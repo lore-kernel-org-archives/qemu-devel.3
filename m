@@ -4,67 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BDAFD376C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE9AFD376C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvHKZ-0001D3-RC; Wed, 25 Feb 2026 11:01:43 -0500
+	id 1vvHS4-00031R-87; Wed, 25 Feb 2026 11:09:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvHKA-00010D-JU
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:01:25 -0500
+ id 1vvHRj-0002zd-Cr
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:09:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvHK6-000208-LR
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:01:18 -0500
+ id 1vvHRh-0003DV-B2
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:09:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772035265;
+ s=mimecast20190719; t=1772035743;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SMUGmsXVE6T7qaBrUMjeN3hXdOaT9gJ6ODCBiUJIr9M=;
- b=ZBID2ubB9zif44QvUh6uk5v3PWucNImJL4hJngVtU6X/5lX6PkseTo5deTbD0IwoisDjDD
- qTVhl9N4xPQLjKHBeMaQ35Vk9dA6KIVwQK89jkV2trTray3IWu4kh61ZUxV5ETOwtng6aY
- 851bmNYPSKcQHTDtmflU44Tw5D4PoP8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=LtF3wnOKrNKjrSLx2Zjy3timJyFNsRqbX2wrHtdPLDM=;
+ b=S4RIjC83eMsWIAa92hcfgTc6BwC5qV8HzfXbbNw2JRa9y9R+QuRsuCYrPUx/4/kmZH4av3
+ 4ebj5hEkfjNzzo5x8+9tc15kjtRCvHvgJpyVFcpvKhHxGHYz8xUM5kVHVWbgoPHeJPNlnP
+ DiZcMDg7Yn80kDotuxxMp9kjPmyJfew=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-lP0eCJzJM6SvukokMlvECg-1; Wed,
- 25 Feb 2026 11:01:01 -0500
-X-MC-Unique: lP0eCJzJM6SvukokMlvECg-1
-X-Mimecast-MFC-AGG-ID: lP0eCJzJM6SvukokMlvECg_1772035259
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-lHhf81eSOy-cGj09rJ53HQ-1; Wed,
+ 25 Feb 2026 11:09:01 -0500
+X-MC-Unique: lHhf81eSOy-cGj09rJ53HQ-1
+X-Mimecast-MFC-AGG-ID: lHhf81eSOy-cGj09rJ53HQ_1772035739
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F1E51955D5A; Wed, 25 Feb 2026 16:00:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7FD781855148; Wed, 25 Feb 2026 16:08:36 +0000 (UTC)
 Received: from redhat.com (unknown [10.45.225.165])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 112F419560B6; Wed, 25 Feb 2026 16:00:51 +0000 (UTC)
-Date: Wed, 25 Feb 2026 16:00:48 +0000
+ id A42AD19560B6; Wed, 25 Feb 2026 16:08:30 +0000 (UTC)
+Date: Wed, 25 Feb 2026 16:08:27 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, armbru@redhat.com,
- eblake@redhat.com, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, qemu-devel@nongnu.org, philmd@linaro.org
-Subject: Re: [PATCH v3 1/3] char: qemu_chr_write_log() use qemu_write_full()
-Message-ID: <aZ8csNV0DAHxK7uh@redhat.com>
-References: <20260201173633.413934-1-vsementsov@yandex-team.ru>
- <20260201173633.413934-2-vsementsov@yandex-team.ru>
- <aYCJ3Mu9XJYnl1-r@redhat.com>
- <c70aacec-aa10-4a0c-8eae-f6c48da5b9f1@yandex-team.ru>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, devel@lists.libvirt.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v6 14/27] ui: add proper error reporting for password
+ changes
+Message-ID: <aZ8ee8lb1NeD0GcT@redhat.com>
+References: <20260211152508.732487-1-berrange@redhat.com>
+ <20260211152508.732487-15-berrange@redhat.com>
+ <87seayckwu.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c70aacec-aa10-4a0c-8eae-f6c48da5b9f1@yandex-team.ru>
+In-Reply-To: <87seayckwu.fsf@pond.sub.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -93,92 +101,109 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 19, 2026 at 09:07:07PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 02.02.26 14:26, Daniel P. Berrangé wrote:
-> > On Sun, Feb 01, 2026 at 08:36:29PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > logfd is blocking, so we don't need to care about EAGAIN.
-> > > Let's simply use qemu_write_full().
-> > 
-> > Are you sure logfd is always blocking ?  It can be an FD passed in
-> > from outside QEMU, and off-hand, I'm not sure where we force that to
-> > be blocking. Though we could argue it is the client't fault if they
-> > passed a non-blocking FD to QEMU.
-> > 
-> > NB, we can *not* assume logfd is a plain file as libvirt will pass
-> > in a pipe to send logging via virtlogd.
-> > 
+On Wed, Feb 18, 2026 at 01:10:09PM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> I'm sorry I missed the email. And the commit is in master now.
+> > Neither the VNC or SPICE code for password changes provides error
+> > reporting at source, leading the callers to report a largely useless
+> > generic error message.
+> >
+> > Fixing this removes one of the two remaining needs for the undesirable
+> > error_printf_unless_qmp() method.
+> >
+> > While fixing this the error message hint is improved to recommend the
+> > 'password-secret' option which allows securely passing a password at
+> > startup.
+> >
+> > Reported-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  include/ui/console.h                 |  2 +-
+> >  include/ui/qemu-spice-module.h       |  3 ++-
+> >  tests/functional/generic/test_vnc.py |  4 ++--
+> >  ui/spice-core.c                      | 25 ++++++++++++++++++-------
+> >  ui/spice-module.c                    |  7 ++++---
+> >  ui/ui-qmp-cmds.c                     | 19 ++++++-------------
+> >  ui/vnc-stubs.c                       |  6 +++---
+> >  ui/vnc.c                             | 10 +++++++---
+> >  8 files changed, 43 insertions(+), 33 deletions(-)
+> >
+> > diff --git a/include/ui/console.h b/include/ui/console.h
+> > index 98feaa58bd..3677a9d334 100644
+> > --- a/include/ui/console.h
+> > +++ b/include/ui/console.h
+> > @@ -457,7 +457,7 @@ void qemu_display_help(void);
+> >  void vnc_display_init(const char *id, Error **errp);
+> >  void vnc_display_open(const char *id, Error **errp);
+> >  void vnc_display_add_client(const char *id, int csock, bool skipauth);
+> > -int vnc_display_password(const char *id, const char *password);
+> > +int vnc_display_password(const char *id, const char *password, Error **errp);
+> >  int vnc_display_pw_expire(const char *id, time_t expires);
+> >  void vnc_parse(const char *str);
+> >  int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp);
+> > diff --git a/include/ui/qemu-spice-module.h b/include/ui/qemu-spice-module.h
+> > index 1f22d557ea..072efa0c83 100644
+> > --- a/include/ui/qemu-spice-module.h
+> > +++ b/include/ui/qemu-spice-module.h
+> > @@ -29,7 +29,8 @@ struct QemuSpiceOps {
+> >      void (*display_init)(void);
+> >      int (*migrate_info)(const char *h, int p, int t, const char *s);
+> >      int (*set_passwd)(const char *passwd,
+> > -                      bool fail_if_connected, bool disconnect_if_connected);
+> > +                      bool fail_if_connected, bool disconnect_if_connected,
+> > +                      Error **errp);
+> >      int (*set_pw_expire)(time_t expires);
+> >      int (*display_add_client)(int csock, int skipauth, int tls);
+> >  #ifdef CONFIG_SPICE
+> > diff --git a/tests/functional/generic/test_vnc.py b/tests/functional/generic/test_vnc.py
+> > index f1dd1597cf..097f858ca1 100755
+> > --- a/tests/functional/generic/test_vnc.py
+> > +++ b/tests/functional/generic/test_vnc.py
+> > @@ -48,7 +48,7 @@ def test_no_vnc_change_password(self):
+> >          self.assertEqual(set_password_response['error']['class'],
+> >                           'GenericError')
+> >          self.assertEqual(set_password_response['error']['desc'],
+> > -                         'Could not set password')
+> > +                         'No VNC display is present');
+> >  
+> >      def launch_guarded(self):
+> >          try:
+> > @@ -73,7 +73,7 @@ def test_change_password_requires_a_password(self):
+> >          self.assertEqual(set_password_response['error']['class'],
+> >                           'GenericError')
+> >          self.assertEqual(set_password_response['error']['desc'],
+> > -                         'Could not set password')
+> > +                         'VNC password authentication is disabled')
+> >  
+> >      def test_change_password(self):
+> >          self.set_machine('none')
+> > diff --git a/ui/spice-core.c b/ui/spice-core.c
+> > index 8a6050f4ae..cdcec34f67 100644
+> > --- a/ui/spice-core.c
+> > +++ b/ui/spice-core.c
+> > @@ -756,7 +756,7 @@ static void qemu_spice_init(void)
+> >                               tls_ciphers);
+> >      }
+> >      if (password) {
+> > -        qemu_spice.set_passwd(password, false, false);
+> > +        qemu_spice.set_passwd(password, false, false, NULL);
 > 
-> And, I missed the fact that
+> qemu_spice.set_passwd is qemu_spice_set_passwd().  It's converted to
+> Error below.  That conversion doesn't replace error reporting, it only
+> adds.  Therefore, passing NULL does not lose error reporting here.
+> Good.
 > 
->    qemu_create(common->logfile, flags, 0666, errp);
-> 
-> Can actually chose fd from "fdset". All named fds in monitor are set blocking
-> explicitly except for the case when QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING flag
-> take place.. But fds coming through add-fd commandline options are not handled
-> this way, as I can see.
+> However, why is ignoring errors okay here?  Not this patch's fault, of
+> course.
 
-> Looking through:
-> 
-> 1. util/oslib-posix.c: qemu_write_pidfile()
-> 
-> Uses qemu_write_full(), *unprepared* to non-blocking.
-> 
-> 2. ui/ui-qmp-cmds.c: qmp_screendump()
-> 
-> 2.1. png_save() wraps the fd to fdopen(), which I assume should work well
-> with blocking and non-blocking fds
-> 
-> 2.2. ppm_save() wraps it into qio_channel_file_new_fd()
-> 
-> qio_channel_write_all() -> qio_channel_writev_full_all() do handle QIO_CHANNEL_ERR_BLOCK
-> 
-> 3. qio_channel_file_new_path()
-> 
-> In general qio-channels are prepared to work with non-blocking fds.
-> 
-> qio_channel_file_new_path() is used (except for 2.2 and tests) from migration code, which
-> I think should be prepared to non-blocking fds. At least, qemu_fill_buffer()
-> handles QIO_CHANNEL_ERR_BLOCK.
-> 
-> 4. hw/usb/bus.c: usb_qdev_realize()
-> 
-> Wraps by fdopen()
-> 
-> 5. hw/uefi/var-service-pcap.c: uefi_vars_pcap_init()
-> 
-> Wraps by fdopen()
-> 
-> 6. hw/uefi/var-service-json.c: uefi_vars_json_init()
-> 
-> Use write() and don't handle EAGAIN: *unprepared* for non-blocking.
-> 
-> 7. dump/dump.c: qmp_dump_guest_memory()
-> 
-> Use qemu_write_full() - *unprepared*
-> 
-> 8. chardev/char.c: logfd - *unprepared* after my commit
-> 
-> 9. block/file-posix.c: raw_co_create()
-> 
-> May use write() and not handle EAGAIN during raw_regular_truncate() - unprepared.
-> 
-> 
-> What to do with it? I see several possibilities:
-> 
-> 1. simply support EAGAIN in qemu_write_full()? Like it was in qemu_chr_write_log()
-> - with g_usleep(100)?
-> 
-> 2. switch to qio_channel_file_new_path() + qio_channel_write_all()
-> 
-> 3. call qemu_set_blocking() on fd for *unprepared* cases
+IIUC There are two scenarios qemu_spice_set_passwd can fail
 
-IMHO, use of FDs in non-blocking mode should always be an explicit
-opt-in decision by the code in question.  So my preference is to
-ensure FDs coming via -add-fd get forced into blocking mode, the
-same as we do for FDs coming via the monitor (or any socket recv
-when QIO_CHANNEL_READ_FLAG_FD_PRESERVE_BLOCKING is NOT set)
+ * The password auth method is not enabled
+     -> minor config bug, but we should report that error
+ * The fail_if_conn is true and a client is connected
+     -> impossible scenario during startup, fine to ignore
+
+
 
 With regards,
 Daniel
