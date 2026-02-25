@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D50D4FD45E4
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 19:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7379BFD45E5
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 19:42:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvKlr-0002It-6x; Wed, 25 Feb 2026 14:42:07 -0500
+	id 1vvKlv-0002RF-51; Wed, 25 Feb 2026 14:42:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvKlm-00024E-DL
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 14:42:03 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vvKlp-0002Hm-Pj
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 14:42:06 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvKlj-0002Td-4r
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 14:42:01 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2a9296b3926so251845ad.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 11:41:58 -0800 (PST)
+ id 1vvKlo-0002U7-37
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 14:42:05 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ade1806c28so26345ad.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 11:42:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772048518; x=1772653318; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772048522; x=1772653322; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+fBflHpWcOkIAca/ewhCzxrxnxZcU7j3YRsoFPNFwM0=;
- b=PGJvGHD1WqsLawpTRUHmV+blmx6rZHai4vJAcf5LeO/JhsLxrdYFRbXOfn6rpUUTLl
- dwd0FBI7wAUuOuN5vFrJ75OCv1lPvFZzAozO4zuPKpq6AQDqIkEPY+Zjp3/3oHPxfrG+
- GyZpPFqvDCKWIlA3S+jRFn3Du52a5n7pEqIhuwzcqIraQLGfiBXGElMvdA93L33bL8a7
- Auhml63wTOQgpFyv2fquv1y+55Vah1sbNJruzs48C6mqcDdVmm6AdCKoZZyd8KjSmxWL
- lbU6nC04NxuzUnS6+kNuIbPbIMs8M6T7Mjuffnoa1usxDb7WDgeVcUKYtvt+UGL+tOlc
- jUgw==
+ bh=CfFiKuEp3QRfnNSdj65WKiUbN7nQtTN8Xk1/EYaTfYA=;
+ b=Jf8WilT8NrWc4vwfPHuGjZckC0v4b2Vke0vJmTwk7cMbbl+5Dospu8MEUWEFfPKIcr
+ 8EwwsrOfUcx0rh9a01eEr+3hx5Wwrih+Jv8l96Nv/rMJAaIJLUJpyiS1/QxcOa3poTlC
+ 36TAN0sT6IAos272zkjq5YS6b6aw0vNO0suj9EDys2k5H2wdjDRLE2X0s+XKdO5HXaaA
+ eTnZxEH2SVabwb2OlNj5mHOpfhG/OnpFP98jPkBeMnVELApkGAugHv6GVSu00oAhG5cE
+ XAqvCrl9fkRt6zSq5+YvZ4HvE53CnzwM+y9ytcblMAk7M3ELwNk33ZM4tEfNzRSoUT3I
+ juHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772048518; x=1772653318;
+ d=1e100.net; s=20230601; t=1772048522; x=1772653322;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+fBflHpWcOkIAca/ewhCzxrxnxZcU7j3YRsoFPNFwM0=;
- b=pDDKusDg8bURfC+5uQGrHjwTj8ToN/NXfJEP2Xhtp7LysHDo1ngRUaqQpWIJh3JjnN
- HIQtXMqv1t/gSMWWQ9rdzTgbY7IRWPDq7NwB4jGojQ9BCEOl1tU8/irDtEYlOGSlH7hh
- vL2V++diMUr3yTODx5S1yXgaWDoisTwDIkkwNgAkq3R+jm8wEGANPSnTiAD4mqrGynDA
- gKEL/DsCn6fA7DTdCMyIn/SCk/QHpq4zPkQfUOONx/caoFLMwyeG9bRWYHMoMOUmCaJ2
- TG3BAo1wtIE9LF4OCMIlr+1nAyXUXEwSx2mQZGbPkGlH0stifHMSEnpuq+Ng+7p+7LS0
- rKlA==
+ bh=CfFiKuEp3QRfnNSdj65WKiUbN7nQtTN8Xk1/EYaTfYA=;
+ b=ImBiKYurXKqFngmuZDgRmcAgs8CytROmBoS5uGX+ubfj7dgS9Y/0z+LHX8s8rTC68X
+ YsJmRy6zOZ7G3WoX/Y/SCT6yWFIOMDrx2RUPb2HifUpmrA4NRravCmI4cCeExGtE/wXR
+ 0xmdHCL0cXnwusAGSJK+w84TFzvq1CwLTNFeVibkF42UWEOMpe7wCGL2lU8MfvoT+ycz
+ oJBSw4/UtMiKLGKUYmleaH7hWuLifbPSQDXZ8V60I1Qj8AbQnU8LtFG6YJtU3L0XuEru
+ Zv6/fpIQYpbdIoLB5/ZE/wolWTJ8Rpqsn+WNhG+EmzrEc5BbCqya7XWFhKIfP0SJzvAh
+ TFOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8YlO4bXbrjeb7LXVfNstKL8P2CpYkKIHpkEbA6lYacrKS9F29/yaKL7WrqHfnI1YOJt6V3RrpjWAI@nongnu.org
-X-Gm-Message-State: AOJu0YzC7M7hJj15l1xQF7oqepU+8qTJXiBJdH3CGJEffCOKeV1vn3FS
- i0J6YCBfHyiivehjPp26NkR3gm5+f7h1KRGrSsngAD0W7DxYldPUUuHSKrxwwhAzScM=
-X-Gm-Gg: ATEYQzypVbPdpNhvuYAfs1br9ZMHYKKiPJ7n/JRe2uOIUgCxnwaNiop/Ecxokoffk4S
- q2M80hnyboGuXVfBrV2m0QZsvYBtnyktB/lBQPBYM74sSS+V3QnXyZrR90JfofIWa7h4rlMwiGN
- ERHLL6RG1K3q/HZ1+43lQv5duKyTBp+0MEaAv4p4EkMFjjGk/IP2Hv9a2SF9Fqn7/2wFPVMiUwk
- aIK1BOXkgb6xwbz6wgB2a56aKtvVG4UTtCzmLtkpUCULjW9SrMwX6BxafOGLC3rMiKjT5ynaTzd
- P6P4iQkbr3yiKDvvoB1az3C2yrYhcm51GigcoZfA0cmed/OZkFp1IfDvfAiAN5BE+bb6q12QHNG
- zevzMqhYTK5eZAPMJ0WYiA6dAhP2uChlm71DzTJ4MZIWMwck3ceSs9Nr9MS282aYYulhSPx3/+P
- e6iuKFYxvYX9E7tQg0hLeF2Uy7KBUgy5k+3Cf2z/iP6emUQ93abT4t/ry2h5GDsFL73rFTPrm5J
- 2ftsWc=
-X-Received: by 2002:a17:903:18d:b0:2ad:ebfb:fee1 with SMTP id
- d9443c01a7336-2adebfc00c0mr11743705ad.41.1772048517580; 
- Wed, 25 Feb 2026 11:41:57 -0800 (PST)
+ AJvYcCVea6IHRbbp/1kCo7qwxw7xbzMsp2Mn5wviqYsctcutdHM9jG9AJtoWy9gjUOQs21zyCP+jLZsai9bk@nongnu.org
+X-Gm-Message-State: AOJu0YwhMXp8VTnZv9wckRXs3DzsuWOtoIH/7GjfIMVhiUyjRtKw3QAm
+ Qwnbu78x1+XG6OwvZF/zqTrjGLfvoTZPLGdr7ziMYkhEGNEUz6KhJSgjwH9q8UuQ7wE=
+X-Gm-Gg: ATEYQzzWqsa6eBLLYQYwNkypx7QWpdrasuJP0aa8hbqaJKYwqqGgp+hU/rLf3cnOVLt
+ RbB+4Geg/c/zjYLGlNDGAvst7iq8ciRdU8684yDK6t9GqQ1yGTj7md5u/X9w3rvAlukpQL41VfU
+ q3jJUOmEe2DCx/x/7iMkqRvYEyQNHZ+MYASLaLwD2Ap1uNSdNhOVP4NYU3oyz5g/XadSNuOr4/h
+ KxXVbwaLHcbvpfAXUB3AyKKFAp4se4CpDWkGK7LVj6MCFJHb+F5ZxpWCfbOAfDs0WZCfLZWfft7
+ SJxTPw6aPgR3XA+duWxSBvbWE4ABM+DMlJbTVEQndAfO8XTQD0vs9jwfLldgDlsQK4bxFsR98fG
+ Mjxjy8hW7GzMl9jAsUVyiVvY9Ik6sglU5CAuzGnet208aOc4Mra9Xh+24yF29b/yGCNrbdi0BuP
+ FX3bnP2H/xKbbp0HNU5ZJ/iEvgtTHW/cufMCVK9ETcsiVzYWQYQ8+LlViI5hSqJb+vLm88
+X-Received: by 2002:a17:903:8c8:b0:2ad:9edf:7fe5 with SMTP id
+ d9443c01a7336-2ad9edf8239mr83081225ad.42.1772048522443; 
+ Wed, 25 Feb 2026 11:42:02 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb6b9b32sm113825ad.66.2026.02.25.11.41.56
+ d9443c01a7336-2adfb6b9b32sm113825ad.66.2026.02.25.11.42.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 11:41:57 -0800 (PST)
-Message-ID: <25191af9-bcfe-491f-850e-d5a43fa89c6c@linaro.org>
-Date: Wed, 25 Feb 2026 11:41:56 -0800
+ Wed, 25 Feb 2026 11:42:02 -0800 (PST)
+Message-ID: <90864356-6abb-4cbf-a2bb-abda2ed82c93@linaro.org>
+Date: Wed, 25 Feb 2026 11:42:01 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] accel/hvf: Build without target-specific knowledge
+Subject: Re: [PATCH 5/5] accel/xen: Build without target-specific knowledge
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- xen-devel@lists.xenproject.org, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>
+ xen-devel@lists.xenproject.org, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 References: <20260225051303.91614-1-philmd@linaro.org>
- <20260225051303.91614-5-philmd@linaro.org>
+ <20260225051303.91614-6-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260225051303.91614-5-philmd@linaro.org>
+In-Reply-To: <20260225051303.91614-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -150,8 +150,8 @@ On 2/24/26 9:13 PM, Philippe Mathieu-Daudé wrote:
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/hvf/meson.build | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
+>   accel/xen/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
