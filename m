@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1182DF4BB99
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B2FCF4BB99
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvCQV-0001sw-Co; Wed, 25 Feb 2026 05:47:31 -0500
+	id 1vvCR0-00024b-DB; Wed, 25 Feb 2026 05:48:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvCQP-0001r7-MK
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:47:25 -0500
-Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvCQx-00023T-HC
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:48:00 -0500
+Received: from smtpout4.mo529.mail-out.ovh.net ([217.182.185.173])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvCQM-0000F7-HQ
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:47:25 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.134])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fLWW82d1Tz5wwq;
- Wed, 25 Feb 2026 10:47:15 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvCQu-0000Ig-Rg
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:47:59 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.158])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4fLWWs2W3Hz68wf;
+ Wed, 25 Feb 2026 10:47:52 +0000 (UTC)
+Received: from kaod.org (37.59.142.112) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Wed, 25 Feb
- 2026 11:47:14 +0100
+ 2026 11:47:51 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S0030806bb13-3f1a-433f-a07a-0adbc76e5069,
+ (GARM-112S006f6eae99f-349d-4cc0-b764-710a72c73ceb,
  C59C41ABD0014BFD9FF8970E1C3D3014408A4F94) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <e79610da-334b-40b8-bc67-dfb763c36312@kaod.org>
-Date: Wed, 25 Feb 2026 11:47:13 +0100
+Message-ID: <a97ceb77-11ca-4010-b11e-02579587750e@kaod.org>
+Date: Wed, 25 Feb 2026 11:47:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 21/22] tests/functional/arm/test_aspeed_ast2600_sdk:
- Add i3c functional test
+Subject: Re: [PATCH v7 02/22] hw/i3c/aspeed_i3c: Switch to DEFINE_TYPES() and
+ align parent_obj naming
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Peter Maydell <peter.maydell@linaro.org>, Steven Lee
  <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
@@ -48,7 +48,7 @@ CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>, "komlodi@google.com"
  <komlodi@google.com>
 References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
- <20260225021158.1586584-22-jamin_lin@aspeedtech.com>
+ <20260225021158.1586584-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -93,35 +93,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260225021158.1586584-22-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260225021158.1586584-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.109]
-X-ClientProxiedBy: DAG12EX1.mxp5.local (172.16.2.121) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.112]
+X-ClientProxiedBy: DAG17EX1.mxp5.local (172.16.2.171) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 57749d08-8643-4fcc-bae0-25f4a9ba6ac4
-X-Ovh-Tracer-Id: 15218507569250012036
+X-Ovh-Tracer-GUID: 51afafc6-4e6d-4e5c-917c-78a59abc4cce
+X-Ovh-Tracer-Id: 15228922143432280964
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEfTT7NCtKI3I+OP8VzUjzldjUFiHbxqIWo/nzf1KGDG5Lx7rKyrf9K1Dro6FcydyTP2WYj3oqrDOjdWoIoOGwrOFN+QU+LXQzMDPn5Chx21yRV6QNbRKvN5g2G/WxaNpPvhxkNWI4Jkxe4L5hjFy3/ad81XNJ59MZBFsg54gBKjEiT2uJM9DOYAFs7k1W97Wsp8oi+60o/NJulxX2u+EfaUgD/HhhbozGpyE/KFQfrd9DDaDLamrAYDgIPmPqc9KrX94znqq+n4jiBBcBBk+CfCqqDU8k77s7gF57j3z62jw2DuPb/+BGNfBlJw1Q1lLfJi/LyZGGsuvFJkDgpY2Rqa3zOsT1fDbYbmyyKUdEKiU+B1LSzC1RltofPIqCGU0yj2r4Qi7wO67uz1wkWDjZ5he+uhrZbJNq627pLjCUajOji0YLFERV/fZx3XfvOpjIz/MxUUx1jw5NspVRU4R/FLiWtMpUBRcRbVOLu0EtYleRS+MmgHMOT0u/dCpUw158ndjRCTl98ofSKlYaLzjF5H5Dbox1EiYjAiHisvVnSF04LONdb5trEsRwc7JX2rEVyhhbCsUHDYMzrUcMHX3kwP/xWRmTqH7rw9LpJaFIYlJbthKIKX9HpcyEnLKM7LnAPpzE0fE0xse6LSyMn+q1lvQ9cnvfUa5I0liF26EHIww
-DKIM-Signature: a=rsa-sha256; bh=8GozfWXNi34NcWfS45YtvAy3sbP89wZrlv5I0Gs4s3k=; 
+X-VR-SPAMCAUSE: dmFkZTGCWqxcYpsEoCeniVXbJaV60epsjA9WPTNgrGHcavmY2cQl7eKP21Y6ScYG4fzDR0DgjnPzAixARXQoi6ySxxuTQ687aQXWoIDIum5YB9daF9h7n+Z6MOevIMs3hNkGPtZX4YhaUMbVxVw7Lt5p+2PTYMIxmCvaOAsXoNwE62D6JmtFSWdqCBKBrvG5sdxbx6NiNQjmLLeK1hxRU4V36BEYtUrZ7DP73DYKqBaUvzJ98ygCcC3sw2q1ZLovN+kYi+A6ul8f8/6Y/QMIKl7dk44j6kFqoKcnRt8mkMwaOeUIRMTPsYAuxuy2xB+exkM0JUPuxcj6h1GSvayvHhI52pF6Hlr/hZClZSVi7AqIzLPuAhKN7wk41gdFgSaU2EuQIfbamJO0F9Uf+D46DWLEbId6aBxqYA2jHEJZRbs1aizIFVZfGWPE7E+M/uTAnW80O7D7SmfTRGaeckvOa2vcEXjrBubdVQQmQ2RSPU8kWTsdu59Twg1NTAEhsyqSa9KzQkRmITejL31S8hOvjDwBXR7724Lyttrb8AtYlkR6Y5PnsTYrimKSAGmV5/caLZXGhQNgj42M0socEbCDJhcfgbQAO2QfQr3ICDhdLXMJeYtelywYPWzGyLd09COSbOzirwH7c7PcZhPW8tOneuYE28tOt1Ho5LHsD5qcoHat/3N2mA
+DKIM-Signature: a=rsa-sha256; bh=3DMW+YhOC+SmSWPUYYzqdp6wOQcTFVJGj7gMDr9aKdg=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1772016437; v=1;
- b=NF990/sri4EyfB0Sq3x474oF3UcM7GfR0bEErJgdQsiJkAGFNMRDpJctd9EushV+AVyyhWHP
- mE/skLMW06NXgEr1XkrxMYK1LCf1AvNUAVOiBrvYPjc/9R12CyfsGWSfpUOVTl8h+u9v5JouRXb
- lH4DaXPnjX91PNrhBprEH3ji2DQKiLRuNXVd5b+iZhOuu9Lwx11CXAJf54/EMLCEHIzDIMiPkJ/
- YzfrfY4DDFTOBGUhZsNEvmLm8IFXGzrzH06nVrHf2R8kRUUAON9N6XtyuOaDv/MnZ8LJqXmuzmJ
- cJxBloO/UAQwPhNdagzJfB/shMW6Rl7EbPM/ioYLrUxVw==
-Received-SPF: pass client-ip=178.33.254.192; envelope-from=clg@kaod.org;
- helo=3.mo552.mail-out.ovh.net
+ t=1772016474; v=1;
+ b=PM2bE1D4XaHwkVpRxZYovvap4eMUleSspKDW6YrirMMSuNm55nUgwDj8wvwBZkIXtl4EkDpM
+ +fDObCrMWEGPCv7eBQA6Jfa9YJQaow2fFTAykPaXFYY9qeIX7ctXyfh+NxL3UgRcVUDBQfNMk5r
+ siBwZqxqKSlnR+i2WiEER75FvCo5q8sWvS/8UhOwtOb4de4R0IMAbD623INrqLW9ofOn0kBsARU
+ JO0wDI/6+tJKg6vRVl8oxC767qHnG+ekSl0lU6kVpx6QldP0FwUrZ6imFnJkZW8PpaZRZed782e
+ Pl4hV5J07I28/jff7beE4FH5gpsrkTsAgIFnlXgr25NHw==
+Received-SPF: pass client-ip=217.182.185.173; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo529.mail-out.ovh.net
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,50 +138,116 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/25/26 03:12, Jamin Lin wrote:
+> Following review feedback, update the Aspeed I3C device to use the
+> DEFINE_TYPES() macro instead of an explicit type registration function.
+> 
+> DEFINE_TYPES() is the currently recommended approach in QEMU for
+> registering multiple TypeInfo entries and avoids boilerplate
+> type_init() code.
+> 
+> Additionally, rename embedded SysBusDevice fields from "parent" to
+> "parent_obj" to comply with the QEMU coding style guidelines for QOM
+> objects.
+> 
+> No functional change.
+> 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   tests/functional/arm/test_aspeed_ast2600_sdk.py | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>   include/hw/i3c/aspeed_i3c.h | 16 ++++++----------
+>   hw/i3c/aspeed_i3c.c         | 35 +++++++++++++++--------------------
+>   2 files changed, 21 insertions(+), 30 deletions(-)
 > 
-> diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk.py b/tests/functional/arm/test_aspeed_ast2600_sdk.py
-> index 971fa3390d..46b9f7058c 100755
-> --- a/tests/functional/arm/test_aspeed_ast2600_sdk.py
-> +++ b/tests/functional/arm/test_aspeed_ast2600_sdk.py
-> @@ -31,6 +31,15 @@ def do_ast2600_pcie_test(self):
->               'ip addr show dev eth4',
->               'inet 10.0.2.15/24')
+> diff --git a/include/hw/i3c/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h
+> index 7a984e1f01..bd0ffc84ea 100644
+> --- a/include/hw/i3c/aspeed_i3c.h
+> +++ b/include/hw/i3c/aspeed_i3c.h
+> @@ -21,28 +21,24 @@ OBJECT_DECLARE_TYPE(AspeedI3CState, AspeedI3CClass, ASPEED_I3C)
+>   #define ASPEED_I3C_NR_DEVICES 6
 >   
-> +    def do_ast2600_i3c_test(self):
-> +        exec_command_and_wait_for_pattern(self,
-> +            'i3ctransfer -d /dev/bus/i3c/5-1234567890ab'
-> +            ' -w 0x12,0x34,0x56,0x78,0x90,0xab,0xcd,0xef',
-> +            'Success on message 0')
-> +        exec_command_and_wait_for_pattern(self,
-> +            'i3ctransfer -d /dev/bus/i3c/5-1234567890ab -r 8 | grep 0x | xargs',
-> +            '0x12 0x34 0x56 0x78 0x90 0xab 0xcd 0xef')
-> +
->       def test_arm_ast2600_evb_sdk(self):
->           self.set_machine('ast2600-evb')
->           self.require_netdev('user')
-> @@ -43,6 +52,8 @@ def test_arm_ast2600_evb_sdk(self):
->               'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
->           self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.0')
->           self.vm.add_args('-netdev', 'user,id=net1')
-> +        self.vm.add_args('-device',
-> +            'mock-i3c-target,bus=dw.i3c.5,pid=0xab9078563412')
->           self.do_test_arm_aspeed_sdk_start(
->               self.scratch_file("ast2600-default", "image-bmc"))
+>   OBJECT_DECLARE_SIMPLE_TYPE(AspeedI3CDevice, ASPEED_I3C_DEVICE)
+> -typedef struct AspeedI3CDevice {
+> -    /* <private> */
+> -    SysBusDevice parent;
+> +struct AspeedI3CDevice {
+> +    SysBusDevice parent_obj;
 >   
-> @@ -69,6 +80,7 @@ def test_arm_ast2600_evb_sdk(self):
->           exec_command_and_wait_for_pattern(self,
->                '/sbin/hwclock -f /dev/rtc1', year)
->           self.do_ast2600_pcie_test()
-> +        self.do_ast2600_i3c_test()
+> -    /* <public> */
+>       MemoryRegion mr;
+>       qemu_irq irq;
 >   
+>       uint8_t id;
+>       uint32_t regs[ASPEED_I3C_DEVICE_NR_REGS];
+> -} AspeedI3CDevice;
+> +};
 >   
->   if __name__ == '__main__':
-
-
+> -typedef struct AspeedI3CState {
+> -    /* <private> */
+> -    SysBusDevice parent;
+> +struct AspeedI3CState {
+> +    SysBusDevice parent_obj;
+>   
+> -    /* <public> */
+>       MemoryRegion iomem;
+>       MemoryRegion iomem_container;
+>       qemu_irq irq;
+>   
+>       uint32_t regs[ASPEED_I3C_NR_REGS];
+>       AspeedI3CDevice devices[ASPEED_I3C_NR_DEVICES];
+> -} AspeedI3CState;
+> +};
+>   #endif /* ASPEED_I3C_H */
+> diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
+> index fff259ff66..e7cdfbfdbd 100644
+> --- a/hw/i3c/aspeed_i3c.c
+> +++ b/hw/i3c/aspeed_i3c.c
+> @@ -337,13 +337,6 @@ static void aspeed_i3c_device_class_init(ObjectClass *klass, const void *data)
+>       device_class_set_props(dc, aspeed_i3c_device_properties);
+>   }
+>   
+> -static const TypeInfo aspeed_i3c_device_info = {
+> -    .name = TYPE_ASPEED_I3C_DEVICE,
+> -    .parent = TYPE_SYS_BUS_DEVICE,
+> -    .instance_size = sizeof(AspeedI3CDevice),
+> -    .class_init = aspeed_i3c_device_class_init,
+> -};
+> -
+>   static const VMStateDescription vmstate_aspeed_i3c = {
+>       .name = TYPE_ASPEED_I3C,
+>       .version_id = 1,
+> @@ -366,18 +359,20 @@ static void aspeed_i3c_class_init(ObjectClass *klass, const void *data)
+>       dc->vmsd = &vmstate_aspeed_i3c;
+>   }
+>   
+> -static const TypeInfo aspeed_i3c_info = {
+> -    .name = TYPE_ASPEED_I3C,
+> -    .parent = TYPE_SYS_BUS_DEVICE,
+> -    .instance_init = aspeed_i3c_instance_init,
+> -    .instance_size = sizeof(AspeedI3CState),
+> -    .class_init = aspeed_i3c_class_init,
+> +static const TypeInfo aspeed_i3c_types[] = {
+> +    {
+> +        .name = TYPE_ASPEED_I3C,
+> +        .parent = TYPE_SYS_BUS_DEVICE,
+> +        .instance_init = aspeed_i3c_instance_init,
+> +        .instance_size = sizeof(AspeedI3CState),
+> +        .class_init = aspeed_i3c_class_init,
+> +    },
+> +    {
+> +        .name = TYPE_ASPEED_I3C_DEVICE,
+> +        .parent = TYPE_SYS_BUS_DEVICE,
+> +        .instance_size = sizeof(AspeedI3CDevice),
+> +        .class_init = aspeed_i3c_device_class_init,
+> +    },
+>   };
+>   
+> -static void aspeed_i3c_register_types(void)
+> -{
+> -    type_register_static(&aspeed_i3c_device_info);
+> -    type_register_static(&aspeed_i3c_info);
+> -}
+> -
+> -type_init(aspeed_i3c_register_types);
+> +DEFINE_TYPES(aspeed_i3c_types)
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
