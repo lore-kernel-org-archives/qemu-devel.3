@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B567AFD45FB
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7183FD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO5m-0004km-5N; Wed, 25 Feb 2026 18:14:54 -0500
+	id 1vvO5z-00050x-OS; Wed, 25 Feb 2026 18:15:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO5k-0004kQ-6n
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:14:52 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO5x-00050T-Sq
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:05 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO5h-0002Zp-HU
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:14:51 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4806ce0f97bso2362885e9.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:14:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO5v-0002at-Fr
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:15:05 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43767807cf3so146201f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061287; x=1772666087; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061301; x=1772666101; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sAQRekBqnyK/EC0T/BHUhyfWFZckIqsnxlQCebdjSa8=;
- b=ZJA8eH2Lh02gppzykXb8ATfNmaNv4txeCWYsFYc6kl3SUPzCP9Eq5lyUNM/C0nvYlr
- BuT6mZBSKOiddV7bRefZRX+zdcxTdHNKQESfu3SyTubsJGGTEa+sgt9nCu6CmhjgR2ht
- FEvZ7SSFLqTB9Bd8G5qJw+JwZszFMPCe5P+Bn/uukb2vMRRqOV03gqx49POCxKs9feax
- Te4o6w/sKzSmCffLtvz5z49vRvvElotqIF3xzy/ip/ncJPooEddgsfzruqhzO/Ujxc1I
- 3TfyyTl3w45W8pmDKACywDfGqtR7z6pIyxeO8t4uanAD+fK4IsEpHHQZVU/GH/u5Vg9s
- lZOQ==
+ :reply-to; bh=AOnr4qaJdaK1kJiZweSuzTjxuUU2NRSI0QvsVn5psy8=;
+ b=FEoGVmZQ8SyEbjevNkWj3Mqxem2W7kWVfTvanuguTALqIPgP047eFPyJdEKcNEqbd8
+ C7K+Wjm4/afVRlYRPWFZVFpLht0YYut1hsudS9B2SNRtLl93aVGm8wtqK4Mxwq+O3T75
+ FtRXQSsp/EQFYAOR27Y6LmYnJMxwKIb1NzFVrjXrKw8nDmgbPIx/uWJCRPTlbxf34/LU
+ VmVA8MtnWSkxPTEnb34nmvVZlXOn5P+r9lfyBpaydIIZM0TByXcGLVu19tbe5wB3EWUD
+ SqtSjW+vJqdawgLNdww1HEslCfO1R0nCraYol9DiNvwD+hwKKZNdLnRaKBbNNuE+AIDI
+ ZaVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061287; x=1772666087;
+ d=1e100.net; s=20230601; t=1772061301; x=1772666101;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=sAQRekBqnyK/EC0T/BHUhyfWFZckIqsnxlQCebdjSa8=;
- b=XRhP3HyxvVKTy4Fh997G7pTZ2bo/Aw4eeIoM+68VuTB9aQ4wS+Ahdqyq+C+hOlZM1G
- /0akK0P6x9fzaiEFrFEKumrbxZdeZr6R8b+1PLNlHYL0jRFW29D71u2u0ScLF2BYbPpY
- MbF0mJSvUNuORi2AljYujmmwe3DELgQVnMg0KbFOHmxIQ3q2u3uPP/DHPjTPq5bhmRVc
- 3/1CIVGY+ysc8eubhi7fLW8YC3UtBIdXVol0WQNyiDeTXQtuTu4SjRljbS2mhyoUhAcf
- q17YDIC7vli1NfpAiF7W6kZE3KC1Hta9UW7QAQ5/TcIjgBsingtqRWXRrofFAXo8IzDD
- biNg==
-X-Gm-Message-State: AOJu0Yx3RUyl/OVPF86YwAIrndtZdTChpfLCAlQ++iOw0AJpiwph91aH
- Qpgc7GMzXPsRquk7SbfiWRIcbh+L63YywCr+lTGHyPwvfDpBGsWn2ox2ddMnQag/FiKU/m/G5l8
- HCVr4VS8=
-X-Gm-Gg: ATEYQzxAoFBYmsb3Cb/pNPg4cDn7a3mynjEL4l7rX7+P58htef/SCYvfepHuC1dbtQm
- T1//A9B94y6O4gbEBJzIa+neIGH40q70iodIZpkCP3wOlwq07LO3UlNxKO4MJR2ofVfZ1FtegHh
- fNQJok4EnMjfjby/kUbFN97MDA2exWjpB/27gOj13hAc4CX1Vl9kTc4LDI745bCdFsAHP2+D8SD
- uGuRDT90Pu6FCb/9DM3sQ35kZI/d/RRK6nzToeTJFYbSBh/a2Kqshx3hxxg5OCB8uMt9JSTyhEq
- lxPyCfMsyjVXZ0rc/MoN5jb5FBb0/jUDC+P1KgsvTbdgci+TXPbCSCDeYySLzBvIAd4szniRW5n
- 6fnDlsBvL19Um9FwEvKMyhh2c+obyS8T1+lQtlewr5JG3mFEfu51i7KRWv18TBTvZM2tTIEMT4P
- W4uAcX6QoXF9R87fq3eqxOzIX4uBgFec/qjyHoiyteU2uAnlOwXvzh9nTYABkfp5KGuuXtljkV
-X-Received: by 2002:a05:600c:a009:b0:47e:e970:b4e4 with SMTP id
- 5b1f17b1804b1-483c3df5a16mr954445e9.29.1772061287554; 
- Wed, 25 Feb 2026 15:14:47 -0800 (PST)
+ bh=AOnr4qaJdaK1kJiZweSuzTjxuUU2NRSI0QvsVn5psy8=;
+ b=sfPDUKlawRIBMTfszRu8ytWtyMXT5ru7dQQuJNTsC87/CovA2ekL1ozPk1NYlH+6Mu
+ jS1HptO83/RQS+NpiiaSM5EkSisRw3tmpJO3fzbP2Qm/M6+mTS8DghwDqzpJ9flXagks
+ Ffpwml+ISVGjbbATjWXYstkH7+CQvKcYWyQ7rsa7Y7svjCjge6lcPQo/ASeWhXTeYIRK
+ Gy6gD8nC+AiQC+j5ZuM/cIHnsQwOSj6ZzxBVdDppZcZ+Z7uhpmlziknsAqhx9R9vl1w4
+ jf1panr2nlsTGAuCO20afWK7/dw8BURHZmTO407jsRLLsw2lczGFxu4RV2I58D8I62lM
+ eRzA==
+X-Gm-Message-State: AOJu0YzXI8/4GS73RJVHbubk0XZCjS4DL0k4WQxWo/CSlwN2bzE3tPQ6
+ jRfUhU7W9s0COTm/uPjjVDGKBIZPXhzgkb4hqhohbcLmixn7yEekuysFrZJVoTCujXE/rrANIqh
+ 2Li5xq6U=
+X-Gm-Gg: ATEYQzzh3ZgE+7w3pbCOmlfHG8oif4fKRzrVU/Ls83LFxqgUwmHM6umphpMdbJI3Dz+
+ uI/tDYhnonlVL6glrioMvqW2cyG4oPWS50ZwG/zBJO4kZimIoFzBK6MPBgTtEwvZIKQ6IxNg9g7
+ 0Qmmq+MiI4vmX+5r9MBY9OkZXa5ZcL/B82w9UbnnLFcmTmuxtMl6WPd5HtUaXq9qIORmkKyTRPt
+ UGHNxuwKRzMC+8Ta5g97KnkwY2c+XXzmwCOfmYYdhGNJq7DLmDdldytYHM1rlVbugf8O93EhhvH
+ mk/yGwLXfgC9S/yrkI3r+gFXwMRl3XJwEyD+5tnsxF0sJTmGCn5ujlRYAHNsbF75ftUzjLdfi0c
+ oFJVQozdRRB6IrZ1pY0NQWubIZF9E7jQWd+SBtHwLUvNQ/02F0WswCtMTE8iIsclpsFUF+McOMq
+ zIoRwmtRWhk0bJJkqY0ISwy1cOl3GHt5t79hOz3lWsnpKLZJjwVom5YOTUjIXzjzAr4hOsCJo8
+X-Received: by 2002:a5d:5d85:0:b0:430:f742:fbc7 with SMTP id
+ ffacd0b85a97d-439942aa2bcmr4199223f8f.14.1772061301333; 
+ Wed, 25 Feb 2026 15:15:01 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd70e692sm98330635e9.7.2026.02.25.15.14.46
+ ffacd0b85a97d-4398a292babsm13296868f8f.37.2026.02.25.15.14.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:14:46 -0800 (PST)
+ Wed, 25 Feb 2026 15:15:00 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/70] hw/loongarch: Use loongarch_palen_mask()
-Date: Thu, 26 Feb 2026 00:13:05 +0100
-Message-ID: <20260225231411.96482-6-philmd@linaro.org>
+Subject: [PULL 07/70] exec: Drop TARGET_PHYS_ADDR_SPACE_BITS
+Date: Thu, 26 Feb 2026 00:13:07 +0100
+Message-ID: <20260225231411.96482-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,155 +100,326 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
-Replaces remaining uses of TARGET_PHYS_ADDR_SPACE_BITS with
-runtime calls to loongarch_palen_mask() to fetch the physical
-address mask from the cpucfg PALEN field.
+The macro is no longer in use and can safely be dropped.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Message-ID: <20260218-phys_addr-v6-5-a603bf363218@rev.ng>
+Message-ID: <20260218-phys_addr-v6-7-a603bf363218@rev.ng>
+[PMD: Keep TARGET_PHYS_ADDR_SPACE_BITS poisoned]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/loongarch/boot.h |  3 ++-
- hw/loongarch/boot.c         | 28 ++++++++++++++++------------
- hw/loongarch/virt.c         |  5 ++++-
- 3 files changed, 22 insertions(+), 14 deletions(-)
+ include/exec/cpu-defs.h       | 3 ---
+ target/alpha/cpu-param.h      | 3 ---
+ target/arm/cpu-param.h        | 2 --
+ target/avr/cpu-param.h        | 1 -
+ target/hexagon/cpu-param.h    | 1 -
+ target/hppa/cpu-param.h       | 3 ---
+ target/i386/cpu-param.h       | 2 --
+ target/loongarch/cpu-param.h  | 1 -
+ target/m68k/cpu-param.h       | 1 -
+ target/microblaze/cpu-param.h | 2 --
+ target/mips/cpu-param.h       | 2 --
+ target/or1k/cpu-param.h       | 1 -
+ target/ppc/cpu-param.h        | 7 -------
+ target/riscv/cpu-param.h      | 2 --
+ target/rx/cpu-param.h         | 1 -
+ target/s390x/cpu-param.h      | 1 -
+ target/sh4/cpu-param.h        | 1 -
+ target/sparc/cpu-param.h      | 2 --
+ target/tricore/cpu-param.h    | 1 -
+ target/xtensa/cpu-param.h     | 1 -
+ 20 files changed, 38 deletions(-)
 
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 9819f7fbe30..4984322f75e 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -113,6 +113,7 @@ struct memmap_entry {
-     uint32_t reserved;
- };
+diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
+index e01acb7c906..141b5a99292 100644
+--- a/include/exec/cpu-defs.h
++++ b/include/exec/cpu-defs.h
+@@ -28,9 +28,6 @@
+ #ifndef TARGET_LONG_BITS
+ # error TARGET_LONG_BITS must be defined in cpu-param.h
+ #endif
+-#ifndef TARGET_PHYS_ADDR_SPACE_BITS
+-# error TARGET_PHYS_ADDR_SPACE_BITS must be defined in cpu-param.h
+-#endif
+ #ifndef TARGET_VIRT_ADDR_SPACE_BITS
+ # error TARGET_VIRT_ADDR_SPACE_BITS must be defined in cpu-param.h
+ #endif
+diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
+index c9da620ab3e..f87b36fe873 100644
+--- a/target/alpha/cpu-param.h
++++ b/target/alpha/cpu-param.h
+@@ -8,9 +8,6 @@
+ #ifndef ALPHA_CPU_PARAM_H
+ #define ALPHA_CPU_PARAM_H
  
--void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
-+                           uint64_t phys_addr_mask);
+-/* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
+-#define TARGET_PHYS_ADDR_SPACE_BITS  44
+-
+ #ifdef CONFIG_USER_ONLY
+ /*
+  * Allow user-only to vary page size.  Real hardware allows only 8k and 64k,
+diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
+index 7de0099cbfa..f67e7b34606 100644
+--- a/target/arm/cpu-param.h
++++ b/target/arm/cpu-param.h
+@@ -9,10 +9,8 @@
+ #define ARM_CPU_PARAM_H
  
- #endif /* HW_LOONGARCH_BOOT_H */
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 711d5ffbbc0..ef8eae237cb 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -217,10 +217,12 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+ #ifdef TARGET_AARCH64
+-# define TARGET_PHYS_ADDR_SPACE_BITS  52
+ # define TARGET_VIRT_ADDR_SPACE_BITS  52
+ #else
+-# define TARGET_PHYS_ADDR_SPACE_BITS  40
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #endif
  
- static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
- {
--    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    uint64_t *phys_addr_mask = opaque;
-+    return addr & *phys_addr_mask;
- }
+diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
+index ea7887919a7..130768db51f 100644
+--- a/target/avr/cpu-param.h
++++ b/target/avr/cpu-param.h
+@@ -22,7 +22,6 @@
+ #define AVR_CPU_PARAM_H
  
- static int64_t load_loongarch_linux_image(const char *filename,
-+                                          uint64_t phys_addr_mask,
-                                           uint64_t *kernel_entry,
-                                           uint64_t *kernel_low,
-                                           uint64_t *kernel_high)
-@@ -251,10 +253,8 @@ static int64_t load_loongarch_linux_image(const char *filename,
-     }
+ #define TARGET_PAGE_BITS 10
+-#define TARGET_PHYS_ADDR_SPACE_BITS 24
+ #define TARGET_VIRT_ADDR_SPACE_BITS 24
  
-     /* Early kernel versions may have those fields in virtual address */
--    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
--                              0, TARGET_PHYS_ADDR_SPACE_BITS);
--    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
--                            0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    *kernel_entry = le64_to_cpu(hdr->kernel_entry) & phys_addr_mask;
-+    *kernel_low = le64_to_cpu(hdr->load_offset) & phys_addr_mask;
-     *kernel_high = *kernel_low + size;
+ #endif
+diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+index 45ee7b46409..1f0f22a7968 100644
+--- a/target/hexagon/cpu-param.h
++++ b/target/hexagon/cpu-param.h
+@@ -20,7 +20,6 @@
  
-     rom_add_blob_fixed(filename, buffer, size, *kernel_low);
-@@ -303,19 +303,21 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
-     exit(1);
- }
+ #define TARGET_PAGE_BITS 16     /* 64K pages */
  
--static int64_t load_kernel_info(struct loongarch_boot_info *info)
-+static int64_t load_kernel_info(struct loongarch_boot_info *info,
-+                                uint64_t phys_addr_mask)
- {
-     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
-     ssize_t kernel_size;
+-#define TARGET_PHYS_ADDR_SPACE_BITS 36
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
  
-     kernel_size = load_elf(info->kernel_filename, NULL,
--                           cpu_loongarch_virt_to_phys, NULL,
-+                           cpu_loongarch_virt_to_phys, &phys_addr_mask,
-                            &kernel_entry, &kernel_low,
-                            &kernel_high, NULL, ELFDATA2LSB,
-                            EM_LOONGARCH, 1, 0);
--    kernel_entry = cpu_loongarch_virt_to_phys(NULL, kernel_entry);
-+    kernel_entry = cpu_loongarch_virt_to_phys(&phys_addr_mask, kernel_entry);
-     if (kernel_size < 0) {
-         kernel_size = load_loongarch_linux_image(info->kernel_filename,
-+                                                 phys_addr_mask,
-                                                  &kernel_entry, &kernel_low,
-                                                  &kernel_high);
-     }
-@@ -395,14 +397,15 @@ static void init_boot_rom(MachineState *ms,
- }
+ #endif
+diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
+index e0b2c7c9157..3763bca1252 100644
+--- a/target/hppa/cpu-param.h
++++ b/target/hppa/cpu-param.h
+@@ -9,11 +9,8 @@
+ #define HPPA_CPU_PARAM_H
  
- static void loongarch_direct_kernel_boot(MachineState *ms,
--                                         struct loongarch_boot_info *info)
-+                                         struct loongarch_boot_info *info,
-+                                         uint64_t phys_addr_mask)
- {
-     void *p, *bp;
-     int64_t kernel_addr = VIRT_FLASH0_BASE;
-     uint64_t *data;
+ #if defined(CONFIG_USER_ONLY) && defined(TARGET_ABI32)
+-# define TARGET_PHYS_ADDR_SPACE_BITS  32
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #else
+-/* ??? PA-8000 through 8600 have 40 bits; PA-8700 and 8900 have 44 bits. */
+-# define TARGET_PHYS_ADDR_SPACE_BITS  40
+ # define TARGET_VIRT_ADDR_SPACE_BITS  64
+ #endif
  
-     if (info->kernel_filename) {
--        kernel_addr = load_kernel_info(info);
-+        kernel_addr = load_kernel_info(info, phys_addr_mask);
-     } else {
-         if (!qtest_enabled()) {
-             warn_report("No kernel provided, booting from flash drive.");
-@@ -429,7 +432,8 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
-     g_free(bp);
- }
+diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
+index 909bc027923..5915ef6266c 100644
+--- a/target/i386/cpu-param.h
++++ b/target/i386/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define I386_CPU_PARAM_H
  
--void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-+void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
-+                           uint64_t phys_addr_mask)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+ #ifdef TARGET_X86_64
+-# define TARGET_PHYS_ADDR_SPACE_BITS  52
+ /*
+  * ??? This is really 48 bits, sign-extended, but the only thing
+  * accessible to userland with bit 48 set is the VSYSCALL, and that
+@@ -17,7 +16,6 @@
+  */
+ # define TARGET_VIRT_ADDR_SPACE_BITS  47
+ #else
+-# define TARGET_PHYS_ADDR_SPACE_BITS  36
+ # define TARGET_VIRT_ADDR_SPACE_BITS  32
+ #endif
+ #define TARGET_PAGE_BITS 12
+diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
+index 071567712b3..3bcf77b3755 100644
+--- a/target/loongarch/cpu-param.h
++++ b/target/loongarch/cpu-param.h
+@@ -8,7 +8,6 @@
+ #ifndef LOONGARCH_CPU_PARAM_H
+ #define LOONGARCH_CPU_PARAM_H
  
-@@ -440,6 +444,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-     if (lvms->bios_loaded) {
-         loongarch_firmware_boot(lvms, info);
-     } else {
--        loongarch_direct_kernel_boot(ms, info);
-+        loongarch_direct_kernel_boot(ms, info, phys_addr_mask);
-     }
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index a75968e4c95..9e26c25c23c 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -34,6 +34,7 @@
- #include "hw/misc/unimp.h"
- #include "hw/loongarch/fw_cfg.h"
- #include "target/loongarch/cpu.h"
-+#include "target/loongarch/cpu-mmu.h"
- #include "hw/firmware/smbios.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/acpi/generic_event_device.h"
-@@ -928,6 +929,7 @@ static void virt_init(MachineState *machine)
-     hwaddr base, size, ram_size = machine->ram_size;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
-     Object *cpuobj;
-+    uint64_t phys_addr_mask = 0;
+-#define TARGET_PHYS_ADDR_SPACE_BITS 48
+ #define TARGET_VIRT_ADDR_SPACE_BITS 48
  
-     if (!cpu_model) {
-         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
-@@ -1017,7 +1019,8 @@ static void virt_init(MachineState *machine)
-     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+ #define TARGET_PAGE_BITS 12
+diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
+index 7afbf6d302d..59e04d85ff9 100644
+--- a/target/m68k/cpu-param.h
++++ b/target/m68k/cpu-param.h
+@@ -14,7 +14,6 @@
+  * use the smallest one
+  */
+ #define TARGET_PAGE_BITS 12
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
  
-     lvms->bootinfo.ram_size = ram_size;
--    loongarch_load_kernel(machine, &lvms->bootinfo);
-+    phys_addr_mask = loongarch_palen_mask(&LOONGARCH_CPU(first_cpu)->env);
-+    loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
- }
+ #endif
+diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
+index 6a0714bb3d7..0b13f219c2a 100644
+--- a/target/microblaze/cpu-param.h
++++ b/target/microblaze/cpu-param.h
+@@ -17,10 +17,8 @@
+  * of address space.
+  */
+ #ifdef CONFIG_USER_ONLY
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #else
+-#define TARGET_PHYS_ADDR_SPACE_BITS 64
+ #define TARGET_VIRT_ADDR_SPACE_BITS 64
+ #endif
  
- static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
+index a71e7383d24..122193b0db3 100644
+--- a/target/mips/cpu-param.h
++++ b/target/mips/cpu-param.h
+@@ -8,10 +8,8 @@
+ #define MIPS_CPU_PARAM_H
+ 
+ #ifdef TARGET_ABI_MIPSN64
+-#define TARGET_PHYS_ADDR_SPACE_BITS 48
+ #define TARGET_VIRT_ADDR_SPACE_BITS 48
+ #else
+-#define TARGET_PHYS_ADDR_SPACE_BITS 40
+ # ifdef CONFIG_USER_ONLY
+ #  define TARGET_VIRT_ADDR_SPACE_BITS 31
+ # else
+diff --git a/target/or1k/cpu-param.h b/target/or1k/cpu-param.h
+index 3011bf5fcca..1ff89d523f1 100644
+--- a/target/or1k/cpu-param.h
++++ b/target/or1k/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define OPENRISC_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 13
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #endif
+diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
+index ca7602d8983..5e211d10b0b 100644
+--- a/target/ppc/cpu-param.h
++++ b/target/ppc/cpu-param.h
+@@ -9,12 +9,6 @@
+ #define PPC_CPU_PARAM_H
+ 
+ #ifdef TARGET_PPC64
+-/*
+- * Note that the official physical address space bits is 62-M where M
+- * is implementation dependent.  I've not looked up M for the set of
+- * cpus we emulate at the system level.
+- */
+-#define TARGET_PHYS_ADDR_SPACE_BITS 62
+ /*
+  * Note that the PPC environment architecture talks about 80 bit virtual
+  * addresses, with segmentation.  Obviously that's not all visible to a
+@@ -26,7 +20,6 @@
+ #  define TARGET_VIRT_ADDR_SPACE_BITS 64
+ # endif
+ #else
+-# define TARGET_PHYS_ADDR_SPACE_BITS 36
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
+index 039e877891a..ddb76a5300f 100644
+--- a/target/riscv/cpu-param.h
++++ b/target/riscv/cpu-param.h
+@@ -9,10 +9,8 @@
+ #define RISCV_CPU_PARAM_H
+ 
+ #if defined(TARGET_RISCV64)
+-# define TARGET_PHYS_ADDR_SPACE_BITS 56 /* 44-bit PPN */
+ # define TARGET_VIRT_ADDR_SPACE_BITS 48 /* sv48 */
+ #elif defined(TARGET_RISCV32)
+-# define TARGET_PHYS_ADDR_SPACE_BITS 34 /* 22-bit PPN */
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32 /* sv32 */
+ #endif
+ #define TARGET_PAGE_BITS 12 /* 4 KiB Pages */
+diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
+index ef1970a09e9..3806f41b2fe 100644
+--- a/target/rx/cpu-param.h
++++ b/target/rx/cpu-param.h
+@@ -21,7 +21,6 @@
+ 
+ #define TARGET_PAGE_BITS 12
+ 
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #endif
+diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
+index a5f798eeae7..caef5a0e5c8 100644
+--- a/target/s390x/cpu-param.h
++++ b/target/s390x/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define S390_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 12
+-#define TARGET_PHYS_ADDR_SPACE_BITS 64
+ #define TARGET_VIRT_ADDR_SPACE_BITS 64
+ 
+ #endif
+diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
+index 2b6e11dd0ac..c3b8114e538 100644
+--- a/target/sh4/cpu-param.h
++++ b/target/sh4/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define SH4_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 12  /* 4k */
+-#define TARGET_PHYS_ADDR_SPACE_BITS  32
+ #ifdef CONFIG_USER_ONLY
+ # define TARGET_VIRT_ADDR_SPACE_BITS 31
+ #else
+diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
+index 6e8e2a51469..7ec4ac84dbb 100644
+--- a/target/sparc/cpu-param.h
++++ b/target/sparc/cpu-param.h
+@@ -9,7 +9,6 @@
+ 
+ #ifdef TARGET_SPARC64
+ # define TARGET_PAGE_BITS 13 /* 8k */
+-# define TARGET_PHYS_ADDR_SPACE_BITS  41
+ # ifdef TARGET_ABI32
+ #  define TARGET_VIRT_ADDR_SPACE_BITS 32
+ # else
+@@ -17,7 +16,6 @@
+ # endif
+ #else
+ # define TARGET_PAGE_BITS 12 /* 4k */
+-# define TARGET_PHYS_ADDR_SPACE_BITS 36
+ # define TARGET_VIRT_ADDR_SPACE_BITS 32
+ #endif
+ 
+diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
+index 790242ef3d2..7a5f67fe15e 100644
+--- a/target/tricore/cpu-param.h
++++ b/target/tricore/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define TRICORE_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 14
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #define TARGET_VIRT_ADDR_SPACE_BITS 32
+ 
+ #endif
+diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
+index 06d85218b84..1a9cdcefb49 100644
+--- a/target/xtensa/cpu-param.h
++++ b/target/xtensa/cpu-param.h
+@@ -9,7 +9,6 @@
+ #define XTENSA_CPU_PARAM_H
+ 
+ #define TARGET_PAGE_BITS 12
+-#define TARGET_PHYS_ADDR_SPACE_BITS 32
+ #ifdef CONFIG_USER_ONLY
+ #define TARGET_VIRT_ADDR_SPACE_BITS 30
+ #else
 -- 
 2.52.0
 
