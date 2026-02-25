@@ -4,86 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D38EFD23D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524E5F4BB99
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 10:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvCFJ-0006xt-NP; Wed, 25 Feb 2026 05:35:57 -0500
+	id 1vvCJL-00083z-NG; Wed, 25 Feb 2026 05:40:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vvCFD-0006vN-Oj
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:35:56 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean.christian.cirstea@gmail.com>)
- id 1vvCFC-0006vD-4h
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:35:51 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-483a233819aso63827565e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 02:35:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772015748; x=1772620548; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=inMBkKt77By2B2/2NRVmTl3MIU1MB0hU7n87s7QsHxE=;
- b=TV+dwGXwBfgquR92nxbn9j4jXBQQchF5phQTzwH6QSetC+pCckBslaNHgwBhfr/MZn
- 7iCsf/QqEfyCABb6/QXfcdv1ZXTRfGUzYiEw1gsLEyamXkTv7YfuEqiJlWl5oQlv2Cmv
- 3/mtO5rd9JlF6HBwJ+9aIcZGs6hfagxgvVcqIDPqr2GDubH03SJ1z+sFgvFELDpSXuIT
- 4Z4jrhcTj4XnC1ORHq491tvXm/FtteUXIIDIqk2xTTkoZKuFiJkqUcCKu+xdsln0svsq
- tRW2ksXUGiOuz8AQKwrF0WeBKUspqaPhcN6wpLPB9wXaJn5nwbtatqxvjbDm+B8zZDes
- Lztw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772015748; x=1772620548;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=inMBkKt77By2B2/2NRVmTl3MIU1MB0hU7n87s7QsHxE=;
- b=IPYSFNfYj34xFGUzkuaziqv6luk0bc834ogyt68W05KoWDnEsj+dmcK0YJUXiFng8d
- VQVB9uvEF1/74O7vq9AUh/L6l4eLWtLUEhsRfzEZH0SlgzVsceVZCSyUG9KMBhhEjW/i
- 9Kx5+XMpau7ZoqmGkg+oVUjZUp4Lu5uy6pDigd5Q3X9G5HYHVJFjsznkudp9sjRMoM1S
- sc3wAyv6neZNGDovjfyv+jh8TXxkqXSw/lvFwRqJBFZMMVywjuOrvgNql9f4dKwDbexa
- UbcmLsR5PvmujItTPUVQo+Uef5++p4pvVQgGRwgIwo2l1No3SiuuQlBTQbRRBDWb0hM3
- NuNA==
-X-Gm-Message-State: AOJu0YzKzYJzlcDOufQS2Nn+5cP1TxbD+NH7ifS91Vw4lBBX63Rz9Wti
- jcge15abVLr5k5HkEfuS33MgszOieywHyPLl/VFWY2kEZ4a1+4kgx05FOVafbQ==
-X-Gm-Gg: ATEYQzx8RpxhaB1ZUE3GucB/m0zIK4zL363gmVT16z3/PB9k7A4/R7kgl16vNWu+2K/
- ifLVENprV8u7nGTThoscgAtJ69dG368ZKtKyJQgnVxV3iVEdtCo2OYlZ8hlS0HzA9l522dzAjn+
- vce9KYbB9S+61qXFz21cNI6Kd8O/PyDZnOd7uyWbwUseuPf31ERShaukV66gn17t1XMaxfKOLWr
- aT+WnxB82fTcgeSqGC23N1EPxAubLLQhqRfBohRNdkDcFqD5tID/4V0ds/oqOyfw6X7ALDgdSE8
- +VKszyf9ZGyp4o6eLUyCGMvbW0hfwuRuXxfI1jY+djPKGqhjpu1Janh5DkIzSmO5B4UX6zKTjWd
- die16JZ3YyVLsBq4KB9QwYjj9mcPFIUAmeIRvgRQA0SRWVuCUIUyhacbr2rT3c0E9jHdewHllHN
- DAp87O4uLbpf6vofUzMpSo+q5A3pVoElB1GGIJqQ==
-X-Received: by 2002:a05:600c:8b48:b0:483:c12b:fe4a with SMTP id
- 5b1f17b1804b1-483c12c0071mr9084305e9.11.1772015747947; 
- Wed, 25 Feb 2026 02:35:47 -0800 (PST)
-Received: from tuf-gaming ([82.78.167.197]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd7507adsm69943505e9.9.2026.02.25.02.35.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 02:35:47 -0800 (PST)
-From: =?UTF-8?q?Jean-Christian=20C=C3=8ERSTEA?=
- <jean.christian.cirstea@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu
-Subject: Re: [PATCH v2] linux-user/strace: fix printing of file offsets
-Date: Wed, 25 Feb 2026 12:35:45 +0200
-Message-ID: <20260225103545.170204-1-jean.christian.cirstea@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251226173521.1957025-1-jean.christian.cirstea@gmail.com>
-References: <20251226173521.1957025-1-jean.christian.cirstea@gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvCJI-00081l-JV
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:40:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvCJG-0007IK-Dr
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 05:40:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772015999;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Gmr2LuSx/t/kF3R7Xue3LEaiyvCkd5ASPb7+0F6AsZo=;
+ b=PBIIsTHCL8r7ofqy6nN7/fnOLyiICsGPBfV5I6WlbceN1llxQKN9NtsVN9u4gkmau5hiJg
+ RKL87HVKTAnohLj2p+e7WsxkwmiVXsE+Qe3V7ju8R2ROcPCxL4QAwo+SH9a15pkh1kZzub
+ FbE8fVGgY7MJzFTFDrQAazzWX91X3Zo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-ekiFjBqROziyW9uQ-qAViQ-1; Wed,
+ 25 Feb 2026 05:39:57 -0500
+X-MC-Unique: ekiFjBqROziyW9uQ-qAViQ-1
+X-Mimecast-MFC-AGG-ID: ekiFjBqROziyW9uQ-qAViQ_1772015996
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 598481800348; Wed, 25 Feb 2026 10:39:56 +0000 (UTC)
+Received: from [10.45.224.158] (unknown [10.45.224.158])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 55C141800348; Wed, 25 Feb 2026 10:39:52 +0000 (UTC)
+Message-ID: <d03c5416-14a2-425f-a96c-ba340cf79617@redhat.com>
+Date: Wed, 25 Feb 2026 11:39:50 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=jean.christian.cirstea@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/16] meson: Add BE RISCV targets
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-2-djordje.todorovic@htecgroup.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260225102016.200654-2-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,5 +133,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Are there any outstanding issues with this patch?
+On 25/02/2026 11.20, Djordje Todorovic wrote:
+> Add options to compile riscv64be-softmmu and riscv32be-softmmu
+> ---
+>   meson.build | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index 8c6c0a9a32..41ad38d184 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -55,6 +55,11 @@ supported_cpus = ['ppc64', 's390x', 'riscv64', 'x86_64',
+>   
+>   cpu = host_machine.cpu_family()
+>   
+> +# Unify riscv64be to riscv64.
+> +if cpu == 'riscv64be'
+> +  cpu = 'riscv64'
+> +endif
+> +
+>   target_dirs = config_host['TARGET_DIRS'].split()
+>   
+>   # type of binaries to build
+> @@ -281,7 +286,7 @@ elif cpu == 'ppc64'
+>   elif cpu == 'mips64'
+>     kvm_targets = ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmmu', 'mips64el-softmmu']
+>   elif cpu == 'riscv64'
+> -  kvm_targets = ['riscv64-softmmu']
+> +  kvm_targets = ['riscv32-softmmu', 'riscv64-softmmu', 'riscv32be-softmmu', 'riscv64be-softmmu']
+
+I really dislike the idea of having yet another target like mips where we 
+have 4 different flavours (32/64 bits x big/little endian). That increases 
+the compile- and testing time a lot. Couldn't you do it the ppc64 way? The 
+ppc64-softmmu target can handle both, big and little endian, no need for a 
+separate binary here. And we are going the same way with microblaze now - 
+the microblaze target recently got support for little endian, so we can 
+finally get rid of the microblazeel target now.
+
+  Thanks,
+   Thomas
+
 
