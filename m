@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6629CFD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C272FD45FB
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvOAc-0007Rg-I6; Wed, 25 Feb 2026 18:19:54 -0500
+	id 1vvO97-0004BP-Jg; Wed, 25 Feb 2026 18:18:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAa-0007Qg-JA
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:52 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8m-0003hg-TQ
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:04 -0500
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAZ-0003UQ-0O
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:52 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8k-00039j-4Y
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:18:00 -0500
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-483a233819aso2862595e9.3
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:50 -0800 (PST)
+ 5b1f17b1804b1-48375f10628so1979515e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:17:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061589; x=1772666389; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061476; x=1772666276; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3Tr/RjfOe6IjCItdEvRBAstz9dZRVJOfGHzOcEgiwtI=;
- b=H/Gd1rNQOjIS87vVCxK6MjdHbEsagacOw+18IuTaxLyO4GnY6aIs61k743wMmOXJm2
- 23YEXkTZVrZnJp3PGMP+35mGxkzYK7gDEfRvC+BnWZxDCwn+LwrK3sesgJV4JtYiqpuT
- X4NrabKZekDcnWbFdQLEo8lW625cCcqKzvO8bEaHM80FP2NVCqOX6kZFLLdyVhPuptpy
- 6QLWfOHqEK3+f0ts379kFaJr8t7p8EZirQvXHcc77a1WXGngRLbH9sSMpkE11F/Hj60v
- 0OnfNU7kjI/SrsQtr47Zd/6pdLoUkmfbIkm+ylWexI67hQr4AXPQabIWWWsIdte+1Ft4
- IS2A==
+ :reply-to; bh=7d1eFFQbEOclqX67uZYYSXzl6X/j5CbETWLmC2Ltn6I=;
+ b=r2dRMEymnpG3SqWLxDJFKaHyF8EBlKjj/Nun5i16+thXG3uST0+MW5q/x5knVvLYjF
+ OWQ2D7V+EfPkKlhfGGbge3W6lpGPEGW10kVhvMZFjbL/1SB6F4tcWUL4llVF1Vin40r5
+ zGLX8QPYr1/gm+GPLbteBw2tEu8bAQbt9Q2CVH6xERhWPJjnvTz3k06yhRj19BfbMkdm
+ ceKXogXY6FvwgPSez9pBlYigRpvgtTbjdIxRd+hQH+w9QooiXYa+RP8BWA6ymqjqhxOW
+ c9xhmzFI1tFenXnldmr1Nr+BO4Pg6ik7BOIIwu7C0JrkdBluCMCtZjw5V1MY/202Ftoq
+ 6DcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061589; x=1772666389;
+ d=1e100.net; s=20230601; t=1772061476; x=1772666276;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3Tr/RjfOe6IjCItdEvRBAstz9dZRVJOfGHzOcEgiwtI=;
- b=KCPAU1HesDAzxejJO/BLl2pzZS5+V18xGOrzs/YFTfgCmjAWLHC7ApZQuQrBb747TA
- 8E7yxolcotGruU/zBB/n4lFq2Uk3mTKY0Bn+CS3JPgCsDyNq9K4N9fDcLckeeyTdx5PO
- WA9uGvdpgGI9fkLH8+nfehC+TRYVWOibcR82hzIKxe9Q0mEFn/lNVCFy3dggfhzzXiM8
- CPxYijmMAOpSAdfumcTLYoQObZEBhQoMVmHPnxJ9v2eAvnJuJtqkvBtCcjXWEzugeM52
- UmuO6vD1pH1RtzC59A84WyIdfaiOjYADWAHkwq9N5Vlp6nq13Z06+1TbpjxZJDHmjqkx
- /riQ==
-X-Gm-Message-State: AOJu0Yyv5VzVZMJldIFOJarpC1f1PaII062KKS/djNAErcAiDnEWlGg/
- OYiBQV+b6PDpTMgP7GARtD0lnCsebKwe4uYeY/167jcJWZC+UgM44ZwbE6DJitSvqV1uLTiX7Ov
- Ol9u22Bc=
-X-Gm-Gg: ATEYQzxA1YgGSjHQwn3TNz3P2QUBMPKWcwVTqHgVIuDSXLv15IdtzIYBRCW26EEC29U
- DoqzNp6e4gKPVY1V11GPyDsTBS75lpJQbhipHdREdLSp4X6vI1FrVrBkBiwARrLwN4M1emg5rqQ
- 40D1YvWoq28W+R2VphKjul/j5E1RAvKkBCAv1vQWUKy1wP16rN4GEWyZT/dInNkA0VoP+hNqQAZ
- //DyKJaT8IN6ciWU7IEgSb6cv6I9VWs2yC1jRUgSGH+MzV2N+3TEuz6GRIB84zKDrp6e1k8pf6i
- SYFpRlz1yr+hMHJcXyx5t5Y7CwxSnBdOfNTKub7LRxZlbIO1q+bZlrGo+mwqoruclcYW6Ax+ZaF
- 8W3YB3bs00OuuR37eiZZ0l/5gGhsxfwQhBHZIlnlWT3pA3CkBipg6IcXZ/RNNJXKMOZ1n2B8L+4
- 364Ro73YWxv3teTsXTi4ZicehIBEPh5C3gtk4YB5yo9vVBB9GorXavRioWBGWBVz8yeuJ7/70l
-X-Received: by 2002:a05:600c:468b:b0:483:c35d:367f with SMTP id
- 5b1f17b1804b1-483c3dd6fd2mr1468025e9.21.1772061588932; 
- Wed, 25 Feb 2026 15:19:48 -0800 (PST)
+ bh=7d1eFFQbEOclqX67uZYYSXzl6X/j5CbETWLmC2Ltn6I=;
+ b=S2pUSn0DPUnEdiK3oq1DAGBTCb0jZSH/0LhEKt/Tex7RJLBDuo4jnSp9gdpgWSDeWh
+ 8cqaMCkt7B/1/0jywxYV/QLJrzox5M0NPMZPQNuJ7QkyCj7MhkO5KbCZFRZ+uGlpH3FQ
+ SOo+9JE4aF2R6PilS5Hv1ubP5Qdemtaj9VP2ZoYvfzHEMlgygA56gI+vurgpLJK6psmb
+ 8dY10Dz642uwUWtkwRwZ1ljniC6Hku7koNOHARJLcsAN9Xles4PFVPC50hzdB9MwowEw
+ ampK8rN+CQ96kUKw83vsynCk2Ckk5FlE5m4qXDiruIShUDZifL0ucoNihM3QprFQTJtc
+ ozvA==
+X-Gm-Message-State: AOJu0YzcJ7vMmiu5Emr/Hf8+/1oqeafZx9eF6L21tsC7g4Y8c/8eGT6q
+ 4ktCzx+PIKjP8K2HKqEfbv0OE8F/xZ1WJ8HGMl0tC8WOKhpNIEKSAt0egHyD0FmNs7TjLL3fvO/
+ hc2y++to=
+X-Gm-Gg: ATEYQzx2+tP+CFOdTrcmkEn3akzASgtGXS/LO6hUYAQNd1y0RT/LBkwPdGM8nvDdl5c
+ S738wL9S8rcGENhjrnIMMBU+UDX63KrFuqSQDAAejjUsI4AtzUOUIrEyAY+UmOu8d7PPpStwwCS
+ 0lKcSRafQO5h9FLlkfcruNEthb+3c0J3/fA1wp/IpKwcWbqjWAoQ6L7C+pINDQIQcMTqp48ZgfI
+ W02wmzZDMEnvm4U5GpE2Sdyvu1XQt9mf/TUWSkkOaDDy0TJ/KD7i7ZhYfN/UqNoTzNB3vioQlp2
+ zuyLsp57CFpD8sizPqM+iYxr2syy/gj58jpzjHLcgUTqB+QJfC5CD8rRMnce8EZwmR6N4OWc7th
+ bxAP/sZ/EkusuvjUi5+TUiWJizIRYMx7XBWliyA0VL/dZv83aVuVvtwsfh4zINV9IcUw85Ym5MM
+ ZYCw6QxBNUijMUUJs1UVr+3Bltrp6KrY8PDIRQJukYLkMs4RB3XnzZSp6oqGtUTp67BH5HRAGk
+X-Received: by 2002:a05:600c:4e8e:b0:47f:f952:d207 with SMTP id
+ 5b1f17b1804b1-483a95e251fmr274592245e9.19.1772061475786; 
+ Wed, 25 Feb 2026 15:17:55 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb77437sm21740475e9.3.2026.02.25.15.19.48
+ ffacd0b85a97d-43995056115sm2974279f8f.14.2026.02.25.15.17.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:19:48 -0800 (PST)
+ Wed, 25 Feb 2026 15:17:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/70] target/or1k: Rename 'openrisc' -> 'or1k' in meson.build
-Date: Thu, 26 Feb 2026 00:13:49 +0100
-Message-ID: <20260225231411.96482-50-philmd@linaro.org>
+Subject: [PULL 33/70] target/ppc: Replace ldtul_p() -> ldn_p()
+Date: Thu, 26 Feb 2026 00:13:33 +0100
+Message-ID: <20260225231411.96482-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
@@ -98,48 +98,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow commit 62822fc7e0f ("target/or1k: Rename from openrisc").
+Prefer ldn_p(target_long_bits/8) over target-specific ldtul_p().
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-42-philmd@linaro.org>
+Message-ID: <20260219191955.83815-26-philmd@linaro.org>
 ---
- target/or1k/meson.build | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ target/ppc/gdbstub.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/target/or1k/meson.build b/target/or1k/meson.build
-index cad8c1b1ae0..cc912ee6cf9 100644
---- a/target/or1k/meson.build
-+++ b/target/or1k/meson.build
-@@ -1,8 +1,8 @@
- gen = decodetree.process('insns.decode')
+diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
+index ece1e5c9bd7..e0aae9c9eaf 100644
+--- a/target/ppc/gdbstub.c
++++ b/target/ppc/gdbstub.c
+@@ -23,12 +23,12 @@
+ #include "gdbstub/helpers.h"
+ #include "internal.h"
  
--openrisc_ss = ss.source_set()
--openrisc_ss.add(gen)
--openrisc_ss.add(files(
-+or1k_ss = ss.source_set()
-+or1k_ss.add(gen)
-+or1k_ss.add(files(
-   'cpu.c',
-   'disas.c',
-   'exception.c',
-@@ -14,12 +14,12 @@ openrisc_ss.add(files(
-   'translate.c',
- ))
+-static int ppc_gdb_register_len(int n)
++static unsigned ppc_gdb_register_len(int n)
+ {
+     switch (n) {
+     case 0 ... 31:
+         /* gprs */
+-        return sizeof(target_ulong);
++        return target_long_bits() / 8;
+     case 66:
+         /* cr */
+     case 69:
+@@ -42,7 +42,7 @@ static int ppc_gdb_register_len(int n)
+         /* lr */
+     case 68:
+         /* ctr */
+-        return sizeof(target_ulong);
++        return target_long_bits() / 8;
+     default:
+         return 0;
+     }
+@@ -85,7 +85,7 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
+ {
+     CPUPPCState *env = cpu_env(cs);
+     uint8_t *mem_buf;
+-    int r = ppc_gdb_register_len(n);
++    unsigned r = ppc_gdb_register_len(n);
  
--openrisc_system_ss = ss.source_set()
--openrisc_system_ss.add(files(
-+or1k_common_system_ss = ss.source_set()
-+or1k_common_system_ss.add(files(
-   'interrupt.c',
-   'machine.c',
-   'mmu.c',
- ))
+     if (!r) {
+         return r;
+@@ -127,7 +127,7 @@ int ppc_cpu_gdb_read_register(CPUState *cs, GByteArray *buf, int n)
+ int ppc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ {
+     CPUPPCState *env = cpu_env(cs);
+-    int r = ppc_gdb_register_len(n);
++    unsigned r = ppc_gdb_register_len(n);
  
--target_arch += {'or1k': openrisc_ss}
--target_common_system_arch += {'or1k': openrisc_system_ss}
-+target_arch += {'or1k': or1k_ss}
-+target_common_system_arch += {'or1k': or1k_common_system_ss}
+     if (!r) {
+         return r;
+@@ -135,17 +135,17 @@ int ppc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+     ppc_maybe_bswap_register(env, mem_buf, r);
+     if (n < 32) {
+         /* gprs */
+-        env->gpr[n] = ldtul_p(mem_buf);
++        env->gpr[n] = ldn_p(mem_buf, r);
+     } else if (n < 64) {
+         /* fprs */
+         *cpu_fpr_ptr(env, n - 32) = ldq_p(mem_buf);
+     } else {
+         switch (n) {
+         case 64:
+-            env->nip = ldtul_p(mem_buf);
++            env->nip = ldn_p(mem_buf, r);
+             break;
+         case 65:
+-            ppc_store_msr(env, ldtul_p(mem_buf));
++            ppc_store_msr(env, ldn_p(mem_buf, r));
+             break;
+         case 66:
+             {
+@@ -154,17 +154,17 @@ int ppc_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+                 break;
+             }
+         case 67:
+-            env->lr = ldtul_p(mem_buf);
++            env->lr = ldn_p(mem_buf, r);
+             break;
+         case 68:
+-            env->ctr = ldtul_p(mem_buf);
++            env->ctr = ldn_p(mem_buf, r);
+             break;
+         case 69:
+             cpu_write_xer(env, ldl_p(mem_buf));
+             break;
+         case 70:
+             /* fpscr */
+-            ppc_store_fpscr(env, ldtul_p(mem_buf));
++            ppc_store_fpscr(env, ldn_p(mem_buf, r));
+             break;
+         }
+     }
 -- 
 2.52.0
 
