@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9F6FD3760
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 15:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D1AFD3760
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 15:00:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvGNA-0001JU-7n; Wed, 25 Feb 2026 10:00:20 -0500
+	id 1vvGNB-0001NC-Qn; Wed, 25 Feb 2026 10:00:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guix@demindiro.com>)
- id 1vvGMj-00010A-Ox
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:59:54 -0500
+ id 1vvGMm-00010d-Aq
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:59:59 -0500
 Received: from mail.salt-inc.org ([104.244.79.104] helo=vm0.salt-inc.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guix@demindiro.com>)
- id 1vvGMd-0008MX-3T
+ id 1vvGMd-0008Ma-Cf
  for qemu-devel@nongnu.org; Wed, 25 Feb 2026 09:59:50 -0500
 Received: from localhost (209.60-130-109.adsl-dyn.isp.belgacom.be
  [109.130.60.209])
- by vm0.salt-inc.org (Postfix) with ESMTPSA id EB14CFF028;
- Wed, 25 Feb 2026 15:58:32 +0100 (CET)
+ by vm0.salt-inc.org (Postfix) with ESMTPSA id 76E09FF06E;
+ Wed, 25 Feb 2026 15:58:33 +0100 (CET)
 From: David Hoppenbrouwers <qemu@demindiro.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -33,9 +33,9 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Sairaj Kodilkar <sarunkod@amd.com>,
  David Hoppenbrouwers <qemu@demindiro.com>
-Subject: [PATCH 1/2] hw/i386/amd_iommu.c: trace page walk in fetch_pte()
-Date: Wed, 25 Feb 2026 15:58:30 +0100
-Message-ID: <20260225145831.28275-2-qemu@demindiro.com>
+Subject: [PATCH 2/2] hw/i386/amd_iommu.c: fix incorrect page_size for hugepages
+Date: Wed, 25 Feb 2026 15:58:31 +0100
+Message-ID: <20260225145831.28275-3-qemu@demindiro.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225145831.28275-1-qemu@demindiro.com>
 References: <20260225145831.28275-1-qemu@demindiro.com>
@@ -64,64 +64,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is necessary to demonstrate the issue in the next commit.
-It is also useful when developing drivers.
+fetch_pte() incorrectly calculated the page_size for the next level before
+checking whether the entry at the current level is a leaf.
+
+The incorrect behavior can be observed with a nested Linux guest under
+specific conditions (using Alpine with linux-stable kernel):
+
+1. Define the first guest as such:
+
+    /path/to/qemu-system-x86_64 \
+        -M q35 \
+        -enable-kvm \
+        -cpu host \
+        -m 8G \
+        -device amd-iommu,dma-remap=on \
+        -device virtio-blk,drive=boot,bootindex=1 \
+        -device nvme,drive=vfio,bootindex=2,serial=nvme-vfio-0 \
+        -device virtio-net-pci,netdev=net \
+        -netdev user,id=net,hostfwd=tcp::2223-:22 \
+        -serial unix:/tmp/genesys.unix \
+        -drive if=none,id=boot,file=alpine-vm.qcow2,format=qcow2 \
+        -drive if=none,id=vfio,file=vfio.qcow2,format=qcow2 \
+        -display none \
+        -monitor stdio \
+        -trace 'pci*' \
+        -trace 'amdvi_fetch_pte*'
+
+   Add -cdrom path-to-alpine.iso for the first run to install Alpine.
+
+2. In /etc/update-extlinux.conf, add the following to default_kernel_opts:
+
+    iommu.strict=1 amd_iommu_dump=1 amd_iommu=v2_pgsizes_only,pgtbl_v2
+
+   v2_pgsizes_only is important to coerce Linux into using NextLevel=0
+   for 2M pages.
+
+3. Add /etc/modprobe.d/vfio.conf with the following content:
+
+    /etc/modprobe.d/vfio.conf
+    options vfio-pci ids=1234:11e8,1b36:0010
+    options vfio_iommu_type1 allow_unsafe_interrupts=1
+    softdep igb pre: vfio-pci
+
+4. In /etc/mkinitfs/mkinitfs.conf, add vfio and hugetlbfs to features.
+
+5. In /etc/sysctl.conf, add vm.nr_hugepages=512
+
+6. mkdir /hugepages
+
+7. In /etc/fstab, add hugetlbfs:
+
+    hugetlbfs  /hugepages  hugetlbfs  defaults  0 0
+
+8. Reboot
+
+9. Define the second, nested guest as such:
+
+    qemu-system-x86_64 \
+        -M q35 \
+        -enable-kvm \
+        -cpu host \
+        -m 512M \
+        -mem-prealloc \
+        -mem-path /hugepages/qemu \
+        -display none \
+        -serial stdio \
+        -device vfio-pci,host=0000:00:04.0 \
+        -cdrom path-to-alpine.iso
+
+    scp the original ISO into the guest.
+    Doublecheck -device with lspci -nn.
+
+If you launch the second guest inside the first guest without this patch,
+you will observe that booting gets stuck / takes a very long time:
+
+    ISOLINUX 6.04 6.04-pre1  Copyright (C) 1994-2015 H. Peter Anvin et al
+    boot:
+
+The following trace can be observed:
+
+    amdvi_fetch_pte_translate 0x0000000002867000
+    amdvi_fetch_pte_root level=3 pte=6000000103629603
+    amdvi_fetch_pte_walk level=3 pte=6000000103629603 NextLevel=3 page_size=0x40000000
+    amdvi_fetch_pte_walk level=2 pte=600000010362c401 NextLevel=2 page_size=0x200000
+    amdvi_fetch_pte_walk level=1 pte=700000016b400001 NextLevel=0 page_size=0x1000
+    amdvi_fetch_pte_found level=0 pte=700000016b400001 NextLevel=0 page_size=0x1000
+    amdvi_fetch_pte_translate 0x0000000002e0e000
+    amdvi_fetch_pte_root level=3 pte=6000000103629603
+    amdvi_fetch_pte_walk level=3 pte=6000000103629603 NextLevel=3 page_size=0x40000000
+    amdvi_fetch_pte_walk level=2 pte=600000010362c401 NextLevel=2 page_size=0x200000
+    amdvi_fetch_pte_walk level=1 pte=700000016b200001 NextLevel=0 page_size=0x1000
+    amdvi_fetch_pte_found level=0 pte=700000016b200001 NextLevel=0 page_size=0x1000
+
+Note that NextLevel skips from 2 to 0, indicating a hugepage. However, it
+incorrectly determined the page_size to be 0x1000 when it should be 0x200000.
+It doesn't seem the "host" (first guest) observes this mismatch, but the second
+guest is clearly affected.
+
+I have observed it booting eventually, but I don't remember how long it took.
+If/when it does, run setup-alpine. When it asks about which disk to use it
+will be missing the NVMe drive.
+
+If you apply this patch for the first guest then the second guest will boot
+much faster and see the NVMe drive. The trace will be longer and look like
+this:
+
+    ...
+    amdvi_fetch_pte_translate 0x000000001ffd8000
+    amdvi_fetch_pte_root level=3 pte=600000010373e603
+    amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 page_size=0x8000000000
+    amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 page_size=0x40000000
+    amdvi_fetch_pte_walk level=1 pte=700000014b800001 NextLevel=0 page_size=0x200000
+    amdvi_fetch_pte_found level=0 pte=700000014b800001 NextLevel=0 page_size=0x200000
+    amdvi_fetch_pte_translate 0x0000000000007c00
+    amdvi_fetch_pte_root level=3 pte=600000010373e603
+    amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 page_size=0x8000000000
+    amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 page_size=0x40000000
+    amdvi_fetch_pte_walk level=1 pte=600000010366c201 NextLevel=1 page_size=0x200000
+    amdvi_fetch_pte_found level=0 pte=700000016b807001 NextLevel=0 page_size=0x1000
+    amdvi_fetch_pte_translate 0x000000001ffdc000
+    amdvi_fetch_pte_root level=3 pte=600000010373e603
+    amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 page_size=0x8000000000
+    amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 page_size=0x40000000
+    amdvi_fetch_pte_walk level=1 pte=700000014b800001 NextLevel=0 page_size=0x200000
+    amdvi_fetch_pte_found level=0 pte=700000014b800001 NextLevel=0 page_size=0x200000
+    ...
 
 Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
 ---
- hw/i386/amd_iommu.c  | 8 ++++++++
- hw/i386/trace-events | 4 ++++
- 2 files changed, 12 insertions(+)
+ hw/i386/amd_iommu.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 789e09d6f2..29999fd776 100644
+index 29999fd776..2e83f8f4de 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -667,6 +667,8 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-     uint8_t level, mode;
-     uint64_t pte_addr;
+@@ -684,6 +684,13 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+     level = mode = get_pte_translation_mode(dte);
+     assert(mode > 0 && mode < 7);
  
-+    trace_amdvi_fetch_pte_translate(address);
++    /*
++     * TODO what is the actual behavior if NextLevel=0 or 7 in the root?
++     * For now, set the page_size for the root to be consistent with earlier
++     * QEMU versions,
++     */
++    *page_size = PTE_LEVEL_PAGE_SIZE(level);
 +
-     *pte = dte;
-     *page_size = 0;
+     /*
+      * If IOVA is larger than the max supported by the current pgtable level,
+      * there is nothing to do.
+@@ -700,9 +707,6 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
  
-@@ -691,7 +693,11 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-         return -AMDVI_FR_PT_ROOT_INV;
-     }
- 
-+    trace_amdvi_fetch_pte_root(level, *pte);
-+
-     do {
-+        trace_amdvi_fetch_pte_walk(level, *pte, PTE_NEXT_LEVEL(*pte), *page_size);
-+
          level -= 1;
  
-         /* Update the page_size */
-@@ -750,6 +756,8 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-         *page_size = large_pte_page_size(*pte);
-     }
+-        /* Update the page_size */
+-        *page_size = PTE_LEVEL_PAGE_SIZE(level);
+-
+         /* Permission bits are ANDed at every level, including the DTE */
+         perms &= amdvi_get_perms(*pte);
+         if (perms == IOMMU_NONE) {
+@@ -720,6 +724,9 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+             break;
+         }
  
-+    trace_amdvi_fetch_pte_found(level, *pte, PTE_NEXT_LEVEL(*pte), *page_size);
++        /* Update the page_size */
++        *page_size = PTE_LEVEL_PAGE_SIZE(level);
 +
-     return 0;
- }
- 
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index 5fa5e93b68..5e7d7ba30d 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -118,6 +118,10 @@ amdvi_ir_intctl(uint8_t val) "int_ctl 0x%"PRIx8
- amdvi_ir_target_abort(const char *str) "%s"
- amdvi_ir_delivery_mode(const char *str) "%s"
- amdvi_ir_irte_ga_val(uint64_t hi, uint64_t lo) "hi 0x%"PRIx64" lo 0x%"PRIx64
-+amdvi_fetch_pte_translate(uint64_t address) "0x%016"PRIx64
-+amdvi_fetch_pte_root(uint8_t level, uint64_t pte) "level=%d pte=%016"PRIx64
-+amdvi_fetch_pte_walk(uint8_t level, uint64_t pte, uint8_t nextlevel, uint64_t page_size) "level=%d pte=%016"PRIx64" NextLevel=%d page_size=0x%"PRIx64
-+amdvi_fetch_pte_found(uint8_t level, uint64_t pte, uint8_t nextlevel, uint64_t page_size) "level=%d pte=%016"PRIx64" NextLevel=%d page_size=0x%"PRIx64
- 
- # vmport.c
- vmport_register(unsigned char command, void *func, void *opaque) "command: 0x%02x func: %p opaque: %p"
+         /*
+          * Index the pgtable using the IOVA bits corresponding to current level
+          * and walk down to the lower level.
 -- 
 2.52.0
 
