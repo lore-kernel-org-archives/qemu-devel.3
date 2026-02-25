@@ -4,112 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAFACFD377D
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 18:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B61C1FD377B
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 18:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvJaR-00078H-U2; Wed, 25 Feb 2026 13:26:16 -0500
+	id 1vvJch-00089P-PL; Wed, 25 Feb 2026 13:28:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vvJaQ-000783-EQ
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:26:14 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1vvJHm-0000Mk-4R
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:06:58 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vvJaO-0006Z1-P6
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:26:14 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D63145C074;
- Wed, 25 Feb 2026 18:26:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772043971; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=exV1YB7x68ODAOe4hm4gxb4jfRAlZetQiEYRrH3g1nQ=;
- b=cgQELWz2gjDnNOs+wdoqUZv+29tcP8XEkhG3i+reGZ42ZzrjWmq7RK9BfJkeTYyywZeqMR
- NCu7CSEZNRqu1a1Mgkt6TTjeyk4wlZinYt1ExxkNyxt5ThJHSyTic923L6Zk0lZ1SJX02U
- 4IIoz9iDx9XUPY5L3tkViVJuGWGSO5g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772043971;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=exV1YB7x68ODAOe4hm4gxb4jfRAlZetQiEYRrH3g1nQ=;
- b=r+OUFiVltIT9NzYGaKuaOoFwyNAXYFrHcZ+YgBNodedYcNH6J+K4Fv57j1r9A9PCxWqMQi
- yH8Mc7794G3ye0Dw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772043970; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=exV1YB7x68ODAOe4hm4gxb4jfRAlZetQiEYRrH3g1nQ=;
- b=ZEtcL/6dcSzFJkEcu2JZ72ACHyQTJAtwowCKxsP9vYnPFlrPq13FFkLM4mTIfuEBQyZ5+I
- 5s7N2KWbDjgvavT2M4CetEvpVwymtNdgq8U5KMznARSslw/0kqZ4sten4SEpByWyYrCPXQ
- pw6rNTo5+l3hz6yuNNf0neKiOXO8Q7U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772043970;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=exV1YB7x68ODAOe4hm4gxb4jfRAlZetQiEYRrH3g1nQ=;
- b=q6xLu5vI0qaQlA2PIxaaEF7jpiWltu+ux3NCVUkkfj/B0uwPI/QwGKJz3Tnci02YvyLVI6
- HcJdbSM4An2qnYBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 455ED3EA65;
- Wed, 25 Feb 2026 18:26:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qRqsAsI+n2mVUAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 25 Feb 2026 18:26:10 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Paolo Bonzini
- <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, "Michael S .
- Tsirkin" <mst@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Jason Wang
- <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>, =?utf-8?Q?Cl=C3=A9men?=
- =?utf-8?Q?t?= Mathieu--Drif
- <clement.mathieu--drif@eviden.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v2 16/16] tests/qtest/test-x86-cpuid-compat: Remove the
- test with the i440fx-2.9 machine
-In-Reply-To: <20260225092024.794595-17-thuth@redhat.com>
-References: <20260225092024.794595-1-thuth@redhat.com>
- <20260225092024.794595-17-thuth@redhat.com>
-Date: Wed, 25 Feb 2026 15:26:07 -0300
-Message-ID: <87bjhc3cjk.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1vvJHk-0001ik-D3
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 13:06:57 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4836d9d54f6so13845e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 10:06:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772042813; x=1772647613; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=h5i/S0F8WaVSH6FBxTagf0cVwpWVUmKIj+pLQmf7lvE=;
+ b=HO4fiU/AooQNzxM0ZvEwoSs+V93HnsUiLMOrHWTty+vNeGhTz7GkUJY56JfOYPZx3l
+ wnEKbzh0k4wzZTnDHG/mzzjs5CRtuaBcp3+C8TRmC92Tu9qYNMXsxiG1krUGpXb6IfWN
+ /X6XWDhtPpw0pssh4Lrzgv+rwcLNhD825eByQAInDbzOfsjJnzJr0UN/6De9mafwWXRa
+ yNyvtSMnWAVwHi8ExY7Ccu/1wEvqDE5UFfmSrls/Mzwo3JoDHHR4rt1/Q/ETg4ZHU9cd
+ V+klygWg4KhLXuLgHDDyzTh77vE27Y2wqu8BoyM1pmJOlpUhzqiuD9ZbcVn7IHPlSVBi
+ 7D4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772042813; x=1772647613;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h5i/S0F8WaVSH6FBxTagf0cVwpWVUmKIj+pLQmf7lvE=;
+ b=bPzSXHA6OPuHLFr/jcClUt57tHkGEEr2AGkwWSJZLMUL34Hk/QeWOMhXJv5CnPh2pe
+ fR6bHI3is1gzLgKGA4nzxB1EYDWYPsS9rzsYGVhHb/veuaRg+0KIICkkG+n30FqN6PtC
+ DCnjSMga0fTJi3M/vQZkQCwNDq5woKk0LF1YId8C9vx1QSXG9ikUW1kTMUcvj4+4kljt
+ Ik/MTrmLMal49M9f9hU2iesx6U/j8rQZhQTETMScbTXR4N3SHZwtOUr45YyZ6TaL1gYy
+ rhuVCuRHGukTbrW9XDwqKNAihPgRtml9ouUxsbR/Y0Ybz21GFJTh/aibLnoDlPWAtrGq
+ AjgQ==
+X-Gm-Message-State: AOJu0Yykh+8cv+wLrD4ezf4vWLxNazRs431vv5JfbEMyB+Pn/9CbbORQ
+ aCh8bnVBKBc1AEhb3Vvy1ZoBqy+y9pF1+aEw0WIsDAdczH0/xDyKbQ3xnmxfmgOEhtM=
+X-Gm-Gg: ATEYQzwCWlLd0jBshEYtm6fbUEuX4YU5OiVdrvGZBmv4J5GneXtWxozMkM5/6pDw2Zk
+ ZZRgzq44/0CDaGENYEA6iKj01psBhzFUJM0JQ+zGOcazmXbZUKnCfGHjrencsit59Z2dXCwC49W
+ zPSVHupiGSdBix4ULrUgs02E0r4ZogTTAI31ViYVjXigAjcA+Dx3pLv1zRSv87iq2F8WWvu0q79
+ icBrigjEbonRB5nNU1kZknkYm8XIAZ+mcjCnJ4QBiOQvP8chrTUngvxsb8bZceMozqhlEq63d46
+ FkmJbZlLwuB0uXfhpD3d8lEHZiHoiyKGqQi8IBzRmZwFyOU988W6LwGNyVL1AGZsQyX2gt02Ftg
+ sm3EXSHDlxijv8rdH0OUQrSbdSm5RzFQsPW4sE0Btg3pFG4RJ6CKiR0OPPrLp08py/+7f+4vKKI
+ 7L/+KxPaUjB2RcseRUj29fpAfBNN/a09KaTg==
+X-Received: by 2002:a05:600c:450c:b0:47e:e20e:bbbc with SMTP id
+ 5b1f17b1804b1-483a95aea49mr162371815e9.1.1772042812741; 
+ Wed, 25 Feb 2026 10:06:52 -0800 (PST)
+Received: from AtiePC ([79.116.184.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43970d3ff6dsm37225977f8f.25.2026.02.25.10.06.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Feb 2026 10:06:52 -0800 (PST)
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, pbonzini@redhat.com,
+ Daniel Paziyski <danielpaziyski@gmail.com>
+Subject: [PATCH] hw/intc/apic: mask LVTs when software disabling the APIC
+Date: Wed, 25 Feb 2026 19:05:55 +0100
+Message-ID: <20260225180555.154428-1-danielpaziyski@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[13];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 25 Feb 2026 13:28:30 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,39 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+According to the Intel SDM Vol. 3 and the AMD64 Programmer's Manual Vol. 2, when
+the APIC is software disabled, doing so by clearing the software enable bit from
+the spurious interrupt register, the LVT entries must then have their mask bit set,
+and any attempts to clear them must be ignored until the APIC is software enabled
+again. This patch implements that behavior.
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> The machine has been removed, so the related test can now be removed, too.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  tests/qtest/test-x86-cpuid-compat.c | 11 -----------
->  1 file changed, 11 deletions(-)
->
-> diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-> index 5e0547e81b7..c534e764f82 100644
-> --- a/tests/qtest/test-x86-cpuid-compat.c
-> +++ b/tests/qtest/test-x86-cpuid-compat.c
-> @@ -343,17 +343,6 @@ int main(int argc, char **argv)
->                     "486", "xlevel2=0xC0000002,xstore=on",
->                     NULL, "xlevel2", 0xC0000002);
->  
-> -    /* Check compatibility of old machine-types that didn't
-> -     * auto-increase level/xlevel/xlevel2: */
-> -    if (qtest_has_machine("pc-i440fx-2.9")) {
-> -        add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/off",
-> -                       "Conroe", NULL, "pc-i440fx-2.9",
-> -                       "level", 10);
-> -        add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/on",
-> -                       "Conroe", "erms=on", "pc-i440fx-2.9",
-> -                       "level", 10);
-> -    }
-> -
->      /* Test feature parsing */
->      add_feature_test("x86/cpuid/features/plus",
->                       "486", "+arat",
+Signed-off-by: Daniel Paziyski <danielpaziyski@gmail.com>
+---
+ hw/intc/apic.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 8766ed0..ef52961 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -919,6 +919,13 @@ static void apic_send_msi(MSIMessage *msi)
+     apic_deliver_irq(dest, dest_mode, delivery, vector, trigger_mode);
+ }
+ 
++static void apic_mask_lvts(APICCommonState *s)
++{
++    for (int i = 0; i < APIC_LVT_NB; i++) {
++        s->lvt[i] |= APIC_LVT_MASKED;
++    }
++}
++
+ static int apic_register_write(APICCommonState *s, int index, uint64_t val)
+ {
+     trace_apic_register_write(index, val);
+@@ -964,6 +971,11 @@ static int apic_register_write(APICCommonState *s, int index, uint64_t val)
+     case 0x0f:
+         s->spurious_vec = val & 0x1ff;
+         apic_update_irq(s);
++
++        if (!(val & APIC_SV_ENABLE)) {
++            apic_mask_lvts(s);
++        }
++
+         break;
+     case 0x10 ... 0x17:
+     case 0x18 ... 0x1f:
+@@ -997,6 +1009,9 @@ static int apic_register_write(APICCommonState *s, int index, uint64_t val)
+         {
+             int n = index - 0x32;
+             s->lvt[n] = val;
++            if (!(s->spurious_vec & APIC_SV_ENABLE)) {
++                s->lvt[n] |= APIC_LVT_MASKED;
++            }
+             if (n == APIC_LVT_TIMER) {
+                 apic_timer_update(s, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+             } else if (n == APIC_LVT_LINT0 && apic_check_pic(s)) {
+-- 
+2.53.0
+
 
