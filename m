@@ -4,105 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE1AF357D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D02F357DA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv98O-00075B-08; Wed, 25 Feb 2026 02:16:36 -0500
+	id 1vv9Ey-0000bj-JB; Wed, 25 Feb 2026 02:23:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vv98H-000731-1T
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:16:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vv9Ew-0000bH-67
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:23:22 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vv98F-0001tW-3s
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:16:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772003785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qL6dea3nPOVHlv2oBcUsVZrWZwNNBBgQt3IQvJSqORw=;
- b=DIAwKFh2+TwSIivX3cBrzUH3P3GaAXUsktB3uQYdkyDO9jam8nAPHtYJL+Z6LsS8r+GJEV
- yVYgXrtE2AjEqEt1BMXVJNXHELqzdjzb6CU32xCskiIUsDho9mqQilR4WanIjQFJBeYKAZ
- Teaq1GeRcyvNpPgydMxBWUOVgVafE3k=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-JiuYDrITM0SMaf5y11b_rg-1; Wed, 25 Feb 2026 02:16:22 -0500
-X-MC-Unique: JiuYDrITM0SMaf5y11b_rg-1
-X-Mimecast-MFC-AGG-ID: JiuYDrITM0SMaf5y11b_rg_1772003782
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4398f665747so376108f8f.3
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 23:16:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772003781; x=1772608581; darn=nongnu.org;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=qL6dea3nPOVHlv2oBcUsVZrWZwNNBBgQt3IQvJSqORw=;
- b=IHT5DH9TP+bAh3tzDUm8busKPRpYWQ+Jd9oOM1GJGSsZbP23tx0vUkPhGgOKWgKcam
- URn21VvrGyQdZVSPkvPio5iI3ZGobR/xa1DaGtsKneBevAnDzGTN7TGyiSGV9EJwNgZs
- UZssQ1SrGbsC6OZyKVefLqtCI01i5WVk/ifSJ+JiWhk3sPnZM4C532gqHjSEdtb0L+S5
- vMPYG+5i7OblmgXHcOfJptxZfRIBLzpJxfGkfWYMkbiHP81j/LUF5x3uFo7rKy7TyVtz
- MtMjTfUw4BOIpYkGnfTrFxfO8pkI0bm7soJROcI+Fhcu4ZCnFHzLonoPgKeYoIwxF8Ev
- cc4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772003781; x=1772608581;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qL6dea3nPOVHlv2oBcUsVZrWZwNNBBgQt3IQvJSqORw=;
- b=dVjR3+4jR1vt89m909plAKUsf/heusCyXvSZmr6V0vYBjexamMm5IqhbS+PmKBfA66
- aTvuKdR9TFBW04zpK8nzVlqOoo9VWo6qvXyNAwWpBp28B89DiK06+24flDpo84+UuTPa
- 2Qmvs3ZFNMV1LPWkC7M22s+2TZ8lpu2UfOXqbTH6/WUfpSBSYFjsNZso5juHiDnvTVcg
- L4eoLhTqzlSgLHju2U2KfJR/z+sBn/GhRjJxl2ZeqNl3qbSFe+u4G/g3fvfCtUZNKwXF
- yeYGPbfdVNyiZYK51z3jd217ynjpcffFiAdSwMRcRaMsxj2c6VzAM/qltlh/HlhVdtIq
- JYKw==
-X-Gm-Message-State: AOJu0YwWHiDc/kTiAvHxM0SbO/FQ/ObFrLbPXyPgI1bP8iMzmPcGAQWC
- BdFAFJI4uLZPq6NpEVbJCiZj5cVsRwj7mfTkOVkY4w8geR5w2K4RQhnEx6N/HyLKnteY+82WfKa
- jC2C48ZA6f9gJTY2QsbXhJLDzpMk/nZah7Al5TXkyMK2JNaTad8UaU+MY
-X-Gm-Gg: ATEYQzwwRe0YmxTLEDVsz4SvucA3s0lROA2KEz/ject7GxWgKHefZs/e7Y3U9DlDvWI
- SVn5+03te/Ca0E7308EqnTRZCxN5ctH1xCgnLb5/BDKV2dBBkSCL4meEBs6yaCJ6NveBNDCOBYF
- kQ//cNU/h1SwbdIz+inze0dp8nymU+HPYfFNsdYUgT/LW+FD1PG326DqVzPSafuzPWWotg6CE6L
- RCQr9lFRtks5x4XR4Ky1i98mD6BKfATJNaYo7IIEx7m9gSIg8P25FvlRh3H72eL6uJxnBpWfn/l
- vkYnME94SusJipoVmH4BFJLU1Dl3zc/4FaiO7YtKGrQI6UMthRPas5G/nGlWD4Hg0st5JIDrgVQ
- lC6xYVLTz6ytvMso0cQzckUsRL7S2egtdXiSMitKWHk5msKoI+09K33Zj6BThEUi05bqYok8=
-X-Received: by 2002:a05:600c:8708:b0:477:7c7d:d9b2 with SMTP id
- 5b1f17b1804b1-483a963d62amr213324405e9.32.1772003781522; 
- Tue, 24 Feb 2026 23:16:21 -0800 (PST)
-X-Received: by 2002:a05:600c:8708:b0:477:7c7d:d9b2 with SMTP id
- 5b1f17b1804b1-483a963d62amr213324075e9.32.1772003781071; 
- Tue, 24 Feb 2026 23:16:21 -0800 (PST)
-Received: from rh (p200300f6af25cc00b2a92b19386de96f.dip0.t-ipconnect.de.
- [2003:f6:af25:cc00:b2a9:2b19:386d:e96f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd732eb1sm50579945e9.12.2026.02.24.23.16.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 24 Feb 2026 23:16:20 -0800 (PST)
-Date: Wed, 25 Feb 2026 08:16:19 +0100 (CET)
-From: Sebastian Ott <sebott@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: qemu-devel@nongnu.org, eric.auger@redhat.com, kvm@vger.kernel.org, 
- kvmarm@lists.linux.dev, pbonzini@redhat.com, qemu-arm@nongnu.org
-Subject: Re: [PATCH v6 1/1] target/arm/kvm: add kvm-psci-version vcpu property
-In-Reply-To: <CAFEAcA8O2UEKToJ+zXA6=vvgkRyPKrPwtfHnti7yyGgCGwoJeA@mail.gmail.com>
-Message-ID: <0616fe7f-96b8-251e-dc0f-9e15ec8298ba@redhat.com>
-References: <20260220115656.4831-1-sebott@redhat.com>
- <20260220115656.4831-2-sebott@redhat.com>
- <CAFEAcA8O2UEKToJ+zXA6=vvgkRyPKrPwtfHnti7yyGgCGwoJeA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vv9Eu-0003WO-Kg
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:23:21 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61OIER9x2713432; Wed, 25 Feb 2026 07:23:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HmXNtM
+ BamyJUVROuQL9GAPYX8wVIsbw71UxQicEdbmg=; b=iodH+EWovB9fReC/OTE1t2
+ nCEWmX5JEbTWPA3YFwnE2/WdouCXp7KechP8rTlZBEX2CJgyQnQF71WEuPmb+u0Q
+ 61JKntWufetan5Rp24g27UDI623/CfTTblpHiK7BeyUC4Gc6Xx7ihE8uDqjO6+dR
+ Vs3+8mrDRNzdWP7q0Qj7gYejZ2yBh32Un/qmiclKmOKtT/StoSpHZJv3lgVBLaun
+ jD9WNp8Ml5lhjBmOOJRfhngKt+40bvQrM/YDnWneGWmLRe8P1caWkOmWurrLHMcv
+ VQjDYWw00T4Jn9czU40vTkKhRaioJnDUbEHEOYlktxHud5HXEowkMW3lKxcG6CUA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf34c6f68-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 07:23:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P4DYNc027887;
+ Wed, 25 Feb 2026 07:23:17 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfsr1v1t9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 07:23:16 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61P7NDku30015888
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Feb 2026 07:23:13 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 349BF2004B;
+ Wed, 25 Feb 2026 07:23:13 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFBCA20040;
+ Wed, 25 Feb 2026 07:23:10 +0000 (GMT)
+Received: from [9.124.222.235] (unknown [9.124.222.235])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Feb 2026 07:23:10 +0000 (GMT)
+Message-ID: <a42777cc-6c4c-4746-a505-e98c6fec3791@linux.ibm.com>
+Date: Wed, 25 Feb 2026 12:53:09 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] tests/functional/ppc64: Remove custom migration
+ routine
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: thuth@redhat.com, berrange@redhat.com, peterx@redhat.com,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260204172332.21367-1-farosas@suse.de>
+ <20260204172332.21367-5-farosas@suse.de>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <20260204172332.21367-5-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDA2OSBTYWx0ZWRfXxpe0A/jCAHUk
+ kX0ryo/WBhtxudxxMYA7HzocsBCxM0vzoy07/YHPjhLBmJ93shfcPVXe9h2ITkHLUl8Bd53pjs5
+ siLnOPj+m0OqNm7WCdBMW3Ta2rPcakWWC/6kU+N0ERBqaNwhGVHb0gNg1odWQgkwXh5LDi+wTzQ
+ nrieQR0aUY0raaJWJlL1AMVJFhAtZqK/D2MdBCKNXVD3ZxSbHzMLzdR2lWfdB4UpOoz5YTGW7Kb
+ jPBRAHILAqH5zutvpiJkbzunzdwyMf1571JW5fSQ1xzR2i+yM0cxho+TM3i0a8vkjhYvUmkf94J
+ Z7qJFkS25s1+f5MRVWCyrYhiS7J3sWCTYNEZu6arOBnk0ohE5ao9B4hAMB5QzSonK+oHZFdz9QV
+ w1yBWuiXio4ZzZ2d2SYi4hM6Z18pV1iPXeJV+xahJuqtowPynqhO/J9spUnrrYpIMxYwitZwS9V
+ OkoKZVTrJMOvNqsaIOw==
+X-Proofpoint-ORIG-GUID: gYMrDGwxA9N72aNR0LV-LHBOdZ7VQMjw
+X-Authority-Analysis: v=2.4 cv=F9lat6hN c=1 sm=1 tr=0 ts=699ea366 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=j8CySKXDZJbOIHZBDnEA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: fnQStQ-_os0aOwLvLvOU6SuYxjWlKsQ-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602250069
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,102 +128,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello all,
+
+Just a ping, the issue still exists with functional tests for ppc64 
+failing when run in parallel.
+
+Can we get this merged ?
 
 
-On Tue, 24 Feb 2026, Peter Maydell wrote:
+Thanks,
 
-> On Fri, 20 Feb 2026 at 11:57, Sebastian Ott <sebott@redhat.com> wrote:
->>
->> Provide a kvm specific vcpu property to override the default
->> (as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
->> by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
->>
->> Note: in order to support PSCI v0.1 we need to drop vcpu
->> initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
->>
->> Reviewed-by: Eric Auger <eric.auger@redhat.com>
->> Tested-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Sebastian Ott <sebott@redhat.com>
->> ---
->>  docs/system/arm/cpu-features.rst | 11 ++++++++
->>  target/arm/cpu.c                 |  8 +++++-
->>  target/arm/kvm.c                 | 48 ++++++++++++++++++++++++++++++--
->>  3 files changed, 64 insertions(+), 3 deletions(-)
->>
->> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
->> index 3db1f19401..ce19ae6a04 100644
->> --- a/docs/system/arm/cpu-features.rst
->> +++ b/docs/system/arm/cpu-features.rst
->> @@ -204,6 +204,17 @@ the list of KVM VCPU features and their descriptions.
->>    the guest scheduler behavior and/or be exposed to the guest
->>    userspace.
->>
->> +``kvm-psci-version``
->> +  Set the Power State Coordination Interface (PSCI) firmware ABI version
->> +  that KVM provides to the guest. By default KVM will use the newest
->> +  version that it knows about (which is PSCI v1.3 in Linux v6.13).
->> +
->> +  You only need to set this if you want to be able to migrate this
->> +  VM to a host machine running an older kernel that does not
->> +  recognize the PSCI version that this host's kernel defaults to.
->> +
->> +  Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
->> +
->>  TCG VCPU Features
->>  =================
->>
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 10f8280eef..60f391651d 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -1144,7 +1144,13 @@ static void arm_cpu_initfn(Object *obj)
->>       * picky DTB consumer will also provide a helpful error message.
->>       */
->>      cpu->dtb_compatible = "qemu,unknown";
->> -    cpu->psci_version = QEMU_PSCI_VERSION_0_1; /* By default assume PSCI v0.1 */
->> +    if (!kvm_enabled()) {
->> +        /* By default KVM will use the newest PSCI version that it knows about.
->> +         * This can be changed using the kvm-psci-version property.
->> +         * For others assume PSCI v0.1 by default.
->> +         */
->> +        cpu->psci_version = QEMU_PSCI_VERSION_0_1;
->> +    }
->>      cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
->>
->>      if (tcg_enabled() || hvf_enabled()) {
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index ded582e0da..5453460965 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -485,6 +485,28 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
->>      ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->>  }
->>
->> +static char *kvm_get_psci_version(Object *obj, Error **errp)
->> +{
->> +    ARMCPU *cpu = ARM_CPU(obj);
->> +
->> +    return g_strdup_printf("%d.%d",
->> +                           (int) PSCI_VERSION_MAJOR(cpu->psci_version),
->> +                           (int) PSCI_VERSION_MINOR(cpu->psci_version));
->> +}
->> +
->> +static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
->> +{
->> +    ARMCPU *cpu = ARM_CPU(obj);
->> +    uint16_t maj, min;
->> +
->> +    if (sscanf(value, "%hd.%hd", &maj, &min) != 2) {
->
-> %hd is a signed value, so this will accept "-3.-5" I think ?
-> Probably we want %hu.
-
-Ugh, right.
-
-> (If you agree I can just make this fix locally, no need for you to respin.)
-
-That'd be great, Thanks!
-
-Sebastian
+- Aditya G
 
 
