@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0674EEFD206
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F395EEFD207
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 08:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvA1u-0000HT-1M; Wed, 25 Feb 2026 03:13:58 -0500
+	id 1vvA1y-0000KV-Dj; Wed, 25 Feb 2026 03:14:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vvA1s-0000Gx-9W
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:13:56 -0500
+ id 1vvA1w-0000IK-Cu
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:14:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vvA1q-0001ma-RE
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:13:56 -0500
+ id 1vvA1v-0001n0-1y
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 03:14:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772007234;
+ s=mimecast20190719; t=1772007238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L83tmmVEdGQV/uGUec+kZ4/BaRD7oWY0T8JaJvvXus0=;
- b=TFFU/G+cHAhvqZs+43nCf8+kK4RFEPAcXhq3/tOjuXhVXldyQCimWaJxkZTlB9XpCIdBb5
- gemDkss0n4njhD8aGHzBSc3tMz7gPksIkc5fE6GbjOIYCZMJ0SRnaRX+yl3ZhoY/f2Ztv3
- yCPuXapzKZfvi1OeWGS2WDLplawH2Fw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=IwK+4U3rA5gsM5s8bZtHt3GmDGzP9xFTquIJLV4EUZ8=;
+ b=E9dikzebZt8k4K2mdAj/1rvbCA99blah5dc8jAy0fw+tRN6yvOj3WrwY1q91k3AGH4vZ0/
+ vLAqgQi4ExmYtA0p9pdez7ykB5bxTv9ahT85bnGfljhNYYVYeP+5Jhq63WxrFEAx0TeUGn
+ d5E6kfNHxwYrEQkI6Omoo2jveLFnii8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-nPinB27OO16c3e1UBhRgvA-1; Wed,
- 25 Feb 2026 03:13:50 -0500
-X-MC-Unique: nPinB27OO16c3e1UBhRgvA-1
-X-Mimecast-MFC-AGG-ID: nPinB27OO16c3e1UBhRgvA_1772007229
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-9XxlWmXXM6eZbo-Q3GGWOA-1; Wed,
+ 25 Feb 2026 03:13:54 -0500
+X-MC-Unique: 9XxlWmXXM6eZbo-Q3GGWOA-1
+X-Mimecast-MFC-AGG-ID: 9XxlWmXXM6eZbo-Q3GGWOA_1772007233
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0771B19560AD; Wed, 25 Feb 2026 08:13:49 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 784211800464; Wed, 25 Feb 2026 08:13:53 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.120])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0C6E71800348; Wed, 25 Feb 2026 08:13:47 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 13A331955F43; Wed, 25 Feb 2026 08:13:51 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>,
  Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH v2 2/4] aio-posix: enable IORING_SETUP_SINGLE_ISSUER
-Date: Wed, 25 Feb 2026 16:13:34 +0800
-Message-ID: <20260225081336.1639325-3-stefanha@redhat.com>
+Subject: [PATCH v2 3/4] aio-posix: enable IORING_SETUP_COOP_TASKRUN |
+ IORING_SETUP_TASKRUN_FLAG
+Date: Wed, 25 Feb 2026 16:13:35 +0800
+Message-ID: <20260225081336.1639325-4-stefanha@redhat.com>
 In-Reply-To: <20260225081336.1639325-1-stefanha@redhat.com>
 References: <20260225081336.1639325-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
@@ -85,53 +86,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IORING_SETUP_SINGLE_ISSUER enables optimizations in the host Linux
-kernel's io_uring code when the io_uring context is only used from a
-single thread. This is true is QEMU because io_uring SQEs are submitted
-from the same thread that processes the CQEs.
+The IORING_SETUP_COOP_TASKRUN flag reduces interprocessor interrupts
+when an io_uring event occurs on a different CPU. The idea is that the
+QEMU thread will wait for a CQE anyway, so there is no need to interrupt
+the CPU that it is on.
+
+The IORING_SETUP_TASKRUN_FLAG ensures that QEMU's io_uring CQ ring
+polling still works with COOP_TASKRUN. The kernel will set a flag in the
+SQ ring (this is not a typo, the flag is located in the SQ ring even
+though it pertains to the CQ ring) that can be polled from userspace.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- util/fdmon-io_uring.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ util/fdmon-io_uring.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
-index d0b56127c6..ec056b4818 100644
+index ec056b4818..2e2c0e6785 100644
 --- a/util/fdmon-io_uring.c
 +++ b/util/fdmon-io_uring.c
-@@ -452,13 +452,31 @@ static const FDMonOps fdmon_io_uring_ops = {
-     .add_sqe = fdmon_io_uring_add_sqe,
- };
+@@ -423,13 +423,16 @@ static int fdmon_io_uring_wait(AioContext *ctx, AioHandlerList *ready_list,
  
-+static inline bool is_creating_iothread(void)
-+{
-+    return qemu_get_thread_id() != getpid();
-+}
+ static bool fdmon_io_uring_need_wait(AioContext *ctx)
+ {
++    struct io_uring *ring = &ctx->fdmon_io_uring;
 +
+     /* Have io_uring events completed? */
+-    if (io_uring_cq_ready(&ctx->fdmon_io_uring)) {
++    if (io_uring_cq_ready(ring) ||
++        IO_URING_READ_ONCE(*ring->sq.kflags) & IORING_SQ_TASKRUN) {
+         return true;
+     }
+ 
+     /* Are there pending sqes to submit? */
+-    if (io_uring_sq_ready(&ctx->fdmon_io_uring)) {
++    if (io_uring_sq_ready(ring)) {
+         return true;
+     }
+ 
+@@ -459,7 +462,15 @@ static inline bool is_creating_iothread(void)
+ 
  bool fdmon_io_uring_setup(AioContext *ctx, Error **errp)
  {
-+    unsigned flags = 0;
+-    unsigned flags = 0;
++    /* Enable modern flags supported by the host kernel */
++    unsigned flags =
++#ifdef IORING_SETUP_COOP_TASKRUN
++        IORING_SETUP_COOP_TASKRUN |
++#endif
++#ifdef IORING_SETUP_TASKRUN_FLAG
++        IORING_SETUP_TASKRUN_FLAG |
++#endif
++        0;
      int ret;
  
-+    /*
-+     * The main thread's AioContexts are created from the main loop thread but
-+     * may be accessed from multiple threads (e.g. vCPUs or the migration
-+     * thread). IOThread AioContexts are only accessed from the IOThread
-+     * itself.
-+     */
-+#if IORING_SETUP_SINGLE_ISSUER
-+    if (is_creating_iothread()) {
-+        flags |= IORING_SETUP_SINGLE_ISSUER;
-+    }
-+#endif
-+
-     ctx->io_uring_fd_tag = NULL;
- 
--    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
-+    ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, flags);
-     if (ret != 0) {
-         error_setg_errno(errp, -ret, "Failed to initialize io_uring");
-         return false;
+     /*
 -- 
 2.53.0
 
