@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25D4FD45F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5268DFD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvM0v-00047R-ED; Wed, 25 Feb 2026 16:01:47 -0500
+	id 1vvM1M-0004f9-8h; Wed, 25 Feb 2026 16:02:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvM0t-000468-LR
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:01:43 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1vvM1E-0004X4-6O
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:02:04 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvM0r-0006VY-2D
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:01:42 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-82361bcbd8fso116805b3a.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:01:40 -0800 (PST)
+ id 1vvM1C-0006Xf-3S
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:02:03 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ab46931cf1so9120265ad.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772053300; x=1772658100; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772053319; x=1772658119; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=02gsK4aYLx+ZWojc+tV4tOq8aQjuSBnDllgGwvJ6XL4=;
- b=AmfmpG8ebpfVoVNLTpnNa5UtufAQUFIeCFhY1K4QrhZiVjBuqAn8jtIIdfdA2QlXBQ
- sJU+UKq7h5vbyjL7p9Fub59WQMSczxZ9X6mb2pGGgFJ3jXVN33g61T7epag0IDon53tX
- 4IJb3DxrbIBKeWEF4o4uV++Ufg8MD79/yw6ulyJLmWcOEBHZctatTPmYtCF7ECKrqSXZ
- 7G2hwecSlyupKnUWDOahK9icjz79oY0Xu/ZCNGgJMtqHouBOvwG9DioX+b8pu9pKQmhw
- NZMLKW2plRg88koAzEKmHoCD1APO7w4KLneTUoBF06dsLOsmcFnM9+FM+g82Fg40y1IS
- KCVg==
+ bh=DUw3Sq7P9ZCamPPe4hvbhTPbM9YjdqdDYRsW0dn8EQI=;
+ b=dUyEyK6uhTiN4Y0PdNne7X7gta7bh1a7dVE9sruqfwahLSmHTb+d8FUVLpe16q53Zb
+ 5rTC40u+D1C9eo6LTnpoV4gclbSfOgKBJCKhOhxpKbm0Zb1HqHMABIpJ/nL8OMYL9n8X
+ N72l/nqt9JMVO6+MTk05Li01IkMsLn1A7IdaDKG7rfOntECR+u6M6USV7ZRso+dtrQ34
+ D53z6J9hpY4krfJ5fwwWT/Zi5Efz6qC8KsAL0M028d8zh6IXe21mKc01ezsbLv9VES3u
+ 3s1oRvfN0GKnnbdTRlTYeZePpvmCbSOQS+WM8DD7eIgWmzDOgc+SziLAVTNoUhPC9Dm0
+ MALw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772053300; x=1772658100;
+ d=1e100.net; s=20230601; t=1772053319; x=1772658119;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=02gsK4aYLx+ZWojc+tV4tOq8aQjuSBnDllgGwvJ6XL4=;
- b=dVs3cU+RWb8An9VIwm/fNyNsVaMGR0NWZKFhBWOaQJa31IAquIVUlGhdjBJvuVYjUb
- 5YBWNZPgpxHKDsAUcoxGmmlgklyNpJBTI/oO6QTb0bwKwhlN+NYxj0+oo6fxt5hfjDzn
- KDpCPMBYw2x9bYa3hlVXqVR+UjGPt0y9wc1H5YwD0qkDNFmsuYWP9e8UCPvj8S0Yc2hN
- P9MNhr94dEW/0hjqetIcJdaCYrcUo3Hm8ulqVamrxkaDUFZNkh8/K0GIkMMV9SxHjf11
- bNITgWYMKgNcXnyLFQE9LDPfxUz+DWu9qPngousdSnqTsXLjP+zMFN6y8ll9vLE6757K
- +eYA==
-X-Gm-Message-State: AOJu0YzdUWmiVcVJF4TiJb66Jkf0vRfFBveR9EkXAn7dugArQFz5FZcw
- CmciFltPWaZqf/34bvzPiAOhTCdFZ6BYqD4m/SWVd7kbvUBvo9fdqKn4zese2pIUvNw=
-X-Gm-Gg: ATEYQzzScIBVjspAPj/mgVhuXlBSFBzBhLZgLvgMUUfHA3pB0ZZiLpfgfhVZWbCwYGW
- vabqA2d75J550Cv5ILKqvjM2dOzB92jVh4xVM5q3fEqr43CrgmQGE7dzauYMXg9aGLoTPnTVpsJ
- 0tcj++1RZxd3kMZVQsLQM8yoO4pg5GsxLepNlGroZkO10da/TEbuxNAX5Jbh6pwxgsaAtRTgvC2
- Ki1YGM/ARiy7QGJV6d+f0u52TRVIwSk6CzUzMkBzF7psjs55Rk4jfJiMtxm7emhhH2wGQJhFrZ/
- veBhHDcp0O932SyrwKLuuB4HTM2SyrpfsxMfYM6WAmiE5S/XAokRrUjGkFIk+s87R9l5Wzvas3M
- V44XwEBEej7EIgbzXVfsQRxsKIja2JOKuMDDCEkiRVMuuEadDMlLfd1bCxnoChAfRCfi0evpeaU
- qngspKR6O4SGl5QtT4WkmO50th86CaxBx6qaXOmfoBpJWshHMhmbUIDYVj3XmlpCAs4ota
-X-Received: by 2002:a05:6a20:2450:b0:392:e5eb:f04 with SMTP id
- adf61e73a8af0-395ad278400mr1545314637.72.1772053299592; 
- Wed, 25 Feb 2026 13:01:39 -0800 (PST)
+ bh=DUw3Sq7P9ZCamPPe4hvbhTPbM9YjdqdDYRsW0dn8EQI=;
+ b=ouwxVima1qrCbjzCTCFNQu9wKZClEBU57e/fwmNpfcE1LIJLcusfZwfnefb7lLtzcQ
+ lMU3TIXZaqCJDvRxoVNgnVOhv22vLA617GB1i7uWpvnEBfVM1OM5H8Xk3AS/UgGDpKcW
+ 3Cp6t2pZiT7yqKjcW6QJTtujRddCH0BFtX7kjeQcCoAZ4srCq0f6ei4sNA93mGQBWf/b
+ UxXzkd5vSPkR/fYvdM9NcXcg1EEKTzU+XQ/fUFUbvoxnYELgIpah3yLfWT5eDZ2oS2C5
+ +zNn1mUPONtunPaAOkEpcjXoRZTloRZMjNPyL4GZyh7LCrFpv9Of+QPk2aIXWVWTMFgJ
+ fsDA==
+X-Gm-Message-State: AOJu0YzsiOHxEMgq2FF5VV1tjmHKYWBnxoVH9OlhjJG4tG+HeINF2E1Z
+ J4uTmsepGtdawN/MZ8XxtVF1Sy39hInvhDXQaqbYoeQt30a8H5qFaiyjaTa0GkP1GSE=
+X-Gm-Gg: ATEYQzw5GSdnPKXKvweNf+gjEJ7OTd0osGFenlXuXpw1AHSEMcE6jCWUeJGlx3S3W2N
+ AMk51HvRg+YWVUKe0Ygs7zXPRRDbq9WMeDFAfDBt+RGyU2LXnsOn69ijB4H70/IBKyfKMdOci+9
+ GCe3BEVuaYlC/lN/XvprZJ59cDW2FHg+/W7fwMaAMqrynhZbIrhPDKBNALexsUqk3HAsFO5VHmE
+ e7TjG3mWCQOaVcXvPgQVhFbxLzuPX6Gnfq7jY7I7FV632EGSo1nOKtgj3ec6z2/pJggtaU2fD6g
+ kwL1iPTTGy/5Krd2sPVIrSr0w7YBI1K7dSYIeIDp2/QX8PKWjB5P9ecAroLSleahdfa3frxFAZl
+ 6RM71iDsGCz7IwKuX7DUM45mYFZXtjGZMHr51UJ+kyqV4D8vDDFNSx3wP+nbhelyAZ8sXizncf9
+ KAi6CbMkRTqLgyscwbCgZenOVST3SnCee8jHR/eApGwJzD9R+dvrS5TNMeJYYJEPG4Jmy+
+X-Received: by 2002:a17:902:f541:b0:2a3:e7d3:810b with SMTP id
+ d9443c01a7336-2adf7942ddemr3540695ad.12.1772053319449; 
+ Wed, 25 Feb 2026 13:01:59 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c70fa632ddesm5228a12.13.2026.02.25.13.01.38
+ d9443c01a7336-2adfb6d1ba9sm1188975ad.76.2026.02.25.13.01.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 13:01:38 -0800 (PST)
-Message-ID: <5e5c2b8b-d293-4685-943c-9fda103ff864@linaro.org>
-Date: Wed, 25 Feb 2026 13:01:38 -0800
+ Wed, 25 Feb 2026 13:01:59 -0800 (PST)
+Message-ID: <890c9a37-21c7-4a4c-b3aa-4458f9d21dcb@linaro.org>
+Date: Wed, 25 Feb 2026 13:01:58 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 11/31] hw/arm/smmu: Add PTE NS/NSTable helpers
+Subject: Re: [RFC v4 12/31] hw/arm/smmuv3: Store CD NSCFG in TT info
 Content-Language: en-US
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
  <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
@@ -80,7 +80,7 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101544.2992355-1-tangtao1634@phytium.com.cn>
+ <20260221101632.2993305-1-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,18 +116,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260221101544.2992355-1-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260221101632.2993305-1-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,14 +143,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/21/26 2:15 AM, Tao Tang wrote:
-> Add helper macros for NS and NSTable bits and group PTE attribute
-> accessors for clarity. No functional change beyond the new helpers.
+On 2/21/26 2:16 AM, Tao Tang wrote:
+> With NSCFG definitions in place, record the per-table NSCFG bits
+> in SMMUTransTableInfo during CD decode for later use.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   hw/arm/smmu-internal.h | 16 ++++++++++++++--
->   1 file changed, 14 insertions(+), 2 deletions(-)
+>   hw/arm/smmuv3.c              | 1 +
+>   include/hw/arm/smmu-common.h | 1 +
+>   2 files changed, 2 insertions(+)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
