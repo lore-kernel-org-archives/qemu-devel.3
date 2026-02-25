@@ -4,77 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870F9FD3774
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D247FD3772
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvHbK-0005bH-IK; Wed, 25 Feb 2026 11:19:02 -0500
+	id 1vvHe5-0008BH-8s; Wed, 25 Feb 2026 11:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvHbE-0005aD-Ls
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:18:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vvHe3-0008An-M0; Wed, 25 Feb 2026 11:21:51 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvHbD-0005Yo-7q
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:18:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772036334;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iGiE2Mj26/K0+IHn+BsLqkO0T620m/FjtFIhpQuCwR8=;
- b=Yb2gHVKlwN+jkJNM24RVQIq0WYMcaNikAvDc4V/V9YY+UCeZySg00vBHzW3Yoh+uoAuRm8
- KhhZ+le6JM+jWL1V5F5ZStDhcAHAWi5/VJ1AVZoivty6LgSW+oMbz2NJFi3RdyKlVDHe4f
- INEwkwb6w+/xiltUGJc2S+NLtYH9dVk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-Ie7zv96SObi5Fe8bJ6Xxhw-1; Wed,
- 25 Feb 2026 11:18:51 -0500
-X-MC-Unique: Ie7zv96SObi5Fe8bJ6Xxhw-1
-X-Mimecast-MFC-AGG-ID: Ie7zv96SObi5Fe8bJ6Xxhw_1772036329
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D22CE1956078; Wed, 25 Feb 2026 16:18:48 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.158])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37F2E1800465; Wed, 25 Feb 2026 16:18:43 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	"Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: devel@lists.libvirt.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH 3/4] gitlab-ci: Remove the microblazeel target from the CI jobs
-Date: Wed, 25 Feb 2026 17:18:20 +0100
-Message-ID: <20260225161823.1438850-4-thuth@redhat.com>
-In-Reply-To: <20260225161823.1438850-1-thuth@redhat.com>
-References: <20260225161823.1438850-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vvHe2-00061u-6C; Wed, 25 Feb 2026 11:21:51 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61PFFhWH2771372; Wed, 25 Feb 2026 16:21:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=ZzC2+Y8+E7TCODtvPlnLXD1Aj8qnAxpPs32FCY/+T
+ qI=; b=ecAOFF4EkoaaSrqGxlXSA4hwsbwqFYwXbBbeJl2LWbh31vAQ/L5geis9v
+ HxZvarU1Z0qhsgkFGl0c7bC9ZtK/dNAYhzaNfd6VV91KXu+jHaBcN/z1x3E82IcX
+ OGfzq19melkbe4hFFVtJVfwotZ/sGWARiXsM51wDm0cWdguwxqrl7z2OFy5fpTnd
+ OKlmsoyK3c7+KOeUm2Y9qPLVEln2yInPBgKoKudGFGhB7+CyVMWmFqRvPFO8py0z
+ hcZmof5ed1tZ7LCsZSW2ZsZ0HtTTxa7FUtzYJGfwAiXF0YQt8UV1P4lQPVieeqXL
+ mhRvNf5I2i2EgHfi+j0YJxql1Z5+Q==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf34c8d9k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 16:21:48 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61PDMllp003836;
+ Wed, 25 Feb 2026 16:21:47 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfs8jwv2b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 16:21:47 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61PGLlCS24379958
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Feb 2026 16:21:47 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E96195803F;
+ Wed, 25 Feb 2026 16:21:46 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 905B258056;
+ Wed, 25 Feb 2026 16:21:46 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Feb 2026 16:21:46 +0000 (GMT)
+From: Glenn Miles <milesg@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: Glenn Miles <milesg@linux.ibm.com>, harshpb@linux.ibm.com,
+ rathc@linux.ibm.com
+Subject: [PATCH] MAINTAINERS: Add self as reviewer for PowerPC TCG
+Date: Wed, 25 Feb 2026 10:21:04 -0600
+Message-ID: <20260225162118.914008-1-milesg@linux.ibm.com>
+X-Mailer: git-send-email 2.43.7
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDE1NSBTYWx0ZWRfX7XPm18hIPmXG
+ vLNE4STnoD6JZtjANEA6atwwY1V32p2AmqI1CNTA9Qiy/79hH5cgvfpFt1EdyU8GE9mXCaz78uj
+ E5Oe5yhhLd43Q8l1bqoAIg3b+a4qNGm4QkcEw1MdKo65G6BZNvo4JdtBKTYgzYQ46Tbp2Tb0aRb
+ 6VIRgCF0rHFSiRZb/IoX32DOmmwkQhCkP8aMhvGb9hVwTd7wWH/95bNVfERSGm7wZNfgHk355Sf
+ qzt/zBIX2XZ5nW37F+6qJy6lpqpldaMP8zHTEtLnfxbhbl31yDtwarBhBeGobONDL5POsjMqlSU
+ bbhcIKk2wG6NFvltJJsitMxmsG4YGbhgjJt2fKHLvSwZg9eWR4YhnBf+xX04kZw1LrfXymYRw0B
+ 6WB4SSVN6hwRdXuJ9ftEByoE3DpsERPjJXkblqKIfxlGn6VJbzzlQfVVufHYncMrgpoIhh7mRWf
+ 164ZtbqgUIo0jl7NTPw==
+X-Proofpoint-ORIG-GUID: 7_-pUNF4Qk9qgm_AAw9bRWqfyw_MOXsD
+X-Authority-Analysis: v=2.4 cv=F9lat6hN c=1 sm=1 tr=0 ts=699f219c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8
+ a=E4yikVmuLDfcT8_usIQA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: 7_-pUNF4Qk9qgm_AAw9bRWqfyw_MOXsD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-25_02,2026-02-25_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602250155
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,90 +117,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Added myself as a reviewer for PowerPC TCG
 
-Since we're going to remove the qemu-system-microblazeel binary,
-remove the related tests from the CI jobs now (or switch to "microblaze"
-where it is appropriate).
-
-Note: Since "build-system-ubuntu" does not have as many targets as
-"build-system-fedora", we turn the "microblazeel-softmmu" into a
-"microblaze-softmmu" in the ubuntu job, and remove the corresponding
-target from the fedora job instead, so that the load is more balanced
-now.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
 ---
- .gitlab-ci.d/buildtest.yml   | 6 +++---
- .gitlab-ci.d/cirrus.yml      | 4 ++--
- .gitlab-ci.d/crossbuilds.yml | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 1b656b9eb08..ae3a367cb39 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -40,7 +40,7 @@ build-system-ubuntu:
-   variables:
-     IMAGE: ubuntu2204
-     CONFIGURE_ARGS: --enable-docs --enable-rust
--    TARGETS: alpha-softmmu microblazeel-softmmu mips64el-softmmu
-+    TARGETS: alpha-softmmu microblaze-softmmu mips64el-softmmu
-     MAKE_CHECK_ARGS: check-build
- 
- check-system-ubuntu:
-@@ -112,7 +112,7 @@ build-system-fedora:
-   variables:
-     IMAGE: fedora
-     CONFIGURE_ARGS: --disable-gcrypt --enable-nettle --enable-docs --enable-crypto-afalg --enable-rust
--    TARGETS: microblaze-softmmu mips-softmmu
-+    TARGETS: mips-softmmu
-       xtensa-softmmu m68k-softmmu riscv32-softmmu ppc-softmmu sparc64-softmmu
-     MAKE_CHECK_ARGS: check-build check-doc
- 
-@@ -676,7 +676,7 @@ build-without-defaults:
-       --disable-pie
-       --disable-qom-cast-debug
-       --disable-strip
--      --target-list-exclude=aarch64-softmmu,microblaze-softmmu,mips64-softmmu,mipsel-softmmu,ppc64-softmmu,sh4el-softmmu,xtensa-softmmu,x86_64-softmmu
-+      --target-list-exclude=aarch64-softmmu,mips64-softmmu,mipsel-softmmu,ppc64-softmmu,sh4el-softmmu,xtensa-softmmu,x86_64-softmmu
-     MAKE_CHECK_ARGS: check
- 
- build-libvhost-user:
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index 177bd684ef5..f2a9a64b76a 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -42,7 +42,7 @@ x64-freebsd-14-build:
-     CIRRUS_VM_RAM: 8G
-     UPDATE_COMMAND: pkg update; pkg upgrade -y
-     INSTALL_COMMAND: pkg install -y
--    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu --enable-rust
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu --enable-rust
-     TEST_TARGETS: check
- 
- aarch64-macos-build:
-@@ -56,5 +56,5 @@ aarch64-macos-build:
-     INSTALL_COMMAND: brew install
-     PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
--    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu --enable-rust
-+    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu --enable-rust
-     TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index 59ff8b1d870..cf977dfefb1 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -111,7 +111,7 @@ cross-win64-system:
-     IMAGE: fedora-win64-cross
-     EXTRA_CONFIGURE_OPTS: --enable-fdt=internal --disable-plugins
-     CROSS_SKIP_TARGETS: alpha-softmmu avr-softmmu hppa-softmmu
--                        m68k-softmmu microblazeel-softmmu
-+                        m68k-softmmu microblaze-softmmu
-                         or1k-softmmu rx-softmmu sh4eb-softmmu sparc64-softmmu
-                         tricore-softmmu xtensaeb-softmmu
-   artifacts:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 233d2a5e71..7aa8516d69 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -312,6 +312,7 @@ F: tests/tcg/or1k/
+ PowerPC TCG CPUs
+ M: Nicholas Piggin <npiggin@gmail.com>
+ R: Chinmay Rath <rathc@linux.ibm.com>
++R: Glenn Miles <milesg@linux.ibm.com>
+ L: qemu-ppc@nongnu.org
+ S: Odd Fixes
+ F: target/ppc/
 -- 
-2.53.0
+2.43.7
 
 
