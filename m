@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A53DF55437
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 01:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DB1F55425
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 01:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv3L6-00088m-Hx; Tue, 24 Feb 2026 20:05:22 -0500
+	id 1vv3qy-0003vF-RV; Tue, 24 Feb 2026 20:38:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vv3Kw-00087b-Ii
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 20:05:12 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vv3Kt-0006jG-2F
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 20:05:10 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 96388596A29;
- Wed, 25 Feb 2026 02:05:03 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id V2KexAjBrJVZ; Wed, 25 Feb 2026 02:05:00 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D909F5969F6; Wed, 25 Feb 2026 02:05:00 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D372C5969F4;
- Wed, 25 Feb 2026 02:05:00 +0100 (CET)
-Date: Wed, 25 Feb 2026 02:05:00 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-cc: Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [RFC PATCH] hw/core: Avoid attaching qdevs to /machine/unattached
- if they have a bus
-In-Reply-To: <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
-Message-ID: <3a72c0f3-ba85-1e98-3964-5f43efb80375@eik.bme.hu>
-References: <20260217164049.543975-1-thuth@redhat.com>
- <874ind5da6.fsf@pond.sub.org> <aZ1zsoyKcD1ChK--@redhat.com>
- <CAFEAcA-30xkboF_mt2HD+9TG+j9W7k2FCuSHGSVk9H=gbXnx2A@mail.gmail.com>
- <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vv3qr-0003uv-Po; Tue, 24 Feb 2026 20:38:09 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vv3qo-0003gS-51; Tue, 24 Feb 2026 20:38:09 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBnb2NwUp5p6iBxBw--.1636S2;
+ Wed, 25 Feb 2026 09:37:52 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwB30O1rUp5pBuwcAA--.50570S2;
+ Wed, 25 Feb 2026 09:37:47 +0800 (CST)
+Message-ID: <42f92f30-315b-4862-8876-cd8c41339fc5@phytium.com.cn>
+Date: Wed, 25 Feb 2026 09:37:46 +0800
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- BOUNDARY="3866299591-1498801505-1771979778=:99179"
-Content-ID: <9e42de32-f1b8-48c5-2bde-b345c70a8b59@eik.bme.hu>
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 1/2] tests/qtest: Support for memory access with
+ secure/space attr
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260222082529.491384-1-tangtao1634@phytium.com.cn>
+ <20260222082529.491384-2-tangtao1634@phytium.com.cn>
+ <CAFEAcA-L2oQ2p3nQVDcqpZSjhtU123Sep+ou8xOH-0jFug9LNA@mail.gmail.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <CAFEAcA-L2oQ2p3nQVDcqpZSjhtU123Sep+ou8xOH-0jFug9LNA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwB30O1rUp5pBuwcAA--.50570S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAQBWmcw6oEYwACst
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxWrWrWw45Xr4DZw1UGryxAFb_yoWrCF1kpr
+ ZrA3ZIgF4DGF18t3Z7Xws0gFyxK393KF42qrZ5JryjyF9xCr1xCryF9r15Cry2gws7W3Wq
+ 9r4j9r43JFn8J37anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,170 +76,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Peter,
 
---3866299591-1498801505-1771979778=:99179
-Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <c0855167-3621-d773-0638-e9aba28c5c40@eik.bme.hu>
-
-On Tue, 24 Feb 2026, Mark Cave-Ayland wrote:
-> On 24/02/2026 11:10, Peter Maydell wrote:
->> On Tue, 24 Feb 2026 at 09:48, Daniel P. Berrang� <berrange@redhat.com> 
->> wrote:
->>> IMHO, it is slightly more subtle - people believe they are already
->>> adding children.
->>> 
->>> Consider this code.
->>>
->>>      port92 = isa_create_simple(isa_bus, TYPE_PORT92);
->>> 
->>> my reading of that is that I'm creating a "port92" device that is a
->>> child of "isa_bus". Why would I need to tell QEMU that it is a child
->>> for a second time ?
->>> 
->>> If I trace calls through isa_create_simple I get to a call to:
->>>
->>>     qdev_realize_and_unref(dev, parent, errp);
->>> 
->>> and once I again I'm left wondering why I would need to tell
->>> QEMU 'dev' is a child of 'parent' a second time.
->>> 
->>> Of course I know the answer. We need to give a name for the
->>> child and it isn't trivial to "do the right thing" to invent
->>> an automatic name.
->>> 
->>> Still, overall I'm inclined to largely blame our API designs for
->>> not guiding people into doing the right thing.
->>> 
->>> 
->>> Picking another random unattached set of objects "smbus-eeprom"
->>> I again find they've being created with qdev_realize_and_unref.
->>> 
->>> Pick another unattached device 'i8259_init_chip', and again
->>> we end up calling into qdev_realize_and_unref()
->>> 
->>> 
->>> It feels like qdev_realize_and_unref() is a common point of
->>> blame in unattached devices. IMHO it ought to be taking a
->>> "const char *name" parameter.
->> 
->> I think that is because this is the function that is used
->> in older code that predates the "everything should be in
->> the QOM tree" model. Newer code doesn't use it, I think;
->> and it's not surprising that old pre-QOM code doesn't do
->> anything to put objects into the QOM tree.
->> 
->> The two patterns are:
+On 2026/2/24 23:54, Peter Maydell wrote:
+> On Sun, 22 Feb 2026 at 08:26, Tao Tang <tangtao1634@phytium.com.cn> wrote:
+>> Introduce `*_secure` and `*_space` commands to the qtest protocol and
+>> libqtest API. This allows testing devices that behave differently based
+>> on security state (e.g., ARM TrustZone/CCA or x86 SMM).
 >>
->>   dev = qdev_new(...);
->>   ...
->>   qdev_realize_and_unref(dev, bus, errp);
->> 
->> and
+>> - `*_secure` commands specify the SECURE parameter (0 or 1) and are
+>>    compatible with x86 and ARM.
+>> - `*_space` commands specify the ARM security space (0-3) and are
+>>    ARM-specific.
 >>
->>   object_initialize_child(...);
->>   ...
->>   qdev_realize(dev, bus, errp);
->> 
->> This also is somewhat tangled up with the question of whether you want:
->>
->>   * call a function which allocates memory and initializes it
->>     with an object of this type
->>   * I have the memory here, init the object in-place
-
-Maybe it would not be tangled if there was a qdev_new_child or making the 
-child relationship would not be done in object_initialize_child but with 
-qdev_realize (but that may be too late). Or maybe we just need a set_child 
-or add_child function that one should call after qdev_new or 
-object_initialize and not entangle child init with object init as those 
-are different operations. I think we don't have to decide if we want to 
-allocate objects or init objects at preallocated memory as both could be 
-useful in different cases but these should behave symmetrically so if 
-there's something is only possible with object_initialize_child then it 
-should be possible with allocated objects too.
-
->> If we could come to a definite conclusion on what we want then
->> we would probably be in a better position to try to enforce it.
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 >
-> Exactly this! I think what tends to happen is that we get stuck in situations 
-> where someone suggests an improvement, but then we get hung up trying to work 
-> out the corner-cases where it doesn't work and then things don't progress.
 >
-> The approach I believe we need to take is to work out what we want the API 
-> and QOM tree to look like first, and then work backwards from there.
+>> + * Memory access with MemTxAttrs:
+>> + * """"""""""""""""""""""""""""""
+>> + *
+>> + * The following commands allow specifying memory transaction attributes,
+>> + * which is useful for testing devices that behave differently based on
+>> + * security state (e.g., ARM TrustZone/CCA or System Management Mode in x86).
+>> + *
+>> + * Two variants are available:
+>> + *
+>> + * 1. ``*_secure`` commands: Available on x86 and ARM.
+>> + * Only specifies the SECURE parameter (0 or 1).
+>> + * When SECURE=1, uses the secure AddressSpace. The asidx argument to
+>> + * cpu_get_address_space() can only be 1 on x86 (SMM mode, X86ASIdx_SMM) and
+>> + * ARM (Secure state, ARMASIdx_S); all other targets always use 0 for the asidx
+>> + * parameter. When issuing ``*_secure`` commands, we assert that the secure
+>> + * AddressSpace must exist.
+>> + *
+>> + * 2. ``*_space`` commands: ARM-specific.
+>> + * Only specifies the SPACE parameter (0-3).
+>> + * SECURE is auto-derived: secure=1 for Secure(0)/Root(2), secure=0 for
+>> + * NonSecure(1)/Realm(3), following ARM's arm_space_is_secure() semantics.
+>> + *
+>> + * Secure variants with .secure attribute (x86/ARM):
+>> + * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>> + *
+>> + * .. code-block:: none
+>> + *
+>> + *  > writeb_secure ADDR VALUE SECURE
+>> + *  < OK
+>> + *  > readb_secure ADDR SECURE
+>> + *  < OK VALUE
+>> + *  > read_secure ADDR SIZE SECURE
+>> + *  < OK DATA
+>> + *  > write_secure ADDR SIZE DATA SECURE
+>> + *  < OK
+>> + *  > memset_secure ADDR SIZE VALUE SECURE
+>> + *  < OK
+> Rather than creating two new separate families of commands
+> for this, we could instead have an extra optional parameter
+> to the existing read/write/etc commands, so for example:
 >
-> I tend to be in agreement with Akihiko's argument that we want to deprecate 
-> in-place initialisation with object_initialize_child() and simply use 
-> refcounting everywhere because then we don't hit any lifcycle issues if 
-> something retains a reference to the internal object (memory regions!).
+>    readb ADDR              # read, with MEMTXATTRS_UNSPECIFIED
+>    readb ADDR secure       # ditto, but set the attrs for secure
+>    readb ADDR space=realm  # ditto but for a security space
 >
-> The questions I think we need to answer as a starting point:
+> This patch has a lot of duplication of the existing code,
+> and I think that doing it this way round will help reduce that.
+
+
+Thanks for the feedback.
+
+
+I'll refactor this in V2.
+
+
 >
->  1. Which API shall we converge on: qdev or QOM? Can we come up with a
->     code sample(s) showing what we want object/device initialisation to
->     look lie? Longer term can we unify the QOM and qdev trees?
-
-My first question is why do we have separate qom and qdev names and trees? 
-The docs aren't very helpful. Qdev does not have a Glossary entry and only 
-a brief summary at:
-https://www.qemu.org/docs/master/devel/qdev-api.html
-and some confusing info in an old doc here
-https://habkost.net/posts/2016/11/incomplete-list-of-qemu-apis.html
-
-For a long time I did not even know there was info qom-tree command in 
-monitor but I was familiar with and used info qtree. I still don't know 
-what the qom-tree is good for therefore I also don't care when creating 
-machines or devices as I never use it and don't know why I would want to 
-use it. To me it looks like some internal thing of QEMU that I don't have 
-to be concerned with. All the useful info about devices are in info qtree.
-
->  2. Should we convert to use external object allocation with
->     refcounting?
 >
->  3. How do we handle memory regions? With Akihiko's recent refcount
->     fixes then Zoltan's memory region changes could work: I don't agree
->     with the motivation of simplifying devices as I think it's i)
->     subjective and ii) harder to debug if we lose the pointer to the
->     memory region, but I can see how it fixes the RCU-thread doing an
->     unref after the owner device has already been destroyed issue.
-
-These probably belong to the other thread and not directly related to 
-naming and tree hierarchies but while debugging is also subjective (most 
-of the time you can use traces or just add debug printfs) but you still 
-have a pointer in the parent object or you may be able to get a pointer to 
-the MemoryRegion from QEMU monitor so that's not a good reason to 
-duplicate it in the device. The idea in object oriented design is to only 
-put things in the subclass that it adds to the superclass and the 
-superclass already handles memory regions for most common (PCI and sysbus) 
-devices. And since memory regions are also added as children to their 
-owner (or unattached) you should also be able to get a list of them from 
-QOM.
-
-> As several people have already pointed out in this thread, we do have a poor 
-> track record of API conversions but the introduction of memory regions shows 
-> how this can be done successfully.
+>> +        if (attrs.secure) {
+>> +            as = cpu_get_address_space(first_cpu, 1);
+>> +            /* Secure AddressSpace must be available when issuing secure commands */
+>> +            g_assert(as);
+>> +        } else {
+>> +            as = first_cpu->as;
+>> +        }
+> You can't assume that the first address space is the secure one.
+> To get the right address space for a given MemTxAttrs you do
+> what cpu_memory_rw_debug() does:
 >
-> Given that we already have multiple ways of doing the same thing, I tend to 
-> lean against not introducing yet-another-API unless we can come up with a 
-> long-term strategy for its use. In particular this causes problems in review 
-> where e.g. one reviewer may want to use QOM to setup a device whilst another 
-> may want to use qdev which is confusing for everyone, including the code 
-> submitter.
+>          asidx = cpu_asidx_from_attrs(cpu, attrs);
+>          res = address_space_rw(cpu->cpu_ases[asidx].as, ....);
+
+
+I'll fix it in next version.
+
 >
-> If we can at least get an answer to 1) then I'd be willing to have a go at 
-> writing some kind of specification document and put it out for feedback...
+>
+>> +    } else if (strcmp(words[0], "writeb_space") == 0 ||
+>> +               strcmp(words[0], "writew_space") == 0 ||
+>> +               strcmp(words[0], "writel_space") == 0 ||
+>> +               strcmp(words[0], "writeq_space") == 0) {
+>> +        /* *_space commands: ARM-specific. */
+>> +        uint64_t addr, value, space;
+>> +        MemTxAttrs attrs;
+>> +        AddressSpace *as;
+>> +        int ret;
+>> +
+>> +        if (!target_arm() && !target_aarch64()) {
+>> +            qtest_send(chr, "ERR *_space commands are ARM-specific\n");
+>> +            return;
+>> +        attrs.space = space & 3;
+>> +        attrs.secure = (attrs.space == 0 || attrs.space == 2) ? 1 : 0;
+> I think that because include/hw/arm/arm-security.h is a completely
+> standalone header that is safe to include in compiled-once-for-all-targets
+> code, we can include it in this file. Then we can use
+> arm_space_is_secure(), and also the ARMSS_* constants for
+> the space names rather than hardcoded numbers.
 
-Clarifying the different naming and tree hierarchies would definitely 
-help. So far I don't see what qom-tree is useful for and why it's not the 
-same as qtree. I don't know if that's related but we also have type names 
-and the fdt based machine creation may need to add aliases for those to 
-match the names they are referenced in device trees (such as in 
-"compatible" properties). Maybe finding a naming and hierarchy that's 
-close to a dtb would make it less confusing.
 
-Regards,
-BALATON Zoltan
---3866299591-1498801505-1771979778=:99179--
+Well I did hesitate initially about including 
+include/hw/arm/arm-security.h, because I wasn’t fully sure what the 
+rules are in QTest for pulling in target-related headers like this.
+
+But since you’ve confirmed, I’ll fix it in the next version.
+
+
+Thanks again.
+
+Tao
+
 
