@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B0EFD3774
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 17:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62474FD3775
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 17:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvIMN-00047m-It; Wed, 25 Feb 2026 12:07:39 -0500
+	id 1vvINp-0005AD-KG; Wed, 25 Feb 2026 12:09:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvIMM-00047e-55
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:07:38 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vvINn-00054v-GS
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:09:07 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvIMI-00062e-SG
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:07:36 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2aaf43014d0so48471495ad.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 09:07:34 -0800 (PST)
+ id 1vvINl-0006F4-2D
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 12:09:07 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-823c56765fdso3250887b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 09:09:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772039253; x=1772644053; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hym20VWvKiRj+gWkdg2s0az636JgSxWliDDjRhebkVs=;
- b=Wg8G7mYogMa33Pb2t+bd93SVVip//Mvzdf702DSFZGC69BGeYdTbScSJ+ALfnqZxq6
- RCFOUl4/Sdd3nedkWFta5h47RpzLn1x7XPUbGFmRVFWqgjdVhbJahSJQ8UV1hQ4yjEza
- gWciBBtsvDOlHawwsn906ZaI+U4qnYe5ny56zr4HAUQ3t3HQQbI5nc+bWmyKqTyqUJJg
- fhiYs3je7R9HLcwI/Jv0waC8W800HvLSZgPmSIu2MgVjsQn1Wxxna9QV8m15LgbJGJu+
- Ou8CGLHXid46eNCZAgvwFAN6z5qwPfErnEfbHV8JmpcdMO6yCt1J1yYmGh+RIFwd6/Kk
- ERNA==
+ d=linaro.org; s=google; t=1772039343; x=1772644143; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gn6/1Rq2A5CVWzrrWWjt02GvPthXjV5ommaSgzCG4oY=;
+ b=zPaqbc0R6/QFAxm5DsfQ8tWM4n4gprCHhqpcU0A1GUa+zLXIS7+WnTlvKU9MuNMU88
+ ks5ahlYafJ2af7mtBMY3+nMABfHShzQ1yIodIX3wmV5UK4g3XpgMLKM9pgoFgbq4eEX6
+ MiZIRdGMFCTkCwJesyFKH9aG50wUwyn5JzIENW4aIyHApLoZ/TtcqZiyu8T9+jXFRCW5
+ DAuzH/pu0jiwQzSjCX6vqZ2WxM514LJ9q1eAG9avy00hcQQIODTi+z1bJCwi3w94Mshs
+ uYYMUvaLSxCtyoShZAUH4XPrt5271IgMM93Rabht8e81Djwu+FX2HalewVHPAdRvVmdJ
+ oxlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772039253; x=1772644053;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hym20VWvKiRj+gWkdg2s0az636JgSxWliDDjRhebkVs=;
- b=fvPEXoQ1XTvCVeT9R+oeWbLuIDKq86wa0xaQiF7Dnk4cORl7Sq1ET3ZeiKLUvPAcPg
- CSTBFw8OsTY01jtW/P4/7bRHqO0JKLhuGiHXj50HYyc7Q1WD3yfus/uhnetBdYePH7Dc
- PTD16OSU6r7wPNuuKddNExA1VFxDfjvDCQ6lt+EkQmhn21z5sr+rEaDkd0JlErfh9p3m
- MLWei9ywCSqB0J7a1mH+hddc+e/1hVjRLN5aJUk724BqIgBlQDBUVd2nMnxNeh7O7ntn
- XetzUFlbOJgjA409OtPl7p6daSe1O/Q8FgsjMcRa1t4o2oOqegSdwG0eW3tDBZD0GQE1
- AK6A==
+ d=1e100.net; s=20230601; t=1772039343; x=1772644143;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gn6/1Rq2A5CVWzrrWWjt02GvPthXjV5ommaSgzCG4oY=;
+ b=f39bX0bgeLTsesWwPyzg2NRi8UEXFQRSEgRDiJv0hHTXXUsVoZb9IqUytTiN750L8+
+ ydPFCueYPfqDgnvTKPaJohh5cLiL1eCmpS7msJZONbhT2mOoD2XREw9xLN+9lryNk7H8
+ 1lXflqVBfCuo/AfBxgoiQIrOHxOGE0MvqpF6KHqxDhslXMryBAuKj1rElb7ZeHJTFlLU
+ /dMUzckbvBc2NkuBVzZn4Wjiey9nFTkKiHQT+VA+yjmvuBX3j1qGHBP/ha/+NqrtJdgF
+ unxv58NTilR/LP6Bp728gDw5AzCt366uHSL5w9hEHnHqu8wOkBfYckpTnyo5h7EH9WH+
+ Eb6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRCFJEUOafxNTd/WAfyyRkkqXJQOoo4HlRyHQI8ZAkoM+k6KYefHMzQppOXg+CS3+yIRj9YUaBntBQ@nongnu.org
-X-Gm-Message-State: AOJu0YzF4uQf6Wuj8lhVuxjtqtS1NpFoAdlXdGzbgfOEhmku1CwZbEi8
- r9ChrMO//gFWn2MfR19poqvnNsVweELg+9c8fSFUfwufHDgHn4PQfng4foSqhozfBq0=
-X-Gm-Gg: ATEYQzxfguPS+EY84EbYvC/+MgnQTuUW4mXuYqekv9liLSacB7ljD2wLm4AdCVPO9oE
- C1DnIF67kawGSgL+TLg+ly2fN7bax8raN5pFmIdDk4LATIAFJYl1cGsFnEexYPLW5JHqatp8lTY
- nw/5rJZerTF9pvD7YaVx24EUznbTN2ixJGrf/ix88VSpqStBmCj6Sy2CQsmpCT5TPJWYv1JOaNX
- UwjNPrDcxhK4fyXP8zweMDCq6lY0Z+gpGdE1koda7CRJfHWKdxxCBvPudNDuQkTfelSDZ3IrZ89
- W+pkDevtc9IbMrwDliuoJp7hj9KltnJ78D3XtgSomu53fuGWPxNr9ZS7Nbmx9wyGSfmCwmebara
- +CdU76WUKkYnGmrFBgN2JQB8Dorr873p95WhZrUkvavP9QZDPRV0uEP/h+9oCJLcbUJhX+BT6jt
- UoZZCQDzcMdnRbSX2pUFmd5SmO/wII37nMyiFpxj7BggNF1pHXZVS2S1ZzslivxxLTG1BF
-X-Received: by 2002:a17:902:f68a:b0:2a7:5751:5b30 with SMTP id
- d9443c01a7336-2ad743e2a9cmr160990135ad.12.1772039252938; 
- Wed, 25 Feb 2026 09:07:32 -0800 (PST)
+ AJvYcCXwspIaP58xX3maBg5gsd0zaTJMaEkpFgLRGnWAvuxqT9+Sd+3RGDK2rTDi8kmVX+KGi3C4cGIqM9uK@nongnu.org
+X-Gm-Message-State: AOJu0YxrFq54aeCL+PeUdyyPQHhkRoai2Shx8jq9sppt+3/KWAaq97NL
+ You+PnoZO87Q8/+5M/vot6HFUrsCqMBcqcAXN1LoxLo6MQQc2wdMlXck7smSfvaJ+i8=
+X-Gm-Gg: ATEYQzxB5JMW37WmfEMAYKeHgBm6wASnUxA8JqZqh+bZzciNFO8qrilpi/beMi14q6k
+ YRWdAdpNSS5QHGJ7Mkl8VccRdiyHtxEVPTOONI8UleAkUCQSe8tm3avnQQZ3k+jqa3hMD0bD7pu
+ D7iRuNHrsczHVT17J0/EgNxrTHQzqPANFjX8vN0FYgdv0lX7AGmMmf+I4Z//UAQ07T0/dXutwid
+ vFN5IhBx0orFyCmDurgZMiObhUTVunS2ZX1Ew98ph6i/6SYReKY57V/+iFk/RKXVkyj5aMMdOWf
+ n3aZkVG1I3EnZKqmzirTYz2SIcQhxyszfRZWdWezdn+qZPo5Q8FLlHBat+ccvAUTi3HBZnlWJsp
+ 5YtPe1M+Mupo6nJMpgoC3MBaVryihL8fiHaDLn+A57NxHjpnC7aglFcSGBvTqFO/oLQcPWlMW81
+ HQJR1LWGcZhZiUoKu7zJBKTq6aKIZwUCp/AUGVPFqARnbtm0pxPZCvAP4Kwf2iRQrZqOf/
+X-Received: by 2002:a05:6a20:94cf:b0:35f:68d:430e with SMTP id
+ adf61e73a8af0-39545e50a02mr13526350637.9.1772039343441; 
+ Wed, 25 Feb 2026 09:09:03 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c70f552545fsm413252a12.34.2026.02.25.09.07.32
+ d2e1a72fcca58-826dd643d80sm14597359b3a.2.2026.02.25.09.09.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 09:07:32 -0800 (PST)
-Message-ID: <e8a39e82-46b8-4068-ad80-963f532aff18@linaro.org>
-Date: Wed, 25 Feb 2026 09:07:31 -0800
+ Wed, 25 Feb 2026 09:09:02 -0800 (PST)
+Message-ID: <29be8e4d-90e3-4943-a859-66826ca65316@linaro.org>
+Date: Wed, 25 Feb 2026 09:09:02 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 4/7] tests/tcg: add test for qemu_plugin_set_pc API
 Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
  imp@bsdimp.com, berrange@redhat.com
@@ -81,7 +82,7 @@ References: <909b0a4f-9759-4e27-bba8-997ae2f41bd6@epfl.ch>
  <193c4274-c79e-4b76-8502-312dd3ebeb64@linaro.org>
  <317b95ed-f4cc-44b0-afae-64fd45ac8792@epfl.ch>
  <5dcb0646-4558-4533-8e9d-04e73ffa4513@epfl.ch>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ <e8a39e82-46b8-4068-ad80-963f532aff18@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -116,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <5dcb0646-4558-4533-8e9d-04e73ffa4513@epfl.ch>
+In-Reply-To: <e8a39e82-46b8-4068-ad80-963f532aff18@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,112 +144,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/26 3:49 AM, Florian Hofhammer wrote:
-> On 25/02/2026 08:59, Florian Hofhammer wrote:
->> On 24/02/2026 21:35, Pierrick Bouvier wrote:
->>> On 2/24/26 7:52 AM, Florian Hofhammer wrote:
->>>> The test executes a non-existent syscall, which the syscall plugin
->>>> intercepts and redirects to a clean exit.
->>>> Due to architecture-specific quirks, the architecture-specific Makefiles
->>>> require setting specific compiler and linker flags in some cases.
+On 2/25/26 9:07 AM, Pierrick Bouvier wrote:
+> On 2/25/26 3:49 AM, Florian Hofhammer wrote:
+>> On 25/02/2026 08:59, Florian Hofhammer wrote:
+>>> On 24/02/2026 21:35, Pierrick Bouvier wrote:
+>>>> On 2/24/26 7:52 AM, Florian Hofhammer wrote:
+>>>>> The test executes a non-existent syscall, which the syscall plugin
+>>>>> intercepts and redirects to a clean exit.
+>>>>> Due to architecture-specific quirks, the architecture-specific Makefiles
+>>>>> require setting specific compiler and linker flags in some cases.
+>>>>>
+>>>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>>>>> ---
+>>>>>     tests/tcg/arm/Makefile.target                 |  6 +++++
+>>>>>     tests/tcg/hexagon/Makefile.target             |  7 +++++
+>>>>>     tests/tcg/mips/Makefile.target                |  6 ++++-
+>>>>>     tests/tcg/mips64/Makefile.target              | 15 +++++++++++
+>>>>>     tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
+>>>>>     tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
+>>>>>     tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
+>>>>>     .../{ => plugin}/check-plugin-output.sh       |  0
+>>>>>     .../{ => plugin}/test-plugin-mem-access.c     |  0
+>>>>>     .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++++
+>>>>>     tests/tcg/plugins/syscall.c                   |  6 +++++
+>>>>>     tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
+>>>>>     12 files changed, 131 insertions(+), 3 deletions(-)
+>>>>>     create mode 100644 tests/tcg/mips64/Makefile.target
+>>>>>     create mode 100644 tests/tcg/mips64el/Makefile.target
+>>>>>     create mode 100644 tests/tcg/mipsel/Makefile.target
+>>>>>     rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+>>>>>     rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+>>>>>     create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+>>>>>     create mode 100644 tests/tcg/sparc64/Makefile.target
+>>>>> +++ b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+>>>>> @@ -0,0 +1,26 @@
+>>>>> +/*
+>>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>> + *
+>>>>> + * This test attempts to execute an invalid syscall. The syscall test plugin
+>>>>> + * should intercept this.
+>>>>> + */
+>>>>> +#include <stdint.h>
+>>>>> +#include <stdio.h>
+>>>>> +#include <stdlib.h>
+>>>>> +#include <unistd.h>
+>>>>> +
+>>>>> +void exit_success(void) __attribute__((section(".redirect"), noinline,
+>>>>> +                                       noreturn, used));
+>>>>> +
+>>>>> +void exit_success(void) {
+>>>>> +    _exit(EXIT_SUCCESS);
+>>>>> +}
+>>>>> +
+>>>>> +int main(int argc, char *argv[]) {
+>>>>> +    long ret = syscall(0xc0deUL);
+>>>>> +    if (ret != 0L) {
+>>>>> +        perror("");
+>>>>> +    }
+>>>>> +    /* We should never get here */
+>>>>> +    return EXIT_FAILURE;
+>>>>> +}
+>>>>> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+>>>>> index 5658f83087..b68e3cadf4 100644
+>>>>> --- a/tests/tcg/plugins/syscall.c
+>>>>> +++ b/tests/tcg/plugins/syscall.c
+>>>>> @@ -148,6 +148,12 @@ static void vcpu_syscall(qemu_plugin_id_t id, unsigned int vcpu_index,
+>>>>>                 fprintf(stderr, "Error reading memory from vaddr %"PRIu64"\n", a2);
+>>>>>             }
+>>>>>         }
+>>>>> +
+>>>>> +    if (num == 0xc0deUL) {
+>>>>> +        /* Special syscall to test the control flow redirection functionality. */
+>>>>> +        qemu_plugin_outs("Marker syscall detected, jump to clean exit\n");
+>>>>> +        qemu_plugin_set_pc(0x20000);
 >>>>
->>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->>>> ---
->>>>    tests/tcg/arm/Makefile.target                 |  6 +++++
->>>>    tests/tcg/hexagon/Makefile.target             |  7 +++++
->>>>    tests/tcg/mips/Makefile.target                |  6 ++++-
->>>>    tests/tcg/mips64/Makefile.target              | 15 +++++++++++
->>>>    tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
->>>>    tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
->>>>    tests/tcg/multiarch/Makefile.target           | 22 ++++++++++++++--
->>>>    .../{ => plugin}/check-plugin-output.sh       |  0
->>>>    .../{ => plugin}/test-plugin-mem-access.c     |  0
->>>>    .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++++
->>>>    tests/tcg/plugins/syscall.c                   |  6 +++++
->>>>    tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
->>>>    12 files changed, 131 insertions(+), 3 deletions(-)
->>>>    create mode 100644 tests/tcg/mips64/Makefile.target
->>>>    create mode 100644 tests/tcg/mips64el/Makefile.target
->>>>    create mode 100644 tests/tcg/mipsel/Makefile.target
->>>>    rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
->>>>    rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
->>>>    create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
->>>>    create mode 100644 tests/tcg/sparc64/Makefile.target
->>>> +++ b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
->>>> @@ -0,0 +1,26 @@
->>>> +/*
->>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>> + *
->>>> + * This test attempts to execute an invalid syscall. The syscall test plugin
->>>> + * should intercept this.
->>>> + */
->>>> +#include <stdint.h>
->>>> +#include <stdio.h>
->>>> +#include <stdlib.h>
->>>> +#include <unistd.h>
->>>> +
->>>> +void exit_success(void) __attribute__((section(".redirect"), noinline,
->>>> +                                       noreturn, used));
->>>> +
->>>> +void exit_success(void) {
->>>> +    _exit(EXIT_SUCCESS);
->>>> +}
->>>> +
->>>> +int main(int argc, char *argv[]) {
->>>> +    long ret = syscall(0xc0deUL);
->>>> +    if (ret != 0L) {
->>>> +        perror("");
->>>> +    }
->>>> +    /* We should never get here */
->>>> +    return EXIT_FAILURE;
->>>> +}
->>>> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
->>>> index 5658f83087..b68e3cadf4 100644
->>>> --- a/tests/tcg/plugins/syscall.c
->>>> +++ b/tests/tcg/plugins/syscall.c
->>>> @@ -148,6 +148,12 @@ static void vcpu_syscall(qemu_plugin_id_t id, unsigned int vcpu_index,
->>>>                fprintf(stderr, "Error reading memory from vaddr %"PRIu64"\n", a2);
->>>>            }
->>>>        }
->>>> +
->>>> +    if (num == 0xc0deUL) {
->>>> +        /* Special syscall to test the control flow redirection functionality. */
->>>> +        qemu_plugin_outs("Marker syscall detected, jump to clean exit\n");
->>>> +        qemu_plugin_set_pc(0x20000);
+>>>> An even better alternative is to use a value label, which is a gcc extension, and you would not even need another function. Just pass it as first parameter of syscall, and jump to this address directly from syscall filter.
+>>>>
+>>>> int main(int argc, char *argv[]) {
+>>>>       long ret = syscall(0xc0deUL, &&set_pc_dest);
+>>>>       /* We should never get here */
+>>>>       return EXIT_FAILURE;
+>>>> set_pc_dest:
+>>>>       return EXIT_SUCCESS;
+>>>> }
+>>>>
+>>>> More details:
+>>>> https://www.amulettechnologies.com/boosting-bytecode-efficiency-the-power-of-gccs-label-as-value/
+>>>> https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html
+>>>>
+>>>> Regards,
+>>>> Pierrick
 >>>
->>> An even better alternative is to use a value label, which is a gcc extension, and you would not even need another function. Just pass it as first parameter of syscall, and jump to this address directly from syscall filter.
+>>> Thanks for the idea, I didn't think about this. I'll check it out!
 >>>
->>> int main(int argc, char *argv[]) {
->>>      long ret = syscall(0xc0deUL, &&set_pc_dest);
->>>      /* We should never get here */
->>>      return EXIT_FAILURE;
->>> set_pc_dest:
->>>      return EXIT_SUCCESS;
->>> }
->>>
->>> More details:
->>> https://www.amulettechnologies.com/boosting-bytecode-efficiency-the-power-of-gccs-label-as-value/
->>> https://gcc.gnu.org/onlinedocs/gcc/Labels-as-Values.html
->>>
->>> Regards,
->>> Pierrick
+>>> Best regards,
+>>> Florian
 >>
->> Thanks for the idea, I didn't think about this. I'll check it out!
+>> Fun finding: GCC optimizes the label and the second return away and
+>> there's no way to turn this behavior off, so the test doesn't work with
+>> value labels. I'm nevertheless changing to just passing the function
+>> address as a paremeter, which is cleaner than using a hardcoded address.
 >>
+> 
+> Oh interesting. Is the test compiled in O0?
+
+Just saw your answer below :)
+
+> Yes, you can pass the function address as well. I would be happy with a
+> hardcoded address, but the major pain is all those flags per arch.
+> 
 >> Best regards,
 >> Florian
 > 
-> Fun finding: GCC optimizes the label and the second return away and
-> there's no way to turn this behavior off, so the test doesn't work with
-> value labels. I'm nevertheless changing to just passing the function
-> address as a paremeter, which is cleaner than using a hardcoded address.
->
-
-Oh interesting. Is the test compiled in O0?
-Yes, you can pass the function address as well. I would be happy with a 
-hardcoded address, but the major pain is all those flags per arch.
-
-> Best regards,
-> Florian
 
 
