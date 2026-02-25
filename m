@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449E3F5544C
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7509F5544C
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 03:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv5P2-0000nn-2a; Tue, 24 Feb 2026 22:17:32 -0500
+	id 1vv5Ol-0000l3-45; Tue, 24 Feb 2026 22:17:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv5P1-0000nS-2P
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:17:31 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv5Oj-0000kc-QZ
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:17:13 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv5Oy-00037z-MW
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:17:30 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48370174e18so33616565e9.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:17:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv5Oh-00035g-5p
+ for qemu-devel@nongnu.org; Tue, 24 Feb 2026 22:17:13 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso3802975e9.0
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 19:17:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771989447; x=1772594247; darn=nongnu.org;
+ d=linaro.org; s=google; t=1771989429; x=1772594229; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZyFoJ14S6oW3srTeQcVGkbUM0aXn2EkRu3cSSx5I2ts=;
- b=gc2zw4UNIC3fQcR+5wvNF4i/z4PJiPESvwLWuaNU7GzaYK7Lp2bfkkqIvQePgQdEuT
- 2qVByURNujs3Ugvqj9PB5HMNb/AXeGS+muvO7dJM4Km+vMU7pFypfI5px4B+KGg0aTgg
- 1gHmLARRQ7iSgeZxOVtlbbFbGszKii7q32taJcWG94fltos9NFOo6+ezPSLVvfOFIGw+
- j9jAos93Je0VWSXgsBLQ5tQUyypQe9/RYVfmQj3gYukFKoQHkf63iPIUWOr7vAfxY3oZ
- GJ+s0DhP25zUBO6qC/gUb1TB6sY0PW8rI4GBhGkiF2EwqefD5Ji65i+SUsTzc0Sod0BN
- e+9A==
+ bh=pBFSSzCow/tWOBWocPKfqkuVJO6XeuexcV7U+ifCqGw=;
+ b=exVRjbYYPux1xLWe12hQmtV12cc53Zp1m9rXzc7xCSh1Zr+yLKj4dKurTiQlY0niNC
+ YanAPvpwWft75+QonpBwVHyJKq3bxWDM8T2AKVTfA5HJzIoDkQ5qmQDa2vbuc6yQLlO+
+ mPUCmTfDvKwt2jF4w2egLgpH707lAUxUkqybich7pOL0DrH5XhW48bov/ndxV3mtHC3R
+ mnFqLhK0S2+/lXJvylvR4ilIl3KOLUJOlTl84pzCxwDk+UZsLpxthFe7g/mEx6xD6A/9
+ vf8PiSPbjxRVP5kmXXGtxb+Tqz+JNjfKV86nwO1DYJyF2wSE6UrYqQM251Sfbxzhn4QB
+ SN+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771989447; x=1772594247;
+ d=1e100.net; s=20230601; t=1771989429; x=1772594229;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZyFoJ14S6oW3srTeQcVGkbUM0aXn2EkRu3cSSx5I2ts=;
- b=uaEpRJi0aRQBZDQZOkrt4AkeLF9n8qQJDr8wzMDyHjpgnUNNYnFgkDtAksRG4ZjQcc
- bJd6No4LV/6t1FMqggajfXhZmDLwr8DlVtsoIdhu/eIA7PwVYn9CtXK7GxunjfpthgbK
- 6jyJ9tcVWhMleiIUEWzEkXzTvo272uKFBUCRbbAsjSo7ZBeK6kKSWEpDC4BH+LLp8ONo
- M+ygcWGQ0jwneIpRcISFTOr141bavPyqO4yh0YBMT+WWF4+01pmXqb2khICAVk9Y7ohb
- DwX1Ajp0k6K9idvvs9BJ7YM61MaFSHqJum1Mew00s41vdfRjma4ecgvSHOISBwBJRIoV
- ga9g==
-X-Gm-Message-State: AOJu0YzUBiWqFSyX7jTfdtn1vDMvQBwCq52pQhobAuKMsHYNt4JZNUYS
- PxtHG6iJTfXuUZoi1gzMn4iJzJB0h8MDqz2v8e/0xWeSojtvQ/JjGGJw43kBwu+AoL2bPeiDNPR
- jcPPpFJY=
-X-Gm-Gg: ATEYQzz9+bYE36pygoe5XRo2A9zQ1tRco4OuA0tpmHc49Mdhh+LTwrP4qmA3GTEXxIz
- MVymSlXZ8UehyDXwlVEErcjTGCc0dLz3HesFv08CrifFYvkch0z3NEsfg8BfSHsXR7gAJDnwL0X
- tOkM89O6CICcIVjZhM2NiocsHmeueN06RZK8uCNRvD1SlZkXdNymTu4kwG1tb7lSFL9ug79gdiA
- 7+LgYWG7S5MwXwq9ZwQlKCA7OFqPDf8WpXnweLwJXz68DyEihZl0/dHepVujeWOR+EbnXjoQS+R
- eP17scUs/D7+57ddsNR36TkPNPYjWOBJ7TOBnXnYQTPUeBeJ+qy8rVAZcoTCUdfpOiGcKfrcB8m
- JrpYPS7mK0lLv58zwDusIDZGm53X7YTVkkEXhsKPacFF5cBkwxrsOeuREYF0xn1AEb6Sp26XYWg
- 7JCaEQk1xwtQMXyLg2axTQrvdAwWCoW1Z81wIMZqtaD8gpA7evz3y/dmhjKmKu6ZO6iBTn1oFY
-X-Received: by 2002:a05:600c:1f93:b0:45c:4470:271c with SMTP id
- 5b1f17b1804b1-483bef53c8emr13729355e9.18.1771989446939; 
- Tue, 24 Feb 2026 19:17:26 -0800 (PST)
+ bh=pBFSSzCow/tWOBWocPKfqkuVJO6XeuexcV7U+ifCqGw=;
+ b=v9XMpsq9ynvw7HJiBfUXaWETPWHGNeyvY3j3Wp+m7NEKr19M6h+++hwXq0aepLEGDS
+ 3LL3/CYFN0RRfpliFNdCLHDYeHEuKnSJdaV0Nf2scAJC/Qi/cotkzWOlLgxindafvROs
+ XvPnRNun/gdZpYjhII/8FUP+XCIvj/JDyCuUOiNUfTg3eB+ZLl24PoRLQ+nXbK/9uwRK
+ qqxoh+66LIe1OZ3czEM//wjKegRttd78MrAZOKgz6kPxk4rVpZplz0a3RSaUs1/+il9p
+ GLMYQxswVlVx8HR3cKaPEXzld74OJQAKkH4DCDQQBH6JGAvx80y3k8lEabM8jsBMxuCS
+ fgfg==
+X-Gm-Message-State: AOJu0Yxbf2AtBxpC2rCu7PCfhniK27pOa3SlcgsWy8Hke6VjjOLgC6I/
+ mJ/DxHMocsi/rgmro9726z/AEAj6fBhthfxg6yamc7UBCkiJsIrwR+55MwuSURihMJaJr/INQA4
+ BGF5QwaA=
+X-Gm-Gg: ATEYQzznI/Nmur4R21YCN+oFwOTrSzK7dNSLIlq8cCUTQy9XpiBLShpAC9AzV/ASWTi
+ FrssZKVXlNyPUETFq6sECnHq4LVPvAN8/9lIGmrehkOtVFZ9Lzj5z0ZmE6/169rWI87qbP9GBMk
+ /MO54dQQmx7vu+yU3ekJ8DNqqYEQccE8GVR1lIfJfLRnhL79AMoTHkqW92sMnAESgZsgNfOQBLa
+ jIAkpjToa05VCo9UZhlejitbZlmt/nnRIPDPH0uqZYGRBhCKPz83dZtArskN4m0jXcK31LYPMni
+ VvJuDAqBuB+QZmie8eZ/Pfx36PrgyElD4WC2yQn/g7u5O9Cx0X8y/KYP/GvB+Z7Ajpw5r/NGx1F
+ vuJZKGbpuQ7CXlLR9F35NDp5omMrBn+XaLUM8r7+/WSMvEEUuZScFCIR2u1cTkJwcH3/3Vghs0M
+ nXimuGCgYWuB08n5GlF4OvhNsoNDawm5q07KdFS/8eA9eL4FUbqeouST7TUrDIMqyzLggdzsCL
+X-Received: by 2002:a05:600c:c045:b0:47a:8383:f2b2 with SMTP id
+ 5b1f17b1804b1-483bd76fa19mr21308535e9.17.1771989429299; 
+ Tue, 24 Feb 2026 19:17:09 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb87067sm935425e9.12.2026.02.24.19.17.24
+ 5b1f17b1804b1-483bd750701sm41216875e9.11.2026.02.24.19.17.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 24 Feb 2026 19:17:26 -0800 (PST)
+ Tue, 24 Feb 2026 19:17:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  qemu-s390x@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>
-Subject: [PATCH 3/3] hw/s390x/s390-pci-vfio: Avoid including CONFIG_DEVICES in
- hw/ header
-Date: Wed, 25 Feb 2026 04:16:58 +0100
-Message-ID: <20260225031658.32095-4-philmd@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>
+Subject: [PATCH 1/3] hw/arm/smmuv3: Avoid including CONFIG_DEVICES in hw/
+ header
+Date: Wed, 25 Feb 2026 04:16:56 +0100
+Message-ID: <20260225031658.32095-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225031658.32095-1-philmd@linaro.org>
 References: <20260225031658.32095-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,99 +111,137 @@ source files including it as common objects.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/s390x/s390-pci-vfio.h | 20 --------------------
- hw/s390x/s390-pci-vfio-stubs.c   | 32 ++++++++++++++++++++++++++++++++
- hw/s390x/meson.build             |  1 +
- 3 files changed, 33 insertions(+), 20 deletions(-)
- create mode 100644 hw/s390x/s390-pci-vfio-stubs.c
+ hw/arm/smmuv3-accel.h       | 35 -----------------------------
+ hw/arm/smmuv3-accel-stubs.c | 44 +++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build          |  5 +++--
+ 3 files changed, 47 insertions(+), 37 deletions(-)
+ create mode 100644 hw/arm/smmuv3-accel-stubs.c
 
-diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
-index ae1b126ff70..f7d6149daf6 100644
---- a/include/hw/s390x/s390-pci-vfio.h
-+++ b/include/hw/s390x/s390-pci-vfio.h
-@@ -13,32 +13,12 @@
- #define HW_S390_PCI_VFIO_H
- 
- #include "hw/s390x/s390-pci-bus.h"
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+index a8a64802eca..7e48d1555d3 100644
+--- a/hw/arm/smmuv3-accel.h
++++ b/hw/arm/smmuv3-accel.h
+@@ -14,7 +14,6 @@
+ #ifdef CONFIG_LINUX
+ #include <linux/iommufd.h>
+ #endif
 -#include CONFIG_DEVICES
  
--#ifdef CONFIG_VFIO
- bool s390_pci_update_dma_avail(int fd, unsigned int *avail);
- S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
-                                           S390PCIBusDevice *pbdev);
- void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
- bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
- void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
+ /*
+  * Represents an accelerated SMMU instance backed by an iommufd vIOMMU object.
+@@ -40,7 +39,6 @@ typedef struct SMMUv3AccelDevice {
+     SMMUv3AccelState *s_accel;
+ } SMMUv3AccelDevice;
+ 
+-#ifdef CONFIG_ARM_SMMUV3_ACCEL
+ void smmuv3_accel_init(SMMUv3State *s);
+ bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+                               Error **errp);
+@@ -51,38 +49,5 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+                                 Error **errp);
+ void smmuv3_accel_idr_override(SMMUv3State *s);
+ void smmuv3_accel_reset(SMMUv3State *s);
 -#else
--static inline bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
+-static inline void smmuv3_accel_init(SMMUv3State *s)
 -{
--    return false;
 -}
--static inline S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
--                                                        S390PCIBusDevice *pbdev)
+-static inline bool
+-smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
+-                         Error **errp)
 -{
--    return NULL;
+-    return true;
 -}
--static inline void s390_pci_end_dma_count(S390pciState *s,
--                                          S390PCIDMACount *cnt) { }
--static inline bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
+-static inline bool
+-smmuv3_accel_install_ste_range(SMMUv3State *s, SMMUSIDRange *range,
+-                               Error **errp)
 -{
--    return false;
+-    return true;
 -}
--static inline void s390_pci_get_clp_info(S390PCIBusDevice *pbdev) { }
+-static inline bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+-{
+-    return true;
+-}
+-static inline bool
+-smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+-                           Error **errp)
+-{
+-    return true;
+-}
+-static inline void smmuv3_accel_idr_override(SMMUv3State *s)
+-{
+-}
+-static inline void smmuv3_accel_reset(SMMUv3State *s)
+-{
+-}
 -#endif
  
- #endif
-diff --git a/hw/s390x/s390-pci-vfio-stubs.c b/hw/s390x/s390-pci-vfio-stubs.c
+ #endif /* HW_ARM_SMMUV3_ACCEL_H */
+diff --git a/hw/arm/smmuv3-accel-stubs.c b/hw/arm/smmuv3-accel-stubs.c
 new file mode 100644
-index 00000000000..d9882b7aad0
+index 00000000000..b64f1e4d93e
 --- /dev/null
-+++ b/hw/s390x/s390-pci-vfio-stubs.c
-@@ -0,0 +1,32 @@
++++ b/hw/arm/smmuv3-accel-stubs.c
+@@ -0,0 +1,44 @@
 +/*
-+ * s390 vfio-pci stubs
++ * Stubs for accelerated SMMU instance backed by an iommufd vIOMMU object.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/s390x/s390-pci-vfio.h"
++#include "hw/arm/smmuv3.h"
++#include "hw/arm/smmuv3-accel.h"
 +
-+bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
-+{
-+    return false;
-+}
-+
-+S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
-+                                          S390PCIBusDevice *pbdev)
-+{
-+    return NULL;
-+}
-+
-+void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt)
++void smmuv3_accel_init(SMMUv3State *s)
 +{
 +}
 +
-+bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
++bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
++                              Error **errp)
 +{
-+    return false;
++    return true;
 +}
 +
-+void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
++bool smmuv3_accel_install_ste_range(SMMUv3State *s, SMMUSIDRange *range,
++                                    Error **errp)
++{
++    return true;
++}
++
++bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
++{
++    return true;
++}
++
++bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
++                                Error **errp)
++{
++    return true;
++}
++
++void smmuv3_accel_idr_override(SMMUv3State *s)
 +{
 +}
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 1bc85837996..57cc2a6be3d 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -34,6 +34,7 @@ s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
- ))
- s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
- s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
-+stub_ss.add(files('s390-pci-vfio-stubs.c'))
- s390x_ss.add(when: 'CONFIG_VFIO_AP', if_false: files('ap-stub.c'))
- 
- virtio_ss = ss.source_set()
++
++void smmuv3_accel_reset(SMMUv3State *s)
++{
++}
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 47cdc51d135..8f834c32b1f 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -85,8 +85,9 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+-arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+-arm_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
++arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
++arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
++stub_ss.add(files('smmuv3-accel-stubs.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+ arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
 -- 
 2.52.0
 
