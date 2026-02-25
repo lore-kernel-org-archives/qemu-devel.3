@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE7CFD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAD4FD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO85-00016U-C0; Wed, 25 Feb 2026 18:17:17 -0500
+	id 1vvO9J-0004Md-5X; Wed, 25 Feb 2026 18:18:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO72-0007Nd-FQ
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:16:13 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8Z-0003Sh-1X
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:50 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO70-0002pu-P2
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:16:12 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-436309f1ad7so165331f8f.3
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:16:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8W-00036y-6y
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:45 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48371bb515eso3588505e9.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:17:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061368; x=1772666168; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061462; x=1772666262; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OdmsbI9Au2TUjGLocKfplEKLAz2COL3GTGMnmx6k6OU=;
- b=WEDzDTx1yyuuXQfDwVi2lNr5LjB/Oq2K5f11MCsaOpbsZY2hZ1vgBlqoYv1ohv+8qC
- nJlV4E2yZZPPYsbIZMxkG4hM+zkIIrD886NyWr5SUrBZP9AIbk6dysY/0NGejfkryy6V
- gD8lMJcutfLBLtQfeUHiur84bBJtDQTVVyFKWNV4U0EgOzmyW1+gM2+DEPImHnr9kzon
- rfuBcx0mG9jS1LuJQBV7vfjhgv2td1waOiOWZDNyxyUFx9k/4WtkY1dDXQM62Mt4UggK
- aBlGfE7CFVC3DBQX7plkCzh2Cl1haBvSoCb3pv5dVOZ4gahOMOKYvogIzTFHIGeIow3E
- laXA==
+ :reply-to; bh=OP5Mv3Wzkuhv98as4xw1IeO2sLMsxkiyChA8fkXY4KE=;
+ b=BpuKwIJEOgT2ohrBdWUEcEv4qxHsKEWowaw2gYn0utzoJvFmE+LcAw2VV7+m3f5gIx
+ HjC4ZbEuwfdObFBNO+1mHZ7Y92+iRo3AQomLuXyYJNNOuZIzJFu4HUp9Ty/+D5MG+8Bb
+ WQqh9FxTOFYmzLZwDHSGoazWroKrK/MGgIJZTu46jTomNUlsE4O0jY9u85Zwlh8ut297
+ JiC3W/nit34g1TPliaxyTqUIzFWm8OmwhZsUiVpYT5kVCAwk3VgFc+ttPDLym99uWGZl
+ TkGhIFOxf4ENyhczEY/5abg6EKSQNYHNKNgXlE8K/GifptWs40ZMuMCIZqXW76107HOq
+ YJ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061368; x=1772666168;
+ d=1e100.net; s=20230601; t=1772061462; x=1772666262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=OdmsbI9Au2TUjGLocKfplEKLAz2COL3GTGMnmx6k6OU=;
- b=FtxJg7+1CJ+aGpFn4IaIwHAw8S+nrG8fr8uRTwfwAXaY9igFjxlMiBZp7vTjjWAKwf
- g68EPI3etUc0v+lXYPja37Yavx1xHSVJQh1rj8zK0si8ZOEj3ZrGP8QyLR0iIA4m0+/J
- JHrVv2qXLXt1bQTVsk9M7lvGtDxaY/AFnnAoYhKWGTXQ9ghqoRTWG1Kl+yINr4XMY8ka
- UBVUWPAArKeaEh65cjLEcZOkrmn/BiXVBCbCQeJpJDOLwVvEOsGbSadtoN5YKsX70xgs
- jyNEXrPYy4ct0UK/w9dMsjpOHPy/y0RzU0Cpw9lMAyFQK5E2TSyj1/8c/JSPyaVVFcuA
- PsuA==
-X-Gm-Message-State: AOJu0YyjdRPg1fy+9h8qCZ+wYVCEwvdabY8b9nDSxIYrRYxml7gOB9q+
- m06DCjgF04ItzFdKCkMa5rnDOJmP3awES1NKCHyh3Mh5pWxK3znumUNrMTi4zB37dqNMWJx+HOk
- fiQB28Uo=
-X-Gm-Gg: ATEYQzzn6SFpMnVbXB7KLFj0rqA4xVqiEsF0n8lsumibgwCxTxmj6/KjOvtZQDRT+oC
- MXhkNGoj1+Q46bYWSEVXReLK4fYDuFEnoKvKu8RvFN2Un7LBVrV9cf/uLTACnvngsoyd7usS+Ql
- YrR2zEr/f3H7Gv8Z0zzGUIzEgshMHsiXobvRp+2SR+Cd+Rm0fc2u4YX8EPzCkhuP6PDlj5XrbWx
- 9HEm3FZSz4k/p+sAFoqq8qCDb8ZFNp+7DD1eWoIvB4ve8+Vez9C9EmCoiZ4IUWxeGaEbvsB5fOy
- mX/NQV8FLJOXV397EGicJOepJ+keXmJ8dOxzITg4oXMOWIwdH//81licE7o5MtdBpAOTur3QSr+
- XMs3kizbt7lWCz44G65/zi2gDentlf3vmyq09F8UbR/g5aaoENawDaETUgqkYwyb7l3IrjFdEcA
- V1myBH8ZlVizePVgunUwU8twrXwMWOC04sKEG18n+znD/s3XhICl+UOZslBsZBro2phd9ZnGh9
-X-Received: by 2002:a05:6000:25c1:b0:437:73a2:2d36 with SMTP id
- ffacd0b85a97d-439942fba11mr3876734f8f.43.1772061368146; 
- Wed, 25 Feb 2026 15:16:08 -0800 (PST)
+ bh=OP5Mv3Wzkuhv98as4xw1IeO2sLMsxkiyChA8fkXY4KE=;
+ b=Xs9OTfMV2w9QmdKmaIGU0Ia+YyjwXVLlKSN9G6sbgW6K/YyCm7fJ4XKCqZK38p8o/N
+ lo/vUisX5ANALc4YjbpUFRWYytHYu7LM4lHNuoIM8gTEh2cGbzWdWWUGBarRG4YY1VcB
+ pV1WGlBKl6txuy7P0pvFyRPbmjYBq4MTsvdC4wzhLLWivnwMyiqOFez9zlnnkk6WWGPq
+ vs/BpZq+0xTTmJjr/QUdE3ppAMIdV4xZ/OGplX4JZ9bRuvdIt+lwFnCmVlq1RqVg/csH
+ K+/MUst/M7Q9yoK6lC0YTPgTk33lKXCDptDZERJROZFlOPUq4hCjlJvaOxl53U6/WYA5
+ zylg==
+X-Gm-Message-State: AOJu0YzIgjBucGJj+cnximSwQ9SyMccsg+ufqB/i7yccUHBU4Iunvp1h
+ 1toaIM998caYKdhbJZZbOfAtIfm3mc+RBO4gZ3MH2qAwamhN2vtEqbF3V09NYHgtq9BGvXe22xB
+ bT6ZpiWg=
+X-Gm-Gg: ATEYQzz7IkIYmjmBQBPstYhtDz9FS+BcX4mRDyxL84/u9nwz8QoYwMejNgb8jyfBYET
+ lsJ98ixDPrqzkgWOpOvWo/CehegoMyYyjADhgxDvI11xKv6TovPeOD5+kaHq9rVla5pm2KO+gHS
+ YL/vziguJUVxZliw4bG/NU6Tgd18BUDI3URatwAQXPAzfJvZwL0wb0sMTlXmK8fxfB2DutQkNqu
+ XXNFpp+7ZHvEUW6ybTpbJrZnsNlSd9IkDYkgmM8g5LbPlTj5fqesnE9bbQn7xtbm2C17cBCHjR3
+ pMUNmEP/lkTEnmyCBpiHE3th7WPJ+zDu+uBkjxMEKrCqwUu+iap3WrMS4ZOQZy2z/c0SIv4ABbN
+ QxdwnbrAWaJ0gBn9m02pkmEDtDy5IYjjdmNWK74EQH41jHkecOYKknlNwsEEqImEa7zTQaXivjw
+ lozz3jPAM5cJgDwdpQdzIcQqZ0fUTH5QVpWKwMBz+ckWfxq/6WXcUJRmDB9WZGUoEZZyJpAr1I
+X-Received: by 2002:a05:600c:820a:b0:477:fcb:2256 with SMTP id
+ 5b1f17b1804b1-483c3dd7940mr1324325e9.17.1772061462369; 
+ Wed, 25 Feb 2026 15:17:42 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43970bf9ff5sm38778227f8f.4.2026.02.25.15.16.07
+ 5b1f17b1804b1-483bd70e6c9sm78277195e9.8.2026.02.25.15.17.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:16:07 -0800 (PST)
+ Wed, 25 Feb 2026 15:17:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/70] gdbstub: Always infer gdb_num_core_regs when using XML
- file
-Date: Thu, 26 Feb 2026 00:13:17 +0100
-Message-ID: <20260225231411.96482-18-philmd@linaro.org>
+Subject: [PULL 31/70] target/riscv: Remove empty target_monitor_defs() symbol
+Date: Thu, 26 Feb 2026 00:13:31 +0100
+Message-ID: <20260225231411.96482-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,84 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather correct inferred count over invalid manual one.
+Prefer the stub target_monitor_defs() symbol introduced in commit
+bf957284006 ("monitor: remove target-specific code from monitor.c").
 
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-10-philmd@linaro.org>
+Message-ID: <20260219191955.83815-24-philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 4 ++--
- gdbstub/gdbstub.c     | 1 +
- target/alpha/cpu.c    | 1 -
- target/ppc/cpu_init.c | 2 --
- target/sparc/cpu.c    | 1 -
- 5 files changed, 3 insertions(+), 6 deletions(-)
+ target/riscv/monitor.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 89934b8efe2..7d2f4459d2b 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -128,9 +128,9 @@ struct SysemuCPUOps;
-  * @gdb_adjust_breakpoint: Callback for adjusting the address of a
-  *       breakpoint.  Used by AVR to handle a gdb mis-feature with
-  *       its Harvard architecture split code and data.
-- * @gdb_num_core_regs: Number of core registers accessible to GDB or 0 to infer
-- *                     from @gdb_core_xml_file.
-  * @gdb_core_xml_file: File name for core registers GDB XML description.
-+ * @gdb_num_core_regs: Number of core registers accessible to GDB if no
-+ *                     @gdb_core_xml_file available (otherwise inferred).
-  * @gdb_get_core_xml_file: Optional callback that returns the file name for
-  * the core registers GDB XML description. The returned value is expected to
-  * be a simple constant string: the caller will not g_free() it. If this
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b45eb7c7b2b..90f4b95135b 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -593,6 +593,7 @@ void gdb_init_cpu(CPUState *cpu)
-         gdb_register_feature(cpu, 0,
-                              cc->gdb_read_register, cc->gdb_write_register,
-                              feature);
-+        assert(!cc->gdb_num_core_regs);
-         cpu->gdb_num_regs = cpu->gdb_num_g_regs = feature->num_regs;
-     }
- 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index 1780db7d1e2..e0e13d31e55 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -295,7 +295,6 @@ static void alpha_cpu_class_init(ObjectClass *oc, const void *data)
-     cc->disas_set_info = alpha_cpu_disas_set_info;
- 
-     cc->tcg_ops = &alpha_tcg_ops;
--    cc->gdb_num_core_regs = 67;
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index ccb7eb44d02..a9d31114442 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -244,19 +244,6 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
+     mem_info_svxx(mon, env);
  }
  
- #define DEFINE_ALPHA_CPU_TYPE(base_type, cpu_model, initfn) \
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 0b5610d02d5..3d932a5642b 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7551,8 +7551,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, const void *data)
-                       MMU_INST_FETCH == 2 && PAGE_READ == 1 &&
-                       PAGE_WRITE == 2 && PAGE_EXEC == 4);
- #endif
+-/*
+- * We have way too many potential CSRs and regs being added
+- * regularly to register them in a static array.
+- *
+- * Declare an empty array instead, making get_monitor_def() use
+- * the target_get_monitor_def() API directly.
+- */
+-const MonitorDef monitor_defs[] = { { } };
+-const MonitorDef *target_monitor_defs(void)
+-{
+-    return monitor_defs;
+-}
 -
--    cc->gdb_num_core_regs = 70;
-     cc->gdb_arch_name = ppc_gdb_arch_name;
- #if defined(TARGET_PPC64)
-     cc->gdb_core_xml_file = "power64-core.xml";
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 3991681d1d1..c11d600dc30 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1092,7 +1092,6 @@ static void sparc_cpu_class_init(ObjectClass *oc, const void *data)
- 
- #if defined(TARGET_SPARC64) && !defined(TARGET_ABI32)
-     cc->gdb_core_xml_file = "sparc64-core.xml";
--    cc->gdb_num_core_regs = 86;
- #else
-     cc->gdb_num_core_regs = 72;
- #endif
+ static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
+                                  target_ulong *val, bool is_gprh)
+ {
 -- 
 2.52.0
 
