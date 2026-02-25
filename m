@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F92FCEE8E
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11EAFCEE89
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvDJP-0001B1-7o; Wed, 25 Feb 2026 06:44:15 -0500
+	id 1vvDLb-0002H2-TX; Wed, 25 Feb 2026 06:46:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vvDJN-0001Ae-IP
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:44:13 -0500
-Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
+ id 1vvDLY-0002GO-OI
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:46:28 -0500
+Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vvDJM-00010W-5I
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:44:13 -0500
-Received: by mail-dl1-x1241.google.com with SMTP id
- a92af1059eb24-1271257ae53so6478776c88.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 03:44:11 -0800 (PST)
+ id 1vvDLX-0001HR-7N
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:46:28 -0500
+Received: by mail-dy1-x1344.google.com with SMTP id
+ 5a478bee46e88-2ba6aa57d5fso6235777eec.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 03:46:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772019850; x=1772624650; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772019986; x=1772624786; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=05HjhtVsBXJBNbVvU5Fgi1igTh88gY8jk4o8+838xC8=;
- b=MfHuo16EhKYIowcjAOB99M0MZkbnrKj6QqOYuJF8uS7oiFvuT2VZB5QdgT7dwf7Go2
- akFifaLJ04/CQ7D40+rsooMWzk+9mobOmI7oIhHAHUHchrbhDe502Gs9uzaqNUTDoHna
- DfXEK8+9yYNsb0qjrr4pgZhj9FcXd8WXYoF6lLKZslJMU9sGt5DvRk2UTOPkYoSeYEIO
- 0GyDQEdJQ54OnkAyYznnpmHRSi5OMnp0lJEEte7ARRehmdQWQUOhqFvkB3iKxURtsUsm
- 9Avu+6bY+TKASZOb2c1epKHIAmV/OuImWRwQyfRJFyRw8v5EsvnqaLy+40lz4lZRw5Ky
- zl5w==
+ bh=C6WyCjAtlGmGu/acpLfHrEcLGU1hYj0OCr+qPTyqCvE=;
+ b=X6/gN/qDo/XpQNKCG95Gq9t4HBq1TbPeOObYF5TvApfyoQH59LK0H2MTm4CNTrRmKa
+ IPmg8YXxADCZkk3R2qjXZuhxnI/sDNF84otDFEJReknOmd+CjIDRelMQ3S3xqK5pNBY7
+ kFxEUydqmXjw0w4sk16yj9pZT6dbKh5li00EgCSCm6moFnyrgKlQrGBie+VnPZxZrt67
+ eIeaWKEuuJLG8Ph8vmzJgHTVSO6zzeUQp04VDZiri/eogcnZtfAr+0QuS7WFcgWH25ob
+ rZ8cIAxXtWeDhaTjBYV3QTHn2sX65b51G3FALCTv8ReL+VJjXQSXWDkl936YZ1bJtEQl
+ sENw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772019850; x=1772624650;
+ d=1e100.net; s=20230601; t=1772019986; x=1772624786;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=05HjhtVsBXJBNbVvU5Fgi1igTh88gY8jk4o8+838xC8=;
- b=JvRUUGPWXMduyE1pVcJNQRsMGK6Tk2IfgG6Lw1a1z6Wj7q+zLCQLcYo089kq2KssWS
- Aq7k+vFaKccgbBolOHRy30K0GLiu3lNEICi4sn4jdNUG4VqeMHxQn1TXYpWzzSD/W+gP
- kij4v+o9mW1HKaV93sii3egISg6PU/cWjPS/TLFSy6bRflRC8fKeGMsI9IHVvsDzxZvJ
- op/WjpQSpnGMYlnBnRDgWWnwzq2rYn4UYCk7K3RnR9DioJZpW0B4U4kZMfLJSdJQTLqq
- 7kREUCI6voI4fCnTkv4hFm/p75wVR2z/X0KAvH7pl6/Uf+q1FUl2gX5SrEd+pnDPgHJ2
- xVPA==
-X-Gm-Message-State: AOJu0YwYuC5uXX9Z4+ccc3GlPxoT6psNBEXCYzAELJXLEOSCLCgixY1n
- YW3Cg9uHO39tR1lJwJlLYwEFMdzo04ZoVI2euRu3WsiPPJpjak9T2ey4
-X-Gm-Gg: ATEYQzznGKoxR9L5Yo7i16vJT6F9mWeh5OKFsiNy5+AFQ3UIJEv+F16psD87eLxBhSe
- 9Xhd4rFAQXR+Sgw4TJ5V+wRzsDTr8LKos2hVRMpMBVCBD+IOnP5yE728dbfzIYz6LITa392r8Rg
- VYR1w9WkHhkq+0nc3rIpWCtYY3BcmMDKWUzdsvnOGCzyRYywUE3y2sgis41vf+NQf/GLccMGv+J
- It+WbKf/KBZ+rLFUeDTfHFz7+Jk+b94XqjQSMYWV3BwJXzXujurb0p3gOW64V2/iTsoOu+qY4JH
- 3qdXqHw3/Kr5ULyysHyGPyCdUfKhELnzcOpbqinTvNzyb2kGZd/pdUin6l5IvLYLyq92h54ly9F
- TW8k/JiDTVVdstg2Hx88Kta54e8ILAOd0tuSRXROd7+d2XfSeUdv8HPubnlg39/hoxYCN/hrXbt
- 7rJfguL7pbAWRx8/w/piRMl2OADaoSBcS6/QefGIi3XHfxZEJpcGqzTqfvvLnLMzTAx44tKsvcE
- icRJw9wx/gqaILQ4gboFntvxW6IW00=
-X-Received: by 2002:a05:7301:6706:b0:2ba:9f79:8189 with SMTP id
- 5a478bee46e88-2bd7baea79dmr6172092eec.13.1772019850125; 
- Wed, 25 Feb 2026 03:44:10 -0800 (PST)
+ bh=C6WyCjAtlGmGu/acpLfHrEcLGU1hYj0OCr+qPTyqCvE=;
+ b=vGBpKSlP5xhWcLWl1o/6Qe8zCQPYRnRG+j4hLq6XK6hqBCrXdtAUys+k0S0mwegECi
+ Ud4uH/+63kgpGlfYZkskiO8zbDftVyNXAHZMEMxqQmhpP3yafZGxfl9t1rDiMtDuljYr
+ Y0+1M/s5D1W/mdkidnHEQ7hd/WydneLUTh4enhnzcNymOLKDOoV3VbPO59NwttCAt4VP
+ 4FTrxCaXHl7OVvxXfVybCAO+oZMvqFungBLxNPIAKDAgSezemgfvS1sA7v9LqtLINkyr
+ CcGps6ru7qer52pkV43UVHtUrwnYfU4hkbKoHrDpkvJGPKVe6CLKPuCB2Yj5of6O5nOg
+ 6VYA==
+X-Gm-Message-State: AOJu0YyIQjYEOlmO9wQ/+4MXj9oxEPvXjkQDV3Y5Y50wJaEOr1acLSN0
+ ZVL9JK3Ar0GZqxGZ5Ez3j2DC52FjGy5efehzH/376Z7cSSn0x+eXK65S
+X-Gm-Gg: ATEYQzz7HBrvwz5G6xDJtrCdF+irWaTicqatwcyPq9URFpV5U+gnFkImLvrqkFn9Md5
+ yUG39xBu/UVRRrS7CRUd2bZ/pZvpHOYr2+009P1HBicPV1O0tdPCsUwOGHxksHL/QRwMIXbIBym
+ AqcRZXUC9J5j68Sx/7Q2HsymDGhd3SfyYnGoZThUtTJ1OhIhK83BiarkyhudCBEhAn7bmVhCNYQ
+ xwHIwI4z1nLODfX3z9x6W5xj31UC4UhItUlCPpdg7ls0HBqfJ4lnQcaVkSgJRZWUDbNyAYI/0Ia
+ BEHxJkgTLKknbIbJxpwj6uLJ/4JgMLb4+VEpsjuz+fSVx0yYv8dO5QWseSWhiPlnIOJK5fgJJ9q
+ 3RwnV8RGPvks1epWWDHtpqFljbqGnNGra/K2S2GMoZViUtjbxFTL8oa4sXtn7QFIKeG4GpjUjpW
+ PvWH9UFmZ8565y/YGBAWEX7y3kGOOy25ZDfSyx/oEkvhTr20EiSJYB7gYXJTVDSQEiUc91wi//I
+ KmoY/9HPjALNOIWADgRlotsoXQb234=
+X-Received: by 2002:a05:7300:7492:b0:2b8:26b8:3426 with SMTP id
+ 5a478bee46e88-2bdcbf66a0cmr63088eec.13.1772019985565; 
+ Wed, 25 Feb 2026 03:46:25 -0800 (PST)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bd7dc169e2sm9611586eec.29.2026.02.25.03.44.06
+ 5a478bee46e88-2bd7da4775dsm8737761eec.2.2026.02.25.03.46.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 03:44:09 -0800 (PST)
-Date: Wed, 25 Feb 2026 19:44:13 +0800
+ Wed, 25 Feb 2026 03:46:24 -0800 (PST)
+Date: Wed, 25 Feb 2026 19:46:27 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
  Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  richard.henderson@linaro.org
-Subject: Re: [PATCH 3/3] fpu: Simplify OCP FP8 E4M3 NaN classification in
- parts_canonicalize
-Message-ID: <aZ7ge-zVkIuiiHkT@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH 2/3] fpu: Fix unexpected exception flags when converting
+ infinity to OCP E4M3
+Message-ID: <aZ7hA6DkxaSRRbDK@ZEVORN-PC.localdomain>
 References: <20260225110802.1217946-1-max.chou@sifive.com>
- <20260225110802.1217946-4-max.chou@sifive.com>
+ <20260225110802.1217946-3-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260225110802.1217946-4-max.chou@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
+In-Reply-To: <20260225110802.1217946-3-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 25, 2026 at 07:08:02PM +0800, Max Chou wrote:
-> The OCP FP8 E4M3 format has only a single NaN encoding (0x7F/0xFF),
-> Replace the indirect check via parts_is_snan_frac with a direct
-> check of no_signaling_nans to make the intent clearer.
+On Wed, Feb 25, 2026 at 07:08:01PM +0800, Max Chou wrote:
+> Infinity is a special case distinct from numeric overflow:
+> - Numeric overflow: finite value exceeds format's max normal
+>   -> overflow|inexact
+> - Infinity conversion: input is already infinite
+>   -> no flags
 > 
+> This commit fixes the unexpect exception flags by relocating the float
+> exception flag update flow to be outside the uncanon_e4m3_overflow.
+> And raising the overflow|inexact for numeric overflow in uncanon_normal.
+> 
+> Fixes: 27e989f99c ("fpu: Add conversion routines for OCP FP8 E4M3")
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
->  fpu/softfloat-parts.c.inc | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  fpu/softfloat-parts.c.inc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index 3c323c0cec..5ef7e2d921 100644
+> index a738758aee..3c323c0cec 100644
 > --- a/fpu/softfloat-parts.c.inc
 > +++ b/fpu/softfloat-parts.c.inc
-> @@ -245,8 +245,8 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
->          case float_expmax_e4m3:
->              if (p->frac_hi == 0b111) {
->                  frac_shl(p, fmt->frac_shift);
-> -                p->cls = (parts_is_snan_frac(p->frac_hi, status)
-> -                          ? float_class_snan : float_class_qnan);
-> +                p->cls = no_signaling_nans(status) ? float_class_qnan :
-> +                                                     float_class_snan;
->                  return;
->              }
->              /* otherwise normal */
+> @@ -277,7 +277,6 @@ static void partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
+>                                            const FloatFmt *fmt, bool saturate)
+>  {
+>      assert(N == 64);
+> -    float_raise(float_flag_overflow | float_flag_inexact, s);
+>      if (saturate) {
+>          p->exp = fmt->exp_max;
+>          p->frac_hi = E4M3_NORMAL_FRAC_MAX;
+> @@ -388,6 +387,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+>                  if (exp > exp_max || p->frac_hi > E4M3_NORMAL_FRAC_MAX) {
+>                      partsN(uncanon_e4m3_overflow)(p, s, fmt, overflow_norm);
+>                      exp = p->exp;
+> +                    flags |= (float_flag_overflow | float_flag_inexact);
+>                  }
+>                  break;
+>  
 > -- 
 > 2.52.0
 > 
