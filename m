@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32409FD45F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F68FD45F8
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvMop-0007e9-Fd; Wed, 25 Feb 2026 16:53:19 -0500
+	id 1vvMuY-0000gy-D4; Wed, 25 Feb 2026 16:59:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvMoj-0007VX-Hs
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:53:16 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1vvMuW-0000g2-NK
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:59:12 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvMoc-0006Cb-Bm
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:53:07 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2ad9f316d68so563605ad.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:53:04 -0800 (PST)
+ id 1vvMuU-0006ut-Ep
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:59:12 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c636487ccaeso39590a12.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:59:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772056383; x=1772661183; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772056749; x=1772661549; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZeUXuLzaGvZfQwoS21E0YChtoJgW13dnJa2R/OKYCsE=;
- b=S1+arvm1IC6BO6h7w+j4hdZjw7DO4rkMaIUlmm+HnIiRFmhqGRSul9uNVsngzbkJT6
- Rx6JaXXoFbUwzw8lEpMQK4rWHP2vyhKvbY3Y3cYSSR6F2HtoBbfhSVJ5yWgbf9ARtfx1
- dKL6KaxlSRWvwGtXOOnPwE4kYlOXspPfond5GPtcZAe69K1dp3oyZ260tkghF/ALjLar
- D786/e96qZs0EiWgrhWEDQdRaMv9hK3YDE4NejgJeN2mUP3ATMDSsaromvGMrnaKhRJP
- eVbNOGagA2lDMTiV33CQ3g+nhku64afutU4nqWipiHDxxB4OgXnR15bcUffcx75qGskC
- DOzg==
+ bh=KKI+XFmJIc8/YpgiWkYMFqbl4rqYuwGkumg1fGtGGwU=;
+ b=xwAKz7JVJ1aH0obsGXDgLMLoPCBEHVnmMZOIegzxHqJg/gNLYG4A/KhJ8+PjzvIF00
+ FDo7uiAbJKLy/TjpxdSaH3nG8dGB1cJ6O7sP7U9CJuWIiRh0jBpuYBEiVBXwVsVSkT+E
+ gGqHDxRDn8KkirupQ+6OP27e2AMGYtTQb5MODBKsIUUQLXVEaAQJkLCcNf2ikbyk08cz
+ yYQTz2/VPgbTN3EZGHLRX8wyQBna/vdcXqghEzo8jjxorJQ+cTm66OgMYOyBOrS5e93T
+ UIU5VkBPdDAQZTE/26wpSHcGRR/4OhwP4sBn4QDN0m42TcscVDBgCke6kxAfuqkJc/ns
+ 0T4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772056383; x=1772661183;
+ d=1e100.net; s=20230601; t=1772056749; x=1772661549;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZeUXuLzaGvZfQwoS21E0YChtoJgW13dnJa2R/OKYCsE=;
- b=QG1AZhPMO2PCSHXgZEkkbdxHlXMGWlYVUuMzvLI2lJFlEAuZAUdXhcyn2UyizBYndx
- nKYMfFnjvMOXaKMBtSbqSTvzg0aPml5jGRv+AJj0sZJUfF103LKT4PCxDQXGLaLbMgcN
- dcn2QW2Y9Bs4CT2Kx9/dUFCxEF5lKs3b3yc+3TCkC8MSwOXxMEqjxvdhs5HP3dN7NkZu
- sCvzHOAPIugdWPI7yWjEyNBxNwQr0BbG6yHcrV3lib15DHhW2Fz8k6Wu1uReb4jDj2qo
- 69a3Xn1ApcqFmjKugIzPoSIvtqALe5bmMb3H8IKEMjMmGYOcWkFXRRavZc6iG5G3GQ/T
- Aqzw==
-X-Gm-Message-State: AOJu0YzytTJvJuD+qsC+GQLXqwIi/Bx71zcEPdc7biRyMmkNy+RxOJpC
- Gse18a9wUVSuMGIeaXOfbPVT2atCjiHYyhec3Ij0KGIWWhEPYQZ/P58deM9C5bKZbrA=
-X-Gm-Gg: ATEYQzwEt0r96Vvp2yqPw2gQPgmkAoHNEnrz2txQLrXJVcg8nT3ng4i/6biJTDX0E6E
- Z5SXw6mcO0GPLGGm5GTroDPTg4qF/IkTd1hOowjrWdF6Y5W17CnHf9MxOs8RCyRt5FVPD+hVs3w
- lPxEJRQKCi5Y7yxsOYuqGTqvMu/mm/3ry7QH/cpdrzCV2iOdFt7OTdeAoFpTZ9Tx4lIsQpnSKHF
- htyAgXQ2Fdo0nrFYxQMAbChvIC2F6AKYGQclKlhQ7jvK1Qxmc9f+kvHOv+4/WcXNlkMdgAP2YUu
- reQVisdvV7W1i7Nek90Ri1A1rooB3/DU9f69qXIadQWhv/Z/t5SI8dXRs7UVeE4wOkuIu1DkT74
- 7aHbmGGXPIzw8f8jS8DS71iBFGRPKvbOk9SgQlWd7wfRj/sQX2Koq/rZJpKwWZZX9AbRmBYKWUY
- Nb58iB/pkGc3lyoBU0r21bJWtgNNfdftOxovfmUnLEuFxyHz39O4i6m3R8f3xUECK3VBkI
-X-Received: by 2002:a17:903:94e:b0:2ad:9edf:7fe9 with SMTP id
- d9443c01a7336-2ad9edf8200mr65576065ad.27.1772056383469; 
- Wed, 25 Feb 2026 13:53:03 -0800 (PST)
+ bh=KKI+XFmJIc8/YpgiWkYMFqbl4rqYuwGkumg1fGtGGwU=;
+ b=fZRMRn07S5TnGKy3ydeRZI6Mh9w3jC9wfcetTiMr1l+tTT/VQ/0L/JtsFXZ5gQahx+
+ p+3eEDo7JdKAlaoVd4SWB2Al9Xvl02Jykf20UL/ZlxUkqo1hUFkuE1jywebAGPJroope
+ 2lKpVzHAvGY6fVN+CpTGfXAdDWhQzAiPgEGI3Z9iij/DJ2jfpfYpDRYAsni4oCeJtW2k
+ 0ij9jnGj9V7TcOWd9lvcYjUKySGmIL0K2PV2f/bxwNryVS8/EREXpNL5QOCu92xreyOP
+ ZNFdnpkKW5ACMw+GPgThyKKv2Bjnd+gPfKCY3ozNnupRTwrXSg/Ft3BI357U/siwEkf5
+ 49Mw==
+X-Gm-Message-State: AOJu0Yxnfszcr1PcvJqlvW2BgcXl+RYdl3abLFvWKAzuxfCzKBIWFTmx
+ IolNu4EzYZ1O51Aod7yAEoG0U2fI7IbFpWBIcuJTT7VTSxZME9lvO4lKW4cLssC6w4E=
+X-Gm-Gg: ATEYQzzueM2f3QCrPQ0pdvTkhvWkX7n5tziCo/nt7f2KPrsgyupemZR9pOQfF+Yw5dM
+ zBAL4AAyoSHrYztR5JQmcrA326HX5U2vQ2h+5lTwosAzVDU9Satd6v9m62dVnNLqrVIDlWKjMVp
+ DT+XAAzquU3KWAniXMW9fTSdYcs03080BFjUU3QCg14a2nlRZG6a7QCGXOuN12yL6KI6t3DwY/d
+ 3G8pzMzLwyElClo+tDjOIHiwjTkm98eFOzXgdKmKQozzIupVgh6exHguMEzOMBZrkBfdJfNLMp/
+ 3p4SEWTDfY545QlXP6kJUn1TwEBj95TwbG32oq8apXzJENypD6d+c1UuqjqqQx527TkeA6dXat5
+ deLvPj+rE/oRAAEfzM318dfm6fOmVZXgKJdQSXNmO4jlz8jFnfg5HTEp6S56GONXBf3ml8wlRrL
+ NMaFfPpZPHXgGy+GLxAlWil0o2/oZVQriTNP1HRRwzV1JvomSgQ/nIPkmgMulVqPdwnHC5
+X-Received: by 2002:a17:90b:58cf:b0:354:bda7:8827 with SMTP id
+ 98e67ed59e1d1-358ae7c364cmr14485727a91.2.1772056748730; 
+ Wed, 25 Feb 2026 13:59:08 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb6e261dsm1882215ad.83.2026.02.25.13.53.02
+ 98e67ed59e1d1-359018838b2sm3816964a91.5.2026.02.25.13.59.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 13:53:03 -0800 (PST)
-Message-ID: <93861789-8a94-4c39-815f-ef983e769a83@linaro.org>
-Date: Wed, 25 Feb 2026 13:53:02 -0800
+ Wed, 25 Feb 2026 13:59:08 -0800 (PST)
+Message-ID: <eeaf6ae9-23e0-4413-985f-dcff03737dbb@linaro.org>
+Date: Wed, 25 Feb 2026 13:59:07 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 22/31] hw/arm/smmuv3: Add access checks for STRTAB_BASE
- and CR2 registers
+Subject: Re: [RFC v4 23/31] hw/arm/smmuv3: Add access checks for CMDQ and
+ EVENTQ registers
 Content-Language: en-US
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
  <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
@@ -81,7 +81,7 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101816.2996053-1-tangtao1634@phytium.com.cn>
+ <20260221101823.2996302-1-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260221101816.2996053-1-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260221101823.2996302-1-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,24 +145,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/21/26 2:18 AM, Tao Tang wrote:
-> Add access control for SMMU_STRTAB_BASE and SMMU_CR2 registers to
-> ensure they can only be modified when the SMMU is disabled.
+> Add access control for command queue and event queue related registers
+> to ensure they can only be modified under proper conditions.
 > 
-> This implements:
-> - smmuv3_smmu_disabled_stable(): Check whether the SMMU is in a stable
->     disabled state (CR0.SMMUEN == 0 and CR0ACK.SMMUEN == 0);
-> - smmu_strtab_base_writable(): returns true only when IDR1.TABLES_PRESET==0
->     and SMMU is completely disabled.
+> For command queue (CMDQ):
+> - smmu_cmdq_disabled_stable(): checks CMDQ bit in CR0/CR0ACK
+> - smmu_cmdq_base_writable(): checks IDR1.QUEUES_PRESET==0 and CMDQ disabled
 > 
-> Additionally, mask reserved bits on writes to SMMU_STRTAB_BASE using
-> SMMU_STRTAB_BASE_RESERVED.
+> For event queue (EVTQ):
+> - smmu_eventq_disabled_stable(): checks EVTQ bit in CR0/CR0ACK
+> - smmu_eventq_base_writable():checks IDR1.QUEUES_PRESET==0 and EVTQ disabled
+> - smmu_eventq_irq_cfg_writable(): checks MSI support and EVENTQ_IRQEN state
+> 
+> Additionally, mask reserved bits on writes using SMMU_QUEUE_BASE_RESERVED
+> for queue base registers and SMMU_EVENTQ_IRQ_CFG0_RESERVED for
+> EVENTQ_IRQ_CFG0.
 > 
 > Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   hw/arm/smmuv3.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++--
->   1 file changed, 67 insertions(+), 2 deletions(-)
+>   hw/arm/smmuv3.c | 157 +++++++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 154 insertions(+), 3 deletions(-)
 > 
 
+It seems like we use the same pattern a lot of time for various SMMU 
+registers, and makes me wonder if we could not introduce proper register 
+definitions with callbacks similar to Arm *_reginfo.
+
+That said, it's definitely out of the scope for this series:
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
