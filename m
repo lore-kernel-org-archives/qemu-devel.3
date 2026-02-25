@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A2BFCEE8E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C00AFCEE8A
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 11:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvDCh-00060Q-Ry; Wed, 25 Feb 2026 06:37:20 -0500
+	id 1vvDCb-0005zo-2l; Wed, 25 Feb 2026 06:37:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1vvDCb-000607-Op
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:37:13 -0500
-Received: from sg-1-109.ptr.blmpb.com ([118.26.132.109])
+ id 1vvDCZ-0005zc-VL
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:37:11 -0500
+Received: from sg-1-104.ptr.blmpb.com ([118.26.132.104])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1vvDCW-0007st-Hq
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:37:13 -0500
+ id 1vvDCW-0007tM-Hw
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 06:37:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1772019406; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1772019414; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=G7AZ4K1LApZ83qpc7CCQiivvbVea9ymgYf/d/4iWmjM=;
- b=JXzBUBr6pqr0ZxTqVny7YVFw2/M+YOtPjJKi65Bx/+x/Dg4WLqHAWn/iGit7v6Qr0mtwEw
- h7/Z5L130Y2xOygHH9mpC8VPViOrbBdu0fPRS1czqJYcEjO81twJ+DGpf5CZHwLBFXwv3B
- NlyDUimCv1LQiDDYSDua/rEtsvOS3WFUQ8dnc6vZ9YZyItWkilb4xQyLr5b8llfI22zCSz
- VwL36B1Mz2s0XvkdeXX1jT98V8CWKS4L/pvyZuWT/dlqWoygKsbRns+G5Fm3pyDoK7d+Pk
- 5HsaxBOEDsBo15gWScT5zbVIou96t1M5+D8EIXreUE+02LHtC6pvhyFIj+b5Lw==
-Message-Id: <20260225113620.76926-1-hongmianquan@bytedance.com>
-Content-Transfer-Encoding: 7bit
-X-Mailer: git-send-email 2.32.1 (Apple Git-133)
-From: "hongmianquan" <hongmianquan@bytedance.com>
-Mime-Version: 1.0
-X-Lms-Return-Path: <lba+2699edecc+d326bd+nongnu.org+hongmianquan@bytedance.com>
+ bh=1xg9F2SgpI1Wl2CpnKvf8weUWu5rJmxwVcYjBFIqbzM=;
+ b=e9tx2cYoO+PZ1hKDbUp5dayVG3rZ3JUoIyB/ngad6QuInbONpMJKk24e+ownnEviOvQIoX
+ 5U3qm+vjjXFS5wJdKyY1fo964g8FNydq+a8JprmXcpNOvrDBete9Ps+NYHUDEyHLfHtWxE
+ Njrl6z8aSTAZiMbq7JEfhLB635sMvpuwbcrz73ya3pH11bSn61SFutK7sUeWr6+iPldLVp
+ wXFeRJE0Ab3PbRUcng0+2gnzBz8fhOBMLMVhOuUBNx5pN5g4H+56yAx1OHtCvep+5515/u
+ xmBqdpJkH3k8EhY2FBTltvRMlBqfXIYXYpTkquPkhudGAah+sHCIx0Wd0R12Tw==
 To: <qemu-devel@nongnu.org>
-Subject: [RFC 1/2] migration: Support ghash migration
 Cc: <peterx@redhat.com>, <farosas@suse.de>, 
  "hongmianquan" <hongmianquan@bytedance.com>
-Date: Wed, 25 Feb 2026 19:36:19 +0800
+Date: Wed, 25 Feb 2026 19:36:20 +0800
+In-Reply-To: <20260225113620.76926-1-hongmianquan@bytedance.com>
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Subject: [RFC 2/2] cpr: use hashtable for cpr fds
+Message-Id: <20260225113620.76926-2-hongmianquan@bytedance.com>
+X-Lms-Return-Path: <lba+2699eded4+52aa33+nongnu.org+hongmianquan@bytedance.com>
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
 X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+References: <20260225113620.76926-1-hongmianquan@bytedance.com>
+X-Mailer: git-send-email 2.32.1 (Apple Git-133)
 Content-Type: text/plain; charset=UTF-8
-Received-SPF: pass client-ip=118.26.132.109;
- envelope-from=hongmianquan@bytedance.com; helo=sg-1-109.ptr.blmpb.com
+Received-SPF: pass client-ip=118.26.132.104;
+ envelope-from=hongmianquan@bytedance.com; helo=sg-1-104.ptr.blmpb.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -67,232 +69,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refer to commit 9a85e4b8f672016adbf7b7d5beaab2a99b9b5615 to
-support for GHashTable migration. A custom save/restore is implemented.
-Each item is made of a key and a data. Currently, only pointer-type
-keys and values are supported.
-On the get() path, ghashtable must be allocated using the proper
-key compare, key destroy and value destroy. This must be handled
-beforehand, for example in a pre_load method.
+Use a hashtable to store cpr fds to reduce the time
+consumption of `cpr_find_fd` in scenarios with a large
+number of fds, which relies on the migration support for
+GHashTable implemented earlier.
 
 Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
 ---
- include/migration/vmstate.h |  22 ++++++
- migration/trace-events      |   5 ++
- migration/vmstate-types.c   | 147 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 174 insertions(+)
+ include/migration/cpr.h |   4 +-
+ migration/cpr.c         | 129 ++++++++++++++++++++++++++++------------
+ system/vl.c             |   2 +
+ 3 files changed, 95 insertions(+), 40 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 89f9f49d20..cd7893c66a 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_ghash;
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 5850fd1788..858b251bb5 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -18,16 +18,16 @@
+ #define QEMU_CPR_FILE_VERSION   0x00000001
+ #define CPR_STATE "CprState"
  
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -882,6 +883,27 @@ extern const VMStateInfo vmstate_info_qlist;
-     .start        = offsetof(_type, _next),                              \
+-typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
+ typedef QLIST_HEAD(CprVFIODeviceList, CprVFIODevice) CprVFIODeviceList;
+ 
+ typedef struct CprState {
+-    CprFdList fds;
++    GHashTable *fds;
+     CprVFIODeviceList vfio_devices;
+ } CprState;
+ 
+ extern CprState cpr_state;
+ 
++void cpr_state_init(void);
+ void cpr_save_fd(const char *name, int id, int fd);
+ void cpr_delete_fd(const char *name, int id);
+ int cpr_find_fd(const char *name, int id);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index a0b37007f5..cfdddb5043 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -27,59 +27,101 @@ CprState cpr_state;
+ 
+ /****************************************************************************/
+ 
+-typedef struct CprFd {
++typedef struct CprFdKey {
+     char *name;
+     unsigned int namelen;
+     int id;
++} CprFdKey;
++
++typedef struct CprFdVal {
+     int fd;
+-    QLIST_ENTRY(CprFd) next;
+-} CprFd;
++} CprFdVal;
++
++#define VMSTATE_FDS_KEY                                                 \
++{                                                                       \
++    .name = "cpr-fd-key",                                               \
++    .version_id = 1,                                                    \
++    .minimum_version_id = 1,                                            \
++    .fields = (const VMStateField[]) {                                  \
++        VMSTATE_UINT32(namelen, CprFdKey),                              \
++        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFdKey, 0, NULL, namelen), \
++        VMSTATE_INT32(id, CprFdKey),                                    \
++        VMSTATE_END_OF_LIST()                                           \
++    }                                                                   \
++}
+ 
+-static const VMStateDescription vmstate_cpr_fd = {
+-    .name = "cpr fd",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (VMStateField[]) {
+-        VMSTATE_UINT32(namelen, CprFd),
+-        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+-        VMSTATE_INT32(id, CprFd),
+-        VMSTATE_FD(fd, CprFd),
+-        VMSTATE_END_OF_LIST()
+-    }
++#define VMSTATE_FDS_VAL                 \
++{                                       \
++    .name = "cpr-fd-value",             \
++    .version_id = 1,                    \
++    .minimum_version_id = 1,            \
++    .fields = (const VMStateField[]) {  \
++        VMSTATE_FD(fd, CprFdVal),       \
++        VMSTATE_END_OF_LIST()           \
++    }                                   \
++}
++
++static const VMStateDescription vmstate_fds_hashtable[2] = {
++    VMSTATE_FDS_VAL,   /* value */
++    VMSTATE_FDS_KEY   /* key */
+ };
+ 
++static guint cpr_fd_key_hash(gconstpointer v)
++{
++    const CprFdKey *key = v;
++    return g_str_hash(key->name) ^ key->id;
++}
++
++static gboolean cpr_fd_key_equal(gconstpointer a, gconstpointer b)
++{
++    const CprFdKey *key_a = a;
++    const CprFdKey *key_b = b;
++    return !strcmp(key_a->name, key_b->name) && key_a->id == key_b->id;
++}
++
++static void cpr_destroy_fd_key(gpointer data)
++{
++    CprFdKey *k = (CprFdKey *) data;
++    g_free(k->name);
++    g_free(k);
++}
++
++void cpr_state_init(void)
++{
++    CprState *s = &cpr_state;
++
++    s->fds = g_hash_table_new_full(cpr_fd_key_hash, cpr_fd_key_equal,
++                                   cpr_destroy_fd_key, g_free);
++}
++
+ void cpr_save_fd(const char *name, int id, int fd)
+ {
+-    CprFd *elem = g_new0(CprFd, 1);
++    CprFdKey *key = g_new0(CprFdKey, 1);
++    CprFdVal *val = g_new0(CprFdVal, 1);
+ 
+     trace_cpr_save_fd(name, id, fd);
+-    elem->name = g_strdup(name);
+-    elem->namelen = strlen(name) + 1;
+-    elem->id = id;
+-    elem->fd = fd;
+-    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
++    key->name = g_strdup(name);
++    key->namelen = strlen(name) + 1;
++    key->id = id;
++    val->fd = fd;
++    g_hash_table_insert(cpr_state.fds, key, val);
  }
  
-+/*
-+ * For migrating a GHashTable whose key is a pointer to _key_type and the
-+ * value, a pointer to _val_type
-+ * The target hashtable must have been properly initialized
-+ * _vmsd: Start address of the 2 element array containing the data vmsd
-+ *        and the key vmsd, in that order
-+ * _key_type: type of the key
-+ * _val_type: type of the value
-+ */
-+#define VMSTATE_GHASH_V(_field, _state, _version, _vmsd,                       \
-+                        _key_type, _val_type)                                  \
-+{                                                                              \
-+    .name         = (stringify(_field)),                                       \
-+    .version_id   = (_version),                                                \
-+    .vmsd         = (_vmsd),                                                   \
-+    .info         = &vmstate_info_ghash,                                       \
-+    .start        = sizeof(_key_type),                                         \
-+    .size         = sizeof(_val_type),                                         \
-+    .offset       = offsetof(_state, _field),                                  \
-+}
-+
- /* _f : field name
-    _f_n : num of elements field_name
-    _n : num of elements
-diff --git a/migration/trace-events b/migration/trace-events
-index 90629f828f..f00f4c3e74 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -86,6 +86,11 @@ get_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
- put_qlist(const char *field_name, const char *vmsd_name, int version_id) "%s(%s v%d)"
- put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
+-static CprFd *find_fd(CprFdList *head, const char *name, int id)
++static CprFdVal *find_fd(CprFdKey *key)
+ {
+-    CprFd *elem;
+-
+-    QLIST_FOREACH(elem, head, next) {
+-        if (!strcmp(elem->name, name) && elem->id == id) {
+-            return elem;
+-        }
+-    }
+-    return NULL;
++    return g_hash_table_lookup(cpr_state.fds, key);
+ }
  
-+get_ghash(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, uint32_t nnodes) "%s(%s/%s) nnodes=%d"
-+get_ghash_end(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, int ret) "%s(%s/%s) %d"
-+put_ghash(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, uint32_t nnodes) "%s(%s/%s) nnodes=%d"
-+put_ghash_end(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, int ret) "%s(%s/%s) %d"
-+
- # qemu-file.c
- qemu_file_fclose(void) ""
- qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb211472..e6c3573789 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -942,3 +942,150 @@ const VMStateInfo vmstate_info_qlist = {
-     .get  = get_qlist,
-     .put  = put_qlist,
- };
-+
-+struct put_ghash_data {
-+    QEMUFile *f;
-+    const VMStateDescription *key_vmsd;
-+    const VMStateDescription *val_vmsd;
-+    JSONWriter *vmdesc;
-+    int ret;
-+};
-+
-+static gboolean put_ghash_elem(gpointer key, gpointer value, gpointer data)
-+{
-+    struct put_ghash_data *capsule = (struct put_ghash_data *)data;
-+    QEMUFile *f = capsule->f;
-+    int ret;
-+    Error *local_err = NULL;
-+
-+    qemu_put_byte(f, true);
-+
-+    /* put the key */
-+    ret = vmstate_save_state(f, capsule->key_vmsd, key,
-+                             capsule->vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+        capsule->ret = ret;
-+        return false;
-+    }
-+
-+    /* put the data */
-+    ret = vmstate_save_state(f, capsule->val_vmsd, value,
-+                             capsule->vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+        capsule->ret = ret;
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static int put_ghash(QEMUFile *f, void *pv, size_t unused_size,
-+                     const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    const VMStateDescription *key_vmsd = &field->vmsd[1];
-+    const VMStateDescription *val_vmsd = &field->vmsd[0];
-+    struct put_ghash_data capsule = {
-+        .f = f,
-+        .key_vmsd = key_vmsd,
-+        .val_vmsd = val_vmsd,
-+        .vmdesc = vmdesc,
-+        .ret = 0};
-+    GHashTable **pval = pv;
-+    GHashTable *hash = *pval;
+ void cpr_delete_fd(const char *name, int id)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFdKey key = {
++        .name = (char *)name,
++        .id = id,
++    };
++    CprFdVal *elem = find_fd(&key);
+ 
+     if (elem) {
+-        QLIST_REMOVE(elem, next);
+-        g_free(elem->name);
+-        g_free(elem);
++        g_hash_table_remove(cpr_state.fds, &key);
+     }
+ 
+     trace_cpr_delete_fd(name, id);
+@@ -87,7 +129,11 @@ void cpr_delete_fd(const char *name, int id)
+ 
+ int cpr_find_fd(const char *name, int id)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFdKey key = {
++        .name = (char *)name,
++        .id = id,
++    };
++    CprFdVal *elem = find_fd(&key);
+     int fd = elem ? elem->fd : -1;
+ 
+     trace_cpr_find_fd(name, id, fd);
+@@ -96,7 +142,11 @@ int cpr_find_fd(const char *name, int id)
+ 
+ void cpr_resave_fd(const char *name, int id, int fd)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFdKey key = {
++        .name = (char *)name,
++        .id = id,
++    };
++    CprFdVal *elem = find_fd(&key);
+     int old_fd = elem ? elem->fd : -1;
+ 
+     if (old_fd < 0) {
+@@ -125,9 +175,11 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+ 
+ bool cpr_walk_fd(cpr_walk_fd_cb cb)
+ {
+-    CprFd *elem;
 +    GHashTableIter iter;
-+    gpointer key, value;
-+    uint32_t nnodes = g_hash_table_size(hash);
-+    int ret;
++    CprFdVal *elem;
+ 
+-    QLIST_FOREACH(elem, &cpr_state.fds, next) {
++    g_hash_table_iter_init(&iter, cpr_state.fds);
++    while (g_hash_table_iter_next(&iter, NULL, (gpointer *)&elem)) {
+         g_assert(elem->fd >= 0);
+         if (!cb(elem->fd)) {
+             return false;
+@@ -142,7 +194,8 @@ static const VMStateDescription vmstate_cpr_state = {
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (VMStateField[]) {
+-        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
++        VMSTATE_GHASH_V(fds, CprState, 1, vmstate_fds_hashtable,
++                        CprFdKey, CprFdVal),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
+diff --git a/system/vl.c b/system/vl.c
+index 3e341142a0..da42de87db 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2894,6 +2894,8 @@ void qemu_init(int argc, char **argv)
+ 
+     qemu_init_subsystems();
+ 
++    cpr_state_init();
 +
-+    trace_put_ghash(field->name, key_vmsd->name, val_vmsd->name, nnodes);
-+    qemu_put_be32(f, nnodes);
-+    g_hash_table_iter_init(&iter, hash);
-+    while (g_hash_table_iter_next(&iter, &key, &value)) {
-+        if (!put_ghash_elem(key, value, (gpointer)&capsule)) {
-+            break;
-+        }
-+    }
-+    qemu_put_byte(f, false);
-+    ret = capsule.ret;
-+    if (ret) {
-+        error_report("%s : failed to save ghash (%d)", field->name, ret);
-+    }
-+    trace_put_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
-+    return ret;
-+}
-+
-+static int get_ghash(QEMUFile *f, void *pv, size_t unused_size,
-+                     const VMStateField *field)
-+{
-+    const VMStateDescription *key_vmsd = &field->vmsd[1];
-+    const VMStateDescription *val_vmsd = &field->vmsd[0];
-+    int version_id = field->version_id;
-+    size_t key_size = field->start;
-+    size_t val_size = field->size;
-+    int nnodes, count = 0;
-+    GHashTable **pval = pv;
-+    GHashTable *hash = *pval;
-+    void *key, *val;
-+    int ret = 0;
-+    Error *local_err = NULL;
-+
-+    if (version_id > key_vmsd->version_id) {
-+        error_report("%s %s", key_vmsd->name, "too new");
-+        return -EINVAL;
-+    }
-+    if (version_id < key_vmsd->minimum_version_id) {
-+        error_report("%s %s", key_vmsd->name, "too old");
-+        return -EINVAL;
-+    }
-+    if (version_id > val_vmsd->version_id) {
-+        error_report("%s %s", val_vmsd->name, "too new");
-+        return -EINVAL;
-+    }
-+    if (version_id < val_vmsd->minimum_version_id) {
-+        error_report("%s %s", val_vmsd->name, "too old");
-+        return -EINVAL;
-+    }
-+
-+    nnodes = qemu_get_be32(f);
-+    trace_get_ghash(field->name, key_vmsd->name, val_vmsd->name, nnodes);
-+
-+    while (qemu_get_byte(f)) {
-+        if ((++count) > nnodes) {
-+            ret = -EINVAL;
-+            break;
-+        }
-+        key = g_malloc0(key_size);
-+        ret = vmstate_load_state(f, key_vmsd, key, version_id, &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+            goto key_error;
-+        }
-+        val = g_malloc0(val_size);
-+        ret = vmstate_load_state(f, val_vmsd, val, version_id, &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+            goto val_error;
-+        }
-+        g_hash_table_insert(hash, key, val);
-+    }
-+    if (count != nnodes) {
-+        error_report("%s inconsistent stream when loading the ghash",
-+                     field->name);
-+        return -EINVAL;
-+    }
-+    trace_get_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
-+    return ret;
-+val_error:
-+    g_free(val);
-+key_error:
-+    g_free(key);
-+    trace_get_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
-+    return ret;
-+}
-+
-+const VMStateInfo vmstate_info_ghash = {
-+    .name = "ghash",
-+    .get  = get_ghash,
-+    .put  = put_ghash,
-+};
+     /* first pass of option parsing */
+     optind = 1;
+     while (optind < argc) {
 -- 
 2.32.1 (Apple Git-133)
 
