@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAD4FD45FA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6629CFD45FA
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 23:22:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvO9J-0004Md-5X; Wed, 25 Feb 2026 18:18:33 -0500
+	id 1vvOAc-0007Rg-I6; Wed, 25 Feb 2026 18:19:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8Z-0003Sh-1X
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:50 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAa-0007Qg-JA
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:52 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvO8W-00036y-6y
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:17:45 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48371bb515eso3588505e9.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:17:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvOAZ-0003UQ-0O
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 18:19:52 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-483a233819aso2862595e9.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 15:19:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772061462; x=1772666262; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772061589; x=1772666389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OP5Mv3Wzkuhv98as4xw1IeO2sLMsxkiyChA8fkXY4KE=;
- b=BpuKwIJEOgT2ohrBdWUEcEv4qxHsKEWowaw2gYn0utzoJvFmE+LcAw2VV7+m3f5gIx
- HjC4ZbEuwfdObFBNO+1mHZ7Y92+iRo3AQomLuXyYJNNOuZIzJFu4HUp9Ty/+D5MG+8Bb
- WQqh9FxTOFYmzLZwDHSGoazWroKrK/MGgIJZTu46jTomNUlsE4O0jY9u85Zwlh8ut297
- JiC3W/nit34g1TPliaxyTqUIzFWm8OmwhZsUiVpYT5kVCAwk3VgFc+ttPDLym99uWGZl
- TkGhIFOxf4ENyhczEY/5abg6EKSQNYHNKNgXlE8K/GifptWs40ZMuMCIZqXW76107HOq
- YJ1A==
+ :reply-to; bh=3Tr/RjfOe6IjCItdEvRBAstz9dZRVJOfGHzOcEgiwtI=;
+ b=H/Gd1rNQOjIS87vVCxK6MjdHbEsagacOw+18IuTaxLyO4GnY6aIs61k743wMmOXJm2
+ 23YEXkTZVrZnJp3PGMP+35mGxkzYK7gDEfRvC+BnWZxDCwn+LwrK3sesgJV4JtYiqpuT
+ X4NrabKZekDcnWbFdQLEo8lW625cCcqKzvO8bEaHM80FP2NVCqOX6kZFLLdyVhPuptpy
+ 6QLWfOHqEK3+f0ts379kFaJr8t7p8EZirQvXHcc77a1WXGngRLbH9sSMpkE11F/Hj60v
+ 0OnfNU7kjI/SrsQtr47Zd/6pdLoUkmfbIkm+ylWexI67hQr4AXPQabIWWWsIdte+1Ft4
+ IS2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772061462; x=1772666262;
+ d=1e100.net; s=20230601; t=1772061589; x=1772666389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=OP5Mv3Wzkuhv98as4xw1IeO2sLMsxkiyChA8fkXY4KE=;
- b=Xs9OTfMV2w9QmdKmaIGU0Ia+YyjwXVLlKSN9G6sbgW6K/YyCm7fJ4XKCqZK38p8o/N
- lo/vUisX5ANALc4YjbpUFRWYytHYu7LM4lHNuoIM8gTEh2cGbzWdWWUGBarRG4YY1VcB
- pV1WGlBKl6txuy7P0pvFyRPbmjYBq4MTsvdC4wzhLLWivnwMyiqOFez9zlnnkk6WWGPq
- vs/BpZq+0xTTmJjr/QUdE3ppAMIdV4xZ/OGplX4JZ9bRuvdIt+lwFnCmVlq1RqVg/csH
- K+/MUst/M7Q9yoK6lC0YTPgTk33lKXCDptDZERJROZFlOPUq4hCjlJvaOxl53U6/WYA5
- zylg==
-X-Gm-Message-State: AOJu0YzIgjBucGJj+cnximSwQ9SyMccsg+ufqB/i7yccUHBU4Iunvp1h
- 1toaIM998caYKdhbJZZbOfAtIfm3mc+RBO4gZ3MH2qAwamhN2vtEqbF3V09NYHgtq9BGvXe22xB
- bT6ZpiWg=
-X-Gm-Gg: ATEYQzz7IkIYmjmBQBPstYhtDz9FS+BcX4mRDyxL84/u9nwz8QoYwMejNgb8jyfBYET
- lsJ98ixDPrqzkgWOpOvWo/CehegoMyYyjADhgxDvI11xKv6TovPeOD5+kaHq9rVla5pm2KO+gHS
- YL/vziguJUVxZliw4bG/NU6Tgd18BUDI3URatwAQXPAzfJvZwL0wb0sMTlXmK8fxfB2DutQkNqu
- XXNFpp+7ZHvEUW6ybTpbJrZnsNlSd9IkDYkgmM8g5LbPlTj5fqesnE9bbQn7xtbm2C17cBCHjR3
- pMUNmEP/lkTEnmyCBpiHE3th7WPJ+zDu+uBkjxMEKrCqwUu+iap3WrMS4ZOQZy2z/c0SIv4ABbN
- QxdwnbrAWaJ0gBn9m02pkmEDtDy5IYjjdmNWK74EQH41jHkecOYKknlNwsEEqImEa7zTQaXivjw
- lozz3jPAM5cJgDwdpQdzIcQqZ0fUTH5QVpWKwMBz+ckWfxq/6WXcUJRmDB9WZGUoEZZyJpAr1I
-X-Received: by 2002:a05:600c:820a:b0:477:fcb:2256 with SMTP id
- 5b1f17b1804b1-483c3dd7940mr1324325e9.17.1772061462369; 
- Wed, 25 Feb 2026 15:17:42 -0800 (PST)
+ bh=3Tr/RjfOe6IjCItdEvRBAstz9dZRVJOfGHzOcEgiwtI=;
+ b=KCPAU1HesDAzxejJO/BLl2pzZS5+V18xGOrzs/YFTfgCmjAWLHC7ApZQuQrBb747TA
+ 8E7yxolcotGruU/zBB/n4lFq2Uk3mTKY0Bn+CS3JPgCsDyNq9K4N9fDcLckeeyTdx5PO
+ WA9uGvdpgGI9fkLH8+nfehC+TRYVWOibcR82hzIKxe9Q0mEFn/lNVCFy3dggfhzzXiM8
+ CPxYijmMAOpSAdfumcTLYoQObZEBhQoMVmHPnxJ9v2eAvnJuJtqkvBtCcjXWEzugeM52
+ UmuO6vD1pH1RtzC59A84WyIdfaiOjYADWAHkwq9N5Vlp6nq13Z06+1TbpjxZJDHmjqkx
+ /riQ==
+X-Gm-Message-State: AOJu0Yyv5VzVZMJldIFOJarpC1f1PaII062KKS/djNAErcAiDnEWlGg/
+ OYiBQV+b6PDpTMgP7GARtD0lnCsebKwe4uYeY/167jcJWZC+UgM44ZwbE6DJitSvqV1uLTiX7Ov
+ Ol9u22Bc=
+X-Gm-Gg: ATEYQzxA1YgGSjHQwn3TNz3P2QUBMPKWcwVTqHgVIuDSXLv15IdtzIYBRCW26EEC29U
+ DoqzNp6e4gKPVY1V11GPyDsTBS75lpJQbhipHdREdLSp4X6vI1FrVrBkBiwARrLwN4M1emg5rqQ
+ 40D1YvWoq28W+R2VphKjul/j5E1RAvKkBCAv1vQWUKy1wP16rN4GEWyZT/dInNkA0VoP+hNqQAZ
+ //DyKJaT8IN6ciWU7IEgSb6cv6I9VWs2yC1jRUgSGH+MzV2N+3TEuz6GRIB84zKDrp6e1k8pf6i
+ SYFpRlz1yr+hMHJcXyx5t5Y7CwxSnBdOfNTKub7LRxZlbIO1q+bZlrGo+mwqoruclcYW6Ax+ZaF
+ 8W3YB3bs00OuuR37eiZZ0l/5gGhsxfwQhBHZIlnlWT3pA3CkBipg6IcXZ/RNNJXKMOZ1n2B8L+4
+ 364Ro73YWxv3teTsXTi4ZicehIBEPh5C3gtk4YB5yo9vVBB9GorXavRioWBGWBVz8yeuJ7/70l
+X-Received: by 2002:a05:600c:468b:b0:483:c35d:367f with SMTP id
+ 5b1f17b1804b1-483c3dd6fd2mr1468025e9.21.1772061588932; 
+ Wed, 25 Feb 2026 15:19:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd70e6c9sm78277195e9.8.2026.02.25.15.17.41
+ 5b1f17b1804b1-483bfb77437sm21740475e9.3.2026.02.25.15.19.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 25 Feb 2026 15:17:41 -0800 (PST)
+ Wed, 25 Feb 2026 15:19:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/70] target/riscv: Remove empty target_monitor_defs() symbol
-Date: Thu, 26 Feb 2026 00:13:31 +0100
-Message-ID: <20260225231411.96482-32-philmd@linaro.org>
+Subject: [PULL 49/70] target/or1k: Rename 'openrisc' -> 'or1k' in meson.build
+Date: Thu, 26 Feb 2026 00:13:49 +0100
+Message-ID: <20260225231411.96482-50-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
 References: <20260225231411.96482-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,42 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer the stub target_monitor_defs() symbol introduced in commit
-bf957284006 ("monitor: remove target-specific code from monitor.c").
+Follow commit 62822fc7e0f ("target/or1k: Rename from openrisc").
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260219191955.83815-24-philmd@linaro.org>
+Message-ID: <20260219191955.83815-42-philmd@linaro.org>
 ---
- target/riscv/monitor.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ target/or1k/meson.build | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index ccb7eb44d02..a9d31114442 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -244,19 +244,6 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
-     mem_info_svxx(mon, env);
- }
+diff --git a/target/or1k/meson.build b/target/or1k/meson.build
+index cad8c1b1ae0..cc912ee6cf9 100644
+--- a/target/or1k/meson.build
++++ b/target/or1k/meson.build
+@@ -1,8 +1,8 @@
+ gen = decodetree.process('insns.decode')
  
--/*
-- * We have way too many potential CSRs and regs being added
-- * regularly to register them in a static array.
-- *
-- * Declare an empty array instead, making get_monitor_def() use
-- * the target_get_monitor_def() API directly.
-- */
--const MonitorDef monitor_defs[] = { { } };
--const MonitorDef *target_monitor_defs(void)
--{
--    return monitor_defs;
--}
--
- static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
-                                  target_ulong *val, bool is_gprh)
- {
+-openrisc_ss = ss.source_set()
+-openrisc_ss.add(gen)
+-openrisc_ss.add(files(
++or1k_ss = ss.source_set()
++or1k_ss.add(gen)
++or1k_ss.add(files(
+   'cpu.c',
+   'disas.c',
+   'exception.c',
+@@ -14,12 +14,12 @@ openrisc_ss.add(files(
+   'translate.c',
+ ))
+ 
+-openrisc_system_ss = ss.source_set()
+-openrisc_system_ss.add(files(
++or1k_common_system_ss = ss.source_set()
++or1k_common_system_ss.add(files(
+   'interrupt.c',
+   'machine.c',
+   'mmu.c',
+ ))
+ 
+-target_arch += {'or1k': openrisc_ss}
+-target_common_system_arch += {'or1k': openrisc_system_ss}
++target_arch += {'or1k': or1k_ss}
++target_common_system_arch += {'or1k': or1k_common_system_ss}
 -- 
 2.52.0
 
