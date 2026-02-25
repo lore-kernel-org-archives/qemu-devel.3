@@ -4,71 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB5DFD45EC
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FBFFD45EC
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvM3o-0006LT-6l; Wed, 25 Feb 2026 16:04:44 -0500
+	id 1vvM66-0000dA-FE; Wed, 25 Feb 2026 16:07:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvM3m-0006JZ-CR
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:04:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvM3l-0006pR-29
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:04:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772053480;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y3e/pOQjbAcyPrSH7LkACdvDung2V+mH/sGj9ChXuX8=;
- b=OaMJAQLJzBr3NzbGa3axEgvhqkHjyfR0BiNHfygQ/f73JBsCehR7SZbdFgCR+zl0NTjzfO
- u60CAOhlL0cb4Clj6mYhaHgpzRS1Gl7jnSeCjGbefPz+aTH6561QyIkHas05weuAyGR2hA
- 96vEE8sK9PldbF38i0NDLc0437MagVI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-atQV9V-kM8OOS__zm7gVxg-1; Wed,
- 25 Feb 2026 16:04:28 -0500
-X-MC-Unique: atQV9V-kM8OOS__zm7gVxg-1
-X-Mimecast-MFC-AGG-ID: atQV9V-kM8OOS__zm7gVxg_1772053467
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D358319560A5; Wed, 25 Feb 2026 21:04:27 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.89.212])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF844180066F; Wed, 25 Feb 2026 21:04:26 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 4/4] python: add formal python3.14 support and testing
-Date: Wed, 25 Feb 2026 16:04:15 -0500
-Message-ID: <20260225210415.972192-5-jsnow@redhat.com>
-In-Reply-To: <20260225210415.972192-1-jsnow@redhat.com>
-References: <20260225210415.972192-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vvM62-0000cD-BP
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:07:02 -0500
+Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vvM60-0007Nf-Mz
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:07:02 -0500
+Received: by mail-qk1-x742.google.com with SMTP id
+ af79cd13be357-8cb3dfb3461so5201785a.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772053619; x=1772658419; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZXlQ2dLvjMSsKM90KJPxBcZL5j6I5sE3kZ8dwp4joco=;
+ b=YNcWWDM6dO+ovKT5ryjRKwKa6hyJdIR7/7ma/VINaDrGVRrlblTY9ekJUN8ZaMphr7
+ V7j2Z9yRNE3+TFr+KGWVcbQOonFLO5Sp2diWmoL2j6LSIikMhFcrVjXYRfiVHGdk05sn
+ fbUKxu1qEBUdmNMlsn93DwlaGqhIMFdYLttLusnUOoWyGoQdrXyaFBnPviP1Y9Ukj9Xw
+ rGSABIjQehGVP7vxJhMM6h9v44kiOxLin/bidJ7HwVqDf9lMSOKqiwFkSLSUUQFKVCu3
+ Ezp+bxobC4JahjtYYIIBy5TxksL6dHgSQBUV7MUhK/U0e8pgyM1p5s9WTAl8oOZFnR2v
+ nSMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772053619; x=1772658419;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZXlQ2dLvjMSsKM90KJPxBcZL5j6I5sE3kZ8dwp4joco=;
+ b=J2EDzrgO7RHjm4kjeqWCMXRRFmKM3ohuzsA9bTeFgwrpOltlGYSQKVYyUdAGoPhU4w
+ AYFT+MSZmPzrvYRLpA0qKJ6t1EbOCrYeVF9052affGAq7aEh8Ib1yk5JkeWffTmnYjBi
+ mjAvTMDYYfM2nRXddH0qu29XYFYlKvIuhZ8N+I6r029jsbb/auRhVo5F8j/skziTA015
+ I3rwPNZtXnWTjfAKzBp6xx8gn1XRKQCgbYCLkQ0CuNJipzK5Nm22xFyjIfqAnZfbF7+t
+ YOH6akGSJYAluKz+TGzl1DKn7j/kLnT5l3WrfZae5zWd0DSEZaOH+Y3cW8ml8FaSK1fC
+ biCA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVIIX5/kJgwjLvdkH5H24XdYSGmxafndE7vILtVnk1ttPv4JHBppo/3s5o7w9CcehTiWDVOFP+RTMJ@nongnu.org
+X-Gm-Message-State: AOJu0Ywrfts6M29zr/JKK6waHgP/lfqZQ9eQJP/PRMsw9ovZxzVgTmU/
+ HDOPfyMHBJU0impZVajzn4Ffbxuop/sBSckxu+7RSSlkCQYgj1uzfwVUsU/jNMsTThg=
+X-Gm-Gg: ATEYQzzQSY2E4SXGLtyh99ZzeQ7+ywgfLUSg0hF0rLOueaOMHcKu+9hH0mOKo4t5l1E
+ frV2HK1OnsVLnlvOjoOuhXypVPgxbqfOMyP8R6wyO81nD8bTuD6uPn58D7BWTvFvvxRW2bETdWf
+ UJ/WmmgMQnKx8zt2CStmf/LUmmQSxYUgddyujQiSqJlGcEEGTu0LVlVYElYHtoDeH7G3WUmUbeA
+ 44rnboQMu+/Vlek3nc2tW70nLYuueAkhQC06eHuyaEwsiZOs7XA7qEuZrb/y207SQ9g4EUGac20
+ 74xLwp+8LdBTUhQES2rejkfRL0HxqNSHbJHWOUGs7qxl64XmOwWpWcfJCYuqkYF2YfZmkpWRySS
+ G020QA/sJIjzPX6iyjknzo6HJ3vgUmosxoqUy/zTw9Lxkn3ZLvmIDzj4rKPNw4rlPD6319AZ2qF
+ xdhZS/MbIIN3+mCDYhoRrU93fNU9wRjTW4OKxnHr93SM5pHdY=
+X-Received: by 2002:a05:620a:44d2:b0:8cb:4f63:dac9 with SMTP id
+ af79cd13be357-8cb8c9cdc4bmr2386208285a.17.1772053619241; 
+ Wed, 25 Feb 2026 13:06:59 -0800 (PST)
+Received: from [10.34.149.227] ([172.56.178.189])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cbbf66f325sm26634985a.16.2026.02.25.13.06.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Feb 2026 13:06:58 -0800 (PST)
+Message-ID: <bd43a2b1-2e79-4238-8d11-8f58de1c189e@linaro.org>
+Date: Thu, 26 Feb 2026 08:06:48 +1100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] fpu: Simplify OCP FP8 E4M3 NaN classification in
+ parts_canonicalize
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260225110802.1217946-1-max.chou@sifive.com>
+ <20260225110802.1217946-4-max.chou@sifive.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260225110802.1217946-4-max.chou@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x742.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,49 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- configure        | 4 ++--
- python/setup.cfg | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+On 2/25/26 22:08, Max Chou wrote:
+> The OCP FP8 E4M3 format has only a single NaN encoding (0x7F/0xFF),
+> Replace the indirect check via parts_is_snan_frac with a direct
+> check of no_signaling_nans to make the intent clearer.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>   fpu/softfloat-parts.c.inc | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+> index 3c323c0cec..5ef7e2d921 100644
+> --- a/fpu/softfloat-parts.c.inc
+> +++ b/fpu/softfloat-parts.c.inc
+> @@ -245,8 +245,8 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
+>           case float_expmax_e4m3:
+>               if (p->frac_hi == 0b111) {
+>                   frac_shl(p, fmt->frac_shift);
+> -                p->cls = (parts_is_snan_frac(p->frac_hi, status)
+> -                          ? float_class_snan : float_class_qnan);
+> +                p->cls = no_signaling_nans(status) ? float_class_qnan :
+> +                                                     float_class_snan;
+>                   return;
+>               }
+>               /* otherwise normal */
 
-diff --git a/configure b/configure
-index c4837eba2b1..ec591a89a1f 100755
---- a/configure
-+++ b/configure
-@@ -527,8 +527,8 @@ first_python=
- if test -z "${PYTHON}"; then
-     # A bare 'python' is traditionally python 2.x, but some distros
-     # have it as python 3.x, so check in both places.
--    for binary in python3 python python3.13 python3.12 python3.11 \
--                          python3.10 python3.9 ; do
-+    for binary in python3 python python3.14 python3.13 python3.12 \
-+                          python3.11 python3.10 python3.9 ; do
-         if has "$binary"; then
-             python=$(command -v "$binary")
-             if check_py_version "$python"; then
-diff --git a/python/setup.cfg b/python/setup.cfg
-index e5bf498f0e1..80975933971 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -19,6 +19,7 @@ classifiers =
-     Programming Language :: Python :: 3.11
-     Programming Language :: Python :: 3.12
-     Programming Language :: Python :: 3.13
-+    Programming Language :: Python :: 3.14
-     Typing :: Typed
- 
- [options]
-@@ -162,7 +163,7 @@ multi_line_output=3
- # of python available on your system to run this test.
- 
- [tox:tox]
--envlist = py39, py310, py311, py312, py313
-+envlist = py39, py310, py311, py312, py313, py314
- skip_missing_interpreters = true
- 
- [testenv]
--- 
-2.53.0
+But parts_is_snan_frac also checks snan_bit_is_one.
 
+
+r~
 
