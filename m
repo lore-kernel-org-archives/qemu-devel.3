@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C9DF55454
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 04:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E07F5545A
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 05:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv6sN-0003hA-8p; Tue, 24 Feb 2026 23:51:55 -0500
+	id 1vv7Cy-0006u4-Mr; Wed, 25 Feb 2026 00:13:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vv6sM-0003gx-8J
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:51:54 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7Cw-0006to-Jt
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:10 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vv6sK-0000e5-Ok
- for qemu-devel@nongnu.org; Tue, 24 Feb 2026 23:51:54 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-79801df3e21so61709437b3.2
- for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 20:51:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vv7Cv-00043K-0C
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 00:13:10 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4837f27cf2dso53081585e9.2
+ for <qemu-devel@nongnu.org>; Tue, 24 Feb 2026 21:13:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1771995111; x=1772599911; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SYzPhoyo9q1aOgv+RISAC6VG8zgRhjacisSdefDTrfw=;
- b=FG2eoS+9zdO4PCa6h+6haRo2hTRv2wOEFeB9gG4WksmCbjat4JqdourNG0mLuTy1/U
- 4Uzj5EBbSBHQZ8a2E2Z+JA2MlgvmNLHfY9V3ssf2qv/BPCK7e5DKQ+BhzZJ++XJys/Ul
- GG5FJGRfVcZaIhmUZZO4kzDYq+V2Y392KVUufI28UUaw5/9bIxPgzGVycQN9DdDu3C3O
- 8OuBbqwpN8t6OEkU0RLllFnWtlK+v7vXq9yjA/EGdy656V7RAM79MGMtPl3Y3CS6dCKQ
- mWDXQwGF9baafKSmg2Yrlf9e2ruwORkWvTR+v36Gv87FvYJNhqenlAVFYEDAoZntc4Tq
- NMJg==
+ d=linaro.org; s=google; t=1771996386; x=1772601186; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=j0v0q58T93WLY+QFmTAFfQHATj0wMqCjYTuLixMjNSE=;
+ b=jGuaDM73zkKDJ+ixHFa6e+Iazgz2/9xd7f5iehoHHePkchRhzpsYa7BLsuWiAFx4VG
+ 1d1nPqHZozHvqwKn8sNrVPqhzgNIrfumXOkPHTfPNR2rWgZnNqUDoq/XGRcidYXrTYAU
+ y4+G9HjX4BDU21k5mbuhScESefY/3w4W4pTgVvQ4XzCpq6gBZuEifdBXj3+5/iPTCDuZ
+ pp3ymz9okWPNSLsnAyTLbCfhXH+SWkddlkxwwzZq9OW/Plb5imDr0vG0sP/sSGhaMp1D
+ +C9fwG5YXXpJy7NZX2qyKynxAm8jEqFse2o/VmkEnWWyOZC1mHwMMshhh7a20zH3/dSW
+ 3k8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1771995111; x=1772599911;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SYzPhoyo9q1aOgv+RISAC6VG8zgRhjacisSdefDTrfw=;
- b=mrDfUWvr2ZSSbkA1kaAoWM9P64cwHfOI8ML102AkMudoxXcWKoaQq+9aaZFEBovcNT
- aQsH4Gk9lba7fUADGTlcAKKD3pJLA9YYO5d5kS+ihst+lf+2fvObljR6F7v+ZuYZI9MT
- 277axeWXNy+681wV9A9b4X1N8VATvCBu1C4VQIxUuoCjJW/UEP/8H6FXGhxjw0q4fkJa
- Zq3T0pQzGz1czFiOXw2X2mhJjgyzD4Er2m+b/WrZmuPSTubmMZe5sEyg3rsp2j1HLS39
- +MbVrqmbdQmtPW59eiKrGfffXosf2wVS4qtvcu+Pl0qC2K3toPeCpV/6joXQ+2JyT4h3
- WvFA==
-X-Gm-Message-State: AOJu0YyxXxc3MLYVMiteSBHWtFzXcP+O8JnudslUbs7aNBD/QYmy/Vos
- GhIAMl1lkudDuSElXiAOg7Br4RsulMbdXO8TUnAWp48Kj/2OV8GjQQ3e9AbUHKW8+zfABeOOZh0
- GWL2bcjM=
-X-Gm-Gg: ATEYQzyjgp04PxYqc9KNHmqTC+uZ7sOVePzrg63vWV11nUvZ51ZEuy0/oso/6X2FjQU
- xquYRUNOT2KB9aXccNeEp9TyxX8fU49/b3iQG4y9Rb5nsyxLA84wYPWl5CaamzKbOdsToQ6ggJS
- YjF+FFjEeEJr10snuBQkmFX3QP3WiOk+bhUIVwpeQ83uJwu41EsijRVPYADZ3NTVw4IvUgjqMGh
- K5h0nPYjyZ6EN5fLKgEUzG0CtRWkHZ2+AqRIKpF+U7zIcPa/ZwLfIHh+gk9GrnGEK7JAEUKQ5RL
- 6YW7fi5Gh9UY40/F3CFiA1fZ6C8S9d9sSnNArcGZEc8ocGAI/9hMmNW1KPWCH3rrvxH50biKDCS
- tarbHoMjhiToTpggNpZzbcH9nryHJZywk1RVzQvlkcpuZbLJIVE0aDViFMe8i9PdrjBCLZCLuqe
- fuov/hDdUTE26xeJS3c5aW7BB0qVconXZXZmZ6Ch+LvODVpw47cvugGBlvmz/wTH8=
-X-Received: by 2002:a05:690c:e3c1:b0:798:6542:30f6 with SMTP id
- 00721157ae682-798681c5a39mr10695397b3.37.1771995111216; 
- Tue, 24 Feb 2026 20:51:51 -0800 (PST)
-Received: from [10.34.149.227] ([172.59.192.107])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-79862083774sm9034687b3.14.2026.02.24.20.51.49
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 24 Feb 2026 20:51:50 -0800 (PST)
-Message-ID: <dd2a1db4-f2e5-4273-87be-c5a1e76bcd63@linaro.org>
-Date: Wed, 25 Feb 2026 15:51:44 +1100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] hw/virtio/virtio-qmp: make compilation unit common
+ d=1e100.net; s=20230601; t=1771996386; x=1772601186;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j0v0q58T93WLY+QFmTAFfQHATj0wMqCjYTuLixMjNSE=;
+ b=Qyoj/lS7iCwHNivLI11Y2WD/FniWZxCcuD/G7yE8tfneAbzSnkYIx0xijU713OnEtw
+ uUsFi4NSgjTf2zHMAlqQ+OHf7ErlrPdpHAnxp1jK1BcUg67zMFF7LGJHJqIm9JUJex9U
+ 1vcMmZoDaPOEPauH7Kgaf695nHg8+Wcz4oZGs+Fxyh7uEZzAmS04+dDHZ8ywti8P9/26
+ AFoO/L95+4Bjm818VbbJ9Oe3ebQM5G6YlkyenxvB0yjsSAl03HrzUl5JmYP8j4cNGxvu
+ 6OMt7LSe+OQt5lFPyswkrHfywNIPCWJkTwCZ36Ze53+9HuE21UGhB18ZWOVqYp8WAsTJ
+ ZyFw==
+X-Gm-Message-State: AOJu0YxGCqJRjeoZBdmJV2/TJOTqHmRI4j//Aiyy1GsqWAMARDY5Xun/
+ 1Rvtu7cr5S1uxyIe3pps/J9wftguAUeVCrmi3BD14ixMJJ4GGFVplAU4fnqbukng61LJUNEEoZW
+ 7q+emFn4=
+X-Gm-Gg: ATEYQzx3ZrSkhqm1yA+h1knSDOeTGfE7yAyy1uhNh1QpQuF35YPOqcm2ZLLL/dJWmiH
+ OyC+wbMm5ds2CjHS931w2mKfRn3SVsxWVxwbHpGIHwO7tizhvLRtql7dagrQRAZl4f9ywhlZ1a6
+ W0+0pBWumvAm4tJE9amB8ixoyJULjaRaY+XC8w14drWppRXjiwQb43wlXCxuRxicQt1cbVeFZqM
+ XOqeZ2J60UC+xf4nCOWbs0EnndUPWfg/YdqYvaimrLl5SeyItllWcEguO460KtrgKTO4PfPCpT4
+ RWywYrJ3clPenzU6FoZ8zBTLarXpx9qAO4iTRxt3DrvYPnRuRcF1Bv/p3NvmMpSj6beABqv/dzT
+ g5gy/CCVu1Fl+pbUndw2Rs9jirQVgt9dNdcZ9ZUJ1LQrwKk77iCosOn8OqTzucZbvGRKCwdXUah
+ pVNSczQYoovDyj34Inmxu/my42TG4ObQ/dn6xLIrksmK6T/fuuvCTpOy+hvKLU672ddYq4np4Q
+X-Received: by 2002:a05:600c:4fd3:b0:47e:e20e:bb9c with SMTP id
+ 5b1f17b1804b1-483a95fb0a0mr214322895e9.8.1771996386044; 
+ Tue, 24 Feb 2026 21:13:06 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd750701sm46374715e9.11.2026.02.24.21.13.04
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 24 Feb 2026 21:13:05 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-References: <20260225041948.52929-1-philmd@linaro.org>
- <20260225041948.52929-6-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260225041948.52929-6-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: kvm@vger.kernel.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, xen-devel@lists.xenproject.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/5] accel: Try to build without target-specific knowledge
+Date: Wed, 25 Feb 2026 06:12:58 +0100
+Message-ID: <20260225051303.91614-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/26 15:19, Philippe Mathieu-Daudé wrote:
-> From: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> 
-> All compile time conditionals have no impact at runtime, since they are
-> representing only possible features for devices present at runtime.
-> 
-> In case they are not present, associated features table will never be
-> used. In case they are present but some features are not, matching bits
-> will never be enabled, so those entries will be unused.
-> 
-> Thus, simply expose everything and call it a day.
-> 
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   hw/virtio/virtio-qmp.c | 70 ------------------------------------------
->   hw/virtio/meson.build  |  2 +-
->   2 files changed, 1 insertion(+), 71 deletions(-)
+Code in accel/ aims to be target-agnostic. Not all accelerators
+are ready for that, but start by enforcing a few easy ones.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Philippe Mathieu-Daudé (5):
+  accel/kvm: Include missing 'exec/cpu-common.h' header
+  accel/mshv: Forward-declare mshv_root_hvcall structure
+  accel/mshv: Build without target-specific knowledge
+  accel/hvf: Build without target-specific knowledge
+  accel/xen: Build without target-specific knowledge
 
-r~
+ include/system/mshv_int.h | 5 ++---
+ accel/kvm/kvm-accel-ops.c | 1 +
+ accel/mshv/mshv-all.c     | 2 +-
+ accel/hvf/meson.build     | 5 +----
+ accel/mshv/meson.build    | 5 +----
+ accel/xen/meson.build     | 2 +-
+ 6 files changed, 7 insertions(+), 13 deletions(-)
+
+-- 
+2.52.0
+
 
