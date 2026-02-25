@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159AFFD3773
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70134FD3773
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 16:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvIAH-0005fF-8G; Wed, 25 Feb 2026 11:55:09 -0500
+	id 1vvIE4-0007U7-G7; Wed, 25 Feb 2026 11:59:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vvIAF-0005eY-JY
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:55:07 -0500
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvIDz-0007TY-Ms
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:59:00 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vvIAD-0004Z3-W8
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:55:07 -0500
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-506a747448dso57849711cf.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 08:55:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvIDy-0004tj-AI
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 11:58:59 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4398d1f06caso1497489f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 08:58:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1772038504; x=1772643304; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=uICZUx9FRs67zj6Fwdi31378fhveR48w7JtSzkOE5cE=;
- b=Fjkris1ZbgB8E7xq63boJn9Y+T77+N2v4dByOOu0oH6afhEUlz75OCySyuQUXBre5j
- z3IiQG+WQeklBSYM+B+eG3YiNiykjTht6XuCg4LLXC8NfP6DEUQ0QAcovq0kHKR4B4GU
- /KSB1F6vnTDlE2gpyCbeITm8AQWvp/+kubkC7AZ7YdR7ne/sJI9z/uS7k4YuPanuiHOw
- CYsq/5t+sHrBiREXxGXHQUPxQdJxuIiv70l4qjluaBTwxCMPZSYjWlWqBna+AJmkDdL6
- hBcTL2DV88L03CmfJxJ9Ek55jCLqlp+aFx4b51Tg/R5p0ikfXu9EkEV/j3fL9POds1Se
- Mj6A==
+ d=linaro.org; s=google; t=1772038736; x=1772643536; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VFK6sLlF2XSCQ+r8R/LXiYEhC8f1Oid2t9jg1lRs+Bo=;
+ b=SZ2CL8NX9vt0qUKFrsWgJtH10h4y/gspgA+6wfcodOal1755vQE6NWXmXmThNCbeAq
+ WK7US/cbuIRAf2sK9tvuTP5nfdaHmPIJphFsNMpNhwGgWjN2ihuw9c6qo5o1hMUs7nJ6
+ 2FUS/vRwfo1hoJSTH0jxded7CrjV9SYGHopZE6atlwBQRHMsFQ1qQT2uPU0XdCD1US9t
+ tGQu5fDjfsQb8rH1pfGrNY6Bt+S1DvfGt9qM7Rw5nkyK6pcScenvXLQs8RkiVfcDnhoy
+ 0ZWdcFLoDMUUj98uxsjZXe/syI1bCNZKkG0Ktd51fmHoKOj260fQzMXaTIRrngNpUgo1
+ 25Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772038504; x=1772643304;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uICZUx9FRs67zj6Fwdi31378fhveR48w7JtSzkOE5cE=;
- b=pjqjSkG8fVxa4Yj1Nq7XgpqkyIb9q4DjlZgKLYoj6Ogl/OYDGdgb0Ig5Ag8Aw1uFy2
- dSFC5dVY0ecXXPjVsowe3Ucurf970cevTzmS7uqsl2b8KOUivjTKVT1BlAowLxp8zqRO
- K2DVG9GsGocuvyiEXN12WCd8XuN1x6+/qZcuJ8Ga9t9X9mbsnQPkoltTp2ZxkFEnVusD
- NAAr9hNqcr8f7AslEbGEzZtglTp/l3b+D/esCmWC5/Ic0bWI2AJmBf6y+xh+aqcwtyqu
- e9gxSIG1lpLZqyKo1gftECuynvq9kj4mMFgPttrUW86oKFZz4lwX5cJIR/rWQM6w9Sr7
- hHrw==
-X-Gm-Message-State: AOJu0Yydrdvl86aUFcidlWtMQrjyJxE28MilsOu3wjg/bLwSoIwxkYgI
- jRqcW5grN3aAk+itR5pL3ABslh5qhUgdY0Vh5yRLgPD1fbmb1zb/162RDHPiAWHA/8c=
-X-Gm-Gg: ATEYQzzqFOixqEOiwEX5f7c2UMsxv8lFjiPyfQ4eofzreeC3TSCDgPsomhi8yerEFsL
- VGi6/HpxVyOQFxgO2w2bdRRYeSpxtNKbdSYc03jPDogjXUv3bW43qh+hlV4Vij6Ippt6WDPkcNT
- z7U0nhNmk/RZTXcLkdlWaJpAveFEbWubL3A+G0Ekni+pb3+ALxtx2eQOERHo87Y98MtnWq6pbyv
- /P4v6iwnpEb+3xfqZsiwklA8JSr0kJKsM2pqWXLwTHFI4nMtyDgbrLZ3QG2Jeuy0lnEReTl1K/8
- E9lmggNrnFyKShqACdsEDLTpsl345zL/WWU6XtBfBvghw9cRFGLeEqXYAKA/LnASR+Ky/ChCu2v
- QAinfFWuXuVbMCsv1YbViNOweYKZHTeWf/2eS9tnzsOTo2dFtYIPiZMryS1vVugTHVuOnGhwepW
- fHMFjH2pHk3futYvoIAuV/T940ABrRJsr7+dNANge/UWLUW3vKzWxFlCiseqiHTZfA41ynueJ1x
- FxOjfRptg==
-X-Received: by 2002:ac8:5a4c:0:b0:502:9f6b:a3b3 with SMTP id
- d75a77b69052e-50741f9ac2emr13911191cf.37.1772038504223; 
- Wed, 25 Feb 2026 08:55:04 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F
- (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5070d6df762sm126765311cf.29.2026.02.25.08.55.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 08:55:03 -0800 (PST)
-Date: Wed, 25 Feb 2026 11:55:01 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, anisa.su887@gmail.com, armbru@redhat.com,
- david@kernel.org, imammedo@redhat.com, jonathan.cameron@huawei.com,
- linuxarm@huawei.com, lizhijian@fujitsu.com, mst@redhat.com,
- nifan.cxl@gmail.com, peterx@redhat.com, philmd@linaro.org,
- ppbonzini@redhat.com, venkataravis@micron.com, xiaoguangrong.eric@gmail.com
-Subject: Re: [PATCH v4 0/3] hw/cxl: Add a performant (and correct) path for
- the non interleaved cases
-Message-ID: <aZ8pZXR5Jv4_uB4q@gourry-fedora-PF4VCD3F>
-References: <20260225151916.390-1-alireza.sanaee@huawei.com>
+ d=1e100.net; s=20230601; t=1772038736; x=1772643536;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VFK6sLlF2XSCQ+r8R/LXiYEhC8f1Oid2t9jg1lRs+Bo=;
+ b=VsbEJoohVm47eRFV03s0YECaOOzk1tsDHbhNCb3Eih4nDXWLFP7Qwf7tkfFzFzusbA
+ KKnx488Qb9sxXHRkdaT1wobwTW+KF5PCHHMYJzCNNKOSp/XCT5kCR2vPzWLTL3kWrdMO
+ EbtSZkleufkoTebZzTmDawM7weYOP7khzcHi4Z6cIgrLPYeaq7wjSiLrV8smO9HEpIIF
+ gjObHRBIO2NeC1B0KwlbrxgpIOBGOIG4Js2c+hLiG+FQAYUg635HSzpd4q/EJmYGl2xR
+ 7mgGHMWbMlNeNz2xl21Vl6impLbhDU17aVqHQzptWw7Md36HS3LBrnJuYXexwv2WaztW
+ k5xg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKAt2EolMZslp1ojDTHTFooubpcx9K1x9a+Vo87n7Y16bgoHxwrRQ7uY0+4FsvdHObILyapPZcNBb5@nongnu.org
+X-Gm-Message-State: AOJu0Yygoj0Ng6yIZLhALSJY8GEhHpDHlRTSDBIZ8K5+V7AXfRGL5jBH
+ KP/tLuwUIqkE257X54jWD6ZvhYSjItfY05QLJugldyYpI+96goKJyRIwzrvtwPbnQnA=
+X-Gm-Gg: ATEYQzxnIjuOS4swhCsnqR/oH3rcodKCOaYZCNdpvP7vq4UEKq+eOmIU+L7ZlDZAcwW
+ LzS1mKqlEE+ENXhC2pZ0PlNI8c1eMhBe6OLP7DGD821OYS0qH3oRk+IyCLngTFjekyObw7+YSDJ
+ eQzJXb+5VZGXDg1XKW+2ZWTnge0OnziTB3hU+rdRB4X4SIGbNNDWlx9HJ0IrNOEj8nKjgElGpTY
+ kKGIDSUG12YxbStFusxpvtNUQ+6E7MQ2yf9vPgX1JY+NKn/Rw/Gt2rweu2VkE7D2RlzXpuamUkW
+ C5CaubyQUP2i+HLNFLO/6Jkj1BFl5ErdutkruXbfF1BHsgnGnlPKUF4/4XWqRq0JM1mqUqU6hRt
+ jIiC6u1j2wDFrFqk3O1SGaL024gfVouEb0J6pgzaMsdr1VE4vUxZpE2rwmgoIAPPf96IlTkNg6s
+ gwAEQiRqpXrzaoGB8CNRbG8GaHoXBfSTBd4SsM8fz0vbrz1wA7R1KBE4kR5wSNLNkSkg==
+X-Received: by 2002:a05:6000:1867:b0:435:930a:658e with SMTP id
+ ffacd0b85a97d-439942fdd59mr2139081f8f.53.1772038735578; 
+ Wed, 25 Feb 2026 08:58:55 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439927c3e01sm3668951f8f.11.2026.02.25.08.58.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 25 Feb 2026 08:58:54 -0800 (PST)
+Message-ID: <285e6eda-fc6c-4eb9-b238-47918dd611b1@linaro.org>
+Date: Wed, 25 Feb 2026 17:58:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260225151916.390-1-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=gourry@gourry.net; helo=mail-qt1-x832.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/i386: drop unused PC_CPU_MODEL_IDS macro
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20260225165400.605941-1-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260225165400.605941-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,26 +106,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 25, 2026 at 03:19:12PM +0000, Alireza Sanaee wrote:
-> Hey everyone,
+On 25/2/26 17:54, Daniel P. Berrangé wrote:
+> This is redundant since the 2.4 machine types were dropped.
 > 
-> This is v4 of performant CXL type 3 regions set:
-> 
-> v3 -> v4: 1) Tear down path changed, given that it is done differently than
->           setup.
->           2) Dropped Gregory's tested-by tag due to tear down changes.
-> v2 -> v3: Addressing Zhijian Li. Thanks for the feedback.
-> v1 -> v2: Mainly rebase.
-> 
-> Base: 6593154e7d65f61d8f9dbeb98224731b7137c53e
-> 
+> Fixes: 4c82e7b34b1bf35d97e026196f5bf10ea916512c
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/i386/pc.c | 9 ---------
+>   1 file changed, 9 deletions(-)
 
-slight oddity - i should be able to pull this in with b4 shazam directly
-on top of this base commit, but i had to give it a merge-base manually
-with this commit to get it to fixup conflicts.
-
-I would not have expected conflicts if this is the actual merge base,
-you might want to double check that.
-
-~Gregory
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
