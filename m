@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB36EEFD216
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:21:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A1C8EFD214
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvB4b-0000I2-Ar; Wed, 25 Feb 2026 04:20:49 -0500
+	id 1vvB52-0000YL-PX; Wed, 25 Feb 2026 04:21:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB4Z-0000Hl-MV
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:20:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB50-0000XO-Qs
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB4Y-0003RQ-23
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:20:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB4z-0003Ss-C0
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772011245;
+ s=mimecast20190719; t=1772011272;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l4TT/CZA0RH4hCRVtJIQOHMKvQsXao6eQQG410cyxuU=;
- b=fCUMmzzLG9NAqyG9Feq9/Jg7x8BjrWmySkOc4VInJNAw3vombifce+8pl+A6Y5tUuDYQ+y
- M5yn6lde6lOWVcYPB5uCsMmuQcR1asQsMLYxIUotqvA9aM2ryBUhrfeb/W7yY0xw1B6VOD
- 8zivn7zlY5/QkQKpuZ6Dxv79O6I7WZo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2kKWUWB3jIiIlCxv/XW+CKGBcI6/0gY/mOb+y8lr9gI=;
+ b=hoMUSNkeA5Ylqk2lmpMmgfoGrJs5TZqO6yZupwOD9nDe8skq2eyPYToHXBL84BeR8lyTCU
+ z21FVHgtYGCfNt6CWhd68pNEQC41nYq/ZcEcJUc99IIpN2twfidJ0zTjydW0gDJ6qjmNc+
+ IPL/sHs44Cu6MzLm1tftTndspubQceA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-gN-nWVRYP_StvSmt_nh6dA-1; Wed,
- 25 Feb 2026 04:20:41 -0500
-X-MC-Unique: gN-nWVRYP_StvSmt_nh6dA-1
-X-Mimecast-MFC-AGG-ID: gN-nWVRYP_StvSmt_nh6dA_1772011240
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-md6RXJr_N1uuqowE3q7cVw-1; Wed,
+ 25 Feb 2026 04:21:08 -0500
+X-MC-Unique: md6RXJr_N1uuqowE3q7cVw-1
+X-Mimecast-MFC-AGG-ID: md6RXJr_N1uuqowE3q7cVw_1772011266
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AED9C1955F23; Wed, 25 Feb 2026 09:20:39 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8EFCA195608F; Wed, 25 Feb 2026 09:21:06 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.158])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BFF9B19560A2; Wed, 25 Feb 2026 09:20:33 +0000 (UTC)
+ id 2695319560B6; Wed, 25 Feb 2026 09:21:00 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -55,10 +55,10 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
  Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 01/16] hw/i386/pc: Remove deprecated pc-q35-2.8 and
- pc-i440fx-2.8 machines
-Date: Wed, 25 Feb 2026 10:20:09 +0100
-Message-ID: <20260225092024.794595-2-thuth@redhat.com>
+Subject: [PATCH v2 05/16] hw/block/pflash: Remove
+ PFlashCFI01::old_multiple_chip_handling field
+Date: Wed, 25 Feb 2026 10:20:13 +0100
+Message-ID: <20260225092024.794595-6-thuth@redhat.com>
 In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
 References: <20260225092024.794595-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -92,57 +92,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+The PFlashCFI01::old_multiple_chip_handling boolean was only set
+in the hw_compat_2_8[] array, via the 'old-multiple-chip-handling=on'
+property. We removed all machines using that array, let's remove that
+property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-2-philmd@linaro.org>
+Message-ID: <20250501210456.89071-7-philmd@linaro.org>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/i386/pc_piix.c | 9 ---------
- hw/i386/pc_q35.c  | 9 ---------
- 2 files changed, 18 deletions(-)
+ hw/block/pflash_cfi01.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index f9e0bca9743..58d76d2d410 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -714,15 +714,6 @@ static void pc_i440fx_machine_2_9_options(MachineClass *m)
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index c0f5b9d8fad..5b9ddb20b18 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -84,7 +84,6 @@ struct PFlashCFI01 {
+     char *name;
+     void *storage;
+     VMChangeStateEntry *vmstate;
+-    bool old_multiple_chip_handling;
  
- DEFINE_I440FX_MACHINE(2, 9);
+     /* block update buffer */
+     unsigned char *blk_bytes;
+@@ -703,13 +702,8 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
+      * in the cfi_table[].
+      */
+     num_devices = pfl->device_width ? (pfl->bank_width / pfl->device_width) : 1;
+-    if (pfl->old_multiple_chip_handling) {
+-        blocks_per_device = pfl->nb_blocs / num_devices;
+-        sector_len_per_device = pfl->sector_len;
+-    } else {
+-        blocks_per_device = pfl->nb_blocs;
+-        sector_len_per_device = pfl->sector_len / num_devices;
+-    }
++    blocks_per_device = pfl->nb_blocs;
++    sector_len_per_device = pfl->sector_len / num_devices;
+     device_len = sector_len_per_device * blocks_per_device;
  
--static void pc_i440fx_machine_2_8_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_9_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
--}
--
--DEFINE_I440FX_MACHINE(2, 8);
--
- #ifdef CONFIG_XEN
- static void xenfv_machine_4_2_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9158631f761..7fe6ca64f9d 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -661,12 +661,3 @@ static void pc_q35_machine_2_9_options(MachineClass *m)
- }
+     /* Hardcoded CFI table */
+@@ -765,7 +759,7 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
+         pfl->cfi_table[0x2A] = 0x0B;
+     }
+     pfl->writeblock_size = 1 << pfl->cfi_table[0x2A];
+-    if (!pfl->old_multiple_chip_handling && num_devices > 1) {
++    if (num_devices > 1) {
+         pfl->writeblock_size *= num_devices;
+     }
  
- DEFINE_Q35_MACHINE(2, 9);
--
--static void pc_q35_machine_2_8_options(MachineClass *m)
--{
--    pc_q35_machine_2_9_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
--}
--
--DEFINE_Q35_MACHINE(2, 8);
+@@ -930,8 +924,6 @@ static const Property pflash_cfi01_properties[] = {
+     DEFINE_PROP_UINT16("id2", PFlashCFI01, ident2, 0),
+     DEFINE_PROP_UINT16("id3", PFlashCFI01, ident3, 0),
+     DEFINE_PROP_STRING("name", PFlashCFI01, name),
+-    DEFINE_PROP_BOOL("old-multiple-chip-handling", PFlashCFI01,
+-                     old_multiple_chip_handling, false),
+ };
+ 
+ static void pflash_cfi01_class_init(ObjectClass *klass, const void *data)
 -- 
 2.53.0
 
