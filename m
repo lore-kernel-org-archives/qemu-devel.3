@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 127EEEFD211
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51361EFD214
 	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 09:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvB66-00043u-B5; Wed, 25 Feb 2026 04:22:22 -0500
+	id 1vvB5Y-0001Hk-9j; Wed, 25 Feb 2026 04:21:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB64-0003x1-Vd
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:22:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB5V-00013M-TI
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB62-0003kO-Rl
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:22:20 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvB5U-0003VT-Dt
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 04:21:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772011333;
+ s=mimecast20190719; t=1772011303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=A48Ot7MeNR5A/tznDjC1sMdqc/WpvBD3v76rlGiX8AU=;
- b=G0tWbNzh1c9nD/67s2vXjMemtnjGouSJ9bnpU9SF9wNrHmu91PWwfs6z/I9QZqfaoC4u/i
- 5zFe2F3f+P9HfPpEEFj0KmtG4JpRegicY6O50hZXMt1qBt4zUerJUgFCCVLOZlkrihRe0P
- r36mje5CAhMR5tDvdSTByKFDHQfs74c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=N5G47PNfgQ5seBUdaqp1E/EwjqmlCyb4byiHzUBoKW0=;
+ b=LkNDa4Quk90iT4A4H9TEjwtelYbL0F9dDXM0nKGBolWcKoeuM5xG6k8k/rPXrqLkbxczvB
+ kPKDRUWsNZ0CoVQAEYZ/4NdIXeSJhRnlLVWxTHJCNCLiJz9WpDDQxY8aZbZJWnKyH9cgSD
+ OggJv7Cmh06sTofskShbeuXfHMLeVnc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-w6T1s_g_PuCOGogF1t31Aw-1; Wed,
- 25 Feb 2026 04:22:09 -0500
-X-MC-Unique: w6T1s_g_PuCOGogF1t31Aw-1
-X-Mimecast-MFC-AGG-ID: w6T1s_g_PuCOGogF1t31Aw_1772011327
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-SsRLB3ThOOKLGEsPmlHX0g-1; Wed,
+ 25 Feb 2026 04:21:38 -0500
+X-MC-Unique: SsRLB3ThOOKLGEsPmlHX0g-1
+X-Mimecast-MFC-AGG-ID: SsRLB3ThOOKLGEsPmlHX0g_1772011297
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB12118004BB; Wed, 25 Feb 2026 09:22:07 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86E711800613; Wed, 25 Feb 2026 09:21:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.158])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6D10C19560A2; Wed, 25 Feb 2026 09:22:00 +0000 (UTC)
+ id 9B82219560B6; Wed, 25 Feb 2026 09:21:31 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>,
@@ -55,10 +55,10 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
  Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 15/16] hw/i386/x86-iommu: Remove
- X86IOMMUState::pt_supported field
-Date: Wed, 25 Feb 2026 10:20:23 +0100
-Message-ID: <20260225092024.794595-16-thuth@redhat.com>
+Subject: [PATCH v2 10/16] hw/i386/pc: Remove deprecated pc-q35-2.9 and
+ pc-i440fx-2.9 machines
+Date: Wed, 25 Feb 2026 10:20:18 +0100
+Message-ID: <20260225092024.794595-11-thuth@redhat.com>
 In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
 References: <20260225092024.794595-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -92,91 +92,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The X86IOMMUState::pt_supported boolean was only set in
-the hw_compat_2_9[] array, via the 'pt=off' property. We
-removed all machines using that array, lets remove that
-property and all the code around it, always setting the
-VTD_ECAP_PT capability.
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-19-philmd@linaro.org>
-[thuth: Dropped the hunks that were already merged via commit 31753d5a336f]
+Message-ID: <20250501210456.89071-14-philmd@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/i386/x86-iommu.h |  1 -
- hw/i386/intel_iommu.c       | 13 ++-----------
- hw/i386/x86-iommu.c         |  1 -
- 3 files changed, 2 insertions(+), 13 deletions(-)
+ hw/i386/pc_piix.c | 9 ---------
+ hw/i386/pc_q35.c  | 9 ---------
+ 2 files changed, 18 deletions(-)
 
-diff --git a/include/hw/i386/x86-iommu.h b/include/hw/i386/x86-iommu.h
-index c526a047ab6..0a1e1ba7257 100644
---- a/include/hw/i386/x86-iommu.h
-+++ b/include/hw/i386/x86-iommu.h
-@@ -63,7 +63,6 @@ struct X86IOMMUState {
-     SysBusDevice busdev;
-     OnOffAuto intr_supported;   /* Whether vIOMMU supports IR */
-     bool dt_supported;          /* Whether vIOMMU supports DT */
--    bool pt_supported;          /* Whether vIOMMU supports pass-through */
-     bool dma_translation;       /* Whether vIOMMU supports DMA translation */
-     QLIST_HEAD(, IEC_Notifier) iec_notifiers; /* IEC notify list */
- };
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 4924aa43750..d24ba989bfc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1072,6 +1072,7 @@ static inline bool vtd_ce_type_check(X86IOMMUState *x86_iommu,
- {
-     switch (vtd_ce_get_type(ce)) {
-     case VTD_CONTEXT_TT_MULTI_LEVEL:
-+    case VTD_CONTEXT_TT_PASS_THROUGH:
-         /* Always supported */
-         break;
-     case VTD_CONTEXT_TT_DEV_IOTLB:
-@@ -1080,12 +1081,6 @@ static inline bool vtd_ce_type_check(X86IOMMUState *x86_iommu,
-             return false;
-         }
-         break;
--    case VTD_CONTEXT_TT_PASS_THROUGH:
--        if (!x86_iommu->pt_supported) {
--            error_report_once("%s: PT specified but not supported", __func__);
--            return false;
--        }
--        break;
-     default:
-         /* Unknown type */
-         error_report_once("%s: unknown ce type: %"PRIu32, __func__,
-@@ -5004,7 +4999,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
- {
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 58d76d2d410..d8417d1824f 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -705,15 +705,6 @@ static void pc_i440fx_machine_2_10_options(MachineClass *m)
  
--    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
-+    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
-              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS |
-              VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
-     if (s->dma_drain) {
-@@ -5032,10 +5027,6 @@ static void vtd_cap_init(IntelIOMMUState *s)
-         s->ecap |= VTD_ECAP_DT;
-     }
+ DEFINE_I440FX_MACHINE(2, 10);
  
--    if (x86_iommu->pt_supported) {
--        s->ecap |= VTD_ECAP_PT;
--    }
+-static void pc_i440fx_machine_2_9_options(MachineClass *m)
+-{
+-    pc_i440fx_machine_2_10_options(m);
+-    compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+-    compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
+-}
 -
-     if (s->caching_mode) {
-         s->cap |= VTD_CAP_CM;
-     }
-diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
-index 33ac0bfc97e..a57445404ef 100644
---- a/hw/i386/x86-iommu.c
-+++ b/hw/i386/x86-iommu.c
-@@ -129,7 +129,6 @@ static const Property x86_iommu_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("intremap", X86IOMMUState,
-                             intr_supported, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("device-iotlb", X86IOMMUState, dt_supported, false),
--    DEFINE_PROP_BOOL("pt", X86IOMMUState, pt_supported, true),
-     DEFINE_PROP_BOOL("dma-translation", X86IOMMUState, dma_translation, true),
- };
+-DEFINE_I440FX_MACHINE(2, 9);
+-
+ #ifdef CONFIG_XEN
+ static void xenfv_machine_4_2_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 7fe6ca64f9d..b94d1839e3f 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -652,12 +652,3 @@ static void pc_q35_machine_2_10_options(MachineClass *m)
+ }
  
+ DEFINE_Q35_MACHINE(2, 10);
+-
+-static void pc_q35_machine_2_9_options(MachineClass *m)
+-{
+-    pc_q35_machine_2_10_options(m);
+-    compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+-    compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 9);
 -- 
 2.53.0
 
