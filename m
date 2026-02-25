@@ -4,115 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D02F357DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E9D3F357DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 07:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vv9Ey-0000bj-JB; Wed, 25 Feb 2026 02:23:24 -0500
+	id 1vv9Ic-0001wf-Qu; Wed, 25 Feb 2026 02:27:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vv9Ew-0000bH-67
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:23:22 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1vv9IW-0001wN-Hx
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:27:05 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vv9Eu-0003WO-Kg
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:23:21 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61OIER9x2713432; Wed, 25 Feb 2026 07:23:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=HmXNtM
- BamyJUVROuQL9GAPYX8wVIsbw71UxQicEdbmg=; b=iodH+EWovB9fReC/OTE1t2
- nCEWmX5JEbTWPA3YFwnE2/WdouCXp7KechP8rTlZBEX2CJgyQnQF71WEuPmb+u0Q
- 61JKntWufetan5Rp24g27UDI623/CfTTblpHiK7BeyUC4Gc6Xx7ihE8uDqjO6+dR
- Vs3+8mrDRNzdWP7q0Qj7gYejZ2yBh32Un/qmiclKmOKtT/StoSpHZJv3lgVBLaun
- jD9WNp8Ml5lhjBmOOJRfhngKt+40bvQrM/YDnWneGWmLRe8P1caWkOmWurrLHMcv
- VQjDYWw00T4Jn9czU40vTkKhRaioJnDUbEHEOYlktxHud5HXEowkMW3lKxcG6CUA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf34c6f68-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 07:23:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61P4DYNc027887;
- Wed, 25 Feb 2026 07:23:17 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfsr1v1t9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 07:23:16 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61P7NDku30015888
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 Feb 2026 07:23:13 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 349BF2004B;
- Wed, 25 Feb 2026 07:23:13 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFBCA20040;
- Wed, 25 Feb 2026 07:23:10 +0000 (GMT)
-Received: from [9.124.222.235] (unknown [9.124.222.235])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 25 Feb 2026 07:23:10 +0000 (GMT)
-Message-ID: <a42777cc-6c4c-4746-a505-e98c6fec3791@linux.ibm.com>
-Date: Wed, 25 Feb 2026 12:53:09 +0530
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1vv9IS-0003xJ-SD
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 02:27:03 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id CF6E680D2D;
+ Wed, 25 Feb 2026 10:26:53 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:55b::1:1] (unknown [2a02:6bf:8080:55b::1:1])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id oQbbn77AjqM0-XPtnSQt2; Wed, 25 Feb 2026 10:26:53 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1772004413;
+ bh=LqOGOmjGi8dms2zjSSLd62KSCUTgBWa+JXrkynfUUqE=;
+ h=In-Reply-To:Cc:Date:References:To:Subject:From:Message-ID;
+ b=arioxiKyG3YkY2lVfK1ZhtFSQIxoSoGI74XmQ7sTAo6nICs5XrGkOnN8qijd98buS
+ 3ufaFiBR0jV1W0WGp8pL+b6uK+KQLZ91rAS7ZMjCYJMqAeHUFb/1DOuAbNywLxS0JC
+ UGCUrJ+OQGdVenISdUqTxdWEUfZjOPt2SH2uoomI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+Message-ID: <db7e4629-c00e-4fd6-bd3d-85f6a2eae835@yandex-team.com>
+Date: Wed, 25 Feb 2026 12:26:50 +0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] tests/functional/ppc64: Remove custom migration
- routine
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, berrange@redhat.com, peterx@redhat.com,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260204172332.21367-1-farosas@suse.de>
- <20260204172332.21367-5-farosas@suse.de>
+From: Sergei Heifetz <heifetz@yandex-team.com>
+Subject: Re: [PATCH v2 02/10] ui/vnc: disable audio feature when configured
+ with --disable-audio
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
+References: <20260223202512.1308205-1-heifetz@yandex-team.com>
+ <20260223202512.1308205-3-heifetz@yandex-team.com>
+ <CAJ+F1CJGk_ejDAd066KE1Q_WHn3tjyw2d9xpcCJE1SZL2oA9sw@mail.gmail.com>
 Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <20260204172332.21367-5-farosas@suse.de>
+In-Reply-To: <CAJ+F1CJGk_ejDAd066KE1Q_WHn3tjyw2d9xpcCJE1SZL2oA9sw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDA2OSBTYWx0ZWRfXxpe0A/jCAHUk
- kX0ryo/WBhtxudxxMYA7HzocsBCxM0vzoy07/YHPjhLBmJ93shfcPVXe9h2ITkHLUl8Bd53pjs5
- siLnOPj+m0OqNm7WCdBMW3Ta2rPcakWWC/6kU+N0ERBqaNwhGVHb0gNg1odWQgkwXh5LDi+wTzQ
- nrieQR0aUY0raaJWJlL1AMVJFhAtZqK/D2MdBCKNXVD3ZxSbHzMLzdR2lWfdB4UpOoz5YTGW7Kb
- jPBRAHILAqH5zutvpiJkbzunzdwyMf1571JW5fSQ1xzR2i+yM0cxho+TM3i0a8vkjhYvUmkf94J
- Z7qJFkS25s1+f5MRVWCyrYhiS7J3sWCTYNEZu6arOBnk0ohE5ao9B4hAMB5QzSonK+oHZFdz9QV
- w1yBWuiXio4ZzZ2d2SYi4hM6Z18pV1iPXeJV+xahJuqtowPynqhO/J9spUnrrYpIMxYwitZwS9V
- OkoKZVTrJMOvNqsaIOw==
-X-Proofpoint-ORIG-GUID: gYMrDGwxA9N72aNR0LV-LHBOdZ7VQMjw
-X-Authority-Analysis: v=2.4 cv=F9lat6hN c=1 sm=1 tr=0 ts=699ea366 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=j8CySKXDZJbOIHZBDnEA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: fnQStQ-_os0aOwLvLvOU6SuYxjWlKsQ-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-24_03,2026-02-23_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602250069
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.358, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.659,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,16 +88,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello all,
+Hi, Marc-André.
 
-Just a ping, the issue still exists with functional tests for ppc64 
-failing when run in parallel.
+On 2/24/26 16:05, Marc-André Lureau wrote:
+> Hi
+>
+> On Mon, Feb 23, 2026 at 9:26 PM Sergei Heifetz<heifetz@yandex-team.com> wrote:
+>> Disable the audio feature in VNC when QEMU is configured with
+>> `--disable-audio`. Do not compile the corresponding audio-related
+>> code.
+> Users will have to call query-command-line-options to figure out if
+> audio support was disabled. Since this is an optional build option, I
+> don't know if we treat it as a breaking change.
 
-Can we get this merged ?
+1. I don’t think it makes sense to treat this as a breaking change, 
+because it’s impossible that anything would break after an update unless 
+QEMU has been deliberately reconfigured with `--disable-audio`. If it 
+has, then the consequences are expected.
 
+2. More importantly, I think it should be assumed that a client can 
+handle the situation where QEMU does not support the audio feature.
 
-Thanks,
+See this excerpt from Section 6 of the RFB protocol specification (RFC 
+6143):
 
-- Aditya G
+"A server that does not support the extension will simply ignore the 
+pseudo-encoding. Note that this means the client must assume that the 
+server does not support the extension until it gets some 
+extension-specific confirmation from the server."
 
+In QEMU, use of the audio feature is requested by the client by adding 
+VNC_ENCODING_AUDIO to a SetEncodings message. For confirmation, there is 
+a send_ext_audio_ack function that sends a FrameBufferUpdate message to 
+the client with VNC_ENCODING_AUDIO. The VNCDoTool (0.8.0) documentation, 
+for example, explicitly says that this is used as confirmation for the 
+relevant custom feature (see 1.7.4.12, "QEMU Client Message"):
+
+"This message may only be sent if the client has previously received a 
+FrameBufferUpdate that confirms support for the intended submessage-type 
+[...]" (where the submessage type is "Audio" in our case).
+
+With this patch, the audio feature is disabled in a way that makes a 
+QEMU server behave like a non-QEMU server (as far as audio is 
+concerned). The client sends the audio pseudo-encoding, but the server 
+does not respond with confirmation, because send_ext_audio_ack is now 
+behind an #ifdef. A well-behaved client should handle this accordingly 
+and continue using VNC without sending any audio-related messages to the 
+server. If a client misbehaves and sends VNC_MSG_CLIENT_QEMU_AUDIO while 
+the audio feature is disabled, the server will close the connection with 
+an error.
+
+Also note that the behaviour described above is already present when 
+there is no audiodev (`vs->vd->audio_be` is NULL).
+
+>> Signed-off-by: Sergei Heifetz<heifetz@yandex-team.com>
+>> ---
+>>   ui/vnc.c | 31 ++++++++++++++++++++++++++++---
+>>   1 file changed, 28 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/ui/vnc.c b/ui/vnc.c
+>> index daf5b01d34..e6b6a9f4f9 100644
+>> --- a/ui/vnc.c
+>> +++ b/ui/vnc.c
+>> @@ -1072,6 +1072,7 @@ static void vnc_update_throttle_offset(VncState *vs)
+>>       size_t offset =
+>>           vs->client_width * vs->client_height * vs->client_pf.bytes_per_pixel;
+>>
+>> +#ifdef CONFIG_AUDIO
+>>       if (vs->audio_cap) {
+>>           int bps;
+>>           switch (vs->as.fmt) {
+>> @@ -1091,6 +1092,7 @@ static void vnc_update_throttle_offset(VncState *vs)
+>>           }
+>>           offset += vs->as.freq * bps * vs->as.nchannels;
+>>       }
+>> +#endif
+>>
+>>       /* Put a floor of 1MB on offset, so that if we have a large pending
+>>        * buffer and the display is resized to a small size & back again
+>> @@ -1214,6 +1216,7 @@ static int vnc_update_client(VncState *vs, int has_dirty)
+>>       return n;
+>>   }
+>>
+>> +#ifdef CONFIG_AUDIO
+>>   /* audio */
+>>   static void audio_capture_notify(void *opaque, audcnotification_e cmd)
+>>   {
+>> @@ -1293,6 +1296,7 @@ static void audio_del(VncState *vs)
+>>           vs->audio_cap = NULL;
+>>       }
+>>   }
+>> +#endif
+>>
+>>   static void vnc_disconnect_start(VncState *vs)
+>>   {
+>> @@ -1332,7 +1336,9 @@ void vnc_disconnect_finish(VncState *vs)
+>>   #ifdef CONFIG_VNC_SASL
+>>       vnc_sasl_client_cleanup(vs);
+>>   #endif /* CONFIG_VNC_SASL */
+>> +#ifdef CONFIG_AUDIO
+>>       audio_del(vs);
+>> +#endif
+>>       qkbd_state_lift_all_keys(vs->vd->kbd);
+>>
+>>       if (vs->mouse_mode_notifier.notify != NULL) {
+>> @@ -2097,6 +2103,7 @@ static void send_ext_key_event_ack(VncState *vs)
+>>       vnc_flush(vs);
+>>   }
+>>
+>> +#ifdef CONFIG_AUDIO
+>>   static void send_ext_audio_ack(VncState *vs)
+>>   {
+>>       vnc_lock_output(vs);
+>> @@ -2110,6 +2117,7 @@ static void send_ext_audio_ack(VncState *vs)
+>>       vnc_unlock_output(vs);
+>>       vnc_flush(vs);
+>>   }
+>> +#endif
+>>
+>>   static void send_xvp_message(VncState *vs, int code)
+>>   {
+>> @@ -2197,10 +2205,15 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
+>>               send_ext_key_event_ack(vs);
+>>               break;
+>>           case VNC_ENCODING_AUDIO:
+>> +#ifdef CONFIG_AUDIO
+>>               if (vs->vd->audio_be) {
+>>                   vnc_set_feature(vs, VNC_FEATURE_AUDIO);
+>>                   send_ext_audio_ack(vs);
+>>               }
+>> +#else
+>> +            VNC_DEBUG("Audio encoding received with audio subsystem "
+>> +                      "disabled\n");
+>> +#endif
+>>               break;
+>>           case VNC_ENCODING_WMVi:
+>>               vnc_set_feature(vs, VNC_FEATURE_WMVI);
+>> @@ -2394,7 +2407,9 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
+>>   {
+>>       int i;
+>>       uint16_t limit;
+>> -    uint32_t freq;
+>> +    #ifdef CONFIG_AUDIO
+>> +        uint32_t freq;
+>> +    #endif
+> Indentation is off
+Oh. I'll fix it.
+>>       VncDisplay *vd = vs->vd;
+>>
+>>       if (data[0] > 3) {
+>> @@ -2571,7 +2586,9 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
+>>                   vnc_client_error(vs);
+>>                   break;
+>>               }
+>> -
+>> +#ifndef CONFIG_AUDIO
+>> +            abort();
+> I'd keep the if AUDIO case first, for consistency
+Sure.
+>> +#else
+>>               if (len == 2)
+>>                   return 4;
+>>
+>> @@ -2626,7 +2643,7 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
+>>                   break;
+>>               }
+>>               break;
+>> -
+>> +#endif
+>>           default:
+>>               VNC_DEBUG("Msg: %d\n", read_u16(data, 0));
+>>               vnc_client_error(vs);
+>> @@ -3369,10 +3386,12 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
+>>       vs->last_x = -1;
+>>       vs->last_y = -1;
+>>
+>> +#ifdef CONFIG_AUDIO
+>>       vs->as.freq = 44100;
+>>       vs->as.nchannels = 2;
+>>       vs->as.fmt = AUDIO_FORMAT_S16;
+>>       vs->as.big_endian = false;
+>> +#endif
+>>
+>>       qemu_mutex_init(&vs->output_mutex);
+>>       vs->bh = qemu_bh_new(vnc_jobs_bh, vs);
+>> @@ -3645,9 +3664,11 @@ static QemuOptsList qemu_vnc_opts = {
+>>           },{
+>>               .name = "non-adaptive",
+>>               .type = QEMU_OPT_BOOL,
+>> +#ifdef CONFIG_AUDIO
+>>           },{
+>>               .name = "audiodev",
+>>               .type = QEMU_OPT_STRING,
+>> +#endif
+>>           },{
+>>               .name = "power-control",
+>>               .type = QEMU_OPT_BOOL,
+>> @@ -4080,7 +4101,9 @@ void vnc_display_open(const char *id, Error **errp)
+>>       const char *saslauthz;
+>>       int lock_key_sync = 1;
+>>       int key_delay_ms;
+>> +#ifdef CONFIG_AUDIO
+>>       const char *audiodev;
+>> +#endif
+>>       const char *passwordSecret;
+>>
+>>       if (!vd) {
+>> @@ -4238,6 +4261,7 @@ void vnc_display_open(const char *id, Error **errp)
+>>       }
+>>       vd->ledstate = 0;
+>>
+>> +#ifdef CONFIG_AUDIO
+>>       audiodev = qemu_opt_get(opts, "audiodev");
+>>       if (audiodev) {
+>>           vd->audio_be = audio_be_by_name(audiodev, errp);
+>> @@ -4247,6 +4271,7 @@ void vnc_display_open(const char *id, Error **errp)
+>>       } else {
+>>           vd->audio_be = audio_get_default_audio_be(NULL);
+>>       }
+>> +#endif
+>>
+>>       device_id = qemu_opt_get(opts, "display");
+>>       if (device_id) {
+>> --
+>> 2.34.1
+>>
+>>
+> --
+> Marc-André Lureau
 
