@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F68FD45F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 21:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3686FD45F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 25 Feb 2026 22:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvMuY-0000gy-D4; Wed, 25 Feb 2026 16:59:14 -0500
+	id 1vvMvt-0001L2-VY; Wed, 25 Feb 2026 17:00:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvMuW-0000g2-NK
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:59:12 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1vvMvr-0001KS-JX
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 17:00:35 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvMuU-0006ut-Ep
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 16:59:12 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c636487ccaeso39590a12.1
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 13:59:10 -0800 (PST)
+ id 1vvMvp-0007Mi-VP
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 17:00:35 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-354c67da885so33006a91.3
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 14:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772056749; x=1772661549; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772056831; x=1772661631; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KKI+XFmJIc8/YpgiWkYMFqbl4rqYuwGkumg1fGtGGwU=;
- b=xwAKz7JVJ1aH0obsGXDgLMLoPCBEHVnmMZOIegzxHqJg/gNLYG4A/KhJ8+PjzvIF00
- FDo7uiAbJKLy/TjpxdSaH3nG8dGB1cJ6O7sP7U9CJuWIiRh0jBpuYBEiVBXwVsVSkT+E
- gGqHDxRDn8KkirupQ+6OP27e2AMGYtTQb5MODBKsIUUQLXVEaAQJkLCcNf2ikbyk08cz
- yYQTz2/VPgbTN3EZGHLRX8wyQBna/vdcXqghEzo8jjxorJQ+cTm66OgMYOyBOrS5e93T
- UIU5VkBPdDAQZTE/26wpSHcGRR/4OhwP4sBn4QDN0m42TcscVDBgCke6kxAfuqkJc/ns
- 0T4g==
+ bh=R5B8ceiYaLI28ldbsGCzPzRGI2FQe3b0udAblwV+v9k=;
+ b=y0TufSiVhiDWz078GCDDrux8OA5oePlROolL32rrzX8EaYM1YmUPQ1dQ7dGOs23FDM
+ qyE6nUhIUd5zY64phGcwxVb7YULgdC4yOzdqIazcB+tKZcKK5A+oDGz+G8DlS2yTk4n6
+ VoyRtUamSD3/k/V0i1TJ4uC/61bdwHqVRHwp29CPeUM0xfSXxwAXNLyWKaZ3Ft/uDCrD
+ nMXaMH4kdFiB623y6nb6LCIIdb4XprfdMUE6OALpF5Yf+e9c8midq72onW+p47wiLuTr
+ ow4H5ABXvQcOg9uNJ56XPnqkm+6aR3phNpiP05MosFOm1hXRkdYDa24wdR1u0NmZ6ypJ
+ vOUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772056749; x=1772661549;
+ d=1e100.net; s=20230601; t=1772056831; x=1772661631;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KKI+XFmJIc8/YpgiWkYMFqbl4rqYuwGkumg1fGtGGwU=;
- b=fZRMRn07S5TnGKy3ydeRZI6Mh9w3jC9wfcetTiMr1l+tTT/VQ/0L/JtsFXZ5gQahx+
- p+3eEDo7JdKAlaoVd4SWB2Al9Xvl02Jykf20UL/ZlxUkqo1hUFkuE1jywebAGPJroope
- 2lKpVzHAvGY6fVN+CpTGfXAdDWhQzAiPgEGI3Z9iij/DJ2jfpfYpDRYAsni4oCeJtW2k
- 0ij9jnGj9V7TcOWd9lvcYjUKySGmIL0K2PV2f/bxwNryVS8/EREXpNL5QOCu92xreyOP
- ZNFdnpkKW5ACMw+GPgThyKKv2Bjnd+gPfKCY3ozNnupRTwrXSg/Ft3BI357U/siwEkf5
- 49Mw==
-X-Gm-Message-State: AOJu0Yxnfszcr1PcvJqlvW2BgcXl+RYdl3abLFvWKAzuxfCzKBIWFTmx
- IolNu4EzYZ1O51Aod7yAEoG0U2fI7IbFpWBIcuJTT7VTSxZME9lvO4lKW4cLssC6w4E=
-X-Gm-Gg: ATEYQzzueM2f3QCrPQ0pdvTkhvWkX7n5tziCo/nt7f2KPrsgyupemZR9pOQfF+Yw5dM
- zBAL4AAyoSHrYztR5JQmcrA326HX5U2vQ2h+5lTwosAzVDU9Satd6v9m62dVnNLqrVIDlWKjMVp
- DT+XAAzquU3KWAniXMW9fTSdYcs03080BFjUU3QCg14a2nlRZG6a7QCGXOuN12yL6KI6t3DwY/d
- 3G8pzMzLwyElClo+tDjOIHiwjTkm98eFOzXgdKmKQozzIupVgh6exHguMEzOMBZrkBfdJfNLMp/
- 3p4SEWTDfY545QlXP6kJUn1TwEBj95TwbG32oq8apXzJENypD6d+c1UuqjqqQx527TkeA6dXat5
- deLvPj+rE/oRAAEfzM318dfm6fOmVZXgKJdQSXNmO4jlz8jFnfg5HTEp6S56GONXBf3ml8wlRrL
- NMaFfPpZPHXgGy+GLxAlWil0o2/oZVQriTNP1HRRwzV1JvomSgQ/nIPkmgMulVqPdwnHC5
-X-Received: by 2002:a17:90b:58cf:b0:354:bda7:8827 with SMTP id
- 98e67ed59e1d1-358ae7c364cmr14485727a91.2.1772056748730; 
- Wed, 25 Feb 2026 13:59:08 -0800 (PST)
+ bh=R5B8ceiYaLI28ldbsGCzPzRGI2FQe3b0udAblwV+v9k=;
+ b=M8M9wSaDV+3l05XgE5XvDaIy+vgl8maIin2FSdzWN/jvZsVdElEHxcW+dPVCWnB/mn
+ 1bHKelEivtYwkaA37mkUL/gv59kvEkriZ4Pg82Vo8qBUqhqFCbL8xs4AGaVEGHRfuGwn
+ K51N2CFKBRyCbA4vOfpvGPd5OQMjQDAEbH4FklDkf/kgrjKORIa2RLuGXhcM5sTn+7bX
+ EkVdz2ZB8jutocnfi4gmZ7/yR9VvIwl2eAuweK1Lx/Dl/OIjhd4xt5349tp5RRrWglIY
+ 3lP+5ApJnGxzlJ0MMn8QxfV96+nam7fS07cMv9Uugoq8Pg2WJrAtAbUTS33QMBYpw92C
+ Dr9Q==
+X-Gm-Message-State: AOJu0YzUc9KRAn9R7kUmeM8AtcyCuta2O8npkJwMN2fbBA4doR6JnfA1
+ SKgB74Hl6GPDl+ygymgHx1JOBBqMExW7jBKG7yF0nnQCqUUY2ZOicdYaaexpraslxQc=
+X-Gm-Gg: ATEYQzzyBFuEOmZhxIy7aX/8zFStuzwuhl1OWIr1Yqe2RVagRwFzpYv6Re6Qxe7XxWk
+ rsDZaX5r3AWAbM5mvIuRz+aPpF0cnkX6VHNWtuSM6u/Eu/Vtt4SBlnu11gZ2h+LjjQmyfAIIYBW
+ skhyH7jZGKt2HQ4VpAnjysrRTvop3rcrTWdHQLcrWzxZyfNGjzE9u6s/TWOd4bGx4Ty6xT1/FMQ
+ +Y84KULzkaqPE2DTFTevlckBMO2XBJnLenrJTOCzQOdsjdZssDJ9zAxdY2h8hIbp/HgexX687j4
+ quFOBh2wd8Ft+4GyIp+lMcbvPrWr3UGkH3EDTcBpRhDCJTMKN5tK5zGwOaOCRnNIxr7XYkjZV59
+ 0u4z3MFSG3uhOU5tTtICfo+GIDe7VQDeN/bIKJmrkHUC/jnGOmrXftfIuj/XdleG77qADQ7Js+G
+ 5ycyv41q4BJoXpII0JieRqBZkUoNtZ87JMKdNt42iZmiPqP4EIEqAND3IfSsggL19ADeFQ
+X-Received: by 2002:a17:90b:4d86:b0:356:2c7b:c013 with SMTP id
+ 98e67ed59e1d1-35928bff336mr1343945a91.29.1772056829569; 
+ Wed, 25 Feb 2026 14:00:29 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-359018838b2sm3816964a91.5.2026.02.25.13.59.08
+ 98e67ed59e1d1-359034bbfd4sm3743960a91.10.2026.02.25.14.00.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 25 Feb 2026 13:59:08 -0800 (PST)
-Message-ID: <eeaf6ae9-23e0-4413-985f-dcff03737dbb@linaro.org>
-Date: Wed, 25 Feb 2026 13:59:07 -0800
+ Wed, 25 Feb 2026 14:00:29 -0800 (PST)
+Message-ID: <72e11fe8-9c07-47c9-ab1c-b40e26a6379d@linaro.org>
+Date: Wed, 25 Feb 2026 14:00:28 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 23/31] hw/arm/smmuv3: Add access checks for CMDQ and
- EVENTQ registers
+Subject: Re: [RFC v4 24/31] hw/arm/smmuv3: Determine register bank from MMIO
+ offset
 Content-Language: en-US
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
  <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
@@ -81,7 +81,7 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101823.2996302-1-tangtao1634@phytium.com.cn>
+ <20260221101830.2996354-1-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260221101823.2996302-1-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260221101830.2996354-1-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,33 +145,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/21/26 2:18 AM, Tao Tang wrote:
-> Add access control for command queue and event queue related registers
-> to ensure they can only be modified under proper conditions.
+> Modify the main MMIO handlers (smmu_write_mmio, smmu_read_mmio)
+> to determine the security state of the target register based on its
+> memory-mapped offset.
 > 
-> For command queue (CMDQ):
-> - smmu_cmdq_disabled_stable(): checks CMDQ bit in CR0/CR0ACK
-> - smmu_cmdq_base_writable(): checks IDR1.QUEUES_PRESET==0 and CMDQ disabled
+> By checking if the offset is within the secure register space (>=
+> SMMU_SECURE_REG_START), the handlers can deduce the register's
+> SEC_SID (reg_sec_sid). This SID is then passed down to the register
+> access helper functions (smmu_writel, smmu_readl, etc.).
 > 
-> For event queue (EVTQ):
-> - smmu_eventq_disabled_stable(): checks EVTQ bit in CR0/CR0ACK
-> - smmu_eventq_base_writable():checks IDR1.QUEUES_PRESET==0 and EVTQ disabled
-> - smmu_eventq_irq_cfg_writable(): checks MSI support and EVENTQ_IRQEN state
+> Inside these helpers, the switch statement now operates on a masked,
+> relative offset:
 > 
-> Additionally, mask reserved bits on writes using SMMU_QUEUE_BASE_RESERVED
-> for queue base registers and SMMU_EVENTQ_IRQ_CFG0_RESERVED for
-> EVENTQ_IRQ_CFG0.
+>      uint32_t reg_offset = offset & 0xfff;
+>      switch (reg_offset) {
+>          ...
+>      }
 > 
-> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
+> This design leverages a key feature of the SMMU specification: registers
+> with the same function across different 3 security states
+> (Non-secure, Secure, Realm) share the same relative offset. This avoids
+> significant code duplication. The reg_sec_sid passed from the MMIO
+> handler determines which security bank to operate on, while the masked
+> offset identifies the specific register within that bank.
+> 
+> It is important to distinguish between the security state of the
+> register itself and the security state of the access. A
+> higher-privilege security state is permitted to access registers
+> belonging to a lower-privilege state, but the reverse is not allowed.
+> This patch lays the groundwork for enforcing such rules.
+> 
+> For future compatibility with Realm states, the logic in the
+> else block corresponding to the secure offset check:
+> 
+>      if (offset >= SMMU_SECURE_REG_START) {
+>          reg_sec_sid = SMMU_SEC_SID_S;
+>      } else {
+>          /* Future Realm handling */
+>      }
+> 
+> will need to be expanded.
+> 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > ---
->   hw/arm/smmuv3.c | 157 +++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 154 insertions(+), 3 deletions(-)
+>   hw/arm/smmuv3.c | 57 +++++++++++++++++++++++++++++++++----------------
+>   1 file changed, 39 insertions(+), 18 deletions(-)
 > 
 
-It seems like we use the same pattern a lot of time for various SMMU 
-registers, and makes me wonder if we could not introduce proper register 
-definitions with callbacks similar to Arm *_reginfo.
-
-That said, it's definitely out of the scope for this series:
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
