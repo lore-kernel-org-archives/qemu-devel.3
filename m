@@ -4,94 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94CA8FD9E15
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 21:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 214F6FD9E15
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 21:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvivx-0003GD-C9; Thu, 26 Feb 2026 16:30:09 -0500
+	id 1vvizt-0004Dm-NQ; Thu, 26 Feb 2026 16:34:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vvivu-0003Fn-4s
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 16:30:06 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vvivs-0003lw-Bq
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 16:30:05 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4377174e1ebso908918f8f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 13:30:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772141402; x=1772746202; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kyjTaVC/oZKBKxlAITsiGyapD60mOc2gIVCRgG4M1+I=;
- b=a17gv5XaVV+du+1bcSNtz5YbHLYqc6xVtgBm7Ly2Ue/zEmvi57Y7LStsLsAjKQpjmn
- ChCYTnemdcd+i+JZoFpk5d/OV/wLUej6X0xJUHWl11IxUTith3PlrFSe2Jq/BIQFj89e
- erc8Zp1vCtScBKNxSoKi+zKdd68SlGjrM/GaTec5bT6zsK9kHi42RSh+Fza1a6aGzieJ
- YTS110qeF8E7VcqKxGY1lBRQatWAsLESpe//GSVKfI6HHFBYw+oHWB2DDkPUEGHY1Q+Z
- HMnUN9mixMgwv6hTcTjHAVz58b/otEYvsJ9pHdmfgttLNU7HOZhkcN9cu/TRGqrYzC3S
- GCoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772141402; x=1772746202;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kyjTaVC/oZKBKxlAITsiGyapD60mOc2gIVCRgG4M1+I=;
- b=NO5KvBJhqZzfkWN55WGUXlD5u1HOShesWff5vJz5UHORVoFAeXJccbrPNbj/9dctPs
- ndTYgI3xy3yYVw2GoUiED4GHe8bqdenc2Ksa9U/QWGNCEAbnvZ7yGLeGdpOWDF582Qwv
- qC0HadxirUifZTbcY0y6u1SEOL+XM+fgfcE1aLCKiNmtIO0gXviKXERRBMqORw6uRF1B
- 3bDhwSTcTuF52U9aap3Y7hgJkYODhZYMW8BErOLEx9r9nb4YhpfLecPp+qD8UKbPAAV8
- IgQqZEWJSG/p5PeTnMdeI+2Njj+6cV4dCUypE7ku3YfFhsOIXW8fTC2nEpZ/eXchbVgA
- szDg==
-X-Gm-Message-State: AOJu0YxnX0OurTemb8r3wOiAQF13veYH63kU85Eimo7gw9XZa9TPogVM
- xLAEDMi964UVYoaCOZ5xv1iABZQV6w52TlSVEZw2mHSUNfmOeIT9N3wwJ7za1w==
-X-Gm-Gg: ATEYQzzGWQsBKGTsg2kzDH/aIqCsqgdug8xONXvwdnGyxyXnAgJHb8mIwTbJ5+6dANB
- b8mqs3FhTwmGmZ+S9su4RIYBP5UBAtwTcuoqdGSe0N5QlJzuatANBfWKYulOA2jJ8y3TTl5Ga91
- CfR5euBlTS/GbzwRJtS3FIE+1BbWEYlHCstdClXvKgj69XElhdfJeDg4f0ayghpIbUWmArTDRne
- SXMFYUGYB0sVPM70FFHH1zfoYVwFIN4pF32Rk9BsyuS/PW5OT1UXGz2TDP+xi9Pe65u5T9YSofC
- JlrG9tzxBQN3Zj+4AnnXApZAUIWOZjiUqq9XquDurPel9s/CPFpZ3MfMHTwiSendirAcGIl4F1T
- wRDvnehfDMGSRHacfYAxpmKwrMupIZWrrTTLG5doBVJnj0yivV1zKuDrE85fGYqSeCn4LgWGftF
- eSZ0BlJNbGu8qMc/d5sVb2821capK7Fsdj7VfsWynaJqe+/r2hASYyOukimlH/AqRrmtUPKtIXL
- bDiuQqJC6LUcJnWet8ikTRpaIuDuf3DmbOrIA6LN/P9tcw=
-X-Received: by 2002:a05:6000:2483:b0:439:9a2f:d9bf with SMTP id
- ffacd0b85a97d-4399dde1474mr557637f8f.7.1772141402177; 
- Thu, 26 Feb 2026 13:30:02 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2de3-af00-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
- [2a02:3100:2de3:af00:f009:a6c9:39e7:d8fe])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75a25dsm2113029f8f.21.2026.02.26.13.30.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Feb 2026 13:30:01 -0800 (PST)
-Date: Thu, 26 Feb 2026 21:29:59 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-CC: Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/3=5D_whpx=3A_x86=3A_kick_out_of_H?=
- =?US-ASCII?Q?LT_manually_when_using_the_kernel-irqchip?=
-In-Reply-To: <20260226181930.53170-3-mohamed@unpredictable.fr>
-References: <20260226181930.53170-1-mohamed@unpredictable.fr>
- <20260226181930.53170-3-mohamed@unpredictable.fr>
-Message-ID: <BA4FF800-5D8E-4D14-98CD-B219598E6F1E@gmail.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvizs-0004Dd-Dr
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 16:34:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvizr-0004HO-1A
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 16:34:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772141649;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7i0cGag77hWsvRqCEEhFklyL324opDCyx7aTPbwhVto=;
+ b=YJH7h2gyiRM7tHJDpNgKTEXuXlgCOMldGDlgE6dlyCArs9xrLCzb909KtglIBqgqMIDQQR
+ W4un/kSFKputyQ66R+Y2kDWRene+64QnCQk6ddqPxZW8ItFyLppNxl72C01yysUSqW02be
+ 4ILRjLKrPJvn/9juNL0SLf/0C/Ro4wU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-mkjID-ZEP_SIpNzKffhQHQ-1; Thu,
+ 26 Feb 2026 16:34:07 -0500
+X-MC-Unique: mkjID-ZEP_SIpNzKffhQHQ-1
+X-Mimecast-MFC-AGG-ID: mkjID-ZEP_SIpNzKffhQHQ_1772141646
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8CCEE19560AD; Thu, 26 Feb 2026 21:34:06 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.61])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C8FEF1956053; Thu, 26 Feb 2026 21:34:04 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 1/4] python: pin 'wheel' version in minreqs test
+Date: Thu, 26 Feb 2026 16:33:57 -0500
+Message-ID: <20260226213400.1254014-2-jsnow@redhat.com>
+In-Reply-To: <20260226213400.1254014-1-jsnow@redhat.com>
+References: <20260226213400.1254014-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 22
+X-Spam_score: 2.2
+X-Spam_bar: ++
+X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,81 +86,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+With recent python packaging ecosystem updates, the latest 'wheel' is no
+longer compatible with older packages - and was somehow still compatible
+with our Python 3.9 environment. Pin wheel to an older version (Version
+based on Debian 11's available wheel package) to remove warnings during
+the minreqs test.
 
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ python/Makefile          | 2 --
+ python/tests/minreqs.txt | 1 +
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-Am 26=2E Februar 2026 18:19:29 UTC schrieb Mohamed Mediouni <mohamed@unpre=
-dictable=2Efr>:
->Otherwise, interrupts processed through the cancel vCPU and inject path w=
-ill not cause the vCPU to go out of its halt state=2E
+diff --git a/python/Makefile b/python/Makefile
+index 32aedce4137..b6c9cd1bce2 100644
+--- a/python/Makefile
++++ b/python/Makefile
+@@ -63,8 +63,6 @@ $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.tx
+ 	@(								\
+ 		echo "ACTIVATE $(QEMU_MINVENV_DIR)";			\
+ 		. $(QEMU_MINVENV_DIR)/bin/activate;			\
+-		echo "INSTALL wheel $(QEMU_MINVENV_DIR)";               \
+-		$(PIP_INSTALL) wheel 1>/dev/null;		               \
+ 		echo "INSTALL -r tests/minreqs.txt $(QEMU_MINVENV_DIR)";\
+ 		$(PIP_INSTALL) -r tests/minreqs.txt 1>/dev/null;	\
+ 		echo "INSTALL -e qemu $(QEMU_MINVENV_DIR)";		\
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index 855b5129c94..38b17d17e14 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -16,6 +16,7 @@
+ # installation of the QEMU package itself fails, failing to find
+ # setuptools.
+ setuptools<=70
++wheel==0.34.2
+ 
+ # Dependencies for qapidoc/qapi_domain et al
+ sphinx==3.4.3
+-- 
+2.53.0
 
-Yay, thanks for tackling this!
-
->
->Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
-
-It probably resolves https://gitlab=2Ecom/qemu-project/qemu/-/issues/346 ,=
- though that would need to be confirmed by testing=2E
-
-Best regards,
-Bernhard
-
->---
-> target/i386/whpx/whpx-all=2Ec | 29 +++++++++++++++++++++++++++++
-> 1 file changed, 29 insertions(+)
->
->diff --git a/target/i386/whpx/whpx-all=2Ec b/target/i386/whpx/whpx-all=2E=
-c
->index bd3a1c49c6=2E=2E650d65c61e 100644
->--- a/target/i386/whpx/whpx-all=2Ec
->+++ b/target/i386/whpx/whpx-all=2Ec
->@@ -1475,6 +1475,16 @@ static void whpx_vcpu_post_run(CPUState *cpu)
->         !vcpu->exit_ctx=2EVpContext=2EExecutionState=2EInterruptShadow;
-> }
->=20
->+static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu)=20
->+{
->+    WHV_REGISTER_VALUE reg;
->+    whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
->+    if (reg=2EInternalActivity=2EHaltSuspend) {
->+        reg=2EInternalActivity=2EHaltSuspend =3D 0;
->+        whpx_set_reg(cpu, WHvRegisterInternalActivityState, reg);
->+    }
->+}
->+
-> static void whpx_vcpu_process_async_events(CPUState *cpu)
-> {
->     X86CPU *x86_cpu =3D X86_CPU(cpu);
->@@ -1760,6 +1770,25 @@ int whpx_vcpu_run(CPUState *cpu)
->                 cpu->exception_index =3D EXCP_INTERRUPT;
->                 ret =3D 1;
->             }
->+            /*=20
->+             * When the Hyper-V APIC is enabled, to get out of HLT we
->+             * either have to request an interrupt or manually get it aw=
-ay
->+             * from HLT=2E
->+             *
->+             * We also manually do inject some interrupts via WHvRegiste=
-rPendingEvent
->+             * instead of WHVRequestInterrupt, which does not reset the =
-HLT state=2E
->+             *
->+             * However, even with this done, if the guest does an HLT wi=
-thout
->+             * interrupts enabled (which the test_sti_inhibit KVM unit t=
-est does)
->+             * then the guest will stay in HLT forever=2E
->+             *
->+             * Keep it this way for now, with perhaps adding a heartbeat=
- later
->+             * so that we get the CPU time savings from having Hyper-V h=
-andle HLT
->+             * instead of going away from it as soon as possible=2E
->+             */
->+            if (whpx_irqchip_in_kernel()) {
->+                whpx_vcpu_kick_out_of_hlt(cpu);
->+            }
->             break;
->         case WHvRunVpExitReasonX64MsrAccess: {
->             WHV_REGISTER_VALUE reg_values[3] =3D {0};
 
