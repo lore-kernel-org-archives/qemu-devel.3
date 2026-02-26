@@ -4,71 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D4DFC5913
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 09:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93458FC591C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 09:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvY72-0000fO-Vj; Thu, 26 Feb 2026 04:56:53 -0500
+	id 1vvY8h-0001KX-7n; Thu, 26 Feb 2026 04:58:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vvY70-0000dv-Bz
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:56:50 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vvY6x-0007zv-8b
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:56:50 -0500
-Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61Q9twEp099441
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 26 Feb 2026 18:56:37 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=tdaOgHy9EautR26xnsdc9tfphkqGmlEGl4iCkZecbsk=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772099797; v=1;
- b=v2gTad7D10Y4WJsbi3lNtwD8M5ZG+Z/wwDadLeWE2PBPx3hIH8LqsX7+NxTJUqLK
- ZBOdKWbVPLaOYhePkPuJl6BM7R5KTQT6PToh1dUm71pYbrcYczSAbXOGto2bCN9g
- jaPEw2YWxtpshdBVqcvNKfNTvZDImXn40ffG2SGtiF/HtTW5tgnvBiDjvPHCyXcQ
- TMKZXakw8xXBZta0yvQBu/Z5i46KKGsvZpzloW/B/g9OfeibnGfVMk7KA5WA0KOm
- MXRvLi8ErLNsf16ngqkA1N+3G8Y0NokaoUvfhM91HaesAHQ9HomvVeQQlDEchPwt
- bBKMuCkBve5nP9r4YzA9/g==
-Message-ID: <becde56b-90bd-40ca-9329-0c92b9519a67@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 26 Feb 2026 18:55:58 +0900
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvY8b-0001J4-0b
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:58:29 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvY8X-0008J9-2H
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:58:27 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ad79dfb6eso669419d50.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 01:58:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772099904; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ogk8iqG1CGAXtyQfgrYRG0dlKrIB/XwO8QLHm1H2i0zj0IJ6eTO+p+n/RVhdWmf2m8
+ NhO/TNdaPqnmGWJjO3docntuROTzHIk73iKcG/k2qqi+07Z4tdvpGCfMe7AGJ3CZIDUc
+ pqEeJMq4nESnqXCn5JJ2WCDDit6asTTXob2GBs8VsjwBY9NGk7yMZxJdfC8Ejb8oca8L
+ 5P5oZEJU0bGE7i2BsjEzlUQyLvPLIR+ikz0ccD05SE+IIpG1BCtOdEz06np/OxyQHStc
+ meQzlcMNI6DoUwvN+ZtVXC/mC696JGu4QWwFr2AKE5wh7tevZP7lLX/xQkwsD+fgrjxK
+ 5nLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=VFATZ60XCCL4boFSmWZz5qWIVUbuhEjyvMqowhC/Ah4=;
+ fh=kUbveSOUup10kivE9YRaKNPXso946Zr4aMoS8+2ZZpw=;
+ b=GGSfkBgpmdtX3kF7HmuA4uaEyypwpyHM+cXcyjZogpN2ZiN+bwiRbpa+9aNwwQvl6+
+ m/5o63gks0gbo9j9KJqhYesWNRwpqh5iCY8rlotdX5NlVBXiL35cUvYh5ssIPg7Pvrp5
+ Fera6xLqnhsVhHg7Se7WydV1Z2t/rMA2WTLx07L7ynQMRcpYASe/A6mZjpj/4lNYuM9n
+ NGs7jG3DqSgxh1LdYIA3az15PiJ2MLNa9gR6JJXh2pNkl5rMWPefyDpc1JAzef75XkEa
+ QhmNuUbLulvW5fBdRwdk3Ji4M4e8ydLcws2AWjaS2jEVOCoYxZuznNi/x9svoWPRrEkG
+ 9RnQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772099904; x=1772704704; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=VFATZ60XCCL4boFSmWZz5qWIVUbuhEjyvMqowhC/Ah4=;
+ b=xpNxXO9Uk2JEuQuTDBTNvUVjIPy2NIHyxQ9vbhYWQhu/28lkfA+jRs1yh58TdA4enh
+ tbuIkUCQZB+lkOIpKgg4hFclJaQpEx7nhfTthxgMpi3UyG+kMVPn4K/KU7dJW3o4MR9n
+ T/QTNLp2QUc151vljXW42DrxB48ja96/lPt84fh2x9nrIqSs58uBThkVdjavZKdtDtPs
+ RSmk/OvQKu9oIZqQmVGTY1Ho5GY85rGHbDs7YMW633dqFVS7Qj2BPmn9/OkyO0AxGy2j
+ lJ/SwnGQeEJACsL7/Wb6Y6xa6/cRAZOsGknC3B65iWIioZN/kxgFQX6jvMtoXv28y54T
+ fLGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772099904; x=1772704704;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VFATZ60XCCL4boFSmWZz5qWIVUbuhEjyvMqowhC/Ah4=;
+ b=leROubBP3ZoHkUBqXejZykXBfagef97gmMQQAaogLaPodKVTN5FTlrhCRr6kzTzMY4
+ cdCpYja4JmC2+O59IMsyg69tXejwRnoMNQQkzNz/Vt79thn1Z/HDiKJbZYI/EAZfSDN1
+ 4ux5nptiJEBPAKfu6T0b9sfRnQuB8jsZqwdasfzURGhSZ9IB5p8u7J4lxICX85YGLwD5
+ xO9r+YXgTfpfFt2vVJQdvzq3R0Li5EOKlSVZ8chKdvSwUTG2oJBNPW19vgetX06Ob6Bh
+ 9bFsoMU9kLpMH4SK0N2d75r3QoUIOEc31fjFVBjedRrlY4qgPTV7/nCqGL0N7XTKkhMu
+ mGtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrhioD61r6TZF/nPY88JQm374ZY2W3QVsA0Sr2+Vz0u1Xu0Gm4vc7wbBd9Of+gzRYrtjb/neo0RvGC@nongnu.org
+X-Gm-Message-State: AOJu0YzY6R1V1jXX4BoOHX3WOyAX0Od3Gc0UEt0+PM+RWFgqgOXkZgzN
+ DrzqxGB4ryRSd5KX/lgZxPMd7Im1274jbnjnU8NwrhKK5/3s2Iu/h5jWQoK296uYRwAwTlJncKZ
+ B+1YC1AcmF5FWOvPfF8yApMyWa+2sw6EqCJRmigpr+g==
+X-Gm-Gg: ATEYQzwUxNNQiQvszTosKD5AA3qJ/O3irasgPi19Xas8SLOKvlwvevDfpEiN+HzBCQm
+ zGkagz477EPo2cEtNxJI3Ou9s4R8qizMdyyPuQ4+2QQtmXVwQvWIcy7qRVVJJze0LjFwACT8+xT
+ CisyyGOtuN9rzSWbaKlmSebOQEj/mAOQe5AAjRnhNhgX5E86dSmRm5T7JJtxD6sL5MDnwyjCm4V
+ FxS+uFnYS4TeU71evKV2GI5s+dOgGFeRxetGwEKPo1zlyjGNKl7ZCx+yToadb+OsNVmxIvBdZLG
+ vmPh+MLKdODkSNz8xYBaal0PfkvF8V9XuCVp4ZSpmWNgywY36jrpJNorFccc1p2xG1iF8RghGDj
+ xUg==
+X-Received: by 2002:a05:690e:e89:b0:64c:975b:ecac with SMTP id
+ 956f58d0204a3-64cb7c7b0c8mr1324173d50.74.1772099903604; Thu, 26 Feb 2026
+ 01:58:23 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260223080200.468558-1-vivek.kasireddy@intel.com>
- <20260223080200.468558-11-vivek.kasireddy@intel.com>
- <aa496278-274c-4fb1-bb47-bfdda7337628@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185F034A065CCE507F69F14F875A@IA0PR11MB7185.namprd11.prod.outlook.com>
- <d2779f88-735e-4d14-9b5d-8577282c5477@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185B641D5749566273C27E5F872A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB7185B641D5749566273C27E5F872A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260225081037.21990-1-shivangu@linux.ibm.com>
+In-Reply-To: <20260225081037.21990-1-shivangu@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Feb 2026 09:58:12 +0000
+X-Gm-Features: AaiRm51RmVDEemboNWXvql4kvoytiCF37IeHeTGIW4Xj7JgNOmNTEnScoCU6zIk
+Message-ID: <CAFEAcA9+-5=hVzRMu9n1YtcOazMLQDx65T=NLy9wxv5RNLwYAg@mail.gmail.com>
+Subject: Re: [PATCH] ppc/pnv: fix dumpdtb option
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com, 
+ milesg@linux.ibm.com, qemu-devel@nongnu.org, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,263 +118,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/02/26 15:22, Kasireddy, Vivek wrote:
-> Hi Akihiko,
-> 
->> Subject: Re: [PATCH v7 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
->> associated with VFIO devices
->>
->>>>
->>>> On 2026/02/23 17:00, Vivek Kasireddy wrote:
->>>>> In addition to memfd, a blob resource can also have its backing
->>>>> storage in a VFIO device region. Since, there is no effective way
->>>>> to determine where the backing storage is located, we first try to
->>>>> create a dmabuf assuming it is in memfd. If that fails, we try to
->>>>> create a dmabuf assuming it is in VFIO device region.
->>>>>
->>>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
->>>>> backing storage is located in a memfd or not. If it is not, we invoke
->>>>> the vfio_device_create_dmabuf() API which identifies the right VFIO
->>>>> device and eventually creates a dmabuf fd.
->>>>>
->>>>> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
->>>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
->>>>> fall back to the vfio_device_mmap_dmabuf() API to get a mapping
->>>>> created for the dmabuf.
->>>>>
->>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>>>> Cc: Alex Williamson <alex@shazbot.org>
->>>>> Cc: Cédric Le Goater <clg@redhat.com>
->>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>>>> ---
->>>>>     hw/display/meson.build         |  1 +
->>>>>     hw/display/vfio-dmabuf-stubs.c | 23 +++++++++++++++++++++++
->>>>>     hw/display/virtio-gpu-dmabuf.c | 32 ++++++++++++++++++++++++--
->> ---
->>>> ---
->>>>>     3 files changed, 48 insertions(+), 8 deletions(-)
->>>>>     create mode 100644 hw/display/vfio-dmabuf-stubs.c
->>>>>
->>>>> diff --git a/hw/display/meson.build b/hw/display/meson.build
->>>>> index f5f92b1068..7d2bd839cc 100644
->>>>> --- a/hw/display/meson.build
->>>>> +++ b/hw/display/meson.build
->>>>> @@ -70,6 +70,7 @@ if
->>>> config_all_devices.has_key('CONFIG_VIRTIO_GPU')
->>>>>                         if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
->>>>>       if host_os == 'linux'
->>>>>         virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
->>>>> +    virtio_gpu_ss.add(when: 'CONFIG_VFIO', if_false: files('vfio-
->>>> dmabuf-stubs.c'))
->>>>>       else
->>>>>         virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
->>>>>       endif
->>>>> diff --git a/hw/display/vfio-dmabuf-stubs.c b/hw/display/vfio-
->> dmabuf-
->>>> stubs.c
->>>>> new file mode 100644
->>>>> index 0000000000..12f016f0c5
->>>>> --- /dev/null
->>>>> +++ b/hw/display/vfio-dmabuf-stubs.c
->>>>> @@ -0,0 +1,23 @@
->>>>> +/*
->>>>> + * Copyright (c) 2026 Intel and/or its affiliates.
->>>>> + *
->>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>>> + */
->>>>> +
->>>>> +#include "qemu/osdep.h"
->>>>> +#include "qemu/error-report.h"
->>>>> +#include "qemu/iov.h"
->>>>> +
->>>>> +bool vfio_device_create_dmabuf(struct iovec *iov, unsigned int
->>>> iov_cnt,
->>>>> +                               int *fd, Error **errp)
->>>>> +{
->>>>> +    error_setg(errp, "VFIO dmabuf support is not enabled");
->>>>> +    return false;
->>>>> +}
->>>>> +
->>>>> +bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int
->>>> iov_cnt,
->>>>> +                             void **addr, size_t total_size, Error **errp)
->>>>> +{
->>>>> +    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
->>>>> +    return false;
->>>>> +}
->>>>
->>>> This is VFIO's implementation and shouldn't be here. Follow what
->>>> hw/vfio/iommufd-stubs.c, the previously-mentioned example, does.
->>> Ok, I'll move this file to hw/vfio directory.
->>>
->>>>
->>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->>>> dmabuf.c
->>>>> index fdcf8e53a2..3f39371de1 100644
->>>>> --- a/hw/display/virtio-gpu-dmabuf.c
->>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>>>> @@ -18,6 +18,7 @@
->>>>>     #include "ui/console.h"
->>>>>     #include "hw/virtio/virtio-gpu.h"
->>>>>     #include "hw/virtio/virtio-gpu-pixman.h"
->>>>> +#include "hw/vfio/vfio-device.h"
->>>>>     #include "trace.h"
->>>>>     #include "system/ramblock.h"
->>>>>     #include "system/hostmem.h"
->>>>> @@ -82,13 +83,21 @@ virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res, int *fd,
->>>>>     static bool virtio_gpu_remap_dmabuf(struct
->>>> virtio_gpu_simple_resource *res,
->>>>>                                         Error **errp)
->>>>>     {
->>>>> +    Error *mmap_err = NULL;
->>>>>         void *map;
->>>>>
->>>>>         map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
->>>> res->dmabuf_fd, 0);
->>>>>         if (map == MAP_FAILED) {
->>>>> -        error_setg_errno(errp, errno, "dmabuf mmap failed");
->>>>> +        error_setg_errno(&mmap_err, errno, "dmabuf mmap failed: ");
->>>>>             res->remapped = NULL;
->>>>> -        return false;
->>>>> +
->>>>> +        if (!vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
->>>>> +                                     res->blob_size, errp)) {
->>>>> +            error_report_err(mmap_err);
->>>>> +            return false;
->>>>> +        }
->>>>> +        error_free(mmap_err);
->>>>> +        mmap_err = NULL;
->>>>>         }
->>>>>         res->remapped = map;
->>>>>         return true;
->>>>> @@ -145,7 +154,7 @@ bool virtio_gpu_have_udmabuf(void)
->>>>>
->>>>>     void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
->> *res)
->>>>>     {
->>>>> -    Error *local_err = NULL;
->>>>> +    Error *local_err = NULL, *vfio_err = NULL;
->>>>>         VirtIOGPUErrorType err;
->>>>>         void *pdata = NULL;
->>>>>         int fd;
->>>>> @@ -158,12 +167,19 @@ void virtio_gpu_init_dmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>>             err = virtio_gpu_create_udmabuf(res, &fd, &local_err);
->>>>>             if (err != VIRTIO_GPU_NO_ERROR) {
->>>>>                 error_prepend(&local_err, "Cannot create dmabuf: ");
->>>>> -            if (err == VIRTIO_GPU_GUEST_ERROR) {
->>>>> -                qemu_log_mask(LOG_GUEST_ERROR,
->>>>> -                              "Cannot create dmabuf: incompatible mem\n");
->>>>> +
->>>>> +            if (!vfio_device_create_dmabuf(res->iov, res->iov_cnt, &fd,
->>>>> +                                           &vfio_err)) {
->>>>> +                if (err == VIRTIO_GPU_GUEST_ERROR) {
->>>>> +                    qemu_log_mask(LOG_GUEST_ERROR,
->>>>> +                                  "Cannot create dmabuf: incompatible mem\n");
->>>>
->>>> This logic is faulty. err is not set by vfio_device_create_dmabuf(), so
->>>> it reports a guest error even when the memory is compatible with
->>>> vfio_device_create_dmabuf() and it raised an error for a different
->>>> reason.
->>> Maybe I misunderstood your previous comment about this but I
->> thought
->>> we are going to assume that if both virtio_gpu_create_udmabuf() and
->>> vfio_device_create_dmabuf() fail (assuming Guest error in case of
->>> virtio_gpu_create_udmabuf ()) then it is reasonable to assume that
->> Guest
->>> is at fault for passing in incompatible memory addresses.
->>
->> It's not what I suggested. What I suggested is as follows:
->>   > virtio_gpu_create_udmabuf(res);
->>   > if (it turned out the memory is incompatible with udmabuf) {
->>   >     virtio_gpu_create_vfio_dmabuf(res);
->>   >     if (it turned out the memory is not backed by VFIO) {
->>   >         qemu_log_mask(LOG_GUEST_ERROR, "incompatible\n");
->>   >         return;
->>   >     }
->>   > }
->>
->> https://lore.kernel.org/qemu-devel/c7c03384-4815-4032-89bd-
->> de1ef90bb949@rsg.ci.i.u-tokyo.ac.jp/
->>
->> It is not correct to assume vfio_device_create_dmabuf() is failed due to
->> a guest error when virtio_gpu_create_udmabuf(). For example, when
->> mmap()
->> fails in vfio_device_mmap_dmabuf(), it is a host error, and reporting a
->> guest error in the case is a bug.
->>
->>>
->>> However, in order to fix this properly, I think we would have to have
->>> vfio_device_create_dmabuf() return VIRTIO_GPU_GUEST/HOST_ERROR
->>> (or something equivalent) which I was trying to avoid. Do you see any
->>> other proper way to fix this issue without messing with the return type
->>> of vfio_device_create_dmabuf()?
->>>
->>> The reason why I am hesitant to make vfio_device_create_dmabuf()
->> return
->>> Guest/Host error is because a future user of this API may not need this
->> info.
->>
->> A future user may not need it, but we need it to make this code bug-free.
-> Ok, I plan to add the following enum and make it available to VFIO and
-> virtio-gpu-dmabuf.c:
-> typedef enum DmabufCreateErrorType {
->      DMABUF_CREATE_NO_ERROR = 1,
+On Wed, 25 Feb 2026 at 08:11, Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
+>
+> The '-machine dumpdtb' command line option stopped working on
+> PowerPC/pnv systems after recent design change [1].
+>
+> Fixing this by generating fdt blob in `pnv_init`.
+>
+> [1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+>
+> Cc: Aditya Gupta <adityag@linux.ibm.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-When there is no error, vfio_device_create_dmabuf() should return the 
-file descriptor instead (see e.g., qemu_open()).
+Thanks for catching this. I would suggest having
 
->      /* Guest is responsible for this error */
->      DMABUF_CREATE_GUEST_ERROR = -1,
->      /* Host is at fault for this error */
->      DMABUF_CREATE_HOST_ERROR = -2,
-> } DmabufCreateErrorType;
-> 
-> Is the naming OK? And, what would be a good location (header) to have this in?
-I would prefix the names VFIO and put it into
-include/hw/vfio/vfio-device.h.
+Cc: qemu-stable@nongnu.org
+Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
 
-In that case, using it for udmabuf is cheating, but I think it's fine 
-since it's locally-contained in virtio-gpu-dmabuf.c, its intent is still 
-clear, and it has no adverse effect for users (at least there will be no 
-bug).
+> ---
+>  hw/ppc/pnv.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 1513575b8f..9861714ad5 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -1261,6 +1261,10 @@ static void pnv_init(MachineState *machine)
+>      if (pmc->i2c_init) {
+>          pmc->i2c_init(pnv);
+>      }
+> +
+> +    if (!machine->fdt) {
+> +        machine->fdt = pnv_dt_create(machine);
+> +    }
 
-Regards,
-Akihiko Odaki
+So we now set the machine->fdt in pnv_init() (which is
+the right place: the centralized dumpdtb handling assumes
+the DTB is set after machine creation but before reset).
 
-> 
-> Thanks,
-> Vivek
-> 
->>
->> Regards,
->> Akihiko Odaki
->>
->>>
->>> Thanks,
->>> Vivek
->>>
->>>>
->>>> Regards,
->>>> Akihiko Odaki
->>>>
->>>>> +                }
->>>>> +                error_report_err(local_err);
->>>>> +                error_report_err(vfio_err);
->>>>> +                return;
->>>>>                 }
->>>>> -            error_report_err(local_err);
->>>>> -            return;
->>>>> +            error_free(local_err);
->>>>> +            local_err = NULL;
->>>>>             }
->>>>>
->>>>>             res->dmabuf_fd = fd;
->>>
-> 
+That means that this code in pnv_reset():
 
+    if (machine->fdt) {
+        fdt = machine->fdt;
+    } else {
+        fdt = pnv_dt_create(machine);
+        /* Pack resulting tree */
+        _FDT((fdt_pack(fdt)));
+    }
+
+will never take the "else" path, and that code is dead.
+
+It also suggests we should call fdt_pack() in pnv_init
+before setting machine->fdt.
+
+This bit code in pnv_reset():
+
+    /* Update machine->fdt with latest fdt */
+    if (machine->fdt != fdt) {
+        /*
+         * Set machine->fdt for 'dumpdtb' QMP/HMP command. Free
+         * the existing machine->fdt to avoid leaking it during
+         * a reset.
+         */
+        g_free(machine->fdt);
+        machine->fdt = fdt;
+    }
+
+is also now dead and can be removed.
+
+Q: can the generated DBT genuinely be different on a
+subsequent reset than it was when QEMU first starts?
+The comments in the pnv_reset() code seem to suggest it,
+but on the other hand the code as written will only
+call pnv_dt_create() and update machine->fdt once on first
+reset, not on later resets. So perhaps the comment is
+just confusingly worded ?
+
+thanks
+-- PMM
 
