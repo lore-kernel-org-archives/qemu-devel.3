@@ -4,123 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BE50FD461A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 04:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA16FD461A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 04:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvT5M-0001Va-KU; Wed, 25 Feb 2026 23:34:48 -0500
+	id 1vvT5P-0001W5-1u; Wed, 25 Feb 2026 23:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vvT5K-0001VE-Fi
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 23:34:46 -0500
+ id 1vvT5L-0001VQ-Bk
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 23:34:48 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vvT5I-0008KG-BH
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 23:34:46 -0500
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1vvT5I-0008KK-BI
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 23:34:47 -0500
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61Q4Ute83225947
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 04:34:41 GMT
+ 61Q4VH0A350948
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 04:34:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WsR20ixZ7eACFtHj/lxqptDZAT6vfYF5bRFUepAMUdI=; b=PdwxRDuyUnqv2lJU
- yZ+b5RTGY/e5doHgR42/mVy1s7EeEDC0vrh0vxD/AwVdvtaaSBbETbBQU5mqSRrL
- uN9UGWrEmO800H/JaCb1zvAQKLzCrbEUosBHIlZFAeFz2VtZ6wOxCU9G8lxkI1UD
- CaA6SgHRCpfoZwFAmZc7aFVgX4zLGlY8gv6rKt2oRtwb9up+keZ0pG+D31sIGTA3
- 9L36A3Uw93Y/mbmO8aG8Ntry7ZpTonGpHeOWpI7j5Qk8UuKHBf3ocmWNsywUTdcr
- MPq6O9Zp+CBXvRHCwc/qjJKfiGqcif2vgUanaBfnaIY2SbxxCEx/DbSmVLo6cCE0
- TLJK4g==
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cjdph088c-1
+ nPkdfB8s4lf14SpLhfUVAOqZSEA4/FZoFD6WX4r7hbQ=; b=f08fctbKJ7Ri5LIb
+ o2FpMZtXZ852GnXRyqUY01zqU9dpr7ielGXZPhJDc3H+d0m/4S3sQWPpOn+p7tMC
+ /C9tOQHLHLZ+Dektp2aAlpHMP1c3iNziEq/BXTF9didiTOip0O6TpnG/+4w+Ygum
+ a/UiEJMhOe+plI1vWPErFqIbFn1ACjIeTTcLpegnosqUPfSE5iKAgoQngFrmWVZA
+ 6Aupt78ds8trotQoHY5uxSbSZUR5Ggyb8Pg0rkaAW1nV6UOZKd8zoWqqHksvDbRU
+ rdELoDmUbXlkscOk4jjc8/f2za1pz4LGBhSZx5CRIVhMI44f9lVBUsrPzmZ/Vnvy
+ Q8Zncw==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cj54p9sqg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 04:34:41 +0000 (GMT)
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-45ca5b0a968so6387486b6e.2
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 20:34:41 -0800 (PST)
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 04:34:42 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-4639a3bf26cso2672346b6e.1
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 20:34:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1772080480; x=1772685280; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1772080481; x=1772685281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WsR20ixZ7eACFtHj/lxqptDZAT6vfYF5bRFUepAMUdI=;
- b=BBtDX7XAfBxSvsL1RUZn88YQlCyWhApPXTLgjhhGIL6q10qz2uw4bx4Wf1tvvroV22
- VeBlfUl/cNMFuFoMNcM2wKOA4y8+Fj4wG7seUtFIrYfz88cF3NnnB6z7CFykGBm1XghK
- COyh6mdw4RWcLAsOHmEFK8wHtCk2pIMmGw+JJ3/gwlCj29Hs0aQ06SvZUciQeD1Zo/py
- W84e6CisNJ9Q+sf/Ta5kVUbyTvzGMVzcPVAiuW93uUX7p1LKnzqpu1d7rJZC+WpIfro5
- oTE5TJtvVhHyEEYh2mFj/lmabkkU1j01jKULRQVw3sb+40gL1gXRU2HnF+LY4XshVdN/
- Sgcg==
+ bh=nPkdfB8s4lf14SpLhfUVAOqZSEA4/FZoFD6WX4r7hbQ=;
+ b=bLTX2b4FFRiwgEXJ+I1xaAM/dBt8D+SNMbkLh0pUGj0ETv6o1nSdnDDoaRqhos6jq3
+ zEkKiObeuGfTdDTSvBoUZg089o/u2lhR4IfX5OGKldrUeLV7KBvp5ZFezlEu821G0MLw
+ +0+9W1cJwwqMgYiyxz5k+db9kuyiBoik6BiHApPoSJIxE/jPziawNEBbBoVqJHZQymN4
+ bVAB5oWUfxozY3g7L7DyP8ONriiNVkDZcnp6kB0KiTz/L6ygC3HWbI59c1ZFHCFGHctA
+ pJOUw9Pz3ZoUUkxlObaqIznJoDGC7u+7jR0keSwnUE1orcwWUCAjuY9ASYkDRrsaBImp
+ mnvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772080480; x=1772685280;
+ d=1e100.net; s=20230601; t=1772080482; x=1772685282;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WsR20ixZ7eACFtHj/lxqptDZAT6vfYF5bRFUepAMUdI=;
- b=Buo3oBfeZyf89f6IdL4BpEjcthF9RKAVUK61aWQof/Zqz3tvecCNSa0tU5Hmqie0KF
- BwDqxlUuxiKE0hNnXulak9oEDERGnnE4+JBfMjNoFRaNyiJ9LI8xK+ZFzr2MwrPmwriE
- Yktf/FSEKjMWwJOV/9xKJkunTpW4yP0y/mD3f6yo7yfCxOMXViz32oyY3QFmyNcpVnY0
- Kc13iGZrRjs9yPluGAT/aQ3DHr7d4Zp9+m46bTBWBmkqlLsQrh0vwZXz0oZqh/nVe1RY
- JO7D0MdC5F7Zli4egs7naBRt9dMPa535BojLZ6fEy1RgQL4moqEwckg6HSvuYZV4ZHQE
- 2CUA==
-X-Gm-Message-State: AOJu0YzHx5I6wzTm/LpqK6lIN/epH0aoMZU7n3bXJ0q6z8hwTz/FEjBv
- lQMVYQeRlcBmyrE6et4rEP5hPDZnFI6edXXGR9uqm9XzcMziwhLYQOAC37JjlhtEXosVOEEPACa
- vnB9Whj6mx9sDTD2l7geFu8DlifnJpfUs+MwJSpcOo5Usg73um8GQL8GrAVRnECvHZQ==
-X-Gm-Gg: ATEYQzwqXj2mqpgEoXxaKfsAjcsg6HtU28RpJgDRWf3jC+Q+eDEwkuQMHUT/3DxH7Ge
- iNK+7OzGueZ2B0yICpmMdcl70vF6xdSHiVZEqTJk7oG2vYlaI97njO9XKcAJbgOgqaGegfTMNdt
- zALIP1otU+TC+aDVBuhIIsS3E8ciddwHSaTQPZdaP0DEaB1SFa8xTEt+op6Q4INagQptEUE3bQ+
- +W3jgm5rYs3SfPHtgj1V3dPI5sQZxVUBpLXCCoZdbbKieuLl42+oWgDTK5dNWdTaEgrz9DiWB0a
- 5HmVMJ3STMbX7KS/Gqf8Bo9fg9AnWCdytUUhzxUs0QDBqPPZTrj/7rsYmCk59XMtwz9G8FXhksi
- ZlF5zqxOkEUPhxxtnfIdlT96xVzjCAz8dHSZ6EKBaO1I7Nm+YUb3k76pjiK/qEFNNuSwz4g==
-X-Received: by 2002:a05:6808:1a03:b0:45e:f0ef:382c with SMTP id
- 5614622812f47-4649f061367mr1344225b6e.44.1772080480277; 
- Wed, 25 Feb 2026 20:34:40 -0800 (PST)
-X-Received: by 2002:a05:6808:1a03:b0:45e:f0ef:382c with SMTP id
- 5614622812f47-4649f061367mr1344219b6e.44.1772080479899; 
- Wed, 25 Feb 2026 20:34:39 -0800 (PST)
+ bh=nPkdfB8s4lf14SpLhfUVAOqZSEA4/FZoFD6WX4r7hbQ=;
+ b=JSVUl4Ru1SoK8Mmevs8Xm70pSNQdW3PmRKcIQkDuF1HTVVZ6jX9lbIkJTEIwysqDcf
+ 6q+a5GMe4eZSWcEsNGKnlOnaFmKXfNyqZ766cOLW2WvHZw4oSqt4u5sldukZpYF+EJN5
+ l/v7K5OZ68xwtxauTWRGfeleJzh1qqYDE3e+fZx/1xm7n6+l/RT7ZbviB9i7DATYh1zY
+ mHm0HRB1cDqGzEpeqb9WsQljeikoNN8L/kBVXKg8ohM8F2JMveIEOusDZ4K6wePb+VwO
+ RO4JTw3dOdAnVOnzvrRGal3OVUyNdBUcxhLTuawMjUT3wzBlkg7rHiDl+08OtFNsb0Kp
+ cAEg==
+X-Gm-Message-State: AOJu0YxDwj1ICaVe5A903DABSI+SBrLg5SiHjpuhMK4ik6YMIynhTxEr
+ RkI/79OimxrUjA9TjQBWlQ/FtgUkQX44ql9wx/7ftiEGxOARdZRKWHVxXxFON+hcrk48rXQdb1V
+ tSaA/kkQK+mDQoqcwXRpbSft8iaBDL+J2LtDdVV5lp/buypWj8YeTWnlHEsa9wSLvBg==
+X-Gm-Gg: ATEYQzz1aq8gwOuKCf7h5rKMiQjFg3MhqQ+f7/eG/KoD37Katol4MnMcdI1kzkCdfrA
+ 6IWgUobCJ2MDFzHxRHVYYQU/0ZtZ4ynJQbQIvYGmtKdkBCxjMZo9dSA+F3XK9oSMJeRmu/Yqp6c
+ +kJ/CBIPQYRcsMb6qRN0Ofj9ywoESXUZGUPBgZb1ehlrZVLK5dIVs+4Qe6HhWsS5GS/rC7XRLXR
+ CLZ8F1gNuT1o3KSYy+/+vOBJBEUHCA3y1868jJK7Y3SbpCzoGsTdTnPyaS1XK4ZcUVMOknsDiAu
+ lg4n2JlqQ0VWd9Qf/mmW6K6RpF04VqJWh9fHWXEWNaMfkxuXyVrPtZlEM7iykz9Q/9uGKBx6bSC
+ k5l+d5UhtJguMlZMRlKGtO6ROgW+CtPAf1DP/qj96bPg/RsD3GKXkPyG5AwFJE8OJUXCPUQ==
+X-Received: by 2002:a05:6808:6501:b0:45a:8cdc:1012 with SMTP id
+ 5614622812f47-4649ee854a9mr1475677b6e.20.1772080481525; 
+ Wed, 25 Feb 2026 20:34:41 -0800 (PST)
+X-Received: by 2002:a05:6808:6501:b0:45a:8cdc:1012 with SMTP id
+ 5614622812f47-4649ee854a9mr1475669b6e.20.1772080481071; 
+ Wed, 25 Feb 2026 20:34:41 -0800 (PST)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4644a1f6333sm10394328b6e.19.2026.02.25.20.34.39
+ 5614622812f47-4644a1f6333sm10394328b6e.19.2026.02.25.20.34.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 20:34:39 -0800 (PST)
+ Wed, 25 Feb 2026 20:34:40 -0800 (PST)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com
-Subject: [PATCH 2/3] target/hexagon: use TCG_COND_TSTEQ/TSTNE for predicate
- branches
-Date: Wed, 25 Feb 2026 20:34:35 -0800
-Message-Id: <20260226043436.648171-2-brian.cain@oss.qualcomm.com>
+Subject: [PATCH 3/3] tests/tcg/hexagon: add test for predicated .new branch
+ LSB evaluation
+Date: Wed, 25 Feb 2026 20:34:36 -0800
+Message-Id: <20260226043436.648171-3-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260226043436.648171-1-brian.cain@oss.qualcomm.com>
 References: <20260226043436.648171-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: xQhk9OrgWil4oo_uyWCfR_6-__nhld7j
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDAzNiBTYWx0ZWRfXyyNfpKQJVnkK
- X6UMdBt2Zbxa82p2FXLI6TfAUt2k9AEcx7Wy0LiqjAwfm+IOTpQxoTfGtE4PHAHl2DQJZv3AJ/t
- Ng1MPVI9Um6MG3DDkWghuMKVb5vY4VpKmTahrSkASXuBR88oyfFaJhs/Fma80WeZt8zsrJ0oDIx
- cAmt8P5yC2ckOqiGBCYreX7mgRApAcXPxjkC98f0tPGVV0EXJ8j7BrDHLtZ1c7MzBHSfqfaINEv
- biYYqFIIqW9R8sKEPgm/wC7nV9Wci6e4dWYk0oVng4VTfYnZTNtu7+t8azTdzRATr8Sp3lUDzfQ
- MGlbRiCOaV5EjltFiRqsjt/jbS9NZ+jYhQDFzfLnYGuAx1Iop4anXUSL9LehzmqJI8NGnHbs45h
- r0vJQledi11YkrM6mmXly98sfx6Aq8WEzhTR93Otg8R2ZVCUECQ8+JDW8ZTD0PpU8Wjgwxrz7B0
- f6oD+DboypWdk8q6Sog==
-X-Authority-Analysis: v=2.4 cv=NJLYOk6g c=1 sm=1 tr=0 ts=699fcd61 cx=c_pps
- a=4ztaESFFfuz8Af0l9swBwA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDAzNiBTYWx0ZWRfXxBUZ/PaxzmY9
+ Mt6SqCu286OFOF70GKBVdAtj7MiYIABrMciLKrM7/Q4smaCk8EjiLindBv62Zm1lyW9XllJ5XTU
+ 4C8JjN1d//h9gOLhOXhd/6FzmxAUQPlrVQKCsKktgJKiCk1SHdHimci7yXf63mL3tGvGX0jsHTy
+ VEasazjJ+3lWiiEqNIz+tO2aKohR8BKMhIIJi/rKg+A6nstDW/cWHjnP+aJRFKfhYKd/mwa3KtB
+ VedueUB7IQrYOd4l4L19vIYDm9TlwHouVxSWD4Qzr9jfQEZbWJ9miUegusj8gG8iNCGQCffuBS0
+ OeyX/KF6zn5AJ4gmviC/fYHJjZCQj2FnsgVIKseM7mlinKL8rQuA0zk/TuqDvEoj42tiJKxX6CO
+ eEbP41LuUuJHIXEiemDhTs9fdZ1WndBBL6u92LkSEjBYCk0HpzyksfnuLZL3XfS/Zbcl1rrUTTx
+ s05lHzrgHuphH3bZ2hg==
+X-Proofpoint-GUID: w4VNzzlyCRXTpnQNrpAOr2R_pG3WB7-V
+X-Authority-Analysis: v=2.4 cv=I5Bohdgg c=1 sm=1 tr=0 ts=699fcd62 cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=ao8-HdWYDGaaWDIvVGwA:9 a=QEXdDO2ut3YA:10
- a=TPnrazJqx2CeVZ-ItzZ-:22
-X-Proofpoint-GUID: xQhk9OrgWil4oo_uyWCfR_6-__nhld7j
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=E-oac-dUpCFVs3rAG8QA:9 a=QEXdDO2ut3YA:10
+ a=_Y9Zt4tPzoBS9L09Snn2:22
+X-Proofpoint-ORIG-GUID: w4VNzzlyCRXTpnQNrpAOr2R_pG3WB7-V
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-25_04,2026-02-25_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 adultscore=0 malwarescore=0 impostorscore=0 phishscore=0
+ spamscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602260036
 Received-SPF: pass client-ip=205.220.180.131;
@@ -148,325 +148,383 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace TCG_COND_EQ/NE comparisons against 0 with TCG_COND_TSTEQ/TSTNE
-comparisons against 1 for all predicate-conditional branches. This tests
-bit 0 of the predicate register directly, eliminating redundant andi
-operations that previously extracted the LSB before the comparison.
-
-For predicate-conditional jumps (jumpt, jumpf, jumptnew, etc.) and
-jump-register variants (jumprt, jumprf, etc.), pass the raw predicate
-value directly instead of going through fLSBOLD/fLSBNEW extraction.
-For callers that produce a 0/1 result via setcond (compare-and-jump,
-jumprz, etc.), the TSTEQ/TSTNE test on bit 0 is equivalent to the
-previous EQ/NE test against 0.
+Test for predicated .new branches with non-standard predicate values
+(non-all-0, non-all-1).  Hexagon predicates are 8 bits wide but conditional
+branches evaluate only the LSB.
 
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/gen_tcg.h   | 80 +++++++++++++++++++-------------------
- target/hexagon/genptr.c    | 32 ++++++---------
- target/hexagon/translate.c |  2 +-
- 3 files changed, 53 insertions(+), 61 deletions(-)
+ tests/tcg/hexagon/Makefile.target        |   3 +
+ tests/tcg/hexagon/test_pnew_jump_loads.c | 339 +++++++++++++++++++++++
+ 2 files changed, 342 insertions(+)
+ create mode 100644 tests/tcg/hexagon/test_pnew_jump_loads.c
 
-diff --git a/target/hexagon/gen_tcg.h b/target/hexagon/gen_tcg.h
-index 45ccd51888..98d3996011 100644
---- a/target/hexagon/gen_tcg.h
-+++ b/target/hexagon/gen_tcg.h
-@@ -696,13 +696,13 @@
-     gen_callr(ctx, RsV)
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index f86f02bb31..5199c78536 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -81,6 +81,8 @@ HEX_TESTS += test_vminh
+ HEX_TESTS += test_vpmpyh
+ HEX_TESTS += test_vspliceb
  
- #define fGEN_TCG_J2_callt(SHORTCODE) \
--    gen_cond_call(ctx, PuV, TCG_COND_EQ, riV)
-+    gen_cond_call(ctx, PuV, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J2_callf(SHORTCODE) \
--    gen_cond_call(ctx, PuV, TCG_COND_NE, riV)
-+    gen_cond_call(ctx, PuV, TCG_COND_TSTNE, riV)
- #define fGEN_TCG_J2_callrt(SHORTCODE) \
--    gen_cond_callr(ctx, TCG_COND_EQ, PuV, RsV)
-+    gen_cond_callr(ctx, TCG_COND_TSTEQ, PuV, RsV)
- #define fGEN_TCG_J2_callrf(SHORTCODE) \
--    gen_cond_callr(ctx, TCG_COND_NE, PuV, RsV)
-+    gen_cond_callr(ctx, TCG_COND_TSTNE, PuV, RsV)
++HEX_TESTS += test_pnew_jump_loads
++
+ HEX_TESTS += v68_scalar
+ HEX_TESTS += v68_hvx
+ HEX_TESTS += v69_hvx
+@@ -104,6 +106,7 @@ overflow: overflow.c hex_test.h
+ preg_alias: preg_alias.c hex_test.h
+ read_write_overlap: read_write_overlap.c hex_test.h
+ reg_mut: reg_mut.c hex_test.h
++test_pnew_jump_loads: test_pnew_jump_loads.c hex_test.h
+ unaligned_pc: unaligned_pc.c
  
- #define fGEN_TCG_J2_loop0r(SHORTCODE) \
-     gen_loop0r(ctx, RsV, riV)
-@@ -893,21 +893,21 @@
-     gen_cmpnd_cmp_n1_jmp_f(ctx, 1, TCG_COND_GT, RsV, riV)
- 
- #define fGEN_TCG_J4_tstbit0_tp0_jump_nt(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_EQ, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J4_tstbit0_tp0_jump_t(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_EQ, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J4_tstbit0_fp0_jump_nt(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_NE, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_TSTNE, riV)
- #define fGEN_TCG_J4_tstbit0_fp0_jump_t(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_NE, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 0, RsV, TCG_COND_TSTNE, riV)
- #define fGEN_TCG_J4_tstbit0_tp1_jump_nt(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_EQ, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J4_tstbit0_tp1_jump_t(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_EQ, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J4_tstbit0_fp1_jump_nt(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_NE, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_TSTNE, riV)
- #define fGEN_TCG_J4_tstbit0_fp1_jump_t(SHORTCODE) \
--    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_NE, riV)
-+    gen_cmpnd_tstbit0_jmp(ctx, 1, RsV, TCG_COND_TSTNE, riV)
- 
- /* p0 = cmp.eq(r0, #7) */
- #define fGEN_TCG_SA1_cmpeqi(SHORTCODE) \
-@@ -933,31 +933,31 @@
-     do { \
-         TCGv LSB = tcg_temp_new(); \
-         COND; \
--        gen_cond_jump(ctx, TCG_COND_EQ, LSB, riV); \
-+        gen_cond_jump(ctx, TCG_COND_TSTEQ, LSB, riV); \
-     } while (0)
- #define fGEN_TCG_cond_jumpf(COND) \
-     do { \
-         TCGv LSB = tcg_temp_new(); \
-         COND; \
--        gen_cond_jump(ctx, TCG_COND_NE, LSB, riV); \
-+        gen_cond_jump(ctx, TCG_COND_TSTNE, LSB, riV); \
-     } while (0)
- 
- #define fGEN_TCG_J2_jumpt(SHORTCODE) \
--    fGEN_TCG_cond_jumpt(fLSBOLD(PuV))
-+    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuV, riV)
- #define fGEN_TCG_J2_jumptpt(SHORTCODE) \
--    fGEN_TCG_cond_jumpt(fLSBOLD(PuV))
-+    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuV, riV)
- #define fGEN_TCG_J2_jumpf(SHORTCODE) \
--    fGEN_TCG_cond_jumpf(fLSBOLD(PuV))
-+    gen_cond_jump(ctx, TCG_COND_TSTNE, PuV, riV)
- #define fGEN_TCG_J2_jumpfpt(SHORTCODE) \
--    fGEN_TCG_cond_jumpf(fLSBOLD(PuV))
-+    gen_cond_jump(ctx, TCG_COND_TSTNE, PuV, riV)
- #define fGEN_TCG_J2_jumptnew(SHORTCODE) \
--    fGEN_TCG_cond_jumpt(fLSBNEW(PuN))
-+    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuN, riV)
- #define fGEN_TCG_J2_jumptnewpt(SHORTCODE) \
--    fGEN_TCG_cond_jumpt(fLSBNEW(PuN))
-+    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuN, riV)
- #define fGEN_TCG_J2_jumpfnewpt(SHORTCODE) \
--    fGEN_TCG_cond_jumpf(fLSBNEW(PuN))
-+    gen_cond_jump(ctx, TCG_COND_TSTNE, PuN, riV)
- #define fGEN_TCG_J2_jumpfnew(SHORTCODE) \
--    fGEN_TCG_cond_jumpf(fLSBNEW(PuN))
-+    gen_cond_jump(ctx, TCG_COND_TSTNE, PuN, riV)
- #define fGEN_TCG_J2_jumprz(SHORTCODE) \
-     fGEN_TCG_cond_jumpt(tcg_gen_setcondi_tl(TCG_COND_NE, LSB, RsV, 0))
- #define fGEN_TCG_J2_jumprzpt(SHORTCODE) \
-@@ -979,31 +979,31 @@
-     do { \
-         TCGv LSB = tcg_temp_new(); \
-         COND; \
--        gen_cond_jumpr(ctx, RsV, TCG_COND_EQ, LSB); \
-+        gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, LSB); \
-     } while (0)
- #define fGEN_TCG_cond_jumprf(COND) \
-     do { \
-         TCGv LSB = tcg_temp_new(); \
-         COND; \
--        gen_cond_jumpr(ctx, RsV, TCG_COND_NE, LSB); \
-+        gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, LSB); \
-     } while (0)
- 
- #define fGEN_TCG_J2_jumprt(SHORTCODE) \
--    fGEN_TCG_cond_jumprt(fLSBOLD(PuV))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuV)
- #define fGEN_TCG_J2_jumprtpt(SHORTCODE) \
--    fGEN_TCG_cond_jumprt(fLSBOLD(PuV))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuV)
- #define fGEN_TCG_J2_jumprf(SHORTCODE) \
--    fGEN_TCG_cond_jumprf(fLSBOLD(PuV))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuV)
- #define fGEN_TCG_J2_jumprfpt(SHORTCODE) \
--    fGEN_TCG_cond_jumprf(fLSBOLD(PuV))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuV)
- #define fGEN_TCG_J2_jumprtnew(SHORTCODE) \
--    fGEN_TCG_cond_jumprt(fLSBNEW(PuN))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuN)
- #define fGEN_TCG_J2_jumprtnewpt(SHORTCODE) \
--    fGEN_TCG_cond_jumprt(fLSBNEW(PuN))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuN)
- #define fGEN_TCG_J2_jumprfnew(SHORTCODE) \
--    fGEN_TCG_cond_jumprf(fLSBNEW(PuN))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuN)
- #define fGEN_TCG_J2_jumprfnewpt(SHORTCODE) \
--    fGEN_TCG_cond_jumprf(fLSBNEW(PuN))
-+    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuN)
- 
- /*
-  * New value compare & jump instructions
-@@ -1101,13 +1101,13 @@
-     gen_cmpi_jumpnv(ctx, TCG_COND_LE, NsN, -1, riV)
- 
- #define fGEN_TCG_J4_tstbit0_t_jumpnv_t(SHORTCODE) \
--    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_EQ, riV)
-+    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J4_tstbit0_t_jumpnv_nt(SHORTCODE) \
--    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_EQ, riV)
-+    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_TSTEQ, riV)
- #define fGEN_TCG_J4_tstbit0_f_jumpnv_t(SHORTCODE) \
--    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_NE, riV)
-+    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_TSTNE, riV)
- #define fGEN_TCG_J4_tstbit0_f_jumpnv_nt(SHORTCODE) \
--    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_NE, riV)
-+    gen_testbit0_jumpnv(ctx, NsN, TCG_COND_TSTNE, riV)
- 
- /* r0 = r1 ; jump address */
- #define fGEN_TCG_J4_jumpsetr(SHORTCODE) \
-@@ -1150,14 +1150,14 @@
-     gen_jumpr(ctx, hex_gpr[HEX_REG_LR])
- 
- #define fGEN_TCG_SL2_jumpr31_t(SHORTCODE) \
--    gen_cond_jumpr31(ctx, TCG_COND_EQ, hex_pred[0])
-+    gen_cond_jumpr31(ctx, TCG_COND_TSTEQ, hex_pred[0])
- #define fGEN_TCG_SL2_jumpr31_f(SHORTCODE) \
--    gen_cond_jumpr31(ctx, TCG_COND_NE, hex_pred[0])
-+    gen_cond_jumpr31(ctx, TCG_COND_TSTNE, hex_pred[0])
- 
- #define fGEN_TCG_SL2_jumpr31_tnew(SHORTCODE) \
--    gen_cond_jumpr31(ctx, TCG_COND_EQ, ctx->new_pred_value[0])
-+    gen_cond_jumpr31(ctx, TCG_COND_TSTEQ, ctx->new_pred_value[0])
- #define fGEN_TCG_SL2_jumpr31_fnew(SHORTCODE) \
--    gen_cond_jumpr31(ctx, TCG_COND_NE, ctx->new_pred_value[0])
-+    gen_cond_jumpr31(ctx, TCG_COND_TSTNE, ctx->new_pred_value[0])
- 
- /* Count trailing zeros/ones */
- #define fGEN_TCG_S2_ct0(SHORTCODE) \
-diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-index 9eb21da6f3..c7b9436c8d 100644
---- a/target/hexagon/genptr.c
-+++ b/target/hexagon/genptr.c
-@@ -455,7 +455,7 @@ static void gen_write_new_pc_addr(DisasContext *ctx, TCGv addr,
-     TCGLabel *pred_false = NULL;
-     if (cond != TCG_COND_ALWAYS) {
-         pred_false = gen_new_label();
--        tcg_gen_brcondi_tl(cond, pred, 0, pred_false);
-+        tcg_gen_brcondi_tl(cond, pred, 1, pred_false);
-     }
- 
-     if (ctx->pkt->pkt_has_multi_cof) {
-@@ -579,9 +579,7 @@ static void gen_cond_jumpr(DisasContext *ctx, TCGv dst_pc,
- 
- static void gen_cond_jumpr31(DisasContext *ctx, TCGCond cond, TCGv pred)
- {
--    TCGv LSB = tcg_temp_new();
--    tcg_gen_andi_tl(LSB, pred, 1);
--    gen_cond_jumpr(ctx, hex_gpr[HEX_REG_LR], cond, LSB);
-+    gen_cond_jumpr(ctx, hex_gpr[HEX_REG_LR], cond, pred);
- }
- 
- static void gen_cond_jump(DisasContext *ctx, TCGCond cond, TCGv pred,
-@@ -609,14 +607,14 @@ static void gen_cmpnd_cmp_jmp_t(DisasContext *ctx,
-                                 int pnum, TCGCond cond, TCGv arg1, TCGv arg2,
-                                 int pc_off)
- {
--    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, arg2, TCG_COND_EQ, pc_off);
-+    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, arg2, TCG_COND_TSTEQ, pc_off);
- }
- 
- static void gen_cmpnd_cmp_jmp_f(DisasContext *ctx,
-                                 int pnum, TCGCond cond, TCGv arg1, TCGv arg2,
-                                 int pc_off)
- {
--    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, arg2, TCG_COND_NE, pc_off);
-+    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, arg2, TCG_COND_TSTNE, pc_off);
- }
- 
- static void gen_cmpnd_cmpi_jmp_t(DisasContext *ctx,
-@@ -624,7 +622,7 @@ static void gen_cmpnd_cmpi_jmp_t(DisasContext *ctx,
-                                  int pc_off)
- {
-     TCGv tmp = tcg_constant_tl(arg2);
--    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, tmp, TCG_COND_EQ, pc_off);
-+    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, tmp, TCG_COND_TSTEQ, pc_off);
- }
- 
- static void gen_cmpnd_cmpi_jmp_f(DisasContext *ctx,
-@@ -632,7 +630,7 @@ static void gen_cmpnd_cmpi_jmp_f(DisasContext *ctx,
-                                  int pc_off)
- {
-     TCGv tmp = tcg_constant_tl(arg2);
--    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, tmp, TCG_COND_NE, pc_off);
-+    gen_cmpnd_cmp_jmp(ctx, pnum, cond, arg1, tmp, TCG_COND_TSTNE, pc_off);
- }
- 
- static void gen_cmpnd_cmp_n1_jmp_t(DisasContext *ctx, int pnum, TCGCond cond,
-@@ -665,9 +663,7 @@ static void gen_cmpnd_tstbit0_jmp(DisasContext *ctx,
- static void gen_testbit0_jumpnv(DisasContext *ctx,
-                                 TCGv arg, TCGCond cond, int pc_off)
- {
--    TCGv pred = tcg_temp_new();
--    tcg_gen_andi_tl(pred, arg, 1);
--    gen_cond_jump(ctx, cond, pred, pc_off);
-+    gen_cond_jump(ctx, cond, arg, pc_off);
- }
- 
- static void gen_jump(DisasContext *ctx, int pc_off)
-@@ -698,11 +694,9 @@ static void gen_cond_call(DisasContext *ctx, TCGv pred,
-                           TCGCond cond, int pc_off)
- {
-     TCGv lr = get_result_gpr(ctx, HEX_REG_LR);
--    TCGv lsb = tcg_temp_new();
-     TCGLabel *skip = gen_new_label();
--    tcg_gen_andi_tl(lsb, pred, 1);
--    gen_write_new_pc_pcrel(ctx, pc_off, cond, lsb);
--    tcg_gen_brcondi_tl(cond, lsb, 0, skip);
-+    gen_write_new_pc_pcrel(ctx, pc_off, cond, pred);
-+    tcg_gen_brcondi_tl(cond, pred, 1, skip);
-     tcg_gen_movi_tl(lr, ctx->next_PC);
-     gen_set_label(skip);
- }
-@@ -710,10 +704,8 @@ static void gen_cond_call(DisasContext *ctx, TCGv pred,
- static void gen_cond_callr(DisasContext *ctx,
-                            TCGCond cond, TCGv pred, TCGv new_pc)
- {
--    TCGv lsb = tcg_temp_new();
-     TCGLabel *skip = gen_new_label();
--    tcg_gen_andi_tl(lsb, pred, 1);
--    tcg_gen_brcondi_tl(cond, lsb, 0, skip);
-+    tcg_gen_brcondi_tl(cond, pred, 1, skip);
-     gen_callr(ctx, new_pc);
-     gen_set_label(skip);
- }
-@@ -955,7 +947,7 @@ static void gen_cmp_jumpnv(DisasContext *ctx,
- {
-     TCGv pred = tcg_temp_new();
-     tcg_gen_setcond_tl(cond, pred, val, src);
--    gen_cond_jump(ctx, TCG_COND_EQ, pred, pc_off);
-+    gen_cond_jump(ctx, TCG_COND_TSTEQ, pred, pc_off);
- }
- 
- static void gen_cmpi_jumpnv(DisasContext *ctx,
-@@ -963,7 +955,7 @@ static void gen_cmpi_jumpnv(DisasContext *ctx,
- {
-     TCGv pred = tcg_temp_new();
-     tcg_gen_setcondi_tl(cond, pred, val, src);
--    gen_cond_jump(ctx, TCG_COND_EQ, pred, pc_off);
-+    gen_cond_jump(ctx, TCG_COND_TSTEQ, pred, pc_off);
- }
- 
- /* Shift left with saturation */
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 8a223f6e13..633401451d 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -163,7 +163,7 @@ static void gen_end_tb(DisasContext *ctx)
-     if (ctx->branch_cond != TCG_COND_NEVER) {
-         if (ctx->branch_cond != TCG_COND_ALWAYS) {
-             TCGLabel *skip = gen_new_label();
--            tcg_gen_brcondi_tl(ctx->branch_cond, ctx->branch_taken, 0, skip);
-+            tcg_gen_brcondi_tl(ctx->branch_cond, ctx->branch_taken, 1, skip);
-             gen_goto_tb(ctx, 0, ctx->branch_dest, true);
-             gen_set_label(skip);
-             gen_goto_tb(ctx, 1, ctx->next_PC, false);
+ # This test has to be compiled for the -mv67t target
+diff --git a/tests/tcg/hexagon/test_pnew_jump_loads.c b/tests/tcg/hexagon/test_pnew_jump_loads.c
+new file mode 100644
+index 0000000000..2cba2b4002
+--- /dev/null
++++ b/tests/tcg/hexagon/test_pnew_jump_loads.c
+@@ -0,0 +1,339 @@
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Exhaustive test for predicated .new branches with non-standard predicate
++ * values (non-all-0, non-all-1).
++ *
++ * Hexagon predicates are 8 bits wide but conditional branches evaluate only
++ * bit 0 (the LSB).  A predicate value like 0xFE is non-zero yet has bit 0
++ * clear, so it must evaluate as "false".
++ *
++ * This test covers the distinct TCG code paths for predicated .new ops:
++ *
++ *   1. gen_cond_jump      - J2_jumptnewpt / J2_jumpfnewpt  (p0..p3)
++ *   2. gen_cond_jumpr     - J2_jumprtnewpt / J2_jumprfnewpt
++ *   3. gen_cond_jumpr31   - SL2_jumpr31_tnew / SL2_jumpr31_fnew (duplex)
++ *   4. gen_testbit0_jumpnv - J4_tstbit0_t/f_jumpnv_t
++ *   5. Conditional .new loads and stores
++ */
++
++#include <stdio.h>
++#include <stdint.h>
++
++int err;
++
++#include "hex_test.h"
++
++/*
++ * Non-standard predicate: non-zero (0xFE) but bit 0 clear => false.
++ * This distinguishes correct LSB evaluation from incorrect non-zero checks.
++ */
++#define PRED_VAL    0xFEu
++#define SENTINEL    0xDEADBEEFu
++#define LOAD_VAL    0xAAAABBBBu
++
++/* gen_cond_jump (J2_jumptnewpt) */
++
++/*
++ * Macro to test jumptnew across predicate registers p0..p3.
++ * { Pn = and(Pn, Pn); if (Pn.new) jump:t TARGET }
++ *
++ * Pn.new = PRED_VAL & PRED_VAL = 0xFE => bit0=0 => not taken.
++ * Different predicate registers produce different instruction encodings.
++ */
++#define TEST_JUMPTNEW(PREG)                                     \
++static void test_jumptnew_##PREG(void)                          \
++{                                                               \
++    uint32_t jumped;                                            \
++    asm volatile(                                               \
++        #PREG " = %[pred]\n"                                    \
++        "{ " #PREG " = and(" #PREG ", " #PREG ")\n"            \
++        "  if (" #PREG ".new) jump:t 1f }\n"                   \
++        "%[jumped] = #0\n"                                      \
++        "jump 2f\n"                                             \
++        "1:\n"                                                  \
++        "%[jumped] = #1\n"                                      \
++        "2:\n"                                                  \
++        : [jumped] "=&r"(jumped)                                \
++        : [pred] "r"(PRED_VAL)                                  \
++        : #PREG                                                 \
++    );                                                          \
++    check32(jumped, 0);                                         \
++}
++
++TEST_JUMPTNEW(p0)
++TEST_JUMPTNEW(p1)
++TEST_JUMPTNEW(p2)
++TEST_JUMPTNEW(p3)
++
++/* jumpfnew: bit0=0 => condition "false" => negated => jump IS taken */
++static void test_jumpfnew_p0(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "p0 = %[pred]\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (!p0.new) jump:t 1f }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        : [pred] "r"(PRED_VAL)
++        : "p0"
++    );
++    check32(jumped, 1);
++}
++
++/* gen_cond_jumpr (J2_jumprtnewpt) */
++
++static void test_jumprtnew_p0(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "p0 = %[pred]\n"
++        "r0 = ##1f\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (p0.new) jumpr:t r0 }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        : [pred] "r"(PRED_VAL)
++        : "p0", "r0"
++    );
++    check32(jumped, 0);
++}
++
++static void test_jumprfnew_p0(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "p0 = %[pred]\n"
++        "r0 = ##1f\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (!p0.new) jumpr:t r0 }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        : [pred] "r"(PRED_VAL)
++        : "p0", "r0"
++    );
++    check32(jumped, 1);
++}
++
++/* gen_cond_jumpr31 (SL2_jumpr31_tnew) */
++
++/*
++ * Duplex sub-instructions: only SA1_cmpeqi and similar can produce .new
++ * predicates in a duplex packet, and those only yield 0x00/0xFF.
++ * We test with standard values to exercise the duplex decode path.
++ *
++ * { p0 = cmp.eq(r0, #0); if (p0.new) jumpr:nt r31 }
++ * With r0=0: p0.new = 0xFF => bit0=1 => taken.
++ */
++static void test_jumpr31_tnew(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "r0 = #0\n"
++        "r31 = ##1f\n"
++        "{ p0 = cmp.eq(r0, #0)\n"
++        "  if (p0.new) jumpr:nt r31 }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        :
++        : "r0", "r31", "p0"
++    );
++    check32(jumped, 1);
++}
++
++/* p0.new = 0xFF => bit0=1 => !true => not taken */
++static void test_jumpr31_fnew(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "r0 = #0\n"
++        "r31 = ##1f\n"
++        "{ p0 = cmp.eq(r0, #0)\n"
++        "  if (!p0.new) jumpr:nt r31 }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        :
++        : "r0", "r31", "p0"
++    );
++    check32(jumped, 0);
++}
++
++/* gen_testbit0_jumpnv (J4_tstbit0) */
++
++/*
++ * { r0 = #0xFE; if (tstbit(r0.new, #0)) jump:t TARGET }
++ * r0.new = 0xFE => bit0=0 => tstbit false => not taken.
++ */
++static void test_tstbit0_t_jumpnv(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "{ r0 = #0xFE\n"
++        "  if (tstbit(r0.new, #0)) jump:t 1f }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        :
++        : "r0"
++    );
++    check32(jumped, 0);
++}
++
++/* bit0=0 => tstbit false => negated => taken */
++static void test_tstbit0_f_jumpnv(void)
++{
++    uint32_t jumped;
++
++    asm volatile(
++        "{ r0 = #0xFE\n"
++        "  if (!tstbit(r0.new, #0)) jump:t 1f }\n"
++        "%[jumped] = #0\n"
++        "jump 2f\n"
++        "1:\n"
++        "%[jumped] = #1\n"
++        "2:\n"
++        : [jumped] "=&r"(jumped)
++        :
++        : "r0"
++    );
++    check32(jumped, 1);
++}
++
++/* conditional .new loads and stores */
++
++static uint32_t load_val;
++static uint32_t store_dst;
++
++/* bit0=0 => condition false => load skipped => sentinel remains */
++static void test_cond_load_tnew(void)
++{
++    uint32_t result;
++
++    load_val = LOAD_VAL;
++    asm volatile(
++        "p0 = %[pred]\n"
++        "%[res] = ##0xDEADBEEF\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (p0.new) %[res] = memw(%[addr]+#0) }\n"
++        : [res] "=&r"(result)
++        : [pred] "r"(PRED_VAL),
++          [addr] "r"(&load_val)
++        : "p0", "memory"
++    );
++    check32(result, SENTINEL);
++}
++
++/* bit0=0 => condition false => negated => load executed */
++static void test_cond_load_fnew(void)
++{
++    uint32_t result;
++
++    load_val = LOAD_VAL;
++    asm volatile(
++        "p0 = %[pred]\n"
++        "%[res] = ##0xDEADBEEF\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (!p0.new) %[res] = memw(%[addr]+#0) }\n"
++        : [res] "=&r"(result)
++        : [pred] "r"(PRED_VAL),
++          [addr] "r"(&load_val)
++        : "p0", "memory"
++    );
++    check32(result, LOAD_VAL);
++}
++
++/* bit0=0 => condition false => store skipped => sentinel remains */
++static void test_cond_store_tnew(void)
++{
++    store_dst = SENTINEL;
++    asm volatile(
++        "p0 = %[pred]\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (p0.new) memw(%[addr]+#0) = %[val] }\n"
++        :
++        : [pred] "r"(PRED_VAL),
++          [addr] "r"(&store_dst),
++          [val] "r"(LOAD_VAL)
++        : "p0", "memory"
++    );
++    check32(store_dst, SENTINEL);
++}
++
++/* bit0=0 => condition false => negated => store executed */
++static void test_cond_store_fnew(void)
++{
++    store_dst = SENTINEL;
++    asm volatile(
++        "p0 = %[pred]\n"
++        "{ p0 = and(p0, p0)\n"
++        "  if (!p0.new) memw(%[addr]+#0) = %[val] }\n"
++        :
++        : [pred] "r"(PRED_VAL),
++          [addr] "r"(&store_dst),
++          [val] "r"(LOAD_VAL)
++        : "p0", "memory"
++    );
++    check32(store_dst, LOAD_VAL);
++}
++
++int main(void)
++{
++    /* gen_cond_jump with all predicate registers */
++    test_jumptnew_p0();
++    test_jumptnew_p1();
++    test_jumptnew_p2();
++    test_jumptnew_p3();
++    test_jumpfnew_p0();
++
++    /* gen_cond_jumpr */
++    test_jumprtnew_p0();
++    test_jumprfnew_p0();
++
++    /* gen_cond_jumpr31 (duplex, standard values) */
++    test_jumpr31_tnew();
++    test_jumpr31_fnew();
++
++    /* gen_testbit0_jumpnv */
++    test_tstbit0_t_jumpnv();
++    test_tstbit0_f_jumpnv();
++
++    /* conditional .new loads and stores */
++    test_cond_load_tnew();
++    test_cond_load_fnew();
++    test_cond_store_tnew();
++    test_cond_store_fnew();
++
++    puts(err ? "FAIL" : "PASS");
++    return err ? 1 : 0;
++}
 -- 
 2.34.1
 
