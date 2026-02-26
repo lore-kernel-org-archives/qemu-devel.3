@@ -4,122 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B74FC592E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63F55FC592B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYz5-0004gg-72; Thu, 26 Feb 2026 05:52:43 -0500
+	id 1vvZ2L-0003ZT-Er; Thu, 26 Feb 2026 05:56:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vvYz1-0004cJ-DU; Thu, 26 Feb 2026 05:52:39 -0500
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vvZ29-00038t-AE
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:55:56 -0500
+Received: from mail-centralusazon11010037.outbound.protection.outlook.com
+ ([52.101.61.37] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vvYz0-0000mU-3n; Thu, 26 Feb 2026 05:52:39 -0500
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vvZ26-0001eE-Rn
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:55:52 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PTvPLC/4rhRMb8fuvQnpp9tpTdfBcDfyjMorIZXAOGiehfGwc4ndqraxCnjxdVoAKl814QxFW9YvicASYYx8WsuETOqrKSNYAjv2xvcgpd5stLT9c55uC3mX0ZMGFm58twSTVSTcdRinsHYHVFIKgv9y3RhwcnvIpFKFpeQlHK2aaNxK5TNM9bXs7OgCSvJ9J5f+OtB3ra+MPMehXLTtPcP5fIQF8jFsuz6vgyJ9u6gPr7ezqrmBfV+DzmjizjUm2PkvbEhcuOdxhNhRrSqq6eWfFZm91RnzJgBSFwJOBar/waTr0vF+tCKshm1wm3Ehe0RUU6+6gHYAewN0RhQuNg==
+ b=oIZVBaxcGUV1lBz9A61GlwG05nohv7RPIqeUBbW1B6H9kIsOZ7Ob1LJZUR0dSU/+dIB1bJjuka26Rwxbo1zW7wKBSz7z/Jr6zqUjzZl0HgR8IgDmlj3FpzF7TnyR4QCXrPaVgtlBngIKcDqW0dDP8cpWLHNO3eckCB6z4i1JLHF9M5Lrmbe6al/IKF/1u7HyJfSqiNcJ9lgtECSslSEW+wZZzgL2rZ9qykgjAiroRWhOeV3WOgKpfOSsrfIPiNF5XDNonh4H7VRKa/h5N73sfEZgXGAT6MABKoSg7JkeB7/zaWsg4sNu68phwe4wsHrnrcJLL9SwyXKn+3GLyWw+lg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qH1RaeibYDkJ5ZRNRJpc87DXVbALmF1hyEOhxcJ9AOI=;
- b=R/5otNqgqaRiZe2wQYRnOngGxZxF4Lok84UeVcCRER27pM9S73ly5t9plwc309gYDHcCeBe2+UOHllMU4UEZgB5HbfSwqiI/2t8Cpr7F1pPPIE3Jeh7BS1f63pLeEjmCEIZG4VEnIbsVuTHs6968pht2VgDfaJo1fO6Iso/iesYmOmFEphzjFigiqNspVpBErh3XG8CnQZYIMzr38dmBocUhcLn1m41cr7H3K4/Nyn8J6KGMu4KaLlqP/T0gmiV1RXDGAG8oAS9Xby3/8m9LWPRnkNMhH69TWU6QCfnj8i5NENvJR0ZczhJ4jFHgZ48jKZ9K192d5pq3Qijr06BAHQ==
+ bh=+R0CtrilsFWS1BvAQZWygAP6hJf7kcUZpGbuvIxQmUY=;
+ b=hpTyNzXhJYmxfGsy/DPUzxKfflJVkJx1dfTs4JnpT1OxQ60ggJiseZMO+uKeD+7iLfZtgrgiajr8S2oBdkSPWWCHk24s8n6erGbMfziFwbN1nskYzSu9whBvMPAnt855GqOnDsJFXvABjN1rId8Fp1OxQ/BinLh3H+yyHdsx82uaDKRr8GRjpSvdD9t7y58KqWsQ4NvKQ5FgVyqNCsTYE5RwHOludOoJA0AhzAFjlk9mQXnKsk8CC+x+0/DwjIQcH4vnDz8hBrNGzc0Bl3kAsL4QsM8iNyETU5aj24YtXW+amvbsgeCVxhNy1yhCNZWuPtVcRrBgx2qmP9P+brZN9Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qH1RaeibYDkJ5ZRNRJpc87DXVbALmF1hyEOhxcJ9AOI=;
- b=bHnxZWroswFFplWjmwf384kq9LgEoZcj3OiwpZZDeQXDyaeBEtFAaSCaz23Wb/LmUfJtidEIvKgQugohaFbeNn2sE8WTB/XjFkTsc0IyaL53qLrrtreIfQoFuuT2ummfoxr6aJKI/KM/VFDZYl2AXnzENZL/GIioMO6dGjCV9olVDgqGcvArBKfA5cenxMjoDC72iTdFm+6gTjkhl+jQjegAB+1tVFesukDcNJlBGgdcPgLlpx+0gX6m+H7Yw0rprPqgdDOqTcbXKhxAdARQcGceOwtJasTV4TXN5cqkMHnqwpBiItaMoyszsvXIRyd+iz+HMdDfQUgQVEhM4uaujQ==
-Received: from SA1P222CA0125.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:3c5::19)
- by LV8PR12MB9641.namprd12.prod.outlook.com (2603:10b6:408:295::18)
+ bh=+R0CtrilsFWS1BvAQZWygAP6hJf7kcUZpGbuvIxQmUY=;
+ b=XU845zMN9NQHd5vAi2q0/Iv/TVzkUlN7rrqNMaH9zgEkWZtqRI2/D5ENF2lvjritgRIIOySMzB56kj1+rfGNF8vpuBqlz9YjY09ErmJa5SxKOHQJzHM91fT57W6l6kqAmyPISXg5yM4/OtT1+f5s66sraatEBiMwWfDcRg1Uu1E=
+Received: from BL1PR13CA0205.namprd13.prod.outlook.com (2603:10b6:208:2be::30)
+ by PH8PR12MB7328.namprd12.prod.outlook.com (2603:10b6:510:214::7)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.13; Thu, 26 Feb
- 2026 10:52:30 +0000
-Received: from SN1PEPF000397AF.namprd05.prod.outlook.com
- (2603:10b6:806:3c5:cafe::75) by SA1P222CA0125.outlook.office365.com
- (2603:10b6:806:3c5::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.26 via Frontend Transport; Thu,
- 26 Feb 2026 10:52:30 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SN1PEPF000397AF.mail.protection.outlook.com (10.167.248.53) with Microsoft
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.11; Thu, 26 Feb
+ 2026 10:50:41 +0000
+Received: from BN2PEPF000044A6.namprd04.prod.outlook.com
+ (2603:10b6:208:2be:cafe::38) by BL1PR13CA0205.outlook.office365.com
+ (2603:10b6:208:2be::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.22 via Frontend Transport; Thu,
+ 26 Feb 2026 10:50:41 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN2PEPF000044A6.mail.protection.outlook.com (10.167.243.100) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Thu, 26 Feb 2026 10:52:29 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Feb
- 2026 02:52:11 -0800
-Received: from NV-2Y5XW94.nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Feb
- 2026 02:52:08 -0800
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
- <alex@shazbot.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
- <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>,
- <skolothumtho@nvidia.com>
-Subject: [PATCH v3 12/32] hw/arm/virt: Link SMMUv3 CMDQV resources to platform
- bus
-Date: Thu, 26 Feb 2026 10:50:36 +0000
-Message-ID: <20260226105056.897-13-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260226105056.897-1-skolothumtho@nvidia.com>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ 15.20.9632.12 via Frontend Transport; Thu, 26 Feb 2026 10:50:41 +0000
+Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 26 Feb
+ 2026 04:50:38 -0600
+From: fanhuang <FangSheng.Huang@amd.com>
+To: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
+ <gourry@gourry.net>, <jonathan.cameron@huawei.com>
+CC: <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
+ <Lianjie.Shi@amd.com>, fanhuang <FangSheng.Huang@amd.com>
+Subject: [PATCH v6 0/1] numa: add 'memmap-type' option for memory type
+ configuration
+Date: Thu, 26 Feb 2026 18:50:22 +0800
+Message-ID: <20260226105023.256568-1-FangSheng.Huang@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.126.230.35]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF000397AF:EE_|LV8PR12MB9641:EE_
-X-MS-Office365-Filtering-Correlation-Id: 911d4a6d-3e1b-4f69-b197-08de75252338
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A6:EE_|PH8PR12MB7328:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6baea3c3-662f-4be1-39d7-08de7524e269
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|36860700013|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: 0REvlEKX4QgNpC/Utg+7ZWUKzk+6o2Dy6V3T+/XzhoLuuMT5Hr21xRXn8R+WjPfkoCZ0VIAT89m5sYzAwho+V/8GGcMvvuCQtUE/g/vsfH05F46tyxkDsu5/MWD1mz2L7p3uTM30vzCVSbdRyr1VmhEj2L19g8xdk3HHHkoKTSFxRj/bwm18Ozz/zm9Y68k0dhnaccFQhplwKVLVnvxZm2IjIDjedWCM7+fRkau8e/omgkb2sMrO0RL3qSK/ncEPty0GuHkBg7GxBPWZXkByO8GZ+MAsbbB+TETIAbaBPCOzsJ2dUykmDfVp0zWgv7sIU80gqFX5SWZbWTZSBpsqjz2hEdjQdT7jc2TKlwdd7I8fCQvdAwjcuocTt5gbw9u6mgH3/AcRJS7Vaiav8Vv7MJg8bMTo9U+TwysKh0HWI7kABq25mBeIJoKmeYuhDZs/MZqxjFu1PoZ1ps4+RBUMSRUDlQgQtgeYsZSqeATzknNjnEw2IXlh5d3tS5y+2XAV4y2Fa9xfXmufoCJXjkMNEgUhWDHsoaHyX9fq4Cgk91fjvfKXc9oj1bQHMM1HxHzXO3ab7lVIPZYfd7NQNK8OvFAhCBK3dZVlY1KY+9JBSApOekv29rowQa04pUyu4jevq2UJEnapGUd1TpGMxq9mtvqRmr5+pAxCu0Vn0o2diLNaPj9So8UTbPZEsZnDZF0Ptt9kP1JAn93TWmuDXVvCwJJVxLMcvQ9u+ZorviR1uEwCUteSB09tJuJutlSsVe4Hapuv1MI9hPeMgTe5/gyB9CPDDxdwenmTgcwj74V28z5Ne/LIWFipiolcXaNkZJ5yeuyMlj0iWJPvgyjpBp/vsg==
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(36860700013)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
+ ARA:13230040|36860700013|1800799024|376014|82310400026|43062017; 
+X-Microsoft-Antispam-Message-Info: dAodVAKf9staHnqXJiqaOR53iqsqYHYSzDddzRzILOMji/Cff9aqMEcagDB4QJ1hX9li0bqt9Be0FaHJkZZjIJur0GmwssAfmwPTvIyB7k57vgZuA0jUtaMw0vcgbbEqM/en8my8CS4g1lJMNkezj5xdixlIRmVeGkNlWhBXgJEm8wfNQHlmEswb5wcUWhza8Ns5I1IwLRN5fABKUPg3lo2BbtXUoJk0dZcu4kpdTdM56//8bC6NqLcfFE95lmHi1H/NJmNCDzdwgBd50WRULD/bvzy+y3c8/eTZi/t8lNUXGfe71CRXbmMDKivGoXUnZDwEzwuI7EskLColeCteuyv9CsBP6iSugR/j//U4e0YQ2IB1sG2+/iwnc0U9eO0SfN4+vt2qaE2+XGEWJxjjtg8yYmHj7JwKaKrHYWDq8blRBklYP3UDLRG3xEULS2loDn4uEx186s9Ciq0O28smp/1/dJMd2VqDAi3VLPA0y+XwWAxAYXIO9OF+WbdHJ3MoKu6zjk3m4Vz7IP0GiUj1vVlDPG5yp3erP2E6OrhfCqKj/UNaHAQ/U2MYLjdeF1cU1qJGVNbfgkSGwlzqU7uWAvwutuIZ0MvNeeneoWNJz9Fm4zxtuGVjVdiH4KC8k5QTVkWy/IumYAlh+0zoNY/C/W5SGtDLMWofRyLV9gy2hGRGu1oiPmr9oXLoE8YQLLt1k5XuSTnnUAPQWNchDor20VaOmMNSSJZRyBKL0LXIEiSQkozJWQKcmAlrNBSibGAmSz4cLTvQsOymUXNwUoOSZu50dGD+1hz08wcYPnMEShGZp7fcagzASzIX4UbmEXxsvMwT3OocO7ZIKeybBNB46a2vafIFwv1KboL6JTnF4bk=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026)(43062017);
+ DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: hptKTS08k6UndM+tLXwOUtj59jJq7reCS6PYWYT3I76+aavWyjm9/Zej81Hr0PrAUICewLBu1dtRoUoup0+atvHLndyw3AXmHEfuw++N53Mv6ZcgsnxYsR/s/Cbt012iTFt9DvGEotnYI945MiRVBumYDKa+Km2YU7SRFKKr1BzFpQukFAYIt54G8hy2A4nH2v5rqAVmXN1pgCS99qGhTy5J2IaaOHHAiVzeNs1aGaz26/w8ygN1Pr70u462LrJLj2geJGwImELTDgCbtVrokQh8s+6oKkmz1ytzGv7HkWajKyQsP7i7QndQTd5DguoPGdm+VdbANtKaoGxB/X5f1rjTmIKHN/zoQyyy1Mtip8t64L1YTK6TEvgrefem6cXn+/brE96/oT51eocVab5OXcMFIPruH3jmNh9newFBhfGnIV2RWaOGks8RFz/TNZ0a
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2026 10:52:29.5818 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 911d4a6d-3e1b-4f69-b197-08de75252338
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000397AF.namprd05.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: O1x2/ZmjHDRHBmwuolaui8YsghNKeDS/h5YzOWmintxEPL2xhAd64gCBYmcllQotGXxPuW9I5diGfKm8SgKT52vbLfMiHqyepON8Vf6yJmSelN7DSYwd0RKy1/bQ/Q2VFz7BnVAv/S+5GWFphBUxG0T7ORoUwaVZo2xewAPHGuu6Cx3TA8zTv0OSsYUD4bEnIc0hqNF+H2EyAOzEe0iOwMfMeIo64z+GajAnPs1u5jp81poiwfncpf3ehzevOJ+uMwtwhTel/nN1EJPfbnn04geD8T7Ci9OG4fmiULuIROIEvuAjnVsA4e+WWBxzvw7mU2FRVp5hcPLGNKEi6GIax6gT0RlQm5DpcLUIP+v9Jzz+EKP53OMUbzt5opusT4MPcRcJsIjtN09Lut6CE0VxtWRyCA//0NSsCOHjU006LUwFvHb+uu+0fLppAw2INFs9
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2026 10:50:41.0533 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6baea3c3-662f-4be1-39d7-08de7524e269
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A6.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9641
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7328
+Received-SPF: permerror client-ip=52.101.61.37;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,61 +127,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SMMUv3 devices with acceleration may enable CMDQV extensions
-after device realize. In that case, additional MMIO regions and
-IRQ lines may be registered but not yet mapped to the platform bus.
+Hi all,
 
-Ensure SMMUv3 device resources are linked to the platform bus
-during machine_done().
+This is v6 of the SPM (Specific Purpose Memory) patch. Thank you for
+the feedback on v5, especially Gregory's review.
 
-This is safe to do unconditionally since the platform bus helpers
-skip resources that are already mapped.
+Changes in v6:
+- Added validation: memmap-type now requires memdev to be specified,
+  to avoid misconfiguration on memory-less NUMA nodes
+- Simplified pc_update_numa_memory_types() by replacing switch/goto
+  with a direct conditional expression
+- Reserved memory nodes are now excluded from SRAT memory affinity
+  entries, since E820 already marks them as reserved and SRAT should
+  not report them as enabled memory affinity
 
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- hw/arm/virt.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Use case:
+This feature allows marking NUMA node memory as Specific Purpose Memory
+(SPM) or reserved in the E820 table. SPM serves as a hint to the guest
+that this memory might be managed by device drivers based on guest policy
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 292e523664..c75a8d6e9e 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1833,6 +1833,24 @@ static void virt_build_smbios(VirtMachineState *vms)
-     }
- }
- 
-+/*
-+ * SMMUv3 devices with acceleration may enable CMDQV extensions
-+ * after device realize. In that case, additional MMIO regions and
-+ * IRQ lines may be registered but not yet mapped to the platform bus.
-+ *
-+ * Ensure all resources are linked to the platform bus before final
-+ * machine setup.
-+ */
-+
-+static void virt_smmuv3_dev_link_cmdqv(VirtMachineState *vms)
-+{
-+    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
-+        DeviceState *dev = g_ptr_array_index(vms->smmuv3_devices, i);
-+        platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
-+                                 SYS_BUS_DEVICE(dev));
-+    }
-+}
-+
- static
- void virt_machine_done(Notifier *notifier, void *data)
- {
-@@ -1849,6 +1867,9 @@ void virt_machine_done(Notifier *notifier, void *data)
-     if (vms->cxl_devices_state.is_enabled) {
-         cxl_fmws_link_targets(&error_fatal);
-     }
-+
-+    virt_smmuv3_dev_link_cmdqv(vms);
-+
-     /*
-      * If the user provided a dtb, we assume the dynamic sysbus nodes
-      * already are integrated there. This corresponds to a use case where
+Example usage:
+  -object memory-backend-ram,size=8G,id=m0
+  -object memory-backend-memfd,size=8G,id=m1
+  -numa node,nodeid=0,memdev=m0
+  -numa node,nodeid=1,memdev=m1,memmap-type=spm
+
+Supported memmap-type values:
+  - normal:   Regular system RAM (E820 type 1, default)
+  - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF), a hint
+              that this memory might be managed by device drivers
+  - reserved: Reserved memory (E820 type 2), not usable as RAM
+
+OS-facing test results:
+
+1. memmap-type=spm
+~~~~~~~~~~~~~~~~~~
+
+  -numa node,cpus=4-7,nodeid=1,memdev=m1,memmap-type=spm
+
+Guest dmesg output:
+
+  [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000027fffffff] usable
+  [    0.000000] BIOS-e820: [mem 0x0000000280000000-0x000000047fffffff] soft reserved
+  [    0.000000] BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] reserved
+
+  [    0.042582] ACPI: SRAT: Node 1 PXM 1 [mem 0x280000000-0x47fffffff]
+
+2. memmap-type=reserved
+~~~~~~~~~~~~~~~~~~~~~~~
+
+  -numa node,cpus=4-7,nodeid=1,memdev=m1,memmap-type=reserved
+
+Guest dmesg output:
+
+  [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000027fffffff] usable
+  [    0.000000] BIOS-e820: [mem 0x0000000280000000-0x000000047fffffff] reserved
+  [    0.000000] BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] reserved
+
+  [    0.042728] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0x0009ffff]
+  [    0.042729] ACPI: SRAT: Node 0 PXM 0 [mem 0x00100000-0x7fffffff]
+  [    0.042731] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0x27fffffff]
+
+  Note: Node 1 is excluded from SRAT memory affinity entries since v6,
+  because E820 already marks it as reserved and it should not be reported
+  as enabled memory.
+
+3. normal (default, no memmap-type specified)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  -numa node,cpus=4-7,nodeid=1,memdev=m1
+
+Guest dmesg output:
+
+  [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000047fffffff] usable
+  [    0.000000] BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] reserved
+
+  [    0.042413] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0x0009ffff]
+  [    0.042414] ACPI: SRAT: Node 0 PXM 0 [mem 0x00100000-0x7fffffff]
+  [    0.042416] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0x27fffffff]
+  [    0.042417] ACPI: SRAT: Node 1 PXM 1 [mem 0x280000000-0x47fffffff]
+
+The results show:
+- Node association is correct (Node 1 at 0x280000000-0x47fffffff)
+- E820 types are correctly applied (usable/soft reserved/reserved)
+- SRAT entries are generated for normal and spm configurations
+- Reserved nodes are excluded from SRAT memory affinity (new in v6)
+
+Please review. Thanks!
+
+Best regards,
+Jerry Huang
+
+fanhuang (1):
+  numa: add 'memmap-type' option for memory type configuration
+
+ hw/core/numa.c               | 24 ++++++++++++
+ hw/i386/acpi-build.c         |  8 ++++
+ hw/i386/e820_memory_layout.c | 72 ++++++++++++++++++++++++++++++++++++
+ hw/i386/e820_memory_layout.h | 12 +++---
+ hw/i386/pc.c                 | 48 ++++++++++++++++++++++++
+ include/system/numa.h        |  7 ++++
+ qapi/machine.json            | 24 ++++++++++++
+ qemu-options.hx              | 14 ++++++-
+ 8 files changed, 202 insertions(+), 7 deletions(-)
+
 -- 
-2.43.0
+2.34.1
 
 
