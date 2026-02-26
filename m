@@ -4,60 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3BEFD8FC9
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 768EBFD8FCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdC6-0005Zq-Gs; Thu, 26 Feb 2026 10:22:26 -0500
+	id 1vvdFI-0006Jc-Cq; Thu, 26 Feb 2026 10:25:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vvdC5-0005Sm-6B
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:22:25 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vvdFD-0006J9-Kw
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:25:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vvdC2-0004kQ-TV
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:22:24 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fMFYb5h8wzJ4673;
- Thu, 26 Feb 2026 23:21:55 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id CE1724056A;
- Thu, 26 Feb 2026 23:22:20 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.47.30.19) by
- dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 26 Feb 2026 15:22:18 +0000
-To: <qemu-devel@nongnu.org>, <lizhijian@fujitsu.com>
-CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
- <gourry@gourry.net>, <imammedo@redhat.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <mst@redhat.com>, <nifan.cxl@gmail.com>,
- <peterx@redhat.com>, <philmd@linaro.org>, <ppbonzini@redhat.com>,
- <venkataravis@micron.com>, <xiaoguangrong.eric@gmail.com>
-Subject: [PATCH v6 3/3] hw/cxl: Add a performant (and correct) path for the
- non interleaved cases
-Date: Thu, 26 Feb 2026 15:20:34 +0000
-Message-ID: <20260226152034.1523-4-alireza.sanaee@huawei.com>
-X-Mailer: git-send-email 2.51.0.windows.2
-In-Reply-To: <20260226152034.1523-1-alireza.sanaee@huawei.com>
-References: <20260226152034.1523-1-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vvdF5-0005Kk-LK
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:25:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772119530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=P6T4+eVfHVZJh/RAPggWQOSXbIgtrPWNcXlWAC5T1zQ=;
+ b=Sja5aka0jSTTkOZgpv5x7GWCjTVTND5Tw3ZD/QozvxzspO+IdZlpc34cn6udkJUyFt/3tc
+ 3ZPztEs0bbZlYnFxwq+Yh/wIutWwW/P3FAR7EkPLJxC+L8fzpg6IG8brz/bm8mhQZLsCv5
+ QBFRbx6gu+2JYNrWiVxp8GA4tRUYwXk=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-zXa8h25QNPmczaX_70KiDA-1; Thu, 26 Feb 2026 10:25:28 -0500
+X-MC-Unique: zXa8h25QNPmczaX_70KiDA-1
+X-Mimecast-MFC-AGG-ID: zXa8h25QNPmczaX_70KiDA_1772119528
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8cb6291d95aso924909285a.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:25:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772119528; x=1772724328; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=P6T4+eVfHVZJh/RAPggWQOSXbIgtrPWNcXlWAC5T1zQ=;
+ b=Hx9TQw0ZnwZAyG30N6n+t9RqpeelDkrPjj5KMY7Kb9AT1Iff0UIvEw3PCgB7l3iYdW
+ K3F45BuOISt367q0K6+rGIdrYrr8DLmtKSeDYZD9cI16IlBdi9bqM/JKcCBkwQnXTtDz
+ MGGHv7wMvqVj1cK6JNv4gS10nazEoI4ujBVFA9Y63fR1Dtj6hQIY5RbhviIcBWuLiEwI
+ +ZxA66jAWEVgXIMHM1AYEGjo1bb9c0N9726JxWSDcMoZqjdmiTP87Y0xJci83+QuVWOw
+ 7AA+HJjXzhducZdshshldKNJyt5q1RBfF/SlvGn9+JGdKfr3dUxEeuSipwpz47fWZxBc
+ nTAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772119528; x=1772724328;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P6T4+eVfHVZJh/RAPggWQOSXbIgtrPWNcXlWAC5T1zQ=;
+ b=qfaNgtsxnNSM1MTk8Np2MXQEeDcsYgkNMqGG40lHgekva3N3bqEWG28fhIlG9yl/bj
+ 75gGVTrB4YdCpeWtbO0GtTEVsq1okih/CxFdPAYSVMZ9f4tnCnYT9lVr+KQps/j0WyeB
+ 0kEfq9+uFSIJ8ZcUFL1cEa1i5jgCko+Zo1pGybqYGxk5SHUnAX0hEHvSQ+8RigU66PIu
+ 2ZSca2W67b2zAWw6CRS+6EynYXWcX+2dUv16jnikmLXVY+hZ4ocaslwAylglmcnOYhmD
+ vSj9/WHf3DwO3QN7qZt31vqZrEjN/c9xmx7l8kAGpLnqqMxQLTGjKoRfyWfZsHjBnhkL
+ 6JyA==
+X-Gm-Message-State: AOJu0YzAb8yA65u8mAdVCGAj0Qx/cNO5whykNanWvOSowW2I9wsZAO9w
+ pvZdGqYou+juqcCfNR4lmc6tVrltn5cIgahofp2sz5goKBWmcfaEuQ2dRXd7cxRx3IjgXLKsRCV
+ y9lj5CvDEkrr3DXFz+fSJv3uEl9QAs4h+4PinJaOiOb/5oUW4JjZ20Wdu
+X-Gm-Gg: ATEYQzzyF1cmkq/Wp1CCPiCIB09mkXtw3EsGG/J2zKdbDFGOrYAKxxW+XT9NhvXJvDc
+ A2iPRbX6POsZqOuE8Vg1ieo+REeFKgTEfYYa5i5e1SRoIkfNhZwDjmWHd49/JTzrnfgFidp/rG3
+ 99BPyy2rHuHf+Ciu9CcOkEt/BoE6R5P/UkLxBVqSubFG/fhBXc1tnO8CRQ4PwOg3daFFZiftLKV
+ WyEGBFQtPmaJhJUXdZz9/ieJFuaGf20N5xktzPx7BQNk4KWj6Mt1UyZFC/RVNvga0QDmmmu4ikl
+ yM3FP9zUmkgjbC9XVYnYrvcl5Vet0TNMNPF6PEuH/GRCiob4ZgVHHHAH8YScaC3HyXkkcI5qun2
+ IYNynGs+pXReSjA/8kZHwAvpLTbW8EReLJYgRRFz7f3QTrxseJSb7+VSvCvSu0aK9bAhIh2YCrd
+ 88wdDuhQ==
+X-Received: by 2002:a05:620a:46a6:b0:8c6:e579:a81f with SMTP id
+ af79cd13be357-8cbbcf77cb0mr598302185a.23.1772119527415; 
+ Thu, 26 Feb 2026 07:25:27 -0800 (PST)
+X-Received: by 2002:a05:620a:46a6:b0:8c6:e579:a81f with SMTP id
+ af79cd13be357-8cbbcf77cb0mr598297485a.23.1772119526876; 
+ Thu, 26 Feb 2026 07:25:26 -0800 (PST)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-899c7159c15sm20937726d6.2.2026.02.26.07.25.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Feb 2026 07:25:26 -0800 (PST)
+Date: Thu, 26 Feb 2026 10:25:24 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v10 18/19] multifd: Fix hang if send thread errors during
+ sync
+Message-ID: <aaBl5IRgBosD8AQU@x1.local>
+References: <20260220-colo_unit_test_multifd-v10-0-bfe67d422ef1@web.de>
+ <20260220-colo_unit_test_multifd-v10-18-bfe67d422ef1@web.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.47.30.19]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260220-colo_unit_test_multifd-v10-18-bfe67d422ef1@web.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,314 +121,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CXL address to device decoding logic is complex because of the need to
-correctly decode fine grained interleave. The current implementation
-prevents use with KVM where executed instructions may reside in that memory
-and gives very slow performance even in TCG.
+On Fri, Feb 20, 2026 at 08:51:40PM +0100, Lukas Straub wrote:
+> When a send thread encounters an error (as is the case with yank),
+> it sets multifd_send_state->exiting and the other threads exit too.
+> This races with multifd_send_sync_main() which now hangs at
+> qemu_sem_wait(&p->sem_sync) in multifd_send_sync_main() line 647
+> as it waits for threads that have exited.
+> 
+> Fix this by kicking the semaphores when exiting the send threads.
+> 
+> I encountered this hang when stress testing the colo unit test,
+> though I was unable to write a migration test to reliably hit this.
+> 
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
-In many real cases non interleaved memory configurations are useful and for
-those we can use a more conventional memory region alias allowing similar
-performance to other memory in the system.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Whether this fast path is applicable can be established once the full set
-of HDM decoders has been committed (in whatever order the guest decides to
-commit them). As such a check is performed on each commit/uncommit of HDM
-decoder to establish if the alias should be added or removed.
-
-Co-developed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
----
-Thanks Gregory for the review and feedback on the previous versions. 
-
-Change log:
-v5-v6: Use object_unparent() in the third commit when deleting alias regions.
-
- hw/cxl/cxl-component-utils.c |   6 ++
- hw/cxl/cxl-host.c            | 190 +++++++++++++++++++++++++++++++++++
- hw/mem/cxl_type3.c           |   4 +
- include/hw/cxl/cxl.h         |   1 +
- include/hw/cxl/cxl_device.h  |   4 +
- 5 files changed, 205 insertions(+)
-
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 07aabe331c..a624357978 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -143,6 +143,12 @@ static void dumb_hdm_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-         value = FIELD_DP32(value, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
-     }
-     stl_le_p((uint8_t *)cache_mem + offset, value);
-+
-+    if (should_commit) {
-+        cfmws_update_non_interleaved(true);
-+    } else if (should_uncommit) {
-+        cfmws_update_non_interleaved(false);
-+    }
- }
- 
- static void bi_handler(CXLComponentState *cxl_cstate, hwaddr offset,
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index 2dc9f77007..00bf389290 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -264,6 +264,196 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
-     return d;
- }
- 
-+typedef struct CXLDirectPTState {
-+    CXLType3Dev *ct3d;
-+    hwaddr decoder_base;
-+    hwaddr decoder_size;
-+    hwaddr dpa_base;
-+    unsigned int hdm_decoder_idx;
-+} CXLDirectPTState;
-+
-+static void cxl_fmws_direct_passthrough_setup(CXLDirectPTState *state,
-+                                              CXLFixedWindow *fw)
-+{
-+    CXLType3Dev *ct3d = state->ct3d;
-+    MemoryRegion *mr = NULL;
-+    uint64_t vmr_size = 0, pmr_size = 0, offset = 0;
-+    MemoryRegion *direct_mr;
-+    g_autofree char *direct_mr_name;
-+    unsigned int idx = state->hdm_decoder_idx;
-+
-+    if (ct3d->hostvmem) {
-+        MemoryRegion *vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-+
-+        vmr_size = memory_region_size(vmr);
-+        if (state->dpa_base < vmr_size) {
-+            mr = vmr;
-+            offset = state->dpa_base;
-+        }
-+    }
-+    if (!mr && ct3d->hostpmem) {
-+        MemoryRegion *pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-+
-+        pmr_size = memory_region_size(pmr);
-+        if (state->dpa_base - vmr_size < pmr_size) {
-+            mr = pmr;
-+            offset = state->dpa_base - vmr_size;
-+        }
-+    }
-+    if (!mr) {
-+        return;
-+    }
-+
-+    if (ct3d->direct_mr_fw[idx]) {
-+        return;
-+    }
-+
-+    direct_mr = &ct3d->direct_mr[idx];
-+    direct_mr_name = g_strdup_printf("cxl-direct-mapping-alias-%u", idx);
-+    if (!direct_mr_name) {
-+        return;
-+    }
-+
-+    memory_region_init_alias(direct_mr, OBJECT(ct3d), direct_mr_name, mr,
-+                             offset, state->decoder_size);
-+    memory_region_add_subregion(&fw->mr,
-+                                state->decoder_base - fw->base, direct_mr);
-+    ct3d->direct_mr_fw[idx] = fw;
-+}
-+
-+static void cxl_fmws_direct_passthrough_remove(CXLType3Dev *ct3d,
-+                                               uint64_t decoder_base,
-+                                               unsigned int idx)
-+{
-+    CXLFixedWindow *owner_fw = ct3d->direct_mr_fw[idx];
-+    MemoryRegion *direct_mr = &ct3d->direct_mr[idx];
-+
-+    if (!owner_fw) {
-+        return;
-+    }
-+
-+    if (!memory_region_is_mapped(direct_mr)) {
-+        return;
-+    }
-+
-+    if (cxl_cfmws_find_device(owner_fw, decoder_base, false)) {
-+        return;
-+    }
-+
-+    memory_region_del_subregion(&owner_fw->mr, direct_mr);
-+    object_unparent(OBJECT(direct_mr));
-+    ct3d->direct_mr_fw[idx] = NULL;
-+}
-+
-+static int cxl_fmws_direct_passthrough(Object *obj, void *opaque)
-+{
-+    CXLDirectPTState *state = opaque;
-+    CXLFixedWindow *fw;
-+
-+    if (!object_dynamic_cast(obj, TYPE_CXL_FMW)) {
-+        return 0;
-+    }
-+
-+    fw = CXL_FMW(obj);
-+
-+    /* Verify not interleaved */
-+    if (!cxl_cfmws_find_device(fw, state->decoder_base, false)) {
-+        return 0;
-+    }
-+
-+    cxl_fmws_direct_passthrough_setup(state, fw);
-+
-+    return 0;
-+}
-+
-+static int update_non_interleaved(Object *obj, void *opaque)
-+{
-+    const int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
-+    bool commit = *(bool *)opaque;
-+    CXLType3Dev *ct3d;
-+    uint32_t *cache_mem;
-+    unsigned int hdm_count, i;
-+    uint32_t cap;
-+    uint64_t dpa_base = 0;
-+
-+    if (!object_dynamic_cast(obj, TYPE_CXL_TYPE3)) {
-+        return 0;
-+    }
-+
-+    ct3d = CXL_TYPE3(obj);
-+    cache_mem = ct3d->cxl_cstate.crb.cache_mem_registers;
-+    cap = ldl_le_p(cache_mem + R_CXL_HDM_DECODER_CAPABILITY);
-+    hdm_count = cxl_decoder_count_dec(FIELD_EX32(cap,
-+                                                 CXL_HDM_DECODER_CAPABILITY,
-+                                                 DECODER_COUNT));
-+    for (i = 0; i < hdm_count; i++) {
-+        uint64_t decoder_base, decoder_size, skip;
-+        uint32_t hdm_ctrl, low, high;
-+        int iw, committed;
-+
-+        hdm_ctrl = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + i * hdm_inc);
-+        committed = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED);
-+
-+        /*
-+         * Optimization: Looking for a fully committed path; if the type 3 HDM
-+         * decoder is not commmitted, it cannot lie on such a path.
-+         */
-+        if (commit && !committed) {
-+            return 0;
-+        }
-+
-+        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_DPA_SKIP_LO +
-+                       i * hdm_inc);
-+        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_DPA_SKIP_HI +
-+                        i * hdm_inc);
-+        skip = ((uint64_t)high << 32) | (low & 0xf0000000);
-+        dpa_base += skip;
-+
-+        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_LO + i * hdm_inc);
-+        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_SIZE_HI + i * hdm_inc);
-+        decoder_size = ((uint64_t)high << 32) | (low & 0xf0000000);
-+
-+        low = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_LO + i * hdm_inc);
-+        high = ldl_le_p(cache_mem + R_CXL_HDM_DECODER0_BASE_HI + i * hdm_inc);
-+        decoder_base = ((uint64_t)high << 32) | (low & 0xf0000000);
-+
-+        iw = FIELD_EX32(hdm_ctrl, CXL_HDM_DECODER0_CTRL, IW);
-+
-+        if (iw == 0) {
-+            if (!commit) {
-+                cxl_fmws_direct_passthrough_remove(ct3d, decoder_base, i);
-+            } else {
-+                CXLDirectPTState state = {
-+                    .ct3d = ct3d,
-+                    .decoder_base = decoder_base,
-+                    .decoder_size = decoder_size,
-+                    .dpa_base = dpa_base,
-+                    .hdm_decoder_idx = i,
-+                };
-+
-+                object_child_foreach_recursive(object_get_root(),
-+                                               cxl_fmws_direct_passthrough,
-+                                               &state);
-+            }
-+        }
-+        dpa_base += decoder_size / cxl_interleave_ways_dec(iw, &error_fatal);
-+    }
-+
-+    return false;
-+}
-+
-+bool cfmws_update_non_interleaved(bool commit)
-+{
-+    /*
-+     * Walk endpoints to find both committed and uncommitted decoders,
-+     * then check if they are not interleaved (but the path is fully set up).
-+     */
-+    object_child_foreach_recursive(object_get_root(),
-+                                   update_non_interleaved, &commit);
-+
-+    return false;
-+}
-+
- static MemTxResult cxl_read_cfmws(void *opaque, hwaddr addr, uint64_t *data,
-                                   unsigned size, MemTxAttrs attrs)
- {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 4739239da3..d9fc0bec8f 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -427,6 +427,8 @@ static void hdm_decoder_commit(CXLType3Dev *ct3d, int which)
-     ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 1);
- 
-     stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc, ctrl);
-+
-+    cfmws_update_non_interleaved(true);
- }
- 
- static void hdm_decoder_uncommit(CXLType3Dev *ct3d, int which)
-@@ -442,6 +444,8 @@ static void hdm_decoder_uncommit(CXLType3Dev *ct3d, int which)
-     ctrl = FIELD_DP32(ctrl, CXL_HDM_DECODER0_CTRL, COMMITTED, 0);
- 
-     stl_le_p(cache_mem + R_CXL_HDM_DECODER0_CTRL + which * hdm_inc, ctrl);
-+
-+    cfmws_update_non_interleaved(false);
- }
- 
- static int ct3d_qmp_uncor_err_to_cxl(CxlUncorErrorType qmp_err)
-diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-index 998f495a98..931f5680bd 100644
---- a/include/hw/cxl/cxl.h
-+++ b/include/hw/cxl/cxl.h
-@@ -71,4 +71,5 @@ CXLComponentState *cxl_usp_to_cstate(CXLUpstreamPort *usp);
- typedef struct CXLDownstreamPort CXLDownstreamPort;
- DECLARE_INSTANCE_CHECKER(CXLDownstreamPort, CXL_DSP, TYPE_CXL_DSP)
- 
-+bool cfmws_update_non_interleaved(bool commit);
- #endif
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 393f312217..ba551fa5f9 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -685,6 +685,8 @@ typedef struct CXLSetFeatureInfo {
-     size_t data_size;
- } CXLSetFeatureInfo;
- 
-+typedef struct CXLFixedWindow CXLFixedWindow;
-+
- struct CXLSanitizeInfo;
- 
- typedef struct CXLAlertConfig {
-@@ -712,6 +714,8 @@ struct CXLType3Dev {
-     uint64_t sn;
- 
-     /* State */
-+    MemoryRegion direct_mr[CXL_HDM_DECODER_COUNT];
-+    CXLFixedWindow *direct_mr_fw[CXL_HDM_DECODER_COUNT];
-     AddressSpace hostvmem_as;
-     AddressSpace hostpmem_as;
-     CXLComponentState cxl_cstate;
 -- 
-2.43.0
+Peter Xu
 
 
