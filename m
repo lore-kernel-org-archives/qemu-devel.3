@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E280FFD460E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 03:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 821DFFD460E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 03:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvS9q-0008N7-JC; Wed, 25 Feb 2026 22:35:22 -0500
+	id 1vvSCF-0000XP-91; Wed, 25 Feb 2026 22:37:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vvS9o-0008M1-SR
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 22:35:20 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1vvSCE-0000XH-B2
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 22:37:50 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vvS9l-0000a8-Dz
- for qemu-devel@nongnu.org; Wed, 25 Feb 2026 22:35:20 -0500
+ id 1vvSCB-0000f0-RG
+ for qemu-devel@nongnu.org; Wed, 25 Feb 2026 22:37:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772076917; x=1803612917;
+ t=1772077068; x=1803613068;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:mime-version;
- bh=/qndfBuRv3nCJOhDX36E3yR6zKEk/BhGBmwSHzUHp8Q=;
- b=VtzTgJSGVBP4WIwhhMkuht89pgfp+USeXi7tiPDcfRnv5bUJZTxfhcww
- S3EyKSC3KzVOJfdcA/grappPDinNRYApz+RtGvq2r696OgWLZVqBmdz/C
- 5eSLQFKZ4JJQ+alSsXHitK9VO+m5sj4TUFxYiNDnEaSTn5RRPktGR6uMA
- g3qPJbS674/FWyYazLYQSUhz5NB1fRKqHmvE1edUYEvr7L6hVIBWIFpPx
- sVcA6nEqEy2ZkF/+Gi13RAXXYcq48jUegqldWj+BwV0kuBm4Qvk1vnl1d
- 1DQw+2fKwIb3IuNyYXb+V8apO/XXNkwidFPybbh7pxKXaEBe4WLkeXFj5 g==;
-X-CSE-ConnectionGUID: NPhCim3NTd+I6/kXuCUmyA==
-X-CSE-MsgGUID: wseVCv38S1alVpf7RgCpIg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11712"; a="73173053"
-X-IronPort-AV: E=Sophos;i="6.21,311,1763452800"; d="scan'208,217";a="73173053"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2026 19:35:13 -0800
-X-CSE-ConnectionGUID: ylI758e5TXi764jMsEcFfA==
-X-CSE-MsgGUID: 6ZvPOKrbSwaUkTm6Tx4h9A==
+ bh=mzbROBTGqhSbLaDbV303+dm3EeQn04IvCjZzrMJft20=;
+ b=QxVGH04xuO1MgKyDpdo6gVvxWhDCXv3owdREXuZNJ0ySsvCSYZeMPeeA
+ FVqVh8GyuPx57hjKCXb6Ju4oOTLwPP02z/qFXjGil0uhADcq3WQ+7RJ1E
+ 23PwUdpo+u96tA/Lf4xS8e7MYG8bSOWzMXotE+5Cb1hfMO4iPP1Ib8xLW
+ TrJIIeGFt9nyqklUeV0qOESGrSKNGIUlQp1rLrJlJRgQy2fCjxq065xkb
+ Es5hb4fydiJtffhmi/q8wfEXGUWNL7hgiZOUZ9gB7YkfnJGn737XhLSo7
+ WnmU0thCTJ0I/GG8et+qArgN7doOBRAa/PJoYqvhbGJpNACcgU2gW+hsA w==;
+X-CSE-ConnectionGUID: KATuHdaqSFCyIqW07qD5Qw==
+X-CSE-MsgGUID: wSiMco14T6G5DGTpWl7C5w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11712"; a="73105916"
+X-IronPort-AV: E=Sophos;i="6.21,311,1763452800"; d="scan'208,217";a="73105916"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2026 19:37:46 -0800
+X-CSE-ConnectionGUID: HyyLP33AQdud71BaTDZJfg==
+X-CSE-MsgGUID: xDSdiuhCR6OPqJnotD16GQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,311,1763452800"; 
- d="scan'208,217";a="215539442"
+ d="scan'208,217";a="221412868"
 Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2026 19:35:14 -0800
+ by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2026 19:37:45 -0800
 Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
  ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 25 Feb 2026 19:35:12 -0800
+ 15.2.2562.35; Wed, 25 Feb 2026 19:37:45 -0800
 Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
  ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Wed, 25 Feb 2026 19:35:12 -0800
-Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.62) by
+ 15.2.2562.35 via Frontend Transport; Wed, 25 Feb 2026 19:37:45 -0800
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.6) by
  edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 25 Feb 2026 19:35:12 -0800
+ 15.2.2562.35; Wed, 25 Feb 2026 19:37:45 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=peE2RPTLtDRuf5PtBVV7jT1nbPPlVMQWJhbVNMIb+jsggAdpP7ob/1nutp0lKWkLB3dsi3b+m1vjoBunA3pGqUH8LAjFXNvUJ/Ml/2KJIZb4ZHSklhyo7LuswlEOlnfNW6IcOjcSFUoAEt2bIQYX5+Q5pIjEz0i857+dThjCDYP9acqt3v1CZZV68bPoY1Wzi8P5c+gYeJGpbhkJtuAXswrnGowwQrX/fs1hUGmYbuVhbhikHtdJgKs5QzxGnYcfGopIlSZOjEvKWv2UcZ+Z466mdZLX6nUrWxdRRqbmMvbWTqzlSn0sGTu7pZR8DcUqxArihXxbPEUVGIb0/j3ZTQ==
+ b=iu4CPTE39gi2Ib3Em/uiXxh6Phh5KecHkOez58rpiHM1HxixAIFUofVP8ycMOJL0I4fimvPVGRIXSKiHZDiEMCxTb17YWmpOlJawAds4K/AKGSUokRs5GEXqC5n2OROn9JD3fwljvnKCVFjDA7aghKgphXVFa2A5smzpw+rE8eWjBJeE4//8URdARby4I2kuM9j8jt8/fEEuCE5xizxDFlfWpriyFOCvcGmOpb5wIlQoDDhpUt04wIwVto+ABXD2ytzd9ZnUHVj4lJB838M0O7IwVcpthvXwDM3NnywRmNJrV7tzw/4mTBRe/IFYh/3mHB8013QIY6d8rIQEit5VLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cDvI5NsMPDvA8vZp0LNzfGw9sznrIpJZq6M53SdHM9U=;
- b=yyYSYa0WiG7NwXHI08emAmtxvR2INQ7pNeLmjTSVR20YIDsvjn7YY1L0sI6IzYcWHwBYu8uZGCgXVjKivAdrATgcQUM6iBdFrQIZ9tdK8PaSrYeiFUSCr2LWD5diKP6x7oN7qfD+JHwBVOK4++dXlocu8T9+PjlIfcKkGwQ0D6YhNlXN+oDOfXjFafrNSm4JziaObapFfrvu7EiqruO/QSZnHnX+jN8NVa4dgySRuMj8XWggEQVqRVq4W6yY1znSqqB12UJAZ8hOab5w6CacdCzsbR4jScLnm60xFd0jv3d2tBJk+8mEHnwvzEVm99r7Rd2glFSsVp7C7/pGnN7bUQ==
+ bh=1yOtyWlcAksKn5Y72vWo/LkUo9ECbW/EBtI7MJz9nS8=;
+ b=pbTfTHwT8HGbFkiHY9CO5AUi+qh6QO5bQi1u944l+MF+T/vTzWmYOUf86QDLLEQs1UEEnc6GaeevJa2CQ2lqbs7Sw3sejlv4E+n5lX3z50vjNQmw1bEEYd6p6BJNm+xm/C/K2E4UqXt0IU/AIjKgsFSYaugggdOtwQsWi9StJN3z86F0jfVcevSm4RlGDAsK2fqdV5j7qjo3EGj2hG+vJ7CrFlOo3talg0+ALjTarquJZEivktsmGGs014r6ma6dDbk+VSpf9LVmbmosXh+xfMTvOjq63FnICEwSpBTDd7hTnAOGtCk5R7WNVBwiTHOnnf0NXLm/QLDVWANOoLmMZA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -73,11 +73,11 @@ Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
  by PH7PR11MB6546.namprd11.prod.outlook.com (2603:10b6:510:212::16)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Thu, 26 Feb
- 2026 03:35:07 +0000
+ 2026 03:37:41 +0000
 Received: from IA3PR11MB9136.namprd11.prod.outlook.com
  ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
  ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9632.017; Thu, 26 Feb 2026
- 03:35:07 +0000
+ 03:37:41 +0000
 From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
 To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
@@ -89,24 +89,22 @@ CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
  "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "Tian, Kevin"
  <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Hao, Xudong"
  <xudong.hao@intel.com>
-Subject: RE: [RFCv2 PATCH 05/13] intel_iommu: Change pasid property from bool
- to uint8
-Thread-Topic: [RFCv2 PATCH 05/13] intel_iommu: Change pasid property from bool
- to uint8
-Thread-Index: AQHcnWPqbS/Y9XzGekqX1LA/E6YJILWTCDiAgAFd5UA=
-Date: Thu, 26 Feb 2026 03:35:06 +0000
-Message-ID: <IA3PR11MB91368B668DF1EB773AB54D779272A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Subject: RE: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size check
+Thread-Topic: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size check
+Thread-Index: AQHcnWP6tyKy+zgBK0aBvE2Kf1JwJ7WTCNiAgAFesyA=
+Date: Thu, 26 Feb 2026 03:37:41 +0000
+Message-ID: <IA3PR11MB9136245DC6D58206EC54E2C09272A@IA3PR11MB9136.namprd11.prod.outlook.com>
 References: <20260214034135.220413-1-zhenzhong.duan@intel.com>
- <20260214034135.220413-6-zhenzhong.duan@intel.com>
- <AM8PR07MB76022449D3A87724252E41FB8675A@AM8PR07MB7602.eurprd07.prod.outlook.com>
-In-Reply-To: <AM8PR07MB76022449D3A87724252E41FB8675A@AM8PR07MB7602.eurprd07.prod.outlook.com>
+ <20260214034135.220413-13-zhenzhong.duan@intel.com>
+ <AM8PR07MB7602F76D7799033FFCB1A5608675A@AM8PR07MB7602.eurprd07.prod.outlook.com>
+In-Reply-To: <AM8PR07MB7602F76D7799033FFCB1A5608675A@AM8PR07MB7602.eurprd07.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 msip_labels: MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Enabled=True;
  MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SiteId=7d1c7785-2d8a-437d-b842-1ed5d8fbe00a;
- MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SetDate=2026-02-25T06:39:09.792Z;
+ MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SetDate=2026-02-25T06:41:23.127Z;
  MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Name=Eviden
  For Internal Use - All
  Employees; MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_ContentBits=1;
@@ -115,70 +113,70 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH7PR11MB6546:EE_
-x-ms-office365-filtering-correlation-id: ca72cab3-a242-4c71-e278-08de74e80943
+x-ms-office365-filtering-correlation-id: 671271a3-6028-4f42-bba9-08de74e86557
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|38070700021|8096899003; 
-x-microsoft-antispam-message-info: Qoxtmfs3oRCte+kOxs1zSV0LX4i3EkulQlYWJT5QTTfuGmhn5Px3b5aPK7+WE2clv7ivPGCjJmVYeW261EKlVp9IMXfJWwgtoa2RoMFdXGfO4ueka/gYn8O2ljPc+/2Ny/qQ6iXrzZjNk/2oCKiH0qxgYkqj9ep53W2tszBhpE+uiEc76mz8tZ/WG4N9hddrGkPpmLVbOHC5J7mhRJ632p+ClCUo2AQVa7B+i1RYoSHEipfUFV86/24119zm4Uol8WOp0C38Weyj0bh6w7KxjXOqDCyw4b8s/D3FyPmaUOW+YMzK4aF+W0q+b0iCIQdYdoTgTplpkIIXQaDo13kv6rcMOuDnQaysJ+J/2jjmFeDgGiiv2d+c8eN2SUcjRlyc8VhRm2LdtkImGHny1nLMvMA0/YuT6pKSRyknd47wPDpN0tI3p4zswOtCfIUz3VFD8RirMFdbvj6idxM64aoJgkmcQum3stE6UwCOIn6jssz/PVgzoKJtsW2Y+ttcZYuqPFc6CkOmglKSXpTniPE20O3SN5XQolVJTw4z7iEY3PW0t5UXTPinmn1ZlUtdmzwTqOZ25Q84Llb1GSiZ7HGx8ymOTzhyKOynII4m3lmxVXWokl+SUikHUIvtJXjYmrA/HbcFGaDaJE0ZEu/UlTw5GG1G6qj/556+/HdVa3LGpO3nphu5+jSIi/WT5g9VwAroIjkNqn5ymhv0KBhoLxTICM+DmaxK6wgnN2zVxjVVqfMURNlEN6Bdt05nzbnOLx2/3josCmOrUfQdiMAJCLW7dUYDbGqgE37gtKsvarVmHRE=
+ ARA:13230040|7416014|376014|1800799024|366016|38070700021|8096899003|7053199007|18082099003;
+x-microsoft-antispam-message-info: qhxEmGhmclQcdsupZRKt/QP566sm9QodusxKOOAsx5ku1/q5qilWF81GGizL2U+7OVfXP0zqdFO9wMjXsXidngyNQ1+gAbUKNDlMrZGOBgpPJZ6pa+MFBa9VTFTU+wHaEaJ8wI463KG3lxc6b1ePrcivh0VVrs14lijMUUcvajH64WzrgJSwIpRHQ5U9jnLAUCPrD124bVmJGe9ybKwb9OEYvZP+VXIs1AEfjF9Zueboul+4J+iC8R9Vrj3zvqPCrNHHFsq4GLOGroshzyVaPlF4X2DDIdmdO+BBSe6hUdo1ApwqaCbl78aalwpx1AV9XHAMSaoEsGNihXnDG5zEeP4dyDd2lg1d8S9f99EW2Gk3uowyrNi5KNjTWPsJBWoZy3i7HG++rd7/H0ce/zpDPwJeeZ8jAN3ooG/KT5uTyz/XlN564hGuEH5lErNK/hI+wH1QAvqWHdF6svltvirfFAOomCp1UtLvUZeDru3PfX8fzDFsWcrbC+G+GcSjXIlQdR8cSx/X9TrqPj/KmsZvSoP1kLpMs+NJeFgT65S7povOVSeUhhoq6szBoczDELmBz/kA0rIHdsLoVtAdLL/iSyhD8XBOssZd2dyoKmh/FJpRql/I3iEZPiI8I4sgI3QlgWg6cB0xPMc2/ngM3iEzpspxC9xWW9+aXX+IB/gVdFUcLK4mCdoYIjHuZsbEFim8HjjoiGGLWaFBUFOm73lnZeh43zwl3k3TMZ/OCmkcN7HvtEIyuqZ5kd8amJyKEom8Ag2Ls6sAmupTs0kZ2Ov87IASwE/zD9RZXgqX+2SMX/I=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700021)(8096899003);
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700021)(8096899003)(7053199007)(18082099003);
  DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?dF0UeoyM8H7NQe6EpS6yZ+6gLQXz9Bn1aCYygcn47kGaRPx/AlF4zo+P35pC?=
- =?us-ascii?Q?UJZXBmYoukHQXnihvQB5u59NXTcBZPHhhL31ZRf4fuFkkmG0xaYXdn0KDvQl?=
- =?us-ascii?Q?Xm3Qhg0FpNAOe0CQSVxr33jCyhlBAilQ/D+E8V5XO1Orez7pCnvnR+bAzkm9?=
- =?us-ascii?Q?JTSAlBY/urXhSZ3N8KGq4FuiUYoifK/gW42Np7mIS/NGIRNJ2qeWI5NJo4ye?=
- =?us-ascii?Q?vKglI7yNrQkhZXs868meCsLCA6TNrEgU7OlLvgaOxuAttSO6j4oZt3ObLgtQ?=
- =?us-ascii?Q?SJdsDq8MgRNtOkrMcKP6cmR/tBNMXNVNwaWaG2uCwGTOMLV+vVjIhUzoiY7K?=
- =?us-ascii?Q?I6zI/O+U0kdXdnxAvbItgB+sGQzxm5XQuUZvPNrEnF0KNTWTOGL8MOziGwEH?=
- =?us-ascii?Q?RCQrBcNfs7MLIc1boMECORbR9hkAvsf2HjKkSqfUMb7vmbg5KkGm/h0QHac6?=
- =?us-ascii?Q?KiAkxfQ8229M8jMLzNlVTTemqOM7BZO+3rVS/5Q+XDWUh9dotpw1XBJlJBpf?=
- =?us-ascii?Q?aDLLhb+J3y7KI7BEAcw1jEpIQLfRDzAYVGF/BOoW2GpAbw1i62IYRvh7M2+s?=
- =?us-ascii?Q?WKa1txfLLeOOXnlP3ftbdiTpDP5i2HkZVYh6/Ql1dgkueOCi3lipEjLBReN8?=
- =?us-ascii?Q?++Y4yvdtq9VDtv0qta5qDwmbwJi8X+SxPyQvZJOUA0kTpYM7azrjjo6LaQlO?=
- =?us-ascii?Q?QSFe4HrHOJPTn3hHj9V8A3jraJxXzDUeCdUH/addS4+9rvoSSKYEGv4viA3g?=
- =?us-ascii?Q?75xfXpY8alVNHsRwMbQefpNjsVT60bfabQOq+odqqHDEOlxu53m6zDyvLmno?=
- =?us-ascii?Q?ujGtjQO4YT4oykH3iyPdbarjT/fk7gU8mdWMFv3YACJ5b79tfKt7ORMmegV7?=
- =?us-ascii?Q?y78aBnKTrEIUsQgacLMtNZDSSPfE3JxEMutQNETwtngQHTFKea1hpYFQLOBF?=
- =?us-ascii?Q?iWiKs/JTtkHEYpM4l8G85nWtF+J0j6POupdj6rpL0IR7v+mvchDMd6QnsXa7?=
- =?us-ascii?Q?sjFyIyqTPiwPHe7vLjQ74j0B4qYohkuEfyYaml8l7sP1/usdcq0kyWzQpdDf?=
- =?us-ascii?Q?nuWX2hZaE4LbB8eOYZavI8XnFwWSJlcm0Seo333/2sCyZg5MnjRYWlZgpZzR?=
- =?us-ascii?Q?Zjos7CSjJfz3Zk0vjoAI8xdrVPyU5xpkohGLTGuJcTOEvent/4dIuvb/YBEr?=
- =?us-ascii?Q?Ct+0zgkBDIrRu1XHyduEePzA5gJYKAZNJYBcu4H1Ln9b1EoC6+fz34eHgcOI?=
- =?us-ascii?Q?UBwokf1p6o1jA3/3206w1+krZxnkv92rJFuS1mxB9YyTmtzAn1paHy5GlVd0?=
- =?us-ascii?Q?0BAvPZ6ELIBTNBePIQ2pkDQvulF5slhkehSDEGuEjs3KOM6MvisFa0pq5uIm?=
- =?us-ascii?Q?wIE1D6Hm2TVtjxnQW2yjYeCpjAX+ZnSibcVGZ5hKqWhXtM4Cl5Ear1d9x+Gk?=
- =?us-ascii?Q?0kRDxOadpTKjYX8bobTgEa20elMs52tNMuQVZS3b2mRhbxCVxHm8yF7pQcag?=
- =?us-ascii?Q?vh+ADMXUiJhWh2cugEgJLAcW7b83xkiONh7L+rDlHBYbaxb1Bdq+jMCGF6Dh?=
- =?us-ascii?Q?vmir86OYnsE4iZelSifaHXm7hsz3AE6HXmkXQO0zYYvMSS2A2KTtCLv0i+Z/?=
- =?us-ascii?Q?AhQ+Fq9UAVeLCaywfkVXht+uzmrnRGrL+wr7kSBiplg1JHI2LTltn5PyQOiO?=
- =?us-ascii?Q?JNav9Mz3+Lc6geMmivW6dECQAxt8+Xu4+BTNwdujpPZ1RiScK5Wj0Lth9XJj?=
- =?us-ascii?Q?UYcxggiHag=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?tBpicE6wQE3JLLG6MWCqZzl0J9XSlIxM9nfegfapqNRVTYpyh4YLbwHO06pA?=
+ =?us-ascii?Q?EXUr410LPnAGcvnPwlRkKLQom46MfB+X0insTbNwE+d588bfMlkWRG11bjgs?=
+ =?us-ascii?Q?Bk3jb/erXHzF/aSVvpwbY1QeMzY2t+H3hrZCdtMqxN3QWpf2OFKN39V+4t/M?=
+ =?us-ascii?Q?bDour8ALpuwe3Mkkpz7zz2IGxPpBpmC7UJ2ST/dFNmVdjg/XYtVHO1dDwL4V?=
+ =?us-ascii?Q?1+oEx0zuhohKAgUIe/H+fb/WI5F1lHJ1oFYcN1iNGi/dlwyHHURBrBZdg3dY?=
+ =?us-ascii?Q?nU0GQvJaqLf/Vz9vrcEcOaV++g5xNY0i05CFopuIaBx4HLcOKOL+8nVdwNz5?=
+ =?us-ascii?Q?KbVqtOqIIQR+GAOyOgecUlDplCEgODAKOvdAuvUlNBetmUd1Jy/Whjesa1PP?=
+ =?us-ascii?Q?5AwuJUnPfdaew/zy5eTiNREb+r0OT0NwDTYPy4b5trxPfuIsbG6MDQECSZX3?=
+ =?us-ascii?Q?gT3CxEEEh1row/4GUheA270rnjJDDkLz8UD4mvTmTdMD7XDj9CFGt4Uvu65D?=
+ =?us-ascii?Q?CpvoRrkZfWyUmvmDh0/7T310BMPzOzHAQSD8DahkgeiZUC/YKur1xnqcX3d6?=
+ =?us-ascii?Q?d93NveUFN+y1NNEI2FxXBFfxZ+K3JinW1yWozvs+D4K3NbKr0GHKlXQM5tgt?=
+ =?us-ascii?Q?0D6xNm11GueqPTiPz7cevYzWmiBfkyaCXjDbsgAyL1T9ZE4ECvHQaQqXX80s?=
+ =?us-ascii?Q?pahboInl/q8v+ZbMQY3Gd2mYelhjGKgp36p+pIAQMxelFraZ9IPBJvv4p7rg?=
+ =?us-ascii?Q?9DGWHQvfkWqLj7nu7pN+R6WOA5NaE2sclrJEwb+OrcGRLYOHRIuui+Nt0bu5?=
+ =?us-ascii?Q?NmGmUuqD/uMiO+eCHsANBdFjCFWRQZKwJ98iop38C+Js/6MY8KcGWDzY1ohu?=
+ =?us-ascii?Q?kwe+T4fT43Pnmaoj6TvyY3XSoLSXXg2GZ5F6ZJe2ckORNCsDT3TDT1MH1Bes?=
+ =?us-ascii?Q?vDbWig/F50t+Z0ahKF2H1ao3P+reX467dxLSFMtJSQPMCz0PR8APSDV/2IJ5?=
+ =?us-ascii?Q?JT41O2L1Fi0MlbgpPn1zbBbVk1FkjZIhhMa3d+Q9jgpJhd+nziusbarq8KnI?=
+ =?us-ascii?Q?5USnIjMZ0uBUzXx6zXV5hMISqXAzyXOSYJ2EScLgH3dMdBPyCPo0uA4Q1ywt?=
+ =?us-ascii?Q?dYPIRKgE4bLakj3/1PqziH/5jK5Je8MfWEX0PCiaMD90pGfckcSGftVWgCZz?=
+ =?us-ascii?Q?Mc0qOXjvjRBhBmwEKZmLgLET4GykVnjA82uGkNSP4mOXz7KdfLC1p3XdRXAr?=
+ =?us-ascii?Q?FHiD1laoMskgmYE+i4Y6cCN6MVFPW/lQ+xTCNxDUc/jzwjqMeUhfRSFI1Ijc?=
+ =?us-ascii?Q?56IKtslhL312rW3mLFSZOdrKmIIHgOsSBw+rEhxLoCOXxCIuORfOeDtxpC7h?=
+ =?us-ascii?Q?SE0ObxDTnly00Y8faHAaeDW0rwg/sT0zpdUY9RKh1DOYdKy7AUpURULLBUAn?=
+ =?us-ascii?Q?r/2/myez5hazEmg3bHdq6kVs+xKOeOX403dS/yKHFSv/Jxcjg3gQiNF+J5Er?=
+ =?us-ascii?Q?fOatZfvrjq4Dzbr3tsY49cMUXp3AK+r04KXJLss34bFLulRBvCFUhhxcIjvC?=
+ =?us-ascii?Q?k6s8pDg5JOGiLVN8zw4wqAi2Z1SRsPSLrqyGIgmNM6C89/CichupoqHnHpND?=
+ =?us-ascii?Q?P37aPaDDotaQ0bJMG8SYZ7VEcw5iu8bIl+L+C8BIrpNwQ+St2p4+oRCQdOeQ?=
+ =?us-ascii?Q?P6Gcy1T93fJjMA9MhCqSsWrm+JBHlBMoI4X/b6VkFIbbgfTtkrDh8SSERHVc?=
+ =?us-ascii?Q?4eRxAZgBKg=3D=3D?=
 Content-Type: multipart/alternative;
- boundary="_000_IA3PR11MB91368B668DF1EB773AB54D779272AIA3PR11MB9136namp_"
+ boundary="_000_IA3PR11MB9136245DC6D58206EC54E2C09272AIA3PR11MB9136namp_"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ca72cab3-a242-4c71-e278-08de74e80943
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2026 03:35:06.8656 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 671271a3-6028-4f42-bba9-08de74e86557
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2026 03:37:41.4616 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wya2QmYLaUDIKjoc4Ut8Zcm+BYDoGfp9QbFp1x2oBeUV30LlkoGaLlr89UlFZ2SMbV/uZvlrNzMGQpIeWK1eY2OlkuniFK0amORt4GcGU/g=
+X-MS-Exchange-CrossTenant-userprincipalname: SeXQFAsNn57r6a5KZlyHBX3O8GhLY8fcwLa89ry363mzAv7GpHaYP+2EjeXtXfeB86V6jEqwHvbC8JKcDhsF1CQV/piKvQstoE3MIteRTNY=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6546
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.18;
+Received-SPF: pass client-ip=198.175.65.17;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,93 +192,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_IA3PR11MB91368B668DF1EB773AB54D779272AIA3PR11MB9136namp_
+--_000_IA3PR11MB9136245DC6D58206EC54E2C09272AIA3PR11MB9136namp_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
 Hi Clement,
 
-I'm fine with either extract32/64 syntax or mask syntax. Just to confirm be=
-low match what you prefer.
+Exactly, copied from PCIe spec:
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.=
-h
-index e5518a94ea..e097839c3b 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -195,7 +195,8 @@
-#define VTD_ECAP_MHMV               (15ULL << 20)
-#define VTD_ECAP_SRS                (1ULL << 31)
-#define VTD_ECAP_NWFS               (1ULL << 33)
--#define VTD_ECAP_PSS(x)             extract64(x, 35, 5)
-+#define VTD_ECAP_PSS                (0x1fULL << 35)
-+#define VTD_ECAP_PSS_SHIFT          35
-#define VTD_ECAP_PASID              (1ULL << 40)
-#define VTD_ECAP_PDS                (1ULL << 42)
-#define VTD_ECAP_SMTS               (1ULL << 43)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 94a691d423..48c2565a9e 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -5027,7 +5027,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
-     }
+Max PASID Width - Indicates the width of the PASID field supported by an ap=
+plicable Endpoint Function. The value n indicates support for PASID values =
+0 through 2n -1 (inclusive). The value 0 indicates support for a single PAS=
+ID (0). The value 20 indicates support for all PASID values (20 bits). This=
+ field must be between 0 and 20 (inclusive)
 
-     if (s->pasid) {
--        s->ecap =3D VTD_ECAP_PASID | deposit64(s->ecap, 35, 5, s->pasid - =
-1);
-+        s->ecap =3D VTD_ECAP_PASID | (uint64_t)(s->pasid - 1) << VTD_ECAP_=
-PSS_SHIFT;
-     }
-}
-
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index e6e9251d21..cb668f3d00 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -47,7 +47,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMM=
-UDevice *vtd_hiod,
-     HostIOMMUDevice *hiod =3D vtd_hiod->hiod;
-     struct HostIOMMUDeviceCaps *caps =3D &hiod->caps;
-     struct iommu_hw_info_vtd *vtd =3D &caps->vendor_caps.vtd;
--    uint8_t hpasid =3D VTD_ECAP_PSS(vtd->ecap_reg) + 1;
-+    uint64_t hpasid =3D vtd->ecap_reg & VTD_ECAP_PSS;
-     PCIBus *bus =3D vtd_hiod->bus;
-     PCIDevice *pdev =3D bus->devices[vtd_hiod->devfn];
-
-@@ -69,9 +69,10 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOM=
-MUDevice *vtd_hiod,
-     }
-
-     /* Only do the check when host device support PASIDs */
--    if (caps->max_pasid_log2 && s->pasid > hpasid) {
-+    if (caps->max_pasid_log2 && s->pasid &&
-+        ((uint64_t)(s->pasid - 1) << VTD_ECAP_PSS_SHIFT) > hpasid) {
-         error_setg(errp, "PASID bits size %d > host IOMMU PASID bits size =
-%d",
--                   s->pasid, hpasid);
-+                   s->pasid, (int)(hpasid >> VTD_ECAP_PSS_SHIFT));
-         return false;
-     }
-
-Thanks
+BRs,
 Zhenzhong
 
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Sent: Wednesday, February 25, 2026 2:40 PM
+Sent: Wednesday, February 25, 2026 2:42 PM
 To: Duan, Zhenzhong <zhenzhong.duan@intel.com>; qemu-devel@nongnu.org
 Cc: alex@shazbot.org; clg@redhat.com; eric.auger@redhat.com; mst@redhat.com=
 ; jasowang@redhat.com; jgg@nvidia.com; nicolinc@nvidia.com; skolothumtho@nv=
 idia.com; joao.m.martins@oracle.com; Tian, Kevin <kevin.tian@intel.com>; Li=
 u, Yi L <yi.l.liu@intel.com>; Hao, Xudong <xudong.hao@intel.com>
-Subject: Re: [RFCv2 PATCH 05/13] intel_iommu: Change pasid property from bo=
-ol to uint8
+Subject: Re: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size che=
+ck
 
 Hi Zhenzhong,
 
-Maybe VTD_ECAP_PSS could be modified to take the pasid width and return the=
- PSS field with the correct offset.
-
-This comment echos what I said about [12/13]
+Why do we capitalize the first letter of each word in "Max PASID Width"?
+I guess you try to match the pcie spec, but just want to confirm :)
 
 cmd
 
@@ -308,89 +250,89 @@ evin.tian@intel.com>>; yi.l.liu@intel.com<mailto:yi.l.liu@intel.com> <yi.l.=
 liu@intel.com<mailto:yi.l.liu@intel.com>>; xudong.hao@intel.com<mailto:xudo=
 ng.hao@intel.com> <xudong.hao@intel.com<mailto:xudong.hao@intel.com>>; Zhen=
 zhong Duan <zhenzhong.duan@intel.com<mailto:zhenzhong.duan@intel.com>>
-Subject: [RFCv2 PATCH 05/13] intel_iommu: Change pasid property from bool t=
-o uint8
+Subject: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size check
 
 Caution: External email. Do not open attachments or click links, unless thi=
 s email comes from a known sender and you know the content is safe.
 
 
-'x-pasid-mode' is a bool property, we need an extra 'pss' property to
-represent PASID size supported. Because there is no any device in QEMU
-supporting pasid capability yet, no guest could use the pasid feature
-until now, 'x-pasid-mode' takes no effect.
+If pasid bits size is bigger than host side, host could fail to emulate
+all bindings in guest. Add a check to fail device plug early.
 
-So instead of an extra 'pss' property we can use a single 'pasid'
-property of uint8 type to represent if pasid is supported and the PASID
-bits size. A value of N > 0 means pasid is supported and N - 1 is the
-value in PSS field in ECAP register.
+Pasid bits size should also be no more than 20 bits according to PCI spec.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com<mailto:zhenzhong.du=
 an@intel.com>>
 ---
- hw/i386/intel_iommu_internal.h | 1 -
- include/hw/i386/intel_iommu.h  | 2 +-
- hw/i386/intel_iommu.c          | 4 ++--
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ hw/i386/intel_iommu_internal.h | 1 +
+ hw/i386/intel_iommu.c          | 5 +++++
+ hw/i386/intel_iommu_accel.c    | 8 ++++++++
+ 3 files changed, 14 insertions(+)
 
 diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.=
 h
-index 11a53aa369..04a9392e8a 100644
+index e4bcc884b0..e5518a94ea 100644
 --- a/hw/i386/intel_iommu_internal.h
 +++ b/hw/i386/intel_iommu_internal.h
-@@ -195,7 +195,6 @@
+@@ -195,6 +195,7 @@
  #define VTD_ECAP_MHMV               (15ULL << 20)
  #define VTD_ECAP_SRS                (1ULL << 31)
  #define VTD_ECAP_NWFS               (1ULL << 33)
--#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid=
- */
++#define VTD_ECAP_PSS(x)             extract64(x, 35, 5)
  #define VTD_ECAP_PASID              (1ULL << 40)
  #define VTD_ECAP_PDS                (1ULL << 42)
  #define VTD_ECAP_SMTS               (1ULL << 43)
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 54c2b6b77a..bb957b93e0 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -315,7 +315,7 @@ struct IntelIOMMUState {
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) *=
-/
-     bool dma_drain;                 /* Whether DMA r/w draining enabled */
--    bool pasid;                     /* Whether to support PASID */
-+    uint8_t pasid;                  /* PASID supported in bits, 0 if not *=
-/
-     bool fs1gp;                     /* First Stage 1-GByte Page Support */
-
-     /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 92a367d657..e27a7c725f 100644
+index 6483cb3d85..c1b31b17de 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -4186,7 +4186,7 @@ static const Property vtd_properties[] =3D {
-     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FA=
-LSE),
-     DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, fals=
-e),
--    DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
-+    DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0),
-     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
-     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
-     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
-@@ -5033,7 +5033,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
+@@ -5545,6 +5545,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Er=
+ror **errp)
+         error_setg(errp, "Need to set scalable mode for PASID");
+         return false;
+     }
++    if (s->pasid >=3D PCI_EXT_CAP_PASID_MAX_WIDTH) {
++        error_setg(errp, "PASID width %d, exceed Max PASID Width %d allowe=
+d "
++                   "in PCI spec", s->pasid, PCI_EXT_CAP_PASID_MAX_WIDTH);
++        return false;
++    }
+
+     if (s->svm) {
+         if (!x86_iommu->dt_supported) {
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index acb1b1e238..15412123d5 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -44,6 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMM=
+UDevice *vtd_hiod,
+     HostIOMMUDevice *hiod =3D vtd_hiod->hiod;
+     struct HostIOMMUDeviceCaps *caps =3D &hiod->caps;
+     struct iommu_hw_info_vtd *vtd =3D &caps->vendor_caps.vtd;
++    uint8_t hpasid =3D VTD_ECAP_PSS(vtd->ecap_reg) + 1;
+     PCIBus *bus =3D vtd_hiod->bus;
+     PCIDevice *pdev =3D bus->devices[vtd_hiod->devfn];
+
+@@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOM=
+MUDevice *vtd_hiod,
+         return false;
      }
 
-     if (s->pasid) {
--        s->ecap |=3D VTD_ECAP_PASID | VTD_ECAP_PSS;
-+        s->ecap =3D VTD_ECAP_PASID | deposit64(s->ecap, 35, 5, s->pasid - =
-1);
-     }
- }
-
++    /* Only do the check when host device support PASIDs */
++    if (caps->max_pasid_log2 && s->pasid > hpasid) {
++        error_setg(errp, "PASID bits size %d > host IOMMU PASID bits size =
+%d",
++                   s->pasid, hpasid);
++        return false;
++    }
++
+     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
+         error_setg(errp, "Host device downstream to a PCI bridge is "
+                    "unsupported when x-flts=3Don");
 --
 2.47.3
 
---_000_IA3PR11MB91368B668DF1EB773AB54D779272AIA3PR11MB9136namp_
+--_000_IA3PR11MB9136245DC6D58206EC54E2C09272AIA3PR11MB9136namp_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -451,110 +393,16 @@ break-word">
 <div class=3D"WordSection1">
 <p class=3D"MsoNormal">Hi Clement,<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I&#8217;m fine with either extract32/64 syntax or ma=
-sk syntax. Just to confirm below match what you prefer.<o:p></o:p></p>
+<p class=3D"MsoNormal">Exactly, copied from PCIe spec:<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">diff --git a/hw/i386/intel_iommu_internal.h b/hw/i38=
-6/intel_iommu_internal.h<o:p></o:p></p>
-<p class=3D"MsoNormal">index e5518a94ea..e097839c3b 100644<o:p></o:p></p>
-<p class=3D"MsoNormal">--- a/hw/i386/intel_iommu_internal.h<o:p></o:p></p>
-<p class=3D"MsoNormal">+++ b/hw/i386/intel_iommu_internal.h<o:p></o:p></p>
-<p class=3D"MsoNormal">@@ -195,7 +195,8 @@<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_MHMV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (15ULL &lt;&lt; 20)<o=
-:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_SRS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 3=
-1)<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_NWFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 33)<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">-#define VTD_ECAP_PSS(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; extract64(x, 35, 5)<o:p></o:p>=
-</p>
-<p class=3D"MsoNormal">+#define VTD_ECAP_PSS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (0x1fULL &lt;&l=
-t; 35)<o:p></o:p></p>
-<p class=3D"MsoNormal">+#define VTD_ECAP_PSS_SHIFT&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 35<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_PASID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 40)<o:p></o=
-:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_PDS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 4=
-2)<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_SMTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 43)<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_i=
-ommu.c<o:p></o:p></p>
-<p class=3D"MsoNormal">index 94a691d423..48c2565a9e 100644<o:p></o:p></p>
-<p class=3D"MsoNormal">--- a/hw/i386/intel_iommu.c<o:p></o:p></p>
-<p class=3D"MsoNormal">+++ b/hw/i386/intel_iommu.c<o:p></o:p></p>
-<p class=3D"MsoNormal">@@ -5027,7 +5027,7 @@ static void vtd_cap_init(Intel=
-IOMMUState *s)<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
+<p class=3D"MsoNormal">Max PASID Width - Indicates the width of the PASID f=
+ield supported by an applicable Endpoint Function. The value n indicates su=
+pport for PASID values 0 through 2n -1 (inclusive). The value 0 indicates s=
+upport for a single PASID (0). The
+ value 20 indicates support for all PASID values (20 bits). This field must=
+ be between 0 and 20 (inclusive)<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; if (s-&gt;pasid) {<o:p></o:=
-p></p>
-<p class=3D"MsoNormal">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;ec=
-ap =3D VTD_ECAP_PASID | deposit64(s-&gt;ecap, 35, 5, s-&gt;pasid - 1);<o:p>=
-</o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;ec=
-ap =3D VTD_ECAP_PASID | (uint64_t)(s-&gt;pasid - 1) &lt;&lt; VTD_ECAP_PSS_S=
-HIFT;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
-<p class=3D"MsoNormal">}<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/i=
-ntel_iommu_accel.c<o:p></o:p></p>
-<p class=3D"MsoNormal">index e6e9251d21..cb668f3d00 100644<o:p></o:p></p>
-<p class=3D"MsoNormal">--- a/hw/i386/intel_iommu_accel.c<o:p></o:p></p>
-<p class=3D"MsoNormal">+++ b/hw/i386/intel_iommu_accel.c<o:p></o:p></p>
-<p class=3D"MsoNormal">@@ -47,7 +47,7 @@ bool vtd_check_hiod_accel(IntelIOM=
-MUState *s, VTDHostIOMMUDevice *vtd_hiod,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; HostIOMMUDevice *hiod =3D v=
-td_hiod-&gt;hiod;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; struct HostIOMMUDeviceCaps =
-*caps =3D &amp;hiod-&gt;caps;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; struct iommu_hw_info_vtd *v=
-td =3D &amp;caps-&gt;vendor_caps.vtd;<o:p></o:p></p>
-<p class=3D"MsoNormal">-&nbsp;&nbsp;&nbsp; uint8_t hpasid =3D VTD_ECAP_PSS(=
-vtd-&gt;ecap_reg) + 1;<o:p></o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp; uint64_t hpasid =3D vtd-&gt;ecap=
-_reg &amp; VTD_ECAP_PSS;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; PCIBus *bus =3D vtd_hiod-&g=
-t;bus;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; PCIDevice *pdev =3D bus-&gt=
-;devices[vtd_hiod-&gt;devfn];<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">@@ -69,9 +69,10 @@ bool vtd_check_hiod_accel(IntelIO=
-MMUState *s, VTDHostIOMMUDevice *vtd_hiod,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; /* Only do the check when h=
-ost device support PASIDs */<o:p></o:p></p>
-<p class=3D"MsoNormal">-&nbsp;&nbsp;&nbsp; if (caps-&gt;max_pasid_log2 &amp=
-;&amp; s-&gt;pasid &gt; hpasid) {<o:p></o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp; if (caps-&gt;max_pasid_log2 &amp=
-;&amp; s-&gt;pasid &amp;&amp;<o:p></o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ((uint64=
-_t)(s-&gt;pasid - 1) &lt;&lt; VTD_ECAP_PSS_SHIFT) &gt; hpasid) {<o:p></o:p>=
-</p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; err=
-or_setg(errp, &quot;PASID bits size %d &gt; host IOMMU PASID bits size %d&q=
-uot;,<o:p></o:p></p>
-<p class=3D"MsoNormal">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;pasid, hpas=
-id);<o:p></o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;pasid, (int=
-)(hpasid &gt;&gt; VTD_ECAP_PSS_SHIFT));<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ret=
-urn false;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks<o:p></o:p></p>
+<p class=3D"MsoNormal">BRs,<o:p></o:p></p>
 <p class=3D"MsoNormal">Zhenzhong<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 <div style=3D"border:none;border-left:solid blue 1.5pt;padding:0in 0in 0in =
@@ -567,7 +415,7 @@ urn false;<o:p></o:p></p>
 font-family:&quot;Calibri&quot;,sans-serif"> CLEMENT MATHIEU--DRIF &lt;clem=
 ent.mathieu--drif@eviden.com&gt;
 <br>
-<b>Sent:</b> Wednesday, February 25, 2026 2:40 PM<br>
+<b>Sent:</b> Wednesday, February 25, 2026 2:42 PM<br>
 <b>To:</b> Duan, Zhenzhong &lt;zhenzhong.duan@intel.com&gt;; qemu-devel@non=
 gnu.org<br>
 <b>Cc:</b> alex@shazbot.org; clg@redhat.com; eric.auger@redhat.com; mst@red=
@@ -575,8 +423,8 @@ hat.com; jasowang@redhat.com; jgg@nvidia.com; nicolinc@nvidia.com; skolothu=
 mtho@nvidia.com; joao.m.martins@oracle.com; Tian, Kevin &lt;kevin.tian@inte=
 l.com&gt;; Liu, Yi L &lt;yi.l.liu@intel.com&gt;;
  Hao, Xudong &lt;xudong.hao@intel.com&gt;<br>
-<b>Subject:</b> Re: [RFCv2 PATCH 05/13] intel_iommu: Change pasid property =
-from bool to uint8<o:p></o:p></span></p>
+<b>Subject:</b> Re: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits s=
+ize check<o:p></o:p></span></p>
 </div>
 </div>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
@@ -589,17 +437,13 @@ from bool to uint8<o:p></o:p></span></p>
 </p>
 </div>
 <div>
-<p class=3D"MsoNormal"><span style=3D"color:black">Maybe VTD_ECAP_PSS could=
- be modified to take the pasid width and return the PSS field with the corr=
-ect offset.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Why do we capitalize the=
+ first letter of each word in &quot;Max PASID Width&quot;?<o:p></o:p></span=
+></p>
 </div>
 <div>
-<p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
-</p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"color:black">This comment echos what =
-I said about [12/13]<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">I guess you try to match=
+ the pcie spec, but just want to confirm :)<o:p></o:p></span></p>
 </div>
 <div>
 <p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
@@ -655,8 +499,8 @@ f=3D"mailto:kevin.tian@intel.com">kevin.tian@intel.com</a>&gt;;
 f=3D"mailto:xudong.hao@intel.com">xudong.hao@intel.com</a>&gt;; Zhenzhong D=
 uan &lt;<a href=3D"mailto:zhenzhong.duan@intel.com">zhenzhong.duan@intel.co=
 m</a>&gt;<br>
-<b>Subject:</b>&nbsp;[RFCv2 PATCH 05/13] intel_iommu: Change pasid property=
- from bool to uint8<o:p></o:p></span></p>
+<b>Subject:</b>&nbsp;[RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits =
+size check<o:p></o:p></span></p>
 </div>
 <div>
 <p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
@@ -669,106 +513,104 @@ ize:11.0pt">Caution: External email. Do not open attachments or click links=
 afe.<br>
 <br>
 <br>
-'x-pasid-mode' is a bool property, we need an extra 'pss' property to<br>
-represent PASID size supported. Because there is no any device in QEMU<br>
-supporting pasid capability yet, no guest could use the pasid feature<br>
-until now, 'x-pasid-mode' takes no effect.<br>
+If pasid bits size is bigger than host side, host could fail to emulate<br>
+all bindings in guest. Add a check to fail device plug early.<br>
 <br>
-So instead of an extra 'pss' property we can use a single 'pasid'<br>
-property of uint8 type to represent if pasid is supported and the PASID<br>
-bits size. A value of N &gt; 0 means pasid is supported and N - 1 is the<br=
->
-value in PSS field in ECAP register.<br>
+Pasid bits size should also be no more than 20 bits according to PCI spec.<=
+br>
 <br>
 Signed-off-by: Zhenzhong Duan &lt;<a href=3D"mailto:zhenzhong.duan@intel.co=
 m">zhenzhong.duan@intel.com</a>&gt;<br>
 ---<br>
-&nbsp;hw/i386/intel_iommu_internal.h | 1 -<br>
-&nbsp;include/hw/i386/intel_iommu.h&nbsp; | 2 +-<br>
+&nbsp;hw/i386/intel_iommu_internal.h | 1 +<br>
 &nbsp;hw/i386/intel_iommu.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp; | 4 ++--<br>
-&nbsp;3 files changed, 3 insertions(+), 4 deletions(-)<br>
+&nbsp; | 5 +++++<br>
+&nbsp;hw/i386/intel_iommu_accel.c&nbsp;&nbsp;&nbsp; | 8 ++++++++<br>
+&nbsp;3 files changed, 14 insertions(+)<br>
 <br>
 diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.=
 h<br>
-index 11a53aa369..04a9392e8a 100644<br>
+index e4bcc884b0..e5518a94ea 100644<br>
 --- a/hw/i386/intel_iommu_internal.h<br>
 +++ b/hw/i386/intel_iommu_internal.h<br>
-@@ -195,7 +195,6 @@<br>
+@@ -195,6 +195,7 @@<br>
 &nbsp;#define VTD_ECAP_MHMV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (15ULL &lt;&lt; 20)<br>
 &nbsp;#define VTD_ECAP_SRS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
 nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 31)<br>
 &nbsp;#define VTD_ECAP_NWFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 33)<br>
--#define VTD_ECAP_PSS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (7ULL &lt;&lt; 35) /* limit: MemTxAttr=
-s::pid */<br>
++#define VTD_ECAP_PSS(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; extract64(x, 35, 5)<br>
 &nbsp;#define VTD_ECAP_PASID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
 ;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 40)<br>
 &nbsp;#define VTD_ECAP_PDS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
 nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 42)<br>
 &nbsp;#define VTD_ECAP_SMTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 43)<br>
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h<=
-br>
-index 54c2b6b77a..bb957b93e0 100644<br>
---- a/include/hw/i386/intel_iommu.h<br>
-+++ b/include/hw/i386/intel_iommu.h<br>
-@@ -315,7 +315,7 @@ struct IntelIOMMUState {<br>
-&nbsp;&nbsp;&nbsp;&nbsp; OnOffAuto intr_eim;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Toggle for EIM cabability */<b=
-r>
-&nbsp;&nbsp;&nbsp;&nbsp; uint8_t aw_bits;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Host/IOVA addre=
-ss width (in bits) */<br>
-&nbsp;&nbsp;&nbsp;&nbsp; bool dma_drain;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Whether DM=
-A r/w draining enabled */<br>
--&nbsp;&nbsp;&nbsp; bool pasid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-; /* Whether to support PASID */<br>
-+&nbsp;&nbsp;&nbsp; uint8_t pasid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* PASID supp=
-orted in bits, 0 if not */<br>
-&nbsp;&nbsp;&nbsp;&nbsp; bool fs1gp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp; /* First Stage 1-GByte Page Support */<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp; /* Transient Mapping, Reserved(0) since VTD spec r=
-evision 3.2 */<br>
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c<br>
-index 92a367d657..e27a7c725f 100644<br>
+index 6483cb3d85..c1b31b17de 100644<br>
 --- a/hw/i386/intel_iommu.c<br>
 +++ b/hw/i386/intel_iommu.c<br>
-@@ -4186,7 +4186,7 @@ static const Property vtd_properties[] =3D {<br>
-&nbsp;&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;x-scalable-mode&quot;, Inte=
-lIOMMUState, scalable_mode, FALSE),<br>
-&nbsp;&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;x-flts&quot;, IntelIOMMUSta=
-te, fsts, FALSE),<br>
-&nbsp;&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;snoop-control&quot;, IntelI=
-OMMUState, snoop_control, false),<br>
--&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;x-pasid-mode&quot;, IntelIOMMUSt=
-ate, pasid, false),<br>
-+&nbsp;&nbsp;&nbsp; DEFINE_PROP_UINT8(&quot;pasid&quot;, IntelIOMMUState, p=
-asid, 0),<br>
-&nbsp;&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;svm&quot;, IntelIOMMUState,=
- svm, false),<br>
-&nbsp;&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;dma-drain&quot;, IntelIOMMU=
-State, dma_drain, true),<br>
-&nbsp;&nbsp;&nbsp;&nbsp; DEFINE_PROP_BOOL(&quot;stale-tm&quot;, IntelIOMMUS=
-tate, stale_tm, false),<br>
-@@ -5033,7 +5033,7 @@ static void vtd_cap_init(IntelIOMMUState *s)<br>
+@@ -5545,6 +5545,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Er=
+ror **errp)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;Nee=
+d to set scalable mode for PASID&quot;);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
++&nbsp;&nbsp;&nbsp; if (s-&gt;pasid &gt;=3D PCI_EXT_CAP_PASID_MAX_WIDTH) {<=
+br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;PASID wi=
+dth %d, exceed Max PASID Width&nbsp;%d allowed &quot;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;in PCI spec&quot;, s-&gt;pasid, PC=
+I_EXT_CAP_PASID_MAX_WIDTH);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br>
++&nbsp;&nbsp;&nbsp; }<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp; if (s-&gt;svm) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (!x86_iommu-&gt;dt_supp=
+orted) {<br>
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c<br>
+index acb1b1e238..15412123d5 100644<br>
+--- a/hw/i386/intel_iommu_accel.c<br>
++++ b/hw/i386/intel_iommu_accel.c<br>
+@@ -44,6 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMM=
+UDevice *vtd_hiod,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; HostIOMMUDevice *hiod =3D vtd_hiod-&gt;hiod;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; struct HostIOMMUDeviceCaps *caps =3D &amp;hiod-&gt=
+;caps;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; struct iommu_hw_info_vtd *vtd =3D &amp;caps-&gt;ve=
+ndor_caps.vtd;<br>
++&nbsp;&nbsp;&nbsp; uint8_t hpasid =3D VTD_ECAP_PSS(vtd-&gt;ecap_reg) + 1;<=
+br>
+&nbsp;&nbsp;&nbsp;&nbsp; PCIBus *bus =3D vtd_hiod-&gt;bus;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; PCIDevice *pdev =3D bus-&gt;devices[vtd_hiod-&gt;d=
+evfn];<br>
+<br>
+@@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOM=
+MUDevice *vtd_hiod,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br>
 &nbsp;&nbsp;&nbsp;&nbsp; }<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp; if (s-&gt;pasid) {<br>
--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;ecap |=3D VTD_ECAP_PASID =
-| VTD_ECAP_PSS;<br>
-+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;ecap =3D VTD_ECAP_PASID |=
- deposit64(s-&gt;ecap, 35, 5, s-&gt;pasid - 1);<br>
-&nbsp;&nbsp;&nbsp;&nbsp; }<br>
-&nbsp;}<br>
++&nbsp;&nbsp;&nbsp; /* Only do the check when host device support PASIDs */=
 <br>
++&nbsp;&nbsp;&nbsp; if (caps-&gt;max_pasid_log2 &amp;&amp; s-&gt;pasid &gt;=
+ hpasid) {<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;PASID bi=
+ts size %d &gt; host IOMMU PASID bits size %d&quot;,<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;pasid, hpasid);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br>
++&nbsp;&nbsp;&nbsp; }<br>
++<br>
+&nbsp;&nbsp;&nbsp;&nbsp; if (pci_device_get_iommu_bus_devfn(pdev, &amp;bus,=
+ NULL, NULL)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;Hos=
+t device downstream to a PCI bridge is &quot;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;unsupported when x-flts=3Don&=
+quot;);<br>
 --<br>
 2.47.3<o:p></o:p></span></p>
 </div>
@@ -777,5 +619,5 @@ tate, stale_tm, false),<br>
 </body>
 </html>
 
---_000_IA3PR11MB91368B668DF1EB773AB54D779272AIA3PR11MB9136namp_--
+--_000_IA3PR11MB9136245DC6D58206EC54E2C09272AIA3PR11MB9136namp_--
 
