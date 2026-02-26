@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF2A9FD8FE0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343D2FD8FDA
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vveiu-0000sE-U8; Thu, 26 Feb 2026 12:00:26 -0500
+	id 1vvekf-0001uK-GB; Thu, 26 Feb 2026 12:02:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vveik-0000rS-2o
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:00:14 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvekW-0001ph-TH
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:02:05 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vveih-0006VU-8n
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:00:13 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-65f9763e8d1so2416477a12.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:00:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvekV-0006m1-9I
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:02:04 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4833115090dso11420175e9.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:02:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772125209; x=1772730009; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EBuUFvcmhE991ryP8Kr1P2g448wAv4g7tcPs8O0sdD8=;
- b=sYq1aw+P0wIrd73tKxW8+7zIY+lxJQgRBDHx8jXSTCaQOmW73ZbksEh5CBP6lRp1++
- 8Oy8CsloAhRtHTmRO5YNgRzQES3Yza3tzuF8bKl3bmhovZXM5pabEqeQ8R/GX7BKCITx
- 1DXcIHDz+J+8yFI7ibQJYi8sz1Z54Y7GTbAOVGD7jPMoEfxicTHov5jsywQXtjjxgcLD
- k6BKYxkL3jfIFPfGVkKw/5kpqaDiqFQ6NffAL1hE6/xZ6HwYmQBxfP/rdq4jGD5Su//o
- vXAfdixssTmmpb/aSMr3OUzf8qY5NFUoiOkcHSTm/DzmUWfqDLGeVCS3ehry52xrhKLX
- ugRQ==
+ d=linaro.org; s=google; t=1772125321; x=1772730121; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Psl5miEuGELH0aI58KUW77MWnyztiLM1W5R8DySdthE=;
+ b=eBGWeoJ4N8f2/NCWBLuzEGsKmtaDV+nIaTOdMUcbqJy+J6WNdnEa34nKxbdHhLgTYX
+ /WOS1gHgHFP47Jjrd2mw9G97YemGD+anF0Tm0rgfwmDn4COKV/TeuwG1hT7t7njsWY1+
+ obDTxyo/c6X5C3KVRWaG7+Wi6JyIQd4d7R8Q8L1ZjyJF0MjryUXkpIxqzfd/geZ6Uc7K
+ CtleMXLgTZsTq+xp2DfdSXNPDMUoKqrgJvWd2qNCLk84iqn1XrhCOvLNjUZTVg4tjmeS
+ /Nq96mh1Isc9qHyP9Mg+dhhnj4CBKL+24fWjCsPfbqmzWog584AgVzMEptecMjXOIsVY
+ /Q+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772125209; x=1772730009;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EBuUFvcmhE991ryP8Kr1P2g448wAv4g7tcPs8O0sdD8=;
- b=oPchlixIMZeMGr5qFt3o/7C3WslCQxVZX7C9lIDUiQPz9T/C4eYwu19sAIB01DNu/Y
- HyU6Xu47EHWeL7FXs0+sXJj42aFEna+T8qmpaoE4HNtbChR0GuZ6z/AXPpzE5G5lkw2s
- NN2x8HSrWKSUjAH/QWX4oLF9dWMgqTHySlQbVu03I3c0fCGLGcsYETBYVHpwaPto67mh
- pQIZhV8RZvr24pGWQi8+ZAMWepkz3pwiwpIkPTVRfZF4MBxc5LqwKRyeA83DAjYkUa+v
- WXeZyawsQB6OAxfgR9uaOQFdyw2ELMbnIFPFsU2FJgpztzUV+eBqr6klSfevmCgr0P+k
- iQWw==
-X-Gm-Message-State: AOJu0Yzu8I82qkJkBNXVSrMAJpjh3MaLG8/iSuGXiqQid86CIyIwGyx6
- wSgmBIsgnk+BUCublNuuB1Jt73kU35Rl/5Xq3wlYi1Qx9wLOBgsOMRjLOWZFhpAoA8A=
-X-Gm-Gg: ATEYQzw47dKi5ihZQ0uz4R8/1i0eP2uqB2HNL5A8uDxO0CjHlfBxsR6ImOzLnCPL0Xq
- a8QlAsT6MJulilqODWS55hoxUlGTTAIbLU5L32jJIqsL9AmNut7CkTbf9WAhIs8JaDuax2Hkx49
- ORIBo4Am1z6IX0eiwzTzuvlXWAm3yjCvZP9doPDXTSFa5VK6ZHHz0NGPD//Waei8q5k4QGQaN05
- AKXEpvOUq3iQZZW0C9H/JbIKajlANvmc8QezL1JiNHLrVnFx/F7cEUAgPuyOVPjzvExg+0EDkyw
- 38yYm9vG8Da7nB+zERSVITSNTkV5+eGIgZK0HjXiftMulexng5IofWHicECR6rLPMKa92jy1keW
- p27rozSy5RbgviCfrDTXrQgfZnnQheW1NzpJ8AeMuC7c5+bN2G8ahJkV69Wb9gsBXzp3d3BTkWY
- XffLD1sGm9HGBAnxEi6jkKfMM=
-X-Received: by 2002:a05:6402:2110:b0:65c:5a7b:bd99 with SMTP id
- 4fb4d7f45d1cf-65fb6e904e3mr1764465a12.31.1772125208950; 
- Thu, 26 Feb 2026 09:00:08 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65fabf6d0fbsm683914a12.20.2026.02.26.09.00.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 09:00:08 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3EA445F802;
- Thu, 26 Feb 2026 17:00:06 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: Re: [PATCH v2 1/3] tests: upgrade most non-lcitool debian tests to
- debian 13
-In-Reply-To: <20260225193856.959771-2-jsnow@redhat.com> (John Snow's message
- of "Wed, 25 Feb 2026 14:38:54 -0500")
-References: <20260225193856.959771-1-jsnow@redhat.com>
- <20260225193856.959771-2-jsnow@redhat.com>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Thu, 26 Feb 2026 17:00:06 +0000
-Message-ID: <87a4wvzbhl.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1772125321; x=1772730121;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Psl5miEuGELH0aI58KUW77MWnyztiLM1W5R8DySdthE=;
+ b=YX9HfokU+b2W2oU89WsKl+EdjAoTOfynQ7pw5Nzes039pE5cYXZ+xGYUcj9uzLt/4q
+ ZYOXltLqsrgMOPgn9GWESBs7cAYSWKAuW5zKijGUSQf7xN9S7ASXo6E75tBnNCRvL+Gg
+ 44PziMHM6HBMknyRF4zaVoYlX6PqzD+ThTmy3BKDJao1JW2ASVq2OMLEqxsQy63mqhFR
+ DYFXtY6HTUu7rJmHGHBsRI5U7cFmehuL3C3Pm46c3Fd+XdTw7emMssneSWpzSomCA/0w
+ HuHnbeHRMCuGETU0FSgENJIjyK2nq4ASOi/sOoTVRKp7vj4iA2W+nVDOmAKJwrmSwbhr
+ MDPw==
+X-Gm-Message-State: AOJu0YxPPfC7bdtVldvPiPPiVZLabHtXmrer2guP4Td8tZoSbt5RSjkL
+ FwJFqE3xgiYYPaWK2NCk+5XTIZJyKhMJOVnTEGc37FCGceMpvhubVyw8+2Wp200t7ozTt+GOgAe
+ DcHF5X+A=
+X-Gm-Gg: ATEYQzw44HcLkFKQ+HuYPxk4Rx7OWHseuYUGShjHV7o/y4FgU/5bAhQNVS7TjsbdTKq
+ uHjIr+JE6TLMe1S44KngpkuEOXVNBrxYeY4796siy+60mMlHvsOpKamSDkf+kul4YoDZukfeuNi
+ HdlcpR9OuG7KChKnhKmQ8yRb2NoOxrxG4h61jg0bG8ucZ66wFbqikUV6gXWGGJYwRMS4jVj7I1i
+ YhpCjfL2P9tYvOoCj+g9/Kfb1Gs9GeML+mUlbTgGP2TPDYjF1g69f6lb0whMAJOZEys0jPjejII
+ KAkeHtZMN0gjgwxLqdiZdeRr6AGQHaPxqzGipcW7N9cMMDFL1TUxyr+AjKTwPoYEi5A1ZFXSiAe
+ mnYicJMlt+ArSUYlVy7TyL/cyu+7lBbqfGhHK6SI2TlDiweDv8SGqkPVLAP/NYAmBo9vvJC6INS
+ DGgVlfhoXXkIBh3HEP+8NkGexZJawjROg/0dHdW6/EOeQ0ZzvBzkP2UXqzxEcukUhOVA==
+X-Received: by 2002:a05:600c:3516:b0:482:eec4:76d with SMTP id
+ 5b1f17b1804b1-483c3de3b6fmr49517285e9.17.1772125320838; 
+ Thu, 26 Feb 2026 09:02:00 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4399c75b5b6sm714513f8f.18.2026.02.26.09.01.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Feb 2026 09:02:00 -0800 (PST)
+Message-ID: <66138da8-a096-4558-8b2f-dd4e937ce2ff@linaro.org>
+Date: Thu, 26 Feb 2026 18:01:59 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/hppa: Expand tcg_global_mem_new() ->
+ tcg_global_mem_new_i64()
+Content-Language: en-US
+To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+References: <20260205212914.10382-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260205212914.10382-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,21 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+ping?
 
-> Debian 11 was EOL in 2024, and Debian 12 will be EOL this June. This
-> patch moves all but one of our tests, debian-legacy-test-cross, onto
-> Debian 13.
->
-> This patch does the bare minimum to upgrade these tests and doesn't make
-> any attempt at optimization or cleanup that may or may not be possible
-> with this upgrade.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+On 5/2/26 22:29, Philippe Mathieu-Daudé wrote:
+> The HPPA target is a 64-bit one, so tcg_global_mem_new()
+> expands to tcg_global_mem_new_i64(). Use the latter which
+> is more explicit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/hppa/translate.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 0f8a66f7732..70c20c00377 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -307,9 +307,9 @@ void hppa_translate_init(void)
+>   
+>       cpu_gr[0] = NULL;
+>       for (i = 1; i < 32; i++) {
+> -        cpu_gr[i] = tcg_global_mem_new(tcg_env,
+> -                                       offsetof(CPUHPPAState, gr[i]),
+> -                                       gr_names[i]);
+> +        cpu_gr[i] = tcg_global_mem_new_i64(tcg_env,
+> +                                           offsetof(CPUHPPAState, gr[i]),
+> +                                           gr_names[i]);
+>       }
+>       for (i = 0; i < 4; i++) {
+>           cpu_sr[i] = tcg_global_mem_new_i64(tcg_env,
+> @@ -322,7 +322,7 @@ void hppa_translate_init(void)
+>   
+>       for (i = 0; i < ARRAY_SIZE(vars); ++i) {
+>           const GlobalVar *v = &vars[i];
+> -        *v->var = tcg_global_mem_new(tcg_env, v->ofs, v->name);
+> +        *v->var = tcg_global_mem_new_i64(tcg_env, v->ofs, v->name);
+>       }
+>   
+>       cpu_psw_xb = tcg_global_mem_new_i32(tcg_env,
 
-Queued to testing/next, thanks.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
