@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C57FD8FD1
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C491CFD8FC3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdlB-0003fX-M0; Thu, 26 Feb 2026 10:58:41 -0500
+	id 1vvdlW-0005A9-Dt; Thu, 26 Feb 2026 10:59:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vvdl9-0003eC-Ck
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:58:39 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vvdlU-00053h-DX
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:59:00 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vvdl7-00043t-UC
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:58:39 -0500
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1vvdlS-00046P-I8
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:58:59 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 63CE56013C;
- Thu, 26 Feb 2026 15:58:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E54EC19423;
- Thu, 26 Feb 2026 15:58:32 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 8E42B6091C;
+ Thu, 26 Feb 2026 15:58:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AEDC116C6;
+ Thu, 26 Feb 2026 15:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772121515;
- bh=ebhzs1f9leTJhb7vJ9DTLKifZg7rjye2J7sNivsOQ3s=;
+ s=k20201202; t=1772121537;
+ bh=pVZHWg0t4JXbIDil2TydyNQYwETXIrvCJILBi8caDGw=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=QjLld+NpH9eFYRonODSfV2PKLWHIQ1yst/ZN2P3geM9ro/JrTctO1PqhDvnZw8kN0
- WCVSX8Qkxk01hWjaMT3qKYjZ1x9+nBcL9/KQfflgCR7p/ldGDDAfI6pHu0p1oTdTwj
- At5XLv2zS9oZhVTQYZBjMmFIAzCNcSaQcXl6dHyR7beu+l+Jfi471mkmZ/FTVC2jye
- VbcFtKPxFjQ7xbHaCraHT9UnvsUpCYBxiFBBCv3/2mHS1DYnROWG4VbZ+HD/4mDDiD
- 2mU5/12G8TTqnyF/Et0OOncFWbs3mW1S5ap+TAQglH0IPqNEn6FJSdC5U63tVKRz8D
- ECMHYwAj3SaQA==
-Message-ID: <160c548f-7839-486e-9ee2-637dcb156bb3@kernel.org>
-Date: Thu, 26 Feb 2026 16:58:29 +0100
+ b=czu7Ms8/1jtt1vZDh8kAIGj68ekdy5b6FZeBSsBT17wMmzhYDxcZVnvTtVL/PigGa
+ S9cnEGQCwQXokZ4uo768XoC4YpKb3zFX9oHipf8PZN9zsXN7sJSGKNvnFl2rz5/5q1
+ SS+evB4lINsFVdCV4wdMMTz+hBs4CK1Xb1mEitjdOP3rq47k6ep4xgWP9Wv7LUzmmw
+ yTO7rd5LqYynvU4v+Y4MLwnsztv0q8sWbRwVR79bh/d+H47UQFCpRb6VaeJ1D+fbJb
+ GDAaty9duIiftGkP2bmG/qBJirwqG16vdFlm0NiA/VWsbHoUBk0rmTH4+U3whukgs2
+ Hxqv/jdWw4Qdw==
+Message-ID: <cf9520ac-de22-4fcd-b966-a9cae8e56c7c@kernel.org>
+Date: Thu, 26 Feb 2026 16:58:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/15] memory: drop
- RamDiscardListener::double_discard_supported
+Subject: Re: [PATCH v3 04/15] system/memory: minor doc fix
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -47,20 +46,21 @@ Cc: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  <philmd@linaro.org>, Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
  Mark Kanda <mark.kanda@oracle.com>
 References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
- <20260226140001.3622334-3-marcandre.lureau@redhat.com>
+ <20260226140001.3622334-5-marcandre.lureau@redhat.com>
 From: David Hildenbrand <david@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20260226140001.3622334-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20260226140001.3622334-5-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=david@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,15 +79,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/26/26 14:59, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> This was never turned off, effectively some dead code.
-> 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Reviewed-by: Cédric Le Goater <clg@redhat.com>
 > ---
 
-Great, thanks!
-
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 
 -- 
 Cheers,
