@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F9CFCE08A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 14:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BF7FCE08C
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 14:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvbvL-0002uU-MF; Thu, 26 Feb 2026 09:01:03 -0500
+	id 1vvbvL-0002uK-Ml; Thu, 26 Feb 2026 09:01:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vvbvF-0002lt-OM
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 09:01:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vvbur-0002d0-Pm
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 09:00:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vvbvB-0006Lu-VA
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 09:00:56 -0500
+ id 1vvbul-0006Ij-VO
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 09:00:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772114452;
+ s=mimecast20190719; t=1772114427;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2WvlEsuPi6e7u3qLm/tyXMiGoFxoDbeEYBboebD1eIM=;
- b=eKFd71h3rSnczP5/eZPaQbeyzDzH4woQXLaC4gCil1/G9nCSagimgcWlgsWuntyc8fXejb
- TM9JKbIONHnoEbp3wrb7VPKeqfoE9VGIpRqbElzTu3qUdDFEjIaQc8Jpfxxe4MO7bx+uSD
- yHDCroRIJ2HWzvDjPAYhc7ner98mi1I=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=YojGkR9U2ESl4vEoymd56OJc8xyM37B0p+ADPxQm3Fc=;
+ b=W3qoi5KQXssdnYhSunIXm5PcOzM5hFxm9ZC6d8jFLkJl6zODBQQrRQ4l0R8j5z3apfwndl
+ l1SI6icCNFsxJ+p92dW5yfCT0aqW+U1Vj5sj5ow+AUxT6wsAHRiCSWhZqkBSfhUQoqV/3P
+ Zw2Vxm4/OYLcr4bdY1HDvictePG8f88=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-r2k1fx2VMWKbW7KwiIZpbw-1; Thu,
- 26 Feb 2026 09:00:49 -0500
-X-MC-Unique: r2k1fx2VMWKbW7KwiIZpbw-1
-X-Mimecast-MFC-AGG-ID: r2k1fx2VMWKbW7KwiIZpbw_1772114448
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-lYyvKkLCNT2Tlv-G0Vmr1w-1; Thu,
+ 26 Feb 2026 09:00:22 -0500
+X-MC-Unique: lYyvKkLCNT2Tlv-G0Vmr1w-1
+X-Mimecast-MFC-AGG-ID: lYyvKkLCNT2Tlv-G0Vmr1w_1772114421
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F5B819560B7; Thu, 26 Feb 2026 14:00:48 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F361C18004BB; Thu, 26 Feb 2026 14:00:20 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.29])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BCB5430001B9; Thu, 26 Feb 2026 14:00:46 +0000 (UTC)
+ id 5C63130001B9; Thu, 26 Feb 2026 14:00:20 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -57,28 +57,27 @@ Cc: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
  Mark Kanda <mark.kanda@oracle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v3 13/15] system/physmem: destroy ram block attributes before
- RCU-deferred reclaim
-Date: Thu, 26 Feb 2026 14:59:58 +0100
-Message-ID: <20260226140001.3622334-14-marcandre.lureau@redhat.com>
+Subject: [PATCH v3 05/15] kvm: replace RamDicardManager by the
+ RamBlockAttribute
+Date: Thu, 26 Feb 2026 14:59:50 +0100
+Message-ID: <20260226140001.3622334-6-marcandre.lureau@redhat.com>
 In-Reply-To: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
 References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 22
-X-Spam_score: 2.2
-X-Spam_bar: ++
-X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,44 +95,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-ram_block_attributes_destroy() was called from reclaim_ramblock(), which
-runs as an RCU callback deferred by call_rcu().
-
-However,when the RamDiscardManager is finalized, it will assert that its
-source_list is empty in the next commit. Since the RCU callback hasn't
-run yet, the source added by ram_block_attributes_create() is still
-attached.
-
-Move ram_block_attributes_destroy() into qemu_ram_free() so the source
-is removed synchronously. This is safe because qemu_ram_free() during
-shutdown runs after pause_all_vcpus(), so no vCPU thread can
-concurrently access the attributes via kvm_convert_memory().
+No need to cast through the RamDiscardManager interface, use the
+RamBlock already retrieved. Makes it more direct and readable, and allow
+further refactoring to make RamDiscardManager an aggregator object in
+the following patches.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- system/physmem.c | 2 +-
+ accel/kvm/kvm-all.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 2fb0c25c93b..cf64caf6285 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2589,7 +2589,6 @@ static void reclaim_ramblock(RAMBlock *block)
-     }
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 0d8b0c43470..20131e563da 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3124,7 +3124,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
+     rb = qemu_ram_block_from_host(addr, false, &offset);
  
-     if (block->guest_memfd >= 0) {
--        ram_block_attributes_destroy(block->attributes);
-         close(block->guest_memfd);
-         ram_block_coordinated_discard_require(false);
-     }
-@@ -2618,6 +2617,7 @@ void qemu_ram_free(RAMBlock *block)
-     /* Write list before version */
-     smp_wmb();
-     ram_list.version++;
-+    g_clear_pointer(&block->attributes, ram_block_attributes_destroy);
-     call_rcu(block, reclaim_ramblock, rcu);
-     qemu_mutex_unlock_ramlist();
- }
+-    ret = ram_block_attributes_state_change(RAM_BLOCK_ATTRIBUTES(mr->rdm),
++    ret = ram_block_attributes_state_change(rb->attributes,
+                                             offset, size, to_private);
+     if (ret) {
+         error_report("Failed to notify the listener the state change of "
 -- 
 2.53.0
 
