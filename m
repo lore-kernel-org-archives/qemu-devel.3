@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6EEFD8FF5
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 18:54:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29ACFFD8FF5
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 18:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvgUW-0008Km-3d; Thu, 26 Feb 2026 13:53:40 -0500
+	id 1vvgUO-0008H9-8A; Thu, 26 Feb 2026 13:53:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvgU3-0008C8-BI
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:11 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1vvgU9-0008EN-0a
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:20 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvgTz-0003WP-KZ
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:11 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b935cd1c6f3so163767966b.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 10:53:06 -0800 (PST)
+ id 1vvgU5-0003Xo-3d
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:16 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b8d7f22d405so185637966b.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 10:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772131985; x=1772736785; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772131990; x=1772736790; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QkFfoTUTnHUyPobpDVFMIZRdkqj9H3jZxM/MRJrFhww=;
- b=GIm49HwOXve7E6ifuHuQyJDLGabkS4Avh/GTBf35SXwcbaHVXHE/8/fWSteBSbeYRF
- XtNY+I8Li2GV5tLt9tuzH0K7l4KFRhUmsOz1/TDTJyL8V+70UnneOulrFMs9mc55V7Tj
- BMhRXF4hSpVzOurjHdpdu5Ht1OmHDJwW7LLIMjPbJuSuZ8OBn9zGg5DphWCAB+gzzJD6
- BTLXd0BUPIn2g8LNQAxFw8n8ZYaUjVM/I5tZ77JJnui0czNF0zyNDz0HcAr0FPJY4pZt
- pLIROl7Qp51id00kK9Y6kPwOV+hwE2VkmW2imQ8kNDQh9TeSwj6zfmhUUfZMFhJXhBA+
- Lm/A==
+ bh=yboa4Ib5iNaVNTq21S5NaeZDhTNkVA/TIAAajIB1sXY=;
+ b=kx+6xSlmw7fRFboHpfiJbJq9RZ1XOf48X+XXr1s2Q/aPUcVY7CdHiWoP6mNd16+x+W
+ a8XHj2BoN54KhRNNaPG3jb125Bm5/3zbgYXq1ObPTYJT3saO4kTuZ6s+uzSTFACrAIBC
+ rb0jghTyB+QfAoZTLLI67kqjP/dZn/PEzKXhVdJGkxNhuyrPL3WhJKfbXUjU0j/hQp7q
+ OP8C6i5IddDSm/31wAsWhzrGIUJ5vffHJK//MSoe32ta2GUQZ1hkDtOiLQgr6185/vA6
+ Vy/ury0xtc/313/CDLlECrBdeWuTDInq/EI3yvU5DAJgxLEXcChlLx5UrkGdJWle4/Jj
+ 8N4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772131985; x=1772736785;
+ d=1e100.net; s=20230601; t=1772131990; x=1772736790;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QkFfoTUTnHUyPobpDVFMIZRdkqj9H3jZxM/MRJrFhww=;
- b=XuSKhumb2yrjH8VVA9jklGCg17C0GgR3xuQL/67GKGavt+zQTdm58PIXzGRcVyG1DH
- zBI+iPgf4+y+lgbWnD7uYzLanIgBa6s1ZDqvEAhjnDFdsgkI1/QhJimFNag0lJTtL9KO
- 7D+AKWQlA7npWKwW7HgHYIw4J4g6aOZlofueM4kfbvhgQ0WuhqgBHhawz2U9pQJ4ybLr
- 4rLaHiVaYocfjlBp5dhiuL6G5VqsFfoMCNrLVp0uD0I7kjcmY92Dk3e06Zl7YUM7tSch
- FzpNkmY+pyzPnM2aFjNNGceCpehu/EMwZrnokTUTGrx3ozeXYUVSrInFX+PBkkU4AFcX
- 007A==
-X-Gm-Message-State: AOJu0YxVL5cDqKBbjlRE/p7g+mw8so5NbGs9xcKbyBliqPVBEBOyh3Zy
- SpKNNZe4tJJ1GVfVkFQXK95tdfJcO395eJkW3dMQyuZe2VdZ5dbyUf4ZiF6jmANH4aM=
-X-Gm-Gg: ATEYQzxo4TyTRRM3ybzDp8GPm28fNJX8g92TbfolMNmYfM8jVcC8v3LKjfKdFqcNMyU
- utFfIQr1w136Au4eaAJjGQgo1t3rOhJ4kZs44BwT2AESlcCjBA4XnhmkuJzCd4bz/VwjCi92JrY
- W8dssZq21UOZgMNrSfffug4B+QkkZNl0k3ziXyf27G+JYFtkQ8FF72zsZxJPjMkGj+qSrzUtmfU
- hMnXH2Kp0Rx9ZLmr7zLW8Pv9EZeO0omgLc6kVFQusPLWWexL+KrrtoxkWPYpW2WrEYoXfL6uUdS
- zyT9QI8DjvihOZUtW9HOAKCpexFKZ/Toe0SFmZi17tLseSAHGs+ctIv9ZCPPRHDlPNtMRNEink5
- Jjc5ZXyhqqYIQnWJXfwAGhNf6fauXWI3c1DNVdb+MTInMAdhsxcm4EhFPUmpogTy9DNV1Y7x6mB
- Y7XIbovWhbirOVdM7C7G2Fa0Q=
-X-Received: by 2002:a17:907:84b:b0:b88:6542:86a0 with SMTP id
- a640c23a62f3a-b93517e2cb1mr324107566b.54.1772131985363; 
- Thu, 26 Feb 2026 10:53:05 -0800 (PST)
+ bh=yboa4Ib5iNaVNTq21S5NaeZDhTNkVA/TIAAajIB1sXY=;
+ b=b4TlLyBOzeAY23A4Z38ztR5aRO6NR6Gl66K2/C3XEl9weLcn31HKbki4YCqZIhGlYV
+ XAV2hU0DhQrsdTlFDJu0gIz+saOUU7lVgtngqY+QIuHFfka95kVDTaAuaOul8fpdyQRN
+ 8nDbnVha5f1Zw93u/DF4XeH84sDWTccSc4KEfy6rMTatEWGvZw+F76lv01LYnJGeiY8b
+ 1iDj8v8sKgYfXOkISHDQh12Xb6mEFXVc3M/nz5IVxpnOdWsyhYvnSd/qJFWg/L30eKMO
+ bloYvvKHdYzZIPU1QOUpwpVtDpFM75gU+mYINEVYu5D8JfJ49P6VsV7ipuhuI0IrMuV9
+ nAVA==
+X-Gm-Message-State: AOJu0Yzx3yo5mc+5qpOjgtnsAVkSKdGzgCLBr0CUVsuuBgmxS3RrrlBn
+ 8cxKIi5R9cn/oeNl8Oi8XFe7MGVqQQfhQdzAW8laF+9KTN1HUY4rzrrRcuG9PBmSpm0=
+X-Gm-Gg: ATEYQzwQ9PpZJXGurBj5HRACT4S2X4rocOTgkM1erHy/98OpHGvGjSi/4ZkFGi+oz8o
+ sJLPn1SdwVRcDVRVxV5jgamPGgLcC+2uBDa0iJ5lcC7HcjPbzsuD0tMeavIroJ+/ouz7fWw3AAn
+ +qSDFCrC4VR3hBsq5563UsurDQiSMJE26t67m2ro6g9e2jghGHyiefis3ia9+jBB2vWZ5KNw7bS
+ ociUVG1r2tybODim3RMU7DfzMLjEfngZd5wTX+lcWBFsEvME54Phtgw0CZC9n7DUM+zc7yBFZCm
+ FPuL2eEadZae5RV+N9G9S5U95Wuh/+m4TDlVfMxFkKfCNe7eb7RIHv7Sewsb5EoV3JAp6uze0Cw
+ VfGViiV2TYo9YYHCgUoJIOldQyihVapfqsLNp1813W37g1TZML1y4CGB4uWc4lA7UJKhnFgsg3i
+ PptxWF4Tpl7jvWuQhs2wTnZCQ=
+X-Received: by 2002:a17:907:da17:b0:b87:6b9c:6386 with SMTP id
+ a640c23a62f3a-b935bb25ae5mr260933866b.56.1772131989452; 
+ Thu, 26 Feb 2026 10:53:09 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935ae60bf5sm86835266b.42.2026.02.26.10.53.04
+ 4fb4d7f45d1cf-65fabf6d26dsm739784a12.16.2026.02.26.10.53.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 10:53:04 -0800 (PST)
+ Thu, 26 Feb 2026 10:53:07 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7CE045F8BA;
- Thu, 26 Feb 2026 18:53:03 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 050265F8D5;
+ Thu, 26 Feb 2026 18:53:04 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -74,20 +74,19 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  Brad Smith <brad@comstyle.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Warner Losh <imp@bsdimp.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 1/7] tests/docker: upgrade most non-lcitool debian tests to
- debian 13
-Date: Thu, 26 Feb 2026 18:52:56 +0000
-Message-ID: <20260226185303.1920021-2-alex.bennee@linaro.org>
+ Warner Losh <imp@bsdimp.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 6/7] tests/vm: build openbsd from lcitool data (!567)
+Date: Thu, 26 Feb 2026 18:53:01 +0000
+Message-ID: <20260226185303.1920021-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260226185303.1920021-1-alex.bennee@linaro.org>
 References: <20260226185303.1920021-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,169 +109,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+For now only use the minimal decadency set until all the OpenBSD
+mappings can be divined.
 
-Debian 11 was EOL in 2024, and Debian 12 will be EOL this June. This
-patch moves all but one of our tests, debian-legacy-test-cross, onto
-Debian 13.
+Currently depends on: https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/567
 
-This patch does the bare minimum to upgrade these tests and doesn't make
-any attempt at optimization or cleanup that may or may not be possible
-with this upgrade.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[AJB: tweak summary line]
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20260213154859.1551283-6-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/docker/dockerfiles/debian-hexagon-cross.docker  | 11 ++++++-----
- .../docker/dockerfiles/debian-loongarch-cross.docker  | 10 +++++-----
- tests/docker/dockerfiles/debian-toolchain.docker      |  8 +++++---
- tests/docker/dockerfiles/debian-tricore-cross.docker  |  5 ++---
- tests/docker/dockerfiles/debian-xtensa-cross.docker   |  2 +-
- 5 files changed, 19 insertions(+), 17 deletions(-)
+ tests/lcitool/refresh           |  5 ++--
+ tests/vm/generated/openbsd.json | 27 +++++++++++++++++++++
+ tests/vm/openbsd                | 42 ++-------------------------------
+ 3 files changed, 32 insertions(+), 42 deletions(-)
+ create mode 100644 tests/vm/generated/openbsd.json
 
-diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-index 23152b4918b..91d4b71ac95 100644
---- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
-+++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-@@ -5,10 +5,12 @@
- # needs to be able to build QEMU itself in CI we include its
- # build-deps.
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
-+
-+# Add deb-src repository sources
-+RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
-+    /etc/apt/sources.list.d/debian.sources
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index c74345e03d0..3e4b026035b 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -87,9 +87,9 @@ def generate_cirrus(target, trailer=None):
+     generate(filename, cmd, trailer)
  
--# Duplicate deb line as deb-src
--RUN cat /etc/apt/sources.list | sed "s/^deb\ /deb-src /" >> /etc/apt/sources.list
- RUN apt-get update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-     DEBIAN_FRONTEND=noninteractive eatmydata \
-@@ -24,6 +26,7 @@ RUN apt-get update && \
-         ninja-build \
-         python3-pip \
-         python3-setuptools \
-+        python3-tomli \
-         python3-venv \
-         python3-wheel && \
- # Install QEMU build deps for use in CI
-@@ -36,8 +39,6 @@ RUN apt-get update && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
-     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
--RUN /usr/bin/pip3 install tomli
+-def generate_pkglist(vm, target):
++def generate_pkglist(vm, target, project="qemu"):
+     filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
+-    cmd = lcitool_cmd + ["variables", "--format", "json", target, "qemu"]
++    cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
+     generate(filename, cmd, None)
+ 
+ 
+@@ -316,6 +316,7 @@ try:
+     # VM packages lists
+     #
+     generate_pkglist("freebsd", "freebsd-14")
++    generate_pkglist("openbsd", "openbsd-78", project="qemu-minimal")
+ 
+     #
+     # Ansible package lists
+diff --git a/tests/vm/generated/openbsd.json b/tests/vm/generated/openbsd.json
+new file mode 100644
+index 00000000000..0886afd0d3d
+--- /dev/null
++++ b/tests/vm/generated/openbsd.json
+@@ -0,0 +1,27 @@
++{
++  "ccache": "/usr/local/bin/ccache",
++  "cpan_pkgs": [],
++  "cross_pkgs": [],
++  "make": "/usr/local/bin/gmake",
++  "ninja": "/usr/local/bin/ninja",
++  "packaging_command": "pkg_add",
++  "pip3": "/usr/local/bin/pip3",
++  "pkgs": [
++    "bash",
++    "bison",
++    "bzip2",
++    "ccache",
++    "dtc",
++    "git",
++    "glib2",
++    "gmake",
++    "gsed",
++    "libffi",
++    "meson",
++    "ninja",
++    "pkgconf",
++    "python3"
++  ],
++  "pypi_pkgs": [],
++  "python": "/usr/local/bin/python3"
++}
+diff --git a/tests/vm/openbsd b/tests/vm/openbsd
+index 9aabfeec963..4f8eeb28e24 100755
+--- a/tests/vm/openbsd
++++ b/tests/vm/openbsd
+@@ -24,45 +24,6 @@ class OpenBSDVM(basevm.BaseVM):
+     link = "https://cdn.openbsd.org/pub/OpenBSD/7.8/amd64/install78.iso"
+     csum = "a228d0a1ef558b4d9ec84c698f0d3ffd13cd38c64149487cba0f1ad873be07b2"
+     size = "20G"
+-    pkgs = [
+-        # tools
+-        "dtc",
+-        "git",
+-        "pkgconf",
+-        "bzip2", "xz",
+-        "ninja",
 -
- ENV TOOLCHAIN_INSTALL /opt
- ENV TOOLCHAIN_RELEASE 12.Dec.2023
- ENV TOOLCHAIN_BASENAME "clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl"
-diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-index 538ab534902..55b3dbe4510 100644
---- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
-+++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-@@ -4,10 +4,11 @@
- # This docker target uses prebuilt toolchains for LoongArch64 from:
- # https://github.com/loongson/build-tools/releases
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
--# Duplicate deb line as deb-src
--RUN cat /etc/apt/sources.list | sed "s/^deb\ /deb-src /" >> /etc/apt/sources.list
-+# Add deb-src repository sources
-+RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
-+    /etc/apt/sources.list.d/debian.sources
- 
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-@@ -31,12 +32,11 @@ RUN apt-get update && \
-         ninja-build \
-         python3-pip \
-         python3-setuptools \
-+        python3-tomli \
-         python3-venv \
-         python3-wheel && \
-         dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
--RUN /usr/bin/pip3 install tomli
+-        # gnu tools
+-        "bash",
+-        "gmake",
+-        "gsed",
+-        "gettext-tools",
 -
- RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.08/CLFS-loongarch64-8.1-x86_64-cross-tools-gcc-glibc.tar.xz \
-     | tar -xJC /opt
- 
-diff --git a/tests/docker/dockerfiles/debian-toolchain.docker b/tests/docker/dockerfiles/debian-toolchain.docker
-index ab4ce29533d..9a256209a78 100644
---- a/tests/docker/dockerfiles/debian-toolchain.docker
-+++ b/tests/docker/dockerfiles/debian-toolchain.docker
-@@ -4,13 +4,15 @@
- # This dockerfile is used for building a cross-compiler toolchain.
- # The script for building the toolchain is supplied via extra-files.
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
- # Install build utilities for building gcc and glibc.
- # ??? The build-dep isn't working, missing a number of
- # minimal build dependiencies, e.g. libmpc.
- 
--RUN sed 's/^deb /deb-src /' </etc/apt/sources.list >/etc/apt/sources.list.d/deb-src.list
-+# Add deb-src repository sources
-+RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
-+    /etc/apt/sources.list.d/debian.sources
- 
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-@@ -34,7 +36,7 @@ RUN cd /root && ./build-toolchain.sh
- # Throw away the extra toolchain build deps, the downloaded source,
- # and the build trees by restoring the original image,
- # then copying the built toolchain from stage 0.
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-     DEBIAN_FRONTEND=noninteractive eatmydata \
-diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
-index 7e00e870ceb..fd797dc7ee4 100644
---- a/tests/docker/dockerfiles/debian-tricore-cross.docker
-+++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
-@@ -9,7 +9,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-@@ -31,12 +31,11 @@ RUN apt update && \
-        pkgconf \
-        python3-pip \
-        python3-setuptools \
-+       python3-tomli \
-        python3-wheel \
-        python3-venv && \
-        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
--RUN /usr/bin/pip3 install tomli
+-        # libs: usb
+-        "libusb1--",
 -
- RUN curl -#SL https://github.com/bkoppelmann/package_940/releases/download/tricore-toolchain-9.40/tricore-toolchain-9.4.0.tar.gz \
-     | tar -xzC /usr/local/
+-        # libs: crypto
+-        "gnutls",
+-
+-        # libs: images
+-        "jpeg",
+-        "png",
+-
+-        # libs: ui
+-        "capstone",
+-        "sdl2",
+-        "gtk+3",
+-        "libxkbcommon",
+-
+-        # libs: migration
+-        "zstd",
+-
+-        # libs: networking
+-        "libslirp",
+-
+-        # Python stuff
+-        "py3-setuptools",
+-    ]
  
-diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-index d011eee2ad3..ef63e44e2ef 100644
---- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
-+++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-@@ -5,7 +5,7 @@
- # using a prebuilt toolchains for Xtensa cores from:
- # https://github.com/foss-xtensa/toolchain/releases
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
+     BUILD_SCRIPT = """
+         set -e;
+@@ -198,8 +159,9 @@ class OpenBSDVM(basevm.BaseVM):
+         self.console_wait("login:")
+         self.wait_ssh()
  
- RUN apt-get update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
++        pkgs = self.get_qemu_packages_from_lcitool_json()
+         self.print_step("Installing packages")
+-        self.ssh_root_check("pkg_add %s\n" % " ".join(self.pkgs))
++        self.ssh_root_check("pkg_add %s\n" % " ".join(pkgs))
+ 
+         # shutdown
+         self.ssh_root(self.poweroff)
 -- 
 2.47.3
 
