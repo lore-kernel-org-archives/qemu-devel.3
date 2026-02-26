@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B693BFD8FC3
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A86FDFD8FD0
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdiR-0005Na-Nu; Thu, 26 Feb 2026 10:55:51 -0500
+	id 1vvdid-0005R4-N3; Thu, 26 Feb 2026 10:56:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiP-0005Lc-6k
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:49 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1vvdiY-0005PX-BZ
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:59 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiM-0003kr-Lg
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:48 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4398d1f06caso961964f8f.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:46 -0800 (PST)
+ id 1vvdiW-0003o0-Lh
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:58 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-480706554beso13256095e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121345; x=1772726145; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772121355; x=1772726155; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9JJmQIaiVFL0Mge03bSjQhlB7hltQcjiAuFGOTxguH4=;
- b=c6NyRxMqRJZQ+fA1Z6G7mo/lZ0GEQb7DdOzxno2hXvp2x9bvMxBSNlYsvz1bSOojY7
- MAvZm4reG+JUt71u1PGcFakYrzgP8/qhP0aN54L4EoOxVrM4yRXH4tT+sBrreXtGQiU9
- gLdYXYQeu1VvlUd602Uwjf50a7kQ+q/Q3Fj7FgKkIMzomhqNc7UfEkPZKZDFF7Fnxk0q
- Vuh2Isq2ynGC4xZegWTjN/yKK1KvbylmeRwsNnvDa+bKXtGEb1rk93p8NNwALSlHlMPa
- BKcpebC6ETbBKUYkHO6KKX9yZr31buXenYclyiHwHFAsm+Bfg7UmcXKPFGKoYmYgnfjO
- uxfg==
+ :reply-to; bh=OKoWT2ApVIzhi/7waZCc6MN7OGT/UzfjYDpeVAHn0Cc=;
+ b=pH8lRnP3HU7QkBUituspQfoo30kiO76IUZF6u96NNywx7hdkMTGlV53JZK0XLjg2uo
+ F0OuE8wuhbnoN8caFLXAPanHJx8wj5wGfR9igcaIWB2eKQikiYo2DAFKtSgapZxm2Mqr
+ wXJooVWe0nSrdAE8oIM62FgOEIjYcOuYf4PbcBhe6EowfA1+QjmBYBTKajkhC/x4JzfM
+ f3k7H/ngHUSrisP7GmU0bvfezQ2jHr2CaL0sTV4avmGemntVo6tCBaIgSS6CSdkTNr/p
+ 5yo1cRIgBZzAjwkTyIdXOsnR7WMArs50j5veb26sgXSGx2PMYQzES0tzXXaXmYq14Ph4
+ OCVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121345; x=1772726145;
+ d=1e100.net; s=20230601; t=1772121355; x=1772726155;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9JJmQIaiVFL0Mge03bSjQhlB7hltQcjiAuFGOTxguH4=;
- b=ba/tkFer9u9ajCLgo7BnSjsIXHUqb2CKOibxqIVUdxUZAMmXUkuo2199CmLBth4WNb
- Mka29t19xaq2qY3sETb6r3p1mdwOI9MgL6dJV/hIVJb8zQWExbPsMjSgs3htDYl9ONlz
- lJTBdieciA23hLaCiHCK7vlZgqc2MJyoCfBowJU3S+mslNvDZOHdPPWyUHBPjTwclEUU
- jReXB9/02lUM2TySgWzuVKUXNHHn9SQ7uuvMpxtKGse13/HaKSV8/c37aaiugDP33tkq
- 9Y8fF170jj0BEltivHP1Zlp1kmL9c8eO0e0xsfHfpajtNKg0ZWs//nuIjfd22VwGbcFM
- UXrw==
-X-Gm-Message-State: AOJu0YzlfMccLwaEkBvDW626q5NotdCxe75NssuNy0V1NJg9gfKw+B6K
- cB6fjW+EFtBy8mHQwi744It6U4WlJD7/WVE8DybXFATaYZxQIOALu36FKAq12roZ4FejGbd3ZKu
- OwL8x
-X-Gm-Gg: ATEYQzxJBviGD3/JQDpCbsDodCiU4AWOYncszJCFhM4pbBIfyhaBhyZBe3CJHAkJE6R
- 8hK5fU7gsSRPVMpUtcWEKvSTF8alRv5gTRfzE6gZR8BhChpzMgmI+vvzVVLLIj4Onjta52HZtlZ
- vxilsm82gmuE3BN6Mi17+wXAKIgin7hPDyrgvtwG7rL+YXXlapkFEkxZoKAT1Z1JE2fGnRVsCTt
- Z3yikFWkVRtYu9Odn+HNlC12f4DYSb6MqKxzOT21VsRQv8655MmFv8OI/YlEWB6WZ/+9+4f5o9S
- 6s68R2uRQ/NgVKPPZ2P8P8sHseHizy1xVDb5yDHoqmLgsHvD482d9ASGgpF7hQD3jTSIlM2GSBI
- 6Wgp1El9QFLGWq9Hv7L6uXP1OhTiHfz10j6WeOmId0sShTZvQrSm3tcngKGcPR35QXEiIIeUsFC
- 0uQuCCWWIulGVTME0Q//mlbD2ulVAqg0TemSRBAbi7c20b3uamPGAeVehJ+zr4qp8r81Gtu2Hmj
- 9ss+rdl8xAOBbrEIMaGXkJvOha6Y6I=
-X-Received: by 2002:a5d:64c9:0:b0:436:8058:452 with SMTP id
- ffacd0b85a97d-439942f2c8fmr9772213f8f.44.1772121345026; 
- Thu, 26 Feb 2026 07:55:45 -0800 (PST)
+ bh=OKoWT2ApVIzhi/7waZCc6MN7OGT/UzfjYDpeVAHn0Cc=;
+ b=Gsfz6DFF7hzoobijnjGDJ+y1mdEeQwmXgNEW1Yg/ka+Q7V5UpEYvGWy22aR6iQtFSA
+ L10Olphj2iS8Ez+mAM0Av7B90pj5VG5p/uErNbQlxFldqvFaNy4+yLCfkbhR+3zGbnlP
+ r7sHu5nmR8eZ5ESZtmXBW9y63UPeNQbAxI8aiAbsyddjyL2X0K35VSgnGSHIn5IbNmYF
+ 5I+PfVza7DB/MJYy0QICN9amCiX59EJfTDNvdE7lCqwlbVtxUuPaDkhpXxXrhuLhvhku
+ n8J01XAiQhzn3dvMAExCW29s4VGToqvqKj3ac4L/M0/+u3OkzdtJ5LthNEPb7di0tqeZ
+ wJFw==
+X-Gm-Message-State: AOJu0YzQ+Iw5TDK6NY88zbArXWHEBxaUad7LQb//CcveWh3ctFlXVO8w
+ ZC3gfDbuIkZvawrHlS6q025+DtRwCjoPAa+mpHtHwGmxgtSCIU7KL3QXMJtBiOdatYlamFXytqp
+ Jdr8Q
+X-Gm-Gg: ATEYQzyRMgRke6Hkb6N88N9KmBFIB/BmU903kKKDPqgbzC+nnsBXdtV6F+mM+rf3mCD
+ eOsxYmvFRsDYJwJ5+zZ/ylXxCVtMg+LkJiZe5pFR2PkYF9Zc5rBe6wG6e9dz64j45yHGTjZu6B2
+ lLG0RuC0QbkguOgTksLzPWfTa23HE9bWMKhpdwMkTiVwVflyWfrsQzrjgvp0NczozCx0XMVlwU9
+ NzXI00Q4zVkp/cvWVZOlasdXyGeOJLRsv+g3xhYa5b54mCz1TEyYSSNX4R5px0CKFVdmiqI6bpn
+ YrGU9mejRkc7UEvWjv1WeV8qNHo1+LfPLrVfUzQH79Zmz0Lbyo9+7ClPuFbDcmtJiYIVJIJ6GIC
+ 9MY5mAUd2JUAtdadTIq1LEM+rneOTM6mrcqh05VBAoD8Dem2SyauLiME3p/8Hkxrm6Vdq2BGqZd
+ 4w05rcVzG61+/9+kRZ8KK0aTWlIoVFIxWNYeZVZNmC9Fy2cvW/Poomxr2PoyFhFceE+S4MPXIY+
+ H2Zs++pIV/KqZ5e5LhZFTnpE2YgItI=
+X-Received: by 2002:a05:6000:26d2:b0:439:8f5a:2b8d with SMTP id
+ ffacd0b85a97d-439942fdfb0mr8967158f8f.56.1772121355171; 
+ Thu, 26 Feb 2026 07:55:55 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.44
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:44 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:54 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/20] Revert "target/arm/hvf: Sync CNTV_CTL_EL0 &
- CNTV_CVAL_EL0"
-Date: Thu, 26 Feb 2026 15:55:22 +0000
-Message-ID: <20260226155535.1171290-8-peter.maydell@linaro.org>
+Subject: [PULL 18/20] target/arm: Add have_ffr argument to kvm_arch_{get,
+ put}_sve
+Date: Thu, 26 Feb 2026 15:55:33 +0000
+Message-ID: <20260226155535.1171290-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
 References: <20260226155535.1171290-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,86 +101,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This reverts commit bfbea371ef2cabc47effac5a286e2644d727a8d6.
-
-This commit breaks VM save/restore:
-
-Assertion failed: (b), function hvf_arch_get_registers, file hvf.c, line 667.
-zsh: abort      ./qemu-system-aarch64 -m 8192 -M virt,accel=hvf -cdrom  -device virtio-gpu
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Tested-by: Zenghui Yu <zenghui.yu@linux.dev>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260216034432.23912-12-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/hvf/hvf.c | 25 -------------------------
- 1 file changed, 25 deletions(-)
+ target/arm/kvm.c | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 1b19d9713e..d79469ca27 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -200,9 +200,6 @@ void hvf_arm_init_debug(void)
- #define SYSREG_PMCEID0_EL0    SYSREG(3, 3, 9, 12, 6)
- #define SYSREG_PMCEID1_EL0    SYSREG(3, 3, 9, 12, 7)
- #define SYSREG_PMCCNTR_EL0    SYSREG(3, 3, 9, 13, 0)
--
--#define SYSREG_CNTV_CTL_EL0   SYSREG(3, 3, 14, 3, 1)
--#define SYSREG_CNTV_CVAL_EL0  SYSREG(3, 3, 14, 3, 2)
- #define SYSREG_PMCCFILTR_EL0  SYSREG(3, 3, 14, 15, 7)
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index ecb732a669..4908138764 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2118,7 +2118,7 @@ static int kvm_arch_put_fpsimd(CPUState *cs)
+  * code the slice index to zero for now as it's unlikely we'll need more than
+  * one slice for quite some time.
+  */
+-static int kvm_arch_put_sve(CPUState *cs, uint32_t vq)
++static int kvm_arch_put_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+ {
+     CPUARMState *env = cpu_env(cs);
+     uint64_t tmp[ARM_MAX_VQ * 2];
+@@ -2141,11 +2141,13 @@ static int kvm_arch_put_sve(CPUState *cs, uint32_t vq)
+         }
+     }
  
- #define SYSREG_ICC_AP0R0_EL1     SYSREG(3, 0, 12, 8, 4)
-@@ -505,7 +502,6 @@ int hvf_arch_get_registers(CPUState *cpu)
-     uint64_t val;
-     hv_simd_fp_uchar16_t fpval;
-     int i, n;
--    bool b;
+-    r = sve_bswap64(tmp, &env->vfp.pregs[FFR_PRED_NUM].p[0],
+-                    DIV_ROUND_UP(vq * 2, 8));
+-    ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
+-    if (ret) {
+-        return ret;
++    if (have_ffr) {
++        r = sve_bswap64(tmp, &env->vfp.pregs[FFR_PRED_NUM].p[0],
++                        DIV_ROUND_UP(vq * 2, 8));
++        ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
++        if (ret) {
++            return ret;
++        }
+     }
  
-     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
-         ret = hv_vcpu_get_reg(cpu->accel->fd, hvf_reg_match[i].reg, &val);
-@@ -635,16 +631,6 @@ int hvf_arch_get_registers(CPUState *cpu)
+     return 0;
+@@ -2234,7 +2236,7 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+     }
  
-     aarch64_restore_sp(env, arm_current_el(env));
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+-        ret = kvm_arch_put_sve(cs, cpu->sve_max_vq);
++        ret = kvm_arch_put_sve(cs, cpu->sve_max_vq, true);
+     } else {
+         ret = kvm_arch_put_fpsimd(cs);
+     }
+@@ -2300,7 +2302,7 @@ static int kvm_arch_get_fpsimd(CPUState *cs)
+  * code the slice index to zero for now as it's unlikely we'll need more than
+  * one slice for quite some time.
+  */
+-static int kvm_arch_get_sve(CPUState *cs, uint32_t vq)
++static int kvm_arch_get_sve(CPUState *cs, uint32_t vq, bool have_ffr)
+ {
+     CPUARMState *env = cpu_env(cs);
+     uint64_t *r;
+@@ -2324,12 +2326,14 @@ static int kvm_arch_get_sve(CPUState *cs, uint32_t vq)
+         sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
+     }
  
--    ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, &val);
--    assert_hvf_ok(ret);
--    b = hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, val);
--    assert(b);
--
--    ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, &val);
--    assert_hvf_ok(ret);
--    b = hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, val);
--    assert(b);
--
+-    r = &env->vfp.pregs[FFR_PRED_NUM].p[0];
+-    ret = kvm_get_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
+-    if (ret) {
+-        return ret;
++    if (have_ffr) {
++        r = &env->vfp.pregs[FFR_PRED_NUM].p[0];
++        ret = kvm_get_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
++        if (ret) {
++            return ret;
++        }
++        sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
+     }
+-    sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
+ 
      return 0;
  }
+@@ -2417,7 +2421,7 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+     }
  
-@@ -656,7 +642,6 @@ int hvf_arch_put_registers(CPUState *cpu)
-     uint64_t val;
-     hv_simd_fp_uchar16_t fpval;
-     int i, n;
--    bool b;
- 
-     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
-         val = *(uint64_t *)((void *)env + hvf_reg_match[i].offset);
-@@ -771,16 +756,6 @@ int hvf_arch_put_registers(CPUState *cpu)
-     ret = hv_vcpu_set_vtimer_offset(cpu->accel->fd, hvf_state->vtimer_offset);
-     assert_hvf_ok(ret);
- 
--    b = hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, &val);
--    assert(b);
--    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, val);
--    assert_hvf_ok(ret);
--
--    b = hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, &val);
--    assert(b);
--    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, val);
--    assert_hvf_ok(ret);
--
-     return 0;
- }
- 
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+-        ret = kvm_arch_get_sve(cs, cpu->sve_max_vq);
++        ret = kvm_arch_get_sve(cs, cpu->sve_max_vq, true);
+     } else {
+         ret = kvm_arch_get_fpsimd(cs);
+     }
 -- 
 2.43.0
 
