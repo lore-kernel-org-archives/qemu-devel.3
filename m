@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD46FC5910
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 08:36:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6831FC590F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 08:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvWqb-0002iR-DE; Thu, 26 Feb 2026 03:35:49 -0500
+	id 1vvWru-0003kz-Ox; Thu, 26 Feb 2026 03:37:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvWqZ-0002ho-Jn
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:35:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvWrs-0003kV-Mz
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:37:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvWqY-00040e-9s
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:35:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvWrr-000454-F9
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:37:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772094945;
+ s=mimecast20190719; t=1772095026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NFXIEeyrqjQPMgJQqMPckyXJnQVpkrnSMDnXL7ITY2Q=;
- b=GiXVFykC/5f26jNJEvBH7x8NjwbNkfaozfE8pSOaVXAcdA4hIO95pcaXKIjLm1Pz1IpPQ2
- jE49F+zPdVn15yKL5Wpw8PO1ERuoaMb3gZkGPvkGLosj+HEWqPZJ9IUWRdFmOtxe/ZSg/n
- 6Q5BqzmxI6IovymtDBz+4Q2zoL2QAvo=
+ bh=LDjE9MoVkZ2a9pzXltK2zzjXa5jKquZ3t9Uq97N590s=;
+ b=PJ01C5yH/c1kDdQWtwz9+Y8whmxJLuCe3TX/Fs9w0PnFhytiXb32d/ALZb7mPdsKGkeVPe
+ uG68KUDOYMeJWXQLmcMn0wpc5PNWGRiufrPVsXjUwYxT4f8ej13Q6t9tzj5hijYZNaXvG8
+ hvdGnLjQuesjmfSM1ICS5U+oJLPTcgA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-wlZG0MLHPLize9__e106DQ-1; Thu,
- 26 Feb 2026 03:35:43 -0500
-X-MC-Unique: wlZG0MLHPLize9__e106DQ-1
-X-Mimecast-MFC-AGG-ID: wlZG0MLHPLize9__e106DQ_1772094942
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-aE3aml6FOOCR-bC1CyeI8w-1; Thu,
+ 26 Feb 2026 03:37:05 -0500
+X-MC-Unique: aE3aml6FOOCR-bC1CyeI8w-1
+X-Mimecast-MFC-AGG-ID: aE3aml6FOOCR-bC1CyeI8w_1772095024
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D1731800464; Thu, 26 Feb 2026 08:35:42 +0000 (UTC)
+ id 5CD1118004AD; Thu, 26 Feb 2026 08:37:04 +0000 (UTC)
 Received: from [10.45.225.23] (unknown [10.45.225.23])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D6AEE1956053; Thu, 26 Feb 2026 08:35:39 +0000 (UTC)
-Message-ID: <f021d139-42ab-4153-8d1e-a504c038ccec@redhat.com>
-Date: Thu, 26 Feb 2026 09:35:38 +0100
+ id 0BC931955F2D; Thu, 26 Feb 2026 08:37:01 +0000 (UTC)
+Message-ID: <9ed3b522-bb07-4b3b-8676-4f2377e971c4@redhat.com>
+Date: Thu, 26 Feb 2026 09:37:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] python: drop avocado
+Subject: Re: [PATCH v3 4/4] python: add formal python3.14 support and testing
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20260225210415.972192-1-jsnow@redhat.com>
- <20260225210415.972192-4-jsnow@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20260225210415.972192-5-jsnow@redhat.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -99,18 +99,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260225210415.972192-4-jsnow@redhat.com>
+In-Reply-To: <20260225210415.972192-5-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -129,10 +129,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/02/2026 22.04, John Snow wrote:
-> Avocado-framework is no longer used for anything, so it can be removed.
-> 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
+>   configure        | 4 ++--
+>   python/setup.cfg | 3 ++-
+>   2 files changed, 4 insertions(+), 3 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
