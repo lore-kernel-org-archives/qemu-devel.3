@@ -4,94 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53981FC5926
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB1BFC5926
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYj4-0006Kt-5E; Thu, 26 Feb 2026 05:36:10 -0500
+	id 1vvYka-0006sB-PF; Thu, 26 Feb 2026 05:37:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvYj0-0006KA-JA
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:36:06 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvYiy-0006oG-Eh
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:36:05 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b904e1cd038so89260566b.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:36:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vvYkY-0006s2-Px
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:37:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vvYkO-00073E-Fl
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:37:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772102251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Sha0tlrmOYa0Rpb8cUAyArTKqhODwvWX97J3L8tcVRU=;
+ b=g/zcpEmgJbOInlMZs7FA00XKtJYPRCB06GianRCGtlF8vXCY5KIdrzIhHxTXAnUAls8wDh
+ plNfAj+YP3oSWP8rsE4Pa7sTIEAKQPNEBHEZhTNwTeHsrZloTFdDoGQAXgLNQ8HvbI18zX
+ sJIiBlp3an5K7ORn8liQhGX4lzkSTnQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-bL48W3suPEGoF-cTcnTGkw-1; Thu, 26 Feb 2026 05:37:29 -0500
+X-MC-Unique: bL48W3suPEGoF-cTcnTGkw-1
+X-Mimecast-MFC-AGG-ID: bL48W3suPEGoF-cTcnTGkw_1772102248
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43766514653so523856f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:37:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772102162; x=1772706962; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U+SwGcXK2mWpRhBmt4eGxbxhVXoDRpxwqXqeSoPaYHs=;
- b=h9Cy2O46gzHV+BpjAehL17AUdfNcUaBEOv6RseiXaILyJJCMbFvHmWwpSdCyC1RS5e
- ThLhEYp+Omy1eNxenMVYaOJKEOuYA4rD5gGRcVNz19qdSvQ9z0yhnbrZlqC1jtJ1zzyf
- dYtEQ5+Ak4Pu9uffjjEfhpBRyvn83otJcBEJWWiv6bVhNDZXvRNTsy6jdBOzxqYHJ1eC
- ph8A767niH5l3HLQ/6mYICxAxhaSr3Xv8Clzg1ea711r6K1GIvxt/+mL/anT+C3LGun6
- bfdiAFfkNYoxoD3DN9nnc2U9dt3YHUqqwvkxK/1q8ZKEN2efBU9M+RR89oSKZN8DFMoD
- YIWw==
+ d=redhat.com; s=google; t=1772102248; x=1772707048; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Sha0tlrmOYa0Rpb8cUAyArTKqhODwvWX97J3L8tcVRU=;
+ b=PD8Rh4klXeKTQ9hG1OHhh9euZ0r3H0AIIH1vMGpPivHmasDJ0DeVuLyIEL8fY0FQKM
+ k4HW/RhFvYs85WTLkkxVRxogBMAyHjQdfZqWctF6LG39dBpP4Mq+NBcPzZWiMGBzL8Hi
+ HbPDlZu7XIGAOiDkrrgnGcEm+NtvlwFk8fCchHwHSjWHGMv4VDW57uerwUBQTh6vOsgQ
+ x0NUAy2Ojrqh4pREW2CxnqSKks6+eDp2qaoM9ja6ZW7bJ4lB7jv5WOH6MVyExmrVycM9
+ VB68Lsu/tY14sWW6X8rxtd4PdGeHM/yG2Ytt6w954D6SUhx/ZrCx9DmmJuzBdPuda02N
+ QIIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772102162; x=1772706962;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U+SwGcXK2mWpRhBmt4eGxbxhVXoDRpxwqXqeSoPaYHs=;
- b=Zti5cLpmWAF8+vtXwN4K+56LFzZ02EAYEMp5cMHiQKmPybBof6p8vvPCUbG7iVTY9F
- veJk6hVvu1Jl/qqeqnt7W94gwNTytl5SMqGq8QJpNga30FgxOEym+hGfOGScO6Q7+e/l
- SOY1nXAH2eBj4Vq877EqLogLib34M3uHuVM+90hSsTdM8qSd65ohR+L+0GwATAtc3hg3
- 30nzLx2E5OU7W0c/zl3Z8QVyfitGnY9MXtWG5iYn5C6wpwzQetxMY4jEW2gW62o5Kvw0
- BHhhzXoejzr2qgGNskPSVC3+h6aslzCqfqzF1ed4ZSntUOFGM0z3sv/7PsUBGB+B+fos
- K5ig==
-X-Gm-Message-State: AOJu0YzRNhnjztgOhER1o+VG/jsCCTbLinGEkkmKEGPAPHk+kFKVKT/w
- Jo9t8NEkT2krFK9tYsZmBVtR3egcr92iO9ue3Ax/aBJ+o4BMxn+FXydBZITgvKInKPQmP7mmfjk
- SKbVZ
-X-Gm-Gg: ATEYQzzMPtX0RC1LNSsnUjdYQR641rgqXMmv0VW9MMOVui9rm7/JQsvlrX0VA7mT9jZ
- OTCK2gjzFt9gFiUEM/2NkA0CyYSci59Zvq3iSOZ1WMiytKgOOhTrWu1OfFRIoOP4qUhsdYJ2wFO
- p19HvRtxlWur4tqF2OHv0JzC+TbCUXI7zyLZHgafvfnM9Sbw0CkhXdmPVKpwrLyg1uKg5aS6kRF
- iC8CTEbt5iXnExFuaa4YV9GClMWApv5MTDIWwyC/bx5TzpYnRbPr6Up/7QNNjmV1GbBFVihyorv
- FvNqCBAtj63MiYoUT31p3BlkI4MhHwtUqVDwbLI3UWx7wrb9J4JRu17IkklLt25O7scEXbnDxfd
- t8mNVNa4WvRmEN6mnTYOILaBaPRGXtfeYf1tqCRqd8X4KGmfJPndXVymulSEoiaXaeaTFbiLtzT
- SFv12Pj1M/1yz2gOdTs2Ay7RM=
-X-Received: by 2002:a17:907:1b1b:b0:b3b:5fe6:577a with SMTP id
- a640c23a62f3a-b9351494c43mr209320766b.8.1772102162535; 
- Thu, 26 Feb 2026 02:36:02 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935ac5138bsm45776566b.15.2026.02.26.02.36.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 02:36:01 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 21B1A5F7C6;
- Thu, 26 Feb 2026 10:36:01 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org
-Subject: Re: [PATCH 2/4] target/arm: use FIELD_DP32 instead of open-coding
- syn_wfx
-In-Reply-To: <CAFEAcA8BX-YdALLhyYB_mDOycnUaLQ_abmSyK3VcPNQz9E3imA@mail.gmail.com>
- (Peter Maydell's message of "Thu, 26 Feb 2026 10:19:31 +0000")
-References: <20260224154347.344219-1-alex.bennee@linaro.org>
- <20260224154347.344219-3-alex.bennee@linaro.org>
- <CAFEAcA8BX-YdALLhyYB_mDOycnUaLQ_abmSyK3VcPNQz9E3imA@mail.gmail.com>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Thu, 26 Feb 2026 10:36:01 +0000
-Message-ID: <87ldgfzt9q.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1772102248; x=1772707048;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Sha0tlrmOYa0Rpb8cUAyArTKqhODwvWX97J3L8tcVRU=;
+ b=EBCqkQ3tvjBvgXWPYnNHAKvPxvoULpIdoNLAgP0oV9ue5aUuLKwCRQlj1eUgOQ5OM5
+ 8ssuWfPTUjBaBWKZ0Agz5jcSjaj1qsd8ogZX9hZEoGMsiGFFa2YuG/dnM+uKgLJo+DMj
+ IJ31ZQ3NchHsGdOXERCA5Qq/ETT7flTtqiNOlC5lx6ElG+LNjbsWqjnNJYY5qujO/WZH
+ obsWHpKoRNeCOm1wjErB+kR3oG8ELQJmmltwN/qkXzPSpUyAqD2VCoCi6L9s3GzVbXUI
+ NZU2X/ybSflUKdA4iQAwfDYh2pFzW1SB7UbPOnck75en0oo5ld3j2G1/yyHv85RojXG8
+ ElHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVh6z65P0JlGDmJsZKb334xrl4vnGhsNVgXgj2/rXtx5n//5/u2pOvZ8fDZR+ebYQL5HjYZD1qDKut@nongnu.org
+X-Gm-Message-State: AOJu0YzWTtwnDrhUeCIQsSCrfODGcbSUXneRyN0C99wHUTKe7u07Atie
+ uHEHq7y9/gxG8oc7u7FI9gz6pOBA6A6ybSSojFdLXzLg5qpXVeZJk6+rn4NMH1nnEzD53OJEIFw
+ ROUXz7TGqaviIpgvEXQogcR+Jlu9dSgdTtxrnE/5N54H/peUB9sDwtO9f
+X-Gm-Gg: ATEYQzy1MaPhBDeEQ8tDYfOe4M7QZyUnhMBMt9nyhUqM+hnveJsH3gCQr0IbcS49G7O
+ wdmj9NUERnBODlEmPWiB/rbAfLx6/RN5BQPK0+ssk0e9+NGL6bubFSRN1e1otQbES5BK45HzEbX
+ Y8hE6/kCf4WKSU6EcBrXXbiXqCko9vPKUPVWlQqGR10QBSQKIJmY+QVXmGeRB10H+jllw4uSvCm
+ OS9kkZHSic4E3Oaydxzb/63kZoJH6SHa6D9TaDcwBozir3EyVILISgG6XMm797/7HnSfFsh/sJt
+ eZDfnYOmKthF/Dmh0ElBc79NJHu0XCAn1Ggs0GBTyYtXHOdKklik1iKvYJfHWCzzcQZUbkCrijr
+ /JDMAVNKsK6G+RZKlvDHhlJDuhAUoEDzastjCweXIFmJmgeI9ZUobcQNIIQ==
+X-Received: by 2002:a05:600c:4f94:b0:480:4a4f:c36f with SMTP id
+ 5b1f17b1804b1-483a95e2488mr313974325e9.21.1772102247942; 
+ Thu, 26 Feb 2026 02:37:27 -0800 (PST)
+X-Received: by 2002:a05:600c:4f94:b0:480:4a4f:c36f with SMTP id
+ 5b1f17b1804b1-483a95e2488mr313973765e9.21.1772102247443; 
+ Thu, 26 Feb 2026 02:37:27 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:165:d60:2c1a:3780:4e49:dfcf?
+ ([2a01:e0a:165:d60:2c1a:3780:4e49:dfcf])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd765604sm121443315e9.15.2026.02.26.02.37.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Feb 2026 02:37:27 -0800 (PST)
+Message-ID: <0acdccaa-33dd-424d-a206-e413971d23ce@redhat.com>
+Date: Thu, 26 Feb 2026 11:37:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/14] Make RamDiscardManager work with multiple sources
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, David Hildenbrand <david@kernel.org>,
+ Mark Kanda <mark.kanda@oracle.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,52 +171,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 2/25/26 13:04, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> This is an attempt to fix the incompatibility of virtio-mem with confidential
+> VMs. The solution implements what was discussed earlier with D. Hildenbrand:
+> https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
+> 
+> The first patches are misc cleanups. Then some code refactoring to have split a
+> manager/source. And finally, the manager learns to deal with multiple sources.
+> 
+> I haven't done thorough testing. I only launched a SEV guest with a virtio-mem
+> device. It would be nice to have more tests for those scenarios with
+> VFIO/virtio-mem/confvm.. In any case, review & testing needed!
+> 
+In a SEV-SNP guest (BIOS) with a VFIO device and virtio-mem device :
 
-> On Tue, 24 Feb 2026 at 15:43, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> We can use the registerfields API to safely set the individual fields
->> and avoid open coding magic numbers. The EC and IL fields are still
->> driven by defines but we could convert them later.
->>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
->> +FIELD(WFX_ISS, TI, 0, 2)
->> +FIELD(WFX_ISS, RV, 14, 1)
->> +FIELD(WFX_ISS, RN, 15, 5)
->> +FIELD(WFX_ISS, COND, 20, 4)
->> +FIELD(WFX_ISS, CV, 24, 1)
->> +
->>  static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
->>  {
->> -    return (EC_WFX_TRAP << ARM_EL_EC_SHIFT) |
->> -           (is_16bit ? 0 : (1 << ARM_EL_IL_SHIFT)) |
->> -           (cv << 24) | (cond << 20) | ti;
->> +    uint32_t res =3D (EC_WFX_TRAP << ARM_EL_EC_SHIFT);
->> +
->> +    res =3D FIELD_DP32(res, WFX_ISS, CV, cv);
->> +    res =3D FIELD_DP32(res, WFX_ISS, COND, cond);
->> +    res =3D FIELD_DP32(res, WFX_ISS, TI, ti);
->> +
->> +    if (!is_16bit) {
->> +        res |=3D ARM_EL_IL;
->> +    }
->> +    return res;
->>  }
->
-> I'm not hugely enthusiastic about this mostly because it
-> means we would have one syn_foo function that's written totally
-> differently to all the rest.
+   -m 4G,maxmem=24G
+   -object '{"size": 4294967296, "id": "mem-vmem0", "qom-type": "memory-backend-ram"}'
+   -device '{"id": "pcie-root-port-1", "port": 1, "driver": "pcie-root-port", "bus": "pcie.0", "chassis": 2}'
+   -device '{"memdev": "mem-vmem0", "driver": "virtio-mem-pci", "id": "virtio_mem-vmem0", "bus": "pcie-root-port-1", "addr":  "0x0"}'
+   -object '{"size": 4294967296, "id": "mem-machine_mem", "qom-type": "memory-backend-ram"}'
+   ...
 
-I did consider running through the rest of the file updating with proper
-field setting but I didn't want to bloat the series. I think it does
-help with readability compared to open coded constant shifts.
+   [    0.663227] Memory Encryption Features active: AMD SEV SEV-ES SEV-SNP
+   ...
+   [    3.199716] virtio_mem virtio2: start address: 0x180000000
+   [    3.200988] virtio_mem virtio2: region size: 0x100000000
+   [    3.202217] virtio_mem virtio2: device block size: 0x200000
+   [    3.203475] virtio_mem virtio2: nid: 0
+   [    3.204384] virtio_mem virtio2: memory block size: 0x8000000
+   [    3.205696] virtio_mem virtio2: subblock size: 0x200000
+   [    3.207193] virtio_mem virtio2: plugged size: 0x0
+   [    3.208282] virtio_mem virtio2: requested size: 0x0
 
->
-> -- PMM
+boot is fine.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Powerdown reveals an issue :
+
+   [   25.054116] ACPI: PM: Preparing to enter system sleep state S5
+   [   25.055671] reboot: Power down
+   **
+   ERROR:../system/ram-discard-manager.c:459:ram_discard_manager_finalize: assertion failed: (QLIST_EMPTY(&rdm->source_list))
+   Aborted
+
+Thanks,
+
+C.
+
 
