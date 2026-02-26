@@ -4,57 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1ABFD8FE0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDFAFD8FE1
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvevJ-0007PU-Eg; Thu, 26 Feb 2026 12:13:13 -0500
+	id 1vvf5X-0001Gd-JC; Thu, 26 Feb 2026 12:23:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1vvevG-0007Oz-UI
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:13:10 -0500
-Received: from out-172.mta1.migadu.com ([95.215.58.172])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vvf5W-0001GD-Hr
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:23:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1vvevE-00019Z-Pr
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:13:10 -0500
-Message-ID: <c805cd6f-e69c-4cf1-8773-0a45bfb677f8@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1772125984;
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vvf5V-0003GB-1j
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:23:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772126623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QQ2E11vmARMbm0XjMwkBECua6RVPsNj4Cuf6gp22r0k=;
- b=Fx3PSGKdJmkvkBUd/NP6DrPaV6vpjABjI7C+HGXm8bboo/xnbWKxvMFoWtR758JEmCqrEG
- kftmOwhYoXt8J843lJv7mRH4cFAlvWuA2p9RCIVgiTjyiHnpAGuGHVnFop2mcjTRht+Lbd
- t917L3Dhx8wZ4LPVLFSABt/HQRnOuNQ=
-Date: Fri, 27 Feb 2026 01:12:52 +0800
+ bh=9vXdZHUB4yq1T06PtQXg7acfPst7t78RnMqwk/XQieA=;
+ b=PutJCHXo/nmGzDC7Wge3QUbXFxZJ0tmAGvbL4qx9FvfP46Esm/+DSGs4QmXhKIqr/636ME
+ KWVftlQXrj0U5RrmpkHfB++Ury4xkbs6z6FltLyxl+ypUVa9ld+d2jVMmrDKPlSEHlXJRG
+ 8dn7UHpFJAWb3Mutz2HbuXU674+yMcw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-478-fIhTt_2vNyq_YNNvzE78pw-1; Thu, 26 Feb 2026 12:23:41 -0500
+X-MC-Unique: fIhTt_2vNyq_YNNvzE78pw-1
+X-Mimecast-MFC-AGG-ID: fIhTt_2vNyq_YNNvzE78pw_1772126620
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b93665db5e3so69403266b.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:23:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772126620; x=1772731420; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9vXdZHUB4yq1T06PtQXg7acfPst7t78RnMqwk/XQieA=;
+ b=gZ6pGmCqYQkdmccEn6RUEk3/F+jCo6Ks08V54G2IUZyM0+9uFtueD7iTH9+EpmwCGB
+ RmyTyUAUGfevWrVIpGKaii1Kc7eSArqqF81+ZLIkbzkXCP2GTAeOZG+7qOHcAfyL4sAg
+ Pq4GM9JQ3kqBpJpReI2ypUpPkXSwbd02CaOvdMSF5P8i3+TXPUp0uf1X2+aZ4ovv4UoJ
+ vRjIjYmhu9hz/bwOVmz6BtuTSqEW5LzPwMvL66yLzJqIG362YjoBA85s/VxTXmbWLZSX
+ mao3+6NnaaEf6wzOJ48TNuKtUEYL6vJDeoJexkTKORZR+DoXPcYjw+VPMDPx/XFUMhRq
+ Ep9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772126620; x=1772731420;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9vXdZHUB4yq1T06PtQXg7acfPst7t78RnMqwk/XQieA=;
+ b=ZHLX/cj513xEmxhaqJ0cm4LkjkClnufP4ca4D5lUgxqCnOXVFNy27UXptHTSoi/Nau
+ NaHQTrDpNPI20E1mvvQKYdf0Jpl78zIx222T7gMtM6I6jvYcH5hsb1g0Mdb+QfuojWI/
+ fnoYeMM3H/twsF5Ne9zeIAmOJCJ3pOnsL0YSNS5uYrhzHamZ6njm++7vo0KHq8D4SxMx
+ IdCNpudMsJNMgpcslAxvStHw7ffq2/VabrkF3Ojmx0bCw1TZ0zWC+tA8s2/odlshG1jK
+ QRwKKswCTztI5YEa6B7iKdflAUooC1NelmlhE7dYqekX+KZw9PoegCXev9eROJiCqnMi
+ vZNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeDqK1OJYk5VFLEBmxdVs+d33xvt8kepo91Ha9X0ccAG9xbnsRKjfLtEGxnR9QNAuSZV6+lM+eLa+B@nongnu.org
+X-Gm-Message-State: AOJu0YyISYvQl2dk2tWY/GEqhRZ72lRkiQDu8NXBPAXH4JxTN+2sTGM9
+ EZ4MM1QmRjoFd0jT1KJu/I22xOYw5V2pS5J1FkZL09uSJLhT1VxnMA8wmFuZjnDRUmRqpHlTdJQ
+ bIesreTSNL3qomtJlDTfXEcx+OipxCmGQhfDsCpUGb/9zz4efCRINVthU
+X-Gm-Gg: ATEYQzy8nMQbg13c9j6FO2SK0ICXCObwOLgoDrlqbWRVTuzTZFCJXfEVvMBEuEbETKo
+ XOlseLOiddVXTNT69iS/lkPySPJkSxj+vZ/AqNUQAJPaGFoHZ26uIus9S7Uxzi84PBL0kgah1as
+ yOLzkHtAt5lExNtF2S+gG6IVnWtuAHuGvE1CxWMp0mGsCF8EWqg59HO05w0aivjzsIgTAyI7xMA
+ jk6ymZYZmKwB/YSMnIMSVC9sE+uwTMAzwOTV9hrIQajKSI3dpXSY+O3vVbmjurxYy+WBSu4ucSg
+ k/2RaZX0WH/q1nUCQ6h1UHV4M+kIBCHiEDHeBsvO+UEbHgWtDoBOyatECPJfVg/JqaaKWSFq02a
+ sRH/YtE6qEw/ioroW1Qlrz60s4ua7rl62FauMmi5o4XKtB/xvavMC35IQ83e7kZBrvLNraSBXHM
+ ceg0srH6e64wJ6fzhxkcH0Qss=
+X-Received: by 2002:a17:907:948e:b0:b73:667e:bb29 with SMTP id
+ a640c23a62f3a-b9081985f25mr1103887266b.8.1772126620367; 
+ Thu, 26 Feb 2026 09:23:40 -0800 (PST)
+X-Received: by 2002:a17:907:948e:b0:b73:667e:bb29 with SMTP id
+ a640c23a62f3a-b9081985f25mr1103885466b.8.1772126619873; 
+ Thu, 26 Feb 2026 09:23:39 -0800 (PST)
+Received: from [192.168.1.84] ([93.56.161.93])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b935aec7091sm76204566b.58.2026.02.26.09.23.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Feb 2026 09:23:39 -0800 (PST)
+Message-ID: <54c74ac4-3eca-483b-b56d-73c6e7d17c3f@redhat.com>
+Date: Thu, 26 Feb 2026 18:23:38 +0100
 MIME-Version: 1.0
-Subject: Re: [PATCH v4 08/84] target/arm: Skip AF and DB updates for
- AccessType_AT
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
- <20250830054128.448363-9-richard.henderson@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 35/35] migration: return EEXIST when trying to add the
+ same migration blocker
+To: Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Ani Sinha <ani@anisinha.ca>, Prasad Pandit <pjp@fedoraproject.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <20260225035000.385950-1-anisinha@redhat.com>
+ <20260225035000.385950-36-anisinha@redhat.com> <aZ8xlrL2xQtoN9MI@x1.local>
+ <C486617D-2B20-4904-A87B-81CC5FA84153@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <20250830054128.448363-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.172; envelope-from=zenghui.yu@linux.dev;
- helo=out-172.mta1.migadu.com
+In-Reply-To: <C486617D-2B20-4904-A87B-81CC5FA84153@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -72,60 +130,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/30/25 1:40 PM, Richard Henderson wrote:
-> We are required to skip DB update for AT instructions, and
-> we are allowed to skip AF updates.  Choose to skip both.
+On 2/26/26 04:46, Ani Sinha wrote:
 > 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/ptw.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
 > 
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 8925c9a610..089eeff845 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -58,6 +58,12 @@ typedef struct S1Translate {
->       * and will not change the state of the softmmu TLBs.
->       */
->      bool in_debug;
-> +    /*
-> +     * in_at: is this AccessType_AT?
-> +     * This is also set for debug, because at heart that is also
-> +     * an address translation, and simplifies a test.
-> +     */
-> +    bool in_at;
->      /*
->       * If this is stage 2 of a stage 1+2 page table walk, then this must
->       * be true if stage 1 is an EL0 access; otherwise this is ignored.
-> @@ -1929,7 +1935,12 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
->      descaddr &= ~(hwaddr)(page_size - 1);
->      descaddr |= (address & (page_size - 1));
->  
-> -    if (likely(!ptw->in_debug)) {
-> +    /*
-> +     * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
-> +     * and it is IMPLEMENTATION DEFINED whether AF is updated
-> +     * (AArch64.SetAccessFlag; qemu chooses to not update).
-> +     */
-> +    if (likely(!ptw->in_at)) {
->          /*
->           * Access flag.
->           * If HA is enabled, prepare to update the descriptor below.
+>> On 25 Feb 2026, at 10:59 PM, Peter Xu <peterx@redhat.com> wrote:
+>> 
+>> Hi, Ani,
+>> 
+>> On Wed, Feb 25, 2026 at 09:19:40AM +0530, Ani Sinha wrote:
+>>> Currently the code that adds a migration blocker does not check
+>>> if the same blocker already exists. Return an EEXIST error code
+>>> if there is an attempt to add the same migration blocker again.
+>>> This way the same migration blocker will not get added twice.
+>> 
+>> Could you help explain why it will inject two identical errors in
+>> the first place, and why the caller cannot make sure it won't be
+>> injected twice?
+> 
+> Likely due to a bug in the code. For example if the init function
+> that adds the blocker is called again and the caller does not handle
+> the second init call properly. This came up as a part of the coco
+> reset work where migration blockers are added in init methods. They
+> need not be added again when init methods are again called during
+> the reset process. The caller can handle it of course but adding a
+> check further down the call stack makes things more robust.
+Since this is the last patch, is it okay to remove it at least for now? 
+Can the situation actually happen?
 
-|           * Otherwise, pass the access fault on to software.
-|           */
-|          if (!(descriptor & (1 << 10))) {
-|              if (param.ha) {
-|                  new_descriptor |= 1 << 10; /* AF */
-|              } else {
-|                  fi->type = ARMFault_AccessFlag;
-|                  goto do_fault;
+If not and it's a programming error, even an abort() is okay.
 
-This also skips the access flag fault which could be generated by an AT
-instruction. Is this an expected change?
+Paolo
 
-Thanks,
-Zenghui
 
