@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F14FC5904
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34686FC5903
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvVhu-0003hT-9X; Thu, 26 Feb 2026 02:22:46 -0500
+	id 1vvVj7-00046J-Uo; Thu, 26 Feb 2026 02:24:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vvVhq-0003h3-KK
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:22:44 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1vvVj5-00045v-MB
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:23:59 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1vvVhk-0000KK-UM
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:22:41 -0500
+ id 1vvVj2-0000NS-D7
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:23:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772090557; x=1803626557;
+ t=1772090636; x=1803626636;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:mime-version;
- bh=bx5KnlfN0Z0QtsxIewF/BpuRe8I0UlryKfU2nCPWeW0=;
- b=an0DOJqTRRmYe6mVLozHZ/U3gTz5IivyeoX1pNnwDGSJyxwFd3SJHcgG
- iE7/QrWAy+++dxFUvJHfkX4d72w2X4olYhxiRG5ikGDErdJiV+byJnJi3
- qlRexIvVpbgJMd0lBPi86hJuqDAtFH/lLggegKkY6fNdunan+Ie/7Sqco
- UrcC5/v5xxy/w1vT+vU98hAod0I1mINXPe/bDimeGif7WntXz24vfw3gQ
- iQRrwRwJwjdv9bEZswpubZvXL1jNZD3ZnHNiD9gnuT0dLGI+A6cPpDojS
- j3Qic2MhR7SZiNCHzbr0Nyxr62gMxEU6HukweJAjXr7XKhBVROewzj3mj A==;
-X-CSE-ConnectionGUID: aC7TuDB5RbOUtKnMfvECNQ==
-X-CSE-MsgGUID: K8dDsm1RSmSuuV1ot6BSUQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11712"; a="95758069"
-X-IronPort-AV: E=Sophos;i="6.21,311,1763452800"; d="scan'208,217";a="95758069"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2026 23:22:33 -0800
-X-CSE-ConnectionGUID: Ok8JzYkbRlKTPQfmp5nrtQ==
-X-CSE-MsgGUID: cTIGaUKoQ7yMVztmPPPxvw==
+ bh=xCuVCsw6sODy7bg/KuhCy3jxX9BLXZK13vnrkVXfxGU=;
+ b=POEA8uNf5Cj+ummb50HRuiHEAE0eiqNqr5zfFD5EUVmOtZsfCJEtefz4
+ KLOmB1gZL3+HvifTnzuixfvbT2WM8hJowxzacYoTsiGDotA9BNb68Kd0Q
+ yFeAVrSNvDB2i2wk1VLowq0aUbx+ykgdiHvH10mYPDXOl1jO/AZuVOqsH
+ gnpbuNI33XDVzBEiu7IS+CoXwG5tYBLEuw//Zlu5cRfo0hTnYRNTBbBHs
+ BTe8M50KVpOhGT+vljx5oE4U2ZinB3VTtvhZA0pTdsIlw8LU7TPHpnGe2
+ L042l5J237jy7poBEYcXIaT2XzVhsW3FCzMA/ZYwND6912mIAWh9rl4UY A==;
+X-CSE-ConnectionGUID: 1p8g9amYSV6U9vOigRnu/Q==
+X-CSE-MsgGUID: VP9B/vaBTLmaI22sr0TsvQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11712"; a="73015958"
+X-IronPort-AV: E=Sophos;i="6.21,311,1763452800"; d="scan'208,217";a="73015958"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2026 23:23:54 -0800
+X-CSE-ConnectionGUID: dA0axWX6Q7iWx+T8yRfnIA==
+X-CSE-MsgGUID: 4J0IWCRFT5+v+0+MQTr0kw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,311,1763452800"; 
- d="scan'208,217";a="220981607"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Feb 2026 23:22:33 -0800
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ d="scan'208,217";a="221462122"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+ by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2026 23:23:54 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 25 Feb 2026 23:22:32 -0800
+ 15.2.2562.37; Wed, 25 Feb 2026 23:23:53 -0800
 Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 25 Feb 2026 23:22:32 -0800
-Received: from DM1PR04CU001.outbound.protection.outlook.com (52.101.61.19) by
+ 15.2.2562.37 via Frontend Transport; Wed, 25 Feb 2026 23:23:53 -0800
+Received: from PH7PR06CU001.outbound.protection.outlook.com (52.101.201.18) by
  edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Wed, 25 Feb 2026 23:22:31 -0800
+ 15.2.2562.35; Wed, 25 Feb 2026 23:23:53 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kURAh6JrL9iywp50wh2urroQq6j8iC5bDa376fyb28ye4ZpzC+LAcohkLg0H3t4Y/1L3At6o1HO3RxvkVTr0Md61r73U9+hVE79oEnIFALts9WtQ+XV+pEsKvctjXyuNJ+nd21V4Lslj7R2i2xHmRl1X08NbCzcdnJnNut1e8rLtHyGYJSC6xS1OrcDZ4iHpoX/0pG1qtjD16yt0njFN3kdsAjNnV1G/wxAc3DnTYNIgO+5YW9MRw/xvz4zmVJuTnoQzMDOYYEn+aNCr/qZRYt34bpsQWGcVvsEhfXi7CQvM1BWBPF9flJaVatnBjQe5CeCBJHUAhtIbjkpf19uU1Q==
+ b=ZgVvuT48yJDYSz+srn7hvvFnm9Q7bqaj4RylbJzlUJfk1bgUH/LDyYVOqQixxDRrsApDYXvyyUzTEvMS2c5IcHd3jfJ48iKnsQttGYpxSydVCpOBusGxy7yqFAC4Fn4hhnud69NU7LP6TVGxi1zpVESjYw2xV6/IUEYq3EJ2ZhA0LGWU5ilyJ7W7TEU0EyEALEypGIdnUH5w0+rOIab+tYG++v64BSX8cp5ArvOLpfLsD8OyL3+OZGeVZEnysuEcU1lAgFfrQBUcHrHKc928Lub1+IVh6zGwxJRNan2B5UKbqFf2eQI2pl9gW8cqIbUxaLXM8XCoOgHDs8KaL+lCEA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DIGsTYINgfhjnFi5qHgMgvNy5mpOoA2NgX4eIzmwvTY=;
- b=gT84WNmRIEUlQ/T0JXBZT3MshPpqCUX0LaFzlLzL1UlsPtiKXiqSMULTDZIHev2aQEjc75bTUyPj9wP2hdQhAx8oAWf1G+aRLIodrmpdSLtv4PrOIt4/TMn3FvODCrT9hwu5TAxfJy09/dFQ75PQDBf6PJH2jUIEvr72QSyoPkROQwIQX8Nm1gChabG7mc8W9ICyMtpQwWMCaICrMWMR7H49CVr6mh0/l4jauEZA7Eq4pB7KlkQ19wrEuErwqOvtq3uVXZk4UToDaGEyDN+YsHGvGAbOl6EnQjbHgpxIDP+BaBrzZO//4bW56AQuEo68CrCgq5szGp4ZZPoT5Uczfw==
+ bh=wOiQdbTbjKiAVeInRRxlUz8lXfvtBz/f55gBHUvi0ok=;
+ b=LLMY1uCBTwaRZvlOuDEFpwRhwJyVSdH74J4gAPoaXtP07yu6S9I3VNQbajFWKLB89fwP0NqbKDwEwtgs6ceMeQ4bns9cQ59rsTGwNoGx8nUXwDiI3/+V2yBhH7NoA/njfZ8VVGQLWkgu9CrjzvCpGDTPTxlOB12Ynr8p4Kafj+emV7Hy+44zdfeZwsMKEADxDddvTS+Ejb74mz2A0QClCgO8Jymm9hVOkh8MFTJA45Rb01F06PqMaL+VRphcQfgorjXengqSKZ4Gqf4iSEYYuUZyeod5ZL+NrQM4h/ur0KY0Ijmp8Bh5KDURl4uBPkF43L5745LxUnGrq3kXu02BdA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -73,11 +73,11 @@ Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
  by CO1PR11MB5139.namprd11.prod.outlook.com (2603:10b6:303:95::5) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.11; Thu, 26 Feb
- 2026 07:22:24 +0000
+ 2026 07:23:48 +0000
 Received: from IA3PR11MB9136.namprd11.prod.outlook.com
  ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
  ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9632.017; Thu, 26 Feb 2026
- 07:22:23 +0000
+ 07:23:47 +0000
 From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
 To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
@@ -91,22 +91,22 @@ CC: "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
  <xudong.hao@intel.com>
 Subject: RE: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size check
 Thread-Topic: [RFCv2 PATCH 12/13] intel_iommu_accel: Add pasid bits size check
-Thread-Index: AQHcnWP6tyKy+zgBK0aBvE2Kf1JwJ7WTB68AgAFX8xCAADhWgIAADKOw
-Date: Thu, 26 Feb 2026 07:22:23 +0000
-Message-ID: <IA3PR11MB9136DF2D289C59655B75C9739272A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Thread-Index: AQHcnWP6tyKy+zgBK0aBvE2Kf1JwJ7WTCNiAgAFesyCAADGdAIAADZNg
+Date: Thu, 26 Feb 2026 07:23:47 +0000
+Message-ID: <IA3PR11MB9136EA84C2DE4A3342273CDB9272A@IA3PR11MB9136.namprd11.prod.outlook.com>
 References: <20260214034135.220413-1-zhenzhong.duan@intel.com>
  <20260214034135.220413-13-zhenzhong.duan@intel.com>
- <AM8PR07MB760213E1A9BBE02E443F9CD28675A@AM8PR07MB7602.eurprd07.prod.outlook.com>
- <IA3PR11MB9136ADFEF99A8AD8220F497A9272A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <AM8PR07MB76026D37748B1BEAE5713C2D8672A@AM8PR07MB7602.eurprd07.prod.outlook.com>
-In-Reply-To: <AM8PR07MB76026D37748B1BEAE5713C2D8672A@AM8PR07MB7602.eurprd07.prod.outlook.com>
+ <AM8PR07MB7602F76D7799033FFCB1A5608675A@AM8PR07MB7602.eurprd07.prod.outlook.com>
+ <IA3PR11MB9136245DC6D58206EC54E2C09272A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <AM8PR07MB7602232CB25D963A887E9B018672A@AM8PR07MB7602.eurprd07.prod.outlook.com>
+In-Reply-To: <AM8PR07MB7602232CB25D963A887E9B018672A@AM8PR07MB7602.eurprd07.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 msip_labels: MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Enabled=True;
  MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SiteId=7d1c7785-2d8a-437d-b842-1ed5d8fbe00a;
- MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SetDate=2026-02-26T06:29:55.338Z;
+ MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_SetDate=2026-02-26T06:34:09.791Z;
  MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_Name=Eviden
  For Internal Use - All
  Employees; MSIP_Label_ecb69475-382c-4c7a-b21d-8ca64eeef1bd_ContentBits=1;
@@ -115,61 +115,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CO1PR11MB5139:EE_
-x-ms-office365-filtering-correlation-id: 44d355d4-c600-4511-5525-08de7507c94e
+x-ms-office365-filtering-correlation-id: ed10f924-b4c6-4dc8-895a-08de7507fb92
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|7053199007|18082099003|38070700021|13003099007|8096899003;
-x-microsoft-antispam-message-info: G9a9duIQQTpfNVlMaCX+Rmdk+8ErU8bqvlbpopX3KnwbJ44AGudz5jb5+TGSzHOuQb6y+muhowY0scxsGy0vxqK0mM5B9Jjc7mtyehExJ6JNPnRdxEFW85b2MCtb1WWfosf4+6tnUPHOut3bPwXmr0BSI4FudVoYsHebfo0iIFsG2fB8JCp3aU1K9oOIA75H9YQib2YDRG50Bg4tvjAWRfP18aKKiNYg1E9LSehvhsj6/UByI5e55+PLNjYnsThCX+WBcVAVPAoSIDHd5Nb0SW0IDn0TcYUnLOAxWK72R85FA4LXrSuuNFuimtYCsY+iPYf9pKhaVi29vvkKgb0OMNfv5cT+ELaPEsYvcEttcBk1nq/ulcZpyl1mktJosVSPGna+a6jLPyafWEuYCI/xV6WcmXGDbTRerai60nlUI+Hg4FynE2v9ELDJb2xHmRIpCMSC2C6k5BsOK8PTX1/vZXgE8JZSQc/2l7sdFDiuhBuutu71rmYsl+8YeIJfzeg/eYe5m57EKgQ4CA74voCuYduqzVWRn3DYcSgf/tkZImiLvuivuleG6MbnZFFu2sqyzUc+Vr7sQHbKL31OE53YTm73AUY2MvK38Fyegg7wX3YbG+nNonhXLgrD8YfGU2GJrjm48HZjULuEV5lf+jweGx2XA58b1Jl7veX5OgMA1osZ1y93esHeT3zmEtshZ2wJ3Lgd0RyVGbmOmG2HKnyk+/dDlltDPzvInjRIX1UgOodjoRtyQqF1KVb44BdHbghDdOaCHOT9wnKojkSk3UFo8+P+K+z/jGK2Efh/jJMdR6Y=
+ ARA:13230040|1800799024|376014|7416014|366016|7053199007|18082099003|38070700021|8096899003;
+x-microsoft-antispam-message-info: DXayHrk6+rd/c4weCz8BWFff3PwzQWCYkoBhlcmFK8Z90xqCW5BHL+ZhldmbkTcqkiQcg0BUF9t+1404I5qhnFLnCv9ig4qP1lZ4ru4ksAFVOeVnzGI1xz80X8s/XQGdH79o6oUpA36OkqmztWIRZkzeygZV2NBonVjEMwC+EIJXaCCN/G16PEof6hAK4MDcxHpkaQm8zFDkxeN8RCAB9s1FCiXkYm8FoKQnxoxO+8w15t+qDkynml+v8ZXh/OHvTt3TuxO3Neb9OE1Y84AXhKpjEO0IoSO1SEVJvoIJC2qCJdxH2x91QYBQ1JFWqz0+RfCoj8DDwyeD9Agg1Rf1FQu5JzN44xmszhGcC2ewraxns4PTwDBB1JdcW0pWod4z1PokC0jDZC7zDhbCQIs1r21lfGJNiFX/Gd2mFqvO7bQP4s21dpRebCD/srBY4PZubOWHuDMwH72n3BOVN3Qk7fBeR5SsX0J81gXgVaq7v9sVG7VJ7D6JBbfVmEYU09xABxf81x4/e+70A40Bwk+41XFx9+uwWXy0kPnOLIutXMgYywDu0/JCLH2Jg7TbR8UdEfnUe0cDyyBkSaW7ouQ+hUITro2vsd6ErnIKLLV1vauvbI/97tesFcCtnkj0YXuOkHEX2bdCBS1QmUHmkOe706wvJ3JF07+P0vA6NCBog+OF0muEMq29soIo9rEGURgxS54fchlpOgOjTqI9WiPrUXTM4JlA+VmzmsJOc6ieYrOVyeQ0+b7XvBRoPyX/BMhUM4uc6DRTP+t6T1uwnFkAz5KtHicXDZmIwB2cw//LJow=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007)(18082099003)(38070700021)(13003099007)(8096899003);
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007)(18082099003)(38070700021)(8096899003);
  DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?3ZgtO6wPi9OqGzcl4EGWU9maZlqMMV72u71xcEudekIFt8JCfFBfxxGsqF/P?=
- =?us-ascii?Q?jIZFFLWkmBychkXEwqn6gEN2PA0Lg9q2ODSM5zcpwOngMRaHBiEjWCUePdto?=
- =?us-ascii?Q?Dt265W3XceSIo4lY0Nxa943VcicVM2TUDPg9cqUaUsz2LruUjmV0nrfCADQZ?=
- =?us-ascii?Q?0qt0ezQVxpcsEkGBa3vyV5rLwP362Ys42Wz0cVkt7R/PWESmnJnyhDYwoaYZ?=
- =?us-ascii?Q?1L2sxD1wzPdoWjTp+NlV+FPZ6MjMf8P1WPrm1XLHjaRpKRv++TNEZu4rGLzy?=
- =?us-ascii?Q?GR1zqzEU667YlW3vjCpCG0uT2d+/1An9ZxA9+gbtLhPVfxyet6r20EWio0ry?=
- =?us-ascii?Q?iVlGFXmog1kFGPcap6PRJiGZoItqS8gbrTis1U+lAE9/syz/BTG5jlXp92XF?=
- =?us-ascii?Q?pIY0Jd+eUEnUzi+IX5q98Vmv5wUBtJ5r2bNN/uS5o2H13o8tG3kX1FMIE29i?=
- =?us-ascii?Q?+a/SOT9FpkMzT8aYYAGgCEqerX77XOa9J4zrqOpa/Pt6slikOp/9diPQfA9A?=
- =?us-ascii?Q?DujAdxczcy2kkn/2QPjQdU4OiXFq3NVn6xMTLjwWBuUosWVz+QiLwjKlP155?=
- =?us-ascii?Q?VUHLYMELYsrKxb9jjNB3TbZOfm+dEdkixm7vlFxANtbT1+WNAspkKs+zcddr?=
- =?us-ascii?Q?POe8TLf2EbJi5RCL5UqJeqHNbM8biWONLl1xODqEN0+fc5JvGTrfiKJAg7uK?=
- =?us-ascii?Q?aqWApZ6zQ/669/KxoZ9EtFlsorPSDRCsXJCEOe30Hh38MshPBN3NSNlCb5gw?=
- =?us-ascii?Q?LMVCIqmY2LIs42qchEJorbNhXMqZnaZtJwu9+gbUy/Q0xmD2GCBDboICaun5?=
- =?us-ascii?Q?9hLeGqYNo9QzwvEl+8MvtGRmqngyGAy1fzpfVK0aQzVNSmstht1/adCM3RF8?=
- =?us-ascii?Q?pnBmX+OQPeyEEnq9sKpavOLnleaKxhg+PMYQltOZ7M4S6icMH8/E7Xzbrc3s?=
- =?us-ascii?Q?GJ8ZNNDxTPRLjzwW2aVj2d33YhiYpoeEctmylHrN9NEKnnqwOxEt6Kn21Q9D?=
- =?us-ascii?Q?taDtl/LK4e4augB2O9pKkdPzr4WTEHoSbAdBTAOuuBrL5T8jO0l9gI1cTV2K?=
- =?us-ascii?Q?2s8JjzE7K8JZm6Z9ihLf9dyk561nz/3fhowzJ9iUFcGYklQdrIfQ3evqAbyH?=
- =?us-ascii?Q?KiQpTM3dr5PB2m6Os7Cjx2HyWjyQZn2BEHe4u7siCTAhN5J5U4T+apQyC90P?=
- =?us-ascii?Q?kY5elpJwrtGY29L1PBEaYAs8/5BIgeNuNGVVIAasXSI8dw/dqbkRnETxU1LT?=
- =?us-ascii?Q?tV75fV+UDs/Oz6PR3pJPsIyb4MjFTQLKpyD00npoYUEf0MWCZp2AJzOd0kje?=
- =?us-ascii?Q?78q2DmrbXRIrHeuyp90i6heLkCxckf+kZfuD/Td8Tp5tsxX6xmwpde8PlQ/+?=
- =?us-ascii?Q?HrVdJVTAwxZEh4d+23ZktzPmDKGKIGr/R7lput1gag1UsplgMkZEqo1o+hCU?=
- =?us-ascii?Q?K0erREILWWGYszIsED8ISLamFM4e8CeSjoi96ix7OaAl6nti1B7M2T5JqGKv?=
- =?us-ascii?Q?wvI6r1y7qnSejbLbUSD6tHgwu3W82oI0NZx8b8CeMhyiySC8Kc3SzH/w/7cS?=
- =?us-ascii?Q?dHMzl5TSIPnKWzwxveYvF57pRrcLZfIEnf+ICtJJ36fIy5aNZ/g40wcd+VsW?=
- =?us-ascii?Q?CiuyI79W2goHazOT3Owt2y+xxHK5wHSRivd9DhhLzDsWczjfxVdswvl4TKj1?=
- =?us-ascii?Q?W5b7LuX1XzaZvFYGXoE5uTVjETuyQHHo5dcoPt05WQbxH2RcmGaKwbxbRj5I?=
- =?us-ascii?Q?sis29V5fnA=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?3mFkueO3tNh5CM2sYSTG7sv/+RAgbFS/2y/5XXLasSz/NcOk2+wxrlUe3MPp?=
+ =?us-ascii?Q?7b+XHK1rZIRiSnQrkmunfWLoo6Ghpv7BVB/murJzKCNi8Zfu3vhl6vLv0mPD?=
+ =?us-ascii?Q?cqYwWsx5gLUNdXAqGOPvQYyZyxUiE1kzgAZEvl67gVlE5Q729DWKdJZ2hjn/?=
+ =?us-ascii?Q?O1LznEGYzjdSHAq2ttNI0U9bRe2CtmhGvWTOj3g6vjPrdGfhD6y3a9t+G0SV?=
+ =?us-ascii?Q?zcyBvcY0402m2E+ySsyzHLaJAUnFJzMoTgZnh2ICS+CmF8RsMb/yL1aJelDu?=
+ =?us-ascii?Q?SEJt5YOwWhM+VLU1ko+I7Tnvnv5LbUwikN+CYAMn5+MUvFgCacX9fveJONJy?=
+ =?us-ascii?Q?kFXGmMldnDfrBMvN0ynhh4lsMrbm3ttnX94Ten6g5bv6SdmE2iN7+pKkRvzr?=
+ =?us-ascii?Q?OYSzEkv7k9SCipnjpjdF7EGoXS7QlJCQ5UE1+Shk4OaD29q0DJn1WN+oFYoH?=
+ =?us-ascii?Q?g68k1ux/7tXiX0StLubZyux3OL1zL5O52pXowKAQM26C/hhhtBGMdU0ub1ya?=
+ =?us-ascii?Q?kbV+ZKSBHZJstt+vorqSWW98bc5PuowvCnjqcMmCvVCRBP6Ll7yDZNlvyABA?=
+ =?us-ascii?Q?wt+sSq47ch2+UO/aITJ3o7ZUwyvxw//tYZ+ILfxygwVqzr6HyAEqySaHwUD4?=
+ =?us-ascii?Q?kwYvlwhtn1qh3dNBmqlPw7fQ2CyhWIPMof2dLFQaHVpdERS14PkaGbKXb4F+?=
+ =?us-ascii?Q?zjqZ1+YEvEuBLjL3KgC2Er1j1ftmcESXtSiBnr/ilswcXZS7VHAeG1PdMx9i?=
+ =?us-ascii?Q?YT+qUGOl1zc9YWNgEZ1FKyJnZBcgfLnRwsfMRMqY+JOMPF6U0QciIWsAqguv?=
+ =?us-ascii?Q?XwCTKqZp1YzlUOzhi4xEcu0UgVbpHayJovxuxmw1qmvbzTeE8K8DRecpRihC?=
+ =?us-ascii?Q?1bttPw4/5BngK2N9f8SnyFac/b9SMuSCPgOwUGQ1e63iG7cSO/W+OjjufrT9?=
+ =?us-ascii?Q?LD7qgMHX+TNdZQZ95u9c6UGg0WtO6f+qvNnGepdi4ljwet+DRWaeVGUnwWnd?=
+ =?us-ascii?Q?w8Npwy0MEswXNA0qVn9gHDOelGHcIuHG9GkPENRS2RwJAeMd41iOmi37BUcf?=
+ =?us-ascii?Q?CjrKMXXqJ4eTZGknw03EcIkvVxvzOEw0mUlS5ohE1N580uTRVJ3nUIMdDhmc?=
+ =?us-ascii?Q?Cdretm1UhBwGb2Fog+SmRu5Vc8a+viVAHhg7tz4UQjCndm4Vwwqz/CzUsb/i?=
+ =?us-ascii?Q?nAZjmcq7rI9Njw1ZPd5JQcTbrAq4Hkj+nSqb8cX38rpL9naKPo0wVkpnLMlh?=
+ =?us-ascii?Q?g6lGRxty8q9uHcIkGMBpFenwMtqelUEpfuYwy3EUSdR9/wB9qDl8jeFwCpgv?=
+ =?us-ascii?Q?N7m3u0hbK9CwHkXeob5f5Kwye3wAhuyMMCIl4gmyTo4AP3x7a5KX9Ah5uwC6?=
+ =?us-ascii?Q?xHfZLLhoilxalOLXa+XJsKuSnDE2ajlgmOSWXtflUENrhiCIkMRqVpRkNCgp?=
+ =?us-ascii?Q?4H7gxmJhl80csyCdG1M9mpbgVmGeseIuC4zLYzrMiSlMO8TdgoPGoadz3k2J?=
+ =?us-ascii?Q?/D6S9xGCniuLWX6cFNneWmDAPd8I23tqfDELjKi7foT0VNqq3iI1NK7vkYzm?=
+ =?us-ascii?Q?NZ1B7j2IuWrRsXtAimyMf32/igP7CPC9BTveD+i6XJIjDKl6Uwwac9+nEY3K?=
+ =?us-ascii?Q?xQt4RW3UbhBznR30vt/IehdW1gsOxF/+Bb9cgNfB6IxoT8h9d/7zeaOykH1Q?=
+ =?us-ascii?Q?vslYGM4/OHNFP+FswkZyMTHzEI4w2ygUFwLxv2MQj5wJ/2dXPAW17NaTZovd?=
+ =?us-ascii?Q?xGILBovK/w=3D=3D?=
 Content-Type: multipart/alternative;
- boundary="_000_IA3PR11MB9136DF2D289C59655B75C9739272AIA3PR11MB9136namp_"
+ boundary="_000_IA3PR11MB9136EA84C2DE4A3342273CDB9272AIA3PR11MB9136namp_"
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 44d355d4-c600-4511-5525-08de7507c94e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2026 07:22:23.5679 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed10f924-b4c6-4dc8-895a-08de7507fb92
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2026 07:23:47.8723 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: J3NG2Uf3YgQLYByCrmVTs1vkwbBFc55CT/KjhTNVhZAEGaouRfAhdUfB8tWS+znxNwRFDJ80W0+9rDVvfJKK7ZDSzmYHOiJNYtmbi37sVpI=
+X-MS-Exchange-CrossTenant-userprincipalname: RY+ftMs2B1IEum+fRvLMcV1z1uvRYcyUlqEOaoUR7a5qUclt0Nhi5nlLEw3SlSX7DoVHfuQ5HZU1x7luLrOVjhNNDwyxEnI3bqZt4YKCexM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB5139
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.9;
+Received-SPF: pass client-ip=198.175.65.21;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -194,52 +194,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_IA3PR11MB9136DF2D289C59655B75C9739272AIA3PR11MB9136namp_
+--_000_IA3PR11MB9136EA84C2DE4A3342273CDB9272AIA3PR11MB9136namp_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Clement,
-
-That's a good idea, it looks simpler to use extract32/64 for multi bits fie=
-ld, for one bit field, just keep it as is. Will change as below, let me kno=
-w if I misunderstand your suggestion.
-
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.=
-h
-index e5518a94ea..d6674861fd 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -195,7 +195,8 @@
-#define VTD_ECAP_MHMV               (15ULL << 20)
-#define VTD_ECAP_SRS                (1ULL << 31)
-#define VTD_ECAP_NWFS               (1ULL << 33)
--#define VTD_ECAP_PSS(x)             extract64(x, 35, 5)
-+#define VTD_ECAP_SET_PSS(x, v)      ((x)->ecap =3D deposit64((x)->ecap, 35=
-, 5, v))
-+#define VTD_ECAP_PSS(ecap)          extract64(ecap, 35, 5)
-#define VTD_ECAP_PASID              (1ULL << 40)
-#define VTD_ECAP_PDS                (1ULL << 42)
-#define VTD_ECAP_SMTS               (1ULL << 43)
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 94a691d423..dd7073fc08 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -5027,7 +5027,8 @@ static void vtd_cap_init(IntelIOMMUState *s)
-     }
-
-     if (s->pasid) {
--        s->ecap =3D VTD_ECAP_PASID | deposit64(s->ecap, 35, 5, s->pasid - =
-1);
-+        VTD_ECAP_SET_PSS(s, s->pasid - 1);
-+        s->ecap |=3D VTD_ECAP_PASID;
-     }
-}
+Oh, good catch! Will fix, thanks
 
 BRs,
 Zhenzhong
 
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Sent: Thursday, February 26, 2026 2:30 PM
+Sent: Thursday, February 26, 2026 2:35 PM
 To: Duan, Zhenzhong <zhenzhong.duan@intel.com>; qemu-devel@nongnu.org
 Cc: alex@shazbot.org; clg@redhat.com; eric.auger@redhat.com; mst@redhat.com=
 ; jasowang@redhat.com; jgg@nvidia.com; nicolinc@nvidia.com; skolothumtho@nv=
@@ -250,21 +215,19 @@ ck
 
 Hi Zhenzhong,
 
-Oh ok, I did not remember this comment from Eric, my mistake.
+In this hunk:
 
-From what I see in the smmu:
-- "getters" use extract and are named according to the field they extract.
-- "setters" use deposit and use the following naming pattern "XXX_SET_THENA=
-ME"
+if (s->pasid >=3D PCI_EXT_CAP_PASID_MAX_WIDTH)
 
-Do you think we should follow the same way?
+s->pasid comes from the prop and is the actual size right? not size - 1 ? S=
+houldn't the comparison be > instead of >=3D ?
 
 cmd
 
 ________________________________
 From: Duan, Zhenzhong <zhenzhong.duan@intel.com<mailto:zhenzhong.duan@intel=
 .com>>
-Sent: 26 February 2026 04:12
+Sent: 26 February 2026 04:37
 To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com<mailto:clement.=
 mathieu--drif@eviden.com>>; qemu-devel@nongnu.org<mailto:qemu-devel@nongnu.=
 org> <qemu-devel@nongnu.org<mailto:qemu-devel@nongnu.org>>
@@ -294,36 +257,15 @@ Hi Clement,
 
 
 
-This is to follow Eric's suggestion in previous iommufd nesting series
-
-where he suggested to use extra32/64 syntax, copied here:
+Exactly, copied from PCIe spec:
 
 
 
-+#define VTD_INV_DESC_PASIDC_DSI        (0ULL << 4)
-
-+#define VTD_INV_DESC_PASIDC_PASID_SI   (1ULL << 4)
-
-+#define VTD_INV_DESC_PASIDC_GLOBAL     (3ULL << 4)
-
-as those are values for the granularity field using
-
-
-
-VTD_INV_DESC_PASIDC_G_* look relevant to me.
-
-
-
-I think you would gain in readability if you adopt extract32/64 syntax
-
-like in hw/arm/smmuv3-internal.h
-
-Looks more readable to me.
-
-
-
-See https://lore.kernel.org/qemu-devel/2cbb91d3-9acc-4e7a-9a0a-19d9b5efe21b=
-@redhat.com/ for details.
+Max PASID Width - Indicates the width of the PASID field supported by an ap=
+plicable Endpoint Function. The value n indicates support for PASID values =
+0 through 2n -1 (inclusive). The value 0 indicates support for a single PAS=
+ID (0). The value 20 indicates support for all PASID values (20 bits). This=
+ field must be between 0 and 20 (inclusive)
 
 
 
@@ -335,7 +277,7 @@ Zhenzhong
 
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com<mailto:clemen=
 t.mathieu--drif@eviden.com>>
-Sent: Wednesday, February 25, 2026 2:38 PM
+Sent: Wednesday, February 25, 2026 2:42 PM
 To: Duan, Zhenzhong <zhenzhong.duan@intel.com<mailto:zhenzhong.duan@intel.c=
 om>>; qemu-devel@nongnu.org<mailto:qemu-devel@nongnu.org>
 Cc: alex@shazbot.org<mailto:alex@shazbot.org>; clg@redhat.com<mailto:clg@re=
@@ -356,14 +298,9 @@ Hi Zhenzhong,
 
 
 
-I'm a bit confused about this patch.
+Why do we capitalize the first letter of each word in "Max PASID Width"?
 
-
-
-All the other VTD_ECAP_* are masks for the ecap qword.
-
-The purpose of this new definition of ECAP_PSS differs a bit as it extracts=
- the field itself :/
+I guess you try to match the pcie spec, but just want to confirm :)
 
 
 
@@ -480,7 +417,7 @@ MUDevice *vtd_hiod,
 --
 2.47.3
 
---_000_IA3PR11MB9136DF2D289C59655B75C9739272AIA3PR11MB9136namp_
+--_000_IA3PR11MB9136EA84C2DE4A3342273CDB9272AIA3PR11MB9136namp_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -539,65 +476,7 @@ div.WordSection1
 <body lang=3D"EN-US" link=3D"blue" vlink=3D"purple" style=3D"word-wrap:brea=
 k-word">
 <div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi Clement,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">That&#8217;s a good idea, it looks simpler to use ex=
-tract32/64 for multi bits field, for one bit field, just keep it as is. Wil=
-l change as below, let me know if I misunderstand your suggestion.<o:p></o:=
-p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">diff --git a/hw/i386/intel_iommu_internal.h b/hw/i38=
-6/intel_iommu_internal.h<o:p></o:p></p>
-<p class=3D"MsoNormal">index e5518a94ea..d6674861fd 100644<o:p></o:p></p>
-<p class=3D"MsoNormal">--- a/hw/i386/intel_iommu_internal.h<o:p></o:p></p>
-<p class=3D"MsoNormal">+++ b/hw/i386/intel_iommu_internal.h<o:p></o:p></p>
-<p class=3D"MsoNormal">@@ -195,7 +195,8 @@<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_MHMV&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (15ULL &lt;&lt; 20)<o=
-:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_SRS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 3=
-1)<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_NWFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 33)<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">-#define VTD_ECAP_PSS(x)&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; extract64(x, 35, 5)<o:p></o:p>=
-</p>
-<p class=3D"MsoNormal">+#define VTD_ECAP_SET_PSS(x, v)&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp; ((x)-&gt;ecap =3D deposit64((x)-&gt;ecap, 35, 5, v))<o:p></o:p></=
-p>
-<p class=3D"MsoNormal">+#define VTD_ECAP_PSS(ecap)&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp; extract64(ecap, 35, 5)<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_PASID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 40)<o:p></o=
-:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_PDS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 4=
-2)<o:p></o:p></p>
-<p class=3D"MsoNormal">#define VTD_ECAP_SMTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (1ULL &lt;&lt; 43)<o:=
-p></o:p></p>
-<p class=3D"MsoNormal">diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_i=
-ommu.c<o:p></o:p></p>
-<p class=3D"MsoNormal">index 94a691d423..dd7073fc08 100644<o:p></o:p></p>
-<p class=3D"MsoNormal">--- a/hw/i386/intel_iommu.c<o:p></o:p></p>
-<p class=3D"MsoNormal">+++ b/hw/i386/intel_iommu.c<o:p></o:p></p>
-<p class=3D"MsoNormal">@@ -5027,7 +5027,8 @@ static void vtd_cap_init(Intel=
-IOMMUState *s)<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; if (s-&gt;pasid) {<o:p></o:=
-p></p>
-<p class=3D"MsoNormal">-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;ec=
-ap =3D VTD_ECAP_PASID | deposit64(s-&gt;ecap, 35, 5, s-&gt;pasid - 1);<o:p>=
-</o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VTD_ECAP=
-_SET_PSS(s, s-&gt;pasid - 1);<o:p></o:p></p>
-<p class=3D"MsoNormal">+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; s-&gt;ec=
-ap |=3D VTD_ECAP_PASID;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
-<p class=3D"MsoNormal">}<o:p></o:p></p>
+<p class=3D"MsoNormal">Oh, good catch! Will fix, thanks<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 <p class=3D"MsoNormal">BRs,<o:p></o:p></p>
 <p class=3D"MsoNormal">Zhenzhong<o:p></o:p></p>
@@ -612,7 +491,7 @@ ap |=3D VTD_ECAP_PASID;<o:p></o:p></p>
 font-family:&quot;Calibri&quot;,sans-serif"> CLEMENT MATHIEU--DRIF &lt;clem=
 ent.mathieu--drif@eviden.com&gt;
 <br>
-<b>Sent:</b> Thursday, February 26, 2026 2:30 PM<br>
+<b>Sent:</b> Thursday, February 26, 2026 2:35 PM<br>
 <b>To:</b> Duan, Zhenzhong &lt;zhenzhong.duan@intel.com&gt;; qemu-devel@non=
 gnu.org<br>
 <b>Cc:</b> alex@shazbot.org; clg@redhat.com; eric.auger@redhat.com; mst@red=
@@ -634,34 +513,25 @@ ize check<o:p></o:p></span></p>
 </p>
 </div>
 <div>
-<p class=3D"MsoNormal"><span style=3D"color:black">Oh ok, I did not remembe=
-r this comment from Eric, my mistake.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">In this&nbsp;hunk:<o:p><=
+/o:p></span></p>
 </div>
 <div>
 <p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
 </p>
 </div>
 <div>
-<p class=3D"MsoNormal"><span style=3D"color:black">From what I see in the s=
-mmu:<o:p></o:p></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"color:black">- &quot;getters&quot; us=
-e extract and are named according to the field they extract.<o:p></o:p></sp=
-an></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"color:black">- &quot;setters&quot; us=
-e deposit and use the following naming pattern &quot;XXX_SET_THENAME&quot;<=
-o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">if (s-&gt;pasid &gt;=3D =
+PCI_EXT_CAP_PASID_MAX_WIDTH)<o:p></o:p></span></p>
 </div>
 <div>
 <p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
 </p>
 </div>
 <div>
-<p class=3D"MsoNormal"><span style=3D"color:black">Do you think we should f=
-ollow the same way?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">s-&gt;pasid comes from t=
+he prop and is the actual size right? not size - 1 ? Shouldn't the comparis=
+on be &gt; instead of &gt;=3D ?<o:p></o:p></span></p>
 </div>
 <div>
 <p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
@@ -685,7 +555,7 @@ ollow the same way?<o:p></o:p></span></p>
 size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:black">&nbsp;D=
 uan, Zhenzhong &lt;<a href=3D"mailto:zhenzhong.duan@intel.com">zhenzhong.du=
 an@intel.com</a>&gt;<br>
-<b>Sent:</b>&nbsp;26 February 2026 04:12<br>
+<b>Sent:</b>&nbsp;26 February 2026 04:37<br>
 <b>To:</b>&nbsp;CLEMENT MATHIEU--DRIF &lt;<a href=3D"mailto:clement.mathieu=
 --drif@eviden.com">clement.mathieu--drif@eviden.com</a>&gt;;
 <a href=3D"mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.org</a> &lt;<a h=
@@ -745,30 +615,14 @@ ement-anchor-horizontal:column;mso-height-rule:exactly">
 </div>
 <p>Hi Clement,<o:p></o:p></p>
 <p>&nbsp;<o:p></o:p></p>
-<p>This is to follow Eric&#8217;s suggestion in previous iommufd nesting se=
-ries<o:p></o:p></p>
-<p>where he suggested to use extra32/64 syntax, copied here:<o:p></o:p></p>
+<p>Exactly, copied from PCIe spec:<o:p></o:p></p>
 <p>&nbsp;<o:p></o:p></p>
-<p>+#define VTD_INV_DESC_PASIDC_DSI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p; (0ULL &lt;&lt; 4)<o:p></o:p></p>
-<p>+#define VTD_INV_DESC_PASIDC_PASID_SI&nbsp;&nbsp; (1ULL &lt;&lt; 4)<o:p>=
-</o:p></p>
-<p>+#define VTD_INV_DESC_PASIDC_GLOBAL&nbsp;&nbsp;&nbsp;&nbsp; (3ULL &lt;&l=
-t; 4)<o:p></o:p></p>
-<p>as those are values for the granularity field using<o:p></o:p></p>
-<p>&nbsp;<o:p></o:p></p>
-<p>VTD_INV_DESC_PASIDC_G_* look relevant to me.<o:p></o:p></p>
-<p>&nbsp;<o:p></o:p></p>
-<p>I think you would gain in readability if you adopt extract32/64 syntax<o=
-:p></o:p></p>
-<p>like in hw/arm/smmuv3-internal.h<o:p></o:p></p>
-<p>Looks more readable to me.<o:p></o:p></p>
-<p>&nbsp;<o:p></o:p></p>
-<p>See <u><span style=3D"color:#467886"><a href=3D"https://lore.kernel.org/=
-qemu-devel/2cbb91d3-9acc-4e7a-9a0a-19d9b5efe21b@redhat.com/"><span style=3D=
-"color:#467886">https://lore.kernel.org/qemu-devel/2cbb91d3-9acc-4e7a-9a0a-=
-19d9b5efe21b@redhat.com/</span></a></span></u>&nbsp;for
- details.<o:p></o:p></p>
+<p>Max PASID Width - Indicates the width of the PASID field supported by an=
+ applicable Endpoint Function. The value n indicates support for PASID valu=
+es 0 through 2n -1 (inclusive). The value 0 indicates support for a single =
+PASID (0). The value 20 indicates
+ support for all PASID values (20 bits). This field must be between 0 and 2=
+0 (inclusive)<o:p></o:p></p>
 <p>&nbsp;<o:p></o:p></p>
 <p>BRs,<o:p></o:p></p>
 <p>Zhenzhong<o:p></o:p></p>
@@ -782,7 +636,7 @@ serif">From:</span></b><span style=3D"font-size:11.0pt;font-family:&quot;Ca=
 libri&quot;,sans-serif">&nbsp;CLEMENT MATHIEU--DRIF &lt;<a href=3D"mailto:c=
 lement.mathieu--drif@eviden.com">clement.mathieu--drif@eviden.com</a>&gt;<b=
 r>
-<b>Sent:</b>&nbsp;Wednesday, February 25, 2026 2:38 PM<br>
+<b>Sent:</b>&nbsp;Wednesday, February 25, 2026 2:42 PM<br>
 <b>To:</b>&nbsp;Duan, Zhenzhong &lt;<a href=3D"mailto:zhenzhong.duan@intel.=
 com">zhenzhong.duan@intel.com</a>&gt;;
 <a href=3D"mailto:qemu-devel@nongnu.org">qemu-devel@nongnu.org</a><br>
@@ -807,13 +661,10 @@ its size check</span><o:p></o:p></p>
 <p>&nbsp;<o:p></o:p></p>
 <p><span style=3D"color:black">Hi Zhenzhong,</span><o:p></o:p></p>
 <p><span style=3D"color:black">&nbsp;</span><o:p></o:p></p>
-<p><span style=3D"color:black">I'm a bit confused about this patch.</span><=
-o:p></o:p></p>
-<p><span style=3D"color:black">&nbsp;</span><o:p></o:p></p>
-<p><span style=3D"color:black">All the other VTD_ECAP_* are masks for the e=
-cap qword.</span><o:p></o:p></p>
-<p><span style=3D"color:black">The purpose of this new definition of ECAP_P=
-SS differs a bit as it extracts the field itself :/</span><o:p></o:p></p>
+<p><span style=3D"color:black">Why do we capitalize the first letter of eac=
+h word in &quot;Max PASID Width&quot;?</span><o:p></o:p></p>
+<p><span style=3D"color:black">I guess you try to match the pcie spec, but =
+just want to confirm :)</span><o:p></o:p></p>
 <p><span style=3D"color:black">&nbsp;</span><o:p></o:p></p>
 <p><span style=3D"color:black">cmd</span><o:p></o:p></p>
 <p><span style=3D"color:black">&nbsp;</span><o:p></o:p></p>
@@ -1012,7 +863,7 @@ d to set scalable mode for PASID&quot;);<br>
 +&nbsp;&nbsp;&nbsp; if (s-&gt;pasid &gt;=3D PCI_EXT_CAP_PASID_MAX_WIDTH) {<=
 br>
 +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; error_setg(errp, &quot;PASID wi=
-dth %d, exceed Max PASID Width %d allowed &quot;<br>
+dth %d, exceed Max PASID Width&nbsp;%d allowed &quot;<br>
 +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
 bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;in PCI spec&quot;, s-&gt;pasid, PC=
 I_EXT_CAP_PASID_MAX_WIDTH);<br>
@@ -1070,5 +921,5 @@ quot;);<br>
 </body>
 </html>
 
---_000_IA3PR11MB9136DF2D289C59655B75C9739272AIA3PR11MB9136namp_--
+--_000_IA3PR11MB9136EA84C2DE4A3342273CDB9272AIA3PR11MB9136namp_--
 
