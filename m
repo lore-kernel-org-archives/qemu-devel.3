@@ -4,132 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE31FD8FF4
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 19:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D4CFD8FF4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 19:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvh0D-0000gw-3e; Thu, 26 Feb 2026 14:26:25 -0500
+	id 1vvh0x-0001HJ-LL; Thu, 26 Feb 2026 14:27:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvh0B-0000gO-9Y
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 14:26:23 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvh09-0000Yz-A8
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 14:26:23 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-826c49b7628so864636b3a.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 11:26:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772133979; x=1772738779; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fBzSLc/fHo+AH9TdMZvDXfnX12fqlgQkihDDgs3PpLk=;
- b=T1/yVP9vc+NB2Gr68kS9VrH8NjkawTPesR4JeYZASr/wJy2Pa9L4mIm2NVWAoYB+9j
- Kl1HnC63+X5A2gvf64PuPQDXn3uX7t4OLXB0d1YoAa7XqnsqXfaflT1PmC4RYDNhPram
- 48/aX1H0MPSLFiZF4H/M3ekqPe9rvlD+tlgOx+r0mEahfTjOaTI9CaNFszxzJ9SnyCMR
- dunLtukiLSi47oUBOJ3ThmJ4l0YgawZ1PR8y1BybvCrkTbmyBbJH2Ig4HWN4xjaHgAmn
- u8usB1OL7sPbOS3POz+tEdhCxKK8ruBHPxC1A7gFXBUEq8sLVxsoCIHjapCIzF8sSE/G
- Ntrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772133979; x=1772738779;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fBzSLc/fHo+AH9TdMZvDXfnX12fqlgQkihDDgs3PpLk=;
- b=KuAu0IbLr7VOe74wmqtST7GDpyuZ/b+Af1Z/rlIwnOXO7rAmvTqlRVEFoBXv6jo/vS
- /kenY5D6nWST1A89ouOHKKNC5NpaoyivbuH3tMqCtxd1BDzSILc8RLOlRgg/PMzHCkyg
- lM4FM09lyBl9FeDhPcbX9dDdBrRYCSAAzvdZeRTru4DM5JwHciHSXxQYFfWyKxyABP3B
- Ljyu0v9HN2Ky0b70Lz9MfLkkQH3aikQcc40xdtivDKp1Iok5l04CXSYV7NhvIJdMlhCf
- 35OkYqfvEPSt/XGqHcF38w4yj2AdgGoPdLB0lK1+OVhxyaVGrTc9Xl76XQYDrFuDHh4J
- /XqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtj1gfMUA6FKmojB4eYHVpjGFu2c7B1RYIM7CR/g7LrgLmnXoWy9eLTe+EJJknclJDL06iOe5khPXw@nongnu.org
-X-Gm-Message-State: AOJu0YwRezzumwtZnPffgXY5UFLaozEjo4yiS0QB92CI891pwDJ9CIhi
- XyNxoFpOq0OcirENDEOPp49VRBmwsiqRBuimLe5aiiXjemM4lhH9nepxX+idJyEDJpM=
-X-Gm-Gg: ATEYQzxXzaZs+LN8ic4RXX910byyiskRwTWID3F++B4tQZo9w7AvXQFkQEeSxBpPxHz
- bQ+oR9MnY+E4f22RB6c2bpJ6QivEjgdZPgXaGxkGUXhWmGDNAo/qT4iwXbqD4I7M49y4aIAH4V3
- tkDJxF98o0rZAEIwApbRNTPVl7PX5GaIS6ioZHCxI3XDf0DOemGh+M3L5qXqYUSIg7ZfUmVF5i0
- ocTppVbrl3lWjU6XDkcpe/UkUCZ8aHSsbEaXAS44wciSNymwoF8Kq6dmrFNS3AlWKMVJn/8pjPU
- 3m+FZR1zshivW3UxhC4boo9kBId5xA02cVtmRubZbvLDB/rSLXr8J3kde/2o7cO/1+ll+e209z2
- 7a9qdMEfiA/lf/nAFp4TzFaqQ/xqO5KKjOX/PDNesNfHcPhlscWlEE/ZOMBI4USwyrAwfXCinIA
- OjOnPCtxGsJrHj3I36I9HYdnr0mpqFuLl7huQyo+1j9AFXW5Hzvo00csSGc+PT4qAbOU7B
-X-Received: by 2002:a05:6a00:1885:b0:7e8:4471:ae55 with SMTP id
- d2e1a72fcca58-8274da129c8mr168725b3a.33.1772133979180; 
- Thu, 26 Feb 2026 11:26:19 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8273a01a9dasm3112972b3a.49.2026.02.26.11.26.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Feb 2026 11:26:18 -0800 (PST)
-Message-ID: <a42315f0-e84b-46b3-9fac-299f9894de16@linaro.org>
-Date: Thu, 26 Feb 2026 11:26:17 -0800
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vvh0v-0001GH-Aw
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 14:27:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vvh0t-0000cx-Pr
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 14:27:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772134026;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=//r4q/GNtoRK8A1QDy1k3nlQsH+0Z0HYZ+0+plNbQwg=;
+ b=MARakf4qivRumKDgnnmM2UkpzBMZvPedql5DDfMQK66cv4joEPHi44t6i5hKgORwpAp04R
+ uDUSe1LFxAuav+D7m9G1aiTdYuu0ZE9fKBDud6Q79ZLkH81Ac19nC3aZh7Kq9dpYOsGmEG
+ iXRNqotLzr2ZyoX4LlY44Y2opLzfgm4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-kuw9CDOOM9KdrzhElBIvgQ-1; Thu,
+ 26 Feb 2026 14:27:03 -0500
+X-MC-Unique: kuw9CDOOM9KdrzhElBIvgQ-1
+X-Mimecast-MFC-AGG-ID: kuw9CDOOM9KdrzhElBIvgQ_1772134022
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D827B1956095; Thu, 26 Feb 2026 19:27:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.49])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 54E2030001B9; Thu, 26 Feb 2026 19:26:59 +0000 (UTC)
+Date: Thu, 26 Feb 2026 20:26:57 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Brian Song <hibriansong@gmail.com>
+Subject: Re: [PATCH v4 16/24] fuse: Manually process requests (without libfuse)
+Message-ID: <aaCegU1HXp17bM2A@redhat.com>
+References: <20260218132633.29748-1-hreitz@redhat.com>
+ <20260218132633.29748-17-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] tests/functional: add Arm VBSA uefi conformance
- test
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
- Warner Losh <imp@bsdimp.com>
-References: <20260226185303.1920021-1-alex.bennee@linaro.org>
- <20260226185303.1920021-8-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260226185303.1920021-8-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260218132633.29748-17-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 22
+X-Spam_score: 2.2
+X-Spam_bar: ++
+X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,154 +86,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/26/26 10:53 AM, Alex Benn√©e wrote:
-> The VBSA test is a subset of the wider Arm architecture compliance
-> suites (ACS) which validate machines meet particular minimum set of
-> requirements. The VBSA is for virtual machines so it makes sense we
-> should check the -M virt machine is compliant.
+Am 18.02.2026 um 14:26 hat Hanna Czenczek geschrieben:
+> Manually read requests from the /dev/fuse FD and process them, without
+> using libfuse.  This allows us to safely add parallel request processing
+> in coroutines later, without having to worry about libfuse internals.
+> (Technically, we already have exactly that problem with
+> read_from_fuse_export()/read_from_fuse_fd() nesting.)
 > 
-> Fortunately there are prebuilt binaries published via github so all we
-> need to do is build an EFI partition and place things in the right
-> place.
+> We will continue to use libfuse for mounting the filesystem; fusermount3
+> is a effectively a helper program of libfuse, so it should know best how
+> to interact with it.  (Doing it manually without libfuse, while doable,
+> is a bit of a pain, and it is not clear to me how stable the "protocol"
+> actually is.)
 > 
-> There are some additional Linux based tests which are left for later.
+> Take this opportunity of quite a major rewrite to update the Copyright
+> line with corrected information that has surfaced in the meantime.
 > 
-> Message-ID: <20260213154859.1551283-7-alex.bennee@linaro.org>
-> Signed-off-by: Alex Benn√©e <alex.bennee@linaro.org>
+> Here are some benchmarks from before this patch (4k, iodepth=16, libaio;
+> except 'sync', which are iodepth=1 and pvsync2):
 > 
+> file:
+>   read:
+>     seq aio:    99.8k ±1.5k IOPS
+>     rand aio:   50.5k ±1.0k
+>     seq sync:   36.1k ±1.1k
+>     rand sync:  10.0k ±0.1k
+>   write:
+>     seq aio:    72.0k ±9.3k
+>     rand aio:   70.6k ±2.5k
+>     seq sync:   30.6k ±0.8k
+>     rand sync:  30.1k†±1.0k
+> null:
+>   read:
+>     seq aio:   157.9k ±4.7k
+>     rand aio:  158.7k ±4.8k
+>     seq sync:   80.2k ±2.8k
+>     rand sync:  77.5k ±3.8k
+>   write:
+>     seq aio:   154.3k ±3.6k
+>     rand aio:  154.3k ±4.2k
+>     seq sync:   76.1k ±5.2k
+>     rand sync:  72.9k ±4.0k
+> 
+> And with this patch applied:
+> 
+> file:
+>   read:
+>     seq aio:   106.8k ±1.9k (+7%)
+>     rand aio:   48.3k ±8.8k (-4%)
+>     seq sync:   35.5k ±1.4k (-2%)
+>     rand sync:  10.0k ±0.2k (±0%)
+>   write:
+>     seq aio:    76.3k ±6.6k (+6%)
+>     rand aio:   76.4k ±1.5k (+8%)
+>     seq sync:   31.6k ±0.6k (+3%)
+>     rand sync:  30.9k ±0.8k (+3%)
+> null:
+>   read:
+>     seq aio:   161.7k ±6.0k (+2%)
+>     rand aio:  165.6k ±7.1k (+4%)
+>     seq sync:   80.5k ±3.0k (±0%)
+>     rand sync:  78.5k ±3.1k (+1%)
+>   write:
+>     seq aio:   185.1k ±3.3k (+20%)
+>     rand aio:  186.7k ±4.8k (+21%)
+>     seq sync:   82.5k ±4.2k (+8%)
+>     rand sync:  78.7k ±3.2k (+8%)
+> 
+> So not much difference, aside from write AIO to a null-co export getting
+> a bit better.
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 > ---
-> v2
->    - use the VBSA prebuilt shell
->    - fail the test if we see FAILED in the console stream
-> ---
->   tests/functional/aarch64/meson.build       |  1 +
->   tests/functional/aarch64/test_virt_vbsa.py | 99 ++++++++++++++++++++++
->   2 files changed, 100 insertions(+)
->   create mode 100755 tests/functional/aarch64/test_virt_vbsa.py
+>  block/export/fuse.c | 944 +++++++++++++++++++++++++++++++++-----------
+>  1 file changed, 720 insertions(+), 224 deletions(-)
 > 
-> diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-> index 49eca120589..7ea8c22b048 100644
-> --- a/tests/functional/aarch64/meson.build
-> +++ b/tests/functional/aarch64/meson.build
-> @@ -46,6 +46,7 @@ tests_aarch64_system_thorough = [
->     'tuxrun',
->     'virt',
->     'virt_gpu',
-> +  'virt_vbsa',
->     'xen',
->     'xlnx_versal',
->   ]
-> diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/functional/aarch64/test_virt_vbsa.py
-> new file mode 100755
-> index 00000000000..3da06904ea9
-> --- /dev/null
-> +++ b/tests/functional/aarch64/test_virt_vbsa.py
-> @@ -0,0 +1,99 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that runs the Arm VBSA conformance tests.
-> +#
-> +# Copyright (c) 2026 Linaro Ltd.
-> +#
-> +# Author:
-> +#  Alex Benn√©e <alex.bennee@linaro.org>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
+> diff --git a/block/export/fuse.c b/block/export/fuse.c
+> index af0a8de17b..c481fb72a2 100644
+> --- a/block/export/fuse.c
+> +++ b/block/export/fuse.c
+> @@ -1,7 +1,7 @@
+>  /*
+>   * Present a block device as a raw image through FUSE
+>   *
+> - * Copyright (c) 2020 Max Reitz <mreitz@redhat.com>
+> + * Copyright (c) 2020, 2025 Hanna Czenczek <hreitz@redhat.com>
+>   *
+>   * This program is free software; you can redistribute it and/or modify
+>   * it under the terms of the GNU General Public License as published by
+> @@ -27,12 +27,15 @@
+>  #include "block/qapi.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-commands-block.h"
+> +#include "qemu/error-report.h"
+>  #include "qemu/main-loop.h"
+>  #include "system/block-backend.h"
+>  
+>  #include <fuse.h>
+>  #include <fuse_lowlevel.h>
+>  
+> +#include "standard-headers/linux/fuse.h"
 > +
-> +import shutil
-> +from subprocess import check_call, DEVNULL
-> +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern, get_qemu_img, skipIfMissingCommands
-> +from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
-> +
-> +
-> +@skipIfMissingCommands("mformat", "mcopy", "mmd")
-> +class Aarch64VirtMachine(QemuSystemTest):
-> +    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-> +    timeout = 360
-> +
-> +    def wait_for_console_pattern(self, success_message, vm=None):
-> +        wait_for_console_pattern(self, success_message,
-> +                                 failure_message='FAILED',
-> +                                 vm=vm)
-> +
-> +    ASSET_VBSA_EFI = Asset('https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
-> +                           '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Vbsa.efi',
-> +                           '80f37d2fb86d152d95dec4d05ff099c9e47ee8a89314268e08056b0e1359e1fa')
-> +
-> +    ASSET_BSA_SHELL = Asset('https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
-> +                            '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Shell.efi',
-> +                            'e526604f0d329b481c6a1f62f7a0db8ea24ce8178b2c6abda8e247425f38775c')
-> +
-> +    def test_aarch64_vbsa_uefi_tests(self):
-> +        """
-> +        Launch the UEFI based VBSA test from an EFI file-system
-> +        """
-> +
-> +        self.vm.set_console()
-> +
-> +        # virt machine wi
-> +        self.set_machine('virt')
-> +        self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on')
-> +        self.vm.add_args('-cpu', 'max','-m', '1024')
-> +
-> +        # We will use the QEMU firmware blobs to boot
-> +        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
-> +        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
-> +        vars_path = self.scratch_file('vars.fd')
-> +        shutil.copy(vars_source, vars_path)
-> +
-> +        self.vm.add_args('-drive', f'if=pflash,format=raw,readonly=on,file={code_path}')
-> +        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
-> +
-> +        # Build an EFI FAT32 file-system for the UEFI tests
-> +        vbsa_efi = self.ASSET_VBSA_EFI.fetch()
-> +        bsa_shell = self.ASSET_BSA_SHELL.fetch()
-> +
-> +        img_path = self.scratch_file('vbsa.img')
-> +        qemu_img = get_qemu_img(self)
-> +        check_call([qemu_img, 'create', '-f', 'raw', img_path, '64M'],
-> +                   stdout=DEVNULL, stderr=DEVNULL)
-> +
-> +        check_call(['mformat', '-i', img_path, '-v', 'VBSA', '::'],
-> +                   stdout=DEVNULL, stderr=DEVNULL)
-> +
-> +        check_call(['mmd', '-i', img_path, '::/EFI'],
-> +                   stdout=DEVNULL, stderr=DEVNULL)
-> +
-> +        check_call(['mmd', '-i', img_path, '::/EFI/BOOT'],
-> +                   stdout=DEVNULL, stderr=DEVNULL)
-> +
-> +        check_call(['mcopy', '-i', img_path, bsa_shell, '::/EFI/BOOT/BOOTAA64.EFI'],
-> +                   stdout=DEVNULL, stderr=DEVNULL)
-> +
-> +        check_call(['mcopy', '-i', img_path, vbsa_efi, '::/Vbsa.efi'],
-> +                   stdout=DEVNULL, stderr=DEVNULL)
-> +
-> +        self.vm.add_args('-drive', f'file={img_path},format=raw,if=none,id=drive0')
-> +        self.vm.add_args('-device', 'virtio-blk-pci,drive=drive0')
-> +
-> +        self.vm.launch()
-> +
-> +        # wait for EFI prompt
-> +        self.wait_for_console_pattern('Shell>')
-> +
-> +        # Start the VBSA tests
-> +        ec_and_wait(self, "FS0:Vbsa.efi", 'VBSA Architecture Compliance Suite')
-> +
-> +        # could we parse the summary somehow?
-> +
-> +        self.wait_for_console_pattern('VBSA tests complete. Reset the system.')
-> +
+>  #if defined(CONFIG_FALLOCATE_ZERO_RANGE)
+>  #include <linux/falloc.h>
+>  #endif
+> @@ -42,17 +45,102 @@
+>  #endif
+>  
+>  /* Prevent overly long bounce buffer allocations */
+> -#define FUSE_MAX_BOUNCE_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 64 * 1024 * 1024))
+> +#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 64 * 1024 * 1024))
+> +/* Small enough to fit in the request buffer */
+> +#define FUSE_MAX_WRITE_BYTES (64 * 1024)
 
-Same comment than on v1:
-https://lore.kernel.org/qemu-devel/5befbd0e-5f0f-41c4-99a7-1cf17bfe5454@linaro.org/
+Is the comment stale now that you moved to two separate buffers?
 
-In case a failing output would not contain any string easy to identify, 
-I'm fine with current patch, but since I didn't receive any answer on 
-previous series, I'm not sure if it has been tried.
+>  /**
+> - * Handle client reads from the exported image.
+> + * Handle client reads from the exported image.  Allocates *bufptr and reads
+> + * data from the block device into that buffer.
+> + * Returns the buffer (read) size on success, and -errno on error.
+> + * After use, *bufptr must be freed via qemu_vfree().
+>   */
+> -static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+> -                      size_t size, off_t offset, struct fuse_file_info *fi)
+> +static ssize_t fuse_read(FuseExport *exp, void **bufptr,
+> +                         uint64_t offset, uint32_t size)
+>  {
+> -    FuseExport *exp = fuse_req_userdata(req);
+>      int64_t blk_len;
+>      void *buf;
+>      int ret;
+>  
+>      /* Limited by max_read, should not happen */
+> -    if (size > FUSE_MAX_BOUNCE_BYTES) {
+> -        fuse_reply_err(req, EINVAL);
+> -        return;
+> +    if (size > FUSE_MAX_READ_BYTES) {
+> +        return -EINVAL;
+>      }
+>  
+>      /**
+> @@ -653,18 +954,12 @@ static void fuse_read(fuse_req_t req, fuse_ino_t inode,
+>       */
+>      blk_len = blk_getlength(exp->common.blk);
+>      if (blk_len < 0) {
+> -        fuse_reply_err(req, -blk_len);
+> -        return;
+> +        return blk_len;
+>      }
+>  
+>      if (offset >= blk_len) {
+> -        /*
+> -         * Technically libfuse does not allow returning a zero error code for
+> -         * read requests, but in practice this is a 0-length read (and a future
+> -         * commit will change this code anyway)
+> -         */
+> -        fuse_reply_err(req, 0);
+> -        return;
+> +        *bufptr = NULL;
+> +        return 0;
 
-Regards,
-Pierrick
+It feels a bit inconsistent to set *bufptr = NULL here, but not in the
+error paths. Both cases depend on it being NULL afterwards, but the
+caller already makes sure that it is NULL when it calls fuse_read().
+
+>      }
+>  
+>      if (offset + size > blk_len) {
+
+Overall, this feels much nicer than v3!
+
+Kevin
+
 
