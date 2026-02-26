@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420E2FD9E1F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 23:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D7DFD9E1E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 23:33:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvkqv-0001Qg-KV; Thu, 26 Feb 2026 18:33:05 -0500
+	id 1vvkrh-0001zQ-N8; Thu, 26 Feb 2026 18:33:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vvkqt-0001PP-Sg
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:33:03 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1vvkrd-0001xo-74
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:33:49 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vvkqr-000874-C7
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:33:02 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-65f980cea07so2160169a12.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 15:33:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772148780; cv=none;
+ id 1vvkrb-000892-PU
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:33:48 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-65c4152313fso2060114a12.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 15:33:47 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772148826; cv=none;
  d=google.com; s=arc-20240605;
- b=Xqa9d1VTESf/NPHpoW6LTfpZCfYI8a9IpCUql14GrmInT0irtI4kkD4A2iOzJYRpnn
- eS6LgoLC8JQeRZyWii7RNiJ7kkGqsA/9PHYaiMqCZ2PFDIryyAr30HnNPiZeuvo1/uBJ
- AYR61LDvudjcVLoQoruyNbZmP2X51xMqotjXpyzgPO1musZJkZuWw0mum8ynGQNKq/Mx
- 1hBIhhxQcxPaejmLd3h6eIlAP9iFCSBUs4MsLGNKIuOIaG7s7pk666DirpTo0h0tV/8N
- tiA5XPMCyrIiK2BvkJ65acyZlCAOrXNnlq2CuiUGnZhFOaMlVAvo1etPDTZ18TyNLSTh
- mWzw==
+ b=hseHx5jqx63J4Eq6miR5tyhZmiI/GU5jsyG3JamgHxdkgYJsPGWglNeBd2gutKLNDO
+ OYwsML9f17KHiS3UFImyNV6CO/4Lcay7Hcxc/gn+sp+lCuD7Ugl/kUEHpdgmrMaSujDS
+ qEvc/oA7RlmewEHAzFyOMFjcIz1O4m+v9/LsL5Z+dN2HtyedIUO6Fo3IhHmF9dkIuefv
+ O8QwRhLGubVvEiiudotHRBNx8z7Kad63lAhHBwmY83WfuJ13LyaAy6/Kje0dXixTJ24P
+ wN70uzxFdXFQph36tY5Dfklq14/tVEq/otcU3ZT7bxrB3W33PhtEMOnKw46ytd4DnsfG
+ f9cA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=R38QMhZ0gEM6+wz+fYRPAJ1LAc/0i3M3WKQv0O4Oed4=;
+ bh=JMf2ZRkTSLHI5o4DU1I+pHxJgLMlTHOF/aTsRAwy9LM=;
  fh=02yfZO3MCi97EyXeoLg1BYIgpUdGEMk3Yh61+offrCA=;
- b=USuBOLAS/9Lfyj9Wy7ds29QCTKoISPMQ4icMQ8d+DZSFjMtpcSM8sv4S69orLsY0Zv
- RCBkjcRX4ZtXDu4fzQ4LrrUL/AGmhSeo5fm2ywigCu28dIrxLFP8YC+dbkLX3304BmI8
- Q7NusGmEoFL53Lx9GLT4bXWm0sJg3ZPEVesxsqLfdVIxqvgue4IHimtf7zbTTGUi7Sfc
- QVOBep+/geYR2EEe3lVkYj456wI9n0tMaRmDutV/3nzHxyOmlk3IxfCk5K8d+ewVCm4O
- EFlYjZi4KYyoMj2qw+W9F+gv5G8jIdvSOi186Gi6ublOFskDelP8xFZeW3LhqbV+TbXl
- 2+4w==; darn=nongnu.org
+ b=fuI7gTzG5n/WoYaeHvNQ4o5QhIoow+njj15QslajPCMNh489FuWbnBxJs4fh3wvJh7
+ gvKpA/8jNLU4obG1AbirpvPtp8aT9PratoIY7LyXHXbrHYxwxJ/cWxTGQxJh7ZILxCpu
+ Bm7/vcS3CVlk6Ng2oQMX3+2rzDUSu01CPz/U/liQ1kyGqkXwCNiJ3DcEGkD2xUhBdyB+
+ 6tkRpFoeXAgG16aQQKXCkdp8jDck2d8jNxMNXzMWR/c95+haMNA4I85vQl2Nr/f8V77r
+ nG+/LVZRpyapZVtVFNUEw1stUWF6AzZbaTkI8jrtCblRT42hSWXtMY9IhXCaCc5Icn02
+ OyCQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772148780; x=1772753580; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772148826; x=1772753626; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R38QMhZ0gEM6+wz+fYRPAJ1LAc/0i3M3WKQv0O4Oed4=;
- b=HN3IU2kH7mwGDQ7P1P5ifa6URnpGMeYc08zZAgm5Ae61x1z8iAAHlKsR3XQlLt7X2e
- XoFojTzpd9mz8Hkw8OxVB+sHIKRzHZAVAA7Yn1H+KDzFfMMsoqX7hy7+iQe9h/ElYxoQ
- x05spVRKIzERO4YNwMAAa24JMdmx3R1u3SW+L6BE5tj/X6Ldy8LF0zRLVnOwggKARxZi
- UGOXR8DBoaYf8WwyB3URlK3642St9q8JTIqPn7IyqSS3OKCXQz/MdWZXNZzf1Rs94VYZ
- W1cTxUHlXECJ7jg456lAywYX5xT6znNuHmqXZCkY56YkX7MsOz/v/K6Pis8u9fbBo/xA
- bg8g==
+ bh=JMf2ZRkTSLHI5o4DU1I+pHxJgLMlTHOF/aTsRAwy9LM=;
+ b=gSuBgdr4B1QgOPGH/2N4hbhtLoVDU2alDsZIPZVU1l1GQCuYm/Y3u/I+mSKqwVm9lu
+ 6uCFL2Y35Wspiq9DXCJE3nvrgvzcBHZBl4B9dHPnNsbSOYPuhcouHb9bynXAmq7w8qhb
+ 2Kb9vnh581Y5dy1LsQo8JJ4Dg6qswXzGvT9LAgaSowyAwFMrcS1tCvPKe6XtCMflVDqu
+ 0mh18d0BvgPO7MS2ijbmawEFd9E/EcUe716hSaTMqZkLCpCh4UyZLsNgU0YgX0WUMG/2
+ uFvHf4m9BguTD0c9qx0jQqWTbEmIuVC7DzLS6NOBzYnhTnvoqEScojlKTaGIJ5P/h//j
+ f1LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772148780; x=1772753580;
+ d=1e100.net; s=20230601; t=1772148826; x=1772753626;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=R38QMhZ0gEM6+wz+fYRPAJ1LAc/0i3M3WKQv0O4Oed4=;
- b=CpG1bcwI7IEiJ2DleU1mpHJQcDJu/fNsP4/0laCRLtQgTs6OkJDTen7+QVr0wWYiKf
- mXVHk7wWJ5RxnZA+hr4fAOY6USdTDyE2yovAi1hLungnYxhU8ooPlER9Ln7V0brKRkXI
- 9l4UStTfjxnRtXEQMI+LPtae/o0vdPNHT5gp7Wisxt5FmjqyH/gMHsU4rj6YJ95Bn19D
- 7JNRyQ+/j2+roqTwTnEc2urrV/1Y6Mak7ifuJ6BN0WrivI6tmBm+tmW+nMmf6wY7sTtS
- 31/Y6kOSzt00z0BfiQd3rOtggJC+THa8lvALNlHOc847HYzUjRTekLoSNXxS3BDkFYFY
- j4Tw==
-X-Gm-Message-State: AOJu0YyOPCo89EuZHPvb0lz55gNrVsWmvZ0kXlW3k+hTBQyDtAtuyHRx
- FW0Cpljmpw+HqTqq8yAUpwDf3Obzp83ymJZmzQtPo3HPw8NN8qWaxrSslyT+xk8oVkRbxVc19j7
- //4wcpFa6Y/JPe52j7ZV059eXsVQVELU=
-X-Gm-Gg: ATEYQzwXCF9t4rssdyOGq86Oa2jKN1UmQy4GF6k2NAPZMJGNqcJvNxsNQ7/CRlPUvCT
- YC/+HamGPuwi+Ou13xwGmlPMt77N2WPzyc7wzN9BfHnCCaBVgSltuuwDei2UiLhitVNf2my7RG/
- s5CtgSfCLUKl/5terzIZFxCoRdYonAKfIEUfewfd2xeAOZTtj1vW/1sm0R0DhOPhXdze9YrTSjQ
- LaV2Rq2KSDe9qtqTjiCM6bUKMnU6kaE84QVgKcGnq/mbMeouWpPJ0m1K5C8Zj+AEk0prl/JSBH9
- o36AL5v5DDAWOLfaNQbCid9HY53dztEgfwz/qXCI5Ft4WJIK
-X-Received: by 2002:a05:6402:2706:b0:65f:aecc:4f1d with SMTP id
- 4fb4d7f45d1cf-65fddceeaa9mr545791a12.24.1772148779618; Thu, 26 Feb 2026
- 15:32:59 -0800 (PST)
+ bh=JMf2ZRkTSLHI5o4DU1I+pHxJgLMlTHOF/aTsRAwy9LM=;
+ b=EH9dMUQpTHMZ9CPrHnjV6F1jEblUqBDQnLu1RodviWGeodjCghWjqXIERxLZ/NQuDQ
+ b3hiByiRpG2gBUzmmCJ3MHKPNFihrm0RYv7mNq2jqrM4KCJQ9uXu4y46025NhLOsUADT
+ VZYB2c8008qV555ieSrflhPYsXxKeq7LK+47X+GBpnO/ZVVS9G6rQ94VPgkDITf6asex
+ dsINWsbliGPn+b2eSRMsTDzvMRVjoTQqxIiHB/i7OWspaX+sQzFEevqpMjW7SG6jf6Rs
+ VO92czojtJCFCy3siXq/eBo3LYeWP1CXpYgX7QB+ZMt4/2yImc42u7KnfXFUktVK+67E
+ XblA==
+X-Gm-Message-State: AOJu0YyFO/NcXi9r6Pfk0zrjvoFFZX1eHjtsvHoWxPeh3+NNcpiNEltd
+ OMAN+DMbnLK7QoQEApNapd0HtuwN/HgEAMIE9VbiuIx1tKPFCSEPqEJLcVa+MJhXaorhVBHX8ze
+ GWFoa1FSYHBD2JEnvSl+yl3gyE2QdZDI=
+X-Gm-Gg: ATEYQzzOOo2nH+uc+0jF0EUJYAvD434swhoucgjTzS1kr7d8rPGU8pzoMui2EvDkaD+
+ YDhkmx2q0/9FEcXAEubxP2f91vbzn7Xi/UbdBtwl4fd+pmehs3uXJFKZyeS5jOAVKjm1Xqpm3xo
+ HkzBZV49PdZdeFRkzNP/wqLpt000SfSL0pn0V6hu21XyXyJ27ia8/nRRWRBXl4geSdX9YSeQYs0
+ 0bKFb7BMbchRV5OCbK9KRqmKkBejD7k//4eo0ARBVSO5yFJY7+aOaHhBQipee7+V3Ai6xXxNPCi
+ to60h9WHPAT9MWG72+Fv50MPMsBhLLJgKWyATA==
+X-Received: by 2002:a05:6402:f11:b0:658:bf8d:c92b with SMTP id
+ 4fb4d7f45d1cf-65fde4cdcfdmr393771a12.31.1772148826274; Thu, 26 Feb 2026
+ 15:33:46 -0800 (PST)
 MIME-Version: 1.0
 References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
- <20260225102016.200654-8-djordje.todorovic@htecgroup.com>
-In-Reply-To: <20260225102016.200654-8-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-12-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260225102016.200654-12-djordje.todorovic@htecgroup.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 27 Feb 2026 09:32:33 +1000
-X-Gm-Features: AaiRm53pZYHqHh_mK_RHsuFk_208oCKEy0uYGj7nqr1br9fbAJuk_LF6xJyQqFA
-Message-ID: <CAKmqyKOr0mbz0xksnO-=n0Z3cGbY0FqPTnwfY-7WaesZKewHwg@mail.gmail.com>
-Subject: Re: [PATCH v2 07/16] hw/riscv: Check endianness for fw_dynamic fields
+Date: Fri, 27 Feb 2026 09:33:19 +1000
+X-Gm-Features: AaiRm52gPpMG35iEd5M1HUdmYsPhtJpel7r8Nsvzry4UWY8RGOy34Ke551-OVEs
+Message-ID: <CAKmqyKO=aQUWZG_DqvCgKYnME6UGVWn6Cyr6z8v1OJ=d84f6ig@mail.gmail.com>
+Subject: Re: [PATCH v2 11/16] linux-user/riscv: Disable vDSO for big-endian
+ targets
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
@@ -98,8 +99,8 @@ Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "thuth@redhat.com" <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -126,76 +127,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Feb 25, 2026 at 8:20=E2=80=AFPM Djordje Todorovic
 <Djordje.Todorovic@htecgroup.com> wrote:
 >
-> For riscvbe target, the fields for OpenSBI's fw_payload
-> need to be in target endian.
-> ---
->  hw/riscv/boot.c         | 14 ++++++++++++++
->  include/hw/riscv/boot.h |  5 +++++
->  2 files changed, 19 insertions(+)
->
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 6dab521a6b..f13264a87f 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -396,19 +396,33 @@ void riscv_rom_copy_firmware_info(MachineState *mac=
-hine,
->      size_t dinfo_len;
->
->      if (riscv_is_32bit(harts)) {
-> +#if TARGET_BIG_ENDIAN
 
-This will need to be done without adding any TARGET_BIG_ENDIAN macros.
-We don't want to have custom built binaries
+Why?
 
 Alistair
 
-> +        dinfo32.magic =3D cpu_to_be32(FW_DYNAMIC_INFO_MAGIC_VALUE);
-> +        dinfo32.version =3D cpu_to_be32(FW_DYNAMIC_INFO_VERSION);
-> +        dinfo32.next_mode =3D cpu_to_be32(FW_DYNAMIC_INFO_NEXT_MODE_S);
-> +        dinfo32.next_addr =3D cpu_to_be32(kernel_entry);
-> +#else
->          dinfo32.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
->          dinfo32.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
->          dinfo32.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
->          dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
-> +#endif
->          dinfo32.options =3D 0;
->          dinfo32.boot_hart =3D 0;
->          dinfo_ptr =3D &dinfo32;
->          dinfo_len =3D sizeof(dinfo32);
->      } else {
-> +#if TARGET_BIG_ENDIAN
-> +        dinfo64.magic =3D cpu_to_be64(FW_DYNAMIC_INFO_MAGIC_VALUE);
-> +        dinfo64.version =3D cpu_to_be64(FW_DYNAMIC_INFO_VERSION);
-> +        dinfo64.next_mode =3D cpu_to_be64(FW_DYNAMIC_INFO_NEXT_MODE_S);
-> +        dinfo64.next_addr =3D cpu_to_be64(kernel_entry);
-> +#else
->          dinfo64.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
->          dinfo64.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
->          dinfo64.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
->          dinfo64.next_addr =3D cpu_to_le64(kernel_entry);
-> +#endif
->          dinfo64.options =3D 0;
->          dinfo64.boot_hart =3D 0;
->          dinfo_ptr =3D &dinfo64;
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index f00b3ca122..6a6b796eee 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -24,8 +24,13 @@
->  #include "hw/core/loader.h"
->  #include "hw/riscv/riscv_hart.h"
+> From: djtodoro <djordje.todorovic@htecgroup.com>
 >
-> +#if TARGET_BIG_ENDIAN
-> +#define RISCV32_BIOS_BIN    "opensbi-riscv32be-generic-fw_dynamic.bin"
-> +#define RISCV64_BIOS_BIN    "opensbi-riscv64be-generic-fw_dynamic.bin"
-> +#else
->  #define RISCV32_BIOS_BIN    "opensbi-riscv32-generic-fw_dynamic.bin"
->  #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
-> +#endif
+> ---
+>  linux-user/riscv/target_elf.h | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 >
->  typedef struct RISCVBootInfo {
->      ssize_t kernel_size;
+> diff --git a/linux-user/riscv/target_elf.h b/linux-user/riscv/target_elf.=
+h
+> index dbbfdf54d3..6f416ac3e2 100644
+> --- a/linux-user/riscv/target_elf.h
+> +++ b/linux-user/riscv/target_elf.h
+> @@ -12,10 +12,16 @@
+>
+>  #ifdef TARGET_RISCV32
+>  #define ELF_CLASS               ELFCLASS32
+> -#define VDSO_HEADER             "vdso-32.c.inc"
+>  #else
+>  #define ELF_CLASS               ELFCLASS64
+> -#define VDSO_HEADER             "vdso-64.c.inc"
+> +#endif
+> +
+> +#if !TARGET_BIG_ENDIAN
+> +# ifdef TARGET_RISCV32
+> +#  define VDSO_HEADER            "vdso-32.c.inc"
+> +# else
+> +#  define VDSO_HEADER            "vdso-64.c.inc"
+> +# endif
+>  #endif
+>
+>  #define HAVE_ELF_HWCAP          1
 > --
 > 2.34.1
 
