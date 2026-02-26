@@ -4,75 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38150FC592F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 11:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5A13FC5933
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 11:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvZM1-0006Fk-OJ; Thu, 26 Feb 2026 06:16:27 -0500
+	id 1vvZSQ-00081w-HA; Thu, 26 Feb 2026 06:23:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvZLw-0006FM-IV
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 06:16:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvZLs-0005SE-Jy
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 06:16:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772104575;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=8zhsW3B3olPZZMPqApfeXMrprbaC3NE2DEnyEUTeuP8=;
- b=KfRGCRb1AqAims0EEHfQZNf7uc9uStwZgJ5Fhu3xbP2jMbn1RjzOK+rTDOJJZS6NIGYiNC
- kEODF7QH7y3XCpvdCEpqCTyyV5Ulge4dpfM+HsSd6ZxWooLzKHfRc6qBdGs9brVURkmabT
- OggzG4i26uc02OrR2j2cz3ozLIWs/nA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-YwfaSNJNNi2wtQS-Di2y1w-1; Thu,
- 26 Feb 2026 06:16:11 -0500
-X-MC-Unique: YwfaSNJNNi2wtQS-Di2y1w-1
-X-Mimecast-MFC-AGG-ID: YwfaSNJNNi2wtQS-Di2y1w_1772104570
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68CAF1800341; Thu, 26 Feb 2026 11:16:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.97])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 929971800465; Thu, 26 Feb 2026 11:16:07 +0000 (UTC)
-Date: Thu, 26 Feb 2026 11:16:04 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: John Snow <jsnow@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Qemu-block <qemu-block@nongnu.org>, Peter Lieven <pl@dlhnet.de>
-Subject: Re: block/nfs.c and libnfs vs Fedora 43 (was: Re: [PULL v2 00/19]
- Python patches)
-Message-ID: <aaArdNcA8Iq9DrBA@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvZSM-00080q-Id
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 06:22:58 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvZSL-0006cN-4O
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 06:22:58 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-64aedd812baso464635d50.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 03:22:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772104976; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BK93KUoKBxnRWNoVmYj+eVovXb4gju6Iyg+gfki/3g7tMTo/8DRv7ARr98ZruZDBOJ
+ o4QJEsbtkwltcv+eaz6YKKdFifx+eF0/VtbrZRUYo2ElFt9D1pr0YrmJ5Qst7ve6b2la
+ 1gqpRwI14vH7LySvPYxuPVYKi/ueocfwRvvL9bLIHTCa/zw8LqtwaqDQTX1Kp+a3D22C
+ Uvja39y9bO7yoONVCB15/K9D6n7dkNICjCtFH88WzO4WMGEeWm0gpt4GFeBUVGThOX1f
+ FCZ/8O5AfMYylR5/gr1PpCebNxjcj2UXdGQ35BWscGO7PW6WZiCm3YYLHdAkHo2zCm1e
+ FRPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/SiJRGb+OvNY68jQ3xeAkk3Ef9PVJlg2ZsyyEjFofvU=;
+ fh=EyLUZsdvxUvmIXohxHVBSxxRCCRJss8LIEsNGHnQQzY=;
+ b=ALHqB1j7xn7S/H4O/orDkwub8KTO1lX3IYa5xS8TmRT1Ii3adQSDDdwkTgkNcDyDDH
+ sky4vUGK1J3Fi+cd7a2yOSjIOLewd1tcE3cPl90ut3QmEaRT0zCgbHeLbDGdz4Yvvk6s
+ g6C/TaZcCIh+pEAyI1vulC6Hu+WsAlE5xTyBPfqYAfp3UZ8UZldVm18F2+jhCB+Pka9R
+ W8xz9mjmvHQAfC2vXNixQ/WC0c6d/r6M/HhY2uA1hxgIZI3Zq07znHSD+PxFUCDrZRJj
+ Pw0eG9g066k+DY0YfcabJ/At40e3Q1qoJYgfFnbf7nhjGq6fiyuglELWtiBobJchcERb
+ QQjw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772104976; x=1772709776; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/SiJRGb+OvNY68jQ3xeAkk3Ef9PVJlg2ZsyyEjFofvU=;
+ b=euGghUO91iGraOl8JoLvfAmidFTOkBSwUL//Hh+AliHCpgro4eN4EdlL24oK7Mao7d
+ hs6o9OYSvGFCfKEeTGfVWt7Ot1A5u8NrxK6t2byFPR+oIUu8MWEzBeybLr8A10hqzQji
+ MninIjJcqfT5DbFpO4kU/CqxllYKQoKYKlWv3nb81HFX33tF+ZHIyr4XSg747u8RxNQ5
+ Fb2Y3Y4HisOWjsiO8jOi94UoKIY9VPOt0E9xMJA7EMd7CRXjHPrT2GQprooSscX/MRP4
+ Zs1+XRLQgC/qOtjTmHVCjXTqF4+wZ2DRBZzYNQRYR9NzKB06HbyUmsrHtFqFbfkRxIn9
+ jo8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772104976; x=1772709776;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/SiJRGb+OvNY68jQ3xeAkk3Ef9PVJlg2ZsyyEjFofvU=;
+ b=np2b3u0b+Su2srDIRX0PGVL0hfuKo2jDyH60cIAG/XwvvxMunCdimElFe+WcbyGE5/
+ cxyzD5gGKUBcBmDDm6GExClSQJuw3jL18MvkETVvw4iAutXWy7ngVqF7OLEHOFeddvBw
+ +CnrLXtfQsCBktoRwmYGzA+kkNtKgg1CyQGLfjybXNU+zn/MVyssD6yLSX3z2kxvi2Sy
+ H5MQlbn4IbRKizymend3cdYLR/4mdUg628aBeBBIRx+/wVTkw7Ewk5TJfppdOrh81DCD
+ ur6cTBs8OoI5k2kPk6cYsoArFb/MegK+rrYjtXjnr6Lr7HQcRLe8pHkx/C37hSTqkCwI
+ iYXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3J9AkpTBOCQ0SEQUzpKLNHxnVApmaxOVlpq1oMaMS7ctQUd8JJlzeebWRwQ10Wwf8ogajnH4JcpK0@nongnu.org
+X-Gm-Message-State: AOJu0YxF9WI5YgOsMGcmex7NgtQqas1fHpPK++gabGT3yBnlu2FmV6U5
+ xDZujPFesis/gbD2tN6d+T8pB2DgdZhgvlAMQ4SdkDWy7uqagAXeeWu8hGgWwtaIJMghVgyl6sg
+ Znz3HYKfANWg0mPM3YUVYXS2Qp9V0+OFL5Io/vqHrZtyl4PUSzrAT1tE=
+X-Gm-Gg: ATEYQzylx0UNc76EI6Cb3sjAYN5RQEzp/Ox6nHBl8eOIZQxnmWB6DOxJQtWdKU9DL7Q
+ 8w9ikxsxy3+J3VPuffxaXe2MMSn78al4G9gXkAVP2XeaNjAqLIPoA4Dv/y9lulXeKekyrnqhCTp
+ mo844t/dfXHogdLS3ncrullQlnzGDfz9x3l6xwWgm4NLKxMxPjZqj3M+l4cxQRNKHmxWa1Av4Vq
+ uRFpLEHGYauUM3DRqgPreXfRFKhWjodogDMsBHXeOZ05eh9tZI5tYvq+mUE8cPsTDFXTbpTLlKw
+ nehkeXqm3HrMI0oFjWuup1b6lF4GnIyaSZEI1K7Y9W8xSIZt+MFGzC2+88LnWIDqTNtyeEdkq/g
+ seg==
+X-Received: by 2002:a05:690e:1243:b0:646:5127:9d14 with SMTP id
+ 956f58d0204a3-64cb7c88f47mr1177601d50.79.1772104975720; Thu, 26 Feb 2026
+ 03:22:55 -0800 (PST)
+MIME-Version: 1.0
 References: <20260224181440.832943-1-jsnow@redhat.com>
  <CAFEAcA-zsPN0Pbg9USt2dWCD9+iONr=bCGDaxomysn3ubqx=gA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-zsPN0Pbg9USt2dWCD9+iONr=bCGDaxomysn3ubqx=gA@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ <aaArdNcA8Iq9DrBA@redhat.com>
+In-Reply-To: <aaArdNcA8Iq9DrBA@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Feb 2026 11:22:44 +0000
+X-Gm-Features: AaiRm53-r08IOIgbyXGrjEjDU_Pu38wjRERWwtM75V9AZCV41zY76Kc6G1dc9yQ
+Message-ID: <CAFEAcA9dBtOsgDL+0WvyB9GHVR=Y02VbTvPA-fjfiEkog1Khfg@mail.gmail.com>
+Subject: Re: block/nfs.c and libnfs vs Fedora 43 (was: Re: [PULL v2 00/19]
+ Python patches)
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: John Snow <jsnow@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>, 
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Qemu-block <qemu-block@nongnu.org>, Peter Lieven <pl@dlhnet.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,100 +120,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 10:44:58AM +0000, Peter Maydell wrote:
-> On Tue, 24 Feb 2026 at 18:14, John Snow <jsnow@redhat.com> wrote:
-> >
-> > The following changes since commit afe653676dc6dfd49f0390239ff90b2f0052c2b8:
-> >
-> >   Merge tag 'audio-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-02-23 14:03:50 +0000)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/jsnow/qemu.git tags/python-pull-request
-> >
-> > for you to fetch changes up to 4e55bb4be53bc7a5e3fe1429af12d2e3090049a5:
-> >
-> >   python: add setuptools and wheel dependencies (2026-02-24 13:11:29 -0500)
-> >
-> > ----------------------------------------------------------------
-> >
-> > ----------------------------------------------------------------
-> 
-> Hi -- it looks like this pullreq may have broken the "coverity" job
-> that (run on a separate schedule from main CI) does a QEMU build to
-> upload to the coverity scan service:
-> 
-> https://gitlab.com/qemu-project/qemu/-/jobs/13264087007
-> 
-> It fails during QEMU configure:
-> 
-> Dependency libnfs found: NO. Found 16.2.0 but need: '<6.0.0' ;
-> matched: '>=1.9.3'
-> Run-time dependency libnfs found: NO
-> ../meson.build:1150:11: ERROR: Dependency lookup for libnfs with
-> method 'pkgconfig' failed: Invalid version, need 'libnfs' ['<6.0.0']
-> found '16.2.0'.
-> 
-> I'm guessing this is because:
->  * the coverity job runs on the amd64-fedora-container
->  * we just upgraded our Fedora container to F43
->  * coverity configures with --enable-libnfs
+On Thu, 26 Feb 2026 at 11:16, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Thu, Feb 26, 2026 at 10:44:58AM +0000, Peter Maydell wrote:
+> > I'm guessing this is because:
+> >  * the coverity job runs on the amd64-fedora-container
+> >  * we just upgraded our Fedora container to F43
+> >  * coverity configures with --enable-libnfs
+>
+> Do we really need to be hardcoding configure options ?
+>
+> It is a pretty random subset of options, compared to what gets
+> enabled in the build.
 
-Do we really need to be hardcoding configure options ?
+The comment in scripts/coverity-scan/run-coverity-scan gives the
+rationale:
 
-It is a pretty random subset of options, compared to what gets
-enabled in the build.
+# We configure with a fixed set of enables here to ensure that we don't
+# accidentally reduce the scope of the analysis by doing the build on
+# the system that's missing a dependency that we need to build part of
+# the codebase.
 
-Originally we had the hand-built Dockerfile, but now nearly all
-our dockerfiles are auto-generated by lcitool, so we get the full
-set of QEMU deps on every distro. 
+And indeed this thread shows that it worked -- without the
+--enable-libnfs we would simply not have noticed that we'd
+silently stopped scanning block/nfs.c. Now we get to make an
+active decision that we're OK with that.
 
-There is a risk that we break a meson/configure chck somewhere,
-but IMHO that's not something our coverity needs to be validating
-directly. If that happens and we later fix it, coverity would
-pick up any flaws that weere introduced in the window it was
-broken.
-
->  * in meson.build we enforce libnfs < 6.0.0
->  * F43 ships with a newer libnfs
-> 
-> The "not libnfs v6" restriction was added by thuth in
-> commit e2d98f257138 in 2024 because of a big API change in
-> libnfs v6. The theory was that this was a temporary hack
-> until somebody updated block/nfs.c to handle the new API.
-> Over a year later, nobody has touched block/nfs.c...
-> 
-> I guess for the moment we should fix the Coverity build
-> by dropping the --enable-libnfs (and accepting that we
-> don't scan block/nfs.c any more). For the longer term:
-> 
->  * does anybody want to update block/nfs.c ?
->  * or should we mark it as deprecated and plan to eventually
->    drop it, given that the set of supported distros you can
->    build it on is rapidly shrinking ?
-
-MAINTAINERS file marks it as "maintained" but given the ongoing
-brokeness that feels outdated :-(
-
-In Fedora we've been carrying a patch to QEMU to enable libnfs
-v6.
-
-  https://src.fedoraproject.org/rpms/qemu/blob/rawhide/f/0002-nfs-Add-support-for-libnfs-v2-api.patch
-  https://src.fedoraproject.org/rpms/qemu/blob/rawhide/f/0008-Revert-meson.build-Disallow-libnfs-v6-to-fix-the-bro.patch
-
-I vaguely recall someone saying there was problem with this patch but I
-can't remember details. We've had no bug reports AFAIR, but that could
-just mean it has few/no users to begin with.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+thanks
+-- PMM
 
