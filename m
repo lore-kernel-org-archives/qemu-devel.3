@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCDBFD8FCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06451FD8FCF
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdid-0005Qi-1G; Thu, 26 Feb 2026 10:56:03 -0500
+	id 1vvdiX-0005PR-8n; Thu, 26 Feb 2026 10:55:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiV-0005Ol-74
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:55 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1vvdiS-0005OA-Qr
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:53 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiS-0003mE-AD
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:54 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4398913af88so940998f8f.2
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:51 -0800 (PST)
+ id 1vvdiR-0003lg-2w
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:52 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-439857ec679so900176f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121351; x=1772726151; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772121349; x=1772726149; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZfBUJaYraA8yxuxaiXVVUn603JpjW9lcSMUyJUScvg0=;
- b=H+zAsPKnzipjVL8CmSxqh3n34WT8ctXV0UoyzUyzt9vKsbxUefrP4Drt8PJydxX9MH
- 9DntlvTK1IJDsgklsxPUKZeGdIf4x0ErSMy8F9cdr4LEEw1ec9MKoq47GKpcM7cOIXja
- Yh7LjfRpPVpQT1XBtFNBDI7IJYuhPRPjyNjYOTftBKFULOXnh/jqtwbQZB+yDu2mSqMD
- fCAuBOhqy53gQtWSrW2UOHUiDww/aH/THL0hddaJdtN7c8RIWcMpaeojPo2rt9dAdE8G
- Mp6UJtDiYlJxZYSdSeLR1DGvhPnsWNDw6BptxjfAUymvt6YPNMEI9+9+L2RGTp3rgkvR
- 0tvw==
+ :reply-to; bh=+W4n7F0RdzIOjtiRGCeQo/5csBStB2/lMq2PpMdFY+o=;
+ b=v9dbha9ZYbiD0/GerfdKbdNhhaXBIKL6iPYP09Nezm9nRD9LTMuWpi8uvUaH52yc+9
+ RFRb+a89WIjUO+MpZOIebquuFaG2dUdjiVTvIAXW8bqJpk41GJBJaRGrOwwxlddYL+3l
+ duciEoqZu57ZDlhVkfbTEnwVP/vReg6nKTl5sxODM/0WzNOGti7uJEceMy2SWAXmsn7K
+ 6t8VYMSKC7msNPlS25WCswyUjRfxEv2pyestipia/f6svxMV5KgRj7wKXqS6GHdqLw34
+ m1aym04yfyTtmgQW84FHEYpZk0QKj/rzr53oTH+iYOs2++7zT9yvhWaOrq7brLFRBi9C
+ N8iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121351; x=1772726151;
+ d=1e100.net; s=20230601; t=1772121349; x=1772726149;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZfBUJaYraA8yxuxaiXVVUn603JpjW9lcSMUyJUScvg0=;
- b=QeSXUmp4O87sTb9JPmsF954+5JTCgPL89EJNjIzD2sHOXRi3qUpW3jF0bMNeDypfwz
- Db9twb42zap1qwHu8dn6aoko9Hw0aLUhBBqSaapjEcjPdFf4huKtOAg9M0yxjca2uUhx
- wygK4dKwDLFeX6oGm74ZHRXUO8OE7j1PlS3viRKu/vdd664JQaOB1UHUnnsYkR/xfczA
- zkj4HMZ+01p8ssYIZNSVKARDjLGNTdKSYBL7R7n+Prm6sDYrovjhUDuZhMx4F6dS4oyY
- gRN5fRpaGw5CvxOnwTC9ZtywvqoJBW+Xllcp0hZ7sbmY/+qyqUQECKTq2srsuLZ6xbBK
- pGtw==
-X-Gm-Message-State: AOJu0YxFl9BoAG49kSHarfI5TuhGlljrRLJ1RFA+tjh78O4TvAzZ65sY
- HFWxgVp2vtNmMjCS1beQpyMhxd8poQuGT6Ji8+STqgOdLgiz1F6U7y2hc+RyzVBHVXLRPV8bzi9
- kVwwC
-X-Gm-Gg: ATEYQzz0I2Daj105BycRpPGHQLWYdB191Qi69XFwzd9YiaFD9RnqYEyG6ku4IOvP3+v
- TChJHw4VzDt2XGiCULbNEi8jvegLJpR9ZJvoY0wHo4JoDi5dkhoiUg379fVRh+aeqAZKBBlwcPp
- 89KjmcV3zP8ugoTb4swDTeDfKdE9glvj+sujdhQdNnhoNorjl5y0nRN/oKXCNeMtKdHGWxP8gLs
- id+RGTWrXFUe/VKgDKyqqC2hxK3YTMVVkmj0gb54lIHw+mBPMdKR6zpse92R4Wczz8PNwxqY/zK
- l4wtfIBozt2G5UFRw3lSkDkut0SVeMgeZQX+KDaFg9YREhtEMFAE8xRPXZTWqj/jeDlO1kcZHqk
- YPtc3heeDq5owu9eNWLwTrroap4wJtUJ4OBqSSX/l3U0c3Dur45CYvQkZm4t4O5QspvUxWSpipt
- AdzmTybh4AVUDZJE3gr0ohuB7CcVV5X8FRRsdn4h9/GzRNBwjPgBv++QUdYQjc/FKwg9X/OZaJV
- cDM4ztCag5Vj7wvM7QHimAhzr2gBrQ=
-X-Received: by 2002:a05:6000:290b:b0:439:8d77:4dad with SMTP id
- ffacd0b85a97d-43994305b07mr8859477f8f.55.1772121350521; 
- Thu, 26 Feb 2026 07:55:50 -0800 (PST)
+ bh=+W4n7F0RdzIOjtiRGCeQo/5csBStB2/lMq2PpMdFY+o=;
+ b=f/GR7p7WdMTgCKPS0stORyiUPRWFuGbM4v27Bl2VhBmPOo9/3zlDqYsa8x93wRSQT2
+ 0Fa5YRr+oDuW0fYo7lVvBinagV0/l8mv98kFF9g+YQkQq4TtEhZSHXjlOgM66MUoMnKw
+ c8TWdo17an+7CHCxAjRPerBilZ365JHgNXt8TFeZxW9ZgesyWGyExhKQwRnZqujhXKJv
+ pPQX4YIp8HFrDsvm8/0/ifU7SftN4avXz5oK5iZ6w6oNcf3kCiMT+2OWrFU5Jutih5n2
+ mG8kFyDaC7mVYNSw+OdM172PoPI1YhDzikJ5SPB5IlefJ3WflJsoGzaffiiyX2v202n/
+ qMnA==
+X-Gm-Message-State: AOJu0YxNIfEWVn4iB8lc2Rzps6EknnIEqGKOqQuqWHYyScYUMVbJgISj
+ libpsS/bTRPKH4kec7vUe1F+5ppwzdCSyOaSQ7TjeCf74AxVFZ+iNrD2j83Ju8PG1auyjq2Q4RB
+ GQcz3
+X-Gm-Gg: ATEYQzyXjKxev7fBrZn50LgcLVrvB+6XMqIy2pIhGSc4vovCCShIyLomWGhOCAHnUyL
+ 1a8am0O9b07ZO8BTewnuWA+TJpCVYmyl8fnnXAFbYMn6MgDMdVb3S9MKbJgjya2HH6+TiC94AgJ
+ j/teWbxHk9UJePwLx//33HRWyTPX0c5U/DtypjZ1qlSR0jYIZ4J5lvD+4FPquZLLuhvFAFPdtSS
+ V/rPjBtrxSb6jxkD+6ykIpA9WT3/roR7oLpJvE90OaAb4KQMt7mqTfuchDYYfaOuFhetBHkTyCc
+ +uspYozI4V9dqaWbHNHTctigpKCcGLVCqZWOSDpwz64z3wXHm0LPkDeXe/4S2K3oPSvTypjK5Nc
+ ssDsEdg5PlZEcf83HavgnNDANg5Joym1aJrs0vEFTQ3FUZIcU0tSvHht0h76oFSkPReHOIR1bWe
+ EplLu5s5e7qtL0CdM4tASBs/kpOeFyU5VWbn4XM4h838NCYBHSKzjKcZ1R/OJEGmTshMtu83A0Y
+ wlv0OVDi+k8DRZ0sHRgrkWTzYQTqOs=
+X-Received: by 2002:a5d:5d85:0:b0:430:f742:fbc7 with SMTP id
+ ffacd0b85a97d-439942aa2bcmr8986689f8f.14.1772121348540; 
+ Thu, 26 Feb 2026 07:55:48 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.49
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:49 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:47 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/20] target/arm: Move kvm test out of cpu_arm_set_sve
-Date: Thu, 26 Feb 2026 15:55:28 +0000
-Message-ID: <20260226155535.1171290-14-peter.maydell@linaro.org>
+Subject: [PULL 11/20] target/arm: Move kvm_arm_sve_get_vls within kvm.c
+Date: Thu, 26 Feb 2026 15:55:26 +0000
+Message-ID: <20260226155535.1171290-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
 References: <20260226155535.1171290-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,112 +102,142 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Introduce a set of stub property callbacks for when we really
-don't want to be able to enable SVE.  Register the real or stub
-funtions in aarch64_add_sve_properties depending on whether or
-not SVE is available.
-
-Adjust aarch64_a64fx_initfn to initialize the set of supported
-vector sizes before calling aarch64_add_sve_properties.
+Prepare to adjust the invocation point and visibility.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260216034432.23912-6-richard.henderson@linaro.org
+Message-id: 20260216034432.23912-4-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu64.c     | 48 ++++++++++++++++++++++++++++++++++++------
- target/arm/tcg/cpu64.c |  2 +-
- 2 files changed, 42 insertions(+), 8 deletions(-)
+ target/arm/kvm.c | 108 +++++++++++++++++++++++------------------------
+ 1 file changed, 54 insertions(+), 54 deletions(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 209ab5c344..58215216c5 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -300,6 +300,30 @@ static void cpu_arm_set_vq(Object *obj, Visitor *v, const char *name,
-     vq_map->init |= 1 << (vq - 1);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index c46ee9620b..2b74901d54 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -243,6 +243,60 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
+     return ret;
  }
  
-+static void prop_bool_get_false(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
++uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
 +{
-+    bool value = false;
-+    visit_type_bool(v, name, &value, errp);
-+}
++    /* Only call this function if kvm_arm_sve_supported() returns true. */
++    static uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
++    static bool probed;
++    uint32_t vq = 0;
++    int i;
 +
-+static void prop_bool_set_false(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    bool value;
++    /*
++     * KVM ensures all host CPUs support the same set of vector lengths.
++     * So we only need to create the scratch VCPUs once and then cache
++     * the results.
++     */
++    if (!probed) {
++        struct kvm_vcpu_init init = {
++            .target = -1,
++            .features[0] = (1 << KVM_ARM_VCPU_SVE),
++        };
++        struct kvm_one_reg reg = {
++            .id = KVM_REG_ARM64_SVE_VLS,
++            .addr = (uint64_t)&vls[0],
++        };
++        int fdarray[3], ret;
 +
-+    if (visit_type_bool(v, name, &value, errp) && value) {
-+        error_setg(errp, "'%s' feature not supported by %s on this host",
-+                   name, current_accel_name());
++        probed = true;
++
++        if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
++            error_report("failed to create scratch VCPU with SVE enabled");
++            abort();
++        }
++        ret = ioctl(fdarray[2], KVM_GET_ONE_REG, &reg);
++        kvm_arm_destroy_scratch_host_vcpu(fdarray);
++        if (ret) {
++            error_report("failed to get KVM_REG_ARM64_SVE_VLS: %s",
++                         strerror(errno));
++            abort();
++        }
++
++        for (i = KVM_ARM64_SVE_VLS_WORDS - 1; i >= 0; --i) {
++            if (vls[i]) {
++                vq = 64 - clz64(vls[i]) + i * 64;
++                break;
++            }
++        }
++        if (vq > ARM_MAX_VQ) {
++            warn_report("KVM supports vector lengths larger than "
++                        "QEMU can enable");
++            vls[0] &= MAKE_64BIT_MASK(0, ARM_MAX_VQ);
++        }
 +    }
++
++    return vls[0];
 +}
 +
-+static void prop_add_stub_bool(Object *obj, const char *name)
-+{
-+    object_property_add(obj, name, "bool", prop_bool_get_false,
-+                        prop_bool_set_false, NULL, NULL);
-+}
-+
- static bool cpu_arm_get_sve(Object *obj, Error **errp)
+ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
  {
-     ARMCPU *cpu = ARM_CPU(obj);
-@@ -309,12 +333,6 @@ static bool cpu_arm_get_sve(Object *obj, Error **errp)
- static void cpu_arm_set_sve(Object *obj, bool value, Error **errp)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
+     /* Identify the feature bits corresponding to the host CPU, and
+@@ -1914,60 +1968,6 @@ bool kvm_arm_mte_supported(void)
+ 
+ QEMU_BUILD_BUG_ON(KVM_ARM64_SVE_VQ_MIN != 1);
+ 
+-uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
+-{
+-    /* Only call this function if kvm_arm_sve_supported() returns true. */
+-    static uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
+-    static bool probed;
+-    uint32_t vq = 0;
+-    int i;
 -
--    if (value && kvm_enabled() && !kvm_arm_sve_supported()) {
--        error_setg(errp, "'sve' feature not supported by KVM on this host");
--        return;
+-    /*
+-     * KVM ensures all host CPUs support the same set of vector lengths.
+-     * So we only need to create the scratch VCPUs once and then cache
+-     * the results.
+-     */
+-    if (!probed) {
+-        struct kvm_vcpu_init init = {
+-            .target = -1,
+-            .features[0] = (1 << KVM_ARM_VCPU_SVE),
+-        };
+-        struct kvm_one_reg reg = {
+-            .id = KVM_REG_ARM64_SVE_VLS,
+-            .addr = (uint64_t)&vls[0],
+-        };
+-        int fdarray[3], ret;
+-
+-        probed = true;
+-
+-        if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
+-            error_report("failed to create scratch VCPU with SVE enabled");
+-            abort();
+-        }
+-        ret = ioctl(fdarray[2], KVM_GET_ONE_REG, &reg);
+-        kvm_arm_destroy_scratch_host_vcpu(fdarray);
+-        if (ret) {
+-            error_report("failed to get KVM_REG_ARM64_SVE_VLS: %s",
+-                         strerror(errno));
+-            abort();
+-        }
+-
+-        for (i = KVM_ARM64_SVE_VLS_WORDS - 1; i >= 0; --i) {
+-            if (vls[i]) {
+-                vq = 64 - clz64(vls[i]) + i * 64;
+-                break;
+-            }
+-        }
+-        if (vq > ARM_MAX_VQ) {
+-            warn_report("KVM supports vector lengths larger than "
+-                        "QEMU can enable");
+-            vls[0] &= MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+-        }
 -    }
 -
-     FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, SVE, value);
- }
- 
-@@ -471,7 +489,23 @@ void aarch64_add_sve_properties(Object *obj)
-     ARMCPU *cpu = ARM_CPU(obj);
-     uint32_t vq;
- 
--    object_property_add_bool(obj, "sve", cpu_arm_get_sve, cpu_arm_set_sve);
-+    /*
-+     * For hw virtualization, we have already probed the set of vector
-+     * lengths supported.  If there are none, the host doesn't support
-+     * SVE at all.  In which case we register a stub property, to allow
-+     *   -cpu max,sve=off
-+     * to always be valid.
-+     *
-+     * For TCG, this function is only called for cpu models which
-+     * support SVE.  The error message in the stub is written
-+     * assuming host virtualiation is being used.
-+     */
-+    if (cpu->sve_vq.supported) {
-+        object_property_add_bool(obj, "sve", cpu_arm_get_sve, cpu_arm_set_sve);
-+    } else {
-+        assert(!tcg_enabled());
-+        prop_add_stub_bool(obj, "sve");
-+    }
- 
-     for (vq = 1; vq <= ARM_MAX_VQ; ++vq) {
-         char name[8];
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index fa80e48d2b..84857fb706 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -524,10 +524,10 @@ static void aarch64_a64fx_initfn(Object *obj)
-     cpu->gic_pribits = 5;
- 
-     /* The A64FX supports only 128, 256 and 512 bit vector lengths */
--    aarch64_add_sve_properties(obj);
-     cpu->sve_vq.supported = (1 << 0)  /* 128bit */
-                           | (1 << 1)  /* 256bit */
-                           | (1 << 3); /* 512bit */
-+    aarch64_add_sve_properties(obj);
- 
-     cpu->isar.reset_pmcr_el0 = 0x46014040;
- 
+-    return vls[0];
+-}
+-
+ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
+ {
+     uint64_t vls[KVM_ARM64_SVE_VLS_WORDS] = { cpu->sve_vq.map };
 -- 
 2.43.0
 
