@@ -4,95 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE396FD9E1E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 23:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420E2FD9E1F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 23:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvkof-0000LX-Gd; Thu, 26 Feb 2026 18:30:45 -0500
+	id 1vvkqv-0001Qg-KV; Thu, 26 Feb 2026 18:33:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vvkoQ-0000Ke-MF
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:30:30 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1vvkqt-0001PP-Sg
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:33:03 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vvkoO-00081C-Di
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:30:30 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-65c4152313fso2056877a12.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 15:30:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772148627; cv=none;
+ id 1vvkqr-000874-C7
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:33:02 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-65f980cea07so2160169a12.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 15:33:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772148780; cv=none;
  d=google.com; s=arc-20240605;
- b=OcnpO69QfuyfQdJ+vxrbecyJm442c7w/P+B1O4wiKo56pKxwJFPtIkSCGmBqOJIkXd
- ybUKMQQd3vKDnroK+GbJ6XzKyFH8CpbOdfKIvnHB0zZC3FIVcN3HjPeiWD2GzuaGF5Bv
- MfxUJTzA1f3EgdJfczPi1QmBi/tT5couFURPAORQAVl9zE9p4T46lFNXWf+UT24FjYfk
- cmkn9ZCBq/o4vEM9haHNIuzvSmdQxZe3OzlMK7BDbLKwni9SijVssGTadziYYSbvVb82
- NKW73GZV0sz2kVaKkfEEC3/bhS/IcwyiESQYUy4w0fGmgjHgHAR3a7Eq8zVdjSBPwA1c
- if4Q==
+ b=Xqa9d1VTESf/NPHpoW6LTfpZCfYI8a9IpCUql14GrmInT0irtI4kkD4A2iOzJYRpnn
+ eS6LgoLC8JQeRZyWii7RNiJ7kkGqsA/9PHYaiMqCZ2PFDIryyAr30HnNPiZeuvo1/uBJ
+ AYR61LDvudjcVLoQoruyNbZmP2X51xMqotjXpyzgPO1musZJkZuWw0mum8ynGQNKq/Mx
+ 1hBIhhxQcxPaejmLd3h6eIlAP9iFCSBUs4MsLGNKIuOIaG7s7pk666DirpTo0h0tV/8N
+ tiA5XPMCyrIiK2BvkJ65acyZlCAOrXNnlq2CuiUGnZhFOaMlVAvo1etPDTZ18TyNLSTh
+ mWzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Gl956GU9vtTgDHI735C3PJU5IFAdthrkMFyf9VEdxnc=;
- fh=6v8jo8vqcOvg90uRAPe+xGKCBKWCBssDw2Rjh0853fw=;
- b=cT7v54zW6+PXD0f8hj2IjGMEHlRstjK7MexwPfY/F1C7IsuvB+Hnf3U11ePaMALB6B
- TyeOZNGgbYeBehlbsK3xgCHGq+2AgjJeUk3lW733IonOz2E5qq4oqS/40+eu02C4QBOj
- Rzqb3Gb8Trd4uk0TmSKPQivXp44aumb7KRN+5tCUK5dsohX0a3WI7hZxw8LQSmIHV+Hz
- bdwkdV+/SJRcxNjahCkY0ggWH1YA3EjV+FaedjEU92yGowYuT8jC17hitSNosOcBnSG/
- HutXdE6Cm4Yzr2MLjSOc0aRIzmL/0MncNlisGSxQthraXT3I9CbiGe9o74w41zus/bSx
- sgeg==; darn=nongnu.org
+ bh=R38QMhZ0gEM6+wz+fYRPAJ1LAc/0i3M3WKQv0O4Oed4=;
+ fh=02yfZO3MCi97EyXeoLg1BYIgpUdGEMk3Yh61+offrCA=;
+ b=USuBOLAS/9Lfyj9Wy7ds29QCTKoISPMQ4icMQ8d+DZSFjMtpcSM8sv4S69orLsY0Zv
+ RCBkjcRX4ZtXDu4fzQ4LrrUL/AGmhSeo5fm2ywigCu28dIrxLFP8YC+dbkLX3304BmI8
+ Q7NusGmEoFL53Lx9GLT4bXWm0sJg3ZPEVesxsqLfdVIxqvgue4IHimtf7zbTTGUi7Sfc
+ QVOBep+/geYR2EEe3lVkYj456wI9n0tMaRmDutV/3nzHxyOmlk3IxfCk5K8d+ewVCm4O
+ EFlYjZi4KYyoMj2qw+W9F+gv5G8jIdvSOi186Gi6ublOFskDelP8xFZeW3LhqbV+TbXl
+ 2+4w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772148627; x=1772753427; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772148780; x=1772753580; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Gl956GU9vtTgDHI735C3PJU5IFAdthrkMFyf9VEdxnc=;
- b=itwRxwmfbqCxT0IOLYVkdWC0w0YxtPl/vf5NYzigH7j+MiH3rIh3nw3iIQgZdYYnFS
- +b6RVT4xuIM5b/kIqdnsEOJAMxHADFwimsNnDWAyTbGYAXK5muAXI1kPDAm1RH0oc1tm
- 1kGJ/wjPul125zG1r9eqPv/sCho83LmUUnblR1qiSauYI+wlLq6My0aBIo0Oo2KRvW4c
- Fk0xI+iwPkX2OKmfQlSvGDBMHaZ2jHDydj8zfTdXsr8sjThw8f3Ab3ZyHzpCS57CB9QE
- X+6lkYjLBn/5aI5Mk+SnRUrH7TFOdbh+Ag3xZUy4iSq+IDEqw1dBOcIXQDofBU4hU6LJ
- X4Og==
+ bh=R38QMhZ0gEM6+wz+fYRPAJ1LAc/0i3M3WKQv0O4Oed4=;
+ b=HN3IU2kH7mwGDQ7P1P5ifa6URnpGMeYc08zZAgm5Ae61x1z8iAAHlKsR3XQlLt7X2e
+ XoFojTzpd9mz8Hkw8OxVB+sHIKRzHZAVAA7Yn1H+KDzFfMMsoqX7hy7+iQe9h/ElYxoQ
+ x05spVRKIzERO4YNwMAAa24JMdmx3R1u3SW+L6BE5tj/X6Ldy8LF0zRLVnOwggKARxZi
+ UGOXR8DBoaYf8WwyB3URlK3642St9q8JTIqPn7IyqSS3OKCXQz/MdWZXNZzf1Rs94VYZ
+ W1cTxUHlXECJ7jg456lAywYX5xT6znNuHmqXZCkY56YkX7MsOz/v/K6Pis8u9fbBo/xA
+ bg8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772148627; x=1772753427;
+ d=1e100.net; s=20230601; t=1772148780; x=1772753580;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Gl956GU9vtTgDHI735C3PJU5IFAdthrkMFyf9VEdxnc=;
- b=qFd/2ca3CR934lCQz8C8gC4ZjsGCYihDbluJ8PYRJe+YFA+2S7zsgK9Re4ZOvJeZ6E
- g2SiuFm7spuHVAzAqmiYQdhGGNWvwuVFEXf8qz+kXo3OXVIfCWfhB/NvQ3YleUnBIZJT
- tDVc8YVtxU0be7ifJW460J3xqjkdzdOvbOyhAV21GjmeXh57kgnwLTeXu4jt2HEgqqt4
- Q9rQJRnpoXHqwTQZBc4w0oCzTGoAzPLcj3dviaO7DQMx/Z8EaqDgaAMJlHNZ8e/7NVbd
- 3GbWvlk55+M0v6V0Ej94Gm3A4sIE0HHn8yM9g1Ql1WrMfhvvoMSCnrmSmx6OGLrSg7gh
- 54hg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXedg2zxZqdnz1xvMegV3j1I7wcuXspR/sOsHLqZddv8M4Ygm8CaKr+km/JMaT68puDr0T/Evv0Z+ZK@nongnu.org
-X-Gm-Message-State: AOJu0Yw+dLCL/jSIWJGWgp4zJxHYApkHMuINFIMpKvdyXxzbq72WMUyz
- 2IGeEISRbiKaegGukXyxWVspiiWkfBRI3qp1kczB7ESdK/awU3/OOvIzLcyaLZx7L3/wf46mghG
- H2tEavxA7Bt0Qymo5lqOLb+VtftZDwK4=
-X-Gm-Gg: ATEYQzxqzhCaqo+FauNZNeaLCroeVjGOcs7avKHl4Hv+1sZep497u+qYSxu5HMaMMvc
- TyFgWMSzACAANG1kwApUf7SF/CfPFOTWmxJzvM0Fdu5pNTkI+RpnuQHNqyhfTHyMM4tECqvEj4Y
- t5fDAMhMZVI9hnpE36xJ74M2DwDWk4mypykS1d8E9bQT4JXSvsodENiRObIF/HE0F4B3N2MUnSF
- vQ/yj6KFtgbUdWNMqCzTWKviLxwbY8WlEiK+1i9qY/KYEwg5wCADgoCAO2DNFAzo6+Bpc8L0WNj
- knHY3U+I6Xfl9d5LjAnWmcWinQf+jkHUlFpqsw==
-X-Received: by 2002:a05:6402:1443:b0:65f:71ed:7abd with SMTP id
- 4fb4d7f45d1cf-65fddee8e65mr526517a12.23.1772148626655; Thu, 26 Feb 2026
- 15:30:26 -0800 (PST)
+ bh=R38QMhZ0gEM6+wz+fYRPAJ1LAc/0i3M3WKQv0O4Oed4=;
+ b=CpG1bcwI7IEiJ2DleU1mpHJQcDJu/fNsP4/0laCRLtQgTs6OkJDTen7+QVr0wWYiKf
+ mXVHk7wWJ5RxnZA+hr4fAOY6USdTDyE2yovAi1hLungnYxhU8ooPlER9Ln7V0brKRkXI
+ 9l4UStTfjxnRtXEQMI+LPtae/o0vdPNHT5gp7Wisxt5FmjqyH/gMHsU4rj6YJ95Bn19D
+ 7JNRyQ+/j2+roqTwTnEc2urrV/1Y6Mak7ifuJ6BN0WrivI6tmBm+tmW+nMmf6wY7sTtS
+ 31/Y6kOSzt00z0BfiQd3rOtggJC+THa8lvALNlHOc847HYzUjRTekLoSNXxS3BDkFYFY
+ j4Tw==
+X-Gm-Message-State: AOJu0YyOPCo89EuZHPvb0lz55gNrVsWmvZ0kXlW3k+hTBQyDtAtuyHRx
+ FW0Cpljmpw+HqTqq8yAUpwDf3Obzp83ymJZmzQtPo3HPw8NN8qWaxrSslyT+xk8oVkRbxVc19j7
+ //4wcpFa6Y/JPe52j7ZV059eXsVQVELU=
+X-Gm-Gg: ATEYQzwXCF9t4rssdyOGq86Oa2jKN1UmQy4GF6k2NAPZMJGNqcJvNxsNQ7/CRlPUvCT
+ YC/+HamGPuwi+Ou13xwGmlPMt77N2WPzyc7wzN9BfHnCCaBVgSltuuwDei2UiLhitVNf2my7RG/
+ s5CtgSfCLUKl/5terzIZFxCoRdYonAKfIEUfewfd2xeAOZTtj1vW/1sm0R0DhOPhXdze9YrTSjQ
+ LaV2Rq2KSDe9qtqTjiCM6bUKMnU6kaE84QVgKcGnq/mbMeouWpPJ0m1K5C8Zj+AEk0prl/JSBH9
+ o36AL5v5DDAWOLfaNQbCid9HY53dztEgfwz/qXCI5Ft4WJIK
+X-Received: by 2002:a05:6402:2706:b0:65f:aecc:4f1d with SMTP id
+ 4fb4d7f45d1cf-65fddceeaa9mr545791a12.24.1772148779618; Thu, 26 Feb 2026
+ 15:32:59 -0800 (PST)
 MIME-Version: 1.0
 References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
- <A02120BF-779D-4B2C-B29D-A9CB044EA895@unpredictable.fr>
-In-Reply-To: <A02120BF-779D-4B2C-B29D-A9CB044EA895@unpredictable.fr>
+ <20260225102016.200654-8-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260225102016.200654-8-djordje.todorovic@htecgroup.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 27 Feb 2026 09:30:00 +1000
-X-Gm-Features: AaiRm50eKCaKUZ-_EfpaWMFYN44iAl1xaEEGTrArAFT8h9i_VN7NUKO_iap7-D8
-Message-ID: <CAKmqyKO6ioRt+h_tZrudbriv-QDVsOG1LNJ+GFQJ3ZO-fEhjiA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/16] Add RISC-V big-endian target support
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+Date: Fri, 27 Feb 2026 09:32:33 +1000
+X-Gm-Features: AaiRm53pZYHqHh_mK_RHsuFk_208oCKEy0uYGj7nqr1br9fbAJuk_LF6xJyQqFA
+Message-ID: <CAKmqyKOr0mbz0xksnO-=n0Z3cGbY0FqPTnwfY-7WaesZKewHwg@mail.gmail.com>
+Subject: Re: [PATCH v2 07/16] hw/riscv: Check endianness for fw_dynamic fields
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
  "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
  "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
@@ -101,8 +98,8 @@ Cc: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "thuth@redhat.com" <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -126,101 +123,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 25, 2026 at 9:39=E2=80=AFPM Mohamed Mediouni
-<mohamed@unpredictable.fr> wrote:
+On Wed, Feb 25, 2026 at 8:20=E2=80=AFPM Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
 >
+> For riscvbe target, the fields for OpenSBI's fw_payload
+> need to be in target endian.
+> ---
+>  hw/riscv/boot.c         | 14 ++++++++++++++
+>  include/hw/riscv/boot.h |  5 +++++
+>  2 files changed, 19 insertions(+)
 >
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 6dab521a6b..f13264a87f 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -396,19 +396,33 @@ void riscv_rom_copy_firmware_info(MachineState *mac=
+hine,
+>      size_t dinfo_len;
 >
-> > On 25. Feb 2026, at 11:20, Djordje Todorovic <Djordje.Todorovic@htecgro=
-up.com> wrote:
-> >
-> > This series adds big-endian (BE) RISC-V target support to QEMU,
-> > covering both softmmu and linux-user emulation for riscv32be and
-> > riscv64be.
-> Hello,
->
-> There=E2=80=99s no Linux RISC-V big endian. Maybe the right thing to do i=
-s to not
-> support it unless we=E2=80=99re sure that it can get to Linux upstream (f=
-or the linux-user mode)?
+>      if (riscv_is_32bit(harts)) {
+> +#if TARGET_BIG_ENDIAN
 
-Agreed. We really need upstream Linux support before user mode
-
->
-> Thank you,
-> -Mohamed
-> >
-> > The RISC-V ISA supports big-endian operation via the mstatus SBE/MBE/UB=
-E
-> > bits. While instructions are always little-endian, data accesses follow
-> > the configured endianness. This series implements the necessary QEMU
-> > infrastructure.
-
-How are you testing this?
+This will need to be done without adding any TARGET_BIG_ENDIAN macros.
+We don't want to have custom built binaries
 
 Alistair
 
-> >
-> > Furthermore, MIPS announced cores with BE configuration:
-> >  https://mips.com/products/hardware/i8500/
-> >
-> > Patches 01-03: Build system and config for new BE targets
-> > Patches 04-07: Core emulation fixes (instruction fetch, boot ROM, ELF
-> >               loading, fw_dynamic endianness)
-> > Patches 08-11: Linux-user BE targets and vDSO handling
-> > Patch  12:     Set SBE/MBE mstatus bits at CPU reset
-> > Patch  13:     Fix PTE A/D atomic update endianness in page table walke=
-r
-> > Patch  14:     Clean up instruction fetch to use MO_LE directly
-> > Patch  15:     Fix virtio-mmio legacy device register endianness
-> > Patch  16:     Add riscv32be and riscv64be to SysEmuTarget
-> >
-> > Djordje Todorovic (9):
-> >  meson: Add BE RISCV targets
-> >  config/targets: Add BE RISCV softmmu targets
-> >  config/devices: Add BE riscv configs
-> >  target/riscv: Ensure LE instruction fetching
-> >  hw/riscv: Ensure bootrom has correct endianess
-> >  hw/riscv: Ensure proper ELF endian expectation
-> >  hw/riscv: Check endianness for fw_dynamic fields
-> >  config/targets: Add RISC-V userspace targets
-> >  arch/riscv: Set UBE bit on BE target
-> >
-> > djtodoro (7):
-> >  config/targets: Add missing fields to BE linux-user targets
-> >  linux-user/riscv: Disable vDSO for big-endian targets
-> >  target/riscv: Set SBE and MBE bits at CPU reset for BE targets
-> >  target/riscv: Fix PTE A/D atomic update endianness
-> >  target/riscv: Use MO_LE for instruction fetch
-> >  hw/virtio: Use DEVICE_LITTLE_ENDIAN for virtio-mmio legacy ops
-> >  qapi: Add riscv32be and riscv64be to SysEmuTarget
-> >
-> > configs/devices/riscv32be-softmmu/default.mak | 15 +++++++
-> > configs/devices/riscv64be-softmmu/default.mak | 16 ++++++++
-> > configs/targets/riscv32be-linux-user.mak      | 11 +++++
-> > configs/targets/riscv32be-softmmu.mak         |  8 ++++
-> > configs/targets/riscv64be-linux-user.mak      | 11 +++++
-> > configs/targets/riscv64be-softmmu.mak         |  8 ++++
-> > hw/riscv/boot.c                               | 41 ++++++++++++++++---
-> > hw/virtio/virtio-mmio.c                       |  2 +-
-> > include/hw/riscv/boot.h                       |  5 +++
-> > linux-user/riscv/target_elf.h                 | 10 ++++-
-> > meson.build                                   |  7 +++-
-> > qapi/machine.json                             |  3 +-
-> > target/riscv/cpu.c                            |  3 ++
-> > target/riscv/cpu_bits.h                       |  2 +
-> > target/riscv/cpu_helper.c                     |  9 ++--
-> > target/riscv/translate.c                      | 16 ++++----
-> > 16 files changed, 145 insertions(+), 22 deletions(-)
-> > create mode 100644 configs/devices/riscv32be-softmmu/default.mak
-> > create mode 100644 configs/devices/riscv64be-softmmu/default.mak
-> > create mode 100644 configs/targets/riscv32be-linux-user.mak
-> > create mode 100644 configs/targets/riscv32be-softmmu.mak
-> > create mode 100644 configs/targets/riscv64be-linux-user.mak
-> > create mode 100644 configs/targets/riscv64be-softmmu.mak
-> >
-> > --
-> > 2.34.1
-> >
+> +        dinfo32.magic =3D cpu_to_be32(FW_DYNAMIC_INFO_MAGIC_VALUE);
+> +        dinfo32.version =3D cpu_to_be32(FW_DYNAMIC_INFO_VERSION);
+> +        dinfo32.next_mode =3D cpu_to_be32(FW_DYNAMIC_INFO_NEXT_MODE_S);
+> +        dinfo32.next_addr =3D cpu_to_be32(kernel_entry);
+> +#else
+>          dinfo32.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
+>          dinfo32.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
+>          dinfo32.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
+>          dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
+> +#endif
+>          dinfo32.options =3D 0;
+>          dinfo32.boot_hart =3D 0;
+>          dinfo_ptr =3D &dinfo32;
+>          dinfo_len =3D sizeof(dinfo32);
+>      } else {
+> +#if TARGET_BIG_ENDIAN
+> +        dinfo64.magic =3D cpu_to_be64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+> +        dinfo64.version =3D cpu_to_be64(FW_DYNAMIC_INFO_VERSION);
+> +        dinfo64.next_mode =3D cpu_to_be64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+> +        dinfo64.next_addr =3D cpu_to_be64(kernel_entry);
+> +#else
+>          dinfo64.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+>          dinfo64.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
+>          dinfo64.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+>          dinfo64.next_addr =3D cpu_to_le64(kernel_entry);
+> +#endif
+>          dinfo64.options =3D 0;
+>          dinfo64.boot_hart =3D 0;
+>          dinfo_ptr =3D &dinfo64;
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index f00b3ca122..6a6b796eee 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -24,8 +24,13 @@
+>  #include "hw/core/loader.h"
+>  #include "hw/riscv/riscv_hart.h"
 >
+> +#if TARGET_BIG_ENDIAN
+> +#define RISCV32_BIOS_BIN    "opensbi-riscv32be-generic-fw_dynamic.bin"
+> +#define RISCV64_BIOS_BIN    "opensbi-riscv64be-generic-fw_dynamic.bin"
+> +#else
+>  #define RISCV32_BIOS_BIN    "opensbi-riscv32-generic-fw_dynamic.bin"
+>  #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
+> +#endif
+>
+>  typedef struct RISCVBootInfo {
+>      ssize_t kernel_size;
+> --
+> 2.34.1
 
