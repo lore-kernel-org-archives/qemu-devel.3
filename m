@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58601FC5926
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:33:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53981FC5926
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYgi-0005hc-4J; Thu, 26 Feb 2026 05:33:44 -0500
+	id 1vvYj4-0006Kt-5E; Thu, 26 Feb 2026 05:36:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvYge-0005h2-Cc
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:33:40 -0500
-Received: from mail-ed1-x541.google.com ([2a00:1450:4864:20::541])
+ id 1vvYj0-0006KA-JA
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:36:06 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvYgb-00067s-MU
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:33:39 -0500
-Received: by mail-ed1-x541.google.com with SMTP id
- 4fb4d7f45d1cf-65bfc858561so1355751a12.2
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:33:37 -0800 (PST)
+ id 1vvYiy-0006oG-Eh
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:36:05 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b904e1cd038so89260566b.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:36:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772102016; x=1772706816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772102162; x=1772706962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a50vn565+HHWHNtpAnMWwLQRnfJLyrNr/JVZBxH2Ee8=;
- b=wpjngdsnI7xmHLjJjwvKij9nIp9/phQJVYkcJ+kTJTAKpv2qPEhr2qsTIkpBBI/eJd
- Mb1P5rQeRe9491JJfx8HIUHxd7a31+/RhpZt8L2j96kOGPT3Y03KjpMpKziXathEdPmC
- JQEHaP2idmY5AF0+HJMrceQ3M+i9IkF2B2ZXqBzr6GRI7cR2h4efLGKGux1UOumelvYD
- aHkl/w2+RbA7KCpRLdnnc/gfw9ITkljo2iQ+eUiTsOAWfdjOCvYjNzWLy7YXwNCk8HMX
- s4x4WpxE1xM+hh4hT/iAApJWKGe7Z9x6UsWQLJvzxeATTtQspJv+iQ8ka5u3zDW/wF/m
- QqAQ==
+ bh=U+SwGcXK2mWpRhBmt4eGxbxhVXoDRpxwqXqeSoPaYHs=;
+ b=h9Cy2O46gzHV+BpjAehL17AUdfNcUaBEOv6RseiXaILyJJCMbFvHmWwpSdCyC1RS5e
+ ThLhEYp+Omy1eNxenMVYaOJKEOuYA4rD5gGRcVNz19qdSvQ9z0yhnbrZlqC1jtJ1zzyf
+ dYtEQ5+Ak4Pu9uffjjEfhpBRyvn83otJcBEJWWiv6bVhNDZXvRNTsy6jdBOzxqYHJ1eC
+ ph8A767niH5l3HLQ/6mYICxAxhaSr3Xv8Clzg1ea711r6K1GIvxt/+mL/anT+C3LGun6
+ bfdiAFfkNYoxoD3DN9nnc2U9dt3YHUqqwvkxK/1q8ZKEN2efBU9M+RR89oSKZN8DFMoD
+ YIWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772102016; x=1772706816;
+ d=1e100.net; s=20230601; t=1772102162; x=1772706962;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a50vn565+HHWHNtpAnMWwLQRnfJLyrNr/JVZBxH2Ee8=;
- b=HugTDUbi7m7T8N5zdpeoJtk0m6DIU+PFjLbJSLDrmf6Bvcd248kmj4UUfrswWci8lX
- H1BGoR1wxiUo1hKOkp3G6q5SXSS2Z0TCRuZm1szOsj/i008NGbdRHZKtPzJLjT+oW3q2
- 8zuzxJpfBNz4w9LITkg6O32Fdr419hYap5W+sa7MDp0Qpn7rti3h4iqT24YM49Q5jogm
- 0ZHmBFq9U7GX/F5d+fshwmA/e38dC46E8GWxIT1xTm7O91oFfoQgdXyGiOrfcYjZMC17
- XqHolzEc4w6YzUMsEu5NQ50R49cQm/3rlG2za/3wY6BEcyoqd9QED/OW58dfGtozQhja
- ylEg==
-X-Gm-Message-State: AOJu0YyfMGQ+Ur10oxdodlDc95wRFqT2d6sSfdMmbXHFzZdgbokBJFO4
- BcmLIYU52TiXoJYd7kfHIQGVK0g7I/o1k2Af2Yfrb9VTXGv/xJ1/w5zm5xdXk4HA6Jk=
-X-Gm-Gg: ATEYQzwPtM3KkZ4QtSgFe580BPVeKvG6JKTQ7s4nl1xxrWL+52GwP8LJA+1KYlWSpPS
- yPpGOlEgOEdcDjwRGoOEhLTIbJEqOsWGoKoNhyV/LkvmXYeEydcbppgRLV74X/+Ec82A1rB9RbE
- x+rGeffJ1KOXMcQ+ICcrDRsQFTdkZJUunyCTdUi5Sp1o4BsIijnzCZ+1lftU9RJdAWkOsm8+Aho
- t9w3l6rbgVaJvQD+bBMhM/qz2DJ9XMEkallhVTOSPOyuuj6ewK8tCRg3CpteOCX7rkFqakZ6xg8
- pYc3AM6LbDrVsV/oho9p/tqj76CJhCt41OUgi7uvYbgzuchNEEzeFixovVi5WwxSI6Yk7gydM8S
- W7EHf+vifw6vQukl2yu/dJVq11dKwFVAHatFGutbCdONX/nB4Cz4oTa8xHWjgSCVIHSUN7Q7xn5
- wbzRTEejWxyfdiPmGghHq1Gm9zQGHbhJx1tw==
-X-Received: by 2002:a05:6402:1446:b0:659:3d99:4bf4 with SMTP id
- 4fb4d7f45d1cf-65fa476ebefmr2361406a12.4.1772102014612; 
- Thu, 26 Feb 2026 02:33:34 -0800 (PST)
+ bh=U+SwGcXK2mWpRhBmt4eGxbxhVXoDRpxwqXqeSoPaYHs=;
+ b=Zti5cLpmWAF8+vtXwN4K+56LFzZ02EAYEMp5cMHiQKmPybBof6p8vvPCUbG7iVTY9F
+ veJk6hVvu1Jl/qqeqnt7W94gwNTytl5SMqGq8QJpNga30FgxOEym+hGfOGScO6Q7+e/l
+ SOY1nXAH2eBj4Vq877EqLogLib34M3uHuVM+90hSsTdM8qSd65ohR+L+0GwATAtc3hg3
+ 30nzLx2E5OU7W0c/zl3Z8QVyfitGnY9MXtWG5iYn5C6wpwzQetxMY4jEW2gW62o5Kvw0
+ BHhhzXoejzr2qgGNskPSVC3+h6aslzCqfqzF1ed4ZSntUOFGM0z3sv/7PsUBGB+B+fos
+ K5ig==
+X-Gm-Message-State: AOJu0YzRNhnjztgOhER1o+VG/jsCCTbLinGEkkmKEGPAPHk+kFKVKT/w
+ Jo9t8NEkT2krFK9tYsZmBVtR3egcr92iO9ue3Ax/aBJ+o4BMxn+FXydBZITgvKInKPQmP7mmfjk
+ SKbVZ
+X-Gm-Gg: ATEYQzzMPtX0RC1LNSsnUjdYQR641rgqXMmv0VW9MMOVui9rm7/JQsvlrX0VA7mT9jZ
+ OTCK2gjzFt9gFiUEM/2NkA0CyYSci59Zvq3iSOZ1WMiytKgOOhTrWu1OfFRIoOP4qUhsdYJ2wFO
+ p19HvRtxlWur4tqF2OHv0JzC+TbCUXI7zyLZHgafvfnM9Sbw0CkhXdmPVKpwrLyg1uKg5aS6kRF
+ iC8CTEbt5iXnExFuaa4YV9GClMWApv5MTDIWwyC/bx5TzpYnRbPr6Up/7QNNjmV1GbBFVihyorv
+ FvNqCBAtj63MiYoUT31p3BlkI4MhHwtUqVDwbLI3UWx7wrb9J4JRu17IkklLt25O7scEXbnDxfd
+ t8mNVNa4WvRmEN6mnTYOILaBaPRGXtfeYf1tqCRqd8X4KGmfJPndXVymulSEoiaXaeaTFbiLtzT
+ SFv12Pj1M/1yz2gOdTs2Ay7RM=
+X-Received: by 2002:a17:907:1b1b:b0:b3b:5fe6:577a with SMTP id
+ a640c23a62f3a-b9351494c43mr209320766b.8.1772102162535; 
+ Thu, 26 Feb 2026 02:36:02 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65fac07c09fsm352199a12.32.2026.02.26.02.33.32
+ a640c23a62f3a-b935ac5138bsm45776566b.15.2026.02.26.02.36.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 02:33:33 -0800 (PST)
+ Thu, 26 Feb 2026 02:36:01 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 464F05F7C6;
- Thu, 26 Feb 2026 10:33:32 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 21B1A5F7C6;
+ Thu, 26 Feb 2026 10:36:01 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org
-Subject: Re: [PATCH 3/4] target/arm: pass rd directly to wfit helper
-In-Reply-To: <CAFEAcA8km4H10ZseUd=D6KWTpHQptUaL0D3dSrg3-LGWY1bcgg@mail.gmail.com>
- (Peter Maydell's message of "Thu, 26 Feb 2026 10:29:24 +0000")
+Subject: Re: [PATCH 2/4] target/arm: use FIELD_DP32 instead of open-coding
+ syn_wfx
+In-Reply-To: <CAFEAcA8BX-YdALLhyYB_mDOycnUaLQ_abmSyK3VcPNQz9E3imA@mail.gmail.com>
+ (Peter Maydell's message of "Thu, 26 Feb 2026 10:19:31 +0000")
 References: <20260224154347.344219-1-alex.bennee@linaro.org>
- <20260224154347.344219-4-alex.bennee@linaro.org>
- <CAFEAcA8km4H10ZseUd=D6KWTpHQptUaL0D3dSrg3-LGWY1bcgg@mail.gmail.com>
+ <20260224154347.344219-3-alex.bennee@linaro.org>
+ <CAFEAcA8BX-YdALLhyYB_mDOycnUaLQ_abmSyK3VcPNQz9E3imA@mail.gmail.com>
 User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Thu, 26 Feb 2026 10:33:32 +0000
-Message-ID: <87qzq7ztdv.fsf@draig.linaro.org>
+Date: Thu, 26 Feb 2026 10:36:01 +0000
+Message-ID: <87ldgfzt9q.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::541;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x541.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,85 +112,44 @@ Peter Maydell <peter.maydell@linaro.org> writes:
 > On Tue, 24 Feb 2026 at 15:43, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
 rote:
 >>
->> If we generate an exception for WFIT we could also fill out the rv/rn
->> fields of the ISS. To facilitate this pass the register number
->> directly and read the timeout value in the helper itself.
+>> We can use the registerfields API to safely set the individual fields
+>> and avoid open coding magic numbers. The EC and IL fields are still
+>> driven by defines but we could convert them later.
 >>
 >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>  target/arm/tcg/helper-defs.h   | 2 +-
->>  target/arm/tcg/op_helper.c     | 4 +++-
->>  target/arm/tcg/translate-a64.c | 2 +-
->>  3 files changed, 5 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
->> index 5a10a9fba3b..a9a062cf777 100644
->> --- a/target/arm/tcg/helper-defs.h
->> +++ b/target/arm/tcg/helper-defs.h
->> @@ -55,7 +55,7 @@ DEF_HELPER_2(exception_pc_alignment, noreturn, env, va=
-ddr)
->>  DEF_HELPER_1(setend, void, env)
->>  DEF_HELPER_2(wfi, void, env, i32)
->>  DEF_HELPER_1(wfe, void, env)
->> -DEF_HELPER_2(wfit, void, env, i64)
->> +DEF_HELPER_FLAGS_2(wfit, TCG_CALL_NO_WG, void, env, i32)
 >
-> Why the change to NO_WG ? The code change doesn't remove any
-> writes to globals...
-
-I thought that was the right way round - it doesn't write to any
-globals, but it does read so the helper needs to ensure globals are
-synced before the callback.
-
->
->>  DEF_HELPER_1(yield, void, env)
->>  DEF_HELPER_1(pre_hvc, void, env)
->>  DEF_HELPER_2(pre_smc, void, env, i32)
->> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
->> index aa14f15eb62..28a1c7243ad 100644
->> --- a/target/arm/tcg/op_helper.c
->> +++ b/target/arm/tcg/op_helper.c
->> @@ -409,7 +409,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
->>  #endif
->>  }
->>
->> -void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
->> +void HELPER(wfit)(CPUARMState *env, uint32_t rd)
->>  {
->>  #ifdef CONFIG_USER_ONLY
->>      /*
->> @@ -428,6 +428,8 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
->>      int target_el =3D check_wfx_trap(env, false, &excp);
->>      /* The WFIT should time out when CNTVCT_EL0 >=3D the specified valu=
-e. */
->>      uint64_t cntval =3D gt_get_countervalue(env);
->> +    uint64_t timeout =3D env->xregs[rd];
+>> +FIELD(WFX_ISS, TI, 0, 2)
+>> +FIELD(WFX_ISS, RV, 14, 1)
+>> +FIELD(WFX_ISS, RN, 15, 5)
+>> +FIELD(WFX_ISS, COND, 20, 4)
+>> +FIELD(WFX_ISS, CV, 24, 1)
 >> +
->>      /*
->>       * We want the value that we would get if we read CNTVCT_EL0 from
->>       * the current exception level, so the direct_access offset, not
->> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a=
-64.c
->> index 5d261a5e32b..073454b9195 100644
->> --- a/target/arm/tcg/translate-a64.c
->> +++ b/target/arm/tcg/translate-a64.c
->> @@ -2064,7 +2064,7 @@ static bool trans_WFIT(DisasContext *s, arg_WFIT *=
-a)
->>      }
->>
->>      gen_a64_update_pc(s, 4);
->> -    gen_helper_wfit(tcg_env, cpu_reg(s, a->rd));
->> +    gen_helper_wfit(tcg_env, tcg_constant_i32(a->rd));
->>      /* Go back to the main loop to check for interrupts */
->>      s->base.is_jmp =3D DISAS_EXIT;
->>      return true;
+>>  static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
+>>  {
+>> -    return (EC_WFX_TRAP << ARM_EL_EC_SHIFT) |
+>> -           (is_16bit ? 0 : (1 << ARM_EL_IL_SHIFT)) |
+>> -           (cv << 24) | (cond << 20) | ti;
+>> +    uint32_t res =3D (EC_WFX_TRAP << ARM_EL_EC_SHIFT);
+>> +
+>> +    res =3D FIELD_DP32(res, WFX_ISS, CV, cv);
+>> +    res =3D FIELD_DP32(res, WFX_ISS, COND, cond);
+>> +    res =3D FIELD_DP32(res, WFX_ISS, TI, ti);
+>> +
+>> +    if (!is_16bit) {
+>> +        res |=3D ARM_EL_IL;
+>> +    }
+>> +    return res;
+>>  }
 >
-> Otherwise
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> I'm not hugely enthusiastic about this mostly because it
+> means we would have one syn_foo function that's written totally
+> differently to all the rest.
+
+I did consider running through the rest of the file updating with proper
+field setting but I didn't want to bloat the series. I think it does
+help with readability compared to open coded constant shifts.
+
 >
-> You might squash this in to patch 4 if you like.
->
-> thanks
 > -- PMM
 
 --=20
