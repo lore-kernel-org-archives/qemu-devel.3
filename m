@@ -4,102 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB13AFD8FE4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1C3FD8FE8
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvfWc-0007ZP-DV; Thu, 26 Feb 2026 12:51:46 -0500
+	id 1vvfWw-0007cp-UF; Thu, 26 Feb 2026 12:52:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvfWZ-0007YJ-UQ
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:51:44 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvfWY-0008Rf-FV
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:51:43 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64c9a6d6b70so890924d50.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:51:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772128301; cv=none;
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvfWt-0007ca-RG
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:52:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvfWr-0008TJ-V7
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:52:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772128320;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
+ b=J6HoQGskGrksbtbXhiDh/B4mxZU4D43bv1gz7gZBdL7Oy2DFFuDvnmV8PFahntSzGte6Ym
+ J8vQPHxAyE7OdKzAoaJNBwV0HxG9U/ye+C/q+pleXkCIBpmksanabcIAlIJBP2nczzt+Sn
+ s+mvSOaEy+pnION1zJ7FlSrYyclksU0=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-634-8ernzKuVOrSYrbzN0i2Ikw-1; Thu, 26 Feb 2026 12:51:58 -0500
+X-MC-Unique: 8ernzKuVOrSYrbzN0i2Ikw-1
+X-Mimecast-MFC-AGG-ID: 8ernzKuVOrSYrbzN0i2Ikw_1772128318
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-79868eae64fso24268817b3.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:51:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772128318; cv=none;
  d=google.com; s=arc-20240605;
- b=NoHjTH00t6ulF8PaFKPQvr+dmYrj+iwPkkB5u8Hauo3lviLDSBbgChYqbkzOLtbYgM
- xASwSnAcpQ2bFEB6q6AoFrwVuo5rOzQhWNSgYql6GG/tZ00EL1gKFcJwwLwxLF/9CewJ
- uC2H95mhK7bUWcg7Ur7LB7CAz94VFgQg4f/eL6tx45KVpSpimbBw6f9+quHQLCuuqQqx
- a44ZhWFX1bfHHRuvGF9K+VJ3fDVIoWJB7QVMJm2EC+Z9haKZG40u/614R/vW1tj3hjBR
- juOYj51vavWo0+fRBDg9E9NkDcxv9tbrciYNVdecZIl7JTkEhxbzbUQP+Ud0CNpdRYfs
- biWA==
+ b=A1CJ7srgekUEz/2PvsF3nrKCe3Lb+BQKJyiQxGe4giYp/NRTo7QonWZ25DTIm1ORzt
+ VzZsArG7mIA2SyAAuPmbgjpwSzuQCaB08z8jeiwEJ6T3yvaDZ6tvfYQ/8t2ovBzfWZEZ
+ nmOYXsUi30mcShPX0xdsu+SWVn5it8IBFssZkfByHAnF+C/siXp02XGAFBChHbh+xDi8
+ OkaaBt40hdS2u9L2GZON+x4nlKlcGHaPBszSaXkFsW9KnL5qv6tmapBjuRv8/olnWBvg
+ sbfNOa2vG6Il0q618Y97t4EpdRbYXgOqyJpNAncKY9lcCVYSvK9URtczOwbsNJSjACkO
+ J82g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=MczOQdlV3Z0NIfpzTjI1i3JRBKuufM71zp9/8Wg1KuI=;
- fh=hvReHNk3wGerKahIsfNPsq9Kxhs336W2LUCQiAdCyx0=;
- b=DbBhdsdPhfWN0v1oKqZ67Zl2gYC6olXwe8JpYJ1xzaRYyQAv2Gu55M0NRcLuvf8bh3
- Bq6IzC4+poqtxvAN9h07AJsoqJMmlT3ZQEcth/7wBYZIYHZvcYZ5WspUoaF5KlWAvw1H
- XidJ7qw269xvW3gVc9WwSgGBtc9CdIEluSru53C7NPI+CA1b33U13sa3HlcFAiTumQyq
- emin3aXhZuLN3BcxenTY1PQeGIHVPeXgjDO6iJI+oGL28vzLriZ015mEJxYPEMHQ0Io5
- Ia5RoQB4dJP609YMgGCxZqwdX37GXItOjK153IZ3T4EphPMmfYb6Bugcv5CPjZVzhN9B
- HavA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
+ fh=XzBuknDOpMWBbu+VXGIDfqUZ/ryxq1MzEkPeMMiXjDQ=;
+ b=TKepPMLJEu/yzH91zwq5evlIffK3JIiacOxYtHSWbrPxi9tFvkLRX8M0wvngcsM3Ej
+ X7opLZlJGeKd+6HGv/vaqS9PqNS0N2XTm/D6uYld7dhC6MqA4rgBXOBgKLagmQwrj8Nu
+ vaIkomSDWOH3qHadPctWH0gTJs1rRopFtmih3tzbTr0PPm/5icSAlJeWXCka6d++Afxh
+ KjbDK4aXT54j9ZAHv/XpRFcD/b5aLiCvs3WnVFw3G4U718vRMbYgHSZQX1jt/ArdIHj6
+ GHow9U3Pzne2BVuzx62GrKDgxr2Vlxrqg3werGxoBLUFNwttHidvR35m3GX3fkHObWra
+ d4iA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772128301; x=1772733101; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MczOQdlV3Z0NIfpzTjI1i3JRBKuufM71zp9/8Wg1KuI=;
- b=wrjmmR/IZEBRFp9vjUVmgTlD/qI5tSKPHGDT/Ds1bP62jko8c4zm38uyi8n6gWAwoY
- 8LsLgzVM5f4DStAAbEcWqSjAuMaW/GgHWdGjBJhgH3MW1uEs/G0qxIQPbfebTav5U3aQ
- 5hrW+oMfGEvw6Voz+YxH/PGCbzj9c+7NIVDeM4NRal6DNC8o62rmJpF1A8XK5meTQZTn
- GJxfOMFzMkset26ge79aV2C7evenwRUfDxMyo3lAdlQu1+Bh94rDK4fJTJaYmYg54z4Z
- Yz1hGga+zrBFMUsi1P/FBlU2OykfNyvDaM+oHWxomDc3MVM3OOfipxuuNeb3sZqlFcta
- 3TKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772128301; x=1772733101;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1772128318; x=1772733118; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MczOQdlV3Z0NIfpzTjI1i3JRBKuufM71zp9/8Wg1KuI=;
- b=IxGS9mYzSExfevhU7D7E2VKbKsweRTdfNNjulkYs/gzCHBQN/AoZqYumV/YPdqeR5p
- U6NHabPB0oMkD+qe0LUj8MCStJls1hNoLi4BDIWE1HVBfRu5YOF8O3HhyPIT1MmurnJv
- K248fqf67xe1hZmKwQ9vk+L7au/FAQq2k/Krzn54JJLe6tAjmvGikfCpj9pQ85OwZofk
- BCI8mSdco/On5PhhqBj9SbxlE0mUsNhYZNzmGXQxBKGEB7sc3iGs1w+dIypTavohbFfT
- mlIs7w3jXm8CttqB1KQitM6J1YbSHPqIrgIyBMMlioo4GyRoJCgnCy5uVkKfen64FVJd
- l52Q==
-X-Gm-Message-State: AOJu0YxuwxpFyjX5jfg7lDqQ+H8Lp6JLKpsd7IRAnD+/olfNy/NJVbaZ
- iJDl1Rm6K+z+KzA5Nr4FS1fEyS72BhzCnU2K2/xapo/vrmPOFbbrHIzKq3QP3B43R39o+0I1raT
- ix9Z04skdGgeA+K4wAAGY+u7mnxSmPfs0PLr1EhaCCw==
-X-Gm-Gg: ATEYQzwSLL9cXfMV7v2uJZtT44LAA9hTFt2yL/gDWKR0WikMD/bjgsSNg1ajnirreAW
- eW+wWgLsJGsJfpikS+ILuYVhGMORKIsqMVESfgrhVuqiyUqUkLCuBuFjYi34LpEV1dxR8Njbhvi
- 5Ptv7gMisc76gXRngEM832BP0H2Zbx1aOUtnM1o5+e2ObWTcIDg6XyG9VFrj4okdVsapQmIkoSu
- sQ4Ic8cVG5XN1LjUy3Q2GvWH2FSlmrV6CdSO7IAtNNUptJYMURNmIay4Tp94crmUJqSANqmpX/S
- wDvkMo6LAY0hhAHp6u4hAK5ZTW/d1UGDZtzqtAq4LCSKZ345djFiOQVDvax/UgpB9u0=
-X-Received: by 2002:a53:d0d2:0:b0:64c:a471:980b with SMTP id
- 956f58d0204a3-64cc23514e6mr73937d50.72.1772128300679; Thu, 26 Feb 2026
- 09:51:40 -0800 (PST)
+ bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
+ b=VdwXmh+8noKK+TVUpCNc8/o+8g+CQ8v4O8ldquANCCdD0cjf8XNsyOJ8zmSVPldxAi
+ Fkpgk+1ompcB/Vcsqo+T2CRb7yEJufHwSF1rJ+7F5la6Cytz/qDOL4QPWWlwAYef6okP
+ l5LcR/Uqx/+nwIy3hXUnNyWm1uzNr/tFxJW1RFe5J70xfKSwqubY/rwzN1ctAJ+Off78
+ gSnX3KTyujXk9g7TXhacYVcReaXLZQJRKs1tCQXpvkFTqR3TT2dO2ifTA5/3f5zqJtcA
+ 3XwzRLZMuygioh8hoNCifInh2QCkDyl90OR0bzkRr6O3qut2U/BgYwq41bhx4oldn95l
+ aSjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772128318; x=1772733118;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
+ b=K4OAeXqaFqPqKlKjreH13Z6Fbi+BVQnJyTZbFL3vxZ/WLglBv8d/zRxJJP0X3UOX8f
+ c2IAVEcoXwPj3REnjKTU1u1JQNfhNNJSMoRD3KM3vNTNjb2smF8UIqQpeZ4C7RFQ9RVC
+ iklfNbrSsJVVt2gGWaU9mQeC0DeVPaxc/APCWTILKrI9XO6zwPwCKvdE3bFy2MXKi1dt
+ Sw7HWG+K5MWFGHFB3zEnHjxzsxpNtOBuJg+fh57IgH4cIdadoQbWb6TC6W6j0LkiNLlP
+ ocXIqWDNZWYWIJYWOfwDx38BVrEbkQMp6NHQUZWsMP1Delrz1wOchCB+j5VleuHyvMiN
+ xg+Q==
+X-Gm-Message-State: AOJu0YzEHbnx1ko/7Gt+PSr4UxYmgRcZein54VYl0eW9SSc3osuIFe+1
+ bBHhP8q34Ry/IZ8yE2qMZrXgh5/tkbnaQ1p1YvHcxy0QAvmmCrLbC/uKK3copwWi1Bz5b440p9n
+ 10uDQTib1RuwtUh4XRPmvy6f/ixegpLY3Qu/S267Psm8Dp7F92IJ0dv4xBtNc+a6rrFuxAEZnGo
+ iyeFygv3sDtCkiA1E6Sml8V3zrg+z9fJ0=
+X-Gm-Gg: ATEYQzzyIqF69yQppzWXBHZjeTCn1jrc2JkwqwmM+M3o2pWnmHYz7a9CXa2kc4o/w3E
+ h5sMfZyXJftfnduFW1IIKlny5rN06qfTf70eY51wAftatTFp8tnb2cjyy+TyxusMRRwfs/lkveo
+ PlITII3qh6ROCnJgMxXNRvt5iU6AackMSMnsmumoPPLrIWF/PjuYhSiJ3L2f8J8LTCfYWr8eA5/
+ to8ldaI8OGsP3DXc0jlUh/2N0Szxqv1oZJxjQ==
+X-Received: by 2002:a05:690e:2552:b0:649:af6b:7427 with SMTP id
+ 956f58d0204a3-64cc237d23dmr74336d50.78.1772128318219; 
+ Thu, 26 Feb 2026 09:51:58 -0800 (PST)
+X-Received: by 2002:a05:690e:2552:b0:649:af6b:7427 with SMTP id
+ 956f58d0204a3-64cc237d23dmr74324d50.78.1772128317753; Thu, 26 Feb 2026
+ 09:51:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20260226111001.1021810-1-peter.maydell@linaro.org>
- <51c0d1fb-df43-412a-83f8-f01b868595f3@redhat.com>
-In-Reply-To: <51c0d1fb-df43-412a-83f8-f01b868595f3@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Feb 2026 17:51:29 +0000
-X-Gm-Features: AaiRm53OvELh2ixgm33pUQJJBAm9XAL5014ZJddyq29cFcYdtKXAh_UGkuQaiZI
-Message-ID: <CAFEAcA9MChu8iEvumR33c1bN++h8ktVi0ZAkQhkiL2hoqU=oMQ@mail.gmail.com>
-Subject: Re: [PATCH] scripts/coverity: Drop --enable-libnfs from configure
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- John Snow <jsnow@redhat.com>
+References: <20260225192808.957477-1-jsnow@redhat.com>
+ <20260225192808.957477-3-jsnow@redhat.com>
+ <aaBYBfryWrYRMT2G@redhat.com>
+In-Reply-To: <aaBYBfryWrYRMT2G@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 26 Feb 2026 12:51:46 -0500
+X-Gm-Features: AaiRm51qyK3mi7205kzmt1vHuVpOzr21SjD3NzF7R_R01_AN_F81qy7L-ANZ2Jg
+Message-ID: <CAFn=p-YsiOiBy0VRdbXS0=PFtWkj_OzaMz+QPeku294=17mHXg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] python: replace avocado tests with pytest
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,52 +138,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Feb 2026 at 11:14, Thomas Huth <thuth@redhat.com> wrote:
+On Thu, Feb 26, 2026 at 9:26=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
-> On 26/02/2026 12.10, Peter Maydell wrote:
-> > The environment we do our coverity build in (amd64-fedora-container)
-> > has just upgraded to Fedora 43.  This ships with libnfs version
-> > 16.2.0.  We can't currently build against that: in commit
-> > e2d98f257138 we added a requirement to meson.build that libnfs be <
-> > 6.0.0, because of an upstream API change that we haven't yet updated
-> > block/nfs.c to handle.
+> On Wed, Feb 25, 2026 at 02:28:06PM -0500, John Snow wrote:
+> > Following suit with the rest of this repository, drop avocado and
+> > replace it with the Python standard "pytest" package.
 > >
-> > The result is that the coverity CI job currently fails in
-> > configure:
+> > In this case, we do not truly need pytest as all we are using it for is
+> > running other python processes formerly launched by shell scripts, but
+> > this matches how the standalone python-qemu-qmp package does things,
+> > which keeps things simple on my end.
+>
+> From the POV of QEMU we don't really want 'pytest' in the loop
+> any more than we want avocado. The desire is for "meson" to be
+> the test harness.
+>
+> If this use of a pytest is just a temporary stepping stone
+> towards fully integrating with meson, then that's acceptable
+> but lets note that this is a temporary solution in the commit
+> message.
+
+Admittedly I wasn't thinking about just using meson directly, so I
+suppose this *is* just a stepping stone. My only question for meson
+integration is how can I set up the deps so that "make check" will try
+to install the linting deps and run the python tests, but skips these
+tests if we are offline and don't have the deps. i.e. "try to run
+these tests, but don't error out if we can't"
+
+Hazarding a guess: make the python tests depend on a linter group, add
+a custom target for that linter group, allow failure in that custom
+target (how?), then configure the individual meson test cases to skip
+if the deps are not present.
+
+(Guess I'll go look at your older series and see how you handled this...)
+
+>
 > >
-> > Dependency libnfs found: NO. Found 16.2.0 but need: '<6.0.0' ;
-> > matched: '>=1.9.3'
-> > Run-time dependency libnfs found: NO
-> > ../meson.build:1150:11: ERROR: Dependency lookup for libnfs with
-> > method 'pkgconfig' failed: Invalid version, need 'libnfs' ['<6.0.0']
-> > found '16.2.0'.
+> > (pytest version chosen based off of Debian 11's package version as quer=
+ied by
+> > repology; under the assumption that this is the likely the oldest
+> > version we currently leverage in testing.)
 > >
-> > Fix the coverity builds by dropping --enable-libnfs. This means we
-> > will no longer have coverage of block/nfs.c until/unless we do
-> > that update to handle the new libnfs API.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
 > > ---
-> >   scripts/coverity-scan/run-coverity-scan | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >  python/Makefile          |  4 +-
+> >  python/setup.cfg         |  1 +
+> >  python/tests/linters.py  | 89 ++++++++++++++++++++++++++++++++++++++++
+> >  python/tests/minreqs.txt |  1 +
+> >  4 files changed, 93 insertions(+), 2 deletions(-)
+> >  create mode 100644 python/tests/linters.py
 > >
-> > diff --git a/scripts/coverity-scan/run-coverity-scan b/scripts/coverity-scan/run-coverity-scan
-> > index 43cf770f5e..9b89a3303f 100755
-> > --- a/scripts/coverity-scan/run-coverity-scan
-> > +++ b/scripts/coverity-scan/run-coverity-scan
-> > @@ -424,7 +424,7 @@ echo "Configuring..."
-> >       --enable-linux-aio --enable-attr \
-> >       --enable-cap-ng --enable-trace-backends=log --enable-spice --enable-rbd \
-> >       --enable-libusb --enable-usb-redir \
-> > -    --enable-libiscsi --enable-libnfs --enable-seccomp \
-> > +    --enable-libiscsi --enable-seccomp \
-> >       --enable-tpm --enable-libssh --enable-lzo --enable-snappy --enable-bzip2 \
-> >       --enable-numa --enable-rdma --enable-smartcard --enable-virglrenderer \
-> >       --enable-mpath --enable-glusterfs \
+> > diff --git a/python/Makefile b/python/Makefile
+> > index b6c9cd1bce2..42994d39618 100644
+> > --- a/python/Makefile
+> > +++ b/python/Makefile
+> > @@ -105,7 +105,7 @@ develop:
+> >
+> >  .PHONY: check
+> >  check:
+> > -     @avocado --config avocado.cfg run tests/
+> > +     @pytest -v tests/*.py
+> >
+> >  .PHONY: check-tox
+> >  check-tox:
+> > @@ -113,7 +113,7 @@ check-tox:
+> >
+> >  .PHONY: check-coverage
+> >  check-coverage:
+> > -     @coverage run -m avocado --config avocado.cfg run tests/*.py
+> > +     @coverage run -m pytest -v tests/*.py
+> >       @coverage combine
+> >       @coverage html
+> >       @coverage report
+> > diff --git a/python/setup.cfg b/python/setup.cfg
+> > index c46a95f8d41..03344526730 100644
+> > --- a/python/setup.cfg
+> > +++ b/python/setup.cfg
+> > @@ -43,6 +43,7 @@ devel =3D
+> >      mypy >=3D 1.4.0
+> >      pylint >=3D 2.17.3
+> >      pylint !=3D 3.2.4; python_version<"3.9"
+> > +    pytest >=3D 6.0.2
+> >      tox >=3D 3.18.0
+> >      sphinx >=3D 3.4.3
+> >
+> > diff --git a/python/tests/linters.py b/python/tests/linters.py
+> > new file mode 100644
+> > index 00000000000..28556c09910
+> > --- /dev/null
+> > +++ b/python/tests/linters.py
+> > @@ -0,0 +1,89 @@
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +import os
+> > +import subprocess
 >
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> from subprocess import check_call
 
-Thanks; I've applied this to master to fix the coverity job.
+oooh.
 
--- PMM
+>
+> > +import sys
+> > +
+> > +
+> > +def pyrun(*args):
+> > +    subprocess.run((sys.executable, *args), check=3DTrue)
+>
+> Not sure this is worth the trouble compared to doing...
+>
+>
+> > +
+> > +
+> > +class TestLinters:
+> > +
+> > +    def test_flake8_pkg(self):
+> > +        pyrun("-m", "flake8", "qemu/")
+>
+> ...this inline:
+>
+>     check_call([sys.executable, "-m", "flake8", "qemu/"])
+>
+>
+> > +    def test_mypy_iotests(self):
+> > +        cwd =3D os.getcwd()
+> > +        try:
+> > +            os.chdir("../tests/qemu-iotests/")
+> > +            pyrun("-m", "linters", "--mypy")
+> > +        finally:
+> > +            os.chdir(cwd)
+>
+> This dance could be replaced with
+>
+>     check_call([sys.executable, "-m", "linters", "--mpypy"],
+>                cwd=3D"../tests/qemu-iotests/")
+
+Learning new things every day.
+
+>
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+
 
