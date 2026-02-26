@@ -4,89 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577ACFD9E1E
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 23:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBFBFD9E22
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 23:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvkKc-0000tc-Uy; Thu, 26 Feb 2026 17:59:42 -0500
+	id 1vvkla-0007j3-A3; Thu, 26 Feb 2026 18:27:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvkKb-0000tL-KI
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:59:41 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vvklX-0007iN-14
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:27:31 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvkKZ-0003sA-TZ
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:59:41 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-43988056dc3so1407245f8f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:59:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vvklT-0007d6-VD
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 18:27:29 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-65c0e2cbde1so3007156a12.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 15:27:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772148445; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YR2LyfmVAVSemZVfo1bf3cjaG1dwA543A/5Du94jAz5TSXzb0Uv3Wuchn/hFhaW6X7
+ Jvvquz8AO0EevVngr9sOwvsZOOxnJHePuMXQ9hH8LVBEPZcGbnCvh74GkIUdNI6Af4Qw
+ dUtHyx2ty80LOXrDqQfweLHCMsfC+VllGx5DbTGiFCE4+rNfhS0nnqya6vozLqmvM7m6
+ LfqAA8kmavz6+uVEOrhMkHIBs6NfMnugyRjbgZD13GzCCIdDlP9hUOInZ7mAjGaIvLis
+ 9MudwwY2Ld7ZHIgN/bQ/gzPA9GSXi3gMVYZ8l7h5l4iUxG7l+xRIwjhRjqPRwFhvYgpj
+ /2yA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=8vhK/szmxMUe+/GfN8Da00C8tuSThBSFLyznHXrPZgk=;
+ fh=1GR3ZbDEWJDX08ZGB5wfzFoJlMqYXfgEkXUL5FMv3Ks=;
+ b=SKBbGX/DP/ojXviGqtuc5vwlI+ZtOAyuEw92JZs+5AG53TsmgrTLJyTaV0gl2wRiPi
+ MmEm+Z0ETsp0JLKsm5lYYC2nlM8wqc+jDEo7cbRSiapt3jhxUmNMrMlSMmzR79pTaq3i
+ hRa57d7ymWRVS3imE2+WXNLqSGx/CwzncVbAouJNmaW44/K4xKZxOXiwlNp3xK0hjOId
+ 7WgLwKyg09IVmzJzo8/Z6BqPmUoiqcfL+aRj+J2aH2/qYh8IlYi4xZj1QfNQXNpoq/LK
+ Qary7ZCj9kVV0d3ZcuM8kJ9vhKabHkLaecHvQxw+cCijcIPl5lygTpa60+JKhI6icwxl
+ pNBA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772146778; x=1772751578; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IHZXkaVgViOohCapk16z4GZOnLF3Wy2PgK3udt46ano=;
- b=OjsCmkSv/oH/tjTyiUrzJ/f2w4HiDeHocwYs8gJVMyHjHvuexDXnYx+bmmw3UYWDIV
- rJ80xGFZfobZE/yIpUuundFeciyjZoO7WTbalRhjAUTx1g3t/kxhk1Y9mh9ROBU8VWjP
- UuuhipRA3cfPvlQK+nCJ9ZNG4ECb5wCrv9OgOPyHkWHP4nJolczN3jByq1aaZPvvBMik
- jUcgoLljGB5RrxPrnfTeTqlJJR4gatQdvzVrmcZ1h2zUcbk8KwTYcCwpa9Yr4U9vjSqI
- lM0cu78CV3hwTSBDujElJsdjk7qp/SfeVZiw8BAM6rjdFHy4nN0lfqmpHP45bODvY3cl
- GTkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772146778; x=1772751578;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1772148445; x=1772753245; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IHZXkaVgViOohCapk16z4GZOnLF3Wy2PgK3udt46ano=;
- b=p10sr44BrGxNqjV7hBtdrPCf7i9cwHdEZSQBtorAOAEBjTmidpSWC8XP+X/kNhCY+L
- TBN4qewHi9hsl+liLa+kLEo7OnvR7aSPtho2q5F7jOjMqdbdcZbPZoRytb5nJC/JFMJ3
- jEPNrwP9i65TNHozYZXjLk+qB7t++kUUZIaqlPA+Ka8rNssQ1P4LY/nx0yOYwJwmxdHs
- RWHfL9jhzwfPAgdtHfFuNTj2uF81pCjyj1VSLV/uS71pSs/b93Acus/en9Nm14WkhtKD
- KxeSgxKFIaMtrSFnxD3NjPVLuvuV6aT+Vz+OyQvDNBjj7FcIB9tXtu3/MpzkHoMxhQYM
- IMTg==
-X-Gm-Message-State: AOJu0YyUjFD3qunnrKiPs4Aq/XWn89wYMtI0k4FQFg6m74jxGR5fnKWD
- moU60wm1Qj3oPbWZLGB2W8Sb8uX3ZCwhZq//HKwgKQPB5mLQ5FgTAZyUs3Ow6qKV2/kmdihdutK
- tU/FsKu8=
-X-Gm-Gg: ATEYQzx8D88Pt8YNgy6xxKWb585/XFLx8KOnnpeFNPw0mwo8gSeFYeeF6DjE9zSgM5K
- nfwNF0MTm6bv5Q/CfTdU3XvTEHWUG4iX94O04Bu7DdgqbU0u3+qkmXxVZpIR2HodL86inFbkJc8
- wug2lcNyDSY1J1AtLZWa3rR+/fiXboEpawZ5MpOfDVWfQFXomBXq/UoVdHWYXcLnhE5Zj8bXy1s
- kARIMQwDaW1DRKGHihK5xQWCCuIDBz9TTnyxLYMdUCHSDFsoEIm/WoJipGlxZMldJnQ7m7vtq1K
- vmOAnBlf6CjHePAu1MjhRGP5UQ0Ne3nFa+jjUeclO63+FL3qEq9v6AzmNKcWVzVbkw4bvH5Re1w
- Zgrset5Iv5jsfiSsqBRzQA+WUKKVNn+9V1Aediif+FxxXspNqxWDNDt81csUm8Xe+C24d0eteu7
- T33O5ZszKeCnnrixjQ9n6ob20okaIUdFNPpIjEi3Oxs+jbSX4wo2OXADDnrPOV+b4HePqoaXlTn
- eLhqB6Tuig=
-X-Received: by 2002:a05:6000:250a:b0:439:5e4d:baa3 with SMTP id
- ffacd0b85a97d-4399de0b8b5mr925970f8f.11.1772146777800; 
- Thu, 26 Feb 2026 14:59:37 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c6100b8sm2856955f8f.2.2026.02.26.14.59.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 26 Feb 2026 14:59:37 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] gdbstub: Generate a single gdbstub-xml.c /
- gdb_static_features[]
-Date: Thu, 26 Feb 2026 23:59:36 +0100
-Message-ID: <20260226225936.50725-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ bh=8vhK/szmxMUe+/GfN8Da00C8tuSThBSFLyznHXrPZgk=;
+ b=RhOsADFw/PB2D3c8TDl/nJrZcNn5UFX7bNCu/BCPbmycpYrTG9JMS6JfEmDc+DQtWk
+ /wM3p37eFXXzNfCP7KxwXkGvfl8qEo7yInTnl2pWCQNNzk61+vEfVrL8meQ0ZWVsICkh
+ gQx51q11nghWwjM1TKlwvrBhV/fJe6kCuDxWsjqAH9C/ZXYeDnOTmxJIMwf25eEmsOWv
+ 0Nt43aXWQRFHHuWyDwXtUkq5JcA+0saH6f4Z4+1cXJyauLn3vILfqJnSH+2os2D8BR4x
+ Y92UbYY8Fv54IW+4Ny9NnbgYateN1Vl/GGENQlm/5JenAifAdiaYOkKpDJN1UQnXxLLL
+ NBDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772148445; x=1772753245;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=8vhK/szmxMUe+/GfN8Da00C8tuSThBSFLyznHXrPZgk=;
+ b=Cwh6uupID3TkwmjTEXOAks5rtcMO21GxhAvUCl8kZnoMN/ePCXMz4yoh6nCrCpVlUU
+ nOL3X4s/JGCDY1jWCoKoTdWb0MQYFEx3A0CVCoNx4O6Ojkd5wVENFa80G8iVOYlv1LOD
+ C9KjwPDNxEtUDtf4KtzlqrEW54XRe6XIReC7939nTfAsjxd81ipDF/oPgfKsmr9QIyfO
+ ThIfMwlV/6kE1Wc6lgeQnyji7orY+2u14VFxlp6WavUdhlRiXEl/as6B+raRiR9aDl9D
+ KpirzyhmgePu1PhZ5qTCsoXjDX+jt+6cjJMZeIA3MxZS3RWqBjkk0evxUaL4FKboq3lJ
+ JKjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWf/e+vmyo9U5UPD5ALNFCzssb3sMpsja8yTAs8EMT0wAnFrN1mMwYfn/Q5fb+662tSx666cu7NGSC5@nongnu.org
+X-Gm-Message-State: AOJu0Yz2QK75ilyIkJmL1PDS+v+d9Sd0k3Kp007YCGSv+nK2QyvkEb0E
+ zKcBAZv6pXXBV8Y/dHdZMt6cYe1VEVKuB4MDI/JGlW+nuL+S1lvL4WV54dsDYBcRTRqu5zc3MQu
+ p5O29VToEeu/gpnKgdi4QFgF1p2L/5Mo=
+X-Gm-Gg: ATEYQzw5TDXmW59WHcnN9cqUG9n82PkZgyyDpJ28akMMdoNAdFfiNIOWwzmrxg5kdUc
+ 12rcdGJ4p2s1hhE7b9hN+h7MjYGhhUT3oZkscgoK5NGs2LVCyLraYmEyaYCTtHs+E89OMZkIKkZ
+ LWSk57Qx50elgwSKASYg8JmDLUtR8Wz1TE390nBy1hFGL1WTGJL97DoZJzQG3JFM27AQPMcEjSB
+ WecpeNb3XUgUyYoJEoV1nlA34LFZHxng6O6oySQn3WKDznsOGbmKS7kukpkYpuf6bdzR+0ahOCA
+ x8Pq+bdAInEEoA0aKWZ3aNU699KQ6bFS/qVFEQ==
+X-Received: by 2002:a05:6402:3506:b0:65f:a428:dffe with SMTP id
+ 4fb4d7f45d1cf-65fdd6b628fmr654034a12.7.1772148444497; Thu, 26 Feb 2026
+ 15:27:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-2-djordje.todorovic@htecgroup.com>
+ <d03c5416-14a2-425f-a96c-ba340cf79617@redhat.com>
+ <aZ7rchFnUwL9XGBL@redhat.com>
+In-Reply-To: <aZ7rchFnUwL9XGBL@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 27 Feb 2026 09:26:58 +1000
+X-Gm-Features: AaiRm51f5LmaiWkeCC6Qb04xzQi3rlSUw4hj5W8bpsk1GQnt0s9_t0oM7oQEg5g
+Message-ID: <CAKmqyKPrrk9ick=PJpPLyj1xfgU-ZaCGZsc4EW+oomkRP26FDA@mail.gmail.com>
+Subject: Re: [PATCH v2 01/16] meson: Add BE RISCV targets
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>, 
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>, 
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,98 +128,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gdb_static_features[] only contains strings, nothing target-specific.
-Instead of generating one file per target, generate a single file
-with a single gdb_static_features[] array. Remove the stub.
+On Wed, Feb 25, 2026 at 10:30=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
+>
+> On Wed, Feb 25, 2026 at 11:39:50AM +0100, Thomas Huth wrote:
+> > On 25/02/2026 11.20, Djordje Todorovic wrote:
+> > > Add options to compile riscv64be-softmmu and riscv32be-softmmu
+> > > ---
+> > >   meson.build | 7 ++++++-
+> > >   1 file changed, 6 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/meson.build b/meson.build
+> > > index 8c6c0a9a32..41ad38d184 100644
+> > > --- a/meson.build
+> > > +++ b/meson.build
+> > > @@ -55,6 +55,11 @@ supported_cpus =3D ['ppc64', 's390x', 'riscv64', '=
+x86_64',
+> > >   cpu =3D host_machine.cpu_family()
+> > > +# Unify riscv64be to riscv64.
+> > > +if cpu =3D=3D 'riscv64be'
+> > > +  cpu =3D 'riscv64'
+> > > +endif
+> > > +
+> > >   target_dirs =3D config_host['TARGET_DIRS'].split()
+> > >   # type of binaries to build
+> > > @@ -281,7 +286,7 @@ elif cpu =3D=3D 'ppc64'
+> > >   elif cpu =3D=3D 'mips64'
+> > >     kvm_targets =3D ['mips-softmmu', 'mipsel-softmmu', 'mips64-softmm=
+u', 'mips64el-softmmu']
+> > >   elif cpu =3D=3D 'riscv64'
+> > > -  kvm_targets =3D ['riscv64-softmmu']
+> > > +  kvm_targets =3D ['riscv32-softmmu', 'riscv64-softmmu', 'riscv32be-=
+softmmu', 'riscv64be-softmmu']
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v2: Check array length
----
- meson.build       | 27 +++++++++++++++++----------
- stubs/gdbstub.c   |  6 ------
- stubs/meson.build |  2 --
- 3 files changed, 17 insertions(+), 18 deletions(-)
- delete mode 100644 stubs/gdbstub.c
+We really don't want a 32-bit KVM target at all
 
-diff --git a/meson.build b/meson.build
-index 451cb28149f..5d7abc5db8b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3867,6 +3867,23 @@ subdir('linux-user')
- subdir('tests/qtest/libqos')
- subdir('tests/qtest/fuzz')
- 
-+feature_to_c = find_program('scripts/feature_to_c.py')
-+gdbstub_xml = []
-+foreach target : target_dirs
-+  config_target = config_target_mak[target]
-+  if 'TARGET_XML_FILES' in config_target
-+    gdbstub_xml += config_target['TARGET_XML_FILES'].split()
-+  endif
-+endforeach
-+if gdbstub_xml.length() > 0
-+  gdbstub_xml = custom_target('gdbstub-xml.c',
-+                              output: 'gdbstub-xml.c',
-+                              input: files(gdbstub_xml),
-+                              command: [feature_to_c, '@INPUT@'],
-+                              capture: true)
-+  common_ss.add(gdbstub_xml)
-+endif
-+
- ##############################################
- # Internal static_libraries and dependencies #
- ##############################################
-@@ -4218,7 +4235,6 @@ if have_rust
- endif
- 
- 
--feature_to_c = find_program('scripts/feature_to_c.py')
- rust_root_crate = find_program('scripts/rust/rust_root_crate.sh')
- 
- if host_os == 'darwin'
-@@ -4298,15 +4314,6 @@ foreach target : target_dirs
-     endif
-   endif
- 
--  if 'TARGET_XML_FILES' in config_target
--    gdbstub_xml = custom_target(target + '-gdbstub-xml.c',
--                                output: target + '-gdbstub-xml.c',
--                                input: files(config_target['TARGET_XML_FILES'].split()),
--                                command: [feature_to_c, '@INPUT@'],
--                                capture: true)
--    arch_srcs += gdbstub_xml
--  endif
--
-   if target in config_target_info
-     arch_srcs += config_target_info[target]
-   else
-diff --git a/stubs/gdbstub.c b/stubs/gdbstub.c
-deleted file mode 100644
-index 580e20702b2..00000000000
---- a/stubs/gdbstub.c
-+++ /dev/null
-@@ -1,6 +0,0 @@
--#include "qemu/osdep.h"
--#include "exec/gdbstub.h"       /* gdb_static_features */
--
--const GDBFeature gdb_static_features[] = {
--  { NULL }
--};
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 8a07059500d..1e0f6f47377 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -89,8 +89,6 @@ if have_system
- endif
- 
- if have_system or have_user
--  stub_ss.add(files('gdbstub.c'))
--
-   # Also included in have_system for --disable-tcg builds
-   stub_ss.add(files('replay.c'))
- 
--- 
-2.52.0
+> >
+> > I really dislike the idea of having yet another target like mips where =
+we
+> > have 4 different flavours (32/64 bits x big/little endian). That increa=
+ses
+> > the compile- and testing time a lot. Couldn't you do it the ppc64 way? =
+The
+> > ppc64-softmmu target can handle both, big and little endian, no need fo=
+r a
+> > separate binary here. And we are going the same way with microblaze now=
+ -
+> > the microblaze target recently got support for little endian, so we can
+> > finally get rid of the microblazeel target now.
+>
+> Also with the ongoing work to make a single QEMU binary that can
+> support any target, it feels like any problems with handling big
+> and little endian in a single binary will need to be solved
+> regardless, so if practical we should align with that direction
+> from the start.
 
+Exactly. We are working towards a single RISC-V  binary for all bit
+lengths. Big endian would have to start out included in the existing
+builds
+
+Alistair
+
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
