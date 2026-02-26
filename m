@@ -4,99 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0097DFD9E19
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B71FAFD9E1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvjSk-0003Ia-47; Thu, 26 Feb 2026 17:04:03 -0500
+	id 1vvjSz-0003hU-JB; Thu, 26 Feb 2026 17:04:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vvjRx-0002ZP-U7
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:24 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjSF-0002gO-Bm
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:32 -0500
 Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vvjRu-0001uc-3F
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:11 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjS9-0001vJ-Ka
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:28 -0500
 Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4398f8e2837so1145152f8f.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:03:08 -0800 (PST)
+ ffacd0b85a97d-437711e9195so991447f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:03:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772143387; x=1772748187; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772143399; x=1772748199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UJqefZarmSpkloNs/DyvVPHufqYwdRWZLXNt17FEpiI=;
- b=L4dV2MKux57nl8Ez6Z5RzxdkzVV6aLVmtfYlvf6+jW7Yo+B+x2lXXPywC1+5kDxRTS
- 46ttlvG8lshYSC6hUluww8Qv4CivgRTlHp/DYECC8PtFTqY+Mkzat7K4BHvIOeghZwrF
- rZ83eG0UmQusYO8n0jJQfJf+isjEDFqCl3I5r+JhdqCw2Q2wg04iBGoNByIijv0WgB4Y
- byVyxli/OOEwJ7JOUpWsB8YvTLgRRBYeRRxl/9ONDwF4gBHUJfk64S9wJr9odE5hSfPn
- 7w/jmdogBeYqd29B2mUoINys0POBK1r1e3HFQW95KTtQvpaJvCZ8MlA/dYyuGUc3UUts
- +h/Q==
+ bh=Hbzn5vHgMdXp7p0dhzileZ9MCb8UEIgfWGmULUXbwAo=;
+ b=OlM4xEeNzJsLYitiemx8oGObTEMPV5FERDflDi74fHJON+QxZ5Z2pPjZZnygaGd1t/
+ 5BJGpaP+p5+2ho6Jr9lnFMHXYWYqGscuBDyFXJGhZAT8Z44GeXAeY8KYRUbExL3C7Vda
+ 5BYVKQO1k4z/Xzyx5fjPn7A+yluIMtUu/0niTT3xP9NsIWX9sukfljVSg3z6fv/mRog7
+ L0rDIRnxBRnDFV6CuGellV7G6Fsdp//h6e5WfIsIk0K9/xlEnVx5lI6yFkahzu3OB08u
+ MwgXcsPgpONlHI/KR5p9B72tP5g9qVZp41m59C5XFxONl+V3Huq+H+SBuWghjbf2utmz
+ esLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772143387; x=1772748187;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1772143399; x=1772748199;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UJqefZarmSpkloNs/DyvVPHufqYwdRWZLXNt17FEpiI=;
- b=G7jRVoy+iWiYfiBBUHYxDDpP4UjW0N249/R+o9Nmv4ur3tIM9qCAc0RDWZiF+CXgHV
- 4bqKnca2VdYYg3NSY0PyR8n43grOyYRhxJjxj6JY2aY0l31vy/NFrKJhfmg+ks5BUmoT
- MA2cuYQ8zOHsIPWEduMjZ+JI68G6YBXBFMHKHvrNaugeaGcDRG4tr9tCLDKf7Kj/oo3W
- e7LjCxgnmX5Ww0OgE4wUqvJ/fKGlPkHmVw1p5MsW0jfou+MDSMUuiJ1I8zA1trCsDfbU
- 1dNo4ScWV4SwLdXnSV9pspxk/aK9o1CQfvR6yK3KIs/VZpgfOhJ7+5vyZ8pdti6quNYh
- vyPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqvWmyE+r6sWpTuPR+PWtUonhH9+fSQfPzLXGyElVovf0b806AsGZUix8B1C9A/1pkZOrG3A4OY5GC@nongnu.org
-X-Gm-Message-State: AOJu0Yyjt5ZS2xbpK2OFovUtu7tfcxMnafeFdccngtYM1G7M6X4mqDtw
- iVjG7AsH/QOq50aKWQRQC97KmH7u2GNlyXMkQi104T8ad+173/+9dqIj
-X-Gm-Gg: ATEYQzyeFGhFFyBnwcOep5ajxI2FBuzeKK5qpMrVk445ApIPJlTLA7ehzjCEjah/D5/
- t3Al7i32gySx0MiYo73vzU3LYn49DlniPvzyfxuMoH1tss3BCpOtkZYEOCYcRrAcWn++5nKofyq
- IRWTvI2dNhb1v+ldmPQ++F/RRZ6GhCBzHv9JySlKYAbCX6V8QUA7CPhJqREVZbN9oH9q7x/uqd6
- nWHu77NN+vlyLzPXdVRwQMyPteaOra1DAVeNCVElj6TJEawB0O2YaEvhRe1oXAGvj0oNIDVQYhS
- pSbcsqiIh205w0IaxjsRMQOJJCkaUjZ6dGgz69JD+FAozDAGhAN938I4UIZDS+eHdEpzFuOWjig
- 10kRAMgZPQ1gdzX/AtclXsWEk2ro3bkVFYJLBrmo/Dw4Ed3naBB5XJTCpFk3NaJ2hnY+8ZHlggr
- l6HoeIzzjNdPwhZRsZyAm3psHbqLdV4Oyi+C/K5dlGmuQ3b6a3W6qbHV+cm8uIEX2mllbT5C7ym
- plugNKqgaHHzqB3jE+TlFhRX6DBBdFsoe5ub4P4cWlF0Dg=
-X-Received: by 2002:a05:6000:144d:b0:435:bcbe:d104 with SMTP id
- ffacd0b85a97d-4399de1f29fmr703889f8f.34.1772143386556; 
- Thu, 26 Feb 2026 14:03:06 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2de3-af00-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
- [2a02:3100:2de3:af00:f009:a6c9:39e7:d8fe])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c764546sm2419923f8f.29.2026.02.26.14.03.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Feb 2026 14:03:05 -0800 (PST)
-Date: Thu, 26 Feb 2026 22:03:05 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ bh=Hbzn5vHgMdXp7p0dhzileZ9MCb8UEIgfWGmULUXbwAo=;
+ b=qp14njOeqWm4zQ8TqWirxFx/zYXWtNsTgPQF1DVr5r0+OB4kFKfWFlXpWwKtQtr/2A
+ 4TnIU4iGYCbO1jwuwd7XMGoG8GSKbL6FiislJzlwrrv7BQ5gll3S6byUj22iNmSQqxHE
+ WvfyiLOxYThWOHBQfM2spZpFlpPIK/K1NVdT3bxzHSlpYu4IRGaAwwBBPeb9zcpbN/4f
+ 6RSZDFj8quV6wkFQdSxIO+tfozKnKsJyzv1S65ENSbXT9/rMOV8x4G3MxRXw/4hLsrHZ
+ F63kYHKb7MvA3fsjOXzZhIvyOTiBy3x50zN2X1fChET0TsCUvVCflMsbLMpWSIY7M8N8
+ 675w==
+X-Gm-Message-State: AOJu0Yy9Ah/dIyZ3CSAcKiI0VlaxWDB8s8iaKpeEdC3l4ejhT17L7i6x
+ 8hRJtZtN2P/mFON+X/5/vy9etC+EQTfrjsdwSD+wr9PBK7H8a5k1d9eRAukW1Ayh+RSMrgOzLP9
+ AeJN0Vp0=
+X-Gm-Gg: ATEYQzy9HohlkKfsNsNsaEGhcbTrJvIZ/KqzdW0RY1balaWhYpUXlpYN4odQKiAjCbM
+ 0BtfG/e4kjOz+GuF6XAhMl8WmQnThLyeBG0Ke05ne/00SR9EMjdZsFXSRCqjoBSfh6a9+R6qh/X
+ n79MCBab1DDDbi7sRRgFH5nYkswtqXUAWS7P3OOAXLW2aYXXz9xzEPS8PVAijK1kMDNJ1ESTX5t
+ qC1elMI/+Y4aehj1EkCOcHmkQR+wIvv3XYkkkFYgYUnfJJxjv7fGZH9jvZoekpyegtdP0nxR0pw
+ eCuEEjQcvdSBIc0WseNP8/ehxeCWYxtR5akNXDNzC2tBz3wGDCez8Eh+UfStTVP5QoBFDVBK3pZ
+ a2E95SSBxir+aPc43uGKv4AXu6Q0IQy7YGdwy7zbZ5cvJfoss6GvAnA9YmcgWDLEbtWo2YnexZP
+ l0Xpota/WrIDa/Ofxacs9RCEFtC7WTLUA1V9mQk6B9LPZ6cR1lM00rpYpCZ9IjdqR51uNHcBTBR
+ hzSJ0PChkY=
+X-Received: by 2002:a05:6000:2901:b0:439:5c09:4854 with SMTP id
+ ffacd0b85a97d-4399de2fcd2mr690489f8f.41.1772143398974; 
+ Thu, 26 Feb 2026 14:03:18 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4399c76b40esm1838119f8f.36.2026.02.26.14.03.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 26 Feb 2026 14:03:18 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-CC: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Mark Burton <mburton@qti.qualcomm.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH=5D_hw/core=3A_Avoid_attaching_qde?=
- =?US-ASCII?Q?vs_to_/machine/unattached_if_they_have_a_bus?=
-In-Reply-To: <0fef1895-b8dd-4091-a4af-6bcb5a974e32@linaro.org>
-References: <20260217164049.543975-1-thuth@redhat.com>
- <874ind5da6.fsf@pond.sub.org> <aZ1zsoyKcD1ChK--@redhat.com>
- <CAFEAcA-30xkboF_mt2HD+9TG+j9W7k2FCuSHGSVk9H=gbXnx2A@mail.gmail.com>
- <ef1aeb7f-d79c-446f-be58-28245b84ccfa@nutanix.com>
- <0fef1895-b8dd-4091-a4af-6bcb5a974e32@linaro.org>
-Message-ID: <DCBCB187-152E-4122-BA69-2CB25984B168@gmail.com>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH 7/7] system/memory: Have 'info mtree' display addresses nicely
+Date: Thu, 26 Feb 2026 23:02:25 +0100
+Message-ID: <20260226220226.20164-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260226220226.20164-1-philmd@linaro.org>
+References: <20260226220226.20164-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42d.google.com
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,161 +104,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use the size of a MR / AS to decide how many address chars
+need to be used.
 
+For example, using 'qemu-system-x86_64 -M q35 -S -monitor stdio'
+to run 'info mtree' displays before:
 
-Am 25=2E Februar 2026 05:55:21 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
-philmd@linaro=2Eorg>:
->+Bernhard
->
->On 24/2/26 13:22, Mark Cave-Ayland wrote:
->> On 24/02/2026 11:10, Peter Maydell wrote:
->>=20
->>> On Tue, 24 Feb 2026 at 09:48, Daniel P=2E Berrang=C3=A9 <berrange@redh=
-at=2Ecom> wrote:
->>>> IMHO, it is slightly more subtle - people believe they are already
->>>> adding children=2E
->>>>=20
->>>> Consider this code=2E
->>>>=20
->>>> =C2=A0=C2=A0=C2=A0=C2=A0 port92 =3D isa_create_simple(isa_bus, TYPE_P=
-ORT92);
->>>>=20
->>>> my reading of that is that I'm creating a "port92" device that is a
->>>> child of "isa_bus"=2E Why would I need to tell QEMU that it is a chil=
-d
->>>> for a second time ?
->>>>=20
->>>> If I trace calls through isa_create_simple I get to a call to:
->>>>=20
->>>> =C2=A0=C2=A0=C2=A0 qdev_realize_and_unref(dev, parent, errp);
->>>>=20
->>>> and once I again I'm left wondering why I would need to tell
->>>> QEMU 'dev' is a child of 'parent' a second time=2E
->>>>=20
->>>> Of course I know the answer=2E We need to give a name for the
->>>> child and it isn't trivial to "do the right thing" to invent
->>>> an automatic name=2E
->>>>=20
->>>> Still, overall I'm inclined to largely blame our API designs for
->>>> not guiding people into doing the right thing=2E
->>>>=20
->>>>=20
->>>> Picking another random unattached set of objects "smbus-eeprom"
->>>> I again find they've being created with qdev_realize_and_unref=2E
->>>>=20
->>>> Pick another unattached device 'i8259_init_chip', and again
->>>> we end up calling into qdev_realize_and_unref()
->>>>=20
->>>>=20
->>>> It feels like qdev_realize_and_unref() is a common point of
->>>> blame in unattached devices=2E IMHO it ought to be taking a
->>>> "const char *name" parameter=2E
->>>=20
->>> I think that is because this is the function that is used
->>> in older code that predates the "everything should be in
->>> the QOM tree" model=2E Newer code doesn't use it, I think;
->>> and it's not surprising that old pre-QOM code doesn't do
->>> anything to put objects into the QOM tree=2E
->>>=20
->>> The two patterns are:
->>>=20
->>> =C2=A0 dev =3D qdev_new(=2E=2E=2E);
->>> =C2=A0 =2E=2E=2E
->>> =C2=A0 qdev_realize_and_unref(dev, bus, errp);
->>>=20
->>> and
->>>=20
->>> =C2=A0 object_initialize_child(=2E=2E=2E);
->>> =C2=A0 =2E=2E=2E
->>> =C2=A0 qdev_realize(dev, bus, errp);
->>>=20
->>> This also is somewhat tangled up with the question of whether you want=
-:
->>>=20
->>> =C2=A0 * call a function which allocates memory and initializes it
->>> =C2=A0=C2=A0=C2=A0 with an object of this type
->>> =C2=A0 * I have the memory here, init the object in-place
->>>=20
->>> If we could come to a definite conclusion on what we want then
->>> we would probably be in a better position to try to enforce it=2E
->
->I recall a previous discussion where we said in-place allocation
->does not scale with dynamic machines (data driven config), and IIRC
->Bernhard said by switching to dynamic heap allocation we'd use more
->QOM cast macros and lose compiler safety type checks=2E Can't find it
->now in the archives=2E
+  address-space: I/O
+    0000000000000000-000000000000ffff (prio 0, i/o): io
+        0000000000000000-0000000000000003 (prio 0, i/o): acpi-evt
+        0000000000000004-0000000000000005 (prio 0, i/o): acpi-cnt
+        0000000000000008-000000000000000b (prio 0, i/o): acpi-tmr
+        0000000000000020-000000000000002f (prio 0, i/o): acpi-gpe0
+        0000000000000030-0000000000000037 (prio 0, i/o): acpi-smi
+        0000000000000060-000000000000007f (prio 0, i/o): sm-tco
+      0000000000000000-0000000000000007 (prio 0, i/o): dma-chan
+      0000000000000008-000000000000000f (prio 0, i/o): dma-cont
+      0000000000000020-0000000000000021 (prio 0, i/o): pic
+      0000000000000040-0000000000000043 (prio 0, i/o): pit
+      ...
+  memory-region: pc.ram
+    0000000000000000-0000000007ffffff (prio 0, ram): pc.ram
+  memory-region: pc.bios
+    00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
+  memory-region: pci
+    0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+      00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+      00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+      00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
+      00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
+  ...
 
-It was probably this comment about type safety which was unrelated to heap=
- allocations: https://lore=2Ekernel=2Eorg/qemu-devel/49C85A05-2BE5-4D9B-A08=
-A-B93039669BD8@gmail=2Ecom/
+and after:
 
-Best regards,
-Bernhard
+  address-space: I/O
+    0000-ffff (prio 0, container): io
+        0000-0003 (prio 0, i/o): acpi-evt
+        0004-0005 (prio 0, i/o): acpi-cnt
+        0008-000b (prio 0, i/o): acpi-tmr
+        0020-002f (prio 0, i/o): acpi-gpe0
+        0030-0037 (prio 0, i/o): acpi-smi
+        0060-007f (prio 0, i/o): sm-tco
+      0000-0007 (prio 0, i/o): dma-chan
+      0008-000f (prio 0, i/o): dma-cont
+      0020-0021 (prio 0, i/o): pic
+      0040-0043 (prio 0, i/o): pit
+      ...
+  memory-region: pc.ram
+    00000000-07ffffff (prio 0, ram): pc.ram
+  memory-region: pc.bios
+    fffc0000-ffffffff (prio 0, rom): pc.bios
+  memory-region: pci
+    0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+      00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+      00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+      00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
+      00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
+  ...
 
->
->We have some model declension where we allocate in-place $MAX members
->and expose a QOM property to initialize up to that number (or worst,
->de-initialize and unparent what is left!) in the DeviceRealize handler=2E
->Not "in-place" could simplify this=2E
->
->> Exactly this! I think what tends to happen is that we get stuck in situ=
-ations where someone suggests an improvement, but then we get hung up tryin=
-g to work out the corner-cases where it doesn't work and then things don't =
-progress=2E
->>=20
->> The approach I believe we need to take is to work out what we want the =
-API and QOM tree to look like first, and then work backwards from there=2E
->>=20
->> I tend to be in agreement with Akihiko's argument that we want to depre=
-cate in-place initialisation with object_initialize_child() and simply use =
-refcounting everywhere because then we don't hit any lifcycle issues if som=
-ething retains a reference to the internal object (memory regions!)=2E
->>=20
->> The questions I think we need to answer as a starting point:
->>=20
->>  =C2=A0 1=2E Which API shall we converge on: qdev or QOM? Can we come u=
-p with a
->>  =C2=A0=C2=A0=C2=A0=C2=A0 code sample(s) showing what we want object/de=
-vice initialisation to
->>  =C2=A0=C2=A0=C2=A0=C2=A0 look lie? Longer term can we unify the QOM an=
-d qdev trees?
->>=20
->>  =C2=A0 2=2E Should we convert to use external object allocation with
->>  =C2=A0=C2=A0=C2=A0=C2=A0 refcounting?
->>=20
->>  =C2=A0 3=2E How do we handle memory regions? With Akihiko's recent ref=
-count
->>  =C2=A0=C2=A0=C2=A0=C2=A0 fixes then Zoltan's memory region changes cou=
-ld work: I don't agree
->>  =C2=A0=C2=A0=C2=A0=C2=A0 with the motivation of simplifying devices as=
- I think it's i)
->>  =C2=A0=C2=A0=C2=A0=C2=A0 subjective and ii) harder to debug if we lose=
- the pointer to the
->>  =C2=A0=C2=A0=C2=A0=C2=A0 memory region, but I can see how it fixes the=
- RCU-thread doing an
->>  =C2=A0=C2=A0=C2=A0=C2=A0 unref after the owner device has already been=
- destroyed issue=2E
->>=20
->> As several people have already pointed out in this thread, we do have a=
- poor track record of API conversions but the introduction of memory region=
-s shows how this can be done successfully=2E
->>=20
->> Given that we already have multiple ways of doing the same thing, I ten=
-d to lean against not introducing yet-another-API unless we can come up wit=
-h a long-term strategy for its use=2E In particular this causes problems in=
- review where e=2Eg=2E one reviewer may want to use QOM to setup a device w=
-hilst another may want to use qdev which is confusing for everyone, includi=
-ng the code submitter=2E
->>=20
->> If we can at least get an answer to 1) then I'd be willing to have a go=
- at writing some kind of specification document and put it out for feedback=
-=2E=2E=2E
->>=20
->>=20
->> ATB,
->>=20
->> Mark=2E
->>=20
->>=20
->
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ system/memory.c | 27 +++++++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
+
+diff --git a/system/memory.c b/system/memory.c
+index 4d276307da5..abcbdaadcd7 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3321,7 +3321,26 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
+ 
+ #define MR_SIZE(size) (int128_nz(size) ? (hwaddr)int128_get64( \
+                            int128_sub((size), int128_one())) : 0)
+-#define MR_ADDR_WIDTH   16
++
++static unsigned mr_addr_fmt_width(const MemoryRegion *mr)
++{
++    const unsigned int bits = 127 - clz128(mr->size);
++    unsigned int width;
++
++    if (bits <= 8) {
++        width = 2;
++    } else if (bits <= 16) {
++        width = 4;
++    } else if (bits <= 32) {
++        width = 8;
++    } else if (bits <= 64) {
++        width = 16;
++    } else {
++        width = 20;
++    }
++    return width;
++}
++
+ #define MTREE_INDENT "  "
+ 
+ static void mtree_expand_owner(const char *label, Object *obj)
+@@ -3513,7 +3532,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+         return;
+     }
+ 
+-    width = MR_ADDR_WIDTH;
++    width = mr_addr_fmt_width(view->root);
+     while (n--) {
+         const MemoryRegion *mr = range->mr;
+ 
+@@ -3643,7 +3662,7 @@ static void mtree_print_as(gpointer key, gpointer value, gpointer user_data)
+     MemoryRegion *mr = key;
+     GSList *as_same_root_mr_list = value;
+     struct AddressSpaceInfo *asi = user_data;
+-    const unsigned int width = MR_ADDR_WIDTH;
++    const unsigned int width = mr_addr_fmt_width(mr);
+ 
+     g_slist_foreach(as_same_root_mr_list, mtree_print_as_name, NULL);
+     mtree_print_mr(mr, 1, width, -mr->addr, false,
+@@ -3692,7 +3711,7 @@ static void mtree_info_as(bool dispatch_tree, bool owner, bool disabled)
+     /* print aliased regions */
+     QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
+         const MemoryRegion *mr = ml->mr;
+-        const unsigned int width = MR_ADDR_WIDTH;
++        const unsigned int width = mr_addr_fmt_width(mr);
+ 
+         qemu_printf("memory-region: %s\n", memory_region_name(mr));
+         mtree_print_mr(mr, 1, width, 0, false, &ml_head, owner, disabled);
+-- 
+2.52.0
+
 
