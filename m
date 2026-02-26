@@ -4,121 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346A2FC590F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 08:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D36FC590F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 09:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvX0a-0004vg-Od; Thu, 26 Feb 2026 03:46:08 -0500
+	id 1vvXL9-0005LI-JL; Thu, 26 Feb 2026 04:07:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vvX0U-0004tv-G6; Thu, 26 Feb 2026 03:46:03 -0500
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvXL8-0005L1-8w
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:07:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vvX0R-00053U-N5; Thu, 26 Feb 2026 03:46:02 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yN1kRMmA0DZ7M5C9tYmXWdDImSE5wovLVOC7wzLE1tgurJwNGLnl9YNyWOnvbxf99F/M2Nl1EE0kBrF1/wJMkKMQCWgd0ORa2z9O6JEvtGWUkhUzLMxB0a24h5NG4H0uQXeaK5Lt4ypizNa8kAaJgfCggGObkE9dw3VmwOKv9SV10sHPf352vSkzdZ69OQACqaIt1SED8yFLe8cWnX8EFyBuHTMgDH68Qnk9qxzPqE2BHXTcyPCnbqffQJctR0yPBC5/d47A3iRD4nDkVEvapevY1gZUgAX/lqVUU3NsLHxlxqqHlfWPx5pPaiWzZEizFds09+evFPktETwGNDvNdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Moxa23sTz6WJISn3YNhhHYEne9Lcbc5VZsMZVvuAy1s=;
- b=y9KFiynviLpLJsqDRKHEkf6voTnNfgmQ2diy1zC6mvJRvuayajz/mq+xCKfb5Msolw0FCJvhtw6oeCg9rhLlwfgQ42zzypjr3JfjEz7FEIXvnB1tfiaZHA7lWrCCbS4objMKy70j+HQue0COXb8CvQHBMfVQ+tvw9eCs6YIvmYyuoIiA/eNWaZg6GS+YerKU9hloC6M5FM99pdCAOHAyiTR1w8NptU2291Sp0Z5bKU3DT0FVG8gCVdQN9TrR5wKo8lS8FPsxT0iEWmjcqhQjFdfnmwk3h2DgKuHxJtO8VeFcNdoNsHRc4WzqGjiEf6HpXOrrO7CfEizQxxhbEjRnrQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Moxa23sTz6WJISn3YNhhHYEne9Lcbc5VZsMZVvuAy1s=;
- b=aJs6GU6OL+SmLK/QPt95Q5caBdbQGPE8XUvKi1MBWSFU6Yxv8p9qutsfowkwUTpLoiVCKEqN7rMIwier/k88UIOYRrcAKuzXBKxPoUgefOMstaMxQ2A8OcTZPAJkWXfM0DQjg1/a+tXmyDjvNzdInwu+Ib/fNyg62cwaAB6cD8QbjPXnfs1p6zVbkJAh2NVhrLxhzWCIJm8WbJsWCLrrRScX+ItNvH+BMQxupdOEVekGKY6lc0VttLfn46XdiPqXUYz4SkL9lh2qOqjifKg/pc55cdP/9UtSn1X4WdAirS9qN6BWqfQIFopseb/xt+ajXOTzeKNWH9K1gh8tps5aJw==
-Received: from CH0PR03CA0325.namprd03.prod.outlook.com (2603:10b6:610:118::31)
- by IA1PR12MB8222.namprd12.prod.outlook.com (2603:10b6:208:3f2::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Thu, 26 Feb
- 2026 08:45:52 +0000
-Received: from DS3PEPF0000C37D.namprd04.prod.outlook.com
- (2603:10b6:610:118:cafe::77) by CH0PR03CA0325.outlook.office365.com
- (2603:10b6:610:118::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.26 via Frontend Transport; Thu,
- 26 Feb 2026 08:45:25 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- DS3PEPF0000C37D.mail.protection.outlook.com (10.167.23.7) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9632.12 via Frontend Transport; Thu, 26 Feb 2026 08:45:52 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Feb
- 2026 00:45:31 -0800
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 26 Feb
- 2026 00:45:28 -0800
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jan@nvidia.com>, <jgg@nvidia.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <philmd@linaro.org>,
- <kjaju@nvidia.com>, <skolothumtho@nvidia.com>
-Subject: [PATCH v8 3/5] hw/arm/smmuv3-accel: Allocate vEVENTQ for accelerated
- SMMUv3 devices
-Date: Thu, 26 Feb 2026 08:44:54 +0000
-Message-ID: <20260226084456.112142-4-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260226084456.112142-1-skolothumtho@nvidia.com>
-References: <20260226084456.112142-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvXL3-0000s7-Tt
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:07:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772096835;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2BcZjZzCJD0GbyEgv+eejXfATABCv2Fa4hvJR3BWcp0=;
+ b=MvK3CimeEafK+DPHWUlwgqZjd1HFftsHVcTImbzikUMoJlT9Q5bI4EHGQytcBFYMsbqvHV
+ mUoI9w+XCvRIo8xDR+FBKf/wBhOHWSoBPe0pqDSwvl3yMBue09peQBrlNP/rZl4mAOyxzq
+ UKn/0IzKORnKqUTKIAUVuwi7k3L4oJY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-5yBA87gIPZqR4JiPQLKA4A-1; Thu,
+ 26 Feb 2026 04:07:11 -0500
+X-MC-Unique: 5yBA87gIPZqR4JiPQLKA4A-1
+X-Mimecast-MFC-AGG-ID: 5yBA87gIPZqR4JiPQLKA4A_1772096830
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 51D391800473; Thu, 26 Feb 2026 09:07:10 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.225.23])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1D1161800348; Thu, 26 Feb 2026 09:07:06 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Rob Herring <robh@kernel.org>
+Cc: qemu-arm@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] hw/arm: Remove the deprecated "highbank" and "midway" machines
+Date: Thu, 26 Feb 2026 10:07:04 +0100
+Message-ID: <20260226090704.27699-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.231.35]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF0000C37D:EE_|IA1PR12MB8222:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16320b75-2191-421d-7ee8-08de751372a7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: 8j3JrlpHHt5c60nUw4H348RWTKwCE1zV/SzzXY+7pgSMBEvLzr1y0urWDk0TF6SW2BMn7uuHdaSb6SmSmlYluMHyNOeoEBM5N17RhCKH6+9BGTRnQX37/TvaeBz3YPPHeHZKJo8HlafX7Tz6CGMGWIjyCnHeocK3/OqXyl9OrNs2oi+L56AKOohZ+ATCmNa+3YadgFikCX4hNaIb1xYPxMdW926r5Bryn970wRL/pjT4vl4jmFSYsnnLUDaGHVRcOmd2w1+iTrfNkpIExAeSJCoiTsn6uLnrLYbnWD6F0dIA7pzJh0+7p1+A0bc/vvW2lpUSVATYaH1fUVlhzTCNJKy6+irDRJ/YngaXiIf/qgZb/zGw3VMYjSUsH0kteqfRop1rRMPiKp36p93JEgMMth+9xnDaPKsEDpusS8pgtS96Pp27450YTDuv0+LAP0j9I2z3xq95UmyDWt7zu/mAMVGNfVFaPdrPYhT+zI7bQetFiqJCoz6HJivCr6Frw+UzHfvedDAe11XZSbqkJv3+pvDPToTvfoS0/XP7K1ibU20X529Fh9YPBfx+N7qrQns3q+xY24+7nxNw6Hyf1TkOKDUlXHrtFBbaHmJ/93slcjPvExQs8qMju0JRBrhVAFtcRX1AquTyNdQuFWcdc5do5st1bXVg1zZ7p285EfDncGU4aM4PdyFsNVeGjJ2yosWYki9Lf3x6yfA8xAQOng9HJnWMtZt0nOERQ6bYPRzgrGSDD9vtXkC7PnYL1HML2CL/DLU40MZKOm3wWbgUSb9Ufpf/4wmH2nt2QJaMWpzKgXFeYdQ8iWRyYGBazDiJ3p0EBOJs0HdkFO00MqWr+31fFQ==
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: rioxQHukd2Fk0jpi1CC6cEQtSBEcf4Drsy2/NFcc/1BZCTeQMXkrW3+S/44MfsYuooD7m4y4CulBOJV9dQlb4GohcMsqCLDkjj8BX6lbx2ApKlfsx4tGGtBxb5i48esY8F2JO2SSDTqNOF9MfL3zFnv+3e6FUSo85nl5P6VmXRi5qXmXRLZ0bdi8yCa2SekJVUUheC5/WM6a91QEUK/C3KQbdPBsZiWRWY0abCoW95/Kn9q/D5GE0u7YMn7lbfMOvKwiODZYzsIpmADJRY6SvrMZmysFSGxbTx1V/ToW0eWUXGQ4bhqn2O8jRo3xnR4iFHGFPj8yzIzUrq0+20kJ32c4j8h8Dy6/I4gV2joRf1qHXi76VsMhEHGYVMHVOFrU0X8pPW1gD4C29KpjPC33SVgwsB3FEH4dEMhi/UWavA3Gd6GQkJeAGsAqHa3WY+vK
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2026 08:45:52.0083 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16320b75-2191-421d-7ee8-08de751372a7
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF0000C37D.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8222
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=skolothumtho@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,209 +80,582 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Thomas Huth <thuth@redhat.com>
 
-When the guest enables the Event Queue and a vIOMMU is present, allocate a
-vEVENTQ object so that host-side events related to the vIOMMU can be
-received and propagated back to the guest.
+These machines have been marked as deprecated two releases ago,
+and so far nobody complained that they are still useful, so it's
+time to remove these now.
 
-Allocate a vEVENTQ only when both of the following conditions are met:
-
-  1) The guest SMMUv3 driver has set EVENTQEN = 1 in SMMU_CR0.
-  2) A vIOMMU exists (created when the first VFIO device is attached).
-
-These two conditions may occur in any order.
-
-In the cold-plug case, the vIOMMU already exists before the guest
-driver probes. When the guest sets EVENTQEN = 1 during driver probe,
-the vEVENTQ is allocated at that point.
-
-With hot-plug, the VFIO device may be attached either before or after
-the guest sets EVENTQEN. If the vIOMMU is created first, allocation is
-deferred until EVENTQEN = 1. If EVENTQEN is already set, allocation
-happens when the vIOMMU is created.
-
-In all cases, allocation is triggered when the second required
-condition becomes true.
-
-Errors from command queue consumption and vEVENTQ allocation are reported
-independently as the two operations are unrelated.
-
-Event read and propagation will be added in a later patch.
-
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/arm/smmuv3-accel.h |  6 +++++
- hw/arm/smmuv3-accel.c | 61 +++++++++++++++++++++++++++++++++++++++++--
- hw/arm/smmuv3.c       |  6 +++++
- 3 files changed, 71 insertions(+), 2 deletions(-)
+ MAINTAINERS                             |   9 -
+ docs/about/deprecated.rst               |   7 -
+ docs/about/removed-features.rst         |   7 +
+ docs/system/arm/highbank.rst            |  19 --
+ docs/system/target-arm.rst              |   1 -
+ configs/devices/arm-softmmu/default.mak |   1 -
+ hw/arm/highbank.c                       | 404 ------------------------
+ hw/arm/Kconfig                          |  16 -
+ hw/arm/meson.build                      |   1 -
+ 9 files changed, 7 insertions(+), 458 deletions(-)
+ delete mode 100644 docs/system/arm/highbank.rst
+ delete mode 100644 hw/arm/highbank.c
 
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index a8a64802ec..dba6c71de5 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -22,6 +22,7 @@
-  */
- typedef struct SMMUv3AccelState {
-     IOMMUFDViommu *viommu;
-+    IOMMUFDVeventq *veventq;
-     uint32_t bypass_hwpt_id;
-     uint32_t abort_hwpt_id;
-     QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-@@ -50,6 +51,7 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp);
- bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
-                                 Error **errp);
- void smmuv3_accel_idr_override(SMMUv3State *s);
-+bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
- void smmuv3_accel_reset(SMMUv3State *s);
- #else
- static inline void smmuv3_accel_init(SMMUv3State *s)
-@@ -80,6 +82,10 @@ smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
- static inline void smmuv3_accel_idr_override(SMMUv3State *s)
- {
- }
-+static inline bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-+{
-+    return true;
-+}
- static inline void smmuv3_accel_reset(SMMUv3State *s)
- {
- }
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index c19c526fca..f703ea1aac 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -390,6 +390,19 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
-                    sizeof(Cmd), &entry_num, cmd, errp);
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 233d2a5e71f..c7cec413cf0 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -817,15 +817,6 @@ F: include/hw/*/exynos*
+ F: docs/system/arm/exynos.rst
+ F: tests/functional/arm/test_smdkc210.py
  
-+static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
-+{
-+    IOMMUFDVeventq *veventq = accel->veventq;
-+
-+    if (!veventq) {
-+        return;
-+    }
-+    close(veventq->veventq_fd);
-+    iommufd_backend_free_id(accel->viommu->iommufd, veventq->veventq_id);
-+    g_free(veventq);
-+    accel->veventq = NULL;
-+}
-+
- static void smmuv3_accel_free_viommu(SMMUv3AccelState *accel)
- {
-     IOMMUFDViommu *viommu = accel->viommu;
-@@ -397,6 +410,7 @@ static void smmuv3_accel_free_viommu(SMMUv3AccelState *accel)
-     if (!viommu) {
-         return;
-     }
-+    smmuv3_accel_free_veventq(accel);
-     iommufd_backend_free_id(viommu->iommufd, accel->bypass_hwpt_id);
-     iommufd_backend_free_id(viommu->iommufd, accel->abort_hwpt_id);
-     iommufd_backend_free_id(viommu->iommufd, accel->viommu->viommu_id);
-@@ -404,6 +418,41 @@ static void smmuv3_accel_free_viommu(SMMUv3AccelState *accel)
-     accel->viommu = NULL;
- }
+-Calxeda Highbank
+-M: Rob Herring <robh@kernel.org>
+-M: Peter Maydell <peter.maydell@linaro.org>
+-L: qemu-arm@nongnu.org
+-S: Odd Fixes
+-F: hw/arm/highbank.c
+-F: hw/net/xgmac.c
+-F: docs/system/arm/highbank.rst
+-
+ Canon DIGIC
+ M: Antony Pavlov <antonynpavlov@gmail.com>
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 1d5c4f3707c..f95d798731f 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -293,13 +293,6 @@ they want to use and avoids confusion.  Existing users of the ``spike``
+ machine must ensure that they're setting the ``spike`` machine in the
+ command line (``-M spike``).
  
-+bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-+{
-+    SMMUv3AccelState *accel = s->s_accel;
-+    IOMMUFDVeventq *veventq;
-+    uint32_t veventq_id;
-+    uint32_t veventq_fd;
-+
-+    if (!accel || !accel->viommu) {
-+        return true;
-+    }
-+
-+    if (accel->veventq) {
-+        return true;
-+    }
-+
-+    if (!smmuv3_eventq_enabled(s)) {
-+        return true;
-+    }
-+
-+    if (!iommufd_backend_alloc_veventq(accel->viommu->iommufd,
-+                                       accel->viommu->viommu_id,
-+                                       IOMMU_VEVENTQ_TYPE_ARM_SMMUV3,
-+                                       1 << s->eventq.log2size, &veventq_id,
-+                                       &veventq_fd, errp)) {
-+        return false;
-+    }
-+
-+    veventq = g_new0(IOMMUFDVeventq, 1);
-+    veventq->veventq_id = veventq_id;
-+    veventq->veventq_fd = veventq_fd;
-+    veventq->viommu = accel->viommu;
-+    accel->veventq = veventq;
-+    return true;
-+}
-+
- static bool
- smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-                           Error **errp)
-@@ -429,6 +478,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-     viommu->viommu_id = viommu_id;
-     viommu->s2_hwpt_id = s2_hwpt_id;
-     viommu->iommufd = idev->iommufd;
-+    accel->viommu = viommu;
+-Arm ``highbank`` and ``midway`` machines (since 10.1)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-There are no known users left for these machines (if you still use it,
+-please write a mail to the qemu-devel mailing list). If you just want to
+-boot a Cortex-A15 or Cortex-A9 Linux, use the ``virt`` machine instead.
+-
  
-     /*
-      * Pre-allocate HWPTs for S1 bypass and abort cases. These will be attached
-@@ -448,14 +498,20 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-         goto free_abort_hwpt;
-     }
+ System emulator binaries
+ ------------------------
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 41bec8b8e38..1282a82391e 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1180,6 +1180,13 @@ and serves as the initial engineering sample rather than a production version.
+ A newer revision, A1, is now supported, and the ``ast2700a1-evb`` should
+ replace the older A0 version.
  
-+    /* Allocate a vEVENTQ if guest has enabled event queue */
-+    if (!smmuv3_accel_alloc_veventq(s, errp)) {
-+        goto free_bypass_hwpt;
-+    }
++Arm ``highbank`` and ``midway`` machines (removed in 11.0)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 +
-     /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
-     hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
-     if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
--        goto free_bypass_hwpt;
-+        goto free_veventq;
-     }
--    accel->viommu = viommu;
-     return true;
++There were no known users left for these machines. If you just want to
++boot a Cortex-A15 or Cortex-A9 Linux, use the ``virt`` machine instead.
++
++
+ linux-user mode CPUs
+ --------------------
  
-+free_veventq:
-+    smmuv3_accel_free_veventq(accel);
- free_bypass_hwpt:
-     iommufd_backend_free_id(idev->iommufd, accel->bypass_hwpt_id);
- free_abort_hwpt:
-@@ -463,6 +519,7 @@ free_abort_hwpt:
- free_viommu:
-     iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
-     g_free(viommu);
-+    accel->viommu = NULL;
-     return false;
- }
+diff --git a/docs/system/arm/highbank.rst b/docs/system/arm/highbank.rst
+deleted file mode 100644
+index bb4965b367f..00000000000
+--- a/docs/system/arm/highbank.rst
++++ /dev/null
+@@ -1,19 +0,0 @@
+-Calxeda Highbank and Midway (``highbank``, ``midway``)
+-======================================================
+-
+-``highbank`` is a model of the Calxeda Highbank (ECX-1000) system,
+-which has four Cortex-A9 cores.
+-
+-``midway`` is a model of the Calxeda Midway (ECX-2000) system,
+-which has four Cortex-A15 cores.
+-
+-Emulated devices:
+-
+-- L2x0 cache controller
+-- SP804 dual timer
+-- PL011 UART
+-- PL061 GPIOs
+-- PL031 RTC
+-- PL022 synchronous serial port controller
+-- AHCI
+-- XGMAC ethernet controllers
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index a96d1867df1..89f7b77313f 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -83,7 +83,6 @@ Board-specific documentation
+    arm/bananapi_m2u.rst
+    arm/b-l475e-iot01a.rst
+    arm/sabrelite
+-   arm/highbank
+    arm/digic
+    arm/cubieboard
+    arm/emcraft-sf2
+diff --git a/configs/devices/arm-softmmu/default.mak b/configs/devices/arm-softmmu/default.mak
+index 57ef1b8a702..71cf1645110 100644
+--- a/configs/devices/arm-softmmu/default.mak
++++ b/configs/devices/arm-softmmu/default.mak
+@@ -12,7 +12,6 @@
+ # keep out of the build.
+ # CONFIG_CUBIEBOARD=n
+ # CONFIG_EXYNOS4=n
+-# CONFIG_HIGHBANK=n
+ # CONFIG_INTEGRATOR=n
+ # CONFIG_FSL_IMX31=n
+ # CONFIG_MUSICPAL=n
+diff --git a/hw/arm/highbank.c b/hw/arm/highbank.c
+deleted file mode 100644
+index 92d497999c0..00000000000
+--- a/hw/arm/highbank.c
++++ /dev/null
+@@ -1,404 +0,0 @@
+-/*
+- * Calxeda Highbank SoC emulation
+- *
+- * Copyright (c) 2010-2012 Calxeda
+- *
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms and conditions of the GNU General Public License,
+- * version 2 or later, as published by the Free Software Foundation.
+- *
+- * This program is distributed in the hope it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+- * more details.
+- *
+- * You should have received a copy of the GNU General Public License along with
+- * this program.  If not, see <http://www.gnu.org/licenses/>.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/datadir.h"
+-#include "qapi/error.h"
+-#include "hw/core/sysbus.h"
+-#include "migration/vmstate.h"
+-#include "hw/arm/boot.h"
+-#include "hw/arm/machines-qom.h"
+-#include "hw/core/loader.h"
+-#include "net/net.h"
+-#include "system/runstate.h"
+-#include "system/system.h"
+-#include "hw/core/boards.h"
+-#include "qemu/error-report.h"
+-#include "hw/char/pl011.h"
+-#include "hw/ide/ahci-sysbus.h"
+-#include "hw/cpu/a9mpcore.h"
+-#include "hw/cpu/a15mpcore.h"
+-#include "qemu/log.h"
+-#include "qom/object.h"
+-#include "cpu.h"
+-#include "target/arm/cpu-qom.h"
+-
+-#define SMP_BOOT_ADDR           0x100
+-#define SMP_BOOT_REG            0x40
+-#define MPCORE_PERIPHBASE       0xfff10000
+-
+-#define MVBAR_ADDR              0x200
+-#define BOARD_SETUP_ADDR        (MVBAR_ADDR + 8 * sizeof(uint32_t))
+-
+-#define GIC_EXT_IRQS            128 /* EnergyCore ECX-1000 & ECX-2000 */
+-
+-/* Board init.  */
+-
+-#define NUM_REGS      0x200
+-static void hb_regs_write(void *opaque, hwaddr offset,
+-                          uint64_t value, unsigned size)
+-{
+-    uint32_t *regs = opaque;
+-
+-    if (offset == 0xf00) {
+-        if (value == 1 || value == 2) {
+-            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+-        } else if (value == 3) {
+-            qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+-        }
+-    }
+-
+-    if (offset / 4 >= NUM_REGS) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                  "highbank: bad write offset 0x%" HWADDR_PRIx "\n", offset);
+-        return;
+-    }
+-    regs[offset / 4] = value;
+-}
+-
+-static uint64_t hb_regs_read(void *opaque, hwaddr offset,
+-                             unsigned size)
+-{
+-    uint32_t value;
+-    uint32_t *regs = opaque;
+-
+-    if (offset / 4 >= NUM_REGS) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                  "highbank: bad read offset 0x%" HWADDR_PRIx "\n", offset);
+-        return 0;
+-    }
+-    value = regs[offset / 4];
+-
+-    if ((offset == 0x100) || (offset == 0x108) || (offset == 0x10C)) {
+-        value |= 0x30000000;
+-    }
+-
+-    return value;
+-}
+-
+-static const MemoryRegionOps hb_mem_ops = {
+-    .read = hb_regs_read,
+-    .write = hb_regs_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
+-};
+-
+-#define TYPE_HIGHBANK_REGISTERS "highbank-regs"
+-OBJECT_DECLARE_SIMPLE_TYPE(HighbankRegsState, HIGHBANK_REGISTERS)
+-
+-struct HighbankRegsState {
+-    /*< private >*/
+-    SysBusDevice parent_obj;
+-    /*< public >*/
+-
+-    MemoryRegion iomem;
+-    uint32_t regs[NUM_REGS];
+-};
+-
+-static const VMStateDescription vmstate_highbank_regs = {
+-    .name = "highbank-regs",
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32_ARRAY(regs, HighbankRegsState, NUM_REGS),
+-        VMSTATE_END_OF_LIST(),
+-    },
+-};
+-
+-static void highbank_regs_reset(DeviceState *dev)
+-{
+-    HighbankRegsState *s = HIGHBANK_REGISTERS(dev);
+-
+-    s->regs[0x40] = 0x05F20121;
+-    s->regs[0x41] = 0x2;
+-    s->regs[0x42] = 0x05F30121;
+-    s->regs[0x43] = 0x05F40121;
+-}
+-
+-static void highbank_regs_init(Object *obj)
+-{
+-    HighbankRegsState *s = HIGHBANK_REGISTERS(obj);
+-    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
+-
+-    memory_region_init_io(&s->iomem, obj, &hb_mem_ops, s->regs,
+-                          "highbank_regs", 0x1000);
+-    sysbus_init_mmio(dev, &s->iomem);
+-}
+-
+-static void highbank_regs_class_init(ObjectClass *klass, const void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->desc = "Calxeda Highbank registers";
+-    dc->vmsd = &vmstate_highbank_regs;
+-    device_class_set_legacy_reset(dc, highbank_regs_reset);
+-}
+-
+-static const TypeInfo highbank_regs_info = {
+-    .name          = TYPE_HIGHBANK_REGISTERS,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(HighbankRegsState),
+-    .instance_init = highbank_regs_init,
+-    .class_init    = highbank_regs_class_init,
+-};
+-
+-static void highbank_regs_register_types(void)
+-{
+-    type_register_static(&highbank_regs_info);
+-}
+-
+-type_init(highbank_regs_register_types)
+-
+-static struct arm_boot_info highbank_binfo;
+-
+-enum cxmachines {
+-    CALXEDA_HIGHBANK,
+-    CALXEDA_MIDWAY,
+-};
+-
+-/* ram_size must be set to match the upper bound of memory in the
+- * device tree (linux/arch/arm/boot/dts/highbank.dts), which is
+- * normally 0xff900000 or -m 4089. When running this board on a
+- * 32-bit host, set the reg value of memory to 0xf7ff00000 in the
+- * device tree and pass -m 2047 to QEMU.
+- */
+-static void calxeda_init(MachineState *machine, enum cxmachines machine_id)
+-{
+-    DeviceState *dev = NULL;
+-    SysBusDevice *busdev;
+-    qemu_irq pic[GIC_EXT_IRQS];
+-    int n;
+-    unsigned int smp_cpus = machine->smp.cpus;
+-    qemu_irq cpu_irq[4];
+-    qemu_irq cpu_fiq[4];
+-    qemu_irq cpu_virq[4];
+-    qemu_irq cpu_vfiq[4];
+-    MemoryRegion *sysram;
+-    MemoryRegion *sysmem;
+-    char *sysboot_filename;
+-
+-    switch (machine_id) {
+-    case CALXEDA_HIGHBANK:
+-        machine->cpu_type = ARM_CPU_TYPE_NAME("cortex-a9");
+-        break;
+-    case CALXEDA_MIDWAY:
+-        machine->cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-
+-    for (n = 0; n < smp_cpus; n++) {
+-        Object *cpuobj;
+-        ARMCPU *cpu;
+-
+-        cpuobj = object_new(machine->cpu_type);
+-        cpu = ARM_CPU(cpuobj);
+-
+-        object_property_add_child(OBJECT(machine), "cpu[*]", cpuobj);
+-        object_property_set_int(cpuobj, "psci-conduit", QEMU_PSCI_CONDUIT_SMC,
+-                                &error_abort);
+-
+-        if (object_property_find(cpuobj, "reset-cbar")) {
+-            object_property_set_int(cpuobj, "reset-cbar", MPCORE_PERIPHBASE,
+-                                    &error_abort);
+-        }
+-        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
+-        cpu_irq[n] = qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ);
+-        cpu_fiq[n] = qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_FIQ);
+-        cpu_virq[n] = qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_VIRQ);
+-        cpu_vfiq[n] = qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_VFIQ);
+-    }
+-
+-    sysmem = get_system_memory();
+-    /* SDRAM at address zero.  */
+-    memory_region_add_subregion(sysmem, 0, machine->ram);
+-
+-    sysram = g_new(MemoryRegion, 1);
+-    memory_region_init_ram(sysram, NULL, "highbank.sysram", 0x8000,
+-                           &error_fatal);
+-    memory_region_add_subregion(sysmem, 0xfff88000, sysram);
+-    if (machine->firmware != NULL) {
+-        sysboot_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, machine->firmware);
+-        if (sysboot_filename != NULL) {
+-            if (load_image_targphys(sysboot_filename, 0xfff88000, 0x8000,
+-                                    NULL) < 0) {
+-                error_report("Unable to load %s", machine->firmware);
+-                exit(1);
+-            }
+-            g_free(sysboot_filename);
+-        } else {
+-            error_report("Unable to find %s", machine->firmware);
+-            exit(1);
+-        }
+-    }
+-
+-    switch (machine_id) {
+-    case CALXEDA_HIGHBANK:
+-        dev = qdev_new("l2x0");
+-        busdev = SYS_BUS_DEVICE(dev);
+-        sysbus_realize_and_unref(busdev, &error_fatal);
+-        sysbus_mmio_map(busdev, 0, 0xfff12000);
+-
+-        dev = qdev_new(TYPE_A9MPCORE_PRIV);
+-        break;
+-    case CALXEDA_MIDWAY:
+-        dev = qdev_new(TYPE_A15MPCORE_PRIV);
+-        break;
+-    }
+-    qdev_prop_set_uint32(dev, "num-cpu", smp_cpus);
+-    qdev_prop_set_uint32(dev, "num-irq", GIC_EXT_IRQS + GIC_INTERNAL);
+-    busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
+-    sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
+-    for (n = 0; n < smp_cpus; n++) {
+-        sysbus_connect_irq(busdev, n, cpu_irq[n]);
+-        sysbus_connect_irq(busdev, n + smp_cpus, cpu_fiq[n]);
+-        sysbus_connect_irq(busdev, n + 2 * smp_cpus, cpu_virq[n]);
+-        sysbus_connect_irq(busdev, n + 3 * smp_cpus, cpu_vfiq[n]);
+-    }
+-
+-    for (n = 0; n < GIC_EXT_IRQS; n++) {
+-        pic[n] = qdev_get_gpio_in(dev, n);
+-    }
+-
+-    dev = qdev_new("sp804");
+-    qdev_prop_set_uint32(dev, "freq0", 150000000);
+-    qdev_prop_set_uint32(dev, "freq1", 150000000);
+-    busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
+-    sysbus_mmio_map(busdev, 0, 0xfff34000);
+-    sysbus_connect_irq(busdev, 0, pic[18]);
+-    pl011_create(0xfff36000, pic[20], serial_hd(0));
+-
+-    dev = qdev_new(TYPE_HIGHBANK_REGISTERS);
+-    busdev = SYS_BUS_DEVICE(dev);
+-    sysbus_realize_and_unref(busdev, &error_fatal);
+-    sysbus_mmio_map(busdev, 0, 0xfff3c000);
+-
+-    sysbus_create_simple("pl061", 0xfff30000, pic[14]);
+-    sysbus_create_simple("pl061", 0xfff31000, pic[15]);
+-    sysbus_create_simple("pl061", 0xfff32000, pic[16]);
+-    sysbus_create_simple("pl061", 0xfff33000, pic[17]);
+-    sysbus_create_simple("pl031", 0xfff35000, pic[19]);
+-    sysbus_create_simple("pl022", 0xfff39000, pic[23]);
+-
+-    sysbus_create_simple(TYPE_SYSBUS_AHCI, 0xffe08000, pic[83]);
+-
+-    dev = qemu_create_nic_device("xgmac", true, NULL);
+-    if (dev) {
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xfff50000);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[77]);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 1, pic[78]);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 2, pic[79]);
+-    }
+-
+-    dev = qemu_create_nic_device("xgmac", true, NULL);
+-    if (dev) {
+-        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0xfff51000);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[80]);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 1, pic[81]);
+-        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 2, pic[82]);
+-    }
+-
+-    /* TODO create and connect IDE devices for ide_drive_get() */
+-
+-    highbank_binfo.ram_size = machine->ram_size;
+-    /* highbank requires a dtb in order to boot, and the dtb will override
+-     * the board ID. The following value is ignored, so set it to -1 to be
+-     * clear that the value is meaningless.
+-     */
+-    highbank_binfo.board_id = -1;
+-    highbank_binfo.loader_start = 0;
+-    highbank_binfo.board_setup_addr = BOARD_SETUP_ADDR;
+-    highbank_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
+-
+-    arm_load_kernel(ARM_CPU(first_cpu), machine, &highbank_binfo);
+-}
+-
+-static void highbank_init(MachineState *machine)
+-{
+-    calxeda_init(machine, CALXEDA_HIGHBANK);
+-}
+-
+-static void midway_init(MachineState *machine)
+-{
+-    calxeda_init(machine, CALXEDA_MIDWAY);
+-}
+-
+-static void highbank_class_init(ObjectClass *oc, const void *data)
+-{
+-    static const char * const valid_cpu_types[] = {
+-        ARM_CPU_TYPE_NAME("cortex-a9"),
+-        NULL
+-    };
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-
+-    mc->desc = "Calxeda Highbank (ECX-1000)";
+-    mc->init = highbank_init;
+-    mc->valid_cpu_types = valid_cpu_types;
+-    mc->block_default_type = IF_IDE;
+-    mc->units_per_default_bus = 1;
+-    mc->max_cpus = 4;
+-    mc->ignore_memory_transaction_failures = true;
+-    mc->default_ram_id = "highbank.dram";
+-    mc->deprecation_reason = "no known users left for this machine";
+-}
+-
+-static const TypeInfo highbank_type = {
+-    .name = MACHINE_TYPE_NAME("highbank"),
+-    .parent = TYPE_MACHINE,
+-    .class_init = highbank_class_init,
+-    .interfaces = arm_machine_interfaces,
+-};
+-
+-static void midway_class_init(ObjectClass *oc, const void *data)
+-{
+-    static const char * const valid_cpu_types[] = {
+-        ARM_CPU_TYPE_NAME("cortex-a15"),
+-        NULL
+-    };
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-
+-    mc->desc = "Calxeda Midway (ECX-2000)";
+-    mc->init = midway_init;
+-    mc->valid_cpu_types = valid_cpu_types;
+-    mc->block_default_type = IF_IDE;
+-    mc->units_per_default_bus = 1;
+-    mc->max_cpus = 4;
+-    mc->ignore_memory_transaction_failures = true;
+-    mc->default_ram_id = "highbank.dram";
+-    mc->deprecation_reason = "no known users left for this machine";
+-}
+-
+-static const TypeInfo midway_type = {
+-    .name = MACHINE_TYPE_NAME("midway"),
+-    .parent = TYPE_MACHINE,
+-    .class_init = midway_class_init,
+-    .interfaces = arm_machine_interfaces,
+-};
+-
+-static void calxeda_machines_init(void)
+-{
+-    type_register_static(&highbank_type);
+-    type_register_static(&midway_type);
+-}
+-
+-type_init(calxeda_machines_init)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index c66c452737e..45fe8575fb8 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -64,22 +64,6 @@ config EXYNOS4
+     select USB_EHCI_SYSBUS
+     select OR_IRQ
  
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index c08d58c579..5d718da764 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1605,6 +1605,12 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
-         s->cr0ack = data & ~SMMU_CR0_RESERVED;
-         /* in case the command queue has been enabled */
-         smmuv3_cmdq_consume(s, &local_err);
-+        if (local_err) {
-+            error_report_err(local_err);
-+            local_err = NULL;
-+        }
-+        /* Allocate vEVENTQ if EVENTQ is enabled and a vIOMMU is available */
-+        smmuv3_accel_alloc_veventq(s, &local_err);
-         break;
-     case A_CR1:
-         s->cr[1] = data;
+-config HIGHBANK
+-    bool
+-    default y
+-    depends on TCG && ARM
+-    select A9MPCORE
+-    select A15MPCORE
+-    select AHCI_SYSBUS
+-    select ARM_TIMER # sp804
+-    select ARM_V7M
+-    select PL011 # UART
+-    select PL022 # SPI
+-    select PL031 # RTC
+-    select PL061 # GPIO
+-    select PL310 # cache controller
+-    select XGMAC # ethernet
+-
+ config INTEGRATOR
+     bool
+     default y
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 47cdc51d135..b187b946f04 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -4,7 +4,6 @@ arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
+ arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+ arm_common_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
+ arm_common_ss.add(when: 'CONFIG_EMCRAFT_SF2', if_true: files('msf2-som.c'))
+-arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
+ arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
+ arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
 -- 
-2.43.0
+2.53.0
 
 
