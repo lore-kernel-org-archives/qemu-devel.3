@@ -4,104 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD909FC5910
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42567FC5910
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:20:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYTE-0002Pc-Nf; Thu, 26 Feb 2026 05:19:48 -0500
+	id 1vvYTj-0002ZX-0P; Thu, 26 Feb 2026 05:20:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvYTD-0002PL-3l
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:19:47 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vvYTe-0002XU-FU
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:20:14 -0500
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvYTB-00046n-L5
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:19:46 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7982c3b7da9so7379307b3.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:19:44 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772101184; cv=none;
- d=google.com; s=arc-20240605;
- b=UJckCwaRLyvyH9XMpfJFvPLDADve8/jWQInZAJgZ7jcWsSUrOfD3cCWH3HPvN3lvfE
- gaAVk2OO8U2UknfvX91j47Z+J8faRK3157jeJB62Wwf/V7/ZfW9ds4/9uZFjAMBDzkjI
- gwxyOhP0pHHfr7pKkJ8Tt7PtWGXD6HNAmKJ50Q5HHbivThlPezzK0KNsGjL/9TFcWSRk
- caO6RYy4u1EeenOkJBjH8M3Z254gRPG97pFSSLWkxygiC5AGIglWzpaXMXtlKPnm0m8r
- Acx94Pm+rfZ0eTdd/KnJQPju6Ocq+S5pnbTx3RDqXbi9tWHpBs4IWWtb8jnSVPh1Mlb+
- XMtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ERgBiwPJOT5sqaJzAZH1sG7hvUhBl2XMAdmXa++VDEg=;
- fh=qDEitYY2TPRRMZ4OARbMiUT09q8rCCMKzcZWPtML1Tk=;
- b=CrVvmvZTrmOXVMxPA5KvnVNNmAU/vBG1Kz/Mi/Z7MJilKqsgBDsRZXEFFg57njrSh/
- 7HwJysZC7GikK5HcXYOLXVjPyOeR/N8egrpZPcuwich8H6po0BKDpqMjwyJir0x3E3xe
- WbaAV5qGlD2WSI2bKLGqEJyU2XtAmllI4l1OI/lBnUEfFj7FV36/GeTVQIG6JbiJoL98
- VTR3s+V4hAwsGcS3Scv+ip9DOoiNqVx8JhcaIyr4RNaWdP0VWel4kCRjLLJrgcPaHxi7
- l/tkJ+waHJLXyQs1TsQg4jn7XdIPtsMXX1NqbCirgM5krmARFx06qHJ7RSH1VMy32BV7
- N5Zg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vvYTd-0004Kz-36
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:20:14 -0500
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-1270ac5d3efso547974c88.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:20:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772101184; x=1772705984; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ERgBiwPJOT5sqaJzAZH1sG7hvUhBl2XMAdmXa++VDEg=;
- b=ir7sL2q495nJgZERktS/o8pQ11HTvOXUjQx8z+FngmGDbOeNtYa+aNpWHJ2mqPfeHR
- BvYtPZo6ifWwY71033p79sT3C4RQidDQg0O4ZNAouCS1LfdqTSb1B3H7NlfpHCm5KzgD
- cp+/87epuHj4iY2KQ4MZYb4+yrmStySFcosdTb1f3xUH2k6XKZXJ3L6I55Kl3L1gl2lK
- x83rop6AmpIwDExPVnJa/4o3epIooSqyVjXXGdKfLs/9nR4eiGY9fbYdO7mZZSMy7WaB
- R1LAFkcM3nkiilX/0QMt5YJ3v2m41obcBshd8UgCVbdsQ0kWWTpqa7T7Itlh5TTV7k88
- ZrvA==
+ d=gmail.com; s=20230601; t=1772101211; x=1772706011; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PTQfQ0Cp2HeDcEXCvcCXQf0PTtazv4JoH+8fi3PB4dU=;
+ b=S0bLIHkGTKVaMJep/VeGiQTEjHKNfUCjFqNa8D7avDdC3d2/Hj6WU7woPVla8kHYKg
+ p4M5bSNNcNBKZooVMgBpkn4yUkm5HZdaPcXIwR+8T8ayl/vlnn+a8PUR24zgRswUQq8y
+ VGRZ4xWkc1glOI8hYim2cTlE+pmAZPojMiI5Z11MgPiVzmVchKpo2jq/YflNjfTqwuKD
+ kCNBdt6S4ZlqIxkDOO8sNmgqDhK5rxRLd4M05D1ifz7zXVf+ULMAGmFzmU6GVUoRPS01
+ jaxc3PPRXCkTxxNFlA+yh2WUaWSLfPEl2w1B1nef8nrerX+KV8O99CDVo3bZAIZkE1xW
+ rr+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772101184; x=1772705984;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ERgBiwPJOT5sqaJzAZH1sG7hvUhBl2XMAdmXa++VDEg=;
- b=Z3DGjuueYS+Zf6CxUmKS/z6X4o1tQxCeG5RDuwppTLlgxh1E05Hw7V4dp7JU62NHeu
- Do0pnXCJSQ1A+gwMIlUeNgrlmFhhcnCR9z2Vc/znqHPl7zBwC7FxFqrmiV4YRBuh1Djm
- 9WnytPcjoonYVR0QPFdWgdReBMHCfll9Ybk4lAFsDO55Yp+bpalnfKaMlBXEaRA7aoHz
- y2MHZ39FFuw5LkamRdNetPZu7ssMma6la23dB+44rpEI60L4u5RYT0D8qlCX2+yGUZFp
- 10uJRzZGw73LwM+PiwdyHjjDMsjNVJSnnQthT/tsYyHZliKLUZvYmETH10Ymze14FRQD
- 3ExA==
-X-Gm-Message-State: AOJu0Yy+AEyDLsxJhYfSnZ1LsYQKPy8I878MBvPWf7p3RLgwJay492KL
- gQFTo8kKuvrd551UYigT/VhB7+y2xidVp5jikRdzFQwepIIANusmb7YRsbvlKMfMI3qOdr0wshL
- WGHLziwfhGj9NIPDbZCC/vMvwAF2XjT79UEiRgvGxzg==
-X-Gm-Gg: ATEYQzze0rYlW8TceV8NAWiJWsG3oJaHj953KgGilXk6tMofzdL4+O/p4g+X8Q1/3vX
- 94aL/wUgwiO8SoLPxO3ThvBQCKDDg+gvhZtkCTNd4ypfTlM71GX1erRPjo+qLe7R96kBOMf1koI
- 7uZo9CdldoxYNpwS+9skq0YO/NoAo5Zq2gGgzBdCh0FUoMzZBoZO+6KosaUo32invpXkBuMAU4A
- VNdnZUwnJoitdtrA6XneiGUi0qN8ErJQXf9nl1YerwxhWsShFvkiRfJywZTIRICo0hREMZO99jz
- NEl7D4M7pwrgAwArqSf3YO1U81ettu9AQNHxtDBG6yOPVCDQlvOxTOvXWvBCFl9wfk8=
-X-Received: by 2002:a05:690c:b10:b0:796:3f2f:a33b with SMTP id
- 00721157ae682-79876c1c2d7mr11547367b3.18.1772101183918; Thu, 26 Feb 2026
- 02:19:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772101211; x=1772706011;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PTQfQ0Cp2HeDcEXCvcCXQf0PTtazv4JoH+8fi3PB4dU=;
+ b=aXPUedz/CcKd+4D0a1U89s1VUCxuG5kGJrKRPQXJoqyMUu1F4j5OJFcqI+aWCa/X7n
+ eD4ww2CAtCEsgeN9KEpOmtvM7Jmr6xBlBulJlFWiAwiN63qAT17CX5XC99TbIey+7Lss
+ Cw3T+NFX9yo42Nu4LT6TzdOC1AQnrvL2jxSDsHXuffhtj4GaXKzmiFLsg4LukJvNloUV
+ w0QTbR6XEc94bhc/8dtWdHhnj3ajNZlOLdbqTSjNTuOygcjvho1E9othzZhpX71u5Bhw
+ au5AGMjzDLvT1y5irwyVFG511B/FsTovrJC7/8028tfhvwsgZ1BA3ybZVczVnqIicme/
+ b49g==
+X-Gm-Message-State: AOJu0YwxF4n3xLbC3WO9d+cJUwS6Cb8bbPC1gmApwzCSAV322FoZHvRk
+ VSD9IuOpU4CzZD8KoHiw7g69KPlBe1/TfseebkkBz7jbyLFXR0Haocl4k0/nlnJLWTs=
+X-Gm-Gg: ATEYQzyphzxnjF7h/Z3gShRSjJpynbSMfy+KePreGyxClKskJiQgoElNgHSoEL16UKI
+ EsRku57VO26SnixXL3FIMIaoTBG3SfJYYosiQSOSGLSSvGZ9vh86b6QaV0QUbWiHXYRLUoIqy2m
+ IUBbwoZUMFXYs0O3v8Ge0+U8AhcEx9F5ZJ2demXbok8Pt4q8J3ukrL81dmKrn3NphSW/IdWvqBV
+ VXWgvW3rK01EYOWkrfWlJeDYaN4lgQz8feK2Xar+SN4pqN1+UwaiezhafnuuG8p6qnZP7M+s6M9
+ D33z5ohTegIH0V6B+VvfQDtVcPRh/7mgNSeO9Kpz4nWiqa8z887VNSY5iwpubgQVhiOpnpXNgw9
+ r1Escxl1rtZxftCb7VD6LneIMttkNHiXU/tp0myMIRfTu810ZZqOGVJCSJJxHk01xMKKFWOk9UH
+ JSRUHln0lVErNmhDZBCyl6ejvsHqxTHlxvngDkfG2OMUG+raDyr2OknXzCuMnP9RoFaHK4UA2hp
+ +1Em1iFSvPoi4+0jGf7kjqrvaU=
+X-Received: by 2002:a05:7022:61a9:b0:11b:9386:8256 with SMTP id
+ a92af1059eb24-127869d8d7dmr1176270c88.43.1772101210648; 
+ Thu, 26 Feb 2026 02:20:10 -0800 (PST)
+Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12789a52ab0sm2318517c88.15.2026.02.26.02.20.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Feb 2026 02:20:10 -0800 (PST)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, linux-kernel@vger.kernel.org,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PATCH] MAINTAINERS: Add myself as a reviewer for RISC-V TCG CPUs
+Date: Thu, 26 Feb 2026 18:20:08 +0800
+Message-ID: <20260226102008.146928-1-chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260224154347.344219-1-alex.bennee@linaro.org>
- <20260224154347.344219-3-alex.bennee@linaro.org>
-In-Reply-To: <20260224154347.344219-3-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Feb 2026 10:19:31 +0000
-X-Gm-Features: AaiRm50DPzGrXORSCBPZp3zns44SYEPNOpukRR4ANOPj6ov1RvPIjvsrF3rGS2o
-Message-ID: <CAFEAcA8BX-YdALLhyYB_mDOycnUaLQ_abmSyK3VcPNQz9E3imA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] target/arm: use FIELD_DP32 instead of open-coding
- syn_wfx
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,41 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Feb 2026 at 15:43, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> We can use the registerfields API to safely set the individual fields
-> and avoid open coding magic numbers. The EC and IL fields are still
-> driven by defines but we could convert them later.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Add myself as a reviewer for RISC-V TCG CPU related code to better
+participate in patch review.
 
-> +FIELD(WFX_ISS, TI, 0, 2)
-> +FIELD(WFX_ISS, RV, 14, 1)
-> +FIELD(WFX_ISS, RN, 15, 5)
-> +FIELD(WFX_ISS, COND, 20, 4)
-> +FIELD(WFX_ISS, CV, 24, 1)
-> +
->  static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
->  {
-> -    return (EC_WFX_TRAP << ARM_EL_EC_SHIFT) |
-> -           (is_16bit ? 0 : (1 << ARM_EL_IL_SHIFT)) |
-> -           (cv << 24) | (cond << 20) | ti;
-> +    uint32_t res =3D (EC_WFX_TRAP << ARM_EL_EC_SHIFT);
-> +
-> +    res =3D FIELD_DP32(res, WFX_ISS, CV, cv);
-> +    res =3D FIELD_DP32(res, WFX_ISS, COND, cond);
-> +    res =3D FIELD_DP32(res, WFX_ISS, TI, ti);
-> +
-> +    if (!is_16bit) {
-> +        res |=3D ARM_EL_IL;
-> +    }
-> +    return res;
->  }
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'm not hugely enthusiastic about this mostly because it
-means we would have one syn_foo function that's written totally
-differently to all the rest.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 233d2a5e71..4923715c9c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -333,6 +333,7 @@ M: Alistair Francis <alistair.francis@wdc.com>
+ R: Weiwei Li <liwei1518@gmail.com>
+ R: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ R: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
++R: Chao Liu <chao.liu.zevorn@gmail.com>
+ L: qemu-riscv@nongnu.org
+ S: Supported
+ F: configs/targets/riscv*
+-- 
+2.53.0
 
--- PMM
 
