@@ -4,72 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DBC1FD8FD3
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 16:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2264FD8FD3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 16:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdy4-0001aB-Lb; Thu, 26 Feb 2026 11:12:00 -0500
+	id 1vve1M-00038p-Mr; Thu, 26 Feb 2026 11:15:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vvdy1-0001ZF-JA
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:11:58 -0500
-Received: from qs-2005g-snip4-2.eps.apple.com ([57.103.86.193]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vve1J-00031R-8u
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:15:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vvdxz-0005fD-OA
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:11:57 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPS id
- 56145180015C; Thu, 26 Feb 2026 16:11:50 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772122312; x=1774714312;
- bh=6S/q21pFn1OT/H9EqBcYzae2OwIFRQGq7oFgZeO8mDM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=G+xP7o5oaS4qPyfJS6AuGlAl73GhKB3Llfkp0J9V0UP5MDfojfiZX77iOxZ555dl13fwR+2R6nerfPoV1y6OPkLGMZfrqQ3iETpptzXO/cWbDRs/6Wv++YuVzLTUK7MhqEAxSB1szUJsewJcBTM8MsvFHMRhgXqF5HqECeLFlLZLE5u1sdt9XXtxbSW0njUDTCotbgRdRmCgtxb98OG3pYAHxNByRq5YbrcPoMMSQOO5f+YgHCthU6OKFDx4P8nW1o6M9gZpxEH3nSVeRBQdeiwE+Ef7qOapskSZVBreCM1EW3RtA4ewilkNcl9MXxaVJxkKQiQRZDhEs9XwmDIIfw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPSA id
- 097CB1874A07; Thu, 26 Feb 2026 16:11:48 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] Revert "elf-ops.h: Map into memory the ELF to load"
-Date: Thu, 26 Feb 2026 17:11:46 +0100
-Message-ID: <20260226161146.68876-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=b6K/I9Gx c=1 sm=1 tr=0 ts=69a070c6
- cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=c_HyBtZksB4fQN2gfusA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDE0NSBTYWx0ZWRfXzajmgqgc9gn6
- 3nfu7bLQelLUHqO2/XJwUSM8mSi+TBOf960oziwJMU2c1xwShiOzbb3bpIsIOatX+0yZmZU2hUx
- EIm6VBaY0YZcrcEerX3xRyV+6dcq99AhaO3jvAJ/CTQg73c9sUQKFvKS4/pAbJKML/syM4Lyho8
- Nwu/itI4q8XPPvZ3+0wBl81/Pk23VjQipgIfK2HtmNcWC6XbfxJbwnu8swSDB92YIvlmACQaeVr
- YviICU+8pKs4Xfp6iUX0ReKT0vilk3eKg4aXjaJyIjLxDOu3Smq0R23cCBlGUTKGcLK50nPY55a
- bnPtqAyTCds7aePx4Yt9bPsZ8+TsI4RSDH6NjuenKW9Gf84Ii+JK2/x2wMi4sU=
-X-Proofpoint-GUID: WRAdG0wSoPuTRCd6SgM7eweGGcE-Nl8j
-X-Proofpoint-ORIG-GUID: WRAdG0wSoPuTRCd6SgM7eweGGcE-Nl8j
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-26_01,2026-02-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 clxscore=1030
- malwarescore=0 mlxscore=0 spamscore=0 mlxlogscore=999 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602260145
-X-JNJ: AAAAAAABGi2J0b637XDYQfOx5VmKkNoV1JPUiB4HHKbjC615WKXSPH3PyvOjSBw1bEqqceKe2/OdThVoKEPohxA4YfmFS1TGb5DtRB0MXVEMS64Li7G5oTraGi8BzNqyjAHXMk4akGhTieriJ3HlRU8YGfttluY0zbAgedNhjnu4zK5pFPJkRlQ3L46RFd7LgMlGSL2wDYrhcInUW+E2Q3mslvWq4L55PF8VcEboNh+7JpxyXEFzgIksrdaGCv/9H354bJsrWaVo3iJAxSq2DltemEO1n2Rg5ow9bJjGKLLmEgHrFDbK41wTF5nI2SFzX/4/GVBocJptkRyz3qtRS9iX27G4XsGd7pRyLscQ7JNcdVYlrJ7vyuj1K3aKz4R7UWQGyRilO8dNbfBh0CsdsNuekQrKWO2UQahELZrZMWIua6uqzlKhs8Bh01ezEkQYijHhixl5R/FedP4b4zE+SjoVHlZNttLqsdk+o8RHBoRbcg5AiWCAn1J24ydj9umHLWdhNJGVMyM5abY8t5Oh7ylt3qWxuynrs1Zr3HtOYNbHBAPyAEdbdljXz8w7+NDktmxH7aFhcCtYJELI40kqQgT4zsB1wbNH27WG8ZMiB7aj5JA=
-Received-SPF: pass client-ip=57.103.86.193;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vve1H-0006DK-PN
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:15:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772122517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vSKQ0n12PECkU++UusRsCy3aOIngD05ybGdgIjZou6Y=;
+ b=d5RF/Wi5KscsvlXOZp8/vXXu+i4qT2hZ9HBC8LdmiNO/6j7C9qmG8T2+QC2KF/svGWPy93
+ vSTjEs9xyv+aVJ/LVlyDxiYRRfcyzn6tPr0FddNq2zWVhZUASDAqKDfee7LEmscz7pnvlE
+ 03aj5qXSFXAO+cQOxsvWkhhUHUYlLoQ=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692-u54G7x8ZO8a8EgkRYk7zng-1; Thu, 26 Feb 2026 11:15:16 -0500
+X-MC-Unique: u54G7x8ZO8a8EgkRYk7zng-1
+X-Mimecast-MFC-AGG-ID: u54G7x8ZO8a8EgkRYk7zng_1772122515
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2ad7e454f38so55675085ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 08:15:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772122515; x=1772727315; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vSKQ0n12PECkU++UusRsCy3aOIngD05ybGdgIjZou6Y=;
+ b=C46Ga6lxlB6INedHmqqzwl4KhIO6j/fq3Eoa6Xqg7gEtvm7lroEv1vAU64CallcPkW
+ s336sbSVyFSsui8RRkXQplwUSPs/AmnH21FT94tDyg14Wn727JLTJTFJXKE+x8w0Tv01
+ m/a2FuqnmF75TnzKUtQwpJMi6OrtHyQ8Xn5ILz8hm11/EHPVtNYrvZgbZYfQNtKXN3rs
+ r0e7GXtz4dCCsfdfwXZ8mffryqT2SpwYPYetnm3OogIoSiAhZcWrIZi4cX0VoFn1Yy8e
+ IHd7QeCQT7LL3B3LWs+kSs+siULnJj9kxFDsSlDecKbrtI9g9gqO/GTK2apTl6urfMT3
+ vrKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772122515; x=1772727315;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vSKQ0n12PECkU++UusRsCy3aOIngD05ybGdgIjZou6Y=;
+ b=LAZYgPf8+Er/O6i1R8tVSarDX11Q/lAv5RL6bN5GniZzDBLSnMG0gLHJzbsY2+R0Is
+ wZyUhQIThgjNNFoO6c4Ac5oy5iCxD03/vWv0pClYFSh4ij9SZlj4q/gT03D8Py7a+6Ex
+ /gmW57DdiHuYi2XhXC6CE8ThykIUxN+BWE8+B5wTpIOdBKvedStAxnTLcu3NLMSyYzky
+ zX72sg+Z4kDna4BAFjBmFS4cQwAhV1mF4VVV1XE4o94pThgvj3E/UG2uEbWTviUU3wFI
+ wpESR4vNYc+1w5pcLfgTEwDastAIB9OEB46KFG0JJnw4zkBYx5KjQ6bxfiQiNBvmfYoK
+ u21Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdYRpG0UVXbR11S2qYK3OSmO6bP3CtwjEddRqatiwqG1pRhVMQO0LTsOZNMxXB8mY/Dm2Soirj9DZT@nongnu.org
+X-Gm-Message-State: AOJu0Yxe+tfWrrlFEl1nFRAYqTfkBsyY/+8lLhyjTNOLtvn9OrHcO4fz
+ cicPlK9wb60syLSQ4eKU0gvTJdPaMUBaQF29VVz+Bqe3PelS57aBHd9TxMhd66ulgsPBtst/WeE
+ fVyPa26QsKI+O3DTdDukUECEmRoEu3vg4I6phXHd7dtnes6WLK57mydFuuurMWSwP
+X-Gm-Gg: ATEYQzxu4eGaRvsOcmpECVUIKnLKE7Ii+aRt8fIf/X86fFMCX8wzSUxqhlgQzx/gxQU
+ d5b+I/hDSC4N0TQ3s0vOmPDr0JMcGDTEWExT4U12bS1A9tsOOQxZL6c3mQQDEsS4nuYRI99Rguv
+ nrtXqMKaVN7mG0RQH3PqfDQeDAjRmvD18sGeD7FonAuMSPg4tqsFveNpR2++xnDDrUAhJvyvCCS
+ KFl0Gcvd4o1O0QNhbMzNX90evlQgf1AWrPnQns+ymLuQ0LX649HScktj+FQKJHkAEzm+3JJnrqQ
+ KnMH4OdOR3r7huadRcJf0RvJ01u5Y5Ce0ZPp9FVFaXgZVOZJ8sa+1kFTwPpTShGYh5KypPiBePq
+ lsB48392gGZWEeOEsxC0hPubZHCI2Xulj12Z0EblY3PP2t05nZmx7aHDe7OyLAQwY7Fscfg==
+X-Received: by 2002:a17:902:e805:b0:2ad:9edf:7fe4 with SMTP id
+ d9443c01a7336-2ade9a637f4mr41236835ad.48.1772122514521; 
+ Thu, 26 Feb 2026 08:15:14 -0800 (PST)
+X-Received: by 2002:a17:902:e805:b0:2ad:9edf:7fe4 with SMTP id
+ d9443c01a7336-2ade9a637f4mr41236445ad.48.1772122513802; 
+ Thu, 26 Feb 2026 08:15:13 -0800 (PST)
+Received: from smtpclient.apple ([122.176.129.56])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2adfb5c183bsm30620715ad.24.2026.02.26.08.15.10
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 26 Feb 2026 08:15:13 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: Re: [PATCH v6 35/35] migration: return EEXIST when trying to add the
+ same migration blocker
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <aaBFxY6PUsNrAYft@x1.local>
+Date: Thu, 26 Feb 2026 21:44:58 +0530
+Cc: Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <ani@anisinha.ca>,
+ Prasad Pandit <pjp@fedoraproject.org>, qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <83E69A6D-EDC8-4380-8C4E-6F77D1E2F078@redhat.com>
+References: <20260225035000.385950-1-anisinha@redhat.com>
+ <20260225035000.385950-36-anisinha@redhat.com> <aZ8xlrL2xQtoN9MI@x1.local>
+ <C486617D-2B20-4904-A87B-81CC5FA84153@redhat.com> <aaBFxY6PUsNrAYft@x1.local>
+To: Peter Xu <peterx@redhat.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -87,151 +128,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 816b9fe450220e19acb91a0ce4a8ade7000648d1.
 
-Unfortunately, this optimisation breaks -kernel [x] on Windows hosts.
 
-Reverting this commit enabled proceeding with kvm-unit-tests testing.
+> On 26 Feb 2026, at 6:38=E2=80=AFPM, Peter Xu <peterx@redhat.com> =
+wrote:
+>=20
+> On Thu, Feb 26, 2026 at 09:16:43AM +0530, Ani Sinha wrote:
+>>=20
+>>=20
+>>> On 25 Feb 2026, at 10:59=E2=80=AFPM, Peter Xu <peterx@redhat.com> =
+wrote:
+>>>=20
+>>> Hi, Ani,
+>>>=20
+>>> On Wed, Feb 25, 2026 at 09:19:40AM +0530, Ani Sinha wrote:
+>>>> Currently the code that adds a migration blocker does not check if =
+the same
+>>>> blocker already exists. Return an EEXIST error code if there is an =
+attempt to
+>>>> add the same migration blocker again. This way the same migration =
+blocker will
+>>>> not get added twice.
+>>>=20
+>>> Could you help explain why it will inject two identical errors in =
+the first
+>>> place, and why the caller cannot make sure it won't be injected =
+twice?
+>>=20
+>> Likely due to a bug in the code. For example if the init function =
+that
+>> adds the blocker is called again and the caller does not handle the
+>> second init call properly.  This came up as a part of the coco reset =
+work
+>> where migration blockers are added in init methods. They need not be
+>> added again when init methods are again called during the reset
+>> process. The caller can handle it of course but adding a check =
+further
+>> down the call stack makes things more robust.
+>=20
+> IMHO if we want to make it more robust, we shouldn't return an error
+> because the caller may not always check for errors.
+>=20
+> Would assertion suites more here?  Because migration blockers are not
+> something the user can manipulate, so it's a solid bug to fix when
+> triggered.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- include/hw/elf_ops.h.inc | 71 +++++++++++++++-------------------------
- 1 file changed, 26 insertions(+), 45 deletions(-)
+If Prasad agrees, I will send something.
 
-diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
-index 9c35d1b9da..bcf484b938 100644
---- a/include/hw/elf_ops.h.inc
-+++ b/include/hw/elf_ops.h.inc
-@@ -325,11 +325,9 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
- {
-     struct elfhdr ehdr;
-     struct elf_phdr *phdr = NULL, *ph;
--    int size, i;
--    ssize_t total_size;
--    elf_word mem_size, file_size, data_offset;
-+    int size, i, total_size;
-+    elf_word mem_size, file_size;
-     uint64_t addr, low = (uint64_t)-1, high = 0;
--    GMappedFile *mapped_file = NULL;
-     uint8_t *data = NULL;
-     ssize_t ret = ELF_LOAD_FAILED;
- 
-@@ -409,32 +407,20 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-         }
-     }
- 
--    /*
--     * Since we want to be able to modify the mapped buffer, we set the
--     * 'writable' parameter to 'true'. Modifications to the buffer are not
--     * written back to the file.
--     */
--    mapped_file = g_mapped_file_new_from_fd(fd, true, NULL);
--    if (!mapped_file) {
--        goto fail;
--    }
--
-     total_size = 0;
-     for(i = 0; i < ehdr.e_phnum; i++) {
-         ph = &phdr[i];
-         if (ph->p_type == PT_LOAD) {
-             mem_size = ph->p_memsz; /* Size of the ROM */
-             file_size = ph->p_filesz; /* Size of the allocated data */
--            data_offset = ph->p_offset; /* Offset where the data is located */
--
--            if (file_size > 0) {
--                if (g_mapped_file_get_length(mapped_file) <
--                    file_size + data_offset) {
-+            data = g_malloc0(file_size);
-+            if (ph->p_filesz > 0) {
-+                if (lseek(fd, ph->p_offset, SEEK_SET) < 0) {
-+                    goto fail;
-+                }
-+                if (read(fd, data, file_size) != file_size) {
-                     goto fail;
-                 }
--
--                data = (uint8_t *)g_mapped_file_get_contents(mapped_file);
--                data += data_offset;
-             }
- 
-             /* The ELF spec is somewhat vague about the purpose of the
-@@ -530,23 +516,22 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-                 *pentry = ehdr.e_entry - ph->p_vaddr + ph->p_paddr;
-             }
- 
--            /* Some ELF files really do have segments of zero size;
--             * just ignore them rather than trying to create empty
--             * ROM blobs, because the zero-length blob can falsely
--             * trigger the overlapping-ROM-blobs check.
--             */
--            if (mem_size != 0) {
-+            if (mem_size == 0) {
-+                /* Some ELF files really do have segments of zero size;
-+                 * just ignore them rather than trying to create empty
-+                 * ROM blobs, because the zero-length blob can falsely
-+                 * trigger the overlapping-ROM-blobs check.
-+                 */
-+                g_free(data);
-+            } else {
-                 if (load_rom) {
-                     g_autofree char *label =
-                         g_strdup_printf("%s ELF program header segment %d",
-                                         name, i);
- 
--                    /*
--                     * rom_add_elf_program() takes its own reference to
--                     * 'mapped_file'.
--                     */
--                    rom_add_elf_program(label, mapped_file, data, file_size,
--                                        mem_size, addr, as);
-+                    /* rom_add_elf_program() seize the ownership of 'data' */
-+                    rom_add_elf_program(label, NULL, data, file_size, mem_size,
-+                                        addr, as);
-                 } else {
-                     MemTxResult res;
- 
-@@ -584,16 +569,14 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             struct elf_note *nhdr = NULL;
- 
-             file_size = ph->p_filesz; /* Size of the range of ELF notes */
--            data_offset = ph->p_offset; /* Offset where the notes are located */
--
--            if (file_size > 0) {
--                if (g_mapped_file_get_length(mapped_file) <
--                    file_size + data_offset) {
-+            data = g_malloc0(file_size);
-+            if (ph->p_filesz > 0) {
-+                if (lseek(fd, ph->p_offset, SEEK_SET) < 0) {
-+                    goto fail;
-+                }
-+                if (read(fd, data, file_size) != file_size) {
-                     goto fail;
-                 }
--
--                data = (uint8_t *)g_mapped_file_get_contents(mapped_file);
--                data += data_offset;
-             }
- 
-             /*
-@@ -607,6 +590,7 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-             if (nhdr != NULL) {
-                 elf_note_fn((void *)nhdr, (void *)&ph->p_align, SZ == 64);
-             }
-+            g_free(data);
-             data = NULL;
-         }
-     }
-@@ -619,9 +603,6 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
-     }
-     ret = total_size;
-  fail:
--    if (mapped_file) {
--        g_mapped_file_unref(mapped_file);
--    }
-     g_free(phdr);
-     return ret;
- }
--- 
-2.50.1 (Apple Git-155)
+>=20
+> Thanks,
+>=20
+> --=20
+> Peter Xu
+
 
 
