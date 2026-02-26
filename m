@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A574FD8FCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE45CFD8FC3
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdiJ-0005JH-Na; Thu, 26 Feb 2026 10:55:43 -0500
+	id 1vvdiJ-0005JB-CL; Thu, 26 Feb 2026 10:55:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiI-0005IZ-6k
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:42 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1vvdiH-0005IS-Ti
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:41 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiG-0003jA-FW
+ id 1vvdiF-0003iz-Qj
  for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:41 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43989bd056bso877883f8f.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:40 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-43990aa7dbaso807382f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121339; x=1772726139; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772121338; x=1772726138; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0aW5QS6awRTQP4v+qDxXUEry2KGxlG04nu2nu/gqLQI=;
- b=J36MTAcgAIhUUawqgeIJokWekE3mmTvTnpPBCYUAY8V7dQZRxJaRW4mzR+zGdmUHbT
- VqJGz4q74ytQdNOIee/jqGHis2Hhe7NrNIiXEXY/H6VBJMInHh7pUwjDh4pN0JkG5KCI
- UNGdRSKaO4lyaQesBaswGbh/CGVLAiWa9tCMx49L8lt7E0PX/WIqi95yc+26NwA3qYxU
- iQqeOGnDwZ69lzZVigGCqv9oYqSC24Y71yoq5iAR+gFxsdwE3xtc2P4mx4rmGNVdBDDA
- kvu2+gywHUXkLawFSfzQn/+xm3tXAXRY/uxnrKCmuSA11b5Gs551akm20B/57S/yms7b
- RTpQ==
+ :reply-to; bh=VBXg/2TNoBI9VaCBAUsRvO0hRVupsocR+41+B9vIhuc=;
+ b=DjsKnYjohGn+aB0eQK5XXGQI1Cfha7pjOT5HbYojtmXwWCC3Opxz/fD7qhKDOm2h3y
+ uuRw5x0vnsO/ZjudsH4KLCOYr9VVHZmq+pZaMqmX9EPo6ELmNBK8JmNMQjAjG9R+i1Ob
+ jxvPQJUTb2zKV3Dkk1KLHwKqwVzTEIgLwiSjS1OFhzgp0PSHR3WO4LdL5J0lZh1kTQd/
+ D+b30z6yPrXOeFB0RTgiJV7ctsYbGRJWnUZwvt5prch0IxKHYiE+qFeqyoKUu3lAs4qN
+ go/asEP3bhTH5VChu0Caf7xBMxOv08yHzJ2JLb/H0D3ms9hX0eal7lomfRzSgdSwJV/X
+ D9jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121339; x=1772726139;
+ d=1e100.net; s=20230601; t=1772121338; x=1772726138;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0aW5QS6awRTQP4v+qDxXUEry2KGxlG04nu2nu/gqLQI=;
- b=m+55O4ih+/eDwrCk3Csrjp4bQJj0TW9mUKnlYZqRSzr5kTMIwkQzmiHCKVXxUhemrO
- 86+n5J9psVhafJi3LsqCS3quto/Ta7XR/oxtjGPDSYBytkY2HpBWHd4QeZxGChBWT+aD
- pI3ov9NbptTpwKfR7UM/ogke13IqdNAWpKuPzDHTuP/uQmVPIGcv8azWJRNAFirp1dz5
- z4JzSfTDabycb759lDS5IWgaTn3veJJ+KOT17vbgIZbbmWnahB0jh6cYe/YfofgeBJHM
- EmxpYVRfYZcFXzUTspDfSUsq/HzgbM5Af4hA2YwB4huRYJN75GmJ5599V/27uyVsqHX+
- y4JQ==
-X-Gm-Message-State: AOJu0YxSOtAC04uYvu+oWlBBCKj3dKcCTSK/78w8UoqUlW9XqumTYnLe
- XMhZdabLxYXuB5NJaMO5Cci20z2DzVYviBJuwHbn2sPc8abBKlnO+WauH8C5AkV6UUTbRzCoT+P
- bCSNv
-X-Gm-Gg: ATEYQzw5gMhd9AZQh5GCkTQqW1wFl3W31xatxtsVvVRB2bYXYwwS13xHDbwVKTJh3AD
- BkL0/5Yy/40S+t8kqPg1C+U1Gg/qSGC7O1dtiw7QFrZTNYCPZRdx7M78UqH1sUPPhRYYVw1d1Gu
- dfpxNet/OmNi6i6F6eJV3zNFwAnj3bIqnyOFs71KNIuSFeR5iklth8Vs0CAUGbd8XcO8emVR9Iu
- 1ZE6C7xo+evd6hrQzeMMQUN0Mwb9OZBl9yZ5fkoWk/xyyheZVWlXiPbGK0pll4FUZc3P5mzs0QZ
- lZ2Hu01WqG+UJUfdzSMzGwHuF7atoK/5RIev9bPuor/xBqScvnDsJThgC7dKJh7EwR1d++PtA2z
- RwMvtBwD+RF3f7xxkWtyUE4RdHIXkVeA47noyxPyMZL00rhe2yPI2hSu0z9UaMJT6HJJCwTv3+g
- 6UAHIYQiK0t63Zb513fZDNhlPoWxOZCUIuyYixFWdU5WZXKoARSHZp/Cr45iUJa8/xbNZiHIP7U
- e/sxpVCBn4xBGNz/JTY+8d4gPvUVeE=
-X-Received: by 2002:a05:6000:144c:b0:439:909f:c594 with SMTP id
- ffacd0b85a97d-439971ae7f0mr7126093f8f.10.1772121338692; 
- Thu, 26 Feb 2026 07:55:38 -0800 (PST)
+ bh=VBXg/2TNoBI9VaCBAUsRvO0hRVupsocR+41+B9vIhuc=;
+ b=DoBiCMrfQkyUpJ8lbm1kYMW3V99FH5QAxQDI8g4QXCPCctZVGz+yFRLd81K6us4lr/
+ yj74n0weYqbV0TjRc+NJQU4muymNbNdRwieW3gF91jQKTQjQgBajTLy82boqdfZM5okj
+ FdH4PixHAh5tW+0YDwaVv8NnU70nxg+J8IhQCCwhdr7JYAwWuq70AFCHc2zg2fAIMf4V
+ 4hqlbQQdrgBnri/fGGo2Sk83/p0e85Zipoa2zkWSjC4HSG+70BsOLIJ1PsotmWfrZi9E
+ HuZgj5V0F3vIJYKR4p3e5NVPvuG3RvT3YjzC64pHaukUzsayqiemmYNedf15HKEOaNBB
+ 3LLw==
+X-Gm-Message-State: AOJu0YzGxUQtLgSB31E1XTcXNnmU3C6l4DtnvxTGpwyAGUKJ/XfM9wEj
+ uNH4XcUDZg9MMDmrMf2KLkr9R3y4Yd78gpc7PKmkEVDl0MFpAgrzcaSm1u1i4DetPw4X8mAoKlG
+ GoaWi
+X-Gm-Gg: ATEYQzwJfY88ZJh4P7UM7dWQBXPObHjLm8tbw+UnTm8a8x5tM8c/pxcVKWUSwjVKH69
+ co/SUVgdTlF+ScTHWH/GrcU6LuarlWNhnOA/rb41lsL8z7MX8zIHPolDkLsYWgaWVWqxv17SbMF
+ tIYk7W6PIWLQRMhVbtY1U3+CQtqtaKPLedc37kWEKmaTYaKgvwnNnjtPcJxXtvCdUQEdAob7ZHc
+ hTIyhMuABVowMDqi/JQB+yIDqRZHGF95YfJP0MzNNRYYdts6yuUEbmgqUanWl5woTWancjMPBTg
+ Zn+JFSoPWBByWSp171nk4IKLFQTJGKY4FrW29AJJ6iRZkXKAU7rtuXMmSvn+Cl8D3TBkT287yzD
+ WmbarwuB25WE9NBPQ3XXn2i3OSCqHjyRwvVzfhXOYE7fGw4ACjDb3JuK6Kq0oveDCJbAAqThAHX
+ 9rthKZ2Hv6IB6ZIrL++OJ0buW3HXRFqARBWfpQTPlX1520lhEELOZw1/OL+NiZqI8rbbKTdybkC
+ MjBMUgryWxJNz9cQ9ByRqe7j6/5AJ0=
+X-Received: by 2002:a05:6000:438a:b0:436:1989:a1ba with SMTP id
+ ffacd0b85a97d-43994294f6dmr9329748f8f.10.1772121337782; 
+ Thu, 26 Feb 2026 07:55:37 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.37
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:38 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:37 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/20] target/arm: set the correct TI bits for WFIT traps
-Date: Thu, 26 Feb 2026 15:55:17 +0000
-Message-ID: <20260226155535.1171290-3-peter.maydell@linaro.org>
+Subject: [PULL 01/20] hw/ssi/xilinx_spips: Reset TX FIFO in reset
+Date: Thu, 26 Feb 2026 15:55:16 +0000
+Message-ID: <20260226155535.1171290-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
 References: <20260226155535.1171290-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Weixie Cui <cuiweixie@gmail.com>
 
-The WFIT trap should be reported as 0b10.
+In xilinx_spips_reset() and xlnx_zynqmp_qspips_reset() a cut and
+paste error meant we reset the RX FIFO twice and the TX FIFO not at
+all.  Correct this to reset both FIFOs.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20260220171945.1065102-1-alex.bennee@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260223095905.67709-1-cuiweixie@gmail.com
+[Rewrote commit message]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/op_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ssi/xilinx_spips.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 4d70863506..aa14f15eb6 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -448,7 +448,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
+index a4718fb72d..f6e717bc01 100644
+--- a/hw/ssi/xilinx_spips.c
++++ b/hw/ssi/xilinx_spips.c
+@@ -369,7 +369,7 @@ static void xilinx_spips_reset(DeviceState *d)
+     memset(s->regs, 0, sizeof(s->regs));
  
-     if (target_el) {
-         env->pc -= 4;
--        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false), target_el);
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 2, false), target_el);
-     }
+     fifo8_reset(&s->rx_fifo);
+-    fifo8_reset(&s->rx_fifo);
++    fifo8_reset(&s->tx_fifo);
+     /* non zero resets */
+     s->regs[R_CONFIG] |= MODEFAIL_GEN_EN;
+     s->regs[R_SLAVE_IDLE_COUNT] = 0xFF;
+@@ -397,7 +397,7 @@ static void xlnx_zynqmp_qspips_reset(DeviceState *d)
+     memset(s->regs, 0, sizeof(s->regs));
  
-     if (uadd64_overflow(timeout, offset, &nexttick)) {
+     fifo8_reset(&s->rx_fifo_g);
+-    fifo8_reset(&s->rx_fifo_g);
++    fifo8_reset(&s->tx_fifo_g);
+     fifo32_reset(&s->fifo_g);
+     s->regs[R_INTR_STATUS] = R_INTR_STATUS_RESET;
+     s->regs[R_GPIO] = 1;
 -- 
 2.43.0
 
