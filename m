@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57063FD8FD0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208F8FD8FD1
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdif-0005S9-2y; Thu, 26 Feb 2026 10:56:05 -0500
+	id 1vvdig-0005VD-EY; Thu, 26 Feb 2026 10:56:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiX-0005PW-NX
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:59 -0500
+ id 1vvdiW-0005P2-8d
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:56 -0500
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiV-0003ng-LQ
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:57 -0500
+ id 1vvdiT-0003ml-VY
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:56 -0500
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4398d1f06caso962106f8f.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:55 -0800 (PST)
+ ffacd0b85a97d-43990ea3fbcso709859f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121354; x=1772726154; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772121352; x=1772726152; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Hc2CJaf+EvCFfQ6zg/jl611kyl275mtn77dMnXM1joU=;
- b=ZmuwAgiIgg2xuyIglzv+2mH2dA0uaH4Om8qmBZTb18pOyfVXxryxMGnn0C1+c/hJAR
- Mn1Ssk/OG9dfIywuFZnENnt5CwLr+a7ke+qs3yucgu1vffDPnGgiF4Ok7YK7tr+H1Yyo
- E/U3uDztCNH9FuOWjoGlhzQg+1hMJ1umNqVjRRvRaSAebVUyme+Ls52Su2u7E43mwi5d
- sEF4IuslJjk4DTfOGywU8pLMtajQrSSDpATqn5Z3BhLTqumgSMUGrN0jU4UxC5fJR/sn
- HzV7+Gm5o42kYJPkCKtrKfK/m0eElotjNCL6oxlHWtqR0JehjmgSVOD7HThgCoga0iex
- 82pQ==
+ :reply-to; bh=sfrFs8pT9cgR7jMYX6r7NcDgV+dCxES7G4jHs+l6wU8=;
+ b=kODA6LvawuTIiLzMw5RK2wQQkuvRF3g6zQnL9XCILQOhqqtt99wBzd0y+gz+YeVD2L
+ uv7jMgbild4QXHvQT2YVwEhzyVL7auvSD6DJ6z4HqysSUhAPvC5giYjdkhjGPK6XJ9GW
+ bemnE1Chf2vbIwD5ZDDPdA8q07po5oZws6vIYaEjia+Q9xrJs6f6XDj4YBE575sS3w4o
+ UscPMCANmjvslAox4Rm3SUeOcatsWKrv9qrmGsKR9wk2UUrmw74Ji+4z3YOTQWKZ1zQf
+ xwA4TtG7hWBz2J85ZjQVphiCjR09mjMYUFSQoiLV2EIL5DcFP0X93vW1otODDxi6WlOD
+ yvNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121354; x=1772726154;
+ d=1e100.net; s=20230601; t=1772121352; x=1772726152;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Hc2CJaf+EvCFfQ6zg/jl611kyl275mtn77dMnXM1joU=;
- b=dM8HNYzTB/BiXOZS2l3vr2LsMDEQsb+V87APp/eUgYq9Tul10A0nj88nXdQyZpcv+J
- QUW64wUYgrG8uUpADkZsrnocw/iD3C8ccf4oDJxS0jqEI3BLLNTLly5uTUsFGWS/xXUO
- wyhXqWfYVKX8etMeXd23dWSLu4bbTncCkHjfZzkDGcCW61kKrD1vAOikUmRnijFdWsjh
- r3cOQmCvuPENJWSri2Rk64VrAifippJhhJTagKKTbdmC7w9PXWXRqZi2RMNriZ6nRXYM
- bVOaQfQtIuVf13iV7hxYxr5CIoNbpf0mZ+WJ4tC5p0jeTAxwtGBdd3Zp/xY0JKG5LntP
- ZYKw==
-X-Gm-Message-State: AOJu0Yw2REdBeqwqQ3fuhFKfsxTYzKv8agMl12blAKVGFaWTJsFqiFxp
- 3e15eEn+HBCPAGXijhWtnl8/peGVD5m39h3dollMomFkHE/QmoCqAccgnYnD5rDeyl9YN0F+VOI
- HICiJ
-X-Gm-Gg: ATEYQzzkcOxTMSv4rxzdI21sF3L11tgZKD4h73zrIp0VYrp0dyQ/AAA4pWVkudKHpFb
- uBzc+xHStfl8FPc4Mhk2ZwDNWAXiH8cbSBlayeu1w+trZaPx0fyvtp9+6tSaXppp7Nk1XxihU/B
- PoXKBWf27xppBdqbJGYH04k9OUmqfyc+ZSKZQeQ+9B/EZqIO+UzmLt2vK4niQfC53sqWjysVQim
- AWDcKtf44XqBHt79aUgw8b6IzZMUgHZdK3/rlNMaYIAotpxENBZ3G9g7e/V7ZmaDwcfWVSA7tbE
- 8lzMro0WlyHan9QRHQly6DwWfPRloCzV2BrVc8GKxU0p2IT4Hdgz5fuMMucUIfdTagosB+nW3kx
- UJ2Qy01KYonoGiTPkRPQv48kHIy34G6yOIAkAagGXLXoyCqPtPTf73J8Vfc0OE/Is+BPzSibFrv
- YvcfcH3SG1QaPdeXEIrMd30o+a6pTjpGLJTuZF7mz/hO3GnjzuakO36ZSa6ZIl3NV4FV88ggvt/
- RqmPK7mxit2bCFyCtE5H6sLq7I3/8w=
-X-Received: by 2002:a05:6000:25c8:b0:437:6e6e:6f95 with SMTP id
- ffacd0b85a97d-439942e2c68mr7908662f8f.27.1772121354250; 
- Thu, 26 Feb 2026 07:55:54 -0800 (PST)
+ bh=sfrFs8pT9cgR7jMYX6r7NcDgV+dCxES7G4jHs+l6wU8=;
+ b=YmxIXA6HtydLoNVQ1zQhVSg4+QsDaw5Ab+bxssWUu43IlqtrCKujy7rhngwchmJKb3
+ 2YBoR5FCHvbcf37PWLvvCRW2I0a835hvNhBmngizQK3i8FzJcpXo/j5Xs90UHchVXLrR
+ 6EhqHklxci/JvPhY0TZudWf49nZvhw1vz8MpdOOmX5E8CiVO7ofcxKwozMTuqRzonqrF
+ wYcZuOHoUxAhvYMgdO7tP61lPsaf+fBww/1nHkp3+LcwUyoliACiB+D9s3XmS3lWzgG7
+ TP6ujbNy4F57GdTFU9g00CrO/xx5V0HNGf5pA3Xk/RJ9yqcE6L3aQTVEnlbos1I+d2x4
+ GJcw==
+X-Gm-Message-State: AOJu0Ywj4alJT52FTUip5vbaV7h96aqfbu2KaCpBlPSQaAZ6r2w962iV
+ STVJvPCwc/Yhz8mkgbqdZJfGeJaKXd11otWqEWux2SaKbPIlkwHDXbhrusGS/lFQWCOkAXSO0zm
+ N81j6
+X-Gm-Gg: ATEYQzzoGo4Bbz6EPTneCBR/0XrpkTbEUf7mgG8i0AARKcES4MgklEh3Dp4JgQLWPPX
+ UBm8qZQFhHCMuz0/X7QBwR4rE05OeaJfUf1RS1xVsE+s+pFXuh7QIRzcl27qvajIcsGfrvviphq
+ AGpWV/T1hQ+0phvGEAPE8LSBWGLuQATA15v9bqUCg+ckLHdFEaVRZib1vkQj3v8yZg8GjbupzjD
+ 455hb0fqW2kIZfYkkua9AZISHLsIrmTO7bqFJ/6UUjIPwNsSVS4DQhm2+YDpBrU5JrGLvphrf2P
+ hwwboJw8qd+hguzMNpFfTfHHdB3NFiHtmHm9Wl8LSA6FESMj0jql3rDsGPxb6N9vf5QcjJBmWo4
+ GjFsdZFf4xr/5J5JD6S7obZPzZHacbxd6aSWVrho/0DzlCXpVeq5IYkvq6UquwySHpd2djBPKxK
+ Zf5iN1f6RagSTTynqfV0Q78dNFnOjxxfQ+ogVIo63ORsz7of8rVSaXe94p+Uc26Ax1/sA8/nWSX
+ ZJ8uKeCWOr1qrcMcIMYmXBLY2kELHg=
+X-Received: by 2002:a05:6000:2381:b0:439:936b:c006 with SMTP id
+ ffacd0b85a97d-439971fc9f7mr5249725f8f.20.1772121352434; 
+ Thu, 26 Feb 2026 07:55:52 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.53
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:53 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:51 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/20] target/arm: Add vq argument to kvm_arch_{get, put}_sve
-Date: Thu, 26 Feb 2026 15:55:32 +0000
-Message-ID: <20260226155535.1171290-18-peter.maydell@linaro.org>
+Subject: [PULL 15/20] target/arm: Remove kvm test in arm_set_pmu
+Date: Thu, 26 Feb 2026 15:55:30 +0000
+Message-ID: <20260226155535.1171290-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
 References: <20260226155535.1171290-1-peter.maydell@linaro.org>
@@ -102,115 +102,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+In kvm_arm_get_host_cpu_features, we only set ARM_FEATURE_PMU if
+kvm_arm_pmu_supported.  In arm_cpu_post_init we only register the
+"pmu" property if ARM_FEATURE_PMU.  Therefore, if kvm is enabled,
+we can only arrive in arm_set_pmu if kvm_arm_pmu_supported.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260216034432.23912-11-richard.henderson@linaro.org
+Message-id: 20260216034432.23912-8-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/kvm.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ target/arm/cpu.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index b8aba20f02..ecb732a669 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2118,16 +2118,15 @@ static int kvm_arch_put_fpsimd(CPUState *cs)
-  * code the slice index to zero for now as it's unlikely we'll need more than
-  * one slice for quite some time.
-  */
--static int kvm_arch_put_sve(CPUState *cs)
-+static int kvm_arch_put_sve(CPUState *cs, uint32_t vq)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint64_t tmp[ARM_MAX_VQ * 2];
-     uint64_t *r;
-     int n, ret;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 60f391651d..7e3e84b4bb 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1224,10 +1224,6 @@ static void arm_set_pmu(Object *obj, bool value, Error **errp)
+     ARMCPU *cpu = ARM_CPU(obj);
  
-     for (n = 0; n < KVM_ARM64_SVE_NUM_ZREGS; ++n) {
--        r = sve_bswap64(tmp, &env->vfp.zregs[n].d[0], cpu->sve_max_vq * 2);
-+        r = sve_bswap64(tmp, &env->vfp.zregs[n].d[0], vq * 2);
-         ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_ZREG(n, 0), r);
-         if (ret) {
-             return ret;
-@@ -2135,8 +2134,7 @@ static int kvm_arch_put_sve(CPUState *cs)
-     }
- 
-     for (n = 0; n < KVM_ARM64_SVE_NUM_PREGS; ++n) {
--        r = sve_bswap64(tmp, r = &env->vfp.pregs[n].p[0],
--                        DIV_ROUND_UP(cpu->sve_max_vq * 2, 8));
-+        r = sve_bswap64(tmp, &env->vfp.pregs[n].p[0], DIV_ROUND_UP(vq * 2, 8));
-         ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_PREG(n, 0), r);
-         if (ret) {
-             return ret;
-@@ -2144,7 +2142,7 @@ static int kvm_arch_put_sve(CPUState *cs)
-     }
- 
-     r = sve_bswap64(tmp, &env->vfp.pregs[FFR_PRED_NUM].p[0],
--                    DIV_ROUND_UP(cpu->sve_max_vq * 2, 8));
-+                    DIV_ROUND_UP(vq * 2, 8));
-     ret = kvm_set_one_reg(cs, KVM_REG_ARM64_SVE_FFR(0), r);
-     if (ret) {
-         return ret;
-@@ -2236,7 +2234,7 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-     }
- 
-     if (cpu_isar_feature(aa64_sve, cpu)) {
--        ret = kvm_arch_put_sve(cs);
-+        ret = kvm_arch_put_sve(cs, cpu->sve_max_vq);
+     if (value) {
+-        if (kvm_enabled() && !kvm_arm_pmu_supported()) {
+-            error_setg(errp, "'pmu' feature not supported by KVM on this host");
+-            return;
+-        }
+         set_feature(&cpu->env, ARM_FEATURE_PMU);
      } else {
-         ret = kvm_arch_put_fpsimd(cs);
-     }
-@@ -2302,10 +2300,9 @@ static int kvm_arch_get_fpsimd(CPUState *cs)
-  * code the slice index to zero for now as it's unlikely we'll need more than
-  * one slice for quite some time.
-  */
--static int kvm_arch_get_sve(CPUState *cs)
-+static int kvm_arch_get_sve(CPUState *cs, uint32_t vq)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    CPUARMState *env = &cpu->env;
-+    CPUARMState *env = cpu_env(cs);
-     uint64_t *r;
-     int n, ret;
- 
-@@ -2315,7 +2312,7 @@ static int kvm_arch_get_sve(CPUState *cs)
-         if (ret) {
-             return ret;
-         }
--        sve_bswap64(r, r, cpu->sve_max_vq * 2);
-+        sve_bswap64(r, r, vq * 2);
-     }
- 
-     for (n = 0; n < KVM_ARM64_SVE_NUM_PREGS; ++n) {
-@@ -2324,7 +2321,7 @@ static int kvm_arch_get_sve(CPUState *cs)
-         if (ret) {
-             return ret;
-         }
--        sve_bswap64(r, r, DIV_ROUND_UP(cpu->sve_max_vq * 2, 8));
-+        sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
-     }
- 
-     r = &env->vfp.pregs[FFR_PRED_NUM].p[0];
-@@ -2332,7 +2329,7 @@ static int kvm_arch_get_sve(CPUState *cs)
-     if (ret) {
-         return ret;
-     }
--    sve_bswap64(r, r, DIV_ROUND_UP(cpu->sve_max_vq * 2, 8));
-+    sve_bswap64(r, r, DIV_ROUND_UP(vq * 2, 8));
- 
-     return 0;
- }
-@@ -2420,7 +2417,7 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-     }
- 
-     if (cpu_isar_feature(aa64_sve, cpu)) {
--        ret = kvm_arch_get_sve(cs);
-+        ret = kvm_arch_get_sve(cs, cpu->sve_max_vq);
-     } else {
-         ret = kvm_arch_get_fpsimd(cs);
-     }
+         unset_feature(&cpu->env, ARM_FEATURE_PMU);
 -- 
 2.43.0
 
