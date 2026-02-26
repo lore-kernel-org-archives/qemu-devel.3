@@ -4,59 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64774FD9E1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A599CFD9E1B
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvjxV-0001h9-Uv; Thu, 26 Feb 2026 17:35:50 -0500
+	id 1vvkA8-0006Ze-A1; Thu, 26 Feb 2026 17:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vvjxU-0001gd-5Y
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:35:48 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vvjxR-0000Cx-Ux
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:35:47 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9ED0D597318;
- Thu, 26 Feb 2026 23:35:40 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id DpMWVepZBbJc; Thu, 26 Feb 2026 23:35:38 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8FD495972DF; Thu, 26 Feb 2026 23:35:38 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8DF1D5972E2;
- Thu, 26 Feb 2026 23:35:38 +0100 (CET)
-Date: Thu, 26 Feb 2026 23:35:38 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH 7/7] system/memory: Have 'info mtree' display addresses
- nicely
-In-Reply-To: <20260226220226.20164-8-philmd@linaro.org>
-Message-ID: <a3e183e3-4196-f3d0-f221-d93652e7d3df@eik.bme.hu>
-References: <20260226220226.20164-1-philmd@linaro.org>
- <20260226220226.20164-8-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvkA6-0006Yo-2N
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:48:50 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvkA4-0001og-Cb
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:48:49 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-4398913af88so1228881f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:48:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772146125; x=1772750925; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AesqWR3A+DEHGL6xXHBfjeeZ/wNOVnM51V+UKn6f6YY=;
+ b=rAGocMYn7RDiHw7K1XYGo/RMf8HhU2cInJVWQ7KBxW+T8onEGMG0BC60cTJ+2vhGue
+ KrD1QiTBVMaNScGZHzUaaz+He1F0n2zILYCXz9xUT5OEQwhX0eOlBjRJ9+PzL3utxzjd
+ hKPbKfdOVC7uK4MrVWVyX1MYoLcVpGGfR1Wg9XJ1pz8mZsO4ygjGu9LtFUJ07EBS+92N
+ x6zXabzYsBg0iJ/J4DJuIt1KyUE44iWafyIqkriv2BRBQw1q1P/3fp9u+w1F/toZPOGd
+ gSGX6BdyGhaRINhqE43x+6HFPir0QutkzHfECI5mCbrwNzMXsU8hwCdERn2IleCkh/Vs
+ jBzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772146125; x=1772750925;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AesqWR3A+DEHGL6xXHBfjeeZ/wNOVnM51V+UKn6f6YY=;
+ b=O7ZpenFoArOXlSWk1n1blxTNsC0F6CJ3rhB8Wrh3dbRtRgjTwXFDk8m5ZP60OHySGC
+ G3/B9Z3l1LzL241BnMAs0iYac/aCu//9TbE/sttQRuA1VSTTA7UjCmvFyRTauwMmjDIs
+ z8I6UzOPhSEO5hQ8tI1Nd7ApNGLMjS6H51aqlYQECK+mvc4OCuNhdmI7wja5p61gNJwX
+ L3vmdu1lVFB8/RbBfiR4Kp+v9AHlBf97dFMBOKIxCTKM3HPfb85wlsJht5FfM4RrK2ZB
+ AfOEOroBTe8OG3qVWdGFVsKa7Q8N6OPyWFgXK83rgoP+nQRpe5NavfTAHOu/h/lWKVT+
+ Ow6A==
+X-Gm-Message-State: AOJu0YyGRoJl7fg7KEHanhAo9MPASUi3p+3dYqzV9iQ/vZ4g2nchnWAz
+ p+Ola/jHpfyVNRfjnbXBIyzoJon1B6Wi8O/h3iOfoTtS4etLKatK6QcFJ6ducCyG1PsYVyKA5DK
+ iFzHR6aI=
+X-Gm-Gg: ATEYQzy2NcqImkNEkpLwFwdxyAJz+FhiRKGYZox75QrVxSMIyJFFTfFi+y6Zoeg2Nfr
+ qJlKZVhKoZmiXO5JQTh+yhvgzzms0VZ40ql9KOHqKmS6c3KCt+hWaH3c4Wa6HwJ5fiu42s3QlrX
+ fuzwkKOtsof14d7T+UvGhuFu8RiwUnFq8hAGIzZhlnqgBfQ/t8MVkY7mBfKDxt4MWMgZpP29i+l
+ bexP+AkA21MSwyT4Tj8hd7IwuInIqyAA5ARkS7NJNZ1w5DOa8Sy1EeKxSXBYWTMPg5S15fTHpCm
+ LIS7XSo4gVaArwlnGmc5kM+ppqEhRgffkN52OZw+7Kn4V9ZIKk+WpreOCaeH0psC0VRX+7vkXQx
+ opPhrTygoW+791y+etTxVonAga2885/qGXJgFm97Cz+SdZ+RYSb+EIV3ZNIYms2x4npj2G/J4YI
+ 5xJdrDdm74TACfC6rLwwuEytd4BexxIM8VlSMCJZqvgr0W2uKM1KBQazlVEokrFvIedPyn64T2
+X-Received: by 2002:a05:6000:616:b0:437:6dac:458a with SMTP id
+ ffacd0b85a97d-4399de38672mr809841f8f.57.1772146125231; 
+ Thu, 26 Feb 2026 14:48:45 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4399c764546sm2613774f8f.29.2026.02.26.14.48.43
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 26 Feb 2026 14:48:43 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] gdbstub: Generate a single gdbstub-xml.c /
+ gdb_static_features[]
+Date: Thu, 26 Feb 2026 23:48:42 +0100
+Message-ID: <20260226224842.36130-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- BOUNDARY="3866299591-679242517-1772145310=:40301"
-Content-ID: <45088092-8b40-6013-0f8e-5c2e0943310d@eik.bme.hu>
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,143 +102,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+gdb_static_features[] only contains strings, nothing target-specific.
+Instead of generating one file per target, generate a single file
+with a single gdb_static_features[] array. Remove the stub.
 
---3866299591-679242517-1772145310=:40301
-Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <9d8d7d34-6db7-a246-79b8-d74509f0234e@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
+---
+ meson.build       | 25 +++++++++++++++----------
+ stubs/gdbstub.c   |  6 ------
+ stubs/meson.build |  2 --
+ 3 files changed, 15 insertions(+), 18 deletions(-)
+ delete mode 100644 stubs/gdbstub.c
 
-On Thu, 26 Feb 2026, Philippe Mathieu-Daudé wrote:
-> Use the size of a MR / AS to decide how many address chars
-> need to be used.
->
-> For example, using 'qemu-system-x86_64 -M q35 -S -monitor stdio'
-> to run 'info mtree' displays before:
->
->  address-space: I/O
->    0000000000000000-000000000000ffff (prio 0, i/o): io
->        0000000000000000-0000000000000003 (prio 0, i/o): acpi-evt
->        0000000000000004-0000000000000005 (prio 0, i/o): acpi-cnt
->        0000000000000008-000000000000000b (prio 0, i/o): acpi-tmr
->        0000000000000020-000000000000002f (prio 0, i/o): acpi-gpe0
->        0000000000000030-0000000000000037 (prio 0, i/o): acpi-smi
->        0000000000000060-000000000000007f (prio 0, i/o): sm-tco
->      0000000000000000-0000000000000007 (prio 0, i/o): dma-chan
->      0000000000000008-000000000000000f (prio 0, i/o): dma-cont
->      0000000000000020-0000000000000021 (prio 0, i/o): pic
->      0000000000000040-0000000000000043 (prio 0, i/o): pit
->      ...
->  memory-region: pc.ram
->    0000000000000000-0000000007ffffff (prio 0, ram): pc.ram
->  memory-region: pc.bios
->    00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
->  memory-region: pci
->    0000000000000000-ffffffffffffffff (prio -1, i/o): pci
->      00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
->      00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
->      00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
->      00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
->  ...
->
-> and after:
->
->  address-space: I/O
->    0000-ffff (prio 0, container): io
->        0000-0003 (prio 0, i/o): acpi-evt
->        0004-0005 (prio 0, i/o): acpi-cnt
->        0008-000b (prio 0, i/o): acpi-tmr
->        0020-002f (prio 0, i/o): acpi-gpe0
->        0030-0037 (prio 0, i/o): acpi-smi
->        0060-007f (prio 0, i/o): sm-tco
->      0000-0007 (prio 0, i/o): dma-chan
->      0008-000f (prio 0, i/o): dma-cont
->      0020-0021 (prio 0, i/o): pic
->      0040-0043 (prio 0, i/o): pit
->      ...
->  memory-region: pc.ram
->    00000000-07ffffff (prio 0, ram): pc.ram
->  memory-region: pc.bios
->    fffc0000-ffffffff (prio 0, rom): pc.bios
->  memory-region: pci
->    0000000000000000-ffffffffffffffff (prio -1, i/o): pci
->      00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
->      00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
->      00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
->      00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
->  ...
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> system/memory.c | 27 +++++++++++++++++++++++----
-> 1 file changed, 23 insertions(+), 4 deletions(-)
->
-> diff --git a/system/memory.c b/system/memory.c
-> index 4d276307da5..abcbdaadcd7 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -3321,7 +3321,26 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
->
-> #define MR_SIZE(size) (int128_nz(size) ? (hwaddr)int128_get64( \
->                            int128_sub((size), int128_one())) : 0)
-> -#define MR_ADDR_WIDTH   16
-> +
-> +static unsigned mr_addr_fmt_width(const MemoryRegion *mr)
-> +{
-> +    const unsigned int bits = 127 - clz128(mr->size);
-> +    unsigned int width;
-> +
-> +    if (bits <= 8) {
-> +        width = 2;
-> +    } else if (bits <= 16) {
-> +        width = 4;
-> +    } else if (bits <= 32) {
-> +        width = 8;
-> +    } else if (bits <= 64) {
-> +        width = 16;
-> +    } else {
-> +        width = 20;
+diff --git a/meson.build b/meson.build
+index 451cb28149f..6d73ee40ea3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3867,6 +3867,21 @@ subdir('linux-user')
+ subdir('tests/qtest/libqos')
+ subdir('tests/qtest/fuzz')
+ 
++feature_to_c = find_program('scripts/feature_to_c.py')
++gdbstub_xml = []
++foreach target : target_dirs
++  config_target = config_target_mak[target]
++  if 'TARGET_XML_FILES' in config_target
++    gdbstub_xml += config_target['TARGET_XML_FILES'].split()
++  endif
++endforeach
++gdbstub_xml = custom_target('gdbstub-xml.c',
++                            output: 'gdbstub-xml.c',
++                            input: files(gdbstub_xml),
++                            command: [feature_to_c, '@INPUT@'],
++                            capture: true)
++common_ss.add(gdbstub_xml)
++
+ ##############################################
+ # Internal static_libraries and dependencies #
+ ##############################################
+@@ -4218,7 +4233,6 @@ if have_rust
+ endif
+ 
+ 
+-feature_to_c = find_program('scripts/feature_to_c.py')
+ rust_root_crate = find_program('scripts/rust/rust_root_crate.sh')
+ 
+ if host_os == 'darwin'
+@@ -4298,15 +4312,6 @@ foreach target : target_dirs
+     endif
+   endif
+ 
+-  if 'TARGET_XML_FILES' in config_target
+-    gdbstub_xml = custom_target(target + '-gdbstub-xml.c',
+-                                output: target + '-gdbstub-xml.c',
+-                                input: files(config_target['TARGET_XML_FILES'].split()),
+-                                command: [feature_to_c, '@INPUT@'],
+-                                capture: true)
+-    arch_srcs += gdbstub_xml
+-  endif
+-
+   if target in config_target_info
+     arch_srcs += config_target_info[target]
+   else
+diff --git a/stubs/gdbstub.c b/stubs/gdbstub.c
+deleted file mode 100644
+index 580e20702b2..00000000000
+--- a/stubs/gdbstub.c
++++ /dev/null
+@@ -1,6 +0,0 @@
+-#include "qemu/osdep.h"
+-#include "exec/gdbstub.h"       /* gdb_static_features */
+-
+-const GDBFeature gdb_static_features[] = {
+-  { NULL }
+-};
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 8a07059500d..1e0f6f47377 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -89,8 +89,6 @@ if have_system
+ endif
+ 
+ if have_system or have_user
+-  stub_ss.add(files('gdbstub.c'))
+-
+   # Also included in have_system for --disable-tcg builds
+   stub_ss.add(files('replay.c'))
+ 
+-- 
+2.52.0
 
-Why 20? HWADDR_FMT_plx this seems to replace is "%016" PRIx64
-
-Regards,
-BALATON Zoltan
-
-> +    }
-> +    return width;
-> +}
-> +
-> #define MTREE_INDENT "  "
->
-> static void mtree_expand_owner(const char *label, Object *obj)
-> @@ -3513,7 +3532,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
->         return;
->     }
->
-> -    width = MR_ADDR_WIDTH;
-> +    width = mr_addr_fmt_width(view->root);
->     while (n--) {
->         const MemoryRegion *mr = range->mr;
->
-> @@ -3643,7 +3662,7 @@ static void mtree_print_as(gpointer key, gpointer value, gpointer user_data)
->     MemoryRegion *mr = key;
->     GSList *as_same_root_mr_list = value;
->     struct AddressSpaceInfo *asi = user_data;
-> -    const unsigned int width = MR_ADDR_WIDTH;
-> +    const unsigned int width = mr_addr_fmt_width(mr);
->
->     g_slist_foreach(as_same_root_mr_list, mtree_print_as_name, NULL);
->     mtree_print_mr(mr, 1, width, -mr->addr, false,
-> @@ -3692,7 +3711,7 @@ static void mtree_info_as(bool dispatch_tree, bool owner, bool disabled)
->     /* print aliased regions */
->     QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
->         const MemoryRegion *mr = ml->mr;
-> -        const unsigned int width = MR_ADDR_WIDTH;
-> +        const unsigned int width = mr_addr_fmt_width(mr);
->
->         qemu_printf("memory-region: %s\n", memory_region_name(mr));
->         mtree_print_mr(mr, 1, width, 0, false, &ml_head, owner, disabled);
->
---3866299591-679242517-1772145310=:40301--
 
