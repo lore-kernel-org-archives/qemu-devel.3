@@ -4,92 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CC0FD8FE0
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1ABFD8FE0
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vveqY-0005X5-S4; Thu, 26 Feb 2026 12:08:18 -0500
+	id 1vvevJ-0007PU-Eg; Thu, 26 Feb 2026 12:13:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vveqW-0005Wl-O5
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:08:17 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vveqU-0000JX-7b
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:08:15 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4837907f535so10462245e9.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:08:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772125692; x=1772730492; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cJ6QuEyaXLd8/OOc/Z0fAYJuC3JNh5cCwzxGRUoPfxo=;
- b=ZKeGZnCY+XdmEcD/GjET83CKx1Gg4m1REnM9gLT2xPyeBgpxNuRDuBjSDVMlAKvoNB
- hbvwbJri7jDhJPaK2H3vU6JPM7kULQySvZ3EGp0vhZpkiTZBkg8rbPjLlVDC9sYQtrQk
- tK4aQw0FsIhBQPxqtGPywIooxT7Rx5egKPpqsl6jMo/DQfuehfNYWloEFzSPH7WhA47G
- luJNCfQ0c15gNbDj41eoS1NOvMBGmRuDsKgWz+XiQO34/AeBZxCqI0Z1eL59Xh9rN9fR
- x462pC6pmNAUcTQd/l9rIzkZbjTYzTGI5brH9S6quOGLRMGg+tdDRKdhz5dA4YWQj+Oq
- cR6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772125692; x=1772730492;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cJ6QuEyaXLd8/OOc/Z0fAYJuC3JNh5cCwzxGRUoPfxo=;
- b=eHgvSM/Vm8KbkS25v2GekobynDvF0LJdlHCFzHjmcLlPc/F/KLQExR2nVOlQAnYz3f
- iCZ+fbIVWou/bnrpFghJs/6okmEQYb98qZzj/YreyThMga3K70rKnN15mR2Wu3O1uapZ
- dRs94I4tSEVeoMdEVktWpFfghXipwxwP9DZtVNpeXKZW+JWoipA4DodpP9J/3cT3iJBC
- cF1LB075Ixh0W80VIux+UTU5d+7/0e5q0iw0ZLOmNqh4OLqIkLQnRmwNy3eojOEhAPdb
- qeZ/HY7iqKFWcU48d8x/5zGwUILN/To9Y8IxA1+B+J3vvhrPUPKaeuyHDG54kom1SK6T
- FMRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWY9zt61+9JnQkWK1TzMd53SIO9e2culyG/4pbdzmgewfrgnmvtqWz0hYNvJN4+daww0w08RDv20rOP@nongnu.org
-X-Gm-Message-State: AOJu0YyVhWnz/vQCrvD7Fm6QO26f6FrQrHofTxgWZg5VWrQAHwSkvVRR
- C74+cePPHmU5ZeiMNQm9JiOMI39ySDiiJ5vMaIs64IIGzLyob2TJiphkNp96x1DEjAM=
-X-Gm-Gg: ATEYQzzQbYkkLv8CYSIvEYPSToJOIXbGY9winnrM0MBjmc7gEh6uyyyvAafTvBx0Su2
- Fcv5vsz//Q0D2gmY/8E5D5Awo/vVjKUaNO5b3hiY3Crj+r4qzNOrONOfp+ij9rkUvfvZClb+oWR
- zci2rgxKxpzNo9J99+l0qfksaig3Z2JJZlNAbtXzp1jff941mt2+KYF9bijgMLuUvxmlDTCal1q
- dDpq4ZKGzkvYtbBNHQqyHS3ji0M0OFoIJcB6KEiz79MJWZASukX/DKWyEXqgbtJ0LVSS3w+NI+y
- KucZTMnm7f2YcLIEzFn4RJvV4Q/rMX5zFQ7J7KBOMnbMDYOymaylZdPFBF7qJo3PMAler6pl91m
- t6mvjmP7xqdxE7hXGvuE+4sLcouVWrs3cRTosdlltRNbSkvaoSRGEehR5zD3wfPdWkpfeHP9IJm
- CCDXvU6ncsKZlXNMm5N8S8hVdKtEovcsvht4ujyMciXXDCh98/cl7odb54Hitr/uTF3w==
-X-Received: by 2002:a05:600c:8a09:20b0:480:69ae:f0e9 with SMTP id
- 5b1f17b1804b1-483c89b4949mr13070545e9.16.1772125691955; 
- Thu, 26 Feb 2026 09:08:11 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfba9a5esm97270375e9.4.2026.02.26.09.08.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Feb 2026 09:08:10 -0800 (PST)
-Message-ID: <de38bb8a-91d5-4088-83bf-0730d3aa3d56@linaro.org>
-Date: Thu, 26 Feb 2026 18:08:09 +0100
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1vvevG-0007Oz-UI
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:13:10 -0500
+Received: from out-172.mta1.migadu.com ([95.215.58.172])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1vvevE-00019Z-Pr
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:13:10 -0500
+Message-ID: <c805cd6f-e69c-4cf1-8773-0a45bfb677f8@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1772125984;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QQ2E11vmARMbm0XjMwkBECua6RVPsNj4Cuf6gp22r0k=;
+ b=Fx3PSGKdJmkvkBUd/NP6DrPaV6vpjABjI7C+HGXm8bboo/xnbWKxvMFoWtR758JEmCqrEG
+ kftmOwhYoXt8J843lJv7mRH4cFAlvWuA2p9RCIVgiTjyiHnpAGuGHVnFop2mcjTRht+Lbd
+ t917L3Dhx8wZ4LPVLFSABt/HQRnOuNQ=
+Date: Fri, 27 Feb 2026 01:12:52 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] machine: add "acpi-watchdog" property
+Subject: Re: [PATCH v4 08/84] target/arm: Skip AF and DB updates for
+ AccessType_AT
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250830054128.448363-1-richard.henderson@linaro.org>
+ <20250830054128.448363-9-richard.henderson@linaro.org>
 Content-Language: en-US
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, zhao1.liu@intel.com,
- rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-3-imammedo@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260206131438.1857182-3-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <20250830054128.448363-9-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.172; envelope-from=zenghui.yu@linux.dev;
+ helo=out-172.mta1.migadu.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,57 +72,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
-
-On 6/2/26 14:14, Igor Mammedov wrote:
-> It will be used by following code to enable ACPI watchdog.
-> Initial support will bring it to Q35 and arm/virt machines using
-> respective iTCO and GWDT watchdogs as hardware backend.
+On 8/30/25 1:40 PM, Richard Henderson wrote:
+> We are required to skip DB update for AT instructions, and
+> we are allowed to skip AF updates.  Choose to skip both.
 > 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/hw/core/boards.h |  1 +
->   hw/core/machine.c        | 20 ++++++++++++++++++++
->   2 files changed, 21 insertions(+)
+>  target/arm/ptw.c | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 8925c9a610..089eeff845 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -58,6 +58,12 @@ typedef struct S1Translate {
+>       * and will not change the state of the softmmu TLBs.
+>       */
+>      bool in_debug;
+> +    /*
+> +     * in_at: is this AccessType_AT?
+> +     * This is also set for debug, because at heart that is also
+> +     * an address translation, and simplifies a test.
+> +     */
+> +    bool in_at;
+>      /*
+>       * If this is stage 2 of a stage 1+2 page table walk, then this must
+>       * be true if stage 1 is an EL0 access; otherwise this is ignored.
+> @@ -1929,7 +1935,12 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+>      descaddr &= ~(hwaddr)(page_size - 1);
+>      descaddr |= (address & (page_size - 1));
+>  
+> -    if (likely(!ptw->in_debug)) {
+> +    /*
+> +     * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
+> +     * and it is IMPLEMENTATION DEFINED whether AF is updated
+> +     * (AArch64.SetAccessFlag; qemu chooses to not update).
+> +     */
+> +    if (likely(!ptw->in_at)) {
+>          /*
+>           * Access flag.
+>           * If HA is enabled, prepare to update the descriptor below.
 
+|           * Otherwise, pass the access fault on to software.
+|           */
+|          if (!(descriptor & (1 << 10))) {
+|              if (param.ha) {
+|                  new_descriptor |= 1 << 10; /* AF */
+|              } else {
+|                  fi->type = ARMFault_AccessFlag;
+|                  goto do_fault;
 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 6411e68856..4ca808fb73 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -499,6 +499,20 @@ static void machine_set_usb(Object *obj, bool value, Error **errp)
->       ms->usb_disabled = !value;
->   }
->   
-> +static bool machine_get_acpi_watchdog(Object *obj, Error **errp)
-> +{
-> +    MachineState *ms = MACHINE(obj);
-> +
-> +    return ms->acpi_watchdog;
-> +}
-> +
-> +static void machine_set_acpi_watchdog(Object *obj, bool value, Error **errp)
-> +{
-> +    MachineState *ms = MACHINE(obj);
-> +
-> +    ms->acpi_watchdog = value;
-> +}
-> +
->   static bool machine_get_graphics(Object *obj, Error **errp)
->   {
->       MachineState *ms = MACHINE(obj);
-> @@ -1257,6 +1271,12 @@ static void machine_class_init(ObjectClass *oc, const void *data)
->           NULL, NULL);
->       object_class_property_set_description(oc, "memory",
->           "Memory size configuration");
-> +
-> +    object_class_property_add_bool(oc, "acpi-watchdog",
-> +        machine_get_acpi_watchdog, machine_set_acpi_watchdog);
-> +     object_class_property_set_description(oc, "acpi-watchdog",
-> +        "Set on/off to enable/disable ACPI watchdog."
-> +        " Default: off (ACPI watchdog is disabled).");
+This also skips the access flag fault which could be generated by an AT
+instruction. Is this an expected change?
 
-Should we check for CONFIG_ACPI somewhere?
-
->   }
+Thanks,
+Zenghui
 
