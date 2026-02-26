@@ -4,116 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3920FCE086
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 13:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A6CFCE086
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 14:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvbtB-0001th-Vp; Thu, 26 Feb 2026 08:58:50 -0500
+	id 1vvbuZ-0002aS-CH; Thu, 26 Feb 2026 09:00:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvbt7-0001tT-27
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 08:58:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vvbuX-0002a5-DT
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 09:00:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvbt5-0005wg-E5
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 08:58:44 -0500
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vvbuV-0006Gh-DL
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 09:00:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772114321;
+ s=mimecast20190719; t=1772114409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=N1T6w9shveLxolgdHLVjXKFJq2czAN0xskBEg5nX71I=;
- b=QEekAXJAA8EPtWaE75H8nx2F5aWEnNKH36N0Fbuf7JbjdCjhJGnuLnSdvqN+2F3t0RjX4R
- MIBtwFw32r7v/3hkJ0MZbxxbBHNjbjvQVIvydg4qZQMrDkna85slOnRIf/7YJFkBOPIzHo
- c52BACTl95VPiG8CvytSDsQ0fPdRzio=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=a4wT0ri5GvGdVnebIamXmnytN6J5FpX06JiH+x3fJhY=;
+ b=b60309R+opvX3nBIXQuFTCN/efTHQB35iQPANwqv5lNPSMWQY9bhvj5nxwSiE8sQyCusGZ
+ 5gjyWIRhyhCBCxljtnov+GmdDiXxbN4j0Q2xGz608Nkd2TeU1b3uTaOIovI1z8KbKeRDgx
+ og2+ElNzQ4ufm+x5Hly2HXJtOW0UhBA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-aQmPlAnjMqOsUwSAFclUyQ-1; Thu,
- 26 Feb 2026 08:58:28 -0500
-X-MC-Unique: aQmPlAnjMqOsUwSAFclUyQ-1
-X-Mimecast-MFC-AGG-ID: aQmPlAnjMqOsUwSAFclUyQ_1772114307
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-dIeL5E4AMBGVJTSMNWniJg-1; Thu,
+ 26 Feb 2026 09:00:06 -0500
+X-MC-Unique: dIeL5E4AMBGVJTSMNWniJg-1
+X-Mimecast-MFC-AGG-ID: dIeL5E4AMBGVJTSMNWniJg_1772114404
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF0FB18003F6; Thu, 26 Feb 2026 13:58:27 +0000 (UTC)
-Received: from [10.45.225.23] (unknown [10.45.225.23])
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 952C918005B6; Thu, 26 Feb 2026 14:00:04 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.29])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9973A1955F2D; Thu, 26 Feb 2026 13:58:25 +0000 (UTC)
-Message-ID: <8ada4c26-d8b5-4cd2-8f9b-648ded2ab361@redhat.com>
-Date: Thu, 26 Feb 2026 14:58:24 +0100
+ id 0BAE01956056; Thu, 26 Feb 2026 14:00:02 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
+ Mark Kanda <mark.kanda@oracle.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v3 00/15] Make RamDiscardManager work with multiple sources
+Date: Thu, 26 Feb 2026 14:59:45 +0100
+Message-ID: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 106/153] bump meson wheel to 1.10.0
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20251227091622.20725-1-pbonzini@redhat.com>
- <20251227094759.35658-32-pbonzini@redhat.com>
- <CAFEAcA91Ghhhve2=aSB+Af6C_Hhdh1-MMQCuUWDpwwMFvYHJgg@mail.gmail.com>
- <CABgObfbaGUUCXEOpd5r3ymybbmN6XnTq+L18a79QJF9JtS-SCQ@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CABgObfbaGUUCXEOpd5r3ymybbmN6XnTq+L18a79QJF9JtS-SCQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -131,34 +89,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/2026 14.40, Paolo Bonzini wrote:
-> On Thu, Feb 26, 2026 at 2:39 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Sat, 27 Dec 2025 at 09:55, Paolo Bonzini <pbonzini@redhat.com> wrote:
->>>
->>> This version includes several improvements and bugfixes for Rust.
->>>
->>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>> ---
->>>   configure                                   |   4 ++--
->>>   python/scripts/vendor.py                    |   4 ++--
->>>   python/wheels/meson-1.10.0-py3-none-any.whl | Bin 0 -> 1057029 bytes
->>>   pythondeps.toml                             |   4 ++--
->>>   4 files changed, 6 insertions(+), 6 deletions(-)
->>>   create mode 100644 python/wheels/meson-1.10.0-py3-none-any.whl
->>
->> Hi Paolo -- should this change (now upstream as commit 8c04b6a48b15a)
->> have deleted python/wheels/meson-1.9.0-py3-none-any.whl, or is
->> there a reason we need to keep both 1.9.0 and 1.1.0 wheels?
-> 
-> I think someone else must have reported it.  I have a
-> patch deleting it queued for my next pull request.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-That was likely me, I once complained on IRC already. And Marc-André also 
-sent a patch already:
+Hi,
 
-https://marc.info/?i=20260211-cleanups-v1-2-e63c96572389@redhat.com
+This is an attempt to fix the incompatibility of virtio-mem with confidential
+VMs. The solution implements what was discussed earlier with D. Hildenbrand:
+https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
 
-  Thomas
+The first patches are misc cleanups. Then some code refactoring to have split a
+manager/source. And finally, the manager learns to deal with multiple sources.
+
+I haven't done thorough testing. I only launched a SEV guest with a virtio-mem
+device. It would be nice to have more tests for those scenarios with
+VFIO/virtio-mem/confvm.. In any case, review & testing needed!
+
+(should fix https://issues.redhat.com/browse/RHEL-131968)
+
+v3: issues found by Cédric
+ - fix assertion error on shutdown, due to rcu-defer cleanup
+ - fix API doc warnings
+
+v2:
+ - drop replay_{populated,discarded} from source, suggested by Peter Xu
+ - add extra manager cleanup
+ - add r-b tags for preliminary patches
+
+thanks
+
+Marc-André Lureau (15):
+  system/rba: use DIV_ROUND_UP
+  memory: drop RamDiscardListener::double_discard_supported
+  virtio-mem: use warn_report_err_once()
+  system/memory: minor doc fix
+  kvm: replace RamDicardManager by the RamBlockAttribute
+  system/memory: split RamDiscardManager into source and manager
+  system/memory: move RamDiscardManager to separate compilation unit
+  system/memory: constify section arguments
+  system/ram-discard-manager: implement replay via is_populated
+    iteration
+  virtio-mem: remove replay_populated/replay_discarded implementation
+  system/ram-discard-manager: drop replay from source interface
+  system/memory: implement RamDiscardManager multi-source aggregation
+  system/physmem: destroy ram block attributes before RCU-deferred
+    reclaim
+  system/memory: add RamDiscardManager reference counting and cleanup
+  tests: add unit tests for RamDiscardManager multi-source aggregation
+
+ include/hw/vfio/vfio-container.h            |    2 +-
+ include/hw/vfio/vfio-cpr.h                  |    2 +-
+ include/hw/virtio/virtio-mem.h              |    3 -
+ include/system/memory.h                     |  287 +----
+ include/system/ram-discard-manager.h        |  358 ++++++
+ include/system/ramblock.h                   |    3 +-
+ accel/kvm/kvm-all.c                         |    2 +-
+ hw/vfio/cpr-legacy.c                        |    4 +-
+ hw/vfio/listener.c                          |   12 +-
+ hw/virtio/virtio-mem.c                      |  290 +----
+ migration/ram.c                             |    6 +-
+ system/memory.c                             |   83 +-
+ system/memory_mapping.c                     |    4 +-
+ system/physmem.c                            |    2 +-
+ system/ram-block-attributes.c               |  279 +----
+ system/ram-discard-manager.c                |  612 +++++++++
+ tests/unit/test-ram-discard-manager-stubs.c |   48 +
+ tests/unit/test-ram-discard-manager.c       | 1234 +++++++++++++++++++
+ system/meson.build                          |    1 +
+ tests/unit/meson.build                      |    8 +-
+ 20 files changed, 2361 insertions(+), 879 deletions(-)
+ create mode 100644 include/system/ram-discard-manager.h
+ create mode 100644 system/ram-discard-manager.c
+ create mode 100644 tests/unit/test-ram-discard-manager-stubs.c
+ create mode 100644 tests/unit/test-ram-discard-manager.c
+
+-- 
+2.53.0
 
 
