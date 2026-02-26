@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B85FD9E1B
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B18FD9E1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvjmM-0006oT-RX; Thu, 26 Feb 2026 17:24:18 -0500
+	id 1vvjoF-0007k7-RM; Thu, 26 Feb 2026 17:26:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvjmJ-0006o4-3t
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:24:15 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vvjoE-0007jj-F0
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:26:14 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vvjmH-0006EM-Kg
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:24:14 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-8273eb7798eso536959b3a.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:24:13 -0800 (PST)
+ id 1vvjoC-0006U4-Mw
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:26:14 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c70c112cb61so791777a12.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:26:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772144652; x=1772749452; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772144771; x=1772749571; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tiCUiuTRNWhXdlzOvXrPZGAO/tBoo26Z9cd6ud0bBnQ=;
- b=TauN+btLvLnlZB3uXTK86m1EG58VhLmd0hi9L6UjjVCRbCibOcjwbhSM+AJjkHMu82
- GPuFYyTp90UQuSUtQFWovZiQ1mL0qw14BjPyfHMgOnNSyUmbwrP+h8Pc1BN7Dev/NBe5
- kaNWVrneyG4nZhSxEWNXDYFp0dPtVUwEL2lYvFaI2wiQgbq2Ff13rQLEMaw4MSC43m1+
- ub99JgjtwaO915JgTvaew+tXpGI7FKwx+bVDrJbsFE63mkUCEqE/UafXQhA4WwQ4jJgy
- AQZaLv+JxPk1BleKysxsrr+G5rvhcMeixGQEZ6iH5Vl6qDKMsAO2IV/Y+7+4DzFN2DkT
- vQdQ==
+ bh=o/OEHDyfcrpJjd9xBUVwuWiP15shi86UCO8ZwRmhmEM=;
+ b=D+q4Dn6MkXHOBW0vFqMSlBDAkVrCWirK8ohlohbg7Qmqjat74nBHn6uF9LhSB8N+Mf
+ fOaMGgAE9PTM6mPOye1WPCNKQzz5TbvSR2qmV628YCS+jVZy6d6tedZTUF5H1cOkPXSD
+ 8nr6tNMIlEwPesZ1Uz6/CfpmYFMvLUjKahRjRT8Gl/BFzX0CszXWFjunL+Xr3Cre/ZF3
+ ZkqMmPSvoScj8XIg3rXw/ZYEAGaHX7/cWCRQ2C+olEJJSFzafYMcDg3uIYUcUG2UuTDV
+ WNNU2r9fj/T4WSTj/mBKSkWaRp89cXWLvNIInvwH+zECVbiI4cmUXl01AVB/3/NlR+sI
+ 8Vxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772144652; x=1772749452;
+ d=1e100.net; s=20230601; t=1772144771; x=1772749571;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tiCUiuTRNWhXdlzOvXrPZGAO/tBoo26Z9cd6ud0bBnQ=;
- b=Lc7VScmrCSf7QWPjNJ3kEmymUKPG1QwSizrhGGjGTVZmoqI8LQXoeOE65TwBCFH3QX
- 0JtYc8m+5OLyeEZ46bqnSl08DG+xKRxIjaMKv50E1xfm7f1RXWg73XxXxu+64mzf3AGx
- RxNs7cQSN/DOIxBk+FmVnfB5t+3OcxRhKHCACZ548BziH4NG37izUNR95ck0tQTVciEe
- Uf5SYTsGG+pPxkhuZNZXrBVBpi7UOAYFbFqClpwa0zj1aKCKaJls+oTjWc/zmRMQE3j/
- X8AUy2Z89ZXAbDL/nMkIbpYZ8r23qd4K7YvMdY1JJXw3gRoPHY1etnPP06LpKxp5J44X
- pp6g==
+ bh=o/OEHDyfcrpJjd9xBUVwuWiP15shi86UCO8ZwRmhmEM=;
+ b=wMJK1nq3UxOM1M+sYl4G6g1zO0uYCQXwGDyzSa4m1BMx4oDelyyTT16qnnwCQRzVKs
+ Xr46OFJY2HtvJvapCOP+383ltB8VaOknmx/JZnUpygeHe0Z2iaODjL9Z9b0RiJ1WPnLJ
+ RC/0S9ER8JhruHmE2I1PIwASG8GsIYmzxxN5p8Eir/Ir9MQz+0VFLSLk2BrCcJ0uNgwT
+ 34WN5UYgKB3EbTPxrEbW3fYUh9UOxE9FNGEEcb9taCdEe2Hecmj0LReYZ7ve4Dp7NWd2
+ ae3kZ1TgnBYIxAazIZatkLELFvmKDNPFJuRAcydNNodVGdsb8i166/XoiEKVaxeNwns8
+ 0rSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFUGt/Jfj6JbDUknGeTvFqxZFCq4dYPC3VVWeDvcxArpEEZqY2uRC2Fa0n20GiHXsts4HYoNVqYqBL@nongnu.org
-X-Gm-Message-State: AOJu0YzSJKYsjJCIWSQwGqstGiYKJgp5DEAZu702yzuDmqbRIZdPfejq
- gaMSVlYEUd23jLtDBW6+v04Tv5Xve1GCI1dVxZvrAqZvCxP4kRvQvw9EbRiqAEYvSGY=
-X-Gm-Gg: ATEYQzx2WsGeO3KRrgge1Jm2hVgk/E3Tm4QKgAJWEeGZr6/nB/Dr47bKB/r5Lp0JW3w
- 3J4qo72EsGeqU7xrwqOb6dFquEPZs3+7noO3YjP6BSJ5mRxZM5W7eq51wfdecZ63hewBJSvmdYF
- U1K8P9DzED0IY++1SPgjhO5jV3SSNlpj5ZDcBCpU/ci8uNA2ZKl2vCWJPGxdlQXtf7lkzgpHf7d
- ojwuSLIylV4YICZmpGwKHQ+gUUnZHycTmMBatC+2RYifW117NSzzt+F0i/PbEFN0wE0o+PQNsO6
- 7HZQ75MN3Pe2sxF8wcqzMDyJCXXeglg+9iEDpl1Mzct93HSLjCk9WKOSHBtNyM68QYB2vtPKJyf
- QS2KWDMWIobWQy0Y24mY7GawOdjnvsRIvZnNXX4eHt/BdIBw/vhBiH+van7V92IqINYLhYzNuY4
- VI0ntaZU0BDf3EqPtpe7cUwV6iq/mZ1UgGLqGFcuJKl8GcZBQA2qKipHuvCWNoccb2DlVC
-X-Received: by 2002:a05:6a21:7481:b0:364:783:8c0f with SMTP id
- adf61e73a8af0-395c3ae7fc2mr672528637.33.1772144651980; 
- Thu, 26 Feb 2026 14:24:11 -0800 (PST)
+ AJvYcCVNkJ8E9OAeWUKDI5oZRsYimf/mMsZx3wUmaW3UlE8IUpMTDBKCTO52LexjFitZ2lFKAMYYA+5zvwMi@nongnu.org
+X-Gm-Message-State: AOJu0Yyi1DRjSo3DqqD7au1la7Ec/b9DlzytTJYLNMywsZZLqo3vDL9F
+ yrY8zWjiRSCg1hhwF4s2U6X6jdEEdh46Uq0OhJsA0tsh+wEjo6+BLwlubtWKfRNVckk=
+X-Gm-Gg: ATEYQzzST1m8TFEeT+KNdlzNlFWZZrJ+Xa7pEnrQdk52x0VKhe6PT18g1xMeOIIn3jU
+ 0FXE704MteLJLmu2zWH6zROAVK0Q28Z4S11MyXEt1fcOegDFVZrIwu+ZVpk+b5ouV9tcwRBKvbL
+ lGrk1dKuAcpXtrAGOrHcdhKit2+X1pH5oqUOXB8YcFNkgalwH9xJhriLkcsqDFRB9KGWOY2xVq6
+ qZyedNZ+Mw+xf/6WPQ2ugPmNhzdxR6Q6Q8BEwN+/jZTtJiDyGxWVfaJKht8F9nM2GozA69918Ps
+ /InmjtEhGj3bl4mAEbYcxUkId5r7J+oNuZ+2LXnKuZwPBy2ark4tJ9KV8Xh3MI/5tmY8OEYAD4W
+ utmmiXP6sYvbx9hfuW/9Zn0lrAlkAnDabgn2rm17tjzlQKwVJyDFON1LuzDPt0MGNkPTrxgWrii
+ yayQZA/s6HhuSUL6MegLwP6cr/9ahXSEeI9Dx/NbAhzG7ib7W/4AcfB3J1Hmzn7X+yOEfK
+X-Received: by 2002:a17:90b:524a:b0:359:df9:c9f9 with SMTP id
+ 98e67ed59e1d1-35965c3af23mr604243a91.7.1772144771020; 
+ Thu, 26 Feb 2026 14:26:11 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c70fa806295sm2916595a12.16.2026.02.26.14.24.10
+ 98e67ed59e1d1-359034bb172sm6642250a91.11.2026.02.26.14.26.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 26 Feb 2026 14:24:11 -0800 (PST)
-Message-ID: <2ebd23a1-56be-40cb-9fe1-43f839733feb@linaro.org>
-Date: Thu, 26 Feb 2026 14:24:10 -0800
+ Thu, 26 Feb 2026 14:26:10 -0800 (PST)
+Message-ID: <8f1b5aa3-50e7-4f64-a423-23c4e9cec48f@linaro.org>
+Date: Thu, 26 Feb 2026 14:26:09 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] system/memory: Allow mtree_print_mr() to display
- distinct address width
+Subject: Re: [PATCH 7/7] system/memory: Have 'info mtree' display addresses
+ nicely
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -81,7 +81,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260226220226.20164-1-philmd@linaro.org>
- <20260226220226.20164-7-philmd@linaro.org>
+ <20260226220226.20164-8-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260226220226.20164-7-philmd@linaro.org>
+In-Reply-To: <20260226220226.20164-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,20 +145,129 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/26/26 2:02 PM, Philippe Mathieu-Daudé wrote:
-> mtree_print_mr() display addresses using 16 chars on 64-bit
-> binaries, and 8 chars on 32-bit ones. Some MR / AS don't
-> always benefit of 16 chars, for example the ISA I/O region
-> fits in 16 bits, and displaying 12 extra '0' in 64-bit
-> binaries isn't really a good user experience.
+> Use the size of a MR / AS to decide how many address chars
+> need to be used.
 > 
-> Add an extra @width argument to mtree_print_mr(). Next
-> commit will make use of it.
+> For example, using 'qemu-system-x86_64 -M q35 -S -monitor stdio'
+> to run 'info mtree' displays before:
+> 
+>    address-space: I/O
+>      0000000000000000-000000000000ffff (prio 0, i/o): io
+>          0000000000000000-0000000000000003 (prio 0, i/o): acpi-evt
+>          0000000000000004-0000000000000005 (prio 0, i/o): acpi-cnt
+>          0000000000000008-000000000000000b (prio 0, i/o): acpi-tmr
+>          0000000000000020-000000000000002f (prio 0, i/o): acpi-gpe0
+>          0000000000000030-0000000000000037 (prio 0, i/o): acpi-smi
+>          0000000000000060-000000000000007f (prio 0, i/o): sm-tco
+>        0000000000000000-0000000000000007 (prio 0, i/o): dma-chan
+>        0000000000000008-000000000000000f (prio 0, i/o): dma-cont
+>        0000000000000020-0000000000000021 (prio 0, i/o): pic
+>        0000000000000040-0000000000000043 (prio 0, i/o): pit
+>        ...
+>    memory-region: pc.ram
+>      0000000000000000-0000000007ffffff (prio 0, ram): pc.ram
+>    memory-region: pc.bios
+>      00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
+>    memory-region: pci
+>      0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+>        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+>        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+>        00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
+>        00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
+>    ...
+> 
+> and after:
+> 
+>    address-space: I/O
+>      0000-ffff (prio 0, container): io
+>          0000-0003 (prio 0, i/o): acpi-evt
+>          0004-0005 (prio 0, i/o): acpi-cnt
+>          0008-000b (prio 0, i/o): acpi-tmr
+>          0020-002f (prio 0, i/o): acpi-gpe0
+>          0030-0037 (prio 0, i/o): acpi-smi
+>          0060-007f (prio 0, i/o): sm-tco
+>        0000-0007 (prio 0, i/o): dma-chan
+>        0008-000f (prio 0, i/o): dma-cont
+>        0020-0021 (prio 0, i/o): pic
+>        0040-0043 (prio 0, i/o): pit
+>        ...
+>    memory-region: pc.ram
+>      00000000-07ffffff (prio 0, ram): pc.ram
+>    memory-region: pc.bios
+>      fffc0000-ffffffff (prio 0, rom): pc.bios
+>    memory-region: pci
+>      0000000000000000-ffffffffffffffff (prio -1, i/o): pci
+>        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
+>        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
+>        00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
+>        00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
+>    ...
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   system/memory.c | 48 +++++++++++++++++++++++++++---------------------
->   1 file changed, 27 insertions(+), 21 deletions(-)
+>   system/memory.c | 27 +++++++++++++++++++++++----
+>   1 file changed, 23 insertions(+), 4 deletions(-)
 > 
+> diff --git a/system/memory.c b/system/memory.c
+> index 4d276307da5..abcbdaadcd7 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3321,7 +3321,26 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
+>   
+>   #define MR_SIZE(size) (int128_nz(size) ? (hwaddr)int128_get64( \
+>                              int128_sub((size), int128_one())) : 0)
+> -#define MR_ADDR_WIDTH   16
+> +
+> +static unsigned mr_addr_fmt_width(const MemoryRegion *mr)
+> +{
+> +    const unsigned int bits = 127 - clz128(mr->size);
+> +    unsigned int width;
+> +
+> +    if (bits <= 8) {
+> +        width = 2;
+> +    } else if (bits <= 16) {
+> +        width = 4;
+> +    } else if (bits <= 32) {
+> +        width = 8;
+> +    } else if (bits <= 64) {
+> +        width = 16;
+> +    } else {
+> +        width = 20;
+> +    }
+> +    return width;
+> +}
+> +
+>   #define MTREE_INDENT "  "
+>   
+>   static void mtree_expand_owner(const char *label, Object *obj)
+> @@ -3513,7 +3532,7 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+>           return;
+>       }
+>   
+> -    width = MR_ADDR_WIDTH;
+> +    width = mr_addr_fmt_width(view->root);
+>       while (n--) {
+>           const MemoryRegion *mr = range->mr;
+>   
+> @@ -3643,7 +3662,7 @@ static void mtree_print_as(gpointer key, gpointer value, gpointer user_data)
+>       MemoryRegion *mr = key;
+>       GSList *as_same_root_mr_list = value;
+>       struct AddressSpaceInfo *asi = user_data;
+> -    const unsigned int width = MR_ADDR_WIDTH;
+> +    const unsigned int width = mr_addr_fmt_width(mr);
+>   
+>       g_slist_foreach(as_same_root_mr_list, mtree_print_as_name, NULL);
+>       mtree_print_mr(mr, 1, width, -mr->addr, false,
+> @@ -3692,7 +3711,7 @@ static void mtree_info_as(bool dispatch_tree, bool owner, bool disabled)
+>       /* print aliased regions */
+>       QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
+>           const MemoryRegion *mr = ml->mr;
+> -        const unsigned int width = MR_ADDR_WIDTH;
+> +        const unsigned int width = mr_addr_fmt_width(mr);
+>   
+>           qemu_printf("memory-region: %s\n", memory_region_name(mr));
+>           mtree_print_mr(mr, 1, width, 0, false, &ml_head, owner, disabled);
 
+That is so neat!
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
