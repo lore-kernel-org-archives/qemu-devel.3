@@ -4,106 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3965FFD9E19
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:14:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA9A8FD9E14
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:22:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvjcg-00083C-Vq; Thu, 26 Feb 2026 17:14:19 -0500
+	id 1vvjkH-0004Rn-Kc; Thu, 26 Feb 2026 17:22:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vvjcf-00082y-SP
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:14:17 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vvjkF-0004Qz-EB
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:22:07 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vvjcd-0003UJ-4I
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:14:17 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c636487ccaeso460399a12.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:14:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772144052; cv=none;
- d=google.com; s=arc-20240605;
- b=a+MqN4xtdbhMVQ1w0k1wPd618MXzSH/H0MLaijq2dQUdU6VJIhpfXYoqX8ABgSFBzD
- ZPKimZQAbIFQ0edbmwpwZgLf5LZQcfEz+ikK+WqsUpSeFYjsbz2+B6yiE57ONUx8rz2e
- k6BNjvjuVIYiIdT8Iy2foDJLJJEPxwOyIA6g0rM7YPZl+C0tGdaUYsRUBLcGPQ5KF3GD
- 6b1arBfbx/aYW+2+WmElmkTnxsaYaVBYsAq1TFHccrA+6071XPnxnZvgZLhbGxw/UVYw
- 2huFdt0BR4qfsKu3zzQhv1YvKWp8Nel2PjorTliXs+S34URwxnHsnsWUKBH5LuaeSO4B
- FH6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=kwXkN4CQqyUcBSNtyDI2ylAWfliivb/jsiYcZsARlgw=;
- fh=kWGEXuCKDBxGDPzzadhEfRJt01GUdYxxxqyqKtCtcZY=;
- b=Ecs119XscQNCxk9cSNUrN+AZR5XzBO6FqGH+MfTkvlghqj0VEfp7zs7fSrVE/K0T8X
- j0mNYU7zwgsCPflYYhUMfArCXsMOtEyOJ/b2rHBmOC6o5vRi9bKlRFsGfQRiWOyKHwIL
- 4U5qEDV/Fa23kdkETTUtxPr+ddtThp6Fo6CTxFOKzAm4j3liicTaM+lRysJTAk4fX0wk
- 0EHJCnnLTuU4qMtYXBhXtfwr0SXass+zHUchlKbXYH+coVSsJC6TnSJX8IHro8Ox9kYw
- 8+v0t8j9QOFfI0xLIoPJDEueWa30208jHNwdDgfbsjuFr9X3qFHZAywyIIRdJm6SISIB
- LNxg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vvjkD-0005wS-S6
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:22:07 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2adae92249eso15048845ad.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772144052; x=1772748852;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kwXkN4CQqyUcBSNtyDI2ylAWfliivb/jsiYcZsARlgw=;
- b=btoTSdYuRnmbwZj0OSZs63Oz0CHnf3rei/izulzcfX5eD0xj9BJ/9B4FBjmIlJCf9p
- wY+wZGglBpXL/75WwBhZbp0T6+Z3shafR8dMYl9T2eZrpNenoINCtT6PoXjqlqbJO5Tq
- W59lG2WwhWNJkrYRFEM0TFLGoZ7jCtYSPOE5Awfe/HYJ2zpKzYvIMedxmGIDqND52Hm/
- Lai+/e7vTHIqRnkYqioZV9j8mpfH+xSKMM9cPPXoHTSzqLv3GaDk6szB83aRcy4ZwDJy
- n73ERd0boF8P50rE7o5YjKzNd5wJdg8UkgvkmLg98Ucq0Bmy8Bb7JX6274AvH54mhjd5
- FJ+A==
+ d=linaro.org; s=google; t=1772144524; x=1772749324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ugH2sjYvErRham5qeu5pJBHQcMnFp7j4/TNyMwS4mdA=;
+ b=ngy2tYXpUiCp8rpgxFHAYGKEYPBwTET09vItTTFU0JTDpEgRyIwLmpirdaJNum6Pv/
+ y+Dl/fv0kBLqd6fXa5xhV75XXdhmsVzbfYCfYKEeV0pXanQFnh55QAvqggYvMU49Vt7G
+ Z8J3ZvdBHAZdlt+UApY38Zm6oKz6Ne85DP6HBYseJxgSSBRfgFu4LUcIgbybdamVqh2C
+ KjkCHHIMs0ElwGBXUQanQ5Ksr4li/RWttikP4fzy/EjpuaH3WIHdixD2hYk8FOODdT26
+ lTkNRaj6E04cgXt447D3eiwG3nol9Fnr5WsswQ8zL+vee3TpLgkG5C+gKlMBLIFmh/im
+ QDww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772144052; x=1772748852;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kwXkN4CQqyUcBSNtyDI2ylAWfliivb/jsiYcZsARlgw=;
- b=i6GBHRLqaMlAlFPeol7D8SYeFaJBxZmZq9fPVQ2RvVBAf/fMEKeH6h8LJUWenD01Yc
- 0/dTz4NCRphDh6p11fMK0DQpVlkSU1wAUGCT3It150LMlzqgZtam0D14uwkDaCtHZjcM
- dMXJa8brz6HrwIstxTv+g6x+mySRmY0B40aGWqSZJe8FiVRm6o8/RJcEg3YFSLM1mXxf
- EPK4Mxb0TKczYVf3vcC5CT/4fcGnFk8wilv/H767JtuD3hr4r8tGguOnxYHjFOrErF8s
- oaC7Aw5Sv5mktoMKNWuZGLfCyARDY3qauaqMW1Ye1EUKVsZ3EcvBo87UqOzv/0FsOGT1
- 3cjQ==
-X-Gm-Message-State: AOJu0Yyt2SA5dXfEnzQWt5k7+GKm/Y0N56ld/AbqWSh6AVdCyoCyaB6k
- nOlyMuM08hmSzVWXgVlZd/Z6EdMQLjBvqW+bmKcKs6+8GclW5YoTNl/QvI9Dh99qVh3k4NrmVCJ
- rzDIrUiVxsYrDFs2RKb8FqVKqW70lt2yFEjcWUIn9Pg==
-X-Gm-Gg: ATEYQzxOUZE5reoU3pza0wRWoEGprbFyKIRjur3tbFDQSRQ9Ih81QGJBl2JfiVHlml4
- SLK7Wbd7EBW6KQbzx+NLwhkPjJGqIL2pGR5PrLlYLHTuMQ1/WukEuOlVoKMUsXiFl0zGXvetFff
- E7q0vyeuV0eLamXWbZE6JZg76zpK0jCgKNcX0cW1bbI5vd0kJdh/VGgdNYvSlArwVz0w1DIFAuC
- F7e+6pWaItmhG8/gfIVLyySPdHO8h6CacYtoEoMioNDvYX6rc1C5jiRzcHVpJDIy5SDbrfhMe8e
- ZVTNgNA=
-X-Received: by 2002:a17:90b:5843:b0:354:a57c:65dd with SMTP id
- 98e67ed59e1d1-35965cd0e68mr560148a91.24.1772144052552; Thu, 26 Feb 2026
- 14:14:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772144524; x=1772749324;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ugH2sjYvErRham5qeu5pJBHQcMnFp7j4/TNyMwS4mdA=;
+ b=gpKrEn4ITVz89cjYg0n+SuytbY7dEZPX+Wp5WuVRFJJv5AlK+PEpX3b6WTVX8bADOw
+ USEvO9trIAMZauF7dbZHUmk1qQRh9g1xsdMk6HVyC7dSX7EbJGkG2HNpbvzlMtFYxqOb
+ Rj2psOYh0zYjEVGCBtjYAkc1s540y2XPptXQ1ExPRKSaEHCumnkds60lHmUJlTwCc3TK
+ akoEkiKgvXhAqBIS24HX7I8Ak4rZCOODdQYq58Ts6e+tfFQ3aXvVvSVEBe5jtYKjkDCi
+ BueMBlZ4oAVT/qvEwY+r8bjG1DE2ZwQyKl5FrgGf6j/PdWNVRasS8L+zfUuIX+HKS7gk
+ Fukg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBQY4TPu4eZ9q2eIWmBHQrnZFCsIBgDCmXPsHFIAQoLOwzk3WAqP0/LiPbHY97gaeNtJYJTGlsMiAX@nongnu.org
+X-Gm-Message-State: AOJu0YzBuRccTcY5XZApfpHL0HIWEMOkeJsG+bEfIEgMGCJycsO8p29U
+ KHzS6nsNv1vCTdVtX/T1WnxetxzxZZWvN9G5wUSlppFjrPHlHAmeHa3wCdHSXQ5B8yA=
+X-Gm-Gg: ATEYQzxOPc7fKf8ES64IP2qtFh7ZiZDW8cWZEkiUVHRk7BF0qibsMWu6DP+bUuTGddF
+ EoVxrKv9GUgOg9MpPp/80wad4uiW0MnFqjXMQzQFq7ZlVdne9RYro5Isfwv6emv5VXlcZCFMoqP
+ NiE50y4yK8QACeOKr3d8Im0yNHGw9DpKxiYz9K4LehQCYBH63MMosGoIUaogwibl9z0LMXra5Zp
+ YLTyb3s21uXOYtGtPAyxPBe4CuwhAWgnxTvtPjRvg9NXAb3MzeBa+QMB+oufffWj2ebUogDqJ9D
+ LGBZFjh06ZQvGj93g7QiLWpXvz43OPUyaVNVbH1BmZeBIKtXX+lc5LCT6aYxUYcKerPGB+SmqEl
+ oBKAl8gJo585jGn6xmbvCJgM7aVDVQYHqUZYFUCIfoUgO+itf93/SY693LjGQR0qCkR8jj9lioy
+ f/1U9k7L//7y3Pzt3+8KeXHSqN0UlStIucIhkxfB4IzMWYxPiTMsjZapVmUn/faAHkoPjm
+X-Received: by 2002:a17:902:c951:b0:2a9:622e:fd46 with SMTP id
+ d9443c01a7336-2ae2e035736mr4743075ad.0.1772144524213; 
+ Thu, 26 Feb 2026 14:22:04 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2adfb6f3688sm36724245ad.87.2026.02.26.14.22.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Feb 2026 14:22:03 -0800 (PST)
+Message-ID: <0a910d27-cb1d-4495-90ee-3674fd8ee564@linaro.org>
+Date: Thu, 26 Feb 2026 14:22:03 -0800
 MIME-Version: 1.0
-References: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
- <20260224-bsd-user-claude-v4-18-8ee5ae17056f@bsdimp.com>
- <07084666-45b2-4829-9352-9efc09a60a4b@linaro.org>
-In-Reply-To: <07084666-45b2-4829-9352-9efc09a60a4b@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 26 Feb 2026 15:14:00 -0700
-X-Gm-Features: AaiRm52ET930l2nh785CUJfIQxu_UWujQtloRUokRmAyeYmwrqdOOCGUq0DZom8
-Message-ID: <CANCZdfpgzcT=u0RptF+p0bCHzK3apPT3DS0rHM7tDuLmXz6qhg@mail.gmail.com>
-Subject: Re: [PATCH v4 18/24] bsd-user: Add do_bsd___semctl implementation
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@freebsd.org>
-Content-Type: multipart/alternative; boundary="000000000000be5259064bc17004"
-Received-SPF: none client-ip=2607:f8b0:4864:20::52e;
- envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] system/ramblock: Constify various RAMBlock arguments
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260226220226.20164-1-philmd@linaro.org>
+ <20260226220226.20164-3-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260226220226.20164-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,374 +143,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000be5259064bc17004
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/26/26 2:02 PM, Philippe Mathieu-Daudé wrote:
+> Mark the RAMBlock structure const when is only accessed read-only.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/system/ramblock.h | 26 +++++++++++++-------------
+>   stubs/ram-block.c         |  8 ++++----
+>   system/physmem.c          | 26 +++++++++++++-------------
+>   3 files changed, 30 insertions(+), 30 deletions(-)
+> 
 
-On Thu, Feb 26, 2026 at 12:56=E2=80=AFPM Pierrick Bouvier <
-pierrick.bouvier@linaro.org> wrote:
-
-> On 2/24/26 6:40 AM, Warner Losh wrote:
-> > From: Stacey Son <sson@FreeBSD.org>
-> >
-> > Add implementation of __semctl(2) syscall for System V semaphore contro=
-l
-> > operations. Handles command translation, endianness conversion for
-> GETVAL/
-> > SETVAL, and array/structure conversions for
-> GETALL/SETALL/IPC_STAT/IPC_SET.
-> >
-> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> > Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
-> > ---
-> >   bsd-user/bsd-misc.h | 111
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >   1 file changed, 111 insertions(+)
-> >
-> > diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-> > index e1e552b58f..72b3db0b74 100644
-> > --- a/bsd-user/bsd-misc.h
-> > +++ b/bsd-user/bsd-misc.h
-> > @@ -99,6 +99,117 @@ static inline abi_long do_bsd_semop(int semid,
-> abi_long ptr, unsigned nsops)
-> >       return semop(semid, sops, nsops);
-> >   }
-> >
-> > +/* __semctl(2) */
-> > +static inline abi_long do_bsd___semctl(int semid, int semnum, int
-> target_cmd,
-> > +                                       abi_ptr un_ptr)
-> > +{
-> > +    void *target_un;
-> > +    union semun arg;
-> > +    struct semid_ds dsarg;
-> > +    unsigned short *array =3D NULL;
-> > +    int host_cmd;
-> > +    abi_long ret =3D 0;
-> > +    abi_long err;
-> > +    abi_ulong target_array, target_buffer;
-> > +
-> > +    switch (target_cmd) {
-> > +    case TARGET_GETVAL:
-> > +        host_cmd =3D GETVAL;
-> > +        break;
-> > +
-> > +    case TARGET_SETVAL:
-> > +        host_cmd =3D SETVAL;
-> > +        break;
-> > +
-> > +    case TARGET_GETALL:
-> > +        host_cmd =3D GETALL;
-> > +        break;
-> > +
-> > +    case TARGET_SETALL:
-> > +        host_cmd =3D SETALL;
-> > +        break;
-> > +
-> > +    case TARGET_IPC_STAT:
-> > +        host_cmd =3D IPC_STAT;
-> > +        break;
-> > +
-> > +    case TARGET_IPC_SET:
-> > +        host_cmd =3D IPC_SET;
-> > +        break;
-> > +
-> > +    case TARGET_IPC_RMID:
-> > +        host_cmd =3D IPC_RMID;
-> > +        break;
-> > +
-> > +    case TARGET_GETPID:
-> > +        host_cmd =3D GETPID;
-> > +        break;
-> > +
-> > +    case TARGET_GETNCNT:
-> > +        host_cmd =3D GETNCNT;
-> > +        break;
-> > +
-> > +    case TARGET_GETZCNT:
-> > +        host_cmd =3D GETZCNT;
-> > +        break;
-> > +
-> > +    default:
-> > +        return -TARGET_EINVAL;
-> > +    }
-> > +
-> > +    /*
-> > +     * Unlike Linux and the semctl system call, we take a pointer
-> > +     * to the union arg here.
-> > +     */
-> > +    target_un =3D lock_user(VERIFY_READ, un_ptr, sizeof(union
-> target_semun), 1);
-> > +
-> > +    switch (host_cmd) {
-> > +    case GETVAL:
-> > +    case SETVAL:
-> > +        __get_user(arg.val, (abi_int *)target_un);
-> > +        ret =3D get_errno(semctl(semid, semnum, host_cmd, arg));
-> > +        break;
-> > +
-> > +    case GETALL:
-> > +    case SETALL:
-> > +        __get_user(target_array, (abi_ulong *)target_un);
-> > +        err =3D target_to_host_semarray(semid, &array, target_array);
-> > +        if (is_error(err)) {
-> > +            goto out;
-> > +        }
->
-> Seems like ret should be set to an error also, else we'll silently
-> return default value 0. I'm not sure which error code we should return
-> (EINVAL?)
->
-
-Ah yes. I'll look at it and fix it.
-
-
-> > +        arg.array =3D array;
-> > +        ret =3D get_errno(semctl(semid, semnum, host_cmd, arg));
-> > +        err =3D host_to_target_semarray(semid, target_array, &array);
->
-
-And this is starting to look wrong too. I'll fix that.
-
-
-> > +        break;
-> > +
-> > +    case IPC_STAT:
-> > +    case IPC_SET:
-> > +        __get_user(target_buffer, (abi_ulong *)target_un);
-> > +        err =3D target_to_host_semid_ds(&dsarg, target_buffer);
-> > +        if (is_error(err)) {
-> > +            goto out;
-> > +        }
-> > +        arg.buf =3D &dsarg;
-> > +        ret =3D get_errno(semctl(semid, semnum, host_cmd, arg));
-> > +        err =3D host_to_target_semid_ds(target_buffer, &dsarg);
-> > +        break;
-> > +
-> > +    case IPC_RMID:
-> > +    case GETPID:
-> > +    case GETNCNT:
-> > +    case GETZCNT:
-> > +        ret =3D get_errno(semctl(semid, semnum, host_cmd, NULL));
-> > +        break;
-> > +
-> > +    default:
-> > +        ret =3D -TARGET_EINVAL;
-> > +        break;
-> > +    }
-> > +out:
-> > +    unlock_user(target_un, un_ptr, 1);
-> > +    return ret;
-> > +}
-> > +
-> >   /* getdtablesize(2) */
-> >   static inline abi_long do_bsd_getdtablesize(void)
-> >   {
-> >
->
-> With that,
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->
-> Feel free to add the fix and pull directly without reposting so you can
-> save some time before softfreeze.
->
-
-Thanks! Most of these errors are rare, but still gotta get them right.
-
-Warner
-
---000000000000be5259064bc17004
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 26,=
- 2026 at 12:56=E2=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.b=
-ouvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">On 2/24/26 6:40 AM, Warner Lo=
-sh wrote:<br>
-&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; <br>
-&gt; Add implementation of __semctl(2) syscall for System V semaphore contr=
-ol<br>
-&gt; operations. Handles command translation, endianness conversion for GET=
-VAL/<br>
-&gt; SETVAL, and array/structure conversions for GETALL/SETALL/IPC_STAT/IPC=
-_SET.<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Cc: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org=
-" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/bsd-misc.h | 111 ++++++++++++++++++++++++++++++++=
-++++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 111 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h<br>
-&gt; index e1e552b58f..72b3db0b74 100644<br>
-&gt; --- a/bsd-user/bsd-misc.h<br>
-&gt; +++ b/bsd-user/bsd-misc.h<br>
-&gt; @@ -99,6 +99,117 @@ static inline abi_long do_bsd_semop(int semid, abi=
-_long ptr, unsigned nsops)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return semop(semid, sops, nsops);<br>
-&gt;=C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +/* __semctl(2) */<br>
-&gt; +static inline abi_long do_bsd___semctl(int semid, int semnum, int tar=
-get_cmd,<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abi_p=
-tr un_ptr)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 void *target_un;<br>
-&gt; +=C2=A0 =C2=A0 union semun arg;<br>
-&gt; +=C2=A0 =C2=A0 struct semid_ds dsarg;<br>
-&gt; +=C2=A0 =C2=A0 unsigned short *array =3D NULL;<br>
-&gt; +=C2=A0 =C2=A0 int host_cmd;<br>
-&gt; +=C2=A0 =C2=A0 abi_long ret =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 abi_long err;<br>
-&gt; +=C2=A0 =C2=A0 abi_ulong target_array, target_buffer;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 switch (target_cmd) {<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_GETVAL:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D GETVAL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_SETVAL:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D SETVAL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_GETALL:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D GETALL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_SETALL:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D SETALL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_IPC_STAT:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D IPC_STAT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_IPC_SET:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D IPC_SET;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_IPC_RMID:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D IPC_RMID;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_GETPID:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D GETPID;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_GETNCNT:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D GETNCNT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case TARGET_GETZCNT:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 host_cmd =3D GETZCNT;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 default:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return -TARGET_EINVAL;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* Unlike Linux and the semctl system call, we tak=
-e a pointer<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* to the union arg here.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 target_un =3D lock_user(VERIFY_READ, un_ptr, sizeof(uni=
-on target_semun), 1);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 switch (host_cmd) {<br>
-&gt; +=C2=A0 =C2=A0 case GETVAL:<br>
-&gt; +=C2=A0 =C2=A0 case SETVAL:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(arg.val, (abi_int *)target_un)=
-;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(semctl(semid, semnum, h=
-ost_cmd, arg));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case GETALL:<br>
-&gt; +=C2=A0 =C2=A0 case SETALL:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(target_array, (abi_ulong *)tar=
-get_un);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D target_to_host_semarray(semid, &a=
-mp;array, target_array);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(err)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-Seems like ret should be set to an error also, else we&#39;ll silently <br>
-return default value 0. I&#39;m not sure which error code we should return =
-<br>
-(EINVAL?)<br></blockquote><div><br></div><div>Ah yes. I&#39;ll look at it a=
-nd fix it.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 arg.array =3D array;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(semctl(semid, semnum, h=
-ost_cmd, arg));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D host_to_target_semarray(semid, ta=
-rget_array, &amp;array);<br></blockquote><div><br></div><div>And this is st=
-arting to look wrong too. I&#39;ll fix that.</div><div>=C2=A0</div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex">
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case IPC_STAT:<br>
-&gt; +=C2=A0 =C2=A0 case IPC_SET:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 __get_user(target_buffer, (abi_ulong *)ta=
-rget_un);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D target_to_host_semid_ds(&amp;dsar=
-g, target_buffer);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (is_error(err)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 arg.buf =3D &amp;dsarg;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(semctl(semid, semnum, h=
-ost_cmd, arg));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 err =3D host_to_target_semid_ds(target_bu=
-ffer, &amp;dsarg);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 case IPC_RMID:<br>
-&gt; +=C2=A0 =C2=A0 case GETPID:<br>
-&gt; +=C2=A0 =C2=A0 case GETNCNT:<br>
-&gt; +=C2=A0 =C2=A0 case GETZCNT:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D get_errno(semctl(semid, semnum, h=
-ost_cmd, NULL));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 default:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -TARGET_EINVAL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +out:<br>
-&gt; +=C2=A0 =C2=A0 unlock_user(target_un, un_ptr, 1);<br>
-&gt; +=C2=A0 =C2=A0 return ret;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0/* getdtablesize(2) */<br>
-&gt;=C2=A0 =C2=A0static inline abi_long do_bsd_getdtablesize(void)<br>
-&gt;=C2=A0 =C2=A0{<br>
-&gt; <br>
-<br>
-With that,<br>
-Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
-.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
-<br>
-Feel free to add the fix and pull directly without reposting so you can <br=
->
-save some time before softfreeze.<br></blockquote><div><br></div><div>Thank=
-s! Most of these errors are rare, but still gotta get them right.</div><div=
-><br></div><div>Warner=C2=A0</div></div></div>
-
---000000000000be5259064bc17004--
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
