@@ -4,74 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DECFC591C
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C4CFC5910
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYD0-0003Xd-5v; Thu, 26 Feb 2026 05:03:02 -0500
+	id 1vvYQF-0001H6-HX; Thu, 26 Feb 2026 05:16:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vvYCs-0003WQ-9K
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:02:55 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vvYQD-0001Gg-Dq
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:16:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vvYCq-0000YJ-Nf
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:02:53 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vvYQB-00038a-5K
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:16:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772100172;
+ s=mimecast20190719; t=1772100997;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u9Y0uHcGY2M9/Y7Y8tPz+t9U4uOAS3MeY40EsxfBOwI=;
- b=bbqrWZnNwzaevYu8fa6FP+WHMKkuyh8hyG80EmOPTURRxGh9bQvcAYm5sbvg0kVH2Lnshd
- KVLPIPkAu/CpVbHiJPfVvSMCxJhDFhBe5I3bHzYK0HouDscxZysjJLMZCrCJzs3NdsYk5n
- zM2Q8s02o38ydtEq0m8DlPpiyghniMA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-63pCFaxbOSGqbIZxsD0THw-1; Thu,
- 26 Feb 2026 05:02:47 -0500
-X-MC-Unique: 63pCFaxbOSGqbIZxsD0THw-1
-X-Mimecast-MFC-AGG-ID: 63pCFaxbOSGqbIZxsD0THw_1772100166
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CB8C19560A6; Thu, 26 Feb 2026 10:02:46 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.35.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 91D951800370; Thu, 26 Feb 2026 10:02:43 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: [PATCH 2/5] target/arm/machine: Use VMSTATE_VARRAY_INT32_ALLOC for
- cpreg arrays
-Date: Thu, 26 Feb 2026 11:01:30 +0100
-Message-ID: <20260226100232.500781-3-eric.auger@redhat.com>
-In-Reply-To: <20260226100232.500781-1-eric.auger@redhat.com>
-References: <20260226100232.500781-1-eric.auger@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9oWCswLb5L7ptghwnTCvOR8gC3pEp5Uc3EP+QJdSQO8=;
+ b=EYJVcRiD8EwQJ6n2HaxLG+f0iUJr0Y7vv5oA3bKIk+kz4lMjr6g7do8hCaKASSk/dZFcr0
+ aeGhYccPveJu4cxOKT8SSNiQSQPhG9JgT+68v55ufyN9sjAqGGf+1BJqwKd5Dp/xBSZ++F
+ zUXOBkkamnEXMNwhxnQLvNsLJhZZGUw=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-194-7oSN0mCFMnaUUc39MbIuUA-1; Thu, 26 Feb 2026 05:16:35 -0500
+X-MC-Unique: 7oSN0mCFMnaUUc39MbIuUA-1
+X-Mimecast-MFC-AGG-ID: 7oSN0mCFMnaUUc39MbIuUA_1772100995
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4836cc0b38eso7428155e9.2
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:16:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772100994; x=1772705794; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=9oWCswLb5L7ptghwnTCvOR8gC3pEp5Uc3EP+QJdSQO8=;
+ b=tEE/7dJH9XmR6C2ZG24kV9TpybY9AxwnD3qqPCDnsDIob/vCZZwOL5JDTY3kZ81QoX
+ ZecyMaYWGkDlh1oK0slBBWlGqu+PmtETab3boDT9spUNdXdWDCBQ1PozS/dajrDRM43C
+ onEoQDt/E5o59VSl0/LW1Jyw7GPkf6ZUCl2JgWgDoFAv/4CJVVSjB9Q2ykJWY0Cuu/Yu
+ /ayS/o5cIBQRuowq0xbHFi1iSCHqPfgt1rpz80MPx++1IUxOWgoC+g+/lxPCZYUiSyue
+ BPNxlg+hJIqrLGu06KYanp3ZaWkB9waTHnGEKYRzQ3lkq9xQgs/L5Trb6LQMI89BoPSN
+ eAMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772100994; x=1772705794;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9oWCswLb5L7ptghwnTCvOR8gC3pEp5Uc3EP+QJdSQO8=;
+ b=iHI+exLzz6zXFjPbOUysKylyCVJOSznM6UXEQzIUZ28dthyNgde/H4VgLSo2hA6xXr
+ b/R3XpeyFo2BcA+JUlus5laMtiEQEn/cdErVDEDsVyDPj4qXjrjM1NA4hvJxm6bhr7OW
+ vQLEzUBrvkNkDS7Aif09Lc/KClC1kYB+LR/8nj+SFW/nuQZJO2ZzwvkcA1H0gdEIg9p/
+ 0Qic8nEXrWn+O1P/rKF6EFZJ0Lw1BGZDqxOfQ0enrUJxOi/yLEpOZ/teswgvIMobKFdG
+ 8T+OuXrREAuNf3VBua6iuLqynTMUIedKZa//5YElBFZvqBpzE2wPL6/2Psw/PixK27te
+ lmkg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyARnGtlyyIGUmJ5mTVJKCCROJPykQsOR796lx3xvzYLJb/ygFWwPE0Znszklya5V27zAhA3mTogYg@nongnu.org
+X-Gm-Message-State: AOJu0Yyn0Ucfn3pQCUR5EwvKerLWx0povCMqu0tRtq5a1TtCgixabzUs
+ T6Zd+dAcVlkHU9lzUr4ena2mAcvkErh1uIJ7o2jR3zl03AM/XFm+VeyB6aVSkie5BenhgrG2KgW
+ XLBgs7xT8igbDDyrUFC1IVkHUg9ilsBH7CDyxs8+hrOh1LDCdH3QZywao
+X-Gm-Gg: ATEYQzx1MULLu2p8WxVmXS9inv2OjcdW5TaO722KaOabPyg4pmkT8u/aOTu3doM/Su1
+ GPCd+H6U4Ca77YCCUqmUtZjHI+UbhNY0aJRRBl3Wsn0xjEeieUb3KGG6aUOlDmmT6r67A8qsOsM
+ 2RQVR5LNvsITQLv1Pr+cNvDgellGg0iPZV9rIhqEOgwGpg1TcQ3jjIdFNEXJ79UTjtoIfDoaZNK
+ TEJc6oZ37OJBsWBDhfFK65I+7Ak44TmMa9Api7Ynvcauf3V4E+qO56NOmeQNgeh3HYmOz0vgRen
+ hKFWyHvTCr6jBDC9XYiwsIz2j4OOSLllqJcMx29bQyTuKyO7SIX/NSwDVSIwqX2K8HMjrsj/z0o
+ 20ZUBEAUubpZZik2nZVqHxksGpnId7U5OkWJ9qO0m1YawuGsRVLmKqoAZ2A==
+X-Received: by 2002:a05:600c:8b35:b0:47d:8479:78d5 with SMTP id
+ 5b1f17b1804b1-483c3db518dmr24698315e9.7.1772100994472; 
+ Thu, 26 Feb 2026 02:16:34 -0800 (PST)
+X-Received: by 2002:a05:600c:8b35:b0:47d:8479:78d5 with SMTP id
+ 5b1f17b1804b1-483c3db518dmr24697785e9.7.1772100993974; 
+ Thu, 26 Feb 2026 02:16:33 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:165:d60:2c1a:3780:4e49:dfcf?
+ ([2a01:e0a:165:d60:2c1a:3780:4e49:dfcf])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfbb465bsm78546265e9.3.2026.02.26.02.16.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Feb 2026 02:16:33 -0800 (PST)
+Message-ID: <23522438-72ce-4b54-94ba-125ec513876c@redhat.com>
+Date: Thu, 26 Feb 2026 11:16:32 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/14] system/memory: split RamDiscardManager into
+ source and manager
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, David Hildenbrand <david@kernel.org>,
+ Mark Kanda <mark.kanda@oracle.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Ben Chaney <bchaney@akamai.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260225120456.3170057-1-marcandre.lureau@redhat.com>
+ <20260225120456.3170057-7-marcandre.lureau@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260225120456.3170057-7-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,130 +173,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the need for explicitly allocating cpreg_vmstate arrays.
-On post save we simply point to cpreg arrays and set the length
-accordingly.
+Hello
 
-Remove VMSTATE_VARRAY_INT32 for cpreg_vmstate_array_len as now
-the array is dynamically allocated.
+Two little issues below break documentation generation.
 
-Also add a trace point on post_load to trace potential mismatch
-between the number of incoming cpregs versus current ones.
+>   }
+>   
+>   /**
+> - * memory_region_set_ram_discard_manager: set the #RamDiscardManager for a
+> + * memory_region_add_ram_discard_source: add a #RamDiscardSource for a
+>    * #MemoryRegion
+>    *
+> - * This function must not be called for a mapped #MemoryRegion, a #MemoryRegion
+> - * that does not cover RAM, or a #MemoryRegion that already has a
+> - * #RamDiscardManager assigned. Return 0 if the rdm is set successfully.
+> + * @mr: the #MemoryRegion
+> + * @rdm: #RamDiscardManager to set
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/helper.c     |  5 -----
- target/arm/kvm.c        |  5 -----
- target/arm/machine.c    | 24 +++++++++++++-----------
- target/arm/trace-events |  3 +++
- 4 files changed, 16 insertions(+), 21 deletions(-)
+Should be @source
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 6bfab90981c..7389f2988c4 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -265,15 +265,10 @@ void arm_init_cpreg_list(ARMCPU *cpu)
-     if (arraylen) {
-         cpu->cpreg_indexes = g_new(uint64_t, arraylen);
-         cpu->cpreg_values = g_new(uint64_t, arraylen);
--        cpu->cpreg_vmstate_indexes = g_new(uint64_t, arraylen);
--        cpu->cpreg_vmstate_values = g_new(uint64_t, arraylen);
-     } else {
-         cpu->cpreg_indexes = NULL;
-         cpu->cpreg_values = NULL;
--        cpu->cpreg_vmstate_indexes = NULL;
--        cpu->cpreg_vmstate_values = NULL;
-     }
--    cpu->cpreg_vmstate_array_len = arraylen;
-     cpu->cpreg_array_len = 0;
- 
-     g_hash_table_foreach(cpu->cp_regs, add_cpreg_to_list, cpu);
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index ded582e0da0..12a75f42e07 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -807,12 +807,7 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
- 
-     cpu->cpreg_indexes = g_renew(uint64_t, cpu->cpreg_indexes, arraylen);
-     cpu->cpreg_values = g_renew(uint64_t, cpu->cpreg_values, arraylen);
--    cpu->cpreg_vmstate_indexes = g_renew(uint64_t, cpu->cpreg_vmstate_indexes,
--                                         arraylen);
--    cpu->cpreg_vmstate_values = g_renew(uint64_t, cpu->cpreg_vmstate_values,
--                                        arraylen);
-     cpu->cpreg_array_len = arraylen;
--    cpu->cpreg_vmstate_array_len = arraylen;
- 
-     for (i = 0, arraylen = 0; i < rlp->n; i++) {
-         uint64_t regidx = rlp->reg[i];
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index bbaae344492..214087111bc 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -1,5 +1,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "trace.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
- #include "system/tcg.h"
-@@ -984,11 +985,9 @@ static int cpu_pre_save(void *opaque)
-         }
-     }
- 
-+    cpu->cpreg_vmstate_indexes = cpu->cpreg_indexes;
-+    cpu->cpreg_vmstate_values = cpu->cpreg_values;
-     cpu->cpreg_vmstate_array_len = cpu->cpreg_array_len;
--    memcpy(cpu->cpreg_vmstate_indexes, cpu->cpreg_indexes,
--           cpu->cpreg_array_len * sizeof(uint64_t));
--    memcpy(cpu->cpreg_vmstate_values, cpu->cpreg_values,
--           cpu->cpreg_array_len * sizeof(uint64_t));
- 
-     return 0;
- }
-@@ -1043,6 +1042,9 @@ static int cpu_post_load(void *opaque, int version_id)
-     CPUARMState *env = &cpu->env;
-     int i, v;
- 
-+    trace_cpu_post_load(cpu->cpreg_vmstate_array_len,
-+                        cpu->cpreg_array_len);
-+
-     /*
-      * Handle migration compatibility from old QEMU which didn't
-      * send the irq-line-state subsection. A QEMU without it did not
-@@ -1170,13 +1172,13 @@ const VMStateDescription vmstate_arm_cpu = {
-         /* The length-check must come before the arrays to avoid
-          * incoming data possibly overflowing the array.
-          */
--        VMSTATE_INT32_POSITIVE_LE(cpreg_vmstate_array_len, ARMCPU),
--        VMSTATE_VARRAY_INT32(cpreg_vmstate_indexes, ARMCPU,
--                             cpreg_vmstate_array_len,
--                             0, vmstate_info_uint64, uint64_t),
--        VMSTATE_VARRAY_INT32(cpreg_vmstate_values, ARMCPU,
--                             cpreg_vmstate_array_len,
--                             0, vmstate_info_uint64, uint64_t),
-+        VMSTATE_INT32(cpreg_vmstate_array_len, ARMCPU),
-+        VMSTATE_VARRAY_INT32_ALLOC(cpreg_vmstate_indexes, ARMCPU,
-+                                   cpreg_vmstate_array_len,
-+                                   0, vmstate_info_uint64, uint64_t),
-+        VMSTATE_VARRAY_INT32_ALLOC(cpreg_vmstate_values, ARMCPU,
-+                                   cpreg_vmstate_array_len,
-+                                   0, vmstate_info_uint64, uint64_t),
-         VMSTATE_UINT64(env.exclusive_addr, ARMCPU),
-         VMSTATE_UINT64(env.exclusive_val, ARMCPU),
-         VMSTATE_UINT64(env.exclusive_high, ARMCPU),
-diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 676d29fe516..2de0406f784 100644
---- a/target/arm/trace-events
-+++ b/target/arm/trace-events
-@@ -26,3 +26,6 @@ arm_powerctl_reset_cpu(uint64_t mp_aff) "cpu %" PRIu64
- 
- # tcg/psci.c and hvf/hvf.c
- arm_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid) "PSCI Call x0=0x%016"PRIx64" x1=0x%016"PRIx64" x2=0x%016"PRIx64" x3=0x%016"PRIx64" cpuid=0x%x"
-+
-+# machine.c
-+cpu_post_load(uint32_t cpreg_vmstate_array_len, uint32_t cpreg_array_len) "cpreg_vmstate_array_len=%d cpreg_array_len=%d"
--- 
-2.53.0
+> + */
+> +int memory_region_add_ram_discard_source(MemoryRegion *mr, RamDiscardSource *source);
+> +
+> +/**
+> + * memory_region_del_ram_discard_source: remove a #RamDiscardSource for a
+> + * #MemoryRegion
+>    *
+>    * @mr: the #MemoryRegion
+>    * @rdm: #RamDiscardManager to set
+
+Should be @source
+
+>    */
+> -int memory_region_set_ram_discard_manager(MemoryRegion *mr,
+> -                                          RamDiscardManager *rdm);
+> +void memory_region_del_ram_discard_source(MemoryRegion *mr, RamDiscardSource *source);
+>   
+>   /**
+>    * memory_region_find: translate an address/size relative to a
+
+
+Thanks,
+
+C.
 
 
