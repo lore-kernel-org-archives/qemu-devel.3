@@ -4,62 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4E5FD8FD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 16:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DBC1FD8FD3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 16:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdwe-0000p7-IQ; Thu, 26 Feb 2026 11:10:33 -0500
+	id 1vvdy4-0001aB-Lb; Thu, 26 Feb 2026 11:12:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vvdwJ-0000n1-Dx; Thu, 26 Feb 2026 11:10:16 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vvdw8-0005Ke-Bq; Thu, 26 Feb 2026 11:10:07 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwD3EqlQcKBpvhuJBw--.1S2;
- Fri, 27 Feb 2026 00:09:52 +0800 (CST)
-Received: from [192.168.31.151] (unknown [113.246.232.133])
- by mail (Coremail) with SMTP id AQAAfwA3jutGcKBp6HsdAA--.36723S2;
- Fri, 27 Feb 2026 00:09:49 +0800 (CST)
-Message-ID: <9d1a0bab-ca81-4745-86a3-7e9d39451f53@phytium.com.cn>
-Date: Fri, 27 Feb 2026 00:09:41 +0800
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vvdy1-0001ZF-JA
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:11:58 -0500
+Received: from qs-2005g-snip4-2.eps.apple.com ([57.103.86.193]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vvdxz-0005fD-OA
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:11:57 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPS id
+ 56145180015C; Thu, 26 Feb 2026 16:11:50 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772122312; x=1774714312;
+ bh=6S/q21pFn1OT/H9EqBcYzae2OwIFRQGq7oFgZeO8mDM=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=G+xP7o5oaS4qPyfJS6AuGlAl73GhKB3Llfkp0J9V0UP5MDfojfiZX77iOxZ555dl13fwR+2R6nerfPoV1y6OPkLGMZfrqQ3iETpptzXO/cWbDRs/6Wv++YuVzLTUK7MhqEAxSB1szUJsewJcBTM8MsvFHMRhgXqF5HqECeLFlLZLE5u1sdt9XXtxbSW0njUDTCotbgRdRmCgtxb98OG3pYAHxNByRq5YbrcPoMMSQOO5f+YgHCthU6OKFDx4P8nW1o6M9gZpxEH3nSVeRBQdeiwE+Ef7qOapskSZVBreCM1EW3RtA4ewilkNcl9MXxaVJxkKQiQRZDhEs9XwmDIIfw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-0 (Postfix) with ESMTPSA id
+ 097CB1874A07; Thu, 26 Feb 2026 16:11:48 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH] Revert "elf-ops.h: Map into memory the ELF to load"
+Date: Thu, 26 Feb 2026 17:11:46 +0100
+Message-ID: <20260226161146.68876-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/2] tests/qtest: Add qtest-attrs-test to verify memory
- access with attr
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260222082529.491384-1-tangtao1634@phytium.com.cn>
- <20260222082529.491384-3-tangtao1634@phytium.com.cn>
- <aZ8Jtl8jxBqDq8Rz@ZEVORN-PC.localdomain>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <aZ8Jtl8jxBqDq8Rz@ZEVORN-PC.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAfwA3jutGcKBp6HsdAA--.36723S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQASBWmfZugExgACsu
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvAXoWfZw17Cw1UtF1fAF4fXw1xGrg_yoW8Zw1fuo
- Wftr42gw1xtr17GFy3tryvyr42g34F9rs3AF48Xw47JF18tF4jkF15JayDJrWYyFy8K3sr
- GF9rJasYyrsrtwn3n29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
- J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
- UUUUUUU==
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: 16
-X-Spam_score: 1.6
-X-Spam_bar: +
-X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_PH_SUBJ_META=2.499 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=b6K/I9Gx c=1 sm=1 tr=0 ts=69a070c6
+ cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=c_HyBtZksB4fQN2gfusA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDE0NSBTYWx0ZWRfXzajmgqgc9gn6
+ 3nfu7bLQelLUHqO2/XJwUSM8mSi+TBOf960oziwJMU2c1xwShiOzbb3bpIsIOatX+0yZmZU2hUx
+ EIm6VBaY0YZcrcEerX3xRyV+6dcq99AhaO3jvAJ/CTQg73c9sUQKFvKS4/pAbJKML/syM4Lyho8
+ Nwu/itI4q8XPPvZ3+0wBl81/Pk23VjQipgIfK2HtmNcWC6XbfxJbwnu8swSDB92YIvlmACQaeVr
+ YviICU+8pKs4Xfp6iUX0ReKT0vilk3eKg4aXjaJyIjLxDOu3Smq0R23cCBlGUTKGcLK50nPY55a
+ bnPtqAyTCds7aePx4Yt9bPsZ8+TsI4RSDH6NjuenKW9Gf84Ii+JK2/x2wMi4sU=
+X-Proofpoint-GUID: WRAdG0wSoPuTRCd6SgM7eweGGcE-Nl8j
+X-Proofpoint-ORIG-GUID: WRAdG0wSoPuTRCd6SgM7eweGGcE-Nl8j
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-26_01,2026-02-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 clxscore=1030
+ malwarescore=0 mlxscore=0 spamscore=0 mlxlogscore=999 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602260145
+X-JNJ: AAAAAAABGi2J0b637XDYQfOx5VmKkNoV1JPUiB4HHKbjC615WKXSPH3PyvOjSBw1bEqqceKe2/OdThVoKEPohxA4YfmFS1TGb5DtRB0MXVEMS64Li7G5oTraGi8BzNqyjAHXMk4akGhTieriJ3HlRU8YGfttluY0zbAgedNhjnu4zK5pFPJkRlQ3L46RFd7LgMlGSL2wDYrhcInUW+E2Q3mslvWq4L55PF8VcEboNh+7JpxyXEFzgIksrdaGCv/9H354bJsrWaVo3iJAxSq2DltemEO1n2Rg5ow9bJjGKLLmEgHrFDbK41wTF5nI2SFzX/4/GVBocJptkRyz3qtRS9iX27G4XsGd7pRyLscQ7JNcdVYlrJ7vyuj1K3aKz4R7UWQGyRilO8dNbfBh0CsdsNuekQrKWO2UQahELZrZMWIua6uqzlKhs8Bh01ezEkQYijHhixl5R/FedP4b4zE+SjoVHlZNttLqsdk+o8RHBoRbcg5AiWCAn1J24ydj9umHLWdhNJGVMyM5abY8t5Oh7ylt3qWxuynrs1Zr3HtOYNbHBAPyAEdbdljXz8w7+NDktmxH7aFhcCtYJELI40kqQgT4zsB1wbNH27WG8ZMiB7aj5JA=
+Received-SPF: pass client-ip=57.103.86.193;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,625 +87,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chao,
+This reverts commit 816b9fe450220e19acb91a0ce4a8ade7000648d1.
 
-On 2026/2/25 22:48, Chao Liu wrote:
-> On Sun, Feb 22, 2026 at 04:25:29PM +0800, Tao Tang wrote:
->> Add a new test case `qtest-attrs-test` to validate the newly introduced
->> `*_secure` and `*_space` qtest commands.
->>
->> The test covers:
->> - ARM (virt machine): Verifies access to all four ARM security spaces
->>    (Secure, NonSecure, Root, Realm).
->> - x86 (pc machine): Verifies access to the SMM AddressSpace.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   tests/qtest/meson.build        |   4 +-
->>   tests/qtest/qtest-attrs-test.c | 669 +++++++++++++++++++++++++++++++++
->>   2 files changed, 672 insertions(+), 1 deletion(-)
->>   create mode 100644 tests/qtest/qtest-attrs-test.c
->>
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index 25fdbc7980..a53c90474a 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -115,6 +115,7 @@ qtests_i386 = \
->>      'drive_del-test',
->>      'cpu-plug-test',
->>      'migration-test',
->> +   'qtest-attrs-test',
->>     ]
->>   
->>   if dbus_display and config_all_devices.has_key('CONFIG_VGA')
->> @@ -272,7 +273,8 @@ qtests_aarch64 = \
->>     ['arm-cpu-features',
->>      'numa-test',
->>      'boot-serial-test',
->> -   'migration-test']
->> +   'migration-test',
->> +   'qtest-attrs-test']
->>   
->>   qtests_s390x = \
->>     qtests_filter + \
->> diff --git a/tests/qtest/qtest-attrs-test.c b/tests/qtest/qtest-attrs-test.c
->> new file mode 100644
->> index 0000000000..69daced706
->> --- /dev/null
->> +++ b/tests/qtest/qtest-attrs-test.c
->> @@ -0,0 +1,669 @@
->> +/*
->> + * QTest for memory access with transaction attributes
->> + *
->> + * This test verifies if the qtest *_secure and *_space commands work correctly.
->> + *
->> + * Two architectures are covered:
->> + *
->> + * - ARM (virt machine, cortex-a57, secure=on):
->> + *     *_secure uses the ARM Secure AddressSpace (ARMASIdx_S = 1).
->> + *     *_space uses all four ARM security spaces (Secure/NonSecure/Root/Realm).
->> + *     secure=on is required so that the ARM Secure address space is initialised;
->> + *
->> + * - x86 (pc machine, TCG):
->> + *     *_secure uses the SMM AddressSpace (X86ASIdx_SMM = 1).
->> + *     On TCG, cpu_address_space_init() always creates X86ASIdx_SMM as a
->> + *     container that is an alias of all system memory, so no special machine
->> + *     flags are needed -- the SMM AS exists unconditionally under TCG.
->> + *     *_space commands are ARM-specific and have no x86 equivalents.
->> + *
->> + * Copyright (c) 2026 Phytium Technology
->> + *
->> + * Author:
->> + *  Tao Tang <tangtao1634@phytium.com.cn>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "libqtest.h"
->> +#include "libqtest-single.h"
->> +#include "hw/arm/arm-security.h"
->> +
-> This header is included unconditionally, but the test is compiled
-> for both i386 and aarch64 targets.
->
-> While it works (the header only defines an enum and inline functions),
-> it's a bit odd to pull in ARM-specific definitions for x86 test code.
+Unfortunately, this optimisation breaks -kernel [x] on Windows hosts.
 
+Reverting this commit enabled proceeding with kvm-unit-tests testing.
 
-Yes it's a bit odd but I think it'll have no side effect as 
-hw/arm/arm-security.h is so pure and simplified after this commit:
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ include/hw/elf_ops.h.inc | 71 +++++++++++++++-------------------------
+ 1 file changed, 26 insertions(+), 45 deletions(-)
 
-a145038 "target/arm: Move ARMSecuritySpace to a common header"
-
-
->
-> Not a blocker, but worth noting. :)
->
->> +
->> +/*
->> + * Define test addresses for ARM and x86.
->> + *
->> + * Default RAM size is 128 MiB for all architectures including "virt" machine in
->> + * ARM and "pc" machine in x86.
->> + * We define a 4 KiB size offset above the RAM base, both in ARM and x86, as the
->> + * test address.
->> + */
->> +#define TEST_ADDR_OFFSET    0x1000ULL
->> +#define TEST_ARM_BASE       0x40000000ULL
->> +#define TEST_X86_BASE       0x0ULL
->> +
->> +#define TEST_ADDR_ARM       (TEST_ARM_BASE + TEST_ADDR_OFFSET)
->> +#define TEST_ADDR_X86       (TEST_X86_BASE + TEST_ADDR_OFFSET)
->> +
->> +#define ARM_MACHINE_ARGS "-machine virt,secure=on -cpu cortex-a57"
->> +
->> +/* ARM *_secure tests */
->> +
->> +static void test_arm_writeb_readb_secure(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    /* secure=0: NonSecure access */
->> +    qtest_writeb_secure(qts, TEST_ADDR_ARM, 0x55, 0);
->> +    val = qtest_readb_secure(qts, TEST_ADDR_ARM, 0);
->> +    g_assert_cmpuint(val, ==, 0x55);
->> +
->> +    /* secure=1: Secure access (ARM Secure AS) */
->> +    qtest_writeb_secure(qts, TEST_ADDR_ARM, 0xAA, 1);
->> +    val = qtest_readb_secure(qts, TEST_ADDR_ARM, 1);
->> +    g_assert_cmpuint(val, ==, 0xAA);
->> +
-> The test pattern here (and in all other test functions) is:
-> write value -> read back -> assert equal. This only verifies that
-> the round-trip works, but does NOT verify that different security
-> spaces are actually isolated from each other.
->
-> A meaningful test would be something like:
->
-> ```
->      /* Write different values to the same address in different spaces */
->      qtest_writeb_secure(qts, TEST_ADDR_ARM, 0xAA, 1);  /* Secure */
->      qtest_writeb_secure(qts, TEST_ADDR_ARM, 0x55, 0);  /* NonSecure */
->
->      /* Verify Secure space was not clobbered by the NonSecure write */
->      val = qtest_readb_secure(qts, TEST_ADDR_ARM, 1);
->      g_assert_cmpuint(val, ==, 0xAA);
-> ```
->
-> Without this kind of cross-space verification, the tests would
-> pass even if the attrs parameter were completely ignored and all
-> accesses went to the same address space.
-
-
-Thanks for the advice. I'll give a try with this cross-space verification.
-
->
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_writew_readw_secure(void)
->> +{
->> +    QTestState *qts;
->> +    uint16_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_writew_secure(qts, TEST_ADDR_ARM, 0x1234, 0);
->> +    val = qtest_readw_secure(qts, TEST_ADDR_ARM, 0);
->> +    g_assert_cmpuint(val, ==, 0x1234);
->> +
->> +    qtest_writew_secure(qts, TEST_ADDR_ARM, 0x1234, 1);
->> +    val = qtest_readw_secure(qts, TEST_ADDR_ARM, 1);
->> +    g_assert_cmpuint(val, ==, 0x1234);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_writel_readl_secure(void)
->> +{
->> +    QTestState *qts;
->> +    uint32_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_writel_secure(qts, TEST_ADDR_ARM, 0xDEADBEEF, 0);
->> +    val = qtest_readl_secure(qts, TEST_ADDR_ARM, 0);
->> +    g_assert_cmpuint(val, ==, 0xDEADBEEF);
->> +
->> +    qtest_writel_secure(qts, TEST_ADDR_ARM, 0xDEADBEEF, 1);
->> +    val = qtest_readl_secure(qts, TEST_ADDR_ARM, 1);
->> +    g_assert_cmpuint(val, ==, 0xDEADBEEF);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_writeq_readq_secure(void)
->> +{
->> +    QTestState *qts;
->> +    uint64_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_writeq_secure(qts, TEST_ADDR_ARM, 0x123456789ABCDEF0ULL, 0);
->> +    val = qtest_readq_secure(qts, TEST_ADDR_ARM, 0);
->> +    g_assert_cmpuint(val, ==, 0x123456789ABCDEF0ULL);
->> +
->> +    qtest_writeq_secure(qts, TEST_ADDR_ARM, 0x123456789ABCDEF0ULL, 1);
->> +    val = qtest_readq_secure(qts, TEST_ADDR_ARM, 1);
->> +    g_assert_cmpuint(val, ==, 0x123456789ABCDEF0ULL);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
-> These four functions (writeb/writew/writel/writeq) have identical
-> logic, differing only in data width. Same for the *_space and x86
-> variants. The 669-line test file could be reduced to ~200 lines
-> using parameterized tests with g_test_add_data_func, e.g.:
->
-> ```
->      typedef struct {
->          const char *name;
->          int width;  /* 1, 2, 4, 8 */
->          ...
->      } TestParam; /* this is a demo name */
->
->      static void test_arm_read_write_secure(const void *data)
->      {
->          const TestParam *p = data;
->          /* single function handling all widths */
->      }
-> ```
-
-
-I'll refactor it in V2.
-
->> +static void test_arm_memwrite_memread_secure(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t wbuf[16] = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
->> +                         0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
->> +    uint8_t rbuf[16];
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
-> Every single test function calls qtest_init/qtest_quit, which
-> means starting and stopping a full QEMU instance for each test.
-> For the ARM tests alone that's 14 QEMU startups. This will be
-> very slow. Consider using a test fixture (g_test_add) to share
-> the QTestState across tests of the same architecture.
-
-
-As Pierrick said in another mail:
-
-> Tao initially implemented something like this. However, it means that 
-> you now need to cleanup/reset SMMU state between state, which is 
-> fragile and requires even more code. Thus, at the time, I suggested to 
-> simply spawn a new machine for every test. 
-I indeed tested all cases in one call. The related discussion is here:
-
-https://lore.kernel.org/qemu-devel/7370070a-c569-4b77-bd1e-6fc749ba9c90@phytium.com.cn/
-https://lore.kernel.org/qemu-devel/b184c907-e073-43d0-87b9-cf8c6c23dbed@phytium.com.cn/
-
-
-As Pierrick suggested, maybe it's time to refactor this when it reach 30 
-seconds in debug build.
-
-
-How do you think about it?
-
-
->
->> +    qtest_memwrite_secure(qts, TEST_ADDR_ARM, wbuf, sizeof(wbuf), 0);
->> +    qtest_memread_secure(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), 0);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +    qtest_memwrite_secure(qts, TEST_ADDR_ARM, wbuf, sizeof(wbuf), 1);
->> +    qtest_memread_secure(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), 1);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_memset_secure(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t rbuf[16];
->> +    size_t i;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_memset_secure(qts, TEST_ADDR_ARM, 0x42, sizeof(rbuf), 0);
->> +    qtest_memread_secure(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), 0);
->> +
->> +    for (i = 0; i < sizeof(rbuf); i++) {
->> +        g_assert_cmpuint(rbuf[i], ==, 0x42);
->> +    }
->> +
->> +    qtest_memset_secure(qts, TEST_ADDR_ARM, 0x42, sizeof(rbuf), 1);
->> +    qtest_memread_secure(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), 1);
->> +
->> +    for (i = 0; i < sizeof(rbuf); i++) {
->> +        g_assert_cmpuint(rbuf[i], ==, 0x42);
->> +    }
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +/* ARM *_space tests (ARM-specific: Secure/NonSecure/Root/Realm) */
->> +
->> +static void test_arm_writeb_readb_space(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    /* NonSecure space (secure=0) */
->> +    qtest_writeb_space(qts, TEST_ADDR_ARM, 0x11, ARMSS_NonSecure);
->> +    val = qtest_readb_space(qts, TEST_ADDR_ARM, ARMSS_NonSecure);
->> +    g_assert_cmpuint(val, ==, 0x11);
->> +
->> +    /* Realm space (secure=0) */
->> +    qtest_writeb_space(qts, TEST_ADDR_ARM, 0x33, ARMSS_Realm);
->> +    val = qtest_readb_space(qts, TEST_ADDR_ARM, ARMSS_Realm);
->> +    g_assert_cmpuint(val, ==, 0x33);
->> +
->> +    /* Secure space (secure=1) */
->> +    qtest_writeb_space(qts, TEST_ADDR_ARM, 0x22, ARMSS_Secure);
->> +    val = qtest_readb_space(qts, TEST_ADDR_ARM, ARMSS_Secure);
->> +    g_assert_cmpuint(val, ==, 0x22);
->> +
->> +    /* Root space (secure=1) */
->> +    qtest_writeb_space(qts, TEST_ADDR_ARM, 0x44, ARMSS_Root);
->> +    val = qtest_readb_space(qts, TEST_ADDR_ARM, ARMSS_Root);
->> +    g_assert_cmpuint(val, ==, 0x44);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_writew_readw_space(void)
->> +{
->> +    QTestState *qts;
->> +    uint16_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_writew_space(qts, TEST_ADDR_ARM + 0x10, 0x1122, ARMSS_NonSecure);
->> +    val = qtest_readw_space(qts, TEST_ADDR_ARM + 0x10, ARMSS_NonSecure);
->> +    g_assert_cmpuint(val, ==, 0x1122);
->> +
->> +    qtest_writew_space(qts, TEST_ADDR_ARM + 0x20, 0x3344, ARMSS_Realm);
->> +    val = qtest_readw_space(qts, TEST_ADDR_ARM + 0x20, ARMSS_Realm);
->> +    g_assert_cmpuint(val, ==, 0x3344);
->> +
->> +    qtest_writew_space(qts, TEST_ADDR_ARM + 0x30, 0x5566, ARMSS_Secure);
->> +    val = qtest_readw_space(qts, TEST_ADDR_ARM + 0x30, ARMSS_Secure);
->> +    g_assert_cmpuint(val, ==, 0x5566);
->> +
->> +    qtest_writew_space(qts, TEST_ADDR_ARM + 0x40, 0x7788, ARMSS_Root);
->> +    val = qtest_readw_space(qts, TEST_ADDR_ARM + 0x40, ARMSS_Root);
->> +    g_assert_cmpuint(val, ==, 0x7788);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_writel_readl_space(void)
->> +{
->> +    QTestState *qts;
->> +    uint32_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_writel_space(qts, TEST_ADDR_ARM + 0x50, 0x11223344, ARMSS_NonSecure);
->> +    val = qtest_readl_space(qts, TEST_ADDR_ARM + 0x50, ARMSS_NonSecure);
->> +    g_assert_cmpuint(val, ==, 0x11223344);
->> +
->> +    qtest_writel_space(qts, TEST_ADDR_ARM + 0x60, 0x55667788, ARMSS_Realm);
->> +    val = qtest_readl_space(qts, TEST_ADDR_ARM + 0x60, ARMSS_Realm);
->> +    g_assert_cmpuint(val, ==, 0x55667788);
->> +
->> +    qtest_writel_space(qts, TEST_ADDR_ARM + 0x70, 0x99AABBCC, ARMSS_Secure);
->> +    val = qtest_readl_space(qts, TEST_ADDR_ARM + 0x70, ARMSS_Secure);
->> +    g_assert_cmpuint(val, ==, 0x99AABBCC);
->> +
->> +    qtest_writel_space(qts, TEST_ADDR_ARM + 0x80, 0xDDEEFF00, ARMSS_Root);
->> +    val = qtest_readl_space(qts, TEST_ADDR_ARM + 0x80, ARMSS_Root);
->> +    g_assert_cmpuint(val, ==, 0xDDEEFF00);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_writeq_readq_space(void)
->> +{
->> +    QTestState *qts;
->> +    uint64_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_writeq_space(qts, TEST_ADDR_ARM + 0x90, 0x1122334455667788ULL,
->> +                       ARMSS_NonSecure);
->> +    val = qtest_readq_space(qts, TEST_ADDR_ARM + 0x90, ARMSS_NonSecure);
->> +    g_assert_cmpuint(val, ==, 0x1122334455667788ULL);
->> +
->> +    qtest_writeq_space(qts, TEST_ADDR_ARM + 0xA0, 0x99AABBCCDDEEFF00ULL,
->> +                       ARMSS_Realm);
->> +    val = qtest_readq_space(qts, TEST_ADDR_ARM + 0xA0, ARMSS_Realm);
->> +    g_assert_cmpuint(val, ==, 0x99AABBCCDDEEFF00ULL);
->> +
->> +    qtest_writeq_space(qts, TEST_ADDR_ARM + 0xB0, 0x0123456789ABCDEFULL,
->> +                       ARMSS_Secure);
->> +    val = qtest_readq_space(qts, TEST_ADDR_ARM + 0xB0, ARMSS_Secure);
->> +    g_assert_cmpuint(val, ==, 0x0123456789ABCDEFULL);
->> +
->> +    qtest_writeq_space(qts, TEST_ADDR_ARM + 0xC0, 0xFEDCBA9876543210ULL,
->> +                       ARMSS_Root);
->> +    val = qtest_readq_space(qts, TEST_ADDR_ARM + 0xC0, ARMSS_Root);
->> +    g_assert_cmpuint(val, ==, 0xFEDCBA9876543210ULL);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_memwrite_memread_space(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t wbuf[8] = { 0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6, 0x07, 0x18 };
->> +    uint8_t rbuf[8];
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_memwrite_space(qts, TEST_ADDR_ARM, wbuf, sizeof(wbuf), ARMSS_NonSecure);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_NonSecure);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +    qtest_memwrite_space(qts, TEST_ADDR_ARM, wbuf, sizeof(wbuf), ARMSS_Realm);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_Realm);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +
->> +    qtest_memwrite_space(qts, TEST_ADDR_ARM, wbuf, sizeof(wbuf), ARMSS_Secure);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_Secure);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +    qtest_memwrite_space(qts, TEST_ADDR_ARM, wbuf, sizeof(wbuf), ARMSS_Root);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_Root);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +static void test_arm_memset_space(void)
->> +{
->> +    QTestState *qts;
->> +    uint8_t rbuf[8];
->> +    size_t i;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qts = qtest_init(ARM_MACHINE_ARGS);
->> +
->> +    qtest_memset_space(qts, TEST_ADDR_ARM, 0x99, sizeof(rbuf), ARMSS_NonSecure);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_NonSecure);
->> +
->> +    for (i = 0; i < sizeof(rbuf); i++) {
->> +        g_assert_cmpuint(rbuf[i], ==, 0x99);
->> +    }
->> +
->> +    qtest_memset_space(qts, TEST_ADDR_ARM, 0x99, sizeof(rbuf), ARMSS_Realm);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_Realm);
->> +
->> +    for (i = 0; i < sizeof(rbuf); i++) {
->> +        g_assert_cmpuint(rbuf[i], ==, 0x99);
->> +    }
->> +
->> +    qtest_memset_space(qts, TEST_ADDR_ARM, 0x99, sizeof(rbuf), ARMSS_Secure);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_Secure);
->> +
->> +    for (i = 0; i < sizeof(rbuf); i++) {
->> +        g_assert_cmpuint(rbuf[i], ==, 0x99);
->> +    }
->> +
->> +    qtest_memset_space(qts, TEST_ADDR_ARM, 0x99, sizeof(rbuf), ARMSS_Root);
->> +    qtest_memread_space(qts, TEST_ADDR_ARM, rbuf, sizeof(rbuf), ARMSS_Root);
->> +
->> +    for (i = 0; i < sizeof(rbuf); i++) {
->> +        g_assert_cmpuint(rbuf[i], ==, 0x99);
->> +    }
->> +
->> +    qtest_quit(qts);
->> +}
->> +
->> +/* Test new *_secure / *_space API in libqtest-single.h */
->> +static void test_arm_single_secure(void)
->> +{
->> +    uint8_t val;
->> +    uint8_t wbuf[4] = { 0x10, 0x20, 0x30, 0x40 };
->> +    uint8_t rbuf[4];
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qtest_start(ARM_MACHINE_ARGS);
->> +
->> +    writeb_secure(TEST_ADDR_ARM, 0x5A, 0);
->> +    val = readb_secure(TEST_ADDR_ARM, 0);
->> +    g_assert_cmpuint(val, ==, 0x5A);
->> +
->> +    memwrite_secure(TEST_ADDR_ARM + 0x80, wbuf, sizeof(wbuf), 0);
->> +    memread_secure(TEST_ADDR_ARM + 0x80, rbuf, sizeof(rbuf), 0);
->> +    g_assert(memcmp(wbuf, rbuf, sizeof(wbuf)) == 0);
->> +
->> +    qtest_end();
->> +}
->> +
->> +static void test_arm_single_space(void)
->> +{
->> +    uint32_t val;
->> +
->> +    if (!qtest_has_machine("virt")) {
->> +        g_test_skip("virt machine not available");
->> +        return;
->> +    }
->> +
->> +    qtest_start(ARM_MACHINE_ARGS);
->> +
->> +    writel_space(TEST_ADDR_ARM + 0x400, 0xA5A5A5A5, ARMSS_NonSecure);
->> +    val = readl_space(TEST_ADDR_ARM + 0x400, ARMSS_NonSecure);
->> +    g_assert_cmpuint(val, ==, 0xA5A5A5A5);
->> +
->> +    writel_space(TEST_ADDR_ARM + 0x404, 0x1A2B3C4D, ARMSS_Realm);
->> +    val = readl_space(TEST_ADDR_ARM + 0x404, ARMSS_Realm);
->> +    g_assert_cmpuint(val, ==, 0x1A2B3C4D);
->> +
->> +    writel_space(TEST_ADDR_ARM + 0x408, 0x55667788, ARMSS_Secure);
->> +    val = readl_space(TEST_ADDR_ARM + 0x408, ARMSS_Secure);
->> +    g_assert_cmpuint(val, ==, 0x55667788);
->> +
->> +    writel_space(TEST_ADDR_ARM + 0x40C, 0xCCDDEEFF, ARMSS_Root);
->> +    val = readl_space(TEST_ADDR_ARM + 0x40C, ARMSS_Root);
->> +    g_assert_cmpuint(val, ==, 0xCCDDEEFF);
->> +
->> +    qtest_end();
->> +}
->> +
->> +#define X86_MACHINE_ARGS  "-machine pc -accel tcg"
-> The x86 tests hardcode `-accel tcg` but only check for machine
-> availability, not accelerator availability. If the build doesn't
-> include TCG, qtest_init() will fail instead of gracefully
-> skipping. You should add a `qtest_has_accel("tcg")` check.
->
-> Similarly, the ARM tests don't verify that `-cpu cortex-a57` is
-> available or that `secure=on` is supported for the virt machine.
-
-
-I'll add it in V2.
-
-
-Thanks for the review!
-
-Tao
+diff --git a/include/hw/elf_ops.h.inc b/include/hw/elf_ops.h.inc
+index 9c35d1b9da..bcf484b938 100644
+--- a/include/hw/elf_ops.h.inc
++++ b/include/hw/elf_ops.h.inc
+@@ -325,11 +325,9 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+ {
+     struct elfhdr ehdr;
+     struct elf_phdr *phdr = NULL, *ph;
+-    int size, i;
+-    ssize_t total_size;
+-    elf_word mem_size, file_size, data_offset;
++    int size, i, total_size;
++    elf_word mem_size, file_size;
+     uint64_t addr, low = (uint64_t)-1, high = 0;
+-    GMappedFile *mapped_file = NULL;
+     uint8_t *data = NULL;
+     ssize_t ret = ELF_LOAD_FAILED;
+ 
+@@ -409,32 +407,20 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+         }
+     }
+ 
+-    /*
+-     * Since we want to be able to modify the mapped buffer, we set the
+-     * 'writable' parameter to 'true'. Modifications to the buffer are not
+-     * written back to the file.
+-     */
+-    mapped_file = g_mapped_file_new_from_fd(fd, true, NULL);
+-    if (!mapped_file) {
+-        goto fail;
+-    }
+-
+     total_size = 0;
+     for(i = 0; i < ehdr.e_phnum; i++) {
+         ph = &phdr[i];
+         if (ph->p_type == PT_LOAD) {
+             mem_size = ph->p_memsz; /* Size of the ROM */
+             file_size = ph->p_filesz; /* Size of the allocated data */
+-            data_offset = ph->p_offset; /* Offset where the data is located */
+-
+-            if (file_size > 0) {
+-                if (g_mapped_file_get_length(mapped_file) <
+-                    file_size + data_offset) {
++            data = g_malloc0(file_size);
++            if (ph->p_filesz > 0) {
++                if (lseek(fd, ph->p_offset, SEEK_SET) < 0) {
++                    goto fail;
++                }
++                if (read(fd, data, file_size) != file_size) {
+                     goto fail;
+                 }
+-
+-                data = (uint8_t *)g_mapped_file_get_contents(mapped_file);
+-                data += data_offset;
+             }
+ 
+             /* The ELF spec is somewhat vague about the purpose of the
+@@ -530,23 +516,22 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+                 *pentry = ehdr.e_entry - ph->p_vaddr + ph->p_paddr;
+             }
+ 
+-            /* Some ELF files really do have segments of zero size;
+-             * just ignore them rather than trying to create empty
+-             * ROM blobs, because the zero-length blob can falsely
+-             * trigger the overlapping-ROM-blobs check.
+-             */
+-            if (mem_size != 0) {
++            if (mem_size == 0) {
++                /* Some ELF files really do have segments of zero size;
++                 * just ignore them rather than trying to create empty
++                 * ROM blobs, because the zero-length blob can falsely
++                 * trigger the overlapping-ROM-blobs check.
++                 */
++                g_free(data);
++            } else {
+                 if (load_rom) {
+                     g_autofree char *label =
+                         g_strdup_printf("%s ELF program header segment %d",
+                                         name, i);
+ 
+-                    /*
+-                     * rom_add_elf_program() takes its own reference to
+-                     * 'mapped_file'.
+-                     */
+-                    rom_add_elf_program(label, mapped_file, data, file_size,
+-                                        mem_size, addr, as);
++                    /* rom_add_elf_program() seize the ownership of 'data' */
++                    rom_add_elf_program(label, NULL, data, file_size, mem_size,
++                                        addr, as);
+                 } else {
+                     MemTxResult res;
+ 
+@@ -584,16 +569,14 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+             struct elf_note *nhdr = NULL;
+ 
+             file_size = ph->p_filesz; /* Size of the range of ELF notes */
+-            data_offset = ph->p_offset; /* Offset where the notes are located */
+-
+-            if (file_size > 0) {
+-                if (g_mapped_file_get_length(mapped_file) <
+-                    file_size + data_offset) {
++            data = g_malloc0(file_size);
++            if (ph->p_filesz > 0) {
++                if (lseek(fd, ph->p_offset, SEEK_SET) < 0) {
++                    goto fail;
++                }
++                if (read(fd, data, file_size) != file_size) {
+                     goto fail;
+                 }
+-
+-                data = (uint8_t *)g_mapped_file_get_contents(mapped_file);
+-                data += data_offset;
+             }
+ 
+             /*
+@@ -607,6 +590,7 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+             if (nhdr != NULL) {
+                 elf_note_fn((void *)nhdr, (void *)&ph->p_align, SZ == 64);
+             }
++            g_free(data);
+             data = NULL;
+         }
+     }
+@@ -619,9 +603,6 @@ static ssize_t glue(load_elf, SZ)(const char *name, int fd,
+     }
+     ret = total_size;
+  fail:
+-    if (mapped_file) {
+-        g_mapped_file_unref(mapped_file);
+-    }
+     g_free(phdr);
+     return ret;
+ }
+-- 
+2.50.1 (Apple Git-155)
 
 
