@@ -4,89 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BC5FC5900
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 06:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC34EFC5905
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:05:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvVHB-0002jm-Fc; Thu, 26 Feb 2026 01:55:09 -0500
+	id 1vvVQT-000563-16; Thu, 26 Feb 2026 02:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vvVH9-0002is-9Q
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 01:55:07 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vvVH7-00049l-KR
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 01:55:07 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-82728e5680cso295253b3a.0
- for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 22:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1772088904; x=1772693704; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JY/VUckVnKE6ESLECX0Wd/SX2Je+hH6pZD183ZttAN4=;
- b=ZqrRDSze9tRvqLC8fY0Gftf7QbxK7RhEEFvlredqIoDXlSwGBXGZZgIMxtTmjrRkwa
- oFdisE7kWlL/JTg/ejaC0BsfTccXWFd/axU5v8I916MWyKX1ADU4qP3qvBd8swgUdZ9l
- v8H6JNI9VNCy+6Wxf5wN0OFIWtxcLmItfBqCIkbsvNTwXLna42YmQbzYAgvBzYqglv54
- mplTPkhYcha+vQ+wBvuOhv2vVQV5/9J3rOvdCojnl8VUgM4wKDn13gSrX9Z3b3KRw8TT
- PLF60NWdRtSyV0uq4Nrdx8t6K79igp8QN0S1Ls1NO+yKUBAnLOtq2CTxfBFID2o94WrT
- UEcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772088904; x=1772693704;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JY/VUckVnKE6ESLECX0Wd/SX2Je+hH6pZD183ZttAN4=;
- b=N/YgkexuuQ0YW9P6o1uaU8L3JtpvU6D+UIVJrUIXInmTqUcRUYvJnOfrAKe3ErkTxe
- zMdH6KFYt79cON9sct/tOrszLc1EKMxkFgZ7qspjZL/2OgUlVoODd8U3dEu/GVejwjWP
- XIFAWGSYwkotFmpdKhmMKRVuQeOkYI51zUl4xtm4dU12UEQxpYdTxaW0pCgPsqFz4yYS
- zQmvdn+MTLMaeeVbx+YRpVjlObBC6ISD+GOqs39ed+ZAIWhlSIysgPaKDhBTttqdMbgJ
- Nvnwswnp1BKLxxdquQ/Wm9Ej4GKl9/g7pNivMkH6oYewsE9hFvRFxTJAfugxrnm62QE9
- z/TA==
-X-Gm-Message-State: AOJu0YyD3oUsADUXOR6giwzPDt3BUy+TypU9KhsJPQgEzEfv3eH0k4+0
- IPogbCh55saPox7BlM1GTm82tH+xBgkjUJn2U0nUGLyLjAhtJcOTzB/9zKYPsVZWsFs=
-X-Gm-Gg: ATEYQzyfLkzM7FpkvCWtXoNOTOl8XyIf2qfWDSVEYWuj0WdBH9Ff0IFRd/fwu44tY7K
- IQwfMl4kzAPOizryjxyJRe2UBBIAgOFN3no9Jx03vRkLsY88tJ6W+P+Kc7d1HcJDoUOI2gzYYTM
- +I1+lYr9ctAKvWL0RRltuif5QucjeJKuLAVfu2HwL9px/yOTrzwfyP9t8CdLgZsF0Qa65206K+c
- 2f+bCd9OB+6CM/wFSmwfcYCQheslgc8FLjyTskPGTVgHTF/p8t2Q2okZ7lcVgVIEDQvyYaB5Jer
- lbeYR9MX8njerEkD7eAUqpKEaXjMYq7Yzz5uLqKcYuxkBdwHjfrQZm2S3+2QOZwgniXALUjoUJI
- eymJcIroCktsMuW5SargCFlbuIwngZPrTdYyYKGyyIJg4rtwlyz7t3PxVFA1cEgTmXNGXvfaA0p
- yY5xtHlTyYwJqR4eIofwzrCEAbWv3BLYReqm+MkN4bpeiSVDOaQBfE3RnHh56YBMGb
-X-Received: by 2002:a05:6a21:4782:b0:394:f8cb:262c with SMTP id
- adf61e73a8af0-39545f7ae20mr16853252637.40.1772088903917; 
- Wed, 25 Feb 2026 22:55:03 -0800 (PST)
-Received: from sifive.com ([136.226.240.189]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb5b2268sm13571605ad.6.2026.02.25.22.55.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 25 Feb 2026 22:55:03 -0800 (PST)
-Date: Thu, 26 Feb 2026 14:55:00 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 3/3] fpu: Simplify OCP FP8 E4M3 NaN classification in
- parts_canonicalize
-Message-ID: <aZ_tdQO2cHUu6hRv@sifive.com>
-References: <20260225110802.1217946-1-max.chou@sifive.com>
- <20260225110802.1217946-4-max.chou@sifive.com>
- <bd43a2b1-2e79-4238-8d11-8f58de1c189e@linaro.org>
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1vvVQP-00055f-BB
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:04:41 -0500
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1vvVQN-0005uP-Jd
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:04:40 -0500
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61Q08WwN2951284; Wed, 25 Feb 2026 23:04:25 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=UvK4WThGJOPx4tyFuXZXzmVLG9xkV0ZHbCSRuTWEP
+ zg=; b=xQtoOAqXGjdZeZ8Ze3TvYk+dhZ5WyT7RSvVid0cHtn5TRva69s5SIl0bK
+ xz2CJePjHT1W4rbtN7alFuucicRdPJEFH8XKdFAR03h6zvgMfQw/ykmx4wrBBgYc
+ yTTL+P6Kc5Kr1pEOnh49KYKSAV7GFBWSKwNZ9+hB2bK3ASNuN+7cy08B9x/IIhXe
+ EheRkNR+b9rfrrr/gfhyi4v/mNTQJchr+WltTnG6WjHMNTuVMpffUoUTiJOS8t6J
+ NVOzwwozdBB3o90cqOdraUBmHXH0z8JdKaN4casuxXg6GgW6u9TJgn14wfSiD/Hb
+ o7Gwtz9SYe+IvhamKkz4d9gu648mw==
+Received: from sn4pr2101cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11022072.outbound.protection.outlook.com
+ [40.93.195.72])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4cjbbsrpny-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 25 Feb 2026 23:04:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OHMlvjGGJdtsW8QuBAl18+wuTsRQTAqfQIoU0ZyhMSmaoS0LkSKyCgdjPpanQLsFGoMokRV67XHDUc6yBBMU5eTGvfykLazwoVeyJnvO/nEX2yxcIzs+ANtqzXbMF9B7wwiZgsMO4u5AQQEDD9mVKqIrwmI/8xI7zNd8CcxTNegp/Qoc5jDAyOn7uviesJYw/HToBTZv7SAp75eDFFB760eI4itKCMQWg6TnRDnIRQZLrzp/SNpGialq68gwp+6EdXiY9jPoJzuQeqAznb81I/I551V28sBCY35Opz7SLC5C+jiFFubuiMZ6l2dmPuXJESEfw8r7ldcqlgm5GCQdmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=UvK4WThGJOPx4tyFuXZXzmVLG9xkV0ZHbCSRuTWEPzg=;
+ b=BLY76VdSim8ZG9gtazjtHbwDYfaviLiwHK+rn4pr7gzjkpy4hUGRJnEoGnRHa7yvErZDSZjhz1fStQ8qO+9M2iaLlgDQiYAhlp7Oym75vLnVKzXrfBTarEwVbBZBCVjM+hpESaFkmgFs7QhaLW9UJkdOepoxqBhbINPYs9n4/1qLSA8U/9Z9qfQUP7TVbpw56rLIxMxEr6sykLH4QRixo1bE64TY0FsLHZUhRcN8KqvOZH+YQjVqkULL79+L7z5vRQfY3V4XrRLa9GTzzGC/S4mo/OTlDIqb0r+tS78KawJSvCj0hwJZV9ebt+q+FUlc0NlocLRNketOmtpeyFBoiQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=UvK4WThGJOPx4tyFuXZXzmVLG9xkV0ZHbCSRuTWEPzg=;
+ b=dHWbRLc5wiwf6Z/3h2/KX+h7SekfW6dG40nyUhJdekjrulZ7JcoB0ozrOqvhB7kt36MOYmskFfxksuI1AWztiRrV7NpgJGJJxhGwhIr9PXBzYfbvh2+h5qpRrxXER5l90pJlTEfMNx0BiEilhQPccvecac0GT0Z9BrwKqKrfiFvILtZNPNEH/7Pv1LEF9f+XOSrlo9ADNk6WrunIL//+3K34/heEco40LR4uP82X3r/3i++c87qeAjpUSqfGxzomYBgCQhlCuAhPPh+C9/s0wIAoaOzRrhYUZIWi9G3yoOOLZifsGirFKrOas4vUFgpm2EcxekSIGQ0WdavUmpKW1w==
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
+ by DS0PR02MB10688.namprd02.prod.outlook.com (2603:10b6:8:1f4::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Thu, 26 Feb
+ 2026 07:04:24 +0000
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::1ea5:acb6:ebe1:e1c4%6]) with mapi id 15.20.9632.010; Thu, 26 Feb 2026
+ 07:04:23 +0000
+From: Khushit Shah <khushit.shah@nutanix.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+CC: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Marcelo
+ Tosatti <mtosatti@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sean Christopherson <seanjc@google.com>, "kvm@vger.kernel.org"
+ <kvm@vger.kernel.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+Thread-Topic: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+Thread-Index: AQHcXrhurlricMg9iE6/H6LGVi6DLrUEthqAgBW2oICAeHTggIACPS0A
+Date: Thu, 26 Feb 2026 07:04:23 +0000
+Message-ID: <8803DF89-C418-41BC-8848-1C2AE38A0D82@nutanix.com>
+References: <20251126093742.2110483-1-khushit.shah@nutanix.com>
+ <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
+ <C1DC0AAE-AE34-42E1-A15C-E03D1EE4D770@nutanix.com>
+ <79f110e1-b217-4a70-81f7-d596f822dde5@maciej.szmigiero.name>
+In-Reply-To: <79f110e1-b217-4a70-81f7-d596f822dde5@maciej.szmigiero.name>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|DS0PR02MB10688:EE_
+x-ms-office365-filtering-correlation-id: 119063e7-628e-4ae1-b19d-08de750545bd
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
+x-microsoft-antispam-message-info: TebhtNuihwkmvQneM2nAYoWy4M1rbHh+qls6k+qOANa6+jwYXLR8qrZU3fOv13jk7AY3tkOmqgLFFd+D6Ikaa71+plb5VEG37Q8qWbDPes4czq5aBtGyCRZFNMNd89FADAQ6/LuZU5fEW0t8BJVn5yUTaO6is7+NOIL2gJ3Kqad0XpHFg8FewBfwYxpHkfA7LgXiGsgIcU3ncGGmdACUgkDGfE+wvYYxmvuA0Bd+i1SYDWOq9zmyD+s1Sn2U19nFfMCGwODb33VYwINBrzmXwzwLFvTRcbQkw6Eyr88EARiYuLC8gmSzkOaKpByMJB8E5ksgqPTGLmz5w5HoJun/6btxF66M3r0yZS7BlR6GHn8T6B1f+JYjTaODrO/ygzEkk56CiRpG8szE0muZHGeBgT9SNZowrnRYFyHcRKgGtr/aDgjpAoL8VjZtAeuVoKRUX2YoLzIVgtdC7WGaFCYo3TkmTVJnpi07wVvW1TmFXEnFgKqyjT22MyiyowKPtR1/CSZJLliHL75VFlmmaKWpENjL6luucPEcKR0sb4tGRU63gQ209FmfFqiKOq5uniWyNNhESyrdL6tZTY57Yg6Q/oIQFkcKiYGNM+ERzd/Ivs6lWepOdUQgtgDwXZ0elKfgmvrTwWHCfAgTeDaMRmAYEhawYFB9FHpXaCIntnmxSDGQ3qIF3DlxYbu0C6xczCq0s0Mzj/0Gl4lV9geedMLo893WGgxwcMMYBPHlczoFf/dIktKB3htMeQRcJezuyp5JaZXIX7sFDidYzch9bh0JZT5XgOWC+ZEARYjLhneqSLU=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TDYwRFU3Ti8zUDNocDViZXhzS1pvSU4rNWEzN0I3akI0OVZkMlIvM3B3eWsy?=
+ =?utf-8?B?enZyWXJBOFhHejgzREc0RDlvRk9mVUxhbXBweVQ1Y1o0K0RzaXZ5ZnpmYm5H?=
+ =?utf-8?B?ZVIvOWwzT1VUNE1wKzdnQlVlY01tOUhjeXltSFltRE0zbGVSaHNvMDMyYndC?=
+ =?utf-8?B?UytaVU5kNmcxQzlGemc4VFRFbktoK0xNa0o3aVJZeVVQWkZnK3YrS2FFUitS?=
+ =?utf-8?B?Zm9BWTgrVXNtR0ZyRllvdHRjNUl2Qk53QmNwT2xjVnBaNjlCdS9VV2JPZXlO?=
+ =?utf-8?B?bFI4eDVpN3lwUHpDUk9hSVlFWHU4bmtBQzcvaVROSGpmeSs0UlBha1lnZGZx?=
+ =?utf-8?B?dUd3RW4rczg1L0dDN2tmM1ptNXRxVnAwVHRmMmNTbFFGeHBNWFhBbUFHZENN?=
+ =?utf-8?B?UnJTRFAwQUM1bWNNZWNPUi8vczVLcWNLZWtUWXhnOC9WMXVQemw0YTBpSFpx?=
+ =?utf-8?B?YWttRThHem9meG04RC9HaW5tcWRMVzJ0dm1sTG85WjVscWxlR2JPd1phQlVq?=
+ =?utf-8?B?Z3M4UzJwbGhkS041dUdZZ2RobWtXMnJESzJFbllNbnh3MnBQQnQvemR2WWgw?=
+ =?utf-8?B?Rlk3TjUxNUFhWVNOWlEyaUZlNGpXcFR6OWlOcW5RcDdqK0xqaWdyRUNqMXBn?=
+ =?utf-8?B?aUQ3SnhzejdwTkNpcUtabGxiZ25ad2xKcnR3KzNjdXBTQjRJMllpdlh6Z0tZ?=
+ =?utf-8?B?UlhGbWxJcEdRb1B1eTI2Z0RTMmN4U2hoRkVpc1l6V3hNWmZTb2g3Z2xoMSs5?=
+ =?utf-8?B?ZWdaa3FXMlF5YmJiZlp3SytkVjJTNWJzcWUzMStFZjMwcnlwYkZOWkJvczVO?=
+ =?utf-8?B?UWVzY05vcWQyc1E0THoxaVZPTGNJUmNucitURDJSS0NWNmxvaWVQMkt1MjRr?=
+ =?utf-8?B?NUQ2d2FRTllyZlVKZDRRZXZIR3g0bGlwYjkvOHJaY3QyM1BlN2JnSEJtOVZh?=
+ =?utf-8?B?YjNCamE3QWJEZ3psalVQL2hFWFBRdkpzbEJtUjV3SDlFa3JjVXRNd0k1dlZp?=
+ =?utf-8?B?dG10VWs5SzNWSDljN0FNbXhHTFNjMG5ENWQxUTBHQnBGR3FpUTZDcUJTaEwy?=
+ =?utf-8?B?TWo0LzlhN0hWWDdidzNxOTRqTXpodGs5RHJNallybTNKanVqVXpzcG1KZVlt?=
+ =?utf-8?B?MTdMVW05NjVWK1dxZUtLa1o2SUNuVGdhcitPcC9TWVpISWNtaHNtVjF4SG1u?=
+ =?utf-8?B?K0poNjlkSm5lVUpzakNJWEc5dWlhNU5ZRnBmWlRKcm1SWWhHalNsQVJhQS93?=
+ =?utf-8?B?QnlyeSt4QVVHUVBZL05pUzRvQ0t3cG9odlFyZmhmd2lUN1BNOXgrS0Y0RmRK?=
+ =?utf-8?B?cGc4T05VTExOSTFCL0RzNmZnZmloa3p5cmgrQTVnejdiN3g1U1RPTVlTd3BK?=
+ =?utf-8?B?V05RcldUSTVSVk1aME1rVEhZV0svUTQ5RGp5Qlk0UlZZeks4V25qQU1BUkVu?=
+ =?utf-8?B?YzBBMzJSY2RHazh2THNod2J0TkxTNHl1Y0E5VGNTdGNxam03Q1lJVW1EUTQv?=
+ =?utf-8?B?SXRkNEJuZ1Rnei9DMnhCcHNtaUk1eGpueHU1amMrUEdlVDQwYjJBUkZQS24r?=
+ =?utf-8?B?cVBRR2Z2ZEk2ajZRL2QvZmJkbGM5N3dtdDYvdlgvWmpDdi9BZnMzTXdyWU5O?=
+ =?utf-8?B?cERjTGF5cm1xYy9oZXljbjhrQWorbEJjWFFiVzFMRTBwSHUxVmhPSlptVk5T?=
+ =?utf-8?B?VHFXVGphM2ZhZk01dWtvSkpoQ0dsaWlzRUdLU2RyNkZ6cVhYeFpEa2pPVmUr?=
+ =?utf-8?B?bEd5NGg5NDBVajd6N08xZFpkcytSSHcvL3oxbXpVOHpvOTZmQmoyYWtnQjVm?=
+ =?utf-8?B?VVhrbjl1a3RaZjl0aktMVFRYTG5HVTRwOWN6VkQ2cXo3bGZFVFNETWZhTGFR?=
+ =?utf-8?B?d1Y3bGpNRDJCdkVPZHVXVWRKUHdwbkE1UUkwQkJ5MHE1dnRyWForUTNvUWtJ?=
+ =?utf-8?B?eWVQY3VrMXV2KytZdU1aTzcvL3VUakNZNlNkNkhlb2cvbjM2Vkh4dXoxUkZ1?=
+ =?utf-8?B?WThWYmxPTjFwWEpnRTVDNmFDbVk2cEpTWml6c1hkSnpZaW0yU0JDSm4rbUlR?=
+ =?utf-8?B?TnRraFJER2w1eDU3OWFqQjI2RUdmeC9sQ0FHY0RsVWREZnFtRmRpQis2S05h?=
+ =?utf-8?B?Uk1uTDdmMlhIcVFzL1JTaWMybnpNMFlwVFhsUmJDUmgyS0cwNS9GMC93RXdu?=
+ =?utf-8?B?eEhLeGhLRFZOMnNKSUp4VVJZTythZHpKdTB3Qy9sRUJoemhGNm5CdWdBZFU2?=
+ =?utf-8?B?MFFEanVmSUZOU2oyUWJyTFM0MHRaUzdyUkVjRXhXOGUwTjI3c2taRDJTeXUy?=
+ =?utf-8?B?L0Vuc1BRTGRienlYRnhrbmZiaVBrYXMrWFhCZkJvUXB5cDdVQmpFdS9NVFZm?=
+ =?utf-8?Q?Qfi+L8n4/7akTuqQ=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <7B6A3143DCBEEA4A960439B0F4C0343C@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bd43a2b1-2e79-4238-8d11-8f58de1c189e@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 119063e7-628e-4ae1-b19d-08de750545bd
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2026 07:04:23.8270 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IM9Q0HB6cl6+GcNhNjhFP5R88LykiF5J+3GvRW1frLrORFmVrhtrRC1ggIi3sCzOaV8FCB3dDu+eUVqcAgsY9hnD2d09oeI49GBTPNpJ4Gs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB10688
+X-Authority-Analysis: v=2.4 cv=PL8COPqC c=1 sm=1 tr=0 ts=699ff079 cx=c_pps
+ a=oU/Ts+293Snq71mcenrglA==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22 a=FjMANGMcuP__UM3ky4AA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: dN02Bq-QLMwkXdeagCmM6hC5qCJGoUXu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDA2MSBTYWx0ZWRfX3hEhbpppmfdj
+ IrPRGuLWUO8sOD8hVc9EUP2QDcOqJB/LZlYKQU+r5DwVN8Za4E11EKpQGKXrNACL3XQmOUHPMVz
+ Ut3ECARLklZJngyzJUxA5+nEKXgMh0vvJ3zny+hRieVz2dNO/1HOBYxyUoy5MwZF3GoGGVbPdQp
+ pHQsB4BmIl8RPobJ8w2uXbIA+bgwyO/Ogvq778HG9THiiF42GJ33X+fbJneLaNX0UgyyHI1rPRb
+ BnhvWPWuc3xWNWvHm8qB18Ii5yU3TOD1rkqECnXouagiEge+l8m8FdANmA16SM5MhdiLPaRPD0O
+ Ikdwsvu7e0MO/fzoP3dCXwmM5TKrcuM3lH5j9tPSDO274YC9QgP939Ub5wujiTi5dIiZNc34cSU
+ wPWntKi7Qhs2DyT8Yha0LTrocO3rDGJc+7HNs0MuKuWJnt6w0Nze32L4vd5orQ+q5gnTvS4Y8j9
+ hRf3F0Z5cwgamjpGMmg==
+X-Proofpoint-GUID: dN02Bq-QLMwkXdeagCmM6hC5qCJGoUXu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-25_04,2026-02-25_02,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +196,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-02-26 08:06, Richard Henderson wrote:
-> On 2/25/26 22:08, Max Chou wrote:
-> > The OCP FP8 E4M3 format has only a single NaN encoding (0x7F/0xFF),
-> > Replace the indirect check via parts_is_snan_frac with a direct
-> > check of no_signaling_nans to make the intent clearer.
-> > 
-> > Signed-off-by: Max Chou <max.chou@sifive.com>
-> > ---
-> >   fpu/softfloat-parts.c.inc | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> > index 3c323c0cec..5ef7e2d921 100644
-> > --- a/fpu/softfloat-parts.c.inc
-> > +++ b/fpu/softfloat-parts.c.inc
-> > @@ -245,8 +245,8 @@ static void partsN(canonicalize)(FloatPartsN *p, float_status *status,
-> >           case float_expmax_e4m3:
-> >               if (p->frac_hi == 0b111) {
-> >                   frac_shl(p, fmt->frac_shift);
-> > -                p->cls = (parts_is_snan_frac(p->frac_hi, status)
-> > -                          ? float_class_snan : float_class_qnan);
-> > +                p->cls = no_signaling_nans(status) ? float_class_qnan :
-> > +                                                     float_class_snan;
-> >                   return;
-> >               }
-> >               /* otherwise normal */
-> 
-> But parts_is_snan_frac also checks snan_bit_is_one.
-> 
-> 
-> r~
-
-Hi Richard,
-
-You're right. I missed that parts_is_snan_frac respects both
-snan_bit_is_one and no_signaling_nans flags and I just assumed that user
-will use no_signaling_nans flag to define the E4M3 NaN.
-The current implementation correctly allows targets to control E4M3 NaN
-classification through either mechanism, and this change would have removed
-the snan_bit_is_one flexibility.
-
-I'll drop this patch and send a v2 series containing only the two bug fix
-patches:
-
-Thanks,
-rnax
-
+DQoNCj4gT24gMjUgRmViIDIwMjYsIGF0IDI6MjLigK9BTSwgTWFjaWVqIFMuIFN6bWlnaWVybyA8
+bWFpbEBtYWNpZWouc3ptaWdpZXJvLm5hbWU+IHdyb3RlOg0KPiANCj4gTm93IHRoYXQgdGhlIEtW
+TSBzaWRlIG9mIHRoaXMgcGF0Y2ggaXMgaW4gTGludXMgdHJlZSBhcmUgdGhlcmUgYW55IHBsYW5z
+DQo+IHRvIHN1Ym1pdCBhIHYyIGZvciB2aXNpYmlsaXR5IGFuZCB3aXRoIHVwZGF0ZWQgZmxhZyBu
+YW1pbmcgZXZlbiBiZWZvcmUNCj4gZ2V0dGluZyB0aGUgcXVlc3Rpb25zIGFib3ZlIGFuc3dlcmVk
+Pw0KPiANCj4+IFJlZ2FyZHMsDQo+PiBLaHVzaGl0DQo+IA0KPiBUaGFua3MsDQo+IE1hY2llag0K
+DQpTdXJlLCB3aWxsIHNlbmQgYSB2Mi4=
 
