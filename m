@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561B2FC5911
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 08:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D088FC590F
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 08:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvX1B-0005GJ-28; Thu, 26 Feb 2026 03:46:45 -0500
+	id 1vvX0v-000558-NB; Thu, 26 Feb 2026 03:46:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvX18-0005Ey-SC
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:46:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvX0u-00054d-5c
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:46:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvX17-000588-8n
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:46:42 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvX0s-00056O-Fj
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 03:46:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772095600;
+ s=mimecast20190719; t=1772095585;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L+RyRLaqQtZc3EzTIayv9FDKEXo7lUf/dERof9VMRnM=;
- b=W/puaDiWKlF6qNVHJINy71bcPBY0Wt0X6CkcRexv1iYbmFPsI5AcJ8oAImUitjSykhDW+u
- yQtfIH8BzGw4NQUj+B3aTfibxdkaXoYoqVkeD5i1z9EP3a8ziMOiZlInCzaB3LH5mfJHpE
- hgHnqAu400OfgMXNhueIg/KZW/6VPtk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=9kMCpKa6E3whzwhZXFGsoThzRuxM/9yjPJs+xWo9Cq4=;
+ b=UPNDxwUm8N32kt5ak+iz8OFIPFCV9OSEQUT/KCaSM73Aows9ME+qnSy2I8ZA7NMfhFhDyr
+ o86944U4NS+NAxdxgPuM/gnXqK/zDdjpbgdZqp7TKmeHJPNLcoo9yBtQmNFMHchf/zVDBd
+ iSAx05R9y/uuS04da9xP64SI23c8pJg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-WrgkjeoaPtClaTCQjWECXQ-1; Thu,
- 26 Feb 2026 03:46:36 -0500
-X-MC-Unique: WrgkjeoaPtClaTCQjWECXQ-1
-X-Mimecast-MFC-AGG-ID: WrgkjeoaPtClaTCQjWECXQ_1772095595
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-3wRgehe5PiGFJTlqHaLQFQ-1; Thu,
+ 26 Feb 2026 03:46:22 -0500
+X-MC-Unique: 3wRgehe5PiGFJTlqHaLQFQ-1
+X-Mimecast-MFC-AGG-ID: 3wRgehe5PiGFJTlqHaLQFQ_1772095580
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 404EA1956088; Thu, 26 Feb 2026 08:46:35 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A226818004AD; Thu, 26 Feb 2026 08:46:20 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.225.23])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DCAAB19560B5; Thu, 26 Feb 2026 08:46:30 +0000 (UTC)
+ id 8388319560B5; Thu, 26 Feb 2026 08:46:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	"Edgar E. Iglesias" <edgar.iglesias@gmail.com>
@@ -54,27 +54,24 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 4/4] Remove the qemu-system-microblazeel target from the
- build
-Date: Thu, 26 Feb 2026 09:46:06 +0100
-Message-ID: <20260226084608.11251-5-thuth@redhat.com>
+Subject: [PATCH v2 1/4] tests/functional: Remove the microblazeel test
+Date: Thu, 26 Feb 2026 09:46:03 +0100
+Message-ID: <20260226084608.11251-2-thuth@redhat.com>
 In-Reply-To: <20260226084608.11251-1-thuth@redhat.com>
 References: <20260226084608.11251-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,130 +89,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-It's been deprecated since two releases, so it should be fine to
-remove this now. Users can use the qemu-system-microblaze binary
-instead that can handle both endiannesses now.
+We are going to remove the microblazeel target, so the test is not
+required anymore. The little endian mode is tested already via the
+"microblaze" target, so we don't lose any test coverage here.
+
+While we're at it, simplify the "microblaze" target test now (in the
+file tests/functional/microblaze/test_s3adsp1800.py) since we don't
+need the separate super-class here anymore.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                      |  4 ++--
- docs/about/deprecated.rst                        | 13 -------------
- docs/about/removed-features.rst                  | 14 ++++++++++++++
- configs/devices/microblazeel-softmmu/default.mak |  6 ------
- configs/targets/microblazeel-softmmu.mak         |  6 ------
- qapi/machine.json                                |  2 +-
- 6 files changed, 17 insertions(+), 28 deletions(-)
- delete mode 100644 configs/devices/microblazeel-softmmu/default.mak
- delete mode 100644 configs/targets/microblazeel-softmmu.mak
+ tests/functional/meson.build                  |  1 -
+ .../functional/microblaze/test_s3adsp1800.py  | 23 +++-------------
+ tests/functional/microblazeel/meson.build     |  5 ----
+ .../microblazeel/test_s3adsp1800.py           | 26 -------------------
+ 4 files changed, 3 insertions(+), 52 deletions(-)
+ delete mode 100644 tests/functional/microblazeel/meson.build
+ delete mode 100755 tests/functional/microblazeel/test_s3adsp1800.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 233d2a5e71f..2af4b2c0887 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -286,7 +286,7 @@ F: target/microblaze/
- F: hw/microblaze/
- F: disas/microblaze.c
- F: tests/docker/dockerfiles/debian-microblaze-cross.d/build-toolchain.sh
--F: tests/functional/microblaze*/meson.build
-+F: tests/functional/microblaze/
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index e1f5c0e7678..b979cff2b97 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -18,7 +18,6 @@ subdir('i386')
+ subdir('loongarch64')
+ subdir('m68k')
+ subdir('microblaze')
+-subdir('microblazeel')
+ subdir('mips')
+ subdir('mipsel')
+ subdir('mips64')
+diff --git a/tests/functional/microblaze/test_s3adsp1800.py b/tests/functional/microblaze/test_s3adsp1800.py
+index f093b162c0a..be78c208e3b 100755
+--- a/tests/functional/microblaze/test_s3adsp1800.py
++++ b/tests/functional/microblaze/test_s3adsp1800.py
+@@ -14,8 +14,6 @@
  
- MIPS TCG CPUs
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
-@@ -1422,7 +1422,7 @@ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
- S: Maintained
- F: hw/microblaze/petalogix_s3adsp1800_mmu.c
- F: include/hw/char/xilinx_uartlite.h
--F: tests/functional/microblaze*/test_s3adsp1800.py
-+F: tests/functional/microblaze/test_s3adsp1800.py
+ class MicroblazeMachine(QemuSystemTest):
  
- petalogix_ml605
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 1d5c4f3707c..d0ce914d858 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -301,19 +301,6 @@ please write a mail to the qemu-devel mailing list). If you just want to
- boot a Cortex-A15 or Cortex-A9 Linux, use the ``virt`` machine instead.
- 
- 
--System emulator binaries
--------------------------
+-    timeout = 90
 -
--``qemu-system-microblazeel`` (since 10.1)
--'''''''''''''''''''''''''''''''''''''''''
+     ASSET_IMAGE_BE = Asset(
+         ('https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/'
+          'day17.tar.xz'),
+@@ -25,14 +23,12 @@ class MicroblazeMachine(QemuSystemTest):
+         ('http://www.qemu-advent-calendar.org/2023/download/day13.tar.gz'),
+         'b9b3d43c5dd79db88ada495cc6e0d1f591153fe41355e925d791fbf44de50c22')
+ 
+-    def do_ballerina_be_test(self, force_endianness=False):
++    def test_microblaze_s3adsp1800_big_endian(self):
+         self.set_machine('petalogix-s3adsp1800')
+         self.archive_extract(self.ASSET_IMAGE_BE)
+         self.vm.set_console()
+         self.vm.add_args('-kernel',
+                          self.scratch_file('day17', 'ballerina.bin'))
+-        if force_endianness:
+-            self.vm.add_args('-M', 'endianness=big')
+         self.vm.launch()
+         wait_for_console_pattern(self, 'This architecture does not have '
+                                        'kernel memory protection')
+@@ -41,14 +37,13 @@ def do_ballerina_be_test(self, force_endianness=False):
+         # message, that's why we don't test for a later string here. This
+         # needs some investigation by a microblaze wizard one day...
+ 
+-    def do_xmaton_le_test(self, force_endianness=False):
++    def test_microblaze_s3adsp1800_little_endian(self):
+         self.require_netdev('user')
+         self.set_machine('petalogix-s3adsp1800')
+         self.archive_extract(self.ASSET_IMAGE_LE)
+         self.vm.set_console()
+         self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
+-        if force_endianness:
+-            self.vm.add_args('-M', 'endianness=little')
++        self.vm.add_args('-M', 'endianness=little')
+         tftproot = self.scratch_file('day13')
+         self.vm.add_args('-nic', f'user,tftp={tftproot}')
+         self.vm.launch()
+@@ -60,17 +55,5 @@ def do_xmaton_le_test(self, force_endianness=False):
+                 '821cd3cab8efd16ad6ee5acc3642a8ea')
+ 
+ 
+-class MicroblazeBigEndianMachine(MicroblazeMachine):
 -
--The ``qemu-system-microblaze`` binary can emulate little-endian machines
--now, too, so the separate binary ``qemu-system-microblazeel`` (with the
--``el`` suffix) for little-endian targets is not required anymore. The
--``petalogix-s3adsp1800`` machine can now be switched to little endian by
--setting its ``endianness`` property to ``little``.
+-    ASSET_IMAGE_BE = MicroblazeMachine.ASSET_IMAGE_BE
+-    ASSET_IMAGE_LE = MicroblazeMachine.ASSET_IMAGE_LE
+-
+-    def test_microblaze_s3adsp1800_legacy_be(self):
+-        self.do_ballerina_be_test()
+-
+-    def test_microblaze_s3adsp1800_legacy_le(self):
+-        self.do_xmaton_le_test(force_endianness=True)
 -
 -
- Backend options
- ---------------
- 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 41bec8b8e38..c6ee20ff620 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1277,6 +1277,20 @@ The 'pvrdma' device and the whole RDMA subsystem have been removed.
- 
- SD physical layer specification v2.00 supersedes the v1.10 one.
- 
-+
-+System emulator binaries
-+------------------------
-+
-+``qemu-system-microblazeel`` (removed in 11.0)
-+''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The ``qemu-system-microblaze`` binary can emulate little-endian machines
-+now, too, so the separate binary ``qemu-system-microblazeel`` (with the
-+``el`` suffix) for little-endian targets is not required anymore. The
-+``petalogix-s3adsp1800`` machine can now be switched to little endian by
-+setting its ``endianness`` property to ``little``.
-+
-+
- Related binaries
- ----------------
- 
-diff --git a/configs/devices/microblazeel-softmmu/default.mak b/configs/devices/microblazeel-softmmu/default.mak
+ if __name__ == '__main__':
+     QemuSystemTest.main()
+diff --git a/tests/functional/microblazeel/meson.build b/tests/functional/microblazeel/meson.build
 deleted file mode 100644
-index 4c1086435bf..00000000000
---- a/configs/devices/microblazeel-softmmu/default.mak
+index 27619dc5a9a..00000000000
+--- a/tests/functional/microblazeel/meson.build
 +++ /dev/null
-@@ -1,6 +0,0 @@
--# Default configuration for microblazeel-softmmu
+@@ -1,5 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0-or-later
 -
--# Boards are selected by default, uncomment to keep out of the build.
--# CONFIG_PETALOGIX_S3ADSP1800=n
--# CONFIG_PETALOGIX_ML605=n
--# CONFIG_XLNX_ZYNQMP_PMU=n
-diff --git a/configs/targets/microblazeel-softmmu.mak b/configs/targets/microblazeel-softmmu.mak
-deleted file mode 100644
-index 52feb957b48..00000000000
---- a/configs/targets/microblazeel-softmmu.mak
+-tests_microblazeel_system_thorough = [
+-  's3adsp1800'
+-]
+diff --git a/tests/functional/microblazeel/test_s3adsp1800.py b/tests/functional/microblazeel/test_s3adsp1800.py
+deleted file mode 100755
+index 75ce8856ed1..00000000000
+--- a/tests/functional/microblazeel/test_s3adsp1800.py
 +++ /dev/null
-@@ -1,6 +0,0 @@
--TARGET_ARCH=microblaze
--# needed by boot.c
--TARGET_NEED_FDT=y
--TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
--TARGET_LONG_BITS=32
--TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/qapi/machine.json b/qapi/machine.json
-index ef8575b6eb9..685e4e29b87 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -38,7 +38,7 @@
- ##
- { 'enum' : 'SysEmuTarget',
-   'data' : [ 'aarch64', 'alpha', 'arm', 'avr', 'hexagon', 'hppa', 'i386',
--             'loongarch64', 'm68k', 'microblaze', 'microblazeel', 'mips', 'mips64',
-+             'loongarch64', 'm68k', 'microblaze', 'mips', 'mips64',
-              'mips64el', 'mipsel', 'or1k', 'ppc',
-              'ppc64', 'riscv32', 'riscv64', 'rx', 's390x', 'sh4',
-              'sh4eb', 'sparc', 'sparc64', 'tricore',
+@@ -1,26 +0,0 @@
+-#!/usr/bin/env python3
+-#
+-# Functional test that boots a microblaze Linux kernel and checks the console
+-#
+-# Copyright (c) 2018, 2021 Red Hat, Inc.
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later. See the COPYING file in the top-level directory.
+-
+-from microblaze.test_s3adsp1800 import MicroblazeMachine
+-
+-
+-class MicroblazeLittleEndianMachine(MicroblazeMachine):
+-
+-    ASSET_IMAGE_LE = MicroblazeMachine.ASSET_IMAGE_LE
+-    ASSET_IMAGE_BE = MicroblazeMachine.ASSET_IMAGE_BE
+-
+-    def test_microblaze_s3adsp1800_legacy_le(self):
+-        self.do_xmaton_le_test()
+-
+-    def test_microblaze_s3adsp1800_legacy_be(self):
+-        self.do_ballerina_be_test(force_endianness=True)
+-
+-
+-if __name__ == '__main__':
+-    MicroblazeMachine.main()
 -- 
 2.53.0
 
