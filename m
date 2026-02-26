@@ -4,101 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D31FC592F
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 11:27:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED456FC5935
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 11:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvZWT-0001ji-2h; Thu, 26 Feb 2026 06:27:13 -0500
+	id 1vvZio-0005ww-1k; Thu, 26 Feb 2026 06:39:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvZWQ-0001it-OU
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 06:27:10 -0500
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvZWN-0007RR-Ok
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 06:27:10 -0500
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-64937edbc9eso564532d50.2
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 03:27:07 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772105226; cv=none;
- d=google.com; s=arc-20240605;
- b=CqpAUUzBoux3zMDjQoaXzHNlVjvX9BlNQfDt+gbnQw+ZQH/E6jyVcvYLB8VnlbpjUD
- 5Ltl09K2BToCrqpOiAAEyWtb1UxDfLtj/IVJCDnvTv89v+pI8c+61uGyrNGf3I0hAOHB
- osA1Nl/nFeNLz8AncNTnjZMKVRJl1cCJxLVYkTnNEuDvOamvhS5CztnT+bo2Scc73Kx+
- HH2XdiBZ3i75yS9ksD9g71rLitpDjZR0woApQ4dg4Lzv2Yb0imhe6dr1nRhuxSynXVLL
- +eZ14ThXvybj4cTmVExJ62B+Ep+dXZsMu5sIXNPDx+9PYm4TRKo+rtCfdm9bWhJse6tZ
- SO1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=JzOhWwV1LkmXxrYyweiJgKjm61/PJ8xKblWJNwIW4X4=;
- fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
- b=cEcck682ewzFZqgubA5hog5FR+WyuldMhlJtiI9FT5BLoyUB5fndMNFLJoZpzLfRG0
- YHTjPCKveu0u5IWbUiGgd4eqzAgLDWjQK6EMrUO2153KOO6EppHMwaXyxMt1qpEKWa5E
- yzd8NI2ZMyCm+gLCdhKNEkEo07UfQtU/vcWjtqQ+UMnLkd/vqb8XgunydIAa32AtBznk
- KbiPzB2/e3UMB0UjyNlT+n9a+bvbpjeYHyum1W4GbyesrRHj7OCN93eDHrMLY6s/r9QM
- 50Uo4dDY609oFy41TIxcaF9MWzukiweuIu/C1S1HLC6onmGe+alLAp6P2VTmBFieRX4Q
- FD+Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772105226; x=1772710026; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JzOhWwV1LkmXxrYyweiJgKjm61/PJ8xKblWJNwIW4X4=;
- b=ja5AW0bpTqNVgeRf9c0uUMvTSaqhu7NBEdnSc16OrUJ0KoqSPWFrrlHXbBD0XmRB9j
- Z9Xwk9xDKrT44GrPUprTR/cGSKF6cwReQLEoTPg9Fi2fG4F7eo4SpEfSf3giVAtYeeRP
- bXoxwXfeo/VjnJuz2Hr1IUlZeAJ+2cX/+6w8JIMxIhJ3s1LWP4gMs9vvNBgSoIurS4YL
- vsgFkI+OXRSx6+6VnJiM9Cmrf4jP8pkRONCZjT/OA3YDcHbV0+9U7GH2O+kE8/P4XTV1
- 4dieIVXdFbEsa21XurRX1Jpa11XJ36r2MVOcEhfEzWVG2uGrHtVfNJlbK50nAuWZYxlO
- /dEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772105226; x=1772710026;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JzOhWwV1LkmXxrYyweiJgKjm61/PJ8xKblWJNwIW4X4=;
- b=KUKpaqOAAmOV3LK4i6yLQX10T4ZobfNMGkUnGUYfT+mRB/PidHMqY1N8CgGDcfX+Zs
- s8+c/RAsO/1v8gO7as96VYtE2i1MlTgqvrvo+x2gDdJ5RqI5PUl7RcS/rRSwZiKR4Pb6
- 3HsbRnm7EUlmcf57qOmx2MYRczm80jOF1koqu4rgtEFTM1mxmgBgqbRT06JqrxUZ29lR
- 5hoT7xHqV2tSvthBc+BO42RY49BLxohKFQ7waEy7KWPLkERGOnlLJmXBifpxeGDi9R2B
- K4XJb2RlrEKTzGgk5P9928pzzP5Dq/D7jBgyZr9CZG3xv4Tpb6rZecK7cSUpZ8NuGwGE
- ZqYA==
-X-Gm-Message-State: AOJu0YztMNd9qwUKBSuF2i7KEEApFniAQfO8+R1LZKrs7GiUVWQHhXNH
- DXLdEUuDHi5iLT1egXXuPZxth8IHaFfa5QhUIJuGTmbvXYVnZzO5sM/BGw5YYeM7dQMy5p+HIz+
- Rd1SOQtWDTzt1kyzW3SPXZImzC7pD2lj0VdNFwbM1XHHKbUdn3pk5
-X-Gm-Gg: ATEYQzznWDLDbGGuY7VXA94B9IjdV6BuHCWgMqj1JDwHa+tSMe67BvjX93AaLbsEdhl
- TVmQiPQshXhvSHwm1NHgpCOZL+QsPMYBVOX5ne1nmVY5vTt66NssjMDojtlnJ22G22I2vFytmjf
- KG3eKKqwG3yJzq6a5dWQ1FBJvpOWO2OD5Xpa6qhyy19fz2TOGR6nWdOSUoTEfwOhMalaXtZbYcp
- HC4AnbLCyIbCSFBHIcHQW0IjOA8Kx+p9Vyg51qKGcIq5HkcRnaZ3JRxnUbyfVhsgEie5Dw1rrFy
- d2msNnC1WdAshWpMf+kOd5QTlLCt7LTJ7cOXJe7YG8I/ExzZ4U9tUc0M6SVZUgxNN4c=
-X-Received: by 2002:a05:690e:2027:b0:64c:a4ab:e4dd with SMTP id
- 956f58d0204a3-64cb22c7754mr2480126d50.1.1772105226284; Thu, 26 Feb 2026
- 03:27:06 -0800 (PST)
-MIME-Version: 1.0
-References: <20260225231411.96482-1-philmd@linaro.org>
-In-Reply-To: <20260225231411.96482-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Feb 2026 11:26:54 +0000
-X-Gm-Features: AaiRm52KDAoEUa2QX9roDo0_ioHsJrUjHCHaoKzk7p-s5LAHwRoJJrpsHXUisdM
-Message-ID: <CAFEAcA9rBRMiLgk8FxfRTTM0Uf7qxUXqWvBqw7PWgL=s8-kc4Q@mail.gmail.com>
-Subject: Re: [PULL 00/70] Single binary patches for 2026-02-26
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <pl@dlhnet.de>)
+ id 1vvZil-0005wd-P8; Thu, 26 Feb 2026 06:39:55 -0500
+Received: from mailcow.dlhnet.de ([2a01:b1c0::44ca:22ff:fe9b:798c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pl@dlhnet.de>)
+ id 1vvZij-0001lR-It; Thu, 26 Feb 2026 06:39:55 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id 0AD3546ACE9; Thu, 26 Feb 2026 12:39:39 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dlhnet.de; s=dkim;
+ t=1772105980; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+ content-transfer-encoding:in-reply-to:references;
+ bh=BYii1giY01zqkKFhniadKeEnHWieRiossP9rcaQ0Zbg=;
+ b=ZyvstNYDTmnHgDFtvOcwzc+KvbOYqwLaSRBa4XVFszXbOAMQDcQiNRyINa2BgsWUGsj7OT
+ 4vkP1FH1lHOlZnYICAgAuDGXZGTAVuYtVQutQnLy0AnawnLydjPxmrhmGr45wzUdZXv4Np
+ 71Zpdevp8CVyBtfTilPrlWJ6/+eZpEHKcyBjci7B1ReSyEnlPVNydwjUcRrUv6iBugMRdi
+ I2TIpaUFA057JbxgKTmQrkbIRnuPInQhZhP+OdrQZVgSSSkxJSErUVkbY0hUG6g6tIHET4
+ OhSLqcvKS4nqDQEcbo/T4yIrQ7hesGD9WuUEYztKIFd2ylY7YkDoWKJ3grK+cw==
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: Re: block/nfs.c and libnfs vs Fedora 43 (was: Re: [PULL v2 00/19]
+ Python patches)
+From: Peter Lieven <pl@dlhnet.de>
+In-Reply-To: <aaArdNcA8Iq9DrBA@redhat.com>
+Date: Thu, 26 Feb 2026 12:39:28 +0100
+Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
+ QEMU Developers <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Qemu-block <qemu-block@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Message-Id: <8CD4D8E7-54EA-4A69-97E0-9FB693FE0CFF@dlhnet.de>
+References: <20260224181440.832943-1-jsnow@redhat.com>
+ <CAFEAcA-zsPN0Pbg9USt2dWCD9+iONr=bCGDaxomysn3ubqx=gA@mail.gmail.com>
+ <aaArdNcA8Iq9DrBA@redhat.com>
+To: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+X-Last-TLS-Session-Version: TLSv1.2
+Received-SPF: pass client-ip=2a01:b1c0::44ca:22ff:fe9b:798c;
+ envelope-from=pl@dlhnet.de; helo=mailcow.dlhnet.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,40 +71,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Feb 2026 at 23:14, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> The following changes since commit 6593154e7d65f61d8f9dbeb98224731b7137c5=
-3e:
->
->   Merge tag 'python-pull-request' of https://gitlab.com/jsnow/qemu into s=
-taging (2026-02-24 18:41:04 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/philmd/qemu.git tags/single-binary-20260226
->
-> for you to fetch changes up to c87bf20b072ebd26f2c4ff68f802ef0d69f72a46:
->
->   page-vary: Build migration_legacy_page_bits as common code (2026-02-26 =
-00:12:12 +0100)
->
-> ----------------------------------------------------------------
-> Various patches related to single binary effort:
->
-> - Remove TARGET_PHYS_ADDR_SPACE_BITS definition
-> - Remove MonitorDef register entries already provided by gdbstub XML
-> - Remove gdbstub ldtul*() macros
-> - Build various gdbstub.c files once
-> - Make qemu_arch_available() and page-vary common code
-> ----------------------------------------------------------------
 
 
+> Am 26.02.2026 um 12:16 schrieb Daniel P. Berrang=C3=A9 =
+<berrange@redhat.com>:
+>=20
+> On Thu, Feb 26, 2026 at 10:44:58AM +0000, Peter Maydell wrote:
+>> On Tue, 24 Feb 2026 at 18:14, John Snow <jsnow@redhat.com> wrote:
+>>>=20
+>>> The following changes since commit =
+afe653676dc6dfd49f0390239ff90b2f0052c2b8:
+>>>=20
+>>>  Merge tag 'audio-pull-request' of =
+https://gitlab.com/marcandre.lureau/qemu into staging (2026-02-23 =
+14:03:50 +0000)
+>>>=20
+>>> are available in the Git repository at:
+>>>=20
+>>>  https://gitlab.com/jsnow/qemu.git tags/python-pull-request
+>>>=20
+>>> for you to fetch changes up to =
+4e55bb4be53bc7a5e3fe1429af12d2e3090049a5:
+>>>=20
+>>>  python: add setuptools and wheel dependencies (2026-02-24 13:11:29 =
+-0500)
+>>>=20
+>>> ----------------------------------------------------------------
+>>>=20
+>>> ----------------------------------------------------------------
+>>=20
+>> Hi -- it looks like this pullreq may have broken the "coverity" job
+>> that (run on a separate schedule from main CI) does a QEMU build to
+>> upload to the coverity scan service:
+>>=20
+>> https://gitlab.com/qemu-project/qemu/-/jobs/13264087007
+>>=20
+>> It fails during QEMU configure:
+>>=20
+>> Dependency libnfs found: NO. Found 16.2.0 but need: '<6.0.0' ;
+>> matched: '>=3D1.9.3'
+>> Run-time dependency libnfs found: NO
+>> ../meson.build:1150:11: ERROR: Dependency lookup for libnfs with
+>> method 'pkgconfig' failed: Invalid version, need 'libnfs' ['<6.0.0']
+>> found '16.2.0'.
+>>=20
+>> I'm guessing this is because:
+>> * the coverity job runs on the amd64-fedora-container
+>> * we just upgraded our Fedora container to F43
+>> * coverity configures with --enable-libnfs
+>=20
+> Do we really need to be hardcoding configure options ?
+>=20
+> It is a pretty random subset of options, compared to what gets
+> enabled in the build.
+>=20
+> Originally we had the hand-built Dockerfile, but now nearly all
+> our dockerfiles are auto-generated by lcitool, so we get the full
+> set of QEMU deps on every distro.=20
+>=20
+> There is a risk that we break a meson/configure chck somewhere,
+> but IMHO that's not something our coverity needs to be validating
+> directly. If that happens and we later fix it, coverity would
+> pick up any flaws that weere introduced in the window it was
+> broken.
+>=20
+>> * in meson.build we enforce libnfs < 6.0.0
+>> * F43 ships with a newer libnfs
+>>=20
+>> The "not libnfs v6" restriction was added by thuth in
+>> commit e2d98f257138 in 2024 because of a big API change in
+>> libnfs v6. The theory was that this was a temporary hack
+>> until somebody updated block/nfs.c to handle the new API.
+>> Over a year later, nobody has touched block/nfs.c...
+>>=20
+>> I guess for the moment we should fix the Coverity build
+>> by dropping the --enable-libnfs (and accepting that we
+>> don't scan block/nfs.c any more). For the longer term:
+>>=20
+>> * does anybody want to update block/nfs.c ?
+>> * or should we mark it as deprecated and plan to eventually
+>>   drop it, given that the set of supported distros you can
+>>   build it on is rapidly shrinking ?
+>=20
+> MAINTAINERS file marks it as "maintained" but given the ongoing
+> brokeness that feels outdated :-(
+>=20
+> In Fedora we've been carrying a patch to QEMU to enable libnfs
+> v6.
+>=20
+>  =
+https://src.fedoraproject.org/rpms/qemu/blob/rawhide/f/0002-nfs-Add-suppor=
+t-for-libnfs-v2-api.patch
+>  =
+https://src.fedoraproject.org/rpms/qemu/blob/rawhide/f/0008-Revert-meson.b=
+uild-Disallow-libnfs-v6-to-fix-the-bro.patch
 
-Applied, thanks.
+Sorry, I was not aware of any build problems so far and as I wrote Peter =
+earlier I was some time out of Qemu development, but that changed =
+recently.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+Is there a reason why Ronnie=E2=80=99s patch never went upstream? =
+Surely, it was incomplete without the fix in the build scripts.
 
--- PMM
+I do not see any issue with both patches. If there are issues at all I =
+would suspect a problem introduced in libnfs v6.
+
+In general I found nfs in userspace really useful especially if it is =
+only used for ISOs or qemu-img jobs.
+
+A broken NFS server mounted in the host can easily bring down a lot of =
+things including a VM that has a ISO mounted from it.
+
+Peter=
 
