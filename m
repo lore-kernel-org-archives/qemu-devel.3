@@ -4,183 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC34EFC5905
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E20FC5904
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvVQT-000563-16; Thu, 26 Feb 2026 02:04:45 -0500
+	id 1vvVXo-00072W-70; Thu, 26 Feb 2026 02:12:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1vvVQP-00055f-BB
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:04:41 -0500
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvVXe-0006zn-M7
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:12:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1vvVQN-0005uP-Jd
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:04:40 -0500
-Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61Q08WwN2951284; Wed, 25 Feb 2026 23:04:25 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=UvK4WThGJOPx4tyFuXZXzmVLG9xkV0ZHbCSRuTWEP
- zg=; b=xQtoOAqXGjdZeZ8Ze3TvYk+dhZ5WyT7RSvVid0cHtn5TRva69s5SIl0bK
- xz2CJePjHT1W4rbtN7alFuucicRdPJEFH8XKdFAR03h6zvgMfQw/ykmx4wrBBgYc
- yTTL+P6Kc5Kr1pEOnh49KYKSAV7GFBWSKwNZ9+hB2bK3ASNuN+7cy08B9x/IIhXe
- EheRkNR+b9rfrrr/gfhyi4v/mNTQJchr+WltTnG6WjHMNTuVMpffUoUTiJOS8t6J
- NVOzwwozdBB3o90cqOdraUBmHXH0z8JdKaN4casuxXg6GgW6u9TJgn14wfSiD/Hb
- o7Gwtz9SYe+IvhamKkz4d9gu648mw==
-Received: from sn4pr2101cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11022072.outbound.protection.outlook.com
- [40.93.195.72])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4cjbbsrpny-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 25 Feb 2026 23:04:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OHMlvjGGJdtsW8QuBAl18+wuTsRQTAqfQIoU0ZyhMSmaoS0LkSKyCgdjPpanQLsFGoMokRV67XHDUc6yBBMU5eTGvfykLazwoVeyJnvO/nEX2yxcIzs+ANtqzXbMF9B7wwiZgsMO4u5AQQEDD9mVKqIrwmI/8xI7zNd8CcxTNegp/Qoc5jDAyOn7uviesJYw/HToBTZv7SAp75eDFFB760eI4itKCMQWg6TnRDnIRQZLrzp/SNpGialq68gwp+6EdXiY9jPoJzuQeqAznb81I/I551V28sBCY35Opz7SLC5C+jiFFubuiMZ6l2dmPuXJESEfw8r7ldcqlgm5GCQdmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UvK4WThGJOPx4tyFuXZXzmVLG9xkV0ZHbCSRuTWEPzg=;
- b=BLY76VdSim8ZG9gtazjtHbwDYfaviLiwHK+rn4pr7gzjkpy4hUGRJnEoGnRHa7yvErZDSZjhz1fStQ8qO+9M2iaLlgDQiYAhlp7Oym75vLnVKzXrfBTarEwVbBZBCVjM+hpESaFkmgFs7QhaLW9UJkdOepoxqBhbINPYs9n4/1qLSA8U/9Z9qfQUP7TVbpw56rLIxMxEr6sykLH4QRixo1bE64TY0FsLHZUhRcN8KqvOZH+YQjVqkULL79+L7z5vRQfY3V4XrRLa9GTzzGC/S4mo/OTlDIqb0r+tS78KawJSvCj0hwJZV9ebt+q+FUlc0NlocLRNketOmtpeyFBoiQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UvK4WThGJOPx4tyFuXZXzmVLG9xkV0ZHbCSRuTWEPzg=;
- b=dHWbRLc5wiwf6Z/3h2/KX+h7SekfW6dG40nyUhJdekjrulZ7JcoB0ozrOqvhB7kt36MOYmskFfxksuI1AWztiRrV7NpgJGJJxhGwhIr9PXBzYfbvh2+h5qpRrxXER5l90pJlTEfMNx0BiEilhQPccvecac0GT0Z9BrwKqKrfiFvILtZNPNEH/7Pv1LEF9f+XOSrlo9ADNk6WrunIL//+3K34/heEco40LR4uP82X3r/3i++c87qeAjpUSqfGxzomYBgCQhlCuAhPPh+C9/s0wIAoaOzRrhYUZIWi9G3yoOOLZifsGirFKrOas4vUFgpm2EcxekSIGQ0WdavUmpKW1w==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by DS0PR02MB10688.namprd02.prod.outlook.com (2603:10b6:8:1f4::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Thu, 26 Feb
- 2026 07:04:24 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%6]) with mapi id 15.20.9632.010; Thu, 26 Feb 2026
- 07:04:23 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-CC: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S . Tsirkin" <mst@redhat.com>, Marcelo
- Tosatti <mtosatti@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sean Christopherson <seanjc@google.com>, "kvm@vger.kernel.org"
- <kvm@vger.kernel.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
-Thread-Topic: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
-Thread-Index: AQHcXrhurlricMg9iE6/H6LGVi6DLrUEthqAgBW2oICAeHTggIACPS0A
-Date: Thu, 26 Feb 2026 07:04:23 +0000
-Message-ID: <8803DF89-C418-41BC-8848-1C2AE38A0D82@nutanix.com>
-References: <20251126093742.2110483-1-khushit.shah@nutanix.com>
- <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
- <C1DC0AAE-AE34-42E1-A15C-E03D1EE4D770@nutanix.com>
- <79f110e1-b217-4a70-81f7-d596f822dde5@maciej.szmigiero.name>
-In-Reply-To: <79f110e1-b217-4a70-81f7-d596f822dde5@maciej.szmigiero.name>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|DS0PR02MB10688:EE_
-x-ms-office365-filtering-correlation-id: 119063e7-628e-4ae1-b19d-08de750545bd
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
-x-microsoft-antispam-message-info: TebhtNuihwkmvQneM2nAYoWy4M1rbHh+qls6k+qOANa6+jwYXLR8qrZU3fOv13jk7AY3tkOmqgLFFd+D6Ikaa71+plb5VEG37Q8qWbDPes4czq5aBtGyCRZFNMNd89FADAQ6/LuZU5fEW0t8BJVn5yUTaO6is7+NOIL2gJ3Kqad0XpHFg8FewBfwYxpHkfA7LgXiGsgIcU3ncGGmdACUgkDGfE+wvYYxmvuA0Bd+i1SYDWOq9zmyD+s1Sn2U19nFfMCGwODb33VYwINBrzmXwzwLFvTRcbQkw6Eyr88EARiYuLC8gmSzkOaKpByMJB8E5ksgqPTGLmz5w5HoJun/6btxF66M3r0yZS7BlR6GHn8T6B1f+JYjTaODrO/ygzEkk56CiRpG8szE0muZHGeBgT9SNZowrnRYFyHcRKgGtr/aDgjpAoL8VjZtAeuVoKRUX2YoLzIVgtdC7WGaFCYo3TkmTVJnpi07wVvW1TmFXEnFgKqyjT22MyiyowKPtR1/CSZJLliHL75VFlmmaKWpENjL6luucPEcKR0sb4tGRU63gQ209FmfFqiKOq5uniWyNNhESyrdL6tZTY57Yg6Q/oIQFkcKiYGNM+ERzd/Ivs6lWepOdUQgtgDwXZ0elKfgmvrTwWHCfAgTeDaMRmAYEhawYFB9FHpXaCIntnmxSDGQ3qIF3DlxYbu0C6xczCq0s0Mzj/0Gl4lV9geedMLo893WGgxwcMMYBPHlczoFf/dIktKB3htMeQRcJezuyp5JaZXIX7sFDidYzch9bh0JZT5XgOWC+ZEARYjLhneqSLU=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TDYwRFU3Ti8zUDNocDViZXhzS1pvSU4rNWEzN0I3akI0OVZkMlIvM3B3eWsy?=
- =?utf-8?B?enZyWXJBOFhHejgzREc0RDlvRk9mVUxhbXBweVQ1Y1o0K0RzaXZ5ZnpmYm5H?=
- =?utf-8?B?ZVIvOWwzT1VUNE1wKzdnQlVlY01tOUhjeXltSFltRE0zbGVSaHNvMDMyYndC?=
- =?utf-8?B?UytaVU5kNmcxQzlGemc4VFRFbktoK0xNa0o3aVJZeVVQWkZnK3YrS2FFUitS?=
- =?utf-8?B?Zm9BWTgrVXNtR0ZyRllvdHRjNUl2Qk53QmNwT2xjVnBaNjlCdS9VV2JPZXlO?=
- =?utf-8?B?bFI4eDVpN3lwUHpDUk9hSVlFWHU4bmtBQzcvaVROSGpmeSs0UlBha1lnZGZx?=
- =?utf-8?B?dUd3RW4rczg1L0dDN2tmM1ptNXRxVnAwVHRmMmNTbFFGeHBNWFhBbUFHZENN?=
- =?utf-8?B?UnJTRFAwQUM1bWNNZWNPUi8vczVLcWNLZWtUWXhnOC9WMXVQemw0YTBpSFpx?=
- =?utf-8?B?YWttRThHem9meG04RC9HaW5tcWRMVzJ0dm1sTG85WjVscWxlR2JPd1phQlVq?=
- =?utf-8?B?Z3M4UzJwbGhkS041dUdZZ2RobWtXMnJESzJFbllNbnh3MnBQQnQvemR2WWgw?=
- =?utf-8?B?Rlk3TjUxNUFhWVNOWlEyaUZlNGpXcFR6OWlOcW5RcDdqK0xqaWdyRUNqMXBn?=
- =?utf-8?B?aUQ3SnhzejdwTkNpcUtabGxiZ25ad2xKcnR3KzNjdXBTQjRJMllpdlh6Z0tZ?=
- =?utf-8?B?UlhGbWxJcEdRb1B1eTI2Z0RTMmN4U2hoRkVpc1l6V3hNWmZTb2g3Z2xoMSs5?=
- =?utf-8?B?ZWdaa3FXMlF5YmJiZlp3SytkVjJTNWJzcWUzMStFZjMwcnlwYkZOWkJvczVO?=
- =?utf-8?B?UWVzY05vcWQyc1E0THoxaVZPTGNJUmNucitURDJSS0NWNmxvaWVQMkt1MjRr?=
- =?utf-8?B?NUQ2d2FRTllyZlVKZDRRZXZIR3g0bGlwYjkvOHJaY3QyM1BlN2JnSEJtOVZh?=
- =?utf-8?B?YjNCamE3QWJEZ3psalVQL2hFWFBRdkpzbEJtUjV3SDlFa3JjVXRNd0k1dlZp?=
- =?utf-8?B?dG10VWs5SzNWSDljN0FNbXhHTFNjMG5ENWQxUTBHQnBGR3FpUTZDcUJTaEwy?=
- =?utf-8?B?TWo0LzlhN0hWWDdidzNxOTRqTXpodGs5RHJNallybTNKanVqVXpzcG1KZVlt?=
- =?utf-8?B?MTdMVW05NjVWK1dxZUtLa1o2SUNuVGdhcitPcC9TWVpISWNtaHNtVjF4SG1u?=
- =?utf-8?B?K0poNjlkSm5lVUpzakNJWEc5dWlhNU5ZRnBmWlRKcm1SWWhHalNsQVJhQS93?=
- =?utf-8?B?QnlyeSt4QVVHUVBZL05pUzRvQ0t3cG9odlFyZmhmd2lUN1BNOXgrS0Y0RmRK?=
- =?utf-8?B?cGc4T05VTExOSTFCL0RzNmZnZmloa3p5cmgrQTVnejdiN3g1U1RPTVlTd3BK?=
- =?utf-8?B?V05RcldUSTVSVk1aME1rVEhZV0svUTQ5RGp5Qlk0UlZZeks4V25qQU1BUkVu?=
- =?utf-8?B?YzBBMzJSY2RHazh2THNod2J0TkxTNHl1Y0E5VGNTdGNxam03Q1lJVW1EUTQv?=
- =?utf-8?B?SXRkNEJuZ1Rnei9DMnhCcHNtaUk1eGpueHU1amMrUEdlVDQwYjJBUkZQS24r?=
- =?utf-8?B?cVBRR2Z2ZEk2ajZRL2QvZmJkbGM5N3dtdDYvdlgvWmpDdi9BZnMzTXdyWU5O?=
- =?utf-8?B?cERjTGF5cm1xYy9oZXljbjhrQWorbEJjWFFiVzFMRTBwSHUxVmhPSlptVk5T?=
- =?utf-8?B?VHFXVGphM2ZhZk01dWtvSkpoQ0dsaWlzRUdLU2RyNkZ6cVhYeFpEa2pPVmUr?=
- =?utf-8?B?bEd5NGg5NDBVajd6N08xZFpkcytSSHcvL3oxbXpVOHpvOTZmQmoyYWtnQjVm?=
- =?utf-8?B?VVhrbjl1a3RaZjl0aktMVFRYTG5HVTRwOWN6VkQ2cXo3bGZFVFNETWZhTGFR?=
- =?utf-8?B?d1Y3bGpNRDJCdkVPZHVXVWRKUHdwbkE1UUkwQkJ5MHE1dnRyWForUTNvUWtJ?=
- =?utf-8?B?eWVQY3VrMXV2KytZdU1aTzcvL3VUakNZNlNkNkhlb2cvbjM2Vkh4dXoxUkZ1?=
- =?utf-8?B?WThWYmxPTjFwWEpnRTVDNmFDbVk2cEpTWml6c1hkSnpZaW0yU0JDSm4rbUlR?=
- =?utf-8?B?TnRraFJER2w1eDU3OWFqQjI2RUdmeC9sQ0FHY0RsVWREZnFtRmRpQis2S05h?=
- =?utf-8?B?Uk1uTDdmMlhIcVFzL1JTaWMybnpNMFlwVFhsUmJDUmgyS0cwNS9GMC93RXdu?=
- =?utf-8?B?eEhLeGhLRFZOMnNKSUp4VVJZTythZHpKdTB3Qy9sRUJoemhGNm5CdWdBZFU2?=
- =?utf-8?B?MFFEanVmSUZOU2oyUWJyTFM0MHRaUzdyUkVjRXhXOGUwTjI3c2taRDJTeXUy?=
- =?utf-8?B?L0Vuc1BRTGRienlYRnhrbmZiaVBrYXMrWFhCZkJvUXB5cDdVQmpFdS9NVFZm?=
- =?utf-8?Q?Qfi+L8n4/7akTuqQ=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <7B6A3143DCBEEA4A960439B0F4C0343C@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvVXb-0007Lq-Pp
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:12:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772089926;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FBdUl52cQDccib0nRxMgzOcVdooF8JsO4LTwPImhd04=;
+ b=D+ZrGN2OUOeRRDq1a2Sw2PeDKgKAUONNF097rDoFdnAoloSTCJewS18bt8Qi1l8SfBKTh/
+ 5jeQAZVFfHcslcY3NTuJArp3y5tmZClpZ8OkV89/adNT0OcUJg77xZJpUyrS01Rn6UWaX/
+ vGwutAYe7aTsIry31+AIQXwYFkqspQ8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-T9Rgry4ZPfaPSzmqrCYjrg-1; Thu,
+ 26 Feb 2026 02:12:04 -0500
+X-MC-Unique: T9Rgry4ZPfaPSzmqrCYjrg-1
+X-Mimecast-MFC-AGG-ID: T9Rgry4ZPfaPSzmqrCYjrg_1772089922
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D115F18005AD; Thu, 26 Feb 2026 07:12:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 665871956053; Thu, 26 Feb 2026 07:12:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E77F121E6932; Thu, 26 Feb 2026 08:11:57 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>,  Stefan Weil
+ <sw@weilnetz.de>,  "Dr. David Alan Gilbert" <dave@treblig.org>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH v6 25/27] util: add support for formatting a program
+ name in messages
+In-Reply-To: <aZ8iSclFzGgPEH1t@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 25 Feb 2026 16:24:41 +0000")
+References: <20260211152508.732487-1-berrange@redhat.com>
+ <20260211152508.732487-26-berrange@redhat.com>
+ <87ikbt3v0y.fsf@pond.sub.org> <aZ8iSclFzGgPEH1t@redhat.com>
+Date: Thu, 26 Feb 2026 08:11:57 +0100
+Message-ID: <871pi8htc2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 119063e7-628e-4ae1-b19d-08de750545bd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Feb 2026 07:04:23.8270 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: IM9Q0HB6cl6+GcNhNjhFP5R88LykiF5J+3GvRW1frLrORFmVrhtrRC1ggIi3sCzOaV8FCB3dDu+eUVqcAgsY9hnD2d09oeI49GBTPNpJ4Gs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB10688
-X-Authority-Analysis: v=2.4 cv=PL8COPqC c=1 sm=1 tr=0 ts=699ff079 cx=c_pps
- a=oU/Ts+293Snq71mcenrglA==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=HzLeVaNsDn8A:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=jxMXjlTPpCISP5mWtjnE:22 a=FjMANGMcuP__UM3ky4AA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: dN02Bq-QLMwkXdeagCmM6hC5qCJGoUXu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI2MDA2MSBTYWx0ZWRfX3hEhbpppmfdj
- IrPRGuLWUO8sOD8hVc9EUP2QDcOqJB/LZlYKQU+r5DwVN8Za4E11EKpQGKXrNACL3XQmOUHPMVz
- Ut3ECARLklZJngyzJUxA5+nEKXgMh0vvJ3zny+hRieVz2dNO/1HOBYxyUoy5MwZF3GoGGVbPdQp
- pHQsB4BmIl8RPobJ8w2uXbIA+bgwyO/Ogvq778HG9THiiF42GJ33X+fbJneLaNX0UgyyHI1rPRb
- BnhvWPWuc3xWNWvHm8qB18Ii5yU3TOD1rkqECnXouagiEge+l8m8FdANmA16SM5MhdiLPaRPD0O
- Ikdwsvu7e0MO/fzoP3dCXwmM5TKrcuM3lH5j9tPSDO274YC9QgP939Ub5wujiTi5dIiZNc34cSU
- wPWntKi7Qhs2DyT8Yha0LTrocO3rDGJc+7HNs0MuKuWJnt6w0Nze32L4vd5orQ+q5gnTvS4Y8j9
- hRf3F0Z5cwgamjpGMmg==
-X-Proofpoint-GUID: dN02Bq-QLMwkXdeagCmM6hC5qCJGoUXu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-25_04,2026-02-25_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -196,11 +100,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMjUgRmViIDIwMjYsIGF0IDI6MjLigK9BTSwgTWFjaWVqIFMuIFN6bWlnaWVybyA8
-bWFpbEBtYWNpZWouc3ptaWdpZXJvLm5hbWU+IHdyb3RlOg0KPiANCj4gTm93IHRoYXQgdGhlIEtW
-TSBzaWRlIG9mIHRoaXMgcGF0Y2ggaXMgaW4gTGludXMgdHJlZSBhcmUgdGhlcmUgYW55IHBsYW5z
-DQo+IHRvIHN1Ym1pdCBhIHYyIGZvciB2aXNpYmlsaXR5IGFuZCB3aXRoIHVwZGF0ZWQgZmxhZyBu
-YW1pbmcgZXZlbiBiZWZvcmUNCj4gZ2V0dGluZyB0aGUgcXVlc3Rpb25zIGFib3ZlIGFuc3dlcmVk
-Pw0KPiANCj4+IFJlZ2FyZHMsDQo+PiBLaHVzaGl0DQo+IA0KPiBUaGFua3MsDQo+IE1hY2llag0K
-DQpTdXJlLCB3aWxsIHNlbmQgYSB2Mi4=
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+
+> On Thu, Feb 19, 2026 at 11:08:45AM +0100, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > The error_report function can include the program name in any
+>> > messages it prints. The qemu_log function has no equivalent
+>> > behaviour.
+>> >
+>> > This introduces support for a "program name" in the new
+>> > messages API, which will be included by default for all
+>> > binaries.
+>> >
+>> > This change tweaks the output of the error_report function,
+>> > adding a space between the program name and the location
+>> > info.
+>>=20
+>> Why?
+>
+> Looking again, arguably that is fixing a pre-existing bug
+>
+> The current code is:
+>
+>     if (!monitor_cur() && g_get_prgname()) {
+>         error_printf("%s:", g_get_prgname());
+>         sep =3D " ";
+>     }
+>     switch (cur_loc->kind) {
+>     case LOC_CMDLINE:
+>         argp =3D cur_loc->ptr;
+>         for (i =3D 0; i < cur_loc->num; i++) {
+>             error_printf("%s%s", sep, argp[i]);
+>             sep =3D " ";
+>         }
+>         error_printf(": ");
+>         break;
+>     case LOC_FILE:
+>         error_printf("%s:", (const char *)cur_loc->ptr);
+>         if (cur_loc->num) {
+>             error_printf("%d:", cur_loc->num);
+>         }
+>         error_printf(" ");
+>         break;
+>     default:
+>         error_printf("%s", sep);
+>     }
+>
+>
+> Notice how we honour "sep" for LOC_CMDLINE but ignore
+> it for LOC_FILE.
+
+This works exactly as intended.  To illustrate, add
+
+    error_report("test, ignore");
+
+to qdev_device_add(), then:
+
+    $ cat t.cfg
+    [device]
+      driver =3D "usb-kbd"
+    $ qemu-system-x86_64 -S -display none -machine usb=3Don -device usb-kbd=
+ -readconfig t.cfg -monitor stdio
+    QEMU 10.2.50 monitor - type 'help' for more information
+    qemu-system-x86_64: -device usb-kbd: test, ignore
+    qemu-system-x86_64:t.cfg:2: test, ignore
+    (qemu) device_add usb-kbd
+    test, ignore
+
+The format
+
+    program:sourcefile:lineno: message
+
+conforms to the GNU Coding Standards at
+<https://www.gnu.org/prep/standards/standards.html#Errors>, and matches
+common practice.
+
+> With the program name printing moved out into a separate
+> function, the space is always printed. No change for
+> LOC_CMDLINE, but new whitespace for LOC_FILE.
+>
+> Should have changed this in a separate patch.
+>
+>> >       The qemu_log function will gain the program name. This
+>> > can be easily seen with the 'log' trace backend, and how it
+>> > is now more closely matching error_report output.
+>> >
+>> > Before:
+>> >
+>> >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 't=
+race:qcrypto*'
+>> >   qcrypto_tls_creds_x509_load TLS creds x509 load creds=3D0x5584e13937=
+f0 dir=3Dfish
+>> >   qcrypto_tls_creds_get_path TLS creds path creds=3D0x5584e13937f0 fil=
+ename=3Dca-cert.pem path=3D<none>
+>> >   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: N=
+o such file or directory
+>> >
+>> > After:
+>> >
+>> >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 't=
+race:qcrypto*'
+>> >   qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load =
+creds=3D0x5584e13937f0 dir=3Dfish
+>> >   qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=
+=3D0x5584e13937f0 filename=3Dca-cert.pem path=3D<none>
+>> >   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: N=
+o such file or directory
+>> >
+>> > When adding this the '-msg program-name=3Don|off' option is
+>> > introduced, so that the program name (which is enabled by
+>> > default) can be supressed if desired. This could be useful
+>> > if '-msg guest-name=3Don' is being used as a more informative
+>> > identifier.
+>>=20
+>> Separate patch?
+>
+> It is a bit of a borderline decision, but I felt the knob to turn it
+> off should be in the same patch that force enables it.
+
+Peter objected to making the logs more verbose by default, and I think
+he has a point.  Perhaps having errors and logs share a general format
+is useful anyway, and perhaps making it even more configurable is as
+well.  I figure we'd need separate configuration for logs and for error
+messages.
+
+Let's get to rough consensus before we debate the finer points like this
+one.
+
+>> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+> With regards,
+> Daniel
+
 
