@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29ACFFD8FF5
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 18:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FF7FD8FF5
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 18:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvgUO-0008H9-8A; Thu, 26 Feb 2026 13:53:32 -0500
+	id 1vvgUk-00009y-Uw; Thu, 26 Feb 2026 13:53:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvgU9-0008EN-0a
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:20 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1vvgUC-0008En-WE
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:22 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vvgU5-0003Xo-3d
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:16 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b8d7f22d405so185637966b.0
+ id 1vvgU5-0003Xx-4G
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 13:53:18 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-65f9a875eabso2392555a12.0
  for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 10:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1772131990; x=1772736790; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yboa4Ib5iNaVNTq21S5NaeZDhTNkVA/TIAAajIB1sXY=;
- b=kx+6xSlmw7fRFboHpfiJbJq9RZ1XOf48X+XXr1s2Q/aPUcVY7CdHiWoP6mNd16+x+W
- a8XHj2BoN54KhRNNaPG3jb125Bm5/3zbgYXq1ObPTYJT3saO4kTuZ6s+uzSTFACrAIBC
- rb0jghTyB+QfAoZTLLI67kqjP/dZn/PEzKXhVdJGkxNhuyrPL3WhJKfbXUjU0j/hQp7q
- OP8C6i5IddDSm/31wAsWhzrGIUJ5vffHJK//MSoe32ta2GUQZ1hkDtOiLQgr6185/vA6
- Vy/ury0xtc/313/CDLlECrBdeWuTDInq/EI3yvU5DAJgxLEXcChlLx5UrkGdJWle4/Jj
- 8N4Q==
+ bh=ndupL3oUN02SVuVkMK/kSxRCtIhg07JpVkz01Y9bmaU=;
+ b=XGvDE4fH5q4C1zk4LGWdI4yrG+dFACKYIx0510HaTu1PrHimp0DaUx4kInMrTW+pBS
+ s8PZwNAN+StD8lQTHlsm5AddRdJno4O+4Gg6IuFLMnQ2IbRzLCAP9AqiY6gizLcgXzaK
+ OAUeziAnfzypGz4vSDuF4JOlfgEAabA7DTOiy/O2nRBARB7/vPOzqbYWsiFdxY4GNMEb
+ WfBR7FdsiTrc46JLAB/9DyYpRzmwW/0UHzYk4HebfUpW7+e5moH/v53GKGuBHuU46FMJ
+ PBPK2X9s99rjdXAa1UzTLgAsLJ+jJ3ygnoRjPF2SXfsyOjP6FpDZ0jgGZRwYZA9+kkOj
+ gzYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1772131990; x=1772736790;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yboa4Ib5iNaVNTq21S5NaeZDhTNkVA/TIAAajIB1sXY=;
- b=b4TlLyBOzeAY23A4Z38ztR5aRO6NR6Gl66K2/C3XEl9weLcn31HKbki4YCqZIhGlYV
- XAV2hU0DhQrsdTlFDJu0gIz+saOUU7lVgtngqY+QIuHFfka95kVDTaAuaOul8fpdyQRN
- 8nDbnVha5f1Zw93u/DF4XeH84sDWTccSc4KEfy6rMTatEWGvZw+F76lv01LYnJGeiY8b
- 1iDj8v8sKgYfXOkISHDQh12Xb6mEFXVc3M/nz5IVxpnOdWsyhYvnSd/qJFWg/L30eKMO
- bloYvvKHdYzZIPU1QOUpwpVtDpFM75gU+mYINEVYu5D8JfJ49P6VsV7ipuhuI0IrMuV9
- nAVA==
-X-Gm-Message-State: AOJu0Yzx3yo5mc+5qpOjgtnsAVkSKdGzgCLBr0CUVsuuBgmxS3RrrlBn
- 8cxKIi5R9cn/oeNl8Oi8XFe7MGVqQQfhQdzAW8laF+9KTN1HUY4rzrrRcuG9PBmSpm0=
-X-Gm-Gg: ATEYQzwQ9PpZJXGurBj5HRACT4S2X4rocOTgkM1erHy/98OpHGvGjSi/4ZkFGi+oz8o
- sJLPn1SdwVRcDVRVxV5jgamPGgLcC+2uBDa0iJ5lcC7HcjPbzsuD0tMeavIroJ+/ouz7fWw3AAn
- +qSDFCrC4VR3hBsq5563UsurDQiSMJE26t67m2ro6g9e2jghGHyiefis3ia9+jBB2vWZ5KNw7bS
- ociUVG1r2tybODim3RMU7DfzMLjEfngZd5wTX+lcWBFsEvME54Phtgw0CZC9n7DUM+zc7yBFZCm
- FPuL2eEadZae5RV+N9G9S5U95Wuh/+m4TDlVfMxFkKfCNe7eb7RIHv7Sewsb5EoV3JAp6uze0Cw
- VfGViiV2TYo9YYHCgUoJIOldQyihVapfqsLNp1813W37g1TZML1y4CGB4uWc4lA7UJKhnFgsg3i
- PptxWF4Tpl7jvWuQhs2wTnZCQ=
-X-Received: by 2002:a17:907:da17:b0:b87:6b9c:6386 with SMTP id
- a640c23a62f3a-b935bb25ae5mr260933866b.56.1772131989452; 
- Thu, 26 Feb 2026 10:53:09 -0800 (PST)
+ bh=ndupL3oUN02SVuVkMK/kSxRCtIhg07JpVkz01Y9bmaU=;
+ b=YuQsFnvhYxDDdx8PPbSYJbrNiY8zQn9ek5i6ylkE0S/Q9l2SCWPezBOuI7wN4PwfsE
+ OHzDOhQSyq1bobXF9hkN2Oe+l1dWA4Iwg5KNjFr5k/VFk3006r2yJrKkxYWYjkescfRj
+ TS0h5ubP1xB84DL7YnTAa5yRAeCv9/SHIySR9e4XhnDum8zwWYyEZ39XM8m4+YirmsV4
+ DfwMQ/LvX7AJfF3sOiKxbLKJnNF+wuzq34nM/lcEVzg+JBPjRoh1+BYbWK70tBQGdCGg
+ YTVwb449ER0kJm7RyHgOKTylXSDbeQU7IJ6vbpyWoBUAWYUZ22y+ZQdreZfky2fNQXxW
+ KwqQ==
+X-Gm-Message-State: AOJu0YyS3WnY3/jMgStuiq9IkRVadRZWs3SJ4NdtHSo38Z/fJULrzV5P
+ ZshsBPIXGP3Sr40dxUe8GX+sELFbx4WjOHfQtGTziAPenvxHoKDzMLlz+luVk998IUw=
+X-Gm-Gg: ATEYQzyW+HS3J37GL0QqCluipi6GLyAT1/55IPGCX/L1iF/u6qudeNE+XMNakgaAGcS
+ sFYE40laDQj6m7cXGsBBO3PUMhhK/OfiqUzU0SN/MhxCZtLzUZAYRZjvvESIFw6kHfktnlMv/G6
+ MezjZD+SxRONMjk+3k5ohuNPqX8fBjc+OBkVoPxgx5ZhIgIfi/pszk57D2uTPKIFNDd5T7Ot2VU
+ kWK25S010Bp/zC5pMqcMBQJVJ4XY/opPdv9ppb9HJQ7V25kkfC2urNRP9HSyNC+FFrVK8H7sOgx
+ kIKRaGZnkVJvb7Klp9iiMl50gHHNIuucXeeuufaKLnnYjIxoegrCAn1POp28aXTk0S0w/e0PsYU
+ CB/Py7n7R4fQ4f8+NUHMs5i3OWh2X1/uQIEcrYwcpcXFIwF4TW5MCPlprIZFmeEU/CZisJPIkEz
+ ihCxKgmnUf6+VVqfpsyp6afF258ox0q5mHYQ==
+X-Received: by 2002:a05:6402:26c9:b0:65f:a9e1:4a4e with SMTP id
+ 4fb4d7f45d1cf-65fdd6c02a8mr217403a12.4.1772131990286; 
+ Thu, 26 Feb 2026 10:53:10 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65fabf6d26dsm739784a12.16.2026.02.26.10.53.05
+ 4fb4d7f45d1cf-65fac06dc16sm713945a12.23.2026.02.26.10.53.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 26 Feb 2026 10:53:07 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 050265F8D5;
+ by draig.lan (Postfix) with ESMTP id 1BB3C5F8D7;
  Thu, 26 Feb 2026 18:53:04 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,19 +74,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Kyle Evans <kevans@freebsd.org>,
  Brad Smith <brad@comstyle.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Warner Losh <imp@bsdimp.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 6/7] tests/vm: build openbsd from lcitool data (!567)
-Date: Thu, 26 Feb 2026 18:53:01 +0000
-Message-ID: <20260226185303.1920021-7-alex.bennee@linaro.org>
+ Warner Losh <imp@bsdimp.com>
+Subject: [PATCH v2 7/7] tests/functional: add Arm VBSA uefi conformance test
+Date: Thu, 26 Feb 2026 18:53:02 +0000
+Message-ID: <20260226185303.1920021-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260226185303.1920021-1-alex.bennee@linaro.org>
 References: <20260226185303.1920021-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,139 +108,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For now only use the minimal decadency set until all the OpenBSD
-mappings can be divined.
+The VBSA test is a subset of the wider Arm architecture compliance
+suites (ACS) which validate machines meet particular minimum set of
+requirements. The VBSA is for virtual machines so it makes sense we
+should check the -M virt machine is compliant.
 
-Currently depends on: https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/567
+Fortunately there are prebuilt binaries published via github so all we
+need to do is build an EFI partition and place things in the right
+place.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20260213154859.1551283-6-alex.bennee@linaro.org>
+There are some additional Linux based tests which are left for later.
+
+Message-ID: <20260213154859.1551283-7-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/lcitool/refresh           |  5 ++--
- tests/vm/generated/openbsd.json | 27 +++++++++++++++++++++
- tests/vm/openbsd                | 42 ++-------------------------------
- 3 files changed, 32 insertions(+), 42 deletions(-)
- create mode 100644 tests/vm/generated/openbsd.json
 
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index c74345e03d0..3e4b026035b 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -87,9 +87,9 @@ def generate_cirrus(target, trailer=None):
-     generate(filename, cmd, trailer)
- 
- 
--def generate_pkglist(vm, target):
-+def generate_pkglist(vm, target, project="qemu"):
-     filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
--    cmd = lcitool_cmd + ["variables", "--format", "json", target, "qemu"]
-+    cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
-     generate(filename, cmd, None)
- 
- 
-@@ -316,6 +316,7 @@ try:
-     # VM packages lists
-     #
-     generate_pkglist("freebsd", "freebsd-14")
-+    generate_pkglist("openbsd", "openbsd-78", project="qemu-minimal")
- 
-     #
-     # Ansible package lists
-diff --git a/tests/vm/generated/openbsd.json b/tests/vm/generated/openbsd.json
-new file mode 100644
-index 00000000000..0886afd0d3d
+---
+v2
+  - use the VBSA prebuilt shell
+  - fail the test if we see FAILED in the console stream
+---
+ tests/functional/aarch64/meson.build       |  1 +
+ tests/functional/aarch64/test_virt_vbsa.py | 99 ++++++++++++++++++++++
+ 2 files changed, 100 insertions(+)
+ create mode 100755 tests/functional/aarch64/test_virt_vbsa.py
+
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+index 49eca120589..7ea8c22b048 100644
+--- a/tests/functional/aarch64/meson.build
++++ b/tests/functional/aarch64/meson.build
+@@ -46,6 +46,7 @@ tests_aarch64_system_thorough = [
+   'tuxrun',
+   'virt',
+   'virt_gpu',
++  'virt_vbsa',
+   'xen',
+   'xlnx_versal',
+ ]
+diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/functional/aarch64/test_virt_vbsa.py
+new file mode 100755
+index 00000000000..3da06904ea9
 --- /dev/null
-+++ b/tests/vm/generated/openbsd.json
-@@ -0,0 +1,27 @@
-+{
-+  "ccache": "/usr/local/bin/ccache",
-+  "cpan_pkgs": [],
-+  "cross_pkgs": [],
-+  "make": "/usr/local/bin/gmake",
-+  "ninja": "/usr/local/bin/ninja",
-+  "packaging_command": "pkg_add",
-+  "pip3": "/usr/local/bin/pip3",
-+  "pkgs": [
-+    "bash",
-+    "bison",
-+    "bzip2",
-+    "ccache",
-+    "dtc",
-+    "git",
-+    "glib2",
-+    "gmake",
-+    "gsed",
-+    "libffi",
-+    "meson",
-+    "ninja",
-+    "pkgconf",
-+    "python3"
-+  ],
-+  "pypi_pkgs": [],
-+  "python": "/usr/local/bin/python3"
-+}
-diff --git a/tests/vm/openbsd b/tests/vm/openbsd
-index 9aabfeec963..4f8eeb28e24 100755
---- a/tests/vm/openbsd
-+++ b/tests/vm/openbsd
-@@ -24,45 +24,6 @@ class OpenBSDVM(basevm.BaseVM):
-     link = "https://cdn.openbsd.org/pub/OpenBSD/7.8/amd64/install78.iso"
-     csum = "a228d0a1ef558b4d9ec84c698f0d3ffd13cd38c64149487cba0f1ad873be07b2"
-     size = "20G"
--    pkgs = [
--        # tools
--        "dtc",
--        "git",
--        "pkgconf",
--        "bzip2", "xz",
--        "ninja",
--
--        # gnu tools
--        "bash",
--        "gmake",
--        "gsed",
--        "gettext-tools",
--
--        # libs: usb
--        "libusb1--",
--
--        # libs: crypto
--        "gnutls",
--
--        # libs: images
--        "jpeg",
--        "png",
--
--        # libs: ui
--        "capstone",
--        "sdl2",
--        "gtk+3",
--        "libxkbcommon",
--
--        # libs: migration
--        "zstd",
--
--        # libs: networking
--        "libslirp",
--
--        # Python stuff
--        "py3-setuptools",
--    ]
- 
-     BUILD_SCRIPT = """
-         set -e;
-@@ -198,8 +159,9 @@ class OpenBSDVM(basevm.BaseVM):
-         self.console_wait("login:")
-         self.wait_ssh()
- 
-+        pkgs = self.get_qemu_packages_from_lcitool_json()
-         self.print_step("Installing packages")
--        self.ssh_root_check("pkg_add %s\n" % " ".join(self.pkgs))
-+        self.ssh_root_check("pkg_add %s\n" % " ".join(pkgs))
- 
-         # shutdown
-         self.ssh_root(self.poweroff)
++++ b/tests/functional/aarch64/test_virt_vbsa.py
+@@ -0,0 +1,99 @@
++#!/usr/bin/env python3
++#
++# Functional test that runs the Arm VBSA conformance tests.
++#
++# Copyright (c) 2026 Linaro Ltd.
++#
++# Author:
++#  Alex Bennée <alex.bennee@linaro.org>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import shutil
++from subprocess import check_call, DEVNULL
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern, get_qemu_img, skipIfMissingCommands
++from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
++
++
++@skipIfMissingCommands("mformat", "mcopy", "mmd")
++class Aarch64VirtMachine(QemuSystemTest):
++    KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
++    timeout = 360
++
++    def wait_for_console_pattern(self, success_message, vm=None):
++        wait_for_console_pattern(self, success_message,
++                                 failure_message='FAILED',
++                                 vm=vm)
++
++    ASSET_VBSA_EFI = Asset('https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
++                           '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Vbsa.efi',
++                           '80f37d2fb86d152d95dec4d05ff099c9e47ee8a89314268e08056b0e1359e1fa')
++
++    ASSET_BSA_SHELL = Asset('https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
++                            '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Shell.efi',
++                            'e526604f0d329b481c6a1f62f7a0db8ea24ce8178b2c6abda8e247425f38775c')
++
++    def test_aarch64_vbsa_uefi_tests(self):
++        """
++        Launch the UEFI based VBSA test from an EFI file-system
++        """
++
++        self.vm.set_console()
++
++        # virt machine wi
++        self.set_machine('virt')
++        self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on')
++        self.vm.add_args('-cpu', 'max','-m', '1024')
++
++        # We will use the QEMU firmware blobs to boot
++        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
++        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
++        vars_path = self.scratch_file('vars.fd')
++        shutil.copy(vars_source, vars_path)
++
++        self.vm.add_args('-drive', f'if=pflash,format=raw,readonly=on,file={code_path}')
++        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
++
++        # Build an EFI FAT32 file-system for the UEFI tests
++        vbsa_efi = self.ASSET_VBSA_EFI.fetch()
++        bsa_shell = self.ASSET_BSA_SHELL.fetch()
++
++        img_path = self.scratch_file('vbsa.img')
++        qemu_img = get_qemu_img(self)
++        check_call([qemu_img, 'create', '-f', 'raw', img_path, '64M'],
++                   stdout=DEVNULL, stderr=DEVNULL)
++
++        check_call(['mformat', '-i', img_path, '-v', 'VBSA', '::'],
++                   stdout=DEVNULL, stderr=DEVNULL)
++
++        check_call(['mmd', '-i', img_path, '::/EFI'],
++                   stdout=DEVNULL, stderr=DEVNULL)
++
++        check_call(['mmd', '-i', img_path, '::/EFI/BOOT'],
++                   stdout=DEVNULL, stderr=DEVNULL)
++
++        check_call(['mcopy', '-i', img_path, bsa_shell, '::/EFI/BOOT/BOOTAA64.EFI'],
++                   stdout=DEVNULL, stderr=DEVNULL)
++
++        check_call(['mcopy', '-i', img_path, vbsa_efi, '::/Vbsa.efi'],
++                   stdout=DEVNULL, stderr=DEVNULL)
++
++        self.vm.add_args('-drive', f'file={img_path},format=raw,if=none,id=drive0')
++        self.vm.add_args('-device', 'virtio-blk-pci,drive=drive0')
++
++        self.vm.launch()
++
++        # wait for EFI prompt
++        self.wait_for_console_pattern('Shell>')
++
++        # Start the VBSA tests
++        ec_and_wait(self, "FS0:Vbsa.efi", 'VBSA Architecture Compliance Suite')
++
++        # could we parse the summary somehow?
++
++        self.wait_for_console_pattern('VBSA tests complete. Reset the system.')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.47.3
 
