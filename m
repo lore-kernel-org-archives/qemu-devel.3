@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E94FD9E19
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F1EFD9E1A
 	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvjRX-0002Ux-5z; Thu, 26 Feb 2026 17:02:49 -0500
+	id 1vvjRp-0002XK-FA; Thu, 26 Feb 2026 17:03:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRQ-0002UM-4n
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:02:40 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRf-0002WH-02
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:02 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRO-0001rz-Ht
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:02:39 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4834826e5a0so14897705e9.2
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:02:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRc-0001td-VH
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:02:54 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4836f4cbe0bso12382415e9.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:02:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772143357; x=1772748157; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772143371; x=1772748171; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8BewiopFU6OtMOWx2DJLJCKryyOULKc5wR7PaImslFk=;
- b=lk8OsRtyrOShX666kaXa7dZgiGMihbIyEaSb1kiluEvfBTDnIo6ViXSdLoEmJ4EneQ
- qOaSENYigfflu01wu/ei7h0fewZNiP1JaWq5AnZ+/zG/tfJH3t80D9PFE7GuWqwhGqMR
- SAeIKy4n3e/G8FWuJ1RuYSI+4sX1zqRWzD1qiamXh5B004/EKR6enlDLv4Ucz0PrAaTU
- S48RwOnidnAx7+faOGH125Yk7NWohDCRttIvvswNKsL18ChDCNM76I0QHVs6ktk7Bwlh
- i6Kx6kFs8ZPUbtOPqPIHUAGZEYoMNvUvLTYcJ47CIwywOyfJw1xsjoRDc1i8C0AEKdk5
- K3sA==
+ bh=WCZUc1LA8R4v0JRjwSW69cVOsM9EcduzH6g7RYX1cUA=;
+ b=urH1xcI6Ebn5pm8kgeV9/rDHPjvQeSCUDSTkPw3HzdmACA2YrUqJWX0Gpf18Sh8OLQ
+ rlrEi9tE8QBq+MSYXpKaUvL7qGWWV8yyCSQpGvTcBhhz5oCHhvvnAHuLaJpzp1xJbSOx
+ aAM048gdU8kKOVTG/RQo2krYkb6zpN+2rYweFsRR1xeMoWZIrbC44+SRtGdrkDjlmUTi
+ //c9WQoR8AHwT7g/9GxI5HSsSA58hs0P1436qTTDMyM0vK6wnF1uimrfG3Yk5nOpKIFM
+ sbp2A82zI/m69FmRAUs/wvw0QNK9HfFe0uVLH9FOTBkm86SgWKLCLbHjcJ4c50sf6fcg
+ eNxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772143357; x=1772748157;
+ d=1e100.net; s=20230601; t=1772143371; x=1772748171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8BewiopFU6OtMOWx2DJLJCKryyOULKc5wR7PaImslFk=;
- b=m7XteDaIX5S3xDqZLkKOaxmQQeDk4rJUU3gsj9vpFlVCOrDKrNa/ImLFpASs4yCcOn
- LYNN/VnH0nyzgzi+hGL76NoTveJ3wEOFA+0oLKMsvYhcIHnSxc20uDwwc5WPfk9P1XHd
- cd93L5CaYYDCy14KXMrJg8Ivwp+tbaJWE9fHO10Ul5+AUWsoYxL85uIQnIEv287rZkH5
- VHj6XdqU1poBkF3clLFObOe3o1RF9EllCSa9VK27z6hooJOvGMbtDfeAafG6qSXh9a4+
- rN0gA3BPEOyE2YoC+UaWTyh9kXu7zPsVd+vNC1OEpeM6uQNqoqwzYhAofyGIIaTE3zot
- wspg==
-X-Gm-Message-State: AOJu0Yz/VqOIp1c0oUO1GYAgM9ClIXqAWYsnfnOWxt31QyDO7SkIGabB
- zCH02oE9aPw3uY2e0UUZCX+qQzkNQFBmgXVXHpeoQun+Yu5wv35dvyIguxkhC+id0gIf9qNIfQ6
- PSRP3pto=
-X-Gm-Gg: ATEYQzwHKWqYWPPpwTf9s+L/iUHfD2VLpQQFkSJGQ7fwcb6QLnuuFxnWBBL/CtGnr9e
- uzY7j0RbBnMO8BDAs4zXWqQ4Yr67cXrdrtX38TxX1Ev26/HSVa31EkFEw6b6zm+ETVTtAHyF+4V
- Z8z3DqPXQDG+SdAzhgZXryVo6+Trfw6Zq2o6hDj4CC+uRCarK6f2h502xiuJs5jqdvrd6zjhEFJ
- QVf21QIBDFpQ9QjA3epa7yBMvxJoRnabHdOVLRIUqYgIpM2vk7P2zLbYeUfqw7RAN/VEOnoZ4XO
- dPr6qvIeObc4gqF1Tej0sU2tXeDrZxM3KYhsnBrH45bbaLSi0KpuZfx2PGnSycSi3DlVAfo8fM4
- JoKTTCNfyuAApTZb14Js1d9tjpro35DEXqjkgZymOn/U+UAj+bB84Pu3sGVo4ZeuJLXxbZT4m5P
- CubCpOT6nj6OhALraXNd7PB2hvcUTwxqXxi+1uuvLTUc8qBKKKZ062zQcoZ1YYIdV7HkAT82BR
-X-Received: by 2002:a05:600c:c04b:10b0:483:79a6:e7e1 with SMTP id
- 5b1f17b1804b1-483c9ba7e28mr4360065e9.7.1772143356563; 
- Thu, 26 Feb 2026 14:02:36 -0800 (PST)
+ bh=WCZUc1LA8R4v0JRjwSW69cVOsM9EcduzH6g7RYX1cUA=;
+ b=Aa4I5MIk0dVBasgDUlEOlWU0zcapdG0iN5cYN5NflkXoaHgyb6JALyylDMRrt+aNEH
+ 0jLK0fnL27oq1fg6Q0X1apidARssmOiLLaQBijZjJdCEDGVydslN2s1pDGuiLxlAsb7e
+ m9O3S/z+C1DbK8Yfcf45CUPFsUFDCQNscnbA7DsqtwPLKUcepIT5e6eVUolBaUK6xsZm
+ tiVT+tGlKjVi5n50sn9jqbkQq04It+qJPP9XAGFZnFM6mWVAKPEUfen4tEb478n9SiiJ
+ PNpnuM1GzxpjGcpI4Ph/I7pSgxeFZya8nExnREEbWyG1MNZFGPMrzTsAicCjFIlxuIvV
+ SMfA==
+X-Gm-Message-State: AOJu0YwK9oWFM5V0JPTOcaO+Z6sRoKhxPOfL8O+MlzCVCgG8Z6sHNQzZ
+ Vzpz6LDipbPpEuPt/wLAvczVvSHhiTCh07xgT5+DvqeC2RaPokvbB1QB1Ay5PT7tqS8wmauLHqY
+ e1mZlsRk=
+X-Gm-Gg: ATEYQzzsIqc6TxuYHXcgfvwJ0F4nZ+XR+7YlNcmO0nIw005GoUikRmZclIUA3czGugR
+ Z5TECh+LZWmhBat2IFg9hx2f+t1qScGkeN+xcdPkUJqpzSvcqZ5Sj42vAwE4/waPqi+f+iAW1Qh
+ zDWNgbt/xFhCs5us1QLnErHnGVmkhmXaDix9kiE21w8n3C2uEhz1kxsimkHkva5Z1BxOsW+CyXc
+ iIEOBt10XKfRjBshpp6uyniTXfm5XxNl/DI7TIV2vHvQs5sHYWEQ1gyUqQe8Fm1x7L5OwIS2ZoO
+ iQiOd3J6scFpd/J4p3fY28su3rVUjrRKVwln2AR52KiAnt3gv+SBUpgXexzTkXB9BxgyebwHUGA
+ 31hK0WFsN0aJPvuGmLHC/VokrjrXKhdurAoKle8nIPgKyH2SqOMPazjU0NrfoUp0TpiBhhN4AMs
+ Ue7aQ6qbjEjnkplsO/Y6u3LdxVJNLibAFPzY+gcb+WvK9r3mmlg4iQyHFNz5dTsPWtLgrI0TpT
+X-Received: by 2002:a05:600c:4f11:b0:477:7925:f7fb with SMTP id
+ 5b1f17b1804b1-483c9babeaamr6690795e9.10.1772143371096; 
+ Thu, 26 Feb 2026 14:02:51 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c71b498sm2352668f8f.15.2026.02.26.14.02.34
+ 5b1f17b1804b1-483c3b84023sm68696045e9.12.2026.02.26.14.02.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 26 Feb 2026 14:02:35 -0800 (PST)
+ Thu, 26 Feb 2026 14:02:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,17 +70,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 1/7] stubs: Merge physmem.c within ram-block.c
-Date: Thu, 26 Feb 2026 23:02:19 +0100
-Message-ID: <20260226220226.20164-2-philmd@linaro.org>
+Subject: [PATCH 3/7] system/memory: Constify various MemoryRegion arguments
+Date: Thu, 26 Feb 2026 23:02:21 +0100
+Message-ID: <20260226220226.20164-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260226220226.20164-1-philmd@linaro.org>
 References: <20260226220226.20164-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,68 +103,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-physmem.c defines 2 stubs which are related to ram-block:
-qemu_ram_block_from_host() and qemu_ram_get_fd().
-Move them with the other ram-block stubs.
+Mark the MemoryRegion structure const when is only accessed read-only.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- stubs/physmem.c   | 13 -------------
- stubs/ram-block.c | 11 +++++++++++
- stubs/meson.build |  1 -
- 3 files changed, 11 insertions(+), 14 deletions(-)
- delete mode 100644 stubs/physmem.c
+ include/system/memory.h | 28 ++++++++++++++--------------
+ system/memory.c         | 34 ++++++++++++++++++----------------
+ 2 files changed, 32 insertions(+), 30 deletions(-)
 
-diff --git a/stubs/physmem.c b/stubs/physmem.c
-deleted file mode 100644
-index 14667f2bd8f..00000000000
---- a/stubs/physmem.c
-+++ /dev/null
-@@ -1,13 +0,0 @@
--#include "qemu/osdep.h"
--#include "system/ramblock.h"
--
--RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
--                                   ram_addr_t *offset)
--{
--    return NULL;
--}
--
--int qemu_ram_get_fd(RAMBlock *rb)
--{
--    return -1;
--}
-diff --git a/stubs/ram-block.c b/stubs/ram-block.c
-index 8790a59593e..f0650b19ac6 100644
---- a/stubs/ram-block.c
-+++ b/stubs/ram-block.c
-@@ -35,3 +35,14 @@ int ram_block_discard_disable(bool state)
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 0562af31361..baa6a840375 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1749,14 +1749,14 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+  *
+  * @mr: the memory region being queried.
+  */
+-Object *memory_region_owner(MemoryRegion *mr);
++Object *memory_region_owner(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_size: get a memory region's size.
+  *
+  * @mr: the memory region being queried.
+  */
+-uint64_t memory_region_size(MemoryRegion *mr);
++uint64_t memory_region_size(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_is_ram: check whether a memory region is random access
+@@ -1765,7 +1765,7 @@ uint64_t memory_region_size(MemoryRegion *mr);
+  *
+  * @mr: the memory region being queried
+  */
+-static inline bool memory_region_is_ram(MemoryRegion *mr)
++static inline bool memory_region_is_ram(const MemoryRegion *mr)
  {
-     return 0;
+     return mr->ram;
  }
+@@ -1777,7 +1777,7 @@ static inline bool memory_region_is_ram(MemoryRegion *mr)
+  *
+  * @mr: the memory region being queried
+  */
+-bool memory_region_is_ram_device(MemoryRegion *mr);
++bool memory_region_is_ram_device(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_is_romd: check whether a memory region is in ROMD mode
+@@ -1787,7 +1787,7 @@ bool memory_region_is_ram_device(MemoryRegion *mr);
+  *
+  * @mr: the memory region being queried
+  */
+-static inline bool memory_region_is_romd(MemoryRegion *mr)
++static inline bool memory_region_is_romd(const MemoryRegion *mr)
+ {
+     return mr->rom_device && mr->romd_mode;
+ }
+@@ -1800,7 +1800,7 @@ static inline bool memory_region_is_romd(MemoryRegion *mr)
+  *
+  * @mr: the memory region being queried
+  */
+-bool memory_region_is_protected(MemoryRegion *mr);
++bool memory_region_is_protected(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
+@@ -1810,7 +1810,7 @@ bool memory_region_is_protected(MemoryRegion *mr);
+  *
+  * @mr: the memory region being queried
+  */
+-bool memory_region_has_guest_memfd(MemoryRegion *mr);
++bool memory_region_has_guest_memfd(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_get_iommu: check whether a memory region is an iommu
+@@ -1820,7 +1820,7 @@ bool memory_region_has_guest_memfd(MemoryRegion *mr);
+  *
+  * @mr: the memory region being queried
+  */
+-static inline IOMMUMemoryRegion *memory_region_get_iommu(MemoryRegion *mr)
++static inline IOMMUMemoryRegion *memory_region_get_iommu(const MemoryRegion *mr)
+ {
+     if (mr->alias) {
+         return memory_region_get_iommu(mr->alias);
+@@ -1991,7 +1991,7 @@ const char *memory_region_name(const MemoryRegion *mr);
+  * @mr: the memory region being queried
+  * @client: the client being queried
+  */
+-bool memory_region_is_logging(MemoryRegion *mr, uint8_t client);
++bool memory_region_is_logging(const MemoryRegion *mr, uint8_t client);
+ 
+ /**
+  * memory_region_get_dirty_log_mask: return the clients for which a
+@@ -2002,7 +2002,7 @@ bool memory_region_is_logging(MemoryRegion *mr, uint8_t client);
+  *
+  * @mr: the memory region being queried
+  */
+-uint8_t memory_region_get_dirty_log_mask(MemoryRegion *mr);
++uint8_t memory_region_get_dirty_log_mask(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_is_rom: check whether a memory region is ROM
+@@ -2011,7 +2011,7 @@ uint8_t memory_region_get_dirty_log_mask(MemoryRegion *mr);
+  *
+  * @mr: the memory region being queried
+  */
+-static inline bool memory_region_is_rom(MemoryRegion *mr)
++static inline bool memory_region_is_rom(const MemoryRegion *mr)
+ {
+     return mr->ram && mr->readonly;
+ }
+@@ -2023,7 +2023,7 @@ static inline bool memory_region_is_rom(MemoryRegion *mr)
+  *
+  * @mr: the memory region being queried
+  */
+-static inline bool memory_region_is_nonvolatile(MemoryRegion *mr)
++static inline bool memory_region_is_nonvolatile(const MemoryRegion *mr)
+ {
+     return mr->nonvolatile;
+ }
+@@ -2036,7 +2036,7 @@ static inline bool memory_region_is_nonvolatile(MemoryRegion *mr)
+  *
+  * @mr: the RAM or alias memory region being queried.
+  */
+-int memory_region_get_fd(MemoryRegion *mr);
++int memory_region_get_fd(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_from_host: Convert a pointer into a RAM memory region
+@@ -2521,7 +2521,7 @@ bool memory_region_present(MemoryRegion *container, hwaddr addr);
+  *
+  * @mr: a #MemoryRegion which should be checked if it's mapped
+  */
+-bool memory_region_is_mapped(MemoryRegion *mr);
++bool memory_region_is_mapped(const MemoryRegion *mr);
+ 
+ /**
+  * memory_region_get_ram_discard_manager: get the #RamDiscardManager for a
+diff --git a/system/memory.c b/system/memory.c
+index c51d0798a84..eeb0d19484f 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1819,9 +1819,9 @@ static void memory_region_finalize(Object *obj)
+     g_free(mr->ioeventfds);
+ }
+ 
+-Object *memory_region_owner(MemoryRegion *mr)
++Object *memory_region_owner(const MemoryRegion *mr)
+ {
+-    Object *obj = OBJECT(mr);
++    const Object *obj = OBJECT(mr);
+     return obj->parent;
+ }
+ 
+@@ -1849,7 +1849,7 @@ void memory_region_unref(MemoryRegion *mr)
+     }
+ }
+ 
+-uint64_t memory_region_size(MemoryRegion *mr)
++uint64_t memory_region_size(const MemoryRegion *mr)
+ {
+     if (int128_eq(mr->size, int128_2_64())) {
+         return UINT64_MAX;
+@@ -1866,25 +1866,25 @@ const char *memory_region_name(const MemoryRegion *mr)
+     return mr->name;
+ }
+ 
+-bool memory_region_is_ram_device(MemoryRegion *mr)
++bool memory_region_is_ram_device(const MemoryRegion *mr)
+ {
+     return mr->ram_device;
+ }
+ 
+-bool memory_region_is_protected(MemoryRegion *mr)
++bool memory_region_is_protected(const MemoryRegion *mr)
+ {
+     return mr->ram && (mr->ram_block->flags & RAM_PROTECTED);
+ }
+ 
+-bool memory_region_has_guest_memfd(MemoryRegion *mr)
++bool memory_region_has_guest_memfd(const MemoryRegion *mr)
+ {
+     return mr->ram_block && mr->ram_block->guest_memfd >= 0;
+ }
+ 
+-uint8_t memory_region_get_dirty_log_mask(MemoryRegion *mr)
++uint8_t memory_region_get_dirty_log_mask(const MemoryRegion *mr)
+ {
+     uint8_t mask = mr->dirty_log_mask;
+-    RAMBlock *rb = mr->ram_block;
++    const RAMBlock *rb = mr->ram_block;
+ 
+     if (global_dirty_tracking && ((rb && qemu_ram_is_migratable(rb)) ||
+                              memory_region_is_iommu(mr))) {
+@@ -1898,7 +1898,7 @@ uint8_t memory_region_get_dirty_log_mask(MemoryRegion *mr)
+     return mask;
+ }
+ 
+-bool memory_region_is_logging(MemoryRegion *mr, uint8_t client)
++bool memory_region_is_logging(const MemoryRegion *mr, uint8_t client)
+ {
+     return memory_region_get_dirty_log_mask(mr) & (1 << client);
+ }
+@@ -2406,7 +2406,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
+         memory_region_get_ram_addr(mr) + addr, size, client, NULL);
+ }
+ 
+-int memory_region_get_fd(MemoryRegion *mr)
++int memory_region_get_fd(const MemoryRegion *mr)
+ {
+     RCU_READ_LOCK_GUARD();
+     while (mr->alias) {
+@@ -2806,7 +2806,7 @@ static FlatRange *flatview_lookup(FlatView *view, AddrRange addr)
+                    sizeof(FlatRange), cmp_flatrange_addr);
+ }
+ 
+-bool memory_region_is_mapped(MemoryRegion *mr)
++bool memory_region_is_mapped(const MemoryRegion *mr)
+ {
+     return !!mr->container || mr->mapped_via_alias;
+ }
+@@ -3290,7 +3290,7 @@ void address_space_destroy_free(AddressSpace *as)
+     call_rcu(as, do_address_space_destroy_free, rcu);
+ }
+ 
+-static const char *memory_region_type(MemoryRegion *mr)
++static const char *memory_region_type(const MemoryRegion *mr)
+ {
+     if (mr->alias) {
+         return memory_region_type(mr->alias);
+@@ -3483,7 +3483,6 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+     GArray *fv_address_spaces = value;
+     struct FlatViewInfo *fvi = user_data;
+     FlatRange *range = &view->ranges[0];
+-    MemoryRegion *mr;
+     int n = view->nr;
+     int i;
+     AddressSpace *as;
+@@ -3510,7 +3509,8 @@ static void mtree_print_flatview(gpointer key, gpointer value,
+     }
+ 
+     while (n--) {
+-        mr = range->mr;
++        const MemoryRegion *mr = range->mr;
 +
-+RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-+                                   ram_addr_t *offset)
-+{
-+    return NULL;
-+}
+         if (range->offset_in_region) {
+             qemu_printf(MTREE_INDENT HWADDR_FMT_plx "-" HWADDR_FMT_plx
+                         " (prio %d, %s%s): %s @" HWADDR_FMT_plx,
+@@ -3683,8 +3683,10 @@ static void mtree_info_as(bool dispatch_tree, bool owner, bool disabled)
+ 
+     /* print aliased regions */
+     QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
+-        qemu_printf("memory-region: %s\n", memory_region_name(ml->mr));
+-        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled);
++        const MemoryRegion *mr = ml->mr;
 +
-+int qemu_ram_get_fd(RAMBlock *rb)
-+{
-+    return -1;
-+}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 8a07059500d..0171f531523 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -20,7 +20,6 @@ if have_block
-   stub_ss.add(files('get-vm-name.c'))
-   stub_ss.add(files('iothread-lock-block.c'))
-   stub_ss.add(files('migr-blocker.c'))
--  stub_ss.add(files('physmem.c'))
-   stub_ss.add(files('ram-block.c'))
-   stub_ss.add(files('runstate-check.c'))
-   stub_ss.add(files('uuid.c'))
++        qemu_printf("memory-region: %s\n", memory_region_name(mr));
++        mtree_print_mr(mr, 1, 0, &ml_head, owner, disabled);
+         qemu_printf("\n");
+     }
+ 
 -- 
 2.52.0
 
