@@ -4,89 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42567FC5910
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E32FC5926
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYTj-0002ZX-0P; Thu, 26 Feb 2026 05:20:19 -0500
+	id 1vvYcm-0004LA-Kq; Thu, 26 Feb 2026 05:29:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vvYTe-0002XU-FU
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:20:14 -0500
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvYck-0004Jo-N1
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:29:38 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vvYTd-0004Kz-36
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:20:14 -0500
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-1270ac5d3efso547974c88.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:20:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvYcj-0005Ys-4c
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:29:38 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so470472d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:29:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772101776; cv=none;
+ d=google.com; s=arc-20240605;
+ b=aT31XU7SvrVfwA8hIouMafKl/GeB77AoNB3CCIpLlKNH7H68fpmmY0x0l6f0pUg78j
+ BNO8bmeF4jlwwDIxpcNoAn6rZKRKJ0SKQtxyD66xHIn4dhJ099AoApizgcPshTNY4mBJ
+ GnuRahYsCkiacUnbskLk/cxjobuy1qzZUemaZfkwJh67XHxsR5ritfa4RwgSqmQvcfC1
+ BUfU7d6thVI9fe5lHAvaJtwsziM3YT83u/Mf1uTgP2bXo9Eimer/uW5Jme/eFAd5nbdW
+ gag8RxeFOYtIjONOfHm4C6ugWM6ycyc4nPvK8SqonrFLcMV41BWakcvOp6i2aeDu9gCK
+ cIUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ah9ojG0q3uo3b9b+2P9a9B8y88QGjOnwpMnd7A74Iz8=;
+ fh=qDEitYY2TPRRMZ4OARbMiUT09q8rCCMKzcZWPtML1Tk=;
+ b=JGmV9qd8E2gmLRjCmLCbw/8QxCy66Wi+461vdqraSI2JVqCHyt6fHNu6wqKOLjvl1I
+ boptvqFRP70q4G9anTKuztMGZdkE/SC4/Hj/bUocECV2CwcMD6oe0oBj69BrMeFWGsVB
+ byQxXEAswLooQGvr2QeGI2Yv6vVq62WGudF3qnhQV/6YuWU/xEr1D+8uh/GwqSLdyiJc
+ 4vkajZecgxevw8ZmIRFv+z7KbGSkNwmQkn8FRxmGMmgQPo84SZZvu2z+A7rPMRN/CiwR
+ qf+4+025oVtiBEexKUW8iDYCgEQ75G9+AuLjHAVJ137CRlUkfjeFWRcYB902430RvZLQ
+ poqA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772101211; x=1772706011; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PTQfQ0Cp2HeDcEXCvcCXQf0PTtazv4JoH+8fi3PB4dU=;
- b=S0bLIHkGTKVaMJep/VeGiQTEjHKNfUCjFqNa8D7avDdC3d2/Hj6WU7woPVla8kHYKg
- p4M5bSNNcNBKZooVMgBpkn4yUkm5HZdaPcXIwR+8T8ayl/vlnn+a8PUR24zgRswUQq8y
- VGRZ4xWkc1glOI8hYim2cTlE+pmAZPojMiI5Z11MgPiVzmVchKpo2jq/YflNjfTqwuKD
- kCNBdt6S4ZlqIxkDOO8sNmgqDhK5rxRLd4M05D1ifz7zXVf+ULMAGmFzmU6GVUoRPS01
- jaxc3PPRXCkTxxNFlA+yh2WUaWSLfPEl2w1B1nef8nrerX+KV8O99CDVo3bZAIZkE1xW
- rr+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772101211; x=1772706011;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772101776; x=1772706576; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PTQfQ0Cp2HeDcEXCvcCXQf0PTtazv4JoH+8fi3PB4dU=;
- b=aXPUedz/CcKd+4D0a1U89s1VUCxuG5kGJrKRPQXJoqyMUu1F4j5OJFcqI+aWCa/X7n
- eD4ww2CAtCEsgeN9KEpOmtvM7Jmr6xBlBulJlFWiAwiN63qAT17CX5XC99TbIey+7Lss
- Cw3T+NFX9yo42Nu4LT6TzdOC1AQnrvL2jxSDsHXuffhtj4GaXKzmiFLsg4LukJvNloUV
- w0QTbR6XEc94bhc/8dtWdHhnj3ajNZlOLdbqTSjNTuOygcjvho1E9othzZhpX71u5Bhw
- au5AGMjzDLvT1y5irwyVFG511B/FsTovrJC7/8028tfhvwsgZ1BA3ybZVczVnqIicme/
- b49g==
-X-Gm-Message-State: AOJu0YwxF4n3xLbC3WO9d+cJUwS6Cb8bbPC1gmApwzCSAV322FoZHvRk
- VSD9IuOpU4CzZD8KoHiw7g69KPlBe1/TfseebkkBz7jbyLFXR0Haocl4k0/nlnJLWTs=
-X-Gm-Gg: ATEYQzyphzxnjF7h/Z3gShRSjJpynbSMfy+KePreGyxClKskJiQgoElNgHSoEL16UKI
- EsRku57VO26SnixXL3FIMIaoTBG3SfJYYosiQSOSGLSSvGZ9vh86b6QaV0QUbWiHXYRLUoIqy2m
- IUBbwoZUMFXYs0O3v8Ge0+U8AhcEx9F5ZJ2demXbok8Pt4q8J3ukrL81dmKrn3NphSW/IdWvqBV
- VXWgvW3rK01EYOWkrfWlJeDYaN4lgQz8feK2Xar+SN4pqN1+UwaiezhafnuuG8p6qnZP7M+s6M9
- D33z5ohTegIH0V6B+VvfQDtVcPRh/7mgNSeO9Kpz4nWiqa8z887VNSY5iwpubgQVhiOpnpXNgw9
- r1Escxl1rtZxftCb7VD6LneIMttkNHiXU/tp0myMIRfTu810ZZqOGVJCSJJxHk01xMKKFWOk9UH
- JSRUHln0lVErNmhDZBCyl6ejvsHqxTHlxvngDkfG2OMUG+raDyr2OknXzCuMnP9RoFaHK4UA2hp
- +1Em1iFSvPoi4+0jGf7kjqrvaU=
-X-Received: by 2002:a05:7022:61a9:b0:11b:9386:8256 with SMTP id
- a92af1059eb24-127869d8d7dmr1176270c88.43.1772101210648; 
- Thu, 26 Feb 2026 02:20:10 -0800 (PST)
-Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12789a52ab0sm2318517c88.15.2026.02.26.02.20.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 02:20:10 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, linux-kernel@vger.kernel.org,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PATCH] MAINTAINERS: Add myself as a reviewer for RISC-V TCG CPUs
-Date: Thu, 26 Feb 2026 18:20:08 +0800
-Message-ID: <20260226102008.146928-1-chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ bh=ah9ojG0q3uo3b9b+2P9a9B8y88QGjOnwpMnd7A74Iz8=;
+ b=pjxBn1N8LzKZ378tiMKBYr7cxjN6iRJjz7pk1W2Nam6adGYnmtxVlTARk/1QhetaNv
+ ASO6SlhYAN5IfPgh8jBEyW4vhtoTbLrBoBqtd1KBlkxf4qd4lw3a25IFVW52etrF5O0X
+ tlCarRVWmfFnxcRfmMc4f2SQmxTpEC46yDQNHDILK8AqyE5ndur/oQAKBUbMJ6MxUGOG
+ EdOWXKKS2qwqrkrrQ070KtNQcDNNc9lcUShfSc4zh/J45DzTpaww8tOvQQKLMLNbYUJv
+ E3T8m+XT9uS/JeFAczacS7EM7jKBcvAd+2YlDNwBG4jEzyKNLdXvFoWBciiVczk+YkbD
+ +nSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772101776; x=1772706576;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ah9ojG0q3uo3b9b+2P9a9B8y88QGjOnwpMnd7A74Iz8=;
+ b=mEEkZQIKCaWEVvDCy+qH9/O/cbnqjplEVlMQZxMTNfHk+VAXohvyf9c2mlEiCGi4v9
+ ET5pboYTzzAQ5zv77u+1ZB/ynD9CivFeK5cztV/9BLGRf6Fsdinkdy4JK0QsgHWnIw27
+ 4e3hzS8TlHy8vzBwFNmXYZ3EDKbpapdurp9AaDKg1n7yoRUEq4ZgvthsI9V0MAXBg/kg
+ 9f4tp2zA64TdPpqsNxofcL/RXjEWZvvJZ+KVBXE1OBLnFEoMfU/DULFzAWzcjle0UWlM
+ aXRwazzW7cbpu3EaO/P/3nKfzmkMEldXEPL1gAvX1L1lZ0qdBGuZJtxHl1EWMLDVEShu
+ zG0A==
+X-Gm-Message-State: AOJu0Yzpf3SoFpKNLdxyaZZFKFr05DL72eLOto77OlmNWTDKHple4d2v
+ /bEAsiuWKegX0KIKl52oO7HdnFPy4Z/L77ve+1GS/HiYTpUVyV/B68V2WW8x1u1+Tq7KT/MY8JF
+ D6pbY3FIjHDTx6YoiWGsdfwopwirIacmIHeiHNP4BvQ==
+X-Gm-Gg: ATEYQzy4hMeSEj0mDE9QIcy1HHcjIVq/FITa+jVUKyH+yz7k1VnzXztwmsJgu7ly6nv
+ U3ssKKTtnbzSwkdML8Lb+9Vl2sC29MIQNTu70DjTm6a9z3BXcAjDNPtybHuppAmDry3+E+Cu7vS
+ uhHofvquc0FlHjR5VWc2Hk0qi/RZVEu1FJ1YSgX33cTfTFnUP79E2xz7X8smW0HDCrqA1TtXYBu
+ wgKpwpxt7pGBdU7EjMvS0LYiUM0guYG7DvpICRKeCoftuZJVXfZerW5bao7+Z2aHsinLUX2LEZO
+ Pj6kymzgqK1VpQ99gsWknJlnBnqKP9hoS2PEy4PL1N4CSXLzxAFlaq2ve1Ao3VQKJwY=
+X-Received: by 2002:a53:ac88:0:b0:64c:b242:496e with SMTP id
+ 956f58d0204a3-64cb2425731mr2910841d50.17.1772101775643; Thu, 26 Feb 2026
+ 02:29:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
+References: <20260224154347.344219-1-alex.bennee@linaro.org>
+ <20260224154347.344219-4-alex.bennee@linaro.org>
+In-Reply-To: <20260224154347.344219-4-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Feb 2026 10:29:24 +0000
+X-Gm-Features: AaiRm52sjpMfL2DsXcKotaMr15GNp12jlu3XaMBA5wXiQeZ0_juQvmmrhoogx40
+Message-ID: <CAFEAcA8km4H10ZseUd=D6KWTpHQptUaL0D3dSrg3-LGWY1bcgg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] target/arm: pass rd directly to wfit helper
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,27 +116,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add myself as a reviewer for RISC-V TCG CPU related code to better
-participate in patch review.
+On Tue, 24 Feb 2026 at 15:43, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> If we generate an exception for WFIT we could also fill out the rv/rn
+> fields of the ISS. To facilitate this pass the register number
+> directly and read the timeout value in the helper itself.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  target/arm/tcg/helper-defs.h   | 2 +-
+>  target/arm/tcg/op_helper.c     | 4 +++-
+>  target/arm/tcg/translate-a64.c | 2 +-
+>  3 files changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
+> index 5a10a9fba3b..a9a062cf777 100644
+> --- a/target/arm/tcg/helper-defs.h
+> +++ b/target/arm/tcg/helper-defs.h
+> @@ -55,7 +55,7 @@ DEF_HELPER_2(exception_pc_alignment, noreturn, env, vad=
+dr)
+>  DEF_HELPER_1(setend, void, env)
+>  DEF_HELPER_2(wfi, void, env, i32)
+>  DEF_HELPER_1(wfe, void, env)
+> -DEF_HELPER_2(wfit, void, env, i64)
+> +DEF_HELPER_FLAGS_2(wfit, TCG_CALL_NO_WG, void, env, i32)
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+Why the change to NO_WG ? The code change doesn't remove any
+writes to globals...
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 233d2a5e71..4923715c9c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -333,6 +333,7 @@ M: Alistair Francis <alistair.francis@wdc.com>
- R: Weiwei Li <liwei1518@gmail.com>
- R: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
- R: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-+R: Chao Liu <chao.liu.zevorn@gmail.com>
- L: qemu-riscv@nongnu.org
- S: Supported
- F: configs/targets/riscv*
--- 
-2.53.0
+>  DEF_HELPER_1(yield, void, env)
+>  DEF_HELPER_1(pre_hvc, void, env)
+>  DEF_HELPER_2(pre_smc, void, env, i32)
+> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+> index aa14f15eb62..28a1c7243ad 100644
+> --- a/target/arm/tcg/op_helper.c
+> +++ b/target/arm/tcg/op_helper.c
+> @@ -409,7 +409,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+>  #endif
+>  }
+>
+> -void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+> +void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+>  {
+>  #ifdef CONFIG_USER_ONLY
+>      /*
+> @@ -428,6 +428,8 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+>      int target_el =3D check_wfx_trap(env, false, &excp);
+>      /* The WFIT should time out when CNTVCT_EL0 >=3D the specified value=
+. */
+>      uint64_t cntval =3D gt_get_countervalue(env);
+> +    uint64_t timeout =3D env->xregs[rd];
+> +
+>      /*
+>       * We want the value that we would get if we read CNTVCT_EL0 from
+>       * the current exception level, so the direct_access offset, not
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a6=
+4.c
+> index 5d261a5e32b..073454b9195 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -2064,7 +2064,7 @@ static bool trans_WFIT(DisasContext *s, arg_WFIT *a=
+)
+>      }
+>
+>      gen_a64_update_pc(s, 4);
+> -    gen_helper_wfit(tcg_env, cpu_reg(s, a->rd));
+> +    gen_helper_wfit(tcg_env, tcg_constant_i32(a->rd));
+>      /* Go back to the main loop to check for interrupts */
+>      s->base.is_jmp =3D DISAS_EXIT;
+>      return true;
 
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+You might squash this in to patch 4 if you like.
+
+thanks
+-- PMM
 
