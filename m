@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DC4FD8FCE
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1B8FD8FCE
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdiW-0005PK-So; Thu, 26 Feb 2026 10:55:56 -0500
+	id 1vvdih-0005XG-U1; Thu, 26 Feb 2026 10:56:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiR-0005NR-Ah
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:51 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1vvdiZ-0005QH-Ka
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:56:01 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiP-0003lT-Di
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:50 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43767807cf3so724232f8f.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:49 -0800 (PST)
+ id 1vvdiX-0003oJ-U7
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:59 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-483770e0b25so9659245e9.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121348; x=1772726148; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772121356; x=1772726156; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WSrDqWRIaOtHv55qkOHl6cQ041BeMEi4R6eKWEMbzxg=;
- b=azgW3ySR+A7o/YLufLDKdVz6rzul5j7z5fkrHIkIJmiWOyo63ACIq0IrYIsLYbqIsV
- wYTFosx9EOpJEIO2M7BlgH6ItjED+sAADCt7TYvHA6MAPCwS1u8zTeIwGAPZMeuUOHJt
- ejPvQcXZen5+8lXvw1TsRb0SWOcLfNKi1KP++aztOadXNjGiiAnDFLKoOSc4OGLfaElZ
- IaqPpGzyUUPvde0YzZVFDOogF7LJ1XicXl36k5G6h5rQ3sBQdgNwCsnENDBUSpYUalE7
- B4vIzafamEdLORM1dKOmUBnsFFiqzjqyZa0k6dxoAapqv8R5D+q9Iw0WrgNMTgUGFDrA
- GumA==
+ :reply-to; bh=Jbj1sPJQ+uYTLuU5zSZYzgNaueHVlD9yhTCYeNJfHjI=;
+ b=uLR29qqXGMFc3kNrMPM52w3emy5OfNADSbakFtnuh/0tTk9uK60xW8ter0e/eu8O94
+ 0Uxmp0Vjja6zyeLUob3PVEM2BSo2ebzEAm/YrAPU83DOj1WxbYvCmqe7SeRpMHOA+Tb2
+ RFSbbo+Ew2jwwvXaZOrmUMNEGf9MBZgPCAdXGBrXYHW+6OwhYNLoUmOML/20Ro0waZ4F
+ 7heC1GbZFxOkYRYnvfzDYQ6ys0+zS9TUnemrFfJADrYJsoYItwVhneX88ladtELP0hYK
+ GoKq0pdmrpE494GhMADRfsgEJfrAM1nC60oVrqTXRojwEPpAtC1A00s9ZiqPwVWX6zCf
+ 6K5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121348; x=1772726148;
+ d=1e100.net; s=20230601; t=1772121356; x=1772726156;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=WSrDqWRIaOtHv55qkOHl6cQ041BeMEi4R6eKWEMbzxg=;
- b=ccXgevwaXLxDyrsOh0aKHnlqKG3GovnAoXhO8pydrHeUPLNxqtLEDuVBTWUaQmOL0o
- qftx5SZKk+1WwWVyrx4nTAUCYlMmw9sU9Cl8gJiXjwaIElfweY5WM+p/VlQqC7MzBjX3
- TSFzwwHZSalaAkMzryQEw6vU1L7PUft8kw0Agb/TYUvrO5yuopRyClA9aIhVt1MbJswq
- oq41QDJ8mQFxfVdfOoKGKJEO3ESbVSxRByF5dc0BzssqBVtftUtuNGgSmhUcTEsYyOvC
- g+YIlgSoBZImcb9UqywdkuRu+R+uZ19ntFUuN8BpwqjaBrscvMB/SRkjVpmGo8rgxDcQ
- C3GA==
-X-Gm-Message-State: AOJu0YwjH/5SyyuBSQoYq8/ajcCDGopeOQaVZruAZoubWbb0EGSuTnR5
- /kj6YtlPKv72fAWLDHcZVIVU4uGTKRP5QeNThRfI8m132F+H40DvJF4IwNsQOJ8JiX7Tl6N9HwP
- HbQxl
-X-Gm-Gg: ATEYQzyBcReSGrrOC5izwOs3Hqd7b41VtuXDBecpTgNjWCtBaDNCFT0QDL9Bl3U6Yyn
- X172mCZuz56FTIFaHcAllzB8UsgG3dD2dEzCCPgP0IB3l2W27OgS4ox/KNKBss2QeWJyPqEAJcL
- AxBSX0PYUTffzKEtn5PCuk3dyGyPVH8/N7MpTRzNL0xaLQAyzxVqK2m3WzKfHA3Z8lCLK3Qbyyy
- XK2Pwncjcz/nbWx2hFIl/aOzxyXG6AOjqQvZ0/ExYq2dgwVfXp3LswcPKk1r7liNCztkvj30Xll
- 3+6PywVVtcCK2CGHqYk3aVYZrcPdF2GY7DGWLdVWkwRKBeWINpAagJgWLK1AxDna+ZPk9Bdxt/i
- mWmsxfFrMrfGo4+ZlQpffQlJ9FnY8uMOjjFgM9w2L+W9PDk9SGd4NmE3lm1hF3QA8Q9/A8Yjnow
- +3AeFgZPDSafzl3JPGRrzis0nqPt4tseP8UUMdjPD9wIdFpNrWaUWct9axqDI0gdXtAKmgxMwyj
- 5+LJ42sehim7IWLboQTmwZ7hrWMX7c=
-X-Received: by 2002:a5d:64e5:0:b0:439:8bb9:dad4 with SMTP id
- ffacd0b85a97d-439942109cfmr8198321f8f.0.1772121347619; 
- Thu, 26 Feb 2026 07:55:47 -0800 (PST)
+ bh=Jbj1sPJQ+uYTLuU5zSZYzgNaueHVlD9yhTCYeNJfHjI=;
+ b=VZMZ+3ZuqIffu32itC/90lRxCnTm7qAg91uBSjsGwoeLjxRXxAOU9sA5EuuhGGo2Di
+ V1vr6moIZeK1sWzRUeJ9QoodepYrddJpqOnWrVG1mEH77ZAtCFayq4peftLATOzTyI99
+ Symo+8/CljXjMZVi87/qkpiB/DOytVmErwgfj5/J6ZNXM7ZfP/z/Ld6lpuiE+Vb1lKa+
+ ymkNAGKBUEH3Sl5I3Vlz/q6/Yz/AQw0jSwbuXM4+tNs1YZUXyD48vb0YYnWwZAa4F7Cz
+ qaehqPIgBuSr7jH/OPWMtdZMZ72snxZJ0XjP8yVxBHb8cspegcx27jy8v+0LnA3DrO65
+ tMFA==
+X-Gm-Message-State: AOJu0Yzmaxc3J2XVJI2n3TO1jAJCLCwBJT7zBkuTojF/a0G+3N9AWQ10
+ o4O73CK8dyW183CgKZxG4mULny5yJjZnDt7xhlqDUvjS9bcyLqFzJMCjCO/0X8N0FyJfDKyc1I6
+ Q1rvE
+X-Gm-Gg: ATEYQzxN0xjK/B5h1lfdxw9BGFIPZ9KF1KwBawe1m/cnM7XZOkVybLxSlU6kY9XqGv4
+ FreAjHsf+OQqleybWM/p/HyvciA6DowigPru5Mi3aUXuw/vZ5dF3Jcxb6DE2zyqSnUh/b7qw/kj
+ tIU/QOSnTBt50iSfqY+NbLii/7190LhjzOQAJHnF4efqneJ8WAybxIMcI31tmQUQVZXFPAWMsll
+ sdGqr33042ag6VSBu8hZBUOpQr6BjPvmVyle6Lk6Ij/VpNSyjdXWbuGHWWSu5tQOP+lqg78l1cp
+ uHtRNd76NjCHQrT2+YnhMV+QfaYTyFJQMo6phXOW1eG7xbaWUCVSdhFFsD+0TEFDniSBCsBTxh0
+ 1lTyvJoS0BXeY/g2XQJRnrXn+zhuZMeYF7I4nU/Cyno9cS0J0vDP5jFk/hEvq3qxxby36eowpBW
+ k0pq+VPUqV8v2/e7aRvjwwRdMh7cE3/GTVY2sVW845tx5TAsWBqX+dHsK6Sp9V+kVhDiuLDEzHn
+ Vpl0KYSz5MmHgx6T3qjVq711ezTrG8=
+X-Received: by 2002:a05:600c:4057:b0:483:c12b:fe46 with SMTP id
+ 5b1f17b1804b1-483c12bff6cmr67799855e9.10.1772121356030; 
+ Thu, 26 Feb 2026 07:55:56 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.46
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:46 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/20] target/arm: Remove aarch64 test for kvm
-Date: Thu, 26 Feb 2026 15:55:25 +0000
-Message-ID: <20260226155535.1171290-11-peter.maydell@linaro.org>
+Subject: [PULL 19/20] target/arm/kvm: Don't free migration-blocker reason on
+ failure
+Date: Thu, 26 Feb 2026 15:55:34 +0000
+Message-ID: <20260226155535.1171290-20-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
 References: <20260226155535.1171290-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+The migrate_add_blocker() function documents that if it fails it will
+free the Error it is passed via its reasonp argument and set reasonp
+to NULL.  That means that in kvm_arm_enable_mte() we don't need to
+call error_free(mte_migration_blocker) in the failure codepath.
+Doing so is harmless because error_free(NULL) is permitted and does
+nothing, but we can remove the unnecessary code.
 
-We no longer support kvm for aarch32, therefore the aarch64
-test is trivially true.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260216034432.23912-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260223173232.453165-1-peter.maydell@linaro.org
 ---
- target/arm/cpu64.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ target/arm/kvm.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index dec430c48b..87b8c586c4 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -799,9 +799,7 @@ static void aarch64_host_initfn(Object *obj)
-     ARMCPU *cpu = ARM_CPU(obj);
- #if defined(CONFIG_KVM)
-     kvm_arm_set_cpu_features_from_host(cpu);
--    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
--        aarch64_add_sve_properties(obj);
--    }
-+    aarch64_add_sve_properties(obj);
- #elif defined(CONFIG_HVF)
-     hvf_arm_set_cpu_features_from_host(cpu);
- #elif defined(CONFIG_WHPX)
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 4908138764..eaa065d726 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2554,7 +2554,6 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
+         error_setg(&mte_migration_blocker,
+                    "Live migration disabled due to MTE enabled");
+         if (migrate_add_blocker(&mte_migration_blocker, errp)) {
+-            error_free(mte_migration_blocker);
+             return;
+         }
+ 
 -- 
 2.43.0
 
