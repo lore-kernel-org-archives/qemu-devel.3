@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD1B8FD8FCE
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58420FD8FCE
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdih-0005XG-U1; Thu, 26 Feb 2026 10:56:07 -0500
+	id 1vvdiI-0005Io-MT; Thu, 26 Feb 2026 10:55:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiZ-0005QH-Ka
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:56:01 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vvdiG-0005IH-VH
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:41 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiX-0003oJ-U7
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:59 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-483770e0b25so9659245e9.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:57 -0800 (PST)
+ id 1vvdiE-0003is-M0
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:40 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48371bb515eso14041995e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121356; x=1772726156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Jbj1sPJQ+uYTLuU5zSZYzgNaueHVlD9yhTCYeNJfHjI=;
- b=uLR29qqXGMFc3kNrMPM52w3emy5OfNADSbakFtnuh/0tTk9uK60xW8ter0e/eu8O94
- 0Uxmp0Vjja6zyeLUob3PVEM2BSo2ebzEAm/YrAPU83DOj1WxbYvCmqe7SeRpMHOA+Tb2
- RFSbbo+Ew2jwwvXaZOrmUMNEGf9MBZgPCAdXGBrXYHW+6OwhYNLoUmOML/20Ro0waZ4F
- 7heC1GbZFxOkYRYnvfzDYQ6ys0+zS9TUnemrFfJADrYJsoYItwVhneX88ladtELP0hYK
- GoKq0pdmrpE494GhMADRfsgEJfrAM1nC60oVrqTXRojwEPpAtC1A00s9ZiqPwVWX6zCf
- 6K5g==
+ d=linaro.org; s=google; t=1772121337; x=1772726137; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Eg/lpITLr/gcwuz8G7fR992djlT3kb1FxJWTvk4PLo8=;
+ b=PdkqmDFv97l8PYH9TEhPD7AedLWnJyvkPbDOW9hNpzKa3lYH2aCvmYFIZR/bNBy11K
+ FkbdZS307W0DiN6iZ26ZSdHK1GlkSQcTXdtu/WST4IOyF+31PjdPeyiEp9TLRo1028h1
+ VWPnYmEPSfMmhlKZWnlQUDGj9amwfhlTdxu/RjUpEyXYPQhpotRWW5rE6rvU7XYfvyHG
+ FfoHvTbXODJKMf6/06BkHH0BmGUYFFuL0FpkS4w+jHLo6aLbJgxASKm2fIhJx6Wvlgya
+ f1j5t0Wl8gHsiggRsWsaxE1r81CaHRTS9v0ZlH1zbmmpHlWiGM+Rv/v4/4dIdzII8TIl
+ BVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121356; x=1772726156;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Jbj1sPJQ+uYTLuU5zSZYzgNaueHVlD9yhTCYeNJfHjI=;
- b=VZMZ+3ZuqIffu32itC/90lRxCnTm7qAg91uBSjsGwoeLjxRXxAOU9sA5EuuhGGo2Di
- V1vr6moIZeK1sWzRUeJ9QoodepYrddJpqOnWrVG1mEH77ZAtCFayq4peftLATOzTyI99
- Symo+8/CljXjMZVi87/qkpiB/DOytVmErwgfj5/J6ZNXM7ZfP/z/Ld6lpuiE+Vb1lKa+
- ymkNAGKBUEH3Sl5I3Vlz/q6/Yz/AQw0jSwbuXM4+tNs1YZUXyD48vb0YYnWwZAa4F7Cz
- qaehqPIgBuSr7jH/OPWMtdZMZ72snxZJ0XjP8yVxBHb8cspegcx27jy8v+0LnA3DrO65
- tMFA==
-X-Gm-Message-State: AOJu0Yzmaxc3J2XVJI2n3TO1jAJCLCwBJT7zBkuTojF/a0G+3N9AWQ10
- o4O73CK8dyW183CgKZxG4mULny5yJjZnDt7xhlqDUvjS9bcyLqFzJMCjCO/0X8N0FyJfDKyc1I6
- Q1rvE
-X-Gm-Gg: ATEYQzxN0xjK/B5h1lfdxw9BGFIPZ9KF1KwBawe1m/cnM7XZOkVybLxSlU6kY9XqGv4
- FreAjHsf+OQqleybWM/p/HyvciA6DowigPru5Mi3aUXuw/vZ5dF3Jcxb6DE2zyqSnUh/b7qw/kj
- tIU/QOSnTBt50iSfqY+NbLii/7190LhjzOQAJHnF4efqneJ8WAybxIMcI31tmQUQVZXFPAWMsll
- sdGqr33042ag6VSBu8hZBUOpQr6BjPvmVyle6Lk6Ij/VpNSyjdXWbuGHWWSu5tQOP+lqg78l1cp
- uHtRNd76NjCHQrT2+YnhMV+QfaYTyFJQMo6phXOW1eG7xbaWUCVSdhFFsD+0TEFDniSBCsBTxh0
- 1lTyvJoS0BXeY/g2XQJRnrXn+zhuZMeYF7I4nU/Cyno9cS0J0vDP5jFk/hEvq3qxxby36eowpBW
- k0pq+VPUqV8v2/e7aRvjwwRdMh7cE3/GTVY2sVW845tx5TAsWBqX+dHsK6Sp9V+kVhDiuLDEzHn
- Vpl0KYSz5MmHgx6T3qjVq711ezTrG8=
-X-Received: by 2002:a05:600c:4057:b0:483:c12b:fe46 with SMTP id
- 5b1f17b1804b1-483c12bff6cmr67799855e9.10.1772121356030; 
- Thu, 26 Feb 2026 07:55:56 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772121337; x=1772726137;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Eg/lpITLr/gcwuz8G7fR992djlT3kb1FxJWTvk4PLo8=;
+ b=OmOlhKXdjYYzygHl+zncMJkWlgTTUHC5Zy1dDgD6q4bjGUbu2S2Loy2NKo6Ddtp0hf
+ BwhnXnvbLNH/OCKN+IDjhorb2A02ImH9+h82r+KdilAGXUCJ5uxOdts7hB8zRH2K1dBL
+ /D/VmPO3TI005uP8Jgw+H1VhkZM+JdDet8/Oe/yBuHkRgKP/XbzEWCcQGcabeSdxHMFf
+ /Sd6J85qxgvX8hQZYTE/JAyHwIjsIOBmvbuDRDaoohFwvS0AtsO3GVnX7ZzAs/c5vCTn
+ zE9yJ3dYjVjADB/aPRMlImXkO2kr71No05Jy789+JRx1DGzAG9pVu/AWy9hSVN1upJyJ
+ CvvQ==
+X-Gm-Message-State: AOJu0YwEYJP3aCX47Fc3Ka5vHYJE1Yrkuqf0B2/OH2NjoIB90ES9tFHP
+ /Ws8OtybXlC/1w+mizOI0fycz+ZLYqMDyuL5KnuwsieajGMS+3ulnjQ1KPkJ0MBQ9dWBc0R0RVP
+ 1MySE
+X-Gm-Gg: ATEYQzxvcJWgAOqK5/cxgPtt4Rspojy36jBdchca+E1frtI+EARScXXrlL0FtuKPl8/
+ T8d8ucO++CyH2sMsXlnqU5M6XdQneh8uB379r74FDH/MZ+W3Yi2JnHry9MnPOJDg4O0eMmuMr6f
+ YVrKTFxxj9lmKuiTGuwm6vJoL06M8EvKAEMA9yD4ZmVs0Ghh7WfDGsHIHY1RYxg3oCs+fm2NV8d
+ sDCpCjONYexieMMfOjjxmEjf7RUaJ7/F1XUXUEQEPouyU0xv4eH3mrgvNCrvI6z7KRemuLXCzdC
+ h4awh9+kJSeHNCmMNNduUUYp+7hcaWkrfYLXd8VptM0kbm3uc+NJX47qFQHhzUrcAjgTMAeDl06
+ GU5SzM1kHKjd0/GfVm3scAdPzNjXt5wWEaHyiL9H/eNhJLEBDEei9eAR+isOOlygmXNGsta8VZ4
+ yLQIKB74BY8ubGnVotYhBrUNViwt2nfWRw1Y0JeWGXU7xsl5pKo4XD/L5TCWocYGK91aWaxlhIF
+ P8tMbE9fE3QTCOyM4rOU7doTQOk6OM=
+X-Received: by 2002:a05:600c:3b14:b0:483:c35d:3662 with SMTP id
+ 5b1f17b1804b1-483c3dd6fc6mr46786065e9.18.1772121336777; 
+ Thu, 26 Feb 2026 07:55:36 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.55
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:55 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:36 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/20] target/arm/kvm: Don't free migration-blocker reason on
- failure
-Date: Thu, 26 Feb 2026 15:55:34 +0000
-Message-ID: <20260226155535.1171290-20-peter.maydell@linaro.org>
+Subject: [PULL 00/20] target-arm queue
+Date: Thu, 26 Feb 2026 15:55:15 +0000
+Message-ID: <20260226155535.1171290-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
-References: <20260226155535.1171290-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +99,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migrate_add_blocker() function documents that if it fails it will
-free the Error it is passed via its reasonp argument and set reasonp
-to NULL.  That means that in kvm_arm_enable_mte() we don't need to
-call error_free(mte_migration_blocker) in the failure codepath.
-Doing so is harmless because error_free(NULL) is permitted and does
-nothing, but we can remove the unnecessary code.
+The following changes since commit 7390b0825b8e041a961f6215a18fa68213dc4779:
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260223173232.453165-1-peter.maydell@linaro.org
----
- target/arm/kvm.c | 1 -
- 1 file changed, 1 deletion(-)
+  Merge tag 'single-binary-20260226' of https://github.com/philmd/qemu into staging (2026-02-26 09:33:12 +0000)
 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 4908138764..eaa065d726 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -2554,7 +2554,6 @@ void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
-         error_setg(&mte_migration_blocker,
-                    "Live migration disabled due to MTE enabled");
-         if (migrate_add_blocker(&mte_migration_blocker, errp)) {
--            error_free(mte_migration_blocker);
-             return;
-         }
- 
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260226
+
+for you to fetch changes up to 907b8d56351b1ba6c97953edaca6a08f02fa2048:
+
+  hw/char/pl011: Only log "data written to disabled UART" once (2026-02-26 11:27:19 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * target/arm: set the correct TI bits for WFIT traps
+ * target/arm: Refactorings preparatory to KVM SME support
+ * target/arm/kvm: Don't free migration-blocker reason on failure
+ * target/arm/kvm: add kvm-psci-version vcpu property
+ * Revert "target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0"
+ * hw/arm/virt: Add virtio-mmio-transports property
+ * hw/arm/virt: Update error message for bad gic-version option
+ * hw/cpu: Build a15mpcore.c once as common object
+ * hw/misc/allwinner-cpucfg: Remove use of ARM_CPU() cast macro
+ * hw/ssi/xilinx_spips: Reset TX FIFO in reset
+ * hw/char/pl011: Only log "data written to disabled UART" once
+ * tests/functional: Make sure test case .py files are executable
+
+----------------------------------------------------------------
+Alex Bennée (1):
+      target/arm: set the correct TI bits for WFIT traps
+
+Mohamed Mediouni (1):
+      Revert "target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0"
+
+Mohammadfaiz Bawa (1):
+      hw/arm/virt: Add virtio-mmio-transports property
+
+Peter Maydell (4):
+      hw/arm/virt: Update error message for bad gic-version option
+      tests/functional: Make sure test case .py files are executable
+      target/arm/kvm: Don't free migration-blocker reason on failure
+      hw/char/pl011: Only log "data written to disabled UART" once
+
+Philippe Mathieu-Daudé (2):
+      hw/cpu: Build a15mpcore.c once as common object
+      hw/misc/allwinner-cpucfg: Remove use of ARM_CPU() cast macro
+
+Richard Henderson (9):
+      target/arm: Remove aarch64 test for kvm
+      target/arm: Move kvm_arm_sve_get_vls within kvm.c
+      target/arm: Init sve_vq in kvm_arm_set_cpu_features_from_host
+      target/arm: Move kvm test out of cpu_arm_set_sve
+      target/arm: Drop kvm_arm_sve_supported
+      target/arm: Remove kvm test in arm_set_pmu
+      target/arm: Drop kvm_arm_pmu_supported
+      target/arm: Add vq argument to kvm_arch_{get, put}_sve
+      target/arm: Add have_ffr argument to kvm_arch_{get, put}_sve
+
+Sebastian Ott (1):
+      target/arm/kvm: add kvm-psci-version vcpu property
+
+Weixie Cui (1):
+      hw/ssi/xilinx_spips: Reset TX FIFO in reset
+
+ docs/system/arm/cpu-features.rst   |  11 +++
+ docs/system/arm/virt.rst           |   5 +
+ hw/arm/virt-acpi-build.c           |   2 +-
+ hw/arm/virt.c                      |  45 ++++++++-
+ hw/char/pl011.c                    |  24 ++++-
+ hw/cpu/a15mpcore.c                 |   2 +-
+ hw/cpu/meson.build                 |   2 +-
+ hw/misc/allwinner-cpucfg.c         |   4 +-
+ hw/ssi/xilinx_spips.c              |   4 +-
+ include/hw/arm/virt.h              |   1 +
+ include/hw/char/pl011.h            |   1 +
+ target/arm/cpu.c                   |  12 ++-
+ target/arm/cpu64.c                 |  72 ++++++++------
+ target/arm/hvf/hvf.c               |  25 -----
+ target/arm/kvm-stub.c              |  15 ---
+ target/arm/kvm.c                   | 197 ++++++++++++++++++++-----------------
+ target/arm/kvm_arm.h               |  35 -------
+ target/arm/tcg/cpu64.c             |   2 +-
+ target/arm/tcg/op_helper.c         |   2 +-
+ tests/functional/ppc/test_ppe42.py |   0
+ 20 files changed, 246 insertions(+), 215 deletions(-)
+ mode change 100644 => 100755 tests/functional/ppc/test_ppe42.py
 
