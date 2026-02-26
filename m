@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E20FC5904
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:12:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5D6FC5907
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 07:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvVXo-00072W-70; Thu, 26 Feb 2026 02:12:20 -0500
+	id 1vvVdn-0001Rh-TA; Thu, 26 Feb 2026 02:18:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvVXe-0006zn-M7
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:12:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvVXb-0007Lq-Pp
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:12:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772089926;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FBdUl52cQDccib0nRxMgzOcVdooF8JsO4LTwPImhd04=;
- b=D+ZrGN2OUOeRRDq1a2Sw2PeDKgKAUONNF097rDoFdnAoloSTCJewS18bt8Qi1l8SfBKTh/
- 5jeQAZVFfHcslcY3NTuJArp3y5tmZClpZ8OkV89/adNT0OcUJg77xZJpUyrS01Rn6UWaX/
- vGwutAYe7aTsIry31+AIQXwYFkqspQ8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-T9Rgry4ZPfaPSzmqrCYjrg-1; Thu,
- 26 Feb 2026 02:12:04 -0500
-X-MC-Unique: T9Rgry4ZPfaPSzmqrCYjrg-1
-X-Mimecast-MFC-AGG-ID: T9Rgry4ZPfaPSzmqrCYjrg_1772089922
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D115F18005AD; Thu, 26 Feb 2026 07:12:01 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 665871956053; Thu, 26 Feb 2026 07:12:00 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E77F121E6932; Thu, 26 Feb 2026 08:11:57 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  Stefan Weil
- <sw@weilnetz.de>,  "Dr. David Alan Gilbert" <dave@treblig.org>,  Pierrick
- Bouvier <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
- Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 25/27] util: add support for formatting a program
- name in messages
-In-Reply-To: <aZ8iSclFzGgPEH1t@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 25 Feb 2026 16:24:41 +0000")
-References: <20260211152508.732487-1-berrange@redhat.com>
- <20260211152508.732487-26-berrange@redhat.com>
- <87ikbt3v0y.fsf@pond.sub.org> <aZ8iSclFzGgPEH1t@redhat.com>
-Date: Thu, 26 Feb 2026 08:11:57 +0100
-Message-ID: <871pi8htc2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vvVdk-0001Q3-8K
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:18:28 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vvVdg-0008Nz-I0
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 02:18:27 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2aaf43014d0so4373255ad.2
+ for <qemu-devel@nongnu.org>; Wed, 25 Feb 2026 23:18:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1772090303; x=1772695103; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OpflKE2DNWvd/n7WqUURydxOraSugj+yhOqZu5kSeew=;
+ b=EY4A6V2HodQaygsb79yxFi9sTyrKw6zti2zTlEHpN4NxxMFDMEt9z9NImqRds6lbFT
+ cv964UBcJWQqk/vNL7oLd2LkRBZm/doRmMztzdwOlpqiFfTszpCsxvHhSZFgXDxH5QsU
+ tGd3nzT7CqL0tpvJu+eOETnq8BKazuU1/bAW0W+NFdJP8JUmSer8yduFtUBj6WFolyVY
+ YRmW3MG2hWKli9Tnq8/9Q+RDkb4NAji4KM+chAHLA7FUlnvP5QNChOHfCSnbRjU9z5gm
+ YcGlv3l/HUDu+9W1a50ST9sHJhr+Z7wSWP3C00NCvvJhcMvXxgMmJ51oXrLWXNmQLyIi
+ 0v5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772090303; x=1772695103;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OpflKE2DNWvd/n7WqUURydxOraSugj+yhOqZu5kSeew=;
+ b=Raz00R7ePOPPze6rWhRsSdY6Mt6q2uhI7oMedF5l0JzSc2TKtdOWUO/8OOEYtZZF6H
+ yGiYklXnKE4kYI3INh4tqmQWo3KHRJ7iLKoE7GQrv3u7vG3FJGSx38OJnG7TY7atrWfQ
+ PTTQIzxK+Dc0rcdykXZthJaciMao7m7GHQJQUAcoDvUHmgYsta+VKYMjZSUZRXNqCzjk
+ W+y1URu3YvtaqkcR4UZ9Vjqa1GrWPqXxsVMlIdpJj7d643E1s3wQXyk3V7xKHgqNN2A/
+ C4OZkCMM1xNwuX+u7MBacfnHpr06FaejfiKNFK+veHe0Of64I+6XVp4J0qRHDyrEHc0S
+ W9AQ==
+X-Gm-Message-State: AOJu0Yw6dHlFZAm335O9mF7+1NFZW4ZuojWgoYf0D6aoZ2bhxZZY/NAZ
+ JBr++cGl8Zn0oZUZ/UicveGZyXKUDzKGZzBQuGBbS+zF8vj2BqbfdQfSGwe/ZYMchoXRMzKoEdH
+ VSO8eZ7eSMXFitVl5nvueC6NA67AGYLnvqimeelbX60idBr3vEZGXE29ybCbMFmINiacbjUIa0V
+ 6pb2Hos0tdOioeqHzFy0il+rhOZo3ANpRBJi0Ct25APj5B
+X-Gm-Gg: ATEYQzzfZFkDUNZlekrtIZxr5kXtE4piteKzFJqw8eR1T7yqnVBPN+imLYkrEFbPXNU
+ vTt0QWNsHYIaeTBhBkBqtNwiP5yopuj/KFvO+d1G4YSFHr/LOFmsk1NcAzxF/iNST3QQDlrStkC
+ C9ZtFW6ub4k0KW9aBUOkpxdRljVk0bVaY3kEkLAG5rFaGAzwMhr+7PL8Xu3uB/Q933hNXTWDepz
+ AtP4oS4R1NO4lE+bQFQ8Z6wWoZZ+C6Wd8JZdiMRFDnzA0jqsaAaq3smbCbI1maC+6ZI4r4DzuWL
+ LaaAYUB0+6GsZy8eazBaxvLSALlTtGhAXVUs6MhFUsxQuKX/+rhDOFv0JsnuAs9iytPozuunKaA
+ sYPNuMG3tzOfwGwjatXIfL4CmbZsYUWGFo696jWbkw0DnwWgfmu4dpw5uL06N4SuSNL1vIR1LaG
+ C2X2vWwuZFbXIdRD+IuG9wmVe9iJxDTgJKZsFuZy5uwqh4erGjBEQmnqQyPYLZR0bFOWrCUwzfj
+ el9ezTEe68yaXTUFWVRk/Im4MQ=
+X-Received: by 2002:a17:903:32c8:b0:2aa:f0d6:bf3b with SMTP id
+ d9443c01a7336-2ad7455d873mr187746455ad.53.1772090302633; 
+ Wed, 25 Feb 2026 23:18:22 -0800 (PST)
+Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82739ff37f1sm1296179b3a.40.2026.02.25.23.18.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 25 Feb 2026 23:18:22 -0800 (PST)
+From: Max Chou <max.chou@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ richard.henderson@linaro.org, Max Chou <max.chou@sifive.com>
+Subject: [PATCH v2 0/2] fpu: Fix OCP FP8 E4M3 conversion issues
+Date: Thu, 26 Feb 2026 15:18:13 +0800
+Message-ID: <20260226071817.1417875-1-max.chou@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,138 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+This series fix following issues related to OCP FP8 E4M3 conversion.
 
-> On Thu, Feb 19, 2026 at 11:08:45AM +0100, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > The error_report function can include the program name in any
->> > messages it prints. The qemu_log function has no equivalent
->> > behaviour.
->> >
->> > This introduces support for a "program name" in the new
->> > messages API, which will be included by default for all
->> > binaries.
->> >
->> > This change tweaks the output of the error_report function,
->> > adding a space between the program name and the location
->> > info.
->>=20
->> Why?
->
-> Looking again, arguably that is fixing a pre-existing bug
->
-> The current code is:
->
->     if (!monitor_cur() && g_get_prgname()) {
->         error_printf("%s:", g_get_prgname());
->         sep =3D " ";
->     }
->     switch (cur_loc->kind) {
->     case LOC_CMDLINE:
->         argp =3D cur_loc->ptr;
->         for (i =3D 0; i < cur_loc->num; i++) {
->             error_printf("%s%s", sep, argp[i]);
->             sep =3D " ";
->         }
->         error_printf(": ");
->         break;
->     case LOC_FILE:
->         error_printf("%s:", (const char *)cur_loc->ptr);
->         if (cur_loc->num) {
->             error_printf("%d:", cur_loc->num);
->         }
->         error_printf(" ");
->         break;
->     default:
->         error_printf("%s", sep);
->     }
->
->
-> Notice how we honour "sep" for LOC_CMDLINE but ignore
-> it for LOC_FILE.
+- Numeric overflow to E4M3 produces incorrect exponent values due to a
+  missing local variable update after calling uncanon_e4m3_overflow.
+- Converting infinity to E4M3 incorrectly raises OF|NX exception flags.
 
-This works exactly as intended.  To illustrate, add
+Changes in version 2:
+- The “fpu: Simplify OCP FP8 E4M3 NaN classification in parts_canonicalize”
+  patch has been removed. This change retains the flexibility to classify NaNs.
 
-    error_report("test, ignore");
+rnax
 
-to qdev_device_add(), then:
+Max Chou (2):
+  fpu: Fix repacking issues in the uncanonical step for E4M3 overflow
+  fpu: Fix unexpected exception flags when converting infinity to OCP
+    E4M3
 
-    $ cat t.cfg
-    [device]
-      driver =3D "usb-kbd"
-    $ qemu-system-x86_64 -S -display none -machine usb=3Don -device usb-kbd=
- -readconfig t.cfg -monitor stdio
-    QEMU 10.2.50 monitor - type 'help' for more information
-    qemu-system-x86_64: -device usb-kbd: test, ignore
-    qemu-system-x86_64:t.cfg:2: test, ignore
-    (qemu) device_add usb-kbd
-    test, ignore
+ fpu/softfloat-parts.c.inc | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-The format
-
-    program:sourcefile:lineno: message
-
-conforms to the GNU Coding Standards at
-<https://www.gnu.org/prep/standards/standards.html#Errors>, and matches
-common practice.
-
-> With the program name printing moved out into a separate
-> function, the space is always printed. No change for
-> LOC_CMDLINE, but new whitespace for LOC_FILE.
->
-> Should have changed this in a separate patch.
->
->> >       The qemu_log function will gain the program name. This
->> > can be easily seen with the 'log' trace backend, and how it
->> > is now more closely matching error_report output.
->> >
->> > Before:
->> >
->> >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 't=
-race:qcrypto*'
->> >   qcrypto_tls_creds_x509_load TLS creds x509 load creds=3D0x5584e13937=
-f0 dir=3Dfish
->> >   qcrypto_tls_creds_get_path TLS creds path creds=3D0x5584e13937f0 fil=
-ename=3Dca-cert.pem path=3D<none>
->> >   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: N=
-o such file or directory
->> >
->> > After:
->> >
->> >   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish -d 't=
-race:qcrypto*'
->> >   qemu-system-x86_64: qcrypto_tls_creds_x509_load TLS creds x509 load =
-creds=3D0x5584e13937f0 dir=3Dfish
->> >   qemu-system-x86_64: qcrypto_tls_creds_get_path TLS creds path creds=
-=3D0x5584e13937f0 filename=3Dca-cert.pem path=3D<none>
->> >   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: N=
-o such file or directory
->> >
->> > When adding this the '-msg program-name=3Don|off' option is
->> > introduced, so that the program name (which is enabled by
->> > default) can be supressed if desired. This could be useful
->> > if '-msg guest-name=3Don' is being used as a more informative
->> > identifier.
->>=20
->> Separate patch?
->
-> It is a bit of a borderline decision, but I felt the knob to turn it
-> off should be in the same patch that force enables it.
-
-Peter objected to making the logs more verbose by default, and I think
-he has a point.  Perhaps having errors and logs share a general format
-is useful anyway, and perhaps making it even more configurable is as
-well.  I figure we'd need separate configuration for logs and for error
-messages.
-
-Let's get to rough consensus before we debate the finer points like this
-one.
-
->> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> With regards,
-> Daniel
+-- 
+2.52.0
 
 
