@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 737BCFD8FC3
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E67CAFD8FC3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 15:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvdiP-0005Lv-H5; Thu, 26 Feb 2026 10:55:49 -0500
+	id 1vvdih-0005X7-O2; Thu, 26 Feb 2026 10:56:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiN-0005LA-V6
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:48 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vvdiV-0005Ok-5b
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:55 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvdiM-0003ki-1I
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:47 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43988056dc3so1040677f8f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:45 -0800 (PST)
+ id 1vvdiT-0003mM-DU
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 10:55:54 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4398dd671daso1117776f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 07:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772121344; x=1772726144; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772121351; x=1772726151; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lJhJpmRt2N+ostHQqi971o1Mv0Stne1iPkG3Ew0xXN8=;
- b=WcsGH2iT92hnLQkbyw++rPUYKax7lG/ixgGQ6EU521uVolU4579k143nW4GTCahKPs
- 2QYURcxxe0E9EKMFM9fG4g0U5fd32GOBqGZg5zw/RZ+ckuICVdX6zAXP7RIcTnbdCaAE
- ESRdcJ5H9sLZCogde6OpFUaE3L9vXTXpWgi6VW/wsrxn3AwaZN4pdZ0rtZFZCLGoJ4Y7
- 34YJfj/6F+OXaorqcz6DdjnVEzydr0BoGiiyu/Ckqq4wDLEog+opuKwiWjy91O0e6YBb
- zD7grxvaZghjoKbw9OuyQJJLiEZgGmiWO96J19Xcm3bBvMVsMswpZM3Ozfyc7wDemTtB
- mjyA==
+ :reply-to; bh=Rmltxj0hvxlVzepTANi2L0kwJYbr2zP+eSEap718xM8=;
+ b=wclB73vU98VRmFID+k+ZNn2tGAl9+mUkuvBdn4K4skS4BiS/jKsX3v4riht+eFl9cQ
+ djoHB3vQ2BBIxU8rvtu/Eo4gHKXMESoJjfjTJCzsGve7t+65zxGBSP+DCSEgq9AqWMwS
+ /SOTa6W0LCB0zUl/x5W+UcgCmhqx2b4IJ/EF9t1iJtHA/wQjl6+0lG4Qr2pXpXMnTylX
+ VOoP06r4x482BMc+ABZ+8wQniBg3JvXCxVd3WGlX6eNf5d+i2LOtIWh3C4oi548zNFHe
+ Pd3l9WWJjSrrVCfALjoRk0bqgkgrv0LkSpqxpy1YThGV1E7y1epOdGn3g6EHjylq/0H2
+ QIQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772121344; x=1772726144;
+ d=1e100.net; s=20230601; t=1772121351; x=1772726151;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lJhJpmRt2N+ostHQqi971o1Mv0Stne1iPkG3Ew0xXN8=;
- b=wdCOVz+eoAGeG4mqAt9uKAY5RcqxZumxqMEYoRg1UpCnHuPut/oou5XgAsFdLGaAVE
- PFJmcvZ3ZDVhLtuUNEWWeCMDjoIO5eMS5obi+NeE/Pvz/TMgce/Axi2EPb34WdTB9Pw4
- PiOe9n1k0CBPic2muMtKc6Gags1pJDNIuueoerNId3WUHo11p5V87+OmGuOSZHGfnGa5
- e/tN2uDJ9qPY3z92BUlArfDa/rhCYrt2GPo+jFBwcaJ4zKYG7ghGyd53T+VLSEcvbFkF
- pYviNTx+7BGMEOCWYqD/ZGrxkH6H15L1TFaoUXIjhAEHygDSjWU9Qm9I6S1gD4x4bl0O
- RsRQ==
-X-Gm-Message-State: AOJu0YwJ711ukxQ6iWNRzU+5Wm90h+DLiKRCN1j5SpS7EHOCanFIHlsC
- xa9osBtLjhj+bMSWtwcCBPdqy+3xhun3B2HBSiruTYjv+CYbPSx4k+/qydkMxvQIGaug2GPgTp1
- Ly7h5
-X-Gm-Gg: ATEYQzy1w2Q6uObs4XPL+jwGWIchXaOC3EGE2elZKP3AA1Fp50vUzjvQEf8vbFcdy4p
- Y+U82ae6aIBoeyVa3X6hHGfv6My1yGiwEeqY0n8M0J3AdyWA7nAE5tFzS3vxCpSWSC8V297nvCQ
- tYWNSVDuSZKhzNqBAl90f3IhYId+YnyIMHwyeZDmFewUqQNBTLuwNpdEo9w+lUm7yN2Ll57OgSb
- 1R79Zw4tdNC9F2ah9izxKkGAr7dWIQa0EI6O0twceCrAMTzh6sc/8YtxrDoj4zWCp99dcjg7tQn
- FqGzIrxHpu/4bRy78Q4LewhjWHgylBIWhLVmKbVWd3vx1ug6+ufqOmM8YLpnSOTru6++CZGb9+o
- ItqL4iK+b9yo06C92aooJrcfDVXvQ/QxenLoQzK4ACR1HX+iy22aFLR2XzNOiXjRbphwn+1l9tx
- KCrEwhFLTp1q41DCAAnCHRQt7Y6cGmuNkzBXl7AIzkFpA4Cy4kkQqmqpg6/7eKsQBsWo+jDZ26K
- 7yvgXSrWRrwUUkAuaEOKQRKgZPsxMw=
-X-Received: by 2002:a5d:5f43:0:b0:436:d9b:cd02 with SMTP id
- ffacd0b85a97d-43997e65811mr5012169f8f.0.1772121344116; 
- Thu, 26 Feb 2026 07:55:44 -0800 (PST)
+ bh=Rmltxj0hvxlVzepTANi2L0kwJYbr2zP+eSEap718xM8=;
+ b=L4TVqQh76lhU9T0P3z4nlGYOqoIjg8TOSavQ/QJHPBWb9fR9Z832WCqsR+miMB/S7o
+ absKsDdDELl+cAa7z3ebeIxqNs1HjCzA5Z2+iuMPS0JDnas+69mulPS8cqvWGDkq8gx7
+ YKFz32TOvJZKBan1XSCkX22moUNB1JAlqHPu64yJ3lqeuzqngjwmyTIp1Tvxflg4saWQ
+ xDaTuMpDdLezavuA+mYJDLDNO9Qe36SHB6iV6zOMl1prZAuY6x/gqgi6JwVM6jVQXJ1W
+ bjFiqStHHejIcxqu7suzLgp9S7lSLu91gVBSqXzmOc5nSN6AHX/tVWe/oNZ1eb/Mmmk7
+ Givw==
+X-Gm-Message-State: AOJu0YxJuoiYBb5AWxmq2KU9mj8sKa4W/QysNxnRYvWk56YjAB3nwmSI
+ S4DGR1p/30OLb2jk7in3TH5QiwAlDq50wsrdTZLnBFeBdlqO3LVuCbEYYyCDqqUlSM4eZgMZbKO
+ 6mPUU
+X-Gm-Gg: ATEYQzzLpLLAM5ciZOdiMZ4ZqeqDbV3An8cRgx1QrsIeyO9cdOxXLkhlm6ZZXe668uh
+ PMm0AgksZyiAlgvYm5MEqCVDxc2XT2F8NM0Q/i46uuMSEEZY5OXkzcAt9H9F0y4mFFGLIKD7G/l
+ eZiWG+Ip5WtQy+UV4vHi4/h9Vgr8H1H3sZYbS3+hzy7nY/vAqaSo7mL7yZyQtzTAQ1zxiXPLcPE
+ KYB4tfx9PkLZiudr0SCnOy2OTe866hSAKMyN3J+LC18FtLDHeb7P/uNkTvrs6H/KLdzBER+4OsO
+ hqoFGdqVT1+B7UOzyjRsc619aLyXTSrZNwIpPCVB+XzZcQh8+Nnp/8u8THbh6S8sJNMQHkWVug3
+ UAvhtiEO1Y2x6TolWk/tq8UJ9WVQFiK9H3+DokZQvbZZ2NDiCmVIdlrf9LZw5KQ3MJ6sGSvfrHT
+ gOf7YH7DqxnH9vmCW+Poq0R+RbjAMkGRNjrF9uA9VBWyTVUCtf4WEUd1NkOhcO1gGLwbl6Ax+pT
+ 0nWL0C9NKSbcdsi25DDV8Km8L8zQv4=
+X-Received: by 2002:a05:6000:2dc6:b0:439:8f6f:1b2a with SMTP id
+ ffacd0b85a97d-43997ed6d0dmr5410071f8f.4.1772121351467; 
+ Thu, 26 Feb 2026 07:55:51 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.43
+ ffacd0b85a97d-4399c75b8afsm407235f8f.23.2026.02.26.07.55.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 07:55:43 -0800 (PST)
+ Thu, 26 Feb 2026 07:55:50 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/20] target/arm/kvm: add kvm-psci-version vcpu property
-Date: Thu, 26 Feb 2026 15:55:21 +0000
-Message-ID: <20260226155535.1171290-7-peter.maydell@linaro.org>
+Subject: [PULL 14/20] target/arm: Drop kvm_arm_sve_supported
+Date: Thu, 26 Feb 2026 15:55:29 +0000
+Message-ID: <20260226155535.1171290-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260226155535.1171290-1-peter.maydell@linaro.org>
 References: <20260226155535.1171290-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,149 +100,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Ott <sebott@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Provide a kvm specific vcpu property to override the default
-(as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
-by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
+This function has only one real use, so inline it and
+drop the stubs.
 
-Note: in order to support PSCI v0.1 we need to drop vcpu
-initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Sebastian Ott <sebott@redhat.com>
-Message-id: 20260220115656.4831-2-sebott@redhat.com
-[PMM: adjust sscanf to not permit negative numbers]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260216034432.23912-7-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/cpu-features.rst | 11 ++++++++
- target/arm/cpu.c                 |  8 +++++-
- target/arm/kvm.c                 | 48 ++++++++++++++++++++++++++++++--
- 3 files changed, 64 insertions(+), 3 deletions(-)
+ target/arm/kvm-stub.c |  5 -----
+ target/arm/kvm.c      |  9 +--------
+ target/arm/kvm_arm.h  | 12 ------------
+ 3 files changed, 1 insertion(+), 25 deletions(-)
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index 3db1f19401..ce19ae6a04 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -204,6 +204,17 @@ the list of KVM VCPU features and their descriptions.
-   the guest scheduler behavior and/or be exposed to the guest
-   userspace.
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index f2de36aef3..f1d0ca09e6 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -37,11 +37,6 @@ bool kvm_arm_pmu_supported(void)
+     return false;
+ }
  
-+``kvm-psci-version``
-+  Set the Power State Coordination Interface (PSCI) firmware ABI version
-+  that KVM provides to the guest. By default KVM will use the newest
-+  version that it knows about (which is PSCI v1.3 in Linux v6.13).
-+
-+  You only need to set this if you want to be able to migrate this
-+  VM to a host machine running an older kernel that does not
-+  recognize the PSCI version that this host's kernel defaults to.
-+
-+  Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3.
-+
- TCG VCPU Features
- =================
- 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 10f8280eef..60f391651d 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1144,7 +1144,13 @@ static void arm_cpu_initfn(Object *obj)
-      * picky DTB consumer will also provide a helpful error message.
-      */
-     cpu->dtb_compatible = "qemu,unknown";
--    cpu->psci_version = QEMU_PSCI_VERSION_0_1; /* By default assume PSCI v0.1 */
-+    if (!kvm_enabled()) {
-+        /* By default KVM will use the newest PSCI version that it knows about.
-+         * This can be changed using the kvm-psci-version property.
-+         * For others assume PSCI v0.1 by default.
-+         */
-+        cpu->psci_version = QEMU_PSCI_VERSION_0_1;
-+    }
-     cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
- 
-     if (tcg_enabled() || hvf_enabled()) {
+-bool kvm_arm_sve_supported(void)
+-{
+-    return false;
+-}
+-
+ bool kvm_arm_mte_supported(void)
+ {
+     return false;
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index ded582e0da..c46ee9620b 100644
+index b00172a289..495ac0709a 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -485,6 +485,28 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
-     ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
- }
+@@ -246,7 +246,6 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
  
-+static char *kvm_get_psci_version(Object *obj, Error **errp)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+    return g_strdup_printf("%d.%d",
-+                           (int) PSCI_VERSION_MAJOR(cpu->psci_version),
-+                           (int) PSCI_VERSION_MINOR(cpu->psci_version));
-+}
-+
-+static void kvm_set_psci_version(Object *obj, const char *value, Error **errp)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    uint16_t maj, min;
-+
-+    if (sscanf(value, "%hu.%hu", &maj, &min) != 2) {
-+        error_setg(errp, "Invalid PSCI version.");
-+        return;
-+    }
-+
-+    cpu->psci_version = PSCI_VERSION(maj, min);
-+}
-+
- /* KVM VCPU properties should be prefixed with "kvm-". */
- void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+ static uint32_t kvm_arm_sve_get_vls(int fd)
  {
-@@ -506,6 +528,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-                              kvm_steal_time_set);
-     object_property_set_description(obj, "kvm-steal-time",
-                                     "Set off to disable KVM steal time.");
-+
-+    object_property_add_str(obj, "kvm-psci-version", kvm_get_psci_version,
-+                            kvm_set_psci_version);
-+    object_property_set_description(obj, "kvm-psci-version",
-+                                    "Set PSCI version. "
-+                                    "Valid values are 0.1, 0.2, 1.0, 1.1, 1.2, 1.3");
+-    /* Only call this function if kvm_arm_sve_supported() returns true. */
+     uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
+     struct kvm_one_reg reg = {
+         .id = KVM_REG_ARM64_SVE_VLS,
+@@ -298,7 +297,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      * Ask for SVE if supported, so that we can query ID_AA64ZFR0,
+      * which is otherwise RAZ.
+      */
+-    sve_supported = kvm_arm_sve_supported();
++    sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+     if (sve_supported) {
+         init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
+     }
+@@ -1937,11 +1936,6 @@ bool kvm_arm_el2_supported(void)
+     return kvm_check_extension(kvm_state, KVM_CAP_ARM_EL2);
  }
  
- bool kvm_arm_pmu_supported(void)
-@@ -1976,8 +2004,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-     if (cs->start_powered_off) {
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_POWER_OFF;
+-bool kvm_arm_sve_supported(void)
+-{
+-    return kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+-}
+-
+ bool kvm_arm_mte_supported(void)
+ {
+     return kvm_check_extension(kvm_state, KVM_CAP_ARM_MTE);
+@@ -2000,7 +1994,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
      }
--    if (kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
--        cpu->psci_version = QEMU_PSCI_VERSION_0_2;
-+    if (cpu->psci_version != QEMU_PSCI_VERSION_0_1 &&
-+        kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PSCI_0_2)) {
-+        /*
-+         * Versions >= v0.2 are backward compatible with v0.2
-+         * omit the feature flag for v0.1 .
-+         */
-         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PSCI_0_2;
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+-        assert(kvm_arm_sve_supported());
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_SVE;
      }
-     if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
-@@ -2015,6 +2047,18 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         }
-     }
+     if (cpu_isar_feature(aa64_pauth, cpu)) {
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 97549766ea..cee06b5f0b 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -176,13 +176,6 @@ bool kvm_arm_aarch32_supported(void);
+  */
+ bool kvm_arm_pmu_supported(void);
  
-+    if (cpu->psci_version) {
-+        psciver = cpu->psci_version;
-+        ret = kvm_set_one_reg(cs, KVM_REG_ARM_PSCI_VERSION, &psciver);
-+        if (ret) {
-+            error_report("KVM in this kernel does not support PSCI version %d.%d",
-+                         (int) PSCI_VERSION_MAJOR(psciver),
-+                         (int) PSCI_VERSION_MINOR(psciver));
-+            error_printf("Consider setting the kvm-psci-version property on the "
-+                         "migration source.\n");
-+            return ret;
-+        }
-+    }
-     /*
-      * KVM reports the exact PSCI version it is implementing via a
-      * special sysreg. If it is present, use its contents to determine
+-/**
+- * kvm_arm_sve_supported:
+- *
+- * Returns true if KVM can enable SVE and false otherwise.
+- */
+-bool kvm_arm_sve_supported(void);
+-
+ /**
+  * kvm_arm_mte_supported:
+  *
+@@ -208,11 +201,6 @@ static inline bool kvm_arm_pmu_supported(void)
+     return false;
+ }
+ 
+-static inline bool kvm_arm_sve_supported(void)
+-{
+-    return false;
+-}
+-
+ static inline bool kvm_arm_mte_supported(void)
+ {
+     return false;
 -- 
 2.43.0
 
