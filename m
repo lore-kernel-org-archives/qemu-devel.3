@@ -4,72 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67360FCE077
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 13:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30429FCE07E
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 13:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvbD9-00088i-CN; Thu, 26 Feb 2026 08:15:23 -0500
+	id 1vvbUJ-0005Dl-Gk; Thu, 26 Feb 2026 08:33:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vvbD6-000886-7A
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 08:15:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vvbD4-0006JT-8j
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 08:15:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772111716;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7b54WMDHvzc46ebHCSA0AaQthrR4jVhyxVkGRZt3xCk=;
- b=LadeRTvsFW0nnwkmxnqJLoDvD/a0JXz+mYAX0CRjTMbsUbgNjNExAVOxJactBg4FvReGK3
- NN87BiJ+cs1XNxGyu2tBA4LRe3//hCecd2mNVR9kWgMud3utsVWMXCFGUtkJySkWe4+GW9
- 6gmvf+sXrnkRRWsdWcoOzijlhTdRdJ8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-aeJgh-fHPb-SN84S3I-BXg-1; Thu,
- 26 Feb 2026 08:15:12 -0500
-X-MC-Unique: aeJgh-fHPb-SN84S3I-BXg-1
-X-Mimecast-MFC-AGG-ID: aeJgh-fHPb-SN84S3I-BXg_1772111711
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D36E195609F; Thu, 26 Feb 2026 13:15:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.49])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 126DC1800348; Thu, 26 Feb 2026 13:15:08 +0000 (UTC)
-Date: Thu, 26 Feb 2026 14:15:06 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
- jsnow@redhat.com, den@openvz.org
-Subject: Re: [PATCH v3] [for-10.1] block-jobs: add final flush
-Message-ID: <aaBHWpS78HWizzmv@redhat.com>
-References: <20250402083715.391059-1-vsementsov@yandex-team.ru>
- <aZ8leLFRoF4J7s6a@redhat.com>
- <2a294c9c-fd5d-4c57-a43d-4ba08e24fe48@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvbUI-0005DY-1d
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 08:33:06 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvbUG-0001RJ-H5
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 08:33:05 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so909793d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 05:33:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772112783; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LiIIKupYlssQzeH3WZStnwwOFVJxtErdM3Ed2xh0/BT8PLUasUu0H7yw7sOeboDmFY
+ VV5yAL1xBZaUe8cpAQoGp0OMWf4qjPfFH7BW5JwTzA5VlIc1N54/0az8+cLed8StcslN
+ y8yUYVHUjahMmvXmc0fwOTnkVpuDsrH2HtB1adv9Jc2/2bU4Z8eKRdrrAjLKny5gMqZd
+ WiJjMaVvUdDNd8Qfog4QyXIimDLWLRJAjM5PzC2JxcadCCbjUcqv6TmGh8NcTpj+vHpx
+ P5HgYddGhd5mKekk+GHJePBsxpvIDMtJ4nP3/A94QpE5yazwN+LrpadC9YN89VuUHagS
+ AsAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :mime-version:dkim-signature;
+ bh=emm+fOzlNK/3324ofA1rvajWn7CzXGKf8Ow+HEZmKf0=;
+ fh=wZWECxj4up2f0ESeW7QI7zxzvm6aKp9CEoFhHVk4A0c=;
+ b=CFTjaFsucDPvCykdnwhf2TMeYfe/6/efJEoS+tdzWoEvumTK/ThQjARcMle70B12bm
+ U60ctQMSrQaiix93RT4b8zGj3Ra+97sa4UNaPsgZwNqMDxUqrWelTrnLcYHxq/RrBXeQ
+ dlrufUq+n58v/MPAimVGAq3GgVh7u+/bR8ZChGxvagfbxugjZqz7P5lwy15vDxTkSIZ6
+ 4rOoen4wEgMs89d8KZKPuuE+MaNZR+zBQwiknBDSOlw4PH03YZ+zsKQNHidd3pM7FGQx
+ U4KuGEjGzlvlKYyy4SvqIdzvvy0yqpfzo8779jgxCd+xO955tJ5dztML83zS1fXQdK9/
+ o/0w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772112783; x=1772717583; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=emm+fOzlNK/3324ofA1rvajWn7CzXGKf8Ow+HEZmKf0=;
+ b=R/RB8c84imOFS2mKfwmBNqiscy76Hi8S5PsW2NqB2t6wjQ4VpNl7T30zdPxfABHevc
+ +/EK5pgkQ9+ZYNCJt0d+s8S+8WHAf6jaJLphpOf0jic78LRuD8unVc3cR30jz/UnJdsL
+ 0H4P8ACt4VZXvOALSaMKMxWRrrgfM2JfcZ6t+oDDsiYsmKM1pAR8Gf8yUe8ZSnQlZ6Hz
+ tW1r+S3wBHgKAhKiQ3kooheuCTCfldp/cQv8M4L+GvWlFxrzvx75h3LPf+ZAPx/6pDY+
+ zMWzCuiiPn3fTN9EYixB79v59Mzjo/kndzQ4tUS/zbmElu65fRQCP4hU7kUIm/mONK61
+ +M5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772112783; x=1772717583;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=emm+fOzlNK/3324ofA1rvajWn7CzXGKf8Ow+HEZmKf0=;
+ b=VEHT6bPJTYCX/i9q/Ft6mKB0ZjMjth5BBboUn9ly7YAfgPPIZWgpXI2kNPItdWQx0f
+ 8uwwcKNXUN+e5vlGw74tBQ3O5vTkMPtmpxU3t1pVS0kHSld7b244ZJItIuqUj1Rr67Vg
+ lZYgD88YBQUlYRXL4gT46ymqJ0j6oURYQUj4/UI3Ph4U5SfC2TVPwR3PipVRHV1m/mTI
+ hcaNbN8syUacAtB+9IN0R8QGZC7+f2DcsyrzGBddVnGxQMKHxudVX65FUFBLmPO4rNpD
+ 79ko9ATXkAaRCSwE88v5v4jrwp/d/5SPRhOjAnbG+0rCGfOmB6Poynhec73fCUPMPvkh
+ rU3w==
+X-Gm-Message-State: AOJu0YzjwUwMnHIli6vt1qbGXwhW2vTN973c4nAScPj9+FxQrZIOQzEd
+ NPr4VEs07fGYA12mQgml0jGg+xLK4QY9tlHlaheCQWzZoQy2rzBCVIKbwqWkr3JLdyCpExN4VZA
+ nKwY+BEG3G4/6moImaQU/h1NiJ7Uhua4+Zc9QLdTJucr0yNbEmDhu0F8=
+X-Gm-Gg: ATEYQzzItKSX+bbZ2TvlU+9NBQWhIPl/6d/8e9ldTEQgIsoMDuQWvkItcqt5GyR5iqE
+ bMJXu4P1PxBDsRnonhqImjK832hssLtlkw09PSCynaVpxTmA9g8HRPFDtwGJlGAOKlPCkh2//IY
+ tdMKSFxuLpqGPgLObFivUEt2AQ9x0HhiaHEONChG90VmxnyMH4WCgOESq1dAUh7c1MZxXcheYbQ
+ rEa3hNNWjzP20LcrZrvattm3IPQgdeUSO5fVChVdVPbco74EO1jw4evULI6JBKSc09jEybOiW5E
+ 6bZzDLcbB2lTtaAjWohgC3tY8h80tckSBM/Qo/NuioIbIuvftrLF6y/tYB6vQRki4IMRMv5xbJ2
+ AUg==
+X-Received: by 2002:a05:690e:6cb:b0:64a:db34:8502 with SMTP id
+ 956f58d0204a3-64cb22db9d6mr2419705d50.13.1772112782909; Thu, 26 Feb 2026
+ 05:33:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2a294c9c-fd5d-4c57-a43d-4ba08e24fe48@yandex-team.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 22
-X-Spam_score: 2.2
-X-Spam_bar: ++
-X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Feb 2026 13:32:51 +0000
+X-Gm-Features: AaiRm53u7J1Rgv2TBujn_pdfITKv1fb3EdKTvSw_vSJC9Z89BOdv3bBNuqGkzfs
+Message-ID: <CAFEAcA-8as1Tc_N_hucAvUTi-O2ag9OHApY2j9Dq9=CO+A1wSQ@mail.gmail.com>
+Subject: configure fails with "No matching distribution found for
+ wheel>=0.34.2"
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: John Snow <jsnow@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,140 +114,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 25.02.2026 um 21:18 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> On 25.02.26 19:38, Kevin Wolf wrote:
-> > Am 02.04.2025 um 10:37 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> > > Actually block job is not completed without the final flush. It's
-> > > rather unexpected to have broken target when job was successfully
-> > > completed long ago and now we fail to flush or process just
-> > > crashed/killed.
-> > > 
-> > > Mirror job already has mirror_flush() for this. So, it's OK.
-> > > 
-> > > Do this for stream, commit and backup jobs too.
-> > > 
-> > > Note that jobs behave a bit different around IGNORE action:
-> > > backup and commit just retry the operation, when stream skip
-> > > failed operation and store the error to report later. Keep
-> > > these different behaviors for final flush too.
-> > > 
-> > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > ---
-> > > 
-> > > v2 was old "[PATCH v2 0/3] block-jobs: add final flush"[1]
-> > > v3: follow Kevin's suggestion to introduce block_job_handle_error()
-> > >     (still, it's not obvious how to rewrite commit and stream operation
-> > >     loops reusing this helper, not making things more complicated..
-> > >     I decided too keep them as is, using new helper only for final flush.)
-> > > 
-> > > [1] https://patchew.org/QEMU/20240626145038.458709-1-vsementsov@yandex-team.ru/
-> > > Supersedes: <20240626145038.458709-1-vsementsov@yandex-team.ru>
-> > > 
-> > >   block/backup.c           |  8 ++++++++
-> > >   block/commit.c           |  6 +++++-
-> > >   block/stream.c           |  8 ++++++--
-> > >   blockjob.c               | 34 ++++++++++++++++++++++++++++++++++
-> > >   include/block/blockjob.h |  9 +++++++++
-> > >   5 files changed, 62 insertions(+), 3 deletions(-)
+On my local machine, configure now seems to fail with:
 
-> > > diff --git a/block/commit.c b/block/commit.c
-> > > index 5df3d05346..711093504f 100644
-> > > --- a/block/commit.c
-> > > +++ b/block/commit.c
-> > > @@ -201,7 +201,11 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-> > >           }
-> > >       }
-> > > -    return 0;
-> > > +    do {
-> > > +        ret = blk_co_flush(s->base);
-> > > +    } while (block_job_handle_error(&s->common, ret, s->on_error, true, true));
-> > 
-> > Why does commit still flush even if we return an error?
-> 
-> Hmm. We are on success path here, we do flush where "return 0;" was.
+python determined to be '/usr/bin/python3'
+python version: Python 3.12.3
+mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+mkvenv: checking for meson>=3D1.5.0
+mkvenv: checking for pycotap>=3D1.1.0
+mkvenv: checking for qemu.qmp>=3D0.0.5
+mkvenv: checking for setuptools>=3D44.1.1
+mkvenv: checking for wheel>=3D0.34.2
+mkvenv: checking for pip>=3D20.3.4
+mkvenv: installing meson=3D=3D1.10.0, pycotap=3D=3D1.3.1, qemu.qmp=3D=3D0.0=
+.5,
+wheel>=3D0.34.2, pip>=3D20.3.4
+ERROR: Could not find a version that satisfies the requirement
+wheel>=3D0.34.2 (from versions: none)
+ERROR: No matching distribution found for wheel>=3D0.34.2
 
-True, disregard it here. I saw it on stream and didn't read commit
-carefully enough assuming it was the same.
+*** Ouch! ***
 
-> > > @@ -235,8 +235,12 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
-> > >           }
-> > >       }
-> > > +    do {
-> > > +        ret = blk_co_flush(s->blk);
-> > > +    } while (block_job_handle_error(&s->common, ret, s->on_error, true, false));
-> > 
-> > Same here about flushing even on error.
-> 
-> Here I keep the behavior of stream: for "ignore" action, it continues streaming,
-> but in the end return failure. It's documented in QAPI, and I note it in commit
-> message.
-> 
-> If we continue writes after failure, I assume we still need these writes, so,
-> why not flush them?
+Could not provide build dependency 'meson=3D=3D1.10.0':
+ =E2=80=A2 Python package 'meson' version '1.3.2' was found, but isn't suit=
+able.
+ =E2=80=A2 No suitable version found in, or failed to install from
+'/home/pm215/qemu/python/wheels'.
+ =E2=80=A2 mkvenv was configured to operate offline and did not check PyPI.
 
-It probably doesn't hurt much, but since we already know that the
-streaming won't complete successfully, it's probably also not incorrect
-not to flush - nobody can rely on everything being present in the active
-layer. The only thing that can happen is that you get another failure,
-which could be nasty if the failure comes only after a long timeout. But
-I guess either way is fine.
 
-> As far as I understand semantics of "ignore", it means "ignore errors, but still
-> try to do as much progress as possible". And it seems strange that other jobs do
-> endless retry in case of "ignore" action..
+This is on Ubuntu 24.04.4 LTS, and happens even if I delete
+the build directory and configure from scratch.
 
-Yes, I wonder if anyone is using this mode in practice.
+Any suggestions?
 
-> > 
-> > > +
-> > >       /* Do not remove the backing file if an error was there but ignored. */
-> > > -    return error;
-> > > +    return error ?: ret;
-> > >   }
-> > >   static const BlockJobDriver stream_job_driver = {
-> > > diff --git a/blockjob.c b/blockjob.c
-> > > index 32007f31a9..70a7af2077 100644
-> > > --- a/blockjob.c
-> > > +++ b/blockjob.c
-> > > @@ -626,3 +626,37 @@ AioContext *block_job_get_aio_context(BlockJob *job)
-> > >       GLOBAL_STATE_CODE();
-> > >       return job->job.aio_context;
-> > >   }
-> > > +
-> > > +bool coroutine_fn
-> > > +block_job_handle_error(BlockJob *job, int ret, BlockdevOnError on_err,
-> > > +                       bool is_read, bool retry_on_ignore)
-> > > +{
-> > > +    assert(ret >= 0);
-> > > +
-> > > +    if (ret == 0) {
-> > > +        return false;
-> > > +    }
-> > > +
-> > > +    if (job_is_cancelled(&job->job)) {
-> > > +        return false;
-> > > +    }
-> > > +
-> > > +    BlockErrorAction action =
-> > > +        block_job_error_action(job, on_err, is_read, -ret);
-> > > +    switch (action) {
-> > > +    case BLOCK_ERROR_ACTION_REPORT:
-> > > +        return false;
-> > > +    case BLOCK_ERROR_ACTION_IGNORE:
-> > > +        if (!retry_on_ignore) {
-> > > +            return false;
-> > > +        }
-> > > +        /* fallthrough */
-> > 
-> > What is the idea behind having a pause point for "ignore"? Is it to at
-> > least avoid QEMU hanging completely if it goes into an infinite loop
-> > with retry_on_ignore?
-> 
-> Yes, just to have a pause point on every iteration of retrying loop,
-> like we do it in data-copying iterations of block jobs.
-
-Ok, that's fair. If you want, we could add a comment to this effect.
-
-Kevin
-
+thanks
+-- PMM
 
