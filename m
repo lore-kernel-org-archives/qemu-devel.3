@@ -4,85 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C983DFC5913
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 09:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D4DFC5913
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 09:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvY1p-0007Gh-2d; Thu, 26 Feb 2026 04:51:30 -0500
+	id 1vvY72-0000fO-Vj; Thu, 26 Feb 2026 04:56:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvY1b-0007Du-UC
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:51:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vvY70-0000dv-Bz
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:56:50 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvY1Y-0007KC-Uo
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:51:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772099471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rU0aKfvKOzw75Cb25bqDjXPDevHPqqpxwKjEYcpa2o8=;
- b=EK6vkxoJIf3olM9CTBo/sA/ilQK6ueYn2up0C0WPShK66m2o2GhXaqJLJXRfBpzX1oQ8lI
- l7V21CWIoaCaNHQQkKRgxRn9r2Uto3fhhuTJ/+4HlniWClsZwRrBa665XGhOaVxo1ejNS7
- P4syyYEWRaNGw807mlmH2wTZxdVf7ig=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-rJB6MOJ3Pi6G8lipVpxcOg-1; Thu,
- 26 Feb 2026 04:51:07 -0500
-X-MC-Unique: rJB6MOJ3Pi6G8lipVpxcOg-1
-X-Mimecast-MFC-AGG-ID: rJB6MOJ3Pi6G8lipVpxcOg_1772099465
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12BFB195609E; Thu, 26 Feb 2026 09:51:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08FEA30001A5; Thu, 26 Feb 2026 09:51:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8351A21E6932; Thu, 26 Feb 2026 10:51:01 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Stefan Weil <sw@weilnetz.de>,  "Dr.
- David Alan Gilbert" <dave@treblig.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  devel@lists.libvirt.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin
- Wolf <kwolf@redhat.com>,  qemu-block@nongnu.org,  qemu-rust@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH v6 00/27] util: sync error_report & qemu_log output more
- closely
-In-Reply-To: <20260211152508.732487-1-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Wed, 11 Feb 2026 15:24:41
- +0000")
-References: <20260211152508.732487-1-berrange@redhat.com>
-Date: Thu, 26 Feb 2026 10:51:01 +0100
-Message-ID: <874in3hlyy.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vvY6x-0007zv-8b
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 04:56:50 -0500
+Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61Q9twEp099441
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 26 Feb 2026 18:56:37 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=tdaOgHy9EautR26xnsdc9tfphkqGmlEGl4iCkZecbsk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1772099797; v=1;
+ b=v2gTad7D10Y4WJsbi3lNtwD8M5ZG+Z/wwDadLeWE2PBPx3hIH8LqsX7+NxTJUqLK
+ ZBOdKWbVPLaOYhePkPuJl6BM7R5KTQT6PToh1dUm71pYbrcYczSAbXOGto2bCN9g
+ jaPEw2YWxtpshdBVqcvNKfNTvZDImXn40ffG2SGtiF/HtTW5tgnvBiDjvPHCyXcQ
+ TMKZXakw8xXBZta0yvQBu/Z5i46KKGsvZpzloW/B/g9OfeibnGfVMk7KA5WA0KOm
+ MXRvLi8ErLNsf16ngqkA1N+3G8Y0NokaoUvfhM91HaesAHQ9HomvVeQQlDEchPwt
+ bBKMuCkBve5nP9r4YzA9/g==
+Message-ID: <becde56b-90bd-40ca-9329-0c92b9519a67@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 26 Feb 2026 18:55:58 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260223080200.468558-1-vivek.kasireddy@intel.com>
+ <20260223080200.468558-11-vivek.kasireddy@intel.com>
+ <aa496278-274c-4fb1-bb47-bfdda7337628@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185F034A065CCE507F69F14F875A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <d2779f88-735e-4d14-9b5d-8577282c5477@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185B641D5749566273C27E5F872A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB7185B641D5749566273C27E5F872A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.734,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.78, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,157 +84,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 2026/02/26 15:22, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v7 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+>> associated with VFIO devices
+>>
+>>>>
+>>>> On 2026/02/23 17:00, Vivek Kasireddy wrote:
+>>>>> In addition to memfd, a blob resource can also have its backing
+>>>>> storage in a VFIO device region. Since, there is no effective way
+>>>>> to determine where the backing storage is located, we first try to
+>>>>> create a dmabuf assuming it is in memfd. If that fails, we try to
+>>>>> create a dmabuf assuming it is in VFIO device region.
+>>>>>
+>>>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+>>>>> backing storage is located in a memfd or not. If it is not, we invoke
+>>>>> the vfio_device_create_dmabuf() API which identifies the right VFIO
+>>>>> device and eventually creates a dmabuf fd.
+>>>>>
+>>>>> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
+>>>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+>>>>> fall back to the vfio_device_mmap_dmabuf() API to get a mapping
+>>>>> created for the dmabuf.
+>>>>>
+>>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>>>> Cc: Alex Williamson <alex@shazbot.org>
+>>>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>>>> ---
+>>>>>     hw/display/meson.build         |  1 +
+>>>>>     hw/display/vfio-dmabuf-stubs.c | 23 +++++++++++++++++++++++
+>>>>>     hw/display/virtio-gpu-dmabuf.c | 32 ++++++++++++++++++++++++--
+>> ---
+>>>> ---
+>>>>>     3 files changed, 48 insertions(+), 8 deletions(-)
+>>>>>     create mode 100644 hw/display/vfio-dmabuf-stubs.c
+>>>>>
+>>>>> diff --git a/hw/display/meson.build b/hw/display/meson.build
+>>>>> index f5f92b1068..7d2bd839cc 100644
+>>>>> --- a/hw/display/meson.build
+>>>>> +++ b/hw/display/meson.build
+>>>>> @@ -70,6 +70,7 @@ if
+>>>> config_all_devices.has_key('CONFIG_VIRTIO_GPU')
+>>>>>                         if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
+>>>>>       if host_os == 'linux'
+>>>>>         virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
+>>>>> +    virtio_gpu_ss.add(when: 'CONFIG_VFIO', if_false: files('vfio-
+>>>> dmabuf-stubs.c'))
+>>>>>       else
+>>>>>         virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
+>>>>>       endif
+>>>>> diff --git a/hw/display/vfio-dmabuf-stubs.c b/hw/display/vfio-
+>> dmabuf-
+>>>> stubs.c
+>>>>> new file mode 100644
+>>>>> index 0000000000..12f016f0c5
+>>>>> --- /dev/null
+>>>>> +++ b/hw/display/vfio-dmabuf-stubs.c
+>>>>> @@ -0,0 +1,23 @@
+>>>>> +/*
+>>>>> + * Copyright (c) 2026 Intel and/or its affiliates.
+>>>>> + *
+>>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>>> + */
+>>>>> +
+>>>>> +#include "qemu/osdep.h"
+>>>>> +#include "qemu/error-report.h"
+>>>>> +#include "qemu/iov.h"
+>>>>> +
+>>>>> +bool vfio_device_create_dmabuf(struct iovec *iov, unsigned int
+>>>> iov_cnt,
+>>>>> +                               int *fd, Error **errp)
+>>>>> +{
+>>>>> +    error_setg(errp, "VFIO dmabuf support is not enabled");
+>>>>> +    return false;
+>>>>> +}
+>>>>> +
+>>>>> +bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int
+>>>> iov_cnt,
+>>>>> +                             void **addr, size_t total_size, Error **errp)
+>>>>> +{
+>>>>> +    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
+>>>>> +    return false;
+>>>>> +}
+>>>>
+>>>> This is VFIO's implementation and shouldn't be here. Follow what
+>>>> hw/vfio/iommufd-stubs.c, the previously-mentioned example, does.
+>>> Ok, I'll move this file to hw/vfio directory.
+>>>
+>>>>
+>>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>>>> dmabuf.c
+>>>>> index fdcf8e53a2..3f39371de1 100644
+>>>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>>>> @@ -18,6 +18,7 @@
+>>>>>     #include "ui/console.h"
+>>>>>     #include "hw/virtio/virtio-gpu.h"
+>>>>>     #include "hw/virtio/virtio-gpu-pixman.h"
+>>>>> +#include "hw/vfio/vfio-device.h"
+>>>>>     #include "trace.h"
+>>>>>     #include "system/ramblock.h"
+>>>>>     #include "system/hostmem.h"
+>>>>> @@ -82,13 +83,21 @@ virtio_gpu_create_udmabuf(struct
+>>>> virtio_gpu_simple_resource *res, int *fd,
+>>>>>     static bool virtio_gpu_remap_dmabuf(struct
+>>>> virtio_gpu_simple_resource *res,
+>>>>>                                         Error **errp)
+>>>>>     {
+>>>>> +    Error *mmap_err = NULL;
+>>>>>         void *map;
+>>>>>
+>>>>>         map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
+>>>> res->dmabuf_fd, 0);
+>>>>>         if (map == MAP_FAILED) {
+>>>>> -        error_setg_errno(errp, errno, "dmabuf mmap failed");
+>>>>> +        error_setg_errno(&mmap_err, errno, "dmabuf mmap failed: ");
+>>>>>             res->remapped = NULL;
+>>>>> -        return false;
+>>>>> +
+>>>>> +        if (!vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
+>>>>> +                                     res->blob_size, errp)) {
+>>>>> +            error_report_err(mmap_err);
+>>>>> +            return false;
+>>>>> +        }
+>>>>> +        error_free(mmap_err);
+>>>>> +        mmap_err = NULL;
+>>>>>         }
+>>>>>         res->remapped = map;
+>>>>>         return true;
+>>>>> @@ -145,7 +154,7 @@ bool virtio_gpu_have_udmabuf(void)
+>>>>>
+>>>>>     void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
+>> *res)
+>>>>>     {
+>>>>> -    Error *local_err = NULL;
+>>>>> +    Error *local_err = NULL, *vfio_err = NULL;
+>>>>>         VirtIOGPUErrorType err;
+>>>>>         void *pdata = NULL;
+>>>>>         int fd;
+>>>>> @@ -158,12 +167,19 @@ void virtio_gpu_init_dmabuf(struct
+>>>> virtio_gpu_simple_resource *res)
+>>>>>             err = virtio_gpu_create_udmabuf(res, &fd, &local_err);
+>>>>>             if (err != VIRTIO_GPU_NO_ERROR) {
+>>>>>                 error_prepend(&local_err, "Cannot create dmabuf: ");
+>>>>> -            if (err == VIRTIO_GPU_GUEST_ERROR) {
+>>>>> -                qemu_log_mask(LOG_GUEST_ERROR,
+>>>>> -                              "Cannot create dmabuf: incompatible mem\n");
+>>>>> +
+>>>>> +            if (!vfio_device_create_dmabuf(res->iov, res->iov_cnt, &fd,
+>>>>> +                                           &vfio_err)) {
+>>>>> +                if (err == VIRTIO_GPU_GUEST_ERROR) {
+>>>>> +                    qemu_log_mask(LOG_GUEST_ERROR,
+>>>>> +                                  "Cannot create dmabuf: incompatible mem\n");
+>>>>
+>>>> This logic is faulty. err is not set by vfio_device_create_dmabuf(), so
+>>>> it reports a guest error even when the memory is compatible with
+>>>> vfio_device_create_dmabuf() and it raised an error for a different
+>>>> reason.
+>>> Maybe I misunderstood your previous comment about this but I
+>> thought
+>>> we are going to assume that if both virtio_gpu_create_udmabuf() and
+>>> vfio_device_create_dmabuf() fail (assuming Guest error in case of
+>>> virtio_gpu_create_udmabuf ()) then it is reasonable to assume that
+>> Guest
+>>> is at fault for passing in incompatible memory addresses.
+>>
+>> It's not what I suggested. What I suggested is as follows:
+>>   > virtio_gpu_create_udmabuf(res);
+>>   > if (it turned out the memory is incompatible with udmabuf) {
+>>   >     virtio_gpu_create_vfio_dmabuf(res);
+>>   >     if (it turned out the memory is not backed by VFIO) {
+>>   >         qemu_log_mask(LOG_GUEST_ERROR, "incompatible\n");
+>>   >         return;
+>>   >     }
+>>   > }
+>>
+>> https://lore.kernel.org/qemu-devel/c7c03384-4815-4032-89bd-
+>> de1ef90bb949@rsg.ci.i.u-tokyo.ac.jp/
+>>
+>> It is not correct to assume vfio_device_create_dmabuf() is failed due to
+>> a guest error when virtio_gpu_create_udmabuf(). For example, when
+>> mmap()
+>> fails in vfio_device_mmap_dmabuf(), it is a host error, and reporting a
+>> guest error in the case is a bug.
+>>
+>>>
+>>> However, in order to fix this properly, I think we would have to have
+>>> vfio_device_create_dmabuf() return VIRTIO_GPU_GUEST/HOST_ERROR
+>>> (or something equivalent) which I was trying to avoid. Do you see any
+>>> other proper way to fix this issue without messing with the return type
+>>> of vfio_device_create_dmabuf()?
+>>>
+>>> The reason why I am hesitant to make vfio_device_create_dmabuf()
+>> return
+>>> Guest/Host error is because a future user of this API may not need this
+>> info.
+>>
+>> A future user may not need it, but we need it to make this code bug-free.
+> Ok, I plan to add the following enum and make it available to VFIO and
+> virtio-gpu-dmabuf.c:
+> typedef enum DmabufCreateErrorType {
+>      DMABUF_CREATE_NO_ERROR = 1,
 
-> This series is a tangent that came out of discussion in
->
->    https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00903.html
+When there is no error, vfio_device_create_dmabuf() should return the 
+file descriptor instead (see e.g., qemu_open()).
 
-This was about error messages providing sufficient information both for
-users and for developers.
+>      /* Guest is responsible for this error */
+>      DMABUF_CREATE_GUEST_ERROR = -1,
+>      /* Host is at fault for this error */
+>      DMABUF_CREATE_HOST_ERROR = -2,
+> } DmabufCreateErrorType;
+> 
+> Is the naming OK? And, what would be a good location (header) to have this in?
+I would prefix the names VFIO and put it into
+include/hw/vfio/vfio-device.h.
 
-Manos proposed to print a stack backtrace on programming errors and
-fatal errors (&error_abort and &error_fatal), enabled at configure time.
-He found this useful for debugging a use-after-free.
+In that case, using it for udmabuf is cheating, but I think it's fine 
+since it's locally-contained in virtio-gpu-dmabuf.c, its intent is still 
+clear, and it has no adverse effect for users (at least there will be no 
+bug).
 
-Daniel pointed out that GDB shows better stack backtraces, and that we
-could not enable this feature in distro builds.  He wondered whether
-showing just thread names would do.
+Regards,
+Akihiko Odaki
 
-> In thinking about adding thread info to error_report,
-
-I understand why that can be useful for developers in certain scenarios,
-but I feel it results in error reporting that is overly vebose and
-unwieldy for users.  I'd prefer optional, default off.
-
->                                                       I
-> came to realize we should likely make qemu_log behave
-> consistently with error_report & friends. We already
-> honour '-msg timestamp=3Don', but don't honour 'guest-name=3Don'
-> and also don't include the binary name.
-
-I'm willing to accept a message format common to error reporting and log
-if that's useful.  Backed by shared code, obviously.
-
-Why could it be useful, and to whom?
-
-Error messages are both for users and developers.  Both need them to be
-clear and detailed enough to figure out what's gone wrong, and what to
-do about it.
-
-Developers can use additional detail.  Lots and lots of it at times.  No
-excuse for dumping it all on users.
-
-Carefully designed logs can also be for both.  Much of what QEMU can log
-is just for developers, and that's *fine*.  Sometimes developers want to
-log lots of detail per message, sometimes they don't, to keep the logs
-managable, as Peter pointed out.
-
-When the error message needs of users and developers conflict, I put
-users first.
-
-When the logging needs of users and developers conflict, I put
-developers first.
-
-> As an example of the current state, consider mixing error and
-> log output today:
-
-Having the errors in the log can clearly be useful.  The easiest way to
-have them in the log is --- wait for it --- logging them.
-
-We don't do that now.  Instead, you can log to stderr, or you can piece
-together log file contents and error messages.  The format differences
-can be inconvenient either way.
-
-Could we log errors?
-
-> - Default context:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish \
->                        -d 'trace:qcrypto*'
->   qcrypto_tls_creds_x509_load TLS creds x509 load creds=3D0x55ac6d97f700 =
-dir=3Dfish
->   qcrypto_tls_creds_get_path TLS creds path creds=3D0x55ac6d97f700 filena=
-me=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64: Unable to access credentials fish/ca-cert.pem: No s=
-uch file or directory
->
-> - Full context:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish \
->                        -d 'trace:qcrypto*' \
->                        -msg guest-name=3Don,timestamp=3Don \
->                        -name "fish food"
->   2025-08-19T20:14:16.791413Z qcrypto_tls_creds_x509_load TLS creds x509 =
-load creds=3D0x55e9a3458d10 dir=3Dfish
->   2025-08-19T20:14:16.791429Z qcrypto_tls_creds_get_path TLS creds path c=
-reds=3D0x55e9a3458d10 filename=3Dca-cert.pem path=3D<none>
->   2025-08-19T20:14:16.791433Z fish food qemu-system-x86_64: Unable to acc=
-ess credentials fish/ca-cert.pem: No such file or directory
->
-> And after this series is complete:
->
-> - Default context:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish \
->                       -d 'trace:qcrypto*'
->   qemu-system-x86_64(1184284:main): qcrypto_tls_creds_x509_load TLS creds=
- x509 load creds=3D0x55a24ad5cb30 dir=3Dfish
->   qemu-system-x86_64(1184284:main): qcrypto_tls_creds_get_path TLS creds =
-path creds=3D0x55a24ad5cb30 filename=3Dca-cert.pem path=3D<none>
->   qemu-system-x86_64(1184284:main): Unable to access credentials fish/ca-=
-cert.pem: No such file or directory
->
-> - Full context:
->
->   # qemu-system-x86_64 -object tls-creds-x509,id=3Dt0,dir=3Dfish \
->                       -d 'trace:qcrypto*' \
->                       -msg guest-name=3Don,timestamp=3Don \
->                       -name "fish food"
->   2025-08-19T20:12:50.211823Z [fish food] qemu-system-x86_64(1168876:main=
-): qcrypto_tls_creds_x509_load TLS creds x509 load creds=3D0x5582183d8760 d=
-ir=3Dfish
->   2025-08-19T20:12:50.211842Z [fish food] qemu-system-x86_64(1168876:main=
-): qcrypto_tls_creds_get_path TLS creds path creds=3D0x5582183d8760 filenam=
-e=3Dca-cert.pem
-> +path=3D<none>
->   2025-08-19T20:12:50.211846Z [fish food] qemu-system-x86_64(1168876:main=
-): Unable to access credentials fish/ca-cert.pem: No such file or directory
->
-> The main things to note:
->
->  * error_report/warn_report/qemu_log share the same
->    output format and -msg applies to both
-
-I fear this is a bad idea.  I apologize for being so late with this.  I
-didn't think hard enough until now.
-
-Unified format with separate configuration controls and defaults could
-be okay.
-
->  * -msg debug-threads=3Don is now unconditionally enabled
->    and thus the param is deprecated & ignored
-
-This part just makes sense.
-
->  * Thread ID and name are unconditionally enabled
->
->  * Guest name is surrounded in [...] brackets
->
->  * The default output lines are typically 15 chars
->    wider given that we always include the thread
->    ID + name now
->
->  * This takes the liberty of assigning the new file
->    to the existing error-report.c maintainer (Markus)
->    Since splitting it off into message.c instead of
->    putting it all in error-report.c felt slightly
->    nicer.
->
-> One thing I didn't tackle is making the location
-> info get reported for qemu_log. This is used to
-> give context for error messages when parsing some
-> CLI args, and could be interesting for log messages
-> associated with those same CLI args.
+> 
+> Thanks,
+> Vivek
+> 
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>
+>>> Thanks,
+>>> Vivek
+>>>
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>>>
+>>>>> +                }
+>>>>> +                error_report_err(local_err);
+>>>>> +                error_report_err(vfio_err);
+>>>>> +                return;
+>>>>>                 }
+>>>>> -            error_report_err(local_err);
+>>>>> -            return;
+>>>>> +            error_free(local_err);
+>>>>> +            local_err = NULL;
+>>>>>             }
+>>>>>
+>>>>>             res->dmabuf_fd = fd;
+>>>
+> 
 
 
