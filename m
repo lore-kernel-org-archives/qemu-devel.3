@@ -4,125 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1C3FD8FE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E2FFD8FE4
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 17:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvfWw-0007cp-UF; Thu, 26 Feb 2026 12:52:06 -0500
+	id 1vvfXQ-0007mX-FT; Thu, 26 Feb 2026 12:52:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvfWt-0007ca-RG
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:52:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vvfWr-0008TJ-V7
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:52:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772128320;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
- b=J6HoQGskGrksbtbXhiDh/B4mxZU4D43bv1gz7gZBdL7Oy2DFFuDvnmV8PFahntSzGte6Ym
- J8vQPHxAyE7OdKzAoaJNBwV0HxG9U/ye+C/q+pleXkCIBpmksanabcIAlIJBP2nczzt+Sn
- s+mvSOaEy+pnION1zJ7FlSrYyclksU0=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-8ernzKuVOrSYrbzN0i2Ikw-1; Thu, 26 Feb 2026 12:51:58 -0500
-X-MC-Unique: 8ernzKuVOrSYrbzN0i2Ikw-1
-X-Mimecast-MFC-AGG-ID: 8ernzKuVOrSYrbzN0i2Ikw_1772128318
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-79868eae64fso24268817b3.1
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:51:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772128318; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvfXO-0007hJ-FE
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:52:34 -0500
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvfXM-0008Vr-UV
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 12:52:34 -0500
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-64ad79df972so1474061d50.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 09:52:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772128352; cv=none;
  d=google.com; s=arc-20240605;
- b=A1CJ7srgekUEz/2PvsF3nrKCe3Lb+BQKJyiQxGe4giYp/NRTo7QonWZ25DTIm1ORzt
- VzZsArG7mIA2SyAAuPmbgjpwSzuQCaB08z8jeiwEJ6T3yvaDZ6tvfYQ/8t2ovBzfWZEZ
- nmOYXsUi30mcShPX0xdsu+SWVn5it8IBFssZkfByHAnF+C/siXp02XGAFBChHbh+xDi8
- OkaaBt40hdS2u9L2GZON+x4nlKlcGHaPBszSaXkFsW9KnL5qv6tmapBjuRv8/olnWBvg
- sbfNOa2vG6Il0q618Y97t4EpdRbYXgOqyJpNAncKY9lcCVYSvK9URtczOwbsNJSjACkO
- J82g==
+ b=Nlc6E9UB3EdSdP3Akx7IoYqGk14Psc9QegcU8eR5B6OAJGs651MjrpiIng2fR+fwb8
+ 8Uq+VLVMdQZz1ElkIQ5IB1pwCsT7zklGvo/Vd5jmHkk4puQ/n9fqmQbphtULcGpnxxBs
+ ilGRgvf8mtAmlY379ZktvU047qM007Rc5TtqMJIOMXXX6cXo00j/9NzMDjO+7baPZDlh
+ W1KSDn8QBysByIX39oPjCrr4PspFUuCrknMPPsMb+4o7cw6UEyKJhI33HURN1s/sd7yK
+ yfsH/DJVfEgDZ/Kie5bEX7IuFJ+o+jQJznlskFGMOCYBW/Q8VWC78bF+pF2rrRE0EBeX
+ CPYQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
- fh=XzBuknDOpMWBbu+VXGIDfqUZ/ryxq1MzEkPeMMiXjDQ=;
- b=TKepPMLJEu/yzH91zwq5evlIffK3JIiacOxYtHSWbrPxi9tFvkLRX8M0wvngcsM3Ej
- X7opLZlJGeKd+6HGv/vaqS9PqNS0N2XTm/D6uYld7dhC6MqA4rgBXOBgKLagmQwrj8Nu
- vaIkomSDWOH3qHadPctWH0gTJs1rRopFtmih3tzbTr0PPm/5icSAlJeWXCka6d++Afxh
- KjbDK4aXT54j9ZAHv/XpRFcD/b5aLiCvs3WnVFw3G4U718vRMbYgHSZQX1jt/ArdIHj6
- GHow9U3Pzne2BVuzx62GrKDgxr2Vlxrqg3werGxoBLUFNwttHidvR35m3GX3fkHObWra
- d4iA==; darn=nongnu.org
+ bh=bvgZT1pdvN1sWV5i4q+V5E2bmmd3IumBF2IGI/ai+XA=;
+ fh=SRQlc7DCgygFOBv11PrxbJLVVjtVgcAU5BH1r8sN9tc=;
+ b=LhFknHi36FutItL/0gs8HltUYy785aReBqkh0oZdpBk/UKcAbhgXJ65BkulLjfD/rV
+ TXOHK7yfQZnSdNkczMlLlMKlMDvLEKNaq7Sds9K0HkQKdTDuLmYbR0EdzHLlRH0ilGgK
+ 5pt5JvHI8zsewIPGjFssR381E5AGtwgEVq6Rifh2MNkmEwaUpn3RU7nvZFmWj9PO+N0P
+ 9k4WMd5vzV9zEvKtKMu1+O+aOna4KUG3mEBu9Mq3QrR4p6cKxACa7g5qK4Bz1UXHL0nu
+ FV/enUFvSHAm4zceY6rJnwJnGJlMosVGDqqUFGzy8vBXNgh8onRZ4Bj/Ave1KzwSSY76
+ RriA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772128318; x=1772733118; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772128352; x=1772733152; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
- b=VdwXmh+8noKK+TVUpCNc8/o+8g+CQ8v4O8ldquANCCdD0cjf8XNsyOJ8zmSVPldxAi
- Fkpgk+1ompcB/Vcsqo+T2CRb7yEJufHwSF1rJ+7F5la6Cytz/qDOL4QPWWlwAYef6okP
- l5LcR/Uqx/+nwIy3hXUnNyWm1uzNr/tFxJW1RFe5J70xfKSwqubY/rwzN1ctAJ+Off78
- gSnX3KTyujXk9g7TXhacYVcReaXLZQJRKs1tCQXpvkFTqR3TT2dO2ifTA5/3f5zqJtcA
- 3XwzRLZMuygioh8hoNCifInh2QCkDyl90OR0bzkRr6O3qut2U/BgYwq41bhx4oldn95l
- aSjA==
+ bh=bvgZT1pdvN1sWV5i4q+V5E2bmmd3IumBF2IGI/ai+XA=;
+ b=whtwqQqDpYl4+hyhoX3Y2QdDKJFKMMAUgv2bMY7u+/uJeZAjo7ntY6UUapGq0L4o7B
+ lZ+66FO3F/q+o6QPQMClSJTeu7SoU8s2iyumA8VJ9Pmxl/Wc2cz6YIEuj838GffSuvVK
+ gU4M3js3kT0Xi7Xs2HQx3Z1MKv3GHW3p1xQJwYl0LlT4MsMIX98JxiXSd175N3Jj95u+
+ jQeI8xaqX/8MROtx17WxmqOZdakVmC3HCWwUHX2licX3uof64Umk4JA2EAC8NI4jQquY
+ 1eJXs/IOYJQ3+C9rzydzJk5XP/9Ho5xTv1JoRuoC8m0XNPrwLzRpGl0vx7bJFA1wchs+
+ Ogzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772128318; x=1772733118;
+ d=1e100.net; s=20230601; t=1772128352; x=1772733152;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=aGb/lmGGa6pt6DoY2qzEC/Nr+2ZST4xwaLwBFAnBcyk=;
- b=K4OAeXqaFqPqKlKjreH13Z6Fbi+BVQnJyTZbFL3vxZ/WLglBv8d/zRxJJP0X3UOX8f
- c2IAVEcoXwPj3REnjKTU1u1JQNfhNNJSMoRD3KM3vNTNjb2smF8UIqQpeZ4C7RFQ9RVC
- iklfNbrSsJVVt2gGWaU9mQeC0DeVPaxc/APCWTILKrI9XO6zwPwCKvdE3bFy2MXKi1dt
- Sw7HWG+K5MWFGHFB3zEnHjxzsxpNtOBuJg+fh57IgH4cIdadoQbWb6TC6W6j0LkiNLlP
- ocXIqWDNZWYWIJYWOfwDx38BVrEbkQMp6NHQUZWsMP1Delrz1wOchCB+j5VleuHyvMiN
- xg+Q==
-X-Gm-Message-State: AOJu0YzEHbnx1ko/7Gt+PSr4UxYmgRcZein54VYl0eW9SSc3osuIFe+1
- bBHhP8q34Ry/IZ8yE2qMZrXgh5/tkbnaQ1p1YvHcxy0QAvmmCrLbC/uKK3copwWi1Bz5b440p9n
- 10uDQTib1RuwtUh4XRPmvy6f/ixegpLY3Qu/S267Psm8Dp7F92IJ0dv4xBtNc+a6rrFuxAEZnGo
- iyeFygv3sDtCkiA1E6Sml8V3zrg+z9fJ0=
-X-Gm-Gg: ATEYQzzyIqF69yQppzWXBHZjeTCn1jrc2JkwqwmM+M3o2pWnmHYz7a9CXa2kc4o/w3E
- h5sMfZyXJftfnduFW1IIKlny5rN06qfTf70eY51wAftatTFp8tnb2cjyy+TyxusMRRwfs/lkveo
- PlITII3qh6ROCnJgMxXNRvt5iU6AackMSMnsmumoPPLrIWF/PjuYhSiJ3L2f8J8LTCfYWr8eA5/
- to8ldaI8OGsP3DXc0jlUh/2N0Szxqv1oZJxjQ==
-X-Received: by 2002:a05:690e:2552:b0:649:af6b:7427 with SMTP id
- 956f58d0204a3-64cc237d23dmr74336d50.78.1772128318219; 
- Thu, 26 Feb 2026 09:51:58 -0800 (PST)
-X-Received: by 2002:a05:690e:2552:b0:649:af6b:7427 with SMTP id
- 956f58d0204a3-64cc237d23dmr74324d50.78.1772128317753; Thu, 26 Feb 2026
- 09:51:57 -0800 (PST)
+ bh=bvgZT1pdvN1sWV5i4q+V5E2bmmd3IumBF2IGI/ai+XA=;
+ b=GIgu9n7eIp2/al0DD03eN7i6oKWUxNSM8nrEnAtxTfcEcyZc4dJ6eNR7dswWl9B7wA
+ wDOhA5uJDbmmdl6uz5dp6L8M6lVcgN2X76Cz0Q+o8rJej1S9PAk+HWdc3FiLv+LX5liz
+ K+I29A+CGxIEgB+WpPeTSWU8qGo2h4aAFKewZG6waQkEQxaHwtaaVqPpcAtepGEy4TCV
+ w+7ZiF5Ijw5yOE1kuapqEUbfz3COAQBpxhKDdnNxlLIDfFcQo4Jmpr8t1P6v/vvI+LGj
+ 1/DEnN6mFVDULYO7hR3xpEFMw+5lOuibKMJDXDrmY+P38138J4rDHJWPBOBHX8pCmZJv
+ fPtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgP0hU1+kQFtOenZqSTHvmOsLpZSinvktVKXBybzRWRjnBpCgop0oIboqc5H5UoZFRfJxCUGcOfgkU@nongnu.org
+X-Gm-Message-State: AOJu0YwtVlyJ4/5wNJAeem+t/ICIjes+4+yCdKzL18Z3cUiXCFY1/JCQ
+ oHyEkh49gzCbHmin/zr5kDfbAhkn9YlP4ylvxVtDkugRid/zUW0C3c+ahvv3ubMpisM09gaVJoN
+ XR2Qk1FW6IrvJLVajN3cVksZcpqV7uhrHuNXStW/Rrw==
+X-Gm-Gg: ATEYQzwfhzjM4sh3SwSOO6pTv5lhqBJmiPdQmn/LTdaIpxCrOc0d+DONdlITobcXUlW
+ 8PCXB16wCE914y80aO4z9+wrN0Dp6BBou9No5cRXMYbpCENscQhDCybhGliIxYlD/gg+VI99xVq
+ 1yd1y9GxIg094K4Kmu/g92x48Sq/vd6gmXVkZcdEvgmXvyhCdZipdapWhJoBTdYJB8gWlVlsZ6Q
+ ftHeUlLX+fDryg0tzrFVZd/4pPmRyrQTKj4Z2qCZeBxkbFAY5AV3xEwRY/sNAxvLdQ8nXYD85Iv
+ 4a5H5sVwxeYOBIs/zdc4s9rT3xa1Ln6CIlJCJFSyDSLIiNxFoyea28Tqyed0il70K8Ml+u9FXpl
+ tXQ==
+X-Received: by 2002:a05:690e:44f:b0:646:7c25:5f86 with SMTP id
+ 956f58d0204a3-64cc20e4bdcmr111487d50.27.1772128351729; Thu, 26 Feb 2026
+ 09:52:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20260225192808.957477-1-jsnow@redhat.com>
- <20260225192808.957477-3-jsnow@redhat.com>
- <aaBYBfryWrYRMT2G@redhat.com>
-In-Reply-To: <aaBYBfryWrYRMT2G@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 26 Feb 2026 12:51:46 -0500
-X-Gm-Features: AaiRm51qyK3mi7205kzmt1vHuVpOzr21SjD3NzF7R_R01_AN_F81qy7L-ANZ2Jg
-Message-ID: <CAFn=p-YsiOiBy0VRdbXS0=PFtWkj_OzaMz+QPeku294=17mHXg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] python: replace avocado tests with pytest
+References: <20260225191255.955585-1-jsnow@redhat.com>
+ <aaBOxS7bCODGq4Ry@redhat.com>
+In-Reply-To: <aaBOxS7bCODGq4Ry@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 26 Feb 2026 17:52:19 +0000
+X-Gm-Features: AaiRm51t_MK1P2bBLygxDOkkGjMPt46Gw73Fn0mGQnO_41gCRYyTcDu7TE3cGNQ
+Message-ID: <CAFEAcA-BHr4h+2U8DOU73PFSFSNakixeUSk_9iT9iCg6+f1X2w@mail.gmail.com>
+Subject: Re: [PATCH] configure: allow PyPI access for python 'tooling'
+ dependencies
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
+Cc: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,152 +123,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 9:26=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+On Thu, 26 Feb 2026 at 13:47, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> On Wed, Feb 25, 2026 at 02:28:06PM -0500, John Snow wrote:
-> > Following suit with the rest of this repository, drop avocado and
-> > replace it with the Python standard "pytest" package.
+> On Wed, Feb 25, 2026 at 02:12:55PM -0500, John Snow wrote:
+> > We actually do not allow our meson requirements to be fetched online
+> > because we strictly prefer the vendored version. Move the tooling group
+> > installation to a different invocation that does allow PyPI to be
+> > accessed when configure is run without explicitly disabling PyPI access=
+.
 > >
-> > In this case, we do not truly need pytest as all we are using it for is
-> > running other python processes formerly launched by shell scripts, but
-> > this matches how the standalone python-qemu-qmp package does things,
-> > which keeps things simple on my end.
+> > This will allow QEMU to download and install python3-wheel for you if
+> > you don't have it in your host environment.
 >
-> From the POV of QEMU we don't really want 'pytest' in the loop
-> any more than we want avocado. The desire is for "meson" to be
-> the test harness.
+> IOW, with this patch the behaviour is now:
 >
-> If this use of a pytest is just a temporary stepping stone
-> towards fully integrating with meson, then that's acceptable
-> but lets note that this is a temporary solution in the commit
-> message.
+>   * Host  python3-wheel -> already works
+>   * No python3-wheel -> auto downloads
+>   * No python3-wheel && --disable-downloads -> fail
+>
+> previously the 2nd case there was behaving the same as the
+> 3rd  which was wrong.
 
-Admittedly I wasn't thinking about just using meson directly, so I
-suppose this *is* just a stepping stone. My only question for meson
-integration is how can I set up the deps so that "make check" will try
-to install the linting deps and run the python tests, but skips these
-tests if we are offline and don't have the deps. i.e. "try to run
-these tests, but don't error out if we can't"
+Thanks; I've applied this patch at John's request to git to unbreak
+builds for people who happen not to have their distro's python3-wheel
+installed.
 
-Hazarding a guess: make the python tests depend on a linter group, add
-a custom target for that linter group, allow failure in that custom
-target (how?), then configure the individual meson test cases to skip
-if the deps are not present.
-
-(Guess I'll go look at your older series and see how you handled this...)
-
->
-> >
-> > (pytest version chosen based off of Debian 11's package version as quer=
-ied by
-> > repology; under the assumption that this is the likely the oldest
-> > version we currently leverage in testing.)
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  python/Makefile          |  4 +-
-> >  python/setup.cfg         |  1 +
-> >  python/tests/linters.py  | 89 ++++++++++++++++++++++++++++++++++++++++
-> >  python/tests/minreqs.txt |  1 +
-> >  4 files changed, 93 insertions(+), 2 deletions(-)
-> >  create mode 100644 python/tests/linters.py
-> >
-> > diff --git a/python/Makefile b/python/Makefile
-> > index b6c9cd1bce2..42994d39618 100644
-> > --- a/python/Makefile
-> > +++ b/python/Makefile
-> > @@ -105,7 +105,7 @@ develop:
-> >
-> >  .PHONY: check
-> >  check:
-> > -     @avocado --config avocado.cfg run tests/
-> > +     @pytest -v tests/*.py
-> >
-> >  .PHONY: check-tox
-> >  check-tox:
-> > @@ -113,7 +113,7 @@ check-tox:
-> >
-> >  .PHONY: check-coverage
-> >  check-coverage:
-> > -     @coverage run -m avocado --config avocado.cfg run tests/*.py
-> > +     @coverage run -m pytest -v tests/*.py
-> >       @coverage combine
-> >       @coverage html
-> >       @coverage report
-> > diff --git a/python/setup.cfg b/python/setup.cfg
-> > index c46a95f8d41..03344526730 100644
-> > --- a/python/setup.cfg
-> > +++ b/python/setup.cfg
-> > @@ -43,6 +43,7 @@ devel =3D
-> >      mypy >=3D 1.4.0
-> >      pylint >=3D 2.17.3
-> >      pylint !=3D 3.2.4; python_version<"3.9"
-> > +    pytest >=3D 6.0.2
-> >      tox >=3D 3.18.0
-> >      sphinx >=3D 3.4.3
-> >
-> > diff --git a/python/tests/linters.py b/python/tests/linters.py
-> > new file mode 100644
-> > index 00000000000..28556c09910
-> > --- /dev/null
-> > +++ b/python/tests/linters.py
-> > @@ -0,0 +1,89 @@
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +import os
-> > +import subprocess
->
-> from subprocess import check_call
-
-oooh.
-
->
-> > +import sys
-> > +
-> > +
-> > +def pyrun(*args):
-> > +    subprocess.run((sys.executable, *args), check=3DTrue)
->
-> Not sure this is worth the trouble compared to doing...
->
->
-> > +
-> > +
-> > +class TestLinters:
-> > +
-> > +    def test_flake8_pkg(self):
-> > +        pyrun("-m", "flake8", "qemu/")
->
-> ...this inline:
->
->     check_call([sys.executable, "-m", "flake8", "qemu/"])
->
->
-> > +    def test_mypy_iotests(self):
-> > +        cwd =3D os.getcwd()
-> > +        try:
-> > +            os.chdir("../tests/qemu-iotests/")
-> > +            pyrun("-m", "linters", "--mypy")
-> > +        finally:
-> > +            os.chdir(cwd)
->
-> This dance could be replaced with
->
->     check_call([sys.executable, "-m", "linters", "--mpypy"],
->                cwd=3D"../tests/qemu-iotests/")
-
-Learning new things every day.
-
->
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
-
+-- PMM
 
