@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66368FD9E1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10599FD9E19
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 22:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvjRO-0002U7-6D; Thu, 26 Feb 2026 17:02:38 -0500
+	id 1vvjSG-0002Zf-36; Thu, 26 Feb 2026 17:03:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRK-0002Tg-Mk
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:02:34 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRl-0002WS-MF
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:02 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRH-0001rJ-Kp
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:02:33 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4836f363d0dso11334225e9.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:02:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvjRk-0001tx-4y
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 17:03:01 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-483703e4b08so11935205e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 14:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772143349; x=1772748149; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1YCxApL5P6y/FNAwXBIxfEE53QyBoQHf9WRkCWMOkw4=;
- b=JiBBdJKxckam/A80GZ5r1lQlkb26uN/3LxLaOkgW9o1DBi/cNoahVE0irDt+JH5L8Y
- QCp85JvY2/U7gptKtm6pxZHS6oZW3xBPaqXBvuRuznTspnhQGf9DX3xWnUBTOrWk9Q5L
- BiHt8G/xlPaxk8LCF4Mp3LNpvHn80k+IMkkbGOFBGfjd5YMEW86a7/3UzJYMovh019ji
- LRcPdw3CQj+uBB+eN5nOhEmIh+ta7NnWa/bX46oEnhnbhFzFRi+fTQbOq0cyTzr5o07Y
- uTmmEaUKgSpVGVbauGWU7wwTg7m6O/Zn3tXAFYV2gsknYSKbQy1i/6Z4KrwGTL8M0h0K
- Klhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772143349; x=1772748149;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772143378; x=1772748178; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1YCxApL5P6y/FNAwXBIxfEE53QyBoQHf9WRkCWMOkw4=;
- b=vTFZg4HpKwq3AxnMpWGd1fEHMEIPAI54mz4FsSo5NvOO9ARQz+689uSFzkdB2Lc47N
- 1z2WBE5wvx5AeHWRofgIZnZWS/s5iPtMD8gLzsKg+xvfJEM3WQOZw88758cWbYtDv1s3
- eyShBlUcYqodn3W6AXssjxPCufCze+jvBdt8MEPYFFSMNvHFkW7KZl6clr4UNVDmfeWw
- /E4FlFYRJ+jYKLGgYE+uK0TXHQ/DO587njjtOGGLVIrIwrv6PPHc+0K5saR4+QgEALok
- l4W7gBnUiRBOJgGABkW7w9awfxkR9rZ8p31cPXo9F3J2JQ3n06vtpnhDL4rnLIsLPZMf
- wYEg==
-X-Gm-Message-State: AOJu0Yz3fkOwtECNAiQVyfwsjB1a7kqbwTRBcLw0xpOtAz+bp92MZxoQ
- pvTH5fRuJRCegdprmoGLziHSl6jj0XzAksZuaVDNg6zc4FST0IHDu9hEeu2YjMKRFq8FpUUQtJE
- ys6gDPAQ=
-X-Gm-Gg: ATEYQzwoPTUXwhMwNZKQc3s/2otEqUNPjMLVWBF5kjJ+3oDOlgRHsECXSXFFCqtK8Te
- v2nvtssnzB0p5KWljBbcPmBTekHAL5SWraTueFB//3K1yoQ/7PLG5++CBkAWfnbUdiSc6QrFKYO
- h7eyhzBOe7WhzSJ4rKXwdwzvcgnxZFzVAljHRhFEdgAGSanddSuhywkwYev/hJfulbWQ7dOa4y3
- lGNoKm7Bl0xgXPcWUcHjoZ2cztA/c3To2Di3ynUjJkPFXBr8TfHyzP/x8M7w15S07WKSs0nAPvk
- i9JZExjZqJiMcWaRItCT8UP5n5obzfeYsN2YrKWf5g2V2tzYzfwC4NctxUhn7Cg5vH+4OSqPISU
- XeqMSh3rHwexgq5/bHvTDzidoj2ARGvNvfZKB39AAwcwsTUs83l9TF9eUPh2OZiZWWheGmvuaSd
- 4ZzGXel3sFazJVWBJ//bSobt/rH99S2/dJ8d8cFo0knK048djDxCTDzp2f9vMAcLvyr8k+L0V+
-X-Received: by 2002:a05:600c:621b:b0:477:9b35:3e49 with SMTP id
- 5b1f17b1804b1-483c9bb1e1fmr5713755e9.3.1772143348998; 
- Thu, 26 Feb 2026 14:02:28 -0800 (PST)
+ bh=IJ+Tv4G5h3x1rcHXKQ6649mV1rq/SLP2Dnsze79zphM=;
+ b=NAkfGDGSVvUjch0nYRBjW58gkkYoFm+rCge0YbLNKTG+O6SJhzU4xxJP0U94xsp5WQ
+ H7dHjpfgZamabpLbDlH7Wmhid4WC/VPBDCy4Ssxe/6xxcCxVEZVxRL0GYCrt18YGSdUx
+ A/ssPCGYQAx8FrKNi4+6TiggMD5idxyEJRoJCl09lEsqShRnSeG+cbnoCKDqbf6oZcXI
+ DTeW5zNVxkCNsbMPzlCkRKNnDt4gjqeK6/lHAlgQ9RuHvQimi8POQAwH/XNVoCubZ2vG
+ W6qR6fFHFO/fxJZiL0AgQYnRowop9b2TBV5qXmrXdxWcud0atBAmJJC3dfczOQCk8RhY
+ o5qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772143378; x=1772748178;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IJ+Tv4G5h3x1rcHXKQ6649mV1rq/SLP2Dnsze79zphM=;
+ b=HJsbJku6W1DPU++BBiRUlGPMy5y4O4+R2doJ09MjE1Kpvhatn5wvYlm/QSnCm2c0eK
+ 7ncnIjfvQikHBTH+SGTE/ff1vDrXx4P28XdR3cwK5+i98Rppdl8LkwUm4XMicBb+PW1d
+ KLgCgTfp6G87cthcbR9xNH12BCxrIDNLr4Lyjng4ZPChj+8Y5TFaZIm32aV1DJc3iSbJ
+ k1rDmSQvu94FG4tDiui3aMpX/UezygdQwE0zoS+DJvYU0kURbC9Neyjmb1T8QKk/Kncu
+ YnWeS3vju8uQ5yJ8KypKO1/35yP8cz9zUfy1j7EqlGPWTrdDOEJpvOZ6F4cuG6yRKGds
+ lT9Q==
+X-Gm-Message-State: AOJu0YwKSa+sCgbTbMsacn6rPAyDBN+FNm+VzLs3RD44FhaeN+c90Tjy
+ 0sYb8NzNfw8HbvoZAS1r+ZUlHvQ/rrzH7mOM/ra6Csgr86COh8La2FsCZUsGvG682tn3dtaYw4U
+ cE8Wz8Gg=
+X-Gm-Gg: ATEYQzxPZ6cv/+5zjkQt+7xAVQAESKgUMuXWwqALmcdlE29znstqjZV5F5OmFZG0g1E
+ 7CVMlakfBgF+dY5zZoD9ZQkPhwTWUuFl8n+a3V/fjUZteUu8sBnhELR9BWY4DuQ3j3tR06USz6/
+ 2dVGX3FRGrKvPCbyD2knEyuf/d2GGGFDtRlRgc3qd3tPiFTbQCq7oQpEPNcY2ScfG4qqZ5JMXYQ
+ ie1D26Mm1Gb770gE1mRfKukrLWJUE1VFTn4masyHbobY+AOSebZtZXNKLFryAMFoChnyEd6JXYY
+ PIvoHtW4rx4xvQKH/yMsZY9f8NGGExWgSJ2vMtzm/0tFmcwmTe1YvfcO8ijTHw7WmgCNdALzvwX
+ IgbsfK76BkJC7gjA7ynNMZQN9R6sDpnzRW2am3xGe370ZX/HqQNeK1g/Hd5KNsjhsJZrGEkh7U+
+ /7p5zE494L4LYsb20dMC3jYaGJUIVQP4RJvueagWPGZ7WieXXU7OAKn2tepbO9j53kY3R/Zo4h
+X-Received: by 2002:a05:600c:4ec7:b0:477:9a61:fd06 with SMTP id
+ 5b1f17b1804b1-483c33cab41mr69979905e9.8.1772143377923; 
+ Thu, 26 Feb 2026 14:02:57 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd702e7bsm192062865e9.5.2026.02.26.14.02.27
+ 5b1f17b1804b1-483bd7507adsm188751385e9.9.2026.02.26.14.02.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 26 Feb 2026 14:02:28 -0800 (PST)
+ Thu, 26 Feb 2026 14:02:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -69,15 +70,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 0/7] system/memory: Improve 'info mtree' readability
-Date: Thu, 26 Feb 2026 23:02:18 +0100
-Message-ID: <20260226220226.20164-1-philmd@linaro.org>
+Subject: [PATCH 4/7] system/memory: Have memory_region_type() correctly
+ describe containers
+Date: Thu, 26 Feb 2026 23:02:22 +0100
+Message-ID: <20260226220226.20164-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260226220226.20164-1-philmd@linaro.org>
+References: <20260226220226.20164-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,83 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cleaning dust, I had forgotten about this branch. In short,
-it improves 'info mtree' readability of addresses.
+MemoryRegion containers are not I/O regions,
+describe them as 'container'.
 
-Currently with Q35:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ system/memory.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-    address-space: I/O
-      0000000000000000-000000000000ffff (prio 0, i/o): io
-          0000000000000000-0000000000000003 (prio 0, i/o): acpi-evt
-          0000000000000004-0000000000000005 (prio 0, i/o): acpi-cnt
-          0000000000000008-000000000000000b (prio 0, i/o): acpi-tmr
-          0000000000000020-000000000000002f (prio 0, i/o): acpi-gpe0
-          0000000000000030-0000000000000037 (prio 0, i/o): acpi-smi
-          0000000000000060-000000000000007f (prio 0, i/o): sm-tco
-        0000000000000000-0000000000000007 (prio 0, i/o): dma-chan
-        0000000000000008-000000000000000f (prio 0, i/o): dma-cont
-        0000000000000020-0000000000000021 (prio 0, i/o): pic
-        0000000000000040-0000000000000043 (prio 0, i/o): pit
-        ...
-    memory-region: pc.ram
-      0000000000000000-0000000007ffffff (prio 0, ram): pc.ram
-    memory-region: pc.bios
-      00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
-    memory-region: pci
-      0000000000000000-ffffffffffffffff (prio -1, i/o): pci
-        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
-        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
-        00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
-        00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
-    ...
-
-With this series:
-
-    address-space: I/O
-      0000-ffff (prio 0, container): io
-          0000-0003 (prio 0, i/o): acpi-evt
-          0004-0005 (prio 0, i/o): acpi-cnt
-          0008-000b (prio 0, i/o): acpi-tmr
-          0020-002f (prio 0, i/o): acpi-gpe0
-          0030-0037 (prio 0, i/o): acpi-smi
-          0060-007f (prio 0, i/o): sm-tco
-        0000-0007 (prio 0, i/o): dma-chan
-        0008-000f (prio 0, i/o): dma-cont
-        0020-0021 (prio 0, i/o): pic
-        0040-0043 (prio 0, i/o): pit
-        ...
-    memory-region: pc.ram
-      00000000-07ffffff (prio 0, ram): pc.ram
-    memory-region: pc.bios
-      fffc0000-ffffffff (prio 0, rom): pc.bios
-    memory-region: pci
-      0000000000000000-ffffffffffffffff (prio -1, i/o): pci
-        00000000000a0000-00000000000bffff (prio 1, i/o): vga-lowmem
-        00000000000c0000-00000000000dffff (prio 1, rom): pc.rom
-        00000000000e0000-00000000000fffff (prio 1, rom): alias isa-bios @pc.bios 0000000000020000-000000000003ffff
-        00000000fffc0000-00000000ffffffff (prio 0, rom): pc.bios
-    ...
-
-Philippe Mathieu-Daudé (7):
-  stubs: Merge physmem.c within ram-block.c
-  system/ramblock: Constify various RAMBlock arguments
-  system/memory: Constify various MemoryRegion arguments
-  system/memory: Have memory_region_type() correctly describe containers
-  system/memory: Display address spaces starting at 0x0000.0000
-  system/memory: Allow mtree_print_mr() to display distinct address
-    width
-  system/memory: Have 'info mtree' display addresses nicely
-
- include/system/memory.h   |  28 +++++-----
- include/system/ramblock.h |  26 ++++-----
- stubs/physmem.c           |  13 -----
- stubs/ram-block.c         |  17 ++++--
- system/memory.c           | 108 ++++++++++++++++++++++++--------------
- system/physmem.c          |  26 ++++-----
- stubs/meson.build         |   1 -
- 7 files changed, 123 insertions(+), 96 deletions(-)
- delete mode 100644 stubs/physmem.c
-
+diff --git a/system/memory.c b/system/memory.c
+index eeb0d19484f..d5060774834 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3303,6 +3303,8 @@ static const char *memory_region_type(const MemoryRegion *mr)
+         return "rom";
+     } else if (memory_region_is_ram(mr)) {
+         return "ram";
++    } else if (!mr->container) {
++        return "container";
+     } else {
+         return "i/o";
+     }
 -- 
 2.52.0
 
