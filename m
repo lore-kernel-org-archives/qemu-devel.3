@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F641FC5926
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADFCFC5926
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 10:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvYs5-00016s-0I; Thu, 26 Feb 2026 05:45:29 -0500
+	id 1vvYvL-00027x-HX; Thu, 26 Feb 2026 05:48:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvYrq-00012g-Tm
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:45:15 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1vvYvG-000277-6x
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:48:46 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvYrn-00087p-TP
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:45:14 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64c9a6d6b70so471565d50.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:45:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772102710; cv=none;
+ id 1vvYvD-00007m-Q5
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 05:48:45 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64c9cabfe5dso860626d50.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 02:48:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772102922; cv=none;
  d=google.com; s=arc-20240605;
- b=kOlq8adl3itpAxpPaZmA4GRchDDzXxL0eOWysGvlDpFYtk3H4XqshXcnY76gU32JCI
- 0upzlp1cd+4IItTXx0Hj2dcXO6WIzrMmCqN4cOK37V1ORXZAkVk5mlwpTnHqJD07wFLN
- GfX/bUFC1kYAKjftK+qqXTRq7pEnGYLZjx3zQNehF1WvSUuCwyR/iHpWvkeVlv4zyObe
- yAOjmQIVCszug9/GUojcVELomzdNWHtlDf7ziTYr2x+uQb0oGzTCvQB881RQmspl9nWp
- DHaR3cKOJbC2GiBxZSWu/moYwA36fz4ZDP55ZVLMB2eoUrmh+/c515l+LrVP9duH5t+b
- 0F8A==
+ b=Z7Rj0Cnp/NrRv2WjLimyisvOdnb5A8IgazOVmuhiD4uLpEKLPe+kkiJt8Ksx8aUkk+
+ a1ypvfG8URlojJWT8toVRiFCX5mS3rEN4WEf5Y6DJcfcp+FYb14Xcnkc/AB1PxPDIpMe
+ llha94RxztK6Wi7bpgEuWziQr9/46Xn4oEaDdLu3V1z9MUyiOcP8WP6OonBBB8E8zIkR
+ ZJO7JrM6dSipfq8RplKOPf7LGp5nM5Lc/7N8Xejl7ERkvJIec+cMTHZBZWEflevXUV2H
+ 07aMD6LGPhnWBAMkjFYjiogOFOaXQ/Volr7TJDC8TBTM8Gj7Po74ecRL2sa0/GSKsgzj
+ gKbg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+p/eARGQ3/oySAleuaCzSd4JkUmllWgPWmWpg3bC6z4=;
- fh=y8MUwU+YzfbfqpRAhYXKpItqB7biLDOVGflHzlqnYtg=;
- b=SHO7OwTF7H/RRgIZYyjCJiGmJrUXmEkoZPLxW3jTTMQkSMz5VSI4NroRriA99D1C9c
- APl7m42Ielpazhz05j2/tmvpCBHtFCwoJ4uK3ymxIdhqP1yw9ZhQ9yLbu71qVMPpgOn+
- MOVl+0wR1lwa4ojXTpI45p3Lw1xxSL5kxtCCnqx8RSwUZbaSKwsAQmYPNTNZ5qc/CjLW
- I6g8Tfa1a4Q87Cs+P06ZNYeYcHRdJb32Wad9lH676RY378CHlrRaXRdeardgGR+fCVoN
- opFal9qelFhPJor9zh4cpLvOQEpqYKLKy8+YKIIR/QgTPbIk692KkYQFvXRE16lj6xdB
- Kxsg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=g2ltcvxTAmF77I1gesFS7URxAh0g7MseFZN4w+qgzbg=;
+ fh=qDEitYY2TPRRMZ4OARbMiUT09q8rCCMKzcZWPtML1Tk=;
+ b=kYq3+Xgx31kpTC6d7moBgF0qE8tEoVsaTinCLRV9thvqvbrMsXm3WgVfspBfTbEYUi
+ 7p7gOOh3ljBNCQ0MXpk4hgTRB3ZWcIhIVqwKMtnLUdzoCIY3lf8S1QmUUOzLIN2E4uHv
+ 6SH/HQRqLzMVP+3Ftrx9oF85ry0er35K8SFylr8JLZmIADOuDsDABBqXNdo+8E4i1FRp
+ S53Se7m9gaPrI02i+7n1BLGMtGzPgvcUs3DaLac3AiBtUN+3r5LfDL8zBVP1/pQrrjcK
+ yX/4kZ0mDSCesAZNVnQsFQE8dJoXP/Wscwn9ZhlsXsab23cg5D/KlKoDTDpNYoIwTk1P
+ yHvA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772102710; x=1772707510; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+p/eARGQ3/oySAleuaCzSd4JkUmllWgPWmWpg3bC6z4=;
- b=irzXo3IIbYXRirWdMgCIHXRnniXyVe4+2bCIZ4ka8MajkZeOdn3NxoSqMRsQRuFuqF
- K0IlOWI5Acnd6LcMlSPBR7dW0I9aASj1RndDfRwY3OG8FZQDE061/eOxrzsrBg/2ahar
- LPNH2dlDTr46l3eQrS6tMjXwOyAZYZ3XLZ5m+5fhrIRIlXK+vPvSyVlevN1kl5o90H8e
- baZ73OHak7AchmzAfR56ytqelo9tD8RjkrzP0hcUBlsDgUm4JOoj90pAmpFjFA0mte1y
- ytb1ROcWv8pQw6khf+SQsuMZ9Fg75neeRs7bJNx8m6liYpz40kjnn+QXnwyB8LxX95i6
- HpOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772102710; x=1772707510;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772102922; x=1772707722; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+p/eARGQ3/oySAleuaCzSd4JkUmllWgPWmWpg3bC6z4=;
- b=RG97LrW14La9mmGiK/Ef0LzPoAnLUze0Pa9YX/NELZmRINCmUo2bXn9+70mHZ2+ZQv
- 7XfLJARsugnWYCdyvY8KZZodsOTmkjw2cQTtUUKi+Ir2KS8Yw5JbgChbeZwdQQ9aOUiB
- glMsgVfUpLHzeWrS27hEazCcl27T+OUn2Z6g4vbTMLF/4/voa1N7RgUH47D04VnQu9pZ
- /fHWEKqaqvMvykZJ2q2Lc4e72dAtzQRWcNgYaAOBF9I2Jr+W1xvokaQ7scpIsECUGPKb
- PcbtzskY+c2sgTUgWGJru7NthZYcF9p0qdu+7EhhnPS+QcC4OKF+fBsXJqtzH1PHN+fH
- //FA==
-X-Gm-Message-State: AOJu0YyH+7CmWuwnJ2PNQDeYdifDTY3nHIfPs8SfUu9l1rc+S56JXKoP
- zhZkGOzKFdjx54YY2Hvs5DDMeCv77+fD4jGXrVRTzwnu9AEYmAy/LD2vv5Z+46abHt53XP3wXPP
- dHNOzEZHhDjvMbGKS5Vc1FOiVS3/+j6+b6uYJ7YgGww==
-X-Gm-Gg: ATEYQzxptTFntZgaJP2BF7J04AsTCVZUqPo94tlb93wcgcBq6qe/JiGooWk5aizuWTr
- mBe/pHc9RrY2SzjxuDl3LpC/KH6kuqpDEGkNFL24PVJ7IBZy1l/cIqqReSDGm/YJXTIAHCIZu56
- nW/EVDK/6iREIFr87bVliGTbvaCSFpGWfXZeUihYP4M1AL4IVEHB1tXJABRgj4Ffpj2c9Dfjy8L
- blM5rDc6Af1T5rXQ9ABgCJtli9gH8vHjINch4ZcxFLiDns45jnM6jQmgqHESw2VWxkRRVngrkhJ
- OqpAXRaeNhFf2AyflZklkkCHY+aEgNNqd+G1lV+xlEA1HpjhlXGrLQn6nmw4tqTZ1LA=
-X-Received: by 2002:a05:690e:2026:b0:64c:a4ab:e4e9 with SMTP id
- 956f58d0204a3-64cb22c8acdmr2781180d50.11.1772102709721; Thu, 26 Feb 2026
- 02:45:09 -0800 (PST)
+ bh=g2ltcvxTAmF77I1gesFS7URxAh0g7MseFZN4w+qgzbg=;
+ b=Njzgj7zb+WfDkNngT4dLf0uEoiA24Va0aDSfLMLplFD83b2omSgGzg6iGAVucxH2Ot
+ FWXYyJrbkkY7ioc74zJ5QcYrv2KkfoiHpOvqVNMo6LVv2GEw4v/diw4TtQQDLi8FMhzJ
+ ZXTNZg2TO9kv+b1JOjIZbQUiAnzJ0UqFhTMe/wgGNgIG5/KdpHWRIDkbiJCS2YppAoT7
+ 7RmNF5xvKuiVpKQwq3/tZoNN/Oo01erYemFa57GB5Jxs4i3FdwK6J8EFqIfqP15a2t6C
+ z6MEGUJaYikN/KsaJ41clOT4v/pir0EYq5YLHcHvSnoNGvkTmqozhLldZOm04yH3cTe2
+ WkDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772102922; x=1772707722;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=g2ltcvxTAmF77I1gesFS7URxAh0g7MseFZN4w+qgzbg=;
+ b=XIgzfw0g3OdgvyHYDLdsFvglsjHCZ0oORNRRvwtpU0XAb+fBCZiNKcPuTyIxD0Kcn6
+ 4qQg7NAmAvZBRrkfecPlgpCaYbXb1NR7fZiLPUqhyY5NBeJfWCx1+XoqEWoqSwVsOPev
+ CziwnTH6n0s1UNo0mcVZxF9v8B3YNUyuVsHtPDWI4eUHB00Eac/PozwNFK04v6I9xKYt
+ nku4/NQowI5pQBGSx9NPV5WlqGqsTW8l4UqBhOD0yLdVNw6dBxPt4bGBYk4Rsrm43R1O
+ wRy1TGQcQJDSOil9AJrUJBeDmmKCVbkkh2c70qHAj2UYpSdawTPvCfaDZ10ylsdCDZ5H
+ 3qQQ==
+X-Gm-Message-State: AOJu0YwEE/ft1ooTPM+kCZY5gtcBmCOAHl9d9t2v3ikrzsyro+1dSkqW
+ enGcvBGGCF2jS6Nqd3DnjTBAPVPac4s5Yt9DfkB2fADWqqUDrvXqIaK6QXORqDefeT5JPMECZuO
+ M7AbHHY3FC3zcipr0oH16zEeVXpsOYNuj5lONqv1Ptg==
+X-Gm-Gg: ATEYQzznKEobnw4Echq0lfzzTP7fItg42t9cAPtlmwbwLwq2T1uF3D7S6vUNuqd/907
+ P+HDYHPL5n6Auv2KNKkfSVdIIWPZ4kM6rsuyKY8GKUuS4xT4ZZ6yfsVNYu13jHf3/cr2iJoAnIg
+ iQT5Q1L2osuKea1FfAO2JUlBq9syv7b7G0Le6zGPtqQW3jSPJO45Kb9oiF6+OV7oXDAGX/Ks4xR
+ +rBoBkzrJN/N7czxWaN32GBo0iuzWwIzl0t5lVArG0kO+125vXO97wOB7fKfLtW/v8jckJcKGE9
+ Yo5X+r/tMLOxda62UQmYs6TMbJs7g0g3SsiLaDBId7MFYy/x/RfmIqpGsdI90JnF11xHWK2vpRB
+ P/w==
+X-Received: by 2002:a53:d014:0:b0:646:9ddf:5f2 with SMTP id
+ 956f58d0204a3-64cb6f25486mr1391056d50.31.1772102922092; Thu, 26 Feb 2026
+ 02:48:42 -0800 (PST)
 MIME-Version: 1.0
-References: <20260224181440.832943-1-jsnow@redhat.com>
-In-Reply-To: <20260224181440.832943-1-jsnow@redhat.com>
+References: <20260224154347.344219-1-alex.bennee@linaro.org>
+ <20260224154347.344219-4-alex.bennee@linaro.org>
+ <CAFEAcA8km4H10ZseUd=D6KWTpHQptUaL0D3dSrg3-LGWY1bcgg@mail.gmail.com>
+ <87qzq7ztdv.fsf@draig.linaro.org>
+In-Reply-To: <87qzq7ztdv.fsf@draig.linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 26 Feb 2026 10:44:58 +0000
-X-Gm-Features: AaiRm50121XoJp_9bq6eZQ3-bFRt-CUVK0QG2HJEZrDm_FWUQafaA4JSH5MkfAk
-Message-ID: <CAFEAcA-zsPN0Pbg9USt2dWCD9+iONr=bCGDaxomysn3ubqx=gA@mail.gmail.com>
-Subject: block/nfs.c and libnfs vs Fedora 43 (was: Re: [PULL v2 00/19] Python
- patches)
-To: John Snow <jsnow@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Qemu-block <qemu-block@nongnu.org>,
- Peter Lieven <pl@dlhnet.de>
+Date: Thu, 26 Feb 2026 10:48:29 +0000
+X-Gm-Features: AaiRm50idvpZ8JjyLmNCnolOP9F6qZU4igGPOX7Vi8CUtmePIRyXh9jCxhjWjIs
+Message-ID: <CAFEAcA_zJEM7VH3U_2-FAvu=vjnwcY+qjnjzfY9UsCwwd=zqfg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] target/arm: pass rd directly to wfit helper
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,61 +119,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 24 Feb 2026 at 18:14, John Snow <jsnow@redhat.com> wrote:
+On Thu, 26 Feb 2026 at 10:33, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> The following changes since commit afe653676dc6dfd49f0390239ff90b2f0052c2b8:
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
->   Merge tag 'audio-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-02-23 14:03:50 +0000)
+> > On Tue, 24 Feb 2026 at 15:43, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+> >>
+> >> If we generate an exception for WFIT we could also fill out the rv/rn
+> >> fields of the ISS. To facilitate this pass the register number
+> >> directly and read the timeout value in the helper itself.
+> >>
+> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >> ---
+> >>  target/arm/tcg/helper-defs.h   | 2 +-
+> >>  target/arm/tcg/op_helper.c     | 4 +++-
+> >>  target/arm/tcg/translate-a64.c | 2 +-
+> >>  3 files changed, 5 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs=
+.h
+> >> index 5a10a9fba3b..a9a062cf777 100644
+> >> --- a/target/arm/tcg/helper-defs.h
+> >> +++ b/target/arm/tcg/helper-defs.h
+> >> @@ -55,7 +55,7 @@ DEF_HELPER_2(exception_pc_alignment, noreturn, env, =
+vaddr)
+> >>  DEF_HELPER_1(setend, void, env)
+> >>  DEF_HELPER_2(wfi, void, env, i32)
+> >>  DEF_HELPER_1(wfe, void, env)
+> >> -DEF_HELPER_2(wfit, void, env, i64)
+> >> +DEF_HELPER_FLAGS_2(wfit, TCG_CALL_NO_WG, void, env, i32)
+> >
+> > Why the change to NO_WG ? The code change doesn't remove any
+> > writes to globals...
 >
-> are available in the Git repository at:
->
->   https://gitlab.com/jsnow/qemu.git tags/python-pull-request
->
-> for you to fetch changes up to 4e55bb4be53bc7a5e3fe1429af12d2e3090049a5:
->
->   python: add setuptools and wheel dependencies (2026-02-24 13:11:29 -0500)
->
-> ----------------------------------------------------------------
->
-> ----------------------------------------------------------------
+> I thought that was the right way round - it doesn't write to any
+> globals, but it does read so the helper needs to ensure globals are
+> synced before the callback.
 
-Hi -- it looks like this pullreq may have broken the "coverity" job
-that (run on a separate schedule from main CI) does a QEMU build to
-upload to the coverity scan service:
+The default if you use a DEF_HELPER macro that doesn't specify
+flags is "reading and writing to globals is OK" (it's a zero
+flags argument). So this change goes from "flags 0" to "flags NO_WG"
+and doesn't make any difference to how TCG thinks of its behaviour
+w.r.t. reading globals.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/13264087007
+I think you're right that the helper doesn't need to be able to write
+globals, but making a stricter promise about what the helper does is
+something that's a distinct change from adding the rn info to the syndrome.
 
-It fails during QEMU configure:
-
-Dependency libnfs found: NO. Found 16.2.0 but need: '<6.0.0' ;
-matched: '>=1.9.3'
-Run-time dependency libnfs found: NO
-../meson.build:1150:11: ERROR: Dependency lookup for libnfs with
-method 'pkgconfig' failed: Invalid version, need 'libnfs' ['<6.0.0']
-found '16.2.0'.
-
-I'm guessing this is because:
- * the coverity job runs on the amd64-fedora-container
- * we just upgraded our Fedora container to F43
- * coverity configures with --enable-libnfs
- * in meson.build we enforce libnfs < 6.0.0
- * F43 ships with a newer libnfs
-
-The "not libnfs v6" restriction was added by thuth in
-commit e2d98f257138 in 2024 because of a big API change in
-libnfs v6. The theory was that this was a temporary hack
-until somebody updated block/nfs.c to handle the new API.
-Over a year later, nobody has touched block/nfs.c...
-
-I guess for the moment we should fix the Coverity build
-by dropping the --enable-libnfs (and accepting that we
-don't scan block/nfs.c any more). For the longer term:
-
- * does anybody want to update block/nfs.c ?
- * or should we mark it as deprecated and plan to eventually
-   drop it, given that the set of supported distros you can
-   build it on is rapidly shrinking ?
-
-thanks
 -- PMM
 
