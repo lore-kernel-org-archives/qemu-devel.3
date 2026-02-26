@@ -4,115 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2264FD8FD3
-	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 16:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204B7FD8FD3
+	for <qemu-devel@archiver.kernel.org>; Thu, 26 Feb 2026 16:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vve1M-00038p-Mr; Thu, 26 Feb 2026 11:15:24 -0500
+	id 1vve9y-0005yT-CT; Thu, 26 Feb 2026 11:24:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vve1J-00031R-8u
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:15:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vve9x-0005xu-8W
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:24:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vve1H-0006DK-PN
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:15:21 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vve9u-0007pe-BB
+ for qemu-devel@nongnu.org; Thu, 26 Feb 2026 11:24:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772122517;
+ s=mimecast20190719; t=1772123052;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vSKQ0n12PECkU++UusRsCy3aOIngD05ybGdgIjZou6Y=;
- b=d5RF/Wi5KscsvlXOZp8/vXXu+i4qT2hZ9HBC8LdmiNO/6j7C9qmG8T2+QC2KF/svGWPy93
- vSTjEs9xyv+aVJ/LVlyDxiYRRfcyzn6tPr0FddNq2zWVhZUASDAqKDfee7LEmscz7pnvlE
- 03aj5qXSFXAO+cQOxsvWkhhUHUYlLoQ=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QO7I8+4B4NTXDLmtRuXokwHGU/kjO/wKXmZiqPd7ceM=;
+ b=InUX+/YuuWOpjvJoOUqi+Vd3kWTS1Eu+6036Rji4brart6IKMR2XB2GwLCeycbC2UQqF4D
+ I1gjKwivujR2YXD6oqCmfhdrnmy4IgF6Nu5HGrHDwxskr8QYKw5irt8HE5xfi/3184AavN
+ R32Ikgb1UA/z4tEYqvhu3y/gZacKsUc=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-u54G7x8ZO8a8EgkRYk7zng-1; Thu, 26 Feb 2026 11:15:16 -0500
-X-MC-Unique: u54G7x8ZO8a8EgkRYk7zng-1
-X-Mimecast-MFC-AGG-ID: u54G7x8ZO8a8EgkRYk7zng_1772122515
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2ad7e454f38so55675085ad.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 08:15:15 -0800 (PST)
+ us-mta-147-JuRe0HgcPnCjkP6SvzrkmQ-1; Thu, 26 Feb 2026 11:24:10 -0500
+X-MC-Unique: JuRe0HgcPnCjkP6SvzrkmQ-1
+X-Mimecast-MFC-AGG-ID: JuRe0HgcPnCjkP6SvzrkmQ_1772123050
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-64ca5bae25aso1682174d50.3
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 08:24:10 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772123050; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TO6R/tEWHTvOSfmcjHQMk19GUOKgKXEFoilU3HqUCQlssGWt4QGnQQIaXEK9eSnRu/
+ pp/Kt4dNgNMmDz6fPqI/QyapjGBKdib/fMLmITE7b8pKFEGk7mlZBXN2uBm8FRKwBR2c
+ Xyyk8G7RTmuWG3IYj9zgsn7t0cNRC1EqrFGhdl2ZNpnJ5+di7SPgOO8nH38WyLIizms0
+ 7bIWNHVKZPsbXhytNovQHQwzg42bPu+lVddSl8iTfJ1qcMMRHga9cMpqeOoivQizSEhw
+ LWbTzhjIaFks8MKl8aWb83RTzFHzjgYP3OYGpAWtgo+YU5m1D9ZItRqFmiS6FF4Z2K9Q
+ ZuBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=QO7I8+4B4NTXDLmtRuXokwHGU/kjO/wKXmZiqPd7ceM=;
+ fh=VNFsG6wANPp1ZECopsVB7Ex2xqU2oTIhhrTg6bRRKWM=;
+ b=N+CBiLPXSmhlEIOcD5Ma9VKZTVUDUedNH4ZKNCFSCqXSy+OWlZn9a69thfiMi1TtOE
+ ew/kfi//rE9s+saYVwNDG1F4GVxPgk1SHFkk+vO5ZMxLIaWY8hpgoLxHBhdm9XI5wiNq
+ WhfHBzXqwr6DUbepNVnLnVtnu3FP9ScAxyT6kE34dAhbFWXEGw/sL0UEtpx9SLK6PoJn
+ yrm7Uxow1IQlV953nHTENHOj+RqOIEp/XRxNxVHfL1hRk7v9Bva1aX0Kcwi0t7wx0ek6
+ Ttjspum3zSq3iQDNHQfB27vlYo0t8MvuZSZS3Ys+FhZB92Sg+NQknAVek6JoFhjCiHC/
+ TWFw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772122515; x=1772727315; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vSKQ0n12PECkU++UusRsCy3aOIngD05ybGdgIjZou6Y=;
- b=C46Ga6lxlB6INedHmqqzwl4KhIO6j/fq3Eoa6Xqg7gEtvm7lroEv1vAU64CallcPkW
- s336sbSVyFSsui8RRkXQplwUSPs/AmnH21FT94tDyg14Wn727JLTJTFJXKE+x8w0Tv01
- m/a2FuqnmF75TnzKUtQwpJMi6OrtHyQ8Xn5ILz8hm11/EHPVtNYrvZgbZYfQNtKXN3rs
- r0e7GXtz4dCCsfdfwXZ8mffryqT2SpwYPYetnm3OogIoSiAhZcWrIZi4cX0VoFn1Yy8e
- IHd7QeCQT7LL3B3LWs+kSs+siULnJj9kxFDsSlDecKbrtI9g9gqO/GTK2apTl6urfMT3
- vrKg==
+ d=redhat.com; s=google; t=1772123050; x=1772727850; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=QO7I8+4B4NTXDLmtRuXokwHGU/kjO/wKXmZiqPd7ceM=;
+ b=WpRIXxEB/JFScfhWDkdHRUIWUu54QdVlRRxQxryInjSDeDVrzTay26Sx1IomfxfheA
+ 1ygxpUdxI1qqbkcYY6BitTCug+UIl2E5hgUr1RLVy4UR+k9UmmV5AkpdMPPTl1kdmqY7
+ Ee4vUZRq857UbHJDXmxJexDqnWnaN9MhQxlhN5zU/VK5bmM2kQkQ78efN1jvhPz51J01
+ CWif1NNaH6pGfaWZjF8DR9P/fkPfLu9yycZA3KfRd2MyV91bRO5/y4yEazSiMOujQM0C
+ jWWXCa2nSddCrhQHKZoiS3PjJ5dciE28jifAp//co0Jm1EDkYiauUc7uoiOEb4v0lfIX
+ bY+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772122515; x=1772727315;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vSKQ0n12PECkU++UusRsCy3aOIngD05ybGdgIjZou6Y=;
- b=LAZYgPf8+Er/O6i1R8tVSarDX11Q/lAv5RL6bN5GniZzDBLSnMG0gLHJzbsY2+R0Is
- wZyUhQIThgjNNFoO6c4Ac5oy5iCxD03/vWv0pClYFSh4ij9SZlj4q/gT03D8Py7a+6Ex
- /gmW57DdiHuYi2XhXC6CE8ThykIUxN+BWE8+B5wTpIOdBKvedStAxnTLcu3NLMSyYzky
- zX72sg+Z4kDna4BAFjBmFS4cQwAhV1mF4VVV1XE4o94pThgvj3E/UG2uEbWTviUU3wFI
- wpESR4vNYc+1w5pcLfgTEwDastAIB9OEB46KFG0JJnw4zkBYx5KjQ6bxfiQiNBvmfYoK
- u21Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdYRpG0UVXbR11S2qYK3OSmO6bP3CtwjEddRqatiwqG1pRhVMQO0LTsOZNMxXB8mY/Dm2Soirj9DZT@nongnu.org
-X-Gm-Message-State: AOJu0Yxe+tfWrrlFEl1nFRAYqTfkBsyY/+8lLhyjTNOLtvn9OrHcO4fz
- cicPlK9wb60syLSQ4eKU0gvTJdPaMUBaQF29VVz+Bqe3PelS57aBHd9TxMhd66ulgsPBtst/WeE
- fVyPa26QsKI+O3DTdDukUECEmRoEu3vg4I6phXHd7dtnes6WLK57mydFuuurMWSwP
-X-Gm-Gg: ATEYQzxu4eGaRvsOcmpECVUIKnLKE7Ii+aRt8fIf/X86fFMCX8wzSUxqhlgQzx/gxQU
- d5b+I/hDSC4N0TQ3s0vOmPDr0JMcGDTEWExT4U12bS1A9tsOOQxZL6c3mQQDEsS4nuYRI99Rguv
- nrtXqMKaVN7mG0RQH3PqfDQeDAjRmvD18sGeD7FonAuMSPg4tqsFveNpR2++xnDDrUAhJvyvCCS
- KFl0Gcvd4o1O0QNhbMzNX90evlQgf1AWrPnQns+ymLuQ0LX649HScktj+FQKJHkAEzm+3JJnrqQ
- KnMH4OdOR3r7huadRcJf0RvJ01u5Y5Ce0ZPp9FVFaXgZVOZJ8sa+1kFTwPpTShGYh5KypPiBePq
- lsB48392gGZWEeOEsxC0hPubZHCI2Xulj12Z0EblY3PP2t05nZmx7aHDe7OyLAQwY7Fscfg==
-X-Received: by 2002:a17:902:e805:b0:2ad:9edf:7fe4 with SMTP id
- d9443c01a7336-2ade9a637f4mr41236835ad.48.1772122514521; 
- Thu, 26 Feb 2026 08:15:14 -0800 (PST)
-X-Received: by 2002:a17:902:e805:b0:2ad:9edf:7fe4 with SMTP id
- d9443c01a7336-2ade9a637f4mr41236445ad.48.1772122513802; 
- Thu, 26 Feb 2026 08:15:13 -0800 (PST)
-Received: from smtpclient.apple ([122.176.129.56])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb5c183bsm30620715ad.24.2026.02.26.08.15.10
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 26 Feb 2026 08:15:13 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v6 35/35] migration: return EEXIST when trying to add the
- same migration blocker
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <aaBFxY6PUsNrAYft@x1.local>
-Date: Thu, 26 Feb 2026 21:44:58 +0530
-Cc: Fabiano Rosas <farosas@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <ani@anisinha.ca>,
- Prasad Pandit <pjp@fedoraproject.org>, qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <83E69A6D-EDC8-4380-8C4E-6F77D1E2F078@redhat.com>
-References: <20260225035000.385950-1-anisinha@redhat.com>
- <20260225035000.385950-36-anisinha@redhat.com> <aZ8xlrL2xQtoN9MI@x1.local>
- <C486617D-2B20-4904-A87B-81CC5FA84153@redhat.com> <aaBFxY6PUsNrAYft@x1.local>
-To: Peter Xu <peterx@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ d=1e100.net; s=20230601; t=1772123050; x=1772727850;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QO7I8+4B4NTXDLmtRuXokwHGU/kjO/wKXmZiqPd7ceM=;
+ b=Ir5DDdhe1KB4P0TDAi06qYwS20EApj59ew288B6bLYHz/SPOvrQv8CsrGIZVvJHEps
+ FRYIZGx7FdjFY1La3D+k6AVtLh5fEIU3/7xWoiCInjDih8IdySPyn6nINmQBYcIGj1/2
+ seuywivOqshlofJi5tLFEg5KcY98cGXTuoXSaAkh//bxurvb6KZglFDIaH7N1u0VuOrZ
+ ZAWbJjp/cAM5j/N1GRispQ20rDDTSzoMWGFSmmmH3b+3pbfWriTmsfHMDPmgpHH0Y6PA
+ WbAYOJflufnLlO5xzzsKIuytdpDN8PcValPaxus7TS8ULcSLbMF1N4idseU160JP/qYy
+ tA+Q==
+X-Gm-Message-State: AOJu0YwFHikvn3SljVOGAWaVI7Zla1juZ5OxMF9eGPymrNgjz9jHmSwZ
+ mlfvUvL2ytcr2Ce5lUXm3leoQrie71AbbFuITPU7XERLTK+o5qqtdlxnPWVm7kKOlXcfeDos3RX
+ W402Sc5MRzZQ+n7s+GvOcGfryn7izYGbIWJPVQrA8IHmyYFET4Wbbjgw0xW89G2kNfiOcGFv9pP
+ IIUgGTt8GyZsZlRrmU3O5aI+GkGZcdvEA=
+X-Gm-Gg: ATEYQzwqWsc7tqF86hbMzb865a8CHklpkXHfTz7Bp3YwYoE9p1ekcmjlk8kpY61lbIC
+ 0meJVJQBagwCTHdixLr69NGfvdwdFkI40xrarzZk5ooTVVkfdkc9g+sBeND5e+YrKkU+/ErMlTZ
+ ZemF52hlsJCEKqYEbRbWtvW1F5m4/9iEwREg86e9PAYyM4GL7pdqnS6c0mlFbA2741gM7NIL/5b
+ 0hxUUSzDFpOsuDEpNODalbFPHMXzpHv0GqROw==
+X-Received: by 2002:a05:690e:408b:b0:649:cc0d:a99b with SMTP id
+ 956f58d0204a3-64cb7bf809amr1907347d50.11.1772123048621; 
+ Thu, 26 Feb 2026 08:24:08 -0800 (PST)
+X-Received: by 2002:a05:690e:408b:b0:649:cc0d:a99b with SMTP id
+ 956f58d0204a3-64cb7bf809amr1907265d50.11.1772123046651; Thu, 26 Feb 2026
+ 08:24:06 -0800 (PST)
+MIME-Version: 1.0
+References: <20260225193856.959771-1-jsnow@redhat.com>
+ <20260225193856.959771-3-jsnow@redhat.com>
+ <87wm00zb0x.fsf@draig.linaro.org>
+In-Reply-To: <87wm00zb0x.fsf@draig.linaro.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 26 Feb 2026 11:23:55 -0500
+X-Gm-Features: AaiRm51sFcxOJQ9vlC5ij_Gtvv_yzpEgjShOj0JQCdlwFT_je0Q4XZBl5j3YaRU
+Message-ID: <CAFn=p-ZV1Qy7ooEYC2tQkYARkspZ1Zh044wXSr5Phxi7TakUfg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] tests: upgrade debian-legacy-test-cross to debian
+ 13
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000b27931064bbc8ce6"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,58 +136,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000b27931064bbc8ce6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Feb 25, 2026, 5:57=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro.=
+org> wrote:
+
+> John Snow <jsnow@redhat.com> writes:
+>
+> > We no longer require Debian 11 to run these tests; they work properly
+> > under Debian 13/Trixie.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> If these all work with Debian 13 we should just punt the compilers into
+> debian-all-test-cross and delete this container and redirect its users.
+>
+
+Alright, wasn't sure where you wanted em. I'll give it a shot.
 
 
-> On 26 Feb 2026, at 6:38=E2=80=AFPM, Peter Xu <peterx@redhat.com> =
-wrote:
->=20
-> On Thu, Feb 26, 2026 at 09:16:43AM +0530, Ani Sinha wrote:
->>=20
->>=20
->>> On 25 Feb 2026, at 10:59=E2=80=AFPM, Peter Xu <peterx@redhat.com> =
-wrote:
->>>=20
->>> Hi, Ani,
->>>=20
->>> On Wed, Feb 25, 2026 at 09:19:40AM +0530, Ani Sinha wrote:
->>>> Currently the code that adds a migration blocker does not check if =
-the same
->>>> blocker already exists. Return an EEXIST error code if there is an =
-attempt to
->>>> add the same migration blocker again. This way the same migration =
-blocker will
->>>> not get added twice.
->>>=20
->>> Could you help explain why it will inject two identical errors in =
-the first
->>> place, and why the caller cannot make sure it won't be injected =
-twice?
->>=20
->> Likely due to a bug in the code. For example if the init function =
-that
->> adds the blocker is called again and the caller does not handle the
->> second init call properly.  This came up as a part of the coco reset =
-work
->> where migration blockers are added in init methods. They need not be
->> added again when init methods are again called during the reset
->> process. The caller can handle it of course but adding a check =
-further
->> down the call stack makes things more robust.
->=20
-> IMHO if we want to make it more robust, we shouldn't return an error
-> because the caller may not always check for errors.
->=20
-> Would assertion suites more here?  Because migration blockers are not
-> something the user can manipulate, so it's a solid bug to fix when
-> triggered.
+> > ---
+> >  .../dockerfiles/debian-legacy-test-cross.docker  | 16 +++++-----------
+> >  1 file changed, 5 insertions(+), 11 deletions(-)
+> >
+> > diff --git a/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+> b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+> > index 5a6616b7d39..293f31a07d6 100644
+> > --- a/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+> > +++ b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+> > @@ -1,18 +1,13 @@
+> >  # Docker legacy cross-compiler target (tests and minimal qemu)
+> >  #
+> > -# Compilers for some of our older targets which we cant currently
+> > -# upgrade. Currently:
+> > -#
+> > -#   libc6.1-dev-alpha-cross:
+> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1054412
+> > -#   sh4-linux-user: binaries don't run with bookworm compiler
+> > -#
+> >  # As we are targeting check-tcg here we only need minimal qemu
+> >  # dependencies and the relevant cross compilers.
+> >
+> > -FROM docker.io/library/debian:11-slim
+> > +FROM docker.io/library/debian:13-slim
+> >
+> > -# Duplicate deb line as deb-src
+> > -RUN cat /etc/apt/sources.list | sed "s/^deb\ /deb-src /" >>
+> /etc/apt/sources.list
+> > +# Add deb-src repository sources
+> > +RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
+> > +    /etc/apt/sources.list.d/debian.sources
+> >
+> >  RUN export DEBIAN_FRONTEND=3Dnoninteractive && \
+> >      apt-get update && \
+> > @@ -35,12 +30,11 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \
+> >          libc6-dev-sh4-cross \
+> >          python3-pip \
+> >          python3-setuptools \
+> > +        python3-tomli \
+> >          python3-venv \
+> >          python3-wheel && \
+> >          dpkg-query --showformat
+> '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+> >
+> > -RUN /usr/bin/pip3 install tomli
+> > -
+> >  ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tool=
+s
+> >  ENV DEF_TARGET_LIST alpha-linux-user,sh4-linux-user
+> >  ENV MAKE /usr/bin/make
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+>
+>
 
-If Prasad agrees, I will send something.
+--000000000000b27931064bbc8ce6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->=20
-> Thanks,
->=20
-> --=20
-> Peter Xu
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 25, 2026, 5:57=E2=80=
+=AFPM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.b=
+ennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Joh=
+n Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"nor=
+eferrer">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; We no longer require Debian 11 to run these tests; they work properly<=
+br>
+&gt; under Debian 13/Trixie.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+<br>
+If these all work with Debian 13 we should just punt the compilers into<br>
+debian-all-test-cross and delete this container and redirect its users.<br>=
+</blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Alri=
+ght, wasn&#39;t sure where you wanted em. I&#39;ll give it a shot.</div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_=
+quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
+ex;border-left:1px #ccc solid;padding-left:1ex">
+<br>
+&gt; ---<br>
+&gt;=C2=A0 .../dockerfiles/debian-legacy-test-cross.docker=C2=A0 | 16 +++++=
+-----------<br>
+&gt;=C2=A0 1 file changed, 5 insertions(+), 11 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/tests/docker/dockerfiles/debian-legacy-test-cross.docker =
+b/tests/docker/dockerfiles/debian-legacy-test-cross.docker<br>
+&gt; index 5a6616b7d39..293f31a07d6 100644<br>
+&gt; --- a/tests/docker/dockerfiles/debian-legacy-test-cross.docker<br>
+&gt; +++ b/tests/docker/dockerfiles/debian-legacy-test-cross.docker<br>
+&gt; @@ -1,18 +1,13 @@<br>
+&gt;=C2=A0 # Docker legacy cross-compiler target (tests and minimal qemu)<b=
+r>
+&gt;=C2=A0 #<br>
+&gt; -# Compilers for some of our older targets which we cant currently<br>
+&gt; -# upgrade. Currently:<br>
+&gt; -#<br>
+&gt; -#=C2=A0 =C2=A0libc6.1-dev-alpha-cross: <a href=3D"https://bugs.debian=
+.org/cgi-bin/bugreport.cgi?bug=3D1054412" rel=3D"noreferrer noreferrer" tar=
+get=3D"_blank">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1054412<=
+/a><br>
+&gt; -#=C2=A0 =C2=A0sh4-linux-user: binaries don&#39;t run with bookworm co=
+mpiler<br>
+&gt; -#<br>
+&gt;=C2=A0 # As we are targeting check-tcg here we only need minimal qemu<b=
+r>
+&gt;=C2=A0 # dependencies and the relevant cross compilers.<br>
+&gt;=C2=A0 <br>
+&gt; -FROM <a href=3D"http://docker.io/library/debian:11-slim" rel=3D"noref=
+errer noreferrer" target=3D"_blank">docker.io/library/debian:11-slim</a><br=
+>
+&gt; +FROM <a href=3D"http://docker.io/library/debian:13-slim" rel=3D"noref=
+errer noreferrer" target=3D"_blank">docker.io/library/debian:13-slim</a><br=
+>
+&gt;=C2=A0 <br>
+&gt; -# Duplicate deb line as deb-src<br>
+&gt; -RUN cat /etc/apt/sources.list | sed &quot;s/^deb\ /deb-src /&quot; &g=
+t;&gt; /etc/apt/sources.list<br>
+&gt; +# Add deb-src repository sources<br>
+&gt; +RUN sed -i &quot;s/^Types: deb$/Types: deb deb-src/&quot; \<br>
+&gt; +=C2=A0 =C2=A0 /etc/apt/sources.list.d/debian.sources<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 RUN export DEBIAN_FRONTEND=3Dnoninteractive &amp;&amp; \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 apt-get update &amp;&amp; \<br>
+&gt; @@ -35,12 +30,11 @@ RUN DEBIAN_FRONTEND=3Dnoninteractive eatmydata \<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 libc6-dev-sh4-cross \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 python3-pip \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 python3-setuptools \<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 python3-tomli \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 python3-venv \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 python3-wheel &amp;&amp; \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 dpkg-query --showformat &#39;${Packa=
+ge}_${Version}_${Architecture}\n&#39; --show &gt; /packages.txt<br>
+&gt;=C2=A0 <br>
+&gt; -RUN /usr/bin/pip3 install tomli<br>
+&gt; -<br>
+&gt;=C2=A0 ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disabl=
+e-tools<br>
+&gt;=C2=A0 ENV DEF_TARGET_LIST alpha-linux-user,sh4-linux-user<br>
+&gt;=C2=A0 ENV MAKE /usr/bin/make<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+<br>
+</blockquote></div></div></div>
 
+--000000000000b27931064bbc8ce6--
 
 
