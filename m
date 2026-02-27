@@ -4,97 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A24FEFB6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25CFCFEFB6A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw1Hc-0001MX-GE; Fri, 27 Feb 2026 12:05:44 -0500
+	id 1vw1Mk-0002PS-MM; Fri, 27 Feb 2026 12:11:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vw1Ha-0001LE-DI
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:05:42 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vw1HW-0000SR-79
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:05:42 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id E371C3FF1C
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 17:05:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1772211935;
- bh=aidZFqgNYVKlfZtMJCPzhzAMhlvmH2Ifwk6xVL7JNuk=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=Q6duSxDmR4eV3YABT9d6Bh78Ur7voBxrdkwMG6oDjXz+eeoJbENks1LXiDOpSeER1
- e/7ybFsVNoOkl+41hIGlnExPYZNWJ4mS0Ejef3Z4nmnHqsVSY9g8ric3dopuAbKrj1
- vbNpzSUXvoHj70V/nY1n01WZa8jDWh6kQVZwN0kA4HYCs+ZAgP4KSMOnC1a3bMBTmR
- 4g6OWCc+ywa9+N8MNIwMxdl8nexxtDllwonpxggsZNcKkcXYxdEVAfkk2PXR9Q3Qo4
- a3LvBvrQPmxNftvcjJLbGfFCNS6qNPYP6yI87oU55Iik95I0FH4onNX1nWaw4QreCs
- 9TRboZCJmR6LQ==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id CE0A37F15D
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 17:05:35 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1vw1Mj-0002PF-FK
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:11:01 -0500
+Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1vw1Mh-000140-KJ
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:11:01 -0500
+Received: by mail-qt1-x834.google.com with SMTP id
+ d75a77b69052e-506251815a3so19675911cf.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 09:10:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772212258; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GUdLFVfwauFOJxjZ+5E+qnW6KFadpAbArWIG1HH/zzbxLJSVaPt+UeaUC3r3OQt3cA
+ od148ZIkxlOR44WsAscniwqPqHecFfOnpy01czQq+CAlJ/rv7pVthzt8MGTdf1az6Iwk
+ t1wmOf3KGGyHKShwOB0ywOFBuouUtjE+N7N5svl1+G0OIOFSwiYq6alITPjFEHTtc5dB
+ 8zUuMVhDiOht8h/+Qbpc993A+Ak5LRrDxaHOwgunnqu0WVUEd1t1XO1uPyjFaqsFxeSt
+ C4gYInGUuH+foZip3P+x8TsoZ1oKNGuqw6rl12T0WVOL56O3SiiTOKc5B3D9mPO0yEQc
+ WhOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=4jkB89qc1VzhOh0RayZ1MFW7zsWsHWB61Akofa84qd8=;
+ fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
+ b=lQHOyzRpgG67KC4Xc0hEQHI+NBlD17onJqmPywYiZbUoKIgVOg9WbCF9VeZbocdwvM
+ stUsFSxAO9TnZO8D/jRLZRH4zfZLuv1PY/J6iYknHbiCy/mR4ddHwypobvDIw4nDV2fQ
+ hpuWgM1XZBNzGSA15D2TbpgUX+GVsMf8Vjuw5tmN/CzMuGBU6wm49bukEk9x+p0/z/bv
+ rCMtEjGZslotZjn2waW1ce1CpFaU2e1Q/4rVqWe16Q0nuGU61lDoUsyO4IMLAqtzhRUd
+ Jf5uRqUmovQs724nmEqh+gY7G4RhxghayZAt/4I10houVF/BwrfTGD+xpaDDi71LgMSq
+ dnMg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772212258; x=1772817058; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4jkB89qc1VzhOh0RayZ1MFW7zsWsHWB61Akofa84qd8=;
+ b=G+4UKP0XaQNhkRxRStCeZ8k/LDKdJIKF7rfQJPgVCRHaNCqSXD2m75ak2wAOokoFBu
+ +D+6wfSO5CJwuwW3SR1XhITBTNI+ZjPpdiFqEM9cx71wys1sv1fkqxiNluhYoniP1HNo
+ m5IZgmnna9jj4ttBlOX2KKHuMKYqJT98YnKg3RjCIEAQLTdwqeD1rgeiRVdm9WBdC00/
+ JEmxkpVHI0rIuGQ7RdFBJJ5GZ9rmwchSZHp11CQyObuOF8wjJwvZFedOImKUd/LgBZQh
+ D/Wq2EGVaNtVeQKmbLGYlAg8bZ8qPYXpmlzOJKDjzBC9831hch49ZoQlU/X7d/Lh/hGu
+ QwCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772212258; x=1772817058;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4jkB89qc1VzhOh0RayZ1MFW7zsWsHWB61Akofa84qd8=;
+ b=sEt3mA5bI1za1fnmHW0Tl8gszvL1RseiCwhreigMGWJJrUMQRCT6jnLS6XznGHCYRV
+ c6+F8nP8b9gOkL3Ag29WmcwsxubJDtL1JdPSc+QnCFj9NNFEvKN5Hrmwe+uGOSH6qRyt
+ 4LZA75DL8IvyfC9HN+M71uAcU7Mim5LgVToPM9rqUqNp3gEvrnYzqvU6ciiqugWFUzhx
+ 9bj/Gfl3T8/CCBXt8MbA2ZXSV3WActYHWYsKrEoTZ9KQDZ80fmCLm9v76s8uucmRBWh8
+ /Aq810qEpu5UjIQd0l/2BxQoCtXzWBWxJVKSvzM9SmKpodiOlDGx8GHY+KC3/c+QZ+Um
+ D5GQ==
+X-Gm-Message-State: AOJu0YwpjXnSJMIxiXU5lcwyxW0XBvvX8eoJ+SAOvVJrq/CVXu1J9eoW
+ pKedNq3ulUijZSXTyOUbs6yG6s7lK0StT/LLV9jYnou6VAWy1wKe9NPe3dEZOkaegvcInUC41Z8
+ LczeFA9Bu4qWUaHe7+6IO7thya72Nebc=
+X-Gm-Gg: ATEYQzyFL/eVFCcYbumcBM9Dh0b/gg5jVm4/IRd7kZFe55ra6cEiihOGamyp1u99Xl8
+ Z1kKMW1Fdl0oRyzSw4izIcarzNCeSLQSnIOH9eYraVEKsii8acNTvOruv9BwV+DM655+MAUUbvC
+ VoQktxrzEIo40YkWTnA7W683RyJV6+GinCt6j/NnLdxoXkW+fnwoxKP021+kNBoQa+xyLCLbkmg
+ Bu78eA99Z67jpk8aUuzo7WOCzDFk5Cd00d3C1x4b+PCVUHQXDvH/c30RfCxY3vJgH4M3pXH87YI
+ CTO/0LDBqecyja/Zu8pDM6g=
+X-Received: by 2002:a05:622a:4ce:b0:506:9d3e:67ed with SMTP id
+ d75a77b69052e-50752a1efcbmr42539211cf.70.1772212258284; Fri, 27 Feb 2026
+ 09:10:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+References: <CAOkKuiOpVZwn7ZwPDPxJWmQ2SovUUTf2eLwg9dWFgEEhi3_NFw@mail.gmail.com>
+ <aaFRigrJ-uiYcmUi@redhat.com>
+ <CAOkKuiN_RsOQTREhAvQT2aJf0XJ4Mxk8XRK6MrXrWcoNdGhr4w@mail.gmail.com>
+ <aaFd7GASyxLikTTC@redhat.com>
+In-Reply-To: <aaFd7GASyxLikTTC@redhat.com>
+From: Choon Keong Teo <ckeong.teo17@gmail.com>
+Date: Sat, 28 Feb 2026 01:10:46 +0800
+X-Gm-Features: AaiRm532n-9oA_9NS_0YuDZK650pnO2f7u7t4SQX3Y4XjYOEDOzHJYBdXBjR1Uk
+Message-ID: <CAOkKuiMeb=SxjZnytCAbPtJQrHA8zHyDaQkKwd++aPAmCQ_7-Q@mail.gmail.com>
+Subject: Re: [HELP] Issue running test cases in Qemu
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 27 Feb 2026 16:59:24 -0000
-From: Ubuntu SRU Bot <2126951@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Fix Committed; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=In Progress; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; status=In Progress; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium;
- assignee=wesley.hershberger@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; status=Fix Committed; importance=Medium; assignee=None; 
-X-Launchpad-Bug-Tags: sts verification-needed verification-needed-questing
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: athos tjaalton ubuntu-sru-bot whershberger
-X-Launchpad-Bug-Reporter: Wesley Hershberger (whershberger)
-X-Launchpad-Bug-Modifier: Ubuntu SRU Bot (ubuntu-sru-bot)
-References: <175977079933.1446079.11908449148472830395.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <20260227165924.0E9B9FC009@ubuntu-archive-toolbox.internal>
-Subject: [Bug 2126951] Autopkgtest regression report
- (qemu/1:10.1.0+ds-5ubuntu2.3)
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="2b2e09fee12efee48836b36f2ca9a800f38d982a";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: a676ba2de3835f3e4ec0c4aaecc5e386bb7b7983
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
+ envelope-from=ckeong.teo17@gmail.com; helo=mail-qt1-x834.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,330 +116,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2126951 <2126951@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All autopkgtests for the newly accepted qemu (1:10.1.0+ds-5ubuntu2.3) for q=
-uesting have finished running.
-The following regressions have been reported in tests triggered by the pack=
-age:
+Dear Daniel,
 
-architecture-properties/0.2.6 (ppc64el)
-casper/25.10.2 (amd64, ppc64el)
-edk2/2025.02-8ubuntu3 (amd64, armhf)
-freedom-maker/0.34 (arm64)
-incus/6.0.4-2 (arm64, s390x)
-ironic-python-agent/10.2.0-3 (arm64)
-kworkflow/20191112-1.2 (amd64)
-libvirt/11.6.0-1ubuntu3.3 (arm64, ppc64el)
-nova/3:32.0.0-0ubuntu1.1 (i386)
-systemd/257.9-0ubuntu2.1 (armhf)
+Thank you so much for your guidance!
 
 
-Please visit the excuses page listed below and investigate the failures, pr=
-oceeding afterwards as per the StableReleaseUpdates policy regarding autopk=
-gtest regressions [1].
 
-https://people.canonical.com/~ubuntu-archive/proposed-
-migration/questing/update_excuses.html#qemu
+Best regards,
+Choon Keong.
 
-[1] https://wiki.ubuntu.com/StableReleaseUpdates#Autopkgtest_Regressions
-
-Thank you!
-
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2126951
-
-Title:
-  `block-stream` segfault with concurrent `query-named-block-nodes`
-
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Committed
-Status in qemu source package in Jammy:
-  In Progress
-Status in qemu source package in Noble:
-  In Progress
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  Fix Committed
-Status in qemu source package in Resolute:
-  Fix Committed
-
-Bug description:
-  [ Impact ]
-
-  When running `block-stream` and `query-named-block-nodes`
-  concurrently, a null-pointer dereference causes QEMU to segfault.
-
-  The original reporter of this issue experienced the bug while
-  performing concurrent libvirt `virDomainBlockPull` calls on the same
-  VM/different disks. The race condition occurs at the end of the
-  `block-stream` QMP; libvirt's handler for a completed `block-stream`
-  (`qemuBlockJobProcessEventCompletedPull` [1]) calls `query-named-
-  block-nodes` (see "libvirt trace" below for a full trace).
-
-  This occurs in every version of QEMU shipped with Ubuntu, 22.04 thru
-  25.10.
-
-  [1] qemuBlockJobProcessEventCompletedPull
-
-  [ Test Plan ]
-
-  ```
-  sudo apt install libvirt-daemon-system virtinst
-  ```
-
-  In `query-named-block-nodes.sh`:
-  ```sh
-  #!/bin/bash
-
-  while true; do
-      virsh qemu-monitor-command "$1" query-named-block-nodes > /dev/null
-  done
-  ```
-
-  In `blockrebase-crash.sh`:
-  ```sh
-  #!/bin/bash
-
-  set -ex
-
-  domain=3D"$1"
-
-  if [ -z "${domain}" ]; then
-      echo "Missing domain name"
-      exit 1
-  fi
-
-  ./query-named-block-nodes.sh "${domain}" &
-  query_pid=3D$!
-
-  while [ -n "$(virsh list --uuid)" ]; do
-      snap=3D"snap0-$(uuidgen)"
-
-      virsh snapshot-create-as "${domain}" \
-          --name "${snap}" \
-          --disk-only file=3D \
-          --diskspec vda,snapshot=3Dno \
-          --diskspec "vdb,stype=3Dfile,file=3D/var/lib/libvirt/images/n0-bl=
-k0_${snap}.qcow2" \
-          --atomic \
-          --no-metadata
-
-      virsh blockpull "${domain}" vdb
-
-      while bjr=3D$(virsh blockjob "$domain" vdb); do
-          if [[ "$bjr" =3D=3D *"No current block job for"* ]] ; then
-              break;
-          fi;
-      done;
-  done
-
-  kill "${query_pid}"
-  ```
-
-  `provision.sh` (`Ctrl + ]` after boot):
-  ```sh
-  #!/bin/bash
-
-  set -ex
-
-  wget https://cloud-images.ubuntu.com/daily/server/noble/current/noble-
-  server-cloudimg-amd64.img
-
-  sudo cp noble-server-cloudimg-amd64.img /var/lib/libvirt/images/n0-root.q=
-cow2
-  sudo qemu-img create -f qcow2 /var/lib/libvirt/images/n0-blk0.qcow2 10G
-
-  touch network-config
-  touch meta-data
-  touch user-data
-
-  virt-install \
-    -n n0 \
-    --description "Test noble minimal" \
-    --os-variant=3Dubuntu24.04 \
-    --ram=3D1024 --vcpus=3D2 \
-    --import \
-    --disk path=3D/var/lib/libvirt/images/n0-root.qcow2,bus=3Dvirtio,cache=
-=3Dwritethrough,size=3D10 \
-    --disk path=3D/var/lib/libvirt/images/n0-blk0.qcow2,bus=3Dvirtio,cache=
-=3Dwritethrough,size=3D10 \
-    --graphics none \
-    --network network=3Ddefault \
-    --cloud-init user-data=3D"user-data,meta-data=3Dmeta-data,network-confi=
-g=3Dnetwork-config"
-  ```
-
-  And run the script to cause the crash (you may need to manually kill
-  query-named-block-jobs.sh):
-  ```sh
-  chmod 755 provision.sh blockrebase-crash.sh query-named-block-nodes.sh
-  ./provision.sh
-  ./blockrebase-crash n0
-  ```
-
-  Expected behavior: `blockrebase-crash.sh` runs until "No space left on
-  device"
-
-  Actual behavior: QEMU crashes after a few iterations:
-  ```
-  Block Pull: [81.05 %]+ bjr=3D
-  + [[ '' =3D=3D *\N\o\ \c\u\r\r\e\n\t\ \b\l\o\c\k\ \j\o\b\ \f\o\r* ]]
-  ++ virsh blockjob n0 vdb
-  Block Pull: [97.87 %]+ bjr=3D
-  + [[ '' =3D=3D *\N\o\ \c\u\r\r\e\n\t\ \b\l\o\c\k\ \j\o\b\ \f\o\r* ]]
-  ++ virsh blockjob n0 vdb
-  error: Unable to read from monitor: Connection reset by peer
-  error: Unable to read from monitor: Connection reset by peer
-  + bjr=3D
-  ++ virsh list --uuid
-  + '[' -n 4eed8ba4-300b-4488-a520-510e5b544f57 ']'
-  ++ uuidgen
-  + snap=3Dsnap0-88be23e5-696c-445d-870a-abe5f7df56c0
-  + virsh snapshot-create-as n0 --name snap0-88be23e5-696c-445d-870a-abe5f7=
-df56c0 --disk-only file=3D --diskspec vda,snapshot=3Dno --diskspec vdb,styp=
-e=3Dfile,file=3D/var/lib/libvirt/images/n0-blk0_snap0-88be23e5-696c-445d-87=
-0a-abe5f7df56c0.qcow2 --atomic --no-metadata
-  error: Requested operation is not valid: domain is not running
-  Domain snapshot snap0-88be23e5-696c-445d-870a-abe5f7df56c0 created
-  + virsh blockpull n0 vdb
-  error: Requested operation is not valid: domain is not running
-  error: Requested operation is not valid: domain is not running
-
-  wesley@nv0:~$ error: Requested operation is not valid: domain is not runn=
-ing
-  ```
-
-  [ Where problems could occur ]
-
-  The only codepaths affected by this change are `block-stream` and
-  `blockdev-backup` [1][2]. If the code is somehow broken, we would
-  expect to see failures when executing these QMP commands (or the
-  libvirt APIs that use them, `virDomainBlockPull` and
-  `virDomainBackupBegin` [3][4]).
-
-  As noted in the upstream commit message, the change does cause an
-  additional flush to occur during `blockdev-backup` QMPs.
-
-  The patch that was ultimately merged upstream was a revert of most of
-  [5]. _That_ patch was a workaround for a blockdev permissions issue
-  that was later resolved in [6] (see the end of [7] and replies for
-  upstream discussion). Both [5] and [6] are present in QEMU 6.2.0, so
-  the assumptions that led us to the upstream solution hold for Jammy.
-
-  [1] https://qemu-project.gitlab.io/qemu/interop/qemu-qmp-ref.html#command=
--QMP-block-core.block-stream
-  [2] https://qemu-project.gitlab.io/qemu/interop/qemu-qmp-ref.html#command=
--QMP-block-core.blockdev-backup
-  [3] https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainBlockPu=
-ll
-  [4] https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainBackupB=
-egin
-  [5] https://gitlab.com/qemu-project/qemu/-/commit/3108a15cf09
-  [6] https://gitlab.com/qemu-project/qemu/-/commit/3860c0201924d
-  [7] https://lists.gnu.org/archive/html/qemu-devel/2025-10/msg06800.html
-
-  [ Other info ]
-
-  Backtrace from the coredump (source at [1]):
-  ```
-  #0  bdrv_refresh_filename (bs=3D0x5efed72f8350) at /usr/src/qemu-1:10.1.0=
-+ds-5ubuntu2/b/qemu/block.c:8082
-  #1  0x00005efea73cf9dc in bdrv_block_device_info (blk=3D0x0, bs=3D0x5efed=
-72f8350, flat=3Dtrue, errp=3D0x7ffeb829ebd8)
-      at block/qapi.c:62
-  #2  0x00005efea7391ed3 in bdrv_named_nodes_list (flat=3D<optimized out>, =
-errp=3D0x7ffeb829ebd8)
-      at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/block.c:6275
-  #3  0x00005efea7471993 in qmp_query_named_block_nodes (has_flat=3D<optimi=
-zed out>, flat=3D<optimized out>,
-      errp=3D0x7ffeb829ebd8) at /usr/src/qemu-1:10.1.0+ds-5ubuntu2/b/qemu/b=
-lockdev.c:2834
-  #4  qmp_marshal_query_named_block_nodes (args=3D<optimized out>, ret=3D0x=
-7f2b753beec0, errp=3D0x7f2b753beec8)
-      at qapi/qapi-commands-block-core.c:553
-  #5  0x00005efea74f03a5 in do_qmp_dispatch_bh (opaque=3D0x7f2b753beed0) at=
- qapi/qmp-dispatch.c:128
-  #6  0x00005efea75108e6 in aio_bh_poll (ctx=3D0x5efed6f3f430) at util/asyn=
-c.c:219
-  #7  0x00005efea74ffdb2 in aio_dispatch (ctx=3D0x5efed6f3f430) at util/aio=
--posix.c:436
-  #8  0x00005efea7512846 in aio_ctx_dispatch (source=3D<optimized out>, cal=
-lback=3D<optimized out>,
-      user_data=3D<optimized out>) at util/async.c:361
-  #9  0x00007f2b77809bfb in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so=
-.0
-  #10 0x00007f2b77809e70 in g_main_context_dispatch () from /lib/x86_64-lin=
-ux-gnu/libglib-2.0.so.0
-  #11 0x00005efea7517228 in glib_pollfds_poll () at util/main-loop.c:287
-  #12 os_host_main_loop_wait (timeout=3D0) at util/main-loop.c:310
-  #13 main_loop_wait (nonblocking=3D<optimized out>) at util/main-loop.c:589
-  #14 0x00005efea7140482 in qemu_main_loop () at system/runstate.c:905
-  #15 0x00005efea744e4e8 in qemu_default_main (opaque=3Dopaque@entry=3D0x0)=
- at system/main.c:50
-  #16 0x00005efea6e76319 in main (argc=3D<optimized out>, argv=3D<optimized=
- out>) at system/main.c:93
-  ```
-
-  The libvirt logs suggest that the crash occurs right at the end of the bl=
-ockjob, since it reaches "concluded" state before crashing. I assumed that =
-this was one of:
-  - `stream_clean` is freeing/modifying the `cor_filter_bs` without holding=
- a lock that it needs to [2][3]
-  - `bdrv_refresh_filename` needs to handle the possibility that the QLIST =
-of children for a filter bs could be NULL [1]
-
-  Ultimately the fix was neither of these [4]; `bdrv_refresh_filename`
-  should not be able to observe a NULL list of children.
-
-  `query-named-block-nodes` iterates the global list of block nodes
-  `graph_bdrv_states` [5]. The offending block node (the
-  `cor_filter_bs`, added during a `block-stream`) was removed from the
-  list of block nodes _for the disk_ when the operation finished, but
-  not removed from the global list of block nodes until later (this is
-  the window for the race). The patch keeps the block node in the disk's
-  list until it is dropped at the end of the blockjob.
-
-  [1] https://git.launchpad.net/ubuntu/+source/qemu/tree/block.c?h=3Dubuntu=
-/questing-devel#n8071
-  [2] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
-=3Dubuntu/questing-devel#n131
-  [3] https://git.launchpad.net/ubuntu/+source/qemu/tree/block/stream.c?h=
-=3Dubuntu/questing-devel#n340
-  [4] https://gitlab.com/qemu-project/qemu/-/commit/9dbfd4e28dd11a83f54c371=
-fade8d49a63d6dc1e
-  [5] https://gitlab.com/qemu-project/qemu/-/blob/v10.1.0/block.c?ref_type=
-=3Dtags#L72
-
-  [ libvirt trace ]
-  `qemuBlockJobProcessEventCompletedPull` [1]
-  `qemuBlockJobProcessEventCompletedPullBitmaps` [2]
-  `qemuBlockGetNamedNodeData` [3]
-  `qemuMonitorBlockGetNamedNodeData` [4]
-  `qemuMonitorJSONBlockGetNamedNodeData` [5]
-  `qemuMonitorJSONQueryNamedBlockNodes` [6]
-
-  [1] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_b=
-lockjob.c?h=3Dapplied/ubuntu/questing-devel#n870
-  [2] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_b=
-lockjob.c?h=3Dapplied/ubuntu/questing-devel#n807
-  [3] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_b=
-lock.c?h=3Dapplied/ubuntu/questing-devel#n2925
-  [4] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_m=
-onitor.c?h=3Dapplied/ubuntu/questing-devel#n2039
-  [5] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_m=
-onitor_json.c?h=3Dapplied/ubuntu/questing-devel#n2816
-  [6] https://git.launchpad.net/ubuntu/+source/libvirt/tree/src/qemu/qemu_m=
-onitor_json.c?h=3Dapplied/ubuntu/questing-devel#n2159
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2126951/+subscriptions
-
+On Fri, Feb 27, 2026 at 5:03=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Fri, Feb 27, 2026 at 04:34:23PM +0800, Choon Keong Teo wrote:
+> > Thanks for your reply. I would like to start by focusing on the unit
+> > tests and qtests. Is there any method for running a single test file?
+> > Thank you so much for your help!
+>
+> Just directly execute the binary for the test you care about in both
+> those cases.
+>
+> For qtests you need to also set an env variable
+>
+>  QTEST_QEMU_BINARY=3D./build/qemu-system-XXXXX
+>
+> for the target you're testing.
+>
+> More guidance is in docs/devel/testing/
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
