@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C3BFD530A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 19:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377DBFD530A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 19:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw3Ah-0003G4-54; Fri, 27 Feb 2026 14:06:43 -0500
+	id 1vw3Af-0003Fs-Np; Fri, 27 Feb 2026 14:06:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vw3AY-0003Es-Oe
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:06:35 -0500
-Received: from p-west2-cluster3-host6-snip4-4.eps.apple.com ([57.103.69.97]
+ id 1vw3AW-0003E5-HF
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:06:32 -0500
+Received: from p-west2-cluster3-host9-snip4-9.eps.apple.com ([57.103.69.72]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vw3AW-0006RE-8Y
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:06:34 -0500
+ id 1vw3AU-0006R2-AY
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:06:31 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-0 (Postfix) with ESMTPS id
- 768E51800155; Fri, 27 Feb 2026 19:06:27 +0000 (UTC)
+ 25BD718000A6; Fri, 27 Feb 2026 19:06:25 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772219188; x=1774811188;
- bh=LjzGrhEn0ykJAOrChlujow4EMgIqhCxyPavUws3eZDg=;
+ s=sig1; t=1772219186; x=1774811186;
+ bh=4n4xIy8i5xV9kHLwKpAQhwfVxRJH3sNm66Cv+vgl914=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=f4fW1R68Yt+08jCkuj2LELOVbDapZWkwDw2sAhhxgUJh9+AlEyVUm5jrNSvDeZhEue5JsuWjLbxE5nPn8PJyQShF0ghN9NJiJJJ3J7O1sfPbs/jfkjlczCUJ02erJd7/tAr0Tb7QDomt7MKGz12LHBHOZIqb7dzu/KMVdLqpthYRWgOuJvaIGEcBoKHo41UQtdh3/O2bwnmhbBODYMCHfpf6WqwHeNqEXfgpbepxjWnEo+VgntJLZopsmUB79x+zNfayOAe1aql6u19V0ReVhh+N7Ah2XzkeAFn3ZVCu4NgtiP6FE7+enBUkHpmGcNlZeTJbnUB2B5VMpAxCILIURA==
+ b=beeRE0hzMf6oj5ZjM4lMbOqFCOJONdwUBBIjRXcoAHeB+wSRdiFFkkHKP7fyxZ9VxiUfF2a6KOqs3CXOTtRxSufw2RWfrmVjG2fwUS78qagM01eUFabUJuxZMfXo/tmRFPsbz3cIBb/liHZBq3UU7DcnRXZro8LTjU00APbvViAF8ZRDyMrNLZZ+qItzuPvzgSfTYOw1gsKQpBfr2iqkj4fGPltcPdWsGNPr3d4GOpzklqpGxZ4jhM9slYxQChxHkLUKHpPCJhUJryLKQaWmmo4GimuVkXIg5KtI3P2NbTqpDMYW8SOqrjmU7kNzhE/FRYt3Ssyj5ssBo4/xDVXnUQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-0 (Postfix) with ESMTPSA id
- 1E53818001B0; Fri, 27 Feb 2026 19:06:25 +0000 (UTC)
+ C64161800171; Fri, 27 Feb 2026 19:06:23 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pedro Barbuda <pbarbuda@microsoft.com>
-Subject: [PATCH 3/4] whpx: i386: enable synthetic processor features
-Date: Fri, 27 Feb 2026 20:06:18 +0100
-Message-ID: <20260227190619.8867-4-mohamed@unpredictable.fr>
+Subject: [PATCH 1/4] whpx: i386: move whpx_vcpu_kick_out_of_hlt() invocation
+ to interrupt raise time
+Date: Fri, 27 Feb 2026 20:06:16 +0100
+Message-ID: <20260227190619.8867-2-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260227190619.8867-1-mohamed@unpredictable.fr>
 References: <20260227190619.8867-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: K0CYA5vu2nTuqjOGsJNdEAifx3tsW4qq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDE2OCBTYWx0ZWRfX46fsds8AoWCe
- LTh1P7aSMUxUqkWqcyJrrrUSMYB4EXcpwxidmbxICUyToma2tnYWP5uQVv7MaJrTSJXvHgAYIwo
- Rl5v8SA2EdlNrirEeTke4lpBxXi8FtsLmbwTCYbTFFO0xEeEdnvc3NH3uGoBquNYucGB6otnrmo
- cGglka2yMYy7hjQLWNIX+sXAXgKU+nynbt7GrufZt3qP8HuzqoAegbL9rSmgExhTGW9SxqMnWbb
- SF+fZHfLUdIU+6uEEbPl2vThb1CI3XOMnd+Q9toWpFNv6QemHwvPZT08dozJymhQoES6GQggM0E
- 8QfqAs7leA1fzfNyPTmAm7GhXzti8MV5HU0xAlHGZzxwEwnoIaFyQ5W6phUuyY=
-X-Proofpoint-ORIG-GUID: K0CYA5vu2nTuqjOGsJNdEAifx3tsW4qq
-X-Authority-Info-Out: v=2.4 cv=N9Uk1m9B c=1 sm=1 tr=0 ts=69a1eb33
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDE2OCBTYWx0ZWRfX5+4bJ0qZxnOm
+ NCALgzMTKGkJl0hreC+5JIyAhD33ijcl6UCPs33dSte3qkqoa7xfitsWWRvysMDP8VVFiKj8/sV
+ gFUn1WzS6ud/RQktS3h+Hjt7rJVCYqpAVT04uTzoimdruka+/wVIq+y7JSjIRlgyN2tVz3pHQbQ
+ KAdkukaY2om0nvOh7FR3kDyVfBjVa4hR9LEvAlkUx83jUuPC5Jg9RRulzVCY0TB5SGDwBZ1hWlm
+ N4Odcf3BCWouRqce9ilMr8Z4UnaPsb4X//TmYF+OeUMWp3chTZtAP6WfH358xElZ/8z4i+ZLbHc
+ GkSWrUBAhYsrAVxK5E9dLxfxF5GKrQwiICim+6Sa2TgpKwCyGg7KtIiPb6s62I=
+X-Proofpoint-GUID: wYGUP3lI72CoypRWrWwvwlLaeNNcRrfC
+X-Authority-Info-Out: v=2.4 cv=RYadyltv c=1 sm=1 tr=0 ts=69a1eb31
  cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
  a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=zrTx395S4Ej948ve6SYA:9
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=o8I7T96M5UCSVa1h564A:9
+X-Proofpoint-ORIG-GUID: wYGUP3lI72CoypRWrWwvwlLaeNNcRrfC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-27_03,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0 clxscore=1030 bulkscore=0 spamscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 mlxlogscore=852 lowpriorityscore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ clxscore=1030 suspectscore=0 adultscore=0
+ mlxlogscore=999 spamscore=0
+ bulkscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602270168
-X-JNJ: AAAAAAAB8iFCAEPAbKZgLVEkUVVYiZqkYMGYQrq4sHTiZ2Fdhu6LYC57GujvsOcy54dtRp1EaL3A8nsTGofdpt1tI4iyKIl6ktA3v9iY/UpkGCcjRz+zlwrGei232iHXvASwiW4rKU7D0obvMi09FoHjLYMuZHf/EnmPu7XWbE3C6mElEkWWhc2jrPtfV2ua8VIH/DnalwyIYwoxuVGNEqgg7+Kmy5+Yk6LKuJYBlo7TKcFYTuGY0yf0oSpc/bcLU8OndyVK9s3FXa2PMaEWSM0iLPMqdj3zS4g51Ybb5AQWSllFuN2VIRwAbZQeEqm7iq4Cnl/FBKbp4iUfKe0tus1IGScgrfsXtrWql7Vz23pze/URxWAq17OCqBNL02dFU+qcpcn5Nf3NSR/SIiWrjpud74TPlX11hvIJCKdZP+6FJ4uAAAJhdsG3gFolXHgMPwXirbE7RAvXiN4ONjKoNVCKFR6Rh0l+NbsTHSyZhHRxNrJfLkhhsEPumaE2j8K+mH8m/HoD0Ic5Nw+aA3AXgjs7ZbrwaAd2JJ8NCT/46/zAr8f1Rr4K216Ve3EGT+1e7RILadb0LjwyW2aBDuHBd5J/cmcMEFgLGDWQ0mI=
-Received-SPF: pass client-ip=57.103.69.97;
+X-JNJ: AAAAAAABVP2HDaZOd/r5FMXVj76K5HmnFbFheYm7kgnW4MIfRrpy9RUN0bccWc9po2/nPAzMv5rTz1KUENJTUzM6NuFYKX6jBTDQELK0hZNvEJjgGN8LglQMjcc/qSR0EqYIVViJR4FUEfJXDj2alrHDZZ1q9McGsaKnv06+BxUeluyQcwSdIHy5BqobUxrFdUpyh5ezp8he/HzvShv7QZLjluA7sbfAauecIsqmg98m3mhjGOM9JcSLWb1czhnI/amzMGZ/glgh8P5Q4RE0qbrBy9Vc4JsatnT3phHP1c2mYvTkC0epf1GKvA1oWKh0Qcz8BGu23XySmx5Jw9E4TLw2YipwNM+OHTnpdlerrSnwrFAgAMkw7cIgoKPfCp+KvCOb6TAlMDvVm4FBI49QQVEdBmQS4WloMfa7L7nMxx7DvM/MxOC79pMOnIuezlO5uBGauIrc32BARFoI+JKHx7EqVklSg1WLtlo1+oEd9TaKISDmlFFr4EsMHccWofJZbAnf64p9Jckc5mTui+fiUlMGH1VK7PzmoSq9P+TezLyp5gA698PlPS/CPiWtHb0pngUEsnABHcK+YBe9D2CFovPw0INRzUhoFYe4m/TY29HJfOCKFBI2/G176eD17gxminlH5bzDioY=
+Received-SPF: pass client-ip=57.103.69.72;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
@@ -90,65 +92,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the point in time in which we setup the partition, the vCPUs
-aren't available yet.
-
-So enable them by default for now like what the MSHV backend does.
-
-AccessFrequencyRegs is shared for both the LAPIC frequency reporting and the TSC frequency.
-
-To still benefit from the fixed TSC frequency reporting when kernel-irqchip=off, still enable AccessFrequencyRegs anyway.
+This fixes the sti followed by hlt kvm_unit_tests.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ target/i386/whpx/whpx-all.c | 49 ++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 28 deletions(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index ccc52d1f96..e7e0a50da6 100644
+index 6d2771a98a..90f51fc4dd 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2152,6 +2152,40 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
+@@ -1308,6 +1308,16 @@ static int whpx_handle_halt(CPUState *cpu)
+     return ret;
+ }
  
-+    /* Enable synthetic processor features */
-+    WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
-+    memset(&synthetic_features, 0, sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
-+    synthetic_features.BanksCount = 1;
-+
-+    synthetic_features.Bank0.HypervisorPresent = 1;
-+    synthetic_features.Bank0.Hv1 = 1;
-+    synthetic_features.Bank0.AccessPartitionReferenceCounter = 1;
-+    synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
-+    /* if kernel-irqchip=off, HV_X64_MSR_APIC_FREQUENCY = 0. */
-+    synthetic_features.Bank0.AccessFrequencyRegs = 1;
-+    synthetic_features.Bank0.AccessVpIndex = 1;
-+    synthetic_features.Bank0.AccessHypercallRegs = 1;
-+    synthetic_features.Bank0.TbFlushHypercalls = 1;
-+
-+    if (whpx_irqchip_in_kernel()) {
-+        synthetic_features.Bank0.AccessSynicRegs = 1;
-+        synthetic_features.Bank0.AccessSyntheticTimerRegs = 1;
-+        synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
-+        synthetic_features.Bank0.SyntheticClusterIpi = 1;
-+        synthetic_features.Bank0.DirectSyntheticTimers = 1;
++static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
++{
++    WHV_REGISTER_VALUE reg;
++    whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
++    if (reg.InternalActivity.HaltSuspend) {
++        reg.InternalActivity.HaltSuspend = 0;
++        whpx_set_reg(cpu, WHvRegisterInternalActivityState, reg);
 +    }
++}
 +
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+            whpx->partition,
-+            WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
-+            &synthetic_features,
-+            sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set synthetic features, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-     /* Register for MSR and CPUID exits */
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
+ static void whpx_vcpu_pre_run(CPUState *cpu)
+ {
+     HRESULT hr;
+@@ -1391,6 +1401,17 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+                 .Vector = irq,
+             };
+             reg_count += 1;
++            /* 
++             * When the Hyper-V APIC is enabled, to get out of HLT we
++             * either have to request an interrupt or manually get it away
++             * from HLT.
++             *
++             * We also manually do inject some interrupts via WHvRegisterPendingEvent
++             * instead of WHVRequestInterrupt, which does not reset the HLT state.
++             */
++            if (whpx_irqchip_in_kernel()) {
++                whpx_vcpu_kick_out_of_hlt(cpu);
++            }
+         }
+      }
+ 
+@@ -1453,15 +1474,6 @@ static void whpx_vcpu_post_run(CPUState *cpu)
+         !vcpu->exit_ctx.VpContext.ExecutionState.InterruptShadow;
+ }
+ 
+-static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
+-{
+-    WHV_REGISTER_VALUE reg;
+-    whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
+-    if (reg.InternalActivity.HaltSuspend) {
+-        reg.InternalActivity.HaltSuspend = 0;
+-        whpx_set_reg(cpu, WHvRegisterInternalActivityState, reg);
+-    }
+-}
+ 
+ static void whpx_vcpu_process_async_events(CPUState *cpu)
+ {
+@@ -1770,25 +1782,6 @@ int whpx_vcpu_run(CPUState *cpu)
+                 cpu->exception_index = EXCP_INTERRUPT;
+                 ret = 1;
+             }
+-            /* 
+-             * When the Hyper-V APIC is enabled, to get out of HLT we
+-             * either have to request an interrupt or manually get it away
+-             * from HLT.
+-             *
+-             * We also manually do inject some interrupts via WHvRegisterPendingEvent
+-             * instead of WHVRequestInterrupt, which does not reset the HLT state.
+-             *
+-             * However, even with this done, if the guest does an HLT without
+-             * interrupts enabled (which the test_sti_inhibit KVM unit test does)
+-             * then the guest will stay in HLT forever.
+-             *
+-             * Keep it this way for now, with perhaps adding a heartbeat later
+-             * so that we get the CPU time savings from having Hyper-V handle HLT
+-             * instead of going away from it as soon as possible.
+-             */
+-            if (whpx_irqchip_in_kernel()) {
+-                whpx_vcpu_kick_out_of_hlt(cpu);
+-            }
+             break;
+         case WHvRunVpExitReasonX64MsrAccess: {
+             WHV_REGISTER_VALUE reg_values[3] = {0};
 -- 
 2.50.1 (Apple Git-155)
 
