@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53932104891E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D8F104891D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw5q7-0007MM-Nl; Fri, 27 Feb 2026 16:57:40 -0500
+	id 1vw5tT-00006L-Qm; Fri, 27 Feb 2026 17:01:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw5q3-0007M7-Nb
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:57:35 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw5tS-00006A-4D
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:01:06 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw5q2-0004ji-64
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:57:35 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4836f363ad2so28922545e9.1
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:57:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw5tQ-0005SP-Ii
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:01:05 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4836f363d0dso20052065e9.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:01:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772229452; x=1772834252; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772229663; x=1772834463; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D0GpsygPvlN/a2wXsnUdPgim+zYrmdQWQq7EA14iOTA=;
- b=YdZZjpaxlSugu05RPrAp5M4skMDqfz2DAEwtS3rgGbjRURE0MpXJ5QqEth20qBc9aX
- avE0lS/Jf89rhC/tmkMRlv0l21MTTWIp5au1fQILzdYh0hcrdG/KC3UqHhKql9dCqATH
- +WDQLETXWwzjvdsd+yGEP+mcN9od9sjSIX+fXY+4YZsAv5q0emSzsjKovAFNSGM5EXzX
- qwqRLgjSvd+7YKHbtSZ/vqxhQqZoXXAG6a+tOhkj5Ra5gFg0c/fj0NhhAxRoPCW31xGA
- olecGBIAq8uYpCN1JSbfQHGMEBdLdHOVeTJOxKkfGs+3NVnmmiRvvY1sGQUNTxKSaUmG
- E/NQ==
+ bh=trSDE7pd39gnBsa+dl0LZBIcXUIYPLYUecv07VK9dXw=;
+ b=kvCsV4sXrq2lkFADQKEFUwOeoFsYBwUTpU2NDDxnpjuhFAMGktKjaU/7N+CKnkHlw5
+ aEqAP0OShEJcMx+epPlLtwW3YpjU0LzWXfzVR5/8ZRjbO6Oc92OJIATL8SnuV8AxZ3AU
+ MInEBsflxrDA14RGT6lBs+qXE67pl0C+SjkwQZ+8db3xl6iooXUB1ZeIDUyAozqdz+q5
+ 1EofLAZwIfoOMlpgx7h+k5/pFvAQ6G2XBTat3cOeb4fUdTFqELZ/HQu/ZNLKBntiawgh
+ BBXmkUgIl3udYGZYK7scGGbjFntccCdwW+NO6T8xdHzgWZUQ/s/aqL5/tjipLyUDiaNt
+ OZQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772229452; x=1772834252;
+ d=1e100.net; s=20230601; t=1772229663; x=1772834463;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D0GpsygPvlN/a2wXsnUdPgim+zYrmdQWQq7EA14iOTA=;
- b=KMdBQHCcY0OOFugXkZXX7GHa3j29DRnJhUZSfKd61Wye4HVHPMPbSYXVY+K3gYuOdq
- DihxQMvf5wTWEePVYtQX+thhA2pbwYgUAyHuOsQDJGtu8FgUi4M2jQD160kutGHOu2EH
- 2cigebsL48ofik7PctTTTTxYRYGsF06PL++0eciQcJnezBkpT4q32AGuYzy3fVw/LbuD
- X8XXTAVxTPGQOpwmtwoSJq53/ixVBYY15U6KqSZ+rS/PnHRcK6+Dt/Indn8V1UGG7FFX
- iZ+umPtyjpqRsPCB6EtlvR4yMnpzRDxalh658CQluCU/2mpQzW2gJjgAYmjKpNl01q0P
- xuAA==
+ bh=trSDE7pd39gnBsa+dl0LZBIcXUIYPLYUecv07VK9dXw=;
+ b=JikxdmDIHS7JLu8lKP2z8CeI/NqTB35X/KCRGt8dDvx+nsI0FDIsT1+E06NxuKw+AE
+ qWZGXDOpR4HgBwQi0PBKh0gljmk1h7Kvu4ZUzIYI3iazVblQMoOr4LUQCTEoGUSOoLF1
+ AQOPUqoZ/lLJywihs+DsUc127aGLZ2E2t6nXMf9SACIVBkRt3YoSTBt6j80eRQw6eZjR
+ EkXvJVCOj3rkwx8nQEfsDBoYn/jhacFaABx3WgioHRMsZ6O6PQYm8du/qkXW5px1TZwh
+ she4qPN8U/wgdeoeL9O9Zslk9a7v1VWUqx2OEbtAKLx6oH4Wf3w4nYqXi0fLciW1s5Bi
+ OGcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUuxMg9C1G8j9D8IJh2+VzmQurKgtjVgOubUP1qP78+ufwW1baVI2j84Sl/xdsI8ITGkQ5Z02dZASFW@nongnu.org
-X-Gm-Message-State: AOJu0YwCdlsrMvwgWY6AA+I2zXDeFaDqjsvbt554BzxmijOJlS3XqW3/
- MFIhnhLnZmzk+alMaHA6cSU8NXpJTstURg+7Gh9K/10H/ig7ZZd0Tw2C+Cm6Z0hdWsk=
-X-Gm-Gg: ATEYQzzz1iYR4WIIUTYUiY7s7ymAPXIqeuPHDOr31HRBgxC2iK548CYGZ9H4+KR+NfR
- ETaGj30bcZAwq2RcgqNKR+KL5EhiA24AjL4J5uPxJ0PqOkdAfGrjjaAtgHy8JKLkSLJzA32Qm9Y
- lXofuZ56NrNTegBivPbFZwE6tUD40fgx8dp6M8YSsWHEpcurehFW+Iq1qNKrZ7pb8gPsRSaphgv
- Cfn/z1sYB+GB6mxAX/Bzj/RP4Jc7Omu8ZBQmUSbjej8qBziIgE/vzrTpGJCxh17NHcmckNul/Cy
- im/MNYTOlXoI2scd3M67STQTBTgyUuznkXqsynTILVomsVPupD8jXD6FNnwnmTMcspaxC/p37c9
- aqIczGEzJVxbxPEqcQrr1ChXRU5GMITgqBDv7Xbvep4diq3W2zp3ojQ0e0+P3hE0Fr1ui7niZD/
- 9LAZL2s83Gbf15mWf1b0ciI4i/fUvVTejdNloRJr6hL0zNJSt+hO+YKO03A7EIJ7D1IQ==
-X-Received: by 2002:a05:600c:1989:b0:483:71f9:37f3 with SMTP id
- 5b1f17b1804b1-483c9bb663amr79362565e9.1.1772229452523; 
- Fri, 27 Feb 2026 13:57:32 -0800 (PST)
+ AJvYcCUSzU8D/MyDDxleo7vsGxQaM48e5QZxW8Ua4Y5X7dQwzKFJvAYjk/qjr1GNSZJakVPZ4Rf3S3foiSiz@nongnu.org
+X-Gm-Message-State: AOJu0YziQmQhEfHi1xZIx35GzqL9qRqnlQt4f03h9IiGRCcT9jj3S7GZ
+ 7kzqzPU2qFgj/1hF9qhTb1MxH3iJtg2xuqsxqxfQWqJfO7OcQFI5q/Xa/sqpzDmQwZ4=
+X-Gm-Gg: ATEYQzyEVgoHzfpZmMy93cTN32X86+pEjPAwJEdzHAZd4S5LAyztF7IKsdamMFZ1U3r
+ /gX6xK6PExRLs+1YgvqVLDybKwiUNc8MNKlWigLOL+fnflf3l7M6Yfm2GtczWL0tDrT00/4novo
+ y7caxJHeP/pFdELKj0KeMvSfyahodMAHcXNJ2mmKGR4Xo2bUa+7iBdB9PWMrEPBN0G+/Gx4LDJ/
+ xtPJ/cyIpBprsft8ayYbp6UVEfDKMNfu8NjM5ndspiY9QGxvp39YkLiQY9fHgHDfO58nL8cFoqm
+ zmBPmOyUVottekZEZor+B7RHvQ5F8xeZX+PR5DKFB0HW1k7yUyVKBXenmemlb9xfcMy+HnyEoXw
+ 0QGQZADhNOywQDhW5+EPYvEAa4CPgx8FzTnjLdvZtWlVo2+TeF+iq/eC3gkKXtxBxDIrvVLP+li
+ khtvZWQ+DeivP40HTaEBgNSn2AQUXtINffOgTuUYL8nn7wHxt3492FFK8XQABpd1eWcw==
+X-Received: by 2002:a05:600c:1f06:b0:477:55ce:f3c2 with SMTP id
+ 5b1f17b1804b1-483c9bc42c7mr68080365e9.14.1772229661557; 
+ Fri, 27 Feb 2026 14:01:01 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c765c67sm10205266f8f.32.2026.02.27.13.57.31
+ 5b1f17b1804b1-483bd6f3124sm235980485e9.1.2026.02.27.14.01.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 13:57:31 -0800 (PST)
-Message-ID: <2d78870b-b5d1-4c2d-8ca1-bed5cef38b10@linaro.org>
-Date: Fri, 27 Feb 2026 22:57:31 +0100
+ Fri, 27 Feb 2026 14:01:01 -0800 (PST)
+Message-ID: <1ffc80ba-de20-4957-b506-453772ed84a6@linaro.org>
+Date: Fri, 27 Feb 2026 23:01:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/37] target/hexagon: Add privilege check, use
- tag_ignore()
+Subject: Re: [PATCH v3 10/37] target/hexagon: Add memory order definition
 Content-Language: en-US
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
  sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
- Brian Cain <bcain@quicinc.com>, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Brian Cain <bcain@quicinc.com>
 References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
- <20260227203627.932864-10-brian.cain@oss.qualcomm.com>
+ <20260227203627.932864-11-brian.cain@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260227203627.932864-10-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260227203627.932864-11-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,52 +106,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/26 21:35, Brian Cain wrote:
+On 27/2/26 21:36, Brian Cain wrote:
 > From: Brian Cain <bcain@quicinc.com>
 > 
-> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   target/hexagon/cpu.h            |  1 +
->   linux-user/hexagon/cpu_loop.c   | 16 +++++++++++++++
->   target/hexagon/cpu.c            |  1 +
->   target/hexagon/translate.c      |  8 ++++++++
->   target/hexagon/gen_tcg_funcs.py | 35 +++++++++++++++++++++------------
->   5 files changed, 48 insertions(+), 13 deletions(-)
-
-
-> diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
-> index 5711055aff2..b63990663ab 100644
-> --- a/linux-user/hexagon/cpu_loop.c
-> +++ b/linux-user/hexagon/cpu_loop.c
-> @@ -22,6 +22,7 @@
->   #include "qemu.h"
->   #include "user-internals.h"
->   #include "user/cpu_loop.h"
-> +#include "target/hexagon/internal.h"
->   #include "signal-common.h"
->   #include "internal.h"
+>   target/hexagon/cpu-param.h | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
+> index 45ee7b46409..ccaf6a9d28d 100644
+> --- a/target/hexagon/cpu-param.h
+> +++ b/target/hexagon/cpu-param.h
+> @@ -23,4 +23,9 @@
+>   #define TARGET_PHYS_ADDR_SPACE_BITS 36
+>   #define TARGET_VIRT_ADDR_SPACE_BITS 32
 >   
-> @@ -60,6 +61,21 @@ void cpu_loop(CPUHexagonState *env)
->                   env->gpr[0] = ret;
->               }
->               break;
-> +        case HEX_EVENT_PRECISE:
-> +            switch (env->cause_code) {
-> +            case HEX_CAUSE_PRIV_USER_NO_GINSN:
-> +            case HEX_CAUSE_PRIV_USER_NO_SINSN:
-> +            case HEX_CAUSE_INVALID_PACKET:
-> +            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC,
-> +                    env->gpr[HEX_REG_PC]);
-> +            break;
-> +            default:
-> +                EXCP_DUMP(env, "\nqemu: unhandled CPU precise exception "
-> +                    "cause code 0x%x - aborting\n",
-> +                    env->cause_code);
-> +                exit(EXIT_FAILURE);
-> +            }
-> +            break;
+> +/*
+> + * Hexagon processors have a strong memory model.
+> + */
+> +#define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL)
 
-Just a comment (not blocking anything), I'm confused here because the
-series is about system emulation but you add code to user emulation.
+This definition is poisoned since commit 98c7c146988.
+
+Commit 7dc2af9786e ("tcg: Remove the TCG_GUEST_DEFAULT_MO
+definition globally") already sets
+hexagon_tcg_ops::guest_default_memory_order = TCG_MO_ALL.
+
+Maybe just drop this patch?
 
