@@ -4,120 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 848AEFEFB47
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A1CFEFB4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvxqY-00020E-3q; Fri, 27 Feb 2026 08:25:34 -0500
+	id 1vvy12-0006OO-NH; Fri, 27 Feb 2026 08:36:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvxqV-0001zl-Q9
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:25:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvxqU-0000Mj-5J
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:25:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772198728;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dJJZgVKFfKwjAZgFNdO5Fdu7/7v5cf2M/0syyHQEqSU=;
- b=H6wjgQ8YY4ZMykd2FH/eYzwyyH5GrpS93mZ684nhYxHnc/LbwFfNyHBnHvdqpcUkY5/FjT
- 0MGlGipV2NLGB9augAkj6RVABvR70owqtwNlWQC4VEITJ9NkzCI0z6CrUaX8tJ8RcpKLe0
- u5MPKWPdOd32nXqJusOYK/6rt4KUGwk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-1foeYZJ3PeeNJ0mf60yWWQ-1; Fri,
- 27 Feb 2026 08:25:25 -0500
-X-MC-Unique: 1foeYZJ3PeeNJ0mf60yWWQ-1
-X-Mimecast-MFC-AGG-ID: 1foeYZJ3PeeNJ0mf60yWWQ_1772198723
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A17618003F6; Fri, 27 Feb 2026 13:25:20 +0000 (UTC)
-Received: from [10.44.34.56] (unknown [10.44.34.56])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C51651956053; Fri, 27 Feb 2026 13:25:12 +0000 (UTC)
-Message-ID: <45f6dfe0-c81b-4d50-af62-f8eb38584a2d@redhat.com>
-Date: Fri, 27 Feb 2026 14:25:10 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvy11-0006Ns-1G
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:36:23 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvy0w-0002Th-Sz
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:36:21 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so1825053d50.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:36:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772199375; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Fc8sjqHdwDO/XKvDA28mJjVBaxI9C3GE0mc2psv45ReRpovvBUPMSZjA6Zd/wGIchW
+ ZeJBIhdeAxggn2CO5ij1wrDldL59CTRmEVQQQaj068A+D5IL6rMwiFS5dCyqNQIT6iL8
+ CmGgWm8YXu8xc+x0eNenogz/efFf8F9slqqZ1vzDK0Mp6ImiRo42BSDEJYlySKKMaggf
+ WfYlI4z1r8+wLgIm7LpRH+K9+ecqtXQVTgZH5w1FJlOR57xbbswxbXucy8ztnbmLbwKd
+ BtMca9gHX+JLoUzlv76kCFNGicDPZEMLUQ0uCvZGD5LET+5GWPBNR5MjHFYxtCg0vcGt
+ 4Dvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=S4irztnqbbgQlCoC34C43pIRxRtPZhHtjrI1JhWV6sc=;
+ fh=R4ICwLqqLoRGx9KpJH2L+RpE8XRID83H1PerdS4nzwo=;
+ b=JkwxU04eUmzMSujzefzFMTK9VuB5AXnjMiyHeCMQm4/sRCLuFIMZhPC1hzCSGwjGIm
+ ybxFqOAgNkadNwMS4fV5GJl4US/4Y5YemGBalxn9H2OAbA/xxkTLtGiBTM/T1IFwZD2x
+ l3R45h+L+2FTxI1e/tWHpTRKpWaeiQ+wDN07Th56hTDl7dgFBo3E+KATcqDBQumZu+Cf
+ 8HEXMBYH671sCMGeuITKskPNuwR1i0EflLCg+8vr77kPr1p2hldUrPoRGKJV16hHXjMi
+ Ge/+GPuXcIdSQawEDV0mD/NzVcVrJnbT8B4sKb3T/L/aUvW+hRbx4W+9n9CGAMKJBgIY
+ Eg/A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772199375; x=1772804175; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S4irztnqbbgQlCoC34C43pIRxRtPZhHtjrI1JhWV6sc=;
+ b=dfa42zi1qB7WAW/CxCFJzWQbAPa6/wA4W9FXK0mktL3w6S7gvw520IcH/wcyZIbbUS
+ APx26mST6rc5kf4rz8D0jibuPuhmLghLmcwP346XhZyO0UWDjcD17VM7tZQt/Heo4eH8
+ mUXjxqmxhctpfIT6tYrSF+QkwSYel9pXx82dk+YWMXvdks3fq/Xgd4hO3V0SdkEdjZTg
+ KTOpD3LOqW9jokNTssN8TM/wbplMBMX7tltQwL2NyQGgjcjLdDnMOqQUYBE9Ryu/StEU
+ KKi6WrKIlilGmp4QB0AcbLUAfkdmrbqUHsIMPKNm0dC5EQzmZB9C5Qw3twIXiVOy6vc/
+ LM9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772199375; x=1772804175;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=S4irztnqbbgQlCoC34C43pIRxRtPZhHtjrI1JhWV6sc=;
+ b=UF00rSvyQMDhWVpM69WtYc5pOWnul8aoY7+QfWJxDbSeaDFWhY74xfLX9thGcfYjci
+ ZBxcJ//V9FcwuZjnEMnkeB3dCQXVuAxdSrVyRjJhkRBG5lQz1mRH9DBlPsSzAIhY/yGi
+ St/9+enMqPZXrCkxZBXp2MeMMh4hGavUXNTvMiWE4MsyXoFyBBrpf9wxkVj4p5EVtJOe
+ XIEXyp2IA1lJYaXG8rA1yeIEWKnIo1xhB+TNWSXZhzeK4uQF9EsENB/7cqWb+P2s56Fl
+ 0iBdsBKggaJYbWF61h6KBgSP5QtpdCBe4617buNAibG3an+EQX6SzoXvNx37gFdg3nFD
+ LBEQ==
+X-Gm-Message-State: AOJu0YydhJ4zWTj24v7+T5B24rsFrVl8II0HDbHYqs8Ja3/C7suoGPYU
+ 0rM9ayKtYt368FeV4Gn6tmD2qIqd5u7cWCvCtevgCaFgNfTkQIEOODJZepCj+erM2tnhAjCKBBJ
+ qG4HdtACrwTDTd8fSIWeCalzjGvY3p5BhbFYUwTMu8A==
+X-Gm-Gg: ATEYQzx/SLZ0xjxFU+CtItQq+3ZoAgyiq5DJNwLi9Xrvx70UqpYljg+WHv1Z90zy2YO
+ i2cIzKSW6/0EjXUiU0cyQMhgWtXRd5b33LrhUfk478ntSYCbv3p3aCLzW1Fanw3Ud38EabwAk5Z
+ FLkxcF9H1A9rqYD2jL3L9lWUcyA5sH1ZGo6CfhNixvBh7P29rgxN4cMmyq5PGzN/8EKWvuVE4i0
+ cfhQN0eGDCBGooCrUEuqCv8O9Yt+XdcytlayxISE3s1ZOdLv6TRSKOJR1totKf/mc6cjxK0Y74r
+ AfT6MEFnuZIHsxqGBZXyZjDHo4kLmawZYt7icrQAQlyAEx4CB0MP5tLyqJRtPCbn/R8=
+X-Received: by 2002:a53:ac9c:0:b0:649:b851:4eb with SMTP id
+ 956f58d0204a3-64cc22100bdmr2606703d50.53.1772199374837; Fri, 27 Feb 2026
+ 05:36:14 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 8/8] tests/functional: add test_tap_migration
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- jasowang@redhat.com, mst@redhat.com
-Cc: armbru@redhat.com, eblake@redhat.com, farosas@suse.de, peterx@redhat.com, 
- zhao1.liu@intel.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, davydov-max@yandex-team.ru,
- qemu-devel@nongnu.org, yc-core@yandex-team.ru, leiyang@redhat.com,
- raphael.s.norwitz@gmail.com, bchaney@akamai.com,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260219115530.2019498-1-vsementsov@yandex-team.ru>
- <20260219115530.2019498-9-vsementsov@yandex-team.ru>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260219115530.2019498-9-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260225034451.41338-1-philmd@linaro.org>
+In-Reply-To: <20260225034451.41338-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 27 Feb 2026 13:36:03 +0000
+X-Gm-Features: AaiRm51VAa1zifQcOFsoVOEXynBvuazfWCEr_Te26Q1eijg12ZVJYwSm0I3Ahmo
+Message-ID: <CAFEAcA-U5FdcNC-RQL1rkdPsVBWuk8-4B_JFtPMWS0eZid8L4g@mail.gmail.com>
+Subject: Re: [PATCH] hw/cpu: Build a15mpcore.c once as common object
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,77 +116,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/02/2026 12.55, Vladimir Sementsov-Ogievskiy wrote:
-> Add test for a new local-migration migration of virtio-net/tap, with fd
-> passing through UNIX socket.
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->   tests/functional/x86_64/meson.build           |   1 +
->   tests/functional/x86_64/test_tap_migration.py | 401 ++++++++++++++++++
->   2 files changed, 402 insertions(+)
->   create mode 100755 tests/functional/x86_64/test_tap_migration.py
-> 
-> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-> index f78eec5e6c..d23b0cc727 100644
-> --- a/tests/functional/x86_64/meson.build
-> +++ b/tests/functional/x86_64/meson.build
-> @@ -36,4 +36,5 @@ tests_x86_64_system_thorough = [
->     'vfio_user_client',
->     'virtio_balloon',
->     'virtio_gpu',
-> +  'tap_migration',
->   ]
-> diff --git a/tests/functional/x86_64/test_tap_migration.py b/tests/functional/x86_64/test_tap_migration.py
-> new file mode 100755
-> index 0000000000..c629b44f66
-> --- /dev/null
-> +++ b/tests/functional/x86_64/test_tap_migration.py
-> @@ -0,0 +1,401 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that tests TAP local migration
-> +# with fd passing
-> +#
-> +# Copyright (c) Yandex Technologies LLC, 2026
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import os
-> +import time
-> +import subprocess
-> +from subprocess import run
-> +import signal
-> +from typing import Tuple
-> +
-> +from qemu_test import (
-> +    LinuxKernelTest,
-> +    Asset,
-> +    exec_command_and_wait_for_pattern,
-> +)
-> +from qemu_test.decorators import skipWithoutSudo
-> +
-> +GUEST_IP = "10.0.1.2"
-> +GUEST_IP_MASK = f"{GUEST_IP}/24"
-> +GUEST_MAC = "d6:0d:75:f8:0f:b7"
-> +HOST_IP = "10.0.1.1"
+On Wed, 25 Feb 2026 at 03:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> a15mpcore.c doesn't need to include the target-specific 'kvm_arm.h'
+> header, it only lacks the qemu_get_cpu() declaration which comes
+> from 'hw/core/cpu.h'. Include the latter and build as common object.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Is it ok to use hard-coded IP addresses here? What if there is already 
-another unrelated 10.0.1.x network on the host (e.g. from a libvirt setup or 
-a VPN)?
 
-> +HOST_IP_MASK = f"{HOST_IP}/24"
-> +TAP_ID = "tap0"
-> +TAP_ID2 = "tap1"
-> +TAP_MAC = "e6:1d:44:b5:03:5d"
-> +
-> +
-> +def ip(args, check=True) -> None:
-> +    """Run ip command with sudo"""
-> +    run(["sudo", "ip"] + args, check=check)
-I think you need to check for the "ip" binary somewhere and skip the test if 
-it is not available (e.g. on a unusual Linux distro or a *BSD host).
 
-  Thomas
+Applied to target-arm.next, thanks (and now in master, looks like
+I forgot to hit 'send' on this mail...).
 
+-- PMM
 
