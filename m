@@ -4,94 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC283104891E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311A0103FFAC
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:21:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw6Bw-0006ND-Hy; Fri, 27 Feb 2026 17:20:12 -0500
+	id 1vw6Bc-000645-M1; Fri, 27 Feb 2026 17:19:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6Bt-0006KC-DW
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:20:09 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6Br-000810-4O
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:20:08 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-480706554beso29806105e9.1
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:20:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772230805; x=1772835605; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v7ZHQMFWjWl4mZlb+CYA8GnDjnrZ4AUcKOA5fzMdZ3Y=;
- b=cV7dib6CrY/vB38lYK+olJYgluo2BVfqYhbBzzL8KhMtTvDkGnBsXp69Lmf5vHIxf9
- PmhkSXgryU8Bw/pQF+DdfbMp5RvvLh+Ik7X3fwMzTL4r22Gv6quwEKQz/BRYBwQvy1y3
- Xg7GzYgUMME7tyExdzzZaTPqqjl3J9IjkDRpxJK86hVZOVXDjAEh0oaN/JQveJO2XNXo
- E8CCpg3yxb5M/awY6hozyYyZcI56JkwZ/flUFxMlsVzu68Q+uPhXbsoEgMmeda+fZZxT
- CkMdSiXIuZp/Mw7A3ZVI4Uwa0YjAbn/bSQ6SD6O0eTKRezyfdo6hKCwOL9VyBOkAxFr7
- DCIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772230805; x=1772835605;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=v7ZHQMFWjWl4mZlb+CYA8GnDjnrZ4AUcKOA5fzMdZ3Y=;
- b=LOaJLA68+dSWfifvP/pLKFHVZbwpmivmB3r71yJAI/YUJwW4AfkYaMv7P92EpXvH5C
- 5FJDrYPU1kzyZjlddmFzoqdhttUZ1nLTeutfCozUbaQpVr1oi2gZ5NCEKL9LpbcJbpAL
- NCRVg5UYdIU8R0HLYzbPIQjxhq/nDu+qENyJtoYY9mIHuyUldld2BA8SdVC1+ij91YNQ
- RDrUbAhnUeiJJqrO5d+8wHS37kKfgOTLjvTA/Sk2VumgsBTFmA957oJiJAsOpVwj+wSt
- D3I25S71BOjr3Y3LKPnAUiPK+x2jkfxe5AOSFVe0yPoXBE4xWEO/rlHR7fRruuByriZz
- sxqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUT5ifPuboMmxS9vNqfsXJQo6qQEU2jNPqdsAL41xLxOfkfriJizxwJiS9Wf6iCHlqHi3rEos37t3Vv@nongnu.org
-X-Gm-Message-State: AOJu0YzxhkxF2S9aXectULLwm9hEX9ks6skB+eZaP5/UU0eQA8YwwQPl
- gnASf3t5GoK6agOCt0PCHGboWp9feUKEgHjezCMeh5lb6CvVOGJmafvcoSgbIPd1A+c=
-X-Gm-Gg: ATEYQzxG0xCJWIStQHBe6DIfKLgy1G7+pLyFOWY4IjEAN+J140QwchKOVRwuJX25nvX
- lWF/8AVcfAsouayXd7cMHPYBMigWMQ3Cv9lpBt0O/WrzOm7gIMxk3Rc9mZ6KIkAWdP1pQ+XrYo9
- JNa/9Q85vjv6ak70cgwO0Z+1y39ZbbWq+xgJQBFaoDvcVa7mXpIDhDlPFFhBH0sq2amjnGA8MPc
- kfnUZ1eQiJ8LS3u+zbrEqExO3Rv2wyW0maW/xDVv1Z+Ju6iK8zWDISIwdwoKfBUaPky68ICGPiZ
- sGEYoILbwHaPJVIbrJQO1+ntqkV5nXDz6ofXGikSKM2WFBsOl4nlh3hrL6JxWonmokoT4XNhd5d
- Kn5Q+yxdCCDoooyI5x+wpdezL82Iw1ODSPJjuvzJSlZ4rZsl1EB+ZaKDk3Kc/girxiVwgxDJhL8
- bbLrAAAyX07d+TJCHOh/hxAv/i5qKkK2A95fvwj1oiLgYYEKnBrILJAN7NhBN1ZGv1jFUJcL1ma
- x+9
-X-Received: by 2002:a05:600c:8b01:b0:483:be73:9b1 with SMTP id
- 5b1f17b1804b1-483c9bdb186mr77889075e9.31.1772230804647; 
- Fri, 27 Feb 2026 14:20:04 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd75dfaasm217043645e9.12.2026.02.27.14.20.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 14:20:03 -0800 (PST)
-Message-ID: <35984e30-23be-4796-bf06-7fae66a08652@linaro.org>
-Date: Fri, 27 Feb 2026 23:20:02 +0100
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vw6Ba-00063n-P8
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:19:51 -0500
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vw6BX-0007m5-OU
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:19:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1772230788; x=1803766788;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=mSJwk8OL8GT7Kwlz7h7yRvXBaRvRP8lpklTQLrCYMRk=;
+ b=NHDXAbw8+2HHCV+LIIA2Y8X3MAJvfWQOVE+NJjbZlY1xFmHu9Bt2ooO6
+ wI2UfFiVxXZ/dJ+8BdyMegpbIcCSHEKAYv/imhrZX1NQiDJLwYKYba6PD
+ I+lV8xxq4NPMxaXVCz5H+7EuY2N81fGgNkQHNRZGligh/bKikF+yUoSIV
+ cVjyBmf47sokAnC8ldxtxoOYX+dxGnaz8k5MLbCfowQuLre4t12N7TKlR
+ vLvyuODMbW+FPVzL2W2QVnMb1AJtjhRHo7wybKHv4N+zrOpDh2RCtRlFO
+ kQq4/uwajJs/pwFLFhJBydootTZloc8RGb0JOAbxCmN4so1D3GZU+CcEC w==;
+X-CSE-ConnectionGUID: kuX0m7i4S2ufACiQULnKdA==
+X-CSE-MsgGUID: Z3WvNqOHS8SQuFxN7YHh6Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11714"; a="73509328"
+X-IronPort-AV: E=Sophos;i="6.21,314,1763452800"; d="scan'208";a="73509328"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Feb 2026 14:19:40 -0800
+X-CSE-ConnectionGUID: x94JWGV/R5aHGWekbGvzMA==
+X-CSE-MsgGUID: UczGk8GaRF+E1JpRdmCCOw==
+X-ExtLoop1: 1
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Feb 2026 14:19:40 -0800
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v8 01/10] virtio-gpu: Recreate the resource's dmabuf if new
+ backing is attached
+Date: Fri, 27 Feb 2026 14:13:47 -0800
+Message-ID: <20260227221632.827046-2-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260227221632.827046-1-vivek.kasireddy@intel.com>
+References: <20260227221632.827046-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 37/37] target/hexagon: Add hex_interrupts support
-Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
- Brian Cain <bcain@quicinc.com>, Sid Manning <sidneym@quicinc.com>,
- Michael Lambert <mlambert@quicinc.com>
-References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
- <20260227203627.932864-38-brian.cain@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260227203627.932864-38-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,52 +89,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/26 21:36, Brian Cain wrote:
-> From: Brian Cain <bcain@quicinc.com>
-> 
-> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-> Co-authored-by: Sid Manning <sidneym@quicinc.com>
-> Co-authored-by: Michael Lambert <mlambert@quicinc.com>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   target/hexagon/cpu.h            |   1 +
->   target/hexagon/hex_interrupts.h |  15 ++
->   target/hexagon/cpu.c            |   2 +
->   target/hexagon/hex_interrupts.c | 332 ++++++++++++++++++++++++++++++++
->   4 files changed, 350 insertions(+)
->   create mode 100644 target/hexagon/hex_interrupts.h
->   create mode 100644 target/hexagon/hex_interrupts.c
-> 
-> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> index 3f4f8516f2f..99150aae753 100644
-> --- a/target/hexagon/cpu.h
-> +++ b/target/hexagon/cpu.h
-> @@ -190,6 +190,7 @@ struct ArchCPU {
->       bool short_circuit;
->   #ifndef CONFIG_USER_ONLY
->       struct HexagonTLBState *tlb;
-> +    uint32_t l2vic_base_addr;
+There are cases when a blob resource's backing might get detached
+and re-attached again such as when the underlying object is getting
+migrated in the Guest. In these situations, we need to obtain a new
+dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
 
-This field is never used (nor in
-https://github.com/quic/qemu/tree/bcain/sysemu_review).
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/virtio-gpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
->       uint32_t htid;
->   #endif
->   };
-
-
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index 69b5c56b55f..a1ca4075472 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -61,6 +61,8 @@ static const Property hexagon_cpu_properties[] = {
->   #if !defined(CONFIG_USER_ONLY)
->       DEFINE_PROP_LINK("tlb", HexagonCPU, tlb, TYPE_HEXAGON_TLB,
->                        HexagonTLBState *),
-> +    DEFINE_PROP_UINT32("l2vic-base-addr", HexagonCPU, l2vic_base_addr,
-> +        0xffffffff),
->       DEFINE_PROP_UINT32("htid", HexagonCPU, htid, 0),
->   #endif
->       DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 643e91ca2a..f20111fa57 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -937,6 +937,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         return;
+     }
++
++    if (res->blob_size) {
++        virtio_gpu_init_udmabuf(res);
++    }
+ }
+ 
+ static void
+-- 
+2.53.0
 
 
