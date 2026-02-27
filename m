@@ -4,66 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8202FFEFB67
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 15:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 699BBFEFB6C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 15:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw015-0000HU-8v; Fri, 27 Feb 2026 10:44:36 -0500
+	id 1vw0AH-0002jA-Do; Fri, 27 Feb 2026 10:54:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vw011-0000H0-6h; Fri, 27 Feb 2026 10:44:32 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vw00z-0001rH-O2; Fri, 27 Feb 2026 10:44:30 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBXX5vYu6Fp8hKYBw--.45S2;
- Fri, 27 Feb 2026 23:44:24 +0800 (CST)
-Received: from [192.168.31.151] (unknown [113.246.232.133])
- by mail (Coremail) with SMTP id AQAAfwAHXuvXu6FpPbkdAA--.36627S2;
- Fri, 27 Feb 2026 23:44:23 +0800 (CST)
-Message-ID: <22745fd1-afa1-4b0b-943a-f275407ca3be@phytium.com.cn>
-Date: Fri, 27 Feb 2026 23:44:22 +0800
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vw0AG-0002if-27; Fri, 27 Feb 2026 10:54:04 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vw0AE-0003D5-5u; Fri, 27 Feb 2026 10:54:03 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E8DA4597318;
+ Fri, 27 Feb 2026 16:53:58 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id fIRVzAwFIKJB; Fri, 27 Feb 2026 16:53:56 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DF12A5972E2; Fri, 27 Feb 2026 16:53:56 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DD1AF596A29;
+ Fri, 27 Feb 2026 16:53:56 +0100 (CET)
+Date: Fri, 27 Feb 2026 16:53:56 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Aditya Gupta <adityag@linux.ibm.com>
+cc: shivang upadhyay <shivangu@linux.ibm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org, 
+ npiggin@gmail.com, milesg@linux.ibm.com, qemu-devel@nongnu.org, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>
+Subject: Re: [PATCH] ppc/pnv: fix dumpdtb option
+In-Reply-To: <aaGoqt6B5fWQGNRh@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Message-ID: <648a3687-6356-8063-b4d4-a0bbc332dd0c@eik.bme.hu>
+References: <20260225081037.21990-1-shivangu@linux.ibm.com>
+ <CAFEAcA9+-5=hVzRMu9n1YtcOazMLQDx65T=NLy9wxv5RNLwYAg@mail.gmail.com>
+ <48b13f0b-bb53-4316-923d-77a20ffdfab1@linux.ibm.com>
+ <aaFv56FZ6Z50G_T4@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <33d78dda-6df8-3825-7cf5-7bf7e21d010e@eik.bme.hu>
+ <aaGoqt6B5fWQGNRh@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 23/31] hw/arm/smmuv3: Add access checks for CMDQ and
- EVENTQ registers
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101823.2996302-1-tangtao1634@phytium.com.cn>
- <eeaf6ae9-23e0-4413-985f-dcff03737dbb@linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <eeaf6ae9-23e0-4413-985f-dcff03737dbb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAHXuvXu6FpPbkdAA--.36627S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWmguFMsVgAOsB
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7Zw4DJr4rAryxurWfZFy8AFb_yoW8WrWDpF
- y8K3s8KF4Iqry2v3sayr10yay5WFZ7Jwn7Xr47Gr98Ww15Arn5ZF48Kr95Ga4kWry8J3Wx
- X3WDtayxW34rAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -7
 X-Spam_score: -0.8
 X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,51 +72,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
-
-On 2026/2/26 05:59, Pierrick Bouvier wrote:
-> On 2/21/26 2:18 AM, Tao Tang wrote:
->> Add access control for command queue and event queue related registers
->> to ensure they can only be modified under proper conditions.
+On Fri, 27 Feb 2026, Aditya Gupta wrote:
+> On 26/02/27 02:05PM, BALATON Zoltan wrote:
+>> On Fri, 27 Feb 2026, Aditya Gupta wrote:
+>>> On 26/02/27 03:43PM, shivang upadhyay wrote:
+>>>>> <...snip...>
+>>>>>
+>>>>> Q: can the generated DBT genuinely be different on a
+>>>>> subsequent reset than it was when QEMU first starts?
+>>>>> The comments in the pnv_reset() code seem to suggest it,
+>>>>> but on the other hand the code as written will only
+>>>>> call pnv_dt_create() and update machine->fdt once on first
+>>>>> reset, not on later resets. So perhaps the comment is
+>>>>> just confusingly worded ?
+>>>>
+>>>> Yes, I am not much familiar with the design here. But, as per
+>>>>
+>>>> my current understanding of this code, DTB content should not
+>>>>
+>>>> not be changed.
+>>>
+>>> To add to this, yes, normally reset path doesn't change the device tree,
+>>> since all reboots are the same as the first boot.
+>>>
+>>> As of upstream this is true, I don't see dtb changing between resets.
 >>
->> For command queue (CMDQ):
->> - smmu_cmdq_disabled_stable(): checks CMDQ bit in CR0/CR0ACK
->> - smmu_cmdq_base_writable(): checks IDR1.QUEUES_PRESET==0 and CMDQ 
->> disabled
->>
->> For event queue (EVTQ):
->> - smmu_eventq_disabled_stable(): checks EVTQ bit in CR0/CR0ACK
->> - smmu_eventq_base_writable():checks IDR1.QUEUES_PRESET==0 and EVTQ 
->> disabled
->> - smmu_eventq_irq_cfg_writable(): checks MSI support and EVENTQ_IRQEN 
->> state
->>
->> Additionally, mask reserved bits on writes using 
->> SMMU_QUEUE_BASE_RESERVED
->> for queue base registers and SMMU_EVENTQ_IRQ_CFG0_RESERVED for
->> EVENTQ_IRQ_CFG0.
->>
->> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmuv3.c | 157 +++++++++++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 154 insertions(+), 3 deletions(-)
->>
+>> Isn't VOF allowing clients to do setprop that would be changing the device
+>> tree? Some settings are stored there so maybe it can be changed by the guest
+>> that should be preserved between reboots?
 >
-> It seems like we use the same pattern a lot of time for various SMMU 
-> registers, and makes me wonder if we could not introduce proper 
-> register definitions with callbacks similar to Arm *_reginfo.
+> By VOF did you mean the pseries f/w ?
+
+I don't know much about these machines. I meant Virtual Open Firmware in 
+QEMU or SLOF which it can replace. But maybe this is only used by spapr so 
+does not affect pseries but in spapr there's spapr_vof_setprop() which 
+looks like it can change the fdt. Maybe it's handled differently on 
+pseries, I don't know.
+
+> i don't see anything changing the dt in powernv as of now, but
+> for some edge case, where that is possible (will be possible atleast
+> after mpipl support is merged), we can always update the fdt in below 2
+> if cases in pnv_reset:
 >
-> That said, it's definitely out of the scope for this series:
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>    > if (machine->fdt) {
+>    >     fdt = machine->fdt;
+>    > } else {
+>    >     fdt = pnv_dt_create(machine);
+>    >     /* Pack resulting tree */
+>    >     _FDT((fdt_pack(fdt)));
+>    > }
+>
+> machine->fdt will never be NULL since it's being set in pnv_init
+> should we just do pnv_dt_create on every pnv_reset ?
 
+I don't know either but wasn't original code meant to either create an fdt 
+or take what the user specified with -dtb option or similiar? In that case 
+maybe you don't want to override the user specified dtb but I could be 
+wrong about what this is meant to do as I have no idea whatsoever about 
+these machines.
 
-Thanks for your suggestion. I will consider refactoring it after merging 
-the current series.
-
-
-Best regards,
-
-Tao
-
+Regards,
+BALATON Zoltan
 
