@@ -4,57 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46961FD531F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 09:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33366FD5320
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 09:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvuF4-0001BW-IW; Fri, 27 Feb 2026 04:34:38 -0500
+	id 1vvuLX-00030N-Tx; Fri, 27 Feb 2026 04:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvuF2-0001At-Gc
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:34:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvuLL-0002tF-BC
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:41:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvuF1-0003Bw-43
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:34:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvuLI-0005Io-D5
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:41:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772184873;
+ s=mimecast20190719; t=1772185263;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NJwkCFkfHXiyqQ5E6OaZ3M80IPR6iNZW9Qqwv1iOrnA=;
- b=LA/cyaTLdP7zfix4hEXUJtjdCO/21XaYATkpbWBx3B69fjJzSLXYn8J5bAJEEw51dWQq0X
- yiZi2bZjvnMe2RgfLDksmovnFDWqMMXCw9oJAyv9Fr7yN7PbFSLQ+yQG2Hb30sCR0WRTxq
- BqA+mOP/TD58dkjdBrXAiIT7SvBcR/s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=nX6itWd5Fzshw3FWi70xjuzKv8RYy9dQFDLLjsxi4PI=;
+ b=jJCB6Z15lemuApVs1Sxk2t3a9gWDQaWYBSGeOXNtJCgRDskDsfYBPcB01YjK3P6+j1Ve58
+ f0Ei3jpPhMy41OTJKAJ6E5vKl/H9YswBYZ9t6r1Tgaz6UaH5nnpkUzXUcy6GWNtIs1yGRn
+ y9xCvuOVGhmgsdD+pVSEoOsSUHqveuo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-55-euyMtNvC9Na8i6GPjuw-1; Fri,
- 27 Feb 2026 04:34:31 -0500
-X-MC-Unique: 55-euyMtNvC9Na8i6GPjuw-1
-X-Mimecast-MFC-AGG-ID: 55-euyMtNvC9Na8i6GPjuw_1772184870
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-GNGBUsKqNbCX0QL2luQutw-1; Fri,
+ 27 Feb 2026 04:41:00 -0500
+X-MC-Unique: GNGBUsKqNbCX0QL2luQutw-1
+X-Mimecast-MFC-AGG-ID: GNGBUsKqNbCX0QL2luQutw_1772185258
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26A7B1800473; Fri, 27 Feb 2026 09:34:30 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83067195608E; Fri, 27 Feb 2026 09:40:58 +0000 (UTC)
 Received: from [10.44.34.56] (unknown [10.44.34.56])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 71BE31800465; Fri, 27 Feb 2026 09:34:27 +0000 (UTC)
-Message-ID: <cbb3049c-44c0-4bdd-8c65-29eedfe0aef1@redhat.com>
-Date: Fri, 27 Feb 2026 10:34:25 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F137919560B5; Fri, 27 Feb 2026 09:40:53 +0000 (UTC)
+Message-ID: <64c71db5-f7d7-455a-9e31-df1d17c14f3c@redhat.com>
+Date: Fri, 27 Feb 2026 10:40:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] python: replace avocado tests with pytest
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260226213400.1254014-1-jsnow@redhat.com>
- <20260226213400.1254014-3-jsnow@redhat.com>
+Subject: Re: [PATCH v2 2/7] tests/docker: migrate legacy-test-cross compilers
+ to trixie
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, qemu-arm@nongnu.org, Kyle Evans <kevans@freebsd.org>,
+ Brad Smith <brad@comstyle.com>, Warner Losh <imp@bsdimp.com>,
+ John Snow <jsnow@redhat.com>
+References: <20260226185303.1920021-1-alex.bennee@linaro.org>
+ <20260226185303.1920021-3-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -99,20 +104,21 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260226213400.1254014-3-jsnow@redhat.com>
+In-Reply-To: <20260226185303.1920021-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 22
+X-Spam_score: 2.2
+X-Spam_bar: ++
+X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,23 +134,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/02/2026 22.33, John Snow wrote:
-> Following suit with the rest of this repository, drop avocado and
-> replace it with the Python standard "pytest" package.
+On 26/02/2026 19.52, Alex Bennée wrote:
+> The bugs have evidently been fixed in the latest release so we can
+> migrate the laggards into how all-test-cross container and remove the
+> legacy hacks. They are also packaged for the main architectures so we
+> don't need to jump through the amd64 hoops.
 > 
-> Our ultimate goal is to merge these python tests with the meson test
-> suite, so the use of 'pytest' here is only a stop-gap solution to get
-> the GitLab CI 'check-python-tox' passing again following recent Python
-> packaging ecosystem changes.
-> 
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Suggested-by: John Snow <jsnow@redhat.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   python/Makefile          |  4 +-
->   python/setup.cfg         |  1 +
->   python/tests/linters.py  | 79 ++++++++++++++++++++++++++++++++++++++++
->   python/tests/minreqs.txt |  1 +
->   4 files changed, 83 insertions(+), 2 deletions(-)
->   create mode 100644 python/tests/linters.py
+>   configure                                     | 10 +---
+>   .gitlab-ci.d/buildtest.yml                    | 12 -----
+>   .gitlab-ci.d/container-cross.yml              |  6 ---
+>   .gitlab-ci.d/containers.yml                   |  1 -
+>   .../dockerfiles/debian-all-test-cross.docker  |  8 ++-
+>   .../debian-legacy-test-cross.docker           | 51 -------------------
+>   tests/lcitool/refresh                         |  8 ++-
+>   7 files changed, 13 insertions(+), 83 deletions(-)
+>   delete mode 100644 tests/docker/dockerfiles/debian-legacy-test-cross.docker
+> 
+
+Nice! Kudos to John for figuring it out!
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
