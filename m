@@ -4,83 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C2DCFEFB47
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD20FEFB47
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvxas-00081y-JV; Fri, 27 Feb 2026 08:09:22 -0500
+	id 1vvxg4-0000Pt-RB; Fri, 27 Feb 2026 08:14:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvxaq-000819-LH
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:09:20 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvxg3-0000Pj-Bx
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:14:43 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvxao-0004pH-3U
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:09:20 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4806f3fc50bso21534185e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:09:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vvxg1-0006F3-SM
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:14:43 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64aea64bf15so1705719d50.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:14:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772198079; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SyaTXqr+/fpUZKB8J7mckHCPT2ndkfqlq5u6TL3WZiANzNQ3dvdgK8GSu34+3L6HYX
+ 2fmCBr7sm60gssGkQ+66NJ993ECEV9q8MAkNp19wdHDC1+BtN8wHBbHyu8Mb9v3IOA8k
+ JnyGI1+6gg8Q/jeW8HeZzl8R5nKZwGwLHliRumvdsBcZ1yQiGt8ckoZeOvm9MYeQOlQL
+ W6Pb5B3an77Bmp6PFeJTOvuS7kbOblvwb7naQDfLAoCNjII41Osn8BYQoD4A6U2qFUz/
+ kUyXRsPeec7h4lCTt4XndkTsaqlEZipmQc6wylP1EWuKTQlcft6bJes1mxCdPm3+eqWP
+ NEQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=K3fLwXB1he2rPSs4SFGDoWtWsvIn6bbN1tetlGpNGiM=;
+ fh=1oW3mullCo6C+FsMss+A6yUoqCfV978yZ8v1/qRK2qI=;
+ b=fe4t7G9x2cnO9Mqufcs2XwNdbLkHbO4Bj1cDDaM1GVzPUGrpeVUBzRenTTYTPK9024
+ 3mOfSQSLrIXIRojJT3yqsftxDpF90I9JTwy5Ilqegu4S5W4hX2Tv7xckJ4E448YPzwv3
+ 8Exsz6mcsD896ZkslH96T6/SuIleF7n25VFe+Qf0DL+oer0Qgh6AfWuvx0d0kKD72OzM
+ GsboWo49laueOtHA9l11Esc+aYP4uwsuZTVaQKy4rO2ccumYSbbi4lexVC+YxfNnTvkS
+ ns8LE/SZtzIGhdx2g/kTwslg/z/bmGkxzE7wtTnRiMnUFb9kjwXdYOc+AZxGmB67PGaI
+ +ung==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772197756; x=1772802556; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=QnA1dtsYm09c7k2K5qTF6yo2m4/YXUDluRufyWk2hkU=;
- b=tT4C0UfQVjp8lvgaDVdaY4qMt9w9MGRzLv7BLWEwEm5oH6hsBosiALrUSMM2y5G+Fh
- VThymmyTKUKNBw/l6VZFwRz9BZ0HVw2vlWW0bgRCe45kWJu2POtk1uDA1EMgmpR2IVOM
- IOE2J60NQkVVkENJdPbIAwkBxIPHFl4sabLjTSUZTRUMwLJCCLt1A05ZPT3QVn7rKT27
- oYjPIBvN5n9FhaGcRm7uA5ovaJmMhraFDCWr8NwZFCXWl6v1kpWGgXbPE62nOj6f2oBe
- IZhl0zmHtqPAz6ecYyRTAZr/4C9aAJxO4/tG9WkxAkDlmsH6REsmFjPumAx+ArVf+FXM
- WtVw==
+ d=linaro.org; s=google; t=1772198079; x=1772802879; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=K3fLwXB1he2rPSs4SFGDoWtWsvIn6bbN1tetlGpNGiM=;
+ b=aCfS03hIjyBvpgjBeVfuqfrzwB8RXs3MNB4VJf55AQ36wgSelPN+eodQQj/+tbuYeU
+ redqED4lC44CDZTj9Wzy4yrNMI9JRrwu6hScqhh03zER1hsedaV2FRV1QGyEqHiaJ0uX
+ ZrlsgKznLZCDvHMYB/Dq1XlCTnHs2TzRYKzLXYuzhXaxzghdjG8NMRYFxrdGV8wQU2AK
+ v28U83CgPY+X/J64Eoqw96BqZxN7I+ydBjToAwK9yqWsXDKgf1C+luGDEfiWS73zlnlI
+ VeFqxF4gslniIDJSQ5Qt7NuwcmIhSwGXHOJXYHkPLc/MP1jXJ/efaIWF33fbo331F+sH
+ lxig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772197756; x=1772802556;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QnA1dtsYm09c7k2K5qTF6yo2m4/YXUDluRufyWk2hkU=;
- b=ihGw7opBdNkP2aWuWWdNhu8/6m/mqahxgoU5opAMUgTrgChrRpYj23kbWbiETJw+15
- v8mn+rI36HDB/ERk6rBcsoKtXz0NMe5hdGwlXoluOjPKVO2hswUE9q/dpRA6KiVigSg1
- 29TPSla4edCJwXXdJWNcHKM2/GetufqMMCs1GdWeDAYBrtDP89GhHhAcAKGeybXPqUqP
- Rwk08OuDvpJD9RH0YUCFRwcw+CC6cFycGStlSqTH264d+c7H+quE0ZFdpnLK6zlBgwcI
- 7XJpSVh4+9Ab/fc7iO6i6RBlV4niKB9ej3aULzeRm5PZKMp6VmcHnU+s7lORv8tZx2Jm
- V/SA==
+ d=1e100.net; s=20230601; t=1772198079; x=1772802879;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K3fLwXB1he2rPSs4SFGDoWtWsvIn6bbN1tetlGpNGiM=;
+ b=sPWPQ6R5NuLkf5G0xL7byIFxFS6oiPJJrELcoQapBZhesKs5nLulUkLBSKazH8ErRx
+ LwnHdpd8Z7vegJ4jGWJlvsmdqDdWVPZVaTBi1eCgx4UVUpXc/hp13dSoS0S3NZEk9/4B
+ O5Z4oF7dsfOTe1mFEoWarqAXVoLqfEJxTnsDf2QZC+qm30cbZQvjinRlqJPjPa8utEdC
+ E91wW8SLjphErge7Qf3gXk/xmi2sxmMemyxiZIwRGA7GzursgGCcUXkihX67fVcxP/V7
+ 3dFhC4xbSUUQ4E/smStKHJaA1UtBqP2uuHCoSeqUoOLYtD+8GJuejafza9OkocueoGpi
+ LiQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMO7pchAj66vBg91/Auzqdoz8jjssvlEkrqpUDEe0EWYxJBlbLXK+7XUJAaOaB7y3FYb5nqWVzB/ci@nongnu.org
-X-Gm-Message-State: AOJu0YwX4hgsxn3dOpo0+iN5Am9lJh9uu0KR2v38oXdps36+iFHjZobx
- QXPsd+EFX+Es24ENQFPMEsU89k6GDrYz3usCQ0HyxzlpltbntX2VFkbYIXzP9HhZ9QQ=
-X-Gm-Gg: ATEYQzxvC5Xs5uzwoMVEth1cNhbfpVb8duyyWch11Kd0nCJU/+D0XH3uAZw1FyhK74c
- +pVnZIPv9YR/IXUNS6zpFg5/C0fZSyjXSftBaTQ0tqC7nYOJJlEEhShY8T754Es07livudDCLis
- j6/+iMhMzUXi9TNhUT9tKUvxd3uxUdW7DDnWShhCc0eHbLaThUQ1wrNuhyktDZQ7fFS8GK6pS09
- o73Qb1Ho27ZM4d83w7BEz/TVw+nax6hqee1fUQ3y7fAiatBMn6WE0tUfP/90plSxOSBkWWgcMId
- 2jZjtofOxxqRO0SfC9faS+ZYIfBKC1QotXt5WZ5OXw7/7hZCvwPujbb3B1D/fTJGWHxWQTkF+xm
- KiW0aYos0ki/dy9O4fLfmuJr9vvINlIaUqdKOO47ZtlxPcSLT/cbP1v5VtGo02WqYpWG3+9AuwY
- 3v7NR+wXDrTx8fxrm6/8T/s/IENB6dqgwashsQzB9Tj4xrARkDu2bnmHeI4V1/nh9PTw==
-X-Received: by 2002:a05:600c:1e89:b0:482:f564:d613 with SMTP id
- 5b1f17b1804b1-483c9ba37b1mr43228685e9.15.1772197756273; 
- Fri, 27 Feb 2026 05:09:16 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd750607sm216106625e9.10.2026.02.27.05.09.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 05:09:15 -0800 (PST)
-Message-ID: <70d4f460-c5c5-45ac-9ef0-2307ea4834f2@linaro.org>
-Date: Fri, 27 Feb 2026 14:09:14 +0100
+ AJvYcCXLj4QySop/ZZQdeJNQPHjZlublK8tUm7WoTo1MNEJGfCel4CF5WivgQwyHYrjuoqQfyVwD+Uo1V2UW@nongnu.org
+X-Gm-Message-State: AOJu0YxbsWQ+82Y3L7WGnR+CKJuRaIgZ6mIH2yV7md0bLWsMv3vFOkMU
+ //qRFGb10mYZ3B/NlYWUJ84WhQY9rV0jDCZ7cpy6vtlu1Nyw2YkkCpZfY4fAiCiZ9W0kYK1bR0S
+ f+Qsp1Pf8LcZEvILxmTFwnbtrmHquAuahUQwu5/HUNQ==
+X-Gm-Gg: ATEYQzwZZTQt6+A/qLskt3WHTjFa2hGjuuctASw5SQjXckV2V1+3PoUhcxkyLnLTicM
+ /duTbkfQQ0HFIBR3tu45mXJF0vT4mLG8XnauL3DBbzlUpTEjR/0Mg7EtnJPSTDKxm9ixRRg3Su9
+ 3SXtFNLu0GQ7MtIIi7/fM3KFSu0ur+WGLJSK5uYR7WzAs+GtoCbh/juXGDXSYsCa9mI6dk/b41K
+ Q8g5rhgC8absiJln/z9S8bP8d54jFgHg2BJ8HA//WI4pE/Y7Z883egPHddp4R1yA4AuAMf/wbU9
+ Os4ML/8LMW930xHbGrpaaSQiNfN09EOW2X7yJ8Tt9D+dGyirHaJSLqFM3pY8BZRKnC4=
+X-Received: by 2002:a53:ee51:0:b0:64a:d294:e502 with SMTP id
+ 956f58d0204a3-64cc2378a3fmr1714512d50.66.1772198078551; Fri, 27 Feb 2026
+ 05:14:38 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ppc-linux-user GDB stub broken
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
-Cc: qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel@nongnu.org
-References: <e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de>
- <CAPMQPEL1__biyd5e81EW78OA1rmVYqfsdEOmH5cs-nOvwnB3cg@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAPMQPEL1__biyd5e81EW78OA1rmVYqfsdEOmH5cs-nOvwnB3cg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+References: <20260206131438.1857182-1-imammedo@redhat.com>
+ <20260206131438.1857182-9-imammedo@redhat.com>
+ <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
+ <20260219131751.4e4e4e0e@imammedo> <aZ8THMubft44Q3E-@redhat.com>
+ <20260226135648.4c1a4009@imammedo> <878qced4xx.fsf@pond.sub.org>
+ <20260227104227.3d84f0d7@imammedo> <87ikbi9yky.fsf@pond.sub.org>
+In-Reply-To: <87ikbi9yky.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 27 Feb 2026 13:14:26 +0000
+X-Gm-Features: AaiRm52c2lwviW0Xz1vv6BxHbmGiGBhHvWpffiNEu8fceG_jWmjnf9P2iXIdMas
+Message-ID: <CAFEAcA_dXNiXCeYdBimBMR-hWvt6+DB1FdJ9iZ5q8zoejyRWeA@mail.gmail.com>
+Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
+ ACPI table
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
+ pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,84 +125,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/26 10:58, Philippe Mathieu-Daudé wrote:
-> Hi Florian,
+On Fri, 27 Feb 2026 at 12:10, Markus Armbruster <armbru@redhat.com> wrote:
+> The larger problem is that we generally fail at documenting device and
+> machine properties.  I'm not asking you to boil that ocean :)
+>
+> The narrow problem is providing guidance on watchdog configuration.
+> What and where?
+>
+> Regarding where: you proposed to add a machine property of QAPI enum
+> type.
+>
+> The property can have a description, and you give it one.  Sadly, it's
+> basically invisible.  As far as I know, the only way you can get at it
+> is qom-list-properties and such.  I doubt anybody is going to read the
+> description there.
 
+I think it also will appear if you run e.g.
+ qemu-system-arm -M virt,help
 
->> on current master (d8a9d97317d03190b34498741f98f22e2a9afe3e), the basic
->> gdb stub test fails for ppc-linux-user when running "make check-tcg".
+(which produces a list of all properties with their short descriptions)
 
+For board-specific properties, we should be documenting these in
+the manual page for the board. For instance "virt" does that here:
+ https://www.qemu.org/docs/master/system/arm/virt.html#machine-specific-options
 
->> I've debugged around a bit but I don't know my way around the gdbstub
->> internals enough to propose a patch right away, so I'll just summarize
->> what I figured out so far.
->> 1. Due to cc->gdb_num_core_regs not being set explicitly anymore, it is
->>     set to 0 at the end of gdbstub/gdbstub.c:gdb_init_cpu(). In the same
->>     function, cpu->gdb_num_regs gets set to 70.
->> 2. When the test tries to read a register in gdbstub/gdbstub.c:gdb_read_register(),
->>     the first condition of "reg < cc->gdb_num_core_regs" is always false.
->>     Also, the register number for fpscr passed to the function is is 103,
->>     and cpu->gdb_num_regs is also 103. If the register number is supposed
->>     to be an index (as I understand it), this would indicate an
->>     off-by-one error somewhere.
->>
->> If you have some pointers on where to look / what to check out for
->> fixing this, I'll happily try to work on a patch. But I suppose that
->> somebody more experienced with this could probably fix this much faster
->> than I can.
-> 
-> I'll have a look.
+For the global machine options, I don't think we have a place where we
+document those. If we did, we should perhaps have each board's page
+also link to the global-options page.
 
-Short term, this seems to fix it:
-
--- >8 --
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 90f4b95135b..0b0a5d1e044 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -610,6 +610,10 @@ void gdb_register_coprocessor(CPUState *cpu,
-      guint i;
-      int base_reg = cpu->gdb_num_regs;
-
-+    if (g_pos && g_pos != base_reg) {
-+        base_reg = g_pos;
-+    }
-+
-      for (i = 0; i < cpu->gdb_regs->len; i++) {
-          /* Check for duplicates.  */
-          s = &g_array_index(cpu->gdb_regs, GDBRegisterState, i);
-@@ -622,14 +626,7 @@ void gdb_register_coprocessor(CPUState *cpu,
-
-      /* Add to end of list.  */
-      cpu->gdb_num_regs += feature->num_regs;
--    if (g_pos) {
--        if (g_pos != base_reg) {
--            error_report("Error: Bad gdb register numbering for '%s', "
--                         "expected %d got %d", feature->xml, g_pos, 
-base_reg);
--        } else {
--            cpu->gdb_num_g_regs = cpu->gdb_num_regs;
--        }
--    }
-+    cpu->gdb_num_g_regs = cpu->gdb_num_regs;
-  }
-
-  void gdb_unregister_coprocessor_all(CPUState *cpu)
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index e0aae9c9eaf..51b14b95b9f 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -502,7 +502,7 @@ void ppc_gdb_init(CPUState *cs, PowerPCCPUClass *pcc)
-  {
-      if (pcc->insns_flags & PPC_FLOAT) {
-          gdb_register_coprocessor(cs, gdb_get_float_reg, gdb_set_float_reg,
-- 
-gdb_find_static_feature("power-fpu.xml"), 0);
-+ 
-gdb_find_static_feature("power-fpu.xml"), 71);
-      }
-      if (pcc->insns_flags & PPC_ALTIVEC) {
-          gdb_register_coprocessor(cs, gdb_get_avr_reg, gdb_set_avr_reg,
-
----
+-- PMM
 
