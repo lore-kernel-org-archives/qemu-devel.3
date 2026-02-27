@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 436C1FEFB6A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28485FEFB6A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw1Sy-0004OQ-8R; Fri, 27 Feb 2026 12:17:28 -0500
+	id 1vw1Sy-0004OR-Q0; Fri, 27 Feb 2026 12:17:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xtex@envs.net>) id 1vw109-0004BW-BJ
+ (Exim 4.90_1) (envelope-from <xtex@envs.net>) id 1vw109-0004Bd-I5
  for qemu-devel@nongnu.org; Fri, 27 Feb 2026 11:47:41 -0500
 Received: from mail.envs.net ([157.180.15.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xtex@envs.net>) id 1vw107-0004ON-Pi
+ (Exim 4.90_1) (envelope-from <xtex@envs.net>) id 1vw107-0004P8-Bz
  for qemu-devel@nongnu.org; Fri, 27 Feb 2026 11:47:41 -0500
 Received: from localhost (mail.envs.net [127.0.0.1])
- by mail.envs.net (Postfix) with ESMTP id 8D00F1C00C2;
- Fri, 27 Feb 2026 16:47:27 +0000 (UTC)
+ by mail.envs.net (Postfix) with ESMTP id 60A721C00E3;
+ Fri, 27 Feb 2026 16:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=envs.net; s=modoboa;
- t=1772210847; bh=xC4Sr1dNunbqSjkBIVUx1MbIhsovXY5hEIEGCj9FXR0=;
- h=From:Subject:Date:To:Cc:From;
- b=XHs3KOennaCRjzu/5Xi9KDDvr02O6UEM2Z345TRJCXLMFrX+Vy995Ku6Nzdnnf44l
- Xo0YslERkPwTQvthzW3rj3LoE3jn44qBWEa+j9zJHSs07dK2N/md9kwD7b1b5H9j6L
- jlOntrN605Z4ZBzv4YYdCyd6VuhAcpKE+zmY7U43CvBa//chvVrtULspCRMmluJmqa
- 8gtAp+hLpinl4IEvJo6+Sm0Csi/b3mbq5WkhtEXtMNOewHXBMLwCUci6VNZ9hyUIXX
- WUulz0q680PnhM9zLMQd+u891M0rvVc30Oz7ubFC36zHg7Q/wsMIoqd0BSATZxhPab
- wPIXuBvjiumLKQbikw2eTDFzK4EDyj5g9VfDYyYaStY5mTdk1OiQUP1Y11nZRrUIgO
- guYu46l29SpCkuM1ecUlRAucTmPI482nxUiRJJAjWtVlRgDHwtcbyEwrV9b0dkVa8n
- gEPYWsIwZtSCcRq4QGFNVXXG4y3EJ3fdkeA7G+/3ANdyhWuLFisuMpx0ODIPiM4CbI
- mTHfBfn637o7BQyHziB0BcrzkFib0x62ssVnZ5/+T3sc0n8Wk7uHZDFMeDiN1kFjVw
- EFxC4PiB9quiJeJZeuCxnQtf0cjeYwH7IBTPz4Nrr8weCYH2Enn19Im+2XAWXYUZrV
- kM4uyDTj6ueNW4KuyHxf8C7A=
+ t=1772210855; bh=Uk9wA2yM3y796Jo8lyWMW2veY7XOlDD6nkMTwS+ne5s=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=MnQ7gYtHH9Arl14Wa5xoT13rxaaYYkdQSvZi/mIiBkXn5eqcUBBqmhtCqIhzujl5f
+ OMDCT9+fqG/W7SRnqKo9+u9pwuARVXS+GkI3DR8R5IRe2wvg9a/eR1YyJmaiKFTN85
+ 7o0bq70xPfsZJ1b8mPSZbSPp+KIyYZQ04HYw/OjT5viV0PRezkmnh0QA2bE/9iC6+q
+ TywT+KNSl991f3Lzcqd5Goax00SGZuayBO4F8m4MyQXShysVH7E3UQ9gd6GJuxDYwZ
+ uIpR8hwcGXuCG46VkztfTGnsn0fgWjAwlkQQQmQWzyMx82VGqFvFnYZeHsIxwTy1N2
+ 218c5KQGFAJNRXQ23kXxJSaqhazOWYA2ODMHiQVU99RQzHVcab62px20pVFznuWD5d
+ 0vHGyL2cBB8xYMM7FoFESbBObf49NHZTiRtFyjfUd4vlGkuNvI2Rq81462CZ0GXL1b
+ ImTux34cVsYTk2DEdIlClQN14fbpdeo60FysEf/t0uYrydb5BwnzFeEN1d23oOO2Qe
+ iQ8z5oXsIrpfVEUtmnwGcWyvi3ENPFYyHOdBbbGDeVw6ZF0kM8IpbnccMVc1zT8h+V
+ DDQnh7r0qkjN6ao97JMZ/nKy/v/TTZwalyJXYwH/Az2BdDUDnzJkQSHYrcs0slBgIf
+ f6YsHZ7k5QCjeJFh400yIHyg=
 X-Virus-Scanned: Debian amavisd-new at mail.envs.net
 Received: from mail.envs.net ([127.0.0.1])
  by localhost (mail.envs.net [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id Aa1e0O-sXS8j; Fri, 27 Feb 2026 16:47:20 +0000 (UTC)
+ with ESMTP id nMDFTgMfgXIp; Fri, 27 Feb 2026 16:47:28 +0000 (UTC)
 Received: from localhost.localdomain (unknown [142.248.151.117])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
  by mail.envs.net (Postfix) with ESMTPSA;
- Fri, 27 Feb 2026 16:47:18 +0000 (UTC)
+ Fri, 27 Feb 2026 16:47:28 +0000 (UTC)
 From: Bingwu Zhang <xtex@envs.net>
-Subject: [PATCH 0/4] Fixes for unfixed mmap beyond reserved_va
-Date: Sat, 28 Feb 2026 00:46:29 +0800
-Message-Id: <20260228-abyss-mmap-relocation-v1-0-c8ec0476894b@astrafall.org>
+Date: Sat, 28 Feb 2026 00:46:30 +0800
+Subject: [PATCH 1/4] linux-user: Deal with mmap where start > reserved_va
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MwQqDMAyA4VeRnA10OUy3V5Ed0i66wFqlEVGK7
- 27x+B++v4BJVjF4NwWybGo6pxqPtoHw4zQJ6rc2kKOnI+qQ/WGGMfKCWf5z4LUKDMEzse9fjjx
- Uu2QZdb+/w+c8L4Uavt5nAAAA
-X-Change-ID: 20260227-abyss-mmap-relocation-ccba2ab8902b
+Message-Id: <20260228-abyss-mmap-relocation-v1-1-c8ec0476894b@astrafall.org>
+References: <20260228-abyss-mmap-relocation-v1-0-c8ec0476894b@astrafall.org>
+In-Reply-To: <20260228-abyss-mmap-relocation-v1-0-c8ec0476894b@astrafall.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>, 
  =?utf-8?q?Alex_R=C3=B8nne_Petersen?= <alex@alexrp.com>, 
@@ -65,12 +63,12 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>,
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Bingwu Zhang <xtex@astrafall.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1310; i=xtex@astrafall.org;
- h=from:subject:message-id; bh=GultX8RF4cywkU/8PVwklfSArfJmeBhJRSyeCpujixo=;
- b=owGbwMvMwCW2U4Ij7wZL9ETG02pJDJkLT03smK/3IOdtSdXJerU8K5U3z3fbRf078XTm/BXiK
- UJs8tsud0xkYRDjYrAUU2QpMmzwZtVJ5xddVi4LM4eVCWSItEgDAwMDAwsDX25iXqmRjpGeqbah
- nqGhjpGOEQMXpwBMtVYzw//arNj5117viD9dKre9rO/1z215V9/pr5ycvm7iex72Y/sKGBnee4V
- JPHQtLBSv3X/hxJ3vjvXiPkvVZ9QacS4vObv9bjw/AA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1229; i=xtex@astrafall.org;
+ h=from:subject:message-id; bh=rTfZmcXB35KVF+0oZQFtWTXqSC2+Z2NKT1fd0IuSDek=;
+ b=owGbwMvMwCW2U4Ij7wZL9ETG02pJDJkLT00V6LIQm7jx38qKPYoT75cuUpxT0+286Uns0+NJR
+ zcFm3271zGRhUGMi8FSTJGlyLDBm1UnnV90WbkszBxWJpAh0iINDAwMDCwMfLmJeaVGOkZ6ptqG
+ eoaGOkY6RgxcnAIw1R9eMPx3OTGRoTF04aXLGUKHC3TWXPzwcmd82dQdScfnPZDVVeDfxsjwTFj
+ i3xQjgRKnKDHVY981Em3OMTeuWmm9nM11xtTeye08AA==
 X-Developer-Key: i=xtex@astrafall.org; a=openpgp;
  fpr=7231804B052C670F15A6771DB918086ED8045B91
 Received-SPF: pass client-ip=157.180.15.194; envelope-from=xtex@envs.net;
@@ -98,37 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For reserved_va & ~MAP_FIXED mmap, linux-user and bsd-user translates it
-into a fixed mmap within [mmap_min_addr, reserved_va]. However, the
-previous implementation didn't care about where the address hint
-provided by user is greater than reserved_va and will run into
-an assertion failure.
+From: Bingwu Zhang <xtex@astrafall.org>
 
-This series fixed it for linux-user and bsd-user and added test
-coverage. For start > reserved_va, skip [start, reserved_va] and just
-search within [min_addr, reserved_va].
-
-I actually thought that I am adding too many CC's and causing
-unnecessary noise but b4 is asking me to run auto-to-cc (:
-
+Fixes: 4c13048e02d9 ("linux-user: Use page_find_range_empty for mmap_find_vma_reserved")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3310
 Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
 ---
-Bingwu Zhang (4):
-      linux-user: Deal with mmap where start > reserved_va
-      bsd-user: Deal with mmap where start > reserved_va
-      tests/tcg/multiarch/test-mmap: Print more details
-      tests/tcg/multiarch/test-mmap: Check mmaps beyond reserved_va
+ linux-user/mmap.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
- bsd-user/mmap.c                 |  8 +++++---
- linux-user/mmap.c               |  9 ++++++---
- tests/tcg/multiarch/test-mmap.c | 27 ++++++++++++++++++++++++---
- 3 files changed, 35 insertions(+), 9 deletions(-)
----
-base-commit: d8a9d97317d03190b34498741f98f22e2a9afe3e
-change-id: 20260227-abyss-mmap-relocation-ccba2ab8902b
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 07175e11d576..76978a56a859 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -423,12 +423,15 @@ abi_ulong mmap_next_start;
+ static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
+                                         abi_ulong align)
+ {
+-    target_ulong ret;
++    target_ulong ret = -1;
+ 
+-    ret = page_find_range_empty(start, reserved_va, size, align);
++    if (start <= reserved_va) {
++        ret = page_find_range_empty(start, reserved_va, size, align);
++    }
+     if (ret == -1 && start > mmap_min_addr) {
+         /* Restart at the beginning of the address space. */
+-        ret = page_find_range_empty(mmap_min_addr, start - 1, size, align);
++        ret = page_find_range_empty(mmap_min_addr, MIN(start - 1, reserved_va),
++                                    size, align);
+     }
+ 
+     return ret;
 
-Best regards,
 -- 
-Bingwu Zhang <xtex@astrafall.org>
+2.52.0
 
 
