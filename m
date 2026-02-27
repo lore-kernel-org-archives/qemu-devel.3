@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7456FD5333
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 10:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8261BFD5335
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 10:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvujP-0002Oi-Hq; Fri, 27 Feb 2026 05:05:59 -0500
+	id 1vvun7-0003kH-VQ; Fri, 27 Feb 2026 05:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vvujL-0002Nn-Ux; Fri, 27 Feb 2026 05:05:55 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.34])
+ id 1vvun6-0003jx-9D; Fri, 27 Feb 2026 05:09:48 -0500
+Received: from mxct.zte.com.cn ([183.62.165.209])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vvujH-0005Ey-7m; Fri, 27 Feb 2026 05:05:53 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ id 1vvun2-0006ny-St; Fri, 27 Feb 2026 05:09:47 -0500
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4fMkVK4rWpz4y4Zn;
- Fri, 27 Feb 2026 18:05:45 +0800 (CST)
+ by mxct.zte.com.cn (FangMail) with ESMTPS id 4fMkZm0mkwz51Sl8;
+ Fri, 27 Feb 2026 18:09:36 +0800 (CST)
 Received: from xaxapp05.zte.com.cn ([10.99.98.109])
- by mse-fl1.zte.com.cn with SMTP id 61RA5YSa098410;
- Fri, 27 Feb 2026 18:05:35 +0800 (+08)
+ by mse-fl2.zte.com.cn with SMTP id 61RA9YO1093381;
+ Fri, 27 Feb 2026 18:09:35 +0800 (+08)
  (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp05[null]) by mapi (Zmail) with MAPI id mid32;
- Fri, 27 Feb 2026 18:05:37 +0800 (CST)
-X-Zmail-TransId: 2afc69a16c71f43-629f5
+Received: from mapi (xaxapp02[null]) by mapi (Zmail) with MAPI id mid32;
+ Fri, 27 Feb 2026 18:09:37 +0800 (CST)
+X-Zmail-TransId: 2afa69a16d6104f-6baf7
 X-Mailer: Zmail v1.0
-Message-ID: <20260227180537641ywDyRd1dHlebVETYjXAFI@zte.com.cn>
+Message-ID: <20260227180937387Xf5-8a9sUNkRZnzDB99ay@zte.com.cn>
 In-Reply-To: <20260227180104794YvW9Rb2I_kAGzUruZL11Q@zte.com.cn>
 References: 20260227180104794YvW9Rb2I_kAGzUruZL11Q@zte.com.cn
-Date: Fri, 27 Feb 2026 18:05:37 +0800 (CST)
+Date: Fri, 27 Feb 2026 18:09:37 +0800 (CST)
 Mime-Version: 1.0
 From: <liu.xuemei1@zte.com.cn>
 To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
  <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>
 Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, <liu.xuemei1@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIDIvM10gaHcvaW50Yy9yaXNjdl9hcGxpYzogQWRkIGluLWtlcm5lbCBhcGxpYyBzYXZlIGFuZCByZXN0b3JlCgogZnVuY3Rpb24=?=
+Subject: =?UTF-8?B?W1BBVENIIDMvM10gaHcvaW50Yy9pbXNpYzogQWRkIGluLWtlcm5lbCBpbXNpYyBzYXZlIGFuZCByZXN0b3JlCgogZnVuY3Rpb24=?=
 Content-Type: text/plain;
 	charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 61RA5YSa098410
+X-MAIL: mse-fl2.zte.com.cn 61RA9YO1093381
 X-TLS: YES
 X-SPF-DOMAIN: zte.com.cn
 X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
 X-SPF: None
-X-SOURCE-IP: 10.5.228.132 unknown Fri, 27 Feb 2026 18:05:46 +0800
+X-SOURCE-IP: 10.5.228.133 unknown Fri, 27 Feb 2026 18:09:36 +0800
 X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69A16C79.001/4fMkVK4rWpz4y4Zn
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+X-Fangmail-MID-QID: 69A16D60.000/4fMkZm0mkwz51Sl8
+Received-SPF: pass client-ip=183.62.165.209;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxct.zte.com.cn
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,280 +79,239 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-Add save and restore function if riscv_use_emulated_aplic return
-false, it is to get and set APLIC irqchip state from KVM kernel.
+Add save and store funtction if kvm_irqchip_in_kernel() return
+true, it is to get and set IMSIC irqchip state from KVM kernel.
 
 Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
 ---
- hw/intc/riscv_aplic.c         | 200 ++++++++++++++++++++++++++++------
- include/hw/intc/riscv_aplic.h |   4 +
- 2 files changed, 173 insertions(+), 31 deletions(-)
+ hw/intc/riscv_imsic.c         | 171 +++++++++++++++++++++++++++++++---
+ include/hw/intc/riscv_imsic.h |   2 +
+ 2 files changed, 159 insertions(+), 14 deletions(-)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 8f70043111..3523e63fb0 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -922,14 +922,7 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
-         }
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index 7c9a012033..c0b07de0fc 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -34,6 +34,7 @@
+ #include "system/system.h"
+ #include "system/kvm.h"
+ #include "migration/vmstate.h"
++#include "kvm/kvm_riscv.h"
 
-         aplic->bitfield_words = (aplic->num_irqs + 31) >> 5;
--        aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
-         aplic->state = g_new0(uint32_t, aplic->num_irqs);
--        aplic->target = g_new0(uint32_t, aplic->num_irqs);
--        if (!aplic->msimode) {
--            for (i = 0; i < aplic->num_irqs; i++) {
--                aplic->target[i] = 1;
--            }
--        }
-         aplic->idelivery = g_new0(uint32_t, aplic->num_harts);
-         aplic->iforce = g_new0(uint32_t, aplic->num_harts);
-         aplic->ithreshold = g_new0(uint32_t, aplic->num_harts);
-@@ -941,6 +934,19 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
-         if (kvm_enabled()) {
-             aplic->kvm_splitmode = true;
-         }
-+    } else {
-+        aplic->nr_words = DIV_ROUND_UP(aplic->num_irqs, 32);
-+        aplic->setip = g_new0(uint32_t, aplic->nr_words);
-+        aplic->clrip = g_new0(uint32_t, aplic->nr_words);
-+        aplic->setie = g_new0(uint32_t, aplic->nr_words);
-+    }
-+
-+    aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
-+    aplic->target = g_new0(uint32_t, aplic->num_irqs);
-+    if (!aplic->msimode) {
-+        for (i = 0; i < aplic->num_irqs; i++) {
-+            aplic->target[i] = 1;
-+        }
+ #define IMSIC_MMIO_PAGE_LE             0x00
+ #define IMSIC_MMIO_PAGE_BE             0x04
+@@ -363,11 +364,12 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+         qdev_init_gpio_out(dev, imsic->external_irqs, imsic->num_pages);
+
+         imsic->num_eistate = imsic->num_pages * imsic->num_irqs;
+-        imsic->eidelivery = g_new0(uint32_t, imsic->num_pages);
+-        imsic->eithreshold = g_new0(uint32_t, imsic->num_pages);
+         imsic->eistate = g_new0(uint32_t, imsic->num_eistate);
      }
 
-     /*
-@@ -968,47 +974,179 @@ static const Property riscv_aplic_properties[] = {
-     DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
++    imsic->eidelivery = g_new0(uint32_t, imsic->num_pages);
++    imsic->eithreshold = g_new0(uint32_t, imsic->num_pages);
++
+     memory_region_init_io(&imsic->mmio, OBJECT(dev), &riscv_imsic_ops,
+                           imsic, TYPE_RISCV_IMSIC,
+                           IMSIC_MMIO_SIZE(imsic->num_pages));
+@@ -398,23 +400,17 @@ static const Property riscv_imsic_properties[] = {
+     DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
  };
 
--static bool riscv_aplic_state_needed(void *opaque)
-+static bool riscv_aplic_emul_state_needed(void *opaque)
+-static bool riscv_imsic_state_needed(void *opaque)
++static bool riscv_imsic_emul_state_needed(void *opaque)
  {
-     RISCVAPLICState *aplic = opaque;
-
-     return riscv_use_emulated_aplic(aplic->msimode);
+     return !kvm_irqchip_in_kernel();
  }
 
-+static const VMStateDescription vmstate_riscv_aplic_emul = {
-+    .name = "riscv_aplic_emul",
+-static const VMStateDescription vmstate_riscv_imsic = {
+-    .name = "riscv_imsic",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
+-    .needed = riscv_imsic_state_needed,
++static const VMStateDescription vmstate_riscv_imsic_emul = {
++    .name = "riscv_imsic_emul",
 +    .version_id = 1,
 +    .minimum_version_id = 1,
-+    .needed = riscv_aplic_emul_state_needed,
++    .needed = riscv_imsic_emul_state_needed,
+     .fields = (const VMStateField[]) {
+-            VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
+-                                  num_pages, 0,
+-                                  vmstate_info_uint32, uint32_t),
+-            VMSTATE_VARRAY_UINT32(eithreshold, RISCVIMSICState,
+-                                  num_pages, 0,
+-                                  vmstate_info_uint32, uint32_t),
+             VMSTATE_VARRAY_UINT32(eistate, RISCVIMSICState,
+                                   num_eistate, 0,
+                                   vmstate_info_uint32, uint32_t),
+@@ -422,6 +418,153 @@ static const VMStateDescription vmstate_riscv_imsic = {
+         }
+ };
+
++static bool riscv_imsic_in_kernel_state_needed(void *opaque)
++{
++    return kvm_irqchip_in_kernel();
++}
++
++static int riscv_imsic_in_kernel_pre_save(void *opaque)
++{
++    RISCVIMSICState *imsic = opaque;
++    uint64_t attr;
++
++    if (kvm_irqchip_in_kernel()) {
++        for (uint32_t i = 0; i < BITS_TO_LONGS(imsic->num_irqs); i++) {
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIE0 + i * 2);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eie + i * 2 , false);
++
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIP0 + i * 2);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eip + i * 2, false);
++#ifdef CONFIG_32BIT
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIE0 + i * 2 + 1);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eie + i * 2 + 1, false);
++
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIP0 + i * 2 + 1);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eip + i * 2 + 1, false);
++#endif
++        }
++    }
++
++    return 0;
++}
++
++static int riscv_imsic_in_kernel_post_load(void *opaque, int version_id)
++{
++    RISCVIMSICState *imsic = opaque;
++    uint64_t attr;
++
++    if (kvm_irqchip_in_kernel()) {
++        for (uint32_t i = 0; i < BITS_TO_LONGS(imsic->num_irqs); i++) {
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIE0 + i * 2);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eie + i * 2, true);
++
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIP0 + i * 2);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eip + i * 2, true);
++#ifdef CONFIG_32BIT
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIE0 + i * 2 + 1);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eie + i * 2 + 1, true);
++
++            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                                  ISELECT_IMSIC_EIP0 + i * 2 + 1);
++            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                     imsic->eip + i * 2 + 1, true);
++#endif
++        }
++    }
++
++    return 0;
++}
++
++static const VMStateDescription vmstate_riscv_imsic_in_kernel = {
++    .name = "riscv_imsic_in_kernel",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = riscv_imsic_in_kernel_state_needed,
++    .pre_save = riscv_imsic_in_kernel_pre_save,
++    .post_load = riscv_imsic_in_kernel_post_load,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_UINT32(state, RISCVAPLICState,
-+                              num_irqs, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-+        VMSTATE_UINT32(mmsicfgaddrH, RISCVAPLICState),
-+        VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
-+        VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-+        VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
-+        VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
-+        VMSTATE_VARRAY_UINT32(idelivery, RISCVAPLICState,
-+                                num_harts, 0,
-+                                vmstate_info_uint32, uint32_t),
-+        VMSTATE_VARRAY_UINT32(iforce, RISCVAPLICState,
-+                                num_harts, 0,
-+                                vmstate_info_uint32, uint32_t),
-+        VMSTATE_VARRAY_UINT32(ithreshold, RISCVAPLICState,
-+                                num_harts, 0,
-+                                vmstate_info_uint32, uint32_t),
++        VMSTATE_UINT64_ARRAY(eie, RISCVIMSICState, 64),
++        VMSTATE_UINT64_ARRAY(eip, RISCVIMSICState, 64),
 +        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+static bool riscv_aplic_in_kernel_state_needed(void *opaque)
++static int riscv_imsic_pre_save(void *opaque)
 +{
-+    RISCVAPLICState *aplic = opaque;
++    RISCVIMSICState *imsic = opaque;
++    uint64_t attr;
 +
-+    return !riscv_use_emulated_aplic(aplic->msimode);
-+}
++    if (kvm_irqchip_in_kernel()) {
++        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                              ISELECT_IMSIC_EIDELIVERY);
++        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                 imsic->eidelivery, false);
 +
-+static int riscv_aplic_in_kernel_pre_save(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        for (uint32_t i = 0; i < aplic->nr_words; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIP_BASE + i * 4,
-+                                     aplic->setip + i, false);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_CLRIP_BASE + i * 4,
-+                                     aplic->clrip + i, false);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIE_BASE + i * 4,
-+                                     aplic->setie + i, false);
-+        }
-+    }
++        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                              ISELECT_IMSIC_EITHRESHOLD);
++        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                 imsic->eithreshold, false);
++   }
 +
 +    return 0;
 +}
 +
-+static int riscv_aplic_in_kernel_post_load(void *opaque, int version_id)
++static int riscv_imsic_post_load(void *opaque, int version_id)
 +{
-+    RISCVAPLICState *aplic = opaque;
++    RISCVIMSICState *imsic = opaque;
++    uint64_t attr;
 +
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        for (uint32_t i = 0; i < aplic->nr_words; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIP_BASE + i * 4,
-+                                     aplic->setip + i, true);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_CLRIP_BASE + i * 4,
-+                                     aplic->clrip + i, true);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIE_BASE + i * 4,
-+                                     aplic->setie + i, true);
-+        }
-+    }
++    if (kvm_irqchip_in_kernel()) {
++        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                              ISELECT_IMSIC_EIDELIVERY);
++        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                 imsic->eidelivery, true);
++
++        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
++                                              ISELECT_IMSIC_EITHRESHOLD);
++        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
++                                 imsic->eithreshold, true);
++   }
 +
 +    return 0;
 +}
 +
-+static const VMStateDescription vmstate_riscv_aplic_in_kernel = {
-+    .name = "riscv_aplic_in_kernel",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = riscv_aplic_in_kernel_state_needed,
-+    .pre_save = riscv_aplic_in_kernel_pre_save,
-+    .post_load = riscv_aplic_in_kernel_post_load,
++static const VMStateDescription vmstate_riscv_imsic = {
++    .name = "riscv_imsic",
++    .version_id = 3,
++    .minimum_version_id = 3,
++    .pre_save = riscv_imsic_pre_save,
++    .post_load = riscv_imsic_post_load,
 +    .fields = (const VMStateField[]) {
-+            VMSTATE_VARRAY_UINT32(setip, RISCVAPLICState,
-+                                  nr_words, 0,
-+                                  vmstate_info_uint32, uint32_t),
-+            VMSTATE_VARRAY_UINT32(clrip, RISCVAPLICState,
-+                                  nr_words, 0,
-+                                  vmstate_info_uint32, uint32_t),
-+            VMSTATE_VARRAY_UINT32(setie, RISCVAPLICState,
-+                                  nr_words, 0,
-+                                  vmstate_info_uint32, uint32_t),
-+            VMSTATE_END_OF_LIST()
++        VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
++                              num_pages, 0,
++                              vmstate_info_uint32, uint32_t),
++        VMSTATE_VARRAY_UINT32(eithreshold, RISCVIMSICState,
++                              num_pages, 0,
++                              vmstate_info_uint32, uint32_t),
++        VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_riscv_imsic_emul,
++        &vmstate_riscv_imsic_in_kernel,
++        NULL
 +    }
 +};
 +
-+static int riscv_aplic_pre_save(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_DOMAINCFG,
-+                                 &aplic->domaincfg, false);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_GENMSI,
-+                                 &aplic->genmsi, false);
-+
-+        for (uint32_t i = 1; i < aplic->num_irqs; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SOURCECFG_BASE + (i - 1) * 4,
-+                                     aplic->sourcecfg + i, false);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_TARGET_BASE + (i - 1) * 4,
-+                                     aplic->target + i, false);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static int riscv_aplic_post_load(void *opaque, int version_id)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_DOMAINCFG,
-+                                 &aplic->domaincfg, true);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_GENMSI,
-+                                 &aplic->genmsi, true);
-+
-+        for (uint32_t i = 1; i < aplic->num_irqs; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SOURCECFG_BASE + (i - 1) * 4,
-+                                     aplic->sourcecfg + i, true);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_TARGET_BASE + (i - 1) * 4,
-+                                     aplic->target + i, true);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static const VMStateDescription vmstate_riscv_aplic = {
-     .name = "riscv_aplic",
--    .version_id = 3,
--    .minimum_version_id = 3,
--    .needed = riscv_aplic_state_needed,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-+    .pre_save = riscv_aplic_pre_save,
-+    .post_load = riscv_aplic_post_load,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
--            VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
--            VMSTATE_UINT32(mmsicfgaddrH, RISCVAPLICState),
--            VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
--            VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-             VMSTATE_UINT32(genmsi, RISCVAPLICState),
--            VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
--            VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
--            VMSTATE_VARRAY_UINT32(sourcecfg, RISCVAPLICState,
--                                  num_irqs, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(state, RISCVAPLICState,
-+            VMSTATE_VARRAY_UINT32(sourcecfg , RISCVAPLICState,
-                                   num_irqs, 0,
-                                   vmstate_info_uint32, uint32_t),
-             VMSTATE_VARRAY_UINT32(target, RISCVAPLICState,
-                                   num_irqs, 0,
-                                   vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(idelivery, RISCVAPLICState,
--                                  num_harts, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(iforce, RISCVAPLICState,
--                                  num_harts, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(ithreshold, RISCVAPLICState,
--                                  num_harts, 0,
--                                  vmstate_info_uint32, uint32_t),
-             VMSTATE_END_OF_LIST()
--        }
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_riscv_aplic_emul,
-+        &vmstate_riscv_aplic_in_kernel,
-+        NULL
-+    }
- };
+ static void riscv_imsic_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+diff --git a/include/hw/intc/riscv_imsic.h b/include/hw/intc/riscv_imsic.h
+index fae999731d..af7a7ba4f1 100644
+--- a/include/hw/intc/riscv_imsic.h
++++ b/include/hw/intc/riscv_imsic.h
+@@ -54,6 +54,8 @@ struct RISCVIMSICState {
+     uint32_t *eidelivery;
+     uint32_t *eithreshold;
+     uint32_t *eistate;
++    uint64_t eip[64];
++    uint64_t eie[64];
 
- static void riscv_aplic_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
-index c7a4d4ad01..1976bea68c 100644
---- a/include/hw/intc/riscv_aplic.h
-+++ b/include/hw/intc/riscv_aplic.h
-@@ -53,6 +53,9 @@ struct RISCVAPLICState {
-     uint32_t *idelivery;
-     uint32_t *iforce;
-     uint32_t *ithreshold;
-+    uint32_t *setip;
-+    uint32_t *clrip;
-+    uint32_t *setie;
-
-     /* topology */
- #define QEMU_APLIC_MAX_CHILDREN        16
-@@ -66,6 +69,7 @@ struct RISCVAPLICState {
-     uint32_t num_harts;
-     uint32_t iprio_mask;
-     uint32_t num_irqs;
-+    uint32_t nr_words;
-     bool msimode;
+     /* config */
      bool mmode;
-
 -- 
 2.27.0
 
