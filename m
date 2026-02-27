@@ -4,107 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25CFCFEFB6A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0EDFEFB6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw1Mk-0002PS-MM; Fri, 27 Feb 2026 12:11:02 -0500
+	id 1vw1T0-0004Qf-Bb; Fri, 27 Feb 2026 12:17:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1vw1Mj-0002PF-FK
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:11:01 -0500
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
- id 1vw1Mh-000140-KJ
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:11:01 -0500
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-506251815a3so19675911cf.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 09:10:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772212258; cv=none;
- d=google.com; s=arc-20240605;
- b=GUdLFVfwauFOJxjZ+5E+qnW6KFadpAbArWIG1HH/zzbxLJSVaPt+UeaUC3r3OQt3cA
- od148ZIkxlOR44WsAscniwqPqHecFfOnpy01czQq+CAlJ/rv7pVthzt8MGTdf1az6Iwk
- t1wmOf3KGGyHKShwOB0ywOFBuouUtjE+N7N5svl1+G0OIOFSwiYq6alITPjFEHTtc5dB
- 8zUuMVhDiOht8h/+Qbpc993A+Ak5LRrDxaHOwgunnqu0WVUEd1t1XO1uPyjFaqsFxeSt
- C4gYInGUuH+foZip3P+x8TsoZ1oKNGuqw6rl12T0WVOL56O3SiiTOKc5B3D9mPO0yEQc
- WhOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4jkB89qc1VzhOh0RayZ1MFW7zsWsHWB61Akofa84qd8=;
- fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
- b=lQHOyzRpgG67KC4Xc0hEQHI+NBlD17onJqmPywYiZbUoKIgVOg9WbCF9VeZbocdwvM
- stUsFSxAO9TnZO8D/jRLZRH4zfZLuv1PY/J6iYknHbiCy/mR4ddHwypobvDIw4nDV2fQ
- hpuWgM1XZBNzGSA15D2TbpgUX+GVsMf8Vjuw5tmN/CzMuGBU6wm49bukEk9x+p0/z/bv
- rCMtEjGZslotZjn2waW1ce1CpFaU2e1Q/4rVqWe16Q0nuGU61lDoUsyO4IMLAqtzhRUd
- Jf5uRqUmovQs724nmEqh+gY7G4RhxghayZAt/4I10houVF/BwrfTGD+xpaDDi71LgMSq
- dnMg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772212258; x=1772817058; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4jkB89qc1VzhOh0RayZ1MFW7zsWsHWB61Akofa84qd8=;
- b=G+4UKP0XaQNhkRxRStCeZ8k/LDKdJIKF7rfQJPgVCRHaNCqSXD2m75ak2wAOokoFBu
- +D+6wfSO5CJwuwW3SR1XhITBTNI+ZjPpdiFqEM9cx71wys1sv1fkqxiNluhYoniP1HNo
- m5IZgmnna9jj4ttBlOX2KKHuMKYqJT98YnKg3RjCIEAQLTdwqeD1rgeiRVdm9WBdC00/
- JEmxkpVHI0rIuGQ7RdFBJJ5GZ9rmwchSZHp11CQyObuOF8wjJwvZFedOImKUd/LgBZQh
- D/Wq2EGVaNtVeQKmbLGYlAg8bZ8qPYXpmlzOJKDjzBC9831hch49ZoQlU/X7d/Lh/hGu
- QwCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772212258; x=1772817058;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4jkB89qc1VzhOh0RayZ1MFW7zsWsHWB61Akofa84qd8=;
- b=sEt3mA5bI1za1fnmHW0Tl8gszvL1RseiCwhreigMGWJJrUMQRCT6jnLS6XznGHCYRV
- c6+F8nP8b9gOkL3Ag29WmcwsxubJDtL1JdPSc+QnCFj9NNFEvKN5Hrmwe+uGOSH6qRyt
- 4LZA75DL8IvyfC9HN+M71uAcU7Mim5LgVToPM9rqUqNp3gEvrnYzqvU6ciiqugWFUzhx
- 9bj/Gfl3T8/CCBXt8MbA2ZXSV3WActYHWYsKrEoTZ9KQDZ80fmCLm9v76s8uucmRBWh8
- /Aq810qEpu5UjIQd0l/2BxQoCtXzWBWxJVKSvzM9SmKpodiOlDGx8GHY+KC3/c+QZ+Um
- D5GQ==
-X-Gm-Message-State: AOJu0YwpjXnSJMIxiXU5lcwyxW0XBvvX8eoJ+SAOvVJrq/CVXu1J9eoW
- pKedNq3ulUijZSXTyOUbs6yG6s7lK0StT/LLV9jYnou6VAWy1wKe9NPe3dEZOkaegvcInUC41Z8
- LczeFA9Bu4qWUaHe7+6IO7thya72Nebc=
-X-Gm-Gg: ATEYQzyFL/eVFCcYbumcBM9Dh0b/gg5jVm4/IRd7kZFe55ra6cEiihOGamyp1u99Xl8
- Z1kKMW1Fdl0oRyzSw4izIcarzNCeSLQSnIOH9eYraVEKsii8acNTvOruv9BwV+DM655+MAUUbvC
- VoQktxrzEIo40YkWTnA7W683RyJV6+GinCt6j/NnLdxoXkW+fnwoxKP021+kNBoQa+xyLCLbkmg
- Bu78eA99Z67jpk8aUuzo7WOCzDFk5Cd00d3C1x4b+PCVUHQXDvH/c30RfCxY3vJgH4M3pXH87YI
- CTO/0LDBqecyja/Zu8pDM6g=
-X-Received: by 2002:a05:622a:4ce:b0:506:9d3e:67ed with SMTP id
- d75a77b69052e-50752a1efcbmr42539211cf.70.1772212258284; Fri, 27 Feb 2026
- 09:10:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xtex@envs.net>) id 1vw10Y-0004Ef-V3
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 11:48:06 -0500
+Received: from mail.envs.net ([157.180.15.194])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xtex@envs.net>) id 1vw10W-0004Ri-Lt
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 11:48:06 -0500
+Received: from localhost (mail.envs.net [127.0.0.1])
+ by mail.envs.net (Postfix) with ESMTP id 38E4F1C00C2;
+ Fri, 27 Feb 2026 16:47:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=envs.net; s=modoboa;
+ t=1772210876; bh=csWXSgMvLLu/s4uO1TBWAsRV4yhoL8ER4BRpdpMb2aE=;
+ h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+ b=TVL79udivh+jEKI+yDRV472fISVdVWHDWL5+V3mK/whwVD01NONuL/B/uhL3VkbwO
+ bLvNP0zOj6GSDiiVoOXylWvgMSCE+GuRcEn4norS0HEVFi1PASes5l/Dgq/ZaU4Aic
+ lOL/mlRoz9XBF+FaWVBwuFMgYv2eas5djks5pshUKHK8Y+p/eAqhu+5dgIutBLCUSY
+ U7d6HsYiIveDFRubFA2+1IZD5/eRyb4vDd9EIXJWflP4BhXxeQd8w6gi75xF8iyL64
+ H6emzXC/NnRFYbqzfcEdvqBdyHPK9KwLTQLbfzqJcG0InF26JFFkr3AY87pODFcidu
+ TvLqwgUCL6nLcZYwHVICspkmQK+w7bYXJySNHGBbBuQMyk0bmzCs6/xrnLqEtblAzR
+ UWaLorNpF3itRr4q8xeeKSOaOm/Loo0yyxylZzzZLmkfM/heWSZL4xnuXFU5GPZy3Q
+ o6nHFWmmFUv5ebnwu0XmmzT97pToGUZMubRIHPK8jKozK2GyWA0/tj/tkSpsdZ12gL
+ 9yQD4jJNzc/5rLjEejIcV/S3UJxw97BWxaZ2KqbpUB5+RZZYmX9eHPslBhNb0hVwJ1
+ 8DuzQPKUwDMjnA2kZ+OQTNU8MXEOXGUcJjfiRIa4F2m2FTr+Xfi8D9XiOYwTzJFCRJ
+ ZxylYsgBUmrg8l0m3C8Rj7Rk=
+X-Virus-Scanned: Debian amavisd-new at mail.envs.net
+Received: from mail.envs.net ([127.0.0.1])
+ by localhost (mail.envs.net [127.0.0.1]) (amavisd-new, port 10026)
+ with ESMTP id X3yltzk1xBL7; Fri, 27 Feb 2026 16:47:51 +0000 (UTC)
+Received: from localhost.localdomain (unknown [142.248.151.117])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by mail.envs.net (Postfix) with ESMTPSA;
+ Fri, 27 Feb 2026 16:47:50 +0000 (UTC)
+From: Bingwu Zhang <xtex@envs.net>
+Date: Sat, 28 Feb 2026 00:46:33 +0800
+Subject: [PATCH 4/4] tests/tcg/multiarch/test-mmap: Check mmaps beyond
+ reserved_va
 MIME-Version: 1.0
-References: <CAOkKuiOpVZwn7ZwPDPxJWmQ2SovUUTf2eLwg9dWFgEEhi3_NFw@mail.gmail.com>
- <aaFRigrJ-uiYcmUi@redhat.com>
- <CAOkKuiN_RsOQTREhAvQT2aJf0XJ4Mxk8XRK6MrXrWcoNdGhr4w@mail.gmail.com>
- <aaFd7GASyxLikTTC@redhat.com>
-In-Reply-To: <aaFd7GASyxLikTTC@redhat.com>
-From: Choon Keong Teo <ckeong.teo17@gmail.com>
-Date: Sat, 28 Feb 2026 01:10:46 +0800
-X-Gm-Features: AaiRm532n-9oA_9NS_0YuDZK650pnO2f7u7t4SQX3Y4XjYOEDOzHJYBdXBjR1Uk
-Message-ID: <CAOkKuiMeb=SxjZnytCAbPtJQrHA8zHyDaQkKwd++aPAmCQ_7-Q@mail.gmail.com>
-Subject: Re: [HELP] Issue running test cases in Qemu
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=ckeong.teo17@gmail.com; helo=mail-qt1-x834.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260228-abyss-mmap-relocation-v1-4-c8ec0476894b@astrafall.org>
+References: <20260228-abyss-mmap-relocation-v1-0-c8ec0476894b@astrafall.org>
+In-Reply-To: <20260228-abyss-mmap-relocation-v1-0-c8ec0476894b@astrafall.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>, 
+ =?utf-8?q?Alex_R=C3=B8nne_Petersen?= <alex@alexrp.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Kyle Evans <kevans@freebsd.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Bingwu Zhang <xtex@astrafall.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1372; i=xtex@astrafall.org;
+ h=from:subject:message-id; bh=Ch4YHmmE4DsC/m7FHP6NO4qOoidbitpNHb4YWm7olLM=;
+ b=owGbwMvMwCW2U4Ij7wZL9ETG02pJDJkLT0178499mvyh5r2GEW1VLb4FFv2RE78dzL/kvypyi
+ jhrk8uzjoksDGJcDJZiiixFhg3erDrp/KLLymVh5rAygQyRFmlgYGBgYGHgy03MKzXSMdIz1TbU
+ MzTUMdIxYuDiFICpNnJg+J//xNxe5O7uvjdLO4vZOx4/XqhmvECgo7curieaqTjXjYPhn2nkkQy
+ ObRcfFyfEZU61iw+aEycUmHp8rtD0XzeCLRLW8gMA
+X-Developer-Key: i=xtex@astrafall.org; a=openpgp;
+ fpr=7231804B052C670F15A6771DB918086ED8045B91
+Received-SPF: pass client-ip=157.180.15.194; envelope-from=xtex@envs.net;
+ helo=mail.envs.net
+X-Spam_score_int: -9
+X-Spam_score: -1.0
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 27 Feb 2026 12:17:26 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -119,39 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Daniel,
+From: Bingwu Zhang <xtex@astrafall.org>
 
-Thank you so much for your guidance!
+Unfixed mmap calls where start > reserved_va or the max guest addr
+should have a valid result.
 
+Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
+---
+ tests/tcg/multiarch/test-mmap.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
+diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
+index 88f7a04101a3..2bfa52912704 100644
+--- a/tests/tcg/multiarch/test-mmap.c
++++ b/tests/tcg/multiarch/test-mmap.c
+@@ -497,6 +497,20 @@ void check_shrink_mmaps(void)
+     fprintf(stdout, " passed\n");
+ }
+ 
++void check_mmaps_beyond_addr_space(void)
++{
++    unsigned char *addr;
++    addr = mmap((void *)(-(unsigned long)pagesize * 10), pagesize * 2,
++                PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d", __func__, (void *)addr, errno);
++    fail_unless(addr != MAP_FAILED);
++
++    memcpy(dummybuf, addr, 2 * pagesize);
++    munmap(addr, 2 * pagesize);
++
++    fprintf(stdout, " passed\n");
++}
++
+ int main(int argc, char **argv)
+ {
+ 	char tempname[] = "/tmp/.cmmapXXXXXX";
+@@ -540,6 +554,7 @@ int main(int argc, char **argv)
+ 	check_file_unfixed_eof_mmaps();
+ 	check_invalid_mmaps();
+     check_shrink_mmaps();
++    check_mmaps_beyond_addr_space();
+ 
+ 	/* Fails at the moment.  */
+ 	/* check_aligned_anonymous_fixed_mmaps_collide_with_host(); */
 
-Best regards,
-Choon Keong.
+-- 
+2.52.0
 
-On Fri, Feb 27, 2026 at 5:03=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Fri, Feb 27, 2026 at 04:34:23PM +0800, Choon Keong Teo wrote:
-> > Thanks for your reply. I would like to start by focusing on the unit
-> > tests and qtests. Is there any method for running a single test file?
-> > Thank you so much for your help!
->
-> Just directly execute the binary for the test you care about in both
-> those cases.
->
-> For qtests you need to also set an env variable
->
->  QTEST_QEMU_BINARY=3D./build/qemu-system-XXXXX
->
-> for the target you're testing.
->
-> More guidance is in docs/devel/testing/
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
 
