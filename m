@@ -4,113 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5680104891D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED44C103FFAC
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw6WO-0007Hw-Se; Fri, 27 Feb 2026 17:41:20 -0500
+	id 1vw6Wn-0007nz-NK; Fri, 27 Feb 2026 17:41:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vw6WJ-0007Bc-3M
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:41:15 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6Wm-0007la-Kl
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:41:44 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vw6WH-000300-8y
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:41:14 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2D9583FACF;
- Fri, 27 Feb 2026 22:41:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772232070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7onmDyMLk8L74KuGD0ZRzUXXTBrppU5h3LV3AjMV3I=;
- b=exjwL75YE/pcTM67DsMMc5iL/MOfVXiTWvVRkopN2aj03TGCffxVyhnH/+PoDmc4+Vbfz3
- lFNopHO0r50BToQYtwoP2uxA1ElVVdux8Ij+PPN2jTs8FrnQPmoc3tqg76A90ouA4kjPto
- jEDywDeiclrtS9VyjWMUbN2vixf+nNc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772232070;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7onmDyMLk8L74KuGD0ZRzUXXTBrppU5h3LV3AjMV3I=;
- b=4jm6LsMoc8RLib/z8ZwCaTFguXRmVdWYhhPP2yzVbw4CBkLiuwTaMUPGXi4WIShnd+EVIM
- 00EvrBOVNSW5q4AA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=exjwL75Y;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4jm6LsMo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772232070; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7onmDyMLk8L74KuGD0ZRzUXXTBrppU5h3LV3AjMV3I=;
- b=exjwL75YE/pcTM67DsMMc5iL/MOfVXiTWvVRkopN2aj03TGCffxVyhnH/+PoDmc4+Vbfz3
- lFNopHO0r50BToQYtwoP2uxA1ElVVdux8Ij+PPN2jTs8FrnQPmoc3tqg76A90ouA4kjPto
- jEDywDeiclrtS9VyjWMUbN2vixf+nNc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772232070;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B7onmDyMLk8L74KuGD0ZRzUXXTBrppU5h3LV3AjMV3I=;
- b=4jm6LsMoc8RLib/z8ZwCaTFguXRmVdWYhhPP2yzVbw4CBkLiuwTaMUPGXi4WIShnd+EVIM
- 00EvrBOVNSW5q4AA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A2BD73EA69;
- Fri, 27 Feb 2026 22:41:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wEnhGYUdomlucAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 27 Feb 2026 22:41:09 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
-Cc: vsementsov@yandex-team.ru, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Nicholas Piggin <npiggin@gmail.com>, Harsh
- Prateek Bora <harshpb@linux.ibm.com>, Peter Maydell
- <peter.maydell@linaro.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:sPAPR (pseries)"
- <qemu-ppc@nongnu.org>, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Subject: Re: [PATCH v2 03/16] migration: make .post_save() a void function
-In-Reply-To: <20260220210214.800050-4-vsementsov@yandex-team.ru>
-References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
- <20260220210214.800050-4-vsementsov@yandex-team.ru>
-Date: Fri, 27 Feb 2026 19:41:07 -0300
-Message-ID: <87ecm5u7wc.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6Wl-00037Y-1E
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:41:44 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4398f8403edso1977855f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:41:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772232101; x=1772836901; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CQ88jLxHMH0BcOoSDAI/nDiZx5RzOvlSGPqAZG+5zWk=;
+ b=FgQ/GfkVyhmkq71Ou13QwFTWW8NvfidNLIymPiw+s9zVfeAgQ5KHgsAynj6LhBi+t+
+ QecGs0tF1PIfZY4e8Ef2etfrCIE7UGinwLAptsu+ETLnyR6hLq29EhXJA/dTT7fZEAuM
+ g6KARqNBDoZqxKECFt6XyQnymSJfyPn488w8N0P6rDv7c46NxQ11f/lobAdTlzQT6BeW
+ +ykg7AhuJ/6d7rY7QF344LZ7GBdJytbjnegyDFBuw6bpwgvZu2BrF4i8moT8RBNdjN1v
+ ElIVZONGodArAtKJNxlY1wNrZM7P/lmBUA3CaFYaLDyO3lMVKWYLNiiZooikgVjgNm0z
+ 00Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772232101; x=1772836901;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CQ88jLxHMH0BcOoSDAI/nDiZx5RzOvlSGPqAZG+5zWk=;
+ b=OJRqYVCG5n5Dy4pofmw6DA/byPmejsCLzbarzkMvO61g6+jA3+HZcxsCZrlrviAe+3
+ Xc8tafkL1a2fB92BkLDfEugyZdpdUDqcvDf5JDha/c8Wsd5FyIJfxNBrfKHoAfwAPTta
+ yse+RYBBwQxaW88teoL8kfhVW6Al+1V/BfFkuhagjpSFMLJrbh4Ii1h5LR5JgrJ3eTpW
+ EwGKJEREQocV3K31ww2IyaSiR7CvakOtc9UnpNEW7ki8UhMF87Jutu+P/Ix+t7r2rZvV
+ mhPAoHQ3tc1R34JrBcb+S90FwtTt9dxpy1dZJmDh0xJ7k3JHudgO58pi1ousuagQozP5
+ rr9w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0MNajUg9/TYbGw9dnwJLt2LXdXYSqBOZ+RG6iPwAoKkQOtPg9rm8rJ9xlMOcrO3ukYkelAo8us/vh@nongnu.org
+X-Gm-Message-State: AOJu0YzylVTpnB1WlZuNg/HzxwkltoTMKYMXRl859joatmnekKIrpRCQ
+ KUWn0XGxGVpuqWDuDtEHFkjGSDEhN1ajjxk0t1PmZ2GfjFsAqNnR6bmYBdBjtv8ODGM=
+X-Gm-Gg: ATEYQzxzfX/MUpxu/X+oCXUxwnOKtZWs1UGIIDa/38s2kxiheXel2IQxBFJSOZUp/AD
+ VoSPUd1RXp3okSkAADvWYEeOe1qZQ9ylwl4EXNqvl9bssBqwiZ99DrWVFANOxgTzqbpRjw8avSb
+ f6FXVchBOZaNB9uVfpBuMsHaxOoqFc8ZA2h8C+yatNaAWUTFAsDNrI0sbPpn+8Am7lqecVWhCe4
+ 8SmdDAlyMswF8+OrI6jh7JMI9EcLwUa6B9fbPhKCxfIstvRjGRTi1SAkArfq6BOPBGYSoW3WrMa
+ K4px6iCMc0+By+drUpv1QvL9FVEmyd7dEhUTKpnOli+iaJ1CdDvZOb2OmgssLppSws/8x5MswVV
+ 4Bm1vxHYkohLkTJnwqiVneoIlEBPQctJKVFY6OWH9mGCeR6DAwflT3x9QI+7lOmV9ItU9Z3WZiu
+ wEQyyx93mq/rbAmbHsGnPniLxE97IEMqRcbl6oSi+hMfOT4/bJwP8xIKXBvv3COA6Luw==
+X-Received: by 2002:a05:600c:34d0:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-483c9bdb2d2mr84951095e9.31.1772232101435; 
+ Fri, 27 Feb 2026 14:41:41 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd750701sm256758945e9.11.2026.02.27.14.41.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Feb 2026 14:41:40 -0800 (PST)
+Message-ID: <203f4d67-da40-41c9-881e-19359fc39faa@linaro.org>
+Date: Fri, 27 Feb 2026 23:41:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; TO_DN_SOME(0.00)[];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[yandex-team.ru,linaro.org,gmail.com,linux.ibm.com,nongnu.org];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 2D9583FACF
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/16] target/riscv: Ensure LE instruction fetching
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-5-djordje.todorovic@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260225102016.200654-5-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,167 +109,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
-
-> All other handlers now have _errp() variants. Should we go this way
-> for .post_save()? Actually it's rather strange, when the vmstate do
-> successful preparations in .pre_save(), then successfully save all
-> sections and subsections, end then fail when all the state is
-> successfully transferred to the target.
->
-> Happily, we have only three .post_save() realizations, all always
-> successful. Let's make this a rule.
->
-> Also note, that we call .post_save() in two places, and handle
-> its (theoretical) failure inconsistently. Fix that too.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 25/2/26 11:20, Djordje Todorovic wrote:
+> With the insroduction of BE RISCV target, instruction fetching
+> needs to always expect instructions to be LE encoded as specified
+> by the RISCV specification.
 > ---
->  docs/devel/migration/main.rst |  2 +-
->  hw/ppc/spapr_pci.c            |  3 +--
->  include/migration/vmstate.h   | 10 +++++++++-
->  migration/savevm.c            |  3 +--
->  migration/vmstate.c           | 12 +++---------
->  target/arm/machine.c          |  4 +---
->  6 files changed, 16 insertions(+), 18 deletions(-)
->
-> diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-> index 234d280249..2de7050764 100644
-> --- a/docs/devel/migration/main.rst
-> +++ b/docs/devel/migration/main.rst
-> @@ -439,7 +439,7 @@ The functions to do that are inside a vmstate definition, and are called:
->  
->    This function is called before we save the state of one device.
->  
-> -- ``int (*post_save)(void *opaque);``
-> +- ``void (*post_save)(void *opaque);``
->  
->    This function is called after we save the state of one device
->    (even upon failure, unless the call to pre_save returned an error).
-> diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-> index ea998bdff1..1dc3b02659 100644
-> --- a/hw/ppc/spapr_pci.c
-> +++ b/hw/ppc/spapr_pci.c
-> @@ -2093,14 +2093,13 @@ static int spapr_pci_pre_save(void *opaque)
->      return 0;
->  }
->  
-> -static int spapr_pci_post_save(void *opaque)
-> +static void spapr_pci_post_save(void *opaque)
->  {
->      SpaprPhbState *sphb = opaque;
->  
->      g_free(sphb->msi_devs);
->      sphb->msi_devs = NULL;
->      sphb->msi_devs_num = 0;
-> -    return 0;
->  }
->  
->  static int spapr_pci_post_load(void *opaque, int version_id)
-> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> index 3695afd483..15578b3e28 100644
-> --- a/include/migration/vmstate.h
-> +++ b/include/migration/vmstate.h
-> @@ -223,7 +223,15 @@ struct VMStateDescription {
->      bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
->      int (*pre_save)(void *opaque);
->      bool (*pre_save_errp)(void *opaque, Error **errp);
-> -    int (*post_save)(void *opaque);
+>   target/riscv/translate.c | 17 ++++++++++-------
+>   1 file changed, 10 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index f687c75fe4..67dfb5f1c0 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -23,6 +23,8 @@
+>   #include "exec/helper-proto.h"
+>   #include "exec/helper-gen.h"
+>   #include "exec/target_page.h"
+> +#include "exec/tswap.h"
 > +
-> +    /*
-> +     * post_save() rarely used to free some temporary resources.
-> +     * It's is called if .pre_save[_errp]() call was successful
-> +     * (or .pre_save[_errp] handler absent), regardless success
-> +     * or failure during fields and subsections save. If
-> +     * .pre_save[_errp]() fails, .post_save() is not called.
-> +     */
-
-I would not mention usage directly and maybe also simplify the language
-a bit. If there's doubt on the exact flow, people can read the code:
-
-  /*
-   * Unless .pre_save() fails, post_save() is called after saving
-   * fields and subsections. It should not fail because at this point
-   * the state has potentially already been transferred.
-   */
-
-> +    void (*post_save)(void *opaque);
->      bool (*needed)(void *opaque);
->      bool (*dev_unplug_pending)(void *opaque);
->  
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 3a16c467b2..c5236e71ba 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -321,14 +321,13 @@ static int configuration_pre_save(void *opaque)
->      return 0;
->  }
->  
-> -static int configuration_post_save(void *opaque)
-> +static void configuration_post_save(void *opaque)
->  {
->      SaveState *state = opaque;
->  
->      g_free(state->capabilities);
->      state->capabilities = NULL;
->      state->caps_count = 0;
-> -    return 0;
->  }
->  
->  static int configuration_pre_load(void *opaque)
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 651c3fe011..5111e7a141 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -550,10 +550,7 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->                  if (ret) {
->                      error_prepend(errp, "Save of field %s/%s failed: ",
->                                    vmsd->name, field->name);
-> -                    if (vmsd->post_save) {
-> -                        vmsd->post_save(opaque);
-> -                    }
-> -                    return ret;
-> +                    goto out;
->                  }
->  
->                  /* Compressed arrays only care about the first element */
-> @@ -578,12 +575,9 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->  
->      ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
->  
-> +out:
->      if (vmsd->post_save) {
-> -        int ps_ret = vmsd->post_save(opaque);
-> -        if (!ret && ps_ret) {
-> -            ret = ps_ret;
-> -            error_setg(errp, "post-save failed: %s", vmsd->name);
-> -        }
-> +        vmsd->post_save(opaque);
-
-Nice cleanup.
-
->      }
->      return ret;
->  }
-> diff --git a/target/arm/machine.c b/target/arm/machine.c
-> index bbaae34449..de810220e2 100644
-> --- a/target/arm/machine.c
-> +++ b/target/arm/machine.c
-> @@ -993,15 +993,13 @@ static int cpu_pre_save(void *opaque)
->      return 0;
->  }
->  
-> -static int cpu_post_save(void *opaque)
-> +static void cpu_post_save(void *opaque)
->  {
->      ARMCPU *cpu = opaque;
->  
->      if (!kvm_enabled()) {
->          pmu_op_finish(&cpu->env);
->      }
+>   #include "exec/translator.h"
+>   #include "accel/tcg/cpu-ldst.h"
+>   #include "exec/translation-block.h"
+> @@ -302,7 +304,7 @@ static void gen_goto_tb(DisasContext *ctx, unsigned tb_slot_idx,
+>                           target_long diff)
+>   {
+>       target_ulong dest = ctx->base.pc_next + diff;
 > -
-> -    return 0;
->  }
->  
->  static int cpu_pre_load(void *opaque)
+> +
+>        /*
+>         * Under itrigger, instruction executes one by one like singlestep,
+>         * direct block chain benefits will be small.
+> @@ -617,7 +619,7 @@ static void gen_ctr_jal(DisasContext *ctx, int rd, target_ulong imm)
+>   static void gen_jal(DisasContext *ctx, int rd, target_ulong imm)
+>   {
+>       TCGv succ_pc = dest_gpr(ctx, rd);
+> -
+> +
+>       /* check misaligned: */
+>       if (!riscv_cpu_allow_16bit_insn(ctx->cfg_ptr,
+>                                       ctx->priv_ver,
+> @@ -1253,13 +1255,13 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
+>            * real one is 2 or 4 bytes. Instruction preload wouldn't trigger
+>            * additional page fault.
+>            */
+> -        opcode = translator_ldl(env, &ctx->base, ctx->base.pc_next);
+> +        opcode = tswap32(translator_ldl(env, &ctx->base, ctx->base.pc_next));
+>       } else {
+>           /*
+>            * For unaligned pc, instruction preload may trigger additional
+>            * page fault so we only load 2 bytes here.
+>            */
+> -        opcode = (uint32_t) translator_lduw(env, &ctx->base, ctx->base.pc_next);
+> +        opcode = (uint32_t) tswap16(translator_lduw(env, &ctx->base, ctx->base.pc_next));
+>       }
+>       ctx->ol = ctx->xl;
+>   
+> @@ -1278,9 +1280,9 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
+>       } else {
+>           if (!pc_is_4byte_align) {
+>               /* Load last 2 bytes of instruction here */
+> -            opcode = deposit32(opcode, 16, 16,
+> -                               translator_lduw(env, &ctx->base,
+> -                                               ctx->base.pc_next + 2));
+> +            uint16_t opcode_hi = translator_lduw(env, &ctx->base,
+> +                                                 ctx->base.pc_next + 2);
+> +            opcode = deposit32(opcode, 16, 16, tswap16(opcode_hi));
+>           }
+>           ctx->opcode = opcode;
+>   
+> @@ -1396,6 +1398,7 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+>               if (page_ofs > TARGET_PAGE_SIZE - MAX_INSN_LEN) {
+>                   uint16_t next_insn =
+>                       translator_lduw(env, &ctx->base, ctx->base.pc_next);
+> +                next_insn = tswap16(next_insn);
+>                   int len = insn_len(next_insn);
+>   
+>                   if (!translator_is_same_page(&ctx->base, ctx->base.pc_next + len - 1)) {
+
+Per commit a31f16bdd4a ("target/riscv: Inline translator_ld[uw,l,q]
+calls") you shouldn't need that.
+
+This series base branch is outdated.
 
