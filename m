@@ -4,151 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7F9FEFB56
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 848DFFEFB56
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvylt-0006C4-Td; Fri, 27 Feb 2026 09:24:50 -0500
+	id 1vvysL-0008G1-KZ; Fri, 27 Feb 2026 09:31:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vvylo-00068z-VV; Fri, 27 Feb 2026 09:24:45 -0500
-Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vvyln-0003Ba-2i; Fri, 27 Feb 2026 09:24:44 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M3XSRceLWsZXAR5y2iPDDn17IWJhT+4M1fjX2MuIAMTcXOXQTd1aBbCSAyvVj/P1c/uxKzrMShfX5KRDls7454BvM+qPnYr/aBU5hBqg3uIT9Sp1Vh2zo9PjPutzz9m4ASZKFKd6tVyITPapiAkXmwRdND08dqHurrPrwQ1Qh2PuAXtBcG0iVcBpOI78xAU6YbYfXdyjkQxbzeUmlAt2A6PRAtcTz2wRhDzhHGL7AUNeu69FFGQc2M08h+w19+Av6eY84Z1BxdYiinilT/M+z1ZGbqEJ9/peVF71PTG+17neG70An8RdX4lSjYN4fy1bRfX5Fp41if0njp0rBKUrXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ligwK0Rdc9PhOnrZz60yEealh3YTyXcXLtt46v+E/00=;
- b=MIDVdlnVIXIJGvBkHnZRjkipchmYNWoChktWifGDPmrqtxhG7n2/BDxzrpPU+M0j4L97QphHUFuL68cJI+wsPjkRB/7JI1hYhFY9t/ZPBdIF8canW/ruxzKol4xgwR4oMr7EBTd27gMMKlOxGs023cAl6nkyC9HN3jcqrXkUUdh7cNhlIBYmWKZydcEEc9ZguFixgEqCxr3Yu/m8TkrNcEGLeT6SSTFLExTmtWm6CpceLdRmVFQD/xDphRuFZt0kaXN5rDJ+8Zi3VTh4XHmyGg220IPNlIBD6VOTkhl6VqYhhkRE7xpRvwCB+9rcKGprz0mQKrgePvarfm4JnfCc7w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ligwK0Rdc9PhOnrZz60yEealh3YTyXcXLtt46v+E/00=;
- b=nIuwxdKpGXcjlz0Sw+dYtMW/j892A5cdiN8DeT+KgJBCSLsyWCnQZvvuar9MbPuFkNDWTtHxBpAmcjK8ppXKaH6cgjzQDWQvV75m1OE1znFOOdKg0P8be6/nFvwczNqLbvTCNRKzopclOyHJXWt+QzodErgZ6q7SxTBuj/+0i//o2PqfE+Bt/ELPdFt3YQgFNuMqp21ojs37wPxSOsmTK5FG8p6TjNEhrZoTOqPMWAfD9ErqDf14cBPL+B8dV2DB+0KskZ4FQAKVBVR3xPeQa+B6RBn/H7hzmi+yjmGE6sigXtKDI5il4XrSolFYk3vBTDhPXGxx47p36ZlnDivCvw==
-Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
- by AS4PR09MB6562.eurprd09.prod.outlook.com (2603:10a6:20b:4f4::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Fri, 27 Feb
- 2026 14:24:38 +0000
-Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
- ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
- ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9654.014; Fri, 27 Feb 2026
- 14:24:38 +0000
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-To: Conor Dooley <conor@kernel.org>
-CC: Alistair Francis <alistair23@gmail.com>, Mohamed Mediouni
- <mohamed@unpredictable.fr>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
- <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "philmd@linaro.org"
- <philmd@linaro.org>, "thuth@redhat.com" <thuth@redhat.com>
-Subject: Re: [PATCH v2 00/16] Add RISC-V big-endian target support
-Thread-Topic: [PATCH v2 00/16] Add RISC-V big-endian target support
-Thread-Index: AQHcpkBaA1l4l1CIU02NL47xpBxJMLWTSjoAgAJY6wCAAATbgIAAE2KAgADFJICAAAPwAIAAGKQA
-Date: Fri, 27 Feb 2026 14:24:38 +0000
-Message-ID: <e18fd3f3-30a7-4e19-ac54-b4caf68ee9fe@htecgroup.com>
-References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
- <A02120BF-779D-4B2C-B29D-A9CB044EA895@unpredictable.fr>
- <CAKmqyKO6ioRt+h_tZrudbriv-QDVsOG1LNJ+GFQJ3ZO-fEhjiA@mail.gmail.com>
- <20260226-hangout-satin-fd7913f18f2b@spud>
- <CAKmqyKNST9ExmpcFE3iejmzZZRtMNSiVXkzfUK4GhhcketrCEw@mail.gmail.com>
- <de767b4f-93f2-47b1-8813-d1c063a30759@htecgroup.com>
- <20260227-dandruff-chemicals-4b3d22ca6354@spud>
-In-Reply-To: <20260227-dandruff-chemicals-4b3d22ca6354@spud>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|AS4PR09MB6562:EE_
-x-ms-office365-filtering-correlation-id: b2e7c125-505a-4366-b234-08de760bf081
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|7416014|1800799024|38070700021; 
-x-microsoft-antispam-message-info: HAHtY1/HznZvdwtaFf7HcFAsAlIszZ+r+acZM5hkaic1/nC8dM2bN2wRoNVvwWLLtvuFpaClgKAQo0hIe50Ka9zy5qI5HorM35UNwx/99CrN6XU2RAEkMaA+evf3wB2eYHu/k20xEUUYwGQyiMGTpseA8hHM0CvbY9NusVzv/4zjr03Izy0khxtnNOdEZo7W+a8fh2rB+VmBt+GNSIKjVhJYL/+5TYDA1DiRfc9uuH1MarYf9zsEgbvnHoa9+jfM9RqQ/N3f8zn4VDRbXiGm/A3VeDCTuVYyFZLgU0AHoogsyxkUT3VpfnrvPzv4nAZ0MuXAuChgh1ilfk2XuIKflH/b5eRvF/HarHW1fVGF4PFEycBqKEhfC6LT/vnggdOrws7bcUYZHSmlvGQdyRyL2SxD+1t9A3ruqpW9UsQjLeG8yZVgFyDBhyYUbct9cb6KC1oGIEl5Z0NDGsUX2WALQesgjHmOL4vZmwhGkxD02dtcR+tVq9drmumRzywugPUml7GzsgKLXhgUH7Q7FV2R7AoG4qu66r6Qm1qG2QDSim6RpZM7QjKGrlE3psBxSidASh04sXP3sC/bLvOuyK95iDJ+cqzVBNFHqK4dUZQNohM0tIdDzplwEsYeigf2fxKCwS0q8Hp6Ai+bWjpO5uT3Db2u0ErHB5b7B0OwafOh+v3RzYAQN4ou2y5mSXjZaw0iPD0XIUObA4oKdvrn38NMuF+G8wO4FAvicHltiOgqQe/J6sv/jgA1Lg2EStk0MgOc
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(7416014)(1800799024)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bWl0V1dlWVgyNjRuU2FQekNVOW5NN2s5Y05YNElvS1ZpaWVaUUt4Q2locG15?=
- =?utf-8?B?QmxpbVNERWp6N256aVZZc1J2c1B2QmhOdlk1S0pEWUc3b1FHNnBSelhGbVF6?=
- =?utf-8?B?azdtK2hMT0NNQ2h6MnhyV3I5WnNQVGJzRmJpL0JPOXg3d1ErWEgwb2pzamE3?=
- =?utf-8?B?Vk5wUFl2WWtjMHFQNEUrV2FBYmMzZ2JUYlMxdTNMcDlYVUpKMm1TdlhVbFgx?=
- =?utf-8?B?STZKZ0ZBRXlkaGlGbGY0L1RzdTBMKzhaOCtMN2JsZ0JKNmFSa2hoeEpvMXBm?=
- =?utf-8?B?Mng5VmpYNHBQTzR2T1JaYkZ3MmhVOXQrM3c1UTZmOUdUMmZEYmxKQ21Lc0to?=
- =?utf-8?B?bVhMdW0yY2lsbXQ3aXlkRE5lN0Y4VTE1akdxcHZHck0rQzMycXY3YTZKb3VN?=
- =?utf-8?B?SW9BeGtOdVZ0dk1FVmpnSUdnclRtSVd4YUlucXBYV2tBRmJqNEdBNVhjY2x4?=
- =?utf-8?B?aVhyR2dJTkhmMGhpaUpCYmxuWWtSY0l5U2dzcnFBN1FQK3JZV0QyWWVmOGNS?=
- =?utf-8?B?ck1LRFBPclBraDJTanNEOUhiam40NmVwbWtXb0JOenpjRHVQZDNmRFhvLzBL?=
- =?utf-8?B?dEZveEQ1MmV1VFNBN1FNTG5aOVFPeUJzS1pQUTNKalRtNDI2bWhpYWI5V2dB?=
- =?utf-8?B?TFk2N2R3KyszSGY4UERud3YxQTEwdzhHLzAzRy9yVXUzQ0VoWEE4a3dEYzBx?=
- =?utf-8?B?YjRQaEN4eXk2cUNWS0R1Zi9Ud3c3MXNHdmZRVDIyT1F4cFRNYWc0QmJtN0VG?=
- =?utf-8?B?QzBEbTBEREYzSjFoK2tLSVlPVHBnckh6VGhZa0ZBZGx2SWphTUhTalFEWktL?=
- =?utf-8?B?UE1VV2x3QSs0TWkrV1JtWEZUellyZk5ZZjgycXA2Y3FlN1RZUWNXZ1h4UGdR?=
- =?utf-8?B?RWQvVlduaFJ6a1QxU0ZnOGdCdGlOODQ1QVQ3VEVhZ2M1Q0svWEJRWVZyRXNZ?=
- =?utf-8?B?UVNoUTRnVGRldkNzUlF6MEt6VTR1KzVEdmNCbkp3ZWlGUUUvakE4bkpzU01i?=
- =?utf-8?B?RjErWVJUQ3VNVHRlR2l2d2FUVlJ1MEhNakIzajlYY0lmcWs0bG5rQllKUVQ5?=
- =?utf-8?B?dVJXemFHWmtjK2FuUHJLMWM5WEtUQnNWSXR0UWtLbGk0bm1oQ1BMVGxwYzFB?=
- =?utf-8?B?dHR6Wmo2UEw1UkVYaGVSaUUvZGl3K2hPT0t4MWVsZHM3all6NDIrUkJvUERu?=
- =?utf-8?B?Mnd2M2dwajIwQ0hOaVpjWGd6K1FVNXV4QndKZFJEd0U1UUdTOEUyQndKSWZD?=
- =?utf-8?B?NUY0czYzZmVpenV4dTN0TnA5L0FLREVHN0hHa1Bya1VqaFdEUmRSV2VmSGhH?=
- =?utf-8?B?S1RUUmN3eG95aW1XZ2V6L3U3eDhKcVc5SXdMYVZ0K3VXd09DRE5KekJGSk1C?=
- =?utf-8?B?U01SOGxiVDF2SWRUbXBjR21WbGZORHExZXNQRlprVWxZWU5EeG91MzVCMlZ2?=
- =?utf-8?B?NTVZWHVvdlNNeXVoUHlkVnRza1J0MExDaXJrSE54aUNEOG5vMDBXS2VheHZL?=
- =?utf-8?B?YU5OUDlkNFlTNGVrN0N1cjJ2YzJCeTF1Y2Fqd01Pa0dvaVY3T3NZTDR3ZTBz?=
- =?utf-8?B?MExNUVBubTVWR2NXUnJyVU5qbDR2M2FWUWhON3BMV3J2ZFcyV2EwMitFVW9u?=
- =?utf-8?B?dWpDOXhhOEJUZjBZSUhLdEtjUW1EOEJibTBGZHIxaGhzOU9kZ2xvYTd5ZXU3?=
- =?utf-8?B?dHhCdUozanFFL2puT3o5SWJpSmpUUVNiSG9KOWZzWkJQUXQyR3BVQkRzWHNO?=
- =?utf-8?B?R3FBSmRpb1hreU4rSXVPZERBY1VUVEppM2owUlVnNjR6ODZXYkRmbUtQbGsx?=
- =?utf-8?B?VDdwUldhd2djbUl5ZWNiTGtMdGJpYm1OaXVPOXVSZUUrb1RHSVJNeHZQWHNF?=
- =?utf-8?B?bnBRN2trb1ZiS1cweHpxTGQxSnRuRThIbk5mVFZzQmtSQWgrMUE4aHlySkox?=
- =?utf-8?B?Wms1amIvc3FkL2ZoblJnN0dQaURXRnd6TU1sdjZOK3p3aG9aRmEza0tWZk1M?=
- =?utf-8?B?VzlxbVMweUczUThZbmlTWWhWaFBjTWcyOVJybkdQVkpyT3Z6YTl3amJYTnhr?=
- =?utf-8?B?S3FvdmpkMjVGcFkzOEZISzNSQzNENDh5VXMwbksrZ3VRMVo3NEFkckRGaFA2?=
- =?utf-8?B?RkN5QktYY3RzTUhjRGU3TGxhUE9ucEM4VCtQdFNVd0tRNFFOYWVtNW5aRlVE?=
- =?utf-8?B?eFBlWU5tdHpVclgvQmIwZ1djQnRqd2ZVbHhKUG9VYW5LSTZuTldYUFBiOUpu?=
- =?utf-8?B?RTVmd29xMHVSVXZ6bXVRTUVoN215UTdqVllvakZtZlR5b2RpNmk2ZnZQTnBk?=
- =?utf-8?B?bGFubHlCallIZlEwNjhtamtZcU5kRnlmeVhhbXp2eC9rY3dQRDIrcVZKd0tV?=
- =?utf-8?Q?uYXpRPUqMqau9qu8XF3RQMuu/T7KKkrtmk6bB?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <818F06420BD81840B947ABF32F459783@eurprd09.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1vvysC-00088g-JW
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:31:21 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1vvys9-0005Jf-0h
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:31:20 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48318d08ec2so53275e9.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 06:31:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1772202670; x=1772807470; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=7t70c5yCnUVrPN1M20H2ZzeIsX//ZNTm9WFwFVy1xhw=;
+ b=HCfDJ/wQBKcPwTVkx+nYntxhOhMxSR+ak6WiFzXhJLpcory7AlcLgFtOM/kkhfNJQF
+ gMlHLydHZxpWkiq1K8tn+j8esXZTXZPyFYB/VqLHV827/tkTT234+o80nMkI06/DoWZQ
+ zCfxxqqXNmbxuxXEljP2tSgpPOYYch6G4vbQ1JKA4jVeLBMey5oR2ErSAFtsFqVFkXQ7
+ s+y8pMQKwlLX0iytmUKEk0JtGw0vEfqayJrXRex8zclvnu1ZKUii2U/6b1UKUf1R2SVo
+ a3vLb3zKHMslTqJdS3r2/tmqc1qOQJitl9BkoVOxjZM4ifE24wCWy3hN2C8P5DsAuUJa
+ v/eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772202670; x=1772807470;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7t70c5yCnUVrPN1M20H2ZzeIsX//ZNTm9WFwFVy1xhw=;
+ b=pWFQpq/5Y6mfR18KbcxQJ4kTWWNP6hP9wW5br49hzs/G3Rr20eik4ioGpH8uknr1Ds
+ YMK47G6LdOhpL74qNsWqwvFej3kOBbWS9T3vNCdudDqYwBJNPdnhDCaUs9ZV2lhGYrN4
+ GIarPnF/47O5fkX1Iq/QLT0hgZBvIrTewsuZHswItOJxGK7zdAF63kM0Yr4FAju151Hd
+ Sd+N66vuwqu6/TwpMLtMykS9skx251Ql/seuj1eKIu2MMIJWQ+UctmYu/rnjBHETES45
+ UBh7hl8vWuFhqd1aU+4m2LZhjN4sXzSy9sNvY6q+NVYOruFnA4Db30a3ls/6OCZHy3G/
+ mKMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5y/yKPOC9cNmlQ4sdc52Q0TOwdakKZ8/eKR3fnB5pArXymeDz0DNlUum6u2oNZCaCVqIobX+SRDP2@nongnu.org
+X-Gm-Message-State: AOJu0YwQKtW3BV0Z5VK2bwC0Z/eEU+omGSRC3Od5JCsjuWYKvyYIE1j/
+ dPGpgR1z88wjPKgtjNsYX2iO8o9t5s/0I0D2HSb9iHT5HgQlcLhBbgRUYBlojhN6Xw==
+X-Gm-Gg: ATEYQzwp07mvicSPfHtGG7lmgrmRrRBP70Ttb91Hk6QQM3S4f4hZReL4G/qetvnhmu4
+ EAHs85R4W+0T3JdA2OHPRlKmBIcQs9y6ohxyatmHz/s4XWqPDmD2BK+AYRR1LATcyTqurYkUeES
+ /RK44gqYFgNnzVd+507om20m6OI5MyVljOmu6T+THIIM7+37Dl8DDDm/ne6hDgOx/aXKDRy4dUw
+ YxpPiScCE9U4ZJnvBG8M8BOhgbp5GubhRmfT4mUQsOMC3egptlS29QrLun0yuhEd44kpSMmIKTV
+ uX3WXYMCVl6Y4bKc8HzvaWHcZiOzO2B5W1ZLU0z6C+pCLaGaThVAeCMdvb90/EeaR4BHLQLrj84
+ pDkNLzjYMVr4vlRfjP9GdoDwSygTPxSKFbzZm/KJjq0kYz7kkEtYxKjEGpxbbES6S4QOJhxHaeV
+ yRuUKEeglRC3e0tMipkXeNwjgp9JZ9/+oOGNfE6rl9s1lYYrb5gJMPxTXNd5SeEgNJ
+X-Received: by 2002:a05:600c:154e:b0:47e:d9e7:1c12 with SMTP id
+ 5b1f17b1804b1-483c31a96c4mr2321145e9.6.1772202669842; 
+ Fri, 27 Feb 2026 06:31:09 -0800 (PST)
+Received: from google.com (206.56.155.104.bc.googleusercontent.com.
+ [104.155.56.206]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4399c75b8afsm7922957f8f.23.2026.02.27.06.31.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Feb 2026 06:31:08 -0800 (PST)
+Date: Fri, 27 Feb 2026 14:31:05 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: Re: [RFC v4 01/31] hw/arm/smmuv3-common: Fix incorrect reserved mask
+ for SMMU CR0 register
+Message-ID: <aaGqqcW6qo6jnp7_@google.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-2-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b2e7c125-505a-4366-b234-08de760bf081
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Feb 2026 14:24:38.4777 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AFCsDGtYF8cJA1V5OXkxsjCJ3gi6by4+OhbXZDNlMCBJ3ZxJXCBHlHGIXVEIE9FpE3wPdSqC2PElpObjxppDg93yugDiZOe3w1uAQMzRQ5U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR09MB6562
-Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
- envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260221100250.2976287-2-tangtao1634@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,50 +111,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQpPbiAyLzI3LzI2IDEzOjU2LCBDb25vciBEb29sZXkgd3JvdGU6DQo+IE9uIEZyaSwgRmViIDI3
-LCAyMDI2IGF0IDEyOjQyOjIxUE0gKzAwMDAsIERqb3JkamUgVG9kb3JvdmljIHdyb3RlOg0KPj4g
-T24gMi8yNy8yNiAwMTo1NiwgQWxpc3RhaXIgRnJhbmNpcyB3cm90ZToNCj4+PiBDQVVUSU9OOiBU
-aGlzIGVtYWlsIG9yaWdpbmF0ZWQgZnJvbSBvdXRzaWRlIG9mIHRoZSBvcmdhbml6YXRpb24uIERv
-IG5vdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIHVubGVzcyB5b3UgcmVjb2duaXpl
-IHRoZSBzZW5kZXIgYW5kIGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4NCj4+Pg0KPj4+DQo+Pj4g
-T24gRnJpLCBGZWIgMjcsIDIwMjYgYXQgOTo0N+KAr0FNIENvbm9yIERvb2xleTxjb25vckBrZXJu
-ZWwub3JnPiB3cm90ZToNCj4+Pj4gT24gRnJpLCBGZWIgMjcsIDIwMjYgYXQgMDk6MzA6MDBBTSAr
-MTAwMCwgQWxpc3RhaXIgRnJhbmNpcyB3cm90ZToNCj4+Pj4+IE9uIFdlZCwgRmViIDI1LCAyMDI2
-IGF0IDk6MznigK9QTSBNb2hhbWVkIE1lZGlvdW5pDQo+Pj4+PiA8bW9oYW1lZEB1bnByZWRpY3Rh
-YmxlLmZyPiB3cm90ZToNCj4+Pj4+Pj4gT24gMjUuIEZlYiAyMDI2LCBhdCAxMToyMCwgRGpvcmRq
-ZSBUb2Rvcm92aWM8RGpvcmRqZS5Ub2Rvcm92aWNAaHRlY2dyb3VwLmNvbT4gd3JvdGU6DQo+Pj4+
-Pj4+DQo+Pj4+Pj4+IFRoaXMgc2VyaWVzIGFkZHMgYmlnLWVuZGlhbiAoQkUpIFJJU0MtViB0YXJn
-ZXQgc3VwcG9ydCB0byBRRU1VLA0KPj4+Pj4+PiBjb3ZlcmluZyBib3RoIHNvZnRtbXUgYW5kIGxp
-bnV4LXVzZXIgZW11bGF0aW9uIGZvciByaXNjdjMyYmUgYW5kDQo+Pj4+Pj4+IHJpc2N2NjRiZS4N
-Cj4+Pj4+PiBIZWxsbywNCj4+Pj4+Pg0KPj4+Pj4+IFRoZXJl4oCZcyBubyBMaW51eCBSSVNDLVYg
-YmlnIGVuZGlhbi4gTWF5YmUgdGhlIHJpZ2h0IHRoaW5nIHRvIGRvIGlzIHRvIG5vdA0KPj4+Pj4+
-IHN1cHBvcnQgaXQgdW5sZXNzIHdl4oCZcmUgc3VyZSB0aGF0IGl0IGNhbiBnZXQgdG8gTGludXgg
-dXBzdHJlYW0gKGZvciB0aGUgbGludXgtdXNlciBtb2RlKT8NCj4+Pj4+IEFncmVlZC4gV2UgcmVh
-bGx5IG5lZWQgdXBzdHJlYW0gTGludXggc3VwcG9ydCBiZWZvcmUgdXNlciBtb2RlDQo+Pj4+IE9u
-IHRoYXQgZnJvbnQsIEJlbiBwb3N0ZWQgcGF0Y2hlcyBmb3IgaXQgYW5kIExpbnVzIHdhcyByZWFs
-bHkgcmVhbGx5IG5vdA0KPj4+PiBlbnRodXNlZCB3aGVuIGhlIGJlY2FtZSBhd2FyZSBvZiBpdDoN
-Cj4+Pj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvbGludXgtcmlzY3YvMDY2ZDcwYzctYjBhNy00
-NWU1LTkzMzctMTc5MDFiYzk1NjY0QGNvZGV0aGluay5jby51aw0KPj4+PiBFdmVuIHdpdGhvdXQg
-TGludXMnIHRha2UsIEkgZmVlbCBsaWtlIHRoZXJlJ3MgYWJzb2x1dGVseSBubyBjaGFuY2Ugb2YN
-Cj4+Pj4gdXBzdHJlYW0gc3VwcG9ydCB3aXRob3V0IG1lYW5pbmdmdWwgc2hpcHBpbmcgaGFyZHdh
-cmUgdGhhdCByZXF1aXJlcw0KPj4+PiBiaWcgZW5kaWFuIHN1cHBvcnQsIGJlY2F1c2UgYmFzaWNh
-bGx5IGV2ZXJ5b25lIGVsc2Ugd2FzIGFsc28gb3Bwb3NlZCB0bw0KPj4+PiBhZGRpbmcgaXQuLi4N
-Cj4+PiBZZWFoLi4uIEkgc2F3IHRoYXQuDQo+Pj4NCj4+PiBBIGZldyB0aG91Z2h0cywganVzdCBi
-ZWNhdXNlIExpbnVzIGRvZXNuJ3QgbGlrZSBpdCBkb2Vzbid0IG1lYW4gUUVNVQ0KPj4+IGNhbid0
-IHN1cHBvcnQgaXQuIEJ1dCBJIGFtIGhlc2l0YW50IHRvIHN1cHBvcnQgQkUgY29uc2lkZXJpbmcg
-dGhlIGxhY2sNCj4+PiBvZiBlY29zeXN0ZW0gc3VwcG9ydCBldmVyeXdoZXJlIGVsc2UuDQo+PiBQ
-bGVhc2UgYmUgYXdhcmUgdGhhdCBNSVBTIHdpbGwgc2hpcCBoYXJkd2FyZSBiYXNlZCBvbiByaXNj
-diBCRQ0KPj4NCj4+IHNvb246aHR0cHM6Ly9taXBzLmNvbS9wcm9kdWN0cy9oYXJkd2FyZS9pODUw
-MC8NCj4gTm90IHRoZSBtZWFuaW5nIG9mICJoYXJkd2FyZSIgSSB3YXMgdXNpbmcsIGFzIHRoaXMg
-YXBwZWFycyB0byBiZSBhIGNvcmUNCj4gY29tcGxleCBJUCByYXRoZXIgdGhhbiBwaHlzaWNhbCBo
-YXJkd2FyZT8gRG8geW91IGtub3cgb2YgYW55IGRldmljZXMsDQo+IG91dHNpZGUgb2YgYSBNSVBT
-IHRlc3QgY2hpcCBvciB3L2UsIHRoYXQgYXJlIGdvaW5nIHRvIHVzZSB0aGlzIElQPw0KPg0KPiBP
-biB0aGUgbGludXggc3VwcG9ydCBmcm9udCwgdGhlIGRldmlscyBhZHZvY2F0ZSB0YWtlIHdvdWxk
-IGJlIHRoYXQNCj4gcGVvcGxlIHNob3VsZCBqdXN0IHJ1biB0aGlzIGNvcmUgaW4gTEUgbW9kZSwg
-YnV0IHRoYXQncyBhIGJyaWRnZSB0byBiZQ0KPiBjcm9zc2VkIHdoZW4gc29tZW9uZSBwcm9kdWNl
-cyBhbiBTb0MgdXNpbmcgdGhhdCBjb3JlIGNvbXBsZXggYW5kIG9uDQo+IGFub3RoZXIgbWFpbGlu
-ZyBsaXN0IQ0KDQpZZXMsIHlvdSBhcmUgcmlnaHQsIHRoZSBpODUwMCBpcyBhbiBJUC4gQW5kIEkg
-Y2FuIHNoYXJlIGZvciBub3cgdGhhdCANClFFTVUgYW5kIEZQR0ENCg0KYm9hcmQgd2l0aCB0aGUg
-aTg1MDAgYml0ZmlsZSBhcmUgdGhlIHRhcmdldHMgZm9yIHRlc3Rpbmcgb2YgUklTQy1WIEJFIA0K
-c29mdHdhcmUuDQoNCg0KQmVzdCByZWdhcmRzLA0KRGpvcmRqZQ0K
+On Sat, Feb 21, 2026 at 06:02:20PM +0800, Tao Tang wrote:
+> The current definition of the SMMU_CR0_RESERVED mask is incorrect.
+> It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
+> treating bit 9 (RES0) as an implemented bit.
+> 
+> According to the SMMU architecture specification, the layout for CR0 is:
+> | 31:11| RES0           |
+> | 10   | DPT_WALK_EN    |
+> | 9    | RES0           |
+> | 8:6  | VMW            |
+> | 5    | RES0           |
+> | 4    | ATSCHK         |
+> | 3    | CMDQEN         |
+> | 2    | EVENTQEN       |
+> | 1    | PRIQEN         |
+> | 0    | SMMUEN         |
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Link: https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00088.html
+
+I think fixes as this, should be separate, that would make the series
+smaller.
+
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+
+Thanks,
+Mostafa
+
+> ---
+>  include/hw/arm/smmuv3-common.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+> index 67a23fbeaae..2df54ba60f9 100644
+> --- a/include/hw/arm/smmuv3-common.h
+> +++ b/include/hw/arm/smmuv3-common.h
+> @@ -355,7 +355,7 @@ REG32(CR0,                 0x20)
+>      FIELD(CR0, EVENTQEN,      2, 1)
+>      FIELD(CR0, CMDQEN,        3, 1)
+>  
+> -#define SMMU_CR0_RESERVED 0xFFFFFC20
+> +#define SMMU_CR0_RESERVED 0xFFFFFA20
+>  
+>  REG32(CR0ACK,              0x24)
+>  REG32(CR1,                 0x28)
+> -- 
+> 2.34.1
+> 
 
