@@ -4,85 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED03FD7F87
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 10:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC564FD7F8E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 10:25:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvuvj-0007kJ-5h; Fri, 27 Feb 2026 05:18:43 -0500
+	id 1vvv1e-0001Mc-RH; Fri, 27 Feb 2026 05:24:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvuvh-0007kB-Hj
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 05:18:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vvv1b-0001LK-Ji; Fri, 27 Feb 2026 05:24:48 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvuvf-0001zh-Lq
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 05:18:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772187518;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=P77OTxmSw3RVq02mWscBMfZ0CfLsVv9FPYW4YnWmyoA=;
- b=A98au/FgzE5QQ5UpQguThAQrKc9jwCz7/PfenwrjQGpcGN7TO0MPyvhmXJXtqCResiReEi
- 4doXOPhoQgjnWJ81UlVSid2yH33y3sPFQ6rMeVCTWu7K7K1Sfd0x2tocNY/KCrXkStfucw
- fGduktd1MF/BC7r3E2GRGWc5ST5b1BI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-7HEkyegCMNi4CWX-g49now-1; Fri,
- 27 Feb 2026 05:18:34 -0500
-X-MC-Unique: 7HEkyegCMNi4CWX-g49now-1
-X-Mimecast-MFC-AGG-ID: 7HEkyegCMNi4CWX-g49now_1772187513
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26B83195609F; Fri, 27 Feb 2026 10:18:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.85])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE0871800348; Fri, 27 Feb 2026 10:18:28 +0000 (UTC)
-Date: Fri, 27 Feb 2026 10:18:25 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
- shannon.zhaosl@gmail.com, philmd@linaro.org, zhao1.liu@intel.com,
- rad@semihalf.com, leif.lindholm@oss.qualcomm.com
-Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
- ACPI table
-Message-ID: <aaFvcWnmE7dOiK-o@redhat.com>
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-9-imammedo@redhat.com>
- <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
- <20260219131751.4e4e4e0e@imammedo> <aZ8THMubft44Q3E-@redhat.com>
- <20260226135648.4c1a4009@imammedo> <878qced4xx.fsf@pond.sub.org>
- <aaFdZY5ESpQCJigY@redhat.com> <20260227110125.1d46e695@imammedo>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vvv1Z-0004At-Ul; Fri, 27 Feb 2026 05:24:47 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61R7NO5X2233752; Fri, 27 Feb 2026 10:24:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=7xfyTa9sQ3M4DMPjio99fcyitWU2v9
+ BSiWB1gwLSzUA=; b=MgwQ9cGMREWebBfUxsdzO6FgqU+AH8oeF5DYOcYG4KzydJ
+ BrpctUpsNv33O4Q+yia8b7vthUdV4riKVTDvj8a88PpCAOiYE1/5WQzTf16aqj0L
+ MurVYIlY4m1t4/BmrxzO4sMb9D7glmCP2M1zzR+QlaDrCQ2H9cVdXQYqMk9r3b/v
+ yBggAf2c1MrKlC26zrC/2/xqgdOtqoFiNR6fSXmsd5f174ybIYLqereIGRodZzVB
+ w22egZN+TyuhHKkLFC4FlYRdGCAbEbuWqzSTI67dUdRJZm16pRSnQiXwUNMAivdG
+ ERsrK3SVBGpv6kh6H02taKNzuLt9YSi9WViHI/2A==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf472caft-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 27 Feb 2026 10:24:42 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61R76xdA001653;
+ Fri, 27 Feb 2026 10:24:41 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfr1nhnpp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 27 Feb 2026 10:24:40 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61RAObkq37814680
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 27 Feb 2026 10:24:37 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC3DE2004F;
+ Fri, 27 Feb 2026 10:24:36 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F5FD2004D;
+ Fri, 27 Feb 2026 10:24:34 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.210.232])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 27 Feb 2026 10:24:34 +0000 (GMT)
+Date: Fri, 27 Feb 2026 15:54:31 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: shivang upadhyay <shivangu@linux.ibm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, milesg@linux.ibm.com, qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH] ppc/pnv: fix dumpdtb option
+Message-ID: <aaFv56FZ6Z50G_T4@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260225081037.21990-1-shivangu@linux.ibm.com>
+ <CAFEAcA9+-5=hVzRMu9n1YtcOazMLQDx65T=NLy9wxv5RNLwYAg@mail.gmail.com>
+ <48b13f0b-bb53-4316-923d-77a20ffdfab1@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260227110125.1d46e695@imammedo>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 22
-X-Spam_score: 2.2
-X-Spam_bar: ++
-X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <48b13f0b-bb53-4316-923d-77a20ffdfab1@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: DQsEx-rS80VXSAEy4uqHu_nxmXtOyqIG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDA4NyBTYWx0ZWRfX14K8qhhssziR
+ yq5ni35ngC6HM41fHRDddkWuocWcDsB4gtWkMI9CcqeB75cxFkmlYVAxVV50e0EpYr5a6fO/q4R
+ LtwuoJBLVkGdUVbIKDbOjnTVvmZEKyo8LVbqc/1kEND391zME2erCDtk9P9I45gkHgW8IamrBNM
+ 1r6k4jbr7jU0szZyan9Jsuk4jznpW9P7DRcltF6k/ptZo8OdDF9YdH/uk3gBJ9XDRaEfHPUqzk3
+ v3xZpa36qDRfnALgBKkuvjc7ej/dkirbT7pV6WCFjEk0516F+NPmN+JY8OdiFTJfQp1lTx8DAhG
+ TnZ9mI/fo7yYyfIud+whgP0npBDHTWVD8voyzXrWIIkQyvx3/fIZs0tU2atU2VmUfP1Ho5oCjft
+ Vy4r7Fc0M77wme6ZZEpAqHjoOi6QtXseAcckQaN2B4ql6iaWX7ExyvNDfJNPMherVCeCpkuOjWo
+ AwMAHOF2VCIin968ozg==
+X-Authority-Analysis: v=2.4 cv=R7wO2NRX c=1 sm=1 tr=0 ts=69a170ea cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=vgz_7i7j5wqnLQ5aguMA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: W6SmiBSbmHom9rUVgQ4Gld83ge5--sHy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-27_01,2026-02-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602270087
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,168 +120,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 27, 2026 at 11:01:25AM +0100, Igor Mammedov wrote:
-> On Fri, 27 Feb 2026 09:01:25 +0000
-> Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
-> > On Fri, Feb 27, 2026 at 08:24:42AM +0100, Markus Armbruster wrote:
-> > > Igor Mammedov <imammedo@redhat.com> writes:
-> > >   
-> > > > On Wed, 25 Feb 2026 15:19:56 +0000
-> > > > Daniel P. Berrangé <berrange@redhat.com> wrote:  
-> > > >> 
-> > > >> Right, if there was a case where we were already using -device to
-> > > >> create the watchdog, then I would suggest having a simple
-> > > >> 'wadt=on|off' property as standard for any watchdog wanting that
-> > > >> ACPI abstraction wrapper.
-> > > >> 
-> > > >> That could (hypothetically) be the case if we had chosen to add
-> > > >> WADT suport backed by i6300esb, eg -device i6300esb,wadt=on|off
-> > > >> 
-> > > >> For cases built-in to the machine type, I'd suggest <type>-wadt=on|off
-> > > >> 
-> > > >> eg for Q35,  "-machine q35,itco-wadt=on|off"
-> > > >> 
-> > > >> for virt, '-machine virt,gwdt-wadt=on|off'  
-> > > >
-> > > > CCin Markus since it touches QAPI stuff.
-> > > >
-> > > > For respin, I've went ahead with a bit more generic approach
-> > > > (as a user, I wouldn't really care what kind of built-in watchdog board ships,
-> > > > and having 1 property instead total instead of machine specific ones makes it
-> > > > easier for mgmt layer to deal with).
-> > > >
-> > > > here is current idea:
-> > > >
-> > > > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > > > index 6411e68856..a0c6719b58 100644
-> > > > --- a/hw/core/machine.c
-> > > > +++ b/hw/core/machine.c
-> > > > @@ -1257,6 +1271,14 @@ static void machine_class_init(ObjectClass *oc, const void *data)
-> > > >          NULL, NULL);
-> > > >      object_class_property_set_description(oc, "memory",
-> > > >          "Memory size configuration");
-> > > > +
-> > > > +    object_class_property_add_enum(oc, "watchdog", "WatchdogType",
-> > > > +        &WatchdogType_lookup,
-> > > > +        machine_get_watchdog, machine_set_watchdog);
-> > > > +     object_class_property_set_description(oc, "watchdog",
-> > > > +        "Use: auto (watchdog is configured according board defaults),"
-> > > > +        " off (disabled), native (built-in watchdog), wdat (ACPI based watchdog)]. "
-> > > > +        " Default: auto");
-> > > >  }  
-> > > 
-> > > Adds the property to abstract base type "machine", i.e. every machine
-> > > has it.
-> > > 
-> > > Fundamentally assumes there is at most one onboard watchdog of interest.
-> > > 
-> > > I'm lacking context, please bear with me: who or what is going to set
-> > > this property, and for what purpose?
-> > >   
-> > > > diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-> > > > index 92e84dfb14..7f5e10340f 100644
-> > > > --- a/qapi/machine-common.json
-> > > > +++ b/qapi/machine-common.json
-> > > > @@ -9,6 +9,23 @@
-> > > >  # Common machine types
-> > > >  # ********************
-> > > >  ##
-> > > > +##
-> > > > +# @WatchdogType:
-> > > > +#
-> > > > +# On board watchdog configuration.
-> > > > +#
-> > > > +# @auto: Watchdog is configured according to board defaults.  
-> > > 
-> > > As far as I can tell, we don't document "boards" (machine types)
-> > > anywhere, let alone "board defaults".  Not this patch's fault, of
-> > > course.  The meaning of @auto remains unclear.
-> > >   
-> > > > +#
-> > > > +# @off: Watchdog disabled (ARM).
-> > > > +#
-> > > > +# @native: Native watchdog (arm/virt: sbsa-gwdt, x86/q53: TCO)
-> > > > +#
-> > > > +# @wdat: ACPI WDAT watchdog.
-> > > > +#
-> > > > +# Since: 10.2  
-> > > 
-> > > 11.0
-> > >   
-> > > > +##
-> > > > +{ 'enum': 'WatchdogType',
-> > > > +  'data': [ 'auto', 'off', 'native', 'wdat' ] }  
-> > > 
-> > > What do managament applications need to know about onboard watchdog
-> > > configuration?
-> > > 
-> > > Do they need to know what @auto means for the machine type at hand?
-> > > 
-> > > Do they ever need to pick a value?  Do they need to know which values
-> > > work with the machine type then?  
-> > 
-> > Libvirt generally wants to work with & express the exact hardware
-> > and not rely on "auto" settings in QEMU.
-> > 
-> > So in terms of the built-in watchdog for Q35 we currently express
-> > this explicitly via
-> > 
-> >     <watchdog model='itco' />
-> 
-> not specifying above libvirt doesn't make itco go away on qemu side,
-> it's still there regardless of above.
-
-That is fine. Libvirt will synthesize a <watchdog> device to
-represent & track the built-in default hardware, if the mgmt
-app did not specify it explicitly.
-
-
-
-> > Adding "WADT" is not expressing a new piece of hardware, just a
-> > configuration choice of the iTCO hardware. So from that POV in
-> > libvirt I anticipate expressing it as
-> > 
-> >     <watchdog model='itco' wadt='yes|no'/>
+On 26/02/27 03:43PM, shivang upadhyay wrote:
+> > <...snip...>
 > >
-> > IMHO, similar reasoning works at the QEMU level - WADT is not a
-> > new type of watchdog hardware, just a config choice supported
-> > with certain specific QEMU watchdogs. So I'd prefer something
-> > closer to what I suggested in the mail that Igor replies to,
-> > where we have a simple boolean flag to control use of WADT,
-> > and other distinct properties if we need other controls on the
-> > watchdog, instead of trying overload multiple distinct settings
-> > into one enum.
-> > 
-> > For Arm we would similarly want to express the choice of
-> > hardware directly as
-> > 
-> >    <watchdog model='gwdt'/>
-> for gwdt it's more than just adding extra ACPI table,
-> with wdat knob, watchdog entry in GTDT table should be disabled
-> and gwdt itself should be wired to use different freq
-> (in the end it's different hw that happens to use the same registers/
-> protocol).
+> > Q: can the generated DBT genuinely be different on a
+> > subsequent reset than it was when QEMU first starts?
+> > The comments in the pnv_reset() code seem to suggest it,
+> > but on the other hand the code as written will only
+> > call pnv_dt_create() and update machine->fdt once on first
+> > reset, not on later resets. So perhaps the comment is
+> > just confusingly worded ?
+> 
+> Yes, I am not much familiar with the design here. But, as per
+> 
+> my current understanding of this code, DTB content should not
+> 
+> not be changed.
 
-That doesn't really sound that different to me.  If enabling WADT
-implies disabling GTDT that's ok, likewise if Peter wants DT to be
-available in parallel that's ok too. We can cope with modelling
-either approach in libvirt
+To add to this, yes, normally reset path doesn't change the device tree,
+since all reboots are the same as the first boot.
 
-> if we make it built-in, we would need in addition to virt.wadt alias
-> also have virt.watchdog=[on|off] to manage creation. 
+As of upstream this is true, I don't see dtb changing between resets.
 
+One case where reset path does change the device tree compared to
+pnv_init part is Memory-Preserving IPL (MPIPL), which is a
+dump-collection feature in powernv for collecting dumps after kernel
+crashes.
+This is not merged yet in upstream, and is currently in discussion [1].
 
+I am okay with the dead if condition in pnv_reset to be removed for now,
+we can add it later for mpipl purpose if needed.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+[1]: https://lore.kernel.org/qemu-devel/20260225124633.1841222-1-adityag@linux.ibm.com/
+
+Thanks,
+- Aditya G
 
 
