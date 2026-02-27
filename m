@@ -4,78 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834EEFD530C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 08:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62114FD530D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 08:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvsun-0000W1-4X; Fri, 27 Feb 2026 03:09:37 -0500
+	id 1vvsvf-0000ln-9k; Fri, 27 Feb 2026 03:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvsul-0000Vd-Kx
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 03:09:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vvsva-0000k5-8M; Fri, 27 Feb 2026 03:10:29 -0500
+Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vvsuj-0002tp-Sy
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 03:09:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772179772;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z4dRO3J9ZEREHEz67IYOdhP3RwpWBYBXb6puJsUpGX8=;
- b=Yg2Bl5vnY+0qAnp1BMuppRDJcNSeV1jPYc7DpD/32cKiB1GbLMfgvn/op74ZFP5hCqNtw0
- /Ac6BbbMvvjLCmSuJq8WcCQyR0hyi/pBGPmS/pkeNkXjJ2iJtoiNwQ7tTug76iNnvwBnt9
- 2VUsj1OQatGukLKG102zsmEfYO2kOxw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-iRcIr9IpM9GaW_BQsi496w-1; Fri,
- 27 Feb 2026 03:09:28 -0500
-X-MC-Unique: iRcIr9IpM9GaW_BQsi496w-1
-X-Mimecast-MFC-AGG-ID: iRcIr9IpM9GaW_BQsi496w_1772179767
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 54A7D180034A; Fri, 27 Feb 2026 08:09:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.85])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 222571800348; Fri, 27 Feb 2026 08:09:24 +0000 (UTC)
-Date: Fri, 27 Feb 2026 08:09:21 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 2/4] python: replace avocado tests with pytest
-Message-ID: <aaFQCknP5DRUXS0Z@redhat.com>
-References: <20260226213400.1254014-1-jsnow@redhat.com>
- <20260226213400.1254014-3-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vvsvX-0003Bo-Gh; Fri, 27 Feb 2026 03:10:26 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.200])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4fMgx60ywgz68v9;
+ Fri, 27 Feb 2026 08:10:17 +0000 (UTC)
+Received: from kaod.org (37.59.142.98) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 27 Feb
+ 2026 09:10:16 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-98R002baa5c88c-df19-46f1-b8da-add4e35583a7,
+ 1764588C194503052958D0AAF3448E51E66CE866) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.66.77.115
+Message-ID: <1dd64a22-a541-4416-b2d7-27b4797123de@kaod.org>
+Date: Fri, 27 Feb 2026 09:10:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260226213400.1254014-3-jsnow@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] hw/i2c/aspeed_i2c: Fix DMA64 address handling
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+References: <20260224073207.985162-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260224073207.985162-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.98]
+X-ClientProxiedBy: DAG15EX1.mxp5.local (172.16.2.151) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: a6bc64e6-7248-4a49-b00a-4492d902b4ec
+X-Ovh-Tracer-Id: 5866219993320164274
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFPQxIGS+fxt5rMMjT3uMD733CcXoQqvLrNuLlNiDYvScHGONVq9oL7x+SrX1J1WgeFdTqKQpd2jdsShYBrVk6hpJDE9Q59mJlGCC5xdG/tBv8glUMbKGz7uWD9Pwmojo2CDqLC7fXDviD9/R0vq4fZDmtfwaUYb07DHlVP03Jja1gzWC357PH5qaWPQwUu7VP+ZG+BLJfYO2cWwShUmDYosN62B6AIB0w5LL6zM5WyLhtmoHm7VrZC3BXXfWeo0PxNUQ0XOQvzz5cpj+D8x/xfvr/HRGk6sM6xX4rjSuWoNruzoSPzL+56jmQ063wmJO2zHqSZtkull2oKYZfKS9VqhCH5BxB9nNBPxZSAR+YBe7rA1W/fT/71zI+1mRgH2MsPrW+EXEOzuH5aY+YzLlCtEeXyVk3kfZu+7l3QXpM0q0FnhFz8Wiiyw4y+8QMo7esMXOypOXnYB6FoIQnCXasNVXIbhwdExO25hfWTBEUGa3tx8bf1m5I5RPmA631zEGDGZNIfsE50nz8dolfVLHF64LtRYYWkdkNs+Y8wVvZ7fXVI56BS10EHxgtGMcehHajh3rBSvPOh37ZD5bdu5iiaO/+ba9qYmF/pXqXIWp6Sjs31XfEu7Kl5wmCqfKiMCUI7cuOGn7/wOcFgc59GynzH54M9atVVxxuOcKEKfgCWpA
+DKIM-Signature: a=rsa-sha256; bh=T9yBt11QhSDrUOX7JxImBoP3P+Memr5n6XIgHO2ZuYo=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1772179819; v=1;
+ b=T1kFSjfpf4jKegDBRUtaZboFODGYMVVuvvEPeeQf13vPruEdNPUgfowhGsikw7tDEn47NSTB
+ MDVy4jZsBLbWAFbFHLzoRi+3ZinxVLzXo1CSgSpX7FOY4TTFX+c0jyRJvW+rZCHc4qPqOg7hgzU
+ +gvf2Qqj/4H9ZRRMVXbPoH5m79G8s2q7uBCf7x87jDlaxTJhxpCmZe9JbC4VrmNlMstctXMBbIq
+ G3F8dB+Pypm9QmdI+M17uJvPrp/MGwAA9L+bh1IP6xhQ2/xzfwd4wFv5Ahy4Ip+bN4KqSlP674K
+ iPpNw/aFp3gveE85G5ALXFQdM2EfKT1daQeogxN0pMhPg==
+Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo529.mail-out.ovh.net
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,91 +126,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 04:33:58PM -0500, John Snow wrote:
-> Following suit with the rest of this repository, drop avocado and
-> replace it with the Python standard "pytest" package.
+On 2/24/26 08:32, Jamin Lin wrote:
+> The current code updates the upper 32 bits of dma_dram_offset only when
+> aic->has_dma64 is false, which is incorrect.
 > 
-> Our ultimate goal is to merge these python tests with the meson test
-> suite, so the use of 'pytest' here is only a stop-gap solution to get
-> the GitLab CI 'check-python-tox' passing again following recent Python
-> packaging ecosystem changes.
+> If aic->has_dma64 is true, the controller supports 64-bit DMA addressing
+> and the upper 32-bit DMA address register must be used to update the
+> dma_dram_offset accordingly.
 > 
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Fix the condition so that the upper 32 bits are updated only when
+> 64-bit DMA is supported.
+> 
+> Fixes: efea7ddb4689a1ac4bce63a9ddb32887c7f3ac50 ("hw/i2c/aspeed_i2c: Fix DMA moving data into incorrect address")
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->  python/Makefile          |  4 +-
->  python/setup.cfg         |  1 +
->  python/tests/linters.py  | 79 ++++++++++++++++++++++++++++++++++++++++
->  python/tests/minreqs.txt |  1 +
->  4 files changed, 83 insertions(+), 2 deletions(-)
->  create mode 100644 python/tests/linters.py
+>   hw/i2c/aspeed_i2c.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 122bfdd63d..8022938f34 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -237,7 +237,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2CBus *bus)
+>           bus->dma_dram_offset =
+>               deposit64(bus->dma_dram_offset, 0, 32,
+>                         FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
+> -        if (!aic->has_dma64) {
+> +        if (aic->has_dma64) {
+>               value = bus->regs[R_I2CM_DMA_TX_ADDR_HI];
+>               bus->dma_dram_offset =
+>                   deposit64(bus->dma_dram_offset, 32, 32,
+> @@ -262,7 +262,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2CBus *bus)
+>           bus->dma_dram_offset =
+>               deposit64(bus->dma_dram_offset, 0, 32,
+>                         FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
+> -        if (!aic->has_dma64) {
+> +        if (aic->has_dma64) {
+>               value = bus->regs[R_I2CM_DMA_RX_ADDR_HI];
+>               bus->dma_dram_offset =
+>                   deposit64(bus->dma_dram_offset, 32, 32,
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
+Applied to aspeed-next.
 
-> +class TestLinters:
-> +
-> +    def test_flake8_pkg(self):
-> +        check_call([sys.executable, "-m", "flake8", "qemu/"])
-> +
-> +    def test_flake8_scripts(self):
-> +        check_call([sys.executable, "-m", "flake8", "scripts/"])
-> +
-> +    def test_flake8_qapi(self):
-> +        check_call([sys.executable, "-m", "flake8",
-> +              "../scripts/qapi/",
-> +              "../docs/sphinx/qapidoc.py",
-> +              "../docs/sphinx/qapi_domain.py"])
+Thanks,
 
-Underindented.
-
-> +
-> +    def test_isort_pkg(self):
-> +        check_call([sys.executable, "-m", "isort", "-c", "qemu/"])
-> +
-> +    def test_isort_scripts(self):
-> +        check_call([sys.executable, "-m", "isort", "-c", "scripts/"])
-> +
-> +    def test_isort_qapi(self):
-> +        check_call([sys.executable, "-m", "isort",
-> +                    "--sp", ".", "-c", "../scripts/qapi/"])
-> +
-> +    def test_isort_qapi_sphinx(self):
-> +        # Force isort to recognize 'compat' as a local module and not
-> +        # third-party
-> +        check_call([sys.executable, "-m", "isort",
-> +                    "--sp", ".", "-c", "-p", "compat",
-> +                    "../docs/sphinx/qapi_domain.py",
-> +                    "../docs/sphinx/qapidoc.py"])
-> +
-
-...
-
-> +
-> +    def test_pylint_qapi(self):
-> +        os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-> +        check_call([sys.executable, "-m", "pylint",
-> +              "--rcfile=../scripts/qapi/pylintrc",
-> +              "../scripts/qapi/",
-> +              "../docs/sphinx/qapidoc.py",
-> +              "../docs/sphinx/qapi_domain.py"])
-
-Underindented.
-
-> +
-> +    def test_pylint_iotests(self):
-> +        os.environ['SETUPTOOLS_USE_DISTUTILS'] = 'stdlib'
-> +        check_call([sys.executable, "-m", "linters", "--pylint"],
-> +                   cwd="../tests/qemu-iotests/")
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+C.
 
 
