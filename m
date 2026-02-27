@@ -4,102 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8263EFEFB48
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C161FEFB48
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvwrE-0008N3-6K; Fri, 27 Feb 2026 07:22:12 -0500
+	id 1vvwxa-0001zD-NZ; Fri, 27 Feb 2026 07:28:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vvwrA-0008Lc-KH
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:22:10 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vvwr6-0004lb-LU
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:22:08 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-354c19bf64bso824686a91.1
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 04:22:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772194922; cv=none;
- d=google.com; s=arc-20240605;
- b=SQFBS/V3Ym0PozQOCGzK4z+rMeePChdgKqLivYr3T/DC8RG426ynZ/phx9jrdHAQNy
- 7tmN36FO7YDuBwLI77LbraMplZp+VQCTbqCMs6rItriRI3I60RxDrTJs+XDk5uEgxjeb
- A/Cimal3rZ3xB/7paHESYP/dJlweFyODUF5DZYArWVH1Fpgdpfa4+zgtqcdCFeV9hGid
- 1XJTwnAeK1UmLscWCOkYtAvt390MmF0EBuqXMSwPBiTAZjI6Wq51UuzOz1KgpURKAn9x
- 3VLFREZy6v/BnlhI9HyNQcj4xz3ymZI9+D5kIPk0mcHOsO+mf5xK8J5z+n9yz9YczNyf
- rasA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=sltoDfI7b+Q6VzMhsvUxu98Dr2T+egh3zldsnt/YSy8=;
- fh=YTxI/2B0tIA4OGE8g1nLoHfXTEPH/KCzPpRqw/hY+Dc=;
- b=Gi1M/A3rZRdJTB5VZ2M2F7IIZHTB5/AZr9DybembObK2778h7P1h3Uyf+WJEJyEYPX
- wam7aDEUcZ8t/5g/Rxv0embYada3Hp5He82MFPKE3V+1GOWsb6ckqE/LxUPYjBiK+6CG
- Bjzv2KT5xIsZtLS8iwpWHE9+CDt/TFv6eP7hEXzH9wudiQRYOnou7QcLim9J6R366ezf
- C2Fa1nMh3qHYar+XDVZPx1k8QvfjKB6/TVPn7KfQhPFrarsWrjE5ra8jdw97SeAnkwhq
- rs577V14jm+MCoPwv8wcMYliSxPKPXlB+OzVPAgpF7X4XLX4iuZIwN2bIceAMarH/o8e
- 5vHQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772194922; x=1772799722;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sltoDfI7b+Q6VzMhsvUxu98Dr2T+egh3zldsnt/YSy8=;
- b=IBLNSeRkQ7k7VKDTRGcNGTV4MCWE1MYwutiALLEBSXfvoV/McWXq2jYh+aT37ZtWr4
- LFbAKCGHWzEpAO8zaZyGw1QxJOmbWV4JelR4XVN3G8Q7EEFBCBGUcbmfEFlidWztZyEM
- WmlMBhprTIkxKwjj3vxIyRW4EVayYoUqILfyzWQ8WS56oLYTZlBUW96jbHmfxZEuFHN1
- RjAbKeL+ES7WR8vHQf7CyJKP7GPj7ydFXOzCpK4ozz+vCT6DGC60KLx7KICulWJmCrcd
- innSoDjMOCPWdj4ACNt0zZNElXs/IZOUAaWHrG3pdzh8byLNJFQohohSVQPjEzICyZry
- klMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772194922; x=1772799722;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sltoDfI7b+Q6VzMhsvUxu98Dr2T+egh3zldsnt/YSy8=;
- b=TpS58IZ9FLT2sL5RX1M5J1EbREg/XmFunDRS3bf3kfJ0tNku/uY8BvHbMAYqyx8xxK
- jCDj2UadHq5xKPH1stzaoXXocd4mz86uOl1X5uBfViM1PV+03dzYCE+zH4paTslfxpwS
- CRxUIRM+HscIRlny+23RaR4c9rLt3O4ei4LnYhFfiyYMC3aqeewRAp9llLPpgv/8MxnO
- u8GqsOIQMVx9DfJJCcUr1ePvLal0eWqtKE2s5bc+25rLOx1PpEMLCy8NtCYQwb1hm8VZ
- d+ZVBn+NzSj6ul4lEvZ4O65vNSzsEuHrn/G3g4/D2rh0ktptEQ9JldlmyNODyu3Fk4ne
- 5qUw==
-X-Gm-Message-State: AOJu0YxSeSVgXboDO8MJicKZthtSoGGMfpEGgLsBCM/urNnAqDEi06u5
- +fvioY5OSefdfrfoD7AQ0oDXKwLHlhGBpv5PZ7g/1WqTKO3YrcXLJfqE0e8euxeCxU+Uq+cggmD
- jV11azQpgivHkNJ1jOg2OBYbCHM87iw3b7GSMkntzEnPQ+CnCVpNZhcQ=
-X-Gm-Gg: ATEYQzwN/25bcAy4ynYAJyCRJXszRD0F4qSYezBenQkNBNF0QEpx++jL6Aa37C8YWcw
- 7uFlx88rRmf/HFZnL43mE5kCtUDa15sUjXs/htuBCpwY57/2NDKiJv3qgTJFYHqKHsl+2Cw1ns0
- 6cO7e3ycttCa7W9nGWE6kRZOmw/EtQ79T9dpr5Tpla+kJrpKXsxhMORw9M4msrui8Q6sQBZCuzx
- KBy+n2zZVk+M0CJJ4b6y21Yqn08NRsBw5ar3rADnuT0RTjGqnOebJVS4H8nuF/lk/gf+5DmfXGA
- 4LjMftg=
-X-Received: by 2002:a17:90b:4d10:b0:356:21e9:73ff with SMTP id
- 98e67ed59e1d1-359690182femr2341573a91.11.1772194921907; Fri, 27 Feb 2026
- 04:22:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1vvwxY-0001yY-PC; Fri, 27 Feb 2026 07:28:44 -0500
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1vvwxW-0006Jw-SH; Fri, 27 Feb 2026 07:28:44 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lXtPca3kalHH3oNqpiCeLgQWaxOK7XNQOEwtGnz+uDSzErBMnQMOgGzxvvdq5A27QWZls4dRx7BNema2Ifa47kT4jnDLND2/lrjzxhC+tEEZ4au0j9DIm9LZEuIHNHU0EtviBsiR3hqK/uUqlSTqlpByMYDXrz4txFarenQEV4hZr23Kq1pzDHyBNrqv8yNUaki9xVF8S3jhUJUPkAo8B1CldLjWIIxxIdw/8L4/bNLLgezCLS7ThbRD6CBNhYYztQYN9bpGd+9QlKzyvIdk/8aI+D/7nlyg0DBEmWIiDzU4nvstjdKPzu4jtUarnttAKlL1rpDmWIpXf+MVV3KGBA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=96CW2LsZX3nNx9RQo9d+82DyPmmbCeNaEnnsepK+9R4=;
+ b=OBqQo6A5OB3aUXuhThz1CX4DXR39gK0kp2m+WTLp+SXDpjZ5Vo27Xu3vIGoQt97aJrWtbK4PbCLe3ckuY7PD/iVPbJ4Vp//gERvKg6gtPxg0e1m7VsOPHlQU0uhxvHU2geohtUW9vOpu0NwL4IihLKXNmKjFr2OIXlBItkkglybdZXyzhw3VNOkCAnO3V5JJcQxONOGDfSBWxwt7GX2qVs3LWzzzaYgMfXpIlZzlNx1e5WHpNHfGlq01NsXtE7Tu/vCBxWqjC/ypSRRSXqtXniKcuZ9L8lfSl5XPTY0RgKE0cFFR0Vy3z5pjODxwyGdYS0UWwtonJz4ELFkWrtu72A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=96CW2LsZX3nNx9RQo9d+82DyPmmbCeNaEnnsepK+9R4=;
+ b=WenPG1S+6r+xud5QSzW2CdA0UacnY7NrXesUu4HekeUlKd3pXHswaUd6vCsLymk3T7PQXWeI8qYMONsdmHhIQr89XUvjymKjdAI5SFgAr4dX6tM08RMMD+JAFx87lmA9B4L+hyd8OIz3nmpYFPrMW9ritWExE8nwWORKLlvgk3sGFGYmsM36IluJEjMNQc2SUWcrwOQ8EV9gGA9Akri+WyVtxALy6XhZNWW7TWZ7U1S6t42MKo6o0uTUn2lgQzbjd7K72KaSymlOx2/SdnJwBdJkXXIbIrIESMfrwinFs25eSMDKem0E0oNEAgiI8hfq6WmOSK/hD+zkBZ+Ekk3nbA==
+Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
+ by GVXPR09MB7066.eurprd09.prod.outlook.com (2603:10a6:150:1b7::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.11; Fri, 27 Feb
+ 2026 12:28:32 +0000
+Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
+ ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
+ ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9654.014; Fri, 27 Feb 2026
+ 12:28:32 +0000
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+To: Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair23@gmail.com>,
+ Conor Dooley <conor@kernel.org>
+CC: Mohamed Mediouni <mohamed@unpredictable.fr>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "philmd@linaro.org"
+ <philmd@linaro.org>
+Subject: Re: [PATCH v2 00/16] Add RISC-V big-endian target support
+Thread-Topic: [PATCH v2 00/16] Add RISC-V big-endian target support
+Thread-Index: AQHcpkBaA1l4l1CIU02NL47xpBxJMLWTSjoAgAJY6wCAAATbgIAAE2KAgACOxoCAADKBgA==
+Date: Fri, 27 Feb 2026 12:28:32 +0000
+Message-ID: <3b98f46c-4fe6-46a3-84c6-9448accf71c9@htecgroup.com>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <A02120BF-779D-4B2C-B29D-A9CB044EA895@unpredictable.fr>
+ <CAKmqyKO6ioRt+h_tZrudbriv-QDVsOG1LNJ+GFQJ3ZO-fEhjiA@mail.gmail.com>
+ <20260226-hangout-satin-fd7913f18f2b@spud>
+ <CAKmqyKNST9ExmpcFE3iejmzZZRtMNSiVXkzfUK4GhhcketrCEw@mail.gmail.com>
+ <35add848-6875-49c2-afd0-d5a1ccdbcd3f@redhat.com>
+In-Reply-To: <35add848-6875-49c2-afd0-d5a1ccdbcd3f@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|GVXPR09MB7066:EE_
+x-ms-office365-filtering-correlation-id: 50440796-5b37-4dfe-767a-08de75fbb843
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|7416014|38070700021; 
+x-microsoft-antispam-message-info: 48KUG8yoUGzpGqIuWcQs9xlL3xzrhGIcPuMjI279t2rAyq+cvPOSbp43LsXlj5RIqO55YZCKj45jF6cLQMnm82MG1fIJ2OoNiT+vgy3rdQ35wU7X12nZn1NjcEd2NHGq5vph4iAEMU4yIiwiAEI+ne+O5h23CYppJSTYT++ImJ/zGSz8qj64y6BIRNpdzyf3JwbpptV1ayrc+32TWDMtamEQleVUnUXrUXpAKxgInk87dL7tIanYFvTCr1c89+GfWQYFjH3i+5vidGHjRqeyMIZgK13/YSmWK247jbDUvAbU//edeJVHXuqjsWhOAHJksTL6Xferkxe+wFAXxu3JQmfFKsqfQ/ZlsgUjb/jrF2lh1JHwBOTtZZ5UyD3TFNJWi5sV+2jhhyBv9wkFHwSDDLjctMwm86to2Zw85wYayl3lHzI8ESoFkRkgySn+AmMizq3n6456idnc6PYHbFG5GVJ1UkSbRN9ZLn/2M/JkSVYhJIPqTSUNPxq/npCO7TdKk8s9+euxwhh1scDGcaT/4+uiPaW3f3LSSqpGPEVqvElpVHhwelNJbqztLQ9qWZ0e6P2jQJjFzN1YioSnxvjS+pWovNa7rLOPgKA2djhI4b0obTYjuXnq69MW0w4BXcwvm01UxGh9qehGcEl7JMk4VrR3nTpUs1IU5ebFz8yzdxdc8wGT6snaTZPF4/epI0aypWzWrtVnPytVN0GyJvBd0JZFSF71W4wLutAAx/gxUtBhB6xOQs8ql4WGsbxWxcfa
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(38070700021); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?blFkcFRXNnA1VEhHb0xRRnEwYUJxNUVKbklGcFBtUFBZbDQxeXRmbDA5RUM1?=
+ =?utf-8?B?Z2E2R0E5NXZzM3Y3SVJqclRVdEx5MlRHTGE2RlFDRC9ZK2pJb2cyMERTTUZK?=
+ =?utf-8?B?V1NxNVRPK1I2R0ZtbTlJRGtRQ2NLcmUxSmMwVGtPR2EwZVhnaEt5L2Nkckkz?=
+ =?utf-8?B?N0RmL3VGQ2ZwSDJMeDQvTGtvR3BwUml1RTdKbmZhVXo2cE5rcWZ3VXFpbkZJ?=
+ =?utf-8?B?dDgvY0gzOUpqMjhCNS9yMzV6QUppbndJdkJVYW9aeU9mbUtPZnlNNEs4TDlU?=
+ =?utf-8?B?WFU1WmMxdDdvK01UcUxXaUlzeGxWWDFSWVVKemNETS80dzNXNUZieEdxc2tW?=
+ =?utf-8?B?NFY2SFE3Zy9PNDRkbGF4V1hkYjBqaGlnOVcxbWNNRlRlQWhBcitVK2NUV21T?=
+ =?utf-8?B?ZEhFSGVVZ21ndFc3R3djL2ExRVpwN3d6UE1iK2xidFhORjBVL0ZSNXJDOXhH?=
+ =?utf-8?B?SkgxcmJJcTF1c3dNT0VFR3BJVk4wL1FXdHFWT2hTemMyTFh5NWJ2UjBWZytJ?=
+ =?utf-8?B?bnhQZDdBUXZiMUFLSGZWQWlYWkppS1dLckxMOGNaMDVkKzlDb3p2ckdNMUUr?=
+ =?utf-8?B?V3FwQTRNTnpyUEltN3J0QkMvRlhlY2crOUw4dVJWT1dRS3praThSbHJGUmNF?=
+ =?utf-8?B?N1JPb2xSYzh4Rm9uK1dEV0tGV0dtRTkyY0QxVENLVDZFaVUrbTJ3K3drZnM1?=
+ =?utf-8?B?WTBremtuTlNkalNQbDJwbUJvUDZpWjNZVE4wN1dCZ1BWY0tQMnFob1BmbWNt?=
+ =?utf-8?B?QWlLSkg5MUdua2NpdUVrWDl0Slh2WG9IYk5XeCtweTI1MUpmdlkzL1V2c2NG?=
+ =?utf-8?B?U0k3Sk9ETnJzYUVsK21HS21VRFdrSk01Ykx4L25FTzg1T3Robm9UZ2RQRzRE?=
+ =?utf-8?B?N05JdHkxK2hpcXRZS3JkYWYwWWVSUjlzWm9YZ3RxYURxaVhYbFpoc1J1WUY0?=
+ =?utf-8?B?Rm40S2gwcGw4Y05NbktGNkdXNHJoUlZYMmZSWFFlVmN1aTl0cGJIRkw5U1FU?=
+ =?utf-8?B?L2tyL281cEdPdzNENFRxOEl0d0xsc3E3Wm9uUzJBSHBRVDhVWHdDK1FqTXNK?=
+ =?utf-8?B?anozQ2R5WGpDd3c3V09IVGU5a20rZTQydjFROU1OL2hUS0VUcWQyOGZ6cFEx?=
+ =?utf-8?B?SWxiaGRzbGorTDh3K1RIbUZ3MEcrV2NHb0p3Ky9kdGdFSHIrckM4Mk5FdERV?=
+ =?utf-8?B?alJLWkJrdTJJK2MzT1I3QktMaWt6RUYrb3VuSlRBT3EyTzhLNTZlTWtBV3Uw?=
+ =?utf-8?B?ZmdNUDZTYlNOMjFIUEF3a2I1amx3Q0s3YjNVY0xVZkZlUkNQRDVpOFRzZTVp?=
+ =?utf-8?B?UmRKOVNTZml5T0VEeDVXQ3hIcUVTc0FsaFpZb2RGT0JBbS82MXN0ejliWGpD?=
+ =?utf-8?B?UFk2dlJHblp5ZkpwNWtVdXNNQnpkSUY2MXdtQUZ3ZDh5bXRVd2lPUlZVdlRZ?=
+ =?utf-8?B?dU9la3UvVVdRTUlXT1lyTnI0YjRUb1J4N1NadnZFNnBTamgwOHBVS2Z6OE8w?=
+ =?utf-8?B?YUlxK0JBVE1JVHlrc3dEVkg2VWIrRU9OQVY5bVBGMVNyQmNPOGh5djZnSnQ4?=
+ =?utf-8?B?ckp6WTBha05BdTIvZWtjU2ZGb1JDeWhmamQwR3J6c0R6TTBud2lrWFQxRXNQ?=
+ =?utf-8?B?cVZSS2RieVNiUFFLd0ZyZ1Q0VVo2VUJwaEkvRXV6RDdWRlZ5VXk5TGkzeUVl?=
+ =?utf-8?B?ZHNSZjZXY3NvRWQ3QjNIVWNpSTU1MlJjMXVTUE1adUh1T1RMNmFGTk9ZQXBU?=
+ =?utf-8?B?ZkV1NUFzUjQzQTVRSkdCMGhHN1p5RUhQNlJFVDU4UFdmS0g2Y3pPbjFwWXFw?=
+ =?utf-8?B?RW5mMlNLbGNzZW9OMTlmSnhWczVleTROMkYraDZoTDFkYW12OGxpOU1uZnMy?=
+ =?utf-8?B?ZEFrV05udTRxSzNabUo4RzFQY29IQjUyWTN5MkxzYkFTY1NWNE5UTjlvbGow?=
+ =?utf-8?B?cnJFaEdCT0QrWTUrWFBSWVk5OWNydEsvN2UvTjNlOWl1UW9xcmRCNzVqODdW?=
+ =?utf-8?B?Wk0wWE1yZ2Fvd2kzbTRHNC9RNFliWjdGL2hwMHFCemNnaVZUcmR3SXNqWHRQ?=
+ =?utf-8?B?SE9ndzhiYnVHSDYvblVSUXZnajdtcm1Xd0JTU2tKaE9tK3MvM1AzMXc2Wllz?=
+ =?utf-8?B?cllIUldGdUlUQzY1ckQvSnNrdkZlNytoOXY4aGJ1YVdEN0RYR3ZMbkZEc0lh?=
+ =?utf-8?B?cWE3cW9tRE5zcXFPVFQ5Y3hXWHAyNm1JSncxd09EZG5vRkVLL3JkNis3bkZS?=
+ =?utf-8?B?R0dnY1hBSm1GbHA2UHI3MTVPeld0dEZzckZDRG9IZHF6LzhVdVNjemMzbTFh?=
+ =?utf-8?B?Ynlpc3ZYTTRhQXpTM0drMEsyUkdaQXN4bXFsamlwcnY0TitDaC94SGhhWGFP?=
+ =?utf-8?Q?rOxSvwmVGn45xdZ93ix1p+F/BbkQrQWkUQbr4?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D9FEAB0B3F90BB4191BEBB1B2123D16B@eurprd09.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20260227104314.81038-1-philmd@linaro.org>
- <20260227104314.81038-3-philmd@linaro.org>
-In-Reply-To: <20260227104314.81038-3-philmd@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 27 Feb 2026 05:21:51 -0700
-X-Gm-Features: AaiRm52PmePY7DPk3z8LBAuJhlnAaI_DA4zWLE4wiPk78in47f-tX-F-LQW9rqI
-Message-ID: <CANCZdfqZjEza8=+FosNW4O_ygbGB-fdF2nik5sdbpjUOY2a7ng@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] gdbstub: Remove 'gdb-xml/' directory prefix in
- TARGET_XML_FILES
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000cb11d1064bcd4857"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102b;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50440796-5b37-4dfe-767a-08de75fbb843
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Feb 2026 12:28:32.1263 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6f5l4wsmiwZmyzMYm3+bF5xtxL9ua6qLzdjykCO4+/wGD5JqcbVAOwLYvuBRsyTS6UIksDfkyT7dX0zCXaiRzd4ijO4B1b3LKl/6RWHFKQI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVXPR09MB7066
+Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+ envelope-from=Djordje.Todorovic@htecgroup.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,129 +162,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cb11d1064bcd4857
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Feb 27, 2026 at 3:44=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> All GDB XML files are in the gdb-xml/ directory. No need to be
-> so verbose in TARGET_XML_FILES, let meson prepend the directory.
->
-> Except meson.build lines, this is a mechanical change done running:
->
->  $ sed -i -e s,gdb-xml/,,g $(git grep -l gdb-xml configs/targets/)
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-
-This looks fine, and should work with the modified meson. One observation..=
-.
-
-diff --git a/configs/targets/aarch64-bsd-user.mak
-> b/configs/targets/aarch64-bsd-user.mak
-> index 7f42e060477..3a839b301e4 100644
-> --- a/configs/targets/aarch64-bsd-user.mak
-> +++ b/configs/targets/aarch64-bsd-user.mak
-> @@ -1,4 +1,4 @@
->  TARGET_ARCH=3Daarch64
->  TARGET_BASE_ARCH=3Darm
-> -TARGET_XML_FILES=3D gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml
-> gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-sme2.xml
-> +TARGET_XML_FILES=3D aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml
-> aarch64-sme2.xml
->
-
-This seems to be missing aarch64-mte.xml that linux-user has. I have a
-patch in my queue to fix this since it leads to an instant assertion in
-some cases. When are you landing these changes so I can plan? Otherwise
-we'll collide when we submit the pull requests. The patch came in as a pull
-request on the upstream blitz...
-
-
->  TARGET_LONG_BITS=3D64
-> diff --git a/configs/targets/aarch64-linux-user.mak
-> b/configs/targets/aarch64-linux-user.mak
-> index bf328b3b80c..ddfacc092dd 100644
-> --- a/configs/targets/aarch64-linux-user.mak
-> +++ b/configs/targets/aarch64-linux-user.mak
-> @@ -1,6 +1,6 @@
->  TARGET_ARCH=3Daarch64
->  TARGET_BASE_ARCH=3Darm
-> -TARGET_XML_FILES=3D gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml
-> gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xm=
-l
-> +TARGET_XML_FILES=3D aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml
-> aarch64-mte.xml aarch64-sme2.xml
->  TARGET_HAS_BFLT=3Dy
->  CONFIG_SEMIHOSTING=3Dy
->  CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy
-
-
-Warner
-
---000000000000cb11d1064bcd4857
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 27,=
- 2026 at 3:44=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
-philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote cl=
-ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
- rgb(204,204,204);padding-left:1ex">All GDB XML files are in the gdb-xml/ d=
-irectory. No need to be<br>
-so verbose in TARGET_XML_FILES, let meson prepend the directory.<br>
-<br>
-Except meson.build lines, this is a mechanical change done running:<br>
-<br>
-=C2=A0$ sed -i -e s,gdb-xml/,,g $(git grep -l gdb-xml configs/targets/)<br>
-<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com=
-">imp@bsdimp.com</a>&gt;</div><div><br></div><div>This looks fine, and shou=
-ld work with the modified meson. One observation...</div><div><br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">diff --git a/configs/targets=
-/aarch64-bsd-user.mak b/configs/targets/aarch64-bsd-user.mak<br>
-index 7f42e060477..3a839b301e4 100644<br>
---- a/configs/targets/aarch64-bsd-user.mak<br>
-+++ b/configs/targets/aarch64-bsd-user.mak<br>
-@@ -1,4 +1,4 @@<br>
-=C2=A0TARGET_ARCH=3Daarch64<br>
-=C2=A0TARGET_BASE_ARCH=3Darm<br>
--TARGET_XML_FILES=3D gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-x=
-ml/aarch64-pauth.xml gdb-xml/aarch64-sme2.xml<br>
-+TARGET_XML_FILES=3D aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aar=
-ch64-sme2.xml<br></blockquote><div><br></div><div>This seems to be missing =
-aarch64-mte.xml that linux-user has. I have a patch in my queue to fix this=
- since it leads to an instant assertion in some cases. When are you landing=
- these changes so I can plan? Otherwise we&#39;ll collide when we submit th=
-e pull requests. The patch came in as a pull request on the upstream blitz.=
-..</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0TARGET_LONG_BITS=3D64<br>
-diff --git a/configs/targets/aarch64-linux-user.mak b/configs/targets/aarch=
-64-linux-user.mak<br>
-index bf328b3b80c..ddfacc092dd 100644<br>
---- a/configs/targets/aarch64-linux-user.mak<br>
-+++ b/configs/targets/aarch64-linux-user.mak<br>
-@@ -1,6 +1,6 @@<br>
-=C2=A0TARGET_ARCH=3Daarch64<br>
-=C2=A0TARGET_BASE_ARCH=3Darm<br>
--TARGET_XML_FILES=3D gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-x=
-ml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml<br>
-+TARGET_XML_FILES=3D aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aar=
-ch64-mte.xml aarch64-sme2.xml<br>
-=C2=A0TARGET_HAS_BFLT=3Dy<br>
-=C2=A0CONFIG_SEMIHOSTING=3Dy<br>
-=C2=A0CONFIG_ARM_COMPATIBLE_SEMIHOSTING=3Dy</blockquote><div><br></div><div=
->Warner=C2=A0</div></div></div>
-
---000000000000cb11d1064bcd4857--
+DQpPbiAyLzI3LzI2IDEwOjI3LCBUaG9tYXMgSHV0aCB3cm90ZToNCj4gQ0FVVElPTjogVGhpcyBl
+bWFpbCBvcmlnaW5hdGVkIGZyb20gb3V0c2lkZSBvZiB0aGUgb3JnYW5pemF0aW9uLiBEbyANCj4g
+bm90IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgdW5sZXNzIHlvdSByZWNvZ25pemUg
+dGhlIHNlbmRlciANCj4gYW5kIGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4NCj4NCj4NCj4gT24g
+MjcvMDIvMjAyNiAwMS41NiwgQWxpc3RhaXIgRnJhbmNpcyB3cm90ZToNCj4+IE9uIEZyaSwgRmVi
+IDI3LCAyMDI2IGF0IDk6NDfigK9BTSBDb25vciBEb29sZXkgPGNvbm9yQGtlcm5lbC5vcmc+IHdy
+b3RlOg0KPj4+DQo+Pj4gT24gRnJpLCBGZWIgMjcsIDIwMjYgYXQgMDk6MzA6MDBBTSArMTAwMCwg
+QWxpc3RhaXIgRnJhbmNpcyB3cm90ZToNCj4+Pj4gT24gV2VkLCBGZWIgMjUsIDIwMjYgYXQgOToz
+OeKAr1BNIE1vaGFtZWQgTWVkaW91bmkNCj4+Pj4gPG1vaGFtZWRAdW5wcmVkaWN0YWJsZS5mcj4g
+d3JvdGU6DQo+Pj4+Pg0KPj4+Pj4NCj4+Pj4+DQo+Pj4+Pj4gT24gMjUuIEZlYiAyMDI2LCBhdCAx
+MToyMCwgRGpvcmRqZSBUb2Rvcm92aWMgDQo+Pj4+Pj4gPERqb3JkamUuVG9kb3JvdmljQGh0ZWNn
+cm91cC5jb20+IHdyb3RlOg0KPj4+Pj4+DQo+Pj4+Pj4gVGhpcyBzZXJpZXMgYWRkcyBiaWctZW5k
+aWFuIChCRSkgUklTQy1WIHRhcmdldCBzdXBwb3J0IHRvIFFFTVUsDQo+Pj4+Pj4gY292ZXJpbmcg
+Ym90aCBzb2Z0bW11IGFuZCBsaW51eC11c2VyIGVtdWxhdGlvbiBmb3IgcmlzY3YzMmJlIGFuZA0K
+Pj4+Pj4+IHJpc2N2NjRiZS4NCj4+Pj4+IEhlbGxvLA0KPj4+Pj4NCj4+Pj4+IFRoZXJl4oCZcyBu
+byBMaW51eCBSSVNDLVYgYmlnIGVuZGlhbi4gTWF5YmUgdGhlIHJpZ2h0IHRoaW5nIHRvIGRvIGlz
+IA0KPj4+Pj4gdG8gbm90DQo+Pj4+PiBzdXBwb3J0IGl0IHVubGVzcyB3ZeKAmXJlIHN1cmUgdGhh
+dCBpdCBjYW4gZ2V0IHRvIExpbnV4IHVwc3RyZWFtIA0KPj4+Pj4gKGZvciB0aGUgbGludXgtdXNl
+ciBtb2RlKT8NCj4+Pj4NCj4+Pj4gQWdyZWVkLiBXZSByZWFsbHkgbmVlZCB1cHN0cmVhbSBMaW51
+eCBzdXBwb3J0IGJlZm9yZSB1c2VyIG1vZGUNCj4+Pg0KPj4+IE9uIHRoYXQgZnJvbnQsIEJlbiBw
+b3N0ZWQgcGF0Y2hlcyBmb3IgaXQgYW5kIExpbnVzIHdhcyByZWFsbHkgcmVhbGx5IA0KPj4+IG5v
+dA0KPj4+IGVudGh1c2VkIHdoZW4gaGUgYmVjYW1lIGF3YXJlIG9mIGl0Og0KPj4+IGh0dHBzOi8v
+bG9yZS5rZXJuZWwub3JnL2xpbnV4LXJpc2N2LzA2NmQ3MGM3LWIwYTctNDVlNS05MzM3LTE3OTAx
+YmM5NTY2NEBjb2RldGhpbmsuY28udWsgDQo+Pj4NCj4+PiBFdmVuIHdpdGhvdXQgTGludXMnIHRh
+a2UsIEkgZmVlbCBsaWtlIHRoZXJlJ3MgYWJzb2x1dGVseSBubyBjaGFuY2Ugb2YNCj4+PiB1cHN0
+cmVhbSBzdXBwb3J0IHdpdGhvdXQgbWVhbmluZ2Z1bCBzaGlwcGluZyBoYXJkd2FyZSB0aGF0IHJl
+cXVpcmVzDQo+Pj4gYmlnIGVuZGlhbiBzdXBwb3J0LCBiZWNhdXNlIGJhc2ljYWxseSBldmVyeW9u
+ZSBlbHNlIHdhcyBhbHNvIG9wcG9zZWQgdG8NCj4+PiBhZGRpbmcgaXQuLi4NCj4+DQo+PiBZZWFo
+Li4uIEkgc2F3IHRoYXQuDQo+Pg0KPj4gQSBmZXcgdGhvdWdodHMsIGp1c3QgYmVjYXVzZSBMaW51
+cyBkb2Vzbid0IGxpa2UgaXQgZG9lc24ndCBtZWFuIFFFTVUNCj4+IGNhbid0IHN1cHBvcnQgaXQu
+IEJ1dCBJIGFtIGhlc2l0YW50IHRvIHN1cHBvcnQgQkUgY29uc2lkZXJpbmcgdGhlIGxhY2sNCj4+
+IG9mIGVjb3N5c3RlbSBzdXBwb3J0IGV2ZXJ5d2hlcmUgZWxzZS4NCj4+DQo+PiBUaGVyZSBhcmUg
+YSBidW5jaCBvZiBjaGFuZ2VzIGluIHRoaXMgc2VyaWVzIHRoYXQgY291bGQgZWFzaWx5IGdvIGlu
+dG8NCj4+IFFFTVUuIFRoZXkgYXJlbid0IGludHJ1c2l2ZSBhbmQganVzdCBpbnZvbHZlIGNoYW5n
+aW5nIG9yIHVzaW5nIGhlbHBlcg0KPj4gZnVuY3Rpb25zIHRvIGhhbmRsZSBlbmRpYW5uZXNzLiBJ
+IHRoaW5rIHRob3NlIGNvdWxkIGJlIHNwbGl0IG91dCBhbmQNCj4+IGdvIHVwc3RyZWFtLCByZWR1
+Y2luZyB0aGUgc2l6ZSBvZiB0aGlzIHNlcmllcyBhbmQgcmVkdWNpbmcgdGhlDQo+PiBtYWludGVu
+YW5jZSBidXJkZW4gb2Ygb3V0IG9mIHRyZWUgcGF0Y2hlcy4NCj4+DQo+PiBUaGUgY29yZSBCRSBz
+dXBwb3J0IGlzIGEgZGlmZmVyZW50IHByb2JsZW0uIEJ1dCBpZiBzb2Z0bW11IHdvcmtzIGluDQo+
+PiB0aGUgZXhpc3RpbmcgYmluYXJpZXMgdGhlbiBtYXliZSBpdCdzIHdvcnRoIGFjY2VwdGluZy4N
+Cj4NCj4gRldJVywgaGF2ZSBhIGxvb2sgYXQgdGhlIGNoYW5nZXMgdGhhdCBQaGlsaXBwZSBkaWQg
+aW4gDQo+IHRhcmdldC9taWNyb2JsYXplLyBpbg0KPiB0aGUgcGFzdCB0d28geWVhcnMsIGhlIG1l
+cmdlZCB0aGUgYm90aCBlbmRpYW5uZXNzIGZsYXZvdXJzIHRoZXJlIHNvIGl0IA0KPiBjYW4NCj4g
+bm93IGJlIGhhbmRsZWQgaW4gb25lIGJpbmFyeSEgSWYgeW91IGRvIHNvbWV0aGluZyBzaW1pbGFy
+IHdpdGggcmlzY3YsIGl0DQo+IGhvcGVmdWxseSBzaG91bGQgbm90IGJlIHRvbyBpbnRydXNpdmUu
+DQo+DQo+IMKgVGhvbWFzDQo+DQpIaSBUaG9tYXMsDQoNClllcywgc3VyZSwgdGhhbmtzIGZvciB0
+aGUgYWR2aWNlLCBJIHdpbGwgdHJ5IHRvIGZvbGxvdyB0aGF0IHBhcnQgZm9yIA0KcmlzY3YgYXMg
+d2VsbCENCg0KVGhhbmtzIGEgbG90IQ0KRGpvcmRqZQ0K
 
