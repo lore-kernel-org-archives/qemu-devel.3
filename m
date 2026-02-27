@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB69FEFB58
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524C0FEFB56
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvyum-0001X3-5k; Fri, 27 Feb 2026 09:34:00 -0500
+	id 1vvyyt-00036h-96; Fri, 27 Feb 2026 09:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1vvyuk-0001WZ-GM
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:33:58 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vvyys-00036M-29
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:38:14 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1vvyui-0006Bg-8Y
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:33:58 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4806b0963a9so71925e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 06:33:55 -0800 (PST)
+ id 1vvyyo-0006pR-1N
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:38:13 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48373ad38d2so85325e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 06:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1772202834; x=1772807634; darn=nongnu.org;
+ d=google.com; s=20230601; t=1772203088; x=1772807888; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=zhksgfBBekPXJxvWmNFhtqq8ITn67s1ZAi/srfmIvRY=;
- b=f3UGci8cE5Pvlfdm/KDce6wXH1FebBMGuWI+NFw2QFwnjFqQBeIoZtLnb9YrnF2WrZ
- FS2SWin/c5Jpi4Es/v9DEM1Ib28RxB+I3BPlpQRjjBgXqpu63/23M2sRfNvpwg2EiHfp
- G+NGTO27b3uA2zs1od80pAmfSULy4e+3z/timD2c1pNbZuWSo+IVp0hGZrkf16owj1Mz
- sQV4o7ZMcmKMawQYLQmfjokoXWOEhDXP/wiiFYyq8PniqziY6F4dIh9q1vbUZ3ClFtlB
- PLXQC94wgtza3+VpZDIa5u8AeY+B5Mg7aNSIDyldkJdgB019miKkUmwRNqJ8UT9ZFWm1
- vZeA==
+ bh=IqXVEhexwNoFsyN+/mdUL5gosBnO45hXFSuHc2IJRgE=;
+ b=3u2bnpx5s51fSwE45gzYxyS1kF3makhALYxHHjYRlwdaDr1CozkA2SxurSt1kV4+p3
+ XRD8mkcjXYAbOE19DXcND5rzXoS82W1egowUbvUonGJ85usct36t2rTfls90zoLF79Xb
+ LllNV+fToTHjPkkB3d11+6eh8dQ4PYHHWBATtL9GdDtCVhL/LlS8JZe/e255CFDIw4Av
+ VHV0i8hMJb/qv1lHiDZO9xMBXj3gzZ4jZ9sV+DMm8zOg1nRwb4c7LoHav971CiQ+Xq6v
+ VjowEG4KZ+VkNqQPtyVcK7df17n31y2nk0bBZKhm6Mdd6gHRw91nPH95DAz6LSC7Kvov
+ zIBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772202834; x=1772807634;
+ d=1e100.net; s=20230601; t=1772203088; x=1772807888;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zhksgfBBekPXJxvWmNFhtqq8ITn67s1ZAi/srfmIvRY=;
- b=kxQCGqmk6HocaTmxTGZnVQRHI07KOZYbsYnSfUk+JMwS/+7wg5jt4da9g583v5YfkX
- eYddYLrOshBdzOgX+iswVfpcW8bumMW1lfYb38oR9KKGWhZb6+nSnMoYANGTAroWJapB
- Up0/WMuHkt7aIxxGoVxqFMrhmrFsJQ3MV6Z4mGqIZVYyVl3LLa8Ehb4VU6LtXBHD7lYJ
- xLEzwdjnzw6HSYBANyBaBQSmyE10FipJs/Zg+F6tgf/inF3IB9IXpV5mjt3eUg4C9qMk
- ApHyMpQSzConG22ONxAmqqhMXlHrskEGHmLOMoXLfJlTgdQub533zmb26oTJkgV8S2CY
- 0Z5Q==
+ bh=IqXVEhexwNoFsyN+/mdUL5gosBnO45hXFSuHc2IJRgE=;
+ b=w3WHqlLEhF1LOgtLM/iU5xsO3dthqYaRguG7eGUKEFEbPoWUf1GfnwMrXwQ00Uxs0Q
+ rWBs+VOoGW8rCizHyh3VGhIwe1d+eN7WU6CKFstnMNuYhCY/ptRcACpIhCpbPmmoBLjs
+ zU5B01Iq34huDP1QCsD6hfem7ea3m3lUGDXRXpjxY5QQunov3PJj585n/T+SxxtKuuMB
+ 3+Ok2yAaeUXjKqF5iafObn4hGS10GHaE2oYbx0kjdG9JAJSMV0RpYKYMvACJbGNMzA50
+ 9Y4tMgAyeXbd75qpnISqlZigz2z58Admed9QfpC/YTeid6iThtbsMxpus3l7bc+pCHD5
+ a5Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhUnhF22drbJwLqtYYiy+C/gUcy93FK/I8cSXLzW1aalHg+IhGktNrqyFbk+sdoLtYlQUJh/H7Ev9W@nongnu.org
-X-Gm-Message-State: AOJu0YxcUrKpf66FUYFnCMG6My8Q/+T/sIuMOrEXZ5QSEWCsKkTRy+Eh
- JY/Cr3z+3r5QdCQdNXV+EWs6qtFHfyPpoUG5VwrapjRyv25EhjpEvlAAmceVb0KAIQ==
-X-Gm-Gg: ATEYQzw7F1xP9Nu4lVSpzLZNgUeRMWdHUtjavQu605022Rg18ZQECzpP4xZgGWBMZI3
- CfhwypwKbKUcKovotk9JLeTbhCvaej+or2l/2MgBw7LX4b0cRmP3RpZuNNIg64azRByxsSk5Sod
- RQBg55gIgG7hXS/KF/pAGCH5JQA0wcn/9+BzbUq6LUMhxT93v8OBnquBEBnqd0G9xA1LTYARHp+
- xv7q/5ZZcYu78oFJJKZzDMF/qg5WJv/Y0CA+lrDLtkqZmVpq39L94+/Ull8hHEnZKQ/guhHw4kg
- zUkYEhnv8u7WzzQSek+b2rBuT7NK4U70MVBi7G4tkigpeRPW2kUjKW739K5IvxKgjtD97M8CaJs
- R2G9GXpZwMH4WrORHDuUATOvFM2LAyuI4nW5Nr1+Ckfnj9nQHBJOS2++jW6zIn+OIHj+eFE3hni
- FBk6SvvQLTJ6Puy3vr9E1DRj4/DBmjOcyimVfpf9OnkkDV8QtPnUl9pmogcZrd4NJZ
-X-Received: by 2002:a05:600c:556e:b0:483:1093:f29b with SMTP id
- 5b1f17b1804b1-483c318881dmr1468245e9.8.1772202833932; 
- Fri, 27 Feb 2026 06:33:53 -0800 (PST)
+ AJvYcCWjtiwAJMAHnwP0Y4UmSqGSSF4YRY84oJktnQEL0+dK1xnwRXXWNPFnT2Xxvz8w4l7P/4rdjno3ImvB@nongnu.org
+X-Gm-Message-State: AOJu0Yys5ZPPpN25pkJYWhkQJIbaG0z2/rQz7xqM84me3hm3wbGd+tPh
+ DXBqKw4tm+0Vxx6TR4spDT3XG4hva//nJzkbpa6NWlNMvPQilqN1IX+d7gTN4OEKIU0fwF9D+d/
+ zvbKCeQ==
+X-Gm-Gg: ATEYQzxMTdM0dNml+lbNhycNOrkMlehoED17b4Z+ajkamCWlrz/tjHt7nzKUEO30XmP
+ vRpPGHypBMkVcd24uDE+2kB0POmXRO8LkJ02sArnuAzl+bH0wbCru7/QQ1C0/OJt2e6z4Z2s6DJ
+ 3a9iHGt+RThjsCu4Lfjy4tmP3Xco4SsrL7MSOJj8uqpZQwKtK9jMd1VP9piTVCyempU2YbIqUpb
+ tjd5DZq0/oslCkb0ugP8EK41OSPRJ1HsUjLy/pQpwlE7khYtp5m6vbcdIyJ3Bvs7FClEKdS672D
+ jaVSDIXurCWXU9nK+1PKWgXYj2/5Gleks0Eh0T12Co9yc/8/K5+uJgX0D1RNs42InQbffppKhKc
+ xQCXkwBUt0bs5qGovpL3oypK5NL9q7B2MFP8ldAibyguW/koTrGKtPlM25JkLXmP7k0zIf/QF0D
+ IHkzMF49eNlT2sYtlczsXZW3can6BSdTgswMewzX1kLDGjJJ38akxm2HfyOzOOcRgP
+X-Received: by 2002:a05:600c:4c84:b0:483:6a76:11a6 with SMTP id
+ 5b1f17b1804b1-483c39ef68amr1002175e9.5.1772203087318; 
+ Fri, 27 Feb 2026 06:38:07 -0800 (PST)
 Received: from google.com (206.56.155.104.bc.googleusercontent.com.
  [104.155.56.206]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3b4410bsm118970925e9.6.2026.02.27.06.33.53
+ 5b1f17b1804b1-483c3addb3asm118331935e9.0.2026.02.27.06.38.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 06:33:53 -0800 (PST)
-Date: Fri, 27 Feb 2026 14:33:49 +0000
+ Fri, 27 Feb 2026 06:38:06 -0800 (PST)
+Date: Fri, 27 Feb 2026 14:38:03 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Tao Tang <tangtao1634@phytium.com.cn>
 Cc: Eric Auger <eric.auger@redhat.com>,
@@ -77,16 +78,17 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: Re: [RFC v4 03/31] hw/arm/smmuv3: Introduce secure registers
-Message-ID: <aaGrTayVy-m2Ttf5@google.com>
+Subject: Re: [RFC v4 04/31] hw/arm/smmuv3: Introduce banked registers for
+ SMMUv3 state
+Message-ID: <aaGsS9ldIqXZqhpk@google.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221100250.2976287-4-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-5-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260221100250.2976287-4-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=smostafa@google.com; helo=mail-wm1-x32f.google.com
+In-Reply-To: <20260221100250.2976287-5-tangtao1634@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -175
 X-Spam_score: -17.6
 X-Spam_bar: -----------------
@@ -94,7 +96,7 @@ X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,121 +112,1044 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 21, 2026 at 06:02:22PM +0800, Tao Tang wrote:
-> The Arm SMMUv3 architecture defines a set of registers for managing
-> secure transactions and context.
+On Sat, Feb 21, 2026 at 06:02:23PM +0800, Tao Tang wrote:
+> Rework the SMMUv3 state management by introducing a banked register
+> structure. This is a purely mechanical refactoring with no functional
+> changes.
 > 
-> This patch introduces the definitions for these secure registers within
-> the SMMUv3 device model internal header.
+> To support multiple security states, a new enum, SMMUSecSID, is
+> introduced to identify each state, sticking to the spec terminology.
+> 
+> A new structure, SMMUv3RegBank, is then defined to hold the state
+> for a single security context. The main SMMUv3State now contains an
+> array of these banks, indexed by SMMUSecSID. This avoids the need for
+> separate fields for non-secure and future secure registers.
+> 
+> All existing code, which handles only the Non-secure state, is updated
+> to access its state via s->bank[SMMU_SEC_SID_NS]. A local bank helper
+> pointer is used where it improves readability.
+> 
+> Function signatures and logic remain untouched in this commit to
+> isolate the structural changes and simplify review. This is the
+> foundational step for building multi-security-state support.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Link: https://lore.kernel.org/qemu-devel/759ec110-365f-488b-802d-c7bb1efe30bc@redhat.com/
 
+There are a few warning from scripts/checkpatch.pl, plus some other
+nits I mentioned, otherwise:
 Reviewed-by: Mostafa Saleh <smostafa@google.com>
+
+
+> ---
+>  hw/arm/smmuv3-accel.c        |  42 +++--
+>  hw/arm/smmuv3-internal.h     |  24 ++-
+>  hw/arm/smmuv3.c              | 345 +++++++++++++++++++----------------
+>  include/hw/arm/smmu-common.h |   6 +
+>  include/hw/arm/smmuv3.h      |  30 ++-
+>  5 files changed, 257 insertions(+), 190 deletions(-)
+> 
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index f5cd4df336a..30d4b38c0a3 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -40,19 +40,20 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>                                   struct iommu_hw_info_arm_smmuv3 *info,
+>                                   Error **errp)
+>  {
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+>      /* QEMU SMMUv3 supports both linear and 2-level stream tables */
+>      if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=
+> -                FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
+> +                FIELD_EX32(bank->idr[0], IDR0, STLEVEL)) {
+>          error_setg(errp, "Host SMMUv3 Stream Table format mismatch "
+>                     "(host STLEVEL=%u, QEMU STLEVEL=%u)",
+>                     FIELD_EX32(info->idr[0], IDR0, STLEVEL),
+> -                   FIELD_EX32(s->idr[0], IDR0, STLEVEL));
+> +                   FIELD_EX32(bank->idr[0], IDR0, STLEVEL));
+>          return false;
+>      }
+>  
+>      /* QEMU SMMUv3 supports only little-endian translation table walks */
+>      if (FIELD_EX32(info->idr[0], IDR0, TTENDIAN) >
+> -                FIELD_EX32(s->idr[0], IDR0, TTENDIAN)) {
+> +                FIELD_EX32(bank->idr[0], IDR0, TTENDIAN)) {
+>          error_setg(errp, "Host SMMUv3 doesn't support Little-endian "
+>                     "translation table");
+>          return false;
+> @@ -60,7 +61,7 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>  
+>      /* QEMU SMMUv3 supports only AArch64 translation table format */
+>      if (FIELD_EX32(info->idr[0], IDR0, TTF) <
+> -                FIELD_EX32(s->idr[0], IDR0, TTF)) {
+> +                FIELD_EX32(bank->idr[0], IDR0, TTF)) {
+>          error_setg(errp, "Host SMMUv3 doesn't support AArch64 translation "
+>                     "table format");
+>          return false;
+> @@ -68,53 +69,53 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>  
+>      /* QEMU SMMUv3 supports SIDSIZE 16 */
+>      if (FIELD_EX32(info->idr[1], IDR1, SIDSIZE) <
+> -                FIELD_EX32(s->idr[1], IDR1, SIDSIZE)) {
+> +                FIELD_EX32(bank->idr[1], IDR1, SIDSIZE)) {
+>          error_setg(errp, "Host SMMUv3 SIDSIZE not compatible "
+>                     "(host=%u, QEMU=%u)",
+>                     FIELD_EX32(info->idr[1], IDR1, SIDSIZE),
+> -                   FIELD_EX32(s->idr[1], IDR1, SIDSIZE));
+> +                   FIELD_EX32(bank->idr[1], IDR1, SIDSIZE));
+>          return false;
+>      }
+>  
+>      /* Check SSIDSIZE value opted-in is compatible with Host SMMUv3 SSIDSIZE */
+>      if (FIELD_EX32(info->idr[1], IDR1, SSIDSIZE) <
+> -                FIELD_EX32(s->idr[1], IDR1, SSIDSIZE)) {
+> +                FIELD_EX32(bank->idr[1], IDR1, SSIDSIZE)) {
+>          error_setg(errp, "Host SMMUv3 SSIDSIZE not compatible "
+>                     "(host=%u, QEMU=%u)",
+>                     FIELD_EX32(info->idr[1], IDR1, SSIDSIZE),
+> -                   FIELD_EX32(s->idr[1], IDR1, SSIDSIZE));
+> +                   FIELD_EX32(bank->idr[1], IDR1, SSIDSIZE));
+>          return false;
+>      }
+>  
+>      /* User can disable QEMU SMMUv3 Range Invalidation support */
+>      if (FIELD_EX32(info->idr[3], IDR3, RIL) <
+> -                FIELD_EX32(s->idr[3], IDR3, RIL)) {
+> +                FIELD_EX32(bank->idr[3], IDR3, RIL)) {
+>          error_setg(errp, "Host SMMUv3 doesn't support Range Invalidation");
+>          return false;
+>      }
+>      /* Check OAS value opted is compatible with Host SMMUv3 IPA */
+>      if (FIELD_EX32(info->idr[5], IDR5, OAS) <
+> -                FIELD_EX32(s->idr[5], IDR5, OAS)) {
+> +                FIELD_EX32(bank->idr[5], IDR5, OAS)) {
+>          error_setg(errp, "Host SMMUv3 supports only %d-bit IPA, but the vSMMU "
+>                     "OAS implies %d-bit IPA",
+>                     smmuv3_oas_bits(FIELD_EX32(info->idr[5], IDR5, OAS)),
+> -                   smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
+> +                   smmuv3_oas_bits(FIELD_EX32(bank->idr[5], IDR5, OAS)));
+>          return false;
+>      }
+>  
+>      /* QEMU SMMUv3 supports GRAN4K/GRAN16K/GRAN64K translation granules */
+>      if (FIELD_EX32(info->idr[5], IDR5, GRAN4K) !=
+> -                FIELD_EX32(s->idr[5], IDR5, GRAN4K)) {
+> +                FIELD_EX32(bank->idr[5], IDR5, GRAN4K)) {
+>          error_setg(errp, "Host SMMUv3 doesn't support 4K translation granule");
+>          return false;
+>      }
+>      if (FIELD_EX32(info->idr[5], IDR5, GRAN16K) !=
+> -                FIELD_EX32(s->idr[5], IDR5, GRAN16K)) {
+> +                FIELD_EX32(bank->idr[5], IDR5, GRAN16K)) {
+>          error_setg(errp, "Host SMMUv3 doesn't support 16K translation granule");
+>          return false;
+>      }
+>      if (FIELD_EX32(info->idr[5], IDR5, GRAN64K) !=
+> -                FIELD_EX32(s->idr[5], IDR5, GRAN64K)) {
+> +                FIELD_EX32(bank->idr[5], IDR5, GRAN64K)) {
+>          error_setg(errp, "Host SMMUv3 doesn't support 64K translation granule");
+>          return false;
+>      }
+> @@ -168,7 +169,8 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
+>  
+>  static uint32_t smmuv3_accel_gbpa_hwpt(SMMUv3State *s, SMMUv3AccelState *accel)
+>  {
+> -    return FIELD_EX32(s->gbpa, GBPA, ABORT) ?
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+> +    return FIELD_EX32(bank->gbpa, GBPA, ABORT) ?
+>             accel->abort_hwpt_id : accel->bypass_hwpt_id;
+>  }
+>  
+> @@ -687,22 +689,24 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+>          return;
+>      }
+>  
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+Sometimes you have:
+SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+Others
+SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
+
+It would be helpful if naming is consistent.
+
+> +
+>      /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
+> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
+> +    bank->idr[3] = FIELD_DP32(bank->idr[3], IDR3, RIL, s->ril);
+>  
+>      /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
+> +    bank->idr[0] = FIELD_DP32(bank->idr[0], IDR0, ATS, s->ats);
+>  
+>      /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
+>      if (s->oas == SMMU_OAS_48BIT) {
+> -        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
+> +        bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
+>      }
+>  
+>      /*
+>       * By default QEMU SMMUv3 has no SubstreamID support. Update IDR1 if user
+>       * has enabled it.
+>       */
+> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE, s->ssidsize);
+> +    bank->idr[1] = FIELD_DP32(bank->idr[1], IDR1, SSIDSIZE, s->ssidsize);
+>  }
+>  
+>  /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
+> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> index ebdb4ebae67..deb1ef60e87 100644
+> --- a/hw/arm/smmuv3-internal.h
+> +++ b/hw/arm/smmuv3-internal.h
+> @@ -41,7 +41,9 @@ typedef enum SMMUTranslationClass {
+>  
+>  static inline int smmu_enabled(SMMUv3State *s)
+>  {
+> -    return FIELD_EX32(s->cr[0], CR0, SMMUEN);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    return FIELD_EX32(bank->cr[0], CR0, SMMUEN);
+>  }
+>  
+>  /* Command Queue Entry */
+> @@ -69,12 +71,16 @@ static inline uint32_t smmuv3_idreg(int regoffset)
+>  
+>  static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s)
+>  {
+> -    return FIELD_EX32(s->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
+>  }
+>  
+>  static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
+>  {
+> -    return FIELD_EX32(s->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
+>  }
+>  
+>  /* Queue Handling */
+> @@ -119,17 +125,23 @@ static inline void queue_cons_incr(SMMUQueue *q)
+>  
+>  static inline bool smmuv3_cmdq_enabled(SMMUv3State *s)
+>  {
+> -    return FIELD_EX32(s->cr[0], CR0, CMDQEN);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    return FIELD_EX32(bank->cr[0], CR0, CMDQEN);
+>  }
+>  
+>  static inline bool smmuv3_eventq_enabled(SMMUv3State *s)
+>  {
+> -    return FIELD_EX32(s->cr[0], CR0, EVENTQEN);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    return FIELD_EX32(bank->cr[0], CR0, EVENTQEN);
+>  }
+>  
+>  static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type)
+>  {
+> -    s->cmdq.cons = FIELD_DP32(s->cmdq.cons, CMDQ_CONS, ERR, err_type);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    bank->cmdq.cons = FIELD_DP32(bank->cmdq.cons, CMDQ_CONS, ERR, err_type);
+>  }
+>  
+>  static const char *cmd_stringify[] = {
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index c08d58c5790..5511585601d 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -52,6 +52,8 @@
+>  static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+>                                 uint32_t gerror_mask)
+>  {
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>  
+>      bool pulse = false;
+>  
+> @@ -67,15 +69,15 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+>          break;
+>      case SMMU_IRQ_GERROR:
+>      {
+> -        uint32_t pending = s->gerror ^ s->gerrorn;
+> +        uint32_t pending = bank->gerror ^ bank->gerrorn;
+>          uint32_t new_gerrors = ~pending & gerror_mask;
+>  
+>          if (!new_gerrors) {
+>              /* only toggle non pending errors */
+>              return;
+>          }
+> -        s->gerror ^= new_gerrors;
+> -        trace_smmuv3_write_gerror(new_gerrors, s->gerror);
+> +        bank->gerror ^= new_gerrors;
+> +        trace_smmuv3_write_gerror(new_gerrors, bank->gerror);
+>  
+>          pulse = smmuv3_gerror_irq_enabled(s);
+>          break;
+> @@ -89,8 +91,10 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
+>  
+>  static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
+>  {
+> -    uint32_t pending = s->gerror ^ s->gerrorn;
+> -    uint32_t toggled = s->gerrorn ^ new_gerrorn;
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    uint32_t pending = bank->gerror ^ bank->gerrorn;
+> +    uint32_t toggled = bank->gerrorn ^ new_gerrorn;
+>  
+>      if (toggled & ~pending) {
+>          qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -102,9 +106,9 @@ static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
+>       * We do not raise any error in case guest toggles bits corresponding
+>       * to not active IRQs (CONSTRAINED UNPREDICTABLE)
+>       */
+> -    s->gerrorn = new_gerrorn;
+> +    bank->gerrorn = new_gerrorn;
+>  
+> -    trace_smmuv3_write_gerrorn(toggled & pending, s->gerrorn);
+> +    trace_smmuv3_write_gerrorn(toggled & pending, bank->gerrorn);
+>  }
+>  
+>  static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd)
+> @@ -146,7 +150,9 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
+>  
+>  static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
+>  {
+> -    SMMUQueue *q = &s->eventq;
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    SMMUQueue *q = &bank->eventq;
+>      MemTxResult r;
+>  
+>      if (!smmuv3_eventq_enabled(s)) {
+> @@ -266,69 +272,75 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
+>   */
+>  static void smmuv3_init_id_regs(SMMUv3State *s)
+>  {
+> +    SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
+> +
+>      /* Based on sys property, the stages supported in smmu will be advertised.*/
+>      if (s->stage && !strcmp("2", s->stage)) {
+> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
+> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S2P, 1);
+>      } else if (s->stage && !strcmp("nested", s->stage)) {
+> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
+> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
+> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S1P, 1);
+> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S2P, 1);
+>      } else {
+> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
+> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S1P, 1);
+>      }
+>  
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, TTF, 2); /* AArch64 PTW only */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, COHACC, 1); /* IO coherent */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ASID16, 1); /* 16-bit ASID */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, VMID16, 1); /* 16-bit VMID */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, TTENDIAN, 2); /* little endian */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, STALL_MODEL, 1); /* No stall */
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, TTF, 2); /* AArch64 PTW only */
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, COHACC, 1); /* IO coherent */
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, ASID16, 1); /* 16-bit ASID */
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, VMID16, 1); /* 16-bit VMID */
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, TTENDIAN, 2); /* little endian */
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, STALL_MODEL, 1); /* No stall */
+>      /* terminated transaction will always be aborted/error returned */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, TERM_MODEL, 1);
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, TERM_MODEL, 1);
+>      /* 2-level stream table supported */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, STLEVEL, 1);
+> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, STLEVEL, 1);
+>  
+> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SIDSIZE, SMMU_IDR1_SIDSIZE);
+> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, EVENTQS, SMMU_EVENTQS);
+> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, CMDQS,   SMMU_CMDQS);
+> +    bk->idr[1] = FIELD_DP32(bk->idr[1], IDR1, SIDSIZE, SMMU_IDR1_SIDSIZE);
+> +    bk->idr[1] = FIELD_DP32(bk->idr[1], IDR1, EVENTQS, SMMU_EVENTQS);
+> +    bk->idr[1] = FIELD_DP32(bk->idr[1], IDR1, CMDQS,   SMMU_CMDQS);
+>  
+> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, HAD, 1);
+> -    if (FIELD_EX32(s->idr[0], IDR0, S2P)) {
+> +    bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, HAD, 1);
+> +    if (FIELD_EX32(bk->idr[0], IDR0, S2P)) {
+>          /* XNX is a stage-2-specific feature */
+> -        s->idr[3] = FIELD_DP32(s->idr[3], IDR3, XNX, 1);
+> +        bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, XNX, 1);
+>      }
+> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
+> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
+> +    bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, RIL, 1);
+> +    bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, BBML, 2);
+>  
+>      /* OAS: 44 bits */
+> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_44);
+> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, OAS, SMMU_IDR5_OAS_44);
+>      /* 4K, 16K and 64K granule support */
+> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
+> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
+> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN64K, 1);
+> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, GRAN4K, 1);
+> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, GRAN16K, 1);
+> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, GRAN64K, 1);
+>      s->aidr = 0x1;
+>      smmuv3_accel_idr_override(s);
+>  }
+>  
+>  static void smmuv3_reset(SMMUv3State *s)
+>  {
+> -    s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
+> -    s->cmdq.prod = 0;
+> -    s->cmdq.cons = 0;
+> -    s->cmdq.entry_size = sizeof(struct Cmd);
+> -    s->eventq.base = deposit64(s->eventq.base, 0, 5, SMMU_EVENTQS);
+> -    s->eventq.prod = 0;
+> -    s->eventq.cons = 0;
+> -    s->eventq.entry_size = sizeof(struct Evt);
+> -
+> -    s->features = 0;
+> -    s->sid_split = 0;
+> -    s->cr[0] = 0;
+> -    s->cr0ack = 0;
+> -    s->irq_ctrl = 0;
+> -    s->gerror = 0;
+> -    s->gerrorn = 0;
+> +    SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
+> +
+> +    bk->cmdq.base = deposit64(bk->cmdq.base, 0, 5, SMMU_CMDQS);
+> +    bk->cmdq.prod = 0;
+> +    bk->cmdq.cons = 0;
+> +    bk->cmdq.entry_size = sizeof(struct Cmd);
+> +    bk->eventq.base = deposit64(bk->eventq.base, 0, 5, SMMU_EVENTQS);
+> +    bk->eventq.prod = 0;
+> +    bk->eventq.cons = 0;
+> +    bk->eventq.entry_size = sizeof(struct Evt);
+> +
+> +    bk->features = 0;
+> +    bk->sid_split = 0;
+> +    bk->cr[0] = 0;
+> +    bk->cr0ack = 0;
+> +    bk->irq_ctrl = 0;
+> +    bk->gerror = 0;
+> +    bk->gerrorn = 0;
+> +    bk->gbpa = SMMU_GBPA_RESET_VAL;
+> +
+> +    s->aidr = 0x1;
+>      s->statusr = 0;
+> -    s->gbpa = SMMU_GBPA_RESET_VAL;
+>  }
+>  
+>  static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
+> @@ -442,7 +454,7 @@ static bool s2_pgtable_config_valid(uint8_t sl0, uint8_t t0sz, uint8_t gran)
+>  static int decode_ste_s2_cfg(SMMUv3State *s, SMMUTransCfg *cfg,
+>                               STE *ste)
+>  {
+> -    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
+> +    uint8_t oas = FIELD_EX32(smmuv3_bank(s, SMMU_SEC_SID_NS)->idr[5], IDR5, OAS);
+>  
+>      if (STE_S2AA64(ste) == 0x0) {
+>          qemu_log_mask(LOG_UNIMP,
+> @@ -560,7 +572,8 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+>                        STE *ste, SMMUEventInfo *event)
+>  {
+>      uint32_t config;
+> -    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
+> +    /* OAS field only presents on NS-IDR5 so we use hardcoded SMMU_SEC_SID_NS */
+> +    uint8_t oas = FIELD_EX32(smmuv3_bank(s, SMMU_SEC_SID_NS)->idr[5], IDR5, OAS);
+>      int ret;
+>  
+>      if (!STE_VALID(ste)) {
+> @@ -649,9 +662,11 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>      uint32_t log2size;
+>      int strtab_size_shift;
+>      int ret;
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>  
+> -    trace_smmuv3_find_ste(sid, s->features, s->sid_split);
+> -    log2size = FIELD_EX32(s->strtab_base_cfg, STRTAB_BASE_CFG, LOG2SIZE);
+> +    trace_smmuv3_find_ste(sid, bank->features, bank->sid_split);
+> +    log2size = FIELD_EX32(bank->strtab_base_cfg, STRTAB_BASE_CFG, LOG2SIZE);
+>      /*
+>       * Check SID range against both guest-configured and implementation limits
+>       */
+> @@ -659,7 +674,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>          event->type = SMMU_EVT_C_BAD_STREAMID;
+>          return -EINVAL;
+>      }
+> -    if (s->features & SMMU_FEATURE_2LVL_STE) {
+> +    if (bank->features & SMMU_FEATURE_2LVL_STE) {
+>          int l1_ste_offset, l2_ste_offset, max_l2_ste, span, i;
+>          dma_addr_t l1ptr, l2ptr;
+>          STEDesc l1std;
+> @@ -668,11 +683,11 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>           * Align strtab base address to table size. For this purpose, assume it
+>           * is not bounded by SMMU_IDR1_SIDSIZE.
+>           */
+> -        strtab_size_shift = MAX(5, (int)log2size - s->sid_split - 1 + 3);
+> -        strtab_base = s->strtab_base & SMMU_BASE_ADDR_MASK &
+> +        strtab_size_shift = MAX(5, (int)log2size - bank->sid_split - 1 + 3);
+> +        strtab_base = bank->strtab_base & SMMU_BASE_ADDR_MASK &
+>                        ~MAKE_64BIT_MASK(0, strtab_size_shift);
+> -        l1_ste_offset = sid >> s->sid_split;
+> -        l2_ste_offset = sid & ((1 << s->sid_split) - 1);
+> +        l1_ste_offset = sid >> bank->sid_split;
+> +        l2_ste_offset = sid & ((1 << bank->sid_split) - 1);
+>          l1ptr = (dma_addr_t)(strtab_base + l1_ste_offset * sizeof(l1std));
+>          /* TODO: guarantee 64-bit single-copy atomicity */
+>          ret = dma_memory_read(&address_space_memory, l1ptr, &l1std,
+> @@ -701,7 +716,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>          }
+>          max_l2_ste = (1 << span) - 1;
+>          l2ptr = l1std_l2ptr(&l1std);
+> -        trace_smmuv3_find_ste_2lvl(s->strtab_base, l1ptr, l1_ste_offset,
+> +        trace_smmuv3_find_ste_2lvl(bank->strtab_base, l1ptr, l1_ste_offset,
+>                                     l2ptr, l2_ste_offset, max_l2_ste);
+>          if (l2_ste_offset > max_l2_ste) {
+>              qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -713,7 +728,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
+>          addr = l2ptr + l2_ste_offset * sizeof(*ste);
+>      } else {
+>          strtab_size_shift = log2size + 5;
+> -        strtab_base = s->strtab_base & SMMU_BASE_ADDR_MASK &
+> +        strtab_base = bank->strtab_base & SMMU_BASE_ADDR_MASK &
+>                        ~MAKE_64BIT_MASK(0, strtab_size_shift);
+>          addr = strtab_base + sid * sizeof(*ste);
+>      }
+> @@ -732,7 +747,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+>      int i;
+>      SMMUTranslationStatus status;
+>      SMMUTLBEntry *entry;
+> -    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
+> +    uint8_t oas = FIELD_EX32(smmuv3_bank(s, SMMU_SEC_SID_NS)->idr[5], IDR5, OAS);
+>  
+>      if (!CD_VALID(cd) || !CD_AARCH64(cd)) {
+>          goto bad_cd;
+> @@ -1054,6 +1069,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>      SMMUv3State *s = sdev->smmu;
+>      uint32_t sid = smmu_get_sid(sdev);
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>                             .sid = sid,
+>                             .inval_ste_allowed = false};
+> @@ -1071,7 +1088,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>      qemu_mutex_lock(&s->mutex);
+>  
+>      if (!smmu_enabled(s)) {
+> -        if (FIELD_EX32(s->gbpa, GBPA, ABORT)) {
+> +        if (FIELD_EX32(bank->gbpa, GBPA, ABORT)) {
+>              status = SMMU_TRANS_ABORT;
+>          } else {
+>              status = SMMU_TRANS_DISABLE;
+> @@ -1295,7 +1312,9 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+>  {
+>      SMMUState *bs = ARM_SMMU(s);
+>      SMMUCmdError cmd_error = SMMU_CERROR_NONE;
+> -    SMMUQueue *q = &s->cmdq;
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+> +    SMMUQueue *q = &bank->cmdq;
+>      SMMUCommandType type = 0;
+>  
+>      if (!smmuv3_cmdq_enabled(s)) {
+> @@ -1309,7 +1328,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+>       */
+>  
+>      while (!smmuv3_q_empty(q)) {
+> -        uint32_t pending = s->gerror ^ s->gerrorn;
+> +        uint32_t pending = bank->gerror ^ bank->gerrorn;
+>          Cmd cmd;
+>  
+>          trace_smmuv3_cmdq_consume(Q_PROD(q), Q_CONS(q),
+> @@ -1562,29 +1581,32 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+>  static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
+>                                 uint64_t data, MemTxAttrs attrs)
+>  {
+> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+> +
+>      switch (offset) {
+>      case A_GERROR_IRQ_CFG0:
+> -        s->gerror_irq_cfg0 = data;
+> +        bank->gerror_irq_cfg0 = data;
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE:
+> -        s->strtab_base = data;
+> +        bank->strtab_base = data;
+>          return MEMTX_OK;
+>      case A_CMDQ_BASE:
+> -        s->cmdq.base = data;
+> -        s->cmdq.log2size = extract64(s->cmdq.base, 0, 5);
+> -        if (s->cmdq.log2size > SMMU_CMDQS) {
+> -            s->cmdq.log2size = SMMU_CMDQS;
+> +        bank->cmdq.base = data;
+> +        bank->cmdq.log2size = extract64(bank->cmdq.base, 0, 5);
+> +        if (bank->cmdq.log2size > SMMU_CMDQS) {
+> +            bank->cmdq.log2size = SMMU_CMDQS;
+>          }
+>          return MEMTX_OK;
+>      case A_EVENTQ_BASE:
+> -        s->eventq.base = data;
+> -        s->eventq.log2size = extract64(s->eventq.base, 0, 5);
+> -        if (s->eventq.log2size > SMMU_EVENTQS) {
+> -            s->eventq.log2size = SMMU_EVENTQS;
+> +        bank->eventq.base = data;
+> +        bank->eventq.log2size = extract64(bank->eventq.base, 0, 5);
+> +        if (bank->eventq.log2size > SMMU_EVENTQS) {
+> +            bank->eventq.log2size = SMMU_EVENTQS;
+>          }
+>          return MEMTX_OK;
+>      case A_EVENTQ_IRQ_CFG0:
+> -        s->eventq_irq_cfg0 = data;
+> +        bank->eventq_irq_cfg0 = data;
+>          return MEMTX_OK;
+>      default:
+>          qemu_log_mask(LOG_UNIMP,
+> @@ -1598,22 +1620,24 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>                                 uint64_t data, MemTxAttrs attrs)
+>  {
+>      Error *local_err = NULL;
+> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+>  
+>      switch (offset) {
+>      case A_CR0:
+> -        s->cr[0] = data;
+> -        s->cr0ack = data & ~SMMU_CR0_RESERVED;
+> +        bank->cr[0] = data;
+> +        bank->cr0ack = data & ~SMMU_CR0_RESERVED;
+>          /* in case the command queue has been enabled */
+>          smmuv3_cmdq_consume(s, &local_err);
+>          break;
+>      case A_CR1:
+> -        s->cr[1] = data;
+> +        bank->cr[1] = data;
+>          break;
+>      case A_CR2:
+> -        s->cr[2] = data;
+> +        bank->cr[2] = data;
+>          break;
+>      case A_IRQ_CTRL:
+> -        s->irq_ctrl = data;
+> +        bank->irq_ctrl = data;
+>          break;
+>      case A_GERRORN:
+>          smmuv3_write_gerrorn(s, data);
+> @@ -1624,16 +1648,16 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>          smmuv3_cmdq_consume(s, &local_err);
+>          break;
+>      case A_GERROR_IRQ_CFG0: /* 64b */
+> -        s->gerror_irq_cfg0 = deposit64(s->gerror_irq_cfg0, 0, 32, data);
+> +        bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 0, 32, data);
+>          break;
+>      case A_GERROR_IRQ_CFG0 + 4:
+> -        s->gerror_irq_cfg0 = deposit64(s->gerror_irq_cfg0, 32, 32, data);
+> +        bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 32, 32, data);
+>          break;
+>      case A_GERROR_IRQ_CFG1:
+> -        s->gerror_irq_cfg1 = data;
+> +        bank->gerror_irq_cfg1 = data;
+>          break;
+>      case A_GERROR_IRQ_CFG2:
+> -        s->gerror_irq_cfg2 = data;
+> +        bank->gerror_irq_cfg2 = data;
+>          break;
+>      case A_GBPA:
+>          /*
+> @@ -1642,67 +1666,67 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>           */
+>          if (data & R_GBPA_UPDATE_MASK) {
+>              /* Ignore update bit as write is synchronous. */
+> -            s->gbpa = data & ~R_GBPA_UPDATE_MASK;
+> +            bank->gbpa = data & ~R_GBPA_UPDATE_MASK;
+>              smmuv3_accel_attach_gbpa_hwpt(s, &local_err);
+>          }
+>          break;
+>      case A_STRTAB_BASE: /* 64b */
+> -        s->strtab_base = deposit64(s->strtab_base, 0, 32, data);
+> +        bank->strtab_base = deposit64(bank->strtab_base, 0, 32, data);
+>          break;
+>      case A_STRTAB_BASE + 4:
+> -        s->strtab_base = deposit64(s->strtab_base, 32, 32, data);
+> +        bank->strtab_base = deposit64(bank->strtab_base, 32, 32, data);
+>          break;
+>      case A_STRTAB_BASE_CFG:
+> -        s->strtab_base_cfg = data;
+> +        bank->strtab_base_cfg = data;
+>          if (FIELD_EX32(data, STRTAB_BASE_CFG, FMT) == 1) {
+> -            s->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
+> -            s->features |= SMMU_FEATURE_2LVL_STE;
+> +            bank->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
+> +            bank->features |= SMMU_FEATURE_2LVL_STE;
+>          }
+>          break;
+>      case A_CMDQ_BASE: /* 64b */
+> -        s->cmdq.base = deposit64(s->cmdq.base, 0, 32, data);
+> -        s->cmdq.log2size = extract64(s->cmdq.base, 0, 5);
+> -        if (s->cmdq.log2size > SMMU_CMDQS) {
+> -            s->cmdq.log2size = SMMU_CMDQS;
+> +        bank->cmdq.base = deposit64(bank->cmdq.base, 0, 32, data);
+> +        bank->cmdq.log2size = extract64(bank->cmdq.base, 0, 5);
+> +        if (bank->cmdq.log2size > SMMU_CMDQS) {
+> +            bank->cmdq.log2size = SMMU_CMDQS;
+>          }
+>          break;
+>      case A_CMDQ_BASE + 4: /* 64b */
+> -        s->cmdq.base = deposit64(s->cmdq.base, 32, 32, data);
+> +        bank->cmdq.base = deposit64(bank->cmdq.base, 32, 32, data);
+>          break;
+>      case A_CMDQ_PROD:
+> -        s->cmdq.prod = data;
+> +        bank->cmdq.prod = data;
+>          smmuv3_cmdq_consume(s, &local_err);
+>          break;
+>      case A_CMDQ_CONS:
+> -        s->cmdq.cons = data;
+> +        bank->cmdq.cons = data;
+>          break;
+>      case A_EVENTQ_BASE: /* 64b */
+> -        s->eventq.base = deposit64(s->eventq.base, 0, 32, data);
+> -        s->eventq.log2size = extract64(s->eventq.base, 0, 5);
+> -        if (s->eventq.log2size > SMMU_EVENTQS) {
+> -            s->eventq.log2size = SMMU_EVENTQS;
+> +        bank->eventq.base = deposit64(bank->eventq.base, 0, 32, data);
+> +        bank->eventq.log2size = extract64(bank->eventq.base, 0, 5);
+> +        if (bank->eventq.log2size > SMMU_EVENTQS) {
+> +            bank->eventq.log2size = SMMU_EVENTQS;
+>          }
+>          break;
+>      case A_EVENTQ_BASE + 4:
+> -        s->eventq.base = deposit64(s->eventq.base, 32, 32, data);
+> +        bank->eventq.base = deposit64(bank->eventq.base, 32, 32, data);
+>          break;
+>      case A_EVENTQ_PROD:
+> -        s->eventq.prod = data;
+> +        bank->eventq.prod = data;
+>          break;
+>      case A_EVENTQ_CONS:
+> -        s->eventq.cons = data;
+> +        bank->eventq.cons = data;
+>          break;
+>      case A_EVENTQ_IRQ_CFG0: /* 64b */
+> -        s->eventq_irq_cfg0 = deposit64(s->eventq_irq_cfg0, 0, 32, data);
+> +        bank->eventq_irq_cfg0 = deposit64(bank->eventq_irq_cfg0, 0, 32, data);
+>          break;
+>      case A_EVENTQ_IRQ_CFG0 + 4:
+> -        s->eventq_irq_cfg0 = deposit64(s->eventq_irq_cfg0, 32, 32, data);
+> +        bank->eventq_irq_cfg0 = deposit64(bank->eventq_irq_cfg0, 32, 32, data);
+>          break;
+>      case A_EVENTQ_IRQ_CFG1:
+> -        s->eventq_irq_cfg1 = data;
+> +        bank->eventq_irq_cfg1 = data;
+>          break;
+>      case A_EVENTQ_IRQ_CFG2:
+> -        s->eventq_irq_cfg2 = data;
+> +        bank->eventq_irq_cfg2 = data;
+>          break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP,
+> @@ -1746,18 +1770,21 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
+>  static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
+>                                 uint64_t *data, MemTxAttrs attrs)
+>  {
+> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+> +
+>      switch (offset) {
+>      case A_GERROR_IRQ_CFG0:
+> -        *data = s->gerror_irq_cfg0;
+> +        *data = bank->gerror_irq_cfg0;
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE:
+> -        *data = s->strtab_base;
+> +        *data = bank->strtab_base;
+>          return MEMTX_OK;
+>      case A_CMDQ_BASE:
+> -        *data = s->cmdq.base;
+> +        *data = bank->cmdq.base;
+>          return MEMTX_OK;
+>      case A_EVENTQ_BASE:
+> -        *data = s->eventq.base;
+> +        *data = bank->eventq.base;
+>          return MEMTX_OK;
+>      default:
+>          *data = 0;
+> @@ -1771,12 +1798,15 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
+>  static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+>                                uint64_t *data, MemTxAttrs attrs)
+>  {
+> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
+> +
+>      switch (offset) {
+>      case A_IDREGS ... A_IDREGS + 0x2f:
+>          *data = smmuv3_idreg(offset - A_IDREGS);
+>          return MEMTX_OK;
+>      case A_IDR0 ... A_IDR5:
+> -        *data = s->idr[(offset - A_IDR0) / 4];
+> +        *data = bank->idr[(offset - A_IDR0) / 4];
+>          return MEMTX_OK;
+>      case A_IIDR:
+>          *data = s->iidr;
+> @@ -1785,77 +1815,77 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
+>          *data = s->aidr;
+>          return MEMTX_OK;
+>      case A_CR0:
+> -        *data = s->cr[0];
+> +        *data = bank->cr[0];
+>          return MEMTX_OK;
+>      case A_CR0ACK:
+> -        *data = s->cr0ack;
+> +        *data = bank->cr0ack;
+>          return MEMTX_OK;
+>      case A_CR1:
+> -        *data = s->cr[1];
+> +        *data = bank->cr[1];
+>          return MEMTX_OK;
+>      case A_CR2:
+> -        *data = s->cr[2];
+> +        *data = bank->cr[2];
+>          return MEMTX_OK;
+>      case A_STATUSR:
+>          *data = s->statusr;
+>          return MEMTX_OK;
+>      case A_GBPA:
+> -        *data = s->gbpa;
+> +        *data = bank->gbpa;
+>          return MEMTX_OK;
+>      case A_IRQ_CTRL:
+>      case A_IRQ_CTRL_ACK:
+> -        *data = s->irq_ctrl;
+> +        *data = bank->irq_ctrl;
+>          return MEMTX_OK;
+>      case A_GERROR:
+> -        *data = s->gerror;
+> +        *data = bank->gerror;
+>          return MEMTX_OK;
+>      case A_GERRORN:
+> -        *data = s->gerrorn;
+> +        *data = bank->gerrorn;
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG0: /* 64b */
+> -        *data = extract64(s->gerror_irq_cfg0, 0, 32);
+> +        *data = extract64(bank->gerror_irq_cfg0, 0, 32);
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG0 + 4:
+> -        *data = extract64(s->gerror_irq_cfg0, 32, 32);
+> +        *data = extract64(bank->gerror_irq_cfg0, 32, 32);
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG1:
+> -        *data = s->gerror_irq_cfg1;
+> +        *data = bank->gerror_irq_cfg1;
+>          return MEMTX_OK;
+>      case A_GERROR_IRQ_CFG2:
+> -        *data = s->gerror_irq_cfg2;
+> +        *data = bank->gerror_irq_cfg2;
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE: /* 64b */
+> -        *data = extract64(s->strtab_base, 0, 32);
+> +        *data = extract64(bank->strtab_base, 0, 32);
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE + 4: /* 64b */
+> -        *data = extract64(s->strtab_base, 32, 32);
+> +        *data = extract64(bank->strtab_base, 32, 32);
+>          return MEMTX_OK;
+>      case A_STRTAB_BASE_CFG:
+> -        *data = s->strtab_base_cfg;
+> +        *data = bank->strtab_base_cfg;
+>          return MEMTX_OK;
+>      case A_CMDQ_BASE: /* 64b */
+> -        *data = extract64(s->cmdq.base, 0, 32);
+> +        *data = extract64(bank->cmdq.base, 0, 32);
+>          return MEMTX_OK;
+>      case A_CMDQ_BASE + 4:
+> -        *data = extract64(s->cmdq.base, 32, 32);
+> +        *data = extract64(bank->cmdq.base, 32, 32);
+>          return MEMTX_OK;
+>      case A_CMDQ_PROD:
+> -        *data = s->cmdq.prod;
+> +        *data = bank->cmdq.prod;
+>          return MEMTX_OK;
+>      case A_CMDQ_CONS:
+> -        *data = s->cmdq.cons;
+> +        *data = bank->cmdq.cons;
+>          return MEMTX_OK;
+>      case A_EVENTQ_BASE: /* 64b */
+> -        *data = extract64(s->eventq.base, 0, 32);
+> +        *data = extract64(bank->eventq.base, 0, 32);
+>          return MEMTX_OK;
+>      case A_EVENTQ_BASE + 4: /* 64b */
+> -        *data = extract64(s->eventq.base, 32, 32);
+> +        *data = extract64(bank->eventq.base, 32, 32);
+>          return MEMTX_OK;
+>      case A_EVENTQ_PROD:
+> -        *data = s->eventq.prod;
+> +        *data = bank->eventq.prod;
+>          return MEMTX_OK;
+>      case A_EVENTQ_CONS:
+> -        *data = s->eventq.cons;
+> +        *data = bank->eventq.cons;
+>          return MEMTX_OK;
+>      default:
+>          *data = 0;
+> @@ -2039,9 +2069,10 @@ static const VMStateDescription vmstate_smmuv3_queue = {
+>  static bool smmuv3_gbpa_needed(void *opaque)
+>  {
+>      SMMUv3State *s = opaque;
+> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+>  
+>      /* Only migrate GBPA if it has different reset value. */
+> -    return s->gbpa != SMMU_GBPA_RESET_VAL;
+> +    return bank->gbpa != SMMU_GBPA_RESET_VAL;
+>  }
+>  
+>  static const VMStateDescription vmstate_gbpa = {
+> @@ -2050,7 +2081,7 @@ static const VMStateDescription vmstate_gbpa = {
+>      .minimum_version_id = 1,
+>      .needed = smmuv3_gbpa_needed,
+>      .fields = (const VMStateField[]) {
+> -        VMSTATE_UINT32(gbpa, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gbpa, SMMUv3State),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
+> @@ -2061,27 +2092,29 @@ static const VMStateDescription vmstate_smmuv3 = {
+>      .minimum_version_id = 1,
+>      .priority = MIG_PRI_IOMMU,
+>      .fields = (const VMStateField[]) {
+> -        VMSTATE_UINT32(features, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].features, SMMUv3State),
+>          VMSTATE_UINT8(sid_size, SMMUv3State),
+> -        VMSTATE_UINT8(sid_split, SMMUv3State),
+> +        VMSTATE_UINT8(bank[SMMU_SEC_SID_NS].sid_split, SMMUv3State),
+>  
+> -        VMSTATE_UINT32_ARRAY(cr, SMMUv3State, 3),
+> -        VMSTATE_UINT32(cr0ack, SMMUv3State),
+> +        VMSTATE_UINT32_ARRAY(bank[SMMU_SEC_SID_NS].cr, SMMUv3State, 3),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].cr0ack, SMMUv3State),
+>          VMSTATE_UINT32(statusr, SMMUv3State),
+> -        VMSTATE_UINT32(irq_ctrl, SMMUv3State),
+> -        VMSTATE_UINT32(gerror, SMMUv3State),
+> -        VMSTATE_UINT32(gerrorn, SMMUv3State),
+> -        VMSTATE_UINT64(gerror_irq_cfg0, SMMUv3State),
+> -        VMSTATE_UINT32(gerror_irq_cfg1, SMMUv3State),
+> -        VMSTATE_UINT32(gerror_irq_cfg2, SMMUv3State),
+> -        VMSTATE_UINT64(strtab_base, SMMUv3State),
+> -        VMSTATE_UINT32(strtab_base_cfg, SMMUv3State),
+> -        VMSTATE_UINT64(eventq_irq_cfg0, SMMUv3State),
+> -        VMSTATE_UINT32(eventq_irq_cfg1, SMMUv3State),
+> -        VMSTATE_UINT32(eventq_irq_cfg2, SMMUv3State),
+> -
+> -        VMSTATE_STRUCT(cmdq, SMMUv3State, 0, vmstate_smmuv3_queue, SMMUQueue),
+> -        VMSTATE_STRUCT(eventq, SMMUv3State, 0, vmstate_smmuv3_queue, SMMUQueue),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].irq_ctrl, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerror, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerrorn, SMMUv3State),
+> +        VMSTATE_UINT64(bank[SMMU_SEC_SID_NS].gerror_irq_cfg0, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerror_irq_cfg1, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerror_irq_cfg2, SMMUv3State),
+> +        VMSTATE_UINT64(bank[SMMU_SEC_SID_NS].strtab_base, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].strtab_base_cfg, SMMUv3State),
+> +        VMSTATE_UINT64(bank[SMMU_SEC_SID_NS].eventq_irq_cfg0, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].eventq_irq_cfg1, SMMUv3State),
+> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].eventq_irq_cfg2, SMMUv3State),
+> +
+> +        VMSTATE_STRUCT(bank[SMMU_SEC_SID_NS].cmdq, SMMUv3State, 0,
+> +                       vmstate_smmuv3_queue, SMMUQueue),
+> +        VMSTATE_STRUCT(bank[SMMU_SEC_SID_NS].eventq, SMMUv3State, 0,
+> +                       vmstate_smmuv3_queue, SMMUQueue),
+>  
+>          VMSTATE_END_OF_LIST(),
+>      },
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index 7b975abc25a..6ea40f6b074 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -40,6 +40,12 @@
+>  #define CACHED_ENTRY_TO_ADDR(ent, addr)      ((ent)->entry.translated_addr + \
+>                                               ((addr) & (ent)->entry.addr_mask))
+>  
+> +/* StreamID Security state */
+> +typedef enum SMMUSecSID {
+> +    SMMU_SEC_SID_NS = 0,
+> +    SMMU_SEC_SID_NUM,
+> +} SMMUSecSID;
+> +
+>  /*
+>   * Page table walk error types
+>   */
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 26b2fc42fd9..d07bdfa1f27 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -32,19 +32,13 @@ typedef struct SMMUQueue {
+>       uint8_t log2size;
+>  } SMMUQueue;
+>  
+> -struct SMMUv3State {
+> -    SMMUState     smmu_state;
+> -
+> +typedef struct SMMUv3RegBank {
+>      uint32_t features;
+> -    uint8_t sid_size;
+>      uint8_t sid_split;
+>  
+>      uint32_t idr[6];
+> -    uint32_t iidr;
+> -    uint32_t aidr;
+>      uint32_t cr[3];
+>      uint32_t cr0ack;
+> -    uint32_t statusr;
+>      uint32_t gbpa;
+>      uint32_t irq_ctrl;
+>      uint32_t gerror;
+> @@ -59,6 +53,17 @@ struct SMMUv3State {
+>      uint32_t eventq_irq_cfg2;
+>  
+>      SMMUQueue eventq, cmdq;
+> +} SMMUv3RegBank;
+> +
+> +struct SMMUv3State {
+> +    SMMUState     smmu_state;
+> +
+> +    uint8_t sid_size;
+> +    uint32_t iidr;
+> +    uint32_t aidr;
+> +    uint32_t statusr;
+> +
+> +    SMMUv3RegBank bank[SMMU_SEC_SID_NUM];
+>  
+>      qemu_irq     irq[4];
+>      QemuMutex mutex;
+> @@ -94,7 +99,14 @@ struct SMMUv3Class {
+>  #define TYPE_ARM_SMMUV3   "arm-smmuv3"
+>  OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
+>  
+> -#define STAGE1_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S1P)
+> -#define STAGE2_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S2P)
+> +#define STAGE1_SUPPORTED(s) \
+> +    FIELD_EX32((s)->bank[SMMU_SEC_SID_NS].idr[0], IDR0, S1P)
+> +#define STAGE2_SUPPORTED(s) \
+> +    FIELD_EX32((s)->bank[SMMU_SEC_SID_NS].idr[0], IDR0, S2P)
+> +
+> +static inline SMMUv3RegBank *smmuv3_bank(SMMUv3State *s, SMMUSecSID sec_sid)
+> +{
+> +    return &s->bank[sec_sid];
+> +}
+> 
+If this is a macro you can use in other cases as in state structs as
+it currently inlined in:
+VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].irq_ctrl, SMMUv3State),
 
 Thanks,
 Mostafa
 
-> ---
->  include/hw/arm/smmuv3-common.h | 70 +++++++++++++++++++++++++++++++++-
->  1 file changed, 69 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-> index 9f78bbe89eb..c40fa46fb88 100644
-> --- a/include/hw/arm/smmuv3-common.h
-> +++ b/include/hw/arm/smmuv3-common.h
-> @@ -269,7 +269,7 @@ REG32(CD_5, 20)
->      ((sel) ? ((cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, NSCFG1, (v))) : \
->               ((cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, NSCFG0, (v))))
->  
-> -/* MMIO Registers */
-> +/* MMIO Registers. Shared by Non-secure/Realm/Root states. */
->  
->  REG32(IDR0,                0x0)
->      FIELD(IDR0, S2P,         0 , 1)
-> @@ -356,6 +356,7 @@ REG32(CR0,                 0x20)
->      FIELD(CR0, CMDQEN,        3, 1)
->  
->  #define SMMU_CR0_RESERVED 0xFFFFFA20
-> +#define SMMU_S_CR0_RESERVED 0xFFFFFC12
->  
->  REG32(CR0ACK,              0x24)
->  REG32(CR1,                 0x28)
-> @@ -414,6 +415,73 @@ REG32(EVENTQ_IRQ_CFG2,     0xbc)
->  
->  #define A_IDREGS           0xfd0
->  
-> +#define SMMU_SECURE_REG_START 0x8000 /* Start of secure-only registers */
-> +
-> +REG32(S_IDR0,               0x8000)
-> +    FIELD(S_IDR0, STALL_MODEL, 24, 2)
-> +REG32(S_IDR1,               0x8004)
-> +    FIELD(S_IDR1, S_SIDSIZE,          0 , 6)
-> +    FIELD(S_IDR1, SEL2,               29, 1)
-> +    FIELD(S_IDR1, SECURE_IMPL,        31, 1)
-> +
-> +REG32(S_IDR2,               0x8008)
-> +REG32(S_IDR3,               0x800c)
-> +REG32(S_IDR4,               0x8010)
-> +
-> +REG32(S_CR0,                0x8020)
-> +    FIELD(S_CR0, SMMUEN,      0, 1)
-> +    FIELD(S_CR0, EVENTQEN,    2, 1)
-> +    FIELD(S_CR0, CMDQEN,      3, 1)
-> +
-> +REG32(S_CR0ACK,             0x8024)
-> +REG32(S_CR1,                0x8028)
-> +REG32(S_CR2,                0x802c)
-> +
-> +REG32(S_INIT,               0x803c)
-> +    FIELD(S_INIT, INV_ALL,    0, 1)
-> +
-> +REG32(S_GBPA,               0x8044)
-> +    FIELD(S_GBPA, ABORT,     20, 1)
-> +    FIELD(S_GBPA, UPDATE,    31, 1)
-> +
-> +REG32(S_IRQ_CTRL,           0x8050)
-> +    FIELD(S_IRQ_CTRL, GERROR_IRQEN,    0, 1)
-> +    FIELD(S_IRQ_CTRL, EVENTQ_IRQEN,    2, 1)
-> +
-> +REG32(S_IRQ_CTRLACK,        0x8054)
-> +
-> +REG32(S_GERROR,             0x8060)
-> +    FIELD(S_GERROR, CMDQ_ERR,          0, 1)
-> +
-> +#define SMMU_GERROR_IRQ_CFG0_RESERVED   0x00FFFFFFFFFFFFFC
-> +#define SMMU_GERROR_IRQ_CFG2_RESERVED   0x000000000000003F
-> +
-> +#define SMMU_STRTAB_BASE_RESERVED       0x40FFFFFFFFFFFFC0
-> +#define SMMU_QUEUE_BASE_RESERVED        0x40FFFFFFFFFFFFFF
-> +#define SMMU_EVENTQ_IRQ_CFG0_RESERVED   0x00FFFFFFFFFFFFFC
-> +
-> +REG32(S_GERRORN,            0x8064)
-> +REG64(S_GERROR_IRQ_CFG0,    0x8068)
-> +REG32(S_GERROR_IRQ_CFG1,    0x8070)
-> +REG32(S_GERROR_IRQ_CFG2,    0x8074)
-> +REG64(S_STRTAB_BASE,        0x8080)
-> +REG32(S_STRTAB_BASE_CFG,    0x8088)
-> +    FIELD(S_STRTAB_BASE_CFG, LOG2SIZE, 0, 6)
-> +    FIELD(S_STRTAB_BASE_CFG, SPLIT,    6, 5)
-> +    FIELD(S_STRTAB_BASE_CFG, FMT,     16, 2)
-> +
-> +REG64(S_CMDQ_BASE,          0x8090)
-> +REG32(S_CMDQ_PROD,          0x8098)
-> +REG32(S_CMDQ_CONS,          0x809c)
-> +    FIELD(S_CMDQ_CONS, ERR,           24, 7)
-> +
-> +REG64(S_EVENTQ_BASE,        0x80a0)
-> +REG32(S_EVENTQ_PROD,        0x80a8)
-> +REG32(S_EVENTQ_CONS,        0x80ac)
-> +REG64(S_EVENTQ_IRQ_CFG0,    0x80b0)
-> +REG32(S_EVENTQ_IRQ_CFG1,    0x80b8)
-> +REG32(S_EVENTQ_IRQ_CFG2,    0x80bc)
-> +
->  /* Commands */
->  
->  typedef enum SMMUCommandType {
+
+>  #endif
 > -- 
 > 2.34.1
 > 
