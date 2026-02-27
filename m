@@ -4,120 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA14FEFB4D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53569FEFB4B
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:01:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvxQJ-00040i-O8; Fri, 27 Feb 2026 07:58:27 -0500
+	id 1vvxSj-0004j7-4F; Fri, 27 Feb 2026 08:00:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvxQI-00040I-Ai
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:58:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vvxQG-00030k-Le
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:58:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772197103;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ca0IcNzRFuMLL5N6Xje3pe9CjvwuwwAv+Q9s0wPOyFg=;
- b=K9ONyNCafvbqTOmdK9zvy+pUFmyr9AXBVF5xoTrqw7UljcpmldZiPcNtCByHcjPz+GTIQk
- vtsxcVMEH3g/ZrH3pvnbDGQyB/aMU6M9JBSNmkZ8wGrE+Va/WOooy01kfrH8SeAmS+UFoO
- WiPGEKlpJEaYI5xKxQ2HRMjccB0WxmQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-bBt3SzGIOMyGXgCfI0wkBQ-1; Fri,
- 27 Feb 2026 07:58:20 -0500
-X-MC-Unique: bBt3SzGIOMyGXgCfI0wkBQ-1
-X-Mimecast-MFC-AGG-ID: bBt3SzGIOMyGXgCfI0wkBQ_1772197097
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C8E91956089; Fri, 27 Feb 2026 12:58:17 +0000 (UTC)
-Received: from [10.44.34.56] (unknown [10.44.34.56])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5881119560B5; Fri, 27 Feb 2026 12:58:08 +0000 (UTC)
-Message-ID: <35753e04-2b27-4621-8175-802cd81b1950@redhat.com>
-Date: Fri, 27 Feb 2026 13:58:06 +0100
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vvxSP-0004hP-TH
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:00:39 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vvxSN-0003Nm-Mt
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:00:36 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b8fb3c4bbc4so292158866b.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:00:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772197228; x=1772802028; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7/P8Dw5SjZ9erFXlIDk5Hj2i9CHN3A62UtBOXidNtRo=;
+ b=yPyCqaUoTXzt3J7u0/5C0DLGEksQelSFkVIjifkcgOgKaebXN3bUfPtM/sjMEJa46j
+ nGH+XrwikjgU/KOI3zjZj9quz8GJe100+g5vM9nLBnyGSg2zqDVv09/vPGPPAiBRqvmc
+ el41WxtsulJeDg8fNldtIAhCQXRDGaD2TSy5ytDfUO+Ak7qxgehhmLZYyU/uTDmax7D5
+ jpl2EQa8q805SLSUuZMBsL5Q//nthXz1/6HDmV/gs9F7sNhWhFF75hniuZ0jKCWogfQ4
+ 4ANmwnIM8YikYFzihMDjNsH/p7yrHxYywRpj9AoTjY797nKUtfs/gkwbQtYXucuQM8LV
+ Bixw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772197228; x=1772802028;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7/P8Dw5SjZ9erFXlIDk5Hj2i9CHN3A62UtBOXidNtRo=;
+ b=TnEBdlzvAcqT3hVawNiqkyz64n6PBkOQE/3EY+yj9cWgdbvlIqBvIxbe53XYFjl0Tf
+ DxKvya05sVSckz/z5h45gn24hJR4JXf9RdRCUFgtcLawbrX/KiOyV1yFWaNRQgKNGzFM
+ 5jXJK/a7ayI8SmgIqPjbbcVlPNlY8pr2dETUFErXYzrlEQGvyYgof39GgwJkBnUDZC3n
+ /f8vj9tv8j0TfuuZrXcSp+QXtyCo6inr4CJWwF80OaU56Bw7qc06uA49RiUqHHmPJFka
+ RXUn7to5dIRLChChAZftSnkaoMSaAV0cDVpKKnFi1axsXTPbeWoUnF+fTJzv+m0UxF2U
+ CAeQ==
+X-Gm-Message-State: AOJu0Yzzvg/TvWDMnYbclznWOtboJRLYi4h+/9yBGCVqMJKJuIPUFkSN
+ U0CN0t3BiGu9CXHYXpDABthHUl/ynn9LJLkhac4QvDspsuVNoPNvmMSGAA+peQWh3Hs=
+X-Gm-Gg: ATEYQzzAltIyc2Aw2XunWmINPb9byxlLtl55312YVLRxbWkl3dHgsl+20+vmOYSjSaC
+ VZD/vk8kopcI3mw3hARJ2YFuPaR5rIfOTUS/Cy209oIqi2n1Zcla7xCgi8ygXfyyGuIY1Qv22Vl
+ 5MqVcPt6rIGDj+bqdj0aiGQ6tM1OqCbGdadOTU8LBzjAT2AFVabFowOcEnKXe9Zfq16WwGBvLPg
+ jYXxV9IBvGRzi5//tD+2CkbBoaXIfLVEs2DwobwHzTe/Wly2pZMEuiNjwczCSkWh26nsSjilwYh
+ P1emYxtd0V3knEphJP7l31WsoD/0fyIILowaLzKMoYTwut+aDocqBaNbi4GA5C4ZcJW9jXDM5nO
+ aKCVD2n4V/5BpZ3NB/els9wOTRu4LMc0f4LksBIbui0z0cCBIB8Ct6nhTfUObGe3f/h1TbpmFmy
+ HhPuFQjfqGTYYuR1PGERFOga4=
+X-Received: by 2002:a17:907:7b8b:b0:b8f:97c6:1e2d with SMTP id
+ a640c23a62f3a-b9376365a38mr182354666b.4.1772197227399; 
+ Fri, 27 Feb 2026 05:00:27 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65fac06e3fasm1236144a12.25.2026.02.27.05.00.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Feb 2026 05:00:25 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 182A15F7D1;
+ Fri, 27 Feb 2026 13:00:23 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Thomas
+ Huth <thuth@redhat.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v4 1/4] meson: Restrict gdbstub to user/system builds
+In-Reply-To: <20260227104314.81038-2-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 27 Feb 2026 11:43:11
+ +0100")
+References: <20260227104314.81038-1-philmd@linaro.org>
+ <20260227104314.81038-2-philmd@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Fri, 27 Feb 2026 13:00:23 +0000
+Message-ID: <87seamxrx4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 07/30] s390x/diag: Implement DIAG 320 subcode 1
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-8-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260212204352.1044699-8-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 23
-X-Spam_score: 2.3
-X-Spam_bar: ++
-X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,140 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/02/2026 21.43, Zhuoying Cai wrote:
-> DIAG 320 subcode 1 provides information needed to determine
-> the amount of storage to store one or more certificates from the
-> certificate store.
-> 
-> Upon successful completion, this subcode returns information of the current
-> cert store, such as the number of certificates stored and allowed in the cert
-> store, amount of space may need to be allocate to store a certificate,
-> etc for verification-certificate blocks (VCBs).
-> 
-> The subcode value is denoted by setting the left-most bit
-> of an 8-byte field.
-> 
-> The verification-certificate-storage-size block (VCSSB) contains
-> the output data when the operation completes successfully. A VCSSB
-> length of 4 indicates that no certificate are available in the cert
-> store.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-> Reviewed-by: Collin Walling <walling@linux.ibm.com>
-> ---
-...
-> diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
-> index aa04b699c6..6e4779c699 100644
-> --- a/include/hw/s390x/ipl/diag320.h
-> +++ b/include/hw/s390x/ipl/diag320.h
-> @@ -11,10 +11,32 @@
->   #define S390X_DIAG320_H
->   
->   #define DIAG_320_SUBC_QUERY_ISM     0
-> +#define DIAG_320_SUBC_QUERY_VCSI    1
->   
->   #define DIAG_320_RC_OK              0x0001
->   #define DIAG_320_RC_NOT_SUPPORTED   0x0102
-> +#define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
->   
->   #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
-> +#define DIAG_320_ISM_QUERY_VCSI     0x40000000
-> +
-> +#define VCSSB_NO_VC     4
-> +#define VCSSB_MIN_LEN   128
-> +#define VCE_HEADER_LEN  128
-> +#define VCB_HEADER_LEN  64
-> +
-> +struct VCStorageSizeBlock {
-> +    uint32_t length;
-> +    uint8_t reserved0[3];
-> +    uint8_t version;
-> +    uint32_t reserved1[6];
-> +    uint16_t total_vc_ct;
-> +    uint16_t max_vc_ct;
-> +    uint32_t reserved3[11];
-> +    uint32_t max_single_vcb_len;
-> +    uint32_t total_vcb_len;
-> +    uint32_t reserved4[10];
-> +};
-> +typedef struct VCStorageSizeBlock VCStorageSizeBlock;
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Since this API between QEMU and the guest, maybe add a
+> Limited builds (tools, documentation) don't need to generate /
+> build gdbstub files. Only process the gdbstub/ folder when
+> user / system emulation / acceleration is built.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-QEMU_BUILD_BUG_ON(sizeof(VCStorageSizeBlock) != ...);
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-here to make sure that there is no accidential padding.
-(should not happen since field are naturally aligned, but better be safe 
-than sorry?)
-
->   #endif
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index e867fc2156..3c7e64eb05 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -197,11 +197,54 @@ out:
->       }
->   }
->   
-> +static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
-> +                                     uintptr_t ra, S390IPLCertificateStore *cs)
-> +{
-> +    g_autofree VCStorageSizeBlock *vcssb = NULL;
-> +
-> +    vcssb = g_new0(VCStorageSizeBlock, 1);
-> +    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcssb, sizeof(*vcssb))) {
-> +        s390_cpu_virt_mem_handle_exc(cpu, ra);
-> +        return -1;
-> +    }
-> +
-> +    if (be32_to_cpu(vcssb->length) > sizeof(*vcssb)) {
-> +        return -1;
-> +    }
-
-Thanks for adding the check, but I think this should rather be :
-
-         return DIAG_320_RC_INVAL_VCSSB_LEN;
-
-since we did not inject an exception in this case?
-
-> +    if (be32_to_cpu(vcssb->length) < VCSSB_MIN_LEN) {
-> +        return DIAG_320_RC_INVAL_VCSSB_LEN;
-> +    }
-
-...
-
-> +    case DIAG_320_SUBC_QUERY_VCSI:
-> +        if (!diag_parm_addr_valid(addr, sizeof(VCStorageSizeBlock), true)) {
-> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
-> +            return;
-> +        }
-> +
-> +        if (addr & 0x7) {
-> +            s390_program_interrupt(env, PGM_ADDRESSING, ra);
-> +            return;
-> +        }
-> +
-> +        rc = handle_diag320_query_vcsi(cpu, addr, r1, ra, cs);
-> +        if (rc == -1) {
-> +            return;
-
-... otherwise the error will be ignored silently here and the guest will 
-think that the call succeeded.
-
-Maybe you could also create some kvm-unit-tests for this new diag call that 
-exercises these error scenarios, then you'll easily see whether the diag 
-behaves as expected.
-
-  Thanks,
-   Thomas
-
-
-> +        }
-> +        env->regs[r1 + 1] = rc;
-> +        break;
->       default:
->           env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
->           break;
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
