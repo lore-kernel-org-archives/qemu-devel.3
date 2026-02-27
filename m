@@ -4,100 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D768FEFB47
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0FAFEFB47
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvxNo-0001ha-H8; Fri, 27 Feb 2026 07:55:52 -0500
+	id 1vvxOX-0002FS-9E; Fri, 27 Feb 2026 07:56:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
- id 1vvxNm-0001hJ-Da
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:55:50 -0500
-Received: from mail-out-3.itc.rwth-aachen.de ([2a00:8a60:1:e501::5:48])
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1vvxOW-0002F2-0E; Fri, 27 Feb 2026 07:56:36 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
- id 1vvxNi-0002pc-KM
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:55:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=rwth-aachen.de; i=@rwth-aachen.de; q=dns/txt;
- s=20240516-RWTH; t=1772196947; x=1803732947;
- h=from:subject:date:message-id:mime-version:
- content-transfer-encoding:to:cc;
- bh=yZr4BeywM7F9IhJLv75Ry3iSOnc72LDHUlCtcspfmiw=;
- b=P39IoihAHRQh4dyrDrELv8PHBRn1+x4XerzDoClHo6xTFOuspJ/Z5vBq
- kgYTCU8H8kFrioqHkbI/E+XglPqSTxSUcahXWDgRiqti7ENYaH/cBgT8i
- RiCnZr6IxBy2jW+I/018CxZwVP3A3xmwQ2QO0QDwjNHcHItVRFxjk+EFN
- 7sbZevaksBiur6E7PNRIhpgmTjO/vZrjhqGAmDYqum0WCGbsM/1VKXoI/
- RcY+USoWyxOwHo71HfnzVjPON4YFpZ6lEycEbiu+IVRmzg8xlJ+1WlFGy
- lYS5DozQ9GWbInB6bqzw/hhblEtlommjVQiE0R1F+qAmNxDEUrkehEP5W g==;
-X-CSE-ConnectionGUID: TnutT7rsTmuVt8OZh7kBzQ==
-X-CSE-MsgGUID: 8P2zr2IGSXCXh3euzXCOhg==
-X-IPAS-Result: =?us-ascii?q?A2DEBgA9k6Fp/5oagoZagQmBUINIgWoIFQEBhDiRdJoYh?=
- =?us-ascii?q?AWBfw8BAQEBAQEBAQEIAUoHBAEBghOCLkaNISg0CQ4BAgQBAQEBAwIDAQEBA?=
- =?us-ascii?q?QEBAQEBAQELAQEGAQEBAQEBBgWBIYYJRg2HBA8BRjUCJgJIFg4FgwIBgnMUB?=
- =?us-ascii?q?qdpgTKBAYR82geBJQYJAQuBCi6IVAGBcIQEh0mBSoFHdnaCYQICgiuDDoJpB?=
- =?us-ascii?q?IEOf4EjjEpihWoJP4ECeCwBVRMNCgsHBWGBBQM1EioVbjIdgSM+FzNYGwcFh?=
- =?us-ascii?q?XwPiHSBPQQjgROCHAMLGA1IESw3FBtBAW4HjW4/gjMBYywrIi6BCi6XUK9WB?=
- =?us-ascii?q?4I4gWeMHpVUATKXYJMLmQaKCoN/llCEPQIEAgQFAhiBaIIADgdxgzYSQBcCD?=
- =?us-ascii?q?44qGRyDQoUTwGJ3AgE5AgcBCgEBAwmCOYQPjAIBgRwBAQ?=
-IronPort-Data: A9a23:dsJ/2KnLelumsx294JPcdKHo5gygJ0RdPkR7XQ2eYbSJt1+Wr1Gzt
- xIbXWrQbPaLMWKncoogO4q19UNV7MCAnNNjQQtqpH1hQltH+JHPbTi7wuYcHAvPdJGZHBI/h
- yk6QoOdRCzhZiaE/n9BCpC48z8kk/rOHuagYAL9EngZbRd+Tys8gg5Ulec8g4p56fC0GArlV
- ena+qUzA3f7nWQtWo4ow/jb8k035q6t4GpwUmEWPJingnePzxH5M7pCfcldH1OgKqFIE+izQ
- fr0zb3R1gvx4xc3B9q5pa3we0sMT6S6FVDmZq1+AvXKbrBq/0Te445jXBYuQR4/Zwahw7id/
- O5wWamYEm/FCIWRwrhHA0kAe81JFfYuFLfveRBTuCEIpqHMWyOEL/5GVCnaMWCEkwp6KTkmy
- BAWFNwCRiyFmv6Kn6igduxxuNhzC/vrY4A1qEg1mFk1Dd5+KXzCa7/V+d9VzHIr3IVHW+zBe
- 8pcYDYpYBmojx9nYwxLTstlxKHy2D+mLmEwRFG9/MLb50DWxRZt0b6rM8DSd9qLQ8p9k0Geq
- 3jNuX7mHhFfPdWUyTeDtH6h7gPKtXiiBdtISuHhq5aGhnXD/jYBEkc3emCLism50UOjSeJ0D
- Ewbr39GQa8asRbDosPGdwW4oXqBsjYYWtxZCep87xuCooLM7hqUHC4BRy9NZdginMs3QzUw0
- RmOhdyBLSVitaDQRX+D+7O8qzS0Ni4Ia2gYakcsRA8I85/prYc1gx/nStdlGbSyyNrvFlnNL
- yuitjcih7gDyNVRkqz950/bg3elqt7FQ2bZ+znqY45s1SshDKbNWmBiwQOzASpoRGpBcmS8g
- Q==
-IronPort-HdrOrdr: A9a23:Awnb3aE+2gy+5yJapLqEy8eALOsnbusQ8zAXPiFKOH9om6mj/f
- xG88526faKskdoZJhNo7690dC7MArhHMdOkO8s1NSZPDUO2lHEEGgK1+KLqAEIcBeQygcy78
- ZdmxYSMqyUMbDH4PyKhzVRrLsbsb262bHtnumb1nF2UAVjbOV8/x50YzzrcHFLeA==
-X-Talos-CUID: 9a23:+Ovjz2zei9ASJlVUe6RwBgUoHN05TiLH10vVPnGkWUFbSOKWY02prfY=
-X-Talos-MUID: 9a23:W0/LvAQIrpmrrHWtRXS8vGtwLp1JzJ+eI3ANypgbqfmvEix/bmI=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.21,314,1763420400"; d="scan'208";a="315126415"
-Received: from rwthex-s2-a.rwth-ad.de ([134.130.26.154])
- by mail-in-3.itc.rwth-aachen.de with ESMTP; 27 Feb 2026 13:55:40 +0100
-Received: from mkroening-air.local (134.99.235.10) by rwthex-s2-a.rwth-ad.de
- (2a00:8a60:1:e500::26:154) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 27 Feb
- 2026 13:55:39 +0100
-Subject: [PATCH v2 0/3] semihosting/uaccess: Swap bytes based on
- runtime-configurable endianness
-Date: Fri, 27 Feb 2026 13:54:29 +0100
-Message-ID: <20260227-semihosting-cpu-tswap-v2-0-cbdcdf39dd15@eonerc.rwth-aachen.de>
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1vvxOT-0002sv-EQ; Fri, 27 Feb 2026 07:56:35 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 5F95B437C6;
+ Fri, 27 Feb 2026 12:56:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2186BC2BC9E;
+ Fri, 27 Feb 2026 12:56:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1772196991;
+ bh=dMIdCGLMjW1mH7Ui/T93D0llAw6sJxNHz+M3HNpSRxI=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=ojvxTqjbwaVyiWGaEuUD/igIRrX9pzPoUwjgvqBh1cMvbFp8zQJUjO/OnRVfAoTNd
+ g9MZmjlv1nRVLKKC5UhpQ1dKY+lTR2w8gfCTWH2JWOlP1y/Wy0B+wfGdE56wLdzFT5
+ sg9YDln2FPsEnbXo4gWqO+lYVUyqkBgQscHayHVWOZ2Eejb4QJyj6Zr6wG7ks7Y8wt
+ 8wQRmMeCt2kUbErUEosydHryNfxeiO+htVnZkuhsLaf/w0uCHMSUaMvrz/aCsajTCw
+ zXe1Hx4Ty6WVcgW7VO0QzvYsYnP/lQnl56JotSllwGipROrnjmVlwWaelMVb0Ylfvj
+ vMNWvWZ1+4yjg==
+Date: Fri, 27 Feb 2026 12:56:26 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: Alistair Francis <alistair23@gmail.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "thuth@redhat.com" <thuth@redhat.com>
+Subject: Re: [PATCH v2 00/16] Add RISC-V big-endian target support
+Message-ID: <20260227-dandruff-chemicals-4b3d22ca6354@spud>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <A02120BF-779D-4B2C-B29D-A9CB044EA895@unpredictable.fr>
+ <CAKmqyKO6ioRt+h_tZrudbriv-QDVsOG1LNJ+GFQJ3ZO-fEhjiA@mail.gmail.com>
+ <20260226-hangout-satin-fd7913f18f2b@spud>
+ <CAKmqyKNST9ExmpcFE3iejmzZZRtMNSiVXkzfUK4GhhcketrCEw@mail.gmail.com>
+ <de767b4f-93f2-47b1-8813-d1c063a30759@htecgroup.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNQQ6CMBBFr2Jm7ZDSQElceQ/DopSBzsKWdCpoC
- He3cgGX7yX//R2EEpPA7bJDopWFYyigrxdw3oaZkMfCoJU2qlYGhZ7so2QOM7rlhVk2u+DQdCM
- NpLuGNJTtkmji99l99IU9S47pc96s9c/+K641KjSNaTvjdDu15k4xUHJV2rJHa52nUI0E/XEcX
- 26j7NzGAAAA
-X-Change-ID: 20260106-semihosting-cpu-tswap-b47debe274e2
-To: <qemu-devel@nongnu.org>
-CC: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Maydell
- <peter.maydell@linaro.org>, =?utf-8?q?Martin_Kr=C3=B6ning?=
- <martin.kroening@eonerc.rwth-aachen.de>
-X-Mailer: b4 0.14.3
-X-Originating-IP: [134.99.235.10]
-X-ClientProxiedBy: rwthex-s1-a.rwth-ad.de (2a00:8a60:1:e500::26:152) To
- rwthex-s2-a.rwth-ad.de (2a00:8a60:1:e500::26:154)
-Received-SPF: pass client-ip=2a00:8a60:1:e501::5:48;
- envelope-from=martin.kroening@eonerc.rwth-aachen.de;
- helo=mail-out-3.itc.rwth-aachen.de
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="4h5M8rZycvRQ+rzv"
+Content-Disposition: inline
+In-Reply-To: <de767b4f-93f2-47b1-8813-d1c063a30759@htecgroup.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=conor@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,56 +79,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  =?utf-8?q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
-From:  =?utf-8?q?Martin_Kr=C3=B6ning?= via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The semihosting ABI [1] states:
-> Multi-byte values in memory must be formatted as pure little-endian or pure
-> big-endian to match the endianness mapping configuration of the processor.
 
-This series ensures that semihosting data is properly byte-swapped if
-the guest's CPU is currently in a different runtime-configurable
-endianness than the host's CPU. This is done by adding cpu_internal_tswap()
-functions and then using them in semihosting/uaccess.
+--4h5M8rZycvRQ+rzv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3258
-Buglink: https://github.com/taiki-e/semihosting/issues/18
+On Fri, Feb 27, 2026 at 12:42:21PM +0000, Djordje Todorovic wrote:
+>=20
+> On 2/27/26 01:56, Alistair Francis wrote:
+> > CAUTION: This email originated from outside of the organization. Do not=
+ click links or open attachments unless you recognize the sender and know t=
+he content is safe.
+> >
+> >
+> > On Fri, Feb 27, 2026 at 9:47=E2=80=AFAM Conor Dooley <conor@kernel.org>=
+ wrote:
+> >> On Fri, Feb 27, 2026 at 09:30:00AM +1000, Alistair Francis wrote:
+> >>> On Wed, Feb 25, 2026 at 9:39=E2=80=AFPM Mohamed Mediouni
+> >>> <mohamed@unpredictable.fr> wrote:
+> >>>>
+> >>>>
+> >>>>> On 25. Feb 2026, at 11:20, Djordje Todorovic <Djordje.Todorovic@hte=
+cgroup.com> wrote:
+> >>>>>
+> >>>>> This series adds big-endian (BE) RISC-V target support to QEMU,
+> >>>>> covering both softmmu and linux-user emulation for riscv32be and
+> >>>>> riscv64be.
+> >>>> Hello,
+> >>>>
+> >>>> There=E2=80=99s no Linux RISC-V big endian. Maybe the right thing to=
+ do is to not
+> >>>> support it unless we=E2=80=99re sure that it can get to Linux upstre=
+am (for the linux-user mode)?
+> >>> Agreed. We really need upstream Linux support before user mode
+> >> On that front, Ben posted patches for it and Linus was really really n=
+ot
+> >> enthused when he became aware of it:
+> >> https://lore.kernel.org/linux-riscv/066d70c7-b0a7-45e5-9337-17901bc956=
+64@codethink.co.uk
+> >> Even without Linus' take, I feel like there's absolutely no chance of
+> >> upstream support without meaningful shipping hardware that requires
+> >> big endian support, because basically everyone else was also opposed to
+> >> adding it...
+> > Yeah... I saw that.
+> >
+> > A few thoughts, just because Linus doesn't like it doesn't mean QEMU
+> > can't support it. But I am hesitant to support BE considering the lack
+> > of ecosystem support everywhere else.
+>=20
+>=20
+> Please be aware that MIPS will ship hardware based on riscv BE
+>=20
+> soon:=C2=A0https://mips.com/products/hardware/i8500/
 
-[1]: https://github.com/ARM-software/abi-aa/blob/2025Q1/semihosting/semihosting.rst#the-semihosting-interface
+Not the meaning of "hardware" I was using, as this appears to be a core
+complex IP rather than physical hardware? Do you know of any devices,
+outside of a MIPS test chip or w/e, that are going to use this IP?
 
-Signed-off-by: Martin Kröning <martin.kroening@eonerc.rwth-aachen.de>
----
-Changes in v2:
-- Rebase and resolve conflicts.
-- Rename virtio_is_big_endian to internal_is_big_endian (fist commit).
-- Rename new functios from cpu_tswap to cpu_internal_tswap.
-- Document exceptions for using these internal functions (virtio and
-  semihosting).
-- Link to v1: https://lore.kernel.org/qemu-devel/20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de
+On the linux support front, the devils advocate take would be that
+people should just run this core in LE mode, but that's a bridge to be
+crossed when someone produces an SoC using that core complex and on
+another mailing list!
 
----
-Martin Kröning (3):
-      include/hw/core: Rename virtio_is_big_endian to internal_is_big_endian
-      include/exec: Provide the cpu_internal_tswap() functions
-      semihosting/uaccess: Use the cpu_internal_tswap() functions
+--4h5M8rZycvRQ+rzv
+Content-Type: application/pgp-signature; name="signature.asc"
 
- hw/core/cpu-system.c             |  6 +++---
- hw/virtio/virtio.c               |  2 +-
- include/exec/tswap.h             | 36 ++++++++++++++++++++++++++++++++++++
- include/hw/core/cpu.h            |  4 ++--
- include/hw/core/sysemu-cpu-ops.h |  6 +++---
- include/semihosting/uaccess.h    |  8 ++++----
- target/arm/cpu.c                 |  4 ++--
- target/ppc/cpu_init.c            |  2 +-
- 8 files changed, 52 insertions(+), 16 deletions(-)
----
-base-commit: d8a9d97317d03190b34498741f98f22e2a9afe3e
-change-id: 20260106-semihosting-cpu-tswap-b47debe274e2
+-----BEGIN PGP SIGNATURE-----
 
-Best regards,
--- 
-Martin Kröning <martin.kroening@eonerc.rwth-aachen.de>
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaaGUdwAKCRB4tDGHoIJi
+0jmAAP99PMmN6qoj+F4Yu32cK3ksL4cgiIhJ85W2IsAYg6qkzQD/XJDPylQU15Hj
+W/0CQ1gyEN2mpT61GzZDqZqUwReqngw=
+=cyXL
+-----END PGP SIGNATURE-----
 
+--4h5M8rZycvRQ+rzv--
 
