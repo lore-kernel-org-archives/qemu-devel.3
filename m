@@ -4,128 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D217FEFB6A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F100FEFB6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 17:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw1X1-0006dq-Gn; Fri, 27 Feb 2026 12:21:39 -0500
+	id 1vw1Xz-00073u-9h; Fri, 27 Feb 2026 12:22:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw1Wz-0006d2-7A
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:21:37 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw1Wx-0002pI-K9
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:21:36 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-827270d50d4so2412311b3a.3
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 09:21:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vw1Xy-00073j-BS
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:22:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vw1Xv-0002ss-2V
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 12:22:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772212953;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=F/FoRDNULwobUv87bLgI7+mgOvV8vuLBeBAhDkKVDx8=;
+ b=LsxUeUzHhVKuWwyuMcPofY6YvMeOwEw7wl4c+r7uXaaoQ5fRJZMWZE5awe7ShAO8KRbHR9
+ uT2KggQx3Cre8MClVNBrMNSso6bnxMPKxymGJ/EiMZzmZQTxZgJbd3YOfYYsKNeAgvWmTJ
+ psAfwpTOB0cDegdnIgCqOBn6qHu4DRM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-19-00XyB01iPX-WdbO1NOV1PQ-1; Fri, 27 Feb 2026 12:22:31 -0500
+X-MC-Unique: 00XyB01iPX-WdbO1NOV1PQ-1
+X-Mimecast-MFC-AGG-ID: 00XyB01iPX-WdbO1NOV1PQ_1772212951
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8c881d0c617so1569394285a.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 09:22:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772212894; x=1772817694; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hv8hlGp6pQrt8pvPX57YFdO92F+YbkVe3stq2Ei2ns4=;
- b=f2DsW5OR+EZmhQH/UEYzq7BXnQYgj+tJwWW7Tv+8t4gs2QA2dpPNHbA16QnFpw/ws/
- IyAdaMVP9L5Ra0/6/jM/cNOMhkNGPztthoVrYs3dS33yIMxaktL/YM6k450u7faJL1Y8
- Jy+U/NDAyNpKoHxZANayHosNNHFtyu54cxP5Wnu2BsL9acM6/mpeLf7mpmVXGEj+/Ol8
- GlqWB60XZjZjL5bQJHqqDOzX49cW9M/0aQnRO0g2TAVcAiMqCVJWMTLMlHMwfOBx6oV5
- XWCr6H2kYds9aqAURB1q/X8LWgXE/2dL4VFjYmT+15Pa02LTQSnsSkF5WEAy6PtCZEqX
- 0RHA==
+ d=redhat.com; s=google; t=1772212951; x=1772817751; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=F/FoRDNULwobUv87bLgI7+mgOvV8vuLBeBAhDkKVDx8=;
+ b=mTDmmsg+Mz63t77n/EIOLPafEd+ZFrvSakwJXmUHX7pUImqRzUAH3uqPT/8NIIgr3T
+ xi5vS0ohCcMOm7SnDVpkloj0F5I4D+OugL139GDZ3awh4kQhPw8KrpcvuZ/oGZrtbdgx
+ XBHVKhQnwWlx1md6MzylpeTyJe/AXmmi0ab9fGPNlrF36qK+GsRL4Ao3LDIN0hHIo20O
+ JGrSfoiJi/650qDiu06AH/WBQdLVFwU3EzDuGDwnV+cs92gL+reviXQce9NlGKAEJv1b
+ cFTeHmCOqKPC9JThms+sXoY6oRhMDjAgo//oiWWT3399YJm/J3Z+03mSSebXMl43mmbj
+ oSQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772212894; x=1772817694;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hv8hlGp6pQrt8pvPX57YFdO92F+YbkVe3stq2Ei2ns4=;
- b=ZXG4U2O4/ciUoMCRuPnl6jXExHd3i+6L61DSn44xqG9JNSnUORcihmfdn96O5If+x2
- OsT7+pbxBgkYshLQyMIWGKQlUL2hQLfdj529B4pAjVSC037dZl3rjun0DofKyAi3oB+P
- tCKlBfQWAB324TqY7fw/NRKZMZWvC8pRqViZRcNccGTNporm1C4ISWDq8arK38mTOeG5
- xvFilORbl+ftGAuklaZoYvVRN6CrA/vaFChok38fZbOKJLfi1+W5QsZiSBtNORygasHk
- zj98gmmgc6d/Og7IdUd0m67banIGFfavKoNT7XXBw+cKxI+kSF0i9f+WPp25iWqB89CD
- W0yQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5fQlTQvRAyHbhVp2Qt1gT4ra2tztB6voAJuBowJR6qz8fcdrdH6n+2K+w7e4HK/q52WI9sF4WnIq4@nongnu.org
-X-Gm-Message-State: AOJu0YzEFWw3/ctKaueV4wKMo6nB2ZbnHikoV1r/vqgHFlNIB5acwXlt
- mtqX61Fksgu4YWS+DAAdb0vn74VRZrzYwv2ucfq7AfSt2aYsstD5NAkD+4ondOi3Kxg=
-X-Gm-Gg: ATEYQzwYOvfyMD4MsMPTpZHRIARYe8lIjgUcmQV6xNppaiMKANwyBWPgpX0FmQNKdx6
- ZOq4KlodKjBf0MHxUF63Fz7dqXNcCP6G2LebSBWhZ8CyO0DHMFWF9PM/Oj0E070SggMKWGhu1dZ
- MOyb80UN8JC18rknz9DwfsGvuanxcSxYePpipWIMfJJXDRVN6Ff3wpayj+SVRvHuuj2eG0cInX1
- iNW8jN+q1ddrHqJMlhig/sT9Wfg+V3TmpcwEOmtbtJw2Ta0mORmC+23yvHUeeY+d1PWjZQEOIn8
- sDVzQUQoahGkQzie4zmmSfGp2W77x5CgQnib1GyVy0uy9US75gwDZf0ZPvOBQRJetIiEz7/3hY8
- KGS4KYDl/da+8QnImvqxY2wmACKgpLP6oNMuHyv1vunBVo+0PtSOBwpPx6grQIL8jLzcDXhs/EG
- 3odPJqkyXFdDxRac+Uu+cBIOalJ3VRI4Pf0CGpYcZnR96o46HbiDrR6wl8mnBv0QQgrCcRJVpPY
- Ra/6Xo=
-X-Received: by 2002:a05:6a00:852:b0:81e:8e66:38d9 with SMTP id
- d2e1a72fcca58-8274d972c25mr3877800b3a.17.1772212893949; 
- Fri, 27 Feb 2026 09:21:33 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82739d8bcb2sm5600052b3a.22.2026.02.27.09.21.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 09:21:33 -0800 (PST)
-Message-ID: <5e99783f-6e0b-46f5-80e0-ca5036544a63@linaro.org>
-Date: Fri, 27 Feb 2026 09:21:31 -0800
+ d=1e100.net; s=20230601; t=1772212951; x=1772817751;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=F/FoRDNULwobUv87bLgI7+mgOvV8vuLBeBAhDkKVDx8=;
+ b=B6K+f6NL7oUyBtC1vGyNDDvXSF/rGfAIeb/azA2vL8GpJQ9EayELcpqzrqh+z3Y4pB
+ EGRrVtEqD5jflG1fQJIgM7+oKv4A78EScASQmbEUEyXQUHsPI/k+/S9rIiPnjVw57/1r
+ /OViGw98FJG0m3qn41y18MWzN/ksJzQ3Uve0kNo/nJCmTNwuEuVCD9rRmtSFEtF+nr9R
+ aKwEOAE/ZZ9/NYl+5yYU+4jvYoot3YTb1g9paMI7ufBJ5TcWZHs1AsbKhLcJYwdS9y4u
+ EE4yhiF+YezC/q5N36YS/uDdI5pQtS81fmFx9E65B6prQYKtfYUKK137szhSuCgJYo9H
+ sTdQ==
+X-Gm-Message-State: AOJu0YyyQMm1GrLVUKtQGXkt8rS+ez2JukRpdgtrwk+RjRbkByeXcFdK
+ pZ7Nz+PeXQtAkuETcBpGc2MQpasL9+IyqeEVB65GYb1+QjyxgFKgdP9kuNKl3OlYf+90z3jRBcQ
+ 8YEmxfT1aAacVpQOw9pbDiowwjlC3j1uXaFQFW1LM3ksCaXCwsDdNGHYe
+X-Gm-Gg: ATEYQzzJ3kl1RH6x0iESAQIgp7G8QfMhu/tGel48ZlMZhozEPvO35BOqTJDudiDC5Lz
+ mUZuR21oM8r4yH1OyP+pdonCt+Yyd4CruZvnR3kJbnuib+1amy0ACIADcjexm5zaJxYoS2wut1K
+ gSOraB3g2v5Jj1LIODaUkb1I8VUs8zRr98nFYvQRCCDLV0z9UCnrkFVRP3cI0U9SpZYX7ok3Zkl
+ He9B94MrcqEge98M/j4NTHivo+i1WOt8K0KQDxq1s4xDbxcQ12vGvD9NcBJbvjsBiK6rJzCyUMR
+ TcFamznvDGdOgn1E/oB+/0ly8LfBE21f5Pp7jJ4KmP6HX0kcspkjtyClERW9OesDgv57qBLQrsc
+ colYseTjQVJX1jQ==
+X-Received: by 2002:a05:620a:4014:b0:8c7:15fc:2a23 with SMTP id
+ af79cd13be357-8cbc8e41d72mr453316685a.79.1772212950824; 
+ Fri, 27 Feb 2026 09:22:30 -0800 (PST)
+X-Received: by 2002:a05:620a:4014:b0:8c7:15fc:2a23 with SMTP id
+ af79cd13be357-8cbc8e41d72mr453310385a.79.1772212950088; 
+ Fri, 27 Feb 2026 09:22:30 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-899c73a3130sm48465926d6.49.2026.02.27.09.22.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 27 Feb 2026 09:22:29 -0800 (PST)
+Date: Fri, 27 Feb 2026 12:22:18 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v10 19/19] migration: Always open
+ s->rp_state.from_dst_file on the source
+Message-ID: <aaHSypDPWTn8WXNv@x1.local>
+References: <20260220-colo_unit_test_multifd-v10-0-bfe67d422ef1@web.de>
+ <20260220-colo_unit_test_multifd-v10-19-bfe67d422ef1@web.de>
+ <aaBrc4bMxUHhgpH8@x1.local> <20260227124903.241af498@penguin>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ppc-linux-user GDB stub broken
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Florian Hofhammer <florian.hofhammer@fhofhammer.de>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de>
- <CAPMQPEL1__biyd5e81EW78OA1rmVYqfsdEOmH5cs-nOvwnB3cg@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAPMQPEL1__biyd5e81EW78OA1rmVYqfsdEOmH5cs-nOvwnB3cg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260227124903.241af498@penguin>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,37 +122,366 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/26 1:58 AM, Philippe Mathieu-Daudé wrote:
->> The error message is as follows:
->>        TEST    basic gdbstub support on ppc
->>      Python Exception <class 'gdb.error'>: Could not fetch register "fpscr"; remote failure reply '14'
->>      Error occurred in Python: Could not fetch register "fpscr"; remote failure reply '14'
->>      qemu-ppc: QEMU: Terminated via GDBstub
->> I've tested from a clean checkout with the following commands:
->>      ./configure --target-list=ppc-linux-user
->>      make -j$(nproc) all
->>      make check-tcg
+On Fri, Feb 27, 2026 at 12:49:03PM +0100, Lukas Straub wrote:
+> On Thu, 26 Feb 2026 10:49:07 -0500
+> Peter Xu <peterx@redhat.com> wrote:
 > 
-> It's odd this config isn't caught by our CI.
->
+> > On Fri, Feb 20, 2026 at 08:51:41PM +0100, Lukas Straub wrote:
+> > > qemu_file_get_return_path() can not fail (See also commit 3f9d6e77b)
+> > > so always open the return path socket on the source. This allows
+> > > us to reuse the return path in other parts like colo. Also take
+> > > the proper locks in colo while we're at it.
+> > > 
+> > > This fixes a crash due to a race between migrate_cancel() and
+> > > the colo thread shutting down.
+> > > 
+> > > Before, the rp socket is opened just before the rp thread is started
+> > > and closed after it terminates and postcopy fast path is closed.
+> > > Now it's the same, only the rp socket stays open until migration_cleanup().
+> > > 
+> > > If there is a rp thread, the rp socket is shut down at the end of migration,
+> > > but the file is still open. COLO is not compatible with postcopy, so this is
+> > > safe as no one else uses the rp socket after this point.
+> > > 
+> > > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+> > > ---
+> > >  migration/colo.c      | 29 ++++++-------------
+> > >  migration/migration.c | 77 ++++++++++++++++++++++++---------------------------
+> > >  2 files changed, 44 insertions(+), 62 deletions(-)
+> > > 
+> > > diff --git a/migration/colo.c b/migration/colo.c
+> > > index ce02c71d8857d470be434bdf3a9cacad3baab0d5..0dee33f1145b81af276cf318e2984deae9ae0527 100644
+> > > --- a/migration/colo.c
+> > > +++ b/migration/colo.c
+> > > @@ -173,11 +173,13 @@ static void primary_vm_do_failover(void)
+> > >       * The s->rp_state.from_dst_file and s->to_dst_file may use the
+> > >       * same fd, but we still shutdown the fd for twice, it is harmless.
+> > >       */
+> > > -    if (s->to_dst_file) {
+> > > -        qemu_file_shutdown(s->to_dst_file);
+> > > -    }
+> > > -    if (s->rp_state.from_dst_file) {
+> > > -        qemu_file_shutdown(s->rp_state.from_dst_file);
+> > > +    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+> > > +        if (s->to_dst_file) {
+> > > +            qemu_file_shutdown(s->to_dst_file);
+> > > +        }
+> > > +        if (s->rp_state.from_dst_file) {
+> > > +            qemu_file_shutdown(s->rp_state.from_dst_file);
+> > > +        }  
+> > 
+> > Nit: these "start to take mutex for..." changes should belong to a separate
+> > patch.
+> > 
+> 
+> Will do.
+> 
+> > >      }
+> > >  
+> > >      old_state = failover_set_state(FAILOVER_STATUS_ACTIVE,
+> > > @@ -537,6 +539,7 @@ static void colo_process_checkpoint(MigrationState *s)
+> > >      Error *local_err = NULL;
+> > >      int ret;
+> > >  
+> > > +    assert(s->rp_state.from_dst_file);
+> > >      if (get_colo_mode() != COLO_MODE_PRIMARY) {
+> > >          error_report("COLO mode must be COLO_MODE_PRIMARY");
+> > >          return;
+> > > @@ -544,12 +547,6 @@ static void colo_process_checkpoint(MigrationState *s)
+> > >  
+> > >      failover_init_state();
+> > >  
+> > > -    s->rp_state.from_dst_file = qemu_file_get_return_path(s->to_dst_file);
+> > > -    if (!s->rp_state.from_dst_file) {
+> > > -        error_report("Open QEMUFile from_dst_file failed");
+> > > -        goto out;
+> > > -    }
+> > > -
+> > >      packets_compare_notifier.notify = colo_compare_notify_checkpoint;
+> > >      colo_compare_register_notifier(&packets_compare_notifier);
+> > >  
+> > > @@ -634,16 +631,6 @@ out:
+> > >      colo_compare_unregister_notifier(&packets_compare_notifier);
+> > >      timer_free(s->colo_delay_timer);
+> > >      qemu_event_destroy(&s->colo_checkpoint_event);
+> > > -
+> > > -    /*
+> > > -     * Must be called after failover BH is completed,
+> > > -     * Or the failover BH may shutdown the wrong fd that
+> > > -     * re-used by other threads after we release here.
+> > > -     */
+> > > -    if (s->rp_state.from_dst_file) {
+> > > -        qemu_fclose(s->rp_state.from_dst_file);
+> > > -        s->rp_state.from_dst_file = NULL;
+> > > -    }
+> > >  }
+> > >  
+> > >  void migrate_start_colo_process(MigrationState *s)
+> > > diff --git a/migration/migration.c b/migration/migration.c
+> > > index f36d42ef657bdf26d78ca642d77a9b76e1c0c174..8caa56940beef12de33a799695cf486c8fbd471c 100644
+> > > --- a/migration/migration.c
+> > > +++ b/migration/migration.c
+> > > @@ -97,7 +97,7 @@ static GSList *migration_blockers[MIG_MODE__MAX];
+> > >  
+> > >  static bool migration_object_check(MigrationState *ms, Error **errp);
+> > >  static bool migration_switchover_start(MigrationState *s, Error **errp);
+> > > -static bool close_return_path_on_source(MigrationState *s);
+> > > +static bool stop_return_path_thread_on_source(MigrationState *s);
+> > >  static void migration_completion_end(MigrationState *s);
+> > >  
+> > >  static void migration_downtime_start(MigrationState *s)
+> > > @@ -1278,7 +1278,7 @@ static void migration_cleanup(MigrationState *s)
+> > >      cpr_state_close();
+> > >      cpr_transfer_source_destroy(s);
+> > >  
+> > > -    close_return_path_on_source(s);
+> > > +    stop_return_path_thread_on_source(s);
+> > >  
+> > >      if (s->migration_thread_running) {
+> > >          bql_unlock();
+> > > @@ -1307,6 +1307,14 @@ static void migration_cleanup(MigrationState *s)
+> > >          qemu_fclose(tmp);
+> > >      }
+> > >  
+> > > +    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+> > > +        tmp = s->rp_state.from_dst_file;
+> > > +        s->rp_state.from_dst_file = NULL;
+> > > +    }
+> > > +    if (tmp) {
+> > > +        qemu_fclose(tmp);
+> > > +    }
+> > > +
+> > >      assert(!migration_is_active());
+> > >  
+> > >      if (s->state == MIGRATION_STATUS_CANCELLING) {
+> > > @@ -2187,38 +2195,6 @@ static bool migrate_handle_rp_resume_ack(MigrationState *s,
+> > >      return true;
+> > >  }
+> > >  
+> > > -/*
+> > > - * Release ms->rp_state.from_dst_file (and postcopy_qemufile_src if
+> > > - * existed) in a safe way.
+> > > - */
+> > > -static void migration_release_dst_files(MigrationState *ms)
+> > > -{
+> > > -    QEMUFile *file = NULL;
+> > > -
+> > > -    WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+> > > -        /*
+> > > -         * Reset the from_dst_file pointer first before releasing it, as we
+> > > -         * can't block within lock section
+> > > -         */
+> > > -        file = ms->rp_state.from_dst_file;
+> > > -        ms->rp_state.from_dst_file = NULL;
+> > > -    }
+> > > -
+> > > -    /*
+> > > -     * Do the same to postcopy fast path socket too if there is.  No
+> > > -     * locking needed because this qemufile should only be managed by
+> > > -     * return path thread.
+> > > -     */
+> > > -    if (ms->postcopy_qemufile_src) {
+> > > -        migration_ioc_unregister_yank_from_file(ms->postcopy_qemufile_src);
+> > > -        qemu_file_shutdown(ms->postcopy_qemufile_src);
+> > > -        qemu_fclose(ms->postcopy_qemufile_src);
+> > > -        ms->postcopy_qemufile_src = NULL;
+> > > -    }
+> > > -
+> > > -    qemu_fclose(file);
+> > > -}
+> > > -
+> > >  /*
+> > >   * Handles messages sent on the return path towards the source VM
+> > >   *
+> > > @@ -2388,9 +2364,9 @@ out:
+> > >      return NULL;
+> > >  }
+> > >  
+> > > -static void open_return_path_on_source(MigrationState *ms)
+> > > +static void start_return_path_thread_on_source(MigrationState *ms)  
+> > 
+> > Changing this seems OK, but I'm totally confused why you deleted
+> > migration_release_dst_files().  That's the helper to properly close the two
+> > possible qemufiles that rp thread uses.
+> 
+> Okay, so my reasoning here is:
+> I think that closing ms->postcopy_qemufile_src is very closely
+> related to cleaning up the rp thread so I moved that to
+> stop_return_path_thread_on_source().
 
-https://gitlab.com/qemu-project/qemu/-/blob/master/tests/tcg/multiarch/Makefile.target#L153
+Hmm OK, I had that feeling you wanted to move all qemufile cleanups into
+the cleanup function.
 
-```
-ifneq ($(GDB),)
-...
-# gdbstub tests
-...
-else
-run-gdbstub-%:
-	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst 
--%,,$(TARGET_NAME)) support")
-```
+Actually I think that may still be easier for you, e.g. you can at least
+reuse the migration_release_dst_files().  I don't see much benefit yet on
+open code the preempt qemufiles..
 
-Unfortunately, gdb is not installed in any container.
+> 
+> Meanwhile I think s->rp_state.from_dst_file is more closely related to
+> s->to_dst_file and in fact I think we can remove s->rp_state.from_dst_file
+> entirely in the future and use s->to_dst_file for send *and* receive
+> just like you would with a normal socket.
+> 
+> So I close s->rp_state.from_dst_file right besides s->to_dst_file in
+> this patch. And I do the same open-coded file lock dance like
+> s->to_dst_file already does.
 
-At least we caught something with this bug, which is great :).
+Let's not do open coded things.  That makes things worse.
 
-Regards,
-Pierrick
+If you also agree we can cleanup qemufile alawys only until migration
+cleanup then we can stick with it for now.
+
+> 
+> > IIUC you can keep it then use it
+> > in either postcopy_pause() or migration_cleanup() directly.
+> 
+> I can do that if you wish.
+> Should I keep closing ms->postcopy_qemufile_src inside
+> migration_release_dst_files() or stop_return_path_thread_on_source() ?
+
+If you use migration_release_dst_files() in both (1) postcopy pause and (2)
+migration cleanup, IIUC we should covered all cases.  But please double
+check.
+
+> 
+> > 
+> > Then you need to remove the chunk [1] below, making the function only do
+> > "stop" but not close.
+> > 
+> > >  {
+> > > -    ms->rp_state.from_dst_file = qemu_file_get_return_path(ms->to_dst_file);
+> > > +    assert(ms->rp_state.from_dst_file);  
+> > 
+> > I don't see why this change is a must, to open from_dst_file earlier.  Can
+> > we keep it as before, or would you justify it in a separate patch?
+> 
+> Well, the issue is that opening the return path file is behind this if:
+> 
+>  if (migrate_postcopy_ram() || migrate_return_path()) {
+> -        open_return_path_on_source(s);
+> +        start_return_path_thread_on_source(s);
+>  }
+> 
+> And I want to always open the return path file, without also starting
+> the return path thread.
+
+I never notice this small difference.. then logically COLO should just
+depend on return-path capability.
+
+IIUC the simplest for your series to move on is:
+
+  - If COLO always require return-path (I hope you know the best... e.g. do
+    you enable return-path cap for your colo deployment?), we can add that
+    enforcement in migrate_caps_check().  It's an ABI break only to COLO,
+    but if you're OK, I don't see it an issue.
+
+  - Just add one more condition above into:
+
+  if (migrate_postcopy_ram() || migrate_return_path() || migrate_colo()) {
+          open_return_path_on_source(s);
+  }
+
+  Instead of making rp complicated; after all many places assume rp thread
+  is there when rp qemufile is there, vice versa.  Changing that needs more
+  monitoring of code base, IMHO.  Better stick with it to be simple.
+
+> 
+> > 
+> > >  
+> > >      trace_open_return_path_on_source();
+> > >  
+> > > @@ -2402,7 +2378,7 @@ static void open_return_path_on_source(MigrationState *ms)
+> > >  }
+> > >  
+> > >  /* Return true if error detected, or false otherwise */
+> > > -static bool close_return_path_on_source(MigrationState *ms)
+> > > +static bool stop_return_path_thread_on_source(MigrationState *ms)
+> > >  {
+> > >      if (!ms->rp_state.rp_thread_created) {
+> > >          return false;
+> > > @@ -2424,7 +2400,17 @@ static bool close_return_path_on_source(MigrationState *ms)
+> > >  
+> > >      qemu_thread_join(&ms->rp_state.rp_thread);
+> > >      ms->rp_state.rp_thread_created = false;
+> > > -    migration_release_dst_files(ms);
+> > > +    /*
+> > > +     * Close the postcopy fast path socket if there is one.
+> > > +     * No locking needed because this qemufile should only be managed by
+> > > +     * return path thread which we just stopped.
+> > > +     */
+> > > +    if (ms->postcopy_qemufile_src) {
+> > > +        migration_ioc_unregister_yank_from_file(ms->postcopy_qemufile_src);
+> > > +        qemu_file_shutdown(ms->postcopy_qemufile_src);
+> > > +        qemu_fclose(ms->postcopy_qemufile_src);
+> > > +        ms->postcopy_qemufile_src = NULL;
+> > > +    }  
+> > 
+> > [1]
+> > 
+> > >      trace_migration_return_path_end_after();
+> > >  
+> > >      /* Return path will persist the error in MigrationState when quit */
+> > > @@ -2787,7 +2773,7 @@ static void migration_completion(MigrationState *s)
+> > >          goto fail;
+> > >      }
+> > >  
+> > > -    if (close_return_path_on_source(s)) {
+> > > +    if (stop_return_path_thread_on_source(s)) {
+> > >          goto fail;
+> > >      }
+> > >  
+> > > @@ -2941,7 +2927,15 @@ static MigThrError postcopy_pause(MigrationState *s)
+> > >           * path and just wait for the thread to finish. It will be
+> > >           * re-created when we resume.
+> > >           */
+> > > -        close_return_path_on_source(s);
+> > > +        stop_return_path_thread_on_source(s);
+> > > +        QEMUFile *rp_file;
+> > > +        WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+> > > +            rp_file = s->rp_state.from_dst_file;
+> > > +            s->rp_state.from_dst_file = NULL;
+> > > +        }
+> > > +        if (rp_file) {
+> > > +            qemu_fclose(rp_file);
+> > > +        }  
+> > 
+> > Open-code this is going backwards.  Please see if we can reuse
+> > migration_release_dst_files() at least.
+> > 
+> > Thanks,
+> > 
+> > >  
+> > >          /*
+> > >           * Current channel is possibly broken. Release it.  Note that this is
+> > > @@ -3758,6 +3752,7 @@ void migration_start_outgoing(MigrationState *s)
+> > >      if (!qemu_file_set_blocking(s->to_dst_file, true, &local_err)) {
+> > >          goto fail;
+> > >      }
+> > > +    s->rp_state.from_dst_file = qemu_file_get_return_path(s->to_dst_file);
+> > >  
+> > >      /*
+> > >       * Open the return path. For postcopy, it is used exclusively. For
+> > > @@ -3765,7 +3760,7 @@ void migration_start_outgoing(MigrationState *s)
+> > >       * QEMU uses the return path.
+> > >       */
+> > >      if (migrate_postcopy_ram() || migrate_return_path()) {
+> > > -        open_return_path_on_source(s);
+> > > +        start_return_path_thread_on_source(s);
+> > >      }
+> > >
+> > >
+> > >  
+> > >      /*
+> > > 
+> > > -- 
+> > > 2.39.5
+> > >   
+> > 
+> 
+
+
+
+-- 
+Peter Xu
+
 
