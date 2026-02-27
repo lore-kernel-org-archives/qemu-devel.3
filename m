@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524C0FEFB56
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F7FFEFB56
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvyyt-00036h-96; Fri, 27 Feb 2026 09:38:15 -0500
+	id 1vvz09-0003wV-0F; Fri, 27 Feb 2026 09:39:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1vvyys-00036M-29
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:38:14 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1vvz04-0003sE-6v
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:39:28 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1vvyyo-0006pR-1N
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:38:13 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48373ad38d2so85325e9.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 06:38:09 -0800 (PST)
+ id 1vvz01-0006zf-BH
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:39:27 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4806b0963a9so72505e9.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 06:39:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1772203088; x=1772807888; darn=nongnu.org;
+ d=google.com; s=20230601; t=1772203163; x=1772807963; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IqXVEhexwNoFsyN+/mdUL5gosBnO45hXFSuHc2IJRgE=;
- b=3u2bnpx5s51fSwE45gzYxyS1kF3makhALYxHHjYRlwdaDr1CozkA2SxurSt1kV4+p3
- XRD8mkcjXYAbOE19DXcND5rzXoS82W1egowUbvUonGJ85usct36t2rTfls90zoLF79Xb
- LllNV+fToTHjPkkB3d11+6eh8dQ4PYHHWBATtL9GdDtCVhL/LlS8JZe/e255CFDIw4Av
- VHV0i8hMJb/qv1lHiDZO9xMBXj3gzZ4jZ9sV+DMm8zOg1nRwb4c7LoHav971CiQ+Xq6v
- VjowEG4KZ+VkNqQPtyVcK7df17n31y2nk0bBZKhm6Mdd6gHRw91nPH95DAz6LSC7Kvov
- zIBg==
+ bh=V0KbNi2ejJzRRKYM6gfypxQI3IJ4KfiigCVnzXy8L10=;
+ b=S6J+wxqs6Gojn/qlDai7S73SOba3AV8YeMQ4RWYOIO5vyrm8qsStkUXoGyKH+bpj6F
+ 0v/LjPPkjG8cSF12j1xWcRGAm3pYPh5coqCoffTsOEUh4T+GTZud45mqaxdKI8nwNGeV
+ 3R6QSTocKJdKhVozNxRqR5arDRdcFjFDNPY2xMMn+zN4nia+wD0QtqUcwKXRzqzUR3qN
+ y8Hb5n60Ky/cf6HQfK2zbLmXufSIbipQXsikMl/xz9LN5BdampIgap3w62Kl2tPqU2Jg
+ UsuOStpAlfO5Ccm6ew6h1K3e5WLXBu39NHVPyCnk2sEbZ3ta+DZzsmzBrXlOE0QNdzqh
+ xgvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772203088; x=1772807888;
+ d=1e100.net; s=20230601; t=1772203163; x=1772807963;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IqXVEhexwNoFsyN+/mdUL5gosBnO45hXFSuHc2IJRgE=;
- b=w3WHqlLEhF1LOgtLM/iU5xsO3dthqYaRguG7eGUKEFEbPoWUf1GfnwMrXwQ00Uxs0Q
- rWBs+VOoGW8rCizHyh3VGhIwe1d+eN7WU6CKFstnMNuYhCY/ptRcACpIhCpbPmmoBLjs
- zU5B01Iq34huDP1QCsD6hfem7ea3m3lUGDXRXpjxY5QQunov3PJj585n/T+SxxtKuuMB
- 3+Ok2yAaeUXjKqF5iafObn4hGS10GHaE2oYbx0kjdG9JAJSMV0RpYKYMvACJbGNMzA50
- 9Y4tMgAyeXbd75qpnISqlZigz2z58Admed9QfpC/YTeid6iThtbsMxpus3l7bc+pCHD5
- a5Pg==
+ bh=V0KbNi2ejJzRRKYM6gfypxQI3IJ4KfiigCVnzXy8L10=;
+ b=j7r6i4wxZFuQ53oERb0Ujatct+vG9j66DOm2zvr7pTmMN/OTP5RzPh4dM7szu2474E
+ F8KzMuVROhM0LVvNRqBk550hDJRK97zFZBN53P0Oq6nSpsXZJEe9LZCOyNFT7NusdQFS
+ Yut3HE/hT9U8OhLYEtMdJeGaxz+rwUJjK69iDabcFy3F1TB5WeF2rNawlHN378yppmW0
+ 371GY+J8pAJXDyalUNMo3g3aewCn90jp2Je1iGSu8c+3tsVFxYrSo64J1d5u134iSMg4
+ J1Lul5c4jjJ1sLotMktkdfaJbi5Xnr4PUhS4QOj3hDCHoBhFo4GvCmtnpak2GLjVbMG3
+ tpBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjtiwAJMAHnwP0Y4UmSqGSSF4YRY84oJktnQEL0+dK1xnwRXXWNPFnT2Xxvz8w4l7P/4rdjno3ImvB@nongnu.org
-X-Gm-Message-State: AOJu0Yys5ZPPpN25pkJYWhkQJIbaG0z2/rQz7xqM84me3hm3wbGd+tPh
- DXBqKw4tm+0Vxx6TR4spDT3XG4hva//nJzkbpa6NWlNMvPQilqN1IX+d7gTN4OEKIU0fwF9D+d/
- zvbKCeQ==
-X-Gm-Gg: ATEYQzxMTdM0dNml+lbNhycNOrkMlehoED17b4Z+ajkamCWlrz/tjHt7nzKUEO30XmP
- vRpPGHypBMkVcd24uDE+2kB0POmXRO8LkJ02sArnuAzl+bH0wbCru7/QQ1C0/OJt2e6z4Z2s6DJ
- 3a9iHGt+RThjsCu4Lfjy4tmP3Xco4SsrL7MSOJj8uqpZQwKtK9jMd1VP9piTVCyempU2YbIqUpb
- tjd5DZq0/oslCkb0ugP8EK41OSPRJ1HsUjLy/pQpwlE7khYtp5m6vbcdIyJ3Bvs7FClEKdS672D
- jaVSDIXurCWXU9nK+1PKWgXYj2/5Gleks0Eh0T12Co9yc/8/K5+uJgX0D1RNs42InQbffppKhKc
- xQCXkwBUt0bs5qGovpL3oypK5NL9q7B2MFP8ldAibyguW/koTrGKtPlM25JkLXmP7k0zIf/QF0D
- IHkzMF49eNlT2sYtlczsXZW3can6BSdTgswMewzX1kLDGjJJ38akxm2HfyOzOOcRgP
-X-Received: by 2002:a05:600c:4c84:b0:483:6a76:11a6 with SMTP id
- 5b1f17b1804b1-483c39ef68amr1002175e9.5.1772203087318; 
- Fri, 27 Feb 2026 06:38:07 -0800 (PST)
+ AJvYcCWd5hnJXgBTVP3jzbhpd5MdpkDq2tubVnAFUJdQyhixKyL+fTyB+pqKi4K4uN9MNh2ZJrqMhcTQpJ6r@nongnu.org
+X-Gm-Message-State: AOJu0Yxo7CjDZ4I72tsHchBzmqVbgMXsF54snGFGtnoZBeBeA2zL3P6J
+ o26t8w1p+lxakLW41oYR0B2NyPbeV3mySefeVT2l1oE+ryl3Ey/Bh4Y1c1jpE9APVA==
+X-Gm-Gg: ATEYQzznVXVVj1d8PqbRuG5yukan8Yb/Pe07QadNZV8hzwx8eUHT8R0zKosbsZuddTt
+ eiG8INy9agklIC8sMpVjojKCjJh85PIwilepSvuuTqRf3/E/nKUvIswi21EJAO6UuEpW+zVxgsl
+ pLzanQZxM/Z1ds/eWrOkMQM+2VzuZhpZ2UXEPhtdduhafk2gmpLLLQbXSpQgO5H0jA69hiIYo9s
+ UETEn516zaT4mWYUxcTO/DFiNYDdVrXoVU4/lmG79lUDk1O81pzUCPWmaz796JpXvAF6M9DZ/yD
+ xA1/OJT175VWyQshZlZKIhHmytFDwgouq+xHBkj4VTXMsCmZUI0TkQzdfRSMxGwihpie9lVheGk
+ 8qe99K94EmrNeHz57EPrvH7C78zdP6ZpJoRb+lFdin2R2N3IK3E+BZW0eY6yHwfboKiOoudhDTm
+ q1jvqNEIyMFPeBN9f0ElOBbNP+ydAoHKu8+imE9GUPx3mCQYKY2v1/yGAaC7vIK9+c
+X-Received: by 2002:a05:600c:1591:b0:483:6f85:b16e with SMTP id
+ 5b1f17b1804b1-483c39ce73cmr1555795e9.3.1772203162876; 
+ Fri, 27 Feb 2026 06:39:22 -0800 (PST)
 Received: from google.com (206.56.155.104.bc.googleusercontent.com.
  [104.155.56.206]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3addb3asm118331935e9.0.2026.02.27.06.38.06
+ ffacd0b85a97d-4399c76b250sm7673750f8f.34.2026.02.27.06.39.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 06:38:06 -0800 (PST)
-Date: Fri, 27 Feb 2026 14:38:03 +0000
+ Fri, 27 Feb 2026 06:39:22 -0800 (PST)
+Date: Fri, 27 Feb 2026 14:39:18 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Tao Tang <tangtao1634@phytium.com.cn>
 Cc: Eric Auger <eric.auger@redhat.com>,
@@ -78,17 +77,16 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: Re: [RFC v4 04/31] hw/arm/smmuv3: Introduce banked registers for
- SMMUv3 state
-Message-ID: <aaGsS9ldIqXZqhpk@google.com>
+Subject: Re: [RFC v4 06/31] hw/arm/smmuv3: Track SEC_SID in configs and events
+Message-ID: <aaGsltcRyTu7j1tU@google.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221100250.2976287-5-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-7-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260221100250.2976287-5-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=smostafa@google.com; helo=mail-wm1-x332.google.com
+In-Reply-To: <20260221100250.2976287-7-tangtao1634@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -175
 X-Spam_score: -17.6
 X-Spam_bar: -----------------
@@ -96,7 +94,7 @@ X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,1044 +110,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 21, 2026 at 06:02:23PM +0800, Tao Tang wrote:
-> Rework the SMMUv3 state management by introducing a banked register
-> structure. This is a purely mechanical refactoring with no functional
-> changes.
+On Sat, Feb 21, 2026 at 06:02:25PM +0800, Tao Tang wrote:
+> Cache the SEC_SID inside SMMUTransCfg to keep configuration lookups
+> tied to the correct register bank.
 > 
-> To support multiple security states, a new enum, SMMUSecSID, is
-> introduced to identify each state, sticking to the spec terminology.
-> 
-> A new structure, SMMUv3RegBank, is then defined to hold the state
-> for a single security context. The main SMMUv3State now contains an
-> array of these banks, indexed by SMMUSecSID. This avoids the need for
-> separate fields for non-secure and future secure registers.
-> 
-> All existing code, which handles only the Non-secure state, is updated
-> to access its state via s->bank[SMMU_SEC_SID_NS]. A local bank helper
-> pointer is used where it improves readability.
-> 
-> Function signatures and logic remain untouched in this commit to
-> isolate the structural changes and simplify review. This is the
-> foundational step for building multi-security-state support.
+> Plumb the SEC_SID through tracepoints and queue helpers so diagnostics
+> and event logs always show which security interface emitted the record.
+> To support this, the SEC_SID is placed in SMMUEventInfo so the bank is
+> identified as soon as an event record is built.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-There are a few warning from scripts/checkpatch.pl, plus some other
-nits I mentioned, otherwise:
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-
-
 > ---
->  hw/arm/smmuv3-accel.c        |  42 +++--
->  hw/arm/smmuv3-internal.h     |  24 ++-
->  hw/arm/smmuv3.c              | 345 +++++++++++++++++++----------------
->  include/hw/arm/smmu-common.h |   6 +
->  include/hw/arm/smmuv3.h      |  30 ++-
->  5 files changed, 257 insertions(+), 190 deletions(-)
+>  hw/arm/smmuv3-internal.h     |  1 +
+>  hw/arm/smmuv3.c              | 20 +++++++++++++-------
+>  hw/arm/trace-events          |  2 +-
+>  include/hw/arm/smmu-common.h |  1 +
+>  4 files changed, 16 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index f5cd4df336a..30d4b38c0a3 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -40,19 +40,20 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->                                   struct iommu_hw_info_arm_smmuv3 *info,
->                                   Error **errp)
->  {
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
->      /* QEMU SMMUv3 supports both linear and 2-level stream tables */
->      if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=
-> -                FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
-> +                FIELD_EX32(bank->idr[0], IDR0, STLEVEL)) {
->          error_setg(errp, "Host SMMUv3 Stream Table format mismatch "
->                     "(host STLEVEL=%u, QEMU STLEVEL=%u)",
->                     FIELD_EX32(info->idr[0], IDR0, STLEVEL),
-> -                   FIELD_EX32(s->idr[0], IDR0, STLEVEL));
-> +                   FIELD_EX32(bank->idr[0], IDR0, STLEVEL));
->          return false;
->      }
->  
->      /* QEMU SMMUv3 supports only little-endian translation table walks */
->      if (FIELD_EX32(info->idr[0], IDR0, TTENDIAN) >
-> -                FIELD_EX32(s->idr[0], IDR0, TTENDIAN)) {
-> +                FIELD_EX32(bank->idr[0], IDR0, TTENDIAN)) {
->          error_setg(errp, "Host SMMUv3 doesn't support Little-endian "
->                     "translation table");
->          return false;
-> @@ -60,7 +61,7 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->  
->      /* QEMU SMMUv3 supports only AArch64 translation table format */
->      if (FIELD_EX32(info->idr[0], IDR0, TTF) <
-> -                FIELD_EX32(s->idr[0], IDR0, TTF)) {
-> +                FIELD_EX32(bank->idr[0], IDR0, TTF)) {
->          error_setg(errp, "Host SMMUv3 doesn't support AArch64 translation "
->                     "table format");
->          return false;
-> @@ -68,53 +69,53 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->  
->      /* QEMU SMMUv3 supports SIDSIZE 16 */
->      if (FIELD_EX32(info->idr[1], IDR1, SIDSIZE) <
-> -                FIELD_EX32(s->idr[1], IDR1, SIDSIZE)) {
-> +                FIELD_EX32(bank->idr[1], IDR1, SIDSIZE)) {
->          error_setg(errp, "Host SMMUv3 SIDSIZE not compatible "
->                     "(host=%u, QEMU=%u)",
->                     FIELD_EX32(info->idr[1], IDR1, SIDSIZE),
-> -                   FIELD_EX32(s->idr[1], IDR1, SIDSIZE));
-> +                   FIELD_EX32(bank->idr[1], IDR1, SIDSIZE));
->          return false;
->      }
->  
->      /* Check SSIDSIZE value opted-in is compatible with Host SMMUv3 SSIDSIZE */
->      if (FIELD_EX32(info->idr[1], IDR1, SSIDSIZE) <
-> -                FIELD_EX32(s->idr[1], IDR1, SSIDSIZE)) {
-> +                FIELD_EX32(bank->idr[1], IDR1, SSIDSIZE)) {
->          error_setg(errp, "Host SMMUv3 SSIDSIZE not compatible "
->                     "(host=%u, QEMU=%u)",
->                     FIELD_EX32(info->idr[1], IDR1, SSIDSIZE),
-> -                   FIELD_EX32(s->idr[1], IDR1, SSIDSIZE));
-> +                   FIELD_EX32(bank->idr[1], IDR1, SSIDSIZE));
->          return false;
->      }
->  
->      /* User can disable QEMU SMMUv3 Range Invalidation support */
->      if (FIELD_EX32(info->idr[3], IDR3, RIL) <
-> -                FIELD_EX32(s->idr[3], IDR3, RIL)) {
-> +                FIELD_EX32(bank->idr[3], IDR3, RIL)) {
->          error_setg(errp, "Host SMMUv3 doesn't support Range Invalidation");
->          return false;
->      }
->      /* Check OAS value opted is compatible with Host SMMUv3 IPA */
->      if (FIELD_EX32(info->idr[5], IDR5, OAS) <
-> -                FIELD_EX32(s->idr[5], IDR5, OAS)) {
-> +                FIELD_EX32(bank->idr[5], IDR5, OAS)) {
->          error_setg(errp, "Host SMMUv3 supports only %d-bit IPA, but the vSMMU "
->                     "OAS implies %d-bit IPA",
->                     smmuv3_oas_bits(FIELD_EX32(info->idr[5], IDR5, OAS)),
-> -                   smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
-> +                   smmuv3_oas_bits(FIELD_EX32(bank->idr[5], IDR5, OAS)));
->          return false;
->      }
->  
->      /* QEMU SMMUv3 supports GRAN4K/GRAN16K/GRAN64K translation granules */
->      if (FIELD_EX32(info->idr[5], IDR5, GRAN4K) !=
-> -                FIELD_EX32(s->idr[5], IDR5, GRAN4K)) {
-> +                FIELD_EX32(bank->idr[5], IDR5, GRAN4K)) {
->          error_setg(errp, "Host SMMUv3 doesn't support 4K translation granule");
->          return false;
->      }
->      if (FIELD_EX32(info->idr[5], IDR5, GRAN16K) !=
-> -                FIELD_EX32(s->idr[5], IDR5, GRAN16K)) {
-> +                FIELD_EX32(bank->idr[5], IDR5, GRAN16K)) {
->          error_setg(errp, "Host SMMUv3 doesn't support 16K translation granule");
->          return false;
->      }
->      if (FIELD_EX32(info->idr[5], IDR5, GRAN64K) !=
-> -                FIELD_EX32(s->idr[5], IDR5, GRAN64K)) {
-> +                FIELD_EX32(bank->idr[5], IDR5, GRAN64K)) {
->          error_setg(errp, "Host SMMUv3 doesn't support 64K translation granule");
->          return false;
->      }
-> @@ -168,7 +169,8 @@ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
->  
->  static uint32_t smmuv3_accel_gbpa_hwpt(SMMUv3State *s, SMMUv3AccelState *accel)
->  {
-> -    return FIELD_EX32(s->gbpa, GBPA, ABORT) ?
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-> +    return FIELD_EX32(bank->gbpa, GBPA, ABORT) ?
->             accel->abort_hwpt_id : accel->bypass_hwpt_id;
->  }
->  
-> @@ -687,22 +689,24 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->          return;
->      }
->  
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-Sometimes you have:
-SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-Others
-SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
-
-It would be helpful if naming is consistent.
-
-> +
->      /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
-> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
-> +    bank->idr[3] = FIELD_DP32(bank->idr[3], IDR3, RIL, s->ril);
->  
->      /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
-> +    bank->idr[0] = FIELD_DP32(bank->idr[0], IDR0, ATS, s->ats);
->  
->      /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
->      if (s->oas == SMMU_OAS_48BIT) {
-> -        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
-> +        bank->idr[5] = FIELD_DP32(bank->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
->      }
->  
->      /*
->       * By default QEMU SMMUv3 has no SubstreamID support. Update IDR1 if user
->       * has enabled it.
->       */
-> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE, s->ssidsize);
-> +    bank->idr[1] = FIELD_DP32(bank->idr[1], IDR1, SSIDSIZE, s->ssidsize);
->  }
->  
->  /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
 > diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-> index ebdb4ebae67..deb1ef60e87 100644
+> index 866d62257e3..a1071f7b689 100644
 > --- a/hw/arm/smmuv3-internal.h
 > +++ b/hw/arm/smmuv3-internal.h
-> @@ -41,7 +41,9 @@ typedef enum SMMUTranslationClass {
+> @@ -274,6 +274,7 @@ static inline const char *smmu_event_string(SMMUEventType type)
 >  
->  static inline int smmu_enabled(SMMUv3State *s)
->  {
-> -    return FIELD_EX32(s->cr[0], CR0, SMMUEN);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    return FIELD_EX32(bank->cr[0], CR0, SMMUEN);
->  }
->  
->  /* Command Queue Entry */
-> @@ -69,12 +71,16 @@ static inline uint32_t smmuv3_idreg(int regoffset)
->  
->  static inline bool smmuv3_eventq_irq_enabled(SMMUv3State *s)
->  {
-> -    return FIELD_EX32(s->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, EVENTQ_IRQEN);
->  }
->  
->  static inline bool smmuv3_gerror_irq_enabled(SMMUv3State *s)
->  {
-> -    return FIELD_EX32(s->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    return FIELD_EX32(bank->irq_ctrl, IRQ_CTRL, GERROR_IRQEN);
->  }
->  
->  /* Queue Handling */
-> @@ -119,17 +125,23 @@ static inline void queue_cons_incr(SMMUQueue *q)
->  
->  static inline bool smmuv3_cmdq_enabled(SMMUv3State *s)
->  {
-> -    return FIELD_EX32(s->cr[0], CR0, CMDQEN);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    return FIELD_EX32(bank->cr[0], CR0, CMDQEN);
->  }
->  
->  static inline bool smmuv3_eventq_enabled(SMMUv3State *s)
->  {
-> -    return FIELD_EX32(s->cr[0], CR0, EVENTQEN);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    return FIELD_EX32(bank->cr[0], CR0, EVENTQEN);
->  }
->  
->  static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type)
->  {
-> -    s->cmdq.cons = FIELD_DP32(s->cmdq.cons, CMDQ_CONS, ERR, err_type);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    bank->cmdq.cons = FIELD_DP32(bank->cmdq.cons, CMDQ_CONS, ERR, err_type);
->  }
->  
->  static const char *cmd_stringify[] = {
+>  /*  Encode an event record */
+>  typedef struct SMMUEventInfo {
+> +    SMMUSecSID sec_sid;
+>      SMMUEventType type;
+>      uint32_t sid;
+>      bool recorded;
 > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index c08d58c5790..5511585601d 100644
+> index 2c107724e77..3438adcecd2 100644
 > --- a/hw/arm/smmuv3.c
 > +++ b/hw/arm/smmuv3.c
-> @@ -52,6 +52,8 @@
->  static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
->                                 uint32_t gerror_mask)
->  {
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->  
->      bool pulse = false;
->  
-> @@ -67,15 +69,15 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
->          break;
->      case SMMU_IRQ_GERROR:
->      {
-> -        uint32_t pending = s->gerror ^ s->gerrorn;
-> +        uint32_t pending = bank->gerror ^ bank->gerrorn;
->          uint32_t new_gerrors = ~pending & gerror_mask;
->  
->          if (!new_gerrors) {
->              /* only toggle non pending errors */
->              return;
->          }
-> -        s->gerror ^= new_gerrors;
-> -        trace_smmuv3_write_gerror(new_gerrors, s->gerror);
-> +        bank->gerror ^= new_gerrors;
-> +        trace_smmuv3_write_gerror(new_gerrors, bank->gerror);
->  
->          pulse = smmuv3_gerror_irq_enabled(s);
->          break;
-> @@ -89,8 +91,10 @@ static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
->  
->  static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
->  {
-> -    uint32_t pending = s->gerror ^ s->gerrorn;
-> -    uint32_t toggled = s->gerrorn ^ new_gerrorn;
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    uint32_t pending = bank->gerror ^ bank->gerrorn;
-> +    uint32_t toggled = bank->gerrorn ^ new_gerrorn;
->  
->      if (toggled & ~pending) {
->          qemu_log_mask(LOG_GUEST_ERROR,
-> @@ -102,9 +106,9 @@ static void smmuv3_write_gerrorn(SMMUv3State *s, uint32_t new_gerrorn)
->       * We do not raise any error in case guest toggles bits corresponding
->       * to not active IRQs (CONSTRAINED UNPREDICTABLE)
->       */
-> -    s->gerrorn = new_gerrorn;
-> +    bank->gerrorn = new_gerrorn;
->  
-> -    trace_smmuv3_write_gerrorn(toggled & pending, s->gerrorn);
-> +    trace_smmuv3_write_gerrorn(toggled & pending, bank->gerrorn);
+> @@ -148,9 +148,9 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
+>      return MEMTX_OK;
 >  }
 >  
->  static inline MemTxResult queue_read(SMMUQueue *q, Cmd *cmd)
-> @@ -146,7 +150,9 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
->  
->  static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
+> -static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
+> +static MemTxResult smmuv3_write_eventq(SMMUv3State *s, SMMUSecSID sec_sid,
+> +                                       Evt *evt)
 >  {
-> -    SMMUQueue *q = &s->eventq;
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    SMMUQueue *q = &bank->eventq;
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      SMMUQueue *q = &bank->eventq;
 >      MemTxResult r;
->  
->      if (!smmuv3_eventq_enabled(s)) {
-> @@ -266,69 +272,75 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
->   */
->  static void smmuv3_init_id_regs(SMMUv3State *s)
+> @@ -178,7 +178,8 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
 >  {
-> +    SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
-> +
->      /* Based on sys property, the stages supported in smmu will be advertised.*/
->      if (s->stage && !strcmp("2", s->stage)) {
-> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
-> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S2P, 1);
->      } else if (s->stage && !strcmp("nested", s->stage)) {
-> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
-> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
-> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S1P, 1);
-> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S2P, 1);
->      } else {
-> -        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
-> +        bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, S1P, 1);
->      }
->  
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, TTF, 2); /* AArch64 PTW only */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, COHACC, 1); /* IO coherent */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ASID16, 1); /* 16-bit ASID */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, VMID16, 1); /* 16-bit VMID */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, TTENDIAN, 2); /* little endian */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, STALL_MODEL, 1); /* No stall */
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, TTF, 2); /* AArch64 PTW only */
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, COHACC, 1); /* IO coherent */
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, ASID16, 1); /* 16-bit ASID */
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, VMID16, 1); /* 16-bit VMID */
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, TTENDIAN, 2); /* little endian */
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, STALL_MODEL, 1); /* No stall */
->      /* terminated transaction will always be aborted/error returned */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, TERM_MODEL, 1);
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, TERM_MODEL, 1);
->      /* 2-level stream table supported */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, STLEVEL, 1);
-> +    bk->idr[0] = FIELD_DP32(bk->idr[0], IDR0, STLEVEL, 1);
->  
-> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SIDSIZE, SMMU_IDR1_SIDSIZE);
-> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, EVENTQS, SMMU_EVENTQS);
-> -    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, CMDQS,   SMMU_CMDQS);
-> +    bk->idr[1] = FIELD_DP32(bk->idr[1], IDR1, SIDSIZE, SMMU_IDR1_SIDSIZE);
-> +    bk->idr[1] = FIELD_DP32(bk->idr[1], IDR1, EVENTQS, SMMU_EVENTQS);
-> +    bk->idr[1] = FIELD_DP32(bk->idr[1], IDR1, CMDQS,   SMMU_CMDQS);
->  
-> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, HAD, 1);
-> -    if (FIELD_EX32(s->idr[0], IDR0, S2P)) {
-> +    bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, HAD, 1);
-> +    if (FIELD_EX32(bk->idr[0], IDR0, S2P)) {
->          /* XNX is a stage-2-specific feature */
-> -        s->idr[3] = FIELD_DP32(s->idr[3], IDR3, XNX, 1);
-> +        bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, XNX, 1);
->      }
-> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
-> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
-> +    bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, RIL, 1);
-> +    bk->idr[3] = FIELD_DP32(bk->idr[3], IDR3, BBML, 2);
->  
->      /* OAS: 44 bits */
-> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_44);
-> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, OAS, SMMU_IDR5_OAS_44);
->      /* 4K, 16K and 64K granule support */
-> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
-> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
-> -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN64K, 1);
-> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, GRAN4K, 1);
-> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, GRAN16K, 1);
-> +    bk->idr[5] = FIELD_DP32(bk->idr[5], IDR5, GRAN64K, 1);
->      s->aidr = 0x1;
->      smmuv3_accel_idr_override(s);
->  }
->  
->  static void smmuv3_reset(SMMUv3State *s)
->  {
-> -    s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
-> -    s->cmdq.prod = 0;
-> -    s->cmdq.cons = 0;
-> -    s->cmdq.entry_size = sizeof(struct Cmd);
-> -    s->eventq.base = deposit64(s->eventq.base, 0, 5, SMMU_EVENTQS);
-> -    s->eventq.prod = 0;
-> -    s->eventq.cons = 0;
-> -    s->eventq.entry_size = sizeof(struct Evt);
-> -
-> -    s->features = 0;
-> -    s->sid_split = 0;
-> -    s->cr[0] = 0;
-> -    s->cr0ack = 0;
-> -    s->irq_ctrl = 0;
-> -    s->gerror = 0;
-> -    s->gerrorn = 0;
-> +    SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
-> +
-> +    bk->cmdq.base = deposit64(bk->cmdq.base, 0, 5, SMMU_CMDQS);
-> +    bk->cmdq.prod = 0;
-> +    bk->cmdq.cons = 0;
-> +    bk->cmdq.entry_size = sizeof(struct Cmd);
-> +    bk->eventq.base = deposit64(bk->eventq.base, 0, 5, SMMU_EVENTQS);
-> +    bk->eventq.prod = 0;
-> +    bk->eventq.cons = 0;
-> +    bk->eventq.entry_size = sizeof(struct Evt);
-> +
-> +    bk->features = 0;
-> +    bk->sid_split = 0;
-> +    bk->cr[0] = 0;
-> +    bk->cr0ack = 0;
-> +    bk->irq_ctrl = 0;
-> +    bk->gerror = 0;
-> +    bk->gerrorn = 0;
-> +    bk->gbpa = SMMU_GBPA_RESET_VAL;
-> +
-> +    s->aidr = 0x1;
->      s->statusr = 0;
-> -    s->gbpa = SMMU_GBPA_RESET_VAL;
->  }
->  
->  static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
-> @@ -442,7 +454,7 @@ static bool s2_pgtable_config_valid(uint8_t sl0, uint8_t t0sz, uint8_t gran)
->  static int decode_ste_s2_cfg(SMMUv3State *s, SMMUTransCfg *cfg,
->                               STE *ste)
->  {
-> -    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
-> +    uint8_t oas = FIELD_EX32(smmuv3_bank(s, SMMU_SEC_SID_NS)->idr[5], IDR5, OAS);
->  
->      if (STE_S2AA64(ste) == 0x0) {
->          qemu_log_mask(LOG_UNIMP,
-> @@ -560,7 +572,8 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
->                        STE *ste, SMMUEventInfo *event)
->  {
->      uint32_t config;
-> -    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
-> +    /* OAS field only presents on NS-IDR5 so we use hardcoded SMMU_SEC_SID_NS */
-> +    uint8_t oas = FIELD_EX32(smmuv3_bank(s, SMMU_SEC_SID_NS)->idr[5], IDR5, OAS);
->      int ret;
->  
->      if (!STE_VALID(ste)) {
-> @@ -649,9 +662,11 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
->      uint32_t log2size;
->      int strtab_size_shift;
->      int ret;
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->  
-> -    trace_smmuv3_find_ste(sid, s->features, s->sid_split);
-> -    log2size = FIELD_EX32(s->strtab_base_cfg, STRTAB_BASE_CFG, LOG2SIZE);
-> +    trace_smmuv3_find_ste(sid, bank->features, bank->sid_split);
-> +    log2size = FIELD_EX32(bank->strtab_base_cfg, STRTAB_BASE_CFG, LOG2SIZE);
->      /*
->       * Check SID range against both guest-configured and implementation limits
->       */
-> @@ -659,7 +674,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
->          event->type = SMMU_EVT_C_BAD_STREAMID;
->          return -EINVAL;
->      }
-> -    if (s->features & SMMU_FEATURE_2LVL_STE) {
-> +    if (bank->features & SMMU_FEATURE_2LVL_STE) {
->          int l1_ste_offset, l2_ste_offset, max_l2_ste, span, i;
->          dma_addr_t l1ptr, l2ptr;
->          STEDesc l1std;
-> @@ -668,11 +683,11 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
->           * Align strtab base address to table size. For this purpose, assume it
->           * is not bounded by SMMU_IDR1_SIDSIZE.
->           */
-> -        strtab_size_shift = MAX(5, (int)log2size - s->sid_split - 1 + 3);
-> -        strtab_base = s->strtab_base & SMMU_BASE_ADDR_MASK &
-> +        strtab_size_shift = MAX(5, (int)log2size - bank->sid_split - 1 + 3);
-> +        strtab_base = bank->strtab_base & SMMU_BASE_ADDR_MASK &
->                        ~MAKE_64BIT_MASK(0, strtab_size_shift);
-> -        l1_ste_offset = sid >> s->sid_split;
-> -        l2_ste_offset = sid & ((1 << s->sid_split) - 1);
-> +        l1_ste_offset = sid >> bank->sid_split;
-> +        l2_ste_offset = sid & ((1 << bank->sid_split) - 1);
->          l1ptr = (dma_addr_t)(strtab_base + l1_ste_offset * sizeof(l1std));
->          /* TODO: guarantee 64-bit single-copy atomicity */
->          ret = dma_memory_read(&address_space_memory, l1ptr, &l1std,
-> @@ -701,7 +716,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
->          }
->          max_l2_ste = (1 << span) - 1;
->          l2ptr = l1std_l2ptr(&l1std);
-> -        trace_smmuv3_find_ste_2lvl(s->strtab_base, l1ptr, l1_ste_offset,
-> +        trace_smmuv3_find_ste_2lvl(bank->strtab_base, l1ptr, l1_ste_offset,
->                                     l2ptr, l2_ste_offset, max_l2_ste);
->          if (l2_ste_offset > max_l2_ste) {
->              qemu_log_mask(LOG_GUEST_ERROR,
-> @@ -713,7 +728,7 @@ int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste, SMMUEventInfo *event)
->          addr = l2ptr + l2_ste_offset * sizeof(*ste);
->      } else {
->          strtab_size_shift = log2size + 5;
-> -        strtab_base = s->strtab_base & SMMU_BASE_ADDR_MASK &
-> +        strtab_base = bank->strtab_base & SMMU_BASE_ADDR_MASK &
->                        ~MAKE_64BIT_MASK(0, strtab_size_shift);
->          addr = strtab_base + sid * sizeof(*ste);
->      }
-> @@ -732,7 +747,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
->      int i;
->      SMMUTranslationStatus status;
->      SMMUTLBEntry *entry;
-> -    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
-> +    uint8_t oas = FIELD_EX32(smmuv3_bank(s, SMMU_SEC_SID_NS)->idr[5], IDR5, OAS);
->  
->      if (!CD_VALID(cd) || !CD_AARCH64(cd)) {
->          goto bad_cd;
-> @@ -1054,6 +1069,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->      SMMUv3State *s = sdev->smmu;
->      uint32_t sid = smmu_get_sid(sdev);
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->      SMMUEventInfo event = {.type = SMMU_EVT_NONE,
->                             .sid = sid,
->                             .inval_ste_allowed = false};
-> @@ -1071,7 +1088,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->      qemu_mutex_lock(&s->mutex);
->  
->      if (!smmu_enabled(s)) {
-> -        if (FIELD_EX32(s->gbpa, GBPA, ABORT)) {
-> +        if (FIELD_EX32(bank->gbpa, GBPA, ABORT)) {
->              status = SMMU_TRANS_ABORT;
->          } else {
->              status = SMMU_TRANS_DISABLE;
-> @@ -1295,7 +1312,9 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
->  {
->      SMMUState *bs = ARM_SMMU(s);
->      SMMUCmdError cmd_error = SMMU_CERROR_NONE;
-> -    SMMUQueue *q = &s->cmdq;
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
-> +    SMMUQueue *q = &bank->cmdq;
->      SMMUCommandType type = 0;
->  
->      if (!smmuv3_cmdq_enabled(s)) {
-> @@ -1309,7 +1328,7 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
->       */
->  
->      while (!smmuv3_q_empty(q)) {
-> -        uint32_t pending = s->gerror ^ s->gerrorn;
-> +        uint32_t pending = bank->gerror ^ bank->gerrorn;
->          Cmd cmd;
->  
->          trace_smmuv3_cmdq_consume(Q_PROD(q), Q_CONS(q),
-> @@ -1562,29 +1581,32 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
->  static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->                                 uint64_t data, MemTxAttrs attrs)
->  {
-> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
-> +
->      switch (offset) {
->      case A_GERROR_IRQ_CFG0:
-> -        s->gerror_irq_cfg0 = data;
-> +        bank->gerror_irq_cfg0 = data;
->          return MEMTX_OK;
->      case A_STRTAB_BASE:
-> -        s->strtab_base = data;
-> +        bank->strtab_base = data;
->          return MEMTX_OK;
->      case A_CMDQ_BASE:
-> -        s->cmdq.base = data;
-> -        s->cmdq.log2size = extract64(s->cmdq.base, 0, 5);
-> -        if (s->cmdq.log2size > SMMU_CMDQS) {
-> -            s->cmdq.log2size = SMMU_CMDQS;
-> +        bank->cmdq.base = data;
-> +        bank->cmdq.log2size = extract64(bank->cmdq.base, 0, 5);
-> +        if (bank->cmdq.log2size > SMMU_CMDQS) {
-> +            bank->cmdq.log2size = SMMU_CMDQS;
->          }
->          return MEMTX_OK;
->      case A_EVENTQ_BASE:
-> -        s->eventq.base = data;
-> -        s->eventq.log2size = extract64(s->eventq.base, 0, 5);
-> -        if (s->eventq.log2size > SMMU_EVENTQS) {
-> -            s->eventq.log2size = SMMU_EVENTQS;
-> +        bank->eventq.base = data;
-> +        bank->eventq.log2size = extract64(bank->eventq.base, 0, 5);
-> +        if (bank->eventq.log2size > SMMU_EVENTQS) {
-> +            bank->eventq.log2size = SMMU_EVENTQS;
->          }
->          return MEMTX_OK;
->      case A_EVENTQ_IRQ_CFG0:
-> -        s->eventq_irq_cfg0 = data;
-> +        bank->eventq_irq_cfg0 = data;
->          return MEMTX_OK;
->      default:
->          qemu_log_mask(LOG_UNIMP,
-> @@ -1598,22 +1620,24 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->                                 uint64_t data, MemTxAttrs attrs)
->  {
->      Error *local_err = NULL;
-> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
->  
->      switch (offset) {
->      case A_CR0:
-> -        s->cr[0] = data;
-> -        s->cr0ack = data & ~SMMU_CR0_RESERVED;
-> +        bank->cr[0] = data;
-> +        bank->cr0ack = data & ~SMMU_CR0_RESERVED;
->          /* in case the command queue has been enabled */
->          smmuv3_cmdq_consume(s, &local_err);
->          break;
->      case A_CR1:
-> -        s->cr[1] = data;
-> +        bank->cr[1] = data;
->          break;
->      case A_CR2:
-> -        s->cr[2] = data;
-> +        bank->cr[2] = data;
->          break;
->      case A_IRQ_CTRL:
-> -        s->irq_ctrl = data;
-> +        bank->irq_ctrl = data;
->          break;
->      case A_GERRORN:
->          smmuv3_write_gerrorn(s, data);
-> @@ -1624,16 +1648,16 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->          smmuv3_cmdq_consume(s, &local_err);
->          break;
->      case A_GERROR_IRQ_CFG0: /* 64b */
-> -        s->gerror_irq_cfg0 = deposit64(s->gerror_irq_cfg0, 0, 32, data);
-> +        bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 0, 32, data);
->          break;
->      case A_GERROR_IRQ_CFG0 + 4:
-> -        s->gerror_irq_cfg0 = deposit64(s->gerror_irq_cfg0, 32, 32, data);
-> +        bank->gerror_irq_cfg0 = deposit64(bank->gerror_irq_cfg0, 32, 32, data);
->          break;
->      case A_GERROR_IRQ_CFG1:
-> -        s->gerror_irq_cfg1 = data;
-> +        bank->gerror_irq_cfg1 = data;
->          break;
->      case A_GERROR_IRQ_CFG2:
-> -        s->gerror_irq_cfg2 = data;
-> +        bank->gerror_irq_cfg2 = data;
->          break;
->      case A_GBPA:
->          /*
-> @@ -1642,67 +1666,67 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->           */
->          if (data & R_GBPA_UPDATE_MASK) {
->              /* Ignore update bit as write is synchronous. */
-> -            s->gbpa = data & ~R_GBPA_UPDATE_MASK;
-> +            bank->gbpa = data & ~R_GBPA_UPDATE_MASK;
->              smmuv3_accel_attach_gbpa_hwpt(s, &local_err);
->          }
->          break;
->      case A_STRTAB_BASE: /* 64b */
-> -        s->strtab_base = deposit64(s->strtab_base, 0, 32, data);
-> +        bank->strtab_base = deposit64(bank->strtab_base, 0, 32, data);
->          break;
->      case A_STRTAB_BASE + 4:
-> -        s->strtab_base = deposit64(s->strtab_base, 32, 32, data);
-> +        bank->strtab_base = deposit64(bank->strtab_base, 32, 32, data);
->          break;
->      case A_STRTAB_BASE_CFG:
-> -        s->strtab_base_cfg = data;
-> +        bank->strtab_base_cfg = data;
->          if (FIELD_EX32(data, STRTAB_BASE_CFG, FMT) == 1) {
-> -            s->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
-> -            s->features |= SMMU_FEATURE_2LVL_STE;
-> +            bank->sid_split = FIELD_EX32(data, STRTAB_BASE_CFG, SPLIT);
-> +            bank->features |= SMMU_FEATURE_2LVL_STE;
->          }
->          break;
->      case A_CMDQ_BASE: /* 64b */
-> -        s->cmdq.base = deposit64(s->cmdq.base, 0, 32, data);
-> -        s->cmdq.log2size = extract64(s->cmdq.base, 0, 5);
-> -        if (s->cmdq.log2size > SMMU_CMDQS) {
-> -            s->cmdq.log2size = SMMU_CMDQS;
-> +        bank->cmdq.base = deposit64(bank->cmdq.base, 0, 32, data);
-> +        bank->cmdq.log2size = extract64(bank->cmdq.base, 0, 5);
-> +        if (bank->cmdq.log2size > SMMU_CMDQS) {
-> +            bank->cmdq.log2size = SMMU_CMDQS;
->          }
->          break;
->      case A_CMDQ_BASE + 4: /* 64b */
-> -        s->cmdq.base = deposit64(s->cmdq.base, 32, 32, data);
-> +        bank->cmdq.base = deposit64(bank->cmdq.base, 32, 32, data);
->          break;
->      case A_CMDQ_PROD:
-> -        s->cmdq.prod = data;
-> +        bank->cmdq.prod = data;
->          smmuv3_cmdq_consume(s, &local_err);
->          break;
->      case A_CMDQ_CONS:
-> -        s->cmdq.cons = data;
-> +        bank->cmdq.cons = data;
->          break;
->      case A_EVENTQ_BASE: /* 64b */
-> -        s->eventq.base = deposit64(s->eventq.base, 0, 32, data);
-> -        s->eventq.log2size = extract64(s->eventq.base, 0, 5);
-> -        if (s->eventq.log2size > SMMU_EVENTQS) {
-> -            s->eventq.log2size = SMMU_EVENTQS;
-> +        bank->eventq.base = deposit64(bank->eventq.base, 0, 32, data);
-> +        bank->eventq.log2size = extract64(bank->eventq.base, 0, 5);
-> +        if (bank->eventq.log2size > SMMU_EVENTQS) {
-> +            bank->eventq.log2size = SMMU_EVENTQS;
->          }
->          break;
->      case A_EVENTQ_BASE + 4:
-> -        s->eventq.base = deposit64(s->eventq.base, 32, 32, data);
-> +        bank->eventq.base = deposit64(bank->eventq.base, 32, 32, data);
->          break;
->      case A_EVENTQ_PROD:
-> -        s->eventq.prod = data;
-> +        bank->eventq.prod = data;
->          break;
->      case A_EVENTQ_CONS:
-> -        s->eventq.cons = data;
-> +        bank->eventq.cons = data;
->          break;
->      case A_EVENTQ_IRQ_CFG0: /* 64b */
-> -        s->eventq_irq_cfg0 = deposit64(s->eventq_irq_cfg0, 0, 32, data);
-> +        bank->eventq_irq_cfg0 = deposit64(bank->eventq_irq_cfg0, 0, 32, data);
->          break;
->      case A_EVENTQ_IRQ_CFG0 + 4:
-> -        s->eventq_irq_cfg0 = deposit64(s->eventq_irq_cfg0, 32, 32, data);
-> +        bank->eventq_irq_cfg0 = deposit64(bank->eventq_irq_cfg0, 32, 32, data);
->          break;
->      case A_EVENTQ_IRQ_CFG1:
-> -        s->eventq_irq_cfg1 = data;
-> +        bank->eventq_irq_cfg1 = data;
->          break;
->      case A_EVENTQ_IRQ_CFG2:
-> -        s->eventq_irq_cfg2 = data;
-> +        bank->eventq_irq_cfg2 = data;
->          break;
->      default:
->          qemu_log_mask(LOG_UNIMP,
-> @@ -1746,18 +1770,21 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
->  static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
->                                 uint64_t *data, MemTxAttrs attrs)
->  {
-> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
-> +
->      switch (offset) {
->      case A_GERROR_IRQ_CFG0:
-> -        *data = s->gerror_irq_cfg0;
-> +        *data = bank->gerror_irq_cfg0;
->          return MEMTX_OK;
->      case A_STRTAB_BASE:
-> -        *data = s->strtab_base;
-> +        *data = bank->strtab_base;
->          return MEMTX_OK;
->      case A_CMDQ_BASE:
-> -        *data = s->cmdq.base;
-> +        *data = bank->cmdq.base;
->          return MEMTX_OK;
->      case A_EVENTQ_BASE:
-> -        *data = s->eventq.base;
-> +        *data = bank->eventq.base;
->          return MEMTX_OK;
->      default:
->          *data = 0;
-> @@ -1771,12 +1798,15 @@ static MemTxResult smmu_readll(SMMUv3State *s, hwaddr offset,
->  static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
->                                uint64_t *data, MemTxAttrs attrs)
->  {
-> +    SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, reg_sec_sid);
-> +
->      switch (offset) {
->      case A_IDREGS ... A_IDREGS + 0x2f:
->          *data = smmuv3_idreg(offset - A_IDREGS);
->          return MEMTX_OK;
->      case A_IDR0 ... A_IDR5:
-> -        *data = s->idr[(offset - A_IDR0) / 4];
-> +        *data = bank->idr[(offset - A_IDR0) / 4];
->          return MEMTX_OK;
->      case A_IIDR:
->          *data = s->iidr;
-> @@ -1785,77 +1815,77 @@ static MemTxResult smmu_readl(SMMUv3State *s, hwaddr offset,
->          *data = s->aidr;
->          return MEMTX_OK;
->      case A_CR0:
-> -        *data = s->cr[0];
-> +        *data = bank->cr[0];
->          return MEMTX_OK;
->      case A_CR0ACK:
-> -        *data = s->cr0ack;
-> +        *data = bank->cr0ack;
->          return MEMTX_OK;
->      case A_CR1:
-> -        *data = s->cr[1];
-> +        *data = bank->cr[1];
->          return MEMTX_OK;
->      case A_CR2:
-> -        *data = s->cr[2];
-> +        *data = bank->cr[2];
->          return MEMTX_OK;
->      case A_STATUSR:
->          *data = s->statusr;
->          return MEMTX_OK;
->      case A_GBPA:
-> -        *data = s->gbpa;
-> +        *data = bank->gbpa;
->          return MEMTX_OK;
->      case A_IRQ_CTRL:
->      case A_IRQ_CTRL_ACK:
-> -        *data = s->irq_ctrl;
-> +        *data = bank->irq_ctrl;
->          return MEMTX_OK;
->      case A_GERROR:
-> -        *data = s->gerror;
-> +        *data = bank->gerror;
->          return MEMTX_OK;
->      case A_GERRORN:
-> -        *data = s->gerrorn;
-> +        *data = bank->gerrorn;
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG0: /* 64b */
-> -        *data = extract64(s->gerror_irq_cfg0, 0, 32);
-> +        *data = extract64(bank->gerror_irq_cfg0, 0, 32);
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG0 + 4:
-> -        *data = extract64(s->gerror_irq_cfg0, 32, 32);
-> +        *data = extract64(bank->gerror_irq_cfg0, 32, 32);
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG1:
-> -        *data = s->gerror_irq_cfg1;
-> +        *data = bank->gerror_irq_cfg1;
->          return MEMTX_OK;
->      case A_GERROR_IRQ_CFG2:
-> -        *data = s->gerror_irq_cfg2;
-> +        *data = bank->gerror_irq_cfg2;
->          return MEMTX_OK;
->      case A_STRTAB_BASE: /* 64b */
-> -        *data = extract64(s->strtab_base, 0, 32);
-> +        *data = extract64(bank->strtab_base, 0, 32);
->          return MEMTX_OK;
->      case A_STRTAB_BASE + 4: /* 64b */
-> -        *data = extract64(s->strtab_base, 32, 32);
-> +        *data = extract64(bank->strtab_base, 32, 32);
->          return MEMTX_OK;
->      case A_STRTAB_BASE_CFG:
-> -        *data = s->strtab_base_cfg;
-> +        *data = bank->strtab_base_cfg;
->          return MEMTX_OK;
->      case A_CMDQ_BASE: /* 64b */
-> -        *data = extract64(s->cmdq.base, 0, 32);
-> +        *data = extract64(bank->cmdq.base, 0, 32);
->          return MEMTX_OK;
->      case A_CMDQ_BASE + 4:
-> -        *data = extract64(s->cmdq.base, 32, 32);
-> +        *data = extract64(bank->cmdq.base, 32, 32);
->          return MEMTX_OK;
->      case A_CMDQ_PROD:
-> -        *data = s->cmdq.prod;
-> +        *data = bank->cmdq.prod;
->          return MEMTX_OK;
->      case A_CMDQ_CONS:
-> -        *data = s->cmdq.cons;
-> +        *data = bank->cmdq.cons;
->          return MEMTX_OK;
->      case A_EVENTQ_BASE: /* 64b */
-> -        *data = extract64(s->eventq.base, 0, 32);
-> +        *data = extract64(bank->eventq.base, 0, 32);
->          return MEMTX_OK;
->      case A_EVENTQ_BASE + 4: /* 64b */
-> -        *data = extract64(s->eventq.base, 32, 32);
-> +        *data = extract64(bank->eventq.base, 32, 32);
->          return MEMTX_OK;
->      case A_EVENTQ_PROD:
-> -        *data = s->eventq.prod;
-> +        *data = bank->eventq.prod;
->          return MEMTX_OK;
->      case A_EVENTQ_CONS:
-> -        *data = s->eventq.cons;
-> +        *data = bank->eventq.cons;
->          return MEMTX_OK;
->      default:
->          *data = 0;
-> @@ -2039,9 +2069,10 @@ static const VMStateDescription vmstate_smmuv3_queue = {
->  static bool smmuv3_gbpa_needed(void *opaque)
->  {
->      SMMUv3State *s = opaque;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
->  
->      /* Only migrate GBPA if it has different reset value. */
-> -    return s->gbpa != SMMU_GBPA_RESET_VAL;
-> +    return bank->gbpa != SMMU_GBPA_RESET_VAL;
->  }
->  
->  static const VMStateDescription vmstate_gbpa = {
-> @@ -2050,7 +2081,7 @@ static const VMStateDescription vmstate_gbpa = {
->      .minimum_version_id = 1,
->      .needed = smmuv3_gbpa_needed,
->      .fields = (const VMStateField[]) {
-> -        VMSTATE_UINT32(gbpa, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gbpa, SMMUv3State),
->          VMSTATE_END_OF_LIST()
->      }
->  };
-> @@ -2061,27 +2092,29 @@ static const VMStateDescription vmstate_smmuv3 = {
->      .minimum_version_id = 1,
->      .priority = MIG_PRI_IOMMU,
->      .fields = (const VMStateField[]) {
-> -        VMSTATE_UINT32(features, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].features, SMMUv3State),
->          VMSTATE_UINT8(sid_size, SMMUv3State),
-> -        VMSTATE_UINT8(sid_split, SMMUv3State),
-> +        VMSTATE_UINT8(bank[SMMU_SEC_SID_NS].sid_split, SMMUv3State),
->  
-> -        VMSTATE_UINT32_ARRAY(cr, SMMUv3State, 3),
-> -        VMSTATE_UINT32(cr0ack, SMMUv3State),
-> +        VMSTATE_UINT32_ARRAY(bank[SMMU_SEC_SID_NS].cr, SMMUv3State, 3),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].cr0ack, SMMUv3State),
->          VMSTATE_UINT32(statusr, SMMUv3State),
-> -        VMSTATE_UINT32(irq_ctrl, SMMUv3State),
-> -        VMSTATE_UINT32(gerror, SMMUv3State),
-> -        VMSTATE_UINT32(gerrorn, SMMUv3State),
-> -        VMSTATE_UINT64(gerror_irq_cfg0, SMMUv3State),
-> -        VMSTATE_UINT32(gerror_irq_cfg1, SMMUv3State),
-> -        VMSTATE_UINT32(gerror_irq_cfg2, SMMUv3State),
-> -        VMSTATE_UINT64(strtab_base, SMMUv3State),
-> -        VMSTATE_UINT32(strtab_base_cfg, SMMUv3State),
-> -        VMSTATE_UINT64(eventq_irq_cfg0, SMMUv3State),
-> -        VMSTATE_UINT32(eventq_irq_cfg1, SMMUv3State),
-> -        VMSTATE_UINT32(eventq_irq_cfg2, SMMUv3State),
-> -
-> -        VMSTATE_STRUCT(cmdq, SMMUv3State, 0, vmstate_smmuv3_queue, SMMUQueue),
-> -        VMSTATE_STRUCT(eventq, SMMUv3State, 0, vmstate_smmuv3_queue, SMMUQueue),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].irq_ctrl, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerror, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerrorn, SMMUv3State),
-> +        VMSTATE_UINT64(bank[SMMU_SEC_SID_NS].gerror_irq_cfg0, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerror_irq_cfg1, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].gerror_irq_cfg2, SMMUv3State),
-> +        VMSTATE_UINT64(bank[SMMU_SEC_SID_NS].strtab_base, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].strtab_base_cfg, SMMUv3State),
-> +        VMSTATE_UINT64(bank[SMMU_SEC_SID_NS].eventq_irq_cfg0, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].eventq_irq_cfg1, SMMUv3State),
-> +        VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].eventq_irq_cfg2, SMMUv3State),
-> +
-> +        VMSTATE_STRUCT(bank[SMMU_SEC_SID_NS].cmdq, SMMUv3State, 0,
-> +                       vmstate_smmuv3_queue, SMMUQueue),
-> +        VMSTATE_STRUCT(bank[SMMU_SEC_SID_NS].eventq, SMMUv3State, 0,
-> +                       vmstate_smmuv3_queue, SMMUQueue),
->  
->          VMSTATE_END_OF_LIST(),
->      },
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index 7b975abc25a..6ea40f6b074 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -40,6 +40,12 @@
->  #define CACHED_ENTRY_TO_ADDR(ent, addr)      ((ent)->entry.translated_addr + \
->                                               ((addr) & (ent)->entry.addr_mask))
->  
-> +/* StreamID Security state */
-> +typedef enum SMMUSecSID {
-> +    SMMU_SEC_SID_NS = 0,
-> +    SMMU_SEC_SID_NUM,
-> +} SMMUSecSID;
-> +
->  /*
->   * Page table walk error types
->   */
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 26b2fc42fd9..d07bdfa1f27 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -32,19 +32,13 @@ typedef struct SMMUQueue {
->       uint8_t log2size;
->  } SMMUQueue;
->  
-> -struct SMMUv3State {
-> -    SMMUState     smmu_state;
-> -
-> +typedef struct SMMUv3RegBank {
->      uint32_t features;
-> -    uint8_t sid_size;
->      uint8_t sid_split;
->  
->      uint32_t idr[6];
-> -    uint32_t iidr;
-> -    uint32_t aidr;
->      uint32_t cr[3];
->      uint32_t cr0ack;
-> -    uint32_t statusr;
->      uint32_t gbpa;
->      uint32_t irq_ctrl;
->      uint32_t gerror;
-> @@ -59,6 +53,17 @@ struct SMMUv3State {
->      uint32_t eventq_irq_cfg2;
->  
->      SMMUQueue eventq, cmdq;
-> +} SMMUv3RegBank;
-> +
-> +struct SMMUv3State {
-> +    SMMUState     smmu_state;
-> +
-> +    uint8_t sid_size;
-> +    uint32_t iidr;
-> +    uint32_t aidr;
-> +    uint32_t statusr;
-> +
-> +    SMMUv3RegBank bank[SMMU_SEC_SID_NUM];
->  
->      qemu_irq     irq[4];
->      QemuMutex mutex;
-> @@ -94,7 +99,14 @@ struct SMMUv3Class {
->  #define TYPE_ARM_SMMUV3   "arm-smmuv3"
->  OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
->  
-> -#define STAGE1_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S1P)
-> -#define STAGE2_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S2P)
-> +#define STAGE1_SUPPORTED(s) \
-> +    FIELD_EX32((s)->bank[SMMU_SEC_SID_NS].idr[0], IDR0, S1P)
-> +#define STAGE2_SUPPORTED(s) \
-> +    FIELD_EX32((s)->bank[SMMU_SEC_SID_NS].idr[0], IDR0, S2P)
-> +
-> +static inline SMMUv3RegBank *smmuv3_bank(SMMUv3State *s, SMMUSecSID sec_sid)
-> +{
-> +    return &s->bank[sec_sid];
-> +}
-> 
-If this is a macro you can use in other cases as in state structs as
-it currently inlined in:
-VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].irq_ctrl, SMMUv3State),
+>      Evt evt = {};
+>      MemTxResult r;
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUSecSID sec_sid = info->sec_sid;
+> +    g_assert(sec_sid < SMMU_SEC_SID_NUM);
+
+What does this defend against?
 
 Thanks,
 Mostafa
 
-
->  #endif
+>  
+>      if (!smmuv3_eventq_enabled(s, sec_sid)) {
+>          return;
+> @@ -258,8 +259,9 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
+>          g_assert_not_reached();
+>      }
+>  
+> -    trace_smmuv3_record_event(smmu_event_string(info->type), info->sid);
+> -    r = smmuv3_write_eventq(s, &evt);
+> +    trace_smmuv3_record_event(sec_sid, smmu_event_string(info->type),
+> +                              info->sid);
+> +    r = smmuv3_write_eventq(s, sec_sid, &evt);
+>      if (r != MEMTX_OK) {
+>          smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
+>      }
+> @@ -917,6 +919,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
+>                              100 * sdev->cfg_cache_hits /
+>                              (sdev->cfg_cache_hits + sdev->cfg_cache_misses));
+>          cfg = g_new0(SMMUTransCfg, 1);
+> +        cfg->sec_sid = SMMU_SEC_SID_NS;
+>  
+>          if (!smmuv3_decode_config(&sdev->iommu, cfg, event)) {
+>              g_hash_table_insert(bc->configs, sdev, cfg);
+> @@ -1074,7 +1077,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>                             .sid = sid,
+> -                           .inval_ste_allowed = false};
+> +                           .inval_ste_allowed = false,
+> +                           .sec_sid = sec_sid};
+>      SMMUTranslationStatus status;
+>      SMMUTransCfg *cfg = NULL;
+>      IOMMUTLBEntry entry = {
+> @@ -1176,7 +1180,9 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+>                                 uint64_t num_pages, int stage)
+>  {
+>      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+> -    SMMUEventInfo eventinfo = {.inval_ste_allowed = true};
+> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
+> +                               .inval_ste_allowed = true};
+>      SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo);
+>      IOMMUTLBEvent event;
+>      uint8_t granule;
+> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> index 8135c0c7344..9c2cc131ab4 100644
+> --- a/hw/arm/trace-events
+> +++ b/hw/arm/trace-events
+> @@ -40,7 +40,7 @@ smmuv3_cmdq_opcode(const char *opcode) "<--- %s"
+>  smmuv3_cmdq_consume_out(uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "prod:%d, cons:%d, prod_wrap:%d, cons_wrap:%d "
+>  smmuv3_cmdq_consume_error(const char *cmd_name, uint8_t cmd_error) "Error on %s command execution: %d"
+>  smmuv3_write_mmio(uint64_t addr, uint64_t val, unsigned size, uint32_t r) "addr: 0x%"PRIx64" val:0x%"PRIx64" size: 0x%x(%d)"
+> -smmuv3_record_event(const char *type, uint32_t sid) "%s sid=0x%x"
+> +smmuv3_record_event(int sec_sid, const char *type, uint32_t sid) "sec_sid=%d %s sid=0x%x"
+>  smmuv3_find_ste(uint16_t sid, uint32_t features, uint16_t sid_split) "sid=0x%x features:0x%x, sid_split:0x%x"
+>  smmuv3_find_ste_2lvl(uint64_t strtab_base, uint64_t l1ptr, int l1_ste_offset, uint64_t l2ptr, int l2_ste_offset, int max_l2_ste) "strtab_base:0x%"PRIx64" l1ptr:0x%"PRIx64" l1_off:0x%x, l2ptr:0x%"PRIx64" l2_off:0x%x max_l2_ste:%d"
+>  smmuv3_get_ste(uint64_t addr) "STE addr: 0x%"PRIx64
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index 6ea40f6b074..ae1489717fe 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -107,6 +107,7 @@ typedef struct SMMUS2Cfg {
+>  typedef struct SMMUTransCfg {
+>      /* Shared fields between stage-1 and stage-2. */
+>      SMMUStage stage;           /* translation stage */
+> +    SMMUSecSID sec_sid;        /* cached sec sid */
+>      bool disabled;             /* smmu is disabled */
+>      bool bypassed;             /* translation is bypassed */
+>      bool aborted;              /* translation is aborted */
 > -- 
 > 2.34.1
 > 
