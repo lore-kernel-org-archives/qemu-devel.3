@@ -4,81 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A26E3FD7F92
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 10:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D2BFD7F91
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 10:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvvKE-00046C-BL; Fri, 27 Feb 2026 05:44:02 -0500
+	id 1vvvYK-0007pa-Iv; Fri, 27 Feb 2026 05:58:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvvK5-00044C-N7
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 05:43:54 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vvvYF-0007pJ-RB
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 05:58:34 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vvvK0-0001xD-NM
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 05:43:52 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso16659425e9.3
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 02:43:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vvvYD-0005Zu-0g
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 05:58:31 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4377174e1ebso1320341f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 02:58:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772189902; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lz/vf6g4GILeyvqFNm70J5/qVDMV6uGyEkHvtAq1GpCDbEGFMTiDAzIj3xtc+xcQVE
+ pfzO5o8R9AW0ccOv3Ei/WxpyXohJKtGWa77U08GV1Ch3Dfr1VADOTLVUDorYGbs5ZEG0
+ b8Skfw4tos+1iiV8/ASuyNKKlZh7u9SSidK88q7lNlP2ion2/FDHOrkkxTv26MFqoZfM
+ WW25XEt70d3IwyURZtMyswMavqzAhPk9b/qPx+7CcjTpvSKQWF068lMw2IF92ry7Q9R8
+ Qh6bNgkgXptr8KEM4qPt2sO02f3YkrUDtMEIc+H2BeODv32Vz7uDqhQpF7dmjx0WPPUU
+ QoGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=vdZnAot3DC0NpJa2X37ZE62i7x8eIS0h6kIzZLeXd4o=;
+ fh=YTxI/2B0tIA4OGE8g1nLoHfXTEPH/KCzPpRqw/hY+Dc=;
+ b=NQPmtJJNvBGnSGQXg7uW1p/Sy9JgB9O//fAoAh4KdwVxqOf10ER7Ou5onri3DURPZW
+ qL3Gy6MOVaKzNTtPp3T7Y9ICxow3Qhc+UrR6y1XU5dhe04KeGJsWKqYC7jIsFXnjUzxB
+ dn1xWdfSzEwYQMXXNWNNw3nZxplsoscZ5lNoYjsnWIZl5QX4PIGpltCCBS5cG6QAOaTC
+ DzjcZRQnTklXq/YJYtHTbiwGYgFLxvA6Z9uIrXeWa3Ke9I2K7mWH8LuAuS2OJklvSzbm
+ hl3XS6M/9r222sYDRIJITvDzN9geBCXLRJZAsX+FTVTb3/U1kHd50IlBC6xMczoFu8/y
+ t6Ew==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772189018; x=1772793818; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772189902; x=1772794702; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N0uENRAh9OdXk68MZop2EV+uGF6w4EsVU+piNY5qjs8=;
- b=Ftm07sEsR/MtYynczFYchfn1Cj8xvY+iZfeGFG2alniUuUaqEqph47m1lmS+obW44O
- JKav98cgedvq7BxH8K+tq24ERhFGtSqnWLrAWPcNGoNEpSkCiTunKHHtTs0U1iW1959r
- rqK0jRBTV756LVa7i3Zf90pfaFU4z14nfSrgaAZxvZi2kcM92PG6oaT5SfBm9jtvJxWk
- 0Z0jcUEVnzQjLfrppdO+Blo7a41BLLjmPwHtGxchalPSKm0JJYR3AUiQEDVjRoqUFM5K
- RO+YCtC5vHVsfcGsGI73XgO+E7w6e6hCbRInNcqsA4iar2hIB8nNR9SMQ26P1pIF6TW2
- Qw3w==
+ bh=vdZnAot3DC0NpJa2X37ZE62i7x8eIS0h6kIzZLeXd4o=;
+ b=zbLyUQkGVLMgvkN3dG0GgTj+8GYeLW/u5tB5fpVlhyaXItVa+/CnoP2Jrb3yK0K+k3
+ 7GO4wWFDiImoBUrlyz9OQ5nNfMja9WtHv2/FktCABUXni1umPue5sKUUlcN9W4eWCVF4
+ 9UcyLcixZnPMNq0Ln5NVoMJ/6fQLxphNHa/pXHy4c7nrNQIWBKyrsg7alSQjCTxBeDnT
+ NFipBa38Ml5PVw3h2C5kkAGnPj7H8Cj7nT0krFuPwnsuB9MQW8L1hOHzAu4R/MxIef98
+ yfKe5mNQhMlC4PSxJoBHACx+IDPQLO18MeYmPnNjLsO1GMSIszdINwUzGkJ5Rj+Bq2sr
+ RmqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772189018; x=1772793818;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1772189902; x=1772794702;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=N0uENRAh9OdXk68MZop2EV+uGF6w4EsVU+piNY5qjs8=;
- b=Rw5pMInX2TSge+YNp00XOPvKQEn3EFcd2YJ61diqnKF8uBXlK9DykaWmdaihO+iMbl
- UT/bDobt+zICWSeygSNqWm6v8RtH3gGMAHj3qDkOf0SuAqCbIYYKgu3P0BE/Au0CTIUN
- Do78p9stUwL0de4Sd8hcwKOrbw3FoCHqqzjorXigpui0b0YHF10dX4apnLBNLKwqvluz
- fUJBtN1lU89IjR1BnaGvHazDYSFLtoSQKXB7bWhw22LWJdqcknq0YtyIa8oMm6cYZXZW
- 3FgAV8dog9a7sW2x6+DkJZpy1venZDWDyy85ofQ1O4+37VXpA5qS4o0NCN3OlIFmgSTZ
- R30g==
-X-Gm-Message-State: AOJu0YwqYBiosj2WIdgdqZPydHHgBIylAGTanINVWgufcyCRkak6MhcK
- WlzlA8P7dbDqIt+1BLa0gS/aTxeQJWt4evpaojUVkumDm2auADVsl2XKl8XaJxMzAZYEhPiIGeS
- duVU+OAA=
-X-Gm-Gg: ATEYQzweag0eBSzS6Uujne1AH4EsPXlZ2cp8cG3KuU/NEcrQnfKWx5pbhkunaofkUry
- Xp9TS560iQRMsJB0kDc7mvqzENluIHgV/vxtDS8+bdnhp87y+Yguhmm9AvahtnkbeRnEFb9JNXO
- t9JQw5YisnmPQajdwJG/IdvkXEY4VV9y6VRVBvyyAHQm7yMyjQrwCzTEe8BHo4tI4a1rv7FDP0U
- JQVb2PJVJOSFDUtF9Is6dB8QihHCF41MLYQoPbuYzWGJMOv8LFrCMWXMP79TAlEPcVZwGcoohsB
- XHR4H888gMll03CxtJBtISAWseCX1qZMq8MfFv73wOn0i0kDNCyyOVWGflsn3gOuU2qTcnViv4y
- H+Gb7Mrh4M9/da5183+G20QNVVqD2FldyO1In2flsk4M9yWc/zwwc/iXxBJcF4n0X/4A/38CKtb
- K+DkEefMbo8MftKCgBHYn9TswXGC+ImEE6bxK83PoJ9YCEv2dYTMPx0EZU7fzK8a1K1fUJN0kD
-X-Received: by 2002:a05:600c:37cf:b0:477:6d96:b3c8 with SMTP id
- 5b1f17b1804b1-483c9c23b6amr30404975e9.23.1772189018357; 
- Fri, 27 Feb 2026 02:43:38 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd6f3124sm203065995e9.1.2026.02.27.02.43.37
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 27 Feb 2026 02:43:37 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 3/4] gdbstub: Move gdb-xml/ within gdbstub/
-Date: Fri, 27 Feb 2026 11:43:13 +0100
-Message-ID: <20260227104314.81038-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260227104314.81038-1-philmd@linaro.org>
-References: <20260227104314.81038-1-philmd@linaro.org>
+ bh=vdZnAot3DC0NpJa2X37ZE62i7x8eIS0h6kIzZLeXd4o=;
+ b=boIqVGLmGF7852v+WrSX7dOAGHoFK1zhb5tfN1J7BcsdOgSiwJcT4rOft1Z3VZ3QvD
+ 012c/2QO4e7eKrjnihMbUqGiMHD93pjmkRPnypjSRopw6QBbbyPMqaSoqxm3rqtPi5a0
+ hP/rGVY6iqx7PgPh4erKhIVNGEeX29xuI1Yjx8YBLpwJDzPNhav4Ugith3tBKu+nH77n
+ 5m0XRjCFyByxkDdjp1kF69eXiJTMdDKUnvNCy2BelokIBJgO0XvDBgZUNMJtyIQaRRGq
+ yautPEx5zHptx7s4Dyer8DIRQz1tJxnFqDbGDkQH2oMvPyefvjklzxCkX0nctVLLtuFD
+ cWiw==
+X-Gm-Message-State: AOJu0Yy0VkjptMLrurmIxGDgiP/FOTHpHyQ1LfFIPH1FduHGlkX4WP4b
+ ffAfQGA/vfyzxjf4DWa9m9Ap1xDpwIpdcsC0AQhDKJZVHL7kIbnI8GHBa9A/4jCOrr0vmSzai09
+ xEr6CLGKgRf8JSqOQfnW4wXJw1QLl6hK3GxxV0thEWfWHNt8fOm8Vscfj5w==
+X-Gm-Gg: ATEYQzy165mipfzLbIEGEXdXJMpGLVlDKNkyLphwMYSYAhF+nmDUQtPFyZ91/620uoK
+ MF3w7LmyUexGIdcWi/a3vZ71V5hysmUkUJS505d8LuPWeSwiTSAqvd4PlaBM4gPVVmE4EqBpyjr
+ euzC95PdDh/yjIsF+0g8fia7Yfun0Mjoh0KOSRgDhUeh9xVuwEd7X4AuJaOu+oFH18hOd2uG5Ib
+ +Wwa/neaZnhvDxt36F8cVxaFjTbhlH7wEaAwi2mgQ5+O4YXlsek+1GH3/NEsCugKxVxI9r4Yr4b
+ NVh7JSUsNZei0AlHU4wRMwUWXiCVpuSu/quWT96eqjTOKv+h4A==
+X-Received: by 2002:a5d:5f47:0:b0:437:895d:2026 with SMTP id
+ ffacd0b85a97d-4399de2b9b7mr4038964f8f.38.1772189902495; Fri, 27 Feb 2026
+ 02:58:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20260227104314.81038-1-philmd@linaro.org>
+ <20260227104314.81038-2-philmd@linaro.org>
+In-Reply-To: <20260227104314.81038-2-philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 27 Feb 2026 12:57:56 +0200
+X-Gm-Features: AaiRm52CaE3UCGPWUgr43jb9qYSdvrDHaB8VIQ6x-VoONK6F8oMXYn0KUMmx5p0
+Message-ID: <CAAjaMXZZ1migvDAhFsJcSua2QqSgnNL-dHA0ym5K+=Mi4ygYvA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] meson: Restrict gdbstub to user/system builds
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,489 +118,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gdb-xml/ files are only consumed by gdbstub API.
-No need for a top-level entry, move them to gdbstub/.
+On Fri, Feb 27, 2026 at 12:43=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Limited builds (tools, documentation) don't need to generate /
+> build gdbstub files. Only process the gdbstub/ folder when
+> user / system emulation / acceleration is built.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS                                   | 19 +++++++++----------
- docs/devel/codebase.rst                       |  2 --
- meson.build                                   |  2 +-
- {gdb-xml => gdbstub/gdb-xml}/aarch64-core.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/aarch64-fpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/aarch64-mte.xml  |  0
- .../gdb-xml}/aarch64-pauth.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/aarch64-sme2.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/alpha-core.xml   |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-core.xml     |  0
- .../gdb-xml}/arm-m-profile-mve.xml            |  0
- .../gdb-xml}/arm-m-profile.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-neon.xml     |  0
- .../gdb-xml}/arm-vfp-sysregs.xml              |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-vfp.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-vfp3.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/avr-cpu.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/cf-core.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/cf-fp.xml        |  0
- {gdb-xml => gdbstub/gdb-xml}/hexagon-core.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/hexagon-hvx.xml  |  0
- .../gdb-xml}/i386-32bit-linux.xml             |  0
- {gdb-xml => gdbstub/gdb-xml}/i386-32bit.xml   |  0
- .../gdb-xml}/i386-64bit-apx.xml               |  0
- .../gdb-xml}/i386-64bit-linux.xml             |  0
- {gdb-xml => gdbstub/gdb-xml}/i386-64bit.xml   |  0
- .../gdb-xml}/loongarch-base32.xml             |  0
- .../gdb-xml}/loongarch-base64.xml             |  0
- .../gdb-xml}/loongarch-fpu.xml                |  0
- .../gdb-xml}/loongarch-lasx.xml               |  0
- .../gdb-xml}/loongarch-lsx.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/m68k-core.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/m68k-fp.xml      |  0
- .../gdb-xml}/microblaze-core.xml              |  0
- .../gdb-xml}/microblaze-stack-protect.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/or1k-core.xml    |  0
- .../gdb-xml}/power-altivec.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/power-core.xml   |  0
- {gdb-xml => gdbstub/gdb-xml}/power-fpu.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/power-spe.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/power-vsx.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/power64-core.xml |  0
- .../gdb-xml}/riscv-32bit-cpu.xml              |  0
- .../gdb-xml}/riscv-32bit-fpu.xml              |  0
- .../gdb-xml}/riscv-32bit-virtual.xml          |  0
- .../gdb-xml}/riscv-64bit-cpu.xml              |  0
- .../gdb-xml}/riscv-64bit-fpu.xml              |  0
- .../gdb-xml}/riscv-64bit-virtual.xml          |  0
- {gdb-xml => gdbstub/gdb-xml}/rx-core.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-acr.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-cr.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-fpr.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-gs.xml      |  0
- .../gdb-xml}/s390-virt-kvm.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-virt.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-vx.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/s390x-core64.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc32-cp0.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc32-cpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc32-fpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc64-cp0.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc64-cpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc64-fpu.xml  |  0
- 63 files changed, 10 insertions(+), 13 deletions(-)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-mte.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-pauth.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-sme2.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/alpha-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-m-profile-mve.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-m-profile.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-neon.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp-sysregs.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp3.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/avr-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/cf-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/cf-fp.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/hexagon-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/hexagon-hvx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-32bit-linux.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-32bit.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit-apx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit-linux.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-base32.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-base64.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-lasx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-lsx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/m68k-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/m68k-fp.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/microblaze-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/microblaze-stack-protect.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/or1k-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-altivec.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-spe.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-vsx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power64-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-virtual.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-virtual.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/rx-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-acr.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-cr.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-fpr.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-gs.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-virt-kvm.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-virt.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-vx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390x-core64.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc32-cp0.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc32-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc32-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc64-cp0.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc64-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc64-fpu.xml (100%)
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 606b16762cf..fd316018b68 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -106,7 +106,7 @@ M: Thomas Huth <thuth@redhat.com>
- S: Supported
- F: configs/devices/s390x-softmmu/default.mak
- F: configs/targets/s390x-softmmu.mak
--F: gdb-xml/s390*.xml
-+F: gdbstub/gdb-xml/s390*.xml
- F: hw/char/sclp*.[hc]
- F: hw/char/terminal3270.c
- F: hw/intc/s390_flic.c
-@@ -214,8 +214,8 @@ F: include/hw/cpu/a*mpcore.h
- F: docs/system/target-arm.rst
- F: docs/system/arm/cpu-features.rst
- F: docs/system/arm/emulation.rst
--F: gdb-xml/arm*.xml
--F: gdb-xml/aarch64*.xml
-+F: gdbstub/gdb-xml/arm*.xml
-+F: gdbstub/gdb-xml/aarch64*.xml
- 
- ARM SMMU
- M: Eric Auger <eric.auger@redhat.com>
-@@ -230,7 +230,7 @@ AVR TCG CPUs
- M: Michael Rolnik <mrolnik@gmail.com>
- S: Maintained
- F: docs/system/target-avr.rst
--F: gdb-xml/avr-cpu.xml
-+F: gdbstub/gdb-xml/avr-cpu.xml
- F: target/avr/
- F: tests/functional/avr/
- 
-@@ -245,7 +245,7 @@ F: tests/tcg/hexagon/
- F: disas/hexagon.c
- F: configs/targets/hexagon-linux-user/default.mak
- F: docker/dockerfiles/debian-hexagon-cross.docker
--F: gdb-xml/hexagon*.xml
-+F: gdbstub/gdb-xml/hexagon*.xml
- T: git https://github.com/quic/qemu.git hex-next
- 
- Hexagon idef-parser
-@@ -304,7 +304,7 @@ M: Stafford Horne <shorne@gmail.com>
- S: Odd Fixes
- F: docs/system/or1k/cpu-features.rst
- F: target/or1k/
--F: gdb-xml/or1k-core.xml
-+F: gdbstub/gdb-xml/or1k-core.xml
- F: hw/or1k/
- F: include/hw/or1k/
- F: tests/functional/or1k/meson.build
-@@ -403,7 +403,7 @@ M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
- M: Artyom Tarasenko <atar4qemu@gmail.com>
- S: Maintained
- F: target/sparc/
--F: gdb-xml/sparc*.xml
-+F: gdbstub/gdb-xml/sparc*.xml
- F: hw/sparc/
- F: hw/sparc64/
- F: include/hw/sparc/sparc64.h
-@@ -491,7 +491,7 @@ S: Supported
- F: target/s390x/kvm/
- F: target/s390x/machine.c
- F: target/s390x/sigp.c
--F: gdb-xml/s390*.xml
-+F: gdbstub/gdb-xml/s390*.xml
- T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
-@@ -1348,7 +1348,7 @@ F: include/hw/intc/loongson_ipi_common.h
- F: hw/intc/loongarch_*.c
- F: hw/intc/loongson_ipi_common.c
- F: hw/rtc/ls7a_rtc.c
--F: gdb-xml/loongarch*.xml
-+F: gdbstub/gdb-xml/loongarch*.xml
- 
- M68K Machines
- -------------
-@@ -3299,7 +3299,6 @@ F: docs/system/gdb.rst
- F: gdbstub/*
- F: include/exec/gdbstub.h
- F: include/gdbstub/*
--F: gdb-xml/
- F: tests/tcg/multiarch/gdbstub/*
- F: scripts/feature_to_c.py
- F: scripts/probe-gdb-support.py
-diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
-index 69d88271178..f09307b8971 100644
---- a/docs/devel/codebase.rst
-+++ b/docs/devel/codebase.rst
-@@ -88,8 +88,6 @@ yet, so sometimes the source code is all you have.
-   `VirtFS <https://www.linux-kvm.org/page/VirtFS>`_ support.
- * `gdbstub <https://gitlab.com/qemu-project/qemu/-/tree/master/gdbstub>`_:
-   `GDB <GDB usage>` support.
--* `gdb-xml <https://gitlab.com/qemu-project/qemu/-/tree/master/gdb-xml>`_:
--  Set of XML files describing architectures and used by `gdbstub <GDB usage>`.
- * `host <https://gitlab.com/qemu-project/qemu/-/tree/master/host>`_:
-   Various architecture specific header files (crypto, atomic, memory
-   operations).
-diff --git a/meson.build b/meson.build
-index 42f9cfb5512..56a746fed00 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4304,7 +4304,7 @@ foreach target : target_dirs
-   if 'TARGET_XML_FILES' in config_target
-     gdbstub_xml_files = []
-     foreach gdbstub_xml : config_target['TARGET_XML_FILES'].split()
--      gdbstub_xml_files += 'gdb-xml/' + gdbstub_xml
-+      gdbstub_xml_files += 'gdbstub/gdb-xml/' + gdbstub_xml
-     endforeach
-     gdbstub_xml = custom_target(target + '-gdbstub-xml.c',
-                                 output: target + '-gdbstub-xml.c',
-diff --git a/gdb-xml/aarch64-core.xml b/gdbstub/gdb-xml/aarch64-core.xml
-similarity index 100%
-rename from gdb-xml/aarch64-core.xml
-rename to gdbstub/gdb-xml/aarch64-core.xml
-diff --git a/gdb-xml/aarch64-fpu.xml b/gdbstub/gdb-xml/aarch64-fpu.xml
-similarity index 100%
-rename from gdb-xml/aarch64-fpu.xml
-rename to gdbstub/gdb-xml/aarch64-fpu.xml
-diff --git a/gdb-xml/aarch64-mte.xml b/gdbstub/gdb-xml/aarch64-mte.xml
-similarity index 100%
-rename from gdb-xml/aarch64-mte.xml
-rename to gdbstub/gdb-xml/aarch64-mte.xml
-diff --git a/gdb-xml/aarch64-pauth.xml b/gdbstub/gdb-xml/aarch64-pauth.xml
-similarity index 100%
-rename from gdb-xml/aarch64-pauth.xml
-rename to gdbstub/gdb-xml/aarch64-pauth.xml
-diff --git a/gdb-xml/aarch64-sme2.xml b/gdbstub/gdb-xml/aarch64-sme2.xml
-similarity index 100%
-rename from gdb-xml/aarch64-sme2.xml
-rename to gdbstub/gdb-xml/aarch64-sme2.xml
-diff --git a/gdb-xml/alpha-core.xml b/gdbstub/gdb-xml/alpha-core.xml
-similarity index 100%
-rename from gdb-xml/alpha-core.xml
-rename to gdbstub/gdb-xml/alpha-core.xml
-diff --git a/gdb-xml/arm-core.xml b/gdbstub/gdb-xml/arm-core.xml
-similarity index 100%
-rename from gdb-xml/arm-core.xml
-rename to gdbstub/gdb-xml/arm-core.xml
-diff --git a/gdb-xml/arm-m-profile-mve.xml b/gdbstub/gdb-xml/arm-m-profile-mve.xml
-similarity index 100%
-rename from gdb-xml/arm-m-profile-mve.xml
-rename to gdbstub/gdb-xml/arm-m-profile-mve.xml
-diff --git a/gdb-xml/arm-m-profile.xml b/gdbstub/gdb-xml/arm-m-profile.xml
-similarity index 100%
-rename from gdb-xml/arm-m-profile.xml
-rename to gdbstub/gdb-xml/arm-m-profile.xml
-diff --git a/gdb-xml/arm-neon.xml b/gdbstub/gdb-xml/arm-neon.xml
-similarity index 100%
-rename from gdb-xml/arm-neon.xml
-rename to gdbstub/gdb-xml/arm-neon.xml
-diff --git a/gdb-xml/arm-vfp-sysregs.xml b/gdbstub/gdb-xml/arm-vfp-sysregs.xml
-similarity index 100%
-rename from gdb-xml/arm-vfp-sysregs.xml
-rename to gdbstub/gdb-xml/arm-vfp-sysregs.xml
-diff --git a/gdb-xml/arm-vfp.xml b/gdbstub/gdb-xml/arm-vfp.xml
-similarity index 100%
-rename from gdb-xml/arm-vfp.xml
-rename to gdbstub/gdb-xml/arm-vfp.xml
-diff --git a/gdb-xml/arm-vfp3.xml b/gdbstub/gdb-xml/arm-vfp3.xml
-similarity index 100%
-rename from gdb-xml/arm-vfp3.xml
-rename to gdbstub/gdb-xml/arm-vfp3.xml
-diff --git a/gdb-xml/avr-cpu.xml b/gdbstub/gdb-xml/avr-cpu.xml
-similarity index 100%
-rename from gdb-xml/avr-cpu.xml
-rename to gdbstub/gdb-xml/avr-cpu.xml
-diff --git a/gdb-xml/cf-core.xml b/gdbstub/gdb-xml/cf-core.xml
-similarity index 100%
-rename from gdb-xml/cf-core.xml
-rename to gdbstub/gdb-xml/cf-core.xml
-diff --git a/gdb-xml/cf-fp.xml b/gdbstub/gdb-xml/cf-fp.xml
-similarity index 100%
-rename from gdb-xml/cf-fp.xml
-rename to gdbstub/gdb-xml/cf-fp.xml
-diff --git a/gdb-xml/hexagon-core.xml b/gdbstub/gdb-xml/hexagon-core.xml
-similarity index 100%
-rename from gdb-xml/hexagon-core.xml
-rename to gdbstub/gdb-xml/hexagon-core.xml
-diff --git a/gdb-xml/hexagon-hvx.xml b/gdbstub/gdb-xml/hexagon-hvx.xml
-similarity index 100%
-rename from gdb-xml/hexagon-hvx.xml
-rename to gdbstub/gdb-xml/hexagon-hvx.xml
-diff --git a/gdb-xml/i386-32bit-linux.xml b/gdbstub/gdb-xml/i386-32bit-linux.xml
-similarity index 100%
-rename from gdb-xml/i386-32bit-linux.xml
-rename to gdbstub/gdb-xml/i386-32bit-linux.xml
-diff --git a/gdb-xml/i386-32bit.xml b/gdbstub/gdb-xml/i386-32bit.xml
-similarity index 100%
-rename from gdb-xml/i386-32bit.xml
-rename to gdbstub/gdb-xml/i386-32bit.xml
-diff --git a/gdb-xml/i386-64bit-apx.xml b/gdbstub/gdb-xml/i386-64bit-apx.xml
-similarity index 100%
-rename from gdb-xml/i386-64bit-apx.xml
-rename to gdbstub/gdb-xml/i386-64bit-apx.xml
-diff --git a/gdb-xml/i386-64bit-linux.xml b/gdbstub/gdb-xml/i386-64bit-linux.xml
-similarity index 100%
-rename from gdb-xml/i386-64bit-linux.xml
-rename to gdbstub/gdb-xml/i386-64bit-linux.xml
-diff --git a/gdb-xml/i386-64bit.xml b/gdbstub/gdb-xml/i386-64bit.xml
-similarity index 100%
-rename from gdb-xml/i386-64bit.xml
-rename to gdbstub/gdb-xml/i386-64bit.xml
-diff --git a/gdb-xml/loongarch-base32.xml b/gdbstub/gdb-xml/loongarch-base32.xml
-similarity index 100%
-rename from gdb-xml/loongarch-base32.xml
-rename to gdbstub/gdb-xml/loongarch-base32.xml
-diff --git a/gdb-xml/loongarch-base64.xml b/gdbstub/gdb-xml/loongarch-base64.xml
-similarity index 100%
-rename from gdb-xml/loongarch-base64.xml
-rename to gdbstub/gdb-xml/loongarch-base64.xml
-diff --git a/gdb-xml/loongarch-fpu.xml b/gdbstub/gdb-xml/loongarch-fpu.xml
-similarity index 100%
-rename from gdb-xml/loongarch-fpu.xml
-rename to gdbstub/gdb-xml/loongarch-fpu.xml
-diff --git a/gdb-xml/loongarch-lasx.xml b/gdbstub/gdb-xml/loongarch-lasx.xml
-similarity index 100%
-rename from gdb-xml/loongarch-lasx.xml
-rename to gdbstub/gdb-xml/loongarch-lasx.xml
-diff --git a/gdb-xml/loongarch-lsx.xml b/gdbstub/gdb-xml/loongarch-lsx.xml
-similarity index 100%
-rename from gdb-xml/loongarch-lsx.xml
-rename to gdbstub/gdb-xml/loongarch-lsx.xml
-diff --git a/gdb-xml/m68k-core.xml b/gdbstub/gdb-xml/m68k-core.xml
-similarity index 100%
-rename from gdb-xml/m68k-core.xml
-rename to gdbstub/gdb-xml/m68k-core.xml
-diff --git a/gdb-xml/m68k-fp.xml b/gdbstub/gdb-xml/m68k-fp.xml
-similarity index 100%
-rename from gdb-xml/m68k-fp.xml
-rename to gdbstub/gdb-xml/m68k-fp.xml
-diff --git a/gdb-xml/microblaze-core.xml b/gdbstub/gdb-xml/microblaze-core.xml
-similarity index 100%
-rename from gdb-xml/microblaze-core.xml
-rename to gdbstub/gdb-xml/microblaze-core.xml
-diff --git a/gdb-xml/microblaze-stack-protect.xml b/gdbstub/gdb-xml/microblaze-stack-protect.xml
-similarity index 100%
-rename from gdb-xml/microblaze-stack-protect.xml
-rename to gdbstub/gdb-xml/microblaze-stack-protect.xml
-diff --git a/gdb-xml/or1k-core.xml b/gdbstub/gdb-xml/or1k-core.xml
-similarity index 100%
-rename from gdb-xml/or1k-core.xml
-rename to gdbstub/gdb-xml/or1k-core.xml
-diff --git a/gdb-xml/power-altivec.xml b/gdbstub/gdb-xml/power-altivec.xml
-similarity index 100%
-rename from gdb-xml/power-altivec.xml
-rename to gdbstub/gdb-xml/power-altivec.xml
-diff --git a/gdb-xml/power-core.xml b/gdbstub/gdb-xml/power-core.xml
-similarity index 100%
-rename from gdb-xml/power-core.xml
-rename to gdbstub/gdb-xml/power-core.xml
-diff --git a/gdb-xml/power-fpu.xml b/gdbstub/gdb-xml/power-fpu.xml
-similarity index 100%
-rename from gdb-xml/power-fpu.xml
-rename to gdbstub/gdb-xml/power-fpu.xml
-diff --git a/gdb-xml/power-spe.xml b/gdbstub/gdb-xml/power-spe.xml
-similarity index 100%
-rename from gdb-xml/power-spe.xml
-rename to gdbstub/gdb-xml/power-spe.xml
-diff --git a/gdb-xml/power-vsx.xml b/gdbstub/gdb-xml/power-vsx.xml
-similarity index 100%
-rename from gdb-xml/power-vsx.xml
-rename to gdbstub/gdb-xml/power-vsx.xml
-diff --git a/gdb-xml/power64-core.xml b/gdbstub/gdb-xml/power64-core.xml
-similarity index 100%
-rename from gdb-xml/power64-core.xml
-rename to gdbstub/gdb-xml/power64-core.xml
-diff --git a/gdb-xml/riscv-32bit-cpu.xml b/gdbstub/gdb-xml/riscv-32bit-cpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-32bit-cpu.xml
-rename to gdbstub/gdb-xml/riscv-32bit-cpu.xml
-diff --git a/gdb-xml/riscv-32bit-fpu.xml b/gdbstub/gdb-xml/riscv-32bit-fpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-32bit-fpu.xml
-rename to gdbstub/gdb-xml/riscv-32bit-fpu.xml
-diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdbstub/gdb-xml/riscv-32bit-virtual.xml
-similarity index 100%
-rename from gdb-xml/riscv-32bit-virtual.xml
-rename to gdbstub/gdb-xml/riscv-32bit-virtual.xml
-diff --git a/gdb-xml/riscv-64bit-cpu.xml b/gdbstub/gdb-xml/riscv-64bit-cpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-64bit-cpu.xml
-rename to gdbstub/gdb-xml/riscv-64bit-cpu.xml
-diff --git a/gdb-xml/riscv-64bit-fpu.xml b/gdbstub/gdb-xml/riscv-64bit-fpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-64bit-fpu.xml
-rename to gdbstub/gdb-xml/riscv-64bit-fpu.xml
-diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdbstub/gdb-xml/riscv-64bit-virtual.xml
-similarity index 100%
-rename from gdb-xml/riscv-64bit-virtual.xml
-rename to gdbstub/gdb-xml/riscv-64bit-virtual.xml
-diff --git a/gdb-xml/rx-core.xml b/gdbstub/gdb-xml/rx-core.xml
-similarity index 100%
-rename from gdb-xml/rx-core.xml
-rename to gdbstub/gdb-xml/rx-core.xml
-diff --git a/gdb-xml/s390-acr.xml b/gdbstub/gdb-xml/s390-acr.xml
-similarity index 100%
-rename from gdb-xml/s390-acr.xml
-rename to gdbstub/gdb-xml/s390-acr.xml
-diff --git a/gdb-xml/s390-cr.xml b/gdbstub/gdb-xml/s390-cr.xml
-similarity index 100%
-rename from gdb-xml/s390-cr.xml
-rename to gdbstub/gdb-xml/s390-cr.xml
-diff --git a/gdb-xml/s390-fpr.xml b/gdbstub/gdb-xml/s390-fpr.xml
-similarity index 100%
-rename from gdb-xml/s390-fpr.xml
-rename to gdbstub/gdb-xml/s390-fpr.xml
-diff --git a/gdb-xml/s390-gs.xml b/gdbstub/gdb-xml/s390-gs.xml
-similarity index 100%
-rename from gdb-xml/s390-gs.xml
-rename to gdbstub/gdb-xml/s390-gs.xml
-diff --git a/gdb-xml/s390-virt-kvm.xml b/gdbstub/gdb-xml/s390-virt-kvm.xml
-similarity index 100%
-rename from gdb-xml/s390-virt-kvm.xml
-rename to gdbstub/gdb-xml/s390-virt-kvm.xml
-diff --git a/gdb-xml/s390-virt.xml b/gdbstub/gdb-xml/s390-virt.xml
-similarity index 100%
-rename from gdb-xml/s390-virt.xml
-rename to gdbstub/gdb-xml/s390-virt.xml
-diff --git a/gdb-xml/s390-vx.xml b/gdbstub/gdb-xml/s390-vx.xml
-similarity index 100%
-rename from gdb-xml/s390-vx.xml
-rename to gdbstub/gdb-xml/s390-vx.xml
-diff --git a/gdb-xml/s390x-core64.xml b/gdbstub/gdb-xml/s390x-core64.xml
-similarity index 100%
-rename from gdb-xml/s390x-core64.xml
-rename to gdbstub/gdb-xml/s390x-core64.xml
-diff --git a/gdb-xml/sparc32-cp0.xml b/gdbstub/gdb-xml/sparc32-cp0.xml
-similarity index 100%
-rename from gdb-xml/sparc32-cp0.xml
-rename to gdbstub/gdb-xml/sparc32-cp0.xml
-diff --git a/gdb-xml/sparc32-cpu.xml b/gdbstub/gdb-xml/sparc32-cpu.xml
-similarity index 100%
-rename from gdb-xml/sparc32-cpu.xml
-rename to gdbstub/gdb-xml/sparc32-cpu.xml
-diff --git a/gdb-xml/sparc32-fpu.xml b/gdbstub/gdb-xml/sparc32-fpu.xml
-similarity index 100%
-rename from gdb-xml/sparc32-fpu.xml
-rename to gdbstub/gdb-xml/sparc32-fpu.xml
-diff --git a/gdb-xml/sparc64-cp0.xml b/gdbstub/gdb-xml/sparc64-cp0.xml
-similarity index 100%
-rename from gdb-xml/sparc64-cp0.xml
-rename to gdbstub/gdb-xml/sparc64-cp0.xml
-diff --git a/gdb-xml/sparc64-cpu.xml b/gdbstub/gdb-xml/sparc64-cpu.xml
-similarity index 100%
-rename from gdb-xml/sparc64-cpu.xml
-rename to gdbstub/gdb-xml/sparc64-cpu.xml
-diff --git a/gdb-xml/sparc64-fpu.xml b/gdbstub/gdb-xml/sparc64-fpu.xml
-similarity index 100%
-rename from gdb-xml/sparc64-fpu.xml
-rename to gdbstub/gdb-xml/sparc64-fpu.xml
--- 
-2.52.0
-
+>  meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 3cd1d8dbc66..60415df69a1 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3724,7 +3724,6 @@ subdir('qom')
+>  subdir('authz')
+>  subdir('crypto')
+>  subdir('ui')
+> -subdir('gdbstub')
+>  if have_system
+>    subdir('hw')
+>  else
+> @@ -3767,6 +3766,7 @@ if have_system or have_user
+>                           output: 'decode-@BASENAME@.c.inc',
+>                           arguments: ['@INPUT@', '@EXTRA_ARGS@', '-o', '@=
+OUTPUT@'])
+>    subdir('libdecnumber')
+> +  subdir('gdbstub')
+>    subdir('target')
+>  endif
+>
+> --
+> 2.52.0
+>
+>
 
