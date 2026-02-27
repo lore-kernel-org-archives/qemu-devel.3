@@ -4,113 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F6DFEFB72
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 18:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 936B5FEFB75
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 18:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw2IE-00074T-49; Fri, 27 Feb 2026 13:10:26 -0500
+	id 1vw2xM-000545-7q; Fri, 27 Feb 2026 13:52:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1vw2IC-000749-Es
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 13:10:24 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1vw2IB-000433-0R
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 13:10:24 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61RGPVYf2962734; Fri, 27 Feb 2026 18:10:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=aQDnoE
- BgdqNpi5XimOSLpaVYJ5IyvvzmOgRkDCAu0AU=; b=cKL0RbblnA6xTUud304RAM
- PJqH40I5CDgZ34S3ZfQvWtlyYRt7hzvCTorfaedCqi+Z+m7LufvLhVkxEpmhMhBH
- kbwkkYncjPsIY8x4CPEplBLecgpkoWC6vip5zQR18OdVDLweMGC0xBF9E6Tbwj+d
- Efz225L332ypsL+rJMR4KpMr4lPpovZBmAMmKRe4IATDFfdJWOSz+OH+9afEnDYj
- PY4yyMljSLNB+nudN/FBG+berPnvYKBcqVlS28VYEDJXtD/gTVvevJck9VVddpvP
- uWGKrZBbDER80JShpN/QBFdZRNLBo3P8d+fKvkYVJw0Fx0+KTzu09Cl0x81ifXqw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cf24gw6xw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Feb 2026 18:10:19 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61RI5BIc030342;
- Fri, 27 Feb 2026 18:10:19 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfrhkudyj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 27 Feb 2026 18:10:19 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61RIAITZ46137734
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 27 Feb 2026 18:10:19 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9E16D58059;
- Fri, 27 Feb 2026 18:10:18 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B48E58058;
- Fri, 27 Feb 2026 18:10:18 +0000 (GMT)
-Received: from [9.61.252.45] (unknown [9.61.252.45])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 27 Feb 2026 18:10:18 +0000 (GMT)
-Message-ID: <c133bb17-ac2c-4568-92ed-f24188a1f3ca@linux.ibm.com>
-Date: Fri, 27 Feb 2026 12:10:17 -0600
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vw2xI-00053R-I8
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 13:52:52 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vw2xD-0002OQ-7m
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 13:52:49 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 5EDBF3F8FD;
+ Fri, 27 Feb 2026 18:52:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1772218357; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/dWuw6UZmmFElLpH5JSMUDUFEeKYpnJmh51HY8SrP48=;
+ b=v4Ef+X93P7ONNH5AeoXMGxRT8GdUatcZVgay4iOKMeZQkpFVqz3uSP4W3hAfawxjlhKX9i
+ Rk8Yxu4sEQdy0EaFGlkXFyXI+35/Kur1EhfPi9HDHur8dtHnA556crTZiwneX4UR9fH+fW
+ CIbgfJKy+3cEyUeNjQVicZl8Iqmo7Vc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1772218357;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/dWuw6UZmmFElLpH5JSMUDUFEeKYpnJmh51HY8SrP48=;
+ b=jw0/FRTRuhZ1/ktnzWZ7c3b8t04Re8sDZlb8qHvDD6VkJw6EkbGpoQPLccWupLlO9PgDSR
+ 37IOFQMuzvw3E0AA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=v4Ef+X93;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="jw0/FRTR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1772218357; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/dWuw6UZmmFElLpH5JSMUDUFEeKYpnJmh51HY8SrP48=;
+ b=v4Ef+X93P7ONNH5AeoXMGxRT8GdUatcZVgay4iOKMeZQkpFVqz3uSP4W3hAfawxjlhKX9i
+ Rk8Yxu4sEQdy0EaFGlkXFyXI+35/Kur1EhfPi9HDHur8dtHnA556crTZiwneX4UR9fH+fW
+ CIbgfJKy+3cEyUeNjQVicZl8Iqmo7Vc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1772218357;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/dWuw6UZmmFElLpH5JSMUDUFEeKYpnJmh51HY8SrP48=;
+ b=jw0/FRTRuhZ1/ktnzWZ7c3b8t04Re8sDZlb8qHvDD6VkJw6EkbGpoQPLccWupLlO9PgDSR
+ 37IOFQMuzvw3E0AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D8FFF3EA69;
+ Fri, 27 Feb 2026 18:52:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 87/zJvTnoWk1DAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 27 Feb 2026 18:52:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Subject: Re: [PATCH 0/4] arm: Fix some memory leaks
+In-Reply-To: <20260227135736.2280161-1-peter.maydell@linaro.org>
+References: <20260227135736.2280161-1-peter.maydell@linaro.org>
+Date: Fri, 27 Feb 2026 15:52:34 -0300
+Message-ID: <87ldge5899.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vdpa: Allow VDPA to work on big-endian machine
-Content-Language: en-US
-To: jasowang@redhat.com, yin31149@gmail.com,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20250616133647.1662767-1-kshk@linux.ibm.com>
- <22de010f-8fa3-4630-bc6c-e3ce8704ec04@rsg.ci.i.u-tokyo.ac.jp>
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-In-Reply-To: <22de010f-8fa3-4630-bc6c-e3ce8704ec04@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=TNRIilla c=1 sm=1 tr=0 ts=69a1de0c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=jWRtH5E-zo02ZlT3h_IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: kIB27aBrf92vgu_REdIWHjdqCU2ceBaK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDE2MSBTYWx0ZWRfX0N94Z3LlX7qM
- LyKXdpJJlyv7V9+GB9QOFqz16oaNh+SabpcuFcRezRBa9VsMfBFOGvzeqo8ZGkm0OF5rJ4bZi+d
- pP7mBv6zVJYintNjOw9CowFchRqj1JNQrJbpPNfD7WsOoajhzJWHQkXXmaZwWat4Hocg5bAVwek
- ODjgy8KenYaD/IaDSM6c50vYjnWA3t8h3zk6Lw1IHXjdC7EnQly0g+V0D2SmCg1ADFQ7ch6UULk
- aQHYNF0Wqn8XuFHK9Rp0MPR0AnUNpjXKIMvLBzGD/z+Fvl3AH5oC4+TGAwSVJp+WaKxhbKSwyCZ
- mEbfBIwsYItwhvn+5JqqeJbpTexNee0UeUFIIslc6c1fEXabQfhN7h67UhY4MnPUBpnP5wNj3Gb
- JtPklDlH3xcRlvlVMZfM5yT3gJeJ55WwIVXRJEQ6UaHuXelPzYOQya9l659ARKm/tcGL3jPqu9U
- qkY6ENWPx0gr8r8ucCg==
-X-Proofpoint-ORIG-GUID: P4Cxyq2N9z7SGWK2chhdrKBE44vkcWA5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-27_03,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 clxscore=1011 bulkscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602270161
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=kshk@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.50 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,linaro.org:email]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 5EDBF3F8FD
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,25 +130,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21-Jun-25 00:52, Akihiko Odaki wrote:
-> On 2025/06/16 22:36, Konstantin Shkolnyy wrote:
->> After commit 0caed25cd171 vhost_vdpa_net_load_vlan() started seeing
->> VIRTIO_NET_F_CTRL_VLAN flag and making 4096 calls to the kernel with
->> VIRTIO_NET_CTRL_VLAN_ADD command. However, it forgot to convert the
->> 16-bit VLAN IDs to LE format. On BE machine, the kernel calls failed
->> when they saw "VLAN IDs" greater than 4095, and QEMU then said:
->> "unable to start vhost net: 5: falling back on userspace virtio", and
->> VDPA became disabled.
->>
->> Convert the VLAN ID to LE before putting it into virtio queue.
->>
->> Fixes: 8f7e9967484d ("vdpa: Restore vlan filtering state")
->> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
->> Acked-by: Jason Wang <jasowang@redhat.com>
->> Acked-by: Eugenio Pérez <eperezma@redhat.com>
-> 
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Was this patch missed or there was another reason it wasn't applied?
+> This patchset fixes a couple of minor memory leaks I found by running
+> "make check" for the arm targets with the clang leak sanitizer enabled.
+>
+> The first two patches are necessary because there are a few leaks
+> that are either not interesting to fix or which are not in our code,
+> and which otherwise clutter up the logs with failure messages.
+> We have a suppressions-file already, but it's in the scripts/oss-fuzz
+> subdirectory, so I move it out as it's more widely useful than that,
+> and add some more suppression lines to it.
+>
+> Patches 3 and 4 are the actual leak fixes, which are straightforward.
+>
+> This gets me what would be a clean run, except that there's something
+> wrong with the refcounting of qio channel objects in the chardev code,
+> which results in variously use-after-free, leak, or assertion failures
+> when running the vhost-user tests in qos-test. I'm still looking at
+> those, but in the meantime posting this series gives me something to
+> point at as part of the repro instructions for those errors.
+>
+
+Looks like something I worked on in the past. It seems this fell through
+the cracks:
+
+https://lore.kernel.org/r/20250515222014.4161-1-farosas@suse.de
 
 
