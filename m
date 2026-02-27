@@ -4,59 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689C8FEFB6C
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 15:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B77FFEFB6C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 16:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw0Ew-0003YH-UL; Fri, 27 Feb 2026 10:58:56 -0500
+	id 1vw0Te-0006C0-0r; Fri, 27 Feb 2026 11:14:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vw0Ef-0003XI-1M; Fri, 27 Feb 2026 10:58:38 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vw0Ec-0003fu-MU; Fri, 27 Feb 2026 10:58:36 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fMtJr0KZQzJ46CH;
- Fri, 27 Feb 2026 23:58:04 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id BDDBA40584;
- Fri, 27 Feb 2026 23:58:30 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 27 Feb
- 2026 15:58:29 +0000
-Date: Fri, 27 Feb 2026 15:58:28 +0000
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
- <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jan@nvidia.com>, <jgg@nvidia.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>
-Subject: Re: [PATCH v3 15/32] hw/arm/tegra241-cmdqv: Emulate global and
- VINTF VCMDQ register reads
-Message-ID: <20260227155828.00007b6b@huawei.com>
-In-Reply-To: <20260226105056.897-16-skolothumtho@nvidia.com>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-16-skolothumtho@nvidia.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vw0Ta-0006Bl-3M; Fri, 27 Feb 2026 11:14:02 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vw0TX-0007SI-Dc; Fri, 27 Feb 2026 11:14:01 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3f2O4wqFpbk6YBw--.275S2;
+ Sat, 28 Feb 2026 00:13:44 +0800 (CST)
+Received: from [192.168.31.151] (unknown [113.246.232.133])
+ by mail (Coremail) with SMTP id AQAAfwDHIO6mwqFpD7odAA--.51609S2;
+ Sat, 28 Feb 2026 00:13:37 +0800 (CST)
+Message-ID: <30491a30-6b3a-4fff-8325-da665ceed935@phytium.com.cn>
+Date: Sat, 28 Feb 2026 00:13:24 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 31/31] [NOT-MERGE] hw/arm/smmuv3: temporarily enable SEL2
+ bit and sone other features
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101933.2998060-1-tangtao1634@phytium.com.cn>
+ <36f2aa40-1b01-4cb8-8546-06d9e770b30b@linaro.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <36f2aa40-1b01-4cb8-8546-06d9e770b30b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwDHIO6mwqFpD7odAA--.51609S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWmguFMsVgAPsA
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrtF43Jr1fXr1UGFWUGFyrXrb_yoWkKrg_uw
+ s2vrykurn7Zr48W3ZIyFn3ZFyku3WUtF9rKw1jyrWSqr9rJrZ0krs3K3s5Z3yYgan2k39x
+ ZFnI9w43Z3y3ujkaLaAFLSUrUUUU1b8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+ Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+ UUUU=
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,74 +76,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Feb 2026 10:50:39 +0000
-Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+Hi Pierrick,
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> 
-> Tegra241 CMDQV exposes per-VCMDQ register windows through two MMIO views:
-> 
->   -Global VCMDQ registers at 0x10000/0x20000
->   -VINTF VCMDQ (VI_VCMDQ) registers at 0x30000/0x40000
-> 
-> The VI_VCMDQ register ranges are an alias of the global VCMDQ registers
-> and are only meaningful when a VCMDQ is mapped to a VINTF via ioctl
-> IOMMU_HW_QUEUE_ALLOC.
-> 
-> Add read side emulation for both global VCMDQ and VI_VCMDQ register
-> ranges. MMIO accesses are decoded to extract the VCMDQ instance index
-> and normalized to a VCMDQ0_* register offset, allowing a single helper
-> to service all VCMDQ instances.
-> 
-> VI_VCMDQ accesses are translated to their equivalent global VCMDQ
-> offsets and reuse the same decoding path. All VCMDQ reads are currently
-> served from cached register state.
-> 
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Hi Shameer,
-
-As noted below there are a lot of repeats of 0x80 and the register window offsets in here.
-Maybe some defines would make things clearer?
-
->  static uint64_t tegra241_cmdqv_read_vintf(Tegra241CMDQV *cmdqv, hwaddr offset)
->  {
->      int i;
-> @@ -42,6 +82,7 @@ static uint64_t tegra241_cmdqv_read_vintf(Tegra241CMDQV *cmdqv, hwaddr offset)
->  static uint64_t tegra241_cmdqv_read(void *opaque, hwaddr offset, unsigned size)
->  {
->      Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
-> +    int index;
->  
->      if (offset >= TEGRA241_CMDQV_IO_LEN) {
->          qemu_log_mask(LOG_UNIMP,
-> @@ -67,6 +108,42 @@ static uint64_t tegra241_cmdqv_read(void *opaque, hwaddr offset, unsigned size)
->          return cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4];
->      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
->          return tegra241_cmdqv_read_vintf(cmdqv, offset);
-> +    case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
-> +        /*
-> +         * VI_VCMDQ registers (VINTF logical view) have the same per-VCMDQ
-> +         * layout as the global VCMDQ registers, but are based at 0x30000
-> +         * instead of 0x10000.
-> +         *
-> +         * Subtract 0x20000 to translate a VI_VCMDQ offset into the equivalent
-> +         * global VCMDQ offset, then fall through to reuse the common VCMDQ
-> +         * decoding logic below.
-> +         */
-> +        offset -= 0x20000;
-There are a lot of repeated numeric values of offsets and sizes in here.
-I'm a bit in two minds about whether they are clearer as numbers or you should add
-a few more defines.
-
-Jonathan
+On 2026/2/26 05:31, Pierrick Bouvier wrote:
+> On 2/21/26 2:19 AM, Tao Tang wrote:
+>> Temporarily:
+>> - enable S_IDR1.SEL2,
+>> - change AIDR to 0x2 to indicate SMMUv3.2,
+>> - use smaller SID size and Cmd/Evt queue size.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmuv3.c                | 3 ++-
+>>   include/hw/arm/smmuv3-common.h | 6 +++---
+>>   2 files changed, 5 insertions(+), 4 deletions(-)
+>>
+>
+> I have been able to boot hafnium with:
+> - instructions at 
+> https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG/
+> - the current patch
+> - qemu-system-aarch64 -global arm-smmuv3.secure-impl=on ...
+>
+> In case someone else wants to reproduce this easily:
+>
+> ```
+> git clone https://github.com/p-b-o/qemu-linux-stack
+> cd qemu-linux-stack
+> git checkout optee-secure-smmu
+> ./build.sh # only requires podman and qemu-user-static
+> ./run.sh /path/to/qemu-system-aarch64
+> ```
+>
+> Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
+Thanks for the test!
 
+
+Hafnium is indeed a good way to exercise Secure register and Secure 
+command queue access.
+
+
+Best regards,
+
+Tao
 
 
