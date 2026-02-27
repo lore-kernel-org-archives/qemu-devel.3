@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8CF1039895
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D08A31039895
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw5eK-0002gZ-67; Fri, 27 Feb 2026 16:45:28 -0500
+	id 1vw5ep-0003Pz-RZ; Fri, 27 Feb 2026 16:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw5eI-0002g9-Pm
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:45:26 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1vw5en-0003OD-L4
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:45:58 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw5eH-00027S-BR
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:45:26 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-827390e8a3cso1727318b3a.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:45:24 -0800 (PST)
+ id 1vw5em-0002BE-0j
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:45:57 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-824a6f2d816so1143999b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:45:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772228724; x=1772833524; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772228754; x=1772833554; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ECXGFcWw51EXrrWWRnhyMYmnIZ/Cc8wdZ9ymQw/pZyU=;
- b=zbWL9rkQ3856ob9KfaIcYv8I7XVD+Jz0ab4Sq4Rr8k5nquoCQoENZbv8lqdQ2GiZmQ
- ewTgQBBOenrCzWY8dUTrkrcGNhmEbUSSbg/uD+eJLY5AYZPmviZorCgkL8ZKdIVOq3K/
- yVUY2VCt4oV6iJBwL9pu0lCJBkkfG0N/MiwpIIPpf0mKkZSCkVYetzQVLstxyLY0Yv69
- ZINLhnq966MiB598pR0u9Et+qK1HUJSn/yuz7E/xz7i2bArmdjvGtteMIlzfhT6IQ93s
- U5Hg1UYOSbEWvybFyhDF5X9UZKW4S80tLwa63BrZfKwxqlWjSvdcx+X+BGzAXIUK5WpF
- xWpQ==
+ bh=zXgdmzSTMWelnMfysb5tRQHiucFgSA3WXofYIVXp2/w=;
+ b=gHWZyz5/n+9X6wPW1FDyTlb+QdTo7JxmKqcaaKTHyenqfA2SfUoYl2MXLSNqRifdp6
+ Nu2ojZEOESEhF6Vaz6IKm1ptaSAlSF26CNrWUXjGW4IttTBwpv3GnB/MgX+aj+5Y/+bV
+ I+wWp+mNZ6xQdK0XFmjiADHohWAUCjt66eIbDCTau94Yu2CcPebZlc5o2kXhWKBZfWce
+ +5xftRqTu7JjjQ7B6ABaasA2iAllda/ryFWyQOdBDPOE89mtkWq8JYZ4reLt7Fh0Slw3
+ 96kmHifi+VgIjqXBT6KxOU1H/+fqR3F37w/P83x2pV3Oh56xkCubTxvk94tU4VILrsmf
+ F/GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772228724; x=1772833524;
+ d=1e100.net; s=20230601; t=1772228754; x=1772833554;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ECXGFcWw51EXrrWWRnhyMYmnIZ/Cc8wdZ9ymQw/pZyU=;
- b=AqC5Gk/mdrz3kkclAgmGVa/qax3BvMZGDB97ahsjb0uODXIMYpj7MR0v5jCBUP87AG
- y7XOr93HBn0yeNsEVE8CHuRRLMr02PWh4u7XWd3fW3lCWGqs5LjWEy6VcRdAANISU6PO
- WgS5/PwZN+KxZKb5lk58N4pMXlVuyqr2qOWy5T90aWOLPFPSsj8vk9NBJ79qWuBetw8Q
- F3RQckXT6o2T6uLlRiAc58BodIAH79FLmQ4YyAN7guCRCGXJF4gENdDrBTfjzqYosbX7
- bTBGIQxSV+rnFCSKjL/z0p3LZv3mqLEFQKvsw/seagLf639dLZt237NP2ay7aX/1VWU2
- t8Ow==
+ bh=zXgdmzSTMWelnMfysb5tRQHiucFgSA3WXofYIVXp2/w=;
+ b=FfHPeHnyDCOp9Xi8UCPd4V0SDuS2x69C2TxmRzQDwmdqcLdNxSAIVyrNAPW69mvk//
+ eKZUv6CR2DCIThQyAOfak5OHF98VJ00lwyUnyF7Okz92+e8pMjO7NL0WTJp7igtOmNZF
+ Cj2z39suA5CysEf/Sk6wZ6khrckkZGzxDkxumnOqsKspb4RHPa8JODEbxM8HpUTN19iH
+ Y0RHyF6/ueDFq2JeqqVrj7DagWsqyKoPpq4QUKRc3NB3FHXwvAWhyHjF6NInIxF2c1cJ
+ rdP9zyfI/qTnxK1VbMl+kOUCnpfXipZJAsoMVg8f78nL64bjWXUEb+oZUB8tO/Du2/oK
+ P6KA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVY/6eGJtATGLaDFZlNFinzt3wbfbZSTAwhcm4AYDrp89T4jhGRINYHjPDvojFav8lZaCLJ3LFylREG@nongnu.org
-X-Gm-Message-State: AOJu0YxGBPfHmsYwBvq7ZdXbBnkluSMwBIOAZDvuZ3BwK+pXeYDnOr51
- Bs6VbqPlGYkrVMF8ES6W2dF2eaeUgznu0Bhdmr2YHkxqCG0LidTmPNsr/qwGppIGTCk=
-X-Gm-Gg: ATEYQzyavzZoY6+nEKp8WDk4K8G9g9PO5gTrDMlD7tZDPg+sZQOtTwIs2WZwMV63mKm
- 8oLTLfqprxftyCLoZscb/taFjTHQ9GuyKwYfpb5uEW6E8+/NCll7pzTxcyLq3WIahkx0uuAGvze
- 57jfNqo3W0r5EnfvsDSq5YjXz3+5REcz7NIHKz3ELoOmlYx80uujwcAJlzlOfVzqeXeagboEKAa
- MvBBk9zGhISDKwFXeApcNlGSWcPRAOc2jp5Rubsrb9OcaBnZ7UaKwxJ841WtnfT/7vh+khlNBwX
- GpUo6KgjzomLYXURNstsqbGcN2h2XNl6MGQleFRkXLQVOMjO45Zxu2iZsRBtgZtDS1+pAyfAEdd
- +GodLsWjhO1NrAkLUp+k+2QHa3vaovjBXAlBSiclgoj4Di61iHrDNsDQNIH6rE66glc3oaiCddN
- PdO2xZh7xbgqjztRtkkwExbXR0UblbavlOFXDwo3xB47TZSnBYf1glNdVakkitC70YJrZPt/4wH
- TfgBy0=
-X-Received: by 2002:a05:6a00:f95:b0:81f:be27:8d16 with SMTP id
- d2e1a72fcca58-8274dba209fmr3347365b3a.21.1772228723528; 
- Fri, 27 Feb 2026 13:45:23 -0800 (PST)
+ AJvYcCVSH6l26iwQdzypIULTGq34yB+Ja+j1oLRFg0wAsoV3UMpc1yduwHjVzS7dFNsmVn4P6rvphYjOgpDp@nongnu.org
+X-Gm-Message-State: AOJu0YzPFRehhrtILds3u9IvlABrMuiSQma1LUOj4lja7uRsCsXyBpq4
+ zFHP/gI+YGaFgi706nGVa9zqKNvvueEJ10lUwXFw3GisDTxS54QL6FSNkYguI63Q1F4=
+X-Gm-Gg: ATEYQzxr9B0RGhGAngGibYVv4bHDVKiKQDevQ+oA3Oi4BwcwHBr9hH+eYvoIbW39xx7
+ WKQDgl+pgFrrI69AI6ia5xDGooqMRaQmORKqA/cYi5e5gIP9/jkZnYohqbOrgHnJawXjE0mWG8u
+ SgRRdqH/5MmivokCJ1NR7+cBSn79VQ1C7R9yslOS7RhhguN09jlKO2L8K3heUxKFHvsqzvL6cL0
+ 58CBShe/z8TUp9dJphrPb+1Z5cV0ZZV0bJTFBOwQjlWNXZnhLVKaThHZAgvAyPF5awvLSYuP9Dl
+ p/Z8ZbbriUa651DGyO1fbife2Qo7HsDpCpiC4GShZtLf1Ia0OfSGwvkICxBzrDxSkPQmSUqUkp/
+ lsJ2lsWNtjI3yQ3Y0tjBHHgsn6nUllQAWtbzwGh2OBMNrnqnKK6S4flHeNUuYyGWi4OjoTjVERY
+ 4eJOVHhLXVM3hk0c0xZb2pFAVwRTHl3e0RXYbpGYXNkdyQPIG4dJyTOT7gHPgPmyweAXJp
+X-Received: by 2002:a05:6a21:1186:b0:392:e5cb:da81 with SMTP id
+ adf61e73a8af0-395c39f7bb6mr4005476637.3.1772228754469; 
+ Fri, 27 Feb 2026 13:45:54 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8273a01080fsm5770759b3a.46.2026.02.27.13.45.22
+ 41be03b00d2f7-c70fa61a19bsm5482866a12.9.2026.02.27.13.45.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 13:45:23 -0800 (PST)
-Message-ID: <3017face-a0f8-414a-87e9-7145bcf462b6@linaro.org>
-Date: Fri, 27 Feb 2026 13:45:22 -0800
+ Fri, 27 Feb 2026 13:45:54 -0800 (PST)
+Message-ID: <8e7e5a33-8ecb-4e16-935d-49b1530cd9ef@linaro.org>
+Date: Fri, 27 Feb 2026 13:45:53 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] gdbstub: Make base register explicit in m68k GDB XML
- files
+Subject: Re: [PATCH 3/4] gdbstub: Emit base_register index in GDBFeature
+ entries
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -81,7 +80,7 @@ Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-ppc@nongnu.org
 References: <20260227213958.21170-1-philmd@linaro.org>
- <20260227213958.21170-3-philmd@linaro.org>
+ <20260227213958.21170-4-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260227213958.21170-3-philmd@linaro.org>
+In-Reply-To: <20260227213958.21170-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,20 +144,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/27/26 1:39 PM, Philippe Mathieu-Daudé wrote:
-> Both gdb-xml/cf-fp.xml and gdb-xml/m68k-fp.xml aren't imported
-> from GDB repository. Presumably they are hand-written, and lack
-> the @regnum XML tag.
+> Record the base register index in the generated C file.
 > 
-> This might explain why gdb_register_coprocessor() have a @g_pos
-> argument, only used for these 2 m68k files.
+> Check at runtime that either @g_pos argument of
+> gdb_register_coprocessor() is zero, or it the base register
+> index.
 > 
-> Fixes: 56aebc89167 ("Add GDB XML register description support")
+> This change pass 'make check-tcg' test suite, which runs the
+> tests/tcg/multiarch/gdbstub/registers.py test, itself calling
+> gdb_register_coprocessor() for each target tested.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/m68k/helper.c | 4 ++--
->   gdb-xml/cf-fp.xml    | 2 +-
->   gdb-xml/m68k-fp.xml  | 2 +-
->   3 files changed, 4 insertions(+), 4 deletions(-)
+>   include/exec/gdbstub.h  | 1 +
+>   gdbstub/gdbstub.c       | 2 ++
+>   scripts/feature_to_c.py | 1 +
+>   3 files changed, 4 insertions(+)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
