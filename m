@@ -4,70 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7D0104891E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC283104891E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:20:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw6Bj-00067Q-Py; Fri, 27 Feb 2026 17:20:01 -0500
+	id 1vw6Bw-0006ND-Hy; Fri, 27 Feb 2026 17:20:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vw6Bf-00066C-OV
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:19:55 -0500
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vw6Be-0007n5-0w
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:19:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772230794; x=1803766794;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=H/a/kqUYjQO2m0ZdrAJtD1lUIdP2SDzEYOBTYhsibeI=;
- b=iXYIjKG93YTCeHLRBrV9A+ocvEKTcRqZXGrYXnI6fXSZmx6RkUrhUtpF
- nfwvLZnJFB8mS9aLEyqBa4lTCqcOpLiIO5LEIkQ9DiZlOs/qvwh3JmFTO
- RNq3fWnTDfE2CvAn9GfOITK0W5+/UNHowYZAPz7z9Y9rUiAih0E6pgJqS
- Q/escd7P46kUAG5IG1Ym4E2tWLkyCi/E0nfwfEMPX/8MSgIjpx7K2nSup
- LpP7xcNB7dfZLDIEBK41MOzDDg5X2fjVwm3vD9Aam+l4vafIP+ODy4aB3
- 2vut9QD/D73JYqpcxKmhdXF6OHoDipWEGE10DvlmN5qyxrmoWMAKTqUuk Q==;
-X-CSE-ConnectionGUID: kS9UaHqdTg6FXO19lrxYQA==
-X-CSE-MsgGUID: 0waavMFtRiO63bOvPTF1LA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11714"; a="73509365"
-X-IronPort-AV: E=Sophos;i="6.21,314,1763452800"; d="scan'208";a="73509365"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2026 14:19:41 -0800
-X-CSE-ConnectionGUID: 2d4HG9iqSiKiPWBofyEmtQ==
-X-CSE-MsgGUID: 3WcFRdvVRR+PhjZus5Zs8g==
-X-ExtLoop1: 1
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2026 14:19:40 -0800
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v8 08/10] vfio/device: Add a helper to mmap a dmabuf
-Date: Fri, 27 Feb 2026 14:13:54 -0800
-Message-ID: <20260227221632.827046-9-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260227221632.827046-1-vivek.kasireddy@intel.com>
-References: <20260227221632.827046-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6Bt-0006KC-DW
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:20:09 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6Br-000810-4O
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:20:08 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-480706554beso29806105e9.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:20:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772230805; x=1772835605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v7ZHQMFWjWl4mZlb+CYA8GnDjnrZ4AUcKOA5fzMdZ3Y=;
+ b=cV7dib6CrY/vB38lYK+olJYgluo2BVfqYhbBzzL8KhMtTvDkGnBsXp69Lmf5vHIxf9
+ PmhkSXgryU8Bw/pQF+DdfbMp5RvvLh+Ik7X3fwMzTL4r22Gv6quwEKQz/BRYBwQvy1y3
+ Xg7GzYgUMME7tyExdzzZaTPqqjl3J9IjkDRpxJK86hVZOVXDjAEh0oaN/JQveJO2XNXo
+ E8CCpg3yxb5M/awY6hozyYyZcI56JkwZ/flUFxMlsVzu68Q+uPhXbsoEgMmeda+fZZxT
+ CkMdSiXIuZp/Mw7A3ZVI4Uwa0YjAbn/bSQ6SD6O0eTKRezyfdo6hKCwOL9VyBOkAxFr7
+ DCIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772230805; x=1772835605;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v7ZHQMFWjWl4mZlb+CYA8GnDjnrZ4AUcKOA5fzMdZ3Y=;
+ b=LOaJLA68+dSWfifvP/pLKFHVZbwpmivmB3r71yJAI/YUJwW4AfkYaMv7P92EpXvH5C
+ 5FJDrYPU1kzyZjlddmFzoqdhttUZ1nLTeutfCozUbaQpVr1oi2gZ5NCEKL9LpbcJbpAL
+ NCRVg5UYdIU8R0HLYzbPIQjxhq/nDu+qENyJtoYY9mIHuyUldld2BA8SdVC1+ij91YNQ
+ RDrUbAhnUeiJJqrO5d+8wHS37kKfgOTLjvTA/Sk2VumgsBTFmA957oJiJAsOpVwj+wSt
+ D3I25S71BOjr3Y3LKPnAUiPK+x2jkfxe5AOSFVe0yPoXBE4xWEO/rlHR7fRruuByriZz
+ sxqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUT5ifPuboMmxS9vNqfsXJQo6qQEU2jNPqdsAL41xLxOfkfriJizxwJiS9Wf6iCHlqHi3rEos37t3Vv@nongnu.org
+X-Gm-Message-State: AOJu0YzxhkxF2S9aXectULLwm9hEX9ks6skB+eZaP5/UU0eQA8YwwQPl
+ gnASf3t5GoK6agOCt0PCHGboWp9feUKEgHjezCMeh5lb6CvVOGJmafvcoSgbIPd1A+c=
+X-Gm-Gg: ATEYQzxG0xCJWIStQHBe6DIfKLgy1G7+pLyFOWY4IjEAN+J140QwchKOVRwuJX25nvX
+ lWF/8AVcfAsouayXd7cMHPYBMigWMQ3Cv9lpBt0O/WrzOm7gIMxk3Rc9mZ6KIkAWdP1pQ+XrYo9
+ JNa/9Q85vjv6ak70cgwO0Z+1y39ZbbWq+xgJQBFaoDvcVa7mXpIDhDlPFFhBH0sq2amjnGA8MPc
+ kfnUZ1eQiJ8LS3u+zbrEqExO3Rv2wyW0maW/xDVv1Z+Ju6iK8zWDISIwdwoKfBUaPky68ICGPiZ
+ sGEYoILbwHaPJVIbrJQO1+ntqkV5nXDz6ofXGikSKM2WFBsOl4nlh3hrL6JxWonmokoT4XNhd5d
+ Kn5Q+yxdCCDoooyI5x+wpdezL82Iw1ODSPJjuvzJSlZ4rZsl1EB+ZaKDk3Kc/girxiVwgxDJhL8
+ bbLrAAAyX07d+TJCHOh/hxAv/i5qKkK2A95fvwj1oiLgYYEKnBrILJAN7NhBN1ZGv1jFUJcL1ma
+ x+9
+X-Received: by 2002:a05:600c:8b01:b0:483:be73:9b1 with SMTP id
+ 5b1f17b1804b1-483c9bdb186mr77889075e9.31.1772230804647; 
+ Fri, 27 Feb 2026 14:20:04 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd75dfaasm217043645e9.12.2026.02.27.14.20.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Feb 2026 14:20:03 -0800 (PST)
+Message-ID: <35984e30-23be-4796-bf06-7fae66a08652@linaro.org>
+Date: Fri, 27 Feb 2026 23:20:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 37/37] target/hexagon: Add hex_interrupts support
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ Brian Cain <bcain@quicinc.com>, Sid Manning <sidneym@quicinc.com>,
+ Michael Lambert <mlambert@quicinc.com>
+References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
+ <20260227203627.932864-38-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260227203627.932864-38-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,137 +108,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to mmap a dmabuf, we first need to create a placeholder
-mapping that would fit the entire size of the dmabuf. This mapping
-would then be replaced with smaller mappings of individual dmabuf
-segments.
+On 27/2/26 21:36, Brian Cain wrote:
+> From: Brian Cain <bcain@quicinc.com>
+> 
+> Co-authored-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> Co-authored-by: Sid Manning <sidneym@quicinc.com>
+> Co-authored-by: Michael Lambert <mlambert@quicinc.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   target/hexagon/cpu.h            |   1 +
+>   target/hexagon/hex_interrupts.h |  15 ++
+>   target/hexagon/cpu.c            |   2 +
+>   target/hexagon/hex_interrupts.c | 332 ++++++++++++++++++++++++++++++++
+>   4 files changed, 350 insertions(+)
+>   create mode 100644 target/hexagon/hex_interrupts.h
+>   create mode 100644 target/hexagon/hex_interrupts.c
+> 
+> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> index 3f4f8516f2f..99150aae753 100644
+> --- a/target/hexagon/cpu.h
+> +++ b/target/hexagon/cpu.h
+> @@ -190,6 +190,7 @@ struct ArchCPU {
+>       bool short_circuit;
+>   #ifndef CONFIG_USER_ONLY
+>       struct HexagonTLBState *tlb;
+> +    uint32_t l2vic_base_addr;
 
-Cc: Alex Williamson <alex@shazbot.org>
-Cc: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
----
- hw/vfio/device.c              | 65 +++++++++++++++++++++++++++++++++++
- hw/vfio/dmabuf-stubs.c        |  7 ++++
- include/hw/vfio/vfio-device.h | 17 +++++++++
- 3 files changed, 89 insertions(+)
+This field is never used (nor in
+https://github.com/quic/qemu/tree/bcain/sysemu_review).
 
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index a25ecc3697..596fbceb68 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -728,3 +728,68 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     }
-     return ret;
- }
-+
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp)
-+{
-+    struct vfio_region_info *info = NULL;
-+    VFIODevice *vbasedev = NULL;
-+    ram_addr_t offset, len = 0;
-+    RAMBlock *first_rb, *rb;
-+    void *map, *submap;
-+    int i, index;
-+
-+    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
-+        return false;
-+    }
-+
-+    /*
-+     * We first reserve a contiguous chunk of address space for the entire
-+     * dmabuf, then replace it with smaller mappings that correspond to the
-+     * individual segments of the dmabuf.
-+     */
-+    map = mmap(NULL, total_size, PROT_NONE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+    if (map == MAP_FAILED) {
-+        error_setg_errno(errp, errno, "Could not reserve placeholder mapping");
-+        return false;
-+    }
-+
-+    for (i = 0; i < iov_cnt; i++) {
-+        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
-+        if (i == 0) {
-+            first_rb = rb;
-+        }
-+        if (!rb || rb != first_rb) {
-+            error_setg(errp, "Cannot mmap dmabuf with different regions\n");
-+            goto err;
-+        }
-+
-+        index = vfio_get_region_index_from_mr(rb->mr);
-+        if (index < 0) {
-+            error_setg(errp, "Cannot find region index for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        if (vfio_device_get_region_info(vbasedev, index, &info)) {
-+            error_setg(errp, "Cannot find region info for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        submap = mmap(map + len, iov[i].iov_len, PROT_READ,
-+                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-+                      info->offset + offset);
-+        if (submap == MAP_FAILED) {
-+            error_setg(errp, "Could not mmap dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        len += iov[i].iov_len;
-+    }
-+    *addr = map;
-+    return true;
-+err:
-+    munmap(map, total_size);
-+    error_prepend(errp, "VFIO dmabuf mmap failed: ");
-+    return false;
-+}
-+
-diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
-index e71e2b68dd..c3aa37233d 100644
---- a/hw/vfio/dmabuf-stubs.c
-+++ b/hw/vfio/dmabuf-stubs.c
-@@ -15,3 +15,10 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     error_setg(errp, "VFIO dmabuf support is not enabled");
-     return VFIO_DMABUF_CREATE_HOST_ERROR;
- }
-+
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp)
-+{
-+    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
-+    return false;
-+}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 9dcf3ea57d..a1381f5f30 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -340,6 +340,23 @@ int vfio_get_region_index_from_mr(MemoryRegion *mr);
-  */
- int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-                                  Error **errp);
-+
-+/**
-+ * Mmap a dmabuf by first translating the addresses in the iovec
-+ * array into VFIO region offsets and then creating a placeholder
-+ * mapping that would be replaced later with mappings that
-+ * correspond to the dmabuf segments.
-+ *
-+ * @iov: array of iovec entries associated with the dmabuf
-+ * @iov_cnt: number of entries in the iovec array
-+ * @addr: pointer to store the resulting mmap address
-+ * @total_size: total size of the dmabuf
-+ * @errp: pointer to Error*, to store an error if it happens.
-+ *
-+ * Returns true on success and false in case of an error.
-+ */
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp);
- #endif
- 
- /* Returns 0 on success, or a negative errno. */
--- 
-2.53.0
+>       uint32_t htid;
+>   #endif
+>   };
+
+
+> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+> index 69b5c56b55f..a1ca4075472 100644
+> --- a/target/hexagon/cpu.c
+> +++ b/target/hexagon/cpu.c
+> @@ -61,6 +61,8 @@ static const Property hexagon_cpu_properties[] = {
+>   #if !defined(CONFIG_USER_ONLY)
+>       DEFINE_PROP_LINK("tlb", HexagonCPU, tlb, TYPE_HEXAGON_TLB,
+>                        HexagonTLBState *),
+> +    DEFINE_PROP_UINT32("l2vic-base-addr", HexagonCPU, l2vic_base_addr,
+> +        0xffffffff),
+>       DEFINE_PROP_UINT32("htid", HexagonCPU, htid, 0),
+>   #endif
+>       DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
 
 
