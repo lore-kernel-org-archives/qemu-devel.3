@@ -4,117 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE6EFD5323
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 09:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D31CFD5323
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 09:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvuMx-0003eo-Ig; Fri, 27 Feb 2026 04:42:48 -0500
+	id 1vvuRd-0004aM-T8; Fri, 27 Feb 2026 04:47:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vvuMu-0003eT-7k
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:42:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvuRE-0004ZW-1d
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:47:12 -0500
+Received: from 2.mo552.mail-out.ovh.net ([178.33.105.233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vvuMp-0005oU-HM
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:42:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772185357;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dZA1WBA4FETQ9pY8HOR9yTT3oIH0yOYOVCXzxT1O6l0=;
- b=cJPmf040tTzr9/QfM3naW7j3pXKZmGbZKWtF2jhVDzJJNCIh//vAYtQLdf+59buk2SwnLG
- Hv/R02OOPcXrZGR9YOU6nJOGc6c6kk1YNy/9uW7HwgqJxWxrt3UqCNh6f9ZPiKzETJFG/N
- 7TumuTeLJ78ToP4xy6nBGVK9dDLGdQM=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-RaqdPOz_MUy1k1GXLbN2Rg-1; Fri, 27 Feb 2026 04:42:35 -0500
-X-MC-Unique: RaqdPOz_MUy1k1GXLbN2Rg-1
-X-Mimecast-MFC-AGG-ID: RaqdPOz_MUy1k1GXLbN2Rg_1772185354
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4398fed3552so1629880f8f.3
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 01:42:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772185354; x=1772790154; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dZA1WBA4FETQ9pY8HOR9yTT3oIH0yOYOVCXzxT1O6l0=;
- b=kgUVyabSxblUG61ub6aPK04Xkcy/mQqUdLJKvYhjlGY91ZVBREfZFhY7Fi0QYnPzUM
- UK2WGLMM40XLVCjdZ9i6hW7y9NXTTIttutAmJ/BKHs8JHtD+nZtTagol7dSOL9VEgbBX
- SQyckcCKhb7aFDZR9hyXd1Szy8UJaiBfCzYo8HA1pkxyTHbf638UEFhUip5pn8jaAKf/
- l8nfk/oAfWfMep/e49pzve/XtMQ2MhTpc9WQnDOvTYGCdwz+28Cwvq6i9pbQrMgmMeN+
- 3w994+/83QtfmOQFyQvDRl2OlFq5mr5mBMeN7J6UiFl7rav/GadG+Ts1FN+8M5UlIpxu
- Af1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772185354; x=1772790154;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dZA1WBA4FETQ9pY8HOR9yTT3oIH0yOYOVCXzxT1O6l0=;
- b=EmrQQC4Pyz+YVj3hIXouF3HcZ19qDpCGSRnt5L1wAQE6u7z7+UWk4x/kU8Ck6ITV9K
- RJvd/sYu3F8dMpBhUwOCUP3KwGo0MrPYqBaekPWR+sJGp4ZFO+LDo2j9tb1CtINXNI78
- bVOQtaLmK+MWlSUwKeLpL5MXWbWR9tnkCQlePl9ZEUECVImO7rPK9Gs7NLlLbaxTZjB7
- tbYYWgWpkIE+bgA9TBBOqGbx/WkZB3Yg8SOjHs2WSrYCLuMoK4P/9bzyQcur5gvwSJVj
- t1ICo72CeCUhXlf9rY8PRf2kS0UWjd+Lpxz9vLQBU5OYj1RRqVcwWHmzQUkpLi8YDFg1
- caVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1g4M2G9KGrcWCsE+IF6iLVeHrYPog+A9GzjAaeFU4QSQYq6qQiagJjQeI4hOJU6weQGeVqsTFEqKg@nongnu.org
-X-Gm-Message-State: AOJu0Yyy4gdcUXKBuuyIium0nussQ0sudkZ+UuNUbC3AJTkou3+rRUk1
- kWs/22M+OPHaQmPhsZykqxeKVnn+x3i9Mfr5L0OqKFL95/EzsF1AuoP7E2UyazFApiA/V5faKH2
- fyvqscEUYYfXOUZEJe+2YFig4YnEOE9w2np1tlwps13u9GVh6EL7D/0p3
-X-Gm-Gg: ATEYQzzRpMyFP5nGeBlVPXa9n8sjkHubUPyDJqOCgofdEMmRuPJklyliQDFP16VGHsI
- SaNkSkE3ndvp1C6rSNiiyjRHhNlc3Wkgbt3wpphEyu5wGcmC/ls0pb45+xS7kLjG85USU9loM3U
- YuTb2GCPYzBYnyh3NheigXC0IFhIMWoK8N7dvqRAKuDWz8ZZev9+fXDBS1lt1QF8WtF6jMM+DhF
- fljBrNrzEzeO3I1uPGNuevErFTtKDb01Mdr0Bna8iqhv7WijYpijgulPBqiJEdbdqORDuBkIbjq
- RyQTFO/EhhqXs0+lxwwjDRDKSo/ZP9idoO0edJ5E6/ZaLQwHyuqUw7NL3SfhFS1qNDnWeYL6LG6
- spS53ig==
-X-Received: by 2002:a05:6000:25c3:b0:437:8f37:887 with SMTP id
- ffacd0b85a97d-4399de3e4f6mr3728816f8f.36.1772185353648; 
- Fri, 27 Feb 2026 01:42:33 -0800 (PST)
-X-Received: by 2002:a05:6000:25c3:b0:437:8f37:887 with SMTP id
- ffacd0b85a97d-4399de3e4f6mr3728753f8f.36.1772185352977; 
- Fri, 27 Feb 2026 01:42:32 -0800 (PST)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b19esm6305321f8f.25.2026.02.27.01.42.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 01:42:32 -0800 (PST)
-Date: Fri, 27 Feb 2026 10:42:27 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, mst@redhat.com,
- anisinha@redhat.com, pbonzini@redhat.com, shannon.zhaosl@gmail.com,
- philmd@linaro.org, zhao1.liu@intel.com, rad@semihalf.com,
- leif.lindholm@oss.qualcomm.com
-Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
- ACPI table
-Message-ID: <20260227104227.3d84f0d7@imammedo>
-In-Reply-To: <878qced4xx.fsf@pond.sub.org>
-References: <20260206131438.1857182-1-imammedo@redhat.com>
- <20260206131438.1857182-9-imammedo@redhat.com>
- <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
- <20260219131751.4e4e4e0e@imammedo> <aZ8THMubft44Q3E-@redhat.com>
- <20260226135648.4c1a4009@imammedo> <878qced4xx.fsf@pond.sub.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvuR9-00073G-P7
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 04:47:11 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.133])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fMk4l0sWMz5w85;
+ Fri, 27 Feb 2026 09:47:02 +0000 (UTC)
+Received: from kaod.org (37.59.142.97) by DAG14EX2.mxp5.local (172.16.2.142)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 27 Feb
+ 2026 10:47:01 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-97G0029f86ab2c-04be-4556-98fc-f33ff16cbfa7,
+ 1764588C194503052958D0AAF3448E51E66CE866) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.66.77.115
+Message-ID: <8349c679-8fe8-4994-be55-6de9b71a1b6c@kaod.org>
+Date: Fri, 27 Feb 2026 10:47:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 03/22] hw/i3c: Add bus support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>, "komlodi@google.com"
+ <komlodi@google.com>, Patrick Venture <venture@google.com>, Titus Rwantare
+ <titusr@google.com>
+References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
+ <20260225021158.1586584-4-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260225021158.1586584-4-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.97]
+X-ClientProxiedBy: DAG14EX1.mxp5.local (172.16.2.141) To DAG14EX2.mxp5.local
+ (172.16.2.142)
+X-Ovh-Tracer-GUID: a8ce6106-ec4f-4931-a5fc-7eb3a1f1d806
+X-Ovh-Tracer-Id: 7500182232834083786
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGdXHpDnnIVhM+jOZOQ2vFje4ylX1q2W2yGfUnaMH8tRBxydNWLkwZFXTNyz2y8Ql1CZ4+DMX0jRAqbbYe7w0x+ev5RA96RS1PoI6bS7ZsGiIM+cLk68jaPAPFJw8OSvdWr54Y9hfDkCEwDNPqSDiXnEPiyT1sSnXOhz0nIGajZM+/HZw85TG796GwE/NfiRMTxZBbkuyaJM16LjhcHw5aND2V/elw9WAXy4kmoBXjLaxqXQkhdXEImGGa2JMkhJA1K1EIuRwi9i+3rXNErtwDXsU9iUpcF4huPOyLnBdp27NoZhGQqmbjk7x0P46iBLIkkPRnFtbOCt5GEo049DiAVtw9j+uCupo+O9UVaRngjYJRp8PLCHmIxvDJ0e1rs4Gdnch4o2MyCIkaJe6+jHQx6bU5/5jsPvaAZsVQCQ263TEgArIDnAbhOGknS8A40S8SiTr7l1/21n6Squ273HhLlo+nkO/rbPFagc58J95/1JM4K+8/ljeel4yfg2aFQ0zWfqrileaNHR//QHpQ5cfXDGW0MOCAd4/Kea/BZc4ElWIcBFqp5vLaadmw1JmWORDmFsc+iOJ+mV36y+CSDZe871OI7NFrirNGFKZYbJVL3fOfD3hBwILTQvjsorzew1YxOvgMaxK8SzBkLWicLBfYIAMSwq6rN5AHjiBf+fHHjmg
+DKIM-Signature: a=rsa-sha256; bh=4jPSLOib4PyOtgSJk58mRotYxxqkDUIrFhcWapF2uXg=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1772185624; v=1;
+ b=pTsWKlN2XwUzWoed7n68RtJB5KQmnUSPowjazHNZukmwifhdkMbbqvAqj1rwqokPQMifakPY
+ HtMik5JewvrlMVDxtQf2jHLSlaufvXIyQk50PGENeI5jJP99aJWSuLkpNNZlwZPHFL4yxjSuWrt
+ 5QiiEmi4hqabD1CLx3XdXPdT5RWi+Z8R9cuyZ3W1Hp+aDIb0oLippjq021lE09RajOZjq/4MHyK
+ 208LJcLVc5OTuhaafmm3qlYR1JIktwk26+DwvpWy8SscAEES06Xw2tAK8+KFDUfZYgjiYALPUgX
+ SdkfxGVBAAgJn7TiXNiqr+0KpfsneyicKsZMabC2Z3YAQ==
+Received-SPF: pass client-ip=178.33.105.233; envelope-from=clg@kaod.org;
+ helo=2.mo552.mail-out.ovh.net
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,364 +137,1027 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Feb 2026 08:24:42 +0100
-Markus Armbruster <armbru@redhat.com> wrote:
+On 2/25/26 03:12, Jamin Lin wrote:
+> Adds an I3C bus and a target class.
+> The bus supports:
+> - I3C data transmission and reception
+> - CCCs (including ENTDAA)
+> - IBIs
+> - legacy I2C transactions
+> 
+> General usage of the bus is similar to I2C. Users are expected to
+> initialize a bus via i3c_init_bus, and use the bus returned from the
+> init function to do transactions on the bus.
+> 
+> In order to handle IBIs, the controller provides callbacks to handle
+> receiving an IBI from a target, receiving (optional) additional IBI
+> bytes from a target, and handling when a target is done with its IBI.
+> 
+> Similarly, target creation is done via i3c_target_create_simple and
+> users use the provided I3CTarget to handle transactions.
+> The target has functions provided that it can use to invoke an IBI and
+> send additional bytes.
+> 
+> Along with the send, recv, and event callbacks that are expected of an
+> I3C target, which are similar to I2C, there is a separate callback for
+> CCC handling.
+> This is to help encapsulate CCC handling and keep it separate from
+> target-specific read/write functionality.
+> 
+> To avoid repition for required CCCs among I3C targets, there is some
+> class-level CCC handling added. The CCC is then passed to the target in
+> case it needs to handle it in some way.
+> 
+> Signed-off-by: Joe Komlodi <komlodi@google.com>
+> Reviewed-by: Patrick Venture <venture@google.com>
+> Reviewed-by: Titus Rwantare <titusr@google.com>
+> Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   include/hw/i3c/i3c.h | 277 ++++++++++++++++++
+>   hw/i3c/core.c        | 647 +++++++++++++++++++++++++++++++++++++++++++
+>   hw/i3c/meson.build   |   1 +
+>   hw/i3c/trace-events  |  16 ++
+>   4 files changed, 941 insertions(+)
+>   create mode 100644 include/hw/i3c/i3c.h
+>   create mode 100644 hw/i3c/core.c
+> 
+> diff --git a/include/hw/i3c/i3c.h b/include/hw/i3c/i3c.h
+> new file mode 100644
+> index 0000000000..6ba90793ad
+> --- /dev/null
+> +++ b/include/hw/i3c/i3c.h
+> @@ -0,0 +1,277 @@
+> +/*
+> + * QEMU I3C bus interface.
+> + *
+> + * Copyright 2025 Google LLC
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QEMU_INCLUDE_HW_I3C_I3C_H_
+> +#define QEMU_INCLUDE_HW_I3C_I3C_H_
+> +
+> +#include "hw/core/qdev.h"
+> +#include "qom/object.h"
+> +#include "hw/i2c/i2c.h"
+> +
+> +#define TYPE_I3C_TARGET "i3c-target"
+> +OBJECT_DECLARE_TYPE(I3CTarget, I3CTargetClass, I3C_TARGET)
+> +
+> +typedef enum I3CEvent {
+> +    I3C_START_RECV,
+> +    I3C_START_SEND,
+> +    I3C_STOP,
+> +    I3C_NACK,
+> +} I3CEvent;
+> +
+> +typedef enum I3CCCC {
+> +    /* Broadcast CCCs */
+> +    I3C_CCC_ENEC      = 0x00,
+> +    I3C_CCC_DISEC     = 0x01,
+> +    I3C_CCC_ENTAS0    = 0x02,
+> +    I3C_CCC_ENTAS1    = 0x03,
+> +    I3C_CCC_ENTAS2    = 0x04,
+> +    I3C_CCC_ENTAS3    = 0x05,
+> +    I3C_CCC_RSTDAA    = 0x06,
+> +    I3C_CCC_ENTDAA    = 0x07,
+> +    I3C_CCC_DEFTGTS   = 0x08,
+> +    I3C_CCC_SETMWL    = 0x09,
+> +    I3C_CCC_SETMRL    = 0x0a,
+> +    I3C_CCC_ENTTM     = 0x0b,
+> +    I3C_CCC_SETBUSCON = 0x0c,
+> +    I3C_CCC_ENDXFER   = 0x12,
+> +    I3C_CCC_ENTHDR0   = 0x20,
+> +    I3C_CCC_ENTHDR1   = 0x21,
+> +    I3C_CCC_ENTHDR2   = 0x22,
+> +    I3C_CCC_ENTHDR3   = 0x23,
+> +    I3C_CCC_ENTHDR4   = 0x24,
+> +    I3C_CCC_ENTHDR5   = 0x25,
+> +    I3C_CCC_ENTHDR6   = 0x26,
+> +    I3C_CCC_ENTHDR7   = 0x27,
+> +    I3C_CCC_SETXTIME  = 0x28,
+> +    I3C_CCC_SETAASA   = 0x29,
+> +    I3C_CCC_RSTACT    = 0x2a,
+> +    I3C_CCC_DEFGRPA   = 0x2b,
+> +    I3C_CCC_RSTGRPA   = 0x2c,
+> +    I3C_CCC_MLANE     = 0x2d,
+> +    /* Direct CCCs */
+> +    I3C_CCCD_ENEC       = 0x80,
+> +    I3C_CCCD_DISEC      = 0x81,
+> +    I3C_CCCD_ENTAS0     = 0x82,
+> +    I3C_CCCD_ENTAS1     = 0x83,
+> +    I3C_CCCD_ENTAS2     = 0x84,
+> +    I3C_CCCD_ENTAS3     = 0x85,
+> +    I3C_CCCD_SETDASA    = 0x87,
+> +    I3C_CCCD_SETNEWDA   = 0x88,
+> +    I3C_CCCD_SETMWL     = 0x89,
+> +    I3C_CCCD_SETMRL     = 0x8a,
+> +    I3C_CCCD_GETMWL     = 0x8b,
+> +    I3C_CCCD_GETMRL     = 0x8c,
+> +    I3C_CCCD_GETPID     = 0x8d,
+> +    I3C_CCCD_GETBCR     = 0x8e,
+> +    I3C_CCCD_GETDCR     = 0x8f,
+> +    I3C_CCCD_GETSTATUS  = 0x90,
+> +    I3C_CCCD_GETACCCR   = 0x91,
+> +    I3C_CCCD_ENDXFER    = 0x92,
+> +    I3C_CCCD_SETBRGTGT  = 0x93,
+> +    I3C_CCCD_GETMXDS    = 0x94,
+> +    I3C_CCCD_GETCAPS    = 0x95,
+> +    I3C_CCCD_SETROUTE   = 0x96,
+> +    I3C_CCCD_SETXTIME   = 0x98,
+> +    I3C_CCCD_GETXTIME   = 0x99,
+> +    I3C_CCCD_RSTACT     = 0x9a,
+> +    I3C_CCCD_SETGRPA    = 0x9b,
+> +    I3C_CCCD_RSTGRPA    = 0x9c,
+> +    I3C_CCCD_MLANE      = 0x9d,
+> +} I3CCCC;
+> +
+> +#define CCC_IS_DIRECT(_ccc) (_ccc & 0x80)
+> +
+> +#define I3C_BROADCAST 0x7e
+> +#define I3C_HJ_ADDR 0x02
+> +#define I3C_ENTDAA_SIZE 8
+> +
+> +struct I3CTargetClass {
+> +    DeviceClass parent_class;
+> +
+> +    /*
+> +     * Controller to target. Returns 0 for success, non-zero for NAK or other
+> +     * error.
+> +     */
+> +    int (*send)(I3CTarget *s, const uint8_t *data, uint32_t num_to_send,
+> +                uint32_t *num_sent);
+> +    /*
+> +     * Target to controller. I3C targets are able to terminate reads early, so
+> +     * this returns the number of bytes read from the target.
+> +     */
+> +    uint32_t (*recv)(I3CTarget *s, uint8_t *data, uint32_t num_to_read);
+> +    /* Notify the target of a bus state change. */
+> +    int (*event)(I3CTarget *s, enum I3CEvent event);
+> +    /*
+> +     * Handle a read CCC transmitted from a controller.
+> +     * CCCs are I3C commands that I3C targets support.
+> +     * The target can NACK the CCC if it does not support it.
+> +     */
+> +    int (*handle_ccc_read)(I3CTarget *s, uint8_t *data, uint32_t num_to_read,
+> +                           uint32_t *num_read);
+> +    /*
+> +     * Handle a write CCC transmitted from a controller.
+> +     * CCCs are I3C commands that I3C targets support.
+> +     * The target can NACK the CCC if it does not support it.
+> +     */
+> +    int (*handle_ccc_write)(I3CTarget *s, const uint8_t *data,
+> +                            uint32_t num_to_send, uint32_t *num_sent);
+> +
+> +    /*
+> +     * Matches and adds the candidate if the address matches the candidate's
+> +     * address.
+> +     * Returns true if the address matched, or if this was a broadcast, and
+> +     * updates the device list. Otherwise returns false.
+> +     */
+> +    bool (*target_match)(I3CTarget *candidate, uint8_t address, bool is_read,
+> +                         bool broadcast, bool in_entdaa);
+> +};
+> +
+> +struct I3CTarget {
+> +    DeviceState parent_obj;
+> +
+> +    uint8_t address;
+> +    uint8_t static_address;
+> +    uint8_t dcr;
+> +    uint8_t bcr;
+> +    uint64_t pid;
+> +
+> +    /* CCC State tracking. */
+> +    I3CCCC curr_ccc;
+> +    uint8_t ccc_byte_offset;
+> +    bool in_ccc;
+> +    bool in_test_mode;
+> +};
+> +
+> +struct I3CNode {
+> +    I3CTarget *target;
+> +    QLIST_ENTRY(I3CNode) next;
+> +};
+> +
+> +typedef struct I3CNode I3CNode;
+> +
+> +typedef QLIST_HEAD(I3CNodeList, I3CNode) I3CNodeList;
+> +
+> +#define TYPE_I3C_BUS "i3c-bus"
+> +OBJECT_DECLARE_TYPE(I3CBus, I3CBusClass, I3C_BUS)
+> +
+> +struct I3CBus {
+> +    BusState parent_obj;
+> +
+> +    /* Legacy I2C. */
+> +    I2CBus *i2c_bus;
+> +
+> +    I3CNodeList current_devs;
+> +    bool broadcast;
+> +    uint8_t ccc;
+> +    bool in_ccc;
+> +    bool in_entdaa;
+> +    uint8_t saved_address;
+> +};
+> +
+> +struct I3CBusClass {
+> +    BusClass parent_class;
+> +
+> +    /* Handle an incoming IBI request from a target */
+> +    int (*ibi_handle) (I3CBus *bus, uint8_t addr, bool is_recv);
+> +    /* Receive data from an IBI request */
+> +    int (*ibi_recv) (I3CBus *bus, uint8_t data);
+> +    /* Do anything that needs to be done, since the IBI is finished. */
+> +    int (*ibi_finish) (I3CBus *bus);
+> +};
+> +
+> +I3CBus *i3c_init_bus(DeviceState *parent, const char *name);
+> +I3CBus *i3c_init_bus_type(const char *type, DeviceState *parent,
+> +                          const char *name);
+> +void i3c_set_target_address(I3CTarget *dev, uint8_t address);
+> +bool i3c_bus_busy(I3CBus *bus);
+> +
+> +/*
+> + * Start a transfer on an I3C bus.
+> + * If is_recv is known at compile-time (i.e. a device will always be sending or
+> + * will always be receiving at a certain point), prefer to use i3c_start_recv or
+> + * i3c_start_send instead.
+> + *
+> + * Returns 0 on success, non-zero on an error.
+> + */
+> +int i3c_start_transfer(I3CBus *bus, uint8_t address, bool is_recv);
+> +
+> +/*
+> + * Start a receive transfer on an I3C bus.
+> + *
+> + * Returns 0 on success, non-zero on an error
+> + */
+> +int i3c_start_recv(I3CBus *bus, uint8_t address);
+> +
+> +/*
+> + * Start a send transfer on an I3C bus.
+> + *
+> + * Returns 0 on success, non-zero on an error
+> + */
+> +int i3c_start_send(I3CBus *bus, uint8_t address);
+> +
+> +void i3c_end_transfer(I3CBus *bus);
+> +void i3c_nack(I3CBus *bus);
+> +int i3c_send_byte(I3CBus *bus, uint8_t data);
+> +int i3c_send(I3CBus *bus, const uint8_t *data, uint32_t num_to_send,
+> +             uint32_t *num_sent);
+> +/*
+> + * I3C receives can only NACK on a CCC. The target should NACK a CCC it does not
+> + * support.
+> + */
+> +int i3c_recv_byte(I3CBus *bus, uint8_t *data);
+> +int i3c_recv(I3CBus *bus, uint8_t *data, uint32_t num_to_read,
+> +             uint32_t *num_read);
+> +bool i3c_scan_bus(I3CBus *bus, uint8_t address, enum I3CEvent event);
+> +int i3c_do_entdaa(I3CBus *bus, uint8_t address, uint64_t *pid, uint8_t *bcr,
+> +                  uint8_t *dcr);
+> +int i3c_start_device_transfer(I3CTarget *dev, int send_length);
+> +bool i3c_target_match_and_add(I3CBus *bus, I3CTarget *target, uint8_t address,
+> +                             enum I3CEvent event);
+> +int i3c_target_send_ibi(I3CTarget *t, uint8_t addr, bool is_recv);
+> +int i3c_target_send_ibi_bytes(I3CTarget *t, uint8_t data);
+> +int i3c_target_ibi_finish(I3CTarget *t, uint8_t data);
+> +
+> +/*
+> + * Legacy I2C functions.
+> + *
+> + * These are wrapper for I2C functions that take in an I3C bus instead of an I2C
+> + * bus. Internally they use the I2C bus (and devices attached to it) that's a
+> + * part of the I3C bus
+> + */
+> +void legacy_i2c_nack(I3CBus *bus);
+> +uint8_t legacy_i2c_recv(I3CBus *bus);
+> +int legacy_i2c_send(I3CBus *bus, uint8_t data);
+> +int legacy_i2c_start_transfer(I3CBus *bus, uint8_t address, bool is_recv);
+> +int legacy_i2c_start_recv(I3CBus *bus, uint8_t address);
+> +int legacy_i2c_start_send(I3CBus *bus, uint8_t address);
+> +void legacy_i2c_end_transfer(I3CBus *bus);
+> +I2CSlave *legacy_i2c_device_create_simple(I3CBus *bus, const char *name,
+> +                                          uint8_t addr);
+> +
+> +/**
+> + * Create an I3C Target.
+> + *
+> + * The target returned from this function still needs to be realized.
+> + */
+> +I3CTarget *i3c_target_new(const char *name, uint8_t addr, uint8_t dcr,
+> +                          uint8_t bcr, uint64_t pid);
+> +
+> +/**
+> + * Create and realize an I3C target.
+> + *
+> + * Create the target, initialize it, put it on the specified I3C bus, and
+> + * realize it.
+> + */
+> +I3CTarget *i3c_target_create_simple(I3CBus *bus, const char *name,
+> +                                    uint8_t addr, uint8_t dcr, uint8_t bcr,
+> +                                    uint64_t pid);
+> +
+> +/* Realize and drop the reference count on an I3C target. */
+> +bool i3c_target_realize_and_unref(I3CTarget *dev, I3CBus *bus, Error **errp);
+> +
+> +#endif  /* QEMU_INCLUDE_HW_I3C_I3C_H_ */
+> diff --git a/hw/i3c/core.c b/hw/i3c/core.c
+> new file mode 100644
+> index 0000000000..22e6e226a7
+> --- /dev/null
+> +++ b/hw/i3c/core.c
+> @@ -0,0 +1,647 @@
+> +/*
+> + * QEMU I3C bus interface.
+> + *
+> + * Copyright 2025 Google LLC
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "qapi/error.h"
+> +#include "trace.h"
+> +#include "hw/i3c/i3c.h"
+> +#include "hw/core/qdev-properties.h"
+> +
+> +/*
+> + * In test mode (enabled by ENTTM CCC) we're supposed to send a random PID
+> + * during ENTDAA, so we'll just send "QEMU".
+> + */
+> +#define TEST_MODE_PROVISIONED_ID 0x0000554d4551ULL
+> +
+> +static const Property i3c_props[] = {
+> +    DEFINE_PROP_UINT8("static-address", struct I3CTarget, static_address, 0),
+> +    DEFINE_PROP_UINT8("dcr", struct I3CTarget, dcr, 0),
+> +    DEFINE_PROP_UINT8("bcr", struct I3CTarget, bcr, 0),
+> +    DEFINE_PROP_UINT64("pid", struct I3CTarget, pid, 0),
+> +};
+> +
+> +I3CBus *i3c_init_bus(DeviceState *parent, const char *name)
+> +{
+> +    return i3c_init_bus_type(TYPE_I3C_BUS, parent, name);
+> +}
+> +
+> +I3CBus *i3c_init_bus_type(const char *type, DeviceState *parent,
+> +                          const char *name)
+> +{
+> +    I3CBus *bus;
+> +
+> +    bus = I3C_BUS(qbus_new(type, parent, name));
+> +    QLIST_INIT(&bus->current_devs);
+> +    bus->broadcast = false;
+> +    bus->in_entdaa = false;
+> +    bus->in_ccc = false;
+> +
+> +    /* I2C init. */
+> +    g_autofree gchar *i2c_bus_name = g_strdup_printf("%s-legacy-i2c", name);
+> +    bus->i2c_bus = i2c_init_bus(parent, i2c_bus_name);
+> +
+> +    return bus;
+> +}
+> +
+> +bool i3c_bus_busy(I3CBus *bus)
+> +{
+> +    return !QLIST_EMPTY(&bus->current_devs);
+> +}
+> +
+> +static bool i3c_target_match(I3CTarget *candidate, uint8_t address,
+> +                             bool is_recv, bool broadcast, bool in_entdaa)
+> +{
+> +    /* Once a target has a dynamic address, it only responds to that. */
+> +    uint8_t targ_addr = candidate->address ? candidate->address :
+> +                                             candidate->static_address;
+> +
+> +    if (in_entdaa) {
+> +        if (address != I3C_BROADCAST) {
+> +            g_autofree char *path =
+> +                object_get_canonical_path(OBJECT(candidate));
+> +            qemu_log_mask(LOG_GUEST_ERROR, "%s: I3C Address 0x%.2x sent during "
+> +                          "ENTDAA instead of a broadcast address\n",
+> +                          path, address);
+> +            return false;
+> +        }
+> +
+> +        /*
+> +         * Targets should only ACK ENTDAA broadcasts if they have no dynamic
+> +         * address.
+> +         */
+> +        return candidate->address == 0;
+> +    }
+> +
+> +    /* Return if our addresses match, or if it's a broadcast. */
+> +    return targ_addr == address || broadcast;
+> +}
+> +
+> +bool i3c_target_match_and_add(I3CBus *bus, I3CTarget *target, uint8_t address,
+> +                              enum I3CEvent event)
+> +{
+> +    I3CTargetClass *tc = I3C_TARGET_GET_CLASS(target);
+> +    bool matched = tc->target_match(target, address, event == I3C_START_RECV,
+> +                                    bus->broadcast, bus->in_entdaa);
+> +
+> +    if (matched) {
+> +        I3CNode *node = g_new(struct I3CNode, 1);
+> +        node->target = target;
+> +        QLIST_INSERT_HEAD(&bus->current_devs, node, next);
+> +    }
+> +    return matched;
+> +}
+> +
+> +bool i3c_scan_bus(I3CBus *bus, uint8_t address, enum I3CEvent event)
+> +{
+> +    BusChild *child;
+> +    I3CNode *node, *next;
+> +
+> +    /* Clear out any devices from a previous (re-)START. */
+> +    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
+> +        QLIST_REMOVE(node, next);
+> +        g_free(node);
+> +    }
+> +
+> +    QTAILQ_FOREACH(child, &bus->parent_obj.children, sibling) {
+> +        DeviceState *qdev = child->child;
+> +        I3CTarget *target = I3C_TARGET(qdev);
+> +
+> +        if (i3c_target_match_and_add(bus, target, address, event)) {
+> +            return true;
+> +        }
+> +    }
+> +
+> +    /* No one on the bus could respond. */
+> +    return false;
+> +}
+> +
+> +/* Class-level event handling, since we do some CCCs at the class level. */
+> +static int i3c_target_event(I3CTarget *t, enum I3CEvent event)
+> +{
+> +    I3CTargetClass *tc = I3C_TARGET_GET_CLASS(t);
+> +    trace_i3c_target_event(t->address, event);
+> +
+> +    if (event == I3C_STOP) {
+> +        t->curr_ccc = 0;
+> +        t->ccc_byte_offset = 0;
+> +        t->in_ccc = false;
+> +    }
+> +    return tc->event(t, event);
+> +}
+> +
+> +/*
+> + * Sends a START or repeated START and the address for an I3C transaction.
+> + *
+> + * This function returns 0 if a device on the bus was able to respond to the
+> + * address, and non-zero otherwise.
+> + * A non-zero return represents a NACK.
+> + */
+> +static int i3c_do_start_transfer(I3CBus *bus, uint8_t address,
+> +                                 enum I3CEvent event)
+> +{
+> +    I3CTargetClass *tc;
+> +    I3CNode *node;
+> +
+> +    if (address == I3C_BROADCAST) {
+> +        bus->broadcast = true;
+> +        /* If we're not in ENTDAA, a broadcast is the start of a new CCC. */
+> +        if (!bus->in_entdaa) {
+> +            bus->in_ccc = false;
+> +        }
+> +    } else {
+> +        bus->broadcast = false;
+> +    }
+> +
+> +    /* No one responded to the address, NACK it. */
+> +    if (!i3c_scan_bus(bus, address, event)) {
+> +        return -1;
+> +    }
+> +
+> +    QLIST_FOREACH(node, &bus->current_devs, next) {
+> +        I3CTarget *t = node->target;
+> +
+> +        tc = I3C_TARGET_GET_CLASS(t);
+> +        if (tc->event) {
+> +            int rv = i3c_target_event(t, event);
+> +            if (rv && !bus->broadcast) {
+> +                return rv;
+> +            }
+> +        }
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +int i3c_start_transfer(I3CBus *bus, uint8_t address, bool is_recv)
+> +{
+> +    trace_i3c_start_transfer(address, is_recv);
+> +    return i3c_do_start_transfer(bus, address, is_recv
+> +                                               ? I3C_START_RECV
+> +                                               : I3C_START_SEND);
+> +}
+> +
+> +int i3c_start_recv(I3CBus *bus, uint8_t address)
+> +{
+> +    trace_i3c_start_transfer(address, true);
+> +    return i3c_do_start_transfer(bus, address, I3C_START_RECV);
+> +}
+> +
+> +int i3c_start_send(I3CBus *bus, uint8_t address)
+> +{
+> +    trace_i3c_start_transfer(address, false);
+> +    return i3c_do_start_transfer(bus, address, I3C_START_SEND);
+> +}
+> +
+> +void i3c_end_transfer(I3CBus *bus)
+> +{
+> +    I3CTargetClass *tc;
+> +    I3CNode *node, *next;
+> +
+> +    trace_i3c_end_transfer();
+> +
+> +    /*
+> +     * If we're in ENTDAA, we need to notify all devices when ENTDAA is done.
+> +     * This is because everyone initially participates due to the broadcast,
+> +     * but gradually drops out as they get assigned addresses.
+> +     * Since the current_devs list only stores who's currently participating,
+> +     * and not everyone who previously participated, we send the STOP to all
+> +     * children.
+> +     */
+> +    if (bus->in_entdaa) {
+> +        BusChild *child;
+> +
+> +        QTAILQ_FOREACH(child, &bus->parent_obj.children, sibling) {
+> +            DeviceState *qdev = child->child;
+> +            I3CTarget *t = I3C_TARGET(qdev);
+> +            tc = I3C_TARGET_GET_CLASS(t);
+> +            if (tc->event) {
+> +                i3c_target_event(t, I3C_STOP);
+> +            }
+> +        }
+> +    } else {
+> +        QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
+> +            I3CTarget *t = node->target;
+> +            tc = I3C_TARGET_GET_CLASS(t);
+> +            if (tc->event) {
+> +                i3c_target_event(t, I3C_STOP);
+> +            }
+> +            QLIST_REMOVE(node, next);
+> +            g_free(node);
+> +        }
+> +    }
+> +    bus->broadcast = false;
+> +    bus->in_entdaa = false;
+> +    bus->in_ccc = false;
+> +}
+> +
+> +/*
+> + * Any CCCs that are universal across all I3C devices should be handled here.
+> + * Once they're handled, we pass the CCC up to the I3C target to do anything
+> + * else it may want with the bytes.
+> + */
+> +static int i3c_target_handle_ccc_write(I3CTarget *t, const uint8_t *data,
+> +                                       uint32_t num_to_send, uint32_t *num_sent)
+> +{
+> +    I3CTargetClass *tc = I3C_TARGET_GET_CLASS(t);
+> +    *num_sent = 0;
+> +
+> +    /* Is this the start of a new CCC? */
+> +    if (!t->in_ccc) {
+> +        t->curr_ccc = *data;
+> +        t->in_ccc = true;
+> +        *num_sent = 1;
+> +        trace_i3c_target_handle_ccc(t->address, t->curr_ccc);
+> +    }
+> +
+> +    switch (t->curr_ccc) {
+> +    case I3C_CCC_ENTDAA:
+> +        /*
+> +         * This is the last byte of ENTDAA, the controller is assigning us an
+> +         * address.
+> +         */
+> +        if (t->ccc_byte_offset == 8) {
+> +            t->address = *data;
+> +            t->in_ccc = false;
+> +            t->curr_ccc = 0;
+> +            t->ccc_byte_offset = 0;
+> +            *num_sent = 1;
+> +        }
+> +        break;
+> +    case I3C_CCCD_SETDASA:
+> +        t->address = t->static_address;
+> +        break;
+> +    case I3C_CCC_SETAASA:
+> +        t->address = t->static_address;
+> +        break;
+> +    case I3C_CCC_RSTDAA:
+> +        t->address = 0;
+> +        break;
+> +    case I3C_CCCD_SETNEWDA:
+> +        /* If this isn't the CCC byte, it's our new address. */
+> +        if (*num_sent == 0) {
+> +            t->address = *data;
+> +            *num_sent = 1;
+> +        }
+> +        break;
+> +    case I3C_CCC_ENTTM:
+> +        /*
+> +         * If there are still more to look at, the next byte is the test mode
+> +         * byte.
+> +         */
+> +        if (*num_sent != num_to_send) {
+> +            /* Enter test mode if the byte is non-zero. Otherwise exit. */
+> +            t->in_test_mode = !!data[*num_sent];
+> +            ++*num_sent;
+> +        }
+> +        break;
+> +    /* Ignore other CCCs it's better to handle on a device-by-device basis. */
+> +    default:
+> +        break;
+> +    }
+> +    return tc->handle_ccc_write(t, data, num_to_send, num_sent);
+> +}
+> +
+> +int i3c_send_byte(I3CBus *bus, uint8_t data)
+> +{
+> +    /*
+> +     * Ignored, the caller can determine how many were sent based on if this was
+> +     * ACKed/NACKed.
+> +     */
+> +    uint32_t num_sent;
+> +    return i3c_send(bus, &data, 1, &num_sent);
+> +}
+> +
+> +int i3c_send(I3CBus *bus, const uint8_t *data, uint32_t num_to_send,
+> +             uint32_t *num_sent)
+> +{
+> +    I3CTargetClass *tc;
+> +    I3CTarget *t;
+> +    I3CNode *node;
+> +    int ret = 0;
+> +
+> +    /* If this message is a broadcast and no CCC has been found, grab it. */
+> +    if (bus->broadcast && !bus->in_ccc) {
+> +        bus->ccc = *data;
+> +        bus->in_ccc = true;
+> +        /*
+> +         * We need to keep track if we're currently in ENTDAA.
+> +         * On any other CCC, the CCC is over on a RESTART or STOP, but ENTDAA
+> +         * is only over on a STOP.
+> +         */
+> +        if (bus->ccc == I3C_CCC_ENTDAA) {
+> +            bus->in_entdaa = true;
+> +        }
+> +    }
+> +
+> +    QLIST_FOREACH(node, &bus->current_devs, next) {
+> +        t = node->target;
+> +        tc = I3C_TARGET_GET_CLASS(t);
+> +        if (bus->in_ccc) {
+> +            if (!tc->handle_ccc_write) {
+> +                ret = -1;
+> +                continue;
+> +            }
+> +            ret = i3c_target_handle_ccc_write(t, data, num_to_send, num_sent);
+> +            /* Targets should only NACK on a direct CCC. */
+> +            if (ret && !CCC_IS_DIRECT(bus->ccc)) {
+> +                ret = 0;
+> +            }
+> +        } else {
+> +            if (tc->send) {
+> +                ret = ret || tc->send(t, data, num_to_send, num_sent);
+> +            } else {
+> +                ret = -1;
+> +            }
+> +        }
+> +    }
+> +
+> +    trace_i3c_send(*num_sent, num_to_send, ret == 0);
+> +
+> +    return ret ? -1 : 0;
+> +}
+> +
+> +static int i3c_target_handle_ccc_read(I3CTarget *t, uint8_t *data,
+> +                                      uint32_t num_to_read, uint32_t *num_read)
+> +{
+> +    I3CTargetClass *tc = I3C_TARGET_GET_CLASS(t);
+> +    uint8_t read_count = 0;
+> +    uint64_t pid;
+> +
+> +    switch (t->curr_ccc) {
+> +    case I3C_CCC_ENTDAA:
+> +        if (t->in_test_mode) {
+> +            pid = TEST_MODE_PROVISIONED_ID;
+> +        } else {
+> +            pid = t->pid;
+> +        }
+> +        /* Return the 6-byte PID, followed by BCR then DCR. */
+> +        while (t->ccc_byte_offset < 6) {
+> +            if (read_count >= num_to_read) {
+> +                break;
+> +            }
+> +            data[read_count] = (pid >> (t->ccc_byte_offset * 8)) & 0xff;
+> +            t->ccc_byte_offset++;
+> +            read_count++;
+> +        }
+> +        if (read_count < num_to_read) {
+> +            data[read_count] = t->bcr;
+> +            t->ccc_byte_offset++;
+> +            read_count++;
+> +        }
+> +        if (read_count < num_to_read) {
+> +            data[read_count] = t->dcr;
+> +            t->ccc_byte_offset++;
+> +            read_count++;
+> +        }
+> +        *num_read = read_count;
+> +        break;
+> +    case I3C_CCCD_GETPID:
+> +        while (t->ccc_byte_offset < 6) {
+> +            if (read_count >= num_to_read) {
+> +                break;
+> +            }
+> +            data[read_count] = (t->pid >> (t->ccc_byte_offset * 8)) & 0xff;
+> +            t->ccc_byte_offset++;
+> +            read_count++;
+> +        }
+> +        *num_read = read_count;
+> +        break;
+> +    case I3C_CCCD_GETBCR:
+> +        *data = t->bcr;
+> +        *num_read = 1;
+> +        break;
+> +    case I3C_CCCD_GETDCR:
+> +        *data = t->dcr;
+> +        *num_read = 1;
+> +        break;
+> +    default:
+> +        /* Unhandled on the I3CTarget class level. */
+> +        break;
+> +    }
+> +
+> +    return tc->handle_ccc_read(t, data, num_to_read, num_read);
+> +}
+> +
+> +int i3c_recv_byte(I3CBus *bus, uint8_t *data)
+> +{
+> +     /*
+> +      * Ignored, the caller can determine how many bytes were read based on if
+> +      * this is ACKed/NACKed.
+> +      */
+> +    uint32_t num_read;
+> +    return i3c_recv(bus, data, 1, &num_read);
+> +}
+> +
+> +int i3c_recv(I3CBus *bus, uint8_t *data, uint32_t num_to_read,
+> +             uint32_t *num_read)
+> +{
+> +    int ret = 0;
+> +    I3CTargetClass *tc;
+> +    I3CTarget *t;
+> +
+> +    *data = 0xff;
+> +    if (!QLIST_EMPTY(&bus->current_devs)) {
+> +        tc = I3C_TARGET_GET_CLASS(QLIST_FIRST(&bus->current_devs)->target);
+> +        t = QLIST_FIRST(&bus->current_devs)->target;
+> +        if (bus->in_ccc) {
+> +            if (!tc->handle_ccc_read) {
+> +                return -1;
+> +            }
+> +            ret = i3c_target_handle_ccc_read(t, data, num_to_read, num_read);
+> +        } else {
+> +            if (tc->recv) {
+> +                /*
+> +                 * Targets cannot NACK on a direct transfer, so the data
+> +                 * is returned directly.
+> +                 */
+> +                *num_read = tc->recv(t, data, num_to_read);
+> +            }
+> +        }
+> +    }
+> +
+> +    trace_i3c_recv(*num_read, num_to_read, ret == 0);
+> +
+> +    return ret;
+> +}
+> +
+> +void i3c_nack(I3CBus *bus)
+> +{
+> +    I3CTargetClass *tc;
+> +    I3CNode *node;
+> +
+> +    if (QLIST_EMPTY(&bus->current_devs)) {
+> +        return;
+> +    }
+> +
+> +    QLIST_FOREACH(node, &bus->current_devs, next) {
+> +        tc = I3C_TARGET_GET_CLASS(node->target);
+> +        if (tc->event) {
+> +            i3c_target_event(node->target, I3C_NACK);
+> +        }
+> +    }
+> +}
+> +
+> +int i3c_target_send_ibi(I3CTarget *t, uint8_t addr, bool is_recv)
+> +{
+> +    I3CBus *bus = I3C_BUS(t->parent_obj.parent_bus);
+> +    I3CBusClass *bc = I3C_BUS_GET_CLASS(bus);
+> +    trace_i3c_target_send_ibi(addr, is_recv);
+> +    return bc->ibi_handle(bus, addr, is_recv);
+> +}
+> +
+> +int i3c_target_send_ibi_bytes(I3CTarget *t, uint8_t data)
+> +{
+> +    I3CBus *bus = I3C_BUS(t->parent_obj.parent_bus);
+> +    I3CBusClass *bc = I3C_BUS_GET_CLASS(bus);
+> +    trace_i3c_target_send_ibi_bytes(data);
+> +    return bc->ibi_recv(bus, data);
+> +}
+> +
+> +int i3c_target_ibi_finish(I3CTarget *t, uint8_t data)
+> +{
+> +    I3CBus *bus = I3C_BUS(t->parent_obj.parent_bus);
+> +    I3CBusClass *bc = I3C_BUS_GET_CLASS(bus);
+> +    trace_i3c_target_ibi_finish();
+> +    return bc->ibi_finish(bus);
+> +}
+> +
+> +static bool i3c_addr_is_rsvd(uint8_t addr)
+> +{
+> +    const bool is_rsvd[255] = {
 
-> Igor Mammedov <imammedo@redhat.com> writes:
->=20
-> > On Wed, 25 Feb 2026 15:19:56 +0000
-> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
-> > =20
-> >> On Thu, Feb 19, 2026 at 01:17:51PM +0100, Igor Mammedov wrote: =20
-> >> > On Wed, 18 Feb 2026 19:08:36 +0000
-> >> > Peter Maydell <peter.maydell@linaro.org> wrote:
-> >> >    =20
-> >> > > On Fri, 6 Feb 2026 at 13:15, Igor Mammedov <imammedo@redhat.com> w=
-rote:   =20
-> >> > > >
-> >> > > > Add SBSA generic watchdog to virt machine type with
-> >> > > > all necessary wiring for ACPI watchdog. Which includes
-> >> > > > setting its frequency to 1KHz (max that WDAT is able to handle).
-> >> > > >
-> >> > > > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> >> > > > ---     =20
-> >> > >    =20
-> >> > > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> >> > > > index 390845c503..caf5700ed2 100644
-> >> > > > --- a/hw/arm/virt.c
-> >> > > > +++ b/hw/arm/virt.c
-> >> > > > @@ -93,6 +93,7 @@
-> >> > > >  #include "hw/cxl/cxl.h"
-> >> > > >  #include "hw/cxl/cxl_host.h"
-> >> > > >  #include "qemu/guest-random.h"
-> >> > > > +#include "hw/watchdog/sbsa_gwdt.h"
-> >> > > >
-> >> > > >  static GlobalProperty arm_virt_compat[] =3D {
-> >> > > >      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-> >> > > > @@ -194,6 +195,8 @@ static const MemMapEntry base_memmap[] =3D {
-> >> > > >      [VIRT_PVTIME] =3D             { 0x090a0000, 0x00010000 },
-> >> > > >      [VIRT_SECURE_GPIO] =3D        { 0x090b0000, 0x00001000 },
-> >> > > >      [VIRT_ACPI_PCIHP] =3D         { 0x090c0000, ACPI_PCIHP_SIZE=
- },
-> >> > > > +    [VIRT_GWDT_REFRESH] =3D       { 0x090d0000, 0x00001000 },
-> >> > > > +    [VIRT_GWDT_CONTROL] =3D       { 0x090d1000, 0x00001000 },
-> >> > > >      [VIRT_MMIO] =3D               { 0x0a000000, 0x00000200 },
-> >> > > >      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each =
-of that size */
-> >> > > >      [VIRT_PLATFORM_BUS] =3D       { 0x0c000000, 0x02000000 },
-> >> > > > @@ -245,12 +248,32 @@ static const int a15irqmap[] =3D {
-> >> > > >      [VIRT_GPIO] =3D 7,
-> >> > > >      [VIRT_UART1] =3D 8,
-> >> > > >      [VIRT_ACPI_GED] =3D 9,
-> >> > > > +    [VIRT_GWDT_WS0] =3D 10,
-> >> > > >      [VIRT_MMIO] =3D 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1=
- */
-> >> > > >      [VIRT_GIC_V2M] =3D 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
-> >> > > >      [VIRT_SMMU] =3D 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
-> >> > > >      [VIRT_PLATFORM_BUS] =3D 112, /* ...to 112 + PLATFORM_BUS_NU=
-M_IRQS -1 */
-> >> > > >  };
-> >> > > >
-> >> > > > +static void create_wdt(const VirtMachineState *vms)
-> >> > > > +{
-> >> > > > +    hwaddr rbase =3D vms->memmap[VIRT_GWDT_REFRESH].base;
-> >> > > > +    hwaddr cbase =3D vms->memmap[VIRT_GWDT_CONTROL].base;
-> >> > > > +    int irq =3D vms->irqmap[VIRT_GWDT_WS0];
-> >> > > > +    DeviceState *dev =3D qdev_new(TYPE_WDT_SBSA);
-> >> > > > +    SysBusDevice *s =3D SYS_BUS_DEVICE(dev);
-> >> > > > +
-> >> > > > +    /*
-> >> > > > +     * Set watchdog tick freq to 1Kz as it's the max WDAT driver
-> >> > > > +     * is able to handle.
-> >> > > > +     */
-> >> > > > +    qdev_prop_set_uint64(dev, "clock-frequency", 1000 /* 1KHz *=
-/);
-> >> > > > +    sysbus_realize_and_unref(s, &error_fatal);
-> >> > > > +    sysbus_mmio_map(s, 0, rbase);
-> >> > > > +    sysbus_mmio_map(s, 1, cbase);
-> >> > > > +    sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
-> >> > > > +}     =20
-> >> > >=20
-> >> > > Please can you also add support for exposing this device
-> >> > > in the device tree ?   =20
-> >> >=20
-> >> > It's possible,
-> >> > but we probably should not enable it if acpi variant was requested,
-> >> > to avoid confusion on guest side.
-> >> >=20
-> >> > For Windows it doesn't really mater, for linux it does.
-> >> > on x86 linux guest uses a quirk to disable native iTCO watchdog
-> >> > in favor of WDAT one if later is present.
-> >> > I assume quirk is not desirable so we should expose only a preferred
-> >> > variant.
-> >> >    =20
-> >> > >    =20
-> >> > > > +
-> >> > > >  static void create_randomness(MachineState *ms, const char *nod=
-e)
-> >> > > >  {
-> >> > > >      struct {
-> >> > > > @@ -2515,6 +2538,9 @@ static void machvirt_init(MachineState *ma=
-chine)
-> >> > > >      vms->highmem_ecam &=3D (!firmware_loaded || aarch64);
-> >> > > >
-> >> > > >      create_rtc(vms);
-> >> > > > +    if (machine->acpi_watchdog) {
-> >> > > > +        create_wdt(vms);
-> >> > > > +    }     =20
-> >> > >=20
-> >> > > Can we have a command line option name that isn't ACPI
-> >> > > specific, please? There's nothing inherent to ACPI about
-> >> > > "I would like a watchdog device".   =20
-> >> >=20
-> >> > that is specifically asking for ACPI flavor being used/configured.
-> >> > acpi specific option conflates 2 things:
-> >> >    1. watchdog device creation (of the board choice) with properties=
- tuned for WDAT usage
-> >> >    2. how to expose it on firmware level (in this case ACPI WDAT tab=
-le)
-> >> >=20
-> >> > other option, I've considered was
-> >> >  -device some_wd[,fw=3Ddt|acpi|none]
-> >> > but then 'fw' is not exactly device property but rather a machine one
-> >> > (we can 'abuse' it/use as a proxy of cause).
-> >> > However it doesn't work for boards that have builtin watchdog.   =20
-> >>=20
-> >> Right, if there was a case where we were already using -device to
-> >> create the watchdog, then I would suggest having a simple
-> >> 'wadt=3Don|off' property as standard for any watchdog wanting that
-> >> ACPI abstraction wrapper.
-> >>=20
-> >> That could (hypothetically) be the case if we had chosen to add
-> >> WADT suport backed by i6300esb, eg -device i6300esb,wadt=3Don|off
-> >>=20
-> >> For cases built-in to the machine type, I'd suggest <type>-wadt=3Don|o=
-ff
-> >>=20
-> >> eg for Q35,  "-machine q35,itco-wadt=3Don|off"
-> >>=20
-> >> for virt, '-machine virt,gwdt-wadt=3Don|off' =20
-> >
-> > CCin Markus since it touches QAPI stuff.
-> >
-> > For respin, I've went ahead with a bit more generic approach
-> > (as a user, I wouldn't really care what kind of built-in watchdog board=
- ships,
-> > and having 1 property instead total instead of machine specific ones ma=
-kes it
-> > easier for mgmt layer to deal with).
-> >
-> > here is current idea:
-> >
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index 6411e68856..a0c6719b58 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -1257,6 +1271,14 @@ static void machine_class_init(ObjectClass *oc, =
-const void *data)
-> >          NULL, NULL);
-> >      object_class_property_set_description(oc, "memory",
-> >          "Memory size configuration");
-> > +
-> > +    object_class_property_add_enum(oc, "watchdog", "WatchdogType",
-> > +        &WatchdogType_lookup,
-> > +        machine_get_watchdog, machine_set_watchdog);
-> > +     object_class_property_set_description(oc, "watchdog",
-> > +        "Use: auto (watchdog is configured according board defaults),"
-> > +        " off (disabled), native (built-in watchdog), wdat (ACPI based=
- watchdog)]. "
-> > +        " Default: auto");
-> >  } =20
->=20
-> Adds the property to abstract base type "machine", i.e. every machine
-> has it.
+This array should be a static const and its size needs a fix (0x100)
 
-in past (which might be different from now 'policies'), we used to add
-a property to abstract machine when there is more than 1 board/target
-that consumes it. This follows that trend.
-If that is not desirable now, I can move it specific boards at the cost
-of some boiler-plate code duplication.
+Thanks,
 
-Boards of interest in this series are arm/virt and q35
+C.
 
-> Fundamentally assumes there is at most one onboard watchdog of interest.
 
-there might be, hence default 'auto' to describe various boards default/
-implicit watchdog selection.
-User might set it but is doesn't make much sense to configure already
-default state.
-
-> I'm lacking context, please bear with me: who or what is going to set
-> this property, and for what purpose?
-
-it's for users/mgmt apps that wish to explicitly optin to use watchdog.
-majority users don't need it (and can leave it at default 'auto' or 'off' s=
-tate)
-but depending on usecase, watchdog presence can be a mandatory requirement.=
-=20
-
-and here comes a choice for a layer that knows what guest OS supports
-to pick a suitable watchdog.
-
- - native: requires from user upfront knowledge what built-in watchdog is
-           and if it's supported by guest
- - wdat: abstracts user from need to know what built-in watchdog is
-         as still requires user to know is guest supports it
-
-As of today guest drivers support is in following state:
-  TCO watchdog on Q35 (linux: supported, Windows: not supported)
-  sbsa-gwdt watchdog in arm world - (linux: supported, Windows: broken)
-  wdat abstract watchdog (Q35 and arm) - (linux: supported, Windows: suppor=
-ted)
-
-peddling points in favor of wdat (MS and my to some extent)
-=46rom above selection, wdat is widely supported already for 10 years,
-and while it's not ideal/limited than purpose built drivers
-and relies on less that ideal MS spec.
-It lets use out of box drivers (both Linux and Windows) without need
-to install ones on guest side.
-
-=46rom QEMU maintenance pov, wdat abstraction uses under the hood
-native watchdog, but guest OS doesn't care as all it does in wdat driver
-is executing a series of mmio instructions as specified in WDAT ACPI table.
-And QEMU can transparently change hidden native watchdog to
-another one without need to reconfigure guest OS.
-With deprecation and old machine types being removed we can gradually
-phase out undesirable watchdog impl and replace it with what
-we would fancy in that moment.
-
-> > diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-> > index 92e84dfb14..7f5e10340f 100644
-> > --- a/qapi/machine-common.json
-> > +++ b/qapi/machine-common.json
-> > @@ -9,6 +9,23 @@
-> >  # Common machine types
-> >  # ********************
-> >  ##
-> > +##
-> > +# @WatchdogType:
-> > +#
-> > +# On board watchdog configuration.
-> > +#
-> > +# @auto: Watchdog is configured according to board defaults. =20
->=20
-> As far as I can tell, we don't document "boards" (machine types)
-> anywhere, let alone "board defaults".  Not this patch's fault, of
-> course.  The meaning of @auto remains unclear.
-
-would mentioning q35 and arm/virt here be of any help?
-Suggestions how to deal with it?
-
->=20
-> > +#
-> > +# @off: Watchdog disabled (ARM).
-> > +#
-> > +# @native: Native watchdog (arm/virt: sbsa-gwdt, x86/q53: TCO)
-> > +#
-> > +# @wdat: ACPI WDAT watchdog.
-> > +#
-> > +# Since: 10.2 =20
->=20
-> 11.0
->=20
-> > +##
-> > +{ 'enum': 'WatchdogType',
-> > +  'data': [ 'auto', 'off', 'native', 'wdat' ] } =20
->=20
-> What do managament applications need to know about onboard watchdog
-> configuration?
-
-given it emulates firmware knob (with qemu acting as fw),
-if watchdog is needed, mgmt would need to pick either native
-or wdat one based on what works for guest OS.=20
-
-> Do they need to know what @auto means for the machine type at hand?
-
-I don't think they would need to know what 'auto' means.
-
-> Do they ever need to pick a value?  Do they need to know which values
-> work with the machine type then?
-
-tentatively answer to both questions is yes. not impl. yet though)
-valid states per board would be:
-  q35 { auto -> native, wdat, off - not supported }
-  arm/virt {auto -> off, native, wdat, off }
-
-other boards might have different mapping.
-
-Easiest way to check for this is duplicated per board 'watchdog' property
-with per board setter that verifies setting.
-Or in case a of genric machine property, a callback to let boards
-add their own logic in generic property setter.
-=20
-> >> Q35 is easier as we rely on the guest quirks to disable direct
-> >> access via both paths.
-> >>=20
-> >> With GWDT we need to decide if gwdt-wadt=3Don should imply DTB
-> >> disabled, or if we just expose both & rely on a guest quirk
-> >> or worst case, need a separate property to toggle DTB too.
-> >>  =20
-> >> > I've used device property for x86 Q35 TCO watchdog and
-> >> > then using -global to enable it as workaround in previous version.
-> >> > Ugly but doable workaround. It puts a burden on users to learn how
-> >> > to configure it for each support watchdog/board combo.
-> >> > It's nightmare to discover/maintain though. =20
->=20
-> Our unsolved "how to configure onboard devices" problem bites again.
->=20
-> -global can be pressed into service when there's just once instance of
-> the device type.  The drawbacks you describe are real.  I want to see
-> less of it, not more.
->=20
-> >> > Hence in this version, I've used a generic machine property approach
-> >> > that exposes feature in uniform way across boards. =20
->=20
-> We've done that before.  It works, but I don't think it scale up to a
-> complete solution (I understand you are not after a complete solution
-> here, and that's okay).
->=20
-> For instance, machine pc-q35-FOO has two onboard cfi.pflash01 devices.
-> To enable configuration of their block backends, we alias their "drive"
-> properties as machine properties "pflash0" and "pflash1".  Their other
-> properties remain inaccessible.
->=20
-> Adding a few alias properties to the machine type is workable.  A bit ad
-> hoc, perhaps.  Bothersome to document, so we largely don't.
->=20
-> Adding alias properties for everything anyone could possibly want to
-> configure feels unworkable.
->=20
-> This is *not* an objection to solving the problem at hand with a machine
-> property.
-
-using aliases might work for q35 since it doesn't have 'off' option,
-i.e. we can add 'wdat' property to TCO watchdog and then let alias it
-to q35 as watchdog property:
-     { native -> tco.wdat =3D off,
-       wdat -> tco.wdat =3D on }
-
-for arm/virt it would look like, adding wdat property to sbsa-gwdt watchdog
-and then aliasing it machine's 'watchdog' property with following
-mapping
-     { off - don't create watchdog at all,
-       native -> sbsa-gwdt.wdat=3Doff,
-       wdat ->  sbsa-gwdt.wdat=3Don }
-
-it doesn't seem like a workable approach
-
-> >> > enum might work, but ...
-> >> >   machine.watchdog =3D [acpi | what else could we put here???]
-> >> >=20
-> >> > I'm not married to a way how we expose/configure it and will rewrite
-> >> > it to something that works for majority.
-> >> >    =20
-> >> > > thanks
-> >> > > -- PMM
-> >> > >    =20
-> >> >    =20
-> >>=20
-> >> With regards,
-> >> Daniel =20
->=20
+> +        [0x00] = true,
+> +        [0x01] = true,
+> +        [0x02] = true,
+> +        [0x3e] = true,
+> +        [0x5e] = true,
+> +        [0x6e] = true,
+> +        [0x76] = true,
+> +        [0x7a] = true,
+> +        [0x7c] = true,
+> +        [0x7e] = true,
+> +        [0x7f] = true,
+> +    };
+> +
+> +    return is_rsvd[addr];
+> +}
+> +
+> +I3CTarget *i3c_target_new(const char *name, uint8_t addr, uint8_t dcr,
+> +                          uint8_t bcr, uint64_t pid)
+> +{
+> +    DeviceState *dev;
+> +
+> +    dev = qdev_new(name);
+> +    qdev_prop_set_uint8(dev, "static-address", addr);
+> +    qdev_prop_set_uint8(dev, "dcr", dcr);
+> +    qdev_prop_set_uint8(dev, "bcr", bcr);
+> +    qdev_prop_set_uint64(dev, "pid", pid);
+> +
+> +    if (i3c_addr_is_rsvd(addr)) {
+> +        g_autofree char *path = object_get_canonical_path(OBJECT(dev));
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: I3C target created with reserved "
+> +                      "address 0x%.2x\n", path, addr);
+> +    }
+> +    return I3C_TARGET(dev);
+> +}
+> +
+> +bool i3c_target_realize_and_unref(I3CTarget *dev, I3CBus *bus, Error **errp)
+> +{
+> +    return qdev_realize_and_unref(&dev->parent_obj, &bus->parent_obj, errp);
+> +}
+> +
+> +I3CTarget *i3c_target_create_simple(I3CBus *bus, const char *name, uint8_t addr,
+> +                                    uint8_t dcr, uint8_t bcr, uint64_t pid)
+> +{
+> +    I3CTarget *dev = i3c_target_new(name, addr, dcr, bcr, pid);
+> +    dev->address = 0;
+> +    i3c_target_realize_and_unref(dev, bus, &error_abort);
+> +
+> +    return dev;
+> +}
+> +
+> +/* Legacy I2C functions. */
+> +void legacy_i2c_nack(I3CBus *bus)
+> +{
+> +    trace_legacy_i2c_nack();
+> +    i2c_nack(bus->i2c_bus);
+> +}
+> +
+> +uint8_t legacy_i2c_recv(I3CBus *bus)
+> +{
+> +    uint8_t byte = i2c_recv(bus->i2c_bus);
+> +    trace_legacy_i2c_recv(byte);
+> +    return byte;
+> +}
+> +
+> +int legacy_i2c_send(I3CBus *bus, uint8_t data)
+> +{
+> +    trace_legacy_i2c_send(data);
+> +    return i2c_send(bus->i2c_bus, data);
+> +}
+> +
+> +int legacy_i2c_start_transfer(I3CBus *bus, uint8_t address, bool is_recv)
+> +{
+> +    trace_legacy_i2c_start_transfer(address, is_recv);
+> +    return i2c_start_transfer(bus->i2c_bus, address, is_recv);
+> +}
+> +
+> +int legacy_i2c_start_recv(I3CBus *bus, uint8_t address)
+> +{
+> +    trace_legacy_i2c_start_transfer(address, true);
+> +    return i2c_start_transfer(bus->i2c_bus, address, /*is_recv=*/true);
+> +}
+> +
+> +int legacy_i2c_start_send(I3CBus *bus, uint8_t address)
+> +{
+> +    trace_legacy_i2c_start_transfer(address, false);
+> +    return i2c_start_transfer(bus->i2c_bus, address, /*is_recv=*/false);
+> +}
+> +
+> +void legacy_i2c_end_transfer(I3CBus *bus)
+> +{
+> +    trace_legacy_i2c_end_transfer();
+> +    i2c_end_transfer(bus->i2c_bus);
+> +}
+> +
+> +I2CSlave *legacy_i2c_device_create_simple(I3CBus *bus, const char *name,
+> +                                          uint8_t addr)
+> +{
+> +    I2CSlave *dev = i2c_slave_new(name, addr);
+> +
+> +    i2c_slave_realize_and_unref(dev, bus->i2c_bus, &error_abort);
+> +    return dev;
+> +}
+> +
+> +static void i3c_target_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *k = DEVICE_CLASS(klass);
+> +    I3CTargetClass *sc = I3C_TARGET_CLASS(klass);
+> +    set_bit(DEVICE_CATEGORY_MISC, k->categories);
+> +    k->bus_type = TYPE_I3C_BUS;
+> +    device_class_set_props(k, i3c_props);
+> +    sc->target_match = i3c_target_match;
+> +}
+> +
+> +static const TypeInfo i3c_types[] = {
+> +    {
+> +        .name = TYPE_I3C_BUS,
+> +        .parent = TYPE_BUS,
+> +        .instance_size = sizeof(I3CBus),
+> +        .class_size = sizeof(I3CBusClass),
+> +    },
+> +    {
+> +        .name = TYPE_I3C_TARGET,
+> +        .parent = TYPE_DEVICE,
+> +        .instance_size = sizeof(I3CTarget),
+> +        .abstract = true,
+> +        .class_size = sizeof(I3CTargetClass),
+> +        .class_init = i3c_target_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(i3c_types)
+> diff --git a/hw/i3c/meson.build b/hw/i3c/meson.build
+> index ebf20325cb..fb127613fe 100644
+> --- a/hw/i3c/meson.build
+> +++ b/hw/i3c/meson.build
+> @@ -1,3 +1,4 @@
+>   i3c_ss = ss.source_set()
+> +i3c_ss.add(when: 'CONFIG_I3C', if_true: files('core.c'))
+>   i3c_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_i3c.c'))
+>   system_ss.add_all(when: 'CONFIG_I3C', if_true: i3c_ss)
+> diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events
+> index 3ead84eb45..cdf7cb07f6 100644
+> --- a/hw/i3c/trace-events
+> +++ b/hw/i3c/trace-events
+> @@ -5,3 +5,19 @@ aspeed_i3c_read(uint64_t offset, uint64_t data) "I3C read: offset 0x%" PRIx64 "
+>   aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" PRIx64 " data 0x%" PRIx64
+>   aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64
+>   aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64
+> +
+> +# core.c
+> +i3c_target_event(uint8_t address, uint8_t event) "I3C target 0x%" PRIx8 " event 0x%" PRIx8
+> +i3c_target_handle_ccc(uint8_t address, uint8_t ccc) "I3C target 0x%" PRIx8 " handling CCC 0x%" PRIx8
+> +i3c_target_send_ibi(uint8_t address, bool is_recv) "I3C target IBI address 0x%" PRIx8 " RnW=%d"
+> +i3c_target_send_ibi_bytes(uint8_t byte) "I3C target IBI byte 0x%" PRIx8
+> +i3c_target_ibi_finish(void) "I3C target IBI finish"
+> +i3c_start_transfer(uint8_t address, bool is_recv) "I3C START with address 0x%" PRIx8 " is_recv=%d"
+> +i3c_end_transfer(void) "I3C transfer done"
+> +i3c_send(uint32_t num_sent, uint32_t num_to_send, bool ack) "I3C send %" PRId32 "/%" PRId32 " bytes, ack=%d"
+> +i3c_recv(uint32_t num_read, uint32_t num_to_read, bool ack) "I3C recv %" PRId32 "/%" PRId32 " bytes, ack=%d"
+> +legacy_i2c_nack(void) "Legacy I2C NACK"
+> +legacy_i2c_recv(uint8_t byte) "Legacy I2C recv 0x%" PRIx8
+> +legacy_i2c_send(uint8_t byte) "Legacy I2C send 0x%" PRIx8
+> +legacy_i2c_start_transfer(uint8_t address, bool is_recv) "Legacy I2C START with address 0x%" PRIx8 " is_recv=%d"
+> +legacy_i2c_end_transfer(void) "Legacy I2C STOP"
 
 
