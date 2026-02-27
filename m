@@ -4,113 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34D9FEFB61
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 15:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8202FFEFB67
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 15:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvzyK-0007gY-BP; Fri, 27 Feb 2026 10:41:44 -0500
+	id 1vw015-0000HU-8v; Fri, 27 Feb 2026 10:44:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvzyI-0007g9-Rl
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 10:41:42 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvzyH-0001AT-5r
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 10:41:42 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64ad79df972so2428006d50.1
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 07:41:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772206899; cv=none;
- d=google.com; s=arc-20240605;
- b=F8yvfTiYRqNsNPPiV2JW3oO5sPjSCIVMR0xwFU7unkfnsbPJisVfG7ytYty3ujWgSk
- 3oceJD4cI9X3cnNn6EERA/M1QdPfkLWS9RDXaZdTqCb74o/xxRO/X7HmJwcXAU2ycipB
- /KfNsodFN5FfyYL3/gGi+RzN/BZ3WF5xSCUirQc1Uo+C2td4IPWVkS+eSUsFNSoeE8FP
- +lyA8gNSg3qpuzLN3CWPEhW5Nlv93dfekeOKS3TZ2N1k12hY0pSF1U11XN6rFUO3H+7n
- C8Fyc5NHLDQlrydl2a3X9P+Ag1Emi9vQKcxdHf9/zN9jKwit6vcgLjCLVVhNJ5akFs39
- eEng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=sdhfb2hbydWQTQXwnX9sfwR4aytZTPxQ9Ec0YgcPDFc=;
- fh=305ByrI4MiawRuxmEuO2VeWT9Uic1fF/eg7hArgjZks=;
- b=Q1p8s8MExe0zOwS6tI2ROqVOhSsbpNdfUubYyQnq9ouiq4laEWPgZiwo+4ZnxQ69sq
- dCwO4/qqj/XOxVy1DC2SsdtLTCRK0A7HTgdanLF3SsQ+BH22LkzTu60BXtsiktT2wVSW
- hDNesjQRZteB47doc27vwUOwNQ3DSpVp0rEsyG4AnNS+MVa7I8hb8BhZwOi3k3XYHjXe
- z0iQFY3WyD5tueYhxLFYioEC1gtA4lIlC3Yby75X1T3UQNX0JmhuoYbt48ASKTI5qR7t
- zJK8s88kDpCTylPEPmtT6FvZR9opiFQxdSPqGq4vBewAW3VC1bQ40SxDNQPzNez/EOdX
- 6GhQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772206899; x=1772811699; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sdhfb2hbydWQTQXwnX9sfwR4aytZTPxQ9Ec0YgcPDFc=;
- b=uWG8lfhD93/ETVWny9xkjIOEWLzvrHMqfIbR7hmZWpNo0+OvRpNj9m6CNRpG0+Ji4M
- dFj4vZhau3EQcIKpKPJeiv25JwsvbmCrkiJoxxlJYZ//pTWyNIgekJZBaSyFUpsNAYdO
- oXcQfHs0XBrHRi4h4txTUeqwO4Jfeb55mq3nfT2sjiO12RY0v92MeU0YyxodMAm8uDM7
- +CFbqu3INhSF6RTGOruaBxGAtE/PsuW/bX/ak+UaxrmUl8oEWj3e1X25mrNeBZ5L1Hmd
- D0cffOI9zzNwiRfUl/lObSSI6JdHHk5/t0gxewA7nSDogT8ESbD1tfkvD22I/8WY/+VL
- KL5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772206899; x=1772811699;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sdhfb2hbydWQTQXwnX9sfwR4aytZTPxQ9Ec0YgcPDFc=;
- b=i7NWQNk/kqN1str9Mjl8Z39hJOkZ/GdK4EN4NLCRGD8i9g+cya2TMeqb5+UEP+tVRg
- JwixW71mWQbG61+MeHzTv6CzHRg8Iy/vJNnYJKqbmo47eLWc209mnyVi7DL/tUsm9EgX
- GoZ1IPX4RBJD0U2MCA0QvutJ7HtKbqLklOI6c23csF8vIOc19lOdCEIheOLEheh9CvDH
- dCnuIdWSLqSOR9JWu/fbGxL5maaSlo+8kPFLSyHMmaZ8sNzLVbstnaD9fWvxkyjCakZY
- dbgELDr81Hz54IYy+KJ5/QykYycg+4ptZ+tV6YFORWUZCnHLhtvFfUa0YxCIzW5LYRkD
- yowg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVyo6mjrURdtoQg1hCABFYKuvn+k1HqndOBQxE6i2e4TUUUbPFMYnPK68aOvd+BIm1FqBz2+27PREVV@nongnu.org
-X-Gm-Message-State: AOJu0YzfFjIWqYUlixWvdtafe9RbatdAEKsFI2c/SAl5xVoFJPryipeW
- 1PYuBxcW7durjw4SYkMk/C6as5ae5NzkpzKpNvDNeEreIuEuKvVeMKUSTuZ8JQx2h/umFRQI0cc
- 5nJXuINc+KrQ0x0ruO2DGQjOX1ZWueFYVQu/AQru3yg==
-X-Gm-Gg: ATEYQzzzZ1kKW3laN4VtBi6JAmjXdG35iHS1LO9bk0cCN43gm6dXl10eP+8kz4ci5/H
- g0vC8nnUIehvbOtA5alQ4dRF0AHJlwBRN9jD+I1ddSn+lcG3DtNl8Vr6nMxJlNwtrzQWzUMdaDC
- 8eQ/S5BhNgnFSbapMjk405/m1y7AcTd+9KrHk75Mqm7+zAMP324tISn6cX3PRHpbUzC2foo+of7
- 9EtHeJ+x65rlFmr23ODEJbAVo+GZSpdnV3TVuxxO+1qcBfkALCLC5M4Y9P3RiCkQeV6s3nmg0BU
- ENHd/ZlGW62fbKa/GUVc5PF/2A9FPszlxSfxquaI6/NEzDcYLhIzaVrXPlnkp9185b2D7h0CWX7
- O+A==
-X-Received: by 2002:a53:cf46:0:b0:64a:e959:b3be with SMTP id
- 956f58d0204a3-64cc22d70c6mr2119452d50.71.1772206899311; Fri, 27 Feb 2026
- 07:41:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vw011-0000H0-6h; Fri, 27 Feb 2026 10:44:32 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vw00z-0001rH-O2; Fri, 27 Feb 2026 10:44:30 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBXX5vYu6Fp8hKYBw--.45S2;
+ Fri, 27 Feb 2026 23:44:24 +0800 (CST)
+Received: from [192.168.31.151] (unknown [113.246.232.133])
+ by mail (Coremail) with SMTP id AQAAfwAHXuvXu6FpPbkdAA--.36627S2;
+ Fri, 27 Feb 2026 23:44:23 +0800 (CST)
+Message-ID: <22745fd1-afa1-4b0b-943a-f275407ca3be@phytium.com.cn>
+Date: Fri, 27 Feb 2026 23:44:22 +0800
 MIME-Version: 1.0
-References: <20260227135736.2280161-1-peter.maydell@linaro.org>
- <20260227135736.2280161-2-peter.maydell@linaro.org>
- <CAFEAcA853KSRD7yJKjyoM-E2R4YNou=x+BCR9EWrjym==-tQjA@mail.gmail.com>
- <6b0d1396-63bd-48cd-bfc3-2b0dc34327e9@yodel.dev>
-In-Reply-To: <6b0d1396-63bd-48cd-bfc3-2b0dc34327e9@yodel.dev>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Feb 2026 15:41:27 +0000
-X-Gm-Features: AaiRm50zEKLwcKtVxa6EY25rb6orP1q_vda45rmeYjyWdtzKOgVJ6-LfBs6kJZY
-Message-ID: <CAFEAcA9xXoD505V4wzfTZHt_ajRGYVRN3KRd3BQgGx=YRDYXNQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] scripts: Move lsan_suppressions.txt out of oss-fuzz
- subdir
-To: Yodel Eldar <yodel.eldar@yodel.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Alexander Bulekov <alxndr@bu.edu>, Paolo Bonzini <pbonzini@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 23/31] hw/arm/smmuv3: Add access checks for CMDQ and
+ EVENTQ registers
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101823.2996302-1-tangtao1634@phytium.com.cn>
+ <eeaf6ae9-23e0-4413-985f-dcff03737dbb@linaro.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <eeaf6ae9-23e0-4413-985f-dcff03737dbb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwAHXuvXu6FpPbkdAA--.36627S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQATBWmguFMsVgAOsB
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Zw4DJr4rAryxurWfZFy8AFb_yoW8WrWDpF
+ y8K3s8KF4Iqry2v3sayr10yay5WFZ7Jwn7Xr47Gr98Ww15Arn5ZF48Kr95Ga4kWry8J3Wx
+ X3WDtayxW34rAFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,10 +79,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Feb 2026 at 15:32, Yodel Eldar <yodel.eldar@yodel.dev> wrote:
-> Also, there's a missed reference in the docker test script (diff below).
+Hi Pierrick,
 
-Oops, thanks for catching that.
+On 2026/2/26 05:59, Pierrick Bouvier wrote:
+> On 2/21/26 2:18 AM, Tao Tang wrote:
+>> Add access control for command queue and event queue related registers
+>> to ensure they can only be modified under proper conditions.
+>>
+>> For command queue (CMDQ):
+>> - smmu_cmdq_disabled_stable(): checks CMDQ bit in CR0/CR0ACK
+>> - smmu_cmdq_base_writable(): checks IDR1.QUEUES_PRESET==0 and CMDQ 
+>> disabled
+>>
+>> For event queue (EVTQ):
+>> - smmu_eventq_disabled_stable(): checks EVTQ bit in CR0/CR0ACK
+>> - smmu_eventq_base_writable():checks IDR1.QUEUES_PRESET==0 and EVTQ 
+>> disabled
+>> - smmu_eventq_irq_cfg_writable(): checks MSI support and EVENTQ_IRQEN 
+>> state
+>>
+>> Additionally, mask reserved bits on writes using 
+>> SMMU_QUEUE_BASE_RESERVED
+>> for queue base registers and SMMU_EVENTQ_IRQ_CFG0_RESERVED for
+>> EVENTQ_IRQ_CFG0.
+>>
+>> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmuv3.c | 157 +++++++++++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 154 insertions(+), 3 deletions(-)
+>>
+>
+> It seems like we use the same pattern a lot of time for various SMMU 
+> registers, and makes me wonder if we could not introduce proper 
+> register definitions with callbacks similar to Arm *_reginfo.
+>
+> That said, it's definitely out of the scope for this series:
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
--- PMM
+
+Thanks for your suggestion. I will consider refactoring it after merging 
+the current series.
+
+
+Best regards,
+
+Tao
+
 
