@@ -4,106 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A38C104891E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB33104891F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw6Zr-0000jl-P3; Fri, 27 Feb 2026 17:44:55 -0500
+	id 1vw6c2-0001cU-7Q; Fri, 27 Feb 2026 17:47:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vw6Zq-0000e0-Pt
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:44:54 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6by-0001c7-AO
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:47:06 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vw6Zp-0003L6-4j
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:44:54 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D58BD5BD78;
- Fri, 27 Feb 2026 22:44:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772232292; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RrZYcUPDWa5IAfWblroGNFzLrJjjnhs4/8E3Kh0lDcY=;
- b=BJGD3r6/KpqB8jMCCkQafv/E9ID8g0lV4ToD/Cvrgah4WOMHvODWnp3hHTbTa2GnCCz0cf
- EJRm84PgyFC8wP4V1zdsQ+BqHnwG9v9t0n4G99eLQdM/crqLWBgLQx2gwaEYJ4Mwqiey02
- a2yNpdBb5BqohPuEq+2Tib3U/PFSmDs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772232292;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RrZYcUPDWa5IAfWblroGNFzLrJjjnhs4/8E3Kh0lDcY=;
- b=zKtAMyZ8xMWcbkoxZ/7quv5nrBHvGOE5RgCFxqzSk9gKIwPzisybs9R4PqQ2HthwxvrwwB
- fILd/aaraNtObSBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sl0YSNLt;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BKuMX66u
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772232291; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RrZYcUPDWa5IAfWblroGNFzLrJjjnhs4/8E3Kh0lDcY=;
- b=sl0YSNLtAhz746HHJNNylT2s1EbO7A0owsu327tsk6TUN/ax9bf4ia4+FZKAAZojxl2vCd
- 9MpTqjnR6awIFkrvs0UOQ92+w2UT8aCo+qi50NDlz3tnmzkAuXCGsgW7xG2q2PMUsW62A6
- gigv1/8WadeesplbrLevsUdJQ9kwxlw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772232291;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RrZYcUPDWa5IAfWblroGNFzLrJjjnhs4/8E3Kh0lDcY=;
- b=BKuMX66uA5gfCBYT9iv1qo1QUhcGxzKKFzJH8TISis0n9JSmWrjEbim++f7cnFi8/gCOPx
- eYvPcWmWBFekRBBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 576263EA69;
- Fri, 27 Feb 2026 22:44:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iXLQBmMeomkCdAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 27 Feb 2026 22:44:51 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
-Cc: vsementsov@yandex-team.ru, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 05/16] migration: vmstate_save/load_state(): stop
- tracing errors
-In-Reply-To: <20260220210214.800050-6-vsementsov@yandex-team.ru>
-References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
- <20260220210214.800050-6-vsementsov@yandex-team.ru>
-Date: Fri, 27 Feb 2026 19:44:48 -0300
-Message-ID: <878qcdu7q7.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6bw-0003nm-QY
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:47:06 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-4398f8403edso1980697f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:47:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772232423; x=1772837223; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fEcDCU7eTJBeLj9PcATwG2zFXX1UsnBcTRZ8/NbeQDE=;
+ b=VIEhhJDUPt2B/cZKSSfI8i2nBUI2yJG5fePbF5WSnfvd6eHnZrgza7+stDZKK0P9Hw
+ Bi0usL77ByeK/x+fzADeeYII3RXUxFuVz5V1OTFSpmHVxNCPHpqEOa1pMUqgDaXxACaI
+ ZyUGBAh7ePOwtvNq9oeyXvb7LPTfLJQb8lKgU3DSJEHjPW4WYVGkKx3ua5CjjvWiBcK7
+ yvUPUWIufkGAMwk5c3cy3kgQz4+Qzpgzl0vVZ5xDgw5qO+855FW0V66OfG58ru09ORKs
+ ugYOnaBxwI5PVDBfmf5V3X9x5cYGpnkkRrhLn8dGsSJnodobCybuAB1O2ow0o3v1I1/l
+ Mccw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772232423; x=1772837223;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fEcDCU7eTJBeLj9PcATwG2zFXX1UsnBcTRZ8/NbeQDE=;
+ b=Ky4FVmygTlv8E0s6PBMztbsyZdzxQBI6KcUQimbbM0/RiDsgAHmGEKbAT/jpdZhoBC
+ 92hgkaD5x04S6VaIR3G5TVKppbIWj1rcdvJxwEd0T9vrMHfTUDyT9kKAqKLlQTLpQivr
+ XB1SJnrjI5S9aI2jC9CybboOZ0W9iWlkPhqNvG0klX/4mHpCRec0C6z6KOMFF/CYOS0N
+ GSW7KROTkh1YgAMVFEQr8hxHdP7oDUhx80OBPTQH8Ey+uVo+BfzEctvy9kotkznWabaZ
+ Ilkjy81FN6diQbWQycCvQT6KC0ytzXZ7KgIy5VpJhWOIcE+Dex7rw5o5qWr7T8x3Md3n
+ uKCg==
+X-Gm-Message-State: AOJu0Ywnw9RH51jFaFZpmw4u52I8hvZA8guYLdCCT6mv2rMhiPNSb9zQ
+ 2kGgiJ3PSjsTsU9TRAmxFQYGCeHhwgpeIZB3jcdxYWnqZVP9xzdn8GKIoA5Iqh4h+2U=
+X-Gm-Gg: ATEYQzwxVKZL6J67k6d/O8SRNXuzmv3LBHi7rGllZ60me4VKebbQfm3Liw1+209KQIq
+ azku5KY14JDZgS5qxd5oatpSnIBNwE2ORVg3UC8gT1zftr2VmS0mL/pfG4YGOCCf6HRj/hR7ESQ
+ 9m5o5W0cbaIRbqLqtDXzDdhSnOADv1gU+GHNUrpEb7kEue50KcWFzdhmVaXhKimcOI4cmNkboJn
+ Dxmjb189Q1LDWbwUZYSBbJGM4gtw/51/YktUncl6zwyG6QAEXxdynejJYfyKURhzD5ft3/SPNqE
+ rUxcG5I2cO7yhenBthuTFHdyLr/W8MoHKymeV6G+mXswWrM9YMaOKce2lP5GmeEA7SI+bmpwpYT
+ uWtGMiMJOc2iJFG21h4LJcQpkoVuSbZJKlw0qzraAFZ3/mLKAZcL6CLN6kEMh4ijPyz2NyKpoPY
+ AksYt7bfhcu38L9YlXKZCko3e26hDCHGCLDDo/ru4pRKh9H9OnUCzq/7DjX+2ahXVedQ==
+X-Received: by 2002:a05:6000:230d:b0:437:7010:1d09 with SMTP id
+ ffacd0b85a97d-4399de20bf6mr7104092f8f.27.1772232422835; 
+ Fri, 27 Feb 2026 14:47:02 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4399c70ff6esm15475872f8f.12.2026.02.27.14.47.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 27 Feb 2026 14:47:02 -0800 (PST)
+Message-ID: <5e02aeb3-68d3-4120-8109-37b7b5f1da24@linaro.org>
+Date: Fri, 27 Feb 2026 23:47:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: D58BD5BD78
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/16] hw/riscv: Check endianness for fw_dynamic fields
+Content-Language: en-US
+To: Alistair Francis <alistair23@gmail.com>,
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
+ <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-8-djordje.todorovic@htecgroup.com>
+ <CAKmqyKOr0mbz0xksnO-=n0Z3cGbY0FqPTnwfY-7WaesZKewHwg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAKmqyKOr0mbz0xksnO-=n0Z3cGbY0FqPTnwfY-7WaesZKewHwg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,123 +108,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On 27/2/26 00:32, Alistair Francis wrote:
+> On Wed, Feb 25, 2026 at 8:20 PM Djordje Todorovic
+> <Djordje.Todorovic@htecgroup.com> wrote:
+>>
+>> For riscvbe target, the fields for OpenSBI's fw_payload
+>> need to be in target endian.
+>> ---
+>>   hw/riscv/boot.c         | 14 ++++++++++++++
+>>   include/hw/riscv/boot.h |  5 +++++
+>>   2 files changed, 19 insertions(+)
+>>
+>> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+>> index 6dab521a6b..f13264a87f 100644
+>> --- a/hw/riscv/boot.c
+>> +++ b/hw/riscv/boot.c
+>> @@ -396,19 +396,33 @@ void riscv_rom_copy_firmware_info(MachineState *machine,
+>>       size_t dinfo_len;
+>>
+>>       if (riscv_is_32bit(harts)) {
+>> +#if TARGET_BIG_ENDIAN
+> 
+> This will need to be done without adding any TARGET_BIG_ENDIAN macros.
+> We don't want to have custom built binaries
 
-> We duplicate some of errors by trace points. That doesn't make
-> real sense: we report the error through errp, and stop migration,
-> no reason to duplicate the reported error by trace points, making
-> error path more complicated.
->
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  migration/trace-events |  5 ++---
->  migration/vmstate.c    | 14 ++++++--------
->  2 files changed, 8 insertions(+), 11 deletions(-)
->
-> diff --git a/migration/trace-events b/migration/trace-events
-> index 90629f828f..e864d19c55 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -55,15 +55,14 @@ postcopy_pause_incoming_continued(void) ""
->  postcopy_page_req_sync(void *host_addr) "sync page req %p"
->  
->  # vmstate.c
-> -vmstate_load_field_error(const char *field, int ret) "field \"%s\" load failed, ret = %d"
->  vmstate_load_state(const char *name, int version_id) "%s v%d"
-> -vmstate_load_state_end(const char *name, const char *reason, int val) "%s %s/%d"
-> +vmstate_load_state_end(const char *name) "%s"
->  vmstate_load_state_field(const char *name, const char *field, bool exists) "%s:%s exists=%d"
->  vmstate_n_elems(const char *name, int n_elems) "%s: %d"
->  vmstate_subsection_load(const char *parent) "%s"
->  vmstate_subsection_load_bad(const char *parent,  const char *sub, const char *sub2) "%s: %s/%s"
->  vmstate_subsection_load_good(const char *parent) "%s"
-> -vmstate_save_state_pre_save_res(const char *name, int res) "%s/%d"
-> +vmstate_save_state_pre_save_done(const char *name) "%s"
->  vmstate_save_state_loop(const char *name, const char *field, int n_elems) "%s/%s[%d]"
->  vmstate_save_state_top(const char *idstr) "%s"
->  vmstate_subsection_save_loop(const char *name, const char *sub) "%s/%s"
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index dd7cd27993..b07bbdd366 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -144,7 +144,6 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->          error_setg(errp, "%s: incoming version_id %d is too new "
->                     "for local version_id %d",
->                     vmsd->name, version_id, vmsd->version_id);
-> -        trace_vmstate_load_state_end(vmsd->name, "too new", -EINVAL);
->          return -EINVAL;
->      }
->  
-> @@ -152,7 +151,6 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->          error_setg(errp, "%s: incoming version_id %d is too old "
->                     "for local minimum version_id %d",
->                     vmsd->name, version_id, vmsd->minimum_version_id);
-> -        trace_vmstate_load_state_end(vmsd->name, "too old", -EINVAL);
->          return -EINVAL;
->      }
->  
-> @@ -245,7 +243,6 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->  
->                  if (ret < 0) {
->                      qemu_file_set_error(f, ret);
-> -                    trace_vmstate_load_field_error(field->name, ret);
->                      return ret;
->                  }
->              }
-> @@ -269,7 +266,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->              error_prepend(errp, "post load hook failed for: %s, version_id: "
->                            "%d, minimum_version: %d: ", vmsd->name,
->                            vmsd->version_id, vmsd->minimum_version_id);
-> -            ret = -EINVAL;
-> +            return -EINVAL;
->          }
->      } else if (vmsd->post_load) {
->          ret = vmsd->post_load(opaque, version_id);
-> @@ -279,12 +276,13 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
->                         "minimum_version: %d, ret: %d",
->                         vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
->                         ret);
-> +            return ret;
->          }
->      }
->  
-> -    trace_vmstate_load_state_end(vmsd->name, "end", ret);
-> +    trace_vmstate_load_state_end(vmsd->name);
->  
-> -    return ret;
-> +    return 0;
->  }
->  
->  static int vmfield_name_num(const VMStateField *start,
-> @@ -444,20 +442,20 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
->  
->      if (vmsd->pre_save_errp) {
->          ret = vmsd->pre_save_errp(opaque, errp) ? 0 : -EINVAL;
-> -        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
->          if (ret < 0) {
->              error_prepend(errp, "pre-save for %s failed: ", vmsd->name);
->              return ret;
->          }
->      } else if (vmsd->pre_save) {
->          ret = vmsd->pre_save(opaque);
-> -        trace_vmstate_save_state_pre_save_res(vmsd->name, ret);
->          if (ret) {
->              error_setg(errp, "pre-save failed: %s", vmsd->name);
->              return ret;
->          }
->      }
->  
-> +    trace_vmstate_save_state_pre_save_done(vmsd->name);
-> +
->      if (vmdesc) {
->          json_writer_str(vmdesc, "vmsd_name", vmsd->name);
->          json_writer_int64(vmdesc, "version", version_id);
+Indeed. You should check the HART endianness.
 
-One benefit of the traces is to be able to match with source code when
-debugging a QEMU instance that cannot be rebuilt. Not so much about the
-trace itself, but to be able to know _where_ the code exited.
+An useful exercise is to consider a system with 2 HARTs running
+in different endianness. QEMU should be able to run that setup.
 
-However, I have no preference.
-
-Acked-by: Fabiano Rosas <farosas@suse.de>
+> 
+> Alistair
 
