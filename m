@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A97104891F
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2706104891E
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 22:52:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw6ev-0002JW-D5; Fri, 27 Feb 2026 17:50:09 -0500
+	id 1vw6gP-0002rm-FQ; Fri, 27 Feb 2026 17:51:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6eu-0002J8-0x
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:50:08 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6gN-0002r7-CH
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:51:39 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6eq-00047r-DS
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:50:06 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48370174e18so14553595e9.2
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:50:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vw6gL-0004K4-Vd
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 17:51:39 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43989bd056bso2145384f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 14:51:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772232602; x=1772837402; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772232696; x=1772837496; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sPopO+rtxGbf8mbPUkMqTuisGzC582vtWQ6t1kx3hPM=;
- b=Uva4AdQCWbAbSI7ESiavlXUWTrtSDyNI/0tB6SFgq/M/8je52YiGy1zUzQ8n5yXUh7
- 843UnQ+2qnsndn+92cJcnF9X6e+iy6c2AKFbMKt0P4R8kq3GlvWT8P3PqACBwEUguvEP
- erO2tqGkDfZ/Yx8cBDXgPlJu01+eEQg4aJs/Sp8zA1vF6P9nDl8IcnfvllAcD1xkuQqt
- kK/5uNV3h0Lzu70yL1agMc7DXj0clKolHw3GaJ1VDajZ/Dgl+6OYj13VH5MAvkCPtXk4
- 4lRunAcOhvljoe4yi3S2ZMgfMQ9uIizGHUt1fxTfZE3JEAgSzJAqlv3fTpPptM49P0I4
- aKqw==
+ bh=w2+K1gZgXy5XuDvkue0dAnONG0M7zaWD4q/STguEmzY=;
+ b=Tre5YuZtXnQOVTwghz29z6au+lNg1gSevbsdQLc0xOuXfLj7RnEbjmb3MrL7yglcEN
+ xhT1LOyhB75idyBfyUwivTcwg9WF8M380uSfhW/8YtpLgcCfdXeqAWQBPysplusYAcv3
+ EZLEckhx+CJMCpOZBra00nKD+wwmGN7p858a1CLj9C3krFArtXHNYbP4wkPIfqAcscWr
+ 2/HxNmqGlYWJn6PhAIaWXvBUSZdvbXZn6jodqL2bq/p6T0grij1a88crtsGqCGOexMth
+ sD64z1AF0wTRzjArLLVMCWKPqLftBVJcgpAX3uMG7gp47Yztk6IG7tCLZ68wpBJn4/PU
+ C1pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772232602; x=1772837402;
+ d=1e100.net; s=20230601; t=1772232696; x=1772837496;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sPopO+rtxGbf8mbPUkMqTuisGzC582vtWQ6t1kx3hPM=;
- b=bFLi0pj3GrLLiMEDw7cmx/hlbRZTz/iicPGj7odbZF+fYJFfTzIA5itf7x0qCxmqW1
- W5O824UmNvx7zFAgAuu1KmFDSPDNpE1q7y8rfgFHvYP8QDDWNGCFZ8o6f6b7l1e05pQ8
- LjdpHFJINW/ilV3Q25lNqtuJkh4ubsS7vHkD680RBtPvwRHrEmSOBWkLqMkXrZ3JTgs5
- Wbz1nn4wPbImXoxaGnaTLe1M5zfEUksm89r3FNIM7wH/WPFbD67scSVul0fsGT8MCK3s
- uVt9B/Gpvc5NO6ts8jXmMbMm1Q7uQ6gcb3oyvIOL6GMOti4lwQEWDtefLyakH++UiyFq
- TIKA==
+ bh=w2+K1gZgXy5XuDvkue0dAnONG0M7zaWD4q/STguEmzY=;
+ b=FlQF+CiinF9zw0hXibqD5y7jxDRkH43DCMPqGiDfr2l75mbVRJgNBOsAXz4O6iz7uL
+ ltsubaplNwaC+nTYuhsHIr/OWJstQKEPL4yhwRY3QA265qwZmYRuX/8w69wbKQYwiRzG
+ T6DqlvCJInOCAaK2ncIf/xsnCR3qRP9r6c6rhFkF1JWjq7wmiF+MvptVXnQOeZyHAWhk
+ Z1tLrRtzY3xpVQewD0NRR9hBMZ79heRXyGDE2dQxiH9SnNFgxr64gg7eUeWdkNIigPQl
+ A8jEJQFcsDixY7LNMi40zd91spTbsVGAJeTPuchuP8FwGQ1mEOXDJ5MLixA4p1QM9zSX
+ +myg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXITH/kg49TGetSfnCbZ1rrBEeqahn/W3OBhTowA3cm/4z4vkrOARXr+PtSBnLlY24dK3NI7pUqG0T@nongnu.org
-X-Gm-Message-State: AOJu0YxBoERSlfQ9QsZVEIJ5Ny8XkDbXhx6NNy36bOJL56EAcOaQ9ydO
- CChnCq9ifJCqNNCDSKwo835WdyagZw+T2bRbEe+n/HboqJW09PkVWJheg7HlCkaDNrE=
-X-Gm-Gg: ATEYQzzWXMJy/b0XvyXSiqz2r90IfxwoyBD4dSTi0jaRIpekeJwe6fBjHjPAh6/jqeT
- FzHdZMmUaanVaIMkk6I8mAZEKz67HtlBbaeJHGoWzjgwssFJspNgC14TpRZmR0PoRnnHebO8xYc
- FYP6u5vgNtkAC2bURyEBpzNgU6qWHfxmMiCxaTZxkfRaI+pjCFPla1aO/SzgsH/eua1X1m2nx7b
- vM9PUdyybm+dqx3e+zv4GT3SiC8xZKRX9M37MR98iBHkvJSEJ8PEFhiAT3n3wuGkXkxxKyEY7Lo
- 9Lnf/3oCNZv6mGMATuUtEvreE7lSbHnFmGmnS5NHn+eFnNcNe2D4YHoET9dAws9JC8qJiyHLzBy
- bo6ojBQGUGmC6hJr0JBo+1K+6iYwoRLLMQscrNaS3JLojnVmKsdFW+CDupV0oHz49J8ULGPHuAn
- CXEgMSA5pFEPwgxEdaOAS9xvQGI5KOA2FZi0EswKoYbPlTZzgcyBAvuBoIjS6kmQTiLQ==
-X-Received: by 2002:a05:600c:3e8e:b0:47a:8cce:2940 with SMTP id
- 5b1f17b1804b1-483c9ba2922mr75058575e9.14.1772232602347; 
- Fri, 27 Feb 2026 14:50:02 -0800 (PST)
+ AJvYcCW1cI52oPaZHFZsgL3EbExXvVL297lLC7iMtVf7yxF8H16M1R9gpcHTmApngIUxVuTpqsedUiK1kSOm@nongnu.org
+X-Gm-Message-State: AOJu0YyeHWGbeCuvjLLCuRR5rCX3qVvM0Y3wl2c31w+CFlitouKV9p1m
+ alzCWRcVD7Mq/k091YDP+L1wYMBN+kdLUdiXgJ5NL2IvRsCV8FON01llTwTTfXhwEmY=
+X-Gm-Gg: ATEYQzx4kLBW70E8C5Zn+/dL7MJ6lshpYwq/U7bvhVsycIzi+GfkN7VwSTz3t3Fxl7f
+ 0zKtMs9M49KWzNT3FDVROnWMIJd7hCV4vgBP50ttwqTQP8mMzatIezEhS+KN5gPbEzC2q8ITqG6
+ 4pE2b8Tz4V/0qwlVT/rx1R/+FUQHtcGVXPCNEUowa8N2tK3jCD4aTrPocnZI46iCLhYTfarYbOd
+ huOmyenZ84DV0cmds06nXHarxReNpTPYUse8Nw0TE4hzKrPpQOhoCkVgYmJJg+zgeMppHIYwD2r
+ umGonjSvuTh8mUbTKzChBi0RFMeW5r4QRM7GeSbPlNzoF6/eHrAGkwWAN9TamE9Tr8upFM2hAKZ
+ p1a07OVnPXsCuH+5EI19jrj6VY+JLSI2gh/9Y+zVIMFznmPqFaUulSdIgeVsMx2MryoHPj1oBgs
+ n+tvzSJqAjDsKZjiM3ftG1+BB+Ra1nBRy/hD87Ge4gKLClZxW8Vb+GG56jflqPE1nPpw==
+X-Received: by 2002:a05:6000:2689:b0:436:8f7e:a486 with SMTP id
+ ffacd0b85a97d-4399d97f9damr8510246f8f.11.1772232696501; 
+ Fri, 27 Feb 2026 14:51:36 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3b3ce8fsm135027055e9.4.2026.02.27.14.50.01
+ ffacd0b85a97d-4399c60f783sm9479420f8f.6.2026.02.27.14.51.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 14:50:01 -0800 (PST)
-Message-ID: <c17ea52f-223f-4845-86b8-7ceb5182480b@linaro.org>
-Date: Fri, 27 Feb 2026 23:50:00 +0100
+ Fri, 27 Feb 2026 14:51:35 -0800 (PST)
+Message-ID: <a7d80b8c-4383-4077-8926-99f227ef3220@linaro.org>
+Date: Fri, 27 Feb 2026 23:51:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/16] config/targets: Add RISC-V userspace targets
+Subject: Re: [PATCH v2 09/16] arch/riscv: Set UBE bit on BE target
 Content-Language: en-US
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
@@ -80,13 +80,13 @@ Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
  "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>
 References: <20260225102016.200654-1-djordje.todorovic@htecgroup.com>
- <20260225102016.200654-9-djordje.todorovic@htecgroup.com>
+ <20260225102016.200654-10-djordje.todorovic@htecgroup.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260225102016.200654-9-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260225102016.200654-10-djordje.todorovic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,29 +110,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/2/26 11:20, Djordje Todorovic wrote:
-> This commit adds necessary tagets to build Qemu for RISC-V userspace
-> emulation.
+> When the RISC-V target is built as big-endian, ensure that is signaled
+> in mstatus via UBE bit.
 > ---
->   configs/targets/riscv32be-linux-user.mak | 7 +++++++
->   configs/targets/riscv64be-linux-user.mak | 7 +++++++
->   2 files changed, 14 insertions(+)
->   create mode 100644 configs/targets/riscv32be-linux-user.mak
->   create mode 100644 configs/targets/riscv64be-linux-user.mak
+>   target/riscv/cpu.c | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> diff --git a/configs/targets/riscv32be-linux-user.mak b/configs/targets/riscv32be-linux-user.mak
-> new file mode 100644
-> index 0000000000..bca84945d9
-> --- /dev/null
-> +++ b/configs/targets/riscv32be-linux-user.mak
-> @@ -0,0 +1,7 @@
-> +TARGET_ARCH=riscv32
-> +TARGET_BASE_ARCH=riscv
-> +TARGET_ABI_DIR=riscv
-> +TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
-> +CONFIG_SEMIHOSTING=y
-> +CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
-> +TARGET_BIG_ENDIAN=y
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index e95eea0249..0e24f2cbcd 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -716,6 +716,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>               env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 1);
+>           }
+>       }
+> +#if defined(TARGET_BIG_ENDIAN)
+> +    env->mstatus |= MSTATUS_UBE;
+> +#endif
 
-See commit 91fc6d8101d ("linux-user/microblaze: Fix little-endianness
-binary") and its references.
+You should update mo_endian_env() instead IMO.
+
 
