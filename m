@@ -4,95 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D44C9FD5301
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1F3FD5307
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvs7r-0003af-IP; Fri, 27 Feb 2026 02:19:03 -0500
+	id 1vvsDn-0005Fa-Ji; Fri, 27 Feb 2026 02:25:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vvs7p-0003Zv-BF
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:19:01 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvsDk-0005FI-VO
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:25:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vvs7n-0003AV-Fy
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:19:01 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vvsDg-0004Fs-UD
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:25:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772176737;
+ s=mimecast20190719; t=1772177103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3UgH+JOnN2M8WHuMSMR4uqDP2YjLtYKqK18FCdha8ns=;
- b=BBaEdxIPfHsKe9Q1EOwNbazHQIfD5dLyrimtzoA96U3Z5jp14aV16v776qR0Dlkoee14GM
- xo+LdZqjwZT8yP6pvg8zljn6HxHEzqVgz2wLggu364JmbV/5umbgXJl4q8rpKFicbxZpKd
- C9fsHtEe8a7OTtkERDKZF/ed0GQmaw0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-Xv41ExysPzG3hP7PlJ7Cuw-1; Fri, 27 Feb 2026 02:18:55 -0500
-X-MC-Unique: Xv41ExysPzG3hP7PlJ7Cuw-1
-X-Mimecast-MFC-AGG-ID: Xv41ExysPzG3hP7PlJ7Cuw_1772176734
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43992a50893so1209309f8f.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 23:18:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772176734; x=1772781534; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3UgH+JOnN2M8WHuMSMR4uqDP2YjLtYKqK18FCdha8ns=;
- b=m/BqpagOFNHbICWJqNPhIjS208GAoJR0xygZJ85z2SVSEwPrbtPlOU8jvxTwpegQpk
- zIfKoKiWpbvlLhi4UqlMsGzp9IOwtJJCqW3PXqSJUHXtjI82YR92SIjIHF8wR1+8SigM
- yMwGlvMFMFBcuhvOpWmtGRezN1o/Wjme+X/ilivPxDIZ3bRMcXTSoyw5uJMaSN/CrHs+
- gcePWZKeNbL2H3H/jG5XjtNyRau3L/6yX+LRHdkAQZ02Pg9eDudHqVIl0pKwim1c55rJ
- eBcaIrZi73xJQZog3lNKH34bA1o53mNq0OGegceC2uND5XFAaG8Lew7JqekGcK8b8Whb
- KyGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772176734; x=1772781534;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3UgH+JOnN2M8WHuMSMR4uqDP2YjLtYKqK18FCdha8ns=;
- b=wZgEeFZOVqXqvvjOBBoE+oTqHCvXx26qPidvhRNmW4wTODOWrAgqc+Ai6M3qoVRjuk
- Ip/dS5SJnZt1YtSRQk8cShW16GrMSTHy/6KdQ8mWyYjfOiBb3NQrvUSt8ITnvXpXHZYf
- Uwm15rkQlgACs7W+dy3O0xUicnX1/ZuiLQfXknW+D9NkJFx/osEu8yO0ivPGfol+LHXf
- raOdfGRgC3Z6mmaF3h2tHxNhvWPwLOsmh4jvJD86DhczPtznaAIRyo9c29wl28BHxt1L
- vLJ0C0bSrPtwfufPhXnh4xxnfCrtK8VBVK43dId52bzlwrv/YpdrfSAvGIGcAnHKWoog
- DEzw==
-X-Gm-Message-State: AOJu0YwpD5DEp/RIw8sYgSQjbaOIVUPEP2pCyngitGSRnlJIu33aWH/e
- g9fZwR3WMMXVrw3ZSBZGxlpkgsJCk2Mr3wQDYLxDk6AkXytOMdL1FmJC2lAMM6DTNYCrU3/fK6c
- 2qhW8yUwd+LXPGfmNg8dHvjQvyZPKTe9blEa5F+RhDw4XLrvinPmZavnXf5Xe+BjFoCaZKVY/IX
- ivLiwIOzdiI5OxH8yAqUusLnduouWuO+SuzlxneKgS
-X-Gm-Gg: ATEYQzyNT6SyFp6mA8UqyM2KjBO7xCR+C9s+0GFBQte1hfAghK5ErnUjSPROCKkDbdh
- ZoL5X1/Xx/n20J2Pc0nk4kNlcEKTtsbsjxgqDG95xqgLozbqQ6O65xiX2a4aXu+3lsupqN+zKbl
- 7Eq0sYHmWs+cyLsLT0jogaQIpBNEQH+9u10+0MLrWVEQXPP14O7T8CvSpQTRhlz5bcQO05cq4K1
- SZsqntRG9lneM7WLn4B2+aWi3NdOWRvniTczc6PLLbh6FVD68KbwkbS0aftWxb0zQqjn7M34Ltp
- xc768GayrBwDA77tA1eQHZB3Gy8Z5zD7a2lQ3Z5v5u5/if4r+Hefzmu1hZ4Yra8tNxV7qOKxavF
- qNERE8Mf3AAR+E/WGw0ztf6HmSoPIwaMlR9ijWsBexWfV/1chLPvVhKXuULpmNfCEwr/vB8s6qt
- RrKvocjaqUFxuQvwVmIav0RWdeRO0=
-X-Received: by 2002:a05:6000:26c7:b0:439:8bee:b985 with SMTP id
- ffacd0b85a97d-4399de3dd78mr2547249f8f.54.1772176733785; 
- Thu, 26 Feb 2026 23:18:53 -0800 (PST)
-X-Received: by 2002:a05:6000:26c7:b0:439:8bee:b985 with SMTP id
- ffacd0b85a97d-4399de3dd78mr2547198f8f.54.1772176733197; 
- Thu, 26 Feb 2026 23:18:53 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c70f8casm8586321f8f.14.2026.02.26.23.18.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 23:18:52 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: myrslint <qemu.haziness801@passinbox.com>
-Subject: [PATCH] KVM: i386: Default disable ignore guest PAT quirk
-Date: Fri, 27 Feb 2026 08:18:52 +0100
-Message-ID: <20260227071852.86283-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u/5f1cDZKDRnzwY7JSKa7p74XECjxFXz6CD/Qx9x6uc=;
+ b=Fq5DJLXtQJ4PS4iRsxT+wkBEfwvZdR5eigozc4vT8ngOCh6s3ygKcBx/RX6Q+/tGl+dydE
+ QtLBYvahok/4tvrr+o/8LzLxOkuiSH1KYgbZKJVQhy0Zf1EDyZfPtAxsAWm8X61xDq/Qqc
+ Yp/Bo5SyniS2N6rR3FOIR6iWjRoH+68=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-h9EeiR4lPKi3EZm5sQ6qxA-1; Fri,
+ 27 Feb 2026 02:24:47 -0500
+X-MC-Unique: h9EeiR4lPKi3EZm5sQ6qxA-1
+X-Mimecast-MFC-AGG-ID: h9EeiR4lPKi3EZm5sQ6qxA_1772177086
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 38F27180025E; Fri, 27 Feb 2026 07:24:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.13])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1729019560B8; Fri, 27 Feb 2026 07:24:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A7E1621E6932; Fri, 27 Feb 2026 08:24:42 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,  mst@redhat.com,
+ anisinha@redhat.com,  pbonzini@redhat.com,  shannon.zhaosl@gmail.com,
+ philmd@linaro.org,  zhao1.liu@intel.com,  rad@semihalf.com,
+ leif.lindholm@oss.qualcomm.com
+Subject: Re: [PATCH 08/11] arm: virt: create GWDT watchdog paired with WDAT
+ ACPI table
+In-Reply-To: <20260226135648.4c1a4009@imammedo> (Igor Mammedov's message of
+ "Thu, 26 Feb 2026 13:56:48 +0100")
+References: <20260206131438.1857182-1-imammedo@redhat.com>
+ <20260206131438.1857182-9-imammedo@redhat.com>
+ <CAFEAcA_QO_Pm5qKy2xOer+VmyMZ6KZ1KdUpf_ETV9fQu4YmaHg@mail.gmail.com>
+ <20260219131751.4e4e4e0e@imammedo> <aZ8THMubft44Q3E-@redhat.com>
+ <20260226135648.4c1a4009@imammedo>
+Date: Fri, 27 Feb 2026 08:24:42 +0100
+Message-ID: <878qced4xx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
@@ -117,128 +95,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: myrslint <qemu.haziness801@passinbox.com>
+Igor Mammedov <imammedo@redhat.com> writes:
 
-Add a new accelerator option that allows the guest to adjust the PAT.
-This is already the case for TDX guests and allows using virtio-gpu
-Venus with RADV or NVIDIA drivers.
+> On Wed, 25 Feb 2026 15:19:56 +0000
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+>
+>> On Thu, Feb 19, 2026 at 01:17:51PM +0100, Igor Mammedov wrote:
+>> > On Wed, 18 Feb 2026 19:08:36 +0000
+>> > Peter Maydell <peter.maydell@linaro.org> wrote:
+>> >=20=20=20
+>> > > On Fri, 6 Feb 2026 at 13:15, Igor Mammedov <imammedo@redhat.com> wro=
+te:=20=20
+>> > > >
+>> > > > Add SBSA generic watchdog to virt machine type with
+>> > > > all necessary wiring for ACPI watchdog. Which includes
+>> > > > setting its frequency to 1KHz (max that WDAT is able to handle).
+>> > > >
+>> > > > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+>> > > > ---=20=20=20=20
+>> > >=20=20=20
+>> > > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>> > > > index 390845c503..caf5700ed2 100644
+>> > > > --- a/hw/arm/virt.c
+>> > > > +++ b/hw/arm/virt.c
+>> > > > @@ -93,6 +93,7 @@
+>> > > >  #include "hw/cxl/cxl.h"
+>> > > >  #include "hw/cxl/cxl_host.h"
+>> > > >  #include "qemu/guest-random.h"
+>> > > > +#include "hw/watchdog/sbsa_gwdt.h"
+>> > > >
+>> > > >  static GlobalProperty arm_virt_compat[] =3D {
+>> > > >      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+>> > > > @@ -194,6 +195,8 @@ static const MemMapEntry base_memmap[] =3D {
+>> > > >      [VIRT_PVTIME] =3D             { 0x090a0000, 0x00010000 },
+>> > > >      [VIRT_SECURE_GPIO] =3D        { 0x090b0000, 0x00001000 },
+>> > > >      [VIRT_ACPI_PCIHP] =3D         { 0x090c0000, ACPI_PCIHP_SIZE },
+>> > > > +    [VIRT_GWDT_REFRESH] =3D       { 0x090d0000, 0x00001000 },
+>> > > > +    [VIRT_GWDT_CONTROL] =3D       { 0x090d1000, 0x00001000 },
+>> > > >      [VIRT_MMIO] =3D               { 0x0a000000, 0x00000200 },
+>> > > >      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of=
+ that size */
+>> > > >      [VIRT_PLATFORM_BUS] =3D       { 0x0c000000, 0x02000000 },
+>> > > > @@ -245,12 +248,32 @@ static const int a15irqmap[] =3D {
+>> > > >      [VIRT_GPIO] =3D 7,
+>> > > >      [VIRT_UART1] =3D 8,
+>> > > >      [VIRT_ACPI_GED] =3D 9,
+>> > > > +    [VIRT_GWDT_WS0] =3D 10,
+>> > > >      [VIRT_MMIO] =3D 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
+>> > > >      [VIRT_GIC_V2M] =3D 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
+>> > > >      [VIRT_SMMU] =3D 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
+>> > > >      [VIRT_PLATFORM_BUS] =3D 112, /* ...to 112 + PLATFORM_BUS_NUM_=
+IRQS -1 */
+>> > > >  };
+>> > > >
+>> > > > +static void create_wdt(const VirtMachineState *vms)
+>> > > > +{
+>> > > > +    hwaddr rbase =3D vms->memmap[VIRT_GWDT_REFRESH].base;
+>> > > > +    hwaddr cbase =3D vms->memmap[VIRT_GWDT_CONTROL].base;
+>> > > > +    int irq =3D vms->irqmap[VIRT_GWDT_WS0];
+>> > > > +    DeviceState *dev =3D qdev_new(TYPE_WDT_SBSA);
+>> > > > +    SysBusDevice *s =3D SYS_BUS_DEVICE(dev);
+>> > > > +
+>> > > > +    /*
+>> > > > +     * Set watchdog tick freq to 1Kz as it's the max WDAT driver
+>> > > > +     * is able to handle.
+>> > > > +     */
+>> > > > +    qdev_prop_set_uint64(dev, "clock-frequency", 1000 /* 1KHz */);
+>> > > > +    sysbus_realize_and_unref(s, &error_fatal);
+>> > > > +    sysbus_mmio_map(s, 0, rbase);
+>> > > > +    sysbus_mmio_map(s, 1, cbase);
+>> > > > +    sysbus_connect_irq(s, 0, qdev_get_gpio_in(vms->gic, irq));
+>> > > > +}=20=20=20=20
+>> > >=20
+>> > > Please can you also add support for exposing this device
+>> > > in the device tree ?=20=20
+>> >=20
+>> > It's possible,
+>> > but we probably should not enable it if acpi variant was requested,
+>> > to avoid confusion on guest side.
+>> >=20
+>> > For Windows it doesn't really mater, for linux it does.
+>> > on x86 linux guest uses a quirk to disable native iTCO watchdog
+>> > in favor of WDAT one if later is present.
+>> > I assume quirk is not desirable so we should expose only a preferred
+>> > variant.
+>> >=20=20=20
+>> > >=20=20=20
+>> > > > +
+>> > > >  static void create_randomness(MachineState *ms, const char *node)
+>> > > >  {
+>> > > >      struct {
+>> > > > @@ -2515,6 +2538,9 @@ static void machvirt_init(MachineState *mach=
+ine)
+>> > > >      vms->highmem_ecam &=3D (!firmware_loaded || aarch64);
+>> > > >
+>> > > >      create_rtc(vms);
+>> > > > +    if (machine->acpi_watchdog) {
+>> > > > +        create_wdt(vms);
+>> > > > +    }=20=20=20=20
+>> > >=20
+>> > > Can we have a command line option name that isn't ACPI
+>> > > specific, please? There's nothing inherent to ACPI about
+>> > > "I would like a watchdog device".=20=20
+>> >=20
+>> > that is specifically asking for ACPI flavor being used/configured.
+>> > acpi specific option conflates 2 things:
+>> >    1. watchdog device creation (of the board choice) with properties t=
+uned for WDAT usage
+>> >    2. how to expose it on firmware level (in this case ACPI WDAT table)
+>> >=20
+>> > other option, I've considered was
+>> >  -device some_wd[,fw=3Ddt|acpi|none]
+>> > but then 'fw' is not exactly device property but rather a machine one
+>> > (we can 'abuse' it/use as a proxy of cause).
+>> > However it doesn't work for boards that have builtin watchdog.=20=20
+>>=20
+>> Right, if there was a case where we were already using -device to
+>> create the watchdog, then I would suggest having a simple
+>> 'wadt=3Don|off' property as standard for any watchdog wanting that
+>> ACPI abstraction wrapper.
+>>=20
+>> That could (hypothetically) be the case if we had chosen to add
+>> WADT suport backed by i6300esb, eg -device i6300esb,wadt=3Don|off
+>>=20
+>> For cases built-in to the machine type, I'd suggest <type>-wadt=3Don|off
+>>=20
+>> eg for Q35,  "-machine q35,itco-wadt=3Don|off"
+>>=20
+>> for virt, '-machine virt,gwdt-wadt=3Don|off'
+>
+> CCin Markus since it touches QAPI stuff.
+>
+> For respin, I've went ahead with a bit more generic approach
+> (as a user, I wouldn't really care what kind of built-in watchdog board s=
+hips,
+> and having 1 property instead total instead of machine specific ones make=
+s it
+> easier for mgmt layer to deal with).
+>
+> here is current idea:
+>
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 6411e68856..a0c6719b58 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -1257,6 +1271,14 @@ static void machine_class_init(ObjectClass *oc, co=
+nst void *data)
+>          NULL, NULL);
+>      object_class_property_set_description(oc, "memory",
+>          "Memory size configuration");
+> +
+> +    object_class_property_add_enum(oc, "watchdog", "WatchdogType",
+> +        &WatchdogType_lookup,
+> +        machine_get_watchdog, machine_set_watchdog);
+> +     object_class_property_set_description(oc, "watchdog",
+> +        "Use: auto (watchdog is configured according board defaults),"
+> +        " off (disabled), native (built-in watchdog), wdat (ACPI based w=
+atchdog)]. "
+> +        " Default: auto");
+>  }
 
-The quirk is disabled by default.  Since this caused problems with
-Linux's Bochs video device driver, add a knob to leave it enabled,
-and for now do ont enable it by default.
+Adds the property to abstract base type "machine", i.e. every machine
+has it.
 
-Signed-off-by: Myrsky Lintu <qemu.haziness801@passinbox.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2943
-Link: https://lore.kernel.org/r/175527721636.15451.4393515241478547957-1@git.sr.ht
-[Add property; for now leave it off by default. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/system/kvm_int.h |  1 +
- accel/kvm/kvm-all.c      |  1 +
- target/i386/kvm/kvm.c    | 50 +++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 51 insertions(+), 1 deletion(-)
+Fundamentally assumes there is at most one onboard watchdog of interest.
 
-diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-index baeb166d393..0876aac938d 100644
---- a/include/system/kvm_int.h
-+++ b/include/system/kvm_int.h
-@@ -167,6 +167,7 @@ struct KVMState
-     uint16_t xen_gnttab_max_frames;
-     uint16_t xen_evtchn_max_pirq;
-     char *device;
-+    OnOffAuto honor_guest_pat;
- };
- 
- void kvm_memory_listener_register(KVMState *s, KVMMemoryListener *kml,
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index a1f910e9dff..ebd721c3d66 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -4277,6 +4277,7 @@ static void kvm_accel_instance_init(Object *obj)
-     s->xen_evtchn_max_pirq = 256;
-     s->device = NULL;
-     s->msr_energy.enable = false;
-+    s->honor_guest_pat = ON_OFF_AUTO_OFF;
- }
- 
- /**
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 7cfbc7832de..27b1b848d6a 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3595,8 +3595,30 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     if (first) {
-         kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
-     }
--    first = false;
- 
-+    /*
-+     * Most x86 CPUs in current use have self-snoop, so honoring guest PAT is
-+     * preferable.  As well, the bochs video driver bug which motivated making
-+     * this a default-enabled quirk in KVM was fixed long ago.
-+     */
-+    if (s->honor_guest_pat != ON_OFF_AUTO_OFF) {
-+        ret = kvm_check_extension(s, KVM_CAP_DISABLE_QUIRKS2);
-+        if (ret & KVM_X86_QUIRK_IGNORE_GUEST_PAT) {
-+            ret = kvm_vm_enable_cap(s, KVM_CAP_DISABLE_QUIRKS2, 0,
-+                                    KVM_X86_QUIRK_IGNORE_GUEST_PAT);
-+            if (ret < 0) {
-+                error_report("failed to disable KVM_X86_QUIRK_IGNORE_GUEST_PAT");
-+                return ret;
-+            }
-+        } else {
-+            if (s->honor_guest_pat == ON_OFF_AUTO_ON) {
-+                error_report("KVM does not support disabling ignore-guest-PAT quirk");
-+                return -EINVAL;
-+            }
-+        }
-+    }
-+
-+    first = false;
-     return 0;
- }
- 
-@@ -7053,6 +7075,24 @@ static void kvm_arch_set_xen_evtchn_max_pirq(Object *obj, Visitor *v,
-     s->xen_evtchn_max_pirq = value;
- }
- 
-+static int kvm_arch_get_honor_guest_pat(Object *obj, Error **errp)
-+{
-+    KVMState *s = KVM_STATE(obj);
-+    return s->honor_guest_pat;
-+}
-+
-+static void kvm_arch_set_honor_guest_pat(Object *obj, int value, Error **errp)
-+{
-+    KVMState *s = KVM_STATE(obj);
-+
-+    if (s->fd != -1) {
-+        error_setg(errp, "Cannot set properties after the accelerator has been initialized");
-+        return;
-+    }
-+
-+    s->honor_guest_pat = value;
-+}
-+
- void kvm_arch_accel_class_init(ObjectClass *oc)
- {
-     object_class_property_add_enum(oc, "notify-vmexit", "NotifyVMexitOption",
-@@ -7092,6 +7132,14 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
-                               NULL, NULL);
-     object_class_property_set_description(oc, "xen-evtchn-max-pirq",
-                                           "Maximum number of Xen PIRQs");
-+
-+    object_class_property_add_enum(oc, "honor-guest-pat", "OnOffAuto",
-+                                   &OnOffAuto_lookup,
-+                                   kvm_arch_get_honor_guest_pat,
-+                                   kvm_arch_set_honor_guest_pat);
-+    object_class_property_set_description(oc, "honor-guest-pat",
-+                                          "Disable KVM quirk that ignores guest PAT "
-+                                          "memory type settings (default: auto)");
- }
- 
- void kvm_set_max_apic_id(uint32_t max_apic_id)
--- 
-2.53.0
+I'm lacking context, please bear with me: who or what is going to set
+this property, and for what purpose?
+
+> diff --git a/qapi/machine-common.json b/qapi/machine-common.json
+> index 92e84dfb14..7f5e10340f 100644
+> --- a/qapi/machine-common.json
+> +++ b/qapi/machine-common.json
+> @@ -9,6 +9,23 @@
+>  # Common machine types
+>  # ********************
+>  ##
+> +##
+> +# @WatchdogType:
+> +#
+> +# On board watchdog configuration.
+> +#
+> +# @auto: Watchdog is configured according to board defaults.
+
+As far as I can tell, we don't document "boards" (machine types)
+anywhere, let alone "board defaults".  Not this patch's fault, of
+course.  The meaning of @auto remains unclear.
+
+> +#
+> +# @off: Watchdog disabled (ARM).
+> +#
+> +# @native: Native watchdog (arm/virt: sbsa-gwdt, x86/q53: TCO)
+> +#
+> +# @wdat: ACPI WDAT watchdog.
+> +#
+> +# Since: 10.2
+
+11.0
+
+> +##
+> +{ 'enum': 'WatchdogType',
+> +  'data': [ 'auto', 'off', 'native', 'wdat' ] }
+
+What do managament applications need to know about onboard watchdog
+configuration?
+
+Do they need to know what @auto means for the machine type at hand?
+
+Do they ever need to pick a value?  Do they need to know which values
+work with the machine type then?
+
+>> Q35 is easier as we rely on the guest quirks to disable direct
+>> access via both paths.
+>>=20
+>> With GWDT we need to decide if gwdt-wadt=3Don should imply DTB
+>> disabled, or if we just expose both & rely on a guest quirk
+>> or worst case, need a separate property to toggle DTB too.
+>>=20
+>> > I've used device property for x86 Q35 TCO watchdog and
+>> > then using -global to enable it as workaround in previous version.
+>> > Ugly but doable workaround. It puts a burden on users to learn how
+>> > to configure it for each support watchdog/board combo.
+>> > It's nightmare to discover/maintain though.
+
+Our unsolved "how to configure onboard devices" problem bites again.
+
+-global can be pressed into service when there's just once instance of
+the device type.  The drawbacks you describe are real.  I want to see
+less of it, not more.
+
+>> > Hence in this version, I've used a generic machine property approach
+>> > that exposes feature in uniform way across boards.
+
+We've done that before.  It works, but I don't think it scale up to a
+complete solution (I understand you are not after a complete solution
+here, and that's okay).
+
+For instance, machine pc-q35-FOO has two onboard cfi.pflash01 devices.
+To enable configuration of their block backends, we alias their "drive"
+properties as machine properties "pflash0" and "pflash1".  Their other
+properties remain inaccessible.
+
+Adding a few alias properties to the machine type is workable.  A bit ad
+hoc, perhaps.  Bothersome to document, so we largely don't.
+
+Adding alias properties for everything anyone could possibly want to
+configure feels unworkable.
+
+This is *not* an objection to solving the problem at hand with a machine
+property.
+
+>> > enum might work, but ...
+>> >   machine.watchdog =3D [acpi | what else could we put here???]
+>> >=20
+>> > I'm not married to a way how we expose/configure it and will rewrite
+>> > it to something that works for majority.
+>> >=20=20=20
+>> > > thanks
+>> > > -- PMM
+>> > >=20=20=20
+>> >=20=20=20
+>>=20
+>> With regards,
+>> Daniel
 
 
