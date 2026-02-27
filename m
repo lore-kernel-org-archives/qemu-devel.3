@@ -4,106 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D3BFD530A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 19:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FC3FEFB7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 19:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw35p-000171-W4; Fri, 27 Feb 2026 14:01:42 -0500
+	id 1vw3Ac-0003F4-Fq; Fri, 27 Feb 2026 14:06:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vw35g-0000zN-Hs
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:01:32 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vw35e-0005MP-QK
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:01:32 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64ae222d87dso2220347d50.2
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 11:01:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772218889; cv=none;
- d=google.com; s=arc-20240605;
- b=EQYKAni7DAnCVh2Csff02eP4g2OJPZ0qpGdlGF04YudcQoAIAbZk1dOvhnqMl20fpK
- soZBB9yM8j0Jd7NS1No2jx/SHGH/VKsGBYwYJWBSmHItsOygMAjZyD++5iF3TjgSaaFZ
- VqU2Rb+rl4ODPQK4asmZwzsLiMS+J8Mjt1J0939xKmUKJma2tkUCACdz/Xxe1+A5FtdI
- cuq7mxckavADZcNCArEDPF1OPq8DQh6e+eRNY8GUcCkso9h3FRjJmzkFbN8exrk8agXr
- Y67qZ7yodxIOT6wzg6e71xgFxBLXvNwipsFO/hEUYoWUwZO7LMxlKfRtHpJRK9voGd6k
- zWdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=SULAEUuAj73q2fCD7zwSktbXm56L8xKX3BLqNOyYMeI=;
- fh=L2St6t09imbxtprj7esOWNydLKtr+18WRDEVyS1YvsM=;
- b=dN0oW+22DAdUEWIhs8fYY9NLx6+VXRDb8700Z531s8In25nqrJ1qEL4LklXcGJczGo
- 5hzPkKgnQYJmWLFoeia7rDhl7FRGC38fBoq6G6k21pZ4aaQqqG9rYdC6/l/aQNOl1Al3
- QIwdMfQeKylLE62DgbC0xLj6/ofGsw1EG+vCVJ5Ue/uu0B/7ORceCXSmKb0IqXZGfSLZ
- lg9KDMxNdJhcb7N7dnh+bU9YsIpgSA8SFQc9FiNN/PWnMtrQzvnEtJNLsBCS3MXbdY+t
- tn0BZ/UAV9MGvZVy+wnRJlvPVYaG3hgMK9k0VvOCFUjyVWrlJR58jsSrjS5xv/hSzM3e
- HL3g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772218889; x=1772823689; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SULAEUuAj73q2fCD7zwSktbXm56L8xKX3BLqNOyYMeI=;
- b=yEJtBV1YJ/eb+p+wBMtlRRQ8qzVBBinzERCi51qYoBaEViW0zku3ub4gQgCp7t6iKc
- 3aP3E++fi55f3F7F1uDpB2oYeMHfeewmvMNTPifhRwIwsusra1UdR2hca7ZQNZ8pqCzT
- 9e+lrPJv/mqpO86nupJk8o5EsNzGMriCSvsTx/yMiYNum8wgDGq4MRbMTEZg0ztSdN/T
- V9SqGg6XOXyF3Ai4tI0EkaD0JUzeFPom/LWx2KJbNJMtTSzQsF2G1uzmNANHCs7TrMpM
- QYe9PFBsCd3+2KKcge3+IOYAnARD7zi2NqTd8hxEk3CuhrRR4jvoBju6WN8hkkhSJJgP
- 41tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772218889; x=1772823689;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SULAEUuAj73q2fCD7zwSktbXm56L8xKX3BLqNOyYMeI=;
- b=xMiVT2kn5D+lzpl8IDoyhlZwvClTqiI6BS5fQ5dWnk9JO2B8AsFZJyUHNsX44irYjx
- PvCEVWqmrzbMh4bpKAs/rCyiISdVIVwWJ6robN3kMvtH0djfqFHoO2dYnpSJlXgif1SA
- 10XNpJy5Vj5XUwu7eDf4e+Jd18wLxj52I954YSq7LUXNPxe3Z61ViGpolKBcaBOjQePM
- pbO/uhs2KU1OzJRMnCt/QoiNS5Bg7eE1DZGEJAFAFWQ1v4qtntW9icfSL01tuCdx7G3Y
- gY9XC+wylHIgzXCz+So2WvKxZRbzj05l6XwrXdo4tbu+Ty+QOci1jws/iDlvvG17kv4k
- 90RA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUM88qB7R0DLpfoklOXNLQI45qZDZv94UgIIvdp+aolj0e1TespU0MNDhRKdeAHZD7HT236VeNHOmFr@nongnu.org
-X-Gm-Message-State: AOJu0YxKtxzf+LUjipCvVKzRtpujQ6YTeVu+W4zsnShYZTeqtN3xqz2E
- o/Vq345iCZMaa/WUZ4gBeF4lJgPtQzUdZr1O9NUtqra+k3+DtviHK1L+NGOR7GCMhEo7NgpXTrZ
- FahUfKZK+n0shWakJEwNQ0fLSHGpeBDsmFla6oc9rVkMav0JBjq/rvPI=
-X-Gm-Gg: ATEYQzzAmXQBerMeSE2ZUoXZQFbIj0u4Rk38kY5Fm1jbZ2yILj/4RV9n97tRO1bBdZ+
- VOZK9NOShYUoi67Dnw7qu9P9huGgL3UZtw8Ap8z5bDwPiIodrTDF6sfvx4/mtK+UAhO3vvVJOZi
- kvBeP/r7K3Vo7qJwRR6n90bo4/S1fMCnGareFMONqJu2uX3rV+oeQnEXuKTz9lZ4VgB7EKkS2wn
- oiIYelzk1KMk6iMEgh06DFOL408qpEOHudU3eaPJST+4wYqfXF51Bvn3BRpPsXNeZHeCaZwOM4q
- Zz41Vxi98SeaICZ+zP+wS3IX44Nu6qS0TukUxXFzF1ijrSxlxADHG8vV5VczXxBSDCs=
-X-Received: by 2002:a05:690e:16dc:b0:644:60d9:7514 with SMTP id
- 956f58d0204a3-64cc233f94cmr2441738d50.88.1772218889291; Fri, 27 Feb 2026
- 11:01:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vw3AY-0003EV-60
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:06:34 -0500
+Received: from p-west2-cluster3-host10-snip4-6.eps.apple.com ([57.103.69.79]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vw3AU-0006RO-Jb
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 14:06:33 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-0 (Postfix) with ESMTPS id
+ B6ED91800287; Fri, 27 Feb 2026 19:06:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772219189; x=1774811189;
+ bh=gWqREj2PmGRoTAKiY4qI6uX1E9aTXQTeVV/xFA3kCyI=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=Hkk3/OuhikoQAhN2gF+acMeRdh+9fhSjfYPtyzpdhfdfiGrA48y1MS7dQQMrMdtIB8LuWxPZAQXR9v/S1Nmt8WVOZSRjrzfvrimpJKODO9QmKCUlO7Ej6TwYTQ74mUQqV6/TPkBTdgnModGnZoksF5OaAc/DJkDGWLae6bh3T6PQfLeCdJSzGU7kfaQ92rUEKvcRbQPT8gsj1AWE9E1nNw86Z+uDIKUeUnEYdZId5Yct/PIWFDud0vbYXj7SNhKw6K/4kCEZEvVp7JUYFzE+ZMM9OgEdgAHfwHmDIO5dXnXo0XOM4O9pcv9bwq5QuRLoSyaoH6Mh3wfBXGEetAlE2g==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-0 (Postfix) with ESMTPSA id
+ 4E30518001BE; Fri, 27 Feb 2026 19:06:27 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>
+Subject: [PATCH 4/4] whpx: i386: warn on unsupported MSR access instead of
+ failing silently
+Date: Fri, 27 Feb 2026 20:06:19 +0100
+Message-ID: <20260227190619.8867-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260227190619.8867-1-mohamed@unpredictable.fr>
+References: <20260227190619.8867-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-References: <20260227135736.2280161-1-peter.maydell@linaro.org>
- <87ldge5899.fsf@suse.de>
-In-Reply-To: <87ldge5899.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 27 Feb 2026 19:01:17 +0000
-X-Gm-Features: AaiRm53LJYTqOvy_kESUmBEk5XK9GeB5E8Kq-3_IM14Xi_92bEfRkcVdfs__3lw
-Message-ID: <CAFEAcA-xvHDyE+gJ6KKv=rkEbiTbdtmAreLNKsGTuvvZyZyYDA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] arm: Fix some memory leaks
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=MKZtWcZl c=1 sm=1 tr=0 ts=69a1eb35
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=qc3z_Y1wnV_HfSY8uEAA:9
+ a=zZCYzV9kfG8A:10
+X-Proofpoint-GUID: RdlcglUIO8SveWwayZMzq63eZgIX7wFO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDE2OCBTYWx0ZWRfXyDRU1yCodTG/
+ JCKPrYR4e5RVrCmqTdURW+jKRkyZPyYDYj3p+pXtkmcEpzvvqKZO2GxkLCyXDxVxBUOh2QNH67d
+ cQ9f413pShwBYjaMYj/QL2qGdE37GNTdLFx7hh9dlglb9WDuIT8gIFvdh1IMRKnDLWuofmWa/07
+ 6W05jNvsSQJQm57dNWs2Nqp3rI/KFfoHFc6Qu2ztpFDbwfFd9L3qCTZorKr4pcjnZ/HvszM8nfn
+ XbpkGXf3vGZq7MifRQb4Ray6IRAycbWmea3SiQgjOYtVnlvCYQk1wQrNzDsu8F2uWXyNej0qpDg
+ bLoLw1zuNaDySJi3Q6TOuKUuLf0DTlJQfsyooJamFC4DMQkyrkSFLycYLBlqGY=
+X-Proofpoint-ORIG-GUID: RdlcglUIO8SveWwayZMzq63eZgIX7wFO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-27_03,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=682
+ malwarescore=0 lowpriorityscore=0 suspectscore=0
+ spamscore=0 adultscore=0
+ mlxscore=0 clxscore=1030 bulkscore=0 phishscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602270168
+X-JNJ: AAAAAAABA3esUpypvGfnFyn+lf/IlrK95zylnwbRm4hqtW0bPUcq1577HPh2IWdIJXViWeXl0q+ArPovC1DyfXXvspWFk8m4S3kOPMPhT78oV5JR7qQUU4zBMs0FsPMNywEhSwIUJrRh/Vf6O6D1V6ZuBduLa+p31I35C7sZh7ZAJMA9b8BpbkqHRAG7e8qWXZHGs5lesCw3L0JBHbTC9z0PF6FDXc3DDN8F1M9Wie4nVuSZC1xzCqhmyCz40dU5o7OUN071Hu4Guc1jMFJOtRtubpzBZFYq3VNfsO9RPfiiIhJTsJG54gqoIOqHAyTvQq72vjnalSK3bWG8nGsUsk7CZ5vNaXC4eFZ71/Tn15G7hXtNYISqiWcjWJq9dF4WIgdhNcxikTTkoFFR61qy1y99oerd324XtvGTpvV8j3KMg3ODmnkqisjiLiBa6xbldzQBxiTrSO8n6+RBSnZiAi9xO6eztQr3bLgAN99Y6fKHj8I6mnWdIYRuIWrXaJMpoppuq8tgaEk0Rg79VWA3QS5Toleszx716z79QEDYOa+gxDG5ffObJqnMN4fmOlxkkvBBMAV4f+McVEnaP8B00mkLcMAH0cQ7yX13VqtRWSAh9Z2SsD8RKNBz3BlcSOiIFOajR011VyAyBZI=
+Received-SPF: pass client-ip=57.103.69.79;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,49 +93,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Feb 2026 at 18:52, Fabiano Rosas <farosas@suse.de> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > This patchset fixes a couple of minor memory leaks I found by running
-> > "make check" for the arm targets with the clang leak sanitizer enabled.
-> >
-> > The first two patches are necessary because there are a few leaks
-> > that are either not interesting to fix or which are not in our code,
-> > and which otherwise clutter up the logs with failure messages.
-> > We have a suppressions-file already, but it's in the scripts/oss-fuzz
-> > subdirectory, so I move it out as it's more widely useful than that,
-> > and add some more suppression lines to it.
-> >
-> > Patches 3 and 4 are the actual leak fixes, which are straightforward.
-> >
-> > This gets me what would be a clean run, except that there's something
-> > wrong with the refcounting of qio channel objects in the chardev code,
-> > which results in variously use-after-free, leak, or assertion failures
-> > when running the vhost-user tests in qos-test. I'm still looking at
-> > those, but in the meantime posting this series gives me something to
-> > point at as part of the repro instructions for those errors.
-> >
->
-> Looks like something I worked on in the past. It seems this fell through
-> the cracks:
->
-> https://lore.kernel.org/r/20250515222014.4161-1-farosas@suse.de
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
+ target/i386/whpx/whpx-all.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Yeah, that looks very familiar. The way it only reproduces in
-a loaded system is fantastically annoying -- it relatively
-reliably falls over in a full "make -j20 check" run for me
-but I had massive trouble trying to get anything to reliably
-repro in a useful way...
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index e7e0a50da6..5aa8baa4a2 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1804,6 +1804,9 @@ int whpx_vcpu_run(CPUState *cpu)
+             reg_count = vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite ?
+                         1 : 3;
+ 
++            warn_report("WHPX: Unsupported MSR access (0x%x), IsWrite=%i", 
++                vcpu->exit_ctx.MsrAccess.MsrNumber, vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite);
++
+             hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+                 whpx->partition,
+                 cpu->cpu_index,
+-- 
+2.50.1 (Apple Git-155)
 
-The vhost-user-test also seems to be doing some odd things itself:
-for instance the wait_for_fds() function assumes there is RAM at
-0x0, but we run the test on the arm virt board where RAM doesn't
-start at that address. Presumably we should either make the test
-handle that or else restrict it to not run on boards where it
-will never work.
-
-I'll have a go with your patches and see if I still see issues.
-
--- PMM
 
