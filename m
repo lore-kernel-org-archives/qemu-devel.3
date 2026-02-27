@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FF5104891A
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F409104891D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw5gW-0004lk-Pi; Fri, 27 Feb 2026 16:47:44 -0500
+	id 1vw5n7-00060W-OD; Fri, 27 Feb 2026 16:54:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw5gV-0004lR-MF
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:47:43 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1vw5n6-000603-GU
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:54:32 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw5gT-0002Lm-W1
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:47:43 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-bde0f62464cso1018534a12.2
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:47:41 -0800 (PST)
+ id 1vw5n4-0003q3-DS
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:54:32 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2ad9f2ee29aso15594925ad.1
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:54:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772228860; x=1772833660; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=DGiB4BV2NUCWEqPQRDA28quzz5F8WAm6gER1eWRE+ms=;
- b=xkM6c/o+5SCenFuqjKANo4MlBaFNiAX4vVnlCW3+aUVas2TTRVa4NaSB+bd9KS4EjV
- w7hkjD58zcAsKaCUiCRUdcjnJb8+n6PkoJL2476kPGYvejuGCTHgeqF9E6GHPANkHhCb
- jwvORPV3EbkbWoivWji2kag8E3flmaCxQfFM/xf+OwXpbFjw15Ss+GtR7YG+h7C+HmwT
- fBJYyP3jCtuQrqY/hoYYqx5GsPIBfx8TuehL0P7udUoZC9csImFJJozJjqm1Oa74oDJ8
- CLFWlQ+kPTaQK2MsU1r/FICMl71k6Vydvp87HyegVj17LoWBP8KpIdPZk7xsawMjseWF
- BsCg==
+ d=linaro.org; s=google; t=1772229269; x=1772834069; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=N1QCNbUZCXncakW2sKpOA1tH8cYQK2JAhTTRtB4bwyE=;
+ b=n/29N7pASNK+QCULEXO6KBLeScHRn4JGwso1iJyQOITpkzKiSXBj99755Hd2PjQRXN
+ prx/wjFXfZ7880cUMTQR59GMQZb72c/f+WvsPTp2zXvVcX51qklpQLVyYW3/T6w9PXiC
+ mY3c+WL1SljMIVjLqm3GQVKEDJaEIvNVXjTtjy4f33m3ydwaIbFQ97AGVPAPIKP5CwGm
+ 7VKXO4C4OogxZUr5EJ3q8ri7l0RBnZ4vwHRvTXDh06sM4XKuJ451VmD1XYqxWnncdkr0
+ W2bZqUHF//MrShC6/9iVjJd0pRn5TPnBjrBqGKocH1719agjyOMqGWJGjpAvYtyyWoZ+
+ Wbaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772228860; x=1772833660;
- h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DGiB4BV2NUCWEqPQRDA28quzz5F8WAm6gER1eWRE+ms=;
- b=QAhTeYgeD8g4kYu5CXoWm50BS5NYItmjSE1sbU/1nMCKE0u+TNA+wLLhn1ZzzyPyD2
- sq7Ilmn5I1xcoJVGxwwlHc3A8s4BR8vTsPJAveAvAnOTAUQM1pu8ICAZV94Ilnf6xE9J
- rRs/h9FTpUdbhcsgoo5rOSGF8uH4o7UwFUE3ltgXmBuCkAiZGqUBsHCpSpixXo26mmtM
- apZMRgMOeA4uTXcZsQWgbKgBExGygRDhzZAXL+Jts7Mcey7Po9PHC+FxSLFUg+9e89d+
- HH/PmOIUorkYz+7jYp/F3x2qgyRGfgInQgIjg/Qlm6YFacENriD4G7mKWeOQtZ9bHZCB
- yddQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2wSNoqOUWtosLbX101xcy8FeNsPeoTL5Ay1G4rIQX9FDFHn8g6Td4H7jv09Z5i7FbizTyLyPHfXtt@nongnu.org
-X-Gm-Message-State: AOJu0YwahxhZVOnL6j/sXpG9s9PuY/hOvUVZ9roCG5EaYanHMIfN1gMj
- fz+RRd9DbF2xVWGOAOpJQjIZflvd3LL01VhRFXV28XuYbcgnfvQBncIxSIT0YlJFv24=
-X-Gm-Gg: ATEYQzzdclJCt1irajxgEvgyNlERIkTHYUI75LdHUme6NvYWTs1+skkDvYqiRN+kKik
- 9+MiICMQO5rnVbst/A9O57h8GtntKccYbRgc3PRdaz6UJbGSaQY8OxSfV9DT2cghHE7sbw1PWI0
- 9ocpKxXog44vAxsBjKQq3lgOd0WKsLd0Feeefmes/kDNEHGfpUP3dv0LAF05DoKz0KwUzZpx4rK
- Fqg/VQFo7fELtg0a9KW8BjN2hCVSemdGFZ9Ju/J/73dW//0UNtXXyCp2cNLlGsWhVd9NSLwtr3a
- msuusn0MPV3QVjn5ZAVkT9EnJel/ig0J0hfYdNvue4b3Rx5MFl6zG3ME9iiok41uCg/ONvkrapU
- t2O8sOYCoBnuWRET0V57QCWD5FzTZCcsyfrswBa8cknKTCzF4f5y0GHw2qoDFJyR9C4R7qpiPs6
- txk70xywS6Yx28bUURJ2TYQYiBP90/GMbZhEjwtR8lbdTsKtL04KGmK6xo5PCWrJ7QoegC
-X-Received: by 2002:a17:902:ce92:b0:2aa:f2ce:5aba with SMTP id
- d9443c01a7336-2ae2e4bc557mr44898745ad.38.1772228860330; 
- Fri, 27 Feb 2026 13:47:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772229269; x=1772834069;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=N1QCNbUZCXncakW2sKpOA1tH8cYQK2JAhTTRtB4bwyE=;
+ b=DfvPr6gC0dJJsZmC09/kvBjSQBPltWSU2r3XpsHaf9QLiuWc+yY9SevZpT2fYLjbDH
+ e6R7n4Imdeop7IErbp92xzb5R094cg9o7tHe9NaHJ4K5RYMhu4JO/9UsCbQE9nfeLa2z
+ W2pXO8gfUX+rC3vZs0IXlwAz/AQ3pOLrqx2GBIeGVhy3q5gjnm4u8UcSUPhisdtZJ79B
+ yVqPRJ3qQNrFdJdsRUSxkicR4K/WM4jOaAhZ4QzCAgu7cEBOaC8FnNv188DuTnlXvrCv
+ YFWvD6CNAs/xcMDfHw0NHizJszP5WTw/zHjMc/SZUzV5+PGHWLjNi8pW94DoE3KrMGsi
+ nQnw==
+X-Gm-Message-State: AOJu0YzNwXE9zbbJnCb4Wl3m3nay8IvFoeTk1pXsxegxMWnANQrBKRni
+ UkrVJegpFMfd4bhgvChHw7Ubzc6bTfDmSMTLcCzJOuyKPWImXDuB+oBJSS8qv0Grek0=
+X-Gm-Gg: ATEYQzwIZrbGzeYuMAbkIQ6WMNkTouYMUe9UbI+qu8ScxQI4BDiW6VBn07JAHBM67aM
+ gmY8zpVaF3mrhgEP1uSTj4LTysKPA9BBMmrS0WWVgKVzdZRz8CPdxoBd3x+/k+oYNzLOlnAUGlD
+ pEw7dDH5OJipODPDHEv5kjoFSvJJ82cPcLexpAzQCGd850FioPsLhy7Drl0zpmak2eGQruaSrMj
+ ifaWhHldG7iZdAnFick8GJLL+BWAfip5n6vEB/qnqIPssULguycJITMrjDqJC+NZYd0mn7AvM1a
+ I8QndEJzt0ZTzJXHn98VqwduRgheXI7dhZSF9QMyH9kZ1hr+axHtdZLFZAjgOl0o68wNj7k8DJ9
+ 3swYV2bN3xuowZ0u8NR2xP9Bp2lNa7mxsCm9kebC3TcalX+e3B1B0IRzvbm33t9OfFmpm8NZBYq
+ O3tVLkvUoqE/vIIvpa366Lu/MG+o8KFvgUDGtu3lRkZ9e+p8qftPKJu6XTRerrBGxCFzkC
+X-Received: by 2002:a17:902:dacb:b0:2a7:919c:34c6 with SMTP id
+ d9443c01a7336-2ae2e4cd74bmr41611535ad.38.1772229268688; 
+ Fri, 27 Feb 2026 13:54:28 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae39cfc271sm2464195ad.65.2026.02.27.13.47.39
+ d9443c01a7336-2adfb5b22fesm91486445ad.2.2026.02.27.13.54.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 13:47:39 -0800 (PST)
-Message-ID: <844edc05-11dc-40c1-8cd1-6bdc0bf6bc34@linaro.org>
-Date: Fri, 27 Feb 2026 13:47:39 -0800
+ Fri, 27 Feb 2026 13:54:28 -0800 (PST)
+Message-ID: <efbc1189-408d-4010-8a00-6ddc8aa0b45f@linaro.org>
+Date: Fri, 27 Feb 2026 13:54:27 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: ppc-linux-user GDB stub broken
+Subject: Re: [RFC v4 30/31] hw/arm/smmuv3: Add secure bank migration and
+ secure-impl property
 Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger
+ <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101926.2997959-1-tangtao1634@phytium.com.cn>
+ <831335ed-7463-4020-847a-b65518875376@linaro.org>
+ <b5da3509-fff4-4b38-8bcc-a54ad21e7eb0@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Florian Hofhammer <florian.hofhammer@fhofhammer.de>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de>
- <CAPMQPEL1__biyd5e81EW78OA1rmVYqfsdEOmH5cs-nOvwnB3cg@mail.gmail.com>
- <70d4f460-c5c5-45ac-9ef0-2307ea4834f2@linaro.org>
- <3ec72a91-7326-43ff-8a8a-30135920ebe1@linaro.org>
- <3f07b026-3975-4869-9c3f-b64dd9ddeaab@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -116,18 +119,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <3f07b026-3975-4869-9c3f-b64dd9ddeaab@linaro.org>
+In-Reply-To: <b5da3509-fff4-4b38-8bcc-a54ad21e7eb0@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,55 +146,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/26 1:43 PM, Pierrick Bouvier wrote:
-> On 2/27/26 1:40 PM, Philippe Mathieu-Daudé wrote:
->> On 27/2/26 14:09, Philippe Mathieu-Daudé wrote:
->>> On 27/2/26 10:58, Philippe Mathieu-Daudé wrote:
->>>> Hi Florian,
->>>
->>>
->>>>> on current master (d8a9d97317d03190b34498741f98f22e2a9afe3e), the basic
->>>>> gdb stub test fails for ppc-linux-user when running "make check-tcg".
->>>
->>>
->>>>> I've debugged around a bit but I don't know my way around the gdbstub
->>>>> internals enough to propose a patch right away, so I'll just summarize
->>>>> what I figured out so far.
->>>>> 1. Due to cc->gdb_num_core_regs not being set explicitly anymore, it is
->>>>>       set to 0 at the end of gdbstub/gdbstub.c:gdb_init_cpu(). In the same
->>>>>       function, cpu->gdb_num_regs gets set to 70.
->>>>> 2. When the test tries to read a register in gdbstub/
->>>>> gdbstub.c:gdb_read_register(),
->>>>>       the first condition of "reg < cc->gdb_num_core_regs" is always
->>>>> false.
->>>>>       Also, the register number for fpscr passed to the function is is
->>>>> 103,
->>>>>       and cpu->gdb_num_regs is also 103. If the register number is
->>>>> supposed
->>>>>       to be an index (as I understand it), this would indicate an
->>>>>       off-by-one error somewhere.
->>>>>
->>>>> If you have some pointers on where to look / what to check out for
->>>>> fixing this, I'll happily try to work on a patch. But I suppose that
->>>>> somebody more experienced with this could probably fix this much faster
->>>>> than I can.
->>>>
->>>> I'll have a look.
->>>
->>> Short term, this seems to fix it:
->>
->> Series for the generic fix posted:
->>
->> https://lore.kernel.org/qemu-devel/20260227213958.21170-1-philmd@linaro.org/
->>
+On 2/27/26 8:16 AM, Tao Tang wrote:
+>> As mentioned before, should we enable it automatically in case
+>> secure-memory address space is available at realize time?
 > 
-> Broken link, and unknown series.
-> Can you send the good one?
+> 
+> Let me take this opportunity to address the same concern you raised
+> across patches #07, #17, and #30 on the secure-impl vs secure-memory topic.
+> 
+> 
+> My initial intent was a demand-driven (lazy) validation model — i.e.
+> only validate Secure capability when a device actually declares
+> sec-sid=secure and we go through smmu_init_sdev() /
+> smmuv3_validate_sec_sid(). That avoids forcing Secure-related
+> configuration checks on machines that never exercise Secure DMA.
+> 
+> That said, I agree with your point that secure-impl=on without a
+> corresponding secure-memory link is an unconditional misconfiguration
+> and should fail fast at realize time. For v5 I’ll combine both approaches:
+> 
+> 1) Realize-time inference + fail-fast
+> 
+> - If a secure-memory address space is wired at realize time, the SMMU
+> should “do the right thing out of the box” and enable Secure support
+> automatically.
+> 
+> - If Secure support ends up enabled (either explicitly or via
+> auto-inference) but secure-memory is missing, smmuv3_realize() will
+> error out with a clear message.
+> 
+> Importantly, I’ll preserve the explicit user override you mentioned
+> (-global arm-smmuv3.secure-impl=off).
+> 
+
+This is a good summary.
+Let's see what other people think about it, and if they are ok with it.
+
+> 
+> 2) Make helpers assume the invariant
+> 
+> With the realize-time invariant in place, the Secure branch in
+> smmu_get_address_space() will no longer “warn + return NULL”; it will
+> become an assert (or equivalent hard failure) because the machine
+> configuration is already validated.
 >
 
-Oops, was just a lore.kernel.org delay.
+Sounds good.
 
-> Regards,
-> Pierrick
+> 
+> 3) Keep the device-level guard
+> 
+> I will keep smmuv3_validate_sec_sid() as a complementary per-device
+> guard. This still matters when the user forces secure-impl=off: if a
+> device declares sec-sid=secure, we can reject it immediately with a
+> targeted error at device init/hotplug time, which is a different
+> granularity than the SMMU-wide realize check.
+> 
+> 
+> I’ll incorporate these changes in the next revision.
+> 
 
+Regards,
+Pierrick
 
