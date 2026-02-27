@@ -4,99 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9151FFD5307
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFA9FD5309
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:27:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvsEL-0005ca-SW; Fri, 27 Feb 2026 02:25:45 -0500
+	id 1vvsFk-0006Cl-Oh; Fri, 27 Feb 2026 02:27:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vvsEK-0005bs-Mo
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:25:44 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vvsFj-0006CY-Dv
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:27:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vvsEI-0004TY-VK
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:25:44 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vvsFi-0004bT-5R
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:27:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772177142;
+ s=mimecast20190719; t=1772177229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=dqdWfZa9w4qvLo9QVPtCB4DXn7FhhJj33gbvY7/gVO0=;
- b=JCn9C8A1cqLJme8jZy3rvRfMHfnWSlL/LmYYhsPvBwO73COwWuJ8qOW+qZlIn7MIU+FUoM
- Ypq4ednIO1SR8t5Mp82w9ZWrIqoT8/sMmPm91k0x7Nc4onWeX8ecadrwWg4Ug0XuKsmqke
- 9uovRWSa93qDXRgoPFzdmcC+m2fKeJo=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=DMTBgWFnXQGsoyX0Qck1IFBi/fumrax5xKEwOcBNFGA=;
+ b=alDefGKzuLJmrYx7U7eMOSFCDHCjPNWXe5L3iQfeOTbh+RmU9uql2tfiHykCPK9bEBp4Ct
+ 4NlamWxLzwVKnkfoIEAGmVHMuf+WwaRQMuPwE5GcNE343J0IJOwasXsKofN7Qf+BlFg3Wj
+ arGNcEQd4SBo8pri3Dnvr2G3e7B9nxM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-497-OjCD6sStPJajODjSFFv_ZQ-1; Fri, 27 Feb 2026 02:25:40 -0500
-X-MC-Unique: OjCD6sStPJajODjSFFv_ZQ-1
-X-Mimecast-MFC-AGG-ID: OjCD6sStPJajODjSFFv_ZQ_1772177139
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-35620e2faf0so1166835a91.3
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 23:25:40 -0800 (PST)
+ us-mta-647-Z2s2RhReMJm87fBPo3FbdQ-1; Fri, 27 Feb 2026 02:27:07 -0500
+X-MC-Unique: Z2s2RhReMJm87fBPo3FbdQ-1
+X-Mimecast-MFC-AGG-ID: Z2s2RhReMJm87fBPo3FbdQ_1772177226
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4836ff58111so18230195e9.1
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 23:27:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772177139; x=1772781939; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dqdWfZa9w4qvLo9QVPtCB4DXn7FhhJj33gbvY7/gVO0=;
- b=MX5iaNa0ZqZy1EpVLpyVsh/RVtwBQd7PEAWB4nWFh0wYjEPhVxRcpJ+k2874n2L5GT
- lublDKUKZVMgJcIxt2ZoUeWOYR835CTgKq8P6lRl67CDF1AnH59pAZqY8g6QOZju0Mxl
- VepGNe0B947Dgs/h3KHlCnlXUhGVcmBECXVy/AsPICQP3dkhARke2rCaGK+IqoDPKXGO
- 3EklTu/iWyXCTD8ZsyUzw6thCOBCtod1D08uB3hmHgNQ+79P6eBeQqKQnIoh5q6bDcKi
- UepyguJzylfvBv4RoyyoHWb3uH8h0GoKMvVRhnXBbQg2lduG9zgHsc/aaFsjvkPDyBzx
- vpFA==
+ d=redhat.com; s=google; t=1772177226; x=1772782026; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=DMTBgWFnXQGsoyX0Qck1IFBi/fumrax5xKEwOcBNFGA=;
+ b=BoTN39EC//ZTI1t7pgby9NvcjYAuR2c58JabUCvggNIWk+nudfcPLe8bTu9dAtD4yn
+ VAmH278EfFcAv3BLtDbt4ZK/IlUQxLEcqUYaBnrOQPKQGOr3SVeBgBYAZzBpbHT3YciY
+ Btbku30HxnqDCuPw+2uHzF5GBKFUuI22z3zIefeVTp58CHv2fNVxogIM1s6iapfCTOzy
+ VcTSAxCZ2kyEd76FbmktRar4RhVzqc5tzaH9HwRuPIVq5r5MVmB48KpQLaykROOpT1Wc
+ 12oMXF82GNjBO75EG2vlSxPPOm8ugbcxZ3G4wGaweSXKLi30wfvIILrkelnfJTIRNrrp
+ eNjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772177139; x=1772781939;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1772177226; x=1772782026;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dqdWfZa9w4qvLo9QVPtCB4DXn7FhhJj33gbvY7/gVO0=;
- b=FmPVjeuKFuYmGtYJ16bzsD1pnMgGLYk/bjjFJI5cu+SM0WQ8ep8SmS//i37Jdhc1JU
- LS6F1VtP26It7olHvfup3mIF3E4q85kibaJxR6SzIb/ewDAtTNvCprLivs/oS2r9gByJ
- lkWoyjWEd0y5FZn4aIxFhTRW5LtWaGiITqCKpUPFJXdBjicnav2T/mCoILlK59gyhKGg
- 2rv+edOahBuCy/0SUOsCFJ2H1xv6ltnH1Esjsyn2B2kUAIyscu7XVv+2357X8Pt/TIAf
- QQHrtA5fJXYOP2bJ9NxfBBaTtX0ekDkI7rVdWQuO/HOTbw3LWaVtcevCmGflHH3Bx14d
- BxCw==
+ bh=DMTBgWFnXQGsoyX0Qck1IFBi/fumrax5xKEwOcBNFGA=;
+ b=aC9v6A9odaOAvQYgnBv2wFaQ/M8M/oNk0GEPKxBuvvRV8Ng/hVFG69ki7p/PG7RYKM
+ y7BZ2Ay0dumoCighlkyczrH3hKW8ljml0JKW2tDX/wXUAGT1LclsFomwIyAcgQLkZLhe
+ HlE+mOgPLjaPqtfroGxYRWmXWRgJNxzq6+ZpuEqsEa0m8y5HjcJ3T65vo6Ral2ksxAY9
+ SOnexr7Sl32KoZj0eQFo4Qgb37Yye/4l2rh4ayWBdDHH6plwMmbEfr48XtWIhns2b1VP
+ /foKpGl39bYLRg5OFtH6yOYk/5cQ8sqcJW1oJ5Brvaa2CzAJhORj7BrmN6K3YHd3ESRv
+ WHNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpo+DleTi+eyNA7zFuHAh2UMUZqbS+K5IBj/bGf0f5lWMyTxB/wLIPGVFgElXSU4nOgx6tRp+1lz4w@nongnu.org
-X-Gm-Message-State: AOJu0YxgAy/0LenfjeSgs8DtAQI1nLBw1M9Qm5iOmAGL/V3g1qQSkEXY
- mRBsGzV7AjK1PBqKSnTIJKtiPcLv4W4r1l7KZ8n0FVGu3UcZy4SR5Ijp/eKQp+6iQuP3ml9uM67
- 9WClN7s0kMSXR/zJknnaWNuiTk1EfFLAC6oskS+3vAAh/q9y/Y+CHLzo5
-X-Gm-Gg: ATEYQzwJ394+ArbHO1cZknZU9YtKdNAot/MnvEbFkn/87GCTo0gC1N5R78Fj9SSziEM
- 007J33s6tgFssEuzeQfdAzXL1S78fvNQdcv1LXDNkUjzXW1LWGFglUJtDqyUGgDW0v/9rkhpryX
- dK5Z393y3aSUchxdhdNQd95kdkQTkOgXRg+0ZjERlqfQYJ4GBFrr+kgSMCcloEN6GLEzy9j1r93
- hS/VbEBOlyIpqzfVdgjyV9pcl9abG0ild2CnE1W/8T2qobIzIhG2Dq6qlVg+vJYYL91u6sAbQeg
- PckMxyfEKGSHOX551If3G30d/CzMBaxaEBWImtXrLMT+mubVHSBZd/l3bIV+l5S8/ro+MqKbYtC
- KdfNQCGNkPQmIXh5Uw7/Ej57a8f0XHvMO5XP4537+yeP9kylp0FyrUBg=
-X-Received: by 2002:a17:90b:1d4f:b0:34a:47d0:9a82 with SMTP id
- 98e67ed59e1d1-35965cdad17mr1706671a91.23.1772177139152; 
- Thu, 26 Feb 2026 23:25:39 -0800 (PST)
-X-Received: by 2002:a17:90b:1d4f:b0:34a:47d0:9a82 with SMTP id
- 98e67ed59e1d1-35965cdad17mr1706651a91.23.1772177138777; 
- Thu, 26 Feb 2026 23:25:38 -0800 (PST)
-Received: from rhel9-box.lan ([122.176.129.56])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-3593ddd7374sm4369743a91.16.2026.02.26.23.25.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 26 Feb 2026 23:25:38 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, pbonzini@redhat.com, ani@anisinha.ca,
- qemu-devel@nongnu.org
-Subject: [PATCH v7] hw/vfio: generate new file fd for pseudo device and rebind
- existing descriptors
-Date: Fri, 27 Feb 2026 12:54:45 +0530
-Message-ID: <20260227072445.406907-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
+ AJvYcCWsS0bA3a0Bh9RcoFpgS/80u0ZdWOqO6Y7Lrmgv++gGjqmKyl4l1f5V/nt/6B+efw/h/kKVLk01UHRZ@nongnu.org
+X-Gm-Message-State: AOJu0Yx0mwNSGh0O6VbDFzS1uwMcblnlIWg6ODmt0swF9v2tN+QqjBUy
+ U3uWiTA5O+HcI9Xum/OUJQ/ENZZm7vebpwZ42DVrNxQH3AOvLgjBTNORJftXehJSuuNfwg7CH5i
+ uekpHytiz9LljIByeoHQ6z9X+DvzTbEhGFhHly/zLNW7uRr8PAAvgF2s4
+X-Gm-Gg: ATEYQzyWq00mtVzt+vJv5nECyjDoJDbEURj8pgpbKNKcWnlmuW/jAtUvzTAj319fZ5v
+ 0PtLSd1TKQ2me/RU5FLYyit+bak+Kz+ehM7qPXfHuq8MvWiwNLeS2uLg6gw7MJaRzMj2MhWfkSG
+ dxY9C5JAX7tRoXMi837kGAM5841LGRTfM5doZ1nF36sNUoIfMiSc7d2yWtQurapUi4dF3GH/NJZ
+ /bgyodg0RAeQUxkZ6IiiYa2+CVVcET/S0Z7GhfL+9T3cPZEiiUL1X4+y+cy1cbj8WbyAuJ5qlEH
+ oQR7+5Ovp3P4Q4BjHWDMy85qgz6t91TRcpNh5nDiBoNvdb0FM2tNvyku1hB7AVnnPwiIoPGIdxt
+ cTzD8GalBEOxbSPUfdq3Y60cWzTulpeQuzg5ipnLnNhYBbCBQ4cSFF4hz6g==
+X-Received: by 2002:a05:600c:c490:b0:479:1b0f:dfff with SMTP id
+ 5b1f17b1804b1-483c9bb1fb0mr23577785e9.10.1772177225943; 
+ Thu, 26 Feb 2026 23:27:05 -0800 (PST)
+X-Received: by 2002:a05:600c:c490:b0:479:1b0f:dfff with SMTP id
+ 5b1f17b1804b1-483c9bb1fb0mr23577485e9.10.1772177225498; 
+ Thu, 26 Feb 2026 23:27:05 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:165:d60:2c1a:3780:4e49:dfcf?
+ ([2a01:e0a:165:d60:2c1a:3780:4e49:dfcf])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfccff00sm56251365e9.25.2026.02.26.23.27.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 26 Feb 2026 23:27:05 -0800 (PST)
+Message-ID: <68a2ca73-f3e7-4934-a1fa-efc688c641ca@redhat.com>
+Date: Fri, 27 Feb 2026 08:27:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7] hw/vfio: generate new file fd for pseudo device and
+ rebind existing descriptors
+To: Ani Sinha <anisinha@redhat.com>, Alex Williamson <alex@shazbot.org>
+Cc: pbonzini@redhat.com, ani@anisinha.ca, qemu-devel@nongnu.org
+References: <20260227072445.406907-1-anisinha@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260227072445.406907-1-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
@@ -121,143 +167,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Normally the vfio pseudo device file descriptor lives for the life of the VM.
-However, when the kvm VM file descriptor changes, a new file descriptor
-for the pseudo device needs to be generated against the new kvm VM descriptor.
-Other existing vfio descriptors needs to be reattached to the new pseudo device
-descriptor. This change performs the above steps.
+On 2/27/26 08:24, Ani Sinha wrote:
+> Normally the vfio pseudo device file descriptor lives for the life of the VM.
+> However, when the kvm VM file descriptor changes, a new file descriptor
+> for the pseudo device needs to be generated against the new kvm VM descriptor.
+> Other existing vfio descriptors needs to be reattached to the new pseudo device
+> descriptor. This change performs the above steps.
+> 
+> Tested-by: Cédric Le Goater <clg@redhat.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- hw/vfio/helpers.c | 91 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 91 insertions(+)
+Thanks for the change Ani.
 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index f68f8165d0..00d42d3b98 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -116,6 +116,88 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
-  * we'll re-use it should another vfio device be attached before then.
-  */
- int vfio_kvm_device_fd = -1;
-+
-+/*
-+ * Confidential virtual machines:
-+ * During reset of confidential vms, the kvm vm file descriptor changes.
-+ * In this case, the old vfio kvm file descriptor is
-+ * closed and a new descriptor is created against the new kvm vm file
-+ * descriptor.
-+ */
-+
-+typedef struct VFIODeviceFd {
-+    int fd;
-+    QLIST_ENTRY(VFIODeviceFd) node;
-+} VFIODeviceFd;
-+
-+static QLIST_HEAD(, VFIODeviceFd) vfio_device_fds =
-+    QLIST_HEAD_INITIALIZER(vfio_device_fds);
-+
-+static void vfio_device_fd_list_add(int fd)
-+{
-+    VFIODeviceFd *file_fd;
-+    file_fd = g_malloc0(sizeof(*file_fd));
-+    file_fd->fd = fd;
-+    QLIST_INSERT_HEAD(&vfio_device_fds, file_fd, node);
-+}
-+
-+static void vfio_device_fd_list_remove(int fd)
-+{
-+    VFIODeviceFd *file_fd, *next;
-+
-+    QLIST_FOREACH_SAFE(file_fd, &vfio_device_fds, node, next) {
-+        if (file_fd->fd == fd) {
-+            QLIST_REMOVE(file_fd, node);
-+            g_free(file_fd);
-+            break;
-+        }
-+    }
-+}
-+
-+static int vfio_device_fd_rebind(NotifierWithReturn *notifier, void *data,
-+                                  Error **errp)
-+{
-+    VFIODeviceFd *file_fd;
-+    struct kvm_device_attr attr = {
-+        .group = KVM_DEV_VFIO_FILE,
-+        .attr = KVM_DEV_VFIO_FILE_ADD,
-+    };
-+    struct kvm_create_device cd = {
-+        .type = KVM_DEV_TYPE_VFIO,
-+    };
-+
-+    /* we are not interested in pre vmfd change notification */
-+    if (((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
-+        error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
-+        return -errno;
-+    }
-+
-+    if (vfio_kvm_device_fd != -1) {
-+        close(vfio_kvm_device_fd);
-+    }
-+
-+    vfio_kvm_device_fd = cd.fd;
-+
-+    QLIST_FOREACH(file_fd, &vfio_device_fds, node) {
-+        attr.addr = (uint64_t)(unsigned long)&file_fd->fd;
-+        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-+            error_setg_errno(errp, errno,
-+                             "Failed to add fd %d to KVM VFIO device",
-+                             file_fd->fd);
-+            return -errno;
-+        }
-+    }
-+    return 0;
-+}
-+
-+static struct NotifierWithReturn vfio_vmfd_change_notifier = {
-+    .notify = vfio_device_fd_rebind,
-+};
-+
- #endif
- 
- void vfio_kvm_device_close(void)
-@@ -153,6 +235,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
-         }
- 
-         vfio_kvm_device_fd = cd.fd;
-+        /*
-+         * If the vm file descriptor changes, add a notifier so that we can
-+         * re-create the vfio_kvm_device_fd.
-+         */
-+        kvm_vmfd_add_change_notifier(&vfio_vmfd_change_notifier);
-     }
- 
-     if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-@@ -160,6 +247,8 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
-                          fd);
-         return -errno;
-     }
-+
-+    vfio_device_fd_list_add(fd);
- #endif
-     return 0;
- }
-@@ -183,6 +272,8 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
-                          "Failed to remove fd %d from KVM VFIO device", fd);
-         return -errno;
-     }
-+
-+    vfio_device_fd_list_remove(fd);
- #endif
-     return 0;
- }
--- 
-2.42.0
+C.
+
 
 
