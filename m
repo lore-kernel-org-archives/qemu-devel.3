@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F1CFD530E
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 08:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F4FFD530C
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 08:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvtDr-0005LW-4B; Fri, 27 Feb 2026 03:29:19 -0500
+	id 1vvtJ1-0006On-5A; Fri, 27 Feb 2026 03:34:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@fhofhammer.de>)
- id 1vvtDj-0005L8-H7; Fri, 27 Feb 2026 03:29:13 -0500
-Received: from mwd01m.fhofhammer.de ([173.212.212.240])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@fhofhammer.de>)
- id 1vvtDf-0005lA-TY; Fri, 27 Feb 2026 03:29:10 -0500
-Message-ID: <e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fhofhammer.de;
- s=2023; t=1772180935;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
- bh=VwxvP5Ed9+6mD2H0ZZhW5q2QVTuYa/dYTmAQCg13vCc=;
- b=rRzMZ+xhbz7UcY6ihWGOdJXEUNAwQGKXg+YvFwr51Uyp8J+ZHNn9GRp9tO81/s8hkKA6Rs
- IYMaTplNmsCLfTNe8Q11c/9miHxBK3wgmdCK+Xcrm/i9x9XBQ5ZQr88kMKPSbtY2HuhwLw
- KL6WoWX4rNhvppCYM7CCuPU6i9IoPCcvtBcXCtNuGMDWZiK+Vq4tGz9yc/MkvHe2WiOKbo
- uiU/I8aDNNDtUHeP3Ans/CVzOUvBltUkJBEB06NSHbAwPUOfsLWgv84mhLDi8KA+ab06WY
- 1e/AmudZUrLtRGw2We8HAAKIIOoLfTfM96slpoPk75oxSLH+qVpYWiKTqU0zgMBslFmsHb
- AqYXwAOLH9f9GytwTZ0I2ia5DtyXAI7x1xHbs2I94NGj4q1XPAwKUv0l1WLIkzyATPL8fm
- uXAxd8X55H3jmf7FBbNnB78lQ7CwlGmBfH12bcJLfM0uZkc+4S/D7k2vUU2NLYiGJfNpKi
- GnpBFHfd+7D9CQ3PjyM9wGrcDKnshUncsE2CTrcxA83hAbReUwQU73M4+zCUqvl22PqF7q
- zvH3gI4c6lXKmb1wweDiy41AG9xU2RcdLuI6qSHbKSJWTh8ISGCTL98bmLFRaAg09nYue7
- nBFTF9lDrkNeR2wAZYmHKAbxA/f9tNX6wjIZglg77hcTwZgL0hfFA=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=florian.hofhammer@fhofhammer.de
- smtp.mailfrom=florian.hofhammer@fhofhammer.de
-Date: Fri, 27 Feb 2026 09:28:54 +0100
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1vvtIz-0006OW-Gb
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 03:34:37 -0500
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ckeong.teo17@gmail.com>)
+ id 1vvtIx-0007V1-Pz
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 03:34:37 -0500
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-897002b7576so30054986d6.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 00:34:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772181274; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EKCcmhlPLDKH8GLSoUtV3ovx2St/5iXP+Wu+JnUrhD7etHnhTy2yJdKpUpWQXDOiBK
+ klq96NbxN+a82jwdcwvtZ6gISXdnLZo5yXayNL/RJfNTRaoWvdWIfnHtz4is6zaFwvkO
+ oOP5FAvYoi4S81icABWHFKTpDALb9nU3zrHXZAtVEdVtiAkwnPwVAXFZhy3ATJhqKSwn
+ dfF+KP+AQHtnAJAxJU4MiOn3Lx2YG1e44nyk0NPPwmEvsOIW+56ZnDeHOACnRoeGkE6K
+ UxnmRwVvO4DfaBss2lxdTC44Ji51AyeQ3TWrF1LZbMnIPYpqccA+riJeGn7y7klPWVMv
+ Jlhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=yyRifZRjMZGyiAyTn+lUTGUriyc0kk4XG8s/w1yUK3Q=;
+ fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
+ b=luNyIjG9jbPtMA9okDhkAV4lqq2okw/h4pZdUSNMCc29aYItBPdMGBH2NEsC6OwBuX
+ gvt5GVD/6s1ArA3JxE7ZCzAh+tzWUROXnG/Lqui4zcdNscg+wLJFt/vQMEDTODfxf/gM
+ OJMOvwAzfsfjYs2csWGt3/Jq5rfl1+eFOpRkF1euY5ZT7yS3t1iFXdgY/NsZFX+KxxtC
+ mRuFFZhk3n/u5H9cHHxsuFZTYdTsP697H1tf9hIu3pKTeQevZUl0d8HQN6nDo8cZW3+8
+ z/Epg+bdxHZlL1L0fBOhq1tnaNCX1ZvnKSBeWQzlH3aeDLhSs3tvLmkIpJTGp9j9U2Gm
+ MhyQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772181274; x=1772786074; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yyRifZRjMZGyiAyTn+lUTGUriyc0kk4XG8s/w1yUK3Q=;
+ b=dLGTY2yOhQSyK76LyXmTvWQtjU+4QDYKYRW9sgjpdZo7hRGDoM+wXdPb3lswv6jaji
+ dZXd2YkmAwaZHidALluUSYRiXKZAil7pUTmcfBMKzxQJcY/S6XvvliAb46jnFqVVqRog
+ 2dz9Wzildh0d7bf5G+UQzFrEM9WPtywRlQSaSnyI5ntjO8ZFE2zM59avSBN5fIebmayx
+ hElpWzzQ7zySERWQCv4r73fY1XEo2p5VtWCbt2U4xECC/88uPdHYkH5DQflNbE2AFXZ8
+ tUphL6tMBS1MSLiznCBHZu2pbWBO+vyotI4vetjuXX/cKsHLYUuILqSI0KNWZjTw7J1d
+ p/JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772181274; x=1772786074;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yyRifZRjMZGyiAyTn+lUTGUriyc0kk4XG8s/w1yUK3Q=;
+ b=i06hDlIGjoV28SNLcSYdzOHjkDKR5+bObwCA2jZeWpaqFol92RZB9k7v1FBfm8RUKY
+ DlXJwu/Y0M/AU85gCvFFxJLvzJJbRCNuydC7BZ3E0zBFUMWTYI7RgbFhzqpmFIkBByZh
+ wNhubFvgXXD4ktBC84BiYRN42HAMQSs+n765oE0cAiO1yjVATaCRKPBvLRTpG6gTRjXW
+ JFk/nBMeAUJHuP9MI8wEEmUUKDBRqHcX135kWCG2vXuRnvW45n2LUQVic9wBIOsNqAaV
+ dY1GX89a1Q9lca0VD38eltuPS10v+tpKbryceZc/dBVw8q/N75Nk6dZTePe4qIS0Conw
+ t6Ow==
+X-Gm-Message-State: AOJu0YzfmcsgjUfAjTHvkRg6CfOryo4kjckdjA03PZ7yksVpBvRJ60yP
+ qqd8MzDZblolJkrzZOe9dFNMvv1abEHAE+Hb5uU4CNipBsVnzPeYMOVz2TUviIYl2U+7WNbbac7
+ QdwSBkMfIJpn+Ug3QJbGMWXLOZkAIpKJyCXmGwhcQag==
+X-Gm-Gg: ATEYQzwU14cKRXrPSz10LNf5aoQnsnYULV8locmNmqwUyEPN44OHNdN0gBHk8r4Nrv4
+ gtIZQWENeSrx5GsYoJUXQwYgUlzKXNKRUA2dGROdRpCUmGC5PgchkFju4FhZZ9gfhKgare40ipC
+ Z5v5WCLAkf/wyC8yWQdQ+IUM1GRAQCb8HFIHBQifqNwWbrDbE8qSAguNQ7rA0sTOsIOWFsGVw1n
+ UYdu54QS6VzswsCsctnWvNRv8XhWZI2vDZyeu92XrqjgbrFrf5plxHuD52/J8cQc+4BlOHUVlCN
+ HBl0rm8Ud7Evt3YKuY6gebaK7w==
+X-Received: by 2002:a05:6214:230b:b0:899:ac2b:6ddc with SMTP id
+ 6a1803df08f44-899d1e6e8c9mr29581056d6.62.1772181274569; Fri, 27 Feb 2026
+ 00:34:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
-Subject: ppc-linux-user GDB stub broken
-Autocrypt: addr=florian.hofhammer@fhofhammer.de; keydata=
- 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
- /zEc5hMMZIzTI4AtIcgA3xe4Ew==
-To: qemu-ppc@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, philmd@linaro.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=173.212.212.240;
- envelope-from=florian.hofhammer@fhofhammer.de; helo=mwd01m.fhofhammer.de
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+References: <CAOkKuiOpVZwn7ZwPDPxJWmQ2SovUUTf2eLwg9dWFgEEhi3_NFw@mail.gmail.com>
+ <aaFRigrJ-uiYcmUi@redhat.com>
+In-Reply-To: <aaFRigrJ-uiYcmUi@redhat.com>
+From: Choon Keong Teo <ckeong.teo17@gmail.com>
+Date: Fri, 27 Feb 2026 16:34:23 +0800
+X-Gm-Features: AaiRm53WdC_F23nsfvrJmMfsr3JlvsNEjgGYlEeWsk-8d0HMfePsqsr5z876ZP0
+Message-ID: <CAOkKuiN_RsOQTREhAvQT2aJf0XJ4Mxk8XRK6MrXrWcoNdGhr4w@mail.gmail.com>
+Subject: Re: [HELP] Issue running test cases in Qemu
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=ckeong.teo17@gmail.com; helo=mail-qv1-xf2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,47 +117,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Thanks for your reply. I would like to start by focusing on the unit
+tests and qtests. Is there any method for running a single test file?
+Thank you so much for your help!
 
-on current master (d8a9d97317d03190b34498741f98f22e2a9afe3e), the basic
-gdb stub test fails for ppc-linux-user when running "make check-tcg".
-The error message is as follows:
-      TEST    basic gdbstub support on ppc
-    Python Exception <class 'gdb.error'>: Could not fetch register "fpscr"; remote failure reply '14'
-    Error occurred in Python: Could not fetch register "fpscr"; remote failure reply '14'
-    qemu-ppc: QEMU: Terminated via GDBstub
-I've tested from a clean checkout with the following commands:
-    ./configure --target-list=ppc-linux-user
-    make -j$(nproc) all
-    make check-tcg
 
-According to git bisect, the test started failing with commit
-1ec0fbe2ddadf17f7e0644b441833f0cd20dc137, which reduced
-cc->gdb_num_core_regs from 71 to 70 (link to the patch on the mailing
-list: https://lists.nongnu.org/archive/html/qemu-ppc/2026-02/msg00265.html).
-Commit 7ddd3aca5f2efcf6aae10f836011e445ee77a6e1 (mailing list link:
-https://lists.nongnu.org/archive/html/qemu-ppc/2026-02/msg00267.html)
-got rid of the hardcoded value for cc->gdb_num_core_regs, but the test
-still fails (people involved in the original patches in CC).
-
-I've debugged around a bit but I don't know my way around the gdbstub
-internals enough to propose a patch right away, so I'll just summarize
-what I figured out so far.
-1. Due to cc->gdb_num_core_regs not being set explicitly anymore, it is
-   set to 0 at the end of gdbstub/gdbstub.c:gdb_init_cpu(). In the same
-   function, cpu->gdb_num_regs gets set to 70.
-2. When the test tries to read a register in gdbstub/gdbstub.c:gdb_read_register(),
-   the first condition of "reg < cc->gdb_num_core_regs" is always false.
-   Also, the register number for fpscr passed to the function is is 103,
-   and cpu->gdb_num_regs is also 103. If the register number is supposed
-   to be an index (as I understand it), this would indicate an
-   off-by-one error somewhere.
-
-If you have some pointers on where to look / what to check out for
-fixing this, I'll happily try to work on a patch. But I suppose that
-somebody more experienced with this could probably fix this much faster
-than I can.
 
 Best regards,
-Florian
+Choon Keong.
+
+On Fri, Feb 27, 2026 at 4:10=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Fri, Feb 27, 2026 at 04:03:44PM +0800, Choon Keong Teo wrote:
+> > Hi everyone,
+> >
+> > I=E2=80=99m currently working with QEMU, and trying to run the test cas=
+es. How
+> > can I run the single individual test file only, or a single test case
+> > only? Thank you so much!
+>
+> QEMU has several different test subsystems, can you be more specific
+> about what you're wanting to run.
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
