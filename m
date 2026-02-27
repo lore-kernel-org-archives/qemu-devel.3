@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56795FD530D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A816FD5307
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvsdF-0003BR-UY; Fri, 27 Feb 2026 02:51:30 -0500
+	id 1vvsel-0003ea-Tn; Fri, 27 Feb 2026 02:53:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvsdD-00039o-II
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:51:27 -0500
-Received: from 10.mo552.mail-out.ovh.net ([87.98.187.244])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vvseg-0003dy-2C; Fri, 27 Feb 2026 02:52:58 -0500
+Received: from 8.mo548.mail-out.ovh.net ([46.105.45.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvsdA-00006R-PV
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 02:51:27 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.198])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fMgWB0QwBz5vpZ;
- Fri, 27 Feb 2026 07:51:18 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1vvsee-00009y-8q; Fri, 27 Feb 2026 02:52:57 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.43.172])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4fMgXz71nTz5wBX;
+ Fri, 27 Feb 2026 07:52:51 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 27 Feb
- 2026 08:51:08 +0100
+ 2026 08:52:50 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G001c2f7af53-96bd-4eca-9362-57920968bfdd,
+ (GARM-101G004ba2013ea-c08e-499e-991a-ad224dca7367,
  1764588C194503052958D0AAF3448E51E66CE866) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <897005bf-fd67-4d78-86b4-b92c9cc0f666@kaod.org>
-Date: Fri, 27 Feb 2026 08:51:06 +0100
+Message-ID: <047f2aea-acc7-4966-8b55-723709fe0f28@kaod.org>
+Date: Fri, 27 Feb 2026 08:52:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 03/22] hw/i3c: Add bus support
+Subject: Re: [PATCH v7 18/22] hw/i3c: Add Mock target
 To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
  Maydell <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
@@ -45,11 +45,11 @@ To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, Jamin Lin
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>, "komlodi@google.com"
- <komlodi@google.com>, Patrick Venture <venture@google.com>, Titus Rwantare
- <titusr@google.com>
+ <komlodi@google.com>, Titus Rwantare <titusr@google.com>, Patrick Venture
+ <venture@google.com>
 References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
- <20260225021158.1586584-4-jamin_lin@aspeedtech.com>
- <ad58c432-8c9e-4cd8-847a-df4bd6a45d6d@oss.qualcomm.com>
+ <20260225021158.1586584-19-jamin_lin@aspeedtech.com>
+ <c904f61d-b836-41e2-8032-31ea32324396@oss.qualcomm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -94,27 +94,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <ad58c432-8c9e-4cd8-847a-df4bd6a45d6d@oss.qualcomm.com>
+In-Reply-To: <c904f61d-b836-41e2-8032-31ea32324396@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.95]
-X-ClientProxiedBy: DAG13EX1.mxp5.local (172.16.2.131) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.101]
+X-ClientProxiedBy: DAG13EX2.mxp5.local (172.16.2.132) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: 3403f357-30c3-4a4f-bc09-32d3c682b909
-X-Ovh-Tracer-Id: 5545338519449144077
+X-Ovh-Tracer-GUID: 9861e815-fb2c-4b34-9764-79756572d32d
+X-Ovh-Tracer-Id: 5571797166078397197
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEPhLDgOXVHtajEBrFDY3EhW7HnEz8UgDBe6V4t1xoHOqFDp+QFJkAAnw7VFDD9Qg9KVsYLNlD7SARyrHdNuG1XksDeihrDOylxwnnqpoIrz+Ohkz2NorujLzJT5ooiqlObdrLrqX7WE7GtXzRkAGVebDzfM4LEsKM02k2tA8mqGEfr4tDaUjSVjOScdj1D7SLbyBBzTRLePN1sUaJlnSjhNUhVshInouRRiggXWlS5ijkGiq3GXWtIV8wG2xr++RmZtSU7OsrzIq/C6t9HcXK0kQsfHLwpLBJwGD9RuqvHNhWEW2x7antutJ/lW5ptTldb7JcDTGa99Djc9v5lHMcweobIngG7GQ+0BaXJYpO3Yd1fouN53z6mIvcloj7Yl1qB+mrfDeG3pOQKwRIUpFZKtMRvCED0rDFYSY4dULa8DYwOiT9yBJzFbrjS1YTNZMOnuEwI6jizZx2Su2cE4zqrcns81KWIujoX+zenOwl5nEm6ct5UICImBMM1N37/AkO9nDFkT1EnaK0bm6FWMi05GxoGw8meP0o31515Imk6yORSclomHuaLGDUZcyktEKbzNC1FdsLCme+/y8EsBWymwWMfpPPKY3iChDu0uRVWJR+2M6mBIE8Z/CkFz5aza1OezCaDP2tyCX3IHwPW9a4D7P+ZpKTUggGQs10ElC9SuQ
-DKIM-Signature: a=rsa-sha256; bh=sX6DciBFydF3v5K+DVPBlAqOUsrYPUw2HDLQLyrq06o=; 
+X-VR-SPAMCAUSE: dmFkZTENp50b907tC5SjI0Y0VyUj6vqapV2EZsg8yEII8HQJMQvqkowfF9OpAw9p+wCfci6Hhz6cG8j2JT/5d2yM6tKwftCFG0VW6HNWnWbUfSRzZDqV5Luo4jmkaK+i1TlcWbzpCH3Sqlr3byblk0biRAvYQUpOgZkwtO7CBAUycG+x0HYXxLXr6CaO4lqGs2PGf4CtrqS7XpOqVCErLIyGtrSMfYpjpRLhN0rFEEVGr5YwAHr8YnCPKdSWNeUqYN14+YunppqQsYGQ3KFf8MCnbjpZoOMw54aLzU4PuNsKULtpx7yoYD8SQz5OBAdsUas9SJEkmrnKT/wtpFjTQF9hBWoHPfN3BR7sB94i6pC8pKcj4TlzhDKxs+TVXktlMRAaEXD+V4yR/c/gRMBFcfwNm+x7qn7feCDnNtn/Q7mLxnRf+iczfMn4fR2JLRdHY5mmdsIwplRbAh2aGSwraFLtXb9Go06e2WgeJW/3fOyCJdNBOJcorTmnXiTzdYTRWDk3i3cZ4GIl/nLspqwc8vc+ewlt+rQe4S+hxL/ylVNoQldHfjTIs7uFw1QNCvgFkaD4xYzrhWpcjoDavb04IWyTbW6JtlqCJOUG/s3osN88eMpmaFM+u0pbDLlLwvbbUnhgkU+aN1B7ekmKc/tHQLMir1mQtLBVnvwXUcY0kEHUQpvQGA
+DKIM-Signature: a=rsa-sha256; bh=9ZI05fIlRBAqxCJQyYmWUPmAjTHVCHcSFcIV/A9m+yU=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1772178680; v=1;
- b=ooyubBuAa+IPhoBEttQnQG8YzRRCTOo7S9SO3zmD0IFRvlvUDjqPdc5gSinKgz+GzLJ+Lzsm
- w3JGDpZ/5oX0IYJRAcsgTCsL36wnyPWlwc1JlXWRnEhpMHZv//Oj8xCdVgj+VVUO4SwuR2b4wO+
- EeBrfsPIuDrMnC0PCYe7WQrU99/MvWruWdLbFAGVXpAb895jdLsRLsthcF9sedN6saiU1ImGOyw
- cd/ErWj3ij2HMnyo2ckq71dXWvYPeHRPE03q71yfXAnMLHUL33BpWfYbZy3ej/Mb//Y5/vCI0/B
- jA2kpRbxLXlx01lHwM6LhlZAVJauJaMGFcxONSV0n4IOA==
-Received-SPF: pass client-ip=87.98.187.244; envelope-from=clg@kaod.org;
- helo=10.mo552.mail-out.ovh.net
+ t=1772178773; v=1;
+ b=bmnGb0kybjdcCgnTxTByc/vnMLvlzG9S8jlLspVzMtmBY7I2g222YjKQrkEL1T40XJqmuv/Q
+ Oiwa8PHVVJN1hIvw5M4NX2rjzlXVFDDcQadLYzQ1mJrvGrOZiTvc0XTqPF6SVXAeNNK5zArYpPH
+ aKcgb9k+i7H2lAPiUWPt5LC2QGz0X/DdKQqunbRLSg4fogaoq08GkMFDubOIyUkP2nVkC6osyaJ
+ tLsMHAZEDvlP52FgOqlLGheGDzuDUj2y/UiVBbmEDHQBAQFp6UuA7RfKyw8Pa0tYwaZJr8J12Ee
+ 2r77LsKKcmc+eyuiFkJe8cCojpXVAb1xR3WJNofMCdozQ==
+Received-SPF: pass client-ip=46.105.45.231; envelope-from=clg@kaod.org;
+ helo=8.mo548.mail-out.ovh.net
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -138,142 +138,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jithu,
-
-On 2/27/26 03:23, Jithu Joseph wrote:
+On 2/27/26 02:43, Jithu Joseph wrote:
 > 
-> Another minor comment which too can be addressed later
+> Apologies for chiming in this late ... I only got a chance to test this last week
+> This really is a minor comment ... can be addressed subsequently
+
+No problem. It is not merged yet and fixes are expected.
+
+
 > 
 > On 2/24/2026 6:12 PM, Jamin Lin wrote:
->> Adds an I3C bus and a target class.
->> The bus supports:
->> - I3C data transmission and reception
->> - CCCs (including ENTDAA)
->> - IBIs
->> - legacy I2C transactions
+>> Adds a simple i3c device to be used for testing in lieu of a real
+>> device.
 >>
->> General usage of the bus is similar to I2C. Users are expected to
->> initialize a bus via i3c_init_bus, and use the bus returned from the
->> init function to do transactions on the bus.
->>
->> In order to handle IBIs, the controller provides callbacks to handle
->> receiving an IBI from a target, receiving (optional) additional IBI
->> bytes from a target, and handling when a target is done with its IBI.
->>
->> Similarly, target creation is done via i3c_target_create_simple and
->> users use the provided I3CTarget to handle transactions.
->> The target has functions provided that it can use to invoke an IBI and
->> send additional bytes.
->>
->> Along with the send, recv, and event callbacks that are expected of an
->> I3C target, which are similar to I2C, there is a separate callback for
->> CCC handling.
->> This is to help encapsulate CCC handling and keep it separate from
->> target-specific read/write functionality.
->>
->> To avoid repition for required CCCs among I3C targets, there is some
->> class-level CCC handling added. The CCC is then passed to the target in
->> case it needs to handle it in some way.
+>> The mock target supports the following features:
+>> - A buffer that users can read and write to.
+>> - CCC support for commonly used CCCs when probing devices on an I3C bus.
+>> - IBI sending upon receiving a user-defined byte.
 >>
 >> Signed-off-by: Joe Komlodi <komlodi@google.com>
->> Reviewed-by: Patrick Venture <venture@google.com>
 >> Reviewed-by: Titus Rwantare <titusr@google.com>
+>> Reviewed-by: Patrick Venture <venture@google.com>
 >> Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 >> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 >> ---
->>   include/hw/i3c/i3c.h | 277 ++++++++++++++++++
->>   hw/i3c/core.c        | 647 +++++++++++++++++++++++++++++++++++++++++++
->>   hw/i3c/meson.build   |   1 +
->>   hw/i3c/trace-events  |  16 ++
->>   4 files changed, 941 insertions(+)
->>   create mode 100644 include/hw/i3c/i3c.h
->>   create mode 100644 hw/i3c/core.c
+>>   include/hw/i3c/mock-i3c-target.h |  52 ++++++
+>>   hw/i3c/mock-i3c-target.c         | 298 +++++++++++++++++++++++++++++++
+>>   hw/i3c/Kconfig                   |  10 ++
+>>   hw/i3c/meson.build               |   1 +
+>>   hw/i3c/trace-events              |  10 ++
+>>   5 files changed, 371 insertions(+)
+>>   create mode 100644 include/hw/i3c/mock-i3c-target.h
+>>   create mode 100644 hw/i3c/mock-i3c-target.c
 >>
+>> diff --git a/include/hw/i3c/mock-i3c-target.h b/include/hw/i3c/mock-i3c-target.h
+>> new file mode 100644
 > 
 > ...
 > 
->> +
->> +int i3c_send_byte(I3CBus *bus, uint8_t data)
+>> +static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,
+>> +                              uint32_t num_to_send, uint32_t *num_sent)
 >> +{
->> +    /*
->> +     * Ignored, the caller can determine how many were sent based on if this was
->> +     * ACKed/NACKed.
->> +     */
->> +    uint32_t num_sent;
+>> +    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
+>> +    int ret;
+>> +    uint32_t to_write;
+>> +
+>> +    if (s->cfg.ibi_magic && num_to_send == 1 && s->cfg.ibi_magic == *data) {
+>> +        mock_i3c_target_ibi_timer_start(s);
+>> +        return 0;
+>> +    }
+>> +
+>> +    /* Bounds check. */
+>> +    if (num_to_send + s->p_buf > s->cfg.buf_size) {
+>> +        to_write = s->cfg.buf_size - s->p_buf;
+>> +        ret = -1;
+>> +    } else {
+>> +        to_write = num_to_send;
+>> +        ret = 0;
+>> +    }
+>> +    for (uint32_t i = 0; i < to_write; i++) {
+>> +        trace_mock_i3c_target_tx(data[i]);
+>> +        s->buf[s->p_buf] = data[i];
+>> +        s->p_buf++;
+>> +    }
 > 
-> num_sent is uninitialized here. Even though i3c_send_byte ignores it after the call, it gets passed by pointer into i3c_send() where it is used in the trace_i3c_send() call.
-> If the send callback does not write *num_sent (as is the case with mock_i3c_target_tx, refer my prev comment for patch 18/22), the trace might show garbage. Initializing it to zero might reduce the confusion
+> 
+> num_sent is never updated prior to return, so the traces (from caller i3c_send) looked a bit confusing
+> 
+> <snip>
+> mock_i3c_target_tx I3C mock target write 0x12
+> i3c_send I3C send 0/1 bytes, ack=1   ---------------------> instead of 1/1 bytes
+> mock_i3c_target_tx I3C mock target write 0x34
+> i3c_send I3C send 0/1 bytes, ack=1
+> </snip>
+> 
+> Something like below is needed
+> + *num_sent = to_write
+> (might also needed in the ibi magic path above)
 
-Could please send a patch ? I will queue it after this series.
 
-Also, since you have tested this series, would mind sending
-a Tested-by tag ? possibly a Reviewed-by too.
+Please send a patch.
 
-Thanks
+Thanks,
 
 C.
-
-
-
-
-> 
->> +    return i3c_send(bus, &data, 1, &num_sent);
->> +}
->> +
->> +int i3c_send(I3CBus *bus, const uint8_t *data, uint32_t num_to_send,
->> +             uint32_t *num_sent)
->> +{
->> +    I3CTargetClass *tc;
->> +    I3CTarget *t;
->> +    I3CNode *node;
->> +    int ret = 0;
->> +
->> +    /* If this message is a broadcast and no CCC has been found, grab it. */
->> +    if (bus->broadcast && !bus->in_ccc) {
->> +        bus->ccc = *data;
->> +        bus->in_ccc = true;
->> +        /*
->> +         * We need to keep track if we're currently in ENTDAA.
->> +         * On any other CCC, the CCC is over on a RESTART or STOP, but ENTDAA
->> +         * is only over on a STOP.
->> +         */
->> +        if (bus->ccc == I3C_CCC_ENTDAA) {
->> +            bus->in_entdaa = true;
->> +        }
->> +    }
->> +
->> +    QLIST_FOREACH(node, &bus->current_devs, next) {
->> +        t = node->target;
->> +        tc = I3C_TARGET_GET_CLASS(t);
->> +        if (bus->in_ccc) {
->> +            if (!tc->handle_ccc_write) {
->> +                ret = -1;
->> +                continue;
->> +            }
->> +            ret = i3c_target_handle_ccc_write(t, data, num_to_send, num_sent);
->> +            /* Targets should only NACK on a direct CCC. */
->> +            if (ret && !CCC_IS_DIRECT(bus->ccc)) {
->> +                ret = 0;
->> +            }
->> +        } else {
->> +            if (tc->send) {
->> +                ret = ret || tc->send(t, data, num_to_send, num_sent);
->> +            } else {
->> +                ret = -1;
->> +            }
->> +        }
->> +    }
->> +
->> +    trace_i3c_send(*num_sent, num_to_send, ret == 0);
-> 
-> This trace might print garbage if the target send callback doesnt set it
-> 
->> +
->> +    return ret ? -1 : 0;
->> +}
->> +
-> 
-> Thanks
-> Jithu
 
 
