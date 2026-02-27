@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167471039895
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FF5104891A
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 21:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw5fL-00043I-0N; Fri, 27 Feb 2026 16:46:31 -0500
+	id 1vw5gW-0004lk-Pi; Fri, 27 Feb 2026 16:47:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw5fG-0003wO-2t
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:46:27 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1vw5gV-0004lR-MF
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:47:43 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vw5fD-0002HQ-Af
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:46:25 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2aad1bb5058so25192955ad.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:46:22 -0800 (PST)
+ id 1vw5gT-0002Lm-W1
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 16:47:43 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-bde0f62464cso1018534a12.2
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 13:47:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772228782; x=1772833582; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=43qaeDvlPO4pxHAJTr/KYixKEB+1/QDnWx0q/ajv7Uk=;
- b=BSu3+ntIeIzLEPYt7ceW45jX/Tppxcw7IW3z525Sf4qg22mr5PRdhArFHw+B5GcAbb
- DZxrW2vKvzCU/lIrKGMs4NHJ0WsMJ9S8EGgi7o9dOKxdBltQTjZQlV+aVdcDG5nfCprE
- WVit6XfnOALxWw4WbNL0a0yV2FwavEguStnBz+9TnMKpd1RnvaTgc8mscC9GuniPY1Pg
- /kO+wQgMRW3TJ4fCBirM2pMD8KNei9IKvYPLazBn5sXrXSIE5aS+aU83Bd3F9mNtAx9u
- JDEyR2oVq95iTFVG9qog9kkCpAY6dNeBp1bFE3L9D9+rkJVXMKhY0soQgZ1DpQebzv23
- MP/A==
+ d=linaro.org; s=google; t=1772228860; x=1772833660; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=DGiB4BV2NUCWEqPQRDA28quzz5F8WAm6gER1eWRE+ms=;
+ b=xkM6c/o+5SCenFuqjKANo4MlBaFNiAX4vVnlCW3+aUVas2TTRVa4NaSB+bd9KS4EjV
+ w7hkjD58zcAsKaCUiCRUdcjnJb8+n6PkoJL2476kPGYvejuGCTHgeqF9E6GHPANkHhCb
+ jwvORPV3EbkbWoivWji2kag8E3flmaCxQfFM/xf+OwXpbFjw15Ss+GtR7YG+h7C+HmwT
+ fBJYyP3jCtuQrqY/hoYYqx5GsPIBfx8TuehL0P7udUoZC9csImFJJozJjqm1Oa74oDJ8
+ CLFWlQ+kPTaQK2MsU1r/FICMl71k6Vydvp87HyegVj17LoWBP8KpIdPZk7xsawMjseWF
+ BsCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772228782; x=1772833582;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=43qaeDvlPO4pxHAJTr/KYixKEB+1/QDnWx0q/ajv7Uk=;
- b=YsW0xefGBIOf2sVRbJVK23fziPGzyyeia++A2eqlMo4BHQEGwHIWoq2RxH6RJXlrxN
- ZoG1mNL8H6vvxXVAD/aX/ZV1lgzhXY00aGxOItmlG90h8hEz6rOAQyPt5thQYDTmBmK5
- WMzXDB/z3widzgrf8LlaU3UTtVQCYce0fBHlL2aXjirqBefZjDOXxFEHlVkOjI0onV8d
- LE4yVccg3cLOYjrWtW+1Wb0Ob8TU+DIx9I8Dc7261y26arvblVsxq8a50bUM84i4Qzsa
- tCC+2C+JS+Id7hWybC7+sZgrYSTkUXjfLEqfyviHhcw721/GpqB0G4j3TEIsH1UP0OJq
- lVGA==
+ d=1e100.net; s=20230601; t=1772228860; x=1772833660;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DGiB4BV2NUCWEqPQRDA28quzz5F8WAm6gER1eWRE+ms=;
+ b=QAhTeYgeD8g4kYu5CXoWm50BS5NYItmjSE1sbU/1nMCKE0u+TNA+wLLhn1ZzzyPyD2
+ sq7Ilmn5I1xcoJVGxwwlHc3A8s4BR8vTsPJAveAvAnOTAUQM1pu8ICAZV94Ilnf6xE9J
+ rRs/h9FTpUdbhcsgoo5rOSGF8uH4o7UwFUE3ltgXmBuCkAiZGqUBsHCpSpixXo26mmtM
+ apZMRgMOeA4uTXcZsQWgbKgBExGygRDhzZAXL+Jts7Mcey7Po9PHC+FxSLFUg+9e89d+
+ HH/PmOIUorkYz+7jYp/F3x2qgyRGfgInQgIjg/Qlm6YFacENriD4G7mKWeOQtZ9bHZCB
+ yddQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIDJaCcMYKEyayCXwNn6QxVLxzi1vjybDONWp8G0I6Yc5TkqZkC6YjQsXzGj4pejKGBJOTw7HxiuRs@nongnu.org
-X-Gm-Message-State: AOJu0YzRmA5G0LDNtflJ6oUQ/6dP6Y+1G1SuNdCSyd0b0Y8ApBH8bUsf
- ZjPv2lm0nvIHInkN2zurJc1S9Wx6+QHI9MC14loxB8nINMkeJq6SYFpxw9xRRpspO30=
-X-Gm-Gg: ATEYQzwsJKh0V4mjwJdCmu36S8L7eeMWDPqbDSCnHYsX1Cjj4gnPiOCy7POj+9cbzea
- RUGncNjXzs/J9SiOFp5JnslCTl5hxTXCplxmg3WHmtnoGA9f10CL+QKuV+yt7cQVIyF4Mh8IaBY
- /GdInn40wvobqOrF1aGHpF+ebsOwscVUmqaJDW809bnjAxpqJwGoWfkj5YkbrFdwZcLoUUBt5HU
- b7XG3/NvwqoceNN8o+2j4s87XaqDumRF8WhLprBgpIVL71YGx/IYtPq/cl2jowK39ZGqPq01+hU
- bl7n56593teCQTjhRvbt6KDqqfUMLtC+w7Zm6GJvj6hCRojnYOsbLRj98cDPCU1VopMTxW2vQk1
- wYg3Krxe52vhUYJPjrlHXCTieVmy/qfFHVMIf4RLuAQM+wkU7TCJ+BLBprJCOD77HeNdLsB5Rvd
- j+wgZBlXy6WbjAI69zUvuZ7M5Xi/luW5m+1w1L3pss71ks8PGhPN+7Tu9BUHwDoT+9zyzr
-X-Received: by 2002:a17:903:41c6:b0:2ab:1dad:e500 with SMTP id
- d9443c01a7336-2ae2e408246mr48118905ad.18.1772228781818; 
- Fri, 27 Feb 2026 13:46:21 -0800 (PST)
+ AJvYcCW2wSNoqOUWtosLbX101xcy8FeNsPeoTL5Ay1G4rIQX9FDFHn8g6Td4H7jv09Z5i7FbizTyLyPHfXtt@nongnu.org
+X-Gm-Message-State: AOJu0YwahxhZVOnL6j/sXpG9s9PuY/hOvUVZ9roCG5EaYanHMIfN1gMj
+ fz+RRd9DbF2xVWGOAOpJQjIZflvd3LL01VhRFXV28XuYbcgnfvQBncIxSIT0YlJFv24=
+X-Gm-Gg: ATEYQzzdclJCt1irajxgEvgyNlERIkTHYUI75LdHUme6NvYWTs1+skkDvYqiRN+kKik
+ 9+MiICMQO5rnVbst/A9O57h8GtntKccYbRgc3PRdaz6UJbGSaQY8OxSfV9DT2cghHE7sbw1PWI0
+ 9ocpKxXog44vAxsBjKQq3lgOd0WKsLd0Feeefmes/kDNEHGfpUP3dv0LAF05DoKz0KwUzZpx4rK
+ Fqg/VQFo7fELtg0a9KW8BjN2hCVSemdGFZ9Ju/J/73dW//0UNtXXyCp2cNLlGsWhVd9NSLwtr3a
+ msuusn0MPV3QVjn5ZAVkT9EnJel/ig0J0hfYdNvue4b3Rx5MFl6zG3ME9iiok41uCg/ONvkrapU
+ t2O8sOYCoBnuWRET0V57QCWD5FzTZCcsyfrswBa8cknKTCzF4f5y0GHw2qoDFJyR9C4R7qpiPs6
+ txk70xywS6Yx28bUURJ2TYQYiBP90/GMbZhEjwtR8lbdTsKtL04KGmK6xo5PCWrJ7QoegC
+X-Received: by 2002:a17:902:ce92:b0:2aa:f2ce:5aba with SMTP id
+ d9443c01a7336-2ae2e4bc557mr44898745ad.38.1772228860330; 
+ Fri, 27 Feb 2026 13:47:40 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb5b2bedsm67124205ad.8.2026.02.27.13.46.20
+ d9443c01a7336-2ae39cfc271sm2464195ad.65.2026.02.27.13.47.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 27 Feb 2026 13:46:20 -0800 (PST)
-Message-ID: <56e7e193-511c-404d-9f20-f5ed209f2949@linaro.org>
-Date: Fri, 27 Feb 2026 13:46:20 -0800
+ Fri, 27 Feb 2026 13:47:39 -0800 (PST)
+Message-ID: <844edc05-11dc-40c1-8cd1-6bdc0bf6bc34@linaro.org>
+Date: Fri, 27 Feb 2026 13:47:39 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] gdbstub: Have scripts/feature_to_c.py generate more
- verbose output
+Subject: Re: ppc-linux-user GDB stub broken
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-ppc@nongnu.org
-References: <20260227213958.21170-1-philmd@linaro.org>
- <20260227213958.21170-2-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Florian Hofhammer <florian.hofhammer@fhofhammer.de>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+References: <e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de>
+ <CAPMQPEL1__biyd5e81EW78OA1rmVYqfsdEOmH5cs-nOvwnB3cg@mail.gmail.com>
+ <70d4f460-c5c5-45ac-9ef0-2307ea4834f2@linaro.org>
+ <3ec72a91-7326-43ff-8a8a-30135920ebe1@linaro.org>
+ <3f07b026-3975-4869-9c3f-b64dd9ddeaab@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -116,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260227213958.21170-2-philmd@linaro.org>
+In-Reply-To: <3f07b026-3975-4869-9c3f-b64dd9ddeaab@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,15 +143,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/26 1:39 PM, Philippe Mathieu-Daudé wrote:
-> Make the structure field names explicit, so it is easier
-> to figure what is what when reviewing multiple entries.
+On 2/27/26 1:43 PM, Pierrick Bouvier wrote:
+> On 2/27/26 1:40 PM, Philippe Mathieu-Daudé wrote:
+>> On 27/2/26 14:09, Philippe Mathieu-Daudé wrote:
+>>> On 27/2/26 10:58, Philippe Mathieu-Daudé wrote:
+>>>> Hi Florian,
+>>>
+>>>
+>>>>> on current master (d8a9d97317d03190b34498741f98f22e2a9afe3e), the basic
+>>>>> gdb stub test fails for ppc-linux-user when running "make check-tcg".
+>>>
+>>>
+>>>>> I've debugged around a bit but I don't know my way around the gdbstub
+>>>>> internals enough to propose a patch right away, so I'll just summarize
+>>>>> what I figured out so far.
+>>>>> 1. Due to cc->gdb_num_core_regs not being set explicitly anymore, it is
+>>>>>       set to 0 at the end of gdbstub/gdbstub.c:gdb_init_cpu(). In the same
+>>>>>       function, cpu->gdb_num_regs gets set to 70.
+>>>>> 2. When the test tries to read a register in gdbstub/
+>>>>> gdbstub.c:gdb_read_register(),
+>>>>>       the first condition of "reg < cc->gdb_num_core_regs" is always
+>>>>> false.
+>>>>>       Also, the register number for fpscr passed to the function is is
+>>>>> 103,
+>>>>>       and cpu->gdb_num_regs is also 103. If the register number is
+>>>>> supposed
+>>>>>       to be an index (as I understand it), this would indicate an
+>>>>>       off-by-one error somewhere.
+>>>>>
+>>>>> If you have some pointers on where to look / what to check out for
+>>>>> fixing this, I'll happily try to work on a patch. But I suppose that
+>>>>> somebody more experienced with this could probably fix this much faster
+>>>>> than I can.
+>>>>
+>>>> I'll have a look.
+>>>
+>>> Short term, this seems to fix it:
+>>
+>> Series for the generic fix posted:
+>>
+>> https://lore.kernel.org/qemu-devel/20260227213958.21170-1-philmd@linaro.org/
+>>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   scripts/feature_to_c.py | 13 ++++++++-----
->   1 file changed, 8 insertions(+), 5 deletions(-)
-> 
+> Broken link, and unknown series.
+> Can you send the good one?
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Oops, was just a lore.kernel.org delay.
+
+> Regards,
+> Pierrick
+
 
