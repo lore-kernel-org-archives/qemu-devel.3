@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC48FEFB53
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2B9FEFB52
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 14:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvyLw-0006FB-12; Fri, 27 Feb 2026 08:58:00 -0500
+	id 1vvyQw-0000xK-1G; Fri, 27 Feb 2026 09:03:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvyLj-0006AB-K5
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:57:47 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vvyQr-0000wq-Am
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:03:06 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvyLi-0007VN-3R
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:57:47 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-4399851b14bso1428265f8f.1
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:57:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vvyQp-0008Bi-QO
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 09:03:05 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43987b97701so1583163f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 06:03:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772200662; x=1772805462; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ioBLQgdNgP+ui5ljs2ltf2mT4vFgrZDYJbhZDRSubRI=;
- b=lCZ3jd2hOxYCWanR1OCElmDE9MCa5jPOPaeFKwsnOU+u6dLtA+iIgXs0ricJ5CesVN
- XzC8KVXx508vZLtoBrpRjCEwMTDmVGxXpmrzshIFx6C99SRMpoQo+wWPfWq0blEBqWuB
- 9mstBWjm3cd+NCc39ibVVDUFjpUrwOJNBBoyXTu/LKjWzeu/+DMSLk0+crm41pjPeVSJ
- L/w3MArteP1jQ2anQQLMASqT+fI91cjKklEqkkuOhEKwXQ7L1b+6ILL6jWFrbMpna2wQ
- au717DbyihKD/d5Rj2B5rYoduZw0qHbHZAAUGgmZqx+0cJ2U6R4+nKMjqFtqPT2JNRZq
- ifww==
+ d=linaro.org; s=google; t=1772200982; x=1772805782; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=xC5q7+Jl5yzUXyZ7Rjqp6heIFJmNCHKyWEH47SenFGQ=;
+ b=WVi7kOx1ps7WzVlW31smD0tbvJsF4qpRT4hBf0frmg4kitFHtZHkwlxkZ6xnn4MoyE
+ creJ4G5qJBM+YxTDg+HUI0cfc7XNGGV/P1uFnhZw54ZoaJSqdW211oZ+MTQRA/HFn22X
+ nSgOoDTeh+UFuxGbGfTk0pUmPLlM+YeuLFd6RyiOiMzCKcNYBxNwfPc4OvQsB+j9iKpH
+ r5b5tr4xE/kfb+xOcmnDXiVIwmPI5Jl2TpoOYzEVxGY309zUslH3Sq6hWCcBW+SyQZpu
+ 2GIGpEewxlqlS2cClSbe3eZeUa8paiisvqfcuAFuHkbnvjD6CgIj4Zg7+slXot6e+QBS
+ RdSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772200662; x=1772805462;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ioBLQgdNgP+ui5ljs2ltf2mT4vFgrZDYJbhZDRSubRI=;
- b=nZsNFRKU/o0ikN19/4gGJyerXSyw7/tSFcspeGZsLn8br7G7LcazcZdZmOmitmnv+T
- L3n1jEv+5SMAgiRmLuQ0Zjv0JHQUYNitT7aJ070TNuUvDqUUgtzqfko/ShgPywPwunAn
- eST7I0jFCzYOpqIIvwokt3q2hhMCLLaBAms1oDeFHyHV1XAGJQxJgJc7DcFgNQ9hnJ4z
- +iwYvbE64a+PsXlWKzkhkNzoahdkPVx6/mtAyGynmRpVICKueB002m9BdwkEERXR+gs1
- ZQPGOKpN1HJswABAeSVL/k+8q3W2stbfh2CYkqehcxQdkSdQdwNnSRzED4lGov1laCXe
- b+DQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBfQNhNdjJ/Ks7iSb8mG21VTiihMcqNS3TXF4n57owQbhes4RWwGL0HcSM8SMXcbUmeiFJ5WLIbqi5@nongnu.org
-X-Gm-Message-State: AOJu0Yy8knG+GzPsNkE3ZJvcY1J4ok9RDTDkPnMca8TTKbcH3gTeAuvU
- yGUJDGpMRVYIZXnlUhSF08RLtDv3RR6gFqfZqgWL0wbtk1Pra1UyZQfWoQufBUI7m8o1NYU3wGs
- IISOp
-X-Gm-Gg: ATEYQzyuYiTQkl67pUuVeAbpMkUmeuYSe18hs4hrketu7N+/ZyMAvmrtfHUSvwD90Nr
- CHe5a1WA6FD/iRdxqIA9AP45ktPA9r5rQozhHy0/YtThQ+AxDE9BvLjp7Kc4k4SFm13dr/zOZLS
- 5s2YRg2J1w4wRJVOtmoxSWMGaLejCADhMtP2pNEmySlEJASiGrhQCpVQa4E2oSuORdUVDpi/gsr
- KCVP6OuD04yUQ8uaTgGI9yg+pp3Q+I9RYuJ9n+n/OF2B277HSPHPodnuQSMOYfyPpVChiUvhXrt
- gjRCmhiGzGgYyjSgn92pAeVsoOWg46h3JYRaL/f2/ah62DXU1nX3NwjRb9P6qAhvlu1wnGh7T1D
- 912AOwUTPqeQmE5En8CMOYER6gjDQ224Fguo9bkdBr5sAgezrHmC3EPAwyILaBucKvQep2v14V5
- bGXAWS/3hqy5y+p4/W+nYiN5KYBaFnfYdtiqmw/xOr78hXkgZ/eB2iQOUB0fcUvS7CBMNQPRhiA
- eK1I3hAAcm/dAErtAirtAvkfaJ8Dm8YmqCM/hO2EA==
-X-Received: by 2002:a5d:5f52:0:b0:439:8f2b:7697 with SMTP id
- ffacd0b85a97d-4399ddf1324mr4712039f8f.16.1772200662552; 
- Fri, 27 Feb 2026 05:57:42 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20230601; t=1772200982; x=1772805782;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xC5q7+Jl5yzUXyZ7Rjqp6heIFJmNCHKyWEH47SenFGQ=;
+ b=JA0nO7dF1RHBW4MgiamI/L72MT70mab5V4KoEL+9kRXuUECupU1So6lPOADMpccMoA
+ YRXZwH962+z2NbaKEIvmHGi3GlyJdWfDXiZ3gF1fHThr3X25NfaLMsfS0lbZuX7Igegz
+ uzAIBUt82FpAdjbVfOlhdpbLj/ao6SEEGghc094Ti5UqKVTDGM8dHSsdSvAOjaI6VPd3
+ yvnd6jEBILnnbrLT67hTOVZTCTkeZ6/gjmZcXxUz+Uk50Ug36rUGQp1qscHAql5pbAW9
+ L1OFGpmBrwnywOOCfXjWEMFUBx9GYeE/3O1MtsIdE9SzMqytgVV5ZqpHomDANuavcSoJ
+ Wocg==
+X-Gm-Message-State: AOJu0YxrIk/1vTmR8ebJshkdi/lhkc/X+VCbkaEAmDSO6IjtjC/ldRHw
+ 64VaD2vITTcr7HESoJGoXEKB01V/myAsIqXgcazaOJsxowqCKRismMkd1ph1BOS6p6s=
+X-Gm-Gg: ATEYQzyCqb/Slcokabske3W2s9mCyHcOEvbt+x0X25jhFXCJyCSOt6KCBpItNGlA/Ty
+ i4cxQgUaQsHxQlHLUJVwHKYEIru6muKv+oFdU3TVWNvBw/20Bxc0XXlft+iTlrltukm7xJfjcqN
+ aeM/arL2IdlzRm/3dStElgIcsMDMOBW7FpiP7PNUjOsXfCCj1u4nISD7QuRDU8HCfsv8zYQmZNM
+ nv3iMzm0dzyGbuAZW9H/8RACqTYdrll5X7Adwg9pgi+j/Jf254nYaLHWTWEYAJQXKhcjURmAzwv
+ RaR+e8L2LvguIIZyaPXNKSxCfAhHsOurGlw8Xr5S8mGfWJEJjCBKfwQPYqgLASfGFgZmW1ssnMK
+ 07nVq+dQzGEY395sU+SwjSfItwg693AlgKi92fWewFP8xy3NftzNVAkoHgp49GkwX6UXXKC03Np
+ gUyExof6/dC2DA8Hsdm+Z4PzHmJ2yWkHJVi5Xb
+X-Received: by 2002:a05:6000:2901:b0:431:67d:53b3 with SMTP id
+ ffacd0b85a97d-4399de30feemr4731998f8f.43.1772200979307; 
+ Fri, 27 Feb 2026 06:02:59 -0800 (PST)
+Received: from linaro.org ([2a10:d582:31e:0:cb34:dc61:bb8e:b406])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b327sm7655163f8f.20.2026.02.27.05.57.41
+ ffacd0b85a97d-4399c76b20bsm7473024f8f.35.2026.02.27.06.02.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 05:57:41 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH 4/4] tests/qtest/iommu-smmuv3-test: Free QPCIDevice
-Date: Fri, 27 Feb 2026 13:57:36 +0000
-Message-ID: <20260227135736.2280161-5-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260227135736.2280161-1-peter.maydell@linaro.org>
-References: <20260227135736.2280161-1-peter.maydell@linaro.org>
+ Fri, 27 Feb 2026 06:02:58 -0800 (PST)
+Date: Fri, 27 Feb 2026 14:02:57 +0000
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Subject: Re: Record/replay thread determinism
+Message-ID: <aaGkER6O-1eTtUh_@linaro.org>
+References: <aZhuzUi4P0-mB-FH@linaro.org>
+ <87zf534fpv.fsf@draig.linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+In-Reply-To: <87zf534fpv.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QPCIDevice we get via qpci_device_foreach() is allocated
-memory, and we need to g_free() it after use.
+On Fri, Feb 20, 2026 at 03:06:20PM +0000, Alex Bennée wrote:
+> Jim MacArthur <jim.macarthur@linaro.org> writes:
+> 
+> > It looks like we have a solution to the RCU patch which was causing problems with the func-alpha-replay test (see 20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp).
+> > While this was going on I spent a bit of time investigating repeatability in record/replay and I think there may be broader problems with record & replay.
+> >
+> > While running the func-alpha-replay test we have two threads reading
+> > or writing the replay event log; the "main" thread running
+> > qemu_main_loop and the "RR" (round robin) thread running
+> > rr_cpu_thread_fn. Both of these use replay_mutex_lock() and bql_lock()
+> > to synchronize some actions. There's a third thread running RCU
+> > maintenance which also uses bql_lock(), but not replay_mutex_lock().
+> >
+> > replay_mutex_lock() has some extra logic to improve fairness of
+> > locking. This means that the first caller of replay_mutex_lock()
+> > should obtain the lock first. However, so far as I can see, this
+> > doesn't make the scheduling of the Main and RR threads deterministic.
+> > I have observed times when neither of those threads holds the lock,
+> > and as such, there's no way to predict which will call
+> > replay_mutex_lock() first. This means the ordering of events during
+> > either recording or replay is not deterministic.
+> 
+> The replay_lock was a kludge we added when we did the original
+> transition to multi-threaded TCG which involved nailing down the BQL
+> calls that had previously kept everything in sync.
+> 
+> However if we could keep all replay events in the single RR thread we
+> could get rid of replay lock because everything should behave serially.
 
-This fixes asan leaks like this:
+With these modifications:
+  * Move qemu_clock_run_all_timers into the RR thread
+  * Disable calling qemu_soonest_timeout in the main thread
 
-Direct leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x622a5f16913d in calloc (/home/pm215/qemu/build/arm-clang/tests/qtest/iommu-smmuv3-test+0x1d413d) (BuildId: bc598be1f4ad6d1a9a600c55aeef36108bdb6a04)
-    #1 0x73ee41c0f771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x622a5f1d4cec in qpci_device_find /home/pm215/qemu/build/arm-clang/../../tests/qtest/libqos/pci.c:82:11
-    #3 0x622a5f1d4cec in qpci_device_foreach /home/pm215/qemu/build/arm-clang/../../tests/qtest/libqos/pci.c:34:19
-    #4 0x622a5f23cc73 in setup_qtest_pci_device /home/pm215/qemu/build/arm-clang/../../tests/qtest/iommu-smmuv3-test.c:45:5
-    #5 0x622a5f23cc73 in run_smmuv3_translation /home/pm215/qemu/build/arm-clang/../../tests/qtest/iommu-smmuv3-test.c:74:11
+... the number of record/replay events generated by the main thread falls drastically, and also the remaining events generated by the main thread are always at the very start and end of the log, so should not affect the ordering much.
 
+Rather than removing calls to qemu_soonest_timeout altogether, another option is to modify its calls to qemu_clock_get_ns such that they do not record the clock times in the log. Since these functions only affect how long main waits while polling FDs, I would *guess* that they do not need to be recorded.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- tests/qtest/iommu-smmuv3-test.c | 1 +
- 1 file changed, 1 insertion(+)
+I have no idea how safe these modifications are yet, only that they remove the occasional errors we used to see while running the func-replay-alpha test.
 
-diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
-index cced49a9b6..dae9821b92 100644
---- a/tests/qtest/iommu-smmuv3-test.c
-+++ b/tests/qtest/iommu-smmuv3-test.c
-@@ -77,6 +77,7 @@ static void run_smmuv3_translation(const QSMMUTestConfig *cfg)
-     g_test_message("### SMMUv3 translation mode=%d sec_sid=%d ###",
-                    cfg->trans_mode, cfg->sec_sid);
-     qsmmu_run_translation_case(qts, dev, bar, VIRT_SMMU_BASE, cfg);
-+    g_free(dev);
-     qtest_quit(qts);
- }
- 
--- 
-2.43.0
+Jim
+
 
 
