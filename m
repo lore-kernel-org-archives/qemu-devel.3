@@ -4,43 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62114FD530D
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 08:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DCBEFD530D
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 08:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvsvf-0000ln-9k; Fri, 27 Feb 2026 03:10:31 -0500
+	id 1vvsvp-0000nQ-BP; Fri, 27 Feb 2026 03:10:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vvsva-0000k5-8M; Fri, 27 Feb 2026 03:10:29 -0500
-Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvsvn-0000n5-Tk
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 03:10:39 -0500
+Received: from 8.mo552.mail-out.ovh.net ([46.105.37.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vvsvX-0003Bo-Gh; Fri, 27 Feb 2026 03:10:26 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.200])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4fMgx60ywgz68v9;
- Fri, 27 Feb 2026 08:10:17 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vvsvl-0003VQ-RR
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 03:10:39 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.71])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fMgxR45Lbz5vyC;
+ Fri, 27 Feb 2026 08:10:35 +0000 (UTC)
 Received: from kaod.org (37.59.142.98) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 27 Feb
- 2026 09:10:16 +0100
+ 2026 09:10:34 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-98R002baa5c88c-df19-46f1-b8da-add4e35583a7,
+ (GARM-98R002ebac10ea-e613-4eba-9515-7a0bf62a73aa,
  1764588C194503052958D0AAF3448E51E66CE866) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.66.77.115
-Message-ID: <1dd64a22-a541-4416-b2d7-27b4797123de@kaod.org>
-Date: Fri, 27 Feb 2026 09:10:15 +0100
+Message-ID: <c88dc2a0-c710-4182-837d-251069aa64ba@kaod.org>
+Date: Fri, 27 Feb 2026 09:10:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/i2c/aspeed_i2c: Fix DMA64 address handling
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260224073207.985162-1-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v7 00/22] i3c: aspeed: Add I3C support
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ "nabihestefan@google.com" <nabihestefan@google.com>, "komlodi@google.com"
+ <komlodi@google.com>
+References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -85,27 +91,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260224073207.985162-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [37.59.142.98]
-X-ClientProxiedBy: DAG15EX1.mxp5.local (172.16.2.151) To DAG14EX2.mxp5.local
+X-ClientProxiedBy: DAG11EX2.mxp5.local (172.16.2.112) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: a6bc64e6-7248-4a49-b00a-4492d902b4ec
-X-Ovh-Tracer-Id: 5866219993320164274
+X-Ovh-Tracer-GUID: 42c05e43-a599-464c-b2da-383f1740fde1
+X-Ovh-Tracer-Id: 5871286541848841092
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFPQxIGS+fxt5rMMjT3uMD733CcXoQqvLrNuLlNiDYvScHGONVq9oL7x+SrX1J1WgeFdTqKQpd2jdsShYBrVk6hpJDE9Q59mJlGCC5xdG/tBv8glUMbKGz7uWD9Pwmojo2CDqLC7fXDviD9/R0vq4fZDmtfwaUYb07DHlVP03Jja1gzWC357PH5qaWPQwUu7VP+ZG+BLJfYO2cWwShUmDYosN62B6AIB0w5LL6zM5WyLhtmoHm7VrZC3BXXfWeo0PxNUQ0XOQvzz5cpj+D8x/xfvr/HRGk6sM6xX4rjSuWoNruzoSPzL+56jmQ063wmJO2zHqSZtkull2oKYZfKS9VqhCH5BxB9nNBPxZSAR+YBe7rA1W/fT/71zI+1mRgH2MsPrW+EXEOzuH5aY+YzLlCtEeXyVk3kfZu+7l3QXpM0q0FnhFz8Wiiyw4y+8QMo7esMXOypOXnYB6FoIQnCXasNVXIbhwdExO25hfWTBEUGa3tx8bf1m5I5RPmA631zEGDGZNIfsE50nz8dolfVLHF64LtRYYWkdkNs+Y8wVvZ7fXVI56BS10EHxgtGMcehHajh3rBSvPOh37ZD5bdu5iiaO/+ba9qYmF/pXqXIWp6Sjs31XfEu7Kl5wmCqfKiMCUI7cuOGn7/wOcFgc59GynzH54M9atVVxxuOcKEKfgCWpA
-DKIM-Signature: a=rsa-sha256; bh=T9yBt11QhSDrUOX7JxImBoP3P+Memr5n6XIgHO2ZuYo=; 
+X-VR-SPAMCAUSE: dmFkZTGJPZFmIwnt9Yi4AeVmlTlrq4i3O+cQfiUARpKek1wlxxyRFjwkJfsNg3+ANHUeJEml0hBGme+QRn511E4PiIDNwYFSQlHG3rbO8wVh8L29N+2NJ2KTbnMQKMU1HLoT3wNA+XYpridOGXHbRKGhoHCSCRHCtBqLvv98zSbEE0+/ujuTa2ln463jR2Yb5zbHXS6R2sUYsFPp/Tfs3ZRsCvfqvb9cCB/mN3MfKqtMnmVaOUPZquTzrlooO/0sUxHWiunNqNBV+hIrm0ZHoO9MTTQ3CX3uag9UNXe7xMOm/hY++CFjA2YUQB/9JNO3giHoHnrhrIpiz0IPyvSuTfCfWvJ7OUG2giXjaHVt/Cpw71+DVtzDMpE7X1SrBQnUofwB5hD3Pva4FoA0JgwszFw5mJBsGP1Tj3cTFOk6ZRBMpVsEqGsv5HYmQ4gGSbs6EgBFMbSBN4a/Bx489qZmWAWUCYjr6LyRoIYdhVHxg6bOUoQ2vTkBMxMw0DCdd/7zGf6RCroqbD2QM285TqWK1DPUBsboKgE2voLG0L5nBl/PjvU6cypiSRjlIjgSlvBNi7oJ6VYrXcQUbHDiM5f/XlV42cMtdmEXO63x0nY8hJMWvYHhAuKDYGUXnWDqyca7WnB9hs3+XiwoJUZ6pCJyDl8Lt04InxR/W2mAAnwspcp/zZdIyw
+DKIM-Signature: a=rsa-sha256; bh=3bA/UXg9no6fl3fUC3QM9Z7PIRloyWBuEqNmF/GeNzo=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1772179819; v=1;
- b=T1kFSjfpf4jKegDBRUtaZboFODGYMVVuvvEPeeQf13vPruEdNPUgfowhGsikw7tDEn47NSTB
- MDVy4jZsBLbWAFbFHLzoRi+3ZinxVLzXo1CSgSpX7FOY4TTFX+c0jyRJvW+rZCHc4qPqOg7hgzU
- +gvf2Qqj/4H9ZRRMVXbPoH5m79G8s2q7uBCf7x87jDlaxTJhxpCmZe9JbC4VrmNlMstctXMBbIq
- G3F8dB+Pypm9QmdI+M17uJvPrp/MGwAA9L+bh1IP6xhQ2/xzfwd4wFv5Ahy4Ip+bN4KqSlP674K
- iPpNw/aFp3gveE85G5ALXFQdM2EfKT1daQeogxN0pMhPg==
-Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
- helo=smtpout2.mo529.mail-out.ovh.net
+ t=1772179835; v=1;
+ b=gbxqx+FHqiFxyaTEMLV/aUiOHVTDzQoUSUinoO8IECDfWvA7uM9FCwJYN2XFD2acEwHmMDYt
+ wXEfv6Q7DVrfWbHqgTRPX65MrW5I1xyZwiv0feekN+usw0gCQzqBpEslYNmgtQkJIZQ7l7oTejS
+ 5w6IMC7nEKuPYMt5xlDqStyiPzDKSIYXzhsaJynCw8lvHESMYR4A0CVvk+pgM9nN87cfDEvgfEL
+ QfINzM+AGRLbcUAyEpU0ftZVjzzbVU0jVAWQkivpFAp211zrxHoIWkjsrD88E8nbhnvZG2qVDWh
+ A5HmU+wOMO/JkaKgRC6kr5wgaGNBOOHVzUBv6RoBtgYVg==
+Received-SPF: pass client-ip=46.105.37.156; envelope-from=clg@kaod.org;
+ helo=8.mo552.mail-out.ovh.net
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -129,45 +135,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/24/26 08:32, Jamin Lin wrote:
-> The current code updates the upper 32 bits of dma_dram_offset only when
-> aic->has_dma64 is false, which is incorrect.
+On 2/25/26 03:11, Jamin Lin wrote:
+> v1:
+>    The initial patch series was based on work by Joe Komlodi <komlodi@google.com>.
 > 
-> If aic->has_dma64 is true, the controller supports 64-bit DMA addressing
-> and the upper 32-bit DMA address register must be used to update the
-> dma_dram_offset accordingly.
+>    This series adds I3C bus support to QEMU and adds more functionality to the
+>    Aspeed I3C controller.
 > 
-> Fix the condition so that the upper 32 bits are updated only when
-> 64-bit DMA is supported.
+>    This implementation is a basic implementation that introduces IBIs
+>    (including hot-join), CCCs, and SDR data transfer. As-is, it doesn't support
+>    multi-controller buses or HDR transfers.
 > 
-> Fixes: efea7ddb4689a1ac4bce63a9ddb32887c7f3ac50 ("hw/i2c/aspeed_i2c: Fix DMA moving data into incorrect address")
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/i2c/aspeed_i2c.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>    First we add the I3C bus and controller model. With that added we extend
+>    the functionality of the Aspeed I3C controller so it can do transfers
+>    and handle IBIs.
 > 
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index 122bfdd63d..8022938f34 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -237,7 +237,7 @@ static void aspeed_i2c_set_tx_dma_dram_offset(AspeedI2CBus *bus)
->           bus->dma_dram_offset =
->               deposit64(bus->dma_dram_offset, 0, 32,
->                         FIELD_EX32(value, I2CM_DMA_TX_ADDR, ADDR));
-> -        if (!aic->has_dma64) {
-> +        if (aic->has_dma64) {
->               value = bus->regs[R_I2CM_DMA_TX_ADDR_HI];
->               bus->dma_dram_offset =
->                   deposit64(bus->dma_dram_offset, 32, 32,
-> @@ -262,7 +262,7 @@ static void aspeed_i2c_set_rx_dma_dram_offset(AspeedI2CBus *bus)
->           bus->dma_dram_offset =
->               deposit64(bus->dma_dram_offset, 0, 32,
->                         FIELD_EX32(value, I2CM_DMA_RX_ADDR, ADDR));
-> -        if (!aic->has_dma64) {
-> +        if (aic->has_dma64) {
->               value = bus->regs[R_I2CM_DMA_RX_ADDR_HI];
->               bus->dma_dram_offset =
->                   deposit64(bus->dma_dram_offset, 32, 32,
+>    Next, we add a mock I3C target. It's intended to be a very simple target
+>    just to verify that I3C is working on the guest. Internally, we've used it
+>    on Linux to verify that i3C devices can be probed and can send/receive data
+>    and IBIs.
+>    This target is sort of like an EEPROM, and it can also send IBIs upon
+>    reception of a user-defined magic number.
+> 
+>    Lastly we add  hotplugging support. The hotplugging doesn't do anything too
+>    complicated, it just adds the device attempting to hotplug to the bus. It
+>    is the device's responsibility to hot-join and go through the DAA process
+>    to participate on the bus.
+> 
+> v2:
+>    Jamin Lin <jamin_lin@aspeedtech.com> has taken ownership of the I3C patch
+>    series for upstream submission.
+> 
+>    Changes in this version include:
+> 
+>    1. Added I3C functional tests.
+>    2. Updated patch 4 to refine register field definitions.
+>    3. Updated patch 7 to correct read-only register field masks.
+> 
+> v3:
+>    1. Add Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>    2. Fix a typo
+>    3. Fix ASPEED mail server issue
+> 
+> v4:
+>    1. Add Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com> at the end of each patch.
+> 
+> v5:
+>    1. Address review feedback by updating the I3C bus and device to use the
+>     DEFINE_TYPES() macro instead of an explicit type registration function.
+>    2. Rename variables to `parent_obj` for the parent object and `parent_class`
+>     for the parent class to comply with QEMU QOM coding style guidelines.
+> 
+> v6:
+>    1. Add I3C maintainers and reviewer
+> 
+> v7:
+>    1.  Add I3C maintainers and reviewer
+> 
+> Jamin Lin (3):
+>    hw/i3c/aspeed_i3c: Switch to DEFINE_TYPES() and align parent_obj
+>      naming
+>    tests/functional/arm/test_aspeed_ast2600_sdk: Add i3c functional test
+>    MAINTAINERS: Add I3C maintainers and reviewer
+> 
+> Joe Komlodi (19):
+>    hw/misc/aspeed_i3c: Move to i3c directory
+>    hw/i3c: Add bus support
+>    hw/i3c: Split DesignWare I3C out of Aspeed I3C
+>    hw/i3c/dw-i3c: Add more register fields
+>    hw/i3c/aspeed_i3c: Add more register fields
+>    hw/i3c/dw-i3c: Add more reset values
+>    hw/i3c/aspeed_i3c: Add register RO field masks
+>    hw/i3c/dw-i3c: Add register RO field masks
+>    hw/i3c/dw-i3c: Treat more registers as read-as-zero
+>    hw/i3c/dw-i3c: Use 32 bits on MMIO writes
+>    hw/i3c/dw-i3c: Add IRQ MMIO behavior
+>    hw/i3c/dw-i3c: Add data TX and RX
+>    hw/i3c/dw-i3c: Add IBI handling
+>    hw/i3c/dw-i3c: Add ctrl MMIO handling
+>    hw/i3c/dw-i3c: Add controller resets
+>    hw/i3c/aspeed: Add I3C bus get function
+>    hw/i3c: Add Mock target
+>    hw/arm/aspeed: Build with I3C_DEVICES
+>    hw/i3c: Add hotplug support
+> 
+>   MAINTAINERS                                   |   13 +
+>   meson.build                                   |    1 +
+>   hw/i3c/trace.h                                |    2 +
+>   include/hw/arm/aspeed_soc.h                   |    2 +-
+>   include/hw/{misc => i3c}/aspeed_i3c.h         |   31 +-
+>   include/hw/i3c/dw-i3c.h                       |  199 ++
+>   include/hw/i3c/i3c.h                          |  277 +++
+>   include/hw/i3c/mock-i3c-target.h              |   52 +
+>   hw/i3c/aspeed_i3c.c                           |  258 +++
+>   hw/i3c/core.c                                 |  664 ++++++
+>   hw/i3c/dw-i3c.c                               | 1862 +++++++++++++++++
+>   hw/i3c/mock-i3c-target.c                      |  298 +++
+>   hw/misc/aspeed_i3c.c                          |  383 ----
+>   hw/Kconfig                                    |    1 +
+>   hw/arm/Kconfig                                |    3 +
+>   hw/i3c/Kconfig                                |   15 +
+>   hw/i3c/meson.build                            |    6 +
+>   hw/i3c/trace-events                           |   48 +
+>   hw/meson.build                                |    1 +
+>   hw/misc/meson.build                           |    1 -
+>   hw/misc/trace-events                          |    6 -
+>   .../functional/arm/test_aspeed_ast2600_sdk.py |   12 +
+>   22 files changed, 3723 insertions(+), 412 deletions(-)
+>   create mode 100644 hw/i3c/trace.h
+>   rename include/hw/{misc => i3c}/aspeed_i3c.h (53%)
+>   create mode 100644 include/hw/i3c/dw-i3c.h
+>   create mode 100644 include/hw/i3c/i3c.h
+>   create mode 100644 include/hw/i3c/mock-i3c-target.h
+>   create mode 100644 hw/i3c/aspeed_i3c.c
+>   create mode 100644 hw/i3c/core.c
+>   create mode 100644 hw/i3c/dw-i3c.c
+>   create mode 100644 hw/i3c/mock-i3c-target.c
+>   delete mode 100644 hw/misc/aspeed_i3c.c
+>   create mode 100644 hw/i3c/Kconfig
+>   create mode 100644 hw/i3c/meson.build
+>   create mode 100644 hw/i3c/trace-events
+> 
 
 
 Applied to aspeed-next.
