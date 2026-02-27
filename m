@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1DCCFEFB53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F40DFFEFB54
 	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 13:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvyLw-0006GK-Vm; Fri, 27 Feb 2026 08:58:01 -0500
+	id 1vvyLw-0006GI-IW; Fri, 27 Feb 2026 08:58:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvyLi-0006A6-DE
+ id 1vvyLi-0006A5-Cu
  for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:57:47 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vvyLf-0007V6-Oy
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:57:45 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-4399dd8d7b3so646964f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:57:42 -0800 (PST)
+ id 1vvyLd-0007UU-Qp
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 08:57:44 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43992e14638so2055633f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 05:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772200662; x=1772805462; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772200659; x=1772805459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GtW5nIwjsUl0K9zrg6YDJidQv+NEIvOZPyQaRuLPPXs=;
- b=CUYpBT98EHQF8CWI2TaqeTG53+GC2ubxAEaY0/6AATNNsVqgzGqqq+BqLK7aTuTO+0
- AqtEZ/DH80pIBWIyPdyseog26n68XniEgdeQZYN8CC+vCoLSp0pNBeJk11DKYz1GvE2X
- Rrex1nwURAhfTv3C3C3BuDRKWc291dvA+wknlK+jgZngN4HMQhKpVI/9cC7rALnM9gTq
- 11uv56NqUkZjebmYfbHRw7lIcdkbcmD1rd75Bx8YCytgPvdMR2seD7ayPZNhktyUwYCn
- 21e78TFp5lEtmv6WsvMiatq0Vkc5rvdLvfYwL0gt8ZR4fIgpNP+Zsg/nrSoyOTW130fu
- pJYQ==
+ bh=6roZ6KUka4AvFndTl3oMOQCvPictd311jnL9XOZjvFc=;
+ b=K9jQcCV07bVKJVzYWpqbTYkyb2YFtfVhaN1s24vFb+9kQmzWbKMiCpLfYRonhh1SXC
+ mV4R9F4dOMUX15HoLnxFaD4ngphO1o1+uaLZWWbeVIT+Omjz3MPLVbHACk7Q6p1UDp50
+ fcTDLbgLRryHGF6JPw1l+gmo8FrjOqGyFO2d5Nhg+Mv01UXRPjCQeArQ50tjKD/v2hEs
+ IRDMWGGvzuXCmu31XL9rWJsffiEZx8O1itZTRl1gYj2BBgyjR88IEO48BvK7cR+jto/d
+ 6jYNOD+uMV+zRJoNpzdP4eGuf2jvlCSxEG/5nOUdFSoLHU3Q5KuhfkxlNoCs2OoJfRvL
+ Wumw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772200662; x=1772805462;
+ d=1e100.net; s=20230601; t=1772200659; x=1772805459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GtW5nIwjsUl0K9zrg6YDJidQv+NEIvOZPyQaRuLPPXs=;
- b=I3Z1ZjAuoDhKayLHZd0VNGeWGi3YeAgmHhMYtX2FK2oHWlNHVdeucv5rv1JGguHajt
- 6FkRAqL4909VCDU7GMvyI4gyeWfGUMAWIBMXzDU60H218GkZE6BjY2gaNoODCP+z+I+Z
- Tf65rWgrm8fzh3sewMUt1L2daGp9FnLusSi54GoauQs2HlV97SOcoXz5z4rO2VVZp4ZL
- 1PWgA0HZCQMsYhiWnDXV9PUiXK79JJcGgtr+J5pARw239HYcaWvwgfmGp1xUN+Ms82pQ
- HRgTLdkff2OgB7PtNz1Lj5UuTXjA2LjFg7qiDx0xR1eFWJa/AjqO5f5w/zJ4XmAsfwCI
- PzXw==
+ bh=6roZ6KUka4AvFndTl3oMOQCvPictd311jnL9XOZjvFc=;
+ b=DUg5SXuvn5Q7aC/FaobXns7JZKsBdWSH96NzJguW7j20cuMbbSoAmodGn4PsrGEpYk
+ A7+ywU28Qaaj4kXPrLFVNtmLKY2Wtde4HxeXsR/ePOCX9u+g3wY3uBemVeyIgvo0ud+i
+ LsgeZtHwG7N53Jdxctzr0sOSAjJ2M6jBGXXtI5O7kzOkRoQpqn6jrJGblP8ZK/2sSucH
+ iHRD2HT3+SGOQ0Pw67yrE55laE9md8GoniajSTqNQ//r1MhuVekafkSojUeu7OMRFEN3
+ 12azX1BeDUq4kJee8/lRJoeijxHe5PGQ3jtTNSr/3AXtLPmbcqdTaIF3LLKz4ezodWWD
+ 2vOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVsp7FXXvG1Hyg+270Or+70PdizlRB9IKYnk5tkEpso0OPOglr9VkxJMwYw+bq6taYWGIwEf+OOV8d@nongnu.org
-X-Gm-Message-State: AOJu0YziqRJNg7Um05WtCkJQFhF9QGZV3BqQ6AzzBG/HITc9iLn6xXpT
- ScMxi1uLh7U1yDqfY5n9pxShCi+zD7eG+cyrOr1NJ0bsCZGbnIjGPAei3Cl19wzYYvJfKzVk/rL
- 8Frdg
-X-Gm-Gg: ATEYQzzfcoQ9kJy5mGGHbwV9ydjNlXkwtZUz++QMO1hd4lQQt4sK8Pznvig+0ihUX55
- dbWwJ8aDePVFfeSvAHE2TpnQ/ZIkMFI4tk4t0LTnZrMQBjk1LgI71MCHbmfJ+32SxDMzVgNRpUM
- ss2tvPQRrLD6ihiLAoekyNLo3m10OvXRAojebIB6/bDr/P2PvSj7ZvkRWCphsLKosWfCh4bRyvO
- UnHuv9c9dAxOJOGkEtNyvqIH50m4AygbZVuUiGQIsBEW2nMiFveB5qQckgauK5ehA1Pa89prgnp
- H1XW1dSbfMFouzVlhMxyyctTrTrEFNN6UwoXJbwLmSH2buX88mn3Qv4sF+upXhihtm/ICI0vBnV
- hQqtH8P+lrLdI2HNXYqw1h0RFIjQU0OcKId9y/PBHTnnk1jRGmVNt72Hke5Uk+zn1n8sL7bXDoq
- bRuAybh0evERTeEcL7UBxtfm3WuuxfhCvBaZnp4i3g86F08b7cNNwh8ISqCZpyPZ5YA3I4QsMaY
- m3rXHCRikrbVzCEvJQdlsDg1T3lcQw=
-X-Received: by 2002:a05:6000:1846:b0:430:f593:aa34 with SMTP id
- ffacd0b85a97d-439971f152cmr13395657f8f.17.1772200661506; 
- Fri, 27 Feb 2026 05:57:41 -0800 (PST)
+ AJvYcCVoOyajTZIxGngNGNsbPfDOxxgoNSJ6mZ8E8JG3TaFseBulKv4Lq/IAlqJS7aDJTMMWbwn8ElahXvIe@nongnu.org
+X-Gm-Message-State: AOJu0YxQmRLTeYoEGDiW7sCcJP5/kS57KTpZaokHSnKk05TSWGvS34Dd
+ TB0YuvuFS/Y/uL64/pmITMoPkYHMB3R6yXhr+HNw9ZTrMwnoBNUU0BFJssT1M0lFVpE=
+X-Gm-Gg: ATEYQzy/yspOGsNLR5V+TMi/sRAizthzlDRh/6aNOLifoEc+VbyTfSlJkfAAt56VV/K
+ WEi5Xgqcygn63G0FwKjX5WqVoiQRqb+9bHpTRUnP8mzzlrZ+hTgOK+3K2M5/pqINSuIkL5c3v+2
+ Dx25QGphSjVPgVq1QXpYrig0U2Inn9bQAwXLJFdtF1FKJQwM/DYlv4MJr6YcbodL43R5WA7yk8a
+ 6Ek2vN4AQtox4dcPYgn6RCEOnyG4QBa/MueDkhy2NAGjAKx8J9rsi6f5XpwvktjGY2UaSqsCCbw
+ dy/GYycq/64bAgJGwNG5bUhY6HUBOZRvp4ixjaGyLqXRxrA1gm4slroANQnE9NzroQSqLXXI9O1
+ dsDfOsy3nqBkRqCDkgzMrfRv2xNG5QQEstKnXCgo/7ya8UWrZxlpD8nWZdqsgPmvmqCW0WTKch4
+ 7fFzv0jRAJJWpa3Uz+1q2IOYq2qWwMk2JroB0jCmoJHHkJC4hvvopgnaA1uLx737Ce8Sc0ZoqJW
+ 7JhAkBUKB6NswUiJuzghZLrL+8N6EI=
+X-Received: by 2002:a05:6000:2485:b0:439:918f:f2ed with SMTP id
+ ffacd0b85a97d-4399ddfc6a3mr5159550f8f.26.1772200659068; 
+ Fri, 27 Feb 2026 05:57:39 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b327sm7655163f8f.20.2026.02.27.05.57.40
+ ffacd0b85a97d-4399c75b327sm7655163f8f.20.2026.02.27.05.57.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 05:57:40 -0800 (PST)
+ Fri, 27 Feb 2026 05:57:38 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH 3/4] hw/arm/aspeed_gpio: Don't leak string in
- aspeed_gpio_init()
-Date: Fri, 27 Feb 2026 13:57:35 +0000
-Message-ID: <20260227135736.2280161-4-peter.maydell@linaro.org>
+Subject: [PATCH 1/4] scripts: Move lsan_suppressions.txt out of oss-fuzz subdir
+Date: Fri, 27 Feb 2026 13:57:33 +0000
+Message-ID: <20260227135736.2280161-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260227135736.2280161-1-peter.maydell@linaro.org>
 References: <20260227135736.2280161-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,27 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We allocate the string for the GPIO property name, but never free it.
-Use g_autofree to avoid this.
+The oss-fuzz code uses an lsan_suppressions file to suppress certain
+leak-sanitizer cases that are known issues or not our code's bug.
+This is useful more widely than just for the fuzzer harness: if you
+want to build QEMU with the leak sanitizer enabled and run 'make
+check' then you will want to suppress some bogus leak reports.
+
+Move the file up a directory, and add the usual SPDX identifier
+and a comment describing how to use it.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/gpio/aspeed_gpio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitlab-ci.d/buildtest.yml             |  2 +-
+ scripts/lsan_suppressions.txt          | 11 +++++++++++
+ scripts/oss-fuzz/lsan_suppressions.txt |  5 -----
+ 3 files changed, 12 insertions(+), 6 deletions(-)
+ create mode 100644 scripts/lsan_suppressions.txt
+ delete mode 100644 scripts/oss-fuzz/lsan_suppressions.txt
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index d9237d4360..7d0f87e90c 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -1488,7 +1488,7 @@ static void aspeed_gpio_init(Object *obj)
-     }
- 
-     for (int i = 0; i < agc->nr_gpio_sets; i++) {
--        char *name = g_strdup_printf("gpio-set[%d]", i);
-+        g_autofree char *name = g_strdup_printf("gpio-set[%d]", i);
-         object_property_add(obj, name, "uint32", aspeed_gpio_get_set,
-         aspeed_gpio_set_set, NULL, NULL);
-     }
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 1b656b9eb0..7548057c54 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -626,7 +626,7 @@ build-oss-fuzz:
+     IMAGE: fedora
+   script:
+     - mkdir build-oss-fuzz
+-    - export LSAN_OPTIONS=suppressions=scripts/oss-fuzz/lsan_suppressions.txt
++    - export LSAN_OPTIONS=suppressions=scripts/lsan_suppressions.txt
+     - CC="clang" CXX="clang++" CFLAGS="-fsanitize=address"
+       ./scripts/oss-fuzz/build.sh
+     - export ASAN_OPTIONS="fast_unwind_on_malloc=0"
+diff --git a/scripts/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
+new file mode 100644
+index 0000000000..ffade3ba5a
+--- /dev/null
++++ b/scripts/lsan_suppressions.txt
+@@ -0,0 +1,11 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++# This is a set of suppressions for LeakSanitizer; you can use it by setting
++#   LSAN_OPTIONS="suppressions=/path/to/scripts/lsan_suppressions.txt"
++# when running a QEMU built with the leak-sanitizer.
++
++# The tcmalloc on Fedora37 confuses things
++leak:/lib64/libtcmalloc_minimal.so.4
++
++# libxkbcommon also leaks in qemu-keymap
++leak:/lib64/libxkbcommon.so.0
+diff --git a/scripts/oss-fuzz/lsan_suppressions.txt b/scripts/oss-fuzz/lsan_suppressions.txt
+deleted file mode 100644
+index 7d90c280d0..0000000000
+--- a/scripts/oss-fuzz/lsan_suppressions.txt
++++ /dev/null
+@@ -1,5 +0,0 @@
+-# The tcmalloc on Fedora37 confuses things
+-leak:/lib64/libtcmalloc_minimal.so.4
+-
+-# libxkbcommon also leaks in qemu-keymap
+-leak:/lib64/libxkbcommon.so.0
 -- 
 2.43.0
 
