@@ -4,115 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC2E9FD9E34
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 03:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20E2FD5304
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 07:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvoOf-0008PO-Gp; Thu, 26 Feb 2026 22:20:09 -0500
+	id 1vvrox-0007Ag-Bi; Fri, 27 Feb 2026 01:59:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vvoOd-0008PA-VQ
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 22:20:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vvrov-0007AH-9H
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 01:59:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vvoOc-0001fW-5v
- for qemu-devel@nongnu.org; Thu, 26 Feb 2026 22:20:07 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vvrot-0000r3-Gx
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 01:59:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772162404;
+ s=mimecast20190719; t=1772175565;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FFgxT1HFchnFlGhvCR8TAEDeaBdoPDuDWAGteaYfq24=;
- b=UAcIBRAQVr1U8J0GSIwbOrrhROiJQNW49QQsCxbCPZQSL4VspugSjWMuO9gA46FHBSXXJx
- WscbPU/vLOOBXkWx9ykh5pBnyM68rGQ/TBra5vELEd2NKLm6pcGQ5nIXsbo/qwGils54QN
- ew+p61GD59SRYa3BajH+oFHIcGa70ZE=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=adq2cp2X3QgKA6inAmDUmACVxlGUH4/6uKfXWmHVAI1lf1oXzb8UYO1jCiBNR6qiJFY2N5
+ IUzszJXezXWGmHvSylFqUwFQD5KroeMtpCyV9dDPRqeVgiIbqMLFcPWIxbNEYUmjIQH76V
+ tDNAvLj4paB6wC8WiBllsFTiqZdLZEI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-495-wFz1NOShOKeBeuwef1XkFw-1; Thu, 26 Feb 2026 22:20:02 -0500
-X-MC-Unique: wFz1NOShOKeBeuwef1XkFw-1
-X-Mimecast-MFC-AGG-ID: wFz1NOShOKeBeuwef1XkFw_1772162402
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2aae146bab0so23238975ad.0
- for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 19:20:02 -0800 (PST)
+ us-mta-604-qGzGScgDP7i2Bfu6_6E4fw-1; Fri, 27 Feb 2026 01:59:22 -0500
+X-MC-Unique: qGzGScgDP7i2Bfu6_6E4fw-1
+X-Mimecast-MFC-AGG-ID: qGzGScgDP7i2Bfu6_6E4fw_1772175561
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4837907ec88so19190575e9.0
+ for <qemu-devel@nongnu.org>; Thu, 26 Feb 2026 22:59:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772162402; x=1772767202; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1772175561; x=1772780361; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FFgxT1HFchnFlGhvCR8TAEDeaBdoPDuDWAGteaYfq24=;
- b=ZKWdGVeCycNlgpcMe4LxBjYoDgAuleSUt0xvhLhZnI4jYlg9FNbVfVChsr1QA55rqb
- 9HSXLifxqaWbHRbTeRKxSOTOtm+4bdAc5VUnGPGAAVVoARVSi5S3jxMQKojwntmOs1RN
- 4FxVSGHJn9r/xpL/LriUWxjlgZmZxEYAtuAUS/TVmZLEnSjfbq9Pqg1J9LSzWEDXPcPu
- HjZ07u6gXJ+uQd5S/IwWWv00IZuw2xev7HbHnh2czffu6nPDVPG8KzcjYSDOy2CGYQuP
- PfNI/m401IJ/8FY9aVEfuFEZaxt5S8La+yQUHV+IqhnMjQg3B1O4DQRIHGGAwPgzF3yZ
- 5aQg==
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=IpSASS+unMA7PhiSGIL2Poj/28v/7HKMVZuYFf0CGIfmK0SFZGSFB3Yce0TMokGM3S
+ RBTJFU9DEdTKwm7MdAqJGk82aE/Q/5hQvR/nkulUtuMcH/3LLUdKNx3hr2F0nZVBW8Ii
+ fxlO4FkvqmNrYLyqumL1ZbMvXjY/PdMhBegO8RmDzeyyr02VzloTSMajLL0fb9iLr3E/
+ 871KJw1UHG/3RPK2kpIWoWVajZBmOjl48gajqj1gmm5Y+1MECxIz9LQ5vGl1H4beasIu
+ rFVT7qitiJxcq7q6iEgVkJv62YCi8nTRyUX2a581T+9T5r68qC+40K9GAQF3dTOIIqDi
+ hPzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772162402; x=1772767202;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FFgxT1HFchnFlGhvCR8TAEDeaBdoPDuDWAGteaYfq24=;
- b=igsI+39zRQljjKEBs2XMqBGqWhZIKUN6ryTl1OP1T1cdmudHl8ub+paxT3e6rkllwR
- laB8c0dDN2olAsQTC2Ld2SMigyOzzUXKtHqLl4dbDqE2dQFmSpjHc13qxsvl7juDOOdy
- nwEdc0pwlc2ns6BwXtsZ+bdyct5uJdKRGBca1bAwB2sWF2Twyxaz6XT90oWoz4wXzfk4
- HQf54NER8GTfMYrNI6FnqFZGPvYOd5GopaH2JKRT6fQ8qPZpOgf1q4VsSuyEPyzmPyld
- 3BGPxI2noE/giTTjN9xEvPqT6++3e/O1aWDFx2NMnoAPJs8/J1fHa+jViVX89ZvF0AAN
- mGFw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWUYCOR7btCEGHJ+knGMh7qhuB5AhAUpGLSbas4s9wyeW40QiS9VlXz/ogl6EO3JMJy98+N5SF4wuKe@nongnu.org
-X-Gm-Message-State: AOJu0YxzOFsO4Id2m9hNW04/lsoCFk79CSAstma4ElI1XrcST5wg1hnK
- wt1z/t16zHpNxGueP+WJwtl8QTw9gSOuSEVk1UUNClZq3EyBd9K8HPRd7ZFeVgxyTbX2do2nzY9
- 4kjJmXlW/Lf69xA8h13A09KyU8XrYY7SVeN9FjV1gOWTNhbXnXUwJ8s0W
-X-Gm-Gg: ATEYQzzWnuKb7XL6hBrpL9CCQfFFCrlErgIxsfr2T0mQOUTCoOkW4FnROEMg0O6LBu7
- 1bA8+tpXsfdsI+5djirP+08tG6VN60v5k6NBRpzmIqJnFq/5RfdlqOPtmZOq4ygb3CqlEqGW8GN
- uurF4iBUwsu7MUlCIw7OaQCN9iuFnng+7F51cPJJhBLy+qgcanBo2/fdvWCsOQulUaG/zqc4zDA
- X+V9/ZWGTdiFRNLEGw1UEw2F/my/OuunHtIofZU/jc3cosernFzm5A87STMjq4/VKP5RykjvF/A
- idzStkr7Ln12X9RHjZmejgOIpKb5m4UefYBDI0/WUibN8ajvDko5UXJTUDN7ulb4ZRAM5/SKOuz
- OmLFck9ib1nG+lIIYBnfmGZ1rcQ7ps9IHf+Qk2N99QCHQHzaWB8e4AGwaIZSmRGHr0iskLjYtQ9
- E=
-X-Received: by 2002:a17:902:e889:b0:2aa:f2f3:bcb6 with SMTP id
- d9443c01a7336-2ae2e3cca5emr11637175ad.6.1772162401445; 
- Thu, 26 Feb 2026 19:20:01 -0800 (PST)
-X-Received: by 2002:a17:902:e889:b0:2aa:f2f3:bcb6 with SMTP id
- d9443c01a7336-2ae2e3cca5emr11637025ad.6.1772162401044; 
- Thu, 26 Feb 2026 19:20:01 -0800 (PST)
-Received: from smtpclient.apple ([122.176.129.56])
+ d=1e100.net; s=20230601; t=1772175561; x=1772780361;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=bvOxURG1/Yrmz7f51vk9MpRRvP3i/Ov0sMXxu3ltPri4UiDl1D7cSaLzY4nKcpN8lD
+ XcBeEZG/2unS54pwNGf8PC1AbnuzXBW7LROzSpERDtM7Flj+WHjcd3JJgccYtWkJ0GlT
+ 9478x0g2Zzba/ymMzoIkcB5EpHf2a57mMPa+++Lzlt1+povsB4YhiQ+It6Kr7KgagYaV
+ qWYylkIYR8y1NpxY5o3TBstlVODROn5FzoeI83yAbVn8CyTuxO71L3JblGb9xTTM5jba
+ Lq0CyhCuUMZtSziAmxrI6iTYGJLcYO9JFI8oPfgxSPZwDZj0XCCZH2IhHhkPxBbJjoQ/
+ 26ZA==
+X-Gm-Message-State: AOJu0Yy+9XPr+2iTAPHV2ejeITlQU1lBGPiIyzFpIBBqYOv5V2y7YcxN
+ eUrc1IuVG4Mh5umDJa1EoEthGBo9AAizkWAz0LhkXjsQBi+X3+O85A+2RChlByvk8Gx5cVYh4K/
+ 9AnQsnxpajv4Uo9/BwKfYcxMgPvKH3gEYsiGbKjZ9EWDravqoPj0Zwrxo
+X-Gm-Gg: ATEYQzwzx0gPgT0y+TUAPGfYHeqIR2CyH1Wb9tF2GKeD27MpF7KpAlFqutzX5CPUi1v
+ Vq3dWqymtGrju8XFejUPpHQv0FEKiFsnK9c6MLJqxzWQnbN/xWHHn9BkaZbOknlH3CnYaKT/Lyo
+ 6WjNteg8B0hWiTm+QBldL+0BwL77oqXH7T0SE7IlbtPGyrGTYb0BzoSMUE1tRfDcikr7MBC+Kh0
+ t3AQZS5xglWq6HyYSUcmnhENIKcBwd8PtO+5xN4gCcoZBaqYDqZ6AN+fRZ6yeaGzTwpW5CQCE1W
+ IElf0mdlnYkIrQx/QCGecN9bu+AafR+/+ZtTdYy7vwM3g1z2R01AOTzwTrL3x6jnVTQyCxm406+
+ K/SZbXpHxSpihTFL3dTwbQmuIN3wwKfUUoEW6wcO3RHUxohN1NoEGzIUV+0Tco1Pkk4gSLPrp59
+ FwRvCGRxgF7VVkCmavSqWfba4ampA=
+X-Received: by 2002:a05:600c:c4a6:b0:480:1d0b:2d32 with SMTP id
+ 5b1f17b1804b1-483c9bc0344mr23217185e9.12.1772175561324; 
+ Thu, 26 Feb 2026 22:59:21 -0800 (PST)
+X-Received: by 2002:a05:600c:c4a6:b0:480:1d0b:2d32 with SMTP id
+ 5b1f17b1804b1-483c9bc0344mr23216955e9.12.1772175560933; 
+ Thu, 26 Feb 2026 22:59:20 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2adfb69f98bsm42583655ad.56.2026.02.26.19.19.58
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 26 Feb 2026 19:20:00 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v6 35/35] migration: return EEXIST when trying to add the
- same migration blocker
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <54c74ac4-3eca-483b-b56d-73c6e7d17c3f@redhat.com>
-Date: Fri, 27 Feb 2026 08:49:45 +0530
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Gerd Hoffmann <kraxel@redhat.com>, Ani Sinha <ani@anisinha.ca>,
- Prasad Pandit <pjp@fedoraproject.org>, qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1D3E88B6-D89D-4067-B014-11DDF68C4B8A@redhat.com>
-References: <20260225035000.385950-1-anisinha@redhat.com>
- <20260225035000.385950-36-anisinha@redhat.com> <aZ8xlrL2xQtoN9MI@x1.local>
- <C486617D-2B20-4904-A87B-81CC5FA84153@redhat.com>
- <54c74ac4-3eca-483b-b56d-73c6e7d17c3f@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ 5b1f17b1804b1-483bd750607sm195161155e9.10.2026.02.26.22.59.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 26 Feb 2026 22:59:20 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ Yodel Eldar <yodel.eldar@yodel.dev>
+Subject: Re: [PATCH 0/2] Reapply "rcu: Unify force quiescent state"
+Date: Fri, 27 Feb 2026 07:59:15 +0100
+Message-ID: <20260227065915.71507-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260217-alpha-v1-0-0dcc708c9db3@rsg.ci.i.u-tokyo.ac.jp>
+References: 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.306, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.668,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,37 +124,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Queued, thanks.
 
-
-> On 26 Feb 2026, at 10:53=E2=80=AFPM, Paolo Bonzini =
-<pbonzini@redhat.com> wrote:
->=20
-> On 2/26/26 04:46, Ani Sinha wrote:
->>> On 25 Feb 2026, at 10:59=E2=80=AFPM, Peter Xu <peterx@redhat.com> =
-wrote:
->>> Hi, Ani,
->>> On Wed, Feb 25, 2026 at 09:19:40AM +0530, Ani Sinha wrote:
->>>> Currently the code that adds a migration blocker does not check
->>>> if the same blocker already exists. Return an EEXIST error code
->>>> if there is an attempt to add the same migration blocker again.
->>>> This way the same migration blocker will not get added twice.
->>> Could you help explain why it will inject two identical errors in
->>> the first place, and why the caller cannot make sure it won't be
->>> injected twice?
->> Likely due to a bug in the code. For example if the init function
->> that adds the blocker is called again and the caller does not handle
->> the second init call properly. This came up as a part of the coco
->> reset work where migration blockers are added in init methods. They
->> need not be added again when init methods are again called during
->> the reset process. The caller can handle it of course but adding a
->> check further down the call stack makes things more robust.
-> Since this is the last patch, is it okay to remove it at least for =
-now? Can the situation actually happen?
->=20
-
-Yes you can drop this patch for now. When we get consensus if/what needs =
-to be done, I can send another fix.=20
-
-> If not and it's a programming error, even an abort() is okay.
+Paolo
 
 
