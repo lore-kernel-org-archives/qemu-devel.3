@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC84FEFB49
-	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4E7FEFB47
+	for <qemu-devel@archiver.kernel.org>; Fri, 27 Feb 2026 12:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vvxFH-0006ue-FV; Fri, 27 Feb 2026 07:47:03 -0500
+	id 1vvxF9-0006sa-7G; Fri, 27 Feb 2026 07:46:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vvxF7-0006sM-Oy
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:46:53 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1vvxF6-0006s5-IC
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:46:52 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <adamhet@scaleway.com>)
- id 1vvxF4-0001ep-Nd
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:46:53 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4399dd8d7b3so585124f8f.0
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 04:46:49 -0800 (PST)
+ id 1vvxF3-0001eG-6P
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 07:46:52 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43992e3f9b8so2009971f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 04:46:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=scaleway.com; s=google; t=1772196408; x=1772801208; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6gaYJdfbi1zVa7h6egzBhs1mlyDjTkzG5UEwNdlb5xM=;
- b=GzX+Yj7j+t6kMW5R5FKr9cEaP7pkvtztx8Yez0/oWk2s2KcLauc12T6VQvdKXglxOE
- rlAXOyEJrUeRK6wYCWuaYytmplja07XH/QB0SRAKmCSBOPAIz3Q/ds4Tea8C9GqKBUBp
- lC/D1XftDylMaaNmaqDu1LCkBbNKXcs+NqOrFcbv2NMADqD0OeTwbMHks/kgIclomk9P
- 5qYDsbCn1HsnnP8xqi1L0qLiKAGJcuXjs9MiqqUWxc5gTLESl0lvyVPR9uClFRHHHZiL
- 1Drc5DvE3rd/e2Qbt4PC2QqERlebIrZh8iQtKTk7Fr4vHjQt0UkNQDQ5ITwnyqc7irYl
- mUVA==
+ d=scaleway.com; s=google; t=1772196406; x=1772801206; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PN5rTKxYIAbasXZtlK6hb2TsV0l5NBb2t6kkv2iW9fs=;
+ b=Mv4+7d2FX1kMwT1wa3cxDAlaqXJTn7ndFKIoMDwWn1IXm/Ftcr13UwnE7mxiVlP4eP
+ DioJ1e+CaujKPL/YSmCuyivMBiUl8CLDbX/vtr5fZmo4oTF9XpElD21JbGRJsVFs+He1
+ nENgpTwOYGDNdWSS8jnaZWSEGaWfv2GqWBZFAT1XWg9uvxl/hxAvYJeR1cDdSCW46kJ1
+ J9ZrWeGuul7BA2ytYPyc17QUyUSuDtbnZANEizKils00PJKKr7miMo+zPcuuQVnVymMo
+ on7/tq0TjnUTMwMoW1YJ6EHiEsDHsGHVuvBGtdeSdbL6Mi0hhLUarHGPdhttMHDJzgeB
+ x3Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772196408; x=1772801208;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=6gaYJdfbi1zVa7h6egzBhs1mlyDjTkzG5UEwNdlb5xM=;
- b=j5R5S1xdiTM2mAJ2ZhPoIy4NQL1UgeoCUDMKbRxzWGqCUC36A3/afil6PWYunn5Kus
- 0fA40sGTR8DL9CezxzjIFaSXnaFL39qo1GsMPakO5jDhKPnRYfJ/pFhIdAGTeHd/KNIt
- 1U3+NVncyomfB8esS0U/rmECMLrNE37vylb/+cd//84HDInsuoWbnF5NzV7PyQ6USwPo
- juDeqCGJLQo3gCA+BUEnvp9spTOiQhNSfQ8TQ26zilzkUXaUl/3jlo3bFkbKfIl93ula
- WCusCkXMCrrf3swuTXq0JTU+hpuIQcKZGVWg7tdk7/1iMnaHUwEWEg3mPH2XSZcSJP3Y
- P4eQ==
-X-Gm-Message-State: AOJu0YyXGHq9CqC/3VoPKy38tqqy3QNqbsjnwSv3MlhQvxjKxw3yDRBn
- 9nKQBvZWYllDW45B3HvBRqDMscWx8/S9ZjyMRq19hAbYPduuYko+0GzdPCyHeMsmfU0=
-X-Gm-Gg: ATEYQzwoXVbEl5DFTPxbxvHDvnSJiMD7+FxyJaG4Bn4v5FwPlKilL5m660pm3Pvi1FT
- joAl5sFWC2MRx11ZsMM9ftS/vvsLmor+ENT3PS3zu0Y2Hj0tP5YbnE/Uuc9RWqQKs+J64AJmuYv
- M9OOSECxYtjgno8kCrl9ngiuuYtUKV4vapnwQRKkSK4WY+yYUPpgUQUeLP5JZrzu3z3m3pbR1Jx
- RJhWd5ztW9m6JDklYQONvK8vy6ARugMys/pMQq52yQK30zkzDQClxmi06yk1Zoc828+jViftMWj
- gQiLSiJwyaE4FCoIzebaJZOyPkPbq4OXlsb4Rx+ZNuhSnwCoGCVAb31+m9Qloc3qFepZb7sKxNr
- zw2OGJUb3WbNThSdJfVq9Gn6bJZk20yJH2HzYSNdPHm/3ywkYiJ1kpeORa+7xSgTd4X2AxkrXMg
- U2wdj/RYNuQ4XEGvYDm81UKONE2Jkee0ihcYC3w9whxZe1WhgZ
-X-Received: by 2002:a05:6000:250e:b0:436:14fa:a3fd with SMTP id
- ffacd0b85a97d-439971fc709mr10542084f8f.24.1772196407804; 
- Fri, 27 Feb 2026 04:46:47 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772196406; x=1772801206;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PN5rTKxYIAbasXZtlK6hb2TsV0l5NBb2t6kkv2iW9fs=;
+ b=RwfNi5a3jj/sbqMOLdXQmjAH1x8kGP8zh7sfKkS/87VpocjldfGpr0c+6Om6RY8Zgk
+ Hpe5nfK059+0cz9lLwV4aBXWEcm/DK0Nx8bNyZo4BkxWqDUUFb+GYVq66X3nJgAL5Smk
+ 85grsK3M9R1fQaLHnTAf4nMAi4AotQ72unDiTQ8oreWf6j6OKBgRWKkWWJCbaee4rq++
+ ypDF3Gw0DnaMmAlmlIRRD/FG334lRRI5CvZmE8DMrcpQ0QIbDKkTCVQW+ZLg0nHog4Hf
+ yjQteqfZkxlmSf30AsSgBb6+ISijkf++BMUGo9yr9565qigFYrnK+lRXWLeeqFdRVuMM
+ Nbfw==
+X-Gm-Message-State: AOJu0Yx+z52CAWCZeUzwHBaUFg2BSoclVSPNgQhPS+3Zvyvrfzo7BcyN
+ E4tOD15mG87Yqq0ZOFvRsNZmZhpZRY+DaD2Whdi1kka/mvtgkf3U1vX5LIEA9Bv+Bj4=
+X-Gm-Gg: ATEYQzwh+Q+gwAet5YJmJni9BW4IjxBv9ZGDYbkNcmvHMUi4ySg8oYrrHP4ePPV67PI
+ j2jV0gV9zmLvdy9o2Wbj565N/79gs4HdqViE43K+sAmdGrlOj8bLH4WyoLVZhqXopZt3LHN5WNA
+ s7cLqyB7dAcukqjahrGE1EcUJMeudYgLwl+W2ssN/sHMwbITGRe5WMU5hSuLr/6RMpODLatUnOW
+ QhPo+TARI4uFGOlO9v8x599pCl8MpNJ+RhAq70UP6b5gjDcHBcFzs9GDGULdGTgaN9x+tgo++Uu
+ 4QqmWSXGAlYEQBQcvmavIHWDyWpVkgLSOOA/LyzftIAUKLD4S/dXORr+iSFlFifi6KE+DRNgrBn
+ R6vnqlPFwxg5hNStYdkdWxlZ7f9BTDxxnMW9R1bSCp1WTTGLDwsbBHxH7uNKqUlcRcAFLfAfxvu
+ CmD7XoWEkUtjdK5z1sJGzXhnoeqE3jpFofU/0DBwGafE7DGblG
+X-Received: by 2002:a05:6000:2dc3:b0:437:6758:ce80 with SMTP id
+ ffacd0b85a97d-4399ddf8aa4mr4585934f8f.25.1772196405477; 
+ Fri, 27 Feb 2026 04:46:45 -0800 (PST)
 Received: from localhost (710304585.box.freepro.com. [130.180.219.188])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b272sm6498399f8f.24.2026.02.27.04.46.47
+ ffacd0b85a97d-4399c597578sm6379341f8f.0.2026.02.27.04.46.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 04:46:47 -0800 (PST)
+ Fri, 27 Feb 2026 04:46:45 -0800 (PST)
 From: Antoine Damhet <adamhet@scaleway.com>
-Date: Fri, 27 Feb 2026 13:45:52 +0100
-Subject: [PATCH v3 2/3] qapi: block: Refactor HTTP(s) common arguments
+Subject: [PATCH v3 0/3] block/curl: fix S3 presigned URL support
+Date: Fri, 27 Feb 2026 13:45:50 +0100
+Message-Id: <20260227-fix-curl-v3-v3-0-eb8a4d88feef@scaleway.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260227-fix-curl-v3-v3-2-eb8a4d88feef@scaleway.com>
-References: <20260227-fix-curl-v3-v3-0-eb8a4d88feef@scaleway.com>
-In-Reply-To: <20260227-fix-curl-v3-v3-0-eb8a4d88feef@scaleway.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDIyNz3bTMCt3k0qIc3TJj3cSUVBOjRBPTNDODJCWgjoKiVKA02LTo2Np
+ aAOx1Z+pdAAAA
+X-Change-ID: 20260227-fix-curl-v3-ade42a45f60b
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-stable@nongnu.org, 
  Antoine Damhet <adamhet@scaleway.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1402; i=adamhet@scaleway.com; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2330; i=adamhet@scaleway.com; 
  h=from:subject:message-id;
- bh=ohTVUeEtivMPCvMY4Z1W58yowQAP11aeY+udzyn2cms=; 
- b=owEBbQGS/pANAwAKAdwJoy885Y8+AcsmYgBpoZIv/++BUr+amfRaChsOdBRP5d/awNL6WF3b8
- BtfHKiQLUKJATMEAAEKAB0WIQQCubVZtDHYaY6x8XzcCaMvPOWPPgUCaaGSLwAKCRDcCaMvPOWP
- Pp33B/0V+DhO9ljGe2Rwm19Zc6uyeBa/d7I0Z0gv7PHgSrdBCo1/TWxS5FAb21wi1SjHhwd9hlD
- dj4FiBXyXuHy1BWsjr/KtEYoKA7FzUiWGMfVmfKiF5hSt+j61wbeimjckyGBNQD6Tncl3JYOEE1
- nWEKGd3vjgvoCWxFTilTX/dH85lWSk3BoltQZZNBO3fBZHK1vWC6H3xDGRviybB9vzSQEjC7GqU
- UeVB6Nf3eZAhHYsdwPQ0hvbtOHvANQtAvWbDNg8a7w66YARMdKTAL5JRkvhzdMOw5T2VgUhV0k0
- 4DXXcAS3d3p5IvH0o2eMUgmZNvav7mA2Yd4yZ3EwDmu7WBbD
+ bh=8hhqAiOwDDhfeJWkyUhcIf3tkgKxzkCypW0DlIqYANg=; 
+ b=owEBbQGS/pANAwAKAdwJoy885Y8+AcsmYgBpoZIpwNIY2PC1+L3u7OY6IrjgxUHJfypRAB0Qa
+ hooSGEoIE6JATMEAAEKAB0WIQQCubVZtDHYaY6x8XzcCaMvPOWPPgUCaaGSKQAKCRDcCaMvPOWP
+ PkkYB/459Im7HKQsjSYeaaqy+ll6b/Rn/mq8A050kC+yU4rLLIFdpVm1+JvClpbP8R79pUyqazK
+ FpDKxZr1cYXDu/Vy1FIYktaJa6Si6kCJ2OZFOsgpihYcH5yySie5MOtPNtg+hF2tPZQH0kFNlu6
+ AtcxIfT8DnlP7e4lE51QG+7eAHCSakLMVj1UUL8YcS4jNrM7rdSe10cmlyQ7GN6ncKydXZJAlhN
+ f5DJlW8O//q3WGezRycEdWlBxluSXKLFjhjOyhiLfKPUfPmoQx1kJoxKIrgGEEhdMHqyVF5N6yt
+ ryvnErBOIYQExKNgjbdI1lyGn26G/eqmaefHmvMnovFBdpae
 X-Developer-Key: i=adamhet@scaleway.com; a=openpgp;
  fpr=4C3AEF45D70C65052D3F37E02A5F5236CFB70DEC
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=adamhet@scaleway.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=adamhet@scaleway.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,48 +117,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HTTPs curl block driver is a superset of the HTTP driver, reflect
-that in the QAPI.
+Hi,
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+This series adds the support for S3 presigned URLs that only allow HTTP
+GET requests. While working on this I also stumbled upon a deadlock with
+concurrent I/O and slipped the fix here. Over the years there was
+already an attempt to support these kinds of URLs[1] and at least one
+report of a user in need of the feature[2].
+
+Unfortunately S3 only allows a presigned URL to live up to 7 days so we
+can't really put an example with a stable URL on the commit message but
+here is a presigned URL for the archlinux cloud image[3] that will
+expire in ~7 days.
+
+[1]: https://lore.kernel.org/qemu-devel/110120539.4133.de5ac8a5-69d1-4f59-9540-4a679771a547.open-xchange@ox.pcextreme.nl/
+[2]: https://lore.kernel.org/qemu-devel/7b37cc65-1314-29f4-006f-70836bdfb4b4@linaro.org/
+[3]: https://test-presigned.s3.fr-par.scw.cloud/Arch-Linux-x86_64-cloudimg.qcow2?AWSAccessKeyId=SCWDHE3XBQGZFV282QKG&Expires=1772798381&Signature=zUxbVAWQ9Tl%2B%2Bf1jUW6q3o3His4%3D
+
 ---
- qapi/block-core.json | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+Changes in v3:
+- Used b4 to handle the series (I hope I didn't do something weird)
+- sync 'force-range' description between QAPI and man page
+- Remove redundant 'Defaults to false.' in QAPI doc
+- Regen presigned URL[3]
+- Link to v2: https://lore.kernel.org/qemu-devel/20260224155314.1658988-1-adamhet@scaleway.com
+Changes in v2:
+- New patch (2) that refactors the http(s) QAPI types
+- Specify and reword what happens when using 'force-range' with an HTTP
+  server that doesn't support the feature
+- Document that 'force-range' defaults to false in QAPI
+- Fix a few typos
+- Regen presigned URL[3]
+- Link to v1: https://lore.kernel.org/qemu-devel/20260212162730.440855-1-adamhet@scaleway.com
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b82af7425614..a7871705fa69 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -4595,23 +4595,14 @@
- # Driver specific block device options for HTTPS connections over the
- # curl backend.  URLs must start with "https://".
- #
--# @cookie: List of cookies to set; format is "name1=content1;
--#     name2=content2;" as explained by CURLOPT_COOKIE(3).  Defaults to
--#     no cookies.
--#
- # @sslverify: Whether to verify the SSL certificate's validity
- #     (defaults to true)
- #
--# @cookie-secret: ID of a QCryptoSecret object providing the cookie
--#     data in a secure way.  See @cookie for the format.  (since 2.10)
--#
- # Since: 2.9
- ##
- { 'struct': 'BlockdevOptionsCurlHttps',
--  'base': 'BlockdevOptionsCurlBase',
--  'data': { '*cookie': 'str',
--            '*sslverify': 'bool',
--            '*cookie-secret': 'str'} }
-+  'base': 'BlockdevOptionsCurlHttp',
-+  'data': { '*sslverify': 'bool'} }
- 
- ##
- # @BlockdevOptionsCurlFtp:
+---
+Antoine Damhet (3):
+      block/curl: fix concurrent completion handling
+      qapi: block: Refactor HTTP(s) common arguments
+      block/curl: add support for S3 presigned URLs
 
--- 
-2.53.0
+ block/curl.c                          | 115 +++++++++++++++++++++-------------
+ block/trace-events                    |   1 +
+ docs/system/device-url-syntax.rst.inc |   6 ++
+ qapi/block-core.json                  |  21 +++----
+ 4 files changed, 89 insertions(+), 54 deletions(-)
+---
+base-commit: d8a9d97317d03190b34498741f98f22e2a9afe3e
+change-id: 20260227-fix-curl-v3-ade42a45f60b
+
+Best regards,
+--  
+Antoine 'xdbob' Damhet
+Engineer @scaleway
 
 
