@@ -4,55 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027DDFEE4C6
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 07:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC11FEE4CD
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 07:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwEqZ-000669-HK; Sat, 28 Feb 2026 02:34:44 -0500
+	id 1vwF7J-0000Ly-TW; Sat, 28 Feb 2026 02:52:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwEqX-00065m-Og
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 02:34:41 -0500
+ id 1vwF7H-0000Lg-FD; Sat, 28 Feb 2026 02:51:59 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwEqV-0003iY-6d
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 02:34:41 -0500
+ id 1vwF7E-0006Nc-F5; Sat, 28 Feb 2026 02:51:59 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61S7YFSF009308
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 61S7o3lr012919
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 28 Feb 2026 16:34:33 +0900 (JST)
+ Sat, 28 Feb 2026 16:51:39 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2gmm9x6G4z8uo0q/Uh2no51UOb82XRPtkCjKYlg/Ra8=; 
+DKIM-Signature: a=rsa-sha256; bh=vTjWadEvTBHuiB9pG19yl0PGYUuurjYy2jRtAfTa7i0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772264073; v=1;
- b=uBlK73SiWFMqI09ZdwCxomX9KwfmMfEs1N51DcViclSHlBe2ukXQuVUKdxk4Mn4N
- FkOYC8zNdonzpsTzhbqwUntIFhWYZjScatIgFuhhWYjAlD48rGdvbpC3OKUyPg0T
- xysdEg/7trqNYy2sSkxCrzHJ4Q6KGMjfml1EEdDCv4sS+4N2ZsV0oIPMSpaDWR2L
- +jpiFjUqbfqWiZaek1QH3Pw6y5UgGf412m/v1/MzfLF024S0By7VPG8Nm1cjJmy6
- nkHadbDsRjRxqpaT9U5/thEQMJySbBuvv/D7GbytZvueYIb8CLpUQL7umjpP7obn
- V1fXwt7qKYvyFJ+BvwaQfA==
-Message-ID: <45aee031-3ae5-4334-a9fe-16162336f8a8@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 28 Feb 2026 16:34:15 +0900
+ s=rs20250326; t=1772265099; v=1;
+ b=o/XwUd0DxPZlT2RS97vi+Ad0kIwNBG6B/f2UCIVywHUU+ylYqb5riALjVYsPUuyr
+ ywOm6ykyAX77RmEgBmrmhEK9s/lcfP03fCZbij2tEyuOQvmT8FsjCPswL2Zv2UMO
+ q4mFiJUDhXIbXdK24J6koWzD1rgxTyFWLUyUWJTRYu/kMCRabFsvkpWF7ITNjS+Z
+ f5faJgFfqQsjCxZc2pXhJjdmhoKU80U2qb6vnKh2z2XpsebRKosVihSPb+6bWY/g
+ sg3Xzno5ZQZw3+19KRuj1QZyFcWq+cV9KFXzdw0b/N4lHOVDp2Tx0cDCpsvLYhEh
+ FnVDNmkfi7VIsXshaQr1bw==
+Message-ID: <b30f4300-33be-4737-89d8-3742efbfeb87@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 28 Feb 2026 16:50:03 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260227221632.827046-1-vivek.kasireddy@intel.com>
- <20260227221632.827046-11-vivek.kasireddy@intel.com>
+Subject: Re: [PATCH 0/4] gdbstub: Always infer base register index from GDB XML
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-ppc@nongnu.org
+References: <20260227213958.21170-1-philmd@linaro.org>
+ <d381b443-93e8-435e-801a-eae414216940@linaro.org>
+ <bc7dd4b4-f011-415a-bcd7-6f4fb45b6d55@linaro.org>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260227221632.827046-11-vivek.kasireddy@intel.com>
+In-Reply-To: <bc7dd4b4-f011-415a-bcd7-6f4fb45b6d55@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,111 +76,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/02/28 7:13, Vivek Kasireddy wrote:
-> In addition to memfd, a blob resource can also have its backing
-> storage in a VFIO device region. Since, there is no effective way
-> to determine where the backing storage is located, we first try to
-> create a dmabuf assuming it is in memfd. If that fails, we try to
-> create a dmabuf assuming it is in VFIO device region.
+On 2026/02/28 8:10, Philippe Mathieu-Daudé wrote:
+> +Zhao/Paolo
 > 
-> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
-> backing storage is located in a memfd or not. If it is not, we invoke
-> the vfio_device_create_dmabuf_fd() API which identifies the right
-> VFIO device and eventually creates a dmabuf fd.
+> On 27/2/26 23:39, Pierrick Bouvier wrote:
+>> On 2/27/26 1:39 PM, Philippe Mathieu-Daudé wrote:
+>>> Generic fix for a latent bug reported by Florian:
+>>> https://lore.kernel.org/qemu-devel/e44df309- 
+>>> d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+>>>
+>>> Use the 'regnum' XML tag for feature base register index
+>>> (after fixing the incorrect m68k FPU ones).
+>>>
+>>> Philippe Mathieu-Daudé (4):
+>>>    gdbstub: Have scripts/feature_to_c.py generate more verbose output
+>>>    gdbstub: Make base register explicit in m68k GDB XML files
+>>>    gdbstub: Emit base_register index in GDBFeature entries
+>>>    gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
+>>>
+>>>   include/exec/gdbstub.h     |  4 ++--
+>>>   gdbstub/gdbstub.c          | 16 ++++++----------
+>>>   target/arm/gdbstub.c       | 21 ++++++++-------------
+>>>   target/arm/gdbstub64.c     | 19 +++++++------------
+>>>   target/hexagon/cpu.c       |  2 +-
+>>>   target/i386/gdbstub.c      |  8 +++-----
+>>>   target/loongarch/gdbstub.c |  6 +++---
+>>>   target/m68k/helper.c       |  4 ++--
+>>>   target/microblaze/cpu.c    |  3 +--
+>>>   target/ppc/gdbstub.c       | 11 +++++------
+>>>   target/riscv/gdbstub.c     | 18 ++++++------------
+>>>   target/s390x/gdbstub.c     | 15 +++++++--------
+>>>   target/sparc/gdbstub.c     | 12 ++++--------
+>>>   gdb-xml/cf-fp.xml          |  2 +-
+>>>   gdb-xml/m68k-fp.xml        |  2 +-
+>>>   scripts/feature_to_c.py    | 14 +++++++++-----
+>>>   16 files changed, 66 insertions(+), 91 deletions(-)
+>>>
+>>
+>> See some check-tcg failures:
+>> https://github.com/p-b-o/qemu-ci/actions/runs/22505136358/job/65203283939
 > 
-> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
-> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
-> fall back to the vfio_device_mmap_dmabuf() API to get a mapping
-> created for the dmabuf.
+> I ran check-tcg on a user-only build... And neglected system binaries.
+> Sigh. Thanks for testing / noticing.
 > 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Per commit f46e5073a8a ("i386/gdbstub: Add APX support for gdbstub"),
+> the gdb-xml/i386-64bit-apx.xml file comes from GDB, but I can not find
+> it there...
+> 
+> https://sourceware.org/git/?p=binutils-gdb.git;a=tree;f=gdb/features/ 
+> i386;h=524dad125c554f6210e8987f141383b98ec606cf;hb=refs/tags/binutils-2_46
+> 
+> Maybe it has been generated manually like the m68k one? In that case
+> it could miss the @regnum tag, and the fix could be as easy as:
+> 
+> -- >8 --
+> diff --git a/gdb-xml/i386-64bit-apx.xml b/gdb-xml/i386-64bit-apx.xml
+> index 11a4ec67cae..34cd501881f 100644
+> --- a/gdb-xml/i386-64bit-apx.xml
+> +++ b/gdb-xml/i386-64bit-apx.xml
+> @@ -9,3 +9,3 @@
+>   <feature name="org.gnu.gdb.i386.apx">
+> -  <reg name="r16" bitsize="64" type="int64"/>
+> +  <reg name="r16" bitsize="64" type="int64" regnum="16"/>
+>     <reg name="r17" bitsize="64" type="int64"/>
 > ---
->   hw/display/virtio-gpu-dmabuf.c | 35 +++++++++++++++++++++++++++-------
->   1 file changed, 28 insertions(+), 7 deletions(-)
 > 
-> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index b2badfc1bd..533d3d601c 100644
-> --- a/hw/display/virtio-gpu-dmabuf.c
-> +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -74,13 +74,21 @@ static int virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
->   static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
->                                       Error **errp)
->   {
-> +    Error *mmap_err = NULL;
->       void *map;
->   
->       map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
->       if (map == MAP_FAILED) {
-> -        error_setg_errno(errp, errno, "dmabuf mmap failed");
-> +        error_setg_errno(&mmap_err, errno, "dmabuf mmap failed: ");
->           res->remapped = NULL;
-> -        return false;
-> +
-> +        if (!vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &map,
-> +                                     res->blob_size, errp)) {
+> But I have no clue, it is too late for me to look at GDB source code
+> so I'll defer to Zhao / Paolo and revisit after the week-end.
 
-Let's call vfio_device_mmap_dmabuf() only when 
-vfio_device_create_dmabuf_fd() is called. Hopefully it will simplify the 
-logic structure.
+Found this:
+https://github.com/intel/gdb/commit/de7fe4e5efa952da2499424f7b70a5d4fad7cf6c
 
-Regards,
-Akihiko Odaki
-
-> +            error_report_err(mmap_err);
-> +            return false;
-> +        }
-> +        error_free(mmap_err);
-> +        mmap_err = NULL;
->       }
->       res->remapped = map;
->       return true;
-> @@ -137,7 +145,7 @@ bool virtio_gpu_have_udmabuf(void)
->   
->   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
-> -    Error *local_err = NULL;
-> +    Error *local_err = NULL, *vfio_err = NULL;
->       void *pdata = NULL;
->       int ret;
->   
-> @@ -151,15 +159,28 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->               error_prepend(&local_err, "Cannot create dmabuf: ");
->   
->               if (ret == VFIO_DMABUF_CREATE_GUEST_ERROR) {
-> -                qemu_log_mask(LOG_GUEST_ERROR,
-> -                              "Cannot create dmabuf: incompatible memory\n");
-> -                error_free(local_err);
-> -                return;
-> +                ret = vfio_device_create_dmabuf_fd(res->iov, res->iov_cnt,
-> +                                                   &vfio_err);
-> +                if (ret > 0) {
-> +                    error_free(local_err);
-> +                    local_err = NULL;
-> +                    goto out;
-> +                }
-> +
-> +                if (ret == VFIO_DMABUF_CREATE_GUEST_ERROR) {
-> +                    qemu_log_mask(LOG_GUEST_ERROR,
-> +                                  "Cannot create dmabuf: incompatible memory\n");
-> +                    error_free(vfio_err);
-> +                    error_free(local_err);
-> +                    return;
-> +                }
-> +                error_report_err(vfio_err);
->               }
->               error_report_err(local_err);
->               return;
->           }
->   
-> +out:
->           res->dmabuf_fd = ret;
->           if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
->               error_report_err(local_err);
-
+Regards,Akihiko Odaki
 
