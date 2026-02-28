@@ -4,97 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094071048924
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 01:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B251048927
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 01:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw8jb-0002W2-G5; Fri, 27 Feb 2026 20:03:07 -0500
+	id 1vw9OQ-0006ma-G8; Fri, 27 Feb 2026 20:45:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vw8jZ-0002VP-9r
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 20:03:05 -0500
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vw8jX-0001e1-Lz
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 20:03:05 -0500
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-2bdd40d3c61so2112180eec.1
- for <qemu-devel@nongnu.org>; Fri, 27 Feb 2026 17:03:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772240581; x=1772845381; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=XCPBggat46ICwzgzQGDkliN5ntQA2Z7Z0M0Tun4P7Nk=;
- b=P7Uf/AJDGmksEiROc4idMXH7uiqJdKKXhnvTmyZgEPpkGFmZv0TurFg36ccSxqXfA/
- RoWDkZ7Xwm4BnFRtSh4kYe+SKE7XCcuwA0rQZUyPRxhMLXS8SYRl57OjcQiwOM5wJrH+
- fKcUU5KsMTxLBoR/wzwr3TCOvqU8hxF2iFpHSGktwMJrztyqmNUVgHaC13fgueItxGNP
- esMrwOfgDM0BmOD8TK/zyF+At92oUOxHIbLSrXZH/+0MixgkZgGwvNKU4p8tjHPI2GiO
- YK2PPfRKBouc/QSyQDfSUI4+KlTs79HGJ+iD635PNDaeKKVkAuEmtqY6HEN5BJOKJ7eY
- czAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772240581; x=1772845381;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XCPBggat46ICwzgzQGDkliN5ntQA2Z7Z0M0Tun4P7Nk=;
- b=M3Pf4h2f12mlmu7bi+KqunKVLjNJO2FveeW+nACRKAFS9pR+/y3XC82k5NnQ9yE56C
- ttPEzppSB7UP7n5LGHEjco9x4ksRr7bfMIkUW7KAeOJJO5PXMSbq6H5urBbMbeJZFikf
- HHWt8hd96ZZdw9Y+N5LoKsrXgdE0P8krNNM7bW8boH0K7BjEsIGOWJQpIWTlw/01Y1Gf
- HkE0fJR6Vd0vPSYMp5j1M7wwU0fOwlO15O1370Lks80s80DU0geTmTE/Ps5FgQqOCUEY
- eDnNeTpnSll4wBGMoot+a9E9efUfITuIaioYR345VOJ60D3gFX9owBopTNfyZW6X4adN
- UXEg==
-X-Gm-Message-State: AOJu0YwSCTJXqgtAhAbe9Dfo9Dsr9PgiMJzwgb5rHNyUYpZBCrfuzrIQ
- W6RUTNnWVv2z9hPPbAUR1yE5gUGWk679g7WWoOTnNCY9AbozQB1cNz5v
-X-Gm-Gg: ATEYQzwKQr4VBSVUzQmDLC43RUquKBCn9bpfnSlJ6Tf6RUwM4VP+HSbSebm7EcCF5W5
- vxT9MoHwj7SCN937LhJXI/kABBRirFf857ZH1RsfuG/xWMt456O7YVjSFKuveO2jJTfNH6FfCC3
- HUMvE8eevW44VT1nWDuf2t+kYSxDcHkc2TJDRxOz78yohvu+uEHVqKK/0slKa0SNfzpFwya0dSR
- 1zJK7QoekTLD7fPjnw656QvWUbP3hzK43VpQnJOQsCSdfwj2vtMHM92jrxsI3QJFqSoC+voVZpI
- 8qObS1TnQtrCv6c2huChXjyf21I/xLDRdmxfnihYlU7kIpXg0cSAFofklm+et+EmY3IilJNz4Nc
- 5xDYPntPpyGmKcP4HGojGQ5H6tOiVCY0GQDAjvhyeOxYJvYqs1kXMkYGB9IOvrA2baj1e3Uugd8
- QBceLfajnGMav/wr73J5L1Ya9kOEQY4i7U70MkFuhV+huZOFHZxYhhMakwCAkNcpxoBPQ39w+Bp
- Ckn0knBG+//jO6IyyrR05Zj1OHOqCI=
-X-Received: by 2002:a05:7300:640b:b0:2b7:32fe:4bbb with SMTP id
- 5a478bee46e88-2bde1baf2a6mr1745066eec.11.1772240581141; 
- Fri, 27 Feb 2026 17:03:01 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bded67bd05sm1431860eec.1.2026.02.27.17.02.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 27 Feb 2026 17:03:00 -0800 (PST)
-Date: Sat, 28 Feb 2026 09:02:53 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Conor Dooley <conor@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-riscv@nongnu.org, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Anup Patel <anup.patel@oss.qualcomm.com>, 
- devel@lists.libvirt.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] hw/riscv: Remove deprecated 'riscv, delegate'
- device-tree property
-Message-ID: <aaI-hhHznsDTqMnP@ZEVORN-PC.localdomain>
-References: <20260227232838.23392-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1vw9OM-0006m6-VO; Fri, 27 Feb 2026 20:45:15 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1vw9OK-0001o8-GK; Fri, 27 Feb 2026 20:45:14 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 61RKqtWU2347135; Sat, 28 Feb 2026 01:45:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=a/N0Kg
+ 3gpsN7//5mPm2l8kIf1SnfJhAWHdM3MfRt9h4=; b=GZKbea5Ki7XeDNk5Q0z4/e
+ j5r9syl8Sn1tmMZzdX5W1PMCoV1EmNttyQZq5yZ+kSo94pKkzrfu7i62ggwwm+iq
+ P6DzqYIWCFduv/9pwMUWeKJZTfTnarDF442m1X654u86X6u3V1Jn6TVG16Q7iUXr
+ 5RnMcoxAMjn8QcRUS3n7Cci6Tkld0UbRh/AOdBvpzK2oLP+zxZ4IwUvipT8i2sIs
+ 89sEveTgj4+d/SErS1bTFlGTUmHXJX2/DEgl+vAONIq+xmkUoeo9D5bFIHAzVmtX
+ cHB7psDyF67uwtXm9gFoesM2p+MSW6kLXVznTjsiY3GA/0/ExMHN97QQ0eQ5tgMw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ch8594msc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 28 Feb 2026 01:45:05 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61RNsUY9003413;
+ Sat, 28 Feb 2026 01:45:04 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfs8kcqq0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 28 Feb 2026 01:45:04 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61S1j3tA19989218
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 28 Feb 2026 01:45:03 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 628C258054;
+ Sat, 28 Feb 2026 01:45:03 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AAA415805C;
+ Sat, 28 Feb 2026 01:45:01 +0000 (GMT)
+Received: from [9.61.45.42] (unknown [9.61.45.42])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 28 Feb 2026 01:45:01 +0000 (GMT)
+Message-ID: <18582621-9207-4123-841c-d6af4c89f3d1@linux.ibm.com>
+Date: Fri, 27 Feb 2026 20:45:01 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260227232838.23392-1-philmd@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 04/30] hw/s390x/ipl: Create certificate store
+To: Thomas Huth <thuth@redhat.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
+References: <20260212204352.1044699-1-zycai@linux.ibm.com>
+ <20260212204352.1044699-5-zycai@linux.ibm.com>
+ <7c6424bd-031f-4a58-80b5-1a989baf7f14@redhat.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <7c6424bd-031f-4a58-80b5-1a989baf7f14@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDAxMyBTYWx0ZWRfX8uv9Hkfszegi
+ KN7Ww/B0/mVC+Luz6HymGN7yUv2ON3QrJBq6kgpFJzOnGm8Y4HgVI9afKOroMyS67nzx1uwqnxj
+ zYygKTaw+zCom9hUG9CNE1ygjG/Ghd1yzm4O1MuDyX7LYChn5dIuF9SzJCKHGTkbqg/xnp/+2GO
+ nCjVlYaRhXNf4N6jgjwJJusbL8+lvdHbRUdorcUuJLP+wPhqsuN75HDgpAF9sD5o0y5pHTJK2VF
+ DgKp6IDgx5joFfG/J2MjYFFfgZ5+gkiEX/YW00kcWqpEsdBCryz94i678yi3EOsWFG0oebHWfOj
+ YoDIAoZnazDWKkPOe8Zwm7aO4Gr/Z4jTwgqAX9vYm5eBwhjd+jOsXBuUgBEQS2ruXLzON1qL973
+ VCaLoxglIiESa7VFBsh9aQHnp09INZxr8E32vK5VpHoVL5zMuCVirbXvmUfWitd+sCOiR6NjBkR
+ Tfp2drPwEiYfYIqPqWw==
+X-Proofpoint-GUID: 6P6Z_nuSKSwn476jrPCM7kzSiRJtK1VX
+X-Authority-Analysis: v=2.4 cv=S4HUAYsP c=1 sm=1 tr=0 ts=69a248a1 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
+ a=aGgZRi6wSp843-NrvLwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 6P6Z_nuSKSwn476jrPCM7kzSiRJtK1VX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-27_04,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 impostorscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602280013
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,95 +127,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 28, 2026 at 12:28:37AM +0100, Philippe Mathieu-Daudé wrote:
-> The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> the AIA APLIC support.  The property changed name during the
-> review process in Linux and the correct name ended up being
-> "riscv,delegation". The incorrect name was added as alias, and
-> deprecated in v9.1 (commit 38facfa8432), so can be removed for
-> v11.0.
+On 2/26/26 11:02 AM, Thomas Huth wrote:
+> On 12/02/2026 21.43, Zhuoying Cai wrote:
+>> Create a certificate store for boot certificates used for secure IPL.
+>>
+>> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
+>> machine type option into the cert store.
+>>
+>> Currently, only X.509 certificates in PEM format are supported, as the
+>> QEMU command line accepts certificates in PEM format only.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+> ...
+>> --- /dev/null
+>> +++ b/hw/s390x/cert-store.c
+>> @@ -0,0 +1,221 @@
+> ...
+>> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
+>> +{
+>> +    GPtrArray *cert_path_builder;
+>> +    Error *err = NULL;
+>> +
+>> +    /* If cert store is already populated, then no work to do */
+>> +    if (cert_store->count) {
+>> +        return;
+>> +    }
+>> +
+>> +    cert_path_builder = get_cert_paths(&err);
+>> +    if (cert_path_builder == NULL) {
+>> +        error_report_err(err);
+>> +        exit(1);
+>> +    }
+>> +
+>> +    if (cert_path_builder->len == 0) {
+>> +        g_ptr_array_free(cert_path_builder, TRUE);
+>> +        return;
+>> +    }
+>> +
+>> +    if (cert_path_builder->len > MAX_CERTIFICATES - 1) {
+>> +        error_report("Cert store exceeds maximum of %d certificates", MAX_CERTIFICATES);
+>> +        g_ptr_array_free(cert_path_builder, TRUE);
+>> +        exit(1);
+>> +    }
+>> +
+>> +    cert_store->largest_cert_size = 0;
+>> +    cert_store->total_bytes = 0;
+>> +
+>> +    for (int i = 0; i < cert_path_builder->len; i++) {
+>> +        g_autofree S390IPLCertificate *cert = init_cert(
+>> +                                              (char *) cert_path_builder->pdata[i],
+>> +                                              &err);
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> I'd maybe write it like this to decrease indentation:
+> 
+>          g_autofree S390IPLCertificate *cert =
+>                     init_cert((char *) cert_path_builder->pdata[i],
+>                               &err);
+> 
+> ... but up to you, it's just cosmetics.
+> 
+> ...
+>> diff --git a/hw/s390x/cert-store.h b/hw/s390x/cert-store.h
+>> new file mode 100644
+>> index 0000000000..50e36e2389
+>> --- /dev/null
+>> +++ b/hw/s390x/cert-store.h
+>> @@ -0,0 +1,41 @@
+> ...
+>> +struct S390IPLCertificateStore {
+>> +    uint16_t count;
+>> +    size_t   largest_cert_size;
+>> +    size_t   total_bytes;
+>> +    S390IPLCertificate certs[MAX_CERTIFICATES];
+>> +};
+>> +typedef struct S390IPLCertificateStore S390IPLCertificateStore;
+>> +QEMU_BUILD_BUG_MSG(sizeof(S390IPLCertificateStore) != 5656,
+>> +                   "size of S390IPLCertificateStore is wrong");
+> 
+> Why is there a QEMU_BUILD_BUG_MSG here? As far as I can see, this is not a 
+> structure that we share in the API with the guest, is it? So if this is just 
+> internal to QEMU, the size of the structure should not matter here, I think?
+> 
+>   Thomas
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+I initially assumed that all non-packed structs should be guarded with
+QEMU_BUILD_BUG_MSG to prevent padding changes.
 
-Thanks,
-Chao
-> ---
-> Binary file pc-bios/opensbi-riscv32-generic-fw_dynamic.bin matches
-> Binary file pc-bios/opensbi-riscv64-generic-fw_dynamic.bin matches
-> ---
->  docs/about/deprecated.rst       | 11 -----------
->  docs/about/removed-features.rst | 11 +++++++++++
->  hw/riscv/virt.c                 |  9 ---------
->  3 files changed, 11 insertions(+), 20 deletions(-)
+You are correct that this structure is only used within QEMU. If the
+size is not relevant in this case, then it should be safe to remove the
+check here.
+
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 1d5c4f3707c..cc5502e5394 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -494,17 +494,6 @@ versions, aliases will point to newer CPU model versions
->  depending on the machine type, so management software must
->  resolve CPU model aliases before starting a virtual machine.
->  
-> -RISC-V "virt" board "riscv,delegate" DT property (since 9.1)
-> -''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> -
-> -The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> -the AIA APLIC support.  The property changed name during the review
-> -process in Linux and the correct name ended up being
-> -"riscv,delegation".  Changing the DT property name will break all
-> -available firmwares that are using the current (wrong) name.  The
-> -property is kept as is in 9.1, together with "riscv,delegation", to
-> -give more time for firmware developers to change their code.
-> -
->  x86 "isapc" board use of modern x86 CPUs (since 10.2)
->  '''''''''''''''''''''''''''''''''''''''''''''''''''''
->  
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index 41bec8b8e38..0a62e87ee35 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -1232,6 +1232,17 @@ converting to using TCG plugins they should contact the qemu-devel
->  mailing list.
->  
->  
-> +Firmware, ACPI, Device Tree
-> +---------------------------
-> +
-> +RISC-V "virt" board "riscv,delegate" DT property (removed in 11.0)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> +the AIA APLIC support.  The property changed name during the review
-> +process in Linux and the correct name ended up being "riscv,delegation".
-> +
-> +
->  System emulator devices
->  -----------------------
->  
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index bbce2fb6671..a1c323e66df 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -666,15 +666,6 @@ static void create_fdt_one_aplic(RISCVVirtState *s, int socket,
->          qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegation",
->                                 aplic_child_phandle, 0x1,
->                                 VIRT_IRQCHIP_NUM_SOURCES);
-> -        /*
-> -         * DEPRECATED_9.1: Compat property kept temporarily
-> -         * to allow old firmwares to work with AIA. Do *not*
-> -         * use 'riscv,delegate' in new code: use
-> -         * 'riscv,delegation' instead.
-> -         */
-> -        qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegate",
-> -                               aplic_child_phandle, 0x1,
-> -                               VIRT_IRQCHIP_NUM_SOURCES);
->      }
->  
->      riscv_socket_fdt_write_id(ms, aplic_name, socket);
-> -- 
-> 2.52.0
-> 
-> 
+
 
