@@ -4,52 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E97FEE4CB
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 06:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B239FEE4CB
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 06:33:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwDsa-0007MF-Ro; Sat, 28 Feb 2026 01:32:44 -0500
+	id 1vwDtQ-0007ql-Ie; Sat, 28 Feb 2026 01:33:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDsY-0007Lu-Ed
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:32:42 -0500
-Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDtP-0007qU-GL
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:33:35 -0500
+Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDsW-0003Ay-QR
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:32:42 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.169])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4fNFjw5y9Nz5vrW;
- Sat, 28 Feb 2026 06:32:36 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDtO-0003DX-0p
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:33:35 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.216])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fNFl01JD4z5vRZ;
+ Sat, 28 Feb 2026 06:33:32 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Sat, 28 Feb
- 2026 07:32:35 +0100
+ 2026 07:33:31 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003701eda5c-4e51-4a5e-ba84-88c4c0e28dd3,
+ (GARM-99G0039adfecb6-a970-4e32-85a8-6d1224f298ab,
  AB8FE0F0092A77660108FB6BE0CCE158015A5ABC) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <1077949c-b378-41f7-8ce8-13f68da96444@kaod.org>
-Date: Sat, 28 Feb 2026 07:32:34 +0100
+Message-ID: <14dba035-b769-4323-8ee0-63b15f4ef260@kaod.org>
+Date: Sat, 28 Feb 2026 07:33:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/22] i3c: aspeed: Add I3C support
-To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, "open list:All patches CC here" <qemu-devel@nongnu.org>, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- "nabihestefan@google.com" <nabihestefan@google.com>, "komlodi@google.com"
- <komlodi@google.com>
-References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
- <a19985e2-c9ca-4158-9c64-e0d16ce40c8c@oss.qualcomm.com>
- <e58d1526-d9cf-4f31-b7cb-808a7b0f2c66@kaod.org>
- <08e52599-d4a1-47ad-b828-60a6a20673f3@oss.qualcomm.com>
+Subject: Re: [PATCH 3/4] hw/arm/aspeed_gpio: Don't leak string in
+ aspeed_gpio_init()
+To: Peter Maydell <peter.maydell@linaro.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+CC: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260227135736.2280161-1-peter.maydell@linaro.org>
+ <20260227135736.2280161-4-peter.maydell@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -94,27 +85,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <08e52599-d4a1-47ad-b828-60a6a20673f3@oss.qualcomm.com>
+In-Reply-To: <20260227135736.2280161-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.109]
-X-ClientProxiedBy: DAG13EX2.mxp5.local (172.16.2.132) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG12EX1.mxp5.local (172.16.2.121) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: f9ae14d8-6748-4abc-8236-bb53b8edd677
-X-Ovh-Tracer-Id: 10089189067682974535
+X-Ovh-Tracer-GUID: 839ff327-a8be-4028-b9a2-9925bb0f973d
+X-Ovh-Tracer-Id: 10104951664253569955
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFjs6m9+8vhx2XZoQOPIcXBkumVgYl1Ara/EGqiQwH8RyjWrqBFPNoRr12VgOhbVbTthBymXRAOBnSKhFYCLGtXMTu1uySMfJW2LI9LrrvAIiN6g8xs8ojANMr1jFTtK5S/k+Iy5bm4kVlt0GqqGwaIwJuNtEVYCIIfZ2k75uadnAe+NaVI+RTuCNnZaCda4mhf53gQb8wsDOPELRVzXH6M0nvaao5rttMeP1bJ55pQO6vvaYgDPw72P8H+bVm2DBmzU8VWUSjlsWuqOMzTC1ksgq1W6QU80JyfvaDrA8Pr5l2rU7N96yc2vL2OAx6Wj87fJJ8m8XYZf5WS5dvvsDDlB6q82wS3dhdvdse8EhEXs8ateG0JG5XFHUuW20vch7lC1W4JqYyvTubAC7JJdn07o8DXBL+oKxyctJl4tNBFUgvLt7kOdpZpn0D4Rsf77gjTRiH6NtnjF0ihQMNFQI94Q0YJOKDqkPb6xkj2KRdk7K6CmWXPgPWlaohlx08vZJ6M+WtIBI+5+LuBO1i41/J5980sk3xaty70ZG+HLWIq8vz59JedLJcg7dlSMy9L1WZepta7qn3C31Ye/SGEYl3QxgKU+COuHubaRM6uE3YPvB6HK6eo3wSURPjlsrjIJnFfwUJ0dTYoJfolRVNm01sxK479aHbGVMTTX1KiR0fLOw
-DKIM-Signature: a=rsa-sha256; bh=lu0rJcBrybyyny1rzMg8EW/EStZVVJrgW0dC8bqJIqM=; 
+X-VR-SPAMCAUSE: dmFkZTEL09JfgyhCKwfkDWMjEyUdjTf4fDe5PpUDbyAvEDqokBI2BVIk/jDkNlfZ95NupFMzFS0fb5IZJmNb/nr2JqmB3vuhc6mHFoKueNf1mKkwq0LJLw6UJpX9PgUDmoi574XH6Yc82Ovl0RTkmvE9Gvpto3SOkyfvhsn8THSZJz4f1K1rONdIfmFFk5B0A1A1C4XBSOSrKQgOxhQsrhKEcJKkvQcnjA6qw8gdDrUMMiRhCFMopdk1sOnLx9nSvYAYyrELhf+9UxV5k92DokHDy+fr7PK79tRAwZVpvk7ALIiEmox+lhTNVYIPwRWlovyxqvicadEl++oXJEn7Qi4n5AnSLzKjKBuxGTvl7km8U0U5u1rMVvlMWfojndsKQuWWu6xcy7zHGhhNNBoBjD8mMar8pz7pcA70EOyw3fOyUx0ojn8fYveKkfCovka6xivVfpM9uCzUC8hAmgopnZPTFeiPQk15Py1U6dtDu+eSyNIpjjqFSm+8EXXutc4ep3OeZxVcK6OcC5XC/Z8RhvIyZoY1zjyHDzjV7E+NOUBuoOyZiauFWmxuto1IAUgw+silz7liCroTBc2d7j6zDBNoqUVdrBMHLEEurkT9XC0+iiEi0/xiiW/455OtXLngvVZGvPv14on69KfokorRBfCDjoMmVCqzFHmHQ26YaHqOPUOMPA
+DKIM-Signature: a=rsa-sha256; bh=7aX6j7JqQM4IbWJmgvbkxkclitEQ1v4ndvv+1tN/m6s=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1772260358; v=1;
- b=H9zFYXMFBJ2ebBtf9pAUt4fZi7iSYOY87Z30DcqF7LnUVa85fGYgQpfDD6tPeWWTxlpo6KQy
- ULTdrRlHLql1rBCJjtVW+NJiNVAtThAMqFpoedoOw+k+C9QnVpt3+CbYhc/pHOSCwDzsjvvck0E
- pw+k+bZeBOIEWn96WYWZqpNhJjO1RUgDKB1JeopdJJBQFbG9J5YgjIPrSfQjMvZHp+1jvmOG81H
- 2Y3aUZq1FGShcAmEki3qSNtXpGwrcneAjkuTkvVOzOGltnso9T0MWLLVmGjJgao/AiDOixpv758
- rcabQ5ejDE92UqpikjWKF2KIA0KZ5hMmE+vldkisAMWQA==
-Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
- helo=smtpout2.mo529.mail-out.ovh.net
+ t=1772260412; v=1;
+ b=e4pdrqyuYn8fZBiqP4uUcAa2/BwupyJ2+Ff6NkTRCU/C7ASEcHRXNzbe1cWf0FBRkbKDO89K
+ qkwr8dfnj/wgzETVgTRwSi3ubQCJKvBXh4kl5TY9SbOW17B+sVSjbn0ghj9dentkHCM0qS+XkXc
+ BXcWLpYnkt8qwvxltPp4P40rcOeg1K54+qIJ5L4x1VueF2RcnT3JGHcsxFrUfwyjdFOHm10rjtb
+ LWeTq5urpMkqRXUBeYJkhNTMVFTrDCr/+88omBlyLTOloMtSnDii9TnTYdNQ+W/0Q8ucgCAkBlV
+ R1Yh/0eXScEOMSuGxjPXoLKpjbjgepOUwdvqTUbgxS4mA==
+Received-SPF: pass client-ip=178.33.43.201; envelope-from=clg@kaod.org;
+ helo=4.mo552.mail-out.ovh.net
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
@@ -138,43 +129,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/26 21:03, Jithu Joseph wrote:
-> On 2/26/2026 11:53 PM, Cédric Le Goater wrote:
->> On 2/27/26 03:33, Jithu Joseph wrote:
->>> On 2/24/2026 6:11 PM, Jamin Lin wrote:
->>>
->>>>     The initial patch series was based on work by Joe Komlodi <komlodi@google.com>.
->>>>
->>>>     This series adds I3C bus support to QEMU and adds more functionality to the
->>>>     Aspeed I3C controller.
->>>>
->>>
->>> Thanks Jaimin for the series, I was able to test this series to a good extent over the last week
->>>
->>> Tested read/write transfers from guest Linux using i3ctransfer against the mock-i3c-target  on an AST2600 based machine
->>
->> Can you be more precise on the machine used ?
->>
+On 2/27/26 14:57, Peter Maydell wrote:
+> We allocate the string for the GPIO property name, but never free it.
+> Use g_autofree to avoid this.
 > 
-> This is an internal clone of ast2600-evb which is still a "Work in Progress" and not yet upstream.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/gpio/aspeed_gpio.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
+> index d9237d4360..7d0f87e90c 100644
+> --- a/hw/gpio/aspeed_gpio.c
+> +++ b/hw/gpio/aspeed_gpio.c
+> @@ -1488,7 +1488,7 @@ static void aspeed_gpio_init(Object *obj)
+>       }
+>   
+>       for (int i = 0; i < agc->nr_gpio_sets; i++) {
+> -        char *name = g_strdup_printf("gpio-set[%d]", i);
+> +        g_autofree char *name = g_strdup_printf("gpio-set[%d]", i);
+>           object_property_add(obj, name, "uint32", aspeed_gpio_get_set,
+>           aspeed_gpio_set_set, NULL, NULL);
+>       }
 
-
-OK.
-
-For your awareness, qcom-dc-scm-v1-bmc and qcom-firework-bmc machines
-will be removed in the next cycle.
-
-   https://www.qemu.org/docs/master/about/deprecated.html#arm-qcom-dc-scm-v1-bmc-and-qcom-firework-bmc-machine-since-10-2
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
-
-> 
-> 
-> Thanks
-> Jithu
-> 
-
 
