@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B251048927
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 01:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C94581048927
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 01:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vw9OQ-0006ma-G8; Fri, 27 Feb 2026 20:45:18 -0500
+	id 1vw9Ql-0007Jn-Ny; Fri, 27 Feb 2026 20:47:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vw9OM-0006m6-VO; Fri, 27 Feb 2026 20:45:15 -0500
+ id 1vw9Qj-0007JG-Q8; Fri, 27 Feb 2026 20:47:41 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vw9OK-0001o8-GK; Fri, 27 Feb 2026 20:45:14 -0500
+ id 1vw9Qi-0002Ip-7Z; Fri, 27 Feb 2026 20:47:41 -0500
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61RKqtWU2347135; Sat, 28 Feb 2026 01:45:05 GMT
+ 61RLDLV12347359; Sat, 28 Feb 2026 01:47:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=a/N0Kg
- 3gpsN7//5mPm2l8kIf1SnfJhAWHdM3MfRt9h4=; b=GZKbea5Ki7XeDNk5Q0z4/e
- j5r9syl8Sn1tmMZzdX5W1PMCoV1EmNttyQZq5yZ+kSo94pKkzrfu7i62ggwwm+iq
- P6DzqYIWCFduv/9pwMUWeKJZTfTnarDF442m1X654u86X6u3V1Jn6TVG16Q7iUXr
- 5RnMcoxAMjn8QcRUS3n7Cci6Tkld0UbRh/AOdBvpzK2oLP+zxZ4IwUvipT8i2sIs
- 89sEveTgj4+d/SErS1bTFlGTUmHXJX2/DEgl+vAONIq+xmkUoeo9D5bFIHAzVmtX
- cHB7psDyF67uwtXm9gFoesM2p+MSW6kLXVznTjsiY3GA/0/ExMHN97QQ0eQ5tgMw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=M3dGo3
+ zqI8K9bVpcYrH1pQiUW21B0Vmw/37M8ZNtcbs=; b=AuZX3BLWm+RGexkZUrfgIR
+ GGbrHsbsRXemFqD2WOGHyTT1290NkckfDFZZxpydWCzCg0uCrKfqEFXUA5rCb4pG
+ cWH0f9ntYzlGwDmehO4E4ZiIg/413qpqlLJj5gbNmuk6HjOZ6Zt3Z/grHhPXPopo
+ 2pGMiPhcdv0Q5yp2/iyp5FntlWNJsgh/W1XRkTbLLp9CtYxYpPJ9z2IPSG6A5jfs
+ AhHpjN0RsLBaf/Y/q+dN28dVYeW+DTAHl+5LSEd+AOdN7MLsPpBXxBMoBFRze9iJ
+ sxgPVUhfAs8VxsQoQ5uFNGSn7n4or7NdrA7GbSK4XpjNu1+FSzWRRWwiXXozuSJQ
  ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ch8594msc-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ch8594myp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 28 Feb 2026 01:45:05 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61RNsUY9003413;
- Sat, 28 Feb 2026 01:45:04 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfs8kcqq0-1
+ Sat, 28 Feb 2026 01:47:35 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61RMsbIa030298;
+ Sat, 28 Feb 2026 01:47:34 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cfrhkvvu0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 28 Feb 2026 01:45:04 +0000
+ Sat, 28 Feb 2026 01:47:34 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61S1j3tA19989218
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 61S1lXI929950628
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 28 Feb 2026 01:45:03 GMT
+ Sat, 28 Feb 2026 01:47:33 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 628C258054;
- Sat, 28 Feb 2026 01:45:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 254A95805A;
+ Sat, 28 Feb 2026 01:47:33 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AAA415805C;
- Sat, 28 Feb 2026 01:45:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 853D058054;
+ Sat, 28 Feb 2026 01:47:31 +0000 (GMT)
 Received: from [9.61.45.42] (unknown [9.61.45.42])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 28 Feb 2026 01:45:01 +0000 (GMT)
-Message-ID: <18582621-9207-4123-841c-d6af4c89f3d1@linux.ibm.com>
-Date: Fri, 27 Feb 2026 20:45:01 -0500
+ Sat, 28 Feb 2026 01:47:31 +0000 (GMT)
+Message-ID: <d561af0e-7bbf-4eeb-a1fc-1bff9d65ae4f@linux.ibm.com>
+Date: Fri, 27 Feb 2026 20:47:30 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/30] hw/s390x/ipl: Create certificate store
+Subject: Re: [PATCH v8 05/30] s390x/diag: Introduce DIAG 320 for Certificate
+ Store Facility
 To: Thomas Huth <thuth@redhat.com>, berrange@redhat.com,
  richard.henderson@linaro.org, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -71,29 +72,29 @@ Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
 References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-5-zycai@linux.ibm.com>
- <7c6424bd-031f-4a58-80b5-1a989baf7f14@redhat.com>
+ <20260212204352.1044699-6-zycai@linux.ibm.com>
+ <a80ebb96-2f18-4be2-839e-409b3d30defc@redhat.com>
 Content-Language: en-US
 From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <7c6424bd-031f-4a58-80b5-1a989baf7f14@redhat.com>
+In-Reply-To: <a80ebb96-2f18-4be2-839e-409b3d30defc@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDAxMyBTYWx0ZWRfX8uv9Hkfszegi
- KN7Ww/B0/mVC+Luz6HymGN7yUv2ON3QrJBq6kgpFJzOnGm8Y4HgVI9afKOroMyS67nzx1uwqnxj
- zYygKTaw+zCom9hUG9CNE1ygjG/Ghd1yzm4O1MuDyX7LYChn5dIuF9SzJCKHGTkbqg/xnp/+2GO
- nCjVlYaRhXNf4N6jgjwJJusbL8+lvdHbRUdorcUuJLP+wPhqsuN75HDgpAF9sD5o0y5pHTJK2VF
- DgKp6IDgx5joFfG/J2MjYFFfgZ5+gkiEX/YW00kcWqpEsdBCryz94i678yi3EOsWFG0oebHWfOj
- YoDIAoZnazDWKkPOe8Zwm7aO4Gr/Z4jTwgqAX9vYm5eBwhjd+jOsXBuUgBEQS2ruXLzON1qL973
- VCaLoxglIiESa7VFBsh9aQHnp09INZxr8E32vK5VpHoVL5zMuCVirbXvmUfWitd+sCOiR6NjBkR
- Tfp2drPwEiYfYIqPqWw==
-X-Proofpoint-GUID: 6P6Z_nuSKSwn476jrPCM7kzSiRJtK1VX
-X-Authority-Analysis: v=2.4 cv=S4HUAYsP c=1 sm=1 tr=0 ts=69a248a1 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDAxMyBTYWx0ZWRfX0pY5GwWxt5NB
+ 37Vk+4NymzuZy72QgyT0XG8nZvEKQUaPB9bid36c0zI2hyQArliXSqGGhOe7E+IAJpeR2r1p3me
+ DM1puLtREnxzivZurT9flMOI1spnAvHbk3Xeg+hjw8vxhAawz3NjHE6yqhl4vtvjIdb2qrme77o
+ U+oSKzaZPCuBWAiOas2Gfxz3qmKbTZnWWzH5PyA7ZwCDENm8jTQ3lLKp56E7WmC45gTulaUrUb6
+ PF0vtC8quucsSJ4di2aozfp4lkeZRGfXbzJAr3GG3xqn69GAgKFWt72adbNpUrg0MHKgUyzullS
+ OHvOWN+615P//SOiKQDLyoNqBMmKAVTZTQvQRH3Krxr5ciAKyRaItIAnMXGJQhR7YVOO88R7jpq
+ ZGUX17nxaw0nFbB8W9dyxWSwYJ/47eBIBZ7Bx449eow4kucNo/vD5ssDqoyfQVCHpVmi/sT2H6n
+ paohCGRHL9kZLxV3ccg==
+X-Proofpoint-GUID: wmNXF8ezn9XRKJX6qLRkJwzf3ZMy0Gwy
+X-Authority-Analysis: v=2.4 cv=S4HUAYsP c=1 sm=1 tr=0 ts=69a24937 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
  a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=aGgZRi6wSp843-NrvLwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 6P6Z_nuSKSwn476jrPCM7kzSiRJtK1VX
+ a=20KFwNOVAAAA:8 a=Ex4RbgpnyNBPlYhkkXUA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: wmNXF8ezn9XRKJX6qLRkJwzf3ZMy0Gwy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-27_04,2026-02-27_03,2025-10-01_01
@@ -127,97 +128,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/26/26 11:02 AM, Thomas Huth wrote:
+On 2/27/26 7:41 AM, Thomas Huth wrote:
 > On 12/02/2026 21.43, Zhuoying Cai wrote:
->> Create a certificate store for boot certificates used for secure IPL.
+>> DIAGNOSE 320 is introduced to support Certificate Store (CS)
+>> Facility, which includes operations such as query certificate
+>> storage information and provide certificates in the certificate
+>> store.
 >>
->> Load certificates from the `boot-certs` parameter of s390-ccw-virtio
->> machine type option into the cert store.
+>> Currently, only subcode 0 is supported with this patch, which is
+>> used to query the Installed Subcodes Mask (ISM).
 >>
->> Currently, only X.509 certificates in PEM format are supported, as the
->> QEMU command line accepts certificates in PEM format only.
+>> This subcode is only supported when the CS facility is enabled.
+>>
+>> Availability of CS facility is determined by byte 134 bit 5 of the
+>> SCLP Read Info block. Byte 134's facilities cannot be represented
+>> without the availability of the extended-length-SCCB, so add it as
+>> a check for consistency.
+>>
+>> Note: secure IPL is not available for Secure Execution (SE) guests,
+>> as their images are already integrity protected, and an additional
+>> protection of the kernel by secure IPL is not necessary.
+>>
+>> This feature is available starting with the gen16 CPU model.
 >>
 >> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> Reviewed-by: Collin Walling <walling@linux.ibm.com>
+>> Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 >> ---
-> ...
->> --- /dev/null
->> +++ b/hw/s390x/cert-store.c
->> @@ -0,0 +1,221 @@
-> ...
->> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
->> +{
->> +    GPtrArray *cert_path_builder;
->> +    Error *err = NULL;
+>>   docs/specs/s390x-secure-ipl.rst     | 12 +++++++++
+>>   include/hw/s390x/ipl/diag320.h      | 20 ++++++++++++++
+>>   target/s390x/cpu_features.c         |  1 +
+>>   target/s390x/cpu_features_def.h.inc |  1 +
+>>   target/s390x/cpu_models.c           |  2 ++
+>>   target/s390x/diag.c                 | 42 +++++++++++++++++++++++++++++
+>>   target/s390x/gen-features.c         |  3 +++
+>>   target/s390x/kvm/kvm.c              | 16 +++++++++++
+>>   target/s390x/s390x-internal.h       |  2 ++
+>>   target/s390x/tcg/misc_helper.c      |  7 +++++
+>>   10 files changed, 106 insertions(+)
+>>   create mode 100644 include/hw/s390x/ipl/diag320.h
+>>
+>> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+>> index 7ddac98a37..c2e8f7aba5 100644
+>> --- a/docs/specs/s390x-secure-ipl.rst
+>> +++ b/docs/specs/s390x-secure-ipl.rst
+>> @@ -14,3 +14,15 @@ and a summation of the sizes.
+>>   
+>>   Note: A maximum of 64 certificates are allowed to be stored in the certificate
+>>   store.
 >> +
->> +    /* If cert store is already populated, then no work to do */
->> +    if (cert_store->count) {
->> +        return;
->> +    }
+>> +DIAGNOSE function code 'X'320' - Certificate Store Facility
+>> +-----------------------------------------------------------
 >> +
->> +    cert_path_builder = get_cert_paths(&err);
->> +    if (cert_path_builder == NULL) {
->> +        error_report_err(err);
->> +        exit(1);
->> +    }
->> +
->> +    if (cert_path_builder->len == 0) {
->> +        g_ptr_array_free(cert_path_builder, TRUE);
->> +        return;
->> +    }
->> +
->> +    if (cert_path_builder->len > MAX_CERTIFICATES - 1) {
->> +        error_report("Cert store exceeds maximum of %d certificates", MAX_CERTIFICATES);
->> +        g_ptr_array_free(cert_path_builder, TRUE);
->> +        exit(1);
->> +    }
->> +
->> +    cert_store->largest_cert_size = 0;
->> +    cert_store->total_bytes = 0;
->> +
->> +    for (int i = 0; i < cert_path_builder->len; i++) {
->> +        g_autofree S390IPLCertificate *cert = init_cert(
->> +                                              (char *) cert_path_builder->pdata[i],
->> +                                              &err);
+>> +DIAGNOSE 'X'320' is used to provide support for userspace to directly
+>> +query the s390 certificate store. Userspace may be the s390-ccw BIOS or
+>> +the guest kernel.
+> I think I'd rather say "guest code" instead of "userspace" in the above two 
+> sentences, to avoid confusion. "userspace" is normally everything that does 
+> not belong to the kernel, so the term sounds rather misleading here.
 > 
-> I'd maybe write it like this to decrease indentation:
+> Anyway, with that confusion fixed:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > 
->          g_autofree S390IPLCertificate *cert =
->                     init_cert((char *) cert_path_builder->pdata[i],
->                               &err);
-> 
-> ... but up to you, it's just cosmetics.
-> 
-> ...
->> diff --git a/hw/s390x/cert-store.h b/hw/s390x/cert-store.h
->> new file mode 100644
->> index 0000000000..50e36e2389
->> --- /dev/null
->> +++ b/hw/s390x/cert-store.h
->> @@ -0,0 +1,41 @@
-> ...
->> +struct S390IPLCertificateStore {
->> +    uint16_t count;
->> +    size_t   largest_cert_size;
->> +    size_t   total_bytes;
->> +    S390IPLCertificate certs[MAX_CERTIFICATES];
->> +};
->> +typedef struct S390IPLCertificateStore S390IPLCertificateStore;
->> +QEMU_BUILD_BUG_MSG(sizeof(S390IPLCertificateStore) != 5656,
->> +                   "size of S390IPLCertificateStore is wrong");
-> 
-> Why is there a QEMU_BUILD_BUG_MSG here? As far as I can see, this is not a 
-> structure that we share in the API with the guest, is it? So if this is just 
-> internal to QEMU, the size of the structure should not matter here, I think?
-> 
->   Thomas
 
-I initially assumed that all non-packed structs should be guarded with
-QEMU_BUILD_BUG_MSG to prevent padding changes.
-
-You are correct that this structure is only used within QEMU. If the
-size is not relevant in this case, then it should be safe to remove the
-check here.
-
-> 
+Will do. Thanks for the review!
 
 
