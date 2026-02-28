@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DBAFEE4CB
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 06:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E97FEE4CB
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 06:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwDqA-0006hu-JG; Sat, 28 Feb 2026 01:30:14 -0500
+	id 1vwDsa-0007MF-Ro; Sat, 28 Feb 2026 01:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDq8-0006gA-JQ
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:30:12 -0500
-Received: from 6.mo552.mail-out.ovh.net ([188.165.49.222])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDsY-0007Lu-Ed
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:32:42 -0500
+Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDq6-00035n-Aa
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:30:12 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.143])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4fNFg110jKz5vnw;
- Sat, 28 Feb 2026 06:30:05 +0000 (UTC)
-Received: from kaod.org (37.59.142.107) by DAG14EX2.mxp5.local (172.16.2.142)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vwDsW-0003Ay-QR
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 01:32:42 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.169])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4fNFjw5y9Nz5vrW;
+ Sat, 28 Feb 2026 06:32:36 +0000 (UTC)
+Received: from kaod.org (37.59.142.109) by DAG14EX2.mxp5.local (172.16.2.142)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Sat, 28 Feb
- 2026 07:30:03 +0100
+ 2026 07:32:35 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-107S00179674929-7879-4e45-9a18-7954afd4fad4,
+ (GARM-109S003701eda5c-4e51-4a5e-ba84-88c4c0e28dd3,
  AB8FE0F0092A77660108FB6BE0CCE158015A5ABC) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <992bb14a-37cf-41b6-8bbc-581256ab0f61@kaod.org>
-Date: Sat, 28 Feb 2026 07:30:03 +0100
+Message-ID: <1077949c-b378-41f7-8ce8-13f68da96444@kaod.org>
+Date: Sat, 28 Feb 2026 07:32:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 18/22] hw/i3c: Add Mock target
+Subject: Re: [PATCH v7 00/22] i3c: aspeed: Add I3C support
 To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
  Maydell <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>,
@@ -45,13 +45,11 @@ To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, Jamin Lin
  "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>, "komlodi@google.com"
- <komlodi@google.com>, Titus Rwantare <titusr@google.com>, Patrick Venture
- <venture@google.com>
+ <komlodi@google.com>
 References: <20260225021158.1586584-1-jamin_lin@aspeedtech.com>
- <20260225021158.1586584-19-jamin_lin@aspeedtech.com>
- <c904f61d-b836-41e2-8032-31ea32324396@oss.qualcomm.com>
- <047f2aea-acc7-4966-8b55-723709fe0f28@kaod.org>
- <734cf0d5-6f0a-4f13-a2e0-e35fa0f47997@oss.qualcomm.com>
+ <a19985e2-c9ca-4158-9c64-e0d16ce40c8c@oss.qualcomm.com>
+ <e58d1526-d9cf-4f31-b7cb-808a7b0f2c66@kaod.org>
+ <08e52599-d4a1-47ad-b828-60a6a20673f3@oss.qualcomm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -96,27 +94,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <734cf0d5-6f0a-4f13-a2e0-e35fa0f47997@oss.qualcomm.com>
+In-Reply-To: <08e52599-d4a1-47ad-b828-60a6a20673f3@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.107]
-X-ClientProxiedBy: DAG17EX1.mxp5.local (172.16.2.171) To DAG14EX2.mxp5.local
+X-Originating-IP: [37.59.142.109]
+X-ClientProxiedBy: DAG13EX2.mxp5.local (172.16.2.132) To DAG14EX2.mxp5.local
  (172.16.2.142)
-X-Ovh-Tracer-GUID: f431a9a0-c8d8-4ae7-821b-52b04407c6e9
-X-Ovh-Tracer-Id: 10046404869405903629
+X-Ovh-Tracer-GUID: f9ae14d8-6748-4abc-8236-bb53b8edd677
+X-Ovh-Tracer-Id: 10089189067682974535
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGKmOLyY5gIilso/P62Z2CYg38Ofawoldoc/qPF7MUKFdyimFsd/3RTB07tV47JAYEXZudx2BeJWCNMXxgEyAoVRJ9f3YJ5O0/W96Z6D1qkpnGVI5hRJyieDLLoEU+DgMRKBuNFt8XCa/fUnt4TN9LHPSFlo9SvKoJQTT5Rqp8Jkkgc80der+ZwWR283qI6eLC9Q9kZo9VnxhoozF5yqtH5glztvgl9SUia9E7RPcKInljWftnAs78KoU8WiiJgQB1Epl4UhIfN+h4XGa2RUVjPviewjftXkaPGmyCFZM9nQvMZmoPTA8kA1YyJYjYlpO2QprNL6JXjQDPB0qMI9IqDWmyiQtGORaXOl7O8wno1xKBmw744tDcJDjsxVxfiznAMH1bpYG3DFPuFr7tX7UnB2lREW9VokPYT09s88UJ8Zmyyq5rcRFn3jc10CuaIVYUKAORrrxd8t1CH1K1U4HQrqbktUk2j6/+YfoSb/UE0rcNv7GwjlPSBEgNKV3OEKESDsnH/+p+y7Q7QAtP66RwUUyCpppWu4AHhXOHXEpnjH3BpLFDYhBNWG9IvJbSjnO4NNp08sUOJkSKCG5RICqojOVUINjkMsXHs8+C7Ob42UrbW3In4YW9X6qG9/E+QqVufI3fRN8qhISByLG76ZFxOkR4LmPWQyDKPurBds55ROQ
-DKIM-Signature: a=rsa-sha256; bh=ag8CEyEFyit22L27wHHS+ojjFAoW4mrVnkNbSMqcOYE=; 
+X-VR-SPAMCAUSE: dmFkZTFjs6m9+8vhx2XZoQOPIcXBkumVgYl1Ara/EGqiQwH8RyjWrqBFPNoRr12VgOhbVbTthBymXRAOBnSKhFYCLGtXMTu1uySMfJW2LI9LrrvAIiN6g8xs8ojANMr1jFTtK5S/k+Iy5bm4kVlt0GqqGwaIwJuNtEVYCIIfZ2k75uadnAe+NaVI+RTuCNnZaCda4mhf53gQb8wsDOPELRVzXH6M0nvaao5rttMeP1bJ55pQO6vvaYgDPw72P8H+bVm2DBmzU8VWUSjlsWuqOMzTC1ksgq1W6QU80JyfvaDrA8Pr5l2rU7N96yc2vL2OAx6Wj87fJJ8m8XYZf5WS5dvvsDDlB6q82wS3dhdvdse8EhEXs8ateG0JG5XFHUuW20vch7lC1W4JqYyvTubAC7JJdn07o8DXBL+oKxyctJl4tNBFUgvLt7kOdpZpn0D4Rsf77gjTRiH6NtnjF0ihQMNFQI94Q0YJOKDqkPb6xkj2KRdk7K6CmWXPgPWlaohlx08vZJ6M+WtIBI+5+LuBO1i41/J5980sk3xaty70ZG+HLWIq8vz59JedLJcg7dlSMy9L1WZepta7qn3C31Ye/SGEYl3QxgKU+COuHubaRM6uE3YPvB6HK6eo3wSURPjlsrjIJnFfwUJ0dTYoJfolRVNm01sxK479aHbGVMTTX1KiR0fLOw
+DKIM-Signature: a=rsa-sha256; bh=lu0rJcBrybyyny1rzMg8EW/EStZVVJrgW0dC8bqJIqM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1772260206; v=1;
- b=elaLj1WnosOMXO3nM7qzmMXPO7KZzHFqx4ITSZPqiY2s+NAixtyvPQv0JVBMkuwe7Sm9mr3r
- bawKEpAWhCVWojy7+4WoSONm0uXFnodjsvicct0vYrM6lYH/8d023mIFDvtXuC3k8sFwwBz/Zc7
- HWezf3cfxAj2hwB4SXA/0+YIAHbm6NJ3vJLMMxs4jeBiLYG/IJs+bmApjTbGn6PUqnSGhkn0/nU
- 2zXr76rXteuHNtgLfh4nxBAh6PxM/E36lXYPmz+ELFtjxfMwY5COon9J5/fN3i0KmPjBVzwj+BQ
- gZ+gY6McqHLvNykjqB0RGeBMSAQUoeSHkQy/nUpmPf2cw==
-Received-SPF: pass client-ip=188.165.49.222; envelope-from=clg@kaod.org;
- helo=6.mo552.mail-out.ovh.net
+ t=1772260358; v=1;
+ b=H9zFYXMFBJ2ebBtf9pAUt4fZi7iSYOY87Z30DcqF7LnUVa85fGYgQpfDD6tPeWWTxlpo6KQy
+ ULTdrRlHLql1rBCJjtVW+NJiNVAtThAMqFpoedoOw+k+C9QnVpt3+CbYhc/pHOSCwDzsjvvck0E
+ pw+k+bZeBOIEWn96WYWZqpNhJjO1RUgDKB1JeopdJJBQFbG9J5YgjIPrSfQjMvZHp+1jvmOG81H
+ 2Y3aUZq1FGShcAmEki3qSNtXpGwrcneAjkuTkvVOzOGltnso9T0MWLLVmGjJgao/AiDOixpv758
+ rcabQ5ejDE92UqpikjWKF2KIA0KZ5hMmE+vldkisAMWQA==
+Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo529.mail-out.ovh.net
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
@@ -140,69 +138,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/27/26 20:49, Jithu Joseph wrote:
-> On 2/26/2026 11:52 PM, Cédric Le Goater wrote:
->> On 2/27/26 02:43, Jithu Joseph wrote:
+On 2/27/26 21:03, Jithu Joseph wrote:
+> On 2/26/2026 11:53 PM, Cédric Le Goater wrote:
+>> On 2/27/26 03:33, Jithu Joseph wrote:
+>>> On 2/24/2026 6:11 PM, Jamin Lin wrote:
 >>>
->>> Apologies for chiming in this late ... I only got a chance to test this last week
->>> This really is a minor comment ... can be addressed subsequently
+>>>>     The initial patch series was based on work by Joe Komlodi <komlodi@google.com>.
+>>>>
+>>>>     This series adds I3C bus support to QEMU and adds more functionality to the
+>>>>     Aspeed I3C controller.
+>>>>
+>>>
+>>> Thanks Jaimin for the series, I was able to test this series to a good extent over the last week
+>>>
+>>> Tested read/write transfers from guest Linux using i3ctransfer against the mock-i3c-target  on an AST2600 based machine
 >>
->> No problem. It is not merged yet and fixes are expected.
+>> Can you be more precise on the machine used ?
 >>
 > 
-> ...
-> 
->>>> +static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,
->>>> +                              uint32_t num_to_send, uint32_t *num_sent)
->>>> +{
->>>> +    MockI3cTargetState *s = MOCK_I3C_TARGET(i3c);
->>>> +    int ret;
->>>> +    uint32_t to_write;
->>>> +
->>>> +    if (s->cfg.ibi_magic && num_to_send == 1 && s->cfg.ibi_magic == *data) {
->>>> +        mock_i3c_target_ibi_timer_start(s);
->>>> +        return 0;
->>>> +    }
->>>> +
->>>> +    /* Bounds check. */
->>>> +    if (num_to_send + s->p_buf > s->cfg.buf_size) {
->>>> +        to_write = s->cfg.buf_size - s->p_buf;
->>>> +        ret = -1;
->>>> +    } else {
->>>> +        to_write = num_to_send;
->>>> +        ret = 0;
->>>> +    }
->>>> +    for (uint32_t i = 0; i < to_write; i++) {
->>>> +        trace_mock_i3c_target_tx(data[i]);
->>>> +        s->buf[s->p_buf] = data[i];
->>>> +        s->p_buf++;
->>>> +    }
->>>
->>>
->>> num_sent is never updated prior to return, so the traces (from caller i3c_send) looked a bit confusing
->>>
->>> <snip>
->>> mock_i3c_target_tx I3C mock target write 0x12
->>> i3c_send I3C send 0/1 bytes, ack=1   ---------------------> instead of 1/1 bytes
->>> mock_i3c_target_tx I3C mock target write 0x34
->>> i3c_send I3C send 0/1 bytes, ack=1
->>> </snip>
->>>
->>> Something like below is needed
->>> + *num_sent = to_write
->>> (might also needed in the ibi magic path above)
->>
->>
->> Please send a patch.
-> 
-> Would you like me to revise this patch with the changes, and send it in-reply-to v7 18/22 ?
-> 
-> or would you like me to first apply the whole series and create a new patch with just the delta suggested above ?
+> This is an internal clone of ast2600-evb which is still a "Work in Progress" and not yet upstream.
 
-I rather have new patches on top of this series for now. I might merge
-some if they are trivial.
+
+OK.
+
+For your awareness, qcom-dc-scm-v1-bmc and qcom-firework-bmc machines
+will be removed in the next cycle.
+
+   https://www.qemu.org/docs/master/about/deprecated.html#arm-qcom-dc-scm-v1-bmc-and-qcom-firework-bmc-machine-since-10-2
 
 Thanks,
 
 C.
+
+
+> 
+> 
+> Thanks
+> Jithu
+> 
+
 
