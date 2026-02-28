@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A2B1FD0047
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C28DFD0048
 	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 21:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwS9j-0004CU-1K; Sat, 28 Feb 2026 16:47:23 -0500
+	id 1vwS9e-0004Ah-PK; Sat, 28 Feb 2026 16:47:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwS9d-0004Ai-GU
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:17 -0500
-Received: from qs-2005b-snip4-7.eps.apple.com ([57.103.86.148]
+ id 1vwS9c-0004AO-8t
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:16 -0500
+Received: from qs-2005k-snip4-1.eps.apple.com ([57.103.86.232]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwS9a-0002To-OC
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:17 -0500
+ id 1vwS9a-0002Tj-93
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:15 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPS id
- 61D5518000BB; Sat, 28 Feb 2026 21:47:11 +0000 (UTC)
+ 3502E18001A9; Sat, 28 Feb 2026 21:47:12 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772315234; x=1774907234;
- bh=x5vmcSdYHKQ1byZOmRZeGIdImPo+Cp8DSOTH0Tm5/x8=;
+ s=sig1; t=1772315233; x=1774907233;
+ bh=LjzGrhEn0ykJAOrChlujow4EMgIqhCxyPavUws3eZDg=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=U09EEvdooAeDDUH+0xUiw58D3P0YOSUqw8gdeWPaCBnftX8xSBCiidRDQC2Ahx7lXmd56qy2yZPbcRRbLB5K4rslPRaxftov9WeK9j+bE5I1FhYkFDHp3B6ugLG9TARG7OFU2PTOzrujHLgraOK1m4mf1whwWALa6y9WrhFZQ8U2h2P7rshwgixTtVZ04CD14POBGUxz3tloJ7uYtG0c71bMXgyp70xako1ApYfGLQRiCayL7LRiTkG1IjKVdCipUCZNNQh8lomYy/z+y95gFNhSfMpHazGUWOMWaIW240inPak+aydAVDbfEPigySbhgGIk1lS+4U940BzTNs03gQ==
+ b=EfEVqr2PLTNRlJCHm49sFxU6s1DbRhx2Zu+U6OgGC/KQr+K+2DukQHSBQsGKY6Rt80LNriY4AP73MN9mkXiLBET7I3V3a4gmt5aP6qMT/D1+7ne7vX/LMWG/cAOY6T9GSz5na7POCnhk2l9xGtTm80SsINWAHSkYC18389QYGm61K2S22iTLFrDlRX3M567A0Pp3ODIhkQYZd0PiHxXP2qkmnvzqssCcPjLCk1IgBkLskVTQaGm4wckX3PI2jJiXhkcgb+SlmM1c7CS5JUXjv+zoJRlCO+tWHBLy0CIpV2Y0yAodOLXcPjvDxDTG8/x7fxNjCMQd30RQ5Y4pOjzYZA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPSA id
- 871731800194; Sat, 28 Feb 2026 21:47:09 +0000 (UTC)
+ 9F0AC1800121; Sat, 28 Feb 2026 21:47:10 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
@@ -40,36 +40,36 @@ Cc: Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v2 2/8] whpx: i386: enable all supported host features
-Date: Sat, 28 Feb 2026 22:46:58 +0100
-Message-ID: <20260228214704.19048-3-mohamed@unpredictable.fr>
+Subject: [PATCH v2 3/8] whpx: i386: enable synthetic processor features
+Date: Sat, 28 Feb 2026 22:46:59 +0100
+Message-ID: <20260228214704.19048-4-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260228214704.19048-1-mohamed@unpredictable.fr>
 References: <20260228214704.19048-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=J9GnLQnS c=1 sm=1 tr=0 ts=69a36260
+X-Proofpoint-ORIG-GUID: 9TGchPliEnsy24kq-Fm6YUSrXMORdcJ7
+X-Proofpoint-GUID: 9TGchPliEnsy24kq-Fm6YUSrXMORdcJ7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDIwMyBTYWx0ZWRfX7YIu+EobIagd
+ C9HfzvwOfmdM8pCiqwYBCSSWdtSwhlT8+FBTtg9Rj/xbgdnoEtuaAK/RtsxOsR/NrlxL2AHviaC
+ 75F02Fe1RAKHFj8T1t3ryWFO+g9sTU1phqYFQu4M17u2FJJe8Eu+CwPk+SajNM5fLF2xrCavuxo
+ ypjs1zDFnU+J8ZzsWo5Alk3BDeYP1XkHh1n00b4X9f3DrodmuAvkPmAlY0BlIgTZwKSWxwzWFhe
+ pZHoL+8Ok7EaMWD4RhtFWiSIcs+EZDvXIczx6XKS8AkglMJqNvIEtym4b5MtwvV1SXTUGo437sj
+ Zn4Lr7JmTHGvFpzT3araUXpdMNvMwiuEQwN1lauFAiSnRplRohbhnLnmOXW1xw=
+X-Authority-Info-Out: v=2.4 cv=ArDjHe9P c=1 sm=1 tr=0 ts=69a36260
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=268zvHjo1I8v1SDp_XwA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDIwMyBTYWx0ZWRfXxw/xQmOOt2pF
- fOoaSQb4F/CUljlJMwACTBBs0QA+CCfvB1DFoVOtXkQUO1fM2JCCimCfChGSRqA3c4JQak2zgxt
- Wz++xa2ol5iLYKDK762xT+sc1qQpOJpyKF68bbl5YPreLKK9cPj0fq0JdybcMI/AxPdq0ZKh2Jb
- i8yHtj3v40zLeSpmRlhtq2PMQ4DuttU9iLuFGnsX9GTc3t5pSTEszMIFzB9X58Rgr21yXoeTZf8
- CMYPYrcprrsZ8ApTwhHFDPp45ntc3POK3r6lIEoBwv86v3Sru4LmlPENJfL2AFV7A0j7r8GcVMc
- BTspBAjC8kdK66c4q/vArTzWOAiwvKVLGXR+uaEeLLnnG1+VJTI6oMxuFBSVLk=
-X-Proofpoint-GUID: BtXkmyHs4GLoq2dBFJ4MR-Twp9Yh8Gfw
-X-Proofpoint-ORIG-GUID: BtXkmyHs4GLoq2dBFJ4MR-Twp9Yh8Gfw
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=zrTx395S4Ej948ve6SYA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-28_07,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- spamscore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0
- malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=760 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0 phishscore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1030 spamscore=0 mlxlogscore=812 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602280203
-X-JNJ: AAAAAAABUTq6UU5bAjYLgeH+Y2D+ACx9BtFLNXrH8c2TG3KXrBitNHpwv8UmE5sdJaACQoDFaQAOmeSWFQzp+IuNv7tDdIzs2uUB4lcq4lHrUlhBSmhazQu4/+leadFjYdIpwTtkzPpsCGTPTkokmb3FurgVM81L5gy05p//ET8pzbfT1TIkhg0hXpPpkLBezPbsy3tnhDSOg4Jvr6GMKYgHJvXtTzLO6dElivmE1QuREXQLkbd26JuwWKEwIHpVXVOLTKW/w2ghAzhh9eNNA+IFzLRiaFmuipiKhcdp9Fg9fgTL8z/smNgX/HRhlSp4wv3IfuUzKhPgxyP4OxUnNdmXTc6zTdQU2+aDYi4QeDpm9UDJhSNyq+1UGQUERg5bUBpIDE5NLMdQBE32Rndaa0Kzw9rbdvfJpLzEoYkldnR/uJt6NhtTuwh4KlUpzxNi1sfh4byU4W58vVzxqg6LjQZy74xvnID/MW6NpmTV/cxUdvZvyL03hYOaykkGewQK8pvzay2/dKHfViipCUfwRNTFAf8E+9fCADuP849VBiElaIxU1Sp1vqvDdq2WEKbrtOYZ4AO1oviaLCkdIMdOuhr1WHKb/upD7l+6WbYbEACFmTcdED6CL76zF4bwErgNmYN0LR+I5Bjj5VXlbWK2sV5qKefMtAczJ/2Vx3OVZjmmiQ2l3te95Aj4T+WhWg==
-Received-SPF: pass client-ip=57.103.86.148;
+X-JNJ: AAAAAAABozOBi5JSX3fGrhzryL5KidU6I1MXvNRYamalN/HEGtMr2kzhIgQvBuuLHU2n1I1S1sHVMkl3gapallDtd/4nG2t58ON53EQ/xd0Bcr96j0mMWuBuKJuLmEPEH1MUKP7ZOWAz0PTzO6Q9wBwtbydWj0hySwa1ZMSXiY89MZNdhRzY/LYq4JFTAAw/Spg3FelsM0eV9rJ4umljRYClp6QjTu9pPvZnRfOxfVShsjJNhGQeTn1GE9EXsetxYNkFhFTt8ayujAB3hPocoe6DEAo5QWbGOiOlImEhQjhDJZWuDpCKst6ktxfJmTIrtpZHHw+Kn/6OxF5NTEDFT2oCZnz2puvAQkXXzXrmnwoO3G0rlsYY8VMNhbxZ/gZ8gDkR5hsU2s/NTURl4tJ7atZRx7NfjWiCWFS5kzxG5yPA8Kf0dS5kkx64N7IkOSfQCXIkl2jjfEvjXyaT9VNY3Jdm878TIH02gS4g1y8qN9u0DE2hQbxjjCeKnm9AxSpZ7b1fKXRsuiya3Fuomrd3e+zi/xV54pm92TDClQvbJWIvXV2vwH/HzdY08+V1DktP9KMq8/o6CdzDOufsmHtMC6MwHc5oIMy1YW7LEa9nMBZ8nuYYlEWOsSXN3AiKOvHnTG2QLQQTWcgRZxO04ttmACYz1RxYbGp1vIG0ZSc8TAgtZXPE9Xk=
+Received-SPF: pass client-ip=57.103.86.232;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -93,62 +93,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+At the point in time in which we setup the partition, the vCPUs
+aren't available yet.
+
+So enable them by default for now like what the MSHV backend does.
+
+AccessFrequencyRegs is shared for both the LAPIC frequency reporting and the TSC frequency.
+
+To still benefit from the fixed TSC frequency reporting when kernel-irqchip=off, still enable AccessFrequencyRegs anyway.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 40 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ target/i386/whpx/whpx-all.c | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 90f51fc4dd..ccc52d1f96 100644
+index ccc52d1f96..e7e0a50da6 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2007,6 +2007,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     UINT32 whpx_cap_size;
-     WHV_PARTITION_PROPERTY prop;
-     WHV_CAPABILITY_FEATURES features = {0};
-+    WHV_PROCESSOR_FEATURES_BANKS processor_features;
- 
-     whpx = &whpx_global;
- 
-@@ -2112,6 +2113,45 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         }
+@@ -2152,6 +2152,40 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
      }
  
-+    /* Set all the supported features, to follow the MSHV example */
-+    memset(&processor_features, 0, sizeof(WHV_PROCESSOR_FEATURES_BANKS));
-+    processor_features.BanksCount = 2;
++    /* Enable synthetic processor features */
++    WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
++    memset(&synthetic_features, 0, sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
++    synthetic_features.BanksCount = 1;
 +
-+    hr = whp_dispatch.WHvGetCapability(
-+        WHvCapabilityCodeProcessorFeaturesBanks, &processor_features,
-+        sizeof(WHV_PROCESSOR_FEATURES_BANKS), &whpx_cap_size);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get processor features, hr=%08lx", hr);
-+        ret = -ENOSPC;
-+        goto error;
-+    }
++    synthetic_features.Bank0.HypervisorPresent = 1;
++    synthetic_features.Bank0.Hv1 = 1;
++    synthetic_features.Bank0.AccessPartitionReferenceCounter = 1;
++    synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
++    /* if kernel-irqchip=off, HV_X64_MSR_APIC_FREQUENCY = 0. */
++    synthetic_features.Bank0.AccessFrequencyRegs = 1;
++    synthetic_features.Bank0.AccessVpIndex = 1;
++    synthetic_features.Bank0.AccessHypercallRegs = 1;
++    synthetic_features.Bank0.TbFlushHypercalls = 1;
 +
-+    if (processor_features.Bank1.NestedVirtSupport) {
-+        memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-+        prop.NestedVirtualization = 1;
-+        hr = whp_dispatch.WHvSetPartitionProperty(
-+            whpx->partition,
-+            WHvPartitionPropertyCodeNestedVirtualization,
-+            &prop,
-+            sizeof(WHV_PARTITION_PROPERTY));
-+            if (FAILED(hr)) {
-+                error_report("WHPX: Failed to enable nested virtualization, hr=%08lx", hr);
-+                ret = -EINVAL;
-+                goto error;
-+        }
++    if (whpx_irqchip_in_kernel()) {
++        synthetic_features.Bank0.AccessSynicRegs = 1;
++        synthetic_features.Bank0.AccessSyntheticTimerRegs = 1;
++        synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
++        synthetic_features.Bank0.SyntheticClusterIpi = 1;
++        synthetic_features.Bank0.DirectSyntheticTimers = 1;
 +    }
 +
 +    hr = whp_dispatch.WHvSetPartitionProperty(
 +            whpx->partition,
-+            WHvPartitionPropertyCodeProcessorFeaturesBanks,
-+            &processor_features,
-+            sizeof(WHV_PROCESSOR_FEATURES_BANKS));
++            WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
++            &synthetic_features,
++            sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
 +    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set processor features, hr=%08lx", hr);
++        error_report("WHPX: Failed to set synthetic features, hr=%08lx", hr);
 +        ret = -EINVAL;
 +        goto error;
 +    }
