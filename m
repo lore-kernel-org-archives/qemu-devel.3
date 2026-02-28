@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6E6FD0045
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 21:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786BAFD0040
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 21:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwS9l-0004DQ-Gp; Sat, 28 Feb 2026 16:47:25 -0500
+	id 1vwS9m-0004EM-DC; Sat, 28 Feb 2026 16:47:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwS9e-0004Ap-Pf
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:18 -0500
-Received: from qs-2005d-snip4-1.eps.apple.com ([57.103.86.162]
+ id 1vwS9i-0004CT-Hf
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:22 -0500
+Received: from qs-2005d-snip4-5.eps.apple.com ([57.103.86.166]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwS9d-0002UJ-EC
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:18 -0500
+ id 1vwS9h-0002V4-6a
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 16:47:22 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPS id
- 871C8180011B; Sat, 28 Feb 2026 21:47:15 +0000 (UTC)
+ 10505180013D; Sat, 28 Feb 2026 21:47:17 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772315236; x=1774907236;
- bh=7mj6sUmmdtk9A69SUbrqs2ReO/lE9GHeOdIojBoDuMA=;
+ s=sig1; t=1772315240; x=1774907240;
+ bh=lfrkVypbIXt+OmEJPfA0qbh7rrK7NSWT9WdXrP9x0ww=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=TCSRs5Ohs4n1ZZhpUIXzRJKtc9CmJy5a9QQFjx9rCmZsb5UKe2zChytT5HilMeNAyIRWT/94pNXJTWraOts++SVZCkW196PolK/LAfJWsins0jGhb4olZ5OARL0XP/++GZUdvv78RdMj/+Guk2fCHq+DrKW8IexI0D0Oom2x9ipGHHj6gOnmrLB2Ig1aRIp4deuk/8NSQZ0RHI4fi5ZqqbTqUkQFUvJM5Om7HmWJ4ejuP/zEypk5EhsCyhbmpJwucGAnu0rEGoZYYUseHlS3glCUlaFgsQRTqcbBnMzoZilsqtpnpV4C7U4OPEnZ02YFj4/I5NMstRgv+Qv6TJvD1w==
+ b=HrqwZ5KpvA6gMj6vKQCy3zNx9gJEJPw1vf2bnKf8rmZu1Bhb/ziUk1QN4wlUssXwDaJfftQvOnpS/F8ij6H0r9jdgRsq9zw+wwDoSDuwuuENbqpsde40KWicgoI7iIicj7wG4ues02KLCjkulimRBpQshb15WoYFUG5HCmKywv2wdlSzMNimysseee7XvKMOsdMPvXMvrqHpnebycWv7a1CKyUsM6WRmVpk41aspgxXqiDxMvd4tvS0Rk1zOA3LgIsglWl7YWho+J7v4pN9ljGAxUaVgOsbtdA8b3kIY4edsaxMuK9+JFcMz+CX3dZlFt/NoHJs6IDBZ8HcXZngF8Q==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-20-percent-1 (Postfix) with ESMTPSA id
- F1BC71800121; Sat, 28 Feb 2026 21:47:13 +0000 (UTC)
+ 2E0861800114; Sat, 28 Feb 2026 21:47:16 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
@@ -40,36 +40,36 @@ Cc: Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v2 6/8] whpx: i386: enable PMU
-Date: Sat, 28 Feb 2026 22:47:02 +0100
-Message-ID: <20260228214704.19048-7-mohamed@unpredictable.fr>
+Subject: [PATCH v2 8/8] target/i386: emulate: fix scas
+Date: Sat, 28 Feb 2026 22:47:04 +0100
+Message-ID: <20260228214704.19048-9-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260228214704.19048-1-mohamed@unpredictable.fr>
 References: <20260228214704.19048-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: BnZgRhkZHy3HtQj7YKSXaPd6lMGyfhtv
-X-Authority-Info-Out: v=2.4 cv=YsgChoYX c=1 sm=1 tr=0 ts=69a36264
+X-Authority-Info-Out: v=2.4 cv=J9GnLQnS c=1 sm=1 tr=0 ts=69a36266
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=ymEGMFXK17_Bx2syn8UA:9
-X-Proofpoint-ORIG-GUID: BnZgRhkZHy3HtQj7YKSXaPd6lMGyfhtv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDIwMyBTYWx0ZWRfXxtRF1A9jVH0m
- 00yG+tj87bWPvYnQ68xHal96lFoxY4mCYyCqpyVABixd0rthCyc3IOFIpPusAgigq5Z2QEDYxTu
- 4Tum0cXDfZ04EIgyskr+iwTq1nDNoD0u6wI47zxL8eVXEefVh7Mvu5tGu+/ZSkVUNzZ8/W5QgJz
- 1ZHT3G30oCHcy+eezjxs4LOH7MHlAtGiAAjeYBoAbOqDYpCEtGjxHsYlv2uV/MYxdIn2OmRoI6S
- YZdiN/UPGt/mkoOhSarNyOvEQrqpWw2KXevJKb8nsUpHWLEL1OAfx7ECtXbXawXBMEdnTmO8xn7
- I6oCgrwKAmaXYH/asLYaLoKmRy21q/pehEJo3Ax72hln23SROaS975aCdXNflI=
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VLX2UGPRQwTXjk7uINwA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDIwMyBTYWx0ZWRfX64XrjbRAsYtC
+ +h6YTajBA9XM2ng4tIOoBeiIp231zkx76NmwwhcSAkWuWzo6ItSgY5b6RNEexX1I35YM8JoAsdO
+ ac9hvcHbCkz6XhDSJ2wfgWkLyNwuBbDM6jIQKRieH2dDT1/7TD0n3R9eo/9Bqtga+jMLOipSYEq
+ gAPwiIIGsEYNh/GU0ddS849JzpzFNDFlH5a8fCVf+nJ0O2CWE+f23PIXsVpRLTakQw8QWHiiDsK
+ bfa2OvUVj6dLwwGLpOwXPT4fUfXwWgKXYhrZDhqJVKYHH3T0PgkyvA4K3gWiZHJ/yPT6aUMQ0mj
+ g0KVopX0jwvKL+F+eQJj+WGVzViizqyl8nvc9kB47hML77ILO8Lxb3TfAbjuKY=
+X-Proofpoint-GUID: TJpeEPT7pQeQoNbKIgMbpEBQ6QoUHgrW
+X-Proofpoint-ORIG-GUID: TJpeEPT7pQeQoNbKIgMbpEBQ6QoUHgrW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-28_07,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 clxscore=1030 spamscore=0 phishscore=0 mlxlogscore=841
- suspectscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ spamscore=0 lowpriorityscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=740 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602280203
-X-JNJ: AAAAAAABHN7jq7GdX8uZ3ue7i6uLkRPRh/Ec6iUlZ1426+ZG0SUERdFVn93sxa8rPPGqbaP44reztq4aFGtxQ4+HT99L0nM6WFUcBKIvTUAu6HKTZrcyBsnkH3RGq40X+N8cf6MbW0fvlm+w31VsnW8TIDuou6iHIkay+VFo1pXFgMz8jtW8X9I+c/s2/RwdYEU1wkhvgCZk4a0RlF4BMYRMEPfurQXouzePCEx3jm2SlqczpCZRa6bb8mNaBtDVv0xLNKs2z1giEKpGIEUWlCZ5WZE1kcOwe6J5UgOJfB3sT+XQCq4KbU/g5Auiv86kRlxoqQwDCAcUzSz6g5/a7oUa81sc2JvsEFaD1k1XsI2FP6Ypo31xYQgxYUZQIe2ePuChAkAdJ5ss6jAFXbM7vxQ/7MVrh/mN8oMGQmm0FmjJZP+g805L4YQMmh3oVzhzNdAOHSsUWNlb9ZuUNqa3nj5a3zwXrAlkAQqLyUCL4kPMdYYwloqRUzONilX/XTmB09tt6HyOq86BtoYpx8ufFGOmIrVKddn46CQ530f6dLQICtxS4ITr015qhW1VKhWPprNz874fcdFauAbUFbg4LZ6husplh8bZ2B9Wop8lM1GD3KOce2h+WlF5nwEoznFRNWrlMJerGq1MkR6hfFvQaFRi02guvm3c+g==
-Received-SPF: pass client-ip=57.103.86.162;
+X-JNJ: AAAAAAABi/AUBT6tqxfjaPw5H6uR0DtQk/pDYjB+6DmtGavfsiKvwM4r1vRR9LAwNGbjuWjtvunLzKZBAUbvhFsVwMfUbArDs4+RS94ECheUiA25b20S5na6lqZHFtlitAhsq1GHZ+KarnH+8BCuicUSJRlErmTb1HuMpCLQ1neV2KuHOQZJUMtD8H/aNwbQ5FYebfnAt7vRSj/V9mLFtkVy/43rBj9J3D1nPnx2Axrh0UUM1FTHlKbf467lb2SOXdTrNCTdc8nwdcZO5ElWxauQVrTmABufSpj6ZYr6DYMUbF6XD39cnFDWeirhQsZFFlarDWxdTKOtKZqHL88hSYX8I2sNdQcmKX3kq/3nFNfJxyZA4LW22E2zUMtJfZQ5DdnHSlirrCOfVPIW+KwkOQR77Kc+hwEcFuvYNgDOeiEzcvheuLGBfVk4+tJSZiuYEm+cwUH2kGSZf53OQvB3L6dTxnSiqLwOozkRU/sjLUE7Pqp20+yVdIFD8N/EiMZseAnvEuJ75yPCvoFK89U6RfPGRgREa+r9noE5GXGU03DkQvpY9qEyx8Yp4KHaMpC9sMz3EYxFagEwCXygCtH23Zswxsy0xx4kh6AiELv6zPaJ34ka5+ODL9ZUjaO6PwfHvFw+orbxP2Dq8Tk9uQDMWiDuJOYFVxWmAA==
+Received-SPF: pass client-ip=57.103.86.166;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -93,53 +93,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Also a partition property instead of a CPU one...
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ target/i386/emulate/x86_emu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 5aa8baa4a2..da2ba36060 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2011,6 +2011,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_PARTITION_PROPERTY prop;
-     WHV_CAPABILITY_FEATURES features = {0};
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-+    WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
- 
-     whpx = &whpx_global;
- 
-@@ -2155,6 +2156,27 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
-+    /* Enable supported performance monitoring capabilities */
-+    hr = whp_dispatch.WHvGetCapability(
-+        WHvCapabilityCodeProcessorPerfmonFeatures, &perfmon_features,
-+        sizeof(WHV_PROCESSOR_PERFMON_FEATURES), &whpx_cap_size);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get performance monitoring features, hr=%08lx", hr);
-+        ret = -ENOSPC;
-+        goto error;
-+    }
+diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+index 6c4ccc4538..55b1a68eb6 100644
+--- a/target/i386/emulate/x86_emu.c
++++ b/target/i386/emulate/x86_emu.c
+@@ -745,6 +745,8 @@ static bool exec_scas(CPUX86State *env, struct x86_decode *decode)
+ {
+     decode->op[0].type = X86_VAR_REG;
+     decode->op[0].reg = R_EAX;
++    decode->op[0].regptr = x86_reg(env, R_EAX);
 +
-+    hr = whp_dispatch.WHvSetPartitionProperty(
-+            whpx->partition,
-+            WHvPartitionPropertyCodeProcessorPerfmonFeatures,
-+            &perfmon_features,
-+            sizeof(WHV_PROCESSOR_PERFMON_FEATURES));
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set performance monitoring features, hr=%08lx", hr);
-+        ret = -EINVAL;
-+        goto error;
-+    }
-+
-     /* Enable synthetic processor features */
-     WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
-     memset(&synthetic_features, 0, sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
+     if (decode->rep) {
+         string_rep(env, decode, exec_scas_single, decode->rep);
+     } else {
 -- 
 2.50.1 (Apple Git-155)
 
