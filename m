@@ -4,183 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7ACFD0046
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 22:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B69BFD0045
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 23:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwT5a-0000Ry-GC; Sat, 28 Feb 2026 17:47:10 -0500
+	id 1vwTKF-00035d-Fz; Sat, 28 Feb 2026 18:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vwT5Y-0000Ro-E4
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 17:47:08 -0500
-Received: from mout.gmx.net ([212.227.15.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vwT5W-0003T2-Ph
- for qemu-devel@nongnu.org; Sat, 28 Feb 2026 17:47:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1772318822; x=1772923622; i=deller@gmx.de;
- bh=MBIAjNI5vxHBpOOWEz20DPcdcBKbAqRty2LT1CqjFF0=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=N9FCZGUIJagXXII8SoeyhazioOqnEflNI0Dw010qyFYSSi73qc8xARVtvwnHP00T
- iAnoYrjqxgiTrKIJM4qTjtkRZ4u/FvC3QFjhOgCfZIqGaunLmaY6Z9DGCOQabIV91
- tcwxx61Tn4fXxVkX6DNh13DMDHoV+XdsTAoCa88QtteQObLQd+UiYl9RWA+R9NeIF
- BiwzBC0L/LTQzVLeh98E4ymge1AHUAbW8fLOKnBGrW3g/xK3oVgqtSusG7jtFcnNk
- 59p5E+sbB7VDKBvsb6dgungK72OUzjAG8hOysNkSaFvl+QrNAtxrEJ3oyn4JFa887
- rXe+AmLeeBzCT94/1A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wGs-1vzmTS0Ev6-009HoA; Sat, 28
- Feb 2026 23:47:02 +0100
-Message-ID: <a3587955-7ad2-42d7-8354-4e6c4c03e721@gmx.de>
-Date: Sat, 28 Feb 2026 23:47:00 +0100
+ (Exim 4.90_1) (envelope-from <alberto10pumas@gmail.com>)
+ id 1vwTKE-00035P-0O
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 18:02:18 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alberto10pumas@gmail.com>)
+ id 1vwTKC-00068I-9C
+ for qemu-devel@nongnu.org; Sat, 28 Feb 2026 18:02:17 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-386b553c70eso46972191fa.0
+ for <qemu-devel@nongnu.org>; Sat, 28 Feb 2026 15:02:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772319734; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KzhsOitx3hF89LzB+gM/q1Tcx36m7l0KUxQ3cpG75rFWYFu/YH1st/KG6n0CV/CM7h
+ pkyJG6YmQsdzvSwdCR2b/40IK5p6eap2LSHtFDUo68+ID16/hwzEABt6zZ6ARpMCTIwa
+ upgVVC9FrZiHqc9g9XJnp86jM/QYq3MeN+uk9bFqSKXxkiHkqyGBS6YHNMJrBAh6nwrh
+ hkRJv5HBlohq9RaId2Zx+WigXetv2O7I5hTvgq+YxSBntzWCrpDOYqxR/I1y4NoptxVO
+ pHSH5WDih28FZPFLv389FyeSndOUwfGKmlT/5leH09Yocl1LxmdCxJigaacR47CgMRsT
+ a7Rw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=lF4ZEx54Ieal5oRvXB49KsMbBMYW64s4wlmnPT//q1c=;
+ fh=3vh/zEc2LchxTGmvN5Zmj1ueGz1+WUScTrY7YTQh89g=;
+ b=JJIpuj9Vc6UqoRKYfi1moqKjk6O8aGcEPjfkJdx8aLeytBqE7EfqUFht0EkYY+SDhD
+ ijH1tz/QDX+QPjwjEVr/ev3ql+7u1+Q0hLqYFUq6YGoGIxO2KVx67CcqIh+hQVMBR6st
+ IFIPwK/M7M9K0FM7yi7uR8XQU/wztbkV7Qe6qVStqSLx6Mti8eT3v48ZGUidcifOIqFI
+ 1z3F803vC8Ri25SVYoLLTuwP2fjAPpEYTQR79QmhcfbKXnMR1cZQsx+QTjceLiPdRAvA
+ hw373gL7UEGS0a+XANoxHGVMbHy+yn+01hFuTweaMyrDnL0KY5EUpKWKTMk6Zu31q8fu
+ bT7w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772319734; x=1772924534; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=lF4ZEx54Ieal5oRvXB49KsMbBMYW64s4wlmnPT//q1c=;
+ b=KTkRxSfxXB99z2je3i0Jw4mmtJ3iZZyZucCIGVMalYxuwQOVjKqaYIBl8BpNpj4hmd
+ 6sT9FaViYQlK0RicM34LRMoHF899WH/coE/8H7EE07cEQq+5yN/lqK9IFY41JLH77Niw
+ hvYK3v8z6MAakbOd2AUMFiDtNzUqUZcUX++IXYw1QYzP3ZhNtk+fcdT1SohaL016HqSV
+ 9AprfwGOlQH7cN3obxFa6YsSj1BVRs9xcuVMaqGzfEkVgMFuyn9Dx77qaDAPy3QdpKoi
+ +nARLp35h72FBP567xmABHePsOSwjVPau4UeAUaVO44JTsuWZFWRTueJCPyKYQNKvtWc
+ tVjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772319734; x=1772924534;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lF4ZEx54Ieal5oRvXB49KsMbBMYW64s4wlmnPT//q1c=;
+ b=oyNM100R1IY2YvR7p7oiJyRW3snJOATz0bsZLZtt6dKROSDXHWyfmRSCBF1j5wqb15
+ vVdjcExWZWsFMq7ARL3KaemApjxrpUKs/pwo3sOTWolD7ea5lNkf7ZQBCZ6IAssHtsC6
+ NzwZCtLxcpD0Uwc7hwHdHm9uWE8grtCqS8Ee4aJxS1u7gOkPtLOTgFi83YZpv14CxuFI
+ B0pubKctV0n5r3v1gHHkdqlFgAXiYfs+YqBajLgg0zPy2nj/vKZoI34pWjnDIZ4gemcC
+ +dhnslE4KMzP3EB0CO1Qdw/GZi2CG1dHwKepmw6Rs0x26/JN9blnTLAqAw5yfkFQWoaC
+ SKvw==
+X-Gm-Message-State: AOJu0Yxg3CU+0qtmABAoAdapRHySL6320nTgX8MwdiWZ8FPrwNeKt+pD
+ ycYUXf1dsA/Eey/ThCC4oxLYLvNLpUwhYUYxyQmctzTJrmyynVt8KD4L7w479aUvGKZ4Z00s0r9
+ uXR9FO7fzWZW5e2/R5HkCDW+WQ+pM5hM=
+X-Gm-Gg: ATEYQzzQO/9REbdqqCqGwwMZbXA98FSOz9JeqYENQiWjZ2U+jCHEwiixVPQYBY9yX+u
+ KsnIwy/0jUcSY3MxYY0Ni5B836UOp0+V8GijFKkFKWDPTEGskA26so//ySU6EmyQ+1UI0/19pTQ
+ 6ZDCsJiMC9GXS/cNehU66iQzQf0XxcoRM2IZUfgKU9MvAFGGQ5kYFCPpwE/mevT/sMVM0kKMMQA
+ uQP1CQZZZVgGf2z+DTVjUgQ9ackXaitX9JZtJewk0n0QzSWWS48l0O8Gm5Lxlm93cqHpsZ5lRKY
+ u8Y8A2w0oOcKMpiEDRKE
+X-Received: by 2002:a2e:bc18:0:b0:38a:615:7d9f with SMTP id
+ 38308e7fff4ca-38a0615802emr30408301fa.38.1772319733320; Sat, 28 Feb 2026
+ 15:02:13 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PING] [PATCH v2] linux-user/strace: fix printing of file offsets
-To: =?UTF-8?Q?Jean-Christian_C=C3=8ERSTEA?=
- <jean.christian.cirstea@gmail.com>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, jean-christian.cirstea@tuta.com
-References: <20251226173521.1957025-1-jean.christian.cirstea@gmail.com>
- <20260228194450.211977-1-jean.christian.cirstea@gmail.com>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260228194450.211977-1-jean.christian.cirstea@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GPyQ3JD/YK6qqRbgLM+Wp51qoF8T14fmwftZCug636nO2p8ImRt
- g5vbvRFla4dATsM+Ce/7ptD9DeW+g5iaZmlW14RrR0sf2bhtVxeJwoFsyeQYOhsq7dZrBo2
- XDY+40TZQmeZvy4PjOy+Z3t5PDDvYKjjMzQ7OwvGxkLeAKK7X4FbK5d883Cq2CDW/C+jr0j
- qE6WHWOPtC++uJRUWdTvQ==
-UI-OutboundReport: notjunk:1;M01:P0:9+j9ppfsl2U=;cSt5SVBS5s8Cw7OM1U1tbIRJ89Q
- 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
- CE5HG6g0=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
+From: Alberto Hernandez Cardenas <alberto10pumas@gmail.com>
+Date: Sat, 28 Feb 2026 17:02:02 -0600
+X-Gm-Features: AaiRm50W_H1-Rt0hbSg8RFwjQqcfApoGcA2TBdjpj0wfzjS5ho6_o7z9EoID1ag
+Message-ID: <CAHLkteN0M6RXMsCwEWdaXdf26jDc49caYCQaOSjBqJUGNY0MhA@mail.gmail.com>
+Subject: GSoC 2026 Interest - virtio-rtc vhost-user device - Alberto H.
+To: mvaralar@redhat.com, francesco@valla.it, garzare@redhat.com
+Cc: qemu-devel@nongnu.org, jsnow@redhat.com, alex.bennee@linaro.org
+Content-Type: multipart/alternative; boundary="000000000000220ee4064bea5807"
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=alberto10pumas@gmail.com; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.966, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.722,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -197,12 +109,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/28/26 20:44, Jean-Christian C=C3=8ERSTEA wrote:
-> Any outstanding issues?
+--000000000000220ee4064bea5807
+Content-Type: text/plain; charset="UTF-8"
 
-No, seems ok.
-You may add:
-Reviewed-by: Helge Deller <deller@gmx.de>
+Hi Mentors and QEMU community,
 
-Helge
+My name is Alberto, I am a computer engineering student from Mexico
+(UPIICSA). I want to participate in GSoC 2026 with QEMU.
+
+I already installed Fedora 43 and I compiled QEMU from source successfully.
+I am studying the code right now. I know C and I am learning Rust because I
+want to help with the new components of the project.
+
+I saw this issue on GitLab: *"Writing a large amount of data to the
+virtio-serial chardev device causes the channel to become blocked"* issue
+#3251 <https://gitlab.com/qemu-project/qemu/-/issues/3251>.
+
+I am very interested in this problem. I want to understand why
+vsc->have_data is causing a blockage. I think this is a good way for me to
+learn how QEMU works with devices.
+
+I have some questions:
+
+   -
+
+   Is someone working on this issue right now?
+   -
+
+   Can I try to solve this as a "test task" for my GSoC proposal?
+   -
+
+   Do you have any other small tasks or "Bite Sized" issues for a new
+   student like me?
+
+I am very happy to learn and contribute to QEMU. Thank you for your time!
+
+Best regards,
+
+Alberto Hernandez Cardenas. (Nickname: betillo)
+GitLab: alberto10pumas@gmail.com
+
+--000000000000220ee4064bea5807
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p>Hi Mentors and QEMU community,</p><p>My name is Alberto=
+, I am a computer engineering student from Mexico (UPIICSA). I want to part=
+icipate in GSoC 2026 with QEMU.</p><p>I already installed Fedora 43 and I c=
+ompiled QEMU from source successfully. I am studying the code right now. I =
+know C and I am learning Rust because I want to help with the new component=
+s of the project.</p><p>I saw this issue on GitLab: <b>&quot;Writing a larg=
+e amount of data to the virtio-serial chardev device causes the channel to =
+become blocked&quot;</b>=C2=A0issue=C2=A0<a href=3D"https://gitlab.com/qemu=
+-project/qemu/-/issues/3251" class=3D"gmail-router-link-exact-active gmail-=
+router-link-active"><span class=3D"gmail-gl-align-middle">#3251</span></a>.=
+</p><p>I am very interested in this problem. I want to understand why <code=
+>vsc-&gt;have_data</code> is causing a blockage. I think this is a good way=
+ for me to learn how QEMU works with devices.</p><p>I have some questions:<=
+/p><ul><li><p>Is someone working on this issue right now?</p></li><li><p>Ca=
+n I try to solve this as a &quot;test task&quot; for my GSoC proposal?</p><=
+/li><li><p>Do you have any other small tasks or &quot;Bite Sized&quot; issu=
+es for a new student like me?</p></li></ul><p>I am very happy to learn and =
+contribute to QEMU. Thank you for your time!</p><p>Best regards,</p><p>Albe=
+rto Hernandez Cardenas. (Nickname: betillo)=C2=A0<br>GitLab: <a href=3D"mai=
+lto:alberto10pumas@gmail.com">alberto10pumas@gmail.com</a></p></div>
+
+--000000000000220ee4064bea5807--
 
