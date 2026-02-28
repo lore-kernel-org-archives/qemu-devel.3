@@ -4,112 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B651048925
-	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 02:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A4161039882
+	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 02:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwA1e-0003Bp-2M; Fri, 27 Feb 2026 21:25:50 -0500
+	id 1vwAAB-0004hL-3T; Fri, 27 Feb 2026 21:34:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vwA1b-0003Av-RK; Fri, 27 Feb 2026 21:25:47 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vwA1a-0007cN-4I; Fri, 27 Feb 2026 21:25:47 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 61S1Vx9S1294942; Sat, 28 Feb 2026 02:25:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bgI8PW
- 6GH9cFvuBTHTTsdMEJATSBOxqs/QqM37erZLg=; b=VYNNoAf6McvDa8o+d1hLC+
- kVNBnqzaa2FJxg1rUH8QjQDpkozjMHMUDoI8aV4enC6JPO9amC+wL/2fzlQJ0XVS
- K6ln99AbvXLWUzGHxaV3NVxdiZotz/i9nSGQtrweLcDxGa61G59uVVdUX168ziy+
- 2S93J/D3MUg7D4Zn+xPxeQOnI/0O6ocR7zMsK7BSV1ovvzrk3m8XI5MoaRMEbOfS
- DrYuSKd++Ja2I3BGjseCI0nXS0cuPLtPo/GzMMhnqqViKOclg2Zoo8vZKTqRbdsW
- eARE19IWLy9avaRALnB+RvFs1gLWLf8r8aS63d1wkMoKWqP/dNXdLkkejS0QUhNA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckpseg2nr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 28 Feb 2026 02:25:41 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 61S0WxZO003382;
- Sat, 28 Feb 2026 02:25:40 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cfs8kcttw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 28 Feb 2026 02:25:40 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 61S2PdOe25625208
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 28 Feb 2026 02:25:39 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5AFA5804B;
- Sat, 28 Feb 2026 02:25:38 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5AE0358059;
- Sat, 28 Feb 2026 02:25:37 +0000 (GMT)
-Received: from [9.61.45.42] (unknown [9.61.45.42])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 28 Feb 2026 02:25:37 +0000 (GMT)
-Message-ID: <815ee895-2d73-4ac3-8a53-5903f066f00b@linux.ibm.com>
-Date: Fri, 27 Feb 2026 21:25:36 -0500
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1vwAA7-0004gr-5x
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 21:34:35 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1vwAA3-00016Z-Rc
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 21:34:34 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxmsIwVKJpGggWAA--.1641S3;
+ Sat, 28 Feb 2026 10:34:25 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJDxD8MrVKJp3OxLAA--.13155S3;
+ Sat, 28 Feb 2026 10:34:23 +0800 (CST)
+Subject: Re: [PATCH v5 3/5] target/loongarch: Add generic CPU model information
+To: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260225014131.1487362-1-maobibo@loongson.cn>
+ <20260225014131.1487362-4-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <12e7b842-6057-aa0a-01f0-82d4ba73fed0@loongson.cn>
+Date: Sat, 28 Feb 2026 10:35:30 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Zhuoying Cai <zycai@linux.ibm.com>
-Subject: Re: [PATCH v8 09/30] s390x/diag: Implement DIAG 320 subcode 2
-To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-10-zycai@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20260212204352.1044699-10-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260225014131.1487362-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: g4ZQu_Q9OChMJp_SHn88z2Y34lkAfDhY
-X-Proofpoint-GUID: g4ZQu_Q9OChMJp_SHn88z2Y34lkAfDhY
-X-Authority-Analysis: v=2.4 cv=VIzQXtPX c=1 sm=1 tr=0 ts=69a25225 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VnNF1IyMAAAA:8
- a=Y-p8QTvz0Ndpyi03dzAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDAxOCBTYWx0ZWRfX46JUa/kMv6+I
- 5AMxYrG3wbzfH6RFh3kaOZL3CWw5hAxPNoBp5MqWbZ8qFqBSkLRSmDy+l53R6CaEakzoVTTR6BI
- qlaycgVxcFr4x7/vPv9zFrPRxcO+he3gfHUhInTgWZ2CCIJ1a+4MlNaiUpOjKnVmroQbVh8M1Nn
- V2rsZqEzSGEFxuLR7CdIXjtUkY84XroJsMwXCSoAXabxCrUITrxdddPE44TjKyrL+tU1owI8kms
- vSPJYSj7B02jkS4Z9o7GR7iYU3PeEmlQ6peRZ/52gbIaCIbQrzhHIBUZD9JBNXaraI/BWzGSvlY
- Dsm0VmmiR9ZsxtWra0I6OLoS9cNMDw3wtj37T/tz35QEgpyy7fu0mB7HNNroKV37ISLNUQo3cnJ
- l0UKtNky1of1jKzSEmbN8ACM62D4ZKGPNBsp1IKJYIQDfcCT93rn5/SIOD6FcYPDDcK62Bi7k0+
- 7xWFjWe9uAH2O7j+G6g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-27_04,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602280018
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDxD8MrVKJp3OxLAA--.13155S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCw17Xw4kAry3KF1kJryruFX_yoW5Crykpr
+ W2yF4aga18tFZrC3WfAa45Xr1DZrs7GF429F4Sy3y09rZ8urykWFykta929Fy2ya45CF4I
+ vF10k348XFs7XabCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9N3UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.544, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,104 +84,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/26 3:43 PM, Zhuoying Cai wrote:
-> DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
-> certificate store. Only X509 certificates in DER format and SHA-256 hash
-> type are recognized.
-> 
-> The subcode value is denoted by setting the second-left-most bit
-> of an 8-byte field.
-> 
-> The Verification Certificate Block (VCB) contains the output data
-> when the operation completes successfully. It includes a common
-> header followed by zero or more Verification Certificate Entries (VCEs),
-> depending on the VCB input length and the VC range (from the first VC
-> index to the last VC index) in the certificate store.
-> 
-> Each VCE contains information about a certificate retrieved from
-> the S390IPLCertificateStore, such as the certificate name, key type,
-> key ID length, hash length, and the raw certificate data.
-> The key ID and hash are extracted from the raw certificate by the crypto API.
-> 
-> Note: SHA2-256 VC hash type is required for retrieving the hash
-> (fingerprint) of the certificate.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+ÔÚ 2026/2/25 ÉÏÎç9:41, Bibo Mao Ð´µÀ:
+> On LoongArch system, CPU model name comes from IOCSR register
+> LOONGARCH_IOCSR_VENDOR and LOONGARCH_IOCSR_CPUNAME. Its value
+> can be initialized when CPU is created.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->  docs/specs/s390x-secure-ipl.rst |  22 +++
->  hw/s390x/cert-store.h           |   3 +-
->  include/hw/s390x/ipl/diag320.h  |  50 +++++
->  target/s390x/diag.c             | 328 +++++++++++++++++++++++++++++++-
->  4 files changed, 400 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index d3ece8a82d..22da589162 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -38,3 +38,25 @@ Subcode 1 - query verification certificate storage information
->      The output is returned in the verification-certificate-storage-size block
->      (VCSSB). A VCSSB length of 4 indicates that no certificates are available
->      in the CS.
-> +
-> +Subcode 2 - store verification certificates
-> +    Provides VCs that are in the certificate store.
-> +
-> +    The output is provided in a VCB, which includes a common header followed by
-> +    zero or more verification-certificate entries (VCEs).
-> +
-> +    The instruction expects the cert store to
-> +    maintain an origin of 1 for the index (i.e. a retrieval of the first
-> +    certificate in the store should be denoted by setting first-VC to 1).
-> +
-> +    The first-VC index and last-VC index fields of VCB specify the range of VCs
-> +    to be stored by subcode 2. Stored count and remained count fields specify
-> +    the number of VCs stored and could not be stored in the VCB due to
-> +    insufficient storage specified in the VCB input length field.
-> +
-> +    Each VCE contains a header followed by information extracted from a
-> +    certificate within the certificate store. The information includes:
-> +    key-id, hash, and certificate data. This information is stored
-> +    contiguously in a VCE (with zero-padding). Following the header, the
-> +    key-id is immediately stored. The hash and certificate data follow and
-> +    may be accessed via the respective offset fields stored in the VCE.
+>   hw/loongarch/virt.c    | 6 ++++--
+>   target/loongarch/cpu.c | 4 ++++
+>   target/loongarch/cpu.h | 6 ++++++
+>   3 files changed, 14 insertions(+), 2 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-[...]
-
->  QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_MIN_LEN,
->                     "size of VCStorageSizeBlock is wrong");
-> +QEMU_BUILD_BUG_MSG(sizeof(VCBlock) != VCB_HEADER_LEN, "size of VCBlock is wrong");
-> +QEMU_BUILD_BUG_MSG(sizeof(VCEntry) != VCE_HEADER_LEN, "size of VCEntry is wrong");
->  
->  void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->  {
-> @@ -267,7 +585,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->           * for now.
->           */
->          uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
-> -                                         DIAG_320_ISM_QUERY_VCSI);
-> +                                         DIAG_320_ISM_QUERY_VCSI |
-> +                                         DIAG_320_ISM_STORE_VC);
->  
->          if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
->              s390_cpu_virt_mem_handle_exc(cpu, ra);
-> @@ -293,6 +612,13 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->          }
->          env->regs[r1 + 1] = rc;
->          break;
-
-Subcode 2 should raise a specification exception if the address in
-register r1 is not on a 4Kâ€‘byte boundary. I will handle this with the
-appropriate changes in the next version.
-
-> +    case DIAG_320_SUBC_STORE_VC:
-> +        rc = handle_diag320_store_vc(cpu, addr, r1, ra, cs);
-> +        if (rc == -1) {
-> +            return;
-> +        }
-> +        env->regs[r1 + 1] = rc;
-> +        break;
->      default:
->          env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
->          break;
+Thanks.
+Song Gao
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index a75968e4c9..0ae049eaa4 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -776,7 +776,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+>       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
+>       uint64_t ret = 0;
+>       int features;
+> +    CPULoongArchState *env;
+>   
+> +    env = &LOONGARCH_CPU(first_cpu)->env;
+>       switch (addr) {
+>       case VERSION_REG:
+>           ret = 0x11ULL;
+> @@ -791,10 +793,10 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+>           }
+>           break;
+>       case VENDOR_REG:
+> -        ret = 0x6e6f73676e6f6f4cULL; /* "Loongson" */
+> +        ret = env->vendor_id;
+>           break;
+>       case CPUNAME_REG:
+> -        ret = 0x303030354133ULL;     /* "3A5000" */
+> +        ret = env->cpu_id;
+>           break;
+>       case MISC_FUNC_REG:
+>           if (kvm_irqchip_in_kernel()) {
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 93980e62a3..0b4f3b06e6 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -287,6 +287,8 @@ static void loongarch_la464_initfn(Object *obj)
+>       data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA464);
+>       data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
+>       env->cpucfg[0] = data;
+> +    memccpy((void *)&env->vendor_id, CPU_VENDOR_LOONGSON, 0, 8);
+> +    memccpy((void *)&env->cpu_id, CPU_MODEL_3A5000, 0, 8);
+>   
+>       data = 0;
+>       data = FIELD_DP32(data, CPUCFG1, ARCH, 2);
+> @@ -413,6 +415,8 @@ static void loongarch_la132_initfn(Object *obj)
+>       data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA132);
+>       data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
+>       env->cpucfg[0] = data;
+> +    memccpy((void *)&env->vendor_id, CPU_VENDOR_LOONGSON, 0, 8);
+> +    memccpy((void *)&env->cpu_id, CPU_MODEL_1C101, 0, 8);
+>   
+>       data = 0;
+>       data = FIELD_DP32(data, CPUCFG1, ARCH, 1); /* LA32 */
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index c423b741b2..fda8577a24 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -307,6 +307,10 @@ typedef struct  LoongArchBT {
+>       uint32_t ftop;
+>   } lbt_t;
+>   
+> +#define CPU_VENDOR_LOONGSON   "Loongson"
+> +#define CPU_MODEL_3A5000      "3A5000"
+> +#define CPU_MODEL_1C101       "1C101"
+> +
+>   typedef struct CPUArchState {
+>       uint64_t gpr[32];
+>       uint64_t pc;
+> @@ -318,6 +322,8 @@ typedef struct CPUArchState {
+>   
+>       uint32_t cpucfg[21];
+>       uint32_t pv_features;
+> +    uint64_t vendor_id;
+> +    uint64_t cpu_id;
+>   
+>       /* LoongArch CSRs */
+>       uint64_t CSR_CRMD;
 
 
