@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AAE104892C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549EA1048927
 	for <qemu-devel@archiver.kernel.org>; Sat, 28 Feb 2026 02:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwACC-0005Pb-8K; Fri, 27 Feb 2026 21:36:44 -0500
+	id 1vwACD-0005Q1-La; Fri, 27 Feb 2026 21:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vwACA-0005PF-Bj
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 21:36:42 -0500
+ id 1vwACB-0005PP-L3
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 21:36:43 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vwAC8-0001PD-KH
- for qemu-devel@nongnu.org; Fri, 27 Feb 2026 21:36:42 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1vwAC9-0001PP-NS
+ for qemu-devel@nongnu.org; Fri, 27 Feb 2026 21:36:43 -0500
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxjsO1VKJpRAgWAA--.1760S3;
- Sat, 28 Feb 2026 10:36:37 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Axy8K3VKJpRwgWAA--.927S3;
+ Sat, 28 Feb 2026 10:36:39 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJAxHMKyVKJpQe1LAA--.10696S3;
- Sat, 28 Feb 2026 10:36:36 +0800 (CST)
-Subject: Re: [PATCH v5 4/5] target/loongarch: Add host CPU model in kvm mode
+ by front1 (Coremail) with SMTP id qMiowJDxTMK2VKJpQ+1LAA--.10078S3;
+ Sat, 28 Feb 2026 10:36:38 +0800 (CST)
+Subject: Re: [PATCH v5 5/5] target/loongarch: Add some CPUCFG bits with host
+ CPU model
 To: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
  <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 References: <20260225014131.1487362-1-maobibo@loongson.cn>
- <20260225014131.1487362-5-maobibo@loongson.cn>
+ <20260225014131.1487362-6-maobibo@loongson.cn>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <d09b124a-9759-ca78-326f-4261423a9556@loongson.cn>
-Date: Sat, 28 Feb 2026 10:37:45 +0800
+Message-ID: <756e18c8-5c22-9dad-3ee6-ab5f41654460@loongson.cn>
+Date: Sat, 28 Feb 2026 10:37:49 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260225014131.1487362-5-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+In-Reply-To: <20260225014131.1487362-6-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowJAxHMKyVKJpQe1LAA--.10696S3
+X-CM-TRANSID: qMiowJDxTMK2VKJpQ+1LAA--.10078S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWryDCryUGFyxtF45Jw1kWFX_yoW5WryfpF
- WYv3W3KrW0qFZrC34fJa4Y9rn8Ar4xWw42va4ftr95AFsrZr17Wa18KrZFvF4fK3y8ZF1I
- 9F1Fka1a9FsrtacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxXF4fJw17AFyxKF1fZF48Zrc_yoWrJF45pr
+ 4UCrsIgry8tFyIkwn3tayYqwn8Zr48Gr4a9Fn7Jr1vvF4DXwnrXFW8tan7AF1UJwn5Ar45
+ uFZ8A393G3ZxJFcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
  Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
@@ -58,17 +59,16 @@ X-Coremail-Antispam: 1Uk129KBj93XoWxWryDCryUGFyxtF45Jw1kWFX_yoW5WryfpF
  14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
  kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAF
  wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8wNVDUU
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU82g43UU
  UUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.544, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.544,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.706, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.401,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,130 +84,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2026/2/25 ÉÏÎç9:41, Bibo Mao Ð´µÀ:
-> Host CPU model is basically the same with max CPU model, except Product
-> ID and CPU model name. With host CPU model, Product ID comes from
-> cpucfg0 and CPU model comes from /proc/cpuinfo.
+åœ¨ 2026/2/25 ä¸Šåˆ9:41, Bibo Mao å†™é“:
+> Some CPUCFG capability bits depend on KVM host hypervsior and they
+> are detected on QEMU. However some CPUCFG bits are irrelative with
+> hypervsior, here these bits are checked from host machine and set
+> for VM with host CPU model.
 >
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   target/loongarch/cpu.c | 94 ++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 94 insertions(+)
+>   target/loongarch/cpu.c | 36 +++++++++++++++++++++++++++++++++++-
+>   target/loongarch/cpu.h |  8 ++++++++
+>   2 files changed, 43 insertions(+), 1 deletion(-)
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 
 Thanks.
-Song Gao
+SongÂ  Gao
 > diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index 0b4f3b06e6..37950456b4 100644
+> index 37950456b4..8e8b10505d 100644
 > --- a/target/loongarch/cpu.c
 > +++ b/target/loongarch/cpu.c
-> @@ -458,6 +458,97 @@ static void loongarch_max_initfn(Object *obj)
->       }
->   }
+> @@ -532,7 +532,7 @@ static uint32_t get_host_cpucfg(int number)
 >   
-> +#if defined(CONFIG_KVM)
-> +static int read_cpuinfo(const char *field, char *value, int len)
-> +{
-> +    FILE *f;
-> +    int ret = -1;
-> +    int field_len = strlen(field);
-> +    char line[512];
-> +
-> +    f = fopen("/proc/cpuinfo", "r");
-> +    if (!f) {
-> +        return -1;
-> +    }
-> +
-> +    do {
-> +        if (!fgets(line, sizeof(line), f)) {
-> +            break;
-> +        }
-> +        if (!strncmp(line, field, field_len)) {
-> +            strncpy(value, line, len);
-> +            ret = 0;
-> +            break;
-> +        }
-> +    } while (*line);
-> +
-> +    fclose(f);
-> +
-> +    return ret;
-> +}
-> +
-> +static uint64_t get_host_cpu_model(void)
-> +{
-> +    char line[512];
-> +    char *ns;
-> +    static uint64_t cpuid;
-> +
-> +    if (cpuid) {
-> +        return cpuid;
-> +    }
-> +
-> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
-> +        return 0;
-> +    }
-> +
-> +    ns = strchr(line, ':');
-> +    if (!ns) {
-> +        return 0;
-> +    }
-> +
-> +    ns = strstr(ns, "Loongson-");
-> +    if (!ns) {
-> +        return 0;
-> +    }
-> +
-> +    ns += strlen("Loongson-");
-> +    memccpy((void *)&cpuid, ns, 0, 8);
-> +    return cpuid;
-> +}
-> +
-> +static uint32_t get_host_cpucfg(int number)
-> +{
-> +    unsigned int data = 0;
-> +
-> +#ifdef __loongarch__
-> +    asm volatile("cpucfg %[val], %[reg]"
-> +                 : [val] "=r" (data)
-> +                 : [reg] "r" (number)
-> +                 : "memory");
-> +#endif
-> +
-> +    return data;
-> +}
-> +
-> +static void loongarch_host_initfn(Object *obj)
-> +{
-> +    uint32_t data;
-> +    uint64_t cpuid;
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-> +
-> +    loongarch_max_initfn(obj);
-> +    data = get_host_cpucfg(0);
-> +    if (data) {
-> +        cpu->env.cpucfg[0] = data;
-> +    }
-> +
-> +    cpuid = get_host_cpu_model();
-> +    if (cpuid) {
-> +        cpu->env.cpu_id = cpuid;
-> +    }
-> +}
-> +#endif
-> +
->   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   static void loongarch_host_initfn(Object *obj)
 >   {
->       uint8_t tlb_ps;
-> @@ -811,6 +902,9 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
->       DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
->       DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
->       DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
-> +#if defined(CONFIG_KVM)
-> +    DEFINE_LOONGARCH_CPU_TYPE(64, "host", loongarch_host_initfn),
-> +#endif
->   };
+> -    uint32_t data;
+> +    uint32_t data, cpucfg, field;
+>       uint64_t cpuid;
+>       LoongArchCPU *cpu = LOONGARCH_CPU(obj);
 >   
->   DEFINE_TYPES(loongarch_cpu_type_infos)
+> @@ -542,6 +542,40 @@ static void loongarch_host_initfn(Object *obj)
+>           cpu->env.cpucfg[0] = data;
+>       }
+>   
+> +   /*
+> +    * There is no exception in KVM hypervisor when these intructions are
+> +    * executed if HW support, KVM hypervisor cannot control this.
+> +    *
+> +    * Set cpucfg bits which cannot be controlled by KVM hypervisor.
+> +    */
+> +    data = get_host_cpucfg(2);
+> +    cpucfg = cpu->env.cpucfg[2];
+> +    field = FIELD_EX32(data, CPUCFG2, FRECIPE);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, FRECIPE, field);
+> +    field = FIELD_EX32(data, CPUCFG2, DIV32);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, DIV32, field);
+> +    field = FIELD_EX32(data, CPUCFG2, LAM_BH);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, LAM_BH, field);
+> +    field = FIELD_EX32(data, CPUCFG2, LAMCAS);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, LAMCAS, field);
+> +    field = FIELD_EX32(data, CPUCFG2, LLACQ_SCREL);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, LLACQ_SCREL, field);
+> +    field = FIELD_EX32(data, CPUCFG2, SCQ);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG2, SCQ, field);
+> +    cpu->env.cpucfg[2] = cpucfg;
+> +
+> +    data = get_host_cpucfg(3);
+> +    cpucfg = cpu->env.cpucfg[3];
+> +    field = FIELD_EX32(data, CPUCFG3, DBAR_HINTS);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG3, DBAR_HINTS, field);
+> +    field = FIELD_EX32(data, CPUCFG3, ALDORDER_STA);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG3, ALDORDER_STA, field);
+> +    field = FIELD_EX32(data, CPUCFG3, ASTORDER_STA);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG3, ASTORDER_STA, field);
+> +    field = FIELD_EX32(data, CPUCFG3, SLDORDER_STA);
+> +    cpucfg = FIELD_DP32(cpucfg, CPUCFG3, SLDORDER_STA, field);
+> +    cpu->env.cpucfg[3] = cpucfg;
+> +
+>       cpuid = get_host_cpu_model();
+>       if (cpuid) {
+>           cpu->env.cpu_id = cpuid;
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index fda8577a24..d2dfdc8520 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -147,6 +147,7 @@ FIELD(CPUCFG2, LSPW, 21, 1)
+>   FIELD(CPUCFG2, LAM, 22, 1)
+>   FIELD(CPUCFG2, HPTW, 24, 1)
+>   FIELD(CPUCFG2, FRECIPE, 25, 1)
+> +FIELD(CPUCFG2, DIV32, 26, 1)
+>   FIELD(CPUCFG2, LAM_BH, 27, 1)
+>   FIELD(CPUCFG2, LAMCAS, 28, 1)
+>   FIELD(CPUCFG2, LLACQ_SCREL, 29, 1)
+> @@ -165,6 +166,13 @@ FIELD(CPUCFG3, SPW_LVL, 8, 3)
+>   FIELD(CPUCFG3, SPW_HP_HF, 11, 1)
+>   FIELD(CPUCFG3, RVA, 12, 1)
+>   FIELD(CPUCFG3, RVAMAX, 13, 4)
+> +FIELD(CPUCFG3, DBAR_HINTS, 17, 1)
+> +FIELD(CPUCFG3, ALDORDER_CAP, 18, 1)
+> +FIELD(CPUCFG3, ASTORDER_CAP, 19, 1)
+> +FIELD(CPUCFG3, ALDORDER_STA, 20, 1)
+> +FIELD(CPUCFG3, ASTORDER_STA, 21, 1)
+> +FIELD(CPUCFG3, SLDORDER_CAP, 22, 1)
+> +FIELD(CPUCFG3, SLDORDER_STA, 23, 1)
+>   
+>   /* cpucfg[4] bits */
+>   FIELD(CPUCFG4, CC_FREQ, 0, 32)
 
 
