@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C34D4FD0079
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CE9FD0047
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnll-0004Vq-Q9; Sun, 01 Mar 2026 15:52:06 -0500
+	id 1vwnln-0004hr-Qv; Sun, 01 Mar 2026 15:52:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnkc-00031O-Pd
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:57 -0500
+ id 1vwnkt-0003Ku-B4
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:12 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnkI-0002Et-58
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:40 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398196; cv=none; 
+ id 1vwnkr-0002IF-Qo
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:11 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772398244; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=GEaO/ZNxBo5x9xBC3Ww8fZ997uCdP5c9Epbl4je9SKTR4RxgCsXFMyntxoOf5XLYCbGfrPj4CRp544oDo/Kk2Aamv9iYIFum4VTshK/WTbs56R+TkNvHV3f67QPsL9OaY+ZvNrzYOsL2UFTENe8b1UlhSINDNVbhHhij+LV9LCI=
+ b=Lx15ABIGgj3U6KDnnr1MurADu8EPvcRadvrm8QqimdLoGC/MOXu2RiT9xMVdLYc752XJR1WhRlvW+ttSvgQPOQmbIjTAw63IeumEyQevF0yrAlj5HLpjbk1p9dMIvoZQuzKKJi3QOSo1ioYQLzUwhXl0tn/2uqJLtjChC3DGaec=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398196;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=nRrC8cT/rqN2S3hO1yoRbIiriGhV4+icCfwHDLAMy8E=; 
- b=JSK0VkTD9vbsWi2sIw093DDDgvYqm8c5lZhzngw+wPkp2toBuRRiVuWSALIN4vZUxI4kRPw5bygQ1mztyj7GoubkArf1jMprjEFENhpxz1RTnO6F3INLLA+Yin5vIONc2ZxnUzTc1I6A9Ok1W8dc42QKd2CREbtgcv0Z6Kurbok=
+ s=zohoarc; t=1772398244;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=zQ/BHsRxHlqyT+V9EEAF/Zmvt9alFM0l2mI2Obajrvg=; 
+ b=Y6B9badFBCr+93lZvtDgToz8qyyNPLwEouCqHKKMzPzD2YWvhIRTrLbGb4ZFDbwqvVHnk9rEu0Mt00r/fgcu5LdWUWN8ZasVjlw/g3ZOuj1nEQnsbz19elyf0d7twWV6kl5CeewVv3AWB/qntQyANnxIHcZgzEvQ14Qkq+A3y7M=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398196; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398244; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=nRrC8cT/rqN2S3hO1yoRbIiriGhV4+icCfwHDLAMy8E=;
- b=ht7YT6+vKAXhFlAc96a1+jQz0nHFDiatyH3BFfXueNSoktewoi8OSerLeld79Khj
- 0MT5NGfvnPsDkgKdmxuELan8ruVF5csjCfMPtUcEuCvYBB9EOf+656HZ285/8zXSrQV
- GQ6NJd5lPW2HvLnhSu8dPCyH/peBQNPX3To73V/g=
-Received: by mx.zohomail.com with SMTPS id 177239819447590.68954905683518;
- Sun, 1 Mar 2026 12:49:54 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=zQ/BHsRxHlqyT+V9EEAF/Zmvt9alFM0l2mI2Obajrvg=;
+ b=T/MdWE8WpcFUl3jvWdpj2BrNTkAvjxVYNdtQAkdArSc+U+lUUailUCNC2TosxMrD
+ Jj07vfz/bE8gDb50ikUfE08Ex6RxKVZZ+dADfm8h13fEeoi5JqDZTUQAVoxhtEyYUtZ
+ lIwauZvPVuKdjx2t/OVKmsw1P77uZoY7Ze1S1NIE=
+Received: by mx.zohomail.com with SMTPS id 1772398241709112.97271371515615;
+ Sun, 1 Mar 2026 12:50:41 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,15 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 09/21] ui/dbus: Restore original context after new context
- creation
-Date: Sun,  1 Mar 2026 23:48:26 +0300
-Message-ID: <20260301204838.596994-10-dmitry.osipenko@collabora.com>
+Subject: [PATCH v20 17/21] virtio-gpu: Remove superfluous
+ memory_region_set_enabled()
+Date: Sun,  1 Mar 2026 23:48:34 +0300
+Message-ID: <20260301204838.596994-18-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,38 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get currently bound GL context when creating new GL context and restore
-it after the creation for consistency with behavior expected by virglrenderer
-that assumes context-creation doesn't switch context.
+There is no need to explicitly enable/disable memory region when it's
+added or deleted respectively. Remove superfluous set_enabled() calls
+for consistency.
 
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/dbus.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ hw/display/virtio-gpu-virgl.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 905ee6fea71b..81a4310082a2 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -47,9 +47,17 @@ static DBusDisplay *dbus_display;
- static QEMUGLContext dbus_create_context(DisplayGLCtx *dgc,
-                                          QEMUGLParams *params)
- {
-+    QEMUGLContext ctx, current_context = eglGetCurrentContext();
-+
-     eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-                    qemu_egl_rn_ctx);
--    return qemu_egl_create_context(dgc, params);
-+
-+    ctx = qemu_egl_create_context(dgc, params);
-+
-+    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-+                   current_context);
-+
-+    return ctx;
- }
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index f8773039d01d..5b6474e3da90 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -171,7 +171,6 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+-    memory_region_set_enabled(mr, true);
  
- static bool
+     res->mr = mr;
+ 
+@@ -225,7 +224,6 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         b->renderer_blocked++;
+ 
+         /* memory region owns self res->mr object and frees it by itself */
+-        memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+         object_unparent(OBJECT(vmr));
+     }
 -- 
 2.52.0
 
