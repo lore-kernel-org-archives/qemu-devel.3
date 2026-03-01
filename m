@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644DDFD006A
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8AAFD006A
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwi11-0000ZB-7H; Sun, 01 Mar 2026 09:43:31 -0500
+	id 1vwi0E-0000Hw-VJ; Sun, 01 Mar 2026 09:42:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwi0f-0000P3-LN
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:43:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vwi0D-0000HO-4S
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:42:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwi0d-0005lW-DB
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:43:05 -0500
+ id 1vwi0B-0005iY-N9
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:42:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772376181;
+ s=mimecast20190719; t=1772376155;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=azZnkVp/NSVUI74ENWvUxmzX3QZO7A1ubP1tdWLgtW8=;
- b=Bhtc7AYCsFVVjthkaSWh7ZmBSHVQUnudAw/D0Di7a4HxByWmvE/S2jbSRl1aENB+qAgoO4
- YzOfBAt6DWpHSb1NrXywlYbzGVWcaIHpRPHQaSLuMyqrhGTMewJWPIz4Tb6K1gqrevw8Q6
- 5t3PmrEgDI9cB5G2f3Chosj9xm8RP3k=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vT0k0DbWLV0v+4dOwNHhJjYWwhIfPiojeDvq7lIW4gI=;
+ b=PiMfrlayx3Dxo0veOYbsN5YLXWwAz2CwT4sz9N0+gBueNTzm08Oghp/UGCQk24H4rDEMf8
+ R1HVP33uHFBBKFGyAuVFznFLDhS/PuXCD7qAn1kYK0zX61jzW/2PM7rstMo1PQ/tdza2fd
+ OmlgSHCOZDD2KZE1ZP67cAoNSG6sWj0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-mZj38lEgNOSTlBb2MUpMvg-1; Sun, 01 Mar 2026 09:43:00 -0500
-X-MC-Unique: mZj38lEgNOSTlBb2MUpMvg-1
-X-Mimecast-MFC-AGG-ID: mZj38lEgNOSTlBb2MUpMvg_1772376179
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4839fc4cef6so43586965e9.0
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 06:43:00 -0800 (PST)
+ us-mta-400-Uxag58liNSKAqKY24xQiaw-1; Sun, 01 Mar 2026 09:42:33 -0500
+X-MC-Unique: Uxag58liNSKAqKY24xQiaw-1
+X-Mimecast-MFC-AGG-ID: Uxag58liNSKAqKY24xQiaw_1772376152
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-439af95a718so681791f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 06:42:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772376179; x=1772980979; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772376152; x=1772980952; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=azZnkVp/NSVUI74ENWvUxmzX3QZO7A1ubP1tdWLgtW8=;
- b=Mgu3Efwc+Zd8xSrFzp55BhsF92/81IEIX1m0abDqqRxRzwktRRwoHU3fMwHD9YzCVy
- /jy/bnK5msUdyEUuC9AFf237o8Z8gvuYv57jAwXc1RculjFoH7YmQ9hNSNZ28b3MTSZu
- OpqBSjnkqm+aPrUQcWjihxaaeVH1DgLzOTLFqfCt9bJrkjLatrw/R3sX0XbuRtYcnqNg
- h+HMuvVg2tnBW8k/7pGDTcEHb3TkvgkvuDX58L1NVyvy/6/w3pCFDilGdSvyDxQX7e0/
- DMZ6d9PH+nZaMy0h4Ecej8HI3GaAWyAU5re/XbOsk1OOnsDJ/fGPXOhR63IGA3NM/1hT
- Zzlg==
+ :reply-to; bh=vT0k0DbWLV0v+4dOwNHhJjYWwhIfPiojeDvq7lIW4gI=;
+ b=HhBzZ7AD8P6G20/+jOQUi5jtXpr1t8xBczz91/cB8/vcp6/gN10770I98UhuUjIv15
+ JEyxPXwOa0cucQc03gP3e+PaR2c9h3/9mFF1VKKvXPP/pLawoHw0ZaKAq9zXcj5qoHqp
+ Ib386d/U9ZtA07Dk+gSiVoeTkeJVnCCfDus6VhWVh4XKeYlr9A8hZJG6rrEhvUSLFAA4
+ myEeU9BKHVxBtY2zneePWl+GaTqOe2zzx3AagoWUArk5MBktptxMS9kRUutsSwjTLQ0p
+ /v2FJRmtcrbSvoB3yYYLUtSvWLdfYvdMLOp+SpaiOpW4Rf1GSyr4dsdgkCc201+KFNtH
+ k25g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772376179; x=1772980979;
+ d=1e100.net; s=20230601; t=1772376152; x=1772980952;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=azZnkVp/NSVUI74ENWvUxmzX3QZO7A1ubP1tdWLgtW8=;
- b=Jqz/qOZlGjW7lUZaQZ23NLwQ+N6/QnAMemY1/95BWnYaqAH5Xdgx7zqAEUIcC++psf
- zImKfaNyITkajbSTv3b4L14OYqSVFMq1suiuPsF6XxRN5/8o6OAPFe2szBSrOGe09HxQ
- CwpSBJW7PVT8tV5IIWjilrfR4h8zK7pFC0Hti/CvaeH1qm+lAVeG7Fs4bm4SUUPGQobk
- 1/m9b/kZJTKBq63H2FfvUSnJUdApAWrf0ET4J665VYNZAb0WB1WdrETpreDMF2EIBksF
- 4rfWJet5297Z8ApnMAB4whWVOq5GnqxHkMU6vqbEhNotOVgz67B8RITBt0wdshWlnblI
- MzHQ==
-X-Gm-Message-State: AOJu0Yzw50fgLV+zXhia9npa+sqp6xCTJFSCltUYmk9WVF5V4PD3nxf6
- v3Se2vzI6s1PD+ZcStQdt3unsl3w31f2HM/4yMzlwR4gESA6I9j4LmXgGJnUOzBi7d0JHiZGW9L
- ME5kozIpRGK9/jrZCzpFHaTF9w1OAOeKJD55JWTCO9TgP8Pwd+wQj1kUDsvQtGVXaNvY6CHV5ES
- iuS6D4Q+W9LqV2wbyDc6btqEdZcExVtbOj+GvDx5jZ
-X-Gm-Gg: ATEYQzwuaRxqrndY63jlCQFJU4c9zRrxjjvg4RrGPgi3Cr1o8DCD8zb3yO72hsmxu0q
- mxbNNE6gbLuwP3dZcAh26KHSCcC9YpZQ5TIdxYcFsKAvCDy4uT58TqEluQLCW8Dodk1Le1eHs+a
- YnsV5/P4tmXK2+OysPqobMPwmSBrBeghaF0KQ0nji/qfqwY/iqoI7awcd8AowTNOa4wPKnhV8yK
- qdfNw6W++83hz2YyrGWEL6O64+mKEF3WJ4yfw/7WbmAIMMq2dVEcvzc3a0ZXuGamYSiSl6/yWbM
- vU/HMIa8pCYZIl1v6lB9shJHnDyUpV5AWyF+hjMPJc9mBBKuxwOjHxtAOR4AkBAGCEhV5MvqVmt
- YGSf1LsIQkk3eO/vKLR9Qns0pYRecrzsYH1JeuSOi65afsXeqO0DhVs1yuyrKgnhUhEYMTqTfLB
- N5CAVgBLBxsGs6iPvqE/eS0B+Xvo4=
-X-Received: by 2002:a05:600c:982:b0:477:a53c:8ca1 with SMTP id
- 5b1f17b1804b1-483c33eaf99mr157314965e9.14.1772376178969; 
- Sun, 01 Mar 2026 06:42:58 -0800 (PST)
-X-Received: by 2002:a05:600c:982:b0:477:a53c:8ca1 with SMTP id
- 5b1f17b1804b1-483c33eaf99mr157314585e9.14.1772376178379; 
- Sun, 01 Mar 2026 06:42:58 -0800 (PST)
+ bh=vT0k0DbWLV0v+4dOwNHhJjYWwhIfPiojeDvq7lIW4gI=;
+ b=QdSO0rMQQ3EaMrbj3aRMutWPmVWNapx/GtScZt1KUZEKbikDWirQgteFct9RoxXJWE
+ PBe4PJYzon3a1mut+nMlwLI3Ldu9RynDMEm/afrJze+/TUMnL6raepSRiFFTUfO1WzRD
+ gYNIcYLkoktr0zGDSgHpyBg5676Q0ff8EsEXkQu7qlLMOfBEEjwtkmma/awb9oP2jbuS
+ gTzlk461XUnOsDSJ0uWI4E2BRWQt6pROgRnX00Jct3OnmH3N9bQaeXVA5xydcMaSdIUe
+ NynunMo6JeBzM+HrShMnTYdC9A6LgDDLRXlhMb/MAjO5vM4jCQ9zsG24vHASAH7yJTKQ
+ EglQ==
+X-Gm-Message-State: AOJu0YxKoMzXINA1GQYmlzBDJAym/dgcDWp73+TXi7h0aAhBH8N1BOal
+ 1c0ie1/ExIGQGLBvGKmOZHiFaWKRmofp9HDGAymePpblIAaDktzgAt7ZgIq3iBtoFs2p2PFDNz1
+ Xvrz6elymx3t+D1pZHA92u6Mpg4+JZo29kASlg17x93Xxl7x6GjwrksG1gHc8agYAbt43xq0jgn
+ K4ZtQ8dpvtucMuVJkatAgWJxkDu3SQCHHuGgTLn/r6
+X-Gm-Gg: ATEYQzz4YQ9CQw0XVTWTJeKxNXQtajgWUi6AVk6NCwMrbaR3E3lun1cfhWeBDheQ90v
+ 8gKgVxCAjx8VqONiAh5MYvSWev3UUX575aDGp/UUIvPnuUQcG9gY+x5Hs62f2jsC/u4RuQGqDYO
+ 4rtsbKKb+sM7KtdQ13nzLHVRVyQrN3F5TL54TMidXoXF2ssePjuMP7NaW+shsbHaFRptcwGBRqH
+ 4TreOeHlqutmRE5PYWqxTbZP6AQPLCyPUoQnxme9tWA1DvgYUAQM1IMBNVrKsZUpNbozeB6kMOH
+ iaL8shAzAXJ89KfvBLjmZEGNXn7V09jOHIS1WY7eei7EkBY3djHGBKx0CqfNBJSQ/2M10kDaNLf
+ PTws7yVoBEFeMJAEkGn6lsNBlec1fyEuv+clCrLa1Vrn849/qD1IsmyIU+V5O3nsHXdDTfRIfGn
+ JuJW8txGMDJtbC6IwXMFuS5el3WbU=
+X-Received: by 2002:a05:6000:2c04:b0:439:b486:ba5e with SMTP id
+ ffacd0b85a97d-439b486c3c9mr2854752f8f.51.1772376151715; 
+ Sun, 01 Mar 2026 06:42:31 -0800 (PST)
+X-Received: by 2002:a05:6000:2c04:b0:439:b486:ba5e with SMTP id
+ ffacd0b85a97d-439b486c3c9mr2854702f8f.51.1772376151243; 
+ Sun, 01 Mar 2026 06:42:31 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b34b6252sm4871536f8f.10.2026.03.01.06.42.56
+ ffacd0b85a97d-439b55df68dsm2625607f8f.26.2026.03.01.06.42.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 06:42:56 -0800 (PST)
+ Sun, 01 Mar 2026 06:42:30 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 18/18] target/i386/tcg: optimize CCMP
-Date: Sun,  1 Mar 2026 15:42:18 +0100
-Message-ID: <20260301144218.458140-19-pbonzini@redhat.com>
+Subject: [PATCH 05/18] target/i386/tcg: mark XSAVE* as not allowing REX2
+Date: Sun,  1 Mar 2026 15:42:05 +0100
+Message-ID: <20260301144218.458140-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260301144218.458140-1-pbonzini@redhat.com>
 References: <20260301144218.458140-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,108 +120,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use CC_OP_SUB* and CC_OP_LOGIC* if specific dfv values make it possible;
-this avoids having to compute the carry.  This happens relatively often
-for dfv=0, and also for dfv=sf for code produced by clang.
-
-Of the combinations that cannot be optimized, both GCC and clang
-generate Z.  GCC also generates OS and OSZ.
-
-Do not bother doing this for CTEST; the savings are modest because it
-does not need complex code to compute the carry-out vector (CC_SRC
-is always 0).  In addition, trivially replacing the arguments to the AND
-would only support dfv=0 (produced by -2 & 2) or dfv=S (produced by -2 &
--2), because TEST cannot produce any value where CF or OF are not zero.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/emit.c.inc | 63 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 56 insertions(+), 7 deletions(-)
+ target/i386/tcg/decode-new.h     |  3 +++
+ target/i386/tcg/decode-new.c.inc | 21 ++++++++++-----------
+ 2 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index a1c3680db3c..da0e00e6652 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1748,6 +1748,56 @@ static void gen_dfv_movcond(DisasContext *s, X86DecodedInsn *decode, int cond, u
-                        decode->cc_dst, tcg_constant_tl(dst));
- }
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 92822969003..c974ca9d7c5 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -181,6 +181,9 @@ typedef enum X86InsnCheck {
+     /* Vendor-specific checks for Intel/AMD differences */
+     X86_CHECK_i64_amd = 2048,
+     X86_CHECK_o64_intel = 4096,
++
++    /* No REX2 prefix allowed */
++    X86_CHECK_no_rex2 = 8192,
+ } X86InsnCheck;
  
-+static bool gen_ccmp_movcond(DisasContext *s, int cond, uint32_t dfv, MemOp ot)
-+{
-+    target_ulong op0, op1, max_int;
-+    if (cond == (CCMP_T << 1)) {
-+        return true;
-+    }
-+
-+    /*
-+     * For some values of dfv, it's possible to overwrite operands
-+     * instead of using CC_OP_CCMP.
-+     */
-+    max_int = (target_ulong)1 << ((8 << ot) - 1);
-+    switch(dfv) {
-+    case 0:
-+        op0 = 1, op1 = 0;
-+        break;
-+    case CC_P|CC_C:
-+        op0 = 1, op1 = -16;
-+        break;
-+    case CC_S:
-+        op0 = -3, op1 = 0;
-+        break;
-+    case CC_S|CC_P|CC_C:
-+        op0 = 0, op1 = 16;
-+        break;
-+    case CC_O:
-+        /*
-+         * For 8-bit results the sign bit is in bit 7 and, having no copies to the
-+         * right, it flips the parity flag.
-+         */
-+        op0 = -max_int, op1 = 16 + (ot == MO_8);
-+        break;
-+    case CC_O|CC_S|CC_P|CC_C:
-+        /* Same here. */
-+        op0 = max_int, op1 = -1 - (ot == MO_8);
-+        break;
-+    default:
-+        return false;
-+    }
-+
-+    CCPrepare cc = gen_prepare_cc(s, cond, NULL);
-+    if (!cc.use_reg2) {
-+        cc.reg2 = tcg_constant_tl(cc.imm);
-+    }
-+
-+    tcg_gen_movcond_tl(cc.cond, s->T0, cc.reg, cc.reg2, s->T0, tcg_constant_tl(op0));
-+    tcg_gen_movcond_tl(cc.cond, s->T1, cc.reg, cc.reg2, s->T1, tcg_constant_tl(op1));
-+    return true;
-+}
-+
- static void gen_SUB(DisasContext *s, X86DecodedInsn *decode);
- static void gen_CMP(DisasContext *s, X86DecodedInsn *decode)
- {
-@@ -1756,16 +1806,15 @@ static void gen_CMP(DisasContext *s, X86DecodedInsn *decode)
-     MemOp ot = decode->op[1].ot;
-     TCGv cout;
+ typedef enum X86InsnSpecial {
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 6fab597fafc..b968db2b8ad 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -481,9 +481,9 @@ static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+         [1] = X86_OP_ENTRYr(FXRSTOR,    M,y, cpuid(FXSR) p_00),
+         [2] = X86_OP_ENTRYr(LDMXCSR,    E,d, vex5 chk(VEX128) p_00),
+         [3] = X86_OP_ENTRYw(STMXCSR,    E,d, vex5 chk(VEX128) p_00),
+-        [4] = X86_OP_ENTRYw(XSAVE,      M,y, cpuid(XSAVE) p_00),
+-        [5] = X86_OP_ENTRYr(XRSTOR,     M,y, cpuid(XSAVE) p_00),
+-        [6] = X86_OP_ENTRYw(XSAVEOPT,   M,b, cpuid(XSAVEOPT) p_00),
++        [4] = X86_OP_ENTRYw(XSAVE,      M,y, cpuid(XSAVE) p_00 chk(no_rex2)),
++        [5] = X86_OP_ENTRYr(XRSTOR,     M,y, cpuid(XSAVE) p_00 chk(no_rex2)),
++        [6] = X86_OP_ENTRYw(XSAVEOPT,   M,b, cpuid(XSAVEOPT) p_00 chk(no_rex2)),
+         [7] = X86_OP_ENTRYw(NOP,        M,b, cpuid(CLFLUSH) p_00),
+     };
  
--    switch (cond) {
--    case CCMP_T << 1:
--        gen_SUB(s, decode);
--        return;
--    case (CCMP_T << 1) | 1:
-+    if (cond == ((CCMP_T << 1) | 1)) {
-         decode->cc_op = CC_OP_EFLAGS;
-         decode->cc_src = tcg_constant_tl(dfv);
-         return;
--    default:
--        break;
-+    }
-+
-+    if (gen_ccmp_movcond(s, cond, dfv, ot)) {
-+        gen_SUB(s, decode);
-+        return;
-     }
- 
-     decode->cc_op = CC_OP_CCMPB + ot;
+@@ -2963,15 +2963,14 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+                 goto illegal_op;
+             }
+         }
+-        if (decode.e.check & X86_CHECK_prot_or_vm86) {
+-            if (!PE(s)) {
+-                goto illegal_op;
+-            }
++        if ((decode.e.check & X86_CHECK_prot_or_vm86) && !PE(s)) {
++            goto illegal_op;
+         }
+-        if (decode.e.check & X86_CHECK_no_vm86) {
+-            if (VM86(s)) {
+-                goto illegal_op;
+-            }
++        if ((decode.e.check & X86_CHECK_no_vm86) && VM86(s)) {
++            goto illegal_op;
++        }
++        if ((decode.e.check & X86_CHECK_no_rex2) && (s->prefix & PREFIX_REX2)) {
++            goto illegal_op;
+         }
+         if ((decode.e.check & X86_CHECK_VEX128) && s->vex_l) {
+             goto illegal_op;
 -- 
 2.52.0
 
