@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A453FD0075
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 21:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7EC7FD0075
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 21:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnwi-0004WD-Rc; Sun, 01 Mar 2026 16:03:24 -0500
+	id 1vwnwj-0004Wp-NJ; Sun, 01 Mar 2026 16:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vwnwg-0004Uu-Nm
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:22 -0500
+ id 1vwnwh-0004VN-1q
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:23 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vwnwe-0002KW-5D
+ id 1vwnwf-0002NR-5V
  for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:22 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C6E3B597399;
- Sun, 01 Mar 2026 22:03:17 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id D28BC597395;
+ Sun, 01 Mar 2026 22:03:18 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id u-JeVutj2lg4; Sun,  1 Mar 2026 22:03:15 +0100 (CET)
+ id wUhXEEmwrmxv; Sun,  1 Mar 2026 22:03:16 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C24ED597395; Sun, 01 Mar 2026 22:03:15 +0100 (CET)
-Message-ID: <d492af5c4128dc72ff59908e4b89b07464832a11.1772397447.git.balaton@eik.bme.hu>
+ id CD2BA597398; Sun, 01 Mar 2026 22:03:16 +0100 (CET)
+Message-ID: <d2448f32ab6bda8627ff4f6982c90c6fc2c8fba9.1772397447.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1772397447.git.balaton@eik.bme.hu>
 References: <cover.1772397447.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 6/8] memory: Add internal memory_region_register_ram
- function
+Subject: [PATCH v5 7/8] memory: Shorten memory_region_init_ram_device_ptr and
+ memory_region_init_rom_device
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,7 +45,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 01 Mar 2026 22:03:15 +0100 (CET)
+Date: Sun, 01 Mar 2026 22:03:16 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -6
@@ -69,145 +69,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out common operation from memory_region_init_{ram,rom}
-functions to register the region for migration. This avoids
-duplicating the long comment in several functions.
+We can reuse memory_region_init_io in these functions. Also shorten
+some other function prototypes.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/memory.c | 76 ++++++++++++++-----------------------------------
- 1 file changed, 21 insertions(+), 55 deletions(-)
+ system/memory.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
 diff --git a/system/memory.c b/system/memory.c
-index e1f073e1be..198d1d0b92 100644
+index 198d1d0b92..492bf51f48 100644
 --- a/system/memory.c
 +++ b/system/memory.c
-@@ -3647,18 +3647,10 @@ void mtree_info(bool flatview, bool dispatch_tree, bool owner, bool disabled)
-     }
+@@ -1568,12 +1568,9 @@ static void memory_region_set_ops(MemoryRegion *mr,
+     mr->terminates = true;
  }
  
--bool memory_region_init_ram(MemoryRegion *mr,
--                            Object *owner,
--                            const char *name,
--                            uint64_t size,
--                            Error **errp)
-+static void memory_region_register_ram(MemoryRegion *mr, Object *owner)
+-void memory_region_init_io(MemoryRegion *mr,
+-                           Object *owner,
+-                           const MemoryRegionOps *ops,
+-                           void *opaque,
+-                           const char *name,
+-                           uint64_t size)
++void memory_region_init_io(MemoryRegion *mr, Object *owner,
++                           const MemoryRegionOps *ops, void *opaque,
++                           const char *name, uint64_t size)
  {
-     DeviceState *owner_dev;
- 
--    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
--                                                size, 0, errp)) {
--        return false;
--    }
-     /* This will assert if owner is neither NULL nor a DeviceState.
-      * We only want the owner here for the purposes of defining a
-      * unique name for migration. TODO: Ideally we should implement
-@@ -3667,68 +3659,50 @@ bool memory_region_init_ram(MemoryRegion *mr,
-      */
-     owner_dev = DEVICE(owner);
-     vmstate_register_ram(mr, owner_dev);
-+}
- 
-+bool memory_region_init_ram(MemoryRegion *mr, Object *owner,
-+                            const char *name, uint64_t size,
-+                            Error **errp)
-+{
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
-+                                                0, errp)) {
-+        return false;
-+    }
-+    memory_region_register_ram(mr, owner);
-     return true;
+     memory_region_init(mr, owner, name, size);
+     memory_region_set_ops(mr, ops, opaque);
+@@ -1677,8 +1674,7 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+                                        const char *name, uint64_t size,
+                                        void *ptr)
+ {
+-    memory_region_init(mr, owner, name, size);
+-    memory_region_set_ops(mr, &ram_device_mem_ops, mr);
++    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+     memory_region_setup_ram(mr);
+     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
+     assert(ptr != NULL);
+@@ -1686,12 +1682,9 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+     mr->ram_device = true;
  }
  
--bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
--                                        Object *owner,
--                                        const char *name,
--                                        uint64_t size,
-+bool memory_region_init_ram_guest_memfd(MemoryRegion *mr, Object *owner,
-+                                        const char *name, uint64_t size,
-                                         Error **errp)
+-void memory_region_init_alias(MemoryRegion *mr,
+-                              Object *owner,
+-                              const char *name,
+-                              MemoryRegion *orig,
+-                              hwaddr offset,
+-                              uint64_t size)
++void memory_region_init_alias(MemoryRegion *mr, Object *owner,
++                              const char *name, MemoryRegion *orig,
++                              hwaddr offset, uint64_t size)
  {
--    DeviceState *owner_dev;
--
-     if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
-                                                 RAM_GUEST_MEMFD, errp)) {
-         return false;
-     }
--    /* This will assert if owner is neither NULL nor a DeviceState.
--     * We only want the owner here for the purposes of defining a
--     * unique name for migration. TODO: Ideally we should implement
--     * a naming scheme for Objects which are not DeviceStates, in
--     * which case we can relax this restriction.
--     */
--    owner_dev = DEVICE(owner);
--    vmstate_register_ram(mr, owner_dev);
--
-+    memory_region_register_ram(mr, owner);
-     return true;
- }
- 
--bool memory_region_init_rom(MemoryRegion *mr,
--                            Object *owner,
--                            const char *name,
--                            uint64_t size,
-+bool memory_region_init_rom(MemoryRegion *mr, Object *owner,
-+                            const char *name, uint64_t size,
-                             Error **errp)
- {
--    DeviceState *owner_dev;
--
-     if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-                                                 size, 0, errp)) {
-         return false;
-     }
-     mr->readonly = true;
--    /* This will assert if owner is neither NULL nor a DeviceState.
--     * We only want the owner here for the purposes of defining a
--     * unique name for migration. TODO: Ideally we should implement
--     * a naming scheme for Objects which are not DeviceStates, in
--     * which case we can relax this restriction.
--     */
--    owner_dev = DEVICE(owner);
--    vmstate_register_ram(mr, owner_dev);
--
-+    memory_region_register_ram(mr, owner);
-     return true;
- }
- 
--bool memory_region_init_rom_device(MemoryRegion *mr,
--                                   Object *owner,
--                                   const MemoryRegionOps *ops,
--                                   void *opaque,
--                                   const char *name,
--                                   uint64_t size,
-+bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
-+                                   const MemoryRegionOps *ops, void *opaque,
-+                                   const char *name, uint64_t size,
-                                    Error **errp)
- {
--    DeviceState *owner_dev;
+     memory_region_init(mr, owner, name, size);
+     mr->alias = orig;
+@@ -3706,8 +3699,7 @@ bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
      Error *err = NULL;
  
      assert(ops);
-@@ -3741,15 +3715,7 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
-     }
-     mr->ram = false;
-     mr->rom_device = true;
--    /* This will assert if owner is neither NULL nor a DeviceState.
--     * We only want the owner here for the purposes of defining a
--     * unique name for migration. TODO: Ideally we should implement
--     * a naming scheme for Objects which are not DeviceStates, in
--     * which case we can relax this restriction.
--     */
--    owner_dev = DEVICE(owner);
--    vmstate_register_ram(mr, owner_dev);
--
-+    memory_region_register_ram(mr, owner);
-     return true;
- }
- 
+-    memory_region_init(mr, owner, name, size);
+-    memory_region_set_ops(mr, ops, opaque);
++    memory_region_init_io(mr, owner, ops, opaque, name, size);
+     memory_region_setup_ram(mr);
+     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+     if (!memory_region_error_propagate(mr, err, errp)) {
 -- 
 2.41.3
 
