@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6E4FD0047
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 224ABFD0075
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnl2-0003Qu-CC; Sun, 01 Mar 2026 15:51:21 -0500
+	id 1vwnlJ-0003t2-N9; Sun, 01 Mar 2026 15:51:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnkZ-0002zQ-VO
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:55 -0500
+ id 1vwnkg-00034V-Ip
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:04 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnkI-0002En-4P
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398190; cv=none; 
+ id 1vwnkc-0002HF-Q5
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:58 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772398238; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=n7lygObZjp9YezYhyUmH0b2rKknw2eCrXGtrGInuVvOaR+QfH2CXyKwjUdMSNGd2c92dOYAG6Cd4LF4F3cpq4Lf4sdvHDhWrFOUl4YL1jFt3HxNfI/PA06p5WvsCSLH6ks0o7K+Rg8JqdAwiUeLFdQehjUbvJ4Q70B4uyP0ldAE=
+ b=Oc6comWhSLG5vM+kQ6dT8TJa65Ur2IyvGVGFufP4fBkKxZ4j2BlOuy9rl0bL+8Kp1BmyjDuIGctIY/DsW1kyTnQ9DDHPEO3P6BlvL3Se8O9Ke8MB6AQV0WVhuJF9pQSHzqQwflYk6FpjQmO+jKWaIv1Jo6p3fNrLexVFfQCCOx8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398190;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=6bPwsKQVmR9gSAz2c0NArlGl5DZDiM5ueSSyzTHtaf0=; 
- b=T9V7ps0wOS27aTCAMyfVmbaF0PHV6NJkg37oPqHw+sZjii3ajKWqwzITDqD7wu3xnUwXiOUfszjFGGsRQz9GfKOGl7vAItHNlFVdCEqkMzmaCK68YiRJQ7D+mLpGfAYkGduCn6ICBdew2xxc0xcYP0YMFR46g0SyZnwlYLBvy/M=
+ s=zohoarc; t=1772398238;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=LP0NMKJP0ZJsg3D6W1P93gHQbeBA3DA9ntBuX3+Brh4=; 
+ b=Qet6lrQrOxnVB+F+64IXVZGfAyI853v88Nj31q4HlGEF9u2YxLJJQcsbCn5YobZmuH7QIaBbpZ7qlQK+J5M+g2LO33AknZcCOVwj0qsO3aXXzyo94paus67MrofQ72PehM7n/I+5K2HoBryHVGbHSYIqRODN2vICDSH+grQct6A=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398190; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398238; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=6bPwsKQVmR9gSAz2c0NArlGl5DZDiM5ueSSyzTHtaf0=;
- b=NKfrBmMjGphcllB0KtOR3BIdpew1YMLexgWpSt9cglOR4wyaMHiLYZgJ6rtwPRzP
- KwgrISOVSSGq+5I1UD9GX+t4xay8DJ40OeskzkMCJ1VM/JplpVWyFXDvBFU3cDBq227
- SLdAMiPKpjRgbKu2k0wTOFEFqRE8axUstCb9qTYY=
-Received: by mx.zohomail.com with SMTPS id 1772398188422878.3921321672921;
- Sun, 1 Mar 2026 12:49:48 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=LP0NMKJP0ZJsg3D6W1P93gHQbeBA3DA9ntBuX3+Brh4=;
+ b=jmhCZWeQNz61BU24Umi376fOQ8EiCk2oWkUFhPOYeeNxhSfS1rKQP4sm58tYgdPV
+ FcwkPoIzY+hvWWFGaLBX3kXPkM77r4N2OnhBpfulHs+LQP6iOlrsZcsst+GxsZjEOuF
+ Rok+vG3MhZ8RdKcQcr0cchUks8hQhD6iiqXFOK7s=
+Received: by mx.zohomail.com with SMTPS id 1772398235709282.3974862113014;
+ Sun, 1 Mar 2026 12:50:35 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,15 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 08/21] ui/spice: Restore original context after new
- context creation
-Date: Sun,  1 Mar 2026 23:48:25 +0300
-Message-ID: <20260301204838.596994-9-dmitry.osipenko@collabora.com>
+Subject: [PATCH v20 16/21] docs/system: virtio-gpu: Document host/guest
+ requirements
+Date: Sun,  1 Mar 2026 23:48:33 +0300
+Message-ID: <20260301204838.596994-17-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,38 +98,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get currently bound GL context when creating new GL context and restore
-it after the creation for consistency with behavior expected by virglrenderer
-that assumes context-creation doesn't switch context.
+From: Alex Bennée <alex.bennee@linaro.org>
 
+This attempts to tidy up the VirtIO GPU documentation to make the list
+of requirements clearer. There are still a lot of moving parts and the
+distros have some catching up to do before this is all handled
+automatically.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Sergio Lopez Pascual <slp@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+[dmitry.osipenko@collabora.com: Extended and corrected doc]
 ---
- ui/spice-display.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ docs/system/devices/virtio/virtio-gpu.rst | 105 +++++++++++++++++++++-
+ 1 file changed, 102 insertions(+), 3 deletions(-)
 
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 28399f8a8174..c26c935456ff 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -1033,9 +1033,17 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
- static QEMUGLContext qemu_spice_gl_create_context(DisplayGLCtx *dgc,
-                                                   QEMUGLParams *params)
- {
-+    QEMUGLContext ctx, current_context = eglGetCurrentContext();
-+
-     eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-                    qemu_egl_rn_ctx);
--    return qemu_egl_create_context(dgc, params);
-+
-+    ctx = qemu_egl_create_context(dgc, params);
-+
-+    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-+                   current_context);
-+
-+    return ctx;
- }
+diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
+index ef5fb0401d5d..d05f8cb8e3f9 100644
+--- a/docs/system/devices/virtio/virtio-gpu.rst
++++ b/docs/system/devices/virtio/virtio-gpu.rst
+@@ -7,14 +7,28 @@ VirtIO GPU
+ ==========
  
- static void qemu_spice_gl_scanout_disable(DisplayChangeListener *dcl)
+ This document explains the setup and usage of the virtio-gpu device.
+-The virtio-gpu device paravirtualizes the GPU and display controller.
++The virtio-gpu device provides a GPU and display controller
++paravirtualized using VirtIO. It supports a number of different modes
++from simple 2D displays to fully accelerated 3D graphics.
+ 
+-Linux kernel support
+---------------------
++Linux guest kernel support
++--------------------------
+ 
+ virtio-gpu requires a guest Linux kernel built with the
+ ``CONFIG_DRM_VIRTIO_GPU`` option.
+ 
++3D acceleration
++---------------
++
++3D acceleration of a virtualized GPU is still an evolving field.
++Depending on the 3D mode you are running you may need to override
++distribution supplied libraries with more recent versions or enable
++build options. There are a number of requirements the host must meet
++to be able to be able to support guests. QEMU must be able to access the
++host's GPU and for the best performance be able to reliably share GPU
++memory with the guest. Details of 3D acceleration requirements are
++described in a further sections.
++
+ QEMU virtio-gpu variants
+ ------------------------
+ 
+@@ -67,8 +81,14 @@ intermediate representation is communicated to the host and the
+ `virglrenderer`_ library on the host translates the intermediate
+ representation back to OpenGL API calls.
+ 
++By default OpenGL version on guest is limited to 4.3. In order to enable
++OpenGL 4.6 support, virtio-gpu  host blobs feature (``hostmem`` and ``blob``
++fields) should be enabled.  The ``hostmem`` field specifies the size of
++virtio-gpu host memory window. This is typically between 256M and 8G.
++
+ .. parsed-literal::
+     -device virtio-gpu-gl
++    -device virtio-gpu-gl,hostmem=8G,blob=true
+ 
+ .. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+ .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+@@ -96,6 +116,67 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
+ 
+ .. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
+ 
++.. list-table:: Linux Host Requirements
++  :header-rows: 1
++
++  * - Capability
++    - Kernel Version
++    - Libvirglrenderer Version
++  * - OpenGL pass-through
++    - Any Linux version compatible with QEMU if not using host blobs feature,
++      Linux 6.13+ otherwise
++    - 0.8.2+
++  * - Vulkan pass-through
++    - Linux 6.13+
++    - 1.0.0+
++  * - AMDGPU DRM native context
++    - Linux 6.13+
++    - 1.1.0+
++  * - Freedreno DRM native context
++    - Linux 6.4+
++    - 1.0.0+
++  * - Intel i915 DRM native context
++    - Linux 6.13+
++    - 1.3.0+
++  * - Asahi DRM native context
++    - `Downstream version`_ of Asahi Linux kernel
++    - 1.2.0+
++  * - Panfrost native context
++    - Linux 6.13+
++    - 1.3.0+
++
++.. _Downstream version: https://github.com/AsahiLinux/linux
++
++.. list-table:: Linux Guest Requirements
++  :header-rows: 1
++
++  * - Capability
++    - Kernel Version
++    - Mesa Version
++  * - OpenGL pass-through
++    - Any Linux version supporting virtio-gpu
++    - 16.0.0+
++  * - Vulkan pass-through
++    - Linux 5.16+
++    - 24.2.0+
++  * - AMDGPU DRM native context
++    - Linux 6.14+
++    - 25.0.0+
++  * - Freedreno DRM native context
++    - Linux 6.14+
++    - 23.1.0+
++  * - Intel i915 DRM native context
++    - Linux 6.14+
++    - 26.1.0+
++  * - Asahi DRM native context
++    - Linux 6.14+
++    - 24.2.0+
++  * - Panfrost native context
++    - Linux 6.14+
++    - `mr36814`_
++
++.. _mr36814: https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/36814
++
+ virtio-gpu rutabaga
+ -------------------
+ 
+@@ -135,3 +216,21 @@ Surfaceless is the default if ``wsi`` is not specified.
+ .. _Wayland display passthrough: https://www.youtube.com/watch?v=OZJiHMtIQ2M
+ .. _gfxstream-enabled rutabaga: https://crosvm.dev/book/appendix/rutabaga_gfx.html
+ .. _guest Wayland proxy: https://crosvm.dev/book/devices/wayland.html
++
++.. list-table:: Linux Host Requirements
++  :header-rows: 1
++
++  * - Capability
++    - Kernel Version
++  * - Vulkan+Wayland pass-through
++    - Linux 6.13+
++
++.. list-table:: Linux Guest Requirements
++  :header-rows: 1
++
++  * - Capability
++    - Kernel Version
++    - Mesa Version
++  * - Vulkan+Wayland pass-through
++    - Linux 5.16+
++    - 24.3.0+
 -- 
 2.52.0
 
