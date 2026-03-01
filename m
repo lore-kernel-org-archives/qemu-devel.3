@@ -4,102 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C18FD005C
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 11:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D456FD0066
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 12:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vweqO-0001XQ-Sx; Sun, 01 Mar 2026 06:20:17 -0500
+	id 1vwfzR-0000ZX-8E; Sun, 01 Mar 2026 07:33:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vweqM-0001Wh-7V
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 06:20:14 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vweqK-0006i6-HW
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 06:20:13 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64cb577e79cso3540014d50.0
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 03:20:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772364011; cv=none;
- d=google.com; s=arc-20240605;
- b=NhiGQtJTroNunvO/DA/vmRSdDVfgC7l5gogVVZ0wHpr6E0j2TnN0jy12p61wvjeAjx
- IRGSFUpFuqf9NmQbRZXzUoOgyJVhaYFGDoUZyYjrITu+NXRpzltyfQl77yV4B8jYasRn
- 6iaIXg38x64K5XVrMtaAeJr60eeKJiHBwVJXc0UpN5JuKfRns+fTrZV8pf3otgItmsG7
- 8M9FtGfi5+PE8BFqUaSR1iPx77B+6TCd1+t7jdGdqi/cZnNIh7I0QQPnaRy46upy6DIF
- pFTbBw8pntL8f6tDM8/9kIhGxI7S9qbAfN8mBN03byHbPdmH7TRuyL8M5zYyBeWuVKk3
- zLtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=w4qm1OfWTHMdqvoVaSdZq4+KjUdjZjFh5b9wBq4LGd4=;
- fh=axbB2bjiSokmisYx3H7DI5yUO3Z+Sykod4F4JR7lPwk=;
- b=HM8MHe7w/z4k3yoFcZhXTgy/8jBuuU/V3vfBfwPoPF6I8DJY4eBT9tTq4ocVo7U+YW
- jEP32m96YtRr7mT/m0PUARVoAsccZ7phnm3Gz5Oy2ds4EjDOnLpEExuTXwWoPGBhsxLd
- 1h9Ze8yt0WAGnUGlU1/OhLvLlkFO3wHFvkHf2FGpC+aJK5uGP4k/Ni4Xje6u9evLRQ0l
- 6Q2wXAKUine39pK76UXW9MXAMyDomoWYlhRFanZPsTgi1bNK0ExD1KQgoH8AZhWlEPWE
- LPA++U/SQoqVHXsc8F+nJYHNn3iOcGyyac/VcwNFevWcz64TKQBvLVSZgAyKkSgfH07R
- tybA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772364011; x=1772968811; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w4qm1OfWTHMdqvoVaSdZq4+KjUdjZjFh5b9wBq4LGd4=;
- b=lrJpyBvx1ks79jNdx+7Hjx2QHRgjUU82+0EAUlnDHiPyIOnJFROWscGddBHA0AsJCl
- d8qQWVm1rz7gMAiyfr/jyDK3wqaaE6bK385AmHufPCb84NjFyvtJJu4t+hh16YbdcJNG
- ZrM85e8eRaqZM2VtlKU1RW5zK39tIuSQ4PwjN+7SKcQKRP02Rcv0h7s+urwQRDGD5Zy1
- 43d7v0KJMaG6n/XYBLcDtoqgp+5i+WCUxH8m0PXwlYPEIybNnhEzdacmE/9sU+Horlvi
- 428+pW8WBoVzkE2TWNm9iOTkl/nKUK0IqJoPqF6BNYgCT60lqwAzwnPnbpOT+B6Knmbe
- KgUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772364011; x=1772968811;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=w4qm1OfWTHMdqvoVaSdZq4+KjUdjZjFh5b9wBq4LGd4=;
- b=XARnpWq2bHt9dkQZlpvm4lWr/pGjafXLc/dPv7mB9XEQpxLoPYmsZ1/X5ZgE0o7rci
- H4mC3erJ5IwnWQmYljyDzuUVUIewPM2z/dCOq0+y6luIILA4Pa4YCL757I6AyXriVzcR
- mgyiL1F/dHRTb0A4LE6QUHFpS/avPNf5kdbTYQ4DI4QqcSEd8OKa6BDqlnBsdv+pCA96
- L3WLhnIsZ5ZgtznJuG5oBXn+HPVG3NSBv8iG7yCuqfSHVnMNhp6NiFDKr9eOgXexVknP
- RVXIOBBvs+A4YhCX5uZq6QellcfKgIjTpsHdfTAKLJe6XmoDXWYtpwanvPlyOJVHpbFL
- HQXA==
-X-Gm-Message-State: AOJu0YxO13vTWg5ToZJub/tXOo4xcSwcJ2YBmW42n6l3/MOQnEtMrUHM
- DTV22mYH0O1G7cczGYP4964xskCJFDhpBDvuVS3y0gg4EzP5fDCcBPoZhpnJV0LfFu3M9ibLkOA
- C4f+Tj5IkEnYz4y7vX1WWdBTuyR+aV8be0wt0dPo9mg==
-X-Gm-Gg: ATEYQzzOs2Pvq3E/PSoLlpBXaQCoWGNcxyatF4HHqIlrIWqo5jboz1sHUyPtvqaeXbB
- U7DdaxGKm8y/J4247lt9+X/iL37TxqUyUuvMz0KkIftduaJ2yThCKtId42mdbairbmJqiq0rONU
- moqYmbvUzxz2XmZ46724Uog5p36kxI8HLFd/8Au31uSdn1tkdUtpHo1srGqUvY6q0CYWcQu3ErG
- SFxEDImmm3WzyMhIoc+WPVGclW8jB+6xl1lRYi3iXPABL646npX/7IHVhe1KEf0sPgb/8ci5ebF
- 5rq96i/2M1RiStow+H+AI0xxp6pPVxQDWTWqIP6nrLnQ0nPEhnAQsffUNXBnncd06t4=
-X-Received: by 2002:a05:690e:1902:b0:64c:20f7:b018 with SMTP id
- 956f58d0204a3-64cc22a40e3mr7448673d50.62.1772364010957; Sun, 01 Mar 2026
- 03:20:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vwfzI-0000YS-Te; Sun, 01 Mar 2026 07:33:37 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vwfzG-0008KY-GK; Sun, 01 Mar 2026 07:33:32 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwD3TNANMqRpKgGhAA--.22152S2;
+ Sun, 01 Mar 2026 20:33:18 +0800 (CST)
+Received: from [192.168.31.94] (unknown [113.246.118.211])
+ by mail (Coremail) with SMTP id AQAAfwA3jusMMqRpaCweAA--.37813S2;
+ Sun, 01 Mar 2026 20:33:16 +0800 (CST)
+Content-Type: multipart/alternative;
+ boundary="------------S0LAryhZODTeHls3SfyW1nz5"
+Message-ID: <585be3ce-d5f3-455a-a7fb-3181920cfc60@phytium.com.cn>
+Date: Sun, 1 Mar 2026 20:33:15 +0800
 MIME-Version: 1.0
-References: <20260227151805.2335641-1-alex.bennee@linaro.org>
-In-Reply-To: <20260227151805.2335641-1-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 1 Mar 2026 11:19:59 +0000
-X-Gm-Features: AaiRm53JT1GVFod-UtxVYK_1ongAZWYHkAbNzE39IfRuVqZ6OfharWPeUmkdHgQ
-Message-ID: <CAFEAcA-FSKw7yW1+aMGE46wFgV7xGrE+fNTQRAAoJfpWLWJrLQ@mail.gmail.com>
-Subject: Re: [PULL 0/7] testing updates (vm, docker, arm functional)
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 19/31] hw/arm/smmuv3: Fix CFGI_CD handling when stage-1
+ is unsupported
+To: Mostafa Saleh <smostafa@google.com>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101733.2995020-1-tangtao1634@phytium.com.cn>
+ <aaGu5v0To65M5LkB@google.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <aaGu5v0To65M5LkB@google.com>
+X-CM-TRANSID: AQAAfwA3jusMMqRpaCweAA--.37813S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWmiCd8FiAACsW
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrZr17JF4xGF17Ar17KryxAFb_yoWDtFb_uw
+ 4vq3Z3Gw4DArsxXrn3KFsxXrs3G3y7Wa4UXrWFq343ArW3WFZrJFZ7trZ5XrW3Jw4F9F1j
+ y3yDuay7uFySqjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+ Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+ UUUU=
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,42 +80,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Feb 2026 at 15:19, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+This is a multi-part message in MIME format.
+--------------S0LAryhZODTeHls3SfyW1nz5
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Hi Mostafa,
+
+On 2026/2/27 PM10:49, Mostafa Saleh wrote:
+> On Sat, Feb 21, 2026 at 06:17:33PM +0800, Tao Tang wrote:
+>> Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL path
+>> and return CERROR_ILL when stage-1 translation is not implemented,
+>> matching the architecture requirement (IHI 0070G.b, page 176).
+>>
+>> Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
+>> Signed-off-by: Tao Tang<tangtao1634@phytium.com.cn>
+> This is a separate fix, it can be sent standalone to make this series
+> smaller, similarly the first patch.
+
+
+For #1, #2 and #19 commit (this one), since I’m not fully sure about the 
+expected process here, should I resend these already Reviewed-by fixes 
+as standalone patch respectively right now,  and try to get them merged 
+first?
+
+
+> Also the "Fixes" comment is not accurate, that was probably broken from
+> the stage-2 implementation which was added later.
+
+
+I'll remove "Fixes" when resending this commit.
+
+
+> Reviewed-by: Mostafa Saleh<smostafa@google.com>
 >
-> The following changes since commit d8a9d97317d03190b34498741f98f22e2a9afe=
-3e:
->
->   Merge tag 'pull-target-arm-20260226' of https://gitlab.com/pm215/qemu i=
-nto staging (2026-02-26 16:00:07 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stsquad/qemu.git tags/pull-11.0-testing-updates-2702=
-26-2
->
-> for you to fetch changes up to 49105fa01059c100332a583816ba97562e181586:
->
->   tests/functional: add Arm VBSA uefi conformance test (2026-02-27 12:54:=
-17 +0000)
->
-> ----------------------------------------------------------------
-> testing updates (vm, docker, arm functional)
->
->   - migrate non-lcitool Debian containers to Trixie (13)
->   - remove legacy-test-cross hacks
->   - fix some minor make vm- Makefile issues
->   - bump OpenBSD to 7.8
->   - add VBSA EFI functional test for Arm
->
-> ----------------------------------------------------------------
+> Thanks,
+> Mostafa
+
+
+Thanks for your review.
+
+Tao
 
 
 
-Applied, thanks.
+--------------S0LAryhZODTeHls3SfyW1nz5
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Mostafa,</p>
+    <div class="moz-cite-prefix">On 2026/2/27 PM10:49, Mostafa Saleh
+      wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:aaGu5v0To65M5LkB@google.com">
+      <pre wrap="" class="moz-quote-pre">On Sat, Feb 21, 2026 at 06:17:33PM +0800, Tao Tang wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL path
+and return CERROR_ILL when stage-1 translation is not implemented,
+matching the architecture requirement (IHI 0070G.b, page 176).
 
--- PMM
+Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
+Signed-off-by: Tao Tang <a class="moz-txt-link-rfc2396E" href="mailto:tangtao1634@phytium.com.cn">&lt;tangtao1634@phytium.com.cn&gt;</a>
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This is a separate fix, it can be sent standalone to make this series
+smaller, similarly the first patch.</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>For #1, #2 and #19 commit (this one), since I’m not fully sure
+      about the expected process here, should I resend these already
+      Reviewed-by fixes as standalone patch respectively right now,  and
+      try to get them merged first?</p>
+    <p><br>
+    </p>
+    <blockquote type="cite" cite="mid:aaGu5v0To65M5LkB@google.com">
+      <pre wrap="" class="moz-quote-pre">
+Also the "Fixes" comment is not accurate, that was probably broken from
+the stage-2 implementation which was added later.
+</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>I'll remove "Fixes" when resending this commit.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite" cite="mid:aaGu5v0To65M5LkB@google.com">
+      <pre wrap="" class="moz-quote-pre">
+Reviewed-by: Mostafa Saleh <a class="moz-txt-link-rfc2396E" href="mailto:smostafa@google.com">&lt;smostafa@google.com&gt;</a>
+
+Thanks,
+Mostafa
+</pre>
+    </blockquote>
+    <p><br>
+    </p>
+    <p>Thanks for your review.</p>
+    <p>Tao</p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><span style="white-space: pre-wrap">
+</span></p>
+  </body>
+</html>
+
+--------------S0LAryhZODTeHls3SfyW1nz5--
+
 
