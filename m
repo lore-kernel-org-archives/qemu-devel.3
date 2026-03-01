@@ -4,57 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A80FD0057
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B61FD006A
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 15:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwi8e-00011J-Fz; Sun, 01 Mar 2026 09:51:20 -0500
+	id 1vwiMm-0004wm-Dz; Sun, 01 Mar 2026 10:05:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vwi8c-000116-Dj
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:51:18 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vwiMj-0004um-Hz
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 10:05:53 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vwi8a-0006fy-Dc
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:51:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=cM31RwFvWnKv3KgpYPW2esnRxSyZFPXm0mO3WRlc3Ro=; b=SwJ/k0pq9H1qt9Jv
- ucNr4NlvIyCUx6OsHI9aY5sNZh6QjCmHUPlDczV00cCCGnJ3S4f/E1sVx2uCOFpuOOTawxD2yyR+T
- 5de2Gqfi1FFvDzF/7MPyyCbe8GCJYmwatf9q4sHU3xa24wUni+RWx6NXVQC7m+lH0i4QyfPn5p9qo
- HPqUAUVf3F0ntcItm+W0jGDM+nrfWLpvlL4I9cZYLd0HXhiCuXXSa0fYVyfL0xrBZPDLDlOEHA0XB
- kLt/+CWkt3g5AX2skXve682Ltvx54iiq0qXs1uZ/t15BWHMdagPRMiD7GvsmRouBp3Dd6WDgvuAQl
- 4NImKwGdHpQBd7vu9Q==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vwi8V-00000006KFd-2U30;
- Sun, 01 Mar 2026 14:51:11 +0000
-Date: Sun, 1 Mar 2026 14:51:11 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 02/16] target/alpha: Use explicit little-endian LD/ST API
-Message-ID: <aaRSXzwmZBoRD0e7@gallifrey>
-References: <20260202212019.94205-1-philmd@linaro.org>
- <20260202212019.94205-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vwiMe-0000N6-Py
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 10:05:51 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B4F2B597308;
+ Sun, 01 Mar 2026 16:05:44 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id MTsejwJ2BfDx; Sun,  1 Mar 2026 16:05:42 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 880015969F0; Sun, 01 Mar 2026 16:05:42 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 82A625969E4;
+ Sun, 01 Mar 2026 16:05:42 +0100 (CET)
+Date: Sun, 1 Mar 2026 16:05:42 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Lukas Straub <lukasstraub2@web.de>
+cc: Jason Wang <jasowang@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Subject: Re: qemu master compile error in hw/net/rtl8139.c with --enable-asan
+In-Reply-To: <20260301121347.797dc9f4@penguin>
+Message-ID: <b3dec664-f6d4-76a4-a2cc-edc653ef60e7@eik.bme.hu>
+References: <20260301121347.797dc9f4@penguin>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260202212019.94205-3-philmd@linaro.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 14:50:22 up 125 days, 14:26,  4 users,  load average: 0.00, 0.00,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-527611642-1772377323=:46381"
+Content-ID: <43de0924-bdb1-170e-12ae-cd5549248702@eik.bme.hu>
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,82 +68,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
-> The Alpha architecture uses little endianness. Directly
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Wasn't there one, odd case of the T3E running it big-endian?
-(I have no idea how that worked in practice).
+--3866299591-527611642-1772377323=:46381
+Content-Type: text/plain; CHARSET=ISO-8859-7; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <9a9435dc-b435-3cce-1737-b76e772aaaba@eik.bme.hu>
 
-Dave
+On Sun, 1 Mar 2026, Lukas Straub wrote:
+> On Ubuntu 24.04:
+>
+> lukas@build_colo:~/qemu$ cc --version
+> cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+> Copyright (C) 2023 Free Software Foundation, Inc.
+> This is free software; see the source for copying conditions.  There is NO
+> warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+> lukas@build_colo:~/qemu$ ./configure --target-list=x86_64-softmmu --enable-replication --enable-docs --enable-asan
+> lukas@build_colo:~/qemu$ ninja -C build qemu-system-x86_64 qemu-img tests/qtest/migration-test
+> ninja: Entering directory `build'
+> [24/564] Compiling C object libsystem.a.p/hw_net_rtl8139.c.o
+> FAILED: libsystem.a.p/hw_net_rtl8139.c.o
+> cc -m64 -Ilibsystem.a.p -I. -I.. -Isubprojects/dtc/libfdt -I../subprojects/dtc/libfdt -Isubprojects/libvduse -I../subprojects/libvduse -Iui -Iqapi -Itrace -Iui/shader -I/usr/include/p11-kit-1 -I/usr/include/pixman-1 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 -I/usr/include/slirp -fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O2 -g -mcx16 -msse2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero -fzero-call-used-regs=used-gpr -fsanitize=address -fstack-protector-strong -Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration -Wold-style-definition -Wredundant-decls -Wshadow=local -Wstrict-prototypes -
+ Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value -isystem /home/lukas/qemu/linux-headers -isystem linux-headers -iquote . -iquote /home/lukas/qemu -iquote /home/lukas/qemu/include -iquote /home/lukas/qemu/host/include/x86_64 -iquote /home/lukas/qemu/host/include/generic -iquote /home/lukas/qemu/tcg/x86_64 -pthread -fPIE -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600 -DNCURSES_WIDECHAR=1 -DCONFIG_SOFTMMU -DCOMPILING_SYSTEM_VS_USER -MD -MQ libsystem.a.p/hw_net_rtl8139.c.o -MF libsystem.a.p/hw_net_rtl8139.c.o.d -o libsystem.a.p/hw_net_rtl8139.c.o -c ../hw/net/rtl8139.c
+> ../hw/net/rtl8139.c: In function ¡rtl8139_io_writeb¢:
+> ../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+> 2264 |                 memcpy(data_to_checksum, saved_ip_header + 12, 8);
+>      |                 ^
+> In file included from ../hw/net/rtl8139.c:62:
+> /home/lukas/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ¡ip_ver_len¢ of size 1
+>   50 |     uint8_t  ip_ver_len;     /* version and header length */
+>      |              ^~~~~~~~~~
+> ../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+> 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
+>      |                     ^
+> /home/lukas/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ¡ip_ver_len¢ of size 1
+>   50 |     uint8_t  ip_ver_len;     /* version and header length */
+>      |              ^~~~~~~~~~
+> ../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+> 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
+>      |                     ^
+> /home/lukas/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ¡ip_ver_len¢ of size 1
+>   50 |     uint8_t  ip_ver_len;     /* version and header length */
+>      |              ^~~~~~~~~~
+> In file included from /home/lukas/qemu/include/system/memory.h:21,
+>                 from /home/lukas/qemu/include/hw/pci/pci.h:4,
+>                 from /home/lukas/qemu/include/hw/pci/pci_device.h:4,
+>                 from ../hw/net/rtl8139.c:54:
+> In function ¡stl_he_p¢,
+>    inlined from ¡stl_be_p¢ at /home/lukas/qemu/include/qemu/bswap.h:371:5,
+>    inlined from ¡rtl8139_cplus_transmit_one¢ at ../hw/net/rtl8139.c:2244:21,
+>    inlined from ¡rtl8139_cplus_transmit¢ at ../hw/net/rtl8139.c:2345:28,
+>    inlined from ¡rtl8139_io_writeb¢ at ../hw/net/rtl8139.c:2728:17:
+> /home/lukas/qemu/include/qemu/bswap.h:284:5: error: writing 4 bytes into a region of size 0 [-Werror=stringop-overflow=]
+>  284 |     __builtin_memcpy(ptr, &v, sizeof(v));
+>      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> /home/lukas/qemu/include/net/eth.h: In function ¡rtl8139_io_writeb¢:
+> /home/lukas/qemu/include/net/eth.h:50:14: note: at offset [24, 64] into destination object ¡ip_ver_len¢ of size 1
+>   50 |     uint8_t  ip_ver_len;     /* version and header length */
+>      |              ^~~~~~~~~~
+> cc1: all warnings being treated as errors
+> [37/564] Compiling C object libsystem.a.p/hw_pci_pci.c.o
+> ninja: build stopped: subcommand failed.
 
-> use the little-endian LD/ST API.
-> 
-> Mechanical change running:
-> 
->   $ for a in uw w l q; do \
->       sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
->         $(git grep -wlE '(ld|st)u?[wlq]_p' target/alpha/);
->     done
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-Id: <20251224160040.88612-2-philmd@linaro.org>
-> ---
->  target/alpha/helper.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-> index a9af52a928f..80542cb0665 100644
-> --- a/target/alpha/helper.c
-> +++ b/target/alpha/helper.c
-> @@ -214,17 +214,18 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
->  
->      pt = env->ptbr;
->  
-> -    /* TODO: rather than using ldq_phys() to read the page table we should
-> +    /*
-> +     * TODO: rather than using ldq_phys_le() to read the page table we should
->       * use address_space_ldq() so that we can handle the case when
->       * the page table read gives a bus fault, rather than ignoring it.
-> -     * For the existing code the zero data that ldq_phys will return for
-> +     * For the existing code the zero data that ldq_phys_le will return for
->       * an access to invalid memory will result in our treating the page
->       * table as invalid, which may even be the right behaviour.
->       */
->  
->      /* L1 page table read.  */
->      index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
-> -    L1pte = ldq_phys(cs->as, pt + index*8);
-> +    L1pte = ldq_phys_le(cs->as, pt + index * 8);
->  
->      if (unlikely((L1pte & PTE_VALID) == 0)) {
->          ret = MM_K_TNV;
-> @@ -237,7 +238,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
->  
->      /* L2 page table read.  */
->      index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
-> -    L2pte = ldq_phys(cs->as, pt + index*8);
-> +    L2pte = ldq_phys_le(cs->as, pt + index * 8);
->  
->      if (unlikely((L2pte & PTE_VALID) == 0)) {
->          ret = MM_K_TNV;
-> @@ -250,7 +251,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
->  
->      /* L3 page table read.  */
->      index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
-> -    L3pte = ldq_phys(cs->as, pt + index*8);
-> +    L3pte = ldq_phys_le(cs->as, pt + index * 8);
->  
->      phys = L3pte >> 32 << TARGET_PAGE_BITS;
->      if (unlikely((L3pte & PTE_VALID) == 0)) {
-> -- 
-> 2.52.0
-> 
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+I don't know but it does not seem related to my recent patch. Maybe 
+something with f8b94b4c52 (net: mark struct ip_header as QEMU_PACKED) but 
+that's quite a long time ago or some other changes somewhere else? Adding 
+some people who might have a better guess.
+
+Regards,
+BALATON Zoltan
+--3866299591-527611642-1772377323=:46381--
 
