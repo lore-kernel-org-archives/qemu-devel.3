@@ -4,34 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26E6DFD0078
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 21:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1059BFD0078
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 21:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnwe-0004T6-TW; Sun, 01 Mar 2026 16:03:21 -0500
+	id 1vwnwh-0004Vg-JI; Sun, 01 Mar 2026 16:03:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vwnwc-0004SH-W9
+ id 1vwnwd-0004SS-Iu
  for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:19 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vwnwa-0002C3-4q
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:18 -0500
+ id 1vwnwa-0002CB-5G
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:19 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 816E659738F;
- Sun, 01 Mar 2026 22:03:11 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8F928597392;
+ Sun, 01 Mar 2026 22:03:12 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id TBUVDEMIAtPy; Sun,  1 Mar 2026 22:03:09 +0100 (CET)
+ id azSTcQB94JFW; Sun,  1 Mar 2026 22:03:10 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7CEF0596A0A; Sun, 01 Mar 2026 22:03:09 +0100 (CET)
-Message-ID: <cover.1772397447.git.balaton@eik.bme.hu>
+ id 8A24659738E; Sun, 01 Mar 2026 22:03:10 +0100 (CET)
+Message-ID: <816075b4a7fe7d4234744b7bd29c03139e4c2f38.1772397447.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1772397447.git.balaton@eik.bme.hu>
+References: <cover.1772397447.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v5 0/8] memory: Remove most _nomigrate variants
+Subject: [PATCH v5 1/8] hw/display/{cg3.tcx}: Do not use
+ memory_region_init_rom_nomigrate()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,7 +45,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 01 Mar 2026 22:03:09 +0100 (CET)
+Date: Sun, 01 Mar 2026 22:03:10 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -6
@@ -66,43 +69,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v5:
-- convert Sun machines and their display devices from global vmstate
+Use memory_region_init_rom() instead which is what other devices do.
+This is breaks migration but these devices are only used on sparc Sun
+machines which have no migration compatibility guarantee.
 
-v4:
-- separate patch converting Sun machines from memory_region_init_ram_nomigrate
-- split helper to init ram into two functions: setup and error_propagate
-- also use memory_region_init_io in memory_region_init_ram_device_ptr
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/display/cg3.c | 5 ++---
+ hw/display/tcx.c | 5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-v3:
-- rebased on master after some patches were merged
-- drop some more line from memory-region-housekeeping.cocci
-- added comment to explain what factored out helper does
-- some more clean ups included
-
-BALATON Zoltan (8):
-  hw/display/{cg3.tcx}: Do not use memory_region_init_rom_nomigrate()
-  memory: Remove memory_region_init_rom_nomigrate()
-  sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
-  memory: Remove memory_region_init_ram_nomigrate()
-  memory: Factor out common ram region initialization
-  memory: Add internal memory_region_register_ram function
-  memory: Shorten memory_region_init_ram_device_ptr and
-    memory_region_init_rom_device
-  memory: Factor out more common ram region initialization
-
- docs/devel/memory.rst                         |   9 +-
- hw/display/cg3.c                              |   5 +-
- hw/display/tcx.c                              |   8 +-
- hw/display/vga.c                              |   4 +-
- hw/sparc/sun4m.c                              |  19 +-
- hw/sparc64/sun4u.c                            |  10 +-
- hw/xtensa/xtfpga.c                            |   4 +-
- include/system/memory.h                       |  49 ----
- .../memory-region-housekeeping.cocci          |  47 ---
- system/memory.c                               | 269 ++++++------------
- 10 files changed, 108 insertions(+), 316 deletions(-)
-
+diff --git a/hw/display/cg3.c b/hw/display/cg3.c
+index 568d6048a6..61bdb0552e 100644
+--- a/hw/display/cg3.c
++++ b/hw/display/cg3.c
+@@ -282,8 +282,8 @@ static void cg3_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     CG3State *s = CG3(obj);
+ 
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "cg3.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_rom(&s->rom, obj, "cg3.prom", FCODE_MAX_ROM_SIZE,
++                           &error_fatal);
+     sysbus_init_mmio(sbd, &s->rom);
+ 
+     memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
+@@ -299,7 +299,6 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
+     char *fcode_filename;
+ 
+     /* FCode ROM */
+-    vmstate_register_ram_global(&s->rom);
+     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, CG3_ROM_FILE);
+     if (fcode_filename) {
+         ret = load_image_mr(fcode_filename, &s->rom);
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 36cad82abd..16114b9bb8 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -756,8 +756,8 @@ static void tcx_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     TCXState *s = TCX(obj);
+ 
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "tcx.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_rom(&s->rom, obj, "tcx.prom", FCODE_MAX_ROM_SIZE,
++                           &error_fatal);
+     sysbus_init_mmio(sbd, &s->rom);
+ 
+     /* 2/STIP : Stippler */
+@@ -822,7 +822,6 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
+     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
+ 
+     /* 10/ROM : FCode ROM */
+-    vmstate_register_ram_global(&s->rom);
+     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, TCX_ROM_FILE);
+     if (fcode_filename) {
+         ret = load_image_mr(fcode_filename, &s->rom);
 -- 
 2.41.3
 
