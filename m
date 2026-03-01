@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C75DFD0047
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C5FFD0075
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnlh-0004L8-8T; Sun, 01 Mar 2026 15:52:01 -0500
+	id 1vwnlq-0004nz-Lx; Sun, 01 Mar 2026 15:52:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnkg-00034U-Gy
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:04 -0500
+ id 1vwnkx-0003RC-1P
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:17 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnkc-0002GU-Pe
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:58 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398220; cv=none; 
+ id 1vwnkv-0002J0-FR
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:14 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772398250; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=BlY4trDt+pBwy181ntmFskQpfdjuZYfHB9rz1op0VLI1Ul8ZvbDWFqho6QKj7OBpTHgT/5/SI/ekIgK0nKtJLq0BnsarOYjoSQoOMSwpct91CQ85rPT2BWIrQeb2E7N7vpwIQwDH8eoQ8fcj1Nt8TGfJVJ5uJqwlt4E0FMHoCLo=
+ b=dLJJtspDnMGY/pC7RdbDSxA+1U7uc7hp/UM5KdP+vL95UmWv+ebQHcWFz7vQntspJ6YLVCLaLz14PX2AH7Kgp5z6dOBRez/Qgf0eJhZ7IQMayDTaoECCcXfzjIe6PdmBCxHjCC3ZxwJL5dW5tNiNk8/4n2WWEGt/MwAK0/828ZE=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398220;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=eNOLAKHp8rwBxhlaLnUA/3QSZYKVM/Bg/fNHp+tioDI=; 
- b=dLtvPJXQ/PnLFfv6N0c8aiMCtvGzx1X5Pgigneb1qhgDefnxd0XuHv4e4ch0/6DvX65qnVrWM5zOAuAmR13ijcxa8FQVN7nLpUQqy5qJsG8DGtmFp8eKvPN1W8cVTS7xLPlDv2sFT71yaYy6YdDLYuEj8Y5g/ym3+e1lZ0MQA9I=
+ s=zohoarc; t=1772398250;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=RUysihbuYFgiQ03rEguFa2+KKj1aPKPjUt9UHoBOpIU=; 
+ b=JPa6Vs3FK+DE4RLhx6xB5VAj+Y0G6tvnmPjTIkzWrl0OZnZMaK7bVseTafPDPKFa11NtYwPqyLiacG+7ujlBPEm8g0/eTS4Y425cOP3Jy0OIvfdIUeYjzJakPBNjqJTnaQ+JpwQ7DJPUQFAXzFQmB5H0QsQF3BdxCE6VQXVbxTY=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398220; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398250; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=eNOLAKHp8rwBxhlaLnUA/3QSZYKVM/Bg/fNHp+tioDI=;
- b=BkmCEnJhYgwjCCU5/tWZatOEKAnlLEqsYuzj7fJf0beq0Dwx9Q7tkQTV7AlBxUE2
- eyWXoLXn0i+t736YVS8VYcKzDVj0UKi9J70TQx2zIvB4m+LP5kuUw84siGYY0cl924h
- xD/2AFRZecFU8yq58rp5hwcysDPQ+H8Ae5hJbK0U=
-Received: by mx.zohomail.com with SMTPS id 1772398218028264.3107070617524;
- Sun, 1 Mar 2026 12:50:18 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=RUysihbuYFgiQ03rEguFa2+KKj1aPKPjUt9UHoBOpIU=;
+ b=j5LEykjobEtekHabFAldReogu/BDDH4fr9qfBNdWm/BgZXl2Xy+OMeKN9TJnA2aQ
+ ZVC6MusNY17q5Lv1jGvWQlPZYf+piv2jALoIkcm9YrMzjVU5TElhqUqblfDkeGOmXg5
+ Jy7wpbohw6X0Y4XOEr8LU8Z40Ft5M6yYNVcDPmUo=
+Received: by mx.zohomail.com with SMTPS id 17723982473091.1373908609903083;
+ Sun, 1 Mar 2026 12:50:47 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 13/21] virtio-gpu: Support DRM native context
-Date: Sun,  1 Mar 2026 23:48:30 +0300
-Message-ID: <20260301204838.596994-14-dmitry.osipenko@collabora.com>
+Subject: [PATCH v20 18/21] virtio-gpu: Validate hostmem mapping offset
+Date: Sun,  1 Mar 2026 23:48:35 +0300
+Message-ID: <20260301204838.596994-19-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,155 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for DRM native contexts to VirtIO-GPU. DRM context is enabled
-using a new virtio-gpu-gl device option "drm_native_context=on".
+Check hostmem mapping boundaries originated from guest.
 
-Unlike Virgl and Venus contexts that operate on application API level,
-DRM native contexts work on a kernel UAPI level. This lower level results
-in a lightweight context implementations that yield better performance.
-
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
-Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 11 +++++++++
- hw/display/virtio-gpu-gl.c                |  2 ++
- hw/display/virtio-gpu-virgl.c             | 28 +++++++++++++++++++++++
- hw/display/virtio-gpu.c                   | 15 ++++++++++++
- include/hw/virtio/virtio-gpu.h            |  3 +++
- 5 files changed, 59 insertions(+)
+ hw/display/virtio-gpu-virgl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 0f4bb304a9b8..086e2fcf27b9 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -84,6 +84,17 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- 
- .. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
- 
-+DRM native context is supported since release of `virglrenderer`_ v1.0.0
-+using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
-+host blob support (``hostmem`` and ``blob`` fields) and should be enabled
-+using ``drm_native_context`` field.  The ``hostmem`` field specifies the size
-+of virtio-gpu host memory window. This is typically between 256M and 8G.
-+
-+.. parsed-literal::
-+    -device virtio-gpu-gl,hostmem=8G,blob=on,drm_native_context=on
-+
-+.. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
-+
- virtio-gpu rutabaga
- -------------------
- 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 3e0680880e14..b941e9a4b789 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -159,6 +159,8 @@ static const Property virtio_gpu_gl_properties[] = {
-                     VIRTIO_GPU_FLAG_STATS_ENABLED, false),
-     DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
-+    DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.flags,
-+                    VIRTIO_GPU_FLAG_DRM_ENABLED, false),
- };
- 
- static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index e48a236ab355..f8773039d01d 100644
+index 5b6474e3da90..5617740417ba 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -1323,6 +1323,25 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-         flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
-     }
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+        flags |= VIRGL_RENDERER_DRM;
-+
-+        if (!(flags & VIRGL_RENDERER_ASYNC_FENCE_CB)) {
-+            /*
-+             * Virglrenderer skips enabling DRM context support without
-+             * enabled async-fence feature. VirtIO-GPU will initialize
-+             * successfully, but DRM context won't be available in guest.
-+             *
-+             * For vrend async-fencing can be enabled only if EGL display
-+             * is used. Vrend can't be disabled in QEMU, hence DRM implicitly
-+             * requires EGL too.
-+             *
-+             * Async-fence was bugged in virglrenderer versions <= 1.1.1.
-+             */
-+            error_report("drm requires egl display and virglrenderer >= 1.2.0");
-+            return -EINVAL;
-+        }
-+    }
- #endif
+@@ -791,6 +791,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+     struct virtio_gpu_resource_map_blob mblob;
+     struct virtio_gpu_virgl_resource *res;
+     struct virtio_gpu_resp_map_info resp;
++    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+     int ret;
  
-     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
-@@ -1386,5 +1405,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
-         }
+     VIRTIO_GPU_FILL_CMD(mblob);
+@@ -804,6 +805,15 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+         return;
      }
  
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
-+                                   &capset_max_ver,
-+                                   &capset_max_size);
-+        if (capset_max_size) {
-+            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DRM);
-+        }
-+    }
-+
-     return capset_ids;
- }
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index d0737cbba8a2..e8b6223e3658 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1526,6 +1526,21 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
- #endif
-     }
- 
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+#ifdef VIRGL_VERSION_MAJOR
-+    #if VIRGL_VERSION_MAJOR >= 1
-+        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
-+            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-+            error_setg(errp, "drm requires enabled blob and hostmem options");
-+            return;
-+        }
-+    #else
-+        error_setg(errp, "old virglrenderer, drm unsupported");
++    if (mblob.offset + res->base.blob_size > b->conf.hostmem ||
++        mblob.offset + res->base.blob_size < mblob.offset) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: failed to map virgl resource: invalid offset\n",
++                      __func__);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
 +        return;
-+    #endif
-+#endif
 +    }
 +
-     if (!virtio_gpu_base_device_realize(qdev,
-                                         virtio_gpu_handle_ctrl_cb,
-                                         virtio_gpu_handle_cursor_cb,
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 3714793d5ee2..c08bdc225aa6 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -100,6 +100,7 @@ enum virtio_gpu_base_conf_flags {
-     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
-     VIRTIO_GPU_FLAG_VENUS_ENABLED,
-     VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
-+    VIRTIO_GPU_FLAG_DRM_ENABLED,
- };
- 
- #define virtio_gpu_virgl_enabled(_cfg) \
-@@ -122,6 +123,8 @@ enum virtio_gpu_base_conf_flags {
-     (_cfg.hostmem > 0)
- #define virtio_gpu_venus_enabled(_cfg) \
-     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
-+#define virtio_gpu_drm_enabled(_cfg) \
-+    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
- 
- struct virtio_gpu_base_conf {
-     uint32_t max_outputs;
+     ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
+     if (ret) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
 -- 
 2.52.0
 
