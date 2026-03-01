@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C4CCFD0076
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 23:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A88FD007D
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 23:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwpkw-000755-Le; Sun, 01 Mar 2026 17:59:22 -0500
+	id 1vwqIz-0003nq-5B; Sun, 01 Mar 2026 18:34:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwpkv-00074U-5c
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 17:59:21 -0500
-Received: from p-east2-cluster5-host1-snip4-9.eps.apple.com ([57.103.79.12]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vwqIs-0003mY-Ka
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 18:34:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwpks-0007AI-Tj
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 17:59:20 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-12 (Postfix) with ESMTPS id
- E542918000B6; Sun,  1 Mar 2026 22:59:11 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772405954; x=1774997954;
- bh=ou59ICysOs6aVRaoGnQTeMquA1DHiryx/u76HI7CPb0=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Qz8BO4qoECbD5UnWa4JkUOGwtVtzblrpnlNymX3heqFGUqV0q3gVm9E3PviQF+b3L9/1gc9dPTujkk9PTKijnIUVJbPtisQ+SH/NIXpJenIcU4hwWYuhkKpL1OG3mUADmV2/z6cXM15TVRKkrcK17zM/DdYhAQNYzfUdp5kL/zRkKu2JfmxOab5JHr4FyTSiS8TTvbYeiaDIRlt43xFHlSN9zddfyv0P3h9yF5Egd77xv2BeHCVagjhtqgrjsWQIR26vquaAMLQId1tcYtUsc9h2IkUTlIHu3wVQg+fjEomOyXfoV2biuGT7ZPHQL8nNF2h4SRla7lX5sUZxQlST1A==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-12 (Postfix) with ESMTPSA id
- 1091918001E3; Sun,  1 Mar 2026 22:59:09 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v5 2/2] hvf/arm: expose FEAT_SME2 to guest if available
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <8abec38d-8176-406e-9345-b98e69d5bed0@linaro.org>
-Date: Sun, 1 Mar 2026 23:58:58 +0100
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,
- =?utf-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BEED67A4-C0CF-4952-9F1F-CCF53AEBEF1C@unpredictable.fr>
-References: <20260227-sme2-hvf-v5-0-1c60a92910c8@linaro.org>
- <20260227-sme2-hvf-v5-2-1c60a92910c8@linaro.org>
- <8abec38d-8176-406e-9345-b98e69d5bed0@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Authority-Info-Out: v=2.4 cv=MN1tWcZl c=1 sm=1 tr=0 ts=69a4c4c0
- cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=KKAkSRfTAAAA:8 a=2hGvlMElPCzoILfs6cIA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
- a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAxMDIxMSBTYWx0ZWRfXzg69g7gqk795
- 7ZN2cRq33dqFIsc7WOpsORySH/XUXiIMQB+OxgVMYoEF90+4PuEpuycZy35VWW1TZhNYIF8Xglt
- u/LwB/vjYbsD5D3jo3a57SrhK++HNxq/+fA7JDhxod2gfMG5uRcfjrrTcji+DxeLsAbwJQ+56Pe
- FO7AnG2ZGXLz05jnsK/EeoU8iteQ/PQGESY0FTCjEQWtK0Y+xrdk6WwN19zPLxAjO1rhMh3t4YR
- 1Uodfs/Syv89qPKAPunOJ2y62YGAIwynnZQgjzDwqj8tdKAE2TV4a7XZJKMfnwa/BMvN5vvrFhp
- KbtOIRHIOQIntujqzZ0hO8Ua4pMO5oLlFvVKHo4Ti6OyGZFh1DQ4qaZpHysjBU=
-X-Proofpoint-GUID: r0r5PYDWnhKX01gZTO-26LTts9_yKCvX
-X-Proofpoint-ORIG-GUID: r0r5PYDWnhKX01gZTO-26LTts9_yKCvX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-01_05,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=844
- phishscore=0 suspectscore=0 adultscore=0 clxscore=1030 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603010211
-X-JNJ: AAAAAAABxag+tvAPNm8Hf63VnvdBT3ysh5kG5uVSmSBVIWRnQtRFcwIiWkp43+wDqnu8u8azYsFfu/E+/JLtdOTaC86PcOZvfeDTdCPaJWwff5D/I6Eaxe87HbdsByoINVw5rJA4kJ8vz+9Jbm2PDiBoVm8KhAaI1RvKRP++UF/Thubb4V2OT8KrXYdEfBtfj3uimSMK6v75jZd3SvNDc7YhjndI7F8/xiPb3BZWqF5VtnRwx3JD3G1orQr2JPLbYvrNlWhLdry9RTnYtHCoVNjs7qZV7N/dP5lEDyg35Nr+IH9YKffU33Ij3THyRuEJAMccl4JBHa1XabVIeuimYWwV10xM1qrP4frc4flB6OOOhKmJaa3mTrR0MkPRnrLiGDFbB8B4gAY3PbhRgq7PRDBRLaoXgUsDX/DEnxDwJqPQPKtj6+aMoEg9VDUQOO8BvvdM8u5F8eUbGKhncPdUtHSCdKQEQql8BhiJ8ndKL2GvVMvgaPrRI8bhcfEzT9IUUlYUJVJl10TGHTnKFv7E8MJwrJ5yOlOnJvLE2ohrEvMbJWhqXz18gA3bW6llZEYUa/SLqMjfKW1nkkUNwm3aH3sk/xfaMVHKS7sUnqPS8a+0kboEmnOyABZLHa33ecZFQq3VlJaJzSiW30GLKZn1wrG9fC6orwWVARG9BqVTShBqcy1i3gE0NS342JDN3cXg40VPx/NOirUeRxjqfIeH6OdVz9rLjvgXY/P4Ymoj5Cy2YFQ49AdPOWjL2wR2
-Received-SPF: pass client-ip=57.103.79.12;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vwqIp-0003Oo-PS
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 18:34:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772408060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=07dDEmE1h8ak+wx3QfgX9Lfx4a884I8U+mdw8d4aP3s=;
+ b=N1O3OSEMNYW37CkyM/Urm3EMO+Cxh6SILJm4xpSFK/aPmCFtVMuPnB8Yu9vHVGDMEA/iWG
+ //wVdKkymbxZEC9+ARm26RPREUdOI8u4lxVBeF56ktGgEHgVczB4DpvWQwrlCa2vQuJ3f7
+ bjrOSZT89bE4Yq0NCt7Q00fTUbsjebo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-CGnN9_qfMAeFxHmbtBK6pw-1; Sun,
+ 01 Mar 2026 18:34:17 -0500
+X-MC-Unique: CGnN9_qfMAeFxHmbtBK6pw-1
+X-Mimecast-MFC-AGG-ID: CGnN9_qfMAeFxHmbtBK6pw_1772408055
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AA8319560B7; Sun,  1 Mar 2026 23:34:14 +0000 (UTC)
+Received: from localhost (unknown [10.44.32.49])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BA16D19560A3; Sun,  1 Mar 2026 23:34:09 +0000 (UTC)
+Date: Mon, 2 Mar 2026 07:34:06 +0800
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Raphael Norwitz <rnorwitz@nvidia.com>,
+ virtio-fs@lists.linux.dev, Milan Zamazal <mzamazal@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, zhenwei pi <zhenwei.pi@linux.dev>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org
+Subject: Re: [PATCH 2/4] vhost-user: add skip_drain param to GET_VRING_BASE
+Message-ID: <20260301233406.GA8465@fedora>
+References: <20260224075055.863068-1-dtalexundeer@yandex-team.ru>
+ <20260224075055.863068-3-dtalexundeer@yandex-team.ru>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="c88M+712av5Zw/ul"
+Content-Disposition: inline
+In-Reply-To: <20260224075055.863068-3-dtalexundeer@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 24
+X-Spam_score: 2.4
+X-Spam_bar: ++
+X-Spam_report: (2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,47 +97,373 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--c88M+712av5Zw/ul
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On 1. Mar 2026, at 23:29, Richard Henderson =
-<richard.henderson@linaro.org> wrote:
+On Tue, Feb 24, 2026 at 12:50:53PM +0500, Alexandr Moshkov wrote:
+> In case of migration of QEMU from the new version (where the
+> inllight-migration parameter is present), to the old one (where it is
+> absent) there is no way to disable this feature on the backend during
+> runtime.
 >=20
-> On 2/27/26 19:56, Manos Pitsidianakis wrote:
->> @@ -1121,18 +1122,18 @@ static bool =
-hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->>        clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar);
->>  -    /*
->> -     * Disable SME, which is not properly handled by QEMU hvf yet.
->> -     * To allow this through we would need to:
->> -     * - make sure that the SME state is correctly handled in the
->> -     *   get_registers/put_registers functions
->> -     * - get the SME-specific CPU properties to work with =
-accelerators
->> -     *   other than TCG
->> -     * - fix any assumptions we made that SME implies SVE (since
->> -     *   on the M4 there is SME but not SVE)
->> -     */
->> -    SET_IDREG(&host_isar, ID_AA64PFR1,
->> -              GET_IDREG(&host_isar, ID_AA64PFR1) & =
-~R_ID_AA64PFR1_SME_MASK);
->> +    if (hvf_arm_sme2_supported()) {
->> +        t =3D GET_IDREG(&host_isar, ID_AA64PFR1);
->> +        t =3D FIELD_DP64(t, ID_AA64PFR1, SME, 2);       /* FEAT_SME2 =
-*/
->> +        SET_IDREG(&host_isar, ID_AA64PFR1, t);
->> +
->> +        t =3D GET_IDREG(&host_isar, ID_AA64SMFR0);
->> +        t =3D FIELD_DP64(t, ID_AA64SMFR0, SMEVER, 1);   /* FEAT_SME2 =
-*/
->> +        SET_IDREG(&host_isar, ID_AA64SMFR0, t);
+> This commit slightly changes the semantics of the protocol feature
+> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+> adds a new parameter for GET_VRING_BASE, which allows to control the
+> drain in-flight requests on the backend.
+> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
+> on anytime.
 >=20
-> Why would you need to do this?  Surely these values are already =
-correct.  And if they're not, did we miss enabling something earlier?
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>  backends/cryptodev-vhost.c     |  2 +-
+>  backends/vhost-user.c          |  2 +-
+>  docs/interop/vhost-user.rst    |  3 ++-
+>  hw/block/vhost-user-blk.c      |  2 +-
+>  hw/net/vhost_net.c             |  9 +++++----
+>  hw/scsi/vhost-scsi-common.c    |  2 +-
+>  hw/virtio/vdpa-dev.c           |  2 +-
+>  hw/virtio/vhost-user-base.c    |  2 +-
+>  hw/virtio/vhost-user-fs.c      |  2 +-
+>  hw/virtio/vhost-user-scmi.c    |  2 +-
+>  hw/virtio/vhost-vsock-common.c |  2 +-
+>  hw/virtio/vhost.c              | 24 +++++++++++++++---------
+>  include/hw/virtio/vhost.h      |  7 +++++--
+>  13 files changed, 36 insertions(+), 25 deletions(-)
 >=20
-> This will break the moment FEAT_SME2p1 is supported.
+> diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
+> index 943680a23a..7a457380d0 100644
+> --- a/backends/cryptodev-vhost.c
+> +++ b/backends/cryptodev-vhost.c
+> @@ -110,7 +110,7 @@ static void
+>  cryptodev_vhost_stop_one(CryptoDevBackendVhost *crypto,
+>                                   VirtIODevice *dev)
+>  {
+> -    vhost_dev_stop(&crypto->dev, dev, false);
+> +    vhost_dev_stop(&crypto->dev, dev, false, false);
+>      vhost_dev_disable_notifiers(&crypto->dev, dev);
+>  }
+> =20
+> diff --git a/backends/vhost-user.c b/backends/vhost-user.c
+> index 42845329e7..10be713ebd 100644
+> --- a/backends/vhost-user.c
+> +++ b/backends/vhost-user.c
+> @@ -108,7 +108,7 @@ vhost_user_backend_stop(VhostUserBackend *b)
+>          return 0;
+>      }
+> =20
+> -    ret =3D vhost_dev_stop(&b->dev, b->vdev, true);
+> +    ret =3D vhost_dev_stop(&b->dev, b->vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers &&
+>          k->set_guest_notifiers(qbus->parent, b->dev.nvqs, false) < 0) {
+> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> index bfa75ff9a3..5b944322b4 100644
+> --- a/docs/interop/vhost-user.rst
+> +++ b/docs/interop/vhost-user.rst
+> @@ -1262,7 +1262,8 @@ Front-end message types
+>    specified vring before stopping it.
+> =20
+>    If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
+> -  feature has been negotiated, the back-end may suspend in-flight I/O
+> +  feature has been negotiated, using request payload's *num* field,
+> +  when num is set to 1, QEMU can tell the back-end to suspend in-flight =
+I/O
+
+This changes the behavior of an existing feature bit. How can the
+front-end detect that the back-end supports this new behavior?
+
+>    requests and record them as described in :ref:`Inflight I/O tracking
+>    <inflight_io_tracking>` instead of completing them before stopping the=
+ vring.
+>    How to suspend an in-flight request depends on the implementation of t=
+he back-end
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index c151e83677..7f2067d6cf 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -225,7 +225,7 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+>                   qemu_force_shutdown_requested();
+> =20
+>      ret =3D force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+> -                       vhost_dev_stop(&s->dev, vdev, true);
+> +                       vhost_dev_stop(&s->dev, vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+> index a8ee18a912..604f19e03a 100644
+> --- a/hw/net/vhost_net.c
+> +++ b/hw/net/vhost_net.c
+> @@ -384,7 +384,7 @@ fail:
+>      if (net->nc->info->poll) {
+>          net->nc->info->poll(net->nc, true);
+>      }
+> -    vhost_dev_stop(&net->dev, dev, false);
+> +    vhost_dev_stop(&net->dev, dev, false, false);
+>  fail_start:
+>      return r;
+>  }
+> @@ -403,7 +403,7 @@ static void vhost_net_stop_one(struct vhost_net *net,
+>      if (net->nc->info->poll) {
+>          net->nc->info->poll(net->nc, true);
+>      }
+> -    vhost_dev_stop(&net->dev, dev, false);
+> +    vhost_dev_stop(&net->dev, dev, false, false);
+>      if (net->nc->info->stop) {
+>          net->nc->info->stop(net->nc);
+>      }
+> @@ -641,7 +641,8 @@ void vhost_net_virtqueue_reset(VirtIODevice *vdev, Ne=
+tClientState *nc,
+>      vhost_virtqueue_stop(&net->dev,
+>                           vdev,
+>                           net->dev.vqs + idx,
+> -                         net->dev.vq_index + idx);
+> +                         net->dev.vq_index + idx,
+> +                         false);
+>  }
+> =20
+>  int vhost_net_virtqueue_restart(VirtIODevice *vdev, NetClientState *nc,
+> @@ -691,7 +692,7 @@ err_start:
+>          assert(ret >=3D 0);
+>      }
+> =20
+> -    vhost_dev_stop(&net->dev, vdev, false);
+> +    vhost_dev_stop(&net->dev, vdev, false, false);
+> =20
+>      return r;
+>  }
+> diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
+> index 0bb4305de6..41c1e45aac 100644
+> --- a/hw/scsi/vhost-scsi-common.c
+> +++ b/hw/scsi/vhost-scsi-common.c
+> @@ -108,7 +108,7 @@ int vhost_scsi_common_stop(VHostSCSICommon *vsc)
+>      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(qbus);
+>      int ret =3D 0;
+> =20
+> -    ret =3D vhost_dev_stop(&vsc->dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&vsc->dev, vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers) {
+>          int r =3D k->set_guest_notifiers(qbus->parent, vsc->dev.nvqs, fa=
+lse);
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index 4532d63653..7279f18442 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -301,7 +301,7 @@ static void vhost_vdpa_device_stop(VirtIODevice *vdev)
+>          return;
+>      }
+> =20
+> -    vhost_dev_stop(&s->dev, vdev, false);
+> +    vhost_dev_stop(&s->dev, vdev, false, false);
+> =20
+>      ret =3D k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+>      if (ret < 0) {
+> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> index 01ab9ca56b..9d3875a04b 100644
+> --- a/hw/virtio/vhost-user-base.c
+> +++ b/hw/virtio/vhost-user-base.c
+> @@ -77,7 +77,7 @@ static int vub_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+> =20
+> -    ret =3D vhost_dev_stop(&vub->vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&vub->vhost_dev, vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers(qbus->parent, vub->vhost_dev.nvqs, false)=
+ < 0) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+> index ad6fcacf06..2f6f6df67f 100644
+> --- a/hw/virtio/vhost-user-fs.c
+> +++ b/hw/virtio/vhost-user-fs.c
+> @@ -111,7 +111,7 @@ static int vuf_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+> =20
+> -    ret =3D vhost_dev_stop(&fs->vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&fs->vhost_dev, vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers(qbus->parent, fs->vhost_dev.nvqs, false) =
+< 0) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+> index f9264c4374..dbde342a6e 100644
+> --- a/hw/virtio/vhost-user-scmi.c
+> +++ b/hw/virtio/vhost-user-scmi.c
+> @@ -101,7 +101,7 @@ static int vu_scmi_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+> =20
+> -    ret =3D vhost_dev_stop(vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(vhost_dev, vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers(qbus->parent, vhost_dev->nvqs, false) < 0=
+) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-commo=
+n.c
+> index b33def900a..3d086ed825 100644
+> --- a/hw/virtio/vhost-vsock-common.c
+> +++ b/hw/virtio/vhost-vsock-common.c
+> @@ -106,7 +106,7 @@ int vhost_vsock_common_stop(VirtIODevice *vdev)
+>          return 0;
+>      }
+> =20
+> -    ret =3D vhost_dev_stop(&vvc->vhost_dev, vdev, true);
+> +    ret =3D vhost_dev_stop(&vvc->vhost_dev, vdev, true, false);
+> =20
+>      if (k->set_guest_notifiers(qbus->parent, vvc->vhost_dev.nvqs, false)=
+ < 0) {
+>          error_report("vhost guest notifier cleanup failed: %d", ret);
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index b4cdb7762f..c04bb53159 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1387,11 +1387,13 @@ fail_alloc_desc:
+>  static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+>                                     struct VirtIODevice *vdev,
+>                                     struct vhost_virtqueue *vq,
+> -                                   unsigned idx, bool force)
+> +                                   unsigned idx, bool force,
+> +                                   bool skip_drain)
+>  {
+>      int vhost_vq_index =3D dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>      struct vhost_vring_state state =3D {
+>          .index =3D vhost_vq_index,
+> +        .num =3D skip_drain,
+>      };
+>      int r =3D 0;
+> =20
+> @@ -1439,9 +1441,10 @@ static int do_vhost_virtqueue_stop(struct vhost_de=
+v *dev,
+>  int vhost_virtqueue_stop(struct vhost_dev *dev,
+>                           struct VirtIODevice *vdev,
+>                           struct vhost_virtqueue *vq,
+> -                         unsigned idx)
+> +                         unsigned idx,
+> +                         bool skip_drain)
+>  {
+> -    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false);
+> +    return do_vhost_virtqueue_stop(dev, vdev, vq, idx, false, skip_drain=
+);
+>  }
+> =20
+>  static int vhost_virtqueue_set_busyloop_timeout(struct vhost_dev *dev,
+> @@ -2220,7 +2223,8 @@ fail_vq:
+>          vhost_virtqueue_stop(hdev,
+>                               vdev,
+>                               hdev->vqs + i,
+> -                             hdev->vq_index + i);
+> +                             hdev->vq_index + i,
+> +                             false);
+>      }
+> =20
+>  fail_mem:
+> @@ -2235,7 +2239,7 @@ fail_features:
+> =20
+>  /* Host notifiers must be enabled at this point. */
+>  static int do_vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
+> -                             bool vrings, bool force)
+> +                             bool vrings, bool force, bool skip_drain)
+>  {
+>      int i;
+>      int rc =3D 0;
+> @@ -2262,7 +2266,8 @@ static int do_vhost_dev_stop(struct vhost_dev *hdev=
+, VirtIODevice *vdev,
+>                                        vdev,
+>                                        hdev->vqs + i,
+>                                        hdev->vq_index + i,
+> -                                      force);
+> +                                      force,
+> +                                      skip_drain);
+>      }
+>      if (hdev->vhost_ops->vhost_reset_status) {
+>          hdev->vhost_ops->vhost_reset_status(hdev);
+> @@ -2282,15 +2287,16 @@ static int do_vhost_dev_stop(struct vhost_dev *hd=
+ev, VirtIODevice *vdev,
+>      return rc;
+>  }
+> =20
+> -int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs)
+> +int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs,
+> +                   bool skip_drain)
+>  {
+> -    return do_vhost_dev_stop(hdev, vdev, vrings, false);
+> +    return do_vhost_dev_stop(hdev, vdev, vrings, false, skip_drain);
+>  }
+> =20
+>  int vhost_dev_force_stop(struct vhost_dev *hdev, VirtIODevice *vdev,
+>                           bool vrings)
+>  {
+> -    return do_vhost_dev_stop(hdev, vdev, vrings, true);
+> +    return do_vhost_dev_stop(hdev, vdev, vrings, true, false);
+>  }
+> =20
+>  int vhost_net_set_backend(struct vhost_dev *hdev,
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 89817bd848..3881f6784b 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -233,6 +233,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODev=
+ice *vdev, bool vrings);
+>   * @hdev: common vhost_dev structure
+>   * @vdev: the VirtIODevice structure
+>   * @vrings: true to have vrings disabled in this call
+> + * @skip_drain: true to notice back-end to skip draining all in-flight r=
+equests
+>   *
+>   * Stop the vhost device. After the device is stopped the notifiers
+>   * can be disabled (@vhost_dev_disable_notifiers) and the device can
+> @@ -240,7 +241,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODev=
+ice *vdev, bool vrings);
+>   *
+>   * Return: 0 on success, !=3D 0 on error when stopping dev.
+>   */
+> -int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs);
+> +int vhost_dev_stop(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrin=
+gs,
+> +                   bool skip_drain);
+> =20
+>  /**
+>   * vhost_dev_force_stop() - force stop the vhost device
+> @@ -398,7 +400,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, ui=
+nt64_t iova, int write);
+>  int vhost_virtqueue_start(struct vhost_dev *dev, struct VirtIODevice *vd=
+ev,
+>                            struct vhost_virtqueue *vq, unsigned idx);
+>  int vhost_virtqueue_stop(struct vhost_dev *dev, struct VirtIODevice *vde=
+v,
+> -                         struct vhost_virtqueue *vq, unsigned idx);
+> +                         struct vhost_virtqueue *vq, unsigned idx,
+> +                         bool skip_drain);
+> =20
+>  void vhost_dev_reset_inflight(struct vhost_inflight *inflight);
+>  void vhost_dev_free_inflight(struct vhost_inflight *inflight);
+> --=20
+> 2.34.1
 >=20
 
+--c88M+712av5Zw/ul
+Content-Type: application/pgp-signature; name=signature.asc
 
-FEAT_SME2p1 is already shipped on the Apple M5
-> r~
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmkzOwACgkQnKSrs4Gr
+c8hz8Af+NABviNSJPS7xBLOB/q0/cGcsAEWgZiz1fsGO5iNbJgnPx6JwTYwzuSwf
+32rmK7VpPnbbOj51dt6kyARDaEmsW+3GNXq4vF6h1XPMFYZTI+RLZ2pEp9pNwORv
+5PtkI5okRBRvET/JdBz6FGJDDz68R4fsD6Ph6uPJRnzHSpNlGuKfW3Y4eX9RR/Le
+/2TWPd6FLKUrufz51oBYHn8C972p+73mwrLTH0udLPw1HEWiT/GRg+6RumLkJg18
+R0DJ/QzyadffeHIIj3QzZi7maJ8g0D82yC6EDtnhLwCD98iHzGm2dWCbLK6+uLh+
+/UAavl2lZVEJTbDMB1K5o3pqrkb6zQ==
+=FC/v
+-----END PGP SIGNATURE-----
+
+--c88M+712av5Zw/ul--
 
 
