@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AACFD006E
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEBE6FD006D
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwi1k-0001GS-6x; Sun, 01 Mar 2026 09:44:12 -0500
+	id 1vwi0v-0000VA-M2; Sun, 01 Mar 2026 09:43:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwi0Y-0000LV-7J
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:43:00 -0500
+ id 1vwi0f-0000P1-GB
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:43:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwi0V-0005kf-Jh
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:42:57 -0500
+ id 1vwi0a-0005lD-3u
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:43:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772376174;
+ s=mimecast20190719; t=1772376179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cmC+aGM6B+RmqG1UXe6locEGxQuZMZOjQykwsERH2FE=;
- b=MUfZ9KJg2KXi4xyVsKyNR5h2vr+AIpKayTqZJYLM00QWhqBbig4N5uKnQb3ApDAb73dMN6
- OS1DCJFau9Jg0vMEFiXTqWWOwe4KJAoqmuAt5y/Qj1KrUmSZB6J9KqCwP76R6Gs/0gwK+I
- f2i5NxX3uFJai37RIgUA8LJYa/+kr9s=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZGky8xMD3dSn1WaLy+RU0xJNdQ/dzGO2Gz2ecqpJwgk=;
+ b=GktXUXbzcncEBXPPtAWeX7nWiU9rEUstg6nyVs1LP2aRXuRSYbKtPsovspFNcMoT+PK8G3
+ ivedMOLNrJFubG3bYLhQnS77Coco04WmH6otiVVl6teTKmoAM8+jBDEYFTNcnFoHdn5tqI
+ HNYU9yHdr+zFTIKDxdklBjNfMJ/mt6g=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-Zl1-uXVcMsq9_k6Vu85lug-1; Sun, 01 Mar 2026 09:42:53 -0500
-X-MC-Unique: Zl1-uXVcMsq9_k6Vu85lug-1
-X-Mimecast-MFC-AGG-ID: Zl1-uXVcMsq9_k6Vu85lug_1772376173
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439b5511d5aso224488f8f.1
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 06:42:53 -0800 (PST)
+ us-mta-384-at_JVB7CPNWE_v3JgHvZ1g-1; Sun, 01 Mar 2026 09:42:58 -0500
+X-MC-Unique: at_JVB7CPNWE_v3JgHvZ1g-1
+X-Mimecast-MFC-AGG-ID: at_JVB7CPNWE_v3JgHvZ1g_1772376177
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4837f288194so25714335e9.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 06:42:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772376172; x=1772980972; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772376176; x=1772980976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cmC+aGM6B+RmqG1UXe6locEGxQuZMZOjQykwsERH2FE=;
- b=rSFuUTdOKUJZ5yhQL0PkANRs/KmF90RiZN6JzijGqaJiRd15GG6eUSSUYM24wrp4yM
- 8GAQFfZtRppTin3Y8M/qwbst2mzNAw0GC3NYLLbkWQ4JD1Ubh9hSIBrxHafTglh5StVM
- 13aOxwWzVats81SO585k+/+lzHvvN83aYemCs0o2KxH1j+8FEE7gdstLOuDqrYxdCYtI
- yPjRJ7v1SPSnFJx5vu+KcW1jUe2W8oMj1xWfvlKqABPUAvJQWlEbkMEQpvcI99F8hmBA
- daMZ9v9E0xciBymxegSz4IVhetMeJfnRP3DXm6C2M9XzquxuqxQ/emWHWfokH7OBXWGH
- SL5w==
+ :reply-to; bh=ZGky8xMD3dSn1WaLy+RU0xJNdQ/dzGO2Gz2ecqpJwgk=;
+ b=MzvR99mbDQduPYtlBXCBDQ9UVPkDfcbzHJLTeMWZjl6BjQzRAVwXf/XoSfMI7g8ueL
+ VqUeZ9KZ6yK+I5+k1aRZyv26jJbcqXTLszhGUnfXhhFW8x5N7pBNBAWIuWz38EHQ9KRF
+ ZOHsMLamW8mebbMi57/3QqXFCr0xnGo2iBBAUIrjttdrNhvK8WsmwtF5NU+NoZl5ElUw
+ oi+6E1+OUziOe2o51MqFqU0hg1eetzfbQOLjgLPSB+nAJ1YFPU6NumOlUWReie+BleS9
+ 6FLRUUHg08HCL1zIbEowGi2QvY/KJ6wikUVntsKQyJmBUM5/UKDTFeX8ztBH4rnupkNa
+ fkgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772376172; x=1772980972;
+ d=1e100.net; s=20230601; t=1772376176; x=1772980976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cmC+aGM6B+RmqG1UXe6locEGxQuZMZOjQykwsERH2FE=;
- b=bTINwExHGcWBWBl1tKZzzzYTn08k9Q1qJVOAiRkLcG0H7XbbauwYn2lppf8N36uiAU
- Ra7mfnHL56GEODs129l+E09AGxi3boD+kB4ohO1mL0W7P/3ChUeD5phCR3uJXtHN4+iP
- WtqxI4Gp+lsAJREQY/1O2bYJjIj/mTfsDRX0X+Ii2/hM3MS8ThASRyaQjuD4Fy77m2vz
- s+n/KAkXWmANQGofnCvd1Z7aRSaxbzg9ttd4sJZimbkvvXvOlM3oeO/wOEu8jxRupnEH
- Xo96MsmdkjH83ZvwTj7nVse3Wr6vNSX0WRnCExvHJWmo1alJFgnWTRnCz92DF5UVPiYr
- z1kw==
-X-Gm-Message-State: AOJu0YwEWrmIcQ9Kwhf4FtoGgx4FyjbEFrv1h9LCqU8kZfEuJIB2dwfH
- HdwqO+tVJQHNQPmrimXdIIaP0MqSj2wVzQL4gcy0sv5oCsqI7tJoKd4vq7D37RxWLHh+3uR9gcK
- Q56yCNFk9PHu4MNJQaib9fkkw9RgCIqjDI+h9w8du7TolhjC1DRZTIaiMljpDsS3XTPqcYvbIUD
- pciJYpR2ijKCcLhMs6t7nCEFnaH6jVLj6fDJ55u3bs
-X-Gm-Gg: ATEYQzxiGOx9ArCka6AzhJwTb9jYi8DYF0do1S+6f3X/lBK+P2rRNbdz99LZHK9xZVP
- tJRP9C8SK9kdgLUrA/bBzXlFGukaFqjfYVI2f1FGGgHETNrHGkuJkXMbYi1XAneFaGbX9OTQ4gv
- U7v4JAggGKv0BaRoiZmx6pHFBoCYc8L8cyM2cl9IZam0+Mvkn2dD9KBcx+l2GtSVXdGUkbQ/Bml
- IKm9Owh58RpuX+0/XxEAl8OQAL1/T/rStQXNR93GnW7lKsfmOrdpBx+L+nNRD9JL0pvMD0ftZr+
- vRLZ4aFw49h9Veq3G0cIU1tHTPe8I1xOMWLEiISFp+SUNfXqOBYneVvIFXNkyAOPKElK/RFiImH
- E0+Uk+WJSfCu/Xxi9nOIxCBPGEXEUeV77qnkaLiayHwXt7Vtgl+m4ddTk2lH1Nso/VELyz86STj
- ACTqr5FIkIXa70z4SLsd+tM+ghX3s=
-X-Received: by 2002:a05:6000:144e:b0:439:9605:7daf with SMTP id
- ffacd0b85a97d-4399de2d8afmr16180574f8f.55.1772376171538; 
- Sun, 01 Mar 2026 06:42:51 -0800 (PST)
-X-Received: by 2002:a05:6000:144e:b0:439:9605:7daf with SMTP id
- ffacd0b85a97d-4399de2d8afmr16180488f8f.55.1772376170477; 
- Sun, 01 Mar 2026 06:42:50 -0800 (PST)
+ bh=ZGky8xMD3dSn1WaLy+RU0xJNdQ/dzGO2Gz2ecqpJwgk=;
+ b=deqA/iGjOgxN5eZIF9nlPbfuywPwQKCywg235ghhq7EwvwWDKgTX0wZ+Oan1kYEnfH
+ 9WEWgbFA/R4UggTU9mRg2J8vIZAQCgS+jEDzAuzLanw+a1iW0ZE+Eq306NnqJWQsWrdk
+ xWY5GsgbwWxBEjPwjf8SGine4QIH6FKHrJMpQAg/kIIbAfIvA2NQXiaswo7XL3bq2VLS
+ 9KMPFZQMdIkn3c70oPN9OII8ZRXJ0N0hqTI81joYaIU/gdybYYnaFq6M++V0zprsRLYg
+ rJkQwtD8a6O7s7YbsTVaFKSCNVJ+AZjoAXKZ1UJg1LNxWntEAP9+qnVnUe9jV9EM0UzQ
+ Rj2g==
+X-Gm-Message-State: AOJu0Ywu5FSXUwnTY+dahsq8i9RYq1rlfwF6inoJmQxXKXS72wjmHEHn
+ uVs2AkpYrtoYJRBTY/2cZz8nMRGFc8nOO8AtLBMo9YKGX5ryLGbZ6hTq7SN5/VVw7tG103pB4xN
+ jGJ+XsQHGcgifkZS+chTnZejGSYAYMgUZp3mYINszB5kYHm+hjcDYNws3jqFUvlE9k3n6ktjnH3
+ axolngZk/+QkfWbdykbHV+DsavnPWGxhAzrqKVy9ZQ
+X-Gm-Gg: ATEYQzyh7U6n2+qJyKK/e3o0zHAVV0tdAMEfW9d26pT/B+izvrT00FluLdDM3z0ncS+
+ hvhvwkkblGUuE0+3xkDd08KnC36yVuv6BqRBesjxJ5f9ozP2RlwGAcX7duJ8+vxbenFCsA2UQOy
+ Z9lAbNAR4PM4ymTAgpHwL79mqesjQklVKBcyV4BnVzWU8iER8RwDd9RU4dvU4YOjz3Y+LjLfgwr
+ To9KQmY8K54EFyVnKCV0Ozo0nsXKBdE3XohrB+LWwKd5ZQsWriknKV+ZER7SlJz1RniZsSg4Rae
+ uUh0oI3Th98g94V+oLRogMYVgTBLIsoGFG+rvkGA51YdgL+G+u6brBpFwa7J3UU6roBqt+7h+Y2
+ 6GQIeHHgxwhb7lEhjx5JSNMjuieDJGMRDZ+e7pHZxgYCxK1qc3FtJsZuDSR6V2BZadlvpsixfF9
+ EqebgzHWPIMbQiY/0h3PP/c8vtoRE=
+X-Received: by 2002:a05:600c:46c4:b0:483:7ae2:1737 with SMTP id
+ 5b1f17b1804b1-483c9c1bbe9mr164728565e9.17.1772376175778; 
+ Sun, 01 Mar 2026 06:42:55 -0800 (PST)
+X-Received: by 2002:a05:600c:46c4:b0:483:7ae2:1737 with SMTP id
+ 5b1f17b1804b1-483c9c1bbe9mr164727615e9.17.1772376174663; 
+ Sun, 01 Mar 2026 06:42:54 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b1b97927sm5640925f8f.28.2026.03.01.06.42.49
+ ffacd0b85a97d-439b485a0b6sm4048856f8f.39.2026.03.01.06.42.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 06:42:49 -0800 (PST)
+ Sun, 01 Mar 2026 06:42:52 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 14/18] target/i386/tcg: implement CCMP/CTEST
-Date: Sun,  1 Mar 2026 15:42:14 +0100
-Message-ID: <20260301144218.458140-15-pbonzini@redhat.com>
+Subject: [PATCH 16/18] target/i386/tcg: decode APX instructions
+Date: Sun,  1 Mar 2026 15:42:16 +0100
+Message-ID: <20260301144218.458140-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260301144218.458140-1-pbonzini@redhat.com>
 References: <20260301144218.458140-1-pbonzini@redhat.com>
@@ -120,435 +120,696 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CCMP/CTEST are new instructions that will either perform a CMP/TEST
-or set EFLAGS to a predetermined value.  To support this double
-functionality without using CC_OP_DYNAMIC, introduce a new CCOp that
-is inspired by x86_flags.h.
-
-By shifting the carry computation part of compute_aco_sub* to TCG ops,
-it provides enough flexibility that the result of a subtraction,
-the result of an AND, and any value of EFLAGS can be encoded with a
-single CCOp.
+The bulk of the APX implementation, comprising new map4-specific
+encodings, extensions to legacy root and 0F tables, and the
+implementation of new instructions CFCMOV, PUSH2 and POP2.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h                        |   5 +
- target/i386/tcg/cc_helper_template.h.inc |  11 ++
- target/i386/tcg/cc_helper.c              |  10 ++
- target/i386/tcg/translate.c              |  63 +++++++++++
- target/i386/tcg/decode-new.c.inc         |  26 ++---
- target/i386/tcg/emit.c.inc               | 137 ++++++++++++++++++++++-
- 6 files changed, 238 insertions(+), 14 deletions(-)
+ target/i386/helper.h             |   1 +
+ target/i386/tcg/decode-new.h     |   1 +
+ target/i386/tcg/excp_helper.c    |   5 +
+ target/i386/tcg/decode-new.c.inc | 356 ++++++++++++++++++++++---------
+ target/i386/tcg/emit.c.inc       |  55 +++++
+ 5 files changed, 320 insertions(+), 98 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7586ea0ed8d..a542a8b250c 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1582,6 +1582,11 @@ typedef enum {
-     CC_OP_BLSIL,
-     CC_OP_BLSIQ,
- 
-+    CC_OP_CCMPB, /* Z via CC_DST, P,S via CC_SRC2, carry-out in CC_SRC */
-+    CC_OP_CCMPW,
-+    CC_OP_CCMPL,
-+    CC_OP_CCMPQ,
-+
-     /*
-      * Note that only CC_OP_POPCNT (i.e. the one with MO_TL size)
-      * is used or implemented, because the translation needs
-diff --git a/target/i386/tcg/cc_helper_template.h.inc b/target/i386/tcg/cc_helper_template.h.inc
-index af58c2409f7..8ec449fd3ff 100644
---- a/target/i386/tcg/cc_helper_template.h.inc
-+++ b/target/i386/tcg/cc_helper_template.h.inc
-@@ -60,6 +60,17 @@ static uint32_t glue(compute_aco_cout, SUFFIX)(DATA_TYPE carries)
-     return af_cf + of;
+diff --git a/target/i386/helper.h b/target/i386/helper.h
+index 3f67098f11f..99cbbacadfc 100644
+--- a/target/i386/helper.h
++++ b/target/i386/helper.h
+@@ -57,6 +57,7 @@ DEF_HELPER_2(sysret, void, env, int)
+ DEF_HELPER_FLAGS_1(pause, TCG_CALL_NO_WG, noreturn, env)
+ DEF_HELPER_FLAGS_3(raise_interrupt, TCG_CALL_NO_WG, noreturn, env, int, int)
+ DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, int)
++DEF_HELPER_FLAGS_1(raise_gpf, TCG_CALL_NO_WG, noreturn, env)
+ DEF_HELPER_FLAGS_1(icebp, TCG_CALL_NO_WG, noreturn, env)
+ DEF_HELPER_3(boundw, void, env, tl, int)
+ DEF_HELPER_3(boundl, void, env, tl, int)
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 1c7ed73c437..de35fb44a37 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -53,6 +53,7 @@ typedef enum X86OpType {
+     X86_TYPE_nop, /* modrm operand decoded but not loaded into s->T{0,1} */
+     X86_TYPE_2op, /* 2-operand RMW instruction */
+     X86_TYPE_LoBits, /* encoded in bits 0-2 of the operand + REX.B */
++    X86_TYPE_ZERO, /* Constant zero, for CFCMOV */
+     X86_TYPE_0, /* Hard-coded GPRs (RAX..RDI) */
+     X86_TYPE_1,
+     X86_TYPE_2,
+diff --git a/target/i386/tcg/excp_helper.c b/target/i386/tcg/excp_helper.c
+index 32f2784e923..6a7a9fc8d56 100644
+--- a/target/i386/tcg/excp_helper.c
++++ b/target/i386/tcg/excp_helper.c
+@@ -36,6 +36,11 @@ G_NORETURN void helper_raise_exception(CPUX86State *env, int exception_index)
+     raise_exception(env, exception_index);
  }
  
-+static uint32_t glue(compute_all_ccmp, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1, DATA_TYPE src2)
++G_NORETURN void helper_raise_gpf(CPUX86State *env)
 +{
-+    uint32_t pf, zf, sf;
-+
-+    /* Compute all bits here because PF and SF do not come from DST.  */
-+    zf = dst == 0 ? CC_Z : 0;
-+    pf = compute_pf(src2);
-+    sf = lshift(src2, 8 - DATA_BITS) & CC_S;
-+    return pf + zf + sf + glue(compute_aco_cout, SUFFIX)(src1);
++    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
 +}
 +
- static uint32_t glue(compute_aco_add, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
- {
-     DATA_TYPE src2 = dst - src1;
-diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
-index 6ddd64fcb07..a43b42badc0 100644
---- a/target/i386/tcg/cc_helper.c
-+++ b/target/i386/tcg/cc_helper.c
-@@ -111,6 +111,13 @@ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
-     case CC_OP_ADCOX:
-         return compute_all_adcox(dst, src1, src2);
- 
-+    case CC_OP_CCMPB:
-+        return compute_all_ccmpb(dst, src1, src2);
-+    case CC_OP_CCMPW:
-+        return compute_all_ccmpw(dst, src1, src2);
-+    case CC_OP_CCMPL:
-+        return compute_all_ccmpl(dst, src1, src2);
-+
-     case CC_OP_MULB:
-         flags = compute_aco_mul(src1);
-         goto psz_b;
-@@ -232,6 +239,9 @@ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
-         goto psz_l;
- 
- #ifdef TARGET_X86_64
-+    case CC_OP_CCMPQ:
-+        return compute_all_ccmpq(dst, src1, src2);
-+
-     case CC_OP_MULQ:
-         flags = compute_aco_mul(src1);
-         goto psz_q;
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 75eeed81fbd..b8e5bc55ad9 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -282,6 +282,7 @@ enum {
-     JCC_BE,
-     JCC_S,
-     JCC_P,
-+    CCMP_T = JCC_P,
-     JCC_L,
-     JCC_LE,
- };
-@@ -309,6 +310,7 @@ static const uint8_t cc_op_live_[] = {
-     [CC_OP_SARB ... CC_OP_SARQ] = USES_CC_DST | USES_CC_SRC,
-     [CC_OP_BMILGB ... CC_OP_BMILGQ] = USES_CC_DST | USES_CC_SRC,
-     [CC_OP_BLSIB ... CC_OP_BLSIQ] = USES_CC_DST | USES_CC_SRC,
-+    [CC_OP_CCMPB ... CC_OP_CCMPQ] = USES_CC_DST | USES_CC_SRC | USES_CC_SRC2,
-     [CC_OP_ADCX] = USES_CC_DST | USES_CC_SRC,
-     [CC_OP_ADOX] = USES_CC_SRC | USES_CC_SRC2,
-     [CC_OP_ADCOX] = USES_CC_DST | USES_CC_SRC | USES_CC_SRC2,
-@@ -906,6 +908,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-                              .no_setcond = true };
- 
-     case CC_OP_SHLB ... CC_OP_SHLQ:
-+    case CC_OP_CCMPB ... CC_OP_CCMPQ:
-         /* (CC_SRC >> (DATA_BITS - 1)) & 1 */
-         size = cc_op_size(s->cc_op);
-         return gen_prepare_sign_nz(cpu_cc_src, size);
-@@ -973,6 +976,8 @@ static CCPrepare gen_prepare_eflags_s(DisasContext *s, TCGv reg)
-                              .imm = CC_S };
-     case CC_OP_POPCNT:
-         return (CCPrepare) { .cond = TCG_COND_NEVER };
-+    case CC_OP_CCMPB ... CC_OP_CCMPQ:
-+        return gen_prepare_sign_nz(cpu_cc_src2, cc_op_size(s->cc_op));
-     default:
-         return gen_prepare_sign_nz(cpu_cc_dst, cc_op_size(s->cc_op));
-     }
-@@ -992,6 +997,20 @@ static CCPrepare gen_prepare_eflags_o(DisasContext *s, TCGv reg)
-         return (CCPrepare) { .cond = TCG_COND_NEVER };
-     case CC_OP_MULB ... CC_OP_MULQ:
-         return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_src };
-+
-+    case CC_OP_CCMPB ... CC_OP_CCMPQ:
-+        if (!reg) {
-+            reg = tcg_temp_new();
-+        }
-+        /*
-+         * Sum the carry-out vector and the value of the bit below the MSB;
-+         * the XOR of the top two carry bits ends up in the sign bit.
-+         */
-+        int size = cc_op_size(s->cc_op);
-+        target_ulong adj = 1ull << ((8 << size) - 2);
-+        tcg_gen_add_tl(reg, cpu_cc_src, tcg_constant_tl(adj));
-+        return gen_prepare_sign_nz(reg, size);
-+
-     default:
-         gen_compute_eflags(s);
-         return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = cpu_cc_src,
-@@ -1074,6 +1093,50 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-         }
-         goto slow_jcc;
- 
-+    case CC_OP_CCMPB ... CC_OP_CCMPQ:
-+        size = cc_op_size(s->cc_op);
-+        switch (jcc_op) {
-+            CCPrepare zf;
-+
-+        case JCC_L:
-+        case JCC_LE:
-+            if (!reg) {
-+                reg = tcg_temp_new();
-+            }
-+            /*
-+             * Sum the carry-out vector and the value of the bit below the MSB;
-+             * the XOR of the top two carry bits ends up in the sign bit.
-+             */
-+            size = s->cc_op - CC_OP_CCMPB;
-+            target_ulong adj = 1ull << ((8 << size) - 2);
-+            tcg_gen_add_tl(reg, cpu_cc_src, tcg_constant_tl(adj));
-+            /* Now XOR in SF too.  */
-+            tcg_gen_xor_tl(reg, reg, cpu_cc_src2);
-+            /* And possibly OR the zero flag...  */
-+            if (jcc_op == JCC_LE) {
-+                zf = gen_prepare_val_nz(cpu_cc_dst, size, true);
-+                assert(!zf.use_reg2);
-+                /* If CPU_CC_DST is zero, set reg to all ones.  */
-+                tcg_gen_movcond_tl(zf.cond, reg, zf.reg, tcg_constant_tl(zf.imm),
-+                                   tcg_constant_tl(-1), reg);
-+            }
-+            return gen_prepare_sign_nz(reg, size);
-+
-+        case JCC_BE:
-+            if (!reg) {
-+                reg = tcg_temp_new();
-+            }
-+            /* OR ZF into CF: if CPU_CC_DST is zero, set reg to all ones.  */
-+            zf = gen_prepare_val_nz(cpu_cc_dst, size, true);
-+            assert(!zf.use_reg2);
-+            tcg_gen_movcond_tl(zf.cond, reg, zf.reg, tcg_constant_tl(zf.imm),
-+                               tcg_constant_tl(-1), cpu_cc_src);
-+            return gen_prepare_sign_nz(reg, size);
-+        default:
-+            goto slow_jcc;
-+        }
-+        break;
-+
-     case CC_OP_LOGICB ... CC_OP_LOGICQ:
-         /* Mostly used for test+jump */
-         size = s->cc_op - CC_OP_LOGICB;
+ /*
+  * Check nested exceptions and change to double or triple fault if
+  * needed. It should only be called, if this is not an interrupt.
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index c80c61befea..5e559d6ecb5 100644
+index 18b1b6845c1..32eaf582623 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -1581,7 +1581,7 @@ static void decode_63(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint
- static void decode_group1(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-     static const X86GenFunc group1_gen[8] = {
--        gen_ADD, gen_OR, gen_ADC, gen_SBB, gen_AND, gen_SUB, gen_XOR, gen_SUB,
-+        gen_ADD, gen_OR, gen_ADC, gen_SBB, gen_AND, gen_SUB, gen_XOR, gen_CMP,
+@@ -184,6 +184,8 @@
+     X86_OP_GROUP3(op, op0, s0, None, None, None, None, ## __VA_ARGS__)
+ #define X86_OP_GROUPwr(op, op0, s0, op1, s1, ...)                 \
+     X86_OP_GROUP3(op, op0, s0, op1, s1, None, None, ## __VA_ARGS__)
++#define X86_OP_GROUPrr(op, op0, s0, op1, s1, ...)                 \
++    X86_OP_GROUP3(op, None, None, op0, s0, op1, s1, ## __VA_ARGS__)
+ #define X86_OP_GROUP0(op, ...)                                    \
+     X86_OP_GROUP3(op, None, None, None, None, None, None, ## __VA_ARGS__)
+ 
+@@ -275,8 +277,10 @@
+ #define p_f3          .valid_prefix = P_F3,
+ #define p_f2          .valid_prefix = P_F2,
+ #define p_00_66       .valid_prefix = P_00 | P_66,
++#define p_00_f2       .valid_prefix = P_00 | P_F2,
+ #define p_00_f3       .valid_prefix = P_00 | P_F3,
+ #define p_66_f2       .valid_prefix = P_66 | P_F2,
++#define p_66_f3       .valid_prefix = P_66 | P_F3,
+ #define p_00_66_f3    .valid_prefix = P_00 | P_66 | P_F3,
+ #define p_66_f3_f2    .valid_prefix = P_66 | P_F3 | P_F2,
+ #define p_00_66_f3_f2 .valid_prefix = P_00 | P_66 | P_F3 | P_F2,
+@@ -856,28 +860,30 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
+ 
+     /*
+      * REG selects srcdest2 operand, VEX.vvvv selects src3.  VEX class not found
+-     * in manual, assumed to be 13 from the VEX.L0 constraint.
++     * in manual, assumed to be 13 from the VEX.L0 constraint; EVEX-APX-BMI and
++     * EVEX-APX-CMPccXADD are also pretty much the same; the difference are
++     * reflected in chk(nf0) and in the M operand type.
+      */
+-    [0xe0] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe1] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe2] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe3] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe4] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe5] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe6] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe7] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
++    [0xe0] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe1] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe2] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe3] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe4] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe5] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe6] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe7] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
+ 
+-    [0xe8] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xe9] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xea] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xeb] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xec] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xed] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xee] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
+-    [0xef] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
++    [0xe8] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xe9] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xea] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xeb] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xec] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xed] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xee] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
++    [0xef] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk2(nf0, o64) cpuid(CMPCCXADD) p_66),
+ };
+ 
+-/* five rows for no prefix, 66, F3, F2, 66+F2  */
++/* five rows for no prefix, 66, F3, F2, 66+F2 - all VEX13 instructions extend to APX */
+ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
+     [0] = {
+         X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
+@@ -910,22 +916,22 @@ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
+     [5] = {
+         X86_OP_ENTRY3(BZHI, G,y, E,y, B,y, vex13 cpuid(BMI1)),
+         {},
+-        X86_OP_ENTRY3(PEXT, G,y, B,y, E,y, vex13 zextT0 cpuid(BMI2)),
+-        X86_OP_ENTRY3(PDEP, G,y, B,y, E,y, vex13 zextT0 cpuid(BMI2)),
++        X86_OP_ENTRY3(PEXT, G,y, B,y, E,y, vex13 zextT0 chk(nf0) cpuid(BMI2)),
++        X86_OP_ENTRY3(PDEP, G,y, B,y, E,y, vex13 zextT0 chk(nf0) cpuid(BMI2)),
+         {},
+     },
+     [6] = {
+         {},
+         X86_OP_ENTRY2(ADCX, G,y, E,y, cpuid(ADX)),
+         X86_OP_ENTRY2(ADOX, G,y, E,y, cpuid(ADX)),
+-        X86_OP_ENTRY3(MULX, /* B,y, */ G,y, E,y, 2,y, vex13 cpuid(BMI2)),
++        X86_OP_ENTRY3(MULX, /* B,y, */ G,y, E,y, 2,y, vex13 chk(nf0) cpuid(BMI2)),
+         {},
+     },
+     [7] = {
+         X86_OP_ENTRY3(BEXTR, G,y, E,y, B,y, vex13 zextT0 cpuid(BMI1)),
+-        X86_OP_ENTRY3(SHLX, G,y, E,y, B,y, vex13 cpuid(BMI1)),
+-        X86_OP_ENTRY3(SARX, G,y, E,y, B,y, vex13 sextT0 cpuid(BMI1)),
+-        X86_OP_ENTRY3(SHRX, G,y, E,y, B,y, vex13 zextT0 cpuid(BMI1)),
++        X86_OP_ENTRY3(SHLX, G,y, E,y, B,y, vex13 chk(nf0) cpuid(BMI1)),
++        X86_OP_ENTRY3(SARX, G,y, E,y, B,y, vex13 chk(nf0) sextT0 cpuid(BMI1)),
++        X86_OP_ENTRY3(SHRX, G,y, E,y, B,y, vex13 chk(nf0) zextT0 cpuid(BMI1)),
+         {},
+     },
+ };
+@@ -1023,7 +1029,7 @@ static const X86OpEntry opcodes_0F3A[256] = {
+ 
+     [0xdf] = X86_OP_ENTRY3(VAESKEYGEN, V,dq, W,dq, I,b,  vex4 cpuid(AES) p_66),
+ 
+-    [0xF0] = X86_OP_ENTRY3(RORX, G,y, E,y, I,b, vex13 cpuid(BMI2) p_f2),
++    [0xF0] = X86_OP_ENTRY3(RORX,       G,y, E,y, I,b,    vex13 chk(nf0) cpuid(BMI2) p_f2),
+ };
+ 
+ static void decode_0F3A(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+@@ -1363,9 +1369,9 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0xa0] = X86_OP_ENTRYr(PUSH, FS, w),
+     [0xa1] = X86_OP_ENTRYw(POP, FS, w),
+     [0xa2] = X86_OP_ENTRY0(CPUID),
+-    [0xa3] = X86_OP_ENTRYrr(BT,   E,v, G,v,          btEvGv),
+-    [0xa4] = X86_OP_ENTRY4(SHLD,  E,v, 2op,v, G,v),
+-    [0xa5] = X86_OP_ENTRY3(SHLD,  E,v, 2op,v, G,v),
++    [0xa3] = X86_OP_ENTRYrr(BT,   E,v, G,v,            btEvGv),
++    [0xa4] = X86_OP_ENTRY4(SHLD,  B,v, E,v, G,v,       evex_apx p_00_66),
++    [0xa5] = X86_OP_ENTRY3(SHLD,  B,v, E,v, G,v,       evex_apx p_00_66),
+ 
+     [0xb0] = X86_OP_ENTRY2(CMPXCHG,E,b, G,b, lock),
+     [0xb1] = X86_OP_ENTRY2(CMPXCHG,E,v, G,v, lock),
+@@ -1499,12 +1505,12 @@ static const X86OpEntry opcodes_0F[256] = {
+ 
+     [0xa8] = X86_OP_ENTRYr(PUSH,   GS, w),
+     [0xa9] = X86_OP_ENTRYw(POP,    GS, w),
+-    [0xaa] = X86_OP_ENTRY0(RSM,             chk(smm) svm(RSM)),
++    [0xaa] = X86_OP_ENTRY0(RSM,                          chk(smm) svm(RSM)),
+     [0xab] = X86_OP_ENTRY2(BTS,    E,v, G,v,             btEvGv),
+-    [0xac] = X86_OP_ENTRY4(SHRD,   E,v, 2op,v, G,v),
+-    [0xad] = X86_OP_ENTRY3(SHRD,   E,v, 2op,v, G,v),
++    [0xac] = X86_OP_ENTRY4(SHRD,   B,v, E,v, G,v,        evex_apx p_00_66),
++    [0xad] = X86_OP_ENTRY3(SHRD,   B,v, E,v, G,v,        evex_apx p_00_66),
+     [0xae] = X86_OP_GROUP0(group15),
+-    [0xaf] = X86_OP_ENTRY2(IMUL3,  G,v, E,v, sextT0),
++    [0xaf] = X86_OP_ENTRY3(IMUL3,  B,v, G,v, E,v,        evex_apx sextT0 p_00_66),
+ 
+     [0xb8] = X86_OP_GROUP0(0FB8),
+     /* decoded as modrm, which is visible as a difference between page fault and #UD */
+@@ -1584,9 +1590,9 @@ static void decode_group1(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+ 
+     if (op == 7) {
+         /* prevent writeback for CMP */
+-        entry->op1 = entry->op0;
+         entry->op0 = X86_TYPE_None;
+         entry->s0 = X86_SIZE_None;
++        entry->vex_class = X86_EVEX_APX_cmp;
+     } else {
+         entry->special = X86_SPECIAL_HasLock;
+     }
+@@ -1613,6 +1619,9 @@ static void decode_group2(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
      };
      int op = (get_modrm(s, env) >> 3) & 7;
-     entry->gen = group1_gen[op];
-@@ -1628,7 +1628,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     entry->gen = group2_gen[op];
++    if (op == 2 || op == 3) {
++        entry->check |= X86_CHECK_nf0;
++    }
+     if (op == 7) {
+         entry->special = X86_SPECIAL_SExtT0;
+     } else {
+@@ -1624,22 +1633,22 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
  {
      static const X86OpEntry opcodes_grp3[16] = {
          /* 0xf6 */
--        [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
-+        [0x00] = X86_OP_ENTRYrr(TEST, E,b, I,b),
-         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
-         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
-         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
-@@ -1637,7 +1637,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-         [0x07] = X86_OP_ENTRYr(IDIV, E,b),
+-        [0x00] = X86_OP_ENTRYrr(TEST, E,b, I,b),
+-        [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
+-        [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
+-        [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
+-        [0x05] = X86_OP_ENTRYrr(IMUL,E,b, 0,b, sextT0),
+-        [0x06] = X86_OP_ENTRYr(DIV,  E,b),
+-        [0x07] = X86_OP_ENTRYr(IDIV, E,b),
++        [0x00] = X86_OP_ENTRYrr(TEST, E,b, I,b, evex_apx_cmp p_00),
++        [0x02] = X86_OP_ENTRYwr(NOT,  B,b, E,b, evex_apx p_00 chk(nf0) lock),
++        [0x03] = X86_OP_ENTRYwr(NEG,  B,b, E,b, evex_apx p_00 lock),
++        [0x04] = X86_OP_ENTRYrr(MUL,  E,b, 0,b, evex_apx p_00 zextT0),
++        [0x05] = X86_OP_ENTRYrr(IMUL, E,b, 0,b, evex_apx p_00 sextT0),
++        [0x06] = X86_OP_ENTRYr(DIV,   E,b,      evex_apx p_00),
++        [0x07] = X86_OP_ENTRYr(IDIV,  E,b,      evex_apx p_00),
  
          /* 0xf7 */
--        [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
-+        [0x08] = X86_OP_ENTRYrr(TEST, E,v, I,z),
-         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
-         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
-         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
-@@ -1776,8 +1776,8 @@ static const X86OpEntry opcodes_root[256] = {
-     [0x81] = X86_OP_GROUP2(group1, E,v, I,z),
-     [0x82] = X86_OP_GROUP2(group1, E,b, I,b, chk(i64)),
-     [0x83] = X86_OP_GROUP2(group1, E,v, I,b),
--    [0x84] = X86_OP_ENTRYrr(AND, E,b, G,b),
--    [0x85] = X86_OP_ENTRYrr(AND, E,v, G,v),
-+    [0x84] = X86_OP_ENTRYrr(TEST, E,b, G,b),
-+    [0x85] = X86_OP_ENTRYrr(TEST, E,v, G,v),
+-        [0x08] = X86_OP_ENTRYrr(TEST, E,v, I,z),
+-        [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
+-        [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
+-        [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
+-        [0x0d] = X86_OP_ENTRYrr(IMUL,E,v, 0,v, sextT0),
+-        [0x0e] = X86_OP_ENTRYr(DIV,  E,v),
+-        [0x0f] = X86_OP_ENTRYr(IDIV, E,v),
++        [0x08] = X86_OP_ENTRYrr(TEST, E,v, I,z, evex_apx_cmp p_00_66),
++        [0x0a] = X86_OP_ENTRYwr(NOT,  B,v, E,v, evex_apx p_00_66 chk(nf0) lock),
++        [0x0b] = X86_OP_ENTRYwr(NEG,  B,v, E,v, evex_apx p_00_66 lock),
++        [0x0c] = X86_OP_ENTRYrr(MUL,  E,v, 0,v, evex_apx p_00_66 zextT0),
++        [0x0d] = X86_OP_ENTRYrr(IMUL, E,v, 0,v, evex_apx p_00_66 sextT0),
++        [0x0e] = X86_OP_ENTRYr(DIV,   E,v,      evex_apx p_00_66),
++        [0x0f] = X86_OP_ENTRYr(IDIV,  E,v,      evex_apx p_00_66),
+     };
+ 
+     int w = (*b & 1);
+@@ -1652,12 +1661,12 @@ static void decode_group4_5(DisasContext *s, CPUX86State *env, X86OpEntry *entry
+ {
+     static const X86OpEntry opcodes_grp4_5[16] = {
+         /* 0xfe */
+-        [0x00] = X86_OP_ENTRY1(INC,     E,b,                           lock),
+-        [0x01] = X86_OP_ENTRY1(DEC,     E,b,                           lock),
++        [0x00] = X86_OP_ENTRYwr(INC,    B,b, E,b,                      evex_apx p_00 lock),
++        [0x01] = X86_OP_ENTRYwr(DEC,    B,b, E,b,                      evex_apx p_00 lock),
+ 
+         /* 0xff */
+-        [0x08] = X86_OP_ENTRY1(INC,     E,v,                           lock),
+-        [0x09] = X86_OP_ENTRY1(DEC,     E,v,                           lock),
++        [0x08] = X86_OP_ENTRYwr(INC,    B,v, E,v,                      evex_apx p_00 lock),
++        [0x09] = X86_OP_ENTRYwr(DEC,    B,v, E,v,                      evex_apx p_00 lock),
+         [0x0a] = X86_OP_ENTRYr(CALL_m,  E,f64,                         zextT0),
+         [0x0b] = X86_OP_ENTRYr(CALLF_m, M,p),
+         [0x0c] = X86_OP_ENTRYr(JMP_m,   E,f64,                         zextT0),
+@@ -1696,37 +1705,37 @@ static void decode_90(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint
+ }
+ 
+ static const X86OpEntry opcodes_root[256] = {
+-    [0x00] = X86_OP_ENTRY2(ADD, E,b, G,b, lock),
+-    [0x01] = X86_OP_ENTRY2(ADD, E,v, G,v, lock),
+-    [0x02] = X86_OP_ENTRY2(ADD, G,b, E,b, lock),
+-    [0x03] = X86_OP_ENTRY2(ADD, G,v, E,v, lock),
++    [0x00] = X86_OP_ENTRY3(ADD, B,b, E,b, G,b, evex_apx p_00 lock),
++    [0x01] = X86_OP_ENTRY3(ADD, B,v, E,v, G,v, evex_apx p_00_66 lock),
++    [0x02] = X86_OP_ENTRY3(ADD, B,b, G,b, E,b, evex_apx p_00 lock),
++    [0x03] = X86_OP_ENTRY3(ADD, B,v, G,v, E,v, evex_apx p_00_66 lock),
+     [0x04] = X86_OP_ENTRY2(ADD, 0,b, I,b, lock),   /* AL, Ib */
+     [0x05] = X86_OP_ENTRY2(ADD, 0,v, I,z, lock),   /* rAX, Iz */
+     [0x06] = X86_OP_ENTRYr(PUSH, ES, w, chk(i64)),
+     [0x07] = X86_OP_ENTRYw(POP, ES, w, chk(i64)),
+ 
+-    [0x10] = X86_OP_ENTRY2(ADC, E,b, G,b, lock),
+-    [0x11] = X86_OP_ENTRY2(ADC, E,v, G,v, lock),
+-    [0x12] = X86_OP_ENTRY2(ADC, G,b, E,b, lock),
+-    [0x13] = X86_OP_ENTRY2(ADC, G,v, E,v, lock),
++    [0x10] = X86_OP_ENTRY3(ADC, B,b, E,b, G,b, evex_apx p_00 chk(nf0) lock),
++    [0x11] = X86_OP_ENTRY3(ADC, B,v, E,v, G,v, evex_apx p_00_66 chk(nf0) lock),
++    [0x12] = X86_OP_ENTRY3(ADC, B,b, G,b, E,b, evex_apx p_00 chk(nf0) lock),
++    [0x13] = X86_OP_ENTRY3(ADC, B,v, G,v, E,v, evex_apx p_00_66 chk(nf0) lock),
+     [0x14] = X86_OP_ENTRY2(ADC, 0,b, I,b, lock),   /* AL, Ib */
+     [0x15] = X86_OP_ENTRY2(ADC, 0,v, I,z, lock),   /* rAX, Iz */
+     [0x16] = X86_OP_ENTRYr(PUSH, SS, w, chk(i64)),
+     [0x17] = X86_OP_ENTRYw(POP, SS, w, chk(i64)),
+ 
+-    [0x20] = X86_OP_ENTRY2(AND, E,b, G,b, lock),
+-    [0x21] = X86_OP_ENTRY2(AND, E,v, G,v, lock),
+-    [0x22] = X86_OP_ENTRY2(AND, G,b, E,b, lock),
+-    [0x23] = X86_OP_ENTRY2(AND, G,v, E,v, lock),
++    [0x20] = X86_OP_ENTRY3(AND, B,b, E,b, G,b, evex_apx p_00 lock),
++    [0x21] = X86_OP_ENTRY3(AND, B,v, E,v, G,v, evex_apx p_00_66 lock),
++    [0x22] = X86_OP_ENTRY3(AND, B,b, G,b, E,b, evex_apx p_00 lock),
++    [0x23] = X86_OP_ENTRY3(AND, B,v, G,v, E,v, evex_apx p_00_66 lock),
+     [0x24] = X86_OP_ENTRY2(AND, 0,b, I,b, lock),   /* AL, Ib */
+     [0x25] = X86_OP_ENTRY2(AND, 0,v, I,z, lock),   /* rAX, Iz */
+     [0x26] = {},
+     [0x27] = X86_OP_ENTRY0(DAA, chk(i64)),
+ 
+-    [0x30] = X86_OP_ENTRY2(XOR, E,b, G,b, lock),
+-    [0x31] = X86_OP_ENTRY2(XOR, E,v, G,v, lock),
+-    [0x32] = X86_OP_ENTRY2(XOR, G,b, E,b, lock),
+-    [0x33] = X86_OP_ENTRY2(XOR, G,v, E,v, lock),
++    [0x30] = X86_OP_ENTRY2(XOR, E,b, G,b, evex_apx p_00 lock),
++    [0x31] = X86_OP_ENTRY2(XOR, E,v, G,v, evex_apx p_00_66 lock),
++    [0x32] = X86_OP_ENTRY2(XOR, G,b, E,b, evex_apx p_00 lock),
++    [0x33] = X86_OP_ENTRY2(XOR, G,v, E,v, evex_apx p_00_66 lock),
+     [0x34] = X86_OP_ENTRY2(XOR, 0,b, I,b, lock),   /* AL, Ib */
+     [0x35] = X86_OP_ENTRY2(XOR, 0,v, I,z, lock),   /* rAX, Iz */
+     [0x36] = {},
+@@ -1768,12 +1777,12 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x76] = X86_OP_ENTRYr(Jcc, J,b),
+     [0x77] = X86_OP_ENTRYr(Jcc, J,b),
+ 
+-    [0x80] = X86_OP_GROUP2(group1, E,b, I,b),
+-    [0x81] = X86_OP_GROUP2(group1, E,v, I,z),
+-    [0x82] = X86_OP_GROUP2(group1, E,b, I,b, chk(i64)),
+-    [0x83] = X86_OP_GROUP2(group1, E,v, I,b),
+-    [0x84] = X86_OP_ENTRYrr(TEST, E,b, G,b),
+-    [0x85] = X86_OP_ENTRYrr(TEST, E,v, G,v),
++    [0x80] = X86_OP_GROUP3(group1, B,b, E,b, I,b, evex_apx p_00),
++    [0x81] = X86_OP_GROUP3(group1, B,v, E,v, I,z, evex_apx p_00_66),
++    [0x82] = X86_OP_GROUP2(group1,      E,b, I,b, chk(i64)),
++    [0x83] = X86_OP_GROUP3(group1, B,v, E,v, I,b, evex_apx p_00_66),
++    [0x84] = X86_OP_ENTRYrr(TEST, E,b, G,b, evex_apx_cmp p_00),
++    [0x85] = X86_OP_ENTRYrr(TEST, E,v, G,v, evex_apx_cmp p_00_66),
      [0x86] = X86_OP_ENTRY2(XCHG, E,b, G,b, xchg),
      [0x87] = X86_OP_ENTRY2(XCHG, E,v, G,v, xchg),
  
-@@ -1868,12 +1868,12 @@ static const X86OpEntry opcodes_root[256] = {
+@@ -1804,8 +1813,8 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xB6] = X86_OP_ENTRY3(MOV, LoBits,b, I,b, None, None),
+     [0xB7] = X86_OP_ENTRY3(MOV, LoBits,b, I,b, None, None),
+ 
+-    [0xC0] = X86_OP_GROUP2(group2, E,b, I,b),
+-    [0xC1] = X86_OP_GROUP2(group2, E,v, I,b),
++    [0xC0] = X86_OP_GROUP3(group2, B,b, E,b, I,b,           evex_apx p_00),
++    [0xC1] = X86_OP_GROUP3(group2, B,v, E,v, I,b,           evex_apx p_00_66),
+     [0xC2] = X86_OP_ENTRYr(RET, I,w),
+     [0xC3] = X86_OP_ENTRY0(RET),
+     [0xC4] = X86_OP_ENTRY3(LES, G,z, EM,p, None, None, chk(i64)),
+@@ -1813,10 +1822,10 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xC6] = X86_OP_GROUP3(group11, E,b, I,b, None, None), /* reg=000b */
+     [0xC7] = X86_OP_GROUP3(group11, E,v, I,z, None, None), /* reg=000b */
+ 
+-    [0xD0] = X86_OP_GROUP1(group2, E,b),
+-    [0xD1] = X86_OP_GROUP1(group2, E,v),
+-    [0xD2] = X86_OP_GROUP2(group2, E,b, 1,b), /* CL */
+-    [0xD3] = X86_OP_GROUP2(group2, E,v, 1,b), /* CL */
++    [0xD0] = X86_OP_GROUPwr(group2, B,b, E,b,               evex_apx p_00),
++    [0xD1] = X86_OP_GROUPwr(group2, B,v, E,v,               evex_apx p_00_66),
++    [0xD2] = X86_OP_GROUP3(group2, B,b, E,b, 1,b,           evex_apx p_00), /* CL */
++    [0xD3] = X86_OP_GROUP3(group2, B,v, E,v, 1,b,           evex_apx p_00_66), /* CL */
+     [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b, chk(i64)),
+     [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b, chk(i64)),
+     [0xD6] = X86_OP_ENTRYw(SALC, 0,b, chk(i64)),
+@@ -1837,37 +1846,37 @@ static const X86OpEntry opcodes_root[256] = {
+     [0xF6] = X86_OP_GROUP1(group3, E,b),
+     [0xF7] = X86_OP_GROUP1(group3, E,v),
+ 
+-    [0x08] = X86_OP_ENTRY2(OR, E,b, G,b, lock),
+-    [0x09] = X86_OP_ENTRY2(OR, E,v, G,v, lock),
+-    [0x0A] = X86_OP_ENTRY2(OR, G,b, E,b, lock),
+-    [0x0B] = X86_OP_ENTRY2(OR, G,v, E,v, lock),
++    [0x08] = X86_OP_ENTRY3(OR, B,b, E,b, G,b, evex_apx p_00 lock),
++    [0x09] = X86_OP_ENTRY3(OR, B,v, E,v, G,v, evex_apx p_00_66 lock),
++    [0x0A] = X86_OP_ENTRY3(OR, B,b, G,b, E,b, evex_apx p_00 lock),
++    [0x0B] = X86_OP_ENTRY3(OR, B,v, G,v, E,v, evex_apx p_00_66 lock),
+     [0x0C] = X86_OP_ENTRY2(OR, 0,b, I,b, lock),   /* AL, Ib */
+     [0x0D] = X86_OP_ENTRY2(OR, 0,v, I,z, lock),   /* rAX, Iz */
+     [0x0E] = X86_OP_ENTRYr(PUSH, CS, w, chk(i64)),
+     [0x0F] = X86_OP_GROUP0(0F),
+ 
+-    [0x18] = X86_OP_ENTRY2(SBB, E,b, G,b, lock),
+-    [0x19] = X86_OP_ENTRY2(SBB, E,v, G,v, lock),
+-    [0x1A] = X86_OP_ENTRY2(SBB, G,b, E,b, lock),
+-    [0x1B] = X86_OP_ENTRY2(SBB, G,v, E,v, lock),
++    [0x18] = X86_OP_ENTRY3(SBB, B,b, E,b, G,b, evex_apx p_00 chk(nf0) lock),
++    [0x19] = X86_OP_ENTRY3(SBB, B,v, E,v, G,v, evex_apx p_00_66 chk(nf0) lock),
++    [0x1A] = X86_OP_ENTRY3(SBB, B,b, G,b, E,b, evex_apx p_00 chk(nf0) lock),
++    [0x1B] = X86_OP_ENTRY3(SBB, B,v, G,v, E,v, evex_apx p_00_66 chk(nf0) lock),
+     [0x1C] = X86_OP_ENTRY2(SBB, 0,b, I,b, lock),   /* AL, Ib */
+     [0x1D] = X86_OP_ENTRY2(SBB, 0,v, I,z, lock),   /* rAX, Iz */
+     [0x1E] = X86_OP_ENTRYr(PUSH, DS, w, chk(i64)),
+     [0x1F] = X86_OP_ENTRYw(POP, DS, w, chk(i64)),
+ 
+-    [0x28] = X86_OP_ENTRY2(SUB, E,b, G,b, lock),
+-    [0x29] = X86_OP_ENTRY2(SUB, E,v, G,v, lock),
+-    [0x2A] = X86_OP_ENTRY2(SUB, G,b, E,b, lock),
+-    [0x2B] = X86_OP_ENTRY2(SUB, G,v, E,v, lock),
++    [0x28] = X86_OP_ENTRY3(SUB, B,b, E,b, G,b, evex_apx p_00 lock),
++    [0x29] = X86_OP_ENTRY3(SUB, B,v, E,v, G,v, evex_apx p_00_66 lock),
++    [0x2A] = X86_OP_ENTRY3(SUB, B,b, G,b, E,b, evex_apx p_00 lock),
++    [0x2B] = X86_OP_ENTRY3(SUB, B,v, G,v, E,v, evex_apx p_00_66 lock),
+     [0x2C] = X86_OP_ENTRY2(SUB, 0,b, I,b, lock),   /* AL, Ib */
+     [0x2D] = X86_OP_ENTRY2(SUB, 0,v, I,z, lock),   /* rAX, Iz */
      [0x2E] = {},
      [0x2F] = X86_OP_ENTRY0(DAS, chk(i64)),
  
--    [0x38] = X86_OP_ENTRYrr(SUB, E,b, G,b),
--    [0x39] = X86_OP_ENTRYrr(SUB, E,v, G,v),
--    [0x3A] = X86_OP_ENTRYrr(SUB, G,b, E,b),
--    [0x3B] = X86_OP_ENTRYrr(SUB, G,v, E,v),
--    [0x3C] = X86_OP_ENTRYrr(SUB, 0,b, I,b),   /* AL, Ib */
--    [0x3D] = X86_OP_ENTRYrr(SUB, 0,v, I,z),   /* rAX, Iz */
-+    [0x38] = X86_OP_ENTRYrr(CMP, E,b, G,b),
-+    [0x39] = X86_OP_ENTRYrr(CMP, E,v, G,v),
-+    [0x3A] = X86_OP_ENTRYrr(CMP, G,b, E,b),
-+    [0x3B] = X86_OP_ENTRYrr(CMP, G,v, E,v),
-+    [0x3C] = X86_OP_ENTRYrr(CMP, 0,b, I,b),   /* AL, Ib */
-+    [0x3D] = X86_OP_ENTRYrr(CMP, 0,v, I,z),   /* rAX, Iz */
+-    [0x38] = X86_OP_ENTRYrr(CMP, E,b, G,b),
+-    [0x39] = X86_OP_ENTRYrr(CMP, E,v, G,v),
+-    [0x3A] = X86_OP_ENTRYrr(CMP, G,b, E,b),
+-    [0x3B] = X86_OP_ENTRYrr(CMP, G,v, E,v),
++    [0x38] = X86_OP_ENTRYrr(CMP, E,b, G,b, evex_apx_cmp p_00),
++    [0x39] = X86_OP_ENTRYrr(CMP, E,v, G,v, evex_apx_cmp p_00_66),
++    [0x3A] = X86_OP_ENTRYrr(CMP, G,b, E,b, evex_apx_cmp p_00),
++    [0x3B] = X86_OP_ENTRYrr(CMP, G,v, E,v, evex_apx_cmp p_00_66),
+     [0x3C] = X86_OP_ENTRYrr(CMP, 0,b, I,b),   /* AL, Ib */
+     [0x3D] = X86_OP_ENTRYrr(CMP, 0,v, I,z),   /* rAX, Iz */
      [0x3E] = {},
-     [0x3F] = X86_OP_ENTRY0(AAS, chk(i64)),
+@@ -1892,9 +1901,9 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x5F] = X86_OP_ENTRYw(POP, LoBits,d64),
  
-@@ -1932,8 +1932,8 @@ static const X86OpEntry opcodes_root[256] = {
-     [0x9E] = X86_OP_ENTRY0(SAHF),
-     [0x9F] = X86_OP_ENTRY0(LAHF),
+     [0x68] = X86_OP_ENTRYr(PUSH, I,z),
+-    [0x69] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,z, sextT0),
++    [0x69] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,z, evex_apx_zu p_00_66 sextT0),
+     [0x6A] = X86_OP_ENTRYr(PUSH, I,b),
+-    [0x6B] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,b, sextT0),
++    [0x6B] = X86_OP_ENTRY3(IMUL3, G,v, E,v, I,b, evex_apx_zu p_00_66 sextT0),
+     [0x6C] = X86_OP_ENTRYrr(INS, Y,b, 2,w), /* DX */
+     [0x6D] = X86_OP_ENTRYrr(INS, Y,z, 2,w), /* DX */
+     [0x6E] = X86_OP_ENTRYrr(OUTS, X,b, 2,w), /* DX */
+@@ -2047,9 +2056,151 @@ static void decode_REX2_map1(DisasContext *s, CPUX86State *env, X86OpEntry *entr
+     decode_REX2(s, env, entry, b, opcode_rex2_map1);
+ }
  
--    [0xA8] = X86_OP_ENTRYrr(AND, 0,b, I,b),   /* AL, Ib */
--    [0xA9] = X86_OP_ENTRYrr(AND, 0,v, I,z),   /* rAX, Iz */
-+    [0xA8] = X86_OP_ENTRYrr(TEST, 0,b, I,b),   /* AL, Ib */
-+    [0xA9] = X86_OP_ENTRYrr(TEST, 0,v, I,z),   /* rAX, Iz */
-     [0xAA] = X86_OP_ENTRYwr(STOS, Y,b, 0,b),
-     [0xAB] = X86_OP_ENTRYwr(STOS, Y,v, 0,v),
-     /* Manual writeback because REP LODS (!) has to write EAX/RAX after every LODS.  */
++static const X86OpEntry opcodes_EVEX_map4_20to2F[16] = {
++    [0x0] = X86_OP_ENTRY3(AND,  B,b, E,b, G,b, evex_apx p_00 lock),
++    [0x1] = X86_OP_ENTRY3(AND,  B,v, E,v, G,v, evex_apx p_00_66 lock),
++    [0x2] = X86_OP_ENTRY3(AND,  B,b, G,b, E,b, evex_apx p_00 lock),
++    [0x3] = X86_OP_ENTRY3(AND,  B,v, G,v, E,v, evex_apx p_00_66 lock),
++    [0x4] = X86_OP_ENTRY4(SHLD, B,v, E,v, G,v, evex_apx p_00_66),
++
++    [0x8] = X86_OP_ENTRY3(SUB,  B,b, E,b, G,b, evex_apx p_00 lock),
++    [0x9] = X86_OP_ENTRY3(SUB,  B,v, E,v, G,v, evex_apx p_00_66 lock),
++    [0xA] = X86_OP_ENTRY3(SUB,  B,b, G,b, E,b, evex_apx p_00 lock),
++    [0xB] = X86_OP_ENTRY3(SUB,  B,v, G,v, E,v, evex_apx p_00_66 lock),
++    [0xC] = X86_OP_ENTRY4(SHRD, B,v, E,v, G,v, evex_apx p_00_66),
++};
++
++static void decode_EVEX4cc(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    uint8_t modrm = get_modrm(s, env);
++    int mod = (modrm >> 6) & 3;
++
++    static const X86OpEntry setcc =
++        X86_OP_ENTRYw(SETcc, E,b, evex_apx_zu chk(nf0) p_f2);
++    static const X86OpEntry cfcmov_nd0[2][2] = {
++        { /* NF=0 */
++            X86_OP_ENTRY3(CFCMOVcc_ld,  G,v, ZERO,v, M,v, p_00_66 evex_apx),
++            X86_OP_ENTRY3(CMOVcc,       G,v, ZERO,v, E,v, p_00_66 evex_apx),
++        },
++        { /* NF=1 */
++            X86_OP_ENTRYwr(CFCMOVcc_st, M,v, G,v,         p_00_66 evex_apx),
++            X86_OP_ENTRY3(CMOVcc,       E,v, ZERO,v, G,v, p_00_66 evex_apx),
++        },
++    };
++    static const X86OpEntry cfcmov_nd1[2][2] = {
++        { /* NF=0 */
++            X86_OP_ENTRY3(CMOVcc,       B,v, G,v, E,v,    p_00_66 evex_apx),
++            X86_OP_ENTRY3(CMOVcc,       B,v, G,v, E,v,    p_00_66 evex_apx),
++        },
++        { /* NF=1 */
++            X86_OP_ENTRY3(CFCMOVcc_ld,  B,v, G,v, M,v,    p_00_66 evex_apx),
++            X86_OP_ENTRY3(CMOVcc,       B,v, G,v, E,v,    p_00_66 evex_apx),
++        },
++    };
++
++    if (s->prefix & PREFIX_REPNZ) {
++        *entry = setcc;
++        if (EVEX_APX_ND(s)) {
++            entry->s1 = X86_SIZE_q; /* optimization for zu */
++        }
++    } else {
++        *entry = (EVEX_APX_ND(s) ? cfcmov_nd1 : cfcmov_nd0)[EVEX_APX_NF(s)][mod == 3];
++    }
++}
++
++static const X86OpEntry opcodes_EVEX_map4_40to4F[16] = {
++    [0x0] = X86_OP_GROUP0(EVEX4cc),
++    [0x1] = X86_OP_GROUP0(EVEX4cc),
++    [0x2] = X86_OP_GROUP0(EVEX4cc),
++    [0x3] = X86_OP_GROUP0(EVEX4cc),
++    [0x4] = X86_OP_GROUP0(EVEX4cc),
++    [0x5] = X86_OP_GROUP0(EVEX4cc),
++    [0x6] = X86_OP_GROUP0(EVEX4cc),
++    [0x7] = X86_OP_GROUP0(EVEX4cc),
++    [0x8] = X86_OP_GROUP0(EVEX4cc),
++    [0x9] = X86_OP_GROUP0(EVEX4cc),
++    [0xA] = X86_OP_GROUP0(EVEX4cc),
++    [0xB] = X86_OP_GROUP0(EVEX4cc),
++    [0xC] = X86_OP_GROUP0(EVEX4cc),
++    [0xD] = X86_OP_GROUP0(EVEX4cc),
++    [0xE] = X86_OP_GROUP0(EVEX4cc),
++    [0xF] = X86_OP_GROUP0(EVEX4cc),
++};
++
++static void decode_EVEX4_66(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    entry->gen = (s->prefix & PREFIX_DATA) ? gen_ADCX : gen_ADOX;
++}
++
++static const X86OpEntry opcodes_EVEX_map4_60to6F[16] = {
++    [0x0] = X86_OP_ENTRYwr(MOVBE,        G,y, E,y, cpuid(MOVBE) chk(nf0) p_00_66),
++    [0x1] = X86_OP_ENTRYwr(MOVBE,        E,y, G,y, cpuid(MOVBE) chk(nf0) p_00_66),
++    [0x6] = X86_OP_GROUP3(EVEX4_66, B,y, G,y, E,y, cpuid(ADX) chk(nf0) p_66_f3),
++};
++
++static void decode_EVEX4_8F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    int op = (get_modrm(s, env) >> 3) & 7;
++    if (op == 0) {
++        entry->gen = gen_POP2;
++    } else {
++        *entry = UNKNOWN_OPCODE;
++    }
++}
++
++static const X86OpEntry opcodes_EVEX_map4_80to8F[16] = {
++    [0x0] = X86_OP_GROUP3(group1,   B,b, E,b, I,b,     evex_apx p_00),
++    [0x1] = X86_OP_GROUP3(group1,   B,v, E,v, I,z,     evex_apx p_00_66),
++    [0x3] = X86_OP_GROUP3(group1,   B,v, E,v, I,b,     evex_apx p_00_66),
++    [0x4] = X86_OP_ENTRYrr(TEST,    E,b, G,b,          evex_apx_cmp p_00_66),
++    [0x5] = X86_OP_ENTRYrr(TEST,    E,v, G,v,          evex_apx_cmp p_00_66),
++
++    [0x8] = X86_OP_ENTRYwr(POPCNT,  G,v, E,v,          evex_apx cpuid(POPCNT) zextT0 p_00_66),
++    [0xF] = X86_OP_GROUPw(EVEX4_8F, R,d64, /* B,d64 */ evex_apx_pp2 p_00),
++};
++
++static void decode_EVEX4_FF(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    int op = (get_modrm(s, env) >> 3) & 7;
++    if (op == 6) {
++        entry->gen = gen_PUSH2;
++    } else {
++        *entry = opcodes_root[0xFF];
++    }
++}
++
++static const X86OpEntry opcodes_EVEX_map4_F0toFF[16] = {
++    [0x0] = X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
++    [0x1] = X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
++    [0x4] = X86_OP_ENTRYwr(TZCNT, G,v, E,v,        evex_apx zextT0 p_00_66),
++    [0x5] = X86_OP_ENTRYwr(LZCNT, G,v, E,v,        evex_apx zextT0 p_00_66),
++    [0x6] = X86_OP_GROUP1(group3, E,b),
++    [0x7] = X86_OP_GROUP1(group3, E,v),
++    [0xE] = X86_OP_GROUP1(group4_5, E,b),
++    [0xF] = X86_OP_GROUPrr(EVEX4_FF, B,d64, R,d64, evex_apx_pp2 p_00),
++};
++
+ static void decode_EVEX_map4(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
+-    *entry = UNKNOWN_OPCODE;
++    static const X86OpEntry *opcode_evex_map4[16] = {
++        &opcodes_root[0x00],
++        &opcodes_root[0x10],
++        opcodes_EVEX_map4_20to2F,  /* includes SHLD@24, SHRD@2C */
++        &opcodes_root[0x30],
++        opcodes_EVEX_map4_40to4F,  /* includes CMOVcc/CFCMOVcc/SETcc */
++        NULL,
++        opcodes_EVEX_map4_60to6F,  /* includes MOVBE, ADCX/ADOX */
++        NULL,
++        opcodes_EVEX_map4_80to8F,  /* includes POPCNT */
++        NULL,
++        &opcodes_0F[0xA0],         /* for SHLD/SHRD ...,CL */
++        NULL,
++        &opcodes_root[0xC0],
++        &opcodes_root[0xD0],
++        NULL,
++        opcodes_EVEX_map4_F0toFF,  /* includes CRC32@f0/f1, TZCNT@f4, LZCNT@f5 */
++    };
++    decode_REX2(s, env, entry, b, opcode_evex_map4);
+ }
+ #endif
+ 
+@@ -2066,6 +2217,10 @@ static void decode_EVEX_map4(DisasContext *s, CPUX86State *env, X86OpEntry *entr
+ #undef vex11
+ #undef vex12
+ #undef vex13
++#undef evex_apx
++#undef evex_apx_cmp
++#undef evex_apx_pp2
++#undef evex_apx_zu
+ 
+ static void decode_root(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
+@@ -2519,6 +2674,11 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+         op->n = type - X86_TYPE_ES;
+         op->unit = X86_OP_SEG;
+         break;
++
++    case X86_TYPE_ZERO:
++        op->unit = X86_OP_IMM;
++        decode->immediate = op->imm = 0;
++        break;
+     }
+ 
+     return true;
 diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 94a2bb49172..685972060c0 100644
+index 685972060c0..a1c3680db3c 100644
 --- a/target/i386/tcg/emit.c.inc
 +++ b/target/i386/tcg/emit.c.inc
-@@ -1649,6 +1649,116 @@ static void gen_CMOVcc(DisasContext *s, X86DecodedInsn *decode)
+@@ -1644,6 +1644,30 @@ static void gen_CMC(DisasContext *s, X86DecodedInsn *decode)
+     tcg_gen_xori_tl(cpu_cc_src, cpu_cc_src, CC_C);
+ }
+ 
++#ifdef TARGET_X86_64
++static void gen_CFCMOVcc_ld(DisasContext *s, X86DecodedInsn *decode)
++{
++    TCGLabel *label_false = gen_new_label();
++    int cond = decode->b & 0xf;
++    MemOp ot = decode->op[2].ot;
++
++    gen_jcc_noeob(s, cond ^ 1, label_false);
++    gen_op_ld_v(s, ot, s->T0, s->A0);
++    gen_set_label(label_false);
++}
++
++static void gen_CFCMOVcc_st(DisasContext *s, X86DecodedInsn *decode)
++{
++    TCGLabel *label_false = gen_new_label();
++    int cond = decode->b & 0xf;
++    MemOp ot = decode->op[0].ot;
++
++    gen_jcc_noeob(s, cond ^ 1, label_false);
++    gen_op_st_v(s, ot, s->T0, s->A0);
++    gen_set_label(label_false);
++}
++#endif
++
+ static void gen_CMOVcc(DisasContext *s, X86DecodedInsn *decode)
+ {
      gen_cmovcc(s, decode->b & 0xf, s->T0, s->T1);
+@@ -3141,6 +3165,24 @@ static void gen_PMOVMSKB(DisasContext *s, X86DecodedInsn *decode)
+     }
  }
  
-+/* Convert the repurposed V bits from CCMP or CTEST instructions to
-+ * an EFLAGS value.
-+ */
-+static inline uint32_t evex_to_eflags(DisasContext *s)
++#ifdef TARGET_X86_64
++static void gen_POP2(DisasContext *s, X86DecodedInsn *decode)
 +{
-+    uint16_t eflags = 0;
-+    eflags |= (s->evex3 & 0x08 ? CC_C | CC_P : 0);
-+    eflags |= (s->evex3 & 0x10 ? CC_Z : 0);
-+    eflags |= (s->evex3 & 0x20 ? CC_S : 0);
-+    eflags |= (s->evex3 & 0x40 ? CC_O : 0);
-+    return eflags;
++    TCGLabel *aligned = gen_new_label();
++
++    tcg_gen_brcondi_tl(TCG_COND_TSTEQ, cpu_regs[R_ESP], 15, aligned);
++    gen_helper_raise_gpf(tcg_env);
++    gen_set_label(aligned);
++
++    gen_lea_ss_ofs(s, s->A0, cpu_regs[R_ESP], 0);
++    gen_op_ld_v(s, MO_64, cpu_regs[s->vex_v], s->A0);
++
++    tcg_gen_addi_tl(s->A0, s->A0, 8);
++    gen_op_ld_v(s, MO_64, s->T0, s->A0);
++    gen_pop_update(s, MO_128);
 +}
++#endif
 +
-+/* Conditionally fill CC_DST/SRC/SRC2 with values that produce the flag values
-+ * in DFV, leaving the output of CCMP/CTEST in place if the condition code
-+ * COND is true.  On input, CC_DST contains the result of the subtraction or
-+ * AND.  If COND is true, CC_SRC will be loaded with COUT if it is non-NULL,
-+ * otherwise with zero (resulting in CF=AF=OF=0).
-+ */
-+static void gen_dfv_movcond(DisasContext *s, X86DecodedInsn *decode, int cond, uint32_t dfv,
-+                            MemOp ot, TCGv cout)
-+{
-+    target_ulong dst, src, src2;
-+    CCPrepare cc = gen_prepare_cc(s, cond, NULL);
-+
-+    /* ZF from dst */
-+    dst = (dfv & CC_Z) ? 0 : -1;
-+
-+    /* CF is the high bit of SRC, OF the XOR of the high two bits */
-+    src = deposit64(0, (8 << ot) - 2, 1, !!(dfv & CC_O));
-+    src ^= (dfv & CC_C) ? -1 : 0;
-+
-+    /*
-+     * SF is the high bit of SRC2, PF the parity of the low byte.  But also
-+     * ensure the value is nonzero if dfv requests zf=0.  This triggers the
-+     * optimization below in some extra cases (e.g. dfv == CC_P)
-+     */
-+    src2 = dst & 3;
-+    src2 ^= (dfv & CC_P) ? 0 : 1;
-+    src2 ^= (dfv & CC_S) ? -1 : 0;
-+
-+    if (!cc.use_reg2) {
-+        cc.reg2 = tcg_constant_tl(cc.imm);
-+    }
-+
-+    if (cout) {
-+        decode->cc_src = cout;
-+        tcg_gen_movcond_tl(cc.cond, decode->cc_src, cc.reg, cc.reg2,
-+                           decode->cc_src, tcg_constant_tl(src));
-+    } else if (src) {
-+        decode->cc_src = tcg_temp_new();
-+        tcg_gen_movcond_tl(cc.cond, decode->cc_src, cc.reg, cc.reg2,
-+                           tcg_constant_tl(0), tcg_constant_tl(src));
-+    } else {
-+        decode->cc_src = tcg_constant_tl(0);
-+    }
-+
-+    if (!!dst == !!src2) {
-+        /*
-+         * When an actual CMP or TEST result is stored, DST will be
-+         * equal to SRC2, and when the default flag value is stored,
-+         * only zero/nonzero matters for DST.  If DST and SRC2
-+         * are equally zero/non-zero, use the same value for both.
-+         */
-+        decode->cc_src2 = decode->cc_dst;
-+        dst = src2;
-+    } else {
-+        decode->cc_src2 = tcg_temp_new();
-+        tcg_gen_movcond_tl(cc.cond, decode->cc_src2, cc.reg, cc.reg2,
-+                           decode->cc_dst, tcg_constant_tl(src2));
-+    }
-+    tcg_gen_movcond_tl(cc.cond, decode->cc_dst, cc.reg, cc.reg2,
-+                       decode->cc_dst, tcg_constant_tl(dst));
-+}
-+
-+static void gen_SUB(DisasContext *s, X86DecodedInsn *decode);
-+static void gen_CMP(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    int cond = (s->prefix & PREFIX_EVEX) ? s->evex4 & 0x0f : CCMP_T << 1;
-+    uint32_t dfv = evex_to_eflags(s);
-+    MemOp ot = decode->op[1].ot;
-+    TCGv cout;
-+
-+    switch (cond) {
-+    case CCMP_T << 1:
-+        gen_SUB(s, decode);
-+        return;
-+    case (CCMP_T << 1) | 1:
-+        decode->cc_op = CC_OP_EFLAGS;
-+        decode->cc_src = tcg_constant_tl(dfv);
-+        return;
-+    default:
-+        break;
-+    }
-+
-+    decode->cc_op = CC_OP_CCMPB + ot;
-+    decode->cc_dst = tcg_temp_new();
-+    cout = tcg_temp_new();
-+    tcg_gen_sub_tl(decode->cc_dst, s->T0, s->T1);
-+
-+    /* Compute carry-out vector of subtraction.  */
-+    tcg_gen_xor_tl(cout, s->T1, decode->cc_dst);
-+    tcg_gen_xor_tl(s->T0, s->T0, s->T1);
-+    tcg_gen_and_tl(cout, cout, s->T0);
-+    tcg_gen_xor_tl(cout, cout, decode->cc_dst);
-+
-+    /* src2 == dst if cond is true.  */
-+    gen_dfv_movcond(s, decode, cond, dfv, ot, cout);
-+}
-+
- static void gen_CMPccXADD(DisasContext *s, X86DecodedInsn *decode)
+ static void gen_POP(DisasContext *s, X86DecodedInsn *decode)
  {
-     TCGLabel *label_top = gen_new_label();
-@@ -3844,7 +3954,6 @@ static void gen_SARX(DisasContext *s, X86DecodedInsn *decode)
-     tcg_gen_sar_tl(s->T0, s->T0, s->T1);
+     X86DecodedOp *op = &decode->op[0];
+@@ -3338,6 +3380,19 @@ static void gen_PSLLDQ_i(DisasContext *s, X86DecodedInsn *decode)
+     }
  }
  
--static void gen_SUB(DisasContext *s, X86DecodedInsn *decode);
- static void gen_SBB(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[0].ot;
-@@ -4158,6 +4267,32 @@ static void gen_SYSRET(DisasContext *s, X86DecodedInsn *decode)
-     s->base.is_jmp = DISAS_EOB_RECHECK_TF;
- }
- 
-+static void gen_TEST(DisasContext *s, X86DecodedInsn *decode)
++#ifdef TARGET_X86_64
++static void gen_PUSH2(DisasContext *s, X86DecodedInsn *decode)
 +{
-+    int cond = (s->prefix & PREFIX_EVEX) ? s->evex4 & 0x0f : CCMP_T << 1;
-+    uint32_t dfv = evex_to_eflags(s);
-+    MemOp ot = decode->op[1].ot;
++    TCGLabel *aligned = gen_new_label();
 +
-+    switch (cond) {
-+    case CCMP_T << 1:
-+        gen_AND(s, decode);
-+        return;
-+    case (CCMP_T << 1) | 1:
-+        decode->cc_op = CC_OP_EFLAGS;
-+        decode->cc_src = tcg_constant_tl(dfv);
-+        return;
-+    default:
-+        break;
-+    }
-+
-+    decode->cc_op = CC_OP_CCMPB + ot;
-+    decode->cc_dst = tcg_temp_new();
-+    tcg_gen_and_tl(decode->cc_dst, s->T0, s->T1);
-+
-+    /* src=0, src2 == dst if cond is true.  */
-+    gen_dfv_movcond(s, decode, cond, dfv, ot, NULL);
++    tcg_gen_brcondi_tl(TCG_COND_TSTEQ, cpu_regs[R_ESP], 15, aligned);
++    gen_helper_raise_gpf(tcg_env);
++    gen_set_label(aligned);
++    gen_push_v(s, s->T0);
++    gen_push_v(s, s->T1);
 +}
++#endif
 +
- static void gen_TZCNT(DisasContext *s, X86DecodedInsn *decode)
+ static void gen_PUSH(DisasContext *s, X86DecodedInsn *decode)
  {
-     MemOp ot = decode->op[0].ot;
+     gen_push_v(s, s->T0);
 -- 
 2.52.0
 
