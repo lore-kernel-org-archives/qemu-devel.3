@@ -4,162 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D24FD0047
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 19:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6376FD0047
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwmID-0001US-3h; Sun, 01 Mar 2026 14:17:29 -0500
+	id 1vwmxW-00017e-Re; Sun, 01 Mar 2026 15:00:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vwmHt-0001BR-Fw
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 14:17:10 -0500
-Received: from mout.web.de ([212.227.17.12])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vwmxU-00017F-5Y; Sun, 01 Mar 2026 15:00:08 -0500
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vwmHo-0003XZ-Cn
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 14:17:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1772392612; x=1772997412; i=lukasstraub2@web.de;
- bh=q/mNNwnaGGa47jBNu/l/VsNCmpfLA9HBEoNXzcytdkc=;
- h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
- Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
- cc:content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=tXbAPwK6sqMdLkx6CjE3kAI/tlSfd0Iz+JWjjQpFqxVbgbrccSnvxvDM+m5BAeCt
- 7/qrf7/xJ3rPnbcNavJJyMOvG2JBmp9/XrZkIIHIxcnEL8ukr+29QtsmJBR/SYpcp
- xuYFPa3/soq1d3qzaJraJTlQZMWYC+C9pPK834QxNTbDqi+frjyYID++SL7H1UDJY
- wB6dM4TqWlumst2sJPE3xAun0Tok6ZmqsOjWrTcdJv2xOx2HxWxtlo/v4d2s0Ad09
- Gx2DgDjX09BUzSJUs3M5WG2oEAOr139unUCg+lgChAS7sY9ceARWjfP1HeOPdQ6Fk
- rI6dzMMzxigSpwqC0w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MECGl-1vnC1h0QiL-00EU91; Sun, 01
- Mar 2026 20:16:52 +0100
-From: Lukas Straub <lukasstraub2@web.de>
-Date: Sun, 01 Mar 2026 20:16:35 +0100
-Subject: [PATCH v11 10/21] colo: Fix crash during device vmstate load
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vwmxQ-0000Pb-5o; Sun, 01 Mar 2026 15:00:07 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PjeKNSX6gNZEpK5HKjqVUo8PxW0Ftz7n2PjXvAm7Oun8hQxFt3eGmn3tSTUxJstF5yV1t3K6HTU1RFcE2sX9gPGnjEim9+7Tr8uAjMIf8XqLPZ2QcHcry+MYrppH2i8LIc/StfJ6RbsKrAnieB6SsiHEOOeaUuHv0vXpKkAQB/ksH8OQ+X5GwkLwpKR5cIyWakBxoQHgNGISdcKMTDOjVMv9ZKuG+SD+YZFj+7oq5LfIPrPKVMBUFZK/eDYmDqxZx6ZOlunMeP2+apr662RPS/Exf502H2hLpHF8A6xZPXUnPmxqk86DP1Py8X1zK/yFxx+sAIEX0KlWCdD4BKMHgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jzDZkxiW8hfL28WVXiixzJe3NXbAo3Mx03Tonz84F+o=;
+ b=CJeFXKgQ/LOz9byFioG67WosXosQMYboBrN5YK++0EcIhA7qIY9gnDHa4NeRDBmU0Jic+2gJ2e5ZUjDLKgedGqxV8oYKzj7G6MeiESGiK/8hMUjxdC/GZsQXAiPNr8w1duI8N2fzU08OPcmuCtEvnp+OAjwom7HbFRHkphDO1zvhcAAVkGf+skysXXdDRqS6wTC2QSDz9zhXYmUEF5n3TERqoJ9ooaIeTy/Fa2R1DGyjwrnRAde+Lxt11gvRC8pN/qHcr2hOnyGOTSiMJO1Q9m1syYh8xAKpW4mgogFpYRj/N5bPGSgEvrrulbyaNGVWRI7FAafIszMtvsU9SdPaLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jzDZkxiW8hfL28WVXiixzJe3NXbAo3Mx03Tonz84F+o=;
+ b=keumx8mnsvrzDahajhWEvTf7DpsPWx4g+LLw6R2/dPMWXEpLS9tSK22McHn+Rg4jmN1SsxO1H6rRZ5H3me+lyTMKAcyxBllzHABAB/mcjE3/SKgTLPLoiM2whtAGJr7649AjUkQ7iZr4S26NgzEQLu6jjr7kamK46V5svKF7OdSqgZOLt/JZrnmR3Xry+TE45Qk91xJRqrAcaGFNu74G8EDoBV2k69faMDLwPOpDf3iaZWxCJEafjHXfgDyWiLmIIhd6HkXU3VTbxmFRoad7r8ry9JGTVB5y7xk+j+S4IveMPLsCgMwm55UlhLNnszUumIvclsAY726wN019ybarQg==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by LV9PR12MB9831.namprd12.prod.outlook.com (2603:10b6:408:2e7::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.20; Sun, 1 Mar
+ 2026 19:59:57 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9654.015; Sun, 1 Mar 2026
+ 19:59:57 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Nicolin Chen
+ <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "philmd@linaro.org" <philmd@linaro.org>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+Thread-Topic: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+Thread-Index: AQHcpvxYoJA2rVvrlUmoO+kVeNPgOrWXqK6AgAJnu9A=
+Date: Sun, 1 Mar 2026 19:59:56 +0000
+Message-ID: <CH3PR12MB754818FE668426F2078F25BCAB71A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260226084456.112142-1-skolothumtho@nvidia.com>
+ <20260226084456.112142-6-skolothumtho@nvidia.com>
+ <IA3PR11MB913652049863E1F32BE9C1319270A@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <IA3PR11MB913652049863E1F32BE9C1319270A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|LV9PR12MB9831:EE_
+x-ms-office365-filtering-correlation-id: 3facfdee-c78e-4e4f-c403-08de77cd1ce4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700021;
+x-microsoft-antispam-message-info: tspEvFQdu8lkJCNjbQ3dyAa1+evc/w9NyMTsPyeIn2VjIEl2Qgs5PlbsUZE7+XvSQIN7Xhn1DsvJYZf41WtXYpgyx/XRE+ZNDkZK7PARhiP5Mqt8SMN1KGi2mdvkdI8azPJ/GH32II1N1McZa+sEmbm6YjIysbbaQfwgtlMOMydDoD5+w06pzzQu3R8CDSpOX8DYZHPBw0CNKj4jDyXrxaMhmB767Zo2htrmdaPwAVOSIcVdvLmXmgzXJPF9tGMQNMmvoi4IBISf5aWkGCyFdyggE4iZf1gPJyAcjQI9ljX7/qTOvae3eRMD0F9P7xEybl6qASVwASmQxlpQemn7CHeK1OqOsh49yyWlmrcMsNw+VQDlL4emeTG6JPY3BAJ4FKAEIUAf3vYqVbwSYFp1wQQI9uW8a722BhVtv7HlmQg3duR7JDRtaKn4U1pCIQbUtthHZbvbC0HtphTnQBusZ94hqKC5U7zGqpkuhSHFzJ1f3lbJ2BJJ9+BlWbDkjdlWbqmxeOzy32GYwozm8yNNF4EyDjPa4viAdss9k/xQTLfbNSwwrZ3Elvacn9hmJgbjesp/HQ/vzvle1sY3e6nEJh8Icx6Fz5YK64TayIgJbo/2ZwEZmkOSB7D9rDYoZ+Z4kMKf/3n5AXuBIKe0CWJe75bFY02m/IoSADfj8P0v2r9KEo8+QlBPRMOb5oX1iQLg3cDhF//+s/U0YiZTCCf7Hg+CkZQvbEhsnpixQxb4tW5TdkgnsHwLtEqddQESW6FG+NFQ3K2uGyI7LpCMZqscERilRyJmFika2NOXhXECH1g=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?s28b5l2T0MWuovlbHnOUI5MMptS+ldn/7GUrDeSe35JECjJ6RlhIdIwiltmz?=
+ =?us-ascii?Q?e6pdwfh+3/xwaS2m4bVOKQeQ5UviQ9jItz7nHel4aboTDaDLCOLiJW+qjYhp?=
+ =?us-ascii?Q?M3Y9oCBBJnOcIW8jLSRCfGFK6iub0cdjwYoEQhS25jUR8muOauQCfKQXIm9d?=
+ =?us-ascii?Q?1fwYnAtYThJ75kkQHlASbJg15C8eAw+Ix3rFCaawPWdOQ/+e4XgwBMeaqHI0?=
+ =?us-ascii?Q?2glOu9FiluYWu+WOwAcdBZ3DLsmzS5oumlWU1T/xQega4lZI7KM2pJYzmyjv?=
+ =?us-ascii?Q?Tq62BuBrQB5nMnBkbsqtCFVDH6kKFcouYI64Q3m491qw0mvuiMnyeRpgo1o1?=
+ =?us-ascii?Q?gvJkkMRmUVsTlSpPQIk2C779S69RCzNrMGAp3GKQAYSHIcdUNPa999ksy1Kw?=
+ =?us-ascii?Q?BoiYb83AjmKNgsja8/xCPF1FYolC9jKHUBr5XZbnBbTEaua9yVC/s7+7q7ml?=
+ =?us-ascii?Q?UoGlxqJtZd4Jem83AcX5eWSAtu0K78krB+cjJQmVs9WDvl3d4qVokNi8hHRL?=
+ =?us-ascii?Q?zXV3ntZJmu69o1O3+RBL9y0l94GG+h5Aqh2UTbd5tj6MqC2xtfu0MPyetIXM?=
+ =?us-ascii?Q?2NqULBZ7OiIAwti9c6lp07rJmc57l8MPbJxqbSnZh6uCkA1MC5Lx2CltFmuE?=
+ =?us-ascii?Q?EMHWURL4Ofa/xqIXdU/S0pbMJ9/NEXja1fDh7t6wiQNt2cxcoUddkQS10bT2?=
+ =?us-ascii?Q?KnpBsZ8QX02zmg+RaRPsxAleOQCRP57UVNq3X9hc/jzAujZwsuoWAZKGCmfE?=
+ =?us-ascii?Q?5C1v8/C3i+DxSXgMTc38/NlnDHZ4JwBbZvYYCSgKdCS26sg/jyit7J2fmAz3?=
+ =?us-ascii?Q?QZx7JEEYZssSsoa/uV0py4vY0u3Q4Gv25cBdIT9QJfcINfg/L8jYhIiifscH?=
+ =?us-ascii?Q?NsZyjthb2ZJs7CIIOX7ygH7RzLoDG5pM+wWb4cUSsPa6wRHFkwUrOedv0G8w?=
+ =?us-ascii?Q?fwxxsQOBnWy4OKNL/EmyXrq8gXL+J2SXVll/TuFOPUoBcUyfVN6KN9muWKiQ?=
+ =?us-ascii?Q?QswmPCJwqUVaEW92t8xiZRZmVxKukpUMKqlsaYuiDQA4kH4cldZTsW++02CO?=
+ =?us-ascii?Q?b2UiL6nQgYdK95NdoPGJVtSMlgELawMgHvYrxKZkfcv6atnUwG/jIqwar0Ar?=
+ =?us-ascii?Q?G7+hkrAuSxwd/b5TKjEA+VqnBNQ6Le2ydj6ooNYSBoxovA0cejKMJyuHwwqk?=
+ =?us-ascii?Q?IQpnbHWE3pFygCOcQ7G02liAwFLgMSw2SWYOIVd0+TKYynTxGqRFsVn1yg8H?=
+ =?us-ascii?Q?MgSg4dhC3az0HWVaNnysmGai/OsBPgKhMMtYY1mKsK23U+j0ceIGIiqMMafO?=
+ =?us-ascii?Q?jHv1BrD9EBL0aDyc4I0IMG+EdE44FfItE7o0hAQjTygp5TFJi14g3nX33HPK?=
+ =?us-ascii?Q?UyOZRTiArUsXWjPyKlHsizPyUbGWAgr8em7E4W4+rSiK1XIItoigxv6aarrR?=
+ =?us-ascii?Q?YsQyOMgJ1SFYlKkN2GCttbEWYuFU8yW4akZclG86YZwCkaO1TyVYkK2EtF1F?=
+ =?us-ascii?Q?zuXGMRjITt8Y6BwAxrrUJT3JX0JLlo4sc5cGGkosRn0vBJrMQfapUckPccyc?=
+ =?us-ascii?Q?pQQZaHD6l4D/f0BzrkJ/o9kORNKIsdkrPPkD3oY/r6oAm/ZKhbHPkScQfHML?=
+ =?us-ascii?Q?nB/TvzytK4J9A+xjr50bVLqxgXpH2SJlwsjotkMuZRAGXwuVyJq9g3svPXDX?=
+ =?us-ascii?Q?J/q64WBVJSzDLjIv3CxAYlc1EV+dUg4YV64DNmqQJUbO8t4QhOQJZDOVbwMj?=
+ =?us-ascii?Q?/PsxCbbQwQ=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20260301-colo_unit_test_multifd-v11-10-a9701e795d7a@web.de>
-References: <20260301-colo_unit_test_multifd-v11-0-a9701e795d7a@web.de>
-In-Reply-To: <20260301-colo_unit_test_multifd-v11-0-a9701e795d7a@web.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhang Chen <zhangckid@gmail.com>, 
- Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Lukas Straub <lukasstraub2@web.de>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1224; i=lukasstraub2@web.de;
- h=from:subject:message-id; bh=Jo9ygbD9kqkeUyQ0JD+anPkAvVD/vEUQ7S+iY6iqDJE=;
- b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBppJCdha/1Vh5RDDUSVN9tFIOpprsr4w5xEgx0p
- 0lwRdYcn6yJAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaaSQnQAKCRA1qwsonF2y
- WJP/D/0TqR/SNrA8s3hSd1H7GIacKtdFGpDK91BG9rP9XDysplU8/qXK/liUsrHG+vSSe2dalb1
- oX3md3CEk5z7HlrMaEWngEPvlHgbX+2ASdmdnYvn6FPEbX6ibW9G+RdjYFHo6rSZxatwFN8MlvX
- XOoXaLhHX1U2HGFSbdWa+Hwdh3Fssjhc5x34KG8lh/HDj/AbJS+Z18mfzPU2LQzrrTnc/EH7a8p
- zjLOnSh5oxe1u1besarCTf5LFlfmPombTtX0L68Wf8kSfdG054S5X2Kwg3b1E+JyCXMsUV0Kk+K
- dx2IDe/q5aFSnAJ8YyCigcuISYq2eC5aYjQjbD//uve5tnMT+129xPtUQNJTscYe1Wd+44G/xYX
- 8VL+seavcf67Xquw+f/01VNd4s/kXUOeqZH0R9B/UUiXbOCFepVTQCG3FgqgQimAI+SlCY31Gb/
- c0G3/agce3H2RHzyo9GzIEYEaFnx9FgIaA3YhJAXHMnF2iza15bFWpso2l5oR8Y40sSOhwWnnuy
- I2slF5m2hMvk9pAthm3pWF6u2pT3N8spk6fr5Ao25rZq3nS76bHaV84pUXEKtU0pXRU48/WU8xI
- QDIrLKKNP3QFfFozOyP/clnv77CJa1s5xXo1C0zzC1021ciuUSJkSLI4qJS8YoqPNAibdXpcKPp
- gmdGnkKA1H2lXEQ==
-X-Developer-Key: i=lukasstraub2@web.de; a=openpgp;
- fpr=83FAB158A0D9B8FB72628FA435AB0B289C5DB258
-X-Provags-ID: V03:K1:nWcDkWNJryzs4yIUmEDYbZC9ulgTW4Buc53xWqPI4VisC0BSo8E
- CKGwBxu0kTxT8CdHXuyKVN5jZVhIIHPVT9hO7MtloQir84Z5uWfcXBjyxtDZwPJppVMRr1I
- feahSodsS03LmwfpKKn4LKkyy68M0egz5/CcztBoGvecdX8lsPYLYFR88ywHUbRGeuCYAps
- sps2IgwghYhZqlCkv/o9g==
-UI-OutboundReport: notjunk:1;M01:P0:mT1Rf1k1f3Q=;juPtzgKSXHdm861iLzMB7ZnkMKp
- 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
- moGZr5pPI8jcSw1x3i+6+3s7tRLlO
-Received-SPF: pass client-ip=212.227.17.12; envelope-from=lukasstraub2@web.de;
- helo=mout.web.de
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3facfdee-c78e-4e4f-c403-08de77cd1ce4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Mar 2026 19:59:56.9583 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ASAhHRttFHlg5giD9rZqWxxavP9oMsonbn11FcVDhrup7gX/2BrW5mDUzKPs8Y7t/fPGiwj5jHjsQdgnOhR2fg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV9PR12MB9831
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1.676, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -175,42 +150,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With colo we load device vmstate during each checkpoint, on top of
-a vm that was already running. Some devices expect a reset before
-loading vmstate on such a previously running vm.
+Hi Zhenzhong,
 
-This fixes a crash when using COLO with Q35 machine.
+> -----Original Message-----
+> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+> Sent: 28 February 2026 06:28
+> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+> arm@nongnu.org; qemu-devel@nongnu.org
+> Cc: eric.auger@redhat.com; peter.maydell@linaro.org; Nicolin Chen
+> <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; philmd@linaro.org; Krishnakant Jaju
+> <kjaju@nvidia.com>
+> Subject: RE: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+> vIOMMU events
 
-The reset adds 10-20ms overhead to the checkpointing proces in my
-testing.
+[...]
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-=2D--
- migration/colo.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+> > static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+> > {
+> >     IOMMUFDVeventq *veventq =3D accel->veventq;
+> >@@ -397,6 +441,7 @@ static void
+> >smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+> >     if (!veventq) {
+> >         return;
+> >     }
+> >+    qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
+> >     close(veventq->veventq_fd);
+> >     iommufd_backend_free_id(accel->viommu->iommufd, veventq-
+> >veventq_id);
+>=20
+> Did you ever see free_id failure here?
 
-diff --git a/migration/colo.c b/migration/colo.c
-index 96102c9d0fb3b60e063c81ce07b730011bc4919f..dc7cfa81ef7db78e3ee372642d=
-e48567c5bc06eb 100644
-=2D-- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -729,6 +729,12 @@ static void colo_incoming_process_checkpoint(Migratio=
-nIncomingState *mis,
-=20
-     bql_lock();
-     vmstate_loading =3D true;
-+    /*
-+     * With colo we load device vmstate during each checkpoint, on top of
-+     * a vm that was already running. Some devices expect a reset before
-+     * loading vmstate on such a previously running vm.
-+     */
-+    qemu_system_reset(SHUTDOWN_CAUSE_SNAPSHOT_LOAD);
-     colo_flush_ram_cache();
-     ret =3D qemu_load_device_state(fb, errp);
-     if (ret < 0) {
+So far I have not seen free_id() failure in my test setup.
 
-=2D-=20
-2.39.5
+ I'm working on PRQ using FAULTQ in
+> intel_iommu
+> and find a race condition, I suspect the same for vEVENTQ because both ha=
+ve
+> similar
+> implementation in kernel and qemu.
+>=20
+> qemu_set_fd_handler() is called to remove veventq_fd from epoll() but it'=
+s
+> async,
+> this can lead to releasing of veventq_fd delayed after free_id(veventq_id=
+),
+> during veventq_fd releasing, it drops reference of veventq_id but it's to=
+o late
+> and free_id(veventq_id) already failed.
+>=20
+> It's not easy to reproduce, we had a test case in guest to trigger FAULTQ
+> allocation
+> and freeing sequence in loops.
 
+From a quick look:
+
+qemu_set_fd_handler(fd, NULL, NULL, NULL) -> aio_set_fd_handler()
+
+aio_set_fd_handler() takes ctx->list_lock. For the delete case it sets
+node->pfd.events =3D 0 and then calls:
+
+ctx->fdmon_ops->update(ctx, node, new_node); where new_node =3D NULL
+
+In the epoll backend (util/fdmon-epoll.c) this results in:
+
+epoll_ctl(ctx->epollfd, EPOLL_CTL_DEL, old_node->pfd.fd, ...);
+
+As I understand it, epoll_ctl() is a synchronous syscall. When it returns,
+the fd has been removed from the epoll interest list in the kernel.
+
+Also, I think, aio_set_fd_handler() and aio_dispatch() run in the same thre=
+ad for
+a given AioContext, and dispatch runs with ctx->list_lock held (via
+lockcnt). So looks like handler removal and dispatch are serialized at the =
+QEMU
+level.
+
+Do you see a specific window where the fd could still trigger after
+EPOLL_CTL_DEL returns?
+
+Could you confirm which fdmon backend you are using..poll, epoll, or
+io_uring?
+
+One more question: is the FAULTQ register/unregister model identical to
+vEVENTQ in terms of allocation and teardown ordering? For vEVENTQ we only
+unregister when the last device is removed from the vIOMMU, typically via
+device_del hot unplug.
+
+Please let me know if you see a specific race case here that I may be
+missing.
+
+Thanks,
+Shameer
 
