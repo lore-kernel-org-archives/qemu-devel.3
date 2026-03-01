@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35C8FD0047
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164ADFD0075
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnjf-0002IA-Ub; Sun, 01 Mar 2026 15:49:55 -0500
+	id 1vwnkt-0003Bj-Mw; Sun, 01 Mar 2026 15:51:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnjd-0002Ho-NA
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:49:53 -0500
+ id 1vwnkN-0002qc-RV
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:45 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnja-00020b-O0
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:49:53 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398174; cv=none; 
+ id 1vwnkI-0002Ex-5X
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:38 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772398202; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=bTP05WmsBv0odSJIbmNJmYRAJgEOvXb4sZRG3HeHt5v84JPf+Ah/PJkAzyhLnufQT6hPM1qLEr5e6WdlyqeNINCpZCI3gMAPDBNr12eOgsVWL+pYWgfIUIHOam7Nubbmld8qtZhKWbC/piim6OSLZIJyvK47GdG+h+rHVdljA4I=
+ b=RX6zKStjgRSh2s9z9EVn/Sy4odcD79+Ym42aU0BpRjZrHFqwzSZb13lmuSGI66SXSPlBsYM+OYSNMYJPr3fO6t5VNCGUin8n+BeTqbyd5kGXRMQkrVm3/zzbO1cfmNbTKT8UP/sq4TJtUOK1otLPCI3p42krNGa7UfTSjjNiAiA=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398174;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=YBRytc8sjSwUIzrPLBSSeDWw7jV8bG5DAbKRYlpPhIE=; 
- b=NBWszNz+aHJy2Z1CpUMJTUmo6UTmIhd0KHTz8ecLtgNZMmiPsXz0ux6TgcHdh5mp+EMt97xvhR32MIdqds/f7ON5NZ+2eIVHGyVhlyx/I+Bfh6zOGpeYnnHbahjlF/gBJoIMAQTu45+BYhMIQLPiJRxP3MOnmg1CUpMnDfuarC8=
+ s=zohoarc; t=1772398202;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=j8DPUxwCNH3p3vQdvPZVH2WkbBB65dwd9HOII4I6ibI=; 
+ b=dmPJ1zRDY4Uh9+rPtH/0tbiqkZu+SCbreU5gciuAvZkRi/D8L0xs0SqL32oJ/xmVHE/TyjfG7GhZNXRi081dCHbDxde8MJBa91XSJ0DqPTziuMSA9Wy1w5gwSgNZIfGyCP9CxZruY9bSA1+FnDMGzYH3iunQjGKel0bAftB/ND0=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398174; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398202; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=YBRytc8sjSwUIzrPLBSSeDWw7jV8bG5DAbKRYlpPhIE=;
- b=OmFv/UufDzUOn7col3YOMGsC576F+CuhGG1GrT4P4xbQk2u2VwY++0hu/cL1fw78
- oSzBbfKTgeSe8SZVEqrTJFvC+JU9AUy6GWIUW19a/TZhA+4WF8B2yNcYt2uE+TJxXw7
- GYzpVjWBFZVbysfgNELO618dKB/ZbN85JFtqaPI8=
-Received: by mx.zohomail.com with SMTPS id 1772398171417820.678670322156;
- Sun, 1 Mar 2026 12:49:31 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=j8DPUxwCNH3p3vQdvPZVH2WkbBB65dwd9HOII4I6ibI=;
+ b=TvYd/ynOCI9CZ4VGvB38QegOB7ScMkRhajLUv+6OLFxtiZvmtvBxYYTdFHxXISl+
+ LCMhjOKaT0BXws8uZsPNkD6jyAob4y91mn39sYAf6VCds8fipsh2zeE2xA/zPjzATEM
+ 31ICiaHhqQILXYb9jsedJ7PP0TE8AQTq8P4YiPjA=
+Received: by mx.zohomail.com with SMTPS id 1772398200233167.35102191004364;
+ Sun, 1 Mar 2026 12:50:00 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 06/21] ui/sdl2: Implement dpy dmabuf functions
-Date: Sun,  1 Mar 2026 23:48:23 +0300
-Message-ID: <20260301204838.596994-7-dmitry.osipenko@collabora.com>
+Subject: [PATCH v20 10/21] virtio-gpu: Bounce virtio_gpu_ctrl_bh() to
+ main-loop thread
+Date: Sun,  1 Mar 2026 23:48:27 +0300
+Message-ID: <20260301204838.596994-11-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,237 +97,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+QEMU's display GL core is tied to main-loop thread and virtio-gpu
+interacts with display while processing GPU commands. virtio_gpu_ctrl_bh()
+works in generic AIO context that can be processed from vCPU thread, while
+GL and UI toolkits are bound to the main-loop thread. Bounce the ctrl-bh
+execution if running from a thread other than main to fix the problem.
 
-If EGL is used, we can rely on dmabuf to import textures without
-doing copies.
+ 0  SDL_GL_MakeCurrent() (libSDL3)
+ 1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+ 2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+ 3  make_current() (virglrenderer.c:639)
+ 4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+ 5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+ 6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+ 7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+ 8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+ 9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+ 10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+ 11 aio_bh_poll() (util/async.c)
+ 12 aio_poll() (util/aio-posix.c)
+ 13 blk_pwrite() (block/block-gen.c:1985)
+ 14 pflash_update() (pflash_cfi01.c:396)
+ 15 pflash_write() (pflash_cfi01.c:541)
+ 16 memory_region_dispatch_write() (system/memory.c:1554)
+ 17 flatview_write() (system/physmem.c:3333)
+ 18 address_space_write() (system/physmem.c:3453)
+ 19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+ 20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
 
-To get this working on X11, we use the existing SDL hint:
-SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
-
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- include/ui/sdl2.h |  7 +++++
- meson.build       |  6 ++---
- ui/sdl2-gl.c      | 66 +++++++++++++++++++++++++++++++++++++++++++++++
- ui/sdl2.c         | 42 ++++++++++++++++++++++++++++++
- 4 files changed, 117 insertions(+), 4 deletions(-)
+ hw/display/virtio-gpu.c        | 12 +++++++++++-
+ include/hw/virtio/virtio-gpu.h |  2 ++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-index dbe6e3d9739b..9daf5ecffae7 100644
---- a/include/ui/sdl2.h
-+++ b/include/ui/sdl2.h
-@@ -45,6 +45,7 @@ struct sdl2_console {
-     bool gui_keysym;
-     SDL_GLContext winctx;
-     QKbdState *kbd;
-+    bool has_dmabuf;
- #ifdef CONFIG_OPENGL
-     QemuGLShader *gls;
-     egl_fb guest_fb;
-@@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
-                              void *d3d_tex2d);
- void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
-                            uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
-+void sdl2_gl_console_init(struct sdl2_console *scon);
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 643e91ca2a7a..d0737cbba8a2 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1126,7 +1126,16 @@ static void virtio_gpu_ctrl_bh(void *opaque)
+     VirtIOGPU *g = opaque;
+     VirtIOGPUClass *vgc = VIRTIO_GPU_GET_CLASS(g);
  
- #endif /* SDL2_H */
-diff --git a/meson.build b/meson.build
-index 3cd1d8dbc669..0ce84d45e6f3 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1937,10 +1937,8 @@ if get_option('gtk') \
-   endif
- endif
- 
--x11 = not_found
--if gtkx11.found()
--  x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
--endif
-+x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
-+
- png = not_found
- if get_option('png').allowed() and have_system
-    png = dependency('libpng', version: '>=1.6.34', required: get_option('png'),
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index fbac3edbc09d..697ba2169c34 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -26,6 +26,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/input.h"
- #include "ui/sdl2.h"
-@@ -250,3 +252,67 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
- 
-     SDL_GL_SwapWindow(scon->real_window);
- }
-+
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+    const int *fds;
-+
-+    assert(scon->opengl);
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-+    egl_dmabuf_import_texture(dmabuf);
-+    if (!qemu_dmabuf_get_texture(dmabuf)) {
-+        fds = qemu_dmabuf_get_fds(dmabuf, NULL);
-+        error_report("%s: failed fd=%d", __func__, fds ? fds[0] : -1);
-+        return;
-+    }
-+
-+    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            0, 0,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-+        scon->guest_fb.dmabuf = dmabuf;
-+    }
-+}
-+
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    egl_dmabuf_release_texture(dmabuf);
-+}
-+
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+
-+    return scon->has_dmabuf;
-+}
-+
-+void sdl2_gl_console_init(struct sdl2_console *scon)
-+{
-+    bool hidden = scon->hidden;
-+
-+    scon->hidden = true;
-+    scon->surface = qemu_create_displaysurface(1, 1);
-+    sdl2_window_create(scon);
-+
+-    vgc->handle_ctrl(VIRTIO_DEVICE(g), g->ctrl_vq);
 +    /*
-+     * QEMU checks whether console supports dma-buf before switching
-+     * to the console.  To break this chicken-egg problem we pre-check
-+     * dma-buf availability beforehand using a dummy SDL window.
++     * Bounce handling to main-loop thread as display UI toolkit
++     * and GL context are bounded there.
 +     */
-+    scon->has_dmabuf = qemu_egl_has_dmabuf();
-+
-+    sdl2_window_destroy(scon);
-+    qemu_free_displaysurface(scon->surface);
-+
-+    scon->surface = NULL;
-+    scon->hidden = hidden;
-+}
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 032dc14bc398..3bb2676f847b 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -35,6 +35,10 @@
- #include "qemu/log.h"
- #include "qemu-main.h"
- 
-+#ifdef CONFIG_X11
-+#include <X11/Xlib.h>
-+#endif
-+
- static int sdl2_num_outputs;
- static struct sdl2_console *sdl2_console;
- 
-@@ -120,6 +124,9 @@ void sdl2_window_create(struct sdl2_console *scon)
-         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
-         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
-     }
-+
-+    qemu_egl_display = eglGetCurrentDisplay();
-+
-     sdl_update_caption(scon);
++    if (qemu_get_thread_id() == g->thread_id) {
++        vgc->handle_ctrl(VIRTIO_DEVICE(g), g->ctrl_vq);
++    } else {
++        aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                virtio_gpu_ctrl_bh, g);
++    }
  }
  
-@@ -808,6 +815,10 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
-     .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
-     .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
-     .dpy_gl_update           = sdl2_gl_scanout_flush,
+ static void virtio_gpu_handle_cursor(VirtIODevice *vdev, VirtQueue *vq)
+@@ -1533,6 +1542,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+     QTAILQ_INIT(&g->reslist);
+     QTAILQ_INIT(&g->cmdq);
+     QTAILQ_INIT(&g->fenceq);
++    g->thread_id = qemu_get_thread_id();
+ }
+ 
+ static void virtio_gpu_device_unrealize(DeviceState *qdev)
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 58e0f91fda65..d3bd8ed0d28a 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -218,6 +218,8 @@ struct VirtIOGPU {
+     } dmabuf;
+ 
+     GArray *capset_ids;
 +
-+    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
-+    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
-+    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
++    int thread_id;
  };
  
- static bool
-@@ -835,6 +846,35 @@ static void sdl2_display_early_init(DisplayOptions *o)
-     }
- }
- 
-+static void sdl2_set_hint_x11_force_egl(void)
-+{
-+#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(CONFIG_OPENGL) && \
-+    defined(CONFIG_X11)
-+    Display *x_disp = XOpenDisplay(NULL);
-+    EGLDisplay egl_display;
-+
-+    if (!x_disp) {
-+        return;
-+    }
-+
-+    /* Prefer EGL over GLX to get dma-buf support. */
-+    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
-+
-+    if (egl_display != EGL_NO_DISPLAY) {
-+        /*
-+         * Setting X11_FORCE_EGL hint doesn't make SDL to prefer X11 over
-+         * Wayland. SDL will use Wayland driver even if XWayland presents.
-+         * It's always safe to set the hint even if X11 is not used by SDL.
-+         * SDL will work regardless of the hint.
-+         */
-+        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
-+        eglTerminate(egl_display);
-+    }
-+
-+    XCloseDisplay(x_disp);
-+#endif
-+}
-+
- static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- {
-     uint8_t data = 0;
-@@ -862,6 +902,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
-     SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
-+    sdl2_set_hint_x11_force_egl();
-     SDL_EnableScreenSaver();
-     memset(&info, 0, sizeof(info));
-     SDL_VERSION(&info.version);
-@@ -908,6 +949,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-         sdl2_console[i].kbd = qkbd_state_init(con);
-         if (display_opengl) {
-             qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
-+            sdl2_gl_console_init(&sdl2_console[i]);
-         }
-         register_displaychangelistener(&sdl2_console[i].dcl);
- 
+ struct VirtIOGPUClass {
 -- 
 2.52.0
 
