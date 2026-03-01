@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97851FD0075
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8254CFD0075
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:51:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnjO-0002G9-D3; Sun, 01 Mar 2026 15:49:38 -0500
+	id 1vwnl6-0003VA-2W; Sun, 01 Mar 2026 15:51:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnjL-0002FN-Vp
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:49:35 -0500
+ id 1vwnkZ-0002zP-V8
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:55 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnjK-0001z1-2Z
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:49:35 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398138; cv=none; 
+ id 1vwnkI-0002FR-4r
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:39 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772398208; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=S/Za+7toHRNBafQIwxfIKpZlSLhaIAkDYds8QzuE1i2qz0LWt7EmTtyEbogL1KosSUfkXUhuL20Y+piEpTSTQsANnZQeGtLQxO5Dj2SGWnAYWbJaoaRn7KjbFcSJvRwjPZMS948Nc9RUv5+wjJoYqtw3G3TIHaN3aqAOnp81xqg=
+ b=DmeVvb15CbFFeLe9ToflGvEgU1OnS3NMMmLRe6GxJGOzsBCb3bjtKjFc7H2xdrEQzQMZ3j8Xdj08M/vFUDBxe57THTmGifOK2Mti7ZmMuI8Pp73+GM5wz76CII8rlBascl63/jPdTyBNpKdKK9XH1LXXBp36HS91sTY8OsJzzW8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398138;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=iZsXsIzcNaHYmJr5JliXQqpuFEnCk7SdFODoAz0G3eA=; 
- b=LOMLTb3Czk5sTKBl1GQqeO3AEIpZjEWqRa4OVX9ThhBZUhaE8sm2N6OdC2LCU9+D6e4GvIw2vq2vcbxRhsED1kSnCunouUACoGwlfIC8tpUSJ20tSyIHcglVI+Vy1Rjsq8NthT9lvytB7ZTUAeO83KjZ6PFJXkSyrkE6jkYf+uc=
+ s=zohoarc; t=1772398208;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=NGGSuFiW0lUxSTW+dP4V6IpgbygGrVodrqtl4uD9vrY=; 
+ b=Stoc2khQgwRk4hbWsAAq1Muzn2wzipNJcRJleqQZ8W4PSRwb5glkrixnnZJMKrXcnuIRyGb3isSMcufbt22FqBlVZl+JL3JsAOfIw8l7W7DCBiLTQm2ZSeFcGjEPYo4MP4uAnLNArlsk+DngG1QRjDz4HMq7swkyLei1/UryYWc=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398138; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398208; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=iZsXsIzcNaHYmJr5JliXQqpuFEnCk7SdFODoAz0G3eA=;
- b=DFqvEGFrd1UEkHla/W3zNd29/Bm+KCVmxd18sJ2otMViT0zaOAiMGQ9ZgExPntOe
- NJkPBlbztEi5jJM9np18Xoy/094mELAB270zUCOX/ip9CjIx3bsyd6iiQ9z/dVE6kWA
- 1BzHcOOHGdbxzP8qiNz1gX3YQIXozHsCKrkJabsk=
-Received: by mx.zohomail.com with SMTPS id 1772398134962576.8615667096664;
- Sun, 1 Mar 2026 12:48:54 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=NGGSuFiW0lUxSTW+dP4V6IpgbygGrVodrqtl4uD9vrY=;
+ b=ap3/XCcJz0JWLFQ52mfUsD45MGOwO1soRPn/SKez9rtmqFNqKy5/GPTesZKLyoON
+ 5hvdCMCsKFrEXBUtQ9B4zxNnmQVe2euaGCkAmCUSqx4qUnX8c3Nmca3yBOtZZiVvaTs
+ RQ6HTZTZKvixefesSK2TryGUfFv2NTL0+nBv1K9E=
+Received: by mx.zohomail.com with SMTPS id 1772398206745723.8594621505371;
+ Sun, 1 Mar 2026 12:50:06 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,11 +62,12 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 00/21] Support virtio-gpu DRM native context and MAP_FIXED
- API
-Date: Sun,  1 Mar 2026 23:48:17 +0300
-Message-ID: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
+Subject: [PATCH v20 11/21] virtio-gpu: Handle virgl fence creation errors
+Date: Sun,  1 Mar 2026 23:48:28 +0300
+Message-ID: <20260301204838.596994-12-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
+References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -96,111 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Print out error messages when virgl fence creation fails to aid debugging
+of the fence-related bugs.
 
-This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
-virtio-gpu patches that has been reviewed previously and were waiting for
-a new release of libvirglrenderer 1.3.0.
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ hw/display/virtio-gpu-virgl.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-[1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
-[2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
-
-Changelog:
-
-v20:- Adanbonded GL context unbinding approach as it created difficulties
-      with GTK assuming UI toolkit processed from a single thread. Omitted
-      all unbind-context patches and added new patch instead that makes
-      virtio-gpu to process cmds only from main-loop thread:
-
-        virtio-gpu: Bounce virtio_gpu_ctrl_bh() to main-loop thread
-
-    - Added r-b from Akihiko Odaki to reviewed v19 patches.
-
-    - Added patches restoring GL context when new ctx created for
-      dbus/spice/egl-headless displays.
-
-v19:- Further improved improved naming of functions and terminology RE
-      GL context binding. Suggested by Akihiko Odaki.
-
-    - Added new patch "ui/gdk: Restore original context after new context
-      creation" in addition to improved "ui/sdl2: Restore original context"
-      that now getd actual bound GL context and restores to it instead
-      of restoring to the console's ctx, for consistency with the rest
-      of GL context management fixes that ensure context is bound only
-      when necessary.
-
-    - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
-      and unbind_ctx() to make deferred GPU resetting maintain bound GL
-      context properly.
-
-v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
-      virgl's GL ctx0 and improved naming of cmd-processing function.
-      Suggested by Akihiko Odaki.
-
-    - Added "ui/gdk: Unset context after GL operations" patch after
-      realizing GDK/GL code needed more gdk_gl_context_clear_current().
-
-v17:- Rebased patches on recent upstream, updated doc patches with new
-      drm native contexts supported by libvirglrenderer.
-
-    - Applied minor change that was requested from Akihiko Odaki
-      by moving virtio_gpu_device_realize() for MAP_FIXED v10.
-
-    - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
-      that was missed in MAP_FIXED v10.
-
-    - Added new patches fixing another GL context switching problem I ran
-      into recently with virgl commands unexpectedly processed from CPU
-      thread instead main-loop:
-
-        ui/sdl2: Unset context after GL operations
-        ui/gtk-egl: Unset context after GL operations
-        virtio-gpu: Unset context after GL operations
-
-Alex Bennée (1):
-  docs/system: virtio-gpu: Document host/guest requirements
-
-Dmitry Osipenko (19):
-  ui/gtk: Don't disable scanout when display is refreshed
-  ui/gtk: Restore original context after new context creation
-  ui/gdk: Restore original context after new context creation
-  ui/sdl2: Don't disable scanout when display is refreshed
-  ui/sdl2: Restore original context after new context creation
-  ui/egl-headless: Restore original context after new context creation
-  ui/spice: Restore original context after new context creation
-  ui/dbus: Restore original context after new context creation
-  virtio-gpu: Bounce virtio_gpu_ctrl_bh() to main-loop thread
-  virtio-gpu: Handle virgl fence creation errors
-  virtio-gpu: Support asynchronous fencing
-  virtio-gpu: Support DRM native context
-  docs/system: virtio-gpu: Add link to Mesa VirGL doc
-  docs/system: virtio-gpu: Update Venus link
-  virtio-gpu: Remove superfluous memory_region_set_enabled()
-  virtio-gpu: Validate hostmem mapping offset
-  virtio-gpu: Replace finish_unmapping with mapping_state
-  virtio-gpu: Destroy virgl resources on virtio-gpu reset
-  virtio-gpu: Support mapping hostmem blobs with map_fixed
-
-Pierre-Eric Pelloux-Prayer (1):
-  ui/sdl2: Implement dpy dmabuf functions
-
- docs/system/devices/virtio/virtio-gpu.rst | 121 ++++++-
- hw/display/trace-events                   |   2 +-
- hw/display/virtio-gpu-gl.c                |  62 +++-
- hw/display/virtio-gpu-virgl.c             | 404 ++++++++++++++++++++--
- hw/display/virtio-gpu.c                   |  27 +-
- include/hw/virtio/virtio-gpu.h            |  25 +-
- include/ui/sdl2.h                         |   7 +
- meson.build                               |   8 +-
- ui/dbus.c                                 |  10 +-
- ui/egl-headless.c                         |  10 +-
- ui/gtk-egl.c                              |  10 +-
- ui/gtk-gl-area.c                          |  16 +-
- ui/sdl2-gl.c                              |  74 +++-
- ui/sdl2.c                                 |  42 +++
- ui/spice-display.c                        |  10 +-
- 15 files changed, 751 insertions(+), 77 deletions(-)
-
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 0f754829fb71..7bdc6209cb28 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -900,6 +900,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                       struct virtio_gpu_ctrl_command *cmd)
+ {
+     bool cmd_suspended = false;
++    int ret;
+ 
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+ 
+@@ -1000,14 +1001,30 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+ #if VIRGL_VERSION_MAJOR >= 1
+     if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+-        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
+-                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
+-                                            cmd->cmd_hdr.ring_idx,
+-                                            cmd->cmd_hdr.fence_id);
++        const uint32_t flags = VIRGL_RENDERER_FENCE_FLAG_MERGEABLE;
++
++        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
++                                                  cmd->cmd_hdr.ring_idx,
++                                                  cmd->cmd_hdr.fence_id);
++        if (ret) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: virgl_renderer_context_create_fence error: %s",
++                          __func__, strerror(-ret));
++        }
+         return;
+     }
+ #endif
+-    virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
++
++    /*
++     * Unlike other virglrenderer functions, this one returns a positive
++     * error code.
++     */
++    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
++    if (ret) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: virgl_renderer_create_fence error: %s",
++                      __func__, strerror(ret));
++    }
+ }
+ 
+ static void virgl_write_fence(void *opaque, uint32_t fence)
 -- 
 2.52.0
 
