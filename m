@@ -4,110 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A412CFD0057
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C2AFD006C
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 14:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwhee-00028s-BJ; Sun, 01 Mar 2026 09:20:21 -0500
+	id 1vwhgX-000338-LM; Sun, 01 Mar 2026 09:22:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwheS-00028e-UT
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:20:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwheR-0001Zs-FN
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 09:20:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772374804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Xf+i6VnU/geFmKrB2Mix/SJDoN+M/zzhgdh01+oSyX8=;
- b=VhUbF5Fsttrnaiua0Dr6hs+7uTT5UfKsw0JWSyvxk2Ox/cmg+s2S21G+NLpBJ89It5nVLG
- k5deW6uohHYX58pyn96wInQ/027U2qDJa85BXh2N3R6XG7pRrMtZvyZ3zqu3q+jnv4AeY/
- uBZWixntgITeIIOpeoQ+LUWw8xJ57fc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-IFKg-6_oOVmEYlgFAZwidw-1; Sun, 01 Mar 2026 09:20:03 -0500
-X-MC-Unique: IFKg-6_oOVmEYlgFAZwidw-1
-X-Mimecast-MFC-AGG-ID: IFKg-6_oOVmEYlgFAZwidw_1772374802
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-483786a09b1so35907595e9.3
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 06:20:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772374802; x=1772979602; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xf+i6VnU/geFmKrB2Mix/SJDoN+M/zzhgdh01+oSyX8=;
- b=eK70Y6zL0kOT+gM+McVxQgW/IITaWgozOiRDSflmTTKdwMRCQbMkxBFkYurb+mNMjz
- H9f9D2e8oT604+xcBDKAHkBu5CwMWZEGdvIUV0chESsuffmvbA1aNy2TwWvG5A7PDkCO
- zxSWDmfHNSbB65F79TSYV59W1wmbIWeq8clQkehesru/QBJR1PhMdZ496bN4fjgZV7bM
- UxNQmHD2f1Myu5RpNhishm69QiIMF7/gQu9FRNLCx0AEi3gjvA0g7IUuWOCZITnyjwQN
- vmRtuVdaQDI1n7QQZp42bbF4fDjYbwQxQwWHYXQlVAzx5873Ou4jw7bZGF1vKiDrPQKT
- eNag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772374802; x=1772979602;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Xf+i6VnU/geFmKrB2Mix/SJDoN+M/zzhgdh01+oSyX8=;
- b=qL8Yna5c+HdbENTYKsN283CZ54yCGhMcfXgaHlqAN4gar9y45G6BDkGGtsjhmvxr8p
- me5Joy9I880zkpp41RMGEGHLXDJ1JPygeDwNk4JbcouE9aHOLA0GB/paKYEOrmBUPjm4
- JqPi3wPvkgVDExPXX6yZEIiab5JTcVKUsA3g6pKazqrU3IZq/US9r81XyfA5cTNYeOye
- ++SIGIRu5stYWOL/8l7ZrAc7ufTSvX5dqN0Pf+4tAcuPAgeh5w8Q6dbawr2L2vNHtfgb
- p0owaVEKHQlnRZB2tOWup8P2xm+iCtlyRL8YJGeGmQutXEmGzyTMuWAj1/rwsNnG84gp
- BPkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVF0Qvg53UdOGhup57g4fonoG50WDcmkO+Fb78Udtkv6f2Of7fDoZB3LzDnH37pKY8glrCZaUzm1tYh@nongnu.org
-X-Gm-Message-State: AOJu0YwXYTGrp1gDzjRa5Eu7FClG8UE6x6/PVyepDSzr8GaBLGPi8tFi
- fQflIOhHMYBObUGpQvkcUw+fpJP4AWtLUVubjixwPeZHMgZqoleJEj+aNYMdHhMN3TZWmb6pizx
- YCd553TGQS1bcNZLQA22FUSRjIRhDaKk/4h5CbvpmcxcRbLr0gvx4vwq2
-X-Gm-Gg: ATEYQzwq9X5nP6f35QvNA8GFTydzkfEAAAKppzX5LOjnbeynZCNqq8MS+7MvVadjoOL
- 7/RBZDcdI6BdDyIy0wDwN10TZbZaa9UokWUqiqlHKsoTVOnndS1+MsEf1glZWxFcPxIQhImoqjY
- ogWRpOJc+TQ3UHcGRKQOTLSkZLiK+JZLmG4uwnA5OI4QV6pbCpGnl+2ksPuqDEMVqyf7odbOpEy
- SoiPOhDyC+Oe20hspX8rJhKom1MavmX65Sj7l7OwyXw8AjiFmfixNWOIrTSXmmp9hVnGO1Irkcs
- 6F55jt9xuOUEqUsg30jdIHZcRdL3mX8FSxSWxltdxXOe4H1cEVT+1uFiz6/FtBM65c3QU36lwlM
- g/5WYPgVQvv8xIkvHWL7haBn2dTuslFTeGfmmXzOCn+UbkdpO36oAPJaRkMijBKFFltKYeGIqLQ
- 8sj8q/Suo7CWLo6aU9hWFWzPDar5I=
-X-Received: by 2002:a05:600c:4591:b0:482:eec4:74c with SMTP id
- 5b1f17b1804b1-483c9bf0b3cmr144276345e9.22.1772374802220; 
- Sun, 01 Mar 2026 06:20:02 -0800 (PST)
-X-Received: by 2002:a05:600c:4591:b0:482:eec4:74c with SMTP id
- 5b1f17b1804b1-483c9bf0b3cmr144275995e9.22.1772374801771; 
- Sun, 01 Mar 2026 06:20:01 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb776dfsm197542595e9.1.2026.03.01.06.20.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 06:20:01 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Jon Kohler <jon@nutanix.com>
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
- pawan.kumar.gupta@linux.intel.com
-Subject: Re: [PATCH 0/5] target/i386: introduce ITS_NO to several models
-Date: Sun,  1 Mar 2026 15:19:34 +0100
-Message-ID: <20260301141933.448426-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20251106174626.49930-1-jon@nutanix.com>
-References: 
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vwhgS-0002w4-6N; Sun, 01 Mar 2026 09:22:13 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vwhgP-0002D1-RJ; Sun, 01 Mar 2026 09:22:11 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3jdCFS6RpQzWhAA--.22927S2;
+ Sun, 01 Mar 2026 22:21:57 +0800 (CST)
+Received: from [192.168.31.94] (unknown [113.246.118.211])
+ by mail (Coremail) with SMTP id AQAAfwDXLeuDS6Rp7C4eAA--.37226S2;
+ Sun, 01 Mar 2026 22:21:56 +0800 (CST)
+Message-ID: <2c1c08fe-ddd2-47a9-9e9a-4a900df60bae@phytium.com.cn>
+Date: Sun, 1 Mar 2026 22:21:55 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 12/31] hw/arm/smmuv3: Store CD NSCFG in TT info
+To: Mostafa Saleh <smostafa@google.com>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101632.2993305-1-tangtao1634@phytium.com.cn>
+ <aaGtANCP87L-_gtp@google.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <aaGtANCP87L-_gtp@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-CM-TRANSID: AQAAfwDXLeuDS6Rp7C4eAA--.37226S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWmiCd8FiAAGsS
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrKr17GF17try8XryUurWUtwb_yoW3GrX_ZF
+ 4vg3s5Cw4DWwna9wsrJFs0qr90g347XrW5Xr1UX3y5X345tFsrGw1kK348Arn3Ga1Ykr1a
+ yr90v34rKryYgjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+ Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+ UUUU=
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=-1,
+ RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,9 +79,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.  In the meanwhile the last patch had to be changed to
-introduce ClearwaterForest-v3, so I have adjusted that.
+Hi Mostafa,
 
-Paolo
+On 2026/2/27 PM10:41, Mostafa Saleh wrote:
+> On Sat, Feb 21, 2026 at 06:16:32PM +0800, Tao Tang wrote:
+>> With NSCFG definitions in place, record the per-table NSCFG bits
+>> in SMMUTransTableInfo during CD decode for later use.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> I feel this patch would be better squashed with how it’s used,
+> but no strong opinion.
+
+
+I split "definition" vs "usage" here because Eric suggested keeping 
+plumbing changes separate in previous series.
+
+
+That said, I don’t mind squashing this into "hw/arm/smmu-common: 
+Implement secure state handling in ptw" in V5, since it’s effectively a 
+one-liner and will make the series smaller.
+
+
+> Thanks,
+> Mostafa
+
+
+Best regards,
+
+Tao
 
 
