@@ -4,82 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E5D5FD0075
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D65FD0075
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 21:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnlt-000582-Ey; Sun, 01 Mar 2026 15:52:14 -0500
+	id 1vwnwj-0004WY-7L; Sun, 01 Mar 2026 16:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnl6-0003eJ-8M
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:26 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vwnwg-0004Ut-Nn
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:22 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnl3-0002JY-Rj
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:51:23 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398266; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=kAOpawITJNPk+Br4Lfr8g5qNudBsfCehnbLUoOFQvNspbMjJavW1fCMxEVVCJBP8u1xrOjrE77e0MqsK8TPVjTrKs+7Cvg94ragimHve1I7lVCONthu3h5ltToSc8r+oz1okh4BiRCsyQqFmVegOqXHlaaF0y2UNrEus6Nm6JZw=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398266;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=4+qUhsJNFSA7hB0qS/Pe/ouiM0q+M/ExKeEPi8lvP+s=; 
- b=fI3PCY1vk2yjRletfN9an6orxMdGs1wQtaw4wMCA/dDPXv1F1Y4wOPMZTQCi6BljddV/gg6DVAcKnvJep+zu8RqBEFMxL12eHx/z3XEUTVXffNkVuMO/K4bU65JpI3b6M/jO/FCnMKxEhILvLN1XHzq46ucxuIIXn25JqamB2UM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398266; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=4+qUhsJNFSA7hB0qS/Pe/ouiM0q+M/ExKeEPi8lvP+s=;
- b=eo0Ka5M8/oL+AdulHTewiyc6pqQgDZFY69nwKCe0UakCMySxb37pmjHMTJdlVwxs
- bxHIvgO8Xr5GX3oziPsLoZluDckKSMaUd0toOexC4PDFfpwhcGqmkyVmUXkjUrM8jOV
- rLh8h669o0iM/VlLctB1kXeakwoBsEnxKApkoPsc=
-Received: by mx.zohomail.com with SMTPS id 1772398264326529.6529701470289;
- Sun, 1 Mar 2026 12:51:04 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 20/21] virtio-gpu: Destroy virgl resources on virtio-gpu
- reset
-Date: Sun,  1 Mar 2026 23:48:37 +0300
-Message-ID: <20260301204838.596994-21-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
-References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vwnwe-0002KV-2W
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 16:03:22 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C6785597391;
+ Sun, 01 Mar 2026 22:03:16 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id vHxoOMIVN7dA; Sun,  1 Mar 2026 22:03:14 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B804059738E; Sun, 01 Mar 2026 22:03:14 +0100 (CET)
+Message-ID: <9c5d02b815d1bad7d8a51ad8af918247f50b3b1b.1772397447.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1772397447.git.balaton@eik.bme.hu>
+References: <cover.1772397447.git.balaton@eik.bme.hu>
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v5 5/8] memory: Factor out common ram region initialization
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Date: Sun, 01 Mar 2026 22:03:14 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -6
+X-Spam_score: -0.7
 X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -97,263 +68,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Properly destroy virgl resources on virtio-gpu reset to not leak resources
-on a hot reboot of a VM.
+Introduce internal helper functions to remove duplicated code from
+different memory_region_init_*ram functions.
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/virtio-gpu-gl.c     |  18 +----
- hw/display/virtio-gpu-virgl.c  | 123 +++++++++++++++++++++++++++------
- include/hw/virtio/virtio-gpu.h |   6 +-
- 3 files changed, 107 insertions(+), 40 deletions(-)
+ system/memory.c | 132 ++++++++++++++++++------------------------------
+ 1 file changed, 50 insertions(+), 82 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index b941e9a4b789..8b71dd6fc26f 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
- static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
- {
-     VirtIOGPU *g = VIRTIO_GPU(vdev);
--    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
-     struct virtio_gpu_ctrl_command *cmd;
- 
-     if (!virtio_queue_ready(vq)) {
-         return;
-     }
- 
--    switch (gl->renderer_state) {
--    case RS_RESET:
--        virtio_gpu_virgl_reset(g);
--        /* fallthrough */
--    case RS_START:
--        if (virtio_gpu_virgl_init(g)) {
--            gl->renderer_state = RS_INIT_FAILED;
--            return;
--        }
--
--        gl->renderer_state = RS_INITED;
--        break;
--    case RS_INIT_FAILED:
-+    if (!virtio_gpu_virgl_update_render_state(g)) {
-         return;
--    case RS_INITED:
--        break;
-     }
- 
-     cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
-@@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
-     vgc->process_cmd = virtio_gpu_virgl_process_cmd;
-     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
- 
-+    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
-     vdc->realize = virtio_gpu_gl_device_realize;
-     vdc->unrealize = virtio_gpu_gl_device_unrealize;
-     vdc->reset = virtio_gpu_gl_reset;
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 4a9e956b25df..f0441470b98a 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -96,6 +96,10 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
- {
-     VirtIOGPU *g = opaque;
- 
-+    if (!virtio_gpu_virgl_update_render_state(g)) {
-+        return;
-+    }
-+
-     virtio_gpu_process_cmdq(g);
+diff --git a/system/memory.c b/system/memory.c
+index e15f931a8a..e1f073e1be 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1579,19 +1579,16 @@ void memory_region_init_io(MemoryRegion *mr,
+     memory_region_set_ops(mr, ops, opaque);
  }
  
-@@ -344,14 +348,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
-     virgl_renderer_resource_create(&args, NULL, 0);
- }
- 
-+static int
-+virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
-+                                struct virtio_gpu_virgl_resource *res,
-+                                bool *suspended)
-+{
-+    struct iovec *res_iovs = NULL;
-+    int num_iovs = 0;
-+#if VIRGL_VERSION_MAJOR >= 1
-+    int ret;
-+
-+    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
-+    if (ret) {
-+        return ret;
-+    }
-+    if (*suspended) {
-+        return 0;
-+    }
-+#endif
-+
-+    virgl_renderer_resource_detach_iov(res->base.resource_id,
-+                                       &res_iovs,
-+                                       &num_iovs);
-+    if (res_iovs != NULL && num_iovs != 0) {
-+        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
-+    }
-+    virgl_renderer_resource_unref(res->base.resource_id);
-+
-+    QTAILQ_REMOVE(&g->reslist, &res->base, next);
-+
-+    g_free(res);
-+
-+    return 0;
+-bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
+-                                            Object *owner,
+-                                            const char *name,
+-                                            uint64_t size,
+-                                            uint32_t ram_flags,
+-                                            Error **errp)
++static void memory_region_setup_ram(MemoryRegion *mr)
+ {
+-    Error *err = NULL;
+-    memory_region_init(mr, owner, name, size);
+     mr->ram = true;
+     mr->terminates = true;
+     mr->destructor = memory_region_destructor_ram;
+-    mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
 +}
 +
- static void virgl_cmd_resource_unref(VirtIOGPU *g,
-                                      struct virtio_gpu_ctrl_command *cmd,
-                                      bool *cmd_suspended)
- {
-     struct virtio_gpu_resource_unref unref;
-     struct virtio_gpu_virgl_resource *res;
--    struct iovec *res_iovs = NULL;
--    int num_iovs = 0;
- 
-     VIRTIO_GPU_FILL_CMD(unref);
-     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
-@@ -364,27 +400,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
-         return;
-     }
- 
--#if VIRGL_VERSION_MAJOR >= 1
--    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
--        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
--        return;
--    }
--    if (*cmd_suspended) {
--        return;
--    }
--#endif
-+    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
-+}
- 
--    virgl_renderer_resource_detach_iov(unref.resource_id,
--                                       &res_iovs,
--                                       &num_iovs);
--    if (res_iovs != NULL && num_iovs != 0) {
--        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
--    }
--    virgl_renderer_resource_unref(unref.resource_id);
-+void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-+                                       struct virtio_gpu_simple_resource *base,
-+                                       Error **errp)
++static bool memory_region_error_propagate(MemoryRegion *mr,
++                                          Error *err, Error **errp)
 +{
-+    struct virtio_gpu_virgl_resource *res;
-+    bool suspended = false;
- 
--    QTAILQ_REMOVE(&g->reslist, &res->base, next);
-+    res = container_of(base, struct virtio_gpu_virgl_resource, base);
- 
--    g_free(res);
-+    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
-+        error_setg(errp, "failed to destroy virgl resource");
-+    }
+     if (err) {
+         mr->size = int128_zero();
+         object_unparent(OBJECT(mr));
+@@ -1601,6 +1598,18 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
+     return true;
  }
  
- static void virgl_cmd_context_create(VirtIOGPU *g,
-@@ -1291,6 +1321,10 @@ static void virtio_gpu_fence_poll(void *opaque)
-     VirtIOGPU *g = opaque;
-     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
- 
-+    if (!virtio_gpu_virgl_update_render_state(g)) {
-+        return;
-+    }
-+
-     virgl_renderer_poll();
-     virtio_gpu_process_cmdq(g);
-     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
-@@ -1313,14 +1347,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
-     }
- }
- 
--void virtio_gpu_virgl_reset(VirtIOGPU *g)
-+static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
- {
-+    struct virtio_gpu_simple_resource *res, *tmp;
-+
-+    /*
-+     * Virgl blob resource unmapping can be suspended and
-+     * deferred on unref, ensure that destruction is completed.
-+     */
-+    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
-+        virtio_gpu_virgl_resource_destroy(g, res, NULL);
-+    }
-+
-+    if (!QTAILQ_EMPTY(&g->reslist)) {
-+        return false;
-+    }
-+
-     virgl_renderer_reset();
- 
-     virtio_gpu_virgl_reset_async_fences(g);
-+
-+    return true;
- }
- 
--int virtio_gpu_virgl_init(VirtIOGPU *g)
-+static int virtio_gpu_virgl_init(VirtIOGPU *g)
- {
-     int ret;
-     uint32_t flags = 0;
-@@ -1398,6 +1448,35 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     return 0;
- }
- 
-+bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
++bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr, Object *owner,
++                                            const char *name, uint64_t size,
++                                            uint32_t ram_flags, Error **errp)
 +{
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++    Error *err = NULL;
 +
-+    switch (gl->renderer_state) {
-+    case RS_RESET:
-+        virgl_renderer_force_ctx_0();
-+
-+        if (!virtio_gpu_virgl_reset(g)) {
-+            return false;
-+        }
-+        /* fallthrough */
-+    case RS_START:
-+        if (virtio_gpu_virgl_init(g)) {
-+            gl->renderer_state = RS_INIT_FAILED;
-+            return false;
-+        }
-+
-+        gl->renderer_state = RS_INITED;
-+        break;
-+    case RS_INIT_FAILED:
-+        return false;
-+    case RS_INITED:
-+        break;
-+    }
-+
-+    return true;
++    memory_region_init(mr, owner, name, size);
++    memory_region_setup_ram(mr);
++    mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
++    return memory_region_error_propagate(mr, err, errp);
 +}
 +
- static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
+ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+                                        Object *owner,
+                                        const char *name,
+@@ -1612,108 +1621,69 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+                                        Error **errp)
  {
-     g_array_append_val(capset_ids, capset_id);
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index c08bdc225aa6..8f29062eaa59 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -391,9 +391,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-                                   struct virtio_gpu_ctrl_command *cmd);
- void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
--void virtio_gpu_virgl_reset(VirtIOGPU *g);
--int virtio_gpu_virgl_init(VirtIOGPU *g);
- GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
-+void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-+                                       struct virtio_gpu_simple_resource *res,
-+                                       Error **errp);
-+bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
+     Error *err = NULL;
++
+     memory_region_init(mr, owner, name, size);
+-    mr->ram = true;
+-    mr->terminates = true;
+-    mr->destructor = memory_region_destructor_ram;
+-    mr->ram_block = qemu_ram_alloc_resizeable(size, max_size, resized,
+-                                              mr, &err);
+-    if (err) {
+-        mr->size = int128_zero();
+-        object_unparent(OBJECT(mr));
+-        error_propagate(errp, err);
+-        return false;
+-    }
+-    return true;
++    memory_region_setup_ram(mr);
++    mr->ram_block = qemu_ram_alloc_resizeable(size, max_size, resized, mr,
++                                              &err);
++    return memory_region_error_propagate(mr, err, errp);
+ }
  
+ #if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
+-bool memory_region_init_ram_from_file(MemoryRegion *mr,
+-                                      Object *owner,
+-                                      const char *name,
+-                                      uint64_t size,
+-                                      uint64_t align,
+-                                      uint32_t ram_flags,
+-                                      const char *path,
+-                                      ram_addr_t offset,
++bool memory_region_init_ram_from_file(MemoryRegion *mr, Object *owner,
++                                      const char *name, uint64_t size,
++                                      uint64_t align, uint32_t ram_flags,
++                                      const char *path, ram_addr_t offset,
+                                       Error **errp)
+ {
+     Error *err = NULL;
++
+     memory_region_init(mr, owner, name, size);
+-    mr->ram = true;
++    memory_region_setup_ram(mr);
+     mr->readonly = !!(ram_flags & RAM_READONLY);
+-    mr->terminates = true;
+-    mr->destructor = memory_region_destructor_ram;
+     mr->align = align;
+-    mr->ram_block = qemu_ram_alloc_from_file(size, mr, ram_flags, path,
+-                                             offset, &err);
+-    if (err) {
+-        mr->size = int128_zero();
+-        object_unparent(OBJECT(mr));
+-        error_propagate(errp, err);
+-        return false;
+-    }
+-    return true;
++    mr->ram_block = qemu_ram_alloc_from_file(size, mr, ram_flags, path, offset,
++                                             &err);
++    return memory_region_error_propagate(mr, err, errp);
+ }
+ 
+-bool memory_region_init_ram_from_fd(MemoryRegion *mr,
+-                                    Object *owner,
+-                                    const char *name,
+-                                    uint64_t size,
+-                                    uint32_t ram_flags,
+-                                    int fd,
+-                                    ram_addr_t offset,
+-                                    Error **errp)
++bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
++                                    const char *name, uint64_t size,
++                                    uint32_t ram_flags, int fd,
++                                    ram_addr_t offset, Error **errp)
+ {
+     Error *err = NULL;
++
+     memory_region_init(mr, owner, name, size);
+-    mr->ram = true;
++    memory_region_setup_ram(mr);
+     mr->readonly = !!(ram_flags & RAM_READONLY);
+-    mr->terminates = true;
+-    mr->destructor = memory_region_destructor_ram;
+     mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
+                                            offset, false, &err);
+-    if (err) {
+-        mr->size = int128_zero();
+-        object_unparent(OBJECT(mr));
+-        error_propagate(errp, err);
+-        return false;
+-    }
+-    return true;
++    return memory_region_error_propagate(mr, err, errp);
+ }
  #endif
+ 
+-void memory_region_init_ram_ptr(MemoryRegion *mr,
+-                                Object *owner,
+-                                const char *name,
+-                                uint64_t size,
+-                                void *ptr)
++void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
++                                const char *name, uint64_t size, void *ptr)
+ {
+     memory_region_init(mr, owner, name, size);
+-    mr->ram = true;
+-    mr->terminates = true;
+-    mr->destructor = memory_region_destructor_ram;
+-
++    memory_region_setup_ram(mr);
+     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
+     assert(ptr != NULL);
+     mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
+ }
+ 
+-void memory_region_init_ram_device_ptr(MemoryRegion *mr,
+-                                       Object *owner,
+-                                       const char *name,
+-                                       uint64_t size,
++void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
++                                       const char *name, uint64_t size,
+                                        void *ptr)
+ {
+     memory_region_init(mr, owner, name, size);
+-    mr->ram = true;
+-    mr->ram_device = true;
+     memory_region_set_ops(mr, &ram_device_mem_ops, mr);
+-    mr->destructor = memory_region_destructor_ram;
+-
++    memory_region_setup_ram(mr);
+     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
+     assert(ptr != NULL);
+     mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
++    mr->ram_device = true;
+ }
+ 
+ void memory_region_init_alias(MemoryRegion *mr,
+@@ -3764,15 +3734,13 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+     assert(ops);
+     memory_region_init(mr, owner, name, size);
+     memory_region_set_ops(mr, ops, opaque);
+-    mr->rom_device = true;
+-    mr->destructor = memory_region_destructor_ram;
++    memory_region_setup_ram(mr);
+     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+-    if (err) {
+-        mr->size = int128_zero();
+-        object_unparent(OBJECT(mr));
+-        error_propagate(errp, err);
++    if (!memory_region_error_propagate(mr, err, errp)) {
+         return false;
+     }
++    mr->ram = false;
++    mr->rom_device = true;
+     /* This will assert if owner is neither NULL nor a DeviceState.
+      * We only want the owner here for the purposes of defining a
+      * unique name for migration. TODO: Ideally we should implement
 -- 
-2.52.0
+2.41.3
 
 
