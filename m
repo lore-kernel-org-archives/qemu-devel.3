@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F4BBFD0075
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0417CFD0079
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Mar 2026 20:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwnjm-0002Jj-SJ; Sun, 01 Mar 2026 15:50:02 -0500
+	id 1vwnjf-0002I8-Eh; Sun, 01 Mar 2026 15:49:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnjl-0002J4-2K
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:01 -0500
+ id 1vwnjd-0002Hh-88
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:49:53 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vwnjj-00021l-Gn
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:50:00 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772398182; cv=none; 
+ id 1vwnjb-00020g-8M
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 15:49:53 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772398168; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=TBEhCUikUOxGwpm2SCp9UoA9PPt4cT7fpBKABx4488JIAXiLKI/25HpITJMoWp8LUwsH2X27kchE4AXalBtn6Bv9yFQjVgHe1/AIQYmB930lTirt5KLkEv31SK8JXqUpK8Qa7aTSXsm2o3pNmXXgkxd4SFlZSAipNSyQ7/VXPD8=
+ b=aVu9l0hRZ9oJmvHkSwtAY73A0nFk21jfoPxipkcLHCiPplss18GpW3oVUIo/baFh5A/dfnmpP0nrwR+KguyWd/vsFfpHcRaGKuQSIGN66QrNBZ+VE/5BxJT1YVFq+y/nUpe9CtPKsaelNkckO+hiIotiSo17Rkgi8ekl1ilBAqY=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772398182;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=knWlQrCri4LBjViO2VL23zwDro6N/a6W7npzXIWzx7k=; 
- b=h0k1aefo3aFwfwfGfFn2uPGYy4jkPh6vvQQ1PwXLNu6Q9Ms92V3NmpiotENqvrUb/2qUK80WRf+rMkzfIRV4/GJaJHeW6ggLudVz7dP0QBRLimqHjGYH6OJFaDwcQ+nAq4SyXzYVOh0t4pOPb08GtmZxTOjlKeKEcy6yiQGUr5U=
+ s=zohoarc; t=1772398168;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=b9DUeFEzlsXB6JR3qsoQH+lKifZP0zu1ykTE7vxMs+8=; 
+ b=VIs9yQxjdLLZxJgNICtdpaa9HFH3zPaJXCuq80bqSS/eNyxJyW2veOZ33UDmxH8ZLMcb9lnJ4rcjoWvyozxLU9Tos4XhW9DWH6D77wZ714Wy797ReyEVySrUxrdr5e0r0M3sdMta3RmqXdD3jCWfHb1+bTYpyGIFxmXdrhdAtdA=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398182; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772398168; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=knWlQrCri4LBjViO2VL23zwDro6N/a6W7npzXIWzx7k=;
- b=Uo8Y5PkhoLf8AdylQw7aozvNV2/sgNtWQA3RkU7HlhraBVNz8GenT+SpdgHX/FjQ
- +1kbcHtUhgB9bE2UgzwXaiqgcQGaswbU62dVuY8Gd1Qe4m538prkKwaJu5xFSBtL7Dh
- aTSCtXHnUiVShmFsq7KhBaPSNWZjHGqdU4dAq6pE=
-Received: by mx.zohomail.com with SMTPS id 1772398179208464.1154838573591;
- Sun, 1 Mar 2026 12:49:39 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=b9DUeFEzlsXB6JR3qsoQH+lKifZP0zu1ykTE7vxMs+8=;
+ b=iKAd5OgBPsoNq/pPEkc5uuqfleFMwTkVxLQ/lM20u4CNtjmp5HQoVyh2lLaeR/+N
+ jKHcJldxNwdlGx4uqaIcZuPei/3cXj6BhVl/zdbBVdEEHLkpEcL83DsvlBG+6YqwfYb
+ LcDN+seX7V3jHfWUKseykbqbTw6O7QN1FMMcN1LQ=
+Received: by mx.zohomail.com with SMTPS id 1772398165761852.2134488240242;
+ Sun, 1 Mar 2026 12:49:25 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,15 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v20 07/21] ui/egl-headless: Restore original context after new
- context creation
-Date: Sun,  1 Mar 2026 23:48:24 +0300
-Message-ID: <20260301204838.596994-8-dmitry.osipenko@collabora.com>
+Subject: [PATCH v20 05/21] ui/sdl2: Restore original context after new context
+ creation
+Date: Sun,  1 Mar 2026 23:48:22 +0300
+Message-ID: <20260301204838.596994-6-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,38 +98,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get currently bound GL context when creating new GL context and restore
-it after the creation for consistency with behavior expected by virglrenderer
-that assumes context-creation doesn't switch context.
+SDL API changes GL context to a newly created GL context, which differs
+from other GL providers that don't switch context. Change SDL backend to
+restore the original GL context. This allows Qemu's virtio-gpu to support
+new virglrenderer async-fencing feature for Virgl contexts, otherwise
+virglrenderer's vrend creates a fence-sync context on the Qemu's
+main-loop thread that erroneously stays in-use by the main-loop after
+creation, not allowing vrend's fence-sync thread switch to this new
+context that belongs to it.
 
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/egl-headless.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ ui/sdl2-gl.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index 1f6b845500dd..c2cb179393c3 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -42,9 +42,17 @@ static void egl_gfx_switch(DisplayChangeListener *dcl,
- static QEMUGLContext egl_create_context(DisplayGLCtx *dgc,
-                                         QEMUGLParams *params)
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 5eca0248233e..fbac3edbc09d 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -139,10 +139,12 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+                                      QEMUGLParams *params)
  {
-+    QEMUGLContext ctx, current_context = eglGetCurrentContext();
+     struct sdl2_console *scon = container_of(dgc, struct sdl2_console, dgc);
+-    SDL_GLContext ctx;
++    SDL_GLContext ctx, current_ctx;
+ 
+     assert(scon->opengl);
+ 
++    current_ctx = SDL_GL_GetCurrentContext();
 +
-     eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-                    qemu_egl_rn_ctx);
--    return qemu_egl_create_context(dgc, params);
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+ 
+     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+@@ -167,6 +169,9 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+                             SDL_GL_CONTEXT_PROFILE_ES);
+         ctx = SDL_GL_CreateContext(scon->real_window);
+     }
 +
-+    ctx = qemu_egl_create_context(dgc, params);
++    SDL_GL_MakeCurrent(scon->real_window, current_ctx);
 +
-+    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-+                   current_context);
-+
-+    return ctx;
+     return (QEMUGLContext)ctx;
  }
  
- static void egl_scanout_disable(DisplayChangeListener *dcl)
 -- 
 2.52.0
 
