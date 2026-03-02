@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA43D58E5D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5923CD58E5D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:25:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwwhl-00016D-Kn; Mon, 02 Mar 2026 01:24:33 -0500
+	id 1vwwiq-0001kv-GM; Mon, 02 Mar 2026 01:25:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vwwhg-0000wq-OP
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:24:29 -0500
+ id 1vwwil-0001h7-MM
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:25:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vwwhf-0005zl-9k
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:24:28 -0500
+ id 1vwwij-0006TS-QK
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:25:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772432666;
+ s=mimecast20190719; t=1772432732;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iTNYv1zmHmAZevCUXf+SqfteTVZEB4glXbr8EXI4rQs=;
- b=AmakcdlaK6FfDYUiJ2z0zf9OuFCXk3iIaFK7T0n6REwrkPKRvM663ovvdGLzthdk7F7YBM
- uqmWs7g1D6Y+06MhFhNggW+iV7FBu23I97BNRWZ2G6yCuduUv7OvQdrHr6U75pfYYpJOrP
- LAo9SGslJMffrchI3IDz6NWRfqjGFho=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r0GywuLA6ScD5FZeZAfaHmfzg8JBIP7Ca9VVH6YZ/WU=;
+ b=alviAoS6RqiVaxiZJ6t5/eZtqesWN/NatNy9+m1XlVYCRBXKhBkNgcBSW2JXJuUex9+zn/
+ oCr4t3ry8P0KkOmbhPuMh2LAlc1I4nMoOrkUg9VuZZ9Ocdu7w3T78UYSUL21lHrK91uE3A
+ o4pv81uwW1VqiYSWHa3nSbV5uzFz2xg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-Tw1tiwP9OmaN1PK96jqhEw-1; Mon, 02 Mar 2026 01:24:24 -0500
-X-MC-Unique: Tw1tiwP9OmaN1PK96jqhEw-1
-X-Mimecast-MFC-AGG-ID: Tw1tiwP9OmaN1PK96jqhEw_1772432663
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837bfcfe0dso52295895e9.1
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 22:24:24 -0800 (PST)
+ us-mta-260-Bp5MIGhqO26D3Fe8qoIyUw-1; Mon, 02 Mar 2026 01:25:31 -0500
+X-MC-Unique: Bp5MIGhqO26D3Fe8qoIyUw-1
+X-Mimecast-MFC-AGG-ID: Bp5MIGhqO26D3Fe8qoIyUw_1772432730
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4398eac51b3so3420856f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 22:25:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772432663; x=1773037463; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772432730; x=1773037530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iTNYv1zmHmAZevCUXf+SqfteTVZEB4glXbr8EXI4rQs=;
- b=cAhv+ehtDmsc4AKP/tt3A18MIPbDoz8040qOIG75Av27lSBsuCLp7+vE4WdoKgaruU
- aowSmpb84Y9jxWWCn9ZvZMrvbtf+/zGYkFe0GdMZ4FHchpLBtLw/+6dw9jOZkwCvvuzt
- NFUz2rPHKZHsrLi0cdevY1BhbhaCF8nP2Dal4zkqcWCqKAm7+crVIJ7h6MOlfybbnzbi
- pxPj8zwL/5ufQGZQhbgX8QMwviJwRDClLrLoiziTJEXleKL4Xu5EzSL5YW3aFUgPzsTl
- G0j7TcHhdTpmel10ZSwTGubOGMozlhqaRvzYWPxuuuIbJiCN/lIjbLAaWOekm51oYeX+
- fbgQ==
+ bh=r0GywuLA6ScD5FZeZAfaHmfzg8JBIP7Ca9VVH6YZ/WU=;
+ b=mtdh2j0cuiB1NuNDO4OezbT7H1X0052G7rWtQ2S+4FjxWQZmU2dre8sRuupf1IMUtb
+ Gtl9F5PszZfxRk2+zO1Zw5AUJO76NNdLYOc4CZcEz731Ecnb3Fh1mu1py8XmhxT4zA5l
+ 1Zk1258BHqeGF71eTpuf6Fji/X3MXbMwZ156El8Xebl+bzpnPtlKzgntzfRe+StUqU96
+ JVI/CRRxCN99ewXW/6QyKw4cfJhC+FUW2VMbKIn3oe4agCFViH82pxgkymsI2TjQKqGs
+ 2H2nlZN0QFrSUEOXEqHHf6X9ixL5CEptUfwKF+ehZFd39XvTkwP90Ett+X3aFt5+cZRR
+ svSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772432663; x=1773037463;
+ d=1e100.net; s=20230601; t=1772432730; x=1773037530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iTNYv1zmHmAZevCUXf+SqfteTVZEB4glXbr8EXI4rQs=;
- b=kWXAdtXxsLeS+GEnuFkpNWpMpgl9TNXX7YbbXuketUGoNPOGKUy7ZQjnIFz1bnpgjS
- 1vKo0buyfcdgzfn2ThaeLsiptXe7KLXSHrdI+cCKrDBpet7GnGbl9CIHWeScklkkLiGX
- Y3MO8HklM8kNvrW7puzFFU6bkrht3ShmRV9MUApdB/jnl7W1F+8dWoCkFVZ/hrtUPp8s
- WMG6oDvo0AsGAa6wC2ZMg/dQBH5zmpJqbNCwJFXpEUHAT2XEUD0YYZNKx3sXsp1aCIQA
- TL6aqQ/vZT0Y7RGmPGQSgGkXx3uxphvvo6nYmcqF5/HQig5GVlFvU3W8SDmMCyf4P+VU
- jfrA==
-X-Gm-Message-State: AOJu0YyvgEp0nxIoR2ueqPl/jLdsPpa/CfF00aFxfkDZ2YqGS9ww9X4M
- SYhlrZ73TFs5QDqpD19aD5m7Yz5UWykIpcNXx5FSZ0uKT3fmMTv9SCveeIVr3EUsI9bfMFvtMbB
- B7TcnKPbhO9sjfzcLSaiQzrJVFP3UO3vxDia+7LRtN/yz9FyPo8m3344f
-X-Gm-Gg: ATEYQzyro5Uw3wHK+n0wlpefk7ArLRznDZDXiOkiPL52hDwLugKNE2cWel6VRT7z3Wy
- JWcHVIw/4yfvQ5Qa/ZPlNjppy2RjPMF3gIKliEisTpk+fE30rbI8cUwz0hZSKUvUkt1Pr5tlDne
- iqqWIurLlM/opwaBwZlbduUkjvIS8dT6SBa3gzc5ikb+lpFzNmmOafDywRE7EV0+moj/K+GL7CR
- DsngLiAWH+s4HIRfNF4V+gomyc/UqCwNTg5BPI5IR1wV3oOu9gnrQalvVTl128AZXiqBT9hCRoj
- 6+ocDup1eBS2h9v+g/LsaiF6Am77M6DvrJhHXMv5dg8b/24J9Gtab8IFbC5wx6Db4xC023W8zE9
- zc5ea7Q==
-X-Received: by 2002:a05:600c:8b01:b0:477:9b4a:a82 with SMTP id
- 5b1f17b1804b1-483c9beb38emr210074705e9.35.1772432663220; 
- Sun, 01 Mar 2026 22:24:23 -0800 (PST)
-X-Received: by 2002:a05:600c:8b01:b0:477:9b4a:a82 with SMTP id
- 5b1f17b1804b1-483c9beb38emr210074355e9.35.1772432662809; 
- Sun, 01 Mar 2026 22:24:22 -0800 (PST)
+ bh=r0GywuLA6ScD5FZeZAfaHmfzg8JBIP7Ca9VVH6YZ/WU=;
+ b=u/KQ0SwrsxwDoss7a89fG8gNPKHI+WUT8Pmfpqcwt6te4mx23mDrxWiAXBhxfxN4GI
+ 9DZP1DTnq+jCbgQ5TD4UaW4J8ExQ0y+FPWuoRMJ2wyAiv6MedUc2W8z2p2Kf3QhSpQSr
+ P5XSsAraL335TV07uz26Sd85bCLoewqvAdv/of3JiAVFcpdxp4UQKGo3OlCfdxv45TJP
+ cyYmHpMIvXvZRm473FmQeyfA3hwzYo7ywcacdfqaetflKJwMKq6BldkWniAgKPS7rJ0r
+ ryLvBkasTfOSc4pIq1ZhDTUv8TMCSgoQYRs2NhJqqpJw9QcLaFb3vnCzyh5erujNRSHB
+ PWXQ==
+X-Gm-Message-State: AOJu0YzZmhiXJ2/jgEiS0l9PcTzsdZNsQRNTKNyGm9cVhMC5BlvyGjEg
+ 0b20lHFgd0wk4jkLTTBZx11/z0M9zTM+Mg2dUSw/SfndJitjpU/2b+5o+BXylTOs5f5u0GRVa/t
+ ohteZn7jsl746RusDpnJhQO9e3T5DTzOGXv6McTXiC9fHrUGmXNQ6SJ6H
+X-Gm-Gg: ATEYQzyab1a3oojlBgak++jmDqaGI6AZ/YcsHd0BSF4KZKwXWAIRJqnb1vkzcrhS6up
+ wURPpyAMQ6qYt1U8YizDDnZlSoDfzts672iYo0o3O/7jVUwqYiKuM8rUWSPnCpug2h8Auf+/ahJ
+ eWs0DzIlohFJOWzs3DDZ3Uxeda8H22Im/dQ6JJPWdmaco6ec0kqZCj2NmmGxYQszCbutjHHnHxK
+ kxfgTrp+Z7I61DGkvMVfptxKpb4IkFM5cDALGtrCkEJS4PsKzdbI19nrbQj6gVp5iloOlNjGkAJ
+ aPwVi9uoxOuepKQtze/idRwxAvjVcGWcV86/dQFirZokjKOxTiN3jeJyhrDu2rfDFYi5K/aBWr4
+ bNJR8jQ==
+X-Received: by 2002:a5d:5f52:0:b0:439:5fe4:421a with SMTP id
+ ffacd0b85a97d-439972048a4mr27446112f8f.30.1772432730167; 
+ Sun, 01 Mar 2026 22:25:30 -0800 (PST)
+X-Received: by 2002:a5d:5f52:0:b0:439:5fe4:421a with SMTP id
+ ffacd0b85a97d-439972048a4mr27446087f8f.30.1772432729718; 
+ Sun, 01 Mar 2026 22:25:29 -0800 (PST)
 Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfcb4f8bsm298805155e9.4.2026.03.01.22.24.22
+ ffacd0b85a97d-439ba2a58dasm2526320f8f.27.2026.03.01.22.25.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 22:24:22 -0800 (PST)
-Date: Mon, 2 Mar 2026 07:24:21 +0100
+ Sun, 01 Mar 2026 22:25:29 -0800 (PST)
+Date: Mon, 2 Mar 2026 07:25:28 +0100
 From: Igor Mammedov <imammedo@redhat.com>
 To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2 04/11] hw/acpi: Always link QOM interfaces with
- system binaries
-Message-ID: <20260302072421.7bb71507@imammedo>
-In-Reply-To: <20260225035739.42848-5-philmd@linaro.org>
+ Tsirkin" <mst@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2 05/11] hw/nvram: Build fw_cfg-acpi.c once
+Message-ID: <20260302072528.0d30b5d8@imammedo>
+In-Reply-To: <20260225035739.42848-6-philmd@linaro.org>
 References: <20260225035739.42848-1-philmd@linaro.org>
- <20260225035739.42848-5-philmd@linaro.org>
+ <20260225035739.42848-6-philmd@linaro.org>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -123,41 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 25 Feb 2026 04:57:32 +0100
+On Wed, 25 Feb 2026 04:57:33 +0100
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> Now that acpi_interface.c only contains QOM interfaces,
-> unconditionally link it with system binaries, regardless
-> of whether CONFIG_ACPI is set or not. It is now easier to
-> deselect hardware models depending on ACPI.
->=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
 > ---
->  hw/acpi/meson.build | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  hw/nvram/meson.build | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >=20
-> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-> index 66c978aae83..e1e848327b9 100644
-> --- a/hw/acpi/meson.build
-> +++ b/hw/acpi/meson.build
-> @@ -1,6 +1,5 @@
->  acpi_ss =3D ss.source_set()
->  acpi_ss.add(files(
-> -  'acpi_interface.c',
->    'aml-build.c',
->    'bios-linker-loader.c',
->    'core.c',
-> @@ -36,4 +35,4 @@ system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false:=
- files('pci-bridge-stub.c
->  system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
->  system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
->  system_ss.add(when: 'CONFIG_GHES_CPER', if_false: files('ghes_cper_stub.=
-c'))
-> -system_ss.add(files('acpi-qmp-cmds.c'))
-> +system_ss.add(files('acpi-qmp-cmds.c', 'acpi_interface.c'))
+> diff --git a/hw/nvram/meson.build b/hw/nvram/meson.build
+> index b66f23605b7..26343359875 100644
+> --- a/hw/nvram/meson.build
+> +++ b/hw/nvram/meson.build
+> @@ -18,8 +18,8 @@ system_ss.add(when: 'CONFIG_XLNX_EFUSE_ZYNQMP', if_true=
+: files(
+>  system_ss.add(when: 'CONFIG_XLNX_BBRAM', if_true: files('xlnx-bbram.c'))
+> =20
+>  specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_nvram.c'))
+> -specific_ss.add(when: 'CONFIG_ACPI', if_true: files('fw_cfg-acpi.c'))
+> +system_ss.add(when: 'CONFIG_ACPI', if_true: files('fw_cfg-acpi.c'))
+> =20
+>  system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>    'aspeed_otp.c',
+> -  ))
+> \ No newline at end of file
+> +  ))
 
 
