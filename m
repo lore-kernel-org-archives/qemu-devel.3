@@ -4,120 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E06CD58E5D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 05:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C46ED58E5C
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 05:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vww0r-00054c-8S; Mon, 02 Mar 2026 00:40:13 -0500
+	id 1vww8F-0006vm-Pc; Mon, 02 Mar 2026 00:47:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1vww0n-00050n-V2
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:40:10 -0500
-Received: from mail-northcentralusazon11012038.outbound.protection.outlook.com
- ([40.107.200.38] helo=CH5PR02CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1vww0k-0000ko-JX
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:40:09 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gR+iHnm9QZuU7nw2gnFdOpA1sR+PH+/rq9hmk58qzLkQtPd/eOX5jx4CqUu641Y/C80IXt0p7DyKtBEFIUaF0WAUZeJ07Ab+NyjZmr5zGLz4oisVa69w6WubNAWa18QHrzFzUqjdF9N6AtEJrgT2NQ3sQZS7P9H4lvc7h+I1YfO76bKeE5ShvK6kNT09r9/hPCVIVLz+QciuYIfVxARkbLRrs8cv9KduGJ/xCPoat1fSJuIrLrd/EqG8UQsfq8U3fpsLWWKcwScJ6/QjlA479YRvS7iSqLsocObOkHBw5dCAAaW3v8nH0FHOLPXu0ZPHvf7/QSk2RWI2PdMUdLpRRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4X0oLC1mQhR3vBXkr0n9//dFq9240uKJE/RnPOW1/hg=;
- b=uyExKGjQzf+eXhL3kmkjXc2VuLRe03qXfqOz1QVRI+EJ6D/Stfgd/ke8l5FggphQwScbKwGcQ8SerZaF0OUkDOUeW8PMlZyIZXweLj3dygBMdWMEKNGpfI1dc8tXcCa36g1KELSvxtScxyzsp1O5fZqABBTFPlLz8HnZ1pnv2uMdcbSlPsXZ0Rc4Wo3IgsDxU3s6848/+Gc0WCBa0f+qN9kvwTJ0g7YgOLf1Fsq4N4VWieir81MgN15zNOzPQoYQud/4iJZHWAHWErbKe6PeT7HmGxOEtZzQumWr38EzMHM+NVo3vZGfdhqMD2LUy+6Dj4mNP2kSiaVuFnseIy8onw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=demindiro.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4X0oLC1mQhR3vBXkr0n9//dFq9240uKJE/RnPOW1/hg=;
- b=B8mNRf6TaJf/TzXLT+F/cNhlqDbCWqNrFYbBUJBbWq0hqLjeWG1nU4eu/OlfMgk2NYNJTq0+6KQkR3FPvXO6zDiPAm9EnRDVlGDHFO/hzfqX32U2bXA9zAETQbmI0mfVLiSUFEnrErvi4nXDHmLi5Y+POqDwjjORm1jdAUVQraY=
-Received: from PH2PEPF00003850.namprd17.prod.outlook.com (2603:10b6:518:1::72)
- by SN7PR12MB7370.namprd12.prod.outlook.com (2603:10b6:806:299::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.19; Mon, 2 Mar
- 2026 05:34:57 +0000
-Received: from CY4PEPF0000EDD5.namprd03.prod.outlook.com
- (2a01:111:f403:f912::1) by PH2PEPF00003850.outlook.office365.com
- (2603:1036:903:48::3) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.25 via Frontend Transport; Mon,
- 2 Mar 2026 05:34:57 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CY4PEPF0000EDD5.mail.protection.outlook.com (10.167.241.201) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9654.16 via Frontend Transport; Mon, 2 Mar 2026 05:34:56 +0000
-Received: from [10.143.206.15] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 1 Mar
- 2026 23:34:52 -0600
-Message-ID: <863c6284-812c-495e-a452-a4dec3ed7115@amd.com>
-Date: Mon, 2 Mar 2026 11:04:40 +0530
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vww8A-0006uz-TM
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:47:46 -0500
+Received: from mail-dl1-x1244.google.com ([2607:f8b0:4864:20::1244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vww87-0001nH-9x
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:47:46 -0500
+Received: by mail-dl1-x1244.google.com with SMTP id
+ a92af1059eb24-12732165d1eso4170585c88.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 21:47:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772430460; x=1773035260; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=xkPqB85C/Plj9MjEksT7h5hIkO0OOud3yg5YHhILew0=;
+ b=YPaVaD66J2oXb/BjEQALL8k2/m4JO9GvVPfkp0vbERqYQeO5/GPhR2uFbxgjv54C5K
+ mFFT91y/H8jLQXVidQi5VNseY2UK4kNnlF+AP7J+iBHN3tauj3TB1TFUJxGUyI7HbrAX
+ T8/5k3j3FQM78pvJQ+tMaYorzQ+ht0ofQaaNOmqYIHsjFI6sJUyXog5MxIa/OCcoIFuP
+ 2oWFU0AF5cSaN/O3DNV3UU4Kr+y90GiQIGyS62vzZ/zAgP7AEnAwsQySbfnTuwd5N0Ic
+ chAEtL/2FevdNj/oJxRvwhvQ4j1e2t7oC7FvyEe0Fmus6V+7uKAJJ9uH8BiLv3tg+fD6
+ C4zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772430460; x=1773035260;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xkPqB85C/Plj9MjEksT7h5hIkO0OOud3yg5YHhILew0=;
+ b=m77iUjjBUN0+8yzKOiPjbMsxDYNzRJNBxW2/DKsIje3K1YwIOuN84SpIPjJ/S8Lj41
+ qwYEt/7XAhy8W8hCi4u9b8cRPK6QNfWlmIOCZ85/YObS4e/mXbf/ooFW0ClmRUdS2ajM
+ nm2ZyeeIT4VfEFJR4V/4Uflr/7Klx6x9AdQrUJj+OgS/gqh6wiUBux6aYSRa/vzy5G/k
+ dqlOh60ZvxjFmyaye5qMu4lasGR3xTfE4aC4VjckspKikDHF6gLxZjVXtwZtqv1MVfn3
+ m/xpv9K47qYWaCQw5iTvTxTIdAsuKPOl8Fg2mO90FQvXLZp0f2EKrsXO6YRqe/rzxO6L
+ 17Qw==
+X-Gm-Message-State: AOJu0YwrgnH0iOAsg4DyiFpyIXmUjUQkjxFSgtQdw3DxLPyc925YZ/gw
+ ZS/IIUUc6USK9VR843ta+4Jxmi2V73Mj2ZDHxbjY8H6FW90cBggEoCyS
+X-Gm-Gg: ATEYQzyALJm6seuV/9hbXcil1T66CezU+lxlnk5oMc9t3MkVsba+Ch5xnESjX9hQcd3
+ zSnZDEkImyQwy4/zlWMH3Fu7sBFs0Tf0llKJsADVusuQXpdZ8oVDCkYiksa8y0Nz0nzVgYl1i1J
+ QgcvCOZlI+XpXyI2bb3MkDvyGPVrZMv+m0LBYh9Kcp6c6eHu6R1iG0LoX/y8R5J8Ib5I58hlL3l
+ MTsffyD2T9OyZPdvm4n933mfz2lyWvPcRoEdqcNib9oJvvjJmTjqj+1EorcUcXZ3V1VnVkwzTSF
+ jG5TB4OdgLx2TwhIQwbjglwyIDR9z7N575wBavlnE3Mc4r5Lr+ZOfiVhSmpqFDb5WCKyHa6fD2D
+ vbjFgSv3SVv1X7DZcGrZaPzIcRMWdMPNQ69qoVGmq9yq4N/qS5R+rq+yNX9dVLpoZuIeGcSDIgW
+ AMFmEk7hjehrQAo35XG+b+GYRfDV4UizK7TTAbJtBgezSIvDc39cyp6ukQTvQMoGWZyYewf+Yxw
+ 29AouZChbENwYXZwR+gd2ryC/lvjEN3V5HvsQCSWg==
+X-Received: by 2002:a05:7022:a88:b0:11b:2138:4758 with SMTP id
+ a92af1059eb24-1278fcb52b6mr5612040c88.21.1772430460130; 
+ Sun, 01 Mar 2026 21:47:40 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12789a32863sm12272158c88.10.2026.03.01.21.47.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 01 Mar 2026 21:47:39 -0800 (PST)
+Date: Mon, 2 Mar 2026 13:47:17 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Helge Deller <deller@gmx.de>, 
+ Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, 
+ Max Filippov <jcmvbkbc@gmail.com>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Subject: Re: [PATCH 1/2] accel/tcg: Pass access_type as an argument of
+ tlb_set_page*()
+Message-ID: <aaUj1KaKHuXBMAN1@ZEVORN-PC.localdomain>
+References: <20260202075358.2137740-1-jim.shu@sifive.com>
+ <20260202075358.2137740-2-jim.shu@sifive.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, Eduardo Habkost <eduardo@habkost.net>, "Alejandro
- Jimenez" <alejandro.j.jimenez@oracle.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Richard Henderson
- <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Michael
- S. Tsirkin" <mst@redhat.com>, Vasant Hegde <vasant.hegde@amd.com>
-Subject: Re: [PATCH 2/2] hw/i386/amd_iommu.c: fix incorrect page_size for
- hugepages
-Content-Language: en-US
-To: David Hoppenbrouwers <qemu@demindiro.com>, <qemu-devel@nongnu.org>
-References: <20260225145831.28275-1-qemu@demindiro.com>
- <20260225145831.28275-3-qemu@demindiro.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20260225145831.28275-3-qemu@demindiro.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD5:EE_|SN7PR12MB7370:EE_
-X-MS-Office365-Filtering-Correlation-Id: fb2dccac-e192-46d4-d9f0-08de781d7014
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|82310400026|36860700013|13003099007|7053199007;
-X-Microsoft-Antispam-Message-Info: ml/ecz6FfK99H/rJmN58IHz+CbL1D2stW0y5mtwB/gdlE8BN9pkt3y+F0Wc2pLKU58x+g3edPV78929vEDy0eVV/ZEfRbs2QwZJ2PmlZ91dKoHTMoBtqGewELM0qqH1t2mLfoPdzg7nr64dVJTUwyAIuEz6weV8dRe3NYouHErpLp4ZMc/+yDO6k/Iu1PhXZWtWgNQwPRecw152ouO8K6KyCA3nfGx5po47eCNH6pz+mhJ5E8NlLeuQNEiz6CG031RzhlKfwC1K6bY3Ob9jbKAfdq2I5kjew6k4lameva5Q27jk/v9Y48h1SqQO6soSeehI7b3s6fgSdrQ282agS3ybDLNiOTPiYkL26notPXLagZW46eaBs7fLbHZfZk6ZVMqwn6qzDu61U7ebdI2jujNqUsf96go5Xi4nfDMgMlUIJ08FiIuMEGAG0yGJblK0C+xwGU6PPvabNiLwLYVEWBKh3QAbrlUuyB0WqdffLqWivUjFvZzZQqbVf5T2M+JNQfi6j9Yrfq1IfQQt0ZbRMiJhtCUUJ7fr2l4hxOlmW46YQHwIg6bC6bR/xfaGq2ZU44Q8/th03ZJFDfcDMsGXWbwo3w3phcCT4rs342Pb+5VWW+w5JGzS2gnmDXLbnTcbJcPDkv3C8OJo7oveY6+hTXCe+0dT4iONSqNJUwGOIp2B3a1E1UQiWyGCmfSO9PClOmA+9lXxCv9NkLZuXxfb5tAjAxW8ooqb/b8foMlflTJ+vHWeVdRqMUSpBmVuSqm5fwV3vmZIhbMGAWtN69/u7JA==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013)(13003099007)(7053199007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 8HskGeK4xKoK0+Vm7Utco77LlWUwpTw9ZdCewAUgAY3dLTZgND9o6wVUlHHWubgzDzDGcz5gTXp6AGbfvmCylxcl88b6mt4nsKbAKMaFfU9UCsOydG3vqHfBXFBBjdIzXz3rupl0bzzYlBIoVdNMeLZLc4CFZKwpjX6z6NLLlw7pU2WAcBlsKQWyQh3kMpFMAymefDSt+PqKn2n1pXd28AvOGfb9fpeBN7P3rwyrw8StvBRA+t1LETkNKxRedPQN7dEJrWMpQYVf+99xhM0eeKJV4DKOQFE97FazBbFI1+DV2DddtCaXMRht+vy3AaO3O01kAgcWtLVxKh/vEllJ38mJHPdjStKkDohL8+OHgQ2LrVztMPsMrCQPT2V9MWMbe1YgscGqBcdYwGXWg83yiwFBl5U6bvEWF7eW+LIqDEwfjcTMfMfGU3F1gXFMri/U
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 05:34:56.2121 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fb2dccac-e192-46d4-d9f0-08de781d7014
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD5.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7370
-Received-SPF: permerror client-ip=40.107.200.38;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260202075358.2137740-2-jim.shu@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1244;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1244.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,362 +128,456 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Jim,
 
-
-On 2/25/2026 8:28 PM, David Hoppenbrouwers wrote:
-> [You don't often get email from qemu@demindiro.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
->
-> fetch_pte() incorrectly calculated the page_size for the next level before
-> checking whether the entry at the current level is a leaf.
->
-> The incorrect behavior can be observed with a nested Linux guest under
-> specific conditions (using Alpine with linux-stable kernel):
->
-> 1. Define the first guest as such:
->
->      /path/to/qemu-system-x86_64 \
->          -M q35 \
->          -enable-kvm \
->          -cpu host \
->          -m 8G \
->          -device amd-iommu,dma-remap=on \
->          -device virtio-blk,drive=boot,bootindex=1 \
->          -device nvme,drive=vfio,bootindex=2,serial=nvme-vfio-0 \
->          -device virtio-net-pci,netdev=net \
->          -netdev user,id=net,hostfwd=tcp::2223-:22 \
->          -serial unix:/tmp/genesys.unix \
->          -drive if=none,id=boot,file=alpine-vm.qcow2,format=qcow2 \
->          -drive if=none,id=vfio,file=vfio.qcow2,format=qcow2 \
->          -display none \
->          -monitor stdio \
->          -trace 'pci*' \
->          -trace 'amdvi_fetch_pte*'
->
->     Add -cdrom path-to-alpine.iso for the first run to install Alpine.
->
-> 2. In /etc/update-extlinux.conf, add the following to default_kernel_opts:
->
->      iommu.strict=1 amd_iommu_dump=1 amd_iommu=v2_pgsizes_only,pgtbl_v2
->
->     v2_pgsizes_only is important to coerce Linux into using NextLevel=0
->     for 2M pages.
->
-> 3. Add /etc/modprobe.d/vfio.conf with the following content:
->
->      /etc/modprobe.d/vfio.conf
->      options vfio-pci ids=1234:11e8,1b36:0010
->      options vfio_iommu_type1 allow_unsafe_interrupts=1
->      softdep igb pre: vfio-pci
->
-> 4. In /etc/mkinitfs/mkinitfs.conf, add vfio and hugetlbfs to features.
->
-> 5. In /etc/sysctl.conf, add vm.nr_hugepages=512
->
-> 6. mkdir /hugepages
->
-> 7. In /etc/fstab, add hugetlbfs:
->
->      hugetlbfs  /hugepages  hugetlbfs  defaults  0 0
->
-> 8. Reboot
->
-> 9. Define the second, nested guest as such:
->
->      qemu-system-x86_64 \
->          -M q35 \
->          -enable-kvm \
->          -cpu host \
->          -m 512M \
->          -mem-prealloc \
->          -mem-path /hugepages/qemu \
->          -display none \
->          -serial stdio \
->          -device vfio-pci,host=0000:00:04.0 \
->          -cdrom path-to-alpine.iso
->
->      scp the original ISO into the guest.
->      Doublecheck -device with lspci -nn.
->
-> If you launch the second guest inside the first guest without this patch,
-> you will observe that booting gets stuck / takes a very long time:
->
->      ISOLINUX 6.04 6.04-pre1  Copyright (C) 1994-2015 H. Peter Anvin et al
->      boot:
->
-> The following trace can be observed:
->
->      amdvi_fetch_pte_translate 0x0000000002867000
->      amdvi_fetch_pte_root level=3 pte=6000000103629603
->      amdvi_fetch_pte_walk level=3 pte=6000000103629603 NextLevel=3 page_size=0x40000000
->      amdvi_fetch_pte_walk level=2 pte=600000010362c401 NextLevel=2 page_size=0x200000
->      amdvi_fetch_pte_walk level=1 pte=700000016b400001 NextLevel=0 page_size=0x1000
->      amdvi_fetch_pte_found level=0 pte=700000016b400001 NextLevel=0 page_size=0x1000
->      amdvi_fetch_pte_translate 0x0000000002e0e000
->      amdvi_fetch_pte_root level=3 pte=6000000103629603
->      amdvi_fetch_pte_walk level=3 pte=6000000103629603 NextLevel=3 page_size=0x40000000
->      amdvi_fetch_pte_walk level=2 pte=600000010362c401 NextLevel=2 page_size=0x200000
->      amdvi_fetch_pte_walk level=1 pte=700000016b200001 NextLevel=0 page_size=0x1000
->      amdvi_fetch_pte_found level=0 pte=700000016b200001 NextLevel=0 page_size=0x1000
->
-> Note that NextLevel skips from 2 to 0, indicating a hugepage. However, it
-> incorrectly determined the page_size to be 0x1000 when it should be 0x200000.
-> It doesn't seem the "host" (first guest) observes this mismatch, but the second
-> guest is clearly affected.
->
-> I have observed it booting eventually, but I don't remember how long it took.
-> If/when it does, run setup-alpine. When it asks about which disk to use it
-> will be missing the NVMe drive.
->
-> If you apply this patch for the first guest then the second guest will boot
-> much faster and see the NVMe drive. The trace will be longer and look like
-> this:
->
->      ...
->      amdvi_fetch_pte_translate 0x000000001ffd8000
->      amdvi_fetch_pte_root level=3 pte=600000010373e603
->      amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 page_size=0x8000000000
->      amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 page_size=0x40000000
->      amdvi_fetch_pte_walk level=1 pte=700000014b800001 NextLevel=0 page_size=0x200000
->      amdvi_fetch_pte_found level=0 pte=700000014b800001 NextLevel=0 page_size=0x200000
->      amdvi_fetch_pte_translate 0x0000000000007c00
->      amdvi_fetch_pte_root level=3 pte=600000010373e603
->      amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 page_size=0x8000000000
->      amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 page_size=0x40000000
->      amdvi_fetch_pte_walk level=1 pte=600000010366c201 NextLevel=1 page_size=0x200000
->      amdvi_fetch_pte_found level=0 pte=700000016b807001 NextLevel=0 page_size=0x1000
->      amdvi_fetch_pte_translate 0x000000001ffdc000
->      amdvi_fetch_pte_root level=3 pte=600000010373e603
->      amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 page_size=0x8000000000
->      amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 page_size=0x40000000
->      amdvi_fetch_pte_walk level=1 pte=700000014b800001 NextLevel=0 page_size=0x200000
->      amdvi_fetch_pte_found level=0 pte=700000014b800001 NextLevel=0 page_size=0x200000
->      ...
-
-Hi David,
-
-Thanks for the fix, here are few nits,
-
-Please move the description and reproduction steps of the bug to the cover
-letter and include only necessary information about the bug and what patch
-is doing to resolve it. Also keep the subsystem name as "amd_iommu" in the
-commit message.
-
-Please see [1] for more information about commit message
-[1] 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#write-a-meaningful-commit-message
-
->
-> Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
+On Mon, Feb 02, 2026 at 03:53:57PM +0800, Jim Shu wrote:
+> Pass the access_type so that we could know CPU will do the read or
+> write access. Then, CPU can fill the CPUTLBEntry[Full] of the specific
+> permission (@prot).
+> 
+> It is fine for address_space_translate*() to return different section of
+> read and write access. tlb_set_page*() only sets 'CPUTLBEntry.addr_*'
+> for specific @prot, so access from another @prot will only get TLB miss
+> and start to overwrite 'CPUTLBEntry[Full]' with new @prot.
+> 
+> It is the preliminary patch of next commit to pass the iommu_flags
+> to IOMMUMemoryRegion from access_type.
+> 
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > ---
->   hw/i386/amd_iommu.c | 13 ++++++++++---
->   1 file changed, 10 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 29999fd776..2e83f8f4de 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -684,6 +684,13 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
->       level = mode = get_pte_translation_mode(dte);
->       assert(mode > 0 && mode < 7);
->
-> +    /*
-> +     * TODO what is the actual behavior if NextLevel=0 or 7 in the root?
-> +     * For now, set the page_size for the root to be consistent with earlier
-> +     * QEMU versions,
-> +     */
-> +    *page_size = PTE_LEVEL_PAGE_SIZE(level);
-> +
->       /*
->        * If IOVA is larger than the max supported by the current pgtable level,
->        * there is nothing to do.
-> @@ -700,9 +707,6 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
->
->           level -= 1;
->
-> -        /* Update the page_size */
-> -        *page_size = PTE_LEVEL_PAGE_SIZE(level);
+>  accel/tcg/cputlb.c                   | 14 ++++++++------
+>  include/exec/cputlb.h                | 11 +++++++----
+>  target/alpha/helper.c                |  2 +-
+>  target/avr/helper.c                  |  2 +-
+>  target/hppa/mem_helper.c             |  1 -
+>  target/i386/tcg/system/excp_helper.c |  3 ++-
+>  target/loongarch/tcg/tlb_helper.c    |  2 +-
+>  target/m68k/helper.c                 | 10 +++++++---
+>  target/microblaze/helper.c           |  8 ++++----
+>  target/mips/tcg/system/tlb_helper.c  |  4 ++--
+>  target/openrisc/mmu.c                |  2 +-
+>  target/ppc/mmu_helper.c              |  2 +-
+>  target/riscv/cpu_helper.c            |  2 +-
+>  target/rx/cpu.c                      |  3 ++-
+>  target/s390x/tcg/excp_helper.c       |  2 +-
+>  target/sh4/helper.c                  |  2 +-
+>  target/sparc/mmu_helper.c            |  6 +++---
+>  target/tricore/helper.c              |  2 +-
+>  target/xtensa/helper.c               |  3 ++-
+>  19 files changed, 46 insertions(+), 35 deletions(-)
+> 
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 76546c66515..2a0f4cfff62 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1022,7 +1022,8 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+>   * critical section.
+>   */
+>  void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+> -                       vaddr addr, CPUTLBEntryFull *full)
+> +                       vaddr addr, MMUAccessType access_type,
+> +                       CPUTLBEntryFull *full)
+>  {
+>      CPUTLB *tlb = &cpu->neg.tlb;
+>      CPUTLBDesc *desc = &tlb->d[mmu_idx];
+> @@ -1185,7 +1186,8 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+>  
+>  void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+>                               hwaddr paddr, MemTxAttrs attrs, int prot,
+> -                             int mmu_idx, vaddr size)
+> +                             MMUAccessType access_type, int mmu_idx,
+> +                             vaddr size)
+>  {
+>      CPUTLBEntryFull full = {
+>          .phys_addr = paddr,
+> @@ -1195,15 +1197,15 @@ void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+>      };
+>  
+>      assert(is_power_of_2(size));
+> -    tlb_set_page_full(cpu, mmu_idx, addr, &full);
+> +    tlb_set_page_full(cpu, mmu_idx, addr, access_type, &full);
+>  }
+>  
+>  void tlb_set_page(CPUState *cpu, vaddr addr,
+> -                  hwaddr paddr, int prot,
+> +                  hwaddr paddr, int prot, MMUAccessType access_type,
+>                    int mmu_idx, vaddr size)
+>  {
+>      tlb_set_page_with_attrs(cpu, addr, paddr, MEMTXATTRS_UNSPECIFIED,
+> -                            prot, mmu_idx, size);
+> +                            prot, access_type, mmu_idx, size);
+>  }
+>  
+>  /**
+> @@ -1245,7 +1247,7 @@ static bool tlb_fill_align(CPUState *cpu, vaddr addr, MMUAccessType type,
+>      if (ops->tlb_fill_align) {
+>          if (ops->tlb_fill_align(cpu, &full, addr, type, mmu_idx,
+>                                  memop, size, probe, ra)) {
+> -            tlb_set_page_full(cpu, mmu_idx, addr, &full);
+> +            tlb_set_page_full(cpu, mmu_idx, addr, type, &full);
+>              return true;
+>          }
+>      } else {
+> diff --git a/include/exec/cputlb.h b/include/exec/cputlb.h
+> index 3a9603a6965..47fa4302a9a 100644
+> --- a/include/exec/cputlb.h
+> +++ b/include/exec/cputlb.h
+> @@ -41,6 +41,7 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+>   * @cpu: CPU context
+>   * @mmu_idx: mmu index of the tlb to modify
+>   * @addr: virtual address of the entry to add
+> + * @access_type: access was read/write/execute
+>   * @full: the details of the tlb entry
+>   *
+>   * Add an entry to @cpu tlb index @mmu_idx.  All of the fields of
+> @@ -56,6 +57,7 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+>   * used by tlb_flush_page.
+>   */
+>  void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+> +                       MMUAccessType access_type,
+>                         CPUTLBEntryFull *full);
+>  
+>  /**
+> @@ -65,6 +67,7 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+>   * @paddr: physical address of the page
+>   * @attrs: memory transaction attributes
+>   * @prot: access permissions (PAGE_READ/PAGE_WRITE/PAGE_EXEC bits)
+> + * @access_type: access was read/write/execute
+>   * @mmu_idx: MMU index to insert TLB entry for
+>   * @size: size of the page in bytes
+>   *
+> @@ -81,9 +84,9 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
+>   * used by tlb_flush_page.
+>   */
+>  void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+> -                             hwaddr paddr, MemTxAttrs attrs,
+> -                             int prot, int mmu_idx, vaddr size);
 > -
->           /* Permission bits are ANDed at every level, including the DTE */
->           perms &= amdvi_get_perms(*pte);
->           if (perms == IOMMU_NONE) {
-> @@ -720,6 +724,9 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
->               break;
->           }
->
-> +        /* Update the page_size */
-> +        *page_size = PTE_LEVEL_PAGE_SIZE(level);
-> +
->           /*
->            * Index the pgtable using the IOVA bits corresponding to current level
->            * and walk down to the lower level.
-> --
-> 2.52.0
+> +                             hwaddr paddr, MemTxAttrs attrs, int prot,
+> +                             MMUAccessType access_type, int mmu_idx,
+> +                             vaddr size);
+>  /**
+>   * tlb_set_page:
+>   *
+> @@ -92,7 +95,7 @@ void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
+>   * as a convenience for CPUs which don't use memory transaction attributes.
+>   */
+>  void tlb_set_page(CPUState *cpu, vaddr addr,
+> -                  hwaddr paddr, int prot,
+> +                  hwaddr paddr, int prot, MMUAccessType access_type,
+>                    int mmu_idx, vaddr size);
+>  
+>  #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+> diff --git a/target/alpha/helper.c b/target/alpha/helper.c
+> index a9af52a928f..cd6c380e542 100644
+> --- a/target/alpha/helper.c
+> +++ b/target/alpha/helper.c
+> @@ -321,7 +321,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+>      }
+>  
+>      tlb_set_page(cs, addr & TARGET_PAGE_MASK, phys & TARGET_PAGE_MASK,
+> -                 prot, mmu_idx, TARGET_PAGE_SIZE);
+> +                 prot, access_type, mmu_idx, TARGET_PAGE_SIZE);
+>      return true;
+>  }
+>  
+> diff --git a/target/avr/helper.c b/target/avr/helper.c
+> index 365c8c60e19..563df1e8a5b 100644
+> --- a/target/avr/helper.c
+> +++ b/target/avr/helper.c
+> @@ -143,7 +143,7 @@ bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>          prot = PAGE_READ | PAGE_WRITE;
+>      }
+>  
+> -    tlb_set_page(cs, address, paddr, prot, mmu_idx, TARGET_PAGE_SIZE);
+> +    tlb_set_page(cs, address, paddr, prot, access_type, mmu_idx, TARGET_PAGE_SIZE);
+Checkpatch warning: line over 80 characters. Consider breaking this line.
 
-Looking at the fetch_pte code, it was harder to read as it treats DTE as 
-regular PTE
-and creates confusion about how levels are managed.
+>      return true;
+>  }
+>  
+> diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+> index cce82e65999..710259b3cde 100644
+> --- a/target/hppa/mem_helper.c
+> +++ b/target/hppa/mem_helper.c
+> @@ -475,7 +475,6 @@ bool hppa_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr addr,
+>      out->prot = prot;
+>      out->attrs = MEMTXATTRS_UNSPECIFIED;
+>      out->lg_page_size = TARGET_PAGE_BITS;
+> -
+>      return true;
+>  }
+>  
+> diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
+> index d7ea77c8558..0fdae83f0a2 100644
+> --- a/target/i386/tcg/system/excp_helper.c
+> +++ b/target/i386/tcg/system/excp_helper.c
+> @@ -628,7 +628,8 @@ bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+>          tlb_set_page_with_attrs(cs, addr & TARGET_PAGE_MASK,
+>                                  out.paddr & TARGET_PAGE_MASK,
+>                                  cpu_get_mem_attrs(env),
+> -                                out.prot, mmu_idx, out.page_size);
+> +                                out.prot, access_type, mmu_idx,
+> +                                out.page_size);
+>          return true;
+>      }
+>  
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index b6e9a3a3c7f..a9e44d82ff7 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -669,7 +669,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>          prot = context.prot;
+>          tlb_set_page(cs, address & TARGET_PAGE_MASK,
+>                       physical & TARGET_PAGE_MASK, prot,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +                     access_type, mmu_idx, TARGET_PAGE_SIZE);
+>          qemu_log_mask(CPU_LOG_MMU,
+>                        "%s address=%" VADDR_PRIx " physical " HWADDR_FMT_plx
+>                        " prot %d\n", __func__, address, physical, prot);
+> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+> index 15f110fa7a2..aab2ea8d191 100644
+> --- a/target/m68k/helper.c
+> +++ b/target/m68k/helper.c
+> @@ -969,7 +969,7 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>          tlb_set_page(cs, address & TARGET_PAGE_MASK,
+>                       address & TARGET_PAGE_MASK,
+>                       PAGE_READ | PAGE_WRITE | PAGE_EXEC,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +                     qemu_access_type, mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      }
+>  
+> @@ -989,7 +989,8 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                                 address, access_type, &page_size);
+>      if (likely(ret == 0)) {
+>          tlb_set_page(cs, address & TARGET_PAGE_MASK,
+> -                     physical & TARGET_PAGE_MASK, prot, mmu_idx, page_size);
+> +                     physical & TARGET_PAGE_MASK, prot, qemu_access_type,
+> +                     mmu_idx, page_size);
+>          return true;
+>      }
+>  
+> @@ -1461,6 +1462,7 @@ void HELPER(ptest)(CPUM68KState *env, uint32_t addr, uint32_t is_read)
+>      int prot;
+>      int ret;
+>      target_ulong page_size;
+> +    MMUAccessType qemu_access_type;
+>  
+>      access_type = ACCESS_PTEST;
+>      if (env->dfc & 4) {
+> @@ -1468,9 +1470,11 @@ void HELPER(ptest)(CPUM68KState *env, uint32_t addr, uint32_t is_read)
+>      }
+>      if ((env->dfc & 3) == 2) {
+>          access_type |= ACCESS_CODE;
+> +        qemu_access_type = MMU_INST_FETCH;
+>      }
+>      if (!is_read) {
+>          access_type |= ACCESS_STORE;
+> +        qemu_access_type = MMU_DATA_STORE;
+>      }
+>  
+>      env->mmu.mmusr = 0;
+> @@ -1480,7 +1484,7 @@ void HELPER(ptest)(CPUM68KState *env, uint32_t addr, uint32_t is_read)
+>      if (ret == 0) {
+>          tlb_set_page(env_cpu(env), addr & TARGET_PAGE_MASK,
+>                       physical & TARGET_PAGE_MASK,
+> -                     prot, access_type & ACCESS_SUPER ?
+> +                     prot, qemu_access_type, access_type & ACCESS_SUPER ?
+>                       MMU_KERNEL_IDX : MMU_USER_IDX, page_size);
+>      }
+>  }
+> diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+> index a1857b72172..2bdf8c3ea03 100644
+> --- a/target/microblaze/helper.c
+> +++ b/target/microblaze/helper.c
+> @@ -101,8 +101,8 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>          /* MMU disabled or not available.  */
+>          address &= TARGET_PAGE_MASK;
+>          prot = PAGE_RWX;
+> -        tlb_set_page_with_attrs(cs, address, address, attrs, prot, mmu_idx,
+> -                                TARGET_PAGE_SIZE);
+> +        tlb_set_page_with_attrs(cs, address, address, attrs, prot, access_type,
+> +                                mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      }
+>  
+> @@ -113,8 +113,8 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>  
+>          qemu_log_mask(CPU_LOG_MMU, "MMU map mmu=%d v=%x p=%x prot=%x\n",
+>                        mmu_idx, vaddr, paddr, lu.prot);
+> -        tlb_set_page_with_attrs(cs, vaddr, paddr, attrs, lu.prot, mmu_idx,
+> -                                TARGET_PAGE_SIZE);
+> +        tlb_set_page_with_attrs(cs, vaddr, paddr, attrs, lu.prot, access_type,
+> +                                mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      }
+>  
+> diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+> index 566924b079e..bf08ba29d02 100644
+> --- a/target/mips/tcg/system/tlb_helper.c
+> +++ b/target/mips/tcg/system/tlb_helper.c
+> @@ -934,7 +934,7 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>      if (ret == TLBRET_MATCH) {
+>          tlb_set_page(cs, address & TARGET_PAGE_MASK,
+>                       physical & TARGET_PAGE_MASK, prot,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +                     access_type, mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      }
+>  #if !defined(TARGET_MIPS64)
+> @@ -952,7 +952,7 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>              if (ret == TLBRET_MATCH) {
+>                  tlb_set_page(cs, address & TARGET_PAGE_MASK,
+>                               physical & TARGET_PAGE_MASK, prot,
+> -                             mmu_idx, TARGET_PAGE_SIZE);
+> +                             access_type, mmu_idx, TARGET_PAGE_SIZE);
+>                  return true;
+>              }
+>          }
+> diff --git a/target/openrisc/mmu.c b/target/openrisc/mmu.c
+> index 315debaf3e5..c14f03081e1 100644
+> --- a/target/openrisc/mmu.c
+> +++ b/target/openrisc/mmu.c
+> @@ -127,7 +127,7 @@ bool openrisc_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+>      if (likely(excp == 0)) {
+>          tlb_set_page(cs, addr & TARGET_PAGE_MASK,
+>                       phys_addr & TARGET_PAGE_MASK, prot,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +                     access_type, mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      }
+>      if (probe) {
+> diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+> index ac607054027..8b55a9e4ddf 100644
+> --- a/target/ppc/mmu_helper.c
+> +++ b/target/ppc/mmu_helper.c
+> @@ -1369,7 +1369,7 @@ bool ppc_cpu_tlb_fill(CPUState *cs, vaddr eaddr, int size,
+>      if (ppc_xlate(cpu, eaddr, access_type, &raddr,
+>                    &page_size, &prot, mmu_idx, !probe)) {
+>          tlb_set_page(cs, eaddr & TARGET_PAGE_MASK, raddr & TARGET_PAGE_MASK,
+> -                     prot, mmu_idx, 1UL << page_size);
+> +                     prot, access_type, mmu_idx, 1UL << page_size);
+>          return true;
+>      }
+>      if (probe) {
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index dd6c861a90e..ee0292e3423 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1874,7 +1874,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>  
+>      if (ret == TRANSLATE_SUCCESS) {
+>          tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
+> -                     prot, mmu_idx, tlb_size);
+> +                     prot, access_type, mmu_idx, tlb_size);
+>          return true;
+>      } else if (probe) {
+>          return false;
+> diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+> index 0437edca1ba..11e9e607279 100644
+> --- a/target/rx/cpu.c
+> +++ b/target/rx/cpu.c
+> @@ -194,7 +194,8 @@ static bool rx_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
+>      /* Linear mapping */
+>      address = physical = addr & TARGET_PAGE_MASK;
+>      prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+> -    tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
+> +    tlb_set_page(cs, address, physical, prot, access_type,
+> +                 mmu_idx, TARGET_PAGE_SIZE);
+>      return true;
+>  }
+>  
+> diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
+> index 019eb4fba1f..38ded3b9c78 100644
+> --- a/target/s390x/tcg/excp_helper.c
+> +++ b/target/s390x/tcg/excp_helper.c
+> @@ -181,7 +181,7 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                        "%s: set tlb %" PRIx64 " -> %" PRIx64 " (%x)\n",
+>                        __func__, (uint64_t)vaddr, (uint64_t)raddr, prot);
+>          tlb_set_page(cs, address & TARGET_PAGE_MASK, raddr, prot,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +                     access_type, mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      }
+>      if (probe) {
+> diff --git a/target/sh4/helper.c b/target/sh4/helper.c
+> index 5d6295618f5..d850d90b5ad 100644
+> --- a/target/sh4/helper.c
+> +++ b/target/sh4/helper.c
+> @@ -812,7 +812,7 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>      if (ret == MMU_OK) {
+>          address &= TARGET_PAGE_MASK;
+>          physical &= TARGET_PAGE_MASK;
+> -        tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
+> +        tlb_set_page(cs, address, physical, prot, access_type, mmu_idx, TARGET_PAGE_SIZE);
+line over 80 characters.
 
-I propose following patch (tested with FIO) to resolve this bug...
-
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 789e09d6f2bc..4570a715c9c0 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -658,13 +658,16 @@ static uint64_t large_pte_page_size(uint64_t pte)
-   * -AMDVI_FR_PT_ENTRY_INV: A PTE could not be read from guest memory 
-during a
-   *      page table walk. This means that the DTE has valid data, but 
-one of the
-   *      lower level entries in the Page Table could not be read.
-+ *
-+ *  NOTE: fetch_pte assumes that the provided DTE is valid, i.e. caller has
-+ *  passed dte with bits 0 and 1 set
-   */
-  static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, 
-uint64_t dte,
-                            uint64_t *pte, hwaddr *page_size)
-  {
-      IOMMUAccessFlags perms = amdvi_get_perms(dte);
-
--    uint8_t level, mode;
-+    uint8_t level, mode, next_level;
-      uint64_t pte_addr;
-
-      *pte = dte;
-@@ -691,51 +694,47 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
-hwaddr address, uint64_t dte,
-          return -AMDVI_FR_PT_ROOT_INV;
-      }
-
--    do {
--        level -= 1;
--
--        /* Update the page_size */
--        *page_size = PTE_LEVEL_PAGE_SIZE(level);
--
--        /* Permission bits are ANDed at every level, including the DTE */
--        perms &= amdvi_get_perms(*pte);
--        if (perms == IOMMU_NONE) {
--            return 0;
--        }
--
--        /* Not Present */
--        if (!IOMMU_PTE_PRESENT(*pte)) {
--            return 0;
--        }
-+    *page_size = PTE_LEVEL_PAGE_SIZE(level);
-
--        /* Large or Leaf PTE found */
--        if (PTE_NEXT_LEVEL(*pte) == 7 || PTE_NEXT_LEVEL(*pte) == 0) {
--            /* Leaf PTE found */
--            break;
--        }
--
--        /*
--         * Index the pgtable using the IOVA bits corresponding to 
-current level
--         * and walk down to the lower level.
--         */
-+    do {
-          pte_addr = NEXT_PTE_ADDR(*pte, level, address);
-          *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
-
--        if (*pte == (uint64_t)-1) {
-+        if (*pte == (uint64_t) -1) {
-              /*
-               * A returned PTE of -1 indicates a failure to read the 
-page table
--             * entry from guest memory.
-+             * entry from guest memory
-               */
-              if (level == mode - 1) {
-                  /* Failure to retrieve the Page Table from Root Pointer */
-                  *page_size = 0;
-                  return -AMDVI_FR_PT_ROOT_INV;
-              } else {
--                /* Failure to read PTE. Page walk skips a page_size 
-chunk */
-                  return -AMDVI_FR_PT_ENTRY_INV;
-              }
-          }
--    } while (level > 0);
-+
-+        next_level = PTE_NEXT_LEVEL(*pte);
-+        *page_size = PTE_LEVEL_PAGE_SIZE(level - 1);
-+
-+        /* Permission bits are ANDed at every level, including the DTE */
-+        perms &= amdvi_get_perms(*pte);
-+
-+        if (!IOMMU_PTE_PRESENT(*pte) || perms == IOMMU_NONE) {
-+            return 0;
-+        }
-+
-+        /* Large or Leaf PTE found */
-+        if (next_level == 0 || next_level == 7) {
-+            break;
-+        }
-+
-+        /* AMD IOMMU supports level skip hence assign next_level to level
-+         * instead of decrementing it
-+         */
-+        level = next_level;
-+    } while(level > 0);
-+
-
-      assert(PTE_NEXT_LEVEL(*pte) == 0 || PTE_NEXT_LEVEL(*pte) == 7 ||
-             level == 0);
-@@ -745,7 +744,7 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
-hwaddr address, uint64_t dte,
-       * the range starts in the middle of a contiguous page, the 
-returned PTE
-       * must be the first PTE of the series.
-       */
--    if (PTE_NEXT_LEVEL(*pte) == 7) {
-+    if (next_level == 7) {
-          /* Update page_size with the large PTE page size */
-          *page_size = large_pte_page_size(*pte);
-      }
-@@ -840,6 +839,12 @@ static void 
-amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as,
-      uint64_t pte;
-      int ret;
-
-+    /* Return if DTE is not valid */
-+    if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID) ||
-+        !(dte[0] & AMDVI_DEV_VALID)) {
-+        return;
-+    }
-+
-      while (iova < end) {
-
-          ret = fetch_pte(as, iova, dte[0], &pte, &pagesize);
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 302ccca5121f..721d69c97311 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -190,7 +190,7 @@
-  #define PT_LEVEL_SHIFT(level)           (12 + ((level) * 9))
-
-  /* Return IOVA bit group used to index the Page Table at specific level */
--#define PT_LEVEL_INDEX(level, iova)     (((iova) >> 
-PT_LEVEL_SHIFT(level)) & \
-+#define PT_LEVEL_INDEX(level, iova)     (((iova) >> 
-PT_LEVEL_SHIFT(level - 1)) & \
-                                          GENMASK64(8, 0))
-
-  /* Return the max address for a specified level i.e. max_oaddr */
---
-
-@David Could you please test above patch ?
-
-I have rearraged some part of code. Along with it I have added a 
-requirement that caller
-must validate DTE before calling fetch_pte. This requirement simplifies 
-the loop.
-
-If @David and @Alejandro are okay with this change, I can prepare and 
-send official patch.
-
-Thanks
-Sairaj
+Thanks,
+Chao
+>          return true;
+>      }
+>      if (probe) {
+> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+> index 5a58239d65e..a2e3fb2145c 100644
+> --- a/target/sparc/mmu_helper.c
+> +++ b/target/sparc/mmu_helper.c
+> @@ -234,7 +234,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>                        "Translate at %" VADDR_PRIx " -> "
+>                        HWADDR_FMT_plx ", vaddr " TARGET_FMT_lx "\n",
+>                        address, full.phys_addr, vaddr);
+> -        tlb_set_page_full(cs, mmu_idx, vaddr, &full);
+> +        tlb_set_page_full(cs, mmu_idx, vaddr, access_type, &full);
+>          return true;
+>      }
+>  
+> @@ -250,7 +250,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>             neverland. Fake/overridden mappings will be flushed when
+>             switching to normal mode. */
+>          full.prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+> -        tlb_set_page_full(cs, mmu_idx, vaddr, &full);
+> +        tlb_set_page_full(cs, mmu_idx, vaddr, access_type, &full);
+>          return true;
+>      } else {
+>          if (access_type == MMU_INST_FETCH) {
+> @@ -775,7 +775,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>          trace_mmu_helper_mmu_fault(address, full.phys_addr, mmu_idx, env->tl,
+>                                     env->dmmu.mmu_primary_context,
+>                                     env->dmmu.mmu_secondary_context);
+> -        tlb_set_page_full(cs, mmu_idx, address, &full);
+> +        tlb_set_page_full(cs, mmu_idx, address, access_type, &full);
+>          return true;
+>      }
+>      if (probe) {
+> diff --git a/target/tricore/helper.c b/target/tricore/helper.c
+> index 7ee8c7fd699..a7173dc73f0 100644
+> --- a/target/tricore/helper.c
+> +++ b/target/tricore/helper.c
+> @@ -86,7 +86,7 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>      if (ret == TLBRET_MATCH) {
+>          tlb_set_page(cs, address & TARGET_PAGE_MASK,
+>                       physical & TARGET_PAGE_MASK, prot | PAGE_EXEC,
+> -                     mmu_idx, TARGET_PAGE_SIZE);
+> +                     rw, mmu_idx, TARGET_PAGE_SIZE);
+>          return true;
+>      } else {
+>          assert(ret < 0);
+> diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
+> index 2d93b45036d..2cd51ba0cb7 100644
+> --- a/target/xtensa/helper.c
+> +++ b/target/xtensa/helper.c
+> @@ -282,7 +282,8 @@ bool xtensa_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>          tlb_set_page(cs,
+>                       address & TARGET_PAGE_MASK,
+>                       paddr & TARGET_PAGE_MASK,
+> -                     access, mmu_idx, page_size);
+> +                     access, access_type, mmu_idx,
+> +                     page_size);
+>          return true;
+>      } else if (probe) {
+>          return false;
+> -- 
+> 2.43.0
+> 
+> 
 
