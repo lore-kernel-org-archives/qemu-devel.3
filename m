@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2DD8D58E4B
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FF0CD58E47
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwun0-0000zx-3s; Sun, 01 Mar 2026 23:21:50 -0500
+	id 1vwunR-00019I-CK; Sun, 01 Mar 2026 23:22:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwumx-0000z0-Fh
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:47 -0500
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunQ-00018R-AS
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:16 -0500
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwumv-0006ot-Vc
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:47 -0500
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-463901a0accso1284540b6e.2
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:21:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunO-0006uG-Pk
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:16 -0500
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7d4c9537f90so3120236a34.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425304; x=1773030104;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425333; x=1773030133;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M046+PxjVBxfRiCPCz3BvHMOg7gZrTVkYVWADjCpLdw=;
- b=AgprB5wD8UfXl2eIdhRod0TPAIxBPdRNLDGB5STxPjpblLWGQXDo3bx/qUSFTSEuWc
- 5TyIT/Qcr38tq91I/TARz86X6JcK5dw/EChBN5jEetNXLFX4M7UZ2eHkkNCdkKXJFmBp
- hbDNQwR1HBb0Bs6klI1d+WijDwsPpJ2IslHcTuRu5O4btiU3LoOtI5ym9GL1KIP95K8B
- /oEw+biOBG/6fvcTuuKNUevYVNvD+dP9Xw3l+CW0DOt0WI9bpHSZCK0S1IjZmCktshnt
- p7JHemSUU0r1iiak4iIlneWBTp2/+9chpDzx5O6XwPfYT6Dq6kgy4uQuO8FA+SmQKhJD
- TFbw==
+ bh=19ljbr1o0BvpqD1t+GIQAZ/Y0zwNuoL7pQE8K/HzaYw=;
+ b=GPMDUGRs0/U2aP8bR9cKJ4JmDFd/hVBVx0/1xqxzUSMTOF16Z9GRW3iyVDzN1r4Ru6
+ hVl1qJs9FGhu5GdrMiGnwm816O1o1+K7JJjyzGpO4U9v7MgJsVFcyOPccXL7EGdrrzlX
+ m/OHzrzRCmXglkihb5nRsF4gNvudIcEntz5uF/4bhRcbn+xGI3F8Ji1Zd+TAf6DVykQt
+ dtRLTBUphkyjFWw6Q4PbnsXFvBjvUWabNIJo+7bf9NFx6rWL72Jf0KRaGi0QE74skNlb
+ OltWS/u1dkYFO7P8tcgGHbeSGU8RlqExKKOHAHZOQQGaZOe5sxdaG1x1/wdyiHSFJNIc
+ X6WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772425304; x=1773030104;
+ d=1e100.net; s=20230601; t=1772425333; x=1773030133;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=M046+PxjVBxfRiCPCz3BvHMOg7gZrTVkYVWADjCpLdw=;
- b=IO14oIzEC2/110IgBIt4gQRTRguV1ob+fzkb2EYvk7sYhdbNtcAtBeDrbwCwtW9bgU
- Jr3jBcmuiEBJ7ATxIYPnLfyjNXLtNi4cRssw2ezPxSDSqA2lyFk8bxCS/se1Gix0/ilS
- EvPkiPHcqIz0nQ5NGm6czJ9YAOb2rx8bGyBLij3/W1SD3UZAjXAntLG/Zgm1WUubuTAZ
- PPyAzN++NCZmTutCy+4nbB7NFaMcfU9YvNNuT/uWxpNJeHaeACnOYopV1ObU4ONYERnD
- yxj0W/Ze/mRt/kZIX5r8L1S4nWjIY6D3goNrPTP+yZcfwpxPxsgMEOXoUiyQ95VJt2rJ
- VDPQ==
-X-Gm-Message-State: AOJu0YxwS0xKRV9vLwGpV3aY8Q84LsRUVvXc7gBLJ93dFvPQLgl+JVMK
- xowa02GKXVEuZYr6Sfysy4dbgZPYr1ThXBaua9J/y92JzHgKEpgGtkqkkPIzpLS6nITuMHnhwa3
- vTCs7t8A=
-X-Gm-Gg: ATEYQzwjpEQipUHy53mi0pzvW6OILiAV0rkjR2RU9FJMBOv2bYomokutwENbg04W9ru
- 1JsCjBJhUEM0vn/P0DX9gzcMYvweq/pTL89dr2OCcvcMIW5XcLJgsyIMbBCsREGD3g7Jv1Jt8T6
- k0IZwqyeOzZiqjiMHMrEDvry713FYHl4uC2DoQr897lbu+5NCcguqrK6vS/sARgOQ3zPWTC+DoK
- cLffGhdQJMmcgbpH6sJp58PMw2tYxxyeI5XEn890iXTmbsYz1v3sVLnSY/FMZMpTmexqfhClqt1
- 8U4rOxmxNo/4JPaNdiIIveO0IsJvjBOw23k/nS+T+SLl+lVnM0pGgSWTD+TqEEhd6fDprGaq6aC
- 1CgorbJK7GolzKbvU75DTioh9j2Sjlflx3xFEvx1VGuuFnvpqMzXSJdjozmkH29AOaUQCeE5XKF
- nFh7bOc+VFxpmCVSAso8QT
-X-Received: by 2002:a05:6808:d54:b0:460:f435:2a75 with SMTP id
- 5614622812f47-464be972d37mr5113503b6e.6.1772425304445; 
- Sun, 01 Mar 2026 20:21:44 -0800 (PST)
+ bh=19ljbr1o0BvpqD1t+GIQAZ/Y0zwNuoL7pQE8K/HzaYw=;
+ b=VZUxwaP97EkkRY0tf6FRlKimklo81IAftdqr1BpoEiuOR4SV6WdIrRN4JyGrG5YyZc
+ fSACqdmoypny7QdRlo0qpTcUMXcbxyKVUcl7xAb+cJ38N7PP5RuuyoIVblgFY6LgIFlp
+ G/H097eQY7a3IINZ5w0yoRFNYnqctK3NmUsgwCEyTghrtSZBovFBDPRzmCsE07eeFagt
+ +BemXJn6ilkby4iABAvy+ofU/akbvLxeBB6UgeMYdDYuarf6wfUDV51PD5gkQEJXMI1x
+ 4HY4IqeD9AzW9n+L4S6tumlFq69AYKxBkOXEas3I2VbbkgSK6/2CsZ2tuDDXBdudXAaU
+ lugw==
+X-Gm-Message-State: AOJu0YwAsThTTnDyg1Fy0HPBvV4SbncWPfWxestoSEQUvjnMTO0oveWK
+ yzJB7PJo2YAKRCve2/lJbXCrs+gbXGBA38Bnf3uAM6Qp5bhxpyYkxtlniRtS0gM8mlODxOxaEcU
+ vi0Ga
+X-Gm-Gg: ATEYQzzxYtw55bFJPtkBVbXK981ASfBUw6ewEqKOi8GV61/Occe8u1aybN2OQm6hV2w
+ uutXKqbGgEiBcDyGMKzatlOZZMaYQuzhPSe7Oc8+PU8ETamazjNZgCU+m/tBbjEtBeYgRps42x7
+ /E+xeAcmz4JGpN2IgnErk5s9NHI9c2pmMmFuTMbwSMeIiNc4yXTZgaVBxxUiBNcZByXtz5ALZAW
+ JvTxy+gBEIkqB+Ba1wZk/lruP4QNh1AdHcs6ZsvlGP5CydVCPLhWQMky5+dDEDFaZSPB9CRKhy9
+ +Zkl0S0S68xnN7wDzRa2AyFOlmQdd0QgziuSmQJioPCXQ8kH86qbkmdoyN6wYFOfdB8PRzqh/Ge
+ s7eozF/Km50LPCijFkXXHBYi7TwCM20TbBi6LVRUkhutdsAAI4OEsbjia5hlCsIZvOeImNsaOUs
+ ZZlnTm3Ls3cg==
+X-Received: by 2002:a05:6871:36c8:b0:404:3569:5a45 with SMTP id
+ 586e51a60fabf-41626ffa12emr7426978fac.40.1772425333428; 
+ Sun, 01 Mar 2026 20:22:13 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.21.43
+ 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.22.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 20:21:44 -0800 (PST)
+ Sun, 01 Mar 2026 20:22:12 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
@@ -74,16 +74,16 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 08/27] bsd-user: Add host_to_target_uuid for uuidgen(2)
-Date: Sun,  1 Mar 2026 21:20:56 -0700
-Message-ID: <20260302042115.83410-9-imp@bsdimp.com>
+Subject: [PULL 26/27] bsd-user: Add miscellaneous BSD syscall implementations
+Date: Sun,  1 Mar 2026 21:21:14 -0700
+Message-ID: <20260302042115.83410-27-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302042115.83410-1-imp@bsdimp.com>
 References: <20260302042115.83410-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::229;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x229.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,58 +107,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Add host_to_target_uuid() to convert host struct uuid to target ABI
-for the uuidgen(2) syscall.
+Wire up the remaining miscellaneous BSD syscalls:
+- quotactl(2): Quota control (stub returning ENOSYS)
+- reboot(2): Reboot system (stub returning ENOSYS)
+- uuidgen(2): Generate UUIDs
+- getdtablesize(2): Get descriptor table size
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-misc.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
- create mode 100644 bsd-user/bsd-misc.c
+ bsd-user/freebsd/os-syscall.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
-new file mode 100644
-index 0000000000..68b67f37ba
---- /dev/null
-+++ b/bsd-user/bsd-misc.c
-@@ -0,0 +1,35 @@
-+/*
-+ * BSD misc system call conversions routines
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index f39e521e42..85e5db19a3 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -933,6 +933,22 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         ret = do_obreak(arg1);
+         break;
+ 
++    case TARGET_FREEBSD_NR_quotactl: /* quotactl(2) */
++        ret = do_bsd_quotactl(arg1, arg2, arg3);
++        break;
 +
-+#include <sys/uuid.h>
++    case TARGET_FREEBSD_NR_reboot: /* reboot(2) */
++        ret = do_bsd_reboot(arg1);
++        break;
 +
-+#include "qemu.h"
-+#include "qemu-bsd.h"
++    case TARGET_FREEBSD_NR_uuidgen: /* uuidgen(2) */
++        ret = do_bsd_uuidgen(arg1, arg2);
++        break;
 +
-+/*
-+ * BSD uuidgen(2) struct uuid conversion
-+ */
-+abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid)
-+{
-+    struct target_uuid *target_uuid;
++    case TARGET_FREEBSD_NR_getdtablesize: /* getdtablesize(2) */
++        ret = do_bsd_getdtablesize();
++        break;
 +
-+    if (!lock_user_struct(VERIFY_WRITE, target_uuid, target_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __put_user(host_uuid->time_low, &target_uuid->time_low);
-+    __put_user(host_uuid->time_mid, &target_uuid->time_mid);
-+    __put_user(host_uuid->time_hi_and_version,
-+        &target_uuid->time_hi_and_version);
-+    host_uuid->clock_seq_hi_and_reserved =
-+        target_uuid->clock_seq_hi_and_reserved;
-+    host_uuid->clock_seq_low = target_uuid->clock_seq_low;
-+    memcpy(host_uuid->node, target_uuid->node, TARGET_UUID_NODE_LEN);
-+    unlock_user_struct(target_uuid, target_addr, 1);
-+    return 0;
-+}
+         /*
+          * sys{ctl, arch, call}
+          */
 -- 
 2.52.0
 
