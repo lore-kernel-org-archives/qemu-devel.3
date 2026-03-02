@@ -4,145 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE93EB3624
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 17:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E82EB362A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 18:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx7WM-0004Ey-9B; Mon, 02 Mar 2026 12:57:30 -0500
+	id 1vx7bq-0005el-SU; Mon, 02 Mar 2026 13:03:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1vx7WK-0004Eg-Im
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:57:28 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1vx7WI-0005Oz-QL
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:57:28 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 622GVwFx3630829
- for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 17:57:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- V242aLlBjSi3OM10MErzQPYB6JFho9ZnBmcnHbQYLks=; b=TGlWZ2nLPC8w3nWf
- aJ+yeKqCDgRzLUgLj3BharMkvvvmmYh5M6vusVyklaAYDPhgiurQpxtVPmDc4NCc
- G1+ATG+u5NHT+ZQ7WDQm5KuqQxwo/M9DUR7W92jvwOz5kHwsJtE71kbdSM8oXe2F
- By/qiKA8ljVRiebkcDuickbWffmcoOqluqZ8MqVVa33CQC+8IjwaPfDvvcJwdcrc
- xo1IPXUuKEo+qD833eK2/D7crUkhUdiUFZ1n9Ji17+Z0c7F74gfUZNBR/vwxc63V
- jBOKRkVz244VMWj7gzei/HAOp0UwhcT6YuLyVhmyqemecLZiL7BFf1zyIH/bhr4k
- UpI47w==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cn7rhssc8-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 17:57:24 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8c70ab7f67fso5708235785a.3
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 09:57:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vx7bi-0005du-UM
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:03:04 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vx7bh-0006C4-9a
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:03:02 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-8274a3db5e3so2102156b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 10:03:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1772474244; x=1773079044; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1772474579; x=1773079379; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=V242aLlBjSi3OM10MErzQPYB6JFho9ZnBmcnHbQYLks=;
- b=OD1UploKXn9zgZNcLmM/b/xCAJZPF8FeynXB09wAeE3mav63avAXrD2iJUobTR6S5j
- GU/uEmxEzHG+2PXFIoW/yVPL3Jffhd4Ki9EDay91rnmA/99dEvJeQgjktC9yUPl7QTIt
- bFE4UT9oJEvnuSGQ1VTJSWw6xtDWFQS5ZfugOiYo+ObAs7OZvQjkaXxA8hz4cTi+igI8
- s0/WZ6fCQuy+177f6oJtXwDR7LCO5+HjUclSIPCyagvvidCypiyJ9zRAUgC18hFX/HfH
- +0r6uTc138o6rwd+1akxYr+1pEQMwFIOQugp9zLTSAIK7uFtgNNkSuX/53xHxe4TtCD4
- 8UmQ==
+ bh=2B/yE8a4WQqMJAKfhBel/DBEmoUM7dqpttMF2ptj2M4=;
+ b=zFJo1lyyo2mKCp12/LFrTdt+dxcIxUhEx1Yua8hk70mUfHaN4xLWcmGWnWr5C6vgvH
+ SZnD17Rhpv25G4E2rih5H8DLJ3XCaVycs7TMISeNlLx3Tmlq8tZQlTp0ZEwSCS1vUWmG
+ 30TrpRmMgmO1HIT+CdXvdDDfglP4cRlRb2ViTbExnPPYg83u81bExfCEm8I/yslg3rrm
+ GF+IvS4DX6sNd/ljktqe2Oos9UFcWEsq4TitzlM0rr5im0whAxBjFOhxa6n9tUcw1uDG
+ BkV1/ycRkni1gtu871s5zZHBQ9cKLvKio89sZ1Wiv8MpHDBX+lafR+xCTTLU68PpMFxz
+ JFXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772474244; x=1773079044;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1772474579; x=1773079379;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=V242aLlBjSi3OM10MErzQPYB6JFho9ZnBmcnHbQYLks=;
- b=LyNwVzASm5m03S4/Xf/P0bB8sjbNqX8RDcP8RbdKHLJTwIN8oTqTcF1yzKXZnNGpU4
- Qk9EpT0dsosd5MjLOKZqQMZVprBXypoPLCZVF9r/8IF9C4ujUXEZYu1RNm1WucQGK0WL
- U70+T8zQ3qC3c/TG13gsqhR4nJ+iI/Qr/LqUtJA+wOqUMMTbVesKvtRnWuzlN3UYn1NT
- Fa3Go50vpWqVDBLyTqyQNG5yLbrAlox8JP1ITS/UgxLafXsRgfQacZLSX6QRNZLTFHJG
- Z2W/IXgoi3BzvmbF666Ny7Ce4C8DPCXJXDCEN7+2yt+q2CvaAHdLbu0GKXb3XAG7OaQ/
- RzsA==
+ bh=2B/yE8a4WQqMJAKfhBel/DBEmoUM7dqpttMF2ptj2M4=;
+ b=mBRJO4cQwkngwQQj52cCUNdHqg1zVS/yAEa2biVLLUXi950haOYT15AyZ9n4RJs2Le
+ Pug3+ZVgY//MwXt6ZfzKzT/tLXqMsup5ZV6R10rZG6MzkwYhdT8JHhb6A/wTaQp90aVS
+ uW9BqWWgG/rOOaIMu1oBWUJVKcoEBF3m62mEZp7Qf+s7pwukGQrNjTwWbMk9+qMVQ/jf
+ dBgKQWpn98Yx/pXlXdeB1Yzd1wEMHQPNydPAhbFVbO7pxaAqML8A+iEhSwzQfygvH5he
+ mY/kqqnNAJFAYbA5Vn4L6Az3/uLh42L8yDJlrRzHR/DQpzop3DB8YACAlQ6wemLn5pGE
+ m7sQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiKZvSN13TYJuZc3VNHrBAOVGjusRy7GRoDjbBTy0/c0pFpaPFbqSuo/yC/+8xI7EMvqi2SI7Coxib@nongnu.org
-X-Gm-Message-State: AOJu0YxhjQw5AkeYnX4pXsLZqV2zSxeEfhS3t52jDjtzmI8VUfVBiUzK
- YG/V0SSRj/JW1OnfG2bjQNtvSKIwcZBVwq0HBX7PJ5BGabszcY2gn6fQ/6euQ7Kl9vV2PKrP2vo
- 6R6gQu0YqI/rcSJq9dEQlzfAx3fkOCuG4JgoP5Dn2T2yJtLZpTxXC0S5CAw==
-X-Gm-Gg: ATEYQzyCAhFkCNTGp2zUahRx1MvWnfzpowyg6Mie/Vs5d2gZJQNBSRktWgAolYJ4tDd
- 5UerOn75KZdVfiD/o4nZsyImfPd2EU8sPTIqRJKu1H3S8woTlwCX0MnxUZZbdN+XAZQKtogWN0X
- h5/NBONH4kDz2Z2xWAvmAYfSVEUHcGdYgdWDZ3B0VNS9lyNITRPGD/OQQhfkRHbJp+yBW8JNU6C
- LaxLEwAbWPGz3W4/4v2TTyk8LEGsq06ViJkOY2m4m+JTgpuXKLRU5H2y7xEE/bv8TWlbIrK2Jdt
- Fmf2AT1woiy/OSdqByzYEwy1SqMOg5OQ1ImS1LAf0ON154L0s4bHhW6hkjL9Dc+QacCo5uZquoi
- QRr2xTxz7xkTm3YE7DDf72Ebfi8sXfKgoIOAOM/SD3Zcq3D3tOLWvgegahZQ=
-X-Received: by 2002:a05:620a:4004:b0:8cb:4b1f:8155 with SMTP id
- af79cd13be357-8cbc8e79b19mr1765679185a.58.1772474243584; 
- Mon, 02 Mar 2026 09:57:23 -0800 (PST)
-X-Received: by 2002:a05:620a:4004:b0:8cb:4b1f:8155 with SMTP id
- af79cd13be357-8cbc8e79b19mr1765674185a.58.1772474243048; 
- Mon, 02 Mar 2026 09:57:23 -0800 (PST)
-Received: from [192.168.68.104] ([152.250.131.219])
+ AJvYcCVAbxRMQZksRzUJCWbEP0Np7obHrxkCtV1aMpxYdPuz5EVgAUTnJb8JCUeF2FE1iTVXqz43X/vdjRhB@nongnu.org
+X-Gm-Message-State: AOJu0Yz5e8k0BkFra7sI6x2sq3lYmedGzZMITAjpo81HmQPyaOK9Js5Z
+ mXU/tIijsk3O9J+srLzVOceTsQzfAQVYBahf7tdMUrzf6lduYW654tgGDEs4WJqDOujw8F2QP8r
+ n7Cbb
+X-Gm-Gg: ATEYQzzKeLA6x8JksHG6zS9ETQ5kwVQOfPdTKXrfEtvdBOTXvF3FviK2lRzfMBIl4Qb
+ 4c4uIbfrPfaowBtc0Tk9Ydn41mR19Isx+sq8OIo3LJlxmVMQLPl+aHS6HdgVb5jAPdCj5MhiWE5
+ jfgbe09sItMytjowFDVKNL+ovSoo+UbTD/RfJs0OC2CHZt3/Zd2t5QO2LYuHuJoAo+ZY1IW9dP9
+ xu3hucx6JsoM2opTJgU85GEWJT0qIjhsrPcy2qhQQiwK/BHTqS4GLvr6cTUoMorCbFi14U+0+mE
+ NJJ9VysEBUqMlyxxSdCGI5Nb8VBwlcq0w/oidBnEYEYoAqN/q6xtdN17MYUS2qAqtvDvmxIsG7Q
+ LVcipQ1WDGO1erbUuPSIoFME4BK6RXzqsvhjNnwiF3LT3cvr5xibDXU3KJJXOdmTHR5U1Ow0Y51
+ l0Lgc5ndbHJVKl/26rkvU+ryvhLWv6ByR+Rrks4ZFYpBxUtiqFF7eUH3ELHbxPhjuQ+0q9
+X-Received: by 2002:a05:6a00:2e11:b0:821:807a:e427 with SMTP id
+ d2e1a72fcca58-8274d967e93mr11785164b3a.21.1772474578936; 
+ Mon, 02 Mar 2026 10:02:58 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a07f690c1sm2385126d6.44.2026.03.02.09.57.20
+ d2e1a72fcca58-82739d4d880sm14141404b3a.7.2026.03.02.10.02.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Mar 2026 09:57:22 -0800 (PST)
-Message-ID: <60ee477c-f00d-42b8-85f1-a0f793d57783@oss.qualcomm.com>
-Date: Mon, 2 Mar 2026 14:57:18 -0300
+ Mon, 02 Mar 2026 10:02:58 -0800 (PST)
+Message-ID: <a84d40f6-0466-4744-95e6-5a1f8743c2b4@linaro.org>
+Date: Mon, 2 Mar 2026 10:02:57 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv: Remove deprecated 'riscv, delegate' device-tree
- property
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Conor Dooley <conor@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Anup Patel <anup.patel@oss.qualcomm.com>, devel@lists.libvirt.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260227232838.23392-1-philmd@linaro.org>
+Subject: Re: [PATCH v5 4/7] tests/tcg: add test for qemu_plugin_set_pc API
 Content-Language: en-US
-In-Reply-To: <20260227232838.23392-1-philmd@linaro.org>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
+ imp@bsdimp.com, berrange@redhat.com
+References: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
+ <11fbe855-37cb-4703-b143-66563b881a4e@epfl.ch>
+ <b88345b8-5561-4b09-b42d-dafafd798217@epfl.ch>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <b88345b8-5561-4b09-b42d-dafafd798217@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: b59J9MdizQ8uVyDyfRe6FEvKBZJvoCHc
-X-Proofpoint-GUID: b59J9MdizQ8uVyDyfRe6FEvKBZJvoCHc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDE0MyBTYWx0ZWRfX8MLiSTNPauEq
- PKw0ow6jH0MbR49sqjX2CjP9ZqB3jJp/Dqiflp+4yd4493ER8U/ZC6PURlAmaKEfwj+AcmAMYeJ
- A+YBPZpNAUQiUoXiXCealKBb37TljKWTFPjXqc7shYW2XM/OzjZaX5VK+XGgmOuGlMG+4IAlhTy
- lnkCXrZRh3HNsdkDiaouDpc1bff3+5wAbzbUqD1MgvOWef0upw1JcvQjtVoPoUO+a95ekl1JGwp
- C0zS5or1yqCw9nXpKKHXVH3ftgiWhxAL6iFwKDt2ExNGYpxnhXiwA9bP3ZMANVRDLc08KTfHvrv
- CC27UTzBfx7tmLD96XKjYVIW4EqXb8xJ0CbOSUUWHIutdn7GI4pGC5tCHTlY0MPU1e+yxGGS10o
- kH7wPmiJoyWg2pYuRke4Ch89iQIV5hUyYlw96QCN92ZADrUV9pQvyel8PveY4oy+6cQN8fo130h
- PsPk+5RgPaHyszvsMQg==
-X-Authority-Analysis: v=2.4 cv=cLntc1eN c=1 sm=1 tr=0 ts=69a5cf84 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=pkECnv++/aO9mEczatB6sw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=dXRDz5lpHdRaHOKBsvIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-02_04,2026-03-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020143
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,98 +139,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-From:  Daniel Henrique Barboza via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/27/2026 8:28 PM, Philippe Mathieu-Daudé wrote:
-> The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> the AIA APLIC support.  The property changed name during the
-> review process in Linux and the correct name ended up being
-> "riscv,delegation". The incorrect name was added as alias, and
-> deprecated in v9.1 (commit 38facfa8432), so can be removed for
-> v11.0.
+On 3/2/26 6:58 AM, Florian Hofhammer wrote:
+> On 02/03/2026 14:59, Florian Hofhammer wrote:
+>> The test executes a non-existent syscall, which the syscall plugin
+>> intercepts and redirects to a clean exit.
+>> Due to architecture-specific quirks, the architecture-specific Makefiles
+>> require setting specific compiler and linker flags in some cases.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Binary file pc-bios/opensbi-riscv32-generic-fw_dynamic.bin matches
-> Binary file pc-bios/opensbi-riscv64-generic-fw_dynamic.bin matches
-> ---
+> Please disregard this patch and use the other version I just sent, I
+> forgot to update the commit message for this one. My apologies for that!
+>
 
+Hi Florian, no worries.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+What is the other version you sent?
+Feel free to send a v6 for the series if needed, it's more clear than 
+fix on individual commits.
 
->   docs/about/deprecated.rst       | 11 -----------
->   docs/about/removed-features.rst | 11 +++++++++++
->   hw/riscv/virt.c                 |  9 ---------
->   3 files changed, 11 insertions(+), 20 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 1d5c4f3707c..cc5502e5394 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -494,17 +494,6 @@ versions, aliases will point to newer CPU model versions
->   depending on the machine type, so management software must
->   resolve CPU model aliases before starting a virtual machine.
->   
-> -RISC-V "virt" board "riscv,delegate" DT property (since 9.1)
-> -''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> -
-> -The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> -the AIA APLIC support.  The property changed name during the review
-> -process in Linux and the correct name ended up being
-> -"riscv,delegation".  Changing the DT property name will break all
-> -available firmwares that are using the current (wrong) name.  The
-> -property is kept as is in 9.1, together with "riscv,delegation", to
-> -give more time for firmware developers to change their code.
-> -
->   x86 "isapc" board use of modern x86 CPUs (since 10.2)
->   '''''''''''''''''''''''''''''''''''''''''''''''''''''
->   
-> diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> index 41bec8b8e38..0a62e87ee35 100644
-> --- a/docs/about/removed-features.rst
-> +++ b/docs/about/removed-features.rst
-> @@ -1232,6 +1232,17 @@ converting to using TCG plugins they should contact the qemu-devel
->   mailing list.
->   
->   
-> +Firmware, ACPI, Device Tree
-> +---------------------------
-> +
-> +RISC-V "virt" board "riscv,delegate" DT property (removed in 11.0)
-> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +The "riscv,delegate" DT property was added in QEMU 7.0 as part of
-> +the AIA APLIC support.  The property changed name during the review
-> +process in Linux and the correct name ended up being "riscv,delegation".
-> +
-> +
->   System emulator devices
->   -----------------------
->   
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index bbce2fb6671..a1c323e66df 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -666,15 +666,6 @@ static void create_fdt_one_aplic(RISCVVirtState *s, int socket,
->           qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegation",
->                                  aplic_child_phandle, 0x1,
->                                  VIRT_IRQCHIP_NUM_SOURCES);
-> -        /*
-> -         * DEPRECATED_9.1: Compat property kept temporarily
-> -         * to allow old firmwares to work with AIA. Do *not*
-> -         * use 'riscv,delegate' in new code: use
-> -         * 'riscv,delegation' instead.
-> -         */
-> -        qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegate",
-> -                               aplic_child_phandle, 0x1,
-> -                               VIRT_IRQCHIP_NUM_SOURCES);
->       }
->   
->       riscv_socket_fdt_write_id(ms, aplic_name, socket);
-
+>>
+>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>> ---
+>>   MAINTAINERS                                   |   1 +
+>>   tests/tcg/arm/Makefile.target                 |   6 +
+>>   tests/tcg/multiarch/Makefile.target           |  17 ++-
+>>   .../{ => plugin}/check-plugin-output.sh       |   0
+>>   .../{ => plugin}/test-plugin-mem-access.c     |   0
+>>   .../tcg/multiarch/plugin/test-plugin-set-pc.c | 140 ++++++++++++++++++
+>>   tests/tcg/plugins/meson.build                 |   1 +
+>>   tests/tcg/plugins/setpc.c                     | 120 +++++++++++++++
+>>   8 files changed, 282 insertions(+), 3 deletions(-)
+>>   rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+>>   rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+>>   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-set-pc.c
+>>   create mode 100644 tests/tcg/plugins/setpc.c
+>>
 
