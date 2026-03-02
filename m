@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92422EA4E09
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA9AEA4E18
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx4lf-0004GV-3c; Mon, 02 Mar 2026 10:01:12 -0500
+	id 1vx4m1-0004WG-Ek; Mon, 02 Mar 2026 10:01:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4lG-00048s-Q2
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:00:46 -0500
+ id 1vx4lU-0004FN-ME
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:00:57 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4lE-00041M-RR
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:00:42 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772463611; cv=none; 
+ id 1vx4lR-00042O-6Z
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:00:55 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772463628; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=LyVqj9nEm122s8saURK00IV2ylfDM4Rr3LZ6kTJfwgZ7t8C16T+sB0AczcTzGJ0yb3LFDFrozCM1ggmoks8Cpw1eys2EkWVagmHJhv/gcICYyPnPmtqMqxPR//yeyrBfxCYPeRXyU2NljbaikijHJIV21vcpz7AwWpsloWCeKTA=
+ b=mk9BlPwQppN/o9h0hQmgIvM0vuKdmun6VPkewbm4IO2iZBypAed0+fnUFNutZ9D3/Ow+rkKnIL/vK7tv1Y+vqzVckHWrj2yq7Sg1q4+mERHZ2JtGRiTTtT75u+XLY7q3DVI10fW5o4oR7euB9YuRiR6sv/GuQCOLqFD0RLmRQr8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772463611;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=M5dDjBmD/eKscIlV3dpzWTj+/Xa5vw8zU5RDq7TlSI8=; 
- b=YPKe7DN9PfYlOwYi7WEs5RwlkqtKpoafqIOx5QZJOgwKeNAa7e7qYAyZz5LQo5UgAJoLgsTDcgNcEuu7nZbABapB2V2SamgY+gzzR/WxI4UOiIUiMYHTA+pPnly/s4rpOQyfd3c3uaUpwMC8RG01SsmBDlh6L7N4agHs7U5RWmw=
+ s=zohoarc; t=1772463628;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=C6bVJ5uFMUnYseJrdFu6UyXmpjkVTiLLY8DT2cYl7iM=; 
+ b=T8l/cmRMly33tr7d7t17qyNKPYlt9PygKdWRC5e1KqRAC7i8KrsYrrx2NecczltflCedTT3rnA9rIhtw3bY9EonCNFM8iBVzAtoMZQfkJPb4DVrSx0BnIKU7+DPvwXrAvs7CEU0jfOVjCA0Zd0l11iKrMETkP5ATQVtvGq0VT7s=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463611; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463628; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=M5dDjBmD/eKscIlV3dpzWTj+/Xa5vw8zU5RDq7TlSI8=;
- b=hxRCl63S6PcSlt9NLiKO9gRFDN5l40iWfrJxoT8jYSsjvfHdAG8v2750v9xegw4A
- HY0YfqCl5ZzJ9SiVknp8EmXh98LB3R8eE1BTwbYDKcj0Q94LkFk7+eMpTrKhA9q4BLi
- dVcNCo9o+gnb690S2JfkODaTp6ox+oXtUPphtMGc=
-Received: by mx.zohomail.com with SMTPS id 1772463608092489.54098116833654;
- Mon, 2 Mar 2026 07:00:08 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=C6bVJ5uFMUnYseJrdFu6UyXmpjkVTiLLY8DT2cYl7iM=;
+ b=bUnGOmAL37AxbGIE/z2qQedBNWxodippHN2eaxSfIazLDH+S7zha9jERFZkyIsxd
+ 1HmnWoQFMqnG4/4RqG3nHgGgD4jw1E+PUl8OcuZvU6jY76s8qbtMqDaH47zePyU3UCA
+ snvP5TNa6LkZCshMgI+Kznvx3tgf63kbhOOvSH0k=
+Received: by mx.zohomail.com with SMTPS id 1772463627488906.8360510487804;
+ Mon, 2 Mar 2026 07:00:27 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,13 +62,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v21 00/18] Support virtio-gpu DRM native context and MAP_FIXED
- API
-Date: Mon,  2 Mar 2026 17:59:02 +0300
-Message-ID: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
+Subject: [PATCH v21 03/18] ui/egl: Don't change bound GL context when creating
+ new context
+Date: Mon,  2 Mar 2026 17:59:05 +0300
+Message-ID: <20260302145920.735423-4-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
+References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -96,121 +97,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Don't change bound GL context when creating new GL context for consistency
+with behavior expected by virglrenderer that assumes context-creation doesn't
+switch context. eglCreateContext() doesn't require GL context to be bound
+when it's invoked. Update qemu_egl_create_context() to spawn GL sub-contexts
+from a common parent GL context instead of a currently-bound context.
 
-This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
-virtio-gpu patches that has been reviewed previously and were waiting for
-a new release of libvirglrenderer 1.3.0.
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ ui/dbus.c          | 2 --
+ ui/egl-context.c   | 3 +--
+ ui/egl-headless.c  | 2 --
+ ui/gtk-egl.c       | 4 ----
+ ui/spice-display.c | 2 --
+ 5 files changed, 1 insertion(+), 12 deletions(-)
 
-[1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.osipenko@collabora.com/
-[2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenko@collabora.com/
-
-Changelog:
-
-v21:- Moved virtio-gpu to use iohandler_get_aio_context() as was
-      suggested by Akihiko Odaki.
-
-    - Updated EGL context-create helper and displays using it to make
-      helper take care of using appropriate parent GL context by itself,
-      without a need to switch GL context. Done it all in a single patch:
-
-        ui/egl: Don't change bound GL context when creating new context
-
-    - Cleaned up GDK context-restoring code as was suggested by Akihiko Odaki.
-
-v20:- Adanbonded GL context unbinding approach as it created difficulties
-      with GTK assuming UI toolkit processed from a single thread. Omitted
-      all unbind-context patches and added new patch instead that makes
-      virtio-gpu to process cmds only from main-loop thread:
-
-        virtio-gpu: Bounce virtio_gpu_ctrl_bh() to main-loop thread
-
-    - Added r-b from Akihiko Odaki to reviewed v19 patches.
-
-    - Added patches restoring GL context when new ctx created for
-      dbus/spice/egl-headless displays.
-
-v19:- Further improved improved naming of functions and terminology RE
-      GL context binding. Suggested by Akihiko Odaki.
-
-    - Added new patch "ui/gdk: Restore original context after new context
-      creation" in addition to improved "ui/sdl2: Restore original context"
-      that now getd actual bound GL context and restores to it instead
-      of restoring to the console's ctx, for consistency with the rest
-      of GL context management fixes that ensure context is bound only
-      when necessary.
-
-    - Improved virtio_gpu_virgl_update_render_state() with force_ctx_0()
-      and unbind_ctx() to make deferred GPU resetting maintain bound GL
-      context properly.
-
-v18:- Changed dpy_gl_ctx_make_current() to use first scanout when unsetting
-      virgl's GL ctx0 and improved naming of cmd-processing function.
-      Suggested by Akihiko Odaki.
-
-    - Added "ui/gdk: Unset context after GL operations" patch after
-      realizing GDK/GL code needed more gdk_gl_context_clear_current().
-
-v17:- Rebased patches on recent upstream, updated doc patches with new
-      drm native contexts supported by libvirglrenderer.
-
-    - Applied minor change that was requested from Akihiko Odaki
-      by moving virtio_gpu_device_realize() for MAP_FIXED v10.
-
-    - Added virtio_gpu_virgl_update_render_state() to virtio_gpu_fence_poll()
-      that was missed in MAP_FIXED v10.
-
-    - Added new patches fixing another GL context switching problem I ran
-      into recently with virgl commands unexpectedly processed from CPU
-      thread instead main-loop:
-
-        ui/sdl2: Unset context after GL operations
-        ui/gtk-egl: Unset context after GL operations
-        virtio-gpu: Unset context after GL operations
-
-Alex Bennée (1):
-  docs/system: virtio-gpu: Document host/guest requirements
-
-Dmitry Osipenko (16):
-  ui/gtk: Don't disable scanout when display is refreshed
-  ui/sdl2: Don't disable scanout when display is refreshed
-  ui/egl: Don't change bound GL context when creating new context
-  ui/gdk: Restore original context after new context creation
-  ui/sdl2: Restore original context after new context creation
-  virtio-gpu: Ensure BHs are invoked only from main-loop thread
-  virtio-gpu: Handle virgl fence creation errors
-  virtio-gpu: Support asynchronous fencing
-  virtio-gpu: Support DRM native context
-  docs/system: virtio-gpu: Add link to Mesa VirGL doc
-  docs/system: virtio-gpu: Update Venus link
-  virtio-gpu: Remove superfluous memory_region_set_enabled()
-  virtio-gpu: Validate hostmem mapping offset
-  virtio-gpu: Replace finish_unmapping with mapping_state
-  virtio-gpu: Destroy virgl resources on virtio-gpu reset
-  virtio-gpu: Support mapping hostmem blobs with map_fixed
-
-Pierre-Eric Pelloux-Prayer (1):
-  ui/sdl2: Implement dpy dmabuf functions
-
- docs/system/devices/virtio/virtio-gpu.rst | 121 ++++++-
- hw/display/trace-events                   |   2 +-
- hw/display/virtio-gpu-gl.c                |  62 +++-
- hw/display/virtio-gpu-virgl.c             | 406 +++++++++++++++++++---
- hw/display/virtio-gpu.c                   |  21 +-
- include/hw/virtio/virtio-gpu.h            |  23 +-
- include/hw/virtio/virtio.h                |   7 +
- include/ui/sdl2.h                         |   7 +
- meson.build                               |   8 +-
- ui/dbus.c                                 |   2 -
- ui/egl-context.c                          |   3 +-
- ui/egl-headless.c                         |   2 -
- ui/gtk-egl.c                              |   5 -
- ui/gtk-gl-area.c                          |  13 +-
- ui/sdl2-gl.c                              |  74 +++-
- ui/sdl2.c                                 |  42 +++
- ui/spice-display.c                        |   2 -
- 17 files changed, 710 insertions(+), 90 deletions(-)
-
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 905ee6fea71b..750a064e3fbf 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -47,8 +47,6 @@ static DBusDisplay *dbus_display;
+ static QEMUGLContext dbus_create_context(DisplayGLCtx *dgc,
+                                          QEMUGLParams *params)
+ {
+-    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+-                   qemu_egl_rn_ctx);
+     return qemu_egl_create_context(dgc, params);
+ }
+ 
+diff --git a/ui/egl-context.c b/ui/egl-context.c
+index aed3e3ba1f3f..f9a998768beb 100644
+--- a/ui/egl-context.c
++++ b/ui/egl-context.c
+@@ -19,8 +19,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
+    };
+    bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
+ 
+-   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
+-                          eglGetCurrentContext(),
++   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config, qemu_egl_rn_ctx,
+                           gles ? ctx_att_gles : ctx_att_core);
+    return ctx;
+ }
+diff --git a/ui/egl-headless.c b/ui/egl-headless.c
+index 1f6b845500dd..19955792ac95 100644
+--- a/ui/egl-headless.c
++++ b/ui/egl-headless.c
+@@ -42,8 +42,6 @@ static void egl_gfx_switch(DisplayChangeListener *dcl,
+ static QEMUGLContext egl_create_context(DisplayGLCtx *dgc,
+                                         QEMUGLParams *params)
+ {
+-    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+-                   qemu_egl_rn_ctx);
+     return qemu_egl_create_context(dgc, params);
+ }
+ 
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 0dbb429958e5..6b3519419039 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -217,10 +217,6 @@ void gd_egl_switch(DisplayChangeListener *dcl,
+ QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
+                                     QEMUGLParams *params)
+ {
+-    VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
+-
+-    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+-                   vc->gfx.esurface, vc->gfx.ectx);
+     return qemu_egl_create_context(dgc, params);
+ }
+ 
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 28399f8a8174..ae0f771c2a38 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -1033,8 +1033,6 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
+ static QEMUGLContext qemu_spice_gl_create_context(DisplayGLCtx *dgc,
+                                                   QEMUGLParams *params)
+ {
+-    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+-                   qemu_egl_rn_ctx);
+     return qemu_egl_create_context(dgc, params);
+ }
+ 
 -- 
 2.52.0
 
