@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE59D58E6A
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1084BD58E6B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwx9R-000838-2k; Mon, 02 Mar 2026 01:53:10 -0500
+	id 1vwxA2-0008Ar-1S; Mon, 02 Mar 2026 01:53:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vwx9M-00082p-1G
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:53:04 -0500
+ id 1vwx9Y-00083k-5d
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:53:21 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vwx9J-00026o-79
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:53:02 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1vwx9S-00027f-Uj
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:53:13 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6215PCX6196496
- for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 06:52:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=WFizwxDGlAytsWbH8W2Rv6kUjBcE
- gFuj1s94f/ystiU=; b=dleij0+Oru4DOlEnJi9tkpFrb8dMr2MhGWPQ2Vix8/wN
- E4hLdNNfDml0bnj8P6EqyKKsqhmal9eP/pJWoVu2CX4C8DgwY2/p0zRhrChVglOi
- GJLlzWD1Oe3bhUqWAx7+f6rNFTziGQkr55cLVaXNrg+leBtWYTDuL9qByque8h24
- VYEo9llkQXaIEshP5u6cu4MPjQIWuxGUnPIyFKoYfuzceeXxBEmkOflyoKjN1Upx
- SBqSUM/AOYDKFurpBxBxJ2vk9y7SCzcJV/GtGYjhBAp4mVJqPo7CSFKH8m5Nogiw
- oz3zj9W6f03ZSM0dFNse5UPWQ6fFT5z7rBxZfWyBRA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskcn99j-1
+ 6220sgxC2333658
+ for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 06:53:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=RFC1BhE5QYgRVLNqV
+ I3VflVhJa365rzjWQSSOiaSvgQ=; b=m9/pWt84YQiManjGs7SkSyZw49U1CG30z
+ UekkFGBIrdN+PWH7YkEVFho2Hp2CXa8Na24+qRRAyakVfGYuJ7nIGNyHWh367RAV
+ MB1+L8Yf46DLuJJ7Uo3BdXaGFxeYUFelEyJxT9MRMUlYdEsdGV8y2AdUTpBN6vmj
+ q95y8bda4KA0B26DcM6uaql/tWFhP7ivZmUWRFI0tXMwUK6GzMQwoomqWFrcEHpA
+ 8pSnILcxLx2UzqFlZSTkMmv3IKIz5somVyXK6Hn5ebIRVecjZ5Km6jKHObAajt6c
+ /k4Xj7Y8F54I3XU14Y1CdtGTMjh8f1DQL/5T7aytcraGuyG/685dQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjd59ky-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 06:52:59 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6224Zxxj003210
- for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 06:52:58 GMT
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 06:53:08 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6225e9I8010335
+ for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 06:53:07 GMT
 Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2xvsn0-1
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmc6jvkgx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 06:52:58 +0000
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 06:53:07 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
  by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6226qu6760883382
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 06:52:56 GMT
+ 6226r33F61866362
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 Mar 2026 06:53:03 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1702E20077
- for <qemu-devel@nongnu.org>; Mon,  2 Mar 2026 06:52:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5568220079;
+ Mon,  2 Mar 2026 06:53:03 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D8A920078
- for <qemu-devel@nongnu.org>; Mon,  2 Mar 2026 06:52:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 031E620077;
+ Mon,  2 Mar 2026 06:53:02 +0000 (GMT)
 Received: from Mac.com (unknown [9.124.211.120])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP
- for <qemu-devel@nongnu.org>; Mon,  2 Mar 2026 06:52:55 +0000 (GMT)
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  2 Mar 2026 06:53:01 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/4] ppc-for-11.0 queue
-Date: Mon,  2 Mar 2026 12:22:13 +0530
-Message-ID: <20260302065230.56220-1-harshpb@linux.ibm.com>
+Cc: Caleb Schlossin <calebs@linux.ibm.com>,
+ Chalapathi V <chalapathi.v@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Aditya Gupta <adityag@linux.ibm.com>
+Subject: [PULL 2/4] ppc/pnv: Support for SECURITY_SWITCH XSCOM register access
+Date: Mon,  2 Mar 2026 12:22:15 +0530
+Message-ID: <20260302065230.56220-3-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260302065230.56220-1-harshpb@linux.ibm.com>
+References: <20260302065230.56220-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: O6liAex4Vrw2TMOVve-XcHARInAg3j2t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA1NiBTYWx0ZWRfX4dDvyIJNCg6s
- YQe+HW8GbBe+MQO06v6BOWi9BGqqKrenP4HH5GeGkzN2S/2Vz0j0wa94I7mlb+h32R1AxYwUqOa
- +dGZvYtX4QJnUzKFUiMj3U2DiUD800NZbZ4pdTs3k2Wlqbv94qTPXQCFO45WWJ0ek2ppIb4v6yD
- Goy4FHdxAJ97VVmKQzQeHzGqSAqvO+zNQAvtxaUWtw2tkIdClJrT4Xp4fbwsooFqapexaiy+RxH
- U3fUsV+Y5eVn5CkQZRHrEw5b1q49hCnowOWq8KWhutwtLplpuQ7t/yaBKI0HsIhWvzwhGAeqUG5
- NYnXlxxVuS9N96gJecNhz5XjQ5UZdb9TVH5b/M6pmXO6FGL2DMCdAuOdPM/ZMjKhU1lNSn5SFox
- pjR7AJdjIxGeK0RCT/m0GIk3qHWk3nXjyopSceEdAhy5f2lQ3BQpDlUIy669n5Qrt2T2Fvf7Ho0
- r1Yk81oeiPAXTg8hlWw==
-X-Authority-Analysis: v=2.4 cv=H7DWAuYi c=1 sm=1 tr=0 ts=69a533cb cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22
- a=p0WdMEafAAAA:8 a=PLDK5rTcJzNPIfYv7fkA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: O6liAex4Vrw2TMOVve-XcHARInAg3j2t
+X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69a533d4 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=rhZDsxdhWw0Yntd0-ucA:9
+X-Proofpoint-ORIG-GUID: O4XpLFjRUwOXxVUc2vi9o1_tUvJuGuKS
+X-Proofpoint-GUID: O4XpLFjRUwOXxVUc2vi9o1_tUvJuGuKS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA1NiBTYWx0ZWRfX9nbkqyjbdiOq
+ ICjfJG+2MtUEMiBORu/T6NvXg03OMonr5npL6ac4HRMPdGnUeNwbrTuS71C40GK0JAfXgkXTqAn
+ Yp150R5b+qSyduoIzeat9vp7McL7kVofjPHYhDT1Yb+NE04ADXFw0TkdOVdvyCZWq9leT421kBk
+ ki4t+uejiYDB01lG5chkTsVXkS+TEbKodIP9aEgkOApKF4U+XDRae/Hoew2n7jQovc7V5dFNC7S
+ H3bvKd+r2fUyMgPUMWqAj4aj2m7nCxSzB3HG1VrDANZqgPE33IfA1Pf2vD4+UIDq86BToOAiAqO
+ tGixSQYD53Bg0HOHU/1lFqIoI0+bIfT7E4UBBAO+zXHr9esKSdUinHK+nhFCv9CRgr+idhQagVr
+ FixYMHkxFbayHeI+C5+gXSnfNXIl0SxhlKLDz0H0nLJGoWEdrAJXGdwWfujWsK1tzILRRX/qI2C
+ G5GlrJ35zxq+u+BXFJA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-02_02,2026-02-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020056
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
@@ -118,57 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ffcf1a7981793973ffbd8100a7c3c6042d02ae23:
+From: Caleb Schlossin <calebs@linux.ibm.com>
 
-  Merge tag 'pull-11.0-testing-updates-270226-2' of https://gitlab.com/stsquad/qemu into staging (2026-02-28 14:30:23 +0000)
+Power Hypervisor code requires access to the SECURITY_SWITCH
+XSCOM register at MMIO address 0x80028 (scom address 0x10005).
+Adding basic read support for now so that is doesn't cause
+error messages to be posted.
 
-are available in the Git repository at:
+Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260210134647.2050821-2-calebs@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/pnv_xscom.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.0-20260302
+diff --git a/hw/ppc/pnv_xscom.c b/hw/ppc/pnv_xscom.c
+index 8557b560ae..dc1ffc6c01 100644
+--- a/hw/ppc/pnv_xscom.c
++++ b/hw/ppc/pnv_xscom.c
+@@ -61,6 +61,8 @@ static uint32_t pnv_xscom_pcba(PnvChip *chip, uint64_t addr)
+ static uint64_t xscom_read_default(PnvChip *chip, uint32_t pcba)
+ {
+     switch (pcba) {
++    case 0x10005:       /* SECURITY SWITCH */
++        return 0;
+     case 0xf000f:
+         return PNV_CHIP_GET_CLASS(chip)->chip_cfam_id;
+     case 0x18002:       /* ECID2 */
+-- 
+2.52.0
 
-for you to fetch changes up to 8dec25e04e016e02c19cca68deb7ac6afff26cbe:
-
-  MAINTAINERS: Add self as reviewer for PowerPC TCG (2026-03-02 11:17:34 +0530)
-
-----------------------------------------------------------------
-ppc queue for 11.0
-
-- Fix TCG debug assert translating CLRBWIBC
-- Misc Power10 PowerVM bringup fixes
-- MAINTAINERS: Add Glenn as PPC TCG Reviewer.
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmmlLJAACgkQRUTplPnW
-j7t5yg//S6Ch3ipR0gt13Q4/Hpseila6NADPaU+ASDcRNaWgJCjc+a6jW8xN6m5D
-myfms5vcbNdRLvDNdLYqNhtEjVqJgsbvb7jaFDK+Ny1vJDPRHZK4QIlsx5fWSteL
-fefWgfAu0ce70MQNY6zIsy/a6ORz6g+fTEv6XWsfZEdvlxow4BsClfnDcQw6vu5B
-YLi9FY50Kk7BxQ2gfFbAAPqCU9XSmjSObCANil9qiGl81lLG7VqIflSBEdQ6NWa1
-hJpUUoSEq+BzLtrVLTswb0/EnG2HATHyExRG5jy+oycuB8hKtZIV7g6zAdMBibrk
-EBAAU7MoH/dzcf5XDtrWEFzRm3yXHorMEIxejt51ss/7s6XaiDOciViOR2OEPOxY
-pzJ+8K8wRCxrM9tE2ZHZhmscz7Dns9nU0T5TrJ0NExUe8sB9A19nOQCSJsdNaWSl
-4AXsevm0lqkoUCBgd+6ZHPgSSoheNW4DXuGr7dvaQiDY9xUw8lvAeG1WIVa2W0il
-GAGECZ4Da5e1bLlpSw8ALvINLL+/OjzpL8d//QQOTE7xoF/5SgGUAI/w7OJJXYtX
-vdvzAE9Dk2EMo0juRU9yLKiy7fjz+Ecp6wV74t9r18ZjzkD286+6nAOaXjvFH35i
-c3UMUPdVYRNRjVdFxKw8B/CJ22aWauz8z9X+fFwnqKYH7YLLUZ8=
-=AkZY
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Caleb Schlossin (2):
-      ppc/pnv: Support for SECURITY_SWITCH XSCOM register access
-      ppc/pnv: Add OCC FLAG registers
-
-Glenn Miles (1):
-      MAINTAINERS: Add self as reviewer for PowerPC TCG
-
-Peter Maydell (1):
-      target/ppc/translate: Fix TCG debug assert translating CLRBWIBC
-
- MAINTAINERS                         |  1 +
- include/hw/ppc/pnv_occ.h            |  4 +++
- hw/ppc/pnv_occ.c                    | 55 +++++++++++++++++++++++++++++++++++--
- hw/ppc/pnv_xscom.c                  |  2 ++
- target/ppc/translate/ppe-impl.c.inc | 12 +++++---
- 5 files changed, 67 insertions(+), 7 deletions(-)
 
