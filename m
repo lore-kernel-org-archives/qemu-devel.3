@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D23E5D58E7B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE25D58E7A
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 07:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwy1M-000464-Ae; Mon, 02 Mar 2026 02:48:52 -0500
+	id 1vwy1M-00045q-5w; Mon, 02 Mar 2026 02:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwy1K-00043Y-4h; Mon, 02 Mar 2026 02:48:50 -0500
+ id 1vwy1K-00043V-0c; Mon, 02 Mar 2026 02:48:50 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwy1H-0001Ao-5e; Mon, 02 Mar 2026 02:48:49 -0500
+ id 1vwy1H-0001Ap-5w; Mon, 02 Mar 2026 02:48:49 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6227mGm5070526
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6227mGm2070526
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Mon, 2 Mar 2026 16:48:24 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=FW1M35ADo1rOGTkjkUKBAtfBI7U6bavuPH5VmSHyiJw=; 
+DKIM-Signature: a=rsa-sha256; bh=En1yBiLIRHFeSQzQveGaZuLdWFSDfzKpc6bfIebW9wY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1772437704; v=1;
- b=g0mMfkqH1giUnPHksnEcntq7Oe43sBXylkZZgun28Fw3iWAJp971d5FgfLJSc/Xt
- xLXq4m//LRpGxIbH8qNzyWl29k5c6XCw0fYfgoX84Z6LqQFC/g+JByiAjwBRxRdH
- KvjG7L0dOcqr+AXUkQzSeFGkboJKkO2anVPjE0SlyZxSYe92OFRWBbK+I0Whkoyd
- gEeZ+Xtx3b4xQckeKNPlnpk+v+bOGIaEvo0Xf4TTip8eegODuDZnOvQZ/JoqChpK
- gEqKdCapRyySr+vPj3e8HHz9T8XdcS99fkF70qwUhjowQPCZhIhFQNLlgGv1k7CL
- yCj91iQF+u80ZXcgrNxyoA==
+ b=PotSYLGeNzBXaucBKP+qchrtehxe96x6kzGyvSAHSoGqREV11XXKjmJ96ct6zXUA
+ tSmX4+Ed9QoAAxOQm2hkQeVoALEUmEwbNI3qUxA6DvLWXC3AIq8wS/vaSA7bsv90
+ 7mBH2qHU+r2s6E3fquAY8xQzmghajM9sH2FFYFhNJliAhzhOV5n/KoScCxbNRYQj
+ xnpyvLLWe5f6+SEpXZPXWSSxkuGG1lYS6UaBMyfWCBBWn+C7+9mqnUpao5KkTsbT
+ fGsIBlM/frvRNwzkD0Tw/BV3aiT0JFlCtuqRUYTnKSekoQmwbIM2Fv7yN6jcBaO1
+ DaBfUQOe5FSa6GH/J/y0TQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 02 Mar 2026 16:48:11 +0900
-Subject: [PATCH v2 4/4] meson: Add -Wformat-overflow=2
+Date: Mon, 02 Mar 2026 16:48:08 +0900
+Subject: [PATCH v2 1/4] contrib/elf2dmp: Grow PDB URL buffer
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260302-nvme-v2-4-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260302-nvme-v2-1-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260302-nvme-v2-0-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260302-nvme-v2-0-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -80,34 +80,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Warning-Options.html
-> Level 2 warns also about calls that might overflow the destination
-> buffer given an argument of sufficient length or magnitude. At level
-> 2, unknown numeric arguments are assumed to have the minimum
-> representable value for signed types with a precision greater than 1,
-> and the maximum representable value otherwise. Unknown string
-> arguments whose length cannot be assumed to be bounded either by the
-> directive’s precision, or by a finite set of string literals they may
-> evaluate to, or the character array they may point to, are assumed to
-> be 1 character long.
+The buffers used to construct a PDB URL overflow when the "age" property
+is greater than 0xf, so grow it. This also simplifies the logic of the
+URL construction to use one buffer instead of two to avoid the chore to
+synchronize the sizes of two buffers.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ contrib/elf2dmp/main.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 414c8ea7e280..cf50bc492f9c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -692,6 +692,7 @@ warn_flags = [
-   '-Wempty-body',
-   '-Wendif-labels',
-   '-Wexpansion-to-defined',
-+  '-Wformat-overflow=2',
-   '-Wformat-security',
-   '-Wformat-y2k',
-   '-Wignored-qualifiers',
+diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+index d046a72ae67f..a62abadcc049 100644
+--- a/contrib/elf2dmp/main.c
++++ b/contrib/elf2dmp/main.c
+@@ -494,18 +494,6 @@ static bool pe_check_pdb_name(uint64_t base, void *start_addr,
+     return !strcmp(pdb_name, PDB_NAME);
+ }
+ 
+-static void pe_get_pdb_symstore_hash(OMFSignatureRSDS *rsds, char *hash)
+-{
+-    sprintf(hash, "%.08x%.04x%.04x%.02x%.02x", rsds->guid.a, rsds->guid.b,
+-            rsds->guid.c, rsds->guid.d[0], rsds->guid.d[1]);
+-    hash += 20;
+-    for (unsigned int i = 0; i < 6; i++, hash += 2) {
+-        sprintf(hash, "%.02x", rsds->guid.e[i]);
+-    }
+-
+-    sprintf(hash, "%.01x", rsds->age);
+-}
+-
+ int main(int argc, char *argv[])
+ {
+     int err = 1;
+@@ -517,9 +505,7 @@ int main(int argc, char *argv[])
+     uint64_t KernBase;
+     void *nt_start_addr = NULL;
+     WinDumpHeader64 header;
+-    char pdb_hash[34];
+-    char pdb_url[] = SYM_URL_BASE PDB_NAME
+-        "/0123456789ABCDEF0123456789ABCDEFx/" PDB_NAME;
++    g_autofree char *pdb_url = NULL;
+     struct pdb_reader pdb;
+     uint64_t KdDebuggerDataBlock;
+     KDDEBUGGER_DATA64 *kdbg;
+@@ -583,9 +569,21 @@ int main(int argc, char *argv[])
+     printf("KernBase = 0x%016"PRIx64", signature is \'%.2s\'\n", KernBase,
+             (char *)nt_start_addr);
+ 
+-    pe_get_pdb_symstore_hash(&rsds, pdb_hash);
++    pdb_url = g_strdup_printf("%s"
++                              "%.08x%.04x%.04x"
++                              "%.02x%.02x"
++                              "%.02x%.02x"
++                              "%.02x%.02x"
++                              "%.02x%.02x%.01x"
++                              "%s",
++                              SYM_URL_BASE PDB_NAME "/",
++                              rsds.guid.a, rsds.guid.b, rsds.guid.c,
++                              rsds.guid.d[0], rsds.guid.d[1],
++                              rsds.guid.e[0], rsds.guid.e[1],
++                              rsds.guid.e[2], rsds.guid.e[3],
++                              rsds.guid.e[4], rsds.guid.e[5], rsds.age,
++                              "/" PDB_NAME);
+ 
+-    sprintf(pdb_url, "%s%s/%s/%s", SYM_URL_BASE, PDB_NAME, pdb_hash, PDB_NAME);
+     printf("PDB URL is %s\n", pdb_url);
+ 
+     if (!download_url(PDB_NAME, pdb_url)) {
 
 -- 
 2.53.0
