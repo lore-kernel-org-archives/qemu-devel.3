@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E8AD58E7A
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE65C624C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyzU-0006MS-HV; Mon, 02 Mar 2026 03:51:00 -0500
+	id 1vwyut-0005JG-Ce; Mon, 02 Mar 2026 03:46:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyxI-0003KP-9C
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:50 -0500
+ id 1vwyu9-0004hu-SE
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyxG-0002Fr-RO
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:44 -0500
+ id 1vwyu4-0001sx-Os
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441321;
+ s=mimecast20190719; t=1772441123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I6/bq4+YkLb97SUzRVOI1Wb1iLfHZWsSp+w0aut9ac4=;
- b=XpkKGm7JzQowz9ULK5aGh/XZO3tBINp2ApcQUKgQHUY6wQOFELTTH4hErF+tVOGsi8JAvy
- PH25StTDy1lMNrs8hmV1FReQUsmI4N1wsdbljlfUjVpCYRKA8GQPLJNh9bBgbuymxrtUqb
- naqcjYgwf/s+TlRW/uSS1FNFltbJHzw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DpvlDRKo/WcstLe6ivw1YblVzY0NV6VzUPEXuT9Sw70=;
+ b=fiy2IAOoFsTS3nmJ2jfXgOe22rA0KjfEBqCKkNl68QFuacsm1LKLWA0E6BUoMaNtTdPm6X
+ CFL9Bh3F7aKRQWJegBH2q3PKhCpBX+60avmLJtYfTIKgx7TyS6jWnJdtZmekj7A+qtDnmR
+ C7m4gICh0oEqfBGYtseoikl89P4oA0U=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-1HMvWPS4NJmghGrfhX81ng-1; Mon, 02 Mar 2026 03:48:40 -0500
-X-MC-Unique: 1HMvWPS4NJmghGrfhX81ng-1
-X-Mimecast-MFC-AGG-ID: 1HMvWPS4NJmghGrfhX81ng_1772441319
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439b484ee04so485044f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:48:40 -0800 (PST)
+ us-mta-107-ZGWgjcEsNbOi8Kmm_VVgjA-1; Mon, 02 Mar 2026 03:45:21 -0500
+X-MC-Unique: ZGWgjcEsNbOi8Kmm_VVgjA-1
+X-Mimecast-MFC-AGG-ID: ZGWgjcEsNbOi8Kmm_VVgjA_1772441121
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48071615686so32871745e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441318; x=1773046118; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441120; x=1773045920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I6/bq4+YkLb97SUzRVOI1Wb1iLfHZWsSp+w0aut9ac4=;
- b=sYQMwwpOA/IAJINouY1Jx20zYNLY2tahz8P2Wf5AlIg+Aox3zXx9ry+ZMWA6l+SObp
- vw2d+hxWHlNEPgECGNGEXfxeD7wwdGDItEosHdBeh4VRRvHM4+Qpq6IZYTAwL6RNDj8h
- Rkk22cJ+Oe2ivsRFEfH9TBE3MG5+8cM/n9/0nMNn7yN0WoWFLAo6e/Dn8lrtEnPkftCG
- 8NnuVvy9jyvo3s49QGHUJJlZ+zZGSWwhOgIvb+gC8XDABZUm614nVxDHzeXc3pTrCsd1
- eVeXLc5IIB+KR3oYBJf88DyFR5WJiFRUiUZOZQSMyKqZDwri4csinF69dK7/W3KoXJVx
- Drpw==
+ bh=DpvlDRKo/WcstLe6ivw1YblVzY0NV6VzUPEXuT9Sw70=;
+ b=looCP+ug9a6mSt/wZFlFAfag/xlD46pMRy5dY3rGrgOy01NUWIS+ge0BztirY1zzS1
+ NZFqoa5uXuHDbh+73OvhfRdMEOXqp3RrRoPq3JTwIVFG/WJnFq1e8pY8lPA1ncft/HO8
+ zDCqMY0gB5DAXdalPk2kgoAcCNa0BCUygg2DJVxnquRZOsNv0958v0VcUS7R8XCHpV8K
+ FcJWgcclXO5Da+IkWuHmi4B82ssRLxq9PBn8qmV22yqGJJG57LSDQM8Z22cqJgt8EiSh
+ LHjggvkm3rkXzoZVAgVdN6B5KKPBf4u/Rcs6GFfSJ6reL1lMkZVAZnexXXAlR46tkGam
+ /tdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441318; x=1773046118;
+ d=1e100.net; s=20230601; t=1772441120; x=1773045920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=I6/bq4+YkLb97SUzRVOI1Wb1iLfHZWsSp+w0aut9ac4=;
- b=SgsuyNmQhp2MUNARLTwhnYBowl/8BovEMPoCkYZyQ4k9hc4R8tbGyzspa9qadZ1U0p
- oFSGsyj8ZIcFe1s5NKLNmTSJR8A8hOmSDWIN2qxKQFz5zar+tB+7P0Fp/qDGgak+3DXe
- FV4BbmVtPTco6QLXHflse+kjzpEQ75ouMAyPZX5+dHu6IzWtK8aQ/O5NOhWRfYJbqqN6
- wh6FWEwp+q9ELh2SsmA/RxzwYcTZTWhQYTESJSpMs8Lnw24DgI9jRtl7cfnffkM5ZuKM
- Id6gno8R8sBEA5OXywaAOpTx7xFgExCPAgCBeHvRykgqIHwAgvjucQH9QT/n9+YccSaT
- vnXg==
-X-Gm-Message-State: AOJu0Yw6XlHTBQ4qGURZ6HLhvzACBa4XAhxaGfGFJmS9ROHYdJRBUK6N
- DdevyFCPVY1c2f4HM/1nGgOgZNTypsCVNwvdnORh0cX8LBtsXxR4EMf3eCb6N5PFwRDbAwUXnPU
- CH4dhuSSmg3gIjaVW/fEjOToxuOrR2WZSA/btwbXdS8JkQV8Oj1gkeBk0wrpIG4ZM/zOLvLLo6G
- kbQ//fR6bNhD7KD1DpE/r1TN++jiK1Bck5GKSbwqGd
-X-Gm-Gg: ATEYQzxPmAzJbsrXO6ejUwMmy6wGtIE3GHqtfkjTaaMAbKYbdqxFQRUHK7PqQVqHIJZ
- wSQn+6jZ+nUu8X3DGjZBB5HbjeTy2Xq93OPw9mq++jV3E1vQ6+/MdBk2ePoemWI3uVtJ1wT7Fls
- dsJ1LjS95dcYpcSQMTyCiJQktB+NC/orsexBKR+19RPJIfODme2DVE7ajVai7wpkCDXTAhvivQo
- +PO/SMWZ7zNeKC6U2bzyhQ0tFkyi4U3oYD76lw0H6Jk7aMQ2wm4m5FycglfuYYmlMHTOlNpPgx5
- eOSXVqjuB5McMSqKayuKso2Vw/z+GCYR2diTHgjq+wUsLELVPa6nNEggfzCA0R4Q3dKFoq+yVKj
- zfP+J8Ui8tElat3zwXIcEw8Cnb7A813lUAgHqaJlKkRUpidqC0UDxpRLy+xOqy6t5c9xZKDuKLj
- eaYiw8pBjM7bBLphb3REEDFBFDSe8=
-X-Received: by 2002:a05:6000:2689:b0:439:b69b:3c8d with SMTP id
- ffacd0b85a97d-439b69b4206mr5308545f8f.13.1772441318197; 
- Mon, 02 Mar 2026 00:48:38 -0800 (PST)
-X-Received: by 2002:a05:6000:2689:b0:439:b69b:3c8d with SMTP id
- ffacd0b85a97d-439b69b4206mr5308489f8f.13.1772441317625; 
- Mon, 02 Mar 2026 00:48:37 -0800 (PST)
+ bh=DpvlDRKo/WcstLe6ivw1YblVzY0NV6VzUPEXuT9Sw70=;
+ b=B/l0IIqSxrd+drVnEbTmDOAa3w+qhRFTiWVqfaGUPd5yO4VtDC6mSFTWIb4SJ83n2m
+ +WlEp6t4Z+y9Rh1RNleaBJTaHAApNoI63OJjnctCSdQ+LxfVND+ulT7Tlb69Ijer9p3d
+ YugqobyV5y2xw0MLWnvu6Lz+j/NgMNQipenxJcTSEx5b+gc5bHUOU1cTrB26H19klEE4
+ U8sjpyHzC6FJXzv5aYF3XrrAwj3J46dQreypCgkFklG+aY7EtJ08o1ka/l/cr/Z+npmC
+ xmjvDRyIbSp97g9KRhgRGVYuoRkYT+kJO5vloeZ1Ggf5Um2IzmMTvjEZMAa0qMzy8Ats
+ 6YXQ==
+X-Gm-Message-State: AOJu0YysJYn9VM9JZLPmKI3OlUz6HgcaIYkgv5yDQ5MlXhlugVXxnvTy
+ ZMPZvwxwq8wo6JsT4Rs266yd3WKDEQadzqDtJ2J4c9/ZUN6bmhFkOXVW40YL7OmKNwvrmYLhjTo
+ hO1odnoxklTDd3T0rd9883pOy3qhuUeTxkQJCKrzXMkf5Rm2B+XCcpzT1+G5AGQdhGP/w8NNdNT
+ RrIz+PWMIZsSQroQgsKeX4LzUyQE1rLWLpU+310SCz
+X-Gm-Gg: ATEYQzwwOoGz2yrY0abAUh+itWXP6PZJ/CK2aNsim42d8bSAiwJn1qCryZ3hPGFCpQx
+ LlvvzL9Pam91l41TavWedaMnnHzhu7CeZ2VC2N16ecD0yQkLkY6oj0dLqtYSR9nrkLD0Z4bs1LT
+ NxPIvIA3z5ioOZQ/wm1L8s8ghbcAH7402S2OCBBQStTqpf73RTwU7V7W/Yi39dna7LmVoI2pMb4
+ Dr6qBhDf75o+mfOHJy+fPJyQ8TgClYQq1XXaOoeiGbZnKFxtmhOnq5CA32Gnw/B1YZkOoOfRCUg
+ 2XVUsONLa4hTp35L0yZc1P+ZD4H8S4bCY7gFHy3G1lFPlvSv9ZawLnAj1DC2CO36XUJ9untdYqQ
+ 95WhlQz2Hwd3tzVKSzxg4tadTjsJrU6sXXigtrr4HjMImKqBzkmQlIvXw7C7mByNZhfieY79vLZ
+ eWPu/CYA0UEOQPdmOmpx/6Od/h4Xc=
+X-Received: by 2002:a05:600c:8289:b0:483:6a8d:b2fc with SMTP id
+ 5b1f17b1804b1-483c9babda5mr184977005e9.8.1772441120023; 
+ Mon, 02 Mar 2026 00:45:20 -0800 (PST)
+X-Received: by 2002:a05:600c:8289:b0:483:6a8d:b2fc with SMTP id
+ 5b1f17b1804b1-483c9babda5mr184976575e9.8.1772441119434; 
+ Mon, 02 Mar 2026 00:45:19 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439af926c53sm14131735f8f.8.2026.03.02.00.48.35
+ 5b1f17b1804b1-483c3b770e7sm288907155e9.9.2026.03.02.00.45.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:48:36 -0800 (PST)
+ Mon, 02 Mar 2026 00:45:17 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 085/102] whpx: x86: kick out of HLT manually when using the
- kernel-irqchip
-Date: Mon,  2 Mar 2026 09:47:31 +0100
-Message-ID: <20260302084749.474955-19-pbonzini@redhat.com>
+Cc: Alexander Graf <graf@amazon.com>
+Subject: [PULL 037/102] target/arm/cpu64: Allow -host for nitro
+Date: Mon,  2 Mar 2026 09:42:32 +0100
+Message-ID: <20260302084338.473368-38-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -123,64 +121,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Alexander Graf <graf@amazon.com>
 
-Otherwise, interrupts processed through the cancel vCPU and inject path will not cause the vCPU to go out of its halt state.
+The nitro accel does not actually make use of CPU emulation or details:
+It always uses the host CPU regardless of configuration. Machines for
+the nitro accel select the host CPU type as default to have a clear
+statement of the above and to have a unified cpu type across all
+supported architectures.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260226181930.53170-3-mohamed@unpredictable.fr
+The arm64 logic on Linux currently only allows -cpu host for KVM based
+virtual machines. Add a special case for nitro so that when the nitro
+accel is active, it allows use of the host cpu type.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Link: https://lore.kernel.org/r/20260225220807.33092-8-graf@amazon.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/whpx/whpx-all.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ target/arm/cpu64.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index cfc63065807..51ecc9531fe 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -1468,6 +1468,16 @@ static void whpx_vcpu_post_run(CPUState *cpu)
-         !vcpu->exit_ctx.VpContext.ExecutionState.InterruptShadow;
- }
- 
-+static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
-+{
-+    WHV_REGISTER_VALUE reg;
-+    whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
-+    if (reg.InternalActivity.HaltSuspend) {
-+        reg.InternalActivity.HaltSuspend = 0;
-+        whpx_set_reg(cpu, WHvRegisterInternalActivityState, reg);
-+    }
-+}
-+
- static void whpx_vcpu_process_async_events(CPUState *cpu)
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 58215216c55..d6feba220e8 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -813,6 +813,14 @@ static void aarch64_a53_initfn(Object *obj)
+ static void aarch64_host_initfn(Object *obj)
  {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-@@ -1775,6 +1785,25 @@ int whpx_vcpu_run(CPUState *cpu)
-                 cpu->exception_index = EXCP_INTERRUPT;
-                 ret = 1;
-             }
-+            /* 
-+             * When the Hyper-V APIC is enabled, to get out of HLT we
-+             * either have to request an interrupt or manually get it away
-+             * from HLT.
-+             *
-+             * We also manually do inject some interrupts via WHvRegisterPendingEvent
-+             * instead of WHVRequestInterrupt, which does not reset the HLT state.
-+             *
-+             * However, even with this done, if the guest does an HLT without
-+             * interrupts enabled (which the test_sti_inhibit KVM unit test does)
-+             * then the guest will stay in HLT forever.
-+             *
-+             * Keep it this way for now, with perhaps adding a heartbeat later
-+             * so that we get the CPU time savings from having Hyper-V handle HLT
-+             * instead of going away from it as soon as possible.
-+             */
-+            if (whpx_irqchip_in_kernel()) {
-+                whpx_vcpu_kick_out_of_hlt(cpu);
-+            }
-             break;
-         case WHvRunVpExitReasonX64MsrAccess: {
-             WHV_REGISTER_VALUE reg_values[3] = {0};
+     ARMCPU *cpu = ARM_CPU(obj);
++
++#if defined(CONFIG_NITRO)
++    if (nitro_enabled()) {
++        /* The nitro accel uses -cpu host, but does not actually consume it */
++        return;
++    }
++#endif
++
+ #if defined(CONFIG_KVM)
+     kvm_arm_set_cpu_features_from_host(cpu);
+     aarch64_add_sve_properties(obj);
 -- 
 2.53.0
 
