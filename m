@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2FADEA4E1C
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7627EA4E18
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx4oc-00078f-T4; Mon, 02 Mar 2026 10:04:14 -0500
+	id 1vx4oj-0007nV-DM; Mon, 02 Mar 2026 10:04:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4mc-00059u-9z
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:02:11 -0500
+ id 1vx4mm-0005Gs-QZ
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:02:22 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4mZ-0004BU-Bq
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:02:05 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772463703; cv=none; 
+ id 1vx4mk-0004Cq-TJ
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:02:16 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772463713; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=YoY/6U5rergSyR8ljlsKk+ApqZQJSBWg/Rt2VhiLLARVPh9CIWF5PJu783MEO5G+9IFmXTaStCgPZHTqcDeouwXtv4FAkSnK8wpq1czIX4uRPqe5ri0w8PWSIU80Cd/9A4nTUrtWGT5g6aJDnBHC0ONeNhJRyvGC66kLtRPHWbk=
+ b=aG2ygItNCAKkxV/4LY6FIEbDugeULeIwSVN2JbAQE6ZNzjAUBx5XEixGe+9l7oMDT1M/mlZ+CyuAYKQZySz5a7DLY3Dt2sZl+RA92e7Hl1z2xOfzirD1XwxuJA5ismUj6en9+vKc8XQBMkaR8V8+t7kJWL/nlI2qkAVJUa0xzQo=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772463703;
+ s=zohoarc; t=1772463713;
  h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=mAtHKD4w705o/SW8/42x/ePgTgfhOQt0zB/VSc3hcGA=; 
- b=BwtKoeAVmHQAO+ztKTQxTFRM5ctIWs4vA+Xh0LAZxS7ql21lM5GJNtZpklo5Hc+RES+w6CUPqvT/nFlmqP8gDMMAdOxF3f91OaaxhjtIP+CQWGgPTwNzJkJncmIet9F2bn+zIaxVHnggEI2ThdP66P2/yu7s8ccK4bU6AAMVwq8=
+ bh=Qd36kR1jV6fNbEofbH26jxGtVfQtsvtqjH0LmlFyCJY=; 
+ b=FO0YuDySAEzN1OfV1SIZrAQwsJPze3zfZpPVpm8v8bYUt/Z7C1o1gpz5YfL1WD52O0AfwfDmos8WaCBVJlUN8PLVJGMtqhLml3sYxv1dvAwXjuZ+aLkPr3hyYU8g9+Pk1b2M3jEs4Bzreje7nPrDvj5dVvq9B9Gyr7L2glsrcG8=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463703; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463713; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=mAtHKD4w705o/SW8/42x/ePgTgfhOQt0zB/VSc3hcGA=;
- b=Vr2TYdVAu5x9do2fCZFirT8dkqYKPH/ZBEoZHnJK8iLM5KcSc+4H17OVrL8Os8Hj
- evQ/wL8afjY70kRi3XeQ3Sk5Z1ST993H+cvYgnSA8D0ICBd6dNUit5o9Gi9c2FABE+O
- X/Ae80MqYuJxRbry4a14ajTvAsSWhttdG6dsLicY=
-Received: by mx.zohomail.com with SMTPS id 1772463700867174.6204190058878;
- Mon, 2 Mar 2026 07:01:40 -0800 (PST)
+ bh=Qd36kR1jV6fNbEofbH26jxGtVfQtsvtqjH0LmlFyCJY=;
+ b=jMDaHUclOOLhs6qMmNfNYqiyx0baaLVOqwBolzyvPBa7rJY6QRZwbfaeQuv0om/i
+ QYDDuN0cLw1cjlhhHaBE2j1qMgH/kr2dFWEdA0jYbr/nYW/n/fF3eFBmONVAOZ78V8s
+ uoFqUNGPprRFFMSL5nSmTf81OGyU66bAaUi4abS0=
+Received: by mx.zohomail.com with SMTPS id 1772463712188731.093771044364;
+ Mon, 2 Mar 2026 07:01:52 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,9 +62,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v21 15/18] virtio-gpu: Validate hostmem mapping offset
-Date: Mon,  2 Mar 2026 17:59:17 +0300
-Message-ID: <20260302145920.735423-16-dmitry.osipenko@collabora.com>
+Subject: [PATCH v21 17/18] virtio-gpu: Destroy virgl resources on virtio-gpu
+ reset
+Date: Mon,  2 Mar 2026 17:59:19 +0300
+Message-ID: <20260302145920.735423-18-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
 References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
@@ -96,43 +97,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check hostmem mapping boundaries originated from guest.
+Properly destroy virgl resources on virtio-gpu reset to not leak resources
+on a hot reboot of a VM.
 
 Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/display/virtio-gpu-gl.c     |  18 +----
+ hw/display/virtio-gpu-virgl.c  | 123 +++++++++++++++++++++++++++------
+ include/hw/virtio/virtio-gpu.h |   6 +-
+ 3 files changed, 107 insertions(+), 40 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 500e6b0ddb50..74cbd0f32120 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -791,6 +791,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-     struct virtio_gpu_resource_map_blob mblob;
-     struct virtio_gpu_virgl_resource *res;
-     struct virtio_gpu_resp_map_info resp;
-+    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-     int ret;
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index b941e9a4b789..8b71dd6fc26f 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
+ static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+ {
+     VirtIOGPU *g = VIRTIO_GPU(vdev);
+-    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
+     struct virtio_gpu_ctrl_command *cmd;
  
-     VIRTIO_GPU_FILL_CMD(mblob);
-@@ -804,6 +805,15 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+     if (!virtio_queue_ready(vq)) {
          return;
      }
  
-+    if (mblob.offset + res->base.blob_size > b->conf.hostmem ||
-+        mblob.offset + res->base.blob_size < mblob.offset) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: failed to map virgl resource: invalid offset\n",
-+                      __func__);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+-    switch (gl->renderer_state) {
+-    case RS_RESET:
+-        virtio_gpu_virgl_reset(g);
+-        /* fallthrough */
+-    case RS_START:
+-        if (virtio_gpu_virgl_init(g)) {
+-            gl->renderer_state = RS_INIT_FAILED;
+-            return;
+-        }
+-
+-        gl->renderer_state = RS_INITED;
+-        break;
+-    case RS_INIT_FAILED:
++    if (!virtio_gpu_virgl_update_render_state(g)) {
+         return;
+-    case RS_INITED:
+-        break;
+     }
+ 
+     cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
+@@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+     vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+ 
++    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+     vdc->realize = virtio_gpu_gl_device_realize;
+     vdc->unrealize = virtio_gpu_gl_device_unrealize;
+     vdc->reset = virtio_gpu_gl_reset;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ddd0cfa5e9d8..89c11c142c25 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -96,6 +96,10 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+ {
+     VirtIOGPU *g = opaque;
+ 
++    if (!virtio_gpu_virgl_update_render_state(g)) {
 +        return;
 +    }
 +
-     ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
-     if (ret) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+     virtio_gpu_process_cmdq(g);
+ }
+ 
+@@ -344,14 +348,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+     virgl_renderer_resource_create(&args, NULL, 0);
+ }
+ 
++static int
++virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
++                                struct virtio_gpu_virgl_resource *res,
++                                bool *suspended)
++{
++    struct iovec *res_iovs = NULL;
++    int num_iovs = 0;
++#if VIRGL_VERSION_MAJOR >= 1
++    int ret;
++
++    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
++    if (ret) {
++        return ret;
++    }
++    if (*suspended) {
++        return 0;
++    }
++#endif
++
++    virgl_renderer_resource_detach_iov(res->base.resource_id,
++                                       &res_iovs,
++                                       &num_iovs);
++    if (res_iovs != NULL && num_iovs != 0) {
++        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
++    }
++    virgl_renderer_resource_unref(res->base.resource_id);
++
++    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++
++    g_free(res);
++
++    return 0;
++}
++
+ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+                                      struct virtio_gpu_ctrl_command *cmd,
+                                      bool *cmd_suspended)
+ {
+     struct virtio_gpu_resource_unref unref;
+     struct virtio_gpu_virgl_resource *res;
+-    struct iovec *res_iovs = NULL;
+-    int num_iovs = 0;
+ 
+     VIRTIO_GPU_FILL_CMD(unref);
+     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+@@ -364,27 +400,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+         return;
+     }
+ 
+-#if VIRGL_VERSION_MAJOR >= 1
+-    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+-        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+-        return;
+-    }
+-    if (*cmd_suspended) {
+-        return;
+-    }
+-#endif
++    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
++}
+ 
+-    virgl_renderer_resource_detach_iov(unref.resource_id,
+-                                       &res_iovs,
+-                                       &num_iovs);
+-    if (res_iovs != NULL && num_iovs != 0) {
+-        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+-    }
+-    virgl_renderer_resource_unref(unref.resource_id);
++void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
++                                       struct virtio_gpu_simple_resource *base,
++                                       Error **errp)
++{
++    struct virtio_gpu_virgl_resource *res;
++    bool suspended = false;
+ 
+-    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+ 
+-    g_free(res);
++    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
++        error_setg(errp, "failed to destroy virgl resource");
++    }
+ }
+ 
+ static void virgl_cmd_context_create(VirtIOGPU *g,
+@@ -1291,6 +1321,10 @@ static void virtio_gpu_fence_poll(void *opaque)
+     VirtIOGPU *g = opaque;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
++    if (!virtio_gpu_virgl_update_render_state(g)) {
++        return;
++    }
++
+     virgl_renderer_poll();
+     virtio_gpu_process_cmdq(g);
+     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+@@ -1313,14 +1347,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+     }
+ }
+ 
+-void virtio_gpu_virgl_reset(VirtIOGPU *g)
++static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+ {
++    struct virtio_gpu_simple_resource *res, *tmp;
++
++    /*
++     * Virgl blob resource unmapping can be suspended and
++     * deferred on unref, ensure that destruction is completed.
++     */
++    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
++        virtio_gpu_virgl_resource_destroy(g, res, NULL);
++    }
++
++    if (!QTAILQ_EMPTY(&g->reslist)) {
++        return false;
++    }
++
+     virgl_renderer_reset();
+ 
+     virtio_gpu_virgl_reset_async_fences(g);
++
++    return true;
+ }
+ 
+-int virtio_gpu_virgl_init(VirtIOGPU *g)
++static int virtio_gpu_virgl_init(VirtIOGPU *g)
+ {
+     int ret;
+     uint32_t flags = 0;
+@@ -1394,6 +1444,35 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     return 0;
+ }
+ 
++bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
++{
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    switch (gl->renderer_state) {
++    case RS_RESET:
++        virgl_renderer_force_ctx_0();
++
++        if (!virtio_gpu_virgl_reset(g)) {
++            return false;
++        }
++        /* fallthrough */
++    case RS_START:
++        if (virtio_gpu_virgl_init(g)) {
++            gl->renderer_state = RS_INIT_FAILED;
++            return false;
++        }
++
++        gl->renderer_state = RS_INITED;
++        break;
++    case RS_INIT_FAILED:
++        return false;
++    case RS_INITED:
++        break;
++    }
++
++    return true;
++}
++
+ static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
+ {
+     g_array_append_val(capset_ids, capset_id);
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 718332284305..1f509d0d5beb 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -389,9 +389,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                   struct virtio_gpu_ctrl_command *cmd);
+ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+-void virtio_gpu_virgl_reset(VirtIOGPU *g);
+-int virtio_gpu_virgl_init(VirtIOGPU *g);
+ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
++void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
++                                       struct virtio_gpu_simple_resource *res,
++                                       Error **errp);
++bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
+ 
+ #endif
 -- 
 2.52.0
 
