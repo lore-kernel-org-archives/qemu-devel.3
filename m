@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1EBD58E47
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBDCD58E47
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwunG-00015Z-ME; Sun, 01 Mar 2026 23:22:06 -0500
+	id 1vwumu-0000xU-2A; Sun, 01 Mar 2026 23:21:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunF-00014u-3U
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:05 -0500
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwums-0000wj-RW
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:42 -0500
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunD-0006sY-Mk
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:04 -0500
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7d55b97f358so3545963a34.3
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:22:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwumq-0006nn-Ac
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:42 -0500
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7d4c4b494fcso2452934a34.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:21:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425322; x=1773030122;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425298; x=1773030098;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yo8ODZIvQDghts3qEkJthejsOv/c5ojeKmbD2EqQf9w=;
- b=DiQRUv0YNty6TB7/81CMD4llb3kmQ6zDUyC7fNXFACZIJkbfgQGuaoqMAolk17WHEh
- zjaXkoPhscGTwdUIqB1WIuSjs4hclnfT380ja5iE6ijF0TUoMvtv1K1p/kd1y7hclpH2
- kC5UBuZtxq+Xgbv0PQltYmLLdDnOJJrZnN7ER9dkInW3UFdAO8wBtYSZOwkYEG0rtb+Y
- NFRSWCxOYiskoUzgt0uRqCLsLwEVf03qseRDFm1XvpZnSFOa2oNgY9GVukJqN6QvKzIG
- cDXi92dvEFOmCNUa5ad4Q4bLogI3+db561I8Fues3DnL0zxKdKnleKwRSIwoA1xbEgYi
- A3sQ==
+ bh=3cuON0t/50ogMo6c3lruWdO8pZIhZu0gPHa1YdYOyFQ=;
+ b=hCf/reeEnCzx2snEYGGfSDLcGWUBYSTPOjFm2CCR6wmbqPXnoLERMejbGuCH3vAho0
+ CSaVsoZFwplJMb909q2a5GbRiO01fBlTdhsvDQhxi3ZzZtFm55xcHyn9L7pREqitoMei
+ 073q3wOPNjft+obm/cBVCpKehdOpuJnV6LEc469KEUyf/a8j53DZCbDoSNdEiBtlF9Bh
+ TY1LucUY0mENnmg85xGL9+5KvMe+tDUyT3EMotbHY1JZdksUDJesseejs6bsOb0czhd3
+ bw1r4HHbFSltBn5q1DdDNkuVgcqoyqRaPDL/b81+KKZdeKXiw8mAsa7FLWAf2P7MPynh
+ No/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772425322; x=1773030122;
+ d=1e100.net; s=20230601; t=1772425298; x=1773030098;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yo8ODZIvQDghts3qEkJthejsOv/c5ojeKmbD2EqQf9w=;
- b=Y0YyJh72uOgSNDp4P8Ptc41OEUzM7947YY30J3wUm3tg1F9ShSefMv85M1ujrCExhM
- Uld5BsxlXO9FF13PyftmqI1aTdOmIRe5hoKDNau157VccJprQ20E63PdaVCDrYdhMnWB
- 7288n8JpUfCiRVWbF46BJLUT7v8hORFwmGVv1zMVq0B6zlQQwRRCR/aW/no335CjSHNY
- X2jRkR733MBAq0a1UzptydWV3N5nRb5/O5yXBuK/REJDjbgvXWLKKnvj9SogEqnrAjkS
- N2D7QEp1kxu9Tj8x42W/H3iDxvNDP703fNDr1+ZCHZLlu0rO6NU1QMS0rHsyypFlir/F
- sfuA==
-X-Gm-Message-State: AOJu0YxYKzmMSSwFpZ7cBDnUGEXqi2fpD01Leyua94eKFVjix75q1aTf
- 96Ic79qOE4woSpKMiie3FT9qq/mBuB2Mrj18f5CR1i8RsR7nAuUO4ePh1pfCfBgLO7ugfKdd7Dl
- HSDodpao=
-X-Gm-Gg: ATEYQzw2Ha+4iwjSFCNvvYJxpgbr3cLek/Mlh/gIQnvkamzZ2a0rmi4j6Pg5SLRk9iX
- rofTn2Y1GEy4QDBhpmhQ6ljrj19TOZcE1fAAd2b+0RvB5fsVQoCk8AuMuM//sfaoT48VdFTlFn6
- LbyeEW+PCYCqxcZyoNRqUTM7ALPVSH/F+5GmYoLb58YLVeTbZnLCQ3Qj4f6Jw5C8VZrS9bXnVJ3
- 3C+805hkyFHbx4NE1uis1bGwp/voE3YrvVExiz7iX/Zyr0WXlC9aWTR0lUbUkONnao+EMai5bAA
- PDcwJ2zlVFrdtaaA1ua7u5Yb00Aqgdd9cIlYvgjFzsbsQI8UdOgFRfBvp0sJlBrGtOwQ0+m8jdU
- uetqua7IrNY9Op8lDvmH2Y+J4TkygJrHdhNe+7SZNfMkJALzP/qgQMYtTtS+Fs0VDovnaRkI11R
- tlFWCyhquLlg==
-X-Received: by 2002:a05:6871:788:b0:409:a4d3:a30e with SMTP id
- 586e51a60fabf-41626d64c98mr6287138fac.2.1772425322160; 
- Sun, 01 Mar 2026 20:22:02 -0800 (PST)
+ bh=3cuON0t/50ogMo6c3lruWdO8pZIhZu0gPHa1YdYOyFQ=;
+ b=r+XSvPHCG10leAA7hpnzL+Ijpzdr7goc+rBsbV1YcsTWNJm66JIxx3EMelnVfVKLZQ
+ Dsc6DFNe8q/vh0u5LCijD1iY/jpJM9C5u7aZnMIAbxnPr3EU5Nj6VbeOUn4UcIlPfmcK
+ gSUK8D9KN0b3nJzw/V8uvISUBWiNIMFaN3gEFiimc65RQvixfsrz9aIsCiMJGDt6C8qR
+ 1CnRTBzD78BQL9JfdKJRMWy+s82a2mrTYF0oQ3ukR/z/p5B0WnCTTtfhxsyx9GgKsDqj
+ IaWei9e0HcilD7p/x/FngLVftKvRxfSCnYzVZSwOy/3EBiFrHKuRb/le2TqmK8kyqq04
+ 35dw==
+X-Gm-Message-State: AOJu0YwbGr//GCEf4mtxNIGe3kWb8rSgh4TEgCBg1IyY8EMHNvcDfdUt
+ Xo9Zyx11w9u+UM0kwE6YzZXjZwwkKhvC2OMpjnKuXDxfYg0T3uxBouvq0YPIRewMpkQeKWTEVwV
+ 1UH1e
+X-Gm-Gg: ATEYQzwpYY14SUWluQuWkNgkiXU5WNJEr+Iw2HiU0qkWXHJcHpWTAiKon6F5sjGJaBP
+ IjwvB0j82pRTKbL6hgSmf4vtQdAfyRsGz3YPL1PJmUZI+YxdLKLDtB2rZMNII+TY+VJDuwuor2T
+ 3VpNSb3g5DiCNyVR9ks4enQ3GPuivNsswcjTHuMDddxSdcITapwsFYSvJULEtXmvgkFYlDoEaVX
+ XOEpt0AHeKwMNbPrPvuWxMHb/Z3tel48cZITFC94EhMBOFKlPXJ7X2diTEHsXdiObjkK1Awshwd
+ nK92eEyckN4nIiHV3hJbMr1ud74prcKrkZH3XPWmp5vaS8uOtknFCeFu2tcAJTRikC34LvMZTtQ
+ Or8m4Ntv+GOk0EAmk3Fr9Rl0xcF2H8pMOAgb0vMeCwqkxRJbPUmRYoVWcpA2sX49L6QCdr7qURk
+ J7kBEb1ipbIA==
+X-Received: by 2002:a05:6871:eb07:b0:404:2fe7:e184 with SMTP id
+ 586e51a60fabf-41627097c9cmr6752632fac.43.1772425298553; 
+ Sun, 01 Mar 2026 20:21:38 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.22.00
+ 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.21.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 20:22:01 -0800 (PST)
+ Sun, 01 Mar 2026 20:21:37 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
@@ -72,18 +72,19 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>,
+ Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 19/27] bsd-user: Add do_bsd_semop implementation
-Date: Sun,  1 Mar 2026 21:21:07 -0700
-Message-ID: <20260302042115.83410-20-imp@bsdimp.com>
+Subject: [PULL 04/27] common-user: Drop __linux__ around .note.GNU-stack
+Date: Sun,  1 Mar 2026 21:20:52 -0700
+Message-ID: <20260302042115.83410-5-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302042115.83410-1-imp@bsdimp.com>
 References: <20260302042115.83410-1-imp@bsdimp.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::32f;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::336;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,52 +106,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+GNU-stack tagging is a toolchain issue, not an OS issue. All the
+toolchains require this for ELF.
 
-Add implementation of semop(2) syscall to perform System V semaphore
-operations. Converts target sembuf array to host format and executes
-operations.
-
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- bsd-user/bsd-misc.h | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ common-user/safe-syscall.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-index 3dffb977a5..e1e552b58f 100644
---- a/bsd-user/bsd-misc.h
-+++ b/bsd-user/bsd-misc.h
-@@ -77,6 +77,28 @@ static inline abi_long do_bsd_semget(abi_long key, int nsems,
-                 target_to_host_bitmask(target_flags, ipc_flags_tbl)));
- }
- 
-+/* semop(2) */
-+static inline abi_long do_bsd_semop(int semid, abi_long ptr, unsigned nsops)
-+{
-+    g_autofree struct sembuf *sops = g_malloc(nsops * sizeof(struct sembuf));
-+    struct target_sembuf *target_sembuf;
-+    int i;
-+
-+    target_sembuf = lock_user(VERIFY_READ, ptr,
-+            nsops * sizeof(struct target_sembuf), 1);
-+    if (target_sembuf == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    for (i = 0; i < nsops; i++) {
-+        __get_user(sops[i].sem_num, &target_sembuf[i].sem_num);
-+        __get_user(sops[i].sem_op, &target_sembuf[i].sem_op);
-+        __get_user(sops[i].sem_flg, &target_sembuf[i].sem_flg);
-+    }
-+    unlock_user(target_sembuf, ptr, 0);
-+
-+    return semop(semid, sops, nsops);
-+}
-+
- /* getdtablesize(2) */
- static inline abi_long do_bsd_getdtablesize(void)
- {
+diff --git a/common-user/safe-syscall.S b/common-user/safe-syscall.S
+index 74f7e35694..2f714cfbe8 100644
+--- a/common-user/safe-syscall.S
++++ b/common-user/safe-syscall.S
+@@ -22,6 +22,6 @@
+  * assembly needs an executable stack and the whole QEMU binary will
+  * needlessly end up with one. This should be the last thing in this file.
+  */
+-#if defined(__linux__) && defined(__ELF__)
++#if defined(__ELF__)
+ .section        .note.GNU-stack, "", %progbits
+ #endif
 -- 
 2.52.0
 
