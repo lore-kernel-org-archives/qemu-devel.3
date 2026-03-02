@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A031CD58E7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B287D58E7E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvF-00066I-NU; Mon, 02 Mar 2026 03:46:37 -0500
+	id 1vwytH-0001lw-RZ; Mon, 02 Mar 2026 03:44:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyug-0005Bf-RG
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:07 -0500
+ id 1vwytB-0001i7-OV
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyuV-0001vS-Li
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:56 -0500
+ id 1vwyt7-0001Y4-Os
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441139;
+ s=mimecast20190719; t=1772441065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HYqjAK7qOdvm/hJDVYV3EiWpflw4secDuvQP3hCMmE0=;
- b=GAGQzH3JNeRsI/D8QApLNjkXW+JtkVUoUf1+XrKA1D0kvwDp/0Gs8c4CFsV/EeGJbsYheW
- MFarMZHS7CE3dK+HAQ2E1lW7KnwC6wX8j07iHm1idw511/WNUJLVdBJzPIuHuV5G2N2YAA
- HPWj9IOvN83jzH9H6qbtUIBYXhVeZeQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zPx0GudsuJ7+vudVgsrPzB4kl2V8XPk+UFVlv6vuYpE=;
+ b=YWG+mAVA4miQXSuCGykbx4nPUNxZ7nXEhauSU9FIWgIH4OJR33PBFCU/T91lwdZVuP8zoB
+ acheSmKKUSxeR0lemz//EN6b2ifvwmnOGg/O5YtzRWwPhUCOGypblj6R5Okapy71iv+GVI
+ WqPQxmLyMvhViHr3jntrPBOAc6ZmEHU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-ERlBvC_GOfmL3STi48W5fw-1; Mon, 02 Mar 2026 03:45:38 -0500
-X-MC-Unique: ERlBvC_GOfmL3STi48W5fw-1
-X-Mimecast-MFC-AGG-ID: ERlBvC_GOfmL3STi48W5fw_1772441137
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-4363333c102so2852427f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:38 -0800 (PST)
+ us-mta-258-078gXQzVOK6mdD9ep7cooQ-1; Mon, 02 Mar 2026 03:44:24 -0500
+X-MC-Unique: 078gXQzVOK6mdD9ep7cooQ-1
+X-Mimecast-MFC-AGG-ID: 078gXQzVOK6mdD9ep7cooQ_1772441063
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836ff58111so42861685e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:44:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441136; x=1773045936; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441062; x=1773045862; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HYqjAK7qOdvm/hJDVYV3EiWpflw4secDuvQP3hCMmE0=;
- b=i+P5/wR4ev25C92zkvkWJ1I3O+uecuUp3Q4M9EeopwBD8XDn0TXYOazUJSmYPtI8JG
- v95iAWyYdaQiTBfQQSxXOtTSQ+XOR3n9YWxklQColn8DN7i1QG4nl6BXmusQnQkpCrG4
- RHiXsczL6z6h8rPzwpsdXJs6QV6FFJY/YQchY0BRat3VgrPONrGagu6Ek+dLeXFy3vdz
- 0PW0qDAAwgffcbzL2LkUDHspVHidcahuuH88T8QOOBBe+R4yRCgnFfoS5fpTmlllDKIY
- eshXa365PdMt1egaGqM7RA3+kvhLJnAoxj8JSepJLgrlx/L3Wg9AEF3zvbBIaF6crj2D
- s/Lw==
+ bh=zPx0GudsuJ7+vudVgsrPzB4kl2V8XPk+UFVlv6vuYpE=;
+ b=OX2b6Easu6uUyU6TBtNPnB5yaJymDiFwq384QYblEclwMnzN0gLX1anJdKvBNYGnvg
+ Jv7f6qnpV5/P0a2JiUo5EttSvMNWREwYquawfM5kp5caI4O6oWC0EUSV2r81PP+PIfSX
+ Cni4WkDA4ZPwO7glqjAzr6+Mz/5URbnvGi6XDhpwDinTsNZQYFAtxWzCrRcGHEZCSPjm
+ XOgf8NNNxF2xj3wWo54oX/BN3zgxIaapji6ihck+sB9f19c1P7GPyYN3lvqdfMkOV2hj
+ IDxVO6qdVJy59dbLO6O2rn0Ycje86gJmsIKOv3jVWNQoqESOG9Z0XAWck0Yds2Ii3gvM
+ lUbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441136; x=1773045936;
+ d=1e100.net; s=20230601; t=1772441062; x=1773045862;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HYqjAK7qOdvm/hJDVYV3EiWpflw4secDuvQP3hCMmE0=;
- b=WMRdkanFIRSxinYvdhDppUlFUpd0X3WtKC4N1WNRXmqbaLyFBxttcUtdIADfIlD141
- 7yVWpnoSZHgk+J8ch0yfs5cblllywA0iVTxgGNhpNOegU7gCC/u7Kw2GadpfANL8fKr7
- cuV6QE5WTJFjWwVwWdlTZwlq3WcC3SxxwIWYaevUqvuoHU7Y4GaYYyRdzIxVlzGqmD0k
- 2gnW3oAlG2KHrS3KBfasC10i3IiXXiOfot32lfpTQbZmGOIeRSOIX6xND+yqVEsEDgwX
- RiImejto1x8uKMd2F88DkyrYxzHkv9ulOiD0y/1jljxg0v91ZmQIrGp5nrFuY7aD4Dow
- bxLg==
-X-Gm-Message-State: AOJu0Yx1x1yb84qgDnv5euxCfAAcDV2zWEyy3tj/awlFyVZI1wxjXvae
- pYv00hc505au9wOVC/rRTbH3Ej3fKmDNkmCQRvkkyBR+PqOprloziYyuif5Fi3uGEQpbsjKHOfs
- TTJRIWebBejXogCSvwD0qoBRvOzX9xnBEiub5OaIou64ym6mLg0xE8UP1fx6wAVt+tnelu2w5pN
- vDPdfVhBslMvyZEdvrFafMFZeLu96m69fc8Dhazju8
-X-Gm-Gg: ATEYQzw8CzS4m45NWZqeOOAI099r/Igxu+hAmhmZCIQB58sMTqFdCP4wzmRqpl/4wi9
- gM21fsJOT82rPfKupVTKipNa7q+WBnORfgRzAz66SfvdWGM8+xHBL8HdZvSrtuPUA6kyZW3NS4a
- dkF5uZWiZvl4BzU+d6ETiaFs1Yzd9e9vT8hDY8A3nUC0EffoI5AotAxByp283Wx3E8qsKod2pon
- GRQ2QK1plVH/KwhPiYpgEejFGSiBClZT1XBTZ8oAP0p19qhMM1xWTobWECWPsP2x99cD/stmRXP
- VumOZ6fBr88put828rgsJYCXoCcqj3h1ucOIYe0ttB8Ip5Ki4huhksyrDaSbO23dgPFyQDTAZEW
- FRXpM1gOif/Ty8j0pv+8xqT8OnPsp0Cgy7z5KX/jUigPyAH9aJM4dTmrqEg1uvUbPrHRj2hh3JV
- Nq4jRZ0q0HP4GESnLGww/fEEQVp5U=
-X-Received: by 2002:a05:600c:34cf:b0:480:690e:f14a with SMTP id
- 5b1f17b1804b1-483c9bb6744mr184864485e9.14.1772441136334; 
- Mon, 02 Mar 2026 00:45:36 -0800 (PST)
-X-Received: by 2002:a05:600c:34cf:b0:480:690e:f14a with SMTP id
- 5b1f17b1804b1-483c9bb6744mr184864155e9.14.1772441135801; 
- Mon, 02 Mar 2026 00:45:35 -0800 (PST)
+ bh=zPx0GudsuJ7+vudVgsrPzB4kl2V8XPk+UFVlv6vuYpE=;
+ b=RCQbdIQiM4y8Nj/XwoBLJ3agYlJHadxpI2VES6lZRFCmr7gm/cQZdhcqC3DYE9Ovze
+ UyjDCVnxg3EQrnqqaA89EV6MfYofbQrm9C5+NthwdV8PzUmN4A41FVZGziCg7Q9Rd6Om
+ Sj0efaX/3cY/fXOJbsm3t34vstLL1fF7Akskxl/qqWKYYdlbdlWsyslGKXDEIOLfnKiw
+ SRWHJDKONhzXz+P3FWPd7SN2kVXA4I6FvmFKaLWYM8HDt4pMjkqjNTMyTDOmVtKiYftw
+ qhVwmg9FQhthBHe62n3pabnmZineV/SLny33D40qseu3UJr1GjGCMw/bSCiWAgQyRGIB
+ g+QA==
+X-Gm-Message-State: AOJu0YyjE/qWKq20AeQLxDporDAw0iVO/or2S/tcmWYB+8AZsJMtnyYh
+ xhc5G88oKWXb0mv1mQkeVx+Dn8xb8Cvd0TumjOyljMHf2HHmgkGJn1RWdtrgKbF06coRFLbJ1Xp
+ YnWd2tffxO4YzM4H9eh3H9u/pAkxk7mv0j8gpoo0WwjralpHfIFqMdaf0PbZB3IcbSKoIBqPOUb
+ dsVgeQ5ndVt65aBzwc4b0Fhy7EVfsKD+dQ727LEtG9
+X-Gm-Gg: ATEYQzyVCX/M8k5FGQ21luyDypelVYQPecnLSorwjptz2gihE2mpOTYfMe5pV//5LkV
+ DSiHjW+bLdN6MCaqJ94eGN024yJPKOoGtcgaNlkbeQodz91yXfVK3lNa0BRZDRLia8TcF83KG9z
+ UT2rCLOJqNEkbPTkXrJGoPxIz2rs5hDeVaWM4hWa1K77yxQgLjaCOEZcrKtVhH9Wju8ms+j6RDz
+ 3H3L/9SQz9PaOA8xvqIVFN0sfubXbmtyJt85KI08He/7Tr0ftt51tcWYONEWYGIkWBwpayU1TVZ
+ D5TqeAJKZs/xFOVtUJHJ0xQW1eWylIOzCqhL1FIukMlf0jPY1TrkFc4XwNru+s2pTHwz07/rgOo
+ TXooI2dDjZwMgA/qGn5FUBSEDf6fOhYQ8KXWw2KGd6qv9mO736LPg5JFm4+3xJvQtxHW5xPMe8s
+ PpA7Q30+HA934K82IWFJMZJBk2crc=
+X-Received: by 2002:a05:600c:c04b:10b0:483:79a6:e7e1 with SMTP id
+ 5b1f17b1804b1-483c9ba7e28mr143316145e9.7.1772441061756; 
+ Mon, 02 Mar 2026 00:44:21 -0800 (PST)
+X-Received: by 2002:a05:600c:c04b:10b0:483:79a6:e7e1 with SMTP id
+ 5b1f17b1804b1-483c9ba7e28mr143315865e9.7.1772441061270; 
+ Mon, 02 Mar 2026 00:44:21 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c765c67sm27724110f8f.32.2026.03.02.00.45.33
+ ffacd0b85a97d-439b55d15besm8961321f8f.30.2026.03.02.00.44.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:45:33 -0800 (PST)
+ Mon, 02 Mar 2026 00:44:18 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 043/102] accel/kvm: add confidential class member to indicate
- guest rebuild capability
-Date: Mon,  2 Mar 2026 09:42:38 +0100
-Message-ID: <20260302084338.473368-44-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 015/102] whpx: i386: remove CPUID trapping
+Date: Mon,  2 Mar 2026 09:42:10 +0100
+Message-ID: <20260302084338.473368-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -122,125 +121,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-As a part of the confidential guest reset process, the existing encrypted guest
-state must be made mutable since it would be discarded after reset. A new
-encrypted and locked guest state must be established after the reset. To this
-end, a new boolean member per confidential guest support class
-(eg, tdx or sev-snp) is added that will indicate whether its possible to
-rebuild guest state:
+Very partial in its current state and results in significantly inconsistent
+CPUID data. Remove it until it's reimplemented later.
 
-bool can_rebuild_guest_state;
-
-This is true if rebuilding guest state is possible, false otherwise.
-A KVM based confidential guest reset is only possible when
-the existing state is locked but its possible to rebuild guest state.
-Otherwise, the guest is not resettable.
-
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-3-anisinha@redhat.com
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260223233950.96076-15-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/confidential-guest-support.h | 20 ++++++++++++++++++++
- system/runstate.c                           |  6 +++---
- target/i386/kvm/tdx.c                       |  1 +
- target/i386/sev.c                           |  1 +
- 4 files changed, 25 insertions(+), 3 deletions(-)
+ target/i386/whpx/whpx-all.c | 104 ------------------------------------
+ 1 file changed, 104 deletions(-)
 
-diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
-index 0cc8b26e644..5dca7173088 100644
---- a/include/system/confidential-guest-support.h
-+++ b/include/system/confidential-guest-support.h
-@@ -152,6 +152,11 @@ typedef struct ConfidentialGuestSupportClass {
-      */
-     int (*get_mem_map_entry)(int index, ConfidentialGuestMemoryMapEntry *entry,
-                              Error **errp);
-+
-+    /*
-+     * is it possible to rebuild the guest state?
-+     */
-+    bool can_rebuild_guest_state;
- } ConfidentialGuestSupportClass;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 2f2c613eda0..baa3169c55c 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1795,75 +1795,6 @@ int whpx_vcpu_run(CPUState *cpu)
+             ret = 0;
+             break;
+         }
+-        case WHvRunVpExitReasonX64Cpuid: {
+-            WHV_REGISTER_VALUE reg_values[5];
+-            WHV_REGISTER_NAME reg_names[5];
+-            UINT32 reg_count = 5;
+-            UINT64 cpuid_fn, rip = 0, rax = 0, rcx = 0, rdx = 0, rbx = 0;
+-            X86CPU *x86_cpu = X86_CPU(cpu);
+-            CPUX86State *env = &x86_cpu->env;
+-
+-            memset(reg_values, 0, sizeof(reg_values));
+-
+-            rip = vcpu->exit_ctx.VpContext.Rip +
+-                  vcpu->exit_ctx.VpContext.InstructionLength;
+-            cpuid_fn = vcpu->exit_ctx.CpuidAccess.Rax;
+-
+-            /*
+-             * Ideally, these should be supplied to the hypervisor during VCPU
+-             * initialization and it should be able to satisfy this request.
+-             * But, currently, WHPX doesn't support setting CPUID values in the
+-             * hypervisor once the partition has been setup, which is too late
+-             * since VCPUs are realized later. For now, use the values from
+-             * QEMU to satisfy these requests, until WHPX adds support for
+-             * being able to set these values in the hypervisor at runtime.
+-             */
+-            cpu_x86_cpuid(env, cpuid_fn, 0, (UINT32 *)&rax, (UINT32 *)&rbx,
+-                (UINT32 *)&rcx, (UINT32 *)&rdx);
+-            switch (cpuid_fn) {
+-            case 0x40000000:
+-                /* Expose the vmware cpu frequency cpuid leaf */
+-                rax = 0x40000010;
+-                rbx = rcx = rdx = 0;
+-                break;
+-
+-            case 0x40000010:
+-                rax = env->tsc_khz;
+-                rbx = env->apic_bus_freq / 1000; /* Hz to KHz */
+-                rcx = rdx = 0;
+-                break;
+-
+-            case 0x80000001:
+-                /* Remove any support of OSVW */
+-                rcx &= ~CPUID_EXT3_OSVW;
+-                break;
+-            }
+-
+-            reg_names[0] = WHvX64RegisterRip;
+-            reg_names[1] = WHvX64RegisterRax;
+-            reg_names[2] = WHvX64RegisterRcx;
+-            reg_names[3] = WHvX64RegisterRdx;
+-            reg_names[4] = WHvX64RegisterRbx;
+-
+-            reg_values[0].Reg64 = rip;
+-            reg_values[1].Reg64 = rax;
+-            reg_values[2].Reg64 = rcx;
+-            reg_values[3].Reg64 = rdx;
+-            reg_values[4].Reg64 = rbx;
+-
+-            hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+-                whpx->partition, cpu->cpu_index,
+-                reg_names,
+-                reg_count,
+-                reg_values);
+-
+-            if (FAILED(hr)) {
+-                error_report("WHPX: Failed to set CpuidAccess state registers,"
+-                             " hr=%08lx", hr);
+-            }
+-            ret = 0;
+-            break;
+-        }
+         case WHvRunVpExitReasonException:
+             whpx_get_registers(cpu);
  
- static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
-@@ -167,6 +172,21 @@ static inline int confidential_guest_kvm_init(ConfidentialGuestSupport *cgs,
-     return 0;
- }
- 
-+static inline bool
-+confidential_guest_can_rebuild_state(ConfidentialGuestSupport *cgs)
-+{
-+    ConfidentialGuestSupportClass *klass;
-+
-+    if (!cgs) {
-+        /* non-confidential guests */
-+        return true;
-+    }
-+
-+    klass = CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs);
-+    return klass->can_rebuild_guest_state;
-+
-+}
-+
- static inline int confidential_guest_kvm_reset(ConfidentialGuestSupport *cgs,
-                                                Error **errp)
- {
-diff --git a/system/runstate.c b/system/runstate.c
-index d091a2bdddb..13f32bed8cb 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -57,6 +57,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/runstate-action.h"
-+#include "system/confidential-guest-support.h"
- #include "system/system.h"
- #include "system/tpm.h"
- #include "trace.h"
-@@ -543,8 +544,6 @@ void qemu_system_reset(ShutdownCause reason)
-      */
-     if (cpus_are_resettable()) {
-         cpu_synchronize_all_post_reset();
--    } else {
--        assert(runstate_check(RUN_STATE_PRELAUNCH));
+@@ -2017,26 +1948,6 @@ int whpx_init_vcpu(CPUState *cpu)
+         }
      }
  
-     vm_set_suspended(false);
-@@ -697,7 +696,8 @@ void qemu_system_reset_request(ShutdownCause reason)
-     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
-         reason != SHUTDOWN_CAUSE_SUBSYSTEM_RESET) {
-         shutdown_requested = reason;
--    } else if (!cpus_are_resettable()) {
-+    } else if (!cpus_are_resettable() &&
-+               !confidential_guest_can_rebuild_state(current_machine->cgs)) {
-         error_report("cpus are not resettable, terminating");
-         shutdown_requested = reason;
-     } else {
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 01619857685..a3e81e1c0cc 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -1543,6 +1543,7 @@ static void tdx_guest_class_init(ObjectClass *oc, const void *data)
-     X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
+-    /*
+-     * If the vmware cpuid frequency leaf option is set, and we have a valid
+-     * tsc value, trap the corresponding cpuid's.
+-     */
+-    if (x86_cpu->vmware_cpuid_freq && env->tsc_khz) {
+-        UINT32 cpuidExitList[] = {1, 0x80000001, 0x40000000, 0x40000010};
+-
+-        hr = whp_dispatch.WHvSetPartitionProperty(
+-                whpx->partition,
+-                WHvPartitionPropertyCodeCpuidExitList,
+-                cpuidExitList,
+-                RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
+-
+-        if (FAILED(hr)) {
+-            error_report("WHPX: Failed to set partition CpuidExitList hr=%08lx",
+-                        hr);
+-            ret = -EINVAL;
+-            goto error;
+-        }
+-    }
  
-     klass->kvm_init = tdx_kvm_init;
-+    klass->can_rebuild_guest_state = true;
-     x86_klass->kvm_type = tdx_kvm_type;
-     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
-     x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index acdcb9c4e68..66e38ca32e1 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -2760,6 +2760,7 @@ sev_common_instance_init(Object *obj)
-     cgs->set_guest_state = cgs_set_guest_state;
-     cgs->get_mem_map_entry = cgs_get_mem_map_entry;
-     cgs->set_guest_policy = cgs_set_guest_policy;
-+    cgs->can_rebuild_guest_state = true;
+     vcpu->interruptable = true;
+     cpu->vcpu_dirty = true;
+@@ -2073,7 +1984,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     WHV_CAPABILITY whpx_cap;
+     UINT32 whpx_cap_size;
+     WHV_PARTITION_PROPERTY prop;
+-    UINT32 cpuidExitList[] = {1, 0x80000001};
+     WHV_CAPABILITY_FEATURES features = {0};
  
-     QTAILQ_INIT(&sev_common->launch_vmsa);
- }
+     whpx = &whpx_global;
+@@ -2183,7 +2093,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     /* Register for MSR and CPUID exits */
+     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
+     prop.ExtendedVmExits.X64MsrExit = 1;
+-    prop.ExtendedVmExits.X64CpuidExit = 1;
+     prop.ExtendedVmExits.ExceptionExit = 1;
+     if (whpx_irqchip_in_kernel()) {
+         prop.ExtendedVmExits.X64ApicInitSipiExitTrap = 1;
+@@ -2200,19 +2109,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
+     }
+ 
+-    hr = whp_dispatch.WHvSetPartitionProperty(
+-        whpx->partition,
+-        WHvPartitionPropertyCodeCpuidExitList,
+-        cpuidExitList,
+-        RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
+-
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to set partition CpuidExitList hr=%08lx",
+-                     hr);
+-        ret = -EINVAL;
+-        goto error;
+-    }
+-
+     /*
+      * We do not want to intercept any exceptions from the guest,
+      * until we actually start debugging with gdb.
 -- 
 2.53.0
 
