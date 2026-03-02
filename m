@@ -4,69 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC652D58E5D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9D8D58E5F
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwwSC-00044J-Rx; Mon, 02 Mar 2026 01:08:29 -0500
+	id 1vwwWD-0004sq-3l; Mon, 02 Mar 2026 01:12:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwwSA-00043z-JG
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:08:26 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vwwWB-0004sd-TK; Mon, 02 Mar 2026 01:12:35 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwwS7-0004IO-1t
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:08:26 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62268HhE029064
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 2 Mar 2026 15:08:20 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ZoFfjRsxtN8EiGeb0w9pwoTp6z1iu1miOKnT63Nbg48=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772431700; v=1;
- b=D8ntVfEALqSs2D/ilSWyS2D1wERbH8H1YQPsjAdUFkXuwKAk6XFkHoWO4b/CpI3r
- f8d3eWTffWKZGmxgqwnWxML7gV4VGIHdh1istp9tegGYKx4Fr4fZCvICcNu/xsn0
- wbE2akixik8G65MrJYf59S9jeRAJiva6jfi2wIvunnKhJ4M+KXMn+tThVPVpzwKt
- Y14cB+//zJyaX8ln3lvU0zm26P5yANZq8/vzCm4nrIW9ARFqRWTvgQnyuO3XpJin
- 27nk9fX5GX2hqls2n8aVtgMD7RopbQf4mXtaAX/aWT7XfZsqgRQoR5UjNpqq8DpF
- qhBQGFNL5cE3xlzefkqY2Q==
-Message-ID: <90bb995b-30f0-4d0a-b574-773ef47d798b@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 2 Mar 2026 15:08:17 +0900
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vwwWA-0004e7-AJ; Mon, 02 Mar 2026 01:12:35 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 621L0V3W1903139; Mon, 2 Mar 2026 06:12:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2RwJJy
+ jXVim+0ucGsj1vlTmj/rWxVUANho849tHk6n0=; b=QCBXQLekil8svKCBGboTps
+ UGIvAI1NqtYQGAq5ck6ZC4egjGj1jbh5lh4xFLvUqmFjabA4jU6vmErOWc/S9Vjp
+ iaCP65Sxy5dOCGOOf2Qna/kXILwMJclTzvUvwZONLXbN2Bfkrr6aCjDCKHyYN8zy
+ lS4C2sqIf6rSm9hx/sup/qy4Qyu7ZZQz4rOHcgVHeulxV+xgIvpekemLGnjRd7e4
+ eCrpYlkSwsB8zkkjavxjHDeXuNdarmNjFPrvsE2R5DIkcedATl8G4txeVXezffwO
+ XZPl7Qf/OnIKpCVzc+/GJMflrPnK6vIA/dJ6+sm5q2Uc5K/KPg1BwKP759PGL2PQ
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjd560w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Mar 2026 06:12:31 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62243BUY028908;
+ Mon, 2 Mar 2026 06:12:30 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmaprvq99-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Mar 2026 06:12:30 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6226CTZN21430914
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 Mar 2026 06:12:29 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D5C458055;
+ Mon,  2 Mar 2026 06:12:29 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC16E58063;
+ Mon,  2 Mar 2026 06:12:26 +0000 (GMT)
+Received: from [9.124.211.120] (unknown [9.124.211.120])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  2 Mar 2026 06:12:26 +0000 (GMT)
+Message-ID: <2b10ad99-5591-41fc-a957-0c601ea380cf@linux.ibm.com>
+Date: Mon, 2 Mar 2026 11:42:25 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260227221632.827046-1-vivek.kasireddy@intel.com>
- <20260227221632.827046-10-vivek.kasireddy@intel.com>
- <daa04cc8-c2ae-43f7-8e5c-a2e6d44b1f50@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185A75292BD4C70154A98CAF87EA@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB7185A75292BD4C70154A98CAF87EA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: Re: [PATCH v2 3/3] ppc/pnv: Add OCC FLAG registers
+Content-Language: en-GB
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, chalapathi.v@linux.ibm.com
+References: <20260210134647.2050821-1-calebs@linux.ibm.com>
+ <20260210134647.2050821-4-calebs@linux.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20260210134647.2050821-4-calebs@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69a52a4f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
+ a=VnNF1IyMAAAA:8 a=1uUI7C-GC6mqRRDD0YoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: hb_3-BXOXEelymN2xpylZt4I2QSQeRyZ
+X-Proofpoint-GUID: W1AurXSuzUKXmbE44iZqRp9Nh8yX-aoL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA1MiBTYWx0ZWRfX9CIQgoVhbFUn
+ W/u94GxtnDBHYvYnSaeOg3jA7NeYlTKUFDBUGb4WTktLpb8ueNE47offwjHzgSZquma8MDJDsCK
+ iz+UZx7V2jqgu0/RpR+o78ohpMrUDLtzzqr1MTEj9WnRcNndDzN9sYdexj+h/g8le9gxYDbU8Kc
+ 3VZS/H+PIlZd1JUdEk4l8C2GYmqvWl13XPLnbqn46hKRnRmHn9Jca659hYoMbRaZX5wSYr6+nKh
+ j2p4ShPTercOMgc8IxoRWn3Pct1ByTtkiJ7LkfwJJ4Yjc27eVbay+TzDceMGDyHFB7Prm5YlRQL
+ h90QuWeJj1Xor9jKLSSh0ODhLrc51QSye+OdJsspLIvd3TUi61hE10oMuHshLabru3FGJR5vtOq
+ SzMC0V1Aq4oXYkidI8TbqzopdesZmE80wDRlNqFEdWUQ6fmjY7It+vmowkezlY4lI5SJuM4/O7M
+ UZ3kxCtVVYfoA0ShUlQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-02_02,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020052
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,212 +123,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/02 15:03, Kasireddy, Vivek wrote:
-> Hi Akihiko,
+
+
+On 10/02/26 7:16 pm, Caleb Schlossin wrote:
+> OCCFLG are scratch registers that can be shared with OCC firmware.
+> Log reads and writes to the registers as a reminder when we run
+> into more OCC code.
 > 
->> Subject: Re: [PATCH v8 09/10] virtio-gpu-dmabuf: Improve error handling
->> with 'Error **' and err enum
->>
->> On 2026/02/28 7:13, Vivek Kasireddy wrote:
->>> Make the error handling more robust in virtio_gpu_init_udmabuf()
->>> by introducing 'Error **' parameter to capture errors and using an
->>> enum from VFIO to categorize Guest and Host errors. This allows
->>> for better error reporting and handling of errors from
->>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
->>>
->>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> Cc: Alex Williamson <alex@shazbot.org>
->>> Cc: Cédric Le Goater <clg@redhat.com>
->>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>> ---
->>>    hw/display/virtio-gpu-dmabuf.c | 61 ++++++++++++++++++++++++-------
->> ---
->>>    1 file changed, 43 insertions(+), 18 deletions(-)
->>>
->>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->> dmabuf.c
->>> index 8d67ef7c2a..b2badfc1bd 100644
->>> --- a/hw/display/virtio-gpu-dmabuf.c
->>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>> @@ -18,6 +18,7 @@
->>>    #include "ui/console.h"
->>>    #include "hw/virtio/virtio-gpu.h"
->>>    #include "hw/virtio/virtio-gpu-pixman.h"
->>> +#include "hw/vfio/vfio-device.h"
->>>    #include "trace.h"
->>>    #include "system/ramblock.h"
->>>    #include "system/hostmem.h"
->>> @@ -27,16 +28,18 @@
->>>    #include "standard-headers/linux/udmabuf.h"
->>>    #include "standard-headers/drm/drm_fourcc.h"
->>>
->>> -static void virtio_gpu_create_udmabuf(struct
->> virtio_gpu_simple_resource *res)
->>> +static int virtio_gpu_create_udmabuf(struct
->> virtio_gpu_simple_resource *res,
->>> +                                     Error **errp)
->>>    {
->>>        g_autofree struct udmabuf_create_list *list = NULL;
->>>        RAMBlock *rb;
->>>        ram_addr_t offset;
->>> -    int udmabuf, i;
->>> +    int udmabuf, i, fd;
->>>
->>>        udmabuf = udmabuf_fd();
->>>        if (udmabuf < 0) {
->>> -        return;
->>> +        error_setg(errp, "udmabuf device not available or enabled");
->>> +        return VFIO_DMABUF_CREATE_HOST_ERROR;
->>
->> I failed to point out one thing for naming of the enum. The name should
->> express if the error is caused by invalid iov or something else. Then
->> virtio-gpu decides how to recover the error; it's virtio-gpu who knows
->> the iov is from the guest and decides to report a guest error, not vfio.
->> Otherwise, it reports a host error.
-> So, it sounds like you are suggesting that there needs to be three enum
-> values:
-> enum {
->      /* Guest is responsible for this error */
->      VFIO_DMABUF_CREATE_GUEST_ERROR = -1,
->      /* Guest is at fault as the IOVEC passed in is invalid */
->      VFIO_DMABUF_CREATE_INVALID_IOV_ERROR = -2,
->      /* Host is at fault for this error */
->      VFIO_DMABUF_CREATE_HOST_ERROR = -3,
-> }
-
-vfio doesn't know if the guest or the host is responsible, so it cannot 
-make use of VFIO_DMABUF_CREATE_GUEST_ERROR and 
-VFIO_DMABUF_CREATE_HOST_ERROR.
-
+> Add RW, WO_CLEAR and WO_OR SCOM Type enums in pnv_occ.c
 > 
-> Or, please let me know in detail what changes you would like to see.
-
-A possible combination of values is as follows:
-
-- VFIO_DMABUF_CREATE_ERR_UNSPEC
-- VFIO_DMABUF_CREATE_ERR_INVALID_IOV
-
-I took the example of VIRTIO_GPU_RESP_ERR_UNSPEC and 
-VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER for naming.
-
+> Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com
+> Reviewed-by: Glenn Miles<milesg@linux.ibm.com>
+> Reviewed-by: Aditya Gupta<adityag@linux.ibm.com>
+> Signed-off-by: Chalapathi V<chalapathi.v@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin<calebs@linux.ibm.com>
+> ---
+>   hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++++++++++++++++---
+>   include/hw/ppc/pnv_occ.h |  4 +++
+>   2 files changed, 56 insertions(+), 3 deletions(-)
 > 
->>
->>>        }
->>>
->>>        list = g_malloc0(sizeof(struct udmabuf_create_list) +
->>> @@ -45,7 +48,8 @@ static void virtio_gpu_create_udmabuf(struct
->> virtio_gpu_simple_resource *res)
->>>        for (i = 0; i < res->iov_cnt; i++) {
->>>            rb = qemu_ram_block_from_host(res->iov[i].iov_base, false,
->> &offset);
->>>            if (!rb || rb->fd < 0) {
->>> -            return;
->>> +            error_setg(errp, "IOV memory address incompatible with
->> udmabuf ");
->>> +            return VFIO_DMABUF_CREATE_GUEST_ERROR;
->>>            }
->>>
->>>            list->list[i].memfd  = rb->fd;
->>> @@ -56,22 +60,30 @@ static void virtio_gpu_create_udmabuf(struct
->> virtio_gpu_simple_resource *res)
->>>        list->count = res->iov_cnt;
->>>        list->flags = UDMABUF_FLAGS_CLOEXEC;
->>>
->>> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->>> -    if (res->dmabuf_fd < 0) {
->>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
->>> -                    strerror(errno));
->>> +    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->>> +    if (fd < 0) {
->>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl
->> failed");
->>> +        if (errno == EINVAL || errno == EBADFD) {
->>> +            return VFIO_DMABUF_CREATE_GUEST_ERROR;
->>> +        }
->>> +        return VFIO_DMABUF_CREATE_HOST_ERROR;
->>>        }
->>> +    return fd;
->>>    }
->>>
->>> -static void virtio_gpu_remap_dmabuf(struct
->> virtio_gpu_simple_resource *res)
->>> +static bool virtio_gpu_remap_dmabuf(struct
->> virtio_gpu_simple_resource *res,
->>> +                                    Error **errp)
->>>    {
->>> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
->>> -                         MAP_SHARED, res->dmabuf_fd, 0);
->>> -    if (res->remapped == MAP_FAILED) {
->>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
->>> -                    strerror(errno));
->>> +    void *map;
->>> +
->>> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res-
->>> dmabuf_fd, 0);
->>> +    if (map == MAP_FAILED) {
->>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
->>>            res->remapped = NULL;
->>> +        return false;
->>>        }
->>> +    res->remapped = map;
->>> +    return true;
->>>    }
->>>
->>>    static void virtio_gpu_destroy_dmabuf(struct
->> virtio_gpu_simple_resource *res)
->>> @@ -125,19 +137,32 @@ bool virtio_gpu_have_udmabuf(void)
->>>
->>>    void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->>>    {
->>> +    Error *local_err = NULL;
->>>        void *pdata = NULL;
->>> +    int ret;
->>>
->>>        res->dmabuf_fd = -1;
->>>        if (res->iov_cnt == 1 &&
->>>            res->iov[0].iov_len < 4096) {
->>>            pdata = res->iov[0].iov_base;
->>>        } else {
->>> -        virtio_gpu_create_udmabuf(res);
->>> -        if (res->dmabuf_fd < 0) {
->>> +        ret = virtio_gpu_create_udmabuf(res, &local_err);
->>> +        if (ret < 0) {
->>> +            error_prepend(&local_err, "Cannot create dmabuf: ");
->>
->> This error_prepend() is redundant. The error messages
->> virtio_gpu_create_udmabuf() emits already suggests they are problems
->> with DMA-BUF.
-> Ok, I'll drop the error_prepend().
-> 
-> Thanks,
-> Vivek
-> 
->>
->> Regards,
->> Akihiko Odaki
->>
->>> +
->>> +            if (ret == VFIO_DMABUF_CREATE_GUEST_ERROR) {
->>> +                qemu_log_mask(LOG_GUEST_ERROR,
->>> +                              "Cannot create dmabuf: incompatible memory\n");
->>> +                error_free(local_err);
->>> +                return;
->>> +            }
->>> +            error_report_err(local_err);
->>>                return;
->>>            }
->>> -        virtio_gpu_remap_dmabuf(res);
->>> -        if (!res->remapped) {
->>> +
->>> +        res->dmabuf_fd = ret;
->>> +        if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
->>> +            error_report_err(local_err);
->>>                return;
->>>            }
->>>            pdata = res->remapped;
-> 
+> diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+> index 64cab3e9dc..b9f69daffc 100644
+> --- a/hw/ppc/pnv_occ.c
+> +++ b/hw/ppc/pnv_occ.c
+> @@ -195,6 +195,49 @@ static const TypeInfo pnv_occ_power8_type_info = {
+>   #define P9_OCB_OCI_OCCMISC_CLEAR        0x6081
+>   #define P9_OCB_OCI_OCCMISC_OR           0x6082
+>   
+> +/* OCC scratch registers for flag setting */
+> +#define P9_OCCFLG0                      0x60ac
+> +#define P9_OCCFLG7_OR                   0x60c3
+> +
+> +enum ScomType {
+> +    SCOM_TYPE_RW          = 0,
+> +    SCOM_TYPE_WO_CLEAR    = 1,
+> +    SCOM_TYPE_WO_OR       = 2,
+> +};
+> +
 
+Would be more suitable to place above macros, enum in pnv_occ.h,
+but that's trivial and can be taken care as a separate patch later.
+
+Queued patch 1,3.
 
