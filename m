@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31F3EA4E07
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 14:05:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB4CEA4E08
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 14:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx3tf-00069a-TX; Mon, 02 Mar 2026 09:05:21 -0500
+	id 1vx3td-00067k-DZ; Mon, 02 Mar 2026 09:05:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vx3sQ-00052V-5I
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:04:18 -0500
+ id 1vx3sb-00056J-8l
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:04:24 -0500
 Received: from
- mail-switzerlandnorthazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c213::5] helo=ZR1P278CU001.outbound.protection.outlook.com)
+ mail-switzerlandwestazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c214::1] helo=GVAP278CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vx3sN-0003rN-OT
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:04:01 -0500
+ id 1vx3sV-0003rA-C0
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:04:12 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SGQE3h39Dz62xGRdYfHGAOwntcOGLY3GzJ4DGNPogsK4HaGTVWmwQnN6+1paQ31LvasLps6vLzZxpPHpYzJyor3jEFZF35FfMyTBnEex5eRmnNW7LbmJE045zWn2InukHE07aSDAmNFnz7BsnhJMhT/YkyENVu2oeLGDdetObwlWIBh3hgEZsvvznjusiMcA0JoSC2L0eOoxepY565m8DH2uDmiK89w2+gmRTUYAZuUp3ch+BMYbzplZSWy5II5NR64IggQgsQpJWjG5FixDzt6VZuPwSywe5T99R/kXXYTMsDrHNoqd3GdVHoyCz+fqDdTchCJ5MohjxMsE6NrwJA==
+ b=vJR9NjNHvZ2mqHm4IX0irhcV6YyrzsosgFckWdzk1obrOBwdpkgbjWcWVHbn3V9fI9l+qLbKZuWbukVkM9dqXN7OKZ4koCvzi4WhH6qZCjeqFsm/xclR9EBngO/8bfG4gtN4sW+UASIRqMuBqBY+pvOHQczlY6adBrcEyDaWJ9K09vrzXCLWP49Pmk+4BZCVdg+Sn8yu5a6d50/HYxWejtH7Y939+WzleCZ+PrkXKrdRE/SaiW9kmQnoEhsvh6IUYLkMxot2qWRycHqvqhq/EtJLw8Os5wbn1jbH/GCTVSVwDSeYgykM8daLp6OqzxtlSRuPNfEx+3bkJWg/Cme0eQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3A1hW6ZIYH0mOw4HKORhLgmid2hj+3pe+wmCtQdpK0Q=;
- b=K9zN9jz8bGW9HrK7b9xiJgAYi6ZaEBegRLBpta4WtlW3baiF49K/dSs5TpPVhtC4li68Ygmi2Z/Zoc04byN5/5xwzgL/c9xlDapbvwUTb969RRgjn/IOk9ekJcWP5j11yAHEw3zb1HU920QzAddgT900DH/ogAOZU0p1YhZTqGP8xjeGhr6FusPARbjM3jg2VVdbMMF3U5ymp6pFn4RRdcWKgq5olA4NyIBTAHgcdsZiEVTKsUsGrJMXFuheZH2pQjlEadzC6Fi3Tgc/sZYN/lUtJGr0FzjrjsjLglSnR0Xgp9XWGsLiSopE4ZMo782VDFyUqqbUHdKQbp9bcL1g7A==
+ bh=Mc8d1+imrsWx3XRJ95PRKYs/hR1p9upNC0FbNzCZ19k=;
+ b=b4xbpp//9Yf+SYVvBGSz9OyPiPiHWe4h9kG8/O/wjmgolEV0JiDRnXYDzcuZi7bnLSKcxUbwPHfp56DTLJ/AbIhn58/fC4LTrR+Zm5Zkrlarx9NZE/VATkiDQg9ZgHdjlzTo3sdpMdbEJh3fE3Y06ImoWHQiHuRcU2jDuww9FIvQi3M5qxAbXhQ9Y2RMPAD3gu/tJc6OFdC3wAAmdMTPLe01nAIjglj/xA5qJBmxpBJ1auoIHQp90TJR2dJ0MSlEmmbYtAaIX8ehzET8eCgN2QFu68qk0Cf5drLARkLMy5oF7Q6mzC/mQ34/OpuU/LNt2H6WohGSg3TgP7teIHpPjg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3A1hW6ZIYH0mOw4HKORhLgmid2hj+3pe+wmCtQdpK0Q=;
- b=XQHz2/DkkU0nyI6iZxZBqFoIxYBlPprDeJPWC5Uq7xL9zioZl8gqKzL3kdwC+dh7pJtSVpmphqyqN9J+WAr046+c0QKwQ2sP7MId98u3lLFJPBWa2w0krFsHKtRhQQ3XH8ts1zleJklw91yxwzEAPZpVy6G+Dl2/pFGzc0uTOfQ=
+ bh=Mc8d1+imrsWx3XRJ95PRKYs/hR1p9upNC0FbNzCZ19k=;
+ b=rY7j2j6fTLIDwcO4SV6/+ijbuYydrbM9D5siBjS2GP0X/v8Hy0N3Euddl0yn0wWucC/YenQiGgZE4ftPY0PxhOpfgq9K4PQuKYixBUSiMcsbofzKyovNuA4nMbLxRNtbBWQBtI7UqeAW1nGUEWn81PeN+5VIgaiDOADhumMS54A=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by ZR4P278MB1788.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:b4::22) with
+ by GV0P278MB1029.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:4e::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21; Mon, 2 Mar
- 2026 14:03:50 +0000
+ 2026 14:03:48 +0000
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9654.020; Mon, 2 Mar 2026
- 14:03:50 +0000
-Message-ID: <80238c4b-2a40-42d3-b9c0-2a2b000812b0@epfl.ch>
-Date: Mon, 2 Mar 2026 15:02:13 +0100
+ 14:03:48 +0000
+Message-ID: <11fbe855-37cb-4703-b143-66563b881a4e@epfl.ch>
+Date: Mon, 2 Mar 2026 14:59:12 +0100
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v5 7/7] tests/tcg/plugins: test register accesses
+Subject: [PATCH v5 4/7] tests/tcg: add test for qemu_plugin_set_pc API
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
@@ -110,75 +110,75 @@ X-ClientProxiedBy: GV0P278CA0090.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:918::220)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR4P278MB1788:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0ab8d4ef-e2b2-4325-ce5a-08de7864876a
+X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|GV0P278MB1029:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc0ffe07-d158-4dcf-4b74-08de7864864a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|19092799006|1800799024|786006|366016|376014; 
-X-Microsoft-Antispam-Message-Info: JPXFtkseR3GJTCKLb/vRitpo8gwZLv7HiVmBhsAvebNn/xZArrhqVXr4HPssDxyHm7TQDVzxMctxq29trl785kwIjIYIRcOs6mY72jfbNSsATJDU72chSqhSV8xtWaZukVZeK+wlkq1CMik7GFJZmlrRIrM65sBpf4Nx8Ij6KrGGrgDinhCR3lZq2ViZ7UXwjymd7kKJsxzTSZeqc/es57oC4Gyppzmad+rRH2yJFndA6ETVoJp5aE7xtWwE3UqiOwpCjHZjTEzTN1dHWO0qOhHa6sFUOOQ/GlfFTi9Z+fzHMxk7v5orpHFPH//nOn2soqUSmkAMUiOYoONPgL2VCprhqM7lJFY7MROpstI325xNGYUAJxIH2A4Su3bIa4VhTTxQLnIEK0/S8qvSOK9Walm8ggmbvF//Kq2+KlH+V3hKWG3zjSgZOexj+OJyUOHBDB0WV+6f4gOUZfM0iM1Ivt+YEZWirCqE2PypDqx0iRB5v382Mt+RnkGfCDq5avMElbwvMGbRkMcZk/TEcCS2QNtH6pYiU6H3/vFNCWX6MlbKOf3S6Xo3P9vvh2G6P3m6e23Zkza8npYROq/MMfN0Eh4EzwwxFsg/b2rFfLylcqdICoMFsfLGLzZ6xTnKIGgqAByYaYyhJmEYrBr8i/iN7lTc2qNx+6xjr7BWP2sey2vMBQaZj/UiDXMrelxnaO7otJZ0GZouGkCNJDRVixIl9g4wqSplWO3ufFo5AcuAj58=
+ ARA:13230040|376014|786006|366016|1800799024|19092799006; 
+X-Microsoft-Antispam-Message-Info: 0hAJERx++uYF6NOw6fUGzk+tSwJ+1+172M9ytZFYYcJ8Wlcno7wr8pgJ6u5XP5lVX15b4tlZv+Z48LqzopY6lJUdxd1WYSYGI+a8n60ghbeAiDGpptZwydt7mQG8e2vAXiLOynRi6ROPJNuH9WXotMxNa4EJSo0cakF580YUoXdXUqMGW1fyGArPik8aDWnnkmckIzPVdxheEPWLfGsFm5fQkZAkgl1JAzRYbRgNrumPvySTtQtp7elNRbxCZONP1VngXBZGpU7JkUbCH8tFCjxDB/+I5W5JvmYCSX/7JgZE1iPAm9mmiys1OhImt4weig3EamCMaTfusgiUF7lim4kUoHsrtQwsePmwYHXOht995fyn5KwduuEHwM8wb9gl6/COAWT7WeJylYc0YcHovvlnX/1sEA9wo1WlQsuzojYi21ez2IShPNg4Qdn6skj6/N8JbZS0fekw6y8tMR8+DDVsP3bn1QBFEHLPeZ27KMpb8mMIYANcKxCh6Pzlmmluc7IXfy7MLpvGU2IH6XaYkO8Rdpoc9We+lKYVrDVyw34s4VkTY0ijp0+J+W+ImropWbxuqvhWJITDIUgy6xKkqtlCUyGKsQd9Dbvrp1BZklCe1reWn5XZ0XBRspoSVvOn74vVJWaRZ5zQ8YXYtCeJG9h2aT6mbRF7mQsfUK7BR4pAlkm66nRyFpzYA1PCCRg40gU807op4VM8n4YypNhkz0LrGFxnv3smVAmre5HtJ2s=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(19092799006)(1800799024)(786006)(366016)(376014); DIR:OUT;
+ SFS:(13230040)(376014)(786006)(366016)(1800799024)(19092799006); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YWRIZFMvQ3VvRnh4ZERpbjBsaTVFV0dqWU9zWitYOVJieTZjd1o3OXVnSFpG?=
- =?utf-8?B?R05MVkgxbmVoNC9UdE9OaGpla2NES3hQVHB4RjBZV3dybHB1eDN4YmxLdWlh?=
- =?utf-8?B?YzJtZ2RvN1Iwei92UFhHQWJ4NU1zRlhrdGNWb3NGaU5xZkVIbG9GeHdROVUv?=
- =?utf-8?B?ZFU2ZFp1Y3luWFRJeFI1eGt6UTNFVVhSVHJWQ1R6eFNhVFpmQUdTSlZhUkxH?=
- =?utf-8?B?MSsvc01mYVZrdnhtZk44K1Z3dm9RUWFsZVJWcUVyMG5TOERxdXNjbjRzVmV0?=
- =?utf-8?B?MkRucHUrY1U3V1JrdUJhb2p1UkNRck1KenR2a0wxemRJL21peHdiRGFSVFQx?=
- =?utf-8?B?VUd6ZmpSNmtYa3F1NXhaSmJpU2Q0R05IMXVXd1VhRXpyTE9ZSGFkVUV6MW5K?=
- =?utf-8?B?bWlqSVphK0l5T0RxTW45cWJMMWp4clR1dE0zU1RxdW5GMExxRmxNK00xSWdk?=
- =?utf-8?B?Vlk1OFZBZHFhejZCM1M3SXVEbTFkeEtDV1VpK1JiY0krT0Q5R0VGRkM0bk5p?=
- =?utf-8?B?WTZIWjlqSjBKUUdtaGNxakEzY3lmeHo4L1Y4U1AyZkhTRm8zblVBNWVmc3ox?=
- =?utf-8?B?bWp1bkRxUE1BNXV2bzV1dWVDYUo3MXFHWWF5S0dwQUwyT1J5SHl1ZzdYaUxD?=
- =?utf-8?B?bW44SklYTGxmcXQrR2FoL1d1MnNuUGtUTUFWN2dpUnZETmlNWEtRZ0hEdDVm?=
- =?utf-8?B?ckZnODR5WFplbFN4MmhrdkNWWkgxUCtNZy9NL2FuMVYwR2hLaDZlR0FNeUZn?=
- =?utf-8?B?dzJHeUt3cVYvTkU1eHNhVUMzdjc2STQyaENJU3F0NytlNU04bHEvRHEyZmZm?=
- =?utf-8?B?TE0ySjFjalFUSnRjelBQZFdJeGN5d1RtZTRQSksrd3E3OVZtRHhVMkNMOTBp?=
- =?utf-8?B?NktpYkYvU1ZFYmlDRE5qdi95VldKMlJ2QjR1SE5xNXZSQkRQZmpLY3RCbU1B?=
- =?utf-8?B?WXhwZ1lGYldENEFIVmpyTUdGbWYvLzBFaHZTQjdCNHRORlFjNGNIaEp5ZXVR?=
- =?utf-8?B?SjR0WVNqRDBlTVYvV2JmUmZzRzRFVTlUM0tYVmdGN0ZYVWd2cUJLK0Rycm9W?=
- =?utf-8?B?ZWMvakNCbGNrTjlGNXNxWGlYQWJsdXh4UUtFNmJpa3ZtWjhFQmJyOU9hRkdZ?=
- =?utf-8?B?RitFc1plWTRkcUxEK3lnd2lzU2RVNXQ4bzFDRGl1blgvMmJheEh2Yi9EK3lL?=
- =?utf-8?B?ejk1OU45UWdUR05MaFlKamRjczMxNWFVaU4wdTIzc2R4aW5uZkxMcm1WaXgw?=
- =?utf-8?B?bjgwQkVFaUNTdkcrMmxxdkNvcGVDSDRPWkNlcXEzWGV1WVAxdUtRR3MwTzVG?=
- =?utf-8?B?OG9TWHlLSVZsREw5dExOcE5MdkMyQUxzUDNGbFhVUnhpN2lYY3BmeDdoQ1U3?=
- =?utf-8?B?cndVV09CRklJTUtNYS9mQmJtZXBBK1g4VGt2QlV6ZzZDanBScExnQXBoc3RO?=
- =?utf-8?B?OUlWWDFaeUVFb0xyMmk3eHVJUFJMVkp2UG1NTm43RjdxUG1XR0N2RzhBZWRl?=
- =?utf-8?B?UTZjalN4cnJUR1VualprdloyUU5iVzlsWjAvSlp5MnpoN21nc3pmRGNrc3Fo?=
- =?utf-8?B?dnBoRG5pNWNYb1BYdWV2Sm5nRlBFWm1tVWZGNW5aM1lWRjNBN2J1UElpZDlo?=
- =?utf-8?B?RysvdXdoMmVkNVA0T1NJbnRPUGFMeHA1ZjJiYzZUY1R3M1BEK1dpVE12Rlgz?=
- =?utf-8?B?TE45RGE0bFJFMXhNSHJCclZxSVJ2cXVaeG9YYU9qcmluQkx6N3RFVFFOdGZ4?=
- =?utf-8?B?YktXQlJRNUR1dUJ5Y0dGbXdndjJyNis1cC85QTh3Z2FzVjkrMEZNcmNIdXNP?=
- =?utf-8?B?MWNZdEZzK3R2YW1IRmxQRVZSWmk2cDczVTN5Y0lCakJGcjN0cFNFbGN1bDlz?=
- =?utf-8?B?SnBOaUlFMnRwa1Z4QzBYNGV5Yk8wMFJ0b3lWVG10QWdZQkpJWjNHZzI4amNC?=
- =?utf-8?B?S3hKWXFkcklQMVl4VWs2MGVYVlhrVGxnQTBDN2NBTkxEblNkc2Q3eFpXemdS?=
- =?utf-8?B?c283QWl4Zy9BcnZWaGZQUnZ4V2VzNlAvSmRyQjljVkpZa0IvZlBKNnVaSmhi?=
- =?utf-8?B?VjdSL2IrZms3ZWpHZXJRSlg5eng1TWs5NzFQRTBDL0t1Q1RtbEYzSXExYUkr?=
- =?utf-8?B?RFlnbXM1SDdRdHdocWlobThtNzExNFAyb0dDSXBYSDAvbHozNThSZjh5RWI0?=
- =?utf-8?B?MTh5b3NlWlpvV3pyc3BaeUVMWDNrSHFiT2U2QlFmQTlOcUF6ZitPYkQzM2pY?=
- =?utf-8?B?TThLRTdYeGtidCtaTlJ1WjhLbWhzWWhiUnFHVHcwajc0bXc4eVNTZFZWb2o3?=
- =?utf-8?B?NWNwT2J2RVYwY0JtdDJCcVl0QVF5UlFGWWVoSmxjVmtwSjlSUmk1UT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cEFwa1JUVEsrcDcvcm5oNHN2M0RNUGh3dytaaGtrMUZpcmpadTBNVjlIYWJM?=
+ =?utf-8?B?MFRLNEF4Q1o0d3Y1bHRtNHp6VTZSS2RGc2FPRDdmS1cxenBtNGRBd0E4Sy9v?=
+ =?utf-8?B?YU5sbkZ1bC9GbGF2ZU16ei8zbDFsZXFISEQ1S0RvbU9Kc2YzZHZER3BDOEd2?=
+ =?utf-8?B?dVlmUjZ2SkFNVitLcFdSd044MWlHTUZIVjdzUGRpQzRkUGxhTW5ZRVBRUnc2?=
+ =?utf-8?B?OThpT0U4RXBxVVpYNG5BbUhHLzltbUJsMUZMN1R3dklXdVlhcUlkVGNzQ2JC?=
+ =?utf-8?B?VUQ0ZUNNeERBNlVmRVdvbG45U0c2d2FhTmwzaldYODVudkFzdmFmMjB4alU5?=
+ =?utf-8?B?aVdUZHVmcDdvL1VUZ1lOWHUxNDNCS25IdEVjNmk0UldaUndJY2tDdFY5aVFS?=
+ =?utf-8?B?a3JvRGtnTU5PdzVpZVJPalNsbU11ZUxWc1RZTDhiZnBIdUh3cGNRSDFudE91?=
+ =?utf-8?B?czRxWHZtQ1pyem9qU1JVcFpmcyt1emRUdmxhaVp5TlFyLzdpeUF3TFZLN3pB?=
+ =?utf-8?B?M29HcE5CVlJFNEhLOFFMZmRqZlByNC8rYWU2TnF0elMzVytYTjkrdkkzb1pS?=
+ =?utf-8?B?T3ZhQWhzTGtJQWljZkhUTWtJTGtBNlU2UXJOMWJaTE85QnBoRzJ6Zks3bUE2?=
+ =?utf-8?B?MnpiQjZ4VWhmdVFPUm9sL0ZPQ2JsWVhCaUVnM0ZoNVpncUxtYW9FbkRWVTFE?=
+ =?utf-8?B?ZW0zb1dPenpuWTdIeXNDcFdSSGlYalI5RXJGZXA0WVQ2UDZiR2pBSWhoMmV5?=
+ =?utf-8?B?elhOaTZSZTBnWVpUcVFhRUpBVlFmV3lORWFvWjZEU0xJTUZBVjJHZ2M3SDFt?=
+ =?utf-8?B?M0dBSXA0RHFYNlBtajFmSjRFeG1HKzlOWEtZMW1ZcWJGbGlMSFdxLzJPYWpY?=
+ =?utf-8?B?c0RHRGRTWnhwRllZSExxNTVDNHVSOXo5OHFjdEs4cWdSajZ1WjIzYi9CNm8z?=
+ =?utf-8?B?Rlcwd2Y4S2xEZnBqQ1l4WHhtQ1hlYnhVNDFUUHRPd0F5ZVhCY2l2SWNHOWRh?=
+ =?utf-8?B?VlRNV2JqdFN1d2RUcHl1clVmL051TEFhVEo4MEtaa1FaNFZ5cUdabnBKdWQ4?=
+ =?utf-8?B?eXRUMTgxYk9BcklvZTlQcFp4U0ZBZFVGUmdrL1NqZHozUUcvdHZaZExFUlNX?=
+ =?utf-8?B?SENyNGRMYmtDVmpRMWVzZHFTWDZOczVDMEdTeFh5WC9KK3M4YVpaNVFLeUZG?=
+ =?utf-8?B?UEtrTUdxdXhsUFdTc0ZDb3duU3Vmb2pROThYUmE0VGdjcUc0UVNFbTFKZ2lu?=
+ =?utf-8?B?Y2RBdWhzSkt0eTlGdGtTdVVpR1lWVEswZFJTd3hIREwvUXVnWmwvVTI4ZUlk?=
+ =?utf-8?B?RXNuNStNeC9GQ3F6QTFCSHJqbFk1MW9vNmdvTGcxZFp3aFYrM0dWVlRqZW5R?=
+ =?utf-8?B?TVdBODJQU2dXMW82OGNFcWRCNUh2TGk1YWUwdzExMnFmY2FoRDhyUjhPbmZ6?=
+ =?utf-8?B?dWMxNGZDQmlQYUxJOE1pSGdPZXdqN0VhU3Y3WVczVHRETnVxMmhaOE5ZcFJK?=
+ =?utf-8?B?Smp5ODJLcnZnUWxCQkZsKzdFc1BydnExeXAxR1FyTEh5bnBpdVRTRUdVVkt1?=
+ =?utf-8?B?WGxscUUvd2doRVhkbVpWL0pBMXIrRXdEandxOWZqUy96NHd3U0ZVSVhQR2NT?=
+ =?utf-8?B?YnN2WHhNaCtPNG4xOHlFUDQ0aGxTa2RGcG9nczJNbnhJM1BwY1duNGhCdmlW?=
+ =?utf-8?B?SzduZEpqU0tWQ0pnOEtSVWZXMW04L08vRWtPbldVRUs5enJkcXNYSkdaR3Z5?=
+ =?utf-8?B?NVN0OUI0aU5vbjBUS2ZpUmt2aDNkQXZuRlc1RUhKR0pFNDhhMmV3NUZZdVI4?=
+ =?utf-8?B?REJ0TXJqcVVLTm93cFczelhIeFBFQnkzL2FkUWVTRWs5MWVxc2wxNEZkRTIr?=
+ =?utf-8?B?bzhCZzMxamtZZ1VtcnlETmpLTkhPZm9CbTRQSnY0cFZlY2dvclUwQmkyOVlJ?=
+ =?utf-8?B?TkhsL0xoVGVRNVFqbk9TcUs3OFdoV0lITzBEYzBtZm1BdDM1QmhpRDZCTits?=
+ =?utf-8?B?RUhxUDg4bW1seGJLS2puZEo5VnBwd0ZTcno0U2hEZnRSSXNkbktmMFM1WXUy?=
+ =?utf-8?B?YVI2M0xIQml2U2ZOTW8rZFVLZ3hFWkpFdiszMHduS3dqSmhnTVA4bjRVam9k?=
+ =?utf-8?B?ck42WnlwMHlIaXJlZ2l4dkFVeWhyRFJuaThkY0RXUnQ2ZjZZY29NTkNjZTRN?=
+ =?utf-8?B?OW1LdkVKek1kMXFvOGxUaDZPcEgvdFZTa0lqQzVCTTUxMVNXemY5TEVFejJv?=
+ =?utf-8?B?RlRydDNiY2xjQVlVaS9Xc2g3elpEbHJWdVZwVXU3dFZoTDlpcmhMYWQ5Vko0?=
+ =?utf-8?B?eDBLVU10ckc5RE5UTFNabEphNHhiNENlUkJkOGtqVHZETGhYUXl6Zz09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0ab8d4ef-e2b2-4325-ce5a-08de7864876a
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc0ffe07-d158-4dcf-4b74-08de7864864a
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 14:03:49.8397 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 14:03:47.9553 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eh8nrAwL4qDiuQMWZViaQneIhFgdUYSnK50sS95MQz0MedvXNVvEa5+uswQNTDmbHSOiq63SlO4BG7OInq4KR20Os2zKhSSyMkNUnK8ojv0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR4P278MB1788
-Received-SPF: pass client-ip=2a01:111:f403:c213::5;
+X-MS-Exchange-CrossTenant-UserPrincipalName: UzopiO3fKqzZILRlz+Ve4Kw8FkYPrdLtNtiZXPDB5Nfy6iYr87/9ROz1tKKAeuvqHt7j60Yf+FKFblfSmes3ekj1SOODLQY3tmVvPYinUkQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV0P278MB1029
+Received-SPF: pass client-ip=2a01:111:f403:c214::1;
  envelope-from=florian.hofhammer@epfl.ch;
- helo=ZR1P278CU001.outbound.protection.outlook.com
+ helo=GVAP278CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -195,113 +195,383 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The additional plugin tests register accesses, specifically both for
-read-only and read-write registers. Writing to a read-only register is
-currently not tested, as this would trigger an assertion and fail the
-test.
+The test executes a non-existent syscall, which the syscall plugin
+intercepts and redirects to a clean exit.
+Due to architecture-specific quirks, the architecture-specific Makefiles
+require setting specific compiler and linker flags in some cases.
 
 Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 ---
- tests/tcg/plugins/meson.build |  1 +
- tests/tcg/plugins/registers.c | 79 +++++++++++++++++++++++++++++++++++
- 2 files changed, 80 insertions(+)
- create mode 100644 tests/tcg/plugins/registers.c
+ MAINTAINERS                                   |   1 +
+ tests/tcg/arm/Makefile.target                 |   6 +
+ tests/tcg/multiarch/Makefile.target           |  17 ++-
+ .../{ => plugin}/check-plugin-output.sh       |   0
+ .../{ => plugin}/test-plugin-mem-access.c     |   0
+ .../tcg/multiarch/plugin/test-plugin-set-pc.c | 140 ++++++++++++++++++
+ tests/tcg/plugins/meson.build                 |   1 +
+ tests/tcg/plugins/setpc.c                     | 120 +++++++++++++++
+ 8 files changed, 282 insertions(+), 3 deletions(-)
+ rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+ rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+ create mode 100644 tests/tcg/multiarch/plugin/test-plugin-set-pc.c
+ create mode 100644 tests/tcg/plugins/setpc.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 606b16762c..2746ec9a0b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4083,6 +4083,7 @@ S: Maintained
+ F: docs/devel/tcg-plugins.rst
+ F: plugins/
+ F: tests/tcg/plugins/
++F: tests/tcg/multiarch/plugin/
+ F: tests/functional/aarch64/test_tcg_plugins.py
+ F: contrib/plugins/
+ F: scripts/qemu-plugin-symbols.py
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 6189d7a0e2..613bbf0939 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -78,4 +78,10 @@ sha512-vector: sha512.c
+ 
+ ARM_TESTS += sha512-vector
+ 
++ifeq ($(CONFIG_PLUGIN),y)
++# Require emitting arm32 instructions, otherwise the vCPU might accidentally
++# try to execute Thumb instructions in arm32 mode after qemu_plugin_set_pc()
++test-plugin-set-pc: CFLAGS+=-marm
++endif
++
+ TESTS += $(ARM_TESTS)
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 07d0b27bdd..a347efbadf 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -14,6 +14,10 @@ ifeq ($(filter %-linux-user, $(TARGET)),$(TARGET))
+ VPATH 	       += $(MULTIARCH_SRC)/linux
+ MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/linux/*.c))
+ endif
++ifeq ($(CONFIG_PLUGIN),y)
++VPATH 	       += $(MULTIARCH_SRC)/plugin
++MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/plugin/*.c))
++endif
+ MULTIARCH_TESTS = $(MULTIARCH_SRCS:.c=)
+ 
+ #
+@@ -200,13 +204,20 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
+ 	PLUGIN_ARGS=$(COMMA)print-accesses=true
+ run-plugin-test-plugin-mem-access-with-libmem.so: \
+ 	CHECK_PLUGIN_OUTPUT_COMMAND= \
+-	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
++	$(SRC_PATH)/tests/tcg/multiarch/plugin/check-plugin-output.sh \
+ 	$(QEMU) $<
+ run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
++run-plugin-test-plugin-set-pc-with-libsetpc.so:
+ 
+ EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
+-			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
+-else
++			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so \
++			  run-plugin-test-plugin-set-pc-with-libsetpc.so
++
++else # CONFIG_PLUGIN=n
++# Do not build the syscall skipping test if it's not tested with the setpc
++# plugin because it will simply fail the test.
++MULTIARCH_TESTS := $(filter-out test-plugin-set-pc, $(MULTIARCH_TESTS))
++
+ # test-plugin-syscall-filter needs syscall plugin to succeed
+ test-plugin-syscall-filter: CFLAGS+=-DSKIP
+ endif
+diff --git a/tests/tcg/multiarch/check-plugin-output.sh b/tests/tcg/multiarch/plugin/check-plugin-output.sh
+similarity index 100%
+rename from tests/tcg/multiarch/check-plugin-output.sh
+rename to tests/tcg/multiarch/plugin/check-plugin-output.sh
+diff --git a/tests/tcg/multiarch/test-plugin-mem-access.c b/tests/tcg/multiarch/plugin/test-plugin-mem-access.c
+similarity index 100%
+rename from tests/tcg/multiarch/test-plugin-mem-access.c
+rename to tests/tcg/multiarch/plugin/test-plugin-mem-access.c
+diff --git a/tests/tcg/multiarch/plugin/test-plugin-set-pc.c b/tests/tcg/multiarch/plugin/test-plugin-set-pc.c
+new file mode 100644
+index 0000000000..40d9a9e8f0
+--- /dev/null
++++ b/tests/tcg/multiarch/plugin/test-plugin-set-pc.c
+@@ -0,0 +1,140 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Copyright (C) 2026, Florian Hofhammer <florian.hofhammer@epfl.ch>
++ *
++ * This test set exercises the qemu_plugin_set_pc() function in four different
++ * contexts:
++ * 1. in a syscall callback,
++ * 2. in an instruction callback during normal execution,
++ * 3. in an instruction callback during signal handling,
++ * 4. in a memory access callback.
++ * Note: using the volatile guards is necessary to prevent the compiler from
++ * doing dead code elimination even on -O0, which would cause everything after
++ * the asserts and thus also the target labels to be optimized away.
++ */
++#include <assert.h>
++#include <signal.h>
++#include <stdint.h>
++#include <stdlib.h>
++#include <stdio.h>
++#include <unistd.h>
++#include <setjmp.h>
++
++#define NOINLINE __attribute__((noinline))
++#define NORETURN __attribute__((noreturn))
++
++static int signal_handled;
++/*
++ * The volatile variable is used as a guard to prevent the compiler from
++ * optimizing away "unreachable" labels.
++ */
++static volatile uint32_t guard = 1;
++
++/*
++ * This test executes a magic syscall which communicates two addresses to the
++ * plugin via the syscall arguments. Whenever we reach the "bad" instruction
++ * during normal execution, the plugin should redirect control flow to the
++ * "good" instruction instead.
++ */
++NOINLINE void test_insn(void)
++{
++    long ret = syscall(4095, &&bad_insn, &&good_insn, NULL);
++    assert(ret == 0 && "Syscall filter did not return expected value");
++    if (guard) {
++bad_insn:
++        assert(0 && "PC redirection in instruction callback failed");
++    } else {
++good_insn:
++        return;
++    }
++}
++
++/*
++ * This signal handler communicates a "bad" and a "good" address to the plugin
++ * similar to the previous test, and skips to the "good" address when the "bad"
++ * one is reached. This serves to test whether PC redirection via
++ * qemu_plugin_set_pc() also works properly in a signal handler context.
++ */
++NOINLINE void usr1_handler(int signum)
++{
++    long ret = syscall(4095, &&bad_signal, &&good_signal, NULL);
++    assert(ret == 0 && "Syscall filter did not return expected value");
++    if (guard) {
++bad_signal:
++        assert(0 && "PC redirection in instruction callback failed");
++    } else {
++good_signal:
++        signal_handled = 1;
++        return;
++    }
++}
++
++/*
++ * This test sends a signal to the process, which should trigger the above
++ * signal handler. The signal handler should then exercise the PC redirection
++ * functionality in the context of a signal handler, which behaves a bit
++ * differently from normal execution.
++ */
++NOINLINE void test_sighandler(void)
++{
++    struct sigaction sa = {0};
++    sa.sa_handler = usr1_handler;
++    sigaction(SIGUSR1, &sa, NULL);
++    pid_t pid = getpid();
++    kill(pid, SIGUSR1);
++    assert(signal_handled == 1 && "Signal handler was not executed properly");
++}
++
++/*
++ * This test communicates a "good" address and the address of a local variable
++ * to the plugin. Upon accessing the local variable, the plugin should then
++ * redirect control flow to the "good" address via qemu_plugin_set_pc().
++ */
++NOINLINE void test_mem(void)
++{
++    long ret = syscall(4095, NULL, &&good_mem, &guard);
++    assert(ret == 0 && "Syscall filter did not return expected value");
++    if (guard) {
++        assert(0 && "PC redirection in memory access callback failed");
++    } else {
++good_mem:
++        return;
++    }
++}
++
++/*
++ * This test executes a magic syscall which is intercepted and its actual
++ * execution skipped via the qemu_plugin_set_pc() API. In a proper plugin,
++ * syscall skipping would rather be implemented via the syscall filtering
++ * callback, but we want to make sure qemu_plugin_set_pc() works in different
++ * contexts.
++ */
++NOINLINE NORETURN
++void test_syscall(void)
++{
++    syscall(4096, &&good_syscall);
++    if (guard) {
++        assert(0 && "PC redirection in syscall callback failed");
++    } else {
++good_syscall:
++        /*
++         * Note: we execute this test last and exit straight from here because
++         * when the plugin redirects control flow upon syscall, the stack frame
++         * for the syscall function (and potential other functions in the call
++         * chain in libc) is still live and the stack is not unwound properly.
++         * Thus, returning from here is risky and breaks on some architectures,
++         * so we just exit directly from this test.
++         */
++        _exit(EXIT_SUCCESS);
++    }
++}
++
++
++int main(int argc, char *argv[])
++{
++    test_insn();
++    test_sighandler();
++    test_mem();
++    test_syscall();
++}
 diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index b3e3a9a6d0..d7f8f0ae0a 100644
+index c5e49753fd..b3e3a9a6d0 100644
 --- a/tests/tcg/plugins/meson.build
 +++ b/tests/tcg/plugins/meson.build
-@@ -6,6 +6,7 @@ test_plugins = [
- 'insn.c',
+@@ -7,6 +7,7 @@ test_plugins = [
  'mem.c',
  'patch.c',
-+'registers.c',
  'reset.c',
- 'setpc.c',
++'setpc.c',
  'syscall.c',
-diff --git a/tests/tcg/plugins/registers.c b/tests/tcg/plugins/registers.c
+ ]
+ 
+diff --git a/tests/tcg/plugins/setpc.c b/tests/tcg/plugins/setpc.c
 new file mode 100644
-index 0000000000..6d627c7037
+index 0000000000..72ae31a0ef
 --- /dev/null
-+++ b/tests/tcg/plugins/registers.c
-@@ -0,0 +1,79 @@
++++ b/tests/tcg/plugins/setpc.c
+@@ -0,0 +1,120 @@
 +/*
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
 + * Copyright (C) 2026, Florian Hofhammer <florian.hofhammer@epfl.ch>
 + */
-+#include "glib.h"
-+#include <inttypes.h>
 +#include <assert.h>
-+#include <stdlib.h>
-+#include <string.h>
++#include <glib.h>
++#include <inttypes.h>
 +#include <unistd.h>
-+#include <stdio.h>
 +
 +#include <qemu-plugin.h>
 +
 +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
 +
-+/*
-+ * This plugin tests whether we can read and write registers via the plugin
-+ * API. We try to just read/write a single register, as some architectures have
-+ * registers that cannot be written to, which would fail the test.
-+ * See: https://lists.gnu.org/archive/html/qemu-devel/2026-02/msg07025.html
-+ */
-+static void vcpu_init_cb(qemu_plugin_id_t id, unsigned int vcpu_index)
++static uint64_t source_pc;
++static uint64_t target_pc;
++static uint64_t target_vaddr;
++
++static void vcpu_syscall(qemu_plugin_id_t id, unsigned int vcpu_index,
++                         int64_t num, uint64_t a1, uint64_t a2,
++                         uint64_t a3, uint64_t a4, uint64_t a5,
++                         uint64_t a6, uint64_t a7, uint64_t a8)
 +{
-+    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-+    g_assert(regs != NULL);
-+    g_autoptr(GByteArray) buf = g_byte_array_sized_new(0);
-+    qemu_plugin_reg_descriptor *reg_desc = NULL;
-+    bool success = false;
-+
-+    /* Make sure we can read and write a register not marked as readonly */
-+    for (size_t i = 0; i < regs->len; i++) {
-+        reg_desc = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
-+        if (!reg_desc->is_readonly) {
-+            g_byte_array_set_size(buf, 0);
-+            success = qemu_plugin_read_register(reg_desc->handle, buf);
-+            g_assert(success);
-+            g_assert(buf->len > 0);
-+            success = qemu_plugin_write_register(reg_desc->handle, buf);
-+            g_assert(success);
-+            break;
-+        } else {
-+            reg_desc = NULL;
-+        }
++    if (num == 4096) {
++        qemu_plugin_outs("Marker syscall detected, jump to clean return\n");
++        qemu_plugin_set_pc(a1);
 +    }
-+    g_assert(regs->len == 0 || reg_desc != NULL);
-+
-+    /*
-+     * Check whether we can still read a read-only register. On each
-+     * architecture, at least the PC should be read-only because it's only
-+     * supposed to be modified via the qemu_plugin_set_pc() function.
-+     */
-+    for (size_t i = 0; i < regs->len; i++) {
-+        reg_desc = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
-+        if (reg_desc->is_readonly) {
-+            g_byte_array_set_size(buf, 0);
-+            success = qemu_plugin_read_register(reg_desc->handle, buf);
-+            g_assert(success);
-+            g_assert(buf->len > 0);
-+            break;
-+        } else {
-+            reg_desc = NULL;
-+        }
-+    }
-+    g_assert(regs->len == 0 || reg_desc != NULL);
-+    /*
-+     * Note: we currently do not test whether the read-only register can be
-+     * written to, because doing so would throw an assert in the plugin API.
-+     */
 +}
++
++static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
++                                int64_t num, uint64_t a1, uint64_t a2,
++                                uint64_t a3, uint64_t a4, uint64_t a5,
++                                uint64_t a6, uint64_t a7, uint64_t a8,
++                                uint64_t *sysret)
++{
++    if (num == 4095) {
++        qemu_plugin_outs("Communication syscall detected, set target_pc / "
++                         "target_vaddr\n");
++        source_pc = a1;
++        target_pc = a2;
++        target_vaddr = a3;
++        if (source_pc >> 63 || target_pc >> 63 || target_vaddr >> 63) {
++            /*
++             * Some architectures (e.g., m68k) use 32-bit addresses with the
++             * top bit set, which causes them to get sign-extended somewhere in
++             * the chain to this callback. We mask the top bits off here to get
++             * the actual addresses.
++             */
++            qemu_plugin_outs("High bit in addresses detected: possible sign "
++                             "extension in syscall, masking off top bits\n");
++            source_pc &= UINT32_MAX;
++            target_pc &= UINT32_MAX;
++            target_vaddr &= UINT32_MAX;
++        }
++        *sysret = 0;
++        return true;
++    }
++    return false;
++}
++
++static void vcpu_insn_exec(unsigned int vcpu_index, void *userdata)
++{
++    uint64_t vaddr = (uint64_t)userdata;
++    if (vaddr == source_pc) {
++        g_assert(target_pc != 0);
++        g_assert(target_vaddr == 0);
++
++        qemu_plugin_outs("Marker instruction detected, jump to clean return\n");
++        qemu_plugin_set_pc(target_pc);
++    }
++}
++
++static void vcpu_mem_access(unsigned int vcpu_index,
++                            qemu_plugin_meminfo_t info,
++                            uint64_t vaddr, void *userdata)
++{
++    if (vaddr != 0 && vaddr == target_vaddr) {
++        g_assert(source_pc == 0);
++        g_assert(target_pc != 0);
++        qemu_plugin_mem_value val = qemu_plugin_mem_get_value(info);
++        /* target_vaddr points to our volatile guard ==> should always be 1 */
++        g_assert(val.type == QEMU_PLUGIN_MEM_VALUE_U32);
++        g_assert(val.data.u32 == 1);
++
++        qemu_plugin_outs("Marker mem access detected, jump to clean return\n");
++        qemu_plugin_set_pc(target_pc);
++    }
++}
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    size_t insns = qemu_plugin_tb_n_insns(tb);
++    for (size_t i = 0; i < insns; i++) {
++        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
++        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
++        /*
++         * Note: we cannot only register the callbacks if the instruction is
++         * in one of the functions of interest, because symbol lookup for
++         * filtering does not work for all architectures (e.g., ppc64).
++         */
++        qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_insn_exec,
++                                               QEMU_PLUGIN_CB_RW_REGS_PC,
++                                               (void *)insn_vaddr);
++        qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem_access,
++                                         QEMU_PLUGIN_CB_RW_REGS_PC,
++                                         QEMU_PLUGIN_MEM_R, NULL);
++    }
++}
++
 +
 +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
 +                                           const qemu_info_t *info,
 +                                           int argc, char **argv)
 +{
-+    qemu_plugin_register_vcpu_init_cb(id, vcpu_init_cb);
++
++    qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
++    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
 +    return 0;
 +}
 -- 
