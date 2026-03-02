@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A53EA4E18
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A44EA4E18
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx4mW-00050w-D0; Mon, 02 Mar 2026 10:02:00 -0500
+	id 1vx4mV-0004xF-E1; Mon, 02 Mar 2026 10:01:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4lp-0004Ow-ER
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:01:23 -0500
+ id 1vx4lZ-0004IK-5f
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:01:07 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4ln-00044d-Lv
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:01:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772463646; cv=none; 
+ id 1vx4lX-00043D-MU
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:01:00 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772463617; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=jIo7ubIYw6jCiLGZ0o9catgNBuyPxuZYfUflIo+Ml6zdmsSuysanjI6S0u7AYLWctMqyh6//XbUyLhCxqHO2WZZpuHjBD+Jpls8ib8LGZHq85JETQGzUIWeI48D3l7A+/DPU7dBJXn4fiZ4FCcISlIXI9nVAb3YRrNKGAm71Hgg=
+ b=ffEQS+3Ys1OCmjtWF4mbPxl+xLA4GMA8R2QkrNfb0jJTo61s4iFzhWcK9dMw0UTrgV+K0CiXU+FGmprtA9ypPlCRXpPfBgMWD02P8LGurHI5AmEKb9uzCkDsfxoG5aUy/khWyzBJj8AxFk1nkyuhrj9VOyF+82/kjPEz25Pywhw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772463646;
+ s=zohoarc; t=1772463617;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=YBRytc8sjSwUIzrPLBSSeDWw7jV8bG5DAbKRYlpPhIE=; 
- b=NriD6eT8UTgqsySVW3+u4SsMbmGbZKx5kAppPk08KZ7eMpH/TfrXwqDjD7M1vVAjL96MPTDSYu65/O/Sd8v/enbDNzjOk+PQWg7JfyeSjGeEyHUDfFNc/U+C+ejVdB40/Y214iF3tsTpQ+5owXzyL4Uxmue277nffEAuYTYfg5Q=
+ bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=; 
+ b=XmBr1nzwnkABX9hL/hymIzLxddsgA5QfrJ6OSJjcisgCSAUrIIsP1wFrtqNJ6KvCV3CdSEaliYg4FOBcwGRhf3dgxC2v829HfLWh3c3IecdFtbzCQ7cwt8IvBRGTC+OE1JIe1gT5Tp6Vm/ScZ0TRMXtJJ+SnqTXPuogobw68V4M=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463646; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463617; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=YBRytc8sjSwUIzrPLBSSeDWw7jV8bG5DAbKRYlpPhIE=;
- b=hd/BwjfuTrcEptK5gi23pKrgiHd4Gt/lJmM2I1jsb+16myfzGduscCJOJstz32PU
- O6WmCQulBuC/+xxNTyq6EIS+mN+9meiWhCTTUzBVxKrQ1ws0tkIW4XmuI6NyZayb9A9
- JmuiUKOK4G3Nn0rqThQbUr6wPbT23IqPEkLO1ogI=
-Received: by mx.zohomail.com with SMTPS id 1772463644794613.9368291037958;
- Mon, 2 Mar 2026 07:00:44 -0800 (PST)
+ bh=ViKEV6K3E34y8YBULDM7wujUiITFIahQHAYDINTR4aQ=;
+ b=iJrFT6XDytKUQGCkjvtZWPRriNuYKq2eaVgtODCSfGnHu4HTmjTUeLpdpX6KrJjg
+ 58MNtcqCST10dkmn7Ogk+cugnD/vME3rZaQCq5banckbEHAjPxQulPTetafvg2YVEda
+ cyKitXMUEp7hnCn93jz0ns7GdemsHbvPahGYbqRM=
+Received: by mx.zohomail.com with SMTPS id 1772463615256201.0601352759436;
+ Mon, 2 Mar 2026 07:00:15 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,9 +62,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v21 06/18] ui/sdl2: Implement dpy dmabuf functions
-Date: Mon,  2 Mar 2026 17:59:08 +0300
-Message-ID: <20260302145920.735423-7-dmitry.osipenko@collabora.com>
+Subject: [PATCH v21 01/18] ui/gtk: Don't disable scanout when display is
+ refreshed
+Date: Mon,  2 Mar 2026 17:59:03 +0300
+Message-ID: <20260302145920.735423-2-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
 References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
@@ -97,237 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-
-If EGL is used, we can rely on dmabuf to import textures without
-doing copies.
-
-To get this working on X11, we use the existing SDL hint:
-SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- include/ui/sdl2.h |  7 +++++
- meson.build       |  6 ++---
- ui/sdl2-gl.c      | 66 +++++++++++++++++++++++++++++++++++++++++++++++
- ui/sdl2.c         | 42 ++++++++++++++++++++++++++++++
- 4 files changed, 117 insertions(+), 4 deletions(-)
+ ui/gtk-egl.c     | 1 -
+ ui/gtk-gl-area.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-index dbe6e3d9739b..9daf5ecffae7 100644
---- a/include/ui/sdl2.h
-+++ b/include/ui/sdl2.h
-@@ -45,6 +45,7 @@ struct sdl2_console {
-     bool gui_keysym;
-     SDL_GLContext winctx;
-     QKbdState *kbd;
-+    bool has_dmabuf;
- #ifdef CONFIG_OPENGL
-     QemuGLShader *gls;
-     egl_fb guest_fb;
-@@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
-                              void *d3d_tex2d);
- void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
-                            uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
-+void sdl2_gl_console_init(struct sdl2_console *scon);
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index ae9239999cdb..0dbb429958e5 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -180,7 +180,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
  
- #endif /* SDL2_H */
-diff --git a/meson.build b/meson.build
-index 3cd1d8dbc669..0ce84d45e6f3 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1937,10 +1937,8 @@ if get_option('gtk') \
-   endif
- endif
- 
--x11 = not_found
--if gtkx11.found()
--  x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
--endif
-+x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
-+
- png = not_found
- if get_option('png').allowed() and have_system
-    png = dependency('libpng', version: '>=1.6.34', required: get_option('png'),
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index fbac3edbc09d..697ba2169c34 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -26,6 +26,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/input.h"
- #include "ui/sdl2.h"
-@@ -250,3 +252,67 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
- 
-     SDL_GL_SwapWindow(scon->real_window);
- }
-+
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+    const int *fds;
-+
-+    assert(scon->opengl);
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-+    egl_dmabuf_import_texture(dmabuf);
-+    if (!qemu_dmabuf_get_texture(dmabuf)) {
-+        fds = qemu_dmabuf_get_fds(dmabuf, NULL);
-+        error_report("%s: failed fd=%d", __func__, fds ? fds[0] : -1);
-+        return;
-+    }
-+
-+    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            0, 0,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-+        scon->guest_fb.dmabuf = dmabuf;
-+    }
-+}
-+
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    egl_dmabuf_release_texture(dmabuf);
-+}
-+
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+
-+    return scon->has_dmabuf;
-+}
-+
-+void sdl2_gl_console_init(struct sdl2_console *scon)
-+{
-+    bool hidden = scon->hidden;
-+
-+    scon->hidden = true;
-+    scon->surface = qemu_create_displaysurface(1, 1);
-+    sdl2_window_create(scon);
-+
-+    /*
-+     * QEMU checks whether console supports dma-buf before switching
-+     * to the console.  To break this chicken-egg problem we pre-check
-+     * dma-buf availability beforehand using a dummy SDL window.
-+     */
-+    scon->has_dmabuf = qemu_egl_has_dmabuf();
-+
-+    sdl2_window_destroy(scon);
-+    qemu_free_displaysurface(scon->surface);
-+
-+    scon->surface = NULL;
-+    scon->hidden = hidden;
-+}
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 032dc14bc398..3bb2676f847b 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -35,6 +35,10 @@
- #include "qemu/log.h"
- #include "qemu-main.h"
- 
-+#ifdef CONFIG_X11
-+#include <X11/Xlib.h>
-+#endif
-+
- static int sdl2_num_outputs;
- static struct sdl2_console *sdl2_console;
- 
-@@ -120,6 +124,9 @@ void sdl2_window_create(struct sdl2_console *scon)
-         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
-         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
-     }
-+
-+    qemu_egl_display = eglGetCurrentDisplay();
-+
-     sdl_update_caption(scon);
- }
- 
-@@ -808,6 +815,10 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
-     .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
-     .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
-     .dpy_gl_update           = sdl2_gl_scanout_flush,
-+
-+    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
-+    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
-+    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
- };
- 
- static bool
-@@ -835,6 +846,35 @@ static void sdl2_display_early_init(DisplayOptions *o)
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_egl_set_scanout_mode(vc, false);
+         gd_egl_draw(vc);
      }
  }
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index cd86022d264a..c709b2ce0f63 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -199,7 +199,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
  
-+static void sdl2_set_hint_x11_force_egl(void)
-+{
-+#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(CONFIG_OPENGL) && \
-+    defined(CONFIG_X11)
-+    Display *x_disp = XOpenDisplay(NULL);
-+    EGLDisplay egl_display;
-+
-+    if (!x_disp) {
-+        return;
-+    }
-+
-+    /* Prefer EGL over GLX to get dma-buf support. */
-+    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
-+
-+    if (egl_display != EGL_NO_DISPLAY) {
-+        /*
-+         * Setting X11_FORCE_EGL hint doesn't make SDL to prefer X11 over
-+         * Wayland. SDL will use Wayland driver even if XWayland presents.
-+         * It's always safe to set the hint even if X11 is not used by SDL.
-+         * SDL will work regardless of the hint.
-+         */
-+        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
-+        eglTerminate(egl_display);
-+    }
-+
-+    XCloseDisplay(x_disp);
-+#endif
-+}
-+
- static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- {
-     uint8_t data = 0;
-@@ -862,6 +902,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
-     SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
-+    sdl2_set_hint_x11_force_egl();
-     SDL_EnableScreenSaver();
-     memset(&info, 0, sizeof(info));
-     SDL_VERSION(&info.version);
-@@ -908,6 +949,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-         sdl2_console[i].kbd = qkbd_state_init(con);
-         if (display_opengl) {
-             qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
-+            sdl2_gl_console_init(&sdl2_console[i]);
-         }
-         register_displaychangelistener(&sdl2_console[i].dcl);
- 
+     if (vc->gfx.glupdates) {
+         vc->gfx.glupdates = 0;
+-        gtk_gl_area_set_scanout_mode(vc, false);
+         gtk_gl_area_queue_render(GTK_GL_AREA(vc->gfx.drawing_area));
+     }
+ }
 -- 
 2.52.0
 
