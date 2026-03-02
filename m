@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE15D58E7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F29CD58E7E
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvu-0001Si-Ix; Mon, 02 Mar 2026 03:47:18 -0500
+	id 1vwyvg-0007w5-5L; Mon, 02 Mar 2026 03:47:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyvG-0006CF-1T
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:39 -0500
+ id 1vwyuZ-00055z-H1
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyvE-00022D-Cf
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:37 -0500
+ id 1vwyuS-0001v0-0x
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441195;
+ s=mimecast20190719; t=1772441135;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4F01VEmQLNn4bhnf/pHKH/Ewq60YHHQIBflyPA7EaqY=;
- b=ccZenK00s+sY+tZnG52t0PIHAf41HsxsMQ3uO64wIVyZBkhLZuhr+iq5d1NVK9OCfOQUia
- IZaADWdFlc7USs2/03Ua4dxRfYK0G/I0GeecxlcR8l3LK9pp/Ncmxa9C0Y0V7GpxbybQKw
- ApRNljbwb8fnbXrbXb8jeEbr5ucpUls=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2T5dA1FgY/TpoQcQTw9NSmZNEHPoqxFKitjpjHx9UvQ=;
+ b=FvckcAxFHDo4CGhDY6Oz/00FDye9bzqy2oMdy93qX23vKCIrJJBrMZGBnFz2rFW49YU+xY
+ u7UPHB0Jeg6lIRJLb2fYFSTwxW0IEWj+JMG7iubZUJJFzEWDnP2b72kOxs6wkibRLgCfoh
+ MvrKGq+QgySEZVE38JBcNxX4F6MGhUE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-QefkYCRgPIaY-dBqsUh9ZQ-1; Mon, 02 Mar 2026 03:46:34 -0500
-X-MC-Unique: QefkYCRgPIaY-dBqsUh9ZQ-1
-X-Mimecast-MFC-AGG-ID: QefkYCRgPIaY-dBqsUh9ZQ_1772441193
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4806cfffca6so42275025e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:46:34 -0800 (PST)
+ us-mta-530-RiIhaZndPu6lQN4n2P8VFQ-1; Mon, 02 Mar 2026 03:45:29 -0500
+X-MC-Unique: RiIhaZndPu6lQN4n2P8VFQ-1
+X-Mimecast-MFC-AGG-ID: RiIhaZndPu6lQN4n2P8VFQ_1772441128
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4832c4621c2so46274685e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441193; x=1773045993; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441128; x=1773045928; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4F01VEmQLNn4bhnf/pHKH/Ewq60YHHQIBflyPA7EaqY=;
- b=TMMfCxzh9fn4kTx6RxrYgrzbP7ZcMXKAgSMmHm39J9UCnS9TvgaAR7d6W9Y7holVr6
- KD9caeIFJX3/uPxNB4v3wYCfVt/PkTJ56zRql0+bxKeCFOtLq/MsvAuZvJYNzASq3hps
- 43mhfzKjJQKJ9+t7AbqNa2tfVD8+6raFHwAxTM9UDfsin31gqmrfAo0x+BqsM3MZr2g6
- cP5Mxr5qWxnyw9OWy10oz+239uEUlqEzU1sMMswDCDnOn4fm2mLR61g/iJ9gEh5XPlUn
- ADFYhCC1y15XgSIe8S6fNaH2Mn6qRzJL64Knhl6/lx0PgfeRzLMnsJOzIFCF6QuL5XgQ
- Z7jQ==
+ bh=2T5dA1FgY/TpoQcQTw9NSmZNEHPoqxFKitjpjHx9UvQ=;
+ b=uHkgJwXtosmuUFQ7rZMr8ImT4IhDok10veSRt1Sb8Sxro7gGEgqD6ea2XRMGrvXCs+
+ Ohg6ElXBaoJX5s1U2K8dWjJGdlTl+KFlDRlZvW3ZBhs0E7Yq+b5cc3XGEZlDccMMI6UH
+ 59HUOiHl2hptW99xgbrwERIsn36xMgZeWkEkZzOGL+7Dp7U+dRaOEYw7em26TDGBip25
+ k5i4X6/couk1GSrFEKrenLo1gaxtEl2Pprzh4Aq5+0YivXti9cMfl5JxTTz86pFaS3Ax
+ Qye9lD8lJie+3Lkyjq/9u7uEkJrFM5q7IMn0jjzbR32cLWCLxSdjqybR8EYc0wzllj9J
+ EpKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441193; x=1773045993;
+ d=1e100.net; s=20230601; t=1772441128; x=1773045928;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4F01VEmQLNn4bhnf/pHKH/Ewq60YHHQIBflyPA7EaqY=;
- b=bXRQ+QswgKDCz+5GO6KwNxuxSZSosb0ugDm34TkAtC0mT2tyTCxzogwcFhEJARrP9+
- xgiH4yb0JOkHlhICoO1YKFEKn7mv0iirOym7R6ff8Lag1jzM/GvP7qHcom7h20pXwcFv
- 1vjmIou1Fhxj1AyFfBBkz7vtaytJNb98ZpwRAIW+SLCbZp5SQsXa8wm1cgl6uNbvRqRY
- NeMkAHEo6oAwgkRQSNdh/utxel6OFOoBqOtmHrVpc854jbsFvFPWSrrqxtAiRSuCYHDi
- gN0LOHafhr2B/skbO/oHUvCvalq6cN77XxuhLDMlQAdK1i22AytlGBqZTBwNMK1i5PwN
- TyjQ==
-X-Gm-Message-State: AOJu0Yz/LqrJ1h8l7zoh71GnbI6vVgbVWFLGCGoKE7GPkSPzpyYGInbq
- KWTZs1jwmDvcUMC89yghHxkClZC/RekjGYsQ6ojgVreT0lkfW/R0eTcBYsotSnwIXhFVT+e/sWA
- U5t/4vowS+RAMX+UlaXSFAJPxXwp9IH+iky5uJqFPEAMGc5YvikxqmGIZKu4K01ybbmQLy819ki
- qv6HiBnS9NJkcgmiXAmWuQMGBEV4H2rN0r1DULBiUV
-X-Gm-Gg: ATEYQzxY0QO5Fu5KA4TsL3JF+LG9nzP8k2LwR8tgun3V6CnoZkc9puSfUA6pcki6M1h
- glbNnNpfYvCppon2JffzVpMMwWYPfsSnjEkuMKaVU7ESIXx21KBzMnHclDhrUnoiCcUER53g9YV
- dTzW2K62ULCHlaVISOezOdVBE7K+Pc7OoPhSSEedp+4Cr7lho2CPsP7I98hkxWpdn5pRfJWooDf
- RgR2bhQiHufnPbDfsmD7nR+IuceM0upJUDLv7fm4QFaVtBYfm4++8bSaSHdO9HO5xYf02H57Hch
- t6x2AXFAmARZwLfb547j0g9qp6ciGhznhgmJmSpZpBuR4NEzWO4c1Pf0WPAtZrvGd2ZLpVElJj4
- vjkmaS79uMFD/HcHE/3grOmUq37g2S4M6hcDaU3MVsQFmMl3+Gb26ZyhNkYMwfUtDsKepC6BlVv
- QC8V5TJtkLdPVYeDDGDUtvxvr/Clc=
-X-Received: by 2002:a05:600c:c167:b0:47d:5e02:14e5 with SMTP id
- 5b1f17b1804b1-483c9bb660amr186784855e9.5.1772441192796; 
- Mon, 02 Mar 2026 00:46:32 -0800 (PST)
-X-Received: by 2002:a05:600c:c167:b0:47d:5e02:14e5 with SMTP id
- 5b1f17b1804b1-483c9bb660amr186784375e9.5.1772441192319; 
- Mon, 02 Mar 2026 00:46:32 -0800 (PST)
+ bh=2T5dA1FgY/TpoQcQTw9NSmZNEHPoqxFKitjpjHx9UvQ=;
+ b=mKkuK0ZwWGi6w5RVVVEYRH7fLOUUWNy7eawPLVHCNQpSmWr5y3p25ioDG6Lo6hNsh5
+ B/uSB0pZ94Jady6S0at9vJ964t58a9k9PjFzzWaQmDeAP9hV+LX9imSYgG0SIMEjGw6Y
+ Ow2QU5k9pTfPhZ1fxkqz7lW6eHdX6LiQEylk6zmuXrR41JUV9MjJtfZ7DDZSI2fPIHtm
+ +MC9VaoJWkVfrw6qmJsJOu5Af3vsx5DB4w6Hgdplmvk/R87Gis8x5yXP8wko/U/IcjFd
+ GO/IE5o2nmrxXA+G+alBQ3EBLce/CW1Q1GXMM9DeZ6EY+L42VlvQOjgiymJOcULrT1fo
+ 33yA==
+X-Gm-Message-State: AOJu0Yz+tcHELo81NqMYZ8UFm0jc1stLFAtpWFD4+IGbsbUjDvrpzCWb
+ t3jEsvTG9t5NDsLx75gyAR4sW546YQ4VxIoxsGdLNVB3j/Ply8liBu9aGLSvQKbytGASnH2uk9i
+ g+KKTBjc3PgW82zOQvxmRvFpJNP1lb+D5bZqs3q73n6Jc05g1i5n3MHCRkIIF8tgagmVnDqYZ0A
+ sRpvJv7tV6xzU0DZxO+I7S8F1/+k1f6yWgsDAhbwpL
+X-Gm-Gg: ATEYQzwK8dIq9FxubV8MhunVEOCiuOon/YqNgB2sQxhvzUpvMNP0Ce1ER9rdyw+1Vv7
+ 1yxrP7/FrbN3nipQlR41+6knFXK/av+asXQ7R3xpdwcYA5v7ur+F/ifnALkBmTQpZY1YzaMhQq5
+ K2d57PgqGa2xUqAwO6eGhMSRy3s9wN9dhUrDehGboiClMREQsfmNXwJASD0f/pz7Uu/mbTqBFMp
+ tSC0tLeedvxdMy5WwCuEkBOCjo1RFdFTqMrblLnLTXLO07E9e9d/J05q4OOaxMHP6EK05+PYdBh
+ f2VEE+vpqH2z33fPI94i2c1H8s4BsMg1RyyL5fjnvtPULm3IXA00HlLet0xcnN4mi1s+NwR45vL
+ yxRtUI+dUTJwTNuMlyRROjPyNUQnXNF84MmCModhTWrutlR+sAz8kATW6DVEQo9EntI9jI4rmLO
+ 6hyFVmoG91jvA1xwG698/5IlPdcis=
+X-Received: by 2002:a05:600c:6994:b0:477:c478:46d7 with SMTP id
+ 5b1f17b1804b1-483c9c0b88amr194515825e9.22.1772441127838; 
+ Mon, 02 Mar 2026 00:45:27 -0800 (PST)
+X-Received: by 2002:a05:600c:6994:b0:477:c478:46d7 with SMTP id
+ 5b1f17b1804b1-483c9c0b88amr194515415e9.22.1772441127275; 
+ Mon, 02 Mar 2026 00:45:27 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd750607sm391139275e9.10.2026.03.02.00.46.30
+ 5b1f17b1804b1-483bd75dfaasm355126635e9.12.2026.03.02.00.45.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:46:30 -0800 (PST)
+ Mon, 02 Mar 2026 00:45:25 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 065/102] kvm/i8254: refactor pit initialization into a helper
-Date: Mon,  2 Mar 2026 09:43:00 +0100
-Message-ID: <20260302084338.473368-66-pbonzini@redhat.com>
+Cc: Alexander Graf <graf@amazon.com>, Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Subject: [PULL 040/102] hw/nitro: Enable direct kernel boot
+Date: Mon,  2 Mar 2026 09:42:35 +0100
+Message-ID: <20260302084338.473368-41-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -121,111 +121,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Alexander Graf <graf@amazon.com>
 
-The initialization code will be used again by VM file descriptor change
-notifier callback in a subsequent change. So refactor common code into a new
-helper function.
+Nitro Enclaves can only boot EIF files which are a combination of
+kernel, initramfs and cmdline in a single file. When the kernel image is
+not an EIF, treat it like a kernel image and assemble an EIF image on
+the fly. This way, users can call QEMU with a direct
+kernel/initrd/cmdline combination and everything "just works".
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-25-anisinha@redhat.com
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Link: https://lore.kernel.org/r/20260225220807.33092-11-graf@amazon.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/kvm/i8254.c | 68 +++++++++++++++++++++++++--------------------
- 1 file changed, 38 insertions(+), 30 deletions(-)
+ hw/core/eif.h        |   3 ++
+ hw/nitro/machine.c   | 116 +++++++++++++++++++++++++++++++++++++++++++
+ hw/nitro/meson.build |   2 +-
+ 3 files changed, 120 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/kvm/i8254.c b/hw/i386/kvm/i8254.c
-index 81e742f8667..255047458a8 100644
---- a/hw/i386/kvm/i8254.c
-+++ b/hw/i386/kvm/i8254.c
-@@ -60,6 +60,43 @@ struct KVMPITClass {
-     DeviceRealize parent_realize;
+diff --git a/hw/core/eif.h b/hw/core/eif.h
+index a3412377a90..0c432dbc2dc 100644
+--- a/hw/core/eif.h
++++ b/hw/core/eif.h
+@@ -12,6 +12,7 @@
+ #define HW_CORE_EIF_H
+ 
+ #define MAX_SECTIONS 32
++#define EIF_HDR_ARCH_ARM64 0x1
+ 
+ /* members are ordered according to field order in .eif file */
+ typedef struct EifHeader {
+@@ -49,6 +50,8 @@ enum EifSectionTypes {
+     EIF_SECTION_MAX = 6,
  };
  
-+static void do_pit_initialize(KVMPITState *s, Error **errp)
++#define EIF_MAGIC { '.', 'e', 'i', 'f' }
++
+ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+                    char **kernel_path, char **initrd_path,
+                    char **kernel_cmdline, uint8_t *image_sha384,
+diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
+index e28c8e9bf50..8849959359c 100644
+--- a/hw/nitro/machine.c
++++ b/hw/nitro/machine.c
+@@ -32,9 +32,104 @@
+ #include "system/nitro-accel.h"
+ #include "qemu/accel.h"
+ #include "hw/arm/machines-qom.h"
++#include "hw/core/eif.h"
++#include <zlib.h> /* for crc32 */
+ 
+ #define EIF_LOAD_ADDR   (8 * 1024 * 1024)
+ 
++static bool is_eif(char *eif, gsize len)
 +{
-+    struct kvm_pit_config config = {
-+        .flags = 0,
-+    };
-+    int ret;
++    const char eif_magic[] = EIF_MAGIC;
 +
-+    ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_PIT2, &config);
-+    if (ret < 0) {
-+        error_setg(errp, "Create kernel PIC irqchip failed: %s",
-+                   strerror(-ret));
-+        return;
-+    }
-+    switch (s->lost_tick_policy) {
-+    case LOST_TICK_POLICY_DELAY:
-+        break; /* enabled by default */
-+    case LOST_TICK_POLICY_DISCARD:
-+        if (kvm_check_extension(kvm_state, KVM_CAP_REINJECT_CONTROL)) {
-+            struct kvm_reinject_control control = { .pit_reinject = 0 };
-+
-+            ret = kvm_vm_ioctl(kvm_state, KVM_REINJECT_CONTROL, &control);
-+            if (ret < 0) {
-+                error_setg(errp,
-+                           "Can't disable in-kernel PIT reinjection: %s",
-+                           strerror(-ret));
-+                return;
-+            }
-+        }
-+        break;
-+    default:
-+        error_setg(errp, "Lost tick policy not supported.");
-+        return;
-+    }
-+
-+    return;
++    return len >= sizeof(eif_magic) &&
++           !memcmp(eif, eif_magic, sizeof(eif_magic));
 +}
 +
- static void kvm_pit_update_clock_offset(KVMPITState *s)
++static void build_eif_section(EifHeader *hdr, GByteArray *buf, uint16_t type,
++                              const char *data, uint64_t size)
++{
++    uint16_t section = be16_to_cpu(hdr->section_cnt);
++    EifSectionHeader shdr = {
++        .section_type = cpu_to_be16(type),
++        .flags = 0,
++        .section_size = cpu_to_be64(size),
++    };
++
++    hdr->section_offsets[section] = cpu_to_be64(buf->len);
++    hdr->section_sizes[section] = cpu_to_be64(size);
++
++    g_byte_array_append(buf, (const uint8_t *)&shdr, sizeof(shdr));
++    if (size) {
++        g_byte_array_append(buf, (const uint8_t *)data, size);
++    }
++
++    hdr->section_cnt = cpu_to_be16(section + 1);
++}
++
++/*
++ * Nitro Enclaves only support loading EIF files. When the user provides
++ * a Linux kernel, initrd and cmdline, convert them into EIF format.
++ */
++static char *build_eif(const char *kernel_data, gsize kernel_size,
++                       const char *initrd_path, const char *cmdline,
++                       gsize *out_size, Error **errp)
++{
++    g_autofree char *initrd_data = NULL;
++    static const char metadata[] = "{}";
++    size_t metadata_len = sizeof(metadata) - 1;
++    gsize initrd_size = 0;
++    GByteArray *buf;
++    EifHeader hdr;
++    uint32_t crc = 0;
++    size_t cmdline_len;
++
++    if (initrd_path) {
++        if (!g_file_get_contents(initrd_path, &initrd_data,
++                                 &initrd_size, NULL)) {
++            error_setg(errp, "Failed to read initrd '%s'", initrd_path);
++            return NULL;
++        }
++    }
++
++    buf = g_byte_array_new();
++
++    cmdline_len = cmdline ? strlen(cmdline) : 0;
++
++    hdr = (EifHeader) {
++        .magic = EIF_MAGIC,
++        .version = cpu_to_be16(4),
++        .flags = cpu_to_be16(target_aarch64() ? EIF_HDR_ARCH_ARM64 : 0),
++    };
++
++    g_byte_array_append(buf, (const uint8_t *)&hdr, sizeof(hdr));
++
++    /* Kernel */
++    build_eif_section(&hdr, buf, EIF_SECTION_KERNEL, kernel_data, kernel_size);
++
++    /* Command line */
++    build_eif_section(&hdr, buf, EIF_SECTION_CMDLINE, cmdline, cmdline_len);
++
++    /* Initramfs */
++    build_eif_section(&hdr, buf, EIF_SECTION_RAMDISK, initrd_data, initrd_size);
++
++    /* Metadata */
++    build_eif_section(&hdr, buf, EIF_SECTION_METADATA, metadata, metadata_len);
++
++    /*
++     * Patch the header into the buffer first (with real section offsets
++     * and sizes), then compute CRC over everything except the CRC field.
++     */
++    memcpy(buf->data, &hdr, sizeof(hdr));
++    crc = crc32(crc, buf->data, offsetof(EifHeader, eif_crc32));
++    crc = crc32(crc, &buf->data[sizeof(hdr)], buf->len - sizeof(hdr));
++
++    /* Finally write the CRC into the in-buffer header */
++    ((EifHeader *)buf->data)->eif_crc32 = cpu_to_be32(crc);
++
++    *out_size = buf->len;
++    return (char *)g_byte_array_free(buf, false);
++}
++
+ static void nitro_machine_init(MachineState *machine)
  {
-     int64_t offset, clock_offset;
-@@ -241,42 +278,13 @@ static void kvm_pit_realizefn(DeviceState *dev, Error **errp)
-     PITCommonState *pit = PIT_COMMON(dev);
-     KVMPITClass *kpc = KVM_PIT_GET_CLASS(dev);
-     KVMPITState *s = KVM_PIT(pit);
--    struct kvm_pit_config config = {
--        .flags = 0,
--    };
--    int ret;
- 
-     if (!kvm_check_extension(kvm_state, KVM_CAP_PIT_STATE2) ||
-         !kvm_check_extension(kvm_state, KVM_CAP_PIT2)) {
-         error_setg(errp, "In-kernel PIT not available");
+     const char *eif_path = machine->kernel_filename;
+@@ -74,6 +169,27 @@ static void nitro_machine_init(MachineState *machine)
+         error_report("nitro: failed to read EIF '%s'", eif_path);
+         exit(1);
      }
++
++    if (!is_eif(eif_data, eif_size)) {
++        char *kernel_data = eif_data;
++        gsize kernel_size = eif_size;
++        Error *err = NULL;
++
++        /*
++         * The user gave us a non-EIF kernel, likely a Linux kernel image.
++         * Assemble an EIF file from it, the -initrd and the -append arguments,
++         * so that users can perform a natural direct kernel boot.
++         */
++        eif_data = build_eif(kernel_data, kernel_size, machine->initrd_filename,
++                             machine->kernel_cmdline, &eif_size, &err);
++        if (!eif_data) {
++            error_report_err(err);
++            exit(1);
++        }
++
++        g_free(kernel_data);
++    }
++
+     address_space_write(&address_space_memory, EIF_LOAD_ADDR,
+                         MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
  
--    ret = kvm_vm_ioctl(kvm_state, KVM_CREATE_PIT2, &config);
--    if (ret < 0) {
--        error_setg(errp, "Create kernel PIC irqchip failed: %s",
--                   strerror(-ret));
--        return;
--    }
--    switch (s->lost_tick_policy) {
--    case LOST_TICK_POLICY_DELAY:
--        break; /* enabled by default */
--    case LOST_TICK_POLICY_DISCARD:
--        if (kvm_check_extension(kvm_state, KVM_CAP_REINJECT_CONTROL)) {
--            struct kvm_reinject_control control = { .pit_reinject = 0 };
--
--            ret = kvm_vm_ioctl(kvm_state, KVM_REINJECT_CONTROL, &control);
--            if (ret < 0) {
--                error_setg(errp,
--                           "Can't disable in-kernel PIT reinjection: %s",
--                           strerror(-ret));
--                return;
--            }
--        }
--        break;
--    default:
--        error_setg(errp, "Lost tick policy not supported.");
--        return;
--    }
-+    do_pit_initialize(s, errp);
- 
-     memory_region_init_io(&pit->ioports, OBJECT(dev), NULL, NULL, "kvm-pit", 4);
- 
+diff --git a/hw/nitro/meson.build b/hw/nitro/meson.build
+index e3f18958906..b9bd0d43002 100644
+--- a/hw/nitro/meson.build
++++ b/hw/nitro/meson.build
+@@ -1,4 +1,4 @@
+ system_ss.add(when: 'CONFIG_NITRO_VSOCK_BUS', if_true: files('nitro-vsock-bus.c'))
+ system_ss.add(when: 'CONFIG_NITRO_SERIAL_VSOCK', if_true: files('serial-vsock.c'))
+ system_ss.add(when: 'CONFIG_NITRO_HEARTBEAT', if_true: files('heartbeat.c'))
+-system_ss.add(when: 'CONFIG_NITRO_MACHINE', if_true: files('machine.c'))
++system_ss.add(when: 'CONFIG_NITRO_MACHINE', if_true: [files('machine.c'), zlib])
 -- 
 2.53.0
 
