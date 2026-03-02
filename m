@@ -4,50 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5347FE9B376
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 12:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68632E9B377
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 12:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx2nT-0002we-K0; Mon, 02 Mar 2026 07:54:51 -0500
+	id 1vx2on-0004M5-Gw; Mon, 02 Mar 2026 07:56:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vx2nK-0002pH-Ky; Mon, 02 Mar 2026 07:54:44 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vx2og-0004Et-7z; Mon, 02 Mar 2026 07:56:07 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vx2n6-000108-Vr; Mon, 02 Mar 2026 07:54:30 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 00D734825A;
- Mon, 02 Mar 2026 13:54:18 +0100 (CET)
-Message-ID: <bf9ccb3f-29e3-4c14-8e66-0e16d81da865@proxmox.com>
-Date: Mon, 2 Mar 2026 13:54:11 +0100
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vx2ob-0001HE-Gf; Mon, 02 Mar 2026 07:56:05 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 622CsO49056029
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 2 Mar 2026 21:55:44 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=RH7EBLe7OKFQlzXgGZFErxswz3ztfgkFQZaYOtT/07M=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1772456145; v=1;
+ b=eZ6xHciTtUxifVADGeyUD9gMxAjYCAHYqCS8MpL+y+sb6YVzG8++Zm3nCcIJwfRV
+ Mb9Z7blvtoltxP0qvYIj+ydADH4rv8vSv9t4NJ3VbWq52knd0w99yUuPz/V1sBa6
+ EQGxICnp6FJNxn8f1wQAVmjKPLww3SGlijCjMVRXTHeRSaCRMAuZiUKl/Q1NwFvk
+ dn3l5xYSlIUMGjxeby5hmG+oS+3IDd6abMu4d2nRXAXDhBocXrGAx/Q5VLV1E00g
+ scVRSYiaZwbWC2wOxROPEfmn+qJeHdADq+2eQlmst9I5e//5Nh8PvUYeObs86o2G
+ +y2F0Cs1w3zE+1NO8PDTWQ==
+Message-ID: <a24798b9-1b0d-4801-abdf-7d0c3a2f5a18@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 2 Mar 2026 21:54:24 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Fiona Ebner <f.ebner@proxmox.com>
-Subject: Re: [PATCH] hw/block/block: add 'throttle-group' property
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
- jsnow@redhat.com
-References: <20260116143946.1031006-1-f.ebner@proxmox.com>
- <aZ23DELMG6CycbQ8@redhat.com>
- <7f1754b9-61a7-4413-9a97-1f47958da3e4@proxmox.com>
- <aaB1SXNFxiHlS08u@redhat.com>
+Subject: Re: [PATCH v2 3/4] tests: Grow buffers for double string
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+References: <20260302-nvme-v2-0-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
+ <20260302-nvme-v2-3-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
+ <87pl5m1mad.fsf@pond.sub.org> <aaV7R4NFhHvEShti@redhat.com>
 Content-Language: en-US
-In-Reply-To: <aaB1SXNFxiHlS08u@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1772456033622
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <aaV7R4NFhHvEShti@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -1
+X-Spam_score: -0.2
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,137 +81,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 26.02.26 um 5:31 PM schrieb Kevin Wolf:
-> Am 26.02.2026 um 16:20 hat Fiona Ebner geschrieben:
->> Am 24.02.26 um 3:34 PM schrieb Kevin Wolf:
->>> Am 16.01.2026 um 15:39 hat Fiona Ebner geschrieben:
->>>> With '-drive', it is possible to specify the throttle configuration
->>>> directly on the commandline. Add the possibility to do the same when
->>>> using the modern way with '-blockdev' and a front-end device. Using a
->>>> throttle filter block node is not always an option: in particular, the
->>>> mirror block job operates on a root block node and it might be desired
->>>> to throttle only the guest IO, but not to the block job.
+On 2026/03/02 20:57, Daniel P. Berrangé wrote:
+> On Mon, Mar 02, 2026 at 12:52:10PM +0100, Markus Armbruster wrote:
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
+>>
+>>> A string that represents a double can be long if it is an exponentially
+>>> large number.
 >>>
->>> Hm, is there still a reason why we require a root node for the source?
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> ---
+>>>   tests/unit/test-qobject-input-visitor.c  | 2 +-
+>>>   tests/unit/test-qobject-output-visitor.c | 2 +-
+>>>   2 files changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
+>>> index 84bdcdf702e0..baff9243313c 100644
+>>> --- a/tests/unit/test-qobject-input-visitor.c
+>>> +++ b/tests/unit/test-qobject-input-visitor.c
+>>> @@ -583,7 +583,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
+>>>   
+>>>       i = 0;
+>>>       for (num_list = arrs->number; num_list; num_list = num_list->next) {
+>>> -        char expected[32], actual[32];
+>>> +        char expected[318], actual[318];
+>>
+>> Where does 318 come from?
 
-Do you happen to know what the original reason for the restriction was?
-From git history I cannot really see anything special, just:
+The compiler told me the number.
 
-> commit 07eec652722f3d12b07c5b28d0671ddfc22fe6a5
-> Author: Kevin Wolf <kwolf@redhat.com>
-> Date:   Thu Jun 23 14:20:24 2016 +0200
 > 
->     block: Accept node-name for blockdev-mirror
->     
->     In order to remove the necessity to use BlockBackend names in the
->     external API, we want to allow node-names everywhere. This converts
->     blockdev-mirror to accept a node-name without lifting the restriction
->     that we're operating at a root node.
+> If we're concerned about buffer sizes being too short, then that
+> is a strong sign we should be using g_strdup_printf instead of
+> sprintf with a bigger magic size.
+> 
+> As you say below though, it is better if we eliminate the string
+> formatting entirely here since it is irrelevant for the goals of
+> this test.
+> 
+>>
+>>>   
+>>>           sprintf(expected, "%.6f", (double)i / 3);
+>>>           sprintf(actual, "%.6f", num_list->value);
+>>             g_assert_cmpstr(expected, ==, actual);
+>>             i++;
+>>         }
+>>
+>> Existing code is safe, because the numbers run from 0, 1.0/3, ...,
+>> 31.0/3.
+>>
+>> Its purpose is to check the input visitor parses number arrays
+>> correctly.  Doing it this way is questionable.  Elsewhere in this file,
+>> we get away with the equivalent of
+>>
+>>             g_assert_cmpfloat(num_list->value, ==, (double)i / 3);
+>>
+>> Yes, double can't represent the fractions exactly, but if we're
+>> concerned about that, we should test the difference is less than
+>> epsilon, or simply use representable values.
 
-For operations like backup and stream, the same restriction was lifted:
-930fe17f99 ("blockdev: enable non-root nodes for backup source")
-554b614765 ("block: Add QMP support for streaming to an intermediate layer")
+I will replace them with representable values.
 
-We have the following code snippet in blockdev_mirror_common():
-
->     if (!replaces) {
->         /* We want to mirror from @bs, but keep implicit filters on top */
->         unfiltered_bs = bdrv_skip_implicit_filters(bs);
->         if (unfiltered_bs != bs) {
->             replaces = unfiltered_bs->node_name;
->         }
->     }
-
-Doing this as well for non-root nodes would still match the documentation:
-
-> # @replaces: with sync=full graph node name to be replaced by the new
-> #     image when a whole image copy is done.  This can be used to
-> #     repair broken Quorum files.  By default, @device is replaced,
-> #     although implicitly created filters on it are kept.
-
-But I guess we could also do something like
-
-> diff --git a/blockdev.c b/blockdev.c
-> index 6e6932ddea..0ff058bed0 100644
-> --- a/blockdev.c
-> +++ b/blockdev.c
-> @@ -2931,7 +2931,14 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
->          /* We want to mirror from @bs, but keep implicit filters on top */
->          unfiltered_bs = bdrv_skip_implicit_filters(bs);
->          if (unfiltered_bs != bs) {
-> -            replaces = unfiltered_bs->node_name;
-> +            if (bdrv_is_root_node(bs)) {
-> +                replaces = unfiltered_bs->node_name;
-> +            } else {
-> +                error_setg(errp, "Detected non-root block node which is an"
-> +                                 " implicit filter, please specify @replaces"
-> +                                 " parameter explicitly");
-> +                return;
-> +            }
->          }
->      }
->  
-
-to avoid any surprises for people who explicitly specify a non-root
-implicit filter as the source? Or what do you think?
-
-Reading through the code, I don't see any other issues with using a
-non-root node as the source and an initial test case for a node below a
-throttle node seems to work fine too :)
+Regards,
+Akihiko Odaki
 
 >>
->> I'm not sure if the restriction could be lifted. But AFAICS, that
->> doesn't help in my case with a throttle node as the root node:
+>>> diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
+>>> index 407ab9ed505a..ae05a726f775 100644
+>>> --- a/tests/unit/test-qobject-output-visitor.c
+>>> +++ b/tests/unit/test-qobject-output-visitor.c
+>>> @@ -571,7 +571,7 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
+>>>       i = 0;
+>>>       QLIST_FOREACH_ENTRY(qlist, e) {
+>>>           QNum *qvalue = qobject_to(QNum, qlist_entry_obj(e));
+>>> -        char expected[32], actual[32];
+>>> +        char expected[318], actual[318];
+>>>   
+>>>           g_assert(qvalue);
+>>>           sprintf(expected, "%.6f", (double)i / 3);
 >>
->> Say I'm mirroring the node below throttle and the job is ready to be
->> completed. Further, assume that requests pile up for the root node,
->> while the node below is mostly idle, which can easily happen with low
->> throttle limits:
+>> Likewise.
 >>
->> At some moment, there might be no IO in-flight for the node below
->> throttle and thus the mirror can complete, while all the in-flight
->> requests for the throttle node are currently being intercepted by the
->> throttle group and waiting for the timer to wake them. Because, the call
->> to bdrv_inc_in_flight() for the node below throttle only happens after
->> the intercepted requests are woken. Mirror and the node below do not
->> know about the parent's in flight requests. Is this interpretation correct?
 > 
-> Well, mirror doesn't just complete by itself, but let's assume it
-> already was ready and you told it to complete. Then yes, if there is no
-> more activity and both sides are in sync, the mirror job can complete.
-> 
-> However, is this any different from a mirror job completing when the
-> guest has already put a request in the virtio-blk virtqueue, but the
-> device model hasn't processed it yet? From the guest's perspective, the
-> request is in flight in both cases, and from the mirror job's
-> perspective it hasn't started yet in both cases.
-> 
-> I think the only difference is that with throttling you might hit this
-> case more often, but it's not a case that is fundamentally impossible
-> without throttling.
-> 
->> There are scenarios where we finish the job via block-job-cancel after
->> freezing the guest filesystem to ensure consistency, so having
->> intercepted requests as described above would mess it up.
-> 
-> Why? You got a copy that was in sync at the time that the mirror job
-> completed. The job doesn't promise the exact point of time that the copy
-> matches, it's just some arbitrary time after you request completion when
-> both sides are in sync. This implies that requests after this arbitrary
-> point in time will not be included in the copy.
-> 
-> Though I'm also wondering, if you successfully froze the file system (as
-> opposed to still trying to freeze it), why are we getting write
-> requests? Shouldn't freezing involve waiting for completion of all
-> in-flight requests?
-
-Ah, yes, you're right! There won't be any in-flight requests anymore
-once it's frozen. The throttling just means that the guest has to wait
-longer for completion first.
-
-Also, the parent throttle node is drained too when the mirror finishes :)
-
-Best Regards,
-Fiona
+> With regards,
+> Daniel
 
 
