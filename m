@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C9DE9B35A
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:38:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A08E9B359
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx0eT-00038s-QR; Mon, 02 Mar 2026 05:37:25 -0500
+	id 1vx0eT-000385-9e; Mon, 02 Mar 2026 05:37:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx0eN-00034M-8p
+ id 1vx0eN-00034I-1r
  for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx0eI-0001sJ-OK
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:17 -0500
+ id 1vx0eI-0001sl-NB
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772447826;
+ s=mimecast20190719; t=1772447829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RQxnhT5J3QqrSoHRFSNPnaFQaxtiBW7Sm65CLDXn9LU=;
- b=KjQ3o9F5xPCzs8HbXhryaDbAXWBAnehfsScvaFhjdn9IJBufrjMwW1F7Mpg82uCBs0OLf9
- nk0BZGufObCjcRbMycG7lCFoZ853spTOyRSetMJGbDoXMA746V8d5rig8RlDkCBrbwIxW9
- LyOR4o+gfa79FcoF3I2Dz/JQodhR3hY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gqwIlq9YsCC/mk/RbZ2jJbZEoXtp/RnqPmOFKrdWkWY=;
+ b=BMBcy9cnja/2vy5/WFjkPz1O9FHIgO6OI5K4oxrQFF+6tfvFTpKnmuk6DvUYAEXvKxJQaF
+ DOit5LQHTTLCNmR2WX0DsQD9xalJ+JLRsTbTEwEsUcGwLO/8J8ByN3bgMk4sBH0yPie3Zr
+ xIBdu8utiw0YERzMgvUM3paxq+SAoIc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-EK0ZNf0ZN_OtUmMaS7khyg-1; Mon,
- 02 Mar 2026 05:37:02 -0500
-X-MC-Unique: EK0ZNf0ZN_OtUmMaS7khyg-1
-X-Mimecast-MFC-AGG-ID: EK0ZNf0ZN_OtUmMaS7khyg_1772447821
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-qgevpJmTOymKrMbyLzaddw-1; Mon,
+ 02 Mar 2026 05:37:06 -0500
+X-MC-Unique: qgevpJmTOymKrMbyLzaddw-1
+X-Mimecast-MFC-AGG-ID: qgevpJmTOymKrMbyLzaddw_1772447825
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AB1419560A7; Mon,  2 Mar 2026 10:37:01 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5805C1956053; Mon,  2 Mar 2026 10:37:05 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.23])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 966DE1800666; Mon,  2 Mar 2026 10:36:58 +0000 (UTC)
+ id 1A2831800666; Mon,  2 Mar 2026 10:37:01 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v7 4/7] target/arm/cpu64: Mitigate migration failures due to
- spurious TCR_EL1, PIRE0_EL1 and PIR_EL1
-Date: Mon,  2 Mar 2026 11:35:26 +0100
-Message-ID: <20260302103640.1362564-5-eric.auger@redhat.com>
+Subject: [PATCH v7 5/7] target/arm/cpu64: Define cpreg migration tolerance for
+ KVM_REG_ARM_VENDOR_HYP_BMAP_2
+Date: Mon,  2 Mar 2026 11:35:27 +0100
+Message-ID: <20260302103640.1362564-6-eric.auger@redhat.com>
 In-Reply-To: <20260302103640.1362564-1-eric.auger@redhat.com>
 References: <20260302103640.1362564-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
@@ -88,65 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before linux v6.13 those registers were erroneously unconditionally
-exposed and this was fixed by commits:
-- 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace when
-                 disabled for guests")
-- a68cddbe47ef ("KVM: arm64: Hide S1PIE registers from userspace
-                 when disabled for guests")
-in v6.13.
-
-This means if we migrate from an old kernel host to a >= 6.13 kernel
-host, migration currently fails.
-
-Declare cpreg migration tolerance for those registers.
+KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
+from v6.15 onwards. Backward migration from a >= v6.15 to an older
+kernel would fail without cpreg migration tolerance definition
+for this register.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 ---
- target/arm/cpu64.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ target/arm/cpu64.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index dec430c48b9..9e64184f6f0 100644
+index 9e64184f6f0..0a61edb27f6 100644
 --- a/target/arm/cpu64.c
 +++ b/target/arm/cpu64.c
-@@ -794,10 +794,36 @@ static void aarch64_a53_initfn(Object *obj)
-     define_cortex_a72_a57_a53_cp_reginfo(cpu);
+@@ -817,6 +817,14 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
+                                      0, 0, ToleranceNotOnBothEnds);
+     arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
+                                      0, 0, ToleranceNotOnBothEnds);
++
++    /*
++     * KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
++     * from v6.15 onwards. Backward migration from a >= v6.15 to an older
++     * kernel would fail without cpreg migration tolerance definition
++     */
++    arm_register_cpreg_mig_tolerance(cpu, KVM_REG_ARM_FW_FEAT_BMAP_REG(3),
++                                     0, 0, ToleranceNotOnBothEnds);
  }
  
-+static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
-+{
-+    /*
-+     * Registers that may be in the incoming stream and not exposed
-+     * on the destination
-+     */
-+
-+    /*
-+     * TCR_EL1 was erroneously unconditionnally exposed before linux v6.13.
-+     * See commit 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace
-+     * when disabled for guests")
-+     */
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 2, 0, 3),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+    /*
-+     * PIRE0_EL1 and PIR_EL1 were erroneously unconditionnally exposed
-+     * before linux v6.13. See commit a68cddbe47ef ("KVM: arm64: Hide
-+     * S1PIE registers from userspace when disabled for guests")
-+     */
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 2),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+}
-+
  static void aarch64_host_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
- #if defined(CONFIG_KVM)
-+    kvm_arm_set_cpreg_mig_tolerances(cpu);
-     kvm_arm_set_cpu_features_from_host(cpu);
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         aarch64_add_sve_properties(obj);
 -- 
 2.53.0
 
