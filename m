@@ -4,122 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C257CC624C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C829ED58E7D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwzEd-0000I2-Gq; Mon, 02 Mar 2026 04:06:39 -0500
+	id 1vwzEk-0000J2-9e; Mon, 02 Mar 2026 04:06:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vwzEW-0000HB-IR
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:06:33 -0500
-Received: from mail-westus2azon11012052.outbound.protection.outlook.com
- ([52.101.48.52] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vwzEb-0000Hh-Ad; Mon, 02 Mar 2026 04:06:37 -0500
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vwzET-0005WT-UJ
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:06:32 -0500
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1vwzEY-0005WZ-JI; Mon, 02 Mar 2026 04:06:37 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OIsgtuS4ivnY3jYoN3Lv6V3o0LpaRmIazFZtBgI+6+3bJE+dFKHCzmWE+EbSKdxKcnGSLyKiXTZs2Eigpw6ylwyP/yVSqnw7+CDTci9CgAYLqBRfQ4kWCO0bwaPhs4DVaIu3h1uIPQHWRT4yVvkbTYD8KA0DXMBngGnUzuuRQCgjFw2UU2ok20tYZZRlHFY+KGttaIeZYqAKtiRXm5OBXoBZAVzr6SS7RTkO0nuAElFmyv1dILV4UTcTz+hwR/oGghp/pggg50DIjdgjhJyCwVjj0Mq6r/SqKzeYP9sux1/ifG3iqdpd/C6zUMz6L5zzs1EpOywd6JgnwmXYJOMxpg==
+ b=L1ypaQwzKPxyOCwK//RMn0Iajg4usz1xBBnEAeEDDXINSEn9WUyTbDHuhqkbYHIybu5odM+eTCRjDmu8b4wpjILHggpZ67mfrqa04HzpFBZzzqYjh5Sih4sJ24Q/Er+zca+BFMA5bfgDIRKPISrTFzNFqzYhfdRUt/LbMa2/V52JFATLxlRA7/b1xomV4Vquu+Y2Kn6Za4ginuahuAsQ+XV78M4G/fhi6JISnCIodj5w14i+Ob+O3xmmsGp094uOlNIfaxvFwQ3YiL9eE0PhqF9jiSUjoCVI9iy8oAEovlddmOPW6jY32fnpCjZOVZw5IV5zaUBH6eUgKTRG+0L4gw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IAkXad9qIFw7BEgbB7EHoGzH/It6En6XoYHZYTGCOwo=;
- b=eWpFk37XBdFz3Q5QO6EJVMyWeyemQrl60/jNTfwVyq7uDBbmUUsUi07QnEhe6ioI4deQ0hO8dKABgnmqPhHuyAdfKpEm9XNNi8feX6ardmmwOxAjpevlUQCNL6UJVgiiVUNOvSy3l6oGFZO5r9RFYUbCU1CLynt4z6Ffpp+Vbps8q/8jwC3Q9cTk6zbS1LlmpT387nwFPTMp1HomPgaLg+gc/r1fOKm3nbg/inI5RurXp1dB9Oj6mH5n8z0c20k45Vs1/ao+DtNfxySLZ/S4nq30jZKijbTXPxt+1BiU+DCUwJH5BKQMqvabMC2iFKlFIZ0QTyAxWHm2viOCf0yChQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ bh=tsShdRwexVCtMMeHSWzaL9MTCXXLIYykDy7QeBcmXcQ=;
+ b=DvUZt9FrN7T9h4a1ZWh8qEKaIxbt+5eLWynD1MRTeW8eCLpjL/f2VwvXWfFnQDFPu9QMaEBERQraOOSYVbeRgJDu9jWB94bF1r3QUFybyEvfPIYgFTVzpEntdR9xFmPme5dQAZvQ1wLVCjIlL+j2gZNhZGy4Zknxi3egO+ktpOrrRWb6NOVfqMZm7f3Z5wLxTPFVtnkejUn52z5QH2YUs/JXaKBkVvjBvUDc/PdjRDC77NqsLoEMCRDjgdohsvjNYM/LWRvVUDLUF6P6hQEWPjnRR+V/cMWm4R0BgcXgka+c6uUvOjmaUu7L0UVT7CYEznhoIlzlKMmy0CZUkIyICA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IAkXad9qIFw7BEgbB7EHoGzH/It6En6XoYHZYTGCOwo=;
- b=0QgRG0DcgSEWWzUX4C4UepwZ/rPgh7IgsX4UxfAkBZAbz6mDX1CRPPCEysCGZEoZvalxobdOu5TvGSrPVgcwt8ImgPlqzgig8tH+3jQ21mAMcvxMxr3d+aojnW2JiHg0NvpdUV9/ncM9tEILMePhRc+IkpBYaBbgn4qRWqShQ3s=
-Received: from CH0PR03CA0333.namprd03.prod.outlook.com (2603:10b6:610:11a::7)
- by IA0PR12MB7579.namprd12.prod.outlook.com (2603:10b6:208:43c::14)
+ bh=tsShdRwexVCtMMeHSWzaL9MTCXXLIYykDy7QeBcmXcQ=;
+ b=eup9cxiQMzmzH9VlcnS2WJ/LKmK/CbBIjdUZZR4TxM69ijNK0FHim6BGWMt3nQ4wHcEnmyK+MaMQUSdJvfrZTmMwRi0H6XHsXZR8kgBPFVpjTpUnYnSNazEYIjMj2aRY2UQO9lm2SCjGroNukzclu7S+8/2dxLx4ih6UingY5uL/+bPi4MaFqrL2UBdCcF8yfUjn5CgYKRm4cwmJMAUEWJL6FGF6libAb5V6Wh4N017YU/YJN9itXhy3rZVZzJlv9rmIstEN1lI/qm1SnebM7ejSgvuXE75ItRAvOjnaRvEL5RonWBd10V7M1V2puk9WIU4W93oiSzMYYJUOp48V2w==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by KL1PR06MB6134.apcprd06.prod.outlook.com (2603:1096:820:d0::11)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21; Mon, 2 Mar
- 2026 09:01:22 +0000
-Received: from CH2PEPF0000009C.namprd02.prod.outlook.com
- (2603:10b6:610:11a:cafe::d1) by CH0PR03CA0333.outlook.office365.com
- (2603:10b6:610:11a::7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21 via Frontend
- Transport; Mon, 2 Mar 2026 09:01:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- CH2PEPF0000009C.mail.protection.outlook.com (10.167.244.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9654.16 via Frontend Transport; Mon, 2 Mar 2026 09:01:22 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Mon, 2 Mar
- 2026 03:01:21 -0600
-Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 2 Mar
- 2026 03:01:11 -0600
-Received: from [10.65.98.227] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Mon, 2 Mar 2026 03:01:09 -0600
-Message-ID: <f36e249f-820d-4033-81c3-2b172453d1aa@amd.com>
-Date: Mon, 2 Mar 2026 17:01:08 +0800
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.20; Mon, 2 Mar
+ 2026 09:06:26 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9654.020; Mon, 2 Mar 2026
+ 09:06:26 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>
+Subject: [PATCH v1 00/10] Update test ASPEED OpenBMC SDK v11.01
+Thread-Topic: [PATCH v1 00/10] Update test ASPEED OpenBMC SDK v11.01
+Thread-Index: AQHcqiPZc9fufOBn30qme+8Of+f8BQ==
+Date: Mon, 2 Mar 2026 09:06:25 +0000
+Message-ID: <20260302090624.987922-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KL1PR06MB6134:EE_
+x-ms-office365-filtering-correlation-id: 1ce764ca-3079-4ea1-d5e1-08de783afbb9
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: DUX3M36aF7CoHMLaCqDug9QV6Cx394mtFKh9z3+4gXJEHSBXSdB2yknVvBPX7isBU/xErv7f16udNmpuf78GiujszSqadC+mROH398aWETJF6fNV6uOq56jaQmbj84YsZ8S+MMB7p0yvAYNKTMLpHdCNZtwbAq/lfkiVh/rRrjs3Plp7LbFvtTkRNuZFo8oY7y2UfZljuMygkQIUmVBshZVD2ZufQ9N9JNPZ6qsd0iqA8MNqk2ss0kFHQE2CZjhPzL0VkvQEYwTYptUR3vdxe4890UAewLE6X78OzQ2q5EKbBIEilx/ljJ7MTTJBFFIMyz1JmqhA0mE/bcaXOi7icf4GschMLrjMsNcFm4JiRIu5YhA5iM5j7L3fTKYTlx9DaXkuqfNd6rh+//8HoANuzaRmU5OmSLbWzKxdcIBRVnRYbn5WKTWuztqPs3odUEYmxWJJUTlpYe8hs5eoczzI0z6VQttWD6Z2U37GbYRXcX+hUZFfjFIvg2kfjhDTqkP3BgTjedEfsuxC+zVJIRJejDA7mDTWxBG1UL20GDxVNN8MgSXe+rpUdUvO2aVc/QNvfidmXdqolmQMDOQzfRklLUQjmoQ3Z2IhsiF4kUu5lPxso86XE/3UK0H1nDmcwn32vLQYXMUCN0w1K1GM+k15XbjsqpUbAaC3KUAo2EpP6nKI+30E4ZqP2eZsSAwyT8KKTcmKHXuXzsnKBJOYP9ZbxvC76bXnK4pXCVAyZq+LjnwFgRTyqmCyRyMCfSAuSFZwPUL0s57yNZCr72niYSn8kKI8oELeZlzT1N1VCNN1WT0=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mIiHumqtEOMEzP7NZUJ8kmR/XXmGeNLEZoZQCdpiEgSO+PTJeg6HiHWWEL?=
+ =?iso-8859-1?Q?ApaFzzKcc9ER+rfQUfBiRDVmrWVhIaupDb06G2g8+wBPpkxH7x/Z/TmHqg?=
+ =?iso-8859-1?Q?43H3zzk+iDPKrP8ErzhHS6uReS4Tg5wn/QpCnGE1axlLxZdxp48wzrFgB2?=
+ =?iso-8859-1?Q?4IBg4jdQbeOMdXQ7EZLYVWb0KNi1wmRYuk0t56i693y3By2uXtin+/CSiO?=
+ =?iso-8859-1?Q?T7/k73WisulZChEss/zSksjWzk7t2dQNACk+8sXt5SkOQ/Xxf7o5p6SBz6?=
+ =?iso-8859-1?Q?EShtmGkn58xaampzFTZXzDdph/mvfE5x79HGPJwNbBxIazpGl9lz7TdZ6d?=
+ =?iso-8859-1?Q?OkwiYOECfZY+2/TVvqP8qddhXoBKceiTijvp5aWmAEycH2M4LhUfN9O2kC?=
+ =?iso-8859-1?Q?6+UWVttoR7f4JM23sC2aKx0Xbt9ErYOfGRCbIKI7vjLyEyPcPs1E2sT59C?=
+ =?iso-8859-1?Q?u618gy9c9qdU9xDSA48KLIRPheJfbNXKvppy8cCdXKxWOnkXQiGRcpWYSA?=
+ =?iso-8859-1?Q?nd05FU2pC8WJ7a2n8QAkU0eFNFckcrKI8a3c3qFjroEainDvksNKexbaKa?=
+ =?iso-8859-1?Q?JvyKdm+lzgBlklxHESxZRyc4/M3zfYn2E+JNuFm6KTk3AmPJaNVeCOuzNx?=
+ =?iso-8859-1?Q?pEpXRmqOWJMsWSLj46aTBpz52slsFguINT089HA3avxs455tXnUcLzCyOq?=
+ =?iso-8859-1?Q?JbEem31lEpLkAn1YshpbdVXFYLnejRoqQvTdtBMjWzODPXZx7MI+t7NZMD?=
+ =?iso-8859-1?Q?37O3eEX6bhpCof93Nr1n9l7u69AC8DzDropZ9HEzoaoWPAEbEwAsm997Kg?=
+ =?iso-8859-1?Q?3YhSrak3g6xDiV6eP7gtA1uVEZ5vSWybcJLCg5iucKmiIs3ONTXR6Qygk2?=
+ =?iso-8859-1?Q?khWujsYvskspRFUqJpHmt7nQOmVqupRuk5BQBszxq/alczpPEXwxhU5OBF?=
+ =?iso-8859-1?Q?mT/ePK8UZuSL0qhz952UmRXj9B57cEYXaibenrTKKz98iWySpITJsXeKOq?=
+ =?iso-8859-1?Q?T8VdZjpmf4n7CJo/NQRq0OfSniuPZFFrHI8/5mNXw0VcsUvExlosK6lmXB?=
+ =?iso-8859-1?Q?JYLoJSCeIenv03ELm5Cme+spD6mdbIKv4iiJn3GYENNgSWv22Es2z8EqtS?=
+ =?iso-8859-1?Q?F+fKA4Ads/CGUkQeEKyLyH/3W3jYwneISlKadfZueXDpNvUx66Gzp5SDIn?=
+ =?iso-8859-1?Q?tRICTaCd3CDpDF/ErxeWOw7hjc4HVks4ADUqx0ST+9KgX+YwoRlf5ORYsg?=
+ =?iso-8859-1?Q?dlJB5gxpmFzEfreNNlxF9XRY7+Hndfp+Aqk6lNrHdDdf50cgLZ6W0QvRFp?=
+ =?iso-8859-1?Q?GNYINHhIXE2WEkKaaf7r8P5Dk/LrFV7oLWufJNVY65YNoOsm9qSUH5+LCt?=
+ =?iso-8859-1?Q?3exNrr6EEnO21czl7U1MlLdsZl4rpgIX/Nex9iHzDXhLfWCS34jBqwAGse?=
+ =?iso-8859-1?Q?B+gZfaLKMDTODrUq9UspLmnJXqdNEAlySYlo5ubZbevRf5HnPcVsRyMxG/?=
+ =?iso-8859-1?Q?mqWz2Yk9fELZfO8w/u//3h0eJBcc7O8z60jHXgENXYQKtverhRRCKXgGED?=
+ =?iso-8859-1?Q?ThhTk9g4CbroOzjIicqPahgH3qYn1T1Wrbw0O8F1eZySUBSJr2hws15AIG?=
+ =?iso-8859-1?Q?fs2XWv8rp5sQ8KgYcQiRVilMKJXaA1WJewROr6nKCMTxiy98CSVbX7x3Ra?=
+ =?iso-8859-1?Q?5urlHDR5FHJvZzKt2r7AjLFCfObCLqs8SedzH8bmPYuJd8cVv8E7dWroo9?=
+ =?iso-8859-1?Q?eqZCdcxrgO9+8afX7NwPj2RovxlAC5zcMIZYNnH/MuaDrYRw8WuhpquTa0?=
+ =?iso-8859-1?Q?7e4a5emRfQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/1] numa: add 'memmap-type' option for memory type
- configuration
-To: David Hildenbrand <david@kernel.org>, <qemu-devel@nongnu.org>,
- <imammedo@redhat.com>, <gourry@gourry.net>, <jonathan.cameron@huawei.com>
-CC: <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
- <Lianjie.Shi@amd.com>
-References: <20260226105023.256568-1-FangSheng.Huang@amd.com>
- <20260226105023.256568-2-FangSheng.Huang@amd.com>
- <7facab80-c59f-4869-a68d-2e61acd15cb3@kernel.org>
-From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-In-Reply-To: <7facab80-c59f-4869-a68d-2e61acd15cb3@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000009C:EE_|IA0PR12MB7579:EE_
-X-MS-Office365-Filtering-Correlation-Id: 809dc539-6796-43d5-a698-08de783a469f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: wlqiMw04UIECqUidQInY1FEyTMKeKWBcGf1CKYk+Acv+aUFaI9R4NkuPHnbHJ/PK/2OrHJimlrLlW/BMEmzcL5cy2kG4WVNd3NQ+yhMtL0J0rGuLdd4ItbUHJ4Cq5US4Bcum1i6TFPHip1+tjx8YCt7aXMr8tluya8edWnoDosMLHNMvnEWzeCOw3sQtQ1m3/rkabNJIOebL8tWo7d4U6QLiC77pAzV5AL8J4WrAvIFGDf5pxo7/U73C1fI88DzRNegdFluZwZItm6Dymz8hdTFoYo0ln2wDUATBQ3Cnq0DndZtor28MdaYMVF7K7sMGHed+o6ksLVhf60E635rIdiHYnFQhbYBHo3snVwNt7cTMm23TUFK+vHqjRaXK0BHRWXOa5tBfR8BU6CILiNgeRFfM8ZodveI3c7GzOGxZl3fL8OzJZaqEpYLo5deYA7mzGvamYW6HU1EIovGC5fzQN+a5SaDwo8uuDIK340hCdydWTUt5B9fYPomByBTwBgjpvIR0CdPM8Os2vZRflneQhnokGxpaaAAPeBBbX/s37lEacDxmAmNkk1BVXhlQ/aV0IIbWdpXK9LFx/+44GfvbJTR1umNS7XMo1SB7ZzOEIYiSJGlGUi+E/qSHbLYDAc3vUX+LY7Q3XQJ1lzzqTTPUR0AnAQRgXocsCPoy7rUnSSugw2Hc3hvGvMRsROTIs10R0+6E6cgA4DGiy1+dfbTneOtr89Crp+maaQzMEGEfhZCbZQF33Ffhtbwi7ORfLI3gQUKMj+lt/TEo8YYKoULRKOPl02KB4LYU0OTHn5jTkVo9COW3lTCcYzaLNfPO27kHf8qdMPiMUhK1rIbLj5Hs8Q==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: lt/1kKIvoUZqDnU4emOeS76Kk+kotjhYvhVG5oKoqgjRHWy5j7FDhNDEyfeMNzXmiFKVW8y99mNEhH6+OrDhGPtcoUeZ8YZc77x9pjOp8Mkjh4tt3PxNDfdZkVM8gOrDqeKq2kyoux4I1J/0eWsYjlFK8ilOQqnaZvo4AhR3ZT+avhngf69rNmHRFxY8XPnDCgnkrcqqHH3vtRZS6WeyTT8Lry310fQ201id0mZNdvyMmaqB+lmw21+7WqM1EbCyvqy3X1i+lFv4MLhDNhy0/sEzICmbNhsUCT+KyjMvcz7E2i8xsiYjW6nbXbyJml7P7fkACVvax+wrJ6A24H0tyeRXg31XBPzxSbfA5+dQGROn3Kl16OjK//jDNgb2sg5jimo5712H01Yfdvm5wTYKKZyO8eHsG17wJIL1DkKL0MSNx6w5D5/MBRcNPQKZfp3j
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 09:01:22.1178 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 809dc539-6796-43d5-a698-08de783a469f
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009C.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7579
-Received-SPF: permerror client-ip=52.101.48.52;
- envelope-from=FangSheng.Huang@amd.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ce764ca-3079-4ea1-d5e1-08de783afbb9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Mar 2026 09:06:25.9274 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 4d4ey8uL9kE9k14QB1zLV1gtCWtKeT9qB7mefvXmgh+xT8i4N7eCcr94B1Go+lxZnXkRNBmWzWTWkSZFMe1YHORZIJttBQvhcf2f9GZhRMo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6134
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,63 +141,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/28/2026 4:34 AM, David Hildenbrand wrote:
-> On 2/26/26 11:50, fanhuang wrote:
->> Add a 'memmap-type' option to NUMA node configuration that allows
->> specifying the memory type for a NUMA node.
->>
->> Supported values:
->>    - normal:   Regular system RAM (E820 type 1, default)
->>    - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF)
->>    - reserved: Reserved memory (E820 type 2)
->>
->> The 'spm' type indicates Specific Purpose Memory - a hint to the guest
->> that this memory might be managed by device drivers based on guest policy.
->> The 'reserved' type marks memory as not usable as RAM.
->>
->> Note: This option is only supported on x86 platforms.
->>
->> Usage:
->>    -numa node,nodeid=1,memdev=m1,memmap-type=spm
->>
->> Signed-off-by: fanhuang <FangSheng.Huang@amd.com>
->> ---
->>   hw/core/numa.c               | 24 ++++++++++++
->>   hw/i386/acpi-build.c         |  8 ++++
->>   hw/i386/e820_memory_layout.c | 72 ++++++++++++++++++++++++++++++++++++
->>   hw/i386/e820_memory_layout.h | 12 +++---
->>   hw/i386/pc.c                 | 48 ++++++++++++++++++++++++
->>   include/system/numa.h        |  7 ++++
->>   qapi/machine.json            | 24 ++++++++++++
->>   qemu-options.hx              | 14 ++++++-
->>   8 files changed, 202 insertions(+), 7 deletions(-)
-> 
-> I didn't take a look at the x86 implementation bits. The high-level
-> concept LGTM.
-> 
-> In an ideal world, we'd only indicate the property if actually supported
-> by the machine. Not sure if that is easy to achieve with the "-numa"
-> option. So I guess this has to do :)
-> 
-Hi David,
-
-Thanks for the review and the LGTM on the high-level concept!
-
-Regarding the per-machine property visibility — agreed, it would be
-cleaner. Currently we handle it with a runtime error when memmap-type
-is used on non-x86 machines, which seems like a reasonable compromise
-given the "-numa" option structure.
-
-I was wondering if there's anything else you or the other maintainers
-would like me to address in the current v6? If the patch is in
-reasonable shape, it would be great if it could be picked up, as I
-have a follow-up OVMF patch for soft reserved memory support that
-depends on this QEMU change being merged first.
-
-Happy to make further changes if needed — just let me know.
-
-Thanks,
-Jerry Huang
+The series is based on the aspeed-next branch from:=0A=
+  https://github.com/legoater/qemu.git=0A=
+=0A=
+v1=0A=
+ 1. Update test ASPEED OpenBMC SDK v11.01 for AST2500, AST2600 and AST2700=
+=0A=
+ 2. Update test ASPEED Zephyr SDK v03.06 for AST1030=0A=
+ 3. Update test aspeed-zephyr-project v03.05 for AST1060=0A=
+=0A=
+Jamin Lin (10):=0A=
+  tests/functional/arm/test_aspeed_ast1030: Update test ASPEED Zephyr=0A=
+    SDK v03.06=0A=
+  tests/functional/arm/test_aspeed_ast1060: Update test=0A=
+    aspeed-zephyr-project v03.05=0A=
+  tests/functional/arm/test_aspeed_ast2500_sdk: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/arm/test_aspeed_ast2500_sdk_515: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/arm/test_aspeed_ast2600_sdk: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/arm/test_aspeed_ast2600_sdk_otp: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/arm/test_aspeed_ast2600_sdk_515: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/aarch64/test_aspeed_ast2700a1: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/aarch64/test_aspeed_ast2700a2: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+  tests/functional/aarch64/test_aspeed_ast2700fc: Update test ASPEED=0A=
+    OpenBMC SDK v11.01=0A=
+=0A=
+ .../aarch64/test_aspeed_ast2700a1.py          | 30 +++++++++----------=0A=
+ .../aarch64/test_aspeed_ast2700a2.py          | 30 +++++++++----------=0A=
+ .../aarch64/test_aspeed_ast2700fc.py          | 18 +++++------=0A=
+ tests/functional/arm/test_aspeed_ast1030.py   | 12 ++++----=0A=
+ tests/functional/arm/test_aspeed_ast1060.py   | 14 ++++-----=0A=
+ .../functional/arm/test_aspeed_ast2500_sdk.py |  8 ++---=0A=
+ .../arm/test_aspeed_ast2500_sdk_515.py        |  8 ++---=0A=
+ .../functional/arm/test_aspeed_ast2600_sdk.py | 10 +++----=0A=
+ .../arm/test_aspeed_ast2600_sdk_515.py        | 10 +++----=0A=
+ .../arm/test_aspeed_ast2600_sdk_otp.py        | 10 +++----=0A=
+ 10 files changed, 75 insertions(+), 75 deletions(-)=0A=
+=0A=
+-- =0A=
+2.43.0=0A=
 
