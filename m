@@ -4,65 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA8DD58E5D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8354DD58E5D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 06:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwwfV-0007Uj-0g; Mon, 02 Mar 2026 01:22:13 -0500
+	id 1vwwfy-00089c-St; Mon, 02 Mar 2026 01:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwwfQ-0007Rn-11
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:22:09 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vwwfw-00087u-70
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:22:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwwfN-0005hc-CB
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:22:07 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6226LBB4033525
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 2 Mar 2026 15:22:00 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=y9KYHnJdKXI4Bm/Yc9UuAE4OKFG8WxOH7EecF1Td82s=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772432521; v=1;
- b=EhE2EcgzQ2QHDWYWMza5ZUa0orO/GlpomYeIW2X6y6Gralq7ipO0GBu9Rx2MGcR0
- gC5PS2cgimJtmi/f4B8Z2A2zfLVX7tto62xr3SRM1+sUH4uSBRF7ueFnOuJypNNw
- hT0kG3uYsliRmyyOhb15seklXgXd0wcapK3vteK4YVPlxDUXRjtPkMJ3rVxZz++n
- jcmqlzUZhhjLH4Yt0CmMd3BL03xgg4vo44wFKwOFnoYQkS2+66unidOUMb7FkcJ6
- lrdssimRJ2Lh/l3pUTwWZ8KWw6jQX8AHTUjRdAldzjX+GI0BzBAz+gC0fgOivD52
- epCPoA3orN9+xe71ziPsyw==
-Message-ID: <82dfe6e2-22c1-4df1-9e49-a2c7a2970082@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 2 Mar 2026 15:21:11 +0900
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vwwft-0005jg-So
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 01:22:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772432555;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i8xHnXP2+i2Sqi2ibG1CO68US9CyRL0aXIdbKa8Ya7Q=;
+ b=FdfV5ZdKCIiXmLFnnwp52asww/RMED7StQZQvp2gGyATdcDSNsjrqSGe1X2QvVEmK0JmvE
+ oPP/2TS6NMybXQzS0QrgQQDpTs0QPsiaj0vVZd7Lp/9jgqAprtiI+KVbK7VjTlGfHaFIjh
+ 1oZ37Q9g4PyajDLaYp11a70CeCCixvA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-170-T3kiyv4BOrec4LrTUH4QNA-1; Mon, 02 Mar 2026 01:22:34 -0500
+X-MC-Unique: T3kiyv4BOrec4LrTUH4QNA-1
+X-Mimecast-MFC-AGG-ID: T3kiyv4BOrec4LrTUH4QNA_1772432553
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4837246211bso53556305e9.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 22:22:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772432553; x=1773037353; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i8xHnXP2+i2Sqi2ibG1CO68US9CyRL0aXIdbKa8Ya7Q=;
+ b=rqOPdAnn6xVcqdBo96oW5YgF8GuPQft7wyGu0QBHCTNxqZWYoIVVeANEgl1+I2+PGT
+ DDzEH232HlyAK55FMjB44I3WPgRiynv/+Lcz5N2Tb8dd0CwAa+qCqNXiGhthUNJckmtv
+ ibXqhwiFM4xkMi/L+N1HabnGIWgPDJBb7f4lCHsPzvyRqq2LPqLJ3d3up/Ev+kLDh04e
+ 4p/HlwgHX8UyZgkU+QZDCJamOxFXnGjjLpcULy1MExJit1B0ZbJmQrtuYBtFRcOEZzkw
+ sm/RocAzc4Rfks+TIJegkCiepRMjmiutlBdVAbG1AiSUrT3d81TXCw6TD2F2xZjYQmBt
+ EWmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772432553; x=1773037353;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i8xHnXP2+i2Sqi2ibG1CO68US9CyRL0aXIdbKa8Ya7Q=;
+ b=MDUNRsr+82U9V83n7td5XamKFMIeigp8C9jVqKdzdwmpXFITmbUQNTiV2M3WD3fAQd
+ GUi6vehqVJ5UDfqvUfi1rVuh+yzhhEc7O+35bfBwu8B/N0DlebeALAQ2/yvQFRTR1tup
+ FzY0q82mK7hT09j+aM7zlpCQm9Vjj1r2MX/ipFsmvDg0nSXL26eOx5Jfb3T406KP2W7r
+ yFFO0oUDUl9bEC3++6EHbpR7bTut96+tX2krmsweSQlcZzRGRqB71zyh3w9yMe4qEdwr
+ BoxBt4zT/Ch/LsLXkqL+eoUBZNAFMxUxVFOCOR00KP1AGjkimhPIltWekhwkIHZ037Aw
+ uiMg==
+X-Gm-Message-State: AOJu0Yw2gHsny7MjbHkBGZQ6HPNtzjnlFy2AWyAcMKsVZLAVCNxcXq7M
+ tF0Q/kut2Am7FOpc+s7xPhZf3eMsYSkOcwvc0vcdxuBfhUfJVM0qN8PxmV9BxiujnHb+aqCLdWJ
+ BAA6ER66moolja83A25b+4c+s8dfqc748RTGllHE11o1HA0EyPuyZnMSn
+X-Gm-Gg: ATEYQzwZwikMfJEvdzwNFPyfRC1Nj1BwbglNx/s+O3XWialcyaJ6xxp73RakD/pZJFK
+ OYZh8z6p9/lp0WNlzzlpitUxP+kTqtB37IFtA+iEIlZPLt/Clllz/uBd8YZfeVT1C318JW676ta
+ 9tg7BUpHQe0rXh6E79gpNaPK7HB6J7upb/CrzPFdOz83fGVvS1/209xHENWEcsA/HL8zTZkhKac
+ L0ncGQqXaYXeiBXajb2cIPWnvS9oZNRL1STOWd++d65QveXpBd2KDbOcWaJdnAilLf0BTF30YRi
+ Acy3B18CGX6LfQpjp6YcPBY+7wzQ79EnKGZKMEnJP9DXEalw0DZ8dZACqBF+cW5VjJXvqlFg6l9
+ GV4/nrg==
+X-Received: by 2002:a05:600c:46d5:b0:477:a36f:1a57 with SMTP id
+ 5b1f17b1804b1-483c9bb7c16mr183709605e9.3.1772432552949; 
+ Sun, 01 Mar 2026 22:22:32 -0800 (PST)
+X-Received: by 2002:a05:600c:46d5:b0:477:a36f:1a57 with SMTP id
+ 5b1f17b1804b1-483c9bb7c16mr183709335e9.3.1772432552538; 
+ Sun, 01 Mar 2026 22:22:32 -0800 (PST)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bfbb465bsm277437775e9.3.2026.03.01.22.22.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 01 Mar 2026 22:22:31 -0800 (PST)
+Date: Mon, 2 Mar 2026 07:22:30 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v2 02/11] hw/acpi: Move acpi_send_event() function out
+ of acpi_interface.c
+Message-ID: <20260302072230.668f5906@imammedo>
+In-Reply-To: <20260225035739.42848-3-philmd@linaro.org>
+References: <20260225035739.42848-1-philmd@linaro.org>
+ <20260225035739.42848-3-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] stubs: Merge physmem.c within ram-block.c
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-References: <20260226220226.20164-1-philmd@linaro.org>
- <20260226220226.20164-2-philmd@linaro.org>
- <8a2872f3-dfbb-3fed-dd95-3cd474e3ca2b@eik.bme.hu>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <8a2872f3-dfbb-3fed-dd95-3cd474e3ca2b@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,85 +123,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/02/27 7:22, BALATON Zoltan wrote:
-> On Thu, 26 Feb 2026, Philippe Mathieu-Daudé wrote:
->> physmem.c defines 2 stubs which are related to ram-block:
->> qemu_ram_block_from_host() and qemu_ram_get_fd().
->> Move them with the other ram-block stubs.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> stubs/physmem.c   | 13 -------------
->> stubs/ram-block.c | 11 +++++++++++
-> 
-> Maybe should be the other way around moving what's in subs/ram-block.c 
-> to stubs/physmem.c considering the the functions these stub out are in 
-> system/physmem.c and there's no system/ram-block.c.
+On Wed, 25 Feb 2026 04:57:30 +0100
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-But this stubs out functions in "ramblock.h" (though it's not
-"ram-block.h")
+> acpi_interface.c should only register QOM interfaces. Move
+> the acpi_send_event() function to core.c with the other
+> event handlers, and its declaration in 'hw/acpi/acpi.h'.
+>=20
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Regards,
-Akihiko Odaki
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-> 
-> Regards,
-> BALATON Zoltan
-> 
->> stubs/meson.build |  1 -
->> 3 files changed, 11 insertions(+), 14 deletions(-)
->> delete mode 100644 stubs/physmem.c
->>
->> diff --git a/stubs/physmem.c b/stubs/physmem.c
->> deleted file mode 100644
->> index 14667f2bd8f..00000000000
->> --- a/stubs/physmem.c
->> +++ /dev/null
->> @@ -1,13 +0,0 @@
->> -#include "qemu/osdep.h"
->> -#include "system/ramblock.h"
->> -
->> -RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
->> -                                   ram_addr_t *offset)
->> -{
->> -    return NULL;
->> -}
->> -
->> -int qemu_ram_get_fd(RAMBlock *rb)
->> -{
->> -    return -1;
->> -}
->> diff --git a/stubs/ram-block.c b/stubs/ram-block.c
->> index 8790a59593e..f0650b19ac6 100644
->> --- a/stubs/ram-block.c
->> +++ b/stubs/ram-block.c
->> @@ -35,3 +35,14 @@ int ram_block_discard_disable(bool state)
->> {
->>     return 0;
->> }
->> +
->> +RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
->> +                                   ram_addr_t *offset)
->> +{
->> +    return NULL;
->> +}
->> +
->> +int qemu_ram_get_fd(RAMBlock *rb)
->> +{
->> +    return -1;
->> +}
->> diff --git a/stubs/meson.build b/stubs/meson.build
->> index 8a07059500d..0171f531523 100644
->> --- a/stubs/meson.build
->> +++ b/stubs/meson.build
->> @@ -20,7 +20,6 @@ if have_block
->>   stub_ss.add(files('get-vm-name.c'))
->>   stub_ss.add(files('iothread-lock-block.c'))
->>   stub_ss.add(files('migr-blocker.c'))
->> -  stub_ss.add(files('physmem.c'))
->>   stub_ss.add(files('ram-block.c'))
->>   stub_ss.add(files('runstate-check.c'))
->>   stub_ss.add(files('uuid.c'))
->>
+> ---
+>  include/hw/acpi/acpi.h               |  1 +
+>  include/hw/acpi/acpi_dev_interface.h |  2 --
+>  hw/acpi/acpi_interface.c             |  9 ---------
+>  hw/acpi/core.c                       | 10 ++++++++++
+>  4 files changed, 11 insertions(+), 11 deletions(-)
+>=20
+> diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
+> index b036116dfb8..dc3672db521 100644
+> --- a/include/hw/acpi/acpi.h
+> +++ b/include/hw/acpi/acpi.h
+> @@ -182,6 +182,7 @@ void acpi_gpe_reset(ACPIREGS *ar);
+>  void acpi_gpe_ioport_writeb(ACPIREGS *ar, uint32_t addr, uint32_t val);
+>  uint32_t acpi_gpe_ioport_readb(ACPIREGS *ar, uint32_t addr);
+> =20
+> +void acpi_send_event(DeviceState *dev, AcpiEventStatusBits event);
+>  void acpi_send_gpe_event(ACPIREGS *ar, qemu_irq irq,
+>                           AcpiEventStatusBits status);
+> =20
+> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_=
+dev_interface.h
+> index 5927e40eaff..65debb90a8d 100644
+> --- a/include/hw/acpi/acpi_dev_interface.h
+> +++ b/include/hw/acpi/acpi_dev_interface.h
+> @@ -27,8 +27,6 @@ DECLARE_CLASS_CHECKERS(AcpiDeviceIfClass, ACPI_DEVICE_I=
+F,
+> =20
+>  typedef struct AcpiDeviceIf AcpiDeviceIf;
+> =20
+> -void acpi_send_event(DeviceState *dev, AcpiEventStatusBits event);
+> -
+>  /**
+>   * AcpiDeviceIfClass:
+>   *
+> diff --git a/hw/acpi/acpi_interface.c b/hw/acpi/acpi_interface.c
+> index 8637ff18fca..e58e8aaee23 100644
+> --- a/hw/acpi/acpi_interface.c
+> +++ b/hw/acpi/acpi_interface.c
+> @@ -4,15 +4,6 @@
+>  #include "qemu/module.h"
+>  #include "qemu/queue.h"
+> =20
+> -void acpi_send_event(DeviceState *dev, AcpiEventStatusBits event)
+> -{
+> -    AcpiDeviceIfClass *adevc =3D ACPI_DEVICE_IF_GET_CLASS(dev);
+> -    if (adevc->send_event) {
+> -        AcpiDeviceIf *adev =3D ACPI_DEVICE_IF(dev);
+> -        adevc->send_event(adev, event);
+> -    }
+> -}
+> -
+>  void qbus_build_aml(BusState *bus, Aml *scope)
+>  {
+>      BusChild *kid;
+> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+> index 6b65e587f2a..a6a62a742d1 100644
+> --- a/hw/acpi/core.c
+> +++ b/hw/acpi/core.c
+> @@ -22,6 +22,7 @@
+>  #include "qemu/osdep.h"
+>  #include "hw/core/irq.h"
+>  #include "hw/acpi/acpi.h"
+> +#include "hw/acpi/acpi_dev_interface.h"
+>  #include "hw/nvram/fw_cfg.h"
+>  #include "qemu/config-file.h"
+>  #include "qapi/error.h"
+> @@ -753,3 +754,12 @@ void acpi_update_sci(ACPIREGS *regs, qemu_irq irq)
+>                         (regs->pm1.evt.en & ACPI_BITMASK_TIMER_ENABLE) &&
+>                         !(pm1a_sts & ACPI_BITMASK_TIMER_STATUS));
+>  }
+> +
+> +void acpi_send_event(DeviceState *dev, AcpiEventStatusBits event)
+> +{
+> +    AcpiDeviceIfClass *adevc =3D ACPI_DEVICE_IF_GET_CLASS(dev);
+> +    if (adevc->send_event) {
+> +        AcpiDeviceIf *adev =3D ACPI_DEVICE_IF(dev);
+> +        adevc->send_event(adev, event);
+> +    }
+> +}
 
 
