@@ -4,64 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2874DEB3637
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 21:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5B9EB3632
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 21:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxATO-0006ar-MW; Mon, 02 Mar 2026 16:06:39 -0500
+	id 1vxAU5-0006l2-1M; Mon, 02 Mar 2026 16:07:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxATJ-0006ac-C8
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:06:34 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxATG-00016R-Dy
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:06:32 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 29B6E5969F0;
- Mon, 02 Mar 2026 22:06:26 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id OXaDTVkEFd_0; Mon,  2 Mar 2026 22:06:23 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C03DD5969F4; Mon, 02 Mar 2026 22:06:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BE1DC5969F2;
- Mon, 02 Mar 2026 22:06:23 +0100 (CET)
-Date: Mon, 2 Mar 2026 22:06:23 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Xu <peterx@redhat.com>
-cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 0/8] memory: Remove most _nomigrate variants
-In-Reply-To: <aaXxS0zdMKMoyjvA@x1.local>
-Message-ID: <5ca90707-6feb-b382-937a-0b114a914d5d@eik.bme.hu>
-References: <cover.1770253186.git.balaton@eik.bme.hu>
- <aZ3CQw2ad5cVc-Mm@x1.local> <c8a789fa-8d16-709d-eb3f-8acd6c1d08e8@eik.bme.hu>
- <aZ8jmaB-zuBSoQXH@x1.local>
- <997bf152-3982-490b-8450-06095ffad22b@rsg.ci.i.u-tokyo.ac.jp>
- <01f28121-0306-39e9-6526-fef766388eab@eik.bme.hu>
- <0c750924-95a1-4fc8-ab7c-93ca19b791dc@rsg.ci.i.u-tokyo.ac.jp>
- <b09d2e8a-3b64-e537-b9e0-8037e2855fdc@eik.bme.hu> <aaXxS0zdMKMoyjvA@x1.local>
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vxAU2-0006kO-D3
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:07:19 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vxAU0-0001AL-0d
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:07:18 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-679efb9eb0dso4029072eaf.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 13:07:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772485634; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TiYJ9QuMvnOujkBmTqeA6iKgSWlbfkq93QAlgckBN/oy14ugW+l10mssdLTZMqp+Hb
+ n5TM1LaiE8vuJ6itV1NCtzQR4Hgcsanf13Aenx3xLBBipUjxxPmkrrTH97zY/UgwaG4E
+ H3yDgzQ/dn6ZXsOtdalfSezI9OKvtSZ8pa4xNzpaGsjCE+/nk+EX8iWc7/noRcnv6Xt1
+ qK9jOp0uLjWvq+0dSZzIlodqaGQLoPIhbBHhhZKIiCtnWYKPXRgc7S2i5wRK92W1D7FW
+ qCQPYkC6eJJP3UPecGadPlIbQUowcmcha2cNXfAfsf46ELiLRkN6qEQ92OZWgRgRLJQj
+ fKLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=VMXnQxj3qAUHWMDMrvfiRUeHzQgsxMC8GA7kER9QlAg=;
+ fh=U39PmFavrHPjECQQd1GB3et4CkI7X+0j50odXDdWbyc=;
+ b=cKRLYGZZkeAcZW8qwjo0IZ5MANA6QoIydzWuSy2+LTvIRofMJKvb1CP6u1l7DiG+6f
+ VdhDl0sKLXamb/GFZvVMYzKLjeIkInNsPoeVw+IeP0ql62vuxFcwSE4nGPQxGKrttM8w
+ 7SsNT+4VxdqkvghndDws8zHRcj/NFOnH7PMgDqgde4sO6yY3AYvIVW/s17TdqBl4b9SS
+ ESBDugTFw8q6EzGhpTZbrCc9snmHoSoDo5F1OkqwwJxoAg0mc+6vVMBBJOrNH5J20Inl
+ EKqpkCXuSBiQNUFRPlNRlAa330T7HBwIFXZzqc2k7q3rTrsmDvxlTahxk4uQWtS8Bbi6
+ RShA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772485634; x=1773090434; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VMXnQxj3qAUHWMDMrvfiRUeHzQgsxMC8GA7kER9QlAg=;
+ b=fMEn4jlO8U+oug5RqclDteBdhMbRaLJhfrcP5qUUGSCELEl13/K0rXaumZz2Xe1uRd
+ FwX4NmHsQSjSol7Xaoh/5x+L31lADBxF9znIuPKYnNq92I56mXAXxxrxUuwDhst8KRvI
+ eBqZvR4GmuZB1CYOx5c/1FnlVDJuwqTvZnUQw10ZZODC3YkoGg0cyefFb0j7pAg9YEZ0
+ k6f9HhxpuZ1L0UzIWLaVJF/9hFOo10I56udyQxTcSnZdPJEEwT0AOr29lBIEC06GK5jV
+ FQsqIhTBWTBnT7QIf6d3DPDU1Nd5DQoOZbxEKucNhS14nVuuoFcIhjzpD5PasI8jOIHc
+ cWbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772485634; x=1773090434;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VMXnQxj3qAUHWMDMrvfiRUeHzQgsxMC8GA7kER9QlAg=;
+ b=D4W/RAlim/A6vC6xf3xC7JkSKobcDiMiSCF4Vt2OzPP0geZc7KXVDXwZOTbdyED/tk
+ ZDbLZhUigK1B0VyfEx36h2BJp61BjYPGeP6CludKRm5RB3H4TZ3zErgfgxJsiKv6G47R
+ xCh8N+Xpq35tHjS6X44RDF+S+u9fhk5MfQ2XsoOIc/w0CSVC9YnGL1G28okUAC8tXo9t
+ hzW0vRX1FXGHcNPmIM2VP1zmzuCHVm5HgHOkJsupOdA3EU0Y2wzd/QAyay17iyWpU+Kp
+ nhhE7e/v9RaIjoD2En5rUxWjXCppIttPOUAGgYgsfgCDx5FWRPbv4h/ynhwfK9SRqDvE
+ /0yA==
+X-Gm-Message-State: AOJu0YxKY7yvJQ6+VwYXJWThrynMNAiDHF/inVTRmKIQdW7TcjrVhAHz
+ uZmqgRb0BsOF3tG8JMlr/uhGoQhNMX9A4jcTpJKuVYOTiopPybxv7P9EzW3Ambx6xTFStX1v2rm
+ ZcFCJPAxi400PQRg86Auvo8C7zmbCIdo=
+X-Gm-Gg: ATEYQzzZ6iqcq1gZRv8JBtK3Xqch83wAHLHyCq9ws6ce7jHMxBOM8+7kBdNVeM1HQLj
+ NxgLyhI2TjFh96DgKyeP3ema4NQMAb5y96yn1VMstG4URPDjbEEzqx2s/trXZS6+JUZyaztTzs9
+ NqfUOfgc1zAY2tEMNq+o2ZhTMGEQhEiiAgEGPStK0xf4pRH4MGkfel0YOOPX8InLMOHS30mTG9W
+ hLz4xGGSCG+WAuehuVkTxhrT5TeecT5BGh18943v8qLjgBPKSjXHFttDlGrW2j7+fkZa18FNRUA
+ 9PEQ7mlk
+X-Received: by 2002:a05:6820:3088:b0:679:e5a2:1603 with SMTP id
+ 006d021491bc7-679faf4f360mr7357340eaf.63.1772485634105; Mon, 02 Mar 2026
+ 13:07:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1492811870-1772485583=:82369"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
+ <20260219143332.3316679-3-ruslichenko.r@gmail.com> <aaTqq27wf7i9bzKy@zatzit>
+In-Reply-To: <aaTqq27wf7i9bzKy@zatzit>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Mon, 2 Mar 2026 22:07:02 +0100
+X-Gm-Features: AaiRm50BJpRBfXjqxnhKeRsypZ0FZj1e6ugToygVf_iB6kgA9r8NSe7VjQbqHng
+Message-ID: <CAN-aV1FMEO8haqv_ddQRO_9=JevMmDW=cdJcDuj93epaLDuFjg@mail.gmail.com>
+Subject: Re: [PATCH v2 02/33] system/device_tree: add few parsing and
+ traversal helpers
+To: David Gibson <david@gibson.dropbear.id.au>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org, 
+ peter.maydell@linaro.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com, 
+ takahiro.nakata.wr@renesas.com, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Ruslan_Ruslichenko@epam.com,
+ balaton@eik.bme.hu, Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,229 +121,389 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-1492811870-1772485583=:82369
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 2 Mar 2026, Peter Xu wrote:
-> On Mon, Mar 02, 2026 at 04:20:10PM +0100, BALATON Zoltan wrote:
->> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
->>> On 2026/03/02 21:26, BALATON Zoltan wrote:
->>>> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
->>>>> On 2026/02/26 1:30, Peter Xu wrote:
->>>>>> On Tue, Feb 24, 2026 at 06:44:58PM +0100, BALATON Zoltan wrote:
->>>>>>> On Tue, 24 Feb 2026, Peter Xu wrote:
->>>>>>>> On Thu, Feb 05, 2026 at 02:13:18AM +0100, BALATON Zoltan wrote:
->>>>>>>>> v4:
->>>>>>>>> - separate patch converting Sun machines from
->>>>>>>>> memory_region_init_ram_nomigrate
->>>>>>>>> - split helper to init ram into two functions:
->>>>>>>>> setup and error_propagate
->>>>>>>>> - also use memory_region_init_io in memory_region_init_ram_device_ptr
->>>>>>>>>
->>>>>>>>> v3:
->>>>>>>>> - rebased on master after some patches were merged
->>>>>>>>> - drop some more line from memory-region-housekeeping.cocci
->>>>>>>>> - added comment to explain what factored out helper does
->>>>>>>>> - some more clean ups included
->>>>>>>>>
->>>>>>>>> BALATON Zoltan (8):
->>>>>>>>>    hw/display/{cg3,tcx}: Do not use memory_region_init_rom_nomigrate()
->>>>>>>>>    memory: Remove memory_region_init_rom_nomigrate()
->>>>>>>>>    sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
->>>>>>>>>    memory: Remove memory_region_init_ram_nomigrate()
->>>>>>>>
->>>>>>>> Could you help explain why we need to remove the
->>>>>>>> above two small helpers?
->>>>>>>
->>>>>>> Ideally we should remove all of the nomigrate variants as there are only
->>>>>>> about 3 uses left, everything else is already moved to
->>>>>>> the init_{ram,rom}
->>>>>>> variants that register the memory region for migration.
->>>>>>> The is probably one
->>>>>>> legitimate use that is served by memory_region_init_flags_nomigrate and
->>>>>>> other 3 uses are the xtfpga which I think is just old code and does not
->>>>>>> support migration so it will be converted in the second series to
->>>>>>> memory_region_new as the maintainers did not say anyting to that so far.
->>>>>>> Then there's one in hw/display/vga but that's gated
->>>>>>> behind a compatibility
->>>>>>> switch that's only set in 2.12 (global-vmstate=true) and
->>>>>>> earlier. This is
->>>>>>> not active any more but cannot yet be removed as there
->>>>>>> are eariler compat
->>>>>>> props still need cleaning up but the last visible
->>>>>>> machine version is 5.1 now
->>>>>>> so this is long deprecated and not used. And there are
->>>>>>> these Sun machines
->>>>>>> that I've converted in the first version but Mark said
->>>>>>> he'd like to keep the
->>>>>>> current behaviour until it's the last user left. See:
->>>>>>> https://
->>>>>>> patchew.org/QEMU/cover.1769703287.git.balaton@eik.bme.hu/ b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu/
->>>>>>>
->>>>>>>> Not saying that we can't remove them, but I don't yet see the point of
->>>>>>>> open-code those readonly=true setup either, or any
->>>>>>>> problem with having the
->>>>>>>> smaller helpers when ram_flags=0.  Small helpers
->>>>>>>> sometimes help readability.
->>>>>>>>
->>>>>>>> Some of them are going backwards againist what the cocci scripts were
->>>>>>>> suggesting previously, like:
->>>>>>>>
->>>>>>>> - memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
->>>>>>>> + memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
->>>>>>>>   ... WHEN != E1
->>>>>>>> - memory_region_set_readonly(E1, true);
->>>>>>>>
->>>>>>>> So you suggest open-code instead.  Why?
->>>>>>>
->>>>>>> This is temporary until the usage in vga is gone with
->>>>>>> hw_compat_2_12 then
->>>>>>> the Sun machines will be the last users so they can also be converted to
->>>>>>> init_{ram,rom} (unless Mark changes his mind and agrees
->>>>>>> changing these now
->>>>>>> as was in the first version).
->>>>>>>
->>>>>>>> Is it required for your follow up cleanups?
->>>>>>>
->>>>>>> It makes those simpler as then we don't need to add memory_region_new
->>>>>>> variants for the nomigrate versions that we would remove later anyway.
->>>>>>
->>>>>> Personally I don't see the memory_region_new() whole thing solid yet, but
->>>>>> still during review.  I shared my thoughts.  So far, I'm not fully
->>>>>> convinced, but I also don't have the full picture to say no, either.  We
->>>>>> can wait for others to chime in with more thoughts.
->>>>>>
->>>>>> For this series, I would prefer if we can discuss it separately from the
->>>>>> other work.
->>>>>>
->>>>>> Removing _nomigrate() variances makes sense to me in general, it means we
->>>>>> want to by default suggest new devices only use RAM regions that is
->>>>>> migratable, with proper owner device specified along with
->>>>>> the ramblock name
->>>>>> (as part of migration API).
->>>>>>
->>>>>> However, we have two sets of these _nomigrate APIs:
->>>>>>
->>>>>>    (1) memory_region_init_r[ao]m_nomigrate
->>>>>>    (2) memory_region_init_r[ao]m_flags_nomigrate
->>>>>>
->>>>>> What I am still confused about is why this series used (2) to replace (1)
->>>>>> rather than removing both.  I don't understand how this helps if we still
->>>>>> have (2) around: it means new devices at least can still use
->>>>>> (2) to bypass
->>>>>> migration.
->>>>>>
->>>>>> There's actually one way to enforce migratable RAMs, taking
->>>>>> ROM as example,
->>>>>> it could be:
->>>>>>
->>>>>>    memory_region_init_rom_internal(..., global_vmstate=XXX)
->>>>>>
->>>>>> Then memory_region_init_rom() should use that, setting
->>>>>> global_vmstate=off.
->>>>>>
->>>>>> Then we can unexport/remove memory_region_init_rom_[flag_]nomigrate() but
->>>>>> use that _internal() in relevant paths; we should also mark
->>>>>> the _internal()
->>>>>> functions to say "new code is suggested to use the normal
->>>>>> version".  But I
->>>>>> do not know if that is a slight overkill just for this..
->>>>>>
->>>>>> If the other series (to avoid introducing new APIs) is the
->>>>>> only reason for
->>>>>> this part, then IMHO this part of the series needs to be in the other
->>>>>> series, not this one.  The last cleanup patches look more self contained
->>>>>> OTOH to me, if the whole purpose of the latter half was code
->>>>>> dedup, then it
->>>>>> makes more sense at least to me.
->>>>>
->>>>> +1 for what Peter Xu suggested. Most part of this series looks
->>>>> independently useful, but I don't think the removal of
->>>>> memory_region_init_ram_nomigrate() is.
->>>>
->>>> But if there are no useful uses why keep it? This version shows that
->>>> converting the Sun machines as Peter Maydell suggested only leaves
->>>> very few uses that can be removed eventually too after some further
->>>> clean up that I don't want to take up now. Do you have any usage in
->>>> mind that needs these nomigrate variants?
->>>
->>> Well, my threshold for "useful" is > 1 uses, but maintainers may have
->>> other preferences.
+On Mon, Mar 2, 2026 at 2:41=E2=80=AFAM David Gibson <david@gibson.dropbear.=
+id.au> wrote:
 >
-> Personally I share the same preference..
+> On Thu, Feb 19, 2026 at 03:33:01PM +0100, Ruslan Ruslichenko wrote:
+> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> >
+> > The patch adds few utility functions for parsing FDT nodes.
+> > The helpers are required for upcoming Hardware device tree
+> > feature.
+> >
+> > Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> > ---
+> >  include/system/device_tree.h |  30 +++++
+> >  system/device_tree.c         | 221 +++++++++++++++++++++++++++++++++++
+> >  2 files changed, 251 insertions(+)
+> >
+> > diff --git a/include/system/device_tree.h b/include/system/device_tree.=
+h
+> > index 5667ff9538..9d6b570bdb 100644
+> > --- a/include/system/device_tree.h
+> > +++ b/include/system/device_tree.h
+> > @@ -116,6 +116,11 @@ const void *qemu_fdt_getprop(void *fdt, const char=
+ *node_path,
+> >  uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
+> >                                 const char *property, int cell_id,
+> >                                 Error **errp);
+> > +
+> > +const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_pat=
+h,
+> > +                             const char *property, int *lenp, Error **=
+errp);
+> > +uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_p=
+ath,
+> > +                               const char *property, int cell_id, Erro=
+r **errp);
+> >  uint32_t qemu_fdt_get_phandle(void *fdt, const char *path);
+> >  uint32_t qemu_fdt_alloc_phandle(void *fdt);
+> >  int qemu_fdt_nop_node(void *fdt, const char *node_path);
+> > @@ -191,6 +196,31 @@ int qemu_fdt_setprop_sized_cells_from_array(void *=
+fdt,
+> >                                                  qdt_tmp);             =
+    \
+> >      })
+> >
+> > +typedef struct QEMUDevtreeProp {
+> > +    const char *name;
+> > +    int len;
+> > +    const void *value;
+> > +} QEMUDevtreeProp;
 >
-> When >1 it means we can dedup some code with a function and I normally
-> think it worthwhile.  That's also why I don't understand why we need to
-> open code _set_readonly() in some of this series.
-
-Have you read the latest v5 at all? No open coding of set_readonly or 
-useful uses of memory_region_init_r[ao]m_nomigrate left if we accept 
-converting the Sun machines now to memory_region_init_r[ao]m which they 
-should really use as everything else does that and these are the last 
-remaining uses of these nomigrate variants apart from the few special 
-cases. It seems these Sun machines were left behind when everything else 
-converted away from global vmstate and use the normal 
-memory_region_init_r[ao]m where the _nomigrate were left for backward 
-compatibility during API conversion. So it's time to finish that 
-conversion at last.
-
-> Even if for the sake of a new set of APIs, it doesn't need to provide every
-> single API that we have had in the old set if we don't need it, IMHO.
+> If you need this, it really starts to seem to me that keeping the data
+> structure in fdt is not the right choice any more.  I've thought for a
+> while that with increasing handling of the device tree by qemu, we
+> should maybe have a "live" device tree representation (with pointers)
+> that we use for manipulation.  Right before boot, that can be
+> serialized into fdt.
 >
->>
->> After this series when converting the Sun machines as in v5 the only
->> nomigrate variant left is memory_region_init_ram_flags_nomigrate that is
->> equivalent to memory_region_init_ram_nomigrate with flags=0 which appears
->> outside of memory.c only in hw/xtensa/xtfpga.c (that will be converted in
->> the next series to memory_region_new) and in hw/display/vga.c that can be
->> removed when the hw_compat_2_12 is removed. There are two more uses of
->> memory_region_init_ram_flags_nomigrate in backends/hostmem-ram.c and
->> hw/m68k/next-cube.c but those have non-0 flags parameter. Therefore I think
->> there's no need to keep other nomigrate variants than
->> memory_region_init_ram_flags_nomigrate as the only two uses outside of
->> memory.c that would need memory_region_init_ram_nomigrate are to be removed
->> soon and can use flags=0 until then.
-
-I tried to explain here that the two uses left that could use 
-memory_region_init_ram_nomigrate will be gone shortly so IMO not worth 
-keeping this function around for that.
-
->> I don't know if the other two uses with non-0 flags can be replaced and
->> memory_region_init_ram_flags_nomigrate made internal to memory.c but that's
->> beyond the scope of this series and could be considered separately. Creating
->> nomigrate memory region is not something that should be done or need several
->> functions and the very few cases where this might be needed can use
->> memory_region_init_ram_flags_nomigrate.
+> fdt is, fundamentally, a serialization format.  Direct fdt
+> manipulation with libfdt was really only intended as something to
+> allow firmwares and similarly minimal programs to make small tweaks.
+> Once manipulation becomes extensive, fdt is no longer a good choice of
+> data structure.
 >
-> The hostmem-ram.c one is slightly special, when created as an object it
-> still doesn't know its parent device.
 
-Yes so there might be some special cases but for those it's enough to have 
-a single nomigrate variant which this series proposes.
+For this series, the generic machine is strictly read-only regarding the FD=
+T
+(we only parse it to instantiate devices, we don't manipulate or
+rewrite the tree).
 
-> I still think it might be helpful if you can split your "cleanup" patches
-> out of this series.  Note that softfreeze will be next week.
+So to simplify things, I can drop the QEMUDevtreeProp wrapper and just
+use standard
+libfdt iteration macros (like fdt_for_each_property_offset) to keep
+the footprint
+as small as possible.
 
-This series _is_ the clean up part split from the add memory_region_new 
-functions series so these are all clean ups and the rest is in the other 
-series. I don't theres much more to split. Maybe you missed some patch 
-emails. Here's the clean up series:
+Would this approach be acceptable for now? I can prepare this modification =
+along
+with other review comments for v3 patch series.
 
-https://patchew.org/QEMU/cover.1772397447.git.balaton@eik.bme.hu/
+> > +
+> > +/* node queries */
+> > +
+> > +int qemu_devtree_get_num_children(void *fdt, const char *node_path);
+> > +int qemu_devtree_get_children(void *fdt, const char *node_path,
+> > +                                     int max_paths, char **returned_pa=
+ths);
+> > +int qemu_devtree_num_props(void *fdt, const char *node_path);
+> > +QEMUDevtreeProp *qemu_devtree_get_props(void *fdt, const char *node_pa=
+th);
+> > +
+> > +/* node getters */
+> > +
+> > +int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int p=
+handle);
+> > +int qemu_devtree_getparent(void *fdt, char *node_path,
+> > +                           const char *current);
+> > +
+> > +/* misc */
+> > +
+> > +int devtree_get_num_nodes(void *fdt);
+> > +
+> > +#define DT_PATH_LENGTH 1024
+> >
+> >  /**
+> >   * qemu_fdt_randomize_seeds:
+> > diff --git a/system/device_tree.c b/system/device_tree.c
+> > index d2db7bd355..fc34c660db 100644
+> > --- a/system/device_tree.c
+> > +++ b/system/device_tree.c
+> > @@ -464,6 +464,103 @@ uint32_t qemu_fdt_getprop_cell(void *fdt, const c=
+har *node_path,
+> >      return be32_to_cpu(p[cell_id]);
+> >  }
+> >
+> > +const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_pat=
+h,
+> > +                             const char *property, int *lenp, Error **=
+errp)
+> > +{
+> > +    const void *found_val =3D NULL;
+> > +    int found_len =3D 0;
+> > +    int curr_offset =3D 0;
+> > +    int temp_len;
+> > +    char **tokens;
+> > +    char **iter;
+> > +
+> > +    found_val =3D fdt_getprop(fdt, 0, property, &found_len);
+> > +
+> > +    tokens =3D g_strsplit(node_path + 1, "/", -1);
+> > +
+> > +    for (iter =3D tokens; *iter !=3D NULL; iter++) {
+> > +        if (**iter =3D=3D '\0') {
+> > +            continue;
+> > +        }
+> > +
+> > +        curr_offset =3D fdt_subnode_offset(fdt, curr_offset, *iter);
+> > +        if (curr_offset < 0) {
+> > +            error_setg(errp, "%s: Path '%s' not found",
+> > +                       __func__, *iter);
+> > +            g_strfreev(tokens);
+> > +            return NULL;
+> > +        }
+> > +
+> > +        const void *val =3D fdt_getprop(fdt, curr_offset, property, &t=
+emp_len);
+> > +        if (val) {
+> > +            found_val =3D val;
+> > +            found_len =3D temp_len;
+> > +        }
+> > +    }
+> > +    g_strfreev(tokens);
+> > +
+> > +    if (!found_val) {
+> > +        error_setg(errp, "%s: Property '%s' not found",
+> > +                   __func__, property);
+> > +        return NULL;
+> > +    }
+> > +
+> > +    if (lenp) {
+> > +        *lenp =3D found_len;
+> > +    }
+> > +
+> > +    return found_val;
+> > +}
+> > +
+> > +uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_p=
+ath,
+> > +                               const char *property, int cell_id, Erro=
+r **errp)
+> > +{
+> > +    int len;
+> > +    const uint32_t *p;
+> > +
+> > +    p =3D qemu_fdt_getprop_inherited(fdt, node_path, property, &len, e=
+rrp);
+> > +    if (!p) {
+> > +        return 0;
+> > +    }
+> > +    if (len < (cell_id + 1) * 4) {
+> > +        error_setg(errp,
+> > +                   "%s: %s/%s is too short, need %d bytes for cell ind=
+ %d",
+> > +                   __func__, node_path, property, (cell_id + 1) * 4, c=
+ell_id);
+> > +        return 0;
+> > +    }
+> > +    return be32_to_cpu(p[cell_id]);
+> > +}
+> > +
+> > +int qemu_devtree_getparent(void *fdt, char *node_path, const char *cur=
+rent)
+> > +{
+> > +    const char *sep;
+> > +    int len;
+> > +
+> > +    if (!current || !node_path) {
+> > +        return -FDT_ERR_NOTFOUND;
+> > +    }
+> > +
+> > +    if (current[0] =3D=3D '/' && current[1] =3D=3D 0) {
+>
+> strcmp() against "/" is maybe marginally more costly, but clearer in
+> meaning.
+>
+> > +        return -FDT_ERR_NOTFOUND;
+> > +    }
+> > +
+> > +    sep =3D strrchr(current, '/');
+> > +    if (!sep) {
+> > +        return -FDT_ERR_BADPATH;
+> > +    }
+> > +
+> > +    if (sep =3D=3D current) {
+> > +        len =3D 1;
+> > +    } else {
+> > +        len =3D sep - current;
+> > +    }
+> > +
+> > +    memcpy(node_path, current, len);
+> > +    node_path[len] =3D '\0';
+>
+> This assumes node_path points to a long enough buffer.  Returning a
+> g_strndup()ed copy of the parent path might be a nicer interface?
+>
+> > +
+> > +    return 0;
+> > +}
+> > +
+> >  uint32_t qemu_fdt_get_phandle(void *fdt, const char *path)
+> >  {
+> >      uint32_t r;
+> > @@ -631,6 +728,130 @@ out:
+> >      return ret;
+> >  }
+> >
+> > +int qemu_devtree_num_props(void *fdt, const char *node_path)
+> > +{
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +    int ret =3D 0;
+> > +
+> > +    for (offset =3D fdt_first_property_offset(fdt, offset);
+> > +            offset !=3D -FDT_ERR_NOTFOUND;
+> > +            offset =3D fdt_next_property_offset(fdt, offset)) {
+> > +        ret++;
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +QEMUDevtreeProp *qemu_devtree_get_props(void *fdt, const char *node_pa=
+th)
+> > +{
+> > +    QEMUDevtreeProp *ret =3D g_new0(QEMUDevtreeProp,
+> > +                                    qemu_devtree_num_props(fdt, node_p=
+ath) + 1);
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +    int i =3D 0;
+> > +
+> > +    for (offset =3D fdt_first_property_offset(fdt, offset);
+> > +            offset !=3D -FDT_ERR_NOTFOUND;
+> > +            offset =3D fdt_next_property_offset(fdt, offset)) {
+> > +        const char *propname;
+> > +        const void *val =3D fdt_getprop_by_offset(fdt, offset, &propna=
+me,
+> > +                                                    &ret[i].len);
+> > +
+> > +        ret[i].name =3D propname;
+> > +        ret[i].value =3D val;
+> > +        i++;
+> > +    }
+> > +    return ret;
+> > +}
+> > +
+> > +int qemu_devtree_get_children(void *fdt, const char *node_path,
+> > +                                     int max_paths, char **returned_pa=
+ths) {
+> > +    int count =3D 0;
+> > +    int subnode;
+> > +    const char *name;
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +
+> > +    if (offset < 0) {
+> > +        return offset;
+> > +    }
+> > +
+> > +    bool is_root =3D (strcmp(node_path, "/") =3D=3D 0);
+> > +
+> > +    fdt_for_each_subnode(subnode, fdt, offset) {
+> > +        if (count >=3D max_paths) {
+> > +            break;
+> > +        }
+> > +        name =3D fdt_get_name(fdt, subnode, NULL);
+> > +        if (returned_paths) {
+> > +            returned_paths[count] =3D g_strdup_printf("%s/%s",
+> > +                                                is_root ? "" : node_pa=
+th, name);
+> > +        }
+> > +
+> > +        ++count;
+> > +    }
+> > +
+> > +    return count;
+> > +}
+> > +
+> > +int qemu_devtree_get_num_children(void *fdt, const char *node_path)
+> > +{
+> > +    int count =3D 0;
+> > +    int subnode;
+> > +    int offset =3D fdt_path_offset(fdt, node_path);
+> > +
+> > +    if (offset < 0) {
+> > +        return offset;
+> > +    }
+> > +
+> > +    fdt_for_each_subnode(subnode, fdt, offset) {
+> > +        ++count;
+> > +    }
+> > +
+> > +    return count;
+> > +}
+> > +
+> > +int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int p=
+handle)
+> > +{
+> > +    int offset =3D 0, cur_depth =3D 0;
+> > +    int path_lens[64] =3D { 0 };
+> > +
+> > +    for (offset =3D 0; offset >=3D 0; offset =3D fdt_next_node(fdt, of=
+fset,
+> > +                                                         &cur_depth)) =
+{
+> > +        if (cur_depth > 64) {
+> > +            break;
+> > +        }
+> > +        const char *name =3D fdt_get_name(fdt, offset, NULL);
+> > +
+> > +        int parent_len =3D (cur_depth > 0) ? path_lens[cur_depth - 1] =
+: 0;
+> > +        int len =3D snprintf(node_path + parent_len,
+> > +                             DT_PATH_LENGTH - parent_len,
+> > +                             "%s%s",
+> > +                             (parent_len > 1) ? "/" : "",
+> > +                             (cur_depth =3D=3D 0) ? "/" : name);
+> > +
+> > +        path_lens[cur_depth] =3D parent_len + len;
+> > +
+> > +        if (fdt_get_phandle(fdt, offset) =3D=3D phandle) {
+> > +            return 0;
+> > +        }
+> > +    }
+> > +
+> > +    return -FDT_ERR_NOTFOUND;
+> > +}
+> > +
+> > +int devtree_get_num_nodes(void *fdt)
+> > +{
+> > +    int num_nodes =3D 0;
+> > +    int depth =3D 0, offset =3D 0;
+> > +
+> > +    for (;;) {
+> > +        offset =3D fdt_next_node(fdt, offset, &depth);
+> > +        num_nodes++;
+> > +        if (offset <=3D 0 || depth <=3D 0) {
+> > +            break;
+> > +        }
+> > +    }
+> > +    return num_nodes;
+> > +}
+> > +
+> >  void qmp_dumpdtb(const char *filename, Error **errp)
+> >  {
+> >      ERRP_GUARD();
+> > --
+> > 2.43.0
+> >
+>
+> --
+> David Gibson (he or they)       | I'll have my music baroque, and my code
+> david AT gibson.dropbear.id.au  | minimalist, thank you, not the other wa=
+y
+>                                 | around.
+> http://www.ozlabs.org/~dgibson
 
-and here's the rest of my original series based on these clean ups that 
-continue with adding and using the memory_region_new functions added in 
-that series:
-
-https://patchew.org/QEMU/cover.1770753117.git.balaton@eik.bme.hu/
-
-I'm not sure what do you want to split.
-
-Regards,
-BALATON Zoltan
---3866299591-1492811870-1772485583=:82369--
+--
+BR,
+Ruslan Ruslichenko
 
