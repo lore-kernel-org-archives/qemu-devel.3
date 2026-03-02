@@ -4,102 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CEC9EB3629
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 17:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F204EB3624
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 17:55:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx7Sd-0001oD-EG; Mon, 02 Mar 2026 12:53:40 -0500
+	id 1vx7UT-0002hL-Vk; Mon, 02 Mar 2026 12:55:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx7SY-0001kn-9t
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:53:35 -0500
+ id 1vx7UK-0002fU-EJ
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:55:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx7SW-0004k1-74
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:53:33 -0500
+ id 1vx7UG-00058R-3b
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:55:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772474011;
+ s=mimecast20190719; t=1772474118;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8btxV8nPdxJ+CM3cpxhcU/QVzEUYTpZ6jcDlRHIzDeo=;
- b=EQqc3GoUZV8jQTeMTAP3PnFYCPLm/lLyY3HII8yOCl2t+U4aOpkE/qutud9BG7TViHvsoI
- jd+dy9Qs27WwK/HZtL1KkzSLzcWHD4h5+2Kj+fMbJFf9jsVN/6qchNdkc3x8dcJTEMY680
- M6oOcAwvvAqqoiOa16pllT6cmcTbqmg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W4gQk8QecJuRa1tkH06kVi6OX9PtCJJH23dwgKUWPyQ=;
+ b=c8hHjq9cgyBdwUy9yYTJfRv9Fu9VXO5asXv7/VUd34gY26QER33tgF7RRlEWe93bchMrz4
+ iew3Li0ZDFyO7JJEl6L4J/lB7oGDjFHN3fMNmRhbvpstYdnOtaiWDC96LgQ+ziU8xfmiOO
+ MFH6ZnP98m9FHApE0V1Iodv0XLW7PAw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-TCIjOW3QOCOCJMlGl5yKpg-1; Mon, 02 Mar 2026 12:53:30 -0500
-X-MC-Unique: TCIjOW3QOCOCJMlGl5yKpg-1
-X-Mimecast-MFC-AGG-ID: TCIjOW3QOCOCJMlGl5yKpg_1772474009
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4836ff58111so47992565e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 09:53:30 -0800 (PST)
+ us-mta-569-o6ffIp2sNIGaxsJizLx7ng-1; Mon, 02 Mar 2026 12:55:17 -0500
+X-MC-Unique: o6ffIp2sNIGaxsJizLx7ng-1
+X-Mimecast-MFC-AGG-ID: o6ffIp2sNIGaxsJizLx7ng_1772474116
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4363333c102so3225747f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 09:55:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772474009; x=1773078809;
+ d=1e100.net; s=20230601; t=1772474116; x=1773078916;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8btxV8nPdxJ+CM3cpxhcU/QVzEUYTpZ6jcDlRHIzDeo=;
- b=rp5nB6a1Dw8vHnZok2+njICVqDuvENXw0Arlvv6yQjL+aEZdIRJj7GITYYfb+P+x2S
- sMpdqQqsyNPMh7Z0j58mF00WN35v2qiRdikqEZxiII99R1f/jLT6mWR1aO/FSK3z59GW
- jLfmBylRv/e0t8II67Uore9YLa2vNjRt+9yb2stJXf+6afHXHOrUWRJq0QW8N7uxHghp
- HpUB5F0TD2WMs2orTPnY4jUQdVK+VjVdvVclDdmstDUfz6n1/kqtERmNe9g9DKi6FZzN
- 5kj4J8cdqd2ezKvrgW97pbAwS/TA4Vp+T4mPHbIqev3G0PWeyqx6wfgxMUgpLeeGqryp
- JNvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI53RnrTzkaq8udJw8JylI9mAoR+ZeKzAsyJM65NXINFs3PcvYd3Fhoy4ncmQPqDoclBWFUyff0hLy@nongnu.org
-X-Gm-Message-State: AOJu0YxEAWZO2Nuc5XW1FQKx6GzgnHm3g3nIPMcPy8WVIovzYDfd7cXa
- UF59eBehJF5QOz9ML2MvUYYQNRix1FDCCJ5JA7rZCS4Bw/o12lEffI1no//k+lZGxqFlTVvLFlI
- czJgQySiKd6a4O84BgqqPUfBozMhzOmX0U6nQ7PpUezD/fU9zVM2qH5N9
-X-Gm-Gg: ATEYQzzuE0fwyfK9pn+7K3V8mL6VAgux+lQAHBLyBsnVk8wB3k3lwBj2UTUqgRhyf74
- dt30Wxfs5nrkGGYeQ1rD4bMvC+cw41Hha5dlHcd0OkI1v2O4wnolh4hlgF31ZuuSwzdxq4bRMl0
- AOa+uqb8p4/h4KsC3r1D0KUoDDCEOuOiDOtF5v4nuecOkl/4Zz541UjjdwqSKtPLNVXwujBzi1N
- Rdfi58aQnJbmVBNCGdY95Mu6mr5mZpa02ykkMXkBlt+1BFTW/uyyuZBVOGVeoZ6f+NZZJLwFnMs
- gAunvb4dNLC7kPwcC3hO8gpiSjKbzfuJI4KdXck6IS745kNUE1lIBsCn+oz78QrJO/sv1zxBWhz
- 1pvRf5SBwh5tn3Ps9+xjfr/jcqvD5VUkbrZpiZUbwLB3m9A1dypNkgvVeHN8zEnCWtCG40Q==
-X-Received: by 2002:a05:600c:1f91:b0:477:8985:4036 with SMTP id
- 5b1f17b1804b1-483c9ba7dffmr222208925e9.1.1772474008940; 
- Mon, 02 Mar 2026 09:53:28 -0800 (PST)
-X-Received: by 2002:a05:600c:1f91:b0:477:8985:4036 with SMTP id
- 5b1f17b1804b1-483c9ba7dffmr222208525e9.1.1772474008452; 
- Mon, 02 Mar 2026 09:53:28 -0800 (PST)
+ bh=W4gQk8QecJuRa1tkH06kVi6OX9PtCJJH23dwgKUWPyQ=;
+ b=f+VTXAI5oZWSZIUzSIItGhGssuaF2trSImN6KftLF8KJgd+IKWtHGhzpj+/pSiCfEN
+ XljIaG60LLqmGrs0n1Kajmvu/gLb+7rgkQ5nmkCIOcLl4yq4YFt8dtnFrgXoJeVg53xm
+ DYgV2VccJlIstJFbdXBupNNQb+jg7hl+WnB/FEsXqoQTgrChXwDfypJ6cNG2kytRCPbM
+ 6hLtv9xeJIZrXDV4GK6x0Eilsd+NrIdHMiWQHJWCoS5sVDiLGo8M3H9nuyJmvYPcJoLI
+ Ge5amjTaDpsLe8UZWEYfgQSnUaAtQ9LUEjadyt2CwZXi5rSxnudqtr4NvElRs41w0Wu2
+ IoNQ==
+X-Gm-Message-State: AOJu0YyuAwycBpqnHfnPjfZd0oXqU6Yi3ff3jdCbks/2aKsf0gg9MUag
+ SCodUuE7mnBkbidMvOQIbnqtl1ltWJsHo1BE+Rh+xKfz8oZrtG78tNYy55t7wNtveK7CEQsr8jB
+ irUORQg1tJnLSbbuYZTfCBCst3+wwjjyRze1nST7ybHNnc+W0quKTMRRo
+X-Gm-Gg: ATEYQzwAwVdSCTg0rt+eOAtq8g0qz91Fjo98kxtI7UOJlSNzhLZ9XlAnnSyGj1gTwXw
+ w/1ptvNlU5Y6jd609720udvVq2FEVp9TRpfzXda012brTLiI38dCex0YIMfUaG39gh9mEkLCGLp
+ jWtv3KIPrOMiAGm80q5iG5ju2jZrvJts7Xl8d90sqTz9L64PN/kQojYFgoAqggLWOJ0siNPxpQv
+ bAKX0DI4bXo6ql3dwTWMb4NS2Q1Tf8sBOkUT9nwvJf8gGygmPc2jUxYzmwJ4BgpPgueTKRjx1Fk
+ gIqAlj+1DT9j5XTErr2rHEZHs6QyXfrmvO3K6X+yNENvK+Xp3VfMKH+C56cNJJ1nC9CxvUEuCsR
+ lFvbHcMpNs3T7Sit0tNbrIiE4bBSKc7e+VsxTpobZILlqjio9361LLShhtrr4ZtMYgg8bbw==
+X-Received: by 2002:a05:6000:2282:b0:439:9124:f2b7 with SMTP id
+ ffacd0b85a97d-4399de20546mr22885972f8f.29.1772474115839; 
+ Mon, 02 Mar 2026 09:55:15 -0800 (PST)
+X-Received: by 2002:a05:6000:2282:b0:439:9124:f2b7 with SMTP id
+ ffacd0b85a97d-4399de20546mr22885928f8f.29.1772474115427; 
+ Mon, 02 Mar 2026 09:55:15 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3b44207sm312457385e9.7.2026.03.02.09.53.27
+ ffacd0b85a97d-439b503425asm10686569f8f.25.2026.03.02.09.55.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Mar 2026 09:53:28 -0800 (PST)
-Message-ID: <b6c17396-be09-4497-8dd1-8f66d9c2fe63@redhat.com>
-Date: Mon, 2 Mar 2026 18:53:26 +0100
+ Mon, 02 Mar 2026 09:55:15 -0800 (PST)
+Message-ID: <981bafba-6041-4b27-a015-d9764950f929@redhat.com>
+Date: Mon, 2 Mar 2026 18:55:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC v4 19/31] hw/arm/smmuv3: Fix CFGI_CD handling when stage-1
  is unsupported
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Tao Tang <tangtao1634@phytium.com.cn>, Mostafa Saleh <smostafa@google.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
  <20260221101733.2995020-1-tangtao1634@phytium.com.cn>
- <aaGu5v0To65M5LkB@google.com>
- <585be3ce-d5f3-455a-a7fb-3181920cfc60@phytium.com.cn>
- <3cff6489-e487-4f7b-b2ea-984fb5379ed9@linaro.org>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <3cff6489-e487-4f7b-b2ea-984fb5379ed9@linaro.org>
+In-Reply-To: <20260221101733.2995020-1-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
@@ -128,43 +124,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 3/2/26 6:47 PM, Pierrick Bouvier wrote:
-> On 3/1/26 4:33 AM, Tao Tang wrote:
->> Hi Mostafa,
->>
->> On 2026/2/27 PM10:49, Mostafa Saleh wrote:
->>> On Sat, Feb 21, 2026 at 06:17:33PM +0800, Tao Tang wrote:
->>>> Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL
->>>> path
->>>> and return CERROR_ILL when stage-1 translation is not implemented,
->>>> matching the architecture requirement (IHI 0070G.b, page 176).
->>>>
->>>> Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
->>>> Signed-off-by: Tao Tang<tangtao1634@phytium.com.cn>
->>> This is a separate fix, it can be sent standalone to make this series
->>> smaller, similarly the first patch.
->>
->>
->> For #1, #2 and #19 commit (this one), since I’m not fully sure about
->> the expected process here, should I resend these already Reviewed-by
->> fixes as standalone patch respectively right now,  and try to get
->> them merged first?
->>
+On 2/21/26 11:17 AM, Tao Tang wrote:
+> Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL path
+> and return CERROR_ILL when stage-1 translation is not implemented,
+> matching the architecture requirement (IHI 0070G.b, page 176).
 >
-> If a set of patches is fully ready, you can always put them first in
-> next version, and ask the maintainer to pull this one.
-> If your current series needs them to build, I usually prefer to keep
-> it all together, instead of having two different series, and using a
-> Based-on tag. But it's a personal preference, some people prefer to
-> see several series. 
-Either, either send them in a separate series or put them at the
-beginning. We are approaching the soft freeze so maybe a separate series
-would be better.
+> Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> ---
+>  hw/arm/smmuv3.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index fa09099a09a..d4c58c0c724 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1461,6 +1461,15 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+>                  break;
+>              }
+>  
+> +            /*
+> +             * This command raises CERROR_ILL when stage 1 is not implemented
+> +             * according to (IHI 0070G.b) Page 176.
+> +             */
+> +            if (!STAGE1_SUPPORTED(s)) {
+> +                cmd_error = SMMU_CERROR_ILL;
+> +                break;
+> +            }
+> +
+>              trace_smmuv3_cmdq_cfgi_cd(sid);
+>              smmuv3_flush_config(sdev);
+>              if (!smmuv3_accel_issue_inv_cmd(s, &cmd, sdev, errp)) {
+With the fixed fixes tag,
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 Eric
->
-> Regards,
-> Pierrick
->
 
 
