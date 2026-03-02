@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A95DDE9B36D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 12:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A01E9B36D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 12:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx1wp-0005yY-Bc; Mon, 02 Mar 2026 07:00:27 -0500
+	id 1vx1yV-0006m9-MQ; Mon, 02 Mar 2026 07:02:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx1wk-0005tE-T3
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 07:00:23 -0500
+ id 1vx1yU-0006lO-7m
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 07:02:10 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx1wi-0000aL-NY
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 07:00:22 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772452778; cv=none; 
+ id 1vx1yR-0000hC-Sm
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 07:02:09 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772452908; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=PUgfgo7PpL3FYatocPFeU2x3Hayy4ammU+7wxFTa3kmiBBskW5s4qLHSsWyXusEUgyO2ajCYwHcpBs7T9vs3RusgvKQm2pSyIUoKgk+EMXM9rwdYxycISVtnxOVGDB6pKF9VJc2raMWwpp6wqSzesHZYV0Bm4AumH0dV/XkIFgo=
+ b=TTu75sq9I5G3rZMHg5z6/OE8HzkU7X2S0nLJ8W8ogM3BWDJRVoy/zkCPHoWet8eVUSIckDz6nYb8rB7BMzvjrayRvEpUHz3T+g3XNnMRg0H4W/S8ENNctznPdGydFIMfxPgUF3Uc1NmJZ0Gnp+mkSy1Jt2db7z8l5O7vB8mVvCQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772452778;
+ s=zohoarc; t=1772452908;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=RY+SMFcidu41xylU8aRf6XGKNbIW9Urs3TPJCGe9ASE=; 
- b=gjJqgJOrhAKlBWBzrm04EoWk28YELW9dJcjAzOgMltUa9bcLEvEo2Pp8asXBLNnB2Uvz/D/Syu8VPQ1xUYpiVid8r5NhnTmIED0pr58skLhtjX/J58i/IQyDp/f53iP8/SNepn3D8ODLrZ9LQiGrGLH7PTRZOekdIXqH+3gBe7w=
+ bh=zmAzSxxbZG8JaW/hZ4IGCvV/4RIyeQn62agP5AAb74s=; 
+ b=TzxQ4s15unZm6YsK3SgmN6knitJSqmBqFyTVi38CyhwoVn5C8N3K6daNfwKd5Dv3v8c5Mgi+gpMSdA76A8RANnsBtKJ//NpN6s2XgsjbTJtrimliBj6T0xldp50VrzHO5te90e5+iB7IOqDJQRa+aKZkRnPCBSNeu3/zXPlmsSU=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772452778; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772452908; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=RY+SMFcidu41xylU8aRf6XGKNbIW9Urs3TPJCGe9ASE=;
- b=iNX2zlOjej2XcU0EKiT1Oc03A/S4wIByOaVa2WiQAqIN+lvhI7ugvtGQA1J3QoPv
- j4jCAKwqvuldRuxMZyscFlJIwp1ku2xgT+JNc0kUBI/m58HmKB2S8hfv/EkcImxMKo8
- gABYXnG8DUW5/arpMWjXqUpAvqcjEB38HJ8T27ak=
-Received: by mx.zohomail.com with SMTPS id 1772452775778259.9340348509427;
- Mon, 2 Mar 2026 03:59:35 -0800 (PST)
-Message-ID: <d8078eb8-86e0-46e5-8843-f29f78034a0b@collabora.com>
-Date: Mon, 2 Mar 2026 14:59:28 +0300
+ bh=zmAzSxxbZG8JaW/hZ4IGCvV/4RIyeQn62agP5AAb74s=;
+ b=FXimWOBfXb4nX8bW/yKI8trOLJGpLMXmFTHGTK5nx2RJTFeAvZs9NdcEAVnI0RXS
+ RK57d8CtmC9YvHwSmf8vTMGGhy/q45vel764rjQTZXjRLoHoscL9xog6SPXRW285VCr
+ r6LVYmPC37T4AC6Xns1J3HGcOAc7mOLzFLWUfiEw=
+Received: by mx.zohomail.com with SMTPS id 1772452906687743.5413320330107;
+ Mon, 2 Mar 2026 04:01:46 -0800 (PST)
+Message-ID: <9be98e8d-6b3a-438b-9153-f4dc806158a0@collabora.com>
+Date: Mon, 2 Mar 2026 15:01:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 10/21] virtio-gpu: Bounce virtio_gpu_ctrl_bh() to
- main-loop thread
+Subject: Re: [PATCH v20 02/21] ui/gtk: Restore original context after new
+ context creation
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -67,13 +67,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
- <20260301204838.596994-11-dmitry.osipenko@collabora.com>
- <87bcde7a-1052-45ec-9d09-78bf875c2d46@rsg.ci.i.u-tokyo.ac.jp>
+ <20260301204838.596994-3-dmitry.osipenko@collabora.com>
+ <ea2b4664-fa77-4ea5-abac-bee42f98c8c6@rsg.ci.i.u-tokyo.ac.jp>
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Content-Language: en-US
-In-Reply-To: <87bcde7a-1052-45ec-9d09-78bf875c2d46@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <ea2b4664-fa77-4ea5-abac-bee42f98c8c6@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
  envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
@@ -100,28 +100,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/26 08:57, Akihiko Odaki wrote:
+On 3/2/26 08:58, Akihiko Odaki wrote:
 > On 2026/03/02 5:48, Dmitry Osipenko wrote:
->> QEMU's display GL core is tied to main-loop thread and virtio-gpu
->> interacts with display while processing GPU commands.
->> virtio_gpu_ctrl_bh()
->> works in generic AIO context that can be processed from vCPU thread,
->> while
->> GL and UI toolkits are bound to the main-loop thread. Bounce the ctrl-bh
->> execution if running from a thread other than main to fix the problem.
+>> Get currently bound GL context when creating new GL context and restore
+>> it after the creation for consistency with behavior expected by
+>> virglrenderer
+>> that assumes context-creation doesn't switch context.
+>>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> ---
+>>   ui/gtk-egl.c | 9 ++++++++-
+>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+>> index 0dbb429958e5..be769bcbfbb1 100644
+>> --- a/ui/gtk-egl.c
+>> +++ b/ui/gtk-egl.c
+>> @@ -218,10 +218,17 @@ QEMUGLContext gd_egl_create_context(DisplayGLCtx
+>> *dgc,
+>>                                       QEMUGLParams *params)
+>>   {
+>>       VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
+>> +    QEMUGLContext ctx, current_context = eglGetCurrentContext();
+>>         eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+>>                      vc->gfx.esurface, vc->gfx.ectx);
+>> -    return qemu_egl_create_context(dgc, params);
+>> +
+>> +    ctx = qemu_egl_create_context(dgc, params);
 > 
-> I think you can make use of iohandler_get_aio_context() instead of
-> bouncing.
+> I think it's better to change qemu_egl_create_context() not to require
+> eglMakeCurrent().
 
-Indeed, thanks for the suggestion.
-
-Also noticed that virtio-gpu uses qemu_in_vcpu_thread() for the
-virtio-gpu reset BH, but IIUC the BH still may be invoked from vCPU
-unless BH is tied to iohandler context.
-
-The same problem should affect the virtio-gpu cursor BH.
-
-Will move all these BH's to use iohandler context.
+Ack
 
 -- 
 Best regards,
