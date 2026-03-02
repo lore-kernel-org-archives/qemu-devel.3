@@ -4,155 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5402AE9B34B
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3F9E9B356
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx0Hs-0004zO-64; Mon, 02 Mar 2026 05:14:04 -0500
+	id 1vx0LD-0002Js-Bo; Mon, 02 Mar 2026 05:17:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vx0HU-0004rp-QA
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:13:40 -0500
-Received: from mout.web.de ([212.227.17.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vx0HQ-000621-1S
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:13:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1772446414; x=1773051214; i=lukasstraub2@web.de;
- bh=w7yoLFLxOPrYAjZU0Xno21H3kl0o95xRyRJ/F9GznRU=;
- h=X-UI-Sender-Class:From:To:Subject:Date:Message-Id:In-Reply-To:
- References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=Ofy3ghbrMjpuPryXg6GNcVf6sQyiFtDeZ6J/yfWl8PF8GTgqay3Z/LLa5S9o736W
- C6Z/ld8LkHSqorJShLD353GgLGi/XkCC3ip4129jEJutClsEoReZ3ZiTtE+kvaBD4
- pQvmGWXcK6Oufxco3hMElQ2VYXe0mtGXQbs7DTsXW68ZCZ5FhG5ZQI/XAT7NK+rvY
- NBDul9cMqE/Wact3+Fkg/2C3j2xnRPi2ZxO+qlWmcOXB9VpJltU9eB3fMdITljY10
- Fz24wL3CN577BEDADhUlT+cm/5chOFgogQWRgeYyZ0NTWcElx6lckRud5ihrYSg+g
- G+Ugaj3PPzePu+JOYg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from client.hidden.invalid by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1McIkg-1vP3VC22Iu-00hB06 for
- <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 11:13:34 +0100
-From: Lukas Straub <lukasstraub2@web.de>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v11 03/21] colo: Setup ram cache in normal migration path
-Date: Mon,  2 Mar 2026 11:13:14 +0100
-Message-Id: <20260302-colo_unit_test_multifd-v11-3-3dae81d203ff@web.de>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20260302-colo_unit_test_multifd-v11-0-3dae81d203ff@web.de>
-References: <20260302-colo_unit_test_multifd-v11-0-3dae81d203ff@web.de>
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1vx0KT-0001qS-NP
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:16:52 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1vx0KP-0006Tf-6y
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:16:43 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4806b0963a9so116715e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 02:16:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1772446599; x=1773051399; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=k7R1AQ3U1P/g1SdN2KGXE8s1gr0B1wgPvi93Wt+CB3g=;
+ b=dsaT0ZpG/W2qt8nG+4b4RQF7lzMOqrjjZWm9Jeu1cXIjBWmYn9O9zroVFIzL0pt/On
+ wb8SSLVcGBrIL1zGpG3X6nkMDBpMUK/PS2wfw3IsXXCoEoEEIVNotWsJEDm75gnRv8SZ
+ onD2GS4M9c3i8+Bjr41lm2K5X7ExK5/jLc63Khn/jFckS3FYDu1EaWczs3yY6V4Nb8i4
+ aL+YRjTCq1E2ME/usHnbeak7tnsadp8vIs78WAlLAUdOcNNdLQOajoolrGucsFs4lUlh
+ 7V0Ftjo/KEifqYYyCVNfl+dWvkU73Y+ufhV1yBlEUweJZJXtz1isXRCn0cMg5IAipmOW
+ qDFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772446599; x=1773051399;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=k7R1AQ3U1P/g1SdN2KGXE8s1gr0B1wgPvi93Wt+CB3g=;
+ b=o5R1QorZqKXKoZyUzXBr0nCPMt9/TdY4lcrh5aozg9aB/eLN3I+wpp/SxAr2SlLgel
+ yx36UArhKDZ77DWObCrorB1y4ruWzRu6RGp+yfwFCjXPWBvMsobr/rjalr0Ea2YQhVDD
+ XYhpMzClEAU0EpcSKesqaUwhgrysj8nL8XOFrbfwysoJEmoDhjttELTZTGKuWuRAytlu
+ 6gUKnXc3bNB0MowiI30MIoDmTVH+Lqi21efnXInyBG+OxTfDVAdEz1NJ0BM7oI539uNJ
+ yGD5+fqfdsC/S1tTJPy+fcPnaLgIECjG3QBJAHnwsHnyZ6L8ZkAtwFKY2LXFI2aiOZNG
+ Pq4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKWtBCVHARcFc3kZYKBLk7YBEFDomKNXIqV+8I7CZXA615w4nsR1zI3VYU8HMtccVr5hS6eCaS1h7a@nongnu.org
+X-Gm-Message-State: AOJu0YwSSPDmS0DdoceTdlzWFziYrE01nBMZEP8abwd7hRmX0bOdcPaN
+ ETALuwuY0RRFvMbEzuLSQ/VOenOPfHpCJ2Wtsvi5HbRm4v8TaXHHfL8LXhXcoEJeOg==
+X-Gm-Gg: ATEYQzxt/8f/fM39+sKMyvevNws29v6WWvXEgaH6Ak4C+yh9gel+0pZNB/axVsiGXKA
+ V8iDqr2xBL/RMJgAu+j35fiVTLIh7uKbb9zNF9L0NsII5O+hpvlMxqrlgIUDXQRub/WoGksBHnB
+ ILskrBNhpPuXJrSk03uABWBFwV87VuH5ZxrBKVrbNeWV5UMEBYCxPLsblewJI9l/GjZnHBuz4q5
+ 5imcVRQS6KxR13icHoxDKkHTI7m2H6YVUO2O0BE9PNzmeqQjpb+40vB+9EeanhC9+zxWLQ8+evv
+ XKZNMyPvzv6oG/mHy/HddRH+lTrearadzzmfsVl8tZoX2K5KTf+qFkxcshZ5MRkHwN5exrOvTEG
+ vylZ7ahHWUid7oWQcYgRs8m7XBHcd9TBrVrvq6+B36njV2qzuTHsWeEjfmTshFTvSOxd8JomHcU
+ b6LFTTc7J3U8jGzBwyTb11s/gdKNEzlb1sQ2mYNCSU/Ywk0sX0OA7QgdZTx2CwdFnPjuJQa9yN2
+ II=
+X-Received: by 2002:a05:600c:3554:b0:47d:7304:d759 with SMTP id
+ 5b1f17b1804b1-483d0642811mr1669495e9.15.1772446599162; 
+ Mon, 02 Mar 2026 02:16:39 -0800 (PST)
+Received: from google.com (206.56.155.104.bc.googleusercontent.com.
+ [104.155.56.206]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4399c60e40fsm26572926f8f.7.2026.03.02.02.16.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Mar 2026 02:16:38 -0800 (PST)
+Date: Mon, 2 Mar 2026 10:16:35 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: Re: [RFC v4 04/31] hw/arm/smmuv3: Introduce banked registers for
+ SMMUv3 state
+Message-ID: <aaVjg4-fqlyxU5lh@google.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-5-tangtao1634@phytium.com.cn>
+ <aaGsS9ldIqXZqhpk@google.com>
+ <3287a12c-da1a-463f-b635-37aea5ba8c6d@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2754; i=lukasstraub2@web.de;
- h=from:subject:message-id; bh=bZqP64D7rElL++ZH8EUI9LK8uvlG56Ai3ztis+On3P4=;
- b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBppWAEVmhdzxpzDCFQwPTXmCYOdDJiYV2vim568
- E2Rx/T+gIWJAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaaVgBAAKCRA1qwsonF2y
- WP1TD/9+3htYJH/40x1aQSKhhtRvxC0YcxW6OeTrhH9c7i+LW4fhks1KgWcgDqA68krn8keigCJ
- ot0VMBWo5bDYfBgwCNLcreMCZh4hiBs5xIymv6vLUN+a/IrXP+KHR7J1XCrA+38nBTuLBzaSA0Y
- zJMF5pztB124yw3pIkLcJprGQy1vyqgcqSGTUO/Di3nNI8p0sNe+cxOklV41drDVQTh1VYQcsBz
- ykaTEaUwTHav7HL3TsLxuCwZpOSDrbGpbUDpieW/2G5mgqlvQHnUSW36Hzzx2qpqLizGkTr5PCt
- +L9Dc05aYWiGaT0SksLHVgx8Yb/Q2gR08psSaKQnXPLQjlGXJDITzuh5u08e7X2IhMq+bMVVFR6
- p8oL1ahBjW1h99vm1zxsrCwIChxUdggU9TgtcwJc85zXp1cGps9iz/2fKU9LUVf8Phkn0C+U3S3
- HGMoRZitXo7JCLETj2vR+h33d9F1jTTtgLTQ9ad4QmHE54Kh7F5Jp3zONJ0BJHEHXEnoDsKOS39
- z20Xwdx8H4zZxaEVkdNEvaJSPeWGIeQrQMDWEHRR4IUbFjAeKJxZx6MR9sTeQnmQwbZE2P0mB9b
- jydMuTylb9MNvCyWIN58z4BOjxu9BgLtORMYpr1Xjo8e6IIgaSiK1wtEhmOfqSnIBDjY/5PvE/G
- ld0+SfpJ6gck6Bw==
-X-Developer-Key: i=lukasstraub2@web.de; a=openpgp;
- fpr=83FAB158A0D9B8FB72628FA435AB0B289C5DB258
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:eD8Ovf+J9Z0WU6pZF0Vsm6dYVWeh7smnv2QR7yyKyZInCqho9i+
- fGkoKoKwiOcj5P1inh62CUrLIqq68uubERRTD+rGcEuH/UIbXa0GI5vQV7NiQd4c5uzBez/
- kvU1XQQab0EjbonP8+/fSVyhuXgTnP/kqlNJ0eFa5KzXxQovWXPKFoDXuxES6suFud3YiZk
- bszepnfZR+8OXxWTbWUSA==
-UI-OutboundReport: notjunk:1;M01:P0:R3zT0kodrhA=;XpCPy3z9grOLdKqcXs7T3x2r89M
- 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
- pqZt4eNr59h/KbB2U=
-Received-SPF: pass client-ip=212.227.17.12; envelope-from=lukasstraub2@web.de;
- helo=mout.web.de
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3287a12c-da1a-463f-b635-37aea5ba8c6d@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,92 +116,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since
-121ccedc2b migration: block incoming colo when capability is disabled
+On Sun, Mar 01, 2026 at 09:44:32PM +0800, Tao Tang wrote:
+> Hi Mostafa,
+> 
+> On 2026/2/27 PM10:38, Mostafa Saleh wrote:
+> > On Sat, Feb 21, 2026 at 06:02:23PM +0800, Tao Tang wrote:
+> > > Rework the SMMUv3 state management by introducing a banked register
+> > > structure. This is a purely mechanical refactoring with no functional
+> > > changes.
+> > > 
+> > > To support multiple security states, a new enum, SMMUSecSID, is
+> > > introduced to identify each state, sticking to the spec terminology.
+> > > 
+> > > A new structure, SMMUv3RegBank, is then defined to hold the state
+> > > for a single security context. The main SMMUv3State now contains an
+> > > array of these banks, indexed by SMMUSecSID. This avoids the need for
+> > > separate fields for non-secure and future secure registers.
+> > > 
+> > > All existing code, which handles only the Non-secure state, is updated
+> > > to access its state via s->bank[SMMU_SEC_SID_NS]. A local bank helper
+> > > pointer is used where it improves readability.
+> > > 
+> > > Function signatures and logic remain untouched in this commit to
+> > > isolate the structural changes and simplify review. This is the
+> > > foundational step for building multi-security-state support.
+> > > 
+> > > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> > > Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> > There are a few warning from scripts/checkpatch.pl, plus some other
+> > nits I mentioned, otherwise:
+> > Reviewed-by: Mostafa Saleh <smostafa@google.com>
+> > 
+> > 
+> > > ---
+> > >   hw/arm/smmuv3-accel.c        |  42 +++--
+> > >   hw/arm/smmuv3-internal.h     |  24 ++-
+> > >   hw/arm/smmuv3.c              | 345 +++++++++++++++++++----------------
+> > >   include/hw/arm/smmu-common.h |   6 +
+> > >   include/hw/arm/smmuv3.h      |  30 ++-
+> > >   5 files changed, 257 insertions(+), 190 deletions(-)
+> > > 
+> > > ------------------------------<snip>------------------------------
+> > > 
+> > > 
+> > > 
+> > > ------------------------------<snip>------------------------------
+> > > @@ -687,22 +689,24 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+> > >           return;
+> > >       }
+> > > +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+> > Sometimes you have:
+> > SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+> > Others
+> > SMMUv3RegBank *bk = smmuv3_bank(s, SMMU_SEC_SID_NS);
+> > 
+> > It would be helpful if naming is consistent.
+> 
+> 
+> Apologies for not switching to plain text only in Thunderbird in the
+> previous reply email, which made the formatting look a bit strange.
+> 
+> 
+> I'll unify this definition across all affected places in V5, and also fix
+> style warnings you mentioned previously.
+> 
+> 
+> > > ------------------------------<snip>------------------------------
+> > > 
+> > > 
+> > > 
+> > > ------------------------------<snip>------------------------------
+> > > @@ -94,7 +99,14 @@ struct SMMUv3Class {
+> > >   #define TYPE_ARM_SMMUV3   "arm-smmuv3"
+> > >   OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
+> > > -#define STAGE1_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S1P)
+> > > -#define STAGE2_SUPPORTED(s)      FIELD_EX32(s->idr[0], IDR0, S2P)
+> > > +#define STAGE1_SUPPORTED(s) \
+> > > +    FIELD_EX32((s)->bank[SMMU_SEC_SID_NS].idr[0], IDR0, S1P)
+> > > +#define STAGE2_SUPPORTED(s) \
+> > > +    FIELD_EX32((s)->bank[SMMU_SEC_SID_NS].idr[0], IDR0, S2P)
+> > > +
+> > > +static inline SMMUv3RegBank *smmuv3_bank(SMMUv3State *s, SMMUSecSID sec_sid)
+> > > +{
+> > > +    return &s->bank[sec_sid];
+> > > +}
+> > > 
+> > If this is a macro you can use in other cases as in state structs as
+> > it currently inlined in:
+> > VMSTATE_UINT32(bank[SMMU_SEC_SID_NS].irq_ctrl, SMMUv3State),
+> 
+> 
+> My understanding is that VMSTATE_* wants an offsetof() ( VMSTATE_UINT32 ->
+> VMSTATE_INT32_V -> VMSTATE_SINGLE -> VMSTATE_SINGLE_TEST ->
+> vmstate_offset_value ->offsetof ), so maybe we could not directly reuse the
+> runtime helper there. At runtime, smmuv3_bank() needs a real `SMMUv3State
+> *s` to compute the actual address of the selected bank
+> (`&s->bank[sec_sid]`), which is different from a compile-time field offset.
+> 
+> A small compromise that works for both is to define a field-path macro and
+> then take its address in smmuv3_bank():
 
-x-colo capability needs to be always enabled on the incoming side.
-So migration_incoming_colo_enabled() and migrate_colo() are equivalent
-with migrate_colo() being easier to reason about since it is always true
-during the whole migration.
+I see, I missed that, in that case we can just keep it as is, no need to
+change.
 
-Use migrate_colo() to initialize the ram cache in the normal migration pat=
-h.
+Thanks,
+Mostafa
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-=2D--
- migration/migration.c | 18 ++++++++++++++----
- migration/savevm.c    | 14 +-------------
- 2 files changed, 15 insertions(+), 17 deletions(-)
-
-diff --git a/migration/migration.c b/migration/migration.c
-index a5b0465ed30cb812cb294ab901c7a37fe6157dc6..c2b9621190f8678ac6b32d6794=
-d9bcb6ffa5e402 100644
-=2D-- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -630,10 +630,6 @@ int migration_incoming_enable_colo(Error **errp)
-         return -EINVAL;
-     }
-=20
--    if (ram_block_discard_disable(true)) {
--        error_setg(errp, "COLO: cannot disable RAM discard");
--        return -EBUSY;
--    }
-     migration_colo_enabled =3D true;
-     return 0;
- }
-@@ -770,6 +766,20 @@ process_incoming_migration_co(void *opaque)
-=20
-     assert(mis->from_src_file);
-=20
-+    if (migrate_colo()) {
-+        if (ram_block_discard_disable(true)) {
-+            error_setg(&local_err, "COLO: cannot disable RAM discard");
-+            goto fail;
-+        }
-+
-+        ret =3D colo_init_ram_cache(&local_err);
-+        if (ret) {
-+            error_prepend(&local_err, "failed to init colo RAM cache: %d:=
- ",
-+                          ret);
-+            goto fail;
-+        }
-+    }
-+
-     mis->largest_page_size =3D qemu_ram_pagesize_largest();
-     postcopy_state_set(POSTCOPY_INCOMING_NONE);
-     migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 3a16c467b25b8d93b7d40bd0db751158e0278b4f..b88851cdb7974314b8481646a1=
-dd19642887f210 100644
-=2D-- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2427,19 +2427,7 @@ static int loadvm_process_enable_colo(MigrationInco=
-mingState *mis,
-                                       Error **errp)
- {
-     ERRP_GUARD();
--    int ret;
--
--    ret =3D migration_incoming_enable_colo(errp);
--    if (ret < 0) {
--        return ret;
--    }
--
--    ret =3D colo_init_ram_cache(errp);
--    if (ret) {
--        error_prepend(errp, "failed to init colo RAM cache: %d: ", ret);
--        migration_incoming_disable_colo();
--    }
--    return ret;
-+    return migration_incoming_enable_colo(errp);
- }
-=20
- static int loadvm_postcopy_handle_switchover_start(Error **errp)
-
-=2D-=20
-2.39.5
-
+> 
+> 
+> ```C
+> 
+> /* Field-path macro (offsetof-friendly) */
+> #define SMMUV3_BANK_F(_sid) bank[(_sid)]
+> #define SMMUV3_NS_BANK_F    SMMUV3_BANK_F(SMMU_SEC_SID_NS)
+> 
+> static inline SMMUv3RegBank *smmuv3_bank(SMMUv3State *s, SMMUSecSID sec_sid)
+> {
+>     return &s->SMMUV3_BANK_F(sec_sid);
+> }
+> 
+> /* VMSTATE uses the field-path macro directly */
+> VMSTATE_UINT32(SMMUV3_NS_BANK_F.irq_ctrl, SMMUv3State);
+> 
+> ...
+> 
+> ```
+> 
+> 
+> How do you think about it?
+> 
+> 
+> > 
+> > Thanks,
+> > Mostafa
+> > 
+> 
+> Thanks for your review.
+> 
+> Tao
+> 
 
