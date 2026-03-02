@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4743BE9B359
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71FC1E9B35B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx0eC-00030H-23; Mon, 02 Mar 2026 05:37:08 -0500
+	id 1vx0eP-00035t-0m; Mon, 02 Mar 2026 05:37:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx0e6-0002y1-4j
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vx0e9-0002zp-Tl
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx0e1-0001qD-Un
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:00 -0500
+ id 1vx0e8-0001rf-As
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772447815;
+ s=mimecast20190719; t=1772447823;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S7hdK2T2rhmDCPf6n3Eg8p5Wr+WAP8uwwd7SD8gK1RA=;
- b=BELndcV1N3HfB4/t9pvWMKT/gvRpRbzk43eXnjdHKW4lClBnQq4w96F1wLIi+Hy0ubonZM
- 8mT3xcmU4JsMY3O3wuGEqGJ/fT16K9hywrPsRas/kpxiBjf8XNHR/ovD2OrIOxIHwvm93o
- 0BCo1fJ1xK9g6hQqGdwKNFwSgiVcHKk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=sKLoRoIQCgZ0YUK0eGLnjmDfdwRAbjP+XkZjC4Q6bw8=;
+ b=RgGThNvG/BzmkDEdCmJBRWil4VfqgqNJEiAjcTFiGPIu6PwEZfHFLUzOQY2v+BXPgntmGh
+ D6uD+ssMsYtPvDtvApQaIhk+8xzbcZFkV4ZE5kE0VTTEioy1rB9u7d/YDOdpK4NyqGg/ZT
+ 2/JtNmdV177036uvPpx5s5pLDY9SkF4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-cgu0EvQxNU6Mc71-aMnsnA-1; Mon,
- 02 Mar 2026 05:36:52 -0500
-X-MC-Unique: cgu0EvQxNU6Mc71-aMnsnA-1
-X-Mimecast-MFC-AGG-ID: cgu0EvQxNU6Mc71-aMnsnA_1772447811
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-XlscyT2hMmOD5CDO-hlMBQ-1; Mon,
+ 02 Mar 2026 05:36:59 -0500
+X-MC-Unique: XlscyT2hMmOD5CDO-hlMBQ-1
+X-Mimecast-MFC-AGG-ID: XlscyT2hMmOD5CDO-hlMBQ_1772447818
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2936118001E3; Mon,  2 Mar 2026 10:36:51 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21CBE19560A5; Mon,  2 Mar 2026 10:36:58 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.23])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BBF271800666; Mon,  2 Mar 2026 10:36:47 +0000 (UTC)
+ id 144181800666; Mon,  2 Mar 2026 10:36:54 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v7 1/7] target/arm/machine: Fix detection of unknown incoming
- cpregs
-Date: Mon,  2 Mar 2026 11:35:23 +0100
-Message-ID: <20260302103640.1362564-2-eric.auger@redhat.com>
+Subject: [PATCH v7 3/7] target/arm/machine: Take account cpreg mig tolerances
+ in case of mismatch
+Date: Mon,  2 Mar 2026 11:35:25 +0100
+Message-ID: <20260302103640.1362564-4-eric.auger@redhat.com>
 In-Reply-To: <20260302103640.1362564-1-eric.auger@redhat.com>
 References: <20260302103640.1362564-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 24
+X-Spam_score: 2.4
+X-Spam_bar: ++
+X-Spam_report: (2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,55 +87,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the check of cpreg index matches fail to detect
-a situation where the length of both arrays is same but
-- destination has an extra register not found in the incoming stream (idx1)
-- source has an extra register not found in the destination (idx2)
-  where idx1 < = idx2
-Normally this should fail but it does not.
+If there is a mismatch between the cpreg indexes found on both ends,
+check whether a tolerance was registered for the given kvmidx. If any,
+silence warning/errors.
 
-Fix the logic to scan all indexes.
+Create dedicated helper functions that print the name of the culprit reg
+and analyze whether a tolerance is set. According set the level of traces
+and analyze whether the migration must eventually fail.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Fixes: 721fae12536 ("target-arm: Convert TCG to using (index,value) list for cp migration")
 ---
- target/arm/machine.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ target/arm/machine.c    | 67 +++++++++++++++++++++++++++--------------
+ target/arm/trace-events |  2 ++
+ 2 files changed, 47 insertions(+), 22 deletions(-)
 
 diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 7a3b5a87932..9297a8f5b41 100644
+index 9297a8f5b41..abc66448cef 100644
 --- a/target/arm/machine.c
 +++ b/target/arm/machine.c
-@@ -1107,6 +1107,29 @@ static int cpu_post_load(void *opaque, int version_id)
-         i++;
-         v++;
+@@ -1046,6 +1046,45 @@ static gchar *print_register_name(uint64_t kvm_regidx)
      }
-+    /*
-+     * if we have reached the end of the incoming array but there are
-+     * still regs in cpreg, continue parsing the regs which are missing
-+     * in the input stream
-+     */
-+    for ( ; i < cpu->cpreg_array_len; i++) {
-+        g_autofree gchar *name = print_register_name(cpu->cpreg_indexes[i]);
+ }
+ 
++/*
++ * Handle the situation where @kvmidx is on destination but not
++ * in the incoming stream. This never fails the migration.
++ */
++static void handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx)
++{
++    g_autofree gchar *name = print_register_name(kvmidx);
 +
++    if (!arm_cpu_cpreg_has_mig_tolerance(cpu, kvmidx,
++                                         0, 0, ToleranceNotOnBothEnds)) {
 +        warn_report("%s: %s "
 +                    "expected by the destination but not in the incoming stream, "
-+                    "skip it", __func__, name);
++                     "skip it", __func__, name);
++    } else {
++        trace_tolerate_cpreg_missing_in_incoming_stream(name);
 +    }
-+    /*
-+     * if we have reached the end of the cpreg array but there are
-+     * still regs in the input stream, continue parsing the vmstate array
-+     */
-+    for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
-+        g_autofree gchar *name = print_register_name(cpu->cpreg_vmstate_indexes[v]);
++}
 +
-+        error_report("%s: %s in the incoming stream but unknown on the destination, "
-+                     "fail migration", __func__, name);
++/*
++ * Handle the situation where @kvmidx is in the incoming
++ * stream but not on destination. This fails the migration if
++ * no cpreg mig tolerance is set for this @kvmidx
++ */
++static bool handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx)
++{
++    g_autofree gchar *name = print_register_name(kvmidx);
++    bool fail = false;
++
++    if (!arm_cpu_cpreg_has_mig_tolerance(cpu, kvmidx,
++                                        0, 0, ToleranceNotOnBothEnds)) {
++        error_report("%s: %s in the incoming stream but unknown on the "
++                     "destination, fail migration", __func__, name);
 +        fail = true;
++    } else {
++        trace_tolerate_cpreg_only_in_incoming_stream(name);
 +    }
++    return fail;
++}
++
+ static int cpu_post_load(void *opaque, int version_id)
+ {
+     ARMCPU *cpu = opaque;
+@@ -1085,21 +1124,12 @@ static int cpu_post_load(void *opaque, int version_id)
+     for (i = 0, v = 0; i < cpu->cpreg_array_len
+              && v < cpu->cpreg_vmstate_array_len;) {
+         if (cpu->cpreg_vmstate_indexes[v] > cpu->cpreg_indexes[i]) {
+-            g_autofree gchar *name = print_register_name(cpu->cpreg_indexes[i]);
+-
+-            warn_report("%s: %s "
+-                        "expected by the destination but not in the incoming stream, "
+-                        "skip it", __func__, name);
+-            i++;
++            handle_cpreg_missing_in_incoming_stream(cpu, cpu->cpreg_indexes[i++]);
+             continue;
+         }
+         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
+-            g_autofree gchar *name = print_register_name(cpu->cpreg_vmstate_indexes[v]);
+-
+-            error_report("%s: %s in the incoming stream but unknown on the destination, "
+-                         "fail migration", __func__, name);
+-            v++;
+-            fail = true;
++            fail = handle_cpreg_only_in_incoming_stream(cpu,
++                                                        cpu->cpreg_vmstate_indexes[v++]);
+             continue;
+         }
+         /* matching register, copy the value over */
+@@ -1113,22 +1143,15 @@ static int cpu_post_load(void *opaque, int version_id)
+      * in the input stream
+      */
+     for ( ; i < cpu->cpreg_array_len; i++) {
+-        g_autofree gchar *name = print_register_name(cpu->cpreg_indexes[i]);
+-
+-        warn_report("%s: %s "
+-                    "expected by the destination but not in the incoming stream, "
+-                    "skip it", __func__, name);
++        handle_cpreg_missing_in_incoming_stream(cpu, cpu->cpreg_indexes[i]);
+     }
+     /*
+      * if we have reached the end of the cpreg array but there are
+      * still regs in the input stream, continue parsing the vmstate array
+      */
+     for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
+-        g_autofree gchar *name = print_register_name(cpu->cpreg_vmstate_indexes[v]);
+-
+-        error_report("%s: %s in the incoming stream but unknown on the destination, "
+-                     "fail migration", __func__, name);
+-        fail = true;
++        fail = handle_cpreg_only_in_incoming_stream(cpu,
++                                                    cpu->cpreg_vmstate_indexes[v]);
+     }
      if (fail) {
          return -1;
-     }
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 2de0406f784..dceb3c63f77 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -29,3 +29,5 @@ arm_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid
+ 
+ # machine.c
+ cpu_post_load(uint32_t cpreg_vmstate_array_len, uint32_t cpreg_array_len) "cpreg_vmstate_array_len=%d cpreg_array_len=%d"
++tolerate_cpreg_missing_in_incoming_stream(char *name) "cpreg %s is missing in incoming stream but this is explicitly tolerated"
++tolerate_cpreg_only_in_incoming_stream(char *name) "cpreg %s is in incoming stream but not on destination but this is explicitly tolerated"
 -- 
 2.53.0
 
