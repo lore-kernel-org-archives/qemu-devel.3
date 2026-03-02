@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2D1D58E5D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 05:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA126D58E5D
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 05:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwwIb-0000m8-5u; Mon, 02 Mar 2026 00:58:33 -0500
+	id 1vwwJY-0001ff-Dd; Mon, 02 Mar 2026 00:59:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwwIY-0000kS-OB
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:58:30 -0500
+ id 1vwwJV-0001cv-MG
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:59:29 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vwwIV-0003Hr-M8
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:58:30 -0500
+ id 1vwwJT-0003M0-6e
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 00:59:29 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6225vhQ0024972
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6225wxd7025418
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 2 Mar 2026 14:57:52 +0900 (JST)
+ Mon, 2 Mar 2026 14:59:00 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=oR9kWT5n3qIUm/Mp/uVNy//JKrDDAObV7Puw3z7oIXw=; 
+DKIM-Signature: a=rsa-sha256; bh=TRnZHZ/xSz2uBRk03bbwb4UPO8vJnYWr5HpGppm7VOk=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772431072; v=1;
- b=pc3in3rzRg1LAzqfqoT4OKc8TX3bWT6U6FNOmMFacnklLQ89xJlKFsqSo1I6JeNS
- 2m9I+JX+y9aJmAl9BFis843DB5KUDJ/iDu77emnNVELTkrXtlQxUGNFu1lhx+h7C
- mz4sPYNkUR2B/CvxTtfQdyJX7aX6NibOuYHmreC52SQKWTlZpFEWjNF/RicNWNMu
- jWPTHZavMoO6UJUGmANwl0qG8aEqErW+zfV3gLbKNtUnXNOkVRyXW6UMO1OuO09X
- LZGyFuKuprHCqViltyBFAtCxxN2sn/UbXrkev2DVQOnHUVhAuYkmB6s4DidVqztN
- uUOZhA+0MnRxvV61FU/8kg==
-Message-ID: <87bcde7a-1052-45ec-9d09-78bf875c2d46@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 2 Mar 2026 14:57:42 +0900
+ s=rs20250326; t=1772431140; v=1;
+ b=k2fPHtp7XU0QnVaLXqAaOM4vJ1TdMuWHsd/ma5jJisYVk8DXGCLzqhXohWbByK6s
+ dZYkQjzZS/2RnIH3sDctjUlsT0kAyQAmowmPA3y2L0o1cntW/tYCwyn17xftPE2j
+ EU+DjiBv7sIe32iKK8CTnrGl+/mYmuZJFW8CpauXvQ5909ljJAwbhbukzXSvv9yD
+ l9T5TF96nR5hiN62CSnVxZinsADtYgUMDa68ITcr8PKrweZD8/7/2bT/Yy7PwFHU
+ vrn5PO9MAzT9x2Hq2c9N4lHgCttD2j/IfG/0dl1fNhklG+2F2c/yKfFLQJ4mROcI
+ Rx4Lk/vMtM31WNdQp6qfPw==
+Message-ID: <ea2b4664-fa77-4ea5-abac-bee42f98c8c6@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 2 Mar 2026 14:58:59 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 10/21] virtio-gpu: Bounce virtio_gpu_ctrl_bh() to
- main-loop thread
+Subject: Re: [PATCH v20 02/21] ui/gtk: Restore original context after new
+ context creation
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -63,10 +63,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
  Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
 References: <20260301204838.596994-1-dmitry.osipenko@collabora.com>
- <20260301204838.596994-11-dmitry.osipenko@collabora.com>
+ <20260301204838.596994-3-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260301204838.596994-11-dmitry.osipenko@collabora.com>
+In-Reply-To: <20260301204838.596994-3-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -94,89 +94,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/03/02 5:48, Dmitry Osipenko wrote:
-> QEMU's display GL core is tied to main-loop thread and virtio-gpu
-> interacts with display while processing GPU commands. virtio_gpu_ctrl_bh()
-> works in generic AIO context that can be processed from vCPU thread, while
-> GL and UI toolkits are bound to the main-loop thread. Bounce the ctrl-bh
-> execution if running from a thread other than main to fix the problem.
+> Get currently bound GL context when creating new GL context and restore
+> it after the creation for consistency with behavior expected by virglrenderer
+> that assumes context-creation doesn't switch context.
+> 
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   ui/gtk-egl.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index 0dbb429958e5..be769bcbfbb1 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -218,10 +218,17 @@ QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
+>                                       QEMUGLParams *params)
+>   {
+>       VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
+> +    QEMUGLContext ctx, current_context = eglGetCurrentContext();
+>   
+>       eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+>                      vc->gfx.esurface, vc->gfx.ectx);
+> -    return qemu_egl_create_context(dgc, params);
+> +
+> +    ctx = qemu_egl_create_context(dgc, params);
 
-I think you can make use of iohandler_get_aio_context() instead of bouncing.
+I think it's better to change qemu_egl_create_context() not to require 
+eglMakeCurrent().
 
 Regards,
 Akihiko Odaki
 
-> 
->   0  SDL_GL_MakeCurrent() (libSDL3)
->   1  SDL_GL_MakeCurrent_REAL() (libSDL2)
->   2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
->   3  make_current() (virglrenderer.c:639)
->   4  vrend_finish_context_switch() (vrend_renderer.c:11630)
->   5  vrend_hw_switch_context() (vrend_renderer.c:11613)
->   6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
->   7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
->   8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
->   9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
->   10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
->   11 aio_bh_poll() (util/async.c)
->   12 aio_poll() (util/aio-posix.c)
->   13 blk_pwrite() (block/block-gen.c:1985)
->   14 pflash_update() (pflash_cfi01.c:396)
->   15 pflash_write() (pflash_cfi01.c:541)
->   16 memory_region_dispatch_write() (system/memory.c:1554)
->   17 flatview_write() (system/physmem.c:3333)
->   18 address_space_write() (system/physmem.c:3453)
->   19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
->   20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   hw/display/virtio-gpu.c        | 12 +++++++++++-
->   include/hw/virtio/virtio-gpu.h |  2 ++
->   2 files changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 643e91ca2a7a..d0737cbba8a2 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1126,7 +1126,16 @@ static void virtio_gpu_ctrl_bh(void *opaque)
->       VirtIOGPU *g = opaque;
->       VirtIOGPUClass *vgc = VIRTIO_GPU_GET_CLASS(g);
->   
-> -    vgc->handle_ctrl(VIRTIO_DEVICE(g), g->ctrl_vq);
-> +    /*
-> +     * Bounce handling to main-loop thread as display UI toolkit
-> +     * and GL context are bounded there.
-> +     */
-> +    if (qemu_get_thread_id() == g->thread_id) {
-> +        vgc->handle_ctrl(VIRTIO_DEVICE(g), g->ctrl_vq);
-> +    } else {
-> +        aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> +                                virtio_gpu_ctrl_bh, g);
-> +    }
->   }
->   
->   static void virtio_gpu_handle_cursor(VirtIODevice *vdev, VirtQueue *vq)
-> @@ -1533,6 +1542,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
->       QTAILQ_INIT(&g->reslist);
->       QTAILQ_INIT(&g->cmdq);
->       QTAILQ_INIT(&g->fenceq);
-> +    g->thread_id = qemu_get_thread_id();
->   }
->   
->   static void virtio_gpu_device_unrealize(DeviceState *qdev)
-> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-> index 58e0f91fda65..d3bd8ed0d28a 100644
-> --- a/include/hw/virtio/virtio-gpu.h
-> +++ b/include/hw/virtio/virtio-gpu.h
-> @@ -218,6 +218,8 @@ struct VirtIOGPU {
->       } dmabuf;
->   
->       GArray *capset_ids;
 > +
-> +    int thread_id;
->   };
+> +    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+> +                   current_context);
+> +
+> +    return ctx;
+>   }
 >   
->   struct VirtIOGPUClass {
+>   void gd_egl_scanout_disable(DisplayChangeListener *dcl)
 
 
