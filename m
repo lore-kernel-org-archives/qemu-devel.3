@@ -4,105 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F411EEB3632
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 20:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB00AEB362C
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 20:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxA6J-0001WE-An; Mon, 02 Mar 2026 15:42:47 -0500
+	id 1vxA9d-0002QO-5A; Mon, 02 Mar 2026 15:46:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vxA6H-0001W5-IH
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:42:45 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vxA6F-0005DP-J4
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:42:45 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2ae523d54d2so2325ad.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 12:42:39 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772484158; cv=none;
- d=google.com; s=arc-20240605;
- b=NPeFTYXt/MD8zLTDz6LLoU90XH2MD0LS6Cw3s+tf2NssX3Q6QJN+l7dS79L/6eAlZY
- FzGsqBJSc1cebN5QQFF6RVaJlxBMajsJeFuZxQCNSTIY7K/DqbDlyIJ5BksLrwv39pLZ
- odpG4N3zFbMVsUEaim0nPY0+gfkAEUVoHC7yIW6UXohY2a2emKvPIn+wdZksRuSkVGVq
- gjvc8RN0dXqxijOWY5EeK6q5B6BUPLQnfqXDRPC26sMXOGgoLf+Xpe1D3gA1CdecV1H3
- kXTQGybd+mAPVWMI9HEtP5WRt7K557lPvB3+PAQASvf2LpYc2o9CrSTS3JQhljAQHcee
- SeCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NDGO21nGjDwsFOiwIeoaD9qnbdrsIRx49pXQabH6bKg=;
- fh=pCEs+NADVRa4BouSTcHg13rR4xQRttNiwgoKgQmxxt8=;
- b=OhQecqFKd/p+x/9jFnS/KbcutH6nAZv+kW8s7SE20UkgW+Vo+XITRo+RkppMz9TIKk
- aTRToZH17jK/VB9MDibvFRni/8ykoMHj5DRC8h0a4tDh8p/2mB7snwoexCfCWdNrVrNt
- NStliJClZJ8xQKZBNvraomHDeImwzTFytu7Q/JUFjCOEcpIou5ykkrL8nICPeoqzfYvP
- aCh5GfcbjhZbdoGrp4h4DCi2Y58FBT0hyKkHhVFpckXBNgO+ro25PbwJUf6mT956eDRA
- zW5s6ojx6UBLpw25MAAKkMAMpVD0/LNr3aGD5hkQdOCQGVkvtv/nZHbyTkjlvC7d1Nqj
- 8oTw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1772484158; x=1773088958; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NDGO21nGjDwsFOiwIeoaD9qnbdrsIRx49pXQabH6bKg=;
- b=wWhbZcKhKfAi1CALPLA8h35xcqJ7kSTeGOUjj3/4fuiKGeJvxXhxsIG5nJvTuMEizU
- afHrWUq8qNgLDXv/jdDl7y4otu3z3hYtkrpWdnOpsmJh41aZ2PrXTRCDWJgWiEjoiPb4
- MBNLfRCfNQWypkKR+7gQ+dj9p+8/oPHxOR1eOQImr/ia+95z5R0aKquA3kpnvENvfz3e
- Sl5f/mIKQ17FiuaeeWSN5qU3S9Opv9NvKV/5KZ6PHHvUTIk78XgdsstmdGOExPdHlCuV
- omG4rkvm1UR7dtn2+71jld8zL4S9Fpbl9oqR8f5fMnE8asNns9VHN/Scts99uqCXd1AQ
- niWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772484158; x=1773088958;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NDGO21nGjDwsFOiwIeoaD9qnbdrsIRx49pXQabH6bKg=;
- b=F5FftsYfCX5Hx4FQIUWEIH5IV7gHFgIeMIjM51vPMvMW+ImI5CDWljhzywazqfH5UL
- AwFmrTgGdCglTJwEPgsg08lE+nvkpfxK2j3vMSLJttxiiiCJOArsZkSlfUQ+D88ozCYA
- blWuI5YhxvaT0VGYZv9eLVaUb2xtMsXMU8F63C5B120fdRBTjbAttk2FcKAWtjaLXW25
- CRdc105gdfOalcDGENoa6MlC1mEtkvW70ESAYZ6kG7e3DJK6l/YrtK64shOdMLX142Lk
- iQOEJ1QJJGyMdCIrsTD+4UhoJBHwAb/RC4ikxhLHSfMJ4Y739vRmj5gHKypsnqy+QQeL
- rkVw==
-X-Gm-Message-State: AOJu0YxdZkB1DUbcvRocPoZVXsKmNnfv6q4zhSXXLTwDfaNME6zXv/Ve
- wg+FgTBgJ9iLwr+ZqxfGiam1oFAv/8XdaHma2eyQJgsO24GAX1eKi6nb7gLksNrWzPMr3m5Csx9
- KgEcAJSqFzZV6JAV7tiBdOqmvs4mHUod11nKI4tqj
-X-Gm-Gg: ATEYQzwaUB289EULF6GI1Hu8Ny0l1PHAsT+0t+aDtkmnRSlUHajI0+nV55Jkx216Pye
- eojHNEisXf7nhsnQzh+wNq8WNusOO/tE4ieV73xtDbnqmmaQZY9mfN357U49e83Q2A162wrBu9K
- iN4LjCNAlqPW1mfI9Sw8P/3nJ/O66nxxHZZsJ3Ecec5mAHhoXR4UgLcNSBJU2EWAZfsMW5B6XXo
- uQy5DCIPhyXJZn6gQdbZ4bYNNC67IPFH2qrAd5JbfZxpsez+rvwMqvHIEMnJsrBiK96azRAXSO1
- aQmjyy2rSbB6AvsTv/0ZkPi6QgLOKgXiDDxfpQlTyk4R7smuIr6F1Yq1wzyQhavjbPR6A6h7qJ8
- c9E96HU+huo3PZxu6l0vCSkrOJ71nI9iBkGeh
-X-Received: by 2002:a17:903:fae:b0:2a0:867c:60e2 with SMTP id
- d9443c01a7336-2ae3b5554c6mr4224695ad.19.1772484157858; Mon, 02 Mar 2026
- 12:42:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxA9Y-0002KT-S2
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:46:08 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxA9W-0005jc-Ex
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:46:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B6DD05969F4;
+ Mon, 02 Mar 2026 21:46:04 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id YPJN1c15EICq; Mon,  2 Mar 2026 21:46:02 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A93415969F2; Mon, 02 Mar 2026 21:46:02 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A467B5969F0;
+ Mon, 02 Mar 2026 21:46:02 +0100 (CET)
+Date: Mon, 2 Mar 2026 21:46:02 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v10 17/17] ati-vga: Implement HOST_DATA flush to VRAM
+In-Reply-To: <20260302180447.1078098-18-chad@jablonski.xyz>
+Message-ID: <681a858e-1e35-aa8c-ecf9-b791438aaac5@eik.bme.hu>
+References: <20260302180447.1078098-1-chad@jablonski.xyz>
+ <20260302180447.1078098-18-chad@jablonski.xyz>
 MIME-Version: 1.0
-References: <20260302193931.382228-1-clg@redhat.com>
-In-Reply-To: <20260302193931.382228-1-clg@redhat.com>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Mon, 2 Mar 2026 12:42:25 -0800
-X-Gm-Features: AaiRm53nltaR3z9EER_xiuFEK1-uoBrR11Jyb9jywqdiKYijI4tz0wmiel6evEs
-Message-ID: <CA+QoejUbMDi6NXQtEVzOLxn7MK3eotjg_BseX2nAmPPgyaXo1A@mail.gmail.com>
-Subject: Re: [PATCH] hw/i3c: Fix array bounds and storage in i3c_addr_is_rsvd()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Joe Komlodi <komlodi@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=nabihestefan@google.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,41 +67,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 2, 2026 at 11:39=E2=80=AFAM C=C3=A9dric Le Goater <clg@redhat.c=
-om> wrote:
+On Mon, 2 Mar 2026, Chad Jablonski wrote:
+> Implement flushing the 128-bit HOST_DATA accumulator to VRAM to enable
+> text rendering in X. Supports all datatypes (monochrome frgd/bkgd,
+> monochrome frgd, and color), however monochrome frgd support is
+> partial and does not properly handle transparency/leave-alone.
 >
-> The size of the is_rsvd lookup table in i3c_addr_is_rsvd() is 255 but
-> should be 256 to cover all possible uint8_t address values and avoid
-> potential out-of-bounds access.
+> The flush is broken up into two steps. First, if necessary, expansion of the
+> monochrome bits to the destination color depth. Then the expanded pixels
+> are sent to the ati_2d_do_blt one scanline at a time. ati_2d_do_blt then
+> clips and performs the blit.
 >
-> The array should be static too as it's a constant lookup table.
->
-> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 > ---
->  hw/i3c/core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> hw/display/ati.c      |   5 +-
+> hw/display/ati_2d.c   | 128 +++++++++++++++++++++++++++++++++++++++++-
+> hw/display/ati_int.h  |   3 +
+> hw/display/ati_regs.h |   4 ++
+> 4 files changed, 135 insertions(+), 5 deletions(-)
 >
-> diff --git a/hw/i3c/core.c b/hw/i3c/core.c
-> index 8a37099ce3ff..0a266e00a279 100644
-> --- a/hw/i3c/core.c
-> +++ b/hw/i3c/core.c
-> @@ -525,7 +525,7 @@ int i3c_target_ibi_finish(I3CTarget *t, uint8_t data)
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 965110c13a..01969c9866 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -1037,7 +1037,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>         }
+>         s->host_data.acc[s->host_data.next++] = data;
+>         if (s->host_data.next >= 4) {
+> -            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
+> +            ati_flush_host_data(s);
+>             s->host_data.next = 0;
+>         }
+>         break;
+> @@ -1046,8 +1046,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>             break;
+>         }
+>         s->host_data.acc[s->host_data.next] = data;
+> -        qemu_log_mask(LOG_UNIMP,
+> -                      "HOST_DATA finish flush not yet implemented\n");
+> +        ati_finish_host_data(s);
+
+Or maybe in previous patch:
+
+if (addr == HOST_DATA_LAST) {
+     ati_finish_host_data(s);
+} else if (s->host_data.next >= 4) {
+     ati_flush_host_data(s)
+}
+
+but the other lines around these are still the same so could be handled in 
+the same case group?
+
+>         break;
+>     default:
+>         break;
+> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+> index e240093f12..6c357259ba 100644
+> --- a/hw/display/ati_2d.c
+> +++ b/hw/display/ati_2d.c
+> @@ -47,6 +47,7 @@ static int ati_bpp_from_datatype(const ATIVGAState *s)
+> typedef struct {
+>     int bpp;
+>     uint32_t rop3;
+> +    bool host_data_active;
+>     bool left_to_right;
+>     bool top_to_bottom;
+>     uint32_t frgd_clr;
+> @@ -85,6 +86,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+> {
+>     ctx->bpp = ati_bpp_from_datatype(s);
+>     ctx->rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
+> +    ctx->host_data_active = s->host_data.active;
+>     ctx->left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
+>     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
+>     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
+> @@ -181,10 +183,10 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+>             return false;
+>         }
+>         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
+> -        if (vis_src.x > 0x3fff || vis_src.y > 0x3fff
+> +        if (!ctx->host_data_active && (vis_src.x > 0x3fff || vis_src.y > 0x3fff
+>             || ctx->src_bits >= ctx->vram_end
+>             || ctx->src_bits + vis_src.x + (vis_src.y + vis_dst.height)
+> -             * ctx->src_stride >= ctx->vram_end) {
+> +             * ctx->src_stride >= ctx->vram_end)) {
+>             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+>             return false;
+>         }
+> @@ -298,8 +300,130 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+> void ati_2d_blt(ATIVGAState *s)
+> {
+>     ATI2DCtx ctx;
+> +    uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
+> +
+> +    /* Finish any active HOST_DATA blits before starting a new blit */
+> +    ati_finish_host_data(s);
+> +
+> +    if (src_source == DP_SRC_HOST || src_source == DP_SRC_HOST_BYTEALIGN) {
+> +        /* Begin a HOST_DATA blit */
+> +        s->host_data.active = true;
+> +        s->host_data.next = 0;
+> +        s->host_data.col = 0;
+> +        s->host_data.row = 0;
+> +        return;
+> +    }
+>     setup_2d_blt_ctx(s, &ctx);
+>     if (ati_2d_do_blt(&ctx, s->use_pixman)) {
+>         ati_set_dirty(&s->vga, &ctx);
+>     }
+> }
+> +
+> +bool ati_flush_host_data(ATIVGAState *s)
+> +{
+> +    ATI2DCtx ctx, chunk;
+> +    uint32_t fg = s->regs.dp_src_frgd_clr;
+> +    uint32_t bg = s->regs.dp_src_bkgd_clr;
+> +    unsigned bypp, pix_count, row, col, idx;
+> +    uint8_t pix_buf[ATI_HOST_DATA_ACC_BITS * sizeof(uint32_t)];
+> +    uint32_t byte_pix_order = s->regs.dp_datatype & DP_BYTE_PIX_ORDER;
+> +    uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
+> +    uint32_t src_datatype = s->regs.dp_datatype & DP_SRC_DATATYPE;
+> +
+> +    if (!s->host_data.active) {
+> +        return false;
+> +    }
+> +    if (src_source != DP_SRC_HOST) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "host_data_blt: unsupported src_source %x\n", src_source);
+> +        return false;
+> +    }
+> +    if (src_datatype != SRC_MONO_FRGD_BKGD && src_datatype != SRC_MONO_FRGD &&
+> +        src_datatype != SRC_COLOR) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "host_data_blt: undefined src_datatype %x\n",
+> +                      src_datatype);
+> +        return false;
+> +    }
+> +
+> +    setup_2d_blt_ctx(s, &ctx);
+> +
+> +    if (!ctx.left_to_right || !ctx.top_to_bottom) {
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "host_data_blt: unsupported blit direction %c%c\n",
+> +                      ctx.left_to_right ? '>' : '<',
+> +                      ctx.top_to_bottom ? 'v' : '^');
+> +        return false;
+> +    }
+> +
+> +    bypp = ctx.bpp / 8;
+> +
+> +    if (src_datatype == SRC_COLOR) {
+> +        pix_count = ATI_HOST_DATA_ACC_BITS / ctx.bpp;
+> +        memcpy(pix_buf, &s->host_data.acc[0], 4 * sizeof(uint32_t));
+
+Instead of 4 * sizeof(uint32_t) it may be better to use sizeof(s->host_data.acc).
+
+> +    } else {
+> +        pix_count = ATI_HOST_DATA_ACC_BITS;
+> +        /* Expand monochrome bits to color pixels */
+> +        idx = 0;
+> +        for (int word = 0; word < 4; word++) {
+> +            for (int byte = 0; byte < 4; byte++) {
+> +                uint8_t byte_val = s->host_data.acc[word] >> (byte * 8);
+> +                for (int i = 0; i < 8; i++) {
+> +                    bool is_fg = byte_val & BIT(byte_pix_order ? i : 7 - i);
+> +                    uint32_t color = is_fg ? fg : bg;
+> +                    stn_he_p(&pix_buf[idx], bypp, color);
+> +                    idx += bypp;
+> +                }
+> +            }
+> +        }
+> +    }
+> +
+> +    /* Copy and then modify blit ctx for use in a chunked blit */
+> +    chunk = ctx;
+> +    chunk.src_bits = pix_buf;
+> +    chunk.src.y = 0;
+> +    chunk.src_stride = ATI_HOST_DATA_ACC_BITS * bypp;
+> +
+> +    /* Blit one scanline chunk at a time */
+> +    row = s->host_data.row;
+> +    col = s->host_data.col;
+> +    idx = 0;
+> +    DPRINTF("blt %dpx @ row: %d, col: %d\n", pix_count, row, col);
+> +    while (idx < pix_count && row < ctx.dst.height) {
+> +        unsigned pix_in_scanline = MIN(pix_count - idx,
+> +                                       ctx.dst.width - col);
+> +        chunk.src.x = idx;
+> +        /* Build a rect for this scanline chunk */
+> +        chunk.dst.x = ctx.dst.x + col;
+> +        chunk.dst.y = ctx.dst.y + row;
+> +        chunk.dst.width = pix_in_scanline;
+> +        chunk.dst.height = 1;
+> +        DPRINTF("blt %dpx span @ row: %d, col: %d to dst (%d,%d)\n",
+> +                pix_in_scanline, row, col, chunk.dst.x, chunk.dst.y);
+> +        if (ati_2d_do_blt(&chunk, s->use_pixman)) {
+> +            ati_set_dirty(&s->vga, &chunk);
+> +        }
+> +        idx += pix_in_scanline;
+> +        col += pix_in_scanline;
+> +        if (col >= ctx.dst.width) {
+> +            col = 0;
+> +            row += 1;
+> +        }
+> +    }
+
+This looks a bit complex. I wonder if this would be simpler as two 
+nested loops over rows and then cols but I can live with this for now too.
+
+> +
+> +    /* Track state of the overall blit for use by the next flush */
+> +    s->host_data.row = row;
+> +    s->host_data.col = col;
+> +    if (s->host_data.row >= ctx.dst.height) {
+> +        s->host_data.active = false;
+> +    }
+> +
+> +    return s->host_data.active;
+> +}
+> +
+> +void ati_finish_host_data(ATIVGAState *s)
+> +{
+> +    while (ati_flush_host_data(s)) {
+> +        continue;
+> +    }
+
+Is this while loop still needed? It looks like it will fill the rest of 
+the blit rect with the last accumulator value instead of just finishing 
+the blit in the middle. Is that what the real chip does? Otherwise this 
+could just flush once and deactivate host data, couldn't it?
+
+> +}
+> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+> index baa264215c..071d3af47c 100644
+> --- a/hw/display/ati_int.h
+> +++ b/hw/display/ati_int.h
+> @@ -32,6 +32,7 @@
 >
->  static bool i3c_addr_is_rsvd(uint8_t addr)
->  {
-> -    const bool is_rsvd[255] =3D {
-> +    static const bool is_rsvd[256] =3D {
+> #define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
+> #define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
+> +#define ATI_HOST_DATA_ACC_BITS 128
+>
+> #define TYPE_ATI_VGA "ati-vga"
+> OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
+> @@ -126,5 +127,7 @@ struct ATIVGAState {
+> const char *ati_reg_name(int num);
+>
+> void ati_2d_blt(ATIVGAState *s);
+> +bool ati_flush_host_data(ATIVGAState *s);
+> +void ati_finish_host_data(ATIVGAState *s);
 
-Given that we're using hex addressing for the values in is_rsvd, could
-we make the size `0xff` so it maintains the same formatting?
-Otherwise, it looks good to me.
+I slightly like this better as ati_host_data_{flush,finish} but if you 
+prefer this that's OK too.
 
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+Regards,
+BALATON Zoltan
 
->          [0x00] =3D true,
->          [0x01] =3D true,
->          [0x02] =3D true,
-> --
-> 2.53.0
+> #endif /* ATI_INT_H */
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index 48f15e9b1d..b813fa119e 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -397,7 +397,11 @@
+> #define DST_32BPP                               0x00000006
+> #define DP_DST_DATATYPE                         0x0000000f
+> #define DP_BRUSH_DATATYPE                       0x00000f00
+> +#define SRC_MONO_FRGD_BKGD                      0x00000000
+> +#define SRC_MONO_FRGD                           0x00010000
+> +#define SRC_COLOR                               0x00030000
+> #define DP_SRC_DATATYPE                         0x00030000
+> +#define DP_BYTE_PIX_ORDER                       0x40000000
+>
+> #define BRUSH_SOLIDCOLOR                        0x00000d00
+>
 >
 
