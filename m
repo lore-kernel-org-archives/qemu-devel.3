@@ -4,62 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5800CEA4E21
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59541EA4E25
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx54K-0001KJ-D3; Mon, 02 Mar 2026 10:20:26 -0500
+	id 1vx5GA-0005FM-Ri; Mon, 02 Mar 2026 10:32:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vx54F-0001JP-Qw
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:20:21 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
+ id 1vx5Fs-0005CX-ST; Mon, 02 Mar 2026 10:32:21 -0500
+Received: from
+ mail-switzerlandnorthazon11020097.outbound.protection.outlook.com
+ ([52.101.186.97] helo=ZRAP278CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vx54C-00074v-7V
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:20:19 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id F17BF5969FA;
- Mon, 02 Mar 2026 16:20:12 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id foEmvW1doeaU; Mon,  2 Mar 2026 16:20:10 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C9D715969F4; Mon, 02 Mar 2026 16:20:10 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C76505969F0;
- Mon, 02 Mar 2026 16:20:10 +0100 (CET)
-Date: Mon, 2 Mar 2026 16:20:10 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 0/8] memory: Remove most _nomigrate variants
-In-Reply-To: <0c750924-95a1-4fc8-ab7c-93ca19b791dc@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <b09d2e8a-3b64-e537-b9e0-8037e2855fdc@eik.bme.hu>
-References: <cover.1770253186.git.balaton@eik.bme.hu>
- <aZ3CQw2ad5cVc-Mm@x1.local> <c8a789fa-8d16-709d-eb3f-8acd6c1d08e8@eik.bme.hu>
- <aZ8jmaB-zuBSoQXH@x1.local>
- <997bf152-3982-490b-8450-06095ffad22b@rsg.ci.i.u-tokyo.ac.jp>
- <01f28121-0306-39e9-6526-fef766388eab@eik.bme.hu>
- <0c750924-95a1-4fc8-ab7c-93ca19b791dc@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
+ id 1vx5Fh-00009t-Ou; Mon, 02 Mar 2026 10:32:12 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XOneQn5rni7mwSWCSFO96V6fssxuqg3xhSLrj4mXglCs52Ke4BAr2wqwUuvi4K2D+GH6QWLdqLa4lXcjEDikCGI92AO7G1qxs4CK8JWe00f1hZTjVlaLFdTDy6RiZQPIB5p7aHUsteoxXm+FSRHAsLnf6G9L0Orr27x4YdMy7hq8temAzfrXn1vlT8pnDuqJUSRtd5uY2nje8jhBJuiSSsqiUPw7vx72uqdlevQzzH5qe5jdf0SycpAr81waDUCdXfEm5UtZRziATOGDhycIPCd0u35HblyDJE/enbQzMAaIu+SeOv/y5TGj/GUZWXrDmHNgdzdKedmnhKDinKrwjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=994QZIh2XF9ItTcxYpNWAJvHU2wgx6k4XyFp5MXTWOQ=;
+ b=kn4pt1cfl/CrZOk1+CBBB6ksD2tMYaFBW1kCHbQ82Mbu7tBVibflRlmEED75v8ZZJPLL9ldpsq6t2jyWEko9OuLvhaL+ZzkBbNAT10ZUejpau2dfKXQZLxUQ3AtuKIV6XkCilf/T7c2jxvvjKpT4Ef98JVYtRztyVGuBru1P89I9TtQ7FU94iSDUYwIqksTNLuCJVFm05YJ5EXf+lhUD8xrk3iyQIKk0x/hBKxKnPo4BA6s4CNRpZ+WLJ/KZKA7DGjdEZy5mmTo/vd4N9EngWHhqaNvszK5zAIHbOHT1jb04ab712RdbPH5SFfloere5HJqej6Jhl4G80JhPrWElTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
+ header.d=epfl.ch; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=994QZIh2XF9ItTcxYpNWAJvHU2wgx6k4XyFp5MXTWOQ=;
+ b=JfjEwbI1kxPF6wLTIppFtb9rrtI3Fe7XQaOM/apEAzDzx9XkzvoSB45VFmhUXu1Z3aOK9BjWfjJ+U3YCBNY0DSBrXvXdWxHoPzx9e+KPcfJ21mPhJllqg7Ze5G9EFJMacHv/KfczAhDrd0HtkV/NT4SfNIEWXsWgr4o22dt/QGQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=epfl.ch;
+Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
+ by ZR0P278MB1415.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:92::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21; Mon, 2 Mar
+ 2026 15:27:03 +0000
+Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9654.020; Mon, 2 Mar 2026
+ 15:27:03 +0000
+Message-ID: <c4ecefb4-8769-403f-8420-8bce42e43e13@epfl.ch>
+Date: Mon, 2 Mar 2026 16:27:01 +0100
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Subject: [PATCH trivial] plugins: add missing callbacks to version history
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org, qemu-trivial@nongnu.org
+Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
+ 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
+ 5hMMZIzTI4AtIcgA3xe4Ew==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: GVAP278CA0013.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:710:20::23) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:918::220)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1734890508-1772464810=:91361"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR0P278MB1415:EE_
+X-MS-Office365-Filtering-Correlation-Id: d515118e-b28d-4ce1-7bf3-08de7870277e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|786006|19092799006|1800799024|366016; 
+X-Microsoft-Antispam-Message-Info: kqPxjuOW3z4oSdtJSV7FQgX4QrQC3CXXFyUvc0IGMqTYbLsxGNEwXsr8gI7alz8ILlX9MoXCiOYcUswYUThzEWZdE1W6T2WF6BCf6+3WYnEDdQxshmsbUuRQD5R1tdSDbF3Ub/dexQOTG0kOrS004kJXbRlW6B6P61YHrjbdePsX9yGAULiPG0Z20OD3vTeAsqdPcJwIsB9AbqD7xBAueCdKFsgCq/o6FS3r3PuwPO5FbRN8Mbl/ROq9NDMU0QjKSE4qIPPwJKg3YhgTrmgy9lWo9aMD5iQlyEW83lLpqec3qk4p50Vn4oJrwbNomwz20sdBaEiF8yEjkNGlXIPNfGxS0xSxTN+uqNf+qySnFEr1DcafBA17RoQ7L1XycdHOwyTEIKTyeFGZNRuiePPxE7GI2xq0I2Do9cxPVAgS5v3TNTxN0wR0oRcMghXg3ieFJRs9MlHhuqte7KSIYrWxSRc4r6/ejzddXT3B8SyW4gEtrDHEjxyVAAfeCbjy8hh+/lbFFWppRlYMhQw4jlebI9XKmB4weejj4XghCAE25abUMsKJQh1PMf1SE684ods3oMQGdYhrWf3JutyY8PPCVNE9R0ey06fZU6ojSChKatho6a7dKAa2etmuleME8LlY3x14vTMujTrPQu36A6TtsAj8UKhxCXJnGWTZ3WEA+5aRk4maQFWcYxDKGNCG8pPZb7hKgRTfowbaUCPMoLbZo5nwhWfKLKyfj6GyDukMjzk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(786006)(19092799006)(1800799024)(366016); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MUxYQlpKbUcrbmdaamFlQ3pSZXBCRXhKSjIrcHNmRUlxakpKVmxxc1FxWWdX?=
+ =?utf-8?B?eDdUTUNrVm1JdllNdzZsKy9VMkNTdk90MlZyTFlBOWxEVGhRazhBc2dlK2lr?=
+ =?utf-8?B?TXU1M05BWkRsWW01KzNEUFF5VFNKaThPdmNIWU15OExjRnU2ZzFwc21NeGpR?=
+ =?utf-8?B?YngrSE9BdDZxZVJoNG5BSnBEZlZ3UUo5UjFnenZ0S1VFcFpFVzAwaUoyTExV?=
+ =?utf-8?B?RlkxeVZSN00vSFQrYXZEL1RZR3FZZElEZDBlWDNLRWV0SUFoV0JrTUlZaWRN?=
+ =?utf-8?B?ZkVxcnJrb1hDQ3NKcEs0ZlBuaFdIbXdmNmNRV0huR2ZiY3lKOWZSMVhISVJr?=
+ =?utf-8?B?ZHdlTVl5ZmQ1T2R1ekZ5SGowSnA1NGdVNUY2ZlQvN0pDdENGTUZvazZISTNj?=
+ =?utf-8?B?TjJsQTZ0OU9QZkdlM0N4c3BiaGVCYjJYQzE4cWdzeVVwYWR3NjE1K0lHTUdq?=
+ =?utf-8?B?WDVlM25OZkN1amhCNnVFT1hrdlNKa1Jza2F2eXptSVdPZDdiT0drM0I2RFdq?=
+ =?utf-8?B?bEtmU042Tm1mTkg2TTQ2Zi9GNUFpWUhZcnpNcU1jWEt2UDVxNE9TUkh2QndY?=
+ =?utf-8?B?T09VbmtYekhBcWFZSm5Gb0RFbmtmMmJjSVcyRVdOeUJqMEs2cmk0TUc0K0Za?=
+ =?utf-8?B?VTBCdFBPaFhENERHTnlJWVhKS0VQK2gwNCtMWkdRcDNQQ25vZjA1M2t0NDE3?=
+ =?utf-8?B?UTFGOWVualAyUStSWlBPUmRTVlhEVUtTaklGK250TGtPblUzL3VhNDNBRThy?=
+ =?utf-8?B?c1dwZ1VkVHZ4K0RCY3dXLy81Z2h1bGdUbmpWQjdrd29WTWI3MjRQb2Rnb2lw?=
+ =?utf-8?B?MHJMekdhNEhvWFhlR05LQnVQalJGclk1cHdPR24vNzFndk9TQmZPbHRGbWNJ?=
+ =?utf-8?B?UGVSZnM1SUZYcGxCSThEcEF4QklqUXFMZWdybThTU1Nsd0dxOHNiNEUrVWpm?=
+ =?utf-8?B?VEs3VUJ2QWdJeVAyMTZmalhsNGxYdWtmd2JrQzlha3o2SlBmUzlzZWttT283?=
+ =?utf-8?B?MXNQTktIdExYSWRiWG5HSndlN3JWRk5IRFJhbzF3YlNpL0tmekxlRUx0NWJ2?=
+ =?utf-8?B?YzFPeUNYa2dINFRtMXR5UmU5MkFUQ3QzdkMzQnI2Vk1vOGd6dGZJZ2h0SjZq?=
+ =?utf-8?B?ekV4NWdudUFBL2I4NXlsZnF6a25LbmhZZWVJdUViTUF5dHEzNHY5VHpYRDlS?=
+ =?utf-8?B?RmRDbFJBZzR5NE5jUUF0T0lQbkZLSDJodGkxeFpocjdxT1lqemRiQnNXUzVH?=
+ =?utf-8?B?VE05WXBqc3FqbHNKK0hHN0cxM0tGWkozMm05MjlTMmxGNzlxOWk3L05vRity?=
+ =?utf-8?B?S0lraDhpZy9CeDBTc2tqd0lNU2JZQ3o5WDlKb0hWM1diMHNQNXBPU28xaGZX?=
+ =?utf-8?B?RWI3elIwS1RhVHIvWlVvQllUbzQwWGF5em1tTitma280Z1ppZXp0em5ubWV3?=
+ =?utf-8?B?UWZhcWltUFRmVGRNODJncmM2eS9nQXFYWnY1d0F3VXdxSVVGUFdZa0p1N1pE?=
+ =?utf-8?B?cU5tNGx2RTNSai9uSlJuSG5WVytZWUN1ZzMzS3pYdE8rNTI4R2xPZ2xQQ3Z1?=
+ =?utf-8?B?SmVaNWV4VTcrYXgyajVuc3VtdFNPSUQ1TTF2Mk1YYjdJWERpL1cwa2xnblN6?=
+ =?utf-8?B?OUhFMlVKOS80TXVTWWNIOC9hQlNjaWZpZXRHeCsxVkhmN09zTXd0N1RjNlhS?=
+ =?utf-8?B?S3gzcFAvUkZuTzdKcVlYa1NRcFJyUCtMb21iVEh5WjJCTXIraWw0M2NCOEVI?=
+ =?utf-8?B?cS92RzRsYUp1bWF5YkVtbHRnbGd5SEFOUUh5WkRJVWdjM1hDdys3QmRvSDlk?=
+ =?utf-8?B?bCsvcWZLRjJrUC8vUnd3Y3lTODloRGxEVmJDS0lCR0hhZnlwdXNkcnlaMEFC?=
+ =?utf-8?B?QVVVRkJPTDRuK0t6UkF3c0tldk5uNDZHdTA1c2dOR21tZzVqdDFCVC8rRlFT?=
+ =?utf-8?B?M1o1UUFXd3ZpcFNDMjNheUlQVUZlaFhCY0VZZDhmT0xUTStTeS9tY1hVbUFY?=
+ =?utf-8?B?b2xWMzJDNkE1K2Vza3VxbUtpcWZoRCttcWYxT1NwRi9mM0xROXdwN3JkSVU0?=
+ =?utf-8?B?L0ZLMXp5czlQQzF2c2RUUGlvdjhJdkJlN0s4WE84ZHVCeDgvQ2FpbHZBbG9H?=
+ =?utf-8?B?SjZFR1RNRTdLQkYzd2ZMOVpaYXZNVzB2ci9USit1NGpWbEUzR2FwVDk2cU9V?=
+ =?utf-8?B?MEltZ2hQQ0VnQWUvbWQ4UlZSbk9kSWpqM1RSaldQWEJBeTY1eloyemZwb1kw?=
+ =?utf-8?B?TzRHREgyL1ZpMjVxNUJ5d2RSK2s0eHI0RDNlK29kc3pKVjAzRCsrdTJkTFFS?=
+ =?utf-8?B?dnE0Q3NyM2t5Rm1IV3dWa2RsaHZVaFdqUDZHcUFKclNWaVMzOGVOdz09?=
+X-OriginatorOrg: epfl.ch
+X-MS-Exchange-CrossTenant-Network-Message-Id: d515118e-b28d-4ce1-7bf3-08de7870277e
+X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 15:27:02.9168 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9eQlXQPUkZoMf4u5EVUct57MK73gQwzgJsh5fL61DqpsULYS7enGAeFOy/tcnunG84sI+XTgJcjYPw0Mtj0TPpDzGyrjHC/9drzgitBQJyI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR0P278MB1415
+Received-SPF: pass client-ip=52.101.186.97;
+ envelope-from=florian.hofhammer@epfl.ch;
+ helo=ZRAP278CU002.outbound.protection.outlook.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,178 +192,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The discontinuity and system call filter callbacks were not reflected in
+the versioning comments before. The callbacks have been introduced in
+aac73d85d2d6f556dbcee6041a2898cb0ef9b0e6 and
+5ed628d1d398b164053f5d5685541ea705275998, respectively.
 
---3866299591-1734890508-1772464810=:91361
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+---
+ include/plugins/qemu-plugin.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-On Mon, 2 Mar 2026, Akihiko Odaki wrote:
-> On 2026/03/02 21:26, BALATON Zoltan wrote:
->> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
->>> On 2026/02/26 1:30, Peter Xu wrote:
->>>> On Tue, Feb 24, 2026 at 06:44:58PM +0100, BALATON Zoltan wrote:
->>>>> On Tue, 24 Feb 2026, Peter Xu wrote:
->>>>>> On Thu, Feb 05, 2026 at 02:13:18AM +0100, BALATON Zoltan wrote:
->>>>>>> v4:
->>>>>>> - separate patch converting Sun machines from 
->>>>>>> memory_region_init_ram_nomigrate
->>>>>>> - split helper to init ram into two functions: setup and 
->>>>>>> error_propagate
->>>>>>> - also use memory_region_init_io in memory_region_init_ram_device_ptr
->>>>>>> 
->>>>>>> v3:
->>>>>>> - rebased on master after some patches were merged
->>>>>>> - drop some more line from memory-region-housekeeping.cocci
->>>>>>> - added comment to explain what factored out helper does
->>>>>>> - some more clean ups included
->>>>>>> 
->>>>>>> BALATON Zoltan (8):
->>>>>>>    hw/display/{cg3,tcx}: Do not use memory_region_init_rom_nomigrate()
->>>>>>>    memory: Remove memory_region_init_rom_nomigrate()
->>>>>>>    sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
->>>>>>>    memory: Remove memory_region_init_ram_nomigrate()
->>>>>> 
->>>>>> Could you help explain why we need to remove the above two small 
->>>>>> helpers?
->>>>> 
->>>>> Ideally we should remove all of the nomigrate variants as there are only
->>>>> about 3 uses left, everything else is already moved to the 
->>>>> init_{ram,rom}
->>>>> variants that register the memory region for migration. The is probably 
->>>>> one
->>>>> legitimate use that is served by memory_region_init_flags_nomigrate and
->>>>> other 3 uses are the xtfpga which I think is just old code and does not
->>>>> support migration so it will be converted in the second series to
->>>>> memory_region_new as the maintainers did not say anyting to that so far.
->>>>> Then there's one in hw/display/vga but that's gated behind a 
->>>>> compatibility
->>>>> switch that's only set in 2.12 (global-vmstate=true) and earlier. This 
->>>>> is
->>>>> not active any more but cannot yet be removed as there are eariler 
->>>>> compat
->>>>> props still need cleaning up but the last visible machine version is 5.1 
->>>>> now
->>>>> so this is long deprecated and not used. And there are these Sun 
->>>>> machines
->>>>> that I've converted in the first version but Mark said he'd like to keep 
->>>>> the
->>>>> current behaviour until it's the last user left. See: https:// 
->>>>> patchew.org/QEMU/cover.1769703287.git.balaton@eik.bme.hu/ 
->>>>> b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu/
->>>>> 
->>>>>> Not saying that we can't remove them, but I don't yet see the point of
->>>>>> open-code those readonly=true setup either, or any problem with having 
->>>>>> the
->>>>>> smaller helpers when ram_flags=0.  Small helpers sometimes help 
->>>>>> readability.
->>>>>> 
->>>>>> Some of them are going backwards againist what the cocci scripts were
->>>>>> suggesting previously, like:
->>>>>> 
->>>>>> - memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
->>>>>> + memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
->>>>>>   ... WHEN != E1
->>>>>> - memory_region_set_readonly(E1, true);
->>>>>> 
->>>>>> So you suggest open-code instead.  Why?
->>>>> 
->>>>> This is temporary until the usage in vga is gone with hw_compat_2_12 
->>>>> then
->>>>> the Sun machines will be the last users so they can also be converted to
->>>>> init_{ram,rom} (unless Mark changes his mind and agrees changing these 
->>>>> now
->>>>> as was in the first version).
->>>>> 
->>>>>> Is it required for your follow up cleanups?
->>>>> 
->>>>> It makes those simpler as then we don't need to add memory_region_new
->>>>> variants for the nomigrate versions that we would remove later anyway.
->>>> 
->>>> Personally I don't see the memory_region_new() whole thing solid yet, but
->>>> still during review.  I shared my thoughts.  So far, I'm not fully
->>>> convinced, but I also don't have the full picture to say no, either.  We
->>>> can wait for others to chime in with more thoughts.
->>>> 
->>>> For this series, I would prefer if we can discuss it separately from the
->>>> other work.
->>>> 
->>>> Removing _nomigrate() variances makes sense to me in general, it means we
->>>> want to by default suggest new devices only use RAM regions that is
->>>> migratable, with proper owner device specified along with the ramblock 
->>>> name
->>>> (as part of migration API).
->>>> 
->>>> However, we have two sets of these _nomigrate APIs:
->>>> 
->>>>    (1) memory_region_init_r[ao]m_nomigrate
->>>>    (2) memory_region_init_r[ao]m_flags_nomigrate
->>>> 
->>>> What I am still confused about is why this series used (2) to replace (1)
->>>> rather than removing both.  I don't understand how this helps if we still
->>>> have (2) around: it means new devices at least can still use (2) to 
->>>> bypass
->>>> migration.
->>>> 
->>>> There's actually one way to enforce migratable RAMs, taking ROM as 
->>>> example,
->>>> it could be:
->>>> 
->>>>    memory_region_init_rom_internal(..., global_vmstate=XXX)
->>>> 
->>>> Then memory_region_init_rom() should use that, setting 
->>>> global_vmstate=off.
->>>> 
->>>> Then we can unexport/remove memory_region_init_rom_[flag_]nomigrate() but
->>>> use that _internal() in relevant paths; we should also mark the 
->>>> _internal()
->>>> functions to say "new code is suggested to use the normal version".  But 
->>>> I
->>>> do not know if that is a slight overkill just for this..
->>>> 
->>>> If the other series (to avoid introducing new APIs) is the only reason 
->>>> for
->>>> this part, then IMHO this part of the series needs to be in the other
->>>> series, not this one.  The last cleanup patches look more self contained
->>>> OTOH to me, if the whole purpose of the latter half was code dedup, then 
->>>> it
->>>> makes more sense at least to me.
->>> 
->>> +1 for what Peter Xu suggested. Most part of this series looks 
->>> independently useful, but I don't think the removal of 
->>> memory_region_init_ram_nomigrate() is.
->> 
->> But if there are no useful uses why keep it? This version shows that 
->> converting the Sun machines as Peter Maydell suggested only leaves very few 
->> uses that can be removed eventually too after some further clean up that I 
->> don't want to take up now. Do you have any usage in mind that needs these 
->> nomigrate variants?
->
-> Well, my threshold for "useful" is > 1 uses, but maintainers may have other 
-> preferences.
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+index 17a834dca9..770a65249d 100644
+--- a/include/plugins/qemu-plugin.h
++++ b/include/plugins/qemu-plugin.h
+@@ -76,6 +76,9 @@ typedef uint64_t qemu_plugin_id_t;
+  *
+  * version 6:
+  * - changed return value of qemu_plugin_{read,write}_register from int to bool
++ * - added disconinuity callback API (for interrupts, exceptions, host calls)
++ * - added syscall filter callback API, which allows skipping syscalls and
++ *   setting custom syscall return values
+  */
+ 
+ extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
 
-After this series when converting the Sun machines as in v5 the only 
-nomigrate variant left is memory_region_init_ram_flags_nomigrate that is 
-equivalent to memory_region_init_ram_nomigrate with flags=0 which appears 
-outside of memory.c only in hw/xtensa/xtfpga.c (that will be converted in 
-the next series to memory_region_new) and in hw/display/vga.c that can be 
-removed when the hw_compat_2_12 is removed. There are two more uses of 
-memory_region_init_ram_flags_nomigrate in backends/hostmem-ram.c and 
-hw/m68k/next-cube.c but those have non-0 flags parameter. Therefore I 
-think there's no need to keep other nomigrate variants than 
-memory_region_init_ram_flags_nomigrate as the only two uses outside of 
-memory.c that would need memory_region_init_ram_nomigrate are to be 
-removed soon and can use flags=0 until then.
-
-I don't know if the other two uses with non-0 flags can be replaced and 
-memory_region_init_ram_flags_nomigrate made internal to memory.c but 
-that's beyond the scope of this series and could be considered separately. 
-Creating nomigrate memory region is not something that should be done or 
-need several functions and the very few cases where this might be needed 
-can use memory_region_init_ram_flags_nomigrate.
-
-Regards,
-BALATON Zoltan
---3866299591-1734890508-1772464810=:91361--
+base-commit: ffcf1a7981793973ffbd8100a7c3c6042d02ae23
+-- 
+2.53.0
 
