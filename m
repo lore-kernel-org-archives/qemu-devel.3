@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D4DEE9B34D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63067E9B354
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx01b-0008As-9p; Mon, 02 Mar 2026 04:57:15 -0500
+	id 1vx08B-0001tp-CA; Mon, 02 Mar 2026 05:04:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx01Z-0008AG-Ga
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:57:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx087-0001t0-UV
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:04:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx01X-00049I-93
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:57:13 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx086-0004ic-Mi
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:03:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772445429;
+ s=mimecast20190719; t=1772445838;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=I1oi8UgOQmjI0hYZYflzeK1vX9piKvIcRcNhRVmyCGc=;
- b=Ib5OHbZevxDNbkvlVq3ShpiI8iAvjSt1pK8MUruDbaxgKORxxBDIfHAYPKq9L/XLAaW3JC
- Vz+K7DBvuo8rVL7mC8H34DNxL7A0BSChG8aJF07Swg2o/ZDj7IQOYdYyaM6kYYLA3YZYaF
- QSBB1D11QrQh8BlOApn3z7Uiiy/tun8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vFiZQbN+QFAkICKlOiucWFqPYwFCdRiWiTox0InhBwA=;
+ b=KdnuxIO1qLWAGxDUNRC0RRsgE2546tOMu2bqQ9qMzY1j3B0ua3SoArmsbGL5Bq9Cii+smH
+ XUhiSbnfElsObz9bOkfLvIApRe6GhZVRFHa5acTWW68bwT15KF3PTn7eSPFh0a6OhTpcOP
+ 58XXhCzANrAvAmW0ZcvIwfmOpNXhJAg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-lUdajJMvPnmOoT2jmMOvrg-1; Mon,
- 02 Mar 2026 04:57:06 -0500
-X-MC-Unique: lUdajJMvPnmOoT2jmMOvrg-1
-X-Mimecast-MFC-AGG-ID: lUdajJMvPnmOoT2jmMOvrg_1772445424
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-RYhWPEXIO0ePmOh2JgEnrA-1; Mon,
+ 02 Mar 2026 05:03:54 -0500
+X-MC-Unique: RYhWPEXIO0ePmOh2JgEnrA-1
+X-Mimecast-MFC-AGG-ID: RYhWPEXIO0ePmOh2JgEnrA_1772445833
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6014C1800365; Mon,  2 Mar 2026 09:57:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C58891800352; Mon,  2 Mar 2026 10:03:52 +0000 (UTC)
 Received: from [10.45.224.162] (unknown [10.45.224.162])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E64BF30001B9; Mon,  2 Mar 2026 09:56:56 +0000 (UTC)
-Message-ID: <e63ca33c-6188-400d-be0e-ea39c646540d@redhat.com>
-Date: Mon, 2 Mar 2026 10:56:54 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 01EE51800370; Mon,  2 Mar 2026 10:03:44 +0000 (UTC)
+Message-ID: <d4f7c890-50c1-43b5-abe8-e86e27031386@redhat.com>
+Date: Mon, 2 Mar 2026 11:03:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 14/30] pc-bios/s390-ccw: Define memory for IPLB and
- convert IPLB to pointers
+Subject: Re: [PATCH v8 16/30] s390x: Guest support for Secure-IPL Facility
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
@@ -59,7 +58,7 @@ Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
 References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-15-zycai@linux.ibm.com>
+ <20260212204352.1044699-17-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -104,20 +103,20 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260212204352.1044699-15-zycai@linux.ibm.com>
+In-Reply-To: <20260212204352.1044699-17-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,21 +133,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/02/2026 21.43, Zhuoying Cai wrote:
-> Define a memory space for both IPL Parameter Block (IPLB) and
-> IPL Information Report Block (IIRB) since IIRB is stored immediately
-> following IPLB.
+> Introduce Secure-IPL (SIPL) facility.
 > 
-> Convert IPLB to pointer and it points to the start of the defined memory space.
-> IIRB points to the end of IPLB.
+> Use fac_ipl to represent bytes 136 and 137 for IPL device facilities
+> of the SCLP Read Info block.
+> 
+> Availability of SIPL facility is determined by byte 136 bit 1 of the
+> SCLP Read Info block. Byte 136's facilities cannot be represented
+> without the availability of the extended-length-SCCB, so add it as a
+> check for consistency.
+> 
+> Secure IPL is not available for guests under protected virtualization.
+> 
+> This feature is available starting with the gen16 CPU model.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> Reviewed-by: Collin Walling <walling@linux.ibm.com>
 > ---
->   include/hw/s390x/ipl/qipl.h |  6 ++++++
->   pc-bios/s390-ccw/iplb.h     |  5 +++--
->   pc-bios/s390-ccw/jump2ipl.c |  6 +++---
->   pc-bios/s390-ccw/main.c     | 34 +++++++++++++++++++---------------
->   pc-bios/s390-ccw/netmain.c  |  8 ++++----
->   5 files changed, 35 insertions(+), 24 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
