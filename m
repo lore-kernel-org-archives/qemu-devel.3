@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 280E7D58E7A
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E63D58E7A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwytq-00033G-RY; Mon, 02 Mar 2026 03:45:10 -0500
+	id 1vwyvJ-0006WE-FT; Mon, 02 Mar 2026 03:46:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwytl-0002YX-Nm
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:05 -0500
+ id 1vwyut-0005TX-PG
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:16 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwytj-0001eW-F7
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:04 -0500
+ id 1vwyur-0001zd-Ge
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441102;
+ s=mimecast20190719; t=1772441172;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l2dC2Q9dMZO9bqztuxoBOcOQF8vWCnFvS3RUEwDP/Tg=;
- b=L9GTC7Q8yJbkMCLOwBrXRSO5h6Qw/OX/e/DFZMvZhTUIzRo5kbsrq0kTg1c4U3c2K92RHb
- hzhoNuN/kPIlWI80g4GkqDKMpDpov5nl4HR08QOiTfTb3Y2HsGlJjWzVOLLM/xW0Ua9bfy
- htmamdVeAfE6PeqcZSj7m8IGaZZLX2Q=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yqrLIwIWG7O7AT3AslNieYmXs84EPYo0zTvBpgEa0sY=;
+ b=igDDPWX/5txuT6zPevhd/uc/RrD51aRbiRKq4oX0JQyumanUEsjk0d0nPi1FV1DVRjW6Y+
+ mv0ORr1IBX1naNj+vsYye7aT0bVsTT4KrmHk2fptRiCnTsp4j10Fh40aEUSXdiR5NzwAyX
+ QmNMXNbWTsI0mlYlOmsKhn32U13Go1M=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-88-pAE28c6lMzWPYib927uyMg-1; Mon, 02 Mar 2026 03:45:01 -0500
-X-MC-Unique: pAE28c6lMzWPYib927uyMg-1
-X-Mimecast-MFC-AGG-ID: pAE28c6lMzWPYib927uyMg_1772441101
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837b6f6b93so29833065e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:01 -0800 (PST)
+ us-mta-52-S25YKvJcM0WnffjXI6xthw-1; Mon, 02 Mar 2026 03:46:11 -0500
+X-MC-Unique: S25YKvJcM0WnffjXI6xthw-1
+X-Mimecast-MFC-AGG-ID: S25YKvJcM0WnffjXI6xthw_1772441171
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836b7fbf4fso28198465e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:46:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441099; x=1773045899; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441170; x=1773045970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l2dC2Q9dMZO9bqztuxoBOcOQF8vWCnFvS3RUEwDP/Tg=;
- b=IhTcGJHfQQHx2PSV3diHrCadEEWNIDPLOEJb/dZOhth+0vqzqdc3wA1F58GH/NgcD0
- tRRKg1VugscYuJWtSRD8Gvxu/wPK1Yd/M34xlRG0Bd3pWsLG2aykL2ip3+NK2QWEF4tc
- U+zsjQbvkkGPMfwQEg942A5lnTjWL9gNr0N/+wZbXaX4YGFt7LwEol98oIDkq1s2TvZs
- qeYJbd9U5I9VDrAG1tm0JC0KHDpXbeyabH3X4btUChLW9waAHVF1sfp2sjoZ4XuUkGoZ
- nQvZFU2gl6gAJiaaEIrTDEcWRDuIGOXpvCSLNEtPUCnYBK6YojDfUujg1s8j0TOUDZcA
- lPog==
+ bh=yqrLIwIWG7O7AT3AslNieYmXs84EPYo0zTvBpgEa0sY=;
+ b=VQeS+ZE8EPcbbGEDIDD+j2BiZJvh5r4etXPg5JvwdpU1vkJ62uefRSaXFVi8jhAGK4
+ 2SLt8YiY4DFYBcq49qCD+dGw3LQuvaPHGswcBVSsFi3dLh2szie1Rt7DZb1/3PMKOFZK
+ 2mvQOBkFmDCC97PajAL6kMjqNZhaSKuEZeP9UsdSPvRrPE050FVZRjErxczPOGm49M9g
+ 2XVytM7bJs1kKBoZYU6Ek1Ie136MwgZS6xmLMD2k59SPylhXBKMaODVUppoWJTFsgp0i
+ M7qHrhMz3dN5e7pZ0icGZeGyysr94BPKqAl4g8D/CGXAfCAx9DmNgWY1JTL/WuS1lq8l
+ SR1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441099; x=1773045899;
+ d=1e100.net; s=20230601; t=1772441170; x=1773045970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=l2dC2Q9dMZO9bqztuxoBOcOQF8vWCnFvS3RUEwDP/Tg=;
- b=uuf/P/ZCVzFsFdhP+O1nlAojy3TFmv1V/S/DDMuGEOvwVGoCJteaJkUwqxtYA2VVr1
- /TfB4rK6SjWyxM69iFQ/XdTHrQZkATJJDM22uXcg28dA576SFaMBgdu05OUCICL6vQaL
- QbTcuaQxi9rPINrjfTx9sljJ6vapxfvuuCalBNmiHLIcC2AjhfZ3xtkUFLajP1TJaoiO
- nOFq1p4e9t2DXen6c3zi1tB88FiLEBVW3dwN8PXgVvJt6nz6wH37UmIELy0hhY326V5r
- exhTM5fifGhwJrr0GZUUAM+8yDUVdiTl4Tn3PQWSNOukSTPJ8c2LXSQcED2EV6VB8upb
- JfPQ==
-X-Gm-Message-State: AOJu0YynZNZHZvGw4+JIl9kJNRZeWjnEaBvmXb4u5ntrCShaU9/ZAqDF
- +5WgfRW9mTc09m5aGCmY2/4v5eAS/XVrlAXLM61eL+njv4Qj1TfOh5ON6UrKf7QcDoOKJgjEDx7
- e4WLKP9K9unU9W1LC7YrPKw2Dqf87z/4wJ0dLTyHEuuiQJYLc03MvjCHoB23YIynFjBv5MpuK2p
- C6xH8vUzNp5IcH1P0+AMNf0ZXyI8Zta6nW9JM+WVeE
-X-Gm-Gg: ATEYQzw8Ga5KVaIJw6eUewWffMjzIhwFPTOQojcHh1CNHkwbnMukygq0tpR7ZT8JyMm
- MLCsgZi727za/vtJmg9iEMsrqMgBdTXgnDqpeYVGOyNDSAaSY9IHfjuINK8qSLvPSk3iWYy54tN
- 57/thufTQJlC4nmfjQz/M5sq3AG5gwC5DFxVHdta7gX7AAFnDf7qKIFezF0pn2BAAfijoBnJsTh
- Z3YhGHoVWAl/HmrGXjXn3ep+yIhMAg+bAZBZnx5/OKTBOtUjfzpQGWvikQuCiyc4dq8Jlh33ku/
- w3PwTT/0i3yMdGjq6Ika8UFeQN4z5PmkAISMu2hZPEWC/lggtYlW2eYA4Z48kgyAH0eNZC3LEbg
- HA3frp0XnCFpDitJ+QdE6ISt1lJICG4wTUsWSpktDu8od8nuGsiMycy7I+l4DpwqR52lXu78kzv
- 4qh31hTCmbdBKFGzsdiMW6S1MgbO8=
-X-Received: by 2002:a05:600c:6385:b0:477:54f9:6ac2 with SMTP id
- 5b1f17b1804b1-483c9b53c9cmr217676825e9.0.1772441099500; 
- Mon, 02 Mar 2026 00:44:59 -0800 (PST)
-X-Received: by 2002:a05:600c:6385:b0:477:54f9:6ac2 with SMTP id
- 5b1f17b1804b1-483c9b53c9cmr217676245e9.0.1772441098875; 
- Mon, 02 Mar 2026 00:44:58 -0800 (PST)
+ bh=yqrLIwIWG7O7AT3AslNieYmXs84EPYo0zTvBpgEa0sY=;
+ b=pB95/spNWevYqCHxfSoaBip5NWw6XQR8umXPhriG0KeVjCJFF/f7rx1wg7X94DRwRH
+ H7jywW465lR4jyjPrhRSfFsvfmkDhHcR4Pgsl26G4oK0qSuHPZs7etM0xt10DrpPJdOz
+ /WCmz/K77X3j9UDHntwMrPkB8akpyE24bpnsAZz5KoQVgPP/z+2Y8DzyxXgAKCoFBbmj
+ Zf62v6B/HFqWRmi+3g+m3uwJzaGnk8rbgiLnCEZjeJhNLMw0QxC+9hLyOzS7Fka+oIGy
+ qwwyl/c950T1GSG2lEbO79HSe7ovjBT+NAtBg1gsjv7Y6dPtsN+6KLbg7lT0dgEmnwe4
+ 3g5g==
+X-Gm-Message-State: AOJu0YwXFNFt8mKEwssb51+Rsa7jmPRkZ8uDOsaXJcaE/B49TNRiWE1O
+ b330MCsVu8zo3ipIDVMffrXRebHu4J0LT52lC2nytiNez9AHE+8pOU3ISDcrNxm+SjISMeM5xR1
+ ARWD8d9tvXc5B91WPmOFJBr7vS40CbZCNwKJLDGaTh43CXBG24cJaNVMVkpx4Cm3M+RcJB7JIdJ
+ vkuzx3/Dufn3lsUIYEnjepZ1sT70rfL+kbLY/5g8Mh
+X-Gm-Gg: ATEYQzxRGsTP08i6twJfwiHXxnA9aMclZoYiCN1GxdXRi/1nu5sr/BD4SEqplUcy/fb
+ nsnrG91eAdfU2/clGsoc1iC+4tHQGsKu+VCw+vxTk+njqESHOaCXKIpWJP8sMR4CNjPFMSin/xR
+ mNVkK042akoxMQh/AlYDNBmqXh5/cYZFphVBukbBPLKjMHUZF9qWk4w1OAGm7pxDcHyoZPPMbY9
+ Ht1zJNtbqTWZSXkVeQiuwi1SlkkBMq3jVe4IJj1+Z11bPwZZtT9Ml+JnOFMmYHVGEvxvkZMFsR3
+ 7EmwyixJMgwRB5zDlfJKtS/LN3OHID77dGoI/JAgf17krDWl2q7RHx7kk/MIA/eLzFP2DmQ9Y8B
+ tUwBYAjP4yoiM4AB6UCHqBJvjSoQacM5eQnD0JAqQT9t1AaQZWeKDeDtTK+Jj2hpu+4SuN5vgk0
+ 7RsJ+tmdoieNvkly5xfSvK04vljug=
+X-Received: by 2002:a05:600c:a086:b0:483:a895:9d85 with SMTP id
+ 5b1f17b1804b1-483c9ba3ae6mr211490655e9.2.1772441169654; 
+ Mon, 02 Mar 2026 00:46:09 -0800 (PST)
+X-Received: by 2002:a05:600c:a086:b0:483:a895:9d85 with SMTP id
+ 5b1f17b1804b1-483c9ba3ae6mr211490155e9.2.1772441169088; 
+ Mon, 02 Mar 2026 00:46:09 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd6f26d7sm409057105e9.3.2026.03.02.00.44.58
+ 5b1f17b1804b1-483bfb77444sm122075565e9.4.2026.03.02.00.46.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:44:58 -0800 (PST)
+ Mon, 02 Mar 2026 00:46:07 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Maxim Levitsky <mlevitsk@redhat.com>
-Subject: [PULL 030/102] accel/kvm: Don't clear pending #SMI in
- kvm_get_vcpu_events
-Date: Mon,  2 Mar 2026 09:42:25 +0100
-Message-ID: <20260302084338.473368-31-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 056/102] accel/kvm: rebind current VCPUs to the new KVM VM file
+ descriptor upon reset
+Date: Mon,  2 Mar 2026 09:42:51 +0100
+Message-ID: <20260302084338.473368-57-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -122,57 +122,316 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-The kvm_get_vcpu_events propogates the state of the pending smi
-from the kernel to the cpu->interrupt_request, with the intention
-of having un up to date migration state.
+Confidential guests needs to generate a new KVM file descriptor upon virtual
+machine reset. Existing VCPUs needs to be reattached to this new
+KVM VM file descriptor. As a part of this, new VCPU file descriptors against
+this new KVM VM file descriptor needs to be created and re-initialized.
+Resources allocated against the old VCPU fds needs to be released. This change
+makes this happen.
 
-Later the opposite is done, the kvm_put_vcpu_events restores the state
-of the pending #SMI from the 'cs->interrupt_request'
-
-The only problem is that kvm_get_vcpu_events also resets the SMI
-in cpu->interrupt_request when there is no pending #SMI indicated by the kernel,
-and that is wrong as the SMI might be still raised by qemu.
-
-While at it, also fix a similar but more theoretical bug with regard to a
-latched #INIT while in SMM.
-
-A simple reproducer for this bug is to read an EFI variable in a loop
-from within a guest, while at the same time run 'info registers' on
-the qemu HMP monitor.
-
-The reads will, once in a while, fail with an 'Invalid argument' error.
-
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Link: https://lore.kernel.org/r/20260223221908.361456-1-mlevitsk@redhat.com
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20260225035000.385950-16-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 4 ----
- 1 file changed, 4 deletions(-)
+ accel/kvm/kvm-all.c    | 215 +++++++++++++++++++++++++++++++++--------
+ accel/kvm/trace-events |   1 +
+ 2 files changed, 174 insertions(+), 42 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 3b66ec8c42b..bb8303c39fe 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5501,8 +5501,6 @@ static int kvm_get_vcpu_events(X86CPU *cpu)
-         }
-         if (events.smi.pending) {
-             cpu_interrupt(CPU(cpu), CPU_INTERRUPT_SMI);
--        } else {
--            cpu_reset_interrupt(CPU(cpu), CPU_INTERRUPT_SMI);
-         }
-         if (events.smi.smm_inside_nmi) {
-             env->hflags2 |= HF2_SMM_INSIDE_NMI_MASK;
-@@ -5511,8 +5509,6 @@ static int kvm_get_vcpu_events(X86CPU *cpu)
-         }
-         if (events.smi.latched_init) {
-             cpu_interrupt(CPU(cpu), CPU_INTERRUPT_INIT);
--        } else {
--            cpu_reset_interrupt(CPU(cpu), CPU_INTERRUPT_INIT);
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index d244156f6f4..a347a71a2ee 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -127,6 +127,10 @@ static NotifierList kvm_irqchip_change_notifiers =
+ static NotifierWithReturnList register_vmfd_changed_notifiers =
+     NOTIFIER_WITH_RETURN_LIST_INITIALIZER(register_vmfd_changed_notifiers);
+ 
++static int map_kvm_run(KVMState *s, CPUState *cpu, Error **errp);
++static int map_kvm_dirty_gfns(KVMState *s, CPUState *cpu, Error **errp);
++static int vcpu_unmap_regions(KVMState *s, CPUState *cpu);
++
+ struct KVMResampleFd {
+     int gsi;
+     EventNotifier *resample_event;
+@@ -420,6 +424,90 @@ err:
+     return ret;
+ }
+ 
++static void kvm_create_vcpu_internal(CPUState *cpu, KVMState *s, int kvm_fd)
++{
++    cpu->kvm_fd = kvm_fd;
++    cpu->kvm_state = s;
++    if (!s->guest_state_protected) {
++        cpu->vcpu_dirty = true;
++    }
++    cpu->dirty_pages = 0;
++    cpu->throttle_us_per_full = 0;
++
++    return;
++}
++
++static int kvm_rebind_vcpus(Error **errp)
++{
++    CPUState *cpu;
++    unsigned long vcpu_id;
++    KVMState *s = kvm_state;
++    int kvm_fd, ret = 0;
++
++    CPU_FOREACH(cpu) {
++        vcpu_id = kvm_arch_vcpu_id(cpu);
++
++        if (cpu->kvm_fd) {
++            close(cpu->kvm_fd);
++        }
++
++        ret = kvm_arch_destroy_vcpu(cpu);
++        if (ret < 0) {
++            goto err;
++        }
++
++        if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
++            s->coalesced_mmio_ring = NULL;
++        }
++
++        ret = vcpu_unmap_regions(s, cpu);
++        if (ret < 0) {
++            goto err;
++        }
++
++        ret = kvm_arch_pre_create_vcpu(cpu, errp);
++        if (ret < 0) {
++            goto err;
++        }
++
++        kvm_fd = kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
++        if (kvm_fd < 0) {
++            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu (%s)",
++                         vcpu_id, strerror(kvm_fd));
++            return kvm_fd;
++        }
++
++        kvm_create_vcpu_internal(cpu, s, kvm_fd);
++
++        ret = map_kvm_run(s, cpu, errp);
++        if (ret < 0) {
++            goto err;
++        }
++
++        if (s->kvm_dirty_ring_size) {
++            ret = map_kvm_dirty_gfns(s, cpu, errp);
++            if (ret < 0) {
++                goto err;
++            }
++        }
++
++        ret = kvm_arch_init_vcpu(cpu);
++        if (ret < 0) {
++            error_setg_errno(errp, -ret,
++                             "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
++                             vcpu_id);
++        }
++
++        close(cpu->kvm_vcpu_stats_fd);
++        cpu->kvm_vcpu_stats_fd = kvm_vcpu_ioctl(cpu, KVM_GET_STATS_FD, NULL);
++        kvm_init_cpu_signals(cpu);
++    }
++    trace_kvm_rebind_vcpus();
++
++ err:
++    return ret;
++}
++
+ static void kvm_park_vcpu(CPUState *cpu)
+ {
+     struct KVMParkedVcpu *vcpu;
+@@ -483,13 +571,7 @@ static int kvm_create_vcpu(CPUState *cpu)
          }
      }
  
+-    cpu->kvm_fd = kvm_fd;
+-    cpu->kvm_state = s;
+-    if (!s->guest_state_protected) {
+-        cpu->vcpu_dirty = true;
+-    }
+-    cpu->dirty_pages = 0;
+-    cpu->throttle_us_per_full = 0;
++    kvm_create_vcpu_internal(cpu, s, kvm_fd);
+ 
+     trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
+ 
+@@ -508,19 +590,11 @@ int kvm_create_and_park_vcpu(CPUState *cpu)
+     return ret;
+ }
+ 
+-static int do_kvm_destroy_vcpu(CPUState *cpu)
++static int vcpu_unmap_regions(KVMState *s, CPUState *cpu)
+ {
+-    KVMState *s = kvm_state;
+     int mmap_size;
+     int ret = 0;
+ 
+-    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+-
+-    ret = kvm_arch_destroy_vcpu(cpu);
+-    if (ret < 0) {
+-        goto err;
+-    }
+-
+     mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+     if (mmap_size < 0) {
+         ret = mmap_size;
+@@ -548,6 +622,31 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+         cpu->kvm_dirty_gfns = NULL;
+     }
+ 
++ err:
++    return ret;
++}
++
++static int do_kvm_destroy_vcpu(CPUState *cpu)
++{
++    KVMState *s = kvm_state;
++    int ret = 0;
++
++    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
++
++    ret = kvm_arch_destroy_vcpu(cpu);
++    if (ret < 0) {
++        goto err;
++    }
++
++    /* If I am the CPU that created coalesced_mmio_ring, then discard it */
++    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
++        s->coalesced_mmio_ring = NULL;
++    }
++
++    ret = vcpu_unmap_regions(s, cpu);
++    if (ret < 0) {
++        goto err;
++    }
+     kvm_park_vcpu(cpu);
+ err:
+     return ret;
+@@ -561,26 +660,9 @@ void kvm_destroy_vcpu(CPUState *cpu)
+     }
+ }
+ 
+-int kvm_init_vcpu(CPUState *cpu, Error **errp)
++static int map_kvm_run(KVMState *s, CPUState *cpu, Error **errp)
+ {
+-    KVMState *s = kvm_state;
+-    int mmap_size;
+-    int ret;
+-
+-    trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+-
+-    ret = kvm_arch_pre_create_vcpu(cpu, errp);
+-    if (ret < 0) {
+-        goto err;
+-    }
+-
+-    ret = kvm_create_vcpu(cpu);
+-    if (ret < 0) {
+-        error_setg_errno(errp, -ret,
+-                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
+-                         kvm_arch_vcpu_id(cpu));
+-        goto err;
+-    }
++    int mmap_size, ret = 0;
+ 
+     mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+     if (mmap_size < 0) {
+@@ -605,14 +687,53 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+             (void *)cpu->kvm_run + s->coalesced_mmio * PAGE_SIZE;
+     }
+ 
++ err:
++    return ret;
++}
++
++static int map_kvm_dirty_gfns(KVMState *s, CPUState *cpu, Error **errp)
++{
++    int ret = 0;
++    /* Use MAP_SHARED to share pages with the kernel */
++    cpu->kvm_dirty_gfns = mmap(NULL, s->kvm_dirty_ring_bytes,
++                               PROT_READ | PROT_WRITE, MAP_SHARED,
++                               cpu->kvm_fd,
++                               PAGE_SIZE * KVM_DIRTY_LOG_PAGE_OFFSET);
++    if (cpu->kvm_dirty_gfns == MAP_FAILED) {
++        ret = -errno;
++    }
++
++    return ret;
++}
++
++int kvm_init_vcpu(CPUState *cpu, Error **errp)
++{
++    KVMState *s = kvm_state;
++    int ret;
++
++    trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
++
++    ret = kvm_arch_pre_create_vcpu(cpu, errp);
++    if (ret < 0) {
++        goto err;
++    }
++
++    ret = kvm_create_vcpu(cpu);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret,
++                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
++                         kvm_arch_vcpu_id(cpu));
++        goto err;
++    }
++
++    ret = map_kvm_run(s, cpu, errp);
++    if (ret < 0) {
++        goto err;
++    }
++
+     if (s->kvm_dirty_ring_size) {
+-        /* Use MAP_SHARED to share pages with the kernel */
+-        cpu->kvm_dirty_gfns = mmap(NULL, s->kvm_dirty_ring_bytes,
+-                                   PROT_READ | PROT_WRITE, MAP_SHARED,
+-                                   cpu->kvm_fd,
+-                                   PAGE_SIZE * KVM_DIRTY_LOG_PAGE_OFFSET);
+-        if (cpu->kvm_dirty_gfns == MAP_FAILED) {
+-            ret = -errno;
++        ret = map_kvm_dirty_gfns(s, cpu, errp);
++        if (ret < 0) {
+             goto err;
+         }
+     }
+@@ -2710,6 +2831,16 @@ static int kvm_reset_vmfd(MachineState *ms)
+     }
+     assert(!err);
+ 
++    /*
++     * rebind new vcpu fds with the new kvm fds
++     * These can only be called after kvm_arch_on_vmfd_change()
++     */
++    ret = kvm_rebind_vcpus(&err);
++    if (ret < 0) {
++        return ret;
++    }
++    assert(!err);
++
+     /* these can be only called after ram_block_rebind() */
+     memory_listener_register(&kml->listener, &address_space_memory);
+     memory_listener_register(&kvm_io_listener, &address_space_io);
+diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+index e4beda01488..4a8921c632b 100644
+--- a/accel/kvm/trace-events
++++ b/accel/kvm/trace-events
+@@ -15,6 +15,7 @@ kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
+ kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %s"
+ kvm_irqchip_commit_routes(void) ""
+ kvm_reset_vmfd(void) ""
++kvm_rebind_vcpus(void) ""
+ kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s vector %d virq %d"
+ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
+ kvm_irqchip_release_virq(int virq) "virq %d"
 -- 
 2.53.0
 
