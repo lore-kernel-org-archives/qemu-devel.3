@@ -4,106 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A489EE9B342
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4743BE9B359
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx0aI-0001Rg-Mu; Mon, 02 Mar 2026 05:33:06 -0500
+	id 1vx0eC-00030H-23; Mon, 02 Mar 2026 05:37:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vx0a5-0001O4-Dz
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:33:00 -0500
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vx0a3-00012U-Ui
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:32:53 -0500
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-64ad9fabd08so3493148d50.2
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 02:32:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772447570; cv=none;
- d=google.com; s=arc-20240605;
- b=eaYRQplfyKH4TGiv9CLiXi0sR8Qj7vGQ2TJL6W1LHiqefVZT7HfJU8FGICkYfXfG8y
- x5o+3mOeyT/rR14ThegJgT+j0DBYw+/CbJxTOcZ60zSxFAyYy1i9QROtMg4LQfxwrXGk
- EM3/T8Q2YBYz8CH6sB5xCzpBvDGH8lapVhIpbA9hR9jADzvN+0oJG6DB8e1TiQgaImAa
- fsDTxnAkAT/r9owCAd6l+pNJKJr97+O/dOyEfraUEbQuZ5xi2kJuTpZRcfWVBGrGu7XR
- If2Ph7k1YwZNQK4lDpsK/SOWRp1INb2dAOCQ5CKfmh18NzM5Lt5C9kCV5cK2lre0kYOZ
- A5Tg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+KWbMIZb7vgaoVeySsrF8TFJRCienpK7ZIh64IObNMk=;
- fh=lFfRfZMS5l19tUfRBeAH+newWRgxDnjitXMa7qqUehQ=;
- b=fDU0ak7mGrMj36pUopktaWcWVcDLgrGUFvwy1WW2Z9w5rqzMs3W394MivMOrsRW7q4
- iqXB2fipXTkHriNbKAwGCMh9hdffurIBZBAw8cvGwWFRB2wQD5zSkJdO6ai+2HlKrdyW
- HpFx0CEjJ72jFozoSwER6hBjyfk+siTivqaMXM4Xc28Lz//2sIoNQL41U0SgctVbDzcC
- yoThnsFX2u4ZjmjfKWs+WzzIuB0Us6IcYPkj0wIQ/HGEa+QL1XAH/KX+D7hNlkxVKkOb
- 6tuvBwRGJZlwGVxHhHkDeF6CztwK9FM6a8qvxNMthCj3zzBM0B8jMfNY6XZqvhJK5yhN
- B8wA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772447570; x=1773052370; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+KWbMIZb7vgaoVeySsrF8TFJRCienpK7ZIh64IObNMk=;
- b=pKYDT3FYliBYUBN+ddOhXUL19hGIvdco1Q303coFS22w/XRVMze+g2O6ErJmBn72sO
- l6+9g/u0dXyL9C6BqOYaRnq0YChCa1izxFpL/E+yLvGcn+5+sGU6Y8dKaApAgIlUvf9v
- Uc7fsLx4ebrG2eVsAVCPer90ebd0FoKR865Zsb84Hnoxr7Oi5SB1jaRKLW/LVGtI+uBj
- rE3Qm6ZhIr5Kl7JZnOZsxAqxRgaU1JtnLs6Rc1YQ3EU60wU7BUFV/DYe4D/+apRb7eTK
- kEXM4lCDptev7CUlDqsDJkVL61s7gbjkU7b6d2Yac0aVkpUkLIekrxEIDELyIKQ+C8DI
- OzHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772447570; x=1773052370;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+KWbMIZb7vgaoVeySsrF8TFJRCienpK7ZIh64IObNMk=;
- b=Kpc2sDqGBdQhgxyZNx68SSyqcqbbmeA9HlYJRM6Tbkq9TLgHm0JTfyKpNqfMYs+ki3
- kWzGeSoT2jArbMpRYDRaRG9zbXOBRXIL3tkFWFiyfeRHsh9e7SRJzL71lRaTsZJDDq+i
- heFmLyhPO7EQqGWt8BZU07CqmFO1rz45EOWIBvrp4xzjRCfdcaKFvFkKc8+XOaVL/fo6
- 1dnPRSzDa8GV2b20JxWrmpRpOfssB6cQCGpUhl7dVgY4GvjblzZgBwjXZrkym2XtN/vs
- cNViqsaQeV+muByY19z6aqm0jzjjqS0Gw5mjsm5R4612dPrX8b55/Ibp2LNnjD4J0QQA
- DjCA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZBuqwK77RhdOYFn34fgTU94TZPKXzSnD5l8ETB1CquIFgAcwgMeOwreOMA5wKxD5OLb7GgaCspJFn@nongnu.org
-X-Gm-Message-State: AOJu0Yw6PDOKaBckGgJszQuzzJKzMDxBVEOO+AS+ILZ+orw0eF0RZ9x0
- qavKAma+aj6hj9jysXdT7KBE+ovKfNGrzjZHXnHy9M2dImPPu9fF9pr6EARY1Yp8R1lwHGwYuUt
- zpIl9E8nNOFWaJ5q9mDj+UtAlFL22cAFIC6mztUUYYg==
-X-Gm-Gg: ATEYQzzp0jXKtpGzK5z8arHhLfxr+tPc8N8uTyitrpodkPlHdnBtxN4Pk3vOgkAi+TV
- PqLXhCxxxcbQBG7IlK9/W4n3+zVS5QZg6m4Da/zZOsIpKPUIoP2DXPQRicSPABzRDbsSPjyFNI7
- ryZiHKqVD7QiYmJNUoR/vTFRR+z618qs6aowDJme1rl3fUq5vEnpB9gz4mB2+pGNdqvHOIqKomT
- zK2RIaONy1LlOtpngpmNFJ+0zuSA2QUCk9CU3lOR9BG05gUf9cutV6mL+NAPFOKpbKjsDma6whg
- 69VNcP776Elnwegi+gUVfQ/rNPVFUdZOJwDLMv1ABgFuphKIoVnwH1TvPhbKGPBPgfg=
-X-Received: by 2002:a05:690e:1656:b0:64c:97be:a890 with SMTP id
- 956f58d0204a3-64cc22252e2mr6234224d50.42.1772447570342; Mon, 02 Mar 2026
- 02:32:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vx0e6-0002y1-4j
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vx0e1-0001qD-Un
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772447815;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S7hdK2T2rhmDCPf6n3Eg8p5Wr+WAP8uwwd7SD8gK1RA=;
+ b=BELndcV1N3HfB4/t9pvWMKT/gvRpRbzk43eXnjdHKW4lClBnQq4w96F1wLIi+Hy0ubonZM
+ 8mT3xcmU4JsMY3O3wuGEqGJ/fT16K9hywrPsRas/kpxiBjf8XNHR/ovD2OrIOxIHwvm93o
+ 0BCo1fJ1xK9g6hQqGdwKNFwSgiVcHKk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-cgu0EvQxNU6Mc71-aMnsnA-1; Mon,
+ 02 Mar 2026 05:36:52 -0500
+X-MC-Unique: cgu0EvQxNU6Mc71-aMnsnA-1
+X-Mimecast-MFC-AGG-ID: cgu0EvQxNU6Mc71-aMnsnA_1772447811
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2936118001E3; Mon,  2 Mar 2026 10:36:51 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.32.23])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BBF271800666; Mon,  2 Mar 2026 10:36:47 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
+ sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
+ alex.bennee@linaro.org
+Subject: [PATCH v7 1/7] target/arm/machine: Fix detection of unknown incoming
+ cpregs
+Date: Mon,  2 Mar 2026 11:35:23 +0100
+Message-ID: <20260302103640.1362564-2-eric.auger@redhat.com>
+In-Reply-To: <20260302103640.1362564-1-eric.auger@redhat.com>
+References: <20260302103640.1362564-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-References: <20260301121347.797dc9f4@penguin>
- <127d0e97-ca25-4847-a06f-954443bbc886@yodel.dev>
-In-Reply-To: <127d0e97-ca25-4847-a06f-954443bbc886@yodel.dev>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 2 Mar 2026 10:32:38 +0000
-X-Gm-Features: AaiRm52euGo_Fm7BjgfZoW0lNUJ0dFWFCDNicAOVIV6j4rxN0fVAE98-oSvuQ-c
-Message-ID: <CAFEAcA_igpniZ=zZAUPTyx9xpyS+TjU5KO+LYc-noJsJ+L-GSw@mail.gmail.com>
-Subject: Re: qemu master compile error in hw/net/rtl8139.c with --enable-asan
-To: Yodel Eldar <yodel.eldar@yodel.dev>
-Cc: Lukas Straub <lukasstraub2@web.de>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,48 +86,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Mar 2026 at 15:15, Yodel Eldar <yodel.eldar@yodel.dev> wrote:
->
-> Hi, Lukas
->
-> On 01/03/2026 05:13, Lukas Straub wrote:
+Currently the check of cpreg index matches fail to detect
+a situation where the length of both arrays is same but
+- destination has an extra register not found in the incoming stream (idx1)
+- source has an extra register not found in the destination (idx2)
+  where idx1 < = idx2
+Normally this should fail but it does not.
 
-> > ../hw/net/rtl8139.c: In function =E2=80=98rtl8139_io_writeb=E2=80=99:
-> > ../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of si=
-ze 0 [-Werror=3Dstringop-overflow=3D]
-> >   2264 |                 memcpy(data_to_checksum, saved_ip_header + 12,=
- 8);
-> >        |                 ^
-> > In file included from ../hw/net/rtl8139.c:62:
-> > /home/lukas/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into =
-destination object =E2=80=98ip_ver_len=E2=80=99 of size 1
-> >     50 |     uint8_t  ip_ver_len;     /* version and header length */
-> >        |              ^~~~~~~~~~
+Fix the logic to scan all indexes.
 
-On the face of it, this looks like a compiler bug (warning false
-positive), because we set:
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Fixes: 721fae12536 ("target-arm: Convert TCG to using (index,value) list for cp migration")
+---
+ target/arm/machine.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-    uint8_t *data_to_checksum     =3D eth_payload_data + hlen - 12;
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 7a3b5a87932..9297a8f5b41 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -1107,6 +1107,29 @@ static int cpu_post_load(void *opaque, int version_id)
+         i++;
+         v++;
+     }
++    /*
++     * if we have reached the end of the incoming array but there are
++     * still regs in cpreg, continue parsing the regs which are missing
++     * in the input stream
++     */
++    for ( ; i < cpu->cpreg_array_len; i++) {
++        g_autofree gchar *name = print_register_name(cpu->cpreg_indexes[i]);
++
++        warn_report("%s: %s "
++                    "expected by the destination but not in the incoming stream, "
++                    "skip it", __func__, name);
++    }
++    /*
++     * if we have reached the end of the cpreg array but there are
++     * still regs in the input stream, continue parsing the vmstate array
++     */
++    for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
++        g_autofree gchar *name = print_register_name(cpu->cpreg_vmstate_indexes[v]);
++
++        error_report("%s: %s in the incoming stream but unknown on the destination, "
++                     "fail migration", __func__, name);
++        fail = true;
++    }
+     if (fail) {
+         return -1;
+     }
+-- 
+2.53.0
 
-and earlier
-
-            eth_payload_data =3D saved_buffer + ETH_HLEN;
-
-where
-        uint8_t *saved_buffer  =3D s->cplus_txbuffer;
-
-and s->cplus_txbuffer is a uint8_t* which we set up via g_malloc().
-None of that is an ip_ver_len byte, or even an ip_header struct.
-So it looks like GCC has incorrectly decided that this uint8_t
-buffer has a type which it does not.
-
-A workaround for this is to use clang instead -- the Ubuntu 24.04
-clang sanitizer has no trouble with this code.
-
-This code is quite confusingly written, though. I'll have a look
-to see if there's some simplification which might help both human
-readers and the compiler.
-
-thanks
--- PMM
 
