@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8C36D58E7E
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C6D6D58E7A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:57:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvj-0008Vc-9e; Mon, 02 Mar 2026 03:47:07 -0500
+	id 1vwyvI-0006Pf-Gf; Mon, 02 Mar 2026 03:46:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyuq-0005OA-Vg
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:15 -0500
+ id 1vwyum-0005Kf-1n
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyup-0001yT-3L
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:12 -0500
+ id 1vwyuc-0001wT-U7
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441170;
+ s=mimecast20190719; t=1772441154;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f6cNwZnhJx1VcdrBJs0C0lpGvsSbYS0DjVCzqGMIKXM=;
- b=BHuaFBHvfArO2UJ/NmymXciN2tV7+ALU9P4Opimu0NZRwcEgab21ZNKT1rKKUFYQfUbhpu
- LjKXPFblZTFIAMpEpqNrZH8sYauzbsBYchld7waSRWOfazqNPTZHt5EfbLmjZHE11tgj59
- hYlB8ZjmmJzbmqIkFHVTudf1Ie0Mc24=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lrh321sUlZncTweQpqmP4/PZMRj0UiAkskbKxK9u3DA=;
+ b=SyherBEgXAMfA5CRJINxatSTQdGHOz11aReGIS0wNkQUGmd+wKzXr36itWPrS+W4IyJBdG
+ 2s0auBDf0JzY46iLAwbv4BS1EjckKp1OakEboyvcV9aTFEH2DuWZnxxsKKdsYfZNf/33VE
+ Kn8V2xTqIToBg4evicCUeMbNOt059eI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-510-AwfCWtgPMoSoiTnkn_U7iQ-1; Mon, 02 Mar 2026 03:46:09 -0500
-X-MC-Unique: AwfCWtgPMoSoiTnkn_U7iQ-1
-X-Mimecast-MFC-AGG-ID: AwfCWtgPMoSoiTnkn_U7iQ_1772441168
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-483786a09b1so41294305e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:46:09 -0800 (PST)
+ us-mta-78-Qz8YSp4BP5GA47Vv1wExAA-1; Mon, 02 Mar 2026 03:45:53 -0500
+X-MC-Unique: Qz8YSp4BP5GA47Vv1wExAA-1
+X-Mimecast-MFC-AGG-ID: Qz8YSp4BP5GA47Vv1wExAA_1772441152
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4837f288194so30283315e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441167; x=1773045967; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441151; x=1773045951; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f6cNwZnhJx1VcdrBJs0C0lpGvsSbYS0DjVCzqGMIKXM=;
- b=E6g3a8k2OLco6T1nzGLXzxEIexQNsnowAtSqLoZ7TwDWEg+VbymNiv5CM1sV6Y7Osy
- xUlLXBDrxuRFWpR4cO2nVwJusn83orczfoRefACgd1fNyYCkIcBmt5HfEfPx76Ne29O/
- VpG430Z5/5oNFSuQrAFZEREqRkq5LGJ+fwto+cCFUez0fNLhzDkWvvo3PEHEivQFTVR5
- h3ey93WK82YYjDc0Jhd/kyLbLuftLFmL0hMK5GRR3JWP0nNISBWJUK5b6/xsDMeSn+cU
- ojy8rK+NeYxagbcoxyKUH4RNv59bZnOaxCs/R784DmkTxbhsnxuDrfqTvZ9W0FGGBHiy
- UPZg==
+ bh=lrh321sUlZncTweQpqmP4/PZMRj0UiAkskbKxK9u3DA=;
+ b=L0AWapcNXkJN/DH0SxFYAH6hbKdzyu1OCcXBvW7/O2/Qki6LSlL6sOWjVC9hObU3Hn
+ S648THADS1PhxuGuHbCa9jMT0Krh69wpZGD4wM8Z+O72dc2bsgUpSOKFtT1B9k2UvYBd
+ NJK9aOCwwNVowOQ3qrqHmNLx5njdSgciYbdEbc28iKREoYT8RNaljivAu4n6SdX5c+f5
+ hSyQmhyOVjC/Ki2htJfXqtcBEre1kAtiwd7TwXE1iK60u4SkyK519XGxC5XP1BFjxhiU
+ Mre7iq+4t2A6oXB33yT9OrbdGHHcAyidQ0ETQF1BPq1S7Ph63CE71dMucVWsGcFB78+x
+ nkOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441167; x=1773045967;
+ d=1e100.net; s=20230601; t=1772441151; x=1773045951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=f6cNwZnhJx1VcdrBJs0C0lpGvsSbYS0DjVCzqGMIKXM=;
- b=GxozOZKUZjbPEbF0Ld5yr8SK//qVqd31Byo4TBS7GnccaIFXPPrz0O6oxWUp2sHO0k
- Uu8EiY5iGnZsJlc1nq8pGQOkq7lsCuxIQQmRI093z32C6Vt4XN20dtRg68nvwFmzkVez
- riazOGP2rsNKbNkK+GO9hlwbEA30MjPUk5kbCC2Z4tnTu3UWgBI0OvD66tPHBQ6fKjqM
- 0xWi9pXGq/fK2CpDcXV1f+FuXXJx0INkkrSfcU6npW5XsRvJxA1uOPvnzJVKLBzZft9n
- OhDAA2XxJS4BCi56Ymd8FB3sTlkjPO4AYpNFImWOqdcGVKzy4taTfJa1Acb3NwUQIA45
- sU4w==
-X-Gm-Message-State: AOJu0YymjzmdDdxqUaMdZ9d9safmSws1uwE7rtKz0wYFtfoJGvQaRrHg
- Bea1gZ+aMqbQHBe7QceyTltr4jssHFkFrk96mam3eupVXCf9tlNOeq5+c9wXNQuPgPkbU0GO7kx
- INydjXCJKKcHqYIrMZiIaCDXZdEz6F5BaUK8Qc04ply8IW95F1lc7Eo9dF28JFVkID8Htori8Sj
- WPhsC7Sa8wGa7hGuH9kX9mxW5i69IyHZCEdRxmdVyU
-X-Gm-Gg: ATEYQzyrsvphLRzDZyqf1b/YfUzSvuOta1vhkbG1lwADlLnOpY6lAF5T8oa2dm6R18w
- 93AYY3/zQnrcayH3rDuFvFCcCcvKmsp8k4sPtDRR8zMaRxZEjxHv2wFjnAMPvkiBk1LixeJbabB
- 7q3kI+2ogccI8bHbs2XrCPd4wQEy/8QFdAnBS5pEtcBFi1Ug7oAJxGhFBKG42W+RXd0RrJkaNIY
- fTVJGVuHFZpLIKiOJqEQZDsKbRjLydOBwnjoKwjjQ2xUXOqpxB15uFSB50YXVBY8+jCL1fukdNX
- CI+JX7klpsVsjhD2dWGZzoJT6y7nJpEkwwrXeFtOj5PF2OGA4OKBxtHy28IJ/9mLH74/EwXyjZY
- zzgtnQBKcpRpHTlgV4xqOFqStJyb3EwYk10uX81YRXerl592Z5AK/wtHfEWKfLPEBhLby5naVZD
- 1qMSNhhDjkxEY5NLmgMp8cM/E6XrY=
-X-Received: by 2002:a05:600c:8108:b0:46e:761b:e7ff with SMTP id
- 5b1f17b1804b1-483c9c0baf4mr189616025e9.28.1772441167264; 
- Mon, 02 Mar 2026 00:46:07 -0800 (PST)
-X-Received: by 2002:a05:600c:8108:b0:46e:761b:e7ff with SMTP id
- 5b1f17b1804b1-483c9c0baf4mr189615325e9.28.1772441166524; 
- Mon, 02 Mar 2026 00:46:06 -0800 (PST)
+ bh=lrh321sUlZncTweQpqmP4/PZMRj0UiAkskbKxK9u3DA=;
+ b=TyScpwkg3oOXSmSM5lRUScIC3dvNGg3Em0VXurruqUlrJeKXXmFtZGFnFJpFQld/+a
+ 74CLbE5dtshYjwnQff53azSG6N68G4sAwpIbVVNyMzZUnceHoivLv12v4a8IsURim4gK
+ 8YA9vvIG1/E5iyuJvlTkHiGf05MzxCNwK8gOw1M+Z1SaBQzPOJWU51PwWDbDKb4bvs7I
+ qPBc9J/CjSNdQbB7VzRShMzsVD2LD/E9kBdhlxykoTGT67t8sCFq3cghXpYJtOW+c6NO
+ ZBFdaa2vNQZKt4zM8akOm/8ZHPWMfAMswey8JeqW8UzjtYiEkmuD7aimtV6ZkE8r/oQh
+ KO4A==
+X-Gm-Message-State: AOJu0YzLxCsfw93WbOfFVuQ4rrb9nve7od+lXr2Q+Hx1Xni9fsaJ7XPZ
+ o2NQ53GNo7Mczu76e0meUoKvKEydFKRzQEKJr4GXIwH9kB399pLkQu8yurEBoNIvyAuxRyqsWej
+ Y6MTY/H1FJdiJMgNXHgpDLW+DpWtKL1I5R5aP0r0j9WnlS6j+sBdKG2qDL0gxD5ww1Dd1tZol4r
+ WOj9NGAWY0g4KKA3pP3E5vmnpBA9Xau4bRCIHYXNyA
+X-Gm-Gg: ATEYQzxHzRUHsd58wJEKfDfHQemGhOOmXWVf+t4r5+AKVP/aCAABLbXuBOKtErSVfiA
+ qf/QSlatXP0NpBw37ulyv93F8O8DqCNwPr725ZuhPiilpTaQ0JgNZvudu1vl/XKSUfsIvd/YVHJ
+ A6an0/nPaAxh2hPLWOsrIIdQ76Ue6uqfAGHy2AF8aJ43C2yeF5X9HFqJvThuwoN5KC/oGWyNIEl
+ XwNELhPSYytdwYg3/Gu/kgBqJolpMz/qt8cY6D/m2bvgRHnn4OnVYRCALQVHsGldqLZJSiCpL7n
+ X+63IBMsnglHpyEvhnokx+ZN7yKIvprJ4EX0QpCzodgyc5Bbe4VmelFBTU1uurE8L8FvPwcYJ4S
+ FjF3h8rkD8DSEtAu7ekTaQEZHoJXmk3ujiB9QsNkQ2i7Hp9aJmR3hnYbMjnesXMlNRmU8bE/Mev
+ T52Hyu3bMxsKrZgLBdYiSknQZ50DE=
+X-Received: by 2002:a05:600c:350c:b0:480:4a8f:2d5c with SMTP id
+ 5b1f17b1804b1-483c9c2c2b8mr184252495e9.29.1772441150516; 
+ Mon, 02 Mar 2026 00:45:50 -0800 (PST)
+X-Received: by 2002:a05:600c:350c:b0:480:4a8f:2d5c with SMTP id
+ 5b1f17b1804b1-483c9c2c2b8mr184252025e9.29.1772441149840; 
+ Mon, 02 Mar 2026 00:45:49 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3b4a121sm265288555e9.8.2026.03.02.00.46.04
+ ffacd0b85a97d-439b130abfasm10471304f8f.34.2026.03.02.00.45.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:46:04 -0800 (PST)
+ Mon, 02 Mar 2026 00:45:48 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 055/102] kvm/i386: reload firmware for confidential guest reset
-Date: Mon,  2 Mar 2026 09:42:50 +0100
-Message-ID: <20260302084338.473368-56-pbonzini@redhat.com>
+Subject: [PULL 049/102] accel/kvm: notify when KVM VM file fd is about to be
+ changed
+Date: Mon,  2 Mar 2026 09:42:44 +0100
+Message-ID: <20260302084338.473368-50-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -123,40 +124,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ani Sinha <anisinha@redhat.com>
 
-When IGVM is not being used by the confidential guest, the guest firmware has
-to be reloaded explicitly again into memory. This is because, the memory into
-which the firmware was loaded before reset was encrypted and is thus lost
-upon reset. When IGVM is used, it is expected that the IGVM will contain the
-guest firmware and the execution of the IGVM directives will set up the guest
-firmware memory.
+Various subsystems might need to take some steps before the KVM file descriptor
+for a virtual machine is changed. So a new boolean attribute is added to the
+vmfd_notifier structure which is passed to the notifier callbacks.
+vmfd_notifer.pre is true for pre-notification of vmfd change and false for
+post notification. Notifier callback implementations can simply check
+the boolean value for (vmfd_notifer*)->pre and can take actions for pre or
+post vmfd change based on the value.
+
+Subsequent patches will add callback implementations for specific components
+that need this pre-notification.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-15-anisinha@redhat.com
+Link: https://lore.kernel.org/r/20260225035000.385950-9-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ include/system/kvm.h | 6 ++++--
+ accel/kvm/kvm-all.c  | 9 +++++++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index cc98cc961b7..9d7a9ffceb8 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3416,7 +3416,14 @@ int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index f11729f432c..fbe23608a16 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -571,12 +571,14 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
+ /* argument to vmfd change notifier */
+ typedef struct VmfdChangeNotifier {
+     int vmfd;
++    bool pre;
+ } VmfdChangeNotifier;
  
-     if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-         X86MachineState *x86ms = X86_MACHINE(ms);
--
-+        /*
-+         * For confidential guests, reload bios ROM if IGVM is not specified.
-+         * If an IGVM file is specified then the firmware must be provided
-+         * in the IGVM file.
-+         */
-+        if (ms->cgs && !x86ms->igvm) {
-+                x86_bios_rom_reload(x86ms);
-+        }
-         if (x86_machine_is_smm_enabled(x86ms)) {
-             memory_listener_register(&smram_listener.listener,
-                                      &smram_address_space);
+ /**
+  * kvm_vmfd_add_change_notifier - register a notifier to get notified when
+- * a KVM vm file descriptor changes as a part of the confidential guest "reset"
+- * process. Various subsystems should use this mechanism to take actions such
++ * a KVM vm file descriptor changes or about to be changed as a part of the
++ * confidential guest "reset" process.
++ * Various subsystems should use this mechanism to take actions such
+  * as creating new fds against this new vm file descriptor.
+  * @n: notifier with return value.
+  */
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 3b57d2f9769..d244156f6f4 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2654,6 +2654,13 @@ static int kvm_reset_vmfd(MachineState *ms)
+     memory_listener_unregister(&kml->listener);
+     memory_listener_unregister(&kvm_io_listener);
+ 
++    vmfd_notifier.pre = true;
++    ret = kvm_vmfd_change_notify(&err);
++    if (ret < 0) {
++        return ret;
++    }
++    assert(!err);
++
+     if (s->vmfd >= 0) {
+         close(s->vmfd);
+     }
+@@ -2695,6 +2702,8 @@ static int kvm_reset_vmfd(MachineState *ms)
+      * notify everyone that vmfd has changed.
+      */
+     vmfd_notifier.vmfd = s->vmfd;
++    vmfd_notifier.pre = false;
++
+     ret = kvm_vmfd_change_notify(&err);
+     if (ret < 0) {
+         return ret;
 -- 
 2.53.0
 
