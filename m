@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2046C624C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA098D58E7E
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyss-0001W6-EX; Mon, 02 Mar 2026 03:44:10 -0500
+	id 1vwyt8-0001ej-Fi; Mon, 02 Mar 2026 03:44:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwysr-0001Ve-2J
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:09 -0500
+ id 1vwyt4-0001X8-4k
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwysp-0001WK-EA
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:08 -0500
+ id 1vwysy-0001Ww-BI
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441046;
+ s=mimecast20190719; t=1772441055;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LAHzhuiA9dV8ep+8a24XyrlRe7yv5/OefzsW5S9DsHM=;
- b=L25TaQwusk5IRKGFayLKxaQzAEdgDK2cIaR9R+KBNDk1wBklkFnLRF8NbAVniQAU2mpVJj
- hP09ZTyxUKdNxTIScthy41WTHJwzLimA0oIgMH9q5Pn9WtNrMwpzPocmp9xGbGFDXNvJQw
- XHMQO7XwvdYmmvXz3WYeiZBSI5Rk9Jg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lfcZzc/DZcWi8if1BQU+wSLjMESP5Db2QDdPAzM1JlA=;
+ b=dXkCNUXMQvz7hbmsEuwiJG2JfxyekZ8Am2JA6e8QejekpHMEy1AlmaN+nSyrAVMx4aKikT
+ zcjzJQemqGXtfvCGCw0HkYI6KbcI9CwGWqM5fHYG0uOdILxHV3WVEU5nIYMPBiPCjhSDc+
+ LTbeV3mmuEO0GKwcU0++SU6k2nU/lAg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-ty8dQ5pONHm98e2rErFw0Q-1; Mon, 02 Mar 2026 03:44:05 -0500
-X-MC-Unique: ty8dQ5pONHm98e2rErFw0Q-1
-X-Mimecast-MFC-AGG-ID: ty8dQ5pONHm98e2rErFw0Q_1772441044
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43997e095cdso2909861f8f.3
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:44:05 -0800 (PST)
+ us-mta-252-FktiBpIuO0Or_IgM3xCAZQ-1; Mon, 02 Mar 2026 03:44:14 -0500
+X-MC-Unique: FktiBpIuO0Or_IgM3xCAZQ-1
+X-Mimecast-MFC-AGG-ID: FktiBpIuO0Or_IgM3xCAZQ_1772441053
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48071615686so32863135e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441043; x=1773045843; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441052; x=1773045852; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LAHzhuiA9dV8ep+8a24XyrlRe7yv5/OefzsW5S9DsHM=;
- b=tMRHJq6pGutp0cu5sLqlVNGdIWbQsyNPtqYwy2b9qdZsSeZMKecIq2Pzi6giQ8QS9q
- BP2FU4xRIxA6kjbH+xt8iWrk4YDOMmflcc/DZnNPAvo/yOO3UjeIMqBdLYw0jExcKPoZ
- rQmPtrb7yCvMlYhSZw0J7O0gheOQZUEv0oHqRntdPEoKa0w6BhJVllEKDcaG2Rz4vTDR
- lbn8ReAmKlTcohnq1lafBkwxkrWQ7WPTk/c6hcOqDVqRoZYwyawNED0hG9MrTY0+CFYE
- nkk45S0UF2vGZuAlrHkhD5SiTvj73x7l+CY3XmSUw5PW8bKcGGDPFr7PVWvxT9iHQ8vp
- bR0g==
+ bh=lfcZzc/DZcWi8if1BQU+wSLjMESP5Db2QDdPAzM1JlA=;
+ b=mAZZ0Xl3la3bZJF6jcg/8R0W5eYM5z9bbHtV5pLbYiryZ51xAHWNuo2hB60+pREnW8
+ hMQ8iZxxbaUu4vaBOHLLQoZFnBKKcyuXuXKwxFhEtqYcoCj+WvIr1xxzZ/fwfQ38YynG
+ NQXuzkaqAeovXkYbhtD9W7D/yvr5XNT9iixaHxiAA7LcZs+iKaG9JB4+JjA5ehXF+8K4
+ EnouZVvdW5Ny/T7SyeOB0R0uUR9rTYZn6Q/GUTKA772vTJFHWRYiuNo3+jaWfwqKn9nm
+ OwMNhqwLL5IkPtie5Zr54AD2i9Vj3H09n+HcWXf9t6GzjCs16wnMSRaEvr749USTQT8m
+ HgaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441043; x=1773045843;
+ d=1e100.net; s=20230601; t=1772441052; x=1773045852;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LAHzhuiA9dV8ep+8a24XyrlRe7yv5/OefzsW5S9DsHM=;
- b=EwuNrefKHlWQMO0u1DACKN0fn98XPSrgiCJd0Ao5g5NHo9ngZcA4U1yQS+BjUoShqo
- zsfa5dybh91/O7KUTRYlQnZYVJT+DY0nvednS5iC6VUpgd2aqZLe8dQ7C85W6LLiDAMi
- RTfW6vuy7sGsF9sjvbqhGc/e8D62v5ml0ZMElSiEyK549qWlup2cRDrA3WiGUHAZAd94
- D4sTFucraJJk2yvePXyPGmT+WMYLFF7OaQLeHGzlR4AJ7ZvkWxqSsKYUgR40hFpCSYew
- cmnw/K5YXQ91vgOo4Q7Igj+B+fEM/suquSic19+rnJrWgqDlwCqZ/1aYdjTzzyv2NqS2
- SI+g==
-X-Gm-Message-State: AOJu0Yzm09nFGdgDcr1FGJs0MIMsAeURX+EeC66TIGGhT7euUzjW4V/M
- nB33JFCxtTFPAs5zK/OXJ0XVfCXZcFGZn9pA37+sPmnJ3NRn1ASwNNuxZ4UIie9jUmhA/fEHx5I
- 5xQGzK+SUmBJfGvF4eGAPKcugpK5f4HAC3aKdr5e2zIuMsJ0xvpBSTqayewQ9TzFteB4ZnjY6+x
- XiDh0NLBZFUKCKtFVv56OUIP2tDHR5TZXR1fP7LeIC
-X-Gm-Gg: ATEYQzxSUtRkIl2KOhkPR6Gy7f1UMAgjEIWgxpn/BJy2RTGsT6BoT0WrMUPlCRS50OT
- rK8qECnijIzSOx0oLaBqf50K6OsaCmIhP0j6t4W/ZJBcNW+q1CWAK4M84XpeHnMtV4OF0S6h5k1
- VC1uBY+8izF6PrRge/BvQuki2TfuO7kAUhudT9muXUqkuw4O7YfqhiTabzNq5MxTHZC3U41+eTX
- R9/B0axPgiC3G19k5QRp3mHDQxIE5/eY1YKsgA52Ph19jcCN82m8Lj+NFFz00Q8UxQzqowpnsBR
- xkqRLPt9BlAv0uxRm6mzv9PVXn3EZCxqNNEQgxR2TtMIMMilvxFqzkJc0LgW8GUxXwsg0ultSK6
- 2a9Kpd8NBYWuGlh66FGVITCXU9fGYmt5tGGcpEnheIDmwER0nwenn0RfEY/bV/N/5XxNug823pw
- 4mcsvUtg7CciZG/sAN2RD3kDgWFyE=
-X-Received: by 2002:a05:6000:2404:b0:437:6e55:a736 with SMTP id
- ffacd0b85a97d-4399dde3046mr20698801f8f.7.1772441043430; 
- Mon, 02 Mar 2026 00:44:03 -0800 (PST)
-X-Received: by 2002:a05:6000:2404:b0:437:6e55:a736 with SMTP id
- ffacd0b85a97d-4399dde3046mr20698756f8f.7.1772441042975; 
- Mon, 02 Mar 2026 00:44:02 -0800 (PST)
+ bh=lfcZzc/DZcWi8if1BQU+wSLjMESP5Db2QDdPAzM1JlA=;
+ b=cxbBZpybxjBP6UI5PWUZtXWvsJRmnQ688dN7Dmck7y3GpC8W8hjePg23HTY/FNXOwL
+ YD+36um4WQQ7prZDMo4SLhXeGImqEgPeO03tOw1VuxQ8TqEyo/YPUfUkwaWTVkNznVuc
+ dsC+TtNhN7diGRQsTC+Tes4MZNWxRIiXOUnSXdaQ2J6yQFVXIloYxnmy2SXX+P3aY+YZ
+ CK2S7kc4QgFHCbbRqVMIFZsDVknaXp4DoDidtWAsLYvwRn511zgN8X9iaAmK+bhWAPSF
+ PcCEfzyt3P7IuFwzOpoQOFmR1UTY+IapsRBzwq4hWDE8f7gheReknIJ2xtAmroAizZOr
+ 0VSA==
+X-Gm-Message-State: AOJu0YyL0EMJbj82s+DJJiqU8dj5CYzuL1448lyNShDpEx8DazWPRYGz
+ +692VjMM7+INdWkTQ55iGbzJBahM6G9RZxa733nysClnIEyGkZZCuPxbxpnXA9YXig0xF4HrkO8
+ ApnsWdZl/3zM8qSijRM16AEcbgLMGAmro1/S7eZwIeXBP8oX1paTnMO6Ilxwhh+rgwJ0G88wLm1
+ 1mgCda9VRD43vpavpZxYhn3VDyDQI8rOXfOD/ISTl3
+X-Gm-Gg: ATEYQzy2YKCoSnoT7Yn0k1tb7Y/4GsT3CFbMmQRuP+jQ0qyuX6thvnlixHw4fI6JLE0
+ cRWEdVzCQsUykGQOhoFV7gq5cmlWUfxGkB9gp3n18h2MBhzyOtvxtCZC3PhZ8CRU2MrFhVXwMiO
+ Xmtzb30BUSxbxbqgX3Y9j46XGPud9tK+Gqkvw5NaZfIYTHB3GmyWu+w2P/HSAOwnYdTc/udUDGw
+ K/TdDgnFKVPOQ0NpHlJRG5/ZD0d4m62mWW3UjJRCCfS71NJgbTdLPfuG/4UxlF5T34cD6DmrytB
+ /bGVxyv1ZdcoUcW4Wigync/45xUIRDBbZulyhzvm3GM+KNjKps/6T4RF3wSzrbGeIlyfUkpNV/B
+ tPlH5Hpe8VPBIyoBPrjs4cGABkgIj9/3AXuv7tjvHraPo1sUV3FVEH4+qBQapYLruyVaTxU4AGi
+ McDLlFB77zBZtdoGVqIntHHicqEpE=
+X-Received: by 2002:a05:600c:4fc8:b0:47b:e2a9:2bd7 with SMTP id
+ 5b1f17b1804b1-483c9beaca0mr238450375e9.19.1772441052291; 
+ Mon, 02 Mar 2026 00:44:12 -0800 (PST)
+X-Received: by 2002:a05:600c:4fc8:b0:47b:e2a9:2bd7 with SMTP id
+ 5b1f17b1804b1-483c9beaca0mr238449855e9.19.1772441051694; 
+ Mon, 02 Mar 2026 00:44:11 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b1b97927sm11040692f8f.28.2026.03.02.00.44.01
+ 5b1f17b1804b1-483bd7030b9sm317685125e9.4.2026.03.02.00.44.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:44:01 -0800 (PST)
+ Mon, 02 Mar 2026 00:44:09 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 007/102] whpx: i386: re-enable guest debug support
-Date: Mon,  2 Mar 2026 09:42:02 +0100
-Message-ID: <20260302084338.473368-8-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 011/102] whpx: i386: switch over from winhvemulation to
+ target/i386/emulate
+Date: Mon,  2 Mar 2026 09:42:06 +0100
+Message-ID: <20260302084338.473368-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -125,100 +124,381 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Fix what got broken several years ago by adding ops->supports_guest_debug
-support as an architecture-specific function.
-
-arm64 WHP doesn't currently provide support needed for this.
+Using the mshv backend as a base, move away from winhvemulation
+to using common QEMU code used by the HVF and mshv backends.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20260223233950.96076-7-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260223233950.96076-11-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/whpx-all.h   | 4 ++++
- accel/whpx/whpx-accel-ops.c | 8 ++++++++
- target/arm/whpx/whpx-all.c  | 5 +++++
- target/i386/whpx/whpx-all.c | 5 +++++
- 4 files changed, 22 insertions(+)
+ target/i386/whpx/whpx-all.c | 274 +++++++++++++++++-------------------
+ 1 file changed, 126 insertions(+), 148 deletions(-)
 
-diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
-index f13cdf7f660..3db074c38c5 100644
---- a/include/system/whpx-all.h
-+++ b/include/system/whpx-all.h
-@@ -17,4 +17,8 @@ void whpx_translate_cpu_breakpoints(
-     struct whpx_breakpoints *breakpoints,
-     CPUState *cpu,
-     int cpu_breakpoint_count);
-+
-+/* called by whpx-accel-ops */
-+bool whpx_arch_supports_guest_debug(void);
-+
- #endif
-diff --git a/accel/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
-index 50fadea0fd6..b8f41544cbe 100644
---- a/accel/whpx/whpx-accel-ops.c
-+++ b/accel/whpx/whpx-accel-ops.c
-@@ -17,6 +17,7 @@
- 
- #include "system/whpx.h"
- #include "system/whpx-internal.h"
-+#include "system/whpx-all.h"
- #include "system/whpx-accel-ops.h"
- 
- static void *whpx_cpu_thread_fn(void *arg)
-@@ -81,6 +82,12 @@ static bool whpx_vcpu_thread_is_idle(CPUState *cpu)
-     return !whpx_irqchip_in_kernel();
- }
- 
-+static bool whpx_supports_guest_debug(void)
-+{
-+    return whpx_arch_supports_guest_debug();
-+}
-+
-+
- static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
-@@ -89,6 +96,7 @@ static void whpx_accel_ops_class_init(ObjectClass *oc, const void *data)
-     ops->kick_vcpu_thread = whpx_kick_vcpu_thread;
-     ops->cpu_thread_is_idle = whpx_vcpu_thread_is_idle;
-     ops->handle_interrupt = generic_handle_interrupt;
-+    ops->supports_guest_debug = whpx_supports_guest_debug;
- 
-     ops->synchronize_post_reset = whpx_cpu_synchronize_post_reset;
-     ops->synchronize_post_init = whpx_cpu_synchronize_post_init;
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 40ada2d5b65..e01e6499ba4 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -303,6 +303,11 @@ void whpx_translate_cpu_breakpoints(
-     /* Breakpoints aren’t supported on this platform */
- }
- 
-+bool whpx_arch_supports_guest_debug(void) 
-+{
-+    return false;
-+}
-+
- static void whpx_get_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE* val)
- {
-     struct whpx_state *whpx = &whpx_global;
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 8210250dc3b..e1f0fa5e770 100644
+index cdcaebbe167..eb6076d2f49 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -1272,6 +1272,11 @@ void whpx_apply_breakpoints(
-     }
+@@ -15,6 +15,7 @@
+ #include "gdbstub/helpers.h"
+ #include "qemu/accel.h"
+ #include "accel/accel-ops.h"
++#include "system/memory.h"
+ #include "system/whpx.h"
+ #include "system/cpus.h"
+ #include "system/runstate.h"
+@@ -36,8 +37,12 @@
+ #include "system/whpx-all.h"
+ #include "system/whpx-common.h"
+ 
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
++#include "emulate/x86_flags.h"
++#include "emulate/x86_mmu.h"
++
+ #include <winhvplatform.h>
+-#include <winhvemulation.h>
+ 
+ #define HYPERV_APIC_BUS_FREQUENCY      (200000000ULL)
+ 
+@@ -756,160 +761,140 @@ void whpx_get_registers(CPUState *cpu)
+     x86_update_hflags(env);
  }
  
-+bool whpx_arch_supports_guest_debug(void) 
+-static HRESULT CALLBACK whpx_emu_ioport_callback(
+-    void *ctx,
+-    WHV_EMULATOR_IO_ACCESS_INFO *IoAccess)
++static int emulate_instruction(CPUState *cpu, const uint8_t *insn_bytes, size_t insn_len)
+ {
+-    MemTxAttrs attrs = { 0 };
+-    address_space_rw(&address_space_io, IoAccess->Port, attrs,
+-                     &IoAccess->Data, IoAccess->AccessSize,
+-                     IoAccess->Direction);
+-    return S_OK;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    struct x86_decode decode = { 0 };
++    x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
++
++    whpx_get_registers(cpu);
++    decode_instruction_stream(env, &decode, &stream);
++    exec_instruction(env, &decode);
++    whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++
++    return 0;
+ }
+ 
+-static HRESULT CALLBACK whpx_emu_mmio_callback(
+-    void *ctx,
+-    WHV_EMULATOR_MEMORY_ACCESS_INFO *ma)
++static int whpx_handle_mmio(CPUState *cpu, WHV_RUN_VP_EXIT_CONTEXT *exit_ctx)
+ {
+-    CPUState *cs = (CPUState *)ctx;
+-    AddressSpace *as = cpu_addressspace(cs, MEMTXATTRS_UNSPECIFIED);
++    WHV_MEMORY_ACCESS_CONTEXT *ctx = &exit_ctx->MemoryAccess;
++    int ret;
+ 
+-    address_space_rw(as, ma->GpaAddress, MEMTXATTRS_UNSPECIFIED,
+-                     ma->Data, ma->AccessSize, ma->Direction);
+-    return S_OK;
+-}
+-
+-static HRESULT CALLBACK whpx_emu_getreg_callback(
+-    void *ctx,
+-    const WHV_REGISTER_NAME *RegisterNames,
+-    UINT32 RegisterCount,
+-    WHV_REGISTER_VALUE *RegisterValues)
+-{
+-    HRESULT hr;
+-    struct whpx_state *whpx = &whpx_global;
+-    CPUState *cpu = (CPUState *)ctx;
+-
+-    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(
+-        whpx->partition, cpu->cpu_index,
+-        RegisterNames, RegisterCount,
+-        RegisterValues);
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to get virtual processor registers,"
+-                     " hr=%08lx", hr);
+-    }
+-
+-    return hr;
+-}
+-
+-static HRESULT CALLBACK whpx_emu_setreg_callback(
+-    void *ctx,
+-    const WHV_REGISTER_NAME *RegisterNames,
+-    UINT32 RegisterCount,
+-    const WHV_REGISTER_VALUE *RegisterValues)
+-{
+-    HRESULT hr;
+-    struct whpx_state *whpx = &whpx_global;
+-    CPUState *cpu = (CPUState *)ctx;
+-
+-    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
+-        whpx->partition, cpu->cpu_index,
+-        RegisterNames, RegisterCount,
+-        RegisterValues);
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to set virtual processor registers,"
+-                     " hr=%08lx", hr);
+-    }
+-
+-    /*
+-     * The emulator just successfully wrote the register state. We clear the
+-     * dirty state so we avoid the double write on resume of the VP.
+-     */
+-    cpu->vcpu_dirty = false;
+-
+-    return hr;
+-}
+-
+-static HRESULT CALLBACK whpx_emu_translate_callback(
+-    void *ctx,
+-    WHV_GUEST_VIRTUAL_ADDRESS Gva,
+-    WHV_TRANSLATE_GVA_FLAGS TranslateFlags,
+-    WHV_TRANSLATE_GVA_RESULT_CODE *TranslationResult,
+-    WHV_GUEST_PHYSICAL_ADDRESS *Gpa)
+-{
+-    HRESULT hr;
+-    struct whpx_state *whpx = &whpx_global;
+-    CPUState *cpu = (CPUState *)ctx;
+-    WHV_TRANSLATE_GVA_RESULT res;
+-
+-    hr = whp_dispatch.WHvTranslateGva(whpx->partition, cpu->cpu_index,
+-                                      Gva, TranslateFlags, &res, Gpa);
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to translate GVA, hr=%08lx", hr);
+-    } else {
+-        *TranslationResult = res.ResultCode;
+-    }
+-
+-    return hr;
+-}
+-
+-static const WHV_EMULATOR_CALLBACKS whpx_emu_callbacks = {
+-    .Size = sizeof(WHV_EMULATOR_CALLBACKS),
+-    .WHvEmulatorIoPortCallback = whpx_emu_ioport_callback,
+-    .WHvEmulatorMemoryCallback = whpx_emu_mmio_callback,
+-    .WHvEmulatorGetVirtualProcessorRegisters = whpx_emu_getreg_callback,
+-    .WHvEmulatorSetVirtualProcessorRegisters = whpx_emu_setreg_callback,
+-    .WHvEmulatorTranslateGvaPage = whpx_emu_translate_callback,
+-};
+-
+-static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+-{
+-    HRESULT hr;
+-    AccelCPUState *vcpu = cpu->accel;
+-    WHV_EMULATOR_STATUS emu_status;
+-
+-    hr = whp_dispatch.WHvEmulatorTryMmioEmulation(
+-        vcpu->emulator, cpu,
+-        &vcpu->exit_ctx.VpContext, ctx,
+-        &emu_status);
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to parse MMIO access, hr=%08lx", hr);
+-        return -1;
+-    }
+-
+-    if (!emu_status.EmulationSuccessful) {
+-        error_report("WHPX: Failed to emulate MMIO access with"
+-                     " EmulatorReturnStatus: %u", emu_status.AsUINT32);
++    ret = emulate_instruction(cpu, ctx->InstructionBytes, ctx->InstructionByteCount);
++    if (ret < 0) {
++        error_report("failed to emulate mmio");
+         return -1;
+     }
+ 
+     return 0;
+ }
+ 
++static void handle_io(CPUState *env, uint16_t port, void *buffer,
++                  int direction, int size, int count)
 +{
-+    return true;
++    int i;
++    uint8_t *ptr = buffer;
++
++    for (i = 0; i < count; i++) {
++        address_space_rw(&address_space_io, port, MEMTXATTRS_UNSPECIFIED,
++                         ptr, size,
++                         direction);
++        ptr += size;
++    }
 +}
 +
- /* Returns the address of the next instruction that is about to be executed. */
- static vaddr whpx_vcpu_get_pc(CPUState *cpu, bool exit_context_valid)
++static void whpx_bump_rip(CPUState *cpu, WHV_RUN_VP_EXIT_CONTEXT *exit_ctx)
++{
++    WHV_REGISTER_VALUE reg;
++    whpx_get_reg(cpu, WHvX64RegisterRip, &reg);
++    reg.Reg64 = exit_ctx->VpContext.Rip + exit_ctx->VpContext.InstructionLength;
++    whpx_set_reg(cpu, WHvX64RegisterRip, reg);
++}
++
+ static int whpx_handle_portio(CPUState *cpu,
+-                              WHV_X64_IO_PORT_ACCESS_CONTEXT *ctx)
++                              WHV_RUN_VP_EXIT_CONTEXT *exit_ctx)
  {
+-    HRESULT hr;
+-    AccelCPUState *vcpu = cpu->accel;
+-    WHV_EMULATOR_STATUS emu_status;
++    WHV_X64_IO_PORT_ACCESS_CONTEXT *ctx = &exit_ctx->IoPortAccess;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    int ret;
+ 
+-    hr = whp_dispatch.WHvEmulatorTryIoEmulation(
+-        vcpu->emulator, cpu,
+-        &vcpu->exit_ctx.VpContext, ctx,
+-        &emu_status);
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to parse PortIO access, hr=%08lx", hr);
+-        return -1;
++    if (!ctx->AccessInfo.StringOp && !ctx->AccessInfo.IsWrite) {
++        uint64_t val = 0;
++        WHV_REGISTER_VALUE reg;
++
++        whpx_get_reg(cpu, WHvX64RegisterRax, &reg);
++        handle_io(cpu, ctx->PortNumber, &val, 0, ctx->AccessInfo.AccessSize, 1);
++        if (ctx->AccessInfo.AccessSize == 1) {
++            reg.Reg8 = val;
++        } else if (ctx->AccessInfo.AccessSize == 2) {
++            reg.Reg16 = val;
++        } else if (ctx->AccessInfo.AccessSize == 4) {
++            reg.Reg64 = (uint32_t)val;
++        } else {
++            reg.Reg64 = (uint64_t)val;
++        }
++        whpx_bump_rip(cpu, exit_ctx);
++        whpx_set_reg(cpu, WHvX64RegisterRax, reg);
++        return 0;
++    } else if (!ctx->AccessInfo.StringOp && ctx->AccessInfo.IsWrite) {
++        RAX(env) = ctx->Rax;
++        handle_io(cpu, ctx->PortNumber, &RAX(env), 1, ctx->AccessInfo.AccessSize, 1);
++        whpx_bump_rip(cpu, exit_ctx);
++        return 0;
+     }
+ 
+-    if (!emu_status.EmulationSuccessful) {
+-        error_report("WHPX: Failed to emulate PortIO access with"
+-                     " EmulatorReturnStatus: %u", emu_status.AsUINT32);
++    ret = emulate_instruction(cpu, ctx->InstructionBytes, exit_ctx->VpContext.InstructionLength);
++    if (ret < 0) {
++        error_report("failed to emulate I/O port access");
+         return -1;
+     }
+ 
+     return 0;
+ }
+ 
++static void write_mem(CPUState *cpu, void *data, target_ulong addr, int bytes)
++{
++    vmx_write_mem(cpu, addr, data, bytes);
++}
++
++static void read_mem(CPUState *cpu, void *data, target_ulong addr, int bytes)
++{
++    vmx_read_mem(cpu, data, addr, bytes);
++}
++
++static void read_segment_descriptor(CPUState *cpu,
++                                    struct x86_segment_descriptor *desc,
++                                    enum X86Seg seg_idx)
++{
++    bool ret;
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
++    SegmentCache *seg = &env->segs[seg_idx];
++    x86_segment_selector sel = { .sel = seg->selector & 0xFFFF };
++
++    ret = x86_read_segment_descriptor(cpu, desc, sel);
++    if (ret == false) {
++        error_report("failed to read segment descriptor");
++        abort();
++    }
++}
++
++
++static const struct x86_emul_ops whpx_x86_emul_ops = {
++    .read_mem = read_mem,
++    .write_mem = write_mem,
++    .read_segment_descriptor = read_segment_descriptor,
++    .handle_io = handle_io
++};
++
++static void whpx_init_emu(void)
++{
++    init_decoder();
++    init_emu(&whpx_x86_emul_ops);
++}
++
+ /*
+  * Controls whether we should intercept various exceptions on the guest,
+  * namely breakpoint/single-step events.
+@@ -1279,8 +1264,9 @@ bool whpx_arch_supports_guest_debug(void)
+ 
+ void whpx_arch_destroy_vcpu(CPUState *cpu)
+ {
+-    AccelCPUState *vcpu = cpu->accel;
+-    whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++    g_free(env->emu_mmio_buf);
+ }
+ 
+ /* Returns the address of the next instruction that is about to be executed. */
+@@ -1639,11 +1625,11 @@ int whpx_vcpu_run(CPUState *cpu)
+ 
+         switch (vcpu->exit_ctx.ExitReason) {
+         case WHvRunVpExitReasonMemoryAccess:
+-            ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
++            ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx);
+             break;
+ 
+         case WHvRunVpExitReasonX64IoPortAccess:
+-            ret = whpx_handle_portio(cpu, &vcpu->exit_ctx.IoPortAccess);
++            ret = whpx_handle_portio(cpu, &vcpu->exit_ctx);
+             break;
+ 
+         case WHvRunVpExitReasonX64InterruptWindow:
+@@ -1990,22 +1976,11 @@ int whpx_init_vcpu(CPUState *cpu)
+ 
+     vcpu = g_new0(AccelCPUState, 1);
+ 
+-    hr = whp_dispatch.WHvEmulatorCreateEmulator(
+-        &whpx_emu_callbacks,
+-        &vcpu->emulator);
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to setup instruction completion support,"
+-                     " hr=%08lx", hr);
+-        ret = -EINVAL;
+-        goto error;
+-    }
+-
+     hr = whp_dispatch.WHvCreateVirtualProcessor(
+         whpx->partition, cpu->cpu_index, 0);
+     if (FAILED(hr)) {
+         error_report("WHPX: Failed to create a virtual processor,"
+                      " hr=%08lx", hr);
+-        whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
+         ret = -EINVAL;
+         goto error;
+     }
+@@ -2067,6 +2042,8 @@ int whpx_init_vcpu(CPUState *cpu)
+     max_vcpu_index = max(max_vcpu_index, cpu->cpu_index);
+     qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
+ 
++    env->emu_mmio_buf = g_new(char, 4096);
++
+     return 0;
+ 
+ error:
+@@ -2256,6 +2233,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     }
+ 
+     whpx_memory_init();
++    whpx_init_emu();
+ 
+     printf("Windows Hypervisor Platform accelerator is operational\n");
+     return 0;
 -- 
 2.53.0
 
