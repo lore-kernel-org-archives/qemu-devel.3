@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFE2EA4E08
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 14:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D17AEA4E08
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 14:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx3tG-0005I5-59; Mon, 02 Mar 2026 09:04:55 -0500
+	id 1vx3tT-0005dT-D7; Mon, 02 Mar 2026 09:05:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vx3sJ-00050K-Rz
+ id 1vx3sJ-00050J-R2
  for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:04:11 -0500
 Received: from
- mail-switzerlandwestazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c214::1] helo=GVAP278CU002.outbound.protection.outlook.com)
+ mail-switzerlandnorthazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c213::5] helo=ZR1P278CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vx3sG-0003rA-DI
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:03:55 -0500
+ id 1vx3sG-0003rN-Ej
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 09:03:54 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mwSXF+f6LVlpAFeJOlDt9nUsUQ67DDBLUFlS66EHTp0CzUFduZcPltW47pB+sNbMQ/Zi7bjgiTChdTdaSPOFs7CUdNFVYlpJ+nKjUkSK0PTQGg4wdUJ0tyTyl/k7kipnzuRqymc/lt7RKLXFnwNOYfE+E//WhIweOOdHrLLyJUSYTPr7fUGVkkWFpWh5475daE3fAqzeQy4h3umxVHJ//VJv7mlIo9Rga5kbrcxcQQx//MCopoxReF11vlGEbWunot3A3otiRRsGCPiDzPlo5ieQLshAl8iE4nxpJi3s8sHyLmFJhzBL3fRQZMCD15BZD5D70xU+rFBlGJuMydKCNw==
+ b=vX30/InfeISldsfDkuud4f5XnevqnSDk1MjZypiQuXG1ffSWYh2D4UKum/5Fr6bHws9q8FvSh2m0DIPcE7vwbVLcHgSjhU7x7m40rubdKa1hOEYD22uCpNIKou7NUmm1/5TuLIJg/xvSLzczJD7OdkDVJWAMy4cA8tAkidQMerc9ae+B3IWXPOZw8n3sZlh04dFVOYpmB91S6Tn/B7PhcVOmxzXhyfiPphpJa9bDJI+sSxZu/MWBoM/6NE22UmVuxuP3ZpAlcMHUOZGG/t9U3UXvLOnEmN/niliN1YVOMUJscMx6f/BNbf/4R2vA04C8WdzHCCsMBK4v6QyTC4mkxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Aydg6UENx8H3vEPcpSG/lAEjOt91j8TzpMK3+iJo6n0=;
- b=wJSUoDeBjFqe5uE4fP24vbkI/Cy8Cv9fHXfQy3IyzTKzX/Ch1aSQV7mX9RuKO+uHcLeykXuZhQ5eeqrj0eeMnWfxCGasKDfd2bBi+E6FqLXY2Y8SE2BLGFAkXnwuASMjg6muUDdunY/HEePsANSSYFiJ2xuzMeLkTQpIzwyNEM1qEu02JArfdIjgUWGis/5qt4jBfQD0udR1mmp7Rp5kR5KmvRrfdPitm3gsaQVKruQQtxkoFrFTgxBK1WZ5EF+4w86Yq02G2DBNa2E8WKWzULXiZpje3r43wvRRD9068DR0Uy6wmx/ZBYYg9NGSN+nziWLwy4kFA097taD24A4tjQ==
+ bh=qFvfVT3xRr3bLZR31fQDHBCYLuUxBi5onR+OrGwSbos=;
+ b=r2O9a0yF2vU6KFNiiYJ/1GnDoKseWjiM9eBUITXiutcGSBTfgbiEkQ71XXWVTgDuz9np3RxRt3z/hdnBvfjSLeiHc1Y98VyPbvXJieVUHx0kL3Y7tYxIwPoID2P9ek5uOs7gIxDQs2ekIbGjgdwr3C6GDQsdZme52TaXkdrgVrfcuQ7QPyrM5eqwhWWn5hCWuyFLK1+Mmlxess+LytR8xNQKtpcJbofmFO4GtUMS1pSyl61qu6JjC7q7cgncXStV3Y8JG671Si2rGZQntDizBeJvMnJozqiSMKdcbeVAyr1YN9WrAl1etDz6sbZsf76ksL+xJkmsDbYwTOpg2Qc3rg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Aydg6UENx8H3vEPcpSG/lAEjOt91j8TzpMK3+iJo6n0=;
- b=XWsW9MrGZ5j8kNj4gbOAIaiXReu7vfixWvnTJE0OkuHuI1uQN0MlVNa1uAfiuRaAjQYuxGkykC1pewjrYVre7U9+Y7CPOf/msR7+7SjPJAAECo33qW4zJr150hVRMDU6dElSxBaHSpQSDQa8U4GmUSK1hpsAPK93af5nKvQSesA=
+ bh=qFvfVT3xRr3bLZR31fQDHBCYLuUxBi5onR+OrGwSbos=;
+ b=NGqtryG2ZPO0v8yFiWPQpEISygz0uoZTiToNL7l2GJsTnr6W127fv7VzBH8MpZJccledYV8VUBDxAGdVNDqcoZji+THKlXzPeIRDtpegZAoA5N9w10jTYN9Vzeyp6cCSB/kjsJwpBa2YGyW8XLe+Z2YvGdhC3AYAioseeFz54V0=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by GV0P278MB1029.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:4e::13) with
+ by ZR4P278MB1788.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:b4::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21; Mon, 2 Mar
- 2026 14:03:46 +0000
+ 2026 14:03:49 +0000
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9654.020; Mon, 2 Mar 2026
- 14:03:46 +0000
-Message-ID: <90d7abc0-0539-4e3f-978f-5f51ef911415@epfl.ch>
-Date: Mon, 2 Mar 2026 14:55:57 +0100
+ 14:03:49 +0000
+Message-ID: <a40cd32a-c8c1-49a8-b352-6467e55a3d51@epfl.ch>
+Date: Mon, 2 Mar 2026 14:59:48 +0100
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v5 1/7] plugins: add flag to specify whether PC is rw
+Subject: [PATCH v5 5/7] plugins: add read-only property for registers
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
@@ -104,81 +104,81 @@ Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
  5hMMZIzTI4AtIcgA3xe4Ew==
 In-Reply-To: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: GV0P278CA0090.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:710:2b::23) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:918::220)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|GV0P278MB1029:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4079db75-445e-4cb4-9cda-08de78648535
+X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR4P278MB1788:EE_
+X-MS-Office365-Filtering-Correlation-Id: bc69031f-e3ae-4d4e-3fcb-08de78648699
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|786006|366016|1800799024|19092799006; 
-X-Microsoft-Antispam-Message-Info: BNgmPhb2hgO0EWqBfjCmmlyt1R9ETIU4GQ1RYHAXTz4n5f80A8hTovlzm82rPdlVD3AJ+N9B/9SyEbyjo3e94xZxAhmuAa7/XmnUgqmGyy6N3ytmHzzVWja4TdtKIgeT3uZW9ok6rBEmF+K3o3YCpDn9GtWRdgoPfusHBerjvCRY7bXRJfWtJXZ/Lb51O3wjb/NN0+jn8z6/cMUX+L3uUQdw5U+2XYkkBADS10trfvO78CK6H3N9rVoaWxCSqRRs+qaG5l8SpS1vRgzZd3VoxRxqKdUnnNZEOKIJBlnfkI/TuOaKxGhzr5H1/GnqFaCQ7K264CbFPfZqHFmMJ2tnuM04Am1Mfgg4dRHG6UnKbBPPceb9GvFviDd9PF3HCnfWMBTFYlkSDmgHEST7CIqxcmzXiZnPrMmD9S9RzBNGmE42Q3WpH5kNghNcLnDLCGmutlvs3hn/Bv44UX3ezAHhbvthh0fLq4AbfrHR44z+9dSV6njHRNQAu0XYY0V8auH3ZUoEtNJGfCXf+Wv/AaiG7R/8tVZ+SWIstSc2Zl76HyEYwC64unxljwKOb+MSTV2hy67YBUsABMj9c2vJxQwK8XI7xyCFzctiA0UmOh3gZ+OCVMpqT5VFPyhzLnCADHxgBggbuox6poXnZgfWjT8DU30+kFDDC4e9mXRoH69CI0RRm8yDluiGtsot7jnbssUICAH3eWebz7z0CkLWa+MUjT5XSNCq4h9/UOoa/UOehh4=
+ ARA:13230040|19092799006|1800799024|786006|366016|376014; 
+X-Microsoft-Antispam-Message-Info: 62Nhizk8XGVLMnx6EKC5gGTOWXeeofImHABo72WAot5qJH0LeDGtpxzrT5VS8a0iowRyFglrq1MZnYcc68hLjRpkUaehbTwfaIbQpaqYC9EVzf8ypj7yBwkaNa1eLU457ywSYuNggQHpl/qSUoFlZlKwDvBLQ6y5xuOjJAeHeStaQcANav8AMxcu4nSy1OZYlvPueam2gWjRXySRP5JErzQAS6BsV2/ESUZLW97cUeieVCjbAbXydADN/0/rPLlD5yID1cxnxr09TElC1/xlvr2gG1OopnF7WskSBFHwLY8FXCEb2TSh1mNujdmu6Cimbp1eLbKwp+XG37Ymoy/ne3QqeUNm6bmIqUjUs+fhrnMpX10uWnU9oN6/d6FlJHITSekqvAk05g7uqGFzM1ug65y9Z0F8DLLPg9/+FYe5sWMwKvoZaaIk/r+tNjgB+fMtrIHjWMSyDKSqAJl/9ZDhK5TFzRss9PVcN0Xka5/qaXDvRI+Vhr+IniOsWsARog2s5dc3j84xS8oUxrDQZYgMoJ8kJYoJR8gWVRzwfpwdloenXjN23NBYL2yb2nS/aowJx0fFdiT5gxO8gRu0jnTJQVf5C6qy8k9Vtl6//ouWTb3bIaEGpxUYbVO+oLbfNArGi5eZGs1P1WnXxjdcbUbc0DyAGOkTlinofeoDXdvgG2T32rJ8iWBEWigIOblZ/6FsLXVsT/AuBtGsrTMG1e2um7P+0YySN+9rg7yoC0Cu5uU=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(786006)(366016)(1800799024)(19092799006); DIR:OUT;
+ SFS:(13230040)(19092799006)(1800799024)(786006)(366016)(376014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Zk5ZeWZqdGVkQmR1Ukg0TXk4UGdjU295WkVJMXZIYjF0aUxlZ3RHUjBoTHV1?=
- =?utf-8?B?SnlIdTFtYUNROUVKWStiVW9NZmJFT1dWVjAwajNSVFE3dmdCS0pPUXNSdXBE?=
- =?utf-8?B?WVpaNUt4UjRDOUhSM2pPcVQwSDArVTlYelM1UjZXT24wRndWTVdQMUR3RndS?=
- =?utf-8?B?WDRtRUJsSFNWYzFGMm1FS2RmclQ4eFhMUjBCemVMZ0VhWWxmbUR5V0FMSnAw?=
- =?utf-8?B?NGpBaW9HWXlUbC9nUGhtSEcweGZEaWZBM0FSbE02WFUyM0RTLzg1L3NXbmxv?=
- =?utf-8?B?YTVrN1FQaDNoNElwc0VZaGFlMG9SbmNkRDZNd2JyeFp1WjJOU3JPNCtWODRh?=
- =?utf-8?B?MTNyVVZ4dTM3RjkwMjFkRjZZeEF1OXR1UmFwOGZzTlhQZk9VOTJWa0xYUm5R?=
- =?utf-8?B?S3lhTU9xK3I0cllpYk44eDZFYkxWN3NqQmRLMERLVXNaK0p6VGlSSTZhY3JW?=
- =?utf-8?B?cXdQNDdNSE1aT1EzaC9EQjAvWGdXazVkaGh4YUtaNjNnOGlxdnpjdGtLcmZK?=
- =?utf-8?B?NVlEcEdZdGRtcTRaNGRzRllRVHdNR0pYcEo1TVVZTHU1M3laU0o3L0ZtbVhV?=
- =?utf-8?B?aDlUM0pTdjVYT0FvTmFOdXJySmd4WUlOcTZQTlBZT3R4TnlFQ1NNNFlOWE9Z?=
- =?utf-8?B?LzFUMDQ4Q1FUb2FpRGhtN1RlQ0d4U0hienhPczZVUTJvU0ZEM2FxVVdoZEs1?=
- =?utf-8?B?ZGpLNnJDSEVJdXdDbUdKQXlwSFdUYm9yUUwzaUFYUXdPRlZiVnRadDJvT3px?=
- =?utf-8?B?TzY4TGhsN2cwekgzN3MzditRbFZ2NEo4ZU1JVHNGUWlDTjVRc2NzSCtCekFB?=
- =?utf-8?B?UjhGcGYzdUVPVWs3TWRKbzhURWJKaGZtd2pSS3ZvZ0c3ZnVyMGdYZDljUFo1?=
- =?utf-8?B?V0VSNThvbU01dVlFRmNLWUZmU3pWMERNWUpQeTR6NkJaZDJNbllaU2pGbm92?=
- =?utf-8?B?eFNvNEEvSEh1UVpieWZlK2VMcU94bTUxQnlINUVOSnlVVTF0MnVTMVlvSHFP?=
- =?utf-8?B?d3QwU1JaMTl0ZldwNjI4MjVKbWcwZVNYYnNYZ2FYbVl0SXhsUWdGdCtySHIw?=
- =?utf-8?B?Nmloa1FRMm1sT0dNQXJTWEo5ZkttZFZ0TWFRWUhLMmhvWjFucVFDSFRRWjFH?=
- =?utf-8?B?dFBwN0QrS2h0ZlFZWFFQbEtRVWEyUjNLS3ZaWlVNbHVEN2xPZGc4V01HZmQr?=
- =?utf-8?B?aU8yejlZaWhyU3ZFaWpjUC9aMUlOdU5aeFlBaExTeWxDQjFhaWtZWDVkeVJ1?=
- =?utf-8?B?OHhhMlI3eFlnaEdWSUs1QmZUU3I0WEVoT1IvMnRISzUxNEYzL3lScVU3VjZw?=
- =?utf-8?B?REg0U0RRUmNJZ1U4SUc2MTFUU1dEczZPcXhLbk9GU0ovV2xVbFo3VXdFNnUx?=
- =?utf-8?B?MW53NytrZXNzRVhSTmU1djBobHdPbUpHNWg1dDZUNnhSSEJwZVBka1dkNjBa?=
- =?utf-8?B?NDMxRktiWlZxbXhKdUZXMFdHL3Rwdmd3NGVxWWtIekkzWGl1Z0RxaFpaTDlr?=
- =?utf-8?B?U3JyME8yU2lQcFFOODVta3J4Nno5bXhqeXNCd0Q1UjBEVEdTSmZ4NE1zS24y?=
- =?utf-8?B?YTl3VWIzTlFBMXB4bzJOSXhOZ3N2N3A3UTNFZXppWTVzNmpnWVZBbFQ1T3JI?=
- =?utf-8?B?U0taTkJ0TnR3b2tWekZFUURXamovdjlkbXVnZExmbktFZmdONEJFUlJVNU5x?=
- =?utf-8?B?MlNTa0poNkJZWGVWMzBOdEQ4YWlUcXNzNXhMekNrMExKV2RIdGFkZ1o2cFdM?=
- =?utf-8?B?WVAwREE4OVRSTCtsT2lweWF5elV5S1d0VmNudXRCUjZaTGhMSEtZVXRib3Qx?=
- =?utf-8?B?dllweTJhNGFreEVmZEx1LzFXSVNUaDFLVGlwRVNvV01qMHVyWXlDOWMwMVp4?=
- =?utf-8?B?bUgyVVlQSEhpOStLUW9mR0ZMSGZtVTJrODlNNUgxWUl0QWQ5NGpuNHRGWW5J?=
- =?utf-8?B?NDZTcTFwdnZDbHVmamZJOStoenRVMlJyVXhFbFBxSm9tYXFjZFNoVy9YdUhz?=
- =?utf-8?B?ZGV0Z3lqYU9uNGVENUdMMUFjZzFML080Wlc3Q3FNS201RXFWem5tejQrUFlh?=
- =?utf-8?B?bnNsYytZbVlGSkc1bDVoTWUzRzZiMU84c3g4dWFFbitScEhRMzJMYklTbi9M?=
- =?utf-8?B?TTkveDQ5YXMvY1FvSm1jZWV4TS9jNThEV1RDV09XcUZ6Z1FTTFJ3aUZFYVJB?=
- =?utf-8?B?dExnK0d0bWpjSmVmaWozUUorUzFwaUI3VERoVFRBWFZpVkV6K1RuWVRTUUpV?=
- =?utf-8?B?R3JUWHBCUktVZGF3Q25nUUk2eEJJMDgxYjB4SlJSYTFyYlVSQXM0cW9FWXpt?=
- =?utf-8?B?NWZVQmNOdnJGS21YQ1MwLzZqdWlhSW5SMjJxWVYxVjFBN0plNWoyQT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cmdIeS9qOHhKL0YrSUZkMkljWmlMYWVhK29aZjBjN0NNTk1MWWRDcUNyWGFG?=
+ =?utf-8?B?Zzd4dTRvblQxUittS2wxR3Q2d0Q3ME1tbU1ZZVBYZkVkendBZGpXcEdWemZi?=
+ =?utf-8?B?UXFQNzREWjZhY3RjTGw4Y00rcFM5ZUIvbmxkQ3ZxNEptM2gybi84K1JqQVY1?=
+ =?utf-8?B?TkV0V0RuV1NnbzBGejFJM3FqemI1ZHJFTk5OZmpTQk9jR1gwczRtQ3pTY0hH?=
+ =?utf-8?B?a3dUbnJKMTlVRHZGUXp1cS9ERDhDRGlvRHhMeGxlQmFOVCtlM0RqVFRTUVhI?=
+ =?utf-8?B?RnRkamlPbDlzd0h6L1drOERJUHRwck0vQTNSM2x2RWhPaERWTjBsU01zbHl0?=
+ =?utf-8?B?ZGVBMnRtSFRYc29oQVhQNkNpd3pkK1FUODZobmEwS2RUVzc4Y0hjTDVSQ2Nl?=
+ =?utf-8?B?RnNydVczaEZ1UVliL0kyTkRNNWd3d21JcHF2SGoyYTArWmswWFZTZmV0cHdX?=
+ =?utf-8?B?QjNFTzRYK3NnZGlqNkdHcFlDVnptZXJhelNZa0g4cmdHMzN2aDFBS2poeEJY?=
+ =?utf-8?B?T2Q4YkE3czNyajBlaXpTSDI0R1VUdW5QM1phQ3RnTlludjNVNk1Sd280b2RW?=
+ =?utf-8?B?aHZOamRHZHJRVHo5L1YreDF6WkNIZlBVQ2xmanBYajVyb0M5akU3N0RsY2lR?=
+ =?utf-8?B?NWY5VW16cWVkT3MxT2dHRFI1K1FGbk4wcGNDUUw2ZGFuUWxTNURQT2VSN1pT?=
+ =?utf-8?B?L3A4bGNNUzNMZDlGL2dwRUNaZTdaRHNzMW9pNTdnNTBLWXBLNk9nOVBCdFhK?=
+ =?utf-8?B?Q2hyYkFkcjJXSndkQmNxN1o0N0lkWHVNQ2F2a0NFWnZhc0tJL0oxekxyZ2pI?=
+ =?utf-8?B?RksvdXZOVVlsMVFrK0MzdnRrMHpmcDl0SStHR0NMYVVKOWZvZS9vbGFxV214?=
+ =?utf-8?B?L21pWHF3RzBTb0tjZm4rc3dHN3V0YnVlck1mWXUvbkR3d2xlNmx3a0Q3UVY3?=
+ =?utf-8?B?QWZmNE1rcHFzRWZlblU3c3NUbXpGa0xkMFIxeFNTTGpFazI3bCtMSlJFZFhn?=
+ =?utf-8?B?eFZMVGE1bmdzSnE5RFZUOGxaZkdlRXBKbHFvc0pKbzNPeWhQdEE0OHQ2V3pS?=
+ =?utf-8?B?Yi9zRlhMODl5MTNMTm0wRDhQMWhyL2JEMEhHb2xUY2dsQXMyZWZrdW94OTYr?=
+ =?utf-8?B?TWdWbTY4UzlVaDVGWXhxdXlScEZaSmk5MVhYa1hkMHdKVkpXVFJ5SkU0Nm9V?=
+ =?utf-8?B?c2xSUmNzRmp0djBuYm1GRzR4ZTFCNnkwazBSaFgrbWdNTlhXU2xsTE9pa1pB?=
+ =?utf-8?B?NW1RVkg1ckNZUi9JZWJPOGk4TnY3ZkNQWUdhRVROZFJyczlDWno3UG1FUGxj?=
+ =?utf-8?B?K1djdkEwRXhOQnNGbzFxZjdjYWMzUkRBZXprYnlSdDc3OGZlQWtqNDhXaitv?=
+ =?utf-8?B?QmNYU3kxSWJMT1h2TVpTTFlqSUFYMWFsUWkrcWEvQWViVHJxcEFidmJ2TEN4?=
+ =?utf-8?B?L2xMYUp0dmZEYkJDQ2V6bjdpUVQxZW5OOUdZcUxJWkpKQ2ZBM0NIQnIzOXIr?=
+ =?utf-8?B?Q1g0NTZKYS9tNWpLNXFERS9jcWdMbEVlUTk2MlZrbWlkeXdDeFUzUGpIU2lT?=
+ =?utf-8?B?UDg2UWRpeEJ3SVIxZ2IvcXgrQiszdFhaRHgwWmsyWmdYbGF5bGJpSFpmODd6?=
+ =?utf-8?B?eTNJQ1hZOEwrNzNBalo3b0NtRVR5cVVITHRvOTE4RUZ0enZrNXRKbjVLM1JF?=
+ =?utf-8?B?K1p0OXFnREtDRmxWUEZDcHN1Z0thOUgxMFJIWXBIeks5eTZ6akxQQU15L3Vw?=
+ =?utf-8?B?VWlSK2cycWdtSENTV3lxb1FuWUdkYzZ3M0tka3NGZXlTbVdFNDdNbVVENUNi?=
+ =?utf-8?B?UkEycmt0c1FuTjd4ZkV5VDBUNUNIOEdWMnZRbjBkd1IxY092eEpHWGwvdXpq?=
+ =?utf-8?B?UzhsdnpPSVFYRzliUW0rdmw3aExsZzdYWXN6dDJmOHhqQzFrcDU4Y0t1aHVq?=
+ =?utf-8?B?M1NYa3UyZjc5TDBGcHpSZ1F0YUl0aXhIcDU5UmFER3QvcFhBaWJUd3VSTzNC?=
+ =?utf-8?B?SktPQTVSUTU4VmZQZWZnbjRFdXQyME5rbFZwU051UzVuV0s4ZXZreEJKWS9F?=
+ =?utf-8?B?RFAyaGlPYjRCS3VMRzl6bjNzMEpqNXI1VXdYQlhjcFMzNWFRM0VaN29ZNWcy?=
+ =?utf-8?B?UTRSUitlbG5kbStBc1V4UlZSM3RIQnl6eDNUZHZQVjVPS2E0NWlSQUF1K29t?=
+ =?utf-8?B?d0lQa3FoeDBKOC9yZzV2OGtuUmNzZUF6ZzJ3T0JIelBYdkdGS3p5M1FId3hI?=
+ =?utf-8?B?djdBUW16Y3MzRW9UMk1Pekdzc054ZWxic1d1YWlqTFo4VnpMZkN2WDJ2Wm5V?=
+ =?utf-8?B?d2FvME5OUmJnK3FhWVNHQTBuKzliSnBTWUUwNXdHTUowdG55V3IvUT09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4079db75-445e-4cb4-9cda-08de78648535
+X-MS-Exchange-CrossTenant-Network-Message-Id: bc69031f-e3ae-4d4e-3fcb-08de78648699
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 14:03:46.1802 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 14:03:48.4780 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JMjKGRJAL3P4JHRfvayAY9WHosCw5+ipPExG0YO7MLtKsmCslGOXapqhdSE4VHnFrsurAM82Y/LmIk3/51dJfU2qbV8ING9lF+OAPQvld4E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV0P278MB1029
-Received-SPF: pass client-ip=2a01:111:f403:c214::1;
+X-MS-Exchange-CrossTenant-UserPrincipalName: CVadU1R+EPlFP/vMnTbXPC/mIeaBWSHmL1M99Cc2xDS/mz2MP+94fc3dk6Uto2KYaWVjtPAdM4daf9GqVVPE5TqRD/y/03RqYuODiuytfzI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR4P278MB1788
+Received-SPF: pass client-ip=2a01:111:f403:c213::5;
  envelope-from=florian.hofhammer@epfl.ch;
- helo=GVAP278CU002.outbound.protection.outlook.com
+ helo=ZR1P278CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -195,187 +195,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In addition to the flags specifying whether general-purpose registers
-are read-write (rw) during a plugin callback, we add an additional flag
-explicitly stating whether the PC is writable. This is in preparation of
-a patch that allows to explicitly set the PC to divert control flow from
-within a plugin callback, which is currently not possible.
+Some registers should be marked as read-only from a plugin API
+perspective, as writing to them via qemu_plugin_write_register has no
+effect. This includes the program counter, and we expose this fact to
+the plugins with this patch.
 
 Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 ---
  include/plugins/qemu-plugin.h |  3 +++
- plugins/api.c                 |  4 +++-
- plugins/core.c                | 29 ++++++++++++++++-------------
- 3 files changed, 22 insertions(+), 14 deletions(-)
+ plugins/api.c                 | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+)
 
 diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 17a834dca9..a6ec8e275d 100644
+index f083c30fd3..791d223df4 100644
 --- a/include/plugins/qemu-plugin.h
 +++ b/include/plugins/qemu-plugin.h
-@@ -325,11 +325,14 @@ typedef struct {
-  * @QEMU_PLUGIN_CB_NO_REGS: callback does not access the CPU's regs
-  * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
-  * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
-+ * @QEMU_PLUGIN_CB_RW_REGS_PC: callback reads and writes the CPU's
-+ *                             regs and updates the PC
+@@ -979,11 +979,14 @@ struct qemu_plugin_register;
+  *          writing value with qemu_plugin_write_register
+  * @name: register name
+  * @feature: optional feature descriptor, can be NULL
++ * @is_readonly: true if the register cannot be written via
++ *               qemu_plugin_write_register
   */
- enum qemu_plugin_cb_flags {
-     QEMU_PLUGIN_CB_NO_REGS,
-     QEMU_PLUGIN_CB_R_REGS,
-     QEMU_PLUGIN_CB_RW_REGS,
-+    QEMU_PLUGIN_CB_RW_REGS_PC,
- };
-=20
- enum qemu_plugin_mem_rw {
+ typedef struct {
+     struct qemu_plugin_register *handle;
+     const char *name;
+     const char *feature;
++    bool is_readonly;
+ } qemu_plugin_reg_descriptor;
+ 
+ /**
 diff --git a/plugins/api.c b/plugins/api.c
-index 04ca7da7f1..32eb086300 100644
+index 23c291f644..85b34949cb 100644
 --- a/plugins/api.c
 +++ b/plugins/api.c
-@@ -458,7 +458,9 @@ bool qemu_plugin_write_register(struct qemu_plugin_regi=
-ster *reg,
+@@ -410,6 +410,12 @@ bool qemu_plugin_bool_parse(const char *name, const char *value, bool *ret)
+  * ancillary data the plugin might find useful.
+  */
+ 
++static const char pc_str[] = "pc"; /* generic name for program counter */
++static const char eip_str[] = "eip"; /* x86-specific name for PC */
++static const char rip_str[] = "rip"; /* x86_64-specific name for PC */
++static const char pswa_str[] = "pswa"; /* s390x-specific name for PC */
++static const char iaoq_str[] = "iaoq"; /* HP/PA-specific name for PC */
++static const char rpc_str[] = "rpc"; /* microblaze-specific name for PC */
+ static GArray *create_register_handles(GArray *gdbstub_regs)
  {
-     g_assert(current_cpu);
-=20
--    if (buf->len =3D=3D 0 || qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_C=
-B_RW_REGS) {
-+    if (buf->len =3D=3D 0 ||
-+        (qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB_RW_REGS &&
-+         qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB_RW_REGS_PC)) {
-         return false;
+     GArray *find_data = g_array_new(true, true,
+@@ -427,6 +433,16 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
+         /* Create a record for the plugin */
+         desc.handle = GINT_TO_POINTER(grd->gdb_reg + 1);
+         desc.name = g_intern_string(grd->name);
++        desc.is_readonly = false;
++        if (g_strcmp0(desc.name, pc_str) == 0
++            || g_strcmp0(desc.name, eip_str) == 0
++            || g_strcmp0(desc.name, rip_str) == 0
++            || g_strcmp0(desc.name, pswa_str) == 0
++            || g_strcmp0(desc.name, iaoq_str) == 0
++            || g_strcmp0(desc.name, rpc_str) == 0
++           ) {
++            desc.is_readonly = true;
++        }
+         desc.feature = g_intern_string(grd->feature_name);
+         g_array_append_val(find_data, desc);
      }
-=20
-diff --git a/plugins/core.c b/plugins/core.c
-index 42fd986593..7220b9dbb4 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -119,7 +119,7 @@ static void plugin_vcpu_cb__discon(CPUState *cpu,
-     struct qemu_plugin_cb *cb, *next;
-     uint64_t to =3D cpu->cc->get_pc(cpu);
-=20
--    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
-     if (cpu->cpu_index < plugin.num_vcpus) {
-         /* iterate safely; plugins might uninstall themselves at any time =
-*/
-         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-@@ -395,15 +395,16 @@ void plugin_register_dyn_cb__udata(GArray **arr,
-                                    enum qemu_plugin_cb_flags flags,
-                                    void *udata)
- {
--    static TCGHelperInfo info[3] =3D {
-+    static TCGHelperInfo info[4] =3D {
-         [QEMU_PLUGIN_CB_NO_REGS].flags =3D TCG_CALL_NO_RWG,
-         [QEMU_PLUGIN_CB_R_REGS].flags =3D TCG_CALL_NO_WG,
-         [QEMU_PLUGIN_CB_RW_REGS].flags =3D 0,
-+        [QEMU_PLUGIN_CB_RW_REGS_PC].flags =3D 0,
-         /*
-          * Match qemu_plugin_vcpu_udata_cb_t:
-          *   void (*)(uint32_t, void *)
-          */
--        [0 ... 2].typemask =3D (dh_typemask(void, 0) |
-+        [0 ... 3].typemask =3D (dh_typemask(void, 0) |
-                               dh_typemask(i32, 1) |
-                               dh_typemask(ptr, 2))
-     };
-@@ -425,15 +426,16 @@ void plugin_register_dyn_cond_cb__udata(GArray **arr,
-                                         uint64_t imm,
-                                         void *udata)
- {
--    static TCGHelperInfo info[3] =3D {
-+    static TCGHelperInfo info[4] =3D {
-         [QEMU_PLUGIN_CB_NO_REGS].flags =3D TCG_CALL_NO_RWG,
-         [QEMU_PLUGIN_CB_R_REGS].flags =3D TCG_CALL_NO_WG,
-         [QEMU_PLUGIN_CB_RW_REGS].flags =3D 0,
-+        [QEMU_PLUGIN_CB_RW_REGS_PC].flags =3D 0,
-         /*
-          * Match qemu_plugin_vcpu_udata_cb_t:
-          *   void (*)(uint32_t, void *)
-          */
--        [0 ... 2].typemask =3D (dh_typemask(void, 0) |
-+        [0 ... 3].typemask =3D (dh_typemask(void, 0) |
-                               dh_typemask(i32, 1) |
-                               dh_typemask(ptr, 2))
-     };
-@@ -464,15 +466,16 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
-         !__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t) &&
-         !__builtin_types_compatible_p(qemu_plugin_meminfo_t, int32_t));
-=20
--    static TCGHelperInfo info[3] =3D {
-+    static TCGHelperInfo info[4] =3D {
-         [QEMU_PLUGIN_CB_NO_REGS].flags =3D TCG_CALL_NO_RWG,
-         [QEMU_PLUGIN_CB_R_REGS].flags =3D TCG_CALL_NO_WG,
-         [QEMU_PLUGIN_CB_RW_REGS].flags =3D 0,
-+        [QEMU_PLUGIN_CB_RW_REGS_PC].flags =3D 0,
-         /*
-          * Match qemu_plugin_vcpu_mem_cb_t:
-          *   void (*)(uint32_t, qemu_plugin_meminfo_t, uint64_t, void *)
-          */
--        [0 ... 2].typemask =3D
-+        [0 ... 3].typemask =3D
-             (dh_typemask(void, 0) |
-              dh_typemask(i32, 1) |
-              (__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t=
-)
-@@ -534,7 +537,7 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, ui=
-nt64_t a1, uint64_t a2,
-     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-         qemu_plugin_vcpu_syscall_cb_t func =3D cb->f.vcpu_syscall;
-=20
--        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
-         func(cb->ctx->id, cpu->cpu_index, num, a1, a2, a3, a4, a5, a6, a7,=
- a8);
-         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-     }
-@@ -558,7 +561,7 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_=
-t num, int64_t ret)
-     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-         qemu_plugin_vcpu_syscall_ret_cb_t func =3D cb->f.vcpu_syscall_ret;
-=20
--        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
-         func(cb->ctx->id, cpu->cpu_index, num, ret);
-         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-     }
-@@ -584,7 +587,7 @@ qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t =
-num, uint64_t a1,
-         return false;
-     }
-=20
--    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
-=20
-     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-         qemu_plugin_vcpu_syscall_filter_cb_t func =3D cb->f.vcpu_syscall_f=
-ilter;
-@@ -605,7 +608,7 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
- {
-     /* idle and resume cb may be called before init, ignore in this case *=
-/
-     if (cpu->cpu_index < plugin.num_vcpus) {
--        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
-         plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
-         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-     }
-@@ -614,7 +617,7 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
- void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
- {
-     if (cpu->cpu_index < plugin.num_vcpus) {
--        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
-         plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_RESUME);
-         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-     }
-@@ -885,6 +888,6 @@ enum qemu_plugin_cb_flags tcg_call_to_qemu_plugin_cb_fl=
-ags(int flags)
-     } else if (flags & TCG_CALL_NO_WG) {
-         return QEMU_PLUGIN_CB_R_REGS;
-     } else {
--        return QEMU_PLUGIN_CB_RW_REGS;
-+        return QEMU_PLUGIN_CB_RW_REGS_PC;
-     }
- }
---=20
+-- 
 2.53.0
 
