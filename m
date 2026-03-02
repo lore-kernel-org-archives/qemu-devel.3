@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6888EB363C
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 22:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C77A8EB3637
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 22:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxBM5-0000Jg-V7; Mon, 02 Mar 2026 17:03:09 -0500
+	id 1vxBMG-0000Qq-Um; Mon, 02 Mar 2026 17:03:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxBM4-0000Hp-84
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 17:03:08 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxBMF-0000Pz-7S
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 17:03:19 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxBM2-00016V-I5
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 17:03:07 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439b7c2788dso963085f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 14:03:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxBMD-0001A6-Ka
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 17:03:18 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4398c7083d7so4338526f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 14:03:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772488984; x=1773093784; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772488996; x=1773093796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TtSSxc4Ah1ot2GgQBdeTXSOp3+KBMfYLcFsfHrMmRLk=;
- b=f1rmWHumNZ3vV0LVp0UkUYP9Spj/mt4wwLrkG9c9qPhs1xKgXymg6FErL/NQmb/nSA
- sQDONW84Hm0R+2g51FkYHSXuKoKQPDP+LIMeQiJNqP3Y/wxyZwzitxwJWzsWkFtszd9c
- oC/V+YPv0JGaxLvN3Sx5/zMiasat97sg5nr8ZYG+mz9l8CYPFd0aREmzvpqHGOQE+ENn
- zK7S+z4I9K0T9c9s7wYobGgMp5YJ90mNv/tOaEwETB/PrfHOrcnAzoeMhlBqRsuv2sqr
- Dgqbj3U4fGh2L1xUyzk/UOdNAWDzX+2oMcFtqYd67AhxJzAUd9eblTOa4KCnQUUMI9sm
- E+UQ==
+ bh=a0q3doKdbgb3JqnYROywKi9R6evoTwQ/dQN4VyRTwQg=;
+ b=mTd3OmAW8D/ZqpsCAZPnYTwG1TeJW/uRFTOZLhCnp1BJ+EcrMDR7vpyA6ZSpG+2cv9
+ m9gsIWrT2gdiLWJfB+N1yLNm2f8YXyBKNhBWvzyzC481bPZDmSmvdOJvXHJf1AqstmQM
+ Vddf6iUbQrP7UdgwxjAC74urVmFsgRok9UNxc020nFdncnMkpj4JLJ7qXbQQM8U3tvO8
+ UX4anh2JAYZt8Vz/2l9eV8d3H/UOD0iu3/H2Us6y+v3fa8LkFNzfmmtZYv8QFJ9+q1or
+ eILmH6oKvR5q43AGHcOTYQLjl6emvrq0nSiip1eHXFIdtzn5qJRc1Z2seNprprOs9F1k
+ s22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772488984; x=1773093784;
+ d=1e100.net; s=20230601; t=1772488996; x=1773093796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TtSSxc4Ah1ot2GgQBdeTXSOp3+KBMfYLcFsfHrMmRLk=;
- b=EFqgAO9zgZ5XNsMT4zJO1PxQMX1Hk/RCSMp2q8ZBwyXZ1nP8oOWOY3kAA3s0hWVwED
- 6OnKCdhcy6H2igEq1Jy5v0V7yz3ydvy56nbM8cgJgNxyJnOenuxsOnUDxVOWWjxl+dDN
- tovZxrq785XrHX7AW6PgGViMMz49E+Dyf/6juViTMS+asFWZt43/tDJUVyYcwT9dHVD8
- /9Od/4YdGni8HnmMxn5b4YEK9CGOZFI4UGzLyi/erKxJCpnpeaN4oyRX/aejFrdF1bsG
- LTfcGkOeN4F+4tg3Wb9JxlwMsevzZtafRETdvfxvu6sf8lZgw+yr0VeHCi3mBsQM1cR3
- 1luw==
-X-Gm-Message-State: AOJu0Yx1qeESm2ZzEXwkPEwCyDxaS19MfUDXRj4B8ooz9x5igcQvPpqd
- BweBFdCfRMNfiMAS9B9q28J5aDi+l33KgVjprW51LXIKubpTuYKFlnfU6ySbaQ==
-X-Gm-Gg: ATEYQzz+GRE4UxGU/i/KEePwdRDlB8j+eYCdYUzyOmbgH11owfGBXs29RWS5TbCWf+F
- tMr+jt9Fmv+6ZbYNKFbO5/fSUAzTtPfbn0l6OzyaQ+gwVO+HiZQm3jrbK9rQEUJeFEfeop9SXCD
- 4OTfla0s5yr1nZld7KFiJ1tda8fE2al37ZnJS9HZmPBG1hHU8UJ5Zk3hUP9hNfO1NSfGZdwxko2
- oY+UtRkVKKTLfNH+IIaGvjExdJB4SnPtTpRSfk1+fgAtn9o3kZHXfYunUIBkBdewH5b7Ss0ue1K
- nnqcYElUy2/mPqq2NU73uxYiiaU3cwNUr5SRsUSJHLaqBrZLWarkf9w0EUZBmLE/AJi4pWmQuOw
- oD9NhQMKgwK7x3Vv5+NYUU2ZfGRJtHW9jYP426skDW75eNCkxOtxO4Br86ZiGAPb7DCZObRqPYS
- ZLT2Eo+BoyQclGgXjkuqtjBVVTwRTK30cHd98DOQXFo4dKyo/JR7rBEyq21+NcdkV1/epLGYv9D
- eoxxyBrCpKA6SCYUyBn2l5O6otK5zgZsdIG7Fv4Xng0lS8=
-X-Received: by 2002:a05:6000:18a6:b0:439:b886:20cd with SMTP id
- ffacd0b85a97d-439b886219amr7543680f8f.16.1772488984307; 
- Mon, 02 Mar 2026 14:03:04 -0800 (PST)
+ bh=a0q3doKdbgb3JqnYROywKi9R6evoTwQ/dQN4VyRTwQg=;
+ b=kYZiuqjZXjYYUxQU47dfHQJH0lsZBYSMdh4AsDUjBKYTbuz6gv+zvGzkA9ZEdT8tXT
+ 0ZQQYEBe/Q4yPhP+IYNu7Gg5lkICtSkedxryfhExev7M2TDwePe4bD7HOMh/NKci52z3
+ ZU2czxY3m6No4UVG4zU2BoeaaNZQRqEPiyBLQNFc/5Ta3Rml6nCwxJ7vI7GGjsk4/M3H
+ fBz3XB0h5CKDEnmaym1NDUzfU9MqZGhj1SEj085Ja5l6v8mpOK7TUTlTdGKjWdW/OkBq
+ KP1gh/AqfDQJtZeQgD8FDsINTRpmVmbee6hlLj5OmtgjHaVhO3Wt8NoWOosidZBoTq7+
+ 7zug==
+X-Gm-Message-State: AOJu0YxidOhx5kh6tRw+513iaw/034yeRy+dRRxr60tyWMdznPpASbf3
+ W6hqGrKl+WGO5pnoZcfO1A6wiI0RvBh0ACpf3q8OZsa8D5lzNMfaytCoKHqfEw==
+X-Gm-Gg: ATEYQzyB4QJJa2omsZze7CYINGU1/Z6MqeXU7fERKsq+2ayaNccmCn7V80m6r4fuy+i
+ D8ycZQCnUEacGHE49VOyBxpv1ZhVwwQihlI7e3yfT2M+gUtOlDXw8HVrf8k1kE48Cl6igtw/ypx
+ qBug9nNKBtbTUu0ADrnHrZ82i7gUF403IpaPi2qV8gEk80RNJVpC7n0TtMObtqql31TrPyBqYdA
+ 33mnvZg/q48KHZWZBqs+pvpyf5L2J9V5oHyLtucO4c3AGlm1yk+FSZ+GDoub7CY1oOs0yqWcvsq
+ Q6+7PIYFRB82RHUuSmVhmS4D+BGkbpQA/2nlpQEMXws7961ogbfHCqtjtpE5/lmGRcqgheRC83m
+ HVaPkfPg4CndixZHEImVJLTPpz0fiO5S7nyzisv7XZ9OZt+RIKxQdW2inTcD1Kvd2ED4Mbsma7p
+ QScgc5WXtnLOwDGLDWkUGPuy47h5kIUpY1svATt937p5IV4Al3HcOsx5gAaAtOMeTAcnZ1wXtTj
+ fQkiGlhngQ4CF8vMGEv2OAoCxA7JTYtyO76YUlsU2yqtac=
+X-Received: by 2002:a05:6000:2dc5:b0:439:b858:1d28 with SMTP id
+ ffacd0b85a97d-439b8581e08mr7408633f8f.26.1772488995816; 
+ Mon, 02 Mar 2026 14:03:15 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-2e0b-4800-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:2e0b:4800:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c765c38sm29308102f8f.31.2026.03.02.14.03.02
+ ffacd0b85a97d-4399c765c38sm29308102f8f.31.2026.03.02.14.03.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 14:03:03 -0800 (PST)
+ Mon, 02 Mar 2026 14:03:15 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -79,16 +79,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Troy Lee <leetroy@gmail.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 01/12] hw/arm/Kconfig: Fix serial selection for NPCM8XX
-Date: Mon,  2 Mar 2026 23:02:43 +0100
-Message-ID: <20260302220254.1166849-2-shentey@gmail.com>
+Subject: [PATCH 10/12] hw/arm/aspeed_ast27x0-{ssp,
+ tsp}: Do not access SerialMM internals directly
+Date: Mon,  2 Mar 2026 23:02:52 +0100
+Message-ID: <20260302220254.1166849-11-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302220254.1166849-1-shentey@gmail.com>
 References: <20260302220254.1166849-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,30 +112,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CONFIG_SERIAL selects the internal TYPE_SERIAL device which is akin to
-an "IP block" that needs to be integrated with glue logic. In case of
-NPCM8XX this glue logic is TYPE_SERIAL_MM which the code uses already.
-Fix Kconfig to select CONFIG_SERIAL_MM which matches TYPE_SERIAL_MM.
+SerialMM inherits from SysBusDevice and exposes the memory region by
+means of sysbus_mmio_get_region(). Use that in order to avoid accessing
+implementation details of SerialMM.
 
-Fixes: ae0c4d1a1290 ("hw/arm: Add NPCM8XX SoC")
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/aspeed_ast27x0-ssp.c | 7 ++++---
+ hw/arm/aspeed_ast27x0-tsp.c | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index c66c452737..20e99e52b1 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -493,7 +493,7 @@ config NPCM8XX
-     select SMBUS
-     select PL310  # cache controller
-     select NPCM7XX
--    select SERIAL
-+    select SERIAL_MM
-     select SSI
-     select UNIMP
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index 9b12ba6743..8b84300e0f 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
++    MemoryRegion *mr;
+     g_autofree char *sdram_name = NULL;
+     int i;
  
+@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     }
+ 
+     /* UART */
+-    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
+-                             &s->uart->serial.io, 0,
+-                             memory_region_size(&s->uart->serial.io));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
++    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
++                             memory_region_size(mr));
+     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
+                                 &s->uart_alias);
+     /*
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index e39d1dc171..e7c7b74491 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
++    MemoryRegion *mr;
+     g_autofree char *sdram_name = NULL;
+     int i;
+ 
+@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     }
+ 
+     /* UART */
+-    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
+-                             &s->uart->serial.io, 0,
+-                             memory_region_size(&s->uart->serial.io));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
++    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
++                             memory_region_size(mr));
+     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
+                                 &s->uart_alias);
+     /*
 -- 
 2.53.0
 
