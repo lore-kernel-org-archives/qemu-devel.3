@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E06D58E7A
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6AF7D58E7E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvh-00088E-4I; Mon, 02 Mar 2026 03:47:05 -0500
+	id 1vwyvr-0001AR-PP; Mon, 02 Mar 2026 03:47:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyuq-0005Ny-2v
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:15 -0500
+ id 1vwyuS-000534-8o
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyun-0001wg-13
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:11 -0500
+ id 1vwyuI-0001uw-Ky
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441157;
+ s=mimecast20190719; t=1772441134;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KGbW5Lswy3D/DLPTw7v4xtq/OZ5sriiLYtlBVzlRKco=;
- b=LsjRlqpr/ZbkMj9/+NFfslF8ixGnlvVZNIoCrgk8U0o4ws6pGn9qK22bKmc0Yld274TUTE
- 7uEnRPC/zHXBVXBM/gr93jxGOnWmciYNfbAVYrMTTQzLTb3pEVjBXkXc+qfLqYO0kxeMfS
- +lAhahzekMYbCrfXkm1YTcw3zmVxmfM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E1b0JYdWTmUMjfXhJgLYKJmJjYVhz92C9EWnenw/nwQ=;
+ b=ZppBesEHRopsWkJofDjYjTIUGQZjvRx0TTePqEha1GSPL8KIZ8p6/yW4obbzrnN/q9Kvai
+ ZGaHGt3iMZ6X8KSQdb+/4MgwFtDLJfICwRscDwUc25u8yasiK6TYxNd8RDG26sbcsW1LUA
+ VoEIPTGf6A2w/0o7/bhY4J286KjuFN0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-jBcBIU5GMzuc_0VK_BmxiQ-1; Mon, 02 Mar 2026 03:45:55 -0500
-X-MC-Unique: jBcBIU5GMzuc_0VK_BmxiQ-1
-X-Mimecast-MFC-AGG-ID: jBcBIU5GMzuc_0VK_BmxiQ_1772441154
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48071615686so32875165e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:55 -0800 (PST)
+ us-mta-517-ktoWASXnNZSn1GTtQvDPRQ-1; Mon, 02 Mar 2026 03:45:33 -0500
+X-MC-Unique: ktoWASXnNZSn1GTtQvDPRQ-1
+X-Mimecast-MFC-AGG-ID: ktoWASXnNZSn1GTtQvDPRQ_1772441132
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-439b50dfca1so586231f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441153; x=1773045953; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441130; x=1773045930; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KGbW5Lswy3D/DLPTw7v4xtq/OZ5sriiLYtlBVzlRKco=;
- b=hUDLbgDZprcBG5u8Os5HCc+O6708BPVk65+ntvo/q8XkQsud94mo2ryhWDdWzUkN65
- ehxOATb1umSO1Y/BxZe3vrZHRVucbfnjk33aW38TE09er0+FmKNsf5UpAi6TyhMCJtK1
- FhtoTKNnI5SomWh2DO4nl+GffPtfDlD3QO0/d4X/bRtBxrevXakkjIIFq0nZ8Yt2YS17
- rk70Llgu0moKetbsMnmuanw4u0bTQKNnq+r55I+7CEI8mH2yIjXsxxt0frJSwA/JAYag
- +D+/vcMIDNNDCD/uMQ9a9QXe0xSjRGHVGnQ7EzkDYHwRLE7lQ3nbIYNK/8CgUE6YGcOP
- jkzQ==
+ bh=E1b0JYdWTmUMjfXhJgLYKJmJjYVhz92C9EWnenw/nwQ=;
+ b=EOxtsOx40ZPOLWpf60bP1AqYh5L9UXk2UJPrtw1EW4/nvCuGsER+ioJMGq8FxMTtsC
+ LB26HJj40O0MrXSyASzSuC9Qq+oT8GEEUfMmrx1x1uDR4D0r3hYBhqVscTG/hSrqcMA+
+ jRL8nui/eZDrG7Ubcm3aze7EmCITa0zHzCmqUJb6fPEQHc/AIjJUyOEb1ss4FNYenKcf
+ pD+KpyZdWlhzfwt9lz0D/DsgsKMpUgMafsDV2GQ78jbgLEOhqiVR07u7puQxWBNO4WM7
+ zc2RSzav6k0lE3geojLuj/ninDWarVZhdZrRFCcIs2VljXAsin+bHGV5M1Vau9DaARba
+ I1ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441153; x=1773045953;
+ d=1e100.net; s=20230601; t=1772441130; x=1773045930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KGbW5Lswy3D/DLPTw7v4xtq/OZ5sriiLYtlBVzlRKco=;
- b=XFqNPacBauLCRHgwFzUDYj7sdutpq9EAxLcXMiOwfyrEtZ1J3tiVWxL9F07EKE+dce
- uYKpVg3SvzLV9SA+OrMX4CohGRCglxZEggHnILPtKJMsum74UBTSAtFy5unQci+/IKBq
- zHYJGltCD79EP5dK0RR668nDHN/gsCxLSnXw82FNOhcLpF3dSIAwfETxtDy3d20ZDiM7
- ycCW5aiYG1YfYsH6X4QaGBfQNUQAWwO7Fy7WsCgFRUxMFVC0EiMakikttUBLRF+OwL5t
- 4Gso38nTTAsiJlfi6TosJRoA6qY+9oDjl2qvD/Yt4VfnjCoF6yZ6CtWDj6p3yYYP4bkU
- z0Zg==
-X-Gm-Message-State: AOJu0YyPDFo6tr5jbL4W0JJyAYu832U/mm1V18nMlLniXINJT8KyFViK
- 0Ygww7V6logZFLPCZGApzEZ7K4i6AjTkVne078HPaXamzpMgi5zyE1COzonVwTQeV3/cEy1YI1h
- ZWM3Fi2TZ2/G0ymJPgR6rtDoz3jtCoaDdNAhsBONf6klWauRemfhTd6dB5vbGYbK5Agz7QxQuai
- uAKpfW1rDbO7rfku/sBQkeh7qtUHhElFU7CSkgt0RV
-X-Gm-Gg: ATEYQzyBWkp0j2HsrCqC3Pa90bc/oH9rvb/wVfCjpgIEXK6b6NSonf/aAM/gQf9cq/1
- 0NrZuF6PuZrKgVsYQsOAErmhOjZg4rJPrgOLkGIkrnGkV9ZfI5foW5yv8WafQpBbm0G1SLnnTyp
- AbSaJdTUn7wmeQfdWinJjOLcMSii2k1FFWupte4I5PyZ7v8qq8Q53HUZe/6kEC6+rlUab2t64kQ
- SqJUTWgJ5eqTKPGK4XhlLGv4Vt+z53hLLb3uQORrYCyjGcuYLBZwTPkq96/ftB13cpf5qQHtR4S
- cLxU1iXYT/gV+E4tefPha0t/yrqQdW3KahK1/g7nX6UodX5nyUdoVIC0W4+W12eRF46sNaKjf7E
- pwzYNOJRinEb/u5/+/2F/qpJj1Vec36SY7O27RprZZxuS6BlK1JplJUgGsil56om6Do05owDl4Q
- BrmX7WrsfBIsArbgTcOLycv4fTGYU=
-X-Received: by 2002:a05:600c:621b:b0:47e:e076:c7a5 with SMTP id
- 5b1f17b1804b1-483c9babe69mr198735745e9.11.1772441153592; 
- Mon, 02 Mar 2026 00:45:53 -0800 (PST)
-X-Received: by 2002:a05:600c:621b:b0:47e:e076:c7a5 with SMTP id
- 5b1f17b1804b1-483c9babe69mr198735385e9.11.1772441153081; 
- Mon, 02 Mar 2026 00:45:53 -0800 (PST)
+ bh=E1b0JYdWTmUMjfXhJgLYKJmJjYVhz92C9EWnenw/nwQ=;
+ b=r+7ZqZZJTTHKlR71Tozu3a0et/evax60Dg43tCHhNl/2exFPOYPHYfGuYZzfA7W7HM
+ uruew4XaxdO5EgZ3m9eXaaf0pZ2Rt2mhwfgFJduzHfsTANm+eGcBb2Ej7aaKsNKNbOgQ
+ eAC3ooE0sCDk7S+Lob9qsL/qoEfPimbBtE0O0OjUC/l8SPO3JDgMusvfZ+pgbVMtYGGf
+ 26TfXt5LBeXAq/DUtOPijjwtcdYsI+ofU9KD2KLd64iBueiELmze0xGkY0vW1P847O6F
+ 5inUWyM+hj/O7ihTIQady7ZeqvoKu6DIUDUBmb1CJCYmSnQ4KsnQIbP14E+Lsene5rSC
+ yCZw==
+X-Gm-Message-State: AOJu0Yw4L5f3sIbkuy5Gz0uOC2vpQu7/lUnFjiP/6ru7/ti/KkshjeHI
+ ekOGfLkDa1E9sqo1Q1D+4BqKSpQ+EmIBPFKiLXt6tkXJYQauTGo5JhsM8r1rGrnWF3UVQi1VOQx
+ 24zeatUeYJFriIkFql3CCq+PSGe+loT2fdbztMhmgWCBS3wFUFVs8n6DS5MijbNavH711amUkst
+ kzRJsKTGfk/gtlvZPH5IWu2jVaIF975Cd4zPMKTb6a
+X-Gm-Gg: ATEYQzwy1JMIfkhWoFxM9DQsGaA7Jyoungv0fKhpTmvVROW8N5HA0gL1i0p5t31A3T1
+ lDpXoNEJr1/r9o4gz6W4RCkxvXu81j5nBCTVfFI1/UF91JFD0ms5+sL1TBez/j/ABawDyJwA4Ax
+ GxPxRYMK0ZoZdI5keNjm4a3se3vsMSstXgeGIURccHmmFwPKusHldby8qME+BAlH1/ntXazQBHJ
+ ZWebE19ENqNKUIAWCdNDBcUZ7M0gAlYDsEOR7UKBx8lPDT3UzdFBg+gycSGAKmBRZheRxIeNtH/
+ 07T9zYYlWVqVf54fGnFHR/aWSdupqhU2ZGK2u4jb2ACQvgKvoGxoawspAYOhm45dwO+Nw4YH4Bd
+ fIGs9AbXHymD2dMLCp1J/YDMInT9pPrJgZHd26SDCMaad2aK+HadNe9gFaT5BtLC/pxTtLRIgi0
+ A0egMye6Fif6rfwBBvqwRnL7aiCQM=
+X-Received: by 2002:a5d:5d06:0:b0:435:e3bd:5838 with SMTP id
+ ffacd0b85a97d-4399de00428mr20275686f8f.25.1772441130419; 
+ Mon, 02 Mar 2026 00:45:30 -0800 (PST)
+X-Received: by 2002:a5d:5d06:0:b0:435:e3bd:5838 with SMTP id
+ ffacd0b85a97d-4399de00428mr20275630f8f.25.1772441129829; 
+ Mon, 02 Mar 2026 00:45:29 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483c3b770c2sm262546525e9.10.2026.03.02.00.45.50
+ ffacd0b85a97d-439b1116698sm11757410f8f.16.2026.03.02.00.45.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:45:50 -0800 (PST)
+ Mon, 02 Mar 2026 00:45:28 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 050/102] i386/kvm: unregister smram listeners prior to vm file
- descriptor change
-Date: Mon,  2 Mar 2026 09:42:45 +0100
-Message-ID: <20260302084338.473368-51-pbonzini@redhat.com>
+Cc: Alexander Graf <graf@amazon.com>
+Subject: [PULL 041/102] docs: Add Nitro Enclaves documentation
+Date: Mon,  2 Mar 2026 09:42:36 +0100
+Message-ID: <20260302084338.473368-42-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -122,61 +121,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Alexander Graf <graf@amazon.com>
 
-We will re-register smram listeners after the VM file descriptors has changed.
-We need to unregister them first to make sure addresses and reference counters
-work properly.
+Now that all pieces are in place to spawn Nitro Enclaves using
+a special purpose accelerator and machine model, document how
+to use it.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-10-anisinha@redhat.com
+Signed-off-by: Alexander Graf <graf@amazon.com>
+
+Link: https://lore.kernel.org/r/20260225220807.33092-12-graf@amazon.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ MAINTAINERS                                |   1 +
+ docs/system/confidential-guest-support.rst |   1 +
+ docs/system/index.rst                      |   1 +
+ docs/system/nitro.rst                      | 133 +++++++++++++++++++++
+ 4 files changed, 136 insertions(+)
+ create mode 100644 docs/system/nitro.rst
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 524b5276a68..8edfbb834c6 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -112,6 +112,11 @@ typedef struct {
- static void kvm_init_msrs(X86CPU *cpu);
- static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-                           QEMUWRMSRHandler *wrmsr);
-+static int unregister_smram_listener(NotifierWithReturn *notifier,
-+                                     void *data, Error** errp);
-+NotifierWithReturn kvm_vmfd_change_notifier = {
-+    .notify = unregister_smram_listener,
-+};
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 0458980d434..72153288c53 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3031,6 +3031,7 @@ M: Alexander Graf <graf@amazon.com>
+ S: Maintained
+ F: hw/nitro/
+ F: include/hw/nitro/
++F: docs/system/nitro.rst
  
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_INFO(SET_TSS_ADDR),
-@@ -2885,6 +2890,17 @@ static void register_smram_listener(Notifier *n, void *unused)
-     }
- }
+ Subsystems
+ ----------
+diff --git a/docs/system/confidential-guest-support.rst b/docs/system/confidential-guest-support.rst
+index 66129fbab64..562a7c3c285 100644
+--- a/docs/system/confidential-guest-support.rst
++++ b/docs/system/confidential-guest-support.rst
+@@ -41,5 +41,6 @@ Currently supported confidential guest mechanisms are:
+ * Intel Trust Domain Extension (TDX) (see :doc:`i386/tdx`)
+ * POWER Protected Execution Facility (PEF) (see :ref:`power-papr-protected-execution-facility-pef`)
+ * s390x Protected Virtualization (PV) (see :doc:`s390x/protvirt`)
++* AWS Nitro Enclaves (see :doc:`nitro`)
  
-+static int unregister_smram_listener(NotifierWithReturn *notifier,
-+                                     void *data, Error** errp)
-+{
-+    if (!((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
+ Other mechanisms may be supported in future.
+diff --git a/docs/system/index.rst b/docs/system/index.rst
+index 427b0204831..d297a952823 100644
+--- a/docs/system/index.rst
++++ b/docs/system/index.rst
+@@ -39,5 +39,6 @@ or Hypervisor.Framework.
+    multi-process
+    confidential-guest-support
+    igvm
++   nitro
+    vm-templating
+    sriov
+diff --git a/docs/system/nitro.rst b/docs/system/nitro.rst
+new file mode 100644
+index 00000000000..5907d6153eb
+--- /dev/null
++++ b/docs/system/nitro.rst
+@@ -0,0 +1,133 @@
++AWS Nitro Enclaves
++==================
 +
-+    memory_listener_unregister(&smram_listener.listener);
-+    return 0;
-+}
++`AWS Nitro Enclaves <https://aws.amazon.com/ec2/nitro/nitro-enclaves/>`_
++are isolated compute environments that run alongside EC2 instances.
++They are created by partitioning CPU and memory resources from a parent
++instance and launching a signed Enclave Image Format (EIF) file inside
++a confidential VM managed by the Nitro Hypervisor.
 +
- /* It should only be called in cpu's hotplug callback */
- void kvm_smm_cpu_address_space_init(X86CPU *cpu)
- {
-@@ -3538,6 +3554,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     }
- 
-     pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
-+    kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
- 
-     return 0;
- }
++QEMU supports launching Nitro Enclaves on EC2 instances that have
++enclave support enabled, using the ``nitro`` accelerator and the
++``nitro`` machine type.
++
++Prerequisites
++-------------
++
++* An EC2 instance with Nitro Enclaves enabled
++* The ``nitro_enclaves`` kernel module loaded (provides ``/dev/nitro_enclaves``)
++* CPU cores allocated to the Nitro Enclaves pool via ``nitro-enclaves-allocator``
++* Huge pages allocated for Nitro Enclaves via ``nitro-enclaves-allocator``
++
++Quick Start
++-----------
++
++Launch a Nitro Enclave from a pre-built EIF file::
++
++    $ qemu-system-x86_64 -accel nitro,debug-mode=on -M nitro -nographic \
++        -smp 2 -m 512M -kernel enclave.eif
++
++Launch an enclave from individual kernel and initrd files::
++
++    $ qemu-system-x86_64 -accel nitro,debug-mode=on -M nitro -nographic \
++        -smp 2 -m 512M -kernel vmlinuz -initrd initrd.cpio \
++        -append "console=ttyS0"
++
++The same commands work with ``qemu-system-aarch64`` on Graviton based EC2
++instances.
++
++Accelerator
++-----------
++
++The ``nitro`` accelerator (``-accel nitro``) drives the
++``/dev/nitro_enclaves`` device to create and manage a Nitro Enclave.
++It handles:
++
++* Creating the enclave VM slot
++* Donating memory regions (must be huge page backed)
++* Adding vCPUs (must be full physical cores)
++* Starting the enclave
++* Notifying vsock bus devices of the enclave CID
++
++Accelerator options:
++
++``debug-mode=on|off``
++    Enable debug mode. When enabled, the Nitro Hypervisor exposes the
++    enclave's serial console output via a vsock port that the machine
++    model automatically connects to. In debug mode, PCR values are zero.
++    Default is ``off``.
++
++Machine
++-------
++
++The ``nitro`` machine (``-M nitro``) is a minimal, architecture-independent
++machine that provides only what a Nitro Enclave needs:
++
++* RAM (huge page backed via memfd)
++* vCPUs (defaults to ``host`` CPU type)
++* A Nitro vsock bus with:
++
++  - A heartbeat device (vsock server on port 9000)
++  - A serial console bridge (vsock client, debug mode only)
++
++Communication to the Nitro Enclave is limited to virtio-vsock. The Enclave
++is allocated a CID at launch at which it is reachable. A specific CID can
++be requested with ``-accel nitro,enclave-cid=<N>`` (0 lets the hypervisor
++choose). The assigned CID is readable from the vsock bridge device::
++
++    (qemu) qom-get /machine/peripheral/nitro-vsock enclave-cid
++
++EIF Image Format
++^^^^^^^^^^^^^^^^
++
++Nitro Enclaves boot from EIF (Enclave Image Format) files. When
++``-kernel`` points to an EIF file (detected by the ``.eif`` magic
++bytes), it is loaded directly into guest memory.
++
++When ``-kernel`` points to a regular kernel image (e.g. a bzImage or
++Image), the machine automatically assembles a minimal EIF on the fly
++from ``-kernel``, ``-initrd``, and ``-append``. This allows standard
++direct kernel boot without external EIF tooling.
++
++CPU Requirements
++^^^^^^^^^^^^^^^^
++
++Nitro Enclaves require full physical CPU cores. On hyperthreaded
++systems, this means ``-smp`` must be a multiple of the threads per
++core (typically 2).
++
++Nitro Enclaves can only consume cores that are donated to the Nitro Enclave
++CPU pool. You can configure the CPU pool using the ``nitro-enclaves-allocator``
++tool or manually by writing to the nitro_enclaves cpu pool parameter. To
++allocate vCPUs 1, 2 and 3, you can call::
++
++  $ echo 1,2,3 | sudo tee /sys/module/nitro_enclaves/parameters/ne_cpus
++
++Beware that on x86-64 systems, hyperthread siblings are not consecutive
++and must be added in pairs to the pool. Consult tools like ``lstopo``
++or ``lscpu`` for details about your instance's CPU topology.
++
++Memory Requirements
++^^^^^^^^^^^^^^^^^^^
++
++Enclave memory must be huge page backed. The machine automatically
++creates a memfd memory backend with huge pages enabled. To make the
++huge page allocation work, ensure that huge pages are reserved in
++the system. To reserve 1 GiB of memory on a 4 KiB PAGE_SIZE system,
++you can call::
++
++    $ echo 512 | sudo tee /proc/sys/vm/nr_hugepages
++
++Emulated Nitro Enclaves
++-----------------------
++
++In addition to the native Nitro Enclaves invocation, you can also use
++the emulated nitro-enclave machine target (see :doc:`i386/nitro-enclave`)
++which implements the x86 Nitro Enclave device model. While -M nitro
++delegates virtual machine device emulation to the Nitro Hypervisor, -M
++nitro-enclave implements all devices itself, which means it also works
++on non-EC2 instances.
++
++If you require NSM based attestation backed by valid AWS certificates,
++you must use -M nitro. The -M nitro-enclave model does not provide
++you with an AWS signed attestation document.
 -- 
 2.53.0
 
