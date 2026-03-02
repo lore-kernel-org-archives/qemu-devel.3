@@ -4,102 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE197C624C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9EFC624C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:25:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwzU7-0001Ks-6o; Mon, 02 Mar 2026 04:22:39 -0500
+	id 1vwzWJ-000570-UD; Mon, 02 Mar 2026 04:24:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vwzU5-0001Je-QH
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:22:37 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vwzU3-0007hf-Ot
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:22:37 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48370174e18so23233225e9.2
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 01:22:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772443354; x=1773048154; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HlEaot0Az2g5Lcmwus88Zh0yOjbHLCxHpraQxrLX9JA=;
- b=ZQgDHMUEjPYCMV/vN4gcsHqFzVFlocxIrLpFaoJe1U1As+cwSDZJyOmDVlNZqxD9TY
- vFAX6od6mwUAlQLJOkeuDPOXAVg8iYA8V/LzVEIAn2M0Wf1q+Lgjc6dzgzMOWr5ZAYSu
- vfG2SNtTKUgB6Ugpsu7yBrdqA7weBQxkEnSvestEeUeSxhoc30A382jXWqBNWNizxY8H
- PEuokdsuzPlORbuH0gwTkBFJ/p71t8CPCsluWdu0OmOONBunozwnPe6GHECZA4sm8DaY
- T3GNKFrcM06hzFtIpVIt1t2S3BeJ63hpQXa2ay6a0vV+SnQg0g6MextZ93/dFBxgYeeY
- qxoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772443354; x=1773048154;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HlEaot0Az2g5Lcmwus88Zh0yOjbHLCxHpraQxrLX9JA=;
- b=neTGxJhRZ2dGsNI+u0X4Qhwqz8C/uRbfpt63/IXg7C/OHD2r4tNN6870YdzJ2HYjKc
- +K0FukJr7m08WxwPUAUpeHl134c+x9F5JN5tveaZ2yebt+A/nIT9Gd4aHWRJpEjl65aR
- kJ7m+3PdtUrViIf2fhhf8n3e5P6dZYPQkwr2WuwZQ4pNftO+L2MyAjuWgVlDKNhmKV7B
- ENzWBqi5YpUgwgw+Yl7LBSxeA6n+/0pvvuzv3qYyb46TFwyNpgNilX6oBen+8eHVjxN6
- wZuzAMuSEiI+7tboA5DBuda1vMJIGGVT6H6BznM1vh0n2q7KE1g50U30p+sTHY1vPBL/
- FEcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTsrfDuPwID+624SGg32U7YF7dDbVp8a0baih29qhp1mpJzONi1UssdPADSOiGuTiiznSfDgbERYMQ@nongnu.org
-X-Gm-Message-State: AOJu0YzDQaKEKClOGWlRbKnaWVU0x8t5gQFGjDQKgIxOq672CSNNdAJq
- e5GFCY4ykMFl3fecx3qVZAATGZX1gsUoqAf5HFbhE9mJ0CTMRAxCClaFNxGeIFfBvj0=
-X-Gm-Gg: ATEYQzxCr4k8i4nPYWt8ntrNqmTDWXJ/xk/f7C2IwlQj9Vc6o8Alhj/H2f7nOs+kpjW
- bVv37eIub2Y68ObHvErO/QUto3/RrTB/QyGNLi16eMCBPCv8BJsqgCzIf2oTreIVVfos3wa3Y6Z
- z6RDn9O2WkZra7dse8WjgH7OLFUSUO7vwGR5OF3yHz0YQh5vUkPHbmkdITI0xMBDydXfDgHx0mp
- AE8YmivI/E7s6yR/c//8LRi/P05x2w70FE0OGHQsecYoiQFYGCM4qa7dyuziaBG0pea5c6L7h6f
- OwtGecNnOb3aTgr1MBhpe9vpiOJA/OGwdaWA2ntPzRNzKioG4dKZvoEqzvqlQR3vgI3rKY9FcYJ
- a3kDpXaFPqdoOImvoliMmjFfvEqh9zqeuBvtSs/xADoYheLm5aOy3fEHXtwVlG1cTO74ng99/TO
- aunXLlb1QdJMhVfOE13vIb3GfIl3IOMWBL0ZfCo9A2IuG2abddvJZZOzVTYz/b9iWVkn35aJJ56
- TParigtfaq1VEx+0tBQrnOfpEXCNWM=
-X-Received: by 2002:a05:600c:6488:b0:480:1c69:9d36 with SMTP id
- 5b1f17b1804b1-483c9bbc297mr214797835e9.17.1772443354251; 
- Mon, 02 Mar 2026 01:22:34 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb9d9c6sm129435305e9.14.2026.03.02.01.22.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 01:22:33 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>,
- Yodel Eldar <yodel.eldar@yodel.dev>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v2 6/9] chardev: Don't attempt to unregister yank function
- more than once
-Date: Mon,  2 Mar 2026 09:22:22 +0000
-Message-ID: <20260302092225.4088227-7-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260302092225.4088227-1-peter.maydell@linaro.org>
-References: <20260302092225.4088227-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vwzWF-0004wl-Sn; Mon, 02 Mar 2026 04:24:53 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vwzWE-0007yt-83; Mon, 02 Mar 2026 04:24:51 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 621AGQmO726661; Mon, 2 Mar 2026 09:24:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=wMppmKkjzbTSu5/FVyVnJ0/MQMIc2J
+ Esx1DOSIgXpAk=; b=q+JOJom0/d7JPxfgEXeIaA7k1HvEjslNbZ0jv8pNQPy6a0
+ dph/55jhY/n+F79tTQPP+P/NqTc1z9A8MIeEbd1qQ7j7HKEfj+8vmyaDmU/+1p5Q
+ kSESUlzAy8AynFPKnVPAPIE4jm1gHRhP2PTWVt7HIpkXGB2m9+8UCSsfNrEy69wp
+ MGlZ9hzt0DWyrbCIRZlkk1kgTqfc1xn5ISUENJ0WLaYi7zhF3yuV/hUca4FKQrHv
+ kf3pgnVdPPqhSWEh+Xk7rrJgb3+vnRTZ5+JpBfl+QuZgN9sTneHD4cu4IqlaZ+Ul
+ Pmf8dzU8LbjERfoKpOEB58xsusPfRDxAtG7YiPhQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskcnr24-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Mar 2026 09:24:35 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6229BRlu003284;
+ Mon, 2 Mar 2026 09:24:34 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2xw9tu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 Mar 2026 09:24:34 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6229OUFD37487096
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 Mar 2026 09:24:30 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C081C20043;
+ Mon,  2 Mar 2026 09:24:30 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B3F5D20040;
+ Mon,  2 Mar 2026 09:24:28 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.79.204.232])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  2 Mar 2026 09:24:28 +0000 (GMT)
+Date: Mon, 2 Mar 2026 14:54:26 +0530
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, milesg@linux.ibm.com, qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>
+Subject: Re: [PATCH] ppc/pnv: fix dumpdtb option
+Message-ID: <7yq2eac5yzsx2ve2nwbs7uhjguemravsimtm26dkgppeczqmix@wtrwux3aeswg>
+References: <20260225081037.21990-1-shivangu@linux.ibm.com>
+ <CAFEAcA9+-5=hVzRMu9n1YtcOazMLQDx65T=NLy9wxv5RNLwYAg@mail.gmail.com>
+ <48b13f0b-bb53-4316-923d-77a20ffdfab1@linux.ibm.com>
+ <aaFv56FZ6Z50G_T4@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <33d78dda-6df8-3825-7cf5-7bf7e21d010e@eik.bme.hu>
+ <aaGoqt6B5fWQGNRh@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <648a3687-6356-8063-b4d4-a0bbc332dd0c@eik.bme.hu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <648a3687-6356-8063-b4d4-a0bbc332dd0c@eik.bme.hu>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: UMVxnkpU0AvNELA3WBrrxwXM9IAeMni0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA3OCBTYWx0ZWRfX2IeXQVxpjCQ1
+ GmyrNW42JfW/HWMBA0GyUEdRrED0G8D27iLZ1ijhQXKMGEHCQhmjK8PcV20U7aryRvUsz2usyJy
+ PlB3qVGzzgoGo0ht4Puwlz0unzj5uRDbn86A1jbxHx1sC1atCvihzc0Pkiww/KDwR5XEALrKWxU
+ HWWRF+nP8ENGhtGmqgjLdhToBdiqAOcQIZ+vej4MEWSvk04WiPfQ2X2CyPADEAPrV8pCPCeafws
+ y4iOfnL4y5ZmipDaa2VetEKl1qXQX2aWDdOFpAAvRLwdFD9beEPAXQ4Mnfz9rKh4gbG3nwJdmju
+ I0V139D0LQhKI7Xgh8KqqSgfo5YSOQIWTEM23hG7Zx+B4Hlx3dsdRpwSr4oWwGwLuVc22TBIjJL
+ byFfiZtJN2U7xTU9yIjADH3C14AKMpBHLgL1B9wJZG51JmYcqP09dl+ESXlcCb/h0VOLQR8Bsia
+ EdBmj/e7Fl7K52rdyBA==
+X-Authority-Analysis: v=2.4 cv=H7DWAuYi c=1 sm=1 tr=0 ts=69a55754 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=OmxVkkl3oSMogOC1_KYA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: NVV281ExK2trG4GekwNtyGbg2_5PGUmd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-02_02,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 clxscore=1011 priorityscore=1501
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020078
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,71 +128,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Hi Bolaton,
 
-tcp_chr_free_connection() can be called multiple times in succession,
-in which case the yank function will get as argument a NULL s->sioc
-that has been cleared by the previous tcp_chr_free_connection() call.
+Thanks for taking the time to review.
 
-This leads to an abort() at yank_unregister_function().
+On Fri, Feb 27, 2026 at 04:53:56PM +0100, BALATON Zoltan wrote:
+> On Fri, 27 Feb 2026, Aditya Gupta wrote:
+> > On 26/02/27 02:05PM, BALATON Zoltan wrote:
+> > > On Fri, 27 Feb 2026, Aditya Gupta wrote:
+> > > > On 26/02/27 03:43PM, shivang upadhyay wrote:
+> > > > > > <...snip...>
+> > > > > > 
+> > > > > > Q: can the generated DBT genuinely be different on a
+> > > > > > subsequent reset than it was when QEMU first starts?
+> > > > > > The comments in the pnv_reset() code seem to suggest it,
+> > > > > > but on the other hand the code as written will only
+> > > > > > call pnv_dt_create() and update machine->fdt once on first
+> > > > > > reset, not on later resets. So perhaps the comment is
+> > > > > > just confusingly worded ?
+> > > > > 
+> > > > > Yes, I am not much familiar with the design here. But, as per
+> > > > > 
+> > > > > my current understanding of this code, DTB content should not
+> > > > > 
+> > > > > not be changed.
+> > > > 
+> > > > To add to this, yes, normally reset path doesn't change the device tree,
+> > > > since all reboots are the same as the first boot.
+> > > > 
+> > > > As of upstream this is true, I don't see dtb changing between resets.
+> > > 
+> > > Isn't VOF allowing clients to do setprop that would be changing the device
+> > > tree? Some settings are stored there so maybe it can be changed by the guest
+> > > that should be preserved between reboots?
+> > 
+> > By VOF did you mean the pseries f/w ?
+> 
+> I don't know much about these machines. I meant Virtual Open Firmware in
+> QEMU or SLOF which it can replace. But maybe this is only used by spapr so
+> does not affect pseries but in spapr there's spapr_vof_setprop() which looks
+> like it can change the fdt. Maybe it's handled differently on pseries, I
+> don't know.
+Yes, Vof/Slof firmware are only used for pseries.
+for pnv we use skiboot.lid firmware.
+> 
+> > i don't see anything changing the dt in powernv as of now, but
+> > for some edge case, where that is possible (will be possible atleast
+> > after mpipl support is merged), we can always update the fdt in below 2
+> > if cases in pnv_reset:
+> > 
+> >    > if (machine->fdt) {
+> >    >     fdt = machine->fdt;
+> >    > } else {
+> >    >     fdt = pnv_dt_create(machine);
+> >    >     /* Pack resulting tree */
+> >    >     _FDT((fdt_pack(fdt)));
+> >    > }
+> > 
+> > machine->fdt will never be NULL since it's being set in pnv_init
+> > should we just do pnv_dt_create on every pnv_reset ?
+> 
+> I don't know either but wasn't original code meant to either create an fdt
+> or take what the user specified with -dtb option or similiar? In that case
+> maybe you don't want to override the user specified dtb but I could be wrong
+> about what this is meant to do as I have no idea whatsoever about these
+> machines.
+I think I should just remove all the fdt changing stuff from cpu_reset.
+Becasue nothing is using it as of now. We can introduce it with mpipl patches.
+That would make the code easier to understand there.
+> 
+> Regards,
+> BALATON Zoltan
 
- #0  __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:51
- #1  __GI_abort () at abort.c:79
- #2  qtest_check_status (s=0x513000005600) at ../tests/qtest/libqtest.c:209
- #3  qtest_wait_qemu (s=0x513000005600) at ../tests/qtest/libqtest.c:273
- #4  qtest_kill_qemu (s=0x513000005600) at ../tests/qtest/libqtest.c:285
- #5  kill_qemu_hook_func (s=0x513000005600) at ../tests/qtest/libqtest.c:294
- #6  g_hook_list_invoke (hook_list=0x55ea9cc750c0 <abrt_hooks>, may_recurse=0) at ../glib/ghook.c:534
- #7  sigabrt_handler (signo=6) at ../tests/qtest/libqtest.c:299
- #8  <signal handler called>
- #9  __GI_raise (sig=6) at ../sysdeps/unix/sysv/linux/raise.c:51
- #10 __GI_abort () at abort.c:79
- #11 yank_unregister_function (instance=0x7fb26f2ea9a0,
-     func=0x55ea9bcc0a10 <char_socket_yank_iochannel>, opaque=0x0) at
-     ../util/yank.c:151
- #12 tcp_chr_free_connection (chr=0x51300000ffc0) at ../chardev/char-socket.c:385
- #13 tcp_chr_disconnect_locked (chr=0x51300000ffc0) at ../chardev/char-socket.c:477
- #14 tcp_chr_disconnect (chr=0x51300000ffc0) at ../chardev/char-socket.c:495
- #15 tcp_chr_hup (channel=0x514000000040, cond=G_IO_HUP, opaque=0x51300000ffc0) at ../chardev/char-socket.c:536
- #16 qio_channel_fd_source_dispatch (source=0x50c0000b5fc0, callback=0x55ea9bcd6770 <tcp_chr_hup>,
-     user_data=0x51300000ffc0) at ../io/channel-watch.c:84
- #17 g_main_dispatch (context=0x50f000000040) at ../glib/gmain.c:3381
- #18 g_main_context_dispatch (context=context@entry=0x50f000000040) at ../glib/gmain.c:4099
- #19 g_main_context_iterate (context=0x50f000000040, block=block@entry=1, dispatch=dispatch@entry=1,
-     self=<optimized out>) at ../glib/gmain.c:4175
- #20 g_main_loop_run (loop=0x502000055690) at ../glib/gmain.c:4373
 
-Commit ebae6477dc ("chardev: check if the chardev is registered for
-yanking") seems to have encountered a similar issue, but checking
-s->registered_yank is not a complete solution because that flag
-pertains to the yank instance, not to each individual function.
-
-Skip the yank_unregister_function() in case s->sioc is already NULL,
-which indicates the last yank function was already removed.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[PMM: rebased]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- chardev/char-socket.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 5adeb90865..4e82915cf1 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -370,7 +370,8 @@ static void tcp_chr_free_connection(Chardev *chr)
- 
-     tcp_chr_set_msgfds(chr, NULL, 0);
-     remove_fd_in_watch(chr);
--    if (s->registered_yank &&
-+
-+    if (s->registered_yank && s->sioc &&
-         (s->state == TCP_CHARDEV_STATE_CONNECTING
-         || s->state == TCP_CHARDEV_STATE_CONNECTED)) {
-         yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
--- 
-2.43.0
-
+~Shivang.
 
