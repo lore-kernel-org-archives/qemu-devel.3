@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27C32D58E7D
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E91B8D58E7E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:45:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyso-0001V3-OD; Mon, 02 Mar 2026 03:44:06 -0500
+	id 1vwytE-0001j9-8y; Mon, 02 Mar 2026 03:44:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwysf-0001Qb-J9
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:43:58 -0500
+ id 1vwyt9-0001hT-S0
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyse-0001Uz-0b
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:43:57 -0500
+ id 1vwyt3-0001XA-Sg
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441035;
+ s=mimecast20190719; t=1772441057;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u5XVQye+19ruydFJSwvWvInX5SHaYM971FB7J2eYwf0=;
- b=HMO9qGY1PVcEr7j2k+xf55JF6VxqB8qQ4Zl4m+ZvuM/oV8vBcnxKGNq3VYA5QHSSdJPtPX
- wdb2WeSeRb5clReMlZD3ZLvnH+WAhRIUYVjNN6K1NQMAznWAT70iRCseXsq4+gp+BNQ7lm
- NemUI4qdx6Yl+oQSr5gDgQ5S2R3a8KE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5glJM2P7fY2YVXE7FFswaKmcrolKLgkeSRsFSCk7y4s=;
+ b=YwXRziaCyY7qkaSjygiDhIXnOLGQbSYK6A2BSDluQ68cRjCu6ILmxgEM9TF4exNjqyFZ8W
+ aZ6ZGkuAcNc1hPCN+miY90ejZ4WNp/lGNXHO4bQTlS8NLWF8lAG3Nan81iFoNo63YSdcS+
+ ddzfZAScDTxhoP/f3p42VUcpWZpnusE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-Q9OllKekNSSDqeFn6Z_OZA-1; Mon, 02 Mar 2026 03:43:54 -0500
-X-MC-Unique: Q9OllKekNSSDqeFn6Z_OZA-1
-X-Mimecast-MFC-AGG-ID: Q9OllKekNSSDqeFn6Z_OZA_1772441033
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439b3b408f9so945651f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:43:53 -0800 (PST)
+ us-mta-381-CqsrNeRsNP-LgNVw8PfscA-1; Mon, 02 Mar 2026 03:44:10 -0500
+X-MC-Unique: CqsrNeRsNP-LgNVw8PfscA-1
+X-Mimecast-MFC-AGG-ID: CqsrNeRsNP-LgNVw8PfscA_1772441049
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4363333c102so2851396f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:44:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441032; x=1773045832; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441048; x=1773045848; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u5XVQye+19ruydFJSwvWvInX5SHaYM971FB7J2eYwf0=;
- b=sU2Ji0w7X8uiPiRex5zFXwBASEZjuGZKNtRRsCnTPPjSWKpwrABu3+/xhXImidk0IR
- z5YlPZcuL6lsaRVLjTDElDIZh/hBjYdlW8K+Lzit83IS43W0ZTvAJNEBczt02jHjxt/Z
- YeWCJxNuXPH8lbMr3nLW0AAZkN/my0884ZI1uCtQSoySh92PSC4bip3gJiViNECbZ5l1
- 3MCAFGAfyc9E5zb0gPS8sHwm8/1pdQ/qouDaPl2Frj1pfq27DkA1Rc0TVwE5keTMnHOW
- B0ATaB2IxLVfmuI6X5jpPeVxfTjLe9syNQ15LMP7IPRuLdWy2vcTWg0bAkFzLz1I/ZR1
- RJpA==
+ bh=5glJM2P7fY2YVXE7FFswaKmcrolKLgkeSRsFSCk7y4s=;
+ b=SMyVX/+3f4IsBPDwDuMJJOQhPxEnOMybY7KUWJJIBRMybL4g2Jf6YadHhkoa6zJV36
+ 1+cxh1YONvUZ+E+Gp+YVxAXZtHSxfuQrZLELviukzxaBFmtxXknLvhKDnUgIZZddABMk
+ GAY9DK0yM7tRspBOOpXLel2MVanvpAhDa0/raJmDAtjp52p9c1/PlWB3B3/sEW3VUl8D
+ keWZBnam4Xe6SsMuDWEEI9fO9Vd5jMiFYm16Mvma8VXxZ3QXpas2NwsvCvYBZ0lUaNAA
+ Z8b/frh3uR64C4BqZ6GQGDZNNU8mjeAUChGvcpKpSr/Xa8hL8SIzuIXRbbPQBMtAJFZt
+ 2mrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441032; x=1773045832;
+ d=1e100.net; s=20230601; t=1772441048; x=1773045848;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=u5XVQye+19ruydFJSwvWvInX5SHaYM971FB7J2eYwf0=;
- b=BJfb90dTWp3gdvi94SpVzRgTDNdOz6087hSs5HprjCEE75DZG8Tumix8ch4AeGdbpR
- tAoFUsJbezt34Rb6KX+ot3/4Bw8HGy4irq9qGdqJqqRwzOP0x/AIVQ+kQLjOsP9cxaSm
- k3DwmbX8IlFbXK8tFfmVCYXUOeGPrM7RamjY2jvEByr7bjtWky0HiAe+h0McN1Mtyr1+
- OGQHbugbVOzNag7oZAPzsXJARfQaWYuK1bAkg3AWWh2DAhDip9Mk9WT0t6NKUqP2sA4z
- Xt/Koe4Bb2UMQMhOMFv/9vymc86QP0A3X3/LBykpCXdeH8Qw1Q3di20eG+uMV1Pr1l5R
- 6Dpg==
-X-Gm-Message-State: AOJu0Yx4lODOU2dV3uDaHsHeO98NG4rgvsivjQoRfoZ9kj3kmY7+Sk25
- n7gXOgCMzI5unpnl+Ik0jLm7OCSICdiBw5AYxK2Zkq72vBRL8wD+/XLjerx0hv7d6oYrFvZKW9f
- PAWmHc4TtprQA8FAChdlAs27gzYDQ6X+szWXNnieMtOjp1eT1mnwburfZSc/i6+o5yUF8Abdk+t
- WbmYJvJwFjzoYZRBrKtVm4PYcGvlzcyVOv+Wr5qGk5
-X-Gm-Gg: ATEYQzyw+e25nKmVlmcIfdHMQoK1/gBMNl3MHCjAt0hrYNRQf4QMVJrMF7AhdU0Gfyn
- RmYAuDCtYlZ1kVFL2/D0dLHPYe3vQ0V97sh9n3Oa1J8zTCWnRxDnVQjoxFktKVjMqebpDwxfriO
- h/wzWIbZqyrb4RZSerUZUbp8EoJkDJH3wvF3R2hr1pwcFw2Qea96GM/dIE1xgvGsZjUbAXXLBZ9
- q3ETSF1yCfTcphqUTU3cbAXBmnEhiByWPnLtNdwKXJYYczF1UsWqYi09qkrasLsn9p0aKq07zxQ
- mqd8zNRdJfg49pWSQ49vkFnMxXAhH4n+XQgR5i/u3gDez+0yig1y2UJwP9wzs6gRW9OlGHknPGD
- tjbgT8CDlp73FSq8CTnoH1rbcfBEIcuVGm4fDLxsinxKxTBBV9M/EVFZSoOQe2ZkvEvQT9z3u8F
- mVQRCz7aVYbYLh07Q2iDwthjR1UOM=
-X-Received: by 2002:a05:6000:bcf:b0:439:aa1d:be10 with SMTP id
- ffacd0b85a97d-439aa1dbeaamr8602768f8f.40.1772441031884; 
- Mon, 02 Mar 2026 00:43:51 -0800 (PST)
-X-Received: by 2002:a05:6000:bcf:b0:439:aa1d:be10 with SMTP id
- ffacd0b85a97d-439aa1dbeaamr8602715f8f.40.1772441031356; 
- Mon, 02 Mar 2026 00:43:51 -0800 (PST)
+ bh=5glJM2P7fY2YVXE7FFswaKmcrolKLgkeSRsFSCk7y4s=;
+ b=SrkS4K0Fjk5xBe8VPGPuA1Pm5XctprPDf4KLjWO1sZWKLFITwvFS7mGKMFHGiGrmKS
+ KrtAoNkBGw9Yp2c5Ve2UGEEb0qFkbyoEZdlaW3ODyCxryLYnhm10YeIjxd81yoh+MjW8
+ v0vDK2Ar2ZbMKLepyOTEjFmwCLTR1CopXCg4cjnQ1aA+0SyXAuk5V630SLW3EpKuGMfL
+ 34ZbEEFpWNQcG81r7qyyiRU13JhjnitQkipGdaUZkHWy0J0FThDWnU/ZEhHFD9OFF3va
+ Dy8gbk/H57vjB+uw5xG8P3986+c7uZ1EjVjnEzX3YF3lrZme9jgBIWt1d+8RSQpSzTfy
+ jR2g==
+X-Gm-Message-State: AOJu0Yzhb17Aw7TNzwVg5y0gerM4f8OCFiVrVDWznPXiTd+dwmK0YJFe
+ AXJJGaRVO+233RwLyBgiuZdnKahD5uUdXkKQ1RHbTE+ujwlB8j58IizxGus6W978qpuPNWFBhog
+ REPKo3E+B3qzUhNcbm56FovW8DgChliqXAooN4TIpGocZzqsFSducRVDVompkC+NUMKOZxacicV
+ VFx5wKhQ20kvkMuYRgg+UUpSEDPLJ0g4smx36lSh2g
+X-Gm-Gg: ATEYQzzCXU+lkLDzsdwnE3+0lv4FI1kdw4J9EfOnaYiSuTSMM36C3H5IU04wrEgxg90
+ kU2Z/Tj7rL/Ya8D1Dot5s9Trm5iFlEUZ97A3cn9Mp6a89C4who1N8WD+vGcRsdbdybcBiw4JagE
+ Y705XzBFz5teOF6k4+dYGuYUuJuLiWKXfDSa/nGCCYOW3fIwgKUA3nm1luD2uBOG7+GKvHDbUVM
+ h2Qc/F8YcsUmyYOZ49oww3oSDVofB4w9TJEgwO3zj2UkelWJuO4hwObzHggFD0Ecu6hYe8U0djb
+ NtJlXiq5bbstpZm7h7vm6lFJVJ+4JlAReNo28u4+kqVnaKdeiPR8uWkrGWiPBpl1nhyRs5ZCUE1
+ hiQxX6kAyFEMfHVWzSG00Da7NbJy/Gl8HMOA3+aHENigAghA+wbocG8h/+C88RVH5F5AyVMs9Uz
+ O0KVRrvHylneF/FIe7VYjk7AybgM8=
+X-Received: by 2002:a05:6000:2f86:b0:435:8ad8:b7a with SMTP id
+ ffacd0b85a97d-4399de2c5a6mr19151141f8f.46.1772441047931; 
+ Mon, 02 Mar 2026 00:44:07 -0800 (PST)
+X-Received: by 2002:a05:6000:2f86:b0:435:8ad8:b7a with SMTP id
+ ffacd0b85a97d-4399de2c5a6mr19151089f8f.46.1772441047352; 
+ Mon, 02 Mar 2026 00:44:07 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439bb686a32sm1967191f8f.13.2026.03.02.00.43.47
+ ffacd0b85a97d-439abdf5430sm15119019f8f.5.2026.03.02.00.44.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:43:47 -0800 (PST)
+ Mon, 02 Mar 2026 00:44:06 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Wei Liu (Microsoft)" <wei.liu@kernel.org>
-Subject: [PULL 003/102] target/i386/hvf/x86_mmu: Fix compiler warning
-Date: Mon,  2 Mar 2026 09:41:58 +0100
-Message-ID: <20260302084338.473368-4-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 009/102] whpx: refactor whpx_destroy_vcpu to arch-specific
+ function
+Date: Mon,  2 Mar 2026 09:42:04 +0100
+Message-ID: <20260302084338.473368-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -125,67 +124,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-When reusing the code in WHPX, GCC emits the following warning when compiling
-for i386-softmmu under MSYS2:
+Avoid a TARGET_X86_64 define by moving platform-specific code
+away from generic WHPX support.
 
-  In file included from ../src/target/i386/emulate/x86_mmu.c:20:
-  ../src/target/i386/emulate/x86_mmu.c: In function 'vmx_write_mem':
-  ../src/target/i386/emulate/x86_mmu.c:251:25: error: format '%llx' expects argument of type 'long long unsigned int', but argument 3 has type 'target_ulong' {aka 'unsigned int'} [-Werror=format=]
-    251 |             VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            ~~~
-        |                                                                       |
-        |                                                                       target_ulong {aka unsigned int}
-  ../src/target/i386/emulate/panic.h:34:12: note: in definition of macro 'VM_PANIC_EX'
-     34 |     printf(__VA_ARGS__); \
-        |            ^~~~~~~~~~~
-  ../src/target/i386/emulate/x86_mmu.c:251:48: note: format string is defined here
-    251 |             VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-        |                                             ~~~^
-        |                                                |
-        |                                                long long unsigned int
-        |                                             %x
-
-Fix the warning by reusing the target-specific macro TARGET_FMT_lx which exists
-for this exact purpose.
-
-Fixes: c97d6d2cdf97 ("i386: hvf: add code base from Google's QEMU repository")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
-Link: https://lore.kernel.org/r/20260223233950.96076-3-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260223233950.96076-9-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/hvf/x86_mmu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/system/whpx-all.h   | 1 +
+ accel/whpx/whpx-common.c    | 5 +----
+ target/arm/whpx/whpx-all.c  | 5 +++++
+ target/i386/whpx/whpx-all.c | 6 ++++++
+ 4 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
-index afc5c17d5d5..fe44d2edf4a 100644
---- a/target/i386/hvf/x86_mmu.c
-+++ b/target/i386/hvf/x86_mmu.c
-@@ -244,7 +244,8 @@ void vmx_write_mem(CPUState *cpu, target_ulong gva, void *data, int bytes)
-         int copy = MIN(bytes, 0x1000 - (gva & 0xfff));
+diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
+index 3db074c38c5..b831c463b0b 100644
+--- a/include/system/whpx-all.h
++++ b/include/system/whpx-all.h
+@@ -17,6 +17,7 @@ void whpx_translate_cpu_breakpoints(
+     struct whpx_breakpoints *breakpoints,
+     CPUState *cpu,
+     int cpu_breakpoint_count);
++void whpx_arch_destroy_vcpu(CPUState *cpu);
  
-         if (!mmu_gva_to_gpa(cpu, gva, &gpa)) {
--            VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-+            VM_PANIC_EX("%s: mmu_gva_to_gpa " TARGET_FMT_lx " failed\n",
-+                        __func__, gva);
-         } else {
-             address_space_write(&address_space_memory, gpa,
-                                 MEMTXATTRS_UNSPECIFIED, data, copy);
-@@ -265,7 +266,8 @@ void vmx_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
-         int copy = MIN(bytes, 0x1000 - (gva & 0xfff));
+ /* called by whpx-accel-ops */
+ bool whpx_arch_supports_guest_debug(void);
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index f018a8f5c7d..c57a0d3f0f9 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -236,10 +236,7 @@ void whpx_destroy_vcpu(CPUState *cpu)
+     struct whpx_state *whpx = &whpx_global;
  
-         if (!mmu_gva_to_gpa(cpu, gva, &gpa)) {
--            VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-+            VM_PANIC_EX("%s: mmu_gva_to_gpa " TARGET_FMT_lx " failed\n",
-+                        __func__, gva);
-         }
-         address_space_read(&address_space_memory, gpa, MEMTXATTRS_UNSPECIFIED,
-                            data, copy);
+     whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
+-#ifdef HOST_X86_64
+-    AccelCPUState *vcpu = cpu->accel;
+-    whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
+-#endif
++    whpx_arch_destroy_vcpu(cpu);
+     g_free(cpu->accel);
+ }
+ 
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index e01e6499ba4..0a31c7b9464 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -308,6 +308,11 @@ bool whpx_arch_supports_guest_debug(void)
+     return false;
+ }
+ 
++void whpx_arch_destroy_vcpu(CPUState *cpu)
++{
++    /* currently empty on Arm */
++}
++
+ static void whpx_get_reg(CPUState *cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE* val)
+ {
+     struct whpx_state *whpx = &whpx_global;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index e1f0fa5e770..cdcaebbe167 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1277,6 +1277,12 @@ bool whpx_arch_supports_guest_debug(void)
+     return true;
+ }
+ 
++void whpx_arch_destroy_vcpu(CPUState *cpu)
++{
++    AccelCPUState *vcpu = cpu->accel;
++    whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
++}
++
+ /* Returns the address of the next instruction that is about to be executed. */
+ static vaddr whpx_vcpu_get_pc(CPUState *cpu, bool exit_context_valid)
+ {
 -- 
 2.53.0
 
