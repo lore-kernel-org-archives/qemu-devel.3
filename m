@@ -4,105 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0488EB3638
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 21:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383C1EB3636
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 21:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxAi4-0001v5-T1; Mon, 02 Mar 2026 16:21:49 -0500
+	id 1vxAyp-00048s-A9; Mon, 02 Mar 2026 16:39:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vxAi1-0001ut-OV
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:21:45 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vxAhz-0003Rk-FC
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:21:45 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2ad21f437eeso36652375ad.0
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 13:21:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772486501; cv=none;
- d=google.com; s=arc-20240605;
- b=lYzpQMVKJSMxXH/UwvOVWmirY9DrUsYbJWl4imPknBXfVNm0di5kGHTOZ23Jp3WSqC
- UBNokKJ6Ml9IgbTaP1IRMPWCkNiaS1YmZEuQu8vfM5AlxVDksSuUtGc0BD6J+0/kqOOm
- plZKQA1NPaWNe/c4hEDoS+eutPBOf9n7pJVRqLOs38WWq8nNbhAusu0DQdSsjANPmVqs
- 5bK/6/wW9MRD0w/4klsa6VTVa8HM1coM1A1I7hLFzsESbHYwubqnKfkm1cyYUnOK0p2f
- JyVqZuhfo/+248mPwkuj37lUWuxfIVL2Rpbn0k3h6FMp3A8Hn6Fih98hF676PrjlCC1B
- pxsQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Sg+xfEwA6MvGytdG/rA7xP5iUDiOhMHzZ64iHi+PzSg=;
- fh=n/2g6091IoMWMMiR3h5fkPEPud19wotKT44jRnRvKvQ=;
- b=DQ7C5i3ZAqHOSUgIxN4QiuG9O2rcECRhMxNPy2dhfRrFiNYMdG7j1MX+dLbnsAKenr
- TjX0AE/ui3QWu6Hs6Sqv+Ze8sft9a4jRIqkMDBweSvTPby32NFJPUh25JrcCH+ylZKiR
- 7EwaObUQhe1iB9uxLvq75JL1mg4Bm7X8fSBHdnpprIq3l/CAZX/smfLui/pw1YP57kKm
- LUfIH/yux5DBfm6w+e17XjfM2M4Vh0VphpVjY1dWXa2dRsaWrUt4wH0cYyKWxiddPKzi
- 0XQ74orTJURbqBB6OpphZZ6I68FPTBvAbS8TXTM0+t3NOn2fhnyBpT+buEODnJSPl3qI
- SH2Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
+ id 1vxAyl-00048j-0p
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:39:03 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
+ id 1vxAyj-0005nv-EJ
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 16:39:02 -0500
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 622Jujiw2504678
+ for <qemu-devel@nongnu.org>; Mon, 2 Mar 2026 21:38:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ qL231AvH/ErEeNYnS+y+OIUNn9Iz2WaUeEZMchhqMFY=; b=UccbF9/EwJ2LYZ8b
+ JQj8T66w6Z6qSutuJEgZYU78LMxa7i79hHaOCeosjeTPSeZCA3jElaA8dBvwC38T
+ rvz0vxlcPKvxKzdiFb2Mov5f98i1TTuQiwe5jCcXDmEDOI7ySTd526VyeLlLiv2o
+ 4CfwBU/VncJ8Jb68RgmR9MUJfba2TELnXCE4JqfzsRx/W8cKFdXxFRFqCcKlDPsn
+ iFqRzpvTxRqWyuu693srzapOZNiIFvoAF4EPuMXbCmk1exhaDkFS8P6xa63qDQIE
+ ysFz7Nib0YMOu8rTT6KdKQwPsPctArv4hHM/ViJnCi++j8JeWjO8xccALDloWtu8
+ +u06bg==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cn5heu1j1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 21:38:57 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2bdff07d8f4so2646954eec.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 13:38:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772486501; x=1773091301;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Sg+xfEwA6MvGytdG/rA7xP5iUDiOhMHzZ64iHi+PzSg=;
- b=fAVkemN/ki3MwLx2YN6FdN8nH2RXAjhklxJXFXRj/7j6Gc+Mg5mYPAMR53rWSXXNOt
- 9XimgGk59Ubxz7FhOzMm9wlXXRgBLYzpM80jA+hJ8u3SNYluFq2lD7fPVB83RlSCHl1I
- ODAcADrPWIFHiKkipG8Lzp7t5RcombRVxhoQ/mPmNGYPUbU/Jv3yC+XBWQyBQ0TrGVKE
- mmWq3QAUfgVXybuqhVo3LdSTPnYp1wFvKn8HcLGodMv1I5a/tvDVyiW7NAmYJmNZcODc
- Z4lsar96lvjzREw6li4C90FxhBCEGd1O0s27wxDmKRdm5oHIgGsijmkIJrlCTWrXsG76
- eqFw==
+ d=oss.qualcomm.com; s=google; t=1772487537; x=1773092337; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qL231AvH/ErEeNYnS+y+OIUNn9Iz2WaUeEZMchhqMFY=;
+ b=Ltw23vyxzKRzpEjhad0W4iufrqmtz/KoZuXIsse58+Nuz8XQy7xS6zay0x15LtL41s
+ hy/FhnrwIEu3/h++2CL4VWgVpNHUykROaMpnePSNMMP2tz3R5addoJcRruAfAyiNqUZq
+ F5Jzn3lqeSZok/AxIRCuZBoMzwQnvjPCIvXDZPGoscG0vspDPmmBKYr1TAM3x559d05N
+ BvwUCQepJqoXxfeAL+kyNes9rwqnJSM7t0boBUN6DsceeWCC/dw+B5lrke6t64kh29fE
+ 6ffIHHgpQIqMCxU3TzQJhQk778XTD95occ/TPcU+ubcEoYyOs/bmVa5f07+8hucPzxOe
+ VLxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772486501; x=1773091301;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Sg+xfEwA6MvGytdG/rA7xP5iUDiOhMHzZ64iHi+PzSg=;
- b=ZAfkrmWtlUBDgQYtqif1rLtoLwbV0GMJ8a1gBJi6H6HLTulEX4ZgD6Zje6CY564o+K
- ussRAP4RgyVZKwDWmk0z7wnS7gOYpL9XkWX0QUsnjBqSjIBHeIJTcJXkdtFSqoHoXsE0
- i7Fr+MRuODru4uY8kJusq1LsRTtiwgzOHt0iv8ANHfiTz8arGGXRCG3//2pb8VM4JIfX
- x5EDTSHDasDxYiVP366PzkTdjAo2XLxGG+kzriy9PdWL/5GpsU5aKN1bkAbUfvUpvgKG
- F29DkkCH26Y0TBMwfY7Qn4d4ttn9LF1b1naUfHTzWiwATpy9WrtQPS4qie3/JFArEF8x
- 3qLw==
+ d=1e100.net; s=20230601; t=1772487537; x=1773092337;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qL231AvH/ErEeNYnS+y+OIUNn9Iz2WaUeEZMchhqMFY=;
+ b=alePjRCmBU7eb0oYDRG8o5AXrCV15oS2VTNuIb3C0sUqliyrsOd+2cxk8AQNE+CiMq
+ 0Hi8HXBnigmvITTaqlZq1Jx29SoBJZEynta+GCJPUOcdCOA8gJJVd/EubiZQiMWYFzEz
+ dYR3WASZFMdZLL7nIJt86EqPU448x+2aszLN04wdw9fCwtsWZ0YPrEUDKmPXqJLFnrsU
+ VVdkEIcpW0+UxozHq9PSaKtjjnrNJiPpjPkxOSidjYdFdbBaUlUScuak3wl4HFs4bn/O
+ ftDWY0Pavqxp89WfKBv45zbJsPU4OYHHUxv2mESUuc4I/8FLT+np9qNI5jRZQwL1takE
+ gJwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCLHTR9pzEaeKWxsGd5+a8ZcVfRm8jV2ZVJfjC81V8I+e6U2fmrodpef2d4AOww/G+G84JZblIHlLp@nongnu.org
-X-Gm-Message-State: AOJu0Yyc00QeqfOxqreRFTLUCQyrp+n5cJlalNJlZpiXGLpRh3Qh3+NA
- 1PW7ZaIdB1U3LBVW4VH7HIfEONyC84QEx7AzMF9+6eoA5APK9970wtMiG2w0gXkTc2hNbU61TV+
- pg/KolLibta2j3Of9XuIC9DfODWMGDjLCn1CqbySpxA==
-X-Gm-Gg: ATEYQzzCq+t62Xl6Blc7aUsKS7j/Zh1SbR4innD1aFX9oui0cHS8RHcuUwdn4IL96tv
- kqmOnL2IFOW7mdLIUax/5NkkHR8uUpiKWMG0zkuQ82aZqhndUARKVUlj0CyT2HbVpCaF4Z/5dwV
- ov8agn9RzjfvB/xfX8kqXXtBSvQcSvg4MimzE3FHtpjmRn73GCeThbF7iMm6s0q1sP9YFirqPqV
- RNQdU1lcABOlIKT3wK5lY5NEW4dK5hwCp/F4cxEU/row/TcJ/M4HXLzOFZV38tB+eY3a3fDnseA
- 9S/8+UgoGCPC4WOaUA==
-X-Received: by 2002:a17:903:1a0f:b0:2ae:525a:f971 with SMTP id
- d9443c01a7336-2ae525afc1cmr47139565ad.23.1772486501013; Mon, 02 Mar 2026
- 13:21:41 -0800 (PST)
+ AJvYcCXvEF38UgMiydg/KpkP/59HqkbuLn+ZkmmqPc/MEOC8Paq20DH6bWlOR4NHGPRFJp6dcNbkb+Mp0L1B@nongnu.org
+X-Gm-Message-State: AOJu0YzoXkXOSWinF2Q8iYqUR37skcedfxD9IYrHclCD8evmSFNHy1RF
+ qNFfRstdVLIjUe0cyaoS6VJet9NEUi8OIkazhubyjcaKyl+cPWPtNr+pPCuiZzK7JHaReSajW9v
+ 7ftUroTEB4ygfg672IaY5ehAEjhTJ0XCilJzdQBimZnlH9nku4bzuwUMLYQ==
+X-Gm-Gg: ATEYQzz/zwuMEfMdS6DHPHkmxDLqLFLVgXbpRvsbyEkVfJkuTx5stIKmnwN7UwR+auI
+ pbspcSfSfOL3HblXvKF3/b+L2Oq1hXTy3RC77pba6iOWoBpUltg1O0BYmh4CUQ6+0bu/utkRcd+
+ FbYwXmTA2yFs8n/RmpINkNpFOWusKsVnT/6SaeHK6ppAdrJ6qZCx/4HI5aVqkkM7NiQ0YbRlSY3
+ qrUqRNbvJxtt1y3s2rFsP8gxnTPAq5q8OVSzGJYr/WcBI10kGfBAabyyW2jKwF7Z2r1DvyHekw0
+ vIm5vyi5wmCjQyeGMH9ueZer60tfQd0jaxsBNgVqvHUJWEBcD7MLY06OA2VExS2gXSEvqqtwHka
+ 1jIeCsJzUIYxLjykxuVUXm9Jo6/TDwbHbMLndKWBgiGVjhZ6MARATYwYMd4SnDoLKmLTq7N9DLC
+ nH
+X-Received: by 2002:a05:7022:113:b0:11f:2c9e:87f8 with SMTP id
+ a92af1059eb24-1278fc4dac8mr5445582c88.34.1772487537251; 
+ Mon, 02 Mar 2026 13:38:57 -0800 (PST)
+X-Received: by 2002:a05:7022:113:b0:11f:2c9e:87f8 with SMTP id
+ a92af1059eb24-1278fc4dac8mr5445570c88.34.1772487536700; 
+ Mon, 02 Mar 2026 13:38:56 -0800 (PST)
+Received: from [10.110.0.81] (i-global254.qualcomm.com. [199.106.103.254])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-127899df36asm15217971c88.4.2026.03.02.13.38.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Mar 2026 13:38:56 -0800 (PST)
+Message-ID: <908abf8b-e5d6-40f3-8869-75ce42e632d0@oss.qualcomm.com>
+Date: Mon, 2 Mar 2026 13:38:54 -0800
 MIME-Version: 1.0
-References: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
- <b280d4ad-522d-4d28-b203-b87f114d0d81@epfl.ch>
- <CANCZdfqML5j5TLOQn2vCNAgxF9iWrL=92x_+oL4_NOUUJqt+-Q@mail.gmail.com>
- <535bf813-7926-40d4-b0de-3cd181dbcfa5@linaro.org>
-In-Reply-To: <535bf813-7926-40d4-b0de-3cd181dbcfa5@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 2 Mar 2026 14:21:29 -0700
-X-Gm-Features: AaiRm53drF_1ybopvEdQ2Ssdf5XixbXTPoMLBTJqdxqU-79wdjo8xSHt0aJw--w
-Message-ID: <CANCZdfqdC4xn3eQ35MjY09PLr1-hDoNgJ3quZfqU8UcrshhuVw@mail.gmail.com>
-Subject: Re: [PATCH v5 2/7] linux-user: make syscall emulation interruptible
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org, 
- alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu, 
- berrange@redhat.com
-Content-Type: multipart/alternative; boundary="000000000000432917064c112ce9"
-Received-SPF: none client-ip=2607:f8b0:4864:20::634;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/4] hw/i3c/mock-i3c-target: Set num_sent in TX
+ callback to fix trace reporting
+To: Jamin Lin <jamin_lin@aspeedtech.com>, "clg@kaod.org" <clg@kaod.org>,
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ "komlodi@google.com" <komlodi@google.com>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+References: <20260302032626.1974743-1-jamin_lin@aspeedtech.com>
+ <20260302032626.1974743-3-jamin_lin@aspeedtech.com>
+Content-Language: en-US
+From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+In-Reply-To: <20260302032626.1974743-3-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=BI++bVQG c=1 sm=1 tr=0 ts=69a60372 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=V2NxCb60AAAA:8 a=VDQsAdnQChltgqqKT-AA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22 a=3L6qF29SlnrayQqPM2jZ:22
+X-Proofpoint-GUID: -wnBecmm-NASmGvwnY11px2diezV9xKr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDE2MiBTYWx0ZWRfX1ZqaadrIBgNr
+ nCd9iNsV4Vf/OxdZDpcw0EAvIpgINPjETp+x/LiIx8Y+oYV2Z4lbUz509D9RaTTcTngKceU9Pt6
+ cC7De3vs14z56O3M6vOeZ8uM7TIiRc0o4TgrbHaWRLDECEe6GjV/aIhL4e6+28RXmjS5fUQ/Lxy
+ Ifw33dt9ZmokErkRNGpuTMPw5TAy8PasWJ+T7Qqk8cQ+pnwpWf9GZZt62JqLg/ByokXGLudnmr2
+ 2A4t5Dgc+mqNAL2H5YgMwofDjbsA3Jq78CzwRtwjFGdn+6SeqnojEMe94bUDn8LrloIEPoqklCY
+ 7BfNQFGh2ZVYVBVBJ9+EwSET1qlDCr/Hmp9u4eTA0PErAbS5/Noz9C3dAAhOjpZAY8ecNxB/w4d
+ HKxbbEqRzlqtGT7bSm0hiodFD2tej4Ow3q51hMjduza/vdG9dCyc/A+EBMoQV9Ph24IdWuJkQij
+ jqIq7sfpcfoLHCo/xtw==
+X-Proofpoint-ORIG-GUID: -wnBecmm-NASmGvwnY11px2diezV9xKr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-02_05,2026-03-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 phishscore=0
+ spamscore=0 adultscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020162
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,124 +157,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000432917064c112ce9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/1/2026 7:26 PM, Jamin Lin wrote:
+> mock_i3c_target_tx() did not update *num_sent before returning.
+> 
+> Although some callers may not directly use this value, i3c_send()
+> passes num_sent to trace_i3c_send(). If the target TX callback does
+> not initialize *num_sent, the trace output may report an incorrect
+> or uninitialized value, leading to confusing debugging information.
+> 
+> For example, the following trace was observed:
+> 
+>   mock_i3c_target_tx I3C mock target write 0x12
+>   i3c_send I3C send 0/1 bytes, ack=1    (expected 1/1 bytes)
+> 
+> This happens because *num_sent was never set by the TX callback.
+> 
+> Fix this by setting:
+> 
+>   *num_sent = to_write;
+> 
+> so that the actual number of transmitted bytes is correctly
+> propagated back to i3c_send() and reflected in trace output.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>  hw/i3c/mock-i3c-target.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/i3c/mock-i3c-target.c b/hw/i3c/mock-i3c-target.c
+> index 875cd7c7d0..5c913ee49b 100644
+> --- a/hw/i3c/mock-i3c-target.c
+> +++ b/hw/i3c/mock-i3c-target.c
+> @@ -86,6 +86,7 @@ static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,
+>          s->buf[s->p_buf] = data[i];
+>          s->p_buf++;
+>      }
+> +    *num_sent = to_write;
 
-On Mon, Mar 2, 2026 at 10:50=E2=80=AFAM Pierrick Bouvier <
-pierrick.bouvier@linaro.org> wrote:
+Thanks for fixing this... could you also set *num_sent to 1 in the ibi return path earlier in the function (snippet below), where it seems to consume exactly 1 byte of data
+...
 
-> On 3/2/26 7:15 AM, Warner Losh wrote:
-> >
-> >
-> > On Mon, Mar 2, 2026 at 7:03=E2=80=AFAM Florian Hofhammer
-> > <florian.hofhammer@epfl.ch <mailto:florian.hofhammer@epfl.ch>> wrote:
-> >
-> >     The syscall emulation code previously wasn't interruptible via
-> >     cpu_loop_exit(), as this construct relies on a longjmp target that
-> >     is not
-> >     live anymore in the syscall handling code. Consequently, longjmp()
-> would
-> >     operate on a (potentially overwritten) stale jump buffer. This patc=
-h
-> >     adds an additional
-> >     setjmp and the necessary handling around it to make longjmp() (and =
-by
-> >     proxy cpu_loop_exit() safe to call even within a syscall context.
-> >
-> >     Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch
-> >     <mailto:florian.hofhammer@epfl.ch>>
-> >     ---
-> >
-> >
-> > So bsd-user would need something similar, I'd think. But it still uses
-> > the older-style
-> > TARGET_EJUSTRETURN. With half of the archs still out of tree, I'm not
-> > entirely
-> > sure the best way to approach this.
-> >
-> > The code does what you say, which is good, but there may be some subtle
-> > reason to do something else.
-> >
-> > Reviewed-by: Warner Losh <imp@bsdimp.com <mailto:imp@bsdimp.com>>
-> >
->
-> At the moment, syscall filtering is not available for bsd-user, it's
-> (sadly) only implemented for linux-user. Which implies that current
-> changes are not needed for bsd-user neither, since they can't be tested
-> anyway.
->
+<snip>
+    if (s->cfg.ibi_magic && num_to_send == 1 && s->cfg.ibi_magic == *data) {
+        mock_i3c_target_ibi_timer_start(s);
++	*num_sent = 1;
+        return 0;
+    }
 
-OK. I'll add it to the backlog list then...
 
-Warner
+</snip>
 
---000000000000432917064c112ce9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>      return ret;
+>  }
+>  
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 2, =
-2026 at 10:50=E2=80=AFAM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bo=
-uvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">On 3/2/26 7:15 AM, Warner Losh=
- wrote:<br>
-&gt; <br>
-&gt; <br>
-&gt; On Mon, Mar 2, 2026 at 7:03=E2=80=AFAM Florian Hofhammer <br>
-&gt; &lt;<a href=3D"mailto:florian.hofhammer@epfl.ch" target=3D"_blank">flo=
-rian.hofhammer@epfl.ch</a> &lt;mailto:<a href=3D"mailto:florian.hofhammer@e=
-pfl.ch" target=3D"_blank">florian.hofhammer@epfl.ch</a>&gt;&gt; wrote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0The syscall emulation code previously wasn&#39;t in=
-terruptible via<br>
-&gt;=C2=A0 =C2=A0 =C2=A0cpu_loop_exit(), as this construct relies on a long=
-jmp target that<br>
-&gt;=C2=A0 =C2=A0 =C2=A0is not<br>
-&gt;=C2=A0 =C2=A0 =C2=A0live anymore in the syscall handling code. Conseque=
-ntly, longjmp() would<br>
-&gt;=C2=A0 =C2=A0 =C2=A0operate on a (potentially overwritten) stale jump b=
-uffer. This patch<br>
-&gt;=C2=A0 =C2=A0 =C2=A0adds an additional<br>
-&gt;=C2=A0 =C2=A0 =C2=A0setjmp and the necessary handling around it to make=
- longjmp() (and by<br>
-&gt;=C2=A0 =C2=A0 =C2=A0proxy cpu_loop_exit() safe to call even within a sy=
-scall context.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Signed-off-by: Florian Hofhammer &lt;<a href=3D"mai=
-lto:florian.hofhammer@epfl.ch" target=3D"_blank">florian.hofhammer@epfl.ch<=
-/a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:florian.hofhammer@epfl=
-.ch" target=3D"_blank">florian.hofhammer@epfl.ch</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0---<br>
-&gt; <br>
-&gt; <br>
-&gt; So bsd-user would need something similar, I&#39;d think. But it still =
-uses <br>
-&gt; the older-style<br>
-&gt; TARGET_EJUSTRETURN. With half of the archs still out of tree, I&#39;m =
-not <br>
-&gt; entirely<br>
-&gt; sure the best way to approach this.<br>
-&gt; <br>
-&gt; The code does what you say, which is good, but there may be some subtl=
-e<br>
-&gt; reason to do something else.<br>
-&gt; <br>
-&gt; Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=
-=3D"_blank">imp@bsdimp.com</a> &lt;mailto:<a href=3D"mailto:imp@bsdimp.com"=
- target=3D"_blank">imp@bsdimp.com</a>&gt;&gt;<br>
-&gt; <br>
-<br>
-At the moment, syscall filtering is not available for bsd-user, it&#39;s <b=
-r>
-(sadly) only implemented for linux-user. Which implies that current <br>
-changes are not needed for bsd-user neither, since they can&#39;t be tested=
- <br>
-anyway.<br></blockquote><div><br></div><div>OK. I&#39;ll add it to the back=
-log list then...=C2=A0</div><div><br></div><div>Warner=C2=A0</div></div></d=
-iv>
+Jithu
 
---000000000000432917064c112ce9--
 
