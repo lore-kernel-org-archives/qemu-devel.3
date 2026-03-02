@@ -4,102 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97884EB362A
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 18:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86EB3EB362A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 18:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx7yI-0008TA-LX; Mon, 02 Mar 2026 13:26:22 -0500
+	id 1vx86U-0001qV-OL; Mon, 02 Mar 2026 13:34:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx7yG-0008R8-N1
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:26:20 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vx86Q-0001pg-BN
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:34:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx7yE-0000as-O7
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:26:20 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vx86K-000221-0l
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:34:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772475976;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1772476467;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2LMPDnzTdQWb62mSQwVVw83c4qst9S9fTL7tQ9pE7qg=;
- b=hTaPSwNClO+8VIZ1rxox3tRS4Y0ppCQ8mZ13BiIFoSDb7TPXbSchgvOubMJ+Wm/6T++xkw
- UuufcgN59gteilvW1tYXl6VS2OQD2ECyznBqmY7akXGcuNjDy4DZvAMKeb8C05T//5OPVu
- QQUUt6KgJwE0dCTWotKQZMFBCTFZOQM=
+ bh=SzFZ0rIRKNTUJLwLhW4dYH6YvnevBdHAWrMUCI3xZgE=;
+ b=b3iEetDNzsoBgh1wLKd2ViQJlskpZHsMDsU5IAR5iwiYOC/h0bYo/Mdqlon0jNs8i4vg39
+ vG6sFkpDBNuPg6Ef/wECw7LYJauEftQ+4TzhbU8Mhe+RWUunBAYOS5CchCvwXazc6shpFz
+ NXDXdJ0k8Lj1yqbt68Asx9YLf8l1ne4=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-pCsNDrxCOFSBTVH352pTEQ-1; Mon, 02 Mar 2026 13:26:15 -0500
-X-MC-Unique: pCsNDrxCOFSBTVH352pTEQ-1
-X-Mimecast-MFC-AGG-ID: pCsNDrxCOFSBTVH352pTEQ_1772475974
+ us-mta-638-kB-EFSv8OZGT4TtPdE_4Tw-1; Mon, 02 Mar 2026 13:34:26 -0500
+X-MC-Unique: kB-EFSv8OZGT4TtPdE_4Tw-1
+X-Mimecast-MFC-AGG-ID: kB-EFSv8OZGT4TtPdE_4Tw_1772476465
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4836b7c302fso48403225e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 10:26:15 -0800 (PST)
+ 5b1f17b1804b1-4837b6f6b93so34416935e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 10:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772476465; x=1773081265; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SzFZ0rIRKNTUJLwLhW4dYH6YvnevBdHAWrMUCI3xZgE=;
+ b=ARxfR9fK4JY/zD5NIUygLt4UIxczSR6bT06ex3eoVoNntEtWKEo67aaUmYIEpDxnly
+ Ym7jNpEPKNjhyTPzYakinEGUF78S1oU4c771P4Jm8gNu3upB/FTl3WRTnqvL2e9ZehBq
+ J6WnzXWZQ9QwwUiL0FexVevPQG0k6+0fbNYsbW/qNt1XwHno9DZ8q5pj02ILopPqEFyB
+ jE2Q/rFwW/tabBIOgf/c19DKjwW6VQ8kDEaQes/K2FAYgzI1N+qtfAQc1yjs1/6n7Ces
+ MCJusS2Tfx93YR463RpOHdjJGa/KWFzCozAtfYFHb7pXLsfoULBatG6yJJXM1Bm/NSUV
+ OQDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772475974; x=1773080774;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2LMPDnzTdQWb62mSQwVVw83c4qst9S9fTL7tQ9pE7qg=;
- b=M94O5mf3ApjT7i7TS8wgaGA4gtvYik9cMWgQtRwjViasIdb/lEjACiNKDjjXq6GU7M
- JYWQ1WuHm7DqeWUY+mcFBX8jwJuod0UFHUzWzuM8BYP8COWyUOb82e1ZTIXXcD629ZoB
- klcrdNOf21SOvRMEZIvxisiXtGUsB3L+OufBiltxs8o5vhRavPasKN8S7sH+cZUcNfP4
- z9rGfw915n5+UO6gXK2kse3i0lYn7XRb489rA9VQRcpI1jjBMgBzqtpkQ59eLzoeHnH/
- FE09kYEYpi+vOlWN3THksnEfvTxENcA9cgWjcjsCNcUN2U6rUqdzhQgRX358qLwSTacO
- jogg==
+ d=1e100.net; s=20230601; t=1772476465; x=1773081265;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SzFZ0rIRKNTUJLwLhW4dYH6YvnevBdHAWrMUCI3xZgE=;
+ b=FznWImLnpXZbMv62YBSK0PLJ7joH7bo0epbe2stEFdwbaapOKo6utO6W4GsYUp0pXm
+ tOhQ3oOKWCOf78ZCr7Uyfa4YfTDTkDc3r9cpr+T0DBepg9QC6ycl3PzoNurxpO+v+4nX
+ 6SozKlz6Q2kRkE4DLY5+bAxnoYINRolaM9Kh/4C2zOP1+CYcWiifv6tH7ZFoDUuqLGqQ
+ zx5KqQ9C2zp/5Y6Q7V+oiJArrGN4JvHrbYWrLqGw1lv+uFgtZUln3e6KWWTUy3se5I8E
+ bU/LkH0t7kbzZvA4sjyz7n1l6Ge/f7qdLH6vxTL7bxX8E0BcIwKKsxfr288XKNSjNcRB
+ jZdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGznhS51seKZfdMXDJPRRMtmto0sUAKVhJQT1VAVv/eR+ncHsKUIZoxpso4PWYM+xHzsCcQj8Uiacp@nongnu.org
-X-Gm-Message-State: AOJu0YwkAo95V+DTZxiJcyeEjXy8YoLS7sSLvNqTwWsm08XmRldzkArp
- 4R4rCQDzI/csv2PStd/U5+nQgFBvpOqueSGsOg4wP0qs4S0OK3YfwPMSfSJzp5/OTZZJ4/Sj3V+
- Inu0YdHBHglpdcRaaaJNBaMuq1GXohyWe3hhTJCDB40ew4qi0apB9FfAd
-X-Gm-Gg: ATEYQzzJ4ISDKvLRVRDmyoGj3gQF2p5OF3Z3ACN53I8sVuBjt8o4LbrwGzL65+0Xkii
- edKWIS8lvxBtl5qWmYEXzy8x/5eQKl22uY12zM4WhJJItmG9LYFIQ95r2euYEYbr5NZGpZOjS92
- 9MVm+QOT88moT8Uy3ksi71dEJvYprDUTJKcQ0ZoV2cu5HUNDeL6NN/e3rbcKZqhwtBD3IUXSKUZ
- WVKPI7qcdC7+Xzhtsttgbrq9Ot8EbdZyAV3QY+K857w59oTuu0wtNv6k2Q+PkFSUzEEONU2u11r
- 8OgRqWZ7PCqytDVyfdlV3JO30kpeNUFncbDq4v1pe4zA2YVHlk3M79Iuuj2IMY8TvZc1CoN4q4O
- Bcb5XS7RssqrIXnGt+MY7pVNrnrati+COzvmfZURm7cskR+2sCPRIUSYrOvps2ycMqj9OUg==
-X-Received: by 2002:a05:600c:8106:b0:483:456a:5146 with SMTP id
- 5b1f17b1804b1-483c9c24049mr207664905e9.25.1772475973887; 
- Mon, 02 Mar 2026 10:26:13 -0800 (PST)
-X-Received: by 2002:a05:600c:8106:b0:483:456a:5146 with SMTP id
- 5b1f17b1804b1-483c9c24049mr207664665e9.25.1772475973431; 
- Mon, 02 Mar 2026 10:26:13 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439ba2a58dasm6094724f8f.27.2026.03.02.10.26.11
+ AJvYcCVqQU8Pm/jpmBvuEkSametaJm9O5RC78gY88NJD4SfOsLCvwK+zv6aDcvTwBYxjK10wXb+J3UXluwtK@nongnu.org
+X-Gm-Message-State: AOJu0YxMnkibZSi7dT2rqpDbh4K/R9lkTaQSVYFhSEAFlHKgIlbIh5cV
+ aZqEdDBbTCZ+g2DBDsK/lmFP41NP09ode+BfsWIlL6omZZyxDlvDLWgNtAoWp1H293ArXevX5Ri
+ eHTi1ZomA8QErSFk8lSps995cMNt8I/C4f9NzZbHDWB3VL2VuXJmckvSd
+X-Gm-Gg: ATEYQzzVBUXPg9ba1UP5iqSwFkHHzzVmf1QqaRULz+31u6a5vzs0Qps4dJPzrzA5sn1
+ uXKjRxkqJqOjdU23o6BXPO/ciTjrDl0zuY851PBB//+GOvj5PL1Ke5uJaysrElnw9bBT577X90U
+ 9Km4BI4akw68awRsPGI6V3LsrwCBt8UforNHygjRhRZI/q52nJ1vNT5klR3jcSp6duMSferUH5g
+ 6Nh0CSUguAWN98gg/XqAI1x8UQ8Vmlk4edX9gxC7S5udvVFeLJPJytASp/AZQf7nXKzlvQyQnI9
+ Ct63tgAEl0lGEfOl7MyDqLlKYbR1LeUevmSKud5D13MGHUCFt5zLNK9d3AooHC/MY4pshHuQ1dH
+ aKyLqM4Lhjxq5UY5A+8xNyp0Hh8rPmSh+h8xQRTITsWE5NvGpux4pMXlbVEzeUjOLysc+STzBQK
+ y0h1d84Z0bgYWm4Jh8vjqYEzj1ROU=
+X-Received: by 2002:a05:600c:6309:b0:480:426e:9d38 with SMTP id
+ 5b1f17b1804b1-483c9bc5b70mr224255045e9.27.1772476465029; 
+ Mon, 02 Mar 2026 10:34:25 -0800 (PST)
+X-Received: by 2002:a05:600c:6309:b0:480:426e:9d38 with SMTP id
+ 5b1f17b1804b1-483c9bc5b70mr224254615e9.27.1772476464590; 
+ Mon, 02 Mar 2026 10:34:24 -0800 (PST)
+Received: from [192.168.10.81] ([151.95.144.138])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd68826asm687655225e9.0.2026.03.02.10.34.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Mar 2026 10:26:12 -0800 (PST)
-Message-ID: <6a6144fe-3db3-4ce8-8a8c-c1391d7aa550@redhat.com>
-Date: Mon, 2 Mar 2026 19:26:10 +0100
+ Mon, 02 Mar 2026 10:34:23 -0800 (PST)
+Message-ID: <aa442c69-5dd5-4a3a-b42a-299a30aab881@redhat.com>
+Date: Mon, 2 Mar 2026 19:34:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 16/31] hw/arm/smmuv3: Plumb SEC_SID through IOMMU
- notifier path
+Subject: Re: [PATCH 00/10] Support QEMU cpu models in MSHV accelerator
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: Wei Liu <liuwe@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Magnus Kulke <magnuskulke@microsoft.com>
+References: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
 Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101706.2994213-1-tangtao1634@phytium.com.cn>
- <aaGumxmrKRelouE7@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <aaGumxmrKRelouE7@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+From: Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
@@ -120,110 +123,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/11/26 16:54, Magnus Kulke wrote:
+> Hey all,
+> 
+> In the current MSHV accelerator code passing CPU features via the -cpu
+> flag doesn't work as intended yet. When using the MSHV hypervisor we
+> either silently discard the specified model/features and leave it up
+> to the hypervisor to provide a sensible set of features or if the user
+> selects -cpu host, the hypervisor might refuse to create a partition.
+> 
+> This changeset introduces a more comprehensive support for passing
+> desired guest cpu features to the hypervisor. It's also a prerequisite
+> for Live Migration support, in which we have to roundtrip CPU State
+> explicitly
+> 
+> Known issues:
+> 
+> We will probably have to iterate a bit more on this, since recently
+> support for CET_U/CET_S xstate bits has been introduced in QEMU, which
+> doesn't harmonize with our current approach of configuring the
+> hypervisor with static responses to cpuid queries.
 
+Hi Magnus,
 
-On 2/27/26 3:47 PM, Mostafa Saleh wrote:
-> On Sat, Feb 21, 2026 at 06:17:06PM +0800, Tao Tang wrote:
->> Extend IOMMU notifier functions to be SEC_SID-aware, ensuring that
->> invalidation notifications are dispatched to the correct security-aware
->> address space.
->>
->> This ensures IOMMU notifier events (e.g., to VFIO) are correctly routed
->> to the appropriate security world's address space, maintaining isolation
->> between secure and non-secure DMA operations.
-> I don’t think that VFIO cares about secure regime, my guess is to
-> keep the functions as this and don’t call them for secure invalidations.
+I went back to reviewing this series.
 
-So do we want to prevent VFIO devices from working in secure mode along
-with the SMMU?
+More or less, using "-cpu host" should work because MSHV already runs in 
+a partition.  Therefore, it should be safe to assume that whatever bits 
+were allowed in the current partition's CPUID will also be allowed in 
+the nested guest.
 
-Eric
->
-> Thanks,
-> Mostafa
->
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>  hw/arm/smmuv3.c | 18 +++++++++++-------
->>  1 file changed, 11 insertions(+), 7 deletions(-)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 4a4de719a7c..e33a7babd1c 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1195,15 +1195,16 @@ epilogue:
->>   * @tg: translation granule (if communicated through range invalidation)
->>   * @num_pages: number of @granule sized pages (if tg != 0), otherwise 1
->>   * @stage: Which stage(1 or 2) is used
->> + * @sec_sid: StreamID Security state
->>   */
->>  static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->>                                 IOMMUNotifier *n,
->>                                 int asid, int vmid,
->>                                 dma_addr_t iova, uint8_t tg,
->> -                               uint64_t num_pages, int stage)
->> +                               uint64_t num_pages, int stage,
->> +                               SMMUSecSID sec_sid)
->>  {
->>      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->>      SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
->>                                 .inval_ste_allowed = true};
->>      SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo, sec_sid);
->> @@ -1251,7 +1252,8 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->>      }
->>  
->>      event.type = IOMMU_NOTIFIER_UNMAP;
->> -    event.entry.target_as = &address_space_memory;
->> +    event.entry.target_as = smmu_get_address_space(sdev->smmu, sec_sid);
->> +    g_assert(event.entry.target_as);
->>      event.entry.iova = iova;
->>      event.entry.addr_mask = num_pages * (1 << granule) - 1;
->>      event.entry.perm = IOMMU_NONE;
->> @@ -1262,7 +1264,8 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->>  /* invalidate an asid/vmid/iova range tuple in all mr's */
->>  static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
->>                                        dma_addr_t iova, uint8_t tg,
->> -                                      uint64_t num_pages, int stage)
->> +                                      uint64_t num_pages, int stage,
->> +                                      SMMUSecSID sec_sid)
->>  {
->>      SMMUDevice *sdev;
->>  
->> @@ -1274,7 +1277,8 @@ static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
->>                                          iova, tg, num_pages, stage);
->>  
->>          IOMMU_NOTIFIER_FOREACH(n, mr) {
->> -            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages, stage);
->> +            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg,
->> +                               num_pages, stage, sec_sid);
->>          }
->>      }
->>  }
->> @@ -1307,7 +1311,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
->>      if (!tg) {
->>          trace_smmuv3_range_inval(sec_sid, vmid, asid, addr,
->>                                   tg, 1, ttl, leaf, stage);
->> -        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage);
->> +        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage, sec_sid);
->>          if (stage == SMMU_STAGE_1) {
->>              smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl, sec_sid);
->>          } else {
->> @@ -1331,7 +1335,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
->>          trace_smmuv3_range_inval(sec_sid, vmid, asid, addr, tg,
->>                                   num_pages, ttl, leaf, stage);
->>          smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg,
->> -                                  num_pages, stage);
->> +                                  num_pages, stage, sec_sid);
->>          if (stage == SMMU_STAGE_1) {
->>              smmu_iotlb_inv_iova(s, asid, vmid, addr, tg,
->>                                  num_pages, ttl, sec_sid);
->> -- 
->> 2.34.1
->>
+However, you still need to mask the features corresponding to MSRs that 
+you do not save/restore; this includes for example TSC deadline timer, 
+AMX (XFD), FRED, PMU, UMWAIT are the first few that came to mind.  Or 
+alternatively, just add them to get/put_msrs.
+
+Later on, we probably want to share some of the code to handle MSRs 
+between Hyper-V and KVM.  Please add some comments about the hypercalls, 
+since they are poorly documented, explaining how to find out which MSRs 
+are supported by the hypervisor.
+
+With respect to live migration, here are a few bits of states that 
+should be migrated:
+
+- the FPU registers (MshvFPU is dead code and can be removed; I missed 
+it during my initial review).
+
+- the PDPTRs.  That is probably okay (because you never set nor read 
+env->pdptrs_valid) but please check if Hyper-V supports reading them.
+
+- KVM also has support for migrating in the middle of an exception being 
+delivered (for example if an EPT violation happens due to a write to the 
+stack); this is handled with fields such as these:
+
+         VMSTATE_UINT8(env.exception_pending, X86CPU),
+         VMSTATE_UINT8(env.exception_injected, X86CPU),
+         VMSTATE_UINT8(env.exception_has_payload, X86CPU),
+         VMSTATE_UINT64(env.exception_payload, X86CPU),
+         VMSTATE_INT32(env.exception_nr, X86CPU),
+         VMSTATE_INT32(env.interrupt_injected, X86CPU),
+         VMSTATE_UINT8(env.soft_interrupt, X86CPU),
+         VMSTATE_UINT8(env.nmi_injected, X86CPU),
+         VMSTATE_UINT8(env.nmi_pending, X86CPU),
+
+please check how Hyper-V handles this situation so that it can be 
+implemented in QEMU as well.
+
+Thanks,
+
+Paolo
 
 
