@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E9FD58E73
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 07:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB713D58E73
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 07:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwxSj-0004uM-Kd; Mon, 02 Mar 2026 02:13:05 -0500
+	id 1vwy1M-000468-Og; Mon, 02 Mar 2026 02:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vwxSZ-0004sP-So; Mon, 02 Mar 2026 02:12:56 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vwy1J-00043R-WE; Mon, 02 Mar 2026 02:48:50 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vwxSX-000529-Mp; Mon, 02 Mar 2026 02:12:55 -0500
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c37:8aa5:0:640:e6ae:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 2304A80896;
- Mon, 02 Mar 2026 10:12:52 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:522::1:d] (unknown [2a02:6bf:8080:522::1:d])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id lCgbxx8Ak4Y0-oD4PDXQz; Mon, 02 Mar 2026 10:12:51 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1772435571;
- bh=jM4F0wcWMS7QAaUTe6Ufa0wmn5VyLSmOYlE6G5vCqeI=;
- h=In-Reply-To:Cc:Date:References:To:Subject:Message-ID:From;
- b=mueQLfumxJLEkf3oqx12gh+JScOQZSApv7i39WD9DSfkDShA0rDqoXmbLeFGSAZyu
- kcndR43Y6EFmPaJY+MQcvgmdgkF8Q/2xYPaTvvq6asCcUCLQfXcvhcoBIvJOMko5w9
- EDWurHs85UKzF2xUfKcmv+oIVQY01GlPPR1yylc8=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Content-Type: multipart/alternative;
- boundary="------------9oP2R0i2MvAmkNDBCwN0KaRf"
-Message-ID: <121fea54-0041-4004-aa4f-3a402da8169e@yandex-team.ru>
-Date: Mon, 2 Mar 2026 12:12:47 +0500
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vwy1H-0001An-7Q; Mon, 02 Mar 2026 02:48:49 -0500
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6227mGm1070526
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 2 Mar 2026 16:48:23 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=/52UK39RxJY5TDMCAjODP8aWlDQGfP/SXUC3Iqm+4qw=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1772437704; v=1;
+ b=div63DEgopaq25q97qxJAR5SSD3pgtFSZHqle+ECptrcedUBCO+vUQdW6Wyq1M1C
+ ovmDsg/6XwbCXW5EI3K9G5giTA/bokQNIJ2YZ5EDSYDTzOuh27VpQvL3QbKnESa0
+ zYyw042nUIOx4u+dbrzeHQVPNZYiBYxXWpDCNK1xgGMrJyErU74YFl0mdkFsIYvf
+ p0+qjmCt/CBLOYAoKvo2eS4mv26ZZD4IlZ4J4NkDDNJQ0cVwS9XIggmgixu/Oi/9
+ BfHQaqD9nwJUraDZAXVHb79iCOVbN3h1OsXw9GyhGcDY20aLCk5YXR5xZJae3pJZ
+ o7rcrH7cStT9vkPhedsAwA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH v2 0/4] Fix use-after-free and make format overflow more
+ difficult
+Date: Mon, 02 Mar 2026 16:48:07 +0900
+Message-Id: <20260302-nvme-v2-0-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] vhost-user: add skip_drain param to GET_VRING_BASE
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Raphael Norwitz <rnorwitz@nvidia.com>,
- virtio-fs@lists.linux.dev, Milan Zamazal <mzamazal@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, "Gonglei (Arei)"
- <arei.gonglei@huawei.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org
-References: <20260224075055.863068-1-dtalexundeer@yandex-team.ru>
- <20260224075055.863068-3-dtalexundeer@yandex-team.ru>
- <20260301233406.GA8465@fedora>
-Content-Language: en-US
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-In-Reply-To: <20260301233406.GA8465@fedora>
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALdApWkC/13OwQ7CIAyA4VdZOAspbEPZyfcwOzAoWs2Gwlxcj
+ O8u6s3j3zRf+2QZE2FmXfVkCRfKFKcSalMxd7LTETn50kyB0iBVy6dlRD40WksE24BBVlavCQM
+ 9vsyhL32iPMe0ftVFfqZ/wCI5cNDtztUyWI9mn/JROBIk7nyOlzUK68T5yvrXj094u5fn5t8NN
+ tiM3MVxpLmrbEDd1nqrvdM++MYEqA2o2oRgYFABoFVODbuCvd66lNeQ8QAAAA==
+X-Change-ID: 20260125-nvme-b4661e0a409e
+To: qemu-devel@nongnu.org
+Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ Alex Williamson <alex@shazbot.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-5ab4c
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,196 +84,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------9oP2R0i2MvAmkNDBCwN0KaRf
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+nvme-ns has a use-after-free of a formatted string, so fix it by
+embedding a fixed-length buffer to the object. Embedding a buffer lets
+me avoid a chore to add a function to call g_free().
 
+But I don't want to worry about a buffer overflow, so let the compiler
+check that the buffer won't overflow; C is so restrictive that it cannot
+enforce the existence of g_free(). Compilers can check the length of
+formatted string on the other hand.
 
-On 3/2/26 04:34, Stefan Hajnoczi wrote:
-> On Tue, Feb 24, 2026 at 12:50:53PM +0500, Alexandr Moshkov wrote:
->> In case of migration of QEMU from the new version (where the
->> inllight-migration parameter is present), to the old one (where it is
->> absent) there is no way to disable this feature on the backend during
->> runtime.
->>
->> This commit slightly changes the semantics of the protocol feature
->> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
->> adds a new parameter for GET_VRING_BASE, which allows to control the
->> drain in-flight requests on the backend.
->> Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
->> on anytime.
->>
->> Signed-off-by: Alexandr Moshkov<dtalexundeer@yandex-team.ru>
->> ---
->>   backends/cryptodev-vhost.c     |  2 +-
->>   backends/vhost-user.c          |  2 +-
->>   docs/interop/vhost-user.rst    |  3 ++-
->>   hw/block/vhost-user-blk.c      |  2 +-
->>   hw/net/vhost_net.c             |  9 +++++----
->>   hw/scsi/vhost-scsi-common.c    |  2 +-
->>   hw/virtio/vdpa-dev.c           |  2 +-
->>   hw/virtio/vhost-user-base.c    |  2 +-
->>   hw/virtio/vhost-user-fs.c      |  2 +-
->>   hw/virtio/vhost-user-scmi.c    |  2 +-
->>   hw/virtio/vhost-vsock-common.c |  2 +-
->>   hw/virtio/vhost.c              | 24 +++++++++++++++---------
->>   include/hw/virtio/vhost.h      |  7 +++++--
->>   13 files changed, 36 insertions(+), 25 deletions(-)
->>
->> diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
->> index 943680a23a..7a457380d0 100644
->> --- a/backends/cryptodev-vhost.c
->> +++ b/backends/cryptodev-vhost.c
->> @@ -110,7 +110,7 @@ static void
->>   cryptodev_vhost_stop_one(CryptoDevBackendVhost *crypto,
->>                                    VirtIODevice *dev)
->>   {
->> -    vhost_dev_stop(&crypto->dev, dev, false);
->> +    vhost_dev_stop(&crypto->dev, dev, false, false);
->>       vhost_dev_disable_notifiers(&crypto->dev, dev);
->>   }
->>   
->> diff --git a/backends/vhost-user.c b/backends/vhost-user.c
->> index 42845329e7..10be713ebd 100644
->> --- a/backends/vhost-user.c
->> +++ b/backends/vhost-user.c
->> @@ -108,7 +108,7 @@ vhost_user_backend_stop(VhostUserBackend *b)
->>           return 0;
->>       }
->>   
->> -    ret = vhost_dev_stop(&b->dev, b->vdev, true);
->> +    ret = vhost_dev_stop(&b->dev, b->vdev, true, false);
->>   
->>       if (k->set_guest_notifiers &&
->>           k->set_guest_notifiers(qbus->parent, b->dev.nvqs, false) < 0) {
->> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
->> index bfa75ff9a3..5b944322b4 100644
->> --- a/docs/interop/vhost-user.rst
->> +++ b/docs/interop/vhost-user.rst
->> @@ -1262,7 +1262,8 @@ Front-end message types
->>     specified vring before stopping it.
->>   
->>     If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
->> -  feature has been negotiated, the back-end may suspend in-flight I/O
->> +  feature has been negotiated, using request payload's *num* field,
->> +  when num is set to 1, QEMU can tell the back-end to suspend in-flight I/O
-> This changes the behavior of an existing feature bit. How can the
-> front-end detect that the back-end supports this new behavior?
+Then GCC started complaining about buffer overflow, so let's treat them.
+Fortunately, the potential buffer overflows it detected are not
+user-facing or very subtle. Treating them by growing buffers can improve
+robustness with practically no cost.
 
-Thanks for reply!
-
-The protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT was 
-added by me about a month ago, so I decided to fix it instead of adding 
-another one.
-
-It seemed to me to be the more correct solution, because it took a 
-little time for someone to use it and adding a new "feature for a 
-feature" looked too much for me.
-
---------------9oP2R0i2MvAmkNDBCwN0KaRf
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 3/2/26 04:34, Stefan Hajnoczi wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:20260301233406.GA8465@fedora">
-      <pre wrap="" class="moz-quote-pre">On Tue, Feb 24, 2026 at 12:50:53PM +0500, Alexandr Moshkov wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">In case of migration of QEMU from the new version (where the
-inllight-migration parameter is present), to the old one (where it is
-absent) there is no way to disable this feature on the backend during
-runtime.
-
-This commit slightly changes the semantics of the protocol feature
-VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
-adds a new parameter for GET_VRING_BASE, which allows to control the
-drain in-flight requests on the backend.
-Thus, QEMU will be able to turn this feature on GET_VRING_BASE off and
-on anytime.
-
-Signed-off-by: Alexandr Moshkov <a class="moz-txt-link-rfc2396E" href="mailto:dtalexundeer@yandex-team.ru">&lt;dtalexundeer@yandex-team.ru&gt;</a>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- backends/cryptodev-vhost.c     |  2 +-
- backends/vhost-user.c          |  2 +-
- docs/interop/vhost-user.rst    |  3 ++-
- hw/block/vhost-user-blk.c      |  2 +-
- hw/net/vhost_net.c             |  9 +++++----
- hw/scsi/vhost-scsi-common.c    |  2 +-
- hw/virtio/vdpa-dev.c           |  2 +-
- hw/virtio/vhost-user-base.c    |  2 +-
- hw/virtio/vhost-user-fs.c      |  2 +-
- hw/virtio/vhost-user-scmi.c    |  2 +-
- hw/virtio/vhost-vsock-common.c |  2 +-
- hw/virtio/vhost.c              | 24 +++++++++++++++---------
- include/hw/virtio/vhost.h      |  7 +++++--
- 13 files changed, 36 insertions(+), 25 deletions(-)
+Changes in v2:
+- Rebased.
+- Changed to use g_strdup_printf() in patch
+  "contrib/elf2dmp: Grow PDB URL buffer".
+- Link to v1: https://lore.kernel.org/qemu-devel/20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp
 
-diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-index 943680a23a..7a457380d0 100644
---- a/backends/cryptodev-vhost.c
-+++ b/backends/cryptodev-vhost.c
-@@ -110,7 +110,7 @@ static void
- cryptodev_vhost_stop_one(CryptoDevBackendVhost *crypto,
-                                  VirtIODevice *dev)
- {
--    vhost_dev_stop(&amp;crypto-&gt;dev, dev, false);
-+    vhost_dev_stop(&amp;crypto-&gt;dev, dev, false, false);
-     vhost_dev_disable_notifiers(&amp;crypto-&gt;dev, dev);
- }
- 
-diff --git a/backends/vhost-user.c b/backends/vhost-user.c
-index 42845329e7..10be713ebd 100644
---- a/backends/vhost-user.c
-+++ b/backends/vhost-user.c
-@@ -108,7 +108,7 @@ vhost_user_backend_stop(VhostUserBackend *b)
-         return 0;
-     }
- 
--    ret = vhost_dev_stop(&amp;b-&gt;dev, b-&gt;vdev, true);
-+    ret = vhost_dev_stop(&amp;b-&gt;dev, b-&gt;vdev, true, false);
- 
-     if (k-&gt;set_guest_notifiers &amp;&amp;
-         k-&gt;set_guest_notifiers(qbus-&gt;parent, b-&gt;dev.nvqs, false) &lt; 0) {
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index bfa75ff9a3..5b944322b4 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -1262,7 +1262,8 @@ Front-end message types
-   specified vring before stopping it.
- 
-   If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` protocol
--  feature has been negotiated, the back-end may suspend in-flight I/O
-+  feature has been negotiated, using request payload's *num* field,
-+  when num is set to 1, QEMU can tell the back-end to suspend in-flight I/O
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-This changes the behavior of an existing feature bit. How can the
-front-end detect that the back-end supports this new behavior?</pre>
-    </blockquote>
-    <p>Thanks for reply!</p>
-    <p class="CPO0LE0j16AwB0G2HeuZ" dir="ltr"><span
-      style="white-space: pre-wrap;">The protocol feature VHOST_USER_PROTOCOL_F_GET_</span><span
-      data-lexical-key="96" data-highlighted="false" data-error="true"
-      style="white-space: pre-wrap;">VRING</span><span
-      style="white-space: pre-wrap;">_</span><span data-lexical-key="98"
-      data-highlighted="false" data-error="true"
-      style="white-space: pre-wrap;">BASE</span><span
-      style="white-space: pre-wrap;">_INFLIGHT was added by me about a month ago, so I decided to fix it instead of adding another one. </span></p>
-    <p class="CPO0LE0j16AwB0G2HeuZ" dir="ltr"><span
-      style="white-space: pre-wrap;">It seemed to me to be the more correct solution, because it took a little time for someone to use it and adding a new "feature for a feature" looked too much for me.</span></p>
-  </body>
-</html>
+---
+Akihiko Odaki (4):
+      contrib/elf2dmp: Grow PDB URL buffer
+      vfio/pci: Grow buffer in vfio_pci_host_match()
+      tests: Grow buffers for double string
+      meson: Add -Wformat-overflow=2
 
---------------9oP2R0i2MvAmkNDBCwN0KaRf--
+ meson.build                              |  1 +
+ contrib/elf2dmp/main.c                   | 32 +++++++++++++++-----------------
+ hw/vfio/pci.c                            |  2 +-
+ tests/unit/test-qobject-input-visitor.c  |  2 +-
+ tests/unit/test-qobject-output-visitor.c |  2 +-
+ 5 files changed, 19 insertions(+), 20 deletions(-)
+---
+base-commit: afe653676dc6dfd49f0390239ff90b2f0052c2b8
+change-id: 20260125-nvme-b4661e0a409e
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
