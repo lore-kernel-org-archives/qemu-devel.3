@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A08E9B359
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FD1E9B35E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 10:45:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx0eT-000385-9e; Mon, 02 Mar 2026 05:37:25 -0500
+	id 1vx0lZ-0008Il-Am; Mon, 02 Mar 2026 05:44:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx0eN-00034I-1r
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vx0eI-0001sl-NB
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:37:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772447829;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gqwIlq9YsCC/mk/RbZ2jJbZEoXtp/RnqPmOFKrdWkWY=;
- b=BMBcy9cnja/2vy5/WFjkPz1O9FHIgO6OI5K4oxrQFF+6tfvFTpKnmuk6DvUYAEXvKxJQaF
- DOit5LQHTTLCNmR2WX0DsQD9xalJ+JLRsTbTEwEsUcGwLO/8J8ByN3bgMk4sBH0yPie3Zr
- xIBdu8utiw0YERzMgvUM3paxq+SAoIc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-qgevpJmTOymKrMbyLzaddw-1; Mon,
- 02 Mar 2026 05:37:06 -0500
-X-MC-Unique: qgevpJmTOymKrMbyLzaddw-1
-X-Mimecast-MFC-AGG-ID: qgevpJmTOymKrMbyLzaddw_1772447825
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5805C1956053; Mon,  2 Mar 2026 10:37:05 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.23])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1A2831800666; Mon,  2 Mar 2026 10:37:01 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: [PATCH v7 5/7] target/arm/cpu64: Define cpreg migration tolerance for
- KVM_REG_ARM_VENDOR_HYP_BMAP_2
-Date: Mon,  2 Mar 2026 11:35:27 +0100
-Message-ID: <20260302103640.1362564-6-eric.auger@redhat.com>
-In-Reply-To: <20260302103640.1362564-1-eric.auger@redhat.com>
-References: <20260302103640.1362564-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
+ id 1vx0lS-0008Hm-8g
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:44:38 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
+ id 1vx0lQ-000303-94
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 05:44:37 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4836f363d0dso37245465e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 02:44:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772448273; x=1773053073; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TF+XPMaZ1UZjXw5PXrQWRSROD8ZwCCDG24WrQG3i85g=;
+ b=LulPvbRhI6xHuV+niqW4S9OkRMI86XquTU4ZEitVQh6q7qqRoIcN+HQ1IvpeFtFtOx
+ wTTVYPdetU9NE1g9D8KDH+lpLwXFTcqmgAlHb8TzApiPhRBijw8s+jPj43ahRvSLHBkS
+ EAsA0Y4XEJk05YKzSfDL0wApk568W7OsxK9ylmCMesyuJsmZ+egoAo/pGvtYJqQNHCjs
+ pY7mI6A2WYhUsOVa6Ygt9ZlPkLgThACc60xG+eNEIvjt6JWt3QbXUoLaPoBRIiw7thCZ
+ cq8nGQlBHHsO6eMAUGb08TfHrUpx/Y+PCC8Wev5rM53weXmNo0pQhDdNROqmhoMF6P16
+ gZTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772448273; x=1773053073;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TF+XPMaZ1UZjXw5PXrQWRSROD8ZwCCDG24WrQG3i85g=;
+ b=uefZZphFfdYYc6MYqAZJQz2breYcAMaz1jgBDfMK2KIWP4KgiNCnZltHGkX3zcWs6T
+ lE5xqa094KETq/8VFZvbQ6DADhOZJCn7KuCzJ4UdYdYeUtThdTgJ3V1d/zzse1TCdSpn
+ yxPI5ekYR9aINy+MgttA5HSzZoBCh2UPrZEPXV5I9H5IzmxlOzw5MUi/eBti8yU4nIxX
+ 5zUj+qh3ryio0KTm8TWZU7HdhyoSD/7Pgz3vbzhbpsxbLbkGLNrbbNJG7ZcKNtlRRJT+
+ i87VznYLFVFtWaZ6HhgBzGWZFq6Vf0/KhECYDdoC5C1p7qnaJsE4NK9fzA7luzTiRNOv
+ OcVA==
+X-Gm-Message-State: AOJu0YxYUzA8ZirLAr2kpOKtAbS1oK2mwX9rqeD8jKUXzQycAap+gkAE
+ D81QNhjUQPclL/go3edDzjv4r19gJw8e7Oh3BBCPEnb3O1m64rNb+ETChKlqd+XrDP4=
+X-Gm-Gg: ATEYQzww7HNo2kFtQd4+NvSHH1857jIbVAbUSUHOxtae2H5u4jY63RPugTNA2rNhVRp
+ EBA8yd7NQjER05uvej1N0nx9bLadObjNlYRkByDTzfEHYFCL6HD2Y2hD+0mCIbdrTUG+v5t1gLM
+ 8KgarzFzcGQK677QzqQIAwAOWJBR+Qcgy63JJiEoMIaAqPH+6+VOaDRsY43DLKvPBkGD6ZXKRDb
+ m7PFalhAE7CsxjUGCXZCObjffq6wGoA3URni7dtO8P7NsXZY28TbB+9BWXlvZlponvFePOYBUJb
+ KDaILFPjadC/onXRdfGxeGZXTp22mo4keaQQD+XTaWSB2M7ptxOW6n8WTCbPJmcMjQ9fznwqYaH
+ bAubsFyQjQ+80Z+DFLUkYmnSUK3EaM+2F3cSbkJaJKoImUdaDrPDjo2vUs9nSAdnpFtIAb2bTY3
+ L+oYE2lkrDEwMhyXoylkUfYohvL+wM
+X-Received: by 2002:a05:600c:3e86:b0:480:6941:d38b with SMTP id
+ 5b1f17b1804b1-483c9c1bc0bmr194638385e9.30.1772448272795; 
+ Mon, 02 Mar 2026 02:44:32 -0800 (PST)
+Received: from ST.. ([102.185.186.72]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b4e771basm11664843f8f.0.2026.03.02.02.44.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Mar 2026 02:44:32 -0800 (PST)
+From: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+Subject: [PATCH] doc: add detailed comment for vhost_user_read_header function
+Date: Mon,  2 Mar 2026 12:44:27 +0200
+Message-Id: <20260302104427.233089-1-mohamedaymanworkspace@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 24
-X-Spam_score: 2.4
-X-Spam_bar: ++
-X-Spam_report: (2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=mohamedaymanworkspace@gmail.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,36 +95,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
-from v6.15 onwards. Backward migration from a >= v6.15 to an older
-kernel would fail without cpreg migration tolerance definition
-for this register.
+This comment explains the purpose of the function, its parameters,
+the expected return values, and what each internal step does, including
+reading from the character device and validating the message header
+flags according to the vhost-user protocol.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
 ---
- target/arm/cpu64.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/virtio/vhost-user.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 9e64184f6f0..0a61edb27f6 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -817,6 +817,14 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
-                                      0, 0, ToleranceNotOnBothEnds);
-     arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
-                                      0, 0, ToleranceNotOnBothEnds);
-+
-+    /*
-+     * KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
-+     * from v6.15 onwards. Backward migration from a >= v6.15 to an older
-+     * kernel would fail without cpreg migration tolerance definition
-+     */
-+    arm_register_cpreg_mig_tolerance(cpu, KVM_REG_ARM_FW_FEAT_BMAP_REG(3),
-+                                     0, 0, ToleranceNotOnBothEnds);
- }
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index bb8f8eab77..67525dc403 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -272,6 +272,20 @@ struct scrub_regions {
+     int fd_idx;
+ };
  
- static void aarch64_host_initfn(Object *obj)
++/**
++ * vhost_user_read_header:
++ * @dev: The vhost device state
++ * @msg: Pointer to the vhost-user message structure to populate
++ *
++ * Reads exactly VHOST_USER_HDR_SIZE bytes from the character device
++ * to populate the message header. Validates that the read operation
++ * succeeds entirely and that the received message flags indicate a
++ * valid reply matching the expected vhost-user protocol version.
++ *
++ * Returns: 0 on success,
++ * -EIO or -errno on read failure or short read,
++ * -EPROTO if the protocol flags are invalid.
++ */
+ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+ {
+     struct vhost_user *u = dev->opaque;
+@@ -279,15 +293,20 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+     uint8_t *p = (uint8_t *) msg;
+     int r, size = VHOST_USER_HDR_SIZE;
+ 
++    /* Block and read the exact header size from the character device */
+     r = qemu_chr_fe_read_all(chr, p, size);
+     if (r != size) {
+         int saved_errno = errno;
++        
++        /* * Note: Logging msg->hdr.request here assumes the msg struct was 
++         * pre-populated with the outgoing request prior to this read.
++         */
+         error_report("Failed to read msg header. Read %d instead of %d."
+                      " Original request %d.", r, size, msg->hdr.request);
+         return r < 0 ? -saved_errno : -EIO;
+     }
+ 
+-    /* validate received flags */
++    /* Validate that the received message is a reply and matches our version */
+     if (msg->hdr.flags != (VHOST_USER_REPLY_MASK | VHOST_USER_VERSION)) {
+         error_report("Failed to read msg header."
+                 " Flags 0x%x instead of 0x%x.", msg->hdr.flags,
+@@ -295,6 +314,7 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+         return -EPROTO;
+     }
+ 
++    /* Trace the successful header read */
+     trace_vhost_user_read(msg->hdr.request, msg->hdr.flags);
+ 
+     return 0;
 -- 
-2.53.0
+2.34.1
 
 
