@@ -4,53 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87525EB3634
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 20:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F411EEB3632
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 20:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx9se-0007YE-5G; Mon, 02 Mar 2026 15:28:40 -0500
+	id 1vxA6J-0001WE-An; Mon, 02 Mar 2026 15:42:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vx9sd-0007Xh-2v
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:28:39 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vx9sb-0002Bo-LJ
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:28:38 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id ACC5F5969F0;
- Mon, 02 Mar 2026 21:28:34 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id aDEfFDcGHn1H; Mon,  2 Mar 2026 21:28:32 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AA61B5969FA; Mon, 02 Mar 2026 21:28:32 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A8D7A5969F2;
- Mon, 02 Mar 2026 21:28:32 +0100 (CET)
-Date: Mon, 2 Mar 2026 21:28:32 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v10 16/17] ati-vga: Implement HOST_DATA register writes
-In-Reply-To: <20260302180447.1078098-17-chad@jablonski.xyz>
-Message-ID: <12ec87e8-3c50-d3a9-05d7-2c322604b01b@eik.bme.hu>
-References: <20260302180447.1078098-1-chad@jablonski.xyz>
- <20260302180447.1078098-17-chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vxA6H-0001W5-IH
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:42:45 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vxA6F-0005DP-J4
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 15:42:45 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2ae523d54d2so2325ad.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 12:42:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772484158; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NPeFTYXt/MD8zLTDz6LLoU90XH2MD0LS6Cw3s+tf2NssX3Q6QJN+l7dS79L/6eAlZY
+ FzGsqBJSc1cebN5QQFF6RVaJlxBMajsJeFuZxQCNSTIY7K/DqbDlyIJ5BksLrwv39pLZ
+ odpG4N3zFbMVsUEaim0nPY0+gfkAEUVoHC7yIW6UXohY2a2emKvPIn+wdZksRuSkVGVq
+ gjvc8RN0dXqxijOWY5EeK6q5B6BUPLQnfqXDRPC26sMXOGgoLf+Xpe1D3gA1CdecV1H3
+ kXTQGybd+mAPVWMI9HEtP5WRt7K557lPvB3+PAQASvf2LpYc2o9CrSTS3JQhljAQHcee
+ SeCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=NDGO21nGjDwsFOiwIeoaD9qnbdrsIRx49pXQabH6bKg=;
+ fh=pCEs+NADVRa4BouSTcHg13rR4xQRttNiwgoKgQmxxt8=;
+ b=OhQecqFKd/p+x/9jFnS/KbcutH6nAZv+kW8s7SE20UkgW+Vo+XITRo+RkppMz9TIKk
+ aTRToZH17jK/VB9MDibvFRni/8ykoMHj5DRC8h0a4tDh8p/2mB7snwoexCfCWdNrVrNt
+ NStliJClZJ8xQKZBNvraomHDeImwzTFytu7Q/JUFjCOEcpIou5ykkrL8nICPeoqzfYvP
+ aCh5GfcbjhZbdoGrp4h4DCi2Y58FBT0hyKkHhVFpckXBNgO+ro25PbwJUf6mT956eDRA
+ zW5s6ojx6UBLpw25MAAKkMAMpVD0/LNr3aGD5hkQdOCQGVkvtv/nZHbyTkjlvC7d1Nqj
+ 8oTw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1772484158; x=1773088958; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NDGO21nGjDwsFOiwIeoaD9qnbdrsIRx49pXQabH6bKg=;
+ b=wWhbZcKhKfAi1CALPLA8h35xcqJ7kSTeGOUjj3/4fuiKGeJvxXhxsIG5nJvTuMEizU
+ afHrWUq8qNgLDXv/jdDl7y4otu3z3hYtkrpWdnOpsmJh41aZ2PrXTRCDWJgWiEjoiPb4
+ MBNLfRCfNQWypkKR+7gQ+dj9p+8/oPHxOR1eOQImr/ia+95z5R0aKquA3kpnvENvfz3e
+ Sl5f/mIKQ17FiuaeeWSN5qU3S9Opv9NvKV/5KZ6PHHvUTIk78XgdsstmdGOExPdHlCuV
+ omG4rkvm1UR7dtn2+71jld8zL4S9Fpbl9oqR8f5fMnE8asNns9VHN/Scts99uqCXd1AQ
+ niWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772484158; x=1773088958;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NDGO21nGjDwsFOiwIeoaD9qnbdrsIRx49pXQabH6bKg=;
+ b=F5FftsYfCX5Hx4FQIUWEIH5IV7gHFgIeMIjM51vPMvMW+ImI5CDWljhzywazqfH5UL
+ AwFmrTgGdCglTJwEPgsg08lE+nvkpfxK2j3vMSLJttxiiiCJOArsZkSlfUQ+D88ozCYA
+ blWuI5YhxvaT0VGYZv9eLVaUb2xtMsXMU8F63C5B120fdRBTjbAttk2FcKAWtjaLXW25
+ CRdc105gdfOalcDGENoa6MlC1mEtkvW70ESAYZ6kG7e3DJK6l/YrtK64shOdMLX142Lk
+ iQOEJ1QJJGyMdCIrsTD+4UhoJBHwAb/RC4ikxhLHSfMJ4Y739vRmj5gHKypsnqy+QQeL
+ rkVw==
+X-Gm-Message-State: AOJu0YxdZkB1DUbcvRocPoZVXsKmNnfv6q4zhSXXLTwDfaNME6zXv/Ve
+ wg+FgTBgJ9iLwr+ZqxfGiam1oFAv/8XdaHma2eyQJgsO24GAX1eKi6nb7gLksNrWzPMr3m5Csx9
+ KgEcAJSqFzZV6JAV7tiBdOqmvs4mHUod11nKI4tqj
+X-Gm-Gg: ATEYQzwaUB289EULF6GI1Hu8Ny0l1PHAsT+0t+aDtkmnRSlUHajI0+nV55Jkx216Pye
+ eojHNEisXf7nhsnQzh+wNq8WNusOO/tE4ieV73xtDbnqmmaQZY9mfN357U49e83Q2A162wrBu9K
+ iN4LjCNAlqPW1mfI9Sw8P/3nJ/O66nxxHZZsJ3Ecec5mAHhoXR4UgLcNSBJU2EWAZfsMW5B6XXo
+ uQy5DCIPhyXJZn6gQdbZ4bYNNC67IPFH2qrAd5JbfZxpsez+rvwMqvHIEMnJsrBiK96azRAXSO1
+ aQmjyy2rSbB6AvsTv/0ZkPi6QgLOKgXiDDxfpQlTyk4R7smuIr6F1Yq1wzyQhavjbPR6A6h7qJ8
+ c9E96HU+huo3PZxu6l0vCSkrOJ71nI9iBkGeh
+X-Received: by 2002:a17:903:fae:b0:2a0:867c:60e2 with SMTP id
+ d9443c01a7336-2ae3b5554c6mr4224695ad.19.1772484157858; Mon, 02 Mar 2026
+ 12:42:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260302193931.382228-1-clg@redhat.com>
+In-Reply-To: <20260302193931.382228-1-clg@redhat.com>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Mon, 2 Mar 2026 12:42:25 -0800
+X-Gm-Features: AaiRm53nltaR3z9EER_xiuFEK1-uoBrR11Jyb9jywqdiKYijI4tz0wmiel6evEs
+Message-ID: <CA+QoejUbMDi6NXQtEVzOLxn7MK3eotjg_BseX2nAmPPgyaXo1A@mail.gmail.com>
+Subject: Re: [PATCH] hw/i3c: Fix array bounds and storage in i3c_addr_is_rsvd()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Joe Komlodi <komlodi@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=nabihestefan@google.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,70 +118,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Mar 2026, Chad Jablonski wrote:
-> Writing to any of the HOST_DATA0-7 registers pushes the written data
-> into a 128-bit accumulator. When the accumulator is full a flush is
-> triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
-> will also initiate a flush. The flush itself is left for the next patch.
+On Mon, Mar 2, 2026 at 11:39=E2=80=AFAM C=C3=A9dric Le Goater <clg@redhat.c=
+om> wrote:
 >
-> Unaligned HOST_DATA* writes result in, from what I can tell, undefined
-> behavior on real hardware. A well-behaved driver shouldn't be doing this
-> anyway. For that reason they are not handled here at all.
+> The size of the is_rsvd lookup table in i3c_addr_is_rsvd() is 255 but
+> should be 256 to cover all possible uint8_t address values and avoid
+> potential out-of-bounds access.
 >
-> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> The array should be static too as it's a constant lookup table.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 > ---
-> hw/display/ati.c      | 30 ++++++++++++++++++++++++++++++
-> hw/display/ati_dbg.c  |  9 +++++++++
-> hw/display/ati_int.h  |  9 +++++++++
-> hw/display/ati_regs.h |  9 +++++++++
-> 4 files changed, 57 insertions(+)
+>  hw/i3c/core.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index 6cf243bcf9..965110c13a 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -1024,6 +1024,31 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->     case SRC_SC_BOTTOM:
->         s->regs.src_sc_bottom = data & 0x3fff;
->         break;
-> +    case HOST_DATA0:
-> +    case HOST_DATA1:
-> +    case HOST_DATA2:
-> +    case HOST_DATA3:
-> +    case HOST_DATA4:
-> +    case HOST_DATA5:
-> +    case HOST_DATA6:
-> +    case HOST_DATA7:
-> +        if (!s->host_data.active) {
-> +            break;
-> +        }
-> +        s->host_data.acc[s->host_data.next++] = data;
-> +        if (s->host_data.next >= 4) {
-> +            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-> +            s->host_data.next = 0;
-> +        }
-> +        break;
-> +    case HOST_DATA_LAST:
-> +        if (!s->host_data.active) {
-> +            break;
-> +        }
-> +        s->host_data.acc[s->host_data.next] = data;
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "HOST_DATA finish flush not yet implemented\n");
-> +        break;
+> diff --git a/hw/i3c/core.c b/hw/i3c/core.c
+> index 8a37099ce3ff..0a266e00a279 100644
+> --- a/hw/i3c/core.c
+> +++ b/hw/i3c/core.c
+> @@ -525,7 +525,7 @@ int i3c_target_ibi_finish(I3CTarget *t, uint8_t data)
+>
+>  static bool i3c_addr_is_rsvd(uint8_t addr)
+>  {
+> -    const bool is_rsvd[255] =3D {
+> +    static const bool is_rsvd[256] =3D {
 
-These look quite similar so maybe it could be simpler as
-case HOST_DATA7:
-case HOST_DATA_LAST:
-     if (!s->host_data.active) {
-         break;
-     }
-     s->host_data.acc[s->host_data.next++] = data;
-     if (s->host_data.next >= 4 || addr == HOST_DATA_LAST) {
-         flush;
-         s->host_data.next = 0; // is this needed? flush might reset it
-     }
+Given that we're using hex addressing for the values in is_rsvd, could
+we make the size `0xff` so it maintains the same formatting?
+Otherwise, it looks good to me.
 
-Regards,
-BALATON Zoltan
+Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+
+>          [0x00] =3D true,
+>          [0x01] =3D true,
+>          [0x02] =3D true,
+> --
+> 2.53.0
+>
 
