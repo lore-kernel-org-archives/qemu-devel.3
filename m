@@ -4,109 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED70DC624C6
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A62EAD58E7E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvL-0006lK-N7; Mon, 02 Mar 2026 03:46:43 -0500
+	id 1vwytR-0001nj-L3; Mon, 02 Mar 2026 03:44:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyup-0005ND-FM
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vwytD-0001j8-Aw
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyug-0001x0-LH
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:09 -0500
+ id 1vwytB-0001Ya-4M
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441160;
+ s=mimecast20190719; t=1772441067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ux3ZnPMEDtYfBdP2aeSQqPPs5FTXOfyYnyLyR49twAs=;
- b=L3EJBUtcTuWbMltmEQBT3mhuCEdULIukR88VwGAX06OjaFMJq6hPjqmS+BuU1PYWVwh08u
- xo52UgdOgx2wTohbHuOyrm016dbhriNZX7BI1lNGrbtbAyLPgL6zLCZOodtfBjxXzPu2yn
- 12RSiT/E8T3nDnwvuXp3E+/w8njp+90=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wm3ocIz5yPuGAgAzqL1S37jXenPDu6rAMForht0QG5U=;
+ b=K8sv/0WPSi//Xc+wgntrAe782J14femFg6Vi9VvCx3ADRNgyOPg/pg1Jt1UE+05CGaTFpP
+ 6wvs8bUAFbYcGjxvSUBvMZqSW/CJCXiBDz7E/yOmTZK4gijzZCpMqn0cCEAaYDrP9m5soe
+ 3K06rdubsfCPeAYZeSJz8lTOX52AmZI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-qDQbRtwfNZGsIcCSL89sqA-1; Mon, 02 Mar 2026 03:45:59 -0500
-X-MC-Unique: qDQbRtwfNZGsIcCSL89sqA-1
-X-Mimecast-MFC-AGG-ID: qDQbRtwfNZGsIcCSL89sqA_1772441158
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439b50320a0so676545f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:58 -0800 (PST)
+ us-mta-340-pxzqF27OMnCSKN9iAQ0h5g-1; Mon, 02 Mar 2026 03:44:26 -0500
+X-MC-Unique: pxzqF27OMnCSKN9iAQ0h5g-1
+X-Mimecast-MFC-AGG-ID: pxzqF27OMnCSKN9iAQ0h5g_1772441065
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4836abfc742so33317225e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:44:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441156; x=1773045956; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441064; x=1773045864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ux3ZnPMEDtYfBdP2aeSQqPPs5FTXOfyYnyLyR49twAs=;
- b=Oo9wqoc/4j4apNXoc5mZHXnurPQYpBGPG8GwT3y3i66LDp0YlwmeZjjx31H8002T2b
- cjLvtNl5Akalq4zty0FOgPCz3WLK3T7su02Jlx1Lcgk3wmTOpXdx1F1iEOjOf0XD5/6I
- DhYJjmWOpsru9Wqzs5BBWj0fQGrFcYXPgTTLEhe3e3rbuoTeQF/KtqTd7kbm0vRaLL56
- SYxSNpEqWdd1RdnYhEHrLR+4X7tl+UTP7/lSHDzc/SrsGq7nPPTWSXuIQK0dErXDWOBm
- maLRVoeGx7umGiWXC1MRW4NXNz7Wmp76KpdRbNXusxkLVoN6bxrAG0TXEYhswf+5SEMp
- yxxg==
+ bh=wm3ocIz5yPuGAgAzqL1S37jXenPDu6rAMForht0QG5U=;
+ b=ZNxkrc9h2EA0LAUaGHTlzTiAgvI80VrZ6svA9enSshFTULK08Qv6U2Mg4UpI2TZJj2
+ KQU/ihljaEdDpHEB+dl5TkrWFM/V0kFKZCrCIafL/rJxKHBZ7iiksZxZ+r61TStXkz7k
+ k7L8Egrq6oTWfS+eh2OHTbA7GZgU8/14wAieCZBiQUSO0c/kiqeTc6hNmfe3metbfQba
+ cUfOZth8sI+FQUfmfKSVzTGXi7sKNwiybCKzAb1eaixQRHBoxXs3YtSXFULmSn+XfgM8
+ 40sV+uzsMukCzRErNZTR5OcEB5FhdmWm5ekP5fZQjF7ypqm54PVo9k3ndtcbgexC91zX
+ svqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441156; x=1773045956;
+ d=1e100.net; s=20230601; t=1772441064; x=1773045864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ux3ZnPMEDtYfBdP2aeSQqPPs5FTXOfyYnyLyR49twAs=;
- b=KktemO0eX5vxJyhJMJlC7HiyOPAXRh+PkWhzfor+I1F6z/uFykuDGHJH+JeH+mLoKs
- TyUba32DkoLlynuNtfOZKp3THdS22xFePqaMb8ttEo4TBzgpinfJF3aygFDEfXXaagsC
- yhono5EMyfJuSlXk2H5oNKLxfl+2CqkeQTRXJTDeH8LuNvnCy4g1u5hscdevQ5fTmKd+
- l/BfNm3QN6oQdA0fOFEt+qtO6w7weU4/J+xEVYL23AyL97xRb2YbloAAivX4FDHIy3yP
- uLI8eGR5FZccVJ7gWzx0tlhhoRQiId9G9P+/33NtASagFD88sZqimm+NcSK0ZuOU28H5
- E2qg==
-X-Gm-Message-State: AOJu0Yxo714zUUqVXFBAdKzY4pALNwkFXNCtgMwKNX7s0HxMN/LKEoAd
- mRRP23uDBOYZk2MmTMsLPdYCrIDcqyxVjIYOrgTHbwCYENSJ3d0qxs82CIdjBg+kaYMUzz3/7Zf
- GMTwVTt0SlS6us1ZSAmwNzoACBkRH9vvJsCyhN4XNQe4hTfi/dqZBTs7G+m3t3sfnZkXKPGQ+cx
- jtZiZmkWbEZjoONJYeM+HnI93xRUoSTS2FovUidb6e
-X-Gm-Gg: ATEYQzzEUvV+9Ee7ZQNnUIo2qfaNft+fiKVHCGjilU1im8VebhMs242H6qpRpOaa8AJ
- 2o3Dlzzg4EXLVnUDnNRLGclrfX2V/nxn/iSOqB/S2Cq+SassRN+s6ODuiuYTmYpVwD+3beE1lvD
- vrdr+38a2XzO7vqXfqAaD7Ec9mq1X26k21ioe0O2ZOqiQpdbJmh4iLF5klYOHH2qUEEb7gdNqPO
- yTLgr3012OykncuIowEG10pIf419PKyTxiRJnczoEu/9XZbLShCZ5DusRLB8EXJusHdE48xnceS
- FjtZhax3rNDpb0lrod8fZ3DCSKR1RuByQwVYKA+q55evYyGDrbpYe0QOcCm/TsGKYKywUKtl66E
- UReuJJwJwBiNvwSzaiNGKseR/oAKCA0nB/IgPZU3/g8GLft+LTp+bnk1qpNOoAD3+HVzOm/SFF4
- WMOM2rx7TB4GC5yC7ccBi6N9jlf5Q=
-X-Received: by 2002:a05:6000:2c06:b0:439:8559:98b with SMTP id
- ffacd0b85a97d-4399d97f826mr18661065f8f.9.1772441156015; 
- Mon, 02 Mar 2026 00:45:56 -0800 (PST)
-X-Received: by 2002:a05:6000:2c06:b0:439:8559:98b with SMTP id
- ffacd0b85a97d-4399d97f826mr18661028f8f.9.1772441155513; 
- Mon, 02 Mar 2026 00:45:55 -0800 (PST)
+ bh=wm3ocIz5yPuGAgAzqL1S37jXenPDu6rAMForht0QG5U=;
+ b=C5gNOEMFVS8WIRbMQsyg37gxOZD8NNKoxZmnzA6kCcHdCc4jZxtUXIFHNQM0H1Sg6q
+ 8mmQQAdcF0uIrCBHcl3hrynraowg3ix/ZuBKfmS3aQ5HgjtM62kO5L67rNbqM4bHfeYn
+ iTeFX5FyXsYaXuWeeVRSe39coBnIthR1rCK74CgjM0EmPa3vq99Tfb4mzy1guA5GLpxk
+ SIkJJE+jBllBPFCAG7uUVEEOWU7e/AZtK+KtyqNuyGOtUjueQxGOBXQiA5GZeNbycpbw
+ tn1J7ynsYzp0PFdsBsHKtzkOjeXa0MV1vok1QXgxVH8u877Q8tJfxOMPFnNh3n9jV51O
+ /w0A==
+X-Gm-Message-State: AOJu0YxE3tZ9Lq+2XyLpsAQZJeizRWYQTl8O3xajdPlzCPfgcQ3JNTRs
+ s8Hp19zsQqotkjvPDYXIiBtSRtvLCe9b56jNw51DLPn8uxUGaM4yejyf9nGvFaUOauq88WYCYR8
+ OAIO6b3upKc3ysnDewSsq0TGIPJNs5E9yRSHgZMk1gGmkc46h8YTDNHCP/qoQHXtoG0fovqntBN
+ UGN9v/BGJVHoX3XHrhVW1pN1J8mwLsTFMq8mcz+xGE
+X-Gm-Gg: ATEYQzzZoOd8d2l8HrwtaVkbntM6Mim5sJ3GdNlOvp1s1eJe+/craFqdgBEmMIx0N/4
+ bUDISxy316Scg8EsXDBMNDUO7ZaKmrObJrRPke+ldMEJLG6lO/fhPZMZMzQavsO/g5x2SMEGHXN
+ QjyhuvmkkxfSIQym73XuA8j/xj6yTMCB7Q//cKoOxjFw3rD7z6/UKcwEFclIrH/oB8mJv702jm1
+ RrbOel9KoUdXo76eto7qifU/lC81IXwvwTtRKt+wThYft2F3WopxtyuhZAD0AqAJwhk8GTCkJ8v
+ /EOWmENLD8n2mR+EXX2m4ZnA19bdjvzEiTKtNPwiVjWegD1HPOiNJMBPW6DQLecIsyPVZe4TCIZ
+ vMHDWDTTCWrj/HXjE6aZBrgBToDH0QmnomQdwXSGOSeeurqv8hig7INFF3QE/S7yvK8rh/PN2+k
+ f5lrBSjtnUnXt5ki2DSpyifLwu5fY=
+X-Received: by 2002:a05:600c:1d12:b0:483:9cdc:8ac1 with SMTP id
+ 5b1f17b1804b1-483c9b9eb7amr184465915e9.11.1772441064499; 
+ Mon, 02 Mar 2026 00:44:24 -0800 (PST)
+X-Received: by 2002:a05:600c:1d12:b0:483:9cdc:8ac1 with SMTP id
+ 5b1f17b1804b1-483c9b9eb7amr184465355e9.11.1772441063910; 
+ Mon, 02 Mar 2026 00:44:23 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b130abfasm10471900f8f.34.2026.03.02.00.45.54
+ 5b1f17b1804b1-483bfb296bfsm154969135e9.0.2026.03.02.00.44.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:45:54 -0800 (PST)
+ Mon, 02 Mar 2026 00:44:22 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 051/102] kvm/i386: implement architecture support for kvm file
- descriptor change
-Date: Mon,  2 Mar 2026 09:42:46 +0100
-Message-ID: <20260302084338.473368-52-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 016/102] whpx: common, i386, arm: rework state levels
+Date: Mon,  2 Mar 2026 09:42:11 +0100
+Message-ID: <20260302084338.473368-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,129 +123,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-When the kvm file descriptor changes as a part of confidential guest reset,
-some architecture specific setups including SEV/SEV-SNP/TDX specific setups
-needs to be redone. These changes are implemented as a part of the
-kvm_arch_on_vmfd_change() callback which was introduced previously.
+Change state levels from a set of ifdefs to an enum.
+Make register state loads use state levels too.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-11-anisinha@redhat.com
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20260223233950.96076-16-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c        | 49 ++++++++++++++++++++++++++++--------
- target/i386/kvm/trace-events |  1 +
- 2 files changed, 39 insertions(+), 11 deletions(-)
+ include/system/whpx-accel-ops.h | 16 ++++++++++------
+ include/system/whpx-all.h       |  6 ++++--
+ accel/whpx/whpx-common.c        |  8 ++++----
+ target/arm/whpx/whpx-all.c      |  8 ++++----
+ target/i386/whpx/whpx-all.c     | 16 ++++++++--------
+ 5 files changed, 30 insertions(+), 24 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 8edfbb834c6..40e4b3f1283 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3407,12 +3407,30 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+diff --git a/include/system/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
+index ed9d4c49f4d..4b2a7326548 100644
+--- a/include/system/whpx-accel-ops.h
++++ b/include/system/whpx-accel-ops.h
+@@ -22,11 +22,15 @@ void whpx_cpu_synchronize_post_reset(CPUState *cpu);
+ void whpx_cpu_synchronize_post_init(CPUState *cpu);
+ void whpx_cpu_synchronize_pre_loadvm(CPUState *cpu);
  
- int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
+-/* state subset only touched by the VCPU itself during runtime */
+-#define WHPX_SET_RUNTIME_STATE   1
+-/* state subset modified during VCPU reset */
+-#define WHPX_SET_RESET_STATE     2
+-/* full state set, modified during initialization or on vmload */
+-#define WHPX_SET_FULL_STATE      3
++typedef enum WHPXStateLevel {
++    /* subset of runtime state for faster returns from vmexit */
++    WHPX_LEVEL_FAST_RUNTIME_STATE,
++    /* state subset only touched by the VCPU itself during runtime */
++    WHPX_LEVEL_RUNTIME_STATE,
++    /* state subset modified during VCPU reset */
++    WHPX_LEVEL_RESET_STATE,
++    /* full state set, modified during initialization or on vmload */
++    WHPX_LEVEL_FULL_STATE
++} WHPXStateLevel;
+ 
+ #endif /* TARGET_I386_WHPX_ACCEL_OPS_H */
+diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
+index b831c463b0b..2cbea71b149 100644
+--- a/include/system/whpx-all.h
++++ b/include/system/whpx-all.h
+@@ -2,10 +2,12 @@
+ #ifndef SYSTEM_WHPX_ALL_H
+ #define SYSTEM_WHPX_ALL_H
+ 
++#include "system/whpx-accel-ops.h"
++
+ /* Called by whpx-common */
+ int whpx_vcpu_run(CPUState *cpu);
+-void whpx_get_registers(CPUState *cpu);
+-void whpx_set_registers(CPUState *cpu, int level);
++void whpx_get_registers(CPUState *cpu, WHPXStateLevel level);
++void whpx_set_registers(CPUState *cpu, WHPXStateLevel level);
+ int whpx_accel_init(AccelState *as, MachineState *ms);
+ void whpx_cpu_instance_init(CPUState *cs);
+ HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions);
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 88eef557998..4863fc86631 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -46,7 +46,7 @@ struct WHPDispatch whp_dispatch;
+ void whpx_flush_cpu_state(CPUState *cpu)
  {
--    abort();
-+    int ret;
-+
-+    ret = kvm_arch_init(ms, s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-+        X86MachineState *x86ms = X86_MACHINE(ms);
-+
-+        if (x86_machine_is_smm_enabled(x86ms)) {
-+            memory_listener_register(&smram_listener.listener,
-+                                     &smram_address_space);
-+        }
-+        kvm_set_max_apic_id(x86ms->apic_id_limit);
-+    }
-+
-+    trace_kvm_arch_on_vmfd_change();
-+    return 0;
+     if (cpu->vcpu_dirty) {
+-        whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++        whpx_set_registers(cpu, WHPX_LEVEL_RUNTIME_STATE);
+         cpu->vcpu_dirty = false;
+     }
+ }
+@@ -180,7 +180,7 @@ int whpx_last_vcpu_stopping(CPUState *cpu)
+ static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+ {
+     if (!cpu->vcpu_dirty) {
+-        whpx_get_registers(cpu);
++        whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
+         cpu->vcpu_dirty = true;
+     }
+ }
+@@ -188,14 +188,14 @@ static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+ static void do_whpx_cpu_synchronize_post_reset(CPUState *cpu,
+                                                run_on_cpu_data arg)
+ {
+-    whpx_set_registers(cpu, WHPX_SET_RESET_STATE);
++    whpx_set_registers(cpu, WHPX_LEVEL_RESET_STATE);
+     cpu->vcpu_dirty = false;
  }
  
- bool kvm_arch_supports_vmfd_change(void)
+ static void do_whpx_cpu_synchronize_post_init(CPUState *cpu,
+                                               run_on_cpu_data arg)
  {
--    return false;
-+    return true;
+-    whpx_set_registers(cpu, WHPX_SET_FULL_STATE);
++    whpx_set_registers(cpu, WHPX_LEVEL_FULL_STATE);
+     cpu->vcpu_dirty = false;
  }
  
- int kvm_arch_init(MachineState *ms, KVMState *s)
-@@ -3420,6 +3438,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     int ret;
-     struct utsname utsname;
-     Error *local_err = NULL;
-+    static bool first = true;
- 
-     /*
-      * Initialize confidential guest (SEV/TDX) context, if required
-@@ -3489,16 +3508,17 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
- 
--    /* Tell fw_cfg to notify the BIOS to reserve the range. */
--    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
--
-+    if (first) {
-+        /* Tell fw_cfg to notify the BIOS to reserve the range. */
-+        e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
-+    }
-     ret = kvm_vm_set_nr_mmu_pages(s);
-     if (ret < 0) {
-         return ret;
-     }
- 
-     if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
--        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
-+        x86_machine_is_smm_enabled(X86_MACHINE(ms)) && first) {
-         smram_machine_done.notify = register_smram_listener;
-         qemu_add_machine_init_done_notifier(&smram_machine_done);
-     }
-@@ -3545,16 +3565,23 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-                 return ret;
-             }
- 
--            ret = kvm_msr_energy_thread_init(s, ms);
--            if (ret < 0) {
--                error_report("kvm : error RAPL feature requirement not met");
--                return ret;
-+            if (first) {
-+                ret = kvm_msr_energy_thread_init(s, ms);
-+                if (ret < 0) {
-+                    error_report("kvm : "
-+                                 "error RAPL feature requirement not met");
-+                    return ret;
-+                }
-             }
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 0d56e468bdf..bb94eac7bf8 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -417,7 +417,7 @@ int whpx_vcpu_run(CPUState *cpu)
+     do {
+         bool advance_pc = false;
+         if (cpu->vcpu_dirty) {
+-            whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++            whpx_set_registers(cpu, WHPX_LEVEL_RUNTIME_STATE);
+             cpu->vcpu_dirty = false;
          }
+ 
+@@ -482,7 +482,7 @@ int whpx_vcpu_run(CPUState *cpu)
+         default:
+             error_report("WHPX: Unexpected VP exit code 0x%08x",
+                          vcpu->exit_ctx.ExitReason);
+-            whpx_get_registers(cpu);
++            whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
+             bql_lock();
+             qemu_system_guest_panicked(cpu_get_crash_info(cpu));
+             bql_unlock();
+@@ -516,7 +516,7 @@ static void clean_whv_register_value(WHV_REGISTER_VALUE *val)
+     memset(val, 0, sizeof(WHV_REGISTER_VALUE));
+ }
+ 
+-void whpx_get_registers(CPUState *cpu)
++void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+@@ -563,7 +563,7 @@ void whpx_get_registers(CPUState *cpu)
+     aarch64_restore_sp(env, arm_current_el(env));
+ }
+ 
+-void whpx_set_registers(CPUState *cpu, int level)
++void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index baa3169c55c..c09d9affefa 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -367,7 +367,7 @@ static uint64_t whpx_cr8_to_apic_tpr(uint64_t cr8)
+     return cr8 << 4;
+ }
+ 
+-void whpx_set_registers(CPUState *cpu, int level)
++void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+ {
+     struct whpx_state *whpx = &whpx_global;
+     AccelCPUState *vcpu = cpu->accel;
+@@ -386,7 +386,7 @@ void whpx_set_registers(CPUState *cpu, int level)
+      * Following MSRs have side effects on the guest or are too heavy for
+      * runtime. Limit them to full state update.
+      */
+-    if (level >= WHPX_SET_RESET_STATE) {
++    if (level >= WHPX_LEVEL_RESET_STATE) {
+         whpx_set_tsc(cpu);
      }
  
-     pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
--    kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
-+
-+    if (first) {
-+        kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
-+    }
-+    first = false;
+@@ -583,7 +583,7 @@ static void whpx_get_xcrs(CPUState *cpu)
+     cpu_env(cpu)->xcr0 = xcr0.Reg64;
+ }
+ 
+-void whpx_get_registers(CPUState *cpu)
++void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+ {
+     struct whpx_state *whpx = &whpx_global;
+     AccelCPUState *vcpu = cpu->accel;
+@@ -770,10 +770,10 @@ static int emulate_instruction(CPUState *cpu, const uint8_t *insn_bytes, size_t
+     struct x86_decode decode = { 0 };
+     x86_insn_stream stream = { .bytes = insn_bytes, .len = insn_len };
+ 
+-    whpx_get_registers(cpu);
++    whpx_get_registers(cpu, WHPX_LEVEL_FAST_RUNTIME_STATE);
+     decode_instruction_stream(env, &decode, &stream);
+     exec_instruction(env, &decode);
+-    whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++    whpx_set_registers(cpu, WHPX_LEVEL_FAST_RUNTIME_STATE);
  
      return 0;
  }
-diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
-index 74a6234ff7f..2d213c9f9b6 100644
---- a/target/i386/kvm/trace-events
-+++ b/target/i386/kvm/trace-events
-@@ -6,6 +6,7 @@ kvm_x86_add_msi_route(int virq) "Adding route entry for virq %d"
- kvm_x86_remove_msi_route(int virq) "Removing route entry for virq %d"
- kvm_x86_update_msi_routes(int num) "Updated %d MSI routes"
- kvm_hc_map_gpa_range(uint64_t gpa, uint64_t size, uint64_t attributes, uint64_t flags) "gpa 0x%" PRIx64 " size 0x%" PRIx64 " attributes 0x%" PRIx64 " flags 0x%" PRIx64
-+kvm_arch_on_vmfd_change(void) ""
+@@ -1589,7 +1589,7 @@ int whpx_vcpu_run(CPUState *cpu)
  
- # xen-emu.c
- kvm_xen_hypercall(int cpu, uint8_t cpl, uint64_t input, uint64_t a0, uint64_t a1, uint64_t a2, uint64_t ret) "xen_hypercall: cpu %d cpl %d input %" PRIu64 " a0 0x%" PRIx64 " a1 0x%" PRIx64 " a2 0x%" PRIx64" ret 0x%" PRIx64
+     do {
+         if (cpu->vcpu_dirty) {
+-            whpx_set_registers(cpu, WHPX_SET_RUNTIME_STATE);
++            whpx_set_registers(cpu, WHPX_LEVEL_RUNTIME_STATE);
+             cpu->vcpu_dirty = false;
+         }
+ 
+@@ -1796,7 +1796,7 @@ int whpx_vcpu_run(CPUState *cpu)
+             break;
+         }
+         case WHvRunVpExitReasonException:
+-            whpx_get_registers(cpu);
++            whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
+ 
+             if ((vcpu->exit_ctx.VpException.ExceptionType ==
+                  WHvX64ExceptionTypeDebugTrapOrFault) &&
+@@ -1828,7 +1828,7 @@ int whpx_vcpu_run(CPUState *cpu)
+         default:
+             error_report("WHPX: Unexpected VP exit code %d",
+                          vcpu->exit_ctx.ExitReason);
+-            whpx_get_registers(cpu);
++            whpx_get_registers(cpu, WHPX_LEVEL_FULL_STATE);
+             bql_lock();
+             qemu_system_guest_panicked(cpu_get_crash_info(cpu));
+             bql_unlock();
 -- 
 2.53.0
 
