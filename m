@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3F7D58E7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5411AD58E7A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyxB-0003GS-Ea; Mon, 02 Mar 2026 03:48:49 -0500
+	id 1vwyvJ-0006aW-Nr; Mon, 02 Mar 2026 03:46:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwywY-0002xv-Vz
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:09 -0500
+ id 1vwyvA-0005qR-Jr
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwywX-0002As-Eb
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:47:58 -0500
+ id 1vwyv6-00020p-PY
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441276;
+ s=mimecast20190719; t=1772441186;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vsTvVrZLmqM52PWxCB6hO+fs/DKNlJZKBO6GuZlfP34=;
- b=SDo6GpUPWBiqMS6kPqbvgWTF83CS9QemJb3NMlVhYdKsJTLxSFod012+PcbJ0FROKMQ9aT
- +KK6QrKT7FOnjsyiRgDE4bVz615dQiQyvwgDcuiU2MTXjxAvwlmOQy6eLZtFC3CQulDwCf
- Tzwm5Iy+Coiv+ED0YgquBawnHk94rBc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zptzdiIhn5oW9SnPOXdirIkkuvYnT1Lz9FHCyHx3ZYY=;
+ b=cA+MYE+gL6kK7dupk6XxhyR45DUGqa3jTJyuOOOW2/sg7aAOIION4883r6ZKTfXZVMZyXL
+ Os0OA4xZsGJD0PD62KEO1T+OlKuAZl3DraN7zhoT6RrrH8sJBH/UF4quQA5Olt9wTNpGrj
+ nAMGxZT4yKpPUm7Gq8yzskK7R18qjwg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-wUn_f-qcNOyIsEi_xmieOA-1; Mon, 02 Mar 2026 03:47:55 -0500
-X-MC-Unique: wUn_f-qcNOyIsEi_xmieOA-1
-X-Mimecast-MFC-AGG-ID: wUn_f-qcNOyIsEi_xmieOA_1772441274
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43997e095cdso2912616f8f.3
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:47:55 -0800 (PST)
+ us-mta-57-Hph6q55BN3K4NQdL9Gkghw-1; Mon, 02 Mar 2026 03:46:25 -0500
+X-MC-Unique: Hph6q55BN3K4NQdL9Gkghw-1
+X-Mimecast-MFC-AGG-ID: Hph6q55BN3K4NQdL9Gkghw_1772441184
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-483bcfdaf7dso39970825e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:46:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441273; x=1773046073; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441183; x=1773045983; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vsTvVrZLmqM52PWxCB6hO+fs/DKNlJZKBO6GuZlfP34=;
- b=Wufefh9wr58mGS+UF5uwmdFIlQH15fQpPndNcAAbYzDOIJy0N6/F7HdVE0nBuFRbA5
- QBJMFTHoyetbqy2FprHi2Y/6CDO3Ycvtag2QyhQei5Z71fLfUpHLWMKO642zrB4X97Po
- dwnseFRI53Gu2luQyOozOz6tDnEWwH7adDGVPyrP+R1xuizjHAYJ7/gJS321RJbfhFRd
- mTC86umkrLxpZWeH9nHVr5boY52bZDimWhZP2PrRwoRSWCHEE/f5Vr5U8oPewQeIY2oW
- ePO2wG+Tz2ne9iNr1FdxtooQ8OWFM88+6IMBsevDTQLLO7RW+m+cCuX/XbyCe8BMKFFm
- h1Mg==
+ bh=zptzdiIhn5oW9SnPOXdirIkkuvYnT1Lz9FHCyHx3ZYY=;
+ b=KNulbXnwnbLgRIxsIIvMKDG4kGV2q18UPRMXUHe7cz/IDsWoITPtPxhz9/WxHJEnpD
+ nkDw8O4lDh9RQa6HrgruQ0J6p15lrq89vaz9uV34DF6JdNPZppP2fi+SvSvsDt6NL2r5
+ 75YVKDqvy7Fazx87XGGDNoNZ1yJMdHX5t6b8/9QqeSgXNqvm5MZp2ULr6QbxrA6Ff98s
+ MCnbPKpV2uXi3pcJt55+yutjWY5oCVqk6WxEnb5LueE8DqYjbDLwCtfSbvpyU5ue8UGL
+ bzoqgrHHHZSYFGe8SOZJMTBJ4WxWSRKxCJoJ5m38yVd+pWtzwjnW6xBFS1D7HZaa7GVi
+ tC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441273; x=1773046073;
+ d=1e100.net; s=20230601; t=1772441183; x=1773045983;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vsTvVrZLmqM52PWxCB6hO+fs/DKNlJZKBO6GuZlfP34=;
- b=UgPbP4uune5AGUBQUPoGkoWNKWzyfc1KSWxw/W0aOh4bW/+EOS26+oV7ionyl5aQEo
- 2ShI+7PwRoUUejT6HX9g9FzSZE1FjJdhmyTxuiC7EmxNLJobrAb8AQRxRszrRVoPY6sw
- hMxWO0Tat5KfhAPTUoZpVh3v7UNHKC6oPE3q3YWYh5m+AfCzA+gkNynYd0OCSYyv+cO5
- 8gSHb6kbN9tFnqI+Kb58OG+e2vAIsZ6NtyxPI9b5TOUBDyiJruPlXeU3AstAj0LOYuit
- IlVVbNW1Tc9nmqVhSeeRnV+R/eMwS5GWPszgGt0Q2TFLEbjo+EACn/tynPDHwk9Cpo3z
- Ye5Q==
-X-Gm-Message-State: AOJu0YzShGcwzNADbmB82PDUu1+oNaUZFA2BmbaNmzGy5JZjSARwODBE
- cyF58G291nJ3nVY/yqGPerZoit6IN0S9gIYYVfuEp8YUGG7Db3EWaTDCbnXYzheE8YiIg8Ivbha
- JZfev1u6SM0t0/QYr7Z8MMHL1DHxh7BGZEntego4rXm6tKv4bNm5MnRO4vLBUx8H3cOKYv4jovB
- 5i5ZeqcUol/geeYPEPJzE8Me1uUUI+GZQT3St3BeYD
-X-Gm-Gg: ATEYQzzwLFgtA4YwyjIRRWaDq/5ErDoVISeOdP3Sy2NGoQkE3cc/sVpcUK52at0/ST6
- 4sEu+3cgBtJ8KjeXZWxb2PcDTqBKpBR2U7KocXKcclDtVXGUA0jFh4rQZ0mFUU3YL0DiNmyKEn0
- HMjz0JfumsJU0MeW63xMglS5cZcQPtV1Hgkrd6KvcIRLpNPmWn/xFWFcEzDvNjA7nKyWbeQ7ceM
- uVKm2Y2T+9Ptjhh+v0zJyh8Cw85k8lQT15WuOQl0o4zKF4PPXq7vYM5RYWyfzlZvhCvQhRZ2D2R
- fll2zFSLG2ZijqrLBgMK8SMTKe0IeyhpSDTCWn0ADbIHke0lumBSmgNiz9RzuUmBusbNQ9S/b/j
- EcDxhaR0Qc4chji7dcwso1R8EwvU4rjh+6vxNP3s6RGOuy95JVEcH5auOL4FrirmBIUwT0Pvg1k
- AwIYj8jN9u6pd+rnbL9SLWKOAolNk=
-X-Received: by 2002:a05:600c:46c4:b0:483:7783:537b with SMTP id
- 5b1f17b1804b1-483c9c0f34cmr196582315e9.24.1772441273098; 
- Mon, 02 Mar 2026 00:47:53 -0800 (PST)
-X-Received: by 2002:a05:600c:46c4:b0:483:7783:537b with SMTP id
- 5b1f17b1804b1-483c9c0f34cmr196581815e9.24.1772441272444; 
- Mon, 02 Mar 2026 00:47:52 -0800 (PST)
+ bh=zptzdiIhn5oW9SnPOXdirIkkuvYnT1Lz9FHCyHx3ZYY=;
+ b=Wr8B6CV63EmWaRJL63DuoX0Nwl+v4cRPQ13TjHcnlC6DvQ6GQ7VkE5lqMQs7mtnx62
+ Zm0x9WkPO4ykXMgV6Z48io1Yg97CuQAZU9T22PU/yxplB/tPGIBrqTFBJdy2VBcoof5T
+ Kzu/K/msUAWCFtS9YipixH6dy5X90U0ZanLnFY5VqKcpd8rV7sHqaZqAUMhHdLZW3vlv
+ z3DTF7GHgLb8NwFaBCFsdTVMUbjWwgBzQ+Lxbme/LYMrUawD6fgqXU0YUS50KbUJMSsj
+ Nqdk9Ebl0ChRTVt5KxD1sXVaB8+fwbL5nL9EWj/oNot2X17JWrAkOqP4p0Wxy/qCqigi
+ /RNA==
+X-Gm-Message-State: AOJu0YwzUEEYM8H5+Ud1R89dTfPitF4Pc8Gadrna/4Ts/dBQHB5seDt8
+ Bhk02CeO7qJwyAifHunLgDmO2xuHtZyZRFdqDHFXDob79i1xh7TxGUZURDW5qcHE6gHyGFAr+tb
+ Io4fo0QgR0dKFMVabK6l70j/1mLunA55Vr/niL5pJHoEg5c6WjbNVKc9k3srXWa9OzGXI5vi2Qu
+ B3VsBVJgI6PXrClCIZtnG71ipC9SiNDd1r7SAb9LVX
+X-Gm-Gg: ATEYQzxspumnJM9k7PeUgJRAzCyYcNcC+HU3xhfTBWnyybVatfhN7c92YM/Pjdd5oCp
+ 2pR/frBjGTieNqKkGZjaS09yYIEV/xCr7E8jEZK1uVEAJv8lppO5JKNSqujLMvVW8z/3BZlHyYw
+ TQSQcgt2imkp+9KeUX2rGMw8kLNd2wyZfoUKaydGXuymYh346ivzbUH0Zdb0gW23gGpRNeogSut
+ THd+UgaCAxFnw9UKEO70TkNzo0zzODK8/cVzQ5RIFemuX1xXGguJfomn7TyFTcgeeP+Q9/Sy7iO
+ 16twUA9FDs0oEXyePnhIxDfwSN9erFyFf9OiBY270/uxDnTF/sq8tH0XajWm0UcV3hOk5s1DVGy
+ 2/RYPIlUt33vBbdx7rbtWasfPbSA724nFYqZfBTSvMZuH2q+TRlNllKpJXIB++pbEUkjgntNTwM
+ h8SE7Q5zzbxOMw94cgHUsMTfvCGM0=
+X-Received: by 2002:a05:600c:190c:b0:477:9814:6882 with SMTP id
+ 5b1f17b1804b1-483c9ba7d51mr208098585e9.5.1772441182922; 
+ Mon, 02 Mar 2026 00:46:22 -0800 (PST)
+X-Received: by 2002:a05:600c:190c:b0:477:9814:6882 with SMTP id
+ 5b1f17b1804b1-483c9ba7d51mr208098205e9.5.1772441182378; 
+ Mon, 02 Mar 2026 00:46:22 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd68826asm631883135e9.0.2026.03.02.00.47.50
+ 5b1f17b1804b1-483bd6f3124sm395134185e9.1.2026.03.02.00.46.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:47:51 -0800 (PST)
+ Mon, 02 Mar 2026 00:46:20 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PULL 068/102] hw/hyperv/vmbus: add support for confidential guest
- reset
-Date: Mon,  2 Mar 2026 09:47:14 +0100
-Message-ID: <20260302084749.474955-2-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 061/102] i386/sev: add notifiers only once
+Date: Mon,  2 Mar 2026 09:42:56 +0100
+Message-ID: <20260302084338.473368-62-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -125,104 +123,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ani Sinha <anisinha@redhat.com>
 
-On confidential guests when the KVM virtual machine file descriptor changes as
-a part of the reset process, event file descriptors needs to be reassociated
-with the new KVM VM file descriptor. This is achieved with the help of a
-callback handler that gets called when KVM VM file descriptor changes during
-the confidential guest reset process.
+The various notifiers that are used needs to be installed only once not on
+every initialization. This includes the vm state change notifier and others.
+This change uses 'cgs->ready' flag to install the notifiers only one time,
+the first time.
 
-This patch is tested on non-confidential platform only.
-
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-28-anisinha@redhat.com
+Link: https://lore.kernel.org/r/20260225035000.385950-21-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/hyperv/vmbus.c      | 37 +++++++++++++++++++++++++++++++++++++
- hw/hyperv/trace-events |  1 +
- 2 files changed, 38 insertions(+)
+ target/i386/sev.c | 36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index c5bab5d2452..64abe4c4c16 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -20,6 +20,7 @@
- #include "hw/hyperv/vmbus-bridge.h"
- #include "hw/core/sysbus.h"
- #include "exec/cpu-common.h"
-+#include "system/kvm.h"
- #include "exec/target_page.h"
- #include "trace.h"
- 
-@@ -248,6 +249,12 @@ struct VMBus {
-      * interrupt page
-      */
-     EventNotifier notifier;
-+
-+    /*
-+     * Notifier to inform when vmfd is changed as a part of confidential guest
-+     * reset mechanism.
-+     */
-+    NotifierWithReturn vmbus_vmfd_change_notifier;
- };
- 
- static bool gpadl_full(VMBusGpadl *gpadl)
-@@ -2347,6 +2354,33 @@ static void vmbus_dev_unrealize(DeviceState *dev)
-     free_channels(vdev);
- }
- 
-+/*
-+ * If the KVM fd changes because of VM reset in confidential guests,
-+ * reassociate event fd with the new KVM fd.
-+ */
-+static int vmbus_handle_vmfd_change(NotifierWithReturn *notifier,
-+                                    void *data, Error** errp)
-+{
-+    VMBus *vmbus = container_of(notifier, VMBus,
-+                                vmbus_vmfd_change_notifier);
-+    int ret = 0;
-+
-+    /* we are not interested in pre vmfd change notification */
-+    if (((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    ret = hyperv_set_event_flag_handler(VMBUS_EVENT_CONNECTION_ID,
-+                                            &vmbus->notifier);
-+    /* if we are only using userland event handler, it may already exist */
-+    if (ret != 0 && ret != -EEXIST) {
-+        error_setg(errp, "hyperv set event handler failed with %d", ret);
-+    }
-+
-+    trace_vmbus_handle_vmfd_change();
-+    return ret;
-+}
-+
- static const Property vmbus_dev_props[] = {
-     DEFINE_PROP_UUID("instanceid", VMBusDevice, instanceid),
- };
-@@ -2429,6 +2463,9 @@ static void vmbus_realize(BusState *bus, Error **errp)
-         goto clear_event_notifier;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 260d8ef88bf..647f4bf63d5 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1920,8 +1920,9 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         return -1;
      }
  
-+    vmbus->vmbus_vmfd_change_notifier.notify = vmbus_handle_vmfd_change;
-+    kvm_vmfd_add_change_notifier(&vmbus->vmbus_vmfd_change_notifier);
-+
-     return;
+-    qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
+-
++    if (!cgs->ready) {
++        qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
++    }
+     cgs->ready = true;
  
- clear_event_notifier:
-diff --git a/hw/hyperv/trace-events b/hw/hyperv/trace-events
-index 7963c215b1c..d8c96f18e98 100644
---- a/hw/hyperv/trace-events
-+++ b/hw/hyperv/trace-events
-@@ -16,6 +16,7 @@ vmbus_gpadl_torndown(uint32_t gpadl_id) "gpadl #%d"
- vmbus_open_channel(uint32_t chan_id, uint32_t gpadl_id, uint32_t target_vp) "channel #%d gpadl #%d target vp %d"
- vmbus_channel_open(uint32_t chan_id, uint32_t status) "channel #%d status %d"
- vmbus_close_channel(uint32_t chan_id) "channel #%d"
-+vmbus_handle_vmfd_change(void) ""
+     return 0;
+@@ -1943,22 +1944,23 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         return -1;
+     }
  
- # hv-balloon
- hv_balloon_state_change(const char *tostr) "-> %s"
+-    /*
+-     * SEV uses these notifiers to register/pin pages prior to guest use,
+-     * but SNP relies on guest_memfd for private pages, which has its
+-     * own internal mechanisms for registering/pinning private memory.
+-     */
+-    ram_block_notifier_add(&sev_ram_notifier);
+-
+-    /*
+-     * The machine done notify event is used for SEV guests to get the
+-     * measurement of the encrypted images. When SEV-SNP is enabled, the
+-     * measurement is part of the guest attestation process where it can
+-     * be collected without any reliance on the VMM. So skip registering
+-     * the notifier for SNP in favor of using guest attestation instead.
+-     */
+-    qemu_add_machine_init_done_notifier(&sev_machine_done_notify);
++    if (!cgs->ready) {
++        /*
++         * SEV uses these notifiers to register/pin pages prior to guest use,
++         * but SNP relies on guest_memfd for private pages, which has its
++         * own internal mechanisms for registering/pinning private memory.
++         */
++        ram_block_notifier_add(&sev_ram_notifier);
+ 
++        /*
++         * The machine done notify event is used for SEV guests to get the
++         * measurement of the encrypted images. When SEV-SNP is enabled, the
++         * measurement is part of the guest attestation process where it can
++         * be collected without any reliance on the VMM. So skip registering
++         * the notifier for SNP in favor of using guest attestation instead.
++         */
++        qemu_add_machine_init_done_notifier(&sev_machine_done_notify);
++    }
+     return 0;
+ }
+ 
 -- 
 2.53.0
 
