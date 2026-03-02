@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C79ACD58E7E
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D9FAC624C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvt-0001Kj-Ms; Mon, 02 Mar 2026 03:47:17 -0500
+	id 1vwyze-0007is-CI; Mon, 02 Mar 2026 03:51:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyv4-0005mz-Rv
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:30 -0500
+ id 1vwyws-0003Ds-7i
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyv1-00020P-6x
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:26 -0500
+ id 1vwywq-0002DA-40
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441181;
+ s=mimecast20190719; t=1772441295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X9u53hMXx9IfJyrriLWgxmlEcqPjwDvz8vV2vMP3sM0=;
- b=CZCCXZTuGAoT+Txr8Lz4TqFsuqBFcp7k5Z4luXq53mJBA4xwzr2ZvZunx8PeaTnQiXVxzc
- 3AYOGL6q1rV3S9JAIr6JFw4jXsWuTWarXHXt3HrGfFF103AGILX0lf/FIyUWveEZR3W7sG
- dbP+wrIFXmWjzG33k83m7TXaaE0EyW4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xOgp1TyXySYCJXAWxrtyTkQClS+QjMqnGfrNC3gHDoU=;
+ b=D+aLgtmZNhE/EL7bSFuA5QRazya5Rck2PcX+/QyuDVy7Pyhp/UP6cc67U3JYTIas8tjH6O
+ /CUoLRqyA7WiBJFMXjnJ0pbr9jAS0L1sG4OOSXs/JYYgATB8E7sbRjXiuOil+RCTdWgdSW
+ H3Rj7819y9EPcU/kWNei58Rs+ChUjHM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-vM0PCvQIMIqzSEB9SpglAg-1; Mon, 02 Mar 2026 03:46:20 -0500
-X-MC-Unique: vM0PCvQIMIqzSEB9SpglAg-1
-X-Mimecast-MFC-AGG-ID: vM0PCvQIMIqzSEB9SpglAg_1772441179
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4836c819456so28177775e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:46:19 -0800 (PST)
+ us-mta-416-jEU0CwkePxmSc5d24YYveg-1; Mon, 02 Mar 2026 03:48:14 -0500
+X-MC-Unique: jEU0CwkePxmSc5d24YYveg-1
+X-Mimecast-MFC-AGG-ID: jEU0CwkePxmSc5d24YYveg_1772441293
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4836c819456so28196515e9.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:48:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441178; x=1773045978; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441292; x=1773046092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X9u53hMXx9IfJyrriLWgxmlEcqPjwDvz8vV2vMP3sM0=;
- b=GRyqjncXo6nwpcUsIL+qbNoyBdDJ/fgfUAB0KW+q2uFUPR7rVP52I6AHWbYbFzc8SR
- 7MxNbLf7hS9mULz2eofmqIXy8yl3NnBFLp3b+qJK4e1FT0qhU794jPxnZKFIENqhhQ3L
- 7xDEpu5Qa80Xs2BvchPeFe4b4/Tugk6LuottaXX1MZle0tqv+a+VuBJjY/swAsGYT5vg
- i8tbVq9+StuQiGVRLrFx3jYUzl8JUP5cvjfSTO2tjDrqOA65qk0ovesn5R7ZjMDD5LLW
- hxjwZxitUk21S1NBwxttDwaYgkv0OiP5mKDlEs28cSMzH8cJ+zPKpCSUxzv8CFaeABUq
- TwQQ==
+ bh=xOgp1TyXySYCJXAWxrtyTkQClS+QjMqnGfrNC3gHDoU=;
+ b=lExUTYvERMplugioUeJZpJ1ENSqIr19RM4yFWoxNBtKJpULRK7gIT64lwah8LK2Ve/
+ j6Rq4Eyg67WdPbkPCsxVaIbSez01TUrIWIgr5/7rcTXPDmOvIQUtg545+DPgT2OtNhrV
+ 2W86tr2LQkvUJdNQYaexuC2QShyRUgC+xBSTUZ5WFw2MvhnSNU/xGA9swH6mshs1FT0+
+ rLP5iw+a1Zqshs6zNzWuUJBNWeCyV4KS5kot7/w/j3rrwTqFg2YfjM+4czw8KrSQSaGX
+ lZ+s4BgPc8vLiFDtUOd73cbILStLU3u2HVQjfH+rMBaCIghiMvrXybBH5qnWeFibyOfD
+ +FeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441178; x=1773045978;
+ d=1e100.net; s=20230601; t=1772441292; x=1773046092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=X9u53hMXx9IfJyrriLWgxmlEcqPjwDvz8vV2vMP3sM0=;
- b=qapKCR1YVBmz6RBUgRTHUeIUxi6u0/S+s2fIOvQchJZMhjeMe+zza5iaFu0IDbBH9V
- umMN7AAxZUsE2nbfZTb30XCs7tu8M8HqTpbswRyKD7Oi0lN1YajLhtQjBhuwCXLU6a25
- P2BArrXBujTWPw5PYqogvJaxCnMuVCfSs0VeDBKGOoxDZuXENsVD9xImhew3UNomeouf
- PVU0rdyCsDf1dYFYulf3pCAlWNJcXKQBY5tZvm7ebT0j/yM5a9NfppF5ezoP2YqdYVOu
- vCGjcMFb1MOdJi1g17f3TFT53PNk23FrIWZddkh+DPaWnY1aLW5xGyIpLNPF5ZrcDe/M
- 83Rw==
-X-Gm-Message-State: AOJu0Ywdgi+kMRnnCTgixMmS0kbkabydqn+bQi+baYR1ICPAQWMO7nEM
- oMCKs5yQJJld6DdFg5IJsvaMOxB0xYk2LVgxHAfGyjsFKEzTSvx5T9UD/DZIrBeYOKHb1vf0TXD
- scAJSP4cIq45PBgl46HvCQhwKqRIRE+5mhQHbpQXhJSVBqg8W4hFmt236aagqjuvqIg/6QiF18h
- 6/iOXaSHsI8JMijhvirrUlWD+WLqgqgmxpz0GaCRt0
-X-Gm-Gg: ATEYQzyTbjK2CWwFn1idtwZzzyKiZAymfdP0nSNF47aQQkSlmFxc0KqADTouSr/3N1x
- S0SLNmw+oYM45fxgsyAQX0RDqbCpFvrXgXEGRwvuybki4tAW+t3x1yldzIRfaYmsRAvEI5dmmUm
- q7zLMGd5kP0vQUCUWXIvVPDKB81Kk66jKF0E3Lh+Hjv8bS4QNgAEbMRyUStdbMCuwwk3X1Uy9Fi
- Zg2ECAiV5P+wfiViezRxTKZTQFsOf1HslISemCDm776+TF0ZdmOGlS/mlvNX2sr/86y2LElO6XN
- ELGSfzQuBPsFfgL6SWVjWTYTIrX2WDc65DOYEkUJMrsP4QvouXIWP0amBsqKf58YOF76uhdd91V
- Tk7vMuS6TngzXksYEWoR8yEvVCWHXkiv1BZjiqdAnISriYJhLHtfkMJaRY8Peqf4eRyY3qkuLPa
- K0peBgDrlbduzOaVUCGtO0+RAbFuM=
-X-Received: by 2002:a05:600c:1f91:b0:47e:e2ec:9947 with SMTP id
- 5b1f17b1804b1-483c9c2d7d6mr193328495e9.33.1772441178016; 
- Mon, 02 Mar 2026 00:46:18 -0800 (PST)
-X-Received: by 2002:a05:600c:1f91:b0:47e:e2ec:9947 with SMTP id
- 5b1f17b1804b1-483c9c2d7d6mr193328025e9.33.1772441177458; 
- Mon, 02 Mar 2026 00:46:17 -0800 (PST)
+ bh=xOgp1TyXySYCJXAWxrtyTkQClS+QjMqnGfrNC3gHDoU=;
+ b=UxXDlytUjcNDehi1FqT3jK29eN1Oxd91fzufqfV/HyLEeJ77Y+sIk+HpUx9RRMhQkq
+ dUe10liieLI8wBvemnaFVUUlN+/RGBal0mOaH71u/dtT27h7coBFFq+TF1jhSEfc4dQ1
+ dE8ycFcTBHtT0Bz+Mb9IPl+UeP3F5TjGhLj1uIwgBLOe+Limk4+CxQthScb9oSoFL86m
+ 3RVcdaa8IH4FenK7t/kA3j1crGs7ibaET2Pu4CFbPEJHgnsl7gJRplo+bMDKLum+KEGg
+ eYSGEQ956auqloxyL5IiEyXRU7Js1OONF7C8Umn3PKu4lQdWbmGxPuGUoFxyK0W/bsms
+ kmMQ==
+X-Gm-Message-State: AOJu0Yy5ta2jXAoV+RVE5NoRE1KP3/0qjcIzcpA3aOPmg4vodzIPhs9D
+ DNkJ5Mwgd9zgMeLsKm2sb7onHTj6f88G04pSiuJJyWYSL8rcbI3QCRHoVNWnIBL44PpII2+kN/p
+ WTS6Ka0YS8udbUwKATrLY7sXSFsUEJKcQZvS/d53HTsC5jEg6i8NVNgM38cVNT9MkXIXT7eDvdB
+ 4VPOe7ZLH68QLiOgwhqrgX/HNgPRGxtMwop4G7cXu/
+X-Gm-Gg: ATEYQzx2WS3d7bOFimlYGJvvA2qwP1qRyd4xC7UGq6SmyQeifjvTX1o/2vUrPUUIlJV
+ BqgZDRzg4Z6N2cCAv/Q/AU6b6oJkSnFAseXa6HcCvhQIcJkmz3tSZjUlTrYxRWlZHxKkpHtk8Qp
+ m5b/0mbqRkn7Bn7PNTlgN2k8GJN+aLgnapANSPAleW8pl75ZrfozZ8AbbHFjbZsVgv9IG1ukw/8
+ LlPUoF79qmHQ4NOLFW7ea9FKHeI8KoOzVctSCIHxT1plwq7XjxP6z/TqKTWXh0KcRc7pO+n+BUA
+ LN4nZTXXb2bWT79N8dVWl7X3Wrq7tP6Ahh+wqzDBrN+AYuXLcRUjLs8zVaA0w/ashiWHdSeH/uo
+ oE1XFXlBEMUXgoUERQPDk2T4M7rMvRPKI10WPLvp52O+ZO3zytL/3eyWKkI9NHHNJeacqw32LfD
+ MC4/Gw1WdyGc8MHSp7kiJEiXiiml0=
+X-Received: by 2002:a05:600c:8b54:b0:47e:e20e:bbb4 with SMTP id
+ 5b1f17b1804b1-483c9c24124mr187287545e9.26.1772441292454; 
+ Mon, 02 Mar 2026 00:48:12 -0800 (PST)
+X-Received: by 2002:a05:600c:8b54:b0:47e:e20e:bbb4 with SMTP id
+ 5b1f17b1804b1-483c9c24124mr187287145e9.26.1772441292010; 
+ Mon, 02 Mar 2026 00:48:12 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bfb789efsm205325885e9.2.2026.03.02.00.46.13
+ 5b1f17b1804b1-483bfcb318fsm194677365e9.6.2026.03.02.00.48.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:46:13 -0800 (PST)
+ Mon, 02 Mar 2026 00:48:10 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 059/102] i386/tdx: add a pre-vmfd change notifier to reset tdx
- state
-Date: Mon,  2 Mar 2026 09:42:54 +0100
-Message-ID: <20260302084338.473368-60-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 076/102] audio: fix nominal volume channel (cosmetic)
+Date: Mon,  2 Mar 2026 09:47:22 +0100
+Message-ID: <20260302084749.474955-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,69 +123,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-During reset, when the VM file descriptor is changed, the TDX state needs to be
-re-initialized. A notifier callback is implemented to reset the old
-state and free memory before the new state is initialized post VM file
-descriptor change.
-
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-19-anisinha@redhat.com
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20260211-cleanups-v1-1-e63c96572389@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/tdx.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ audio/audio-mixeng-be.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 37e91d95e1e..4cae99c281a 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -405,6 +405,36 @@ static void tdx_handle_reset(Object *obj, ResetType type)
-     trace_tdx_handle_reset();
- }
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 37040450511..5878b23e04e 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -1649,7 +1649,7 @@ static void audio_mixeng_backend_set_volume_out(AudioBackend *be, SWVoiceOut *sw
  
-+/* TDX guest reset will require us to reinitialize some of tdx guest state. */
-+static int set_tdx_vm_uninitialized(NotifierWithReturn *notifier,
-+                                    void *data, Error** errp)
-+{
-+    TdxFirmware *fw = &tdx_guest->tdvf;
-+
-+    if (!((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    if (tdx_guest->initialized) {
-+        tdx_guest->initialized = false;
-+    }
-+
-+    g_free(tdx_guest->ram_entries);
-+
-+    /*
-+     * the firmware entries will be parsed again, see
-+     * x86_firmware_configure() -> tdx_parse_tdvf()
-+     */
-+    fw->entries = 0;
-+    g_free(fw->entries);
-+
-+    return 0;
-+}
-+
-+static NotifierWithReturn tdx_vmfd_change_notifier = {
-+    .notify = set_tdx_vm_uninitialized,
-+};
-+
- /*
-  * Some CPUID bits change from fixed1 to configurable bits when TDX module
-  * supports TDX_FEATURES0.VE_REDUCTION. e.g., MCA/MCE/MTRR/CORE_CAPABILITY.
-@@ -1549,6 +1579,7 @@ static void tdx_guest_init(Object *obj)
+         sw->vol.mute = vol->mute;
+         sw->vol.l = nominal_volume.l * vol->vol[0] / 255;
+-        sw->vol.r = nominal_volume.l * vol->vol[vol->channels > 1 ? 1 : 0] /
++        sw->vol.r = nominal_volume.r * vol->vol[vol->channels > 1 ? 1 : 0] /
+             255;
  
-     tdx->event_notify_vector = -1;
-     tdx->event_notify_apicid = -1;
-+    kvm_vmfd_add_change_notifier(&tdx_vmfd_change_notifier);
-     qemu_register_resettable(obj);
- }
- 
+         if (k->volume_out) {
 -- 
 2.53.0
 
