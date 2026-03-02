@@ -4,125 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5E9EB362E
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 19:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C9B6EB362E
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 19:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx8aE-0003Hf-Q0; Mon, 02 Mar 2026 14:05:34 -0500
+	id 1vx8lt-0006Oa-8E; Mon, 02 Mar 2026 14:17:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alwilliamson@nvidia.com>)
- id 1vx8XP-0002kQ-L0; Mon, 02 Mar 2026 14:02:39 -0500
-Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alwilliamson@nvidia.com>)
- id 1vx8XO-00063w-4a; Mon, 02 Mar 2026 14:02:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m9KnccOq8AgpY7wZIATigWNzy4ja/c0IdbXxm29D1oOT6MHyeudlAQIj9qlD5r7WhXHQcI1rUnQPGnhiIqMiO+qGxEqirlpeN8c04rEl7IS3ONZB+uXeY9pp+zXqFD1GA+0r4jZuhnmWpVlGY2MrFxt5fcYauGZZs30XIJtLSQvBsX9JdEO2LIqtToLHrv3TSwRY/dD8oXMy+c7tiwcGmBZZlHFMNFAPz4dq6xr60BTa628ylkfcWXr7OjvAb7esoGFu9kkNnhEGN14/ocinRK2M6xdjgRxaK1juCYZsaPCu7M+CEzaLCZOEnpfClEbFx87253V3zfrTTQtPavYUig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YdXMWqMPuB6sJrfaxYvHiN6SMDs1NKlHHgie4FiVLlk=;
- b=xq/lnRQj34XFr3jMeFWxsb4ZSqilM7RxfG/fsXc1KPzBmeBvI2pWOENcWLDoH8xUCfhVd0TWAMMkrWhIK+pYIKSWbFlNeVCK8ikmvZX/lShD5VU+i/7VfeSgjTwo0DGp01oiDddR3U/7wnpo5xh/WswUecw9OKAygpThIVBgpdizMM6LvpRKHVmsf2s9PuglFXm6FYStlpzxQ2GteSLGYCDNE2Rr5ui/1LX0KqgmzPq/+hjDbVv1lW+ct5Xt3wtL5qsx95P2lg2SggwNDrca9vamY8/0Ss8dobd9R+auJ9UGulPseypSWb4O4Ffcki5XFVvYqBVUpummkcazkaDNLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=rsg.ci.i.u-tokyo.ac.jp
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YdXMWqMPuB6sJrfaxYvHiN6SMDs1NKlHHgie4FiVLlk=;
- b=c8nCZ7QVZOlgwqiswTsbQzZ7UeGVPYwZx3l6d51xHKJYTOQwOztcyQRWDpkeWGhXfB4dntcRegnhUNsVN/Jwrhsf/crb2k6rHanQYbP4j6cbWu6ex9ral1fHuZbs5jXHBMf/z4qE+30kpm+0ccVnBc3SM8gOoZFpSyZfmUnCI/JRL4rFaiO28qVTRYeUvjttrmwIM9ogIR8hbmklCE6OY/J1iTADI7FchNtd7SE14n5/lgdzNbb9sEJNxyz3dofuiAs+UNSI0iizy74aMsfs3New1jYbmM1cg6kbLmXd/mEAWxrozWKJcrS5V/kpNTNr9Icl+tnCuMFUlQTZpCZ0Mw==
-Received: from BN0PR04CA0033.namprd04.prod.outlook.com (2603:10b6:408:e8::8)
- by DM3PR12MB9416.namprd12.prod.outlook.com (2603:10b6:0:4b::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9654.21; Mon, 2 Mar 2026 19:02:29 +0000
-Received: from BN3PEPF0000B069.namprd21.prod.outlook.com
- (2603:10b6:408:e8:cafe::97) by BN0PR04CA0033.outlook.office365.com
- (2603:10b6:408:e8::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9654.21 via Frontend Transport; Mon,
- 2 Mar 2026 19:02:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BN3PEPF0000B069.mail.protection.outlook.com (10.167.243.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9700.0 via Frontend Transport; Mon, 2 Mar 2026 19:02:28 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 2 Mar
- 2026 11:02:07 -0800
-Received: from nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 2 Mar
- 2026 11:02:05 -0800
-Date: Mon, 2 Mar 2026 11:59:57 -0700
-From: Alex Williamson <alex.williamson@nvidia.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-CC: <qemu-devel@nongnu.org>, Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
- =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Keith Busch <kbusch@kernel.org>, Klaus Jensen
- <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- <qemu-block@nongnu.org>
-Subject: Re: [PATCH v2 2/4] vfio/pci: Grow buffer in vfio_pci_host_match()
-Message-ID: <20260302115957.10cd3b9a@nvidia.com>
-In-Reply-To: <20260302-nvme-v2-2-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260302-nvme-v2-0-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
- <20260302-nvme-v2-2-37ad8b5788c3@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vx8lp-0006O3-AE
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 14:17:33 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vx8ll-0008HI-8t
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 14:17:32 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64ca1ba0089so4146790d50.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 11:17:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772479044; cv=none;
+ d=google.com; s=arc-20240605;
+ b=e+Txf+QxyIY4yEMYkpRl/0SYhNsbsFcfZSeBetb/milv18s1YcJgFgbDicGar/yA+z
+ 0ThSi0IU8YA7qnbVaocEfwgFt1uJXUaSTr49LAzlgNTTb7g72obESKThQ1mIAfsYkk1p
+ h3o55MAyhJZqkQV+XgxPDnS+8/yY4gma8/YR3JgzmLfO+nm7bt/wAGNaatKuBIzzRoJD
+ ivKYJ8gaMw3GckApUOMa/bTsph9e2V7neAVrZ5hUuBKAVNmviSQFqb29vGVHS09H7aOU
+ 8p2YJou/rCxgLFDPCH3FHACMNlP+Zy9DYiKAR7faOJ1fuqTV0Qowcizwjt2nI2M/7nSL
+ FDjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xO9QsZK1xpSd4YejrResO12aWymG+FZti5jPLtHzkjo=;
+ fh=6s9Q/m57qB6BA7plhNG7BprZb5obIl2XfXIDAoYiT9I=;
+ b=JZAvRULYTGztZ7n3md5iKPY8rN3qGyZYsBKeb7vF8dcnPxRFco64gOOO6OD5Uv/C+3
+ XcbTqoLlahwCOHLKIkXYgYsfkr1hgg22Yuvdb0mnLW1PQxqrY6X75DQ7LpTmWCm8awbJ
+ IWqEDX4CaYfcd9R9s7/YqmPKUcsPXARHrY51q+veoTpuD7PJ9KF9zJaFc4By8rpUkVTo
+ pIFuOrI1y5xYgzUvyJrKX3zhQp4vVa82iPdbXSLXbzKXB+adczIXRHCni9J+8EvzZyBF
+ ClpuqPKd4h+nAzGv3kFPkjn8YK1gM+d/EjdBXx8sbENJIGlkAbTK69Xbdgb9OjlIiJJv
+ yxdQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772479044; x=1773083844; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xO9QsZK1xpSd4YejrResO12aWymG+FZti5jPLtHzkjo=;
+ b=ua110fvd9QC0ak4FrkDp9iSFGOQMzbNkx7XIH3bOVvc468MkRCweaXDM42LiAzNWGb
+ kjt6dUL3gOPBSSHRRzvmgGwhnsgWbs12ChSPI4EkACtwRk758irp3x4E4QKVQ6oi0K71
+ Kni69ZVE0ExNWxCbjFhsNqiQ6K0Djtu9OOW6FR53Gfl+JADEivw7JJmrGcHqnk+eAyic
+ VpU0auWVgQoFoeRsOKKCR91S9YP+/JFfXQMUP+yrH6e+CtygAki/d5ZS3Nu+ysWX9dcI
+ wxQHhartVdAJonJcrp2hiim3gECnzwRzkK7pzVCnan4UQmfPwUsGYCFyTDWiKLxe3GOt
+ PDzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772479044; x=1773083844;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xO9QsZK1xpSd4YejrResO12aWymG+FZti5jPLtHzkjo=;
+ b=U1noOYsBWZRfYfQtCAuOso/H3mM2jDDX3hVDEoBrF8T3Bu1RjYopZsauzC4KqVn3VK
+ 2BqL+bltp7QatEDUD9samtw4S609MgpkgBTfpanfP38PFVH2BRJ1g8Xs0kRuHlYCklvI
+ 6wCizCUBXrle/bYZIfGeQ9ncihh3UUmp38WwkONlnEEP60zCAmfy63FXnVh+aX9f75/n
+ aql8KTF0nWaYEv/TG/a83OqsBhffoADlwQPuEsMpb6VvPVGNDgeFk+wEOe5Kk82tMSai
+ 0yGLXxE//cxkUYqNcjgg3VgcSpjA/gB/wdUf9oUvLpgwx1EayMrYQS2bpMPNiZUz1QLo
+ UMlQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXY5Pm1TOpckl9QMF5vr293VM5DTQD1Jwo9RPh6vgwx1UjP2AOQeecahBflNZZhC4msv6I+ksvaqa92@nongnu.org
+X-Gm-Message-State: AOJu0YywE35cAxay4egm4jppUY/sM0QIFkopPIV2or725pK+nQSN+5cF
+ L10pmSK34nTrTfmjhYAw0P7ErVejoyZvGLMkEMQz+uihco2z+e56NvSGQdzEkrqvEN9J2HJH2Q6
+ ju2/YvOFafrWvJiq4JJqGVK8pjpFa6bp9d9+Hrrwoog==
+X-Gm-Gg: ATEYQzxmCmhWBEXOGq1bTWaxOGT1Xa5VA4i3wj6IEkdW6u2v8aQAf/NHpbIzxzLjsL9
+ gWFSIedDzuTWygl91ZrKUFBxp7Sgm0RP7YhbLS1oDvcKPuWlyMpC+FFgSR/oEBKmUzDb20/W22m
+ g2rcCw9jMGfSoxFLA69nJ9023c+OUCoocIvDimax1fLpS/6wzZ9AWSd/GdPXFpmgbeM1W75Clw7
+ UfoQOIJW25VzK/03muKMv2fYEfnBpu8USOmXSUei5GYODF6CjMBs24G5RKUA+BzgWTCMN9mIKZV
+ N5CyoP/D4Hz/iQLyX84i6HNbvE11KiaD605kWylARPXpe5pSgLj3616IloiAgMmOjVk=
+X-Received: by 2002:a05:690e:208:b0:64a:eaa3:3bb1 with SMTP id
+ 956f58d0204a3-64cc20832f3mr9111000d50.6.1772479043844; Mon, 02 Mar 2026
+ 11:17:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.126.230.35]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B069:EE_|DM3PR12MB9416:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7445a8ee-3307-49ad-fc2c-08de788e4017
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|36860700013|1800799024|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: 4K2Kz5VWWdV4pkiOIX7brOOZ9c5QcA4WHRC14J1NYWBAz2th5MysNe4bBZSBu6Hd+0lnTeMQSuHLKnKnXeUtCEbQsWndTDDn48amdFvPDC4ABD5HZBRn9KbcipIxwOWrcWgPlUTja+Me02F2QhXJk/rP58WNoW1COt5b1domMpg7sJANn/CYAORWAkJYGlPHbcMsQtkcVsBTBQd39wTa5BVOP392L/LTNdosfI0d563hQr0FdbSOn9aRiaf8p1blQEftjZK8M4fw66YLkMuRiACA4mYDOOEp+yzQKm0QEv7BKy2wrhtW7MCHM1PwmBF80Kl9M6oJ9/SvSkRH5IfcI/n8Eo8xS93fyqC5ljm1EQyJN/lB+pOc7KSPiqkmbRLRzKa4rbldm24qrSGC0K3Qm9bta1vf8Q8Ye00HrUh27bHNjBkeZz4Sn3IQyNPE+3yoqlkD47VMLjh+VNa+1QDrd12zewOSr6atoYkxQqV6xx2z7+GHOFwZOxpt4PtTBxfXCiVwCj0TPxqaPf75f+ZxIeJjKmqqlRIRuHgmDbsJ7KVNvYqbAY7IEAlXMtjH3rUw+08rs8RUBpJsei47gUPIcYkpXk0yMSlk4nm+hF47tHwb1UYIsm+ISkSYRvf32mK7s5uEBSXcqBp0ixjSoZdiL5iBkQmvYvyaOhThLrk5t/GvL6uF5GDQjhTD9HXGeKGV0S75MwqzLVzF48CqcHeKPSLd37fcZQJTa6L16MU24Ya+BRksauIFYSitzRIeCvvuG4udyO0X3jXkSPVhEmvkuss+gk3dFATmKb4vp9CftmzYKrxXYJA5j24cb0/UrhCi
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(36860700013)(1800799024)(82310400026)(7053199007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: Iieh8KZH+fbMbLZd6eYogUW5l29SOayB80GWvWCKKMog2ZP49HIA9gbK7lMx43dib0AfEe0Dhq/9qscAbddT13ciakzSLMmFJfDsMbhuj8R225b+7kfddSmzgAyWdhO3TrT1Z37jjZ11VfqQVN5mh0z0f1CdIE+aD+Irp3roHM//B3evLUfXPdUtPdN4TKpuCasQMx6mlATN25PJSUt/k81rRNjHtV1k0u8oFZsnKwTbLOCpvfuYCiZwH/NkpcNOJ4+3hF58NggMNdYWqBP6l+RDnTOws9991DSbAbQknQVgBz59+QM8k+xcaj51Qt7FxSbuCYxA/Lf6wVNgozGYASkBb1XpciHJS+qLN8nE26VpDSwvo2DnmKenV1cq41AQLKyKvnRC60Ky2jmZKPW7+DJe7GCgVQmfbAdxEhLIpi/z8BeTje8BRPQgJ7/sMy8z
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 19:02:28.5231 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7445a8ee-3307-49ad-fc2c-08de788e4017
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B069.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9416
-Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
- envelope-from=alwilliamson@nvidia.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20260301121347.797dc9f4@penguin>
+ <127d0e97-ca25-4847-a06f-954443bbc886@yodel.dev>
+ <CAFEAcA_igpniZ=zZAUPTyx9xpyS+TjU5KO+LYc-noJsJ+L-GSw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_igpniZ=zZAUPTyx9xpyS+TjU5KO+LYc-noJsJ+L-GSw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 2 Mar 2026 19:17:11 +0000
+X-Gm-Features: AaiRm51Dz10Q6wnEBvdoVrU48ZnHZn9GYlpK15gMwyViIyCgOzAxX8J2LHeFUUI
+Message-ID: <CAFEAcA88hc4UsgpuPXBWpbeN0tW26159kPn7jx2J9erBA5DLBw@mail.gmail.com>
+Subject: Re: qemu master compile error in hw/net/rtl8139.c with --enable-asan
+To: Yodel Eldar <yodel.eldar@yodel.dev>
+Cc: Lukas Straub <lukasstraub2@web.de>, BALATON Zoltan <balaton@eik.bme.hu>, 
+ Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 02 Mar 2026 14:05:33 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,45 +120,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 02 Mar 2026 16:48:09 +0900
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+On Mon, 2 Mar 2026 at 10:32, Peter Maydell <peter.maydell@linaro.org> wrote=
+:
+>
+> On Sun, 1 Mar 2026 at 15:15, Yodel Eldar <yodel.eldar@yodel.dev> wrote:
+> >
+> > Hi, Lukas
+> >
+> > On 01/03/2026 05:13, Lukas Straub wrote:
+>
+> > > ../hw/net/rtl8139.c: In function =E2=80=98rtl8139_io_writeb=E2=80=99:
+> > > ../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of =
+size 0 [-Werror=3Dstringop-overflow=3D]
+> > >   2264 |                 memcpy(data_to_checksum, saved_ip_header + 1=
+2, 8);
+> > >        |                 ^
+> > > In file included from ../hw/net/rtl8139.c:62:
+> > > /home/lukas/qemu/include/net/eth.h:50:14: note: at offset [8, 48] int=
+o destination object =E2=80=98ip_ver_len=E2=80=99 of size 1
+> > >     50 |     uint8_t  ip_ver_len;     /* version and header length */
+> > >        |              ^~~~~~~~~~
+>
+> On the face of it, this looks like a compiler bug (warning false
+> positive)
 
-> Ensure the buffer in vfio_pci_host_match() will not overflow even when
-> an invalid addr parameter is provided.
+The gcc folks noted that their documentation says:
 
-This commit log could be much more straightforward.  Something like:
+https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html
 
-    Each field of PCIHostDeviceAddress is an unsigned int, therefore
-    while a valid address is limited to 13 characters, an invalid
-    address could exceed the specified format, up to:
+# Note that sanitizers tend to increase the rate of false positive
+# warnings, most notably those around -Wmaybe-uninitialized. We
+# recommend against combining -Werror and [the use of] sanitizers.
 
-        ffffffff:ffffffff:ffffffff.ffffffff<NUL>
+I think then that I would recommend one of:
+ * use --disable-werror
+ * use clang, not gcc, if you want the sanitizers
 
-    This requires 36 characters with the terminator.
+We could perhaps get configure to do one of:
+ * force --disable-werror for gcc + sanitizers enabled
+ * error out giving the above suggestions
 
-With that:
-
-Reviewed-by: Alex Williamson <alex.williamson@nvidia.com>
-    
-
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  hw/vfio/pci.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c89f3fbea348..94c174a773fb 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2739,7 +2739,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
->  
->  bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name)
->  {
-> -    char tmp[13];
-> +    char tmp[36];
->  
->      sprintf(tmp, "%04x:%02x:%02x.%1x", addr->domain,
->              addr->bus, addr->slot, addr->function);
-> 
-
+thanks
+-- PMM
 
