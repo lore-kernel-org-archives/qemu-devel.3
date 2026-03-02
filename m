@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA9AEA4E18
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58054EA4E18
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 15:02:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx4m1-0004WG-Ek; Mon, 02 Mar 2026 10:01:29 -0500
+	id 1vx4mR-0004ld-7r; Mon, 02 Mar 2026 10:01:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4lU-0004FN-ME
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:00:57 -0500
+ id 1vx4lq-0004PW-UH
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:01:23 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vx4lR-00042O-6Z
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:00:55 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772463628; cv=none; 
+ id 1vx4lp-00045E-6B
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 10:01:18 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772463653; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=mk9BlPwQppN/o9h0hQmgIvM0vuKdmun6VPkewbm4IO2iZBypAed0+fnUFNutZ9D3/Ow+rkKnIL/vK7tv1Y+vqzVckHWrj2yq7Sg1q4+mERHZ2JtGRiTTtT75u+XLY7q3DVI10fW5o4oR7euB9YuRiR6sv/GuQCOLqFD0RLmRQr8=
+ b=Cxa2KWf2iCpO0L2OTF4QCoKuDwmixVJ+gLowhagRjJnxZRy0yiCpb9EO9CFRfTZL+7psCSo62fYBLI/W5khdzyOvLKUDWQouny56hRy8gfhuGufFNPaphWXtYDNtC0cgj1VPqWnzDy/WbADpXcg8MUqdzqqV8Y+39c/QZmww+D8=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772463628;
+ s=zohoarc; t=1772463653;
  h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=C6bVJ5uFMUnYseJrdFu6UyXmpjkVTiLLY8DT2cYl7iM=; 
- b=T8l/cmRMly33tr7d7t17qyNKPYlt9PygKdWRC5e1KqRAC7i8KrsYrrx2NecczltflCedTT3rnA9rIhtw3bY9EonCNFM8iBVzAtoMZQfkJPb4DVrSx0BnIKU7+DPvwXrAvs7CEU0jfOVjCA0Zd0l11iKrMETkP5ATQVtvGq0VT7s=
+ bh=bI72ZYLv+SyJ8/ojXeKwkKNyJnqOjFbE6TJHJoV0X1Q=; 
+ b=GktFC1eo16VWRlT6D6vH4SlYQtGbyouzF+g2YZeh9PZQ/HesVzSQsuQYWHUIsqLJ+dHzIWEq8M3RTLD0uFxDoWtD115LQ0wFsDujNQCg/jfa3GeizFRUcObgIdmGFg1ntFIC1gl6P1nUCp2UvUcB6pD/haslCTp2COLTmzK+We0=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463628; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772463653; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=C6bVJ5uFMUnYseJrdFu6UyXmpjkVTiLLY8DT2cYl7iM=;
- b=bUnGOmAL37AxbGIE/z2qQedBNWxodippHN2eaxSfIazLDH+S7zha9jERFZkyIsxd
- 1HmnWoQFMqnG4/4RqG3nHgGgD4jw1E+PUl8OcuZvU6jY76s8qbtMqDaH47zePyU3UCA
- snvP5TNa6LkZCshMgI+Kznvx3tgf63kbhOOvSH0k=
-Received: by mx.zohomail.com with SMTPS id 1772463627488906.8360510487804;
- Mon, 2 Mar 2026 07:00:27 -0800 (PST)
+ bh=bI72ZYLv+SyJ8/ojXeKwkKNyJnqOjFbE6TJHJoV0X1Q=;
+ b=LGrovN/wtNr7DVxKnL7oOdRr3S9S4TKpY+YTYvn0PUEdgvMYxoyfj2kYmD33t8Iy
+ hPUndqbZOaT4oUI3u8CMPctyEZ5ijJRfEYUfobhX7DkR/B43XWTnmZ5/Zvut/EvjIkT
+ NqddIssCPKG1/fqlUaoKUcWGn7+FAj7MbQO1fNH4=
+Received: by mx.zohomail.com with SMTPS id 1772463651326744.7705039153107;
+ Mon, 2 Mar 2026 07:00:51 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,10 +62,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v21 03/18] ui/egl: Don't change bound GL context when creating
- new context
-Date: Mon,  2 Mar 2026 17:59:05 +0300
-Message-ID: <20260302145920.735423-4-dmitry.osipenko@collabora.com>
+Subject: [PATCH v21 07/18] virtio-gpu: Ensure BHs are invoked only from
+ main-loop thread
+Date: Mon,  2 Mar 2026 17:59:09 +0300
+Message-ID: <20260302145920.735423-8-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
 References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
@@ -97,89 +97,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Don't change bound GL context when creating new GL context for consistency
-with behavior expected by virglrenderer that assumes context-creation doesn't
-switch context. eglCreateContext() doesn't require GL context to be bound
-when it's invoked. Update qemu_egl_create_context() to spawn GL sub-contexts
-from a common parent GL context instead of a currently-bound context.
+QEMU's display GL core is tied to main-loop thread and virtio-gpu
+interacts with display while processing GPU commands. Virtio-gpu BHs
+work in generic AIO context that can be invoked on vCPU thread, while
+GL and UI toolkits are bound to the main-loop thread.
 
+Make virtio-gpu BHs use iohandler AIO context that is handled in a
+main-loop thread only.
+
+ 0  SDL_GL_MakeCurrent() (libSDL3)
+ 1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+ 2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+ 3  make_current() (virglrenderer.c:639)
+ 4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+ 5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+ 6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+ 7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+ 8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+ 9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+ 10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+ 11 aio_bh_poll() (util/async.c)
+ 12 aio_poll() (util/aio-posix.c)
+ 13 blk_pwrite() (block/block-gen.c:1985)
+ 14 pflash_update() (pflash_cfi01.c:396)
+ 15 pflash_write() (pflash_cfi01.c:541)
+ 16 memory_region_dispatch_write() (system/memory.c:1554)
+ 17 flatview_write() (system/physmem.c:3333)
+ 18 address_space_write() (system/physmem.c:3453)
+ 19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+ 20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/dbus.c          | 2 --
- ui/egl-context.c   | 3 +--
- ui/egl-headless.c  | 2 --
- ui/gtk-egl.c       | 4 ----
- ui/spice-display.c | 2 --
- 5 files changed, 1 insertion(+), 12 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 4 +---
+ hw/display/virtio-gpu.c       | 6 +++---
+ include/hw/virtio/virtio.h    | 7 +++++++
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 905ee6fea71b..750a064e3fbf 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -47,8 +47,6 @@ static DBusDisplay *dbus_display;
- static QEMUGLContext dbus_create_context(DisplayGLCtx *dgc,
-                                          QEMUGLParams *params)
- {
--    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
--                   qemu_egl_rn_ctx);
-     return qemu_egl_create_context(dgc, params);
- }
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 0f754829fb71..97baf9b8ca96 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1203,9 +1203,7 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     }
  
-diff --git a/ui/egl-context.c b/ui/egl-context.c
-index aed3e3ba1f3f..f9a998768beb 100644
---- a/ui/egl-context.c
-+++ b/ui/egl-context.c
-@@ -19,8 +19,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
-    };
-    bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
+ #if VIRGL_VERSION_MAJOR >= 1
+-    gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
+-                                    virtio_gpu_virgl_resume_cmdq_bh,
+-                                    g);
++    gl->cmdq_resume_bh = virtio_bh_io_new(virtio_gpu_virgl_resume_cmdq_bh, g);
+ #endif
  
--   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
--                          eglGetCurrentContext(),
-+   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config, qemu_egl_rn_ctx,
-                           gles ? ctx_att_gles : ctx_att_core);
-    return ctx;
- }
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index 1f6b845500dd..19955792ac95 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -42,8 +42,6 @@ static void egl_gfx_switch(DisplayChangeListener *dcl,
- static QEMUGLContext egl_create_context(DisplayGLCtx *dgc,
-                                         QEMUGLParams *params)
- {
--    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
--                   qemu_egl_rn_ctx);
-     return qemu_egl_create_context(dgc, params);
- }
+     return 0;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 643e91ca2a7a..0d88e7b3cdff 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1526,9 +1526,9 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
  
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 0dbb429958e5..6b3519419039 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -217,10 +217,6 @@ void gd_egl_switch(DisplayChangeListener *dcl,
- QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
-                                     QEMUGLParams *params)
- {
--    VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
--
--    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
--                   vc->gfx.esurface, vc->gfx.ectx);
-     return qemu_egl_create_context(dgc, params);
- }
+     g->ctrl_vq = virtio_get_queue(vdev, 0);
+     g->cursor_vq = virtio_get_queue(vdev, 1);
+-    g->ctrl_bh = virtio_bh_new_guarded(qdev, virtio_gpu_ctrl_bh, g);
+-    g->cursor_bh = virtio_bh_new_guarded(qdev, virtio_gpu_cursor_bh, g);
+-    g->reset_bh = qemu_bh_new(virtio_gpu_reset_bh, g);
++    g->ctrl_bh = virtio_bh_io_new(virtio_gpu_ctrl_bh, g);
++    g->cursor_bh = virtio_bh_io_new(virtio_gpu_cursor_bh, g);
++    g->reset_bh = virtio_bh_io_new(virtio_gpu_reset_bh, g);
+     qemu_cond_init(&g->reset_cond);
+     QTAILQ_INIT(&g->reslist);
+     QTAILQ_INIT(&g->cmdq);
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 9dd93cf965ae..bc1ddd3bc4e0 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -547,4 +547,11 @@ QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
+ #define virtio_bh_new_guarded(dev, cb, opaque) \
+     virtio_bh_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
  
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 28399f8a8174..ae0f771c2a38 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -1033,8 +1033,6 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
- static QEMUGLContext qemu_spice_gl_create_context(DisplayGLCtx *dgc,
-                                                   QEMUGLParams *params)
- {
--    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
--                   qemu_egl_rn_ctx);
-     return qemu_egl_create_context(dgc, params);
- }
- 
++/*
++ * The "_io" variant runs BH only on a main-loop thread, while generic BH
++ * may run on a vCPU thread.
++ */
++#define virtio_bh_io_new(cb, opaque) \
++    aio_bh_new(iohandler_get_aio_context(), (cb), (opaque))
++
+ #endif
 -- 
 2.52.0
 
