@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9A9D58E7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73E4FD58E7A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyzC-0004mj-FH; Mon, 02 Mar 2026 03:50:42 -0500
+	id 1vwyvg-0007tq-0D; Mon, 02 Mar 2026 03:47:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwywp-00036d-P8
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:16 -0500
+ id 1vwyup-0005Ne-Hc
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwywo-0002Cf-2T
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:15 -0500
+ id 1vwyul-0001w4-Jy
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441293;
+ s=mimecast20190719; t=1772441148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cwmzy8ApbarQ0EKqSLibn6yOnXmpyRilOlMnlY+cVCY=;
- b=IBJZFb1bxHLNsBw556tghCYyiqf4RLt4CNgNofmovzrBgyDT2GCnKsLqUhrDtNOZIhCRk1
- SRrlSQcY1xoE1XsF8DAP7Z3e3Fpma+iBAH9AE97twtvjQeVFGFNhC5PnuB+xs06mAFMWoN
- lBeNl/CaioMR0pvVjliW68ktyUlciI8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7AROvJv5T7divz4u09Cm1O0cyo+YUynxqWVLfSDj/jQ=;
+ b=O16tE3Hntc9zUXI7BFdgmQVXwaJCrzWHeS6n0Bg2gNAPd+kEsG95YVAMNcfajALMC7076g
+ 0fKwpefIO8I0lHTFOCmBY9QXu3oYlijWUixLA6DtinBnWbjYJ6rx6qDulLn54k+lN3dZFr
+ yzIzFe8fUaHiZAggZyE2v74KWfpg6uw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-SrKTnsk4ONKQKABASD4XLQ-1; Mon, 02 Mar 2026 03:48:12 -0500
-X-MC-Unique: SrKTnsk4ONKQKABASD4XLQ-1
-X-Mimecast-MFC-AGG-ID: SrKTnsk4ONKQKABASD4XLQ_1772441291
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-483a24db6ecso51445985e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:48:11 -0800 (PST)
+ us-mta-443-Hd_0i9PCMUayFAgHqMwgDQ-1; Mon, 02 Mar 2026 03:45:47 -0500
+X-MC-Unique: Hd_0i9PCMUayFAgHqMwgDQ-1
+X-Mimecast-MFC-AGG-ID: Hd_0i9PCMUayFAgHqMwgDQ_1772441146
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4837bfcfe0dso53791275e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441290; x=1773046090; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441145; x=1773045945; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cwmzy8ApbarQ0EKqSLibn6yOnXmpyRilOlMnlY+cVCY=;
- b=EAXOH2p9XV3kl2jNkr+PSwAEu8+X0zrSWRSabwXjfUyj5CoCXDEntXTHen0MrtvUrB
- WxUWaS60lFPY7zEZ0Z5hKkjzE86rkw9Z10mwWLmuc5ICbQCQUCvPMz5ZsYXNDrbUdoXg
- W/Zh5UhBaAyL6maN3evXPZU0caT2991jdfUbyBlCejL+MwT0bhN8FYiWyg7vSZme1YMu
- lrdZERBT1GLlQhgFBz3NIkDj7QmlNj7siSvifhnFzqqLB4FQ3VsRIdd58+kwLdh5eCfS
- K4riWKzXlri0/MtvTtixLXH0Sk5X1iVdpfRku+ZKkxGKHZGik1oD7Ea9CZbu203G3KLh
- 556w==
+ bh=7AROvJv5T7divz4u09Cm1O0cyo+YUynxqWVLfSDj/jQ=;
+ b=Dt/0j4WLqwQEfD5+USYb+HQlasoTeJdM8rsNHziiFzH2Wch9Exiqgjtkfo2OE4U7cT
+ WJPslNdLZeoRbrq40FszQ1ayBACrChI1zC0Xc0u6v+ukKVDtS2a+G+GSNBH3+mCOMjDJ
+ EV+vuN51uxg4KQ7dBhEuptsjKi4pLMFH+ViNWjUKnbh9iFBag9KDVI882Lsz+2W45itf
+ vr0w5xOFh0TKbTr5vbNduDt74P/5rFRmQPhhqLn/nEygYzAujKjnBy1SwWqBbppVLf4G
+ mJDrjiknbZTDlypBO94F5mlF2+b8XgZhitoyz6oUBA2Wjz3Q17E3QorgrVpEuiW4zLzn
+ gQUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441290; x=1773046090;
+ d=1e100.net; s=20230601; t=1772441145; x=1773045945;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Cwmzy8ApbarQ0EKqSLibn6yOnXmpyRilOlMnlY+cVCY=;
- b=uLUD8DYY1BfW2YvJCwMgWAnL3ZTbz6RNcL/kud7vuZH2mqCBHPEReQWaM3j/T/bA7S
- EkOSejft2FtepSeObS5qCFaCZqcZqObIFxPKqFLDIpliOs/cet28b15GNfUycdAW+fPS
- uA5psXLZfVPwKiRykiSYWCEsfMeFJSUb8bwlk63FAcDEpI1TpTcqCkG8oXork3r6JSx8
- FLyD+sSvbyzJQ7dLxEp9yO8qsIkUR7eUc7yEnXGK0nTKWqUkvK4RMFH3W4oE2yxOF4cl
- 005dz2uELIxQpx5PZUkIKnRIaiHqAaD3/gR1Agp7m7jm+GO0treIsU1WXUe5Oq68q3wO
- 6eug==
-X-Gm-Message-State: AOJu0YxhgSkG3rdVpn+S4b9kOyDEUErUpawDjTvkRLvdAsz0+MZmIswY
- fDIENvC94rAZvzWRIUYcXezyl6kr1Na7VSe65or6zGJN+fT+oqu5v5ve1hbm4ZKrGZguK8Z3CCv
- KyrhtsvU8hDwp/V5gC/qJdUt0j0kxxRgA903g5HTxCBR4QSwFxXnz83YQl+XneczWS/EHiCrJ5V
- YGDq8gDwShXqB/lnZkp/avttPBby5xspSZouP0cSpN
-X-Gm-Gg: ATEYQzyLnhExVshyAneELlRjFSkrQgc9Peo+HFMk+imIpHwQPwiAehHCirKY+awO91Z
- 6wyQkdL4M9yqEQBmxxMeq6vuQYgL1jHz/+taeIYxDKTBgj9GiA24CeX5U4x3Slj9yrBqPlLmJ+1
- N/tt5GJta1ruiRIEQ+p0Sf+CcqBK100WbbtYCvDCE/meEm7eYevNYbnbUbJZBcsXvomITY1FAYk
- +YWVvi0HwkmL3zsXVdkFuAnfD1GjSO9hI5TOXZC+PO8iQGSFVNga1LLsqrt2vJdUjzfLVuHaSJN
- g7l8StQoR0A9OYOWBBRbaMw+KJATIs4uM9B55YAmabczdLuy/1HWOuBHM0M8YRSAa3lFS/zUx5F
- szbN6nxbjmI38CHNDZCOqAoFK+2RGpU7I1SQUttGSfLitATi+da/K4gOM36penfywnIwdkGUV2j
- hLiSEDcX/ZaivCqdpw/A2Hb7+OZoc=
-X-Received: by 2002:a05:600c:348a:b0:483:c12b:fe4b with SMTP id
- 5b1f17b1804b1-483c9bc19e9mr196756505e9.9.1772441290339; 
- Mon, 02 Mar 2026 00:48:10 -0800 (PST)
-X-Received: by 2002:a05:600c:348a:b0:483:c12b:fe4b with SMTP id
- 5b1f17b1804b1-483c9bc19e9mr196755915e9.9.1772441289776; 
- Mon, 02 Mar 2026 00:48:09 -0800 (PST)
+ bh=7AROvJv5T7divz4u09Cm1O0cyo+YUynxqWVLfSDj/jQ=;
+ b=jgo04Zeh/Lrrlby/2LnFY2ri3rWurtJQsYhWXKJiA+vdgiaU1Co/mDqLRMOCjJZyoj
+ aujqt1ksMoZUggL45kgi8P5vrOFRg+FazA57Ux5CRPqzukba05ss0+Cz9wG1MyDFLCbN
+ jy/XAnhl3IujsBoM7AaraoEwFZlbYAbFYtSUE8O5vukQzCrL/kdjWZ/ssp9OmszD/RkE
+ k34GDxkfxo7fIm54T1RVcw7aiSiL+TcSSbAtaU/IPrC+luNTzU1c77DwUfKbgiS8ZtCm
+ WP8kW/+WCiD0KjCaIXZnqSWJUqjJfUQJcbH4zHWqYVsLZy+kDGnXX0DzP3Kmdug5zwSD
+ ikcQ==
+X-Gm-Message-State: AOJu0Yzwt/b8boDGpHA/yTVqfJs8l3HCZyx+hqidvsw6UpfocZz+smg1
+ JCc24OoNXUvETHJG2kFlebAeNXZqOG5xy7xuh3+QhH5thpU9JCRSpXvJ30g08JOKuFj8IpCIWl+
+ 0WulxUoXIRCfCvaHcu07t+veiQgIx82zVPlbm8r7H0Dc1GAdUKxRdqQxeXScW8gMPoXVIBCg163
+ A+pjFn37TprB0W+wdzOMVCTGBgf8IdzDfwwZ8mgkOZ
+X-Gm-Gg: ATEYQzyXQoC5+OggPYnbVtuzf1+7bKNh78ZVVfXZVYSxDGEAUaIx/o2K/IS4rRtUDzB
+ lVJ4r9ATxRjpDtVcBHRHhVb9B20ylAPiwG1v0KhY6aOl3xvHQ9MJcRk6kkkoh2MLZaDNSfJ9Y+8
+ lYuKIUsELQ1YqSv3uIo9bMIm/eajlDro+iY8DwVBh4xHBubGguFahyZ7cqHCJIHJfUWOHq2uB3F
+ DRpMtqBlUSYXgqXR4yu5jtPmtAjNe/pS3dyj5+4VhfYwb2xC+jjamELS6Si+ZRi+VR3ab9QmQYQ
+ 2+m9N6j/3s/cGeCdZLj3I3o8aeub8OZllBfYKC/CvSGkEY5xEmOrqYTMap4eT00RB0uV0QpCwII
+ qCdVBCDdKRzdnLobd+5jrjN6hU6V48G5xnRTuJl49XZBu63kSdJ6z4VTiU7AJBOUrLnKWd6QxrV
+ 7LuR75OWEnN55UcwaeUqy+PPfqkUA=
+X-Received: by 2002:a05:600c:458b:b0:483:43da:6c87 with SMTP id
+ 5b1f17b1804b1-483c9bdb71amr195845405e9.33.1772441145458; 
+ Mon, 02 Mar 2026 00:45:45 -0800 (PST)
+X-Received: by 2002:a05:600c:458b:b0:483:43da:6c87 with SMTP id
+ 5b1f17b1804b1-483c9bdb71amr195844995e9.33.1772441144945; 
+ Mon, 02 Mar 2026 00:45:44 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd765604sm343156315e9.15.2026.03.02.00.48.08
+ 5b1f17b1804b1-483c3addb3asm334398835e9.0.2026.03.02.00.45.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:48:09 -0800 (PST)
+ Mon, 02 Mar 2026 00:45:44 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 075/102] qom: add 'confidential-guest-reset' property for x86
- confidential vms
-Date: Mon,  2 Mar 2026 09:47:21 +0100
-Message-ID: <20260302084749.474955-9-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 047/102] accel/kvm: mark guest state as unprotected after vm
+ file descriptor change
+Date: Mon,  2 Mar 2026 09:42:42 +0100
+Message-ID: <20260302084338.473368-48-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -127,67 +124,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ani Sinha <anisinha@redhat.com>
 
-Through the new 'confidential-guest-reset' property, control plane should be
-able to detect if the hypervisor supports x86 confidential guest resets. Older
-hypervisors that do not support resets will not have this property populated.
+When the KVM VM file descriptor has changed and a new one created, the guest
+state is no longer in protected state. Mark it as such.
+The guest state becomes protected again when TDX and SEV-ES and SEV-SNP mark
+it as such.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-35-anisinha@redhat.com
+Link: https://lore.kernel.org/r/20260225035000.385950-7-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qapi/qom.json | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ accel/kvm/kvm-all.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 6f5c9de0f0b..c653248f85d 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1009,13 +1009,19 @@
- #     designated guest firmware page for measured boot with -kernel
- #     (default: false) (since 6.2)
- #
-+# Features:
-+#
-+# @confidential-guest-reset: If present, the hypervisor supports
-+#     confidential guest resets (since 11.0).
-+#
- # Since: 9.1
- ##
- { 'struct': 'SevCommonProperties',
-   'data': { '*sev-device': 'str',
-             '*cbitpos': 'uint32',
-             'reduced-phys-bits': 'uint32',
--            '*kernel-hashes': 'bool' } }
-+            '*kernel-hashes': 'bool' },
-+  'features': ['confidential-guest-reset']}
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index cc5c42ce4de..096edb5e198 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2650,6 +2650,9 @@ static int kvm_reset_vmfd(MachineState *ms)
  
- ##
- # @SevGuestProperties:
-@@ -1136,6 +1142,11 @@
- #     it, the guest will not be able to get a TD quote for
- #     attestation.
- #
-+# Features:
-+#
-+# @confidential-guest-reset: If present, the hypervisor supports
-+#     confidential guest resets (since 11.0).
-+#
- # Since: 10.1
- ##
- { 'struct': 'TdxGuestProperties',
-@@ -1144,7 +1155,8 @@
-             '*mrconfigid': 'str',
-             '*mrowner': 'str',
-             '*mrownerconfig': 'str',
--            '*quote-generation-socket': 'SocketAddress' } }
-+            '*quote-generation-socket': 'SocketAddress' },
-+   'features': ['confidential-guest-reset']}
+     s->vmfd = ret;
  
- ##
- # @ThreadContextProperties:
++    /* guest state is now unprotected again */
++    kvm_state->guest_state_protected = false;
++
+     kvm_setup_dirty_ring(s);
+ 
+     /* rebind memory to new vm fd */
 -- 
 2.53.0
 
