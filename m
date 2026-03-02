@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4968BEB3622
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 18:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635C6EB3622
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 18:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx7dy-0006Ny-Rt; Mon, 02 Mar 2026 13:05:23 -0500
+	id 1vx7dx-0006Np-Rg; Mon, 02 Mar 2026 13:05:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vx7df-0006Cc-L3
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:05:04 -0500
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ id 1vx7di-0006HQ-Vb
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:05:09 -0500
+Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vx7dd-0006Le-A4
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:05:03 -0500
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
- by mailfhigh.phl.internal (Postfix) with ESMTP id CFB6A140020B;
- Mon,  2 Mar 2026 13:05:00 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-12.internal (MEProxy); Mon, 02 Mar 2026 13:05:00 -0500
+ id 1vx7dh-0006Xk-7z
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 13:05:06 -0500
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfout.phl.internal (Postfix) with ESMTP id ABBD4EC0608;
+ Mon,  2 Mar 2026 13:05:04 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-11.internal (MEProxy); Mon, 02 Mar 2026 13:05:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1772474700; x=
- 1772561100; bh=iZFopa7BN2v/Wniu8RWnxAcgO5JG4vm8jdapubVGmHM=; b=I
- 01XVaxcev2iWd0hEDPZjTMg8bb0IbNZ6+KqLJWWDBfBFM1s5v978tDmMfnO5fodi
- fecBFOno/TKXZl24cEUtCwAZs+ZZvpRslF4XWG7Rri/RXkwdWdqFHwiyWjALMI/O
- J+I0JZ6Vj0Ieajb884ijvUy/piEep39biA2WUo99XEVD6JxyaJ6GpkPP4vH5YDOi
- yrrcGrd6r6zyNC5cZ113QSU9mEBtuGG6OumFwSpiny8qxG5KHTh45yR15VtQgE6N
- JXQHmKygNNxgNjs9/DNsUfnQaOIG0c4ISzINvIF21d6asovzQLzCvsNO4VEi4Xxn
- 0c4jxHue3998Cj+uoY7Sw==
+ :reply-to:subject:subject:to:to; s=fm3; t=1772474704; x=
+ 1772561104; bh=/8gQrPLmCC6i3JQzdW1xashObqgDvg5nx94NGxDJ1P0=; b=e
+ Txm0W4E5qqvwMJOLmyGNknjlrkmefVjDNuKAJR4YIYPllKTHlSOVylVYX0yvdddB
+ TByx5fxTaJl8HYBHISJatekLZH7+zaKOVfvyUtIDynoG6MX4liqWVNvyMKrIWggh
+ wgJKT+Pyu6Bf8xfhqVvfMhA/0aZXFGkwE6RZ5V2IiBS2ipNuW1IUCkmJU5eTQ8st
+ Sr9bQd+kn1O3AFX5Fnx60EQlReM/8JqVRC5lxLrV7R2wR0Tor6H1FB4VvfYHNobQ
+ iUmcB5dfJ4o0mKtT4RZ7+0IOEmiftN++dQjxp2l4fGAvUnJUoLQyzqgB0LpPwHWK
+ /Fljz+dlVdXxGGq4RySQw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1772474700; x=1772561100; bh=i
- ZFopa7BN2v/Wniu8RWnxAcgO5JG4vm8jdapubVGmHM=; b=Id6YFM2XTUfysTI3N
- ZhvOGRSclrjE0ClvQodtZRNoaMM30DDqI6cDcliwrXnNXQOk7dOLUCFtm/7AXcBE
- iIVZ+ILRNvcw99uNHUqTIWLFGtAphHisweXVG3V7vQYsqyVeyjTWYwVJRFDePK1A
- Bg6jhX+QZQAkIUv53eGo9m5G36jZD2iIPaR6NekQLat1gKdVvqCzeoF3Yeaa/yT/
- a1ZtyjbobdOBevxAkYu5mr7nyERroIIqVbxdl2TaXSI9rIBti8Do2DXGcdtz04RH
- jp1LR52WG1ZJQWpzCe9w0k/zIU+etnHQpWJFMrXi/tWdABuhkas9N8lmDTHgzHz5
- wXY3Q==
-X-ME-Sender: <xms:TNGlaaVfJpEbuKfMhTp0VIgROXvChPP2HBZtagsr-GafosRNHvqUiQ>
- <xme:TNGladfdjaQ96Mtci_HmDdCJV9FMjrFqPuq5n3PdibmfsGDfKKV2e7exNYF_YsncL
- csFAmDAqGez-SegMHnQ3dM2jzj24fJ7LAN2AIb2AlhmEw2jkJ9D_w>
-X-ME-Received: <xmr:TNGlaWsx_RxHbsmpu_9mkGUvqsWVumXOIf4Ch92sofdYotoUx3LC3ATg4q9D>
+ :x-me-sender:x-sasl-enc; s=fm1; t=1772474704; x=1772561104; bh=/
+ 8gQrPLmCC6i3JQzdW1xashObqgDvg5nx94NGxDJ1P0=; b=O9x1774GabFlqqwQs
+ Zamp/sqz2gZc55ovGah3Ch+i8rKfWSxDsiV2Wv3W7+T6inq4+LQEPyf20DFmpAXN
+ 1R6ONDxNcCICCQgVgh1kIAcM7FHhBe6XX5LECW5pAVeg7M0ZbTx9+FRDs4EwQEF/
+ zNS2vPHEkC9T8zj90MmuWh9BO7/LuKOU2P+tA1MQZrMcfISNZmxWhNCFB8Vet5lo
+ ByDpkCKbQXuEb/HII64VrHtddVSjBxP863I78vajZIBmAmobVUKi0ZJPK0nvlDSl
+ VMqXkGeDqKAg/Sbw7lIvwR0Umt8+vaotsMlrjQHr0wdjCP9wsGjEZMjxRpx8jlSl
+ 3aCeA==
+X-ME-Sender: <xms:UNGlaUFSlC2oDrXkQ9l0GuS54gn4QQyEd85kALHIIuLgcyxJA6BBPA>
+ <xme:UNGlaUNSJvc3MMws58MtiYyvziTUZsZ4CpS8kHVdDJIPHHHI9bWIKuAH3U_a89gS8
+ R9EFDIJBaUY-6aeTLQ0hjhpCr-dK0sJ3rFvwn6T0691q0jw9z2M9e0>
+X-ME-Received: <xmr:UNGlaWfLDzz1eQggoO5hZtXV9hJyYVcjeuNc_d82i4Nop6iPjCd5w3-ggTis>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheekfeehucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
  hlucfvnfffucdljedtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
  necuhfhrohhmpeevhhgrugculfgrsghlohhnshhkihcuoegthhgrugesjhgrsghlohhnsh
  hkihdrgiihiieqnecuggftrfgrthhtvghrnhepgfeiteejhfelheefieetjefgleejfffh
- ueffvdduieejgfeuueeuvddvkeejhfelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ ueffvdduieejgfeuueeuvddvkeejhfelnecuvehluhhsthgvrhfuihiivgepudenucfrrg
  hrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhnsggp
- rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehqvghmuhdqug
- gvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehjrggslhhonhhs
- khhirdighiiipdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhh
- grthdrtghomhdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgt
- phhtthhopehkrhgrgigvlhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:TNGlac9WebDhL0acy9kgh_l4lJgBeINxSKGTMBJicjgcSWs1oDa8Rg>
- <xmx:TNGlaR2tkeW7a8SVCPzLxDlaGjR91-k1H4GYLBh0ltPISaKCBNBSTQ>
- <xmx:TNGlaRAdR2FsjoT0SG7yXWkrnXwvOoQFuNVut5Aerl3xeC1IAPfgEw>
- <xmx:TNGladcHXVCYWGfaUd76hQRRgggoDYPm0frvhOtORMyueNDNCMCGvg>
- <xmx:TNGlaQYRsxBtc1GKj2Bq2khk1Qd_V22bjt5nUlU35lvfIQuH2ZqSE_g5>
+ rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrghtoh
+ hnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhrvggr
+ uhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtg
+ homhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghp
+ thhtoheptghhrggusehjrggslhhonhhskhhirdighiii
+X-ME-Proxy: <xmx:UNGlaRtPDR4QmqPESi95Gf6Fx58CJUYthTK2VDzGjDuwvCtxylLI5Q>
+ <xmx:UNGlaXmttkw7VSFdMerAe8W6vw4wUk7fFgmt3Ls6aNs_cvT8NaMOBg>
+ <xmx:UNGlaTzsKqffVbeLG1TwaM8NQDZ8E8dPo9gSOh9bK4CGv55H6or4ZQ>
+ <xmx:UNGlaZPFDeNt1ABOghPT5RY13yl8N1BaQXYMg0wZii7QTs1qY1wIfA>
+ <xmx:UNGlaYoS_rlbu4Q-nq5O7gE42JvUEL63ttz8KLFqluqa7j-_RncEvAze>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 13:05:00 -0500 (EST)
+ 2 Mar 2026 13:05:02 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 0987ea31;
+ by chomposaur (OpenSMTPD) with ESMTPA id bfb26fb6;
  Mon, 2 Mar 2026 18:04:57 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v10 04/17] ati-vga: Latch src and dst pitch and offset on
- master_cntl default
-Date: Mon,  2 Mar 2026 13:04:34 -0500
-Message-ID: <20260302180447.1078098-5-chad@jablonski.xyz>
+Subject: [PATCH v10 08/17] ati-vga: Consolidate dirty region tracking in
+ ati_2d_blt
+Date: Mon,  2 Mar 2026 13:04:38 -0500
+Message-ID: <20260302180447.1078098-9-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302180447.1078098-1-chad@jablonski.xyz>
 References: <20260302180447.1078098-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=chad@jablonski.xyz;
- helo=fhigh-a1-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.149; envelope-from=chad@jablonski.xyz;
+ helo=fout-a6-smtp.messagingengine.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -117,89 +117,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hardware testing on the Rage 128 confirms that (SRC/DST)_OFFSET,
-and (SRC/DST)_PITCH are latched when (SRC/DST)_PITCH_OFFSET_CNTL bits
-in DP_GUI_MASTER_CNTL are set to "default".
-
-The earlier approach looked at the state of the (SRC/DST)_PITCH_OFFSET_CNTL
-bits when offset and pitch registers were used. This meant that when
-(SRC/DST)_PITCH_OFFSET_CNTL was reset to "leave alone" the old values
-stored in the registers would return. This is not how the real hardware
-works.
+Both supported ROPs follow the same memory set dirty logic.
+This consolidates that logic to remove the duplication.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati.c    |  9 +++++++++
- hw/display/ati_2d.c | 13 ++++---------
- 2 files changed, 13 insertions(+), 9 deletions(-)
+ hw/display/ati_2d.c | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 028efd13e1..ce23e5e48b 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -868,6 +868,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->regs.dp_datatype = (data & 0x0f00) >> 8 | (data & 0x30f0) << 4 |
-                               (data & 0x4000) << 16;
-         s->regs.dp_mix = (data & GMC_ROP3_MASK) | (data & 0x7000000) >> 16;
-+
-+        if (!(data & GMC_SRC_PITCH_OFFSET_CNTL)) {
-+            s->regs.src_offset = s->regs.default_offset;
-+            s->regs.src_pitch = s->regs.default_pitch;
-+        }
-+        if (!(data & GMC_DST_PITCH_OFFSET_CNTL)) {
-+            s->regs.dst_offset = s->regs.default_offset;
-+            s->regs.dst_pitch = s->regs.default_pitch;
-+        }
-         break;
-     case DST_WIDTH_X:
-         s->regs.dst_x = data & 0x3fff;
 diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 309bb5ccb6..a8c4c534b9 100644
+index cfc7bf9789..980cdd6ac0 100644
 --- a/hw/display/ati_2d.c
 +++ b/hw/display/ati_2d.c
-@@ -43,8 +43,6 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
+@@ -43,15 +43,28 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
      }
  }
  
--#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
--
++static void ati_set_dirty(ATIVGAState *s,
++                          const uint8_t *dst_bits, unsigned dst_y)
++{
++    VGACommonState *vga = &s->vga;
++    DisplaySurface *ds = qemu_console_surface(vga->con);
++
++    DPRINTF("%p %u ds: %p %d %d rop: %x\n", vga->vram_ptr, vga->vbe_start_addr,
++            surface_data(ds), surface_stride(ds), surface_bits_per_pixel(ds),
++            (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
++    if (dst_bits >= vga->vram_ptr + vga->vbe_start_addr &&
++        dst_bits < vga->vram_ptr + vga->vbe_start_addr +
++        vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
++        memory_region_set_dirty(&vga->vram, vga->vbe_start_addr +
++                                s->regs.dst_offset + dst_y * surface_stride(ds),
++                                s->regs.dst_height * surface_stride(ds));
++    }
++}
++
  void ati_2d_blt(ATIVGAState *s)
  {
      /* FIXME it is probably more complex than this and may need to be */
-@@ -63,13 +61,12 @@ void ati_2d_blt(ATIVGAState *s)
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-         return;
-     }
--    int dst_stride = DEFAULT_CNTL ? s->regs.dst_pitch : s->regs.default_pitch;
-+    int dst_stride = s->regs.dst_pitch;
-     if (!dst_stride) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
-         return;
-     }
--    uint8_t *dst_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
--                        s->regs.dst_offset : s->regs.default_offset);
-+    uint8_t *dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
- 
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-         dst_bits += s->regs.crtc_offset & 0x07ffffff;
-@@ -97,14 +94,12 @@ void ati_2d_blt(ATIVGAState *s)
-                        s->regs.src_x : s->regs.src_x + 1 - s->regs.dst_width);
-         unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
-                        s->regs.src_y : s->regs.src_y + 1 - s->regs.dst_height);
--        int src_stride = DEFAULT_CNTL ?
--                         s->regs.src_pitch : s->regs.default_pitch;
-+        int src_stride = s->regs.src_pitch;
-         if (!src_stride) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-             return;
+     /* rewritten but for now as a start just to get some output: */
+-    DisplaySurface *ds = qemu_console_surface(s->vga.con);
+-    DPRINTF("%p %u ds: %p %d %d rop: %x\n", s->vga.vram_ptr,
+-            s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
+-            surface_bits_per_pixel(ds),
+-            (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
+     unsigned dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
+                       s->regs.dst_x : s->regs.dst_x + 1 - s->regs.dst_width);
+     unsigned dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
+@@ -166,14 +179,6 @@ void ati_2d_blt(ATIVGAState *s)
+                 memmove(&dst_bits[i], &src_bits[j], s->regs.dst_width * bypp);
+             }
          }
--        uint8_t *src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
--                            s->regs.src_offset : s->regs.default_offset);
-+        uint8_t *src_bits = s->vga.vram_ptr + s->regs.src_offset;
- 
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-             src_bits += s->regs.crtc_offset & 0x07ffffff;
+-        if (dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
+-            dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
+-            s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
+-            memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
+-                                    s->regs.dst_offset +
+-                                    dst_y * surface_stride(ds),
+-                                    s->regs.dst_height * surface_stride(ds));
+-        }
+         break;
+     }
+     case ROP3_PATCOPY:
+@@ -216,18 +221,13 @@ void ati_2d_blt(ATIVGAState *s)
+                 }
+             }
+         }
+-        if (dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
+-            dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
+-            s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
+-            memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
+-                                    s->regs.dst_offset +
+-                                    dst_y * surface_stride(ds),
+-                                    s->regs.dst_height * surface_stride(ds));
+-        }
+         break;
+     }
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unimplemented ati_2d blt op %x\n",
+                       (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
++        return;
+     }
++
++    ati_set_dirty(s, dst_bits, dst_y);
+ }
 -- 
 2.52.0
 
