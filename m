@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18099D58E4B
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6609D58E4B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwunO-000184-UD; Sun, 01 Mar 2026 23:22:14 -0500
+	id 1vwumt-0000xB-8q; Sun, 01 Mar 2026 23:21:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunN-00017E-40
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:13 -0500
-Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwumr-0000wZ-HM
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:41 -0500
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunL-0006tl-NY
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:12 -0500
-Received: by mail-oo1-xc2c.google.com with SMTP id
- 006d021491bc7-679501fac3cso2723218eaf.1
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:22:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwumn-0006nN-FK
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:41 -0500
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-662f2fa7e67so1660669eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425330; x=1773030130;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425296; x=1773030096;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ay9FcTJRWmqeizwpgSBZXd/bub2PVaGHDw3ZhG2MNLc=;
- b=WatmM7vzDZXvQx6YMEH8QpXQm00LQ6SA6Xjg9dq+dMud+jgap9dPfIv1q3KP5teyTt
- r1FzlLXg6OuTWmJboCyOYB7+sSJPrDgL1kixFME7HgYmxr3jZz6MdVl3AcFmOPR3MNw7
- mYtY2MU5tx+x6XPEv85sEwqEnTWel4evMafCpqnULz4G5utHp0gbliqT1ah1EYsHmU/f
- Hc54ETSIm86s/DZdu90EkXZYW76qMSZ+Nx8lZ1lrUoVV6lypYbPdvi2Y6szDoaj1e6kx
- NLN1/7m6/wj6KCNHFlRCBUY3q/IPAOXFvEPyG3Ez6lWr41il1qssQ/lIb0UvNJH515Dl
- 6FzA==
+ bh=N12NhtAymMFKe8yhT5DaNm7oV/djNbpM9E2SGqKgDUM=;
+ b=lTFmxG643kleVa7lf8t+XUAY1L0DYhyCJVeLTxj0L3cpEaJjXtDQn8RStnPeOQLeXk
+ 8zB2qB6BdY+XfPIAyjw0JucSDcxjzsTKMmlrCEwR0RB8Z0NmHkWYsUp4hvSkRlp3oioi
+ B39wM61yZvfUN9EWRtYt8hnou8Aq3/kjKI/7nlf9sS7y01kN3T40AdoUPsbrIUwnkqcs
+ XcHWiV24q5B1fQOPsYLT38gqlha63QmEwV2pb5lt8uge4wTGCa59QJJnlvMBHFRR4Vme
+ JPqH+nVA0JL7z4S3mZ2IRwigTN1J2lCgKjW0TiKA1zmojds9xFH1fC8XoWg38Zx/iVdN
+ MSvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772425330; x=1773030130;
+ d=1e100.net; s=20230601; t=1772425296; x=1773030096;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ay9FcTJRWmqeizwpgSBZXd/bub2PVaGHDw3ZhG2MNLc=;
- b=JFF1S3ACpw9wvkObPTiOBdpMwQpbSKXxQJ13VSSYjyfu4E7+y8BuoQoLMI9ZttpMAK
- qhDM67vlvMC+cMVV74rbwEwHRG1FcTdUvea9WR01VeHY/QV7IYAx21TQ7Ch/EZEEeYj0
- vUCyFJHg/03+MQ4MvhoX99YKDSXwpIxPZzPN9Io7qwQ1X6DyvC0CFj9MVw//7ZmEbfWU
- mFA8sZQ5jGsW0WtjfAsOZFZSCCdXQuSMDacldpvfLPqiJWTY0+QDHF8T/0r7JRAwIfK+
- OfJBiGWXWkQ6xrNpMT+erPy/kdu6wSQOlPMiRXHhqnCAR/a8/rPGJ1adHBBZmTeRiesT
- UwFQ==
-X-Gm-Message-State: AOJu0YyDYCbUSvtV2QQneBDUtcVm2dA4Ho8UrNCBbrXReIkYadoPFdOq
- BQ0n7h1DmH/xRlpr33KBNFRcqlqut59PWSzfcXpHf9khe0w5m4lMND0uH/zFEi4sTmc56nMHBPo
- dcD21
-X-Gm-Gg: ATEYQzwRcCncKQpc+Ly9JWuc/PV+SArL+GYiBAF0GGQHN7qtrWtcJBgisxx28e6Z1oF
- 36SXrRh+EPRSqUcUgqKazclR3/lgreSs1n8lyk1Ubi7X1vnA4MF4l/4/gHz1cf4bsZaWCydrVV9
- uEnHh2uGxhWtiickIYUE2BbJScgn42oAh4Cuto237QkQiYlaVNiZibOXUJUwZ/yQxps3xkW26d1
- m3XeV+SGtBXBWoz9dKSzIRIBcTJekzLICshJQ/1gZVdqutgd/yeaOBsA8jKXXk7zYpPIZiLBAyg
- ObYp9mENQhTCB9uczVvS9L0Zdzcec9CJqS7Kn8nih7PoGKIsb+eMn3m8v2k4OhSrStBPhEM3L3z
- mGotXQpoaKbD8W/TDi2Lzw7patQSApaAlN4at6NiUaCMwUycyBE0mVY6lYaLzPlWRWxMvdWdt5r
- rKXvA2mGiBPw==
-X-Received: by 2002:a05:6820:808:b0:65c:fb86:8a8e with SMTP id
- 006d021491bc7-679faf118cdmr6442952eaf.36.1772425330240; 
- Sun, 01 Mar 2026 20:22:10 -0800 (PST)
+ bh=N12NhtAymMFKe8yhT5DaNm7oV/djNbpM9E2SGqKgDUM=;
+ b=YTYImFRnS7pK0EDrcgiLpqtag2P3KsReJ6qwoMP4BP3T3tZ8ttwO1ughDOC/ozCMuC
+ 8pfMLIxBgYXIgIjEayujzpkKt20i/uuHIwkNn3hd7H7Yi+xv5hhNWJpQA8CDj9wGcsHz
+ z07EGt50zmwOhVci+U5DPg9sa2ZepLRol2bjcYytKIigsCd0pT23CP5BOi+f+glkyrY1
+ JnPgzinzljhrBne6CNy2T/mBhzKieTAZmmThMV8Yu7E5IVq+NeSt4pByGEihfFPG2Sib
+ cB9OK9IPK10WfSLQ9OS43J0/Z8SpUCyVpgQEWJj2J6ihWp1rxSqHYvxjwB6b+eBn76+g
+ 9Q8Q==
+X-Gm-Message-State: AOJu0YyYVUOl5XR8ZUlbJETXzF/g6GUQ66iM//2dumzjWiRFUSLmS2dh
+ L5cmyVaOY5GdqRyEYSDKdxaL4lXU+COzGMopufFqwvIJzrhJbrPErHBAANSvAlC/5HC0hHM8U0x
+ EOPzY+io=
+X-Gm-Gg: ATEYQzz2mLrOZYV/H8o/Qfk+Ln2XS3Bc/3bcoO1bvuaPVtGpS8qsYcanPWXvWNJIgwf
+ feDHnXAJx+LLg2uAaIl0dMMmRM30BUyGkU1osaj3etQyn1NwE+1TZ8So4eqybt8PSFB18ShZvaR
+ BM63bwOgXg7t6o5nUkNVDX5Tv6loc5RFJiMstMAh/N8beooOw/vxWZ1keMVmZtF909OUuCqnEst
+ Z8AdGHGVJIfLYNoPmhMo7tV/gdEi0F5cGWoRnNDOo7PgZrQZ+HjZycRcOg5xengsMqc8W246Rqz
+ Ww0ns3my4H2XGkcUeA+zr4tPWherG6sAnEEJnLPfeeAE/ne44rVNakjCc7b4/rfguc/NOxqLd/m
+ U+wTxnM/IHkkIZ9ozOpTC98PS1k+ir640mochWqzmv/AXVFdge46ooe4rASlXTAn5XSU2UAVJH/
+ w8+OASpCl1pQ==
+X-Received: by 2002:a05:6820:1b0f:b0:663:a6e:49a1 with SMTP id
+ 006d021491bc7-679fadbf908mr6561468eaf.14.1772425295312; 
+ Sun, 01 Mar 2026 20:21:35 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.22.08
+ 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.21.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 20:22:09 -0800 (PST)
+ Sun, 01 Mar 2026 20:21:34 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
@@ -72,18 +72,19 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>,
+ Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 24/27] bsd-user: Implement System V semaphore calls
-Date: Sun,  1 Mar 2026 21:21:12 -0700
-Message-ID: <20260302042115.83410-25-imp@bsdimp.com>
+Subject: [PULL 02/27] bsd-user: Remove OpenBSD-specific code
+Date: Sun,  1 Mar 2026 21:20:50 -0700
+Message-ID: <20260302042115.83410-3-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302042115.83410-1-imp@bsdimp.com>
 References: <20260302042115.83410-1-imp@bsdimp.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2c;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,53 +106,1002 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+Remove the OpenBSD specific code form bsd-user. It's not been maintained
+in any meaningful way since it was introduced to the tree in 2008. It
+hasn't been connected to the build since 2021, and last time (in 2023) I
+tried to mock-up the meson support it needed, it failed to build. I
+contacted the OpenBSD people in 2018, it appears, and even at that time
+they tought this code was not at all useful to them.
 
-Wire up semget(2) and semop(2) syscalls to get System V semaphore
-implementation, as well the undocumented __semctl used to implement the
-bits of the interface in libc.
-
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Cc: Brad Smith <brad@comstyle.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-syscall.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ bsd-user/openbsd/host-os.h           |  25 ---
+ bsd-user/openbsd/os-strace.h         |   1 -
+ bsd-user/openbsd/strace.list         | 187 ----------------------
+ bsd-user/openbsd/syscall_nr.h        | 225 ---------------------------
+ bsd-user/openbsd/target_os_elf.h     | 148 ------------------
+ bsd-user/openbsd/target_os_siginfo.h |  82 ----------
+ bsd-user/openbsd/target_os_signal.h  |  69 --------
+ bsd-user/openbsd/target_os_stack.h   |  56 -------
+ bsd-user/openbsd/target_os_thread.h  |  25 ---
+ bsd-user/qemu.h                      |   8 -
+ bsd-user/strace.c                    |  17 --
+ bsd-user/syscall_defs.h              |  10 --
+ 12 files changed, 853 deletions(-)
+ delete mode 100644 bsd-user/openbsd/host-os.h
+ delete mode 100644 bsd-user/openbsd/os-strace.h
+ delete mode 100644 bsd-user/openbsd/strace.list
+ delete mode 100644 bsd-user/openbsd/syscall_nr.h
+ delete mode 100644 bsd-user/openbsd/target_os_elf.h
+ delete mode 100644 bsd-user/openbsd/target_os_siginfo.h
+ delete mode 100644 bsd-user/openbsd/target_os_signal.h
+ delete mode 100644 bsd-user/openbsd/target_os_stack.h
+ delete mode 100644 bsd-user/openbsd/target_os_thread.h
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 4c1191b8f4..234bd78fd2 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -36,6 +36,7 @@
- #include "bsd-file.h"
- #include "bsd-mem.h"
- #include "bsd-proc.h"
-+#include "bsd-misc.h"
+diff --git a/bsd-user/openbsd/host-os.h b/bsd-user/openbsd/host-os.h
+deleted file mode 100644
+index b9222335d4..0000000000
+--- a/bsd-user/openbsd/host-os.h
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/*
+- *  OpenBSD host dependent code and definitions
+- *
+- *  Copyright (c) 2013 Stacey D. Son
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef HOST_OS_H
+-#define HOST_OS_H
+-
+-#define HOST_DEFAULT_BSD_TYPE target_openbsd
+-
+-#endif /* HOST_OS_H */
+diff --git a/bsd-user/openbsd/os-strace.h b/bsd-user/openbsd/os-strace.h
+deleted file mode 100644
+index 9161390433..0000000000
+--- a/bsd-user/openbsd/os-strace.h
++++ /dev/null
+@@ -1 +0,0 @@
+-/* XXX OpenBSD dependent strace print functions */
+diff --git a/bsd-user/openbsd/strace.list b/bsd-user/openbsd/strace.list
+deleted file mode 100644
+index 1f0a3316f3..0000000000
+--- a/bsd-user/openbsd/strace.list
++++ /dev/null
+@@ -1,187 +0,0 @@
+-{ TARGET_OPENBSD_NR___getcwd, "__getcwd", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR___semctl, "__semctl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR___syscall, "__syscall", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR___sysctl, "__sysctl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_accept, "accept", "%s(%d,%#x,%#x)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_access, "access", "%s(\"%s\",%#o)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_acct, "acct", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_adjfreq, "adjfreq", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_adjtime, "adjtime", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_bind, "bind", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_break, "break", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_chdir, "chdir", "%s(\"%s\")", NULL, NULL },
+-{ TARGET_OPENBSD_NR_chflags, "chflags", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_chmod, "chmod", "%s(\"%s\",%#o)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_chown, "chown", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_chroot, "chroot", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_clock_getres, "clock_getres", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_clock_gettime, "clock_gettime", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_clock_settime, "clock_settime", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_close, "close", "%s(%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_closefrom, "closefrom", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_connect, "connect", "%s(%d,%#x,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_dup, "dup", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_dup2, "dup2", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_execve, "execve", NULL, print_execve, NULL },
+-{ TARGET_OPENBSD_NR_exit, "exit", "%s(%d)\n", NULL, NULL },
+-{ TARGET_OPENBSD_NR_fchdir, "fchdir", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fchflags, "fchflags", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fchmod, "fchmod", "%s(%d,%#o)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_fchown, "fchown", "%s(\"%s\",%d,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_fcntl, "fcntl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fhopen, "fhopen", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fhstat, "fhstat", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fhstatfs, "fhstatfs", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_flock, "flock", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fork, "fork", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_fpathconf, "fpathconf", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_fstat, "fstat", "%s(%d,%p)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_fstatfs, "fstatfs", "%s(%d,%p)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_fsync, "fsync", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_ftruncate, "ftruncate", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_futimes, "futimes", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getdirentries, "getdirentries", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getegid, "getegid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_geteuid, "geteuid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_getfh, "getfh", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getfsstat, "getfsstat", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getgid, "getgid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_getgroups, "getgroups", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getitimer, "getitimer", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getlogin, "getlogin", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getpeereid, "getpeereid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getpeername, "getpeername", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getpgid, "getpgid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getpgrp, "getpgrp", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_getpid, "getpid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_getppid, "getppid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_getpriority, "getpriority", "%s(%#x,%#x)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_getresgid, "getresgid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getresuid, "getresuid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getrlimit, "getrlimit", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getrusage, "getrusage", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getsid, "getsid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getsockname, "getsockname", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getsockopt, "getsockopt", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getthrid, "getthrid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_gettimeofday, "gettimeofday", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_getuid, "getuid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_ioctl, "ioctl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_issetugid, "issetugid", "%s()", NULL, NULL },
+-{ TARGET_OPENBSD_NR_kevent, "kevent", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_kill, "kill", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_kqueue, "kqueue", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_ktrace, "ktrace", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lchown, "lchown", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lfs_bmapv, "lfs_bmapv", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lfs_markv, "lfs_markv", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lfs_segclean, "lfs_segclean", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lfs_segwait, "lfs_segwait", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_link, "link", "%s(\"%s\",\"%s\")", NULL, NULL },
+-{ TARGET_OPENBSD_NR_listen, "listen", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lseek, "lseek", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_lstat, "lstat", "%s(\"%s\",%p)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_madvise, "madvise", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_mincore, "mincore", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_minherit, "minherit", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_mkdir, "mkdir", "%s(\"%s\",%#o)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_mkfifo, "mkfifo", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_mknod, "mknod", "%s(\"%s\",%#o,%#x)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_mlock, "mlock", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_mlockall, "mlockall", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_mmap, "mmap", NULL, NULL, print_syscall_ret_addr },
+-{ TARGET_OPENBSD_NR_mount, "mount", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_mprotect, "mprotect", "%s(%#x,%#x,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_mquery, "mquery", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_msgctl, "msgctl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_msgget, "msgget", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_msgrcv, "msgrcv", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_msgsnd, "msgsnd", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_msync, "msync", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_munlock, "munlock", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_munlockall, "munlockall", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_munmap, "munmap", "%s(%p,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_nanosleep, "nanosleep", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_nfssvc, "nfssvc", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_open, "open", "%s(\"%s\",%#x,%#o)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_opipe, "opipe", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_osigaltstack, "osigaltstack", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_pathconf, "pathconf", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_pipe, "pipe", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_poll, "poll", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_pread, "pread", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_preadv, "preadv", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_profil, "profil", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_ptrace, "ptrace", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_pwrite, "pwrite", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_pwritev, "pwritev", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_quotactl, "quotactl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_read, "read", "%s(%d,%#x,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_readlink, "readlink", "%s(\"%s\",%p,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_readv, "readv", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_reboot, "reboot", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_recvfrom, "recvfrom", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_recvmsg, "recvmsg", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_rename, "rename", "%s(\"%s\",\"%s\")", NULL, NULL },
+-{ TARGET_OPENBSD_NR_revoke, "revoke", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_rfork, "rfork", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_rmdir, "rmdir", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sbrk, "sbrk", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sched_yield, "sched_yield", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_select, "select", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_semget, "semget", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_semop, "semop", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sendmsg, "sendmsg", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sendto, "sendto", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setegid, "setegid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_seteuid, "seteuid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setgid, "setgid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setgroups, "setgroups", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setitimer, "setitimer", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setlogin, "setlogin", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setpgid, "setpgid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setpriority, "setpriority", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setregid, "setregid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setresgid, "setresgid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setresuid, "setresuid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setreuid, "setreuid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setrlimit, "setrlimit", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setsid, "setsid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setsockopt, "setsockopt", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_settimeofday, "settimeofday", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_setuid, "setuid", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_shmat, "shmat", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_shmctl, "shmctl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_shmdt, "shmdt", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_shmget, "shmget", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_shutdown, "shutdown", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sigaction, "sigaction", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sigaltstack, "sigaltstack", "%s(%p,%p)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_sigpending, "sigpending", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sigprocmask, "sigprocmask", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sigreturn, "sigreturn", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sigsuspend, "sigsuspend", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_socket, "socket", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_socketpair, "socketpair", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sstk, "sstk", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_stat, "stat", "%s(\"%s\",%p)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_statfs, "statfs", "%s(\"%s\",%p)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_swapctl, "swapctl", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_symlink, "symlink", "%s(\"%s\",\"%s\")", NULL, NULL },
+-{ TARGET_OPENBSD_NR_sync, "sync", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_sysarch, "sysarch", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_syscall, "syscall", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_threxit, "threxit", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_thrsigdivert, "thrsigdivert", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_thrsleep, "thrsleep", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_thrwakeup, "thrwakeup", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_truncate, "truncate", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_umask, "umask", "%s(%#o)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_unlink, "unlink", "%s(\"%s\")", NULL, NULL },
+-{ TARGET_OPENBSD_NR_unmount, "unmount", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_utimes, "utimes", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_vfork, "vfork", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_wait4, "wait4", NULL, NULL, NULL },
+-{ TARGET_OPENBSD_NR_write, "write", "%s(%d,%#x,%d)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_writev, "writev", "%s(%d,%p,%#x)", NULL, NULL },
+-{ TARGET_OPENBSD_NR_xfspioctl, "xfspioctl", NULL, NULL, NULL },
+diff --git a/bsd-user/openbsd/syscall_nr.h b/bsd-user/openbsd/syscall_nr.h
+deleted file mode 100644
+index dececfd9e8..0000000000
+--- a/bsd-user/openbsd/syscall_nr.h
++++ /dev/null
+@@ -1,225 +0,0 @@
+-/*      $OpenBSD: syscall.h,v 1.101 2008/03/16 19:43:41 otto Exp $      */
+-
+-/*
+- * System call numbers.
+- *
+- * created from;        OpenBSD: syscalls.master,v 1.90 2008/03/16 19:42:57 otto Exp
+- */
+-
+-#define TARGET_OPENBSD_NR_syscall     0
+-#define TARGET_OPENBSD_NR_exit        1
+-#define TARGET_OPENBSD_NR_fork        2
+-#define TARGET_OPENBSD_NR_read        3
+-#define TARGET_OPENBSD_NR_write       4
+-#define TARGET_OPENBSD_NR_open        5
+-#define TARGET_OPENBSD_NR_close       6
+-#define TARGET_OPENBSD_NR_wait4       7
+-#define TARGET_OPENBSD_NR_link        9
+-#define TARGET_OPENBSD_NR_unlink      10
+-#define TARGET_OPENBSD_NR_chdir       12
+-#define TARGET_OPENBSD_NR_fchdir      13
+-#define TARGET_OPENBSD_NR_mknod       14
+-#define TARGET_OPENBSD_NR_chmod       15
+-#define TARGET_OPENBSD_NR_chown       16
+-#define TARGET_OPENBSD_NR_break       17
+-#define TARGET_OPENBSD_NR_getpid      20
+-#define TARGET_OPENBSD_NR_mount       21
+-#define TARGET_OPENBSD_NR_unmount     22
+-#define TARGET_OPENBSD_NR_setuid      23
+-#define TARGET_OPENBSD_NR_getuid      24
+-#define TARGET_OPENBSD_NR_geteuid     25
+-#define TARGET_OPENBSD_NR_ptrace      26
+-#define TARGET_OPENBSD_NR_recvmsg     27
+-#define TARGET_OPENBSD_NR_sendmsg     28
+-#define TARGET_OPENBSD_NR_recvfrom    29
+-#define TARGET_OPENBSD_NR_accept      30
+-#define TARGET_OPENBSD_NR_getpeername 31
+-#define TARGET_OPENBSD_NR_getsockname 32
+-#define TARGET_OPENBSD_NR_access      33
+-#define TARGET_OPENBSD_NR_chflags     34
+-#define TARGET_OPENBSD_NR_fchflags    35
+-#define TARGET_OPENBSD_NR_sync        36
+-#define TARGET_OPENBSD_NR_kill        37
+-#define TARGET_OPENBSD_NR_getppid     39
+-#define TARGET_OPENBSD_NR_dup 41
+-#define TARGET_OPENBSD_NR_opipe       42
+-#define TARGET_OPENBSD_NR_getegid     43
+-#define TARGET_OPENBSD_NR_profil      44
+-#define TARGET_OPENBSD_NR_ktrace      45
+-#define TARGET_OPENBSD_NR_sigaction   46
+-#define TARGET_OPENBSD_NR_getgid      47
+-#define TARGET_OPENBSD_NR_sigprocmask 48
+-#define TARGET_OPENBSD_NR_getlogin    49
+-#define TARGET_OPENBSD_NR_setlogin    50
+-#define TARGET_OPENBSD_NR_acct        51
+-#define TARGET_OPENBSD_NR_sigpending  52
+-#define TARGET_OPENBSD_NR_osigaltstack        53
+-#define TARGET_OPENBSD_NR_ioctl       54
+-#define TARGET_OPENBSD_NR_reboot      55
+-#define TARGET_OPENBSD_NR_revoke      56
+-#define TARGET_OPENBSD_NR_symlink     57
+-#define TARGET_OPENBSD_NR_readlink    58
+-#define TARGET_OPENBSD_NR_execve      59
+-#define TARGET_OPENBSD_NR_umask       60
+-#define TARGET_OPENBSD_NR_chroot      61
+-#define TARGET_OPENBSD_NR_vfork       66
+-#define TARGET_OPENBSD_NR_sbrk        69
+-#define TARGET_OPENBSD_NR_sstk        70
+-#define TARGET_OPENBSD_NR_munmap      73
+-#define TARGET_OPENBSD_NR_mprotect    74
+-#define TARGET_OPENBSD_NR_madvise     75
+-#define TARGET_OPENBSD_NR_mincore     78
+-#define TARGET_OPENBSD_NR_getgroups   79
+-#define TARGET_OPENBSD_NR_setgroups   80
+-#define TARGET_OPENBSD_NR_getpgrp     81
+-#define TARGET_OPENBSD_NR_setpgid     82
+-#define TARGET_OPENBSD_NR_setitimer   83
+-#define TARGET_OPENBSD_NR_getitimer   86
+-#define TARGET_OPENBSD_NR_dup2        90
+-#define TARGET_OPENBSD_NR_fcntl       92
+-#define TARGET_OPENBSD_NR_select      93
+-#define TARGET_OPENBSD_NR_fsync       95
+-#define TARGET_OPENBSD_NR_setpriority 96
+-#define TARGET_OPENBSD_NR_socket      97
+-#define TARGET_OPENBSD_NR_connect     98
+-#define TARGET_OPENBSD_NR_getpriority 100
+-#define TARGET_OPENBSD_NR_sigreturn   103
+-#define TARGET_OPENBSD_NR_bind        104
+-#define TARGET_OPENBSD_NR_setsockopt  105
+-#define TARGET_OPENBSD_NR_listen      106
+-#define TARGET_OPENBSD_NR_sigsuspend  111
+-#define TARGET_OPENBSD_NR_gettimeofday        116
+-#define TARGET_OPENBSD_NR_getrusage   117
+-#define TARGET_OPENBSD_NR_getsockopt  118
+-#define TARGET_OPENBSD_NR_readv       120
+-#define TARGET_OPENBSD_NR_writev      121
+-#define TARGET_OPENBSD_NR_settimeofday        122
+-#define TARGET_OPENBSD_NR_fchown      123
+-#define TARGET_OPENBSD_NR_fchmod      124
+-#define TARGET_OPENBSD_NR_setreuid    126
+-#define TARGET_OPENBSD_NR_setregid    127
+-#define TARGET_OPENBSD_NR_rename      128
+-#define TARGET_OPENBSD_NR_flock       131
+-#define TARGET_OPENBSD_NR_mkfifo      132
+-#define TARGET_OPENBSD_NR_sendto      133
+-#define TARGET_OPENBSD_NR_shutdown    134
+-#define TARGET_OPENBSD_NR_socketpair  135
+-#define TARGET_OPENBSD_NR_mkdir       136
+-#define TARGET_OPENBSD_NR_rmdir       137
+-#define TARGET_OPENBSD_NR_utimes      138
+-#define TARGET_OPENBSD_NR_adjtime     140
+-#define TARGET_OPENBSD_NR_setsid      147
+-#define TARGET_OPENBSD_NR_quotactl    148
+-#define TARGET_OPENBSD_NR_nfssvc      155
+-#define TARGET_OPENBSD_NR_getfh       161
+-#define TARGET_OPENBSD_NR_sysarch     165
+-#define TARGET_OPENBSD_NR_pread       173
+-#define TARGET_OPENBSD_NR_pwrite      174
+-#define TARGET_OPENBSD_NR_setgid      181
+-#define TARGET_OPENBSD_NR_setegid     182
+-#define TARGET_OPENBSD_NR_seteuid     183
+-#define TARGET_OPENBSD_NR_lfs_bmapv   184
+-#define TARGET_OPENBSD_NR_lfs_markv   185
+-#define TARGET_OPENBSD_NR_lfs_segclean        186
+-#define TARGET_OPENBSD_NR_lfs_segwait 187
+-#define TARGET_OPENBSD_NR_pathconf    191
+-#define TARGET_OPENBSD_NR_fpathconf   192
+-#define TARGET_OPENBSD_NR_swapctl     193
+-#define TARGET_OPENBSD_NR_getrlimit   194
+-#define TARGET_OPENBSD_NR_setrlimit   195
+-#define TARGET_OPENBSD_NR_getdirentries       196
+-#define TARGET_OPENBSD_NR_mmap        197
+-#define TARGET_OPENBSD_NR___syscall   198
+-#define TARGET_OPENBSD_NR_lseek       199
+-#define TARGET_OPENBSD_NR_truncate    200
+-#define TARGET_OPENBSD_NR_ftruncate   201
+-#define TARGET_OPENBSD_NR___sysctl    202
+-#define TARGET_OPENBSD_NR_mlock       203
+-#define TARGET_OPENBSD_NR_munlock     204
+-#define TARGET_OPENBSD_NR_futimes     206
+-#define TARGET_OPENBSD_NR_getpgid     207
+-#define TARGET_OPENBSD_NR_xfspioctl   208
+-#define TARGET_OPENBSD_NR_semget      221
+-#define TARGET_OPENBSD_NR_msgget      225
+-#define TARGET_OPENBSD_NR_msgsnd      226
+-#define TARGET_OPENBSD_NR_msgrcv      227
+-#define TARGET_OPENBSD_NR_shmat       228
+-#define TARGET_OPENBSD_NR_shmdt       230
+-#define TARGET_OPENBSD_NR_clock_gettime       232
+-#define TARGET_OPENBSD_NR_clock_settime       233
+-#define TARGET_OPENBSD_NR_clock_getres        234
+-#define TARGET_OPENBSD_NR_nanosleep   240
+-#define TARGET_OPENBSD_NR_minherit    250
+-#define TARGET_OPENBSD_NR_rfork       251
+-#define TARGET_OPENBSD_NR_poll        252
+-#define TARGET_OPENBSD_NR_issetugid   253
+-#define TARGET_OPENBSD_NR_lchown      254
+-#define TARGET_OPENBSD_NR_getsid      255
+-#define TARGET_OPENBSD_NR_msync       256
+-#define TARGET_OPENBSD_NR_pipe        263
+-#define TARGET_OPENBSD_NR_fhopen      264
+-#define TARGET_OPENBSD_NR_preadv      267
+-#define TARGET_OPENBSD_NR_pwritev     268
+-#define TARGET_OPENBSD_NR_kqueue      269
+-#define TARGET_OPENBSD_NR_kevent      270
+-#define TARGET_OPENBSD_NR_mlockall    271
+-#define TARGET_OPENBSD_NR_munlockall  272
+-#define TARGET_OPENBSD_NR_getpeereid  273
+-#define TARGET_OPENBSD_NR_getresuid   281
+-#define TARGET_OPENBSD_NR_setresuid   282
+-#define TARGET_OPENBSD_NR_getresgid   283
+-#define TARGET_OPENBSD_NR_setresgid   284
+-#define TARGET_OPENBSD_NR_mquery      286
+-#define TARGET_OPENBSD_NR_closefrom   287
+-#define TARGET_OPENBSD_NR_sigaltstack 288
+-#define TARGET_OPENBSD_NR_shmget      289
+-#define TARGET_OPENBSD_NR_semop       290
+-#define TARGET_OPENBSD_NR_stat        291
+-#define TARGET_OPENBSD_NR_fstat       292
+-#define TARGET_OPENBSD_NR_lstat       293
+-#define TARGET_OPENBSD_NR_fhstat      294
+-#define TARGET_OPENBSD_NR___semctl    295
+-#define TARGET_OPENBSD_NR_shmctl      296
+-#define TARGET_OPENBSD_NR_msgctl      297
+-#define TARGET_OPENBSD_NR_sched_yield 298
+-#define TARGET_OPENBSD_NR_getthrid    299
+-#define TARGET_OPENBSD_NR_thrsleep    300
+-#define TARGET_OPENBSD_NR_thrwakeup   301
+-#define TARGET_OPENBSD_NR_threxit     302
+-#define TARGET_OPENBSD_NR_thrsigdivert        303
+-#define TARGET_OPENBSD_NR___getcwd    304
+-#define TARGET_OPENBSD_NR_adjfreq     305
+-#define TARGET_OPENBSD_NR_getfsstat   306
+-#define TARGET_OPENBSD_NR_statfs      307
+-#define TARGET_OPENBSD_NR_fstatfs     308
+-#define TARGET_OPENBSD_NR_fhstatfs    309
+-
+-/* syscall flags from machine/trap.h */
+-
+-/*      $OpenBSD: trap.h,v 1.4 2008/07/04 22:04:37 kettenis Exp $       */
+-/*      $NetBSD: trap.h,v 1.4 1999/06/07 05:28:04 eeh Exp $ */
+-
+-/*
+- * Copyright (c) 1996-1999 Eduardo Horvath
+- *
+- * Redistribution and use in source and binary forms, with or without
+- * modification, are permitted provided that the following conditions
+- * are met:
+- * 1. Redistributions of source code must retain the above copyright
+- *    notice, this list of conditions and the following disclaimer.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR  ``AS IS'' AND
+- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR  BE LIABLE
+- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+- * SUCH DAMAGE.
+- *
+- */
+-#define TARGET_OPENBSD_SYSCALL_G2RFLAG 0x400   /* on success, return to %g2 rather than npc */
+-#define TARGET_OPENBSD_SYSCALL_G7RFLAG 0x800   /* use %g7 as above (deprecated) */
+diff --git a/bsd-user/openbsd/target_os_elf.h b/bsd-user/openbsd/target_os_elf.h
+deleted file mode 100644
+index 4cf5747dcd..0000000000
+--- a/bsd-user/openbsd/target_os_elf.h
++++ /dev/null
+@@ -1,148 +0,0 @@
+-/*
+- *  openbsd ELF definitions
+- *
+- *  Copyright (c) 2013 Stacey D. Son
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef TARGET_OS_ELF_H
+-#define TARGET_OS_ELF_H
+-
+-#include "target_arch_elf.h"
+-#include "elf.h"
+-#include "user/tswap-target.h"
+-
+-/* this flag is uneffective under linux too, should be deleted */
+-#ifndef MAP_DENYWRITE
+-#define MAP_DENYWRITE 0
+-#endif
+-
+-/* should probably go in elf.h */
+-#ifndef ELIBBAD
+-#define ELIBBAD 80
+-#endif
+-
+-#ifndef ELF_PLATFORM
+-#define ELF_PLATFORM (NULL)
+-#endif
+-
+-#ifndef ELF_HWCAP
+-#define ELF_HWCAP 0
+-#endif
+-
+-#ifdef TARGET_ABI32
+-#undef ELF_CLASS
+-#define ELF_CLASS ELFCLASS32
+-#undef bswaptls
+-#define bswaptls(ptr) bswap32s(ptr)
+-#endif
+-
+-/* max code+data+bss space allocated to elf interpreter */
+-#define INTERP_MAP_SIZE (32 * 1024 * 1024)
+-
+-/* max code+data+bss+brk space allocated to ET_DYN executables */
+-#define ET_DYN_MAP_SIZE (128 * 1024 * 1024)
+-
+-/* Necessary parameters */
+-#define TARGET_ELF_EXEC_PAGESIZE TARGET_PAGE_SIZE
+-#define TARGET_ELF_PAGESTART(_v) ((_v) & \
+-        ~(unsigned long)(TARGET_ELF_EXEC_PAGESIZE - 1))
+-#define TARGET_ELF_PAGEOFFSET(_v) ((_v) & (TARGET_ELF_EXEC_PAGESIZE - 1))
+-
+-#define DLINFO_ITEMS 12
+-
+-static abi_ulong target_create_elf_tables(abi_ulong p, int argc, int envc,
+-                                          abi_ulong stringp,
+-                                          struct elfhdr *exec,
+-                                          abi_ulong load_addr,
+-                                          abi_ulong load_bias,
+-                                          abi_ulong interp_load_addr,
+-                                          struct image_info *info)
+-{
+-        abi_ulong sp;
+-        int size;
+-        abi_ulong u_platform;
+-        const char *k_platform;
+-        const int n = sizeof(elf_addr_t);
+-
+-        sp = p;
+-        u_platform = 0;
+-        k_platform = ELF_PLATFORM;
+-        if (k_platform) {
+-            size_t len = strlen(k_platform) + 1;
+-            sp -= (len + n - 1) & ~(n - 1);
+-            u_platform = sp;
+-            /* FIXME - check return value of memcpy_to_target() for failure */
+-            memcpy_to_target(sp, k_platform, len);
+-        }
+-        /*
+-         * Force 16 byte _final_ alignment here for generality.
+-         */
+-        sp = sp & ~(abi_ulong)15;
+-        size = (DLINFO_ITEMS + 1) * 2;
+-        if (k_platform) {
+-            size += 2;
+-        }
+-#ifdef DLINFO_ARCH_ITEMS
+-        size += DLINFO_ARCH_ITEMS * 2;
+-#endif
+-        size += envc + argc + 2;
+-        size += 1;                        /* argc itself */
+-        size *= n;
+-        if (size & 15) {
+-            sp -= 16 - (size & 15);
+-        }
+-
+-        /*
+-         * OpenBSD defines elf_addr_t as Elf32_Off / Elf64_Off
+-         */
+-#define NEW_AUX_ENT(id, val) do {               \
+-            sp -= n; put_user_ual(val, sp);     \
+-            sp -= n; put_user_ual(id, sp);      \
+-          } while (0)
+-
+-        NEW_AUX_ENT(AT_NULL, 0);
+-
+-        /* There must be exactly DLINFO_ITEMS entries here.  */
+-        NEW_AUX_ENT(AT_PHDR, (abi_ulong)(load_addr + exec->e_phoff));
+-        NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof(struct elf_phdr)));
+-        NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
+-        NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
+-        NEW_AUX_ENT(AT_BASE, (abi_ulong)(interp_load_addr));
+-        NEW_AUX_ENT(AT_FLAGS, (abi_ulong)0);
+-        NEW_AUX_ENT(AT_ENTRY, load_bias + exec->e_entry);
+-        NEW_AUX_ENT(AT_UID, (abi_ulong)getuid());
+-        NEW_AUX_ENT(AT_EUID, (abi_ulong)geteuid());
+-        NEW_AUX_ENT(AT_GID, (abi_ulong)getgid());
+-        NEW_AUX_ENT(AT_EGID, (abi_ulong)getegid());
+-        NEW_AUX_ENT(AT_HWCAP, (abi_ulong)ELF_HWCAP);
+-        NEW_AUX_ENT(AT_CLKTCK, (abi_ulong)sysconf(_SC_CLK_TCK));
+-        if (k_platform) {
+-            NEW_AUX_ENT(AT_PLATFORM, u_platform);
+-        }
+-#ifdef ARCH_DLINFO
+-        /*
+-         * ARCH_DLINFO must come last so platform specific code can enforce
+-         * special alignment requirements on the AUXV if necessary (eg. PPC).
+-         */
+-        ARCH_DLINFO;
+-#endif
+-#undef NEW_AUX_ENT
+-
+-        sp = loader_build_argptr(envc, argc, sp, stringp);
+-        return sp;
+-}
+-
+-#endif /* TARGET_OS_ELF_H */
+diff --git a/bsd-user/openbsd/target_os_siginfo.h b/bsd-user/openbsd/target_os_siginfo.h
+deleted file mode 100644
+index 732009a820..0000000000
+--- a/bsd-user/openbsd/target_os_siginfo.h
++++ /dev/null
+@@ -1,82 +0,0 @@
+-#ifndef TARGET_OS_SIGINFO_H
+-#define TARGET_OS_SIGINFO_H
+-
+-#define TARGET_NSIG     32   /* counting 0; could be 33 (mask is 1-32) */
+-#define TARGET_NSIG_BPW     (sizeof(uint32_t) * 8)
+-#define TARGET_NSIG_WORDS   (TARGET_NSIG / TARGET_NSIG_BPW)
+-
+-/* this struct defines a stack used during syscall handling */
+-typedef struct target_sigaltstack {
+-    abi_long    ss_sp;
+-    abi_ulong   ss_size;
+-    abi_long    ss_flags;
+-} target_stack_t;
+-
+-typedef struct {
+-    uint32_t __bits[TARGET_NSIG_WORDS];
+-} target_sigset_t
+-
+-struct target_sigaction {
+-    abi_ulong   _sa_handler;
+-    int32_t     sa_flags;
+-    target_sigset_t sa_mask;
+-};
+-
+-/* Compare to sys/siginfo.h */
+-typedef union target_sigval {
+-    int         sival_int;
+-    abi_ulong   sival_ptr;
+-} target_sigval_t;
+-
+-struct target_ksiginfo {
+-    int32_t     _signo;
+-    int32_t     _code;
+-    int32_t     _errno;
+-#if TARGET_ABI_BITS == 64
+-    int32_t     _pad;
+-#endif
+-    union {
+-        struct {
+-            int32_t             _pid;
+-            int32_t             _uid;
+-            target_sigval_t    _value;
+-        } _rt;
+-
+-        struct {
+-            int32_t             _pid;
+-            int32_t             _uid;
+-            int32_t             _struct;
+-            /* clock_t          _utime; */
+-            /* clock_t          _stime; */
+-        } _child;
+-
+-        struct {
+-            abi_ulong           _addr;
+-            int32_t             _trap;
+-        } _fault;
+-
+-        struct {
+-            long                _band;
+-            int                 _fd;
+-        } _poll;
+-    } _reason;
+-};
+-
+-typedef union target_siginfo {
+-    int8_t     si_pad[128];
+-    struct     target_ksiginfo  _info;
+-} target_siginfo_t;
+-
+-#define target_si_signo     _info._signo
+-#define target_si_code      _info._code
+-#define target_si_errno     _info._errno
+-#define target_si_addr      _info._reason._fault._addr
+-
+-#define TARGET_SEGV_MAPERR  1
+-#define TARGET_SEGV_ACCERR  2
+-
+-#define TARGET_TRAP_BRKPT   1
+-#define TARGET_TRAP_TRACE   2
+-
+-
+-#endif /* TARGET_OS_SIGINFO_H */
+diff --git a/bsd-user/openbsd/target_os_signal.h b/bsd-user/openbsd/target_os_signal.h
+deleted file mode 100644
+index 4ee4f768e0..0000000000
+--- a/bsd-user/openbsd/target_os_signal.h
++++ /dev/null
+@@ -1,69 +0,0 @@
+-#ifndef TARGET_OS_SIGNAL_H
+-#define TARGET_OS_SIGNAL_H
+-
+-#include "target_os_siginfo.h"
+-#include "target_arch_signal.h"
+-
+-#define TARGET_SIGHUP  1       /* hangup */
+-#define TARGET_SIGINT  2       /* interrupt */
+-#define TARGET_SIGQUIT 3       /* quit */
+-#define TARGET_SIGILL  4       /* illegal instruction (not reset when caught) */
+-#define TARGET_SIGTRAP 5       /* trace trap (not reset when caught) */
+-#define TARGET_SIGABRT 6       /* abort() */
+-#define TARGET_SIGIOT  SIGABRT /* compatibility */
+-#define TARGET_SIGEMT  7       /* EMT instruction */
+-#define TARGET_SIGFPE  8       /* floating point exception */
+-#define TARGET_SIGKILL 9       /* kill (cannot be caught or ignored) */
+-#define TARGET_SIGBUS  10      /* bus error */
+-#define TARGET_SIGSEGV 11      /* segmentation violation */
+-#define TARGET_SIGSYS  12      /* bad argument to system call */
+-#define TARGET_SIGPIPE 13      /* write on a pipe with no one to read it */
+-#define TARGET_SIGALRM 14      /* alarm clock */
+-#define TARGET_SIGTERM 15      /* software termination signal from kill */
+-#define TARGET_SIGURG  16      /* urgent condition on IO channel */
+-#define TARGET_SIGSTOP 17      /* sendable stop signal not from tty */
+-#define TARGET_SIGTSTP 18      /* stop signal from tty */
+-#define TARGET_SIGCONT 19      /* continue a stopped process */
+-#define TARGET_SIGCHLD 20      /* to parent on child stop or exit */
+-#define TARGET_SIGTTIN 21      /* to readers pgrp upon background tty read */
+-#define TARGET_SIGTTOU 22      /* like TTIN for out if (tp->t_local&LTOSTOP) */
+-#define TARGET_SIGIO   23      /* input/output possible signal */
+-#define TARGET_SIGXCPU 24      /* exceeded CPU time limit */
+-#define TARGET_SIGXFSZ 25      /* exceeded file size limit */
+-#define TARGET_SIGVTALRM 26    /* virtual time alarm */
+-#define TARGET_SIGPROF   27    /* profiling time alarm */
+-#define TARGET_SIGWINCH  28    /* window size changes */
+-#define TARGET_SIGINFO   29    /* information request */
+-#define TARGET_SIGUSR1   30    /* user defined signal 1 */
+-#define TARGET_SIGUSR2   31    /* user defined signal 2 */
+-
+-/*
+- * Language spec says we must list exactly one parameter, even though we
+- * actually supply three.  Ugh!
+- */
+-#define TARGET_SIG_DFL         ((void (*)(int))0)
+-#define TARGET_SIG_IGN         ((void (*)(int))1)
+-#define TARGET_SIG_ERR         ((void (*)(int))-1)
+-
+-#define TARGET_SA_ONSTACK   0x0001  /* take signal on signal stack */
+-#define TARGET_SA_RESTART   0x0002  /* restart system on signal return */
+-#define TARGET_SA_RESETHAND 0x0004  /* reset to SIG_DFL when taking signal */
+-#define TARGET_SA_NODEFER   0x0010  /* don't mask the signal we're delivering */
+-#define TARGET_SA_NOCLDWAIT 0x0020  /* don't create zombies (assign to pid 1) */
+-#define TARGET_SA_USERTRAMP 0x0100  /* do not bounce off kernel's sigtramp */
+-#define TARGET_SA_NOCLDSTOP 0x0008  /* do not generate SIGCHLD on child stop */
+-#define TARGET_SA_SIGINFO   0x0040  /* generate siginfo_t */
+-
+-/*
+- * Flags for sigprocmask:
+- */
+-#define TARGET_SIG_BLOCK       1       /* block specified signal set */
+-#define TARGET_SIG_UNBLOCK     2       /* unblock specified signal set */
+-#define TARGET_SIG_SETMASK     3       /* set specified signal set */
+-
+-#define TARGET_BADSIG       SIG_ERR
+-
+-#define TARGET_SS_ONSTACK 0x0001 /* take signals on alternate stack */
+-#define TARGET_SS_DISABLE 0x0004 /* disable taking signals on alternate stack */
+-
+-#endif /* TARGET_OS_SIGNAL_H */
+diff --git a/bsd-user/openbsd/target_os_stack.h b/bsd-user/openbsd/target_os_stack.h
+deleted file mode 100644
+index 264a658608..0000000000
+--- a/bsd-user/openbsd/target_os_stack.h
++++ /dev/null
+@@ -1,56 +0,0 @@
+-/*
+- *  OpenBSD setup_initial_stack() implementation.
+- *
+- *  Copyright (c) 2013-14 Stacey D. Son
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef TARGET_OS_STACK_H
+-#define TARGET_OS_STACK_H
+-
+-#include "target_arch_sigtramp.h"
+-
+-static inline int setup_initial_stack(struct bsd_binprm *bprm, abi_ulong *p,
+-    abi_ulong *stringp)
+-{
+-    int i;
+-    abi_ulong stack_base;
+-
+-    stack_base = (target_stkbas + target_stksiz) -
+-                  MAX_ARG_PAGES * TARGET_PAGE_SIZE;
+-    if (p) {
+-        *p = stack_base;
+-    }
+-    if (stringp) {
+-        *stringp = stack_base;
+-    }
+-
+-    for (i = 0; i < MAX_ARG_PAGES; i++) {
+-        if (bprm->page[i]) {
+-            info->rss++;
+-            if (!memcpy_to_target(stack_base, bprm->page[i],
+-                        TARGET_PAGE_SIZE)) {
+-                errno = EFAULT;
+-                return -1;
+-            }
+-            g_free(bprm->page[i]);
+-        }
+-        stack_base += TARGET_PAGE_SIZE;
+-    }
+-
+-    return 0;
+-}
+-
+-#endif /* TARGET_OS_STACK_H */
+diff --git a/bsd-user/openbsd/target_os_thread.h b/bsd-user/openbsd/target_os_thread.h
+deleted file mode 100644
+index c3adc6712f..0000000000
+--- a/bsd-user/openbsd/target_os_thread.h
++++ /dev/null
+@@ -1,25 +0,0 @@
+-/*
+- *  OpenBSD thread dependent code and definitions
+- *
+- *  Copyright (c) 2013 Stacey D. Son
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#ifndef TARGET_OS_THREAD_H
+-#define TARGET_OS_THREAD_H
+-
+-#include "target_arch_thread.h"
+-
+-#endif /* TARGET_OS_THREAD_H */
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 93388e7c34..2594c3ef2a 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -182,9 +182,6 @@ abi_long do_freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+ abi_long do_netbsd_syscall(void *cpu_env, int num, abi_long arg1,
+                            abi_long arg2, abi_long arg3, abi_long arg4,
+                            abi_long arg5, abi_long arg6);
+-abi_long do_openbsd_syscall(void *cpu_env, int num, abi_long arg1,
+-                            abi_long arg2, abi_long arg3, abi_long arg4,
+-                            abi_long arg5, abi_long arg6);
+ void gemu_log(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
+ extern __thread CPUState *thread_cpu;
+ char *target_strerror(int err);
+@@ -215,11 +212,6 @@ print_netbsd_syscall(int num,
+                      abi_long arg1, abi_long arg2, abi_long arg3,
+                      abi_long arg4, abi_long arg5, abi_long arg6);
+ void print_netbsd_syscall_ret(int num, abi_long ret);
+-void
+-print_openbsd_syscall(int num,
+-                      abi_long arg1, abi_long arg2, abi_long arg3,
+-                      abi_long arg4, abi_long arg5, abi_long arg6);
+-void print_openbsd_syscall_ret(int num, abi_long ret);
+ /**
+  * print_taken_signal:
+  * @target_signum: target signal being taken
+diff --git a/bsd-user/strace.c b/bsd-user/strace.c
+index 6dc01d3be7..bf54b3bfff 100644
+--- a/bsd-user/strace.c
++++ b/bsd-user/strace.c
+@@ -156,9 +156,6 @@ static const struct syscallname freebsd_scnames[] = {
+ static const struct syscallname netbsd_scnames[] = {
+ #include "netbsd/strace.list"
+ };
+-static const struct syscallname openbsd_scnames[] = {
+-#include "openbsd/strace.list"
+-};
  
- /* BSD dependent syscall shims */
- #include "os-stat.h"
-@@ -878,6 +879,21 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
-         ret = do_bsd_shmdt(arg1);
-         break;
+ static void print_syscall(int num, const struct syscallname *scnames,
+         unsigned int nscnames, abi_long arg1, abi_long arg2, abi_long arg3,
+@@ -244,20 +241,6 @@ void print_netbsd_syscall_ret(int num, abi_long ret)
+     print_syscall_ret(num, ret, netbsd_scnames, ARRAY_SIZE(netbsd_scnames));
+ }
  
-+        /*
-+         * System V Semaphores
-+         */
-+    case TARGET_FREEBSD_NR_semget: /* semget(2) */
-+        ret = do_bsd_semget(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_semop: /* semop(2) */
-+        ret = do_bsd_semop(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___semctl: { /* __semctl() undocumented */
-+        ret = do_bsd___semctl(arg1, arg2, arg3, arg4);
-+        break;
-+    }
-     case TARGET_FREEBSD_NR_freebsd11_vadvise:
-         ret = do_bsd_vadvise();
-         break;
+-void print_openbsd_syscall(int num, abi_long arg1, abi_long arg2, abi_long arg3,
+-        abi_long arg4, abi_long arg5, abi_long arg6)
+-{
+-
+-    print_syscall(num, openbsd_scnames, ARRAY_SIZE(openbsd_scnames), arg1, arg2,
+-            arg3, arg4, arg5, arg6);
+-}
+-
+-void print_openbsd_syscall_ret(int num, abi_long ret)
+-{
+-
+-    print_syscall_ret(num, ret, openbsd_scnames, ARRAY_SIZE(openbsd_scnames));
+-}
+-
+ static void
+ print_signal(abi_ulong arg, int last)
+ {
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index cc4b484f3a..ed28a318dd 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -27,7 +27,6 @@
+ 
+ #include "freebsd/syscall_nr.h"
+ #include "netbsd/syscall_nr.h"
+-#include "openbsd/syscall_nr.h"
+ 
+ /*
+  * machine/_types.h
+@@ -120,15 +119,6 @@ struct bsd_shm_regions {
+ 
+ #define TARGET_NETBSD_MAP_FLAGMASK      0x3ff7
+ 
+-#define TARGET_OPENBSD_MAP_INHERIT      0x0080  /* region is retained after */
+-                                                /* exec */
+-#define TARGET_OPENBSD_MAP_NOEXTEND     0x0100  /* for MAP_FILE, don't change */
+-                                                /* file size */
+-#define TARGET_OPENBSD_MAP_TRYFIXED     0x0400  /* attempt hint address, */
+-                                                /* even within heap */
+-
+-#define TARGET_OPENBSD_MAP_FLAGMASK     0x17f7
+-
+ /* XXX */
+ #define TARGET_BSD_MAP_FLAGMASK         0x3ff7
+ 
 -- 
 2.52.0
 
