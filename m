@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D93D58E47
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4728D58E4B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwunH-00015j-JT; Sun, 01 Mar 2026 23:22:07 -0500
+	id 1vwunB-00013s-17; Sun, 01 Mar 2026 23:22:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunG-00015Y-K5
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:06 -0500
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwun9-00013C-CO
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:59 -0500
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwunF-0006sl-1R
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:22:06 -0500
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-7d4c85307b2so2882586a34.0
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:22:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwun7-0006rj-Sm
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:59 -0500
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7d598f4c618so1761413a34.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:21:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425323; x=1773030123;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425316; x=1773030116;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xaqWwcrZ93FDjWVSE7/eOvpbeQyiYSTVc+iw8x38+d0=;
- b=dzItuMj69YdFtQjKlck64O6dIFTv2UqhgAukUIVF6/912xjh2A0aDZg+k8GiDIjVhP
- iJbfwIQYXV2o58lIw0HMjT1tYxe04IMqimYfMh0ocK+KoV9nuvzE/YHapQKzR2sJc/4n
- 4c/J621imu6Syy2hrLD4vcpUfOKZhmn+f0+TjiS0uw+XIsGcclEK4WSwJWzhlv+WDEzw
- LoV3YFK66yLduPJBsrORifTJnMUaJJ2dABMpKrmELzrGKTvOr4ekNyEzhjFXqmzBIXv2
- PcEdXX5321+wDUyyybeqEGmDY4zM98AJxzuetZvfJRLC4sE5G6bQGGDF72AKJUSV7zcG
- WgYg==
+ bh=LliWkK6+U8IwyeJKNvGi32KWzYUv+A4wlSXc60OygLY=;
+ b=dMoYsSSklX1c12MklZwqoEdeymML+yO081KLgd65Xj5Uppl+pwLvhLb9+9zxVb88cP
+ 5Duqy0cdDjrBsyIHLf/wPF7vjg8z8npMZmAV+p7a2aXJhQRur+acYe+ANu+0wWWWBlQ4
+ wcJ79+1ySR8+zRuwNrnCj46i/2ZBV9AyL3sB7LFb0zNU4JfL0vcQt6wYhIw4Pv5mgTwE
+ oZiPbXAUHK5rMifRasu23M0krXZZ8a2Oc6WgHd2er/zvVXI81DwHQWN3ZonDYl1cKehy
+ Vzil34gDryHvgO+ZG10UNTfi4j+x9xW9Zd29PxXUMTRuwMd3cjmt4COc7gDrnDabbL7E
+ ceTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772425323; x=1773030123;
+ d=1e100.net; s=20230601; t=1772425316; x=1773030116;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xaqWwcrZ93FDjWVSE7/eOvpbeQyiYSTVc+iw8x38+d0=;
- b=AU6a+voHEOop2MEoluJqZM/2m/ILba6K63ZtIH6k4ytbv5n7UG8aoqQUYwkXBKPFpd
- DSVO4GjokRMcjG1pKDxH7XPowXjGx4m1O8wdgt+HaPUnTYvoVcItgOoc3lXbKhZowQvG
- RUn0zCCkmSEI5hDEJ8gtps3ZGUmjB57Ug9QEFQn+OH9vG1ARPbs8lkpXnQT5j5ryF4Ga
- BzTKZ2yPXvkL29f+bzhyPlUE7mkFcQVJkerOW9WpkMyt5+/KEqTQ41ugQuk2BeISFSBT
- VqKo2FHKP/Wb0/uEa5nxpxKM+YRpOJyE8gl4wYXfQvR3WU22+E3WEDACijats3Fs2RzS
- VVZw==
-X-Gm-Message-State: AOJu0Ywfabe5MXpeGqUP87qry0GslNEo+bUbTM2sXZgRbwHgQ58KOPLi
- ALXmVhP26e8dFEgn3JengqSOO/9xqeo0YY5SCsbBRKj1Q9KjCWnZD7uiU6Dgt8VwEAjUMPPtuQ8
- z8Qtx
-X-Gm-Gg: ATEYQzyxYZ2jwb0tj9TVzMNxRJHyQINbijv1iOqZVNW8rK4ykZWat8sfBgyd27U+C0i
- dT+LmdKYUKzDMZsfJ2TC/f69FmpGdQvbQRc1SNCa94a5knr98hmlIn93F6wjs6R+2HyG/uqbvnJ
- v9YXB01TtYL5V0gr9OT9PIfPNrnQdfIsWKKuMSON0KrPdDYLcWPGlrIMMCcb3q5Wq+K7P8HgD2R
- +m9M9s7kJezELk0rtetSUqHoQgyyEpTvcfDrUMf9e/iW5ouNpaBVIPikoPN5H59jbEKanNvbegk
- PmempW9PoWOyggFxi32xtTAABGd3LXqHZxFTuimfcaKNzBVNmmvnNQ0lRnX6Y7H5PcoTFMi8CQ5
- 7L/Tcik0iIh5lNrJ6FKiQaenY+pHXxpLGtkM3n+tD145XbekeEQ8/mQocs/VVXIwF/bv4sPcG8c
- zvQ/+0wJKU4Usz4m0AkFo0
-X-Received: by 2002:a05:6870:1588:b0:40a:5e90:e0c3 with SMTP id
- 586e51a60fabf-41627108c01mr5332493fac.55.1772425323568; 
- Sun, 01 Mar 2026 20:22:03 -0800 (PST)
+ bh=LliWkK6+U8IwyeJKNvGi32KWzYUv+A4wlSXc60OygLY=;
+ b=Wf997wXbj1BrplpDE5WfJmdYaTzmSOi/jA81YgouxMIeLOS1buqUBJ/bCJZlc8gec9
+ rqxmKpnh6ZzCk++42XH5oH6m9StcS77BSzSlfS/XnQ7EI6h07JEu8oQ5Iz5KR/Ggqbf4
+ P+sJMOHhLfuWD2Efc9Nr9Y3buVq5tidbB6KOB/LJ3f5fOY63J1peHXCshuuiLLgzE2Qp
+ qU0rmptCp7t+S0H9cZimHnYmoOOdYAUag6gOoSguMva//gpwtVSuPryHllLOissmkw4x
+ 3pCQgwq+TmqTPvDc9hFPLSZhjCjoPuO5KFTVUnCjb/9OVoG751mmKXKD83TZjmasreT5
+ rmOw==
+X-Gm-Message-State: AOJu0YxEKY/cMddcVADMLqHrs504y1QuI1GW9/QA1CkhB7oOlSgduBbq
+ M2ph6iliTeCRgkNNxOBLmhFV2xa4a8JtQW85c1RUdXlQoHMRNZ8i6orH3Fvwh4TrO+ncwnnzZ3A
+ 3VSLH
+X-Gm-Gg: ATEYQzxkZlZXcAKqxHlYNLvBmAVc6w/bsKOeBEwRBlP1b1wmo3QOB+3nECCnx7teFDy
+ PoASrTc3ai9ib4bVHhgLntjOh+Sz/izc43jhh363Q0JYXRwSoyEi1+QLJPXq+6ZNFHWr/76Nxai
+ RB8gEUCfFPeVGZUvtRg8aNyqIbASbLPoNQ/HWID9fb8QbK2abui0XXxAhFlQg2oARjttM9/bVzo
+ K618EUPnL3rkZ+RhOXvcFU2i4+ECQLOXhfNZSwvw+fOD9rGo6BlnscepeWFV1PcHWdPTj7Mj1+4
+ 5fglrrDrFqdAR9QfAf9kEq0G+0GyTMEWiwXBZt8GXWmhr4217awlajl+l/UlS9AakL086uBxDe2
+ 01SNZGcp6Fn6T/bBr9eAiGOf2ir60TTZwdR5tnhu1egeBdPOJbfiZzp6+21hogNzRJzRuhURZUm
+ hVElH2J1vESQ==
+X-Received: by 2002:a05:6870:63a8:b0:409:61b0:fd28 with SMTP id
+ 586e51a60fabf-416270692d5mr7425002fac.46.1772425315733; 
+ Sun, 01 Mar 2026 20:21:55 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.22.02
+ 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.21.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 20:22:03 -0800 (PST)
+ Sun, 01 Mar 2026 20:21:55 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
@@ -73,17 +73,18 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
  Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 20/27] bsd-user: Add do_bsd___semctl implementation
-Date: Sun,  1 Mar 2026 21:21:08 -0700
-Message-ID: <20260302042115.83410-21-imp@bsdimp.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 15/27] bsd-user: Add semaphore operation constants and
+ structures
+Date: Sun,  1 Mar 2026 21:21:03 -0700
+Message-ID: <20260302042115.83410-16-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302042115.83410-1-imp@bsdimp.com>
 References: <20260302042115.83410-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::336;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x336.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,144 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
-
-Add implementation of __semctl(2) syscall for System V semaphore control
-operations. Handles command translation, endianness conversion for GETVAL/
-SETVAL, and array/structure conversions for GETALL/SETALL/IPC_STAT/IPC_SET.
+Add System V semaphore operation constants (GETVAL, SETVAL, GETALL, etc.)
+and the target_sembuf and target_semun structures needed for semop(2) and
+semctl(2) syscall emulation.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-misc.h | 114 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 114 insertions(+)
+ bsd-user/syscall_defs.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/bsd-user/bsd-misc.h b/bsd-user/bsd-misc.h
-index e1e552b58f..2397ca460b 100644
---- a/bsd-user/bsd-misc.h
-+++ b/bsd-user/bsd-misc.h
-@@ -99,6 +99,120 @@ static inline abi_long do_bsd_semop(int semid, abi_long ptr, unsigned nsops)
-     return semop(semid, sops, nsops);
- }
- 
-+/* __semctl(2) */
-+static inline abi_long do_bsd___semctl(int semid, int semnum, int target_cmd,
-+                                       abi_ptr un_ptr)
-+{
-+    void *target_un;
-+    union semun arg;
-+    struct semid_ds dsarg;
-+    unsigned short *array = NULL;
-+    int host_cmd;
-+    abi_long ret = 0;
-+    abi_ulong target_array, target_buffer;
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 84a3837b6e..4dbd90c2f1 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -93,6 +93,26 @@ struct bsd_shm_regions {
+ /*
+  * sys/sem.h
+  */
++#define TARGET_GETNCNT  3   /* Return the value of semncnt {READ} */
++#define TARGET_GETPID   4   /* Return the value of sempid {READ} */
++#define TARGET_GETVAL   5   /* Return the value of semval {READ} */
++#define TARGET_GETALL   6   /* Return semvals into arg.array {READ} */
++#define TARGET_GETZCNT  7   /* Return the value of semzcnt {READ} */
++#define TARGET_SETVAL   8   /* Set the value of semval to arg.val {ALTER} */
++#define TARGET_SETALL   9   /* Set semvals from arg.array {ALTER} */
 +
-+    switch (target_cmd) {
-+    case TARGET_GETVAL:
-+        host_cmd = GETVAL;
-+        break;
++struct target_sembuf {
++    abi_ushort      sem_num;        /* semaphore # */
++    abi_short       sem_op;         /* semaphore operation */
++    abi_short       sem_flg;        /* operation flags */
++};
 +
-+    case TARGET_SETVAL:
-+        host_cmd = SETVAL;
-+        break;
++union target_semun {
++    abi_int     val;        /* value for SETVAL */
++    abi_ulong   buf;        /* buffer for IPC_STAT & IPC_SET */
++    abi_ulong   array;      /* array for GETALL & SETALL */
++};
 +
-+    case TARGET_GETALL:
-+        host_cmd = GETALL;
-+        break;
-+
-+    case TARGET_SETALL:
-+        host_cmd = SETALL;
-+        break;
-+
-+    case TARGET_IPC_STAT:
-+        host_cmd = IPC_STAT;
-+        break;
-+
-+    case TARGET_IPC_SET:
-+        host_cmd = IPC_SET;
-+        break;
-+
-+    case TARGET_IPC_RMID:
-+        host_cmd = IPC_RMID;
-+        break;
-+
-+    case TARGET_GETPID:
-+        host_cmd = GETPID;
-+        break;
-+
-+    case TARGET_GETNCNT:
-+        host_cmd = GETNCNT;
-+        break;
-+
-+    case TARGET_GETZCNT:
-+        host_cmd = GETZCNT;
-+        break;
-+
-+    default:
-+        return -TARGET_EINVAL;
-+    }
-+
-+    /*
-+     * Unlike Linux and the semctl system call, we take a pointer
-+     * to the union arg here.
-+     */
-+    target_un = lock_user(VERIFY_READ, un_ptr, sizeof(union target_semun), 1);
-+
-+    switch (host_cmd) {
-+    case GETVAL:
-+    case SETVAL:
-+        __get_user(arg.val, (abi_int *)target_un);
-+        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-+        break;
-+
-+    case GETALL:
-+    case SETALL:
-+        __get_user(target_array, (abi_ulong *)target_un);
-+        ret = target_to_host_semarray(semid, &array, target_array);
-+        if (is_error(ret)) {
-+            goto out;
-+        }
-+        arg.array = array;
-+        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-+        if (!is_error(ret)) {
-+            ret = host_to_target_semarray(semid, target_array, &array);
-+        }
-+        break;
-+
-+    case IPC_STAT:
-+    case IPC_SET:
-+        __get_user(target_buffer, (abi_ulong *)target_un);
-+        ret = target_to_host_semid_ds(&dsarg, target_buffer);
-+        if (is_error(ret)) {
-+            goto out;
-+        }
-+        arg.buf = &dsarg;
-+        ret = get_errno(semctl(semid, semnum, host_cmd, arg));
-+        if (!is_error(ret)) {
-+            ret = host_to_target_semid_ds(target_buffer, &dsarg);
-+        }
-+        break;
-+
-+    case IPC_RMID:
-+    case GETPID:
-+    case GETNCNT:
-+    case GETZCNT:
-+        ret = get_errno(semctl(semid, semnum, host_cmd, NULL));
-+        break;
-+
-+    default:
-+        ret = -TARGET_EINVAL;
-+        break;
-+    }
-+out:
-+    unlock_user(target_un, un_ptr, 1);
-+    return ret;
-+}
-+
- /* getdtablesize(2) */
- static inline abi_long do_bsd_getdtablesize(void)
- {
+ struct target_semid_ds {
+     struct target_ipc_perm sem_perm; /* operation permission struct */
+     abi_ptr     sem_base;   /* pointer to first semaphore in set */
 -- 
 2.52.0
 
