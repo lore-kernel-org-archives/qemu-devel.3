@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 557ADD58E7E
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D42D58E7A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvN-0006us-Fr; Mon, 02 Mar 2026 03:46:45 -0500
+	id 1vwywu-0003EI-6M; Mon, 02 Mar 2026 03:48:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyvB-0005w8-G6
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:34 -0500
+ id 1vwywX-0002xs-KH
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:48:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyv8-00021B-FF
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:33 -0500
+ id 1vwywV-0002AZ-6u
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:47:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441188;
+ s=mimecast20190719; t=1772441273;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ctp31faHRscLU5956r9Sxi2RU43/0uUnrBnub/aS7BQ=;
- b=glaLZzWJcPpdiibKa1xSWV/rCecMbbkYzlNiM/3l6//1V5gM4RiVxwxIgobSzCdvMyXuQ6
- jZ2DJJR1IS49uzOzvOfC0pawtyducjBaRyGWErB3UG0zAfzJquYdmn4QIbqzohOLlCyZol
- 0i16LXY6GAWfgONn2IDj3lpRw0VjX5Y=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1r9QLGln9C+4G2u5qGPmBL69tbd+QKIMWgbB8spqDOA=;
+ b=DSKEhsuSJBRphOdD93PiRICTSdbPKX8+YIKj+lusxn+h7pOvrs8CFZBdFSUVQry0TOOwkM
+ YHis9jrPOuMNv0B24OpzQUduTftjrAqBzYqPUKNcAyCkjBRNgjrPdfZ+snSYVSAqcJkTiG
+ onP+BJwWSRDkVyj6knCcUR2ZK0OaCJA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-CwYC17V1NgWeyabo8DVACA-1; Mon, 02 Mar 2026 03:46:27 -0500
-X-MC-Unique: CwYC17V1NgWeyabo8DVACA-1
-X-Mimecast-MFC-AGG-ID: CwYC17V1NgWeyabo8DVACA_1772441186
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4839fc4cef6so47402805e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:46:27 -0800 (PST)
+ us-mta-532-cRTb_gF8N3iLzBaLWCCj_A-1; Mon, 02 Mar 2026 03:47:52 -0500
+X-MC-Unique: cRTb_gF8N3iLzBaLWCCj_A-1
+X-Mimecast-MFC-AGG-ID: cRTb_gF8N3iLzBaLWCCj_A_1772441271
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-483bcfdaf7dso39989085e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:47:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441185; x=1773045985; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441271; x=1773046071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ctp31faHRscLU5956r9Sxi2RU43/0uUnrBnub/aS7BQ=;
- b=tLOTij5xC3jV+VaB8s8t1vnzMZ5Lm63qci69fiw03rxA1PXrwACImBml49yrIY9zNS
- 7G3ZiZyQNeHBCxPB8ztD9Kh9Ab9CmHvNkgTKYKbB61uJDUPJFe3wG0dD8iT3ckNEaOy0
- ASdfSc+NaBB3qwWidaVxICvCj/mqe/XiLcCfUNgj9zrp3FpLIiMd29vk/xgQ3uWmMmCW
- TmpyOLXfDIRFxRHfLv5sQv3NRv0OuCQb8h1/08Tv+X4x4Laq8kBzxP7+ch45bMdJGZMv
- BAoBAVgAbFVKrArtjX9fKv7A8Q77ZrE84vPabJjTQFZFVOSatJiwscJ3FOjQrYyx+atm
- 024g==
+ bh=1r9QLGln9C+4G2u5qGPmBL69tbd+QKIMWgbB8spqDOA=;
+ b=MR1wehTqUFee/z6PpBxC7jtNeoGbXYAkA+hAU8Qss858VjTKLVViHhV2UedapGoSan
+ RIbSa/lS4JkAmPgZRFzDRGrUge20qnVkEK9OfnJfEbkT+kSpLqYrzDkN7eHL3DIDPJMn
+ NIURxGmXCVeMdhY3C6bv7rbvBFSgFcKc1SJw3e2r/rPT1fn8tLaoVUyZMmJMeHgE4j7b
+ xzfg/NjnyzYMRj39UucGBm4ZDTTXD8oJKpfFzsKdP0wkzAWU+pJwduweVhnrwaH1v5Mt
+ s1ok0appBJJwTVqL/zyh7BJN30ayZaIN+eUJ9NhmHDl/XmY86D15wVEX1Fbo3OISbK+r
+ Q6ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441185; x=1773045985;
+ d=1e100.net; s=20230601; t=1772441271; x=1773046071;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ctp31faHRscLU5956r9Sxi2RU43/0uUnrBnub/aS7BQ=;
- b=t9+L/MWoO+uaqhatt4xrzWUC0iBDFhY+nGTsAQb2vxz7SIWeyNQuxoEm/BscGsyH7c
- G3UAkw00Pk42Co8XnKo2bq2xesoLm12u4H+orXOtMJon3lz0AY3YNS5TF8Q/aWDrII3Z
- caAkFlZVHhPVOTxrMGEqGdJoPDcHpMEfBSo0D3e2ZgUV7yrLiAeK9+3E6QiL+uotBqXP
- gcByZuL0COe+XkhRRgE8PLA9GPvYlnm/+h0+u2I765f/ToyUu5PlHXALmYy1xFzdfCUN
- RoSKqRjNxWgRKSQeVCnoAfXQbV52nJNcDW/lIUMyIwBCclFn2sxczOnTLcbgdlI+djZJ
- sFcg==
-X-Gm-Message-State: AOJu0YxSQkOPZzdAsHqZTbqwCK7gwWNnEM+hJLJDkyUmH77JGuMNncmD
- rE9i+mR1++wJGwxN1+LzaMT9t0k23On+QZggm8XC56j4q5Ltm5iE8jk0qRpF2OJBCYWIIZaw7oC
- Z/dM01tnozUYNdKYf3e6xHBC2f6/eDH8+4k4qMlIysA8TVVJC4nvxHG1Uyaw/KwVp663NQdw9g4
- sOQ+pxLti9H3Mzw/25yyHDaAUBCxl3Srh5Dlg2nJZ6
-X-Gm-Gg: ATEYQzxYH+/RgrXSD15Yr30hSIQtZAnzVppcF14sZoLT7La3jDFFFn1pp8eov7UTiMB
- HchnAaIY6WWx4EOsK426H8UQVAeF+tZL8BLzMCpuzuAVxyEwYZQM55gavf9Fu+GSRXwUgfDgQMl
- apJrHFZUQqWoEBIxzMGODuLuW9rAEeLQmn5RTAOuP/w5nLC+iEu7kvddsHjA33KmDxMrj58RgMR
- WPirZyh5lX7wKuJ9GZJKiKAbu3CTZAidwWNTQo+k4MGCqT15tO1wMPqsBOmUmlcWmfMpe2WRVHU
- xbQzOdnG0/42zCE/oR8wFy7sM4o+WpV/ktHRlh9oNgAIjJj7WPMTLOMfw3tWZN8uYpwEt+4j7bU
- CrAFJ3bDa2iqJa7eL5tp+bErkuIdqhMEFgQuQSmhkSXsX+QvbD7opel1GbEu6+lwds4cHWVJndr
- OM7XZZfUZW9Tee1V/wd9SPihYkuOg=
-X-Received: by 2002:a05:600c:4ec7:b0:477:9a61:fd06 with SMTP id
- 5b1f17b1804b1-483c33cab41mr264453085e9.8.1772441185365; 
- Mon, 02 Mar 2026 00:46:25 -0800 (PST)
-X-Received: by 2002:a05:600c:4ec7:b0:477:9a61:fd06 with SMTP id
- 5b1f17b1804b1-483c33cab41mr264452605e9.8.1772441184853; 
- Mon, 02 Mar 2026 00:46:24 -0800 (PST)
+ bh=1r9QLGln9C+4G2u5qGPmBL69tbd+QKIMWgbB8spqDOA=;
+ b=Rata/VQ4d1dwl5f9BPE6nHLirrxXmAVUhtimy/46FDedIg9uZr+rho7eLVLwjKbNuM
+ VWQtY2y3nRC6ku5TtVelbfU1cFRfKInuZVNEkZ3hbMaKci3GjPBkSzCGOvXRZ6S+GY/k
+ ohtwAISjeP01MIUerqtpjGzvVgZ3UFkqBmfARrFQIhjxZu/W2qdcILTv7lkFQDiqevhr
+ LbcmRaNeFZIWdXn/NEwkXbFkxKrV1/cb9XoXp3fy1y+nWWMNsWF5oruy+Y2HLhRiu88z
+ Lq6zfNJc0t7WxkBaeH3ogy8QOgst+sqmbRffBR5BQrZZtvReBs/bjVrW/tHjZCQjby1Q
+ kA4Q==
+X-Gm-Message-State: AOJu0Yx5HicVAk02teXHRrVdT5biTUCLWc3ZMmV6w2jBiu+sRptXSaJS
+ 86JAV3NEpAUXAeU85LgWjxYrxih7uvcpXsrNdkmcpgiTdrJFJee8B84BlyOIYeww0N/0QfXmtDj
+ //YNux2syOa572fppa7CbpZwDsWwK356F5bBUqX13YbbN8S/V7dXwIckhDNXIwkh/4Mlosp3CUV
+ REhtl6GnUPiH4aLN7ijoOU4WToOjZvHbm/LhkZKdqj
+X-Gm-Gg: ATEYQzxvgXJGmGRiWnGTu5jHTparyAfHKKluz9nBNUfmdAz2sM7uqQI7+/cth+KDFj2
+ dp18sj2v8mGkPJrgnD0yiIZ+CRWSm67k5M45ZqjVhBCn6nYQi3V9SLVMJJewqeorD9X//TvMFuX
+ wvLbgGNaA1+LXj2x5uh00ASCQckikF/R84aeU+4Zj9d2shn2ZsO95Ei5okdTgpFunQT4Y/bjQrj
+ uCPr5tGKaStfu3IIYdz9SFMebyNOOKYggmPZKGqnrMyGK7I4/EN36uImIf0EnjWSJwaU0Am0um0
+ uFXeLTxyBhFpLJ+A5YvZWSvipccSxyxGsSR6mDLreTR8rqQRQYShZvYnv72Rs05RJ4EoHY9XS70
+ fqyB0+LauqhKQ9PUl500+SxmFxWKGPVbTNtPYo50LWGJinEhz8Z0ZnzuIQP2I+0pWUZqrMszk2R
+ 0MhtJi7J0IPHiinjM3X0PE4FFSZe8=
+X-Received: by 2002:a05:600c:8b30:b0:483:afbb:a086 with SMTP id
+ 5b1f17b1804b1-483c9c0e31amr188224395e9.29.1772441270959; 
+ Mon, 02 Mar 2026 00:47:50 -0800 (PST)
+X-Received: by 2002:a05:600c:8b30:b0:483:afbb:a086 with SMTP id
+ 5b1f17b1804b1-483c9c0e31amr188223995e9.29.1772441270297; 
+ Mon, 02 Mar 2026 00:47:50 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-483bd7030b9sm317786045e9.4.2026.03.02.00.46.22
+ 5b1f17b1804b1-483bfcbf016sm199758555e9.5.2026.03.02.00.47.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:46:23 -0800 (PST)
+ Mon, 02 Mar 2026 00:47:49 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 062/102] i386/sev: free existing launch update data and kernel
- hashes data on init
-Date: Mon,  2 Mar 2026 09:42:57 +0100
-Message-ID: <20260302084338.473368-63-pbonzini@redhat.com>
+Subject: [PULL 067/102] kvm/hyperv: add synic feature to CPU only if its not
+ enabled
+Date: Mon,  2 Mar 2026 09:47:13 +0100
+Message-ID: <20260302084749.474955-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
@@ -124,61 +124,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ani Sinha <anisinha@redhat.com>
 
-If there is existing launch update data and kernel hashes data, they need to be
-freed when initialization code is executed. This is important for resettable
-confidential guests where the initialization happens once every reset.
+We need to make sure that synic CPU feature is not already enabled. If it is,
+trying to enable it again will result in the following assertion:
+
+Unexpected error in object_property_try_add() at ../qom/object.c:1268:
+qemu-system-x86_64: attempt to add duplicate property 'synic' to object (type 'host-x86_64-cpu')
+
+So enable synic only if its not enabled already.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260225035000.385950-22-anisinha@redhat.com
+Link: https://lore.kernel.org/r/20260225035000.385950-27-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/sev.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ target/i386/kvm/kvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 647f4bf63d5..b3893e431c4 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1773,6 +1773,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-     uint32_t ebx;
-     uint32_t host_cbitpos;
-     struct sev_user_data_status status = {};
-+    SevLaunchUpdateData *data, *next_elm;
-     SevCommonState *sev_common = SEV_COMMON(cgs);
-     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
-     X86ConfidentialGuestClass *x86_klass =
-@@ -1780,6 +1781,11 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 9d7a9ffceb8..7cfbc7832de 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1761,7 +1761,7 @@ static int hyperv_init_vcpu(X86CPU *cpu)
+             return ret;
+         }
  
-     sev_common->state = SEV_STATE_UNINIT;
- 
-+    /* free existing launch update data if any */
-+    QTAILQ_FOREACH_SAFE(data, &launch_update, next, next_elm) {
-+        g_free(data);
-+    }
-+
-     host_cpuid(0x8000001F, 0, NULL, &ebx, NULL, NULL);
-     host_cbitpos = ebx & 0x3f;
- 
-@@ -1968,6 +1974,8 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
-     X86MachineState *x86ms = X86_MACHINE(ms);
-+    SevCommonState *sev_common = SEV_COMMON(cgs);
-+    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
- 
-     if (x86ms->smm == ON_OFF_AUTO_AUTO) {
-         x86ms->smm = ON_OFF_AUTO_OFF;
-@@ -1976,6 +1984,10 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         return -1;
-     }
- 
-+    /* free existing kernel hashes data if any */
-+    g_free(sev_snp_guest->kernel_hashes_data);
-+    sev_snp_guest->kernel_hashes_data = NULL;
-+
-     return 0;
- }
- 
+-        if (!cpu->hyperv_synic_kvm_only) {
++        if (!cpu->hyperv_synic_kvm_only && !hyperv_is_synic_enabled()) {
+             ret = hyperv_x86_synic_add(cpu);
+             if (ret < 0) {
+                 error_report("failed to create HyperV SynIC: %s",
 -- 
 2.53.0
 
