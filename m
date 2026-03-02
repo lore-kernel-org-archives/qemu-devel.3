@@ -4,61 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A65D58E43
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 01:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C4FD58E4B
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 03:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwsHj-0005Rx-Ny; Sun, 01 Mar 2026 20:41:23 -0500
+	id 1vwttq-00048j-EG; Sun, 01 Mar 2026 22:24:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1vwsHh-0005RF-8u; Sun, 01 Mar 2026 20:41:21 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vwttm-00048K-Tf
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 22:24:46 -0500
+Received: from p-west2-cluster6-host2-snip4-2.eps.apple.com ([57.103.70.75]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1vwsHc-0002QB-CH; Sun, 01 Mar 2026 20:41:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202602; t=1772415666;
- bh=5CGnuByR+PiSJKTt9hCuS1FXmYxUhx1apUJhdtu4oSk=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=fJkL2vUm0ff5Qzv/Q3OW+aQAbgFvkP3Dxdv+9cWnxuvDx7F21ekvqI6WzOjfBuEm9
- ESBCD9XZ+sLdYDhK8COGv9T8I9fQZVN7Vz91cuEt02BXgGEfXlb9fG+BaN2NELrNHz
- 3Zx2QlJWX/xMbtDgYeTrQVBi2LNy0Z9v3PLgW8liX5GuIgkOOh3fW87d75/GYbfBDK
- 7DX6vcGFD7TX8rVluxpr4RXmQ1TKKaAsw26vhvX7+LDrNU9znXk1+7w13je8obTDgO
- RRVz7ii4JeuPLFDbA3Z0vFSenwn7yzSVuYnO/lGbo2P6572BfZm58eWvXpgNT3jor3
- lJufCBRbNFVkQ==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4fPM8f36pdz4wC6; Mon, 02 Mar 2026 12:41:06 +1100 (AEDT)
-Date: Mon, 2 Mar 2026 12:40:59 +1100
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.bennee@linaro.org,
- peter.maydell@linaro.org, artem_mygaiev@epam.com,
- volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, balaton@eik.bme.hu,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v2 02/33] system/device_tree: add few parsing and
- traversal helpers
-Message-ID: <aaTqq27wf7i9bzKy@zatzit>
-References: <20260219143332.3316679-1-ruslichenko.r@gmail.com>
- <20260219143332.3316679-3-ruslichenko.r@gmail.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vwttj-0008Il-Tp
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 22:24:46 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-11 (Postfix) with ESMTPS id
+ 6D06C18000AC; Mon,  2 Mar 2026 03:24:40 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772421881; x=1775013881;
+ bh=Z+ZXlHxZqL5m9IjGrYI18dyP4pUx+lq+7Izz0cnnHoI=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=R7vdb/F7dREz6uF7k+qefg5MBE5uSHcvoFJ19ciLB41mpuhE9N8/kRea9d1RPhCybdYICXG0GOMGw5saGrUeendreiXE7RLxlisiLq3q6BA9mWmWv1a5bRkCM4KGNGQIR0Q+L6v6OOqNJy50LgEK5A/yfo7gN8aQ0vl2hGZxBXwRBKR1VPPJafc4JgFaH50oDKw1ZGnVnEP+LATF1aBr3hcItT1Iw44WuGF1Yla4wktbe5emEpRyKRINBvXUywT0QMLejhCXjYa98hXVYQ1JC7P9NcQt4a8Rry0zWxV4hoYDy1Dm9fNVkpvRdSwfWmroN8yEjTFPkV/SVcmcKK81gg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-11 (Postfix) with ESMTPSA id
+ 074F8180019A; Mon,  2 Mar 2026 03:24:37 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
+ Cameron Esfahani <dirty@apple.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH 0/3] whpx: i386: small random fixes
+Date: Mon,  2 Mar 2026 04:24:32 +0100
+Message-ID: <20260302032435.42698-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="RLbUy8+aQ7HiuPuQ"
-Content-Disposition: inline
-In-Reply-To: <20260219143332.3316679-3-ruslichenko.r@gmail.com>
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDAyOCBTYWx0ZWRfX5B+QTzuomcDu
+ eztm+k3w60EW5QIJmS90FsiAuoYCCe88X/NC3JYt18SnnewBMdES8SCyxfTogIFoUSbFm3fAjH1
+ cm7yR/JMY0ext8JVhP/Cdd4OLglZfcnGD0DjXIlzGXqvPtQc09Blu964aLE4O/iP5eMOGYzpJET
+ QCQRm2/BC8r+lk4Y1UNB6gEKlDstJHieIJm/WulhKz5yNRhUqNS2e6Z5mMBmcADZc1gfUo7cedh
+ T3W8xCT9BDlTwGrT6xOOMgvS3L0SpMi62Vlezx6IYLjNoCdFIRMX/HJ3PX0+enTZVK3l31eCfTf
+ I2tdiKEVPE9z7kKKVj+H4RTaIdMhdLWtkBBqINiAU256WpnONQp1NA3+WaAqyQ=
+X-Authority-Info-Out: v=2.4 cv=J66nLQnS c=1 sm=1 tr=0 ts=69a502f9
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=9--OXFxxhngiDR9OTd8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: s7DRdxNlAba96M5DQ9XzwLy066bimZsh
+X-Proofpoint-ORIG-GUID: s7DRdxNlAba96M5DQ9XzwLy066bimZsh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-02_01,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ spamscore=0 clxscore=1030 adultscore=0 suspectscore=0 phishscore=0
+ malwarescore=0 mlxlogscore=699 lowpriorityscore=0 bulkscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603020028
+X-JNJ: AAAAAAAB5F7U99jJJmsgLG/ac+GkDrXKTqx+jbRRMHozl2nA897al5XIWRdqxiWoVFttaV8UmyycpfFIBjNNsF3D6NkYd2HpObzt7tcqyLg/1ZKCNstXab3kHyu2zZAKlGRV/icizWw5tO17weaavDjB3DNNVPEjYzTuvwrNedMrGht+cTFsexZLjl1OlQh4bJFilYBGLW7Yte9cf5IjpSh2C5WLDPGxAX4KiqmxdkywJF46oAQdXK5iUy7YwnkKi0gsTryIC/Poc5irlRfLjLdRTCeJXxAc8zUBRGmPaT/2tD1g3vCjm5hp93jxEIz1cK338WZNnobBGmeCtZ5O8IoksqwjDO3yVLn5yB6JAITX6CPwu7RqceJcKXifRpeBGlj2pQMttyDhh/pU+0Y0AAejRkoLZ6Akfu9giaWIpT6LlKi87RbxciA5XcWp04Ww9zbjpV+GeNO9nZee1aHerXyFKNSA/eVxxArtJgMhQsFgRi/XGyJDUtER8hpZjoT/12OpOxk0rf8Rjs4Os4xWyKWoMwfD5QaQQyF0oqlYY79WabKdzfH8gleL/UypiKIuXqmUK0nnHYD10ZU2Q1Vkq+R5v19EzuAIorpcWR4kYwIYCzYHjCoMbR4SOdH+dx2+uIW7fLmqPdDUB8rMflbuJBzcDNcbTPrGWab2oeqWaaYZwmpxfpav+YsI
+Received-SPF: pass client-ip=57.103.70.75;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,387 +94,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+And this continues...
 
---RLbUy8+aQ7HiuPuQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+From doing testing on a Sapphire Rapids box, saw that there was a stack overflow in
+the page table walker code when the guest is using 57-bit VAs.
 
-On Thu, Feb 19, 2026 at 03:33:01PM +0100, Ruslan Ruslichenko wrote:
-> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->=20
-> The patch adds few utility functions for parsing FDT nodes.
-> The helpers are required for upcoming Hardware device tree
-> feature.
->=20
-> Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
-> ---
->  include/system/device_tree.h |  30 +++++
->  system/device_tree.c         | 221 +++++++++++++++++++++++++++++++++++
->  2 files changed, 251 insertions(+)
->=20
-> diff --git a/include/system/device_tree.h b/include/system/device_tree.h
-> index 5667ff9538..9d6b570bdb 100644
-> --- a/include/system/device_tree.h
-> +++ b/include/system/device_tree.h
-> @@ -116,6 +116,11 @@ const void *qemu_fdt_getprop(void *fdt, const char *=
-node_path,
->  uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
->                                 const char *property, int cell_id,
->                                 Error **errp);
-> +
-> +const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_path,
-> +                             const char *property, int *lenp, Error **er=
-rp);
-> +uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_pat=
-h,
-> +                               const char *property, int cell_id, Error =
-**errp);
->  uint32_t qemu_fdt_get_phandle(void *fdt, const char *path);
->  uint32_t qemu_fdt_alloc_phandle(void *fdt);
->  int qemu_fdt_nop_node(void *fdt, const char *node_path);
-> @@ -191,6 +196,31 @@ int qemu_fdt_setprop_sized_cells_from_array(void *fd=
-t,
->                                                  qdt_tmp);               =
-  \
->      })
-> =20
-> +typedef struct QEMUDevtreeProp {
-> +    const char *name;
-> +    int len;
-> +    const void *value;
-> +} QEMUDevtreeProp;
+And saw that nested virt is incompatible with kernel-irqchip=off so made them exclusive
+to each other.
 
-If you need this, it really starts to seem to me that keeping the data
-structure in fdt is not the right choice any more.  I've thought for a
-while that with increasing handling of the device tree by qemu, we
-should maybe have a "live" device tree representation (with pointers)
-that we use for manipulation.  Right before boot, that can be
-serialized into fdt.
+Also enabled some more enlightenments because why not...
 
-fdt is, fundamentally, a serialization format.  Direct fdt
-manipulation with libfdt was really only intended as something to
-allow firmwares and similarly minimal programs to make small tweaks.
-Once manipulation becomes extensive, fdt is no longer a good choice of
-data structure.
+Mohamed Mediouni (3):
+  whpx: i386: do not enable nested virt when kernel-irqchip=off
+  target/i386: emulate: LA57 fix
+  whpx: i386: enable some more enlightenments
 
-> +
-> +/* node queries */
-> +
-> +int qemu_devtree_get_num_children(void *fdt, const char *node_path);
-> +int qemu_devtree_get_children(void *fdt, const char *node_path,
-> +                                     int max_paths, char **returned_path=
-s);
-> +int qemu_devtree_num_props(void *fdt, const char *node_path);
-> +QEMUDevtreeProp *qemu_devtree_get_props(void *fdt, const char *node_path=
-);
-> +
-> +/* node getters */
-> +
-> +int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int pha=
-ndle);
-> +int qemu_devtree_getparent(void *fdt, char *node_path,
-> +                           const char *current);
-> +
-> +/* misc */
-> +
-> +int devtree_get_num_nodes(void *fdt);
-> +
-> +#define DT_PATH_LENGTH 1024
-> =20
->  /**
->   * qemu_fdt_randomize_seeds:
-> diff --git a/system/device_tree.c b/system/device_tree.c
-> index d2db7bd355..fc34c660db 100644
-> --- a/system/device_tree.c
-> +++ b/system/device_tree.c
-> @@ -464,6 +464,103 @@ uint32_t qemu_fdt_getprop_cell(void *fdt, const cha=
-r *node_path,
->      return be32_to_cpu(p[cell_id]);
->  }
-> =20
-> +const void *qemu_fdt_getprop_inherited(void *fdt, const char *node_path,
-> +                             const char *property, int *lenp, Error **er=
-rp)
-> +{
-> +    const void *found_val =3D NULL;
-> +    int found_len =3D 0;
-> +    int curr_offset =3D 0;
-> +    int temp_len;
-> +    char **tokens;
-> +    char **iter;
-> +
-> +    found_val =3D fdt_getprop(fdt, 0, property, &found_len);
-> +
-> +    tokens =3D g_strsplit(node_path + 1, "/", -1);
-> +
-> +    for (iter =3D tokens; *iter !=3D NULL; iter++) {
-> +        if (**iter =3D=3D '\0') {
-> +            continue;
-> +        }
-> +
-> +        curr_offset =3D fdt_subnode_offset(fdt, curr_offset, *iter);
-> +        if (curr_offset < 0) {
-> +            error_setg(errp, "%s: Path '%s' not found",
-> +                       __func__, *iter);
-> +            g_strfreev(tokens);
-> +            return NULL;
-> +        }
-> +
-> +        const void *val =3D fdt_getprop(fdt, curr_offset, property, &tem=
-p_len);
-> +        if (val) {
-> +            found_val =3D val;
-> +            found_len =3D temp_len;
-> +        }
-> +    }
-> +    g_strfreev(tokens);
-> +
-> +    if (!found_val) {
-> +        error_setg(errp, "%s: Property '%s' not found",
-> +                   __func__, property);
-> +        return NULL;
-> +    }
-> +
-> +    if (lenp) {
-> +        *lenp =3D found_len;
-> +    }
-> +
-> +    return found_val;
-> +}
-> +
-> +uint32_t qemu_fdt_getprop_cell_inherited(void *fdt, const char *node_pat=
-h,
-> +                               const char *property, int cell_id, Error =
-**errp)
-> +{
-> +    int len;
-> +    const uint32_t *p;
-> +
-> +    p =3D qemu_fdt_getprop_inherited(fdt, node_path, property, &len, err=
-p);
-> +    if (!p) {
-> +        return 0;
-> +    }
-> +    if (len < (cell_id + 1) * 4) {
-> +        error_setg(errp,
-> +                   "%s: %s/%s is too short, need %d bytes for cell ind %=
-d",
-> +                   __func__, node_path, property, (cell_id + 1) * 4, cel=
-l_id);
-> +        return 0;
-> +    }
-> +    return be32_to_cpu(p[cell_id]);
-> +}
-> +
-> +int qemu_devtree_getparent(void *fdt, char *node_path, const char *curre=
-nt)
-> +{
-> +    const char *sep;
-> +    int len;
-> +
-> +    if (!current || !node_path) {
-> +        return -FDT_ERR_NOTFOUND;
-> +    }
-> +
-> +    if (current[0] =3D=3D '/' && current[1] =3D=3D 0) {
+ target/i386/emulate/x86_mmu.c | 2 +-
+ target/i386/whpx/whpx-all.c   | 5 ++++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-strcmp() against "/" is maybe marginally more costly, but clearer in
-meaning.
+-- 
+2.50.1 (Apple Git-155)
 
-> +        return -FDT_ERR_NOTFOUND;
-> +    }
-> +
-> +    sep =3D strrchr(current, '/');
-> +    if (!sep) {
-> +        return -FDT_ERR_BADPATH;
-> +    }
-> +
-> +    if (sep =3D=3D current) {
-> +        len =3D 1;
-> +    } else {
-> +        len =3D sep - current;
-> +    }
-> +
-> +    memcpy(node_path, current, len);
-> +    node_path[len] =3D '\0';
-
-This assumes node_path points to a long enough buffer.  Returning a
-g_strndup()ed copy of the parent path might be a nicer interface?
-
-> +
-> +    return 0;
-> +}
-> +
->  uint32_t qemu_fdt_get_phandle(void *fdt, const char *path)
->  {
->      uint32_t r;
-> @@ -631,6 +728,130 @@ out:
->      return ret;
->  }
-> =20
-> +int qemu_devtree_num_props(void *fdt, const char *node_path)
-> +{
-> +    int offset =3D fdt_path_offset(fdt, node_path);
-> +    int ret =3D 0;
-> +
-> +    for (offset =3D fdt_first_property_offset(fdt, offset);
-> +            offset !=3D -FDT_ERR_NOTFOUND;
-> +            offset =3D fdt_next_property_offset(fdt, offset)) {
-> +        ret++;
-> +    }
-> +    return ret;
-> +}
-> +
-> +QEMUDevtreeProp *qemu_devtree_get_props(void *fdt, const char *node_path)
-> +{
-> +    QEMUDevtreeProp *ret =3D g_new0(QEMUDevtreeProp,
-> +                                    qemu_devtree_num_props(fdt, node_pat=
-h) + 1);
-> +    int offset =3D fdt_path_offset(fdt, node_path);
-> +    int i =3D 0;
-> +
-> +    for (offset =3D fdt_first_property_offset(fdt, offset);
-> +            offset !=3D -FDT_ERR_NOTFOUND;
-> +            offset =3D fdt_next_property_offset(fdt, offset)) {
-> +        const char *propname;
-> +        const void *val =3D fdt_getprop_by_offset(fdt, offset, &propname,
-> +                                                    &ret[i].len);
-> +
-> +        ret[i].name =3D propname;
-> +        ret[i].value =3D val;
-> +        i++;
-> +    }
-> +    return ret;
-> +}
-> +
-> +int qemu_devtree_get_children(void *fdt, const char *node_path,
-> +                                     int max_paths, char **returned_path=
-s) {
-> +    int count =3D 0;
-> +    int subnode;
-> +    const char *name;
-> +    int offset =3D fdt_path_offset(fdt, node_path);
-> +
-> +    if (offset < 0) {
-> +        return offset;
-> +    }
-> +
-> +    bool is_root =3D (strcmp(node_path, "/") =3D=3D 0);
-> +
-> +    fdt_for_each_subnode(subnode, fdt, offset) {
-> +        if (count >=3D max_paths) {
-> +            break;
-> +        }
-> +        name =3D fdt_get_name(fdt, subnode, NULL);
-> +        if (returned_paths) {
-> +            returned_paths[count] =3D g_strdup_printf("%s/%s",
-> +                                                is_root ? "" : node_path=
-, name);
-> +        }
-> +
-> +        ++count;
-> +    }
-> +
-> +    return count;
-> +}
-> +
-> +int qemu_devtree_get_num_children(void *fdt, const char *node_path)
-> +{
-> +    int count =3D 0;
-> +    int subnode;
-> +    int offset =3D fdt_path_offset(fdt, node_path);
-> +
-> +    if (offset < 0) {
-> +        return offset;
-> +    }
-> +
-> +    fdt_for_each_subnode(subnode, fdt, offset) {
-> +        ++count;
-> +    }
-> +
-> +    return count;
-> +}
-> +
-> +int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int pha=
-ndle)
-> +{
-> +    int offset =3D 0, cur_depth =3D 0;
-> +    int path_lens[64] =3D { 0 };
-> +
-> +    for (offset =3D 0; offset >=3D 0; offset =3D fdt_next_node(fdt, offs=
-et,
-> +                                                         &cur_depth)) {
-> +        if (cur_depth > 64) {
-> +            break;
-> +        }
-> +        const char *name =3D fdt_get_name(fdt, offset, NULL);
-> +
-> +        int parent_len =3D (cur_depth > 0) ? path_lens[cur_depth - 1] : =
-0;
-> +        int len =3D snprintf(node_path + parent_len,
-> +                             DT_PATH_LENGTH - parent_len,
-> +                             "%s%s",
-> +                             (parent_len > 1) ? "/" : "",
-> +                             (cur_depth =3D=3D 0) ? "/" : name);
-> +
-> +        path_lens[cur_depth] =3D parent_len + len;
-> +
-> +        if (fdt_get_phandle(fdt, offset) =3D=3D phandle) {
-> +            return 0;
-> +        }
-> +    }
-> +
-> +    return -FDT_ERR_NOTFOUND;
-> +}
-> +
-> +int devtree_get_num_nodes(void *fdt)
-> +{
-> +    int num_nodes =3D 0;
-> +    int depth =3D 0, offset =3D 0;
-> +
-> +    for (;;) {
-> +        offset =3D fdt_next_node(fdt, offset, &depth);
-> +        num_nodes++;
-> +        if (offset <=3D 0 || depth <=3D 0) {
-> +            break;
-> +        }
-> +    }
-> +    return num_nodes;
-> +}
-> +
->  void qmp_dumpdtb(const char *filename, Error **errp)
->  {
->      ERRP_GUARD();
-> --=20
-> 2.43.0
->=20
-
---=20
-David Gibson (he or they)	| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you, not the other way
-				| around.
-http://www.ozlabs.org/~dgibson
-
---RLbUy8+aQ7HiuPuQ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmmk6qoACgkQzQJF27ox
-2Gdkjw//T9IbkkK9KCLGFsVQW4pPfAUnIaiHy05xT9eGHi6OgRCMNGA+QNAHECqO
-c8s61bshPZZRkRvchtGRtPdAb3HTWyxNMQg6iQ2fpUfQxhnF6hvOrNMWsfFH0SAC
-5tW2xXeUrYQQcRv05pMaE4TDUv7h0gS4Llrg5hKa6uUrGMVmvX7OgjNrb6yFcoc6
-oeeIUKB2On/TDB5OV9KhJLGjAc0HGxs34p7LJM8rRMsVPu8IUu2VEem1RJp8PK05
-3yAm5x+NUQRGqetzKpCeWsYxUeY9x94LHJ2ISm1Z88tuPAQzGvH4bUcUR29dejKD
-RATQSf/cpU5iEqJGMLKpIHelHfwJYAwUfMPPTqQGVoHgNjf5wXk6MMTJdbLMLmxR
-uYFV1tct8jqqPJFSUAf3LLbH+1N3Jqc+tJMtIBTg+ANwDt8OqhpWVSgkJsZhNr0k
-5nEBcouDD5SL2xsXzoCOEsfIvfODfshecQM5xDhX/RduGvDCHB4k8KRTGYuxbo/g
-XCn8f43V9OhL4LCep2xYbHk4dkHGGyCu+WHWVG34Vot1C67p1Dyi+qM+szrOsd16
-l9afFffF5QeeEzLFsVmtFpNZSwm4hvWvQRobAyYHdseI7PGAI1aIcHXd60r+Xwc+
-Y7j+2uiMs108DAa9VWVpSuWOwfV8vpa62raQiWrfwijFh69XGkw=
-=L5nK
------END PGP SIGNATURE-----
-
---RLbUy8+aQ7HiuPuQ--
 
