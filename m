@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C4FD58E4B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86415D58E4D
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 03:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwttq-00048j-EG; Sun, 01 Mar 2026 22:24:50 -0500
+	id 1vwtts-00049K-8A; Sun, 01 Mar 2026 22:24:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwttm-00048K-Tf
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 22:24:46 -0500
-Received: from p-west2-cluster6-host2-snip4-2.eps.apple.com ([57.103.70.75]
+ id 1vwtto-00048a-1g
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 22:24:48 -0500
+Received: from p-west2-cluster6-host3-snip4-6.eps.apple.com ([57.103.70.9]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vwttj-0008Il-Tp
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 22:24:46 -0500
+ id 1vwttm-0008Iz-Le
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 22:24:47 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-11 (Postfix) with ESMTPS id
- 6D06C18000AC; Mon,  2 Mar 2026 03:24:40 +0000 (UTC)
+ 1FC93180014B; Mon,  2 Mar 2026 03:24:43 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772421881; x=1775013881;
- bh=Z+ZXlHxZqL5m9IjGrYI18dyP4pUx+lq+7Izz0cnnHoI=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=R7vdb/F7dREz6uF7k+qefg5MBE5uSHcvoFJ19ciLB41mpuhE9N8/kRea9d1RPhCybdYICXG0GOMGw5saGrUeendreiXE7RLxlisiLq3q6BA9mWmWv1a5bRkCM4KGNGQIR0Q+L6v6OOqNJy50LgEK5A/yfo7gN8aQ0vl2hGZxBXwRBKR1VPPJafc4JgFaH50oDKw1ZGnVnEP+LATF1aBr3hcItT1Iw44WuGF1Yla4wktbe5emEpRyKRINBvXUywT0QMLejhCXjYa98hXVYQ1JC7P9NcQt4a8Rry0zWxV4hoYDy1Dm9fNVkpvRdSwfWmroN8yEjTFPkV/SVcmcKK81gg==
+ s=sig1; t=1772421885; x=1775013885;
+ bh=9l5pgpdno1+ME50mWO0AryTvHBGwI33pwK6V+Ah9HEU=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=TmrekDvdE10IMPa99Nr4vAK3WYfHBEWeADYigdKwuyvsQA1g1jBb4/Sdu0egG57l7ULn4N/IZLH7fVEPH/Ol34anHaXD8KR5Itxc9mEmdBx8DlN9i9ix7ueg2jM2eNCPzBmgd2A+RDBL97/9Wa8/I7yiYwfclcY7SPnX15Xj2CnzKAdsKz1OByzf0Vj43zKWpyNir38QTafk1UT2LEsyxXP3hZIUW7ARUtcBb1Ltq6ERyHPtrpqXJbW2NxyTlYFRDCS3jyt5sZLkGiU4XXr8Lvuc5l/kmXozvW81HIzPVYkSpX1uuu5tjJCawzI3orfhpuIlBSU2fg/ja4sP7yW5EA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-60-percent-11 (Postfix) with ESMTPSA id
- 074F8180019A; Mon,  2 Mar 2026 03:24:37 +0000 (UTC)
+ 190F8180017B; Mon,  2 Mar 2026 03:24:41 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
@@ -40,45 +40,45 @@ Cc: Pedro Barbuda <pbarbuda@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH 0/3] whpx: i386: small random fixes
-Date: Mon,  2 Mar 2026 04:24:32 +0100
-Message-ID: <20260302032435.42698-1-mohamed@unpredictable.fr>
+Subject: [PATCH 2/3] target/i386: emulate: LA57 fix
+Date: Mon,  2 Mar 2026 04:24:34 +0100
+Message-ID: <20260302032435.42698-3-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260302032435.42698-1-mohamed@unpredictable.fr>
+References: <20260302032435.42698-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDAyOCBTYWx0ZWRfX5B+QTzuomcDu
- eztm+k3w60EW5QIJmS90FsiAuoYCCe88X/NC3JYt18SnnewBMdES8SCyxfTogIFoUSbFm3fAjH1
- cm7yR/JMY0ext8JVhP/Cdd4OLglZfcnGD0DjXIlzGXqvPtQc09Blu964aLE4O/iP5eMOGYzpJET
- QCQRm2/BC8r+lk4Y1UNB6gEKlDstJHieIJm/WulhKz5yNRhUqNS2e6Z5mMBmcADZc1gfUo7cedh
- T3W8xCT9BDlTwGrT6xOOMgvS3L0SpMi62Vlezx6IYLjNoCdFIRMX/HJ3PX0+enTZVK3l31eCfTf
- I2tdiKEVPE9z7kKKVj+H4RTaIdMhdLWtkBBqINiAU256WpnONQp1NA3+WaAqyQ=
-X-Authority-Info-Out: v=2.4 cv=J66nLQnS c=1 sm=1 tr=0 ts=69a502f9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDAyOCBTYWx0ZWRfXybcbEQQttsc4
+ TxgwLej7UrhxC12BHENkK4jUv7085x9cAVxQvpM7Q6ESNfHX1LmJXFa2+otBM8iPxoB4rXi6iVx
+ 4GJ10C2Xw3EZqyGepHINm/qqfXnWLKwY7K8eAjsP0sRi1FORqBch8DRIkgFdQ2BA56bljzglH0l
+ K51KMtCNE5QXsaS0fwwXLbkznO4qvfsyCoGcIOGSwvvESIQlGPW51ewEux8wrLIeMpIEMGqJoq8
+ ab6xf0p/6Sy7nkKy/6HqcZQPSjNd69mMWcB3ZkHaHV7O4PGXK5gBasU0NzNW/DF/5liZm1sDJP7
+ YUFDmzsH66Wx4ok/TMDS95Lw5+eqyxBABTdM23bjhPcSKVw8hr6SRahOLKh3fM=
+X-Authority-Info-Out: v=2.4 cv=R54O2NRX c=1 sm=1 tr=0 ts=69a502fc
  cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=9--OXFxxhngiDR9OTd8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: s7DRdxNlAba96M5DQ9XzwLy066bimZsh
-X-Proofpoint-ORIG-GUID: s7DRdxNlAba96M5DQ9XzwLy066bimZsh
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=gy8mmgNRbJmCihZvwREA:9
+X-Proofpoint-ORIG-GUID: mqAqu5RGurumxadTef7ADyZIfF7XvX6r
+X-Proofpoint-GUID: mqAqu5RGurumxadTef7ADyZIfF7XvX6r
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-02_01,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- spamscore=0 clxscore=1030 adultscore=0 suspectscore=0 phishscore=0
- malwarescore=0 mlxlogscore=699 lowpriorityscore=0 bulkscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=789
+ bulkscore=0 mlxscore=0 spamscore=0 suspectscore=0
+ lowpriorityscore=0
+ malwarescore=0 clxscore=1030 phishscore=0 adultscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603020028
-X-JNJ: AAAAAAAB5F7U99jJJmsgLG/ac+GkDrXKTqx+jbRRMHozl2nA897al5XIWRdqxiWoVFttaV8UmyycpfFIBjNNsF3D6NkYd2HpObzt7tcqyLg/1ZKCNstXab3kHyu2zZAKlGRV/icizWw5tO17weaavDjB3DNNVPEjYzTuvwrNedMrGht+cTFsexZLjl1OlQh4bJFilYBGLW7Yte9cf5IjpSh2C5WLDPGxAX4KiqmxdkywJF46oAQdXK5iUy7YwnkKi0gsTryIC/Poc5irlRfLjLdRTCeJXxAc8zUBRGmPaT/2tD1g3vCjm5hp93jxEIz1cK338WZNnobBGmeCtZ5O8IoksqwjDO3yVLn5yB6JAITX6CPwu7RqceJcKXifRpeBGlj2pQMttyDhh/pU+0Y0AAejRkoLZ6Akfu9giaWIpT6LlKi87RbxciA5XcWp04Ww9zbjpV+GeNO9nZee1aHerXyFKNSA/eVxxArtJgMhQsFgRi/XGyJDUtER8hpZjoT/12OpOxk0rf8Rjs4Os4xWyKWoMwfD5QaQQyF0oqlYY79WabKdzfH8gleL/UypiKIuXqmUK0nnHYD10ZU2Q1Vkq+R5v19EzuAIorpcWR4kYwIYCzYHjCoMbR4SOdH+dx2+uIW7fLmqPdDUB8rMflbuJBzcDNcbTPrGWab2oeqWaaYZwmpxfpav+YsI
-Received-SPF: pass client-ip=57.103.70.75;
+X-JNJ: AAAAAAABgxrCbq28i8YOkaWTlPbnuY5L+ihVRGqe6Yxva0Hk5tl8INcbH31nJ5Ra5Zi053jl7kPTsUhMZuwDo++tdeEfh4nENG91147gdREjWvEfZjhzmaVlC81lDSYVZdhu8/H5FJsOwpLej321aFtzObj8IHtFRC/1aIi+61/TQFEfaal2aab8DaX4TlHoh2Rf1vo3Uh5eBxFXrHDhkQr0nvG06glhbI+nOqb5a32z1rIcBDPZrEn1AX34Cbt9R4n1NS2cCQEa9/cgwk1mrwsIOrvvxIFk6EVoXOLH/rOLEMl+ConcVTWPnEiS+EHQgTpBAXqipVlNp6puwYFvapGtJu08W0o7LGLz/2xjPrTRuYm022TmvRsA4cJNoNPgvRorKsf0IedSUrCUh+7XHaCPTXK2OgvuzQAh4lQtUmoauY+eFz3wn7w7IO7kTukMnVPA5NMb1rwza/Y4EkUVxcOjZukJM8pJR4HlPvULgEpM1OqZwZbi3Oe2prGZX5pNtm3vaKy1gtMwmZJgLmiyHiu4ldlmMEFSzoWavtooYVN4vCmHC05IzoFxJFKT+jQy4kFc8mb5LqG2gP3LXnJvidQogJvHLe0P40Nn5Mq5n0YLwqz83fhEUjvo3aqAbobRQ7oO9ay9CP/PXWUHW7Iy0R1gtZ9R79IU9OOmgX3xM6pWvtYONjE=
+Received-SPF: pass client-ip=57.103.70.9;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,25 +94,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-And this continues...
+Seen on a Sapphire Rapids box with LA57.
 
-From doing testing on a Sapphire Rapids box, saw that there was a stack overflow in
-the page table walker code when the guest is using 57-bit VAs.
-
-And saw that nested virt is incompatible with kernel-irqchip=off so made them exclusive
-to each other.
-
-Also enabled some more enlightenments because why not...
-
-Mohamed Mediouni (3):
-  whpx: i386: do not enable nested virt when kernel-irqchip=off
-  target/i386: emulate: LA57 fix
-  whpx: i386: enable some more enlightenments
-
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+---
  target/i386/emulate/x86_mmu.c | 2 +-
- target/i386/whpx/whpx-all.c   | 5 ++++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+index d30f6c4a3e..3546609a90 100644
+--- a/target/i386/emulate/x86_mmu.c
++++ b/target/i386/emulate/x86_mmu.c
+@@ -56,7 +56,7 @@ static bool is_user(CPUState *cpu)
+ struct gpt_translation {
+     target_ulong  gva;
+     uint64_t gpa;
+-    uint64_t pte[5];
++    uint64_t pte[6];
+ };
+ 
+ static int gpt_top_level(CPUState *cpu, bool pae)
 -- 
 2.50.1 (Apple Git-155)
 
