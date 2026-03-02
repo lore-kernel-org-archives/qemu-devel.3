@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40AAED58E47
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA50D58E47
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 04:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwump-0000wH-I1; Sun, 01 Mar 2026 23:21:39 -0500
+	id 1vwun4-00011A-CF; Sun, 01 Mar 2026 23:21:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwumn-0000vg-LA
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:37 -0500
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwun3-000112-OI
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:53 -0500
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwuml-0006nH-QT
- for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:37 -0500
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-463a0e14abfso3364628b6e.2
- for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:21:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vwun2-0006qc-Bw
+ for qemu-devel@nongnu.org; Sun, 01 Mar 2026 23:21:53 -0500
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-45f194e9a98so1488033b6e.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Mar 2026 20:21:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425294; x=1773030094;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772425311; x=1773030111;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OLsXbMpf797wxSymu383K8sKKBg+3Qontu+O0yhZ6us=;
- b=wAxNO9FbVJ3rvU21RDb/UiIePGnwhexOJ+f4tDdtdX5Ujy4Wwow3kkeEIc0ep/JPOr
- eF9zmPC1UNibZusr8bSPsNkDlhLwlgYV5H2k3eWe/S+qZUY+G/mt0ADR8N0hPvnHBGHV
- auPx4go26rYhaEaeuIOycUi9XdLsUAonrp0Mxky/NkL35EMow8DLF4sceuwvwltFupOS
- dDUFuNRvNtZxIsWGGJCJ0IgXPW0oM9hymiTSsOIiOa6E3KhD4w1LCQ0DmMV4KtEViDeA
- 99cXkO/e/8zRwLxOpAoWpeh8yVNPBhUvxjui4gDCCd8xoHJNtvC8SdVhLLKXm9LeapKV
- z8xg==
+ bh=q/M2ULDSDe0NcTtXHoyde+GECciBrM3DVoejIHmSstw=;
+ b=CLD+/1C6TQjDZ9X/+GpdAmQ5crKHFJ0LrTMGWlQLoxMN2K4ZIZZipSetMSqK10OAl5
+ J09ARgXJ5gjtF35U+K2EuvNMTyyolOMuotTopp9TPVrQ10n2AeaWguxdrkjOMyoQngiF
+ LT1asN9+jr/2mE7sUembdgm3s367UOisOyT000sjviiy5gLjWdrJ9ThYphKOytXb7Mqh
+ JAIOG19RyEBli/hYACsm3/wRxcl/AhrMOpIXpAwo1x/8EtB+O0d+tsKjzKmDmYmDNTCI
+ DkBJCXoYabkvklOv7GMkjR8Cy+NdoJ+5XhqsI5Jfdh/XGuClPJodcXAFXkhZc5rF/upS
+ pSDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772425294; x=1773030094;
+ d=1e100.net; s=20230601; t=1772425311; x=1773030111;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OLsXbMpf797wxSymu383K8sKKBg+3Qontu+O0yhZ6us=;
- b=ZUBjqltKr6WnXQst/nvao54Pplftdku6kfI9bM53nDfNKReXa8w4+hIh0Bodo4Mj7s
- biFYkfQzm5VxsImlI0htiZjLDa5e0+Ij7eGib1vP+NVV91AZLO64JN8CB/Feq4m8J7ip
- ea9W5/ceky+4sxwUrvxeY6bTZKT3lrh5pY+zc1EX0AxGFGBo3TlztloVGKhvjl8aD1Ey
- 3Mx742StLo3MokFcXQglwy58y6ulVOrdmTdykey+JKdosWdZ+2Lz4DZVe/ogBrMpKBWk
- YD7Hox+FpRV2KxRnIGxOQrsZnrGJn4A+Vt8joKlzsmriyrYOYViRkAaaXCtnTHL9jVTq
- 773A==
-X-Gm-Message-State: AOJu0YyLcM8+R7WyNCBk95AzftZ1+m8Es3+eI9rllOCvt+rfqKaoUZQo
- nBQKsDX3/Ln9ZPekXj6WdMG+RKFVy+dRJn2T/Zr5LEWa3PpcpCOhF9yEtbjB2IDby4EV8FwtsqH
- G8HT57PU=
-X-Gm-Gg: ATEYQzy6+b9nd8XkHdHMyDy5px5p7WXK/9kZ3wMUdJZEE3qFqJnmJ0LWuhMK/Dib8Hv
- Bhv2f6jx+15r8q/oK6/6obUMNJcD1x6/CpV0ocfb1GWPf8bY0C8PXVZKpYIsc+6dVc0tZ/eI6Rd
- Hc2iHFhLb3K+PMMRMxdt2XCq8VB0d77aMUEC4Uu0YWHBU8211pESGd48naBV/vylvBzunVnc4Lt
- mvLWKAqKiuv0AtERlOlOlw2EsKdh7PN402wVby21qnwpTHgxzR9CD4BH2gcHTHgGLu3Lpab7v6F
- kunYYAsJr37DZ0heoQ09WRD9kUmnWir6XW+/zPjnoyrObCnR+gpQjaHa6ViTBxezXYuv6YvF/OL
- N4ktmCx/ceA34zoWmGN5YQhZ9nr1SxpMxD6+AfwJcGRpJa1zvkFT3R+8z+OXwUHtW7J8rYppH4X
- uw11Vc54VH7gRI6j9gHQpq
-X-Received: by 2002:a05:6808:2292:b0:450:6eb0:3481 with SMTP id
- 5614622812f47-464bebe2d4amr4834876b6e.43.1772425294158; 
- Sun, 01 Mar 2026 20:21:34 -0800 (PST)
+ bh=q/M2ULDSDe0NcTtXHoyde+GECciBrM3DVoejIHmSstw=;
+ b=IxEvQrNTgo2RKRJvPOYnxbXTv1ugn08oPth4sXgvxtWXOFW/cYCWZUY/hfgD/MD+R/
+ idOad6gfl0JEVWLQ1UzFC1rmg1FXmepatmHaESh79BQeV9oB995nzA/nJ7KFjg6cQZEP
+ KG6GT/qR+64qxZDQWJ/GsTkw9zVFjBU2llpmzKajNfAF641dXWSkDXqUzdCYgmPclTTC
+ 4MdygRu76KoK4jgKxEgw+QYrh04vimzuXChEH4C8nEyYpfnJDq5qS0jP0bb6CDAvNnKm
+ xh8dxBcyLG2Cxii4fw7nljkFgP8tHgTjp8qkjVA0Jo8zChMdK+f8q7PL5NAhdOKKdU2L
+ wASw==
+X-Gm-Message-State: AOJu0YxPmXBi4/1CImOwx2uJX1bT87BWrPsaykDki9QntEtD6q1X0zPE
+ PPInmbjkbpNaBedL0GSsUt8QJ/FQcKGuVmHnHYpjXenw6H3RYT2UbdQ+T2y57dBXygimbFig7ZM
+ 3AQd6biM=
+X-Gm-Gg: ATEYQzw4jLdCcGi0zn0HVfXqXxE0XH2NshT/DJGpE7Q5gB71wM4X0FmpewSAZ395L51
+ aMYl2JdnHTOpueK3Rqz9fdt4KZIfhfShe8VoZ7m46dCeUyRiLb0SW7+u8mzFwqZQvp/OIqUwGzV
+ fjuCLk7LUcsw90Uo4+4c1kkD52wX0ozsbGx01dFBkaqZaY9I16gzgvLWVKzHQCqQFQi5OUsgOW7
+ It2ekhYCiNZDivIdTELVfhp4BYjQUIO87aVP5s4/B22aJZioN6AhfaXQ/eIN3UXnm8Llh+xn2Cy
+ sItb+Vx26eCdxSltLjKCsYVYSFRF5wqRLtN51MluVhKtgA1oKdYai0mDQyprb/bvDvuR82HjSMX
+ YWIs9wnXoZeuRSdsoeYx59SeNcnRNWNNaXFfJ/mRReZuHewmmPWXuxqXsUvKwD98E+/ggi2Z6Je
+ t7kcaQkh5lZfdJY23IMIXO
+X-Received: by 2002:a05:6808:1491:b0:45e:e07c:3fd8 with SMTP id
+ 5614622812f47-464bec61c64mr5341501b6e.43.1772425310862; 
+ Sun, 01 Mar 2026 20:21:50 -0800 (PST)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.21.32
+ 586e51a60fabf-41668233c4bsm2236778fac.19.2026.03.01.20.21.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Mar 2026 20:21:33 -0800 (PST)
+ Sun, 01 Mar 2026 20:21:50 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
@@ -72,18 +72,18 @@ Cc: Reinoud Zandijk <reinoud@netbsd.org>, Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Riku Voipio <riku.voipio@iki.fi>
-Subject: [PULL 01/27] freebsd: FreeBSD 15 has native inotify
-Date: Sun,  1 Mar 2026 21:20:49 -0700
-Message-ID: <20260302042115.83410-2-imp@bsdimp.com>
+ Riku Voipio <riku.voipio@iki.fi>, Stacey Son <sson@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 12/27] bsd-user: Add host_to_target_semid_ds for semctl(2)
+Date: Sun,  1 Mar 2026 21:21:00 -0700
+Message-ID: <20260302042115.83410-13-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260302042115.83410-1-imp@bsdimp.com>
 References: <20260302042115.83410-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::231;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x231.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::235;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,65 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check to make sure that we have inotify in libc, before looking for it
-in libinotify.
+From: Stacey Son <sson@FreeBSD.org>
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Daniel P. Berrange <berrange@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Add host_to_target_semid_ds() to convert host struct semid_ds to target
+format for semctl(2) IPC_STAT operations.
+
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- meson.build      | 14 +++++---------
- util/meson.build |  6 +-----
- 2 files changed, 6 insertions(+), 14 deletions(-)
+ bsd-user/bsd-misc.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 3cd1d8dbc6..9a19a68ab8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2664,18 +2664,14 @@ else
- endif
- config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
- 
-+inotify = not_found
- have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
- have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
--inotify = not_found
--if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
--  # libinotify-kqueue
-+if (have_inotify_init or have_inotify_init1) and not cc.has_function('inotify_init1')
-+  # FreeBSD 14 and older need libinotify-kqueue wrapper
-   inotify = cc.find_library('inotify')
--  if have_inotify_init
--    have_inotify_init = inotify.found()
--  endif
--  if have_inotify_init1
--    have_inotify_init1 = inotify.found()
--  endif
-+  have_inotify_init = have_inotify_init and inotify.found()
-+  have_inotify_init1 = have_inotify_init1 and inotify.found()
- endif
- config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
- config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
-diff --git a/util/meson.build b/util/meson.build
-index 7c9445615d..e7a2a2a64c 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -102,11 +102,7 @@ if have_block
-   util_ss.add(files('throttle.c'))
-   util_ss.add(files('timed-average.c'))
-   if config_host_data.get('CONFIG_INOTIFY1')
--    freebsd_dep = []
--    if host_os == 'freebsd'
--      freebsd_dep = inotify
--    endif
--    util_ss.add(files('filemonitor-inotify.c'), freebsd_dep)
-+    util_ss.add(files('filemonitor-inotify.c'), inotify)
-   else
-     util_ss.add(files('filemonitor-stub.c'))
-   endif
+diff --git a/bsd-user/bsd-misc.c b/bsd-user/bsd-misc.c
+index 941f30d547..5b02006313 100644
+--- a/bsd-user/bsd-misc.c
++++ b/bsd-user/bsd-misc.c
+@@ -116,3 +116,23 @@ abi_long target_to_host_semid_ds(struct semid_ds *host_sd,
+     unlock_user_struct(target_sd, target_addr, 0);
+     return 0;
+ }
++
++abi_long host_to_target_semid_ds(abi_ulong target_addr,
++        struct semid_ds *host_sd)
++{
++    struct target_semid_ds *target_sd;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_sd, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    host_to_target_ipc_perm__locked(&target_sd->sem_perm,
++                                    &host_sd->sem_perm);
++    /* sem_base is not used by kernel for IPC_STAT/IPC_SET */
++    /* target_sd->sem_base = h2g((void *)host_sd->sem_base); */
++    __put_user(target_sd->sem_nsems, &host_sd->sem_nsems);
++    __put_user(target_sd->sem_otime, &host_sd->sem_otime);
++    __put_user(target_sd->sem_ctime, &host_sd->sem_ctime);
++    unlock_user_struct(target_sd, target_addr, 1);
++
++    return 0;
++}
 -- 
 2.52.0
 
