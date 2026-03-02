@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE566C624C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED70DC624C6
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyvB-0005rP-7T; Mon, 02 Mar 2026 03:46:35 -0500
+	id 1vwyvL-0006lK-N7; Mon, 02 Mar 2026 03:46:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyuI-0004wl-Ua
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:48 -0500
+ id 1vwyup-0005ND-FM
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:15 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwyu8-0001tS-6k
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:45:33 -0500
+ id 1vwyug-0001x0-LH
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:46:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441125;
+ s=mimecast20190719; t=1772441160;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6kNPuPLo+kDu65wNHg/Ys8gL0oDKZMPcdkl4aAZoh3w=;
- b=g4jFgN3G6eJFInyh0bddZsFosBnKhsn7VjlL69646b/l2U1Y31g5uMPxkdi0lcJNxQ9ihG
- MwBt7SkTGf1h5BIz728gDbHXZbQjCfSq+Hs1GTl8M4/GVsCZ1C0bh5008xLFevRwUrOHD6
- fHIpVMYz/uRjWRntbqSUtQMRTolquAM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ux3ZnPMEDtYfBdP2aeSQqPPs5FTXOfyYnyLyR49twAs=;
+ b=L3EJBUtcTuWbMltmEQBT3mhuCEdULIukR88VwGAX06OjaFMJq6hPjqmS+BuU1PYWVwh08u
+ xo52UgdOgx2wTohbHuOyrm016dbhriNZX7BI1lNGrbtbAyLPgL6zLCZOodtfBjxXzPu2yn
+ 12RSiT/E8T3nDnwvuXp3E+/w8njp+90=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637--vYheo4kOPWIBu-qx0vv0w-1; Mon, 02 Mar 2026 03:45:24 -0500
-X-MC-Unique: -vYheo4kOPWIBu-qx0vv0w-1
-X-Mimecast-MFC-AGG-ID: -vYheo4kOPWIBu-qx0vv0w_1772441123
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4836cf00787so48181225e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:24 -0800 (PST)
+ us-mta-13-qDQbRtwfNZGsIcCSL89sqA-1; Mon, 02 Mar 2026 03:45:59 -0500
+X-MC-Unique: qDQbRtwfNZGsIcCSL89sqA-1
+X-Mimecast-MFC-AGG-ID: qDQbRtwfNZGsIcCSL89sqA_1772441158
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439b50320a0so676545f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:45:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441122; x=1773045922; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772441156; x=1773045956; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6kNPuPLo+kDu65wNHg/Ys8gL0oDKZMPcdkl4aAZoh3w=;
- b=CycVzrnsyEMtXthMv0ObKP7cjULg2zCytODMVjTEmaHDS5e61KTC/EqEPYhqExQZcr
- W07gC05jNSTGvD+cnfUPsblLtFZ7V2v6bOBWm7PC4pzeWhxN1sAp7TzLvAZxW7Ublgwn
- XJE1qD7NAaokKV3RYJAvwOyrJKvZIu8zAjBbFRw/c37NfExL+Qo53HeS0M5RLorgasQm
- YR0ipvdpe9BwkACiB65P0yFo7AxSaMTkkC2F6D5gbIPzKQ/vmPUBw4LT+6j9Gb+cnla7
- cMDk7J2rOovqNp4Xw7ypu8w6u/PldQk03+jZSHi+FsENXZs34/g/FnNBo8PbK5ZlTFNM
- 15RA==
+ bh=ux3ZnPMEDtYfBdP2aeSQqPPs5FTXOfyYnyLyR49twAs=;
+ b=Oo9wqoc/4j4apNXoc5mZHXnurPQYpBGPG8GwT3y3i66LDp0YlwmeZjjx31H8002T2b
+ cjLvtNl5Akalq4zty0FOgPCz3WLK3T7su02Jlx1Lcgk3wmTOpXdx1F1iEOjOf0XD5/6I
+ DhYJjmWOpsru9Wqzs5BBWj0fQGrFcYXPgTTLEhe3e3rbuoTeQF/KtqTd7kbm0vRaLL56
+ SYxSNpEqWdd1RdnYhEHrLR+4X7tl+UTP7/lSHDzc/SrsGq7nPPTWSXuIQK0dErXDWOBm
+ maLRVoeGx7umGiWXC1MRW4NXNz7Wmp76KpdRbNXusxkLVoN6bxrAG0TXEYhswf+5SEMp
+ yxxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441122; x=1773045922;
+ d=1e100.net; s=20230601; t=1772441156; x=1773045956;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6kNPuPLo+kDu65wNHg/Ys8gL0oDKZMPcdkl4aAZoh3w=;
- b=RMNXiHq22IMLYgMdSWtbiQAZNPVpa5C8waSj5PzBPsvNu3n8PlzsVuM9pSGHi0lYPj
- xb2nxgNwgX/2U2dssduMwDHAH0g4xODoBwwrAOHPs3aKjxrIj+OXFe2/mJXFq+6JO0C0
- YFJO04MtWcmzBRIz9WTH3wSwHvVGjGqjyHJHrJ/iL0KF4ehPUJWLatkULqvJ03weLnNO
- DEqkXOefpkseEVMvog8xLrSZ1rjlPJ20KDkEyZUYzBs9G+dMwAts5kvhTRVrOIgYkyHJ
- z37Sw0xXgnJL6rRU9Kp7rmaIVId6M6eWDB3AjxvN4Me/kJ018g27GzRbxJgtIlL5G/7+
- BPrQ==
-X-Gm-Message-State: AOJu0Ywnb41OinLzXXDo6DyR+tIDD0BP5AJo3uibpkT6ChemMqopj/3q
- 1jDEQBdfJb3ATgxxGLmmfj9Fz6pUJ8tBH5A3GJ6eZEwyCIoB7eixOt+DpjqVf/qU/ow7f3pi3SB
- 4VwxC0n7mzO33CRvaZYUcH9/NkW9AA0ombZ/rqUafMwSwioo6DQUJjBSmUW33Dr4OJ3xKVpey/3
- WpfF3XDVBGp/BuzAmCIN6RoH4oQ7NZ+3JnccvXxEFH
-X-Gm-Gg: ATEYQzzmOAsjhJ1Qpjwtju74sX5JYUXXyBm+s1EzqyQ+s8M6FC0Fi54Te4w2JvKxnuI
- W6qr17GSyC47sdMXo0Wh/e0q5w/2xfp/yj0BtIc9xEL/Opy03Kd5zgO7Lo7RdbTYtuyHqQTAG3W
- TUovFlE9AuSX7Nog5Zc3U53ZR46jTHEgxHhMZcnSn3h9GL9GdDlF1CuPQ0jil4JDIRjDDByYaQb
- vdJgz/y1LrwiwkT3nGyNOBrS+F1PEBE6h/oXrUEG48PodSI3nbv7tZUd6uX6TnXKVYpUQ72So6S
- VaD44lhY7ZaQsXsOcKONmfV6EZ8tpqKbmWyMCtv9FZE8jPdvRMSd9wcRlXTC8VBb1iUTO0TAjCc
- q/0bJxBCRJuN8zR5azyPzf81NkOqlocoLehgJsWzGm0q4Hvhr/HLMwipfvy0FpVaLboXkjSGFED
- HHc+kQKf9uvqsjwS0s7NOs3E78OlI=
-X-Received: by 2002:a05:600c:8183:b0:483:7eeb:4558 with SMTP id
- 5b1f17b1804b1-483c33c1e04mr258789845e9.2.1772441122266; 
- Mon, 02 Mar 2026 00:45:22 -0800 (PST)
-X-Received: by 2002:a05:600c:8183:b0:483:7eeb:4558 with SMTP id
- 5b1f17b1804b1-483c33c1e04mr258789225e9.2.1772441121715; 
- Mon, 02 Mar 2026 00:45:21 -0800 (PST)
+ bh=ux3ZnPMEDtYfBdP2aeSQqPPs5FTXOfyYnyLyR49twAs=;
+ b=KktemO0eX5vxJyhJMJlC7HiyOPAXRh+PkWhzfor+I1F6z/uFykuDGHJH+JeH+mLoKs
+ TyUba32DkoLlynuNtfOZKp3THdS22xFePqaMb8ttEo4TBzgpinfJF3aygFDEfXXaagsC
+ yhono5EMyfJuSlXk2H5oNKLxfl+2CqkeQTRXJTDeH8LuNvnCy4g1u5hscdevQ5fTmKd+
+ l/BfNm3QN6oQdA0fOFEt+qtO6w7weU4/J+xEVYL23AyL97xRb2YbloAAivX4FDHIy3yP
+ uLI8eGR5FZccVJ7gWzx0tlhhoRQiId9G9P+/33NtASagFD88sZqimm+NcSK0ZuOU28H5
+ E2qg==
+X-Gm-Message-State: AOJu0Yxo714zUUqVXFBAdKzY4pALNwkFXNCtgMwKNX7s0HxMN/LKEoAd
+ mRRP23uDBOYZk2MmTMsLPdYCrIDcqyxVjIYOrgTHbwCYENSJ3d0qxs82CIdjBg+kaYMUzz3/7Zf
+ GMTwVTt0SlS6us1ZSAmwNzoACBkRH9vvJsCyhN4XNQe4hTfi/dqZBTs7G+m3t3sfnZkXKPGQ+cx
+ jtZiZmkWbEZjoONJYeM+HnI93xRUoSTS2FovUidb6e
+X-Gm-Gg: ATEYQzzEUvV+9Ee7ZQNnUIo2qfaNft+fiKVHCGjilU1im8VebhMs242H6qpRpOaa8AJ
+ 2o3Dlzzg4EXLVnUDnNRLGclrfX2V/nxn/iSOqB/S2Cq+SassRN+s6ODuiuYTmYpVwD+3beE1lvD
+ vrdr+38a2XzO7vqXfqAaD7Ec9mq1X26k21ioe0O2ZOqiQpdbJmh4iLF5klYOHH2qUEEb7gdNqPO
+ yTLgr3012OykncuIowEG10pIf419PKyTxiRJnczoEu/9XZbLShCZ5DusRLB8EXJusHdE48xnceS
+ FjtZhax3rNDpb0lrod8fZ3DCSKR1RuByQwVYKA+q55evYyGDrbpYe0QOcCm/TsGKYKywUKtl66E
+ UReuJJwJwBiNvwSzaiNGKseR/oAKCA0nB/IgPZU3/g8GLft+LTp+bnk1qpNOoAD3+HVzOm/SFF4
+ WMOM2rx7TB4GC5yC7ccBi6N9jlf5Q=
+X-Received: by 2002:a05:6000:2c06:b0:439:8559:98b with SMTP id
+ ffacd0b85a97d-4399d97f826mr18661065f8f.9.1772441156015; 
+ Mon, 02 Mar 2026 00:45:56 -0800 (PST)
+X-Received: by 2002:a05:6000:2c06:b0:439:8559:98b with SMTP id
+ ffacd0b85a97d-4399d97f826mr18661028f8f.9.1772441155513; 
+ Mon, 02 Mar 2026 00:45:55 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c765c67sm27722423f8f.32.2026.03.02.00.45.20
+ ffacd0b85a97d-439b130abfasm10471900f8f.34.2026.03.02.00.45.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:45:20 -0800 (PST)
+ Mon, 02 Mar 2026 00:45:54 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alexander Graf <graf@amazon.com>
-Subject: [PULL 038/102] hw/nitro: Add nitro machine
-Date: Mon,  2 Mar 2026 09:42:33 +0100
-Message-ID: <20260302084338.473368-39-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 051/102] kvm/i386: implement architecture support for kvm file
+ descriptor change
+Date: Mon,  2 Mar 2026 09:42:46 +0100
+Message-ID: <20260302084338.473368-52-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
 References: <20260302084338.473368-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,269 +122,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-Add a machine model to spawn a Nitro Enclave. Unlike the existing -M
-nitro-enclave, this machine model works exclusively with the -accel
-nitro accelerator to drive real Nitro Enclave creation. It supports
-memory allocation, number of CPU selection, both x86_64 as well as
-aarch64, implements the Enclave heartbeat logic and debug serial
-console.
+When the kvm file descriptor changes as a part of confidential guest reset,
+some architecture specific setups including SEV/SEV-SNP/TDX specific setups
+needs to be redone. These changes are implemented as a part of the
+kvm_arch_on_vmfd_change() callback which was introduced previously.
 
-To use it, create an EIF file and run
-
-  $ qemu-system-x86_64 -accel nitro,debug-mode=on -M nitro -nographic \
-                       -kernel test.eif
-
-or
-
-  $ qemu-system-aarch64 -accel nitro,debug-mode=on -M nitro -nographic \
-                        -kernel test.eif
-
-Signed-off-by: Alexander Graf <graf@amazon.com>
-
-Link: https://lore.kernel.org/r/20260225220807.33092-9-graf@amazon.com
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Link: https://lore.kernel.org/r/20260225035000.385950-11-anisinha@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/nitro/machine.h |  20 +++++
- hw/nitro/machine.c         | 161 +++++++++++++++++++++++++++++++++++++
- tests/qtest/libqtest.c     |   1 +
- hw/nitro/Kconfig           |   8 ++
- hw/nitro/meson.build       |   1 +
- 5 files changed, 191 insertions(+)
- create mode 100644 include/hw/nitro/machine.h
- create mode 100644 hw/nitro/machine.c
+ target/i386/kvm/kvm.c        | 49 ++++++++++++++++++++++++++++--------
+ target/i386/kvm/trace-events |  1 +
+ 2 files changed, 39 insertions(+), 11 deletions(-)
 
-diff --git a/include/hw/nitro/machine.h b/include/hw/nitro/machine.h
-new file mode 100644
-index 00000000000..d78ba7d6dc3
---- /dev/null
-+++ b/include/hw/nitro/machine.h
-@@ -0,0 +1,20 @@
-+/*
-+ * Nitro Enclaves (accel) machine
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 8edfbb834c6..40e4b3f1283 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3407,12 +3407,30 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+ 
+ int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
+ {
+-    abort();
++    int ret;
 +
-+#ifndef HW_NITRO_MACHINE_H
-+#define HW_NITRO_MACHINE_H
-+
-+#include "hw/core/boards.h"
-+#include "qom/object.h"
-+
-+#define TYPE_NITRO_MACHINE MACHINE_TYPE_NAME("nitro")
-+OBJECT_DECLARE_SIMPLE_TYPE(NitroMachineState, NITRO_MACHINE)
-+
-+struct NitroMachineState {
-+    MachineState parent;
-+};
-+
-+#endif /* HW_NITRO_MACHINE_H */
-diff --git a/hw/nitro/machine.c b/hw/nitro/machine.c
-new file mode 100644
-index 00000000000..e28c8e9bf50
---- /dev/null
-+++ b/hw/nitro/machine.c
-@@ -0,0 +1,161 @@
-+/*
-+ * Nitro Enclaves (accel) machine
-+ *
-+ * Copyright © 2026 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-+ *
-+ * Authors:
-+ *   Alexander Graf <graf@amazon.com>
-+ *
-+ * Nitro Enclaves machine model for -accel nitro. This machine behaves
-+ * like the nitro-enclave machine, but uses the real Nitro Enclaves
-+ * backend to launch the virtual machine. It requires use of the -accel
-+ * nitro.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qapi/error.h"
-+#include "qom/object_interfaces.h"
-+#include "chardev/char.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/cpu.h"
-+#include "hw/core/qdev-properties-system.h"
-+#include "hw/nitro/heartbeat.h"
-+#include "hw/nitro/machine.h"
-+#include "hw/nitro/nitro-vsock-bus.h"
-+#include "hw/nitro/serial-vsock.h"
-+#include "system/address-spaces.h"
-+#include "system/hostmem.h"
-+#include "system/system.h"
-+#include "system/nitro-accel.h"
-+#include "qemu/accel.h"
-+#include "hw/arm/machines-qom.h"
-+
-+#define EIF_LOAD_ADDR   (8 * 1024 * 1024)
-+
-+static void nitro_machine_init(MachineState *machine)
-+{
-+    const char *eif_path = machine->kernel_filename;
-+    const char *cpu_type = machine->cpu_type;
-+    g_autofree char *eif_data = NULL;
-+    gsize eif_size;
-+
-+    if (!nitro_enabled()) {
-+        error_report("The 'nitro' machine requires -accel nitro");
-+        exit(1);
++    ret = kvm_arch_init(ms, s);
++    if (ret < 0) {
++        return ret;
 +    }
 +
-+    if (!cpu_type) {
-+        ObjectClass *oc = cpu_class_by_name(target_cpu_type(), "host");
++    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
++        X86MachineState *x86ms = X86_MACHINE(ms);
 +
-+        if (!oc) {
-+            error_report("nitro: no 'host' CPU available");
-+            exit(1);
++        if (x86_machine_is_smm_enabled(x86ms)) {
++            memory_listener_register(&smram_listener.listener,
++                                     &smram_address_space);
 +        }
-+        cpu_type = object_class_get_name(oc);
++        kvm_set_max_apic_id(x86ms->apic_id_limit);
 +    }
 +
-+    if (!eif_path) {
-+        error_report("nitro: -kernel <eif-file> is required");
-+        exit(1);
++    trace_kvm_arch_on_vmfd_change();
++    return 0;
+ }
+ 
+ bool kvm_arch_supports_vmfd_change(void)
+ {
+-    return false;
++    return true;
+ }
+ 
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+@@ -3420,6 +3438,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     int ret;
+     struct utsname utsname;
+     Error *local_err = NULL;
++    static bool first = true;
+ 
+     /*
+      * Initialize confidential guest (SEV/TDX) context, if required
+@@ -3489,16 +3508,17 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+         return ret;
+     }
+ 
+-    /* Tell fw_cfg to notify the BIOS to reserve the range. */
+-    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
+-
++    if (first) {
++        /* Tell fw_cfg to notify the BIOS to reserve the range. */
++        e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
 +    }
-+
-+    /* Expose memory as normal QEMU RAM. Needs to be huge page backed. */
-+    memory_region_add_subregion(get_system_memory(), 0, machine->ram);
-+
-+    /*
-+     * Load EIF (-kernel) as raw blob at the EIF_LOAD_ADDR into guest RAM.
-+     * The Nitro Hypervisor will extract its contents and bootstrap the
-+     * Enclave from it.
-+     */
-+    if (!g_file_get_contents(eif_path, &eif_data, &eif_size, NULL)) {
-+        error_report("nitro: failed to read EIF '%s'", eif_path);
-+        exit(1);
-+    }
-+    address_space_write(&address_space_memory, EIF_LOAD_ADDR,
-+                        MEMTXATTRS_UNSPECIFIED, eif_data, eif_size);
-+
-+    if (defaults_enabled()) {
-+        NitroVsockBridge *bridge = nitro_vsock_bridge_create();
-+
-+        /* Nitro Enclaves require a heartbeat device. Provide one. */
-+        qdev_realize(qdev_new(TYPE_NITRO_HEARTBEAT),
-+                     BUS(&bridge->bus), &error_fatal);
-+
-+        /*
-+         * In debug mode, Nitro Enclaves expose the guest's serial output via
-+         * vsock. When the accel is in debug mode, wire the vsock serial to
-+         * the machine's serial port so that -nographic automatically works
-+         */
-+        if (object_property_get_bool(OBJECT(current_accel()), "debug-mode", NULL)) {
-+            Chardev *chr = serial_hd(0);
-+
-+            if (chr) {
-+                DeviceState *dev = qdev_new(TYPE_NITRO_SERIAL_VSOCK);
-+
-+                qdev_prop_set_chr(dev, "chardev", chr);
-+                qdev_realize(dev, BUS(&bridge->bus), &error_fatal);
-+            }
-+        }
-+    }
-+}
-+
-+static bool nitro_create_memfd_backend(MachineState *ms, const char *path,
-+                                       Error **errp)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+    Object *root = object_get_objects_root();
-+    Object *obj;
-+    bool r = false;
-+
-+    obj = object_new(TYPE_MEMORY_BACKEND_MEMFD);
-+
-+    /* Nitro Enclaves require huge page backing */
-+    if (!object_property_set_int(obj, "size", ms->ram_size, errp) ||
-+        !object_property_set_bool(obj, "hugetlb", true, errp)) {
-+        goto out;
-+    }
-+
-+    object_property_add_child(root, mc->default_ram_id, obj);
-+
-+    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
-+        goto out;
-+    }
-+    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
-+
-+out:
-+    object_unref(obj);
-+    return r;
-+}
-+
-+static void nitro_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Nitro Enclave";
-+    mc->init = nitro_machine_init;
-+    mc->create_default_memdev = nitro_create_memfd_backend;
-+    mc->default_ram_id = "ram";
-+    mc->max_cpus = 4096;
-+}
-+
-+static const TypeInfo nitro_machine_info = {
-+    .name = TYPE_NITRO_MACHINE,
-+    .parent = TYPE_MACHINE,
-+    .instance_size = sizeof(NitroMachineState),
-+    .class_init = nitro_machine_class_init,
-+    .interfaces = (const InterfaceInfo[]) {
-+        /* x86_64 and aarch64 only */
-+        { TYPE_TARGET_AARCH64_MACHINE },
-+        { }
-+    },
-+};
-+
-+static void nitro_machine_register(void)
-+{
-+    type_register_static(&nitro_machine_info);
-+}
-+
-+type_init(nitro_machine_register);
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 794d8700857..051faf31e14 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -1815,6 +1815,7 @@ void qtest_cb_for_every_machine(void (*cb)(const char *machine),
-             g_str_equal("xenpv", machines[i].name) ||
-             g_str_equal("xenpvh", machines[i].name) ||
-             g_str_equal("vmapple", machines[i].name) ||
-+            g_str_equal("nitro", machines[i].name) ||
-             g_str_equal("nitro-enclave", machines[i].name)) {
-             continue;
+     ret = kvm_vm_set_nr_mmu_pages(s);
+     if (ret < 0) {
+         return ret;
+     }
+ 
+     if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
+-        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
++        x86_machine_is_smm_enabled(X86_MACHINE(ms)) && first) {
+         smram_machine_done.notify = register_smram_listener;
+         qemu_add_machine_init_done_notifier(&smram_machine_done);
+     }
+@@ -3545,16 +3565,23 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+                 return ret;
+             }
+ 
+-            ret = kvm_msr_energy_thread_init(s, ms);
+-            if (ret < 0) {
+-                error_report("kvm : error RAPL feature requirement not met");
+-                return ret;
++            if (first) {
++                ret = kvm_msr_energy_thread_init(s, ms);
++                if (ret < 0) {
++                    error_report("kvm : "
++                                 "error RAPL feature requirement not met");
++                    return ret;
++                }
+             }
          }
-diff --git a/hw/nitro/Kconfig b/hw/nitro/Kconfig
-index d3fbc7b683c..cfae85920a0 100644
---- a/hw/nitro/Kconfig
-+++ b/hw/nitro/Kconfig
-@@ -8,3 +8,11 @@ config NITRO_SERIAL_VSOCK
- config NITRO_HEARTBEAT
-     bool
-     depends on NITRO_VSOCK_BUS
+     }
+ 
+     pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
+-    kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
 +
-+config NITRO_MACHINE
-+    bool
-+    default y
-+    depends on NITRO
-+    select NITRO_VSOCK_BUS
-+    select NITRO_HEARTBEAT
-+    select NITRO_SERIAL_VSOCK
-diff --git a/hw/nitro/meson.build b/hw/nitro/meson.build
-index 381c1ee6c15..e3f18958906 100644
---- a/hw/nitro/meson.build
-+++ b/hw/nitro/meson.build
-@@ -1,3 +1,4 @@
- system_ss.add(when: 'CONFIG_NITRO_VSOCK_BUS', if_true: files('nitro-vsock-bus.c'))
- system_ss.add(when: 'CONFIG_NITRO_SERIAL_VSOCK', if_true: files('serial-vsock.c'))
- system_ss.add(when: 'CONFIG_NITRO_HEARTBEAT', if_true: files('heartbeat.c'))
-+system_ss.add(when: 'CONFIG_NITRO_MACHINE', if_true: files('machine.c'))
++    if (first) {
++        kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
++    }
++    first = false;
+ 
+     return 0;
+ }
+diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
+index 74a6234ff7f..2d213c9f9b6 100644
+--- a/target/i386/kvm/trace-events
++++ b/target/i386/kvm/trace-events
+@@ -6,6 +6,7 @@ kvm_x86_add_msi_route(int virq) "Adding route entry for virq %d"
+ kvm_x86_remove_msi_route(int virq) "Removing route entry for virq %d"
+ kvm_x86_update_msi_routes(int num) "Updated %d MSI routes"
+ kvm_hc_map_gpa_range(uint64_t gpa, uint64_t size, uint64_t attributes, uint64_t flags) "gpa 0x%" PRIx64 " size 0x%" PRIx64 " attributes 0x%" PRIx64 " flags 0x%" PRIx64
++kvm_arch_on_vmfd_change(void) ""
+ 
+ # xen-emu.c
+ kvm_xen_hypercall(int cpu, uint8_t cpl, uint64_t input, uint64_t a0, uint64_t a1, uint64_t a2, uint64_t ret) "xen_hypercall: cpu %d cpl %d input %" PRIu64 " a0 0x%" PRIx64 " a1 0x%" PRIx64 " a2 0x%" PRIx64" ret 0x%" PRIx64
 -- 
 2.53.0
 
