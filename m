@@ -4,119 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534ACE9B376
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 12:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5347FE9B376
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 12:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx2mC-0001eU-Ig; Mon, 02 Mar 2026 07:53:32 -0500
+	id 1vx2nT-0002we-K0; Mon, 02 Mar 2026 07:54:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx2m7-0001cu-86
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 07:53:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vx2nK-0002pH-Ky; Mon, 02 Mar 2026 07:54:44 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx2m3-0000Wm-AV
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 07:53:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772456002;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GKySTEtEN6f2eByyCdV8h3ajOY6NLjt50Gc70z8UyFs=;
- b=hhMSjM4SMTFOuP9kQaop9A4u8R+2z0pW6lmD7Mt1MF59Q6ywKDrDXHWZakmmZlEhXEpzRg
- jr4WpkGE9dsUcnrzibos4/0GpzUE18n8dH3/59qv8W0zYSy6NRj2pq9igCbudE2uSJJwGE
- lGCIJ+XlimsABHPRctMW70J5O4clqwI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-JBbugmQiMIqiaJjD4qtLzQ-1; Mon,
- 02 Mar 2026 07:53:18 -0500
-X-MC-Unique: JBbugmQiMIqiaJjD4qtLzQ-1
-X-Mimecast-MFC-AGG-ID: JBbugmQiMIqiaJjD4qtLzQ_1772455996
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 370091800349; Mon,  2 Mar 2026 12:53:16 +0000 (UTC)
-Received: from [10.45.224.162] (unknown [10.45.224.162])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4FFFC1955F22; Mon,  2 Mar 2026 12:53:10 +0000 (UTC)
-Message-ID: <c0b2c720-c2e5-4249-a8fd-02464cd3c037@redhat.com>
-Date: Mon, 2 Mar 2026 13:53:08 +0100
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vx2n6-000108-Vr; Mon, 02 Mar 2026 07:54:30 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 00D734825A;
+ Mon, 02 Mar 2026 13:54:18 +0100 (CET)
+Message-ID: <bf9ccb3f-29e3-4c14-8e66-0e16d81da865@proxmox.com>
+Date: Mon, 2 Mar 2026 13:54:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 25/30] pc-bios/s390-ccw: Handle true secure IPL mode
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-26-zycai@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
+Subject: Re: [PATCH] hw/block/block: add 'throttle-group' property
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
+ jsnow@redhat.com
+References: <20260116143946.1031006-1-f.ebner@proxmox.com>
+ <aZ23DELMG6CycbQ8@redhat.com>
+ <7f1754b9-61a7-4413-9a97-1f47958da3e4@proxmox.com>
+ <aaB1SXNFxiHlS08u@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260212204352.1044699-26-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <aaB1SXNFxiHlS08u@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1772456033622
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,65 +63,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/02/2026 21.43, Zhuoying Cai wrote:
-> When secure boot is enabled (-secure-boot on) and certificate(s) are
-> provided, the boot operates in True Secure IPL mode.
-> 
-> Any verification error during True Secure IPL mode will cause the
-> entire boot process to terminate.
-> 
-> Secure IPL in audit mode requires at least one certificate provided in
-> the key store along with necessary facilities. If secure boot is enabled
-> but no certificate is provided, the boot process will also terminate, as
-> this is not a valid secure boot configuration.
-> 
-> Note: True Secure IPL mode is implemented for the SCSI scheme of
-> virtio-blk/virtio-scsi devices.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
-...
-> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-> index 43a661325f..699ef981e2 100644
-> --- a/pc-bios/s390-ccw/bootmap.c
-> +++ b/pc-bios/s390-ccw/bootmap.c
-> @@ -738,12 +738,16 @@ static int zipl_run(ScsiBlockPtr *pte)
->       entry = (ComponentEntry *)(&header[1]);
->   
->       switch (boot_mode) {
-> +    case ZIPL_BOOT_MODE_SECURE:
->       case ZIPL_BOOT_MODE_SECURE_AUDIT:
->           rc = zipl_run_secure(&entry, tmp_sec);
->           break;
->       case ZIPL_BOOT_MODE_NORMAL:
->           rc = zipl_run_normal(&entry, tmp_sec);
->           break;
-> +    case ZIPL_BOOT_MODE_INVALID:
-> +        rc = -1;
-> +        break;
+Am 26.02.26 um 5:31 PM schrieb Kevin Wolf:
+> Am 26.02.2026 um 16:20 hat Fiona Ebner geschrieben:
+>> Am 24.02.26 um 3:34 PM schrieb Kevin Wolf:
+>>> Am 16.01.2026 um 15:39 hat Fiona Ebner geschrieben:
+>>>> With '-drive', it is possible to specify the throttle configuration
+>>>> directly on the commandline. Add the possibility to do the same when
+>>>> using the modern way with '-blockdev' and a front-end device. Using a
+>>>> throttle filter block node is not always an option: in particular, the
+>>>> mirror block job operates on a root block node and it might be desired
+>>>> to throttle only the guest IO, but not to the block job.
+>>>
+>>> Hm, is there still a reason why we require a root node for the source?
 
-boot_mode can never be set to ZIPL_BOOT_MODE_INVALID invalid (see below), so 
-I suggest to drop this "case" again (and let the default case catch it in 
-case this ever changes - at least that one prints a message).
+Do you happen to know what the original reason for the restriction was?
+From git history I cannot really see anything special, just:
 
->       default:
->           puts("Unknown boot mode");
->           rc = -1;
-...
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 106cdf9dec..1678ede8fb 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -329,6 +329,9 @@ void main(void)
->       }
->   
->       boot_mode = get_boot_mode(iplb->hdr_flags);
-> +    if (boot_mode == ZIPL_BOOT_MODE_INVALID) {
-> +        panic("Need at least one certificate for secure boot!");
-> +    }
+> commit 07eec652722f3d12b07c5b28d0671ddfc22fe6a5
+> Author: Kevin Wolf <kwolf@redhat.com>
+> Date:   Thu Jun 23 14:20:24 2016 +0200
+> 
+>     block: Accept node-name for blockdev-mirror
+>     
+>     In order to remove the necessity to use BlockBackend names in the
+>     external API, we want to allow node-names everywhere. This converts
+>     blockdev-mirror to accept a node-name without lifting the restriction
+>     that we're operating at a root node.
 
-Here you make sure that boot_mode can never be set to INVALID afterwards.
+For operations like backup and stream, the same restriction was lifted:
+930fe17f99 ("blockdev: enable non-root nodes for backup source")
+554b614765 ("block: Add QMP support for streaming to an intermediate layer")
 
-  Thomas
+We have the following code snippet in blockdev_mirror_common():
+
+>     if (!replaces) {
+>         /* We want to mirror from @bs, but keep implicit filters on top */
+>         unfiltered_bs = bdrv_skip_implicit_filters(bs);
+>         if (unfiltered_bs != bs) {
+>             replaces = unfiltered_bs->node_name;
+>         }
+>     }
+
+Doing this as well for non-root nodes would still match the documentation:
+
+> # @replaces: with sync=full graph node name to be replaced by the new
+> #     image when a whole image copy is done.  This can be used to
+> #     repair broken Quorum files.  By default, @device is replaced,
+> #     although implicitly created filters on it are kept.
+
+But I guess we could also do something like
+
+> diff --git a/blockdev.c b/blockdev.c
+> index 6e6932ddea..0ff058bed0 100644
+> --- a/blockdev.c
+> +++ b/blockdev.c
+> @@ -2931,7 +2931,14 @@ static void blockdev_mirror_common(const char *job_id, BlockDriverState *bs,
+>          /* We want to mirror from @bs, but keep implicit filters on top */
+>          unfiltered_bs = bdrv_skip_implicit_filters(bs);
+>          if (unfiltered_bs != bs) {
+> -            replaces = unfiltered_bs->node_name;
+> +            if (bdrv_is_root_node(bs)) {
+> +                replaces = unfiltered_bs->node_name;
+> +            } else {
+> +                error_setg(errp, "Detected non-root block node which is an"
+> +                                 " implicit filter, please specify @replaces"
+> +                                 " parameter explicitly");
+> +                return;
+> +            }
+>          }
+>      }
+>  
+
+to avoid any surprises for people who explicitly specify a non-root
+implicit filter as the source? Or what do you think?
+
+Reading through the code, I don't see any other issues with using a
+non-root node as the source and an initial test case for a node below a
+throttle node seems to work fine too :)
+
+>>
+>> I'm not sure if the restriction could be lifted. But AFAICS, that
+>> doesn't help in my case with a throttle node as the root node:
+>>
+>> Say I'm mirroring the node below throttle and the job is ready to be
+>> completed. Further, assume that requests pile up for the root node,
+>> while the node below is mostly idle, which can easily happen with low
+>> throttle limits:
+>>
+>> At some moment, there might be no IO in-flight for the node below
+>> throttle and thus the mirror can complete, while all the in-flight
+>> requests for the throttle node are currently being intercepted by the
+>> throttle group and waiting for the timer to wake them. Because, the call
+>> to bdrv_inc_in_flight() for the node below throttle only happens after
+>> the intercepted requests are woken. Mirror and the node below do not
+>> know about the parent's in flight requests. Is this interpretation correct?
+> 
+> Well, mirror doesn't just complete by itself, but let's assume it
+> already was ready and you told it to complete. Then yes, if there is no
+> more activity and both sides are in sync, the mirror job can complete.
+> 
+> However, is this any different from a mirror job completing when the
+> guest has already put a request in the virtio-blk virtqueue, but the
+> device model hasn't processed it yet? From the guest's perspective, the
+> request is in flight in both cases, and from the mirror job's
+> perspective it hasn't started yet in both cases.
+> 
+> I think the only difference is that with throttling you might hit this
+> case more often, but it's not a case that is fundamentally impossible
+> without throttling.
+> 
+>> There are scenarios where we finish the job via block-job-cancel after
+>> freezing the guest filesystem to ensure consistency, so having
+>> intercepted requests as described above would mess it up.
+> 
+> Why? You got a copy that was in sync at the time that the mirror job
+> completed. The job doesn't promise the exact point of time that the copy
+> matches, it's just some arbitrary time after you request completion when
+> both sides are in sync. This implies that requests after this arbitrary
+> point in time will not be included in the copy.
+> 
+> Though I'm also wondering, if you successfully froze the file system (as
+> opposed to still trying to freeze it), why are we getting write
+> requests? Shouldn't freezing involve waiting for completion of all
+> in-flight requests?
+
+Ah, yes, you're right! There won't be any in-flight requests anymore
+once it's frozen. The throttling just means that the guest has to wait
+longer for completion first.
+
+Also, the parent throttle node is drained too when the mirror finishes :)
+
+Best Regards,
+Fiona
 
 
