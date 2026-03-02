@@ -4,124 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62CFDD58E4C
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C3E5D58E7A
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 09:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwzcm-0000vH-2s; Mon, 02 Mar 2026 04:31:36 -0500
+	id 1vwzcm-0000vr-MT; Mon, 02 Mar 2026 04:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vwzck-0000uD-97
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:31:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vwzcX-0000sh-9K; Mon, 02 Mar 2026 04:31:21 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vwzce-0000nf-Us
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 04:31:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772443883;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9tT44c3VkiRzg8un9UGd2odC9HVLnnL1l6ynM1xCBqg=;
- b=cF0Ady7WdqXkWie9N5b21pC02kaZ/CGOdra1pELRrVLOS/tNEN2zvSrNWW3BDkDkF7g0oC
- XbS4ixM62O1dYrPEpQ82qxCF5GIXdP2s4AY3Cl1qzr64oeRAtLM7pZcJM9Pydo4YvkWVbv
- LAjO7by1LoR0ivtj7hW74P9RaA6p6Lc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-L3hfEd1cNWWLNKN6ifms3Q-1; Mon,
- 02 Mar 2026 04:31:20 -0500
-X-MC-Unique: L3hfEd1cNWWLNKN6ifms3Q-1
-X-Mimecast-MFC-AGG-ID: L3hfEd1cNWWLNKN6ifms3Q_1772443878
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2414418004A9; Mon,  2 Mar 2026 09:31:18 +0000 (UTC)
-Received: from [10.45.224.162] (unknown [10.45.224.162])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 408AD30001B9; Mon,  2 Mar 2026 09:31:11 +0000 (UTC)
-Message-ID: <d642f503-4923-40de-a68c-b3638c1a8d38@redhat.com>
-Date: Mon, 2 Mar 2026 10:31:10 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] scripts: Move lsan_suppressions.txt out of
- oss-fuzz subdir
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Bulekov <alxndr@bu.edu>, Stefan Hajnoczi <stefanha@redhat.com>,
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>,
- Yodel Eldar <yodel.eldar@yodel.dev>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>
-References: <20260302092225.4088227-1-peter.maydell@linaro.org>
- <20260302092225.4088227-2-peter.maydell@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vwzcS-0000mC-Li; Mon, 02 Mar 2026 04:31:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1772443876; x=1803979876;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=Kd8f24utuXwEIZjXqwiq7QDIaz96z80EZYpsIdzk9J4=;
+ b=RZ2wH+uX3VmB/gKzeEf0938vVpsWT2b+5NxQE7qNblQvnUxjiWY46YqR
+ fQiJCHKuW4TK7c4tMbS7HD6c9iSDUG5j9UBaSZa4/KMmTapuKUj9O8zpG
+ RKw3jpBWXFAQ/WMpd9lImtLWEdTue7LeoL4EfddJz4nGzBy2ffALJzGPM
+ gdlgPiyMK8zgIGOfblrVbEquJFc5yi0qsvaASUN26UlarKrfS4tn0dtgD
+ 78Z1PmITi8Z2XQh4p6MEs3lVOwZish6deQk31/ZI11CFD2iDpVrIregAT
+ a8NQ6r3cVFD2FtWponAgcx8UYQrt/Ro1y8ysfCgOHnWR96+ueXEHJiZ/Z A==;
+X-CSE-ConnectionGUID: rs3Y7G6YRk2kviysDnMDRA==
+X-CSE-MsgGUID: J5k8F9mtQ8y8O2M0WVzwgw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11716"; a="72473373"
+X-IronPort-AV: E=Sophos;i="6.21,319,1763452800"; d="scan'208";a="72473373"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Mar 2026 01:31:05 -0800
+X-CSE-ConnectionGUID: qV4+OgBfRZa/DIuNZ4lPVA==
+X-CSE-MsgGUID: DpBlTzqvR8KU/xuV9BLn8Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,319,1763452800"; d="scan'208";a="217708412"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Mar 2026 01:31:05 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 2 Mar 2026 01:31:04 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Mon, 2 Mar 2026 01:31:04 -0800
+Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.54) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 2 Mar 2026 01:31:03 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sLuGqfduf6XzcIoRYzTWHmNTmAnAM45Qcg8hFmowp0gnEV7C5D8NEm1jc6o67s2NEBiavGcO4e4EfKTdor7EKSe3iRI2uY77NpQJN/aYT3tnvxFKdRH02AUvx9aTYORhf87OVSZmw5ZSlZgM9CzztnuLkoemsEBwyTiS9zfRNR7XBhuGjI+CRBSJ8rawDi5c7WJHTajrGzj55vCrdaEQC7xN5Tjy6xay1R8kiU71OYdr0133KM1LD+3sx0sC8RtbxecdrpxyDzNmLMAuYJ5Rl2ClwaqOJTCn38e5JSjWt2bvpXY3Ugg0WPCrFIys7Xy+J1k8nyPaqcva4XnqFMGWLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9KqGPuiXZ1OztwBRus0qOui4EjaSVDC1Pe2SRjWKkGY=;
+ b=iIfP4HUR+mhJj5op7dhJGfh4I5gGcDNIyQ3z+4BpZMlwgapp0X0+fDXBeI+uRp8RMiUEHXg4Uh7XNTWwQit4q1E5y1xwqOZQ2KxRuRpuWa0ReRYz0rFH0634iTB1TcDYUm5Pa2VcaqPOU/TIObqQCWtZpGd+QksISGxmzSSsE5Tasanu9uv1dVoGoCRvVOiL2OJk8Fk1p6jyhkiI7wvW7ARVD9CWKSsnt0kv/y2pnybuEV470Jpqc36f1CFyvnIZYavtOGWm7IdNMm9xNayBgYdt/vcP9B/ZLSbzhPFq7pxo0dtgDPpACtM7eyCbOLStYM9xFFkFzitMEDJY/E0ghQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by LV4PR11MB9466.namprd11.prod.outlook.com (2603:10b6:408:2e3::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.15; Mon, 2 Mar
+ 2026 09:31:02 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9632.017; Mon, 2 Mar 2026
+ 09:31:01 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Nicolin Chen
+ <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "philmd@linaro.org" <philmd@linaro.org>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+Subject: RE: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+Thread-Topic: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+ vIOMMU events
+Thread-Index: AQHcpvxrPWY0EIaO2EyyMmxqBreJU7WXd1wAgAKmngCAANiH0A==
+Date: Mon, 2 Mar 2026 09:31:01 +0000
+Message-ID: <IA3PR11MB91365D6AF54A9D44998A9BD3927EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260226084456.112142-1-skolothumtho@nvidia.com>
+ <20260226084456.112142-6-skolothumtho@nvidia.com>
+ <IA3PR11MB913652049863E1F32BE9C1319270A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <CH3PR12MB754818FE668426F2078F25BCAB71A@CH3PR12MB7548.namprd12.prod.outlook.com>
+In-Reply-To: <CH3PR12MB754818FE668426F2078F25BCAB71A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260302092225.4088227-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|LV4PR11MB9466:EE_
+x-ms-office365-filtering-correlation-id: d855ae5c-e7e3-488b-2cde-08de783e6b6b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|7416014|38070700021; 
+x-microsoft-antispam-message-info: vJAXguKfgMApbzKmkjpsl175tt2T7zf086BhRbKh/Q5pibgGoICGTW9uMtcn41axICrXI4qeJR8Jynu2hPlNEdveHLioTolpTc5vICg5a68OcgN9twPGsgE0BIXPsoBuV472T0zrtAhRd/VSMhTTim+LQcwDXGTbo3IIekjVWNkz0gUq822F0sIFSAPYOsTs1B0KnZFsKncguw8PrgjpTiw2U3p+OQsyrG8De5cHiPLaceYt6wIAf0cRwEPXwhhe/9l5jDhcWCktn3+E3RjsBOQMOeu6l567x1gPusaDoUkuguu/h6sOfbjPbbVTGctXyzUxr4f+jvaBnl5SxG38RTossF7k/ebvRQwYZu0RchOHWTpmfD0YY4iI+1zDqqXVtHW6iT+l3e/en7UFnB6JJa2wPFIvqqVUH/oPG7BuL/vI2xUJ24J7TKVgttbllFxT4e37DLMcnNch4j9HF9I6WdU87HHTt1D/S7d3fT65Sf/9FaIM02PBaU/GFcErk0m998q353odsuwmyAXJV6Snq2St8XMFiL8gXrM78PMa8u2Kt9e61WW0WFo/MFS+ia9nn4Dszy0QM1ox7AmjbDaQmoGcNYkpbaicau5kq9/MF1ejqmynroB9FdyxrEkovOmZUAzehHN9zmAvjJ99XRsknNAeQxoV7CiHeqdWvJCqNosTujyC+rgtE1G8y8yisWB2W9R/b8CSRTTHYDkDqtvCbw4rzbJaREtyoj1zquKS2NwDsZk+gvFWmnSEyIXql+/OOLhc0oCx5z4gHhsFkKtXJCl4yypztyYhyIEbDVqwpRfcigyfIRErDF9fvI0xgqQw
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?srYnHWaobKHmrOFqMyU2J4Qc0T7JnILaNo517BjeKV+u+VBxCTJ60XreWF9W?=
+ =?us-ascii?Q?bu0SIvFaLxOUG8P2n6QNr9L4B0kpNlzNDvbEbeQXg+C0XZz1V0MsuDVi2vlx?=
+ =?us-ascii?Q?x+G1kVddb5h6Ec4/fVXXD0hdKHYovgGWsmrfxPO7hL6NHMULZatSeXO4xVns?=
+ =?us-ascii?Q?xeNZKMNKXGjfgV045FqP6EUF6TO1/l7E61K1OGX0hCfPszk7O4zf07tJQT8M?=
+ =?us-ascii?Q?rsXUAwwKbSjL9RbTEugpf2UCSUQH584RAObnxO8AX7jizDIlX5EH7xRjzVaU?=
+ =?us-ascii?Q?mf5ZbJ3U0YcEWput1UXPWS9DAwbUu48paKAVd1wYwp8e3RZVemC5Ff9UK1eU?=
+ =?us-ascii?Q?pG+6E5o6+LVtEYbZ8wGl9uvBENZOhhj8211A4kHEzS6p7vfCy6crqiWJnz9d?=
+ =?us-ascii?Q?7z6y8HYFnyDPJ0aRqji9R1bC0ciG3euXGQlhKHj6Bom8w/mQR+hNxIuYgHii?=
+ =?us-ascii?Q?Qa3CP5v+nDKuaeZH1decjpngZcjf9kN89VHj7Ts4vsaOR/vq2/kDBIx+URu5?=
+ =?us-ascii?Q?yVtjbqhe7rFciOTL5WAr7zSwLNFkBYfDFuvsXjnT019F9pOPr00imQa2g3jE?=
+ =?us-ascii?Q?BzLRqHtrSdx5t/Cv9KXuvqMNEZRUmDtv8c0TCcBb1NpLnZXk6dmK4xI060WS?=
+ =?us-ascii?Q?8JQD7TKawv7d1JM4CpucXdC1F1IQvgDMvK50bs4Ived3ybluyEF2/sJTzwOs?=
+ =?us-ascii?Q?ltRzfXWfEvpRDxTlbKJHz7MmbKQGBVGdh46EzO9wZ1N0gf6LbFpdI4b623kY?=
+ =?us-ascii?Q?FwLF89lls+bhH32kaK+/FYoRou5pWMjvDP2n6x/1GfG3G0FhsfltLp8aKL4j?=
+ =?us-ascii?Q?l4oP14VOilYGVfNfThdZRCXVD24UwrlsoMidacJRPpLJis2hi804iwlTvwe4?=
+ =?us-ascii?Q?kNCvxX1SsEzMf+d3WJ0dEI0vXtIrr0wgd07YObB4pZ176E0yc/JIwv5E9FQq?=
+ =?us-ascii?Q?1pY+wOLo4koMnKLaLdJOoky1QcJUGob/9cu+3vM1a668WJZd59lxzMeR5SB/?=
+ =?us-ascii?Q?CTEZIJj1BO2L3r5MRxCzSpfSH6v7fEeQz/qU/5IVzGqZus4HLHkue1qoco5C?=
+ =?us-ascii?Q?9GuJmPwpUo57G1fuhL4Rx5v2UeAdyuTmiN3pB4jcMMld3Q7YJbD4xz0KGADV?=
+ =?us-ascii?Q?3tZ7YwOFRxDwRkHnVPxPK1M6W6ILU3TPzKkzwRWwHt19lANzhXHQMfxSTcKB?=
+ =?us-ascii?Q?u9Hx/O6oK6xcGTRIbVfZ/9NnO8KgVzt3sNgGH3FV7LUd6dn7p+IPSXo9MDIS?=
+ =?us-ascii?Q?qrS714F2Au0UTNEUmo92ZIlULDICz4pK7/6jIyUFv6nwdagMUT3BuYRXCynj?=
+ =?us-ascii?Q?7hoskZxbVe5QjVjLoGDlvJZr53N6Y39Sw7cSsJEFyK2YZL/GKWo+FulZePvp?=
+ =?us-ascii?Q?QM2rgZXYQCghI6SQTQJy15CQGT0xP4Uj+8UDvlFL3xvlfEMyujMl6+Y2DS16?=
+ =?us-ascii?Q?nR8VVkCDGvHm1Ti6uXsxdpKOZx0/UroRLkqXpZGHhM/7SZIkBDA74ffUb8WI?=
+ =?us-ascii?Q?SHeK56r3Hj+rxyu83RLA2G7LAYUIPwWghAfa3H6sqQHqkpQNWshLpT/dm9rj?=
+ =?us-ascii?Q?DNVkLLcX103/RfoC8H02WDDxw0BvECgzSBKxqKPoLajmP/7crwdgK1hVx1zW?=
+ =?us-ascii?Q?0ncXDtSCAzCva1CbdZO0uQFh21N5Btf5jNBJtxYAG9idygFpzBLwBD9ap/Ut?=
+ =?us-ascii?Q?Pg3nOe/NPWERrnnrRYuDxQULyrY/C2o982H08L87oeTLGQd0d5zEE5j+hENL?=
+ =?us-ascii?Q?mh2jQvbKWA=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d855ae5c-e7e3-488b-2cde-08de783e6b6b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Mar 2026 09:31:01.7694 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Z4RIsIJsK4TtDrPJe93h4OYqdgB2Y4dF5CoBT1cV3AZi/I2OxynUwVEc16HSJNUdnQfaVzAJn9In+Sfq2QCCQR/artg7RLxo6tKV07ZFXAM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV4PR11MB9466
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,26 +185,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/03/2026 10.22, Peter Maydell wrote:
-> The oss-fuzz code uses an lsan_suppressions file to suppress certain
-> leak-sanitizer cases that are known issues or not our code's bug.
-> This is useful more widely than just for the fuzzer harness: if you
-> want to build QEMU with the leak sanitizer enabled and run 'make
-> check' then you will want to suppress some bogus leak reports.
-> 
-> Move the file up a directory.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> v2: just move the file so we keep git log --follow happy;
-> fix up reference in tests/docker/test-fuzz
-> ---
->   .gitlab-ci.d/buildtest.yml                   | 2 +-
->   scripts/{oss-fuzz => }/lsan_suppressions.txt | 0
->   tests/docker/test-fuzz                       | 2 +-
->   3 files changed, 2 insertions(+), 2 deletions(-)
->   rename scripts/{oss-fuzz => }/lsan_suppressions.txt (100%)
+Hi Shameer,
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>-----Original Message-----
+>From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+>Subject: RE: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+>vIOMMU events
+>
+>Hi Zhenzhong,
+>
+>> -----Original Message-----
+>> From: Duan, Zhenzhong <zhenzhong.duan@intel.com>
+>> Sent: 28 February 2026 06:28
+>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: eric.auger@redhat.com; peter.maydell@linaro.org; Nicolin Chen
+>> <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+>> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+>> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; philmd@linaro.org; Krishnakant Jaju
+>> <kjaju@nvidia.com>
+>> Subject: RE: [PATCH v8 5/5] hw/arm/smmuv3-accel: Read and propagate host
+>> vIOMMU events
+>
+>[...]
+>
+>> > static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+>> > {
+>> >     IOMMUFDVeventq *veventq =3D accel->veventq;
+>> >@@ -397,6 +441,7 @@ static void
+>> >smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
+>> >     if (!veventq) {
+>> >         return;
+>> >     }
+>> >+    qemu_set_fd_handler(veventq->veventq_fd, NULL, NULL, NULL);
+>> >     close(veventq->veventq_fd);
+>> >     iommufd_backend_free_id(accel->viommu->iommufd, veventq-
+>> >veventq_id);
+>>
+>> Did you ever see free_id failure here?
+>
+>So far I have not seen free_id() failure in my test setup.
+>
+> I'm working on PRQ using FAULTQ in
+>> intel_iommu
+>> and find a race condition, I suspect the same for vEVENTQ because both h=
+ave
+>> similar
+>> implementation in kernel and qemu.
+>>
+>> qemu_set_fd_handler() is called to remove veventq_fd from epoll() but it=
+'s
+>> async,
+>> this can lead to releasing of veventq_fd delayed after free_id(veventq_i=
+d),
+>> during veventq_fd releasing, it drops reference of veventq_id but it's t=
+oo late
+>> and free_id(veventq_id) already failed.
+>>
+>> It's not easy to reproduce, we had a test case in guest to trigger FAULT=
+Q
+>> allocation
+>> and freeing sequence in loops.
+>
+>From a quick look:
+>
+>qemu_set_fd_handler(fd, NULL, NULL, NULL) -> aio_set_fd_handler()
+>
+>aio_set_fd_handler() takes ctx->list_lock. For the delete case it sets
+>node->pfd.events =3D 0 and then calls:
+>
+>ctx->fdmon_ops->update(ctx, node, new_node); where new_node =3D NULL
+>
+>In the epoll backend (util/fdmon-epoll.c) this results in:
+>
+>epoll_ctl(ctx->epollfd, EPOLL_CTL_DEL, old_node->pfd.fd, ...);
+>
+>As I understand it, epoll_ctl() is a synchronous syscall. When it returns,
+>the fd has been removed from the epoll interest list in the kernel.
 
+OK, I think I understand wrongly.
+
+>
+>Also, I think, aio_set_fd_handler() and aio_dispatch() run in the same thr=
+ead for
+>a given AioContext, and dispatch runs with ctx->list_lock held (via
+>lockcnt). So looks like handler removal and dispatch are serialized at the=
+ QEMU
+>level.
+
+I just found my scenario is a bit different from yours, aio_set_fd_handler(=
+)
+is called in vcpu thread and aio_dispatch() is called in main thread in my =
+scenario.
+
+>
+>Do you see a specific window where the fd could still trigger after
+>EPOLL_CTL_DEL returns?
+
+No, just speculation.
+
+>
+>Could you confirm which fdmon backend you are using..poll, epoll, or
+>io_uring?
+
+There is no CONFIG_LINUX_IO_URING defined in my env.
+GDB printed fdmon_poll_ops  for iohandler_ctx->fdmon_ops, I also set
+breakpoint on fdmon_epoll_try_upgrade(), no catch, I think it was
+using poll.
+
+>
+>One more question: is the FAULTQ register/unregister model identical to
+>vEVENTQ in terms of allocation and teardown ordering?
+
+register/unregister model are similar, see https://github.com/yiliu1765/qem=
+u/commit/28b72d6b372555494d0e6a1ccfc97c80bc34423a
+the full branch: https://github.com/yiliu1765/qemu/commits/zhenzhong/iommuf=
+d_prq_wip/
+
+> For vEVENTQ we only
+>unregister when the last device is removed from the vIOMMU, typically via
+>device_del hot unplug.
+
+OK, this is different, register/unregister model is triggered in vcpu threa=
+d
+when guest send PASID table invalidation request in my scenario.
+
+>
+>Please let me know if you see a specific race case here that I may be
+>missing.
+
+Maybe this is a race case only in my scenario, I need to dig further.
+Thanks for your analysis.
+
+BRs,
+Zhenzhong=20
 
