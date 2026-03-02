@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375F3E9B366
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 11:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C314EE9B365
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 11:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx126-0006K4-Hl; Mon, 02 Mar 2026 06:01:50 -0500
+	id 1vx1OP-0007uY-AP; Mon, 02 Mar 2026 06:24:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx11o-0006HL-Sn
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 06:01:38 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx1OB-0007p9-8K
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 06:24:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx11k-0005Ar-N3
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 06:01:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vx1O8-000249-UB
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 06:24:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772449286;
+ s=mimecast20190719; t=1772450664;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rUuKGeEET1rbJjqu5kWCiC+kYAEBDp9SGlaBi9OfeNA=;
- b=eaIFtP/+f5lTB/3vwQYLqWAePDZkR8uCurExd/z6j4UlSe2T9S+W7LNu/PDo9W/7JX6ycQ
- 8+MOvVRkdsWEZoCJvRXzb53V4cBgSojEZqXUn9VVJnVvpkQCyB8288lS7H0yNwT2fBSOqU
- 3ejznq/u93a2JQjPRgxv7RI98iPDKsA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3Pqfhr38D8UyT4WSQtDGaML66dxVeZ2mv+4ore6Y8w0=;
+ b=WvzvGL4hful8MN9KmYuEkvKmyPXLUnsRvXNJvg7LM/MSIqfcQcc58YYKGXVUs/PmXhnyvj
+ DlGVTSkx5Lqvy8Y12joef+bohE3Fhg/Yv0xjrPyb+dTNWKpFKUxGUG/GM9te6jHTRVZ6Ot
+ MQwRoHkYRDUEHgPtCSFlmOEdgQ+iuQA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-QD5nEuG5PaOjEy7NOSo2MQ-1; Mon,
- 02 Mar 2026 06:01:22 -0500
-X-MC-Unique: QD5nEuG5PaOjEy7NOSo2MQ-1
-X-Mimecast-MFC-AGG-ID: QD5nEuG5PaOjEy7NOSo2MQ_1772449280
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-P-jR1zBNPHeHj2ZFX26lkg-1; Mon,
+ 02 Mar 2026 06:24:20 -0500
+X-MC-Unique: P-jR1zBNPHeHj2ZFX26lkg-1
+X-Mimecast-MFC-AGG-ID: P-jR1zBNPHeHj2ZFX26lkg_1772450658
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1464319560A1; Mon,  2 Mar 2026 11:01:20 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1704B195609F; Mon,  2 Mar 2026 11:24:18 +0000 (UTC)
 Received: from [10.45.224.162] (unknown [10.45.224.162])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 59B2D1800576; Mon,  2 Mar 2026 11:01:14 +0000 (UTC)
-Message-ID: <68b7dc03-607f-422e-a639-14b3f60ec5be@redhat.com>
-Date: Mon, 2 Mar 2026 12:01:12 +0100
+ id EEE151800351; Mon,  2 Mar 2026 11:24:10 +0000 (UTC)
+Message-ID: <ba373cdc-bfb4-46b0-9a74-bfe7e74bdbca@redhat.com>
+Date: Mon, 2 Mar 2026 12:24:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 20/30] pc-bios/s390-ccw: Add signed component address
- overlap checks
+Subject: Re: [PATCH v8 22/30] pc-bios/s390-ccw: Add additional security checks
+ for secure boot
 To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
  richard.henderson@linaro.org, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
@@ -59,7 +59,7 @@ Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
 References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-21-zycai@linux.ibm.com>
+ <20260212204352.1044699-23-zycai@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -104,7 +104,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260212204352.1044699-21-zycai@linux.ibm.com>
+In-Reply-To: <20260212204352.1044699-23-zycai@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -135,60 +135,199 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/02/2026 21.43, Zhuoying Cai wrote:
-> Add address range tracking and overlap checks to ensure that no
-> component overlaps with a signed component during secure IPL.
+> Add additional checks to ensure that components do not overlap with
+> signed components when loaded into memory.
+> 
+> Add additional checks to ensure the load addresses of unsigned components
+> are greater than or equal to 0x2000.
+> 
+> When the secure IPL code loading attributes facility (SCLAF) is installed,
+> all signed components must contain a secure code loading attributes block
+> (SCLAB).
+> 
+> The SCLAB provides further validation of information on where to load the
+> signed binary code from the load device, and where to start the execution
+> of the loaded OS code.
+> 
+> When SCLAF is installed, its content must be evaluated during secure IPL.
+> However, a missing SCLAB will not be reported in audit mode. The SCALB
+> checking will be skipped in this case.
+> 
+> Add IPL Information Error Indicators (IIEI) and Component Error
+> Indicators (CEI) for IPL Information Report Block (IIRB).
+> 
+> When SCLAF is installed, additional secure boot checks are performed
+> during zipl and store results of verification into IIRB.
 > 
 > Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/secure-ipl.c | 54 +++++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/secure-ipl.h |  6 ++++
->   2 files changed, 60 insertions(+)
-> 
+>   include/hw/s390x/ipl/qipl.h   |  29 +++-
+>   pc-bios/s390-ccw/s390-ccw.h   |   1 +
+>   pc-bios/s390-ccw/sclp.c       |   8 +
+>   pc-bios/s390-ccw/sclp.h       |   1 +
+>   pc-bios/s390-ccw/secure-ipl.c | 318 +++++++++++++++++++++++++++++++++-
+>   pc-bios/s390-ccw/secure-ipl.h |  42 +++++
+>   6 files changed, 395 insertions(+), 4 deletions(-)
+...
+> diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
+> index cf147f4634..3441020d6b 100644
+> --- a/pc-bios/s390-ccw/sclp.h
+> +++ b/pc-bios/s390-ccw/sclp.h
+> @@ -52,6 +52,7 @@ typedef struct SCCBHeader {
+>   #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
+>   #define SCCB_FAC134_DIAG320_BIT 0x4
+>   #define SCCB_FAC_IPL_SIPL_BIT 0x4000
+> +#define SCCB_FAC_IPL_SCLAF_BIT 0x1000
+>   
+>   typedef struct ReadInfo {
+>       SCCBHeader h;
 > diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-> index 1d5c2d40ce..27d2833642 100644
+> index 27d2833642..54e41ec11c 100644
 > --- a/pc-bios/s390-ccw/secure-ipl.c
 > +++ b/pc-bios/s390-ccw/secure-ipl.c
-> @@ -210,6 +210,55 @@ static void init_lists(IplDeviceComponentList *comp_list,
->       cert_list->ipl_info_header.len = sizeof(cert_list->ipl_info_header);
+> @@ -197,6 +197,12 @@ static bool secure_ipl_supported(void)
+>           return false;
+>       }
+>   
+> +    if (!sclp_is_sclaf_on()) {
+> +        puts("Secure IPL Code Loading Attributes Facility is not supported by"
+> +             " the hypervisor!");
+> +        return false;
+> +    }
+
+Let me double-check: This emits a warning and then the bios might continue 
+with the boot process with another device? (zipl_load() prints another 
+warning and returns without panic'ing when ipl_scsi() failed)
+
+... is this what we want? Or should the boot process be stopped in case 
+we're running in (non-audit) secure mode?
+
+>       return true;
 >   }
 >   
-> +static bool is_comp_overlap(SecureIplCompAddrRange *comp_addr_range,
-> +                            int addr_range_index,
-> +                            uint64_t start_addr, uint64_t end_addr)
+> @@ -259,6 +265,290 @@ static void addr_overlap_check(SecureIplCompAddrRange *comp_addr_range,
+>       *addr_range_index += 1;
+>   }
+>   
+> +static void check_unsigned_addr(uint64_t load_addr, IplDeviceComponentEntry *comp_entry)
 > +{
-> +    /* neither a signed nor an unsigned component can overlap with a signed component */
-> +    for (int i = 0; i < addr_range_index; i++) {
-> +        if ((comp_addr_range[i].start_addr < end_addr &&
-> +            start_addr < comp_addr_range[i].end_addr) &&
-> +            comp_addr_range[i].is_signed) {
-> +            return true;
-> +       }
+> +    /* unsigned load address must be greater than or equal to 0x2000 */
+> +    if (load_addr >= 0x2000) {
+> +        return;
 > +    }
 > +
+> +    set_comp_cei_with_log(comp_entry, S390_CEI_INVALID_UNSIGNED_ADDR,
+> +                          "Load address is less than 0x2000");
+> +}
+> +
+> +static bool check_sclab_presence(uint8_t *sclab_magic,
+> +                                 IplDeviceComponentEntry *comp_entry)
+> +{
+> +    /* identifies the presence of SCLAB */
+> +    if (magic_match(sclab_magic, ZIPL_MAGIC)) {
+> +        return true;
+> +    }
+> +
+> +    if (comp_entry) {
+> +        comp_entry->cei |= S390_CEI_INVALID_SCLAB;
+> +    }
+> +
+> +    /* a missing SCLAB will not be reported in audit mode */
 > +    return false;
 > +}
 > +
-> +static void comp_addr_range_add(SecureIplCompAddrRange *comp_addr_range,
-> +                                int addr_range_index, bool is_signed,
-> +                                uint64_t start_addr, uint64_t end_addr)
+> +static void check_sclab_length(uint16_t sclab_len, IplDeviceComponentEntry *comp_entry)
 > +{
-> +    if (addr_range_index >= MAX_CERTIFICATES) {
-> +        printf("Warning: Ignoring component address range index [%d]"
-> +               " because the maximum supported index is %d\n",
-> +               addr_range_index, MAX_CERTIFICATES - 1);
+> +    if (sclab_len >= S390_SECURE_IPL_SCLAB_MIN_LEN) {
 > +        return;
-
-Shouldn't this rather panic() instead - otherwise we might continue boot in 
-secure mode though there is a problem with overlapping components?
-
 > +    }
 > +
-> +    comp_addr_range[addr_range_index].is_signed = is_signed;
-> +    comp_addr_range[addr_range_index].start_addr = start_addr;
-> +    comp_addr_range[addr_range_index].end_addr = end_addr;
+> +    set_comp_cei_with_log(comp_entry,
+> +                          S390_CEI_INVALID_SCLAB_LEN | S390_CEI_INVALID_SCLAB,
+> +                          "Invalid SCLAB length");
 > +}
+> +
+> +static void check_sclab_format(uint8_t sclab_format, IplDeviceComponentEntry *comp_entry)
+> +{
+> +    /* SCLAB format must set to zero, indicating a format-0 SCLAB being used */
+> +    if (sclab_format == 0) {
+> +        return;
+> +    }
+> +
+> +    set_comp_cei_with_log(comp_entry, S390_CEI_INVALID_SCLAB_FORMAT,
+> +                          "Format-0 SCLAB is not being used");
+> +}
+> +
+> +static void check_sclab_opsw(SecureCodeLoadingAttributesBlock *sclab,
+> +                             SecureIplSclabInfo *sclab_info,
+> +                             IplDeviceComponentEntry *comp_entry)
+> +{
+> +    const char *msg;
+> +    uint32_t cei_flag = 0;
+> +
+> +    if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW)) {
+> +        /* OPSW = 0 - Load PSW field in SCLAB must contain zeros */
+> +        if (sclab->load_psw != 0) {
+> +            cei_flag |= S390_CEI_SCLAB_LOAD_PSW_NOT_ZERO;
+> +            msg = "Load PSW is not zero when Override PSW bit is zero";
+> +        }
+> +    } else {
+> +        /* OPSW = 1 indicating global SCLAB */
+> +        sclab_info->global_count += 1;
+> +        if (sclab_info->global_count == 1) {
+> +            sclab_info->load_psw = sclab->load_psw;
+> +            sclab_info->flags = sclab->flags;
+> +        }
+> +
+> +        /* OLA must set to one */
+> +        if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OLA)) {
+> +            cei_flag |= S390_CEI_SCLAB_OLA_NOT_ONE;
+> +            msg = "Override Load Address bit is not set to one in the global SCLAB";
+> +        }
+> +    }
+> +
+> +    if (!cei_flag) {
+> +        return;
+> +    }
+> +
+> +    set_comp_cei_with_log(comp_entry, cei_flag, msg);
+
+Code gets slightly shorter if you inverse the logic here:
+
+     if (cei_flag) {
+         set_comp_cei_with_log(comp_entry, cei_flag, msg);
+     }
+
+> +}
+> +
+> +static void check_sclab_ola(SecureCodeLoadingAttributesBlock *sclab, uint64_t load_addr,
+> +                            IplDeviceComponentEntry *comp_entry)
+> +{
+> +    const char *msg;
+> +    uint32_t cei_flag = 0;
+> +
+> +    if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OLA)) {
+> +        /* OLA = 0 - Load address field in SCLAB must contain zeros */
+> +        if (sclab->load_addr != 0) {
+> +            cei_flag |= S390_CEI_SCLAB_LOAD_ADDR_NOT_ZERO;
+> +            msg = "Load Address is not zero when Override Load Address bit is zero";
+> +        }
+> +    } else {
+> +        /* OLA = 1 - Load address field must match storage address of the component */
+> +        if (sclab->load_addr != load_addr) {
+> +            cei_flag |= S390_CEI_UNMATCHED_SCLAB_LOAD_ADDR;
+> +            msg = "Load Address does not match with component load address";
+> +        }
+> +    }
+> +
+> +    if (!cei_flag) {
+> +        return;
+> +    }
+> +
+> +    set_comp_cei_with_log(comp_entry, cei_flag, msg);
+
+dito
 
   Thomas
-
 
 
