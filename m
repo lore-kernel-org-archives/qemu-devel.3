@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B144DD58E73
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 07:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C9BCD58E78
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwy4O-0006Uf-Pa; Mon, 02 Mar 2026 02:52:00 -0500
+	id 1vwyJx-0004Qv-5b; Mon, 02 Mar 2026 03:08:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vwy4M-0006UL-TO
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 02:51:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vwyJk-0004PY-Km
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:07:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vwy4L-0001Xc-0U
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 02:51:58 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vwyJi-0004jm-I2
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:07:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772437915;
+ s=mimecast20190719; t=1772438866;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ypQw4hDCNC7avvvsSlPLxUPDdWjLEOd9ZvGufbhFgME=;
- b=KTBw/rQ1K7QUpJFnTD8wMTaUGhOjDgLfkCZEv7Oeia0oxyGGnkSYsQNb6oTfpyzTBNpYFU
- q2FbzhgoGUrj+A95vUSnzAYuI5j/fRqZa2u3qVWfmdKMFcFhlLHgtV7BRVAOXaE3U688TZ
- o/2ll4CVVmVvGXMRAhloYut0PaTChMk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8muxYpR3gJ/S9XyfrCJVADEL44Z0oG0OTmRp40bxfGU=;
+ b=Cf6oB0wQ/ysZKm/gcX6Egirj7SBpb8adV9cJ603qbFAoc7ewuVr4xTY1jhdF9G2fnyue+9
+ v5YHZmKmCC9TuHIq6lK2JF3xCMfrr+Fpf9hZuVTsNefDN0czAxssytYx6g7YedHveNuePn
+ ZBwy/JJ1ghXhCJanD8+vChM5eWCBGo8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-l9xpSyaZO7Cx-KpzvkW1cQ-1; Mon,
- 02 Mar 2026 02:51:52 -0500
-X-MC-Unique: l9xpSyaZO7Cx-KpzvkW1cQ-1
-X-Mimecast-MFC-AGG-ID: l9xpSyaZO7Cx-KpzvkW1cQ_1772437911
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-61-DL4O1zAoMIy1TVFDch3hFA-1; Mon,
+ 02 Mar 2026 03:07:43 -0500
+X-MC-Unique: DL4O1zAoMIy1TVFDch3hFA-1
+X-Mimecast-MFC-AGG-ID: DL4O1zAoMIy1TVFDch3hFA_1772438862
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 443011800342; Mon,  2 Mar 2026 07:51:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4BFDE180025F; Mon,  2 Mar 2026 08:07:42 +0000 (UTC)
 Received: from [10.45.224.162] (unknown [10.45.224.162])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 66D5D30001B9; Mon,  2 Mar 2026 07:51:48 +0000 (UTC)
-Message-ID: <cf2779cf-181b-4264-993b-76f04f375e7b@redhat.com>
-Date: Mon, 2 Mar 2026 08:51:46 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 76D4A1956053; Mon,  2 Mar 2026 08:07:39 +0000 (UTC)
+Message-ID: <c8a99b2d-9ab9-470d-ab2d-c1525b4cba33@redhat.com>
+Date: Mon, 2 Mar 2026 09:07:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] tests/docker: add support for podman remote access
+Subject: Re: [PATCH v2 3/4] tests/docker: allow display of docker output
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20260210163556.713841-1-berrange@redhat.com>
- <20260210163556.713841-3-berrange@redhat.com>
+ <20260210163556.713841-4-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -101,20 +101,20 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260210163556.713841-3-berrange@redhat.com>
+In-Reply-To: <20260210163556.713841-4-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,28 +131,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/02/2026 17.35, Daniel P. Berrangé wrote:
-> When a developer's environment is already within a podman container it
-> is not possible to use 'podman' again to create containers. It will
-> usually result in wierd errors such as:
+> The --quiet command is used with docker unless V=1 is passed to make,
+> and as a result stdout from docker is never visible by default, making
+> it hard to diagnose failures building / running containers.
 > 
->    Error: fatal error, invalid internal status, unable to create a new pause process: cannot re-exec process to join the existing user namespace. Try running "podman system migrate" and if that doesn't work reboot to recover
+> Meanwhile passing V=1 is undesirable as that makes the entire build
+> system verbose.
 > 
-> Podman offers the ability to talk to a daemon outside the container,
-> however, which could be leveraged by QEMU.
+> Introduce a $(DOCKER_V) make variable which is initialized from $(V)
 > 
-> This can be used by invoking "podman --remote", or equivalently the
-> separate "podman-remote" binary:
-> 
->    https://github.com/containers/podman/blob/main/docs/tutorials/remote_client.md
-> 
-> The current 'podman version' check is insufficient to detect the
-> inability to launch containers, so it is replaced with the stronger
-> 'podman info' check.
+> It is thus possible to display docker output without also enabling
+> make verbose output.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/docker/docker.py | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+>   tests/docker/Makefile.include | 20 +++++++++++++-------
+>   1 file changed, 13 insertions(+), 7 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
