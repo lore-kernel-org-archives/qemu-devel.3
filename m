@@ -4,89 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C65BDEB3629
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 17:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 986EAEB3624
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 17:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vx7Mh-0007T4-Uq; Mon, 02 Mar 2026 12:47:31 -0500
+	id 1vx7PV-0008Od-5M; Mon, 02 Mar 2026 12:50:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vx7Mg-0007Si-Fq
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:47:30 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1vx7PS-0008OH-6t
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:50:22 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vx7Md-0003mP-Sf
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:47:30 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-82742aa5a3eso2225936b3a.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 09:47:26 -0800 (PST)
+ id 1vx7PP-0004JE-VY
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 12:50:21 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-82728e5680cso2559197b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 09:50:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772473645; x=1773078445; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=H2YO6rYSw51nUsTzbnCp1uV4PbREe2ELUJ/5aVOWoOQ=;
- b=osPZJv9zBAz297GkuUyUw3/W4nWcMS/p2tXdY/NnN66Uf5XEHjdfR3FMjjRF9GbdBH
- 07BBGADyEnKZd9uVq8JfL4M82QbPLadKMkG62clIMJmAMnjTwrkLBksP0qZbGjxUpuLf
- Aw/dQjwV3xuspglDY5NoRsB5LnIn4KDi79WzgBBaHxYW+41Vsp4sHrb01QdWQZ7xGorL
- 0DhLZW/QOWvEyYPNAQJ5T2X/gANvwxk0EyXcvqL9ov7fJ7bdpOqnb205s+rv1y400U07
- gx5FhAMe89zLkPqRz3l8J98DianD0TuCf/OiPPZBoMAEbzEkb9jg7Rv9xoYsBnOI5A/G
- 2OtA==
+ d=linaro.org; s=google; t=1772473815; x=1773078615; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=66ro48Zzfj8FQGYBcZHELoDQEEWrI/qZ/UDSu0apV4k=;
+ b=YHt835RRQMiwQYLmv43gnJF6DdtL/ILt1qOKTlGRnUBDx7wwtZN099ToGfTgxsvbPf
+ Arf/AZilF28G0VoHlc0hTPDD4OAmJZVnAzxsnDmSXU4nMOVmJSGvk/2BoXi0/2CJ/PMN
+ +/OXcmdYEp6zaw2ktjzt55QWG6TU9Jklo6HjG6ygVBsGMljpIwL4X8RxZoLws10FAgsL
+ blkwP5glRhRBBBaFVmOXChZMmZcFYxMAv6ebCL/xXyl6/cUj2ZrOJZVqxhOkUO3zvToE
+ cPJTqi4A2XaEUuYKQbZRf7/ffKCKvOE1W1BdVTyTlUAdLj1BXQ2E1POGU9xiaoqznL/9
+ c9Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772473645; x=1773078445;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=H2YO6rYSw51nUsTzbnCp1uV4PbREe2ELUJ/5aVOWoOQ=;
- b=dbN/t1LAg/nhGGBKjN3agFFUkUV9tC55lvkVZgKaE8BYOBBTeJSHsbVLZCJqi6oa/y
- qo4yjIywbNkchsAzKQRe93zL7NfRYEVge6jZtrtRaMJ3OBhcrOQnmazByinRe9d/+fYl
- N663Zw/sChkbC86bykPI+A9tOYP/cEkQ3rmRQZQG0cvF/N6QLKjNIH9IGgxlp3jRjo+m
- 9rXt013T8cF0eeHRcyTtDgKXX1BASgwKLunZlXfIKlf0OAqEh57wW6MyOo/q0w4b/UXj
- 5WtIrpkdnR4tFzgoPkPug6CH42Y4Y4F+gGRDVLrfoyTsTDeg7rpEQKLkt3HlHZ8GPU6U
- 9R4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUSw6C0J4Iopz5zlU8vmY6hf1uThWmnI0Jj7ZxnXZlVTNi3FpST8qP2jFpnP3X5K03xEGSradPVuQr@nongnu.org
-X-Gm-Message-State: AOJu0YycVe3GISGSS5Gp1XAVdDbDTIWqQbP+i++Gy5CHsJLEzNpD62Oz
- Zd7M/HVvI2w1QxBegCmQmF0/o6n0SCBzmD8/qBDtlPirQLFpbTf0QwcZoLmlGZZ3l+A=
-X-Gm-Gg: ATEYQzxUdzBQe31H3F/41CG0bqjSTknWL0FID0l9qhj9O7Tj3LX4qMy8GXi5X7GkLLc
- xe6LXux1nd2x5vTz9FuX6LbdUDKF5tMXFM6ooOmseZvrWnPjjs26KnUq87Vtd4ThnqlvvTvDqom
- FOcEzWhwXbKboy1Bkh2vL/2HUeCfJAyx+nxVyqox67QPTb959VLXM6wbP2srtMRlFbTw3RedTVm
- r2NafPnbi3dwpzzR2dRpyiylHovLVLKm/Uz2cPTG8F1DclRTCayNpEuCMkladLQ6KtxugBoxvTz
- pOXyieU7VUAOBs5bReoh371+s/UoXnD/ekGdmUE1Lqcr0tMzD6cmTGnCWq1eSNjg+HgrfkeeIFw
- 1K5z4fAc2sONMUWTNAxAH5uyvJ7WezTJylClJQvGJ2V5X3NRfSFe56ZUgdV52ECtRZLL4RDmW9Z
- qylU+nvPnAj9PfV1GSJFqnNYcpjfhoPYEmflKsC5fXjqTLYsHRlfzEyp0x6NZT7f13y4N4
-X-Received: by 2002:a05:6a21:9217:b0:341:d5f3:f1ac with SMTP id
- adf61e73a8af0-395c3b0dd7emr11408985637.41.1772473645223; 
- Mon, 02 Mar 2026 09:47:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772473815; x=1773078615;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=66ro48Zzfj8FQGYBcZHELoDQEEWrI/qZ/UDSu0apV4k=;
+ b=ZE53brCc0lVkRIHom5Ra0UuUafRntUJVo7X115/9JlZezN0W8+RJkP2keILVgZdasD
+ cVTfkS+aOHM6qmxXmGkf4CKl4iH9Dccy6FpTvgQDDF+au98AFyFLI7UsUKnhzhTtn+lS
+ 3NVN0rg/EFhtHuqfkr62fmiGixY6CjE2QssVc+skKgsSDKQNsCLnCHO+ztDONxgCo/AR
+ xDSdXr8vXae0gRTXO1uixWcV55jytIkq0aQMqHah1p0BRSnFB4le/d5H1qKPa0oRKfyF
+ AXcLJl5GwaBoWNXaJ7RFyduPOOT7+9jeGPWzrNHWg40tUgO08+23Vef65rtweJHjDN0F
+ t3tQ==
+X-Gm-Message-State: AOJu0YwMiu6aSKbfVuI+yhWqzr22n45MVnrHL3YnJe6OGkP7BDpFwOY5
+ Zfrntg/I+9a146eBhlXQ/Ii1t1Tq6fFiHprI0Fe7DDGcSWzRctZPwkBUsOnZDX2JlVc=
+X-Gm-Gg: ATEYQzyYrNj/kiOnmEUjNFgTJuuO9v0BWc0ozd7I++3l066eJGgLvWX5jjexwL4xTXB
+ ny9Tt+lwqW+yuL3TvHIHohfYIJ+9zVxGgr7ODZhRLWJzasKL+Tn5mzzQS5nUzs6BbT6Fz4Fi0i6
+ o/MZ3jinUNe091e6b100eF9M8ufIXLn3i+bJJkFSLNi/WZGIqF15brMnisBB2UBfMad8dRjJgNA
+ W4K3xaV+Sb3V69r8KsJsq6Jd39OrP8vinZuXsrH7sBt2Q3VPArwBkigmz3tiTlaFTQuRWB5VVqG
+ A/2qTcb6lxKNA+3slz7gWBUnHytYnQFDMYjNByXVdkldkeLS6nfWsNMB500T0YXFGPh2wWm3KN4
+ wNTSz6K7eNvpduYy5N7ia2XCy/CS0oB9NcPYljAt6JCGDTgj7c8LUfMofd3YcLmDMBQ3G5eLAXP
+ hv6z4+7fsILivhd5xeE4b8raFnVbGsc+uCwhDUI62V3ZpoqJrJb9qyp8H9Ka65eKj6MU41
+X-Received: by 2002:a05:6a00:339a:b0:7e8:4398:b34f with SMTP id
+ d2e1a72fcca58-8274d9ebde0mr11380142b3a.34.1772473815424; 
+ Mon, 02 Mar 2026 09:50:15 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae3d19559csm77357125ad.5.2026.03.02.09.47.24
+ d2e1a72fcca58-82739d49423sm13799693b3a.4.2026.03.02.09.50.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Mar 2026 09:47:24 -0800 (PST)
-Message-ID: <3cff6489-e487-4f7b-b2ea-984fb5379ed9@linaro.org>
-Date: Mon, 2 Mar 2026 09:47:26 -0800
+ Mon, 02 Mar 2026 09:50:15 -0800 (PST)
+Message-ID: <535bf813-7926-40d4-b0de-3cd181dbcfa5@linaro.org>
+Date: Mon, 2 Mar 2026 09:50:16 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 19/31] hw/arm/smmuv3: Fix CFGI_CD handling when stage-1
- is unsupported
-To: Tao Tang <tangtao1634@phytium.com.cn>, Mostafa Saleh <smostafa@google.com>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101733.2995020-1-tangtao1634@phytium.com.cn>
- <aaGu5v0To65M5LkB@google.com>
- <585be3ce-d5f3-455a-a7fb-3181920cfc60@phytium.com.cn>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v5 2/7] linux-user: make syscall emulation interruptible
 Content-Language: en-US
+To: Warner Losh <imp@bsdimp.com>, Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org, laurent@vivier.eu, berrange@redhat.com
+References: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
+ <b280d4ad-522d-4d28-b203-b87f114d0d81@epfl.ch>
+ <CANCZdfqML5j5TLOQn2vCNAgxF9iWrL=92x_+oL4_NOUUJqt+-Q@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -121,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <585be3ce-d5f3-455a-a7fb-3181920cfc60@phytium.com.cn>
+In-Reply-To: <CANCZdfqML5j5TLOQn2vCNAgxF9iWrL=92x_+oL4_NOUUJqt+-Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -148,33 +139,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/26 4:33 AM, Tao Tang wrote:
-> Hi Mostafa,
-> 
-> On 2026/2/27 PM10:49, Mostafa Saleh wrote:
->> On Sat, Feb 21, 2026 at 06:17:33PM +0800, Tao Tang wrote:
->>> Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL path
->>> and return CERROR_ILL when stage-1 translation is not implemented,
->>> matching the architecture requirement (IHI 0070G.b, page 176).
->>>
->>> Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
->>> Signed-off-by: Tao Tang<tangtao1634@phytium.com.cn>
->> This is a separate fix, it can be sent standalone to make this series
->> smaller, similarly the first patch.
+On 3/2/26 7:15 AM, Warner Losh wrote:
 > 
 > 
-> For #1, #2 and #19 commit (this one), since I’m not fully sure about the 
-> expected process here, should I resend these already Reviewed-by fixes 
-> as standalone patch respectively right now,  and try to get them merged 
-> first?
->
+> On Mon, Mar 2, 2026 at 7:03 AM Florian Hofhammer 
+> <florian.hofhammer@epfl.ch <mailto:florian.hofhammer@epfl.ch>> wrote:
+> 
+>     The syscall emulation code previously wasn't interruptible via
+>     cpu_loop_exit(), as this construct relies on a longjmp target that
+>     is not
+>     live anymore in the syscall handling code. Consequently, longjmp() would
+>     operate on a (potentially overwritten) stale jump buffer. This patch
+>     adds an additional
+>     setjmp and the necessary handling around it to make longjmp() (and by
+>     proxy cpu_loop_exit() safe to call even within a syscall context.
+> 
+>     Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch
+>     <mailto:florian.hofhammer@epfl.ch>>
+>     ---
+> 
+> 
+> So bsd-user would need something similar, I'd think. But it still uses 
+> the older-style
+> TARGET_EJUSTRETURN. With half of the archs still out of tree, I'm not 
+> entirely
+> sure the best way to approach this.
+> 
+> The code does what you say, which is good, but there may be some subtle
+> reason to do something else.
+> 
+> Reviewed-by: Warner Losh <imp@bsdimp.com <mailto:imp@bsdimp.com>>
+> 
 
-If a set of patches is fully ready, you can always put them first in 
-next version, and ask the maintainer to pull this one.
-If your current series needs them to build, I usually prefer to keep it 
-all together, instead of having two different series, and using a 
-Based-on tag. But it's a personal preference, some people prefer to see 
-several series.
+At the moment, syscall filtering is not available for bsd-user, it's 
+(sadly) only implemented for linux-user. Which implies that current 
+changes are not needed for bsd-user neither, since they can't be tested 
+anyway.
 
 Regards,
 Pierrick
