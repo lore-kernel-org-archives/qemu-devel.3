@@ -4,112 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6A5D58E7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF6FD58E7D
 	for <qemu-devel@archiver.kernel.org>; Mon,  2 Mar 2026 08:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vwyso-0001Ut-2h; Mon, 02 Mar 2026 03:44:06 -0500
+	id 1vwysN-0001Ng-GZ; Mon, 02 Mar 2026 03:43:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwysk-0001Ss-U8
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vwysi-0001VM-6H
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:44:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772441038;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=a8PTQ2BRM/m3YVXHv+WYxXuCIrKW0fl7sZurT0v5FJ0=;
- b=gCaP7boVgBhkF2ELol3es5DecnpUng+HBSGeOb9FVt7E2tMRt8i/g1LZd+QMqfgjxCr8v3
- lEvPjI82V6kHNcl+/F6DAmNqcQJpDn+qW10KxMzPGI8vrP++Bapm2hwpMpGDgUYI/VzYFh
- S6Eu+B9xk51VDuOLnTrflbjH7olfNww=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-150-WUSxqJdIMGCV97DxI-i9ew-1; Mon, 02 Mar 2026 03:43:57 -0500
-X-MC-Unique: WUSxqJdIMGCV97DxI-i9ew-1
-X-Mimecast-MFC-AGG-ID: WUSxqJdIMGCV97DxI-i9ew_1772441036
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-439b484ee04so482086f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:43:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vwysL-0001NA-Pt
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:43:37 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vwysJ-0001Sx-Ss
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 03:43:37 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-38709888abeso60359541fa.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 00:43:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772441013; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eK2hZA6cPjQJDkn3mEgM6QWy9c/r3Uu+zWbcovUAzS/r9eAG7zqbpZb4MOSuUBon4l
+ GQXPwmb0TdoNg+T2be5qz7SkX7O6VJLYeGbYd5gu4o0lTlfH2SBwtRcsrzeJZCC4cB9D
+ o1YC26V6S4PEYV+SkR9DxqCtc67A+IMvMOarN1mPJARFtkF7uLgxM2Xv1YG/LOcc1GqQ
+ kFhh+pUyrNYLKMHHRxLEO/lvbAoC+sELhnRvgiVjM7WHSDrSd4ZRv8P81wqcPqx/PuZm
+ Uj1+mO2h61UrBHTnL7sBlEoWVa/wVZhuewmpG73iPYh9RjlXTvNI49nB/SIqsxwk4Z9a
+ wz1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=MTMd4mqiUHkCsBCpE9iA/Rfog8aYAKw5nDWHEHJelXc=;
+ fh=1qfL3HhlEDEQYcjQpM/5urlGlVQZcBrsut7jqVRLSc4=;
+ b=VfFkjvAfsMg2Yp/YYDwqGfo4KIIjphgLKqRc865eqeJYG+mJ68uPITaivlQUfcIg7P
+ cTkIl+Cnk4P5PmUyU7e9NtqqMKnURGGzbxhAo3fKSNXyoQ9kpQqyUGfutT8hmlJSu1mm
+ S150oNj00IAGE1xoNf06SHzpJEIxmvgsvSyWegI1hsTq5+4bTVPfameptgAeWda/tXS/
+ ITAGSG/WwDBtZ2NN4ASB72vb6RhohEFI/c6H7ANLSBa4fjloPKJRZxnlRa/NNkQRt+AF
+ DyrNVYmbioLrJ9uhZcAgL5fZw9lEFkoLXpTk8Nw9rO7iayjVmG1QdM3fx6UnFOFQiCsS
+ bI+g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772441034; x=1773045834; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a8PTQ2BRM/m3YVXHv+WYxXuCIrKW0fl7sZurT0v5FJ0=;
- b=A1OXzx/WIFT2y6WgaVEd3FuiPurIbLjl2+fzmeokalr9pxlbEuBCglkCfK3zJUSQHY
- /TPWlLzSpfXW2TFXve2rol2magvkA0LK1rZYdo59lrLhxc4+/7OLExvI+ZoqEZdbQuNn
- 4IEGwNVtQqQ16et3/Tm8rrCTBMtcDppKuRAgjhxhuBwrzJwWBc3dwRw1zc/NN5c20PYY
- ZHvY8n5wqM9cjD/rgihydYViMlGi+Vr8dYLGa2a4nY8Ss6tup4EV/IUTlkTPQHhCbRv4
- ZITywyvOeAiF9xVudJqYv+rK7AydS1SqptbcsH1NRWzgDk8HFVsQn1zzNJG50RsHd+SK
- hrWg==
+ d=mihalicyn.com; s=mihalicyn; t=1772441013; x=1773045813; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MTMd4mqiUHkCsBCpE9iA/Rfog8aYAKw5nDWHEHJelXc=;
+ b=W0f431SoxSQQXw1QMcsxvj2Q4v+oMD/v5vJ/TdiMrJP3KUugrY5MSd9hH07ACEgTtd
+ 1soa3kktlHV8yOYbmVEZ8oQZyGKWNaM8RawyVbtK5uoNB4P2lf1aKPQyEyV9g2Ir0Y7/
+ TOWngWzXhA08UvE5S0e7ylBUhaK3I5Ky+fQFc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772441034; x=1773045834;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=a8PTQ2BRM/m3YVXHv+WYxXuCIrKW0fl7sZurT0v5FJ0=;
- b=CbzkxcUmB5wTnQLmhjOqiwAWvJGgR/PefdguuIrtEs95y5clGrcNCjipv0HbT+4BqI
- Fkf4kxExVrM1HgyBfrMPVMYfcZW1hNuVOeftnRVte5Qbn69LqLKqLSGe9cHKZ16+IAGf
- zHK/phh6a8gSK9Uy78PNzCJAFqFTGFA5WcD6ZPPcM+1hKKUofQXuJHlX+grzG0WC+WZm
- m/qAdUjnINgd13Y2xMuSloxqM7jhpbXnucC5Fwr8tcQLAEJRwen32jepfSfA6TZ6moZB
- aULQ/AnHGx9Rew4n9S4THzJRjKbBq0OndcQaLcJaWLG9BZBkPYtvGUYqXr3i6M3hIY3m
- FrZA==
-X-Gm-Message-State: AOJu0YybzQS55nfiKVLCWXukIB7cAgOcZpKPc/+UpFtMD3qX2pcN+T2f
- JAJlt0AqkR4t1xPi3NAvTphYpcWheqR0mCfEraASa+vRndNFhsly672Os3unZ0PCMriXLI15For
- i1KKTznom24R2CDwILw0heZTaFwpqaErAUTZW82u2Unhe73IdeMLOH00AnD/H0feqzR6refDjS2
- DUVM7uOiPFV/nnSTqSjN8YdRInW6k5jdWW9HCQ14iB
-X-Gm-Gg: ATEYQzwrtyizTkdReuQf/IMkx8GjTSF3ta/O9I7JZJQB7IzDP9GZcMdxjMvttQ2vFo+
- DdE4hFvYKXzcsIllOxdovXU5KnJz0NUi8gDzDd/9lapTySTTK7lXB9hasCtGUNNooy5P5UzkaI/
- fF2Ewy4y4wvXVqqAna17DuJrd0+BNwp6dLAqwlQdROf3egqBpvibB0+FFecVR4U4kOyRKlQXWTJ
- LDix+9X0DejEKDyDxvyu+xAYo9A60JCMG5Q4yH/9MPM+2w3m1pjpGzjeZJ1jcvNnBO/k6ASZ6LV
- Ny5uL2woZrb+4HGUngHf6oXmcXVFMmLatZp3D4tHlfqPL5qqICpUCskSQi/DXXgoZDV1uFVk+wN
- jPairFaHbVf/0Qyc6er+VxkVe87jSrVqa6GbjJXOjn5oToxXtTBy2UKMoISwwbl2VH1BGJKR8ow
- P1OfzitgbggpH4uN1we2byHdlKfyc=
-X-Received: by 2002:a05:6000:400a:b0:439:ac16:bc6 with SMTP id
- ffacd0b85a97d-439ac160e0cmr10011957f8f.18.1772441034543; 
- Mon, 02 Mar 2026 00:43:54 -0800 (PST)
-X-Received: by 2002:a05:6000:400a:b0:439:ac16:bc6 with SMTP id
- ffacd0b85a97d-439ac160e0cmr10011904f8f.18.1772441033945; 
- Mon, 02 Mar 2026 00:43:53 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75a523sm25581437f8f.19.2026.03.02.00.43.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2026 00:43:52 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Wei Liu (Microsoft)" <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 004/102] target/i386/emulate/x86_decode: Actually use stream in
- decode_instruction_stream()
-Date: Mon,  2 Mar 2026 09:41:59 +0100
-Message-ID: <20260302084338.473368-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260302084338.473368-1-pbonzini@redhat.com>
-References: <20260302084338.473368-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1772441013; x=1773045813;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MTMd4mqiUHkCsBCpE9iA/Rfog8aYAKw5nDWHEHJelXc=;
+ b=eeTvzb1I7U2TQX7CvjXqK+N+NP8Ats4b06bixzwO7LTuz0GAkYZsrOy4m4cjXFF0ij
+ uPOkDwo6iwt/M2jJMXaAksun4vFQvCSBAwbGMUaSbsjCaHUejraC9G+dr+tJY50aFnf1
+ dnD7AYVHRxuXTbskQXNdqafxxvmb7VmMdXXcbiu2QeW3nLE1BH9ZwBLLJRz2cj7FD3WG
+ lts2Bhk28pM6gRD6GzJ1u2gv5ysRZmGTu4zxPFhrHlnWXRPqoxlCeALCokz9CicfbKgv
+ ICFAW8pK+EpDUNgFS3qEqI4Fl0jeUYuZkbmDEgg3I2u3wJDP4SihR3KvbzskgUBtY68b
+ fDZQ==
+X-Gm-Message-State: AOJu0Yy5taAGh/y5YrEZ6CQR+THHVMOz0sKrimSUqKaZbt5uBWcXm1C4
+ 0vymekhXALoXF9I8cTls1BVBEFEJ0O1R77kdUEwdhgdU7iIC5sEunTby2ibiIK65ZOCWsLNoskH
+ QistTdEDeixBbSdg/Z1P/BstZooEIlwiNiJoUjWtHIg==
+X-Gm-Gg: ATEYQzyOEzUQpgJmJ75ZWVSqPvOONMoesWprEr5Xdx1lNeGoaZYkjuRsHFA+C7XHvYM
+ 4IIqQbfNKA9CUcSrnLMVhT3Wj2q9RupbfXf/IV2oZo32Cl98uqnFfXSxvpg5xSLcdS9ek3tPcfR
+ IfLvnARuTM7xOETZh+lwd+cMuriOwSe9KZ28BP11Dl16zgdA6EE36nCERmCDcXff3M9l78WCWTq
+ 7z7wwUkJeWgBeTh0K0SJ0UoaNDy6bMZIo6v4l2pfcvlPPaz6BGgwwxRK1Jlv5WgNi8GQWeq8Sgu
+ han3b6c8vUfrUCcuis9qlXmPrOfNLesCyZWKgnM=
+X-Received: by 2002:a05:651c:3044:b0:382:f6d3:e0fd with SMTP id
+ 38308e7fff4ca-389ff116caamr75522301fa.4.1772441012964; Mon, 02 Mar 2026
+ 00:43:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.012, RCVD_IN_VALIDITY_RPBL_BLOCKED=1.188,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260217152517.271422-1-alexander@mihalicyn.com>
+ <aaFrB7fMMUPfMP_5@AALNPWKJENSEN.aal.scsc.local>
+In-Reply-To: <aaFrB7fMMUPfMP_5@AALNPWKJENSEN.aal.scsc.local>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Mon, 2 Mar 2026 09:43:21 +0100
+X-Gm-Features: AaiRm51MMhlXJ4GYzBVNmCA4r43b7yxxYTFcKjlLH_A5W7dDP1h6o3nxF2veXrQ
+Message-ID: <CAJqdLroN0i6FUe1oGBVYh0ytdYNjGOHuYa0GyoaZ9wTBfh5Qzg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] [RFC] hw/nvme: add basic live migration support
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,53 +116,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+Am Fr., 27. Feb. 2026 um 10:59 Uhr schrieb Klaus Jensen <its@irrelevant.dk>:
+>
+> On Feb 17 16:25, Alexander Mikhalitsyn wrote:
+> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> >
+> > Dear friends,
+> >
+> > This patchset adds basic live migration support for
+> > QEMU emulated NVMe device.
+> >
+> > Implementation has some limitations:
+> > - only one NVMe namespace is supported
+> > - SMART counters are not preserved
+> > - CMB is not supported
+> > - PMR is not supported
+> > - SPDM is not supported
+> > - SR-IOV is not supported
+> > - AERs are not fully supported
+> >
+> > I believe this is something I can support in next patchset versions or
+> > separately on-demand (when usecase appears). But I wanted to share this
+> > first version as RFC to get some feedback on this in case if I'm approaching
+> > it wrong.
+> >
+>
+> Hi Alex,
 
-Compared to decode_instruction(), decode_instruction_stream() has an additional
-stream parameter which avoids some guest memory accesses during instruction
-decoding. Both functions defer the actual work to decode_opcode() which would
-set the stream pointer to zero such that decode_instruction_stream() essentially
-behaved like decode_instruction(). Given that all callers of
-decode_instruction_stream() properly zero-initialize the decode parameter, the
-memset() call can be moved into decode_instruction() which is the only other
-user of decode_opcode(). This preserves the non-zero stream pointer which
-avoids extra guest memory accesses.
+Hi Klaus,
 
-Fixes: 1e25327b244a ("target/i386/emulate: Allow instruction decoding from stream")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
-Tested-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260223233950.96076-4-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/emulate/x86_decode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> Nice work!
 
-diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-index 6ad03b71b07..7bbcd2a9a2a 100644
---- a/target/i386/emulate/x86_decode.c
-+++ b/target/i386/emulate/x86_decode.c
-@@ -2088,8 +2088,6 @@ static void decode_opcodes(CPUX86State *env, struct x86_decode *decode)
- 
- static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
- {
--    memset(decode, 0, sizeof(*decode));
--
-     decode_prefix(env, decode);
-     set_addressing_size(env, decode);
-     set_operand_size(env, decode);
-@@ -2101,6 +2099,8 @@ static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
- 
- uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
- {
-+    memset(decode, 0, sizeof(*decode));
-+
-     return decode_opcode(env, decode);
- }
- 
--- 
-2.53.0
+Thank you ;-)
 
+>
+> As you have already identified, there are a lot of features that are
+> non-trivial to implement migration for. I am completely in favor of only
+> supporting migration on a very limited feature set (i.e., don't worry
+> about CMB, PMR, SPDM, SR-IOV, ZNS/FDP and so on). Focus on the bare
+> mandatory requirements. It would be preferable if the "is migration
+> possible?" test is an allowlist instead of a denylist. That makes sure
+> we don't add a feature down the road and forget to add it to the
+> denylist. I'm not 100% sure how to go about that at this point.
+
+Yeah, I agree. I'll think about it.
+
+>
+> AERs are something we need to deal with. We should not drop events. I
+> don't think I have a problem with aborting enqueued AERs, but not the
+> events.
+
+Yes, this is something I'm working on right now and this week I'll
+send a -v2 with
+graceful AERs handling.
+
+>
+> Finally, this at a minimum needs somekind of simple smoke test to catch
+> regressions. Preferably as part of the QEMU test suite itself, but if
+> that is hard to achieve, then I may be ok with an out-of-tree test that
+> maintainers can use.
+
+Sure, my current tests were simple, I was running fio in screen
+session and then manual
+suspend/resume:
+
+time fio --name=nvme-verify \
+    --filename=/dev/nvme0n1 \
+    --size=5G \
+    --rw=randwrite \
+    --bs=4k \
+    --iodepth=16 \
+    --numjobs=1 \
+    --direct=0 \
+    --ioengine=io_uring \
+    --verify=crc32c \
+    --verify_fatal=1
+
+Also, I had an idea in mind to ensure that Windows VM also survives
+suspend/resume.
+
+I'll take a look on how QEMU test suite is organized and try to come
+up with something.
+
+Thank you very much for looking into this stuff, Klaus!
+
+Kind regards,
+Alex
+
+>
+>
+> Cheers,
+> Klaus
 
