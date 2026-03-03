@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80C5EB365D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 03:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70351E67A61
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 04:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxGm8-0007cw-Fs; Mon, 02 Mar 2026 22:50:25 -0500
+	id 1vxHCa-0003Ov-8a; Mon, 02 Mar 2026 23:17:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxGm6-0007cf-Oy
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:50:22 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxGm4-00033H-Hk
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:50:22 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6233nh6x037586
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 3 Mar 2026 12:49:47 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=t12vpf5BydF6dZQ1OJ4FfNQstBfbjttaXn2PVWYVUfQ=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772509788; v=1;
- b=iLQgQ+Vj1WwTuzWvhBQNcUA1tHwd/qCYgDs5VPDcQ6sLUxX8dGxhBCx46JdAl3Dg
- JA7OP0zlwiMmM67PfAXpvT1IQV/jInHyegz+U8D6M8SHoMwtQd1Xk2z5xV0Lw/er
- bULX1uB4lpUOvAoDmjylJk12bDI51tg7Lw0ap29Z17c0oBZ8XGIHFe1jP9Vy7OaC
- MDzqiMAozPuMFtK2ysWL4Had7Y4Wmr7nhXd+E7AsgjZGGswErvzPf8MEOGG1GQon
- 8LT6V+5VI+0PFgnXCnTPFQmTz5s+5iPnuFhITpFmN631Ig/pDkxthI64B9YJs6Lu
- ZgyKAo+gMJZrtkH1FaMF6w==
-Message-ID: <88f3150c-277d-403c-8a64-0d91d61980be@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 3 Mar 2026 12:49:47 +0900
+ (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
+ id 1vxHCY-0003Ok-V1
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 23:17:42 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
+ id 1vxHCX-0006Sr-4q
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 23:17:42 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48373a4bca3so31258065e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 20:17:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772511457; x=1773116257; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=53zqa3khAxopP2aH9AXDCF45puHjLBt7Xl3ajmc+C4E=;
+ b=DMmeETYqz0meHgM3mRgcoUiuuGVfDqBeTkoMF5acCV0a99RlSggN2Eq94knh+NXwUz
+ 6DHejfEBhQUkDQa+vHIzKnoD3EUrK1y7+ntA/xsjy+OABFZ/1qo8tAZS68cKx8LONnsd
+ eqGkOtqb2wTsMJymx3rcTmstsuhLR6VHF/UiUh2+Vv9u42f0Ih3Y39HXQBySt81UG69p
+ sEWfuT2oxUfLPR03vd0YbkEzIbCdvuJ1RXdbxMUzAxHbR6200hnHsqbPXk9rN9PNHnSg
+ cPGYGr4yz4X1BTVOl1Km3dtZFEecwjCyOSr+2iWoYvPGk24Mngqzk3JuYtkzndr4Aemx
+ T/8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772511457; x=1773116257;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=53zqa3khAxopP2aH9AXDCF45puHjLBt7Xl3ajmc+C4E=;
+ b=a1yJf60IIR4NWQ9DWtgOwjAOn/aE/29W7DxVZCbdlcMwGb5lcHOu56BEz5RtKLLh08
+ VOcXRVVbSKsPg18sTZsFE1mwwLAtveFB0j4XOiMD7skbCK3c4EJ12z8UMJFIOuynJ19h
+ sMOgHzRUuSLEzT5qHMmz2vTrvJLr++xpAav82A3T87uvp9hSw3bx47dAYb09y+gY/7A5
+ jShoWD23aVi+tqgEmW+fcv87Ep14Bec6pHgDGIWj8MyBtbzfbFL8qoMVSWsQvTcbrSfZ
+ pMJvt/UzkKV+TmpA6OrV5eJlLc2IxDjGmhsgSjDud+pVddn27r6ehi38DFBQfl4G62AQ
+ exzA==
+X-Gm-Message-State: AOJu0Yzt3lbskiMqE/AP+zZVYZkyrs1RigfsF6E8exXAFxtbsPIOr8ED
+ zslEeMxckUhQHVdwCvuToNGuDfkvZXsWRxu+kUfeLNcuOFlSGBcUkMb8jj6BGdnQ0BRIRg==
+X-Gm-Gg: ATEYQzx92kKZjsfLY6qzAO0SOjFdPiZ8Zb2NkAbYsj+m1ys9w9XXHZ4PNfsJr5i8/If
+ xFZUvm5w3HEIOX0CKJX/6xnCA25a+ozWWCXmArDMh2cakCDJDVm4WreIk5qkCFU5J/umbK5jfdD
+ +A/zjWOW+N1aE5r54XNXTmAIpo5zE+pzH4lX4B6uZ1/PkNohcBEzAbSDdu3BN7VG1T/OzTfMtlQ
+ 4Hfw+qxjyCFXtlisQ+2LEo1ieeDCkrGJGRwhmGun3Om/vKfTKmU7Z90gx/wfaCjIm6bsJeWPaBe
+ sHunW5DNT8QKx4YGaWppAXteFGbSiccJtLxileEkgzGJ+tXXaPLpviHeNzltcE9+9mNzeGJ4Qr9
+ RCty8KNf4yONqq5C6PyTgRZGKIh75TJNfbzO2zAdAHTUZ8JYjuwqzt8bFficDI9T4dT5FDj5NAG
+ YjSTiwHggkbAvi++pi4Wv/jBNgqX6W
+X-Received: by 2002:a05:600c:4f0e:b0:483:702f:4641 with SMTP id
+ 5b1f17b1804b1-483c9b94367mr244616705e9.3.1772511457294; 
+ Mon, 02 Mar 2026 20:17:37 -0800 (PST)
+Received: from ST.. ([102.185.186.72]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd765604sm388547795e9.15.2026.03.02.20.17.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Mar 2026 20:17:36 -0800 (PST)
+From: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Mohamed Ayman <mohamedaymanworkspace@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH] vhost-user: document vhost_user_read() message handling
+Date: Tue,  3 Mar 2026 06:17:23 +0200
+Message-Id: <20260303041723.7410-1-mohamedaymanworkspace@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 03/18] ui/egl: Don't change bound GL context when
- creating new context
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>,
- Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
- Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
-References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
- <20260302145920.735423-4-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260302145920.735423-4-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=mohamedaymanworkspace@gmail.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,96 +97,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/02 23:59, Dmitry Osipenko wrote:
-> Don't change bound GL context when creating new GL context for consistency
-> with behavior expected by virglrenderer that assumes context-creation doesn't
-> switch context. eglCreateContext() doesn't require GL context to be bound
-> when it's invoked. Update qemu_egl_create_context() to spawn GL sub-contexts
-> from a common parent GL context instead of a currently-bound context.
-> 
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> ---
->   ui/dbus.c          | 2 --
->   ui/egl-context.c   | 3 +--
->   ui/egl-headless.c  | 2 --
->   ui/gtk-egl.c       | 4 ----
->   ui/spice-display.c | 2 --
->   5 files changed, 1 insertion(+), 12 deletions(-)
-> 
-> diff --git a/ui/dbus.c b/ui/dbus.c
-> index 905ee6fea71b..750a064e3fbf 100644
-> --- a/ui/dbus.c
-> +++ b/ui/dbus.c
-> @@ -47,8 +47,6 @@ static DBusDisplay *dbus_display;
->   static QEMUGLContext dbus_create_context(DisplayGLCtx *dgc,
->                                            QEMUGLParams *params)
->   {
-> -    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-> -                   qemu_egl_rn_ctx);
->       return qemu_egl_create_context(dgc, params);
->   }
->   
-> diff --git a/ui/egl-context.c b/ui/egl-context.c
-> index aed3e3ba1f3f..f9a998768beb 100644
-> --- a/ui/egl-context.c
-> +++ b/ui/egl-context.c
-> @@ -19,8 +19,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
->      };
->      bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
->   
-> -   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
-> -                          eglGetCurrentContext(),
-> +   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config, qemu_egl_rn_ctx,
->                             gles ? ctx_att_gles : ctx_att_core);
->      return ctx;
->   }
-> diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-> index 1f6b845500dd..19955792ac95 100644
-> --- a/ui/egl-headless.c
-> +++ b/ui/egl-headless.c
-> @@ -42,8 +42,6 @@ static void egl_gfx_switch(DisplayChangeListener *dcl,
->   static QEMUGLContext egl_create_context(DisplayGLCtx *dgc,
->                                           QEMUGLParams *params)
->   {
-> -    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-> -                   qemu_egl_rn_ctx);
->       return qemu_egl_create_context(dgc, params);
->   }
->   
-> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> index 0dbb429958e5..6b3519419039 100644
-> --- a/ui/gtk-egl.c
-> +++ b/ui/gtk-egl.c
-> @@ -217,10 +217,6 @@ void gd_egl_switch(DisplayChangeListener *dcl,
->   QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
->                                       QEMUGLParams *params)
->   {
-> -    VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
-> -
-> -    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-> -                   vc->gfx.esurface, vc->gfx.ectx);
+Add a detailed documentation comment for vhost_user_read() describing
+its message header validation, payload size checks, and error handling.
 
-This uses vc->gfx.ectx instead of qemu_egl_rn_ctx so it should be passed 
-to qemu_egl_create_context().
+This clarifies how complete vhost-user messages (header + payload) are
+read from the character device and how protocol violations are handled.
 
-Regards,
-Akihiko Odaki
+No functional changes.
 
->       return qemu_egl_create_context(dgc, params);
->   }
->   
-> diff --git a/ui/spice-display.c b/ui/spice-display.c
-> index 28399f8a8174..ae0f771c2a38 100644
-> --- a/ui/spice-display.c
-> +++ b/ui/spice-display.c
-> @@ -1033,8 +1033,6 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
->   static QEMUGLContext qemu_spice_gl_create_context(DisplayGLCtx *dgc,
->                                                     QEMUGLParams *params)
->   {
-> -    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
-> -                   qemu_egl_rn_ctx);
->       return qemu_egl_create_context(dgc, params);
->   }
->   
+Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+---
+ hw/virtio/vhost-user.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index bb8f8eab77..157a869b35 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -300,6 +300,20 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+     return 0;
+ }
+ 
++/**
++ * vhost_user_read:
++ * @dev: The vhost device state
++ * @msg: Pointer to the vhost-user message structure to populate
++ *
++ * Reads a complete vhost-user message (header and optional payload) from 
++ * the character device. It first reads and validates the header, checks 
++ * the advertised payload size against maximum bounds, and then reads any 
++ * attached payload directly into the message structure.
++ *
++ * Returns: 0 on success,
++ * -EIO or -errno on read failure or short read,
++ * -EPROTO if the protocol flags or payload size are invalid.
++ */
+ static int vhost_user_read(struct vhost_dev *dev, VhostUserMsg *msg)
+ {
+     struct vhost_user *u = dev->opaque;
+@@ -307,12 +321,13 @@ static int vhost_user_read(struct vhost_dev *dev, VhostUserMsg *msg)
+     uint8_t *p = (uint8_t *) msg;
+     int r, size;
+ 
++    /* 1. Read and validate the message header */
+     r = vhost_user_read_header(dev, msg);
+     if (r < 0) {
+         return r;
+     }
+ 
+-    /* validate message size is sane */
++    /* 2. Validate that the payload size is sane to prevent buffer overflows */
+     if (msg->hdr.size > VHOST_USER_PAYLOAD_SIZE) {
+         error_report("Failed to read msg header."
+                 " Size %d exceeds the maximum %zu.", msg->hdr.size,
+@@ -320,9 +335,13 @@ static int vhost_user_read(struct vhost_dev *dev, VhostUserMsg *msg)
+         return -EPROTO;
+     }
+ 
++    /* 3. If the header indicates a payload exists, read it */
+     if (msg->hdr.size) {
++        /* Advance the pointer to the start of the payload section */
+         p += VHOST_USER_HDR_SIZE;
+         size = msg->hdr.size;
++        
++        /* Block and read the exact payload size */
+         r = qemu_chr_fe_read_all(chr, p, size);
+         if (r != size) {
+             int saved_errno = errno;
+-- 
+2.34.1
 
 
