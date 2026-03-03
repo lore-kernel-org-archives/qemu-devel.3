@@ -4,114 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D286EDEBF0
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 634D3EDEBF1
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxWGO-0008Rq-Ay; Tue, 03 Mar 2026 15:22:40 -0500
+	id 1vxWKw-0001Tk-Ah; Tue, 03 Mar 2026 15:27:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vxWGL-0008Qy-W5; Tue, 03 Mar 2026 15:22:38 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxWKs-0001So-KG
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:27:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vxWGJ-0007ZB-HT; Tue, 03 Mar 2026 15:22:37 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 623JniBk2154446; Tue, 3 Mar 2026 20:22:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4I1Doy
- dm5udE3wBXzB+yAvYD1I83aUCnHP6VH4Pg8WU=; b=l3LrfKXcWFKLkP6ObYsxhd
- B60ueCBHoxUEyYKfqrTN4HJZ6mhJyV2TwKO6Lkb2Qa81zZXPRD/+oTRmd68q6rZq
- 1SVFIfuGv7674ToRlHhIVx7zewNnG90wSaE3FwFldvEHAR9K5uFCwLuoW17zl81+
- NFBhKv2UaccSJ9K/ze+TtGJkp0Qxxx68DkVIm/qB8ESP+brwPN5pZAB8F2efPd2L
- 6pQ+xJOF9lnznX+fxpSpWdrpRkAOToCKjnrYyN0KJDH3U9m40qCSiftlCrjDhrSZ
- PzNm7Ss0scMBRTPpNqwi0+brIzYwhBHMybFFzBZMiqYpt/nuthNOWYBKu15bI8gw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskbveca-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Mar 2026 20:22:29 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 623KBiBW008769;
- Tue, 3 Mar 2026 20:22:28 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmdd1bn32-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Mar 2026 20:22:28 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 623KMRaf22676034
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Mar 2026 20:22:27 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6FD1258050;
- Tue,  3 Mar 2026 20:22:27 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9F6E658045;
- Tue,  3 Mar 2026 20:22:25 +0000 (GMT)
-Received: from [9.61.253.239] (unknown [9.61.253.239])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  3 Mar 2026 20:22:25 +0000 (GMT)
-Message-ID: <3135b985-9c3c-4689-b780-a6e41cc708ae@linux.ibm.com>
-Date: Tue, 3 Mar 2026 12:22:25 -0800
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxWKq-0008Ve-FD
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:27:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772569634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KhHWeIHx6PBaZnfFcmqNEOBqnPdBYa4kH3IQHIX7oZo=;
+ b=OQGvLbsaqB+teaqQo7TGCRjJ3Blff8vHzaBHZgeL+kp+W5EhoRt9bUqS5OhJxXvlJBfnq5
+ rJHQTXnAUeHsdQxYHhxZzS8Eu/yI/MOWEO2AeWc0/jsJZyBeqgpLPw/BKkCAwPXausR35R
+ MJSV1GfrMZckft1zRIU28NA0BWYZMHM=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-157-1VHgEqH7NkqN1uvMdT0vIg-1; Tue, 03 Mar 2026 15:27:13 -0500
+X-MC-Unique: 1VHgEqH7NkqN1uvMdT0vIg-1
+X-Mimecast-MFC-AGG-ID: 1VHgEqH7NkqN1uvMdT0vIg_1772569633
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8ca3ef536ddso864223185a.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 12:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772569633; x=1773174433; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KhHWeIHx6PBaZnfFcmqNEOBqnPdBYa4kH3IQHIX7oZo=;
+ b=d+KQU8oUbOScGOUtSoL14E3wmxV2CW8lxOdyYMuUJeqWRf8LYIjW62osAz1awxw/X9
+ dGJN2+zyZDv0nRdgsAC612BZ+eqgT1Ja0K5CINEPscA0GM2aAQ4bq8415S1749azRqlO
+ 1Qfj23NvI/RlRSod115oehsL5QDCi80KC5FLV7eIkEExRDdr0GvpW+ome40uT+5UftLA
+ JvSB6hTU4N1C7WWYrmMrsj6VxO6JQxuyUsXVZFAuH1tcBbvhYUH0TXBDWyATS7H9v0OU
+ 1zKTcV+35nFpppNZGqf4WHKwNcrHkz5z/wHfYrvkdrr7n/x2t7hjgWVnGEBXT5MQrrTW
+ ZsBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772569633; x=1773174433;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KhHWeIHx6PBaZnfFcmqNEOBqnPdBYa4kH3IQHIX7oZo=;
+ b=aYv/ubG20Sq2V2MrE7SGGVQAsX/Vk73JZkRbrR8zICUK34hrkAm+IBrM2o5gjLdsip
+ Jb43EaZT7ERonVc/mdutDTUX1/18xcwzh9Ej1GLu4Mv93B3U4bpYOeKuA3toogV0cPGS
+ pZLdAHfuYbeZBIEcytrTMoyFZztpWYpK8kKnqzV6bqLQB2QS0qG1kdUE35y66aAAgCqF
+ cti6T0dX1A5KvgO+AtgFNnbyC51ULzdZFZZYZMx2Acq6CsFguGjJAP+cM4iWIW1/3+CB
+ 8qY7SErxRPQAnupyEreFQjeW8j3AMGze0BN6ZwEyxhDawBlZxdojzPlvI8P4YRFlLp5G
+ /Bkg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxECb1bS2pIscugStwg3WrANc3GM+POXT2iuIsigSLxHcjJZbI1uEM/fYyKLv84XFTBVDPpwKhT5gZ@nongnu.org
+X-Gm-Message-State: AOJu0Yz/f9YeDgr5QvNc0OW4i/FzkwZEHMylik4YwAlf5QLT5zIbT/Kg
+ TyEJ0/40PK0xZ5EMIoNW+q3VHKZ+gr71oas3Zwdmz+aAMaIg3rhIg/CqQgbko2EpiBvlAU9Aanw
+ jShnWXlW843Tl/+cpQva1wsSDDmExB+9pPveSSV45nCy54z+TpkV+Al6/
+X-Gm-Gg: ATEYQzyfzQvMOYRHfSN73vF3w1WvdB3tCNhc+93SE6mJ67jVoKV841ARP+wt5S7u2+R
+ CPmJYR3NTDk9zSw1q5p+WdouJkVK1Zc3WCKmr+NDbt0+3qFNfvdhx8HWxxwQI616ZcI0PcwLOGZ
+ kGnA07NnYlLBGaEe7TvSl5w5tiEAd2q0g3VKPsmNHjAnpUR2H/ifeozu4969yx0pGFqbLtnnIf0
+ sbxCecFi6gQwgIa0s0Aw62JnwrlHzAc6jx+JZq8s0uGn7JECvaGf4BIJvcjinkGKEiGKCWGhc40
+ RQFV9ffrMOQeHWS60XiVuD3DaM3rtlTTtldFvWhIGPmYnFtBUSbJYxvh70OY7LxLDQZykcnEs8K
+ Yv9hj/EDGi2VqhA==
+X-Received: by 2002:a05:620a:711a:b0:8cb:3a1d:79fa with SMTP id
+ af79cd13be357-8cbc8e1fc02mr2326810785a.58.1772569632634; 
+ Tue, 03 Mar 2026 12:27:12 -0800 (PST)
+X-Received: by 2002:a05:620a:711a:b0:8cb:3a1d:79fa with SMTP id
+ af79cd13be357-8cbc8e1fc02mr2326806485a.58.1772569632083; 
+ Tue, 03 Mar 2026 12:27:12 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cbbf6592desm1466684585a.2.2026.03.03.12.27.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 12:27:11 -0800 (PST)
+Date: Tue, 3 Mar 2026 15:27:00 -0500
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: David Hildenbrand <david@kernel.org>, qemu-devel@nongnu.org,
+ Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Fabiano Rosas <farosas@suse.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kvm@vger.kernel.org, Mark Kanda <mark.kanda@oracle.com>
+Subject: Re: [PATCH v3 09/15] system/ram-discard-manager: implement replay
+ via is_populated iteration
+Message-ID: <aadEFOLPsRjWTcfX@x1.local>
+References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
+ <20260226140001.3622334-10-marcandre.lureau@redhat.com>
+ <99b0ab59-c1dc-4d23-addc-7bf4b87bfa03@kernel.org>
+ <CAMxuvazwmjjpnpsWpOd_=HcS-6ynpVjAw2u3R=VuE=Lhg=AnKw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 12/30] s390x/diag: Implement DIAG 508 subcode 1 for
- signature verification
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-13-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260212204352.1044699-13-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: sCZGkBhWbzpxTZvdQ75pCDFBMS3BzN_3
-X-Authority-Analysis: v=2.4 cv=b66/I9Gx c=1 sm=1 tr=0 ts=69a74305 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=Tgzwo3mTLxb0sD9omHwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE2NCBTYWx0ZWRfX63RkHW1He2hZ
- 73GBlnQZghipy81f+VYCBUHg0nGomOYXHn5vRVCg5YYeJo+fxKj/gm3HwSpcZfo23ZvvQ25n2mQ
- NW8dQfTs1RdzwTKsXQF87AathMgHmTGnKs30wEAhg1cEvgTSbxnUwqXxEMDrzUnuLJORmVUTCEm
- QZovldxcDkVp8z+SagIhY2S0dCkwwyeJv2sHKDJgOp70BIFypdS9kIZJfIu43SJPOtREyQg2AlX
- 8o5KfpQEMjyfz4MyDcettdbf3VsQJpSjIIovI+dXgBNEhC9FjYPBYU9KOkmDxGFUH48hC1e3e5i
- vzEeZs6QXeySXFvLnWX8oEAEhv8l5J7dbdKZb2a54L4KdQmt3/jHQRZ3QotZCAMdMZaQq9TD54T
- I+dz9egPdKVz5bR81HJ8AG+Y9bmwultGKRtICuaMHn9cofq5Lj3Li5kofvjhQCQWB9rd9I0eP1R
- DxxhmIxC2hWMPjpOClw==
-X-Proofpoint-GUID: sCZGkBhWbzpxTZvdQ75pCDFBMS3BzN_3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-03_03,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603030164
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMxuvazwmjjpnpsWpOd_=HcS-6ynpVjAw2u3R=VuE=Lhg=AnKw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,46 +129,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Mar 03, 2026 at 11:47:52AM +0100, Marc-André Lureau wrote:
+> We can still iterate with 2M granularity after this patch. However, it
+> may be less effective than iterating using find_next_bit(). Whether
+> this is noticeable remains to be seen.
 
-On 2/12/2026 12:43 PM, Zhuoying Cai wrote:
-> From: Collin Walling<walling@linux.ibm.com>
->
-> DIAG 508 subcode 1 performs signature-verification on signed components.
-> A signed component may be a Linux kernel image, or any other signed
-> binary. **Verification of initrd is not supported.**
->
-> The instruction call expects two item-pairs: an address of a device
-> component, an address of the analogous signature file (in PKCS#7 DER format),
-> and their respective lengths. All of this data should be encapsulated
-> within a Diag508SigVerifBlock.
->
-> The DIAG handler will read from the provided addresses
-> to retrieve the necessary data, parse the signature file, then
-> perform the signature-verification. Because there is no way to
-> correlate a specific certificate to a component, each certificate
-> in the store is tried until either verification succeeds, or all
-> certs have been exhausted.
->
-> A return code of 1 indicates success, and the index and length of the
-> corresponding certificate will be set in the Diag508SigVerifBlock.
-> The following values indicate failure:
->
-> 	0x0102: no certificates are available in the store
-> 	0x0202: component data is invalid
-> 	0x0302: PKCS#7 format signature is invalid
-> 	0x0402: signature-verification failed
-> 	0x0502: length of Diag508SigVerifBlock is invalid
->
-> Signed-off-by: Collin Walling<walling@linux.ibm.com>
-> Signed-off-by: Zhuoying Cai<zycai@linux.ibm.com>
-> Reviewed-by: Thomas Huth<thuth@redhat.com>
-> ---
->   docs/specs/s390x-secure-ipl.rst |  17 +++++
->   include/hw/s390x/ipl/diag508.h  |  30 +++++++++
->   target/s390x/diag.c             | 111 +++++++++++++++++++++++++++++++-
->   3 files changed, 157 insertions(+), 1 deletion(-)
+IIUC when in extreme scattered cases the results should be similar, say,
+when the bitmap (2M for each bit) is 10101010....10101b. OTOH the worst
+case scenario here is when e.g. the whole region is fully populated.
 
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+So.. if we have any concern, maybe we could run a VFIO population test on
+non-CoCo, before or after this patch, having the whole region requested
+available (so a bitmap with 111111111....111111b).
 
+Thanks,
+
+-- 
+Peter Xu
 
 
