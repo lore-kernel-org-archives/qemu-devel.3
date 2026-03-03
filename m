@@ -4,83 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC22EEDEBF6
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF938EDEBF1
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxWii-0000DY-Nj; Tue, 03 Mar 2026 15:51:56 -0500
+	id 1vxWie-0008Dy-H4; Tue, 03 Mar 2026 15:51:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxWig-0008Rv-5v
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:51:54 -0500
-Received: from p-east2-cluster3-host3-snip4-7.eps.apple.com ([57.103.77.158]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxWid-0001Ww-WB
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:51:53 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPS id
- 6F3A51800677; Tue,  3 Mar 2026 20:51:47 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772571111; x=1775163111;
- bh=mLmxlRPFcwMxrG9myQtY85BdAdnRcI/En8EyLObKCOE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=VrYoMk4F62RupsHsJSs8Ldi2wsK6j+PqBZ44C5jsFziF0wIXe3VppAxEWUBff6GxhaZqUuEP1REsCqT8VltXH42BdxNX50aiZ5Sp3wBF4lzzgBotRSFsWyY73Nrvb8Jpxzo4fxN2XxsKDB1SnAXfLp5JvTYpuwcSAmxck3dMm5tC0/oKu3Ea1eGgq3D1eA4yu5VKrIxcU8ozMVUTEtUAEgZjmTQjQNjnCWYXC0WvzDjU+ea3s7s+fjr3P5j+L+gjASntH7UQILAoe9EhXfvmfwTxxMuj5GMK2Vum87jXj94QsMdnhmWcYb/SfCWxp+9/fH1Gkwndby3CTYC0t+R4Og==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPSA id
- D15121800642; Tue,  3 Mar 2026 20:51:44 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v4 2/7] whpx: i386: do not enable nested virt when
- kernel-irqchip=off
-Date: Tue,  3 Mar 2026 21:51:33 +0100
-Message-ID: <20260303205138.32450-3-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260303205138.32450-1-mohamed@unpredictable.fr>
-References: <20260303205138.32450-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxWiW-0007w8-1L
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:51:45 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxWiU-0001Tm-2R
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:51:43 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c70ea5e9e9dso2234348a12.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 12:51:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772571100; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ToeKoFwxduoBUrjnMgC2E+uF9unWI9VRHUVwE0pNgSx1gpcYznDli7AyhitWBpYPsz
+ SteNk35xcaVXAF8cv4/No+6tVNMTrlHLr/I5h81zF6KMVfzZPWCBYjL4yZsURsZ3+zm2
+ C78yf5HUUEk/CkfbVx5SOhJcqrJwUvdELQTVVG3lRcBkkKGR2uGfpRvb4Jc3Plj397Sk
+ EhUt37iT9Vf4B9Rr6QtdoNrsty070LWEWFP5GLOkLzrq9VLU5KyUoI8M8q6XBsr0xIhl
+ SMQx01+vGtSzV9o3lqqN2EkGId/EbAmxZZFEmbCl6/cjRK6FvXqe7snikFX59+AQ6Xun
+ qyWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=iw2X+Z42H7TVZANdWL8MqmVMi7kL+i890vlsGyqBK6s=;
+ fh=3N4YTDWV9KQk1Zfz9qwlmnoEsAk4PdvYntvEBJFMlvI=;
+ b=Fq1fwT0hsPp/X37OXpObErjH94SBM6Nut8kMkcy4YtCxvWOL55PA3YpFGjlqH++uWt
+ lPrp9k6uVOawCFoiPec83XE9prK5atDAGZYiJxcPDtQ2irrLE2Ts6ItIvNyzcNAB2Lpe
+ 6+fmi73Xb+NrQpyp4rj1shqH8rqfKwuimCqIeMRMNXYZ3D+RnfB6Aj9C23XQeyApV+nf
+ kULS4lqlupB8Wz5QrPIxOwzZDLDtY/gJwxO2GGoKfiGTsnBOg2sEJsNETZzBuDyKtFlI
+ cg4FOrZExG+YiCYodPPBvwNeJbhRisJX7z7yi0sKhptNBkT2qvtiP93Nr/jJ0wsNq5gN
+ K6nA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772571100; x=1773175900; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iw2X+Z42H7TVZANdWL8MqmVMi7kL+i890vlsGyqBK6s=;
+ b=PPg72646uHm3CkfxYEHW2jkdj0yX4hqktU+LG668WME0t3YUsrbQ1ysxu9PQXAZpMQ
+ rvvnpcXqHc+Ux3Azp8pt6eYOhPp8ZsmJLOocQgdbWRbJbIuUaeeuk9QsifLYN0voHY85
+ OXTUNUPvusXV479Ukz/2RtNsU5qy6PS7Yf3FfsrXKo0mlWKZYAIz2wVaQ07ldBvGssBi
+ TkXpF/+7CCwXjxAmQa6A25n+SdAOkk9wJAVX77rfAiSPk+o31FRlXQN3cdrOz63h5jmj
+ ayJ4RBNkW0uTTyobCUejCOZ1sY4ood/wImNEBcOlDDHnk9/Jsqp2xbTiDnuUiNCvfq7g
+ uSpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772571100; x=1773175900;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iw2X+Z42H7TVZANdWL8MqmVMi7kL+i890vlsGyqBK6s=;
+ b=p61JBVLVl/P2MgVG7lsH1na+AkZbNN9W74wNN4xe6tbAG+3coyuiK+FFCSTOdtGwg+
+ ycsyXRnJuGZcnQFVej4auYG7UCcXgNw+H2Z0pfWc2IMJVzfybr8EyRm+mp+yJWzv6PmY
+ I7pRgfNxVetbMBm5rJ0WEEEIUfltoICocrdyhHyPaG5ABiQCK+lwiqUQ6APZ0tzfEnsQ
+ sVIlWJn5ZBabbzsJw+8Zk01duIGItSA+3I2nRfocqIcZFO0QBC+STi3fhLX7B1VPYj7b
+ N4/6URLJskiALkmTWMWGCYeCxeFqRRXKTgTjKEoUPTwrlRoeAtsGYogN4m/cRIbBdfac
+ TW9g==
+X-Gm-Message-State: AOJu0YwATXeWklESvsOw5FTCxVbpz3XRsLVNC2ovnJje59Y/J5zwWl4W
+ S8cXSPT95bUhXfOKOl1xqmvoedByy8j7CtvAkInt6OBBsMhgi6nUut2ZRmJVY9vJ628pcztM+Im
+ jRWT4PuIBkhs9C0GO39aBT1UNzYs/7f0=
+X-Gm-Gg: ATEYQzzQRtOqLctz0G+y5Mqzot235/4TcemPFF18W+LaejYGHsyhsFkv97h3mdYXkbp
+ pU4pKhaj7HBkX8O/ldtoJW23HA5666dHxYb8fRP8pwXSLyUeDLuTbMaplUChwwAP3mVFKUI9loe
+ Ha8nuUvzCImKuvixqNnECuIJxpbckzLCgAaZPHq4iwu/SMmueXHKjdwd0JRkqN5nn2NVcA/BUTY
+ 6FTGe3FzBjeXV3+n3kQE36byMaMK0LEaRnerdHwZR62SpeZTNroJT+i9b9W1T4SHSWLXkISCtNT
+ 67sCVbLUBdxwiqqTZwOBEYg3qnWNviaEhuqxf48=
+X-Received: by 2002:a17:903:4765:b0:2ae:47c9:68c4 with SMTP id
+ d9443c01a7336-2ae47c96d75mr96591075ad.50.1772571100475; Tue, 03 Mar 2026
+ 12:51:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE3MSBTYWx0ZWRfX/XIqEUZWlUaR
- dRbAYBERSOrCkbLBI8q2w9tM5gfExkmGZaSi86FHF1SkROqHisHAH0dfooxop0ejulJi2++33sz
- ExuK4rTYCIeesS/r6/oPqS6hKacm+asLBNvMQttcuZoAjlS3bNVHtAkyyWWQE0I6wylYQJREzsO
- 4hcqTvV9wPdWtvmvWu1lv8rVtpI+HLNYVyiohowJ5f/FVaRcXN1FLZZbApwjZmW3evANncYaiM7
- gc/gNMx3RYc8g20L3/GRZ9CZEAM3hpO8NhObQ3mDPh9vghYDEzMfPaB4s3ubsoqQu1ul1LMW6oQ
- zTlbwcx1YJoDx+bGaf5HalI6HBw27JsDgHZZ04Aq+93YuvH/LorF1RjMzybahE=
-X-Proofpoint-GUID: gxuYQkQx_dfxa0gv5iGHHDCiXRGgWjpl
-X-Proofpoint-ORIG-GUID: gxuYQkQx_dfxa0gv5iGHHDCiXRGgWjpl
-X-Authority-Info-Out: v=2.4 cv=EJALElZC c=1 sm=1 tr=0 ts=69a749e5
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=eKpLbWQDCUPTAuIwU-0A:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-03_03,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 malwarescore=0 mlxlogscore=942
- bulkscore=0 adultscore=0 clxscore=1030 phishscore=0 mlxscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603030171
-X-JNJ: AAAAAAABY0kYsusfRXOudXBTUFL7QfousACSEOKiRtJXFWRNOFDIgjz9Jc17ieQKm0xUVRd+CJGxC27wf2QWcYoqNr0LtV3eG2ngaUmT2fABJ0UCfOi2lAPi8FUOVZniBHDgVZhiQuOgdYrD1ZBbE7oEeUCZAAMili6OQ9p/TnPQE4IdnBrXLrsvG51aQy2SMiIhYyo+dT+Notc0IMaBOrMq4JEL0M8LrXhPEIOm73LpB4SEwetBz0l62pp1T3ZbC92GApH8rhMQdIK7j8eEdbufqSSTocOHlA2JJuVh+QlhL8+ZhCinxyw5WyoZLUImAwuuX5HLJBWgiShBU2Nd5uY8eTkjjIZmBo07Tos2XYHDaKONY57k9v9MPoK8UVkc8wa+h5haxI418bAddUZHxPe9VV55sa7q+QXJPGs2bewLBjk+w+PpSeP2nHoJLWGZPS17GT19P9Rl17yCbG38aEX8FVNkJQ93JhpJSiJxrgtuYp11NRopjmNeuH6ehQ9hwrXj9k0T7WFwt8YN2Af/IJbemE+uqCuslOplwrpQI92wEa6gfmc/tQwY27sEG3i6fEtjnHPTzODD/lpxQSLIjsA03JpSR+saSqBsogbN/D4vJJfVsJOCcd5g68CizQ/9XDATvO4+DgX7P9k+B7EKuzg3seoq8Ea37PPsIPW8uTImF5DmY4/LtDJcNwSwPHz0zGPZzCHd1fJI2D+D3C097rIUJnghcLEhlxSwA8iFVE76tbsdvU//BKdHRKeWuCcBIxwnqhQbsIil424TUQ==
-Received-SPF: pass client-ip=57.103.77.158;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
+ <20260227203627.932864-24-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260227203627.932864-24-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 3 Mar 2026 13:51:29 -0700
+X-Gm-Features: AaiRm51wThFyyAlxR22qjVoPKyerRS2bYYMTqdx3YZAUdJkIJIouUJiDL2Ojuno
+Message-ID: <CAATN3NrjWHTJt1AKwHJJMhnXOTc4UjxTB55_u-WJdf_=KPDkSw@mail.gmail.com>
+Subject: Re: [PATCH v3 23/37] target/hexagon: Implement do_raise_exception()
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com, 
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, 
+ Brian Cain <bcain@quicinc.com>
+Content-Type: multipart/alternative; boundary="000000000000c8743b064c24de6a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,30 +117,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This combination is not allowed as of build 26300.7939 and results in:
+--000000000000c8743b064c24de6a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-qemu-system-x86_64.exe: WHPX: Failed to setup partition, hr=c0350005
-qemu-system-x86_64.exe: failed to initialize whpx: Invalid argument
+On Fri, Feb 27, 2026 at 1:37=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> From: Brian Cain <bcain@quicinc.com>
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/internal.h  |  5 +++++
+>  target/hexagon/op_helper.c | 19 +++++++++++++++++++
+>  2 files changed, 24 insertions(+)
+>
+> diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+> index cd06ff41d4f..d94f84b46a7 100644
+> --- a/target/hexagon/internal.h
+> +++ b/target/hexagon/internal.h
+> @@ -31,6 +31,11 @@ void hexagon_debug(CPUHexagonState *env);
+>
+>  extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
+>
+> +void G_NORETURN do_raise_exception(CPUHexagonState *env,
+> +        uint32_t exception,
+> +        target_ulong PC,
+> +        uintptr_t retaddr);
+> +
+>  #ifndef CONFIG_USER_ONLY
+>  extern const VMStateDescription vmstate_hexagon_cpu;
+>  #endif
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index 13e3c2c3a41..54b22f2fee4 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -37,6 +37,25 @@
+>  #define SF_MANTBITS    23
+>
+>  /* Exceptions processing helpers */
+> +G_NORETURN
+> +void do_raise_exception(CPUHexagonState *env, uint32_t exception,
+> +                        target_ulong PC, uintptr_t retaddr)
+> +{
+> +    CPUState *cs =3D env_cpu(env);
+> +#ifdef CONFIG_USER_ONLY
+> +    qemu_log_mask(CPU_LOG_INT, "%s: 0x%08x\n", __func__, exception);
+> +#else
+> +    qemu_log_mask(CPU_LOG_INT, "%s: 0x%08x, @ %08" PRIx32 "\n",
+> +                  __func__, exception, PC);
+>
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 8dd6f68ff9..4afcbbae25 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2147,7 +2147,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
--    if (processor_features.Bank1.NestedVirtSupport) {
-+    if (whpx_irqchip_in_kernel() && processor_features.Bank1.NestedVirtSupport) {
-         memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-         prop.NestedVirtualization = 1;
-         hr = whp_dispatch.WHvSetPartitionProperty(
--- 
-2.50.1 (Apple Git-155)
+Just print this in both user and system mode.
 
+Also, use PRIx32 instead of the x in the format string.
+
+
+> +
+> +    ASSERT_DIRECT_TO_GUEST_UNSET(env, exception);
+>
+
+Consider defining this macro to a nop in user mode.  Then you don't need
+the #ifdef CONFIG_USER_ONLY in this function.
+
+
+> +#endif
+>
+>
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+
+--000000000000c8743b064c24de6a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 27,=
+ 2026 at 1:37=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mail=
+to:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/internal.h=C2=A0 |=C2=A0 5 +++++<br>
+=C2=A0target/hexagon/op_helper.c | 19 +++++++++++++++++++<br>
+=C2=A02 files changed, 24 insertions(+)<br>
+<br>
+diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h<br>
+index cd06ff41d4f..d94f84b46a7 100644<br>
+--- a/target/hexagon/internal.h<br>
++++ b/target/hexagon/internal.h<br>
+@@ -31,6 +31,11 @@ void hexagon_debug(CPUHexagonState *env);<br>
+<br>
+=C2=A0extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];<br=
+>
+<br>
++void G_NORETURN do_raise_exception(CPUHexagonState *env,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t exception,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong PC,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 uintptr_t retaddr);<br>
++<br>
+=C2=A0#ifndef CONFIG_USER_ONLY<br>
+=C2=A0extern const VMStateDescription vmstate_hexagon_cpu;<br>
+=C2=A0#endif<br>
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c<br>
+index 13e3c2c3a41..54b22f2fee4 100644<br>
+--- a/target/hexagon/op_helper.c<br>
++++ b/target/hexagon/op_helper.c<br>
+@@ -37,6 +37,25 @@<br>
+=C2=A0#define SF_MANTBITS=C2=A0 =C2=A0 23<br>
+<br>
+=C2=A0/* Exceptions processing helpers */<br>
++G_NORETURN<br>
++void do_raise_exception(CPUHexagonState *env, uint32_t exception,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 target_ulong PC, uintptr_t retaddr)<br>
++{<br>
++=C2=A0 =C2=A0 CPUState *cs =3D env_cpu(env);<br>
++#ifdef CONFIG_USER_ONLY<br>
++=C2=A0 =C2=A0 qemu_log_mask(CPU_LOG_INT, &quot;%s: 0x%08x\n&quot;, __func_=
+_, exception);<br>
++#else<br>
++=C2=A0 =C2=A0 qemu_log_mask(CPU_LOG_INT, &quot;%s: 0x%08x, @ %08&quot; PRI=
+x32 &quot;\n&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __func__, e=
+xception, PC);<br></blockquote><div><br></div><div>Just print this in both =
+user and system mode.</div><div><br></div><div>Also, use PRIx32 instead of =
+the x in the format string.</div><div>=C2=A0</div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">
++<br>
++=C2=A0 =C2=A0 ASSERT_DIRECT_TO_GUEST_UNSET(env, exception);<br></blockquot=
+e><div><br></div><div>Consider defining this macro to a nop in user mode.=
+=C2=A0 Then you don&#39;t need the #ifdef CONFIG_USER_ONLY in this function=
+.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++#endif<br><br></blockquote><div><br></div><div>Otherwise</div><div>Reviewe=
+d-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com">ltaylo=
+rsimpson@gmail.com</a>&gt;</div><div>=C2=A0</div></div></div>
+
+--000000000000c8743b064c24de6a--
 
