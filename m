@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38BFEDEBFD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3871EDEBF5
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxY82-0004hB-UR; Tue, 03 Mar 2026 17:22:10 -0500
+	id 1vxY89-0004ks-IE; Tue, 03 Mar 2026 17:22:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY80-0004fv-NP
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:08 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY87-0004k9-Tu
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:16 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY7z-0002Pc-5F
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:08 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4806cc07ce7so69991315e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY85-0002Sb-CP
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:15 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4836f363ad2so72946375e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772576525; x=1773181325; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772576532; x=1773181332; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2tDkacrofsQyynIL5aV6S8J0KmjfmKGV0MBvFQ9/O94=;
- b=FkRdlkWSmWAKpWZD33PmjCG/DMHTpgGWSp6Dtk4hMPuJ1LpHLIiW85/YVKy8cdUsIO
- lwfDnDFM3/f1JZfOc9vwfXOjyswgDrAxOnBQ+/cgfZLSAaD2/NRkO8AYcGdrn97tMWFN
- VDdTpOyRStjeQ+RC+0rPu9eAXIzg7gbdkxT0oddNUCtKlxW2CRWipCmLzc6AUy+Zz1yv
- cEsgEnJ9dOXPi/tPhv+VlRhurjeY8R+0KrcimZoHB4gOyB06vorJU5Y8arSMQ3czec93
- g6GQrNT0ZX9RBrzAWPwdTvthmWD5qke7Qj2IcfjLtWy63dH6YlEDdgtxZvTSbsHeGyBW
- 0gLQ==
+ bh=xkqwSLJa0xJ6zHaGrPgGg+nUA0PuvLRB97+M4LUsZGQ=;
+ b=D1iTiR2sMRz6OQzV5+2eYDLMaTYzciSCoAAADfZBq2Pi1ns+dDb1VWacNTQ/Y9UiDE
+ 7XKH5PioyIe+fpVqy5T7JindBqNhWe4oCcTcDV8sEsgt4JP0OWC4W1tAIOaRR2yl5D8K
+ dH5QwQclpGUQYCtii0XTuUskgf8EEmnTVHu5hLys0xzgBWrpAlu60KwivSGE7/evpVuN
+ 8YNJxF+wBq85pmmVPnwC3DPpooPpYzeZ5WBK/C4kdmSWJkShLRjAQHNejigxrE5D5bEU
+ 0ikmQKy+RKCZh5LNrShgtAGfgLCPHqb/ra1xOjEPIdjE0ZKqavPtxYEwiarhbZRQp3Zv
+ jeCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772576525; x=1773181325;
+ d=1e100.net; s=20230601; t=1772576532; x=1773181332;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2tDkacrofsQyynIL5aV6S8J0KmjfmKGV0MBvFQ9/O94=;
- b=n5pOT625uNBaaPNF5+AM0SgOejfV8YoHMoPXMq4viYsTEiDquhNPcs7sUkfg0ohoka
- Woud13OYLrKeGcu6XBA+Cy6A2BXkBgVMMr3E9Txs5A8d1wEzBYGiQZ+X2vkXPbLAGpRz
- M/f4NYDj8d6a52jFSwhuU8wTLMYdjDUX1oSexamKuy9BiZR2JfVzIc03WeQJZVSDTz4a
- Hofo1lgkHGoCBPwWGfXHg+yPONj8yVachaKD6hBj74yurXpVO2NJqOh3FzVDDsnFr2Yu
- wTxRS8u7vhHGpJ24WvbnB/eAu23I1qWinKszLj55KSxdIcOLr4ncyg8aaJv6UmpeTTtj
- kVow==
-X-Gm-Message-State: AOJu0Yyx6siO/MHq4FipEmfgySDHMzIPAiFyIvOaFhq/geYYZs1dKxgx
- RE1VqjfB5TgO2FF5uwWYDY+cSKlkvATQCzOz+FokwhDGkSR75nt1E7YWKARyzw==
-X-Gm-Gg: ATEYQzyISsmz7R50o+qbEiC+zhtZrkh9drH2Sn57hGF1ulpVPJDOu9UWccFHetwA3EV
- 45z/lVokpBDfKGqMofwm+8C+t2dJ/HRwdc3fE3zf6i+pmJQhHyu2dbGPGc3DwbdHPyQ05ms2U0u
- 6jEQiFjIoihDaY0efs6Roabff1YsL4YgybFx4OToldVE3/f6GVxW9xu/2NXnBX7xdKxdQVFBxCt
- AHj5X/CswHPM5jxeonNX9GUzHEPotSIsOojzeKk6x/Tj6Zktx8rFpDqf/lRQeIROejRRFE5SHHa
- ddAvrvpeIltRocqRtwzjDvWQIh0jhB7TxaJaNQ7QD1OfziLZGU1g3jfTD3nDfCwMRKsdy3Yyw80
- Cm4juW+t6+vWPUhU/CvfKnzrqCYVyG9jfs0pbMPxMcSsD2Xqbd4JlUuO36OMApoOc0Ng23xWPrP
- KNeI4us4W+69kDbQi3odFvDyumYx/5Zh9Q+Er036q5YWa5i6omYAOu9oj1A1GNteXjMKm/AzuYA
- Ir/MxYQldpQKgqoacluEqEikkVEP48=
-X-Received: by 2002:a05:600c:6095:b0:483:54cc:cd89 with SMTP id
- 5b1f17b1804b1-483c9bb1dfemr296528495e9.9.1772576525328; 
- Tue, 03 Mar 2026 14:22:05 -0800 (PST)
+ bh=xkqwSLJa0xJ6zHaGrPgGg+nUA0PuvLRB97+M4LUsZGQ=;
+ b=ORUZ4f0aK+YLXxkpRpZGkoIWkDim7//ieC1m4RME2Ffu5l82cgaaAXxXOL/yrBmLro
+ 0YvmaYI7RV3v5O9qNalx2QhCmjYbV87QK53sqw5QOFBEvIaE1rD6AUkMZNKRloqQ/kGH
+ owfMI4CYJsnK8zzA1sP5aldt8uW+4K1os6ghCfyIWaG7EzNWi5a+X3G6NjY462N8NU3E
+ o7wDRqkblVRLCEY1tMqpchQLLd5b/q6ih+C8XAP6KFqFXDU1gElM0vXPUET0lOrFvAW8
+ hwyB9D0boxCbBQueJn/jPTSyQQI8+I93Jb0XBaSMaWwANJT1ESzz+ehnHHkM1FRbAueC
+ jwfw==
+X-Gm-Message-State: AOJu0YxIbV+t/8Aw79ubQXtL7Yi9LpQ7ehBBdbAmGYLgUXrBvKgdIYAU
+ 3L1k19P6lvE42W16ckBl61J0klNmLWEhKTm2xxRYlTBNXrxWUTXhzTM510E/vw==
+X-Gm-Gg: ATEYQzyOlsYjt5zlaCCqCQg78MMEuGO74FopbE758SehpPgV+G4nI17YzGNnymtxb6H
+ vvh95RtZ2RGmCOoxRP3O7lqdwbrl+hseDy5roD07PaLCY8wCXxzDiWYwT9IjuHgpE3tx87bpWPZ
+ rEd8cWs9GyjmalzisjMZ0MrL39TWliph/Rwl8dETxZWL7CcLzVuPa0brkXff8fFi15vGNXTt524
+ LnTWuNSf5WcdIykoSmk7fqO9tpY81XD2ttBFIWdM2B+0Ttht1oajnGIAmh+mtk5OSWEbJsusYe0
+ PRbTMpJAB5NNk/35s3t5/nyM3yFlkkdSunaJoEOkmlkPoieN50JPcotgmQgMvN0TWGaCYdaxUSw
+ 1HE7rBlprLEWIy+Dmi5Uvir74DeMLpwKsMMozH3khpYKTfdEnFtiROBws4cyATT6fqi6PkEoKKV
+ eMB/ruQ/5hwjFRJYr5hjk6i0Qps0Aj3dhiq1LZP7ZITPRenHwZHuccaEffjt7s85UkfHd3k28SW
+ q0A+B2DJFm7CP+pZe4wR0TvbJwXW8U=
+X-Received: by 2002:a05:600c:3f14:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-483c9c02f13mr333689115e9.17.1772576531415; 
+ Tue, 03 Mar 2026 14:22:11 -0800 (PST)
 Received: from Provence
  (dynamic-2a02-3100-1c79-b600-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c79:b600:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.04
+ 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 14:22:04 -0800 (PST)
+ Tue, 03 Mar 2026 14:22:11 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
@@ -80,16 +80,17 @@ Cc: Helge Deller <deller@gmx.de>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 03/13] util/fifo8: Make all read-only methods const-correct
-Date: Tue,  3 Mar 2026 23:21:33 +0100
-Message-ID: <20260303222143.142741-4-shentey@gmail.com>
+Subject: [PATCH v2 08/13] hw/char/serial: Add constants for Line Control
+ Register
+Date: Tue,  3 Mar 2026 23:21:38 +0100
+Message-ID: <20260303222143.142741-9-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260303222143.142741-1-shentey@gmail.com>
 References: <20260303222143.142741-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,105 +113,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows these methods to be used in const contexts, i.e. where the parent
-of the fifo itself is const. This is in particular useful for Rust code.
+Substitute some magic numbers by named constants for slightly improved
+readability.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/qemu/fifo8.h | 10 +++++-----
- util/fifo8.c         | 10 +++++-----
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ hw/char/serial.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-index 4f768d4ee3..6b476b404e 100644
---- a/include/qemu/fifo8.h
-+++ b/include/qemu/fifo8.h
-@@ -71,7 +71,7 @@ uint8_t fifo8_pop(Fifo8 *fifo);
-  *
-  * Returns: The peeked data byte.
-  */
--uint8_t fifo8_peek(Fifo8 *fifo);
-+uint8_t fifo8_peek(const Fifo8 *fifo);
+diff --git a/hw/char/serial.c b/hw/char/serial.c
+index f73de1ae4f..485b98f03f 100644
+--- a/hw/char/serial.c
++++ b/hw/char/serial.c
+@@ -39,6 +39,11 @@
+ #include "hw/core/qdev-properties-system.h"
  
- /**
-  * fifo8_pop_buf:
-@@ -181,7 +181,7 @@ void fifo8_reset(Fifo8 *fifo);
-  *
-  * Returns: True if the fifo is empty, false otherwise.
-  */
--bool fifo8_is_empty(Fifo8 *fifo);
-+bool fifo8_is_empty(const Fifo8 *fifo);
+ #define UART_LCR_DLAB   0x80    /* Divisor latch access bit */
++#define UART_LCR_SB     0x40    /* Set break */
++#define UART_LCR_EPS    0x10    /* Even parity select */
++#define UART_LCR_PEN    0x08    /* Parity enable */
++#define UART_LCR_NSTB   0x04    /* Number of stop bits */
++#define UART_LCR_WLS    0x03    /* Word length select */
  
- /**
-  * fifo8_is_full:
-@@ -191,7 +191,7 @@ bool fifo8_is_empty(Fifo8 *fifo);
-  *
-  * Returns: True if the fifo is full, false otherwise.
-  */
--bool fifo8_is_full(Fifo8 *fifo);
-+bool fifo8_is_full(const Fifo8 *fifo);
+ #define UART_IER_MSI    0x08    /* Enable Modem status interrupt */
+ #define UART_IER_RLSI   0x04    /* Enable receiver line status interrupt */
+@@ -153,23 +158,23 @@ static void serial_update_parameters(SerialState *s)
  
- /**
-  * fifo8_num_free:
-@@ -201,7 +201,7 @@ bool fifo8_is_full(Fifo8 *fifo);
-  *
-  * Returns: Number of free bytes.
-  */
--uint32_t fifo8_num_free(Fifo8 *fifo);
-+uint32_t fifo8_num_free(const Fifo8 *fifo);
+     /* Start bit. */
+     frame_size = 1;
+-    if (s->lcr & 0x08) {
++    if (s->lcr & UART_LCR_PEN) {
+         /* Parity bit. */
+         frame_size++;
+-        if (s->lcr & 0x10)
++        if (s->lcr & UART_LCR_EPS)
+             parity = 'E';
+         else
+             parity = 'O';
+     } else {
+             parity = 'N';
+     }
+-    if (s->lcr & 0x04) {
++    if (s->lcr & UART_LCR_NSTB) {
+         stop_bits = 2;
+     } else {
+         stop_bits = 1;
+     }
  
- /**
-  * fifo8_num_used:
-@@ -211,7 +211,7 @@ uint32_t fifo8_num_free(Fifo8 *fifo);
-  *
-  * Returns: Number of used bytes.
-  */
--uint32_t fifo8_num_used(Fifo8 *fifo);
-+uint32_t fifo8_num_used(const Fifo8 *fifo);
+-    data_bits = (s->lcr & 0x03) + 5;
++    data_bits = (s->lcr & UART_LCR_WLS) + 5;
+     frame_size += data_bits + stop_bits;
+     /* Zero divisor should give about 3500 baud */
+     speed = (s->divider == 0) ? 3500 : (float) s->baudbase / s->divider;
+@@ -430,7 +435,7 @@ static void serial_ioport_write(void *opaque, hwaddr addr, uint64_t val,
+             int break_enable;
+             s->lcr = val;
+             serial_update_parameters(s);
+-            break_enable = (val >> 6) & 1;
++            break_enable = !!(val & UART_LCR_SB);
+             if (break_enable != s->last_break_enable) {
+                 s->last_break_enable = break_enable;
+                 qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
+@@ -676,7 +681,7 @@ static int serial_post_load(void *opaque, int version_id)
+         }
+     }
  
- extern const VMStateDescription vmstate_fifo8;
- 
-diff --git a/util/fifo8.c b/util/fifo8.c
-index a26da66ad2..cc4f590b7a 100644
---- a/util/fifo8.c
-+++ b/util/fifo8.c
-@@ -71,7 +71,7 @@ uint8_t fifo8_pop(Fifo8 *fifo)
-     return ret;
- }
- 
--uint8_t fifo8_peek(Fifo8 *fifo)
-+uint8_t fifo8_peek(const Fifo8 *fifo)
- {
-     assert(fifo->num > 0);
-     return fifo->data[fifo->head];
-@@ -157,22 +157,22 @@ void fifo8_drop(Fifo8 *fifo, uint32_t len)
-     assert(len == 0);
- }
- 
--bool fifo8_is_empty(Fifo8 *fifo)
-+bool fifo8_is_empty(const Fifo8 *fifo)
- {
-     return (fifo->num == 0);
- }
- 
--bool fifo8_is_full(Fifo8 *fifo)
-+bool fifo8_is_full(const Fifo8 *fifo)
- {
-     return (fifo->num == fifo->capacity);
- }
- 
--uint32_t fifo8_num_free(Fifo8 *fifo)
-+uint32_t fifo8_num_free(const Fifo8 *fifo)
- {
-     return fifo->capacity - fifo->num;
- }
- 
--uint32_t fifo8_num_used(Fifo8 *fifo)
-+uint32_t fifo8_num_used(const Fifo8 *fifo)
- {
-     return fifo->num;
- }
+-    s->last_break_enable = (s->lcr >> 6) & 1;
++    s->last_break_enable = !!(s->lcr & UART_LCR_SB);
+     /* Initialize fcr via setter to perform essential side-effects */
+     serial_write_fcr(s, s->fcr_vmstate);
+     serial_update_parameters(s);
 -- 
 2.53.0
 
