@@ -4,104 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B172FEC0480
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684F1EC0485
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMTG-00040n-HH; Tue, 03 Mar 2026 04:55:18 -0500
+	id 1vxMWc-0004mQ-5O; Tue, 03 Mar 2026 04:58:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMTD-00040H-TL
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:55:15 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1vxMWZ-0004lB-9V
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:58:43 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMTC-0002Nw-DF
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:55:15 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-78fc4425b6bso52978907b3.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:55:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772531713; cv=none;
+ id 1vxMWX-0002wL-Si
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:58:43 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ca2b32f46so4024693d50.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:58:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772531920; cv=none;
  d=google.com; s=arc-20240605;
- b=PueFEqUJ4eu1mME7DE5XJJT/LMNcx8DDW5lGHd8hXILPvkIjZVoZCmniLYHbwZzcWc
- WeN+fl/6+6yxlDJhvlYJRuxiF+j7hRNd/63YuLz+QaLgRGCS7T9fEx6xkz5w6GIEbSCJ
- 6S2K4bPKjpK4iQRYMlLC9NZdpxvIp1kAena5xisxVRj+/JcW+s6xCyaQ/z/MB+0anjrd
- 5bwoVWCgadykTv17OXq+ChlOnz1bZKdd6MIPuYG5fpLHeVFlj7YXEhsR8fgqmdantSKu
- bpcXfutdy5zkw2pLjs4aYr+/3p/8wNCOfmZI7SD/UJd+O7RrRJxTw+W1G9TKm32yupy2
- m20g==
+ b=cABhge+4Ww31KgzHFQBnOfa8IVDGaCBKNdzjNV3A7UxX+I+iHvMDAgM1vhsqF2vi8F
+ Ify19UZD+Lp5y4K58QiGM+mgKerKMKFgC/XJn8SvZZgfKkDKhn3E4JsPhwPUZCjNnIZB
+ ld5bbi+OFDb9xswZPx5ligpI6dzlJBAix3mfevIJidqDvQBldMLqUIcsZHgwhv2VBXmj
+ eaneWDFdtLHzueybVnnvqcXizLvLXiVbj7JVbOdTLmVpAiPkKYbFtq9R8Ciz/qDfzcRi
+ yj+YbmP8pqSEN2OlgqEGsL/DlhbMYxhYteIz75LMPC5Ac7o52nhXzoUZO5vNyQtwFyFu
+ Qyag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=S9czckgZH+ZvuNJvQeHNwzw+6/69XROjabrO5sX/7tc=;
- fh=YL0NE4lWf04jcNGWdUc9cgi/Lvh5AUmBxwt6lA0XDZ4=;
- b=c7vdrgozPmG+oklYYi8bD2jZgZe2F7qAgd3zg5WF8rz4zvA0BE0/f2e8F8DN1AbFGB
- PTiqLiS1c7S4DphEOkjuPCcrI01lt4fwNMe/n18LZaIbKVEBho9+rd/WOFNCES2A9cHX
- hkK+jsv5lrGRWaSADt9utoKFQLfSBpdQlwdRWzsv5CRnB+SUYqL95w16tiauxwVlDaS1
- y+tf+KE9g8K73fyeQ4b9+1uHHrujLM6ykHP/NN6A4j7kto1IMR7MLUBdn+loUJHH9CzR
- FQ4/msdeKbWiyr3kcT3m7ZA83NuoDd8xxIeGnKYYdVrp62z3AiTYWRPxb8QulSOzKq1L
- wOdg==; darn=nongnu.org
+ bh=5pCey5Ubv1AsOAyW3sQYFrNaoha+uFbjbH8c/Hsyb5Y=;
+ fh=pqNLb1D8bcr6Ftek+8H330VOVv7kwixaST+YmWhgoFg=;
+ b=kz5htGM9SyaAkVA2t52z9AhRQkO5TyhQ0eB+Fbkr0vRoaFeTQbijt9bv5/y6MQdeit
+ hQv22gBSun+qezsbhFxem83LVcE7i+IgDnS7MdP8T5VgeI0wNaJBYyQlecBYz52zEfuU
+ W8XohC4WTE9rri/IUAV9h4pJ+JyaHLXng8vJYDy5NB9QaKTq010iG8QMZCzvhZGH2KeQ
+ GxG0yoHTFo3+NvxbJi6gEcUVDXjS5LQyrxrfVCPJbmngOjYdzNYCFiRUPVgh/SbGEHzx
+ uFT39zqFzsea/2SpFIKA6Jho31HExrkoF3ZiaLH2b0BDf6Nr+N8aGycX3+GVMNqUnsrm
+ czig==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772531713; x=1773136513; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772531920; x=1773136720; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=S9czckgZH+ZvuNJvQeHNwzw+6/69XROjabrO5sX/7tc=;
- b=PV/pFyPlBRRRrLWEiF1kIaoUcg/sZo+MaiSrRNODtT/2rjfvf5YZFemi8HmV7xFbq5
- X4sVjRmOJBTYqU084X3dk2DGMdLIkvc7/miXaiOh6AxvMP9RW7F8hBlGNwCw3ZTU01i/
- AwE1BfLbQFMLsPhxlfAoby6yBHwxvDFfmelLGfMKLBOwYEa6dpL65FDMDC4QjZJcSj55
- vzZYEWa54mU19h8wvrUSdFFmIRMTvyWHvvyJlL66eTmMIN+J99YIMGtB8tSfdzky5Xk7
- gwuK7bsi5GaWaIfNy5i2UuVV28MiYBjpymfIu88YOLWUfcHw/9uv3Uo3K4zyar1og+Tc
- uRcw==
+ bh=5pCey5Ubv1AsOAyW3sQYFrNaoha+uFbjbH8c/Hsyb5Y=;
+ b=tC8yaGpoVNflvmaGm8TiZa7hkfetGL0XTq5qyW/k6UbRzA4xvWQtCOoM+zXfW65Lnp
+ +Ya82mnDzHaRrEufUY8Sp3KVX3+MWGCXsNxxknkJcFby5GKXt+bbj/SNddlnRycexlSk
+ TSJlbpYbIBqcxKD5iqg2U/1i5vwj3/2htlb0FUiOk1TNWmaKakzVGbufItirhv1UIS3m
+ Gu6l6rUChyeLVUXwGy7qVPkxs8zsC/ib1aXOlMzwiXGsbPcJDc+q7twEpEMiqbnIGmkC
+ NFS8CwuruYYKflZg2fENS1GA+3vr2mcpaABlgo8hlRYbHf4No1guDRwqjJxPWAqB8IiQ
+ Nf+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772531713; x=1773136513;
+ d=1e100.net; s=20230601; t=1772531920; x=1773136720;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S9czckgZH+ZvuNJvQeHNwzw+6/69XROjabrO5sX/7tc=;
- b=D76Lu7cGPmOyfIm9nceTPIIRvKEDZb/9IruA7pt2HiU8puxnWPjyHj2K5kZGktw3z/
- On6X5GS9XLQd8KJ1T/SLwNxCWTyoXWIlUKUgN0/dRk9NQtoF/Tn7GlyeBXvlyT01Aruw
- XoagYUk/pC2OrUMSlUKMZH5vlpTvTv7yh7+lyPTGP1t0ZCu5wI2evEhouW3pW/a9/Nr3
- A+N7gqWnz8kafd5kvhpzDejkQJAYjxv5oQ0dnZoN4lqeWzg3EMi71u5XX8/Y3j4DPLXh
- wUgUykPM0AXXqLF66Q0qfr+xaT19mHT96goUFf+Dh2rnHR6VjjuVyaoqhVQHhWgCe3Ob
- EC5w==
-X-Gm-Message-State: AOJu0YwiSWp5lkcuwq7HrVGYTgxHWCKcNWH13Ypmp2MW/Cl9DqspN9pP
- 8tYyC+CtE887Pr6vHBi1wRev0NFBJGcWwmkhorV/liM0dpzNBoz2Y5kbJ7tpBLbYTbzgX6co1GA
- +oRs5snORf1bX9Y3neLghCj8oB8IRBGgHCu7Mm+l7DA==
-X-Gm-Gg: ATEYQzwya+eSlJXhfvJ9Lzopy+Kl5fAQINcntloe7uDlJPjfAbfHwodikPfzXiYNkdn
- 1XEWTvOVCTJqpL9c+iarSUI1KG64AajmQLZ27p566T3PQIIj7C1gXBL1x21hEF0Obwf8eFdh+uN
- JFBngznAfPmbymu76I09murRBqtQrN4IZl8ywHedLGxmxPtuUF+KeeBGmXlmz24YsGI+Oe5IyQC
- Bb1Fg2IgvTW7zMJ8uoLY4lnn3AJmHW/hNaBlZ2qnvDKJ/lVHDkIl4mrVo8sqKgA86EVTJddGIj4
- Kfmb9U/MRjetfiKBk4Nvp+DJyeIjKvsVhgHKgrqBQELShOcHh0bGslpvMGN0ykBw5YE=
-X-Received: by 2002:a53:e1a3:0:b0:64c:f3af:97a0 with SMTP id
- 956f58d0204a3-64cf3afa01amr49014d50.30.1772531713156; Tue, 03 Mar 2026
- 01:55:13 -0800 (PST)
+ bh=5pCey5Ubv1AsOAyW3sQYFrNaoha+uFbjbH8c/Hsyb5Y=;
+ b=A+MEUBlf1m8ZnRl/bVPhpP+njlOR7ids0Nc7i2okHxRoi2iCtjOJYFVqYE5KbDugdp
+ NxkQ957Kjq6O1e9xxpWVQK1VcHuG+o7ryx5Q55qApVP6Ek66fC2ldqItwY1P/CRoLS6H
+ l4Jhxvg5XgUP9Xlqlc0B56nj9wpTwZBY50hgO4WUMAXgXW8N4b78z3bjAPX6GJUY690d
+ QkK+NuHHPjqXRwFgmlZkagU/EcP0vUvZD/05PtcTFuRP9rO8WlnYjWfFmwel5DtFgU0x
+ OE1PFYqyVoICUe6KTGmSO/m5DgGBoDbijLo6+WDmRLuMEeeIi4yl3uzqAud5esdzQQAg
+ Tafg==
+X-Gm-Message-State: AOJu0YwDqGTzaBs8IiIfzeZpXOQbPMjNjCwHFVDWRdRbSnfesC0fHxIp
+ 1AIV8AIlaJ8holn9QSFQTNSwSa7ehshafknuvjepsHL9mu2TjryBDsNnsDptFsAIek2MNOogJ4k
+ zl2k1yHDVdH/l5co3YY13M5TRNg3net4g9DVJQtef7w==
+X-Gm-Gg: ATEYQzwfKN41/qulwyqwZVZ+5qbJ8x72QceyvyIWMX6ZDd9wO+H8KW+/T4KOwXQBISe
+ td5gsHjmS5Ri8dTR3xaAsRepEcRaX5YQEs+iIyBZobvAdzsKnYE/8Xv4y3E3fY9TbkWoo79aqAb
+ lKhl3TdmmEV2Dr0D8vB9CiDV6ui3aPrdy++xOizNz7sVlAoASxTg7indTLVtI2Hilrtgt4O8oqD
+ 74421HeebuEk0ljRMlEfBN+4QsvWoCwuxcuSruKe5f8/fjH3M11ls8OEpXpEfBzCF5+PRZ2ZF1s
+ jtRhm6jXeVBwSFFaUok5NnEHpQb+pjPcfa03f9YLfljt3p/vJvei1ppMTgf0ChLgNps=
+X-Received: by 2002:a05:690e:4243:b0:64a:cf34:d9ac with SMTP id
+ 956f58d0204a3-64cc20d2d3dmr9976130d50.29.1772531920594; Tue, 03 Mar 2026
+ 01:58:40 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1772397447.git.balaton@eik.bme.hu>
- <ff683ccd3433cdaa72aa6b5c97dc9431c67ff5c5.1772397447.git.balaton@eik.bme.hu>
-In-Reply-To: <ff683ccd3433cdaa72aa6b5c97dc9431c67ff5c5.1772397447.git.balaton@eik.bme.hu>
+References: <20260226090704.27699-1-thuth@redhat.com>
+In-Reply-To: <20260226090704.27699-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 09:55:02 +0000
-X-Gm-Features: AaiRm52xNMQohsV58BYcWHRNXuT4raOPI30dAbtWaf6C0_vyNjwpMq1IJWkcwnM
-Message-ID: <CAFEAcA_u=6KuDNs+DT9yOvPwNac1tTMfx+0r2drDjvKHHt+etg@mail.gmail.com>
-Subject: Re: [PATCH v5 4/8] memory: Remove memory_region_init_ram_nomigrate()
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Date: Tue, 3 Mar 2026 09:58:29 +0000
+X-Gm-Features: AaiRm523zjLlYy9NV7-yZRbLKlTTYbBOfz4UahSJx23BXmZLJYD284RlkqIet0E
+Message-ID: <CAFEAcA9g+S7Z4O6VsdH3tQ_zxJLwFq8Usipm5grVvzTMp45d+Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm: Remove the deprecated "highbank" and "midway"
+ machines
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Rob Herring <robh@kernel.org>, qemu-arm@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000007aff98064c1bbffb"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,36 +115,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Mar 2026 at 21:03, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+--0000000000007aff98064c1bbffb
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 26 Feb 2026 at 09:07, Thomas Huth <thuth@redhat.com> wrote:
 >
-> This is rarely needed and we can use
-> memory_region_init_ram_flags_nomigrate() instead which is now the only
-> nomigrate variant left.
+> From: Thomas Huth <thuth@redhat.com>
 >
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-
-I don't think this one is worth doing. We might as well
-wait until we can get rid of the VGA case.
-
-> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-> index d427d68e50..b025cc53a8 100644
-> --- a/hw/xtensa/xtfpga.c
-> +++ b/hw/xtensa/xtfpga.c
-> @@ -163,8 +163,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
->              sysbus_mmio_get_region(s, 1));
+> These machines have been marked as deprecated two releases ago,
+> and so far nobody complained that they are still useful, so it's
+> time to remove these now.
 >
->      ram = g_malloc(sizeof(*ram));
-> -    memory_region_init_ram_nomigrate(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
-> -                           &error_fatal);
-> +    memory_region_init_ram_flags_nomigrate(ram, OBJECT(s), "open_eth.ram",
-> +                                           16 * KiB, 0, &error_fatal);
->      vmstate_register_ram_global(ram);
->      memory_region_add_subregion(address_space, buffers, ram);
->  }
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-We should change this to memory_region_init_ram(), taking
-the compat break (which is fine for xtensa).
 
-thanks
+
+Applied to target-arm.next, thanks.
+
 -- PMM
+
+--0000000000007aff98064c1bbffb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Thu, 26 Feb 2026 at 09:07, Thomas Huth &lt;<a h=
+ref=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br>&gt;<br>=
+&gt; From: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat=
+.com</a>&gt;<br>&gt;<br>&gt; These machines have been marked as deprecated =
+two releases ago,<br>&gt; and so far nobody complained that they are still =
+useful, so it&#39;s<br>&gt; time to remove these now.<br>&gt;<br><div>&gt; =
+Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@re=
+dhat.com</a>&gt;</div><div><br></div><div><br>
+<br>
+Applied to target-arm.next, thanks.<br>
+<br>
+-- PMM<br>
+<br></div></div>
+
+--0000000000007aff98064c1bbffb--
 
