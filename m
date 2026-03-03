@@ -4,103 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D3A4EDA693
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E8FEDA693
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSFG-00016F-Mi; Tue, 03 Mar 2026 11:05:16 -0500
+	id 1vxSGI-0001qi-R5; Tue, 03 Mar 2026 11:06:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vxSF6-00012K-4j
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:05:05 -0500
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vxSF4-0000ig-Il
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:05:03 -0500
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-506c02ec1b3so67376551cf.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:05:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772553901; cv=none;
+ (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
+ id 1vxSG8-0001oA-Ue
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:06:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
+ id 1vxSG6-0001nG-VT
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:06:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772553963;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
+ b=J+WpwdDa1PWZdtTDXamHq+WduRP2s68HL+PDcGqGZ0VkLrotGcP9P+qKr2CA/Tanr1fU1Y
+ 6D0AQAXRi01Ns1+CSkXcO/rM/Q46+9i8W7o0d6GcJ5Mrq9J9wt8bSKNKf5It3LhwnvCDVj
+ wiYPaHdj2HpH2s/Feh2vfALLrxE+wVE=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-wWuX-NnIOv--oaYyHleakw-1; Tue, 03 Mar 2026 11:06:02 -0500
+X-MC-Unique: wWuX-NnIOv--oaYyHleakw-1
+X-Mimecast-MFC-AGG-ID: wWuX-NnIOv--oaYyHleakw_1772553962
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-7986c067508so91468517b3.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:06:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772553961; cv=none;
  d=google.com; s=arc-20240605;
- b=TZHxpRVJcgtm/4gfsO1G1xbKhhOghFt7MIzE/PbRBT1Id2M/UFXbnYU7j+JCOOJfTP
- /aWwYrrIh+7GAbajQt3htIMkPlnSboaL+VQr0N+9FX65CNz6ehjl0euWhAKOk/0rYzdX
- ++v+ZWtqnMq+NlTw1uDfZgvxVMP03//F6FAea3uNyfVvOg4wiR7Q66QXs2EFYxbke5Zp
- jToZD4DtCTFPxHKXf2uv7bL4Y0byJ0njldZZm5JgdFqk4QPLQvszTx3ADEaHYWnyr9Kg
- T0FT20dJ+fjUCKvVJQauhRkfjkNaLiBr2XhV2I3Q9ov62hlileFrgSKnJrd0q0OVqZan
- 5ZgQ==
+ b=M1ehlp59XyISkdFgx/l65AevbLBiyO9HSoj5w8zMoa/5jRwcGgiSuIBP53kfM7MepP
+ KoiSXuoUoR9RU5B2ijpx0vlaQgFlBrXX+8N1++zo4ubJ0YvSNDPAWgqIaxsmAxky5Bei
+ kva0Em9224Y0B3tzvUcYMdqM3DfG6TIas/omN6sGr6bg4SXsi0/o0TNS+9HzHEKV3cSI
+ EaSlMUFtNAZE739LSFOGJMehh8GmNyW4UA3DIQ6MRDesqPqxOeJEB2h5ugV9Nc8TAq+C
+ tqPrhmRyYcgBJcMFb5fhwGQiN5dy8QLndK731h9/8V/tjCxk7VWUMM/25XAg2H/bE+5m
+ qBdw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fNKNzcqGElYy7bF1GKlUajYK9DCHCDb6hEIBW4dTLP4=;
- fh=GIU+FyOM+eiO1tYKbHGSJ9iUu0d9Nn25uUBQaeMGCdg=;
- b=btRuPIiZwlxvJjOKlMxwQF0DppwCcurOMGrjwfRe9Xfmtc1tkQGKiH7NJgzIFAwFGT
- FbRrozt3r9SjS40eOJYhLjfsGZkgOTYkSuW0OGFeLut1SJKuhouFn4B2DQeeWwoHbSGU
- kNNYmx1Jfi+3+k0Nts5SE7JL/wcIbSFNLBLLGXiJU6+W9LpX+BfmKn8TlDm9Ln4LbfAy
- IclPfYV+dWSId1rt6uyHY87GSp+kPUzR9CXyhPO0jHgA7xWzmI858NoRxpgBt2yEBQvZ
- xGP69ezjj2J5BaCf8FeikA1X9G/iyW/flaiUTKq7fOdD+jB7HOW1e+3c2qQNui0afruR
- /nEA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
+ fh=M+PQ/mPxrlNcwBcpzJhQbIZh5naQ1mTAie8kXWVAj2k=;
+ b=B34RxWq1OLHazi3/Uc7+mOCDDUznr405qkv5AO+dgFyPVDKGbMc2br1HWvm9VQs6VM
+ jDynbrDVT2ofZVsPrALdk8KXoWZ7YdFdRYnHf/DyQmHKAqjCaAqidyOGc4+yRf58Jwn8
+ H3EiS/dyEmVFDJK9xUUpPHbNZp2Qp1nvyvof8eSscRHRNLsTHM4E0eRUw3px/v+5zpW7
+ H0ND/IQiIlClc6BduP3CSVbv3NxGBDdfR/JkpcZG3UbGZ2eAS1EDdy1IuU9iQ3aip9tx
+ GFnN9JHtJs8oxNVRiUkBJJv3mTNmdrJiylU7S8ydubBIJlBaNZdbdGmo2xVnjTOkuTwM
+ 962Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772553901; x=1773158701; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fNKNzcqGElYy7bF1GKlUajYK9DCHCDb6hEIBW4dTLP4=;
- b=O5NYiY2qhkmVjgMPe7kdGZkOgmB+2Nz2YZSHxzA/RrEQM9geGzYYIqjoJlEMi6BW4G
- 2Sjt/Pvk9iq1St8CxtO16XPe+QhIZDnhf9Fr/YgH4KZzsMWGEw6XcfzDfzwEjx6opG3W
- 7M4lb5CAX4ar4EDG4jcaoQSrMhlI4UPCi/cB4FSg1URfYF8fqQaC7oGd7qHviX2HM7pW
- YcS+FRZULt1XbDH1nhnzG/iQ7vuiWU1RWBZm2Po08QhHGWV00sJ21f29Z44kNTwagk1D
- WR+b+iDOpp8IFsKilNjniNLLsF4myzHEZzSSEWVL7oK58eobqcUqtem8gatKimI4p2wT
- n8IQ==
+ d=redhat.com; s=google; t=1772553961; x=1773158761; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
+ b=JoUe8rWnfduzrsWrXl09yJEbvz/u/EXFabypUUM7ZVe1hpnahig345J/7EH+EYqSCQ
+ 2wSobsHOpJpRyTaXOjNjL0rIfviStlY6pKWe1IyEueE2LMQRXNxu5O38zDp//Y2WD4TQ
+ oA41TqBOabDjaDz8zZCMqDGLF82nYYWVW3xgupM16OZlfOz1qWjMHp4+k4+pii40evtD
+ /YtpXurqGzrgUoB0SutJ1jRq1jgUPPFdnSHRhFVHolXEYg0UTRYLh8QM0Pr9J8g9tsfU
+ ltZp2jrFUx59qk2m/q/bJbOj+KE/LPx20zzZ/OVxrKPZGGiyMepmxFH4MukuxS0V5Wgm
+ jAdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772553901; x=1773158701;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fNKNzcqGElYy7bF1GKlUajYK9DCHCDb6hEIBW4dTLP4=;
- b=nrQVfQHTgcFiUS5ZWqs+DgNGq71tpLy3ulURzYfJYUG0gOU6lWXzUkXqoNGSgx8tR6
- RLhq1WG1wwhaCdhpdXxIYUk6fM7H4ycPfr4NeEZSUQWz7FSsR3huKK0nyjix0J8B2fpC
- SF4YbAH/GE2RFf0uAuMqn4O1iTB6Gk9ZrzpKVUMFhO6DmBxiGg+ZZ1ASs2mSGHjPulKD
- mHrS3MYPKaSzWNh2GnzOIIwEWvN8kqmgxtwIc+bRvbVASdw4kQqZ7Wpjn6ZVpU75H9yp
- PKI2Kmwv0b//fEw11bwonAel+cQVUY4A1//eMbKBG0NoOxY5h80W7tiaTQXfWdVS+C0m
- sysw==
-X-Gm-Message-State: AOJu0Yz2dmrXtsNHe5Ds4rtKOL3g4nEnEsv3AtyhNcvBL9kcFrrS7egz
- LKzwfRMeN3VSw61aMvR2/f/Sqvr47iz8Isch11qxdYrBD005tD86LO3ACt6eviPpYruw819/5T3
- Yj/t2fyMBciUZZH8+DjK+58Wr2JEF8PfGy1Ziy7jiVLg8r34=
-X-Gm-Gg: ATEYQzyiwKcHrgFK30EJBC0i7h1vc2EAsccrWcKn7i//JZ2YTnpSDpLgSIcLaIh33ek
- NtHF16rhzNFgk6nNy+8CE0t6qryVyMjmejwEjIftF4l0IfnMMhUcryeTIEc0h8KKvg++pt+1dpL
- SibygpJhzztQQZ+V5Ha32r+sLew6zI5997cacR5fXS1OBFnVSRvTqGk4S4AJ+f9S0svTfL7BN6u
- u+T7Cu7dLbaeYesNVhBV797U/5hWYRbqG/sktw+wqPoERiChGK2WC4W6GuGLw0shMZhvwVVwNdd
- GgXYoo9e6IgyB65JLsfigklpcCqs2D30Fcb2b96c
-X-Received: by 2002:ac8:5e08:0:b0:501:3b85:272c with SMTP id
- d75a77b69052e-508ceb1e73dmr26832301cf.31.1772553901137; Tue, 03 Mar 2026
- 08:05:01 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772553961; x=1773158761;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
+ b=dpELoaq1sLQ8O2R9tcIs3pO0/qv81g+9cBItdvptNfUnyNd8Ahzy/FKbcyaZ5zke4T
+ FZEpkCUtY6DwSXQhjpGICUG8eQ/luZOBvtiWm9o8ZdG1gezQCM9V4ypQQXyRN7MqUs+7
+ +eCm6HNM5ZsT+oiu/wapt+oumSJnjXKG7c56hLEK3cQSEkqkQgf61HKKTdqNbYF0mQyJ
+ LtdT6mUKB4UW+smFShFs0sQ2OSM2t+DDGhWQ6wDvlLKqEVP811TzHNQ88vKYpx1eoVZ2
+ CSN0pP/Y/1kWf0t4//Dyt0RJFooSEURxxtixotSsRPMihefuI7mojfgaa5NdvZLZQ/cJ
+ 7HFA==
+X-Gm-Message-State: AOJu0Yz4SBkX4ehJMgyTB/RfaUY1jOwttZwcg19CIEeyMC74T108Hslc
+ p4NymqQ3vNLWltlnO1xtcRaWfdK3Kb+V/w6oHzjJ1augp9isDCPN1dbHu+x8dvSkT+zSx3yVAM5
+ nhVI8m/KXSW/tq/S5p80kqveAd4k9tdX+Lns98UCvPCqjxs80KX7QDo44rsSuUoVr3g17AQe6wU
+ GLxku1dtOtCfuIAwkHVuXXVjH359BQQmbF7+Afo8k=
+X-Gm-Gg: ATEYQzyq5DnqaHzVTJNID1SFXO1GoAbY+POkh/MFVLha1ilXcQifJrzSt0VoRsi4d9W
+ iq+gcR8QyS0IIwHxeEm1Q0Bp7Atv5QI25v3fmJ9y5CEfDRvtbbVlIK0os8h0DO7m7X3ajRPcW2X
+ 4yz4UdVNU9cwTtSA4Mi+AfUd6et+gR53cyIpy73E2fm+RTha1zYPjkm8idZb6Hore4FiFWy2qLv
+ BvtPQY=
+X-Received: by 2002:a05:690c:3587:b0:798:5a44:781a with SMTP id
+ 00721157ae682-798856080dbmr156553197b3.54.1772553961648; 
+ Tue, 03 Mar 2026 08:06:01 -0800 (PST)
+X-Received: by 2002:a05:690c:3587:b0:798:5a44:781a with SMTP id
+ 00721157ae682-798856080dbmr156552787b3.54.1772553961066; Tue, 03 Mar 2026
+ 08:06:01 -0800 (PST)
 MIME-Version: 1.0
-References: <20260303-gl-v1-0-d90f0a237a52@rsg.ci.i.u-tokyo.ac.jp>
- <20260303-gl-v1-1-d90f0a237a52@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260303-gl-v1-1-d90f0a237a52@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 3 Mar 2026 17:04:49 +0100
-X-Gm-Features: AaiRm52m5YX4itO1zN7sl3C0qva5cCRDboBZph0RhURncE3Lo610mS8JM2Jl9-o
-Message-ID: <CAJ+F1C+8p=T5iczkdZwH_Th9KEYm1YnyP2sSdZ86jkGE2RxFng@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ui/console: Unify pixman-OpenGL format mapping
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org
+References: <CANo9s6=YV6Cyyn7m5LaGaD7U9i61OSZwMyiyLbmUk_xHO4s8vA@mail.gmail.com>
+In-Reply-To: <CANo9s6=YV6Cyyn7m5LaGaD7U9i61OSZwMyiyLbmUk_xHO4s8vA@mail.gmail.com>
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Tue, 3 Mar 2026 17:05:49 +0100
+X-Gm-Features: AaiRm531huwlUF6YkikQHTK-Ie2tTiqXEZJYt66iIaRQvSgEXdcAGJrZx0gYj3A
+Message-ID: <CANo9s6m=2HzzM9uyr0-kG1e69hV_iMDXZ+0DCRsbzYF9zQ+Lvg@mail.gmail.com>
+Subject: Re: Meson build fails with igvm enabled
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Oliver Steffen <osteffen@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lleonard@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,108 +133,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 3, 2026 at 2:11=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+On Tue, 3 Mar 2026 at 11:27, Luigi Leonardi <leonardi@redhat.com> wrote:
 >
-> console_gl_check_format() was supposed to check if the pixman format is
-> supported by surface_gl_create_texture(), but it missed
-> PIXMAN_BE_x8r8g8b8 and PIXMAN_BE_a8r8g8b8, which are properly mapped to
-> OpenGL formats by surface_gl_create_texture().
+> Hi all,
 >
-> Fix the discrepancy of the two functions by sharing the code to map
-> pixman formats to OpenGL ones.
+> I found a problem when trying to build QEMU with igvm enabled:
+> When igvm is not installed in a "canonical" path, the build system
+> cannot find the library.
 >
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
-It should be fine for dbus display as well.
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> ---
->  ui/console-gl.c | 43 ++++++++++++++++++++++---------------------
->  1 file changed, 22 insertions(+), 21 deletions(-)
+> To reproduce:
 >
-> diff --git a/ui/console-gl.c b/ui/console-gl.c
-> index 403fc36fbdf2..22e9787c4156 100644
-> --- a/ui/console-gl.c
-> +++ b/ui/console-gl.c
-> @@ -31,19 +31,38 @@
+> build igvm (latest upstream, as there were some problems with pkg-config).
+> PREFIX=$HOME/igvminst make -f igvm_c/Makefile install
 >
->  /* ---------------------------------------------------------------------=
-- */
+> This would result in igvm being installed in $HOME/igvminst
 >
-> -bool console_gl_check_format(DisplayChangeListener *dcl,
-> -                             pixman_format_code_t format)
-> +static bool map_format(pixman_format_code_t format,
-> +                       GLenum *glformat, GLenum *gltype)
->  {
->      switch (format) {
->      case PIXMAN_BE_b8g8r8x8:
->      case PIXMAN_BE_b8g8r8a8:
-> +        *glformat =3D GL_BGRA_EXT;
-> +        *gltype =3D GL_UNSIGNED_BYTE;
-> +        return true;
-> +    case PIXMAN_BE_x8r8g8b8:
-> +    case PIXMAN_BE_a8r8g8b8:
-> +        *glformat =3D GL_RGBA;
-> +        *gltype =3D GL_UNSIGNED_BYTE;
-> +        return true;
->      case PIXMAN_r5g6b5:
-> +        *glformat =3D GL_RGB;
-> +        *gltype =3D GL_UNSIGNED_SHORT_5_6_5;
->          return true;
->      default:
->          return false;
->      }
->  }
+> Then build QEMU
+> PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:$HOME/igvminst/lib64/pkgconfig/"
+> ./configure --target-list=x86_64-softmmu --enable-igvm
 >
-> +bool console_gl_check_format(DisplayChangeListener *dcl,
-> +                             pixman_format_code_t format)
-> +{
-> +    GLenum glformat;
-> +    GLenum gltype;
-> +
-> +    return map_format(format, &glformat, &gltype);
-> +}
-> +
->  void surface_gl_create_texture(QemuGLShader *gls,
->                                 DisplaySurface *surface)
->  {
-> @@ -54,25 +73,7 @@ void surface_gl_create_texture(QemuGLShader *gls,
->          return;
->      }
+> ninja -C build
 >
-> -    switch (surface_format(surface)) {
-> -    case PIXMAN_BE_b8g8r8x8:
-> -    case PIXMAN_BE_b8g8r8a8:
-> -        surface->glformat =3D GL_BGRA_EXT;
-> -        surface->gltype =3D GL_UNSIGNED_BYTE;
-> -        break;
-> -    case PIXMAN_BE_x8r8g8b8:
-> -    case PIXMAN_BE_a8r8g8b8:
-> -        surface->glformat =3D GL_RGBA;
-> -        surface->gltype =3D GL_UNSIGNED_BYTE;
-> -        break;
-> -    case PIXMAN_r5g6b5:
-> -        surface->glformat =3D GL_RGB;
-> -        surface->gltype =3D GL_UNSIGNED_SHORT_5_6_5;
-> -        break;
-> -    default:
-> -        g_assert_not_reached();
-> -    }
-> -
-> +    assert(map_format(surface_format(surface), &surface->glformat, &surf=
-ace->gltype));
->      glGenTextures(1, &surface->texture);
->      glEnable(GL_TEXTURE_2D);
->      glBindTexture(GL_TEXTURE_2D, surface->texture);
+> This fails with the following error:
 >
-> --
-> 2.53.0
+> In file included from ../stubs/igvm.c:15:
+> /root/qemu/include/system/igvm-internal.h:19:10: fatal error:
+> igvm/igvm.h: No such file or directory
+>    19 | #include <igvm/igvm.h>
+>       |          ^~~~~~~~~~~~~
 >
+> IIUC the problem is that the stubs/igvm.c file uses the igvm header
+> via the "igvm-internal.h", but the library is not added as a
+> dependency in the meson config file.
+>
+> I tried this change to meson, but it doesn't seem to work.
+>
+> Not sure how to fix this.
+>
+> Thanks,
+> Luigi
 >
 
+I found a possible solution:
+stubs/igvm.c doesn't really require the igvm library. It just needs
+the `QIgvm` structure.
+Therefore we can just use a forward declaration.
 
---=20
-Marc-Andr=C3=A9 Lureau
+I will soon send a patch.
+
+Luigi
+
 
