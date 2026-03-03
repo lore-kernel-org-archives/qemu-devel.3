@@ -4,134 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4C1EDEBE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651F2EDEBE6
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:05:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxV2H-0005Hg-49; Tue, 03 Mar 2026 14:04:01 -0500
+	id 1vxV3X-0005m2-NX; Tue, 03 Mar 2026 14:05:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxV2F-0005Fw-NW
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:03:59 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vxV3V-0005lK-Sj
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:05:17 -0500
+Received: from mail-dy1-x1331.google.com ([2607:f8b0:4864:20::1331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxV2D-00042e-DI
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:03:59 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-82742aa5a3eso2978257b3a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:03:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vxV3S-0004Rx-Lc
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:05:17 -0500
+Received: by mail-dy1-x1331.google.com with SMTP id
+ 5a478bee46e88-2ba9c484e5eso5633557eec.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:05:14 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772564712; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Q+43IFsgqhGM/x3/ZqxgoaM654FXilO8wKTeg9MzsTsDAXKG4ZrslgXvqMLc5sTKly
+ PP5cLwJoJ/IGsPGrGh9vZ0QxO5qAroXL2Gs3oX8B/1cEd+diqYMo2OAhncjEhW8eNU73
+ z5FBj+luHrrvrj/eHBdPZLhi73TBUtacv700Rz3z5HwQy5EYgWHaRWZt12I7weFCSzNK
+ sW2n4ZkINrXDz4XHQZ11JewcNE/zcge6cH34pCAo9Cu373VIFWwH6MCUwCkQxMQ1TK16
+ WuCN1EpJiSnGtOKlh8hWKo/36uBLVQPW4tqh/tNVvWxj/DTxLbJS/uZq+4BGGNwifWZS
+ dexA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=/JU+Yglg3bp3vp0f6IoRqu/4RbRUFFqO6dRbMWFLiNY=;
+ fh=82RydcbdAql7fhbq7RYqN7Rlqd/aGBUQJq1T6XQ45DQ=;
+ b=S46r2DSfiB5mAERJSKk9un6eCSBQ4KZjP9V1khrN7ufE1Yj8kvaPafgyvOyTfdYoqV
+ QXam1XzFzieDhRCotEZ20XvVtFn4EdFslVwhgvMAv2kLU0Og+R5LpOcIItZGwvwxt6il
+ JKGRCxdIQL8lZGJocJl1LymAlvAefekULBZccE5VkoZ6/UDLceR0WyccdI5IeASosd2Z
+ DE90+f5GL2TiXhhRkEF8SZYLoCVHmKOX5fE8vW8CJzmjXS0Ts8GHk9TvKavHcxnWbWdT
+ 3xUn+jjqA8PZsvPOSi1lk2DrU93DuggCu93ivLOH6HfWR2VXpeTxpGJPvgu9SGUj/BS8
+ dQHg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772564636; x=1773169436; darn=nongnu.org;
- h=in-reply-to:autocrypt:from:references:cc:to:content-language
- :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=jfa0BTJiu0OaoIir1H7GAUKqjehdctranbZAI2qkmio=;
- b=R3nI4KUyj0uZajNwau6tf0kFWh74Gm+/MwgOyL/q69QNQblaDWBmVgJ+VATt9jPamI
- looRUdqv31ljsPSGuQTYzenXwTlBq75D/BMccrxkmg1njuEiln99Dr+gNxlfSTw/NLVF
- IeG7SQIy1KD3iTRGsyOSIwY3msETTS+1jfFwFeVZ8Qa4Lr2i9nQ8i1nkvH0DFFDG8Zv6
- 7korcI6yuMAtWQvoBgnJEWeEln2ZqSe+2kv8aeGIDpXvdtgnQqCyU0krJQiXYtsue2In
- MsTsCGteRIRBtLNiYn4Tp+UWxjBnjjybLCyELSqr5w587AkxAFkkuWEMPIK2Mg18cgOL
- 1nlA==
+ d=gmail.com; s=20230601; t=1772564712; x=1773169512; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/JU+Yglg3bp3vp0f6IoRqu/4RbRUFFqO6dRbMWFLiNY=;
+ b=YjKDvC6fSHWzmrthPXRWZmv4AUZETfqzSfNo64bMhCINidmxQIqpnllNpvH5hQx+Nz
+ h40YipB+3P2nJZzfJSMLUyPH88sHQhZfuo7sBCOQBBN+gqEaPsrhWyR0FlmmHsB3Mm99
+ OzzcFcxtb5OhjVqRZBYlFx1qYmwqjJSuWDZ8FPMN6/lMDY5Sh6ND1YY67jAjR977snmf
+ YPwJqP1zGsxqrI60Z0VECbMZoE9SXaULSAxgfSk9rt+5r32ySubgTqx/eWSbYHLXUN8j
+ eIpNmDNWt9XszrpUOsqQkkVMUdu+Z/v1wfXum8ovcLLN5kb8tUVSEc1xOqyMGLNT+pkG
+ TZKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772564636; x=1773169436;
- h=in-reply-to:autocrypt:from:references:cc:to:content-language
- :subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jfa0BTJiu0OaoIir1H7GAUKqjehdctranbZAI2qkmio=;
- b=vr0ChV0XwDwfYNI/CgbRu0rPm8T8DALuUpvgq91IVQ7D7ih5BY3ufq+itZWNFXCS+O
- hNdI+Al9jFZJMuY0Xkkb7Bn6gqHCoU2hRQFVMbE1Wc8Qa0YYkY99A3oJi0bCIkbMDmyg
- lGntBdpgmyr3/JL7JHHV+6AYJqLFKxLXRr7BYbKJlBscJ44sNjNmEFluINQULILgYgfW
- mlkn5ARNIxIVghCglINyOzqHv4SH5JL/OyQBxtJD8t+dfpOntet8EJ8QHB2e2SLSPuRs
- Oe77PyH6r1dMXoOhne+Kc4ag+n05gt4g0J4zJaqTHPK95vovH9Qst3YkGD4fJT6AxTjb
- gscA==
+ d=1e100.net; s=20230601; t=1772564712; x=1773169512;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/JU+Yglg3bp3vp0f6IoRqu/4RbRUFFqO6dRbMWFLiNY=;
+ b=X0/vTg4lUwtJNYD3pdOATPXN/rLRVDjLvvo/AmKOj/604E9zlLoVy4vkf35Lq7kh8r
+ pejXiXZBbrOSnVmULL98obYL9bZ/EWcfGm2AFHYJpP/RmtAlqqwemkXrZg8POLiVLvYl
+ /8OkRFxmKL0p5yVkw2uHxtdoyCo1laY/C65YqjHYFVmbE8D+Q+9aSkXylrgrINFSDi6Y
+ B25EtZXd+fZHRC3zZCxdpu9xsVnB5pyontnvi2bkj/jjtWaHIJtCwJBPUq2BMmJol8wQ
+ WMK5jxnuPvnWhtKv5fdYruzApsmTx1jv/686WPkLHHlYJUPOY1ARppweVU19Rqg0zv/K
+ 63+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1ewYsW/HSP6UMe6D8U3Rhps6WntWVR7ztcRIWzf8oJJIUY9S+zo1uEZtImoT2XvzGuOvAm5VkQNWK@nongnu.org
-X-Gm-Message-State: AOJu0YwJo9UGgyidlpsLy6i4o2fN5lwyng1VG5aTDdcnDsKW9tXfNYIq
- n26Mv5tZxbT+wgFHAHt2N66gam4oAUOm15Dxpezx8/jozXCdCij7oonNmygL7xnGAkM=
-X-Gm-Gg: ATEYQzyd0JUzGM8fnAcro22r5rMUjRuhVNZjefy61S1clLYQzSZMngKUoHftfqonYuB
- 0Kf5VNHuQ146nrjPGoZhg20WdG2REctSDw79BPBjQQgySzwbkiu+toTaMXKDAriBQAlAY00PdYU
- hb/3v2rOcjL0X4yDavzev/7p9yO1hqy39Wj225BZeZc7o5wf5rv/vFyzUBJw3p5jeo8e+OnKlGn
- ohjQpMw6XxYpv/I3/cvxL7fpSFMjBl3Xu+8uwRGL4+oPSlactKV70PTn5Gs687tWRhacmTWrGO5
- wFfsv0D5EMXlMVmPQ5ALsl429jqTmkZgydvg+wg7QSYgFH7/R8dP8MdV9euNWVUclFcdWe0py/s
- sCL8ysV49750D003av1Zxk5JQtK9oslyARI8JrSfL5yhKDRqk2Vz+jomJequjLrokaQoQpUyGZO
- FenWr7Pb+x7HpS8inQBrWeL5wYEkxh109MNAcYBDrhDtBNJppgbJ9dny/86fQjp1ookyx8
-X-Received: by 2002:a05:6a00:800d:b0:81f:9f14:ecc8 with SMTP id
- d2e1a72fcca58-8274d97ce62mr11711979b3a.27.1772564635625; 
- Tue, 03 Mar 2026 11:03:55 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82739d4d93dsm16447461b3a.3.2026.03.03.11.03.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 11:03:54 -0800 (PST)
-Content-Type: multipart/mixed; boundary="------------wnS9Zj1VrjWIsUrEPuMGuoEI"
-Message-ID: <fce1ca77-fdd3-424f-9dff-eef789526fa8@linaro.org>
-Date: Tue, 3 Mar 2026 11:03:54 -0800
+ AJvYcCVrCtJbNL9CMnOtAOOOGAuHGFvMtHPPR7wfUzX4AXHVGIfw8F1NgohMLvUHU2wIt3OVZa+TLokb2/+g@nongnu.org
+X-Gm-Message-State: AOJu0YysS0SFsH/X57Ar7JfMhPf7nQ5MZVhZZ13q5JpmMCjOv88ZRn2V
+ Y99oh9FYTH/vCEpy/jV+SbYUSpt7Qn/HdeqP7PExUxEZRRGwzO6ULP5iKgsPt7l6ff/atAsTB56
+ FWgXxg3T2iJZa2SfE+Y36igJosjPv6Zc=
+X-Gm-Gg: ATEYQzyI6UI1ybVkuJZk01e/o1BG5ysfIga2XniRtvit2NENWDaEj1LVqbjrnn+NQRr
+ 0it3a8iVsZyghtNoJUgHI27HADunQVLtan8lcPa8n91lU35LAlHyYczuUxKudwQEg/SBbHhXtnS
+ uQ6XdYDTZZYQUy0f/48FHSHPXYsTY1lcaU57HTA7MpHsKT7qh0ZuuasyhsLSaIJKX04GddiQPgN
+ npb4kPw8dhDnFkjMf2mj7yCQFJZBXmmuYfTdCHx0lhvNDC+62hXpz94hoplcAPAHZ2a5g780PbT
+ Z2IUVJ0=
+X-Received: by 2002:a05:693c:290d:b0:2b8:711:ae6e with SMTP id
+ 5a478bee46e88-2bde1b504famr6969935eec.1.1772564712037; Tue, 03 Mar 2026
+ 11:05:12 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 20/28] hvf: i386: save/restore CR0/2/3
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20260223233950.96076-1-mohamed@unpredictable.fr>
- <20260223233950.96076-21-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260223233950.96076-21-mohamed@unpredictable.fr>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+References: <20260212104432.4168886-1-kchiu@axiado.com>
+ <CAFEAcA_u5B2RdVEaGycCQ6gCx1pQuT8rvGVGZpoKLTK+2s72+w@mail.gmail.com>
+ <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
+ <CAJy5ezpcvp0Qy-P9gE46oDtsxZxNO=xMV1k-GC3WF4yY3gARGw@mail.gmail.com>
+ <CAFEAcA8mC4TkicLy9bcS8NYMDNcSUjsataGGmkMpViw4wBvmCA@mail.gmail.com>
+ <CAJy5ezqTAMr=A3uAfmuWLepK66AdLRu4Q8AmFMh4+4q2HtDrkA@mail.gmail.com>
+In-Reply-To: <CAJy5ezqTAMr=A3uAfmuWLepK66AdLRu4Q8AmFMh4+4q2HtDrkA@mail.gmail.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Tue, 3 Mar 2026 13:04:59 -0600
+X-Gm-Features: AaiRm50rASURkUYUGmVXx2oCdg77jdACm8Kf9EFJ8kIirhbydSVlcyBo4SwOCJs
+Message-ID: <CAJy5ezogVjNxHLFVBp9wd332kwyR8peBHMEjoALg6pYfVk1q8g@mail.gmail.com>
+Subject: Re: [PATCH v1] hw/char/cadence_uart: Add BXRS register
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, alistair@alistair23.me
+Content-Type: multipart/alternative; boundary="00000000000000a1d7064c23624f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1331;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-dy1-x1331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,139 +122,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------wnS9Zj1VrjWIsUrEPuMGuoEI
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+--00000000000000a1d7064c23624f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2/23/26 3:39 PM, Mohamed Mediouni wrote:
-> For symmetry, save/restore the same set of registers even when not needed.
-> 
-> CR2 save/restore needed as page faults injected to the guest imply modifying CR2.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   target/i386/hvf/hvf.c | 15 +++++++++++++++
->   1 file changed, 15 insertions(+)
-> 
-> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-> index fb039ff7bd..a70f8461b0 100644
-> --- a/target/i386/hvf/hvf.c
-> +++ b/target/i386/hvf/hvf.c
-> @@ -477,7 +477,19 @@ static void hvf_load_crs(CPUState *cs)
->   
->       env->cr[0] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
->       env->cr[3] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
-> +    env->cr[2] = rreg(cpu->accel->fd, HV_X86_CR2);
->   }
-> +
-> +static void hvf_save_crs(CPUState *cs)
-> +{
-> +    X86CPU *x86_cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86_cpu->env;
-> +
-> +    wvmcs(cpu->accel->fd, VMCS_GUEST_CR0, env->cr[0]);
-> +    wvmcs(cpu->accel->fd, VMCS_GUEST_CR3, env->cr[3]);
-> +    wreg(cs->accel->fd, HV_X86_CR2, env->cr[2]);
-> +}
-> +
->   void hvf_load_regs(CPUState *cs)
->   {
->       X86CPU *cpu = X86_CPU(cs);
-> @@ -794,6 +806,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
->               decode_instruction(env, &decode);
->               exec_instruction(env, &decode);
->               hvf_store_regs(cpu);
-> +            hvf_save_crs(cpu);
->               break;
->           }
->           break;
-> @@ -837,6 +850,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
->           assert(ins_len == decode.len);
->           exec_instruction(env, &decode);
->           hvf_store_regs(cpu);
-> +        hvf_save_crs(cpu);
->   
->           break;
->       }
-> @@ -942,6 +956,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
->           decode_instruction(env, &decode);
->           exec_instruction(env, &decode);
->           hvf_store_regs(cpu);
-> +        hvf_save_crs(cpu);
->           break;
->       }
->       case EXIT_REASON_TPR: {
+On Tue, Mar 3, 2026 at 12:59=E2=80=AFPM Edgar E. Iglesias <edgar.iglesias@g=
+mail.com>
+wrote:
 
-This patch doesn't compile.
-See a fixing patch I'll let you upstream.
-I'm a bit puzzled about how this has been tested though.
+>
+>
+> On Tue, Mar 3, 2026 at 12:44=E2=80=AFPM Peter Maydell <peter.maydell@lina=
+ro.org>
+> wrote:
+>
+>> On Tue, 3 Mar 2026 at 18:32, Edgar E. Iglesias <edgar.iglesias@gmail.com=
+>
+>> wrote:
+>> >
+>> >
+>> >
+>> > On Tue, Mar 3, 2026 at 2:33=E2=80=AFAM Kuan-Jui Chiu <kchiu@axiado.com=
+> wrote:
+>> >>
+>> >> Hi
+>> >>
+>> >> I was referring this commit of upstream kernel which xilinx added BXR=
+S
+>> >> register in Cadence UART driver
+>> >> serial: xuartps: Adds RXBS register support for zynqmp =C2=B7
+>> >> torvalds/linux@3816b2f
+>> >> <
+>> https://github.com/torvalds/linux/commit/3816b2f886d0918d8a8ae593b2db203=
+ab905a889
+>> >
+>> >>
+>> >> Peter Maydell =E6=96=BC 2026/2/16 =E4=B8=8B=E5=8D=88 06:53 =E5=AF=AB=
+=E9=81=93:
+>>
+>> >> > Where is this register documented? The cadence_uart.c file
+>> >> > references the Zynq 7000 Soc TRM UG585; its URL for that
+>> >> > is out of date, but looking at the copy on the AMD website,
+>> >> > there is a table giving the register summary for the UART:
+>> >> >
+>> https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UAR=
+T
+>> >> > and it lists only registers from offsets 0 to 0x44.
+>>
+>> > There's documentation here for zynqmp:
+>> >
+>> https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/Rx_FIFO_by=
+te_status-UART-Register
+>> >
+>> > I haven't looked to carefully, it may be a register that didn't exist
+>> in the version of the UART on zynq and was added in the version of the u=
+art
+>> in the zynqmp.
+>>
+>> Thanks. On the subject of Xilinx specs, do you have an opinion on
+>> https://gitlab.com/qemu-project/qemu/-/issues/3297 ?
+>> Our Xilinx AXI ethernet device model lets software write to
+>> the PHY registers for the PHY ID, and it's not clear to me
+>> whether these registers are supposed to be read-only or not.
+>>
+>>
+> Yes, they should be read-only, there's probably more registers and fields
+> that have the wrong access restrictions as well. The PHY model is super
+> simple, created just to get guests to not get stuck on boot or fail to us=
+e
+> the PHY...
+>
+> IIRC, there's been several attempts on list to create a better MDIO/PHY
+> interface with shared PHY models but never got merged.
+>
+> Cheers,
+> Edgar
+>
 
-If you don't have access to a Mac intel based, you can use a 
-github-runner for free [1].
+For example:
+https://patchew.org/QEMU/20170922171323.10348-1-f4bug@amsat.org/
 
-[1] https://github.com/second-reality/github-runners
+--00000000000000a1d7064c23624f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Pierrick
---------------wnS9Zj1VrjWIsUrEPuMGuoEI
-Content-Type: text/x-patch; charset=UTF-8;
- name="0001-target-i386-hvf-hvf.c-fix-compilation.patch"
-Content-Disposition: attachment;
- filename="0001-target-i386-hvf-hvf.c-fix-compilation.patch"
-Content-Transfer-Encoding: base64
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 3, =
+2026 at 12:59=E2=80=AFPM Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.igle=
+sias@gmail.com">edgar.iglesias@gmail.com</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><=
+br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_att=
+r">On Tue, Mar 3, 2026 at 12:44=E2=80=AFPM Peter Maydell &lt;<a href=3D"mai=
+lto:peter.maydell@linaro.org" target=3D"_blank">peter.maydell@linaro.org</a=
+>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On =
+Tue, 3 Mar 2026 at 18:32, Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.igl=
+esias@gmail.com" target=3D"_blank">edgar.iglesias@gmail.com</a>&gt; wrote:<=
+br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt; On Tue, Mar 3, 2026 at 2:33=E2=80=AFAM Kuan-Jui Chiu &lt;<a href=3D"ma=
+ilto:kchiu@axiado.com" target=3D"_blank">kchiu@axiado.com</a>&gt; wrote:<br=
+>
+&gt;&gt;<br>
+&gt;&gt; Hi<br>
+&gt;&gt;<br>
+&gt;&gt; I was referring this commit of upstream kernel which xilinx added =
+BXRS<br>
+&gt;&gt; register in Cadence UART driver<br>
+&gt;&gt; serial: xuartps: Adds RXBS register support for zynqmp =C2=B7<br>
+&gt;&gt; torvalds/linux@3816b2f<br>
+&gt;&gt; &lt;<a href=3D"https://github.com/torvalds/linux/commit/3816b2f886=
+d0918d8a8ae593b2db203ab905a889" rel=3D"noreferrer" target=3D"_blank">https:=
+//github.com/torvalds/linux/commit/3816b2f886d0918d8a8ae593b2db203ab905a889=
+</a>&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; Peter Maydell =E6=96=BC 2026/2/16 =E4=B8=8B=E5=8D=88 06:53 =E5=AF=
+=AB=E9=81=93:<br>
+<br>
+&gt;&gt; &gt; Where is this register documented? The cadence_uart.c file<br=
+>
+&gt;&gt; &gt; references the Zynq 7000 Soc TRM UG585; its URL for that<br>
+&gt;&gt; &gt; is out of date, but looking at the copy on the AMD website,<b=
+r>
+&gt;&gt; &gt; there is a table giving the register summary for the UART:<br=
+>
+&gt;&gt; &gt; <a href=3D"https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-T=
+RM/UART-Controller-UART" rel=3D"noreferrer" target=3D"_blank">https://docs.=
+amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UART</a><br>
+&gt;&gt; &gt; and it lists only registers from offsets 0 to 0x44.<br>
+<br>
+&gt; There&#39;s documentation here for zynqmp:<br>
+&gt; <a href=3D"https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registe=
+rs/Rx_FIFO_byte_status-UART-Register" rel=3D"noreferrer" target=3D"_blank">=
+https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/Rx_FIFO_byte_=
+status-UART-Register</a><br>
+&gt;<br>
+&gt; I haven&#39;t looked to carefully, it may be a register that didn&#39;=
+t exist in the version of the UART on zynq and was added in the version of =
+the uart in the zynqmp.<br>
+<br>
+Thanks. On the subject of Xilinx specs, do you have an opinion on<br>
+<a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3297" rel=3D"noref=
+errer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/issues/3297=
+</a> ?<br>
+Our Xilinx AXI ethernet device model lets software write to<br>
+the PHY registers for the PHY ID, and it&#39;s not clear to me<br>
+whether these registers are supposed to be read-only or not.<br>
+<br></blockquote><div><br></div><div>Yes, they should be read-only, there&#=
+39;s probably more registers and fields that have the wrong access restrict=
+ions as well. The PHY model is super simple, created just to get guests to =
+not get stuck on boot or fail to use the PHY...</div><div><br></div><div>II=
+RC, there&#39;s been several attempts on list to create a better MDIO/PHY i=
+nterface with shared PHY models but never got merged.</div><div><br></div><=
+div>Cheers,</div><div>Edgar</div></div></div></blockquote><div><br></div><d=
+iv>For example:</div><div><a href=3D"https://patchew.org/QEMU/2017092217132=
+3.10348-1-f4bug@amsat.org/">https://patchew.org/QEMU/20170922171323.10348-1=
+-f4bug@amsat.org/</a></div><div><br></div><div><br></div></div></div>
 
-RnJvbSBlNjE0ZjI1Y2EzMDk1MzgxNWEwYzU5NzAyY2VlYmZiOTQ2NWY4MDMwIE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2
-aWVyQGxpbmFyby5vcmc+CkRhdGU6IFR1ZSwgMyBNYXIgMjAyNiAxMDo1MTo1NyAtMDgwMApT
-dWJqZWN0OiBbUEFUQ0hdIHRhcmdldC9pMzg2L2h2Zi9odmYuYzogZml4IGNvbXBpbGF0aW9u
-CgouLi90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDc2OjMxOiBlcnJvcjogdXNlIG9mIHVuZGVj
-bGFyZWQgaWRlbnRpZmllciAnY3B1JwogIDQ3NiB8ICAgICBYODZDUFUgKng4Nl9jcHUgPSBY
-ODZfQ1BVKGNwdSk7CiAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXgou
-Li90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDc5OjI0OiBlcnJvcjogdXNlIG9mIHVuZGVjbGFy
-ZWQgaWRlbnRpZmllciAnY3B1JwogIDQ3OSB8ICAgICBlbnYtPmNyWzBdID0gcnZtY3MoY3B1
-LT5hY2NlbC0+ZmQsIFZNQ1NfR1VFU1RfQ1IwKTsKICAgICAgfCAgICAgICAgICAgICAgICAg
-ICAgICAgIF4KLi4vdGFyZ2V0L2kzODYvaHZmL2h2Zi5jOjQ4MDoyNDogZXJyb3I6IHVzZSBv
-ZiB1bmRlY2xhcmVkIGlkZW50aWZpZXIgJ2NwdScKICA0ODAgfCAgICAgZW52LT5jclszXSA9
-IHJ2bWNzKGNwdS0+YWNjZWwtPmZkLCBWTUNTX0dVRVNUX0NSMyk7CiAgICAgIHwgICAgICAg
-ICAgICAgICAgICAgICAgICBeCi4uL3RhcmdldC9pMzg2L2h2Zi9odmYuYzo0ODE6MjM6IGVy
-cm9yOiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlmaWVyICdjcHUnCiAgNDgxIHwgICAgIGVu
-di0+Y3JbMl0gPSBycmVnKGNwdS0+YWNjZWwtPmZkLCBIVl9YODZfQ1IyKTsKICAgICAgfCAg
-ICAgICAgICAgICAgICAgICAgICAgXgouLi90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDg2OjMx
-OiBlcnJvcjogdXNlIG9mIHVuZGVjbGFyZWQgaWRlbnRpZmllciAnY3B1JwogIDQ4NiB8ICAg
-ICBYODZDUFUgKng4Nl9jcHUgPSBYODZfQ1BVKGNwdSk7CiAgICAgIHwgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgXgouLi90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDg5OjExOiBl
-cnJvcjogdXNlIG9mIHVuZGVjbGFyZWQgaWRlbnRpZmllciAnY3B1JwogIDQ4OSB8ICAgICB3
-dm1jcyhjcHUtPmFjY2VsLT5mZCwgVk1DU19HVUVTVF9DUjAsIGVudi0+Y3JbMF0pOwogICAg
-ICB8ICAgICAgICAgICBeCi4uL3RhcmdldC9pMzg2L2h2Zi9odmYuYzo0OTA6MTE6IGVycm9y
-OiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlmaWVyICdjcHUnCiAgNDkwIHwgICAgIHd2bWNz
-KGNwdS0+YWNjZWwtPmZkLCBWTUNTX0dVRVNUX0NSMywgZW52LT5jclszXSk7CiAgICAgIHwg
-ICAgICAgICAgIF4KNyBlcnJvcnMgZ2VuZXJhdGVkLgoKU2lnbmVkLW9mZi1ieTogUGllcnJp
-Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPgotLS0KIHRhcmdldC9p
-Mzg2L2h2Zi9odmYuYyB8IDE0ICsrKysrKystLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgNyBp
-bnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9pMzg2
-L2h2Zi9odmYuYyBiL3RhcmdldC9pMzg2L2h2Zi9odmYuYwppbmRleCBjMjQ3NWIxYTNiMi4u
-ZjUzMjA5NjcwODcgMTAwNjQ0Ci0tLSBhL3RhcmdldC9pMzg2L2h2Zi9odmYuYworKysgYi90
-YXJnZXQvaTM4Ni9odmYvaHZmLmMKQEAgLTQ3MywyMSArNDczLDIxIEBAIHN0YXRpYyB2b2lk
-IGh2Zl9jcHVfeDg2X2NwdWlkKENQVVg4NlN0YXRlICplbnYsIHVpbnQzMl90IGluZGV4LCB1
-aW50MzJfdCBjb3VudCwKIAogc3RhdGljIHZvaWQgaHZmX2xvYWRfY3JzKENQVVN0YXRlICpj
-cykKIHsKLSAgICBYODZDUFUgKng4Nl9jcHUgPSBYODZfQ1BVKGNwdSk7CisgICAgWDg2Q1BV
-ICp4ODZfY3B1ID0gWDg2X0NQVShjcyk7CiAgICAgQ1BVWDg2U3RhdGUgKmVudiA9ICZ4ODZf
-Y3B1LT5lbnY7CiAKLSAgICBlbnYtPmNyWzBdID0gcnZtY3MoY3B1LT5hY2NlbC0+ZmQsIFZN
-Q1NfR1VFU1RfQ1IwKTsKLSAgICBlbnYtPmNyWzNdID0gcnZtY3MoY3B1LT5hY2NlbC0+ZmQs
-IFZNQ1NfR1VFU1RfQ1IzKTsKLSAgICBlbnYtPmNyWzJdID0gcnJlZyhjcHUtPmFjY2VsLT5m
-ZCwgSFZfWDg2X0NSMik7CisgICAgZW52LT5jclswXSA9IHJ2bWNzKGNzLT5hY2NlbC0+ZmQs
-IFZNQ1NfR1VFU1RfQ1IwKTsKKyAgICBlbnYtPmNyWzNdID0gcnZtY3MoY3MtPmFjY2VsLT5m
-ZCwgVk1DU19HVUVTVF9DUjMpOworICAgIGVudi0+Y3JbMl0gPSBycmVnKGNzLT5hY2NlbC0+
-ZmQsIEhWX1g4Nl9DUjIpOwogfQogCiBzdGF0aWMgdm9pZCBodmZfc2F2ZV9jcnMoQ1BVU3Rh
-dGUgKmNzKQogewotICAgIFg4NkNQVSAqeDg2X2NwdSA9IFg4Nl9DUFUoY3B1KTsKKyAgICBY
-ODZDUFUgKng4Nl9jcHUgPSBYODZfQ1BVKGNzKTsKICAgICBDUFVYODZTdGF0ZSAqZW52ID0g
-Jng4Nl9jcHUtPmVudjsKIAotICAgIHd2bWNzKGNwdS0+YWNjZWwtPmZkLCBWTUNTX0dVRVNU
-X0NSMCwgZW52LT5jclswXSk7Ci0gICAgd3ZtY3MoY3B1LT5hY2NlbC0+ZmQsIFZNQ1NfR1VF
-U1RfQ1IzLCBlbnYtPmNyWzNdKTsKKyAgICB3dm1jcyhjcy0+YWNjZWwtPmZkLCBWTUNTX0dV
-RVNUX0NSMCwgZW52LT5jclswXSk7CisgICAgd3ZtY3MoY3MtPmFjY2VsLT5mZCwgVk1DU19H
-VUVTVF9DUjMsIGVudi0+Y3JbM10pOwogICAgIHdyZWcoY3MtPmFjY2VsLT5mZCwgSFZfWDg2
-X0NSMiwgZW52LT5jclsyXSk7CiB9CiAKLS0gCjIuNDcuMwoK
-
---------------wnS9Zj1VrjWIsUrEPuMGuoEI--
+--00000000000000a1d7064c23624f--
 
