@@ -4,60 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE80DEDA6B2
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D70EDA6B2
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxTQ4-0005e4-0m; Tue, 03 Mar 2026 12:20:28 -0500
+	id 1vxTX1-0007h3-TL; Tue, 03 Mar 2026 12:27:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxTQ0-0005d2-PB
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:20:24 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxTPx-0000ld-W9
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:20:23 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 38825596A10;
- Tue, 03 Mar 2026 18:20:19 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id L6uYqBF1fueP; Tue,  3 Mar 2026 18:20:17 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 10CA6596A0A; Tue, 03 Mar 2026 18:20:17 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0E5EE5969FA;
- Tue, 03 Mar 2026 18:20:17 +0100 (CET)
-Date: Tue, 3 Mar 2026 18:20:17 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH 1/7] stubs: Merge physmem.c within ram-block.c
-In-Reply-To: <ef6b34f6-7e72-4aea-9436-c2bda69c2c0e@linaro.org>
-Message-ID: <1dfb1673-082e-2748-9887-bb7efd2df4f4@eik.bme.hu>
-References: <20260226220226.20164-1-philmd@linaro.org>
- <20260226220226.20164-2-philmd@linaro.org>
- <8a2872f3-dfbb-3fed-dd95-3cd474e3ca2b@eik.bme.hu>
- <82dfe6e2-22c1-4df1-9e49-a2c7a2970082@rsg.ci.i.u-tokyo.ac.jp>
- <ef6b34f6-7e72-4aea-9436-c2bda69c2c0e@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxTWr-0007fO-2j
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:27:31 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxTWn-0004Kj-V9
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:27:28 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-483bd7354efso78693845e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:27:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772558841; x=1773163641; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mwLvQGHgXGM1rvifsMff8ixiuGcvGo9Ki/3I2UOm1yg=;
+ b=cEtZBZfQ55bFiDdLNT7ZDwZQB+YeFDByqNBbXMBL8GbqrCIgpq2DvWln6h52fcwyKG
+ dwFyOQNsTSbKA/XP8tlc2tp8s2lGAOLeRdud5m8kGKGJFXTChJyJ1Szy3lWF8j4rIZEG
+ IXuKEvFQD9Exy+UMYPmTGxlNj+imFen9YyO5asYdP6MX+23V0nql57ABiTC4/s1scPNk
+ TvEFN0nOAJzgdCJ8G1LfAKcJImEv09qjvOYlLw753UinBTu60ufwfDdt/oTkYxiIbO41
+ hbbTSwnWNygZtJP12aJwJEp2H2X+0EjJR0yjfYrt9uOOfC5/y5tDYfwWgHrDjSrBYtjk
+ Xlgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772558841; x=1773163641;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mwLvQGHgXGM1rvifsMff8ixiuGcvGo9Ki/3I2UOm1yg=;
+ b=YtXTQuM9LyWA1G+BI8bqckNM+tCUuLUQQdt3CTAADu8Mc6PyicwSHtUvmBuXeAwXeB
+ CN5xXyVDb2be2sTTi45Uts8bWUDUBagI90gRdOG2P9G9wWsUTuN81luB/C80iyK26fWY
+ YzbJZTrxM18aoNw4JM9TVghjt7mm9zeJquz4Y+HTugUScXbcQ+Fvi2IJtofO+MtYyoEa
+ 3fYdgSDFzlELmfYvCYhkPEtTBRoq3sSQf6ipugWJz2J8Ry4w38Z+JMdiuYg5fmyxCwQW
+ QXCdZM9eIjFiZNNuku2eYUoqhKXpkCpqo7ZgojnbP5xk9LGFkMBt56RIDLpVRIcCFylg
+ QW8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQEB3gutkdBoBlbmh2dPvf3AeInVWrNJXJ+D5zYavVhIFqojoLPFwd+F77UOVKXnNU1l9NYza4knVA@nongnu.org
+X-Gm-Message-State: AOJu0YyC5PXHr7W3xMxR5BAdMfTJgCWX5VVajzvyCbfU+RaExff9dSb1
+ ySZEE5i0iuBwsb2pd/agR+bsqmbA46MWLJFNw6z9thg2S+LE+CFmX+HaxuCmzrcENG4=
+X-Gm-Gg: ATEYQzx3L1rEQ+QRHvgvQLkn/tWUFAfhK2Nk6txDGK2wkJ8nXztYcGL4SlCGmZSO6pE
+ uJuahPIh1Zyd4xfRwl6jS5JFhuUpO8bgt/Sy7pJI6OwSQzJD2kfJxKUe9bKSqENcm6kg+mUevJ2
+ kI0mYrvZuUE5yMpC8gV2yeeRKS1MWBTz5LoKVEbo4S4Qu3jUL17BBh2LKYPNsV2DtIiSyRpP5Qt
+ 297VIcFMqiiVQojtT2Afa7dJep95gp8yrx1QVZvJr2anDoPn2eX2tVtg0yBcU/RgLnfBNrfhwmB
+ mz3BVoN+ly++cogouJjOAWw6JuVZIIPbCXWtdpiZXQQA+Shbujl+0U7/7OxOotrBJCyyg+Xdalq
+ RV52xENabOOy70Z/Hdca6ZFhyfblFV8t8ic4K7QGiDIxZ76HtGFjEvhxDI0jzLDBHexSljdpzgV
+ UCOki60BJCZ2YPZwS7CYXS1iO3kqImBiVmGmM7ZM2Db0vb/G0RLeoSghMZUiKx5zETM37Bko2kS
+ kazg1pulDHgybG/+INxMejQqPWuqQk=
+X-Received: by 2002:a05:600c:8106:b0:483:badb:618e with SMTP id
+ 5b1f17b1804b1-483c9b9e39dmr271918715e9.8.1772558840497; 
+ Tue, 03 Mar 2026 09:27:20 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-483bd7507adsm536539465e9.9.2026.03.03.09.27.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 09:27:19 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH] hw/net/xilinx_ethlite: Check for oversized TX packets
+Date: Tue,  3 Mar 2026 17:27:18 +0000
+Message-ID: <20260303172718.437015-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-296359462-1772558417=:69959"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,38 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The xilinx_ethlite network device wasn't checking that the TX packet
+size set by the guest was within the size of its dual port RAM, with
+the effect that the guest could get it to read off the end of the RAM
+block.
 
---3866299591-296359462-1772558417=:69959
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Check the length.  There is no provision in this very simple device
+for reporting errors, so as with various RX errors we just report via
+tracepoint.
 
-On Tue, 3 Mar 2026, Philippe Mathieu-Daudé wrote:
-> On 2/3/26 07:21, Akihiko Odaki wrote:
->> On 2026/02/27 7:22, BALATON Zoltan wrote:
->>> On Thu, 26 Feb 2026, Philippe Mathieu-Daudé wrote:
->>>> physmem.c defines 2 stubs which are related to ram-block:
->>>> qemu_ram_block_from_host() and qemu_ram_get_fd().
->>>> Move them with the other ram-block stubs.
->>>> 
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>> stubs/physmem.c   | 13 -------------
->>>> stubs/ram-block.c | 11 +++++++++++
->>> 
->>> Maybe should be the other way around moving what's in subs/ram-block.c to 
->>> stubs/physmem.c considering the the functions these stub out are in 
->>> system/physmem.c and there's no system/ram-block.c.
->
-> Fine, I'll drop this patch if you think it is not worthwhile.
+This lack of length check has been present since the device was first
+introduced, though the code implementing the tx path has changed
+somewhat since then.
 
-I did not say that, only that the functions are in system/physmem.c so why 
-not put the stubs in stubs/physmem.c to match? Since there's no 
-system/ram-block.c I think it makes more sense to merge these into 
-stubs/physmem.c instead. But just leaving it as it is is also OK.
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
+Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/net/trace-events     |  1 +
+ hw/net/xilinx_ethlite.c | 12 +++++++++---
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-Regards,
-BALATON Zoltan
---3866299591-296359462-1772558417=:69959--
+diff --git a/hw/net/trace-events b/hw/net/trace-events
+index 23efa91d05..001a20b0e2 100644
+--- a/hw/net/trace-events
++++ b/hw/net/trace-events
+@@ -527,3 +527,4 @@ xen_netdev_rx(int dev, int idx, int status, int flags) "vif%u idx %d status %d f
+ # xilinx_ethlite.c
+ ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
+ ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
++ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
+diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+index ba3acd4c77..75e6520569 100644
+--- a/hw/net/xilinx_ethlite.c
++++ b/hw/net/xilinx_ethlite.c
+@@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
+         break;
+     case TX_CTRL:
+         if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
+-            qemu_send_packet(qemu_get_queue(s->nic),
+-                             txbuf_ptr(s, port_index),
+-                             s->port[port_index].reg.tx_len);
++            uint32_t size = s->port[port_index].reg.tx_len;
++
++            if (size >= BUFSZ_MAX) {
++                trace_ethlite_pkt_tx_size_too_big(size);
++            } else {
++                qemu_send_packet(qemu_get_queue(s->nic),
++                                 txbuf_ptr(s, port_index),
++                                 size);
++            }
+             if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
+                 eth_pulse_irq(s);
+             }
+-- 
+2.43.0
+
 
