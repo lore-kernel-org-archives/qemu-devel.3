@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E5DBEC144C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8362EC1451
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxQWl-0004XK-Ti; Tue, 03 Mar 2026 09:15:11 -0500
+	id 1vxQc3-0005YS-PY; Tue, 03 Mar 2026 09:20:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxQWj-0004Ug-7s
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:15:09 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxQc0-0005XT-JA
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:20:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxQWg-0002j7-NI
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:15:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxQbw-0003wN-2w
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:20:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772547304;
+ s=mimecast20190719; t=1772547630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Ohhi/3YwkQET2hZxuH1eKNdUh1Smds7OolJEaR29B4k=;
- b=ZiLOXlHGoZO7ukRBeKlykHawzDxGjEZnj6j6aIuwnTZb5CAOsKiVMRlDT7z+oZgXlBq0Uz
- U79w2knVSGDeHeQXukvVqie7kzAO29r/X5czDrgoNbKZwIdW2y8s80oehVOX6vhqwzx5mt
- WKdbmfv8ZwZO9SS3YuhziV47cXDRYfU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=uexgC2T1okYFmF9aLEqAcVC3b8pgIhJZfwIUhuPyr4s=;
+ b=G6tv1sPjClz1BUpUWi9PBBFC0lNON9eC7FAULovtKuwlJYea4F/W3xvmViqP58wYB5oA/L
+ BUCB+U5Od7pKrA7Gt7VDrIn+/artuEsWgMOfdrqEaQCaWFtLZemJL6SERk4cpHnMdzAeI4
+ FftD66cxNXF/qv3Txd2+TDkXsU9p7qc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-uKOYhRc_Oq6E9Ziuf4MvJA-1; Tue,
- 03 Mar 2026 09:15:01 -0500
-X-MC-Unique: uKOYhRc_Oq6E9Ziuf4MvJA-1
-X-Mimecast-MFC-AGG-ID: uKOYhRc_Oq6E9Ziuf4MvJA_1772547298
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-3fZRmndtOim_DNbsxE7reQ-1; Tue,
+ 03 Mar 2026 09:20:27 -0500
+X-MC-Unique: 3fZRmndtOim_DNbsxE7reQ-1
+X-Mimecast-MFC-AGG-ID: 3fZRmndtOim_DNbsxE7reQ_1772547627
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9899F180034D; Tue,  3 Mar 2026 14:14:58 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0B7E1955F14; Tue,  3 Mar 2026 14:20:26 +0000 (UTC)
 Received: from [10.44.32.110] (unknown [10.44.32.110])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CC58A1956053; Tue,  3 Mar 2026 14:14:55 +0000 (UTC)
-Message-ID: <5d19a4c9-3db4-4a13-80da-5776e91cb9ac@redhat.com>
-Date: Tue, 3 Mar 2026 15:14:53 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 815661800349; Tue,  3 Mar 2026 14:20:24 +0000 (UTC)
+Message-ID: <6987b5dd-1072-4a8d-b6e6-cef96f1ce674@redhat.com>
+Date: Tue, 3 Mar 2026 15:20:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] tests/functional/migration: Add migrate_vms
+Subject: Re: [PATCH v3 3/5] tests/functional/migration: Use the migrate_vms
+ helper
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 Cc: adityag@linux.ibm.com, berrange@redhat.com, peterx@redhat.com
 References: <20260303134348.8890-1-farosas@suse.de>
- <20260303134348.8890-3-farosas@suse.de>
+ <20260303134348.8890-4-farosas@suse.de>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -98,20 +99,21 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260303134348.8890-3-farosas@suse.de>
+In-Reply-To: <20260303134348.8890-4-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,29 +130,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/03/2026 14.43, Fabiano Rosas wrote:
-> Add a migration helper to MigrationTest that uses the migrate-incoming
-> QMP commmand and takes the already instantiated VMs. The -incoming
-> 'defer' command line option is preferred way instead of the -incoming
-> URI syntax that's currently used.
+> Change do_migrate() to call the migrate_vms() helper and provide it
+> with the two VMs already created. Rename do_migrate -> migrate and
+> adjust the callers.
 > 
-> Suggested-by: Peter Xu <peterx@redhat.com>
+> While here, standardize on the "src" and "dst" names.
+> 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   tests/functional/migration.py | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-> index 0aa873edba..3362e5c743 100644
-> --- a/tests/functional/migration.py
-> +++ b/tests/functional/migration.py
-> @@ -40,6 +40,11 @@ def assert_migration(self, src_vm, dst_vm):
->           self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
->           self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
->   
-> +    def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
-> +        dst_vm.qmp('migrate-incoming', uri=dst_uri)
-> +        src_vm.qmp('migrate', uri=src_uri)
-> +        self.assert_migration(src_vm, dst_vm)
+>   tests/functional/migration.py | 34 ++++++++++++++++++----------------
+>   1 file changed, 18 insertions(+), 16 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
