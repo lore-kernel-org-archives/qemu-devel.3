@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED75BEDA6BE
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2697E67A62
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxTaI-0000at-6c; Tue, 03 Mar 2026 12:31:02 -0500
+	id 1vxTcg-00019q-DM; Tue, 03 Mar 2026 12:33:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxTaE-0000Ui-38
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:30:58 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1vxTce-00019e-8r
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:33:28 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxTaB-0005lH-M8
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:30:57 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b9362ddbee2so822874766b.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:30:53 -0800 (PST)
+ id 1vxTcc-0005y9-NX
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:33:28 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b934fdced05so788629466b.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772559052; x=1773163852; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772559201; x=1773164001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2RAkIBVkW5tI4FybOyJBTKE9T7v8apUkv9KbBJC3jJk=;
- b=bnWsDiIhJjuKh7HHPB7FXuVzBhykPOGyVuWQtY90cdeCOFFTkGEGOwZQqaZvwUQ+1S
- 4BtJ0rYsI+aSrx4RD7oCsr2u9hK6eydm/IqKFg2p7fC51ocQcSIZEp5M4vIi56xPPzW9
- 60p132+0f8lRhNV+ZCH8nSErPH2gvfZvdUTIzt+FfY8zv7um5k/rA7fG/XldzVxqMbeT
- U4kTor2aVcoapHZdJ9r1/1oHiavGKwl4r7+NftLlYVIcCjb5F/YUV0mfJ7tlMYsp5Nta
- gNYBRRAhlO9q6u9/2qAjUDZI+Fe1L7G/VKOoKGSFNrDxg2G4aCIW7kprzzf/Cxb5vQS/
- jNeQ==
+ bh=vl4hVoVTqFY3i48nyfeHK2ecdevDsv0c8GqXyhaVmJ4=;
+ b=ezW7TUAtd5qmIPzxyX5SlKqP3D+wUMV0CnJQNpDV/fKFBMtQIDCQq07H2VdzbWz36h
+ LSDwn2j8CrvLuWz6fxkStfyRcU2tsWVs3al5ZVchyT3Q5Xz1w9WoSIOAsJba6YabLFZ3
+ 7RzL+bPX1MN1L1RiiW5PUkJ4sB9kkHrY7faIqJmpObF5PgswZmycUb3+oqIJNLPFfEsF
+ uk/6iJaup9kWHvpK6kjI9l5gZMaDG2z8VS+Cc6kbfKDFK6Xhk6Xj7wnHK8bjc4383fmq
+ 04cIlTmtsIXsuYZynhY4M08OdRRby+uEJfatOW2flJKqHWOSLfAUcMKN5iq88vo74tW0
+ LQ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772559052; x=1773163852;
+ d=1e100.net; s=20230601; t=1772559201; x=1773164001;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2RAkIBVkW5tI4FybOyJBTKE9T7v8apUkv9KbBJC3jJk=;
- b=atH96MYHrvotjj5vwYjXi1dUNEYzXz27fZ+slb/B/DtdLx9YylNgdnODhBoMms0q63
- 39wy9rLqQtCWYarJgD8zgAXZ3h7Me73tABczP5ufqQShT2DRrFB1BISghNyDDGA2NmHz
- Ex6CVu/AyEefKjJcWuLw3aqIN3sIuj4UODUdmL+TnuHqL34WShs4B2G3+4xwMalSMlbT
- B8zen3NOM+P6AIE99cmtsJJMXN6pNxuFZIl+sZdAtb7NTUmB6J+lYOzleZ9EeArhyDkW
- aHB1XO0DByPng1BVjMRQdRmbKpFaTkZsT4uh7s1SOXv+Bku9lQZig+yoJKlelLI2r493
- VqdQ==
+ bh=vl4hVoVTqFY3i48nyfeHK2ecdevDsv0c8GqXyhaVmJ4=;
+ b=h2sIHafR8Yeh/muyccQsaxR7BTyzDrEjuej9z4fRcXChyF84hq1j0sNXAIvFo7cb20
+ RUkLXfwGFuZqjWqXiExZAtm0PiXUJOFW7fCIuO45DfwiXvoyQkksdWm1BoJj95OPVObE
+ jG/GSKhvGzYPw4Jq2NiRGEvZvjpfq+zlM3u1SK52GLAJ7tNECIub6taM96oq4KPI0iYc
+ 24G7eksIcsIMXk2L2p2f/J2NhiMHnCZXNUvhvAQnpS+2wHmM4yO23No4i/lAZ8cIMJld
+ a23+Uxcc4Q0L8nepAtIanwNnRXzAQOfj9SJLfR6nAEnguYl82Azs+2s9QB0DtNO9KUJ4
+ uxPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXC8OSVb1gPMQy1G6uZ/Y9ATUWsccxHKaXHLWh2wYAvcDei/0hdGL2yBp65SAJasgSzT9zVOkaB9TWg@nongnu.org
-X-Gm-Message-State: AOJu0Yw8t9hZXTIqsABBJeiRIVy7qkgkfUcPokSVzW6O1YxGnbTGx9XM
- Qz9bz/vVSJeLEBM6HTZU2d/vWf70ShBkHv2GjLZJLXH/pQMlZ1V972Z/Z5EOueBi720=
-X-Gm-Gg: ATEYQzyK2Wjz0XoIeL1XNEATyXWvE+edEFKnGfgaQDvSIJ5A2X8ZsAsDaJQ15aC9uCY
- moxBGnzsKZ27g8KOjWTAGkiIi7xNjFW8mDDGJZ6PANZRCLswTAHxope009Jz8EnMaSdAMXfpgbL
- 3K7wWNkdxLaeK02XOs3B6RWAyOVAzJn5fJ/XnFmO1qukWjdHfiKaWvsRlNzrWk3muFpVZ4Ijx3w
- RDKH75Sp+mMSnhcFoQrf7TH63D33st45eDGPv4vcE3048TqNIMg8sl8xrgO/X521A7Yhaw0SjuO
- +fVknaa8J4KBUvTD08zJ993U9DaXA8k00wb3+RsReRlknF0kSQ+ZIJfxlMaTwRyg0qRzpDW/oMj
- Ulio0bDhqaya3eub6Xc1JXNqjF7PgQH3jO5LKvZY/pYnKcox+040QGEv+/vFK+dNTEZ/8vmEWDX
- q/HYDGyX/5lg1w5XghdUeVDkQ=
-X-Received: by 2002:a17:906:756:b0:b87:1fe8:9534 with SMTP id
- a640c23a62f3a-b937656ea7fmr784878666b.48.1772559051609; 
- Tue, 03 Mar 2026 09:30:51 -0800 (PST)
+ AJvYcCViGP07C2RfcD9djmNETIhDnrH0SuRysCIb133TU7dOsBOtfnXBOabSu9xBmbO9GnIUKYvKwI/635DP@nongnu.org
+X-Gm-Message-State: AOJu0YwXK28X7PS5vHNLa8i/cSW3b5wkPowq9+SQBxd1ZNTnsAZ5ixDn
+ Dx5hJtEZ81He4bVBhBPCSZJDcwSlp2drRaQ4AMO+jwvhpTe7b3gRkc4eJobVrP+k7Nk=
+X-Gm-Gg: ATEYQzy+fsqdGOrGp7/jAPttuB/9XFJ9a/m0rRf+S8pIWmtPQYSWYctBF9cDh6KwkGB
+ foxoZI4C0qjTliYIEkjwe3p+5TgozvqjYQn/xXgbsplKiWYYfy7M5EgYLe05HqAXMSmUQEww9ea
+ +Xp/iF27gKVH5hJqPQgisvQREuVejVibwmnGDyPUIvZovOjVEzippktaVvXIADKKu5BFFCGInfP
+ pbywb2/J+FfB0f6jQpY5PUVQyd2+sjKr9ob12nHkst8xiiHMrWtyq4BeQQM5Rn6cS3FsMiHNgae
+ UEcBC7l7Lku8bDGw1RXZDk0obsYDDePd2DU8qToFylwJ0wV1IDNtiLsTXpKLjDtn/p+S9PyO7xt
+ AskWJWdJXNSrVymx1aGK7K1mf6Ehzi103hYSm0nkoimy4poL+hBFqzEVSvsZoOQDVbGAk7g6qvj
+ NXk/lDiA27jWqusJboQbPo8QEYGp+kbBRKDg==
+X-Received: by 2002:a17:907:1c93:b0:b93:c5a9:a5e9 with SMTP id
+ a640c23a62f3a-b93c5a9b9d6mr393395766b.4.1772559201322; 
+ Tue, 03 Mar 2026 09:33:21 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935ae93357sm617011566b.48.2026.03.03.09.30.50
+ 4fb4d7f45d1cf-66005566561sm3243826a12.30.2026.03.03.09.33.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 09:30:50 -0800 (PST)
+ Tue, 03 Mar 2026 09:33:19 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AA2465F7BE;
- Tue, 03 Mar 2026 17:30:49 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id E00365F7BE;
+ Tue, 03 Mar 2026 17:33:17 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: dongwon.kim@intel.com,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] virtio-gpu: Fix scanout dmabuf cleanup during resource
- destruction
-In-Reply-To: <CAJ+F1CKCQiBnOncaecpgG2FXj3R2tjxYOe8z7r8rGqCBAo97=g@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Tue, 3 Mar 2026
- 17:28:15 +0100")
-References: <20260303010047.1925589-1-dongwon.kim@intel.com>
- <CAJ+F1CKCQiBnOncaecpgG2FXj3R2tjxYOe8z7r8rGqCBAo97=g@mail.gmail.com>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  "Michael S . Tsirkin"
+ <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei Zhang
+ <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert Wollny
+ <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan Singh
+ <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger Pau
+ =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
+ <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K?=
+ =?utf-8?Q?=C3=B6nig?=
+ <christian.koenig@amd.com>,  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,  Julia Zhang
+ <julia.zhang@amd.com>,  Chen Jiqian <Jiqian.Chen@amd.com>,  Rob Clark
+ <robdclark@gmail.com>,  Robert Beckett <bob.beckett@collabora.com>
+Subject: Re: [PATCH v22 00/18] Support virtio-gpu DRM native context and
+ MAP_FIXED API
+In-Reply-To: <20260303151422.977399-1-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Tue, 3 Mar 2026 18:14:03 +0300")
+References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
 User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Tue, 03 Mar 2026 17:30:49 +0000
-Message-ID: <87wlzsrfau.fsf@draig.linaro.org>
+Date: Tue, 03 Mar 2026 17:33:17 +0000
+Message-ID: <87qzq0rf6q.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,17 +123,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-> Hi
+> Hello,
 >
-> On Tue, Mar 3, 2026 at 2:06=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->>
->> From: Dongwon Kim <dongwon.kim@intel.com>
->>
->> When a virtio-gpu resource is destroyed, any associated udmabuf must be
->> properly torn down. Currently, the code may leave dangling references
->> to dmabuf file descriptors in the scanout primary buffers.
+> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
+> virtio-gpu patches that has been reviewed previously and were waiting for
+> a new release of libvirglrenderer 1.3.0.
+>
+> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.os=
+ipenko@collabora.com/
+> [2]
+> https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osipenk=
+o@collabora.com/
 
 Queued to virtio-gpu/next, thanks.
 
