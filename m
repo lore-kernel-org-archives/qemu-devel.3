@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C6EEDA68D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0E6EDA693
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSI0-00038l-Ml; Tue, 03 Mar 2026 11:08:04 -0500
+	id 1vxSI0-00038Z-Ch; Tue, 03 Mar 2026 11:08:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHy-00036l-Ot
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHy-00035d-0f
  for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:02 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHw-0004ty-Dx
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:02 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHs-0004tB-Oe
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=PISlFkx/zY3kHobRLaPKL8znCuXQQQd5qkjh+of7scY=; b=bmy4PnzioiUqfhp
- g+yG+Al0o7uEZcDYEzhr4R0YrZdTT+t0frX+AgYT+DMBeiOvhzcEAhMiPPrZPT9KueGQopMkJKuop
- n7vEGMH+70Lob+ryet80dLfeMxC6i4u5cdOaqgdlG7JIkuT8MEx8u3nUwOqnk14TEVHhGGOje2Kn9
- gc=;
-Date: Tue, 03 Mar 2026 17:11:30 +0100
-Subject: [PATCH v5 3/4] hppa: Get physical address space bits from HPPACPUDef
+ List-Help; bh=LmX16bD2ok9iOgTIOFJ47bVKGyfqxMyRjBPDAxhPwHE=; b=Q7IxxW9cBIKeljc
+ r7imtRMEUlqBXFbIQNsIUbluTP1eJxYF4J2kGcRQ4WY/tUuT9NpoPYwHHkzDr7/24vEysXBK0p9FW
+ lC1A6U9ljM5OcWTg/aLqdzOZXa2H3mfWc2LOOYEB+2TBoJ5eZ5VaAqCcBqjeb6Y5ZWLCS1c5kD4qH
+ ts=;
+Subject: [PATCH v5 0/4] hppa: PA-8700, use 44 bit physical addresses
+Date: Tue, 03 Mar 2026 17:11:27 +0100
+Message-Id: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260303-hppa-c3600-v5-3-277bfe6b40b8@rev.ng>
-References: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
-In-Reply-To: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XPS2rDMBCA4asYrasyelmKV71HKGWiR6yN40ipS
+ Ai+e6cONDW0yxn4fmburMaSY2VDd2cltlzzaaLBvHTMjzgdI8+BZiZB9iAF8HGekXvVA/DkwFk
+ LEY2xjMBcYsrXNbZ/f8wlnj+peXksn8mho6ARAjSfx1v9wBAKP0DSNqICoXFomn03xlwvp3Jb7
+ 2tijfx1ShMcOAobvXEJjEpv9MzrdFwbTf7vJLmdR9j5nl4RcuPUb+c2TpE7KIvBOJQQwsbpp1M
+ gN06T09qiAwjovP9xy7J8AWMXyrSNAQAA
+X-Change-ID: 20260210-hppa-c3600-f808770ea557
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=6739;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=2871;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=D9wylAZdPgcJ+aQDVhLFS+pRm1WGV3wZik7OybQsd1Q=;
- b=XiDfH9X4hc44ZJ0rpDbRgtYCCQlI3weMh+W0pW3K8tUMN4eYRs6PX7czLw7Du5UcS/ExMkzEX
- cP4lWAsPgI0AB/lWZVP5xT4FnQVjafrjnfS87sKWBecetzBJA+sp2jb
+ bh=m4I1tElYh+WuJ2yFC+TanrROCPSgUw4NlQzq28vur7c=;
+ b=Y8YZElO1zw4fqo4Nf2LEKI06QipFP///vd7LDJnq2D+BK2gH3jqzFiM5U+l5Q+WGKNGV/t4p3
+ 2ihugBoC43nCLJWWR2whgjiAoHUTWKJ1NuCnDWBZtwIxQZQdTH/CNbB
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -72,186 +76,69 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+This patchset tries to address a discrepancy between the C3700 machine
+in QEMU/SeaBIOS and the documentation (chapter 5)
+
+  http://ftp.parisc-linux.org/docs/whitepapers/PA-8700wp.pdf
+
+where 40 bits of physical address space are used in SeaBIOS compared
+to the 44 bits specified in the documentation.
+
+A PA-8500 CPU with 40 bits of physical address space is added to be
+used with the A400 machine.  AFAICT there are no major differences
+from QEMUs side between the PA-8500 and 8700 aside from the physical
+address space size.  The PA-8700 machine can then be moved to using
+44 bits.  To account for the discrepancy with SeaBIOS, the functional
+tests now run the A400.
+
+This series introduces a small restructuring to the HPPA CPU class
+heirarchy. CPU model definitions now inherit from a TYPE_HPPA_CPU base
+class and use a HPPACPUDef struct to provide model specifics, similar
+to the SPARC and RISCV targets.  This hopefully makes it easier to add
+other models, such as the 8800/8900.
+
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hppa/cpu.h        | 11 ++++++++---
- hw/hppa/machine.c        |  4 ++--
- hw/pci-host/astro.c      |  2 +-
- target/hppa/cpu.c        |  9 ++++++++-
- target/hppa/mem_helper.c | 39 +++++++++++----------------------------
- 5 files changed, 30 insertions(+), 35 deletions(-)
+Changes in v5:
+- Moved assert on maximum size of the physical address space to base
+  class initialization function, so it's only ran once.
+- Clarified commit message in final patch.
+- Link to v4: https://lore.kernel.org/qemu-devel/20260302-hppa-c3600-v4-0-447a800da8cc@rev.ng
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 43b4882fb4..487f0f5e9e 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -320,6 +320,11 @@ static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
-     return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
- }
- 
-+static inline uint8_t hppa_phys_addr_bits(CPUHPPAState *env)
-+{
-+    return hppa_def(env)->phys_addr_bits;
-+}
-+
- static inline bool hppa_is_pa20(CPUHPPAState *env)
- {
-     return hppa_def(env)->is_pa20;
-@@ -352,9 +357,9 @@ static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
-     return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
- }
- 
--hwaddr hppa_abs_to_phys_pa1x(vaddr addr);
--hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
--hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
-+hwaddr hppa_abs_to_phys_pa1x(CPUHPPAState *env, vaddr addr);
-+hwaddr hppa_abs_to_phys_pa2_w0(CPUHPPAState *env, vaddr addr);
-+hwaddr hppa_abs_to_phys_pa2_w1(CPUHPPAState *env, vaddr addr);
- 
- /*
-  * Since PSW_{I,CB} will never need to be in tb->flags, reuse them.
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 5d0d4de09e..bb6b7dc76c 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -181,12 +181,12 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
- 
- static uint64_t translate_pa10(void *dummy, uint64_t addr)
- {
--    return hppa_abs_to_phys_pa1x(addr);
-+    return hppa_abs_to_phys_pa1x(cpu_env(first_cpu), addr);
- }
- 
- static uint64_t translate_pa20(void *dummy, uint64_t addr)
- {
--    return hppa_abs_to_phys_pa2_w0(addr);
-+    return hppa_abs_to_phys_pa2_w0(cpu_env(first_cpu), addr);
- }
- 
- static HPPACPU *cpu[HPPA_MAX_CPUS];
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 00a904277c..d38f81e553 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -303,7 +303,7 @@ static IOMMUTLBEntry astro_translate_iommu(IOMMUMemoryRegion *iommu,
-      * language which not-coincidentally matches the PSW.W=0 mapping.
-      */
-     if (addr <= UINT32_MAX) {
--        entry = hppa_abs_to_phys_pa2_w0(addr);
-+        entry = hppa_abs_to_phys_pa2_w0(cpu_env(first_cpu), addr);
-     } else {
-         entry = addr;
-     }
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index cc755da8be..b04bcfa6a0 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -282,7 +282,14 @@ static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
-     HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
-     /* Make sure all CPU models define a HPPACPUDef */
-     g_assert(!object_class_is_abstract(oc) && data != NULL);
--    acc->def = data;
-+    if (data) {
-+        acc->def = data;
-+        /*
-+         * Verify assumptions made in hppa_abs_to_phys_pa2_w1() on the size
-+         * of the physical address space.
-+         */
-+        g_assert(acc->def->phys_addr_bits <= 54);
-+    }
- }
- 
- static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 9199d1e06a..9a11294f75 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -29,29 +29,12 @@
- #include "hw/core/cpu.h"
- #include "trace.h"
- 
--/*
-- * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-- * machines 7300LC.  This should give 44 and 32 bits of physical address
-- * space respectively.
-- *
-- *   CPU model        Physical address space bits
-- *   PA-7000--7300LC  32
-- *   PA-8000--8600    40
-- *   PA-8700--8900    44
-- *
-- * FIXME: However, the SeaBIOS firmware that is that tested against
-- * uses 40-bit physical addresses, despite supposedly running a C3700
-- * with a PA-8700 cpu, so use 40-bits for 64-bit.
-- */
--#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 40
--#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
--
--hwaddr hppa_abs_to_phys_pa1x(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa1x(CPUHPPAState *env, vaddr addr)
- {
--    return extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
-+    return extract64(addr, 0, hppa_phys_addr_bits(env));
- }
- 
--hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa2_w1(CPUHPPAState *env, vaddr addr)
- {
-     /*
-      * Figure H-8 "62-bit Absolute Accesses when PSW W-bit is 1" describes
-@@ -64,11 +47,11 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-      * Since the supported physical address space is below 54 bits, the
-      * H-8 algorithm is moot and all that is left is to truncate.
-      */
--    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
--    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-+    const uint8_t pa = hppa_phys_addr_bits(env);
-+    return sextract64(addr, 0, pa);
- }
- 
--hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa2_w0(CPUHPPAState *env, vaddr addr)
- {
-     /*
-      * See Figure H-10, "Absolute Accesses when PSW W-bit is 0",
-@@ -89,7 +72,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-          * is what can be seen on physical machines too.
-          */
-         addr = (uint32_t)addr;
--        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
-+        addr |= -1ull << (hppa_phys_addr_bits(env) - 4);
-     }
-     return addr;
- }
-@@ -233,13 +216,13 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
-     if (MMU_IDX_MMU_DISABLED(mmu_idx)) {
-         switch (mmu_idx) {
-         case MMU_ABS_W_IDX:
--            phys = hppa_abs_to_phys_pa2_w1(addr);
-+            phys = hppa_abs_to_phys_pa2_w1(env, addr);
-             break;
-         case MMU_ABS_IDX:
-             if (hppa_is_pa20(env)) {
--                phys = hppa_abs_to_phys_pa2_w0(addr);
-+                phys = hppa_abs_to_phys_pa2_w0(env, addr);
-             } else {
--                phys = hppa_abs_to_phys_pa1x(addr);
-+                phys = hppa_abs_to_phys_pa1x(env, addr);
-             }
-             break;
-         default:
-@@ -580,7 +563,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
-     /* Align per the page size. */
-     ent->pa &= TARGET_PAGE_MASK << mask_shift;
-     /* Ignore the bits beyond physical address space. */
--    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-+    ent->pa = sextract64(ent->pa, 0, hppa_phys_addr_bits(env));
- 
-     ent->t = extract64(r2, 61, 1);
-     ent->d = extract64(r2, 60, 1);
+Changes in v4:
+- Add PA-8500 instead of PA-8600 and use the now upstreamed A400
+  machine.
+- Link to v3: https://lore.kernel.org/qemu-devel/20260218-hppa-c3600-v3-0-b37ad58a20dd@rev.ng
 
--- 
-2.52.0
+Changes in v3:
+- Fixed spelling in commit message/comment
+- Rebased
+- Dropped if statement in hppa_cpu_class_base_init() (patch
+  "hppa: Introduce HPPACPUDef").  Not needed as it will simply
+  be set to NULL for the abstract base class anyway.
+- Link to v2: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng
+
+Changes in v2:
+- Missed a reference to the old "hppa" CPU model, updated to
+  "pa-7300lc".
+- Link to v1: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng
+
+---
+Anton Johansson (4):
+      hppa: Restructure CPU Class heirarchy
+      hppa: Introduce HPPACPUDef
+      hppa: Get physical address space bits from HPPACPUDef
+      hppa: Use 44 bit physical addresses for PA-8700
+
+ target/hppa/cpu-qom.h                 |  8 ++++-
+ target/hppa/cpu.h                     | 35 ++++++++++++++++-----
+ hw/hppa/machine.c                     | 25 +++++++++------
+ hw/pci-host/astro.c                   |  2 +-
+ linux-user/hppa/elfload.c             |  2 +-
+ target/hppa/cpu.c                     | 57 +++++++++++++++++++++++++++--------
+ target/hppa/mem_helper.c              | 39 +++++++-----------------
+ tests/qtest/machine-none-test.c       |  2 +-
+ tests/functional/hppa/test_seabios.py |  4 +--
+ 9 files changed, 111 insertions(+), 63 deletions(-)
 
 
