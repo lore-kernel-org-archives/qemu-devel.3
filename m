@@ -4,146 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DEBDEB3641
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 00:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251DDEB3648
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 00:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxDC9-0006nj-CS; Mon, 02 Mar 2026 19:01:01 -0500
+	id 1vxDx9-0004q3-AT; Mon, 02 Mar 2026 19:49:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1vxDC6-0006mL-Un
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 19:00:59 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jithu.joseph@oss.qualcomm.com>)
- id 1vxDC4-0007Fg-BO
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 19:00:58 -0500
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 622Iuoac1187020
- for <qemu-devel@nongnu.org>; Tue, 3 Mar 2026 00:00:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- EXM+H/bF/gKQWMSsAEYM6N1wR9orXlh40uOHx3WoGyw=; b=WIpRxXCQsqaGJcxm
- UPeY3NF7fML2WmdjkotId4+X9B3sHFdi1sH2XPqz0D0E/fT9yKMX6p0SlwT0T4t5
- NkvuqjYcdyxRuItleWibjjOrAH/NZSHlUjCIzEGyLycB087lkW7dIiUcTDk0yBLN
- kRj74YdOZQfj7+VAH3mrn1pktIqAOIEdtnnbPkqVAkD8GkSYOlV22jTEm+i5v+Tp
- u2kG7MPZLNq80jBZopywSI7657siMu/bcN2K1mtq9I6ynR8LR4CMc/HDH41lT2fx
- Oia+f8nBTXrlTwP1zG2HjieLaevwAGVgkva809Zv6FAtSolTcexUz36vsLppWvMW
- kgPKpQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cng96gtav-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 00:00:53 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-2be1b95033cso7218310eec.0
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 16:00:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxDx6-0004pv-Vr
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 19:49:33 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxDx3-0003ya-DZ
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 19:49:32 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c6e77ace76aso1910730a12.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 16:49:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772498962; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Sf8wf//8q3L5djxr4l0YP2HTMpEEBP3Z1rZIw5gx6W7alH4RXwUnVHnoYmZqxWp/qP
+ aZvAEY0XpoJTr/NifGoxIUoFBQQ2PFmQyhcemKjRZu+gvyGSuZttbgnT9IxFzkpO033u
+ 2X3ElSej0y4BpKfpG7iW3PqLSb3kSjPEwlIOCOAD8Xgnbl90bm84YpuQ8n/h/CVayLPw
+ iMcKLGq+6ZzoPNT0IEQUd2G97erxYtEXFbvj3KaNv/+W/tvCPMuZ3rL2LtUzyDvSz7wN
+ /DQBNQJxkni4b9emfLUL96nnjEYk1E8hv4RWWqSb2UP0Zm/6yJv9Kb8ePaDnrPjETUh6
+ naLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=qhRWWznHD8WTta8ncBr/wJvOCnBAE19xC/cR5b9t9aY=;
+ fh=sbxuPqjMywa3JYEGeYJMyo5ksfdP/w06LeNzDEfn49s=;
+ b=X+xqxoAecImdDqNv7CpWZtvRpFelAuDjIFy4owkm/OMCRVEITF2I2nqx5mKaEG5+fE
+ IekWI5hjCG+UkZV7W7wsrAjDi296DxWdCxJc261kvDlfNHSkka6+UxBGfKOSrIdNnc9P
+ 86nggSqxUUPO3oWObUiwuPr3ngEVfKrTlEI/V/BNOY5NFrKma1cDhZ2mztSwR29I9CtV
+ kkSY/imcTdd22N0WEUyflGh2CayIfZ3o45U2LDC6AKZbjUcKYvZ66qiPEuakgDCulCCs
+ Y46vBOiSVL2YVBcBjWxWhvrlfG6VVx/+9CoP5UhgeTTS8gsDq78K2E0xMqmEBX49i12/
+ KvOA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1772496052; x=1773100852; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EXM+H/bF/gKQWMSsAEYM6N1wR9orXlh40uOHx3WoGyw=;
- b=Xo0Mg1agvCDfPHEV18jcR0zS4tgkspLYn4XDhLyDeHzgDQmL6rtEjXUgN8H+tlEq68
- 4qkHHGgkFaFCoJgBPLtKF6PYW2IUIsynl4VcbBtWONodbv8tzaM/vNAxxgb5LgKv+78c
- /lRVJ8jdaNZS7yA0g2+bG7/UCd3wjF4UY2aXmIwgBHCXQdP+ytBYPjhUcCACcTWSMeO1
- 9Vdcf9SiJFampjRYNVKTvpq8uUFj6IX4mJ4xOkwuOYTeaXkJAv+tm1NrENkb+f9nr2R3
- nWMCK1iSBsb3hZzLYgJzOIVXjrWxXYrgw547MnZFP8i/P3lxU3gODkgn7yFjWRN9NzH/
- uVrQ==
+ d=gmail.com; s=20230601; t=1772498962; x=1773103762; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qhRWWznHD8WTta8ncBr/wJvOCnBAE19xC/cR5b9t9aY=;
+ b=dZBJt1ljwzhOnSSgd7j9hGNJOeMj3AZP4k722fb19m8vOmDWkpv4bSTFT2+gJ0rgsP
+ n/qDDWCAoIjUJY+N1sWcseMGopKHJxmm1DcdFjNXLNf0z4EN99ZYq51mfMhnpyNx+T9n
+ kWpo9BeWEMChSEE5Wyny0Gg6nJ+IzfkyYKo2szLorIu5Pli7sy5PqvqhG2K5TflrlvgR
+ spCWOOkYEkApzo5aheBH5C658Cx6E7c4cjlEtluy/AiSYD/65EJ8ACJYHHfFG8hiTAtx
+ t3cK7eNopWZpYNLLizd+3QPLnbzRv4y0Q+hn4qxk9QD+sDW6/KVE1X96/3JbLr1vA6Eb
+ gAOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772496052; x=1773100852;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EXM+H/bF/gKQWMSsAEYM6N1wR9orXlh40uOHx3WoGyw=;
- b=RjeT2MnREy6irvIYlIzA6C8jzGqwH6xitl2HL79YCVolmotelc32jsonYwiSmRYj3O
- bScEe3rgyBgXkIEJdObXv4JIR0fHyKb7mqfeGOGnbvF/zrEn7CibarZLGYtcclq2Ncl8
- 0Gxpr27H6UrQhnJWh8h9HdTcPyYfXJFkP+LLHOXu+Bm5mC/mzSkuUSdXCZBFo2N+aPjl
- wSP2u6PcjTNh6wtlnxf1Cov+NyrkSqW6JZupgaT+DlnyMQ2lxoslc1wH7hchgvZow15b
- ERCBW3PQUYaXEouchGGJyNM6vr4GBIIO0Ym8s5TLV2mhjXdbrssD0KehzPfuFWnIEcK3
- 9xIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW504f3+v9sTq6D9RIEthFWmKwzICLisdxsqVqZfUz7+9AZbPEcgA9Um0dLEagBaRY83Y3b2qtJcISu@nongnu.org
-X-Gm-Message-State: AOJu0YyvHe3y7KuvVULIus4jQHo3p4gP49aigXtD/14BmRTq00O0fDUT
- Eg+h91akeoGaj8e+k3hqNOmB+sjHPWB79aCFxl8NjkZqHRvXqMd7BWB9pihLh5w6qvuhxPK2jJP
- +U+CBluFpb5v3LjU+2/El3kllwj4e0zgYfOd99YE4RPSI//KjStH9GTBPkg==
-X-Gm-Gg: ATEYQzyeTAGJJyMh88ktOhNabXs0NojV8Uy0Z8rttN12zmtBsUqmLnjy+Q67Xv/ZUAr
- AteqM1554266M7//r8KLC+lyVeJ8/VIp+QFKLowZkogeHKqeTMjFEWPWU+hkLrLTcpkOh77C9qu
- sXaIkx4eHx6t8QiSvZ8nOsYxJXWmrynTjyPyN8yFKpLT6llAGl38jK94wfjMMkQY2Qfw0WfMuTh
- ArfwlqD40bL5IJfMMvD+2IllnqePTr73of/BlRXkwTPVGwmnjyMkuWqkzXNpjuz3aJr+2WTYu72
- BCFqQ4YqxBpCKtM8HwKAR2Dmc2SuNhEycvVqHHtBR1jN32Uax+Cbbu132RiA653E7NDw/J1RSQk
- ZsEsmdk+IcZwm+9t6i8l55wOVcDliCU/R0xNF0e0smtBsVFp6aqVuCe9tZqU56pePy6aTTe+o42
- 0H
-X-Received: by 2002:a05:693c:620f:b0:2bd:f002:b326 with SMTP id
- 5a478bee46e88-2bdf002c6b0mr3545051eec.28.1772496050773; 
- Mon, 02 Mar 2026 16:00:50 -0800 (PST)
-X-Received: by 2002:a05:693c:620f:b0:2bd:f002:b326 with SMTP id
- 5a478bee46e88-2bdf002c6b0mr3544994eec.28.1772496048821; 
- Mon, 02 Mar 2026 16:00:48 -0800 (PST)
-Received: from [10.110.0.81] (i-global254.qualcomm.com. [199.106.103.254])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bdfed770dfsm6291983eec.19.2026.03.02.16.00.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Mar 2026 16:00:48 -0800 (PST)
-Message-ID: <dadeb207-4ab6-48e0-86f2-04fb2e7758b1@oss.qualcomm.com>
-Date: Mon, 2 Mar 2026 16:00:46 -0800
+ d=1e100.net; s=20230601; t=1772498962; x=1773103762;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qhRWWznHD8WTta8ncBr/wJvOCnBAE19xC/cR5b9t9aY=;
+ b=JZFRBdeJ0IEdWZJT9WC4iPAo+jGKn3ypgHvdd3xCIlqhEk/470KIhG2EY7ZU7BOsD+
+ N/iv9mqSwQiuyDOZmJSYML/G9JYiAhJpEKXrEw8pU85hTDlFeeh41L9oGEbRZ/sPk43Y
+ qGFuo21DXpG/lqM+xYXNW4LyTFgCmWq4b8PgyYJgC6aa5bZdWf7KmynBIBwPq/uV6YcD
+ FTgue/A6q4VJtpZkGWho5IEa/CnURxPsDX+hGtK99KrnZxYPhy4vbV9gyaMdV9As25Xk
+ 49/Qk1k8X+SiRAnn20/cLeLRtJ1uvC0jouXRXdlVdz2fFrtPbwXBS/1bC2/T4ucwsN2t
+ 1mFQ==
+X-Gm-Message-State: AOJu0YzcI9zW8EhYh7yHektM1B4PB81SZU0vmBriZ1jm6CNW5uAuqdUN
+ pj0+GlWB+hlwFLFmmn8W1z1KXwfmZWTJzxvWLl/r66C0X2nAvDUwnrksyGW++LoV6izXmxf7rEg
+ fI0BRrAHSF+U0HYtp20hFtXjayZZA2Vg=
+X-Gm-Gg: ATEYQzwUYNWxw8x7SY+aTIhW+ZVyZ+7VQ+1ywukCr5MiEzcKBnuwdBOKZa07c4mWnfb
+ d8dlzlprCAvhoSwDyKyqlBXsDHLFYK9dm+CIQxaK0XXxgt3m/YwSPCoTdTYotpoCPU2f2CMvVYP
+ Un5bgx4HYEfLZpH+IopsqLfBGDZPdMFi1V1dkttTtTznV8MBEO/azTKM/I8c84GlqTpUWHPexUz
+ mqA8Y7ZEIeABSxRF8nzfbRMeCVGPWClEv/GBMwpW1gYEK1RAQV5flPPN6j7a6Cmxj9ueuksY0Ew
+ Orj4pVr8ltF2Rq99uP3hvSyiczRtixA1EGH785Y=
+X-Received: by 2002:a17:90a:e18f:b0:358:e7de:a717 with SMTP id
+ 98e67ed59e1d1-35965cd13ecmr11574860a91.25.1772498962404; Mon, 02 Mar 2026
+ 16:49:22 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/4] hw/i3c/mock-i3c-target: Simplify GETMRL byte
- extraction logic
-To: Jamin Lin <jamin_lin@aspeedtech.com>, "clg@kaod.org" <clg@kaod.org>,
- "nabihestefan@google.com" <nabihestefan@google.com>,
- "komlodi@google.com" <komlodi@google.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-References: <20260302032626.1974743-1-jamin_lin@aspeedtech.com>
- <20260302032626.1974743-5-jamin_lin@aspeedtech.com>
-Content-Language: en-US
-From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-In-Reply-To: <20260302032626.1974743-5-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Co6ys34D c=1 sm=1 tr=0 ts=69a624b5 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=V2NxCb60AAAA:8 a=EUspDBNiAAAA:8 a=gyPcqEC5Xe3DmluL9QUA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=3L6qF29SlnrayQqPM2jZ:22
-X-Proofpoint-GUID: VO7hxAV_GnktIw_hue5vMgO8dqSpuptx
-X-Proofpoint-ORIG-GUID: VO7hxAV_GnktIw_hue5vMgO8dqSpuptx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDE3NCBTYWx0ZWRfXzA/I6Mootp67
- 0MFYaCVpxK1253GCX8KEPajI/lluiSlId6YKd1ZmnpZy6sfBva8EQ3VN6rt00z3oyMckuRMGIF6
- IyReiWrCes9b9ibxtWh++B9YqZbf4Q3CjduIW/5mp+QLdq88lMEdFP8bNeJNUR7po9CR58bmGU+
- p+2jDs+Iz4773ngBfA90R3MNSwpAoZw9DaOL1A2LCXKn4ke5qDJ8hkg7Rz4PRgyUMq+pmru06qg
- VG+hNOp6uDLWtvymUcTZPw3Wfrgj1deY+Wqsc62BjgRwje5yuySqe6h7P07NsGYRDkXhY96Butk
- PaHk2YrrjwcEYhIUbzVkm4eGfq++S5PZy9R0IBPt1N/M4ueEWc2Hn3iw52xcRktEoEIXWgcZ8+U
- 5aRbOiRIjE5zck6ZxSXKr0y9NQrvbzhMlj2ZjigIoCgcdRNx1kA5ItdksPQe4f0Y+5syRmdn2Jx
- 9RsHGclRRzaA0WZq0iQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-02_05,2026-03-02_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
- lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 bulkscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603020174
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=jithu.joseph@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260226043436.648171-1-brian.cain@oss.qualcomm.com>
+ <20260226043436.648171-2-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260226043436.648171-2-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 2 Mar 2026 17:49:11 -0700
+X-Gm-Features: AaiRm51dh9bK-M8upjRbQz0XkMA8ykKRl16_X7XSAwTUsD7O3VTOcI2Wj_Y6CbM
+Message-ID: <CAATN3NonuVXqN0SiKqFfod4iQR+qrSe+ecLbO2few4SApQ_PqA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] target/hexagon: use TCG_COND_TSTEQ/TSTNE for
+ predicate branches
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000004d7c7064c141344"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,58 +115,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/1/2026 7:26 PM, Jamin Lin wrote:
-> The GETMRL handling logic extracted MSB/LSB bytes from
-> s->cfg.buf_size using a mask-and-shift expression:
-> 
->   (buf_size & (0xff00 >> (offset * 8))) >>
->   (8 - (offset * 8))
-> 
-> While functionally correct, the expression is difficult to read
-> and obscures the intent, which is simply to return a 16-bit value
-> in MSB-first order.
-> 
-> Replace the mask/shift formula with explicit MSB/LSB extraction:
-> 
->   offset == 0 -> buf_size >> 8
->   offset == 1 -> buf_size & 0xff
-> 
-> This makes the code clearer and easier to review without altering
-> behavior or data ordering.
-> 
-> No functional change.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+--00000000000004d7c7064c141344
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Feb 25, 2026 at 9:34=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
+
+> Replace TCG_COND_EQ/NE comparisons against 0 with TCG_COND_TSTEQ/TSTNE
+> comparisons against 1 for all predicate-conditional branches. This tests
+> bit 0 of the predicate register directly, eliminating redundant andi
+> operations that previously extracted the LSB before the comparison.
+>
+> For predicate-conditional jumps (jumpt, jumpf, jumptnew, etc.) and
+> jump-register variants (jumprt, jumprf, etc.), pass the raw predicate
+> value directly instead of going through fLSBOLD/fLSBNEW extraction.
+> For callers that produce a 0/1 result via setcond (compare-and-jump,
+> jumprz, etc.), the TSTEQ/TSTNE test on bit 0 is equivalent to the
+> previous EQ/NE test against 0.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  hw/i3c/mock-i3c-target.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/i3c/mock-i3c-target.c b/hw/i3c/mock-i3c-target.c
-> index 5c913ee49b..845c173427 100644
-> --- a/hw/i3c/mock-i3c-target.c
-> +++ b/hw/i3c/mock-i3c-target.c
-> @@ -145,9 +145,12 @@ static int mock_i3c_target_handle_ccc_read(I3CTarget *i3c, uint8_t *data,
->              if (s->ccc_byte_offset >= 2) {
->                  break;
->              }
-> -            data[s->ccc_byte_offset] = (s->cfg.buf_size &
-> -                                        (0xff00 >> (s->ccc_byte_offset * 8))) >>
-> -                                        (8 - (s->ccc_byte_offset * 8));
-> +            if (s->ccc_byte_offset == 0) {
-> +                data[s->ccc_byte_offset] = (uint8_t)(s->cfg.buf_size >> 8);
-> +            } else {
-> +                data[s->ccc_byte_offset] = (uint8_t)s->cfg.buf_size;
-> +            }
-> +
->              s->ccc_byte_offset++;
->              *num_read = num_to_read;
->          }
+>  target/hexagon/gen_tcg.h   | 80 +++++++++++++++++++-------------------
+>  target/hexagon/genptr.c    | 32 ++++++---------
+>  target/hexagon/translate.c |  2 +-
+>  3 files changed, 53 insertions(+), 61 deletions(-)
+>
+> diff --git a/target/hexagon/gen_tcg.h b/target/hexagon/gen_tcg.h
+> index 45ccd51888..98d3996011 100644
+> --- a/target/hexagon/gen_tcg.h
+> +++ b/target/hexagon/gen_tcg.h
+>
+> @@ -933,31 +933,31 @@
+>      do { \
+>          TCGv LSB =3D tcg_temp_new(); \
+>          COND; \
+> -        gen_cond_jump(ctx, TCG_COND_EQ, LSB, riV); \
+> +        gen_cond_jump(ctx, TCG_COND_TSTEQ, LSB, riV); \
+>      } while (0)
+>  #define fGEN_TCG_cond_jumpf(COND) \
+>      do { \
+>          TCGv LSB =3D tcg_temp_new(); \
+>          COND; \
+> -        gen_cond_jump(ctx, TCG_COND_NE, LSB, riV); \
+> +        gen_cond_jump(ctx, TCG_COND_TSTNE, LSB, riV); \
+>      } while (0)
+>
+>  #define fGEN_TCG_J2_jumpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpt(fLSBOLD(PuV))
+> +    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuV, riV)
+>  #define fGEN_TCG_J2_jumptpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpt(fLSBOLD(PuV))
+> +    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuV, riV)
+>  #define fGEN_TCG_J2_jumpf(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpf(fLSBOLD(PuV))
+> +    gen_cond_jump(ctx, TCG_COND_TSTNE, PuV, riV)
+>  #define fGEN_TCG_J2_jumpfpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpf(fLSBOLD(PuV))
+> +    gen_cond_jump(ctx, TCG_COND_TSTNE, PuV, riV)
+>  #define fGEN_TCG_J2_jumptnew(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpt(fLSBNEW(PuN))
+> +    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuN, riV)
+>  #define fGEN_TCG_J2_jumptnewpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpt(fLSBNEW(PuN))
+> +    gen_cond_jump(ctx, TCG_COND_TSTEQ, PuN, riV)
+>  #define fGEN_TCG_J2_jumpfnewpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpf(fLSBNEW(PuN))
+> +    gen_cond_jump(ctx, TCG_COND_TSTNE, PuN, riV)
+>  #define fGEN_TCG_J2_jumpfnew(SHORTCODE) \
+> -    fGEN_TCG_cond_jumpf(fLSBNEW(PuN))
+> +    gen_cond_jump(ctx, TCG_COND_TSTNE, PuN, riV)
+>
+>
+There are no more uses of fGET_TCG_cond_jumpf, so that macro can be removed=
+.
 
-Looks way more readable
+There are some additional uses of fGEN_TCG_cond_jumpt just below these
+changes (e.g., fGEN_TCG_J2_jumprz).  So that macro needs to stay.
 
-Reviewed-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
 
+> @@ -979,31 +979,31 @@
+>      do { \
+>          TCGv LSB =3D tcg_temp_new(); \
+>          COND; \
+> -        gen_cond_jumpr(ctx, RsV, TCG_COND_EQ, LSB); \
+> +        gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, LSB); \
+>      } while (0)
+>  #define fGEN_TCG_cond_jumprf(COND) \
+>      do { \
+>          TCGv LSB =3D tcg_temp_new(); \
+>          COND; \
+> -        gen_cond_jumpr(ctx, RsV, TCG_COND_NE, LSB); \
+> +        gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, LSB); \
+>      } while (0)
+>
+>  #define fGEN_TCG_J2_jumprt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprt(fLSBOLD(PuV))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuV)
+>  #define fGEN_TCG_J2_jumprtpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprt(fLSBOLD(PuV))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuV)
+>  #define fGEN_TCG_J2_jumprf(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprf(fLSBOLD(PuV))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuV)
+>  #define fGEN_TCG_J2_jumprfpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprf(fLSBOLD(PuV))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuV)
+>  #define fGEN_TCG_J2_jumprtnew(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprt(fLSBNEW(PuN))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuN)
+>  #define fGEN_TCG_J2_jumprtnewpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprt(fLSBNEW(PuN))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuN)
+>  #define fGEN_TCG_J2_jumprfnew(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprf(fLSBNEW(PuN))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuN)
+>  #define fGEN_TCG_J2_jumprfnewpt(SHORTCODE) \
+> -    fGEN_TCG_cond_jumprf(fLSBNEW(PuN))
+> +    gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuN)
+>
 
-Thanks
-Jithu
+There are no more uses of fGEN_TCG_cond_jumpr[tf], so those macros can be
+removed.
+
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+
+--00000000000004d7c7064c141344
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 25,=
+ 2026 at 9:34=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">Replace TCG_COND_EQ/NE comparisons a=
+gainst 0 with TCG_COND_TSTEQ/TSTNE<br>
+comparisons against 1 for all predicate-conditional branches. This tests<br=
+>
+bit 0 of the predicate register directly, eliminating redundant andi<br>
+operations that previously extracted the LSB before the comparison.<br>
+<br>
+For predicate-conditional jumps (jumpt, jumpf, jumptnew, etc.) and<br>
+jump-register variants (jumprt, jumprf, etc.), pass the raw predicate<br>
+value directly instead of going through fLSBOLD/fLSBNEW extraction.<br>
+For callers that produce a 0/1 result via setcond (compare-and-jump,<br>
+jumprz, etc.), the TSTEQ/TSTNE test on bit 0 is equivalent to the<br>
+previous EQ/NE test against 0.<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/gen_tcg.h=C2=A0 =C2=A0| 80 +++++++++++++++++++--------=
+-----------<br>
+=C2=A0target/hexagon/genptr.c=C2=A0 =C2=A0 | 32 ++++++---------<br>
+=C2=A0target/hexagon/translate.c |=C2=A0 2 +-<br>
+=C2=A03 files changed, 53 insertions(+), 61 deletions(-)<br>
+<br>
+diff --git a/target/hexagon/gen_tcg.h b/target/hexagon/gen_tcg.h<br>
+index 45ccd51888..98d3996011 100644<br>
+--- a/target/hexagon/gen_tcg.h<br>
++++ b/target/hexagon/gen_tcg.h<br><br>
+@@ -933,31 +933,31 @@<br>
+=C2=A0 =C2=A0 =C2=A0do { \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv LSB =3D tcg_temp_new(); \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0COND; \<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_EQ, LSB, riV); \<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTEQ, LSB, riV); =
+\<br>
+=C2=A0 =C2=A0 =C2=A0} while (0)<br>
+=C2=A0#define fGEN_TCG_cond_jumpf(COND) \<br>
+=C2=A0 =C2=A0 =C2=A0do { \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv LSB =3D tcg_temp_new(); \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0COND; \<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_NE, LSB, riV); \<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTNE, LSB, riV); =
+\<br>
+=C2=A0 =C2=A0 =C2=A0} while (0)<br>
+<br>
+=C2=A0#define fGEN_TCG_J2_jumpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpt(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTEQ, PuV, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumptpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpt(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTEQ, PuV, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumpf(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpf(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTNE, PuV, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumpfpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpf(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTNE, PuV, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumptnew(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpt(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTEQ, PuN, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumptnewpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpt(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTEQ, PuN, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumpfnewpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpf(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTNE, PuN, riV)<br>
+=C2=A0#define fGEN_TCG_J2_jumpfnew(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumpf(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jump(ctx, TCG_COND_TSTNE, PuN, riV)<br><br></blockq=
+uote><div><br></div><div>There are no more uses of fGET_TCG_cond_jumpf, so =
+that macro can be removed.</div><div><br></div><div><div>There are some add=
+itional uses of fGEN_TCG_cond_jumpt just below these changes (e.g., fGEN_TC=
+G_J2_jumprz).=C2=A0 So that macro needs to stay.</div></div><div>=C2=A0</di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">
+@@ -979,31 +979,31 @@<br>
+=C2=A0 =C2=A0 =C2=A0do { \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv LSB =3D tcg_temp_new(); \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0COND; \<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_EQ, LSB); \<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, LSB);=
+ \<br>
+=C2=A0 =C2=A0 =C2=A0} while (0)<br>
+=C2=A0#define fGEN_TCG_cond_jumprf(COND) \<br>
+=C2=A0 =C2=A0 =C2=A0do { \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv LSB =3D tcg_temp_new(); \<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0COND; \<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_NE, LSB); \<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, LSB);=
+ \<br>
+=C2=A0 =C2=A0 =C2=A0} while (0)<br>
+<br>
+=C2=A0#define fGEN_TCG_J2_jumprt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprt(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuV)<br>
+=C2=A0#define fGEN_TCG_J2_jumprtpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprt(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuV)<br>
+=C2=A0#define fGEN_TCG_J2_jumprf(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprf(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuV)<br>
+=C2=A0#define fGEN_TCG_J2_jumprfpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprf(fLSBOLD(PuV))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuV)<br>
+=C2=A0#define fGEN_TCG_J2_jumprtnew(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprt(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuN)<br>
+=C2=A0#define fGEN_TCG_J2_jumprtnewpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprt(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTEQ, PuN)<br>
+=C2=A0#define fGEN_TCG_J2_jumprfnew(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprf(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuN)<br>
+=C2=A0#define fGEN_TCG_J2_jumprfnewpt(SHORTCODE) \<br>
+-=C2=A0 =C2=A0 fGEN_TCG_cond_jumprf(fLSBNEW(PuN))<br>
++=C2=A0 =C2=A0 gen_cond_jumpr(ctx, RsV, TCG_COND_TSTNE, PuN)<br></blockquot=
+e><div><br></div><div>There are no more uses of fGEN_TCG_cond_jumpr[tf], so=
+ those macros can be removed.</div><div><br></div><div>Otherwise</div><div>=
+Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com"=
+>ltaylorsimpson@gmail.com</a>&gt;</div><div><br></div><div>=C2=A0</div></di=
+v></div>
+
+--00000000000004d7c7064c141344--
 
