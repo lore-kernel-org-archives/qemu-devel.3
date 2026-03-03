@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92C95EDA685
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83DCBEDA688
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRVG-0005cQ-Qg; Tue, 03 Mar 2026 10:17:43 -0500
+	id 1vxRVT-0005wN-Ob; Tue, 03 Mar 2026 10:17:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxRUw-0005Bs-TN
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:23 -0500
+ id 1vxRV5-0005K5-Ib
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:35 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxRUt-0005Cw-P3
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:22 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772551020; cv=none; 
+ id 1vxRV3-0005GF-SQ
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:31 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772551034; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=Dio1GHqfWSjok3yCc2T3YnU2pPbWymcXlPwVwQZTJUIn/JMKMvNKHuFe4p4Ku2lrBraOc9tzLKErCj1pR1n6qWss3k//25PaAi+08MX4dl4gjqlmR5qFYJbyAROQVxjm0aVpmwY59TyR/L3/54z9Ma9JKYJmE6YuT+tKutF8hgE=
+ b=egi425PiTUoKGPNUx/bRDxZM+LuGocJkEDv/zwnSP/Yi5T6GIhj1l45vJPdpydLPdamREsN+5iLowoILZnFHGxNDEIsppZsO/Trn4RriOWkVB9Okmvj5JXOo7ch0ulVzMjxtMfj8hXvnTtDg6lMVJegl2fB2lEAhwDgKtqmIHBQ=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772551020;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=oaWO7r3ZwyrUipxkB+Cc9t0DxxgtoB+INwfQ+jZ8B+M=; 
- b=RygOESe3ZgvjUThNDrtt9YwzqvgG8oq/S8b+zNPF7JIQjcILL5bmC4xOUYPRF6htsNDGNpR65a3D+DLiYLbBMl235StX+sXK9sDoVCmXQnlA1Hm8G4KvHki9RuXiZ34tRmHaopZsJVWu19YKwmGnF9kuQR/0dC5S8MkyiQwGDRs=
+ s=zohoarc; t=1772551034;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=KiIt5RYPN35jgsVUeLsKKeJLqNUSvmDxvyIw8onprE0=; 
+ b=Hel8dH+cIVBVEb/Jn1dtwW/G4ADGEX32DQZgq9jRRY2yTyh+8M0KcHugJw3jtwa6d/Dli+nfQxZPIHBqVrEu4o9WIjwT3bRspPmw32GyaVT9uW5EUu0cDHO+9HAB29BrG98X1smtDC6TxloXDKExgZH53FVUdEXoqUVwG3cgnwY=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772551020; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772551034; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=oaWO7r3ZwyrUipxkB+Cc9t0DxxgtoB+INwfQ+jZ8B+M=;
- b=SXU/fxHMuqSQjf0e6QNu52yTg+AxCwyppKrvfL+d57DMqMn8E2QStcVM0n9e9Dln
- GotcFyxPYju3wkZQtOz+irRH203ivKhoYVdoehx9NNAKo4it8d0zlp6MkKeiUvcFBxl
- E6QBZ5X5ausYOcSavIJH3X1Qn3yFNXIpgNxwxb10=
-Received: by mx.zohomail.com with SMTPS id 1772551017838937.5229000266958;
- Tue, 3 Mar 2026 07:16:57 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=KiIt5RYPN35jgsVUeLsKKeJLqNUSvmDxvyIw8onprE0=;
+ b=bOoQEPC5d6vO1mg8LHzZiP+TYhGgKYG1NGvdp3e/lVsjZbuuL+cgn0XgGV/X2ED5
+ c/PixtEFD77aistvXqOdWECh54uioZS6832F1ZNlElif8qw3ClzMcpAbRT/rgtADZ3s
+ 7py0SGf9fmx2lfUOT1kJJefzcjBUcE/j/j4Hw+/A=
+Received: by mx.zohomail.com with SMTPS id 1772551031767947.8459032518655;
+ Tue, 3 Mar 2026 07:17:11 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,13 +62,15 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v22 12/18] docs/system: virtio-gpu: Update Venus link
-Date: Tue,  3 Mar 2026 18:14:15 +0300
-Message-ID: <20260303151422.977399-13-dmitry.osipenko@collabora.com>
+Subject: [PATCH v22 14/18] virtio-gpu: Remove superfluous
+ memory_region_set_enabled()
+Date: Tue,  3 Mar 2026 18:14:17 +0300
+Message-ID: <20260303151422.977399-15-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
 References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -96,32 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change virtio-gpu Venus link, pointing it at the Mesa Venus
-documentation instead of the protocol. The Mesa doc provides more
-information and also has a link to the protocol.
+There is no need to explicitly enable/disable memory region when it's
+added or deleted respectively. Remove superfluous set_enabled() calls
+for consistency.
 
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/display/virtio-gpu-virgl.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 89153103b9f8..ef5fb0401d5d 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -83,7 +83,7 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- .. parsed-literal::
-     -device virtio-gpu-gl,hostmem=8G,blob=true,venus=true
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index f5fe1bf4e73c..abf7c176a65f 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -171,7 +171,6 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+-    memory_region_set_enabled(mr, true);
  
--.. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
-+.. _venus: https://docs.mesa3d.org/drivers/venus.html
+     res->mr = mr;
  
- DRM native context is supported since release of `virglrenderer`_ v1.0.0
- using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
+@@ -225,7 +224,6 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         b->renderer_blocked++;
+ 
+         /* memory region owns self res->mr object and frees it by itself */
+-        memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+         object_unparent(OBJECT(vmr));
+     }
 -- 
 2.52.0
 
