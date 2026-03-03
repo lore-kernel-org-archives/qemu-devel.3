@@ -4,106 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998BDEC142E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E43EC1432
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxNph-0004W3-60; Tue, 03 Mar 2026 06:22:36 -0500
+	id 1vxNrW-00051j-La; Tue, 03 Mar 2026 06:24:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNpa-0004UW-Ul
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:22:27 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1vxNrS-000516-F9
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:24:22 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNpZ-0005iS-F2
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:22:26 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ad8435f46so5146348d50.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:22:24 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772536943; cv=none;
+ id 1vxNrQ-0005rW-3X
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:24:22 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64c9ebd1369so4855677d50.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:24:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772537058; cv=none;
  d=google.com; s=arc-20240605;
- b=VE08gr6L3bx2baL545J4i1EKM1dt6ZiLuWGmbuC8qpyqxpf/6uN53TwkS3gURmEso9
- 9nRvawHBEH+zBbER0FnCEKs0Ma3xPOx5L/PqqrOS/1XYyjnH0s4u1/wYmSh6ASOsJGjA
- xA+LHC+K7AssX8GTsIeZP+zBO2RqDdfYuOBOsuDdeGAHV1uG9g1Hwzg6NpOq1Uybxm6s
- 6Y0AHDL+HdU69KLJF/pC0vI6UuVXgTuLHAFB50JG6h2R2DDSx9IT1WhdLbu/QHdz3O0t
- zEHrjtTpTZSJhVqLHtetnsaL6OaNnchTskgMCngg+4+KdEsHp9eVXBNxmHnI+Z3mJTyk
- fzRg==
+ b=luw6cuWk6AzDKuWbO26sp5YjQIlb0UamaN/ix5kNtT6+47XDRieUdfL4WqQGvBvGQZ
+ mdvzLqtuwVrhP8rxPri7zFrj9FRQ0P9b78UbCxXXwA4Qo6dfL8Rqr9Gu8hQNYt2W4pvG
+ fGI1GAc27DNwOjWg/HICxJaFgyc+sUT/ei/tcW2740TzR5esoxi3StW5V6lHVN5+edbo
+ nnEzk0csf9ulaOYuTMoZT51kwaBrGQkuT8n9N0X6OC9i/fM4lUhUMhETP+BLeBJWFM60
+ dzFfTjfE34BPHdRT7FcWbXizb/aqtlTKTQFdyAD8SgRJcsA+lCFszutNT1QWlm32Sr1i
+ 7X9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=m+6IG2CRLKKPRPJdAjPOtx72DUjJTLsUjz5R/WUmzNg=;
- fh=EzCqtT5E+bTTLv4rNAwVJ+2ChJBsIX5zYHpMVTT1IcQ=;
- b=ZlP4zNsTWe6vlbOFHteYPjD64MPrR+RVTKyFzIvj41sXLoQZx8yp+HyT65bA6z6pwS
- POCE1SrKPHy6ZxsY1effOUWqXPgiV7S5bgyMRfNJ6xJHWBcnBI1heTOXBPNz6q9Wt3Yb
- ionnodwZEGSRqTVBa/rz0F7L0zt+FYIh10GErsyzBhComSa9Bpf19tHPXMjTavJCO4xk
- 0Sh6LzhRdzEwoQruj/55p8sOXzCiM1/lpM46qvClKiIjfVDDEp5KZUiic7zjwrhYAm8v
- CLX8QJRH/e8WZmj/NpH2sQFvkbKTbJwNkpftZCLLDcWH/Ibet1Cew0T7ZDEEuZazNfu5
- 80Ew==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=tjeGAeWkW88zo9xVTQEDAZr38G4dxg7jKkDmMC6ghRU=;
+ fh=e8lPG31nRq0pa29+ILZPVpv23pShvDc8zQNyomzI6HQ=;
+ b=TaJ5Oi46bE7S3aaXLRclyWMVm75XunvxL8PwDGcJTgn+gLIHb86fc2DseehBM2NNr4
+ NAbPKTjXqMs8Ar+VDDYYUuaCspfZt8dtq+ZHnZg1/r8U+I3f97s1Y93rfEjln3yQxWlP
+ XxI3R/PuHdSjouwsXq6ugEtew1bl5zb6yUyZ82gZNRnzbFEsWIMFhy4K20C01UHAOSsu
+ j1baJIpVhs2ap0ECE86HqfMUcuMVwNEDkaZyHbg5VY8wVD/KBxO+cZFSuh9n2cfKMCpp
+ U53NWU7LKv1622t/Bfc96DQC8MhYSsMxDKZeby7THhJhZVFm2wKEyHUh6IjNJ6AZufrP
+ KXPw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772536943; x=1773141743; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m+6IG2CRLKKPRPJdAjPOtx72DUjJTLsUjz5R/WUmzNg=;
- b=A7z0T8yrgLLuK7tD+qP8RbClZmNCWeRuWi0cqb8mKlnbfeEVl6Wgh33j1a8tLvh6bI
- se9YLp6hHzy0fx/PaeLacEhnZBUj4bH8zOdnAnzp1712yS9UKvQn+YjzWwCoYhEuU4Ei
- R2DHdGgm6D2irJfS6fvaBC3A9Pm3gT/CMli62H8CdgUy5UIfcso/YEj/EoazTOl/Ewxm
- ZTjcmlI5JWXfVEluKo5KIJKGRcehG9/M1KHqW1EgfFfVt0igB79+YRsgqi9sJ2Q5FLrI
- P5xxJGw4FbTbsqShr+yLbpAFZjkqwrRf8/hW7F+OOGkOGFxKOe760Cg8PUBaFqcVx/uf
- faLw==
+ d=linaro.org; s=google; t=1772537058; x=1773141858; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tjeGAeWkW88zo9xVTQEDAZr38G4dxg7jKkDmMC6ghRU=;
+ b=Z0jNUmkHg/x6KwidXIc4TWKSd7XEdIyhcxrnIDgFatAl+A461TCNHekXBPqkpRc/tM
+ CcS08CH6xyX2sYgzWK+99ice9n16NawmHWD4aTtTlKw8P0RUQXpqmRCzpTG3kJKYvYTw
+ gYnbD/wA1So1O0TELONIWpcJ+Swb8teWf5ALQEDKUrwgi40wb4tF3KGZFxZS2dRhbidf
+ YDZPG/C28JXzGBNx9W39cjPoG/MPHQy029oENc5NNG+8IjuSZ612KdmPM0dX0urd7AYb
+ JhtdfWtWP0xG3q96tWUj+uTxPpzknuDBDn45oTnz3r4vISNM/kKRMAu+fZOlXqX2hTze
+ bnvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772536943; x=1773141743;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=m+6IG2CRLKKPRPJdAjPOtx72DUjJTLsUjz5R/WUmzNg=;
- b=JfgrrZDiM06svaQ5fxK2mJvmAc35bs5qWvLzmoM6q2pB/uond5zmZ+GUDirchIYs0a
- pO8jX2UcOpA8xyRTihnKwjdLfuEMuZ/htzoOb2uvqPrsv1RQhYPuDUdtEXlkcBUO9QSN
- 3JNeS6D/ehRY2ZAYP+9OI3aKxdcYOFlUhj480JiNHx5kmqBVebtxlfaMF84vwYQxszMJ
- Rg+L9Sk1xmSwZpq1d1AbVl2C0YvD1TNKFGlvBg0q2CX9rzJXmNAMz18Uv59ZIPGrcigi
- m3lti7RnZp+1ObOMJLTtJmwGlkfc00qIIxfmg3wzPPcqeejrSILBzioPQhbKnsmsJEje
- xpWw==
-X-Gm-Message-State: AOJu0Yxxx/1ci0Wpi6FWWcZfylxV6zQl/uSVnhiOejAjARTiqzRmVkj9
- 2W/vHcMLhoqdWn+l/u4CraKeNrl8bLIN2UrpIbfFOPPuBK9B83wlFiOjAJcs+sLIw5Up4oYj6qM
- v5SgQOurau1UMjmSN8tey3DujMqvMiycniOEySYr0Og==
-X-Gm-Gg: ATEYQzwvCg1laeY+Jvp6bC8twW4UToPljLJzg0HGCSzJXoUQTA34QqDzhnSxB1lmAMj
- NAIP8EZXjeOmhG2EZwXLDan/pLzUEorXEwA4VQeDu7nCKBc2UzEVNKvMl07J+E8Pb4U1BOiLdk5
- 1mZ3ixJQM7Anb8PiRqIQcitmgJ0bytlYYfyD464tekINmfuuFz8o1k70jGZkz75mRT3ZOWgZsaw
- f7f/YA00R5wYFWew11crDmeKLxblYt8NhBdR0zTqzPaLWJG+5qE5VBuLffnp6iHy5HMLeMC9jw4
- 6xDM3JY06X8sFRJ2dRikZZy9dPXy/1QMkZ9SWlxgV3sy9jI5pSmG6V5m157H1i4m8aY=
-X-Received: by 2002:a05:690e:4241:b0:64c:a0c6:da92 with SMTP id
- 956f58d0204a3-64cc2119f61mr9387579d50.30.1772536943476; Tue, 03 Mar 2026
- 03:22:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772537058; x=1773141858;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tjeGAeWkW88zo9xVTQEDAZr38G4dxg7jKkDmMC6ghRU=;
+ b=OfeIesFvfQbaWUX95mu6FykNXTLIN/TmwIomrtb+q/IzXoLefCJL6IA7QeVrk84q3O
+ fpdpGF2uoD2dASVncwBMUYCcmeLq2UVNMihOHrQXQfugv0KXd4CU4jSbIGBh/k4QKom9
+ drn0awF57/bmeW+7jgh9GKp5IMCE2eGpo+t319JwC+n+NrjnlMebf1UMMC7CkLMPSyox
+ Dn3Kd3PSGdgmdVl0GVNhcwOfG/r5imIxqmNDz7T+uuuI0IkZrZSAROo+YEfqxJJV2ZXp
+ yWhkbV1WgM0O1ZVCzWpkntMCbZR9UxEhJw70p+czxZWVh420IVbz/wyGbO5UY3D4vizX
+ hv7Q==
+X-Gm-Message-State: AOJu0YxGXzK5XVXRcRlmMs/kYDD8XFFh4i2+R3hn1os/bQ8Sl/m8EUeF
+ Dqjn4Sz9+ZuBSSbs0vhwfCefQ7ghLjlBMb6y3MaH6rIUayC9Maiw+wZE3C0Q1bRr5GGEOTU6nhd
+ tJLSN9sJGJ8Z4om9SHO9TDqI0uvZ7SDckqCB5yAiYqA==
+X-Gm-Gg: ATEYQzz0bsUpfntYUKAKWGH229sxN52h760b2dMyXJu5HaMyF1kHzJqT562WCr9GLj6
+ f1JR5MR4CE8X8HLamd9DoEw0QsCbrp2YmJrhY4PUNXyVwXG2mO3uwlpDBjEPSyER1XNVUnzLUzJ
+ 9x3un9GguQDc3LDRPtVawg1OppoKenXlRvipT0xLdRffrJVrs7I37pG3IJKn9KdCnP6kS+WZiup
+ k3wzP4xzK8CjzMDaPj9FR/tKs6dqL+W8Wiu+hl987KsOHCyhG83h9+KAIveOgZf9c5/uFZXyXEW
+ y5MMq0vide9BjGewOnouAp4POM+tZSzZJ8mUWVXFPpor+D58Hk1ipwWxYPPH8v0MCxA=
+X-Received: by 2002:a53:c745:0:b0:64c:ac70:942c with SMTP id
+ 956f58d0204a3-64cc237d367mr8879449d50.75.1772537057765; Tue, 03 Mar 2026
+ 03:24:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20260227-semihosting-cpu-tswap-v2-0-cbdcdf39dd15@eonerc.rwth-aachen.de>
- <20260227-semihosting-cpu-tswap-v2-3-cbdcdf39dd15@eonerc.rwth-aachen.de>
-In-Reply-To: <20260227-semihosting-cpu-tswap-v2-3-cbdcdf39dd15@eonerc.rwth-aachen.de>
+References: <20260302220254.1166849-1-shentey@gmail.com>
+ <20260302220254.1166849-2-shentey@gmail.com>
+In-Reply-To: <20260302220254.1166849-2-shentey@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 11:22:11 +0000
-X-Gm-Features: AaiRm511stA6iolaP1wxhNxm1VinpDhe9nEO33PkwmcNGaX2wRsDRzYo-smPGaw
-Message-ID: <CAFEAcA_oC0Z-o5p4bvRLaViSJQ8YDQyrVLaEw+=fJ4Ud_25r0Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] semihosting/uaccess: Use the cpu_internal_tswap()
- functions
-To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Tue, 3 Mar 2026 11:24:05 +0000
+X-Gm-Features: AaiRm53BDZoRJhzcCv01hSKKTHllLdwJkPgjx2jeFdw342r-OIU71Dgfsvy-gVI
+Message-ID: <CAFEAcA_OFakQ7akKOSLmkFPv9jOXgjE68iaWt8J11FKMPdTCxA@mail.gmail.com>
+Subject: Re: [PATCH 01/12] hw/arm/Kconfig: Fix serial selection for NPCM8XX
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Helge Deller <deller@gmx.de>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
+ Troy Lee <leetroy@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,30 +124,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Feb 2026 at 12:55, Martin Kr=C3=B6ning
-<martin.kroening@eonerc.rwth-aachen.de> wrote:
+On Mon, 2 Mar 2026 at 22:03, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> The semihosting ABI [1] states:
-> > Multi-byte values in memory must be formatted as pure little-endian or =
-pure
-> > big-endian to match the endianness mapping configuration of the process=
-or.
+> CONFIG_SERIAL selects the internal TYPE_SERIAL device which is akin to
+> an "IP block" that needs to be integrated with glue logic. In case of
+> NPCM8XX this glue logic is TYPE_SERIAL_MM which the code uses already.
+> Fix Kconfig to select CONFIG_SERIAL_MM which matches TYPE_SERIAL_MM.
 >
-> This commits ensures that semihosting data is properly byte-swapped if
-> the guest's CPU is currently in a different runtime-configurable
-> endianness than the host's CPU.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3258
-> Buglink: https://github.com/taiki-e/semihosting/issues/18
->
-> [1]: https://github.com/ARM-software/abi-aa/blob/2025Q1/semihosting/semih=
-osting.rst#the-semihosting-interface
->
-> Signed-off-by: Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de=
->
+> Fixes: ae0c4d1a1290 ("hw/arm: Add NPCM8XX SoC")
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  include/semihosting/uaccess.h | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  hw/arm/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index c66c452737..20e99e52b1 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -493,7 +493,7 @@ config NPCM8XX
+>      select SMBUS
+>      select PL310  # cache controller
+>      select NPCM7XX
+> -    select SERIAL
+> +    select SERIAL_MM
+>      select SSI
+>      select UNIMP
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
