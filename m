@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A59C8EC0495
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22BEEB363E
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRKG-0006Or-Df; Tue, 03 Mar 2026 10:06:20 -0500
+	id 1vxRKJ-0006SE-V3; Tue, 03 Mar 2026 10:06:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRKD-0006Jj-HE
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:18 -0500
+ id 1vxRKI-0006Ri-GU
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRKB-00021J-Et
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:17 -0500
+ id 1vxRKG-000237-TU
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772550374;
+ s=mimecast20190719; t=1772550379;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BFi2sJa2unIQOT19osXlDgAQoFr8Ob8UN0cCnqaZMb0=;
- b=QabfpB357WCmHGovr/cIv8mEVhZxqjeceLS3JfroICoqIKmTBivfks5mBHWb4C7fYcYPGT
- Zd5JdmSYhkflbFdspNArb7+jern/wiY5Bf+wJJK3hO1dEmUn5Z3UOxaCd4rRq4K3gf2lLD
- 3qUfALL/lEfy5z8jSi51hNqCp4ZNP5M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=sgYJTTA7n6lwKY5yKJ5rJETpb7L/l65/rCrUKeRfMlE=;
+ b=KtnF1WexRma7YcJVWvWeHKLcXN7ks7734NX6A2XIqA174WBq80/XNyadwTxV5PNTcQoreb
+ ndhw7rtZIveV/HipF6MA8Z0fxX+vttfs1YbEdthQ8K64p8N/h2t9btNGYg6d/iZP2yhlZZ
+ ZDsTsdKBdI9uQ5totd6++9nqzc3rZdY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-wZZnqdWHOper0UQcoiIONA-1; Tue,
- 03 Mar 2026 10:06:13 -0500
-X-MC-Unique: wZZnqdWHOper0UQcoiIONA-1
-X-Mimecast-MFC-AGG-ID: wZZnqdWHOper0UQcoiIONA_1772550371
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-sZ3-ClYZPbe-VbiLkpv_zw-1; Tue,
+ 03 Mar 2026 10:06:16 -0500
+X-MC-Unique: sZ3-ClYZPbe-VbiLkpv_zw-1
+X-Mimecast-MFC-AGG-ID: sZ3-ClYZPbe-VbiLkpv_zw_1772550375
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6D961955F12
- for <qemu-devel@nongnu.org>; Tue,  3 Mar 2026 15:06:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D39EA19560A1
+ for <qemu-devel@nongnu.org>; Tue,  3 Mar 2026 15:06:13 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.225.185])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37BD21800348; Tue,  3 Mar 2026 15:06:09 +0000 (UTC)
+ id 4A5A61800348; Tue,  3 Mar 2026 15:06:11 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 02/27] io: separate freeing of tasks from marking them as
- complete
-Date: Tue,  3 Mar 2026 15:05:39 +0000
-Message-ID: <20260303150604.2402872-3-berrange@redhat.com>
+Subject: [PULL 03/27] io: fix cleanup for TLS I/O source data on cancellation
+Date: Tue,  3 Mar 2026 15:05:40 +0000
+Message-ID: <20260303150604.2402872-4-berrange@redhat.com>
 In-Reply-To: <20260303150604.2402872-1-berrange@redhat.com>
 References: <20260303150604.2402872-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,254 +87,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original design of QIOTask was intended to simplify lifecycle
-management by automatically freeing it when the task was marked as
-complete. This overlooked the fact that when a QIOTask is used in
-combination with a GSource, there may be times when the source
-callback is never invoked. This is typically when a GSource is
-released before any I/O event arrives. In such cases it is not
-desirable to mark a QIOTask as complete, but it still needs to be
-freed. To satisfy this, the task must be released manually.
+The TLS code will create a GSource for tracking completion of the
+handshake process, passing a QIOChannelTLSData struct that contains
+various data items. The data struct is freed by the callback when
+it completes, which means when a source is cancelled, nothing is
+free'ing the data struct or its contents.
 
+Switch to provide a data free callback to the GSource, which ensures
+the QIOChannelTLSData struct is always freed even when the main event
+callback never fires.
+
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/io/task.h         | 29 +++++++++++++++++++++--------
- io/channel-tls.c          |  4 ++++
- io/channel-websock.c      |  3 +++
- io/task.c                 |  8 ++++++--
- tests/unit/test-io-task.c | 26 ++++++++++++++++++++++++++
- 5 files changed, 60 insertions(+), 10 deletions(-)
+ io/channel-tls.c | 64 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 24 deletions(-)
 
-diff --git a/include/io/task.h b/include/io/task.h
-index 0b5342ee84..98847f5994 100644
---- a/include/io/task.h
-+++ b/include/io/task.h
-@@ -96,7 +96,7 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  *                         1000,
-  *                         myobject_operation_timer,
-  *                         task,
-- *                         NULL);
-+ *                         qio_task_free);
-  *    }
-  *   </programlisting>
-  * </example>
-@@ -138,9 +138,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  * the callback func 'myobject_operation_notify' shown
-  * earlier to deal with the results.
-  *
-- * Once this function returns false, object_unref will be called
-- * automatically on the task causing it to be released and the
-- * ref on QMyObject dropped too.
-+ * Once this function returns FALSE, the task will be freed,
-+ * causing it release the ref on QMyObject too.
-  *
-  * The QIOTask module can also be used to perform operations
-  * in a background thread context, while still reporting the
-@@ -208,8 +207,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  * 'err' attribute in the task object to determine if
-  * the operation was successful or not.
-  *
-- * The returned task will be released when qio_task_complete()
-- * is invoked.
-+ * The returned task must be released by calling
-+ * qio_task_free() when no longer required.
-  *
-  * Returns: the task struct
-  */
-@@ -218,6 +217,19 @@ QIOTask *qio_task_new(Object *source,
-                       gpointer opaque,
-                       GDestroyNotify destroy);
- 
-+/**
-+ * qio_task_free:
-+ * task: the task object to free
-+ *
-+ * Free the resources associated with the task. Typically
-+ * the qio_task_complete() method will be called immediately
-+ * before this to trigger the task callback, however, it is
-+ * permissible to free the task in the case of cancellation.
-+ * The destroy callback will be used to release the opaque
-+ * data provided to qio_task_new().
-+ */
-+void qio_task_free(QIOTask *task);
-+
- /**
-  * qio_task_run_in_thread:
-  * @task: the task struct
-@@ -268,8 +280,9 @@ void qio_task_wait_thread(QIOTask *task);
-  * qio_task_complete:
-  * @task: the task struct
-  *
-- * Invoke the completion callback for @task and
-- * then free its memory.
-+ * Invoke the completion callback for @task. This should typically
-+ * only be invoked once on a task, and then qio_task_free() used
-+ * to free it.
-  */
- void qio_task_complete(QIOTask *task);
- 
 diff --git a/io/channel-tls.c b/io/channel-tls.c
-index b0cec27cb9..07274c12df 100644
+index 07274c12df..8b70e95a4b 100644
 --- a/io/channel-tls.c
 +++ b/io/channel-tls.c
-@@ -170,6 +170,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+@@ -153,13 +153,32 @@ struct QIOChannelTLSData {
+ };
+ typedef struct QIOChannelTLSData QIOChannelTLSData;
+ 
++static void qio_channel_tls_io_data_free(gpointer user_data)
++{
++    QIOChannelTLSData *data = user_data;
++    /*
++     * Usually 'task' will be NULL since the GSource
++     * callback will either complete the task or pass
++     * it on to a new GSource. We'll see a non-NULL
++     * task here only if the GSource was released before
++     * its callback triggers
++     */
++    if (data->task) {
++        qio_task_free(data->task);
++    }
++    if (data->context) {
++        g_main_context_unref(data->context);
++    }
++    g_free(data);
++}
++
+ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+                                              GIOCondition condition,
+                                              gpointer user_data);
+ 
+-static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+-                                           QIOTask *task,
+-                                           GMainContext *context)
++static gboolean qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
++                                               QIOTask *task,
++                                               GMainContext *context)
+ {
+     Error *err = NULL;
+     int status;
+@@ -170,8 +189,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
          trace_qio_channel_tls_handshake_fail(ioc);
          qio_task_set_error(task, err);
          qio_task_complete(task);
-+        qio_task_free(task);
-         return;
+-        qio_task_free(task);
+-        return;
++        return TRUE;
      }
  
-@@ -183,6 +184,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+     if (status == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
+@@ -184,7 +202,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
              trace_qio_channel_tls_credentials_allow(ioc);
          }
          qio_task_complete(task);
-+        qio_task_free(task);
+-        qio_task_free(task);
++        return TRUE;
      } else {
          GIOCondition condition;
          QIOChannelTLSData *data = g_new0(typeof(*data), 1);
-@@ -270,11 +272,13 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+@@ -208,8 +226,9 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+                                        condition,
+                                        qio_channel_tls_handshake_io,
+                                        data,
+-                                       NULL,
++                                       qio_channel_tls_io_data_free,
+                                        context);
++        return FALSE;
+     }
+ }
+ 
+@@ -225,11 +244,9 @@ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+         qio_task_get_source(task));
+ 
+     tioc->hs_ioc_tag = 0;
+-    g_free(data);
+-    qio_channel_tls_handshake_task(tioc, task, context);
+-
+-    if (context) {
+-        g_main_context_unref(context);
++    if (!qio_channel_tls_handshake_task(tioc, task, context)) {
++        /* task is kept by new GSource so must not be released yet */
++        data->task = NULL;
+     }
+ 
+     return FALSE;
+@@ -258,8 +275,8 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
+ static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
+                                        gpointer user_data);
+ 
+-static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+-                                     GMainContext *context)
++static gboolean qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
++                                         GMainContext *context)
+ {
+     GIOCondition condition;
+     QIOChannelTLSData *data;
+@@ -272,14 +289,12 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
          trace_qio_channel_tls_bye_fail(ioc);
          qio_task_set_error(task, err);
          qio_task_complete(task);
-+        qio_task_free(task);
-         return;
+-        qio_task_free(task);
+-        return;
++        return TRUE;
      }
  
      if (status == QCRYPTO_TLS_BYE_COMPLETE) {
          qio_task_complete(task);
-+        qio_task_free(task);
-         return;
+-        qio_task_free(task);
+-        return;
++        return TRUE;
      }
  
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index d0929ba232..100faba6b3 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -545,6 +545,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -561,6 +562,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
-         }
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -588,6 +590,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-diff --git a/io/task.c b/io/task.c
-index da79d31782..c3615d2d74 100644
---- a/io/task.c
-+++ b/io/task.c
-@@ -70,8 +70,12 @@ QIOTask *qio_task_new(Object *source,
-     return task;
+     data = g_new0(typeof(*data), 1);
+@@ -299,7 +314,10 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+     trace_qio_channel_tls_bye_pending(ioc, status);
+     ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
+                                                   qio_channel_tls_bye_io,
+-                                                  data, NULL, context);
++                                                  data,
++                                                  qio_channel_tls_io_data_free,
++                                                  context);
++    return FALSE;
  }
  
--static void qio_task_free(QIOTask *task)
-+void qio_task_free(QIOTask *task)
- {
-+    if (!task) {
-+        return;
-+    }
-+
-     qemu_mutex_lock(&task->thread_lock);
-     if (task->thread) {
-         if (task->thread->destroy) {
-@@ -108,6 +112,7 @@ static gboolean qio_task_thread_result(gpointer opaque)
  
-     trace_qio_task_thread_result(task);
-     qio_task_complete(task);
-+    qio_task_free(task);
+@@ -312,11 +330,9 @@ static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
+     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
+ 
+     tioc->bye_ioc_tag = 0;
+-    g_free(data);
+-    qio_channel_tls_bye_task(tioc, task, context);
+-
+-    if (context) {
+-        g_main_context_unref(context);
++    if (!qio_channel_tls_bye_task(tioc, task, context)) {
++        /* task is kept by new GSource so must not be released yet */
++        data->task = NULL;
+     }
  
      return FALSE;
- }
-@@ -194,7 +199,6 @@ void qio_task_complete(QIOTask *task)
- {
-     task->func(task, task->opaque);
-     trace_qio_task_complete(task);
--    qio_task_free(task);
- }
- 
- 
-diff --git a/tests/unit/test-io-task.c b/tests/unit/test-io-task.c
-index 115dba8970..b1c8ecb7ab 100644
---- a/tests/unit/test-io-task.c
-+++ b/tests/unit/test-io-task.c
-@@ -73,6 +73,7 @@ static void test_task_complete(void)
-     src = qio_task_get_source(task);
- 
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     g_assert(obj == src);
- 
-@@ -84,6 +85,28 @@ static void test_task_complete(void)
- }
- 
- 
-+static void test_task_cancel(void)
-+{
-+    QIOTask *task;
-+    Object *obj = object_new(TYPE_DUMMY);
-+    Object *src;
-+    struct TestTaskData data = { NULL, NULL, false };
-+
-+    task = qio_task_new(obj, task_callback, &data, NULL);
-+    src = qio_task_get_source(task);
-+
-+    qio_task_free(task);
-+
-+    g_assert(obj == src);
-+
-+    object_unref(obj);
-+
-+    g_assert(data.source == NULL);
-+    g_assert(data.err == NULL);
-+    g_assert(data.freed == false);
-+}
-+
-+
- static void task_data_free(gpointer opaque)
- {
-     struct TestTaskData *data = opaque;
-@@ -101,6 +124,7 @@ static void test_task_data_free(void)
-     task = qio_task_new(obj, task_callback, &data, task_data_free);
- 
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     object_unref(obj);
- 
-@@ -123,6 +147,7 @@ static void test_task_failure(void)
- 
-     qio_task_set_error(task, err);
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     object_unref(obj);
- 
-@@ -260,6 +285,7 @@ int main(int argc, char **argv)
-     module_call_init(MODULE_INIT_QOM);
-     type_register_static(&dummy_info);
-     g_test_add_func("/crypto/task/complete", test_task_complete);
-+    g_test_add_func("/crypto/task/cancel", test_task_cancel);
-     g_test_add_func("/crypto/task/datafree", test_task_data_free);
-     g_test_add_func("/crypto/task/failure", test_task_failure);
-     g_test_add_func("/crypto/task/thread_complete", test_task_thread_complete);
 -- 
 2.53.0
 
