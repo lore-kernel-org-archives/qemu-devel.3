@@ -4,104 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E75EDEBEB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D286EDEBF0
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxVwL-0004g4-HO; Tue, 03 Mar 2026 15:01:57 -0500
+	id 1vxWGO-0008Rq-Ay; Tue, 03 Mar 2026 15:22:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vxVwH-0004fg-Jn
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:01:53 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vxVwF-0007EA-Kz
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:01:52 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c6dd5b01e14so2123196a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 12:01:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772568110; cv=none;
- d=google.com; s=arc-20240605;
- b=kXxrGU80BXxJ9e+/NwMz43R65Md/x0+haLiXhLpqf6zihAxYNA8W5pLg3ZtSnlM3WM
- WN5T5BQbBlipM+hwK6Gd9e7mxtXhVvoUt19Rw07ZwpHCXOG0hDBEtZKhjntpRKMO2ZBb
- gn/TuPQfLzeQatf6j5FCwjY045Y2ZTyZsL/tdUKx5VpvGo961Owut4NBGB4oBmg0tV1a
- p/uENr1oAWyvDQt8lpC9gWYaDqWmTiWstDxS2GOHgdYptKtTR/C6097V/Uuhkx/k9BqB
- WpmsxKYSsFlxUMSSNVaEBV1Qkkv4LlST10+Pz6JOk0i9bXnBtltpPIw1tLxilt4B+Mhb
- +vvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=8fH8KcUdkOvwGvMaZBR+/w9jSYwvnhbluX8FMDKKVvs=;
- fh=3N4YTDWV9KQk1Zfz9qwlmnoEsAk4PdvYntvEBJFMlvI=;
- b=Thr+9w2G0hUcmdlBWo1qLT/2Pb/o0R/Z2CqbkQLZGqG/JllFK5TuklXw4Cma7K86yO
- VLosjDlDYFk/h2tOrIZ15oJP48LE3YS+uzWp8Bu2hvHRfefJM76U7gG7P76g/jUI1oZx
- 0KdrWM5hZUC1rbcvLh6y4xSuZmly+nLbzOT9f4YQJ0mmHEyrz6BvILn6M0nQdc+uaW0E
- TNKSnxX7LbZOfIawMRb+FrBybgI74hgYLmr90yWNqqYEvVi+luCPy0dpy3WKQTuvTQjG
- j8qnbWH+zx3phTS6tkmJqP/tfou+GF0DZwp2Uq9j3uflLi813THXX6BYCCV9ipar2VPS
- SvUw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772568110; x=1773172910; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8fH8KcUdkOvwGvMaZBR+/w9jSYwvnhbluX8FMDKKVvs=;
- b=LCu9iiOGhh4gDnIyUib1f1gqNiY2w5JxxtHWhKJ4iKZvh1KJB0yPQl3hVtbTeuYU+O
- JOzotP9YlUj6DUPUiomBXePmPiz4UBNPkvstpCvcqpp445rU8CeUfE21d+f6b7jMl9xl
- r/673Z5sd4/15rwcXF5BjDvAIXwkAQEBZ5aOeFMvE6f32XVBan7QrHqPljWoJMhmphJz
- xtXvrIIKkxjWk8yP51s3T9drb6zbfe4a3bGFmZ9wcEkz5+NUgl4ltCAifCwCDjc93gei
- Gc+kS5c5di0BYKN0W4DGK7WXymVBnYLkUeEAhEBBTeukC1kpSfrdWsKq9X5eZAQl7jdv
- Hjnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772568110; x=1773172910;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8fH8KcUdkOvwGvMaZBR+/w9jSYwvnhbluX8FMDKKVvs=;
- b=uaMCcHIQYmXiSbnoKiVTr3Y7a3aoewFCTu53vN++P6IbDzaBQMkvOEo8NOyHRJz8Zy
- 9IVtoGqbttdPxKq/s60iizhmm1lYQ9ZgcTPsrEd/XVNOPMM2BQgypLsSPZpIQ6xRVGI+
- jjWDbBVYz+NayHbEYE4Gx47bAqIIE+2dMuyQBNGGOWUYBE5TIPapp12dizxladN8wRMZ
- 5ZtGReIBCttE6JVyCeZ+XMeHUjWlGNi+yceMmu3g7sAL2Ppb3gtq9veh7twPW3KSo044
- vY/4o/vLhD6FWEodmHn6txTblzvrVB+C+h9i3TGNxck+ZBYH8KggZexp1/mrfZL15mWS
- JZ9Q==
-X-Gm-Message-State: AOJu0Yz/jSq93clF8zf+ke0zgUaAGxGYUwQy+tiiZNvUQ0KUrr1zDXyO
- BEm4LQS/D7fc6fm+wNjIDebUOM2gw2RurZMMGdslO42I7IHUSwgo9qlEtgkGnyQdQ2lnT38CVOa
- gCWKaCoKgWbfyiH77tNki1+4B1MBrOOBiEn6C
-X-Gm-Gg: ATEYQzxQa0gxgky0s0luHg4pcVXMBcgQfarjrJ2Qa0abt86gxv7g4XJf1R0pzk33jl3
- r90S9dxRMsEIFpSCOd73zEXKxBj7+cK3pyfuAMl/izwLa4UbTcUPOpcGoQO7FXTZonABIL6aDsd
- XSeL+OesX/vJV6b/FOPbrPEk3aUDuO0F+DXfnyB4vuxRe7WwmzGBvZEPh6VATuhaDUxf8F3AGj7
- IbWS2rX/cF4gkOVM6Rf069U11w4lJ/+8t22ASvNFQNQ05jgFLFXJMGO8tAG/I/RFGge1J4V5DKa
- Kecp/Y8bo3kyQyX+onJ4CaonIWKWY7/Zd4tIJs0=
-X-Received: by 2002:a17:90a:e710:b0:359:8633:675e with SMTP id
- 98e67ed59e1d1-35986336edcmr7183483a91.31.1772568109961; Tue, 03 Mar 2026
- 12:01:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vxWGL-0008Qy-W5; Tue, 03 Mar 2026 15:22:38 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vxWGJ-0007ZB-HT; Tue, 03 Mar 2026 15:22:37 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 623JniBk2154446; Tue, 3 Mar 2026 20:22:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4I1Doy
+ dm5udE3wBXzB+yAvYD1I83aUCnHP6VH4Pg8WU=; b=l3LrfKXcWFKLkP6ObYsxhd
+ B60ueCBHoxUEyYKfqrTN4HJZ6mhJyV2TwKO6Lkb2Qa81zZXPRD/+oTRmd68q6rZq
+ 1SVFIfuGv7674ToRlHhIVx7zewNnG90wSaE3FwFldvEHAR9K5uFCwLuoW17zl81+
+ NFBhKv2UaccSJ9K/ze+TtGJkp0Qxxx68DkVIm/qB8ESP+brwPN5pZAB8F2efPd2L
+ 6pQ+xJOF9lnznX+fxpSpWdrpRkAOToCKjnrYyN0KJDH3U9m40qCSiftlCrjDhrSZ
+ PzNm7Ss0scMBRTPpNqwi0+brIzYwhBHMybFFzBZMiqYpt/nuthNOWYBKu15bI8gw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskbveca-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Mar 2026 20:22:29 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 623KBiBW008769;
+ Tue, 3 Mar 2026 20:22:28 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmdd1bn32-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 03 Mar 2026 20:22:28 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 623KMRaf22676034
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 3 Mar 2026 20:22:27 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FD1258050;
+ Tue,  3 Mar 2026 20:22:27 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9F6E658045;
+ Tue,  3 Mar 2026 20:22:25 +0000 (GMT)
+Received: from [9.61.253.239] (unknown [9.61.253.239])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  3 Mar 2026 20:22:25 +0000 (GMT)
+Message-ID: <3135b985-9c3c-4689-b780-a6e41cc708ae@linux.ibm.com>
+Date: Tue, 3 Mar 2026 12:22:25 -0800
 MIME-Version: 1.0
-References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
- <20260227203627.932864-19-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260227203627.932864-19-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Tue, 3 Mar 2026 13:01:38 -0700
-X-Gm-Features: AaiRm52Lr1pJI4MccnotrJzidaUMtoA6UBB7ZpYBmgm_Swq9C8yFlCYpglJxm10
-Message-ID: <CAATN3NrvktjC004BA5-r0jGQ2DTPHrXpqMubiZEq29Y3QH-WJA@mail.gmail.com>
-Subject: Re: [PATCH v3 18/37] target/hexagon: Add handlers for guest/sysreg r/w
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
- marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com, 
- sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, 
- Brian Cain <bcain@quicinc.com>
-Content-Type: multipart/alternative; boundary="00000000000088d4df064c242c9b"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 12/30] s390x/diag: Implement DIAG 508 subcode 1 for
+ signature verification
+To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
+ richard.henderson@linaro.org, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, brueckner@linux.ibm.com
+References: <20260212204352.1044699-1-zycai@linux.ibm.com>
+ <20260212204352.1044699-13-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260212204352.1044699-13-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: sCZGkBhWbzpxTZvdQ75pCDFBMS3BzN_3
+X-Authority-Analysis: v=2.4 cv=b66/I9Gx c=1 sm=1 tr=0 ts=69a74305 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=Tgzwo3mTLxb0sD9omHwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE2NCBTYWx0ZWRfX63RkHW1He2hZ
+ 73GBlnQZghipy81f+VYCBUHg0nGomOYXHn5vRVCg5YYeJo+fxKj/gm3HwSpcZfo23ZvvQ25n2mQ
+ NW8dQfTs1RdzwTKsXQF87AathMgHmTGnKs30wEAhg1cEvgTSbxnUwqXxEMDrzUnuLJORmVUTCEm
+ QZovldxcDkVp8z+SagIhY2S0dCkwwyeJv2sHKDJgOp70BIFypdS9kIZJfIu43SJPOtREyQg2AlX
+ 8o5KfpQEMjyfz4MyDcettdbf3VsQJpSjIIovI+dXgBNEhC9FjYPBYU9KOkmDxGFUH48hC1e3e5i
+ vzEeZs6QXeySXFvLnWX8oEAEhv8l5J7dbdKZb2a54L4KdQmt3/jHQRZ3QotZCAMdMZaQq9TD54T
+ I+dz9egPdKVz5bR81HJ8AG+Y9bmwultGKRtICuaMHn9cofq5Lj3Li5kofvjhQCQWB9rd9I0eP1R
+ DxxhmIxC2hWMPjpOClw==
+X-Proofpoint-GUID: sCZGkBhWbzpxTZvdQ75pCDFBMS3BzN_3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-03_03,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603030164
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,51 +127,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000088d4df064c242c9b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 27, 2026 at 1:36=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com>
-wrote:
-
-> From: Brian Cain <bcain@quicinc.com>
+On 2/12/2026 12:43 PM, Zhuoying Cai wrote:
+> From: Collin Walling<walling@linux.ibm.com>
 >
-> This commit provides handlers to generate TCG for guest and system
-> register reads and writes.  They will be leveraged by a future commit.
+> DIAG 508 subcode 1 performs signature-verification on signed components.
+> A signed component may be a Linux kernel image, or any other signed
+> binary. **Verification of initrd is not supported.**
 >
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> The instruction call expects two item-pairs: an address of a device
+> component, an address of the analogous signature file (in PKCS#7 DER format),
+> and their respective lengths. All of this data should be encapsulated
+> within a Diag508SigVerifBlock.
+>
+> The DIAG handler will read from the provided addresses
+> to retrieve the necessary data, parse the signature file, then
+> perform the signature-verification. Because there is no way to
+> correlate a specific certificate to a component, each certificate
+> in the store is tried until either verification succeeds, or all
+> certs have been exhausted.
+>
+> A return code of 1 indicates success, and the index and length of the
+> corresponding certificate will be set in the Diag508SigVerifBlock.
+> The following values indicate failure:
+>
+> 	0x0102: no certificates are available in the store
+> 	0x0202: component data is invalid
+> 	0x0302: PKCS#7 format signature is invalid
+> 	0x0402: signature-verification failed
+> 	0x0502: length of Diag508SigVerifBlock is invalid
+>
+> Signed-off-by: Collin Walling<walling@linux.ibm.com>
+> Signed-off-by: Zhuoying Cai<zycai@linux.ibm.com>
+> Reviewed-by: Thomas Huth<thuth@redhat.com>
 > ---
->  target/hexagon/genptr.c | 147 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 147 insertions(+)
->
+>   docs/specs/s390x-secure-ipl.rst |  17 +++++
+>   include/hw/s390x/ipl/diag508.h  |  30 +++++++++
+>   target/s390x/diag.c             | 111 +++++++++++++++++++++++++++++++-
+>   3 files changed, 157 insertions(+), 1 deletion(-)
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
---00000000000088d4df064c242c9b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 27,=
- 2026 at 1:36=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
-alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mail=
-to:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
-<br>
-This commit provides handlers to generate TCG for guest and system<br>
-register reads and writes.=C2=A0 They will be leveraged by a future commit.=
-<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/genptr.c | 147 +++++++++++++++++++++++++++++++++++++++=
-+<br>
-=C2=A01 file changed, 147 insertions(+)<br></blockquote><div><br></div><div=
->Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com=
-">ltaylorsimpson@gmail.com</a>&gt;</div><div>=C2=A0</div></div></div>
-
---00000000000088d4df064c242c9b--
 
