@@ -4,103 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FAAEB362F
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82167EDA697
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxTqt-0006HL-Lb; Tue, 03 Mar 2026 12:48:11 -0500
+	id 1vxTvZ-0007g8-Mt; Tue, 03 Mar 2026 12:53:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vxTqr-0006Gv-2b
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:48:09 -0500
-Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vxTqo-0001dr-Ny
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:48:08 -0500
-Received: by mail-qt1-x831.google.com with SMTP id
- d75a77b69052e-506a1627a09so33798911cf.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:48:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772560086; cv=none;
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vxTvY-0007fr-L2
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:53:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vxTvW-000431-So
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:53:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772560375;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
+ b=MUC+6r+jSnA20cNdWH2mLsV4e3LKsMtcy2SpuJFKNVYJL8QE13S8+MkjddAgUP2iSXQvon
+ gZIIR+yokYR56uWE34csKaD9TS1uC9uIwhKnbvK4J2Z+8p4ce+IS8074ZqvHTsHKRVEifB
+ 5JbeZclms0SA3KfLIcTJruuUoJcwT6M=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-618-JoJSrvmyPD-nuSFLhU1i2A-1; Tue, 03 Mar 2026 12:52:54 -0500
+X-MC-Unique: JoJSrvmyPD-nuSFLhU1i2A-1
+X-Mimecast-MFC-AGG-ID: JoJSrvmyPD-nuSFLhU1i2A_1772560373
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-79868eae64fso118161767b3.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:52:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772560373; cv=none;
  d=google.com; s=arc-20240605;
- b=GSNL+xJS/GbwMfJ4EAqkjjg+f0iLISGRki80OW245zeo4dY/SPZAqDVo4A0Qix0K52
- MxoJXqsIDPze1j5AE+/8tg7C9SXy2YVNSreQiEcbJ1BqIYyxm7Yau+fwRbzV9e0KjaDE
- Z6/8gu39UkUudnwamyFzbJaFeiq+xpSTBcVrZkpUmYPg6NLOEyyc1FauD+Sw0my9PSl4
- w1v19TZrujdtGlS/t+57jDvtFGOAZ/IVbPy8zSLK4Jbd8yR7LE30GWlADunByWOmmhpe
- IrhR3zcCrDUX88akby5xdEm2uXuA/dimg9beQgCc7NPNmxlU4Ik1xBkjh6XUsAatAhoR
- EepA==
+ b=gwEL1K9cyOgdjJRzUH31LAehJEShea3Rg3c5k/TT7vyak8zckuYMYKSSriVqc0RmR3
+ LIXhtzoID7nQduF32ECSkpsqwqkOKPq+2LkEGLgkVmQK1yk2a1hu7996ZSsogGKPwz+p
+ L0KxGdUPUdRZ0brqS87T8MCx//U6J8bfSbNswctEOj92tUmCqKg3nOIKC9TnbsIZdvzI
+ MqNpTjHgfcw7IlmygycvMWl6db0oWKiuaqbuweolSa7VIcnL/1MC0HmgssRY6U7f111k
+ QOWpdRUns6zD0ctC82TEIMM0iWGTXqvzhxsMXd3xSffmkI2K36F/po+LjDvBAt0GEzy3
+ rXIw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Hvc/yt7iGsZPhVyV73WZBfQqXsHByuf28n5OnEXrKqk=;
- fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
- b=kd4+RoQKnUku5DlqmqqvB1B99uB2XA9ZAxACCvUzcYl0ZHOomdNYWZuKc5+6km6Z93
- 3DcmgJ/hfgQI8ktMk8WqXtaLJBNjiXKcuSvr+12pUleR6W46floI6QRENR9Pl5voYLpj
- SdpK6lNT7weg96CD4+EUWtU68soOOMo402dXQtwkYZqsSePOkERzBNlJxjmFfRMTrCTL
- PyoCKLFhe+wS4FxMIcGLOFQ261KCOXt+I/Z4yA93gDBdZKwyf7wIbbTDjzwUqhv0yRd5
- 3mwQkuElcE6PKRA71lIWjII84eJC6RAUHHKwnDN0g3aNSnwIav03auPDfg9lelugOPew
- ifUA==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
+ fh=Xm1ao//qklFdOPp89/6xUzCVv6E/EI6O1lKNAzhngcE=;
+ b=TqKJQ6x4uAef++hWg+szxHDO4eeEVDkHXLaN1UDF4a36OBc2fD7ENoYM4u+FT4YjLf
+ 7PjQlaG6BhPvVYK0e9wbgP8jjJDIjwLADXQS9b9zR0ZhXtnEtVht/1Cp8noBu9+bcLd1
+ kiEhl7GaCLxCMviccrGIQwvhX7kbYmBNiBj/T2TvHCWfDryhTjNMsvuo7KlGskqf/bjI
+ k6rS2d83MhRA7LW+wwCF4qelwNb+dS5Ir53/RYgEjOkaFHGg40fNb+eS2pTOrjZ5gZUB
+ iRX17CVZA6w1EDv9nUVBsiOlfFwUzi08yng7MmuZ5GUNxb0KADJGJw6r6ywT39e6tzcG
+ gihQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772560086; x=1773164886; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hvc/yt7iGsZPhVyV73WZBfQqXsHByuf28n5OnEXrKqk=;
- b=BOPGG2qxzQDFqW4xO77h+3fUSZ0FJI70jannpCgmxhX1YFm0amp7oTihNrgBvoofs4
- 6Os5TnKsMT2gcWMMUn3loDzPFzC8+oHB1gFp9Zyqn2PpE9cWNZQtSO3b7RTCjc2HFMj5
- zsuE5uE+UC6dKxUgA//EEK2lkziqn0l1dGbXnsUEYYoKbFtDiXSgAcv8MHRvGho+6Mg2
- pzQ6TgrJQmfCy+1ne5xxzlOUHg+1rzsW4hPRUCs/MoovQJV2eciLRe0iEYo6Ek7SE6Uz
- 9YDHzmAJf/HAar3rK+J97O3eCARFJ6moX6Nu3qG1XsYbnZ8WsG81IBMxGLd1NRvVIPAJ
- BLyA==
+ d=redhat.com; s=google; t=1772560373; x=1773165173; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
+ b=Sy1QdfzZvU0LeaHbNO2hiBVUWQE6/lLhTLBtAycLiU4pMwnYYUDEYykrqbQk/2YC6k
+ P0J4cO8cpUEu5T7zD0RRufyDuFlmsIIEAfvxKT/yoRCnlsmuuFCGIab+KnSj9HeQV+lK
+ NFMBqU7Ef9Z0OZcQrBjmJRO9KdMh/yKTG4O508KQ+IF5qwImnjDbohj+wXqKI4cNaQfW
+ /0oGfbaC+trdOW1RRhpEkbCd840e1kMVNvUAE5H8vPCcQmKN7XwXfr7R5r5FSQluJ3VP
+ UNdaFQ25jm88j0FodHR9na5AFg5SOhTLcSRKAdiQ3iEvFAKGYeUTX1M7BTLZDkpTeqtT
+ K3Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772560086; x=1773164886;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Hvc/yt7iGsZPhVyV73WZBfQqXsHByuf28n5OnEXrKqk=;
- b=SdjfW16G8FAHVBlKM5a2NeisQkjmesVxiXvyzXWBiUCFoeZYTIj1nuS2HGYsf/w972
- 2Sb2ThkXk+UCDx4oI00LQPlf1pxejqxVWBHk62HIHpeUkvByH42lZLPtUIPcevY19NSd
- y7B2A56InRjoWBIgK2pntR6D+ce6MsOv5DuUAx1uk9FPqZqM7+TqNhoMC+ePrX/Q6Lsc
- NpzhpsI0OsL7Y53tJuIenS356qOrfQdwdD+ve3xoArrT7dzB2EAXrGrVgPjN30miaH+4
- PliS1/9RwEN7UJ8s74NVd5ILgN1e/9tynOIKZrtBM5Jw0ixGRTRgbV2sdAY2z2Lja2JG
- wttw==
-X-Gm-Message-State: AOJu0YwufohCGTy0u/KTcaR+70RIh3FzlS2NZL/t8PrdqzMO7CZJlYeQ
- C51Hdjc0g7ugUDOnUhUSu3L9ilQOBlzmuLYdhz5LXd3mLsmIxwJjAklKxYhfjpJ+IgAndPixpIt
- cI+bC64N7sm6MADLEfkuAoyS1iWfUQh+B4ZOQhJJzNmOCOHg=
-X-Gm-Gg: ATEYQzwX9lOWrd0MhV7F42CD0W5mk2KPQOzW4VCBRWbPxjtb/iuPW0eLY6ynr/qKFWp
- 5B3QnAn1CTVFCyEg3Ia9nsvsQ693i0TJPvXUlIW2vKTcrScdpJNel1viTorhGaIGvoN+4PHZdQ2
- hqwa5Yq6gJkLU1LYLzexTM2o9EvV3gV9crKbkDTzEKjB9FtYT3owzp11G9idYwbF4r99TvBvCo8
- n6zW5v1cVkkpCgtu6+YsrmtEAYYt5mBiNfKXvC4BpXCeBsgL7hojwUO52l2WGxLl6G/1cr1a8hY
- plyK1swFF+lNHauGpNhPumvqn9MjbUM8Hjm9FPnA
-X-Received: by 2002:ac8:5d49:0:b0:501:3c86:80b9 with SMTP id
- d75a77b69052e-5075296f1fcmr214880371cf.40.1772560085660; Tue, 03 Mar 2026
- 09:48:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772560373; x=1773165173;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
+ b=pKDXkdpqmvRL8ldcynZe9CzECv53Bw2qv4/pdJrGqRBB2RQDEjnc8ZWd5+jkqT6FNk
+ yv2ayb0i5XaNiKxes98oq9ZI01M8AaTjpMaq33NYLcVkit4uco3kC8fdhjLZW3S9m2RU
+ LKdILN/HrDh+XxetTVAoJMGWr24jrDH9ytgL2VgivTAw8rd3MHbwPNpqTqFJ2dtMOvHE
+ OkWcQvsO2lLUhlcJncX7sOo9TUM769kzu62/o19kR1NeongRv5wd30HJrEbp2CyPJgcI
+ NDlW6TtgG+DPopVDsFiXgagdSiKnzutXhe32cGAoCbKyNrgbOrEajemFt1MI/OVGBpOw
+ WQrw==
+X-Gm-Message-State: AOJu0YyZFM/ixku2YqQ3CWpwDi8DyvsnIsnOYj/r/xA4DhiNI1VSaZfi
+ DlCyX19xR46uH6d6VawBMcZziHz+y6IVyW4DTL1UExWZ9GismXiQjokftY3+gOu2FkV4T+Afsxp
+ G5WgHdb/kH2/f112Z8Ds2R8sFfKR7/3QkCd+zIEisKnrCTgUiWG9Pueb5bbuHpI1QUIYSeNuLBa
+ uRuyMClmlpmIcGAW1aBDWvV7xKEH6oIzkp50dw6hr6KA==
+X-Gm-Gg: ATEYQzwnm9xe1BG6rHZS/zFHCYpUACwXdylvLFWtJEwWiH6Ag52tG+SWNeArYKqbEOJ
+ u2yy7yiy9z/7ESHn2Rhv1CQqQZCLlFF7Voh1qNhrqbKL3IO3eFg6VH71FlyA5ck/QwAASSlHSAa
+ LhxFK+23hFgyE2ONbxVB1B3OMY6JJDqVGowlMwXZvZaTMJDwchUwXJofByLH9kxZ1cOLao9zVej
+ PumXvE33oa9t/FS2xxv3SbVYrRD8kxML76giA==
+X-Received: by 2002:a05:690c:4507:b0:798:50ee:5b02 with SMTP id
+ 00721157ae682-7988559ca7dmr155384957b3.42.1772560373282; 
+ Tue, 03 Mar 2026 09:52:53 -0800 (PST)
+X-Received: by 2002:a05:690c:4507:b0:798:50ee:5b02 with SMTP id
+ 00721157ae682-7988559ca7dmr155384657b3.42.1772560372810; Tue, 03 Mar 2026
+ 09:52:52 -0800 (PST)
 MIME-Version: 1.0
-References: <20260303030714.1926907-1-dongwon.kim@intel.com>
-In-Reply-To: <20260303030714.1926907-1-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 3 Mar 2026 18:47:54 +0100
-X-Gm-Features: AaiRm51tbBVQnoLVzrx3K-pMhp6LIiGKvCEaDqGnPXbZ67P0bN-qtNqaYnFKxJ8
-Message-ID: <CAJ+F1C+ownUskL4troo57_GxJjGaZvX2sHCJoc4KjYm3rU-oQw@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Implement dpy_gl_ctx_destroy_texture for gtk-egl
- and gtk-gl-area
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 3 Mar 2026 12:52:42 -0500
+X-Gm-Features: AaiRm51tKqhqlmym-Hb4gRHgvgEX2gcaA3JIMdX1PrUM63qawHV-v3K_lbJIxQQ
+Message-ID: <CAFn=p-bNbEwV+1ijfs=+_bCVfexjvN9WRNZwL13Qas+i_HmUBQ@mail.gmail.com>
+Subject: QAPIDoc Total Section Ordering
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,129 +125,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi, let's recap...
 
-On Tue, Mar 3, 2026 at 4:13=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> Currently, the texture associated with a DisplaySurface is not deleted
-> when the surface is switched or freed, leading to a memory leak in the
-> GPU process. This occurs because the GTK backend lacks a mapping for the
-> 'dpy_gl_ctx_destroy_texture' operation.
->
-> This patch implements the necessary cleanup functions for both EGL and
-> GL Area backends. Each implementation ensures the appropriate GL context
-> is made current before calling surface_gl_destroy_texture(), ensuring
-> that the underlying GL texture ID is safely released by the driver.
->
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  include/ui/gtk.h |  4 ++++
->  ui/gtk-egl.c     | 10 ++++++++++
->  ui/gtk-gl-area.c |  8 ++++++++
->  ui/gtk.c         |  2 ++
->  4 files changed, 24 insertions(+)
->
-> diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-> index 3e6ce3cb48..f1765ad5cb 100644
-> --- a/include/ui/gtk.h
-> +++ b/include/ui/gtk.h
-> @@ -170,6 +170,8 @@ void gd_egl_switch(DisplayChangeListener *dcl,
->                     DisplaySurface *surface);
->  QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
->                                      QEMUGLParams *params);
-> +void gd_egl_destroy_texture(DisplayGLCtx *dgc,
-> +                            DisplaySurface *surface);
->  void gd_egl_scanout_disable(DisplayChangeListener *dcl);
->  void gd_egl_scanout_texture(DisplayChangeListener *dcl,
->                              uint32_t backing_id,
-> @@ -206,6 +208,8 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx =
-*dgc,
->                                          QEMUGLParams *params);
->  void gd_gl_area_destroy_context(DisplayGLCtx *dgc,
->                                  QEMUGLContext ctx);
-> +void gd_gl_area_destroy_texture(DisplayGLCtx *dgc,
-> +                                DisplaySurface *surface);
->  void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
->                                 QemuDmaBuf *dmabuf);
->  void gd_gl_area_scanout_texture(DisplayChangeListener *dcl,
-> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-> index ae9239999c..c1b32bc41b 100644
-> --- a/ui/gtk-egl.c
-> +++ b/ui/gtk-egl.c
-> @@ -225,6 +225,16 @@ QEMUGLContext gd_egl_create_context(DisplayGLCtx *dg=
-c,
->      return qemu_egl_create_context(dgc, params);
->  }
->
-> +void gd_egl_destroy_texture(DisplayGLCtx *dgc, DisplaySurface *surface)
-> +{
-> +    VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc);
-> +
-> +    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-> +                   vc->gfx.esurface, vc->gfx.ectx);
-> +
-> +    surface_gl_destroy_texture(dgc->gls, surface);
-> +}
-> +
->  void gd_egl_scanout_disable(DisplayChangeListener *dcl)
->  {
->      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl);
-> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-> index cd86022d26..84e41f4221 100644
-> --- a/ui/gtk-gl-area.c
-> +++ b/ui/gtk-gl-area.c
-> @@ -299,6 +299,14 @@ void gd_gl_area_destroy_context(DisplayGLCtx *dgc, Q=
-EMUGLContext ctx)
->      g_clear_object(&ctx);
->  }
->
-> +void gd_gl_area_destroy_texture(DisplayGLCtx *dgc, DisplaySurface *surfa=
-ce)
-> +{
-> +    VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc);
-> +
-> +    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-> +    surface_gl_destroy_texture(dgc->gls, surface);
-> +}
-> +
->  void gd_gl_area_scanout_texture(DisplayChangeListener *dcl,
->                                  uint32_t backing_id,
->                                  bool backing_y_0_top,
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index 9ebe7e8df0..217f425075 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -636,6 +636,7 @@ static const DisplayGLCtxOps gl_area_ctx_ops =3D {
->      .dpy_gl_ctx_is_compatible_dcl =3D gd_gl_area_is_compatible_dcl,
->      .dpy_gl_ctx_create       =3D gd_gl_area_create_context,
->      .dpy_gl_ctx_destroy      =3D gd_gl_area_destroy_context,
-> +    .dpy_gl_ctx_destroy_texture =3D gd_gl_area_destroy_texture,
->      .dpy_gl_ctx_make_current =3D gd_gl_area_make_current,
->  };
->
-> @@ -670,6 +671,7 @@ static const DisplayGLCtxOps egl_ctx_ops =3D {
->      .dpy_gl_ctx_is_compatible_dcl =3D gd_egl_is_compatible_dcl,
->      .dpy_gl_ctx_create       =3D gd_egl_create_context,
->      .dpy_gl_ctx_destroy      =3D qemu_egl_destroy_context,
-> +    .dpy_gl_ctx_destroy_texture =3D gd_egl_destroy_texture,
->      .dpy_gl_ctx_make_current =3D gd_egl_make_current,
+In general, it would be nice to have a strict inter-section ordering
+for a few reasons:
 
-But there is no dpy_gl_ctx_create_texture(), how can
-dpy_gl_ctx_destroy_texture() get called?
+(1) It makes it easier to add generated sections such as return
+values, undocumented members, or undocumented features/flags (such as
+Out-of-band execution), because there is a clear and obvious place
+where we should insert the generated doc. We have a few spots in the
+code now where we have a bespoke algorithm to find the correct
+insertion point, and it would be nice to consolidate this logic.
 
->  };
->  #endif
-> --
-> 2.43.0
->
->
+(2) It makes the inliner easier, because merging two doc sections is
+more obvious when there is a normal order that must be adhered to;
+fields that are absent in one or the other docs list do not cause
+problems or complex edge cases.
 
+(3) It allows us to design around a unified look and layout in the
+HTML generator, which increases visual cohesion and yadda yadda yadda.
+In particular, each "group" of doc types is laid out in a block where
+having multiple fields of the same type be non-contiguous greatly
+increases visual clutter. i.e. all arguments should be contiguous, all
+features should be contiguous, etc. I have in the past referred to
+these groupings of doc section types as "doc regions".
 
---=20
-Marc-Andr=C3=A9 Lureau
+For these reasons, I'd like to nail down the order once and for all,
+and clarify a few things.
+
+The order I think you prefer is something like this:
+
+(1) Introduction ("Plain text", currently) - Always the first section,
+always precisely one section. (But may be multiple paragraphs housed
+within that single section.)
+(2) Arguments/members/values/alternatives
+(3) Return(s)
+(4) Error(s)
+(5) Feature(s)
+(6) Details ("Plain text", currently - generally used for clarifying
+detail, examples, and other information.)
+
+Before I go any further, is this order "roughly correct" to you?
+
+...
+
+We previously discussed prohibiting "plain text" from appearing
+anywhere except in (1) or (6). From memory, the summary of that
+discussion is:
+
+Me: Prohibiting plaintext from appearing between 2-5 makes inlining
+easier, and improves HTML output by preventing plaintext paragraphs
+from interrupting the "tabular" output used to render metadata fields.
+
+You: Although it is not often utilized, we may want the freedom/power
+to use plaintext paragraphs to add addendums/notes attached to
+specific sections, i.e. adding a "Note:" to the tail of the arguments
+section specifically.
+
+I recall we debated this particular restriction quite a few times and
+at length; does this summary sound roughly accurate as far as you
+remember?
+
 
