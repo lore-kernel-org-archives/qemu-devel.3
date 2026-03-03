@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B673EDA681
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB247EDA680
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRL9-0007UN-BD; Tue, 03 Mar 2026 10:07:15 -0500
+	id 1vxRKf-0006ad-3z; Tue, 03 Mar 2026 10:06:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRL7-0007Hf-KK
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:07:13 -0500
+ id 1vxRKc-0006Z2-2G
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRL5-0002Bl-TA
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:07:13 -0500
+ id 1vxRKa-00026P-M0
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772550431;
+ s=mimecast20190719; t=1772550400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HAn5uCxKHsi4ZTxZAQG+S8tZlo8bxfoEvDBRqGdtdGY=;
- b=GLTSqCHdaUEutfRcW3FyOVkdCT36WrHB9Qc0sKWK09PnWs6TMT9w27dPBhG5bQ0y9/5Qvn
- Ee4y7ErA8ga7Djhzswq6ImqYc4J6lUuhfPAL5u4/cyoan1F4J5wLs0rBJt627BddUfjKIM
- WA8nkZqXfOaX/jKwGAsjSB5RdniEIJE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Jg5VBo0tLLZdwjeqTGfROxDUEXBQx9Fo+FmYthl0C8Q=;
+ b=K9y66ADyxI0r9d91pXaAUIHY3yWn7PuY3Q8lAkGm+mtRKBrYpd7hqxSfHkXWFrBAy456CC
+ AB4MyDQAp7dpb88lBI9+Avw5BEr5LJDN0CPZMmx8psNtqXDOVeIvHQsdpbXM0QmfwV0p2Y
+ rUMWR7nuZ/D8TMvJiRYah1y213ghYkE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-2KlUCOHDMbaBQKISE7QD0w-1; Tue,
- 03 Mar 2026 10:07:05 -0500
-X-MC-Unique: 2KlUCOHDMbaBQKISE7QD0w-1
-X-Mimecast-MFC-AGG-ID: 2KlUCOHDMbaBQKISE7QD0w_1772550424
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-LR5_JiasMsyffK2tD8mPOg-1; Tue,
+ 03 Mar 2026 10:06:36 -0500
+X-MC-Unique: LR5_JiasMsyffK2tD8mPOg-1
+X-Mimecast-MFC-AGG-ID: LR5_JiasMsyffK2tD8mPOg_1772550394
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AE8519560AA; Tue,  3 Mar 2026 15:07:04 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B05AA180061C; Tue,  3 Mar 2026 15:06:34 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.225.185])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3D501800348; Tue,  3 Mar 2026 15:07:02 +0000 (UTC)
+ id 59E6B1800348; Tue,  3 Mar 2026 15:06:33 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Jon Kohler <jon@nutanix.com>
-Subject: [PULL 27/27] util/oslib-posix: increase memprealloc thread count to 32
-Date: Tue,  3 Mar 2026 15:06:04 +0000
-Message-ID: <20260303150604.2402872-28-berrange@redhat.com>
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: [PULL 12/27] audio: make jackaudio use qemu_thread_set_name
+Date: Tue,  3 Mar 2026 15:05:49 +0000
+Message-ID: <20260303150604.2402872-13-berrange@redhat.com>
 In-Reply-To: <20260303150604.2402872-1-berrange@redhat.com>
 References: <20260303150604.2402872-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -62,15 +62,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,66 +85,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jon Kohler <jon@nutanix.com>
+This has greater portability than directly call pthread_setname_np,
+which is only 1 out of 3 possible functions for pthreads that can
+set the name.
 
-Increase MAX_MEM_PREALLOC_THREAD_COUNT from 16 to 32. This was last
-touched in 2017 [1] and, since then, physical machine sizes and VMs
-therein have continue to get even bigger, both on average and on the
-extremes.
+The new API requires a trampoline function, since it can only set
+the name of the current thread.
 
-For very large VMs, using 16 threads to preallocate memory can be a
-non-trivial bottleneck during VM start-up and migration. Increasing
-this limit to 32 threads reduces the time taken for these operations.
-
-Test results from quad socket Intel 8490H (4x 60 cores) show a fairly
-linear gain of 50% with the 2x thread count increase.
-
----------------------------------------------
-Idle Guest w/ 2M HugePages   | Start-up time
----------------------------------------------
-240 vCPU, 7.5TB (16 threads) | 2m41.955s
----------------------------------------------
-240 vCPU, 7.5TB (32 threads) | 1m19.404s
----------------------------------------------
-
-Note: Going above 32 threads appears to have diminishing returns at
-the point where the memory bandwidth and context switching costs
-appear to be a limiting factor to linear scaling. For posterity, on
-the same system as above:
-- 32 threads: 1m19s
-- 48 threads: 1m4s
-- 64 threads: 59s
-- 240 threads: 50s
-
-Additional thread counts also get less interesting as the amount of
-memory is to be preallocated is smaller. Putting that all together,
-32 threads appears to be a sane number with a solid speedup on fairly
-modern hardware. To go faster, we'd either need to improve the hardware
-(CPU/memory) itself or improve clear_pages_*() on the kernel side to
-be more efficient.
-
-[1] 1e356fc14bea ("mem-prealloc: reduce large guest start-up and migration time.")
-
-Signed-off-by: Jon Kohler <jon@nutanix.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/oslib-posix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ audio/jackaudio.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-index 3c14b72665..dc001da66d 100644
---- a/util/oslib-posix.c
-+++ b/util/oslib-posix.c
-@@ -61,7 +61,7 @@
- #include "qemu/memalign.h"
- #include "qemu/mmap-alloc.h"
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index f49fd82c45..be6fb378f7 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -633,18 +633,36 @@ static void qjack_enable_in(HWVoiceIn *hw, bool enable)
+     ji->c.enabled = enable;
+ }
  
--#define MAX_MEM_PREALLOC_THREAD_COUNT 16
-+#define MAX_MEM_PREALLOC_THREAD_COUNT 32
+-#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
++#if !defined(WIN32)
++struct QJackThreadData {
++    void *(*function)(void *);
++    void *arg;
++};
++
++static void *qjack_thread_trampoline(void *targ)
++{
++    struct QJackThreadData *data = targ;
++    void *(*function)(void *) = data->function;
++    void *arg = data->arg;
++
++    g_free(data);
++    qemu_thread_set_name("jack-client");
++
++    return function(arg);
++}
++
+ static int qjack_thread_creator(jack_native_thread_t *thread,
+     const pthread_attr_t *attr, void *(*function)(void *), void *arg)
+ {
+-    int ret = pthread_create(thread, attr, function, arg);
++    struct QJackThreadData *data = g_new0(struct QJackThreadData, 1);
++    data->function = function;
++    data->arg = arg;
++    int ret = pthread_create(thread, attr, qjack_thread_trampoline, data);
+     if (ret != 0) {
++        g_free(data);
+         return ret;
+     }
  
- struct MemsetThread;
- 
+-    /* set the name of the thread */
+-    pthread_setname_np(*thread, "jack-client");
+-
+     return ret;
+ }
+ #endif
 -- 
 2.53.0
 
