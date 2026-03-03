@@ -4,122 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BBFEDEBF5
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1737EEDEBFB
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxXv7-0001Dm-Jl; Tue, 03 Mar 2026 17:08:49 -0500
+	id 1vxY8B-0004lw-AR; Tue, 03 Mar 2026 17:22:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francesco@valla.it>)
- id 1vxXVv-0002XE-0G
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 16:42:47 -0500
-Received: from delivery.antispam.mailspamprotection.com ([185.56.87.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francesco@valla.it>)
- id 1vxXVs-0007Od-Og
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 16:42:46 -0500
-ARC-Seal: i=1; cv=none; a=rsa-sha256;
- d=outgoing.instance-europe-west4-bh0b.prod.antispam.mailspamprotection.com;
- s=arckey; t=1772574162; 
- b=YLJ7dFKr+0fWDWNvxH0+hP94lDpxo/zaR+Hm5U1n7abWFv77aWJTJ96Mp8jpCqGVN/0L6Zrgjt
- hpbKX5+U8W2m01uMfm4WMxZjb9xbUv5AqyRB/Ua2Lii+tEHMiwjetJaLRlA5qutKT9Yx4/EWCP
- EWH4cRBJXc5RBh62O8Vdb8B1mQVTkbBO4S7QM4iMmMCKzOrMbhLsVDo3Cr5h9IL9RumXuvt9bM
- 0A9ujzueb/+C06sw6v66xRFKBEImekk/hLKnGMlKuah/R/M9VJh/8LYDB4ugXg2QDET16fAiAI
- EPgC6GmrmfU+SJ3aevE2P1Tv1ftLD7yISyclYOVa4NCgCg==;
-ARC-Authentication-Results: i=1;
- outgoing.instance-europe-west4-bh0b.prod.antispam.mailspamprotection.com;
- smtp.remote-ip=35.214.173.214; 
- iprev=pass (214.173.214.35.bc.googleusercontent.com)
- smtp.remote-ip=35.214.173.214; 
- auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
- dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
- arc=none
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed;
- d=outgoing.instance-europe-west4-bh0b.prod.antispam.mailspamprotection.com;
- s=arckey; t=1772574162; 
- bh=sT1WTGuzR5fiePLymPLZZ3/EMwNLUTogJdV9p9h+MgE=;
- h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:DKIM-Signature:DKIM-Signature;
- b=EjsHivKLSJ5mA5KSNMuis/JO2fd9og7O+6JAzPGbI3eBbweZWsWGcn6RuV2gqW4aVYb10LXCvC
- J/wpEcq2912Gud1NJ8+Njw0xJXHW12wAxnEA7mvh4iwvCAMvLJ4k94+MPnZPAER/03ov7g2FRv
- shtztUZFzWBkVhm56m/b3Xvcj1v+ToJ1YDospvespjJdLFLUaTDNccF4hvqykDw8e3mrDnRPGv
- fwxP4/9y/YrfZMur4C/yaaGTp6XRLDJEndZjk/L7dcOjZ2GUqJyL92UGi+pTstW72YBa/BDO8E
- y50vJ/EdbyPvek2h1l/nhuWjIf4Lg4BK3d655PQu7UOx2A==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=antispam.mailspamprotection.com; s=default; h=CFBL-Feedback-ID:CFBL-Address
- :Content-Type:Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
- Cc:To:From:Reply-To:List-Unsubscribe;
- bh=sT1WTGuzR5fiePLymPLZZ3/EMwNLUTogJdV9p9h+MgE=; b=mAEBnk283Gemf6nIRK7Fz7u16x
- cqRpLCfqzqOL0MxxTT0qh640DNnnnKmzGp9FVojoOPYH+m/yXTtaOM1890BKDmHpfVaGRQEe6mfAe
- pIA36tcUrzj0cXyfspnsdCet28s/0hr1aFshIxeRj34D4NCU1rVgsXVkHrhBYOpoHjwA=;
-Received: from 214.173.214.35.bc.googleusercontent.com ([35.214.173.214]
- helo=esm19.siteground.biz)
- by instance-europe-west4-bh0b.prod.antispam.mailspamprotection.com with
- esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384 (Exim 4.98.1)
- (envelope-from <francesco@valla.it>) id 1vxXVm-00000001bts-2zYm
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 21:42:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=valla.it;
- s=default; h=Date:Subject:Cc:To:From:list-help:list-unsubscribe:
- list-subscribe:list-post:list-owner:list-archive;
- bh=sT1WTGuzR5fiePLymPLZZ3/EMwNLUTogJdV9p9h+MgE=; b=DkuRCXqnr+LicvnadsYeNFpLnU
- slFgyatq1U5vy9Hn2b4KkP1U2kcPj/q3PmMRh/zzySOdy/P6UuESaN2N1D452iwqvrfx0OpGI7aQC
- NziLD+T/rTOXjxKZYGUiglhJAS6zG7j0TlRX6ezAiEVWnLzl6PZemtTdhxlNfyIfhIo0=;
-Received: from [82.57.88.19] (port=62003 helo=bywater.localnet)
- by esm19.siteground.biz with essmtpa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.99.1) (envelope-from <francesco@valla.it>)
- id 1vxXVe-000000008XT-2LHZ; Tue, 03 Mar 2026 21:42:30 +0000
-From: Francesco Valla <francesco@valla.it>
-To: "mvaralar@redhat.com" <mvaralar@redhat.com>,
- "sgarzare@redhat.com" <sgarzare@redhat.com>,
- Ammar Yasser <aerosound161@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: GSoC virtio-rtc project
-Date: Tue, 03 Mar 2026 22:42:30 +0100
-Message-ID: <2787739.lGaqSPkdTl@bywater>
-In-Reply-To: <CAHxyR9LgW-MY8PWs_hpGUh=AiYNfD-W8FirmkGMO1Xguby4Lxg@mail.gmail.com>
-References: <CAHxyR9KTC0QzbSYQTAqpBxnyEWJG9+xMGENHps4vfJEPR16Dww@mail.gmail.com>
- <9abb752c-8f26-408e-b6d3-4d4cc2fb86b0@redhat.com>
- <CAHxyR9LgW-MY8PWs_hpGUh=AiYNfD-W8FirmkGMO1Xguby4Lxg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY8A-0004l9-5Z
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:18 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY87-0002TQ-Ez
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:17 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48375f1defeso46546765e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772576534; x=1773181334; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kQcKbngO5gEYvP1cyAmsSZ3twrSC/3ssI8QyeEW5Z+s=;
+ b=S9Ln4QA8uSGDVFlR8QxMcuS1IKxS0uhVBEA+LbwDjJ16cfOMW1vxPISkdXBQr2oNAM
+ rY9hDQcP9e4QK5inIC2GAGS9OSL1Is1c6BIs6lsQqYsa5qloL9+LcWcyvA2gXwo2ol/2
+ ci8S2Viy30MCAthkVdMLyFtLjbUbKKybiNTyW2eAVcluQ9Le7uBgzbTU/0fN6+9URCiv
+ 95DliXLyAa9740P5BqESTBDl60C0UAFVRlkYYmmlSkesvLHnFTTvEnm1Vf9WuzKO5nIJ
+ i32GIBI1i6R8ZVEcXr8PzUk1y6f4m1yCy5whFlwuHDk0sg8xr+19+rShF3cvQaOpfAHB
+ /P3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772576534; x=1773181334;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kQcKbngO5gEYvP1cyAmsSZ3twrSC/3ssI8QyeEW5Z+s=;
+ b=idpDm4ppjxKB0unH7sfn6ryHFyPw6wbRx4hcQnDXxVJmre02Xaan9rWbrCyzfbcVzb
+ PF5LBjHdcxwk9Y86+aF6yDB7+xX9IwpVT6BaJO5q+PJk+ozwxo7KXvyQwMb1U+IgSCt0
+ Sz528fYn31d/i6CHo+5VcBypbRUWjzqa9WBwciAVc+8jQ19vgczM82dx1ln5Le0r91rQ
+ izKlfWyWoLadhX86cJFjns7/EZWwnWMgZ7UfIjWTAt5oUdwfqvQhnYnjSJ+ldzL4V7lN
+ NuP4Dh71qZ8b10Ne8fRp7kWey6vRnfI+5zS2zQVjt+G/u45stm9nTO1JmOudU7xiqmWG
+ D2Wg==
+X-Gm-Message-State: AOJu0YwIsnajutA0RMolCjcgqf3cpYiqQZWw3dGV0xYhb+iZABTQYfEh
+ wfBzSb/Co7pvumeX3P4D+bM29/k6l5IJMJjxO2ck5+mC3nDEQcII2+MtokzzHg==
+X-Gm-Gg: ATEYQzzNpzdkdpmxTwVMnl2g9/J2/vjApIXMrEfIEPnzz6a9USCcK7GYGWxQxZxkrFa
+ S6kTaaxLV2LkRSh1Z8Po5Nrnoz5dupbSeTuLa4dfWqOjmvT718EIXgqQMpAeZfH+QZUxjp7oS2z
+ eVyfa3lYjLh9osZdhjIhnjGFBFunFdnH7D0ikv2/yZq5QdZefv7zSQfesc+Dq60aEpwdvkdQOm3
+ lrRic9NltjdZQvhfijvsxwzzOuN9ZhIqSbs05mttfWPmqZTKY6PN1/7+9XNPtAkBUmBs7TX5L5s
+ LmTBsuFKy3HIGAPNEx/d6fYNnNRjZGDH0VvRa8AVREkrf9VS2t+eqkXMJc94z5/AhJEO+SvTM97
+ f42OEIc8QrzWOedixkOD5rfqZZW9u6oLuYBoxoBb62/YS8vAVzgmQhKsICNMJXhfvuY9JUBme4K
+ oB3iXfD7LjzM0pJugiJ7TRBGYn8Ygq140CUMw+vI+XOOHWTlnXKwQuPPmqO4zNmEACft5zVgwW+
+ 23Pm9bUpQvGRhw+8yUsPd1JH6OPxGhbik6AGzsRtg==
+X-Received: by 2002:a05:600c:444d:b0:480:4a90:1afe with SMTP id
+ 5b1f17b1804b1-483c9c2be1dmr286021745e9.34.1772576533734; 
+ Tue, 03 Mar 2026 14:22:13 -0800 (PST)
+Received: from Provence
+ (dynamic-2a02-3100-1c79-b600-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:1c79:b600:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 14:22:13 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Troy Lee <leetroy@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v2 10/13] hw/char/serial: Avoid implicit conversion when
+ tracing
+Date: Tue,  3 Mar 2026 23:21:40 +0100
+Message-ID: <20260303222143.142741-11-shentey@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260303222143.142741-1-shentey@gmail.com>
+References: <20260303222143.142741-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - esm19.siteground.biz
-X-AntiAbuse: Original Domain - nongnu.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - valla.it
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-SGantispam-id: 099eaf29ab42fad7eba14c81d8c598c0
-X-AntiAbuse: ID - 099eaf29ab42fad7eba14c81d8c598c0
-AntiSpam-DLS: false
-AntiSpam-DLSP: 
-AntiSpam-DLSRS: 
-AntiSpam-TS: 1.0
-CFBL-Address: feedback@antispam.mailspamprotection.com; report=arf
-CFBL-Feedback-ID: 1vxXVm-00000001bts-2zYm-feedback@antispam.mailspamprotection.com
-Authentication-Results: outgoing.instance-europe-west4-bh0b.prod.antispam.mailspamprotection.com; 
- iprev=pass (214.173.214.35.bc.googleusercontent.com)
- smtp.remote-ip=35.214.173.214; 
- auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
- dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
- arc=none
-Received-SPF: pass client-ip=185.56.87.11; envelope-from=francesco@valla.it;
- helo=delivery.antispam.mailspamprotection.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 03 Mar 2026 17:08:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,62 +113,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Ammar,
+On 64 bit targets, the MemoryRegion API passes an address and a value as
+uint64_t, so use that for tracing. Keep the uint8_t for reading since
+this is what the device model produces. On targets with less than 64
+bits, uint64_t is wide enough to avoid narrowing.
 
-On luned=C3=AC 2 marzo 2026 at 23:53, Ammar Yasser wrote:
-> Hello maintainers
->=20
-> Re-introducing myself in case you missed my email to the mailing list.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/char/trace-events | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-I *did* lost your first e-mail, so thank you for writing this one.
-
-> I'm Ammar, a software engineer working with Linux kernel and virtualizati=
-on.
-> I'm interested in contributing to QEMU for GSoC 2026, particularly the
-> virtio-rtc vhost-user device project. If accepted, this would be my second
-> GSoC participation. I participated in 2024 with KubeVirt, which was my
-> original introduction to QEMU.
->=20
-> I have the following questions in order to formulate a successful proposa=
-l:
->=20
-> 1. What would you like to see from a successful proposal ? The current
-> points i am studying and plan to include in mine are:
->=20
-> - an overview of the RTC device spec
-> - how it would interact with QEMU
-> - some of the rust data types and enums we would introduce for requests,
-> different error types.. etc
-> - a breakdown for some of the RTC C implementations that currently exist =
-in
-> QEMU (allwinner, aspeed, goldfish.. etc), and what ideas can we borrow fr=
-om
-> them in our rust implementation
->=20
-> I am leaving out implementation specific details out of the current phase.
-> Let me know if this sounds appropriate
->=20
-
-I'd include some details on how you intend to perform the activity (e.g.: h=
-ow
-to split and order the various tasks).
-
-> 2. I am looking for issues I can tackle to familiarize myself with the
-> vhost-device repo and how one device is structured. Any ones you have that
-> are relevant to the project or you think are important in general?
->=20
-
-No preferences there, please select the one(s) you think appropriate.
-
-> Thanks in advance
->=20
-> Ammar
->=20
->=20
-
-Regards,
-
-=46rancesco
-
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 9e74be2c14..a3fcc77287 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -5,8 +5,8 @@ parallel_ioport_read(const char *desc, uint16_t addr, uint8_t value) "read [%s]
+ parallel_ioport_write(const char *desc, uint16_t addr, uint8_t value) "write [%s] addr 0x%02x val 0x%02x"
+ 
+ # serial.c
+-serial_read(uint16_t addr, uint8_t value) "read addr 0x%02x val 0x%02x"
+-serial_write(uint16_t addr, uint8_t value) "write addr 0x%02x val 0x%02x"
++serial_read(uint64_t addr, uint8_t value) "[0x%02" PRIx64 "] -> 0x%02" PRIx8
++serial_write(uint64_t addr, uint64_t value) "[0x%02" PRIx64 "] <- 0x%02" PRIx64
+ serial_update_parameters(uint64_t baudrate, char parity, int data_bits, int stop_bits) "baudrate=%"PRIu64" parity='%c' data=%d stop=%d"
+ 
+ # virtio-serial-bus.c
+-- 
+2.53.0
 
 
