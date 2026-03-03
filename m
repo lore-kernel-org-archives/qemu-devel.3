@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A91DEDA68D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68415EDA693
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSLj-00067N-BV; Tue, 03 Mar 2026 11:11:55 -0500
+	id 1vxSPD-0008CE-PZ; Tue, 03 Mar 2026 11:15:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSLS-0005z6-IP
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:11:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSLM-0005b6-GN
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:11:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772554289;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=olgD0clpE0baOpuO5+pOb2Ld3gPgWX6Rcbk30mz6MHo=;
- b=ee+5JRAwSYnlZt9896pTIfhRlSZ1LLG1gW8MWzJSCbsg+YwsISLF2C1ltiBxSZjchli8AG
- qmdlTUrZyUWXZtyDERfOK5aionLg9q+v3zjh0L4lh4yrjRirByMJSroCAwHsOIV2WFwcE2
- 9PsMSGtsdYGDYqC9RqEP88ZDm97Zyjo=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-Ec5ofgz6MXSO31ESYoQfNQ-1; Tue, 03 Mar 2026 11:11:26 -0500
-X-MC-Unique: Ec5ofgz6MXSO31ESYoQfNQ-1
-X-Mimecast-MFC-AGG-ID: Ec5ofgz6MXSO31ESYoQfNQ_1772554286
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-899f92be718so59849716d6.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:11:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxSPA-00089L-4t
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:15:30 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxSP7-0006GR-FI
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:15:27 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439c5cce2c6so58831f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:15:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772554285; x=1773159085; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=olgD0clpE0baOpuO5+pOb2Ld3gPgWX6Rcbk30mz6MHo=;
- b=UEZq+iUNR2Lgs8XD4dn7g9ev+els8FlBo4M1g0Ii3iNpoM3fWTgkrgXPvbhnHDi0A+
- dpKUq/iqe1rqa3bIOn9zdRrl2WUPhPgboVDBQVcSoPPHyzx1akL5vSoFCw8mA1UGd8Yx
- 7akqEmxRJSPP+86D0EItJ0XMjn3eAgWaCcZwF7HITXznqKj6JUDtv9yqQxifSPEvVKNU
- cU3IiZZ7jeT8iQWe6ZuBrqC4XYOozi1d+1PuAL4IfRZuiZa1xbWKwq4qzfBmAMhaN9wu
- uaixe9fs15KXJ8DQA0HHAV2AREKW/uJsIleVuW0Rm97pcZdaABygTrAMtZXFdF0Iqe7m
- CfRA==
+ d=linaro.org; s=google; t=1772554521; x=1773159321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Jv1pzy1zvuJuL/I3jnHWuW4Eq8oBan07Ohy9SOuBJS4=;
+ b=XxkJO/ZcuUr2CNbYcGCJpXKNaFuItGlzMzGNcJiWiGd6mRrJfKudVL3bvl66okKwNv
+ LllAzxdLp5a7fYM+bV2u0U5C4uRT04ZqlLtZ0yiymzQiICXLk/YR3iYlQU7KHijrAcEI
+ 1Y8/X8FL08vHRpcksgcs6uJxOb4YUABJ1cajdx0Uza7JVdDgxSnpdLqc/mbQUooobt9B
+ wTmbMdB6dYmkNIeYlbWds8wrPk3rJh+gOFuDDjOjBS1YrOt4Pf5rAsZm0a4/rrPZr3Kq
+ mhmT6cG+hLJdPCrK7RIeJdxXGfWZLRLOUbP/EKlOUgarQZhhHfwcLnkKI/tFmIDskBOe
+ QuNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772554285; x=1773159085;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=olgD0clpE0baOpuO5+pOb2Ld3gPgWX6Rcbk30mz6MHo=;
- b=MJFS48vTqPLlQVnq1/tOv0oThgrs86cAKJ5BLH83fBo5CIcTEM8Q9DyNG5XT3HlRuG
- Y3WWsCjSyrnfWeTNXbSLuU2/RZYb5RLr6QYExRYqV+8Q1xPJ9kugna3jgtIBPqO6TjcK
- djwcOHMOAkUVXB4D/dnQpn7FdVX5FimycxGg7/rI5Rw5chEWjdtUtwcbpgMb51y7E2h/
- K5DeAVppW3sUuaRrmdeRSbLQleZKfRmfLQ+PV6Hi6Fb5wBnN1FgzbHSrCnJTEPZe261L
- T9X1FQTGNkOkeVZq1fU1M9PzZL2RcmO/xu2ao5a2e9BOg/h6qve+FXWF1JPeMP/BRb4D
- 8YtQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUH68ywJYWV108j3HDQe7UAEYxJYibgCGZ/qJMMwwtXXkG4bKVVT+Ocd7Vfr9sRwxks9TurvFNSjzbc@nongnu.org
-X-Gm-Message-State: AOJu0YwcSuPnys0x7V/MkWjmmU/svogZUFnwPjDvrcN+wsyYdNx2Faej
- fEGIhX1guyFImjocAtjcImID4a3bnSQfPGCdblbDEm3zG7JC7yKVhGoAF30ZX/g4SiKWNZYyTDZ
- 9clKlIB0Kai4E6x4FHwaotLNqrkpzmGXlH2CtqR9lm2sXFbe4v6infEnWscg53btP
-X-Gm-Gg: ATEYQzyW9WKh6O8Kw8nc5qk+LbgfiChwSD5Ndo0wS3ci2V3omV97//SSPiOqVphLCcR
- utGxfD0vIooVO07wYTEOPkYrsgfHKVpQA3Oyf9bZHxRzRSsoSAOsciRa8LsR6sriiRoWmlaGEAS
- 3lZm3E5+TCNIKI0LC2pfbPUFeP2WTQndlzQYUIfRx9b0l1U3fXTV4H+YxfwVxdB+LMD/XSVmwKF
- r4fvKItTXtZpn6OlpRNPR+LaIiD2jPWyAqPeLZ637cP3DdKG9RRumDR6BUmmaXOP+6QmqBqMkW6
- UseZF4BRLKhgxyzPdW0oXiXNSPfPef5NO10rGiocLjp6V6epq3qY3Y4filkJRP9Z9xXeJAcgUn1
- tFj9WGqKniBi+Qw==
-X-Received: by 2002:a05:6214:c6d:b0:89a:125f:37dd with SMTP id
- 6a1803df08f44-89a125f394amr20372166d6.49.1772554285457; 
- Tue, 03 Mar 2026 08:11:25 -0800 (PST)
-X-Received: by 2002:a05:6214:c6d:b0:89a:125f:37dd with SMTP id
- 6a1803df08f44-89a125f394amr20371606d6.49.1772554284991; 
- Tue, 03 Mar 2026 08:11:24 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-899c7159b72sm134813326d6.7.2026.03.03.08.11.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 08:11:24 -0800 (PST)
-Date: Tue, 3 Mar 2026 11:11:13 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: farosas@suse.de,
-	"open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 08/16] migration: factor out vmstate_pre_load() from
- vmstate_load_state()
-Message-ID: <aacIIVfQaDxOJxPH@x1.local>
-References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
- <20260220210214.800050-9-vsementsov@yandex-team.ru>
+ d=1e100.net; s=20230601; t=1772554521; x=1773159321;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Jv1pzy1zvuJuL/I3jnHWuW4Eq8oBan07Ohy9SOuBJS4=;
+ b=vM7NsjPFotOJIGFNX+6c81Z7hdwBbZLzctz47jaxGggRoCpNY5fIoopadwi+VKBQv/
+ 6yqznNsvhTBM6qJgHgcs+JJWSpkS8bnuaPTNvDcxl+QdxMViZ6iDNtlZOl2FaYo8+HbH
+ gftng1LqNheu8/BDwubVRlxD+ATqHVd3dRR4uzPxzf92MMR17dyT4Ien/6btk9T73IZm
+ O2IiMMcdvcP9x6lYQ7N2QAiz+Z81xCWJTh634Ey0P4WpwvFWE8KpH3zpq6/rN9rV3L+T
+ xMx0jsRr6swDqyIJEZHgxqFGo8B7V2EYYBpDRKZvVm5neEvfvwwi7li07TTF84XBWntx
+ Su6Q==
+X-Gm-Message-State: AOJu0Yz1UBKIQw1CBRip9+qSQXJTN1Xz47fCGOgX/s0SDQOcCxo3Rsqg
+ 7hJgw+2aNm0UgNvlOdRasxENq2n1HlzoDQH7aGOGNtjnokHcEpQzDcqzt4rA4zf4Egw=
+X-Gm-Gg: ATEYQzwdHqVu/kBskvtmQvBoLrGFOQWsS3bFRKuXoBYG4KqFPNMih3igZFqbLqHeUvB
+ ImlUpFsNWnb2vEdL3l1YdOwv8GIQwVmOeYxozlbS1n6A8OyJmY6MBhWs/ptAhyu0VYKQl6jgoC7
+ UJst2RUgSxfRziKKWtEEAW7yx2LI7ItJQISW6Ka7CHlqPuEzz++0+JGciN7In8n3eKhu8rOB66s
+ uxRIQteMCZnN5OC+e5q0Cudzzg4P0GC/GdIiOvEorPrGAGPxjl/pf8SLBMF2BG3rjlzyd4HAlhf
+ jPpPjXT7t7e0Og2Jn/g/O5PBekMeGoIUTaGcHASoLaCoE7k2Ive/vuJB+3CB3F2T3Qdq6uNlFpj
+ B2ledsB8jBt8d0aMGqOwUXPnjRKRptFI9YHz4t2UZW5TjQ9Awo7AR5s68ZYhECB3Y0lKSp1eMix
+ AxxmqGlXaHydysb8vQZhEVGYY2XPJqiLT568DXSIYE6PyUNZS4xaVLml3WTS2eWgq/xQ==
+X-Received: by 2002:a05:6000:1a8b:b0:439:b486:ba71 with SMTP id
+ ffacd0b85a97d-439b486c4cdmr15513818f8f.56.1772554519274; 
+ Tue, 03 Mar 2026 08:15:19 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b0549600sm21229669f8f.35.2026.03.03.08.15.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 08:15:18 -0800 (PST)
+Message-ID: <ef6b34f6-7e72-4aea-9436-c2bda69c2c0e@linaro.org>
+Date: Tue, 3 Mar 2026 17:15:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260220210214.800050-9-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] stubs: Merge physmem.c within ram-block.c
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
+References: <20260226220226.20164-1-philmd@linaro.org>
+ <20260226220226.20164-2-philmd@linaro.org>
+ <8a2872f3-dfbb-3fed-dd95-3cd474e3ca2b@eik.bme.hu>
+ <82dfe6e2-22c1-4df1-9e49-a2c7a2970082@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <82dfe6e2-22c1-4df1-9e49-a2c7a2970082@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,15 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 21, 2026 at 12:02:06AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Simplify vmstate_load_state() which is rather big, and simplify further
-> refactoring.
+On 2/3/26 07:21, Akihiko Odaki wrote:
+> On 2026/02/27 7:22, BALATON Zoltan wrote:
+>> On Thu, 26 Feb 2026, Philippe Mathieu-Daudé wrote:
+>>> physmem.c defines 2 stubs which are related to ram-block:
+>>> qemu_ram_block_from_host() and qemu_ram_get_fd().
+>>> Move them with the other ram-block stubs.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> stubs/physmem.c   | 13 -------------
+>>> stubs/ram-block.c | 11 +++++++++++
+>>
+>> Maybe should be the other way around moving what's in subs/ram-block.c 
+>> to stubs/physmem.c considering the the functions these stub out are in 
+>> system/physmem.c and there's no system/ram-block.c.
+
+Fine, I'll drop this patch if you think it is not worthwhile.
+
 > 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
+> But this stubs out functions in "ramblock.h" (though it's not
+> "ram-block.h")
+> 
+> Regards,
+> Akihiko Odaki
+> 
+>>
+>> Regards,
+>> BALATON Zoltan
 
 
