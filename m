@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F79E67A70
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 06:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0138E67A6B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 06:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxJQ4-0004w5-MU; Tue, 03 Mar 2026 01:39:48 -0500
+	id 1vxJQI-00053L-LP; Tue, 03 Mar 2026 01:40:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vxJQ0-0004v7-Al; Tue, 03 Mar 2026 01:39:44 -0500
+ id 1vxJQ8-0004xV-HM; Tue, 03 Mar 2026 01:39:52 -0500
 Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vxJPy-0005qP-QD; Tue, 03 Mar 2026 01:39:44 -0500
+ id 1vxJQ7-0005qP-1v; Tue, 03 Mar 2026 01:39:52 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zBJ1Nq+44v+fLY3kMUvnRJsVNd4JNvZp54jXQXsooznF+2DAlR6Vf8Be8GdUlxlWv2yHWRZ7sspPG9KRpvGxG4k+8S9jPk0M5lsSY2wl3pO2olRw3VNkJppVyGIEpDeXQQJVDN3uXtDO6P4Kr/Ud77++jwJyD3spiFjK5o9e9H6n4EHPq9xB4+Yhw+7kLszdQyesd2YiUs0+XHRb0GKhbWxT/vy2QhPLeDbffK1HE0S5SWDR4d1ugDjVcfZzWhFaDNKkSwun66hk0fwAE2dmZKibzbF4XI7xhUtVoX/WPEe8FKWR/HrlP9y8aeNVeiMQ0ZDF6aqe8VYVSeSD8VXmrw==
+ b=uHCLB/kVlUsB2kmRUxcmmztMUCPwLXUxoLu/5JE9OZ/D+kAjUYqY+R3WQGjokRQhuoJaEqpN/VVXhAuE/7nsmpxLpVF8mavDKZs0PCGXUAY9LwQv5GzNVo9xdZM0J4fIqmzQANo/lyVUliSWpzPTL4ZQdmfcKhvvhx/YkAqT3TPYzYOOg0s5JMTk5FEKqVQXfkASGdcrPKE+lSRkcKFe43uzDgXIcv1Me8RSOgp+t/yvTgCOV9BjVS1XhmsYkZnP1lLC6ddqp5ENTlLsRdEz0EM1LcRVIYfr/Zd51GNgmpM2K4/llTo8edCG9T548F5ah7bBC4hLoKWrTBPRImtpng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ycYRALu1JH6hsy+4RlhIofVAvgmnbgCvNWCI8voFiuA=;
- b=QsgbOhASEuCv8sVZccIQbuIsebfngyXmTaG5eW8kuY1abpQ0UXTSh2jTxlPlFGnA8/fDnoOJgmBxq9Nm1inboQDC8PizZqTyelj7IgwMI4PK3jXyo5oLXc2eXEsamoonwI87CA+naor4MmaUvAHKm9omPgxc60rPosRJ4zdg7y+EPRER7dVdBxCsJCKSIUR8bBKIh75KsBkxqv2SrmtlDTY1/fCJoTctWmvNIdulgV+BOgTXOHgfuAPvbnF4wZrvHdBYI0KqZF6IkKjYfkubGCHiFxK1y8FW6a/BoPD5joBB3KYr/+M2reVpkoAL1Qbsrx/u7cGlQw0ySJ5rhr+6Gg==
+ bh=M5R8c5l4tGSYd8JDGr7SW49obQ35y2ZyZ0B4QsopG/A=;
+ b=g9d8MKKTd5zEvNka4oG2h4dIO4J0yrHo4xbEZgg12X9bfpJBPlXr/9jlbrGbpKNTkO/HkuJQ76/ZFSvhZ8Sx3RUG7sCq57NOPBj9MiANohXa3iG43E7CJf+1etKL9OQaxzqayfQ7C0e31MTbwE/Nznv9unpWjLclIj2ww74uatA5s7Zyl33HvmSOHecSEGmQgDcFIsQvHE+sNeOLDo4nta+FRvalw1lSA8dRKRJ3kd1ayiMKkIOIrq6M+4GxQEar75wdvGURT0pdfMpptwq4jnQqfgH7pxtTV0aOUNotKj/oC3GdqC6jcSl3SHA2lkTLL3wgLmS9CCUkRGdSyay79Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ycYRALu1JH6hsy+4RlhIofVAvgmnbgCvNWCI8voFiuA=;
- b=J6Et7qkmH0SpHP0L/egI445iX5/A3QVgFgRzDCBNYOg3GlI9sVq+vBRaW31u5xwmocm7mLjqwnVKKln/y295D8TA/HVm31Z1Qzu/90c83BMPHpMuxDd3A5EZeI0TuHfjFcPK6nBqmHZ2Ov3FVjIIJIvkWNcjqUnyFi+Olu0pQVEPPnzcp5G9D7UnEXT+UxRtc9jchuB2u46Eh88X2YgT+7cDI69x8dbMD5DaWlY7Vc21QMbvX9xbuUTR5Yn+0e3ic7joYbSTX8K5XIOk/oBlaOuihrU48RmWd0zMwuuiMheetIBIJrkj6mCqVSB/VkU53Gw85JS7JviV870VPUFBkg==
+ bh=M5R8c5l4tGSYd8JDGr7SW49obQ35y2ZyZ0B4QsopG/A=;
+ b=l/9JumCjcanHVwZkNT1IBp4AIcDG/pi/MO0QYR7fqNeImXTQdvgACCz+I/hkum/t5P12FmQphC5x9e0reW/yDaL0YLb03kPZMBGmLhkjWzm9Ry1uwJTMofRoXznQR79lmy9gFwqBQps1X6oNMbDb2s6Y/FnVv5NWpDBO4HpZ9h2g1Ql2tp9JG+/YkXofKFO9YqBG9CNT4jngsg8PJjRGsfvMmyTcjCLscb3N1L9pten+XBEc93zH9dI54Xu8+DK+CI4cu7nb1XBYPez18rac/K5ZgRP2DOd1sJsIY+up94FBZNblR9WJpCkibu0BuwK4SKtJZmYxyik5sVOf2g2txA==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by TY0PR06MB5459.apcprd06.prod.outlook.com (2603:1096:400:31f::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Tue, 3 Mar
- 2026 06:39:33 +0000
+ 2026 06:39:39 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9654.022; Tue, 3 Mar 2026
- 06:39:33 +0000
+ 06:39:39 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -51,13 +51,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 01/10] tests/functional/arm/test_aspeed_ast1030: Update
- test ASPEED Zephyr SDK v03.06
-Thread-Topic: [PATCH v2 01/10] tests/functional/arm/test_aspeed_ast1030:
- Update test ASPEED Zephyr SDK v03.06
-Thread-Index: AQHcqth/eZQhRV7b40eJT1y3uOF84g==
-Date: Tue, 3 Mar 2026 06:39:33 +0000
-Message-ID: <20260303063930.2878300-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 05/10] tests/functional/arm/test_aspeed_ast2600_sdk: Update
+ test ASPEED OpenBMC SDK v11.01
+Thread-Topic: [PATCH v2 05/10] tests/functional/arm/test_aspeed_ast2600_sdk:
+ Update test ASPEED OpenBMC SDK v11.01
+Thread-Index: AQHcqtiCT8R9YEFoqUm1efsWIiVkqw==
+Date: Tue, 3 Mar 2026 06:39:39 +0000
+Message-ID: <20260303063930.2878300-6-jamin_lin@aspeedtech.com>
 References: <20260303063930.2878300-1-jamin_lin@aspeedtech.com>
 In-Reply-To: <20260303063930.2878300-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
@@ -68,58 +68,58 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TY0PR06MB5459:EE_
-x-ms-office365-filtering-correlation-id: 6c4d061d-1a55-4e4a-f71d-08de78efa1a1
+x-ms-office365-filtering-correlation-id: c8315fcf-a0ac-4103-7640-08de78efa531
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
-x-microsoft-antispam-message-info: MKnnGF2W6RBjMYIpJkRYqFQJ7I5mlGJQIOtX/xhd4uwgt3wkG7dMpKofBjIOiDYAK/0j4xXexKMuA2m7lGmUfsj7a5KpSMeAN+O8yrGh4gd3mnqT4pkXmXPBYA/V7SIrCgjEd1B9wlqwj7Udgn9/PcdMgA9mFg83cx4771oPhWUHf3h+ZJXW74k8WWneUD1dRJsiR8fgSa+yjduPcJwgptnYyfiDtZ8h3pbQvDYG9MKUvb3JiE2WBjO6zyTmzirWM45q9lrkfVI7aVM4Kw0W/JRyxO6cEkCSPMn5EKFsnkikDpW2O6K0BqtbZ4JXm4w/VN4uBRKT3EkLL8TNvXSqe26XbFCPxeh0OhCoBI0xubNaAdWWP3Bf+IfH824tPhuDInzMqk/kJqKgPBLVIHXsg5HDyLva6Dp3nOzOXeBCzYt5Kq09KiZkXgO2wlLxHk3CLWxP2gwohYfzU+JCY5qoHgRYiuPwlH0F9ad/mMxze2W03XXCaAA7+S9cXRc/BN5DmV4tqVhsvM6SmUXAP3EkXgaNwcgdDVwjvtZ4YQJMmhxYH5EwE+xJFFEUiuPcB5EMig8BMu6aG1kYE99yTJg1AXXUzwAXPesr6N7E7v2eUEDyUvZJ8McDcHW4E5wTYb/P3CIcvhAf9ZfbXHlDfl1eottLP7yRJj1j1TDFgYZETDGOMEndplM6zxZb8kHtRoz2zOVN0aH2JyH3dqVeRwTCxrGNWA1pep5kq0tWoKT+NhgRyLcRHF4Ekeh6CQkNZvzo5nDf3Sp6wp4cboQX2rf4eisL7OFYPthv4IK2/zh0Gyc=
+x-microsoft-antispam-message-info: 16+7jK8rRpikV5Q693JpEKSkH0aLLRtMNts2hfskzaV02h2EJO1zhcXU8s1P0v8zVIdKt7qD2Zi1XBKNPJXKfUnBu7KktsmHz61y4ZCAF1S5grBfwqG6FWsAa4GJZjecXrwA4D61GcJSrZwigBbdh1v3ndCzTUJL3S8imbCom5lsUQhKCJDuHdNiXwqgaIPxJZhohJPrbL0cZ20d6cP9cjEvhX5axfZxKFa3v+nCYY6/cXiNLKfCW+Dd56NF4viCrkgDToZlKud61jDfiKrVPI2QlX9uzwtBrIH2kTMI5ayCH2KcVef6fh5SmrL+JmhxDSL7QqvPd+qQXXXm9zNL23LmpjdJosg/Mf9aPHItx78DUrlcS8YtwJ5Kfw3UWa6qc1gB6PDIkSmmWs2/4EuVQK9AGjnMT1tzcK3DHVMFAVZV6Dyv+g5KCWlwyCXLj1HxpPBT/b93flpk3sFG8Y9VZ0n5js5/JojadGWhengNo3gV69GgQa1p6mCTuDe6q6IBHfx7QcyZZ//zig2xijr0Xfrk/Jrd947WVCm4BH1IbHyyluGNEX9qr7CiLZDn0PqIArugA5855vIkbH7CliQZtmTfgw44CNV+ARHOo5vvtL0P/3ziEdyzFaThpUgwglG5TSa5LFWDzFGD+rr9dveuoBmt6s2Cms9Q+/20aMtF961VqwAupvPlIL3SATNB/MK03Dfrz03tz4scaOuZiDwIUqINBv+hu7qAT6kJs4D4dhWZJKdOmH6YassceG/cpCK8
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Hkx5M60LwSxSY485qCqwRi8MwcHcxbVH++J3lXqTzkoaV+V9i0GQe04yp+?=
- =?iso-8859-1?Q?RLP5b0+TidI5UCYZRtfDGFU7sbVInBSdynjRA9ql3bhL6ffwvlUXb0BW0K?=
- =?iso-8859-1?Q?wmEgCt3af4AahATBx0KYywh9s3uud2gmISgxwJ8PPdUUBd/AU1PdufqhTi?=
- =?iso-8859-1?Q?ezkqIptbMLmPuSCu1gxHIVPdCamFM3jt6Oi2DhrKiIk8mO3A2C7ixXRf6J?=
- =?iso-8859-1?Q?SkjP8ztL+RT6hOJLuEpza0a+4QM7yX3VzPZsYi/GBcBOZp59gOYeFHscPs?=
- =?iso-8859-1?Q?QqPI288WT8jUlIaF1CzXxgIADNcUuCx201qFaj2FrL6rby1iTkdQV2SJqA?=
- =?iso-8859-1?Q?Nt3BTIuGPG28Ei8IasM8hbrgTKCQK5HyLUJU0ImythPbaRTgwaaj7jj3ZI?=
- =?iso-8859-1?Q?Ifh+ZC0j0LohVryK25uKgg5KQHmh8BCjaa5Ohx9gMGK2LRRRYdwJxqcm+2?=
- =?iso-8859-1?Q?N0JX6OPvR99TPMrR4RqtWlzHADuY7SmFp8p7ULFp9dJ/4xafOMLBwHqd46?=
- =?iso-8859-1?Q?PYNvoeLJUb7R9w1Y0Lv8O64BXipPz22EFqhq4nOxTj6tEkxU2ZtzbQD7zf?=
- =?iso-8859-1?Q?YRc+DIZAl6vIVabU8Q6eVUywfwTzoQ9wmBR3feRTmH7ZBFBt+CgDrDydoJ?=
- =?iso-8859-1?Q?MABSxac9Ge851ycy2LYPxbZ8OIofXmJHx+n+fQ5PfPVFW4vflp8iwPifwx?=
- =?iso-8859-1?Q?iSR1lroFExrOvAw3P3Mt+p1ZPFmUIpoGgwnxmH4X5PP9Ta866UCE3n/9y/?=
- =?iso-8859-1?Q?hnHha+ZV7Hz7AH85qnweZpioGbSb2RSkwh/pbHV2QINvPIXitLGXpQHcms?=
- =?iso-8859-1?Q?84nAmYJWwYq584npL+F/418xDuUh4iw3nvPvDhAW4E3smkOr6X5LzSm706?=
- =?iso-8859-1?Q?326bM/pit5coveEn134StuUuxrJdWV5//vm9ior1iwkIlz5ZVxzm1Kn9zK?=
- =?iso-8859-1?Q?UGVSNOB2KTv/orcoBUKEHJBI0D8Ip9LzYRjnWxvl33tYF566A3IjchPvOy?=
- =?iso-8859-1?Q?CTiXKK5KD8O2oXqWUlBXOlBRRRjdCoGO42zJPc+5aRvXFlQMOiMIfZW4iJ?=
- =?iso-8859-1?Q?zWvGWruz4AOAiMPIg+dYATz98m4T2nU+8enc64UY5fbKIG4LUy2ky0AMdb?=
- =?iso-8859-1?Q?jzX63eTGmJEA3APoSWrAFVWFAFTbclxGwrLUwGc1SezSEMDP59JPVXKDIH?=
- =?iso-8859-1?Q?4wNOQIXyAY6pXZngaSk3AlTdEKy7jy1iHCLeMlFUWYHMEJvn1vOUq0A4O3?=
- =?iso-8859-1?Q?UjixWTkIB7YdLxAN2tqGEvtNJkcwnEJs7NPzHLjKVL8tTpHefUgxYfKyk2?=
- =?iso-8859-1?Q?RefZcYxs3snA64wh4+d2Tw0HgJhsT6pKcaqDRaBt2+oocBkcrKY2h9iEXm?=
- =?iso-8859-1?Q?BYcM/LNbE4fgMz9w/dOwxFUOsK4qsvj+TnCNy/dyG94um/VoXA+xZ+KN5j?=
- =?iso-8859-1?Q?gYMeaR1wdDhfnAw8qF0zyORrWeY0zcIuiTFzJEQAdm0fiUxbiRByk3H/sS?=
- =?iso-8859-1?Q?4fvG9Fk3CZSqAeEcu2p8nevdOi0gPUGG/kpcPwliEznMfjLoLQvUj1RBqG?=
- =?iso-8859-1?Q?TtsGOrPVAgrYxo6D2hlQCQLFhZTFvP8DN2Qn97BHqYp0L12fvQuJkQxkMV?=
- =?iso-8859-1?Q?AvK+KVRd/j6TAuiq7j4eS5axSljx4pw24FASphZKv0rebCzOSYF+zCV37k?=
- =?iso-8859-1?Q?bo5dwgwBSo0YgJjBzLW6FHQSqRU8L0XZ7ihpZP8r1c0vmz0Ywfj088tMfa?=
- =?iso-8859-1?Q?PeBSsso947IHpNpFyN3jNyTFvp4yFZfmmtNESEZjdz2T5TBlQ3Mjo22BLt?=
- =?iso-8859-1?Q?sdGhesgo6A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?CDKoQ/szIr8f7S2dJA7mOsR25kXVXki2oTWaEvX1aL2hzepg9XyE6Btk7G?=
+ =?iso-8859-1?Q?gvjj/Au/63oyZxbxGcYpCk7zNI8PLWr3o0oe/20oZQ1OiUkcud6nTDUizk?=
+ =?iso-8859-1?Q?4GhtqgbMNFRg6MWS/DNtzOhLXJ7//f+9OesXMrOM7j8q3MZnYuv0wsiRxi?=
+ =?iso-8859-1?Q?S9EKBSG4SYH02xAFUnZ6QD/HPAb6jPCpMYZumggLvt/xQhWsPQj0nIkgkd?=
+ =?iso-8859-1?Q?ZHCRhs1yywt9qMNYQ6s0CuMtnQoqD4ZRHbsyJGrVCR7n8zZmNX4ou6bZ5f?=
+ =?iso-8859-1?Q?iA/mDXLeN/hnaCquKiqV+KrqXGimqyY6lVjKr9hh3wXJE9Ih7XvtVtBgSz?=
+ =?iso-8859-1?Q?HL9J4m62dY4GbUGPSb8MTitTHGCAN4ObitP97igkgMez6ObCB4fx/Um9jn?=
+ =?iso-8859-1?Q?Nvms0OONl0GevM7moJkkfKSbhxPgv0cFjX14iZAWyiR+s1KGeyOpPFy/Sp?=
+ =?iso-8859-1?Q?aw+Bhjg3q04iDKiahiJptru9X0Q4WPrZDoQmWkqVyGZB46I6ceroGmiEKm?=
+ =?iso-8859-1?Q?X6WnNLnVm1jVRIagOR+JKeccAj8mTPC/wujFudhOLTSGDK05BA6xMByi74?=
+ =?iso-8859-1?Q?oRlHyJNIb90T3GoYolq22TM7a2g9ptXq/y+vYMOjnUGruoTaSlR+DoSqsl?=
+ =?iso-8859-1?Q?XCnJP70/A0gqEwzJ+K1kexjjyZJZiRmx+4HuY03uSoemUhxzlTSqnWFxzF?=
+ =?iso-8859-1?Q?niMwi6HbSrQz0mvc48/l5UByb9/QV3ypY8Yd6f4Bfxy3i5VF+9vZACNxKd?=
+ =?iso-8859-1?Q?uWTE9fybYpd4bpYMvOY6LZrmyMZgzzQLStRL4pSlksz6VnIkrLX9nzqHTI?=
+ =?iso-8859-1?Q?TspiGbzzYGbtqA8ITMY3DznnOZeiy45Xy4/0By2LBKHS8ZppCp04uBUmgd?=
+ =?iso-8859-1?Q?xEupeDhqYhWUBfXuJLlByiXPzmgedW7vXynNL6CqDhDv7T4J/OXmHv3WEb?=
+ =?iso-8859-1?Q?dQ72sVpTZ20L1bFxNBD0eYZuWuopqepExTJR3Pz73k61owXw3MB3XgtyPn?=
+ =?iso-8859-1?Q?44MQV3SSe83mj7U0geuqxybQOQiy4FuXxebDEFcEEnj/4vO78zMKLCm0OJ?=
+ =?iso-8859-1?Q?s5CliOpavGRCTJFPAeVFG3Xo1Pn2U7bLkELYKQDcZnQgoDb6MJEbD8G+T3?=
+ =?iso-8859-1?Q?16x8ExyinsPI0I0IEEZP7WVdZkWGvpayK+dfmTQZXIYI0tTgFPT76EOItR?=
+ =?iso-8859-1?Q?wazwV8FQMJpNjtUI7kpLMVxon8Qt/ou7WVPjCVc6y2WyE2Jy2YKCIdJfyr?=
+ =?iso-8859-1?Q?FzA18wtwGZOjV2Qze3jdhYAAUDF20vyxzQVbC10L/A3rT4IlgvjFkF91dp?=
+ =?iso-8859-1?Q?DzaI2MX5KzyH4QM6SBtPBPjll7iM722xl/ImSOEGTFX7NStr7WDOrCrwZS?=
+ =?iso-8859-1?Q?7BMnVC19d02/sqQtq1g/FxSkiTKb9+U8fhM2pFZfCV+WZnmQA/aIIUrxIx?=
+ =?iso-8859-1?Q?VodpKlVAO4ZptOIhMzzlAdODu0Sgf1pZDt9qOj2Tk3E0EB0mvU+X6YNEYz?=
+ =?iso-8859-1?Q?P+7G0NZfj+1vmg2+YaAj/Ruog8h1BFR/NMQPJRYZYUpc6ME1Ufac8Vxn1A?=
+ =?iso-8859-1?Q?OEi3vOEZatkUL1GqSef13n6/7qr9/OHWFzodVanUIkzL+QnG3YYD5P1MNY?=
+ =?iso-8859-1?Q?KDlGy2XPl50vBDI3xN1bilKkF4NNxBoFou3MPfN+Wa2b25kCq76ElVAwCU?=
+ =?iso-8859-1?Q?tt+MyvYBZoL8zAcQ35Gz+vUPjB3JIfMDdk9OEiCBWE0HAr1brNmGeG/7yu?=
+ =?iso-8859-1?Q?KVbl69JqRB+UIGpylO/aW3mW6V49FeunWJOM79ZeC7uCjcayTAN3B3KCxb?=
+ =?iso-8859-1?Q?5Aq9gvXaWA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c4d061d-1a55-4e4a-f71d-08de78efa1a1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Mar 2026 06:39:33.6896 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8315fcf-a0ac-4103-7640-08de78efa531
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Mar 2026 06:39:39.7051 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eKtPHjTMvHu8nb2OKBmNGFssup8O9u84X/O2nb0SejMBa9gWWbJ2onUdhgvB3rGHjRHvqeTmFkj1Zhy8S5ps3PJNnRej0tSsRjo4b1U1DEc=
+X-MS-Exchange-CrossTenant-userprincipalname: +kL20fXkvYlqlPSe1VEVmLn/OgdzDBQjnfCJ/H73qklp2PihS6L0WLX6i2+nd3CDquVTi/UPSkuvWlQBX6W9ancj9H3hnSgTJPwkkM/673w=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5459
 Received-SPF: pass client-ip=2a01:111:f403:c405::7;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -147,47 +147,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
 ---=0A=
- tests/functional/arm/test_aspeed_ast1030.py | 12 ++++++------=0A=
- 1 file changed, 6 insertions(+), 6 deletions(-)=0A=
+ tests/functional/arm/test_aspeed_ast2600_sdk.py | 10 +++++-----=0A=
+ 1 file changed, 5 insertions(+), 5 deletions(-)=0A=
 =0A=
-diff --git a/tests/functional/arm/test_aspeed_ast1030.py b/tests/functional=
-/arm/test_aspeed_ast1030.py=0A=
-index 0defa7c38e..03fee55b5f 100755=0A=
---- a/tests/functional/arm/test_aspeed_ast1030.py=0A=
-+++ b/tests/functional/arm/test_aspeed_ast1030.py=0A=
-@@ -12,17 +12,17 @@=0A=
+diff --git a/tests/functional/arm/test_aspeed_ast2600_sdk.py b/tests/functi=
+onal/arm/test_aspeed_ast2600_sdk.py=0A=
+index 46b9f7058c..d787e90d10 100755=0A=
+--- a/tests/functional/arm/test_aspeed_ast2600_sdk.py=0A=
++++ b/tests/functional/arm/test_aspeed_ast2600_sdk.py=0A=
+@@ -14,9 +14,9 @@=0A=
  =0A=
- class AST1030Machine(AspeedTest):=0A=
+ class AST2600Machine(AspeedTest):=0A=
  =0A=
--    ASSET_ZEPHYR_3_05 =3D Asset(=0A=
-+    ASSET_ZEPHYR_3_06 =3D Asset(=0A=
-         ('https://github.com/AspeedTech-BMC'=0A=
--         '/zephyr/releases/download/v00.03.05/ast1030-evb-demo.zip'),=0A=
--         '057528d343490b1fbb5a721e91084b4f04fec60dc114bd65e724554f9c217f4b=
-')=0A=
-+         '/zephyr/releases/download/v00.03.06/ast1030-evb-demo.zip'),=0A=
-+         '056f37fcd9f165308cedca3a08f2bed37ed40c0a1402c4fa515613b80a369f38=
-')=0A=
+-    ASSET_SDK_V1100_AST2600 =3D Asset(=0A=
+-        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.0=
+0/ast2600-default-obmc.tar.gz',=0A=
+-        '64d8926a7d01b649168be96c986603b5690f06391286c438a3a772c8c7039e93'=
+)=0A=
++    ASSET_SDK_V1101_AST2600 =3D Asset(=0A=
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v11.0=
+1/ast2600-default-image.tar.gz',=0A=
++        '3c5b4d4ccf27b0d208a073f98426db54cd751b96143180cd15df1a83978f832c'=
+)=0A=
  =0A=
--    def test_arm_ast1030_zephyros_3_05(self):=0A=
-+    def test_arm_ast1030_zephyros_3_06(self):=0A=
-         self.set_machine('ast1030-evb')=0A=
+     def do_ast2600_pcie_test(self):=0A=
+         exec_command_and_wait_for_pattern(self,=0A=
+@@ -44,7 +44,7 @@ def test_arm_ast2600_evb_sdk(self):=0A=
+         self.set_machine('ast2600-evb')=0A=
+         self.require_netdev('user')=0A=
  =0A=
-         kernel_name =3D "ast1030-evb-demo/zephyr.elf"=0A=
-         kernel_file =3D self.archive_extract(=0A=
--            self.ASSET_ZEPHYR_3_05, member=3Dkernel_name)=0A=
-+            self.ASSET_ZEPHYR_3_06, member=3Dkernel_name)=0A=
+-        self.archive_extract(self.ASSET_SDK_V1100_AST2600)=0A=
++        self.archive_extract(self.ASSET_SDK_V1101_AST2600)=0A=
  =0A=
-         self.vm.set_console()=0A=
-         self.vm.add_args('-kernel', kernel_file, '-nographic')=0A=
-@@ -72,7 +72,7 @@ def test_arm_ast1030_otp_blockdev_device(self):=0A=
-         self.vm.set_machine("ast1030-evb")=0A=
+         self.vm.add_args('-device',=0A=
+             'tmp105,bus=3Daspeed.i2c.bus.5,address=3D0x4d,id=3Dtmp-test')=
+=0A=
+@@ -55,7 +55,7 @@ def test_arm_ast2600_evb_sdk(self):=0A=
+         self.vm.add_args('-device',=0A=
+             'mock-i3c-target,bus=3Ddw.i3c.5,pid=3D0xab9078563412')=0A=
+         self.do_test_arm_aspeed_sdk_start(=0A=
+-            self.scratch_file("ast2600-default", "image-bmc"))=0A=
++            self.scratch_file("ast2600-default-image", "image-bmc"))=0A=
  =0A=
-         kernel_name =3D "ast1030-evb-demo/zephyr.elf"=0A=
--        kernel_file =3D self.archive_extract(self.ASSET_ZEPHYR_3_05,=0A=
-+        kernel_file =3D self.archive_extract(self.ASSET_ZEPHYR_3_06,=0A=
-                                            member=3Dkernel_name)=0A=
-         otp_img =3D self.generate_otpmem_image()=0A=
+         self.wait_for_console_pattern('ast2600-default login:')=0A=
  =0A=
 -- =0A=
 2.43.0=0A=
