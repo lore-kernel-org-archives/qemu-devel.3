@@ -4,75 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45290EC1454
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF157EC1454
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxQJz-0001gu-Ea; Tue, 03 Mar 2026 09:02:05 -0500
+	id 1vxQMc-0002ig-FP; Tue, 03 Mar 2026 09:04:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vxQJG-0001e2-Ia
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:01:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vxQMR-0002i5-UB
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:04:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vxQJC-0006sc-Cc
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:01:14 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vxQMP-0007Sj-Mm
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:04:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772546468;
+ s=mimecast20190719; t=1772546668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ocKWBVrFMFsX5PqPkynIrsMVJWrJy74cQL6Eh5x/eTU=;
- b=MB+70Yo853FbmQRYoUq08KM7raVwpQe1TC4kN7SqnDNIJvUUylNP+ciiHnTJGChZuw77WO
- p3nkwZb8TujHHY4E2lacVwrjNhZC6SHVm6zP9MxRD5aTLRVc6bFp0smAvN6tdgSZgQYMNa
- lf35gisoMM5GWfWYEgR4HfgSc80yqlA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-Y50mUOKINse3lHA6E7RU0w-1; Tue,
- 03 Mar 2026 09:01:04 -0500
-X-MC-Unique: Y50mUOKINse3lHA6E7RU0w-1
-X-Mimecast-MFC-AGG-ID: Y50mUOKINse3lHA6E7RU0w_1772546463
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 642861956053; Tue,  3 Mar 2026 14:01:03 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 55A0530001BF; Tue,  3 Mar 2026 14:01:01 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, anisinha@redhat.com, philmd@linaro.org, kraxel@redhat.com,
- thuth@redhat.com
-Subject: [PATCH 17/16] hw/southbridge/ich9: Remove
- ICH9_LPC_SMI_F_BROADCAST_BIT definition
-Date: Tue,  3 Mar 2026 15:00:58 +0100
-Message-ID: <20260303140058.2423099-1-imammedo@redhat.com>
-In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
-References: <20260225092024.794595-1-thuth@redhat.com>
+ bh=tcu2PNK+Lk0rVjY7kfUG4eDcoEc6YZs0BkB8WpsrkMA=;
+ b=AG9fiK/pyTs2JQJ6t7/mojExnnYafuFMEXd5OqP69iiOWSfoPcBNdBy5K4ccwEgDCIisp5
+ QlX3lrmUqQ7pOKmpj0xPq6U87uszUI58RCOW7TAVvPIgywF9PwVH+EDvt9CpJAdGwhlxP7
+ +I6aP//EFPNjf46gTxTwf2EniR2W32w=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-210-YbCFadEkP32Op8DzvLajGw-1; Tue, 03 Mar 2026 09:04:27 -0500
+X-MC-Unique: YbCFadEkP32Op8DzvLajGw-1
+X-Mimecast-MFC-AGG-ID: YbCFadEkP32Op8DzvLajGw_1772546666
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-483786a09b1so55323835e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 06:04:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772546666; cv=none;
+ d=google.com; s=arc-20240605;
+ b=aGCqcks0HYQ7EFOqf8nXkkBZuGxlksBViubbckzY02tnPuD+sFfejCnir5gjE5g5nH
+ 4iTcZbZLsBEZ+K45/kgEQEu7rGHluRmvwE9pRRx1LSWR3PcRWkCULhj7CnRs89oZ6ED0
+ 3DN4hCJb53iFG0gxMC4rR8rRXdYt+EgnoJR3PRZDHkjHDWphXmY44xxhDi4MkEizGZri
+ J7XVmKn0zZYjpWC0Ivyt4wy30dC+Gq/Y29TN55BPYTBjs3dbt6wReHhwxL/nBHz+DiF+
+ 01cfsAuWBbwlesYRfk7ts/sSMlCdArEK6a7H1h5xLYRw6kY15021MsAi4mIuWG/XDrxB
+ Bv2w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tcu2PNK+Lk0rVjY7kfUG4eDcoEc6YZs0BkB8WpsrkMA=;
+ fh=C3e0+sZuoRkzqPJo5N9PiN2hoTQOKo88PWg0Mvv5bT0=;
+ b=ZcQYpq9KaTacx3E4ySF//3Aj4i/oNDpiI1VJqexIyjqILj651sqNhBKDZjq3fDRPE9
+ FQYBybuDv5QxqrsSfvlS2XZriyBfhRLgeENvB1fZ64DRwBwM9GCJbZN78Z5Bn7+pPm8b
+ OUiZ2D+fVNlF9jVtl60gvrr6yhluBSLhSRWXR8XXxYveEGLECbjEP0dyY/x8aCcK1XTn
+ 12jT0EJBwb5K8ntQ99kcWlL067BbpcK7w0oAqWTwgZ3KUQ+gn/vYHma4UoeCe2fG6bvR
+ YfFEX8HTpNqqNbXaNpKuc8kgtgLUtK817QwbTgIP5lhinJHOpS103EW1pjtp6wrCpvwb
+ OoAg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772546666; x=1773151466; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tcu2PNK+Lk0rVjY7kfUG4eDcoEc6YZs0BkB8WpsrkMA=;
+ b=NP1qzgIdS3C0defp8GG9f8tyh2zaBdt/bjZ09ot5uNOpURvVvfTF5hgAHv9sIeilnz
+ C10laX7v4bu0nAcHGK8LHVR/cb/wSBYaJa2OMnWBoFVfBgsRqaFb+unko5dZZWDjxK23
+ bW1a4VwlZN9zSRO4kYmjyMN7hLWryD9zPlSq++2WVixWQxQltjcp7f9QUFnsL4F1oh0G
+ B1ulkXakirjsJ6DJ8ZQWbSW3JMihSSdYix/8qfequ//om8wCIH2hjn0aPSuwL9C7zva2
+ 1ezkaFdN0LLPILtWxpHk3yPdzBP6m1AzGfbJUAasFgMoiB/CQSLGE50AkZQ+Zl+p3doH
+ NryA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772546666; x=1773151466;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tcu2PNK+Lk0rVjY7kfUG4eDcoEc6YZs0BkB8WpsrkMA=;
+ b=d0wReRGR3uVwbGSPsQtp98ZO0FGNCMejJ6tsmU1SPLHxpk3X5hLE1K1GUZ3s8Y/lTD
+ IR4vMejX9y67AvE6F2v8HsGIzZkKG+tCo3g6DJ5hwPVDlDsmQNN1HrKcipGXHOoieZUm
+ klhII6LAh8BkBXGaWytSZwHY3QsezZHcvGaJZEJvOTzKZGJX5hKbdnHj5k0L+KGKrSrT
+ 8h5Q3c6M/fLmFxWKVrnl4wB7HsEyLL9eaZCuGIdBsKDNOFbUgy6DLYy8cr7AwQEMAwiC
+ vOgmUIdww/sQXAWSDwr+fqk9nRBMoGxYO+b0RZDaKvR6wtvhxlwD1X1ops2cxFa/Mmd5
+ rXdg==
+X-Gm-Message-State: AOJu0YwisTs0LWE2+Alrjf4jqNpdJHOK79S+J+KqlsiUnPmrvny4QHSi
+ d3vETzdYupvOqZexKoUv+at1YgK+WdyiXM3oJfazo0RWKYdnwXT2U/UpbhmS1NWqyLQqwN+hUQp
+ r8t98QR04yWslrBIPhYNxZjW/QYpv/iQcEswJIWbt3sDQfsCSSpBDiBF/WAOrTbWLxiArau1RzZ
+ ovScATHQfwi0zZ5F9Xii7i7AOhw3tPMvo=
+X-Gm-Gg: ATEYQzw01kPi5wDAsO6kvjm5sdI6SAmFXmzyz8M+GjKZjBsqV+YN+Je9/aLGGHvkQC9
+ lwrqqPsJKTsyWa6ATC0wWOGWBjSP0piFxGUdC5A0IBHUupB7aJtAjrqDwY/iYwLV50uQLVZQv7U
+ eQLkz7rr5z2c5v1pKMr3R5Ax8QMeo1inWVPBEDVcwwZPRugJiEvHenlmzucuXSfsMUnTxSDMmZa
+ 7Ok0uJs8MGClN88LkPEJtfYclYvK7i+h8TwWgrra6IQ80mM9Ocw5smWMHb2kHGHxYIQwOhaZeB8
+ O30SZuQ=
+X-Received: by 2002:a05:600c:630d:b0:483:7903:c3b1 with SMTP id
+ 5b1f17b1804b1-483c9bedb42mr233631445e9.20.1772546666035; 
+ Tue, 03 Mar 2026 06:04:26 -0800 (PST)
+X-Received: by 2002:a05:600c:630d:b0:483:7903:c3b1 with SMTP id
+ 5b1f17b1804b1-483c9bedb42mr233630775e9.20.1772546665497; Tue, 03 Mar 2026
+ 06:04:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+References: <20260211155410.203883-1-magnuskulke@linux.microsoft.com>
+ <aa442c69-5dd5-4a3a-b42a-299a30aab881@redhat.com>
+ <aabik4j+PseewLz3@example.com>
+In-Reply-To: <aabik4j+PseewLz3@example.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 3 Mar 2026 15:04:14 +0100
+X-Gm-Features: AaiRm50WUnULfFG3zK45xW8mCYHgFTB48IrWas4wE58Migc6h24XI2Cr55nsnpc
+Message-ID: <CABgObfbvpcAL9a6c1vKtGRdSyjqXOV13M6zyoH=--fbAA1nLAA@mail.gmail.com>
+Subject: Re: [PATCH 00/10] Support QEMU cpu models in MSHV accelerator
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <liuwe@microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>, 
+ Magnus Kulke <magnuskulke@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,104 +140,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Tue, Mar 3, 2026 at 2:31=E2=80=AFPM Magnus Kulke
+<magnuskulke@linux.microsoft.com> wrote:
+>
+> On Mon, Mar 02, 2026 at 07:34:21PM +0100, Paolo Bonzini wrote:
+> > Hi Magnus,
+> >
+> > I went back to reviewing this series.
+> >
+> > More or less, using "-cpu host" should work because MSHV already runs i=
+n a
+> > partition.  Therefore, it should be safe to assume that whatever bits w=
+ere
+> > allowed in the current partition's CPUID will also be allowed in the ne=
+sted
+> > guest.
+> >
+> > However, you still need to mask the features corresponding to MSRs that=
+ you
+> > do not save/restore; this includes for example TSC deadline timer, AMX
+> > (XFD), FRED, PMU, UMWAIT are the first few that came to mind.  Or
+> > alternatively, just add them to get/put_msrs.
+> >
+>
+> Hey Paolo,
+>
+> thanks for taking a look at this. I am currently staging follow up
+> patch-sets in which the MSR handling is reworked as part of the live
+> migration support.
 
-v2:
-   - do not check for SMI features if hotplug happens when
-     SMI is not enabled. (matters for qtest and possibly seabios)
-   - removing property also removes default ICH9_LPC_SMI_F_BROADCAST_BIT
-     put default back in place only set it initfn() instead
+Ok, let's start from there so that we don't have to think about
+filtering out features because they're not migrated.
 
-The ICH9_LPC_SMI_F_BROADCAST_BIT feature bit was only set
-in the pc_compat_2_8[] array, via the 'x-smi-broadcast=off'
-property. We removed all machines using that array, lets remove
-that property and all the code around it.
+Thanks for the extra information, I'll study the rust-vmm docs.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
- hw/acpi/ich9.c    |  4 ++--
- hw/isa/lpc_ich9.c | 23 ++++-------------------
- 2 files changed, 6 insertions(+), 21 deletions(-)
+> in the future I think we want to have a MSHV_GET_SUPPORTED_MSRS ioctl
+> that we can query, similar to what's available for KVM.
 
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index bbb1bd60a2..87afe86bcc 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -432,7 +432,7 @@ void ich9_pm_device_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
-     if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         uint64_t negotiated = lpc->smi_negotiated_features;
- 
--        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
-+        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN &&
-             !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
-             error_setg(errp, "cpu hotplug with SMI wasn't enabled by firmware");
-             error_append_hint(errp, "update machine type to newer than 5.1 "
-@@ -476,7 +476,7 @@ void ich9_pm_device_unplug_request_cb(HotplugHandler *hotplug_dev,
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-         uint64_t negotiated = lpc->smi_negotiated_features;
- 
--        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
-+        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN &&
-             !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT))) {
-             error_setg(errp, "cpu hot-unplug with SMI wasn't enabled "
-                              "by firmware");
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 51dc680029..04169ffa24 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -404,15 +404,6 @@ static void smi_features_ok_callback(void *opaque)
-     guest_cpu_hotplug_features = guest_features &
-                                  (BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT) |
-                                   BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
--    if (!(guest_features & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT)) &&
--        guest_cpu_hotplug_features) {
--        /*
--         * cpu hot-[un]plug with SMI requires SMI broadcast,
--         * leave @features_ok at zero
--         */
--        return;
--    }
--
-     if (guest_cpu_hotplug_features ==
-         BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT)) {
-         /* cpu hot-unplug is unsupported without cpu-hotplug */
-@@ -474,14 +465,9 @@ static void ich9_apm_ctrl_changed(uint32_t val, void *arg)
- 
-     /* SMI_EN = PMBASE + 30. SMI control and enable register */
-     if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
--        if (lpc->smi_negotiated_features &
--            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
--            CPUState *cs;
--            CPU_FOREACH(cs) {
--                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
--            }
--        } else {
--            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-+        CPUState *cs;
-+        CPU_FOREACH(cs) {
-+            cpu_interrupt(cs, CPU_INTERRUPT_SMI);
-         }
-     }
- }
-@@ -685,6 +671,7 @@ static void ich9_lpc_initfn(Object *obj)
- 
-     static const uint8_t acpi_enable_cmd = ICH9_APM_ACPI_ENABLE;
-     static const uint8_t acpi_disable_cmd = ICH9_APM_ACPI_DISABLE;
-+    lpc->smi_host_features = BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT);
- 
-     object_initialize_child(obj, "rtc", &lpc->rtc, TYPE_MC146818_RTC);
- 
-@@ -834,8 +821,6 @@ static const Property ich9_lpc_properties[] = {
-     DEFINE_PROP_BOOL("noreboot", ICH9LPCState, pin_strap.spkr_hi, false),
-     DEFINE_PROP_BOOL("smm-compat", ICH9LPCState, pm.smm_compat, false),
-     DEFINE_PROP_BOOL("smm-enabled", ICH9LPCState, pm.smm_enabled, false),
--    DEFINE_PROP_BIT64("x-smi-broadcast", ICH9LPCState, smi_host_features,
--                      ICH9_LPC_SMI_F_BROADCAST_BIT, true),
-     DEFINE_PROP_BIT64("x-smi-cpu-hotplug", ICH9LPCState, smi_host_features,
-                       ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
-     DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_features,
--- 
-2.47.3
+That may not be needed if we can rely on the parent partition's CPUID
+(I changed my mind and I think we can, because QEMU already filters
+out CPUID features it doesn't know about).
+
+We may want to share the knowledge of MSRs between KVM and MSHV, but
+that's a different story.
+
+Paolo
+
+> There are "hv_partition_processor_features" that we query from the
+> hypervisor to filter out MSRs that are not available for a given
+> partition, e.g.
+>
+>                 uint64_t tsc_adjust_support:1;
+>
+> > Later on, we probably want to share some of the code to handle MSRs bet=
+ween
+> > Hyper-V and KVM.  Please add some comments about the hypercalls, since =
+they
+> > are poorly documented, explaining how to find out which MSRs are suppor=
+ted
+> > by the hypervisor.
+> >
+>
+> If the hypercalls are not documented, we probably want to fix it either
+> in the rust-vmm/mshv create (which at the moment provides authorative
+> headers (until we have moved everything to the mshv uapi headers), but
+> i'll double check.
+>
+> > With respect to live migration, here are a few bits of states that shou=
+ld be
+> > migrated:
+> >
+> > - the FPU registers (MshvFPU is dead code and can be removed; I missed =
+it
+> > during my initial review).
+>
+> yup, the FPU registers handling has also been reworked a bit to
+> accomodate XSAVE migration.
+>
+> >
+> > - the PDPTRs.  That is probably okay (because you never set nor read
+> > env->pdptrs_valid) but please check if Hyper-V supports reading them.
+> >
+>
+> I'll try to find that out. Haven't stumbled over this so far, but I
+> understand it's relevant for 32bit PAE guest, which we probably haven't
+> tested thoroughly yet.
+>
+> > - KVM also has support for migrating in the middle of an exception bein=
+g
+> > delivered (for example if an EPT violation happens due to a write to th=
+e
+> > stack); this is handled with fields such as these:
+> >
+> >         VMSTATE_UINT8(env.exception_pending, X86CPU),
+> >         VMSTATE_UINT8(env.exception_injected, X86CPU),
+> >         VMSTATE_UINT8(env.exception_has_payload, X86CPU),
+> >         VMSTATE_UINT64(env.exception_payload, X86CPU),
+> >         VMSTATE_INT32(env.exception_nr, X86CPU),
+> >         VMSTATE_INT32(env.interrupt_injected, X86CPU),
+> >         VMSTATE_UINT8(env.soft_interrupt, X86CPU),
+> >         VMSTATE_UINT8(env.nmi_injected, X86CPU),
+> >         VMSTATE_UINT8(env.nmi_pending, X86CPU),
+> >
+> > please check how Hyper-V handles this situation so that it can be
+> > implemented in QEMU as well.
+> >
+>
+> Those are covered in MSHV's "vCPU Events", I think they map quite
+> cleanly to the QEMU representation:
+>
+> https://docs.rs/mshv-bindings/0.6.7/src/mshv_bindings/x86_64/regs.rs.html=
+#404
+>
+> thanks,
+>
+> magnus
+>
 
 
