@@ -4,112 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F371EC1430
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B52FEC1431
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxO2p-0002Lj-Dr; Tue, 03 Mar 2026 06:36:07 -0500
+	id 1vxO4h-00034F-BE; Tue, 03 Mar 2026 06:38:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxO2i-0002LJ-EM
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:36:00 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxO2e-0000RE-VZ
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:36:00 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso6723246d50.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:35:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772537756; cv=none;
- d=google.com; s=arc-20240605;
- b=AxiJxSUJmd1sGRKUXutXXJ/Dz1SnEqZR5FtM9/9NxrpMnwZdmxtAkVCXzxk47+IKRY
- 3Prjrd0IJyM3WotADhrngMmjY13C0B118uRTQd5WN6MHZM/tl4ztovyOTJwNQgwf7FDE
- q2Nfu9BGst+deG0PYHVRx7CU5+b8MCVERH2ZXOIooXM7zsm6QHlxZ5KAfqeXi4xaXwjC
- ZBc8qwyILwVC9nHaogVkAIiD52GqOQul2aUxVmctUB69YqpfvssEiHZOnhLW7EkPGzKT
- h91RVM+tWkP6CdCTuYAskFOwRSLlQrjfQXi03AgkrTYZeqWrhoOIzfmwH6XazR9u2oBe
- AYOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jNYUG423/WJwFfBAvxtbOTUONG2D9Kt6+fOOWN5TPU8=;
- fh=e8lPG31nRq0pa29+ILZPVpv23pShvDc8zQNyomzI6HQ=;
- b=cCyaN1qblE2pJ76NGyZwDkGRadW9eAGB6K5NqsctZznEsIICr2lKtPxTCARDPFylVG
- bOxR+4XjekyYQMvfdJANtHRTjaYYmpxJ6ySTYGDD1Ey8Zo7ZYSyCPMtL53EoMPsEwbIN
- CX6Ksh/8GWa1IkZRGI0d6zvwxsKp2OggfcC7iDWnb3vwFv/gu8eWcFrTsJD2Y2rpcq96
- X5/BNWCwbuHKlqnxdtFvDyusKx1wRDpp9rvGWrCoH2XB7qZyRYQQbXBHEG1bjVgMTW7n
- m2Xb/4ZzigF0zSnhweu7iHDOLjat9qvbhHAzOc8Nojtpr4dqOK8UNMy2zRUsLUJy0IzH
- 8ZnQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772537756; x=1773142556; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jNYUG423/WJwFfBAvxtbOTUONG2D9Kt6+fOOWN5TPU8=;
- b=oNjCIEJw/kWLMAkQPoG2UYcOw6vcTSBtBFznPc4eq68HfdWqlziQeauEkFnqj9S5+S
- mQE1YGj4684Fccvo8qP66oZMe6mTC8GupdQUitKLDYQ/w/daSsZQLugXnriqY9YRrj9G
- 71JUZz7PeOe81NkhyJRv6Z9VwznjnW14BowkEJAjUmwAElDojNUAdHAalj7BarlAWYo6
- 2b2mUukcaIU7XuqR+d5N4vAxTxGonvsN/kAM5KSuTd53bJUNfjG8fr/6vK6iZPDMzW5P
- KbSRs/ivnmtbAdV0A6jNxXNGHPSGJue/KnEfGZC0EnuT21i7FHKxJqgLPPf1wVOZPczR
- T6zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772537756; x=1773142556;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jNYUG423/WJwFfBAvxtbOTUONG2D9Kt6+fOOWN5TPU8=;
- b=f1Mk2HD8XqqpFt5TwxgYGouaaIPeV9mF//GpLEASmLCB2TnTy0Q7i/yLrwbsMKAEl5
- b1V9GPPqJaLQl6Y3FZLcdbdbPScLFDnDLfq8IGO90fe2zDfS1TuriFIDaBHthXV1RzGE
- oaawRODOqNfzzPv/SZz8So29SmKhSOo8vyJcveDinqcPQ1SuVtS0Hrk/AF2pvMSplGjN
- 6qYlYomGkPAQRmTT7JcHE3+OGNrzrdH95Q+0mwHSC0wLp3a2FUuNkZb39KdUPUjhSyll
- vpEOCFvS3mXvl9qEJTiRLEkMvPkSfhb/yxeax955XrvUc6baCkgT6qxpeKVxwAW4XylV
- AASw==
-X-Gm-Message-State: AOJu0Yy5g93bGbz0glv/+OUaCnxqaLK/c2Y8+JijxOFMhX1BYEQXfarp
- GknREjFLF0RZTyqZO+q8pOx2X9nbFgbRPcA6pTJWGz/2k8bPVDaclucIxA6rq76MkDUC30AONU2
- pfzjqPzVBBxt6bscT3yqNdHtzKAublppAiADmcdsRmw==
-X-Gm-Gg: ATEYQzw4ujsNrDIuw66xC1MvLAN0hzYQbTrVIjiXtHLkAdlY2VFXkX/0dKzrtoRIUPS
- Ct4y5R4LY6fTaeoWaqgIN1e26wB8orudkUavFz3kMs/rchwlDnyTwmhimGrnSFOHOzLiovD0++t
- ti5Ph1uB3QZIwMno7pDsdPb5u+V5z6l/cfT9uR/vhpxxh5dwEsu75PFVRkXGJEUDXf1i3RQ70Y6
- 5h8Zpqo/wQQxl0c3NeTkpf6hZOm4BZVCNZ8DgkbAF3L0RtCymEzGY7/e+1EEh8Gg58n/MTsRczj
- rVL6PVWiIH8IigMY59jpW6w9mdJvv4p7reimLsJwrdcPSLZ85CI6crxbsx+NJ8uB0WQ=
-X-Received: by 2002:a05:690e:130d:b0:63f:b6c0:23f8 with SMTP id
- 956f58d0204a3-64cedce4f47mr1044985d50.33.1772537755702; Tue, 03 Mar 2026
- 03:35:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxO4d-00033k-M7
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:37:59 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxO4b-0000am-OE
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:37:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=+QQrrQJ3BHy9VRXmgfSlftbT+ZLLPlnPfejxYpeCOc4=; b=kO0ClAWqt66p8S0
+ WcnGFIOlVoumFld2dxP+5qVxNQRO/09bOj2guct3InhMQh2jiq/c01OoCRzJRVdRES+bCXBno3Vu3
+ mSI6G9htdzAgQZNuF3NIhfhlE6Dmr8SSF62uB/cWIVviD790+bf6YfwkGv2fHx0NLv9X1wNd3nNCb
+ DA=;
+Date: Tue, 3 Mar 2026 12:41:31 +0100
+To: Helge Deller <deller@gmx.de>
+Cc: qemu-devel@nongnu.org, 
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v4 3/4] hppa: Get physical address space bits from
+ HPPACPUDef
+Message-ID: <aabIfQAZhxbGeXur@hive.localdomain>
+References: <20260302-hppa-c3600-v4-0-447a800da8cc@rev.ng>
+ <20260302-hppa-c3600-v4-3-447a800da8cc@rev.ng>
+ <82aa1b68-3504-4276-ba5b-862b7bcbd7bb@gmx.de>
 MIME-Version: 1.0
-References: <20260302220254.1166849-1-shentey@gmail.com>
- <20260302220254.1166849-11-shentey@gmail.com>
-In-Reply-To: <20260302220254.1166849-11-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 11:35:44 +0000
-X-Gm-Features: AaiRm53MAL6nwdFOQhIgqc9wlQyCd_q1TMPWryaEYM-utEPDBCxRiSBj8YrVuJY
-Message-ID: <CAFEAcA9beXAZHHnU-E9w3Ze1yA-8=Eq+nmjpqL3iuFHVwGk8yQ@mail.gmail.com>
-Subject: Re: [PATCH 10/12] hw/arm/aspeed_ast27x0-{ssp,tsp}: Do not access
- SerialMM internals directly
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Helge Deller <deller@gmx.de>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Troy Lee <leetroy@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <82aa1b68-3504-4276-ba5b-862b7bcbd7bb@gmx.de>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,20 +63,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Mar 2026 at 22:03, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> SerialMM inherits from SysBusDevice and exposes the memory region by
-> means of sysbus_mmio_get_region(). Use that in order to avoid accessing
-> implementation details of SerialMM.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
+On 03/03/26, Helge Deller wrote:
+> On 3/2/26 12:56, Anton Johansson wrote:
+> > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > ---
+> >   target/hppa/cpu.h        | 11 ++++++++---
+> >   hw/hppa/machine.c        |  4 ++--
+> >   hw/pci-host/astro.c      |  2 +-
+> >   target/hppa/mem_helper.c | 40 ++++++++++++----------------------------
+> >   4 files changed, 23 insertions(+), 34 deletions(-)
+> > 
+> > ...
+> > diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+> > index 9199d1e06a..4bd806a53f 100644
+> > --- a/target/hppa/mem_helper.c
+> > +++ b/target/hppa/mem_helper.c
+> > @@ -29,29 +29,12 @@
+> >   #include "hw/core/cpu.h"
+> >   #include "trace.h"
+> > -/*
+> > - * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
+> > - * machines 7300LC.  This should give 44 and 32 bits of physical address
+> > - * space respectively.
+> > - *
+> > - *   CPU model        Physical address space bits
+> > - *   PA-7000--7300LC  32
+> > - *   PA-8000--8600    40
+> > - *   PA-8700--8900    44
+> > - *
+> > - * FIXME: However, the SeaBIOS firmware that is that tested against
+> > - * uses 40-bit physical addresses, despite supposedly running a C3700
+> > - * with a PA-8700 cpu, so use 40-bits for 64-bit.
+> > - */
+> > -#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 40
+> > -#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
+> > -
+> > -hwaddr hppa_abs_to_phys_pa1x(vaddr addr)
+> > +hwaddr hppa_abs_to_phys_pa1x(CPUHPPAState *env, vaddr addr)
+> >   {
+> > -    return extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
+> > +    return extract64(addr, 0, hppa_phys_addr_bits(env));
+> >   }
+> > -hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
+> > +hwaddr hppa_abs_to_phys_pa2_w1(CPUHPPAState *env, vaddr addr)
+> >   {
+> >       /*
+> >        * Figure H-8 "62-bit Absolute Accesses when PSW W-bit is 1" describes
+> > @@ -64,11 +47,12 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
+> >        * Since the supported physical address space is below 54 bits, the
+> >        * H-8 algorithm is moot and all that is left is to truncate.
+> >        */
+> > -    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
+> > -    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
+> > +    const uint8_t pa = hppa_phys_addr_bits(env);
+> > +    g_assert(pa <= 54);
+> 
+> This g_assert() is now a runtime check which adds cycles for every hppa_abs_to_phys_pa2_w1() call,
+> while the previous QEMU_BUILD_BUG_ON() was a cheap compile-time check.
+> Can we change it, or simply drop it, because hppa_phys_addr_bits() anyways return a constant?
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Good point, I think having the sanity check somewhere still makes sense
+since we are assuming that it's less than 54.  I'll move it to the
+initialization of the CPU base class, so it's only ran once.
 
-thanks
--- PMM
+> Other than that:
+> Reviewed-by: Helge Deller <deller@gmx.de>
+
+Thanks!
 
