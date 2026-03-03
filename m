@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1316EDEBEB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D640AEDEBE5
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxVjR-0002Km-Uo; Tue, 03 Mar 2026 14:48:38 -0500
+	id 1vxVse-0003gK-Rz; Tue, 03 Mar 2026 14:58:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxVjQ-0002KK-Dq
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:48:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxVjO-000217-UN
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:48:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772567314;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Mah6Rptv9qO9EnrZrVhLS3/tVZQsJm7csPd9ev3L8Ic=;
- b=UnDaXNFqUU/b+sPguqutEknTd5g2yhz+Ao52l9IgqYnWNipHFsZqqSZWk/WKwpIllJ0X/+
- oPk9pUdfXNp3nA/hbs4YWkmbELeTpjIj5UVtiOlBHPf0jM26HZFSGUPF07Y4Xw/J9HDJ/m
- P/5WNtvSnVm7kv9n/ckCx8ID+L5Tyjc=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-Fuinq2hFOSe6zJPqD32RDA-1; Tue, 03 Mar 2026 14:48:32 -0500
-X-MC-Unique: Fuinq2hFOSe6zJPqD32RDA-1
-X-Mimecast-MFC-AGG-ID: Fuinq2hFOSe6zJPqD32RDA_1772567312
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8c71304beb4so530442885a.3
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:48:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxVsb-0003g2-AG
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:58:06 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxVsY-0005Jp-Lv
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:58:04 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-354a18c48b5so5385679a91.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:58:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772567881; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hqchd311gGZ8Xq7D5TLzRD7sd3+0/3Cydumv3JjeBxaaJMYUOSyV4kXvDJyPIyaUID
+ w4/81izaKyAj0p04SOwIR+zuzWoaS36f6C0sukc2MxokwZ4I8gpMtYFE1TiM9SYciPFO
+ C2I7z9rdfgzXWjLCPjfjmZAOZzq1SjCnacEpY88Jeg+uJSdd5eFnqYjRB/YUrqMXVzwK
+ gaoJauZkb6cc955YuROW5XC6oVWJ10hPnbqKRmshxfc3R+JG965kH/AoT5MaJoEvVmE6
+ kkfVHbcsK5g65vyK+EGwQ9YYLpdLvzYfCLI31AvQUTZIlDD+DCQGLsopmqh1FqMxH69A
+ ra+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=+UeXlceFs919Cl+1aPY5+mwZqA6oJiG6ZHFeMNQjxQE=;
+ fh=3N4YTDWV9KQk1Zfz9qwlmnoEsAk4PdvYntvEBJFMlvI=;
+ b=cd98pQDjSXKxlEuBStLhqniuP5lOaVz/B5+zGwAP9tTqsgdISyi1hm0EgZYb0xhktO
+ z9HgMOLpqDOkUik9LdH3xq+Qa+CYiOnTj8q2brYK9KT/H18ZcYf3CwXr5dHYJ4/dRDT2
+ QOmlyys4MZhXwDvzO9EBcR8XOSbzAHhF9irXivsNIa98qM849C58k+4a85gMkvfvxi6E
+ 9K0pnq/TLLBO1xV7kJKejHX9gZbKRomaBE+Yr8qp+NnlKM+ZV0+jyvmGMY0YmDM86mMD
+ bnnvviLWNZAOltp42ILv8q0gMn6JbRK9G0LiR8oAkw01A/oD8oSlVFBRMV2pD5WJYKY7
+ E6rw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772567312; x=1773172112; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Mah6Rptv9qO9EnrZrVhLS3/tVZQsJm7csPd9ev3L8Ic=;
- b=dMdDxch4PqngVCs9utuesl7pf0iB+pcXnr+Ckf+yA1/sgvoXJrH6yVCP99b+d90cvz
- Wz2UQcHA3kyxIYlRGu+1f+L9KHXphXdlXt2QpIYptARzm4XGSB2ryAbE/2p7Vsa56sVQ
- 4QNr7YbjoCtXo7U5slg8y9PVQj7h9s4CDAx4jUA5CuUbNXnqSaD+FhlS3KfiSTlxHR2i
- pAMzfN2PDdJ0z3hJktae96OtXTZdK0IDrQlaq/UeyM3bJCaZmRdDzuhRFkZvH4ou1vIP
- 5d8kn0K9YxTK/6svdUm9E9DkMvuEYmeA1zetKL0Xa7PnrPht+ccZTooDUHSDc2oJuVLd
- leHQ==
+ d=gmail.com; s=20230601; t=1772567881; x=1773172681; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+UeXlceFs919Cl+1aPY5+mwZqA6oJiG6ZHFeMNQjxQE=;
+ b=drEubjiPOriUZMPDk04Hx7YA4Uj/cCAkW3sjFuUcac05oqhYqMh1BliC8qjfDRC8Jl
+ sDAFgi1JyEvxOunT7EDm/p05g03W/FwLJ6EODlFL7PCA4TovBRYNLLYedzWLMYGAroPn
+ 4aI1Fu4BNewiSC1StgH3jGv7+3RVKkxOQ66731XuS3Veusj9VU31lVw5n1uz44EuDgNg
+ WT03Ia2xYmDAzsSElQIgqgn0NcuhluXWWZtcFfTmpIy0tT9p7iEmN0tkSDac4KyC9qZf
+ eCRiB9MUMXsnPZSlj5Z8g5VSknPP2yPk0Q74In/Ux5AmTWAjROSbUfGmQWgA0OSxccKH
+ WMsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772567312; x=1773172112;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mah6Rptv9qO9EnrZrVhLS3/tVZQsJm7csPd9ev3L8Ic=;
- b=WlaANp2zfkSE4CCrvTn8GJjwL1P2z4U2YIz1imAMmmsf6o0h7h6SBWFsxO9aEEigPP
- nt3s4cdtpAiQr2kXXhCAeNyCXOb72vIUJaofZvrgcPYyANbYL/bxXSysgYagUasECLOU
- ZlYCmc1QKNSkZkJrlaN5kUu2rijp1xCmEQ+kjdIC7/V6GtXOuBoYo1fkufU9/Gs3ifyY
- jSz7u8k35yo15Bj5QQ4NO1kktZnZvg9eA5EhTjAZPoxtpWIl42MzNCpJocb9aef4qZH0
- 86+oUnXcj3TJ2fB9Scps3EfopHFKI73iUwQRsIkQsYUGHa8GLTNnH5hS3M8R4s+t/7ag
- JKvA==
-X-Gm-Message-State: AOJu0Yzy4k4PSz+lPJbrzRHOYhyL9ufXEkiuVjiJ/CVpD+hC4SesbrAh
- Zog37pNLQuLCyeVmxFd9NLKRBT8GULvCUSgHJX9smBzxmpQL0UApzNpUB5odk3WieaFtWHJuCzV
- /9WK5tiCk3iK74+AzTMI148/DWUbiz77s8ZVyvqD9Oetro3VvhTQl05nC
-X-Gm-Gg: ATEYQzzQ2LzF91IpSVnOQXF4+HiprnVy+q6v2AFZ/+PioffBG6RzRpV4ChbgMhumnfu
- /g0U/Vbs6iTlia64/o7qMWWHG43s/uZCcSI6O9Xoir4wecwVE/De/16shyFy3p05ZqZbNUQaEs7
- BdTgeMZ/hkZpI/OJePNWueXp5ZYQ4h8Cocxv6rXAA3PgFn1a3laSx2nhLC4dZ56SvcuFDf6Nctv
- fLg0zoxHBqTEbZgy61dtH3K5VC2PWtZt0RDEB/7O7ZqMzEfBNxnHJg6e5f9xiYCgj4HPxU7GlC7
- 9kNql6lWr3FQW6+d+HPmzV72QG1YYTvjUSugZcIy9atVj0kxOPIOPQtmy3QaEX69OkZiiOMEsLe
- c7k7735jG09CPaA==
-X-Received: by 2002:a05:620a:1a22:b0:8c7:c25:9e69 with SMTP id
- af79cd13be357-8cbc8e2e9efmr2045286885a.66.1772567311969; 
- Tue, 03 Mar 2026 11:48:31 -0800 (PST)
-X-Received: by 2002:a05:620a:1a22:b0:8c7:c25:9e69 with SMTP id
- af79cd13be357-8cbc8e2e9efmr2045282785a.66.1772567311362; 
- Tue, 03 Mar 2026 11:48:31 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a0485ca0asm38444196d6.11.2026.03.03.11.48.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 11:48:31 -0800 (PST)
-Date: Tue, 3 Mar 2026 14:48:19 -0500
-From: Peter Xu <peterx@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, Ben Chaney <bchaney@akamai.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@kernel.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kvm@vger.kernel.org, Mark Kanda <mark.kanda@oracle.com>
-Subject: Re: [PATCH v3 08/15] system/memory: constify section arguments
-Message-ID: <aac7A4XbqFNmYzCT@x1.local>
-References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
- <20260226140001.3622334-9-marcandre.lureau@redhat.com>
+ d=1e100.net; s=20230601; t=1772567881; x=1773172681;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+UeXlceFs919Cl+1aPY5+mwZqA6oJiG6ZHFeMNQjxQE=;
+ b=bMqDVwptMYtlmKdCtPCBNPgdUYN7CtpqTlzuQ/dDMoGvfmTAVTO2diWx1uuDvwkg8C
+ kuPOb0HHaOVydagYL/gUf7JsI02Aj940wjlvvnwnQ57U/r20r1ZO6w2PCb5KM5Z+b4di
+ PRAPOLTLgLpjOq76T/cw7HpMqY9dEa6yYtk1dav7t0x+z1XMIwiShcMXAczAFiI1z70S
+ 3HyJ+/+5kdn4eg0ySh/5VSdaMN7M0Tetq+J5vYaIUgjXGnfa1ns7+npHmuBlONvSqrTs
+ qTPu5e5Eg8RvJuM11Z6RdCMjgTCbQb8NOGrRcdQ/HL4yJJJwcZnhYpgn1Zya/CUdht/X
+ keEA==
+X-Gm-Message-State: AOJu0YxdlL4Ja3o+8uhGEck0x088eQT9EISFpr5yhCST/7T6cwML6vvb
+ QW6rsnVWdlvu28x0twkgFCsMbAps3j7oyxG0c/grQBwDWzsduAjX6sd5rX5nQHnioPpta0s1RFm
+ VSj9q7eX5CKd/hhnPZUUF48mqm5xn1Fk=
+X-Gm-Gg: ATEYQzwy7Pttyy9mEmvb/lRnnwp0Ct4MiCEmgzsZdd7M2SAcJ9G5wGeDO98kEn5X9DE
+ vi1sq3qD4eqFOePGOvLqJyp9fjWICwo9zmcXOo/8sM8ue5Huv7UcIj/nmglIWq58v/44X4HFm6n
+ jAZ6RJD5/Vequsm4bjXUxejBPkxcZxyGOPU4BX58lPl9v5tQpae3DsKZFIijIidMppwgIs96xqq
+ A/E1rxU7rT0inJo5+JmOQQYc9GXVAyakahjWU1qL3QPNVIymAQX3IST+pkQCQmAcit6LGJWtgZd
+ BKKLn2Ivaz424ttyr36945Xwy6GSqSq5RJb5ShU=
+X-Received: by 2002:a17:90b:4a:b0:359:1063:6b02 with SMTP id
+ 98e67ed59e1d1-35965c903d4mr15771062a91.18.1772567880945; Tue, 03 Mar 2026
+ 11:58:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260226140001.3622334-9-marcandre.lureau@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
+ <20260227203627.932864-18-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260227203627.932864-18-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 3 Mar 2026 12:57:49 -0700
+X-Gm-Features: AaiRm53k8-4n5fnDo-JBZPpKVRX3yPpr9oncHTF3al-pCkBXCVwx6fSGOABS6ZQ
+Message-ID: <CAATN3NoVMp770F7L5o0WstQGKTEXHNMN9jj1ZRcf966NhdVU-Q@mail.gmail.com>
+Subject: Re: [PATCH v3 17/37] target/hexagon: Add new macro definitions for
+ sysemu
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com, 
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, 
+ Brian Cain <bcain@quicinc.com>
+Content-Type: multipart/alternative; boundary="000000000000e25239064c241eb2"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,17 +118,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 02:59:53PM +0100, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> The sections shouldn't be modified.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+--000000000000e25239064c241eb2
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+On Fri, Feb 27, 2026 at 1:36=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
 
--- 
-Peter Xu
+> From: Brian Cain <bcain@quicinc.com>
+>
+> Also: add nop TCG overrides for break, unpause, fetchbo; add TCG
+> override for dczeroa_nt (non-temporal variant of dczeroa).
+>
+> break: this hardware breakpoint instruction is used with the in-silicon
+> debugger feature, this is not modeled.
+>
+> unpause: this instruction is used to resume hardware threads that are
+> stalled by pause instructions.  pause is modeled as a nop, or in RR
+> mode as an EXCP_YIELD.  This instruction is safe to ignore.
+>
+> Since prefetch functions are not modeled, fetchbo is safe to ignore.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/cpu_bits.h   |   7 ++
+>  target/hexagon/gen_tcg.h    |   9 ++
+>  target/hexagon/macros.h     |  25 +++-
+>  target/hexagon/sys_macros.h | 237 ++++++++++++++++++++++++++++++++++++
+>  target/hexagon/op_helper.c  |   1 +
+>  5 files changed, 278 insertions(+), 1 deletion(-)
+>  create mode 100644 target/hexagon/sys_macros.h
+>
+> diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h
+> index 91e9da09e03..3cbf8b7f570 100644
+> --- a/target/hexagon/cpu_bits.h
+> +++ b/target/hexagon/cpu_bits.h
+> @@ -97,6 +97,13 @@ enum hex_cause {
+>      HEX_CAUSE_INT7 =3D 0x0c7,
+>  };
+>
+> +enum data_cache_state {
+> +    HEX_DC_STATE_INVALID   =3D 0x0,
+> +    HEX_DC_STATE_VALID     =3D 0x1,
+> +    HEX_DC_STATE_RESERVED  =3D 0x2,
+> +    HEX_DC_STATE_UNUSED_WT =3D 0x3,
+> +};
+> +
+>
 
+Are these needed?
+
+
+
+> diff --git a/target/hexagon/sys_macros.h b/target/hexagon/sys_macros.h
+> new file mode 100644
+> index 00000000000..3b66b83695c
+> --- /dev/null
+> +++ b/target/hexagon/sys_macros.h
+> @@ -0,0 +1,237 @@
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HEXAGON_SYS_MACROS_H
+> +#define HEXAGON_SYS_MACROS_H
+> +
+> +/*
+> + * Macro definitions for Hexagon system mode
+> + */
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +
+> +#define READ_SGP0()    (env->t_sreg[HEX_SREG_SGP0])
+> +#define READ_SGP1()    (env->t_sreg[HEX_SREG_SGP1])
+> +#define READ_SGP10()   ((uint64_t)(env->t_sreg[HEX_SREG_SGP0]) | \
+> +    ((uint64_t)(env->t_sreg[HEX_SREG_SGP1]) << 32))
+> +
+> +#define WRITE_SGP0(VAL)           log_sreg_write(env, HEX_SREG_SGP0, VAL=
+,
+> slot)
+> +#define WRITE_SGP1(VAL)           log_sreg_write(env, HEX_SREG_SGP1, VAL=
+,
+> slot)
+> +#define WRITE_SGP10(VAL) \
+> +    do { \
+> +        log_sreg_write(env, HEX_SREG_SGP0, (VAL) & 0xFFFFFFFF, slot); \
+> +        log_sreg_write(env, HEX_SREG_SGP1, (VAL) >> 32, slot); \
+> +    } while (0)
+> +
+>
+
+Are these READ/WRITE macros needed?  They look like remnants of the old
+generators?
+
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+
+--000000000000e25239064c241eb2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 27,=
+ 2026 at 1:36=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mail=
+to:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
+<br>
+Also: add nop TCG overrides for break, unpause, fetchbo; add TCG<br>
+override for dczeroa_nt (non-temporal variant of dczeroa).<br>
+<br>
+break: this hardware breakpoint instruction is used with the in-silicon<br>
+debugger feature, this is not modeled.<br>
+<br>
+unpause: this instruction is used to resume hardware threads that are<br>
+stalled by pause instructions.=C2=A0 pause is modeled as a nop, or in RR<br=
+>
+mode as an EXCP_YIELD.=C2=A0 This instruction is safe to ignore.<br>
+<br>
+Since prefetch functions are not modeled, fetchbo is safe to ignore.<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/cpu_bits.h=C2=A0 =C2=A0|=C2=A0 =C2=A07 ++<br>
+=C2=A0target/hexagon/gen_tcg.h=C2=A0 =C2=A0 |=C2=A0 =C2=A09 ++<br>
+=C2=A0target/hexagon/macros.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 25 +++-<br>
+=C2=A0target/hexagon/sys_macros.h | 237 +++++++++++++++++++++++++++++++++++=
++<br>
+=C2=A0target/hexagon/op_helper.c=C2=A0 |=C2=A0 =C2=A01 +<br>
+=C2=A05 files changed, 278 insertions(+), 1 deletion(-)<br>
+=C2=A0create mode 100644 target/hexagon/sys_macros.h<br>
+<br>
+diff --git a/target/hexagon/cpu_bits.h b/target/hexagon/cpu_bits.h<br>
+index 91e9da09e03..3cbf8b7f570 100644<br>
+--- a/target/hexagon/cpu_bits.h<br>
++++ b/target/hexagon/cpu_bits.h<br>
+@@ -97,6 +97,13 @@ enum hex_cause {<br>
+=C2=A0 =C2=A0 =C2=A0HEX_CAUSE_INT7 =3D 0x0c7,<br>
+=C2=A0};<br>
+<br>
++enum data_cache_state {<br>
++=C2=A0 =C2=A0 HEX_DC_STATE_INVALID=C2=A0 =C2=A0=3D 0x0,<br>
++=C2=A0 =C2=A0 HEX_DC_STATE_VALID=C2=A0 =C2=A0 =C2=A0=3D 0x1,<br>
++=C2=A0 =C2=A0 HEX_DC_STATE_RESERVED=C2=A0 =3D 0x2,<br>
++=C2=A0 =C2=A0 HEX_DC_STATE_UNUSED_WT =3D 0x3,<br>
++};<br>
++<br></blockquote><div><br></div><div>Are these needed?</div><div>=C2=A0</d=
+iv><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">diff =
+--git a/target/hexagon/sys_macros.h b/target/hexagon/sys_macros.h<br>
+new file mode 100644<br>
+index 00000000000..3b66b83695c<br>
+--- /dev/null<br>
++++ b/target/hexagon/sys_macros.h<br>
+@@ -0,0 +1,237 @@<br>
++/*<br>
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.<br>
++ *<br>
++ * SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#ifndef HEXAGON_SYS_MACROS_H<br>
++#define HEXAGON_SYS_MACROS_H<br>
++<br>
++/*<br>
++ * Macro definitions for Hexagon system mode<br>
++ */<br>
++<br>
++#ifndef CONFIG_USER_ONLY<br>
++<br>
++#define READ_SGP0()=C2=A0 =C2=A0 (env-&gt;t_sreg[HEX_SREG_SGP0])<br>
++#define READ_SGP1()=C2=A0 =C2=A0 (env-&gt;t_sreg[HEX_SREG_SGP1])<br>
++#define READ_SGP10()=C2=A0 =C2=A0((uint64_t)(env-&gt;t_sreg[HEX_SREG_SGP0]=
+) | \<br>
++=C2=A0 =C2=A0 ((uint64_t)(env-&gt;t_sreg[HEX_SREG_SGP1]) &lt;&lt; 32))<br>
++<br>
++#define WRITE_SGP0(VAL)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0log_sreg_w=
+rite(env, HEX_SREG_SGP0, VAL, slot)<br>
++#define WRITE_SGP1(VAL)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0log_sreg_w=
+rite(env, HEX_SREG_SGP1, VAL, slot)<br>
++#define WRITE_SGP10(VAL) \<br>
++=C2=A0 =C2=A0 do { \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 log_sreg_write(env, HEX_SREG_SGP0, (VAL) &amp;=
+ 0xFFFFFFFF, slot); \<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 log_sreg_write(env, HEX_SREG_SGP1, (VAL) &gt;&=
+gt; 32, slot); \<br>
++=C2=A0 =C2=A0 } while (0)<br>
++<br></blockquote><div><br></div><div>Are these READ/WRITE macros needed?=
+=C2=A0 They look like remnants of the old generators?</div><div><br></div><=
+div>Otherwise</div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:l=
+taylorsimpson@gmail.com">ltaylorsimpson@gmail.com</a>&gt;</div><div><br></d=
+iv></div></div>
+
+--000000000000e25239064c241eb2--
 
