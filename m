@@ -4,59 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0E6EDA693
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A91DEDA68D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSI0-00038Z-Ch; Tue, 03 Mar 2026 11:08:04 -0500
+	id 1vxSLj-00067N-BV; Tue, 03 Mar 2026 11:11:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHy-00035d-0f
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:02 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSLS-0005z6-IP
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:11:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHs-0004tB-Oe
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=LmX16bD2ok9iOgTIOFJ47bVKGyfqxMyRjBPDAxhPwHE=; b=Q7IxxW9cBIKeljc
- r7imtRMEUlqBXFbIQNsIUbluTP1eJxYF4J2kGcRQ4WY/tUuT9NpoPYwHHkzDr7/24vEysXBK0p9FW
- lC1A6U9ljM5OcWTg/aLqdzOZXa2H3mfWc2LOOYEB+2TBoJ5eZ5VaAqCcBqjeb6Y5ZWLCS1c5kD4qH
- ts=;
-Subject: [PATCH v5 0/4] hppa: PA-8700, use 44 bit physical addresses
-Date: Tue, 03 Mar 2026 17:11:27 +0100
-Message-Id: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSLM-0005b6-GN
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:11:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772554289;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=olgD0clpE0baOpuO5+pOb2Ld3gPgWX6Rcbk30mz6MHo=;
+ b=ee+5JRAwSYnlZt9896pTIfhRlSZ1LLG1gW8MWzJSCbsg+YwsISLF2C1ltiBxSZjchli8AG
+ qmdlTUrZyUWXZtyDERfOK5aionLg9q+v3zjh0L4lh4yrjRirByMJSroCAwHsOIV2WFwcE2
+ 9PsMSGtsdYGDYqC9RqEP88ZDm97Zyjo=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-215-Ec5ofgz6MXSO31ESYoQfNQ-1; Tue, 03 Mar 2026 11:11:26 -0500
+X-MC-Unique: Ec5ofgz6MXSO31ESYoQfNQ-1
+X-Mimecast-MFC-AGG-ID: Ec5ofgz6MXSO31ESYoQfNQ_1772554286
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-899f92be718so59849716d6.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:11:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772554285; x=1773159085; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=olgD0clpE0baOpuO5+pOb2Ld3gPgWX6Rcbk30mz6MHo=;
+ b=UEZq+iUNR2Lgs8XD4dn7g9ev+els8FlBo4M1g0Ii3iNpoM3fWTgkrgXPvbhnHDi0A+
+ dpKUq/iqe1rqa3bIOn9zdRrl2WUPhPgboVDBQVcSoPPHyzx1akL5vSoFCw8mA1UGd8Yx
+ 7akqEmxRJSPP+86D0EItJ0XMjn3eAgWaCcZwF7HITXznqKj6JUDtv9yqQxifSPEvVKNU
+ cU3IiZZ7jeT8iQWe6ZuBrqC4XYOozi1d+1PuAL4IfRZuiZa1xbWKwq4qzfBmAMhaN9wu
+ uaixe9fs15KXJ8DQA0HHAV2AREKW/uJsIleVuW0Rm97pcZdaABygTrAMtZXFdF0Iqe7m
+ CfRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772554285; x=1773159085;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=olgD0clpE0baOpuO5+pOb2Ld3gPgWX6Rcbk30mz6MHo=;
+ b=MJFS48vTqPLlQVnq1/tOv0oThgrs86cAKJ5BLH83fBo5CIcTEM8Q9DyNG5XT3HlRuG
+ Y3WWsCjSyrnfWeTNXbSLuU2/RZYb5RLr6QYExRYqV+8Q1xPJ9kugna3jgtIBPqO6TjcK
+ djwcOHMOAkUVXB4D/dnQpn7FdVX5FimycxGg7/rI5Rw5chEWjdtUtwcbpgMb51y7E2h/
+ K5DeAVppW3sUuaRrmdeRSbLQleZKfRmfLQ+PV6Hi6Fb5wBnN1FgzbHSrCnJTEPZe261L
+ T9X1FQTGNkOkeVZq1fU1M9PzZL2RcmO/xu2ao5a2e9BOg/h6qve+FXWF1JPeMP/BRb4D
+ 8YtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUH68ywJYWV108j3HDQe7UAEYxJYibgCGZ/qJMMwwtXXkG4bKVVT+Ocd7Vfr9sRwxks9TurvFNSjzbc@nongnu.org
+X-Gm-Message-State: AOJu0YwcSuPnys0x7V/MkWjmmU/svogZUFnwPjDvrcN+wsyYdNx2Faej
+ fEGIhX1guyFImjocAtjcImID4a3bnSQfPGCdblbDEm3zG7JC7yKVhGoAF30ZX/g4SiKWNZYyTDZ
+ 9clKlIB0Kai4E6x4FHwaotLNqrkpzmGXlH2CtqR9lm2sXFbe4v6infEnWscg53btP
+X-Gm-Gg: ATEYQzyW9WKh6O8Kw8nc5qk+LbgfiChwSD5Ndo0wS3ci2V3omV97//SSPiOqVphLCcR
+ utGxfD0vIooVO07wYTEOPkYrsgfHKVpQA3Oyf9bZHxRzRSsoSAOsciRa8LsR6sriiRoWmlaGEAS
+ 3lZm3E5+TCNIKI0LC2pfbPUFeP2WTQndlzQYUIfRx9b0l1U3fXTV4H+YxfwVxdB+LMD/XSVmwKF
+ r4fvKItTXtZpn6OlpRNPR+LaIiD2jPWyAqPeLZ637cP3DdKG9RRumDR6BUmmaXOP+6QmqBqMkW6
+ UseZF4BRLKhgxyzPdW0oXiXNSPfPef5NO10rGiocLjp6V6epq3qY3Y4filkJRP9Z9xXeJAcgUn1
+ tFj9WGqKniBi+Qw==
+X-Received: by 2002:a05:6214:c6d:b0:89a:125f:37dd with SMTP id
+ 6a1803df08f44-89a125f394amr20372166d6.49.1772554285457; 
+ Tue, 03 Mar 2026 08:11:25 -0800 (PST)
+X-Received: by 2002:a05:6214:c6d:b0:89a:125f:37dd with SMTP id
+ 6a1803df08f44-89a125f394amr20371606d6.49.1772554284991; 
+ Tue, 03 Mar 2026 08:11:24 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-899c7159b72sm134813326d6.7.2026.03.03.08.11.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 08:11:24 -0800 (PST)
+Date: Tue, 3 Mar 2026 11:11:13 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: farosas@suse.de,
+	"open list:All patches CC here" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 08/16] migration: factor out vmstate_pre_load() from
+ vmstate_load_state()
+Message-ID: <aacIIVfQaDxOJxPH@x1.local>
+References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
+ <20260220210214.800050-9-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XPS2rDMBCA4asYrasyelmKV71HKGWiR6yN40ipS
- Ai+e6cONDW0yxn4fmburMaSY2VDd2cltlzzaaLBvHTMjzgdI8+BZiZB9iAF8HGekXvVA/DkwFk
- LEY2xjMBcYsrXNbZ/f8wlnj+peXksn8mho6ARAjSfx1v9wBAKP0DSNqICoXFomn03xlwvp3Jb7
- 2tijfx1ShMcOAobvXEJjEpv9MzrdFwbTf7vJLmdR9j5nl4RcuPUb+c2TpE7KIvBOJQQwsbpp1M
- gN06T09qiAwjovP9xy7J8AWMXyrSNAQAA
-X-Change-ID: 20260210-hppa-c3600-f808770ea557
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=2871;
- i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=m4I1tElYh+WuJ2yFC+TanrROCPSgUw4NlQzq28vur7c=;
- b=Y8YZElO1zw4fqo4Nf2LEKI06QipFP///vd7LDJnq2D+BK2gH3jqzFiM5U+l5Q+WGKNGV/t4p3
- 2ihugBoC43nCLJWWR2whgjiAoHUTWKJ1NuCnDWBZtwIxQZQdTH/CNbB
-X-Developer-Key: i=anjo@rev.ng; a=ed25519;
- pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260220210214.800050-9-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -71,74 +116,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset tries to address a discrepancy between the C3700 machine
-in QEMU/SeaBIOS and the documentation (chapter 5)
+On Sat, Feb 21, 2026 at 12:02:06AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Simplify vmstate_load_state() which is rather big, and simplify further
+> refactoring.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-  http://ftp.parisc-linux.org/docs/whitepapers/PA-8700wp.pdf
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-where 40 bits of physical address space are used in SeaBIOS compared
-to the 44 bits specified in the documentation.
-
-A PA-8500 CPU with 40 bits of physical address space is added to be
-used with the A400 machine.  AFAICT there are no major differences
-from QEMUs side between the PA-8500 and 8700 aside from the physical
-address space size.  The PA-8700 machine can then be moved to using
-44 bits.  To account for the discrepancy with SeaBIOS, the functional
-tests now run the A400.
-
-This series introduces a small restructuring to the HPPA CPU class
-heirarchy. CPU model definitions now inherit from a TYPE_HPPA_CPU base
-class and use a HPPACPUDef struct to provide model specifics, similar
-to the SPARC and RISCV targets.  This hopefully makes it easier to add
-other models, such as the 8800/8900.
-
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
-Changes in v5:
-- Moved assert on maximum size of the physical address space to base
-  class initialization function, so it's only ran once.
-- Clarified commit message in final patch.
-- Link to v4: https://lore.kernel.org/qemu-devel/20260302-hppa-c3600-v4-0-447a800da8cc@rev.ng
-
-Changes in v4:
-- Add PA-8500 instead of PA-8600 and use the now upstreamed A400
-  machine.
-- Link to v3: https://lore.kernel.org/qemu-devel/20260218-hppa-c3600-v3-0-b37ad58a20dd@rev.ng
-
-Changes in v3:
-- Fixed spelling in commit message/comment
-- Rebased
-- Dropped if statement in hppa_cpu_class_base_init() (patch
-  "hppa: Introduce HPPACPUDef").  Not needed as it will simply
-  be set to NULL for the abstract base class anyway.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v2-0-9ca09c677012@rev.ng
-
-Changes in v2:
-- Missed a reference to the old "hppa" CPU model, updated to
-  "pa-7300lc".
-- Link to v1: https://lore.kernel.org/qemu-devel/20260210-hppa-c3600-v1-0-a17ec58f053f@rev.ng
-
----
-Anton Johansson (4):
-      hppa: Restructure CPU Class heirarchy
-      hppa: Introduce HPPACPUDef
-      hppa: Get physical address space bits from HPPACPUDef
-      hppa: Use 44 bit physical addresses for PA-8700
-
- target/hppa/cpu-qom.h                 |  8 ++++-
- target/hppa/cpu.h                     | 35 ++++++++++++++++-----
- hw/hppa/machine.c                     | 25 +++++++++------
- hw/pci-host/astro.c                   |  2 +-
- linux-user/hppa/elfload.c             |  2 +-
- target/hppa/cpu.c                     | 57 +++++++++++++++++++++++++++--------
- target/hppa/mem_helper.c              | 39 +++++++-----------------
- tests/qtest/machine-none-test.c       |  2 +-
- tests/functional/hppa/test_seabios.py |  4 +--
- 9 files changed, 111 insertions(+), 63 deletions(-)
+-- 
+Peter Xu
 
 
