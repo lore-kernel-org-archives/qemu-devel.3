@@ -4,117 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 166C2EDA6BE
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA100EDA6BE
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxTct-0001EO-W1; Tue, 03 Mar 2026 12:33:44 -0500
+	id 1vxTfp-00049W-3M; Tue, 03 Mar 2026 12:36:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vxTcs-0001E9-L4
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:33:42 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vxTfd-00047C-J9
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:36:34 -0500
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vxTcr-0005zJ-2z
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:33:42 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8EF225BE1F;
- Tue,  3 Mar 2026 17:33:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772559209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7WcV0PqlqfUEbE/2ZP05IU9XqI8F/KE5MB+/YpgS/hg=;
- b=rlqL/hUHmsJ/SYTtI1KgXx8rU2fp9jlrs+yXzbMMhcCcH4vDWNkWLwFIMwfmSjQ0+WA9op
- wU/HDziy42EkQsKlwB3qRkty4GpoFzuumBaBS1eG6qkuRCCLOz1wW9Bx5FcZRS6s3srLBY
- rlw0TWJLvFIuO6kAdNHOYW4eHXyG2bI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772559209;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7WcV0PqlqfUEbE/2ZP05IU9XqI8F/KE5MB+/YpgS/hg=;
- b=IXA5veBcLELuVeyVLyx6ox9jGu5o+0moVhesEydvZSZtIuSsMM5zuCg9Fh/e5zDAVdYFwq
- 89l3qtfZQJTS4jCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="rlqL/hUH";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=IXA5veBc
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772559209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7WcV0PqlqfUEbE/2ZP05IU9XqI8F/KE5MB+/YpgS/hg=;
- b=rlqL/hUHmsJ/SYTtI1KgXx8rU2fp9jlrs+yXzbMMhcCcH4vDWNkWLwFIMwfmSjQ0+WA9op
- wU/HDziy42EkQsKlwB3qRkty4GpoFzuumBaBS1eG6qkuRCCLOz1wW9Bx5FcZRS6s3srLBY
- rlw0TWJLvFIuO6kAdNHOYW4eHXyG2bI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772559209;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7WcV0PqlqfUEbE/2ZP05IU9XqI8F/KE5MB+/YpgS/hg=;
- b=IXA5veBcLELuVeyVLyx6ox9jGu5o+0moVhesEydvZSZtIuSsMM5zuCg9Fh/e5zDAVdYFwq
- 89l3qtfZQJTS4jCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DEC193EA69;
- Tue,  3 Mar 2026 17:33:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SCZVKGcbp2n+VAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 03 Mar 2026 17:33:27 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: adityag@linux.ibm.com, thuth@redhat.com, berrange@redhat.com,
- peterx@redhat.com
-Subject: [PATCH v4 2/4] tests/functional/migration: Add migrate_vms
-Date: Tue,  3 Mar 2026 14:33:18 -0300
-Message-ID: <20260303173320.10942-3-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260303173320.10942-1-farosas@suse.de>
-References: <20260303173320.10942-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vxTfZ-0007hD-KE
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:36:31 -0500
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-50698970941so72677981cf.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:36:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772559388; cv=none;
+ d=google.com; s=arc-20240605;
+ b=T+jZJXIsq2rGs6dva96oUZrTvkrDWAKVhwu17JUFZTFx2puWvjT0vjGBSEQM3FyYVs
+ d/5adDd9NJMM7DFG4kLHialJ+dsGZwxbh6vVXt3mgtVx9ZLav7rBpFcoUFVfVp3OFxTt
+ MYLbd+w/3pcdBs5BNswAIJKRialHqposzl5BM34Q252s+ehdDF1WtZDesDOVYr0Cuuy4
+ IQtdka65/1OZ9/QH5iDrTZLFKjOy7hKGAvo0ez3YiSXicH9bLjIeQGoV8usUqX8jlb4+
+ P+to6UgbEGC+8AiqAolYObazUWCNVn2ykJfbWOlXf2B2YsD2hdSoG1pi+XsrJAI8eXyf
+ YvqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rK2pO6FkGs2679gVgms260TcmMISzLhxTpl84uprQ2o=;
+ fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
+ b=c4OwKl7hWCQp+EZnRRUOdDpZSrzXdhaLW1GRBUs3IF3FNoc6vjYMa6+dAU2JxGdtfS
+ eEGkAvck3s2ovK9PXJN6mvGHiKfef1Z+x/M6u0LcmKBPssno5XRa3wq1YCTJvAOV2FvR
+ ND/cRlFtbpaA1m4fwZuyKOpGaqaEuIM1XG21zbgHJXK2fjelygd58ct2JxlmnSgyxNy0
+ sPP5Xpr/xwqg+PEm2LkRC9LEiI6+FgUH8kaMBj4ta9Ed/+/cR/NNdSrzYONRJcCLTNG/
+ APhW7VV+2Sz2W30YmGLHJkj1yX9hqMK6OrGrA3cG5AUK42yULAX0utMAKnwff4TL9R2e
+ QTjg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772559388; x=1773164188; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rK2pO6FkGs2679gVgms260TcmMISzLhxTpl84uprQ2o=;
+ b=iVEwe1sZ/nGupdGj5nbeWkYl79Ap8f3ctj1fSc+MdqXJFWSRkxnXuHYGzDqYF4Mv6P
+ ZdfrSDuAfOpCIrOaq7UGqahfqVqFhkS+j69IdUOyinrkODS7txg2CJ9+bU6ufc3eVXIM
+ ZSKqQusxoTyxABzG1t19RII0Wiq/mZj83qbP3X7zsme4JB3xBpUTEzuLBpO3ZjICcpFN
+ roD2bdVQTfTo0kKpg2+ukCPIOL02V6+OfrLTH+yzJ+EUVFkInXfsWoI9tF+XtuOAqoO2
+ VsWSSkrqnJoishfNCvVRwJtjdQWr71LANQw3LGSyzL1z0q+idTtCF4rASnH6A5t+adUc
+ G7rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772559388; x=1773164188;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rK2pO6FkGs2679gVgms260TcmMISzLhxTpl84uprQ2o=;
+ b=OZUWmziyjQm5wJm+XOvllCc0VZjcptWz276e8ijd2Aq10zlnZKMLjKACwJm9O5I7Q0
+ kQTLKzdpJmkZ99rsBSEW2aP7u6ZLdApn2+5t/hRI2mdYKuD/VMg0PWxljOFsMyW25PNt
+ GDDLPjtmA1rwQwE336TIScVk4sQj2SUpEpsXgdA9n4kjjG1HZDi0/oCL6Jdx/e6TZpHE
+ 0TnEPIE1ixrCHilleS9qYPKOgB079cXzWj4PFKqSkruYn/mogccRd6qIoUR+FHMyMUb3
+ faLD4coiu+b6ODfoD9SQ9i5169dOmz73Yb8Y2NbgHpNuJN8kw5i6XnyZru8m9GkbS6d0
+ qXeg==
+X-Gm-Message-State: AOJu0YzPKNx2I3HGmsepshh63o/t0bmxKx3woHHz2rjo7+66Gtfu8a3F
+ L5Am72EmBA3Fjq4QFsJ6evkQJ8tsELPZwYMcN53w+jngqRQGu5p6ywRuoXuVVt+zB+NCY4KPclW
+ GOas//J9LTrUf8dVwXYzIRSHqCfC10Ls=
+X-Gm-Gg: ATEYQzxgNkOVNV7ZDyZqmRQtQotDZUBwpoIPZPu2SQ/ZliU6yPv8YJXwogcdas0b+Md
+ YugawonCGCUnOoE0ck/ksKciZA/dgQ7XxpnruEnfiTAga9pWG9TKpEsyOD82jprkY4N6v8pK3ZG
+ JKfO0V8sHGN3GcT53brPhylEaqm0oDjmw2cPg8z+trLDv7ruSvQ+iGleAoym5/hKX+ywsUzePrq
+ JtqH7p9VfpU3PDkPXz+zJ049A2BuzdJmvuMv3FWG0ngVWi8VV+0aF8rRedJa3HkIIeU6AUaKbWI
+ j8zBVa7lrozQUsEk2eHyZUDf2xaVXwySSu/2eKLk
+X-Received: by 2002:a05:622a:553:b0:501:13b1:14cd with SMTP id
+ d75a77b69052e-50752726534mr218382931cf.3.1772559388148; Tue, 03 Mar 2026
+ 09:36:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; TO_DN_NONE(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:dkim, suse.de:mid, suse.de:email]
-X-Rspamd-Queue-Id: 8EF225BE1F
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+References: <20260303011151.1925827-1-dongwon.kim@intel.com>
+In-Reply-To: <20260303011151.1925827-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 3 Mar 2026 18:36:17 +0100
+X-Gm-Features: AaiRm53cA-wDq5K9uCuHNjI4ps0WI1nvG-aWtV0XMw004BjGsN_VvbdwD2m480M
+Message-ID: <CAJ+F1C+mV7Qag=U10UbkNms8reFHc9LwVG2L7+sr3bxgRfyLLw@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk-egl: Ensure EGL surface is available before drawing
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x836.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,36 +115,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a migration helper to MigrationTest that uses the migrate-incoming
-QMP commmand and takes the already instantiated VMs. The -incoming
-'defer' command line option is preferred way instead of the -incoming
-URI syntax that's currently used.
+On Tue, Mar 3, 2026 at 2:17=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> The EGL surface and context are destroyed when a new GTK window is
+> created. We must ensure these are recreated and initialized before
+> any rendering happens in gd_egl_refresh.
+>
+> Currently, the check for a pending draw is performed before the
+> surface initialization block. This can result in an attempt to
+> draw when the EGL surface (vc->gfx.esurface) is not yet available.
+>
+> This patch moves the drawing check after the surface initialization
+> to ensure a valid surface exists before rendering in gd_egl_refresh.
+>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 
-Suggested-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/functional/migration.py | 5 +++++
- 1 file changed, 5 insertions(+)
+Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 0aa873edba..3362e5c743 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -40,6 +40,11 @@ def assert_migration(self, src_vm, dst_vm):
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
- 
-+    def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
-+        dst_vm.qmp('migrate-incoming', uri=dst_uri)
-+        src_vm.qmp('migrate', uri=src_uri)
-+        self.assert_migration(src_vm, dst_vm)
-+
-     def do_migrate(self, dest_uri, src_uri=None):
-         dest_vm = self.get_vm('-incoming', dest_uri, name="dest-qemu")
-         dest_vm.add_args('-nodefaults')
--- 
-2.51.0
+> ---
+>  ui/gtk-egl.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index ae9239999c..52d187c482 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -152,12 +152,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+>      gd_update_monitor_refresh_rate(
+>              vc, vc->window ? vc->window : vc->gfx.drawing_area);
+>
+> -    if (vc->gfx.guest_fb.dmabuf &&
+> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        gd_egl_draw(vc);
+> -        return;
+> -    }
+> -
+>      if (!vc->gfx.esurface) {
+>          gd_egl_init(vc);
+>          if (!vc->gfx.esurface) {
+> @@ -176,6 +170,12 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+>  #endif
+>      }
+>
+> +    if (vc->gfx.guest_fb.dmabuf &&
+> +        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> +        gd_egl_draw(vc);
+> +        return;
+> +    }
+> +
+>      graphic_hw_update(dcl->con);
+>
+>      if (vc->gfx.glupdates) {
+> --
+> 2.43.0
+>
+>
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
