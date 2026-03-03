@@ -4,118 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E8FEDA693
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B03EDA68D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSGI-0001qi-R5; Tue, 03 Mar 2026 11:06:18 -0500
+	id 1vxSHz-00037T-RJ; Tue, 03 Mar 2026 11:08:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
- id 1vxSG8-0001oA-Ue
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:06:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHx-00034h-Gz
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:01 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lleonard@redhat.com>)
- id 1vxSG6-0001nG-VT
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:06:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772553963;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
- b=J+WpwdDa1PWZdtTDXamHq+WduRP2s68HL+PDcGqGZ0VkLrotGcP9P+qKr2CA/Tanr1fU1Y
- 6D0AQAXRi01Ns1+CSkXcO/rM/Q46+9i8W7o0d6GcJ5Mrq9J9wt8bSKNKf5It3LhwnvCDVj
- wiYPaHdj2HpH2s/Feh2vfALLrxE+wVE=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-wWuX-NnIOv--oaYyHleakw-1; Tue, 03 Mar 2026 11:06:02 -0500
-X-MC-Unique: wWuX-NnIOv--oaYyHleakw-1
-X-Mimecast-MFC-AGG-ID: wWuX-NnIOv--oaYyHleakw_1772553962
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-7986c067508so91468517b3.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:06:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772553961; cv=none;
- d=google.com; s=arc-20240605;
- b=M1ehlp59XyISkdFgx/l65AevbLBiyO9HSoj5w8zMoa/5jRwcGgiSuIBP53kfM7MepP
- KoiSXuoUoR9RU5B2ijpx0vlaQgFlBrXX+8N1++zo4ubJ0YvSNDPAWgqIaxsmAxky5Bei
- kva0Em9224Y0B3tzvUcYMdqM3DfG6TIas/omN6sGr6bg4SXsi0/o0TNS+9HzHEKV3cSI
- EaSlMUFtNAZE739LSFOGJMehh8GmNyW4UA3DIQ6MRDesqPqxOeJEB2h5ugV9Nc8TAq+C
- tqPrhmRyYcgBJcMFb5fhwGQiN5dy8QLndK731h9/8V/tjCxk7VWUMM/25XAg2H/bE+5m
- qBdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
- fh=M+PQ/mPxrlNcwBcpzJhQbIZh5naQ1mTAie8kXWVAj2k=;
- b=B34RxWq1OLHazi3/Uc7+mOCDDUznr405qkv5AO+dgFyPVDKGbMc2br1HWvm9VQs6VM
- jDynbrDVT2ofZVsPrALdk8KXoWZ7YdFdRYnHf/DyQmHKAqjCaAqidyOGc4+yRf58Jwn8
- H3EiS/dyEmVFDJK9xUUpPHbNZp2Qp1nvyvof8eSscRHRNLsTHM4E0eRUw3px/v+5zpW7
- H0ND/IQiIlClc6BduP3CSVbv3NxGBDdfR/JkpcZG3UbGZ2eAS1EDdy1IuU9iQ3aip9tx
- GFnN9JHtJs8oxNVRiUkBJJv3mTNmdrJiylU7S8ydubBIJlBaNZdbdGmo2xVnjTOkuTwM
- 962Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772553961; x=1773158761; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
- b=JoUe8rWnfduzrsWrXl09yJEbvz/u/EXFabypUUM7ZVe1hpnahig345J/7EH+EYqSCQ
- 2wSobsHOpJpRyTaXOjNjL0rIfviStlY6pKWe1IyEueE2LMQRXNxu5O38zDp//Y2WD4TQ
- oA41TqBOabDjaDz8zZCMqDGLF82nYYWVW3xgupM16OZlfOz1qWjMHp4+k4+pii40evtD
- /YtpXurqGzrgUoB0SutJ1jRq1jgUPPFdnSHRhFVHolXEYg0UTRYLh8QM0Pr9J8g9tsfU
- ltZp2jrFUx59qk2m/q/bJbOj+KE/LPx20zzZ/OVxrKPZGGiyMepmxFH4MukuxS0V5Wgm
- jAdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772553961; x=1773158761;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z71x+CDENzxlE8M1Y36YRGBpBi30v8SvKseYkMfbzEE=;
- b=dpELoaq1sLQ8O2R9tcIs3pO0/qv81g+9cBItdvptNfUnyNd8Ahzy/FKbcyaZ5zke4T
- FZEpkCUtY6DwSXQhjpGICUG8eQ/luZOBvtiWm9o8ZdG1gezQCM9V4ypQQXyRN7MqUs+7
- +eCm6HNM5ZsT+oiu/wapt+oumSJnjXKG7c56hLEK3cQSEkqkQgf61HKKTdqNbYF0mQyJ
- LtdT6mUKB4UW+smFShFs0sQ2OSM2t+DDGhWQ6wDvlLKqEVP811TzHNQ88vKYpx1eoVZ2
- CSN0pP/Y/1kWf0t4//Dyt0RJFooSEURxxtixotSsRPMihefuI7mojfgaa5NdvZLZQ/cJ
- 7HFA==
-X-Gm-Message-State: AOJu0Yz4SBkX4ehJMgyTB/RfaUY1jOwttZwcg19CIEeyMC74T108Hslc
- p4NymqQ3vNLWltlnO1xtcRaWfdK3Kb+V/w6oHzjJ1augp9isDCPN1dbHu+x8dvSkT+zSx3yVAM5
- nhVI8m/KXSW/tq/S5p80kqveAd4k9tdX+Lns98UCvPCqjxs80KX7QDo44rsSuUoVr3g17AQe6wU
- GLxku1dtOtCfuIAwkHVuXXVjH359BQQmbF7+Afo8k=
-X-Gm-Gg: ATEYQzyq5DnqaHzVTJNID1SFXO1GoAbY+POkh/MFVLha1ilXcQifJrzSt0VoRsi4d9W
- iq+gcR8QyS0IIwHxeEm1Q0Bp7Atv5QI25v3fmJ9y5CEfDRvtbbVlIK0os8h0DO7m7X3ajRPcW2X
- 4yz4UdVNU9cwTtSA4Mi+AfUd6et+gR53cyIpy73E2fm+RTha1zYPjkm8idZb6Hore4FiFWy2qLv
- BvtPQY=
-X-Received: by 2002:a05:690c:3587:b0:798:5a44:781a with SMTP id
- 00721157ae682-798856080dbmr156553197b3.54.1772553961648; 
- Tue, 03 Mar 2026 08:06:01 -0800 (PST)
-X-Received: by 2002:a05:690c:3587:b0:798:5a44:781a with SMTP id
- 00721157ae682-798856080dbmr156552787b3.54.1772553961066; Tue, 03 Mar 2026
- 08:06:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHu-0004tH-Ct
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=wDmHN0idygJwsT7yupDS5Js7du7AcI+kANWtIfJrTc4=; b=tUQdtF1RpsDUvZI
+ UEQ4cDC/qFM7iAP8O7Pdt5W2ir3IeCQS6kxx4oGYDrTKDtgV5IxaaBadI7w2l5Wkl0dLlp1dN6z/t
+ ynscGsOQbdYdXGfbSgfc1aGzRwm/I4k6qYQshEYg1Y2Xa/BqedKS3Rza3oGQ2tAc1tOgZPIJa3Z1D
+ X4=;
+Date: Tue, 03 Mar 2026 17:11:28 +0100
+Subject: [PATCH v5 1/4] hppa: Restructure CPU Class heirarchy
 MIME-Version: 1.0
-References: <CANo9s6=YV6Cyyn7m5LaGaD7U9i61OSZwMyiyLbmUk_xHO4s8vA@mail.gmail.com>
-In-Reply-To: <CANo9s6=YV6Cyyn7m5LaGaD7U9i61OSZwMyiyLbmUk_xHO4s8vA@mail.gmail.com>
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Tue, 3 Mar 2026 17:05:49 +0100
-X-Gm-Features: AaiRm531huwlUF6YkikQHTK-Ie2tTiqXEZJYt66iIaRQvSgEXdcAGJrZx0gYj3A
-Message-ID: <CANo9s6m=2HzzM9uyr0-kG1e69hV_iMDXZ+0DCRsbzYF9zQ+Lvg@mail.gmail.com>
-Subject: Re: Meson build fails with igvm enabled
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260303-hppa-c3600-v5-1-277bfe6b40b8@rev.ng>
+References: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
+In-Reply-To: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Oliver Steffen <osteffen@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lleonard@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=6878;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=QZx6MxbU+jQI78caN/HWtT+asuMMqXM6wk6LNQt4SWk=;
+ b=+PqMUtVeEGD8CO2m8ZxgeNO3+ZlaAdDu1tUnYwF3DtdsDsLzlsEO63OObM2d8nOc6nzQeiPmV
+ XHQSyGMMrQYAyaKeqSVAmPV5tQR9WdjKH7sqpp1K2RbakSQ8xcu4Mgl
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,57 +67,203 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Mar 2026 at 11:27, Luigi Leonardi <leonardi@redhat.com> wrote:
->
-> Hi all,
->
-> I found a problem when trying to build QEMU with igvm enabled:
-> When igvm is not installed in a "canonical" path, the build system
-> cannot find the library.
->
-> To reproduce:
->
-> build igvm (latest upstream, as there were some problems with pkg-config).
-> PREFIX=$HOME/igvminst make -f igvm_c/Makefile install
->
-> This would result in igvm being installed in $HOME/igvminst
->
-> Then build QEMU
-> PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:$HOME/igvminst/lib64/pkgconfig/"
-> ./configure --target-list=x86_64-softmmu --enable-igvm
->
-> ninja -C build
->
-> This fails with the following error:
->
-> In file included from ../stubs/igvm.c:15:
-> /root/qemu/include/system/igvm-internal.h:19:10: fatal error:
-> igvm/igvm.h: No such file or directory
->    19 | #include <igvm/igvm.h>
->       |          ^~~~~~~~~~~~~
->
-> IIUC the problem is that the stubs/igvm.c file uses the igvm header
-> via the "igvm-internal.h", but the library is not added as a
-> dependency in the meson config file.
->
-> I tried this change to meson, but it doesn't seem to work.
->
-> Not sure how to fix this.
->
-> Thanks,
-> Luigi
->
+Clarifies current CPU model names, assuming 32-bit HPPA runs a PA-7300LC
+whereas 64-bit runs a PA-8700.  The PA-8500 model is added, which will
+later be used by the A400 machine.  All CPU models are made into children
+of the now abstract TYPE_HPPA_CPU base class.
 
-I found a possible solution:
-stubs/igvm.c doesn't really require the igvm library. It just needs
-the `QIgvm` structure.
-Therefore we can just use a forward declaration.
+References to "hppa/hppa64" models in test cases are also updated.
 
-I will soon send a patch.
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/hppa/cpu-qom.h           |  8 +++++++-
+ hw/hppa/machine.c               | 21 +++++++++++++--------
+ linux-user/hppa/elfload.c       |  2 +-
+ target/hppa/cpu.c               | 25 ++++++++++++++++++++-----
+ tests/qtest/machine-none-test.c |  2 +-
+ 5 files changed, 42 insertions(+), 16 deletions(-)
 
-Luigi
+diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
+index 5c454bf543..7541c25b3d 100644
+--- a/target/hppa/cpu-qom.h
++++ b/target/hppa/cpu-qom.h
+@@ -23,7 +23,13 @@
+ #include "hw/core/cpu.h"
+ 
+ #define TYPE_HPPA_CPU "hppa-cpu"
+-#define TYPE_HPPA64_CPU "hppa64-cpu"
++
++#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
++#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
++
++#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
++#define TYPE_HPPA_CPU_PA_8500   HPPA_CPU_TYPE_NAME("pa-8500")
++#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
+ 
+ OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
+ 
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index f55e84529f..5d0d4de09e 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -801,13 +801,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP B160L workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+@@ -817,13 +817,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8700,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP C3700 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_C3700_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -833,13 +833,13 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8500,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP A400-44 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8500;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_A400_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -849,13 +849,18 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP 715/64 workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    /*
++     * Although the 715 workstation should use a 7100LC, it can be safely
++     * modeled as a 7300LC as the difference is a moving of the L1 data cache
++     * to on-chip.
++     */
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 4600708702..7f7ece6dc1 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -8,7 +8,7 @@
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+-    return "hppa";
++    return "pa-7300lc";
+ }
+ 
+ const char *get_elf_platform(CPUState *cs)
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 714f3bbdaf..910a919923 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -207,7 +207,9 @@ static void hppa_cpu_initfn(Object *obj)
+ {
+     CPUHPPAState *env = cpu_env(CPU(obj));
+ 
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
++    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8500) ||
++                   !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8700);
++
+ }
+ 
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+@@ -236,9 +238,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
+ {
+-    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
++    ObjectClass *oc;
++    char *typename;
++
++    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
++    oc = object_class_by_name(typename);
++    g_free(typename);
+ 
+-    return object_class_by_name(typename);
++    return oc;
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -314,12 +321,20 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+         .instance_init = hppa_cpu_initfn,
+-        .abstract = false,
++        .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
+     },
+     {
+-        .name = TYPE_HPPA64_CPU,
++        .name = TYPE_HPPA_CPU_PA_7300LC,
++        .parent = TYPE_HPPA_CPU,
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8500,
++        .parent = TYPE_HPPA_CPU,
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
+     },
+ };
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index b6a87d27ed..f871056fa4 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -48,7 +48,7 @@ static struct arch2cpu cpus_map[] = {
+     { "tricore", "tc1796" },
+     { "xtensa", "dc233c" },
+     { "xtensaeb", "fsf" },
+-    { "hppa", "hppa" },
++    { "hppa", "pa-7300lc" },
+     { "riscv64", "rv64" },
+     { "riscv32", "rv32" },
+     { "rx", "rx62n" },
+
+-- 
+2.52.0
 
 
