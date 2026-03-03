@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97986EDEBF0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC22EDEBF1
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 20:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxWhN-0006Du-L6; Tue, 03 Mar 2026 15:50:33 -0500
+	id 1vxWhJ-0006B7-35; Tue, 03 Mar 2026 15:50:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxWh8-00061C-SH
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:50:22 -0500
-Received: from p-east2-cluster6-host4-snip4-2.eps.apple.com ([57.103.76.143]
+ id 1vxWhE-00061u-42
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:50:24 -0500
+Received: from p-east2-cluster6-host2-snip4-10.eps.apple.com ([57.103.76.191]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxWh6-0000kX-7r
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:50:17 -0500
+ id 1vxWhB-0000mT-CM
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 15:50:23 -0500
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
- CA32318000BA; Tue,  3 Mar 2026 20:50:11 +0000 (UTC)
+ 4057D1800424; Tue,  3 Mar 2026 20:50:17 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772571015; x=1775163015;
- bh=mLmxlRPFcwMxrG9myQtY85BdAdnRcI/En8EyLObKCOE=;
+ s=sig1; t=1772571020; x=1775163020;
+ bh=Y3JlG+z3H9s3sHt/x0Tuo8JzSDhUpyc6A/I7Tj0fIfs=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=H/x2Y5w+bVpX+/2kexXHdhGfuMYyW2d+5691OLGODzf8P6nwEHRqNUVevTt1vfw1nMUmTPBhY3dWRZODNFr4n8lfiKiHI624teGiUMzueHwjKQ4VuadFyUbCWKhhQn/Wm+x2eOKQQW9jZeg7PhdLdAm+xOF/dd6Ntzu2IoAnoL6qJkHI1lwjD0QHxYnkjGkLyutC1qMu0POHHWUdz8Rz5SCI/i0DVUBvyI5LD0CCAyqauBYFWe+Gq3aQokEVuLFuvDIE4SK+39ddIy9oOsD7DVzyOvBXZ+zXqU6A2O0JZHWqBRlBAq8w2u1Az6Y4OnihYwDWrL+/xiaoewNGjUjHMQ==
+ b=K2ZEeZFrCO6lAp8Z35uUzwCr9wdNiXLgRDnSPV9+5NhBzxZFrvLU4QRljLMNJYmIcb314o5htSrm+EOCmLtOh7xM5OlcnNJMW1osmRxRkTWQ2e0yRQwvauYUMP7srYou4G8E/xLR1v0pGIFqsoKn3nYw2NAeKdJesffWch2V+xeYbCfDGk9WLdJITLzL8XlkMXzOJ3qc2WuK9qCL8Ru1Askk1ilrM3BlkBjDcZiwLeve3mdlbFj1IQH8WtIkU6c1h1tVCuHtVY5bg3W58gbt4Aa2HZ0Aah/ZnYBTkRUDityTTzw/Z/qzukedVh+4g1KwKfn7S0qU9KDMUJInAtmkfg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPSA id
- 42D0F180041F; Tue,  3 Mar 2026 20:50:09 +0000 (UTC)
+ CA480180012C; Tue,  3 Mar 2026 20:50:14 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -43,44 +43,43 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Roman Bolshakov <rbolshakov@ddn.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
  Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v3 4/9] whpx: i386: do not enable nested virt when
- kernel-irqchip=off
-Date: Tue,  3 Mar 2026 21:49:54 +0100
-Message-ID: <20260303204959.31156-5-mohamed@unpredictable.fr>
+Subject: [PATCH v3 7/9] whpx: make Hyper-V enlightenments configurable
+Date: Tue,  3 Mar 2026 21:49:57 +0100
+Message-ID: <20260303204959.31156-8-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260303204959.31156-1-mohamed@unpredictable.fr>
 References: <20260303204959.31156-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: XQF0VD8i8cg5ptZQ7nl3TbZmGrjT-d_p
-X-Proofpoint-ORIG-GUID: XQF0VD8i8cg5ptZQ7nl3TbZmGrjT-d_p
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE3MSBTYWx0ZWRfXzUhIdxsdSmxS
- 0LWceMtpO5ToV5z6ZW94NTN3DiaeTYrGwR9JvXukU23hNcnM3at4RauyYaUkcv4gso8vgDQ3K1z
- BEK3pHRQgqqflDdCEIbyQbsl2z0/JhWZwHVnF5jayHJEu4SLoj+4UDn+EEWzqTHu8dHyyWw8u0Z
- sb+u9SYqpYlOAKravLdEnqN/sn9V062LbJIVsDfD8B4sCOlcC+4bMeH+qbgdOtmERShTE6uEB+q
- OuIe16qicd6cUxagQ0LKr923tkAwAtPTMLlMFdzeOPvoPjuvbhYzvbBOANIpn3xR9d7XwxFbVDj
- 5BZH5vSQ7kyXcX209We8KhkE7hOc3lo4OtosbU9hfc+03nlq/XmUcdEr+UChck=
-X-Authority-Info-Out: v=2.4 cv=H4jWAuYi c=1 sm=1 tr=0 ts=69a74985
+X-Proofpoint-GUID: 5go7WhVrQWT7SmQIItTlHSkSemc4f3rO
+X-Proofpoint-ORIG-GUID: 5go7WhVrQWT7SmQIItTlHSkSemc4f3rO
+X-Authority-Info-Out: v=2.4 cv=K/gv3iWI c=1 sm=1 tr=0 ts=69a7498a
  cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=eKpLbWQDCUPTAuIwU-0A:9
+ a=BRqF0JgGwH6LvUrOcfoA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE3MSBTYWx0ZWRfX7AmmhhffwzN1
+ PndZkDZEJ73/y8B524hufZaFjwPpcfK511eu7rhhsdTQy1pVCVaAve9Oo5q8zL6jDUVHudIdf+5
+ iUlLV7FjsIP9W649vYqQvIyXL7Y2WKl/eZbU6sstGP7KIGyuknxABTqSnr6/1qYuoaoXl8cXc8o
+ bBbs8AqcvVrE4WBrIb46ki9iYlaJZUZE2UEYxr8bkmIVAtkrNL1i0T7Lmd6j3OdC42XG7Dg18F1
+ hz6jw4/YS65OMBBUVKPYsgH35tdYYrj2grI/1jDpSTWRdQvhOlARmOQRKSUsPgJ0x+hYlOjKbUR
+ h5oAmpEP67g4mfC8Rxzhwwy/cTiaebPcXRqG6nxJ0Xj09VI+N0dp4ren6b3HnA=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-03_03,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=942
- phishscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1030 suspectscore=0
- malwarescore=0 mlxscore=0 adultscore=0 spamscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ phishscore=0 spamscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603030171
-X-JNJ: AAAAAAABu+YEBTdDFPdVQRImmPkY1UQKHlpqqj5MzYW9cLCwWVNIt6OjJe3LLDeN/iuY34IDt47+5RJAU4AOtubpqwP7wkaPNM1gq4YFuArb+JdUgoLLOL07E5NOzd1wjIrtCV0EVLFkOV939+jWvBxzvbtygUENGzdfYMubghzpHNVRpvrzwIqHIlQYgpD3eepAm2fozOERkTgNOU6HObf+wVRRszg642TJ0g8tc2zmFpHn1LRg659QPK5vQFE9Oadb6X6RrxKoQ0dEOqkELcUAXv31Aol5zaASUGhzHCJPJZGYCj/F6zWxYbTGksglq/HvlMjhxoXDZUuBWKlE5zsNSLJFYWx8KnsMmO8KTXutmG4bsJG+sz87BH7coR46Dx+yK0J9tdPoJFbdKLpuCOPmtp9Qv8KoAvoom9nLxVJJTQoFmFPTVNSE5WgTBj1x7H8tXyt/OSXTIylEb4Fkbn9YaLxbSGsE9nhWAWXrkdLMXHtQEfQL1CYxNXAa348254wrKl0PaMH1xopFPm6CKoZy55/bYy+81VBs372dr4IbmFhSJ579Uz/TnxuEPzQZ6q/htfdW0XL66rpQeg6PmpjKvtrY80SyGNZqZ7dKOQuvXsFwjelEKFJYdfrWGcSD9h/uCrTxnfMgj4uz+/WqODr85rVCa36Kczoa4I8GMx/jGQBMHcCR3OTOP5io7tVOdiM0jmMn8MMPcLBPQ/9qU14MIq8PMHTkbVt4wBx1YbRD6Lzrt0ocAaVqpv2KtAGyU5C/MLXkD7Cf6u0y4kNr
-Received-SPF: pass client-ip=57.103.76.143;
+X-JNJ: AAAAAAABgpjdZUbs+sXZ7QqVpLNGzUeLzt0R7c4kM9ac/vIzkaNfbp+G+BNAZN5WsyO+Wtq924ylfKCEw6mfE2zvLFJzL+y5u0XBc/jU+HDhIKpebdmR43CanOpf5IQtNTbfs68QJKEYA0lXZ+sjPDJaT+yqXpXhQdXoty6SVowzE6gzH+0067SVkPQ3qUk6gMFqXOoGLzgMQKu9tK2rJA608OOvOzgejpzPVVlj5cwJqngoyTLyos8R1XYGAE6AeibKkVTnUePyKh4jfV3RkBhDltRlLpGZmOBgqOQvZROTkTv6h0n0blX/PRas758ejWkqKJQHh8dp4qBV7/mFtsN/p80QRAS1rhyAx0ELg1AsfvNrkDoIpPkfZBW5Tx+8bGmmX7Lk/kGBTJJI7G+BtW6x+yv4o8XmjkricjlEmOWvH28xyng7eYBXuKnXvz4jdtiggb6fQxnqJYOy9fnD3MuNMKe6e+3Mm3HHvkHIP5PZpzErl9Zw4f5+8QTeNeg0Pz6DolEY9L39zliUv+pwIUIVyEAKXFK4RAGtQ7vnGeOs+jDxP593tVeC5gRtClSEdvHbCOuKyyf5vtavqydfRRY8Qaz0ZDfO4HqmAN2T4obOkq0NlPegT8NdYjV9Vgl0FS9umhls1ylkTdZ3YszjXpyQU8k29MNhZxAYl4URP3QlCOa/rVyJHfrw9XIF0c3oULk7IcdD+hyLbgJYdo2mzLsE0yiq8Lrbwy3TAo/agIoRG3mlbTPutyeYVqcuKWGuMjg=
+Received-SPF: pass client-ip=57.103.76.191;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -98,29 +97,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This combination is not allowed as of build 26300.7939 and results in:
+Have them be a machine option instead of a CPU one, to have something available, even if not ideal...
 
-qemu-system-x86_64.exe: WHPX: Failed to setup partition, hr=c0350005
-qemu-system-x86_64.exe: failed to initialize whpx: Invalid argument
+The existing Hyper-V enlightenments configuration mechanism is part of per-CPU configuration, which happens too late for this.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- target/i386/whpx/whpx-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ accel/whpx/whpx-common.c       | 44 ++++++++++++++++++++++++++++++++++
+ include/system/whpx-internal.h |  4 ++++
+ target/i386/whpx/whpx-all.c    | 20 +++++++++-------
+ 3 files changed, 59 insertions(+), 9 deletions(-)
 
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 4863fc8663..dae9ff0800 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -25,6 +25,7 @@
+ #include "qapi/qapi-visit-common.h"
+ #include "migration/blocker.h"
+ #include "accel/accel-cpu-target.h"
++#include "qemu/target-info.h"
+ #include <winerror.h>
+ 
+ #include "system/whpx-internal.h"
+@@ -470,6 +471,41 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
+     }
+ }
+ 
++static void whpx_set_hyperv(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    struct whpx_state *whpx = &whpx_global;
++    OnOffAuto mode;
++
++    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
++        return;
++    }
++
++    switch (mode) {
++    case ON_OFF_AUTO_ON:
++        whpx->hyperv_enlightenments_allowed = true;
++        whpx->hyperv_enlightenments_required = true;
++        break;
++
++    case ON_OFF_AUTO_OFF:
++        whpx->hyperv_enlightenments_allowed = false;
++        whpx->hyperv_enlightenments_required = false;
++        break;
++
++    case ON_OFF_AUTO_AUTO:
++        whpx->hyperv_enlightenments_allowed = true;
++        whpx->hyperv_enlightenments_required = false;
++        break;
++    default:
++        /*
++         * The value was checked in visit_type_OnOffAuto() above. If
++         * we get here, then something is wrong in QEMU.
++         */
++        abort();
++    }
++}
++
+ static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
+@@ -498,6 +534,11 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "kernel-irqchip",
+         "Configure WHPX in-kernel irqchip");
++    object_class_property_add(oc, "hyperv", "OnOffAuto",
++        NULL, whpx_set_hyperv,
++        NULL, NULL);
++    object_class_property_set_description(oc, "hyperv",
++        "Configure Hyper-V enlightenments");
+ }
+ 
+ static void whpx_accel_instance_init(Object *obj)
+@@ -507,6 +548,9 @@ static void whpx_accel_instance_init(Object *obj)
+     memset(whpx, 0, sizeof(struct whpx_state));
+     /* Turn on kernel-irqchip, by default */
+     whpx->kernel_irqchip_allowed = true;
++
++    whpx->hyperv_enlightenments_allowed = true;
++    whpx->hyperv_enlightenments_required = false;
+ }
+ 
+ static const TypeInfo whpx_accel_type = {
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index e7b915ccbf..abea3ddeee 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -41,6 +41,10 @@ struct whpx_state {
+ 
+     bool kernel_irqchip_allowed;
+     bool kernel_irqchip_required;
++
++    bool hyperv_enlightenments_allowed;
++    bool hyperv_enlightenments_required;
++
+ };
+ 
+ extern struct whpx_state whpx_global;
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 8dd6f68ff9..4afcbbae25 100644
+index 915d79152e..4968a5a3e4 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2147,7 +2147,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
+@@ -2219,15 +2219,17 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         synthetic_features.Bank0.DirectSyntheticTimers = 1;
      }
  
--    if (processor_features.Bank1.NestedVirtSupport) {
-+    if (whpx_irqchip_in_kernel() && processor_features.Bank1.NestedVirtSupport) {
-         memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-         prop.NestedVirtualization = 1;
-         hr = whp_dispatch.WHvSetPartitionProperty(
+-    hr = whp_dispatch.WHvSetPartitionProperty(
+-            whpx->partition,
+-            WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
+-            &synthetic_features,
+-            sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to set synthetic features, hr=%08lx", hr);
+-        ret = -EINVAL;
+-        goto error;
++    if (whpx->hyperv_enlightenments_allowed) {
++        hr = whp_dispatch.WHvSetPartitionProperty(
++                whpx->partition,
++                WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
++                &synthetic_features,
++                sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
++        if (FAILED(hr)) {
++            error_report("WHPX: Failed to set synthetic features, hr=%08lx", hr);
++            ret = -EINVAL;
++            goto error;
++        }
+     }
+ 
+     /* Register for MSR and CPUID exits */
 -- 
 2.50.1 (Apple Git-155)
 
