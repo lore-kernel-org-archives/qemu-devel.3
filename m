@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DC6EDA687
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88580EDA687
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRUx-0005Br-VA; Tue, 03 Mar 2026 10:17:24 -0500
+	id 1vxRVF-0005aP-I6; Tue, 03 Mar 2026 10:17:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxRU9-0004sh-N3
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:16:44 -0500
+ id 1vxRUg-00053S-K0
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:09 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxRU6-00055U-AB
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:16:31 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772550968; cv=none; 
+ id 1vxRUb-00058z-K7
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:05 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772551000; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=fsDjL3Xg9LagPB+O/NJ3Nx0TI7aZcYWq5bIk9PFqx8mpINroAc20XaM96vQN0h3xWmJWCgu4soYYKnFDBi6Y7quyg9/c5uEydF+zac1w4HwNVBHZsm+B3RcxVQhsVG6Tra+UX76viCa1STF0+6ErEBv8oAV9TQFInuEHrXydk3Y=
+ b=kZhGBm3ZcKUqgNOekqVr+cr0p6x6UwN0WyrWo7qiwpp+P31rzPqpFKwX9MGutbhU5zvjh00f5hnHMgKEx6CtvtwML2n/u0+dLyZJHCzd6JxqWAxjSr6mH7G4grja/I6aq04k/Y4NpltCFtvY4DUeP5ydCrXR/cSaS0FpxmcQK9E=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772550968;
+ s=zohoarc; t=1772551000;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=niyYgQGaryUtB9WABCvYoibdRU+LTyVDwSsSyGa814I=; 
- b=jzjBOXlyepX6qibibNArV2KD1lhNmkQ66taLYNcJfxKw8B0Fr8JCpyj6syAidxmRYJlCKMZf5g/ISJE6AaFDYPpI/kKd1wRQLOYii97xHiFOsroiiDRsSZ3KUL+yIW8uUZR8waVSnqq56+C6XU6cHWB5XdpVzFOgShkAfftRvqc=
+ bh=YmWIp8TMRsBtMCv/RCBbdzFMUoCmpASD36uIGWmWBAQ=; 
+ b=F6WRUJOswMBIen2JKYR/zMQn6AXU6UCPXkGSeJKLmKTrP25gvyPH7LihICRjkUde1oMzNG8JbwUH84oZn/C7RU8NuapnhZK1MQD4g4s5IWIWIdD0FYhDxMrmCvrUknpfoQs6aTAaKy3g9UOlHTGI3YPFUUBl/uhb9R8GpbUQ2j4=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772550967; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772551000; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=niyYgQGaryUtB9WABCvYoibdRU+LTyVDwSsSyGa814I=;
- b=kM70q81/2LSyny1qZ39FICJmcodpapFYnPJcFE93QuRr+UlJH+MjDh4JZJABmwru
- oCyIYtEGKOJOwTNM7jYMcNv8S8VK/J7XgMmHRmhZ8fuJCtqWuplxlwDJ+AenAo6u7VU
- Im/GCzID8Qi8OzeMvHVJeye8EE+SuDC7ShpUnCIY=
-Received: by mx.zohomail.com with SMTPS id 1772550965474282.4726872821975;
- Tue, 3 Mar 2026 07:16:05 -0800 (PST)
+ bh=YmWIp8TMRsBtMCv/RCBbdzFMUoCmpASD36uIGWmWBAQ=;
+ b=h+9cPrXPoGpWUx/K9VXw45BD/Pq5u3Nq9W8tFySYLIP6o4JJ2OoIQBFCAioa0Bhr
+ Adgk4uFMG7hio3QYtJxeYAtiiRVZUM3L3w4aXJtsvQylrZa/7MauKOtzlKrZdXw+CKY
+ /b8olFGdgYhs96K+eu1d/4vISSpZYUpg3S6soCZQ=
+Received: by mx.zohomail.com with SMTPS id 1772550998271715.9500510426401;
+ Tue, 3 Mar 2026 07:16:38 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,10 +62,9 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v22 04/18] ui/gdk: Restore original context after new context
- creation
-Date: Tue,  3 Mar 2026 18:14:07 +0300
-Message-ID: <20260303151422.977399-5-dmitry.osipenko@collabora.com>
+Subject: [PATCH v22 09/18] virtio-gpu: Support asynchronous fencing
+Date: Tue,  3 Mar 2026 18:14:12 +0300
+Message-ID: <20260303151422.977399-10-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
 References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
@@ -98,50 +97,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get currently bound GL context when creating new GL context and restore
-it after the creation for consistency with behavior expected by virglrenderer
-that assumes context-creation doesn't switch context.
+Support asynchronous fencing feature of virglrenderer. It allows Qemu to
+handle fence as soon as it's signalled instead of periodically polling
+the fence status. This feature is required for enabling DRM context
+support in Qemu because legacy fencing mode isn't supported for DRM
+contexts in virglrenderer.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- ui/gtk-gl-area.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu-gl.c     |   5 ++
+ hw/display/virtio-gpu-virgl.c  | 127 +++++++++++++++++++++++++++++++++
+ include/hw/virtio/virtio-gpu.h |  11 +++
+ meson.build                    |   2 +
+ 4 files changed, 145 insertions(+)
 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index c709b2ce0f63..ce49000d3f17 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -250,11 +250,13 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
-                                         QEMUGLParams *params)
- {
-     VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
-+    GdkGLContext *ctx, *current_ctx;
-     GdkWindow *window;
--    GdkGLContext *ctx;
-     GError *err = NULL;
-     int major, minor;
- 
-+    current_ctx = gdk_gl_context_get_current();
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index b98ef2ef9877..3e0680880e14 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -169,6 +169,11 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+     if (gl->renderer_state >= RS_INITED) {
+ #if VIRGL_VERSION_MAJOR >= 1
+         qemu_bh_delete(gl->cmdq_resume_bh);
 +
-     window = gtk_widget_get_window(vc->gfx.drawing_area);
-     ctx = gdk_window_create_gl_context(window, &err);
-     if (err) {
-@@ -275,8 +277,12 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
++        if (gl->async_fence_bh) {
++            virtio_gpu_virgl_reset_async_fences(g);
++            qemu_bh_delete(gl->async_fence_bh);
++        }
+ #endif
+         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+             timer_free(gl->print_stats);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index f00c666f61f4..ae1880c358b2 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -24,6 +24,23 @@
  
-     gdk_gl_context_make_current(ctx);
-     gdk_gl_context_get_version(ctx, &major, &minor);
--    gdk_gl_context_clear_current();
--    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
+ #include <virglrenderer.h>
+ 
++/*
++ * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fixed
++ * in 1.1.0. Undefine bugged version of the macro and provide our own.
++ */
++#if defined(VIRGL_CHECK_VERSION) && \
++    VIRGL_VERSION_MAJOR == 1 && VIRGL_VERSION_MINOR < 1
++#undef VIRGL_CHECK_VERSION
++#endif
 +
-+    if (current_ctx) {
-+        gdk_gl_context_make_current(current_ctx);
-+    } else {
-+        gdk_gl_context_clear_current();
++#ifndef VIRGL_CHECK_VERSION
++#define VIRGL_CHECK_VERSION(major, minor, micro) \
++    (VIRGL_VERSION_MAJOR > (major) || \
++     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR > (minor) || \
++     VIRGL_VERSION_MAJOR == (major) && VIRGL_VERSION_MINOR == (minor) && \
++     VIRGL_VERSION_MICRO >= (micro))
++#endif
++
+ struct virtio_gpu_virgl_resource {
+     struct virtio_gpu_simple_resource base;
+     MemoryRegion *mr;
+@@ -1079,6 +1096,103 @@ static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+ }
+ #endif
+ 
++void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g)
++{
++    struct virtio_gpu_virgl_context_fence *f;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    while (!QSLIST_EMPTY(&gl->async_fenceq)) {
++        f = QSLIST_FIRST(&gl->async_fenceq);
++
++        QSLIST_REMOVE_HEAD(&gl->async_fenceq, next);
++
++        g_free(f);
 +    }
++}
++
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++static void virtio_gpu_virgl_async_fence_bh(void *opaque)
++{
++    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
++    struct virtio_gpu_ctrl_command *cmd, *tmp;
++    struct virtio_gpu_virgl_context_fence *f;
++    VirtIOGPU *g = opaque;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    if (gl->renderer_state != RS_INITED) {
++        return;
++    }
++
++    QSLIST_MOVE_ATOMIC(&async_fenceq, &gl->async_fenceq);
++
++    while (!QSLIST_EMPTY(&async_fenceq)) {
++        f = QSLIST_FIRST(&async_fenceq);
++
++        QSLIST_REMOVE_HEAD(&async_fenceq, next);
++
++        QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
++            /*
++             * the guest can end up emitting fences out of order
++             * so we should check all fenced cmds not just the first one.
++             */
++            if (cmd->cmd_hdr.fence_id > f->fence_id) {
++                continue;
++            }
++            if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
++                if (cmd->cmd_hdr.ring_idx != f->ring_idx) {
++                    continue;
++                }
++                if (cmd->cmd_hdr.ctx_id != f->ctx_id) {
++                    continue;
++                }
++            }
++            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
++            QTAILQ_REMOVE(&g->fenceq, cmd, next);
++            g_free(cmd);
++        }
++
++        trace_virtio_gpu_fence_resp(f->fence_id);
++        g_free(f);
++        g->inflight--;
++        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
++            trace_virtio_gpu_dec_inflight_fences(g->inflight);
++        }
++    }
++}
++
++static void
++virtio_gpu_virgl_push_async_fence(VirtIOGPU *g, uint32_t ctx_id,
++                                  uint32_t ring_idx, uint64_t fence_id)
++{
++    struct virtio_gpu_virgl_context_fence *f;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    f = g_new(struct virtio_gpu_virgl_context_fence, 1);
++    f->ctx_id = ctx_id;
++    f->ring_idx = ring_idx;
++    f->fence_id = fence_id;
++
++    QSLIST_INSERT_HEAD_ATOMIC(&gl->async_fenceq, f, next);
++
++    qemu_bh_schedule(gl->async_fence_bh);
++}
++
++static void virgl_write_async_fence(void *opaque, uint32_t fence)
++{
++    VirtIOGPU *g = opaque;
++
++    virtio_gpu_virgl_push_async_fence(g, 0, UINT32_MAX, fence);
++}
++
++static void virgl_write_async_context_fence(void *opaque, uint32_t ctx_id,
++                                            uint32_t ring_idx, uint64_t fence)
++{
++    VirtIOGPU *g = opaque;
++
++    virtio_gpu_virgl_push_async_fence(g, ctx_id, ring_idx, fence);
++}
++#endif
++
+ static virgl_renderer_gl_context
+ virgl_create_context(void *opaque, int scanout_idx,
+                      struct virgl_renderer_gl_ctx_param *params)
+@@ -1178,6 +1292,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+ void virtio_gpu_virgl_reset(VirtIOGPU *g)
+ {
+     virgl_renderer_reset();
++
++    virtio_gpu_virgl_reset_async_fences(g);
+ }
  
-     if (gd_cmp_gl_context_version(major, minor, params) == -1) {
-         /* created ctx version < requested version */
+ int virtio_gpu_virgl_init(VirtIOGPU *g)
+@@ -1190,6 +1306,12 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     if (qemu_egl_display) {
+         virtio_gpu_3d_cbs.version = 4;
+         virtio_gpu_3d_cbs.get_egl_display = virgl_get_egl_display;
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++        virtio_gpu_3d_cbs.write_fence         = virgl_write_async_fence;
++        virtio_gpu_3d_cbs.write_context_fence = virgl_write_async_context_fence;
++        flags |= VIRGL_RENDERER_ASYNC_FENCE_CB;
++        flags |= VIRGL_RENDERER_THREAD_SYNC;
++#endif
+     }
+ #endif
+ #ifdef VIRGL_RENDERER_D3D11_SHARE_TEXTURE
+@@ -1223,6 +1345,11 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     gl->cmdq_resume_bh = virtio_bh_io_new_guarded(DEVICE(g),
+                                                   virtio_gpu_virgl_resume_cmdq_bh,
+                                                   g);
++#if VIRGL_CHECK_VERSION(1, 1, 2)
++    gl->async_fence_bh = virtio_bh_io_new_guarded(DEVICE(g),
++                                                  virtio_gpu_virgl_async_fence_bh,
++                                                  g);
++#endif
+ #endif
+ 
+     return 0;
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 58e0f91fda65..16e9f6914f07 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -233,6 +233,13 @@ struct VirtIOGPUClass {
+                              Error **errp);
+ };
+ 
++struct virtio_gpu_virgl_context_fence {
++    uint32_t ctx_id;
++    uint32_t ring_idx;
++    uint64_t fence_id;
++    QSLIST_ENTRY(virtio_gpu_virgl_context_fence) next;
++};
++
+ /* VirtIOGPUGL renderer states */
+ typedef enum {
+     RS_START,       /* starting state */
+@@ -250,6 +257,9 @@ struct VirtIOGPUGL {
+     QEMUTimer *print_stats;
+ 
+     QEMUBH *cmdq_resume_bh;
++
++    QEMUBH *async_fence_bh;
++    QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+ };
+ 
+ struct VhostUserGPU {
+@@ -379,5 +389,6 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset(VirtIOGPU *g);
+ int virtio_gpu_virgl_init(VirtIOGPU *g);
+ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
++void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+ 
+ #endif
+diff --git a/meson.build b/meson.build
+index 0ce84d45e6f3..a8ed44d6b065 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2515,6 +2515,8 @@ config_host_data.set('CONFIG_VNC_JPEG', jpeg.found())
+ config_host_data.set('CONFIG_VNC_SASL', sasl.found())
+ if virgl.found()
+   config_host_data.set('VIRGL_VERSION_MAJOR', virgl.version().split('.')[0])
++  config_host_data.set('VIRGL_VERSION_MINOR', virgl.version().split('.')[1])
++  config_host_data.set('VIRGL_VERSION_MICRO', virgl.version().split('.')[2])
+ endif
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
 -- 
 2.52.0
 
