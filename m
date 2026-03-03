@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5ECEB3648
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 01:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CF3EB3641
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 01:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxENe-00053O-Dw; Mon, 02 Mar 2026 20:16:58 -0500
+	id 1vxENf-000549-Kv; Mon, 02 Mar 2026 20:16:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vxENL-0004zj-Gn
+ id 1vxENL-0004zn-He
  for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:40 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vxENF-00088F-2E
+ (envelope-from <gaosong@loongson.cn>) id 1vxENF-00088E-OK
  for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:37 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx36tqNqZpFOMWAA--.9848S3;
+ by gateway (Coremail) with SMTP id _____8BxEMBqNqZpE+MWAA--.9831S3;
  Tue, 03 Mar 2026 09:16:26 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx_8JfNqZpFmpNAA--.16102S4;
+ by front1 (Coremail) with SMTP id qMiowJCx_8JfNqZpFmpNAA--.16102S3;
  Tue, 03 Mar 2026 09:16:26 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 2/8] target/loongarch: Add full type support with
- query-cpu-model-expansion
-Date: Tue,  3 Mar 2026 08:50:55 +0800
-Message-Id: <20260303005101.3561064-3-gaosong@loongson.cn>
+Subject: [PULL 1/8] target/loongarch: Add missing vCPU features with QMP method
+Date: Tue,  3 Mar 2026 08:50:54 +0800
+Message-Id: <20260303005101.3561064-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260303005101.3561064-1-gaosong@loongson.cn>
 References: <20260303005101.3561064-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8JfNqZpFmpNAA--.16102S4
+X-CM-TRANSID: qMiowJCx_8JfNqZpFmpNAA--.16102S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,9 +66,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-On LoongArch with QMP command query-cpu-model-expansion, only static
-type is supported, full type is not supported. Here add full type support
-with QMP cpu model query command.
+Feature msgint and ptw is missing with QMP method, such as:
+  query-cpu-model-expansion type=static model={"name":"max"}
+
+Here add missing features in cpu_model_advertised_features array.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
@@ -79,19 +79,19 @@ Signed-off-by: Song Gao <gaosong@loongson.cn>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index f89f67ce47..6a95080fe4 100644
+index 1d8cd32f5f..f89f67ce47 100644
 --- a/target/loongarch/loongarch-qmp-cmds.c
 +++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -58,7 +58,8 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-     const char *name;
-     int i;
+@@ -41,7 +41,8 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ }
  
--    if (type != CPU_MODEL_EXPANSION_TYPE_STATIC) {
-+    if ((type != CPU_MODEL_EXPANSION_TYPE_STATIC) &&
-+        (type != CPU_MODEL_EXPANSION_TYPE_FULL)) {
-         error_setg(errp, "The requested expansion type is not supported");
-         return NULL;
-     }
+ static const char *cpu_model_advertised_features[] = {
+-    "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", "kvm-steal-time", NULL
++    "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", "kvm-steal-time", "msgint",
++    "ptw", NULL
+ };
+ 
+ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
 -- 
 2.52.0
 
