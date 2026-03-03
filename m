@@ -4,123 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D52EEC0463
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBBEEC048B
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMbg-0007lS-4I; Tue, 03 Mar 2026 05:04:00 -0500
+	id 1vxMdZ-0008SZ-Aw; Tue, 03 Mar 2026 05:05:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vxMbe-0007lF-Gb
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:03:58 -0500
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxMdW-0008Rn-Tc
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:05:55 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vxMbc-0003au-Tn
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:03:58 -0500
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-506a1b23c05so65122661cf.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 02:03:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772532232; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxMdV-0004VU-B1
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:05:54 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64ad46a44easo4589113d50.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 02:05:52 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772532352; cv=none;
  d=google.com; s=arc-20240605;
- b=XOrXpmuxBJ5Ci7HSpJzXveXW+FD7//Lz1HAzm0qHFHXgOB6m+Qx29tMYCls9Ap5ZJ5
- KV4giW5YqMbfkH57bUPjcDZmQKXnUZRFurag7L3l6Ad4XmGhUdyO8t/ji/Rk4KL9I8kR
- XPzWiTOf8n/MINkb04BXVXAUFUR1dRpT2M4yiD8D9ECMfs5YJsqkJm2ztzN05pwcCoRA
- DCDxJ857SW1KH29/FdsCdqnqwlVXnl7dtEABZ24Fvb6vzanmDthM1TRfL7uw3gTKjmne
- G3+b6uwk5S3pNDk6Yc40Ou+rDd+YXmrDzjmtc8iYZYsM5da2ubbTU5/lrfoS4dpgwS+N
- D/1A==
+ b=gimbIlcCF1Hf3L8JYIOgH7/YIg0QEmkt6nBUEmKm7bQIp45c7yqiJbHXlTZc9RJ3bl
+ 4vVAuul6XBqc1keKopheaRy8Utny2GG7ywkiZXtPssTSJllOkMJb0x2E8KP5dzVxeLRa
+ oVmSnKBDoojPZX5xWaoG2DHIRpvlkOdl12mXtIl59ex9v8PFQNJwIYNmSKEpIpGQlQtW
+ GaDLVnbo1XnVYJ9+ROiHzHBM+nbrKELiqh+u8F1IFXzD/4s0os63Ulsij4B89vjXrIcR
+ pgV4UIEnwxr80GWlYVxT7Bs69n5cokNdkCpPGNQmcQL0N6UR5Xjlnb6ff0Qv1CTMYM/4
+ aeyA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=wLUlowBlfngB2jnDMYXDdpJO5FyXbVX2yiCbAb0KDdI=;
- fh=77h/AplD1uXQRVNC+PY/QlMUYbaYNuAq9ChcTIRorvI=;
- b=Crkd8MOVzwGumwitMzfpvztauYugqrciWn33bJtjDn6ITFgKwI9CpxU4Eh/vbj/p32
- 2sHAqeJuri1Eo7dPrQa0Al9lma9g5S1D+MmJUG8VNJDqtKNKMLKXk5DHioSpZV6vANRh
- SSRe9N/ayPK6yw0TGHzvXqgMmbjVHF7hEGG3OKLPsy0AUaS5ZbqZY5n46/iqbcm3W81m
- /U19y1fadzen7xCc3E+QgkeFsR/2k7q/Zlw0ig/SW5lW91SLaAXJb5KlU/gsdCPoit+0
- +ciO4Xyi8e/q7SyakrqbQyDxvLYI2d0dQUkl8upeRo7KO1PWFTul6ekSlqX4qZEtMDrm
- igkg==; darn=nongnu.org
+ bh=aNuxz4n4+KbIzJ44/0gryLsO0yaOIawHyhJIwBoOn+8=;
+ fh=G0XyrnbfJb+gtQB9Ni02xOrN748RkeIGIfEaxMkh8xE=;
+ b=SqRuB+hbXMFVaUfMK8bJoBQoo+uZIN0QVB92MUKn1HY+NBhV8VrZQLn1z7qmdXPhlC
+ hOYYOOgrvyqhuXaqahCRq6wxblfblWQNo7dJiQbJUA0I4HVBnyytUUIfvdtmmNcaRsaD
+ bYzWhzhqV+ezchvYcW59n+X8hCmk9EUIcsI7LoGjUcpc4b2HNpgjkSUAfqYWm8mohkuj
+ GDK7PSPam6+qaUSVGrCIwAIOCrNEoN5E5NRpThXD5AmT7kGt74anVH5Tnii5eTHafZdR
+ AwwhIQUYOg3CTg34rbvxpRuKWvhy0AKr2Rm+HHri06eymWHr2IFXV9ejvi7HVdZU2y4k
+ 5ikg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772532232; x=1773137032; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772532352; x=1773137152; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wLUlowBlfngB2jnDMYXDdpJO5FyXbVX2yiCbAb0KDdI=;
- b=QcmXjK64151AbBXUunk4YvysxNp3T/ur7AElR2BKTlFaqo41vlueS5TU0e0epa4Q1M
- hN/qPrQy95Ct+/6fxfgpJc/BkgE0+zYVu9Krgy2N7SS8zYm727NunMeZs3aTm6MmNouu
- WGOV1zorK+YlSxmV8feQL/10Ozl42NhrSIvg9ty4mEC1v2z2F/uVh7KBSnsmPyH3g/SX
- fJ7ea10mNhYHfDraP1uOVWDMphsEE3TckzgqbL5Hl4n22+XPsAdSCmupx8EBiSB0atWW
- 2JmwM2kI7XVVPAVPEUPE/MWGtIYppz8h8Wc1M/uWSIHDFSmUkOdXypY1mKQ4Kv5UaxuV
- 3HYw==
+ bh=aNuxz4n4+KbIzJ44/0gryLsO0yaOIawHyhJIwBoOn+8=;
+ b=gJKGe4Eu4QuruFS2cftyR+MfF738hr4O3ialw6IicVXV6VH6CZvefpJI1ImlcAfWtQ
+ tL6ttqqRDLcJrM1fiT5QwElqMaX/qzVmxPdStQtgIY06hlGC1h15kQYNTEYHXhdwo+Ds
+ yhijDHEEFyJvFsr2pjDEfdbK/fwHwYp+Z2LNOXOyiNoPsq2xgsLGqM7iRVYlnL3FwQO7
+ zRhakvc+dHg1fCKu28e2tH5r3fEjV4ZtuaBsago/s5x77K2mtM5a+AWiJLa4JJJ5invS
+ P0p22xmrNZAnorPBT90z3R7G97fxBp9+d9EvE8Rzbwa8fqSsxAurkcb9v4AH/TEJbF4H
+ Kedw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772532232; x=1773137032;
+ d=1e100.net; s=20230601; t=1772532352; x=1773137152;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wLUlowBlfngB2jnDMYXDdpJO5FyXbVX2yiCbAb0KDdI=;
- b=nAcC4N6liC3wkCvRz8YziqVL5FRafJsNJjLmclVX/3IkD7GSNbWEkSpW+0d3WRE15U
- 4ihV11Nht2GBM+uGP9mPD37TPHXmbDB3yikHD/Z+ETJWnGZocNlydW3Hm1UtS8QI5z5y
- gPWqr8wtL1ZtZoprw6zHOMDYAiNEmlQ7+GsZ7t4JRSnGQ/28q5/EzDl/7Y0cw1U5o8Pf
- hUb2EiiIDxuaFogU4s9/DRZnimPU4j4obg+/z6lyiDof9mHRIEGcLILtT7DtUxrd+3a+
- kA55mLwKXUA0jYesFkFW7DmlszUJAL9IMnoeSxA8nn7zdWlKCXQaTo9VBMKoo6K8Il63
- Yq8Q==
+ bh=aNuxz4n4+KbIzJ44/0gryLsO0yaOIawHyhJIwBoOn+8=;
+ b=a7v9ULoOfdgoU1Bf5YMMTGoiojcK9uNlAMRIZYB07AK0HHCw9fmoqXpqYE+mpuTJWy
+ AAzvx2wDn0iouS/u8FddHcj601oIQVWCscOzAuVKR5CDfYWjyBhL3RspKdt7mVYs0GzI
+ IdUWnP7Xq15EzngnyuidaBajlZOG5UGry/QrHrfZhwiVEDI+UdPjBUp2/LtvLoWrdjyJ
+ v2vCALK3wMCKxxD6Ytx+Nx+ywvVU1IHQ/HjdC4qxj7TgXbULfu15tUCt1NdHEzrQ6XmY
+ eeFCVpyOcwmsl2Fu6iZU094DTDGelnR6wEm16cgSvm30zJ8SPaqbZrkb8nddqTbYYi8z
+ iCJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCqucjeVGmRrvWSbzDdASDDNNMmEJfruTYIfi0EjzolCQb9CF4C68tF9OdKZNeLboUhtSA24GpCsag@nongnu.org
-X-Gm-Message-State: AOJu0YzppNpwGTEb/9zIFwobtrXTfliqrUgwB+pa/a5ZHTJUcdYy1/4S
- r2l5Wz9QKrRZjbfRf6xaszzQFudeHxScIxxU9cHyoysXL1F0gJ1qPVH+oMClbQ324v8qiU5lkyG
- v47eSQRfRtoErOpoSVi6UK9lQ6/mH6lM=
-X-Gm-Gg: ATEYQzz7yYTUFfT6a/skamuj97rENS5UCmcCPsMFVBwpRi0X61fni0Hvs05SanE1YRQ
- /VS2sTbL7HeBYc28pUhKi0H8v4mwtTgGycZplaDJf8A6Yze8w719lhaUB6GmkG1rA5UIgOy/KRv
- 0PE7OxHGRuUfhPJ14RAc7bhYbSx4hmf6FTY9F0MEQu/SQ5kp5lBib2RpHmzB15fK46CW2VRxhoB
- LGinDJY5LV2WrLlO2yowhQA4Kb08tRLXmpmqP6a/7TsKvkPzrm91niuIldjpm0UTWK+dbyeH4Az
- H1TwghCwRxLQSdPg/68y9vL75t4gqDWMw626rsQ=
-X-Received: by 2002:ac8:570f:0:b0:501:17cb:bfbc with SMTP id
- d75a77b69052e-507527ca62fmr192991661cf.33.1772532232026; Tue, 03 Mar 2026
- 02:03:52 -0800 (PST)
+ AJvYcCX1xaTPTVaN8WRNpwWLtm1GI9W3ozif46/vN/CajooKeqf9QeVzOMUgi0fJJ6Qo82YjbGGKmGXurO8M@nongnu.org
+X-Gm-Message-State: AOJu0YzCF5ZJJu5uHATreAaYOy5JmvXpVrUmM3XoQs5MQKmBjJJg+vhX
+ 3xYFvavTV2GzmOg8qNul7M43nt4uLzqYOonbVwrTDSCO3jzeqOgl1dBjvBlrqPwGzCrhBBN+2eo
+ bJzKRr2MJf0MQQvFlAWS2dfAXNP9ucM2CvPHvR5FCbg==
+X-Gm-Gg: ATEYQzw/r3+DcJLQjW9OOsi/Log2pgLX2JrsucxEMxe35cvjpg6ud3fugl3BOCyyqBn
+ +zaY4tt4EA4bQTsdAX8O06nd3UUVDRu8jlzyfJ8Zpc3WiSCartJYwMRcCeZzcwYgCI9SjcQeMkp
+ TqIttiHDO5nMyC+T5v5FusaAsthvGxCkuZAxxfRMUSl7A1cdcZ/OH+fHunKBSpz0waxCu/OfVtw
+ gCziV33euE8sx9OOFC4GErSTiVGuQFbNqbMRLE4Ob/glLlYdxFifL5NZQ0l1tc1IKEygEzUKnx8
+ vjumsitwpe7rhGJb2tNHmWFAxmKADDwybIlmxyFIdF0+Zb4iGhdrMKiV8Bjzfjlyljs=
+X-Received: by 2002:a53:b4cd:0:b0:64c:a3d5:631 with SMTP id
+ 956f58d0204a3-64cc22bea64mr9792544d50.63.1772532351953; Tue, 03 Mar 2026
+ 02:05:51 -0800 (PST)
 MIME-Version: 1.0
-References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
- <20260302145920.735423-5-dmitry.osipenko@collabora.com>
-In-Reply-To: <20260302145920.735423-5-dmitry.osipenko@collabora.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 3 Mar 2026 11:03:40 +0100
-X-Gm-Features: AaiRm52ZUMh0R1fgZRRsluzCeZCyrRiSrfqyKcR1LSSfD48YfYjVeO_Nznzpt8U
-Message-ID: <CAJ+F1C+KL2dAYGurXAk3Fc6TLNRa=FQU6U2=UqRkdeBw1uQRbw@mail.gmail.com>
-Subject: Re: [PATCH v21 04/18] ui/gdk: Restore original context after new
- context creation
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
+References: <20260303012054.484837-1-yodel.eldar@yodel.dev>
+ <aaadd0B4kP9amEbz@redhat.com>
+ <CAFEAcA_YMukxSh0YWsxADasT69BZ=BR1Q1NkGeGWzjXQoUifSg@mail.gmail.com>
+ <aaaxZKWz7NlJSD2I@redhat.com>
+In-Reply-To: <aaaxZKWz7NlJSD2I@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Mar 2026 10:05:40 +0000
+X-Gm-Features: AaiRm50AXUE2YxImkL0EYe1-83KW-kfXkowQZr4cUBzhUh2AZXC9CAwsMMpIz2w
+Message-ID: <CAFEAcA_nCSah+orZrMvsit=iWWp8o9J_Y8Fg7sMJP7XeV0_GBg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] configure: Use clang for sanitizer builds or
+ disable Werror
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>, 
- Sergio Lopez Pascual <slp@redhat.com>, Gert Wollny <gert.wollny@collabora.com>,
- qemu-devel@nongnu.org, 
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>, 
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>, 
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, 
- Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
- Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,64 +124,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 2, 2026 at 4:04=E2=80=AFPM Dmitry Osipenko
-<dmitry.osipenko@collabora.com> wrote:
+On Tue, 3 Mar 2026 at 10:01, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
 >
-> Get currently bound GL context when creating new GL context and restore
-> it after the creation for consistency with behavior expected by virglrend=
-erer
-> that assumes context-creation doesn't switch context.
+> On Tue, Mar 03, 2026 at 09:36:45AM +0000, Peter Maydell wrote:
+> > On Tue, 3 Mar 2026 at 08:41, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
+om> wrote:
+> > > GCC documents the possibility of false positives, but I would conside=
+r
+> > > that caveat to apply to CLang too. It may simply have different false
+> > > positives or at a lower rate.
+> >
+> > I'm told that clang/LLVM doesn't have any "middle-end warnings", so
+> > it won't have the same problem that the sanitizers might change IR code
+> > in a way that results in a warning firing that didn't before. So I
+> > think this "sanitizers change warning behaviour" is specific to GCC.
+> >
+> > > If using sanitizers, it is expected behaviour that there can be false
+> > > positives, and if the user doesn't want the build to break as a resul=
+t
+> > > of that, then *the user* can choose to disable -Werror with the suita=
+ble
+> > > configure warnings.
+> >
+> > It is expected *for GCC*. I don't think it's expected for LLVM/clang.
 >
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Oh, so you mean CLang errors from sanitizers are not influenced by
+> the use of -Werror ?
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+I mean that (in my understanding) whether you use -fsanitizer=3D... or not
+does not affect the set of compile time warnings that clang emits.
+Sanitizer errors themselves are runtime ones and the controls on what
+the runtime does when it hits a sanitizer error are entirely different.
 
-> ---
->  ui/gtk-gl-area.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
->
-> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-> index c709b2ce0f63..ce49000d3f17 100644
-> --- a/ui/gtk-gl-area.c
-> +++ b/ui/gtk-gl-area.c
-> @@ -250,11 +250,13 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCt=
-x *dgc,
->                                          QEMUGLParams *params)
->  {
->      VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc);
-> +    GdkGLContext *ctx, *current_ctx;
->      GdkWindow *window;
-> -    GdkGLContext *ctx;
->      GError *err =3D NULL;
->      int major, minor;
->
-> +    current_ctx =3D gdk_gl_context_get_current();
-> +
->      window =3D gtk_widget_get_window(vc->gfx.drawing_area);
->      ctx =3D gdk_window_create_gl_context(window, &err);
->      if (err) {
-> @@ -275,8 +277,12 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx=
- *dgc,
->
->      gdk_gl_context_make_current(ctx);
->      gdk_gl_context_get_version(ctx, &major, &minor);
-> -    gdk_gl_context_clear_current();
-> -    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-> +
-> +    if (current_ctx) {
-> +        gdk_gl_context_make_current(current_ctx);
-> +    } else {
-> +        gdk_gl_context_clear_current();
-> +    }
->
->      if (gd_cmp_gl_context_version(major, minor, params) =3D=3D -1) {
->          /* created ctx version < requested version */
-> --
-> 2.52.0
->
->
+This specific case we're seeing with the rtl8139 code is not
+a sanitizer warning, it's a plain old -Wstringop-overflow
+compiler warning. The sanitizer only affects things because in gcc
+the sanitizer pass is in a place in codegen which happens before some
+warnings are emitted, so the things it does to the IR can affect
+what warnings are generated.
 
-
---=20
-Marc-Andr=C3=A9 Lureau
+thanks
+-- PMM
 
