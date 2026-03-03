@@ -4,99 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A97EC0463
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13B88EC0463
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMIF-0000Hu-Vj; Tue, 03 Mar 2026 04:43:56 -0500
+	id 1vxMIU-0000Ix-JP; Tue, 03 Mar 2026 04:44:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMIC-0000HX-R4
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:43:52 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1vxMIR-0000Im-ME
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:44:07 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMIA-0007qi-Ui
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:43:52 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64ad019bbd4so4788993d50.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:43:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772531029; cv=none;
+ id 1vxMIQ-00086i-4A
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:44:07 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64ad019bbd4so4789206d50.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:44:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772531045; cv=none;
  d=google.com; s=arc-20240605;
- b=UilmDnAr/tCauR301TrFgfWqCuaG6Efd61vDdGHuA9er+qdFKD15t1zxqZNM0CaKP6
- BPWZSplHgGRDt9QFfwRQdfXLLcp2xUAnRigWTdXCloBb5rgVVmpmZfUw9+FUINnerZMr
- 0grj+5FukFjnN27pYJXhaibWeMdqso+7DR6wnJbNlF6d5FgctsHLmR72+fQE+zSkVSmD
- yJDBedOmvhL3KnJrUu5Y0JK6G75wR3Z5Xw/jVD0XgKAjAzBqfUwFAObId0wNdc2GQBzr
- ImIEVEhulf/ZYERGUVz0ULwXd1LQnT/X95E04Zknovbqi+lEDSpJCCunfAINUNZfzpLm
- nJOQ==
+ b=QZeAvBRVrl6ZrZgY7SCiHf7jV5z6Zz52cL7TF7CJw1MyQj3JuDuAAKA1tuM6PlBAdf
+ Trp+daMj137ZlGkYUbwL5hbIK2glM6UunBZLi93WpTl4yjBBfZXCWxNVZ7r52BrPAyId
+ dMu8J5SewoqoNclc0cFzL8kOUgh373mfvPt8JrdiXhiyYynjErJLrsDGBWH5xUQV4CPy
+ Xy4hwX5owxbT7d5e87ZskcRfiqEro4oNMvxQkqTkUn7xbYuEmv8yG6r8fiajXv36C+EO
+ HAN22W/Jq10+YFDsN8gEUvsrKIRDauDefddqIy9/Zz2NWY2knQHvC6PtV3IMSnpjsgw7
+ Lxzg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Y1bTjwLv0JGYOy+rdgp84f/qyf4hcN3l3zuABPewSvg=;
- fh=+4lzQaMBfWrqkbnjBGVFOfNZa4niVxbsqWTgtU6L+wA=;
- b=VD2tS5LL5ntJn3sErsiWY6l7YOY1piNatfNkHpOJ42qGN4FZMeeL7iRX0l682so6nZ
- H/+UQFX0CpnUOslT6++2BVVsyV4OVAyqm6LyWT/ibymkoaPdFUrsxn9SNhfqVR9sjE1k
- 64USx3tPg/juC+kZgzhlzUP+YCuZ1Y4cmukt7FSc3R8Y15XPuJ578RD0i5VcFkaLF7X5
- OPV9ztBAuWzOPfXXlG/tmPTy92TMuE1gauXhA3qfQDGSeYsUkpCCReyD0Qo68xQff8Ph
- 7KM7wupSzIYxSlQ+b465+t6yuuzg/YpnmHW1jmpN4H6kje4D4KH0NUwQP3d/ijuzFJNq
- VpsA==; darn=nongnu.org
+ bh=j55or0Pb5Ij+55T7oxDHOYLL8N3t3fm5NXOQe9C7JvU=;
+ fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
+ b=b5c/GJlWKChaf+lIdfhlsT0UKnNXLYntnZF7aPjsMx/3Z20lV0PwAxOCQgzxyrzGVd
+ 6pIpwTqBCRr+oBHmQnuCxxU7eZGPyawS0K8QYrEVJCQo3qHnNkbelng1ucWa98EV9hvX
+ pn5589i4W8hAZdhNzq1+6/uYlx1NY7B/Me6qCHiJUCc1rs6lVgtjRBeSAKeA/1PUgFkd
+ QwECcIhtHnp2XxolTD0SaYPlZfzR34DlqxeqQ70cjnqr1J4ZiZISbNqNS61IlVKOOn/4
+ 1QDwkYNdXUSgZKL6JECzXECJsmlpUZXGhulga8ByMEo5TmPZciFjUQBO64T0q98Qx9DG
+ 5LNA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772531029; x=1773135829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772531045; x=1773135845; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Y1bTjwLv0JGYOy+rdgp84f/qyf4hcN3l3zuABPewSvg=;
- b=xiQ6hMlZKa6wC36L7yn4cTqGi+3EQVig69ftGe/AD/iqTqsNP7oBDaF80ml9JMrFE9
- IJPBbOGdvL8h2mhD5cAvh790mw8GUqmtONy5x4oFi5yYhtf+9gLUkERtbJYlLnuLXIRQ
- gszWkQddVO3qCZtvo7RUW4i/VpD7ER1fu/XkiPbolVEYp751BUGoLpPiABFOXHUFuEyn
- oU7ZpvFIO+FsRzODWTTuegrNBEk/zn4slGGYY0wswUFlb9/+clxOgHNDS3AbzgtEp+we
- zNG6BJ63Lb4ILKNuYCEklhkR6tHNGQnLaXw/689cyt3VMduOUcyEva63h2eNGwu2JrNU
- oXhw==
+ bh=j55or0Pb5Ij+55T7oxDHOYLL8N3t3fm5NXOQe9C7JvU=;
+ b=v/HCXNO/eY7+s/+XCsSmfvaPHZphmdHofT21d7NeDT4wuwd2k/wsTKGUH78Lz51IQj
+ t3dYy1K1BVFgs0aiiReoiO0SY/dmtRjiEscwER3V7fKrJ/oivpVQmLcypXzUb3Wvy9D/
+ wiR9dD/pOgmGaG9zIGUSKTQrI+qHBl9Bhh2/p3QuNRkDeELVWd1XgS9atgD9aImMkNxS
+ 0TImXRGostLNf/wA0+NPd4dMzu7wAP04rzsHLkv+U/u2tfeI6AQbacb93M75DTUWwp86
+ noOoQnpHX5odSjsf2FYwor/6jYI4Av3zZaECwhkfW2jEo3HDd2rElhPvY8C8mSQNIHXK
+ 68DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772531029; x=1773135829;
+ d=1e100.net; s=20230601; t=1772531045; x=1773135845;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y1bTjwLv0JGYOy+rdgp84f/qyf4hcN3l3zuABPewSvg=;
- b=l2in/QqxH+Maxw1jK9we35f1mMY/Vb1lryhgzYcGiZ5Nh3HgFPLM/BOqAx35Ih2EV6
- YJFFeOMnkmJujmClLtc6F7KR7wm+8ul49M1cjJL3GxoJXqj9du1UBdIgZT8KmS+q/0Ug
- /pbPJgCi2RPevNF9KyiM7lZW4pUO+vInT2sb8SEztM35+t7b9D/bsyECbNDPhie0evPg
- mtAqhWxsuozIGZ7WD7ejyBzZt29BccDKq+Zxr64KrDvR0TLi4Fmk45N3VKBbEoka1Hs3
- GdCHN0A9BJfSN0CwlP4xPiWlZ5ca/T3X/XKN+fGaM9+2Vx522Vu0/RE+MSLGud/0IU/G
- a6OA==
-X-Gm-Message-State: AOJu0YynLOOPzrf8V0xZr5vhlUdlGBGM690zounFTth3+HFX3esUOjse
- 4pFjPg/RoTqiAEo64r6KK4gd5Ny7QxfVqVSSOr+JktbE5bqa4DfjdN89W8zfB9KsdYgXEJfNmpY
- DBcoM9uF7WEpnS3+bjC9MsXR17gUmgqRYdEwlbabwWw==
-X-Gm-Gg: ATEYQzyvx6Gh27/YZ4yQryxO3j/NLBjhF02j89xBzZIaHdTdi8iH1NeovYUcsXI9MOc
- SjKreOV071T670KqWBKXgN1E4XCD1dvd4KRgG4Z60xlpizhKcRXVm3nsPI+iC9QnmwBDBH/1VUw
- qqXYC5DAgCODQpVMCVkqs1cLvu1foJlxHzjYavgE6Dy30MlE+SlRwxsoE829Yz9uDhAM9m+ji2m
- H5fBJCGmB2V7LcyXh2YUt4mKU92dbMLEPaL4eg5OmgWJeS2sro1O2caATxiX/lOuRmZHicRrJJb
- wdklYQdojLBeJRsU1OkGYAYHChRAB7PTnBaIG+Cl53Wcr8Tw1IUKTmse7xkKNud03RI=
-X-Received: by 2002:a05:690e:1616:b0:649:e9a1:c6b6 with SMTP id
- 956f58d0204a3-64cc20e5d1cmr10278614d50.30.1772531029358; Tue, 03 Mar 2026
- 01:43:49 -0800 (PST)
+ bh=j55or0Pb5Ij+55T7oxDHOYLL8N3t3fm5NXOQe9C7JvU=;
+ b=JKk5DZ8V7x0e4DBFxcALU2yf+T0u45haX3XrEPQhw7dCTIZBNW34Ah48AO6bzVWjcm
+ 7X7aQ+7TmXnMs3xJAeZf/WkfGZ6ijuHwoUmXZJDy9CDvourWAiCKyjTKjNODEbxjjyqp
+ IEfQp6xlzaSNqGxPyOiB3bkfEtvqftKNuvF0K2HW93PgWTCcW0dAMfZhTuUb68nx3Ixp
+ tce/CiPwDyrFgsr89yzPTWqgZbWz0aoTAbJkXkCGIO5lx9r6Tu3o2tb+mrp6Fvqb3OA2
+ BqnQUEQi/7zJPUuGddPbXFY51G3Swm0hgl++u/cBSkINZxe01ULphbO796EwFTl4ZeWt
+ CEMQ==
+X-Gm-Message-State: AOJu0YyCbL56swg3eNGnyseHNjzQNKHni00fPNUBTO4IzSEmDVBk85w8
+ Hlc8m19ABWqIrqo6rPX2+am+2CHRSSwBSPGSXa0FZAlrtceKj6rFkpLyVI/n/lx70gTt+pAaiIE
+ xRgoNFpqt/Lr7AoPu0YBP8ElDhWtbPVCce0Uau4in/J9ib9eMDZLH
+X-Gm-Gg: ATEYQzx+Il7S86r+T0lWtFCYtj7OysdLuNJwmLpv/LElfjwGdVOodyKSxnrRfEu0/NH
+ D3b9iF6dvbGhntJW1T+MqdKVZBmy2Q4dtSIn1Z+D8Xuxt1S4LZI7mNvDV+QC45EVOFacPOgxVDe
+ rIWfF5xfX3YoMtyPuAzGYrdbfExgCFWZFREBo/9klVYOU7+94F7w/dDeZOmosK2HTX9kid/AH3X
+ swN23Ulo9o1VkQg4rgfYxQ10/cj1EaLvfwSTt9/v2uBLgq8XPxwKZn3u2Qpji0xrzGTvOaZH4tC
+ eEy4RnCQ6R13KnCJthIfodiiOk3kWvgVPallqKYLZ7ym6ESGBvbHTjzLM/RC8AFYYX2DFnMupZ6
+ gjA==
+X-Received: by 2002:a53:b003:0:b0:64a:e781:891f with SMTP id
+ 956f58d0204a3-64cc20e4c38mr8603550d50.28.1772531044978; Tue, 03 Mar 2026
+ 01:44:04 -0800 (PST)
 MIME-Version: 1.0
-References: <20260302042115.83410-1-imp@bsdimp.com>
-In-Reply-To: <20260302042115.83410-1-imp@bsdimp.com>
+References: <20260302123413.274700-1-thuth@redhat.com>
+In-Reply-To: <20260302123413.274700-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 09:43:37 +0000
-X-Gm-Features: AaiRm52AfWNGM849qYBc8PZg9NBJgnJsOCyrsc2AYY4fKgjBQJGaxUuQ-FQXf_0
-Message-ID: <CAFEAcA9jZEYR1xFCVbjTWF5_bOaSXFVSJ-BAWSHdovgfb0ZLbA@mail.gmail.com>
-Subject: Re: [PULL 00/27] Bsd user 2026q1 upstream patches
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org, Reinoud Zandijk <reinoud@netbsd.org>, 
- Ryo ONODERA <ryoon@netbsd.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>, Brad Smith <brad@comstyle.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Riku Voipio <riku.voipio@iki.fi>
+Date: Tue, 3 Mar 2026 09:43:53 +0000
+X-Gm-Features: AaiRm50dPtGvitO-oiAz1PuCYhJVW04_wPtg-XP5Hl1opzWdKpgTkD5McaQtvEI
+Message-ID: <CAFEAcA_iytyep8dqOx8A9GWrrRRT6PeTicO1yQ1fBr9re483xw@mail.gmail.com>
+Subject: Re: [PULL 00/10] microblazeel removal, improved docker detection, etc.
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,7 +114,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Mar 2026 at 04:23, Warner Losh <imp@bsdimp.com> wrote:
+On Mon, 2 Mar 2026 at 12:34, Thomas Huth <thuth@redhat.com> wrote:
+>
+>  Hi Peter!
 >
 > The following changes since commit ffcf1a7981793973ffbd8100a7c3c6042d02ae23:
 >
@@ -127,27 +124,18 @@ On Mon, 2 Mar 2026 at 04:23, Warner Losh <imp@bsdimp.com> wrote:
 >
 > are available in the Git repository at:
 >
->   ssh://git@github.com/bsdimp/qemu.git tags/bsd-user-2026q1-upstream-pull-request
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-02
 >
-> for you to fetch changes up to f0f6eae80fbdfb6943fc5d701118e78f2346818f:
+> for you to fetch changes up to 424b4b82d53ac26ca3e991b1f85de225cda707ba:
 >
->   bsd-user: update aarch64-bsd-user.mak gdb XML list (2026-03-01 20:50:11 -0700)
+>   gitlab: ensure docker output is always displayed in CI (2026-03-02 09:48:10 +0100)
 >
 > ----------------------------------------------------------------
-> git-publish --base upstream/master --pull --to qemu-devel@nongnu.org --no-check-url
+> * Remove qemu-system-microblazeel (qemu-system-microblaze can be used instead)
+> * Improve detection of the docker/podman binary
+> * Prevent a null pointer dereference during zpci hot unplug
 >
-> bsd-user: Upstream for 11.0
->
-> This combines several batch streams that:
-> (1) Upstream the bsd-misc.c system calls:
->     quoatctl, reboot, getdtablesize, uuidgen, semget, semop, semctl, msgctl
-> (2) common-user drop __linux__ ifdef
-> (3) Remove NetBSD and OpenBSD specific code for bsd-user (hasn't built in years)
-> (4) Fix inotify issues on FreeBSD 15
-> (5) Fix issues with gdb on aarch64
->
-> All of thse have been reviewed, and the only problems with the check patch line
-> length and about added files.
+> ----------------------------------------------------------------
 
 
 
