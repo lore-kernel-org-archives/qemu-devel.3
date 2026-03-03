@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE456EDA680
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D07EDA681
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRKg-0006bd-Ss; Tue, 03 Mar 2026 10:06:46 -0500
+	id 1vxRKt-0006i1-PS; Tue, 03 Mar 2026 10:07:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRKe-0006Zy-L5
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:44 -0500
+ id 1vxRKr-0006hT-DE
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRKd-000278-3l
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:44 -0500
+ id 1vxRKp-00028t-V3
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772550402;
+ s=mimecast20190719; t=1772550414;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v2A27Bn0eymuRNSFalHPR4qUcCIkQEC0ixxoYIziwMo=;
- b=MseQdOSAL4CW2g89NQCb46NBNq4NRTEKuyV282we4uYwB6F1A3oGi5HFpgDdGgFRmwPlax
- J8t2COMCa3p6aDRfTQI4RHyMfVa67D5p41/fzy0veerexkKParINt9AZRnQj1HjBvGiI2P
- 9UIFJJAtUav72n2/NrshoqokpTpWEE8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6MgZnSu8FpgfVyxgsvWX6ruETMQfEejfRnUI7Ndvo2E=;
+ b=gG6E7DTR4dEoFR6QPHCYJ1O9vF1ZWxHaCk9rVozpv1VVfvqqAOSksQIkQMx+ejN5TM9g22
+ tPiG7VgFYIVAtkICSRzsnIzB0z3stRX7AQpxBrsJ/CT1EJYgsck8kfFbrng2jt7uzY9bkS
+ 8/PlSigtL7XFLfPqrnr75nrz/P1dUaQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-LQBSYx1JMueCsUViOwWryg-1; Tue,
- 03 Mar 2026 10:06:41 -0500
-X-MC-Unique: LQBSYx1JMueCsUViOwWryg-1
-X-Mimecast-MFC-AGG-ID: LQBSYx1JMueCsUViOwWryg_1772550400
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-161-z8g_suQePX-zlLZ1UEX6Rg-1; Tue,
+ 03 Mar 2026 10:06:51 -0500
+X-MC-Unique: z8g_suQePX-zlLZ1UEX6Rg-1
+X-Mimecast-MFC-AGG-ID: z8g_suQePX-zlLZ1UEX6Rg_1772550410
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 542BF1956071
- for <qemu-devel@nongnu.org>; Tue,  3 Mar 2026 15:06:40 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D4DD19560AD; Tue,  3 Mar 2026 15:06:50 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.225.185])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3ACB1800678; Tue,  3 Mar 2026 15:06:38 +0000 (UTC)
+ id 55AEA1800370; Tue,  3 Mar 2026 15:06:48 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 15/27] util: introduce some API docs for logging APIs
-Date: Tue,  3 Mar 2026 15:05:52 +0000
-Message-ID: <20260303150604.2402872-16-berrange@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 20/27] monitor: remove redundant error_[v]printf_unless_qmp
+Date: Tue,  3 Mar 2026 15:05:57 +0000
+Message-ID: <20260303150604.2402872-21-berrange@redhat.com>
 In-Reply-To: <20260303150604.2402872-1-berrange@redhat.com>
 References: <20260303150604.2402872-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,116 +88,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a gotcha with qemu_log() usage in a threaded process.
-If fragments of a log message are output via qemu_log() it is
-possible for messages from two threads to get mixed up. To
-prevent this qemu_log_trylock() should be used, along with
-fprintf(f) calls.
+The only callers of these functions have been removed. Adding any
+new usage of them is highly undesirable, so they should be entirely
+removed.
 
-This is a subtle problem that needs to be explained in the
-API docs to ensure correct usage.
-
-In the Rust code, the log_mask_ln method which is conceptually
-equivalent to the C qemu_log() call will unconditionally append
-a newline so must only ever be used for complete log messages.
-
-Reported-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/log-for-trace.h | 17 ++++++++++++++++-
- include/qemu/log.h           | 32 ++++++++++++++++++++++++++++++++
- rust/util/src/log.rs         |  6 ++++++
- 3 files changed, 54 insertions(+), 1 deletion(-)
+ include/monitor/monitor.h |  3 ---
+ monitor/monitor.c         | 24 ------------------------
+ stubs/error-printf.c      |  5 -----
+ 3 files changed, 32 deletions(-)
 
-diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
-index f3a8791f1d..6861a1a4b7 100644
---- a/include/qemu/log-for-trace.h
-+++ b/include/qemu/log-for-trace.h
-@@ -29,7 +29,22 @@ static inline bool qemu_loglevel_mask(int mask)
-     return (qemu_loglevel & mask) != 0;
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index c3740ec616..296690e1f1 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -59,7 +59,4 @@ void monitor_register_hmp(const char *name, bool info,
+ void monitor_register_hmp_info_hrt(const char *name,
+                                    HumanReadableText *(*handler)(Error **errp));
+ 
+-int error_vprintf_unless_qmp(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
+-int error_printf_unless_qmp(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
+-
+ #endif /* MONITOR_H */
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index dd2c45ded0..4d26cd9496 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -281,30 +281,6 @@ int error_vprintf(const char *fmt, va_list ap)
+     return vfprintf(stderr, fmt, ap);
  }
  
--/* main logging function */
-+/**
-+ * qemu_log: report a log message
-+ * @fmt: the format string for the message
-+ * @...: the format string arguments
-+ *
-+ * This will emit a log message to the current output stream.
-+ *
-+ * The @fmt string should normally represent a complete line
-+ * of text, and thus end with a newline character.
-+ *
-+ * While it is possible to incrementally output fragments of
-+ * a complete line using qemu_log, this is inefficient and
-+ * races with other threads. For outputting fragments it is
-+ * strongly preferred to use the qemu_log_trylock() method
-+ * combined with fprintf().
-+ */
- void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
- 
- #endif
-diff --git a/include/qemu/log.h b/include/qemu/log.h
-index 7effba4da4..b49a1a5fe3 100644
---- a/include/qemu/log.h
-+++ b/include/qemu/log.h
-@@ -41,7 +41,39 @@ bool qemu_log_separate(void);
- 
- /* Lock/unlock output. */
- 
-+/**
-+ * Acquires a lock on the current log output stream.
-+ * The returned FILE object should be used with the
-+ * fprintf() function to output the log message, and
-+ * then qemu_log_unlock() called to release the lock.
-+ *
-+ * The primary use case is to be able to incrementally
-+ * output fragments of a complete log message in an
-+ * efficient and race free manner.
-+ *
-+ * The simpler qemu_log() method should normally only
-+ * be used to output complete log messages, and not
-+ * within scope of a qemu_log_trylock() call.
-+ *
-+ * A typical usage pattern would be
-+ *
-+ *    FILE *f = qemu_log_trylock()
-+ *
-+ *    fprintf(f, "Something ");
-+ *    fprintf(f, "Something ");
-+ *    fprintf(f, "Something ");
-+ *    fprintf(f, "The end\n");
-+ *
-+ *    qemu_log_unlock(f);
-+ *
-+ * Returns: the current FILE if available, NULL on error
-+ */
- FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
-+
-+/**
-+ * Releases the lock on the log output, previously
-+ * acquired by qemu_log_trylock().
-+ */
- void qemu_log_unlock(FILE *fd);
- 
- /* Logging functions: */
-diff --git a/rust/util/src/log.rs b/rust/util/src/log.rs
-index 0a4bc4249a..1116570790 100644
---- a/rust/util/src/log.rs
-+++ b/rust/util/src/log.rs
-@@ -135,6 +135,12 @@ fn drop(&mut self) {
- ///     error_address,
- /// );
- /// ```
-+///
-+/// The `log_mask_ln` macro must only be used for emitting complete
-+/// log messages. Where it is required to incrementally output string
-+/// fragments to construct a complete message, `LogGuard::new()` must
-+/// be directly used in combination with `writeln()` to avoid output
-+/// races with other QEMU threads.
- #[macro_export]
- macro_rules! log_mask_ln {
-     ($mask:expr, $fmt:tt $($args:tt)*) => {{
+-int error_vprintf_unless_qmp(const char *fmt, va_list ap)
+-{
+-    Monitor *cur_mon = monitor_cur();
+-
+-    if (!cur_mon) {
+-        return vfprintf(stderr, fmt, ap);
+-    }
+-    if (!monitor_cur_is_qmp()) {
+-        return monitor_vprintf(cur_mon, fmt, ap);
+-    }
+-    return -1;
+-}
+-
+-int error_printf_unless_qmp(const char *fmt, ...)
+-{
+-    va_list ap;
+-    int ret;
+-
+-    va_start(ap, fmt);
+-    ret = error_vprintf_unless_qmp(fmt, ap);
+-    va_end(ap);
+-    return ret;
+-}
+-
+ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+     /* Limit guest-triggerable events to 1 per second */
+     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
+diff --git a/stubs/error-printf.c b/stubs/error-printf.c
+index 0e326d8010..1afa0f62ca 100644
+--- a/stubs/error-printf.c
++++ b/stubs/error-printf.c
+@@ -16,8 +16,3 @@ int error_vprintf(const char *fmt, va_list ap)
+     }
+     return vfprintf(stderr, fmt, ap);
+ }
+-
+-int error_vprintf_unless_qmp(const char *fmt, va_list ap)
+-{
+-    return error_vprintf(fmt, ap);
+-}
 -- 
 2.53.0
 
