@@ -4,112 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAD2EC1431
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 13:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE91EC1431
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 13:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxPdz-0005lD-Fj; Tue, 03 Mar 2026 08:18:35 -0500
+	id 1vxPgw-0006qV-Ld; Tue, 03 Mar 2026 08:21:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vxPdx-0005ki-F7
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:18:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxPgt-0006pr-R0
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:21:36 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vxPdv-000272-A1
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:18:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772543909;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mMeLeLGM3VWI7m/PqytyRwFZ9ygZG3Yk77w/eKyUnkY=;
- b=Al2irn/bG6FJilJn5zyW6lxk0U/0B1pOkWgBES1FGGxMapWPxTc7tvV9hI2m40z8ZbPjwq
- bc9GytP/GiBKim8iBZW8qdoqtZ0wTEaJnL3YSpToGrWNt6rA6OjxgIqhtMaaQYpRmy8JbH
- uttBWCwrMzIz8tUBVX+XaVcw6VRGjlE=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-wrUMgU-MMPOj1Pq9zAOs6w-1; Tue, 03 Mar 2026 08:17:44 -0500
-X-MC-Unique: wrUMgU-MMPOj1Pq9zAOs6w-1
-X-Mimecast-MFC-AGG-ID: wrUMgU-MMPOj1Pq9zAOs6w_1772543863
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b8fbe7a6f41so509867066b.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 05:17:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772543863; x=1773148663; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mMeLeLGM3VWI7m/PqytyRwFZ9ygZG3Yk77w/eKyUnkY=;
- b=b87FcF4+PSERcgxLEDAAxOmhUyhdbDgPJasVRgAB9YjEP09ZLpBA6mUxTYCWT0P4mV
- wDDB8nLMeHSUZRAwoouqjwBF+hgbOshQWbINaUX+OwGtnI36G1JaNC3L5Fk9Zdl6Vz7F
- W6Iws1GZqynQ4fr2UuMO/F7LciGckm6q7QjuyuG5n2t0fcb+CrJ7y+sYVwUS7b8M2u7J
- ekQWUvl9q8FKnBa5FFa2Ii+p/90wy1sL14SwdDHdYKkwxXmX1TN3/uVybgYE5zluHujT
- OEHGvEO53S5DBd8PCzmNxLocurpadNTl5rvZwn5gcEgfsYJNxTgKc7Cssb2whaAWdpmy
- 6Etw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772543863; x=1773148663;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mMeLeLGM3VWI7m/PqytyRwFZ9ygZG3Yk77w/eKyUnkY=;
- b=f8pHyPx9rnGiT5nsF2UHZi3ePGanD/0/9CgpPL7fA94JgwaF1MyxjLwotwtp4APo7d
- x2d6m8geECB53Msw2ZBQsW8apz5y/cyD3paP6IkJprA7qP4Rcye7Snu6M7YVHaRPnSXI
- SqT1+yzo62+uSDZ/xWgcKEXp5wYPl1n63Snka8HLKy8cpxHt4f0yvj2gWFe/fNGDYJiz
- ICiI833nF8+4H40Hq7vibZX/tpBLefgtQS586PXKfog5kkQQHhii4W1XhUmLqaKfSl2g
- RlVhHUXHDpLMou7IS6u/688IR2kxqTfVZR2MNwYypIDAgrTMreWuxlmcIEhhj96YVnBj
- 8Bpg==
-X-Gm-Message-State: AOJu0YwpWrTzikyCEGDaBYQsY6KrxganPg9bBepZs5re9VLk71maHR/j
- 8rvRuWxOeR7090AIi4pJQfoA9uoEg89RdfrCDNemGiJZmTVLUe2hfAbqeGK15GelHepxMdWf6I+
- uceHRzC1yDDBKusWRIRGdIevKPU194G26wGshxPrt70n9ZPTGsXA5nUJz
-X-Gm-Gg: ATEYQzxONQKs60q3dxAQeMJ0UjdwKaZblXJTygfz7xGbI2PhNks8ZH7EMo/hfCFD7k8
- T3HwTplu3mtjSnfTZyTWTWl/8oOEsyqbCEAqwODiQyR8LStsriGxJkis+ehwESiyEcaftoH8xps
- 0Os9Ok+fpbUbIV1MaexqEJlV54TmjmmNooOexSxpgRi3zoeP72sem2Vq1KIpBrKs3XmmXSY63EY
- niGc5udG6g6bfTwvx5dh7OMvonIQf0971uo5bZpkd3CIZ8TeUjSUrvoupVqqgfhG+fBRoLwkD+a
- aKxI/tAgxa40Mc9manSwEM9VpeSVYbR7ExsPj+eqd+B6AnsARcillYBWIc2zswBucW1CyiCUeop
- TuZXVcWVy/48/+7cowlzYem/4C2N6/fuzlD/NNSDElZGOVRpucEPCkYiMKU2G5UIfUEFQ/EWX47
- d1vIMBUkNCIvKjsI1SJcD0Ul8pow8=
-X-Received: by 2002:a17:906:951:b0:b93:5c5c:a9ae with SMTP id
- a640c23a62f3a-b9376511a03mr651841966b.34.1772543862819; 
- Tue, 03 Mar 2026 05:17:42 -0800 (PST)
-X-Received: by 2002:a17:906:951:b0:b93:5c5c:a9ae with SMTP id
- a640c23a62f3a-b9376511a03mr651839466b.34.1772543862157; 
- Tue, 03 Mar 2026 05:17:42 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.144.138])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b935ae60c16sm594356066b.38.2026.03.03.05.17.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 05:17:41 -0800 (PST)
-Message-ID: <ad122aa5-a726-4057-add5-78b3356e395a@redhat.com>
-Date: Tue, 3 Mar 2026 14:17:40 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxPgq-0003Co-M7
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:21:35 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3CB1D597308;
+ Tue, 03 Mar 2026 14:21:30 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id TvZRCbA6pRdR; Tue,  3 Mar 2026 14:21:27 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C817B596A5E; Tue, 03 Mar 2026 14:21:27 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C5D4B596A0A;
+ Tue, 03 Mar 2026 14:21:27 +0100 (CET)
+Date: Tue, 3 Mar 2026 14:21:27 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 0/8] memory: Remove most _nomigrate variants
+In-Reply-To: <cf7e5459-00ce-f41a-6445-5e0661f30434@eik.bme.hu>
+Message-ID: <08ba3097-4081-7fc6-a15c-67267f65b002@eik.bme.hu>
+References: <cover.1770253186.git.balaton@eik.bme.hu>
+ <aZ3CQw2ad5cVc-Mm@x1.local> <c8a789fa-8d16-709d-eb3f-8acd6c1d08e8@eik.bme.hu>
+ <aZ8jmaB-zuBSoQXH@x1.local>
+ <997bf152-3982-490b-8450-06095ffad22b@rsg.ci.i.u-tokyo.ac.jp>
+ <01f28121-0306-39e9-6526-fef766388eab@eik.bme.hu>
+ <0c750924-95a1-4fc8-ab7c-93ca19b791dc@rsg.ci.i.u-tokyo.ac.jp>
+ <b09d2e8a-3b64-e537-b9e0-8037e2855fdc@eik.bme.hu> <aaXxS0zdMKMoyjvA@x1.local>
+ <5ca90707-6feb-b382-937a-0b114a914d5d@eik.bme.hu>
+ <aaaa3663-29bf-485d-9406-e0a2712b4baa@rsg.ci.i.u-tokyo.ac.jp>
+ <cf7e5459-00ce-f41a-6445-5e0661f30434@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/16] scripts/qapi: generate high-level Rust bindings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-13-pbonzini@redhat.com> <87seahnucu.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-In-Reply-To: <87seahnucu.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+Content-Type: multipart/mixed;
+ boundary="3866299591-1778846394-1772544087=:91300"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,159 +80,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/26 10:19, Markus Armbruster wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
->> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>
->> Generate high-level native Rust declarations for the QAPI types.
->>
->> - char* is mapped to String, scalars to there corresponding Rust types
->>
->> - enums use #[repr(u32)] and can be transmuted to their C counterparts
->>
->> - has_foo/foo members are mapped to Option<T>
->>
->> - lists are represented as Vec<T>
->>
->> - structures map fields 1:1 to Rust
->>
->> - alternate are represented as Rust enum, each variant being a 1-element
->>    tuple
->>
->> - unions are represented in a similar way as in C: a struct S with a "u"
->>    member (since S may have extra 'base' fields). The discriminant
->>    isn't a member of S, since Rust enum already include it, but it can be
->>    recovered with "mystruct.u.into()"
->>
->> Anything that includes a recursive struct puts it in a Box.  Lists are
->> not considered recursive, because Vec breaks the recursion (it's possible
->> to construct an object containing an empty Vec of its own type).
->>
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Link: https://lore.kernel.org/r/20210907121943.3498701-21-marcandre.lureau@redhat.com
->> [Paolo: rewrite conversion of schema types to Rust types]
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> 
-> Let's look at the generated Rust.  I'm going to ignore formatting issues
-> like blank lines.  My test inputs are adapted from
-> tests/qapi-schema/qapi-schema-test.json.
-> 
-> = Boilerplate and built-in stuff =
-> 
-> The qapi-types.rs generated for an empty schema is basically empty:
-> 
->      // @generated by qapi-gen, DO NOT EDIT
->      //!
->      //! Schema-defined QAPI types
->      //!
->      //! Copyright (c) 2025 Red Hat, Inc.
->      //!
->      //! This work is licensed under the terms of the GNU LGPL, version 2.1 or
->      //! later. See the COPYING.LIB file in the top-level directory.
->      #![allow(unexpected_cfgs)]
->      #![allow(non_camel_case_types)]
->      #![allow(clippy::empty_structs_with_brackets)]
->      #![allow(clippy::large_enum_variant)]
->      #![allow(clippy::pub_underscore_fields)]
->      // Because QAPI structs can contain float, for simplicity we never
->      // derive Eq.  Clippy however would complain for those structs
->      // that *could* be Eq too.
->      #![allow(clippy::derive_partial_eq_without_eq)]
->      use util::qobject::QObject;
-> 
-> Okay.
-> 
-> Note we generate nothing for the built-in types.  For C, we generate
-> qapi-builtin-types.[ch], which provides lists of built-in types, and
-> enum QType.  Rust gives us lists for free, and QType we don't need right
-> now.  Good.
-> 
-> = Enum types =
-> 
-> Input:
-> 
->      { 'enum': 'TestIfEnum',
->        'data': [ 'foo', { 'name' : 'bar', 'if': 'TEST_IF_ENUM_MEMBER' } ],
->        'if': 'TEST_IF_UNION' }
-> 
-> Output without the boilerplate:
-> 
->      #[cfg(TEST_IF_UNION)]
->      #[derive(Copy, Clone, Debug, PartialEq)]
-> 
-> Ignoring such lines for now.
-> 
->      #[repr(u32)]
-> 
-> As explained in the commit message.
-> 
->      #[derive(common::TryInto)]
-> 
-> Ignoring these, too.
-> 
->      pub enum TestIfEnum {
-> 
->          FOO,
->          #[cfg(TEST_IF_ENUM_MEMBER)]
->          BAR,
->      }
-> 
-> The obvious part :)
-> 
->      #[cfg(TEST_IF_UNION)]
->      impl Default for TestIfEnum {
->          #[inline]
->          fn default() -> TestIfEnum {
->              Self::FOO
->          }
->      }
-> 
-> This specifies the enum type's default value.  Hmm...  Modified input:
-> 
->      { 'enum': 'TestIfEnum',
->        'data': [ { 'name' : 'bar', 'if': 'TEST_IF_ENUM_MEMBER' }, 'foo' ],
->        'if': 'TEST_IF_UNION' }
-> 
-> Output:
-> 
->      #[cfg(TEST_IF_UNION)]
->      #[derive(Copy, Clone, Debug, PartialEq)]
->      #[repr(u32)]
->      #[derive(common::TryInto)]
->      pub enum TestIfEnum {
->          #[cfg(TEST_IF_ENUM_MEMBER)]
->          BAR,
-> 
->          FOO,
->      }
-> 
->      #[cfg(TEST_IF_UNION)]
->      impl Default for TestIfEnum {
->          #[inline]
->          fn default() -> TestIfEnum {
->              Self::BAR
->          }
->      }
-> 
-> If TEST_IF_ENUM_MEMBER is off, member BAR does not exist.  default()
-> uses it anyway.  Bug?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Nice catch.  I can make it produce the first element (as in C) with a 
-tiny bit of cheating
+--3866299591-1778846394-1772544087=:91300
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-     unsafe { ::std::mem::transmute_copy(&0u32) }
+On Tue, 3 Mar 2026, BALATON Zoltan wrote:
+> On Tue, 3 Mar 2026, Akihiko Odaki wrote:
+>> On 2026/03/03 6:06, BALATON Zoltan wrote:
+>>> On Mon, 2 Mar 2026, Peter Xu wrote:
+>>>> On Mon, Mar 02, 2026 at 04:20:10PM +0100, BALATON Zoltan wrote:
+>>>>> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
+>>>>>> On 2026/03/02 21:26, BALATON Zoltan wrote:
+>>>>>>> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
+>>>>>>>> On 2026/02/26 1:30, Peter Xu wrote:
+>>>>>>>>> On Tue, Feb 24, 2026 at 06:44:58PM +0100, BALATON Zoltan wrote:
+>>>>>>>>>> On Tue, 24 Feb 2026, Peter Xu wrote:
+>>>>>>>>>>> On Thu, Feb 05, 2026 at 02:13:18AM +0100, BALATON Zoltan wrote:
+>>>>>>>>>>>> v4:
+>>>>>>>>>>>> - separate patch converting Sun machines from
+>>>>>>>>>>>> memory_region_init_ram_nomigrate
+>>>>>>>>>>>> - split helper to init ram into two functions:
+>>>>>>>>>>>> setup and error_propagate
+>>>>>>>>>>>> - also use memory_region_init_io in 
+>>>>>>>>>>>> memory_region_init_ram_device_ptr
+>>>>>>>>>>>> 
+>>>>>>>>>>>> v3:
+>>>>>>>>>>>> - rebased on master after some patches were merged
+>>>>>>>>>>>> - drop some more line from memory-region-housekeeping.cocci
+>>>>>>>>>>>> - added comment to explain what factored out helper does
+>>>>>>>>>>>> - some more clean ups included
+>>>>>>>>>>>> 
+>>>>>>>>>>>> BALATON Zoltan (8):
+>>>>>>>>>>>>    hw/display/{cg3,tcx}: Do not use 
+>>>>>>>>>>>> memory_region_init_rom_nomigrate()
+>>>>>>>>>>>>    memory: Remove memory_region_init_rom_nomigrate()
+>>>>>>>>>>>>    sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
+>>>>>>>>>>>>    memory: Remove memory_region_init_ram_nomigrate()
+>>>>>>>>>>> 
+>>>>>>>>>>> Could you help explain why we need to remove the
+>>>>>>>>>>> above two small helpers?
+>>>>>>>>>> 
+>>>>>>>>>> Ideally we should remove all of the nomigrate variants as there are 
+>>>>>>>>>> only
+>>>>>>>>>> about 3 uses left, everything else is already moved to
+>>>>>>>>>> the init_{ram,rom}
+>>>>>>>>>> variants that register the memory region for migration.
+>>>>>>>>>> The is probably one
+>>>>>>>>>> legitimate use that is served by memory_region_init_flags_nomigrate 
+>>>>>>>>>> and
+>>>>>>>>>> other 3 uses are the xtfpga which I think is just old code and does 
+>>>>>>>>>> not
+>>>>>>>>>> support migration so it will be converted in the second series to
+>>>>>>>>>> memory_region_new as the maintainers did not say anyting to that so 
+>>>>>>>>>> far.
+>>>>>>>>>> Then there's one in hw/display/vga but that's gated
+>>>>>>>>>> behind a compatibility
+>>>>>>>>>> switch that's only set in 2.12 (global-vmstate=true) and
+>>>>>>>>>> earlier. This is
+>>>>>>>>>> not active any more but cannot yet be removed as there
+>>>>>>>>>> are eariler compat
+>>>>>>>>>> props still need cleaning up but the last visible
+>>>>>>>>>> machine version is 5.1 now
+>>>>>>>>>> so this is long deprecated and not used. And there are
+>>>>>>>>>> these Sun machines
+>>>>>>>>>> that I've converted in the first version but Mark said
+>>>>>>>>>> he'd like to keep the
+>>>>>>>>>> current behaviour until it's the last user left. See:
+>>>>>>>>>> https://
+>>>>>>>>>> patchew.org/QEMU/cover.1769703287.git.balaton@eik.bme.hu/ 
+>>>>>>>>>> b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu/
+>>>>>>>>>> 
+>>>>>>>>>>> Not saying that we can't remove them, but I don't yet see the 
+>>>>>>>>>>> point of
+>>>>>>>>>>> open-code those readonly=true setup either, or any
+>>>>>>>>>>> problem with having the
+>>>>>>>>>>> smaller helpers when ram_flags=0.  Small helpers
+>>>>>>>>>>> sometimes help readability.
+>>>>>>>>>>> 
+>>>>>>>>>>> Some of them are going backwards againist what the cocci scripts 
+>>>>>>>>>>> were
+>>>>>>>>>>> suggesting previously, like:
+>>>>>>>>>>> 
+>>>>>>>>>>> - memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
+>>>>>>>>>>> + memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
+>>>>>>>>>>>   ... WHEN != E1
+>>>>>>>>>>> - memory_region_set_readonly(E1, true);
+>>>>>>>>>>> 
+>>>>>>>>>>> So you suggest open-code instead.  Why?
+>>>>>>>>>> 
+>>>>>>>>>> This is temporary until the usage in vga is gone with
+>>>>>>>>>> hw_compat_2_12 then
+>>>>>>>>>> the Sun machines will be the last users so they can also be 
+>>>>>>>>>> converted to
+>>>>>>>>>> init_{ram,rom} (unless Mark changes his mind and agrees
+>>>>>>>>>> changing these now
+>>>>>>>>>> as was in the first version).
+>>>>>>>>>> 
+>>>>>>>>>>> Is it required for your follow up cleanups?
+>>>>>>>>>> 
+>>>>>>>>>> It makes those simpler as then we don't need to add 
+>>>>>>>>>> memory_region_new
+>>>>>>>>>> variants for the nomigrate versions that we would remove later 
+>>>>>>>>>> anyway.
+>>>>>>>>> 
+>>>>>>>>> Personally I don't see the memory_region_new() whole thing solid 
+>>>>>>>>> yet, but
+>>>>>>>>> still during review.  I shared my thoughts.  So far, I'm not fully
+>>>>>>>>> convinced, but I also don't have the full picture to say no, 
+>>>>>>>>> either.  We
+>>>>>>>>> can wait for others to chime in with more thoughts.
+>>>>>>>>> 
+>>>>>>>>> For this series, I would prefer if we can discuss it separately from 
+>>>>>>>>> the
+>>>>>>>>> other work.
+>>>>>>>>> 
+>>>>>>>>> Removing _nomigrate() variances makes sense to me in general, it 
+>>>>>>>>> means we
+>>>>>>>>> want to by default suggest new devices only use RAM regions that is
+>>>>>>>>> migratable, with proper owner device specified along with
+>>>>>>>>> the ramblock name
+>>>>>>>>> (as part of migration API).
+>>>>>>>>> 
+>>>>>>>>> However, we have two sets of these _nomigrate APIs:
+>>>>>>>>> 
+>>>>>>>>>    (1) memory_region_init_r[ao]m_nomigrate
+>>>>>>>>>    (2) memory_region_init_r[ao]m_flags_nomigrate
+>>>>>>>>> 
+>>>>>>>>> What I am still confused about is why this series used (2) to 
+>>>>>>>>> replace (1)
+>>>>>>>>> rather than removing both.  I don't understand how this helps if we 
+>>>>>>>>> still
+>>>>>>>>> have (2) around: it means new devices at least can still use
+>>>>>>>>> (2) to bypass
+>>>>>>>>> migration.
+>>>>>>>>> 
+>>>>>>>>> There's actually one way to enforce migratable RAMs, taking
+>>>>>>>>> ROM as example,
+>>>>>>>>> it could be:
+>>>>>>>>> 
+>>>>>>>>>    memory_region_init_rom_internal(..., global_vmstate=XXX)
+>>>>>>>>> 
+>>>>>>>>> Then memory_region_init_rom() should use that, setting
+>>>>>>>>> global_vmstate=off.
+>>>>>>>>> 
+>>>>>>>>> Then we can unexport/remove 
+>>>>>>>>> memory_region_init_rom_[flag_]nomigrate() but
+>>>>>>>>> use that _internal() in relevant paths; we should also mark
+>>>>>>>>> the _internal()
+>>>>>>>>> functions to say "new code is suggested to use the normal
+>>>>>>>>> version".  But I
+>>>>>>>>> do not know if that is a slight overkill just for this..
+>>>>>>>>> 
+>>>>>>>>> If the other series (to avoid introducing new APIs) is the
+>>>>>>>>> only reason for
+>>>>>>>>> this part, then IMHO this part of the series needs to be in the 
+>>>>>>>>> other
+>>>>>>>>> series, not this one.  The last cleanup patches look more self 
+>>>>>>>>> contained
+>>>>>>>>> OTOH to me, if the whole purpose of the latter half was code
+>>>>>>>>> dedup, then it
+>>>>>>>>> makes more sense at least to me.
+>>>>>>>> 
+>>>>>>>> +1 for what Peter Xu suggested. Most part of this series looks
+>>>>>>>> independently useful, but I don't think the removal of
+>>>>>>>> memory_region_init_ram_nomigrate() is.
+>>>>>>> 
+>>>>>>> But if there are no useful uses why keep it? This version shows that
+>>>>>>> converting the Sun machines as Peter Maydell suggested only leaves
+>>>>>>> very few uses that can be removed eventually too after some further
+>>>>>>> clean up that I don't want to take up now. Do you have any usage in
+>>>>>>> mind that needs these nomigrate variants?
+>>>>>> 
+>>>>>> Well, my threshold for "useful" is > 1 uses, but maintainers may have
+>>>>>> other preferences.
+>>>> 
+>>>> Personally I share the same preference..
+>>>> 
+>>>> When >1 it means we can dedup some code with a function and I normally
+>>>> think it worthwhile.  That's also why I don't understand why we need to
+>>>> open code _set_readonly() in some of this series.
+>>> 
+>>> Have you read the latest v5 at all? No open coding of set_readonly or 
+>>> useful uses of memory_region_init_r[ao]m_nomigrate left if we accept 
+>>> converting the Sun machines now to memory_region_init_r[ao]m which they 
+>>> should really use as everything else does that and these are the last 
+>>> remaining uses of these nomigrate variants apart from the few special 
+>>> cases. It seems these Sun machines were left behind when everything else 
+>>> converted away from global vmstate and use the normal 
+>>> memory_region_init_r[ao]m where the _nomigrate were left for backward 
+>>> compatibility during API conversion. So it's time to finish that 
+>>> conversion at last.
+>>> 
+>>>> Even if for the sake of a new set of APIs, it doesn't need to provide 
+>>>> every
+>>>> single API that we have had in the old set if we don't need it, IMHO.
+>>>> 
+>>>>> 
+>>>>> After this series when converting the Sun machines as in v5 the only
+>>>>> nomigrate variant left is memory_region_init_ram_flags_nomigrate that is
+>>>>> equivalent to memory_region_init_ram_nomigrate with flags=0 which 
+>>>>> appears
+>>>>> outside of memory.c only in hw/xtensa/xtfpga.c (that will be converted 
+>>>>> in
+>>>>> the next series to memory_region_new) and in hw/display/vga.c that can 
+>>>>> be
+>>>>> removed when the hw_compat_2_12 is removed. There are two more uses of
+>>>>> memory_region_init_ram_flags_nomigrate in backends/hostmem-ram.c and
+>>>>> hw/m68k/next-cube.c but those have non-0 flags parameter. Therefore I 
+>>>>> think
+>>>>> there's no need to keep other nomigrate variants than
+>>>>> memory_region_init_ram_flags_nomigrate as the only two uses outside of
+>>>>> memory.c that would need memory_region_init_ram_nomigrate are to be 
+>>>>> removed
+>>>>> soon and can use flags=0 until then.
+>>> 
+>>> I tried to explain here that the two uses left that could use 
+>>> memory_region_init_ram_nomigrate will be gone shortly so IMO not worth 
+>>> keeping this function around for that.
+>> 
+>> Whether it will be gone shortly or not requires reviewing additional change 
+>> to remove the two use cases.
+>
+> That's why I gave pointers to the places so if somebody is interested can 
+> look. How soon it is depends on how fast we get to the end of this review 
+> (that can resolve xtfpga) and how fast older compatibility settings are 
+> removed before we get to 2.12. The latter can take a while because they also 
+> need cleaning up the (mostly virtio) devices they refer to so I'm not trying 
+> to do anything about that but it should eventually be removed as machines 
+> older than 5.1 are not visible anyway so these are just dead code.
+>
+>>>>> I don't know if the other two uses with non-0 flags can be replaced and
+>>>>> memory_region_init_ram_flags_nomigrate made internal to memory.c but 
+>>>>> that's
+>>>>> beyond the scope of this series and could be considered separately. 
+>>>>> Creating
+>>>>> nomigrate memory region is not something that should be done or need 
+>>>>> several
+>>>>> functions and the very few cases where this might be needed can use
+>>>>> memory_region_init_ram_flags_nomigrate.
+>>>> 
+>>>> The hostmem-ram.c one is slightly special, when created as an object it
+>>>> still doesn't know its parent device.
+>>> 
+>>> Yes so there might be some special cases but for those it's enough to have 
+>>> a single nomigrate variant which this series proposes.
+>>> 
+>>>> I still think it might be helpful if you can split your "cleanup" patches
+>>>> out of this series.  Note that softfreeze will be next week.
+>>> 
+>>> This series _is_ the clean up part split from the add memory_region_new 
+>>> functions series so these are all clean ups and the rest is in the other 
+>>> series. I don't theres much more to split. Maybe you missed some patch 
+>>> emails. Here's the clean up series:
+>>> 
+>>> https://patchew.org/QEMU/cover.1772397447.git.balaton@eik.bme.hu/
+>>> 
+>>> and here's the rest of my original series based on these clean ups that 
+>>> continue with adding and using the memory_region_new functions added in 
+>>> that series:
+>>> 
+>>> https://patchew.org/QEMU/cover.1770753117.git.balaton@eik.bme.hu/
+>>> 
+>>> I'm not sure what do you want to split.
+>> 
+>> In that case, I suggest moving this particular patch into the 
+>> memory_region_new() series (or whichever series reduces the use cases to 
+>> one or zero). That way, each series remains a self-contained logical unit 
+>> for review.
+>
+> This is not one patch but half of the series that later patches depend on so 
+> this would mean just merge the two series again and get nowhere. Looks like 
+> we could at least remove memory_region_init_rom_nomigrate now and keep 
+> memory_region_init_ram for just the two uses in xtfpga or if we convert that 
+> then only for vga but then why keep this function for only the use in vga?
 
-or some reliance on the optimizer
+I mean keep memory_region_init_ram_nomigrate for xtfpga and vga but even 
+xtfpga can be converted to memory_region_init_ram then the only use for 
+memory_region_init_ram_nomigrate would be vga which could easily use 
+memory_region_init_ram_flags_nomigrate that still has two other uses. 
+Sorry for not being able to clearly express this above.
 
-     0.try_into().unwrap()
-
-
-However, I'm inclined to handle this generically.  For example, an enum 
-where the first element is configuration dependent could be usable only 
-if optional.  And then the Rust code can skip the "impl Default".  Let 
-me check how often it would trigger.
-
-Paolo
-
+Regards,
+BALATON Zoltan
+--3866299591-1778846394-1772544087=:91300--
 
