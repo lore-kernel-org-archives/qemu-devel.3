@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45003EC1431
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998BDEC142E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxNoT-0003iW-PL; Tue, 03 Mar 2026 06:21:17 -0500
+	id 1vxNph-0004W3-60; Tue, 03 Mar 2026 06:22:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNoH-0003aj-Ea
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:21:06 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1vxNpa-0004UW-Ul
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:22:27 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNo8-0005bs-RR
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:20:58 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64ad9fabd08so4480138d50.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:20:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772536855; cv=none;
+ id 1vxNpZ-0005iS-F2
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:22:26 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so5146348d50.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:22:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772536943; cv=none;
  d=google.com; s=arc-20240605;
- b=MUFIx/Rc7mfq+9ygfrPAnVDvxYtXkkdc9pj+eLsmzJmkISjYm1jKLmYK5J1lKHQfHj
- p639ZyJ3q7b+8PIwn4VDoJsKvhUd3Af9H3onZ593eAcLsCJfD4YV42yUqHS+kFXPlnk0
- l2hZxJ9RBVuVgB2p0aNur8QsLoBITsMbgWbpBCnHmeR7PpAYkhM8gma/DVgMI7V3Zkpv
- Coj4t9GFfKH6pDf+WM1Wzlf9k//QDGDVNevPKsl3pJ1zhwAMRpyl2kHZYiPCEhwrnUov
- 4sx4+H3Q83fBSPK1CgETzW7bR7D4OZafVrnPbulIV4mDjaz06qfwPGT6r6fJgDPg8zvk
- K5Aw==
+ b=VE08gr6L3bx2baL545J4i1EKM1dt6ZiLuWGmbuC8qpyqxpf/6uN53TwkS3gURmEso9
+ 9nRvawHBEH+zBbER0FnCEKs0Ma3xPOx5L/PqqrOS/1XYyjnH0s4u1/wYmSh6ASOsJGjA
+ xA+LHC+K7AssX8GTsIeZP+zBO2RqDdfYuOBOsuDdeGAHV1uG9g1Hwzg6NpOq1Uybxm6s
+ 6Y0AHDL+HdU69KLJF/pC0vI6UuVXgTuLHAFB50JG6h2R2DDSx9IT1WhdLbu/QHdz3O0t
+ zEHrjtTpTZSJhVqLHtetnsaL6OaNnchTskgMCngg+4+KdEsHp9eVXBNxmHnI+Z3mJTyk
+ fzRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=4KZ6HOtu6ti8U9HXtG57M8M5XOpJaxPZn4q/DlOfbOA=;
+ bh=m+6IG2CRLKKPRPJdAjPOtx72DUjJTLsUjz5R/WUmzNg=;
  fh=EzCqtT5E+bTTLv4rNAwVJ+2ChJBsIX5zYHpMVTT1IcQ=;
- b=ZpptZ2/VfM7FPvcIoFO0Cg9w6ew8EhNEwH2CtHZ/FxlfseQu/pRil6XrMfS1O89fCb
- TbkqrkN4z6LvdbJWri7GAcn/fGIE6lPuRZ60+xsAoA/v1pF7K01QzPF6ihVsJMVgw3fQ
- mJY1TIpQYorl+xsKvpEoCsVEoPN2FtAh/NZezYZEeYGCYiRcJcqbT47NC3Sg/qrj0qj+
- eAIbka4dBlypApd435AQvMAmO5cWA0WYmPp5EKn7CkNAwrmJVgeWC2kcuo8ftxrj6gxh
- q74m9qjRHnQYlOiFqdTacy0DPmuNGQEgLOYuupCeTuIf3It1v0hTCHSV6sznDCi2YLxc
- ZTjA==; darn=nongnu.org
+ b=ZlP4zNsTWe6vlbOFHteYPjD64MPrR+RVTKyFzIvj41sXLoQZx8yp+HyT65bA6z6pwS
+ POCE1SrKPHy6ZxsY1effOUWqXPgiV7S5bgyMRfNJ6xJHWBcnBI1heTOXBPNz6q9Wt3Yb
+ ionnodwZEGSRqTVBa/rz0F7L0zt+FYIh10GErsyzBhComSa9Bpf19tHPXMjTavJCO4xk
+ 0Sh6LzhRdzEwoQruj/55p8sOXzCiM1/lpM46qvClKiIjfVDDEp5KZUiic7zjwrhYAm8v
+ CLX8QJRH/e8WZmj/NpH2sQFvkbKTbJwNkpftZCLLDcWH/Ibet1Cew0T7ZDEEuZazNfu5
+ 80Ew==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772536855; x=1773141655; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772536943; x=1773141743; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4KZ6HOtu6ti8U9HXtG57M8M5XOpJaxPZn4q/DlOfbOA=;
- b=H14p7A7ja0poujU0ncfXy6K2gKsGnYskRY8DQJRICUYONnJaYvok26TRbDBRJid1pC
- RuvcqQFan3R/AmFM1SJSexipyQFYbb5NjYVtypiK2EZ28TeXIgiYt5lUTHGHEvlQpnvg
- YLZfHLeGmzmXNJSgsYWTLrrmEv0m/oHTxu0MXYUFvCMPRfbPMAlcENjueQG6TpsrSLwH
- MyZ034fZUiKTz2KpOOJ3y1gIyvCbHKiv6ijsabvd9I47Vxu6g69S+xNNfSfSUMaRNA5d
- Epg1EpmrxR1gSBokubtdUUfVpLajMO4lihe0oxkAkXV8okndtMDvl4s6G6vsY1w+wRFK
- 39zw==
+ bh=m+6IG2CRLKKPRPJdAjPOtx72DUjJTLsUjz5R/WUmzNg=;
+ b=A7z0T8yrgLLuK7tD+qP8RbClZmNCWeRuWi0cqb8mKlnbfeEVl6Wgh33j1a8tLvh6bI
+ se9YLp6hHzy0fx/PaeLacEhnZBUj4bH8zOdnAnzp1712yS9UKvQn+YjzWwCoYhEuU4Ei
+ R2DHdGgm6D2irJfS6fvaBC3A9Pm3gT/CMli62H8CdgUy5UIfcso/YEj/EoazTOl/Ewxm
+ ZTjcmlI5JWXfVEluKo5KIJKGRcehG9/M1KHqW1EgfFfVt0igB79+YRsgqi9sJ2Q5FLrI
+ P5xxJGw4FbTbsqShr+yLbpAFZjkqwrRf8/hW7F+OOGkOGFxKOe760Cg8PUBaFqcVx/uf
+ faLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772536855; x=1773141655;
+ d=1e100.net; s=20230601; t=1772536943; x=1773141743;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4KZ6HOtu6ti8U9HXtG57M8M5XOpJaxPZn4q/DlOfbOA=;
- b=Pla00BJUoOjRFa3mZTM+MTCG678c3fD/rHtlFOEzMMTE1+7R2GeDy8ElcwjOph7vu5
- kjWgTpMePGYRwEaw0tnxrKirzssDltupup9+tzSYA9zOmFoZPHNzpn5rGsV1rgRXlZbQ
- s4XeS/wgqDyp6jF0+gh0/K6h6A+pALRxblHuHXP9Z5azARkYbGf5XH/DJhVIk8i7jQju
- z7uPXOhAuF6c1Dg/L6f11o66GpxfYWVoQeSLrXysyod9/Ldy90Zn8iQwSpkLjG4r0YFa
- B6tC2neYSqHZRknbM0o3BvefOtUEFnzRMoZ5aFlFSNiO9k6JNXfEtflW4gpDLQjo3b1M
- Gw+Q==
-X-Gm-Message-State: AOJu0YxD9WDG4rH2AZSItkJmM72roD9XCXawGy0hZpnYJRzuC1ZfqMOt
- akFnZMCSYbdDnG/KyPpzJSbt2lMJ9MckBjD/tQ8nNPEAorzWXk5K3QDKtWmiHmCbet+yEutH36D
- Z1fm+eScubGxKN1a6qFGtqXjAz+xiD7DlMGZj/xmIqA==
-X-Gm-Gg: ATEYQzwv82rlodkIl1api123EhXUXvKpri4WmdBpkFPurA7FtNl3FeR9ZTvBF+zxQA8
- SGq+1gefHIpRg9N94Lvaa4lGbvO9WxIFKkJnsa2iEOMx4eSPPz4fbqYCrXUUERyDhr5NqSRqSkl
- ctKsrMDxYpI+MyMNP9Pq6W3XBB155gwyFlTitlQhyWY8WfDw8UggcQlUaXF4jXkGJot5wiVNnN+
- y+KiQOY0Z1sCFL54ovytGNvy0Toa+WzdDYxoetcHgvwJPI823k/Vnp1AgK/mg2et7A8InZMm0iN
- f/4OxCylhbMn/gNFDeHIqynAuiVIp1pr7hbNBYMFtNws4jocc7NnKD0tsxe7qSEyyrkAg0Ulb8l
- scA==
-X-Received: by 2002:a05:690e:15cb:b0:64c:ac70:9420 with SMTP id
- 956f58d0204a3-64cc230a4dcmr9945976d50.76.1772536855438; Tue, 03 Mar 2026
- 03:20:55 -0800 (PST)
+ bh=m+6IG2CRLKKPRPJdAjPOtx72DUjJTLsUjz5R/WUmzNg=;
+ b=JfgrrZDiM06svaQ5fxK2mJvmAc35bs5qWvLzmoM6q2pB/uond5zmZ+GUDirchIYs0a
+ pO8jX2UcOpA8xyRTihnKwjdLfuEMuZ/htzoOb2uvqPrsv1RQhYPuDUdtEXlkcBUO9QSN
+ 3JNeS6D/ehRY2ZAYP+9OI3aKxdcYOFlUhj480JiNHx5kmqBVebtxlfaMF84vwYQxszMJ
+ Rg+L9Sk1xmSwZpq1d1AbVl2C0YvD1TNKFGlvBg0q2CX9rzJXmNAMz18Uv59ZIPGrcigi
+ m3lti7RnZp+1ObOMJLTtJmwGlkfc00qIIxfmg3wzPPcqeejrSILBzioPQhbKnsmsJEje
+ xpWw==
+X-Gm-Message-State: AOJu0Yxxx/1ci0Wpi6FWWcZfylxV6zQl/uSVnhiOejAjARTiqzRmVkj9
+ 2W/vHcMLhoqdWn+l/u4CraKeNrl8bLIN2UrpIbfFOPPuBK9B83wlFiOjAJcs+sLIw5Up4oYj6qM
+ v5SgQOurau1UMjmSN8tey3DujMqvMiycniOEySYr0Og==
+X-Gm-Gg: ATEYQzwvCg1laeY+Jvp6bC8twW4UToPljLJzg0HGCSzJXoUQTA34QqDzhnSxB1lmAMj
+ NAIP8EZXjeOmhG2EZwXLDan/pLzUEorXEwA4VQeDu7nCKBc2UzEVNKvMl07J+E8Pb4U1BOiLdk5
+ 1mZ3ixJQM7Anb8PiRqIQcitmgJ0bytlYYfyD464tekINmfuuFz8o1k70jGZkz75mRT3ZOWgZsaw
+ f7f/YA00R5wYFWew11crDmeKLxblYt8NhBdR0zTqzPaLWJG+5qE5VBuLffnp6iHy5HMLeMC9jw4
+ 6xDM3JY06X8sFRJ2dRikZZy9dPXy/1QMkZ9SWlxgV3sy9jI5pSmG6V5m157H1i4m8aY=
+X-Received: by 2002:a05:690e:4241:b0:64c:a0c6:da92 with SMTP id
+ 956f58d0204a3-64cc2119f61mr9387579d50.30.1772536943476; Tue, 03 Mar 2026
+ 03:22:23 -0800 (PST)
 MIME-Version: 1.0
 References: <20260227-semihosting-cpu-tswap-v2-0-cbdcdf39dd15@eonerc.rwth-aachen.de>
- <20260227-semihosting-cpu-tswap-v2-1-cbdcdf39dd15@eonerc.rwth-aachen.de>
-In-Reply-To: <20260227-semihosting-cpu-tswap-v2-1-cbdcdf39dd15@eonerc.rwth-aachen.de>
+ <20260227-semihosting-cpu-tswap-v2-3-cbdcdf39dd15@eonerc.rwth-aachen.de>
+In-Reply-To: <20260227-semihosting-cpu-tswap-v2-3-cbdcdf39dd15@eonerc.rwth-aachen.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 11:20:43 +0000
-X-Gm-Features: AaiRm51-qOF4mnv1ko5I9fKeZZBAh7qi9V-6c_VAP1yDh7LDolDM3TtNLJp6300
-Message-ID: <CAFEAcA_eacmm9w1exKRrqcfVZRq9vELSuoUMbuQFessG0XvcpQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] include/hw/core: Rename virtio_is_big_endian to
- internal_is_big_endian
+Date: Tue, 3 Mar 2026 11:22:11 +0000
+X-Gm-Features: AaiRm511stA6iolaP1wxhNxm1VinpDhe9nEO33PkwmcNGaX2wRsDRzYo-smPGaw
+Message-ID: <CAFEAcA_oC0Z-o5p4bvRLaViSJQ8YDQyrVLaEw+=fJ4Ud_25r0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] semihosting/uaccess: Use the cpu_internal_tswap()
+ functions
 To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,21 +122,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, 27 Feb 2026 at 12:55, Martin Kr=C3=B6ning
 <martin.kroening@eonerc.rwth-aachen.de> wrote:
 >
-> These functions are needed to do semihosting on CPUs that support
-> runtime-configurable endiannes. This commit renames them and allows
-> using them for semihosting, but makes sure to signal that these
-> functions should not be used in other circumstances.
+> The semihosting ABI [1] states:
+> > Multi-byte values in memory must be formatted as pure little-endian or =
+pure
+> > big-endian to match the endianness mapping configuration of the process=
+or.
+>
+> This commits ensures that semihosting data is properly byte-swapped if
+> the guest's CPU is currently in a different runtime-configurable
+> endianness than the host's CPU.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3258
+> Buglink: https://github.com/taiki-e/semihosting/issues/18
+>
+> [1]: https://github.com/ARM-software/abi-aa/blob/2025Q1/semihosting/semih=
+osting.rst#the-semihosting-interface
 >
 > Signed-off-by: Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de=
 >
 > ---
->  hw/core/cpu-system.c             | 6 +++---
->  hw/virtio/virtio.c               | 2 +-
->  include/hw/core/cpu.h            | 4 ++--
->  include/hw/core/sysemu-cpu-ops.h | 6 +++---
->  target/arm/cpu.c                 | 4 ++--
->  target/ppc/cpu_init.c            | 2 +-
->  6 files changed, 12 insertions(+), 12 deletions(-)
+>  include/semihosting/uaccess.h | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
