@@ -4,52 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3DDEB3648
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 01:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE26EB364A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 01:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxENe-00053g-GL; Mon, 02 Mar 2026 20:16:58 -0500
+	id 1vxENm-00059C-TF; Mon, 02 Mar 2026 20:17:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vxENL-0004zk-Gp
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:40 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vxENF-00088J-0D
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:36 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxNMFrNqZpFeMWAA--.21792S3;
- Tue, 03 Mar 2026 09:16:27 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx_8JfNqZpFmpNAA--.16102S5;
- Tue, 03 Mar 2026 09:16:26 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1vxENf-00053x-1g
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:59 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1vxENd-0008B4-G1
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1772500617; x=1804036617;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=CQbMw7k8VbECn4rME/YV3kJFc5e0kYbwbzc1M9exl9E=;
+ b=kvLXRxMd3f5G5C8AVeGq/ZhpDHP62x97ITGxunbh8+Yx+JNijC0OcjeE
+ QJJxiqh76HzyB7+WX2JWf7TXfsLBaJetlxl7WEURJMb2M/OmNn8qbwiaI
+ ag49dZRK1xfRm5xSGfCpdc7/MA/qzgTqkE6bRbE1lZps17pBgxCNc7J+f
+ aoTFuq9nZLUvNNaiMJaVbrFKoROK53R0dAC+IyVi9x8jq/alqiGx7kCwN
+ hH6h/xNDk7QLIrYGpt60mpxSCQegSpd+1BAPe9+AzjQvGyU+inYV5sxlP
+ Dpwuri7+jqfrDtCJCMpiBN34JKqkZAxjE7Sfunp8u5zRdFCd7xuLFnirq g==;
+X-CSE-ConnectionGUID: k+tPtT7/TGOzPVzQX6UXCQ==
+X-CSE-MsgGUID: jH6v7ewvQTuXbFZrMT1pGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84162912"
+X-IronPort-AV: E=Sophos;i="6.21,321,1763452800"; d="scan'208";a="84162912"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Mar 2026 17:16:54 -0800
+X-CSE-ConnectionGUID: vC/j5UCyQ7iMyHYPYICe7g==
+X-CSE-MsgGUID: CnwpXvHOSJqXZNPTSTk/8g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,321,1763452800"; d="scan'208";a="221993892"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.205.222])
+ by orviesa003.jf.intel.com with ESMTP; 02 Mar 2026 17:16:54 -0800
+From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 3/8] target/loongarch: Add property set with
- query-cpu-model-expansion
-Date: Tue,  3 Mar 2026 08:50:56 +0800
-Message-Id: <20260303005101.3561064-4-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260303005101.3561064-1-gaosong@loongson.cn>
-References: <20260303005101.3561064-1-gaosong@loongson.cn>
+Subject: [PATCH] ui/gtk-egl: Ensure EGL surface is available before drawing
+Date: Mon,  2 Mar 2026 17:11:51 -0800
+Message-Id: <20260303011151.1925827-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8JfNqZpFmpNAA--.16102S5
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,93 +79,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-On LoongArch with QMP command query-cpu-model-expansion, property
-setting is not supported witch command such as:
-  query-cpu-model-expansion type=static model={"name":"max","props":{"lasx":false}}
+The EGL surface and context are destroyed when a new GTK window is
+created. We must ensure these are recreated and initialized before
+any rendering happens in gd_egl_refresh.
 
-Here add property setting support with QMP command.
+Currently, the check for a pending draw is performed before the
+surface initialization block. This can result in an attempt to
+draw when the EGL surface (vc->gfx.esurface) is not yet available.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
+This patch moves the drawing check after the surface initialization
+to ensure a valid surface exists before rendering in gd_egl_refresh.
+
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- target/loongarch/loongarch-qmp-cmds.c | 40 +++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ ui/gtk-egl.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index 6a95080fe4..f053f22bb8 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -50,7 +50,6 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-                                                      Error **errp)
- {
-     Visitor *visitor;
--    bool ok;
-     CpuModelExpansionInfo *expansion_info;
-     QDict *qdict_out;
-     ObjectClass *oc;
-@@ -64,30 +63,47 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         return NULL;
-     }
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index ae9239999c..52d187c482 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -152,12 +152,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+     gd_update_monitor_refresh_rate(
+             vc, vc->window ? vc->window : vc->gfx.drawing_area);
  
-+    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
-+    if (!oc) {
-+        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch "
-+                         "CPU type", model->name);
-+        return NULL;
-+    }
-+
-+    obj = object_new(object_class_get_name(oc));
-     if (model->props) {
-+        Error *err = NULL;
-+        const QDict *qdict_in;
-+
-         visitor = qobject_input_visitor_new(model->props);
-         if (!visit_start_struct(visitor, "model.props", NULL, 0, errp)) {
-             visit_free(visitor);
-+            object_unref(obj);
-             return NULL;
-         }
- 
--        ok = visit_check_struct(visitor, errp);
-+        qdict_in = qobject_to(QDict, model->props);
-+        i = 0;
-+        while ((name = cpu_model_advertised_features[i++]) != NULL) {
-+            if (qdict_get(qdict_in, name)) {
-+                if (!object_property_set(obj, name, visitor, &err)) {
-+                    break;
-+                }
-+            }
-+        }
-+
-+        if (!err) {
-+            visit_check_struct(visitor, &err);
-+        }
-         visit_end_struct(visitor, NULL);
-         visit_free(visitor);
--        if (!ok) {
-+        if (err) {
-+            error_propagate(errp, err);
-+            object_unref(obj);
-             return NULL;
-         }
-     }
- 
--    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
--    if (!oc) {
--        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch CPU type",
--                   model->name);
--        return NULL;
+-    if (vc->gfx.guest_fb.dmabuf &&
+-        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        gd_egl_draw(vc);
+-        return;
 -    }
 -
--    obj = object_new(object_class_get_name(oc));
--
-     expansion_info = g_new0(CpuModelExpansionInfo, 1);
-     expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
-     expansion_info->model->name = g_strdup(model->name);
+     if (!vc->gfx.esurface) {
+         gd_egl_init(vc);
+         if (!vc->gfx.esurface) {
+@@ -176,6 +170,12 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+ #endif
+     }
+ 
++    if (vc->gfx.guest_fb.dmabuf &&
++        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
++        gd_egl_draw(vc);
++        return;
++    }
++
+     graphic_hw_update(dcl->con);
+ 
+     if (vc->gfx.glupdates) {
 -- 
-2.52.0
+2.43.0
 
 
