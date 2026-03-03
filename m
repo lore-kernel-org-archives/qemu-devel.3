@@ -4,42 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1BFEB3641
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0646EB3648
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 01:17:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxENe-00053w-V7; Mon, 02 Mar 2026 20:16:58 -0500
+	id 1vxENg-00054f-9B; Mon, 02 Mar 2026 20:17:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vxENL-0004zl-Gz
+ id 1vxENL-0004zi-Ev
  for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:40 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vxENF-00088K-3u
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:37 -0500
+ (envelope-from <gaosong@loongson.cn>) id 1vxENE-00088G-Um
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 20:16:36 -0500
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxjsNrNqZpF+MWAA--.3779S3;
- Tue, 03 Mar 2026 09:16:27 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxacJoNqZpEuMWAA--.2616S3;
+ Tue, 03 Mar 2026 09:16:24 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCx_8JfNqZpFmpNAA--.16102S6;
- Tue, 03 Mar 2026 09:16:27 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCx_8JfNqZpFmpNAA--.16102S2;
+ Tue, 03 Mar 2026 09:16:15 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 4/8] target/loongarch: Add detailed information with CPU
- Product ID
-Date: Tue,  3 Mar 2026 08:50:57 +0800
-Message-Id: <20260303005101.3561064-5-gaosong@loongson.cn>
+Subject: [PULL 0/8] loongarch-to-apply queue
+Date: Tue,  3 Mar 2026 08:50:53 +0800
+Message-Id: <20260303005101.3561064-1-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260303005101.3561064-1-gaosong@loongson.cn>
-References: <20260303005101.3561064-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCx_8JfNqZpFmpNAA--.16102S6
+X-CM-TRANSID: qMiowJCx_8JfNqZpFmpNAA--.16102S2
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,80 +62,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+The following changes since commit ffcf1a7981793973ffbd8100a7c3c6042d02ae23:
 
-CPUCFG0 is LoongArch CPU Product ID, it is a combination of Vendor ID,
-Series ID and Product ID, here is the layout:
- +-------------+----------------+------------+----------------+
- | Reserved    | Vendor  ID     | Series ID  |  Product ID    |
- +-------------+----------------+------------+----------------+
-  31         24 23            16 15        12 11              0
+  Merge tag 'pull-11.0-testing-updates-270226-2' of https://gitlab.com/stsquad/qemu into staging (2026-02-28 14:30:23 +0000)
 
-Here adds detailed information with CPUCFG0, it is convenient to add
-such information with host or LA664 CPU type in future.
+are available in the Git repository at:
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c | 12 ++++++++++--
- target/loongarch/cpu.h | 10 +++++++++-
- 2 files changed, 19 insertions(+), 3 deletions(-)
+  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260302
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 54dbee2554..f04558027d 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -283,8 +283,12 @@ static void loongarch_la464_initfn(Object *obj)
-     }
- 
-     cpu->dtb_compatible = "loongarch,Loongson-3A5000";
--    env->cpucfg[0] = 0x14c010;  /* PRID */
-+    data = FIELD_DP32(data, CPUCFG0, PRID, 0x10);
-+    data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA464);
-+    data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
-+    env->cpucfg[0] = data;
- 
-+    data = 0;
-     data = FIELD_DP32(data, CPUCFG1, ARCH, 2);
-     data = FIELD_DP32(data, CPUCFG1, PGMMU, 1);
-     data = FIELD_DP32(data, CPUCFG1, IOCSR, 1);
-@@ -389,8 +393,12 @@ static void loongarch_la132_initfn(Object *obj)
-     }
- 
-     cpu->dtb_compatible = "loongarch,Loongson-1C103";
--    env->cpucfg[0] = 0x148042;  /* PRID */
-+    data = FIELD_DP32(data, CPUCFG0, PRID, 0x42);
-+    data = FIELD_DP32(data, CPUCFG0, SERID, PRID_SERIES_LA132);
-+    data = FIELD_DP32(data, CPUCFG0, VENID, PRID_VENDOR_LOONGSON);
-+    env->cpucfg[0] = data;
- 
-+    data = 0;
-     data = FIELD_DP32(data, CPUCFG1, ARCH, 1); /* LA32 */
-     data = FIELD_DP32(data, CPUCFG1, PGMMU, 1);
-     data = FIELD_DP32(data, CPUCFG1, IOCSR, 1);
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 8c198fa584..c423b741b2 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -97,7 +97,15 @@ FIELD(FCSR0, CAUSE, 24, 5)
- #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
- 
- /* cpucfg[0] bits */
--FIELD(CPUCFG0, PRID, 0, 32)
-+FIELD(CPUCFG0, PRID, 0, 12)
-+FIELD(CPUCFG0, SERID, 12, 4)
-+FIELD(CPUCFG0, VENID, 16, 8)
-+#define PRID_SERIES_LA132            0x8  /* Loongson 32bit */
-+#define PRID_SERIES_LA264            0xa  /* Loongson 64bit, 2-issue */
-+#define PRID_SERIES_LA364            0xb  /* Loongson 64bit, 3-issue */
-+#define PRID_SERIES_LA464            0xc  /* Loongson 64bit, 4-issue */
-+#define PRID_SERIES_LA664            0xd  /* Loongson 64bit, 6-issue */
-+#define PRID_VENDOR_LOONGSON         0x14
- 
- /* cpucfg[1] bits */
- FIELD(CPUCFG1, ARCH, 0, 2)
--- 
-2.52.0
+for you to fetch changes up to 45e3ef638e73799815a07a31041afe162d856dc3:
+
+  target/loongarch: Add some CPUCFG bits with host CPU model (2026-03-02 18:02:38 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20260302
+
+----------------------------------------------------------------
+Bibo Mao (8):
+      target/loongarch: Add missing vCPU features with QMP method
+      target/loongarch: Add full type support with query-cpu-model-expansion
+      target/loongarch: Add property set with query-cpu-model-expansion
+      target/loongarch: Add detailed information with CPU Product ID
+      target/loongarch: Add default cpucfg3 with LA464 CPU
+      target/loongarch: Add generic CPU model information
+      target/loongarch: Add host CPU model in kvm mode
+      target/loongarch: Add some CPUCFG bits with host CPU model
+
+ hw/loongarch/virt.c                   |   6 +-
+ target/loongarch/cpu.c                | 160 +++++++++++++++++++++++++++++++++-
+ target/loongarch/cpu.h                |  24 ++++-
+ target/loongarch/loongarch-qmp-cmds.c |  46 +++++++---
+ 4 files changed, 217 insertions(+), 19 deletions(-)
 
 
