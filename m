@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B03EDA68D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7476CEDA693
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSHz-00037T-RJ; Tue, 03 Mar 2026 11:08:03 -0500
+	id 1vxSI0-00038p-Tu; Tue, 03 Mar 2026 11:08:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHx-00034h-Gz
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:01 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHy-00035e-0q
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:02 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHu-0004tH-Ct
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:00 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHv-0004tl-3d
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=wDmHN0idygJwsT7yupDS5Js7du7AcI+kANWtIfJrTc4=; b=tUQdtF1RpsDUvZI
- UEQ4cDC/qFM7iAP8O7Pdt5W2ir3IeCQS6kxx4oGYDrTKDtgV5IxaaBadI7w2l5Wkl0dLlp1dN6z/t
- ynscGsOQbdYdXGfbSgfc1aGzRwm/I4k6qYQshEYg1Y2Xa/BqedKS3Rza3oGQ2tAc1tOgZPIJa3Z1D
- X4=;
-Date: Tue, 03 Mar 2026 17:11:28 +0100
-Subject: [PATCH v5 1/4] hppa: Restructure CPU Class heirarchy
+ List-Help; bh=DHiMP2gsRiouzbzyaVlVV/Jul3SQWrBQapVvZ+Un+gc=; b=odkPVwY3d+30jHg
+ MDAfAy2kQReExkF6sWLp7ZuglfVtzInh310Wedf45Vj92PYBjGefoGokgjjgw2xtrQeZuPL+yqtob
+ y6c9x6QKwekyT/jqGtr1vA4V8F7aqxYJ2lPDfqad+E8n6nS9Wk8NMPRrMNyw13XoLjWU5YksoM9Xd
+ hM=;
+Date: Tue, 03 Mar 2026 17:11:29 +0100
+Subject: [PATCH v5 2/4] hppa: Introduce HPPACPUDef
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260303-hppa-c3600-v5-1-277bfe6b40b8@rev.ng>
+Message-Id: <20260303-hppa-c3600-v5-2-277bfe6b40b8@rev.ng>
 References: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
 In-Reply-To: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=6878;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=4495;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=QZx6MxbU+jQI78caN/HWtT+asuMMqXM6wk6LNQt4SWk=;
- b=+PqMUtVeEGD8CO2m8ZxgeNO3+ZlaAdDu1tUnYwF3DtdsDsLzlsEO63OObM2d8nOc6nzQeiPmV
- XHQSyGMMrQYAyaKeqSVAmPV5tQR9WdjKH7sqpp1K2RbakSQ8xcu4Mgl
+ bh=zxAV25/04DWo+NOxJWlRaG0/QxsZu2z0IOZo2QXFUy0=;
+ b=sYXfJDVFLzkc/0f4uK7K4oZMU7lrpeF2nX6MlRddMuG2QAla3MmaseuTvCDmVT7ii6LsTAPXq
+ /oXoe/cLA+6Dte4gc7BIa32NxH6//VEYpQgYvnqYukSeavhaby0L9pC
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -72,196 +72,147 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clarifies current CPU model names, assuming 32-bit HPPA runs a PA-7300LC
-whereas 64-bit runs a PA-8700.  The PA-8500 model is added, which will
-later be used by the A400 machine.  All CPU models are made into children
-of the now abstract TYPE_HPPA_CPU base class.
+In preparation for handling different physical address spaces sizes (32,
+40, 44 bits) a CPU model configuration struct is added to HPPACPUClass.
 
-References to "hppa/hppa64" models in test cases are also updated.
+Two fields are added describing the size of the physical address space,
+and whether or not the CPU uses the PA-RISC 2.0 architecture.  The
+latter was previously a field in CPUHPPAState.
+
+phys_addr_bits is currently set but unused, and will be used in the
+following commit.  Likewise, PA-8700 is moved to use 44 bit physical
+addresses in a followup commit to not bisection.
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hppa/cpu-qom.h           |  8 +++++++-
- hw/hppa/machine.c               | 21 +++++++++++++--------
- linux-user/hppa/elfload.c       |  2 +-
- target/hppa/cpu.c               | 25 ++++++++++++++++++++-----
- tests/qtest/machine-none-test.c |  2 +-
- 5 files changed, 42 insertions(+), 16 deletions(-)
+ target/hppa/cpu.h | 24 ++++++++++++++++++++----
+ target/hppa/cpu.c | 31 +++++++++++++++++++++----------
+ 2 files changed, 41 insertions(+), 14 deletions(-)
 
-diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
-index 5c454bf543..7541c25b3d 100644
---- a/target/hppa/cpu-qom.h
-+++ b/target/hppa/cpu-qom.h
-@@ -23,7 +23,13 @@
- #include "hw/core/cpu.h"
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 092e647ccf..43b4882fb4 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -270,8 +270,6 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
  
- #define TYPE_HPPA_CPU "hppa-cpu"
--#define TYPE_HPPA64_CPU "hppa64-cpu"
+-    bool is_pa20;
+-
+     target_ulong kernel_entry; /* Linux kernel was loaded here */
+     target_ulong cmdline_or_bootorder;
+     target_ulong initrd_base, initrd_end;
+@@ -290,6 +288,18 @@ struct ArchCPU {
+     QEMUTimer *alarm_timer;
+ };
+ 
++/**
++ * HPPACPUDef:
++ * @phys_addr_bits: Number of bits in the physical address space.
++ * @is_pa20: Whether the CPU model follows the PA-RISC 2.0 or 1.1 spec.
++ *
++ * Configuration options for a HPPA CPU model.
++ */
++typedef struct HPPACPUDef {
++    uint8_t phys_addr_bits;
++    bool is_pa20;
++} HPPACPUDef;
 +
-+#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
-+#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
+ /**
+  * HPPACPUClass:
+  * @parent_realize: The parent class' realize handler.
+@@ -302,11 +312,17 @@ struct HPPACPUClass {
+ 
+     DeviceRealize parent_realize;
+     ResettablePhases parent_phases;
++    const HPPACPUDef *def;
+ };
+ 
+-static inline bool hppa_is_pa20(const CPUHPPAState *env)
++static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
++{
++    return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
++}
 +
-+#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
-+#define TYPE_HPPA_CPU_PA_8500   HPPA_CPU_TYPE_NAME("pa-8500")
-+#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
- 
- OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
- 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index f55e84529f..5d0d4de09e 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -801,13 +801,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
- static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
++static inline bool hppa_is_pa20(CPUHPPAState *env)
  {
-     static const char * const valid_cpu_types[] = {
--        TYPE_HPPA_CPU,
-+        TYPE_HPPA_CPU_PA_7300LC,
-         NULL
-     };
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "HP B160L workstation";
--    mc->default_cpu_type = TYPE_HPPA_CPU;
-+    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->init = machine_HP_B160L_init;
-     mc->is_default = true;
-@@ -817,13 +817,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
- static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
- {
-     static const char * const valid_cpu_types[] = {
--        TYPE_HPPA64_CPU,
-+        TYPE_HPPA_CPU_PA_8700,
-         NULL
-     };
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "HP C3700 workstation";
--    mc->default_cpu_type = TYPE_HPPA64_CPU;
-+    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->init = machine_HP_C3700_init;
-     mc->max_cpus = HPPA_MAX_CPUS;
-@@ -833,13 +833,13 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
- static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
- {
-     static const char * const valid_cpu_types[] = {
--        TYPE_HPPA64_CPU,
-+        TYPE_HPPA_CPU_PA_8500,
-         NULL
-     };
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "HP A400-44 workstation";
--    mc->default_cpu_type = TYPE_HPPA64_CPU;
-+    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8500;
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->init = machine_HP_A400_init;
-     mc->max_cpus = HPPA_MAX_CPUS;
-@@ -849,13 +849,18 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
- static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
- {
-     static const char * const valid_cpu_types[] = {
--        TYPE_HPPA_CPU,
-+        TYPE_HPPA_CPU_PA_7300LC,
-         NULL
-     };
-     MachineClass *mc = MACHINE_CLASS(oc);
- 
-     mc->desc = "HP 715/64 workstation";
--    mc->default_cpu_type = TYPE_HPPA_CPU;
-+    /*
-+     * Although the 715 workstation should use a 7100LC, it can be safely
-+     * modeled as a 7300LC as the difference is a moving of the L1 data cache
-+     * to on-chip.
-+     */
-+    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->init = machine_HP_715_init;
-     /* can only support up to max. 8 CPUs due inventory major numbers */
-diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
-index 4600708702..7f7ece6dc1 100644
---- a/linux-user/hppa/elfload.c
-+++ b/linux-user/hppa/elfload.c
-@@ -8,7 +8,7 @@
- 
- const char *get_elf_cpu_model(uint32_t eflags)
- {
--    return "hppa";
-+    return "pa-7300lc";
+-    return env->is_pa20;
++    return hppa_def(env)->is_pa20;
  }
  
- const char *get_elf_platform(CPUState *cs)
+ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
 diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 714f3bbdaf..910a919923 100644
+index 910a919923..cc755da8be 100644
 --- a/target/hppa/cpu.c
 +++ b/target/hppa/cpu.c
-@@ -207,7 +207,9 @@ static void hppa_cpu_initfn(Object *obj)
- {
-     CPUHPPAState *env = cpu_env(CPU(obj));
- 
--    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
-+    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8500) ||
-+                   !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8700);
-+
+@@ -203,15 +203,6 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
+     tcg_cflags_set(cs, CF_PCREL);
  }
  
+-static void hppa_cpu_initfn(Object *obj)
+-{
+-    CPUHPPAState *env = cpu_env(CPU(obj));
+-
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8500) ||
+-                   !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8700);
+-
+-}
+-
  static void hppa_cpu_reset_hold(Object *obj, ResetType type)
-@@ -236,9 +238,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
- 
- static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
  {
--    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
-+    ObjectClass *oc;
-+    char *typename;
+     HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
+@@ -286,6 +277,14 @@ static const TCGCPUOps hppa_tcg_ops = {
+ #endif /* !CONFIG_USER_ONLY */
+ };
+ 
++static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
++{
++    HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
++    /* Make sure all CPU models define a HPPACPUDef */
++    g_assert(!object_class_is_abstract(oc) && data != NULL);
++    acc->def = data;
++}
 +
-+    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
-+    oc = object_class_by_name(typename);
-+    g_free(typename);
- 
--    return object_class_by_name(typename);
-+    return oc;
- }
- 
- #ifndef CONFIG_USER_ONLY
-@@ -314,12 +321,20 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+ static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -320,22 +319,34 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
          .instance_size = sizeof(HPPACPU),
          .instance_align = __alignof(HPPACPU),
-         .instance_init = hppa_cpu_initfn,
--        .abstract = false,
-+        .abstract = true,
+-        .instance_init = hppa_cpu_initfn,
+         .abstract = true,
          .class_size = sizeof(HPPACPUClass),
          .class_init = hppa_cpu_class_init,
++        .class_base_init = hppa_cpu_class_base_init,
      },
      {
--        .name = TYPE_HPPA64_CPU,
-+        .name = TYPE_HPPA_CPU_PA_7300LC,
-+        .parent = TYPE_HPPA_CPU,
-+    },
-+    {
-+        .name = TYPE_HPPA_CPU_PA_8500,
-+        .parent = TYPE_HPPA_CPU,
-+    },
-+    {
-+        .name = TYPE_HPPA_CPU_PA_8700,
+         .name = TYPE_HPPA_CPU_PA_7300LC,
          .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 32,
++            .is_pa20 = false,
++        },
+     },
+     {
+         .name = TYPE_HPPA_CPU_PA_8500,
+         .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
+     },
+     {
+         .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
      },
  };
-diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
-index b6a87d27ed..f871056fa4 100644
---- a/tests/qtest/machine-none-test.c
-+++ b/tests/qtest/machine-none-test.c
-@@ -48,7 +48,7 @@ static struct arch2cpu cpus_map[] = {
-     { "tricore", "tc1796" },
-     { "xtensa", "dc233c" },
-     { "xtensaeb", "fsf" },
--    { "hppa", "hppa" },
-+    { "hppa", "pa-7300lc" },
-     { "riscv64", "rv64" },
-     { "riscv32", "rv32" },
-     { "rx", "rx62n" },
+ 
 
 -- 
 2.52.0
