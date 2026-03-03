@@ -4,103 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518B0EC0486
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A99BEC0487
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMYh-0005Uc-7U; Tue, 03 Mar 2026 05:00:55 -0500
+	id 1vxMZ9-00066w-BR; Tue, 03 Mar 2026 05:01:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vxMYe-0005Rr-Iv
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:00:53 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vxMZ7-00061U-Bb
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:01:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vxMYc-0003L4-CP
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:00:52 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vxMZ4-0003O7-Um
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:01:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772532048;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1772532076;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=E+I1VudMC+NxAe8pQ2YUQhe5nrqMg2fVzn96RL8BfTQ=;
- b=VRe6XAMFirNo8bum1kD6J5Kbm+RSLH7kVB5W0Z2VbVgouf2M7m2hvlkkxuwx93avQ2PtfP
- 41AHinbUUbiBWuJb4fCAbsFOCVIuhzqXrRry78Q0nBcyQwf8bRkNN4oT4URpudJjPRMwK3
- lr042XPyo0QhVdFBAg+0lLDfiJSpbeQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-YeeS1SsANq6RU6hfj-Ezog-1; Tue, 03 Mar 2026 05:00:46 -0500
-X-MC-Unique: YeeS1SsANq6RU6hfj-Ezog-1
-X-Mimecast-MFC-AGG-ID: YeeS1SsANq6RU6hfj-Ezog_1772532046
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-660ae93b90dso242729a12.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 02:00:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772532046; x=1773136846; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E+I1VudMC+NxAe8pQ2YUQhe5nrqMg2fVzn96RL8BfTQ=;
- b=mVVNr00Ge5Ea2V82mctpt8GcINmNTrMYGmjLptx3uuaLRtsF68ep4QwoxKid3IqcFb
- 9bd8ZX0TkMVvKJujKBvMD7AuW4VKwdNJExlSXx0lVOuw4AuSg1h6yV8JgM1AQsuacGjv
- F5spDRYH+rWIhKXysZve0TWdt9sY3t1/x0g63YN6TrgkJmS3ZrKCieY9PuB34Q3oN7pt
- z5v6TLrEY785yRxwHqMJbqMK3j/pzvuOXas9QQfkDYPTF0Tlom6P1K1uMoFSeSAsiSWE
- pwkJMLzrETAbFraVuOQtfoXGHGcP29z4nQLmUdtAQf6a5kHK1FFoljmt9NFovmGPQzpj
- Gqjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772532046; x=1773136846;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=E+I1VudMC+NxAe8pQ2YUQhe5nrqMg2fVzn96RL8BfTQ=;
- b=U9aH3ycequ9JjWP1YF9ZV8YXwguCNQShnzFKbEgr9IT25i9Vtpd02Ee7s/2FS3Vgi2
- KljLYdEvRmL8GWC523U584+iuK6ImY8LsgwrhGirzBHoRWRVOehtawGk53HlcxGdNEn6
- Z2MVTNwrMcIziS7Fim4+viAn7hrn8sSjh+/EKcSICZ0otmbQab3n5prJU/oRhTw8skyc
- hK9LpBigR8BwJISfJmW5+XvBSdUaM84raf2VTaqbBXZ5zk2LVhq4kVefELLI3C05zIzI
- 6y68abMFA+A1fDyol5czM2rC/mzX/j6bJkGWhJBQhrY1ba8ioMrVFVQF/xAaPEBqGohn
- lYrQ==
-X-Gm-Message-State: AOJu0YzOm5BcDZvPD3eBQyUycBT/n499FC97edcM6Gq6/XMpIq8EcucF
- hCHzjVsjg//eWJfvDw0AZCb5CPgUwQyAqVnqyoecrGkXEqCRJ4JlR+/+Q1h1VspmMVNKcNqPaTr
- HczKkl3iblYoDmH5DfDcJT7T7kynq3iXu6ZY5v5w4MwRWuA2/gc6CfBLW
-X-Gm-Gg: ATEYQzzObp8S58EaeLWF2gq9AdDQkXILFV2lrI43RCYI7bQitcDRB0vZ6RSAKrAVpBV
- rS0sgZfh9UVuLF46EkFae0V2A5mcJStwJXiQZaEKHb6j/tBgjDaXsLVR0mxdt6W1wg7he0vAIj2
- beOaoS0gDOn0wkyih48Gjkuw6CI5kCXBx3g5/cP1tVwvTQi7A15aibk5vFUfMe2Y/vku0XoI+/5
- dNpAPARKSML8mBMUL4mUZMOxtj1ChLfu/TclRqNEKhb/wV/i6d6uumBH5MycumCjc1keJqpyL3H
- voNyNpceZLb1pTLHw88u/C/Bny1HqqQ6M0TLXOSSZU0Glo7mbUiNIVYHHL2bPQFj/z18LUzuk4x
- /8+2+MijBM105IZdi3q4DEu40RJe+O3xlAVWLEJA+2OfGx8fF9eqj2Lq/44VVQ+m5gkgPglj/u5
- OHFRtYZi5vWC6oMnVdXmInULuhBn8=
-X-Received: by 2002:a17:907:3e0e:b0:b93:7255:2da with SMTP id
- a640c23a62f3a-b937659feb6mr1017289866b.55.1772532045206; 
- Tue, 03 Mar 2026 02:00:45 -0800 (PST)
-X-Received: by 2002:a17:907:3e0e:b0:b93:7255:2da with SMTP id
- a640c23a62f3a-b937659feb6mr1017288266b.55.1772532044601; 
- Tue, 03 Mar 2026 02:00:44 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.144.138])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b935ab13564sm576055866b.9.2026.03.03.02.00.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 02:00:43 -0800 (PST)
-Message-ID: <3cd5ac78-1833-4671-a866-60a57f29c3c1@redhat.com>
-Date: Tue, 3 Mar 2026 11:00:42 +0100
+ bh=IcLfc7NvE4QgdTgTr0yMNuo2AEifQaJfPzjZX6S4xR4=;
+ b=ccpGbkTEEyxVtiT/wRTWUUIWC05xvHXRtAS9wZu2QJpIXQrcJg0bmAfswKIWEW1OwR/9DS
+ ovymUO2xOQIM5tKblNrrERhn/x61oaierQEqZjMOoQzWqP9G3IN40WLKXhvnhEmTOdt3MC
+ mlurZjaXGF+E4rxYD4G2Q0XFsFFVeZQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-Mqx3Zps9P3yaCNgp3CVdfg-1; Tue,
+ 03 Mar 2026 05:01:15 -0500
+X-MC-Unique: Mqx3Zps9P3yaCNgp3CVdfg-1
+X-Mimecast-MFC-AGG-ID: Mqx3Zps9P3yaCNgp3CVdfg_1772532074
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1284A1800464; Tue,  3 Mar 2026 10:01:14 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.185])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2D581956053; Tue,  3 Mar 2026 10:01:11 +0000 (UTC)
+Date: Tue, 3 Mar 2026 10:01:08 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [RFC PATCH v2] configure: Use clang for sanitizer builds or
+ disable Werror
+Message-ID: <aaaxZKWz7NlJSD2I@redhat.com>
+References: <20260303012054.484837-1-yodel.eldar@yodel.dev>
+ <aaadd0B4kP9amEbz@redhat.com>
+ <CAFEAcA_YMukxSh0YWsxADasT69BZ=BR1Q1NkGeGWzjXQoUifSg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/16] scripts/qapi: generate high-level Rust bindings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org
-References: <20260108131043.490084-1-pbonzini@redhat.com>
- <20260108131043.490084-13-pbonzini@redhat.com> <87jyw0khu2.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-In-Reply-To: <87jyw0khu2.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA_YMukxSh0YWsxADasT69BZ=BR1Q1NkGeGWzjXQoUifSg@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
@@ -122,111 +90,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/25/26 15:39, Markus Armbruster wrote:
->> +def rs_name(name: str) -> str:
->> +    """
->> +    Map @name to a valid, possibly raw Rust identifier.
->> +    """
->> +    name = re.sub(r'[^A-Za-z0-9_]', '_', name)
->> +    if name[0].isnumeric():
+On Tue, Mar 03, 2026 at 09:36:45AM +0000, Peter Maydell wrote:
+> On Tue, 3 Mar 2026 at 08:41, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Mon, Mar 02, 2026 at 07:20:54PM -0600, Yodel Eldar wrote:
+> > > From: Yodel Eldar <yodel.eldar@yodel.dev>
+> > >
+> > > Builds with --enable-{asan,tsan,safe-stack} fail under GCC, so use
+> > > clang if available, otherwise disable the treatment of warnings as
+> > > errors.
+> > >
+> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
+> > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > > Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+> > > ---
+> > > Hi,
+> > >
+> > > The previous version only disabled Werror whenever `--skip-meson` wasn't
+> > > used and the build occurred in a git repo, but this change should
+> > > probably apply to all types of builds. So, let's use meson_option_add
+> > > to globally disable Werror instead; IIUC (and according to my testing),
+> > > this will override the value in config-meson.cross.new.
+> > >
+> > > I'm still not sure if we should be disabling Werror for ubsan, even
+> > > though it's not currently breaking builds with GCC; please let me know
+> > > what you think.
+> > >
+> > > Special thanks to Peter for looking into the cause of the reports around
+> > > this, for sharing the findings, and suggesting approaches to resolve it.
+> > > I couldn't pick one over the other, so I went with using clang when
+> > > available with Werror disable as a fallback; please let me know if you
+> > > think this is an XOR kind of policy decision.
+> >
+> > In the bug
+> >
+> > >
+> > > Link to RFCv1:
+> > > https://lore.kernel.org/qemu-devel/20260302210039.261325-1-yodel.eldar@yodel.dev/
+> > >
+> > > Link to mentioned discussion:
+> > > https://lore.kernel.org/qemu-devel/CAFEAcA88hc4UsgpuPXBWpbeN0tW26159kPn7jx2J9erBA5DLBw@mail.gmail.com/
+> > >
+> > > v2:
+> > > - Fix misnomer in commit message
+> > > - Simplify condition by using the same variable for all sanitizers
+> > > - Use meson_option_add to disable Werror
+> > >
+> > > Thanks,
+> > > Yodel
+> > > ---
+> > >  configure | 18 ++++++++++++++++++
+> > >  1 file changed, 18 insertions(+)
+> > >
+> > > diff --git a/configure b/configure
+> > > index 5e114acea2..e457e8a17d 100755
+> > > --- a/configure
+> > > +++ b/configure
+> > > @@ -762,6 +762,12 @@ for opt do
+> > >    ;;
+> > >    --wasm64-32bit-address-limit)
+> > >    ;;
+> > > +  --enable-asan) use_sanitizer="yes"
+> > > +  ;;
+> > > +  --enable-tsan) use_sanitizer="yes"
+> > > +  ;;
+> > > +  --enable-safe-stack) use_sanitizer="yes"
+> > > +  ;;
+> > >    # everything else has the same name in configure and meson
+> > >    --*) meson_option_parse "$opt" "$optarg"
+> > >    ;;
+> > > @@ -771,6 +777,18 @@ for opt do
+> > >    esac
+> > >  done
+> > >
+> > > +if test "$use_sanitizer" = "yes"; then
+> > > +    if has clang; then
+> > > +        echo "Sanitizer requested: setting compiler suite to clang"
+> > > +        cc=clang
+> > > +        cxx=clang++
+> > > +        host_cc=clang
+> > > +    else
+> > > +        echo "Sanitizer requested: disabling Werror for non-clang compilers"
+> > > +        meson_option_add -Dwerror=false
+> > > +    fi
+> > > +fi
+> >
+> > GCC documents the possibility of false positives, but I would consider
+> > that caveat to apply to CLang too. It may simply have different false
+> > positives or at a lower rate.
 > 
-> .isdigit()?  It's what c_name() uses...
+> I'm told that clang/LLVM doesn't have any "middle-end warnings", so
+> it won't have the same problem that the sanitizers might change IR code
+> in a way that results in a warning firing that didn't before. So I
+> think this "sanitizers change warning behaviour" is specific to GCC.
 > 
->> +        name = '_' + name
+> > If using sanitizers, it is expected behaviour that there can be false
+> > positives, and if the user doesn't want the build to break as a result
+> > of that, then *the user* can choose to disable -Werror with the suitable
+> > configure warnings.
 > 
-> In review of v1, I pointed to "The Rust Reference"
-> 
->         Identifiers starting with an underscore are typically used to
->         indicate an identifier that is intentionally unused, and will
->         silence the unused warning in rustc.
-> 
->         https://doc.rust-lang.org/reference/identifiers.html
-> 
-> You replied "In this case it doesn't really matter: public items (such
-> as QAPI enum entries, or struct fields) do not raise the unused warning
-> anyway."
-> 
-> What gives us confidence rs_name() will only be used where it doesn't
-> really matter?
+> It is expected *for GCC*. I don't think it's expected for LLVM/clang.
 
-The fact that all QAPI type definitions are (more or less by design) public.
+Oh, so you mean CLang errors from sanitizers are not influenced by
+the use of -Werror ?
 
->> +    # avoid some clashes with the standard library
->> +    if name in ('String',):
->> +        name = 'Qapi' + name
-> 
-> This hides the unwise use of 'String' in qapi/net.json from Rust.  I'd
-> rather rename that one.
-
-Ok, BoxedString?
-
->> +
->> +    return name
->> +
->> +
->> +def to_camel_case(value: str) -> str:
->> +    return ''.join('_' + word if word[0].isdigit()
->> +                   else word[:1].upper() + word[1:]
->> +                   for word in filter(None, re.split("[-_]+", value)))
-> 
-> Please use r'...' for regular expressions always.
-> 
-> Why do you need filter()?
-
-To handle - or _ at the beginning or ending of a string, where an empty
-string would cause an IndexError in word[0].isdigit().
-
-> This maps 'foo-0123-bar' to 'Foo_0123Bar'.  Intentional?  I'd kind of
-> expect 'Foo0123Bar'.
-
-Will fix (it is meant for 0123-45).  New version is:
-
-   def to_camel_case(value: str) -> str:
-       result = ''
-       for p in re.split(r'[-_]+', value):
-           if not p:
-               pass
-           elif p[0].isalpha() or (result and result[-1].isalpha()):
-               result += p[0].upper() + p[1:]
-           else:
-               result += '_' + p
-       return result
-
-
->> +def mcgen(s: str, **kwds: object) -> str:
->> +    s = mcgen_common(s, **kwds)
->> +    return re.sub(r'(?: *\n)+', '\n', s)
-> 
-> This eats trailing spaces and blank lines.  The latter is a big hammer.
-> Without it, I see unwanted blank lines generated.  With it, I see wanted
-> blank lines eaten.  For instance:
-
-Ok, I can look into adding rstrip here and there.
-
->> +        except FileNotFoundError:
->> +            pass
-> 
-> This runs rustfmt to clean up the generated file.  Silently does nothing
-> if we don't have rustfmt.
-> 
-> Should we make rustfmt a hard requirement?  Please discuss this briefly
-> in the commit message.
-
-It's unnecessary, but it does make the output look nicer.  If I add 
-rstrip, I don't need it.
-
->> +    # Return the Rust type for common use
-> 
-> Are the uncommon uses?
-> 
-> There are for C types, and that's why we have both .c_type(),
-> .c_param_type(), nad .c_unboxed_type().
-
-Yes, Box<> and Vec<>.  They just don't deserve their own function unlike C.
-
-Paolo
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
