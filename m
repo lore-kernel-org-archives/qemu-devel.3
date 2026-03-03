@@ -4,106 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A048EC1430
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 12:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A9CCEC1430
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 12:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxOWf-0007CO-5K; Tue, 03 Mar 2026 07:06:57 -0500
+	id 1vxOZ5-0000GH-5A; Tue, 03 Mar 2026 07:09:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxOWd-0007B6-57
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 07:06:55 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxOWb-000852-7Q
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 07:06:54 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7986d231b3cso76282627b3.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 04:06:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772539611; cv=none;
- d=google.com; s=arc-20240605;
- b=WGpJaWUQFu0vJ87TvENCnfNJB/PsrhyXI5XHQfksr9XCRBkNMbjc3rJ40rKlZ5QaqC
- EAAX7aXHTFzg6qcsXi2FIFKw8UXHhecf4EpWM99rRozA9b7VILehsyJBwfzIb1XkGGwU
- GCsRvjGtAExk5eA7PB2bUSp+0ZjKINO4jXjbThVPscf0TRiv6IFxooUP2PqBIVabbyJZ
- FXKpeITHQMbp4i3m+LXJAyUxbtEaCn1k0Xit5aqJRrEVWvsJWdq8UOOC/RsdPdSssCvP
- uljkPE/qlf0si7uDi2JWq3pt4e1a+Qn2ZeMfMA9GNT8gJfg2msOxkZWlA6atjOdvnvVF
- tfXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ehkCGb5/hqMEmuZhMWfCZTFaXcJ9oco12dClte5n6zg=;
- fh=hCnxJSjimeeAy9ELrG71kZckpkzTWvhp+22WYPqq2ew=;
- b=d8Ku/B7H/edlaOYjfP62U9XfF3KjbosBf3X3Ji7Z+pIXsqRSM4KWYAEUgfiNGX+zPB
- l6hmnYGP9PFhQk4RuIiD3tD0bWSq/m6Uk+7hxYMuI+KgCO3hPJT++IXvrl84xsFC8GxD
- isAU8S+RAhZD3rl+atzlepey0NitUje5eBayONaQSIyJuhlEO8ICTiSLN6sCXrIRIGd0
- J3onHuzdxM/i68QpvmLXfNicnMGgcruPRIV74zC8N8BvS7IXOpTPM+3XmJ6no0/2arDf
- 8/JODegfgWSwIla7+tUXaewD1PcpqNsQW7a7/Bi3MCKixBaBd09vrfi5m6S7RajH1iSF
- ZZBQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772539611; x=1773144411; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ehkCGb5/hqMEmuZhMWfCZTFaXcJ9oco12dClte5n6zg=;
- b=mwBNdywfWWdo+Q5fUG7q1oxu8V3vKOlUMOeeHbCgECm+/Dj9kgwKGPwn3k4cyGQfkX
- sF2Tw/Kta4PBma8XI7QFBwpM+Vjnzb3qm6Gq+cIp7b+Rq+6EKu4zaIOEYHITsFb4EILk
- bHrzm5vb7Sc8cholLynRIjVpAwu09UXDtV9ZYbljFYuECSX76WJEGvYor92GoRvk1NHD
- Z9G/DwrD1M0Q0J6luUyQabC7U+1E7JYE8Gq4/uwqCL8yYl6JX9cOC1nYT6hVbr6Yici9
- dqu+D4B1Dn0Vci22d7TuB0VXNAZmqDIB+gOh/DxGR4YYWImWv4x94LXhMuhYO1mrYddw
- Bffg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772539611; x=1773144411;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ehkCGb5/hqMEmuZhMWfCZTFaXcJ9oco12dClte5n6zg=;
- b=JdrEOQQOA7LtUILRQaizcUsNrSmamoyAOur9YtCNKWJ0SOXEXfk+bel6MFnE/fxnMR
- rheVeLrdsMDV/10aAMusFjExWSjDErxbVeiPPPmpSniosg1+8Bfj3E292KAMsEPKF4y0
- 71qxXFQ/r+lgiU8f6RZaOwXa0Wgzz6oa6m9ggOPOaNE9R206sPnRrqwhlKRYv6G/Ai24
- Hu0yO737CVXul5czEBNHRVKEhxM0rIGsXzqo+vg1zQ78zYoNVWhwnlBnpttbO9Fi8GG3
- M+saZyAc5lPJ6rI52vS6DDtocu+ub8Z5Wb0Wnfp537kfwbd4jDg5O1tNpYWF4N07XIoC
- 5x0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWYOteONWqHvjm/DxbJbKTncMbbWUpq+rjtgb6LT43K4/kPkyEELkptf7Pe5eGAYY3A6oAw9xYtoM4Z@nongnu.org
-X-Gm-Message-State: AOJu0YyrWPtU7bJari56gyjHGZ0+tEa5bwT8Ap0hoX+EhHNVdt0KFZKR
- 6VXd3koP2S77L8zOcx1y2hzzy1WGufQfv87q3E6QkYSaCUTL16X2V8jNLe9XX+PuYM5tDL+Hi2k
- +R8kBi8Qbq66gAN0vqIszJWPJkdkY7mq9XGvztW/pBQ==
-X-Gm-Gg: ATEYQzzqtHZ8wUyyL79+2SIpWsqFVSNvrcqjy+Jdy5L2s6bYv2kMjM8wMbCNMaalx+N
- HWiJnw1xbxsOWMfDxnEaPbu7Cycx3x1wVifxsuHgCLsRa7u6i5869yvIQfiT6E1rxcawgTnxiji
- QKg3kq0xWj3GuXKLcqaakn1LGP0cwrGylgHM2vahdRzVrg5d3ChyMu4QfsS4kj2+WA4ALBCPadT
- vAlc0H4+7ezGbbIxIe7yhUx8nhnvIULSw3+HPiAGMolv2EUDnUeNdy+SEZ2+3Tr6a5bDvTLViOJ
- QQJr0IR1SnNMbh0M+RpsVux+aXWO1sFC8c5jyy8D7v9Q5QoYLcrLKZytH5dDTX9iKTk=
-X-Received: by 2002:a05:690e:1686:b0:64a:d18a:66c3 with SMTP id
- 956f58d0204a3-64cedd494a9mr1198183d50.48.1772539611222; Tue, 03 Mar 2026
- 04:06:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxOZ3-0000G9-IA
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 07:09:25 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxOZ1-0008Vw-PB
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 07:09:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
+ :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=OPBiVr346EyTl/03ztyzkKSgI0SQ5anOyQFtNEvbWNA=; b=PuGa1o80qUW5vcc
+ lCFhehxiS86cC5t/Ab6NLHJQXRXemkhSItEuuyPFgvKzUzwcppCxx8JguVCSIhE4UKPrdz74DtA+/
+ ObGdIGbQcYqtLB66zUcA9V6+7SLbA2QRcH+jQN1HZGz6qjrx+G/aKw3Psjf1vSIyGVFN0z+6kflBP
+ 48=;
+Date: Tue, 3 Mar 2026 13:12:50 +0100
+To: Helge Deller <deller@gmx.de>
+Cc: qemu-devel@nongnu.org, 
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v4 4/4] hppa: Use 44 bit physical addresses for PA-8700
+Message-ID: <aabLOU6RXx6sioi6@hive.localdomain>
+References: <20260302-hppa-c3600-v4-0-447a800da8cc@rev.ng>
+ <20260302-hppa-c3600-v4-4-447a800da8cc@rev.ng>
+ <a61583f6-7be3-4c7f-94f7-a21a69eba5d7@gmx.de>
 MIME-Version: 1.0
-References: <20260226175549.1319476-1-peter.maydell@linaro.org>
- <65e0593f-d5d6-4e22-a730-ebe65bc1a332@linaro.org>
-In-Reply-To: <65e0593f-d5d6-4e22-a730-ebe65bc1a332@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 12:06:39 +0000
-X-Gm-Features: AaiRm51C0S1WaXaJRwJhDW5kTXSffAuX06l7M_9kNo6a__BHx-7jq0mMzpLw1aQ
-Message-ID: <CAFEAcA-U0T9c6cZpyoPs7iGqLM=hFks8212no+_H5hp0jcNb6g@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/smc91c111: Don't allow negative-length packets
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a61583f6-7be3-4c7f-94f7-a21a69eba5d7@gmx.de>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,45 +62,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Feb 2026 at 21:49, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 26/2/26 18:55, Peter Maydell wrote:
-> > The smc91c111 data frame format in memory (figure 8-1 in the
-> > datasheet) includes a "byte count" field which is intended to be the
-> > total size of the data frame, including not just the packet data but
-> > also the leading and trailing information like the status word and
-> > the byte count field itself.  It is therefore possible for the guest
-> > to set this to a value so small that the leading and trailing fields
-> > won't fit and the packet has effectively a negative area.
-> >
-> > We weren't checking for this, with the result that when we subtract 6
-> > from the length to get the length of the packet proper we end up with
-> > a negative length, which is then inconsistently handled in the
-> > qemu_send_packet() code such that we can try to transmit a very large
-> > amount of data and read off the end of the device's data array.
-> >
-> > Treat excessively small length values the same way we do excessively
-> > large values.  As with the oversized case, the datasheet does not
-> > describe what happens for this software error case, and there is no
-> > relevant tx error condition for this, so we just log and drop the
-> > packet.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3304
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   hw/net/smc91c111.c | 16 ++++++++++++++--
-> >   1 file changed, 14 insertions(+), 2 deletions(-)
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 03/03/26, Helge Deller wrote:
+> On 3/2/26 12:56, Anton Johansson via qemu development wrote:
+> > This is in line with the PA-8700 specification.
+> > 
+> > As the SeaBIOS functional tests requires a 40 bit physical address space
+> 
+> 44 bit physical address space?
 
+Hmm maybe I'm missing something then, the 44 bit functional tests still
+hangs.  From what I can tell mapping of the PDC address space results in
+physical addresses starting with 0xf00f0xxxxxx for 44 bits, whereas SeaBIOS
+uses 0xf0f0xxxxxx, meaning we require 40 bits to work with SeaBIOS from
+QEMUs side.
 
+  hwaddr hppa_abs_to_phys_pa2_w0(CPUHPPAState *env, vaddr addr)
+  {
+      /*
+       * See Figure H-10, "Absolute Accesses when PSW W-bit is 0",
+       * combined with Figure H-11, as above.
+       */
+      if (likely(extract32(addr, 28, 4) != 0xf)) {
+          ...
+      } else if (extract32(addr, 24, 4) != 0) {
+          ...
+      } else {
+          /*
+           * PDC address space:
+           * Figures H-10 and H-11 of the parisc2.0 spec do not specify
+           * where to map into the 64-bit PDC address space.
+           * We map with an offset which equals the 32-bit address, which
+           * is what can be seen on physical machines too.
+           */
+          addr = (uint32_t)addr;
+          addr |= -1ull << (hppa_phys_addr_bits(env) - 4);
+      }
+      return addr;
+  }
 
-Applied to target-arm.next, thanks.
-
--- PMM
+please let me know if I'm missing something!:)
 
