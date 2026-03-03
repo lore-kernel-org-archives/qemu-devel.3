@@ -4,86 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5303E67A62
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF83EB362F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxR9Q-0003HL-CC; Tue, 03 Mar 2026 09:55:08 -0500
+	id 1vxRGF-0004qy-Bn; Tue, 03 Mar 2026 10:02:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxR97-0003Gx-Fl
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:54:49 -0500
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxRFz-0004ps-LI
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:01:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxR95-0005oh-6U
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:54:49 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772549664; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=KUWdS+uFT9oggfDK/ruVFOBKSmHK69krmnC0AK1DxMNrotqp9kIbBfv2PbdO84ytB0vDacw+XzToNdHGQLRLShitaHn9bVtKODfk+0ioscWf3gQYzHZxZLfmRd0W+dM35nvO+yqxFzZM5BrUIUoo6UtBlDBCfwtmvVG7t0UUjSo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772549664;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=2nhhNmH0bG7yoVypLO137OqbOkM9cTdwHmGLUd8+l2A=; 
- b=lgArkbQsD6IFVraXwpcHrz2GU+Yd5SZHOATIBPrKG3dVyHplzXsyhontxE+XfRdfFsMXvN3f++Zf+ka7SjWoVFjTWb3oPsgfh+TtU0smq2fAUTUIUkBgCKNnv+hROOrWl7W+jfsqPLKrwjkX5cxuspbzAJZb0jGI701vPDx36Kc=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772549664; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=2nhhNmH0bG7yoVypLO137OqbOkM9cTdwHmGLUd8+l2A=;
- b=HzIqBwqKIx/WcBkMUcMDIapv1jyDCzd8IA5G+Jhw8LNg73yEw0G/zi46kKCtMVej
- 3BlzF3rx7iJtDkIj7uYQhUp5yigDz2pIIteuqcCDVez3lkGFsRmZ8JSmRfSiD9l/95e
- 6kY8Ly2ARR43Wb+qvJ4omoFCs2eJV8QSPDTfdqKc=
-Received: by mx.zohomail.com with SMTPS id 1772549662512827.9715536451264;
- Tue, 3 Mar 2026 06:54:22 -0800 (PST)
-Message-ID: <b9192dfb-d4e5-4bc8-8dd8-14097f64a9d7@collabora.com>
-Date: Tue, 3 Mar 2026 17:54:14 +0300
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxRFt-0001Ga-I6
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:01:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772550107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gqGvgtkWn2tpEBidF7xKBveNLxe9SQZngpLkSCyaZYA=;
+ b=SSFYqWSUaTjZZCbxROiAPODK39ZeB6gQP7McfXBSY0pi/p5+ymt2rFF97IHoFnHmrTtlIg
+ EM1vuPsd1oXmUbG/jv8hPYSr4DtaHScfArx8n8I8z9CGmZZxXoCJI+m7gNWO2thx2MJE92
+ 4GEkcoqQRJtKUU3EqWUAqrQs2m3b6Pk=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-67-6UHKLQzwOFC1oUmWAkeK7A-1; Tue, 03 Mar 2026 10:01:44 -0500
+X-MC-Unique: 6UHKLQzwOFC1oUmWAkeK7A-1
+X-Mimecast-MFC-AGG-ID: 6UHKLQzwOFC1oUmWAkeK7A_1772550104
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8c71655aa11so5722129185a.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 07:01:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772550104; x=1773154904; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=gqGvgtkWn2tpEBidF7xKBveNLxe9SQZngpLkSCyaZYA=;
+ b=iqXorYaV44XbSJ24yn7U35OvFgjZP7InoX68s9QscZv9/vMNLfdBDLkmvH2EZh3+8E
+ EutSPHizC8h5qIA2HGTv/faoxxhHbJwF88WeR+OkC4KLtnb7/0hxqDbICGPxwoEXzxcQ
+ 422EiLXQktXW7Ev1U0gln3g6UFr7OEghbFoOctB/VeTzi+dZxtwfujXcClZZAgy2Ozig
+ uiYt3Ukv8Dqo62gl+WzUmq1YYHkg19zNmSVHJDrPJhgO2w3AKIGUTKvwibKMnsLGVUg5
+ Vqdn+frdDFC7xaqUIg2Yo+QY4N1kBge6DWiier5yE97N7D3k7zgTJuModwtOEsw9yvse
+ PxXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772550104; x=1773154904;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gqGvgtkWn2tpEBidF7xKBveNLxe9SQZngpLkSCyaZYA=;
+ b=fEfFX+oNeDaL4eYTlrTo+E2SSqaXaTLr1Nkm+JEKzN42zE3uQQq1K+ND8tVoz5qlW3
+ PghTLx2bMRoJJvjdiRn8fqVHPka1tniAgY7+1ljRPHrxzx3Ms66VtCRHtV8/HBqkoW3Q
+ WnHYfpIMblODX9OMsuGEYot/fZE1isagXBX0ok5nuTcdrGj9hB1z+IwtMbY3qp9XujHG
+ I1UkukgXw1brZMue4dnaM3xw8iCsSSnJGmqN37W0x/CKo8wZXBrD88Tkze8Xjfknl8eM
+ A4h+Hq4hm3Zy96Qm/vUKc9u43mMRoBhbpHLl7+9lRqnteg5IVpu4J3fuSZjfopT8VhkD
+ OM8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEolD+44pKSYGduMySZPW7vIQ1VNeRJbwtMt4oFjV+1POFDMy4065mZ5BI2q8WXaPWth7wUwJmrg4c@nongnu.org
+X-Gm-Message-State: AOJu0Yz1+V8rGKI2MnZdzg3IJWAbkIWBtEnihfr19OwVXt/TijKyw+Ma
+ 8YwuDfLQceHat7otiaIw0XSxFKdPbrttS3kWUlCTWRbB++kQppccGBIKcFNw0DQormcsmjug4Zd
+ Lc+YhOQJxizMxxCB8pC2Y3fUw8732nqWUztlw3NyNq8OwYYpMkEYMw64q
+X-Gm-Gg: ATEYQzw0SOznf1SEEf9UXKHU/GB5UiFU4R5mLZiLK2lKvWoeruR425xP+ImfDYPUtiy
+ QpCzVi7SyF7nivMkWvcK6k4LHDg9vr4/OduwPBgXVEj2Jnw/HSvrPOgT45093PWjk8MNXLfBbvH
+ aMbosd2A3RtC9sV48no1gGI9UWFU9hQsRiy1eaDm6CpXp8Qq5J+yrIIbDW9DT/HGNDsJQivpzay
+ 9JebdDgKwBslsTkvukpHIokzmMSistsewRf3xls6XssXTarYxF1EqKCS07iHNYeoI/r9ynnVvTZ
+ 9uG61KDNwAw/vLWEEyyUgYH/qHhNlocC/+e8xwesSIOf4x0ndT4n2p56+8/WuomOl91BuQMWF51
+ ZyH6V5ThLGcoe9w==
+X-Received: by 2002:a05:620a:3192:b0:8cb:b062:c2e5 with SMTP id
+ af79cd13be357-8cbc8dec9fbmr1994243885a.27.1772550104188; 
+ Tue, 03 Mar 2026 07:01:44 -0800 (PST)
+X-Received: by 2002:a05:620a:3192:b0:8cb:b062:c2e5 with SMTP id
+ af79cd13be357-8cbc8dec9fbmr1994238485a.27.1772550103545; 
+ Tue, 03 Mar 2026 07:01:43 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cbbf736cfasm1389538485a.49.2026.03.03.07.01.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 07:01:42 -0800 (PST)
+Date: Tue, 3 Mar 2026 10:01:31 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: farosas@suse.de,
+	"open list:All patches CC here" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 02/16] migration: make vmstate_save_state_v() static
+Message-ID: <aab3y-ezwVVDkPYU@x1.local>
+References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
+ <20260220210214.800050-3-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v21 04/18] ui/gdk: Restore original context after new
- context creation
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
- <20260302145920.735423-5-dmitry.osipenko@collabora.com>
- <CAJ+F1C+KL2dAYGurXAk3Fc6TLNRa=FQU6U2=UqRkdeBw1uQRbw@mail.gmail.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <CAJ+F1C+KL2dAYGurXAk3Fc6TLNRa=FQU6U2=UqRkdeBw1uQRbw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260220210214.800050-3-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,21 +118,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/26 13:03, Marc-André Lureau wrote:
-> On Mon, Mar 2, 2026 at 4:04 PM Dmitry Osipenko
-> <dmitry.osipenko@collabora.com> wrote:
->>
->> Get currently bound GL context when creating new GL context and restore
->> it after the creation for consistency with behavior expected by virglrenderer
->> that assumes context-creation doesn't switch context.
->>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+On Sat, Feb 21, 2026 at 12:02:00AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> It's used only in vmstate.c.
 > 
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Thanks for the review
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
-Best regards,
-Dmitry
+Peter Xu
+
 
