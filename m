@@ -4,134 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5710EC1429
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B994DEC1423
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxNIX-000301-V7; Tue, 03 Mar 2026 05:48:18 -0500
+	id 1vxNIs-000323-BH; Tue, 03 Mar 2026 05:48:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxNIP-0002z6-Fh
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:48:09 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vxNIq-00031h-59
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:48:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxNIN-00044L-Qc
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:48:09 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vxNIk-0004FT-Qc
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:48:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772534886;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1772534907;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m/qcXj6mGP3zYdxM5zi6RmYl905Ja2cTV3CJXRm4xps=;
- b=fyQ68rZvYsu7jZ7dngGBXuY01es6mUPzhlpKnxArE0TfrP2baerVKfgLttYHaAiOR7gi/P
- lvP20nye3uEIX428ETvs6Dj5KY9qmbebEdWIZ4E+8wZH+jMqDQlb+jWBgDg19k8qvRm9tv
- Jt8OglFsNm02Iy8RtlP4xbLb0D4Kdr4=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nEHegAVxKlLHUxF47/TrSWe3AW8x3xWT9xEVTACOVdc=;
+ b=T7nLytHg24C/mUrJ7gnqwNEJO2xJ13uxTGu7GUS7ck4MQoMvTDyABUKYtQs1Bfslza3k/b
+ avaELuJFye6VoV6HGZlBDlWvA47kMieO9vFq8RCq3fY+Nm7UreiGKy32GltqyCpfDgydQh
+ 1d4AM66TqRUek5fV8mUe3Kv9WDyZkRM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-0Cdd1Aw_M_iyRRj4WNItrA-1; Tue, 03 Mar 2026 05:48:05 -0500
-X-MC-Unique: 0Cdd1Aw_M_iyRRj4WNItrA-1
-X-Mimecast-MFC-AGG-ID: 0Cdd1Aw_M_iyRRj4WNItrA_1772534884
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-35986cc87a6so2365973a91.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 02:48:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772534884; cv=none;
- d=google.com; s=arc-20240605;
- b=TAV1HQAXfqbhBwFimx0nMTeviU6skf4k3/YDnlsZnhlU6oc+XkqNGiRlqz9H1DVnqQ
- FI2gp40/lghrDoVimAeSTkOnYbVK4Nv4jf0en6ER1+97OrGVnbRTZRlhT78ye0ELlKzC
- HKiX+r9EHsrdJQBsPYiIHyAO37gMsgr30n3UyUMayrrHf6vWp/UlCnkHR2PqyaYi0UEv
- AFMBBnA4vEhJCngWVviGttosmRnh5NfFmuvTtH7C7+s6wQHiyRGZ2oWLSO4yyZCuJ7Z2
- 2aINNVwPy7tVUJsxpnzWoyBwHvzZllQu433fkVI6KlgFH1qSrRJfKfzYCaYOWftQUp9A
- uAxw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=m/qcXj6mGP3zYdxM5zi6RmYl905Ja2cTV3CJXRm4xps=;
- fh=QmwjdY2nhcKgGa8S9UuEhm2CAVeDmSPQrlx6n4fZTbM=;
- b=Q7iXUySYaiLS9TjX6hXMHnCHG4HEHc+snZswUVAHq5/JrY+xP51prfvalhORIfZPh+
- VVfq4Ues/8Q21SHATjkDEnHAGKeV8XgG3zDbLB6bpFMJSxsp6gimmCkJtwoy0aDqfDPV
- S4ulky/iOYUyp9TZ5+2tB3IEkeJR0FllU4Bqo/tHZwsYK6w7Kt/1kpqHNB2wfE4K0Map
- YZK0NjBxbnEb0bl6RCZvnQi+jH07Iaqv2eTaHq8/CE5kYPV4EYWR8HC7eJQ+ErdtCGzP
- DT8IgxdoaY77T1pAHzIoSLieWGxxSgxj9Va7FoHwzxBpTZCgIpOa8AHowL6FfruiBRRb
- wDKw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772534884; x=1773139684; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m/qcXj6mGP3zYdxM5zi6RmYl905Ja2cTV3CJXRm4xps=;
- b=noVEo+FP4aF0EcsmC46CEX+p6dgfUkJGX6iW82RTBkzsj+YcVSvSXYTBHGlzGhf33r
- 5knlaaiubDSNLCXuJBA5Vd8qTBtcrervjI/Ik7I5/jP2XyvDTg6dtuvw1Kow3oqpPOkx
- K4N3tSIhiTKzl7CvXSjy6n1IYHtNP3dGA4t7+RnZR8AwaDgemz4L1mVHARrSY7ihFI6X
- YZ6BKNdg6ps/7z95/UsuYxpqBO3CjjAZ8VEKePaH4ac0LMANx7m7AbMhSJRLNHJfbf5z
- wK6VI4oOOP6tDAIoOIfkch/AGktvDCQEGI8VeEjSjSiHVfYBIPz7i8AaJY+DETFpMbQ8
- w81g==
+ us-mta-274-46WMkOf5M-qqwZwoOCS4wA-1; Tue, 03 Mar 2026 05:48:25 -0500
+X-MC-Unique: 46WMkOf5M-qqwZwoOCS4wA-1
+X-Mimecast-MFC-AGG-ID: 46WMkOf5M-qqwZwoOCS4wA_1772534904
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4398fed3552so4664303f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 02:48:24 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772534884; x=1773139684;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=m/qcXj6mGP3zYdxM5zi6RmYl905Ja2cTV3CJXRm4xps=;
- b=Pk/kcK1g9qsNhyMZx2uTAmrHI9/Ff7laMEJTjNH4Aqz1dzM0T/94o0Mw8vqfQIzvm2
- vs9Qqk8Wm6KvZWfggZPeo1cpjgMbVeByVdlPyAGPeCIrmJKoVHpCwS0ULL52AkIw5gsn
- R6Mk6eFN5yGzrGE/jGVqD9obgExCB6nMkW0eTIEuY90zoTai2+8Cz1zXETgUSRneQUsh
- ITJC/oegrVSOihoNKwQ75hUpcFeYRQtkMRn3TdhChNnO/V42epMmpVTHwb0UUyD2ueIE
- bNFCnrw04l7h+Gb53+RRDMzLjGeSt2rfFNqGVuWCF6VAf+eMrBBSBeQVgdJBtcaCNJXD
- xF0w==
-X-Gm-Message-State: AOJu0YwlyadZ0Wvu/t3mBvB6QUM7JBBSLB7H7oOD347oCfgE0jdayLIQ
- PvqIWeVybVgO6nuTUoMc4Ru7sK6GFRwW0z+XI6DVBYshZoersb9aISzwqYDJefpv8gWYZIwykSC
- thQOrDuXzeTuAcOQKOueHFZxjGtust3IJSzBZkBEVYG9PEtdLf9IYxq1uMN3ia3/Zv2ygcUSclA
- uIpSr5dR7/LdLFthZcb+iPTz6WVM3bjPw=
-X-Gm-Gg: ATEYQzyQsxJtilGI0+Rh5l4MszLgA+Rf8QUlxEgvSWccmUmbO5tT7us7fDb/k5A5Yvo
- gT/YMOUFj7YxlyWDpkQN37wJZIQdWa2gbXlvOYR7EjGEdyTh+U8/2biMTbgQxM84e57ksftkqPJ
- 9xtoO2Ei3tUtVWkhlN4tgJTKetiMoaA9yXxA+VT1e3kzaF7gYPFKSqvwENnk+MIIT6yjzfmAUlP
- ptzpeDtl3Xm0Uvn5qMAUhGDOBsVNMMSZRWQFLK5tUaAaESHM2QNpUCnlUPZX5jqwr1euTMBbdYY
- Jal9mmlaKp2oG3VnP7LP640=
-X-Received: by 2002:a17:90a:fc4d:b0:341:88d5:a74e with SMTP id
- 98e67ed59e1d1-35965ccbc07mr12186742a91.29.1772534884105; 
- Tue, 03 Mar 2026 02:48:04 -0800 (PST)
-X-Received: by 2002:a17:90a:fc4d:b0:341:88d5:a74e with SMTP id
- 98e67ed59e1d1-35965ccbc07mr12186724a91.29.1772534883724; Tue, 03 Mar 2026
- 02:48:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772534904; x=1773139704;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nEHegAVxKlLHUxF47/TrSWe3AW8x3xWT9xEVTACOVdc=;
+ b=wT8HGLBDs9lMO6a4uqvEsAkR2WRAEGO8Gq0E/tTPQHlVkbj+Awa/1+XR3TJMWYTVEM
+ J0SdZiNHJP8BxPAY9Hl1dvkCUq3AuD25SWw2+nAIKVvv72MMkubMaNA2r4jng+YLCFfc
+ m3jWl6sWhDgCceO38N6ZICL4xnHnuwgwCVlEKaEl+ZfHQhp1Uvh2IN7RNQ4RWjYZ6GWz
+ mu7YwRsCUFTuE9sN2ZQfwH6Fk0WEsVXkJrszMQaMYi/WnO3DkFcGTIyWU0ayPsJsFL9X
+ Xc8wcE+iZvyeY/fXlXih3rD0He5afi+c+AHfAlGCTmR6S7Kqe+jncWKxgW+jeT9D3HBd
+ ufkA==
+X-Gm-Message-State: AOJu0YyqywVrwgecSp1Nqx6B4uvGz2/LFNWJNmVa5e5WXQCfAnIRJ2Jb
+ bam64hnIoBtAuZyLydckvqH5eou7KdwKkMv6YS+8IRlUjlKTYeNYpMsBucbRhRJK+ogBXbRu3sA
+ lxcgqNOqnrqqRrv1A8qpIFJj0LXFmWoQ+tCkIVLJ7GjjuCiGYTUI9cOhS
+X-Gm-Gg: ATEYQzxR1FAzDKMhBYUVBPGBu+iTIB8mP0iJw22wh6ssI3/qrNZynkEUMZuKf8EsrHn
+ x0oiZ5yd3oh3DTpzqeEBqvOVX6kACvgN5pwbFzxMwnLKW/pahWdXEmvQOFiux+jIFyMN+ZhrfU7
+ BfFhmM6BeNj3d6yheSQ0gbrRE0DkFTpVsUC6ICXpPXRnNjPqkFEJvspgHq2b1iT3jvVWZt0KDWE
+ OpEzB400VGnbsf2PiuGw9N4XfWPU5yIieBue8OJOUDXg4CuRoTKPYoPS1L8JQ61iQKE7cXR8M0/
+ +JwywpqAhqPp4CRoD2g20VwXIOUzxuP50rqWBndUCJCavvI2aVqsGsvc/dkk6Cj5yZfu3E6h6Ii
+ KE1Y3uJpNkmeSXRQJvAusKsa3klOIMRM2HAtj8Guk4rPEyoOVr3geu1vkd78Qys6uIudYFw==
+X-Received: by 2002:a05:6000:610:b0:439:ba4d:bf40 with SMTP id
+ ffacd0b85a97d-439ba4dc256mr9757731f8f.43.1772534903734; 
+ Tue, 03 Mar 2026 02:48:23 -0800 (PST)
+X-Received: by 2002:a05:6000:610:b0:439:ba4d:bf40 with SMTP id
+ ffacd0b85a97d-439ba4dc256mr9757689f8f.43.1772534903240; 
+ Tue, 03 Mar 2026 02:48:23 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b03db76bsm19148913f8f.18.2026.03.03.02.48.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 02:48:22 -0800 (PST)
+Message-ID: <f2bb8d0c-5498-4dfb-ac35-8526d8014b26@redhat.com>
+Date: Tue, 3 Mar 2026 11:48:21 +0100
 MIME-Version: 1.0
-References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
- <20260226140001.3622334-10-marcandre.lureau@redhat.com>
- <99b0ab59-c1dc-4d23-addc-7bf4b87bfa03@kernel.org>
-In-Reply-To: <99b0ab59-c1dc-4d23-addc-7bf4b87bfa03@kernel.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 3 Mar 2026 11:47:52 +0100
-X-Gm-Features: AaiRm50RcuiyIwROlMmdwKZbzjq0MW23AX7s8d9DGltnMotTX0VCM0Qi-B83jOo
-Message-ID: <CAMxuvazwmjjpnpsWpOd_=HcS-6ynpVjAw2u3R=VuE=Lhg=AnKw@mail.gmail.com>
-Subject: Re: [PATCH v3 09/15] system/ram-discard-manager: implement replay via
- is_populated iteration
-To: David Hildenbrand <david@kernel.org>
-Cc: qemu-devel@nongnu.org, Ben Chaney <bchaney@akamai.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
- Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- Mark Kanda <mark.kanda@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 28/31] hw/arm/smmuv3: Select sec-sid from PCI property
+ and validate SECURE_IMPL
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101907.2997408-1-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260221101907.2997408-1-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- MXG_EMAIL_FRAG=0.099, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,52 +118,208 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Thu, Feb 26, 2026 at 5:02=E2=80=AFPM David Hildenbrand <david@kernel.org=
-> wrote:
+
+On 2/21/26 11:19 AM, Tao Tang wrote:
+> Parse each PCI device's sec-sid property during SMMU device initialization
+> and cache it in SMMUDevice::sec_sid. Support "non-secure" and "secure",
+> default to non-secure when unspecified, and reject invalid values with an
+> explicit error. Use sdev->sec_sid in smmuv3_translate() to select the
+> register bank instead of hardcoding the non-secure context.
 >
-> On 2/26/26 14:59, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Replace the source-level replay wrappers with a new
-> > replay_by_populated_state() helper that iterates the section at
-> > min-granularity, calls is_populated() for each chunk, and aggregates
-> > consecutive chunks of the same state before invoking the callback.
-> >
-> > This moves the iteration logic from individual sources into the manager=
-,
-> > preparing for multi-source aggregation where the manager must combine
-> > state from multiple sources anyway.
-> >
-> > The replay_populated/replay_discarded vtable entries in
-> > RamDiscardSourceClass are no longer called but remain in the interface
-> > for now; they will be removed in follow-up commits along with the
-> > now-dead source implementations.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
+> Keep sec-sid parsing in smmu-common, and add a SMMUv3-specific validation
+> hook to enforce architectural constraints: fail fast when sec-sid=secure
+> while SMMU_S_IDR1.SECURE_IMPL is 0 or secure AS is not available.
 >
-> Isn't it significantly more expensive for large guests to possibly
-> iterate in 4k granularity?
+> Typically, SEC_SID is a system-defined attribute (e.g. sideband or tied-off)
+> rather than something a PCIe endpoint can freely toggle in pre-RME scenario.
+> So this PCI sec-sid property is used as a static platform/testing knob to
+> drive the SMMU bank selection.
+>
+> For future RME-DA + TDISP, this will need to become dynamic: the effective
+> state for PCIe requests is derived from PCIe IDE/TDISP T/XT
+> (e.g. SEC_SID = (XT || T) ? Realm : Non-secure), so we'll switch from a
+> static property to a runtime per-device state update when that plumbing
+> is added.
 
-It's a bit hard to say. How likely is it to have a very large
-RamDiscardManager with a min-granularity of 4k?
+When a translation is triggered, address_space_translate_iommu passes attrs.
+MemTxAttrs.secure bit should tell you whether the translation is
+requested in secure mode. 
+Shouldn't we pass that information the smmuv3 translate function()?
+
+In address_space_translate_iommu I see:
+if (imrc->attrs_to_index) {
+   iommu_idx = imrc->attrs_to_index(iommu_mr, attrs);
+}
+
+iotlb = imrc->translate(iommu_mr, addr, is_write ?
+                          IOMMU_WO : IOMMU_RO, iommu_idx);
+
+
+Thanks
+
+Eric
 
 >
-> The nice thing about the old implementation was that we could just scan
-> a bitmap, that is ideally in 2M granularity.
-
-We can still iterate with 2M granularity after this patch. However, it
-may be less effective than iterating using find_next_bit(). Whether
-this is noticeable remains to be seen.
-
-Note: this change was a suggestion from Peter in v1, as discussed in
-https://patchew.org/QEMU/20260204100708.724800-1-marcandre.lureau@redhat.co=
-m/20260204100708.724800-7-marcandre.lureau@redhat.com/#aZyQWOQeKeT5yzIv@x1.=
-local
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> ---
+>  hw/arm/smmu-common.c         | 37 ++++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3.c              | 34 ++++++++++++++++++++++++++++++++-
+>  include/hw/arm/smmu-common.h |  2 ++
+>  3 files changed, 72 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index 5dece2024a4..b0a238abe93 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -21,6 +21,7 @@
+>  #include "exec/target_page.h"
+>  #include "hw/core/cpu.h"
+>  #include "hw/pci/pci_bridge.h"
+> +#include "hw/pci/pci_device.h"
+>  #include "hw/core/qdev-properties.h"
+>  #include "qapi/error.h"
+>  #include "qemu/jhash.h"
+> @@ -1071,14 +1072,50 @@ SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num)
+>      return NULL;
+>  }
+>  
+> +static SMMUSecSID smmu_parse_pci_sec_sid(PCIDevice *pdev, int bus_num,
+> +                                         int devfn)
+> +{
+> +    const char *sec_sid;
+> +
+> +    if (!pdev || !pdev->sec_sid) {
+> +        return SMMU_SEC_SID_NS;
+> +    }
+> +
+> +    sec_sid = pdev->sec_sid;
+> +    if (!strcmp(sec_sid, "non-secure")) {
+> +        return SMMU_SEC_SID_NS;
+> +    }
+> +    if (!strcmp(sec_sid, "secure")) {
+> +        return SMMU_SEC_SID_S;
+> +    }
+> +
+> +    error_report("Invalid sec-sid value '%s' for PCI device %02x:%02x.%x; "
+> +                 "allowed values: non-secure or secure (case-sensitive)",
+> +                 sec_sid, bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn));
+> +    exit(EXIT_FAILURE);
+> +}
+> +
+>  void smmu_init_sdev(SMMUState *s, SMMUDevice *sdev, PCIBus *bus, int devfn)
+>  {
+>      static unsigned int index;
+>      g_autofree char *name = g_strdup_printf("%s-%d-%d", s->mrtypename, devfn,
+>                                              index++);
+> +    SMMUBaseClass *sbc = ARM_SMMU_GET_CLASS(s);
+> +    PCIDevice *pdev;
+> +    int bus_num;
+> +
+>      sdev->smmu = s;
+>      sdev->bus = bus;
+>      sdev->devfn = devfn;
+> +    sdev->sec_sid = SMMU_SEC_SID_NS;
+> +
+> +    bus_num = pci_bus_num(bus);
+> +    pdev = pci_find_device(bus, bus_num, devfn);
+> +    sdev->sec_sid = smmu_parse_pci_sec_sid(pdev, bus_num, devfn);
+> +    if (sbc->validate_sec_sid &&
+> +        !sbc->validate_sec_sid(s, sdev, bus_num)) {
+> +        exit(EXIT_FAILURE);
+> +    }
+>  
+>      memory_region_init_iommu(&sdev->iommu, sizeof(sdev->iommu),
+>                               s->mrtypename, OBJECT(s), name, UINT64_MAX);
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 0b8ea922851..57a063b5e5d 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1116,7 +1116,7 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>      SMMUv3State *s = sdev->smmu;
+>      uint32_t sid = smmu_get_sid(sdev);
+> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+> +    SMMUSecSID sec_sid = sdev->sec_sid;
+>      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>      SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>                             .sid = sid,
+> @@ -1509,6 +1509,36 @@ static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
+>      return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
+>  }
+>  
+> +static bool smmuv3_validate_sec_sid(SMMUState *bs, SMMUDevice *sdev,
+> +                                    int bus_num)
+> +{
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +    bool secure_as_available = bs->secure_memory &&
+> +                               bs->secure_memory_as.root != NULL;
+> +
+> +    if (sdev->sec_sid != SMMU_SEC_SID_S) {
+> +        return true;
+> +    }
+> +
+> +    if (!smmu_hw_secure_implemented(s)) {
+> +        error_report("Invalid sec-sid value 'secure' for PCI device "
+> +                     "%02x:%02x.%x: S_IDR1.SECURE_IMPL is 0, so only "
+> +                     "non-secure is allowed",
+> +                     bus_num, PCI_SLOT(sdev->devfn), PCI_FUNC(sdev->devfn));
+> +        return false;
+> +    }
+> +
+> +    if (!secure_as_available) {
+> +        error_report("Invalid sec-sid value 'secure' for PCI device "
+> +                     "%02x:%02x.%x: secure-memory address space is not "
+> +                     "configured",
+> +                     bus_num, PCI_SLOT(sdev->devfn), PCI_FUNC(sdev->devfn));
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>  static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp, SMMUSecSID sec_sid)
+>  {
+>      SMMUState *bs = ARM_SMMU(s);
+> @@ -2664,6 +2694,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>      ResettableClass *rc = RESETTABLE_CLASS(klass);
+>      SMMUv3Class *c = ARM_SMMUV3_CLASS(klass);
+> +    SMMUBaseClass *sbc = ARM_SMMU_CLASS(klass);
+>  
+>      dc->vmsd = &vmstate_smmuv3;
+>      resettable_class_set_parent_phases(rc, NULL, NULL, smmu_reset_exit,
+> @@ -2673,6 +2704,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>      device_class_set_props(dc, smmuv3_properties);
+>      dc->hotpluggable = false;
+>      dc->user_creatable = true;
+> +    sbc->validate_sec_sid = smmuv3_validate_sec_sid;
+>  
+>      object_class_property_set_description(klass, "accel",
+>          "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index d05cf6ae53b..c74f66a1bb9 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -144,6 +144,7 @@ typedef struct SMMUDevice {
+>      void               *smmu;
+>      PCIBus             *bus;
+>      int                devfn;
+> +    SMMUSecSID         sec_sid;
+>      IOMMUMemoryRegion  iommu;
+>      AddressSpace       as;
+>      uint32_t           cfg_cache_hits;
+> @@ -204,6 +205,7 @@ struct SMMUBaseClass {
+>      /*< public >*/
+>  
+>      DeviceRealize parent_realize;
+> +    bool (*validate_sec_sid)(struct SMMUState *s, SMMUDevice *sdev, int bus_num);
+>  
+>  };
+>  
 
 
