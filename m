@@ -4,134 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89003EC0489
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E6DEC048C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:09:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMf5-0000tt-CL; Tue, 03 Mar 2026 05:07:31 -0500
+	id 1vxMgK-0001e1-C3; Tue, 03 Mar 2026 05:08:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vxMf3-0000tV-Ji
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:07:29 -0500
+ id 1vxMgI-0001dJ-7M
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:08:46 -0500
 Received: from
- mail-switzerlandnorthazlp170100000.outbound.protection.outlook.com
- ([2a01:111:f403:c213::] helo=ZRAP278CU002.outbound.protection.outlook.com)
+ mail-switzerlandnorthazlp170110002.outbound.protection.outlook.com
+ ([2a01:111:f403:c213::2] helo=ZRZP278CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vxMf1-00058H-40
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:07:29 -0500
+ id 1vxMgF-0005F5-S1
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:08:45 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LaRFpE7ZUMGIOyCzvyLJRnHDc09ZYlyWZ+VbST1FAiR/AflPhz7Q7wxUe1bBcbz8JvrsdC9cnpTzNlA7pa4oveNEP36bjHKrsEWmUfEYqIkAyijfUU+xxrTOBT+NqufAkh5EieJfCvQaUhMLKFbMdf05ERAQIv7WEs79HR1qJP4ZeguYVOtMrBK4ptHFpMFnpXKIX4qIIMS5cvHsDYIm1Nchpmh3FDsN3SAqRpEYHzoyoA1x5CQHffGCa701SSDMJ4GOFNfsxzC0/IHRebIBeh68IC6Blt1A8s1OUa2qaiBjyE2EJaJ4M9Mup0OzwqnEBbKP6ueeE0PiDXo67OIZIQ==
+ b=QqmWqOAMLBW10QYb1yaQHfqwy9xDtpsPfPWjcwyjIQ1CWVQ7RcoBTO4gTdbm9XUNiFqozkIvbhStKaKF7Mgtcuzaws0ii95xldXpLbzuR27tJYS8/rUnd20/3QXTcPsAPOoNGD5faKzTWeOuiqhaVjxU8NPQfJFoMpEkUaYRaLFKBEiPRVNco5Ixtns45sUdByLdieo3LoG4Sg/Aats0m058+6KhAdcPywhHVKmeEPvdCR8m18RqwIJccH0p4YLgjm4PDa34FFaBllERyojCFYms8QT5k2Cf+qOXgrHQbDPvRB+NkntpgAw5np5GA272kuHRzqJCi/WWcG+J01PRWQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4U2TJy6wnNRVSc+84RiLaUyqqp5oEUg3VmZg/0C/Q18=;
- b=PasESAjOa7aBUTmfkLg8AFcBfJLOuCo8kvOO3Lz1f3smNGrTzVpuPK3PBZ7eu51mmQMSdD94l25HPmYkhVg48zDb5oWXKpz3ZgrzVJjU+jwXU+OLtDAE+6pMpP/fGnaWG5IXvUCLLJ/bhEnOSVdhnl4kzNKK0mQSveahtthzjES4BsQupmCzI9/zXWhSPcHHprhqJY9flcpeQG9N0co9JlrGFdms84ZZ8Fo1zN9P4xid6sN9WffnhV8HU2ysVrKiJdwX7kMRCxnhGpf7cgQf7GGI9lpXUDB9n1jzZBTfbJ+YWNLTf5BHgWDartrBf/gn+HPxmyOkgqghEbz5lNTQRg==
+ bh=4X54Gr+rILBiVZFDBIA7CKkQVZsYj5xxo2KdQ5zfLLE=;
+ b=EHDSxqfbrs2RyAHprGRFNTe1LSxLUKjRMWM0eV/tN710HgxqaGbN4umH1Acqoxjrokaqiv8ntmgLoVJRmOVJPCrzZdf1QHXSN5p83b0VthGZI3DIVfJ7yuQpOGDoF/w2RIgDo339YjkbYmpLAehici3aPKiwfQarRiohLLpYNRsH6PdidJitSBxWWWOwa+8jomZ74Lx8OViqr55xjgGYjmQSEGK1Kn3Mq9lHkG0ioGzTGYmneRjabp2/Z1JaJ6Z/UvOMbfTGtfKyIcFnYRdAi15NAPFf7DLF0H+1FK6KI2ZNgwki0vH00ZoWzvV9c3046xiD7hj8R/gCNXnkzESPsA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4U2TJy6wnNRVSc+84RiLaUyqqp5oEUg3VmZg/0C/Q18=;
- b=dl4gxyEquTiCi9zLInwJpivJsWAuR3ODobEXpoLZzIvF6v0VAAuVdz7PNuc5euTr/LpBny3ttJSAo+NeruUo4mg7aGpLehSlp0e36qgHoxExfs0I8blA958BX0COYDeWiKz8nOSEa0EHFpG3zBKJdeHv3+7tgeGLRiMCrHvIFfM=
+ bh=4X54Gr+rILBiVZFDBIA7CKkQVZsYj5xxo2KdQ5zfLLE=;
+ b=VeSLl/FI5nDhdfgptKU5J/7OKAID1W6ia0pTLKDHtWErr2BtQqUjRP1Ykv/Cq2CLKNY5xoKzuyLHnZGc4UZvKBJ3rS5sInwDEAjiXe6iSaIO79Jp7Q23gp6h+FyYTSNsJpy7QdUnwYGjJqW8Hvl18H/3NzWZ1lrWW77SVA5EpfY=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::2a0)
  by ZR4P278MB1902.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:b6::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Tue, 3 Mar
- 2026 10:07:20 +0000
+ 2026 10:08:40 +0000
 Received: from ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
  ([fe80::6830:19f2:4a5b:749e]) by ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
  ([fe80::6830:19f2:4a5b:749e%2]) with mapi id 15.20.9654.022; Tue, 3 Mar 2026
- 10:07:20 +0000
-Message-ID: <ce239ef4-c87f-431e-a082-34d4a1ecbf41@epfl.ch>
-Date: Tue, 3 Mar 2026 11:07:19 +0100
+ 10:08:40 +0000
+Message-ID: <e706ebac-e1ac-42f8-a1c0-3a0124afcd54@epfl.ch>
+Date: Tue, 3 Mar 2026 11:08:39 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/7] tests/tcg: add test for qemu_plugin_set_pc API
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
- imp@bsdimp.com, berrange@redhat.com
-References: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
- <11fbe855-37cb-4703-b143-66563b881a4e@epfl.ch>
- <b88345b8-5561-4b09-b42d-dafafd798217@epfl.ch>
- <a84d40f6-0466-4744-95e6-5a1f8743c2b4@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH v5 0/7] Enable PC diversion via the plugin API
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-In-Reply-To: <a84d40f6-0466-4744-95e6-5a1f8743c2b4@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
+ richard.henderson@linaro.org, laurent@vivier.eu, imp@bsdimp.com,
+ berrange@redhat.com
+References: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
+Content-Language: en-US
+In-Reply-To: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
 Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms040605000501020709040303"
-X-ClientProxiedBy: GV0P278CA0076.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:2b::9) To ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
+ micalg=sha-256; boundary="------------ms050006050604060409080005"
+X-ClientProxiedBy: GV0P278CA0073.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:710:2b::6) To ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:918::2a0)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: ZR1PPF9AC83A6B5:EE_|ZR4P278MB1902:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3b88f93-76db-4a9b-7913-08de790ca85e
+X-MS-Office365-Filtering-Correlation-Id: 45b8ea8d-625f-4ffb-1b9b-08de790cd7d7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|786006|366016|19092799006|1800799024; 
-X-Microsoft-Antispam-Message-Info: xa8l0Bk1O9Nd5Wr4EKMyuoCfpw67wGL1JGUGU2rHZnUJinfeH31rBDS2OESpHypBvcAUw97ysOHHVXarb/MIbJaqKsP0Ve/lTERyE2L5Ml7V9HiG5cQ12WxlZmzwJHf+TBAatay2Gpxx3XukWIwHGJ8U3SvRYwpa1+GsvlND4aVtiQXB9aVm6Ge/wJgqne84Z++e+rwGFifzcfUmm57NjKgEHFVoOEFCHsORzacCgXCjwCWhdosKuOnVZc9ky6rTWAU/1R4E5XCUF2eemhEprkbhMd4rHW6d6TGJf2MvhiyYTl4DYwjys19njcw49SsrNMQKeItyRHY/QJK3fLqEZuur2q1eDdQVqXnvzy1GD4fDyR1d0BfCaDvd0Lwrbt3FFfTcqVaAdW+dyQVVmOqEbEMLWnBJiO8omIl1D3kkHXmLNZFg99gv//gVswYD4vzneOPhwgzFRW8pJV4ppVKsMc76+UaleHC6+AW8ohUeVU2sv5IkiwrWUOJrmgPlCQKMhr6AkVaR2LWNI7bDagl7iYRpJHvP5+dtskZK216PUdfHO43vgvoO2juM/Abb6b0xkMJZpJLxkYUo2MvZJiB+TPanP9OoCQDE//mHLsnj4Oz08jKGHuFQ7k+LM29a6h+rPoAvW2qXGHcx5XovrJVvNhOs3T9/cVIyEW5tOZDFEFuPe7bCRZGRmp8r2R0zQ1bOcbdR8ul7zgeilgwXVNeGegpwuwIcrsUdv+cv+DN66GA=
+X-Microsoft-Antispam-Message-Info: kBhPyR52GlVUbmdNeopFR0yZ+OYPp0eTd29mtJ0KYOcxZoH5HXRy8L+oKcpmezZdV8PVW9ohCrwOle5Jq0GjqFKVNMyWdvlDnUEbfNpnJHk0f1QyC4dgMSm/1AQXF5CLGckXgpb/HkW9UKe1iPT2HW4TIAfjxNwWf3GZspQJ3yHU0G10Qj0mpb+CiZCrxUiW6W7rQ46q+FgoQzuf3SgcKrKOibFNhKmHRZkCgbMU34xPepEXGV/nyKYkuh0q89aDfxBILbAjgBc2+x3bKha3SDtyZuSuLdn4t7px9y6AOL9157gwQXktaGIid1aeNJ2KMQyb1tHOj6JDJkG8O7sO5uX/AGoZ4whCUkmM5b2X06sU7MVHGNEynnofCIldPeFICCCpIZKbnnCNc4V4N0rB+hExWgxSrtiu5PL0uBl8xH1BdDbONPpQBTi0nXOMuOszaup5qlkMLMLNI6x7UoIX7ZbEJex///eNCwtJejS8qLClI/et/3bLQbXL31lUvshh3J9gTAfTvWUS0xFwjVq96eD+POBChJKgYm7UBDI8C1d0N5Y92YkRA5JeX4M5DOU7GR7Kdtpf3Rsd5LQzkoc0Nv3X2IfTqxuMEbLxjENAtSR83oitL3tyhWXxZOB3jeCGgaEKAiKwTuoHAcJwBhiBE2YoJRDHTVjdMbSD6pE4p05jTX93tusa/kidBETpcSCjbM62qFQHQC+vqrg8R0iJ8mJtV+3fG5w0dHseNa1CxT8=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(786006)(366016)(19092799006)(1800799024); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bThCcGc4YWYrTXU0VHNJSzNDZ0d3MDBZQlJrSlV6R0dsZ0swellpWUhocHJx?=
- =?utf-8?B?eDRoMG9XbFp5NjhLQXpsY2E4U0Z3aEMvNHJoaUVrY09lVUh2T092QW5rNFAy?=
- =?utf-8?B?RlAwNHZMVnU4dFdIYmhtTHVTNmNsVWkwekFOOWVjT2h4blpnWkRoOGFvWG94?=
- =?utf-8?B?aDdIWFFwUVNaWmJTdU1ibk9hYUFqTk51eG1ydTNQdC9SZE85bmRheFpUdmVJ?=
- =?utf-8?B?ME5lWDlxbU44ZFFjZkhpMWNYRG5WbFJLQlNKQXdzNXZHTlhIdDlwMUdtbUkv?=
- =?utf-8?B?anJLZlZHT3RqUFQ5OVovLzVQRGxkNjJhd0lPM2E4eXI2djE0VFlUYktYNlV1?=
- =?utf-8?B?MGg0blF6Y1lLdkFuTkhuYWcrWDdiQTh6c3h3UGtHOHlRVUNlU3kxSkFkandm?=
- =?utf-8?B?RlJ3bXZybVFRWlhOMFZkRmdLZHNwUWU1T1Y0eWxSejVWQmh6a0lFbzFZWXR5?=
- =?utf-8?B?OGdBU0lLL3RvTWlJbzArNmZjbXZZdlAxTjRqdUtUYXg3dWowMnZ6emZwZHk4?=
- =?utf-8?B?VnFSc2dkM1NQYmNEbjZlenRTRkE3OWNsWXNyZ1habExFaTM1VEUzTjJwbHZM?=
- =?utf-8?B?YjZmdzdMS3BZSCtSRkVaVUpOMWl5a0JuaXQ1OEwwU1NRQ3hZVWY5VVZkNzdK?=
- =?utf-8?B?TmZEZFBuQXZieGJVTHMrUVExWUYyUkF2cUtmM0x1L1pXMm9vdjF6M2kyVm5F?=
- =?utf-8?B?eThiSXRNY2lvcElaeTBIV1FFaTlmeEZad3Z2a0VqdFdUcW5aeUxHSkh6b0E4?=
- =?utf-8?B?ZWpsUTg2bHdQV3BRYXRyMFc2VFNmUHpzVW1RZ3JoWS9MSXBRVUFDR3YwcVpP?=
- =?utf-8?B?d3RNZlNmMks0WUVMSWZIblFZVHA1QnZ4N0hSdmVYK0Q1TVExSnZQTlNJUUgx?=
- =?utf-8?B?OWV6by9ZL0xkRktZWWtvcFM0SlVnanl3QzhrZmRRZXA4U0oxM21XKzRFT0pM?=
- =?utf-8?B?Tmh1T1BxY3FFMXZxdUk5KzdCSDVmRnA3M3JnSTV4QTBTWWk5K3hvcHNUbUFo?=
- =?utf-8?B?czh0dTVUTjdSbTR0aDJpbU9YUjZyTDBLbFVHbzlLbkJUYisyZ092a25nN3dR?=
- =?utf-8?B?SHltcXdRSFp2TWF0Qkt1MHpxZTBFY0sxWWRxdjZzbkZkVW1ZUnB1UmtXY0I2?=
- =?utf-8?B?T0taSmRqc3h2eHVIT1Q5Q0l2VFc2cW1sMGRVQ2haeG5teVhFZzFnaENWcjRN?=
- =?utf-8?B?MEpoM25VS2dOT2F0RHRTQ3pPbkI3L00zMHRVaTdkSXpDdUx2Mll6RGlycTl1?=
- =?utf-8?B?RFBST3RNc3JyVGp2OVY4N0Y3K1VxM1NBS0c2Y1ZUU1MxSmNNNk4ycllhRnAy?=
- =?utf-8?B?cnI2WXE4WkJTMTBTZjl6YWJzK0k0SktDeFB4clF4a2dwbHdpak1EMldBZnFK?=
- =?utf-8?B?MDBZYVN0ZjdwOXdZRWhuU1Z6TG5QN2R6ZjRONXpRWGVtaEhxQ1JKQmMvMUs0?=
- =?utf-8?B?S1pMWTZ2MTJlQ21xUzk4RGZwNkxvSGZaSmh4QlRlT0gxb1M3T0lZUSsvTEtV?=
- =?utf-8?B?dUphbXJuTktVd3VHSkh4VGJGcFRJNTVjeVVSRlBlVEpMd1ByRGR3Yk0xRG1n?=
- =?utf-8?B?TkJCRjhJcUhoT0NmcytmampVTDhvbFdUSUxJMVd4MzI0eUVFOVdRMnQ0ZEpM?=
- =?utf-8?B?eWhRSWVabU5ITlkxcWVlb2paMW1hcTB0MlNtMHFZOFB5d05YSHRKMFA1cENI?=
- =?utf-8?B?QzVFK29FOG94YUg4QnpPM2ZxMGE1dGlUUlQvMUt2TFd2U20vZ3EwaXZQZ3Qy?=
- =?utf-8?B?MEI0TlQ1N3ljMmtEUjdXZ0tEOWtzcWsvbHlhR0FUaERtUkRIRTJFT0E0bFF3?=
- =?utf-8?B?N0xTRFBVTW11SkJJaWZNNVlOdzB0TXFYWjJHeHRmdjJldnFZTkltREVjeGsv?=
- =?utf-8?B?cjdablJON2VRWVk0WEoxT24vZUNBQk9VMVNLMkJ6Uml6MEE0T2g0UkVBN1E3?=
- =?utf-8?B?dTVqdGs4bGFKWDYxZ3R4aGd4NmsyRVZoKzE2WWplYmg2WmVjRXFzTFpFKzdo?=
- =?utf-8?B?WEFielJjV3pIaVhDZlZUc25BdWxKVytEMDJzaXVZM3JKR3FhVDJHeHhmTDdU?=
- =?utf-8?B?M0ErRXhoYWJqQ3BQeEtvOHVpa1lyc1pKNXVrL2FUTXhsNXZEd2wwVDVBaDZY?=
- =?utf-8?B?ZnpuUHZyU1ZxWE4wLzhzK1RNNGg2dkdiR1FVeGdJemZwZkZBOXJkKy9iaDZj?=
- =?utf-8?B?d09pd1dCdVcybVNSYlo0bFFOeldWWXExeVY1OWhsVlJoVXl5RnhBNStRK1Ro?=
- =?utf-8?B?bVlQUlhISVdHR20rWXNPU2RxQXU1SDd6L1IrYUNMMmQ2ZEJ6bW5aMzVyMUd2?=
- =?utf-8?B?R0t4dVpONVgrVnRsUzgzQkVNR1BrZ25TeW5ualdsSWV1b2RDcFdKdz09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RExSNFFUQVlNYk54cHZIRHh3MEdIRXpjdHRzWDlPM2cxc0NQeXBOcE8zTFM1?=
+ =?utf-8?B?SWNXbVFiQnZQTi9MWWZESW5FaXNKYzlOR2hmaGwvdHUyRVlHUlN4NGcrbFMz?=
+ =?utf-8?B?K2k2RUZaVnhHWno5MXJUK0xlOWFGUlR0THdhTzJJVEpkcXpUVGdLaUgwZUY1?=
+ =?utf-8?B?ajQ1OGZHNGk0WGFVOXNFVTljL1JiMzdKNCsyNU54WG4wNGQzUGoyWmNKajdO?=
+ =?utf-8?B?dTJZZzV0Vm1rNm1ZeW5sMHBCMXhnT3VsN25FZnFzcmxrYndXclVpLytYdE5a?=
+ =?utf-8?B?SFZrenc0S3NDdXF6dndBNVNJcEc0NS9vTDZ4UzNFS1dkc05HUkdzNU1KeFE2?=
+ =?utf-8?B?M28yUHVPdFlrWHJBSlJXRGtteUhBOUtIWTF6NXZiTnI4Y2FBbGFXalpWVFI5?=
+ =?utf-8?B?b1NFZUUzd1NraXZ5cFI2c2FWd3ZicWJ2SElabUYwUVYvT2FzNlpIZjFMSVRW?=
+ =?utf-8?B?bThhK0x0cm5MQThtLzdGUFJPSVplelBXczdaOTlpT0VCZnI5Si9kLzUrWFEz?=
+ =?utf-8?B?SEFkU3E2TkxyTVgwMXo4aDBjc01iZzVIRyt5azJNODdrQmk2ZEliMVRBYXJv?=
+ =?utf-8?B?L0Q4cEUxZ0VmeHYzd09mRXI4NjZPSXp2SWxIclFwcXlpbzJWZ3FXT3RkZ1Nk?=
+ =?utf-8?B?bTFtc2FJcjlNOVl6WXl2Qm05OGE3OHhjSXZyTEZGSzVxeDdaVkMvcSthUnRs?=
+ =?utf-8?B?c2Zyb2I1dFh5dHovS2VFV1FCa09nS0ZHVEltU09salJtenVuTXRYcTJBbU9k?=
+ =?utf-8?B?VWlycVR2SDdYNVpLc2U5Z0pPc1ZSeXkwTEdqZWtRUUk3STNObXZXaUVWL1Aw?=
+ =?utf-8?B?V0tDVE9mV0NvNHpzRVpydVJENzFxME9scHltQWpUSm1nelh4MzJZZUZOT2hO?=
+ =?utf-8?B?RnFnM3hZYmNOVGR0QXoyZWZZZmY2eVlOZzRBVkZZMGI4c0pkTUMreVBqcEkr?=
+ =?utf-8?B?aE1manRLVFV2c05VdUQ3aXNJVlJpbm1mS3F6UDViZEFNQ2xBMTVQNGQ3aEZY?=
+ =?utf-8?B?K0pacGdSNGNOZnI3RG8zZlpkWk5oYnFBU1FZb0FDYXd2d0lJNHU5UUFzajNz?=
+ =?utf-8?B?UlJGYWZhT2xtZEFkL1gzSEtyeUFYbTNpYmwrZG1WaVhxZjVCbS9LVGFlUTN1?=
+ =?utf-8?B?UkIwd1JpS0kwSi9GanFXSmt0cTRZY0xRWkNxRGI0Uzhud0loY0M3Ylo5TURp?=
+ =?utf-8?B?N2p2ZUhmRHAwclBmaHlHaG0yVjcxaEhoWTdoME5xdzY1cVUyWjhLYitFaFVl?=
+ =?utf-8?B?YmpsaFBBSFoyWWs1ODZob1hELzNXTDRpVFFzeE9Bc2QvRU1uNnd5bUFDbEFh?=
+ =?utf-8?B?cmJmcWhGYy9PcVY5cW5sZnJDOHhLaUtxZHlLTmFWVkoxS3VLZHFMa3VzeTFa?=
+ =?utf-8?B?dEdvaVBzVDFTT21FUlFIR3lvN3l0L09pZC9NTUFuRVl4dUtmUkh0NUJmOURn?=
+ =?utf-8?B?UFE2NUlIcVJmVm13NjhIclJ2a3pPejRHZUNzRDF4b2p6bUdlWUk3L3VxNkNh?=
+ =?utf-8?B?UmFvaUUvSVc3SGdhS3hHT3R3WEpYdnFLNERsTnBmT0xEVU94aS9xQW5CSVFu?=
+ =?utf-8?B?WDNtanZ5VjFUWUFmbjltdUR3Z3ZuN1AwZlRTUUJRWlZhdERaNTR5ajQvd1FP?=
+ =?utf-8?B?L0YyT0RDYWZDL3dWNUlMbGUxWWtTSTBoVTltWW53MURYNTh3RXQyOHhleU5D?=
+ =?utf-8?B?elBqekpnVXZpSE1hSmttMHU4RDBiR1ZqNkF4K3lzanQ2UmNTc0U2T3hWRmVO?=
+ =?utf-8?B?Sk9EMkl4UWwvVVg0eE5xWFV5WVlYeVpwQnExNzVJS0NjbEJiSXBTWnI0QlpZ?=
+ =?utf-8?B?RTZBNFBKVzhvanNVRVFHMkdjMFpid2JWQVk3cUJVc3dvRzdqZjhoQ2NnVEdW?=
+ =?utf-8?B?NVZkMFQ3cEpFQms3eUFSMm0zMnEzL0JpcGhXWFQ2TmVuamI1R0tpM2N5d3kr?=
+ =?utf-8?B?N3U1dWNwMzE4Nk1PSkQwcUJnVnJRSFpDNjZJYUtPVVplY0QraUliQWc1YThZ?=
+ =?utf-8?B?L1B6eTMyQWtIT3JWV2Y5cEJzUytZWUtjeC9wOXJ5d08xdGxERUtpN054Z08w?=
+ =?utf-8?B?YjFQM2xOVFRQbVdtdnpIY1RVYjVFR3QvSVd2c1B3NngxamRzT0IwQTdzK01w?=
+ =?utf-8?B?SWp5ekZkVWNIQlFCcytKaS80TlpNYzhZdGpCT2Z4YXB5aG5DMnRrYmcxSUR1?=
+ =?utf-8?B?blV4Q25Qa1lJM3JKa2FFcS9hZEJKL3BFbnQxNUVTNnhiYXQ2RkdWNGhmTGY5?=
+ =?utf-8?B?SmQvUnZVNFNRZlhoVTR0d3g5ZUJ3WkhwNHVkT2diVCtURmY0emFmQlEyNkU5?=
+ =?utf-8?B?MHJWenRSdjFOL25VZDdjbGkxT1ZicFFIeGZicGpkV1ZuMUlNWWNSQT09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3b88f93-76db-4a9b-7913-08de790ca85e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 45b8ea8d-625f-4ffb-1b9b-08de790cd7d7
 X-MS-Exchange-CrossTenant-AuthSource: ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Mar 2026 10:07:20.6418 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Mar 2026 10:08:40.2572 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: siQbKyXDE7py7N5b6Z8ay9yyJe85nGow0tXRfUGiPkYyLdjlvKsrCRbKoLIqslL36Zho6agsWbjtnD3n166VXAV6eE5D/Ua7i+oBORuBT/8=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2Bz0vGWW5Eg0SuwgSki7jeK2gEOY6jZImHtbIa6el4g88BmJpJLjWLwmvYc3WYRrTYzQTByWEe/PJ/7ecLEwbsyBngHlMPpv+5NHLtGUSTM=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR4P278MB1902
-Received-SPF: pass client-ip=2a01:111:f403:c213::;
+Received-SPF: pass client-ip=2a01:111:f403:c213::2;
  envelope-from=florian.hofhammer@epfl.ch;
- helo=ZRAP278CU002.outbound.protection.outlook.com
+ helo=ZRZP278CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -153,59 +151,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------ms040605000501020709040303
+--------------ms050006050604060409080005
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 02/03/2026 19:02, Pierrick Bouvier wrote:
-> On 3/2/26 6:58 AM, Florian Hofhammer wrote:
->> On 02/03/2026 14:59, Florian Hofhammer wrote:
->>> The test executes a non-existent syscall, which the syscall plugin
->>> intercepts and redirects to a clean exit.
->>> Due to architecture-specific quirks, the architecture-specific Makefi=
-les
->>> require setting specific compiler and linker flags in some cases.
->>
->> Please disregard this patch and use the other version I just sent, I
->> forgot to update the commit message for this one. My apologies for tha=
-t!
->>
+On 02/03/2026 14:53, Florian Hofhammer wrote:
+> Hi,
 >=20
-> Hi Florian, no worries.
+> This patch series builds on top of the discussion from the thread at
+> https://lore.kernel.org/qemu-devel/e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b=
+@epfl.ch/
+> and adds a plugin API function to set the program counter of the guest,=
+
+> as just writing to it via qemu_plugin_write_register() has no direct
+> effect.
 >=20
-> What is the other version you sent?
-> Feel free to send a v6 for the series if needed, it's more clear than f=
-ix on individual commits.
-
-Ack, going to send a v6.
-
+> This version v5 of the patch series addresses the requested changes fro=
+m
+> the previous v4 submission (details below).
+> Note: checkpatch.pl still reports a warning about line length violation=
+s
+> in patch nr. 6/7 but I did not fix this, as the line was already > 80
+> characters long previously, the change added only a single character,
+> and I think the readability of the code is better as it is now. Please
+> let me know if you disagree and would like me to fix this!
 >=20
->>>
->>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
->>> ---
->>>   MAINTAINERS                                   |   1 +
->>>   tests/tcg/arm/Makefile.target                 |   6 +
->>>   tests/tcg/multiarch/Makefile.target           |  17 ++-
->>>   .../{ =3D> plugin}/check-plugin-output.sh       |   0
->>>   .../{ =3D> plugin}/test-plugin-mem-access.c     |   0
->>>   .../tcg/multiarch/plugin/test-plugin-set-pc.c | 140 +++++++++++++++=
-+++
->>>   tests/tcg/plugins/meson.build                 |   1 +
->>>   tests/tcg/plugins/setpc.c                     | 120 +++++++++++++++=
+> Best regards,
+> Florian=20
+>=20
+> Changes:
+> v5:
+> - make QEMU abort via asserts instead of just returning an error from
+>   the plugin API if preconditions are violated
+> - extend tests for qemu_plugin_set_pc() to different contexts
+> - fix issues highlighted by checkpatch.pl
+> v4:
+> - switch strcmp out in favor of g_strcmp0=20
+> - split the patch introducing the qemu_plugin_set_pc() API into three
+>   patches, two for preparing the plugin infrastructure and the syscall
+>   handling code and a third introducing the actual plugin API
+> v3:
+> - make PC registers read-only across architectures
+> - add tests for read-only registers
+> - adjust test structure for qemu_plugin_set_pc() by moving
+>    architecture-specific tests into corresponding directories
+> v2:
+> - add setjmp() in syscall handling path to allow PC redirection from
+>    syscall callbacks (via longjmp(), the cpu_loop()'s setjmp() for
+>    exiting a TB would not be live anymore in syscall handlers)
+> - add flags to ensure the qemu_plugin_set_pc() API is only called from
+>    contexts where the CPU is live
+> - add test for qemu_plugin_set_pc() API
+> v1:
+> - initial version=20
+>=20
+>=20
+> Florian Hofhammer (7):
+>   plugins: add flag to specify whether PC is rw
+>   linux-user: make syscall emulation interruptible
+>   plugins: add PC diversion API function
+>   tests/tcg: add test for qemu_plugin_set_pc API
+>   plugins: add read-only property for registers
+>   plugins: prohibit writing to read-only registers
+>   tests/tcg/plugins: test register accesses
+>=20
+>  MAINTAINERS                                   |   1 +
+>  include/plugins/qemu-plugin.h                 |  19 +++
+>  linux-user/aarch64/cpu_loop.c                 |   2 +-
+>  linux-user/alpha/cpu_loop.c                   |   2 +-
+>  linux-user/arm/cpu_loop.c                     |   2 +-
+>  linux-user/hexagon/cpu_loop.c                 |   2 +-
+>  linux-user/hppa/cpu_loop.c                    |   1 +
+>  linux-user/i386/cpu_loop.c                    |   8 +-
+>  linux-user/include/special-errno.h            |   8 +
+>  linux-user/loongarch64/cpu_loop.c             |   5 +-
+>  linux-user/m68k/cpu_loop.c                    |   2 +-
+>  linux-user/microblaze/cpu_loop.c              |   2 +-
+>  linux-user/mips/cpu_loop.c                    |   9 +-
+>  linux-user/or1k/cpu_loop.c                    |   2 +-
+>  linux-user/ppc/cpu_loop.c                     |  10 +-
+>  linux-user/riscv/cpu_loop.c                   |   2 +-
+>  linux-user/s390x/cpu_loop.c                   |   2 +-
+>  linux-user/sh4/cpu_loop.c                     |   2 +-
+>  linux-user/sparc/cpu_loop.c                   |   4 +-
+>  linux-user/syscall.c                          |  16 ++
+>  linux-user/xtensa/cpu_loop.c                  |   1 +
+>  plugins/api.c                                 |  42 +++++-
+>  plugins/core.c                                |  29 ++--
+>  tests/tcg/arm/Makefile.target                 |   6 +
+>  tests/tcg/multiarch/Makefile.target           |  17 ++-
+>  .../{ =3D> plugin}/check-plugin-output.sh       |   0
+>  .../{ =3D> plugin}/test-plugin-mem-access.c     |   0
+>  .../tcg/multiarch/plugin/test-plugin-set-pc.c | 140 ++++++++++++++++++=
 
->>>   8 files changed, 282 insertions(+), 3 deletions(-)
->>>   rename tests/tcg/multiarch/{ =3D> plugin}/check-plugin-output.sh (1=
-00%)
->>>   rename tests/tcg/multiarch/{ =3D> plugin}/test-plugin-mem-access.c =
-(100%)
->>>   create mode 100644 tests/tcg/multiarch/plugin/test-plugin-set-pc.c
->>>   create mode 100644 tests/tcg/plugins/setpc.c
->>>
+>  tests/tcg/plugins/meson.build                 |   2 +
+>  tests/tcg/plugins/registers.c                 |  79 ++++++++++
+>  tests/tcg/plugins/setpc.c                     | 120 +++++++++++++++
+>  31 files changed, 495 insertions(+), 42 deletions(-)
+>  rename tests/tcg/multiarch/{ =3D> plugin}/check-plugin-output.sh (100%=
+)
+>  rename tests/tcg/multiarch/{ =3D> plugin}/test-plugin-mem-access.c (10=
+0%)
+>  create mode 100644 tests/tcg/multiarch/plugin/test-plugin-set-pc.c
+>  create mode 100644 tests/tcg/plugins/registers.c
+>  create mode 100644 tests/tcg/plugins/setpc.c
+>=20
+>=20
+> base-commit: ffcf1a7981793973ffbd8100a7c3c6042d02ae23
+
+Please ignore this patch series, I will send a v6 version soon.
+Sorry for the inconvenience and thanks for your understanding!
 
 Best regards,
 Florian
 
---------------ms040605000501020709040303
+--------------ms050006050604060409080005
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -273,8 +333,8 @@ rCfngiHZcAQakPkQrlrZCxMhlIKvDMunATaICyjnHizEC+1qzJsdvJgSC8sOzLxiEjlx3MRe
 CswFMYIEezCCBHcCAQEwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIElu
 Yy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
 MjAyNCBDQTECEAIILYp8ejiSyjOBVc7TclkwDQYJYIZIAWUDBAIBBQCgggLWMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDMwMzEwMDcxOVowLwYJKoZI
-hvcNAQkEMSIEINrf1sUJrJIVAY2p+h+dKe5uqJnwo6CD0Nl0OAoXiBDVMIGFBgkrBgEEAYI3
+DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDMwMzEwMDgzOVowLwYJKoZI
+hvcNAQkEMSIEIHmPLtej9CDBQT7zsg2jb2g5Is4e6Nutc3z0Sz3auAHiMIGFBgkrBgEEAYI3
 EAQxeDB2MGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
 AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMQIQ
 Aggtinx6OJLKM4FVztNyWTCBhwYLKoZIhvcNAQkQAgsxeKB2MGIxCzAJBgNVBAYTAlVTMRcw
@@ -286,12 +346,12 @@ BwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgMwCwYJYIZI
 AWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUDBAIJMAsGCWCGSAFl
 AwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAIBgYrgQQBCwEwCAYG
 K4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgGBiuBBAEOATAIBgYr
-gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBANa5m7QMsa0WYpVp2q4qgvpCxG+5
-Z5b6apCks5hFZFWFzOmqWZ3zsqcl08ilPs2t4glwHMrUB9nm4mVTgnoaZIr1jOIhvNZm50iP
-qrN2ekH9M7OXmN7MoPrka14M1HrZ31/EYHz/X7wE5ZIQDZscpXwn1mOzG+Al6HssTCsvvRq9
-601rqRA5Zr4G5BGB7ZmJJWXnKnQ+4bG4Q/HhTcSkOQ+uO4opAAJKGT8hDHGw8bYWKplwm34q
-1ymVLY8cO22zpKeY1AYbybPvzhyjcufQMQMbba7aNmYO/q3jtXxPDaPbDkA7+fWDgC4KgTEL
-EirRCOqhIvU3Jszd/rqivSITQ/8AAAAAAAA=
+gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBAE2f96w8wfETt06X7sfpBsD45noz
+o/Bl1WCsm+TnXPnU51P6wHsv0YTe9FHsqqoauLlDOWYpztjdCmRVZsb9bHTQK5SGCbxsYUWL
+alIOAr03QGaUgjUSXloOPw2aqJuLWVdAVfgXTCJXNLeBpr2uxqIjx1JcyvcIOa8WDGxcmgD3
+KMmSJUoF6K2df5depxVn5H3hOK7S1eW2BmhTNDKwlDsqG9U4IAK4xkyWVRoz9Tm4hCYJrMk1
+LmxQWVuBz6VK5NF4DV6iFv4jfNEEgOP5oeIB27WBD0ps1l37XGGSwrDUIerkRrZtVRin2Hwt
+nOJ+acaBWrHq3yuXBntmDd+dXq4AAAAAAAA=
 
---------------ms040605000501020709040303--
+--------------ms050006050604060409080005--
 
