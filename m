@@ -4,62 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A56B9EC1430
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 13:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C2EEC1430
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 13:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxPVT-0007qY-2N; Tue, 03 Mar 2026 08:09:47 -0500
+	id 1vxPWY-0000YC-IN; Tue, 03 Mar 2026 08:10:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxPV9-0007RG-NY
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:09:35 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxPW5-0000Ev-Gl
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:10:27 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxPUz-0000Nl-9L
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:09:21 -0500
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 623D90Jb018783
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 3 Mar 2026 22:09:11 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=GvlJiHIg5cF8lIcjx0ELCUIlxep//WnwqBouer09jxc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1772543351; v=1;
- b=bSBMCWA5QiM5eYSo5foS+AMhS9SzNuIdm2wgkbIYa57cobKKHgMGcZ8+1Pd++WVr
- 3E4uVs9wzq9lsb2J2teObOTKtvZFStsqM6OEKpRirMiizTBE57xMw78JvAHDHsIs
- iAs6XfKCt/jwAe3q8Lq1Kis+NsW75gcN8A6XSKRUJdJGlbzvpSdvEUQV4GILZHKu
- wwUQwC8teADBYjdwzH+ey1Y8ETJJPihW7gzMKFWpQDqvtKy53hYNBxlDWO1uMQKr
- zYPb/LsrX6qnyMdBnTiKEGn3uJ1Jd/BJbHLypiRzkmUEYGpcEQqRPf2IdozlvgJi
- 5Y5UAaN2KBEkXbPDEBoabQ==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 0/3] ui/surface: Avoid including epoxy/gl.h in header files
-Date: Tue, 03 Mar 2026 22:08:53 +0900
-Message-Id: <20260303-gl-v1-0-d90f0a237a52@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxPW3-0000jV-2y
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:10:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 988F1596A0A;
+ Tue, 03 Mar 2026 14:10:19 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id JdGUgkfkNFcW; Tue,  3 Mar 2026 14:10:17 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 294AE5969FA; Tue, 03 Mar 2026 14:10:17 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 273585969F2;
+ Tue, 03 Mar 2026 14:10:17 +0100 (CET)
+Date: Tue, 3 Mar 2026 14:10:17 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v5 4/8] memory: Remove memory_region_init_ram_nomigrate()
+In-Reply-To: <CAFEAcA_u=6KuDNs+DT9yOvPwNac1tTMfx+0r2drDjvKHHt+etg@mail.gmail.com>
+Message-ID: <dfb1d623-7f64-b5dc-89bb-8a827a9b1996@eik.bme.hu>
+References: <cover.1772397447.git.balaton@eik.bme.hu>
+ <ff683ccd3433cdaa72aa6b5c97dc9431c67ff5c5.1772397447.git.balaton@eik.bme.hu>
+ <CAFEAcA_u=6KuDNs+DT9yOvPwNac1tTMfx+0r2drDjvKHHt+etg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGXdpmkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDU0MD3fQc3VSzFKNkC0sLQ7PkNCWgwoKi1LTMCrAh0bG1tQDYubbQVAA
- AAA==
-X-Change-ID: 20250510-gl-e6d2c89816cf
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-5ab4c
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,36 +72,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-include/ui/shader.h and include/ui/surface.h are included by files that
-do not depend on Epoxy so they shouldn't include epoxy/gl.h. Otherwise,
-compilations of these files can fail because the path to the directory
-containing epoxy/gl.h may not be passed to the compiler.
+On Tue, 3 Mar 2026, Peter Maydell wrote:
+> On Sun, 1 Mar 2026 at 21:03, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>
+>> This is rarely needed and we can use
+>> memory_region_init_ram_flags_nomigrate() instead which is now the only
+>> nomigrate variant left.
+>>
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>
+> I don't think this one is worth doing. We might as well
+> wait until we can get rid of the VGA case.
 
-Most variables with OpenGL types are removed. The remaining ones are
-GLuint and replaced with uint32_t, which we already use for texture
-names.
+There are two more uses that pass non-0 flags so even with the vga we 
+can't completely remove memory_region_init_ram_flags_nomigrate(), the vga 
+and xtensa are the ones that can use 
+memory_region_init_ram_flags_nomigrate with flags=0 then we don't need 
+memory_region_init_ram_nomigrate. But if everybody is so attached to this 
+function for only these two uses that are to be removed soon I can drop 
+this patch and keep memory_region_init_ram_nomigrate for now but I don't 
+see why.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
-Akihiko Odaki (3):
-      ui/console: Unify pixman-OpenGL format mapping
-      ui/console: Remove DisplaySurface::mem_obj
-      ui/surface: Avoid including epoxy/gl.h in header files
+>> diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+>> index d427d68e50..b025cc53a8 100644
+>> --- a/hw/xtensa/xtfpga.c
+>> +++ b/hw/xtensa/xtfpga.c
+>> @@ -163,8 +163,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
+>>              sysbus_mmio_get_region(s, 1));
+>>
+>>      ram = g_malloc(sizeof(*ram));
+>> -    memory_region_init_ram_nomigrate(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
+>> -                           &error_fatal);
+>> +    memory_region_init_ram_flags_nomigrate(ram, OBJECT(s), "open_eth.ram",
+>> +                                           16 * KiB, 0, &error_fatal);
+>>      vmstate_register_ram_global(ram);
+>>      memory_region_add_subregion(address_space, buffers, ram);
+>>  }
+>
+> We should change this to memory_region_init_ram(), taking
+> the compat break (which is fine for xtensa).
 
- include/ui/console.h       |  4 +--
- include/ui/shader.h        |  2 --
- include/ui/spice-display.h |  1 +
- include/ui/surface.h       |  6 +---
- ui/console-gl.c            | 74 ++++++++++++++++++++++------------------------
- ui/shader.c                |  1 +
- ui/spice-display.c         |  9 +++++-
- 7 files changed, 48 insertions(+), 49 deletions(-)
----
-base-commit: ffcf1a7981793973ffbd8100a7c3c6042d02ae23
-change-id: 20250510-gl-e6d2c89816cf
+There's a patch in the follow up series that will convert this:
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+https://patchew.org/QEMU/cover.1770753117.git.balaton@eik.bme.hu/d2407882ecc62a51781dec51791c91d331802fa3.1770753117.git.balaton@eik.bme.hu/
 
+so until then I chose to just preserve this for now as this is the 
+simplest change here and we still have a similar one in vga but if we 
+finally can get over this series and can discuss the follow ups then this 
+should eventually be converted during that. So I don't think it matters 
+when we take the migration break for this device and this way it's 
+simpler. If we could remove the vga one now then it might worth to do the 
+same here but since that's still there I think this is OK too.
+
+Regards,
+BALATON Zoltan
 
