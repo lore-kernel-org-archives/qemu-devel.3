@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CE4EDEBEB
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788BEEDEBEC
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxVde-00061W-7K; Tue, 03 Mar 2026 14:42:38 -0500
+	id 1vxVdf-00061p-DD; Tue, 03 Mar 2026 14:42:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxVdZ-00060T-Gt
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:42:33 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxVdb-00061D-Av
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:42:35 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxVdX-0007l9-UX
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:42:33 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439c5b40f60so270449f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:42:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxVdZ-0007lf-8u
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:42:34 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso64854175e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:42:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772566950; x=1773171750; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772566951; x=1773171751; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vZhrc4DYAQhRxd65bNwlgwb6AMDI/4IUd46/7qeG4f4=;
- b=DdNmIVAc0AZtR4aFT6Dg2wBUxIKaXMgmU2jIkFV4eSmxXxj0D3lojU80byF0bdtVRd
- Tqu6J++fwaTW65lKa/NcGrXOuyZZ560RtayiHOXbRFIf5xmk6scxGIhHz/kYSIdX5I1J
- WUgyNYZOfGpIx64Tdt3Sm6N2Xx9IIkKOi9QLh4DsXiNKjM+TacC7tqoBwp9gNRmzXpTi
- rpTPYxCP1P6s8+2kwz1rv8xHZK+pbdiLBa0ubFSS15TH5ZHtKqIwfOW4QiU/F6kfRkZk
- mjGaWSA5uBSWUb4EQlhkqGRzQUcuWdpKWRqgRFbj8+iAkr+8katIW6qh272xY1WH8zPU
- OjMg==
+ bh=+3VF3qSAGaHoy/q+VfuevnFQT/3hpVf3O3il8BToUiM=;
+ b=XlHWikC1WUQ0noNCyk6jyjM3Pmie8TsJOo+NnG4uu2O72h9FD+B1Q1GPSb067NsPH6
+ Ut2DUec/gnZw6wx6FsbkUodqRFlWocsQLBl00xpoOUL+6FKJH9m7i7QYlXhLSS3MFV2z
+ 1T795DFZDTdGcIl2LotuZqFrOP2EiQkEYawNP/cXfENjUR3huq08xnxE+fbpIXyq6rpe
+ nSYGfj/JuAuSjdNUSV8hbKmqwPet7IDhmDhHjfLYcILNO+YydEJglG52jkQCuIvpgPOM
+ Fa5qYYyqgSAJQVOqvHYDJLPRKgrZFzrbCFL1R9547p1seBqDr0PodCYUG0hXYOiJRR+8
+ r+/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772566950; x=1773171750;
+ d=1e100.net; s=20230601; t=1772566951; x=1773171751;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vZhrc4DYAQhRxd65bNwlgwb6AMDI/4IUd46/7qeG4f4=;
- b=J/WWZj/S0Kt1VgKlzfQrstSHUVPh9ftbdNO69Be21ny4+36Pdp1Qil/SqUZ6sAoxw3
- EEFpPKls/dIzUvkshk8yl9Vye5ZHikGJ657MY7Ze2jvTWqLU439HEDcrPVCp7D1BU4lg
- m65MxHNl1n0qYPYMGZoETO6w+nETbYkTXpejIu1NPxmEiscTh8SG5dwTSbxCpDtVVLch
- AVanPncUXINI/L7RX1Eaz6OKEcmwOiARewprec8QN8MSCDmqFPk7s7gq6pbyULEClKzJ
- kaG2G9O/sckL2xdb/IsLSSDFlLbX8ILC1gTTHThtGONAjjRF7SJzzFLw1UbNOghS1ekW
- phHw==
-X-Gm-Message-State: AOJu0Yy40W8YwmDGRugLeAcpnY4VQ/jTF/wZ2NDSgxIPgDLeREM5x/gd
- 2XGBKJZidsK6/IENjLX/FLE/pWMJsDNUs+klTPFEcsdw3InJP7fQ9Iua
-X-Gm-Gg: ATEYQzxB1c7726OKCkqAVsGvYfxpUWv4IMRbTdiIouMbQiLQcMOwf3wGG9MWIp8L7za
- VtqQlwKBHmpjAS5quUWUYaJi2FdtkriBEVdHz4xRcaSxcYHiTdexg2fqHSy9/czG3DCu8MTvf4d
- JtY4QkmeuozPdZpY9cZMZhc/BHoNbL3DUNeUNeTPMkfdWP77h/VbnJT5vT+nHig8BBELRLh0Tb5
- /mcKlfsDtPvR6rdGsBJt9sQKzFiGMx6nD9RSgz62y+IYwvgWv/HAHplAe21CkH/vMJpOetwOB6A
- LbQmbzUZyGfE1NFPnNpHwHiFSDY0hcMMBrMKRF+jNQS1jSs9XvyGFdoEb0AWy+JldfVOLNEukJx
- PI7hJypu6dzRlPMqo69wZgtqPNfgWBzrKiE37uFqlo+bn4Jr2IpU2LFAwqZup+gTsWui/rH2K4C
- hHDIy7XY/MRcKaWMQjhF3W6AnhzzjqwIkfC9iTOxwyAVbxl6oCrv4JTXH5Jz1uWdwr6kJvSmFo8
- exEhvAglpn9bVCr/9uMNy+dsbJufsEsGEtzs94ZqLIrQxfHoUjXTZCBYQ==
-X-Received: by 2002:a05:6000:402a:b0:439:c550:d933 with SMTP id
- ffacd0b85a97d-439c550db5amr2812407f8f.41.1772566949675; 
- Tue, 03 Mar 2026 11:42:29 -0800 (PST)
+ bh=+3VF3qSAGaHoy/q+VfuevnFQT/3hpVf3O3il8BToUiM=;
+ b=MEdz1XNZ25+lkfUjemt044UDo3jyni4QSOvE6OmUaETQyhdPNXRJBYhWkG+OaUSXwj
+ fHqzlQLs4YGiikHz6DpfAfFGw+kgyzgv6rmwKMuj3VCgw8IZzlFTDBilGHx07o7N8ZKE
+ Guk3Fdk1UOIoMFwuLQOaKGyUJSNvc5hYd0gAlWFORMydP4imruDcC7k9IIQsmWfHPSAo
+ 09Fu1XzIULQwAMS5ao6mVwUNKtva8dgTpc7rTfPNbN28gj3SKsWO3W+lGhLh0YJc8bmN
+ Q7NCV3ur0lW26KkLZOSfOHPd93ti9Hax5f9LXESjbV8n8LFHxaUA6ebFzZTpAcxauySR
+ GUlQ==
+X-Gm-Message-State: AOJu0YxDuXJXErpSLXRuNIGQipLl/6MusakImrdAfFbXxE4JJfNRNENA
+ hKjgW33cj3O+O7Al/u2PrhK7tLz6M6zhbtRQKZEJdZbKf3PGlFfcllTq
+X-Gm-Gg: ATEYQzyAaUdSuw2+cIs7CY/4WrfBRwSKIWXJ0P9IRTQBUBCg34qV2/Mfgp3bJtHjTvJ
+ N20Egso6ppX4eQFULiaXQ0D7RLfvCQbEOGh98PX/dqNBByPMa3/CNKliyFArhtt0KU2PemaHFmc
+ XRXH3UMGXlGh9xi7q9ykTx3s6DmAJIOHZlLourGmVk5vwcD2M2URP3h1jhup5/apQtLqsp2zAOW
+ FDDhH6vfKSWIMTD2860SU2B68id4NihMrQA/QWma5b7BLeJqrPD8yH2PBfTpT3eWuSrHdktUJdq
+ a2lqEnERW7gDVcX1NwWzMf7MvsOhme5REJOlP9pDFMLtV440KjwP5IQVg0J3Ki+8pZpUSTWcRN5
+ s64lGzjay6yuC1O2wscZ1bAf+jLdRezt717VtiNHovsrZkdxsfTjLO/8Ehfh53M1Yx/VxL6+wr6
+ i6KkVU2Qd5oqkUMJpBCvrmsrj/JFltMGTsfGhL2BDV5MVzAUYf+szhA5M1GAqoSH4sCpXGSGurx
+ GboRxPtHSInlKn7RzvLl/EK2ePag9sd/hD+ryi0No/Udxk=
+X-Received: by 2002:a05:6000:2913:b0:439:b9e8:635f with SMTP id
+ ffacd0b85a97d-439c10dae0emr6703753f8f.21.1772566951365; 
+ Tue, 03 Mar 2026 11:42:31 -0800 (PST)
 Received: from ehlo.thunderbird.net
  (dynamic-2a02-3100-1c79-b600-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
  [2a02:3100:1c79:b600:f009:a6c9:39e7:d8fe])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439c4489279sm4059553f8f.20.2026.03.03.11.42.28
+ ffacd0b85a97d-439b503424fsm20971231f8f.22.2026.03.03.11.42.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 11:42:29 -0800 (PST)
-Date: Tue, 03 Mar 2026 18:43:32 +0000
+ Tue, 03 Mar 2026 11:42:30 -0800 (PST)
+Date: Tue, 03 Mar 2026 18:35:27 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -79,19 +79,18 @@ CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Troy Lee <leetroy@gmail.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_08/12=5D_hw/char/serial=3A_Av?=
- =?US-ASCII?Q?oid_implicit_conversion_when_tracing?=
-In-Reply-To: <CAFEAcA8+Xj=vgG5s9y1Mk=NcJKk2x6=x9RntR+3deaqtk-JThA@mail.gmail.com>
+Subject: Re: [PATCH 11/12] hw/char: Have SerialState inherit from SysBusDevice
+In-Reply-To: <CAFEAcA-dmbSDNC+AL=OO9w=bM-79gVaysroQty=u-SxzQziUrg@mail.gmail.com>
 References: <20260302220254.1166849-1-shentey@gmail.com>
- <20260302220254.1166849-9-shentey@gmail.com>
- <CAFEAcA8+Xj=vgG5s9y1Mk=NcJKk2x6=x9RntR+3deaqtk-JThA@mail.gmail.com>
-Message-ID: <408EC5FC-277C-4E54-8B68-44954464F01C@gmail.com>
+ <20260302220254.1166849-12-shentey@gmail.com>
+ <CAFEAcA-dmbSDNC+AL=OO9w=bM-79gVaysroQty=u-SxzQziUrg@mail.gmail.com>
+Message-ID: <591BD7DD-885A-4B27-BAED-FACC5EE5A5FB@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,54 +115,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 3=2E M=C3=A4rz 2026 11:34:01 UTC schrieb Peter Maydell <peter=2Emaydell=
+Am 3=2E M=C3=A4rz 2026 11:41:52 UTC schrieb Peter Maydell <peter=2Emaydell=
 @linaro=2Eorg>:
 >On Mon, 2 Mar 2026 at 22:03, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
 :
 >>
->> On 64 bit targets, the MemoryRegion API passes an address and a value a=
-s
->> uint64_t, so use that for tracing=2E Keep the uint8_t for reading since
->> this is what the device model produces=2E On targets with less than 64
->> bits, uint64_t is wide enough to avoid narrowing=2E
+>> SerialState currently inherits just from DeviceState and serial devices
+>> use SerialState as an "IP block"=2E Since DeviceState doesn't have an A=
+PI
+>> to provide MMIO regions or IRQs, all serial devices access attributes
+>> internal to SerialState directly=2E Fix this by having SerialState inhe=
+rit
+>> from SysBusDevice=2E
+>>
+>> In addition, SerialState doesn't participate in the reset framework
+>> while SysBusDevice does=2E This allows for implementing reset
+>> functionality more idiomatically=2E
 >>
 >> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>  hw/char/trace-events | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/char/trace-events b/hw/char/trace-events
->> index 9e74be2c14=2E=2Ea3fcc77287 100644
->> --- a/hw/char/trace-events
->> +++ b/hw/char/trace-events
->> @@ -5,8 +5,8 @@ parallel_ioport_read(const char *desc, uint16_t addr, u=
-int8_t value) "read [%s]
->>  parallel_ioport_write(const char *desc, uint16_t addr, uint8_t value) =
-"write [%s] addr 0x%02x val 0x%02x"
->>
->>  # serial=2Ec
->> -serial_read(uint16_t addr, uint8_t value) "read addr 0x%02x val 0x%02x=
-"
->> -serial_write(uint16_t addr, uint8_t value) "write addr 0x%02x val 0x%0=
-2x"
->> +serial_read(uint64_t addr, uint8_t value) "[0x%02" PRIx64 "] -> 0x%02"=
- PRIx8
->> +serial_write(uint64_t addr, uint64_t value) "[0x%02" PRIx64 "] <- 0x%0=
-2" PRIx64
->>  serial_update_parameters(uint64_t baudrate, char parity, int data_bits=
-, int stop_bits) "baudrate=3D%"PRIu64" parity=3D'%c' data=3D%d stop=3D%d"
 >
->We know that the value being written fits in one byte, though,
->because we just asserted that size =3D=3D 1 before trace_serial_write()=
-=2E
+>
+>
+>> @@ -76,12 +76,13 @@ static void serial_isa_realizefn(DeviceState *dev, =
+Error **errp)
+>>      }
+>>      index++;
+>>
+>> -    s->irq =3D isa_get_irq(isadev, isa->isairq);
+>> -    qdev_realize(DEVICE(s), NULL, errp);
+>> +    sysbus_realize(sbd, errp);
+>> +    sysbus_connect_irq(sbd, 0, isa_get_irq(isadev, isa->isairq));
+>>      qdev_set_legacy_instance_id(dev, isa->iobase, 3);
+>>
+>> -    memory_region_init_io(&s->io, OBJECT(isa), &serial_io_ops, s, "ser=
+ial", 8);
+>> -    isa_register_ioport(isadev, &s->io, isa->iobase);
+>> +    memory_region_init_io(sysbus_mmio_get_region(sbd, 0), OBJECT(isa),
+>> +                          &serial_io_ops, sbd, "serial", 8);
+>
+>This looks very odd, because sysbus_mmio_get_region() is supposed
+>to be "the sysbus device provides an MR it has initialized, and this
+>is how you get hold of it"=2E But here we're taking an uninitialized
+>thing and initializing it by calling memory_region_init_io()=2E It works
+>because it's just returning a pointer into the internal memory, but
+>it's still making assumptions about the internals of the device just as
+>much as directly accessing s->io=2E
+>
+>Maybe this is worthwhile for the benefit of getting reset
+>handling automatically into the reset tree=2E
 
-Well, we as humans know it but the compiler doesn't, so it will perform im=
-plicit conversion=2E The format string will still print it as a byte=2E Any=
- issues with that?
+I think the logic can be folded into TYPE_SERIAL=2E I'll send a v2=2E
 
 Best regards,
 Bernhard
 
 >
+>thanks
 >-- PMM
 
