@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684F1EC0485
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16986EC0480
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 10:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMWc-0004mQ-5O; Tue, 03 Mar 2026 04:58:46 -0500
+	id 1vxMYS-0005OJ-2M; Tue, 03 Mar 2026 05:00:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMWZ-0004lB-9V
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:58:43 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1vxMYB-0005Mw-CN
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:00:24 -0500
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMWX-0002wL-Si
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:58:43 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ca2b32f46so4024693d50.3
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:58:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772531920; cv=none;
+ id 1vxMY9-0003HG-MF
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 05:00:22 -0500
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64ca2b32f46so4025639d50.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 02:00:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772532020; cv=none;
  d=google.com; s=arc-20240605;
- b=cABhge+4Ww31KgzHFQBnOfa8IVDGaCBKNdzjNV3A7UxX+I+iHvMDAgM1vhsqF2vi8F
- Ify19UZD+Lp5y4K58QiGM+mgKerKMKFgC/XJn8SvZZgfKkDKhn3E4JsPhwPUZCjNnIZB
- ld5bbi+OFDb9xswZPx5ligpI6dzlJBAix3mfevIJidqDvQBldMLqUIcsZHgwhv2VBXmj
- eaneWDFdtLHzueybVnnvqcXizLvLXiVbj7JVbOdTLmVpAiPkKYbFtq9R8Ciz/qDfzcRi
- yj+YbmP8pqSEN2OlgqEGsL/DlhbMYxhYteIz75LMPC5Ac7o52nhXzoUZO5vNyQtwFyFu
- Qyag==
+ b=UiPJz8ZRO4OxHxea/Z+V5wmUKi1wqpIRo+gXO4JXh5GZlMqFBZ8beMKsYUdbMH+GXs
+ Q4TLPPJNJHvnVsy9c9+6emyAGDnCtFfDo4zXyUPiH3E7IPL9k1AGMCK0Yv7lXt20Z+mF
+ yYkrZf0qVjvamujK3DJz2Rn6YPpuGTJc26slFu2yAye0WFPnKc8JWAE2NHa2KzYJPvJm
+ wFJj1SG+OMlMpRdLyWos9uC6QumAaJiJXpuHvDZmSGDoUEQY/tELt8rrUMVrXmmorf0V
+ W7jkKBesc2bX3P6r5iPkFb+SP8FXHzRqWiRRLk4Rb9HG8eszUCp6PYvqf1Av1XBs+zsV
+ mgUg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=5pCey5Ubv1AsOAyW3sQYFrNaoha+uFbjbH8c/Hsyb5Y=;
- fh=pqNLb1D8bcr6Ftek+8H330VOVv7kwixaST+YmWhgoFg=;
- b=kz5htGM9SyaAkVA2t52z9AhRQkO5TyhQ0eB+Fbkr0vRoaFeTQbijt9bv5/y6MQdeit
- hQv22gBSun+qezsbhFxem83LVcE7i+IgDnS7MdP8T5VgeI0wNaJBYyQlecBYz52zEfuU
- W8XohC4WTE9rri/IUAV9h4pJ+JyaHLXng8vJYDy5NB9QaKTq010iG8QMZCzvhZGH2KeQ
- GxG0yoHTFo3+NvxbJi6gEcUVDXjS5LQyrxrfVCPJbmngOjYdzNYCFiRUPVgh/SbGEHzx
- uFT39zqFzsea/2SpFIKA6Jho31HExrkoF3ZiaLH2b0BDf6Nr+N8aGycX3+GVMNqUnsrm
- czig==; darn=nongnu.org
+ bh=TQeFmCX85bi5y1R+miWM7liTulJFb/kn+hPKR62QfeM=;
+ fh=nFj7aFtTYtepbvYRdSQqL+kQtXhnxjpewi3pBwhpqCE=;
+ b=V6mWUUfpUxrHKAEH6/Jcq2dRKs1wNgA/A2DE7+sEOz5Zx2IOTz30gKmfo0Jmz1gNEU
+ gajWNDO/7jmupUowj8hALRG8GZLcV60B7AhodN2UVBoRAPzgn68BIhqro9lKJwl4ACpj
+ nFcvwYs1YGe3BoJKw5biRHQHLsPh+142HPpdoXP8vhK8ntQEOrp0DJTDVGLgBlVGkxdN
+ GMXZ9mZTIpWsmsELDheQmH4l963pOPDESFtxs8CQNMa+1fjwERzGKONCLTmV94pQ1svM
+ lGxEkriSuzmyTburQ26b0gv6FisA/Mrnut7IwNfUBZ6GN9FerIWeqechR9pXwCNk1ayh
+ Tk3w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772531920; x=1773136720; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772532020; x=1773136820; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5pCey5Ubv1AsOAyW3sQYFrNaoha+uFbjbH8c/Hsyb5Y=;
- b=tC8yaGpoVNflvmaGm8TiZa7hkfetGL0XTq5qyW/k6UbRzA4xvWQtCOoM+zXfW65Lnp
- +Ya82mnDzHaRrEufUY8Sp3KVX3+MWGCXsNxxknkJcFby5GKXt+bbj/SNddlnRycexlSk
- TSJlbpYbIBqcxKD5iqg2U/1i5vwj3/2htlb0FUiOk1TNWmaKakzVGbufItirhv1UIS3m
- Gu6l6rUChyeLVUXwGy7qVPkxs8zsC/ib1aXOlMzwiXGsbPcJDc+q7twEpEMiqbnIGmkC
- NFS8CwuruYYKflZg2fENS1GA+3vr2mcpaABlgo8hlRYbHf4No1guDRwqjJxPWAqB8IiQ
- Nf+A==
+ bh=TQeFmCX85bi5y1R+miWM7liTulJFb/kn+hPKR62QfeM=;
+ b=KGsxNfj6h085qHElAWcyadcmU+TEnsJGIk4WmFB5Iu0KF9tMA4cYWx2j6+Rh8SU58s
+ KXpRGw+os6B5gMidYdJbvMfdKdGavuhsikypUyqSjPVxl0FADvmjexHz3cYMfcMtDssS
+ F/lmvVPKa3MCYRJQiExi7yKhEtNdav7OB1bhE9Xg055IKVNsWW2Guc4rSn8bSXPfryWj
+ b60XOW6xSJ5LxWGpRGzdIAWxSv/oexYVaigJKdKEg5SXXE/HseqIa92wEsUFWrZjA9Uc
+ 48NhrsIIrjco10Cej/j9TpFeYIj7EUJcWAFgeslmFwcqnTZw2paT8WonlG5QOLKFsl8H
+ ytVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772531920; x=1773136720;
+ d=1e100.net; s=20230601; t=1772532020; x=1773136820;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5pCey5Ubv1AsOAyW3sQYFrNaoha+uFbjbH8c/Hsyb5Y=;
- b=A+MEUBlf1m8ZnRl/bVPhpP+njlOR7ids0Nc7i2okHxRoi2iCtjOJYFVqYE5KbDugdp
- NxkQ957Kjq6O1e9xxpWVQK1VcHuG+o7ryx5Q55qApVP6Ek66fC2ldqItwY1P/CRoLS6H
- l4Jhxvg5XgUP9Xlqlc0B56nj9wpTwZBY50hgO4WUMAXgXW8N4b78z3bjAPX6GJUY690d
- QkK+NuHHPjqXRwFgmlZkagU/EcP0vUvZD/05PtcTFuRP9rO8WlnYjWfFmwel5DtFgU0x
- OE1PFYqyVoICUe6KTGmSO/m5DgGBoDbijLo6+WDmRLuMEeeIi4yl3uzqAud5esdzQQAg
- Tafg==
-X-Gm-Message-State: AOJu0YwDqGTzaBs8IiIfzeZpXOQbPMjNjCwHFVDWRdRbSnfesC0fHxIp
- 1AIV8AIlaJ8holn9QSFQTNSwSa7ehshafknuvjepsHL9mu2TjryBDsNnsDptFsAIek2MNOogJ4k
- zl2k1yHDVdH/l5co3YY13M5TRNg3net4g9DVJQtef7w==
-X-Gm-Gg: ATEYQzwfKN41/qulwyqwZVZ+5qbJ8x72QceyvyIWMX6ZDd9wO+H8KW+/T4KOwXQBISe
- td5gsHjmS5Ri8dTR3xaAsRepEcRaX5YQEs+iIyBZobvAdzsKnYE/8Xv4y3E3fY9TbkWoo79aqAb
- lKhl3TdmmEV2Dr0D8vB9CiDV6ui3aPrdy++xOizNz7sVlAoASxTg7indTLVtI2Hilrtgt4O8oqD
- 74421HeebuEk0ljRMlEfBN+4QsvWoCwuxcuSruKe5f8/fjH3M11ls8OEpXpEfBzCF5+PRZ2ZF1s
- jtRhm6jXeVBwSFFaUok5NnEHpQb+pjPcfa03f9YLfljt3p/vJvei1ppMTgf0ChLgNps=
-X-Received: by 2002:a05:690e:4243:b0:64a:cf34:d9ac with SMTP id
- 956f58d0204a3-64cc20d2d3dmr9976130d50.29.1772531920594; Tue, 03 Mar 2026
- 01:58:40 -0800 (PST)
+ bh=TQeFmCX85bi5y1R+miWM7liTulJFb/kn+hPKR62QfeM=;
+ b=YlQEjR3Gnr0vFnzSkvcFvOBAMPwiirUUE0A2TiJME01zivGQEcDNUTPcd6iaWOro4u
+ sCdS2myWrzhX+Nygg26di2ct00BqHPgNpMpFUQbXHcDjT8Tpsp/wYKet5SRY+ve5g/Be
+ no/SLbaLN5h6g1Sls0F2adkwrlrpMSRjORxWK7aB+w1j4/ZsYYa/NxD1OMAyCzVCGwve
+ VRhR06rP5FNx+miXi05XULM6GhyDH95kinpmRQffgOV38S4Hj88JeSK8y6gIH3gzXLJV
+ 5I8MdAXcJUeOmo0+gPeSgOO/jAXNb2XD7aqGONdYrToHWXQFe+jmhZJtlO3anOb2yFKP
+ PxTA==
+X-Gm-Message-State: AOJu0Yx9uZUsle87uvaH5qHnIHbiAqPFhu+Rs+g3V+8QYAJjHxPcMgHG
+ /nTQ4e3zd2zmteM2juK+EUyCLsKfVIjm4zCOxl/NjkOX7ILI5uOw1yNd+WdYxJv2UP9gMPEVh71
+ 3ZUhgLoW8SlWuTLIGdlEBHwL3+sc99tsW+c6CiZjvZA==
+X-Gm-Gg: ATEYQzx7UDQKLDNFYdkgFIv4jGijQbla3NnAqsJkDzmLbvZxwiMDb3IgNpRt7QoiimD
+ smPvmTxfJJ5Y/6997J6r47+/wp20NxYUME0jeNXEWA8vhjCMuAI2OBzffL0CB00shSwF1Pi5y7/
+ mh4k+CsJq59Q6Hxg4HSE7hB84tsJlfMgQf6IOgRkR6ymAzQNgXL8RIHqKCofbRO3e0bpon063y/
+ HtymbRP17YqPKdzIxDZpOzxM6dQS8sVor2WTJsdZg6JZY8edk1+QZsIDXHZl6wxdddPARNOQXEu
+ EE4mu3jueYo1T4i0YQTTDoaD+jX6CXfcJnRsOgyGgsGkK0JBzcADVTdNljLgBZ5PA+rVn71tGd/
+ IZA==
+X-Received: by 2002:a53:d745:0:b0:64c:aa01:55ac with SMTP id
+ 956f58d0204a3-64cc20caafdmr9247295d50.24.1772532020113; Tue, 03 Mar 2026
+ 02:00:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20260226090704.27699-1-thuth@redhat.com>
-In-Reply-To: <20260226090704.27699-1-thuth@redhat.com>
+References: <CAFEAcA-8s+fryKmgU7U=B4Roh4YsQYdWr005Q4opNd-fN3LoQw@mail.gmail.com>
+ <20260226105826.30481-1-thuth@redhat.com>
+In-Reply-To: <20260226105826.30481-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 09:58:29 +0000
-X-Gm-Features: AaiRm523zjLlYy9NV7-yZRbLKlTTYbBOfz4UahSJx23BXmZLJYD284RlkqIet0E
-Message-ID: <CAFEAcA9g+S7Z4O6VsdH3tQ_zxJLwFq8Usipm5grVvzTMp45d+Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: Remove the deprecated "highbank" and "midway"
- machines
+Date: Tue, 3 Mar 2026 10:00:08 +0000
+X-Gm-Features: AaiRm52kkOCFsE2uRP3lkftDHAuXLvgHWjsX7OJ0l-VGpLCXKSIvoXCQKtQaUcg
+Message-ID: <CAFEAcA_MMjrEeH3FknE+q-L7ZVZ3iXTMb4fkes=nY2BVnHtfkA@mail.gmail.com>
+Subject: Re: [PATCH 2/1] hw/net: Remove the xgmac device
 To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org, Rob Herring <robh@kernel.org>, qemu-arm@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000007aff98064c1bbffb"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,16 +117,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007aff98064c1bbffb
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, 26 Feb 2026 at 09:07, Thomas Huth <thuth@redhat.com> wrote:
+On Thu, 26 Feb 2026 at 10:58, Thomas Huth <thuth@redhat.com> wrote:
 >
 > From: Thomas Huth <thuth@redhat.com>
 >
-> These machines have been marked as deprecated two releases ago,
-> and so far nobody complained that they are still useful, so it's
-> time to remove these now.
+> The xgmac device was only used by the highbank machine that just
+> has been removed. Being a sysbus device that cannot be instantiated
+> by the user, this is dead code now and thus can be removed, too.
 >
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 
@@ -133,24 +132,4 @@ On Thu, 26 Feb 2026 at 09:07, Thomas Huth <thuth@redhat.com> wrote:
 Applied to target-arm.next, thanks.
 
 -- PMM
-
---0000000000007aff98064c1bbffb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Thu, 26 Feb 2026 at 09:07, Thomas Huth &lt;<a h=
-ref=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br>&gt;<br>=
-&gt; From: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat=
-.com</a>&gt;<br>&gt;<br>&gt; These machines have been marked as deprecated =
-two releases ago,<br>&gt; and so far nobody complained that they are still =
-useful, so it&#39;s<br>&gt; time to remove these now.<br>&gt;<br><div>&gt; =
-Signed-off-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@re=
-dhat.com</a>&gt;</div><div><br></div><div><br>
-<br>
-Applied to target-arm.next, thanks.<br>
-<br>
--- PMM<br>
-<br></div></div>
-
---0000000000007aff98064c1bbffb--
 
