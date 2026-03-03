@@ -4,90 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E96EDEBE1
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:07:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3363EDEBE0
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxU8X-0002BF-QE; Tue, 03 Mar 2026 13:06:25 -0500
+	id 1vxU9T-0002Rf-Nw; Tue, 03 Mar 2026 13:07:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxU8I-0002AG-GC
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:06:12 -0500
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vxU9R-0002RO-Tq
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:07:21 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxU8F-0000jU-HL
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:06:10 -0500
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-94dddb3c3f0so1568389241.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:06:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vxU9Q-0000vM-Dg
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:07:21 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c648bc907ebso3787362a12.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772561166; x=1773165966; darn=nongnu.org;
- h=user-agent:in-reply-to:content-disposition:mime-version:references
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q9NqhcRpBvzqJTxvlOFYo1l0wkVjO6CCfkHMhTiQEQI=;
- b=DlCgUr9FqjL/g/3ZNatXGVaYFEuaqFsrNcMhcKaEc/528XkzgfmPSJjx2hO5ifvUEd
- arMMj4pw4phbxJ8pgf3eaDYWCTYuLP6rdrKf+FaUwIAChhElseEiZ+udhj0I6G0z/R+I
- 759f7/PNQRfKcXdaRJMhURROW7lKLacfQVIOtM5JGFv/1GOsk5QDC/bMSWtGoolqo2K2
- B9nBA+ub17tJyXfAt+nOaFmLU+xMrncu2l1VwmFmtY/LaOt/O9J0/OCf1SbOl+CzoFW0
- p+NmWvNXLU/1L8+rIjsoucZrk7gVxK0tcVIUnxBwTSU2TvQyvWZqVsZilQmuAoJKZQa6
- L5gQ==
+ d=linaro.org; s=google; t=1772561238; x=1773166038; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XFZ4I7tCbCEtswC5eirIMJ5sLRA2GI/jI5oB/nTWbhE=;
+ b=aeVFha6CuDomhKFjbAzbIT8gkS0iYN23MGzCOtBJH8xX2Xl3F31h0jKZ2UMc4CyK32
+ OvV8CiJqPIJMlK1ZAsVUi+/ateVxyPmfs0AlzCPCrp5HDOjvA2qYbDChOP8rcHt139dR
+ euXqZh8TcQkSmvGUB1NZipodiXInD/lgzdqNhVsWpn+lYac2x2tq7NcQexf4PIZNb09F
+ Q3lnIEbSFKID2+3AbXdYzWQZKFYFqrWx1W6t4XQMrnSm0tRTPlMbm/xSRMd8ZL2x3xZ9
+ v5sHj84zgW39skjiIwJFUPVfwqZo6y6RRNQb5GTnlJdbpl+rG0zvGJ1aZD1MTmo1jgfa
+ DYIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772561166; x=1773165966;
- h=user-agent:in-reply-to:content-disposition:mime-version:references
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q9NqhcRpBvzqJTxvlOFYo1l0wkVjO6CCfkHMhTiQEQI=;
- b=iBER1RRmi7LonuKhS8yMvJ5uNXiGVYjJgG4aAEtgUvNACRZf/3qw0dLqDEC7dXj/1A
- L30Rxx5UIVG1k3eDKgf30CdSsi/7lO7unGfALzNs5oUkmruo329+1yeAi2jDO+YWB52d
- HaVcpr3VWDl8RHpijdufsBi/yOj8QPsvS0rE5631U1uW/4SQ/SdVXNZmITLFErUgfd0N
- Lhr558MdIpNVOss0Z4h/t11VrxTZgY04AlOGJLpDeE7ACZnKMhDP74M4ZT1eNcAJRMMV
- taF1NmD8+ObwofQWluEy2DflX1FCc3mA/6nKew54RLQPTk9xAaf5DdQROihwTcqCbfdT
- 9pnA==
+ d=1e100.net; s=20230601; t=1772561238; x=1773166038;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XFZ4I7tCbCEtswC5eirIMJ5sLRA2GI/jI5oB/nTWbhE=;
+ b=W7/JaCLG25pgk7Wyfj1XyrFmiTo1AHgr2l12CQtu1lyPPmFkyEB/FWHkMI/Q+t0NYZ
+ dPBSFFlJaI50JfHOP4LHMrDjYF3OejREUp5IE/OFUskboAtoax17UEAs3PuuDuRbQokw
+ JvwVEUA3FAyaP8qraSmkE7kLUQKPULkqdk+R7vqu4ZHFQlJnGflwJNwZvKX+cTeKx76u
+ nTxUJnOMCQw7I6NLaDRmzrg1C/WzOl7cevaWNGtZrYNIvEYzuxy3gEia1pbatRi7lSN7
+ LPsKULltDqs/ybcR7UChhyoSu8XjGByEmVkoofP6MYGvA4+n5xg8H4f08lB3X+/B3Pb0
+ Wb3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVCkm2/MFQiq3bp46i548L6SFML3TZ/zncAhbMmOdOKzwkALhE2u54zzfXddfWoVAPBen+PdVLpvWof@nongnu.org
-X-Gm-Message-State: AOJu0YxqZ6yVm6SQYi4y269k4AL4ec+dUWCgRL2w/38blY7IfVM1v4kZ
- iz28vZ7D/nAOz950TZkEgLcp8/gqEAPunf1leMSuAGKjN/L91KQdiX56
-X-Gm-Gg: ATEYQzy2eRxD17bLAM1EZkVmOu7IOrhW2w3zG7aW0Cf6MXSeHq0jpg0iMXq114RJaJa
- nq9MJqimMAKdd0YWZNch1YNIV2O2b9XQ+3I+Tsam0WgoZm04GdvkHSMXGcRxhZGn4W4YvOGbWjc
- 2kXP2fLmGKtR2ZyhVVlr1vlnzuXDs1OAdGhR/aNa9ZWIiJL1NZjYfbQPxUksIO/OmCqWzLX9IeD
- zSQ8TUFOYXvY8Qh2Xqp2hNX3TMSfX85qrj3YscfwXRUIwC+aTChmRXRk3EjOZxC7Uh4YrI/qzYl
- ldOU1CAyzME8uWIpBrwiWaC8QUAFfeP29APz42LY7dn0Q/OiTUiFyL7dB2kAjahLs0a1SZt5Q3c
- r2Buuj8jUBNhDRzkvIpEvZmmI3ZwRmFtTxjyyguiCKiukNZAww1iRJWO0ccbtJkXydNrupmR9fX
- nPo2z87ghjGrFQiIoUg7YRl37lw7HVXawpVJNTc59nrJTnqsC3Ug6oMVvGSqDoY9VB4S3k
-X-Received: by 2002:a05:6102:3e8a:b0:5dd:89af:459b with SMTP id
- ada2fe7eead31-5ff322c4256mr5771101137.7.1772561165701; 
- Tue, 03 Mar 2026 10:06:05 -0800 (PST)
-Received: from gmail.com (ip190-5-140-138.intercom.com.sv. [190.5.140.138])
+ AJvYcCUvyqhQsGP+9ET+hMy7Zp5oMpr/tq7ztUm4WlyxTya42zGYQQdc0c9qZtf5rKF4HrIChMT0nJ85KRI8@nongnu.org
+X-Gm-Message-State: AOJu0YymJnzwPaWkiMMixX8X4PPXvvxdrjBOeJ0dac1q7RSTF5QQtp5m
+ sqf9dTLffL1P8/ohRjHUq/oMSDWNNFQnxaSeDeT3Tpkkw5Yvt8Z6bMcvdy7peA2MBz0=
+X-Gm-Gg: ATEYQzxtNwbpbx3ckKpcc1teDB3ItTFN2sA6J+mkgNl+emF77AhV8Ap5ltEQFgulSEE
+ /FWIl5kJrIptaLNYS8ptGN3FUJuueaaDVH//5UAAU/x2YzOQsk7CqCHdvAufwEQIe2MLXpJ3TyM
+ p/fwBS1L/uHUJmjsGyc0NgGS/YvCWp7Hrb8X8sqUU4AQZFWRpsQ+ykDDTH/dMGRmKSzadr71pID
+ 4XZESWn05/L3ZJred34U+0n2PIo8nw+dBzB8RIt+y7ghIEPuAvjepLaHQgRXA9jlPYnbKM6DiG6
+ eHnWPu/awILIbM8wlrOA6lISlallwfp440TqK6yvydvpSNXKa9xbWA2HTJn7vbbExVYljT9YOt5
+ xVdBtFSH4H5kizROsdK+WosccIatEi1bkHkQj9lXlbJnPQH67ZZWdOKvk5/S7T+TcneP6ORqqQJ
+ ahZkjboZ+u/2068stVAYezZtWHuOYvXqoi8YuhdtLJ8ZY/9dTDdphCmhODFh2FjjeOUWL/
+X-Received: by 2002:a17:90b:5203:b0:359:8c89:96d3 with SMTP id
+ 98e67ed59e1d1-3598c899875mr7007717a91.15.1772561238481; 
+ Tue, 03 Mar 2026 10:07:18 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-5ff1ea15925sm18571467137.8.2026.03.03.10.06.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 10:06:04 -0800 (PST)
-Date: Tue, 3 Mar 2026 19:06:02 +0100
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Jason Wang <jasowang@redhat.com>, Alistair Francis <alistair@alistair23.me>
-Subject: Re: [PATCH] hw/net/xilinx_ethlite: Check for oversized TX packets
-Message-ID: <aacjCn2lfpvuEgZY@zapote>
-References: <20260303172718.437015-1-peter.maydell@linaro.org>
+ 98e67ed59e1d1-3599c3abc40sm2853280a91.14.2026.03.03.10.07.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 10:07:18 -0800 (PST)
+Message-ID: <9090affc-ca5e-4d55-ba80-90fefc85fa97@linaro.org>
+Date: Tue, 3 Mar 2026 10:07:17 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260303172718.437015-1-peter.maydell@linaro.org>
-User-Agent: Mutt/2.2.14+84 (2efcabc4) (2026-01-25)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ua1-x92e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/docker: Update hexagon cross toolchain to 22.1.0
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
+References: <20260303175444.1540049-1-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260303175444.1540049-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,67 +140,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 03, 2026 at 05:27:18PM +0000, Peter Maydell wrote:
-> The xilinx_ethlite network device wasn't checking that the TX packet
-> size set by the guest was within the size of its dual port RAM, with
-> the effect that the guest could get it to read off the end of the RAM
-> block.
+On 3/3/26 9:54 AM, Brian Cain wrote:
+> Update the hexagon cross-compiler Docker container to use toolchain
+> version 22.1.0, replacing the previous 12.Dec.2023 release.  This release
+> has valuable compiler and linker bugfixes, but more importantly it will
+> enable us to target DSP arches up to v81.
 > 
-> Check the length.  There is no provision in this very simple device
-> for reporting errors, so as with various RX errors we just report via
-> tracepoint.
+> This requires upgrading the base image from Debian 11 to Debian 12
+> because the new toolchain needs glibc >= 2.34. Additional changes
+> to accommodate the new base image and toolchain:
 > 
-> This lack of length check has been present since the device was first
-> introduced, though the code implementing the tx path has changed
-> somewhat since then.
+> * Use DEB822 format for enabling deb-src
+> * Add libc++1, libc++abi1, libunwind-14 runtime deps for the new
+> toolchain
+> * Add zstd for the new .tar.zst archive format
+> * Replace pip3 install tomli with python3-tomli system package
+> (Debian 12 enforces PEP 668)
 > 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
-> Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-
-
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  hw/net/trace-events     |  1 +
->  hw/net/xilinx_ethlite.c | 12 +++++++++---
->  2 files changed, 10 insertions(+), 3 deletions(-)
+>   .../dockerfiles/debian-hexagon-cross.docker   | 19 +++++++++++--------
+>   1 file changed, 11 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/net/trace-events b/hw/net/trace-events
-> index 23efa91d05..001a20b0e2 100644
-> --- a/hw/net/trace-events
-> +++ b/hw/net/trace-events
-> @@ -527,3 +527,4 @@ xen_netdev_rx(int dev, int idx, int status, int flags) "vif%u idx %d status %d f
->  # xilinx_ethlite.c
->  ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
->  ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
-> +ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
-> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-> index ba3acd4c77..75e6520569 100644
-> --- a/hw/net/xilinx_ethlite.c
-> +++ b/hw/net/xilinx_ethlite.c
-> @@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
->          break;
->      case TX_CTRL:
->          if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
-> -            qemu_send_packet(qemu_get_queue(s->nic),
-> -                             txbuf_ptr(s, port_index),
-> -                             s->port[port_index].reg.tx_len);
-> +            uint32_t size = s->port[port_index].reg.tx_len;
-> +
-> +            if (size >= BUFSZ_MAX) {
-> +                trace_ethlite_pkt_tx_size_too_big(size);
-> +            } else {
-> +                qemu_send_packet(qemu_get_queue(s->nic),
-> +                                 txbuf_ptr(s, port_index),
-> +                                 size);
-> +            }
->              if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
->                  eth_pulse_irq(s);
->              }
-> -- 
-> 2.43.0
-> 
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
