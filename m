@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F7AEC142C
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:20:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45003EC1431
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxNnL-0003K8-2Z; Tue, 03 Mar 2026 06:20:07 -0500
+	id 1vxNoT-0003iW-PL; Tue, 03 Mar 2026 06:21:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNn6-0003J8-Tu
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:19:54 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1vxNoH-0003aj-Ea
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:21:06 -0500
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNn4-0004NR-CM
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:19:52 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-798374d0f44so86269817b3.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:19:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772536787; cv=none;
+ id 1vxNo8-0005bs-RR
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:20:58 -0500
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-64ad9fabd08so4480138d50.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:20:56 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772536855; cv=none;
  d=google.com; s=arc-20240605;
- b=jXMpX0LoTsSI0joHswsRCYjv0GxkYUhXYH22srmG4ZIxP1Rb9ZpraYkzW83jqBDphh
- twO5/JXrefOsF8omDY39Jr/01wkpaZjueORlc7AuqkMXf34myQ5+nBG5CcuYmd628Q3J
- Gz5JRz3L0HpGOz3BhvJuAjLFF9bVwqkDtMIHZThNI1h+MnO639XsyukYE6g2JDpjimI8
- +Dd9wSuBxwwDPLXiPNtQT9Jrc8pHaVNC2eZZgdOC7IMk6hoqWEP/g36/IoyEkc/XDxjp
- jw7To7KBOwGTjsU2Ab+8c+tLa6SWlJTvmbUIbOFD6PN2jhmgz0kEZedDxo7nBCuIIebN
- RM2A==
+ b=MUFIx/Rc7mfq+9ygfrPAnVDvxYtXkkdc9pj+eLsmzJmkISjYm1jKLmYK5J1lKHQfHj
+ p639ZyJ3q7b+8PIwn4VDoJsKvhUd3Af9H3onZ593eAcLsCJfD4YV42yUqHS+kFXPlnk0
+ l2hZxJ9RBVuVgB2p0aNur8QsLoBITsMbgWbpBCnHmeR7PpAYkhM8gma/DVgMI7V3Zkpv
+ Coj4t9GFfKH6pDf+WM1Wzlf9k//QDGDVNevPKsl3pJ1zhwAMRpyl2kHZYiPCEhwrnUov
+ 4sx4+H3Q83fBSPK1CgETzW7bR7D4OZafVrnPbulIV4mDjaz06qfwPGT6r6fJgDPg8zvk
+ K5Aw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=8EwTYz/QbmiyVUtkVoaDWdh0FQsh8+7atgJEqSg7D6o=;
+ bh=4KZ6HOtu6ti8U9HXtG57M8M5XOpJaxPZn4q/DlOfbOA=;
  fh=EzCqtT5E+bTTLv4rNAwVJ+2ChJBsIX5zYHpMVTT1IcQ=;
- b=hHP6xdJ+GCnaN/FD0Blem+KaZzwE0IA4oMd6MeSIt/u3u5XYvVYeucwTry0h1Q2Byc
- xfv4aHAogms/aHL3Ax/AzHKxGoEYjgrPnChev4lne1UDpSs0viY+kWxaSRvpP7Ff43Uo
- 4VBsRJHXo0FMTOu50wl4ZV+ydiWb0z328Cv1JlwhtJd+pDuxJwD9VT4H7uQLhCbXQRkK
- as8wEZpUG1dJ+5+sMBatb4Or7bH+Um2IwE/UzcBSYc7Nx97+2Ub9WBrBD37bn9mcGy8l
- x4ZcRa1L8gK6I1kFdPmwShG/+RaogsAC7cFVuH5vIdbnTZDEoSh/1dw+Qip4KyGxL2Ki
- R/AQ==; darn=nongnu.org
+ b=ZpptZ2/VfM7FPvcIoFO0Cg9w6ew8EhNEwH2CtHZ/FxlfseQu/pRil6XrMfS1O89fCb
+ TbkqrkN4z6LvdbJWri7GAcn/fGIE6lPuRZ60+xsAoA/v1pF7K01QzPF6ihVsJMVgw3fQ
+ mJY1TIpQYorl+xsKvpEoCsVEoPN2FtAh/NZezYZEeYGCYiRcJcqbT47NC3Sg/qrj0qj+
+ eAIbka4dBlypApd435AQvMAmO5cWA0WYmPp5EKn7CkNAwrmJVgeWC2kcuo8ftxrj6gxh
+ q74m9qjRHnQYlOiFqdTacy0DPmuNGQEgLOYuupCeTuIf3It1v0hTCHSV6sznDCi2YLxc
+ ZTjA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772536787; x=1773141587; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772536855; x=1773141655; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8EwTYz/QbmiyVUtkVoaDWdh0FQsh8+7atgJEqSg7D6o=;
- b=re5uKfZNK57/80BMvCJ5EGOebvSKbylq8Ar4Nl/T6Mkw6gqmuuJFprx2/yGCca/viG
- RACjmgaL1IAnGURoLx9WJhloNmJcM418kcQ/bGoCcNJcUm3XfuZW+YjzoH1XeLfGV11I
- yCmrdI31+0e9bOUSj/xfO2gdw6wbx+xQaG0VpeXJeqAmgS7acNEkLjWSPXQEbl2rGcQ5
- phIfjtfSvmn6cGDVox6+dgqsZzqK4p8trb7Wk3Rsu4po3etdDqCuZ10j3R2wTgxyHKKs
- C+iCgvqcBUIRqOK/XU4iEt15hDVeaeIaR1hbeooYoyljdGMukN0xkO+FsRX5jjW/iKga
- wLbA==
+ bh=4KZ6HOtu6ti8U9HXtG57M8M5XOpJaxPZn4q/DlOfbOA=;
+ b=H14p7A7ja0poujU0ncfXy6K2gKsGnYskRY8DQJRICUYONnJaYvok26TRbDBRJid1pC
+ RuvcqQFan3R/AmFM1SJSexipyQFYbb5NjYVtypiK2EZ28TeXIgiYt5lUTHGHEvlQpnvg
+ YLZfHLeGmzmXNJSgsYWTLrrmEv0m/oHTxu0MXYUFvCMPRfbPMAlcENjueQG6TpsrSLwH
+ MyZ034fZUiKTz2KpOOJ3y1gIyvCbHKiv6ijsabvd9I47Vxu6g69S+xNNfSfSUMaRNA5d
+ Epg1EpmrxR1gSBokubtdUUfVpLajMO4lihe0oxkAkXV8okndtMDvl4s6G6vsY1w+wRFK
+ 39zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772536787; x=1773141587;
+ d=1e100.net; s=20230601; t=1772536855; x=1773141655;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8EwTYz/QbmiyVUtkVoaDWdh0FQsh8+7atgJEqSg7D6o=;
- b=dW+u2UOd2YSVElNhFSdBVJrkKXiOPBHIEzyR32eB0Oyl0Fu5PH+MuY6zCsjfZQPDTp
- JuOWq470a9qzgVS5oskc6emNT8i1LEAQ6wt1OtRquHa9cb4UZfmLVPUlC6HfP+WBT2Bv
- 6/rNFlcFrs08XqtYx2PBdf4qvovCClDK/nwgBLPQbWftR8fb/C8dbTMVB2mXikVM4LGb
- 8lBh6N1e70E1od+RXUM/1oo1A7lr5c3pzOiJJrQ6wCaIK0SHivqhbuC8lERCo9lcAn7z
- k01AnOR6H3u/hHVZ/0cnkg8kj4a1DX2iFANPESvHPlHsUkpuQzWHeV84PLOC/WDEnBWW
- gMBg==
-X-Gm-Message-State: AOJu0Yz0VtYsec1BzzKuRqLQLRli1crl8yRozeFFSMRhiYQV2hg6fMqj
- 1aHv3f0mf5gkbgrHTjB/9XuyMrvjj2WpUC5tdnOAXxV4ILeuNv3+KvcZm0AijS063zZ/zt2B/lz
- 2udW34M0EaHRlZi1OTo/AZgB57tuCMc5P1A6rB8oeXQ==
-X-Gm-Gg: ATEYQzzXylNxxgdrUlbyRp8289CQsblUGECNYCKS6W47vto529FsW7jUDmlYy0BZ8tA
- f6xsxUxJdgEQGYadxCFSSKELVEw1RlP2aipVNEk6DSJuu4VqJiisqNWo5AYdGwP8bM1I6P+SPrl
- TMHDbaWprXmTyoFXyIhTvRI8yYyBUEHK3CGpJjQ4TKQJMSQBYpnON8YbCxhi6VWf/3JXOhqii8I
- obGzlbLzPnxg3gQJZknSkpglo2TQvBuPOFMnltiFxUDyEpzH9rw+UppAWJDdxC48z83pN6iMLEW
- mYBK0rExjLRBgzwE0jiI1EZwPfwRcxyGtxuB+mVZkpZy905RLWbiEzfjEfrvBD2H/0I=
-X-Received: by 2002:a05:690e:120d:b0:64a:ce57:cac4 with SMTP id
- 956f58d0204a3-64cedbecb46mr1229258d50.24.1772536786906; Tue, 03 Mar 2026
- 03:19:46 -0800 (PST)
+ bh=4KZ6HOtu6ti8U9HXtG57M8M5XOpJaxPZn4q/DlOfbOA=;
+ b=Pla00BJUoOjRFa3mZTM+MTCG678c3fD/rHtlFOEzMMTE1+7R2GeDy8ElcwjOph7vu5
+ kjWgTpMePGYRwEaw0tnxrKirzssDltupup9+tzSYA9zOmFoZPHNzpn5rGsV1rgRXlZbQ
+ s4XeS/wgqDyp6jF0+gh0/K6h6A+pALRxblHuHXP9Z5azARkYbGf5XH/DJhVIk8i7jQju
+ z7uPXOhAuF6c1Dg/L6f11o66GpxfYWVoQeSLrXysyod9/Ldy90Zn8iQwSpkLjG4r0YFa
+ B6tC2neYSqHZRknbM0o3BvefOtUEFnzRMoZ5aFlFSNiO9k6JNXfEtflW4gpDLQjo3b1M
+ Gw+Q==
+X-Gm-Message-State: AOJu0YxD9WDG4rH2AZSItkJmM72roD9XCXawGy0hZpnYJRzuC1ZfqMOt
+ akFnZMCSYbdDnG/KyPpzJSbt2lMJ9MckBjD/tQ8nNPEAorzWXk5K3QDKtWmiHmCbet+yEutH36D
+ Z1fm+eScubGxKN1a6qFGtqXjAz+xiD7DlMGZj/xmIqA==
+X-Gm-Gg: ATEYQzwv82rlodkIl1api123EhXUXvKpri4WmdBpkFPurA7FtNl3FeR9ZTvBF+zxQA8
+ SGq+1gefHIpRg9N94Lvaa4lGbvO9WxIFKkJnsa2iEOMx4eSPPz4fbqYCrXUUERyDhr5NqSRqSkl
+ ctKsrMDxYpI+MyMNP9Pq6W3XBB155gwyFlTitlQhyWY8WfDw8UggcQlUaXF4jXkGJot5wiVNnN+
+ y+KiQOY0Z1sCFL54ovytGNvy0Toa+WzdDYxoetcHgvwJPI823k/Vnp1AgK/mg2et7A8InZMm0iN
+ f/4OxCylhbMn/gNFDeHIqynAuiVIp1pr7hbNBYMFtNws4jocc7NnKD0tsxe7qSEyyrkAg0Ulb8l
+ scA==
+X-Received: by 2002:a05:690e:15cb:b0:64c:ac70:9420 with SMTP id
+ 956f58d0204a3-64cc230a4dcmr9945976d50.76.1772536855438; Tue, 03 Mar 2026
+ 03:20:55 -0800 (PST)
 MIME-Version: 1.0
 References: <20260227-semihosting-cpu-tswap-v2-0-cbdcdf39dd15@eonerc.rwth-aachen.de>
- <20260227-semihosting-cpu-tswap-v2-2-cbdcdf39dd15@eonerc.rwth-aachen.de>
-In-Reply-To: <20260227-semihosting-cpu-tswap-v2-2-cbdcdf39dd15@eonerc.rwth-aachen.de>
+ <20260227-semihosting-cpu-tswap-v2-1-cbdcdf39dd15@eonerc.rwth-aachen.de>
+In-Reply-To: <20260227-semihosting-cpu-tswap-v2-1-cbdcdf39dd15@eonerc.rwth-aachen.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 11:19:35 +0000
-X-Gm-Features: AaiRm51l8rYXPrmo7Ptvfj5go7bxbNiyxMtoQxcCLAEgWCnst0stbRZ_GN185hg
-Message-ID: <CAFEAcA9+A4Y52f+zZ=hcJZnsAfhLKQf0dnfoWj49W3p53PUFwQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] include/exec: Provide the cpu_internal_tswap()
- functions
+Date: Tue, 3 Mar 2026 11:20:43 +0000
+X-Gm-Features: AaiRm51-qOF4mnv1ko5I9fKeZZBAh7qi9V-6c_VAP1yDh7LDolDM3TtNLJp6300
+Message-ID: <CAFEAcA_eacmm9w1exKRrqcfVZRq9vELSuoUMbuQFessG0XvcpQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] include/hw/core: Rename virtio_is_big_endian to
+ internal_is_big_endian
 To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,75 +123,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, 27 Feb 2026 at 12:55, Martin Kr=C3=B6ning
 <martin.kroening@eonerc.rwth-aachen.de> wrote:
 >
-> These functions are needed to support semihosting on CPUs that support
-> runtime-configurable endianness. They should not be used in other context=
-s.
+> These functions are needed to do semihosting on CPUs that support
+> runtime-configurable endiannes. This commit renames them and allows
+> using them for semihosting, but makes sure to signal that these
+> functions should not be used in other circumstances.
 >
 > Signed-off-by: Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de=
 >
 > ---
->  include/exec/tswap.h | 36 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
->
-> diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-> index 9e94fa0021..6d9301129d 100644
-> --- a/include/exec/tswap.h
-> +++ b/include/exec/tswap.h
-> @@ -10,6 +10,7 @@
->
->  #include "qemu/bswap.h"
->  #include "qemu/target-info.h"
-> +#include "hw/core/cpu.h"
->
->  /*
->   * If we're in target-specific code, we can hard-code the swapping
-> @@ -72,4 +73,39 @@ static inline void tswap64s(uint64_t *s)
->  }
->  #endif
->
-> +/*
-> + * If we're in semihosting code, have to swap depending on the currently
-> + * configured endianness of the CPU. These functions should not be used =
-in
-> + * other contexts.
-> + */
-> +#define cpu_internal_needs_bswap(cpu) \
-> +    (HOST_BIG_ENDIAN !=3D cpu_internal_is_big_endian(cpu))
-> +
-> +static inline uint16_t cpu_internal_tswap16(CPUState *cpu, uint16_t s)
-> +{
-> +    if (target_needs_bswap() || cpu_internal_needs_bswap(cpu)) {
+>  hw/core/cpu-system.c             | 6 +++---
+>  hw/virtio/virtio.c               | 2 +-
+>  include/hw/core/cpu.h            | 4 ++--
+>  include/hw/core/sysemu-cpu-ops.h | 6 +++---
+>  target/arm/cpu.c                 | 4 ++--
+>  target/ppc/cpu_init.c            | 2 +-
+>  6 files changed, 12 insertions(+), 12 deletions(-)
 
-I don't think these should have the target_needs_bswap()
-check in them. Otherwise for a normally big-endian CPU on
-a little-endian host where the CPU is currently in
-little-endian mode, target_needs_bswap() will return true
-and we'll swap the data, even though we should not
-(because cpu_internal_needs_bswap() returns false).
-
-> +        return bswap16(s);
-> +    } else {
-> +        return s;
-> +    }
-> +}
-> +
-> +static inline uint32_t cpu_internal_tswap32(CPUState *cpu, uint32_t s)
-> +{
-> +    if (target_needs_bswap() || cpu_internal_needs_bswap(cpu)) {
-> +        return bswap32(s);
-> +    } else {
-> +        return s;
-> +    }
-> +}
-> +
-> +static inline uint64_t cpu_internal_tswap64(CPUState *cpu, uint64_t s)
-> +{
-> +    if (target_needs_bswap() || cpu_internal_needs_bswap(cpu)) {
-> +        return bswap64(s);
-> +    } else {
-> +        return s;
-> +    }
-> +}
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
