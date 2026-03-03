@@ -4,103 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A7DEB3658
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 02:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC14CEB365A
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 03:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxFna-00082B-Ib; Mon, 02 Mar 2026 21:47:50 -0500
+	id 1vxGBO-00018t-Tl; Mon, 02 Mar 2026 22:12:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vxFnT-0007pK-Kc
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 21:47:43 -0500
-Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1vxGBN-00017q-1P
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:12:25 -0500
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vxFnQ-0002qy-OW
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 21:47:43 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id 51247EC02EA;
- Mon,  2 Mar 2026 21:47:40 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Mon, 02 Mar 2026 21:47:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1772506060; x=
- 1772592460; bh=moIemkxzO52ufwY3uoVnk1ywy/WIbJMWBe10qUmFuJs=; b=P
- EVrNMtcfmFFmhAEEIgdJqnuYirEJlxiy7tDFTmKKNDkW5C1BkAE2z81QqzrchhyZ
- IcHcoU+Aw2ieKgkK+qWMFpcp57ZdaTrPXS9pv1HckAi6cBsm4RUfr8BCwhj+L2K/
- g0Ql2UNx+0D8fD+FhwnArGVwiMFbM35dnAI2gjfa+8+sfa6G9GoplwOjKksu7FvH
- iU9QSvd2zQuq6puqe5EPCfPBQYgjYJruRiiFnzIakH4fZ5cZJvts30m/tJTzthsq
- bO1AcVagKIWGaX6QtHNxEOIi3/Z0PKnYL+45WzonXX2aq0nTfwrrDGYCGiL6P+gi
- pRt84Ude2M3NZMqCxrIRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; t=1772506060; x=1772592460; bh=m
- oIemkxzO52ufwY3uoVnk1ywy/WIbJMWBe10qUmFuJs=; b=rB3NlPOmCjGAVrWcE
- 5xMKfZyfdrfrv0GHcfcmbs/Eam6YI+v5UYKZipNTzFotJ1yIbCiLE+2mNldntMDc
- YjLfevtbexMWFCc46rQNAl4YthfqHiYpklIwYuizvidphZYurLNcq5dgIUJNwh+G
- FZdkwquC04T+YuKj751xZQCPRg1cOak6PD6Ubu4FFSMawtMOyeaJhomodo5DVSLk
- rcEwtRC4z9xf+qFlFoS7lnjW9TgtIi9jhwnFkkjKwWLiE3WmPeQaxLrC+jpRTuNF
- PmZitDRYo6QTLTewZM9Dr8IY+E5T95gpjDy6gGvru+JMDa3pPXkKo0nCHQzmW4Co
- ch3tg==
-X-ME-Sender: <xms:zEumaYgFVh4sbGJZf5a7WtbIigx1X5MHvuX9qj4At9BYBS72jXlKqQ>
- <xme:zEumaSi1mcLr3mi3DCiKPlLqohM4AXO233Of1Qe1VcDKqnb3KQDolXfaP5NbOQbIA
- No9MEOoPCb-FAyiSuBxTUDCmB30WCve5n6_5sMYferANGSw0mQuvPo>
-X-ME-Received: <xmr:zEumaQLPKdormihhjK7AOfj1i7jSt72ezHUQY34P5R-Cv0xcI2W1G93g4Rqg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvheelgedtucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddt
- necuhfhrohhmpeevhhgrugculfgrsghlohhnshhkihcuoegthhgrugesjhgrsghlohhnsh
- hkihdrgiihiieqnecuggftrfgrthhtvghrnhepgfeiteejhfelheefieetjefgleejfffh
- ueffvdduieejgfeuueeuvddvkeejhfelnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhnsggp
- rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsrghlrghtoh
- hnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhg
- nhhurdhorhhgpdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtg
- hpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhhgrthdrtghomhdprhgt
- phhtthhopehkrhgrgigvlhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:zEumaZFJnQmOd9j7FwBotrOkVuTljWw9n_q_DWNiZr8VsNKS-yqotA>
- <xmx:zEumacTg9U37vSwr-0J-weNTS8_IRxHDNuzWPGqUNj1h7v8QPdoRqA>
- <xmx:zEumadcMwj2bpXRZQGez2IOqLIcZgka25Lua5vbQPqdDUJfXT71nIw>
- <xmx:zEumaTr8HzS8fPTnNjwTXL3hFBoZN_cBaYU0WYcuYq4aIPNfEbo6jA>
- <xmx:zEumaZo2edCJwflGk6olJzR2cC6hOsn9d-HChAl_woNOCF2hM1bGeWCT>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Mar 2026 21:47:39 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 5a1be193;
- Tue, 3 Mar 2026 02:47:34 +0000 (UTC)
-From: Chad Jablonski <chad@jablonski.xyz>
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1vxGBJ-0005Zn-P7
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:12:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1772507542; x=1804043542;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=f3PLxG7obKkufdeeCmWMF1n7vnhFl87d+sDyWglp1+U=;
+ b=Sy92dvJPnLgwnZtxBuqsgTQ7S+uHlZf6BOFKTPk3X9QWKOJV49FbiXqv
+ 1jOil475SKY6Q6yv+7Pv/5QjvhcgkLEYeelxCx1iE1ZScaceNpy6waOIK
+ aEPtJwmRaq6+8rnXz7THWc5/39hvnODQU8nkDYxL0fW4BQaYFRGOF6GkN
+ CZyctXpDyO0yxdzIEjbkTpPC3lZwErURIFnYPHMsq6hsL1wH4ne6QGcA5
+ HYrRVDp+Tq9J/3IwvJysw/53hBkB8zhlS8Vvkj3BdFCsJu3fGLR0kvfkc
+ TzT/1A234X5n8f2wJuSeyCqi+cAcZzsMLCHH/N9KtB+jgeSQp9JGXpm2c Q==;
+X-CSE-ConnectionGUID: tjhSXCY1S4KJwMkYm5yong==
+X-CSE-MsgGUID: rVitdxIqQ/CnaXbi07nT7w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84881212"
+X-IronPort-AV: E=Sophos;i="6.21,321,1763452800"; d="scan'208";a="84881212"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Mar 2026 19:12:17 -0800
+X-CSE-ConnectionGUID: tQaqoKQNThWcF/d+50qSgw==
+X-CSE-MsgGUID: TOKDpUcCQdeGKu/HhW12BQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,321,1763452800"; d="scan'208";a="244797607"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.205.222])
+ by fmviesa001.fm.intel.com with ESMTP; 02 Mar 2026 19:12:17 -0800
+From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v11 14/17] ati-vga: Remove ATIVGAState param from ati_2d_do_blt
-Date: Mon,  2 Mar 2026 21:47:27 -0500
-Message-ID: <20260303024730.1489136-15-chad@jablonski.xyz>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260303024730.1489136-1-chad@jablonski.xyz>
-References: <20260303024730.1489136-1-chad@jablonski.xyz>
+Subject: [PATCH] ui/gtk: Implement dpy_gl_ctx_destroy_texture for gtk-egl and
+ gtk-gl-area
+Date: Mon,  2 Mar 2026 19:07:14 -0800
+Message-Id: <20260303030714.1926907-1-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=chad@jablonski.xyz;
- helo=fout-a1-smtp.messagingengine.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.5,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,42 +80,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This completes the decoupling from the ATIVGAState struct.
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Currently, the texture associated with a DisplaySurface is not deleted
+when the surface is switched or freed, leading to a memory leak in the
+GPU process. This occurs because the GTK backend lacks a mapping for the
+'dpy_gl_ctx_destroy_texture' operation.
+
+This patch implements the necessary cleanup functions for both EGL and
+GL Area backends. Each implementation ensures the appropriate GL context
+is made current before calling surface_gl_destroy_texture(), ensuring
+that the underlying GL texture ID is safely released by the driver.
+
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- hw/display/ati_2d.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/ui/gtk.h |  4 ++++
+ ui/gtk-egl.c     | 10 ++++++++++
+ ui/gtk-gl-area.c |  8 ++++++++
+ ui/gtk.c         |  2 ++
+ 4 files changed, 24 insertions(+)
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index df8975d9d7..4fa28f7beb 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -123,10 +123,10 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-             (ctx->top_to_bottom ? 'v' : '^'));
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index 3e6ce3cb48..f1765ad5cb 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -170,6 +170,8 @@ void gd_egl_switch(DisplayChangeListener *dcl,
+                    DisplaySurface *surface);
+ QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
+                                     QEMUGLParams *params);
++void gd_egl_destroy_texture(DisplayGLCtx *dgc,
++                            DisplaySurface *surface);
+ void gd_egl_scanout_disable(DisplayChangeListener *dcl);
+ void gd_egl_scanout_texture(DisplayChangeListener *dcl,
+                             uint32_t backing_id,
+@@ -206,6 +208,8 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
+                                         QEMUGLParams *params);
+ void gd_gl_area_destroy_context(DisplayGLCtx *dgc,
+                                 QEMUGLContext ctx);
++void gd_gl_area_destroy_texture(DisplayGLCtx *dgc,
++                                DisplaySurface *surface);
+ void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
+                                QemuDmaBuf *dmabuf);
+ void gd_gl_area_scanout_texture(DisplayChangeListener *dcl,
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index ae9239999c..c1b32bc41b 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -225,6 +225,16 @@ QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
+     return qemu_egl_create_context(dgc, params);
  }
  
--static bool ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx)
-+static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
++void gd_egl_destroy_texture(DisplayGLCtx *dgc, DisplaySurface *surface)
++{
++    VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
++
++    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
++                   vc->gfx.esurface, vc->gfx.ectx);
++
++    surface_gl_destroy_texture(dgc->gls, surface);
++}
++
+ void gd_egl_scanout_disable(DisplayChangeListener *dcl)
  {
--    bool use_pixman_fill = s->use_pixman & BIT(0);
--    bool use_pixman_blt = s->use_pixman & BIT(1);
-+    bool use_pixman_fill = use_pixman & BIT(0);
-+    bool use_pixman_blt = use_pixman & BIT(1);
-     if (!ctx->bpp) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-         return false;
-@@ -269,7 +269,7 @@ void ati_2d_blt(ATIVGAState *s)
- {
-     ATI2DCtx ctx;
-     setup_2d_blt_ctx(s, &ctx);
--    if (ati_2d_do_blt(s, &ctx)) {
-+    if (ati_2d_do_blt(&ctx, s->use_pixman)) {
-         ati_set_dirty(&s->vga, &ctx);
-     }
+     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index cd86022d26..84e41f4221 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -299,6 +299,14 @@ void gd_gl_area_destroy_context(DisplayGLCtx *dgc, QEMUGLContext ctx)
+     g_clear_object(&ctx);
  }
+ 
++void gd_gl_area_destroy_texture(DisplayGLCtx *dgc, DisplaySurface *surface)
++{
++    VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
++
++    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
++    surface_gl_destroy_texture(dgc->gls, surface);
++}
++
+ void gd_gl_area_scanout_texture(DisplayChangeListener *dcl,
+                                 uint32_t backing_id,
+                                 bool backing_y_0_top,
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 9ebe7e8df0..217f425075 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -636,6 +636,7 @@ static const DisplayGLCtxOps gl_area_ctx_ops = {
+     .dpy_gl_ctx_is_compatible_dcl = gd_gl_area_is_compatible_dcl,
+     .dpy_gl_ctx_create       = gd_gl_area_create_context,
+     .dpy_gl_ctx_destroy      = gd_gl_area_destroy_context,
++    .dpy_gl_ctx_destroy_texture = gd_gl_area_destroy_texture,
+     .dpy_gl_ctx_make_current = gd_gl_area_make_current,
+ };
+ 
+@@ -670,6 +671,7 @@ static const DisplayGLCtxOps egl_ctx_ops = {
+     .dpy_gl_ctx_is_compatible_dcl = gd_egl_is_compatible_dcl,
+     .dpy_gl_ctx_create       = gd_egl_create_context,
+     .dpy_gl_ctx_destroy      = qemu_egl_destroy_context,
++    .dpy_gl_ctx_destroy_texture = gd_egl_destroy_texture,
+     .dpy_gl_ctx_make_current = gd_egl_make_current,
+ };
+ #endif
 -- 
-2.52.0
+2.43.0
 
 
