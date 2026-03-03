@@ -4,101 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 060FCEDEBE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4C1EDEBE0
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxV0O-0004T0-1o; Tue, 03 Mar 2026 14:02:04 -0500
+	id 1vxV2H-0005Hg-49; Tue, 03 Mar 2026 14:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <razvanghiorghe16@gmail.com>)
- id 1vxV0J-0004Qv-5R
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:02:00 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vxV2F-0005Fw-NW
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:03:59 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <razvanghiorghe16@gmail.com>)
- id 1vxV0E-0003lW-RH
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:01:58 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b9358bc9c50so649395666b.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:01:51 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772564510; cv=none;
- d=google.com; s=arc-20240605;
- b=VFRgyg1gZ+6DsKqUREr1Y7ltlop26cQa1L8H8kfK9ctDguCqQ+5j9zCtWPXfvILAw6
- gaYWi0GNwxZbF2sjMwDxAiauJ9gtBVzsFK8ZVNacjuOBmkEPCBwb6bq0aYFWy4pWm++d
- eo2igDgCzsPV/wi0VCqRmwR1o0jA/iJP5LvsKTatfxdfeTzCVIkuKZHjawiqpmrpCc4A
- 0rCpAF281BmEgZ6Oxzzl1rNrhWx3ZWZztMFT3qZp7LH7QLSxj2Z+NRJIEiMs6sOqr+Bt
- UUd86VyXP40XPD3UDx5ON15aI2FXKFPA+tMI5ijlqL+ZZjorN6C22AbYBM+zirLxgrDS
- WY0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=9zRXY1BEItwlGTFUfk0GnQnwYToDsBlkVLcKmtOezvg=;
- fh=+Uvb7Yz34LHuqkZPJ52D9u/06VY8vB5uNr1P6A8AzDo=;
- b=bSV4T5fufrX1zjsc65f9cwUeDaEThYbl5ONBzO6JcOc4XL/E1LPcKqQ+lQGR0u6s16
- ZnIfBuqT2yn3tk3GVi5eezgpjKW3jQ7ZO/VnHmb9muxhOl+kv3sUpCl1fjMJIi+zT1Wb
- lYAZRY8yEvZ9kGCRGAjfj75NrWGxHRb88AxNLWxkoCLV7mfpGKoVyZb9KwW7taGp10BN
- s+KbGfWVHICqfngcakqSjURW5fjRm2NJcdU+55jQJhUkzwc710penCnMhndsjccN0HH4
- E3btFK/4d5FUXlzMQ9K42QZapKaX1Jhv4j7ZTRrwk7/U3vFpJdO9Xx+6r2gXf5muBnu3
- sC8g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vxV2D-00042e-DI
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:03:59 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-82742aa5a3eso2978257b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:03:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772564510; x=1773169310; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9zRXY1BEItwlGTFUfk0GnQnwYToDsBlkVLcKmtOezvg=;
- b=dQjf3NZ06Q0NETyheWF1PGsEOFI7Hf6J+lyTrS+ofGOhos/rwvpYC9utvGGTehatWC
- 1BGxjj6lmbV1/n6Frw65POGJ0slQpRUGl6nYP3kcuWX5x8326cS4PMysEh25XvyIYvsk
- JSpyb1R6zjkFcBdiaLXwozr4z8ywA0sB/FBzAvM2izt4fUzk3QbZ3sK8NkAZi6Q+lk76
- VeXk3zWaUd8qfZlK4Iq93YWSZFnNawef91wqf7BAxaQkXU69pVsvdhHBloR+S+5cs953
- PuQQ4Q6wHI4Tf+4rZvSovfTg65cMu6+yVJCBhMJuKdNByka7+2hP4hFFmdxYtkCkFOAz
- 5n8A==
+ d=linaro.org; s=google; t=1772564636; x=1773169436; darn=nongnu.org;
+ h=in-reply-to:autocrypt:from:references:cc:to:content-language
+ :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=jfa0BTJiu0OaoIir1H7GAUKqjehdctranbZAI2qkmio=;
+ b=R3nI4KUyj0uZajNwau6tf0kFWh74Gm+/MwgOyL/q69QNQblaDWBmVgJ+VATt9jPamI
+ looRUdqv31ljsPSGuQTYzenXwTlBq75D/BMccrxkmg1njuEiln99Dr+gNxlfSTw/NLVF
+ IeG7SQIy1KD3iTRGsyOSIwY3msETTS+1jfFwFeVZ8Qa4Lr2i9nQ8i1nkvH0DFFDG8Zv6
+ 7korcI6yuMAtWQvoBgnJEWeEln2ZqSe+2kv8aeGIDpXvdtgnQqCyU0krJQiXYtsue2In
+ MsTsCGteRIRBtLNiYn4Tp+UWxjBnjjybLCyELSqr5w587AkxAFkkuWEMPIK2Mg18cgOL
+ 1nlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772564510; x=1773169310;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9zRXY1BEItwlGTFUfk0GnQnwYToDsBlkVLcKmtOezvg=;
- b=ZQ+Bi6v1MnVmwMiIojBS9Vt7hDRB9wW5YoKAwqqxGxk5QrICRgtSarh8EApO9B3deN
- Pjb+T+bsb8ngeL5o5qTb7Ao/B1mBcN/qiq/cuW0TaYSmbXHvAFUf16sK7p8P4+rbFkOJ
- YG3W0iF2Mki01poCKRMu7dskbCQl5Ve3/0yw5nKkBdgcctPVaf0LfAfDdhewW2i6Y1Du
- HEDMTdkhU2Qlh4qRemQtArMdZBiBNr9F40RZyc7ldMGj2hmZA/Y1S1RwV/yv0TLQqRgi
- P8OajcoYvr4qXUCGO1Fc4qTMu/KqI42NKSrKx9nNXulwmAoezgEWMfc8n2UFdGXrPc6C
- aqKw==
-X-Gm-Message-State: AOJu0YyiK+181+ZwCgl5Q1M89rdACadnZ+S2M7tvgdI9pfEHE2XpF7iZ
- MBp0Z36PgCvd/HASEHdyjj6j2PuGoVucOR5/s3kMK5sLG4z1RA2H4Fw95G7DKhCFo0Q4UQ2067a
- XHOlhx4T8c3sHQZayeDFiBj8fFgL6hDN+3ybVEzc=
-X-Gm-Gg: ATEYQzz+k3u3eaGGPHD3syDuOtXCwf4JmRUv48YAnGPlxUUW0Pf1+R6B41Bxtjjk4/Q
- oroo+HcEsDhIjz5WC8V19bjSFGrBw+jLdnBxHApL+Gicriv1GFsdJ1A4X36EoMeyAQVk+HXbMrP
- BkjJcbjPEZYNyFAfexdXbXRESQf1abXkTY53faOFuIQWWYjYJo2T40E7mmmL1e70XJd2LvJ2qzk
- iYJPCEIZGbkb2/t8Rv7a3ngAPZBd7fWqGCGkJM9/NNJl2E/eMMIpeaAWANG2rvMHJMAfP1bf4eN
- wOuCuYF2Few9hWhLc4SqmKAljSPKRZk4qm3NfkDKSnDiWuzHZqU=
-X-Received: by 2002:a17:906:9fc8:b0:b88:4c99:bc0e with SMTP id
- a640c23a62f3a-b93763d2329mr1131489266b.26.1772564509956; Tue, 03 Mar 2026
- 11:01:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772564636; x=1773169436;
+ h=in-reply-to:autocrypt:from:references:cc:to:content-language
+ :subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jfa0BTJiu0OaoIir1H7GAUKqjehdctranbZAI2qkmio=;
+ b=vr0ChV0XwDwfYNI/CgbRu0rPm8T8DALuUpvgq91IVQ7D7ih5BY3ufq+itZWNFXCS+O
+ hNdI+Al9jFZJMuY0Xkkb7Bn6gqHCoU2hRQFVMbE1Wc8Qa0YYkY99A3oJi0bCIkbMDmyg
+ lGntBdpgmyr3/JL7JHHV+6AYJqLFKxLXRr7BYbKJlBscJ44sNjNmEFluINQULILgYgfW
+ mlkn5ARNIxIVghCglINyOzqHv4SH5JL/OyQBxtJD8t+dfpOntet8EJ8QHB2e2SLSPuRs
+ Oe77PyH6r1dMXoOhne+Kc4ag+n05gt4g0J4zJaqTHPK95vovH9Qst3YkGD4fJT6AxTjb
+ gscA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1ewYsW/HSP6UMe6D8U3Rhps6WntWVR7ztcRIWzf8oJJIUY9S+zo1uEZtImoT2XvzGuOvAm5VkQNWK@nongnu.org
+X-Gm-Message-State: AOJu0YwJo9UGgyidlpsLy6i4o2fN5lwyng1VG5aTDdcnDsKW9tXfNYIq
+ n26Mv5tZxbT+wgFHAHt2N66gam4oAUOm15Dxpezx8/jozXCdCij7oonNmygL7xnGAkM=
+X-Gm-Gg: ATEYQzyd0JUzGM8fnAcro22r5rMUjRuhVNZjefy61S1clLYQzSZMngKUoHftfqonYuB
+ 0Kf5VNHuQ146nrjPGoZhg20WdG2REctSDw79BPBjQQgySzwbkiu+toTaMXKDAriBQAlAY00PdYU
+ hb/3v2rOcjL0X4yDavzev/7p9yO1hqy39Wj225BZeZc7o5wf5rv/vFyzUBJw3p5jeo8e+OnKlGn
+ ohjQpMw6XxYpv/I3/cvxL7fpSFMjBl3Xu+8uwRGL4+oPSlactKV70PTn5Gs687tWRhacmTWrGO5
+ wFfsv0D5EMXlMVmPQ5ALsl429jqTmkZgydvg+wg7QSYgFH7/R8dP8MdV9euNWVUclFcdWe0py/s
+ sCL8ysV49750D003av1Zxk5JQtK9oslyARI8JrSfL5yhKDRqk2Vz+jomJequjLrokaQoQpUyGZO
+ FenWr7Pb+x7HpS8inQBrWeL5wYEkxh109MNAcYBDrhDtBNJppgbJ9dny/86fQjp1ookyx8
+X-Received: by 2002:a05:6a00:800d:b0:81f:9f14:ecc8 with SMTP id
+ d2e1a72fcca58-8274d97ce62mr11711979b3a.27.1772564635625; 
+ Tue, 03 Mar 2026 11:03:55 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82739d4d93dsm16447461b3a.3.2026.03.03.11.03.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 11:03:54 -0800 (PST)
+Content-Type: multipart/mixed; boundary="------------wnS9Zj1VrjWIsUrEPuMGuoEI"
+Message-ID: <fce1ca77-fdd3-424f-9dff-eef789526fa8@linaro.org>
+Date: Tue, 3 Mar 2026 11:03:54 -0800
 MIME-Version: 1.0
-References: <20260203073740.19913-1-razvanghiorghe16@gmail.com>
- <20260203073740.19913-2-razvanghiorghe16@gmail.com>
-In-Reply-To: <20260203073740.19913-2-razvanghiorghe16@gmail.com>
-From: razvan ghiorghe <razvanghiorghe16@gmail.com>
-Date: Tue, 3 Mar 2026 21:01:42 +0200
-X-Gm-Features: AaiRm51L3YWd49fRnw5s1JQ7M1uDdWbc4S90pbYyOjkJvG1qibsKhy-3GyaFgNM
-Message-ID: <CAK=UehKoaT5ZsoOwS++BY1TKZwHCWNkgL67VWajZseS-69evWw@mail.gmail.com>
-Subject: Re: [PATCH] tests/tcg/x86_64: Add tests for zero_bss() with RX
- PT_LOAD segments
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, richard.henderson@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000f51f32064c23554b"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=razvanghiorghe16@gmail.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 20/28] hvf: i386: save/restore CR0/2/3
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>
+References: <20260223233950.96076-1-mohamed@unpredictable.fr>
+ <20260223233950.96076-21-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260223233950.96076-21-mohamed@unpredictable.fr>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,423 +147,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f51f32064c23554b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------wnS9Zj1VrjWIsUrEPuMGuoEI
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
-I'd like to kindly ping this patch. It has been a few weeks since
-submission and I haven't received any feedback yet.
-I'm working on getting familiar with the contribution flux. Any review,
-even brief comments on the approach would be very helpful!
-Thanks in advance,
-Razvan
-
-=C3=8En mar., 3 feb. 2026 la 09:39, Razvan Ghiorghe <razvanghiorghe16@gmail=
-.com>
-a scris:
-
-> Add 2 test cases to validate the fix for issue #3179, where the linux-use=
-r
-> ELF Loader incorrectly rejected binaries with .bss sections in R_X PT_LOA=
-D
-> segments.
->
-> test-zerobss-1.c: defines a minimal _start routine that exists immediatel=
-y
-> without accessing the .bss region. Although a .bss region is present in
-> ELF,
-> it is never referenced at runtime. This test validates that the loader ca=
-n
-> correctly handle and zero the fractional .bss region in an R_X segment
-> without triggering permission violations.
->
-> test-zerobss-2.c: explicitly reads from multiple .bss variables to verify
-> they are zeroed properly. If the .bss was correctly zeroed, the exit code
-> will
-> be 0.
->
-> rx_anonymous_bss.ld: tests require a custom linker script to create the
-> specific ELF
-> layout that triggers the bug. The linker script:
-> - creates a single PT_LOAD segment with FLAGS(5) =3D PF_R | PF_X
-> (read-execute)
-> - places .text and .bss in this same segment
-> - sets .bss to ALIGN(1) to force it into the tail of the R_X segment
-> - results in p_filesz < p_memsz, where the gap is anonymous .bss
->
-> Expected behavior:
-> - Without the fix: Both tests fail with "PT_LOAD with non-writable bss"
-> - With the fix: Both tests pass (exit code 0)
->
-> Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+On 2/23/26 3:39 PM, Mohamed Mediouni wrote:
+> For symmetry, save/restore the same set of registers even when not needed.
+> 
+> CR2 save/restore needed as page faults injected to the guest imply modifying CR2.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->  tests/tcg/x86_64/Makefile.target     | 15 ++++++++++++
->  tests/tcg/x86_64/rx_anonymous_bss.ld | 27 +++++++++++++++++++++
->  tests/tcg/x86_64/test-zerobss-1.c    | 20 ++++++++++++++++
->  tests/tcg/x86_64/test-zerobss-2.c    | 36 ++++++++++++++++++++++++++++
->  4 files changed, 98 insertions(+)
->  create mode 100644 tests/tcg/x86_64/rx_anonymous_bss.ld
->  create mode 100644 tests/tcg/x86_64/test-zerobss-1.c
->  create mode 100644 tests/tcg/x86_64/test-zerobss-2.c
->
-> diff --git a/tests/tcg/x86_64/Makefile.target
-> b/tests/tcg/x86_64/Makefile.target
-> index be20fc64e8..ca375a4318 100644
-> --- a/tests/tcg/x86_64/Makefile.target
-> +++ b/tests/tcg/x86_64/Makefile.target
-> @@ -19,6 +19,9 @@ X86_64_TESTS +=3D test-1648
->  X86_64_TESTS +=3D test-2175
->  X86_64_TESTS +=3D cross-modifying-code
->  X86_64_TESTS +=3D fma
+>   target/i386/hvf/hvf.c | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
+> 
+> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> index fb039ff7bd..a70f8461b0 100644
+> --- a/target/i386/hvf/hvf.c
+> +++ b/target/i386/hvf/hvf.c
+> @@ -477,7 +477,19 @@ static void hvf_load_crs(CPUState *cs)
+>   
+>       env->cr[0] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
+>       env->cr[3] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
+> +    env->cr[2] = rreg(cpu->accel->fd, HV_X86_CR2);
+>   }
 > +
-> +X86_64_TESTS +=3D  test-zerobss-1
-> +X86_64_TESTS +=3D  test-zerobss-2
->  TESTS=3D$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
->  else
->  TESTS=3D$(MULTIARCH_TESTS)
-> @@ -36,5 +39,17 @@ test-x86_64: LDFLAGS+=3D-lm -lc
->  test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muldiv.=
-h
->         $(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
->
-> +test-zerobss-1: $(SRC_PATH)/tests/tcg/x86_64/test-zerobss-1.c
-> +       $(CC) -nostdlib -static -fno-stack-protector -fno-pie -no-pie \
-> +            -Wl,-T,$(SRC_PATH)/tests/tcg/x86_64/rx_anonymous_bss.ld \
-> +            -Wl,--build-id=3Dnone \
-> +            $< -o $@
-> +
-> +test-zerobss-2: $(SRC_PATH)/tests/tcg/x86_64/test-zerobss-2.c
-> +       $(CC) -nostdlib -static -fno-stack-protector -fno-pie -no-pie \
-> +            -Wl,-T,$(SRC_PATH)/tests/tcg/x86_64/rx_anonymous_bss.ld \
-> +            -Wl,--build-id=3Dnone \
-> +            $< -o $@
-> +
->  %: $(SRC_PATH)/tests/tcg/x86_64/%.c
->         $(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-> diff --git a/tests/tcg/x86_64/rx_anonymous_bss.ld
-> b/tests/tcg/x86_64/rx_anonymous_bss.ld
-> new file mode 100644
-> index 0000000000..3ec72fde6c
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/rx_anonymous_bss.ld
-> @@ -0,0 +1,27 @@
-> +/* Linker script to create RX PT_LOAD with anonymous .bss tail
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +PHDRS
+> +static void hvf_save_crs(CPUState *cs)
 > +{
-> +    text PT_LOAD FLAGS(5);
-> +}
-> +SECTIONS
-> +{
-> +    . =3D 0x400000;
-> +    .text : {
-> +        *(.text .text.*)
-> +        _etext =3D .;
-> +    } :text
-> +    .bss ALIGN(1) : {
-> +        _bss_start =3D .;
-> +        *(.bss .bss.* COMMON)
-> +        _bss_end =3D .;
-> +    } :text
-> +    /DISCARD/ : {
-> +        *(.note.GNU-stack)
-> +        *(.note.gnu.property)
-> +        *(.comment)
-> +        *(.eh_frame)
-> +    }
-> +}
-> +ENTRY(_start)
-> diff --git a/tests/tcg/x86_64/test-zerobss-1.c
-> b/tests/tcg/x86_64/test-zerobss-1.c
-> new file mode 100644
-> index 0000000000..809ea3cb52
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/test-zerobss-1.c
-> @@ -0,0 +1,20 @@
-> + /*
-> +  * .bss region exists but unused
-> +  * SPDX-License-Identifier: GPL-2.0-or-later
-> +  */
-> +int x;
-> +void _start(void)
-> +{
-> +    /*
-> +     * Exit immediately & never touched x
-> +     */
-> +    __asm__ volatile(
-> +        "mov $60, %%rax\n"
-> +        "xor %%rdi, %%rdi\n"
-> +        "syscall\n"
-> +        : /* no out */
-> +        : /* no in */
-> +        : "rax", "rdi"
-> +    );
-> +    __builtin_unreachable();
-> +}
-> diff --git a/tests/tcg/x86_64/test-zerobss-2.c
-> b/tests/tcg/x86_64/test-zerobss-2.c
-> new file mode 100644
-> index 0000000000..1f4f0d9704
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/test-zerobss-2.c
-> @@ -0,0 +1,36 @@
-> +/*
-> + * Test case for zero_bss() with anonymous BSS in RX PT_LOAD
-> + *
-> + * This binary has .bss in the same PT_LOAD as .text (R_X permissions),
-> + * but the BSS is anonymous (beyond p_filesz), not file-backed.
-> + * Actual behavior:
-> + * old code: Fails with "PT_LOAD with non-writable bss"
-> + * new code: Succeeds, zeros BSS, exits with code 0
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
+> +    X86CPU *x86_cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86_cpu->env;
 > +
-> +/* These will be included in .bss (uninitialized anonymous memory) */
-> +int bss_value;
-> +int bss_array[64];
-> +
-> +void _start(void)
-> +{
-> +    int sum =3D bss_value;
-> +    int i;
-> +
-> +    for (i =3D 0; i < 64; i++) {
-> +        sum +=3D bss_array[i];
-> +    }
-> +    /* If BSS was properly zeroed, sum should be 0 */
-> +    /* Exit with sum as exit code */
-> +    __asm__ volatile (
-> +        "movl %0, %%edi\n\t"
-> +        "movl $60, %%eax\n\t"
-> +        "syscall\n\t"
-> +        : /* no out*/
-> +        : "r" (sum)
-> +        : "rdi", "rax"
-> +    );
-> +
-> +    __builtin_unreachable();
+> +    wvmcs(cpu->accel->fd, VMCS_GUEST_CR0, env->cr[0]);
+> +    wvmcs(cpu->accel->fd, VMCS_GUEST_CR3, env->cr[3]);
+> +    wreg(cs->accel->fd, HV_X86_CR2, env->cr[2]);
 > +}
-> --
-> 2.43.0
->
->
+> +
+>   void hvf_load_regs(CPUState *cs)
+>   {
+>       X86CPU *cpu = X86_CPU(cs);
+> @@ -794,6 +806,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
+>               decode_instruction(env, &decode);
+>               exec_instruction(env, &decode);
+>               hvf_store_regs(cpu);
+> +            hvf_save_crs(cpu);
+>               break;
+>           }
+>           break;
+> @@ -837,6 +850,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
+>           assert(ins_len == decode.len);
+>           exec_instruction(env, &decode);
+>           hvf_store_regs(cpu);
+> +        hvf_save_crs(cpu);
+>   
+>           break;
+>       }
+> @@ -942,6 +956,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
+>           decode_instruction(env, &decode);
+>           exec_instruction(env, &decode);
+>           hvf_store_regs(cpu);
+> +        hvf_save_crs(cpu);
+>           break;
+>       }
+>       case EXIT_REASON_TPR: {
 
---000000000000f51f32064c23554b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This patch doesn't compile.
+See a fixing patch I'll let you upstream.
+I'm a bit puzzled about how this has been tested though.
 
-<div dir=3D"ltr"><div id=3D"gmail-:pu" class=3D"gmail-Am gmail-aiL gmail-aO=
-9 gmail-Al editable gmail-LW-avf gmail-tS-tW gmail-tS-tY" aria-label=3D"Cor=
-pul mesajului" role=3D"textbox" aria-multiline=3D"true" tabindex=3D"1" styl=
-e=3D"direction:ltr;min-height:85px" aria-controls=3D":z9" aria-expanded=3D"=
-false">Hi,<br>I&#39;d like to kindly ping this patch. It has been a few wee=
-ks since submission and I haven&#39;t received any feedback yet.<div>I&#39;=
-m working on getting familiar with the contribution flux. Any review, even =
-brief comments on the approach would be very helpful!<br><div>Thanks in adv=
-ance,=C2=A0</div><div>Razvan</div></div></div></div><br><div class=3D"gmail=
-_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">=C3=8En=
- mar., 3 feb. 2026 la 09:39, Razvan Ghiorghe &lt;<a href=3D"mailto:razvangh=
-iorghe16@gmail.com">razvanghiorghe16@gmail.com</a>&gt; a scris:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">Add 2 test cases to validat=
-e the fix for issue #3179, where the linux-user<br>
-ELF Loader incorrectly rejected binaries with .bss sections in R_X PT_LOAD<=
-br>
-segments.<br>
-<br>
-test-zerobss-1.c: defines a minimal _start routine that exists immediately<=
-br>
-without accessing the .bss region. Although a .bss region is present in ELF=
-,<br>
-it is never referenced at runtime. This test validates that the loader can<=
-br>
-correctly handle and zero the fractional .bss region in an R_X segment<br>
-without triggering permission violations.<br>
-<br>
-test-zerobss-2.c: explicitly reads from multiple .bss variables to verify<b=
-r>
-they are zeroed properly. If the .bss was correctly zeroed, the exit code w=
-ill<br>
-be 0.<br>
-<br>
-rx_anonymous_bss.ld: tests require a custom linker script to create the spe=
-cific ELF<br>
-layout that triggers the bug. The linker script:<br>
-- creates a single PT_LOAD segment with FLAGS(5) =3D PF_R | PF_X (read-exec=
-ute)<br>
-- places .text and .bss in this same segment<br>
-- sets .bss to ALIGN(1) to force it into the tail of the R_X segment<br>
-- results in p_filesz &lt; p_memsz, where the gap is anonymous .bss<br>
-<br>
-Expected behavior:<br>
-- Without the fix: Both tests fail with &quot;PT_LOAD with non-writable bss=
-&quot;<br>
-- With the fix: Both tests pass (exit code 0)<br>
-<br>
-Signed-off-by: Razvan Ghiorghe &lt;<a href=3D"mailto:razvanghiorghe16@gmail=
-.com" target=3D"_blank">razvanghiorghe16@gmail.com</a>&gt;<br>
----<br>
-=C2=A0tests/tcg/x86_64/Makefile.target=C2=A0 =C2=A0 =C2=A0| 15 ++++++++++++=
-<br>
-=C2=A0tests/tcg/x86_64/rx_anonymous_bss.ld | 27 +++++++++++++++++++++<br>
-=C2=A0tests/tcg/x86_64/test-zerobss-1.c=C2=A0 =C2=A0 | 20 ++++++++++++++++<=
-br>
-=C2=A0tests/tcg/x86_64/test-zerobss-2.c=C2=A0 =C2=A0 | 36 +++++++++++++++++=
-+++++++++++<br>
-=C2=A04 files changed, 98 insertions(+)<br>
-=C2=A0create mode 100644 tests/tcg/x86_64/rx_anonymous_bss.ld<br>
-=C2=A0create mode 100644 tests/tcg/x86_64/test-zerobss-1.c<br>
-=C2=A0create mode 100644 tests/tcg/x86_64/test-zerobss-2.c<br>
-<br>
-diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.t=
-arget<br>
-index be20fc64e8..ca375a4318 100644<br>
---- a/tests/tcg/x86_64/Makefile.target<br>
-+++ b/tests/tcg/x86_64/Makefile.target<br>
-@@ -19,6 +19,9 @@ X86_64_TESTS +=3D test-1648<br>
-=C2=A0X86_64_TESTS +=3D test-2175<br>
-=C2=A0X86_64_TESTS +=3D cross-modifying-code<br>
-=C2=A0X86_64_TESTS +=3D fma<br>
-+<br>
-+X86_64_TESTS +=3D=C2=A0 test-zerobss-1<br>
-+X86_64_TESTS +=3D=C2=A0 test-zerobss-2<br>
-=C2=A0TESTS=3D$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64<br>
-=C2=A0else<br>
-=C2=A0TESTS=3D$(MULTIARCH_TESTS)<br>
-@@ -36,5 +39,17 @@ test-x86_64: LDFLAGS+=3D-lm -lc<br>
-=C2=A0test-x86_64: test-i386.c test-i386.h test-i386-shift.h test-i386-muld=
-iv.h<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 $(CC) $(CFLAGS) $&lt; -o $@ $(LDFLAGS)<br>
-<br>
-+test-zerobss-1: $(SRC_PATH)/tests/tcg/x86_64/test-zerobss-1.c<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0$(CC) -nostdlib -static -fno-stack-protector -f=
-no-pie -no-pie \<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -Wl,-T,$(SRC_PATH)/tests/tcg/x86=
-_64/rx_anonymous_bss.ld \<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -Wl,--build-id=3Dnone \<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $&lt; -o $@<br>
-+<br>
-+test-zerobss-2: $(SRC_PATH)/tests/tcg/x86_64/test-zerobss-2.c<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0$(CC) -nostdlib -static -fno-stack-protector -f=
-no-pie -no-pie \<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -Wl,-T,$(SRC_PATH)/tests/tcg/x86=
-_64/rx_anonymous_bss.ld \<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -Wl,--build-id=3Dnone \<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $&lt; -o $@<br>
-+<br>
-=C2=A0%: $(SRC_PATH)/tests/tcg/x86_64/%.c<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 $(CC) $(CFLAGS) $&lt; -o $@ $(LDFLAGS)<br>
-diff --git a/tests/tcg/x86_64/rx_anonymous_bss.ld b/tests/tcg/x86_64/rx_ano=
-nymous_bss.ld<br>
-new file mode 100644<br>
-index 0000000000..3ec72fde6c<br>
---- /dev/null<br>
-+++ b/tests/tcg/x86_64/rx_anonymous_bss.ld<br>
-@@ -0,0 +1,27 @@<br>
-+/* Linker script to create RX PT_LOAD with anonymous .bss tail<br>
-+ * SPDX-License-Identifier: GPL-2.0-or-later<br>
-+ */<br>
-+PHDRS<br>
-+{<br>
-+=C2=A0 =C2=A0 text PT_LOAD FLAGS(5);<br>
-+}<br>
-+SECTIONS<br>
-+{<br>
-+=C2=A0 =C2=A0 . =3D 0x400000;<br>
-+=C2=A0 =C2=A0 .text : {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *(.text .text.*)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 _etext =3D .;<br>
-+=C2=A0 =C2=A0 } :text<br>
-+=C2=A0 =C2=A0 .bss ALIGN(1) : {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 _bss_start =3D .;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *(.bss .bss.* COMMON)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 _bss_end =3D .;<br>
-+=C2=A0 =C2=A0 } :text<br>
-+=C2=A0 =C2=A0 /DISCARD/ : {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *(.note.GNU-stack)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *(.note.gnu.property)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *(.comment)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 *(.eh_frame)<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+ENTRY(_start)<br>
-diff --git a/tests/tcg/x86_64/test-zerobss-1.c b/tests/tcg/x86_64/test-zero=
-bss-1.c<br>
-new file mode 100644<br>
-index 0000000000..809ea3cb52<br>
---- /dev/null<br>
-+++ b/tests/tcg/x86_64/test-zerobss-1.c<br>
-@@ -0,0 +1,20 @@<br>
-+ /*<br>
-+=C2=A0 * .bss region exists but unused<br>
-+=C2=A0 * SPDX-License-Identifier: GPL-2.0-or-later<br>
-+=C2=A0 */<br>
-+int x;<br>
-+void _start(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 /*<br>
-+=C2=A0 =C2=A0 =C2=A0* Exit immediately &amp; never touched x<br>
-+=C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 __asm__ volatile(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;mov $60, %%rax\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;xor %%rdi, %%rdi\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;syscall\n&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : /* no out */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : /* no in */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;rax&quot;, &quot;rdi&quot;<br>
-+=C2=A0 =C2=A0 );<br>
-+=C2=A0 =C2=A0 __builtin_unreachable();<br>
-+}<br>
-diff --git a/tests/tcg/x86_64/test-zerobss-2.c b/tests/tcg/x86_64/test-zero=
-bss-2.c<br>
-new file mode 100644<br>
-index 0000000000..1f4f0d9704<br>
---- /dev/null<br>
-+++ b/tests/tcg/x86_64/test-zerobss-2.c<br>
-@@ -0,0 +1,36 @@<br>
-+/*<br>
-+ * Test case for zero_bss() with anonymous BSS in RX PT_LOAD<br>
-+ *<br>
-+ * This binary has .bss in the same PT_LOAD as .text (R_X permissions),<br=
->
-+ * but the BSS is anonymous (beyond p_filesz), not file-backed.<br>
-+ * Actual behavior:<br>
-+ * old code: Fails with &quot;PT_LOAD with non-writable bss&quot;<br>
-+ * new code: Succeeds, zeros BSS, exits with code 0<br>
-+ * SPDX-License-Identifier: GPL-2.0-or-later<br>
-+ */<br>
-+<br>
-+/* These will be included in .bss (uninitialized anonymous memory) */<br>
-+int bss_value;<br>
-+int bss_array[64];<br>
-+<br>
-+void _start(void)<br>
-+{<br>
-+=C2=A0 =C2=A0 int sum =3D bss_value;<br>
-+=C2=A0 =C2=A0 int i;<br>
-+<br>
-+=C2=A0 =C2=A0 for (i =3D 0; i &lt; 64; i++) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 sum +=3D bss_array[i];<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 /* If BSS was properly zeroed, sum should be 0 */<br>
-+=C2=A0 =C2=A0 /* Exit with sum as exit code */<br>
-+=C2=A0 =C2=A0 __asm__ volatile (<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;movl %0, %%edi\n\t&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;movl $60, %%eax\n\t&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;syscall\n\t&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : /* no out*/<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;r&quot; (sum)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 : &quot;rdi&quot;, &quot;rax&quot;<br>
-+=C2=A0 =C2=A0 );<br>
-+<br>
-+=C2=A0 =C2=A0 __builtin_unreachable();<br>
-+}<br>
--- <br>
-2.43.0<br>
-<br>
-</blockquote></div>
+If you don't have access to a Mac intel based, you can use a 
+github-runner for free [1].
 
---000000000000f51f32064c23554b--
+[1] https://github.com/second-reality/github-runners
+
+Regards,
+Pierrick
+--------------wnS9Zj1VrjWIsUrEPuMGuoEI
+Content-Type: text/x-patch; charset=UTF-8;
+ name="0001-target-i386-hvf-hvf.c-fix-compilation.patch"
+Content-Disposition: attachment;
+ filename="0001-target-i386-hvf-hvf.c-fix-compilation.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSBlNjE0ZjI1Y2EzMDk1MzgxNWEwYzU5NzAyY2VlYmZiOTQ2NWY4MDMwIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2
+aWVyQGxpbmFyby5vcmc+CkRhdGU6IFR1ZSwgMyBNYXIgMjAyNiAxMDo1MTo1NyAtMDgwMApT
+dWJqZWN0OiBbUEFUQ0hdIHRhcmdldC9pMzg2L2h2Zi9odmYuYzogZml4IGNvbXBpbGF0aW9u
+CgouLi90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDc2OjMxOiBlcnJvcjogdXNlIG9mIHVuZGVj
+bGFyZWQgaWRlbnRpZmllciAnY3B1JwogIDQ3NiB8ICAgICBYODZDUFUgKng4Nl9jcHUgPSBY
+ODZfQ1BVKGNwdSk7CiAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXgou
+Li90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDc5OjI0OiBlcnJvcjogdXNlIG9mIHVuZGVjbGFy
+ZWQgaWRlbnRpZmllciAnY3B1JwogIDQ3OSB8ICAgICBlbnYtPmNyWzBdID0gcnZtY3MoY3B1
+LT5hY2NlbC0+ZmQsIFZNQ1NfR1VFU1RfQ1IwKTsKICAgICAgfCAgICAgICAgICAgICAgICAg
+ICAgICAgIF4KLi4vdGFyZ2V0L2kzODYvaHZmL2h2Zi5jOjQ4MDoyNDogZXJyb3I6IHVzZSBv
+ZiB1bmRlY2xhcmVkIGlkZW50aWZpZXIgJ2NwdScKICA0ODAgfCAgICAgZW52LT5jclszXSA9
+IHJ2bWNzKGNwdS0+YWNjZWwtPmZkLCBWTUNTX0dVRVNUX0NSMyk7CiAgICAgIHwgICAgICAg
+ICAgICAgICAgICAgICAgICBeCi4uL3RhcmdldC9pMzg2L2h2Zi9odmYuYzo0ODE6MjM6IGVy
+cm9yOiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlmaWVyICdjcHUnCiAgNDgxIHwgICAgIGVu
+di0+Y3JbMl0gPSBycmVnKGNwdS0+YWNjZWwtPmZkLCBIVl9YODZfQ1IyKTsKICAgICAgfCAg
+ICAgICAgICAgICAgICAgICAgICAgXgouLi90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDg2OjMx
+OiBlcnJvcjogdXNlIG9mIHVuZGVjbGFyZWQgaWRlbnRpZmllciAnY3B1JwogIDQ4NiB8ICAg
+ICBYODZDUFUgKng4Nl9jcHUgPSBYODZfQ1BVKGNwdSk7CiAgICAgIHwgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgXgouLi90YXJnZXQvaTM4Ni9odmYvaHZmLmM6NDg5OjExOiBl
+cnJvcjogdXNlIG9mIHVuZGVjbGFyZWQgaWRlbnRpZmllciAnY3B1JwogIDQ4OSB8ICAgICB3
+dm1jcyhjcHUtPmFjY2VsLT5mZCwgVk1DU19HVUVTVF9DUjAsIGVudi0+Y3JbMF0pOwogICAg
+ICB8ICAgICAgICAgICBeCi4uL3RhcmdldC9pMzg2L2h2Zi9odmYuYzo0OTA6MTE6IGVycm9y
+OiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlmaWVyICdjcHUnCiAgNDkwIHwgICAgIHd2bWNz
+KGNwdS0+YWNjZWwtPmZkLCBWTUNTX0dVRVNUX0NSMywgZW52LT5jclszXSk7CiAgICAgIHwg
+ICAgICAgICAgIF4KNyBlcnJvcnMgZ2VuZXJhdGVkLgoKU2lnbmVkLW9mZi1ieTogUGllcnJp
+Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPgotLS0KIHRhcmdldC9p
+Mzg2L2h2Zi9odmYuYyB8IDE0ICsrKysrKystLS0tLS0tCiAxIGZpbGUgY2hhbmdlZCwgNyBp
+bnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3RhcmdldC9pMzg2
+L2h2Zi9odmYuYyBiL3RhcmdldC9pMzg2L2h2Zi9odmYuYwppbmRleCBjMjQ3NWIxYTNiMi4u
+ZjUzMjA5NjcwODcgMTAwNjQ0Ci0tLSBhL3RhcmdldC9pMzg2L2h2Zi9odmYuYworKysgYi90
+YXJnZXQvaTM4Ni9odmYvaHZmLmMKQEAgLTQ3MywyMSArNDczLDIxIEBAIHN0YXRpYyB2b2lk
+IGh2Zl9jcHVfeDg2X2NwdWlkKENQVVg4NlN0YXRlICplbnYsIHVpbnQzMl90IGluZGV4LCB1
+aW50MzJfdCBjb3VudCwKIAogc3RhdGljIHZvaWQgaHZmX2xvYWRfY3JzKENQVVN0YXRlICpj
+cykKIHsKLSAgICBYODZDUFUgKng4Nl9jcHUgPSBYODZfQ1BVKGNwdSk7CisgICAgWDg2Q1BV
+ICp4ODZfY3B1ID0gWDg2X0NQVShjcyk7CiAgICAgQ1BVWDg2U3RhdGUgKmVudiA9ICZ4ODZf
+Y3B1LT5lbnY7CiAKLSAgICBlbnYtPmNyWzBdID0gcnZtY3MoY3B1LT5hY2NlbC0+ZmQsIFZN
+Q1NfR1VFU1RfQ1IwKTsKLSAgICBlbnYtPmNyWzNdID0gcnZtY3MoY3B1LT5hY2NlbC0+ZmQs
+IFZNQ1NfR1VFU1RfQ1IzKTsKLSAgICBlbnYtPmNyWzJdID0gcnJlZyhjcHUtPmFjY2VsLT5m
+ZCwgSFZfWDg2X0NSMik7CisgICAgZW52LT5jclswXSA9IHJ2bWNzKGNzLT5hY2NlbC0+ZmQs
+IFZNQ1NfR1VFU1RfQ1IwKTsKKyAgICBlbnYtPmNyWzNdID0gcnZtY3MoY3MtPmFjY2VsLT5m
+ZCwgVk1DU19HVUVTVF9DUjMpOworICAgIGVudi0+Y3JbMl0gPSBycmVnKGNzLT5hY2NlbC0+
+ZmQsIEhWX1g4Nl9DUjIpOwogfQogCiBzdGF0aWMgdm9pZCBodmZfc2F2ZV9jcnMoQ1BVU3Rh
+dGUgKmNzKQogewotICAgIFg4NkNQVSAqeDg2X2NwdSA9IFg4Nl9DUFUoY3B1KTsKKyAgICBY
+ODZDUFUgKng4Nl9jcHUgPSBYODZfQ1BVKGNzKTsKICAgICBDUFVYODZTdGF0ZSAqZW52ID0g
+Jng4Nl9jcHUtPmVudjsKIAotICAgIHd2bWNzKGNwdS0+YWNjZWwtPmZkLCBWTUNTX0dVRVNU
+X0NSMCwgZW52LT5jclswXSk7Ci0gICAgd3ZtY3MoY3B1LT5hY2NlbC0+ZmQsIFZNQ1NfR1VF
+U1RfQ1IzLCBlbnYtPmNyWzNdKTsKKyAgICB3dm1jcyhjcy0+YWNjZWwtPmZkLCBWTUNTX0dV
+RVNUX0NSMCwgZW52LT5jclswXSk7CisgICAgd3ZtY3MoY3MtPmFjY2VsLT5mZCwgVk1DU19H
+VUVTVF9DUjMsIGVudi0+Y3JbM10pOwogICAgIHdyZWcoY3MtPmFjY2VsLT5mZCwgSFZfWDg2
+X0NSMiwgZW52LT5jclsyXSk7CiB9CiAKLS0gCjIuNDcuMwoK
+
+--------------wnS9Zj1VrjWIsUrEPuMGuoEI--
 
