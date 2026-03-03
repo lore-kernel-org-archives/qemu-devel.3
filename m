@@ -4,103 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C471AEC142E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F7AEC142C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxNfT-0001ay-Dp; Tue, 03 Mar 2026 06:11:59 -0500
+	id 1vxNnL-0003K8-2Z; Tue, 03 Mar 2026 06:20:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxNfO-0001ac-OY
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:11:54 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxNn6-0003J8-Tu
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:19:54 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxNfL-0002xy-F6
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:11:54 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-660bdba9390so259126a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:11:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxNn4-0004NR-CM
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:19:52 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-798374d0f44so86269817b3.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:19:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772536787; cv=none;
+ d=google.com; s=arc-20240605;
+ b=jXMpX0LoTsSI0joHswsRCYjv0GxkYUhXYH22srmG4ZIxP1Rb9ZpraYkzW83jqBDphh
+ twO5/JXrefOsF8omDY39Jr/01wkpaZjueORlc7AuqkMXf34myQ5+nBG5CcuYmd628Q3J
+ Gz5JRz3L0HpGOz3BhvJuAjLFF9bVwqkDtMIHZThNI1h+MnO639XsyukYE6g2JDpjimI8
+ +Dd9wSuBxwwDPLXiPNtQT9Jrc8pHaVNC2eZZgdOC7IMk6hoqWEP/g36/IoyEkc/XDxjp
+ jw7To7KBOwGTjsU2Ab+8c+tLa6SWlJTvmbUIbOFD6PN2jhmgz0kEZedDxo7nBCuIIebN
+ RM2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=8EwTYz/QbmiyVUtkVoaDWdh0FQsh8+7atgJEqSg7D6o=;
+ fh=EzCqtT5E+bTTLv4rNAwVJ+2ChJBsIX5zYHpMVTT1IcQ=;
+ b=hHP6xdJ+GCnaN/FD0Blem+KaZzwE0IA4oMd6MeSIt/u3u5XYvVYeucwTry0h1Q2Byc
+ xfv4aHAogms/aHL3Ax/AzHKxGoEYjgrPnChev4lne1UDpSs0viY+kWxaSRvpP7Ff43Uo
+ 4VBsRJHXo0FMTOu50wl4ZV+ydiWb0z328Cv1JlwhtJd+pDuxJwD9VT4H7uQLhCbXQRkK
+ as8wEZpUG1dJ+5+sMBatb4Or7bH+Um2IwE/UzcBSYc7Nx97+2Ub9WBrBD37bn9mcGy8l
+ x4ZcRa1L8gK6I1kFdPmwShG/+RaogsAC7cFVuH5vIdbnTZDEoSh/1dw+Qip4KyGxL2Ki
+ R/AQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772536307; x=1773141107; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772536787; x=1773141587; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TlC8cihEtMBMhsYP5dx/K1Gjzx/3WI5KRIFT1PqIs9E=;
- b=g+FxgzJpJ1ZaLz9Rw2gJUwQztaG06zT9ZEGQdobdfA820R0xzr/vvlrrwoI7QIt4wm
- H0x0iYfnXd69HcBw2dnzNVyXBMDkYVQe0QGaSxXk4oiACwUNWi38BSM+gyCrUpLhMgg+
- MBtGG544KhkuYL1OYeRC3kxUetyj28VTSVU/fEx3dRCnMm7cSZMC/Z5hmOX3ROOMjKGx
- pBiO9VUAgoh4buVDiUJOoubwtIn7zRoj31OsZzWP6GvQd8fXjnvkoKn7B3QbA0NKkGOW
- 2byY/+NFOmuETrp0uL5xWZUkiGXjMyDNN8sIwiJJW6mzk71axbgBLjDoqfI5r6xjiOH4
- PG+A==
+ bh=8EwTYz/QbmiyVUtkVoaDWdh0FQsh8+7atgJEqSg7D6o=;
+ b=re5uKfZNK57/80BMvCJ5EGOebvSKbylq8Ar4Nl/T6Mkw6gqmuuJFprx2/yGCca/viG
+ RACjmgaL1IAnGURoLx9WJhloNmJcM418kcQ/bGoCcNJcUm3XfuZW+YjzoH1XeLfGV11I
+ yCmrdI31+0e9bOUSj/xfO2gdw6wbx+xQaG0VpeXJeqAmgS7acNEkLjWSPXQEbl2rGcQ5
+ phIfjtfSvmn6cGDVox6+dgqsZzqK4p8trb7Wk3Rsu4po3etdDqCuZ10j3R2wTgxyHKKs
+ C+iCgvqcBUIRqOK/XU4iEt15hDVeaeIaR1hbeooYoyljdGMukN0xkO+FsRX5jjW/iKga
+ wLbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772536307; x=1773141107;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TlC8cihEtMBMhsYP5dx/K1Gjzx/3WI5KRIFT1PqIs9E=;
- b=Ya8c+Z6Imudp+RYU2BQ3Zn/rvnX0VqcLbofx66jfEuQR3Csc+jPUgmEg5CI2foG0Vr
- 5Coh6UHNJskq7mNfs7A8OQlHER8G3gxj59Y7/LJ9FQU1eXvEssou/frLcPCO8wJV0aY/
- DDdZh4+VKkwmycku/sRiATixLU0ExIC9xehgDujIECo+Z3A9y4RtvuN8CvdFa8xEEVm7
- 2pbaJaYrYc7oshYnkJXIBlJE6HTcfZAATq/qhd/+JVq1uxKCMAE0baxG2t/t/ovl0JMT
- YGirVfy/9kE0tLiDc4cnL1fvu78/wGCbc2idFqQAUXE2K2XKZ/ZNx6OYaFhHS5UgMxWn
- Ssgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeQqrmAV3GVJfgaQL22/ESEPNAFz+EBAeCz4HQM1s8UsLICMPh4smXgnum2B3a6tUnBVSX5Tj9q13r@nongnu.org
-X-Gm-Message-State: AOJu0YxKAWzTcqqex3V0YOV9REekAl7iYmri58ewQFtEBd0PIUWU7QIc
- PiHYqm9GKp80aGIxLTWT2J2DAmw15T/YmjnBY6Joa6v9/R8U0S7XlA8R1Q9tM8Z7veA=
-X-Gm-Gg: ATEYQzzFrTVM9s/JTVEju5VGYzAUIV+ff7O1Jlh/470l+DUfWdNzLkVd4YrtNRnVxz0
- lILdEOOic10+7+PQXKSswitVSVJjx3GjL3WkUoY3EHhrKvjLpmQX4hHssEXDjZVefc1irC7OlFY
- t3SQVUrD1GAAxoBcfqvtnNtUuxy8MVZyYiWozpzUiOWUAaE+coj/DsZJ2OWgxBnw05Xerlu9Mi6
- PDj7wJ48rzr5qBEDaQepcuIpCJl/NxJwY9HrLd/faSMPlJHSQGW7cKaLJxq0JFjXaLWxvvjpzQ1
- l7XH9AK1RqHe2uI8Z0Eq4+R2Atvc9XKRwSdgl4EwMP8NvaEVtaML777kukWddKU61A403nMj4QB
- pdQeffut+4j9rS2rXfn+RfVHBYyufL0FZQtX0clrv/fdgjOZxJsTvDwI6uLOkD1YrzfHBXW/fcw
- M0hPYKNJ5gL+H4/SmcxslPcRg=
-X-Received: by 2002:a17:907:3e91:b0:b93:5521:b57a with SMTP id
- a640c23a62f3a-b93764b5f90mr1040808266b.31.1772536307518; 
- Tue, 03 Mar 2026 03:11:47 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935ab13d57sm579824766b.12.2026.03.03.03.11.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 03:11:46 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1CD1F5F7C1;
- Tue, 03 Mar 2026 11:11:46 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei Zhang
- <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert Wollny
- <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan Singh
- <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger Pau
- =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
- <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K?=
- =?utf-8?Q?=C3=B6nig?=
- <christian.koenig@amd.com>,  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>,  Julia Zhang
- <julia.zhang@amd.com>,  Chen Jiqian <Jiqian.Chen@amd.com>,  Rob Clark
- <robdclark@gmail.com>,  Robert Beckett <bob.beckett@collabora.com>
-Subject: Re: [PATCH v21 00/18] Support virtio-gpu DRM native context and
- MAP_FIXED API
-In-Reply-To: <20260302145920.735423-1-dmitry.osipenko@collabora.com> (Dmitry
- Osipenko's message of "Mon, 2 Mar 2026 17:59:02 +0300")
-References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Tue, 03 Mar 2026 11:11:46 +0000
-Message-ID: <87y0k9b219.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1772536787; x=1773141587;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=8EwTYz/QbmiyVUtkVoaDWdh0FQsh8+7atgJEqSg7D6o=;
+ b=dW+u2UOd2YSVElNhFSdBVJrkKXiOPBHIEzyR32eB0Oyl0Fu5PH+MuY6zCsjfZQPDTp
+ JuOWq470a9qzgVS5oskc6emNT8i1LEAQ6wt1OtRquHa9cb4UZfmLVPUlC6HfP+WBT2Bv
+ 6/rNFlcFrs08XqtYx2PBdf4qvovCClDK/nwgBLPQbWftR8fb/C8dbTMVB2mXikVM4LGb
+ 8lBh6N1e70E1od+RXUM/1oo1A7lr5c3pzOiJJrQ6wCaIK0SHivqhbuC8lERCo9lcAn7z
+ k01AnOR6H3u/hHVZ/0cnkg8kj4a1DX2iFANPESvHPlHsUkpuQzWHeV84PLOC/WDEnBWW
+ gMBg==
+X-Gm-Message-State: AOJu0Yz0VtYsec1BzzKuRqLQLRli1crl8yRozeFFSMRhiYQV2hg6fMqj
+ 1aHv3f0mf5gkbgrHTjB/9XuyMrvjj2WpUC5tdnOAXxV4ILeuNv3+KvcZm0AijS063zZ/zt2B/lz
+ 2udW34M0EaHRlZi1OTo/AZgB57tuCMc5P1A6rB8oeXQ==
+X-Gm-Gg: ATEYQzzXylNxxgdrUlbyRp8289CQsblUGECNYCKS6W47vto529FsW7jUDmlYy0BZ8tA
+ f6xsxUxJdgEQGYadxCFSSKELVEw1RlP2aipVNEk6DSJuu4VqJiisqNWo5AYdGwP8bM1I6P+SPrl
+ TMHDbaWprXmTyoFXyIhTvRI8yYyBUEHK3CGpJjQ4TKQJMSQBYpnON8YbCxhi6VWf/3JXOhqii8I
+ obGzlbLzPnxg3gQJZknSkpglo2TQvBuPOFMnltiFxUDyEpzH9rw+UppAWJDdxC48z83pN6iMLEW
+ mYBK0rExjLRBgzwE0jiI1EZwPfwRcxyGtxuB+mVZkpZy905RLWbiEzfjEfrvBD2H/0I=
+X-Received: by 2002:a05:690e:120d:b0:64a:ce57:cac4 with SMTP id
+ 956f58d0204a3-64cedbecb46mr1229258d50.24.1772536786906; Tue, 03 Mar 2026
+ 03:19:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260227-semihosting-cpu-tswap-v2-0-cbdcdf39dd15@eonerc.rwth-aachen.de>
+ <20260227-semihosting-cpu-tswap-v2-2-cbdcdf39dd15@eonerc.rwth-aachen.de>
+In-Reply-To: <20260227-semihosting-cpu-tswap-v2-2-cbdcdf39dd15@eonerc.rwth-aachen.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Mar 2026 11:19:35 +0000
+X-Gm-Features: AaiRm51l8rYXPrmo7Ptvfj5go7bxbNiyxMtoQxcCLAEgWCnst0stbRZ_GN185hg
+Message-ID: <CAFEAcA9+A4Y52f+zZ=hcJZnsAfhLKQf0dnfoWj49W3p53PUFwQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] include/exec: Provide the cpu_internal_tswap()
+ functions
+To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,34 +119,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-
-> Hello,
+On Fri, 27 Feb 2026 at 12:55, Martin Kr=C3=B6ning
+<martin.kroening@eonerc.rwth-aachen.de> wrote:
 >
-> This is follow up to DRM native context v16 [1] and MAP_FIXED API v10 [2]
-> virtio-gpu patches that has been reviewed previously and were waiting for
-> a new release of libvirglrenderer 1.3.0.
+> These functions are needed to support semihosting on CPUs that support
+> runtime-configurable endianness. They should not be used in other context=
+s.
 >
-> [1] https://lore.kernel.org/qemu-devel/20251116125641.2255794-1-dmitry.os=
-ipenko@collabora.com/
-> [2] https://lore.kernel.org/qemu-devel/20260118162856.223796-1-dmitry.osi=
-penko@collabora.com/
+> Signed-off-by: Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de=
 >
-> Changelog:
+> ---
+>  include/exec/tswap.h | 36 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 36 insertions(+)
 >
-> v21:- Moved virtio-gpu to use iohandler_get_aio_context() as was
->       suggested by Akihiko Odaki.
+> diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+> index 9e94fa0021..6d9301129d 100644
+> --- a/include/exec/tswap.h
+> +++ b/include/exec/tswap.h
+> @@ -10,6 +10,7 @@
+>
+>  #include "qemu/bswap.h"
+>  #include "qemu/target-info.h"
+> +#include "hw/core/cpu.h"
+>
+>  /*
+>   * If we're in target-specific code, we can hard-code the swapping
+> @@ -72,4 +73,39 @@ static inline void tswap64s(uint64_t *s)
+>  }
+>  #endif
+>
+> +/*
+> + * If we're in semihosting code, have to swap depending on the currently
+> + * configured endianness of the CPU. These functions should not be used =
+in
+> + * other contexts.
+> + */
+> +#define cpu_internal_needs_bswap(cpu) \
+> +    (HOST_BIG_ENDIAN !=3D cpu_internal_is_big_endian(cpu))
+> +
+> +static inline uint16_t cpu_internal_tswap16(CPUState *cpu, uint16_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_internal_needs_bswap(cpu)) {
 
-Akihiko,
+I don't think these should have the target_needs_bswap()
+check in them. Otherwise for a normally big-endian CPU on
+a little-endian host where the CPU is currently in
+little-endian mode, target_needs_bswap() will return true
+and we'll swap the data, even though we should not
+(because cpu_internal_needs_bswap() returns false).
 
-Are you happy with the aio changes?
+> +        return bswap16(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+> +static inline uint32_t cpu_internal_tswap32(CPUState *cpu, uint32_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_internal_needs_bswap(cpu)) {
+> +        return bswap32(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+> +static inline uint64_t cpu_internal_tswap64(CPUState *cpu, uint64_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_internal_needs_bswap(cpu)) {
+> +        return bswap64(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
 
-I've provisionally pulled this into to virtio-gpu/next for a 11.0 PR
-this week but I see there are a few patches left to be reviewed.
-
-I shall see if I can test it.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
