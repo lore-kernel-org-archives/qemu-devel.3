@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46596EDA68D
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074B9EDA6A2
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:52:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSpU-0003iz-M1; Tue, 03 Mar 2026 11:42:41 -0500
+	id 1vxSxv-0006PJ-8Y; Tue, 03 Mar 2026 11:51:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSpP-0003V8-3o
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:42:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSpA-00069Z-ID
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:42:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772556139;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CmRnhrPoWTJMnAa0/tkjzZE5IhCFmR9/52zORg0fgBM=;
- b=REtHl0S6YeKVvrjmbxce1wPQEIamjNsY6H9RXRFsI+ZmthDyurIUW8REs7F863dwHx05gP
- uWfTbssEA3V2oYpWafyS0sRB+Htr6OFDwLsgL3JYk/YcLCwSOWH9MGmirTZkg9hg0sNOIJ
- gNijvRFuifTug1PzgCikkcciqOxZuWU=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-oPIsdAebMRGHiKZJZtBm4g-1; Tue, 03 Mar 2026 11:42:18 -0500
-X-MC-Unique: oPIsdAebMRGHiKZJZtBm4g-1
-X-Mimecast-MFC-AGG-ID: oPIsdAebMRGHiKZJZtBm4g_1772556137
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8cb4e37a796so3715591685a.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:42:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vxSxo-0006Oc-Jc
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:51:16 -0500
+Received: from mail-qk1-x730.google.com ([2607:f8b0:4864:20::730])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <axboe@kernel.dk>) id 1vxSxm-0008Dm-GK
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:51:16 -0500
+Received: by mail-qk1-x730.google.com with SMTP id
+ af79cd13be357-8cb5c9ba82bso990920785a.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772556137; x=1773160937; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CmRnhrPoWTJMnAa0/tkjzZE5IhCFmR9/52zORg0fgBM=;
- b=oTz/wpklCeN78O2O7LIlKguk11w9UPuxW8uLAzY45EPswbiWuqfjNQHCkBFW0U7Obz
- mqUxtdXItHb7C5W406OVhAo5rIEAGoXVmKZTRbzFQd4cRk0pU2FI3yGXrD+gAcO2TyV4
- lakjDTrZDF6u3kXLtYLFXOh9t6GxPYvFS4XXLsHTsMY1QFLsX/xT0KeXzUZozUgfkyJe
- DwVp/YRloT3hx0Bm8Q6mjCTywbEevKyTDrPxoAzbCwLuuh6bKbeAKJGeZMMjaWi546+x
- 28gdEEMgAFTlH//J9ZBzqgrkiEYZbi3rhfN4iMHhswntqsXPpAJF0zL8Ah1YADZIv9Cl
- v9ig==
+ d=kernel-dk.20230601.gappssmtp.com; s=20230601; t=1772556673; x=1773161473;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YuljHJCwgnM/MgZCT52VRQf7EwrmIbExP/h+/BPmqdo=;
+ b=qtDNDJShs3db9TolaEJYdWCr3z2Nr4uu/jduvvH57K0D0PBHANvhzjMVBuyaBdLHHK
+ ZqIfeGr0jeXVxnkzfqd8obNp06ZNR29EJUdslwZNAAt5Il7j9rqm49NxzwQhXXcDnGMM
+ ss2DkPJTV9jwbXak/l9n3jn7AxxnHAJr0qrbsDFIuZ/bWHhO/QUnalU4BPb/jzk4VX4h
+ 7REeXdV6UcRGfaA5PMBJe6FbeYJkQ6wcm3nBOaprzDAToIfEgC7aP5Hb4AmEmigbkNOV
+ YASNTJKPnREwKPOrf14k6augaBjKsKSjZK1Y87p2kd1DqY28VywDvqffiqKMMGjz9Exe
+ Yg5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772556137; x=1773160937;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CmRnhrPoWTJMnAa0/tkjzZE5IhCFmR9/52zORg0fgBM=;
- b=iFf8Iv0JVoXIYJnDVUx5T9BTwQyfIwROY22Z6dvpHzziY3m69JSSoxdjCX8KKQpnMK
- qMzqkxWV5GfLS1MDacag/EtLDepjcRybEF1TlhlV8FjGC3YMSFFMDdoY8y9I51tR5mXl
- 71DjqX4u4yOCDnECTSH/I7fBNgHlivryTIT1VJw9QRPgTl7TdML0o4Wsko1BZzi5eClb
- K6UhjPTt2Tk/TkCQOBhX/SNI2UFhZAuzEMHUtn4yisxL48F6EA3hiMV2u7Neh2210X/y
- CEwbpXt6y0U1mu6t4uRrFvTBtl7RRCu2lUnSKkbR0/QamJmS4BpV1Vf996f9MGksUuxL
- MNwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFH3/YRpQGgqWoM/wp/AHec60qzaufAyDbe0y1OTFtheLJsDe4tmGu8/leDxal3NWmNgK/64AZLWev@nongnu.org
-X-Gm-Message-State: AOJu0YzJx3e/4Kq7dCn7Q1JiqczKtRqp8m/qWVkfzZwbjU58v+frH/wi
- XZ825i886vCCW7PgBGFRKOS+EWgZO3gX55R0X2QH9kZEe3KITNXQ7sMMHi+WDgaCphY07HPX1ex
- icFY4D5cAxLvmpuFkwNzDFaeeWdXMoFNSVerd8Xk9IwKkA+1dgGNc/tVn
-X-Gm-Gg: ATEYQzzbf8VuWc2wQ3URisk6kx7xkwUK7SaQNpQqEZBgme2E2AcYnHEk8YApzoYIwY3
- a/R+yBn//CqqIpbtH/M5k2slhgpLtwQdqhjWfSzxQ8nJZnZBHBYXcGuArYBwWPJKyPozHJ4oe43
- U6i3js4l6jLnHqOY+F8w/eqE1kEfed3YP+zLBPeAZB0ayZT/HfDkcQgGVOrVxp5baScykVFcSLK
- vNJ7bJVNdWP2Maje8SEgSTyy9dvvVVHoLS2wON4GYtljLp48rI3STFT2RSH7W/LAexgIuhHTQ0w
- OAyKfcO8BXjgQFB5GjGaGcruAZ1OGQ7aOcEoAjAA+j2XotRhBDxhgzSBiEdZ8gzEtGSjufy4QEY
- QvHPQrP+5Y/mqCQ==
-X-Received: by 2002:a05:620a:3187:b0:8cb:7ad5:6c09 with SMTP id
- af79cd13be357-8cbc8d85c10mr2206467385a.24.1772556137081; 
- Tue, 03 Mar 2026 08:42:17 -0800 (PST)
-X-Received: by 2002:a05:620a:3187:b0:8cb:7ad5:6c09 with SMTP id
- af79cd13be357-8cbc8d85c10mr2206460985a.24.1772556136440; 
- Tue, 03 Mar 2026 08:42:16 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a04849cb3sm33503926d6.6.2026.03.03.08.42.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 08:42:16 -0800 (PST)
-Date: Tue, 3 Mar 2026 11:42:04 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: farosas@suse.de,
-	"open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 15/16] migration/savevm: move to new migration APIs
-Message-ID: <aacPXDprRcJPtGf1@x1.local>
-References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
- <20260220210214.800050-16-vsementsov@yandex-team.ru>
+ d=1e100.net; s=20230601; t=1772556673; x=1773161473;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YuljHJCwgnM/MgZCT52VRQf7EwrmIbExP/h+/BPmqdo=;
+ b=KO9scPFjiIGia/+U7Y9E22rrFoHr3hXMNyk/e3CyjU6tuJ7b7hz4f0Ofr8kkbyat46
+ 9ZLb6bbc6PVlycdd+4vuzWbUvxpV/1eqWME/+LpWYWmRwog4+iJ7Wmtx/hw7oTsoUFg6
+ Bk5Yx6aqftWYwket8oX2JKKEFAoP9ZsM6Q6npFyN63RmRkvIwkPI89u/pbMgZplZlOm/
+ zlkduG1T2vGyabmtWdalOvwJ47fJ0Ty7uTRWGShEFRVXPw//cxUOzatoxrmGbxpqOU3A
+ az8+8nEwMOxFPg5UM34JXh4muhCeui+SucgEKgQPtPiEfl3JTM8mCF9OGHqgrMUDlKJb
+ 6Lcg==
+X-Gm-Message-State: AOJu0Yy/QbkMmhzLMXGwUbJmpcpJolILMH8Md45W47DnxJV/4kfgQyJT
+ xIxZk37Vs/+QE8Jynfkv58utiwplf/MDOtXGDQdoGA84pG2O1lbYEe7Pv7ydNGeW3OQ=
+X-Gm-Gg: ATEYQzyH+wCl2BjerN52jrtoTVQ8MU6Y5PL48IcmZjHMcPllJEZha+3oBcI1NCgfBhw
+ iRC97Kt0opxJ6TwMXQw/Qm6ohA+tMDVNZHFHYYZhB8iOMHD1x4BmG21PvNn2M+iFIIu9XUgtL3E
+ Vl1Z32QbA+4NDhPprMsOY19fs5/8YWoqTHcxoy6oLNDPbauPJWdgVlcnbkB2YgJcDCTWH1GfalI
+ w8BsZ/HTtK3nyW/KExa1O8WM+MHMJ7sJ4CJVhMqeVqV75UcqlLQLVIUdFUP0SdEqWvGXDM8ihqy
+ mkDcrcMgtwHiKKo7UnXoGpF2fEYb3ZNITwv6flv3GCB0d+hcRAVMNZLTqKBdHvwGBSEC0zztQOr
+ 275YFMXO9E5RTddw1wh0swJBxGSXSHj9PDoOHgQxS4YF2mfeoIBXlyZTgJPr9gyQTc5e7M/SYPI
+ 3GcvObAJXH3VOONauszleQ8sgeL7syOEZcFIGEl5S9sSUrSDT28IROs30hYixwBkM6RRQh89OHU
+ kokpDTX
+X-Received: by 2002:a05:620a:4014:b0:8c9:f4eb:ac71 with SMTP id
+ af79cd13be357-8cbc8dc49a7mr1726747985a.10.1772556672714; 
+ Tue, 03 Mar 2026 08:51:12 -0800 (PST)
+Received: from [192.168.1.102] ([96.43.243.2])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-899e53a16c0sm80399996d6.35.2026.03.03.08.51.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 08:51:11 -0800 (PST)
+Message-ID: <287ca341-13a4-4c8c-8bb2-e78dc019c7dc@kernel.dk>
+Date: Tue, 3 Mar 2026 09:51:05 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260220210214.800050-16-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCHSET 0/2] io_uring fixes
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, fam@euphon.net, stefanha@redhat.com,
+ qemu-stable@nongnu.org
+References: <20260213143225.161043-1-axboe@kernel.dk>
+ <3ba732d8-8e33-4bf3-af39-00360c39b940@proxmox.com>
+Content-Language: en-US
+From: Jens Axboe <axboe@kernel.dk>
+In-Reply-To: <3ba732d8-8e33-4bf3-af39-00360c39b940@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::730;
+ envelope-from=axboe@kernel.dk; helo=mail-qk1-x730.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,305 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 21, 2026 at 12:02:13AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-One trivial thing to mention below.
-
-> ---
->  migration/savevm.c | 107 +++++++++++++++++++++++----------------------
->  1 file changed, 55 insertions(+), 52 deletions(-)
+On 3/3/26 4:52 AM, Fiona Ebner wrote:
+> Am 13.02.26 um 3:33 PM schrieb Jens Axboe:
+>> Hi,
+>>
+>> Patch 1 here is the real meat of this, patch 2 is just a slight
+>> improvement. For patch 1, it can literally yield a 50-80x improvement
+>> on the io_uring side for idle systems, where ppoll() ends up sleeping
+>> for 500 msec while there's IO to submit! I noticed this running the
+>> io_uring regression tests in a vm, where I use a variety of block
+>> devices for some of the tests. They would often randomly time out on
+>> AHCI devices, while running them on a virtio-blk or nvme device would
+>> finish in one second or so. I then wrote a reproducer to try and grok
+>> this and had claude dive into this, which helped me better grasp the
+>> various event loops.
+>>
+>> Please take a look and tell me what you think. Some variant of patch 1
+>> should definitely be considered, but let me know if this is the right
+>> approach. I can easily test anything.
+>>
+>> Also note - this seems to trigger more easily or consistently on
+>> aarch64, which is where I run most of my local/immediate testing.
+>>
+>>  util/fdmon-io_uring.c | 22 +++++++++++++++++++++-
+>>  1 file changed, 21 insertions(+), 1 deletion(-)
+>>
 > 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index c5236e71ba..8c001d7468 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -205,27 +205,28 @@ void timer_get(QEMUFile *f, QEMUTimer *ts)
->   * Not in vmstate.c to not add qemu-timer.c as dependency to vmstate.c
->   */
->  
-> -static int get_timer(QEMUFile *f, void *pv, size_t size,
-> -                     const VMStateField *field)
-> +static bool load_timer(QEMUFile *f, void *pv, size_t size,
-> +                       const VMStateField *field, Error **errp)
->  {
->      QEMUTimer *v = pv;
->      timer_get(f, v);
-> -    return 0;
-> +    return true;
->  }
->  
-> -static int put_timer(QEMUFile *f, void *pv, size_t size,
-> -                     const VMStateField *field, JSONWriter *vmdesc)
-> +static bool save_timer(QEMUFile *f, void *pv, size_t size,
-> +                       const VMStateField *field, JSONWriter *vmdesc,
-> +                       Error **errp)
->  {
->      QEMUTimer *v = pv;
->      timer_put(f, v);
->  
-> -    return 0;
-> +    return true;
->  }
->  
->  const VMStateInfo vmstate_info_timer = {
->      .name = "timer",
-> -    .get  = get_timer,
-> -    .put  = put_timer,
-> +    .load  = load_timer,
-> +    .save  = save_timer,
->  };
->  
->  
-> @@ -297,7 +298,7 @@ static uint32_t get_validatable_capabilities_count(void)
->      return result;
->  }
->  
-> -static int configuration_pre_save(void *opaque)
-> +static bool configuration_pre_save(void *opaque, Error **errp)
->  {
->      SaveState *state = opaque;
->      const char *current_name = MACHINE_GET_CLASS(current_machine)->name;
-> @@ -318,7 +319,7 @@ static int configuration_pre_save(void *opaque)
->      }
->      state->uuid = qemu_uuid;
->  
-> -    return 0;
-> +    return true;
->  }
->  
->  static void configuration_post_save(void *opaque)
-> @@ -330,7 +331,7 @@ static void configuration_post_save(void *opaque)
->      state->caps_count = 0;
->  }
->  
-> -static int configuration_pre_load(void *opaque)
-> +static bool configuration_pre_load(void *opaque, Error **errp)
->  {
->      SaveState *state = opaque;
->  
-> @@ -339,7 +340,7 @@ static int configuration_pre_load(void *opaque)
->       * minimum possible value for this CPU.
->       */
->      state->target_page_bits = migration_legacy_page_bits();
-> -    return 0;
-> +    return true;
->  }
->  
->  static bool configuration_validate_capabilities(SaveState *state)
-> @@ -376,28 +377,31 @@ static bool configuration_validate_capabilities(SaveState *state)
->      return ret;
->  }
->  
-> -static int configuration_post_load(void *opaque, int version_id)
-> +static bool configuration_post_load(void *opaque, int version_id, Error **errp)
->  {
->      SaveState *state = opaque;
->      const char *current_name = MACHINE_GET_CLASS(current_machine)->name;
-> -    int ret = 0;
-> +    bool ok = true;
->  
->      if (strncmp(state->name, current_name, state->len) != 0) {
-> -        error_report("Machine type received is '%.*s' and local is '%s'",
-> -                     (int) state->len, state->name, current_name);
-> -        ret = -EINVAL;
-> +        error_setg(errp,
-> +                   "Machine type received is '%.*s' and local is '%s'",
-> +                   (int) state->len, state->name, current_name);
-> +        ok = false;
->          goto out;
->      }
->  
->      if (state->target_page_bits != qemu_target_page_bits()) {
-> -        error_report("Received TARGET_PAGE_BITS is %d but local is %d",
-> -                     state->target_page_bits, qemu_target_page_bits());
-> -        ret = -EINVAL;
-> +        error_setg(errp,
-> +                   "Received TARGET_PAGE_BITS is %d but local is %d",
-> +                   state->target_page_bits, qemu_target_page_bits());
-> +        ok = false;
->          goto out;
->      }
->  
->      if (!configuration_validate_capabilities(state)) {
-> -        ret = -EINVAL;
-> +        error_setg(errp, "Failed to validate capabilities");
-> +        ok = false;
->          goto out;
->      }
->  
-> @@ -409,11 +413,12 @@ out:
->      state->capabilities = NULL;
->      state->caps_count = 0;
->  
-> -    return ret;
-> +    return ok;
->  }
->  
-> -static int get_capability(QEMUFile *f, void *pv, size_t size,
-> -                          const VMStateField *field)
-> +static bool load_capability(QEMUFile *f, void *pv, size_t size,
-> +                            const VMStateField *field,
-> +                            Error **errp)
->  {
->      MigrationCapability *capability = pv;
->      char capability_str[UINT8_MAX + 1];
-> @@ -426,15 +431,16 @@ static int get_capability(QEMUFile *f, void *pv, size_t size,
->      for (i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
->          if (!strcmp(MigrationCapability_str(i), capability_str)) {
->              *capability = i;
-> -            return 0;
-> +            return true;
->          }
->      }
-> -    error_report("Received unknown capability %s", capability_str);
-> -    return -EINVAL;
-> +    error_setg(errp, "Received unknown capability %s", capability_str);
-> +    return false;
->  }
->  
-> -static int put_capability(QEMUFile *f, void *pv, size_t size,
-> -                          const VMStateField *field, JSONWriter *vmdesc)
-> +static bool save_capability(QEMUFile *f, void *pv, size_t size,
-> +                            const VMStateField *field, JSONWriter *vmdesc,
-> +                            Error **errp)
->  {
->      MigrationCapability *capability = pv;
->      const char *capability_str = MigrationCapability_str(*capability);
-> @@ -443,13 +449,13 @@ static int put_capability(QEMUFile *f, void *pv, size_t size,
->  
->      qemu_put_byte(f, len);
->      qemu_put_buffer(f, (uint8_t *)capability_str, len);
-> -    return 0;
-> +    return true;
->  }
->  
->  static const VMStateInfo vmstate_info_capability = {
->      .name = "capability",
-> -    .get  = get_capability,
-> -    .put  = put_capability,
-> +    .load = load_capability,
-> +    .save = save_capability,
->  };
->  
->  /* The target-page-bits subsection is present only if the
-> @@ -539,9 +545,9 @@ static const VMStateDescription vmstate_uuid = {
->  static const VMStateDescription vmstate_configuration = {
->      .name = "configuration",
->      .version_id = 1,
-> -    .pre_load = configuration_pre_load,
-> -    .post_load = configuration_post_load,
-> -    .pre_save = configuration_pre_save,
-> +    .pre_load_errp = configuration_pre_load,
-> +    .post_load_errp = configuration_post_load,
-> +    .pre_save_errp = configuration_pre_save,
->      .post_save = configuration_post_save,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINT32(len, SaveState),
-> @@ -969,8 +975,13 @@ static int vmstate_load(QEMUFile *f, SaveStateEntry *se, Error **errp)
->          }
->          return ret;
->      }
-> -    return vmstate_load_state(f, se->vmsd, se->opaque, se->load_version_id,
-> -                              errp);
-> +
-> +    if (!vmstate_load_vmsd(f, se->vmsd, se->opaque, se->load_version_id,
-> +                           errp)) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    return 0;
->  }
->  
->  static void vmstate_save_old_style(QEMUFile *f, SaveStateEntry *se,
-> @@ -1028,8 +1039,6 @@ static void save_section_footer(QEMUFile *f, SaveStateEntry *se)
->  static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
->                          Error **errp)
->  {
-> -    int ret;
-> -
->      if ((!se->ops || !se->ops->save_state) && !se->vmsd) {
->          return 0;
->      }
-> @@ -1049,12 +1058,8 @@ static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
->      trace_vmstate_save(se->idstr, se->vmsd ? se->vmsd->name : "(old)");
->      if (!se->vmsd) {
->          vmstate_save_old_style(f, se, vmdesc);
-> -    } else {
-> -        ret = vmstate_save_state(f, se->vmsd, se->opaque, vmdesc,
-> -                                 errp);
-> -        if (ret) {
-> -            return ret;
-> -        }
-> +    } else if (!vmstate_save_vmsd(f, se->vmsd, se->opaque, vmdesc, errp)) {
-> +        return -EINVAL;
->      }
-
-I understand you may prefer merging them whenever possible, but for things
-like this personally I normally keep "else" and "if" separate:
-
-      if (!se->vmsd) {
-          vmstate_save_old_style(f, se, vmdesc);
-      } else {
-          if (!vmstate_save_vmsd(f, se->vmsd, se->opaque, vmdesc, errp)) {
-              return -EINVAL;
-          }
-      }
-
-"if" / "else if" can hid problems when we grow the condition in the future
-(I recall we hit one when reviewing the other series adding the _errp()
-variances).  That doesn't apply here but split "if" and "else" also helps
-slightly on readabilty for me, so it says: there's no priority of doing
-old_style or vmsd_style, it's just that we support both with/without vmsd
-pointer, and it shows clearly what we do on which path.
-
-I would expect the compiler will always generate the same byte code, but I
-didn't check.
-
-No strong feelings.
-
->  
->      trace_savevm_section_end(se->idstr, se->section_id, 0);
-> @@ -1317,8 +1322,8 @@ static void qemu_savevm_send_configuration(MigrationState *s, QEMUFile *f)
->          json_writer_start_object(vmdesc, "configuration");
->      }
->  
-> -    vmstate_save_state(f, &vmstate_configuration, &savevm_state,
-> -                       vmdesc, &local_err);
-> +    vmstate_save_vmsd(f, &vmstate_configuration, &savevm_state,
-> +                      vmdesc, &local_err);
->      if (local_err) {
->          error_report_err(local_err);
->      }
-> @@ -2748,7 +2753,6 @@ qemu_loadvm_section_part_end(QEMUFile *f, uint8_t type, Error **errp)
->  static int qemu_loadvm_state_header(QEMUFile *f, Error **errp)
->  {
->      unsigned int v;
-> -    int ret;
->  
->      v = qemu_get_be32(f);
->      if (v != QEMU_VM_FILE_MAGIC) {
-> @@ -2779,10 +2783,9 @@ static int qemu_loadvm_state_header(QEMUFile *f, Error **errp)
->              return -EINVAL;
->          }
->  
-> -        ret = vmstate_load_state(f, &vmstate_configuration, &savevm_state, 0,
-> -                                 errp);
-> -        if (ret) {
-> -            return ret;
-> +        if (!vmstate_load_vmsd(f, &vmstate_configuration, &savevm_state, 0,
-> +                               errp)) {
-> +            return -EINVAL;
->          }
->      }
->      return 0;
-> -- 
-> 2.52.0
+> CC-ing qemu-stable since this affects the 10.2 branch. The fixes are
+> already applied to master as
 > 
+> 2ae361ef1d aio-posix: notify main loop when SQEs are queued
+> 961fcc0f22 fdmon-io_uring: check CQ ring directly in gsource_check
+
+Yes please, would be nice for them to hit the stable release(s) as
+well. Thanks Fiona!
 
 -- 
-Peter Xu
+Jens Axboe
 
 
