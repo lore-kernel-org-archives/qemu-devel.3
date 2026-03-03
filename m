@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AEDCEDA688
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7127FEDA68A
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRWh-0006eu-BI; Tue, 03 Mar 2026 10:19:12 -0500
+	id 1vxRWk-0006x2-2U; Tue, 03 Mar 2026 10:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxRUi-00053v-Px
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:13 -0500
+ id 1vxRVh-0006AJ-QH
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:18:12 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vxRUg-0005AX-LN
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:17:08 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1772551006; cv=none; 
+ id 1vxRVW-0005Km-BE
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:18:03 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772551054; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=cXFfxJmW+3aBkdzEevxxTH3/uWHl5j07FwNBF8S1qIziiDVrwAmCcgPQJn5kDFbhH08S1RtpepYOL3WLNiZbWlCaX07cEm1KaMkoasrlYN4bQgaZozZzv1NwwEKZbA2qfMuKAhql5byW0LdKEgeZszoMni0rlNtAITC+qo/+OZg=
+ b=ep6UilcbbyP4WIF1uXQMIPjIvoeVh/xBFw5Z8pD/p5Llz2uOouZqVVX3pMFne+Rz8+iqd3k/+yIeI7RpmHnlq1CU8qzJZ1unoDpsOYleiPkkdb3F/0WKPw5mIzhAplQlt8Us4E93SpKB5IL/fDggrKt2uFFhISbv2DQX7DTRVwM=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1772551006;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=fwSeuR5L44GPx9CS3ERS2L6IX6uOkkwxJDiywMaHm8g=; 
- b=TYpQNjouBhGMSMQbR1UHnPjijMAypWrOMpcqwW4r0Dc4knaPgBDmJX9J7E9/dCyVTU5gK4XqH3cTWqDosg6HYt878IVtUBB5hWcddic7FwX1aIueoFQQtm/1ZyXAHFvb4eeDFG0zE/aMUzSdQvnCH2S96xWv89pAI34LA0WEPm0=
+ s=zohoarc; t=1772551054;
+ h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=FmmJi/pJ4NPaZN3Q4ggbTie0oIIOgl9sNT4Pzu/4sB0=; 
+ b=Hy7BkHuHBtUpwNHiZfzM6Y2H7iuQceYd674pQiyrhN21xFOmBRyJA/oHfu5hFjvvPwnuCfDKMRzGmSz6+eUJ7qX4SbsheudU3yZ/p3NuJYQTZsL/Msm7t2CZdym2kjiwTk5kn4OiwwZNcdu0qdji7N0v5JFCtr/C2J6pwdH9QHU=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772551006; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772551054; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=fwSeuR5L44GPx9CS3ERS2L6IX6uOkkwxJDiywMaHm8g=;
- b=bgtgIFeDCxak11cAsuvQvfJpCLiZttRSuKFrc+D9f5ReO7Ftv60O356MhDVY35BF
- X9JuOnRONUzgAsUJ8/Wo+Yf6uLTanbLNmak+bb3X3asvRlIu0V2io1Fnl6dEIQjrbE1
- xfBhXrV9gl+P+02ALBx/LMt41hsfk9u09nxejwzg=
-Received: by mx.zohomail.com with SMTPS id 1772551004605586.5737808054918;
- Tue, 3 Mar 2026 07:16:44 -0800 (PST)
+ h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=FmmJi/pJ4NPaZN3Q4ggbTie0oIIOgl9sNT4Pzu/4sB0=;
+ b=ULW6Fg/C3jl4mlI+sjZz45hBjkYdiD037rkY6h0RjPhwJ04uEnj1NU84cnXv7MFb
+ OXAQoiE02wyp4Ea8xFnn6Qts19P3YQMfQWfmYOLy6zjTJcQDeDVezx9dsRVPW3Oq0D8
+ HMb28TKJvYyrPTwCuDu2EQcSYukUO+BUxkqNrTas=
+Received: by mx.zohomail.com with SMTPS id 1772551051522783.400653945956;
+ Tue, 3 Mar 2026 07:17:31 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,14 +62,14 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [PATCH v22 10/18] virtio-gpu: Support DRM native context
-Date: Tue,  3 Mar 2026 18:14:13 +0300
-Message-ID: <20260303151422.977399-11-dmitry.osipenko@collabora.com>
+Subject: [PATCH v22 17/18] virtio-gpu: Destroy virgl resources on virtio-gpu
+ reset
+Date: Tue,  3 Mar 2026 18:14:20 +0300
+Message-ID: <20260303151422.977399-18-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
 References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 Received-SPF: pass client-ip=136.143.188.112;
@@ -97,155 +97,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for DRM native contexts to VirtIO-GPU. DRM context is enabled
-using a new virtio-gpu-gl device option "drm_native_context=on".
+Properly destroy virgl resources on virtio-gpu reset to not leak resources
+on a hot reboot of a VM.
 
-Unlike Virgl and Venus contexts that operate on application API level,
-DRM native contexts work on a kernel UAPI level. This lower level results
-in a lightweight context implementations that yield better performance.
-
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
-Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 11 +++++++++
- hw/display/virtio-gpu-gl.c                |  2 ++
- hw/display/virtio-gpu-virgl.c             | 28 +++++++++++++++++++++++
- hw/display/virtio-gpu.c                   | 15 ++++++++++++
- include/hw/virtio/virtio-gpu.h            |  3 +++
- 5 files changed, 59 insertions(+)
+ hw/display/virtio-gpu-gl.c     |  18 +----
+ hw/display/virtio-gpu-virgl.c  | 123 +++++++++++++++++++++++++++------
+ include/hw/virtio/virtio-gpu.h |   6 +-
+ 3 files changed, 107 insertions(+), 40 deletions(-)
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 0f4bb304a9b8..086e2fcf27b9 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -84,6 +84,17 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- 
- .. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
- 
-+DRM native context is supported since release of `virglrenderer`_ v1.0.0
-+using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
-+host blob support (``hostmem`` and ``blob`` fields) and should be enabled
-+using ``drm_native_context`` field.  The ``hostmem`` field specifies the size
-+of virtio-gpu host memory window. This is typically between 256M and 8G.
-+
-+.. parsed-literal::
-+    -device virtio-gpu-gl,hostmem=8G,blob=on,drm_native_context=on
-+
-+.. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
-+
- virtio-gpu rutabaga
- -------------------
- 
 diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 3e0680880e14..b941e9a4b789 100644
+index b941e9a4b789..8b71dd6fc26f 100644
 --- a/hw/display/virtio-gpu-gl.c
 +++ b/hw/display/virtio-gpu-gl.c
-@@ -159,6 +159,8 @@ static const Property virtio_gpu_gl_properties[] = {
-                     VIRTIO_GPU_FLAG_STATS_ENABLED, false),
-     DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
-                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
-+    DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.flags,
-+                    VIRTIO_GPU_FLAG_DRM_ENABLED, false),
- };
+@@ -63,29 +63,14 @@ static void virtio_gpu_gl_flushed(VirtIOGPUBase *b)
+ static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+ {
+     VirtIOGPU *g = VIRTIO_GPU(vdev);
+-    VirtIOGPUGL *gl = VIRTIO_GPU_GL(vdev);
+     struct virtio_gpu_ctrl_command *cmd;
  
- static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+     if (!virtio_queue_ready(vq)) {
+         return;
+     }
+ 
+-    switch (gl->renderer_state) {
+-    case RS_RESET:
+-        virtio_gpu_virgl_reset(g);
+-        /* fallthrough */
+-    case RS_START:
+-        if (virtio_gpu_virgl_init(g)) {
+-            gl->renderer_state = RS_INIT_FAILED;
+-            return;
+-        }
+-
+-        gl->renderer_state = RS_INITED;
+-        break;
+-    case RS_INIT_FAILED:
++    if (!virtio_gpu_virgl_update_render_state(g)) {
+         return;
+-    case RS_INITED:
+-        break;
+     }
+ 
+     cmd = virtqueue_pop(vq, sizeof(struct virtio_gpu_ctrl_command));
+@@ -201,6 +186,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+     vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+ 
++    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+     vdc->realize = virtio_gpu_gl_device_realize;
+     vdc->unrealize = virtio_gpu_gl_device_unrealize;
+     vdc->reset = virtio_gpu_gl_reset;
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index ae1880c358b2..f5fe1bf4e73c 100644
+index d1b5162f4408..1819f9cb7e9d 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -1323,6 +1323,25 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-         flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
-     }
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+        flags |= VIRGL_RENDERER_DRM;
-+
-+        if (!(flags & VIRGL_RENDERER_ASYNC_FENCE_CB)) {
-+            /*
-+             * Virglrenderer skips enabling DRM context support without
-+             * enabled async-fence feature. VirtIO-GPU will initialize
-+             * successfully, but DRM context won't be available in guest.
-+             *
-+             * For vrend async-fencing can be enabled only if EGL display
-+             * is used. Vrend can't be disabled in QEMU, hence DRM implicitly
-+             * requires EGL too.
-+             *
-+             * Async-fence was bugged in virglrenderer versions <= 1.1.1.
-+             */
-+            error_report("drm requires egl display and virglrenderer >= 1.2.0");
-+            return -EINVAL;
-+        }
-+    }
- #endif
+@@ -96,6 +96,10 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+ {
+     VirtIOGPU *g = opaque;
  
-     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
-@@ -1386,5 +1405,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
-         }
-     }
- 
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
-+                                   &capset_max_ver,
-+                                   &capset_max_size);
-+        if (capset_max_size) {
-+            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DRM);
-+        }
-+    }
-+
-     return capset_ids;
- }
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 38c922e4eba3..91e3b30fecde 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1517,6 +1517,21 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
- #endif
-     }
- 
-+    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
-+#ifdef VIRGL_VERSION_MAJOR
-+    #if VIRGL_VERSION_MAJOR >= 1
-+        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
-+            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
-+            error_setg(errp, "drm requires enabled blob and hostmem options");
-+            return;
-+        }
-+    #else
-+        error_setg(errp, "old virglrenderer, drm unsupported");
++    if (!virtio_gpu_virgl_update_render_state(g)) {
 +        return;
-+    #endif
-+#endif
 +    }
 +
-     if (!virtio_gpu_base_device_realize(qdev,
-                                         virtio_gpu_handle_ctrl_cb,
-                                         virtio_gpu_handle_cursor_cb,
+     virtio_gpu_process_cmdq(g);
+ }
+ 
+@@ -344,14 +348,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+     virgl_renderer_resource_create(&args, NULL, 0);
+ }
+ 
++static int
++virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
++                                struct virtio_gpu_virgl_resource *res,
++                                bool *suspended)
++{
++    struct iovec *res_iovs = NULL;
++    int num_iovs = 0;
++#if VIRGL_VERSION_MAJOR >= 1
++    int ret;
++
++    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, suspended);
++    if (ret) {
++        return ret;
++    }
++    if (*suspended) {
++        return 0;
++    }
++#endif
++
++    virgl_renderer_resource_detach_iov(res->base.resource_id,
++                                       &res_iovs,
++                                       &num_iovs);
++    if (res_iovs != NULL && num_iovs != 0) {
++        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
++    }
++    virgl_renderer_resource_unref(res->base.resource_id);
++
++    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++
++    g_free(res);
++
++    return 0;
++}
++
+ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+                                      struct virtio_gpu_ctrl_command *cmd,
+                                      bool *cmd_suspended)
+ {
+     struct virtio_gpu_resource_unref unref;
+     struct virtio_gpu_virgl_resource *res;
+-    struct iovec *res_iovs = NULL;
+-    int num_iovs = 0;
+ 
+     VIRTIO_GPU_FILL_CMD(unref);
+     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+@@ -364,27 +400,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+         return;
+     }
+ 
+-#if VIRGL_VERSION_MAJOR >= 1
+-    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+-        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+-        return;
+-    }
+-    if (*cmd_suspended) {
+-        return;
+-    }
+-#endif
++    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
++}
+ 
+-    virgl_renderer_resource_detach_iov(unref.resource_id,
+-                                       &res_iovs,
+-                                       &num_iovs);
+-    if (res_iovs != NULL && num_iovs != 0) {
+-        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+-    }
+-    virgl_renderer_resource_unref(unref.resource_id);
++void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
++                                       struct virtio_gpu_simple_resource *base,
++                                       Error **errp)
++{
++    struct virtio_gpu_virgl_resource *res;
++    bool suspended = false;
+ 
+-    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+ 
+-    g_free(res);
++    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
++        error_setg(errp, "failed to destroy virgl resource");
++    }
+ }
+ 
+ static void virgl_cmd_context_create(VirtIOGPU *g,
+@@ -1291,6 +1321,10 @@ static void virtio_gpu_fence_poll(void *opaque)
+     VirtIOGPU *g = opaque;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
++    if (!virtio_gpu_virgl_update_render_state(g)) {
++        return;
++    }
++
+     virgl_renderer_poll();
+     virtio_gpu_process_cmdq(g);
+     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+@@ -1313,14 +1347,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+     }
+ }
+ 
+-void virtio_gpu_virgl_reset(VirtIOGPU *g)
++static bool virtio_gpu_virgl_reset(VirtIOGPU *g)
+ {
++    struct virtio_gpu_simple_resource *res, *tmp;
++
++    /*
++     * Virgl blob resource unmapping can be suspended and
++     * deferred on unref, ensure that destruction is completed.
++     */
++    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
++        virtio_gpu_virgl_resource_destroy(g, res, NULL);
++    }
++
++    if (!QTAILQ_EMPTY(&g->reslist)) {
++        return false;
++    }
++
+     virgl_renderer_reset();
+ 
+     virtio_gpu_virgl_reset_async_fences(g);
++
++    return true;
+ }
+ 
+-int virtio_gpu_virgl_init(VirtIOGPU *g)
++static int virtio_gpu_virgl_init(VirtIOGPU *g)
+ {
+     int ret;
+     uint32_t flags = 0;
+@@ -1398,6 +1448,35 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     return 0;
+ }
+ 
++bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g)
++{
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
++
++    switch (gl->renderer_state) {
++    case RS_RESET:
++        virgl_renderer_force_ctx_0();
++
++        if (!virtio_gpu_virgl_reset(g)) {
++            return false;
++        }
++        /* fallthrough */
++    case RS_START:
++        if (virtio_gpu_virgl_init(g)) {
++            gl->renderer_state = RS_INIT_FAILED;
++            return false;
++        }
++
++        gl->renderer_state = RS_INITED;
++        break;
++    case RS_INIT_FAILED:
++        return false;
++    case RS_INITED:
++        break;
++    }
++
++    return true;
++}
++
+ static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
+ {
+     g_array_append_val(capset_ids, capset_id);
 diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 16e9f6914f07..718332284305 100644
+index 718332284305..1f509d0d5beb 100644
 --- a/include/hw/virtio/virtio-gpu.h
 +++ b/include/hw/virtio/virtio-gpu.h
-@@ -100,6 +100,7 @@ enum virtio_gpu_base_conf_flags {
-     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
-     VIRTIO_GPU_FLAG_VENUS_ENABLED,
-     VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
-+    VIRTIO_GPU_FLAG_DRM_ENABLED,
- };
+@@ -389,9 +389,11 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                   struct virtio_gpu_ctrl_command *cmd);
+ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+-void virtio_gpu_virgl_reset(VirtIOGPU *g);
+-int virtio_gpu_virgl_init(VirtIOGPU *g);
+ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
++void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
++                                       struct virtio_gpu_simple_resource *res,
++                                       Error **errp);
++bool virtio_gpu_virgl_update_render_state(VirtIOGPU *g);
  
- #define virtio_gpu_virgl_enabled(_cfg) \
-@@ -122,6 +123,8 @@ enum virtio_gpu_base_conf_flags {
-     (_cfg.hostmem > 0)
- #define virtio_gpu_venus_enabled(_cfg) \
-     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
-+#define virtio_gpu_drm_enabled(_cfg) \
-+    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
- 
- struct virtio_gpu_base_conf {
-     uint32_t max_outputs;
+ #endif
 -- 
 2.52.0
 
