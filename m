@@ -4,97 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4931EDEBF9
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A839FEDEBF9
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxXul-000139-QK; Tue, 03 Mar 2026 17:08:27 -0500
+	id 1vxXv2-0001Bk-4F; Tue, 03 Mar 2026 17:08:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxXui-00011n-U8
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:08:24 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxXuh-0007LA-6P
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:08:24 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-65f73225f45so9774427a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:08:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772575701; x=1773180501; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f6MMx0UmlhaY7ySCegy0MCQFJM5jOSB2EJMaj6GH8pc=;
- b=Y8dv7/4FBveNQVPeHqNkd8hF9b7/hmuu0zzDFB+Yi2kvyN4f0eg63zZnsSCY26r03K
- 7c7MkYKRCsYvrsp/9sc0E2lkdG3ncvtIrFFbqikHezjvqnkBOK7cRC43RZfEhCIK2AsL
- ekVZBzNOGP53rAlNVlhkupDoa7IaCRpnSfvQtEY/CkgsIyG2WPaiLUS7Bi2yk8W8YmEs
- K2C1C4S4QdNPzWCUkTJUPWw5WbqICj6x9vkTOfu8LcOsVMfo0gnpxtfZSFjZKQsNeQgy
- wYuGplL1naqlGEaOFGbV9qTe+Zkhl+ffHN7lAPbzODQRXImhXiK3RnUI4C69uLZQBwrn
- f5yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772575701; x=1773180501;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f6MMx0UmlhaY7ySCegy0MCQFJM5jOSB2EJMaj6GH8pc=;
- b=EsVXDC4DLyNUIRoIxiUc7lIGJtmCIAq028+NcGx+DGC8a9KzFy8vJQpaJejfTAof23
- LfWUNpYprn+hbBxIZncQ5jUbaWEN63PZHAc1d98PPx8a3nuakY6Bl0DG4kM6TORjqUWy
- LTYwq+kJa3oS2vqUULdhiFoFZjAG2nNNcNo/cmiLNc07dIhF66u1Fe9kwmJxYSpplSAb
- AoURrP6rIkO8Z2r9sf7fbOH7sM0ouU3bMxsuea8z0ap3NR/Sop7t/teiZBW40hKQQxps
- Sy9uCNJXUxuUa4Y1pWzx2i/iXgP6zKh963XGrNgf7hTRRwjh79dfzb/j+QjFr8Kn7LXv
- vLMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWL4Pql+QpJXy6kEC1WD1pj+3N6Tx3E9/fWcvLxxLZpEGvraqUwie623hvJdrJO4JA4cFHwiMpAzbm8@nongnu.org
-X-Gm-Message-State: AOJu0YwRU59PnH2ijX387Cm2jk0yw04F3/N9eIJnIwJWva7CKOHrBPCY
- Cvt8O60J+OtcDwrJskZ6bJMWIQIUpdZVgt+ymHaE6cUclv+HpVC//hfdp5PIqiSZLzQ=
-X-Gm-Gg: ATEYQzyawGThL/7BAOz8yL7lPggceYt9kxlBOkVimj+1KuR3PNZJL6TDEER2KZFv2di
- fNcRjpkmeCveJId1qBhk2mBOmJEAVkJt4YqeobAqikz0t3kxvpad8NhXAPoapiWsb0llFTefOrP
- MwOFYSpDj8huNJ0DQqHyUQ+tprxDb5hqGThnPw8+jVAzlQNHiUxnQz+xaagRYsTxVUNqdAx9bpb
- /iWmRqGE/FCDddeo84AwCPkOrhi7qNBHb+8PmMyn0pJ+jlM5Fqg3IoJ9f7+7DRpanAt3aYF+q4S
- 4L6tcpDpmC6P+Pa27CwSyo5CxuGDgvNaf5mceS8a7VqDgG78vRLgwmlxvLkeHbsTHgc57fATuLr
- 3ozsz1JkUmr0pBTUfGHJ6bj0F47rMIBTNbhFEX+xwoN4YrqSn3II5FO68wQhSE+GEPjJKt1FTYk
- K/ifzju2CHOhHvGEqwiyLnQ3U=
-X-Received: by 2002:a05:6402:27cc:b0:65c:420:d3b with SMTP id
- 4fb4d7f45d1cf-65fddced83dmr9643716a12.22.1772575700983; 
- Tue, 03 Mar 2026 14:08:20 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65fabf6d26dsm5068114a12.16.2026.03.03.14.08.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 14:08:19 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9F7625F7BE;
- Tue, 03 Mar 2026 22:08:17 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: "Kim, Dongwon" <dongwon.kim@intel.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] virtio-gpu: Fix scanout dmabuf cleanup during resource
- destruction
-In-Reply-To: <PH0PR11MB511250B98C5CE00CE879BB3FFA7FA@PH0PR11MB5112.namprd11.prod.outlook.com>
- (Dongwon Kim's message of "Tue, 3 Mar 2026 18:51:45 +0000")
-References: <20260303010047.1925589-1-dongwon.kim@intel.com>
- <CAJ+F1CKCQiBnOncaecpgG2FXj3R2tjxYOe8z7r8rGqCBAo97=g@mail.gmail.com>
- <PH0PR11MB511250B98C5CE00CE879BB3FFA7FA@PH0PR11MB5112.namprd11.prod.outlook.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Tue, 03 Mar 2026 22:08:17 +0000
-Message-ID: <87fr6gr2ge.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <francesco@valla.it>)
+ id 1vxWyx-00036P-SL
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 16:08:45 -0500
+Received: from delivery.antispam.mailspamprotection.com ([185.56.87.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <francesco@valla.it>)
+ id 1vxWyu-0001Kl-TV
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 16:08:43 -0500
+ARC-Seal: i=1; cv=none; a=rsa-sha256;
+ d=outgoing.instance-europe-west4-nc2c.prod.antispam.mailspamprotection.com;
+ s=arckey; t=1772572113; 
+ b=VX3LoTOPSOSRhgqNEuktlrzrvvUumF8iSAdD7ijk8UFiRi3uyJFWzptxTvSS0yQcnm1Lz6v/12
+ TyASbXZpNTLDMT0gfzM7Sij+TIktKGwepRCJaXOR/GRs0Lx/kB3IQMf6FuHRTFB7aZ9U6ZhQ+q
+ 2AmmXtAXpSr3bhBES4iKoc6ozmZ/1xBp+EPDh3yRg2cFcWxgHbI6bBLiI4h4fTMjb5YGkiv1K+
+ iI5OITpw4R6M9ovrTtb/7nXheOD2tahwWUtepTa5a738XjyroOq3Jt60jmQc+2PF7tICKuAwV1
+ y4OAUfjlbtUVx5U1Dy/RUbHdsWpH2fZM7oxL9KUD2A6hAw==;
+ARC-Authentication-Results: i=1;
+ outgoing.instance-europe-west4-nc2c.prod.antispam.mailspamprotection.com;
+ smtp.remote-ip=35.214.173.214; 
+ iprev=pass (214.173.214.35.bc.googleusercontent.com)
+ smtp.remote-ip=35.214.173.214; 
+ auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
+ dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
+ arc=none
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed;
+ d=outgoing.instance-europe-west4-nc2c.prod.antispam.mailspamprotection.com;
+ s=arckey; t=1772572113; 
+ bh=mHA1eNADjqCgGL1SqP8PCdGg4kVQw5jq9z2KBeNPtT0=;
+ h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:Cc:To:Subject:
+ From:MIME-Version:Date:Message-ID:DKIM-Signature:DKIM-Signature;
+ b=FsJEVJ0M11mMxvPFYi3youcoJwG5x/7k9ST7HGUdRWBmrAujeqmePLtdLKPfDEQLQn3fLQmnEL
+ pZVA8HtWrd7DAefKzsJsc/se1wDv/U16tJBY9R8hatBS6nVb5Z1LNzhBLNeWz4kmJy7ry0XC82
+ 8Rs0q0WchOxFC4k7t5R7ul+U6pcQvsoLRVp+PoDStzTTPydLlh4RZN6letFYAztzTfSl6vITYe
+ p7wAUL/t8NcJ+MBZM8SAEXgqWNE6f4oCGw5lU4AublIjM5o+oyTygZj4W1RtXljMCsvoJCcYyg
+ nBYve48UbQNsu1eOA4JNY8flcfRQJGz3kL83TGMlYUoesg==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=antispam.mailspamprotection.com; s=default; h=CFBL-Feedback-ID:CFBL-Address
+ :Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:MIME-Version:Date:
+ Message-ID:Reply-To:List-Unsubscribe;
+ bh=zGSOJOywtKePoj/LQyHFoAJ7E8nXEEGwE2gJCgYSpWk=; b=2hNBGaYdxVxgMuJ5FfTlwmpvmA
+ Ejit9eeKfWsFLIOgPJsdUITHPlzPtxUs7lkfOCezB5A/D0PJNN/hmTJ7+gTYQRzXYah0k9/HPpeSj
+ m9lqxPaiE7YGlwgHOGomYM1cxRaPrz23hZ1PsxsCU2f7dg1ixfOC87kW1R3Avam68DQI=;
+Received: from 214.173.214.35.bc.googleusercontent.com ([35.214.173.214]
+ helo=esm19.siteground.biz)
+ by instance-europe-west4-nc2c.prod.antispam.mailspamprotection.com with
+ esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384 (Exim 4.98.1)
+ (envelope-from <francesco@valla.it>) id 1vxWyi-00000001cV3-2pv2
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 21:08:31 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=valla.it;
+ s=default; h=Cc:To:Subject:From:Date:list-help:list-unsubscribe:
+ list-subscribe:list-post:list-owner:list-archive;
+ bh=zGSOJOywtKePoj/LQyHFoAJ7E8nXEEGwE2gJCgYSpWk=; b=g7RKJXLtkUDob/NZJhyumIgZJ/
+ MsfKZCjhHewlB8zZOA6DW7DC6Y9PqrNXNaeUGochMxVX7ahAPoF6M+kVNdVnd21wpFLkZTuBJ691G
+ z4kyk6QbRBtFm677DO3e/cx3dVBy+ocT7qvzrC2TQH4p2mMOX4jUhA+qXxYY8UEVA+PE=;
+Received: from [82.57.88.19] (port=62022 helo=[192.168.178.65])
+ by esm19.siteground.biz with essmtpa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <francesco@valla.it>)
+ id 1vxWyb-000000001In-0rvj; Tue, 03 Mar 2026 21:08:21 +0000
+Message-ID: <3d5402b2-fb99-47d2-bbb8-48dd6f202cbc@valla.it>
+Date: Tue, 3 Mar 2026 22:08:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+From: Francesco Valla <francesco@valla.it>
+Subject: Re: GSoC 2026 Interest - virtio-rtc vhost-user device - Alberto H.
+To: Alberto Hernandez Cardenas <alberto10pumas@gmail.com>,
+ mvaralar@redhat.com, garzare@redhat.com
+Cc: qemu-devel@nongnu.org, jsnow@redhat.com, alex.bennee@linaro.org
+References: <CAHLkteN0M6RXMsCwEWdaXdf26jDc49caYCQaOSjBqJUGNY0MhA@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAHLkteN0M6RXMsCwEWdaXdf26jDc49caYCQaOSjBqJUGNY0MhA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - esm19.siteground.biz
+X-AntiAbuse: Original Domain - nongnu.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - valla.it
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-SGantispam-id: ffbb5a841c44f3d61be37ed2dd0c09ec
+X-AntiAbuse: ID - ffbb5a841c44f3d61be37ed2dd0c09ec
+AntiSpam-DLS: false
+AntiSpam-DLSP: 
+AntiSpam-DLSRS: 
+AntiSpam-TS: 1.0
+CFBL-Address: feedback@antispam.mailspamprotection.com; report=arf
+CFBL-Feedback-ID: 1vxWyi-00000001cV3-2pv2-feedback@antispam.mailspamprotection.com
+Authentication-Results: outgoing.instance-europe-west4-nc2c.prod.antispam.mailspamprotection.com; 
+ iprev=pass (214.173.214.35.bc.googleusercontent.com)
+ smtp.remote-ip=35.214.173.214; 
+ auth=pass (LOGIN) smtp.auth=esm19.siteground.biz;
+ dkim=pass header.d=valla.it header.s=default header.a=rsa-sha256;
+ arc=none
+Received-SPF: pass client-ip=185.56.87.12; envelope-from=francesco@valla.it;
+ helo=delivery.antispam.mailspamprotection.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 03 Mar 2026 17:08:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,154 +133,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Kim, Dongwon" <dongwon.kim@intel.com> writes:
+Hi Alberto,
 
-> Hi Marc-Andr=C3=A9,
->
->> -----Original Message-----
->> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com>
->> Sent: Tuesday, March 3, 2026 8:28 AM
->> To: Kim, Dongwon <dongwon.kim@intel.com>
->> Cc: qemu-devel@nongnu.org
->> Subject: Re: [PATCH] virtio-gpu: Fix scanout dmabuf cleanup during resou=
-rce
->> destruction
->>=20
->> Hi
->>=20
->> On Tue, Mar 3, 2026 at 2:06=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->> >
->> > From: Dongwon Kim <dongwon.kim@intel.com>
->> >
->> > When a virtio-gpu resource is destroyed, any associated udmabuf must
->> > be properly torn down. Currently, the code may leave dangling
->> > references to dmabuf file descriptors in the scanout primary buffers.
->> >
->> > This patch updates virtio_gpu_fini_udmabuf to:
->> > 1. Iterate through all active scanouts.
->> > 2. Identify dmabufs that match the resource's file descriptor.
->> > 3. Close the dmabuf and invalidate the resource's FD reference to
->> >    prevent use-after-free or double-close scenarios.
->> > 4. Finally, trigger the underlying udmabuf destruction.
->> >
->> > This ensures that the display backend does not attempt to access
->> > memory or FDs that have been released by the guest or the host.
->> >
->> > Cc: Gerd Hoffmann <kraxel@redhat.com>
->> > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->> > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
->>=20
->> Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->>=20
->> > ---
->> >  include/hw/virtio/virtio-gpu.h  |  3 ++-
->> > hw/display/virtio-gpu-udmabuf.c | 25 ++++++++++++++++++-------
->> >  hw/display/virtio-gpu.c         |  2 +-
->> >  3 files changed, 21 insertions(+), 9 deletions(-)
->> >
->> > diff --git a/include/hw/virtio/virtio-gpu.h
->> > b/include/hw/virtio/virtio-gpu.h index 58e0f91fda..65312f869d 100644
->> > --- a/include/hw/virtio/virtio-gpu.h
->> > +++ b/include/hw/virtio/virtio-gpu.h
->> > @@ -357,7 +357,8 @@ bool virtio_gpu_scanout_blob_to_fb(struct
->> > virtio_gpu_framebuffer *fb,
->> >  /* virtio-gpu-udmabuf.c */
->> >  bool virtio_gpu_have_udmabuf(void);
->> >  void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
->> > -void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res);
->> > +void virtio_gpu_fini_udmabuf(VirtIOGPU *g,
->> > +                             struct virtio_gpu_simple_resource *res);
->> >  int virtio_gpu_update_dmabuf(VirtIOGPU *g,
->> >                               uint32_t scanout_id,
->> >                               struct virtio_gpu_simple_resource *res,
->> > diff --git a/hw/display/virtio-gpu-udmabuf.c
->> > b/hw/display/virtio-gpu-udmabuf.c index d804f321aa..bd5b44f5fb 100644
->> > --- a/hw/display/virtio-gpu-udmabuf.c
->> > +++ b/hw/display/virtio-gpu-udmabuf.c
->> > @@ -151,13 +151,6 @@ void virtio_gpu_init_udmabuf(struct
->> virtio_gpu_simple_resource *res)
->> >      res->blob =3D pdata;
->> >  }
->> >
->> > -void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
->> > -{
->> > -    if (res->remapped) {
->> > -        virtio_gpu_destroy_udmabuf(res);
->> > -    }
->> > -}
->> > -
->> >  static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
->> > {
->> >      struct virtio_gpu_scanout *scanout; @@ -169,6 +162,24 @@ static
->> > void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
->> >      g_free(dmabuf);
->> >  }
->> >
->> > +void virtio_gpu_fini_udmabuf(VirtIOGPU *g, struct
->> > +virtio_gpu_simple_resource *res) {
->> > +    int max_outputs =3D g->parent_obj.conf.max_outputs;
->> > +    int i;
->> > +
->> > +    for (i =3D 0; i < max_outputs; i++) {
->> > +        VGPUDMABuf *dmabuf =3D g->dmabuf.primary[i];
->> > +
->> > +        if (dmabuf && (res->dmabuf_fd !=3D -1) &&
->>=20
->> Maybe add qemu_dmabuf_get_numplanes() > 0 ?
->
-> Do you want me to add this condition and resubmit v2 of this patch? I saw
-> this patch has already been in the queue.
+On 3/1/26 00:02, Alberto Hernandez Cardenas wrote:
+> Hi Mentors and QEMU community,
+> My name is Alberto, I am a computer engineering student from Mexico (UPIICSA).
+> I want to participate in GSoC 2026 with QEMU.
 
-If you send v2 I can swap it out.
->
->>=20
->> > +            qemu_dmabuf_get_fds(dmabuf->buf, NULL)[0] =3D=3D res->dma=
-buf_fd) {
->> > +            qemu_dmabuf_close(dmabuf->buf);
->> > +            res->dmabuf_fd =3D -1;
->>=20
->> I am not really happy about that we close the underlying fd here before =
-the
->> next destroy, but I don't have an immediate solution
->
-> Yeah, I just thought this would be the best for now.
->
->>=20
->> > +        }
->> > +    }
->> > +
->> > +    virtio_gpu_destroy_udmabuf(res);
->> > +}
->> > +
->> >  static VGPUDMABuf
->> >  *virtio_gpu_create_dmabuf(VirtIOGPU *g,
->> >                            uint32_t scanout_id, diff --git
->> > a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c index
->> > 643e91ca2a..b2af861f0d 100644
->> > --- a/hw/display/virtio-gpu.c
->> > +++ b/hw/display/virtio-gpu.c
->> > @@ -902,7 +902,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
->> >      res->addrs =3D NULL;
->> >
->> >      if (res->blob) {
->> > -        virtio_gpu_fini_udmabuf(res);
->> > +        virtio_gpu_fini_udmabuf(g, res);
->> >      }
->> >  }
->> >
->> > --
->> > 2.43.0
->> >
->> >
->>=20
->>=20
->> --
->> Marc-Andr=C3=A9 Lureau
->
-> Thanks,
+Thanks for reaching out!
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Judging from the people you wrote to (including me), I assume you are interested
+
+in the virtio-rtc proposal.
+
+> I already installed Fedora 43 and I compiled QEMU from source successfully. I
+> am studying the code right now. I know C and I am learning Rust because I want
+> to help with the new components of the project.
+> I saw this issue on GitLab: *"Writing a large amount of data to the
+> virtio-serial chardev device causes the channel to become
+> blocked"* issue #3251 <https://gitlab.com/qemu-project/qemu/-/issues/3251>.
+> I am very interested in this problem. I want to understand why
+> |vsc->have_data| is causing a blockage. I think this is a good way for me to
+> learn how QEMU works with devices.
+> I have some questions:
+>
+>   * Is someone working on this issue right now?
+>
+Probably not, you can try to reproduce and comment the issue with you findings,
+
+as a starting point.
+
+
+>   * Can I try to solve this as a "test task" for my GSoC proposal?
+>   * Do you have any other small tasks or "Bite Sized" issues for a new student
+>     like me?
+>
+Bite sized issues on QEMU are listed at
+https://gitlab.com/qemu-project/qemu/-/issues?label_name%5B%5D=Bite%20Sized
+
+
+My advice would also be to take a look at the issues for vhost-device
+
+at https://github.com/rust-vmm/vhost-device/issues, as that will probably
+
+be a big part of the activity on virtio-rtc.
+
+
+But don't forget to work on your application, which will be open March 16-31!
+
+
+> I am very happy to learn and contribute to QEMU. Thank you for your time!
+> Best regards,
+> Alberto Hernandez Cardenas. (Nickname: betillo) 
+> GitLab: alberto10pumas@gmail.com
+Regards,
+Francesco
 
