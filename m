@@ -4,71 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC090E67A81
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 07:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D345DE67A85
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 07:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxJwN-00061y-5I; Tue, 03 Mar 2026 02:13:11 -0500
+	id 1vxJzJ-0007oq-L2; Tue, 03 Mar 2026 02:16:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxJwK-00060y-2R
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 02:13:08 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vxJzH-0007kg-Qt
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 02:16:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxJwG-0000yy-UL
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 02:13:07 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6237CFNJ014602
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 3 Mar 2026 16:12:54 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=/4zBjPgniw6pnP4/1STARHWkfyciAGAY5GbVIjeYn14=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772521975; v=1;
- b=sfJzT7O5XqNM01IdFnaqmAvr9qZM2LJOPlhbYGywXRLFJJhPDtCx3BmU5TQlLAzY
- YAvzb69sc7rxl/5+HIxkHgfcV0Qq4a2HHdXpsBRgPH92T7JEryj3XgkcJzSkUxQm
- 5pIDCZvhGQYhst6hb+z4TBwDE63wSPv5G/eXiLndagZNwVJ2rN0opxI8pvmvbVPl
- Ia99w02C8msSKuKZlSDKGuc1AoIHScT90OlsMBn6Xqm2hOT3d4hmQdY+QNWA9mZT
- Tebn/u+3II2p9gApWfFvu3jLkITB5g8D9ioRtJkBc8R8olBzbymk/Kn0nvwiILKp
- K+lvkQw/I/jGHAM0pVDj6g==
-Message-ID: <e0887d59-9b0d-4f94-b00a-a57781d96061@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 3 Mar 2026 16:12:14 +0900
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vxJzF-0001Qr-37
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 02:16:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772522166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gY7akMrUrduOG4Bs1kPpPqfOirAWMhrrpPkghpuD0ag=;
+ b=R6v/PywB7BM3IlBQv23bPMxPPZlsLGi3zl0F38ypC/TBKuK8t+WmWbyuPCfuCxgKGT7Hsg
+ 3J5TbCEpnjd2fx9MB8yPqxSJotQx/OQe6IiwiwloCnIIgdvH81guGDV/m9CYaPtNEYwxIy
+ zlhsgcedaAVYD2GresOWCNnlXKn1RMQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-Wq_giNIHMAS1FiYWkHo-Jw-1; Tue, 03 Mar 2026 02:16:04 -0500
+X-MC-Unique: Wq_giNIHMAS1FiYWkHo-Jw-1
+X-Mimecast-MFC-AGG-ID: Wq_giNIHMAS1FiYWkHo-Jw_1772522164
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-439b4e653d2so1804915f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 23:16:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772522163; x=1773126963; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=gY7akMrUrduOG4Bs1kPpPqfOirAWMhrrpPkghpuD0ag=;
+ b=cHYNztXCfHOUXTAhppJE38IQFgtYJbDtihST0n2wv716mxYkf/A965lQAfw49weFIE
+ j5C75U59zFXN/AES59KG9lIU+sJiuLryM8x5vUsn2RryB2J5T9dlpmAQN3CMyERRJmOh
+ JR/LQPYJZTQx8+0c9Q4b5u/F4eGJ1YNaEvPWXKcQu4UDMxDpvECf6GTIrTpt+UoWhTzi
+ bjainhavQODTwq71vIY6mNWOocIkGxavtMN5x+L+n5JqFrptGTTgBKUw77aPF7KI8hSj
+ vmeArnZ8EhrZnmDfSXXeF7mJgjIbOyq/q7/Y5FbP1+DfpuQ3D5TJXaG6VyrOjpxZeqWz
+ n4uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772522163; x=1773126963;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gY7akMrUrduOG4Bs1kPpPqfOirAWMhrrpPkghpuD0ag=;
+ b=ikrozuN/ardO0cqQ4HDl/ax2FJHty06Gx7klSVOkvaAZ0YxrIfqItf1B2LqJzWTq4y
+ XERkKYWKIyjz/44wLSWDFRKulhFh0mBeAnSa3Ayo9vr+OnDdaf62381pPCyjaiK10KHk
+ QP17xX0E86/HY/MjMbywRAkB5lqcDZPMTYpdqRNrKUySljAPnKDw59oeF+98G4fr48N0
+ SuohaN59VMfHEcKyRaUMTy+yNVEagcp3kKmQmZSTJIupWWzRMWZB7//GwezqSMiGDJrr
+ lvdoapCwCa8fQiatv9yDQ/aABRKKcLGUJq3oyvw/zFAb+n1TzOeHNzjRW7yf3NNrt9/g
+ pVXg==
+X-Gm-Message-State: AOJu0Yxo5ggUHWThWBOITnlEGC/EX10+rFxvt2JoBPgdwWb2zU7C15qJ
+ pMCIh3gnNm/hBUX84lt2TtnVZQl8W4xs8dTHo1UBpt1ebe4vA4JCPVb2CzxHHoHOiUHNoA97LEZ
+ EhcXFm3YTXIK1cWlMdHgUtVqimf4SQFFAsMZYl/nOEDmp4cIERquhH/4Z
+X-Gm-Gg: ATEYQzwx1wvc86nsMdeXMj8iZry/SlwvwQZ1h4beGmf8LgXltlwql8nuEJ4j96TPfPa
+ 6DosI5sjf01bTa9Dq2t3odz8y5iClmUQtkpN55JyKBTEl1UfHzuNkfl7Jq4iAd5yhU8NvvzfLCv
+ pntnIvuzFzJuZGNuIWm0PR4EdYAFJhtG+fbrdLS1TUm9oJU4aGtFVRrWIyjqT7T4N4UDzJXYzq1
+ pSi1eDgs/yMnZb7N88hDdJGWu9gYiliCgmNpXt20w/xBarRdi6nnp6ZbnZJtW8D5BX8lYpMP/7M
+ ibkHuG43SlyWSGdga/DPpHL4rAHH0/2V+E2KOPmXltzWdXB+OAgRVR51fLIbMbBjD81B0vEQchu
+ LPFKz2IBz0VkceForojw2BwZImaIRoxOVpB8JubSTYqNCfQ==
+X-Received: by 2002:a05:6000:288e:b0:430:f5ed:83e3 with SMTP id
+ ffacd0b85a97d-4399ddd8836mr23520822f8f.6.1772522163556; 
+ Mon, 02 Mar 2026 23:16:03 -0800 (PST)
+X-Received: by 2002:a05:6000:288e:b0:430:f5ed:83e3 with SMTP id
+ ffacd0b85a97d-4399ddd8836mr23520772f8f.6.1772522162870; 
+ Mon, 02 Mar 2026 23:16:02 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-79-166.inter.net.il. [80.230.79.166])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b485a0b6sm17126830f8f.39.2026.03.02.23.16.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Mar 2026 23:16:02 -0800 (PST)
+Date: Tue, 3 Mar 2026 02:15:59 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH] vhost-user: document vhost_user_read() message handling
+Message-ID: <20260303021118-mutt-send-email-mst@kernel.org>
+References: <20260303041723.7410-1-mohamedaymanworkspace@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260227221632.827046-1-vivek.kasireddy@intel.com>
- <20260227221632.827046-10-vivek.kasireddy@intel.com>
- <daa04cc8-c2ae-43f7-8e5c-a2e6d44b1f50@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185A75292BD4C70154A98CAF87EA@IA0PR11MB7185.namprd11.prod.outlook.com>
- <90bb995b-30f0-4d0a-b574-773ef47d798b@rsg.ci.i.u-tokyo.ac.jp>
- <CH3PR11MB7177F7B3A2C4C062848D6D29F87FA@CH3PR11MB7177.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CH3PR11MB7177F7B3A2C4C062848D6D29F87FA@CH3PR11MB7177.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260303041723.7410-1-mohamedaymanworkspace@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,234 +115,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/03 16:10, Kasireddy, Vivek wrote:
-> Hi Akihiko,
+On Tue, Mar 03, 2026 at 06:17:23AM +0200, Mohamed Ayman wrote:
+> Add a detailed documentation comment for vhost_user_read() describing
+> its message header validation, payload size checks, and error handling.
 > 
->> Subject: Re: [PATCH v8 09/10] virtio-gpu-dmabuf: Improve error
->> handling with 'Error **' and err enum
->>>> On 2026/02/28 7:13, Vivek Kasireddy wrote:
->>>>> Make the error handling more robust in virtio_gpu_init_udmabuf()
->>>>> by introducing 'Error **' parameter to capture errors and using an
->>>>> enum from VFIO to categorize Guest and Host errors. This allows
->>>>> for better error reporting and handling of errors from
->>>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
->>>>>
->>>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>>>> Cc: Alex Williamson <alex@shazbot.org>
->>>>> Cc: Cédric Le Goater <clg@redhat.com>
->>>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>>>> ---
->>>>>     hw/display/virtio-gpu-dmabuf.c | 61 ++++++++++++++++++++++++-
->> ------
->>>> ---
->>>>>     1 file changed, 43 insertions(+), 18 deletions(-)
->>>>>
->>>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->>>> dmabuf.c
->>>>> index 8d67ef7c2a..b2badfc1bd 100644
->>>>> --- a/hw/display/virtio-gpu-dmabuf.c
->>>>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>>>> @@ -18,6 +18,7 @@
->>>>>     #include "ui/console.h"
->>>>>     #include "hw/virtio/virtio-gpu.h"
->>>>>     #include "hw/virtio/virtio-gpu-pixman.h"
->>>>> +#include "hw/vfio/vfio-device.h"
->>>>>     #include "trace.h"
->>>>>     #include "system/ramblock.h"
->>>>>     #include "system/hostmem.h"
->>>>> @@ -27,16 +28,18 @@
->>>>>     #include "standard-headers/linux/udmabuf.h"
->>>>>     #include "standard-headers/drm/drm_fourcc.h"
->>>>>
->>>>> -static void virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>> +static int virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res,
->>>>> +                                     Error **errp)
->>>>>     {
->>>>>         g_autofree struct udmabuf_create_list *list = NULL;
->>>>>         RAMBlock *rb;
->>>>>         ram_addr_t offset;
->>>>> -    int udmabuf, i;
->>>>> +    int udmabuf, i, fd;
->>>>>
->>>>>         udmabuf = udmabuf_fd();
->>>>>         if (udmabuf < 0) {
->>>>> -        return;
->>>>> +        error_setg(errp, "udmabuf device not available or enabled");
->>>>> +        return VFIO_DMABUF_CREATE_HOST_ERROR;
->>>>
->>>> I failed to point out one thing for naming of the enum. The name
->> should
->>>> express if the error is caused by invalid iov or something else. Then
->>>> virtio-gpu decides how to recover the error; it's virtio-gpu who knows
->>>> the iov is from the guest and decides to report a guest error, not
->> vfio.
->>>> Otherwise, it reports a host error.
->>> So, it sounds like you are suggesting that there needs to be three
->> enum
->>> values:
->>> enum {
->>>       /* Guest is responsible for this error */
->>>       VFIO_DMABUF_CREATE_GUEST_ERROR = -1,
->>>       /* Guest is at fault as the IOVEC passed in is invalid */
->>>       VFIO_DMABUF_CREATE_INVALID_IOV_ERROR = -2,
->>>       /* Host is at fault for this error */
->>>       VFIO_DMABUF_CREATE_HOST_ERROR = -3,
->>> }
->>
->> vfio doesn't know if the guest or the host is responsible, so it cannot
->> make use of VFIO_DMABUF_CREATE_GUEST_ERROR and
->> VFIO_DMABUF_CREATE_HOST_ERROR.
->>
->>>
->>> Or, please let me know in detail what changes you would like to see.
->>
->> A possible combination of values is as follows:
->>
->> - VFIO_DMABUF_CREATE_ERR_UNSPEC
->> - VFIO_DMABUF_CREATE_ERR_INVALID_IOV
-> Just these two error types are needed? Should I completely drop
-> VFIO_DMABUF_CREATE_GUEST_ERROR and VFIO_DMABUF_CREATE_HOST_ERROR,
-> even for udmabuf errors?
+> This clarifies how complete vhost-user messages (header + payload) are
+> read from the character device and how protocol violations are handled.
+> 
+> No functional changes.
+> 
+> Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
 
-Yes, that's what I meant.
 
-Regards,
-Akihiko Odaki
+This all seems unnecessarily verbose.
 
+> ---
+>  hw/virtio/vhost-user.c | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
 > 
-> Thanks,
-> Vivek
-> 
->>
->> I took the example of VIRTIO_GPU_RESP_ERR_UNSPEC and
->> VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER for naming.
->>
->>>
->>>>
->>>>>         }
->>>>>
->>>>>         list = g_malloc0(sizeof(struct udmabuf_create_list) +
->>>>> @@ -45,7 +48,8 @@ static void virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>>         for (i = 0; i < res->iov_cnt; i++) {
->>>>>             rb = qemu_ram_block_from_host(res->iov[i].iov_base, false,
->>>> &offset);
->>>>>             if (!rb || rb->fd < 0) {
->>>>> -            return;
->>>>> +            error_setg(errp, "IOV memory address incompatible with
->>>> udmabuf ");
->>>>> +            return VFIO_DMABUF_CREATE_GUEST_ERROR;
->>>>>             }
->>>>>
->>>>>             list->list[i].memfd  = rb->fd;
->>>>> @@ -56,22 +60,30 @@ static void
->> virtio_gpu_create_udmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>>         list->count = res->iov_cnt;
->>>>>         list->flags = UDMABUF_FLAGS_CLOEXEC;
->>>>>
->>>>> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->>>>> -    if (res->dmabuf_fd < 0) {
->>>>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
->>>>> -                    strerror(errno));
->>>>> +    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->>>>> +    if (fd < 0) {
->>>>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl
->>>> failed");
->>>>> +        if (errno == EINVAL || errno == EBADFD) {
->>>>> +            return VFIO_DMABUF_CREATE_GUEST_ERROR;
->>>>> +        }
->>>>> +        return VFIO_DMABUF_CREATE_HOST_ERROR;
->>>>>         }
->>>>> +    return fd;
->>>>>     }
->>>>>
->>>>> -static void virtio_gpu_remap_dmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>> +static bool virtio_gpu_remap_dmabuf(struct
->>>> virtio_gpu_simple_resource *res,
->>>>> +                                    Error **errp)
->>>>>     {
->>>>> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
->>>>> -                         MAP_SHARED, res->dmabuf_fd, 0);
->>>>> -    if (res->remapped == MAP_FAILED) {
->>>>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
->>>>> -                    strerror(errno));
->>>>> +    void *map;
->>>>> +
->>>>> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED,
->> res-
->>>>> dmabuf_fd, 0);
->>>>> +    if (map == MAP_FAILED) {
->>>>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
->>>>>             res->remapped = NULL;
->>>>> +        return false;
->>>>>         }
->>>>> +    res->remapped = map;
->>>>> +    return true;
->>>>>     }
->>>>>
->>>>>     static void virtio_gpu_destroy_dmabuf(struct
->>>> virtio_gpu_simple_resource *res)
->>>>> @@ -125,19 +137,32 @@ bool virtio_gpu_have_udmabuf(void)
->>>>>
->>>>>     void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource
->> *res)
->>>>>     {
->>>>> +    Error *local_err = NULL;
->>>>>         void *pdata = NULL;
->>>>> +    int ret;
->>>>>
->>>>>         res->dmabuf_fd = -1;
->>>>>         if (res->iov_cnt == 1 &&
->>>>>             res->iov[0].iov_len < 4096) {
->>>>>             pdata = res->iov[0].iov_base;
->>>>>         } else {
->>>>> -        virtio_gpu_create_udmabuf(res);
->>>>> -        if (res->dmabuf_fd < 0) {
->>>>> +        ret = virtio_gpu_create_udmabuf(res, &local_err);
->>>>> +        if (ret < 0) {
->>>>> +            error_prepend(&local_err, "Cannot create dmabuf: ");
->>>>
->>>> This error_prepend() is redundant. The error messages
->>>> virtio_gpu_create_udmabuf() emits already suggests they are
->> problems
->>>> with DMA-BUF.
->>> Ok, I'll drop the error_prepend().
->>>
->>> Thanks,
->>> Vivek
->>>
->>>>
->>>> Regards,
->>>> Akihiko Odaki
->>>>
->>>>> +
->>>>> +            if (ret == VFIO_DMABUF_CREATE_GUEST_ERROR) {
->>>>> +                qemu_log_mask(LOG_GUEST_ERROR,
->>>>> +                              "Cannot create dmabuf: incompatible
->> memory\n");
->>>>> +                error_free(local_err);
->>>>> +                return;
->>>>> +            }
->>>>> +            error_report_err(local_err);
->>>>>                 return;
->>>>>             }
->>>>> -        virtio_gpu_remap_dmabuf(res);
->>>>> -        if (!res->remapped) {
->>>>> +
->>>>> +        res->dmabuf_fd = ret;
->>>>> +        if (!virtio_gpu_remap_dmabuf(res, &local_err)) {
->>>>> +            error_report_err(local_err);
->>>>>                 return;
->>>>>             }
->>>>>             pdata = res->remapped;
->>>
-> 
+> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> index bb8f8eab77..157a869b35 100644
+> --- a/hw/virtio/vhost-user.c
+> +++ b/hw/virtio/vhost-user.c
+> @@ -300,6 +300,20 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+>      return 0;
+>  }
+>  
+> +/**
+> + * vhost_user_read:
+> + * @dev: The vhost device state
+> + * @msg: Pointer to the vhost-user message structure to populate
+> + *
+> + * Reads a complete vhost-user message (header and optional payload) from 
+> + * the character device.
+
+use imperative voice: Read ...
+what "the character device"?
+
+> It first reads and validates the header, checks 
+> + * the advertised payload size against maximum bounds, and then reads any 
+> + * attached payload directly into the message structure.
+
+
+repeating implementation here does not make sense.
+
+> + *
+> + * Returns: 0 on success,
+> + * -EIO or -errno on read failure or short read,
+> + * -EPROTO if the protocol flags or payload size are invalid.
+
+
+we usually do not document specific errors.
+
+> + */
+>  static int vhost_user_read(struct vhost_dev *dev, VhostUserMsg *msg)
+>  {
+>      struct vhost_user *u = dev->opaque;
+> @@ -307,12 +321,13 @@ static int vhost_user_read(struct vhost_dev *dev, VhostUserMsg *msg)
+>      uint8_t *p = (uint8_t *) msg;
+>      int r, size;
+>  
+> +    /* 1. Read and validate the message header */
+
+
+obvious from function name
+`
+>      r = vhost_user_read_header(dev, msg);
+>      if (r < 0) {
+>          return r;
+>      }
+>  
+> -    /* validate message size is sane */
+> +    /* 2. Validate that the payload size is sane to prevent buffer overflows */
+
+how is this better?
+
+>      if (msg->hdr.size > VHOST_USER_PAYLOAD_SIZE) {
+>          error_report("Failed to read msg header."
+>                  " Size %d exceeds the maximum %zu.", msg->hdr.size,
+> @@ -320,9 +335,13 @@ static int vhost_user_read(struct vhost_dev *dev, VhostUserMsg *msg)
+>          return -EPROTO;
+>      }
+>  
+> +    /* 3. If the header indicates a payload exists, read it */
+
+
+this one is ok.
+
+>      if (msg->hdr.size) {
+> +        /* Advance the pointer to the start of the payload section */
+
+too detailed, it's clear as is.
+
+>          p += VHOST_USER_HDR_SIZE;
+>          size = msg->hdr.size;
+> +        
+> +        /* Block and read the exact payload size */
+
+exact?
+
+>          r = qemu_chr_fe_read_all(chr, p, size);
+>          if (r != size) {
+>              int saved_errno = errno;
+> -- 
+> 2.34.1
 
 
