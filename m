@@ -4,128 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4E56EDEBEA
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EC4CEDEBEA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxVh8-0008By-RS; Tue, 03 Mar 2026 14:46:14 -0500
+	id 1vxVh7-0008BJ-BS; Tue, 03 Mar 2026 14:46:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxVh1-00088l-0X
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:46:08 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxVgv-00087K-Q6
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:46:03 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxVgy-00014F-CM
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:46:06 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2ae4988e039so18897165ad.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:46:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vxVgp-0000Ua-NF
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:46:01 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c70bfef17a4so3607292a12.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:45:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772567153; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WN0vwdrmdCILz8AsBjA7xHwpZg2y+NZv+WukTwz+ltlHZ1Mtrbo3LAJYAiznDDZIFY
+ vX7OK/0QfBeQ8W+7ezixS5f2nklqWq0Ucv8CyU0pRM6y/hme1TillOZnytTG0BA7BGKe
+ XgZ44Hzygt8kNXcrLMZw8pVOdSLSofOkxEzjBH/OBGd/I3R2GgHhSvt+cXUDieZ82GaF
+ 4XfnCb1KQsWu03KYjEFqIRqM16iZkQxJlPNg+GEeDUZuRoL7vt2ReXp6bhzVQDU5H2if
+ qUedSrADBy3l9W60rb83lfHmOmmqJ3B4Jaln5KRDymC5y0IWh2lPeqx4ZtabyQTkWpv7
+ 0gUg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=q1IksLXqAANpBj1i/C1RR6riMbVFHouL7qXRzHh70Qc=;
+ fh=3N4YTDWV9KQk1Zfz9qwlmnoEsAk4PdvYntvEBJFMlvI=;
+ b=k+ecHwKEeNrWcqkmG7bn9an7VWG7Rq/Tt2GIj9KcWQMBr2nihf+TM1bQ7OtZcdJnxQ
+ OcUodi6qPJ7URiKXcs8UTxzPuSGwMvKUzcz/m7PUPxQrgDtAmouefVU0ClmfUNRg1OlT
+ aCYlka8FRq9xUqI11+SO2D5wVTou9dCMbb7DrITnpiJab+dQ143Bsv9UsxS/W+8sLzl0
+ qSyBeOnFnOXL67YaoJR99ytU/BZHQpTNiEMVq+zh2HHIglShFFMOupG9UyPs/hMAhzeC
+ poHyUi2uoAVL8Qfc5JHV2d8QsFIqLAisfBxSUmvfRPiaMuHMpVUb78srQof68Qvls80S
+ IT3A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772567163; x=1773171963; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rh+qD60CnqTgO9lcS/lSBXoU6oSU+vhZ8bqx7gfpYvI=;
- b=HA6FT3ZVQVugCmkzF8rh5mx4mBIH6GWTXcnhWi2Nb17uE6WzThHgKKjS2KsMFr87lJ
- MKtuadmOpDTXKJZLtud6t9d5W/LlxmIVuwlZ8cTn/VV106Wc9nEma6KThrYpbovcYeOZ
- vT8qxgqVQtbWhVTFJ+L27Uzgo3O+XS+PKVh3olMzcJMwWqK9uRk+UPzPPSQQNDphVz8x
- fFVbzmP9tzewU8tFKZWr2YMmiNdKMFuaduY2SCtbTELG+M4/o8zeV5FvfXAny95u16yU
- nVgMTKy1oagdzZPfpCMpKl9/UoCWdmSL3Sa/HStaCbRBuiz2QHgKaek4rhJnEKzyaGcs
- /Agw==
+ d=gmail.com; s=20230601; t=1772567153; x=1773171953; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=q1IksLXqAANpBj1i/C1RR6riMbVFHouL7qXRzHh70Qc=;
+ b=byUaNR8+5Jt07cl6SRsNXK86mFmUr2KtUaqVqb028lLUELsBkstnWH7rCI+WzNd0Qm
+ fgVZnPIWRVMI1zZTyxNCso4Vtj8tBFgHmdEBWqIhzQIwbQSz6595lpv9VjWU/wS5XiBh
+ RDH8eTglDRPJ8Yfn2dXt28c28+QHcapRO3jONVkcQuP+Z/9s1m5hKTsF4Tv5Vqbg9SiG
+ 5ByZ3wJhXsBN34AdGMhXd2bnXpGPKPZG+ccfWg87peKSeOUkdo/YEyCbBoHjU0q9Irkg
+ nz+MCt089u3MzxRLwavUN8bUNlc120nhl53cl3dbDqkFrHwmuO/YY4rYFzptuQDT8GLl
+ 30hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772567163; x=1773171963;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rh+qD60CnqTgO9lcS/lSBXoU6oSU+vhZ8bqx7gfpYvI=;
- b=HAyrwyfQ5S9/tr+4fb1Y+XlalEbmh/nGaofbQeZb1lf4rD2ZA7NME56x6N/hiUnW2n
- M7PoL+OgOZSAR8FQL8deMJJg3mLkUwATIwZqBMTMHGGbargUPXAO+Ms0q926t01Hzmci
- cxBnPjR1DWOK+x1eg1vQ1DGe4ktrSg+j7m7cHV1nMg74WJSKimTeAZYeZrWB7Ve1M72m
- r+u18fBT5HbFxAvKcLGyhv7itX0S6N1viu2VJWusQ1iSmXlnv0nZHXNm5gC47UKAY5Yd
- oDVIBFE2Lfk1MBghPtOgP64G2PYX9n2LUWRNEmbkMiwQX/DlrKJV3Clvqk/PoM0/r9LD
- CORQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8dGBlipVVZ/KNkFZ2XceeZ85rxVGSVP9uLiPb/8ybRdMKihQYSNEf43CFfU44KJkPkFHs1/BSse07@nongnu.org
-X-Gm-Message-State: AOJu0YyGtNrGZ0V09ZU6lSVrBqZPMGO7/+HYpmlE5Wl81+v4UXSU3npA
- 2eCMVWGYpKV62P/sDN5v7cka260w4xAc9JyMBFkoj60QZTGHxEbN5tki53znjoUnMe0=
-X-Gm-Gg: ATEYQzwuJ6qXV8I1Wu8r6VNiZk3r59oPCojv4p9qF/9JP5cjX5e7IbO+htCy24StikP
- FPEQ09XifbCQiEU4yGWsb7KYjoAbZfqTCpAat5cVSBHUZuteBke7C/GeP8LEZopzHhKA07LfQ7A
- jrArm5Y7uV0voax28GukYsL0xIU8skRa1qhI0R5uJzlyQOzEmJg5PC0Kg3bTt+WsFqgnvUiTlIM
- it1HArNJSCNb2xMr0k/Pv+M80ARyvCMDKVlm9+gKz1cuiVOxpjpHD5XUhYcUpV4/bmT+XXbg1ac
- 3teIsdrB1Jyzci/klw4Wnjamukfn04kKqeaLGUBJuCXZiPMcHKoMAXsh7Z+Rpjny49aFvtAg8PN
- F5NTPkbHoiOdeOkS8w6VYn/KyZg4DN2+pu2K6/O7lRGmV+6vhrLV0b6p2K9JLAchYRPxf1WeK0p
- PhHuyoAF5HL9zFpz4VHlRayQ3iF1MzUogeyqknE4UiZtUiL0o50vo4skBnCEIcbEOWkIqP
-X-Received: by 2002:a17:903:4765:b0:2aa:d2f4:9c11 with SMTP id
- d9443c01a7336-2ae60c60e17mr32453325ad.5.1772567162271; 
- Tue, 03 Mar 2026 11:46:02 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae4650000dsm89126065ad.54.2026.03.03.11.46.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 11:46:01 -0800 (PST)
-Message-ID: <430d1aa6-c36c-4399-8e5f-b38a9ae1bd35@linaro.org>
-Date: Tue, 3 Mar 2026 11:46:01 -0800
+ d=1e100.net; s=20230601; t=1772567153; x=1773171953;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q1IksLXqAANpBj1i/C1RR6riMbVFHouL7qXRzHh70Qc=;
+ b=ldmM7fbpkySy81Q2UvibPyHIrpl1zGS4TfR7kfZBDV1h6PUsI0wHh7jMO5ed4k2pDT
+ Otdyh1uAzQN5mkOX4qxe2oB+lRNvid/MKue23PYbISWJTBEdCx4MQEVnjMwyxtX5VYjg
+ f/Bp7TWR/yUWvQ000bHaf9FxmMgSbTkEyvsQ2Tx8kkSLzOOOBpxf+vJGdKW7+vfq5CQs
+ M25u7McX0U2nc3rP+xh+2Xfdvx+bO26S4qCGO06RahHZqCI7qK46/E3rezZ6RTLPmxOK
+ jQR18Idrmu7jfeC1M/C5lOz6nk6fOo7MWiaoyWL/a5fLfGRd2Fz8P/Gt8IguZf6HvR9r
+ VdxQ==
+X-Gm-Message-State: AOJu0YyNvlUbHRBPWFCrC0FSwebOq+lYrjphSh3HQSGLWvS/bL3Zc0pB
+ JtTewfJMeThXebcjmV0ErWM3KkeDaT69v/k6lGCQzHXGXIS6MJyNLaP3pgpgw/tLpSRctcwinzE
+ e4Uqp8IvmcAG7/B0oGmNBMtC3dtmzs84=
+X-Gm-Gg: ATEYQzxVH7QSPifEJCNakhyR7uByGW7E7heDVijIi2VT0ILYM+9TKj2PsJMTqJnW9m6
+ GdAABC3MHC7YZmW9XW/Uka9FqbO5TmxEUcCnt+hqOsqdm2iJu42n5c6KM3dCjKnM3i78XSTdljW
+ L/rSt7uKfHHIOcTLvF1VhtfrHdLfw/Tr40ny2AThtaASgtp7ij7F8nQWswUMUA4uYEgsa0kf9WK
+ xYtecbpmun0UYP4eS+wt8FtVO7ChsU0GrgveEB+sRr7cumNUNZMl+gQTpD4RBd7C8D7jCS86HSQ
+ x8njP1lT7wZoyRvFyHHL5DzOoS9aP6Lg9sL7qJA=
+X-Received: by 2002:a17:903:8c6:b0:2ae:5464:7a4b with SMTP id
+ d9443c01a7336-2ae546489e4mr71904585ad.14.1772567152980; Tue, 03 Mar 2026
+ 11:45:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/7] tests/tcg: add tests for qemu_plugin_set_pc API
-Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
- richard.henderson@linaro.org, imp@bsdimp.com
-References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
- <20260303-setpc-v5-v6-4-15c77cfe184e@epfl.ch>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260303-setpc-v5-v6-4-15c77cfe184e@epfl.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
+ <20260227203627.932864-13-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260227203627.932864-13-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Tue, 3 Mar 2026 12:45:41 -0700
+X-Gm-Features: AaiRm51S40_UYhxa3t29lREpGZLeYnyuDiHRFYnz_8f30Gce85aAYnuM_nSJ-ys
+Message-ID: <CAATN3NpprWXbhYA6g-Dn2ZA-sAreHw2OMTBnSLMhd0886X7dMg@mail.gmail.com>
+Subject: Re: [PATCH v3 12/37] target/hexagon: Add guest, system reg number defs
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com, 
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng, 
+ Brian Cain <bcain@quicinc.com>
+Content-Type: multipart/alternative; boundary="0000000000007e7457064c23f358"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,446 +117,350 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/26 5:07 AM, Florian Hofhammer wrote:
-> The test plugin intercepts execution in different contexts. Without the
-> plugin, any of the implemented test functions would trigger an assert
-> and fail. With the plugin, control flow is redirected to skip the assert
-> and return cleanly via the qemu_plugin_set_pc() API.
-> 
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+--0000000000007e7457064c23f358
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Feb 27, 2026 at 1:36=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
+
+> From: Brian Cain <bcain@quicinc.com>
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->   MAINTAINERS                                        |   1 +
->   tests/tcg/arm/Makefile.target                      |   6 +
->   tests/tcg/multiarch/Makefile.target                |  17 ++-
->   .../multiarch/{ => plugin}/check-plugin-output.sh  |   0
->   .../{ => plugin}/test-plugin-mem-access.c          |   0
->   tests/tcg/multiarch/plugin/test-plugin-set-pc.c    | 140 +++++++++++++++++++++
->   tests/tcg/plugins/meson.build                      |   1 +
->   tests/tcg/plugins/setpc.c                          | 120 ++++++++++++++++++
->   8 files changed, 282 insertions(+), 3 deletions(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6698e5ff69..63c0af4d86 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4104,6 +4104,7 @@ S: Maintained
->   F: docs/devel/tcg-plugins.rst
->   F: plugins/
->   F: tests/tcg/plugins/
-> +F: tests/tcg/multiarch/plugin/
->   F: tests/functional/aarch64/test_tcg_plugins.py
->   F: contrib/plugins/
->   F: scripts/qemu-plugin-symbols.py
-> diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
-> index 6189d7a0e2..613bbf0939 100644
-> --- a/tests/tcg/arm/Makefile.target
-> +++ b/tests/tcg/arm/Makefile.target
-> @@ -78,4 +78,10 @@ sha512-vector: sha512.c
->   
->   ARM_TESTS += sha512-vector
->   
-> +ifeq ($(CONFIG_PLUGIN),y)
-> +# Require emitting arm32 instructions, otherwise the vCPU might accidentally
-> +# try to execute Thumb instructions in arm32 mode after qemu_plugin_set_pc()
-> +test-plugin-set-pc: CFLAGS+=-marm
-> +endif
+>  target/hexagon/cpu.h      |   5 ++
+>  target/hexagon/hex_regs.h | 115 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 120 insertions(+)
+>
+> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+> index 9fd69c7453f..3619eaa1a52 100644
+> --- a/target/hexagon/cpu.h
+> +++ b/target/hexagon/cpu.h
+> @@ -20,6 +20,11 @@
+>
+>  #include "fpu/softfloat-types.h"
+>
+> +#define NUM_GREGS 32
+> +#define GREG_WRITES_MAX 2
+> +#define NUM_SREGS 64
+> +#define SREG_WRITES_MAX 2
 > +
+>
 
-Is that still needed?
+Guard with #ifndef CONFIG_USER_ONLY
 
->   TESTS += $(ARM_TESTS)
-> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-> index 07d0b27bdd..a347efbadf 100644
-> --- a/tests/tcg/multiarch/Makefile.target
-> +++ b/tests/tcg/multiarch/Makefile.target
-> @@ -14,6 +14,10 @@ ifeq ($(filter %-linux-user, $(TARGET)),$(TARGET))
->   VPATH 	       += $(MULTIARCH_SRC)/linux
->   MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/linux/*.c))
->   endif
-> +ifeq ($(CONFIG_PLUGIN),y)
-> +VPATH 	       += $(MULTIARCH_SRC)/plugin
-> +MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/plugin/*.c))
-> +endif
->   MULTIARCH_TESTS = $(MULTIARCH_SRCS:.c=)
->   
->   #
-> @@ -200,13 +204,20 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
->   	PLUGIN_ARGS=$(COMMA)print-accesses=true
->   run-plugin-test-plugin-mem-access-with-libmem.so: \
->   	CHECK_PLUGIN_OUTPUT_COMMAND= \
-> -	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
-> +	$(SRC_PATH)/tests/tcg/multiarch/plugin/check-plugin-output.sh \
->   	$(QEMU) $<
->   run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
-> +run-plugin-test-plugin-set-pc-with-libsetpc.so:
->   
->   EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
-> -			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
-> -else
-> +			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so \
-> +			  run-plugin-test-plugin-set-pc-with-libsetpc.so
+
+>  #include "cpu-qom.h"
+>  #include "exec/cpu-common.h"
+>  #include "exec/cpu-defs.h"
+> diff --git a/target/hexagon/hex_regs.h b/target/hexagon/hex_regs.h
+> index bddfc28021c..ea8c62eba9c 100644
+> --- a/target/hexagon/hex_regs.h
+> +++ b/target/hexagon/hex_regs.h
+> @@ -81,4 +81,119 @@ enum {
+>      HEX_REG_UTIMERHI          =3D 63,
+>  };
+>
+> +#ifndef CONFIG_USER_ONLY
 > +
-> +else # CONFIG_PLUGIN=n
-> +# Do not build the syscall skipping test if it's not tested with the setpc
-> +# plugin because it will simply fail the test.
-> +MULTIARCH_TESTS := $(filter-out test-plugin-set-pc, $(MULTIARCH_TESTS))
+> +#define HEX_GREG_VALUES \
+> +  DECL_HEX_GREG(G0,         0) \
+> +  DECL_HEX_GREG(GELR,       0) \
+> +  DECL_HEX_GREG(G1,         1) \
+> +  DECL_HEX_GREG(GSR,        1) \
+> +  DECL_HEX_GREG(G2,         2) \
+> +  DECL_HEX_GREG(GOSP,       2) \
+> +  DECL_HEX_GREG(G3,         3) \
+> +  DECL_HEX_GREG(GBADVA,     3) \
+> +  DECL_HEX_GREG(GCYCLE_1T,  10) \
+> +  DECL_HEX_GREG(GCYCLE_2T,  11) \
+> +  DECL_HEX_GREG(GCYCLE_3T,  12) \
+> +  DECL_HEX_GREG(GCYCLE_4T,  13) \
+> +  DECL_HEX_GREG(GCYCLE_5T,  14) \
+> +  DECL_HEX_GREG(GCYCLE_6T,  15) \
+> +  DECL_HEX_GREG(GPMUCNT4,   16) \
+> +  DECL_HEX_GREG(GPMUCNT5,   17) \
+> +  DECL_HEX_GREG(GPMUCNT6,   18) \
+> +  DECL_HEX_GREG(GPMUCNT7,   19) \
+> +  DECL_HEX_GREG(GPCYCLELO,  24) \
+> +  DECL_HEX_GREG(GPCYCLEHI,  25) \
+> +  DECL_HEX_GREG(GPMUCNT0,   26) \
+> +  DECL_HEX_GREG(GPMUCNT1,   27) \
+> +  DECL_HEX_GREG(GPMUCNT2,   28) \
+> +  DECL_HEX_GREG(GPMUCNT3,   29) \
+> +  DECL_HEX_GREG_DONE
 > +
->   # test-plugin-syscall-filter needs syscall plugin to succeed
->   test-plugin-syscall-filter: CFLAGS+=-DSKIP
->   endif
-> diff --git a/tests/tcg/multiarch/check-plugin-output.sh b/tests/tcg/multiarch/plugin/check-plugin-output.sh
-> similarity index 100%
-> rename from tests/tcg/multiarch/check-plugin-output.sh
-> rename to tests/tcg/multiarch/plugin/check-plugin-output.sh
-> diff --git a/tests/tcg/multiarch/test-plugin-mem-access.c b/tests/tcg/multiarch/plugin/test-plugin-mem-access.c
-> similarity index 100%
-> rename from tests/tcg/multiarch/test-plugin-mem-access.c
-> rename to tests/tcg/multiarch/plugin/test-plugin-mem-access.c
-> diff --git a/tests/tcg/multiarch/plugin/test-plugin-set-pc.c b/tests/tcg/multiarch/plugin/test-plugin-set-pc.c
-> new file mode 100644
-> index 0000000000..40d9a9e8f0
-> --- /dev/null
-> +++ b/tests/tcg/multiarch/plugin/test-plugin-set-pc.c
-> @@ -0,0 +1,140 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright (C) 2026, Florian Hofhammer <florian.hofhammer@epfl.ch>
-> + *
-> + * This test set exercises the qemu_plugin_set_pc() function in four different
-> + * contexts:
-> + * 1. in a syscall callback,
-> + * 2. in an instruction callback during normal execution,
-> + * 3. in an instruction callback during signal handling,
-> + * 4. in a memory access callback.
-> + * Note: using the volatile guards is necessary to prevent the compiler from
-> + * doing dead code elimination even on -O0, which would cause everything after
-> + * the asserts and thus also the target labels to be optimized away.
-> + */
-> +#include <assert.h>
-> +#include <signal.h>
-> +#include <stdint.h>
-> +#include <stdlib.h>
-> +#include <stdio.h>
-> +#include <unistd.h>
-> +#include <setjmp.h>
+> +#define DECL_HEX_GREG_DONE
+> +#define DECL_HEX_GREG(name, val) HEX_GREG_ ##name =3D val,
+> +enum hex_greg {
+> +    HEX_GREG_VALUES
+> +};
+> +#undef DECL_HEX_GREG
+> +#undef DECL_HEX_GREG_DONE
 > +
-> +#define NOINLINE __attribute__((noinline))
-
-Test being compiled in O0, it should not need any noinline attribute.
-
-> +#define NORETURN __attribute__((noreturn))
-
-It's used in a single place, simply move the the attribute there, no 
-need for another define.
-
-> +
-> +static int signal_handled;
-> +/*
-> + * The volatile variable is used as a guard to prevent the compiler from
-> + * optimizing away "unreachable" labels.
-> + */
-> +static volatile uint32_t guard = 1;
-> +
-
-As mentioned on v4, you can simply use an external function for failing 
-the test, which won't be tainted with noreturn attribute.
-This way, you don't need any guard at all or assert(0), and resulting 
-code is linear and easier to read.
-It test completes, it all worked. If it crashes, something was wrong.
-
-void panic(void)
-{
-      g_assert_not_reached();
-}
-
-void test_...() {
-...
-on_panic:
-      panic();
-after_panic:
-      printf("Hello World\n");
-}
-
-> +/*
-> + * This test executes a magic syscall which communicates two addresses to the
-> + * plugin via the syscall arguments. Whenever we reach the "bad" instruction
-> + * during normal execution, the plugin should redirect control flow to the
-> + * "good" instruction instead.
-> + */
-> +NOINLINE void test_insn(void)
+> +#define DECL_HEX_GREG_DONE 0
+> +#define DECL_HEX_GREG(_, val) (1 << val) |
+> +static inline bool greg_implemented(enum hex_greg greg)
 > +{
-> +    long ret = syscall(4095, &&bad_insn, &&good_insn, NULL);
-> +    assert(ret == 0 && "Syscall filter did not return expected value");
-> +    if (guard) {
-> +bad_insn:
-> +        assert(0 && "PC redirection in instruction callback failed");
-> +    } else {
-> +good_insn:
-> +        return;
-> +    }
+> +#if NUM_GREGS > 32
+> +#error "NUM_GREGS too large for greg_implemented(): update `impl_bitmap`=
+"
+> +#endif
+> +    static int32_t impl_bitmap =3D HEX_GREG_VALUES;
+> +    return impl_bitmap & (1 << greg);
 > +}
+> +#undef DECL_HEX_GREG
+> +#undef DECL_HEX_GREG_DONE
 > +
-> +/*
-> + * This signal handler communicates a "bad" and a "good" address to the plugin
-> + * similar to the previous test, and skips to the "good" address when the "bad"
-> + * one is reached. This serves to test whether PC redirection via
-> + * qemu_plugin_set_pc() also works properly in a signal handler context.
-> + */
-> +NOINLINE void usr1_handler(int signum)
-> +{
-> +    long ret = syscall(4095, &&bad_signal, &&good_signal, NULL);
-> +    assert(ret == 0 && "Syscall filter did not return expected value");
-> +    if (guard) {
-> +bad_signal:
-> +        assert(0 && "PC redirection in instruction callback failed");
-> +    } else {
-> +good_signal:
-> +        signal_handled = 1;
-> +        return;
-> +    }
-> +}
+> +#endif /* CONFIG_USER_ONLY */
 > +
-> +/*
-> + * This test sends a signal to the process, which should trigger the above
-> + * signal handler. The signal handler should then exercise the PC redirection
-> + * functionality in the context of a signal handler, which behaves a bit
-> + * differently from normal execution.
-> + */
-> +NOINLINE void test_sighandler(void)
-> +{
-> +    struct sigaction sa = {0};
-> +    sa.sa_handler = usr1_handler;
-> +    sigaction(SIGUSR1, &sa, NULL);
-> +    pid_t pid = getpid();
-> +    kill(pid, SIGUSR1);
-> +    assert(signal_handled == 1 && "Signal handler was not executed properly");
-> +}
-> +
-> +/*
-> + * This test communicates a "good" address and the address of a local variable
-> + * to the plugin. Upon accessing the local variable, the plugin should then
-> + * redirect control flow to the "good" address via qemu_plugin_set_pc().
-> + */
-> +NOINLINE void test_mem(void)
-> +{
-> +    long ret = syscall(4095, NULL, &&good_mem, &guard);
+> +enum {
+> +    HEX_SREG_SGP0 =3D 0,
+> +    HEX_SREG_SGP1 =3D 1,
+> +    HEX_SREG_STID =3D 2,
+> +    HEX_SREG_ELR =3D 3,
+> +    HEX_SREG_BADVA0 =3D 4,
+> +    HEX_SREG_BADVA1 =3D 5,
+> +    HEX_SREG_SSR =3D 6,
+> +    HEX_SREG_CCR =3D 7,
+> +    HEX_SREG_HTID =3D 8,
+> +    HEX_SREG_BADVA =3D 9,
+> +    HEX_SREG_IMASK =3D 10,
+> +    HEX_SREG_GEVB  =3D 11,
+> +    HEX_SREG_GLB_START =3D 16,
+> +    HEX_SREG_EVB =3D 16,
+> +    HEX_SREG_MODECTL =3D 17,
+> +    HEX_SREG_SYSCFG =3D 18,
+> +    HEX_SREG_IPENDAD =3D 20,
+> +    HEX_SREG_VID =3D 21,
+> +    HEX_SREG_VID1 =3D 22,
+> +    HEX_SREG_BESTWAIT =3D 23,
+> +    HEX_SREG_IEL =3D 24,
+> +    HEX_SREG_SCHEDCFG =3D 25,
+> +    HEX_SREG_IAHL =3D 26,
+> +    HEX_SREG_CFGBASE =3D 27,
+> +    HEX_SREG_DIAG =3D 28,
+> +    HEX_SREG_REV =3D 29,
+> +    HEX_SREG_PCYCLELO =3D 30,
+> +    HEX_SREG_PCYCLEHI =3D 31,
+> +    HEX_SREG_ISDBST =3D 32,
+> +    HEX_SREG_ISDBCFG0 =3D 33,
+> +    HEX_SREG_ISDBCFG1 =3D 34,
+> +    HEX_SREG_LIVELOCK =3D 35,
+> +    HEX_SREG_BRKPTPC0 =3D 36,
+> +    HEX_SREG_BRKPTCFG0 =3D 37,
+> +    HEX_SREG_BRKPTPC1 =3D 38,
+> +    HEX_SREG_BRKPTCFG1 =3D 39,
+> +    HEX_SREG_ISDBMBXIN =3D 40,
+> +    HEX_SREG_ISDBMBXOUT =3D 41,
+> +    HEX_SREG_ISDBEN =3D 42,
+> +    HEX_SREG_ISDBGPR =3D 43,
+> +    HEX_SREG_PMUCNT4 =3D 44,
+> +    HEX_SREG_PMUCNT5 =3D 45,
+> +    HEX_SREG_PMUCNT6 =3D 46,
+> +    HEX_SREG_PMUCNT7 =3D 47,
+> +    HEX_SREG_PMUCNT0 =3D 48,
+> +    HEX_SREG_PMUCNT1 =3D 49,
+> +    HEX_SREG_PMUCNT2 =3D 50,
+> +    HEX_SREG_PMUCNT3 =3D 51,
+> +    HEX_SREG_PMUEVTCFG =3D 52,
+> +    HEX_SREG_PMUSTID0 =3D 53,
+> +    HEX_SREG_PMUEVTCFG1 =3D 54,
+> +    HEX_SREG_PMUSTID1 =3D 55,
+> +    HEX_SREG_TIMERLO =3D 56,
+> +    HEX_SREG_TIMERHI =3D 57,
+> +    HEX_SREG_PMUCFG =3D 58,
+> +    HEX_SREG_S59 =3D 59,
+> +    HEX_SREG_S60 =3D 60,
+> +    HEX_SREG_S61 =3D 61,
+> +    HEX_SREG_S62 =3D 62,
+> +    HEX_SREG_S63 =3D 63,
+> +};
+>
 
-Since you use two different syscall numbers, it's worth adding two 
-defines, that you will duplicate in test and plugin.
-Alternatively, you can use the first parameter of syscall to identify 
-which kind of "service" you want from plugin, with defines duplicated 
-between test and plugin again.
-Feel free to pick the solution you prefer.
+Put these inside the #ifndef CONFIG_USER_ONLY (see #endif just above the
+enum).
 
-Reading 4095 the first time here felt like it was a typo mistake.
 
-> +    assert(ret == 0 && "Syscall filter did not return expected value");
-> +    if (guard) {
-> +        assert(0 && "PC redirection in memory access callback failed");
-> +    } else {
-> +good_mem:
-> +        return;
-> +    }
-> +}
 > +
-> +/*
-> + * This test executes a magic syscall which is intercepted and its actual
-> + * execution skipped via the qemu_plugin_set_pc() API. In a proper plugin,
-> + * syscall skipping would rather be implemented via the syscall filtering
-> + * callback, but we want to make sure qemu_plugin_set_pc() works in different
-> + * contexts.
-> + */
-> +NOINLINE NORETURN
-> +void test_syscall(void)
-> +{
-> +    syscall(4096, &&good_syscall);
-> +    if (guard) {
-> +        assert(0 && "PC redirection in syscall callback failed");
-> +    } else {
-> +good_syscall:
-> +        /*
-> +         * Note: we execute this test last and exit straight from here because
-> +         * when the plugin redirects control flow upon syscall, the stack frame
-> +         * for the syscall function (and potential other functions in the call
-> +         * chain in libc) is still live and the stack is not unwound properly.
-> +         * Thus, returning from here is risky and breaks on some architectures,
-> +         * so we just exit directly from this test.
-> +         */
-> +        _exit(EXIT_SUCCESS);
-> +    }
-> +}
-> +
-> +
-> +int main(int argc, char *argv[])
-> +{
-> +    test_insn();
-> +    test_sighandler();
-> +    test_mem();
-> +    test_syscall();
-> +}
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index c5e49753fd..b3e3a9a6d0 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -7,6 +7,7 @@ test_plugins = [
->   'mem.c',
->   'patch.c',
->   'reset.c',
-> +'setpc.c',
->   'syscall.c',
->   ]
->   
-> diff --git a/tests/tcg/plugins/setpc.c b/tests/tcg/plugins/setpc.c
-> new file mode 100644
-> index 0000000000..72ae31a0ef
-> --- /dev/null
-> +++ b/tests/tcg/plugins/setpc.c
-> @@ -0,0 +1,120 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright (C) 2026, Florian Hofhammer <florian.hofhammer@epfl.ch>
-> + */
-> +#include <assert.h>
-> +#include <glib.h>
-> +#include <inttypes.h>
-> +#include <unistd.h>
-> +
-> +#include <qemu-plugin.h>
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> +
-> +static uint64_t source_pc;
-> +static uint64_t target_pc;
-> +static uint64_t target_vaddr;
-> +
-> +static void vcpu_syscall(qemu_plugin_id_t id, unsigned int vcpu_index,
-> +                         int64_t num, uint64_t a1, uint64_t a2,
-> +                         uint64_t a3, uint64_t a4, uint64_t a5,
-> +                         uint64_t a6, uint64_t a7, uint64_t a8)
-> +{
-> +    if (num == 4096) {
-> +        qemu_plugin_outs("Marker syscall detected, jump to clean return\n");
-> +        qemu_plugin_set_pc(a1);
-> +    }
-> +}
-> +
-> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
-> +                                int64_t num, uint64_t a1, uint64_t a2,
-> +                                uint64_t a3, uint64_t a4, uint64_t a5,
-> +                                uint64_t a6, uint64_t a7, uint64_t a8,
-> +                                uint64_t *sysret)
-> +{
-> +    if (num == 4095) {
-> +        qemu_plugin_outs("Communication syscall detected, set target_pc / "
-> +                         "target_vaddr\n");
-> +        source_pc = a1;
-> +        target_pc = a2;
-> +        target_vaddr = a3;
-> +        if (source_pc >> 63 || target_pc >> 63 || target_vaddr >> 63) {
-> +            /*
-> +             * Some architectures (e.g., m68k) use 32-bit addresses with the
-> +             * top bit set, which causes them to get sign-extended somewhere in
-> +             * the chain to this callback. We mask the top bits off here to get
-> +             * the actual addresses.
-> +             */
+>  #endif
+> --
+> 2.34.1
+>
+>
 
-This looks like an actual bug. Using a backtrace here, can you find 
-which function extended it?
-Parameter should be treated as unsigned everywhere, else something is 
-really going wrong.
+--0000000000007e7457064c23f358
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +            qemu_plugin_outs("High bit in addresses detected: possible sign "
-> +                             "extension in syscall, masking off top bits\n");
-> +            source_pc &= UINT32_MAX;
-> +            target_pc &= UINT32_MAX;
-> +            target_vaddr &= UINT32_MAX;
-> +        }
-> +        *sysret = 0;
-> +        return true;
-> +    }
-> +    return false;
-> +}
-> +
-> +static void vcpu_insn_exec(unsigned int vcpu_index, void *userdata)
-> +{
-> +    uint64_t vaddr = (uint64_t)userdata;
-> +    if (vaddr == source_pc) {
-> +        g_assert(target_pc != 0);
-> +        g_assert(target_vaddr == 0);
-> +
-> +        qemu_plugin_outs("Marker instruction detected, jump to clean return\n");
-> +        qemu_plugin_set_pc(target_pc);
-> +    }
-> +}
-> +
-> +static void vcpu_mem_access(unsigned int vcpu_index,
-> +                            qemu_plugin_meminfo_t info,
-> +                            uint64_t vaddr, void *userdata)
-> +{
-> +    if (vaddr != 0 && vaddr == target_vaddr) {
-> +        g_assert(source_pc == 0);
-> +        g_assert(target_pc != 0);
-> +        qemu_plugin_mem_value val = qemu_plugin_mem_get_value(info);
-> +        /* target_vaddr points to our volatile guard ==> should always be 1 */
-> +        g_assert(val.type == QEMU_PLUGIN_MEM_VALUE_U32);
-> +        g_assert(val.data.u32 == 1);
-> +
-> +        qemu_plugin_outs("Marker mem access detected, jump to clean return\n");
-> +        qemu_plugin_set_pc(target_pc);
-> +    }
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Feb 27,=
+ 2026 at 1:36=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mail=
+to:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/cpu.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A05 ++<br>
+=C2=A0target/hexagon/hex_regs.h | 115 +++++++++++++++++++++++++++++++++++++=
++<br>
+=C2=A02 files changed, 120 insertions(+)<br>
+<br>
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h<br>
+index 9fd69c7453f..3619eaa1a52 100644<br>
+--- a/target/hexagon/cpu.h<br>
++++ b/target/hexagon/cpu.h<br>
+@@ -20,6 +20,11 @@<br>
+<br>
+=C2=A0#include &quot;fpu/softfloat-types.h&quot;<br>
+<br>
++#define NUM_GREGS 32<br>
++#define GREG_WRITES_MAX 2<br>
++#define NUM_SREGS 64<br>
++#define SREG_WRITES_MAX 2<br>
++<br></blockquote><div><br></div><div>Guard with #ifndef CONFIG_USER_ONLY</=
+div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0#include &quot;cpu-qom.h&quot;<br>
+=C2=A0#include &quot;exec/cpu-common.h&quot;<br>
+=C2=A0#include &quot;exec/cpu-defs.h&quot;<br>
+diff --git a/target/hexagon/hex_regs.h b/target/hexagon/hex_regs.h<br>
+index bddfc28021c..ea8c62eba9c 100644<br>
+--- a/target/hexagon/hex_regs.h<br>
++++ b/target/hexagon/hex_regs.h<br>
+@@ -81,4 +81,119 @@ enum {<br>
+=C2=A0 =C2=A0 =C2=A0HEX_REG_UTIMERHI=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D =
+63,<br>
+=C2=A0};<br>
+<br>
++#ifndef CONFIG_USER_ONLY<br>
++<br>
++#define HEX_GREG_VALUES \<br>
++=C2=A0 DECL_HEX_GREG(G0,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00) \<br>
++=C2=A0 DECL_HEX_GREG(GELR,=C2=A0 =C2=A0 =C2=A0 =C2=A00) \<br>
++=C2=A0 DECL_HEX_GREG(G1,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A01) \<br>
++=C2=A0 DECL_HEX_GREG(GSR,=C2=A0 =C2=A0 =C2=A0 =C2=A0 1) \<br>
++=C2=A0 DECL_HEX_GREG(G2,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A02) \<br>
++=C2=A0 DECL_HEX_GREG(GOSP,=C2=A0 =C2=A0 =C2=A0 =C2=A02) \<br>
++=C2=A0 DECL_HEX_GREG(G3,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A03) \<br>
++=C2=A0 DECL_HEX_GREG(GBADVA,=C2=A0 =C2=A0 =C2=A03) \<br>
++=C2=A0 DECL_HEX_GREG(GCYCLE_1T,=C2=A0 10) \<br>
++=C2=A0 DECL_HEX_GREG(GCYCLE_2T,=C2=A0 11) \<br>
++=C2=A0 DECL_HEX_GREG(GCYCLE_3T,=C2=A0 12) \<br>
++=C2=A0 DECL_HEX_GREG(GCYCLE_4T,=C2=A0 13) \<br>
++=C2=A0 DECL_HEX_GREG(GCYCLE_5T,=C2=A0 14) \<br>
++=C2=A0 DECL_HEX_GREG(GCYCLE_6T,=C2=A0 15) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT4,=C2=A0 =C2=A016) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT5,=C2=A0 =C2=A017) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT6,=C2=A0 =C2=A018) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT7,=C2=A0 =C2=A019) \<br>
++=C2=A0 DECL_HEX_GREG(GPCYCLELO,=C2=A0 24) \<br>
++=C2=A0 DECL_HEX_GREG(GPCYCLEHI,=C2=A0 25) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT0,=C2=A0 =C2=A026) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT1,=C2=A0 =C2=A027) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT2,=C2=A0 =C2=A028) \<br>
++=C2=A0 DECL_HEX_GREG(GPMUCNT3,=C2=A0 =C2=A029) \<br>
++=C2=A0 DECL_HEX_GREG_DONE<br>
++<br>
++#define DECL_HEX_GREG_DONE<br>
++#define DECL_HEX_GREG(name, val) HEX_GREG_ ##name =3D val,<br>
++enum hex_greg {<br>
++=C2=A0 =C2=A0 HEX_GREG_VALUES<br>
++};<br>
++#undef DECL_HEX_GREG<br>
++#undef DECL_HEX_GREG_DONE<br>
++<br>
++#define DECL_HEX_GREG_DONE 0<br>
++#define DECL_HEX_GREG(_, val) (1 &lt;&lt; val) |<br>
++static inline bool greg_implemented(enum hex_greg greg)<br>
++{<br>
++#if NUM_GREGS &gt; 32<br>
++#error &quot;NUM_GREGS too large for greg_implemented(): update `impl_bitm=
+ap`&quot;<br>
++#endif<br>
++=C2=A0 =C2=A0 static int32_t impl_bitmap =3D HEX_GREG_VALUES;<br>
++=C2=A0 =C2=A0 return impl_bitmap &amp; (1 &lt;&lt; greg);<br>
++}<br>
++#undef DECL_HEX_GREG<br>
++#undef DECL_HEX_GREG_DONE<br>
++<br>
++#endif /* CONFIG_USER_ONLY */<br>
++<br>
++enum {<br>
++=C2=A0 =C2=A0 HEX_SREG_SGP0 =3D 0,<br>
++=C2=A0 =C2=A0 HEX_SREG_SGP1 =3D 1,<br>
++=C2=A0 =C2=A0 HEX_SREG_STID =3D 2,<br>
++=C2=A0 =C2=A0 HEX_SREG_ELR =3D 3,<br>
++=C2=A0 =C2=A0 HEX_SREG_BADVA0 =3D 4,<br>
++=C2=A0 =C2=A0 HEX_SREG_BADVA1 =3D 5,<br>
++=C2=A0 =C2=A0 HEX_SREG_SSR =3D 6,<br>
++=C2=A0 =C2=A0 HEX_SREG_CCR =3D 7,<br>
++=C2=A0 =C2=A0 HEX_SREG_HTID =3D 8,<br>
++=C2=A0 =C2=A0 HEX_SREG_BADVA =3D 9,<br>
++=C2=A0 =C2=A0 HEX_SREG_IMASK =3D 10,<br>
++=C2=A0 =C2=A0 HEX_SREG_GEVB=C2=A0 =3D 11,<br>
++=C2=A0 =C2=A0 HEX_SREG_GLB_START =3D 16,<br>
++=C2=A0 =C2=A0 HEX_SREG_EVB =3D 16,<br>
++=C2=A0 =C2=A0 HEX_SREG_MODECTL =3D 17,<br>
++=C2=A0 =C2=A0 HEX_SREG_SYSCFG =3D 18,<br>
++=C2=A0 =C2=A0 HEX_SREG_IPENDAD =3D 20,<br>
++=C2=A0 =C2=A0 HEX_SREG_VID =3D 21,<br>
++=C2=A0 =C2=A0 HEX_SREG_VID1 =3D 22,<br>
++=C2=A0 =C2=A0 HEX_SREG_BESTWAIT =3D 23,<br>
++=C2=A0 =C2=A0 HEX_SREG_IEL =3D 24,<br>
++=C2=A0 =C2=A0 HEX_SREG_SCHEDCFG =3D 25,<br>
++=C2=A0 =C2=A0 HEX_SREG_IAHL =3D 26,<br>
++=C2=A0 =C2=A0 HEX_SREG_CFGBASE =3D 27,<br>
++=C2=A0 =C2=A0 HEX_SREG_DIAG =3D 28,<br>
++=C2=A0 =C2=A0 HEX_SREG_REV =3D 29,<br>
++=C2=A0 =C2=A0 HEX_SREG_PCYCLELO =3D 30,<br>
++=C2=A0 =C2=A0 HEX_SREG_PCYCLEHI =3D 31,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBST =3D 32,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBCFG0 =3D 33,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBCFG1 =3D 34,<br>
++=C2=A0 =C2=A0 HEX_SREG_LIVELOCK =3D 35,<br>
++=C2=A0 =C2=A0 HEX_SREG_BRKPTPC0 =3D 36,<br>
++=C2=A0 =C2=A0 HEX_SREG_BRKPTCFG0 =3D 37,<br>
++=C2=A0 =C2=A0 HEX_SREG_BRKPTPC1 =3D 38,<br>
++=C2=A0 =C2=A0 HEX_SREG_BRKPTCFG1 =3D 39,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBMBXIN =3D 40,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBMBXOUT =3D 41,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBEN =3D 42,<br>
++=C2=A0 =C2=A0 HEX_SREG_ISDBGPR =3D 43,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT4 =3D 44,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT5 =3D 45,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT6 =3D 46,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT7 =3D 47,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT0 =3D 48,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT1 =3D 49,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT2 =3D 50,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCNT3 =3D 51,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUEVTCFG =3D 52,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUSTID0 =3D 53,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUEVTCFG1 =3D 54,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUSTID1 =3D 55,<br>
++=C2=A0 =C2=A0 HEX_SREG_TIMERLO =3D 56,<br>
++=C2=A0 =C2=A0 HEX_SREG_TIMERHI =3D 57,<br>
++=C2=A0 =C2=A0 HEX_SREG_PMUCFG =3D 58,<br>
++=C2=A0 =C2=A0 HEX_SREG_S59 =3D 59,<br>
++=C2=A0 =C2=A0 HEX_SREG_S60 =3D 60,<br>
++=C2=A0 =C2=A0 HEX_SREG_S61 =3D 61,<br>
++=C2=A0 =C2=A0 HEX_SREG_S62 =3D 62,<br>
++=C2=A0 =C2=A0 HEX_SREG_S63 =3D 63,<br>
++};<br></blockquote><div><br></div><div>Put these inside the #ifndef CONFIG=
+_USER_ONLY (see #endif just above the enum).</div><div>=C2=A0</div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">
++<br>
+=C2=A0#endif<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
 
-Thanks for adding this case also!
-So you'll definitely need a read for this precise test, to be able to 
-keep a load. If it would work with a local variable, that's good, else, 
-try with a local static (eventually marked volatile if it helps), and in 
-last case, use a global variable.
-
-> +}
-> +
-> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> +{
-> +    size_t insns = qemu_plugin_tb_n_insns(tb);
-> +    for (size_t i = 0; i < insns; i++) {
-> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-> +        uint64_t insn_vaddr = qemu_plugin_insn_vaddr(insn);
-> +        /*
-> +         * Note: we cannot only register the callbacks if the instruction is
-> +         * in one of the functions of interest, because symbol lookup for
-> +         * filtering does not work for all architectures (e.g., ppc64).
-> +         */
-
-Too sad :)
-It's not a problem to instrument all instructions though.
-
-> +        qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_insn_exec,
-> +                                               QEMU_PLUGIN_CB_RW_REGS_PC,
-> +                                               (void *)insn_vaddr);
-> +        qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem_access,
-> +                                         QEMU_PLUGIN_CB_RW_REGS_PC,
-> +                                         QEMU_PLUGIN_MEM_R, NULL);
-> +    }
-> +}
-> +
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info,
-> +                                           int argc, char **argv)
-> +{
-> +
-> +    qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
-> +    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
-> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-> +    return 0;
-> +}
-> 
-
-Thanks for the update.
-Test looks good, and minus the style nits reported, it looks quite ready.
-It would be nice if we could sort the signed parameter extension also to 
-avoid a hack on this.
-
-Regards,
-Pierrick
+--0000000000007e7457064c23f358--
 
