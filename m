@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E70EDEBFA
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B00EDEBFA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxY85-0004iz-MG; Tue, 03 Mar 2026 17:22:13 -0500
+	id 1vxY81-0004gH-5p; Tue, 03 Mar 2026 17:22:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY83-0004hh-A2
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:11 -0500
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY7z-0004ey-IW
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:07 -0500
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY81-0002Qn-Rd
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:11 -0500
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY7x-0002P0-UO
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:07 -0500
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48336a6e932so38152515e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:09 -0800 (PST)
+ 5b1f17b1804b1-4837907f535so54790715e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772576528; x=1773181328; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772576524; x=1773181324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JOiFzMYt3nqjzzSrXRu86P7xq+XKX8Q8xCa2W8q3YHY=;
- b=kXPMI8l8ALa++p4ATRP1My4VsDS9Sh+oBWmuvmcvd8boyC+Fz2OdEq26dzHHSYn0N8
- P1ZBuyf0IjcuyQKTRN9dPHz1ZWiDaDoaxoIzdhBjZWwyujzlBsF/Exzf0HQe8kF0j4WK
- pOFFBv4XrlCopCX78z/rKJjknuwsvum17Q/uTZ31Hg0zu7f1dlq2Zn0d0bfY63lr44wK
- jMtU82SLfhSVYnLpl4MhJVK2ZGmrvGCvgOht0ekKcVZAiFSbYXXzHc7PHsLlnpgmTwG+
- YdvycMyU8olR7pRxOhGr8blHqeMBGJSGiQGFT+AlaqzPkij26iKatFB9Dq25NiMFm6kK
- vsqA==
+ bh=Xtq/5HasaYF/u2JgkoCvWSDDmD9TojuUdZIFbfZPAYc=;
+ b=OrMGEhWEtzTyATo2uQ1YjTj+KQ6ZfZukroa3s+KkuJ5Sg4d0jXVp31C9uXn39UhgfN
+ /YU7HM64mDAQbOJKcYS5DV2SnryqLF0feP4wPTlzuA9TuObY2g4ZHOO0v9XpesxRcVz6
+ HDXMkwx2tVKmb64YvG6Se32xGGUsftIyU16a/d69RMfn0nF+DUQey+3tL7kEZ4v/qosJ
+ 5EuGpnHOfTPSwy6IdIgwe/Z/vxnRFCBJfWjDJ1Hr0pa74z7Ufl3mufmHheCzgdqhrq9Q
+ 4DgGTkhkWt1cFwnYEVjSK9pYo8f3B5+lplhcSR7wr2gKr5s6BbMDBANu5u2x2K4r/hR9
+ V4ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772576528; x=1773181328;
+ d=1e100.net; s=20230601; t=1772576524; x=1773181324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JOiFzMYt3nqjzzSrXRu86P7xq+XKX8Q8xCa2W8q3YHY=;
- b=tObmBrhoycC1n7L4/wEFqh+zHJlL7mw6IMbw0X2c0O1EuhSw0etbWOWIPMJd/q7h98
- BmBh3qt50g5RgXCee91wX6qkqdFzyI3boWZ3MX28Xt3ATqBQgFQmXysDxkQCtw0vyIK6
- GXM9B9h+YSlWCYYgKeISIXsepknsIPTQfyA6tS5SEVL6tGh44VPCBb23wBUeb75On7TZ
- 1DQJUGmFmO4ur5BQB96lp7SVnVQHG+F9WHFJYRz7m+FTabqbm+TVBDNVZTpolnUYq2cG
- acLcsu2LCWYzB8Y/d2YunDFfQZ4ccWTSglFeZ5jvooCuxbtyPBQnZICeBhGV1A33NHVD
- fEBw==
-X-Gm-Message-State: AOJu0YzK7UMCRsBLyN99xR2i3iKDdo3yE9NsfaOcfoD5xF+HzR5cAQiw
- KFMkl/Z8D6dKP1WHEpVSN5ylBCDXwSlOcPiFm9a1aTkmh7AcAx/LPZsVtlP6IQ==
-X-Gm-Gg: ATEYQzzjpNwZE/Kz5Ec/x+BiyCCZAIcuPjMn2oRjuvXvX9vLHsxSAcu2OVhxlKkR8uV
- oiIkRP95Wj74GdrRpQDlFbsU9VrqQdV7KK16LlECv88XNBi6/dppPIlAqjW/8l0XmrLWgw8YFON
- hJe2Mpv0l8o8xRRcmOVyff+GHlvCzy/JWgAlGfE59f88jofBajhgmfaF1gRo3gzWoC8SIr6ypRO
- n1WW5cfVmU76lHeFbkvbfRWADiGZTJVH1pUbNQvINnfXNr4iejB0OqHsQ+Rxcg2vDACRY7N7/wK
- oDeBGT5eg1MBGO7rymaBoQPdtNhjKHPXXHps6Ma/sns1BrXaxZi7YUVzMo5MRtqsAHtH4DQsU8r
- Uz/CU+TAYz03/wBlW70J4bqeOmnaUh3l++/2JhaHhOxxuQmuhPbqzfOGjs5FyxqYnoBEwcBiYQp
- NgyGGDi++OWz8DU9Daa2umXOdVtwgTbM6VtfrpKnRUC5L2//5SYlpAjfhreCyumm3a3dzsAYf1z
- AuXeAJYXMTN6qxjBwXT/rZvZEz0ilA=
-X-Received: by 2002:a05:600c:530c:b0:483:afbb:a077 with SMTP id
- 5b1f17b1804b1-483c9b971a3mr296550795e9.1.1772576527895; 
- Tue, 03 Mar 2026 14:22:07 -0800 (PST)
+ bh=Xtq/5HasaYF/u2JgkoCvWSDDmD9TojuUdZIFbfZPAYc=;
+ b=jxVlV0KrK4YD+bUtQwST67rdDYyi3LUQPOW7CHKTwx2kAWsP4AjARxAcyaeMGwPY9U
+ U+IFJ/rQ58cd+rpJmSHeYemJo9x6OW7XYNhhWxPTKiEpWRA9Yj8mmPGJyMhpSX5Xo4Bs
+ cKpys/cE7/ryNiUVCxrW6SVHiMG0VVLZCQ9uldw35+HFJsBdycxjv8MssP6mrt7VJ06Z
+ Hp1qAGivbc160dmiruZxLCpAxds8u87Gwp36ek5DOVD6+wKJg+nHTFUmmypi3FFfdD17
+ NL8Pn2U+GUvBR1B33wlBs+HmJifdMB63wD20efw+dAfk3svLWlKCEk2mwwCskD/A2pjP
+ tsGw==
+X-Gm-Message-State: AOJu0YwcJUqyaPZ+Nlhaga4DBZt51KpPI+2jHkM4SmCddgH3Gvv8qxxG
+ D5rZXOcRO8fVSZYLYfj0l3amYwf9v/wzNORR2dSC23EbyPxvD0w06fKOq5L0qw==
+X-Gm-Gg: ATEYQzyMxcBSrGMwncRcVjJfSNyLtekCPzg0J+oqzz2Z6vBiRiA2nBHhqbwF4DxncgR
+ z2ICP1DPI3vUhWX/122o4cNrefK4g6y3gJVKiAkOWY1CrvIE4pHYMByRfVmh/wy9OHs510ne89Z
+ aPIwxOxf2qU+Vbgi83YAy3XXbuMHG+u6aBmgyXpLIJkHBegtVDfY3AAmHzpiqEr/1hsy2uPfoFa
+ HRJ33QpQn/HltJT0RmPiNsw77MvKEiPR03++2g+R8G98zZXU/Ph40CKWmUHwNbFME3lnOJMqTVY
+ 68sCjoJJKqsN1ZyYmltIOuxOrdVWgBN419bOCs6fKYsb6IctAtmOln51ONCTVtaPVl/GSacfmpv
+ RAG5+ypIMWBl6oNA8b0asnjGsVssJr/E6LQMs3VoaUvuP4zwFRP/DPtxCdKLrhD65NzXkInwKV0
+ rp0sn0oV5AQgZEv+OmuKurj+/0rUpTBhKi4kz07mjSzziljP2IHSc3WTEuTck9gGfSBF8XY+juT
+ nWkt0HVr2e3bUD3TkKsimLeLNFALxk=
+X-Received: by 2002:a05:600c:a0a:b0:483:7813:90d8 with SMTP id
+ 5b1f17b1804b1-483c9b94296mr279196615e9.1.1772576523993; 
+ Tue, 03 Mar 2026 14:22:03 -0800 (PST)
 Received: from Provence
  (dynamic-2a02-3100-1c79-b600-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c79:b600:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.06
+ 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 14:22:07 -0800 (PST)
+ Tue, 03 Mar 2026 14:22:03 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
@@ -80,9 +80,10 @@ Cc: Helge Deller <deller@gmx.de>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 05/13] hw/char/serial: Prefer fifo8 methods over open-coding
-Date: Tue,  3 Mar 2026 23:21:35 +0100
-Message-ID: <20260303222143.142741-6-shentey@gmail.com>
+Subject: [PATCH v2 02/13] hw/arm/aspeed_ast27x0-{ssp,
+ tsp}: Do not access SerialMM internals directly
+Date: Tue,  3 Mar 2026 23:21:32 +0100
+Message-ID: <20260303222143.142741-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260303222143.142741-1-shentey@gmail.com>
 References: <20260303222143.142741-1-shentey@gmail.com>
@@ -112,55 +113,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use fifo8_is_empty() and fifo8_is_full() to improve readability of the
-code.
+SerialMM inherits from SysBusDevice and exposes the memory region by
+means of sysbus_mmio_get_region(). Use that in order to avoid accessing
+implementation details of SerialMM.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/char/serial.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/arm/aspeed_ast27x0-ssp.c | 7 ++++---
+ hw/arm/aspeed_ast27x0-tsp.c | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 0f2e79dfba..20f68fd2f8 100644
---- a/hw/char/serial.c
-+++ b/hw/char/serial.c
-@@ -239,7 +239,7 @@ static void serial_xmit(SerialState *s)
-             if (s->fcr & UART_FCR_FE) {
-                 assert(!fifo8_is_empty(&s->xmit_fifo));
-                 s->tsr = fifo8_pop(&s->xmit_fifo);
--                if (!s->xmit_fifo.num) {
-+                if (fifo8_is_empty(&s->xmit_fifo)) {
-                     s->lsr |= UART_LSR_THRE;
-                 }
-             } else {
-@@ -481,7 +481,7 @@ static uint64_t serial_ioport_read(void *opaque, hwaddr addr, unsigned size)
-             if(s->fcr & UART_FCR_FE) {
-                 ret = fifo8_is_empty(&s->recv_fifo) ?
-                             0 : fifo8_pop(&s->recv_fifo);
--                if (s->recv_fifo.num == 0) {
-+                if (fifo8_is_empty(&s->recv_fifo)) {
-                     s->lsr &= ~(UART_LSR_DR | UART_LSR_BI);
-                 } else {
-                     timer_mod(s->fifo_timeout_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + s->char_transmit_time * 4);
-@@ -555,7 +555,7 @@ static uint64_t serial_ioport_read(void *opaque, hwaddr addr, unsigned size)
- static int serial_can_receive(SerialState *s)
- {
-     if(s->fcr & UART_FCR_FE) {
--        if (s->recv_fifo.num < UART_FIFO_LENGTH) {
-+        if (!fifo8_is_full(&s->recv_fifo)) {
-             /*
-              * Advertise (fifo.itl - fifo.count) bytes when count < ITL, and 1
-              * if above. If UART_FIFO_LENGTH - fifo.count is advertised the
-@@ -585,7 +585,7 @@ static void serial_receive_break(SerialState *s)
- /* There's data in recv_fifo and s->rbr has not been read for 4 char transmit times */
- static void fifo_timeout_int (void *opaque) {
-     SerialState *s = opaque;
--    if (s->recv_fifo.num) {
-+    if (!fifo8_is_empty(&s->recv_fifo)) {
-         s->timeout_ipending = 1;
-         serial_update_irq(s);
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index 9b12ba6743..8b84300e0f 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
++    MemoryRegion *mr;
+     g_autofree char *sdram_name = NULL;
+     int i;
+ 
+@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
      }
+ 
+     /* UART */
+-    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
+-                             &s->uart->serial.io, 0,
+-                             memory_region_size(&s->uart->serial.io));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
++    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
++                             memory_region_size(mr));
+     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
+                                 &s->uart_alias);
+     /*
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index e39d1dc171..e7c7b74491 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
++    MemoryRegion *mr;
+     g_autofree char *sdram_name = NULL;
+     int i;
+ 
+@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     }
+ 
+     /* UART */
+-    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
+-                             &s->uart->serial.io, 0,
+-                             memory_region_size(&s->uart->serial.io));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
++    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
++                             memory_region_size(mr));
+     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
+                                 &s->uart_alias);
+     /*
 -- 
 2.53.0
 
