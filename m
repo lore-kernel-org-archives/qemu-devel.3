@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7476CEDA693
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69FDBEDA68D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSI0-00038p-Tu; Tue, 03 Mar 2026 11:08:04 -0500
+	id 1vxSI1-00039n-8P; Tue, 03 Mar 2026 11:08:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHy-00035e-0q
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:02 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHz-00037a-KW
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:03 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHv-0004tl-3d
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:01 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxSHx-0004uE-UP
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:08:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=DHiMP2gsRiouzbzyaVlVV/Jul3SQWrBQapVvZ+Un+gc=; b=odkPVwY3d+30jHg
- MDAfAy2kQReExkF6sWLp7ZuglfVtzInh310Wedf45Vj92PYBjGefoGokgjjgw2xtrQeZuPL+yqtob
- y6c9x6QKwekyT/jqGtr1vA4V8F7aqxYJ2lPDfqad+E8n6nS9Wk8NMPRrMNyw13XoLjWU5YksoM9Xd
- hM=;
-Date: Tue, 03 Mar 2026 17:11:29 +0100
-Subject: [PATCH v5 2/4] hppa: Introduce HPPACPUDef
+ List-Help; bh=3rhCbQNYO/tiUe03tp1MUNFJgG89bbHSTFYx1Yu5nFc=; b=jZHP3EUjbzp4fqo
+ 6TZjGhAUThtBku5EUUvkQlb9TfEe+5H64mm/GWtObPjLFRZBPzZpzmV7SMaVxHmt/R/PDkckwJx7W
+ 8lSOUGWzMc7OfdFlZYEISCaauALasugdQOYVE2lhOdNgAG7GDW2JTkCXuMrLvpP/21VSMjCAAXJJG
+ 5c=;
+Date: Tue, 03 Mar 2026 17:11:31 +0100
+Subject: [PATCH v5 4/4] hppa: Use 44 bit physical addresses for PA-8700
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260303-hppa-c3600-v5-2-277bfe6b40b8@rev.ng>
+Message-Id: <20260303-hppa-c3600-v5-4-277bfe6b40b8@rev.ng>
 References: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
 In-Reply-To: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=4495;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772554301; l=1705;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=zxAV25/04DWo+NOxJWlRaG0/QxsZu2z0IOZo2QXFUy0=;
- b=sYXfJDVFLzkc/0f4uK7K4oZMU7lrpeF2nX6MlRddMuG2QAla3MmaseuTvCDmVT7ii6LsTAPXq
- /oXoe/cLA+6Dte4gc7BIa32NxH6//VEYpQgYvnqYukSeavhaby0L9pC
+ bh=u5SQAlRQN5Nij60p9+jamxH9PUO8l8fPlBFoHvYtsa0=;
+ b=CD9Yy6aLUy3qXhSqWcPZM7T0+LuoskSUcQFiertKHlrUCzc7xvMH7ZrPgMt40K5SzERhTnchh
+ 2CtNgEJaPmgCpSiUi5NuZjW8hI9/X+RYHyXLgkOzYk95N2RJ7c5xETr
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -72,147 +72,55 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for handling different physical address spaces sizes (32,
-40, 44 bits) a CPU model configuration struct is added to HPPACPUClass.
+This is in line with the PA-8700 specification which demands 44 bits.
 
-Two fields are added describing the size of the physical address space,
-and whether or not the CPU uses the PA-RISC 2.0 architecture.  The
-latter was previously a field in CPUHPPAState.
-
-phys_addr_bits is currently set but unused, and will be used in the
-following commit.  Likewise, PA-8700 is moved to use 44 bit physical
-addresses in a followup commit to not bisection.
+However, this change breaks the SeaBIOS functional tests as the firmware
+assumes 40 bit physical addresses.  Therefore, change the functional
+tests to instead run on an A400 which has the expected physical address
+space size.
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hppa/cpu.h | 24 ++++++++++++++++++++----
- target/hppa/cpu.c | 31 +++++++++++++++++++++----------
- 2 files changed, 41 insertions(+), 14 deletions(-)
+ target/hppa/cpu.c                     | 2 +-
+ tests/functional/hppa/test_seabios.py | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 092e647ccf..43b4882fb4 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -270,8 +270,6 @@ typedef struct CPUArchState {
-     /* Fields up to this point are cleared by a CPU reset */
-     struct {} end_reset_fields;
- 
--    bool is_pa20;
--
-     target_ulong kernel_entry; /* Linux kernel was loaded here */
-     target_ulong cmdline_or_bootorder;
-     target_ulong initrd_base, initrd_end;
-@@ -290,6 +288,18 @@ struct ArchCPU {
-     QEMUTimer *alarm_timer;
- };
- 
-+/**
-+ * HPPACPUDef:
-+ * @phys_addr_bits: Number of bits in the physical address space.
-+ * @is_pa20: Whether the CPU model follows the PA-RISC 2.0 or 1.1 spec.
-+ *
-+ * Configuration options for a HPPA CPU model.
-+ */
-+typedef struct HPPACPUDef {
-+    uint8_t phys_addr_bits;
-+    bool is_pa20;
-+} HPPACPUDef;
-+
- /**
-  * HPPACPUClass:
-  * @parent_realize: The parent class' realize handler.
-@@ -302,11 +312,17 @@ struct HPPACPUClass {
- 
-     DeviceRealize parent_realize;
-     ResettablePhases parent_phases;
-+    const HPPACPUDef *def;
- };
- 
--static inline bool hppa_is_pa20(const CPUHPPAState *env)
-+static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
-+{
-+    return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
-+}
-+
-+static inline bool hppa_is_pa20(CPUHPPAState *env)
- {
--    return env->is_pa20;
-+    return hppa_def(env)->is_pa20;
- }
- 
- static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
 diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 910a919923..cc755da8be 100644
+index b04bcfa6a0..bf54aac96c 100644
 --- a/target/hppa/cpu.c
 +++ b/target/hppa/cpu.c
-@@ -203,15 +203,6 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
-     tcg_cflags_set(cs, CF_PCREL);
- }
- 
--static void hppa_cpu_initfn(Object *obj)
--{
--    CPUHPPAState *env = cpu_env(CPU(obj));
--
--    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8500) ||
--                   !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8700);
--
--}
--
- static void hppa_cpu_reset_hold(Object *obj, ResetType type)
- {
-     HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
-@@ -286,6 +277,14 @@ static const TCGCPUOps hppa_tcg_ops = {
- #endif /* !CONFIG_USER_ONLY */
- };
- 
-+static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
-+{
-+    HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
-+    /* Make sure all CPU models define a HPPACPUDef */
-+    g_assert(!object_class_is_abstract(oc) && data != NULL);
-+    acc->def = data;
-+}
-+
- static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(oc);
-@@ -320,22 +319,34 @@ static const TypeInfo hppa_cpu_type_infos[] = {
-         .parent = TYPE_CPU,
-         .instance_size = sizeof(HPPACPU),
-         .instance_align = __alignof(HPPACPU),
--        .instance_init = hppa_cpu_initfn,
-         .abstract = true,
-         .class_size = sizeof(HPPACPUClass),
-         .class_init = hppa_cpu_class_init,
-+        .class_base_init = hppa_cpu_class_base_init,
-     },
-     {
-         .name = TYPE_HPPA_CPU_PA_7300LC,
-         .parent = TYPE_HPPA_CPU,
-+        .class_data = &(const HPPACPUDef) {
-+            .phys_addr_bits = 32,
-+            .is_pa20 = false,
-+        },
-     },
-     {
-         .name = TYPE_HPPA_CPU_PA_8500,
-         .parent = TYPE_HPPA_CPU,
-+        .class_data = &(const HPPACPUDef) {
-+            .phys_addr_bits = 40,
-+            .is_pa20 = true,
-+        },
-     },
-     {
+@@ -351,7 +351,7 @@ static const TypeInfo hppa_cpu_type_infos[] = {
          .name = TYPE_HPPA_CPU_PA_8700,
          .parent = TYPE_HPPA_CPU,
-+        .class_data = &(const HPPACPUDef) {
-+            .phys_addr_bits = 40,
-+            .is_pa20 = true,
-+        },
+         .class_data = &(const HPPACPUDef) {
+-            .phys_addr_bits = 40,
++            .phys_addr_bits = 44,
+             .is_pa20 = true,
+         },
      },
- };
+diff --git a/tests/functional/hppa/test_seabios.py b/tests/functional/hppa/test_seabios.py
+index 661b2464e1..bdb9d534ef 100755
+--- a/tests/functional/hppa/test_seabios.py
++++ b/tests/functional/hppa/test_seabios.py
+@@ -12,7 +12,7 @@
+ class HppaSeabios(QemuSystemTest):
  
+     timeout = 5
+-    MACH_BITS = {'B160L': 32, 'C3700': 64}
++    MACH_BITS = {'B160L': 32, 'A400': 64}
+ 
+     def boot_seabios(self):
+         mach = self.machine
+@@ -28,7 +28,7 @@ def test_hppa_32(self):
+         self.boot_seabios()
+ 
+     def test_hppa_64(self):
+-        self.set_machine('C3700')
++        self.set_machine('A400')
+         self.boot_seabios()
+ 
+ if __name__ == '__main__':
 
 -- 
 2.52.0
