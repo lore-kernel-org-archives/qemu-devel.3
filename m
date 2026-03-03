@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E44EDA694
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC49CEDA694
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 16:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxSRy-0003PC-T1; Tue, 03 Mar 2026 11:18:22 -0500
+	id 1vxSTD-0004Co-GK; Tue, 03 Mar 2026 11:19:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSRn-0003Lh-MP
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:18:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSTB-0004At-C9
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:19:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxSRh-0007HE-5r
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:18:08 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxST7-0007Sk-Sr
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 11:19:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772554683;
+ s=mimecast20190719; t=1772554761;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tamLwZDC/4hoR1TgW46bFQcr0yd+gyAHFmTa6yhuVGI=;
- b=E2V5UnVzG6BnvZ+mOVOGQEIg0pNKxZj1RChUvR/0OH0mmdk6pZT49zf4dA7evJ0EH9zWJ/
- zuRj1eN6ageEKGlrB5yRVldg+kpQoS4Jm/OZCAw805mD1O66oCH10wYfaJltDKQH/4C7zE
- hsBJ+Emr9z1TiM/W/TdSFmp2TcrjnQA=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6CFk+nJvxWBytK3lcVLQPYUwU7CbYu3mmTtPUc09vTw=;
+ b=J/W4KVYeN79gRbjkgIhTptCBiILMBUL1CldWZX9DhyUn9tQasRU3uI+9saVQOwBNZr++yx
+ TNVASDJ2AsxpWnSDHYSkQkQmx6CiUuFKIicikDhrqGEvbSZCU3cVAjDiKZ1HV3lMj3kkgc
+ VW78/q0wxLqJPvtWo6CGhXmkZ3tlw0c=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-M6VjsMA9MCa8S26rMr7EsA-1; Tue, 03 Mar 2026 11:18:02 -0500
-X-MC-Unique: M6VjsMA9MCa8S26rMr7EsA-1
-X-Mimecast-MFC-AGG-ID: M6VjsMA9MCa8S26rMr7EsA_1772554681
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8cb413d0002so4359967485a.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:18:02 -0800 (PST)
+ us-mta-10-eMNr1McTNlGN_PrgHVIZ7Q-1; Tue, 03 Mar 2026 11:19:20 -0500
+X-MC-Unique: eMNr1McTNlGN_PrgHVIZ7Q-1
+X-Mimecast-MFC-AGG-ID: eMNr1McTNlGN_PrgHVIZ7Q_1772554760
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8cb390a0c4eso3789761285a.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 08:19:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772554681; x=1773159481; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772554760; x=1773159560; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=tamLwZDC/4hoR1TgW46bFQcr0yd+gyAHFmTa6yhuVGI=;
- b=Ti8GBkdR/uagjuimMQI//vKGd6CwAT2+ld4cLZg/UkOu39CerMNdWEEuO0o+9jRzwA
- WxDAriGtEjAfB4CLXK3erBU1jNBJDKss8FXufEIIqKJus9A3Jpohkqzybky8Y0QC/RoL
- iRBas5sDmumYlir1MA2/3lojAjTNYCVk0aMRcPyN+HRUigBWULcPwzIAQtsTXELjn2CS
- IWI66Hz9aWNrIZr7JOPzNUzF93kfSQnqwqYJRBHSDguc0OPOPaxgKoSdsEvdBQcxzDN0
- g7hn4Jztr5sFQYKV+eEwELMxTjIwM/MGJAUVpT5gja6X3/aHFLwCbYfhiyuzOGcFStV6
- +leQ==
+ bh=6CFk+nJvxWBytK3lcVLQPYUwU7CbYu3mmTtPUc09vTw=;
+ b=cIH+t4Dzc9S3tkkeAXEhBDr6jrmQMTA78wBxSw9aAmWrV/NSUmsf81DtacksmOvnsS
+ bbg1eovQ7KugjFrnOng6vTCbTUT/1/AVmn989bhkT1R0a9jSN2JZQ+tXuzRoEA44Xpcg
+ rR3Z7BHCeF1vEin7iq9hEEzYQLq59EKkKQ4p1nSQHyxjq65/LkWu+PxZxxhvJA9dq6at
+ 5PR4R8WXXkOv5k2YPItfGE5y1+23MVTaBYOa+7nJOuqklryA8TMR+82VHDkWGADyaG3x
+ 341lWzNeN79O2AYKUCPWWeEdr7NxaeaP/gzxSkFU/npvZ5FgVbtyV+Re5TwKW5AhDLmh
+ uUeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772554681; x=1773159481;
+ d=1e100.net; s=20230601; t=1772554760; x=1773159560;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tamLwZDC/4hoR1TgW46bFQcr0yd+gyAHFmTa6yhuVGI=;
- b=VM2h7KtGQQcxIO1JOOAarrVI2tWSYWzRMoGyiFHBtgu0+R54ubwAWE3wM57Cu0hZxl
- L+hkEhzEw2Eob45iqNIvePDs6Y7wuN3aSM7zhFs8gIw/X9bHsO5bwnoXiO0sh7mpLvnY
- SzwRu5H3aBT/TKQXGEBbE6l0pZceUYGZ9C7+GsR+Ac0LeKgQEsSkLtcwqM+jNOD79ZEK
- EuNgSEOLI5+ku7v8R2gp1IKfH2Ps2yfhB7DV00fbCNJSezTSzFnsMI/SeQU6bYEf9O9D
- hOKlR/bJaZ2i6JIPGwUsvhuCfbgT4qnUOS1BoD9pIV2voyFkWnISAhjSRmlsEePmk4Wc
- CiLg==
+ bh=6CFk+nJvxWBytK3lcVLQPYUwU7CbYu3mmTtPUc09vTw=;
+ b=ui5YqmlDEZiV9Xnu8SXxQ4SSPsKCOVgh8shXe6K/UvAGJXhrTK36Jq4IEpX5sHeiEl
+ Vna7JTBGdwXPJ1bI2Ef0MWm0pHH7dmGD863c/wxoUioT8iCq/6TiIDWXDBJcDW9Fbd1U
+ +KTROzNShMpNdfC2i1aTsb3OkShcBrnmlSC5mFyNzqkbfrfqotqex32ApqcQ0np0iN1N
+ Vc6mQxFnpRXSYgF7uxfi3oSJArU/4nSvZmbGlncxBu1txPAtY+kCXZERbF4s4KK7oKTT
+ sl4v6rWgdOIjp4O6hITWnWa2JTLgLuCKh4c+fv6uP9DvO3ICJd/Bskyn6hIyYD1PHkNk
+ qJkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/qs8gyCrYCzDtOeui8rn+2yEyVU6HzH6hCGfNeVdLjznFcuip1rxPawFF4PqEUpb2vB6HlBYFR8SW@nongnu.org
-X-Gm-Message-State: AOJu0Yzs9DEhcmClk2GOS475sGTjH84u58ShlZf6ZY4kSVJcgLVoDbtt
- 8bKk2yCr3QiBsnzJ1yQwb3lPHajcriXnzBPfAARdEshe6QNyfqXJmK5q6beMg7g5SCJNpPa2EFy
- Vu3H52/80xv3hG0hV7Lg9mwA1QiEqN+rhwfRuQr2d6DA+68penFNuxLvl
-X-Gm-Gg: ATEYQzyTskOIikCHOdz2HsijSK+NnenqalOqPf6r3MkWuIgQwq0rM69Df9u3Rrrdikm
- nNC1iSoVkeBkHyiznJUBr1JkdNdL+tTHFlD+NkULeUCCh2T0da2AW3Riq3HH/HuV1AvW2J+OeUX
- k0oQkNxlGIsTC8pdmzp3npM713sSl2Ares03pzgdT+0Sl4FBGw7JgmFgbmSl7YgwxTlcNH9qBcv
- z4YQGC/aNk/GkF5+rGlrCeXZO9/cbea+8+pHX/+LNN+48cYMgQohU6tdsdZ0IGXJ2WKBgk30Lub
- wJJBcCj/3ttslVx6v6US/FMDpwxxYqzAd1LUVyexLSNJcoKab5Qd3KbqU1/VQqs3fwQIes+g4d8
- ot/eNrXnsEo2F+Q==
-X-Received: by 2002:a05:620a:28d1:b0:8cb:3fca:2f9 with SMTP id
- af79cd13be357-8cd508e279cmr313143285a.4.1772554681410; 
- Tue, 03 Mar 2026 08:18:01 -0800 (PST)
-X-Received: by 2002:a05:620a:28d1:b0:8cb:3fca:2f9 with SMTP id
- af79cd13be357-8cd508e279cmr313138085a.4.1772554680830; 
- Tue, 03 Mar 2026 08:18:00 -0800 (PST)
+ AJvYcCUSZ/19Sqk+z+2SP/77Z+9cOKFsrGwjET0is9RQKDfGKj0TmugUX01YWr81sKngVbNUiFpB13Tyhll4@nongnu.org
+X-Gm-Message-State: AOJu0YxMCoGkDm+taFSLaKYrRjgLXwvV37dKRq9iekj6s231VeZMGtjI
+ m9pHPjax32lD+L9w7MoeXkQhunB3bPcCjMVLNENnfjbcAr7J50UUzlDymlTCRUYR4/oXSDhRsPk
+ DRtDb0KvtzzeEF8Lme0g6ps3sGSGodu8athaPzqxbjQ4f7r/fkXW4Xq0J
+X-Gm-Gg: ATEYQzx7m5a+skDXrBZbEwC5uokPF3twkTjXH6T20w/nLO+qNmEGUfHztBAaZ6mw9YD
+ iZChtq7dVTAa0nS2B6Yln/unfGlVWZ9dOtL3YkFAXoHVD1MWoZ4qgblE9hPjl6vNrhZrXkymIG/
+ VNxLFlEE6buy/exkJu4lMk/ntSLIJXmMo3Wau8S9nBPZ9yO+NjiNi0VgTYfGJ2OBjVrwnIpCaLf
+ iqFrJDhHqucq70jUXnOjUXNlw5r4KTt4BmiLjMO1X8AtoUoKucfwZnTPuAoezYK+4dWw8kQnR2U
+ h6AEFIQy745V55GzJ64bg9N5e3vSHPZXIMS78Ef8lN60Jmeq0UuPB9NU3aUUFgBIY05IqGWbxIg
+ GxRkjTONGSWKhGw==
+X-Received: by 2002:a05:620a:29c1:b0:8cb:55cc:6245 with SMTP id
+ af79cd13be357-8cbc8d6f198mr2141806885a.12.1772554759648; 
+ Tue, 03 Mar 2026 08:19:19 -0800 (PST)
+X-Received: by 2002:a05:620a:29c1:b0:8cb:55cc:6245 with SMTP id
+ af79cd13be357-8cbc8d6f198mr2141801185a.12.1772554759041; 
+ Tue, 03 Mar 2026 08:19:19 -0800 (PST)
 Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cbbf66c515sm1433537085a.11.2026.03.03.08.18.00
+ af79cd13be357-8cbbf6535b4sm1419131685a.9.2026.03.03.08.19.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 08:18:00 -0800 (PST)
-Date: Tue, 3 Mar 2026 11:17:49 -0500
+ Tue, 03 Mar 2026 08:19:18 -0800 (PST)
+Date: Tue, 3 Mar 2026 11:19:07 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: farosas@suse.de,
 	"open list:All patches CC here" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 11/16] migration: convert vmstate_subsection_save/load
- functions to bool
-Message-ID: <aacJrakaT7dHqczA@x1.local>
+Subject: Re: [PATCH v2 12/16] migration: VMStateInfo: introduce new handlers
+ with errp
+Message-ID: <aacJ-3JDA16aYVKF@x1.local>
 References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
- <20260220210214.800050-12-vsementsov@yandex-team.ru>
+ <20260220210214.800050-13-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260220210214.800050-12-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260220210214.800050-13-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -119,9 +119,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 21, 2026 at 12:02:09AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Convert them to bool return value, as preparation to further
-> convertion of vmstate_save/load_state().
+On Sat, Feb 21, 2026 at 12:02:10AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Add new APIs with errp, to allow handlers report good
+> error messages. We'll convert existing handlers soon.
 > 
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
