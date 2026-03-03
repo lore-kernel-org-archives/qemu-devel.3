@@ -4,63 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E719FEFB6B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E64AFD006E
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 15:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxRKc-0006Ys-TN; Tue, 03 Mar 2026 10:06:42 -0500
+	id 1vxRKB-0006Hl-Q3; Tue, 03 Mar 2026 10:06:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRKY-0006X0-9G
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:39 -0500
+ id 1vxRK8-0006Gm-Pi
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxRKW-00025i-Ad
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:38 -0500
+ id 1vxRK6-0001zu-Ti
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 10:06:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772550395;
+ s=mimecast20190719; t=1772550370;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9ZUN9qo2kVOayeNkrm7meCbsEZa6wbphY9wEaykh81U=;
- b=GZL3UkKWbEXGKnG4RBq8cbLdL2JvqMRO3r5jTN2hOVi0+h7ZP9FqnHm9TOD8T0Q6FAxYVp
- XMIdCF1tXjlUZFAPGq+kwvjDlRK1qvYWAg/WWQJUgRKwEbIf99G9jrWwtFeHU0wKizqE7P
- mDUdUGyVO0roZO5h4Sb8ZeR+ZpdQ9AM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5zycpjcDSFdlGv4MHlzS7PieIxVgHhKMbVwWSAeonfg=;
+ b=D5AKnzHdEzYdWb/OOLRFvCb+BBBuYDPaAk5OFsHWeHFUKghMP1yve/XWAUBKmrS68KC/Xn
+ 0TFAPjLzjs1ix5zc27KsfOjGSAnr6lZWbUdhUSBCzE+MdWJNR1aFimYkiph0865ltxZbEl
+ eSiXMXL5Ygb8C2D3iIEmRpise7uyMw8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-0s7dm3ghP0S9CnX9su6xRQ-1; Tue,
- 03 Mar 2026 10:06:32 -0500
-X-MC-Unique: 0s7dm3ghP0S9CnX9su6xRQ-1
-X-Mimecast-MFC-AGG-ID: 0s7dm3ghP0S9CnX9su6xRQ_1772550390
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-1e7ICGQHM5iTmGgAvIn35w-1; Tue,
+ 03 Mar 2026 10:06:08 -0500
+X-MC-Unique: 1e7ICGQHM5iTmGgAvIn35w-1
+X-Mimecast-MFC-AGG-ID: 1e7ICGQHM5iTmGgAvIn35w_1772550367
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 070F11800349; Tue,  3 Mar 2026 15:06:30 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C90871800370
+ for <qemu-devel@nongnu.org>; Tue,  3 Mar 2026 15:06:07 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.45.225.185])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5E09180066A; Tue,  3 Mar 2026 15:06:27 +0000 (UTC)
+ id A815F1800349; Tue,  3 Mar 2026 15:06:06 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 10/27] util: fix race setting thread name on Win32
-Date: Tue,  3 Mar 2026 15:05:47 +0000
-Message-ID: <20260303150604.2402872-11-berrange@redhat.com>
-In-Reply-To: <20260303150604.2402872-1-berrange@redhat.com>
-References: <20260303150604.2402872-1-berrange@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 00/27] Misc patches queue
+Date: Tue,  3 Mar 2026 15:05:37 +0000
+Message-ID: <20260303150604.2402872-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -88,89 +82,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The call to set the thread name on Win32 platforms is done by the parent
-thread, after _beginthreadex() returns. At this point the new child
-thread is potentially already executing its start method. To ensure the
-thread name is guaranteed to be set before any "interesting" code starts
-executing, it must be done in the start method of the child thread itself.
+The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- util/qemu-thread-win32.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+  Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
 
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 9595a5b090..255c88571f 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -22,6 +22,8 @@ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
- static pSetThreadDescription SetThreadDescriptionFunc;
- static HMODULE kernel32_module;
- 
-+static void set_thread_description(const char *name);
-+
- static bool load_set_thread_description(void)
- {
-     static gsize _init_once = 0;
-@@ -225,6 +227,7 @@ struct QemuThreadData {
-     void             *arg;
-     short             mode;
-     NotifierList      exit;
-+    char             *name; /* Freed in win32_start_routine */
- 
-     /* Only used for joinable threads. */
-     bool              exited;
-@@ -266,6 +269,10 @@ static unsigned __stdcall win32_start_routine(void *arg)
-     void *(*start_routine)(void *) = data->start_routine;
-     void *thread_arg = data->arg;
- 
-+    if (data->name) {
-+        set_thread_description(data->name);
-+        g_clear_pointer(&data->name, g_free);
-+    }
-     qemu_thread_data = data;
-     qemu_thread_exit(start_routine(thread_arg));
-     abort();
-@@ -316,7 +323,7 @@ void *qemu_thread_join(QemuThread *thread)
-     return ret;
- }
- 
--static void set_thread_description(HANDLE h, const char *name)
-+static void set_thread_description(const char *name)
- {
-     g_autofree wchar_t *namew = NULL;
- 
-@@ -329,7 +336,7 @@ static void set_thread_description(HANDLE h, const char *name)
-         return;
-     }
- 
--    SetThreadDescriptionFunc(h, namew);
-+    SetThreadDescriptionFunc(GetCurrentThread(), namew);
- }
- 
- void qemu_thread_create(QemuThread *thread, const char *name,
-@@ -344,6 +351,7 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-     data->arg = arg;
-     data->mode = mode;
-     data->exited = false;
-+    data->name = g_strdup(name);
-     notifier_list_init(&data->exit);
- 
-     if (data->mode != QEMU_THREAD_DETACHED) {
-@@ -355,9 +363,6 @@ void qemu_thread_create(QemuThread *thread, const char *name,
-     if (!hThread) {
-         error_exit(GetLastError(), __func__);
-     }
--    if (name) {
--        set_thread_description(hThread, name);
--    }
-     CloseHandle(hThread);
- 
-     thread->data = data;
+are available in the Git repository at:
+
+  https://gitlab.com/berrange/qemu tags/next-pr-pull-request
+
+for you to fetch changes up to 192f59773a6a8fd1e0d3c1d9c9c3f5f59a62c087:
+
+  util/oslib-posix: increase memprealloc thread count to 32 (2026-03-03 15:01:21 +0000)
+
+----------------------------------------------------------------
+* Increase pre-alloc max thread count to 32
+* Fix checkpatch warning for new/removed files with --terse
+* Detect more GPL boilerplate in checkpatch
+* Fix lean of data in TLS/websock GSource cancellation
+* Tweak CPU docs for DiamondRapids
+* Unconditionally enable thread naming
+* Fix race setting thread naming on Win32
+* Add API docs for logging APIs
+* Fix interleaved error/trace output
+* Fix missing error prefixes with warn_report
+* Add detailed error reporting for VNC passworrd changes
+* Refactoring of error_vprintf & related funcs
+
+----------------------------------------------------------------
+
+Daniel P. Berrangé (25):
+  scripts: detect another GPL license boilerplate variant
+  io: separate freeing of tasks from marking them as complete
+  io: fix cleanup for TLS I/O source data on cancellation
+  io: fix cleanup for websock I/O source data on cancellation
+  docs: simplify DiamondRapids CPU docs
+  qemu-options: remove extraneous [] around arg values
+  include: define constant for early constructor priority
+  monitor: initialize global data from a constructor
+  system: unconditionally enable thread naming
+  util: fix race setting thread name on Win32
+  util: expose qemu_thread_set_name
+  audio: make jackaudio use qemu_thread_set_name
+  util: set the name for the 'main' thread on Windows
+  util: add API to fetch the current thread name
+  util: introduce some API docs for logging APIs
+  util: avoid repeated prefix on incremental qemu_log calls
+  util/log: add missing error reporting in qemu_log_trylock_with_err
+  ui: add proper error reporting for password changes
+  ui: remove redundant use of error_printf_unless_qmp()
+  monitor: remove redundant error_[v]printf_unless_qmp
+  monitor: refactor error_vprintf()
+  monitor: move error_vprintf back to error-report.c
+  util: fix interleaving of error & trace output
+  util: don't skip error prefixes when QMP is active
+  util: fix interleaving of error prefixes
+
+Jon Kohler (1):
+  util/oslib-posix: increase memprealloc thread count to 32
+
+Markus Armbruster (1):
+  scripts/checkpatch: Fix MAINTAINERS update warning with --terse
+
+ audio/jackaudio.c                    |  28 +++++--
+ docs/about/deprecated.rst            |   7 ++
+ docs/system/cpu-models-x86.rst.inc   |  16 ++--
+ include/io/task.h                    |  29 +++++--
+ include/monitor/monitor.h            |   3 -
+ include/qemu/compiler.h              |   8 ++
+ include/qemu/log-for-trace.h         |  17 +++-
+ include/qemu/log.h                   |  39 ++++++++++
+ include/qemu/thread.h                |   3 +-
+ include/ui/console.h                 |   2 +-
+ include/ui/qemu-spice-module.h       |   3 +-
+ io/channel-tls.c                     |  60 +++++++++-----
+ io/channel-websock.c                 |  46 ++++++++---
+ io/task.c                            |   8 +-
+ meson.build                          |  21 +++++
+ monitor/monitor.c                    |  51 +++---------
+ qemu-options.hx                      | 112 +++++++++++++--------------
+ rust/util/src/log.rs                 |   6 ++
+ scripts/checkpatch.pl                |  11 +--
+ stubs/error-printf.c                 |  23 ------
+ stubs/meson.build                    |   1 -
+ stubs/monitor-core.c                 |  19 ++++-
+ system/vl.c                          |  12 +--
+ tests/functional/generic/test_vnc.py |   4 +-
+ tests/unit/test-io-task.c            |  26 +++++++
+ tests/unit/test-util-sockets.c       |   1 +
+ ui/spice-core.c                      |  25 ++++--
+ ui/spice-module.c                    |   7 +-
+ ui/ui-qmp-cmds.c                     |  19 ++---
+ ui/vnc-stubs.c                       |   6 +-
+ ui/vnc.c                             |  16 ++--
+ util/error-report.c                  |  92 +++++++++++++++++-----
+ util/log.c                           |  50 +++++++-----
+ util/oslib-posix.c                   |   2 +-
+ util/qemu-thread-posix.c             |  89 +++++++++++++++------
+ util/qemu-thread-win32.c             |  87 ++++++++++++++-------
+ 36 files changed, 628 insertions(+), 321 deletions(-)
+ delete mode 100644 stubs/error-printf.c
+
 -- 
 2.53.0
 
