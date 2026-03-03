@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3363EDEBE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95884EDEBE0
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxU9T-0002Rf-Nw; Tue, 03 Mar 2026 13:07:23 -0500
+	id 1vxUAU-0003Av-9L; Tue, 03 Mar 2026 13:08:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxU9R-0002RO-Tq
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:07:21 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1vxUAR-000384-5T
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:08:23 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxU9Q-0000vM-Dg
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:07:21 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-c648bc907ebso3787362a12.3
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:07:19 -0800 (PST)
+ id 1vxUAJ-0002Cj-5x
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:08:16 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-82748095963so2978686b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:08:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772561238; x=1773166038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772561293; x=1773166093; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XFZ4I7tCbCEtswC5eirIMJ5sLRA2GI/jI5oB/nTWbhE=;
- b=aeVFha6CuDomhKFjbAzbIT8gkS0iYN23MGzCOtBJH8xX2Xl3F31h0jKZ2UMc4CyK32
- OvV8CiJqPIJMlK1ZAsVUi+/ateVxyPmfs0AlzCPCrp5HDOjvA2qYbDChOP8rcHt139dR
- euXqZh8TcQkSmvGUB1NZipodiXInD/lgzdqNhVsWpn+lYac2x2tq7NcQexf4PIZNb09F
- Q3lnIEbSFKID2+3AbXdYzWQZKFYFqrWx1W6t4XQMrnSm0tRTPlMbm/xSRMd8ZL2x3xZ9
- v5sHj84zgW39skjiIwJFUPVfwqZo6y6RRNQb5GTnlJdbpl+rG0zvGJ1aZD1MTmo1jgfa
- DYIA==
+ bh=s48lV2J2Dlql9cKxvznvCtwN3MJTUr4kVXBIVHCP+TA=;
+ b=kTIGnQaCZAWHVH4vnmuMuNtn5HyYD8TqxJjnmyeN3Mrs5kEkjNPLSBmWUFG5YV35bS
+ Th0AzIIKFD0ehyg4BhfYplmkfjIhbfoV/Ftm+jtohGpworOhQEgeoyuCVEmNkWpnizy5
+ JpqQHmvYoPuF7Cm+BZrsO90VAPAUIlkiwofhpzIjM5CkPCkzjHtmLX8YIQpGjNwp//l2
+ LwbpMza8fGAEPNhCIa1MmWXeOioYh0k0WV+pNKm4x3CuESa6gpjodeTmj6ajVBK/snFM
+ LRXuDgwTXV+SvcqqGIUJYMu2XcacmfXe9yTK95FlR+zYufEryYD4HJU+Bna8Lqm4eOSY
+ rc2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772561238; x=1773166038;
+ d=1e100.net; s=20230601; t=1772561293; x=1773166093;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XFZ4I7tCbCEtswC5eirIMJ5sLRA2GI/jI5oB/nTWbhE=;
- b=W7/JaCLG25pgk7Wyfj1XyrFmiTo1AHgr2l12CQtu1lyPPmFkyEB/FWHkMI/Q+t0NYZ
- dPBSFFlJaI50JfHOP4LHMrDjYF3OejREUp5IE/OFUskboAtoax17UEAs3PuuDuRbQokw
- JvwVEUA3FAyaP8qraSmkE7kLUQKPULkqdk+R7vqu4ZHFQlJnGflwJNwZvKX+cTeKx76u
- nTxUJnOMCQw7I6NLaDRmzrg1C/WzOl7cevaWNGtZrYNIvEYzuxy3gEia1pbatRi7lSN7
- LPsKULltDqs/ybcR7UChhyoSu8XjGByEmVkoofP6MYGvA4+n5xg8H4f08lB3X+/B3Pb0
- Wb3Q==
+ bh=s48lV2J2Dlql9cKxvznvCtwN3MJTUr4kVXBIVHCP+TA=;
+ b=DOrGgPn7JIaBtaynehRhB2E2tMvfiBGuFv9ORTttSk7DxdYIFpcIEzB8FFssmyjOfy
+ QedI6mwPt8eEHqGI9xEJwZDGUZ3BulZet8UC+68Yt5Z2+u6vRPVRkRTABj+/qGLXkuii
+ LLoAk/PlxkHvi/IIjjsS6ERCEIrYB8kpJIlJNFoUuaKTYbyAKuqzMvrU0gY6OHU5mu7h
+ h1ZVtnWmCd8NjXe4b7izi9vgloVsLgMTFNdGcKzqsvdxkqLDUTg+ywrJRFZ86Km9rLjg
+ sjY4ZNpx1dWkNcnhvxbb0e0/a6AhyJW4CJuL7+5auS8tBUeKSvIJJG0Kr2X15r1WCf7H
+ yyDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvyqhQsGP+9ET+hMy7Zp5oMpr/tq7ztUm4WlyxTya42zGYQQdc0c9qZtf5rKF4HrIChMT0nJ85KRI8@nongnu.org
-X-Gm-Message-State: AOJu0YymJnzwPaWkiMMixX8X4PPXvvxdrjBOeJ0dac1q7RSTF5QQtp5m
- sqf9dTLffL1P8/ohRjHUq/oMSDWNNFQnxaSeDeT3Tpkkw5Yvt8Z6bMcvdy7peA2MBz0=
-X-Gm-Gg: ATEYQzxtNwbpbx3ckKpcc1teDB3ItTFN2sA6J+mkgNl+emF77AhV8Ap5ltEQFgulSEE
- /FWIl5kJrIptaLNYS8ptGN3FUJuueaaDVH//5UAAU/x2YzOQsk7CqCHdvAufwEQIe2MLXpJ3TyM
- p/fwBS1L/uHUJmjsGyc0NgGS/YvCWp7Hrb8X8sqUU4AQZFWRpsQ+ykDDTH/dMGRmKSzadr71pID
- 4XZESWn05/L3ZJred34U+0n2PIo8nw+dBzB8RIt+y7ghIEPuAvjepLaHQgRXA9jlPYnbKM6DiG6
- eHnWPu/awILIbM8wlrOA6lISlallwfp440TqK6yvydvpSNXKa9xbWA2HTJn7vbbExVYljT9YOt5
- xVdBtFSH4H5kizROsdK+WosccIatEi1bkHkQj9lXlbJnPQH67ZZWdOKvk5/S7T+TcneP6ORqqQJ
- ahZkjboZ+u/2068stVAYezZtWHuOYvXqoi8YuhdtLJ8ZY/9dTDdphCmhODFh2FjjeOUWL/
-X-Received: by 2002:a17:90b:5203:b0:359:8c89:96d3 with SMTP id
- 98e67ed59e1d1-3598c899875mr7007717a91.15.1772561238481; 
- Tue, 03 Mar 2026 10:07:18 -0800 (PST)
+ AJvYcCVeLKWU817/B2i/XIdPHF6klGcz4YQL9sgFXQj0GwxedfN5ic1neInstHFNtDkX6WLh9ESr7gkzY0Xn@nongnu.org
+X-Gm-Message-State: AOJu0Yy9sYe1HQHTH5JPqYmDGs2+twCzuS7wbcgCBflysStMsLzBglq2
+ Fbx1x4R4QRTMeREZqoWOV1jvF6fkh9c+pjH3eDaOIkKpKgskHVhjm734kusV39IZbN8=
+X-Gm-Gg: ATEYQzwheSMkLXiUp8GkaySVaQwe3CEXi353XE2Fh+bCC0InfFpUBWwHKqN0wbqYKPc
+ WJ/LKEtsMDvRmCeZjMA12wWxMjQ8HD8koXogbdEyY+Cx3JRMCA1n1fdGLP8zIx15hI6U4ZmiG9m
+ IGxeOSVnNV98UzzPikDj4wooyS2FSkpiP2V4fqlWLrMNctiwinyDJnaapKqqFojmizMEHfSv7X7
+ kPLfNBVydf6H5C4OnkhXfx+t6QPU9ncwTioetAOVjCjPsP/KExHoh2MpAL/dg1kAtc+grBRwZtR
+ fO1By+JtvvvMT6LgxXUHSzPzs4Q0xY8/OZHozUwyNel8/W6eoii0rkdf3nDF6MGCeXjbO3MaOYP
+ 4jBse/SLWnOOIAAGFsz/g7bmcqXguty5e2E1lATx1zxC/nWbXcndR4kE9HLpynwU+exwCZTq8DI
+ tezLYAiv7Wb6RccAbJ8u5DoOt3fSfQQy/6yRROoGt4aN6f68yaOVeJGu1F1i2kBHX+27DK
+X-Received: by 2002:a05:6a00:90a3:b0:81f:d605:b2c with SMTP id
+ d2e1a72fcca58-8274da08925mr11000953b3a.48.1772561292816; 
+ Tue, 03 Mar 2026 10:08:12 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3599c3abc40sm2853280a91.14.2026.03.03.10.07.17
+ d2e1a72fcca58-82739d49423sm16620708b3a.4.2026.03.03.10.08.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 10:07:18 -0800 (PST)
-Message-ID: <9090affc-ca5e-4d55-ba80-90fefc85fa97@linaro.org>
-Date: Tue, 3 Mar 2026 10:07:17 -0800
+ Tue, 03 Mar 2026 10:08:12 -0800 (PST)
+Message-ID: <45ce9420-b884-4121-b51c-8be86dedc5ab@linaro.org>
+Date: Tue, 3 Mar 2026 10:08:11 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/docker: Update hexagon cross toolchain to 22.1.0
+Subject: Re: [PATCH v6 1/7] plugins: add flag to specify whether PC is rw
 Content-Language: en-US
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
- sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
-References: <20260303175444.1540049-1-brian.cain@oss.qualcomm.com>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
+ richard.henderson@linaro.org, imp@bsdimp.com
+References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
+ <20260303-setpc-v5-v6-1-15c77cfe184e@epfl.ch>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260303175444.1540049-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260303-setpc-v5-v6-1-15c77cfe184e@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,27 +141,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/26 9:54 AM, Brian Cain wrote:
-> Update the hexagon cross-compiler Docker container to use toolchain
-> version 22.1.0, replacing the previous 12.Dec.2023 release.  This release
-> has valuable compiler and linker bugfixes, but more importantly it will
-> enable us to target DSP arches up to v81.
+On 3/3/26 5:07 AM, Florian Hofhammer wrote:
+> In addition to the flags specifying whether general-purpose registers
+> are read-write (rw) during a plugin callback, we add an additional flag
+> explicitly stating whether the PC is writable. This is in preparation of
+> a patch that allows to explicitly set the PC to divert control flow from
+> within a plugin callback, which is currently not possible.
 > 
-> This requires upgrading the base image from Debian 11 to Debian 12
-> because the new toolchain needs glibc >= 2.34. Additional changes
-> to accommodate the new base image and toolchain:
-> 
-> * Use DEB822 format for enabling deb-src
-> * Add libc++1, libc++abi1, libunwind-14 runtime deps for the new
-> toolchain
-> * Add zstd for the new .tar.zst archive format
-> * Replace pip3 install tomli with python3-tomli system package
-> (Debian 12 enforces PEP 668)
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 > ---
->   .../dockerfiles/debian-hexagon-cross.docker   | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
+>   include/plugins/qemu-plugin.h |  3 +++
+>   plugins/api.c                 |  4 +++-
+>   plugins/core.c                | 29 ++++++++++++++++-------------
+>   3 files changed, 22 insertions(+), 14 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
