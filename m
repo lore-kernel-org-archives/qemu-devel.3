@@ -4,131 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7818EB365A
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 03:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80C5EB365D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 03:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxGCO-0001Iu-GE; Mon, 02 Mar 2026 22:13:28 -0500
+	id 1vxGm8-0007cw-Fs; Mon, 02 Mar 2026 22:50:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxGCG-0001HW-TF
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:13:20 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxGCD-0005em-Ve
- for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:13:20 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-827390e8a3cso3337028b3a.0
- for <qemu-devel@nongnu.org>; Mon, 02 Mar 2026 19:13:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772507596; x=1773112396; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Zox7Sxd0hNHTTmGxWZbjgue/E+XUQRUZjr9ntI9brfw=;
- b=y+S+mb8QXzfp4Oe1qALVYLIe7rPZPu+5z2tGMBeCYR8Er9ex3+C5XFm/njfABpoTSx
- GTyzuf8fZdnYhVFGIGI5m/q37e1c+fY2/Lk56iW+BxN35Ltduk7CR6dSkIZ1esTWXNp7
- tBMfXbo43j5oUwzl/XUYYz3KzYqQ9VQWgnFN0Bim7kQrpqEfpOZHe5yk2NjAZSffzUIo
- ijdcWDTFjJQnp9KTks008MlwZ446DvGEE/D+19tGglNT7vMk04vTJcVnv20H7aFFnhu0
- XoDWqJD2QjHpETK7Y790rrVidjn63pBcTby9d6j7Vz9IyqROfl/ea0ZYcroZo1KDvTzH
- zDQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772507596; x=1773112396;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Zox7Sxd0hNHTTmGxWZbjgue/E+XUQRUZjr9ntI9brfw=;
- b=ka9ow0PIKNxVNdCmVMBZVAHo9GPehv7V4BCfugCcxWn3wyvq9oMdxTGYvKuFMu50N5
- +XyDJrAzn7N9jzLuSHSMCCXU/fIhUvTfYajs7dy/0K4tZv+5osuIAFhgiDXfsV94SrG4
- CDdww5kJ53D5uoHQXPAf9SjdMTqqKTOQ8CANVG4wk97CY6IwnNcK6OYOi0PN/rLJBewA
- 3lNjo0TYPCCCxIosLmhM3Cf2YhRx/i7fEtFTmLMdtDOqVtzFPdWXQPFpWdQRxaPvnpuj
- caLAb4rfz8PGMLuR2g0OirqZA/uvND5r6W60zVE1Zkt0zFTHgI59tSand7oVohuRhw1R
- 6bKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeI/OhHmI44nGSDRkqbBk77ecsdPSYKm0VgxazznQMtsOTNDDnH80hrIj10Rvt6289dIhGxhnZB7Ex@nongnu.org
-X-Gm-Message-State: AOJu0YwRm6fOt5/KyqUEeVyDJJq6JUAJcSb1/LvudaKhbMbyRgipxB33
- HYN1j5WmTDQlU/cKRUd+j8y7lQt4u7xcnG3vITOlNQwhdljK+Sz/WjL4JyQFR2tfczI=
-X-Gm-Gg: ATEYQzxCqoOaIv1mlX+wU/d1LEkll74ecwnyh3lzwgvt5fyjG/BIIglBzdNKzbkJdQi
- 2heAMje9zptViZekIcbsfBhrQmcCHP2LXeR0DUWk6pvVBq2gPJDPXo7ffN+Y6qx4KtRiqP8ZkQ8
- PVpBvrcOoaMu2qUHETYTeiYM0omaQqxTRqd0TnD06GAtUg8CKBjBwUE8QjzZtDuCWniW0G7Zf/V
- f0nefoa8VT6PO+ocb+GyIuak1cgoKSDlRBC0axMre5BeQVjZ6uERz59VNKRvNI6wXNE4fsIK8xT
- prAK1hixJjbdP+iYDoi7HjYv773UF+8S1Mr31dQ44YC1xvluhExP5IdEFA7D2BF1yrB5wBSV+7S
- ZZpus4fZtWYIwqFZl2aVdH4L34LAeEoPR5Wv6w6ClEmM21pFfL/IZxNai3nKwldLrf4YlS9eeYX
- vfClrbbm+eq3qKYLNW1pCuUnxEmvmtL8osZ2Nq4NfX+9NjKTha1M2epEwIPSDG3I4g/ABj
-X-Received: by 2002:a05:6a00:bd12:b0:7e8:3fcb:9b03 with SMTP id
- d2e1a72fcca58-8295d9c00f8mr554822b3a.25.1772507595443; 
- Mon, 02 Mar 2026 19:13:15 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82739d4d826sm14638196b3a.10.2026.03.02.19.13.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Mar 2026 19:13:14 -0800 (PST)
-Message-ID: <e5f37295-2825-4c61-bb66-80f1398b30b9@linaro.org>
-Date: Mon, 2 Mar 2026 19:13:14 -0800
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vxGm6-0007cf-Oy
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:50:22 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vxGm4-00033H-Hk
+ for qemu-devel@nongnu.org; Mon, 02 Mar 2026 22:50:22 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6233nh6x037586
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 3 Mar 2026 12:49:47 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=t12vpf5BydF6dZQ1OJ4FfNQstBfbjttaXn2PVWYVUfQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1772509788; v=1;
+ b=iLQgQ+Vj1WwTuzWvhBQNcUA1tHwd/qCYgDs5VPDcQ6sLUxX8dGxhBCx46JdAl3Dg
+ JA7OP0zlwiMmM67PfAXpvT1IQV/jInHyegz+U8D6M8SHoMwtQd1Xk2z5xV0Lw/er
+ bULX1uB4lpUOvAoDmjylJk12bDI51tg7Lw0ap29Z17c0oBZ8XGIHFe1jP9Vy7OaC
+ MDzqiMAozPuMFtK2ysWL4Had7Y4Wmr7nhXd+E7AsgjZGGswErvzPf8MEOGG1GQon
+ 8LT6V+5VI+0PFgnXCnTPFQmTz5s+5iPnuFhITpFmN631Ig/pDkxthI64B9YJs6Lu
+ ZgyKAo+gMJZrtkH1FaMF6w==
+Message-ID: <88f3150c-277d-403c-8a64-0d91d61980be@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 3 Mar 2026 12:49:47 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/7] linux-user: make syscall emulation interruptible
-To: Warner Losh <imp@bsdimp.com>
-Cc: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, richard.henderson@linaro.org, laurent@vivier.eu,
- berrange@redhat.com
-References: <1739da2c-2ea6-4bc7-be6f-981f8658ce3f@epfl.ch>
- <b280d4ad-522d-4d28-b203-b87f114d0d81@epfl.ch>
- <CANCZdfqML5j5TLOQn2vCNAgxF9iWrL=92x_+oL4_NOUUJqt+-Q@mail.gmail.com>
- <535bf813-7926-40d4-b0de-3cd181dbcfa5@linaro.org>
- <CANCZdfqdC4xn3eQ35MjY09PLr1-hDoNgJ3quZfqU8UcrshhuVw@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v21 03/18] ui/egl: Don't change bound GL context when
+ creating new context
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20260302145920.735423-1-dmitry.osipenko@collabora.com>
+ <20260302145920.735423-4-dmitry.osipenko@collabora.com>
 Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
- eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
- CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
- gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
- qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
- 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
- L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
- IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
- dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
- tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
- PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
- F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
- HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
- CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
- UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
- uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
- vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
- FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
- I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
- oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
- TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
- y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
- /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
- YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
- DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
- v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
- 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
- 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
- dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
- 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
- X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CANCZdfqdC4xn3eQ35MjY09PLr1-hDoNgJ3quZfqU8UcrshhuVw@mail.gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260302145920.735423-4-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,70 +93,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/2/26 1:21 PM, Warner Losh wrote:
+On 2026/03/02 23:59, Dmitry Osipenko wrote:
+> Don't change bound GL context when creating new GL context for consistency
+> with behavior expected by virglrenderer that assumes context-creation doesn't
+> switch context. eglCreateContext() doesn't require GL context to be bound
+> when it's invoked. Update qemu_egl_create_context() to spawn GL sub-contexts
+> from a common parent GL context instead of a currently-bound context.
 > 
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   ui/dbus.c          | 2 --
+>   ui/egl-context.c   | 3 +--
+>   ui/egl-headless.c  | 2 --
+>   ui/gtk-egl.c       | 4 ----
+>   ui/spice-display.c | 2 --
+>   5 files changed, 1 insertion(+), 12 deletions(-)
 > 
-> On Mon, Mar 2, 2026 at 10:50 AM Pierrick Bouvier 
-> <pierrick.bouvier@linaro.org <mailto:pierrick.bouvier@linaro.org>> wrote:
-> 
->     On 3/2/26 7:15 AM, Warner Losh wrote:
->      >
->      >
->      > On Mon, Mar 2, 2026 at 7:03 AM Florian Hofhammer
->      > <florian.hofhammer@epfl.ch <mailto:florian.hofhammer@epfl.ch>
->     <mailto:florian.hofhammer@epfl.ch
->     <mailto:florian.hofhammer@epfl.ch>>> wrote:
->      >
->      >     The syscall emulation code previously wasn't interruptible via
->      >     cpu_loop_exit(), as this construct relies on a longjmp target
->     that
->      >     is not
->      >     live anymore in the syscall handling code. Consequently,
->     longjmp() would
->      >     operate on a (potentially overwritten) stale jump buffer.
->     This patch
->      >     adds an additional
->      >     setjmp and the necessary handling around it to make longjmp()
->     (and by
->      >     proxy cpu_loop_exit() safe to call even within a syscall context.
->      >
->      >     Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch
->     <mailto:florian.hofhammer@epfl.ch>
->      >     <mailto:florian.hofhammer@epfl.ch
->     <mailto:florian.hofhammer@epfl.ch>>>
->      >     ---
->      >
->      >
->      > So bsd-user would need something similar, I'd think. But it still
->     uses
->      > the older-style
->      > TARGET_EJUSTRETURN. With half of the archs still out of tree, I'm
->     not
->      > entirely
->      > sure the best way to approach this.
->      >
->      > The code does what you say, which is good, but there may be some
->     subtle
->      > reason to do something else.
->      >
->      > Reviewed-by: Warner Losh <imp@bsdimp.com <mailto:imp@bsdimp.com>
->     <mailto:imp@bsdimp.com <mailto:imp@bsdimp.com>>>
->      >
-> 
->     At the moment, syscall filtering is not available for bsd-user, it's
->     (sadly) only implemented for linux-user. Which implies that current
->     changes are not needed for bsd-user neither, since they can't be tested
->     anyway.
-> 
-> 
-> OK. I'll add it to the backlog list then...
-> 
-> Warner
+> diff --git a/ui/dbus.c b/ui/dbus.c
+> index 905ee6fea71b..750a064e3fbf 100644
+> --- a/ui/dbus.c
+> +++ b/ui/dbus.c
+> @@ -47,8 +47,6 @@ static DBusDisplay *dbus_display;
+>   static QEMUGLContext dbus_create_context(DisplayGLCtx *dgc,
+>                                            QEMUGLParams *params)
+>   {
+> -    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+> -                   qemu_egl_rn_ctx);
+>       return qemu_egl_create_context(dgc, params);
+>   }
+>   
+> diff --git a/ui/egl-context.c b/ui/egl-context.c
+> index aed3e3ba1f3f..f9a998768beb 100644
+> --- a/ui/egl-context.c
+> +++ b/ui/egl-context.c
+> @@ -19,8 +19,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
+>      };
+>      bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
+>   
+> -   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
+> -                          eglGetCurrentContext(),
+> +   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config, qemu_egl_rn_ctx,
+>                             gles ? ctx_att_gles : ctx_att_core);
+>      return ctx;
+>   }
+> diff --git a/ui/egl-headless.c b/ui/egl-headless.c
+> index 1f6b845500dd..19955792ac95 100644
+> --- a/ui/egl-headless.c
+> +++ b/ui/egl-headless.c
+> @@ -42,8 +42,6 @@ static void egl_gfx_switch(DisplayChangeListener *dcl,
+>   static QEMUGLContext egl_create_context(DisplayGLCtx *dgc,
+>                                           QEMUGLParams *params)
+>   {
+> -    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+> -                   qemu_egl_rn_ctx);
+>       return qemu_egl_create_context(dgc, params);
+>   }
+>   
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index 0dbb429958e5..6b3519419039 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -217,10 +217,6 @@ void gd_egl_switch(DisplayChangeListener *dcl,
+>   QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
+>                                       QEMUGLParams *params)
+>   {
+> -    VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
+> -
+> -    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+> -                   vc->gfx.esurface, vc->gfx.ectx);
 
-Good news is that it should not be too hard to enable.
-More generally, plugins were not enabled for bsd-user until recently (I 
-added it in 9b23bf5024b5c7d91cfe9233f71859208f4ffa94 around a year ago).
+This uses vc->gfx.ectx instead of qemu_egl_rn_ctx so it should be passed 
+to qemu_egl_create_context().
 
 Regards,
-Pierrick
+Akihiko Odaki
+
+>       return qemu_egl_create_context(dgc, params);
+>   }
+>   
+> diff --git a/ui/spice-display.c b/ui/spice-display.c
+> index 28399f8a8174..ae0f771c2a38 100644
+> --- a/ui/spice-display.c
+> +++ b/ui/spice-display.c
+> @@ -1033,8 +1033,6 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
+>   static QEMUGLContext qemu_spice_gl_create_context(DisplayGLCtx *dgc,
+>                                                     QEMUGLParams *params)
+>   {
+> -    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
+> -                   qemu_egl_rn_ctx);
+>       return qemu_egl_create_context(dgc, params);
+>   }
+>   
+
 
