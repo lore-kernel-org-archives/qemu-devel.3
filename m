@@ -4,80 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C4CEC1431
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBCCEC1433
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxO8d-00058U-DH; Tue, 03 Mar 2026 06:42:07 -0500
+	id 1vxOFl-0001oD-W8; Tue, 03 Mar 2026 06:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxO8R-00050m-LV
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:41:58 -0500
-Received: from p-west1-cluster6-host9-snip4-6.eps.apple.com ([57.103.67.89]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxO8N-0001X0-VB
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:41:53 -0500
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-20-percent-3 (Postfix) with ESMTPS id
- 63F5918003AA; Tue,  3 Mar 2026 11:41:45 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772538107; x=1775130107;
- bh=gBxNQ3TjAYTeogiJbh69cd5jTUQ5SWnQGrtlwC8PRBY=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=LazU0yilVk/axwl4yclOi++VSFHVI+Doodc56e4jwTRc24Oms925XYNK2Ak6DAgNgoRchDV1T2kzyV0Su8Iy5t3JTaGy8PBWQZb9CnA/J9UWKT7UwBxMEmheE7gwqokQ2w2mPtGujfwq1IgPmUP8n2ea3Nha29jbJ6PuW7PA+tUfaiZ9/UujBP53RlYAVaHf+KP/9IYWohWSZ2qVAdUSmq8ZclDFHigeIq0YY0YBohXd7DAPxtHUM/NqDAVaeitZeEEOkSYtd2j3MM0krSFUp6XGOxSXbKfnY9RXJaj/rqyZGt0BZgwBS8FFge35St63snI3COScDeTFEPmfRltiuQ==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-20-percent-3 (Postfix) with ESMTPSA id
- EB99C180019D; Tue,  3 Mar 2026 11:41:42 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- Wei Liu <wei.liu@kernel.org>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Cameron Esfahani <dirty@apple.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 2/6] target/i386: emulate: LA57 fix
-Date: Tue,  3 Mar 2026 12:41:31 +0100
-Message-ID: <20260303114135.15390-3-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260303114135.15390-1-mohamed@unpredictable.fr>
-References: <20260303114135.15390-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxOFj-0001n4-HF
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:49:27 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxOFi-0003Uc-1H
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:49:27 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64c9a398bc7so5291859d50.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:49:25 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772538565; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Clm8UdaJRP/xo/Dak6xJ3QkEcaEZaCb21Qw0cn21Zt+jbejk6QdeMO915YTSCOCNJ/
+ 36TVtth9O9U2ZctqGB4wxDd+nD6jhB6id72fDGgQs8rhVsQbDJ0Ko+T5RxI+7MxxME/H
+ F5baY3LHSlXDHlzRpjGOIyVUOBXiv+Y+tKNuke9mu7i4OzkFA2Gaj+uo9ALKXu5Ol2TL
+ N7LrmwSQsctcfAGTScuRllyuoLw9ALUbedEOsjuNyFbKPsZVhuzxOzN7OHnEoSArbnes
+ yCE8FHrWQ9Ten0QbnXOQwkJIamXKfwvRoYnE5n/IkGVnHOLiDGRXP3GMR5TtAVOzwaNU
+ yWCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2hJUD9Sod/ACiZwBZu5VR2FoSOBesQTmoLcwQoPlkNk=;
+ fh=AdBTw8e3qFSUl4ziMc4G2bNspFNTgb/iwfLaoEJKdE8=;
+ b=aP7gzCta4PFkoArH/hNYye+yC9Yf/6b2Cd2AxIXKjCQk24zGi1LF9OVw+00Zr0+MT5
+ rLQx6aggUK1lUwGOGx59rKfTHPgWA7vJWkYKC9VFkxbN98lNgRMl8I8fOpW+PR5/gRcO
+ 0sBwE/kbXcead53T/eJh1+bfIE3RLjjeamYrfaly8vadGVeXhRiPBC60D8vzC1z+JM9X
+ GSoCP5EkqTOZtdPgnjCldcE+v3uMI09KSyOLWL6dq2rZ4ugijXJkgpyYGO0SM0UGG+t1
+ R5/CICbQZaKkEdoErPNUy9/0o63jyKVwEHz7B+C3Wp+Rh0Wiikk20J7pXTDtqg2nLaix
+ TPbA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772538565; x=1773143365; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2hJUD9Sod/ACiZwBZu5VR2FoSOBesQTmoLcwQoPlkNk=;
+ b=MtlYL0gPrTQyDsWkTOb0Oj5+gG1As7jr7el8Ih7zHErp9/OFxSTxIa0JILABL8xkTt
+ nF6WoGghNsAjw8i9MX6tlPd1HviJxhdJjq0yIuRuqzVJpzQOrkdrGaW4mUoLMPAP7+jE
+ 6ZNYwDNaKZ8er7lhP4hlwBbwX5Q+/ogUGMBAA3IFkbYqYXtaVy113HBP4i8V5mTcpv/d
+ v15HkRm/4CWTzGkVj0sHoj4eX+oZPO2e81sLx6/vQ03QxNrjB68ymGKPxO1cq8EgAvJs
+ BUKbz4ILAKS2VTaeY3GmRS/B0F4wWE1gtTtn7edtnhNHedsCEEe5zp0PMJdtLwsNKgX0
+ SKDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772538565; x=1773143365;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2hJUD9Sod/ACiZwBZu5VR2FoSOBesQTmoLcwQoPlkNk=;
+ b=q2QqUz5CSx4V/paNNs3MCJvvZ0Yw1Le3/ggVo+Yqu7b/X7uQxOI7oe4Ae75CCd4YT0
+ bfAAkKkCn16SL9R2dA6d9V1Hr+DJ86erYI0/t7qfz78ALcKkhY1jBnOzQu+ba5nVUUR/
+ imr2cgojNxywuDaL0LIc5nLLZnL+uAhcAQsiE/kz5cTP1t9OEwRs2N/3e9SfsbmW+hS8
+ OHAI7Z2SrTK3DXKdUKnAYcyqEPGmdTPiHLC8FAB8hX7h1gkXdSwtu14fH9Oh1u+4mZOk
+ LhyP2Vz46FI/lgxZA52rKsDnKm2twbdieV1F1y2r7lYMwT8/Thv1WlpmrgSZEappLfK5
+ dj+A==
+X-Gm-Message-State: AOJu0YzCwxC4RTl0LeQvOTW8sGRipyGu4TZ2RjwM4kHyk3F5PtGsLHST
+ 4nJn/YXGjv3NjAMduHmPsFBkJcDOtoQv9XEYT03KVVzskWa3pOXxVnozrB56iD0EAdzJRw2b8z/
+ 1zMmcmuffODhx3ip67sXD5o/ApZCOHtopKoR4RbNoXfFxDU2jzX1H
+X-Gm-Gg: ATEYQzx6XKlOp1sJ7AjEnurtSIjl5eVlcUWcJ8z3AiN/NmzYPA/h7wkgxAmXSzOmBZ/
+ L6G58Hir5dUPIPehl71y2UJdGaKQay7ZE41WzWjJx/xhEpb0dl4BwxrKRXNzy9MSQIudjg3Djxw
+ QBgeGsrsk8COCCG1j0RuvhIyjgHg3urWCVy4CbdP6OVlTv8HgFMFzAzqFsXC7z/Bu3VVEB+4vV6
+ uuHicsoJBg5cQFJvQocIcb43fmsBiFzFssY8s4IqgIVIt0xXmTJ7VHadB5q+tDWLGKbYqbRMLoH
+ U4wzq2smaspSCJqFgPc61iXhrNBBqjUBVtryGjZhJpxENNuSOIhXteZDSFjwZbwmpVLn00tH4sT
+ hTQ==
+X-Received: by 2002:a53:e319:0:b0:646:a1ba:7168 with SMTP id
+ 956f58d0204a3-64cc22cd0c4mr9734394d50.67.1772538564597; Tue, 03 Mar 2026
+ 03:49:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDA5MSBTYWx0ZWRfX5vF4xxSJbU/A
- Ok5LCyZBDBMwujehYBaOjnGK1eGQNV1wKcDUpyuEu0NEezXbbwtmsnUsZeD1D4jGprFsK1h+/He
- KlQcZPOlWv+JzMyPLixK9HDOORHJSVvn8ZzrVFPkyYjmTYt7XIm/TqtieviQC76Q7jrBmKjQbdg
- LsdFmg7p1rx+flBrvYYBIEvufutMXPkhhVEl7TyNFn7DJWCqMPcMlKj+X8OXyvvGRAP225rGU7T
- oeKOdXeqeDSgI0HE/1FLDtcHkz+XQEhQibgGozx5/0ZpJeYpGDI8jRwMDCUrGYttVpNVpPmuAOL
- z/EmYV22PuPqLVJxCNbH8JRchLKYNn8H55HjieM+RTkJ4WBSuk8MCmkh3AhiVg=
-X-Proofpoint-ORIG-GUID: VikLG5vIp_oNXXB1Ew6PkGcWpzU5bwz2
-X-Authority-Info-Out: v=2.4 cv=XbKEDY55 c=1 sm=1 tr=0 ts=69a6c8fa
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=AJrqCOfVdMXzVqk_6-kA:9
-X-Proofpoint-GUID: VikLG5vIp_oNXXB1Ew6PkGcWpzU5bwz2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-02_05,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- lowpriorityscore=0 spamscore=0 mlxscore=0 clxscore=1030 suspectscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=781 phishscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603030091
-X-JNJ: AAAAAAABO4/qCN+wzhHdPgibQyVFJRCpD5XTftRNtAmidjqXTnfxch9iwNujtehQDvPZNgqcZx0KgzcreHzR+UsUxVh3y0n3I4p5WZoc4ColFESrC5oTIH6sc5/zxidCETGW+Xqv88uL8yYvVZGeB5YHnn5KC2g7+iui6CtbOmzOPk43a+9e1/EtQJKecKciADpAWI+9Vi3t8S3M1T7mA6OPm8QZZG7S+3eARz/trIO1dGepApYnR+qV+92uPoiKOuNLt51w0dkOeqQZknWtaCT00EymDOkwbtZ9f4Efs7YmG5gQ0M8npYj4bahLjxjdVurm0dGuWxWozV/T/42/toXixZx1zwTdnW2pvhFLqSGpjoonJ7mx8awJkMbvupfyqXnOmpoC0/+ZA/1De0eCUGZg51ePUuuRlbd2MtTHylgPycuZgFTWYTMXZBMTswy/bCEziHdEQxWo0jVciPzJNRe3H8UJW9Wd8fvNqLmUbhTPfQqj+liwGF76eUJ+gHrLKISS6yR5Lr2DpOKPT1Euw2kKNoD1y1TbJgP21uypaLX1CMxtegEwgDV3ZtGRSHOYFHJB2kEO3mnaqMWOV9UMReNrwy5S5KS0jtxh13UirWSgKP+eSN2yf8HrzN8vdC46sdOJRyn0iBaUkuy6HLILmVaaRhHz4vrmQDBQgoBLhSeQi2F4Bn3unJALzVHV2wMYebThXazZptC1BlZQIw==
-Received-SPF: pass client-ip=57.103.67.89;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260224112215.83355-1-paul@xen.org>
+In-Reply-To: <20260224112215.83355-1-paul@xen.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Mar 2026 11:49:13 +0000
+X-Gm-Features: AaiRm53H_teTlzsJJeXXZkxZScQ4Iz6YgBEnQv6ejvp5s9BLJ8KPPRbxSsIbz8o
+Message-ID: <CAFEAcA9CgNeDKT8mxKsU-_KCNZso2223RJ+JdFzKeQ6ACCn0Ng@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: remove myself as a Xen maintainer
+To: Paul Durrant <paul@xen.org>
+Cc: qemu-devel@nongnu.org, Paul Durrant <pdurrant@amazon.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,27 +117,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Seen on a Sapphire Rapids box with LA57.
+On Tue, 24 Feb 2026 at 11:22, Paul Durrant <paul@xen.org> wrote:
+>
+> From: Paul Durrant <pdurrant@amazon.com>
+>
+> I am no longer actively involved in the Xen Project.
+>
+> Signed-off-by: Paul Durrant <pdurrant@amazon.com>
+> ---
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 233d2a5e71ff..ef805c8ef7a0 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -603,7 +603,6 @@ Guest CPU Cores (Xen)
+>  X86 Xen CPUs
+>  M: Stefano Stabellini <sstabellini@kernel.org>
+>  M: Anthony PERARD <anthony@xenproject.org>
+> -M: Paul Durrant <paul@xen.org>
+>  M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+>  L: xen-devel@lists.xenproject.org
+>  S: Supported
+> --
+> 2.50.1 (Apple Git-155)
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/emulate/x86_mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks for sending in this patch; I'll take it via target-arm.next.
 
-diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
-index 8261ca1635..4e39bae025 100644
---- a/target/i386/emulate/x86_mmu.c
-+++ b/target/i386/emulate/x86_mmu.c
-@@ -56,7 +56,7 @@ static bool is_user(CPUState *cpu)
- struct gpt_translation {
-     target_ulong  gva;
-     uint64_t gpa;
--    uint64_t pte[5];
-+    uint64_t pte[6];
- };
- 
- static int gpt_top_level(CPUState *cpu, bool pae)
--- 
-2.50.1 (Apple Git-155)
-
+-- PMM
 
