@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9145AEC1432
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB9CEC1430
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxNvo-0007mg-U8; Tue, 03 Mar 2026 06:28:52 -0500
+	id 1vxNz8-0000Up-AT; Tue, 03 Mar 2026 06:32:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNvn-0007mE-Nm
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:28:51 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1vxNyn-0000QR-AI
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:32:11 -0500
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxNvm-0006gu-92
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:28:51 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64c9c8f8783so5756269d50.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:28:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772537329; cv=none;
+ id 1vxNyh-0008PU-Cq
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:31:53 -0500
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-64cb577e79cso5560628d50.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:31:50 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772537510; cv=none;
  d=google.com; s=arc-20240605;
- b=StHWmk/SK2IrODYAV+0iNBKOCxQRBECkVd0K47hQ1LD428jFyVaRldyeP8ggtvnVZW
- m7rkv58qgN6V9CjaT39dAmBPhlWjoajT+OnI8+o4oUTMWl+kvxcHdZStQuWtWAiYdZeg
- UxpeXP/dUul6Iafrw9lpXukPtLt0wlWaZgeGEi2QDEqCDyaIlZuKKmr++dZ9+qcpUS4k
- R/+h+9U0+jhkAv3Yq+NXohi3ZisqKxgqu5jdePxoiQEg3gzVLzzsq92aVofXz+rt3zMt
- ifBd1sF2ZOySmUNEs1B3YGkZ6QcMqlEEX6gRBrSr6omn12M9wSDfANv0aZrW5yN80X1L
- SJ0Q==
+ b=XjDwSSyOYDVKRpwHf0J8lYO+Gb1CZSBEzdCVq4Gg5URBlcfmAldBs/CJoD6/z+x2l9
+ mhYQNKdEoZ0ct71yB8NlKYoeBJOTmIky5necHbK2KX5xMXci5LtVQbK77UzCyTMcIAmC
+ valIbQaCmJvR54+FEiy3nWQEjEzSmDkzfC9ppyuEL4lZslS/x4ZTLUEDVs7sf9EF6V03
+ AjPmBHtYFQRmvIlR0N+i0pD/96SoUcQeaJHsyUxGY1j00kB5Xt5IUmS+rpSLNV/8Pa2y
+ uCQmZA+Qko8Irx/xhSeS+pXHZ63xGeNpq6IfgfgShx7nMh2SqIlGSmBjEoS2qwzQ0//z
+ Z2bQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=+2b6TbtolqEqUHYCnJaMhaWWIYLpTc1S6n8wYDRGc5Q=;
+ bh=JHXfHR3rs04a5cc5C/jMgXKlfnt1eqHrGzpqZ7zi+vs=;
  fh=e8lPG31nRq0pa29+ILZPVpv23pShvDc8zQNyomzI6HQ=;
- b=XNMRgzpP0GoQrgq8TbyXGfKNXERcT8SrOQLHPdHBDISHR5/EFBbbBXpkYMcOv+Sbfa
- LrH1Y4j8+7qBjN4GPJIE3JUdGQpWsXNXbba/3ZIuoq6aV2Q2gB8e59Y9jtqbYZKIy7Bu
- TMI9u9V74/F5cfX2Cq093TgCRy8s1YjmC8cCJcHZdmKEZLVSQ3x9f8Yeu+xlMkZyYv11
- LfvvFucmyd3/bFqy+TOX0D/sew59RPFhsGTy3beMlGlnYTgyjVU6F+aF4Mwg6Lodu7eI
- kiXO3unusC5tRXr5wq4GqFW990kE91mLHxda+XCxnyLC/f6kqTJkCuRb9V2ZlLk1Km5F
- 3mXQ==; darn=nongnu.org
+ b=Vd/n3CNGN83r2m3/rY3zKy5i/F5EkeBovKjREPCUc8esPHnsS/7R8ZkQZty/fymUbp
+ axUEk+Rn4U191TNksDVI2zxP3Jhsju0N2Yc3BiPzHMLL2tQNiK+ypr4hB/vDVucjw2Cw
+ KCIzMQ1YzbPUWcZdAXRhU/qoNX/X6SqjEStn5mFuwE4a1fjerrgDDz/gcCdF4ENrzFAz
+ gY9WGHtK+eTSXtGdCp0JJGwqVAnMeRnL7VSjkFSaaQd6JPL3aN/4zxxqqUoBO61uRASf
+ xwbFb3WY0Suv18bykfC9WuNtiXy+Xqg1fIVixke1zoOH0aLSJ6UF+CRCQyHog0+xFGhr
+ W4Sw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772537329; x=1773142129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772537510; x=1773142310; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+2b6TbtolqEqUHYCnJaMhaWWIYLpTc1S6n8wYDRGc5Q=;
- b=EMjVTD6BKx5zJRDFMR20Fhl/G2mCMn9Vhiy7bUk/wUzHtlTPasKQHWpxphTXppYWcN
- UTn9x4lgcnmOIv5hCRI6GTwApHcmEO69BIZhi9DgglczrQBZmYXg2yQ0x7jN9xyJraY0
- ueNz72ul+PJOxeDsN8dyiMZCdfneVAGGK1VTTEb7erskU3mRYqntWCftok0UzCO81DqI
- aO7FMwdJyW4vhXASAzfh7aj108tUbQTvm86wAnjQHBVOYweaXQbZ18SowJJ2buMDida2
- HLISfXkKQ/HYmjREGjJN6+gkNaynosL8rqb4nPJMKkvNkILvG1HLVZWVFCS6FY3d/TAV
- Eo2w==
+ bh=JHXfHR3rs04a5cc5C/jMgXKlfnt1eqHrGzpqZ7zi+vs=;
+ b=iGUJ7xGzuPOP07Rr8LLPRt4a9cBhIvWlZqkOkKTN/8JWU4IlG19pkcZUA24p7MI7sK
+ IHOBkUIu9ru2cE/u9XIntrcdkM0TLEjHOv5QXUN1DJ+OXdNFY1Ls9H10DRvF/f8DKx7A
+ kikgko0R8KgEtQjVWqfLtiiHlx324ZbW4WjEpCvbuVyHq/fc9+smw4hk5XEHtPyFTXbV
+ g84HRFqzo1jOgEtEoc3dVnsggnN7P1hG9higovSpBNbdlLbuxvbF/GgCwCbSKsfGpWl7
+ TpPwPln9CXp8CnyeJ4jyOSMLPrE3RRSaNR2CvnEcFPIqExncXVoQ6gP8I/pVUJ93Aftq
+ ULHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772537329; x=1773142129;
+ d=1e100.net; s=20230601; t=1772537510; x=1773142310;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+2b6TbtolqEqUHYCnJaMhaWWIYLpTc1S6n8wYDRGc5Q=;
- b=Jf323qM/GNHp2ferJmYHLDQoVK9TSTth7d3GdlxoVXnpYna3Mko72hVKPxw1gLTxKU
- f42CSpkHkbevkF1bcGuvSVD4nGDirfhk0UJJNQglayjegMDdCd6MQ70fiTcZ/eaGzWZh
- Ha729u++YmtBH1IAg6mtVmTa8m53V0X/G2PtiU3RPcKvaNU8uPaLCN4uNtfg89UlmoK3
- BPldUgVIbs+fuBCm1JY2rBoLh2EXFexBhygVeayMnFNDxRVIRdprsLPtKcLHRyFSUKpQ
- U1P3mbuT/eaOeY/sB5UZ1pFVUwlDAQ3y/EY8z8pcgJsxFMu+tJ2zT0EKSxBFctTG6pc6
- 3cxQ==
-X-Gm-Message-State: AOJu0Yy8VdnfMq6/4rXQUURGivusGNi/oRFt0sUv9lpQ4pnRwA3gQKLl
- 46Ib+PBMa1CZQTMDHK45waJFEnHYAM2znAaYmRadfjpUYxdVi1OTMMxWjXZbJpkas3OFfc+s0bq
- uSpd20r16QPKLr74VPVpxU5yeJSltjp/M2/n2YVqLdA==
-X-Gm-Gg: ATEYQzwpvcOH3OKnU/vXdrW9Y/1nmM+90mYYMgq3tY7Ye9kCnkfdHGyKKHylpepk/Ti
- NTzysQvempdbkorgXpA7o76MnOHYYCFeuhcpL9i2zw7/CWSbZzLscAcyKDqMadURA+HHehIYlEl
- bgMStEl7pHY6mDZF0qt5HkHDtp+3uDJm98Admbac3d2tw1gnAWod4QXNxDxnyVl/xhI5CXqU4Ka
- dZi83O4fUQ7aiuVrAYEKMK8aZCNri1F2P9c8uTMPpuUwPGzOCNuvDj4BP139+Zt0nftQghyWi8v
- Nb6u/k/l6xWS9fWmcdeIvHxG98O7UY6grK75mex8nrIX7B1dWXvh0pEXiTixMVD+fvs=
-X-Received: by 2002:a05:690e:bcb:b0:64a:d3b2:d3a2 with SMTP id
- 956f58d0204a3-64cedc262e0mr1043496d50.27.1772537329295; Tue, 03 Mar 2026
- 03:28:49 -0800 (PST)
+ bh=JHXfHR3rs04a5cc5C/jMgXKlfnt1eqHrGzpqZ7zi+vs=;
+ b=dfTqFJEeaq1K7sTH9BZzxGnkHC4CGffuWz9FNHLY+dldgzgRZtzkeGxpDOOkrilv/l
+ DPiX545TgnB9YcX8Xn1TX9B2uBDdeukfbS5azhDH4iJFd0l41qOlrKUCzwhy3ds4LzNy
+ +zjlk3anTTYpz8hdF3dMnGg/Qvy8BBW6uR0eso0sD+6RRSOwUCGulUlveiZQ4VpZzzh1
+ X6PF0CvxsNwdRZsKZ1LQLd6IiPTMqVgQ2lJYprpqyAWCD+pe8h8e/UmMWDwMqkkLLG16
+ NT7GBf9qRm63Ea2C1ZgVbpgQycU+Xa8hCtNVZoQJGtzHRzhsmvSz3G8PUHQ2YSmghQk/
+ FdSg==
+X-Gm-Message-State: AOJu0YxVdgKCOrIoEOaM/Wn8hOPIHepvS/KFOcCVCRzslfwMcn9puGSw
+ cDKM3B/hJ+v36TWj3RPkCALK7gdgpJg6PdZtK8zwPgGiedc84v3u7g43U26BhL2Js58piQKbmtq
+ as2eh0E+/vJUSP5uihhqb+HvK/h7hUAMkLihGffD+Gg==
+X-Gm-Gg: ATEYQzz1H98zmu1MeO5NIEyENnkqD3smeC90RVTDSA7rEl8n8DR5VG5n0YJVba6a2Va
+ 6g99cYQlxq/LtztrFTGqSK7xcwoZ3h2k6+Sb+YU8XGK8a/RgutbhrCkwIxFD7YCQ0Dn0PHn5rGb
+ f4rDp3ie409ZliCTLHZDOWfauDfZpEyeti87BiqrQdCZrsV1ypfOHWjEUTDzhso+2yESN67cFCe
+ 5GHFK8ua6kfuo5lxohkNshXczPC90XyXRNh9wyfH7KVh6x7ndzN32K2h3+f8CZDzUa99P6pJGCe
+ 75OFtXHvaGcUDRmRaGojQDF8l/p6BGKmxEHAAnLrlkDL2d/BgNCYVUTHdQd3TvY7/nw=
+X-Received: by 2002:a05:690e:4488:b0:649:c308:90b8 with SMTP id
+ 956f58d0204a3-64cc2025934mr9848749d50.6.1772537509877; Tue, 03 Mar 2026
+ 03:31:49 -0800 (PST)
 MIME-Version: 1.0
 References: <20260302220254.1166849-1-shentey@gmail.com>
- <20260302220254.1166849-7-shentey@gmail.com>
-In-Reply-To: <20260302220254.1166849-7-shentey@gmail.com>
+ <20260302220254.1166849-8-shentey@gmail.com>
+In-Reply-To: <20260302220254.1166849-8-shentey@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 11:28:38 +0000
-X-Gm-Features: AaiRm52xJmXiTl3H3wJ3imUf6rNuejBCuaWciDbNh6ErOqVpoz8mJ_vdO97cyI0
-Message-ID: <CAFEAcA__4Tc=QzZb4rUwWEE2s9naam2CawHZVyE4oy-GYMLu5A@mail.gmail.com>
-Subject: Re: [PATCH 06/12] hw/char/serial: Add constants for Line Control
- Register
+Date: Tue, 3 Mar 2026 11:31:38 +0000
+X-Gm-Features: AaiRm50yQbep8sAM07nVs53xXKAgzKqgwavS-IHNVmMD1nNXzsQYvfYhSoWOjQ4
+Message-ID: <CAFEAcA_g=GJ1MGLak7muj2fvGm++Q2qZoqEKtJGqORWkV0c6iw@mail.gmail.com>
+Subject: Re: [PATCH 07/12] hw/char/serial: Remove redundant reset
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org, 
@@ -101,8 +100,8 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
  Troy Lee <leetroy@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,15 +126,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 2 Mar 2026 at 22:03, Bernhard Beschow <shentey@gmail.com> wrote:
 >
-> Substitute some magic numbers by named constants for slightly improved
-> readability.
+> There is no need to invoke the reset method in realize since the reset
+> framework will do so anyway before the machine starts.
 >
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  hw/char/serial.c | 17 +++++++++++------
->  1 file changed, 11 insertions(+), 6 deletions(-)
+>  hw/char/serial.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/hw/char/serial.c b/hw/char/serial.c
+> index 485b98f03f..0f3469a1e8 100644
+> --- a/hw/char/serial.c
+> +++ b/hw/char/serial.c
+> @@ -934,7 +934,6 @@ static void serial_realize(DeviceState *dev, Error **errp)
+>                               serial_event, serial_be_change, s, NULL, true);
+>      fifo8_create(&s->recv_fifo, UART_FIFO_LENGTH);
+>      fifo8_create(&s->xmit_fifo, UART_FIFO_LENGTH);
+> -    serial_reset(s);
+>  }
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+It would be nice to make this not do qemu_register_reset(),
+though right now because it's a direct subtype of TYPE_DEVICE
+that would imply having all the devices that directly
+instantiate TYPE_SERIAL arranging to reset it in their own
+reset methods.
 
 thanks
 -- PMM
