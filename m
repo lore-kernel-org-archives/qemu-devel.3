@@ -4,82 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90ABCEC1431
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10272EC1430
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 11:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxO8l-0005EJ-9B; Tue, 03 Mar 2026 06:42:15 -0500
+	id 1vxO8q-0005JJ-Bq; Tue, 03 Mar 2026 06:42:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxO8R-00050l-L5
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:41:58 -0500
-Received: from p-west1-cluster6-host3-snip4-10.eps.apple.com ([57.103.67.53]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vxO8N-0001Sx-K1
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:41:53 -0500
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-20-percent-3 (Postfix) with ESMTPS id
- 597BD18001AF; Tue,  3 Mar 2026 11:41:43 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772538105; x=1775130105;
- bh=mLmxlRPFcwMxrG9myQtY85BdAdnRcI/En8EyLObKCOE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=bRrtO0yxF0zqrSM+j/OxOqcFDTpUvIe2ewUZ/jDRcQDow8NN86NKyNazdv9yKsfdhh93R/QAsuQU5BZnNuE0DTJvDx4xWNzrkmZYRSMEXjPxC9Ek8fbRg/HC2S6hYH8hLtgtN5AHbNKHK0gaxc9+DVNxDAIayZ/yog5mdM8L4i0vs0azBuB3o7piaE94lmQXckd6mZC5K/PQD6O3TPkimn8y9GZBL63SX5EdTd/RDg4xEg7Ebpz2Xpin6reYsMwnxUWXTkvkS9NPgVo8MrSbKVRrxb8Kt9+xT+1sYNsPDyH5msRYEB1x/SA6drcPjsz0T6I35mAaybyA1UwctjHO6w==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-20-percent-3 (Postfix) with ESMTPSA id
- C2186180018D; Tue,  3 Mar 2026 11:41:40 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- Wei Liu <wei.liu@kernel.org>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Cameron Esfahani <dirty@apple.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/6] whpx: i386: do not enable nested virt when
- kernel-irqchip=off
-Date: Tue,  3 Mar 2026 12:41:30 +0100
-Message-ID: <20260303114135.15390-2-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260303114135.15390-1-mohamed@unpredictable.fr>
-References: <20260303114135.15390-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxO8d-00058m-Fh
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:42:07 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxO8b-0001gY-Sn
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 06:42:07 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ad79dfb7cso5163307d50.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 03:42:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772538125; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZTVXck/n/wOViQJK0FySTo9grhHg9iKEa8MLM9wNRemCmEomLKijTPEU03cDF0vJwB
+ Cka566uuzbejNxsVTpvIU0UTiTxDIyQB6bPaSn0Ejl882DurB7jmLwvBivAbfrELGhbk
+ PyTd/KrCF+WLpd0WTdCVuuFkaJGYZBQOA7+rSu9wb4EgHyQa9wBdOb8KV9MLr1RQUcCk
+ BWiCeeK1P+i58mk1+yGoiE6FBgu8SzKebWQmyHLcSSQIVVGPHXrSuM6p98I8l7ltZ2Un
+ P2ZqTWrMImZBoQvV3wvAC4GVROmp1UX1LBcKHjZYkTQdhThZ1TKYeDeJeMmayZTbxy6i
+ uivQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TmcAWmmVEiZVO2IXHyRF4hwYUTz2/PggnQC6ob57Es4=;
+ fh=e8lPG31nRq0pa29+ILZPVpv23pShvDc8zQNyomzI6HQ=;
+ b=QxZN24+aXVvdRWrZM9r1kY6EYg3XI3+3TJtyoKTT500IlgoifTfs77x/D6y8Rsw1u/
+ V4fvHlqF4RKzLXF5kLk2jw69MA3N4F6/bGfG2QkNUIAjosCPPLwa/PoY6n6+eRPjdq7m
+ MtNS9ua/J4TgYER2twZ6z3VWEQfaBdoyGAM9yNHSE8+JuE7xolaFTBafAVB2kmrFlWMH
+ SzJn9HEWMKcd+ceL4sdvlfaM6lHh8Yum6Odbtun4hatvcTHAja1aNek4//yR9yYBx2+o
+ H2SDKu0t93Dhxmz0GkKRL0RaUnzkCVFZmuwMG4GekbQPJP2wzunQkSXAl2Tnl0SE+nS6
+ z2Yg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772538125; x=1773142925; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TmcAWmmVEiZVO2IXHyRF4hwYUTz2/PggnQC6ob57Es4=;
+ b=wD6Jgnr5KFz7zPTsEMJtCfRm/WsXhkOqA9FCKCC/vIEUGeA96qGo28gcJFDGAOu2/7
+ qh3dhDubXxHQ+K6HDvIb7h0m+LHitXSWugusxMtfzmuKuGTLEQe0VFnLsj5ZFcH7lrLL
+ xsF8nnUoHV0KLSAjFKvx/7V0ZF1U7onNLxeufTtR5wI9FSSk9+V26AFon/ACMrI0QL6q
+ jGaEsiLcY2v+Bnm2jwDP174G1+3mu8L3+2TBVf9fDdaaYOQwluljcvkMj/ahV9aKr2uc
+ bAGGwCosZSpietnC0qaqrD/Zz3lrJE/uQP5xemrg11ts9YqAGvZjpWpEUfBJqrLXvdA7
+ mL1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772538125; x=1773142925;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TmcAWmmVEiZVO2IXHyRF4hwYUTz2/PggnQC6ob57Es4=;
+ b=LaS7jFzxD39IBYzUe/tIkbA9y8YkUgJLIQFSFOP4iCvm75cbjZ2EJNrUJT+0k0ozvo
+ nGa+2Gl+s2IJ2LYvzH+Aj1mOVcaX5twsMIk7mQambuRC8D9Rjq8CmR7/z5J7CZ4FcPml
+ vJFp7wddTPsJB7pubruImoYmQIAzB0ijJ1xr+k4yabxNECqflJqIX8fQzMpIRP57sjzU
+ stBG2BXe+nKmy4O99uvmBfU/OFMs3C72UNsr+zoMCgwmeZUdou57cK/l3MDihELZ3t9t
+ BOUB3IMFbEPSCjG4r+cCnXK0MOfeDRiF5MX2StU2BRk1Zozz/IJyW5jQ0eQxVYyPj80F
+ qmng==
+X-Gm-Message-State: AOJu0Yw/4yK90oHFmdsgv1Lnc5Yem52zXIbz4XBc+dAiwpAmYrqgoe4z
+ BePxjKoJar07aNETDVE4ZhMwJd/hyXCzOZ04TvM1o52YUrgpwIO9JlPFEj2r+G1fjWPngSVeFqT
+ c7wVUOUxeXBDGV8yopLTQ8qrropry/DvW+zhyH7lGXQ==
+X-Gm-Gg: ATEYQzyTwEJA+Pb3Q/RHd6kSgPvkOgYhwfN5WUlmip31ZD4TGRNqcv6vt5Bh0KFa7+M
+ vGMLuBuclTJaNaQ2ydtv7vdqL3lGwHg7XSP9jZfkUrZidYBUSfw77JEGpRZk9BrbI5VrVGqwzyB
+ Tep2wUYelZLB7q9wmXkurGs/AfYDZ167g87Yo/6GbfNBk2slpS6I+EzTmcKHs6N1Js4+z7LWqBY
+ nlaFkV16ARDvPnIso5rp9WEIl+FQO2JU+Bxm4T5lp1eyNLpheDLTWzHTOIej7U+JbozwN4Lx31l
+ cA3lZtpDJSMN7z0l1qEdwY9x/2jDK6PA7P4kBIYZ8FrwlacLqLRjawl/LLNG6KrAwDo=
+X-Received: by 2002:a05:690e:44a5:b0:649:6872:9d89 with SMTP id
+ 956f58d0204a3-64cc2285d6dmr9939518d50.50.1772538124574; Tue, 03 Mar 2026
+ 03:42:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDA5MSBTYWx0ZWRfXzN7DCCl7iJc2
- L/udpOQnvnEIIsmXqtK0wfzKXnFuJQ1YDfwEiVYtHf1LpU42IVy5jI+m26y6IyQTJD+joPBOTEi
- LdOU5CznzjCnW3DBfZlYWa7fMcRGmzHCDG9BggjdEOfdDziuY5jEFidn94rEDgDz/EpfaHo5SEq
- PZNaGQ7dh5VcXEU5fVj6UzUpAT9Je+PVAUTHhdaUQWk25cIDTGdYeriRANh7cygOhFebI4AhQYg
- 9g2HddYWH5JcxKHciTlTyfxeTjPdO/gG+b+x09Pp628tFS9kOtKXlkxjFpw98pT1ZfuTCr4jNUC
- Xv/qjrlTZboW4Mzqp+VQJmL80bJ5QUsCbzH5qvvXs+lOFV6ZNyZWd+DcyWIamk=
-X-Proofpoint-ORIG-GUID: IxBslaViKlEyzMM3C9kKMzsyxd8QfLSY
-X-Authority-Info-Out: v=2.4 cv=XbKEDY55 c=1 sm=1 tr=0 ts=69a6c8f8
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=eKpLbWQDCUPTAuIwU-0A:9
-X-Proofpoint-GUID: IxBslaViKlEyzMM3C9kKMzsyxd8QfLSY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-02_05,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- lowpriorityscore=0 spamscore=0 mlxscore=0 clxscore=1030 suspectscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=830 phishscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603030091
-X-JNJ: AAAAAAABz/yotMZviZkIPitPqt+/rwxZzumJ5SQQTwzPDzY3a+Z+Q4QlZDznI1IE5qQ97ev/erctLG/Ma5/IWdTw70hblg3pjfhpp8V/IyjQjVlB0lWDHg8LmF05e7ymZu2mOpzpUNmtNqLlDh0k45i+qxsBXENyRXDcIyISOEq5AHHQCFm5jSMx4TcEU5ckf/X7vp7I102vjfpmya1h1NXj5xpfLaqfhGFeLiuHWJHrkBVPdxCSZGBG8sxuh2Eso5Q+MfBoFFtUn7Z6EzaXIuSfjFxUca5gzpLKdFyY9xHKQl7ZkFfXinuxk0ZUCYU3c2N8rsvoXfF7jSnR/oYJh7JysLIRqFjgi1FOznQkcZqowm+Nm5lUbClOXDLdr0IfyV3BVyHXNL9tBRJqM7ezNuKJRllTESTDOIszUMBoYq0ShgNdpAPj/K36E0peh2tMOcp1MQm0JmOhfxMuGWazibzjAkVN6S/PXXx1lgLk4O8Qnn93qthtqBWIFZUgWxzjDye0T8paRxx1G8jN4zPmK3vVEksRl47DFAP+cvEnUQvqOXWHsccYMFA2J3/b89yvBoNqE96dBeVdd2MCN2hmfyj07Q/KBEKvqVg9d3++7eqBcTSN6GfO7+3mpJMNAPZBRpt4WOiX6mwV+UaMIup0tj35s6hV73MxblZlfYIYmmhpObs6xsp4rZvYtlfAcnkGQgqpXrQkvUgbNoOJUnabF7n5Em9MbJecFPHp3WXEDQ==
-Received-SPF: pass client-ip=57.103.67.53;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260302220254.1166849-1-shentey@gmail.com>
+ <20260302220254.1166849-12-shentey@gmail.com>
+In-Reply-To: <20260302220254.1166849-12-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 3 Mar 2026 11:41:52 +0000
+X-Gm-Features: AaiRm50ZDWOSzNYDTMqP2C9-_reSRaMxHA35okEURMI-9ETR6WIHoSKGo3tJgUk
+Message-ID: <CAFEAcA-dmbSDNC+AL=OO9w=bM-79gVaysroQty=u-SxzQziUrg@mail.gmail.com>
+Subject: Re: [PATCH 11/12] hw/char: Have SerialState inherit from SysBusDevice
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Helge Deller <deller@gmx.de>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
+ Troy Lee <leetroy@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,30 +124,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This combination is not allowed as of build 26300.7939 and results in:
+On Mon, 2 Mar 2026 at 22:03, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> SerialState currently inherits just from DeviceState and serial devices
+> use SerialState as an "IP block". Since DeviceState doesn't have an API
+> to provide MMIO regions or IRQs, all serial devices access attributes
+> internal to SerialState directly. Fix this by having SerialState inherit
+> from SysBusDevice.
+>
+> In addition, SerialState doesn't participate in the reset framework
+> while SysBusDevice does. This allows for implementing reset
+> functionality more idiomatically.
+>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-qemu-system-x86_64.exe: WHPX: Failed to setup partition, hr=c0350005
-qemu-system-x86_64.exe: failed to initialize whpx: Invalid argument
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/i386/whpx/whpx-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 8dd6f68ff9..4afcbbae25 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -2147,7 +2147,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
--    if (processor_features.Bank1.NestedVirtSupport) {
-+    if (whpx_irqchip_in_kernel() && processor_features.Bank1.NestedVirtSupport) {
-         memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-         prop.NestedVirtualization = 1;
-         hr = whp_dispatch.WHvSetPartitionProperty(
--- 
-2.50.1 (Apple Git-155)
+> @@ -76,12 +76,13 @@ static void serial_isa_realizefn(DeviceState *dev, Error **errp)
+>      }
+>      index++;
+>
+> -    s->irq = isa_get_irq(isadev, isa->isairq);
+> -    qdev_realize(DEVICE(s), NULL, errp);
+> +    sysbus_realize(sbd, errp);
+> +    sysbus_connect_irq(sbd, 0, isa_get_irq(isadev, isa->isairq));
+>      qdev_set_legacy_instance_id(dev, isa->iobase, 3);
+>
+> -    memory_region_init_io(&s->io, OBJECT(isa), &serial_io_ops, s, "serial", 8);
+> -    isa_register_ioport(isadev, &s->io, isa->iobase);
+> +    memory_region_init_io(sysbus_mmio_get_region(sbd, 0), OBJECT(isa),
+> +                          &serial_io_ops, sbd, "serial", 8);
 
+This looks very odd, because sysbus_mmio_get_region() is supposed
+to be "the sysbus device provides an MR it has initialized, and this
+is how you get hold of it". But here we're taking an uninitialized
+thing and initializing it by calling memory_region_init_io(). It works
+because it's just returning a pointer into the internal memory, but
+it's still making assumptions about the internals of the device just as
+much as directly accessing s->io.
+
+Maybe this is worthwhile for the benefit of getting reset
+handling automatically into the reset tree.
+
+thanks
+-- PMM
 
