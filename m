@@ -4,100 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788BEEDEBEC
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5975DEDEBEA
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 19:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxVdf-00061p-DD; Tue, 03 Mar 2026 14:42:39 -0500
+	id 1vxVh9-0008C4-Dd; Tue, 03 Mar 2026 14:46:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxVdb-00061D-Av
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:42:35 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxVdZ-0007lf-8u
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:42:34 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso64854175e9.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:42:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxVgu-00087C-7b
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:46:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxVgi-0000QX-TW
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 14:45:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772567144;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s8HZgp9XakXoEVO+MoS+jYkmrGbeIxwxjBS2qScpvZo=;
+ b=EChMztZlHsExNRxD1ioL59tqfWNZe2bLgpVsMvxf9MSdXc4+BQYlY/q97LuU0+meI+0L0j
+ dtXp2jEQkuxsKnxGSO3XkFVVX/NQP3ZBdxg8megGlZVG3kVvBOflvoRU6l7q5oGyEnRH+N
+ dUyHTyGDqDH8rAfxlueNz6Bn0CMdi2s=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-292-Gqm8STLUPwK3qQoDcjbePw-1; Tue, 03 Mar 2026 14:45:43 -0500
+X-MC-Unique: Gqm8STLUPwK3qQoDcjbePw-1
+X-Mimecast-MFC-AGG-ID: Gqm8STLUPwK3qQoDcjbePw_1772567143
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-506bfff75edso621366831cf.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 11:45:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772566951; x=1773171751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+3VF3qSAGaHoy/q+VfuevnFQT/3hpVf3O3il8BToUiM=;
- b=XlHWikC1WUQ0noNCyk6jyjM3Pmie8TsJOo+NnG4uu2O72h9FD+B1Q1GPSb067NsPH6
- Ut2DUec/gnZw6wx6FsbkUodqRFlWocsQLBl00xpoOUL+6FKJH9m7i7QYlXhLSS3MFV2z
- 1T795DFZDTdGcIl2LotuZqFrOP2EiQkEYawNP/cXfENjUR3huq08xnxE+fbpIXyq6rpe
- nSYGfj/JuAuSjdNUSV8hbKmqwPet7IDhmDhHjfLYcILNO+YydEJglG52jkQCuIvpgPOM
- Fa5qYYyqgSAJQVOqvHYDJLPRKgrZFzrbCFL1R9547p1seBqDr0PodCYUG0hXYOiJRR+8
- r+/g==
+ d=redhat.com; s=google; t=1772567143; x=1773171943; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=s8HZgp9XakXoEVO+MoS+jYkmrGbeIxwxjBS2qScpvZo=;
+ b=djXJ00X6DkD9MKSYuzG8LKSBk8/Qr2L2jT9EUeiDWukd9i+EzzuL8GBToskGexnx5+
+ khkuUoIhTqNMtRtLHBjKBPUx2JPGWFK+eYx3C1IwDNT1hGoiLd7Y2XJAoueeUyNG1KCE
+ SymPRl0R4shGUHo9W4A3MvWNwGVR2jd/f/7k5JEDVWD4ErRR7Wa00N40HsY/NVRPbKHf
+ tayyHRrJ634tOaHMU0J/4Tzb7QbTej0idsfDIN+83GPjN5Xiz8KT7JXqCJdhE8DC3lwz
+ nUGB+S1wsxf96gFfdXbalAd9oumgDPW9VPydMhO/7yypeXpw73uI9NQ2ZC/w2mWGEUCM
+ 2irA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772566951; x=1773171751;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+3VF3qSAGaHoy/q+VfuevnFQT/3hpVf3O3il8BToUiM=;
- b=MEdz1XNZ25+lkfUjemt044UDo3jyni4QSOvE6OmUaETQyhdPNXRJBYhWkG+OaUSXwj
- fHqzlQLs4YGiikHz6DpfAfFGw+kgyzgv6rmwKMuj3VCgw8IZzlFTDBilGHx07o7N8ZKE
- Guk3Fdk1UOIoMFwuLQOaKGyUJSNvc5hYd0gAlWFORMydP4imruDcC7k9IIQsmWfHPSAo
- 09Fu1XzIULQwAMS5ao6mVwUNKtva8dgTpc7rTfPNbN28gj3SKsWO3W+lGhLh0YJc8bmN
- Q7NCV3ur0lW26KkLZOSfOHPd93ti9Hax5f9LXESjbV8n8LFHxaUA6ebFzZTpAcxauySR
- GUlQ==
-X-Gm-Message-State: AOJu0YxDuXJXErpSLXRuNIGQipLl/6MusakImrdAfFbXxE4JJfNRNENA
- hKjgW33cj3O+O7Al/u2PrhK7tLz6M6zhbtRQKZEJdZbKf3PGlFfcllTq
-X-Gm-Gg: ATEYQzyAaUdSuw2+cIs7CY/4WrfBRwSKIWXJ0P9IRTQBUBCg34qV2/Mfgp3bJtHjTvJ
- N20Egso6ppX4eQFULiaXQ0D7RLfvCQbEOGh98PX/dqNBByPMa3/CNKliyFArhtt0KU2PemaHFmc
- XRXH3UMGXlGh9xi7q9ykTx3s6DmAJIOHZlLourGmVk5vwcD2M2URP3h1jhup5/apQtLqsp2zAOW
- FDDhH6vfKSWIMTD2860SU2B68id4NihMrQA/QWma5b7BLeJqrPD8yH2PBfTpT3eWuSrHdktUJdq
- a2lqEnERW7gDVcX1NwWzMf7MvsOhme5REJOlP9pDFMLtV440KjwP5IQVg0J3Ki+8pZpUSTWcRN5
- s64lGzjay6yuC1O2wscZ1bAf+jLdRezt717VtiNHovsrZkdxsfTjLO/8Ehfh53M1Yx/VxL6+wr6
- i6KkVU2Qd5oqkUMJpBCvrmsrj/JFltMGTsfGhL2BDV5MVzAUYf+szhA5M1GAqoSH4sCpXGSGurx
- GboRxPtHSInlKn7RzvLl/EK2ePag9sd/hD+ryi0No/Udxk=
-X-Received: by 2002:a05:6000:2913:b0:439:b9e8:635f with SMTP id
- ffacd0b85a97d-439c10dae0emr6703753f8f.21.1772566951365; 
- Tue, 03 Mar 2026 11:42:31 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-1c79-b600-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
- [2a02:3100:1c79:b600:f009:a6c9:39e7:d8fe])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b503424fsm20971231f8f.22.2026.03.03.11.42.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 11:42:30 -0800 (PST)
-Date: Tue, 03 Mar 2026 18:35:27 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, qemu-arm@nongnu.org,
+ d=1e100.net; s=20230601; t=1772567143; x=1773171943;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s8HZgp9XakXoEVO+MoS+jYkmrGbeIxwxjBS2qScpvZo=;
+ b=mw0+A4r/f3Qz0h8+uf5m9RdwuNVpKe+8o5LxgDxh+swE5YqSRN9EAd4eB++q6aF14u
+ qOLRCZ7px8RIv9bNNJtWaGbGDd/na1p5vylMYrrXafHX6BaUKOdVuH+JS1aM0hP4/E1e
+ aL2z6x3CgNRZbZpZ0TKBu/CjxHVs4zWkIkR4q0IRE70b4TipXTG20NV0M+AWatJj9QA6
+ iivW6XxTj3c6SI9RzdtpOeyBUvQ40bWvTbst4wKwvjYILZ+RT/P4POf/gakBpCT5zK74
+ 9F6HK+d9AgvPswMnZiflzW/viitUJb7Xkqbq9H98/vWAEu39RpBDxkcy09f7XmgOjlfO
+ DkuA==
+X-Gm-Message-State: AOJu0YzoewVarKEi88KL+zdZSOGRJehAmxgsaRzpCVG3GYKloX7JaJeS
+ 9T8Ozgnyq2vzcnSivlz+0u3z6C0Aa3i+hYXyN6MNDK1lMu3IAhYBP9mXp1gY5hOcNq7bLBgZkjM
+ 6l71x2315FU1u0Nxm+4qthCkRuWupAU2ILrUaBEFDRlqRhrbtG8zUgYc7
+X-Gm-Gg: ATEYQzxchCBAlOrgfcz53onscKhjwlWiub5VHFhYAX1WjnwNwdFoHUBHs+tY97ZA0UB
+ No9iO0Ve2FQnYp1VXu5kQClHVsqtkto3TSMJoN3ESFTpO0dPnTgRaTkhsWbdXW6yjEFIiK4EiIp
+ 1vyRdcXpknJceYjo6p/aWTeoe1lxMpvyh0M82bDHwzeeWwEKBoESsuMz2BVz89kSq2ZGj4sBjIE
+ Q9DnMibzZUuIDnOL/326Gjye18N23oExhBt0olG6t34M1DOqkqOle2Y79eL3/tbw9DPmQ9S2bry
+ lhncL4PREZEzmgbzFTaNjE+tskv6FtLPoNTX72ngXyEj6csxmBeI3P1GjV8nDn2Yzn6mk6Gj0jb
+ BVScQUdnzQRbcew==
+X-Received: by 2002:a05:622a:1654:b0:506:bdd1:798 with SMTP id
+ d75a77b69052e-50752936717mr211228221cf.52.1772567142922; 
+ Tue, 03 Mar 2026 11:45:42 -0800 (PST)
+X-Received: by 2002:a05:622a:1654:b0:506:bdd1:798 with SMTP id
+ d75a77b69052e-50752936717mr211227871cf.52.1772567142400; 
+ Tue, 03 Mar 2026 11:45:42 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50744986357sm132369131cf.8.2026.03.03.11.45.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 11:45:41 -0800 (PST)
+Date: Tue, 3 Mar 2026 14:45:30 -0500
+From: Peter Xu <peterx@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Ben Chaney <bchaney@akamai.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Helge Deller <deller@gmx.de>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- Troy Lee <leetroy@gmail.com>
-Subject: Re: [PATCH 11/12] hw/char: Have SerialState inherit from SysBusDevice
-In-Reply-To: <CAFEAcA-dmbSDNC+AL=OO9w=bM-79gVaysroQty=u-SxzQziUrg@mail.gmail.com>
-References: <20260302220254.1166849-1-shentey@gmail.com>
- <20260302220254.1166849-12-shentey@gmail.com>
- <CAFEAcA-dmbSDNC+AL=OO9w=bM-79gVaysroQty=u-SxzQziUrg@mail.gmail.com>
-Message-ID: <591BD7DD-885A-4B27-BAED-FACC5EE5A5FB@gmail.com>
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kvm@vger.kernel.org, Mark Kanda <mark.kanda@oracle.com>
+Subject: Re: [PATCH v3 06/15] system/memory: split RamDiscardManager into
+ source and manager
+Message-ID: <aac6WsLDu3eygATm@x1.local>
+References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
+ <20260226140001.3622334-7-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260226140001.3622334-7-marcandre.lureau@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,63 +126,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Feb 26, 2026 at 02:59:51PM +0100, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Refactor the RamDiscardManager interface into two distinct components:
+> - RamDiscardSource: An interface that state providers (virtio-mem,
+>   RamBlockAttributes) implement to provide discard state information
+>   (granularity, populated/discarded ranges, replay callbacks).
+> - RamDiscardManager: A concrete QOM object that wraps a source, owns
+>   the listener list, and handles listener registration/unregistration
+>   and notifications.
+> 
+> This separation moves the listener management logic from individual
+> source implementations into the central RamDiscardManager, reducing
+> code duplication between virtio-mem and RamBlockAttributes.
+> 
+> The change prepares for future work where a RamDiscardManager could
+> aggregate multiple sources.
+> 
+> Note, the original virtio-mem code had conditions before discard:
+>   if (vmem->size) {
+>       rdl->notify_discard(rdl, rdl->section);
+>   }
+> however, the new code calls discard unconditionally. This is considered
+> safe, since the populate/discard of sections are already asymmetrical
+> (unplug & unregister all listener section unconditionally).
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Am 3=2E M=C3=A4rz 2026 11:41:52 UTC schrieb Peter Maydell <peter=2Emaydell=
-@linaro=2Eorg>:
->On Mon, 2 Mar 2026 at 22:03, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> SerialState currently inherits just from DeviceState and serial devices
->> use SerialState as an "IP block"=2E Since DeviceState doesn't have an A=
-PI
->> to provide MMIO regions or IRQs, all serial devices access attributes
->> internal to SerialState directly=2E Fix this by having SerialState inhe=
-rit
->> from SysBusDevice=2E
->>
->> In addition, SerialState doesn't participate in the reset framework
->> while SysBusDevice does=2E This allows for implementing reset
->> functionality more idiomatically=2E
->>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->
->
->
->> @@ -76,12 +76,13 @@ static void serial_isa_realizefn(DeviceState *dev, =
-Error **errp)
->>      }
->>      index++;
->>
->> -    s->irq =3D isa_get_irq(isadev, isa->isairq);
->> -    qdev_realize(DEVICE(s), NULL, errp);
->> +    sysbus_realize(sbd, errp);
->> +    sysbus_connect_irq(sbd, 0, isa_get_irq(isadev, isa->isairq));
->>      qdev_set_legacy_instance_id(dev, isa->iobase, 3);
->>
->> -    memory_region_init_io(&s->io, OBJECT(isa), &serial_io_ops, s, "ser=
-ial", 8);
->> -    isa_register_ioport(isadev, &s->io, isa->iobase);
->> +    memory_region_init_io(sysbus_mmio_get_region(sbd, 0), OBJECT(isa),
->> +                          &serial_io_ops, sbd, "serial", 8);
->
->This looks very odd, because sysbus_mmio_get_region() is supposed
->to be "the sysbus device provides an MR it has initialized, and this
->is how you get hold of it"=2E But here we're taking an uninitialized
->thing and initializing it by calling memory_region_init_io()=2E It works
->because it's just returning a pointer into the internal memory, but
->it's still making assumptions about the internals of the device just as
->much as directly accessing s->io=2E
->
->Maybe this is worthwhile for the benefit of getting reset
->handling automatically into the reset tree=2E
+-- 
+Peter Xu
 
-I think the logic can be folded into TYPE_SERIAL=2E I'll send a v2=2E
-
-Best regards,
-Bernhard
-
->
->thanks
->-- PMM
 
