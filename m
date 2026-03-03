@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3871EDEBF5
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0987EEDEBF5
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxY89-0004ks-IE; Tue, 03 Mar 2026 17:22:17 -0500
+	id 1vxY8B-0004m7-LI; Tue, 03 Mar 2026 17:22:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY87-0004k9-Tu
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:16 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY89-0004l0-P2
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:17 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY85-0002Sb-CP
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:15 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4836f363ad2so72946375e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vxY86-0002T7-Db
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:22:17 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-483703e4b08so58240125e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:22:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772576532; x=1773181332; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772576533; x=1773181333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xkqwSLJa0xJ6zHaGrPgGg+nUA0PuvLRB97+M4LUsZGQ=;
- b=D1iTiR2sMRz6OQzV5+2eYDLMaTYzciSCoAAADfZBq2Pi1ns+dDb1VWacNTQ/Y9UiDE
- 7XKH5PioyIe+fpVqy5T7JindBqNhWe4oCcTcDV8sEsgt4JP0OWC4W1tAIOaRR2yl5D8K
- dH5QwQclpGUQYCtii0XTuUskgf8EEmnTVHu5hLys0xzgBWrpAlu60KwivSGE7/evpVuN
- 8YNJxF+wBq85pmmVPnwC3DPpooPpYzeZ5WBK/C4kdmSWJkShLRjAQHNejigxrE5D5bEU
- 0ikmQKy+RKCZh5LNrShgtAGfgLCPHqb/ra1xOjEPIdjE0ZKqavPtxYEwiarhbZRQp3Zv
- jeCA==
+ bh=oh5fF1cD60o2GgdhvxUuihszrtUOa2nx4hPj7KeeMlk=;
+ b=Z4MJj1jItB2b6+MVJ2itEdJ622WN7SoECrzsgwypAqG9kWGo6002Pl+/NY1uYH0Mbj
+ maZLVRbDkDC7tnDnPAlKMmIN1WI17QQFaHuTucYx4/8K5aKV3g15+UGadm666MQCVAG9
+ vcKbq21mnX3PnawkPVFcbasscjZNPWtON1T+SaY+tWn/vfwz1L9pUzzFVb/1xD+dbsld
+ 7SkjXAc2R7/naAB3b0wc0h46PZVvPvRxxD+plGqxs9Jk/ntLhipx/XZ5dIV3dHAlFWHg
+ gZbFBls/2K5D/iGenfl9uB0Wjd24I34pXii+O9n5Ua1d7kGW32pbpAsAmh897EmIe6r6
+ bbgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772576532; x=1773181332;
+ d=1e100.net; s=20230601; t=1772576533; x=1773181333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xkqwSLJa0xJ6zHaGrPgGg+nUA0PuvLRB97+M4LUsZGQ=;
- b=ORUZ4f0aK+YLXxkpRpZGkoIWkDim7//ieC1m4RME2Ffu5l82cgaaAXxXOL/yrBmLro
- 0YvmaYI7RV3v5O9qNalx2QhCmjYbV87QK53sqw5QOFBEvIaE1rD6AUkMZNKRloqQ/kGH
- owfMI4CYJsnK8zzA1sP5aldt8uW+4K1os6ghCfyIWaG7EzNWi5a+X3G6NjY462N8NU3E
- o7wDRqkblVRLCEY1tMqpchQLLd5b/q6ih+C8XAP6KFqFXDU1gElM0vXPUET0lOrFvAW8
- hwyB9D0boxCbBQueJn/jPTSyQQI8+I93Jb0XBaSMaWwANJT1ESzz+ehnHHkM1FRbAueC
- jwfw==
-X-Gm-Message-State: AOJu0YxIbV+t/8Aw79ubQXtL7Yi9LpQ7ehBBdbAmGYLgUXrBvKgdIYAU
- 3L1k19P6lvE42W16ckBl61J0klNmLWEhKTm2xxRYlTBNXrxWUTXhzTM510E/vw==
-X-Gm-Gg: ATEYQzyOlsYjt5zlaCCqCQg78MMEuGO74FopbE758SehpPgV+G4nI17YzGNnymtxb6H
- vvh95RtZ2RGmCOoxRP3O7lqdwbrl+hseDy5roD07PaLCY8wCXxzDiWYwT9IjuHgpE3tx87bpWPZ
- rEd8cWs9GyjmalzisjMZ0MrL39TWliph/Rwl8dETxZWL7CcLzVuPa0brkXff8fFi15vGNXTt524
- LnTWuNSf5WcdIykoSmk7fqO9tpY81XD2ttBFIWdM2B+0Ttht1oajnGIAmh+mtk5OSWEbJsusYe0
- PRbTMpJAB5NNk/35s3t5/nyM3yFlkkdSunaJoEOkmlkPoieN50JPcotgmQgMvN0TWGaCYdaxUSw
- 1HE7rBlprLEWIy+Dmi5Uvir74DeMLpwKsMMozH3khpYKTfdEnFtiROBws4cyATT6fqi6PkEoKKV
- eMB/ruQ/5hwjFRJYr5hjk6i0Qps0Aj3dhiq1LZP7ZITPRenHwZHuccaEffjt7s85UkfHd3k28SW
- q0A+B2DJFm7CP+pZe4wR0TvbJwXW8U=
-X-Received: by 2002:a05:600c:3f14:b0:477:a54a:acba with SMTP id
- 5b1f17b1804b1-483c9c02f13mr333689115e9.17.1772576531415; 
- Tue, 03 Mar 2026 14:22:11 -0800 (PST)
+ bh=oh5fF1cD60o2GgdhvxUuihszrtUOa2nx4hPj7KeeMlk=;
+ b=vsWZFCiByjS+yN+EpyN4dwD0Vx+ZhodNVXLcOYk/OAtJ6hpyOl3nJMo06tQuBuw9/t
+ afDfJ7DDE7PSZRy/nvS9uHvqF8Pe1I/KMrpnDSkzmriZDnRuayEQocdPgNxd96TkLGRU
+ 4AWJcSGLaUz26R297kC1PxZrBlwrJmeQxdFsUPyPf5Tl+4JTZPfAECZRv2GUN95I9Xhy
+ 5y9Qf+b8UBThHNSagq0H29KU193wOn98yP7PBuHHBzn/C62M8iRa4QSbj1k/9Hxn6niM
+ 4ep1N8k8ykaWlNcqBt5Jq5LnEul6AXhf9kWuA9F7EXZwNnIm01X/gr/3v+b/8kUo8rBg
+ yZEg==
+X-Gm-Message-State: AOJu0YzgOdna5St/20jrSaDvLTdN/ty0hddqjl8TYF+LFrS0N6mMw280
+ 7QACX66kRkEl4JEqLoTxcImK4QskM+glgBybp3fSKc1BUYtRplLLf5z2R5c54g==
+X-Gm-Gg: ATEYQzyFHhNf8b5npcgfJkYziQ/dUBwLLc3IaSUdhmXbzofkWvXhl10YTo0qss7cU7Z
+ kID3QS/DOTWFxTOEE2+SuH6K8zPjrKuUGeqAxLpDtnLg51dxHx77u02yvL6W+EzkwcM6c0d0DH3
+ i0NnKJNSjw+ZK7AWMkV92ZOoJMbCX0XXjSS8qt+hlXbfO29GLEBBjjBeIGAFJcYj3JQTTgZeO6T
+ P9uGsBLStOH/2iWYkoywJXrDG9kMvuSPatp6JnKYPoL+HIEww2dfzzX/BDqaOTHXTnctuSTeUVL
+ 3yEqW5YF4hM0/ujsHokolPkDfylMlhQWAnxTnAYqFHZrAwssUQNAPrFyV6YQBWnCEeIZH/QB0nI
+ 2UdNGG3MC1EfNd6/bKVZPDqn250M2/1lQSO9VTL8uxtEc/kbMM0C7m7PWRO9K68kFgINl2T6HIl
+ MVImXn3MYwWGjF0dfvd1H89+0w2a9gZ3WOlFM/6ktMmJJJcL6Voa/93BxEm8zioJqZc2TrAaPA8
+ jxQJPVe/HploDQaqFutu6OL2RjktrA=
+X-Received: by 2002:a05:600c:6992:b0:47e:e981:78b4 with SMTP id
+ 5b1f17b1804b1-48513c71087mr62255885e9.12.1772576532552; 
+ Tue, 03 Mar 2026 14:22:12 -0800 (PST)
 Received: from Provence
  (dynamic-2a02-3100-1c79-b600-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:1c79:b600:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.10
+ 5b1f17b1804b1-485187c81adsm7577715e9.6.2026.03.03.14.22.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 14:22:11 -0800 (PST)
+ Tue, 03 Mar 2026 14:22:12 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
@@ -80,17 +80,16 @@ Cc: Helge Deller <deller@gmx.de>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v2 08/13] hw/char/serial: Add constants for Line Control
- Register
-Date: Tue,  3 Mar 2026 23:21:38 +0100
-Message-ID: <20260303222143.142741-9-shentey@gmail.com>
+Subject: [PATCH v2 09/13] hw/char/serial: Remove redundant reset
+Date: Tue,  3 Mar 2026 23:21:39 +0100
+Message-ID: <20260303222143.142741-10-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260303222143.142741-1-shentey@gmail.com>
 References: <20260303222143.142741-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,77 +112,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Substitute some magic numbers by named constants for slightly improved
-readability.
+There is no need to invoke the reset method in realize since the reset
+framework will do so anyway before the machine starts.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/char/serial.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ hw/char/serial.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/hw/char/serial.c b/hw/char/serial.c
-index f73de1ae4f..485b98f03f 100644
+index 485b98f03f..0f3469a1e8 100644
 --- a/hw/char/serial.c
 +++ b/hw/char/serial.c
-@@ -39,6 +39,11 @@
- #include "hw/core/qdev-properties-system.h"
+@@ -934,7 +934,6 @@ static void serial_realize(DeviceState *dev, Error **errp)
+                              serial_event, serial_be_change, s, NULL, true);
+     fifo8_create(&s->recv_fifo, UART_FIFO_LENGTH);
+     fifo8_create(&s->xmit_fifo, UART_FIFO_LENGTH);
+-    serial_reset(s);
+ }
  
- #define UART_LCR_DLAB   0x80    /* Divisor latch access bit */
-+#define UART_LCR_SB     0x40    /* Set break */
-+#define UART_LCR_EPS    0x10    /* Even parity select */
-+#define UART_LCR_PEN    0x08    /* Parity enable */
-+#define UART_LCR_NSTB   0x04    /* Number of stop bits */
-+#define UART_LCR_WLS    0x03    /* Word length select */
- 
- #define UART_IER_MSI    0x08    /* Enable Modem status interrupt */
- #define UART_IER_RLSI   0x04    /* Enable receiver line status interrupt */
-@@ -153,23 +158,23 @@ static void serial_update_parameters(SerialState *s)
- 
-     /* Start bit. */
-     frame_size = 1;
--    if (s->lcr & 0x08) {
-+    if (s->lcr & UART_LCR_PEN) {
-         /* Parity bit. */
-         frame_size++;
--        if (s->lcr & 0x10)
-+        if (s->lcr & UART_LCR_EPS)
-             parity = 'E';
-         else
-             parity = 'O';
-     } else {
-             parity = 'N';
-     }
--    if (s->lcr & 0x04) {
-+    if (s->lcr & UART_LCR_NSTB) {
-         stop_bits = 2;
-     } else {
-         stop_bits = 1;
-     }
- 
--    data_bits = (s->lcr & 0x03) + 5;
-+    data_bits = (s->lcr & UART_LCR_WLS) + 5;
-     frame_size += data_bits + stop_bits;
-     /* Zero divisor should give about 3500 baud */
-     speed = (s->divider == 0) ? 3500 : (float) s->baudbase / s->divider;
-@@ -430,7 +435,7 @@ static void serial_ioport_write(void *opaque, hwaddr addr, uint64_t val,
-             int break_enable;
-             s->lcr = val;
-             serial_update_parameters(s);
--            break_enable = (val >> 6) & 1;
-+            break_enable = !!(val & UART_LCR_SB);
-             if (break_enable != s->last_break_enable) {
-                 s->last_break_enable = break_enable;
-                 qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
-@@ -676,7 +681,7 @@ static int serial_post_load(void *opaque, int version_id)
-         }
-     }
- 
--    s->last_break_enable = (s->lcr >> 6) & 1;
-+    s->last_break_enable = !!(s->lcr & UART_LCR_SB);
-     /* Initialize fcr via setter to perform essential side-effects */
-     serial_write_fcr(s, s->fcr_vmstate);
-     serial_update_parameters(s);
+ static void serial_unrealize(DeviceState *dev)
 -- 
 2.53.0
 
