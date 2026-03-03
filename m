@@ -4,109 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1DDEC0463
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C654EC0463
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMBZ-000748-Qr; Tue, 03 Mar 2026 04:37:01 -0500
+	id 1vxME0-0007Wv-8L; Tue, 03 Mar 2026 04:39:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMBY-00073w-NP
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:37:00 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMBW-0006mz-VZ
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:37:00 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ca9ec3ee7so5447099d50.3
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:36:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772530617; cv=none;
- d=google.com; s=arc-20240605;
- b=Fh7Yg5TO4m3YxnBLUch50IAFYlyNO4nkaWssnMc4ft/sMlh1UxgzZRTPpjmZj2wez9
- fA4VxltupYVeYFg5yWKWJUJdIMZJFzal8UfN5KWtuwRilYKlGVInZKLgCsWtUXM3UsOr
- rumX3ksTrMF0AEzUFjBcofc6Z2zJum7VRxvdSCgsDm4NLgPTCjaF7c/EDDiOCwJCmhiO
- UpS63lWcQXcwsD9w59NbQOh2tRfcP4nQX/xs+S/wOVb7j4r6956ZUvaxdt+aFhi4wWX6
- iG1ltqV2OEXNSn1EdBYHwpNthpoRp+PUj9ck+g2jdvvV5SOq73j4wzmN6apeE9u3giSc
- W14g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+Z579mPIkYLbS99wjxmFE2PCWQSeBFbwTR9I3S4A6Ls=;
- fh=3cXQUpVpbgpdFwjiRkk/INs2iN57YIx31vKYsn7+X2c=;
- b=GlH65ehpvZCLaYjzk70+vKGJsAiOzVjvykUGBgaeJ+ISBlcbg0qLfpwar3032SsCC8
- 595iUN6sRTrHIcxFFLXx2kJkvYegvW4C4EsG0hX8vU0Awpb7g7UPCZkXezLQsH+nZtaf
- /JP5ojjtIqRqTYFe1aFq1vwnHdHr8vjDKZH9B2C7x+5o8+w/9BC2u5bS7SKZ7ldJDAUq
- 9vcb3r0ebYHgTT1lrlnNXUJ5Ln437W5Tm1p/8uBNnaLzshK4LWttphOIJ5tO25rCoXV8
- DXWVXZSU4Jp7/kpoTvwpnY4TiYrj8oPxQ3wUbWquScgFGIQdfD+yYagr13fXZjUk+6vv
- 7PHA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772530617; x=1773135417; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+Z579mPIkYLbS99wjxmFE2PCWQSeBFbwTR9I3S4A6Ls=;
- b=Gj8LqdA+r41oYFKQAq4rOvBfunIV3t/dwvIyk+R4WMjT8N4tp797EQCDKxuK4eOFde
- g+w2c+18F0Y6lTMk4Ub2o3ZFL4OjrUbgogB9sjR+1s0rMsD1Y3n7xQJO9zmt2iLHwrqU
- zzJvl29nnbrkr1K65GrxaVp6LXVWcD9r2jObszh9tZjx4Apr49vztit8Pvl/iHjARI6S
- VTz9eViRwnWsOlnVu5xz4kmdSXZJQNOqge2lw49m2kzUDJBm66hdpRfn//b/+Vdy8Rhv
- 0ZYErm8csFC7w/SdjZq0XUZD/tJHQerSVoCwUG4NodFSSeaigYepII6SUuPe9jg0UCxZ
- +Ugw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772530617; x=1773135417;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+Z579mPIkYLbS99wjxmFE2PCWQSeBFbwTR9I3S4A6Ls=;
- b=T2O3uUyu1tUcacNEVXhglDAqNBFmx+GN99yNfDpzGF0bs7XvfdFgvaMKlJ0G17/BbT
- KC5cN4mAyA8RePfdiyJ4xEt/kJ3QoV4zU5tKcmxrZ8w7SORYk5qliDE64Itjdv4yOmnp
- TdfJJA1KgF/W8XPg1pWyAOBzo3DlqTJvPJE2Q4moprN0U4ZtT6t1IIWIM16ApRknNYUq
- 9y+xceK4SPCeVlvIaAKsuG5LzeWfiSjFRExQ4brx+VwxQS36oUOalXolAaMgfd6XWV2F
- jiomwynY0cabIFTlDnqg6NB1uhoaQuqPBvPYJqy1opapqlf0YkCuyd83OivrIW1pbNKb
- 31xA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYxCLWncSNKg/oQ2+SCvs/7RNqxIGokk5zGMRAhb6PCG+9yMRXyJBwtPLwfG10IodWFrvLkbr/FbKA@nongnu.org
-X-Gm-Message-State: AOJu0Yz/4A7C/o4gOLEL8pNUlE5ptx0Xnryu/ytT+/vosLatD6jh9oAH
- rzFsHOLNJKHLd7rWnIafMCeDJ9L2E3LAlHhQzfw1rGFSLmT3kSoDggziSmeYsdu/i39WP1G+PdO
- kq5IkKns61WvqGnFD03YSasEkzNx36bHrbC7sA6okLA==
-X-Gm-Gg: ATEYQzwTPJNJmgN451MOCM+3Ze79pP8mUfb4Uj8a22zzRisjwVjjlaATxG9IPU+Oi7/
- 4AykAEmD4GamPabWUVJUmZQrmUeWLiUzv9BTkMcNpQiI2+TmB2k2nqGC2jOKXcgPLPjEIhTNXzE
- /GJS9nT0n4sOYOyk8V++hFvSfwiswpgk0lc50mWoOF7BNOT3Zdz5VvsrVxkfNPpA3bqjQ3MPtxL
- rPWhFKPmSg7TnPQxXVuCdsGZqJufoK92su6Ws7Reg8wGnyjh05TL+/t5jBH97a3syVjyCaJFp3x
- Pa2OAnP1Qw7hXFRx+PGdEfRDc98oFwbrmS/ZAYxL33hKxJmvMChiazjRkHBFfMc5yd4=
-X-Received: by 2002:a05:690e:2002:b0:641:f5bc:6990 with SMTP id
- 956f58d0204a3-64cc2326cfcmr10695075d50.76.1772530617534; Tue, 03 Mar 2026
- 01:36:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxMDt-0007WR-5d
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:39:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxMDq-00070t-Rd
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:39:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772530762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=wn7j5tpduQ9yc+0kyT16p7wSEWXwdwsvIZuE8Mz4aRs=;
+ b=F5ui4qZoXKp8F96Xy0Ku2XpAvrumsperEcxc60zEG5q2CAxt9VCKBElvFe4wkwPDjhfNAU
+ zE0zXexyYGTzuBEiJiKH4M9YPTLWLjOa91VYAGsH47Qeqh4XljPMWbhz9t8a4grHzOmqL0
+ Q+tsm+KhIS79D4RP+fOGbR7FHfhpjUY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-GBdnbKFROPSWVV2NIGxfHg-1; Tue,
+ 03 Mar 2026 04:39:18 -0500
+X-MC-Unique: GBdnbKFROPSWVV2NIGxfHg-1
+X-Mimecast-MFC-AGG-ID: GBdnbKFROPSWVV2NIGxfHg_1772530758
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1137F1956072; Tue,  3 Mar 2026 09:39:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.30])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 83FC41800678; Tue,  3 Mar 2026 09:39:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1E1FC21E692F; Tue, 03 Mar 2026 10:39:15 +0100 (CET)
+Resent-To: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Tue, 03 Mar 2026 10:39:15 +0100
+Resent-Message-ID: <87ldg9ntfg.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  armbru@redhat.com,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 12/16] scripts/qapi: generate high-level Rust bindings
+In-Reply-To: <20260108131043.490084-13-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Thu, 8 Jan 2026 14:10:39 +0100")
+References: <20260108131043.490084-1-pbonzini@redhat.com>
+ <20260108131043.490084-13-pbonzini@redhat.com>
+Date: Tue, 03 Mar 2026 10:19:13 +0100
+Message-ID: <87seahnucu.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260303012054.484837-1-yodel.eldar@yodel.dev>
- <aaadd0B4kP9amEbz@redhat.com>
-In-Reply-To: <aaadd0B4kP9amEbz@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 09:36:45 +0000
-X-Gm-Features: AaiRm50MQ0M52s-hxH7dd02lqRM353JcmA4Hbunk2zoLPMk27CB8eHmG7ikN5wA
-Message-ID: <CAFEAcA_YMukxSh0YWsxADasT69BZ=BR1Q1NkGeGWzjXQoUifSg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] configure: Use clang for sanitizer builds or
- disable Werror
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.968,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.495, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,112 +93,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Mar 2026 at 08:41, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Mon, Mar 02, 2026 at 07:20:54PM -0600, Yodel Eldar wrote:
-> > From: Yodel Eldar <yodel.eldar@yodel.dev>
-> >
-> > Builds with --enable-{asan,tsan,safe-stack} fail under GCC, so use
-> > clang if available, otherwise disable the treatment of warnings as
-> > errors.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-> > ---
-> > Hi,
-> >
-> > The previous version only disabled Werror whenever `--skip-meson` wasn'=
-t
-> > used and the build occurred in a git repo, but this change should
-> > probably apply to all types of builds. So, let's use meson_option_add
-> > to globally disable Werror instead; IIUC (and according to my testing),
-> > this will override the value in config-meson.cross.new.
-> >
-> > I'm still not sure if we should be disabling Werror for ubsan, even
-> > though it's not currently breaking builds with GCC; please let me know
-> > what you think.
-> >
-> > Special thanks to Peter for looking into the cause of the reports aroun=
-d
-> > this, for sharing the findings, and suggesting approaches to resolve it=
-.
-> > I couldn't pick one over the other, so I went with using clang when
-> > available with Werror disable as a fallback; please let me know if you
-> > think this is an XOR kind of policy decision.
->
-> In the bug
->
-> >
-> > Link to RFCv1:
-> > https://lore.kernel.org/qemu-devel/20260302210039.261325-1-yodel.eldar@=
-yodel.dev/
-> >
-> > Link to mentioned discussion:
-> > https://lore.kernel.org/qemu-devel/CAFEAcA88hc4UsgpuPXBWpbeN0tW26159kPn=
-7jx2J9erBA5DLBw@mail.gmail.com/
-> >
-> > v2:
-> > - Fix misnomer in commit message
-> > - Simplify condition by using the same variable for all sanitizers
-> > - Use meson_option_add to disable Werror
-> >
-> > Thanks,
-> > Yodel
-> > ---
-> >  configure | 18 ++++++++++++++++++
-> >  1 file changed, 18 insertions(+)
-> >
-> > diff --git a/configure b/configure
-> > index 5e114acea2..e457e8a17d 100755
-> > --- a/configure
-> > +++ b/configure
-> > @@ -762,6 +762,12 @@ for opt do
-> >    ;;
-> >    --wasm64-32bit-address-limit)
-> >    ;;
-> > +  --enable-asan) use_sanitizer=3D"yes"
-> > +  ;;
-> > +  --enable-tsan) use_sanitizer=3D"yes"
-> > +  ;;
-> > +  --enable-safe-stack) use_sanitizer=3D"yes"
-> > +  ;;
-> >    # everything else has the same name in configure and meson
-> >    --*) meson_option_parse "$opt" "$optarg"
-> >    ;;
-> > @@ -771,6 +777,18 @@ for opt do
-> >    esac
-> >  done
-> >
-> > +if test "$use_sanitizer" =3D "yes"; then
-> > +    if has clang; then
-> > +        echo "Sanitizer requested: setting compiler suite to clang"
-> > +        cc=3Dclang
-> > +        cxx=3Dclang++
-> > +        host_cc=3Dclang
-> > +    else
-> > +        echo "Sanitizer requested: disabling Werror for non-clang comp=
-ilers"
-> > +        meson_option_add -Dwerror=3Dfalse
-> > +    fi
-> > +fi
->
-> GCC documents the possibility of false positives, but I would consider
-> that caveat to apply to CLang too. It may simply have different false
-> positives or at a lower rate.
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-I'm told that clang/LLVM doesn't have any "middle-end warnings", so
-it won't have the same problem that the sanitizers might change IR code
-in a way that results in a warning firing that didn't before. So I
-think this "sanitizers change warning behaviour" is specific to GCC.
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Generate high-level native Rust declarations for the QAPI types.
+>
+> - char* is mapped to String, scalars to there corresponding Rust types
+>
+> - enums use #[repr(u32)] and can be transmuted to their C counterparts
+>
+> - has_foo/foo members are mapped to Option<T>
+>
+> - lists are represented as Vec<T>
+>
+> - structures map fields 1:1 to Rust
+>
+> - alternate are represented as Rust enum, each variant being a 1-element
+>   tuple
+>
+> - unions are represented in a similar way as in C: a struct S with a "u"
+>   member (since S may have extra 'base' fields). The discriminant
+>   isn't a member of S, since Rust enum already include it, but it can be
+>   recovered with "mystruct.u.into()"
+>
+> Anything that includes a recursive struct puts it in a Box.  Lists are
+> not considered recursive, because Vec breaks the recursion (it's possible
+> to construct an object containing an empty Vec of its own type).
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Link: https://lore.kernel.org/r/20210907121943.3498701-21-marcandre.lurea=
+u@redhat.com
+> [Paolo: rewrite conversion of schema types to Rust types]
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-> If using sanitizers, it is expected behaviour that there can be false
-> positives, and if the user doesn't want the build to break as a result
-> of that, then *the user* can choose to disable -Werror with the suitable
-> configure warnings.
+Let's look at the generated Rust.  I'm going to ignore formatting issues
+like blank lines.  My test inputs are adapted from
+tests/qapi-schema/qapi-schema-test.json.
 
-It is expected *for GCC*. I don't think it's expected for LLVM/clang.
+=3D Boilerplate and built-in stuff =3D
 
--- PMM
+The qapi-types.rs generated for an empty schema is basically empty:
+
+    // @generated by qapi-gen, DO NOT EDIT
+    //!
+    //! Schema-defined QAPI types
+    //!
+    //! Copyright (c) 2025 Red Hat, Inc.
+    //!
+    //! This work is licensed under the terms of the GNU LGPL, version 2.1 =
+or
+    //! later. See the COPYING.LIB file in the top-level directory.
+    #![allow(unexpected_cfgs)]
+    #![allow(non_camel_case_types)]
+    #![allow(clippy::empty_structs_with_brackets)]
+    #![allow(clippy::large_enum_variant)]
+    #![allow(clippy::pub_underscore_fields)]
+    // Because QAPI structs can contain float, for simplicity we never
+    // derive Eq.  Clippy however would complain for those structs
+    // that *could* be Eq too.
+    #![allow(clippy::derive_partial_eq_without_eq)]
+    use util::qobject::QObject;
+
+Okay.
+
+Note we generate nothing for the built-in types.  For C, we generate
+qapi-builtin-types.[ch], which provides lists of built-in types, and
+enum QType.  Rust gives us lists for free, and QType we don't need right
+now.  Good.
+
+=3D Enum types =3D
+
+Input:
+
+    { 'enum': 'TestIfEnum',
+      'data': [ 'foo', { 'name' : 'bar', 'if': 'TEST_IF_ENUM_MEMBER' } ],
+      'if': 'TEST_IF_UNION' }
+
+Output without the boilerplate:
+
+    #[cfg(TEST_IF_UNION)]
+    #[derive(Copy, Clone, Debug, PartialEq)]
+
+Ignoring such lines for now.
+
+    #[repr(u32)]
+
+As explained in the commit message.
+
+    #[derive(common::TryInto)]
+
+Ignoring these, too.
+
+    pub enum TestIfEnum {
+
+        FOO,
+        #[cfg(TEST_IF_ENUM_MEMBER)]
+        BAR,
+    }
+
+The obvious part :)
+
+    #[cfg(TEST_IF_UNION)]
+    impl Default for TestIfEnum {
+        #[inline]
+        fn default() -> TestIfEnum {
+            Self::FOO
+        }
+    }
+
+This specifies the enum type's default value.  Hmm...  Modified input:
+
+    { 'enum': 'TestIfEnum',
+      'data': [ { 'name' : 'bar', 'if': 'TEST_IF_ENUM_MEMBER' }, 'foo' ],
+      'if': 'TEST_IF_UNION' }
+
+Output:
+
+    #[cfg(TEST_IF_UNION)]
+    #[derive(Copy, Clone, Debug, PartialEq)]
+    #[repr(u32)]
+    #[derive(common::TryInto)]
+    pub enum TestIfEnum {
+        #[cfg(TEST_IF_ENUM_MEMBER)]
+        BAR,
+
+        FOO,
+    }
+
+    #[cfg(TEST_IF_UNION)]
+    impl Default for TestIfEnum {
+        #[inline]
+        fn default() -> TestIfEnum {
+            Self::BAR
+        }
+    }
+
+If TEST_IF_ENUM_MEMBER is off, member BAR does not exist.  default()
+uses it anyway.  Bug?
+
+Not tested: enum definition's optional 'prefix' member, because Rust
+generation has no need for it and does not use it.  Good.
+
+=3D Object types =3D
+
+Input:
+
+    { 'struct': 'UserDefOne',
+      'base': 'UserDefZero',
+      'data': { 'string': 'str',
+                '*number': 'number' } }
+
+    { 'struct': 'UserDefZero',
+      'data': { 'integer': 'int' } }
+
+Output:
+
+    #[derive(Clone, Debug, PartialEq)]
+
+Ignoring such lines for now.
+
+    pub struct UserDefOne {
+        // Members inherited:
+
+        pub integer: i64,
+        // Own members:
+
+        pub string: String,
+
+        pub number: Option<f64>,
+    }
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub struct UserDefZero {
+
+        pub integer: i64,
+    }
+
+Obvious enough.
+
+More input:
+
+    { 'union': 'TestIfUnion',
+      'base': { 'type': 'TestIfEnum' },
+      'discriminator': 'type',
+      'data': { 'foo': 'UserDefOne',
+                'bar': { 'type': 'UserDefZero', 'if': 'TEST_IF_ENUM_MEMBER'=
+} },
+      'if': { 'all': ['TEST_IF_UNION', 'TEST_IF_STRUCT'] } }
+
+Output:
+
+    #[cfg(all(TEST_IF_UNION, TEST_IF_STRUCT))]
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum TestIfUnionVariant {
+
+Possible trouble if somebody defines a QAPI type name ending with
+'Variant'.
+
+Code generated for a QAPI schema name named 'Frob' typically defines a
+'Frob'.  Sometimes, we transform 'Frob' in (hopefully obvious) ways, say
+to adhere to naming rules.  For instance, QAPI enum member 'foo' of
+'TestIfEnum' becomes FOO in generated Rust.  This risks naming
+collisions in generated code.  Hasn't been much of a problem in
+practice.
+
+We also need names for helpers.  These we commonly derive from QAPI
+schema names, and we reserve names for the purpose:
+
+* Names beginning with 'q_'
+
+* Type names ending with 'List'
+
+* Member name 'u' and names starting with 'has_'
+
+Source: docs/devel/qapi-code-gen.rst section "Naming rules and reserved
+names".
+
+We could reserve names ending with 'Variant'.  Or we use a 'q_' prefix
+here.
+
+        Foo(UserDefOne),
+        #[cfg(TEST_IF_ENUM_MEMBER)]
+        Bar(UserDefZero),
+    }
+
+    #[cfg(all(TEST_IF_UNION, TEST_IF_STRUCT))]
+    impl From<&TestIfUnionVariant> for TestIfEnum {
+        fn from(e: &TestIfUnionVariant) -> Self {
+            match e {
+
+                TestIfUnionVariant::Foo(_) =3D> Self::FOO,
+                #[cfg(TEST_IF_ENUM_MEMBER)]
+                TestIfUnionVariant::Bar(_) =3D> Self::BAR,
+            }
+        }
+    }
+
+    #[cfg(all(TEST_IF_UNION, TEST_IF_STRUCT))]
+    #[derive(Clone, Debug, PartialEq)]
+    pub struct TestIfUnion {
+        pub u: TestIfUnionVariant,
+    }
+
+Why do we need to wrap TestIfUnionVariant in a struct?  Hmm, we need it
+in case we have more common members.  Modified input to demonstrate:
+
+    { 'union': 'TestIfUnion',
+      'base': { 'type': 'TestIfEnum', 'common': 'int' },
+      'discriminator': 'type',
+      'data': { 'foo': 'UserDefOne',
+                'bar': { 'type': 'UserDefZero', 'if': 'TEST_IF_ENUM_MEMBER'=
+} },
+      'if': { 'all': ['TEST_IF_UNION', 'TEST_IF_STRUCT'] } }
+
+Output:
+
+    #[cfg(all(TEST_IF_UNION, TEST_IF_STRUCT))]
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum TestIfUnionVariant {
+
+        Foo(UserDefOne),
+        #[cfg(TEST_IF_ENUM_MEMBER)]
+        Bar(UserDefZero),
+    }
+
+    #[cfg(all(TEST_IF_UNION, TEST_IF_STRUCT))]
+    impl From<&TestIfUnionVariant> for TestIfEnum {
+        fn from(e: &TestIfUnionVariant) -> Self {
+            match e {
+
+                TestIfUnionVariant::Foo(_) =3D> Self::FOO,
+                #[cfg(TEST_IF_ENUM_MEMBER)]
+                TestIfUnionVariant::Bar(_) =3D> Self::BAR,
+            }
+        }
+    }
+
+    #[cfg(all(TEST_IF_UNION, TEST_IF_STRUCT))]
+    #[derive(Clone, Debug, PartialEq)]
+    pub struct TestIfUnion {
+
+        pub common: i64,
+        pub u: TestIfUnionVariant,
+    }
+
+Okay.
+
+=3D Array types =3D
+
+Input:
+
+    { 'struct': 'ArrayStruct',
+      'data': { 'integer': ['int'],
+                '*any': ['any'] } }
+
+Output:
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub struct ArrayStruct {
+
+        pub integer: Vec<i64>,
+
+        pub any: Option<Vec<QObject>>,
+    }
+
+Okay.
+
+=3D Alternate types =3D
+
+Input:
+
+    { 'alternate': 'TestIfAlternate',
+      'data': { 'foo': 'int',
+                'bar': { 'type': 'UserDefZero', 'if': 'TEST_IF_ALT_MEMBER'}=
+ },
+      'if': { 'all': ['TEST_IF_ALT', 'TEST_IF_STRUCT'] } }
+
+Output:
+
+    #[cfg(all(TEST_IF_ALT, TEST_IF_STRUCT))]
+    #[derive(Clone, Debug, PartialEq)]
+    pub enum TestIfAlternate {
+
+            Foo(i64),
+            #[cfg(TEST_IF_ALT_MEMBER)]
+            Bar(UserDefZero),
+    }
+
+Doesn't use QType for the tag like C does.  Okay.
+
 
