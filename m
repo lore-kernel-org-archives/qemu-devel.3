@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8448E67A62
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82014EC1459
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 14:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxQui-0001Xs-Iz; Tue, 03 Mar 2026 09:39:56 -0500
+	id 1vxQuj-0001Y0-CM; Tue, 03 Mar 2026 09:39:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vxQua-0001TU-2V
+ id 1vxQua-0001TW-3K
  for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:39:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vxQuR-00027k-DG
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:39:46 -0500
+ id 1vxQuX-00028K-8Z
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 09:39:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772548778;
+ s=mimecast20190719; t=1772548784;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=NXvKXyiLpbr3xemypEID2qhyZ1ztwiBOv/pMu/3qq8M=;
- b=YH83PaeRzpBc2SkVls0TGG7o453b3SvZbiLRT58TSNSA17kL8BPQVav3LVXgf3lWn4ht+6
- IZqI2lxxIoGrNJHsTfwidi1SFVgT7JUC5VRCJnnp3qupr72VKiEL2miiIIx++JeDVF3aic
- qkXeBxTiRQiV4+l1mhRA+HWLqhpW/Jc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iTlHwn8rYLZPRQjXoSe79P2x9337a1IkyDkbCV1HoWU=;
+ b=SwfdT24aU05r3lX2hrFpczM1S0tIEpMDol30jopvLRKmpKCFKO0aBoHJTqgvtDJBp/furJ
+ bMbddbs8/06bQD//35Pp+lFfM7kq0iC1JSP1nhAPWj8JnlNwRKPXZlnd1b+EscQa2fK9Cu
+ jbz3aOs8eSyIws8YPKdjOdlfvyHgH2A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-aGwU7SqxNeqKoLVSqj3B3Q-1; Tue,
- 03 Mar 2026 09:39:35 -0500
-X-MC-Unique: aGwU7SqxNeqKoLVSqj3B3Q-1
-X-Mimecast-MFC-AGG-ID: aGwU7SqxNeqKoLVSqj3B3Q_1772548774
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-ng_E7sGFO4uWdvvJI1M7cg-1; Tue,
+ 03 Mar 2026 09:39:40 -0500
+X-MC-Unique: ng_E7sGFO4uWdvvJI1M7cg-1
+X-Mimecast-MFC-AGG-ID: ng_E7sGFO4uWdvvJI1M7cg_1772548777
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 241B3180057E; Tue,  3 Mar 2026 14:39:34 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B165B180034D; Tue,  3 Mar 2026 14:39:37 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.45.224.89])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3682730001B9; Tue,  3 Mar 2026 14:39:29 +0000 (UTC)
+ id 7D09430001B9; Tue,  3 Mar 2026 14:39:34 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v2 0/7] Improve traces on migration failure due to cpreg
- number mismatch
-Date: Tue,  3 Mar 2026 15:36:32 +0100
-Message-ID: <20260303143928.1747116-1-eric.auger@redhat.com>
+Subject: [PATCH v2 1/7] vmstate: Introduce VMSTATE_VARRAY_INT32_ALLOC
+Date: Tue,  3 Mar 2026 15:36:33 +0100
+Message-ID: <20260303143928.1747116-2-eric.auger@redhat.com>
+In-Reply-To: <20260303143928.1747116-1-eric.auger@redhat.com>
+References: <20260303143928.1747116-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
@@ -83,58 +85,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series comes as a follow-up of discussions held in
-[PATCH v6 00/11] Mitigation of "failed to load
-cpu:cpreg_vmstate_array_len" migration failures
-(https://lore.kernel.org/all/20260126165445.3033335-1-eric.auger@redhat.com/)
+Already existing VMSTATE_VARRAY_INT32 requires an array to be
+pre-allocated, however there are cases when the size is not known in
+advance and there is no real need to enforce it.
 
-It only covers the improvement of the traces. Actual mitigations
-are handled in a follow-up series:
-[PATCH v7 0/7] Mitigation of "failed to load cpu:cpreg_vmstate_array_len"
-migration failures
-(https://lore.kernel.org/all/20260302103640.1362564-1-eric.auger@redhat.com/)
+Introduce VMSTATE_VARRAY_INT32_ALLOC as we currently have for UINT32
+and UINT16.
 
-When the number of CPU registers received in an incoming migration
-stream is bigger than the number of CPU registers seen by the
-destination we currently get the following error:
+The first user of this variant will be the target/arm/machine.c cpreg
+indexes/values arrays.
 
-"failed to load cpu:cpreg_vmstate_array_len"
-
-This series removes this cryptic message and explicitly outputs
-which spurious registers cause the failures.
-
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
+ include/migration/vmstate.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Available at:
-https://github.com/eauger/qemu/tree/cpreg_vmstate_array_len_traces_v2_mitig_v2
-
-v1 -> v2:
-- Tool all comments from Peter on v1. See individual history logs
-- Also added last patch which was previously included in the follow-up
-  mitigation series ([PATCH v7 0/7] Mitigation of "failed to load
-  cpu:cpreg_vmstate_array_len" migration failures) but actually belongs
-  to those functional changes.
-
-
-Eric Auger (7):
-  vmstate: Introduce VMSTATE_VARRAY_INT32_ALLOC
-  target/arm/machine: Use VMSTATE_VARRAY_INT32_ALLOC for cpreg arrays
-  target/arm/kvm: Export kvm_print_register_name()
-  target/arm/kvm: Tweak print_register_name() for arm64 system register
-  target/arm/machine: Trace cpreg names which do not match on migration
-  target/arm/machine: Trace all register mismatches
-  target/arm/machine: Fix detection of unknown incoming cpregs
-
- include/migration/vmstate.h |  10 ++++
- target/arm/kvm_arm.h        |   8 +++
- target/arm/helper.c         |   5 --
- target/arm/kvm-stub.c       |   5 ++
- target/arm/kvm.c            |   9 +--
- target/arm/machine.c        | 112 ++++++++++++++++++++++++++++++------
- target/arm/whpx/whpx-all.c  |   7 ---
- target/arm/trace-events     |   3 +
- 8 files changed, 123 insertions(+), 36 deletions(-)
-
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 89f9f49d20a..62c2abd0c49 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -447,6 +447,16 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
+ }
+ 
++#define VMSTATE_VARRAY_INT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
++    .name       = (stringify(_field)),                               \
++    .version_id = (_version),                                        \
++    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
++    .info       = &(_info),                                          \
++    .size       = sizeof(_type),                                     \
++    .flags      = VMS_VARRAY_INT32 | VMS_POINTER | VMS_ALLOC,        \
++    .offset     = vmstate_offset_pointer(_state, _field, _type),     \
++}
++
+ #define VMSTATE_VARRAY_UINT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
+     .name       = (stringify(_field)),                               \
+     .version_id = (_version),                                        \
 -- 
 2.53.0
 
