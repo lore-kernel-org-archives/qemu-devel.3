@@ -4,158 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DC9EC143B
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 13:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F2FEC143C
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 13:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxPZ6-00041X-DK; Tue, 03 Mar 2026 08:13:32 -0500
+	id 1vxPcR-0005H9-1d; Tue, 03 Mar 2026 08:16:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vxPZ4-0003yd-G3
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:13:30 -0500
-Received: from
- mail-switzerlandnorthazon11021122.outbound.protection.outlook.com
- ([40.107.167.122] helo=ZRZP278CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxPc5-0005Fy-6G
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:16:50 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vxPZ2-0001Ga-SA
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:13:30 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eYhqYu4YxlKVdOmD1z1uWXxc9gLV54jWwB7aOmQHE+huIjnHM11iruYjY7JKz3IhcYYlFgHWVkluAHtvdqQKCepXsScrDNNuhNGgwU8TvwNBREXUc2y08vpYgnma6tU2egQ11fz6slMMpQSolNpV9g/NB9+EDSLKxj9iici0QQx4fZyxletLaT6Im6IwlbDOk6YdtUQpI4ugFN2iA/39+iIFRFumWu+VhFjAIgFp9Rc9t6SbY+0IkN5k4VYomcq47ZKZcIM+4TW7O2Kr+qPX1F/fkArwWhcwPk339LgylZKAQ2q4fd3hqEjKA4cyIqrxFysA64Zm7aEIrEH1Pr0Q0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Tln7FObLC6Khe4z8e/wBWZGn3sbeacx1bT498SN62OA=;
- b=UPMoRte1LxzR1pEJCK0uv+cY9d05dcI+/T17HOGFLNed7jHbc3tQvOJr7wfBwCENbvkjTQawCWE6aykY2c4k7TlaA9dyQyCRxAWrPWWX8WbOq6y6jMkt7/8Iqj/N0/Zb8MlQ1rY3H2zFx8Zu8Q4q2iUjZxmsmswKZJwgoTzczpzGRYvYLh6gmTB8XGc+kHeTWNMwEVfe14CAB42f5Pr5iSkAD9kd+WWmCObUhvUjq/0aA86qBIqozrVol8aAxfPU0ffTpR64HtSPS8PmUYMg6zcR1P7XC0MLM6yEIfVix1uDJGJUcXC6cseUGR7+rhzvPa9V3r3Hl6soxqwQ1FMkZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Tln7FObLC6Khe4z8e/wBWZGn3sbeacx1bT498SN62OA=;
- b=PwvQO9nCFqPBBg0jdURjhfV5LrcRjJlda8pTIQVcqmgVda0Lvniq85jaCoQyeNEvInIdF8rcRMMNfKH6oFFjYFBa1ycz3uCMzxuWbAr549w8d1QtIFenK8aDnB/MthDEmlYpFDrLmM0Q67mp0RygRiSPhwfHdH53tEcg3KnmF64=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::2a0)
- by GV0P278MB0984.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:4f::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Tue, 3 Mar
- 2026 13:08:22 +0000
-Received: from ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
- ([fe80::6830:19f2:4a5b:749e]) by ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
- ([fe80::6830:19f2:4a5b:749e%2]) with mapi id 15.20.9654.022; Tue, 3 Mar 2026
- 13:08:21 +0000
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-To: qemu-devel@nongnu.org
-Cc: Florian Hofhammer <florian.hofhammer@epfl.ch>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
- richard.henderson@linaro.org, imp@bsdimp.com
-Subject: [PATCH v6 0/7] Enable PC diversion via the plugin API
-Date: Tue,  3 Mar 2026 14:07:26 +0100
-Message-ID: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
-X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
-X-Change-ID: 20260303-setpc-v5-c1df30bad07f
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4823;
- i=florian.hofhammer@epfl.ch; h=from:subject:message-id;
- bh=NCy3opkNA26PInn2rAwQ49fryJrfkEwbjAtz5nc8NnY=;
- b=owEBbQKS/ZANAwAKAZbrJ7oxX8d8AcsmYgBppr1Ykm2sRnpyQBnatteyZOnk2Gf3wxiAZBq6N
- IKG78sBTa2JAjMEAAEKAB0WIQSoIHw/Sr677ZtN+EmW6ye6MV/HfAUCaaa9WAAKCRCW6ye6MV/H
- fDYBD/9oXX4J+tqI+0KaV+V0gc1H235LAqJhm5ho4K7QMkD/de9h7yLFfJ8jjkURKyPkdQ/pyWZ
- RxiO4gV2mFiPuSDkK3S7aognpALzRuoMc4WXknCnBhJRAr8xdj26Qsib2hB0SokKg21MV849hq7
- 4B6sj2ULaFtbsrKHBA7yxmGibv60gukT1Y1Id0jLnTLMF3SFfV4wp/j/dg2/J2RsmOmKnREMy99
- lBs+DMRAPu0Yk3UW7li2Wm069QSlEq7mq9r/gsZyCAfR2sig4g3e5AQsuzZ44CuFYb0QdXGM6rv
- /Tog+vodvXEx11pSa84XkP3O8rmLgwC6thAQIekOJWgGVDrNtVlFJgtaG2qmAIg9z2q5QfoCQ3J
- PmDRbXEF90884i2NxjrrBkG6jxTjn39Digf5j8eqWNLTEOHWmEJ7quRnTmFvX0zcM/iXirWbkFA
- SFSFCQw+VqKCu2AAbKoCCWAnT1FD8Lh8vtH8JNvnv6fI0J329qBkf0F0JzHZx7FKhiStFvrA7ir
- mv9dDqYLgJ+rbswFheeoIJMp1tXYuSXJeUf2Wp56T3/ejaEUIb1nfb3DiO8T5icN0H1Pww5nJqc
- Dj530bFfyif+YRV/dMbUqL9QtNhlPRcojELDRZ4l3r64F7+lLxyH+v5c7LpKpGb64R5pCEmIa/4
- mUeGAQiVf4mDPzg==
-X-Developer-Key: i=florian.hofhammer@epfl.ch; a=openpgp;
- fpr=A8207C3F4ABEBBED9B4DF84996EB27BA315FC77C
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: GVAP278CA0012.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:20::22) To ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::2a0)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxPc0-0001mN-0q
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 08:16:35 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 553CC597319;
+ Tue, 03 Mar 2026 14:16:27 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id TzvqZCHEnrl8; Tue,  3 Mar 2026 14:16:25 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F2F7B597311; Tue, 03 Mar 2026 14:16:24 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id F0D55597308;
+ Tue, 03 Mar 2026 14:16:24 +0100 (CET)
+Date: Tue, 3 Mar 2026 14:16:24 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 0/8] memory: Remove most _nomigrate variants
+In-Reply-To: <aaaa3663-29bf-485d-9406-e0a2712b4baa@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <cf7e5459-00ce-f41a-6445-5e0661f30434@eik.bme.hu>
+References: <cover.1770253186.git.balaton@eik.bme.hu>
+ <aZ3CQw2ad5cVc-Mm@x1.local> <c8a789fa-8d16-709d-eb3f-8acd6c1d08e8@eik.bme.hu>
+ <aZ8jmaB-zuBSoQXH@x1.local>
+ <997bf152-3982-490b-8450-06095ffad22b@rsg.ci.i.u-tokyo.ac.jp>
+ <01f28121-0306-39e9-6526-fef766388eab@eik.bme.hu>
+ <0c750924-95a1-4fc8-ab7c-93ca19b791dc@rsg.ci.i.u-tokyo.ac.jp>
+ <b09d2e8a-3b64-e537-b9e0-8037e2855fdc@eik.bme.hu> <aaXxS0zdMKMoyjvA@x1.local>
+ <5ca90707-6feb-b382-937a-0b114a914d5d@eik.bme.hu>
+ <aaaa3663-29bf-485d-9406-e0a2712b4baa@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZR1PPF9AC83A6B5:EE_|GV0P278MB0984:EE_
-X-MS-Office365-Filtering-Correlation-Id: 118e91e7-ea0b-4a34-e4e3-08de7925f220
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|786006|376014|1800799024|19092799006|366016; 
-X-Microsoft-Antispam-Message-Info: FtHc/OCN+StezRbaXD2Oz5eQ5QZeZjuRQHcrLIlWa/TMcQX9XojK0XwUXolgSXmHtZj20YtlHD1b5KcQBgetEgjdf3glFn++g4ZDHk+3LPRBUItCGiy1Eq8tIXkI6aYkeVLyugOqDAn9SduDyda71kzleuxHVjQ0uLSPFRe5ZD4OkiG82evt8Bf9GE3FZ8i/v48TuEypTVHVdSyHNxmmnQPFeVsq/lSAWuvXQ6tHCDDOMo7IqyUC2GiUlpOUfWmcA5Q4N+MN6R+s3ueC5TmNlfUx1pcOjoKpEed2i8jUrUiqBRl/MbY7tgNmNc0vsBBo6xPpv/gMQKsQlxZCSwPlLu7vQ+bN/JcyoPwnkEu4XlJd07TLw3BQvteKPRAxrIIl9Cx4UzPoc+t/CNWmWgpon6g7J91sUBasvVpMuIL3OB0oKV1pyxqsmPqo3xcJG3N3oJ14kKTNK/PNT5RWZIVMO9Ayhd28yrFfIU7wASDjFfDhvg4oQ67tXcE8sMvl8N/263cD9dkGD90PCO5M4cc1PI9VNeiaWrFG5wSNWU3keQEZtpwV8n9c7CrL6eyjlq7bCHaEAI2q9ubxPCmvX+lWUTGuVaY+SAYh7Of5X9EtW7VLMpsVH4q5iIP6hZeABxIxQAz7FQpE1r4J0yckNeWolJ4vUsLvwdYPGY/icPa4qw16dIIIi620Yw/pWkI34J/Qgit727rvbOoEiVpM4BblCsMtP/RaNl/NMT98mlG1yTU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(786006)(376014)(1800799024)(19092799006)(366016); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cDM3VnVNYWxSQmhMQ3U1SWhjcVkwVnE1bFFkUGxGTlNHZE9YQ3FsZG93RFBJ?=
- =?utf-8?B?c2wxOEhzb3dEcWtvckZaTDFRamJ1bEo1eEQ1TDZKaUhOVkd4b1kxdmI5VVpE?=
- =?utf-8?B?MWRhbjVtaWJGbGNwU05kd29oOGF0SHpIeUhPOFB6MzJUT25QbzFieGdFdnpI?=
- =?utf-8?B?V0hBdHZMbERQNnVOT00rN3ZHT1IvbXlmb256QUlJOFk1RlBMWncwNzB1a0kw?=
- =?utf-8?B?LzVZQW13M0ZGemt5ZU1SbE85dkNpVElVcSs5Q0FkbWUwaU40bWRoVUEzNUI0?=
- =?utf-8?B?ZE53ZVhzdUdYR3JZbmhGc0VsYlJjTnBvUFBIR2M0OFVLbFFrTWx0dGdabmo3?=
- =?utf-8?B?MzN0WERJZHBONlhvYXUzRndpK2IxVnM1Y01tTS9uVGR3dEZlcnd3V00yOUp5?=
- =?utf-8?B?R01ueGFpRStXczBOUE9nWDlOeUtsSVVVVmRVdkxBWmRGdzJTcnNlVkpqZXdz?=
- =?utf-8?B?aVlwQnlTVDJuMkVZb0NBYmdzcVdNbktnRTVLQzZKVFF4RmU3eUJHR05teUh6?=
- =?utf-8?B?WWZKa0UxdGVXeXNBZGtRMHVZb0wwbEt3ck80eW5JZkZkWG5LbWNEbHVFdlFE?=
- =?utf-8?B?REp4ZXFoWVhod0YvVUNsZ3BnK3pFa2xLRlRTUVBiaWF0d0c4a2p2aDF0aVRH?=
- =?utf-8?B?eEsxWTV6OVp4ZGpyMWI1U0JkNHZPaUYwZjA0cWZVT0daUU52TDBPVk81d1NG?=
- =?utf-8?B?c3RtNEw3aVhyeHdOcWZSVk5aaDEwUFNDMm9nSnZHY2VmV0NhWDlUbDZrbndP?=
- =?utf-8?B?bHIvSWFDTFBMZHVQbXdoZTVzOEJaSlJMbDFZQ09mKzFTMnVKWEtCWjhqSTZD?=
- =?utf-8?B?SHV6WjEyZllINFFTVXM4MXk0dXRXOGl3WFlKb1c5M0FVSlV3dUNwbHQ1UU5H?=
- =?utf-8?B?U2VkVEFFTGY0WStuWStnclpvMm1ncS9RcG5uS2ZNcnNiZ2VwSUJjd2JsREha?=
- =?utf-8?B?c0wzb0s0UjNmQ0syUTRMZkJNV2pVSURNSk9yOVIvTDE5WDd3bkNFNHpsWS9m?=
- =?utf-8?B?dEh3V3g3ZXBKYi9KdjF0ekFiUi9LSkxWQXRCc1NWaG1EUGZJb2d3VitzUkx5?=
- =?utf-8?B?WnE4UzZVdUJVOE4wK2lSby8wK3FpbURIWjJ5c0lSei9TYXd5UjB4anNETmFs?=
- =?utf-8?B?L0ZjREhlcjYzQjZpcDBoemJMaU1LMDNvakFjMFQxUkV5MDkvWGtjclgyanlJ?=
- =?utf-8?B?R2RoRVdOSWx0TVd4YXZVWERheXhnb3A3MjhVQ0c0UUgxdGhTK25XcUt2NUx5?=
- =?utf-8?B?ZmkwcnZnVjQ2QWxYY3cxYkZEU0ZrMHJyZmtWckVuM1JGZFY4a2ExQnc3Z1NZ?=
- =?utf-8?B?amM0cmh1VzJuZDBPanhOOEV1QVRTUElyc2RsRlVVZmpZRnR0V3BEbEZ0MUFl?=
- =?utf-8?B?bXpzU3haWkNsb0xsUThLaXBjeUdxM3pDdzBEWmdnWmUrOHJ5Zml3M2dEWnBm?=
- =?utf-8?B?aFNvNGQwSjlUUStnNStCSE1lbFhWeDZZc1lSWHBKNzFoV2huRDJYbHJtNTZB?=
- =?utf-8?B?Q0JzUnFYWUNFZXNDVnpsUHV1Z1VQa0Z2L2JrNkY5SExDR2xSOTZqcnBzN1Yr?=
- =?utf-8?B?RWNHOG1pVDI0a0M0dktZc3VNU2Eydld6Y080YmhBMVFIRkhVY081bjR3WWFk?=
- =?utf-8?B?UzF4dzJZcXMxMk9IaitJSVFsVUhRclhLTGE2clpvR1BOSTVONkR1MjZxWnVY?=
- =?utf-8?B?Tk1DVUk3bXJyVUtFbXBIU09KcGdPQ25SREphaW10ZU12b0NDWFU4V2VVazNL?=
- =?utf-8?B?Sk0vdytYcUlJcFpvNVhrRzNraEpvUnRaaUx5ZFFPWFJuKzNHZFo0aTkwS0dO?=
- =?utf-8?B?M2M1NEUxQzM5TkcrRjB2enVtMWdnUXQ4OEZVRmpqTkh2YzdhZEovdXdpVC81?=
- =?utf-8?B?UkFacVJwRXRmQ2ovZ25pUHEzdWNKaE9kSnRFdDFUSWVCV1hUa1prK0kwRkV3?=
- =?utf-8?B?VmpLWTV5NDdYMk9MTnN0ZjZ0ZXloS2FsZS9mc0lSZHgrZnpYVnN3VUhYUEo4?=
- =?utf-8?B?Q2t0NFc4ZDBtS2dQRXJGcFVLcHNvVmJ4UHhPTUt0bUxDRWprR0N4Uk9COGdk?=
- =?utf-8?B?blpHdTFKU3ZZVG5OQUhrRG1HeGhsUkZsOHplMGhnUFNEenByRnlzNUhhVmxi?=
- =?utf-8?B?VnEvYmdGVmwrSFJOUlhpNnpBRG5pcWs0bjZ4SGZDVFRuK2xGeDJaU3JPWTBp?=
- =?utf-8?B?UXVQVng2T00rRE5JSnlCZXh5TWxWRi94R1NFU2IxL2s0Sk1NQllOdVo3WU9P?=
- =?utf-8?B?RlJ4LzBRdmJEZWpuWWI2M0NNRUxDamRWKzEvSm56WUoyQ0tsTkRNdU42WXl6?=
- =?utf-8?B?R1Mvd1pZOWlvbEdSUmE4QlQ1VnlIeVFCRGZTT0Vma3k2b0JNcVhQUT09?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 118e91e7-ea0b-4a34-e4e3-08de7925f220
-X-MS-Exchange-CrossTenant-AuthSource: ZR1PPF9AC83A6B5.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Mar 2026 13:08:21.8618 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iCiQyqO7UKoPb/baDVJgoYiAeWl5vP+4UzgjhvKl9U2iRzL1P1KJIWV2BscPnn537BABkfNXqfmnP0Ppo/hG9g1K53zEQQA7BGyPe6qRFUU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV0P278MB0984
-Received-SPF: pass client-ip=40.107.167.122;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=ZRZP278CU001.outbound.protection.outlook.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1950825435-1772543784=:91300"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,100 +78,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,=0D
-=0D
-This patch series builds on top of the discussion from the thread at=0D
-https://lore.kernel.org/qemu-devel/e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epf=
-l.ch/=0D
-and adds a plugin API function to set the program counter of the guest,=0D
-as just writing to it via qemu_plugin_write_register() has no direct=0D
-effect.=0D
-=0D
-This version v6 of the patch series addresses the requested changes from=0D
-the previous v4 submission and an incorrect commit message from v5=0D
-(details below).=0D
-Note: checkpatch.pl still reports a warning about line length violations=0D
-in patch nr. 6/7 but I did not fix this, as the line was already > 80=0D
-characters long previously, the change added only a single character,=0D
-and I think the readability of the code is better as it is now. Please=0D
-let me know if you disagree and would like me to fix this!=0D
-=0D
-Best regards,=0D
-Florian =0D
-=0D
-Changes:=0D
-v6:=0D
-- update commit message for patch 4/7=0D
-v5:=0D
-- make QEMU abort via asserts instead of just returning an error from=0D
-  the plugin API if preconditions are violated=0D
-- extend tests for qemu_plugin_set_pc() to different contexts=0D
-- fix issues highlighted by checkpatch.pl=0D
-v4:=0D
-- switch strcmp out in favor of g_strcmp0 =0D
-- split the patch introducing the qemu_plugin_set_pc() API into three=0D
-  patches, two for preparing the plugin infrastructure and the syscall=0D
-  handling code and a third introducing the actual plugin API=0D
-v3:=0D
-- make PC registers read-only across architectures=0D
-- add tests for read-only registers=0D
-- adjust test structure for qemu_plugin_set_pc() by moving=0D
-   architecture-specific tests into corresponding directories=0D
-v2:=0D
-- add setjmp() in syscall handling path to allow PC redirection from=0D
-   syscall callbacks (via longjmp(), the cpu_loop()'s setjmp() for=0D
-   exiting a TB would not be live anymore in syscall handlers)=0D
-- add flags to ensure the qemu_plugin_set_pc() API is only called from=0D
-   contexts where the CPU is live=0D
-- add test for qemu_plugin_set_pc() API=0D
-v1:=0D
-- initial version=0D
-=0D
----=0D
-Florian Hofhammer (7):=0D
-      plugins: add flag to specify whether PC is rw=0D
-      linux-user: make syscall emulation interruptible=0D
-      plugins: add PC diversion API function=0D
-      tests/tcg: add tests for qemu_plugin_set_pc API=0D
-      plugins: add read-only property for registers=0D
-      plugins: prohibit writing to read-only registers=0D
-      tests/tcg/plugins: test register accesses=0D
-=0D
- MAINTAINERS                                        |   1 +=0D
- include/plugins/qemu-plugin.h                      |  19 +++=0D
- linux-user/aarch64/cpu_loop.c                      |   2 +-=0D
- linux-user/alpha/cpu_loop.c                        |   2 +-=0D
- linux-user/arm/cpu_loop.c                          |   2 +-=0D
- linux-user/hexagon/cpu_loop.c                      |   2 +-=0D
- linux-user/hppa/cpu_loop.c                         |   1 +=0D
- linux-user/i386/cpu_loop.c                         |   8 +-=0D
- linux-user/include/special-errno.h                 |   8 ++=0D
- linux-user/loongarch64/cpu_loop.c                  |   5 +-=0D
- linux-user/m68k/cpu_loop.c                         |   2 +-=0D
- linux-user/microblaze/cpu_loop.c                   |   2 +-=0D
- linux-user/mips/cpu_loop.c                         |   9 +-=0D
- linux-user/or1k/cpu_loop.c                         |   2 +-=0D
- linux-user/ppc/cpu_loop.c                          |  10 +-=0D
- linux-user/riscv/cpu_loop.c                        |   2 +-=0D
- linux-user/s390x/cpu_loop.c                        |   2 +-=0D
- linux-user/sh4/cpu_loop.c                          |   2 +-=0D
- linux-user/sparc/cpu_loop.c                        |   4 +-=0D
- linux-user/syscall.c                               |  16 +++=0D
- linux-user/xtensa/cpu_loop.c                       |   1 +=0D
- plugins/api.c                                      |  42 ++++++-=0D
- plugins/core.c                                     |  29 +++--=0D
- tests/tcg/arm/Makefile.target                      |   6 +=0D
- tests/tcg/multiarch/Makefile.target                |  17 ++-=0D
- .../multiarch/{ =3D> plugin}/check-plugin-output.sh  |   0=0D
- .../{ =3D> plugin}/test-plugin-mem-access.c          |   0=0D
- tests/tcg/multiarch/plugin/test-plugin-set-pc.c    | 140 +++++++++++++++++=
-++++=0D
- tests/tcg/plugins/meson.build                      |   2 +=0D
- tests/tcg/plugins/registers.c                      |  79 ++++++++++++=0D
- tests/tcg/plugins/setpc.c                          | 120 +++++++++++++++++=
-+=0D
- 31 files changed, 495 insertions(+), 42 deletions(-)=0D
----=0D
-base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9=0D
-change-id: 20260303-setpc-v5-c1df30bad07f=0D
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-1950825435-1772543784=:91300
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 3 Mar 2026, Akihiko Odaki wrote:
+> On 2026/03/03 6:06, BALATON Zoltan wrote:
+>> On Mon, 2 Mar 2026, Peter Xu wrote:
+>>> On Mon, Mar 02, 2026 at 04:20:10PM +0100, BALATON Zoltan wrote:
+>>>> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
+>>>>> On 2026/03/02 21:26, BALATON Zoltan wrote:
+>>>>>> On Mon, 2 Mar 2026, Akihiko Odaki wrote:
+>>>>>>> On 2026/02/26 1:30, Peter Xu wrote:
+>>>>>>>> On Tue, Feb 24, 2026 at 06:44:58PM +0100, BALATON Zoltan wrote:
+>>>>>>>>> On Tue, 24 Feb 2026, Peter Xu wrote:
+>>>>>>>>>> On Thu, Feb 05, 2026 at 02:13:18AM +0100, BALATON Zoltan wrote:
+>>>>>>>>>>> v4:
+>>>>>>>>>>> - separate patch converting Sun machines from
+>>>>>>>>>>> memory_region_init_ram_nomigrate
+>>>>>>>>>>> - split helper to init ram into two functions:
+>>>>>>>>>>> setup and error_propagate
+>>>>>>>>>>> - also use memory_region_init_io in 
+>>>>>>>>>>> memory_region_init_ram_device_ptr
+>>>>>>>>>>> 
+>>>>>>>>>>> v3:
+>>>>>>>>>>> - rebased on master after some patches were merged
+>>>>>>>>>>> - drop some more line from memory-region-housekeeping.cocci
+>>>>>>>>>>> - added comment to explain what factored out helper does
+>>>>>>>>>>> - some more clean ups included
+>>>>>>>>>>> 
+>>>>>>>>>>> BALATON Zoltan (8):
+>>>>>>>>>>>    hw/display/{cg3,tcx}: Do not use 
+>>>>>>>>>>> memory_region_init_rom_nomigrate()
+>>>>>>>>>>>    memory: Remove memory_region_init_rom_nomigrate()
+>>>>>>>>>>>    sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
+>>>>>>>>>>>    memory: Remove memory_region_init_ram_nomigrate()
+>>>>>>>>>> 
+>>>>>>>>>> Could you help explain why we need to remove the
+>>>>>>>>>> above two small helpers?
+>>>>>>>>> 
+>>>>>>>>> Ideally we should remove all of the nomigrate variants as there are 
+>>>>>>>>> only
+>>>>>>>>> about 3 uses left, everything else is already moved to
+>>>>>>>>> the init_{ram,rom}
+>>>>>>>>> variants that register the memory region for migration.
+>>>>>>>>> The is probably one
+>>>>>>>>> legitimate use that is served by memory_region_init_flags_nomigrate 
+>>>>>>>>> and
+>>>>>>>>> other 3 uses are the xtfpga which I think is just old code and does 
+>>>>>>>>> not
+>>>>>>>>> support migration so it will be converted in the second series to
+>>>>>>>>> memory_region_new as the maintainers did not say anyting to that so 
+>>>>>>>>> far.
+>>>>>>>>> Then there's one in hw/display/vga but that's gated
+>>>>>>>>> behind a compatibility
+>>>>>>>>> switch that's only set in 2.12 (global-vmstate=true) and
+>>>>>>>>> earlier. This is
+>>>>>>>>> not active any more but cannot yet be removed as there
+>>>>>>>>> are eariler compat
+>>>>>>>>> props still need cleaning up but the last visible
+>>>>>>>>> machine version is 5.1 now
+>>>>>>>>> so this is long deprecated and not used. And there are
+>>>>>>>>> these Sun machines
+>>>>>>>>> that I've converted in the first version but Mark said
+>>>>>>>>> he'd like to keep the
+>>>>>>>>> current behaviour until it's the last user left. See:
+>>>>>>>>> https://
+>>>>>>>>> patchew.org/QEMU/cover.1769703287.git.balaton@eik.bme.hu/ 
+>>>>>>>>> b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu/
+>>>>>>>>> 
+>>>>>>>>>> Not saying that we can't remove them, but I don't yet see the point 
+>>>>>>>>>> of
+>>>>>>>>>> open-code those readonly=true setup either, or any
+>>>>>>>>>> problem with having the
+>>>>>>>>>> smaller helpers when ram_flags=0.  Small helpers
+>>>>>>>>>> sometimes help readability.
+>>>>>>>>>> 
+>>>>>>>>>> Some of them are going backwards againist what the cocci scripts 
+>>>>>>>>>> were
+>>>>>>>>>> suggesting previously, like:
+>>>>>>>>>> 
+>>>>>>>>>> - memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
+>>>>>>>>>> + memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
+>>>>>>>>>>   ... WHEN != E1
+>>>>>>>>>> - memory_region_set_readonly(E1, true);
+>>>>>>>>>> 
+>>>>>>>>>> So you suggest open-code instead.  Why?
+>>>>>>>>> 
+>>>>>>>>> This is temporary until the usage in vga is gone with
+>>>>>>>>> hw_compat_2_12 then
+>>>>>>>>> the Sun machines will be the last users so they can also be 
+>>>>>>>>> converted to
+>>>>>>>>> init_{ram,rom} (unless Mark changes his mind and agrees
+>>>>>>>>> changing these now
+>>>>>>>>> as was in the first version).
+>>>>>>>>> 
+>>>>>>>>>> Is it required for your follow up cleanups?
+>>>>>>>>> 
+>>>>>>>>> It makes those simpler as then we don't need to add 
+>>>>>>>>> memory_region_new
+>>>>>>>>> variants for the nomigrate versions that we would remove later 
+>>>>>>>>> anyway.
+>>>>>>>> 
+>>>>>>>> Personally I don't see the memory_region_new() whole thing solid yet, 
+>>>>>>>> but
+>>>>>>>> still during review.  I shared my thoughts.  So far, I'm not fully
+>>>>>>>> convinced, but I also don't have the full picture to say no, either.  
+>>>>>>>> We
+>>>>>>>> can wait for others to chime in with more thoughts.
+>>>>>>>> 
+>>>>>>>> For this series, I would prefer if we can discuss it separately from 
+>>>>>>>> the
+>>>>>>>> other work.
+>>>>>>>> 
+>>>>>>>> Removing _nomigrate() variances makes sense to me in general, it 
+>>>>>>>> means we
+>>>>>>>> want to by default suggest new devices only use RAM regions that is
+>>>>>>>> migratable, with proper owner device specified along with
+>>>>>>>> the ramblock name
+>>>>>>>> (as part of migration API).
+>>>>>>>> 
+>>>>>>>> However, we have two sets of these _nomigrate APIs:
+>>>>>>>> 
+>>>>>>>>    (1) memory_region_init_r[ao]m_nomigrate
+>>>>>>>>    (2) memory_region_init_r[ao]m_flags_nomigrate
+>>>>>>>> 
+>>>>>>>> What I am still confused about is why this series used (2) to replace 
+>>>>>>>> (1)
+>>>>>>>> rather than removing both.  I don't understand how this helps if we 
+>>>>>>>> still
+>>>>>>>> have (2) around: it means new devices at least can still use
+>>>>>>>> (2) to bypass
+>>>>>>>> migration.
+>>>>>>>> 
+>>>>>>>> There's actually one way to enforce migratable RAMs, taking
+>>>>>>>> ROM as example,
+>>>>>>>> it could be:
+>>>>>>>> 
+>>>>>>>>    memory_region_init_rom_internal(..., global_vmstate=XXX)
+>>>>>>>> 
+>>>>>>>> Then memory_region_init_rom() should use that, setting
+>>>>>>>> global_vmstate=off.
+>>>>>>>> 
+>>>>>>>> Then we can unexport/remove memory_region_init_rom_[flag_]nomigrate() 
+>>>>>>>> but
+>>>>>>>> use that _internal() in relevant paths; we should also mark
+>>>>>>>> the _internal()
+>>>>>>>> functions to say "new code is suggested to use the normal
+>>>>>>>> version".  But I
+>>>>>>>> do not know if that is a slight overkill just for this..
+>>>>>>>> 
+>>>>>>>> If the other series (to avoid introducing new APIs) is the
+>>>>>>>> only reason for
+>>>>>>>> this part, then IMHO this part of the series needs to be in the other
+>>>>>>>> series, not this one.  The last cleanup patches look more self 
+>>>>>>>> contained
+>>>>>>>> OTOH to me, if the whole purpose of the latter half was code
+>>>>>>>> dedup, then it
+>>>>>>>> makes more sense at least to me.
+>>>>>>> 
+>>>>>>> +1 for what Peter Xu suggested. Most part of this series looks
+>>>>>>> independently useful, but I don't think the removal of
+>>>>>>> memory_region_init_ram_nomigrate() is.
+>>>>>> 
+>>>>>> But if there are no useful uses why keep it? This version shows that
+>>>>>> converting the Sun machines as Peter Maydell suggested only leaves
+>>>>>> very few uses that can be removed eventually too after some further
+>>>>>> clean up that I don't want to take up now. Do you have any usage in
+>>>>>> mind that needs these nomigrate variants?
+>>>>> 
+>>>>> Well, my threshold for "useful" is > 1 uses, but maintainers may have
+>>>>> other preferences.
+>>> 
+>>> Personally I share the same preference..
+>>> 
+>>> When >1 it means we can dedup some code with a function and I normally
+>>> think it worthwhile.  That's also why I don't understand why we need to
+>>> open code _set_readonly() in some of this series.
+>> 
+>> Have you read the latest v5 at all? No open coding of set_readonly or 
+>> useful uses of memory_region_init_r[ao]m_nomigrate left if we accept 
+>> converting the Sun machines now to memory_region_init_r[ao]m which they 
+>> should really use as everything else does that and these are the last 
+>> remaining uses of these nomigrate variants apart from the few special 
+>> cases. It seems these Sun machines were left behind when everything else 
+>> converted away from global vmstate and use the normal 
+>> memory_region_init_r[ao]m where the _nomigrate were left for backward 
+>> compatibility during API conversion. So it's time to finish that conversion 
+>> at last.
+>> 
+>>> Even if for the sake of a new set of APIs, it doesn't need to provide 
+>>> every
+>>> single API that we have had in the old set if we don't need it, IMHO.
+>>> 
+>>>> 
+>>>> After this series when converting the Sun machines as in v5 the only
+>>>> nomigrate variant left is memory_region_init_ram_flags_nomigrate that is
+>>>> equivalent to memory_region_init_ram_nomigrate with flags=0 which appears
+>>>> outside of memory.c only in hw/xtensa/xtfpga.c (that will be converted in
+>>>> the next series to memory_region_new) and in hw/display/vga.c that can be
+>>>> removed when the hw_compat_2_12 is removed. There are two more uses of
+>>>> memory_region_init_ram_flags_nomigrate in backends/hostmem-ram.c and
+>>>> hw/m68k/next-cube.c but those have non-0 flags parameter. Therefore I 
+>>>> think
+>>>> there's no need to keep other nomigrate variants than
+>>>> memory_region_init_ram_flags_nomigrate as the only two uses outside of
+>>>> memory.c that would need memory_region_init_ram_nomigrate are to be 
+>>>> removed
+>>>> soon and can use flags=0 until then.
+>> 
+>> I tried to explain here that the two uses left that could use 
+>> memory_region_init_ram_nomigrate will be gone shortly so IMO not worth 
+>> keeping this function around for that.
+>
+> Whether it will be gone shortly or not requires reviewing additional change 
+> to remove the two use cases.
+
+That's why I gave pointers to the places so if somebody is interested can 
+look. How soon it is depends on how fast we get to the end of this review 
+(that can resolve xtfpga) and how fast older compatibility settings are 
+removed before we get to 2.12. The latter can take a while because they 
+also need cleaning up the (mostly virtio) devices they refer to so I'm not 
+trying to do anything about that but it should eventually be removed as 
+machines older than 5.1 are not visible anyway so these are just dead 
+code.
+
+>>>> I don't know if the other two uses with non-0 flags can be replaced and
+>>>> memory_region_init_ram_flags_nomigrate made internal to memory.c but 
+>>>> that's
+>>>> beyond the scope of this series and could be considered separately. 
+>>>> Creating
+>>>> nomigrate memory region is not something that should be done or need 
+>>>> several
+>>>> functions and the very few cases where this might be needed can use
+>>>> memory_region_init_ram_flags_nomigrate.
+>>> 
+>>> The hostmem-ram.c one is slightly special, when created as an object it
+>>> still doesn't know its parent device.
+>> 
+>> Yes so there might be some special cases but for those it's enough to have 
+>> a single nomigrate variant which this series proposes.
+>> 
+>>> I still think it might be helpful if you can split your "cleanup" patches
+>>> out of this series.  Note that softfreeze will be next week.
+>> 
+>> This series _is_ the clean up part split from the add memory_region_new 
+>> functions series so these are all clean ups and the rest is in the other 
+>> series. I don't theres much more to split. Maybe you missed some patch 
+>> emails. Here's the clean up series:
+>> 
+>> https://patchew.org/QEMU/cover.1772397447.git.balaton@eik.bme.hu/
+>> 
+>> and here's the rest of my original series based on these clean ups that 
+>> continue with adding and using the memory_region_new functions added in 
+>> that series:
+>> 
+>> https://patchew.org/QEMU/cover.1770753117.git.balaton@eik.bme.hu/
+>> 
+>> I'm not sure what do you want to split.
+>
+> In that case, I suggest moving this particular patch into the 
+> memory_region_new() series (or whichever series reduces the use cases to one 
+> or zero). That way, each series remains a self-contained logical unit for 
+> review.
+
+This is not one patch but half of the series that later patches depend on 
+so this would mean just merge the two series again and get nowhere. Looks 
+like we could at least remove memory_region_init_rom_nomigrate now and 
+keep memory_region_init_ram for just the two uses in xtfpga or if we 
+convert that then only for vga but then why keep this function for only 
+the use in vga?
+
+Regards,
+BALATON Zoltan
+--3866299591-1950825435-1772543784=:91300--
 
