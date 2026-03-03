@@ -4,130 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D266BEDEBFA
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F198EDEBF9
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 22:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxYJM-0003pq-So; Tue, 03 Mar 2026 17:33:53 -0500
+	id 1vxYKg-0004Fr-ML; Tue, 03 Mar 2026 17:35:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxYJL-0003pc-5K
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:33:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxYJH-0000ag-3x
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:33:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772577225;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NZ3iVpiETC1+FJYK8BWoumARbNmPPmCJX56dPvoZWG0=;
- b=A7GOKNBZw0oDnJD7JbmGZobGMQo2ZpdvbVPdo0MOxOvZV/qyfLsRpn6vu764wuiUdscGRV
- qauV6XyCJ06Mngsb5RKOnu6/8UIya4jQM39xODp5Kx5z+siVN/Qh2+oBU+an79kpz4nG1k
- lC5XY0ZWGE28eIxxFTyh8q/GKD8DU+Y=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-4G2GsRWEMD-bUaEPBSYNzw-1; Tue, 03 Mar 2026 17:33:43 -0500
-X-MC-Unique: 4G2GsRWEMD-bUaEPBSYNzw-1
-X-Mimecast-MFC-AGG-ID: 4G2GsRWEMD-bUaEPBSYNzw_1772577223
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-359918118ebso6328917a91.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:33:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772577223; cv=none;
- d=google.com; s=arc-20240605;
- b=S418C/+mbgww497grigzVB2kwW4lTXN6/ZD1dml9jvhmggKzSmL6HKgJ/51Tg06tzy
- Dskc/LACs4NHUkEmTBEA//yWGlpMYtAw4KSDkjKq4lTYBgSkxrAC886eCKhbJf6W8F97
- WPEm9V4I1ZZw9zuSUUpUgbLHwqXXaMynTnFQPwMtAnX47ktEq5eaUOhNgpCD1K578bHx
- PWRcLAnnrOjOjFc+/MMmI8Fo3Amicb4fbasKR44KeHCi5PdS1sLQteTJQa7a8XysN1xw
- cH8XEvp6FNH7KC1N4ccZux3YUx9hGhTKAPG4LkYEPlpoKTSiucNJu/wvZtf6l3B32YUn
- H0cQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NZ3iVpiETC1+FJYK8BWoumARbNmPPmCJX56dPvoZWG0=;
- fh=OKaKyZj7DgGtfb2RDDRBahu5KxUDfK74GK37YsiN4nA=;
- b=VfSrc297n2oKs4mf8vWz9lC3bPIdUSF2R8kIhnqK7GcbmxOypDuCr/vZJWUTWjIsqi
- XqnC7k0Z01m/ipy4hM5gpI19E/zVQd8OlCARqjEPVRqj7F5ARbuxmQRTbLcdxqkUgBej
- ptcyxSCOibRezU89Hd3rDjVjz5+np6qaoeBVfH0uuHHqvVkVsvc669WmEIg4zcunMWDg
- +1/dT1vuXQl7ex0J2/JHlYABdk/wxd0nVO2syj3d2e09qBkCn6b3rx3rC/iffXvuf+sP
- o0yseO2FHyI283eQKjTAz5N7A7Mesr9r6IR908QnIOdjBj3DtDocir3kjihl0QQmoef3
- JafA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vxYKe-0004Fj-FN
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:35:12 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vxYKc-0000xs-Qc
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 17:35:12 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c70ea5e9e9dso2258933a12.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 14:35:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772577223; x=1773182023; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NZ3iVpiETC1+FJYK8BWoumARbNmPPmCJX56dPvoZWG0=;
- b=EaEJ3S5ARG7w4AIjPavlqMDy6pIh7oAXPs03PGxpsKNcEFKWct8zD83npZZ5uK90Bd
- VfIGw9uhBGLsCj/1ysA/nAMRHRUZcGJWEb5gRCfCn/r+DYhXF1VhmGvk+X2hlN65d1G8
- RgGw9J3Y1HjLorBCAXWirskuEbkj+LqjXnfntAyk8i3C2pAI7M68vNZTZ94HV0c9ChcK
- Zapw7jSiKpWUdDUY4Zm/7tYxlpW/nb3797dLUeECDKRGVD1GAWneXqm78btIlLFxKPJp
- Tyr5h98Mndoo2YYnC2vI5iYAB5M96yqGTRqspegz5Ol/cGp7bEvDKifK8MP1rVPsgEb/
- /NZQ==
+ d=linaro.org; s=google; t=1772577309; x=1773182109; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cJhuPwuUVg5YuDiElIynvNSC5St5OIpuCjigwF+HnF0=;
+ b=CTpM+vaqXok+3AChnnuiJIl1bNIKOQBFZ/KDVxDTb2PKA4Z6CgTPExBqgLlb1il+7b
+ WGfAR0QfptIADATcN4SeMbnOn6I+HK4tVt95B0h1+hFRaanzDSDsKIE0J5EN4YP1ul7m
+ 5jmcqvvG1YvGHGQjIwo+MnjkKKNq61++/QrHriYoc1lNBztAZVtQWdxo26p2O0LKNgB9
+ Ymdm7l+RDudi2v1Yhw9QnkUe+WyU7JGvgPTLj3zj5KBLJ+kuJpA5+ukmAmgUGAy+LHV+
+ BRQE9D7XzJhRvkaJInA95JWg6FManjV2sYCG5k2u1icNDBskkumQUdxe2qmTeM3+qqde
+ 7ROg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772577223; x=1773182023;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NZ3iVpiETC1+FJYK8BWoumARbNmPPmCJX56dPvoZWG0=;
- b=NFrBFmqR0ZBMLMpIH1BaZxJaPwcyR2DF7dIy2Z9rjvmvY+7Y4KRDrP+9xoDEg+h2k4
- h5QhkIBJHDs8DfwXezzZGLkVcsnSyZJDWZUB30+VNfl3rHy4drTb4XuqRnRQTlyBY7HH
- K9YuDIzHaygteNVg4nm2h9E85iwfLZa07fSSpuPf8iot4tDdneZTWdSzLQ1IhdR6v+tS
- mKJdPO9ESLhZBwi7RlusginCVnNa2Q1QVd1qWdtPTiJ64TrXys3w2zmCfPD5JPR8eocg
- 8KcMmGYUs+mhopiGBKFFfdirDOvVIcUyMUnYbYBmknBpd5Tj2P4d+t4iWxBvQCjDO5uK
- 9Zjw==
-X-Gm-Message-State: AOJu0Yz6IhIL6RdHqsdRGa/mxivTpK5ju11HlCGbP+9/IrUiIq/GKr1c
- SNT9il4g8CbmdKdqIhxPbsUH+/JK3zwdZ9SIoJOKSMseB45FkBACLgTXfT0i11sYh3KHPE/br8K
- +kRP/DP6splwv+Kac95HMB2eJw5f9/9wGqJS0vXxKUzduSAin4GTPHaREZmTaQbHW4AaY6/cM1p
- u26OrFZcdELbFElobdifGJFqRpp6Aw3Uc=
-X-Gm-Gg: ATEYQzycExWN6w2W+vfDA26n9MYHH6DWqIoyHtMMyNDSmuZ36LuKcIZ89KRWV+Or/s1
- C7sBwZRsTbWBmZSGAZQOz+ZuMK6sMABp397njulKEBkOrKO+Ad1rwUzWW3bvv8crwa7RtTsvR7d
- CoUpbTn3LR/1/d0u1ud/jYysdlYvfQx60SLGS17CSmRCPtYjd1aduyBKN2UIKW9CMEaezQCYuGo
- UysDxogoRsBttsU3uG2V6mJee8qoZ9C7gS1toI2cVMvWD2003KjkmzQuVFC/dIQhJa/fq2PkdvT
- zzjAh4qIEaJdw4nfhDXobkzj
-X-Received: by 2002:a17:90b:1dcf:b0:359:87ff:f34f with SMTP id
- 98e67ed59e1d1-359a69c0a66mr9033a91.3.1772577222717; 
- Tue, 03 Mar 2026 14:33:42 -0800 (PST)
-X-Received: by 2002:a17:90b:1dcf:b0:359:87ff:f34f with SMTP id
- 98e67ed59e1d1-359a69c0a66mr9015a91.3.1772577222381; Tue, 03 Mar 2026 14:33:42
- -0800 (PST)
+ d=1e100.net; s=20230601; t=1772577309; x=1773182109;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cJhuPwuUVg5YuDiElIynvNSC5St5OIpuCjigwF+HnF0=;
+ b=wjjjFVtR1yxNVbInaOX2oE29MBrgk3KIYtnmHYb/bZi33EqoFpfRUQ+OqDgaRcPvy2
+ pqvp3M7MIgXR3ksp5rpDWDTNgizTiijzcHsdeUrXyj63VLyRb6OqOuCHhz27VZqbrLIS
+ 496UTiYiMZX5gg/MUkb28I3aPl6F1qQO2H0Lc4KZ+Jrv6kH24++IVyAWmnZQK036/i63
+ cZswlH8bWUZ0NJzpqNCu/u8sLwhRQiF49xPmg4SYjdj3lZAZSkqucd7Xgdj+DHPdnWJ3
+ 3nbqo9Azlfd3FCzDdbyZ88DBwXH5LQtNaFjH1KMp4bPE0PfuH0gqeCRUyiJiv3582nBV
+ xKpg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJWfoXVjBCOBqEVnEHD3oc+gvrWCwtNf2F6c0kwl11HDdSVEPwi4aTdNYT28lItQA4LqSqRq34mHbI@nongnu.org
+X-Gm-Message-State: AOJu0YyZVVELfHj9TvqZynYOH4/UU55ccfY9u9F+u49doDaR+fOZ1fY5
+ scpD50kTFQK0A+4JJThnXkDsJpvgcBgSAEvMtURQ0B1RkJ2LRVlDRgLcla1bz3Z2b8EJFQ0un15
+ ZYMTfenY=
+X-Gm-Gg: ATEYQzzddq788l6+zUHMIzm9EDb0rD9UPEd5uZVEZh/J5Ig8lLuHZ1u7MizndkWN98I
+ +IOGmBrLLslZ2kYc10SkmP0fZEGm0M1f+trqQqfr5r1sn4wIuLGY8YrwzEVkaSdEyFAaSiukMxl
+ YWXRzt59FdRu+Y37DMsswi8Uf1xcXo4UnUqz3MI0O9M372L1OrzW8VGxri223z0xFO1a6W64dhK
+ Mbm7kLwuE7cjFkt/y9v+iyvNb2NuC2i668hMCnrCQxwJ3xC6AO2KmOR/QIKq6i5cwPgtd/cgxSX
+ wj9X5MeWuZminxX4PxGDhKsx42cFMt5cO+ClFc7i7lpy5Ui/lLYs/uTznBn/flqTfwgh/he4Jzb
+ tVIRGZkg4aWVugXORRO1GAmj6FTO48akK+iYE20v/OjotjmRB4S+WxVEbf0mvPDWeLAGaNe5bsZ
+ Q7umiBd7fxRge8Kk4H10hBefzfSjZqZzbWx5Nk9E/Rqsf39P/NEZal
+X-Received: by 2002:a17:902:c94b:b0:2ae:5442:45cf with SMTP id
+ d9443c01a7336-2ae54424962mr82594605ad.33.1772577309139; 
+ Tue, 03 Mar 2026 14:35:09 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.15])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3599cc41db6sm1710291a91.13.2026.03.03.14.35.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 14:35:08 -0800 (PST)
+Message-ID: <988762d7-6cbc-4ef7-889c-0482502ae248@linaro.org>
+Date: Wed, 4 Mar 2026 09:35:03 +1100
 MIME-Version: 1.0
-References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
- <aadScmxkeyWBFLeg@x1.local>
-In-Reply-To: <aadScmxkeyWBFLeg@x1.local>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 3 Mar 2026 23:33:31 +0100
-X-Gm-Features: AaiRm52s2AB2fKLzvYjW9AoNqafX-WyW_elj4MkHBBh_m2_gOMytHrhkmxz-A30
-Message-ID: <CAMxuvay7r_0Fb=MPn5ECkkeVe1sZ7FfG9r8Z=mCcaEpweqh3cQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/15] Make RamDiscardManager work with multiple sources
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Ben Chaney <bchaney@akamai.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- kvm@vger.kernel.org, Mark Kanda <mark.kanda@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/4] hppa: Get physical address space bits from
+ HPPACPUDef
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+References: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
+ <20260303-hppa-c3600-v5-3-277bfe6b40b8@rev.ng>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260303-hppa-c3600-v5-3-277bfe6b40b8@rev.ng>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,68 +107,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 3/4/26 03:11, Anton Johansson wrote:
+> Reviewed-by: Helge Deller <deller@gmx.de>
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>   target/hppa/cpu.h        | 11 ++++++++---
+>   hw/hppa/machine.c        |  4 ++--
+>   hw/pci-host/astro.c      |  2 +-
+>   target/hppa/cpu.c        |  9 ++++++++-
+>   target/hppa/mem_helper.c | 39 +++++++++++----------------------------
+>   5 files changed, 30 insertions(+), 35 deletions(-)
+> 
+> diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+> index 43b4882fb4..487f0f5e9e 100644
+> --- a/target/hppa/cpu.h
+> +++ b/target/hppa/cpu.h
+> @@ -320,6 +320,11 @@ static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
+>       return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
+>   }
+>   
+> +static inline uint8_t hppa_phys_addr_bits(CPUHPPAState *env)
+> +{
+> +    return hppa_def(env)->phys_addr_bits;
+> +}
+> +
+>   static inline bool hppa_is_pa20(CPUHPPAState *env)
+>   {
+>       return hppa_def(env)->is_pa20;
+> @@ -352,9 +357,9 @@ static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
+>       return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
+>   }
+>   
+> -hwaddr hppa_abs_to_phys_pa1x(vaddr addr);
+> -hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
+> -hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
+> +hwaddr hppa_abs_to_phys_pa1x(CPUHPPAState *env, vaddr addr);
+> +hwaddr hppa_abs_to_phys_pa2_w0(CPUHPPAState *env, vaddr addr);
+> +hwaddr hppa_abs_to_phys_pa2_w1(CPUHPPAState *env, vaddr addr);
+>   
+>   /*
+>    * Since PSW_{I,CB} will never need to be in tb->flags, reuse them.
+> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+> index 5d0d4de09e..bb6b7dc76c 100644
+> --- a/hw/hppa/machine.c
+> +++ b/hw/hppa/machine.c
+> @@ -181,12 +181,12 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
+>   
+>   static uint64_t translate_pa10(void *dummy, uint64_t addr)
+>   {
+> -    return hppa_abs_to_phys_pa1x(addr);
+> +    return hppa_abs_to_phys_pa1x(cpu_env(first_cpu), addr);
+>   }
+>   
+>   static uint64_t translate_pa20(void *dummy, uint64_t addr)
+>   {
+> -    return hppa_abs_to_phys_pa2_w0(addr);
+> +    return hppa_abs_to_phys_pa2_w0(cpu_env(first_cpu), addr);
+>   }
+>   
+>   static HPPACPU *cpu[HPPA_MAX_CPUS];
+> diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+> index 00a904277c..d38f81e553 100644
+> --- a/hw/pci-host/astro.c
+> +++ b/hw/pci-host/astro.c
+> @@ -303,7 +303,7 @@ static IOMMUTLBEntry astro_translate_iommu(IOMMUMemoryRegion *iommu,
+>        * language which not-coincidentally matches the PSW.W=0 mapping.
+>        */
+>       if (addr <= UINT32_MAX) {
+> -        entry = hppa_abs_to_phys_pa2_w0(addr);
+> +        entry = hppa_abs_to_phys_pa2_w0(cpu_env(first_cpu), addr);
+>       } else {
+>           entry = addr;
+>       }
+> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+> index cc755da8be..b04bcfa6a0 100644
+> --- a/target/hppa/cpu.c
+> +++ b/target/hppa/cpu.c
+> @@ -282,7 +282,14 @@ static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
+>       HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
+>       /* Make sure all CPU models define a HPPACPUDef */
+>       g_assert(!object_class_is_abstract(oc) && data != NULL);
+> -    acc->def = data;
+> +    if (data) {
 
-On Tue, Mar 3, 2026 at 10:29=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
->
-> On Thu, Feb 26, 2026 at 02:59:45PM +0100, marcandre.lureau@redhat.com wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > Hi,
-> >
-> > This is an attempt to fix the incompatibility of virtio-mem with confid=
-ential
-> > VMs. The solution implements what was discussed earlier with D. Hildenb=
-rand:
-> > https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18=
-657-5-chenyi.qiang@intel.com/#3502238
-> >
-> > The first patches are misc cleanups. Then some code refactoring to have=
- split a
-> > manager/source. And finally, the manager learns to deal with multiple s=
-ources.
-> >
-> > I haven't done thorough testing. I only launched a SEV guest with a vir=
-tio-mem
-> > device. It would be nice to have more tests for those scenarios with
-> > VFIO/virtio-mem/confvm.. In any case, review & testing needed!
-> >
-> > (should fix https://issues.redhat.com/browse/RHEL-131968)
->
-> Hi, Marc-Andr=C3=A9,
->
-> Just FYI that this series fails some CI tests:
->
-> https://gitlab.com/peterx/qemu/-/pipelines/2361780109
->
-> Frankly I don't yet know on why rust fails with this, maybe you have bett=
-er
-> idea..  So I'll leave that to you..
->
-> =3D=3D=3D8<=3D=3D=3D
-> error: unused import: `InterfaceClass`
->   --> rust/bindings/system-sys/libsystem_sys.rlib.p/structured/lib.rs:23:=
-15
->    |
-> 23 | use qom_sys::{InterfaceClass, Object, ObjectClass};
->    |               ^^^^^^^^^^^^^^
->    |
->    =3D note: `-D unused-imports` implied by `-D warnings`
->    =3D help: to override `-D warnings` add `#[allow(unused_imports)]`
-> error: aborting due to 1 previous error
-> =3D=3D=3D8<=3D=3D=3D
->
+You just asserted data != NULL.
 
-ok, this is because the RDM is no longer in memory.h, and thus objects
-are no longer needed. Fixed
 
-> The other thing is this series will generate tons of checkpatch issues,
-> almost only line width issues and unmaintained files, so they're trivial.
-> It seems to me it'll be nice if this series can land 11.0.  We have one
-> more week.
-> Please take a look when repost, thanks!
-
-ok, thanks
-
+r~
 
