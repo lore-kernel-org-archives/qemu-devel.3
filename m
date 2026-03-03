@@ -4,112 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF225EDEBE3
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F23EDEBE0
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxUNW-0007x1-PD; Tue, 03 Mar 2026 13:21:54 -0500
+	id 1vxUXn-0001PN-0A; Tue, 03 Mar 2026 13:32:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vxUNT-0007wO-Va
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:21:51 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vxUNR-0004x6-MT
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:21:51 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 623ERi9R856129; Tue, 3 Mar 2026 18:21:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=yoPsxeUJs8SBTPp7K2AKooNsWxZCvK
- dY0ekocBbd0k4=; b=blkXltntETm9y6HQo7zd0SFm6ayDSnewIIMP3Bc3B4UQxy
- /nnHZBAZAosZfYqYvmn/8DR/ijlbzCp4u+iX322pOH6rv1S+6X+Z6fc3/Db3Pkk9
- llpV2jyezDuGy0EgshfuY3LLT9xQdvM3j4rWdRI7Vzxj7D7GAyw/TMBi3O/TDDY5
- NP9g/MiZ9sQGDD3w8LIBBTOq/cZae8dhBEKBOw062HfbSb3OK8I+nsVckdPMlmm/
- E2tlhZM+Bvz9b8ykAUBRNZ95cA1l1bSw3u5O4vcSprJdKdbMMa19jSon5xDUGCaz
- ZHRZhItP8pcMtOKziS2bi3JU5V+COkoDLa2MVAhw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskbv04v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Mar 2026 18:21:46 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 623HdOdG028952;
- Tue, 3 Mar 2026 18:21:45 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmaps3nuf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 03 Mar 2026 18:21:45 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 623ILflq49873236
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 3 Mar 2026 18:21:41 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8213320043;
- Tue,  3 Mar 2026 18:21:41 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45E2420040;
- Tue,  3 Mar 2026 18:21:39 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.210.232])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue,  3 Mar 2026 18:21:38 +0000 (GMT)
-Date: Tue, 3 Mar 2026 23:51:35 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, berrange@redhat.com,
- peterx@redhat.com, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: Re: [PATCH v4 4/4] tests/functional/ppc64/pseries: Remove custom
- migration routine
-Message-ID: <aacmGFEulGJA47nI@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260303173320.10942-1-farosas@suse.de>
- <20260303173320.10942-5-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vxUXd-0001OP-6e
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:32:23 -0500
+Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1vxUXb-00071Y-DM
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:32:20 -0500
+Received: by mail-dl1-x122e.google.com with SMTP id
+ a92af1059eb24-12732e6a123so2664437c88.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:32:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772562737; cv=none;
+ d=google.com; s=arc-20240605;
+ b=DhtHkzJV5nuYkBSfLLBJD0FX3AzZD/MlOn91/cCUsTuIwbdeV3pazcEeI8DBVwVDHq
+ 6kgP73mF0kvUMnGfJg0YKOCy4Vnji/Fc0iuXp7Gk78M30l9n4encHGLKcHrvldOhqGXN
+ RGTAxaoWaxH8tWbI7LN0XvO6QFoFfbD794xnZQN4J01R7gpb4r0hrbH7ru2OQTmeaIZY
+ POLC3KQrvmEjvs7hBY0uEQHd3AO04FguGCbq5uIdqipEfAB07Idw9IVGm9JTO+Cdn0k2
+ 8cw6spfg7ENlR7W3RxmTB+8aQaEozBiCY/KNgQcIOBMs4wi8w0vYt2XulPmsRZrtXxFV
+ fBYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=/EdPveg4tGA8FqN+WLX4ITf8szipKUj0T5kGoi73b8s=;
+ fh=W8euAw+JXgI3Nge78U5x5AerZ6pRzZDCA364ubWJQYA=;
+ b=Iwrab+Mn2nMCQUC9+CDk9XNu3q+MKQgQBtyi8mO1RT2VMmM7RZO0EnX7lZXkI3WnZq
+ inaZE6oAcaYu9V/bCmMJ9ykALJFRd84pXsJyR6qTpeKejA+3G6zUusPMpeovOT4cdoTb
+ 6SVyGXcsjoRYp4dAxYwl1Dyaa5GqJVkZD5r7d9DVUmByt+ejlFlNf30naM5h0VkLidjQ
+ TXgwRaS7ytHp5vQgTyaEhSkjOnb5Gyw787gzx8L+ojXqJo0QjxhdUYLdHQDs9uTHt8EG
+ irbiMvTq0IT1z5XiPN+uLRPB97zx12igbQ6Vo59USV6u4MRQ9DEHM1+dyMNdQWPRKabx
+ mJqQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772562737; x=1773167537; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/EdPveg4tGA8FqN+WLX4ITf8szipKUj0T5kGoi73b8s=;
+ b=mrZo0kkB+nUpjGAWRMsWYE2wJNs1Hhpv9hoeX3jGI1w6nc4YscDp/2Ag+HQ2SlGFDc
+ esKBnKiqCMhko393QYzh0naPjDASx3bHcszsolp1grJM96hhJQcWc/MMK67xU97i1XFX
+ Dbb0GM38CTMcuh8Kt8grQ8itCb+hFkPzrIS+zJQUfwgZHyimarSxL55bmxY1pUpuH5sI
+ 3hY2VWMVIEwlp9rKLiyMYVpYTUM0KfuycvQkQ6sIoPPGA8lG5qhB7LREXW9GmT0CaLbn
+ Z5DgZ68KhdGXG1nLNCRa7J5MOAO+U+ERNjsZndKeQaQT2jHXqF15Wi+aZ+jddzIVgBYY
+ /uZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772562737; x=1773167537;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/EdPveg4tGA8FqN+WLX4ITf8szipKUj0T5kGoi73b8s=;
+ b=reW9tiD9Sg6GspOFmQoWRGrRUyBk1GZBuqXpHu3346rfzIa3oCve8kjE1ZweKTuR7K
+ 8Ky3qnnUUIuirwrN22F63TmoJ/l0TIBio439LN+/MjzIzk2WZlO/kQEr4ZoIeVDIx5bM
+ Rxn8TwilIsxwDPDNiy9Pzf1A6cBIRK0rbzZm2f+VcHrdOeU5GHs4Vyg9cP8msCuCesei
+ yZaIip0retPJnRkeDyFtA9FI2E95VqYpm8DqYjss1JLelcp8WnwZr+DFmrGSBC4orVK0
+ k0cym8I2a+dktOnEIVp1TXOzEk29B4VcZBUHLU4D78rxfBE/JU3M7MzyjNzPZod1mPYs
+ fqgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFjq7lQjK2XG0YdgqDwdAtIhZ9RRmlX0PjeV6pl/CNfUzOkTfBQzeI85B1yh3UqCQB9MfC+7bM5Nxb@nongnu.org
+X-Gm-Message-State: AOJu0YzCikVt1boqlMI2R4ny1ByJ6p251ZECg1TjeRUhv+ey+neZGjKU
+ 8CmtpeJDaS3GRZM4fI2f+/+SZjj3CezMFS4pKcT58SVLXaTsY+7y54upWlp6ovhocU5Yyr1mAr2
+ yO8ksVs5mjYOzUc7C6wM/RgXIxA906dw=
+X-Gm-Gg: ATEYQzwZg6UuT2oJCgl/jUirJbQ0weuXiT4vWp/+/4AvT98hhv+HEaOowfIFz8O3yjz
+ L2tPSSs5gAax7Wc9YJaLoSrljeCW1bY0DRrRbB/dlIRhC479z/CYYlrb1jBAYF/Qmk+0LvrhNgH
+ DBhpjuivhoxQJ0XrBww+vVCZ0PeJNInmvjqQj+QB7MJbAy+yJ0IvbwfJ+TYh54L3CAN9QGBaan+
+ GFcXpRVmtS10Zfw/EFVHq25NO3eaYYs8bqWJtJ91A5tkxpyMNcoTmw1hp/2mFAUmbyLl9jXDMOr
+ x1/+US9Z1SrkawZH6g==
+X-Received: by 2002:a05:7022:90f:b0:11b:9386:a3c8 with SMTP id
+ a92af1059eb24-1278fd7b7d5mr7481974c88.41.1772562736313; Tue, 03 Mar 2026
+ 10:32:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260303173320.10942-5-farosas@suse.de>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: E6F1uK5-zMvdjJSb14NL6uPbNRlIv2IZ
-X-Authority-Analysis: v=2.4 cv=b66/I9Gx c=1 sm=1 tr=0 ts=69a726ba cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=20KFwNOVAAAA:8 a=3uas-pzL17UqV6fx6mkA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE0NiBTYWx0ZWRfX7sQOhN3WGhXd
- EmPZavJVnSHADK/HKc+4IQvE/sJAYGF3dPRC/kYS3WdDoErn8XPDSjOkeAw+UTbv9UK0d5qRxkp
- 2N8gcfwzv5Hx5gt9wGRsPgCANmBS612JqdC8iFShzO5sbqdzGgZdJmCU8bbgumtHdEutbmBybXZ
- 8Z1AZjVxqh2kohk2/+XqjlEKA1HZ4Qf37Y6cIfuJM2DNP5DbiKB6UJ5GT+H975ebkuMlx1OdjN/
- cE3XaVaqWRmzWfgRn1rx5B49GUW/y5xv4/grhC2CrrGCsEcPaYV1tCJkB8ghox+9QnuvfE/sxDX
- 4hdu29DGMMfYttpkPZEhSJPiZSFg3MueBRyUcUBZGfuQE/lZ4ptAES1YnmToyWX6591fpk+87M5
- jPEdGwUuL4cOobt7fUIMFLRy6n2MvWdgXWX5wlb+zwlUQ1tq7QT6/qS6YJQBbg5ozB/Zt0YZ6e+
- ir/HVn16xZ9Al4iJsZA==
-X-Proofpoint-GUID: VBJc4ZrS5A6pNktBvoxZjJoISYAXPGS6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-03_02,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603030146
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260212104432.4168886-1-kchiu@axiado.com>
+ <CAFEAcA_u5B2RdVEaGycCQ6gCx1pQuT8rvGVGZpoKLTK+2s72+w@mail.gmail.com>
+ <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
+In-Reply-To: <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Tue, 3 Mar 2026 12:32:03 -0600
+X-Gm-Features: AaiRm50TlLO9zmZIRLd-fBZFSb0JSKwzkeJQUS3HRbcMX-n_cyGgN19ih5MFIUs
+Message-ID: <CAJy5ezpcvp0Qy-P9gE46oDtsxZxNO=xMV1k-GC3WF4yY3gARGw@mail.gmail.com>
+Subject: Re: [PATCH v1] hw/char/cadence_uart: Add BXRS register
+To: Kuan-Jui Chiu <kchiu@axiado.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, alistair@alistair23.me
+Content-Type: multipart/alternative; boundary="0000000000003d783f064c22ece9"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-dl1-x122e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,52 +119,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/03 02:33PM, Fabiano Rosas wrote:
-> Don't implement a custom migration routine at PpcMigrationTest and
-> instead reuse the generic one from MigrationTest.
-> 
-> This removes the dependency of PpcMigrationTest from
-> PseriesMachine. Having one test import another causes unittest code to
-> instantiate the imported test, resulting in the setup and teardown
-> methods being invoked for the imported test class, even if no test
-> from that class will be executed.
-> 
-> If run in parallel, the extra setup/teardown methods that result from
-> importing can race with the ones from the actual test being executed
-> and cause the following error:
-> 
-> File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in tearDown
-> shutil.rmtree(self.workdir)
-> ...
-> FileNotFoundError: [Errno 2] No such file or directory:
-> '<SRC_DIR>/build/tests/functional/ppc64/.../test_migration_with_exec/scratch'
-> 
-> The PseriesMachine class is changed to inherit from MigrationTest so
-> both the migration routines and the class attributes of PseriesMachine
-> can be accessed without the need to instantiate another object.
-> 
-> Fixes: f4e34d0fd5 ("tests/functional: Add a OS level migration test for pseries")
-> Reported-by: Aditya Gupta <adityag@linux.ibm.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+--0000000000003d783f064c22ece9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I don't see any issues with the tests now, and able to run them
-parallely, thanks for fixing it !
+On Tue, Mar 3, 2026 at 2:33=E2=80=AFAM Kuan-Jui Chiu <kchiu@axiado.com> wro=
+te:
 
-Tested-by: Aditya Gupta <adityag@linux.ibm.com>
+> Hi
+>
+> I was referring this commit of upstream kernel which xilinx added BXRS
+> register in Cadence UART driver
+> serial: xuartps: Adds RXBS register support for zynqmp =C2=B7
+> torvalds/linux@3816b2f
+> <
+> https://github.com/torvalds/linux/commit/3816b2f886d0918d8a8ae593b2db203a=
+b905a889
+> >
+>
+> Peter Maydell =E6=96=BC 2026/2/16 =E4=B8=8B=E5=8D=88 06:53 =E5=AF=AB=E9=
+=81=93:
+> > CAUTION: This email originated from outside of the organization. Do not
+> click links or open attachments unless you recognize the sender and know
+> the content is safe.
+> >
+> >
+> > On Thu, 12 Feb 2026 at 10:47, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
+> >> The new CADENCE UART driver in upstream kernel access BXRS register
+> >> This patch adds BXRS (RX FIFO byte status register) or there would be
+> >> kernel panic if user are using the new CADENCE UART driver
+> >>
+> >> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+> > Hi; thanks for this patch.
+> >
+> >> diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
+> >> index eff6a3c4d1..f57cad57a8 100644
+> >> --- a/hw/char/cadence_uart.c
+> >> +++ b/hw/char/cadence_uart.c
+> >> @@ -120,6 +120,7 @@
+> >>   #define R_PMIN     (0x3C/4)
+> >>   #define R_PWID     (0x40/4)
+> >>   #define R_TTRIG    (0x44/4)
+> >> +#define R_RXBS     (0x48/4)
+> > Where is this register documented? The cadence_uart.c file
+> > references the Zynq 7000 Soc TRM UG585; its URL for that
+> > is out of date, but looking at the copy on the AMD website,
+> > there is a table giving the register summary for the UART:
+> >
+> https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UART
+> > and it lists only registers from offsets 0 to 0x44.
+> >
+> > thanks
+> > -- PMM
+>
 
->      timeout = 90
->      KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
-> @@ -116,11 +116,11 @@ def test_ppc64_linux_migration(self):
->          wait_for_console_pattern(self, console_pattern, self.panic_message,
->                                   vm=source_vm)
->  
-> -        PpcMigrationTest().do_migrate_ppc64_linux(source_vm, dest_vm);
-> +        self.migration_with_tcp_localhost_vms(dest_vm, source_vm);
 
-nit: the ';', can ignore though
+Hi,
 
-Thanks,
-- Aditya G
+There's documentation here for zynqmp:
+https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/Rx_FIFO_byte_=
+status-UART-Register
 
+I haven't looked to carefully, it may be a register that didn't exist in
+the version of the UART on zynq and was added in the version of the uart in
+the zynqmp.
+
+Cheers,
+Edgar
+
+--0000000000003d783f064c22ece9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 3, =
+2026 at 2:33=E2=80=AFAM Kuan-Jui Chiu &lt;<a href=3D"mailto:kchiu@axiado.co=
+m">kchiu@axiado.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">Hi<br>
+<br>
+I was referring this commit of upstream kernel which xilinx added BXRS <br>
+register in Cadence UART driver<br>
+serial: xuartps: Adds RXBS register support for zynqmp =C2=B7 <br>
+torvalds/linux@3816b2f <br>
+&lt;<a href=3D"https://github.com/torvalds/linux/commit/3816b2f886d0918d8a8=
+ae593b2db203ab905a889" rel=3D"noreferrer" target=3D"_blank">https://github.=
+com/torvalds/linux/commit/3816b2f886d0918d8a8ae593b2db203ab905a889</a>&gt;<=
+br>
+<br>
+Peter Maydell =E6=96=BC 2026/2/16 =E4=B8=8B=E5=8D=88 06:53 =E5=AF=AB=E9=81=
+=93:<br>
+&gt; CAUTION: This email originated from outside of the organization. Do no=
+t click links or open attachments unless you recognize the sender and know =
+the content is safe.<br>
+&gt;<br>
+&gt;<br>
+&gt; On Thu, 12 Feb 2026 at 10:47, Kuan-Jui Chiu &lt;<a href=3D"mailto:kchi=
+u@axiado.com" target=3D"_blank">kchiu@axiado.com</a>&gt; wrote:<br>
+&gt;&gt; The new CADENCE UART driver in upstream kernel access BXRS registe=
+r<br>
+&gt;&gt; This patch adds BXRS (RX FIFO byte status register) or there would=
+ be<br>
+&gt;&gt; kernel panic if user are using the new CADENCE UART driver<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Kuan-Jui Chiu &lt;<a href=3D"mailto:kchiu@axiado.co=
+m" target=3D"_blank">kchiu@axiado.com</a>&gt;<br>
+&gt; Hi; thanks for this patch.<br>
+&gt;<br>
+&gt;&gt; diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c<br>
+&gt;&gt; index eff6a3c4d1..f57cad57a8 100644<br>
+&gt;&gt; --- a/hw/char/cadence_uart.c<br>
+&gt;&gt; +++ b/hw/char/cadence_uart.c<br>
+&gt;&gt; @@ -120,6 +120,7 @@<br>
+&gt;&gt;=C2=A0 =C2=A0#define R_PMIN=C2=A0 =C2=A0 =C2=A0(0x3C/4)<br>
+&gt;&gt;=C2=A0 =C2=A0#define R_PWID=C2=A0 =C2=A0 =C2=A0(0x40/4)<br>
+&gt;&gt;=C2=A0 =C2=A0#define R_TTRIG=C2=A0 =C2=A0 (0x44/4)<br>
+&gt;&gt; +#define R_RXBS=C2=A0 =C2=A0 =C2=A0(0x48/4)<br>
+&gt; Where is this register documented? The cadence_uart.c file<br>
+&gt; references the Zynq 7000 Soc TRM UG585; its URL for that<br>
+&gt; is out of date, but looking at the copy on the AMD website,<br>
+&gt; there is a table giving the register summary for the UART:<br>
+&gt; <a href=3D"https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-C=
+ontroller-UART" rel=3D"noreferrer" target=3D"_blank">https://docs.amd.com/r=
+/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UART</a><br>
+&gt; and it lists only registers from offsets 0 to 0x44.<br>
+&gt;<br>
+&gt; thanks<br>
+&gt; -- PMM<br></blockquote><div><br></div><div><br></div><div>Hi,</div><di=
+v><br></div><div>There&#39;s documentation here for zynqmp:</div><div><a hr=
+ef=3D"https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/Rx_FIFO=
+_byte_status-UART-Register">https://docs.amd.com/r/en-US/ug1087-zynq-ultras=
+cale-registers/Rx_FIFO_byte_status-UART-Register</a></div><div><br></div><d=
+iv>I haven&#39;t looked to carefully, it may be a register that didn&#39;t =
+exist in the version of the UART on zynq and was added in the version of th=
+e uart in the zynqmp.</div><div><br></div><div>Cheers,</div><div>Edgar</div=
+></div></div>
+
+--0000000000003d783f064c22ece9--
 
