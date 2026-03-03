@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A436EC047E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F8BAEC047D
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxM1H-00044I-Di; Tue, 03 Mar 2026 04:26:23 -0500
+	id 1vxM1L-0004Cr-Li; Tue, 03 Mar 2026 04:26:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vxM0x-0003oo-Ti
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:05 -0500
+ id 1vxM1J-0004Ax-Uu
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vxM0v-0004Q7-N1
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:02 -0500
+ id 1vxM1I-0004Ta-0s
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772529960;
+ s=mimecast20190719; t=1772529983;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=05RW9V+9uWti5AzwJkqtF2mjeEYiDgxxMfFwdFavguw=;
- b=RM9vl8p6Ff8dDEtVU9Myei8N1ZVF/dPCjXX09ICZXOvkwenDmBp3T8E2XlhvIvs3eufYg5
- hJcfz8+cwbuWF67YtV4dxPOSfMXBCtPesIi9rUuC0R0VMlsfLZiNUN0s1RCYTHMGDfhWYh
- hPIsLpuYwg+/RO3Owd4zLFh7qxCN5kE=
+ bh=tBe3Z1p6RUc5jMy7PSA5mqWIquYF/BeqKY1D+XMQbIg=;
+ b=DSycru09qjPAxDSEFA26qZwaoSJEjwp67Ix7X6MU7fx8MXWKNeAJuEMxUCMi6IUNatmOAi
+ sxsbnN8T4iars+zYGBH8zufBUoherijJLLcch05LoTAlEsAPaC7u752pru1E6ruFV0o1f0
+ Ejq50vMHu89hCyMmHTdl3lxDTYstCfg=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-xcmghZrxOAOUgaFi91dBgw-1; Tue,
- 03 Mar 2026 04:25:58 -0500
-X-MC-Unique: xcmghZrxOAOUgaFi91dBgw-1
-X-Mimecast-MFC-AGG-ID: xcmghZrxOAOUgaFi91dBgw_1772529957
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-18tMvffUNCGXpTcqatCEnA-1; Tue,
+ 03 Mar 2026 04:26:19 -0500
+X-MC-Unique: 18tMvffUNCGXpTcqatCEnA-1
+X-Mimecast-MFC-AGG-ID: 18tMvffUNCGXpTcqatCEnA_1772529978
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A8D8195608F; Tue,  3 Mar 2026 09:25:57 +0000 (UTC)
+ id 5FE10195608F; Tue,  3 Mar 2026 09:26:18 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2AE7630001B9; Tue,  3 Mar 2026 09:25:53 +0000 (UTC)
+ id C9C3F30001B9; Tue,  3 Mar 2026 09:26:15 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
  peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
  zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
  qemu-arm@nongnu.org
-Subject: [PATCH v2 05/21] tests: acpi: x86/q35: add WDAT table test case
-Date: Tue,  3 Mar 2026 10:25:16 +0100
-Message-ID: <20260303092532.2410177-6-imammedo@redhat.com>
+Subject: [PATCH v2 12/21] tests: acpi: arm/virt: whitelist new WDAT table
+Date: Tue,  3 Mar 2026 10:25:23 +0100
+Message-ID: <20260303092532.2410177-13-imammedo@redhat.com>
 In-Reply-To: <20260303092532.2410177-1-imammedo@redhat.com>
 References: <20260303092532.2410177-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -90,42 +90,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ tests/data/acpi/aarch64/virt/WDAT.wdat      | 0
+ 2 files changed, 1 insertion(+)
+ create mode 100644 tests/data/acpi/aarch64/virt/WDAT.wdat
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index a5a5b8807b..5b01a657e5 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2530,6 +2530,18 @@ static void test_acpi_isapc_smbios_legacy(void)
-     free_test_data(&data);
- }
- 
-+static void test_acpi_q35_wdat(void)
-+{
-+    test_data data = {
-+        .machine = MACHINE_Q35,
-+        .arch    = "x86",
-+        .variant = ".wdat",
-+    };
-+
-+    test_acpi_one("-machine wdat=on", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_oem_fields(test_data *data)
- {
-     int i;
-@@ -2824,6 +2836,7 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/q35/cxl", test_acpi_q35_cxl);
- #endif
-             qtest_add_func("acpi/q35/slic", test_acpi_q35_slic);
-+            qtest_add_func("acpi/q35/wdat", test_acpi_q35_wdat);
-         }
-         if (qtest_has_machine("microvm")) {
-             qtest_add_func("acpi/microvm", test_acpi_microvm_tcg);
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..135186b40b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/WDAT.wdat",
+diff --git a/tests/data/acpi/aarch64/virt/WDAT.wdat b/tests/data/acpi/aarch64/virt/WDAT.wdat
+new file mode 100644
+index 0000000000..e69de29bb2
 -- 
 2.47.3
 
