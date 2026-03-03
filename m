@@ -4,106 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F23EDEBE0
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53222EDEBE0
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 18:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxUXn-0001PN-0A; Tue, 03 Mar 2026 13:32:32 -0500
+	id 1vxUij-0003Am-3B; Tue, 03 Mar 2026 13:43:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxUXd-0001OP-6e
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:32:23 -0500
-Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxUXb-00071Y-DM
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:32:20 -0500
-Received: by mail-dl1-x122e.google.com with SMTP id
- a92af1059eb24-12732e6a123so2664437c88.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:32:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772562737; cv=none;
- d=google.com; s=arc-20240605;
- b=DhtHkzJV5nuYkBSfLLBJD0FX3AzZD/MlOn91/cCUsTuIwbdeV3pazcEeI8DBVwVDHq
- 6kgP73mF0kvUMnGfJg0YKOCy4Vnji/Fc0iuXp7Gk78M30l9n4encHGLKcHrvldOhqGXN
- RGTAxaoWaxH8tWbI7LN0XvO6QFoFfbD794xnZQN4J01R7gpb4r0hrbH7ru2OQTmeaIZY
- POLC3KQrvmEjvs7hBY0uEQHd3AO04FguGCbq5uIdqipEfAB07Idw9IVGm9JTO+Cdn0k2
- 8cw6spfg7ENlR7W3RxmTB+8aQaEozBiCY/KNgQcIOBMs4wi8w0vYt2XulPmsRZrtXxFV
- fBYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/EdPveg4tGA8FqN+WLX4ITf8szipKUj0T5kGoi73b8s=;
- fh=W8euAw+JXgI3Nge78U5x5AerZ6pRzZDCA364ubWJQYA=;
- b=Iwrab+Mn2nMCQUC9+CDk9XNu3q+MKQgQBtyi8mO1RT2VMmM7RZO0EnX7lZXkI3WnZq
- inaZE6oAcaYu9V/bCmMJ9ykALJFRd84pXsJyR6qTpeKejA+3G6zUusPMpeovOT4cdoTb
- 6SVyGXcsjoRYp4dAxYwl1Dyaa5GqJVkZD5r7d9DVUmByt+ejlFlNf30naM5h0VkLidjQ
- TXgwRaS7ytHp5vQgTyaEhSkjOnb5Gyw787gzx8L+ojXqJo0QjxhdUYLdHQDs9uTHt8EG
- irbiMvTq0IT1z5XiPN+uLRPB97zx12igbQ6Vo59USV6u4MRQ9DEHM1+dyMNdQWPRKabx
- mJqQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxUih-0003Ac-Vn
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:43:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxUig-0006Vu-0t
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 13:43:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772563423;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=D2zeKKfODt4CL6GJIdGMOBnySyY8rAGdhFpXXoca0Q8=;
+ b=IMr81w4AoK9JbLi7GLYmvhd+tQOMSsOsOKSqLbu58i1lh7Yijl4ed0w3rXFaXT2iyqH3T1
+ Fd/Y8QFrvVcVy5WC+Xww4N1C8BfC+9qB0UTbuXWNQDFoIpo5HowwtdUMWc+SUuhmKgTvH0
+ qt/274fpj3vBMlqPdn5FMLo4kghD0h8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-203-Fh4JjPUNMcOmWYcvT8AReA-1; Tue, 03 Mar 2026 13:43:42 -0500
+X-MC-Unique: Fh4JjPUNMcOmWYcvT8AReA-1
+X-Mimecast-MFC-AGG-ID: Fh4JjPUNMcOmWYcvT8AReA_1772563422
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cb3a129cd2so4656793185a.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 10:43:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772562737; x=1773167537; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/EdPveg4tGA8FqN+WLX4ITf8szipKUj0T5kGoi73b8s=;
- b=mrZo0kkB+nUpjGAWRMsWYE2wJNs1Hhpv9hoeX3jGI1w6nc4YscDp/2Ag+HQ2SlGFDc
- esKBnKiqCMhko393QYzh0naPjDASx3bHcszsolp1grJM96hhJQcWc/MMK67xU97i1XFX
- Dbb0GM38CTMcuh8Kt8grQ8itCb+hFkPzrIS+zJQUfwgZHyimarSxL55bmxY1pUpuH5sI
- 3hY2VWMVIEwlp9rKLiyMYVpYTUM0KfuycvQkQ6sIoPPGA8lG5qhB7LREXW9GmT0CaLbn
- Z5DgZ68KhdGXG1nLNCRa7J5MOAO+U+ERNjsZndKeQaQT2jHXqF15Wi+aZ+jddzIVgBYY
- /uZw==
+ d=redhat.com; s=google; t=1772563421; x=1773168221; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=D2zeKKfODt4CL6GJIdGMOBnySyY8rAGdhFpXXoca0Q8=;
+ b=Uy5Rg/Uq+GtvI+EH/q6bR3p99okzpcVxFFFxdP9LKh+08NuZv4vOV1isAnw4+dBoK1
+ cTXwMt00RH8xlCBJiLyW8yLuARR+5mstgQoqC2ulJ0LkvsCTyMhPzYPeLk/qUJaOk6Pg
+ JoPe0LxebXYliICavzdCXeEYHyhUnOeoGxNOreUKQfz1dU9onSB/gvMpCssmVBKqELsi
+ +Bpfs+dFWdL6dJUuA4DKC5mWhTqxfV7E+opUURxQAroyGN/5rvlekgcAD8RmGAuw4d+B
+ M8e0ngaOY6EofHHZUKLil/nSmAlfo+2mxwLfhBiSVIPAz9vUPH4QHkZJPLgfvA1L6vF/
+ W3Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772562737; x=1773167537;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/EdPveg4tGA8FqN+WLX4ITf8szipKUj0T5kGoi73b8s=;
- b=reW9tiD9Sg6GspOFmQoWRGrRUyBk1GZBuqXpHu3346rfzIa3oCve8kjE1ZweKTuR7K
- 8Ky3qnnUUIuirwrN22F63TmoJ/l0TIBio439LN+/MjzIzk2WZlO/kQEr4ZoIeVDIx5bM
- Rxn8TwilIsxwDPDNiy9Pzf1A6cBIRK0rbzZm2f+VcHrdOeU5GHs4Vyg9cP8msCuCesei
- yZaIip0retPJnRkeDyFtA9FI2E95VqYpm8DqYjss1JLelcp8WnwZr+DFmrGSBC4orVK0
- k0cym8I2a+dktOnEIVp1TXOzEk29B4VcZBUHLU4D78rxfBE/JU3M7MzyjNzPZod1mPYs
- fqgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFjq7lQjK2XG0YdgqDwdAtIhZ9RRmlX0PjeV6pl/CNfUzOkTfBQzeI85B1yh3UqCQB9MfC+7bM5Nxb@nongnu.org
-X-Gm-Message-State: AOJu0YzCikVt1boqlMI2R4ny1ByJ6p251ZECg1TjeRUhv+ey+neZGjKU
- 8CmtpeJDaS3GRZM4fI2f+/+SZjj3CezMFS4pKcT58SVLXaTsY+7y54upWlp6ovhocU5Yyr1mAr2
- yO8ksVs5mjYOzUc7C6wM/RgXIxA906dw=
-X-Gm-Gg: ATEYQzwZg6UuT2oJCgl/jUirJbQ0weuXiT4vWp/+/4AvT98hhv+HEaOowfIFz8O3yjz
- L2tPSSs5gAax7Wc9YJaLoSrljeCW1bY0DRrRbB/dlIRhC479z/CYYlrb1jBAYF/Qmk+0LvrhNgH
- DBhpjuivhoxQJ0XrBww+vVCZ0PeJNInmvjqQj+QB7MJbAy+yJ0IvbwfJ+TYh54L3CAN9QGBaan+
- GFcXpRVmtS10Zfw/EFVHq25NO3eaYYs8bqWJtJ91A5tkxpyMNcoTmw1hp/2mFAUmbyLl9jXDMOr
- x1/+US9Z1SrkawZH6g==
-X-Received: by 2002:a05:7022:90f:b0:11b:9386:a3c8 with SMTP id
- a92af1059eb24-1278fd7b7d5mr7481974c88.41.1772562736313; Tue, 03 Mar 2026
- 10:32:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772563421; x=1773168221;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=D2zeKKfODt4CL6GJIdGMOBnySyY8rAGdhFpXXoca0Q8=;
+ b=sdpUr3VjGIwhF11Io4kuF+JoremYIfaXNBAyKsYOFK5KntauKNx3Ew3hwziDbNPRDh
+ l0GWK2F+riQDUgKbyaiL47Jv8aMter3dM9F4UlVHcISjw2mmRGX26qkIE/fD5+9uB2w/
+ iL0kzbuhZ/3bDNpvz1fKEJ6nyrvJnRdE1WXipSyqk0jVJwsgBkktvR+EYgBHZQiE2FXd
+ pj556nKN1m+qKsvdjPNNDfbUZDg1zTRvpkMS6A/OAzUm689yhVD49o/FS64sGS3ZEorT
+ 1OKd/9WO9V7BUsOhc+kkz+FO0VsezG88AzlmQNCqhPkhjwJoq+dy4Az/41RfkFwwj/jL
+ f6Tw==
+X-Gm-Message-State: AOJu0YyfB+UKmwnpwiWL7tLqpfB2LTZP0HF2q+F3vPZXxTPlAi+U/Rw5
+ KbAqoO6x8ZwSJfuOBxkbnkknQhNCp8JBf1GZwXnRdwPKctMydSGeUPFJ9r2bQfV5/iULlUmT8DY
+ 2icFIdEzoepoFcTSlFp79NYncG7LmZogp6pW3DSsbzSTZ07vt72LPGkPY
+X-Gm-Gg: ATEYQzwWdVXQ62QALU+R+P0bc2xNORsBnpZdP0Ng/SfZj6BfMYsuEaJARizAgLFBFcW
+ g3tK49Wt1JyR5axKO9ArFyObuA5i+mxg6B1KOtmcwgMp8U84hB1KbdW2fbuCkCAZFwwIkjNv8bF
+ 43LKzo0s0f63fSvmatpSyjusRLhh94e0d35Camie6iSGWr/RxEzzdBVjVmrEezMPWR3SD3ch6oq
+ K+78h8M2Hzp0iW9i6OAKenqEavnynInapajkZAJpkarln8PyD20c8urzeF8UEO3FqJ8JmQd/IKz
+ OZ2QHpPK98tjQhnu38rHxyByxIMQ/fZ9IunM5seiLuRgvWr+8D18+lRK51KdFdwSVxnZIE9DRm9
+ 4/SxEk2Kyqyb63Q==
+X-Received: by 2002:a05:620a:470d:b0:8b2:f5b5:c9bf with SMTP id
+ af79cd13be357-8cd509c2057mr366659485a.22.1772563421587; 
+ Tue, 03 Mar 2026 10:43:41 -0800 (PST)
+X-Received: by 2002:a05:620a:470d:b0:8b2:f5b5:c9bf with SMTP id
+ af79cd13be357-8cd509c2057mr366656385a.22.1772563421118; 
+ Tue, 03 Mar 2026 10:43:41 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cbbf66f325sm1443836585a.16.2026.03.03.10.43.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 10:43:40 -0800 (PST)
+Date: Tue, 3 Mar 2026 13:43:29 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, adityag@linux.ibm.com, thuth@redhat.com,
+ berrange@redhat.com, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v4 4/4] tests/functional/ppc64/pseries: Remove custom
+ migration routine
+Message-ID: <aacr0aznC4RmBReB@x1.local>
+References: <20260303173320.10942-1-farosas@suse.de>
+ <20260303173320.10942-5-farosas@suse.de>
 MIME-Version: 1.0
-References: <20260212104432.4168886-1-kchiu@axiado.com>
- <CAFEAcA_u5B2RdVEaGycCQ6gCx1pQuT8rvGVGZpoKLTK+2s72+w@mail.gmail.com>
- <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
-In-Reply-To: <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Tue, 3 Mar 2026 12:32:03 -0600
-X-Gm-Features: AaiRm50TlLO9zmZIRLd-fBZFSb0JSKwzkeJQUS3HRbcMX-n_cyGgN19ih5MFIUs
-Message-ID: <CAJy5ezpcvp0Qy-P9gE46oDtsxZxNO=xMV1k-GC3WF4yY3gARGw@mail.gmail.com>
-Subject: Re: [PATCH v1] hw/char/cadence_uart: Add BXRS register
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, 
- pbonzini@redhat.com, marcandre.lureau@redhat.com, alistair@alistair23.me
-Content-Type: multipart/alternative; boundary="0000000000003d783f064c22ece9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-dl1-x122e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260303173320.10942-5-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,141 +118,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003d783f064c22ece9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Mar 03, 2026 at 02:33:20PM -0300, Fabiano Rosas wrote:
+> Don't implement a custom migration routine at PpcMigrationTest and
+> instead reuse the generic one from MigrationTest.
+> 
+> This removes the dependency of PpcMigrationTest from
+> PseriesMachine. Having one test import another causes unittest code to
+> instantiate the imported test, resulting in the setup and teardown
+> methods being invoked for the imported test class, even if no test
+> from that class will be executed.
+> 
+> If run in parallel, the extra setup/teardown methods that result from
+> importing can race with the ones from the actual test being executed
+> and cause the following error:
+> 
+> File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in tearDown
+> shutil.rmtree(self.workdir)
+> ...
+> FileNotFoundError: [Errno 2] No such file or directory:
+> '<SRC_DIR>/build/tests/functional/ppc64/.../test_migration_with_exec/scratch'
+> 
+> The PseriesMachine class is changed to inherit from MigrationTest so
+> both the migration routines and the class attributes of PseriesMachine
+> can be accessed without the need to instantiate another object.
+> 
+> Fixes: f4e34d0fd5 ("tests/functional: Add a OS level migration test for pseries")
+> Reported-by: Aditya Gupta <adityag@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-On Tue, Mar 3, 2026 at 2:33=E2=80=AFAM Kuan-Jui Chiu <kchiu@axiado.com> wro=
-te:
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> Hi
->
-> I was referring this commit of upstream kernel which xilinx added BXRS
-> register in Cadence UART driver
-> serial: xuartps: Adds RXBS register support for zynqmp =C2=B7
-> torvalds/linux@3816b2f
-> <
-> https://github.com/torvalds/linux/commit/3816b2f886d0918d8a8ae593b2db203a=
-b905a889
-> >
->
-> Peter Maydell =E6=96=BC 2026/2/16 =E4=B8=8B=E5=8D=88 06:53 =E5=AF=AB=E9=
-=81=93:
-> > CAUTION: This email originated from outside of the organization. Do not
-> click links or open attachments unless you recognize the sender and know
-> the content is safe.
-> >
-> >
-> > On Thu, 12 Feb 2026 at 10:47, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
-> >> The new CADENCE UART driver in upstream kernel access BXRS register
-> >> This patch adds BXRS (RX FIFO byte status register) or there would be
-> >> kernel panic if user are using the new CADENCE UART driver
-> >>
-> >> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
-> > Hi; thanks for this patch.
-> >
-> >> diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
-> >> index eff6a3c4d1..f57cad57a8 100644
-> >> --- a/hw/char/cadence_uart.c
-> >> +++ b/hw/char/cadence_uart.c
-> >> @@ -120,6 +120,7 @@
-> >>   #define R_PMIN     (0x3C/4)
-> >>   #define R_PWID     (0x40/4)
-> >>   #define R_TTRIG    (0x44/4)
-> >> +#define R_RXBS     (0x48/4)
-> > Where is this register documented? The cadence_uart.c file
-> > references the Zynq 7000 Soc TRM UG585; its URL for that
-> > is out of date, but looking at the copy on the AMD website,
-> > there is a table giving the register summary for the UART:
-> >
-> https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UART
-> > and it lists only registers from offsets 0 to 0x44.
-> >
-> > thanks
-> > -- PMM
->
+-- 
+Peter Xu
 
-
-Hi,
-
-There's documentation here for zynqmp:
-https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/Rx_FIFO_byte_=
-status-UART-Register
-
-I haven't looked to carefully, it may be a register that didn't exist in
-the version of the UART on zynq and was added in the version of the uart in
-the zynqmp.
-
-Cheers,
-Edgar
-
---0000000000003d783f064c22ece9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 3, =
-2026 at 2:33=E2=80=AFAM Kuan-Jui Chiu &lt;<a href=3D"mailto:kchiu@axiado.co=
-m">kchiu@axiado.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">Hi<br>
-<br>
-I was referring this commit of upstream kernel which xilinx added BXRS <br>
-register in Cadence UART driver<br>
-serial: xuartps: Adds RXBS register support for zynqmp =C2=B7 <br>
-torvalds/linux@3816b2f <br>
-&lt;<a href=3D"https://github.com/torvalds/linux/commit/3816b2f886d0918d8a8=
-ae593b2db203ab905a889" rel=3D"noreferrer" target=3D"_blank">https://github.=
-com/torvalds/linux/commit/3816b2f886d0918d8a8ae593b2db203ab905a889</a>&gt;<=
-br>
-<br>
-Peter Maydell =E6=96=BC 2026/2/16 =E4=B8=8B=E5=8D=88 06:53 =E5=AF=AB=E9=81=
-=93:<br>
-&gt; CAUTION: This email originated from outside of the organization. Do no=
-t click links or open attachments unless you recognize the sender and know =
-the content is safe.<br>
-&gt;<br>
-&gt;<br>
-&gt; On Thu, 12 Feb 2026 at 10:47, Kuan-Jui Chiu &lt;<a href=3D"mailto:kchi=
-u@axiado.com" target=3D"_blank">kchiu@axiado.com</a>&gt; wrote:<br>
-&gt;&gt; The new CADENCE UART driver in upstream kernel access BXRS registe=
-r<br>
-&gt;&gt; This patch adds BXRS (RX FIFO byte status register) or there would=
- be<br>
-&gt;&gt; kernel panic if user are using the new CADENCE UART driver<br>
-&gt;&gt;<br>
-&gt;&gt; Signed-off-by: Kuan-Jui Chiu &lt;<a href=3D"mailto:kchiu@axiado.co=
-m" target=3D"_blank">kchiu@axiado.com</a>&gt;<br>
-&gt; Hi; thanks for this patch.<br>
-&gt;<br>
-&gt;&gt; diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c<br>
-&gt;&gt; index eff6a3c4d1..f57cad57a8 100644<br>
-&gt;&gt; --- a/hw/char/cadence_uart.c<br>
-&gt;&gt; +++ b/hw/char/cadence_uart.c<br>
-&gt;&gt; @@ -120,6 +120,7 @@<br>
-&gt;&gt;=C2=A0 =C2=A0#define R_PMIN=C2=A0 =C2=A0 =C2=A0(0x3C/4)<br>
-&gt;&gt;=C2=A0 =C2=A0#define R_PWID=C2=A0 =C2=A0 =C2=A0(0x40/4)<br>
-&gt;&gt;=C2=A0 =C2=A0#define R_TTRIG=C2=A0 =C2=A0 (0x44/4)<br>
-&gt;&gt; +#define R_RXBS=C2=A0 =C2=A0 =C2=A0(0x48/4)<br>
-&gt; Where is this register documented? The cadence_uart.c file<br>
-&gt; references the Zynq 7000 Soc TRM UG585; its URL for that<br>
-&gt; is out of date, but looking at the copy on the AMD website,<br>
-&gt; there is a table giving the register summary for the UART:<br>
-&gt; <a href=3D"https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/UART-C=
-ontroller-UART" rel=3D"noreferrer" target=3D"_blank">https://docs.amd.com/r=
-/en-US/ug585-zynq-7000-SoC-TRM/UART-Controller-UART</a><br>
-&gt; and it lists only registers from offsets 0 to 0x44.<br>
-&gt;<br>
-&gt; thanks<br>
-&gt; -- PMM<br></blockquote><div><br></div><div><br></div><div>Hi,</div><di=
-v><br></div><div>There&#39;s documentation here for zynqmp:</div><div><a hr=
-ef=3D"https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/Rx_FIFO=
-_byte_status-UART-Register">https://docs.amd.com/r/en-US/ug1087-zynq-ultras=
-cale-registers/Rx_FIFO_byte_status-UART-Register</a></div><div><br></div><d=
-iv>I haven&#39;t looked to carefully, it may be a register that didn&#39;t =
-exist in the version of the UART on zynq and was added in the version of th=
-e uart in the zynqmp.</div><div><br></div><div>Cheers,</div><div>Edgar</div=
-></div></div>
-
---0000000000003d783f064c22ece9--
 
