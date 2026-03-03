@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECE3EC047E
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A436EC047E
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxM1b-0004p7-HM; Tue, 03 Mar 2026 04:26:43 -0500
+	id 1vxM1H-00044I-Di; Tue, 03 Mar 2026 04:26:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vxM1Z-0004ht-Av
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:41 -0500
+ id 1vxM0x-0003oo-Ti
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vxM1W-0004Wv-7T
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:39 -0500
+ id 1vxM0v-0004Q7-N1
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:26:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772529997;
+ s=mimecast20190719; t=1772529960;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vmh3DBm76W4KCElh6gdEXbenxmD8vrjSG0p0OjH+Y2E=;
- b=S8DfjgIsjYsNqxGm15oCGpdG3dbeS/Hyd/Rv11bCFy4RV3tEdpjN/4qfCzOWdBIpyWSN53
- +nkvJSSTTuDb5sq95FgAYqPOhxII2PVGy8pR49EOq5Lt5s9YSxalNXhEj7spr0tv3n+TY7
- IK6v5dyhCcdRT7tjLbU8TrshPgF+WY8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=05RW9V+9uWti5AzwJkqtF2mjeEYiDgxxMfFwdFavguw=;
+ b=RM9vl8p6Ff8dDEtVU9Myei8N1ZVF/dPCjXX09ICZXOvkwenDmBp3T8E2XlhvIvs3eufYg5
+ hJcfz8+cwbuWF67YtV4dxPOSfMXBCtPesIi9rUuC0R0VMlsfLZiNUN0s1RCYTHMGDfhWYh
+ hPIsLpuYwg+/RO3Owd4zLFh7qxCN5kE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-TlrU8ywMMWipOWALZhNhxg-1; Tue,
- 03 Mar 2026 04:26:34 -0500
-X-MC-Unique: TlrU8ywMMWipOWALZhNhxg-1
-X-Mimecast-MFC-AGG-ID: TlrU8ywMMWipOWALZhNhxg_1772529993
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-xcmghZrxOAOUgaFi91dBgw-1; Tue,
+ 03 Mar 2026 04:25:58 -0500
+X-MC-Unique: xcmghZrxOAOUgaFi91dBgw-1
+X-Mimecast-MFC-AGG-ID: xcmghZrxOAOUgaFi91dBgw_1772529957
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B49D19560B5; Tue,  3 Mar 2026 09:26:33 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A8D8195608F; Tue,  3 Mar 2026 09:25:57 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 86D7E30001B9; Tue,  3 Mar 2026 09:26:30 +0000 (UTC)
+ id 2AE7630001B9; Tue,  3 Mar 2026 09:25:53 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
  peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
  zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
  qemu-arm@nongnu.org
-Subject: [PATCH v2 17/21] tests: acpi: arm/virt: update expected GTDT blob
-Date: Tue,  3 Mar 2026 10:25:28 +0100
-Message-ID: <20260303092532.2410177-18-imammedo@redhat.com>
+Subject: [PATCH v2 05/21] tests: acpi: x86/q35: add WDAT table test case
+Date: Tue,  3 Mar 2026 10:25:16 +0100
+Message-ID: <20260303092532.2410177-6-imammedo@redhat.com>
 In-Reply-To: <20260303092532.2410177-1-imammedo@redhat.com>
 References: <20260303092532.2410177-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -89,68 +89,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expected diff from base GTDT is an addition of watchdog
-timer block:
-
-   [000h 0000 004h]                   Signature : "GTDT"    [Generic Timer Description Table]
-  -[004h 0004 004h]                Table Length : 00000068
-  +[004h 0004 004h]                Table Length : 00000084
-   [008h 0008 001h]                    Revision : 03
-  -[009h 0009 001h]                    Checksum : 93
-  +[009h 0009 001h]                    Checksum : 39
-   [00Ah 0010 006h]                      Oem ID : "BOCHS "
-   [010h 0016 008h]                Oem Table ID : "BXPC    "
-   [018h 0024 004h]                Oem Revision : 00000001
-  @@ -48,17 +48,30 @@
-                                      Always On : 0
-   [050h 0080 008h]  Counter Read Block Address : FFFFFFFFFFFFFFFF
-
-  -[058h 0088 004h]        Platform Timer Count : 00000000
-  -[05Ch 0092 004h]       Platform Timer Offset : 00000000
-  +[058h 0088 004h]        Platform Timer Count : 00000001
-  +[05Ch 0092 004h]       Platform Timer Offset : 00000068
-   [060h 0096 004h]      Virtual EL2 Timer GSIV : 00000000
-   [064h 0100 004h]     Virtual EL2 Timer Flags : 00000000
-
-  -Raw Table Data: Length 104 (0x68)
-  +[068h 0104 001h]               Subtable Type : 01 [Generic Watchdog Timer]
-  +[069h 0105 002h]                      Length : 001C
-  +[06Bh 0107 001h]                    Reserved : 00
-  +[06Ch 0108 008h]       Refresh Frame Address : 000000000C000000
-  +[074h 0116 008h]       Control Frame Address : 000000000C001000
-  +[07Ch 0124 004h]             Timer Interrupt : 00000090
-  +[080h 0128 004h] Timer Flags (decoded below) : 00000000
-  +                                Trigger Mode : 0
-  +                                    Polarity : 0
-  +                                    Security : 0
-  +
-  +Raw Table Data: Length 132 (0x84)
-
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/aarch64/virt/GTDT.gwdt      | Bin 0 -> 132 bytes
- 2 files changed, 1 deletion(-)
- create mode 100644 tests/data/acpi/aarch64/virt/GTDT.gwdt
+ tests/qtest/bios-tables-test.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 3e9be28cc4..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/GTDT",
-diff --git a/tests/data/acpi/aarch64/virt/GTDT.gwdt b/tests/data/acpi/aarch64/virt/GTDT.gwdt
-new file mode 100644
-index 0000000000000000000000000000000000000000..e0c2151fa7d3432740bb997d7d33669e30f133aa
-GIT binary patch
-literal 132
-zcmZ<{aS3T*U|?Xjbn<uh2v%^42yj+VP*7lGU|;~TLG*tpU|?WikOdJ83=DD%3=Av`
-i3=Gmxz7&*(sRilFfQo?tqYRkh0h0m{dIFfkzyJV@>lgt5
-
-literal 0
-HcmV?d00001
-
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index a5a5b8807b..5b01a657e5 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -2530,6 +2530,18 @@ static void test_acpi_isapc_smbios_legacy(void)
+     free_test_data(&data);
+ }
+ 
++static void test_acpi_q35_wdat(void)
++{
++    test_data data = {
++        .machine = MACHINE_Q35,
++        .arch    = "x86",
++        .variant = ".wdat",
++    };
++
++    test_acpi_one("-machine wdat=on", &data);
++    free_test_data(&data);
++}
++
+ static void test_oem_fields(test_data *data)
+ {
+     int i;
+@@ -2824,6 +2836,7 @@ int main(int argc, char *argv[])
+             qtest_add_func("acpi/q35/cxl", test_acpi_q35_cxl);
+ #endif
+             qtest_add_func("acpi/q35/slic", test_acpi_q35_slic);
++            qtest_add_func("acpi/q35/wdat", test_acpi_q35_wdat);
+         }
+         if (qtest_has_machine("microvm")) {
+             qtest_add_func("acpi/microvm", test_acpi_microvm_tcg);
 -- 
 2.47.3
 
