@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163D2EC0480
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EE8EC0480
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 09:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxMQ0-0002ec-BI; Tue, 03 Mar 2026 04:51:56 -0500
+	id 1vxMRH-00033e-Vp; Tue, 03 Mar 2026 04:53:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMPv-0002dp-GQ
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:51:52 -0500
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1vxMRG-00033W-Sx
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:53:14 -0500
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vxMPr-00018R-HX
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:51:50 -0500
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64c31ca77b4so5181092d50.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:51:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772531506; cv=none;
+ id 1vxMRE-0001D6-5u
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 04:53:13 -0500
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64c9f7576d4so3893939d50.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 01:53:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772531591; cv=none;
  d=google.com; s=arc-20240605;
- b=Qzj1zvA7cbr6vW6zUWqOObkQg5fgRDKU7KfYbm2x8u6Z+DGeZEWrhnEjUeKRUrciko
- 7YREWv8tx1PBzpFq1cDJvThgbWzA14BNKODgIS3mpnxc0uovcUDdUl9TtRyXpZlrvcry
- Fbp2hmiVTC+FBL+OH959l22qw25r5XaKMlpPP1TeUYwOncJD7Q/qp//VGMmmYwy60X+e
- NlxSly7QvZAfGg3HA4NErxR8hNfbvJ0cqXxF0eZn2L1DBL+TmDbCks7tnwjLzWvDYOpl
- A1gP9lx6P1H+2SdD2zf4+7koL1enmbu4Yry9wG6RGzwhAcBKyRpXbEp7aDdYkvOS+P0b
- sv3Q==
+ b=AU0h/tpJNJ0jdmMAnr01IyCD8gUsTLq2zaHclP2WENATJWbh+8YNLqW/0DjK8wGs3n
+ p2hzSyXdkbb+eqCUShGklmwNf6km3a7mOWZhA2jbvDNFku5sPmHdlcR3L4NTxeeBj4A2
+ CSDSWBsRwYpM5dEH1F9DZXSaWYsa6us0qmDz/AJnxYbzmhEkmUlYEefxZdkKULtzClw+
+ 0bQsSERh1dSxBKeSlLsJNtkl29Oz6xfZ747TWYs5Pv0wDxBGwD71aE8XyuFk/0UVvDvY
+ ADGdWG9Bt0/TkhPcD1AKV5wxzAXO6eX86kBxbLiO/N09ANPPmY+ov9V+JUS1qFzv14sF
+ AkAA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=F7xqTP17SS14XOE8tGEW73G1PeKHZQGpDhV/aZTCqkI=;
+ bh=rNHbt+YfeBtPLriqD5NILhZWEKeHFTSTkA74JVdvc54=;
  fh=YL0NE4lWf04jcNGWdUc9cgi/Lvh5AUmBxwt6lA0XDZ4=;
- b=IM83FzOmjjThNnR22Dc9O4czsgwqhan58Wpat6tGjlMGJ7kz73IxBBKwgijn7qSsu2
- OugfUdI666LDDkY9BIQx49g4iNNQjgdz2RXEmf4tkBXi/HlfHfFUEpSFkaA5zuKiafmx
- i9uIQ8sHg4dmFR8io9FzUSjuDC5gbVQLg4hDJf21IXY9pgUE3mZKi7Xf4OtamajfwC78
- uc0pP/x16Vph0teMD3wMMr8N5UREbIt07LggmmSZTloN4uIbFKe/DcBpE1OmcciTrfBV
- QFLxEjvqjfB1vqOjw6RfAVnn2bYWt6ql9lKHEum/w9by1i95t0Iu+hWGQiTU1usQ56Mw
- JbUA==; darn=nongnu.org
+ b=YBGbqSzoXdlXiVQs7Azk32SoELqT3Zx/QNU0/z2mtEMKJoxBLOhAFkt3etqOa/1d0x
+ tcenaa5Y9hWyLNNhKG1HMHYTW14JtPJS5UlEB8F7fkL7mCu/O1Tmg4o3QMMUhvxkzM28
+ gf2KyJtha7UewfUxewltQeJ+bg9AJm1BS2/4AkbtASl0vlmWLeg02UBPnKnvOrHtQS1u
+ 8t/qccrMwChLBicMVMlHIyXPjd9AuEfYH+1dSuuaEuCL3xidP3XRGH8ELuj4/ut2x3Ak
+ Jc8UriTt0BasYlzum7ll/Kcos6VbwG6HMjhL9imF4awec3N9MARrb0wMA+CcN6EF7uKa
+ 6fvQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772531506; x=1773136306; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772531591; x=1773136391; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=F7xqTP17SS14XOE8tGEW73G1PeKHZQGpDhV/aZTCqkI=;
- b=Udn2HQ2gsm3hzkCVql+fS6JARgAe1CV3BmOUUZH811AGqKjPPuBmBxkmYTliwk2uou
- WF49IyLgbTnqCnQEalGSmMr+ClcuYKtlq2TYhNqaE+xsMzJlj5hr1VAa3MYN+gXtShVs
- 8PsL+i1nqLNn+/8hiU75QQln08GRrz2+dhTQwGQWqbIrga01iTMSLpDN2w5tURPjiahZ
- rrWwTArQ5C+J0g9Z8Io6mkOXAIRi2fQLh6OhEA9nY2wUYC/FVwODgF5gBbNIkwEdG3Th
- CxY1ct6XYPlloww6M5wabGulec6hrJbSerWZ+uF+KqEFn7h+xWjn3a70UcsCjgW/T7+B
- 1CNA==
+ bh=rNHbt+YfeBtPLriqD5NILhZWEKeHFTSTkA74JVdvc54=;
+ b=BDjHn2whRMdeMv1we2KzeFrqp+dxGCNKv/JH0U4FQV7prcOjxCifXlZ/d7aBcIoltw
+ Bg8NYMH6cwRs3Vi9XSNmln08k7cdlh9c9Z3QUQhXwFULVSP9J4hhrAfa3C+uA2EV4SGk
+ chksME0hTxvVRFoWU78Ei4JhwWFUm5ys6tLJKqEUdzyOsnSUhtemS7ZH7pp9+/e43hK2
+ 1i1w+Dj4DnKRHeU/ViKd3puZNVlBat79a7ij54ArN+Q7cpjvK9N7S9dJ0DKfzt9ukjLD
+ JblnwWWfCDgnn1N6YdNp7unbpnYgckS6D3X6MBHvJj9Y8IK5E7rvL16VzyobyXgkGrUL
+ gCrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772531506; x=1773136306;
+ d=1e100.net; s=20230601; t=1772531591; x=1773136391;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F7xqTP17SS14XOE8tGEW73G1PeKHZQGpDhV/aZTCqkI=;
- b=mRV80vxdNa0i+NUpijpkABJpNAAmZv/DLgmEQ2xIYBXMJnQ2nok3awXBQcjzW7PlLw
- 0s2uj+3ITKysWVceZrvAOukir1xSJtJEt9+cxFMHD4WKKpeuxARt2v9UIOo5DpWPq+Q6
- cDFLRzy24y7JyScCdH3Qryg1wygQ7/l42y3C8VCyVfiEVqTfU/zkdWRsEy/gMwdLEBNy
- p5xNNxlD+L6vks7iQjjKUSaRutdACtp2SGiN39R22DMG1MQvNnNu10JQmMceYUHVDcv1
- MInvpXSaxarbahcM4LflhhZMGgEQ4+P6uIvxtF16B3HkcV3q6itlVeO72Zmf2EDw4D12
- TKMA==
-X-Gm-Message-State: AOJu0YySZSD+MTnmQB+8xmqjghnyZeuCB7e2gI01tm8iS9PT271EfK3Z
- zMDuQT3HeTO7SXTXwByIcYrwvKwe1euRXs+uu2dRNin+z+PkxhLFs+a380Yx+xsVUhZQXn/wX1b
- AINFMCzdABIF23IOYVLnSjLmLDKfIw59HvC5AeGnaUQ==
-X-Gm-Gg: ATEYQzzJd3ojuBx+9TsoWHuLjBdoCeyV3/yKqp4uKxySxWxklznpkrzgFpCm5x6T1y0
- 2FoUMp3AV5T6hG6CkS8gY+eAoVg7NUzs2Eh+G7sDExUf2qPF89FP1eVaYIZ6FU55uR5Wd8uhye+
- OVwCoJzwWOoF5WBVEuWdFEQhfTKXXY82Kw6fYVFnwJKFCEUuL+GVOHXMaoxGn1LnfkJRkSPsass
- sEGbXFhxWehhX4Ab4dZaLoHyZrRLLTQ6iKczISOJnu5cZvBTsxXCOHAvPnBKgPDNKQIQzp6kFpm
- TLzIUT7dPVSK4hdlduO1mNkKWB+QY6H7WARTWJRLcBqEuZYaIHKgsoqUFE/OT0mnmos=
-X-Received: by 2002:a05:690e:259b:b0:649:ef87:5bc8 with SMTP id
- 956f58d0204a3-64cc204a0b6mr8744302d50.7.1772531506101; Tue, 03 Mar 2026
- 01:51:46 -0800 (PST)
+ bh=rNHbt+YfeBtPLriqD5NILhZWEKeHFTSTkA74JVdvc54=;
+ b=DHatMRnLCI166iF7ORJM3cA1H3RT76n/YzioCLCCOsOB7MuceWVtRS6fxN4sUnVQKo
+ 8YwqTiEbLhJtHsWCelv/AVdD8IbyGXTVxSJGNbwUwBHOmTcXeoymd9F865k38bzUfcpu
+ sWAkmeh6Nhy6dJm+2af5n4HK89LbECy7/f1m1ph1nx51lO966Ze5aDjG8fmpQkUZY68v
+ caRTZZYCFO7RbcLhbVKWJmAJikS0TUu8GdyKgmdt7wneUtIBYHyZp7HNuTAjJ+6lUFEg
+ CISiJY4gII5y52hwkAH8VGI4eQFoUgNrw49AjsETIxzHJsW2W7MqiaNMTt5WhzNQi7ng
+ I+Cw==
+X-Gm-Message-State: AOJu0YyNclim09PcB6tQyq8rQBtZm7TcmwhGNyFYMXV/dpLbXrXp5p4S
+ IMZBhIqmFoKzTseejOVjfusF0u+WR2TDrzCFjSRYqxMmtmZgs27/TXyRi2JYwl9AwCyAL7h3khz
+ 6XhQuW0CLMxSiWqWPEzrMhmbREJv5ZYozlpT138D19g==
+X-Gm-Gg: ATEYQzzFQh4Z4tDxNt/gYJCMPNA/b4J7bQUm15tnYV7lXif/abmGqvBe9papwfb80NS
+ SB3uXmK+sssaqG0sarTQVWSfIaAC7PuCYfsAVuAPdJSliFRDWzVNGbgpJByH1r97Zj0sD3GBmtm
+ +CxM+v+l8VIjaMYQbonVJ/IqA7KuOYH5JLSCykv68+hFuIHpK3lHeWH7lRLc5tsz5EDBiDF7+e+
+ OOu/3XZv08z23Rmd5Eh3ZAfEMLD3enV7tx4YFwNvJZrpEU/cbKqy6TmKpIDDw2z8jDUs+3Y2m6f
+ NrzgP75oSDkcCzCE2mRuP4kOCeugr5cBvDE48Eilc5XGKC47GGNe1BidngvXq66o6E8=
+X-Received: by 2002:a05:690e:ca:b0:64a:f2dc:2849 with SMTP id
+ 956f58d0204a3-64cc2180898mr9604281d50.34.1772531590902; Tue, 03 Mar 2026
+ 01:53:10 -0800 (PST)
 MIME-Version: 1.0
 References: <cover.1772397447.git.balaton@eik.bme.hu>
- <816075b4a7fe7d4234744b7bd29c03139e4c2f38.1772397447.git.balaton@eik.bme.hu>
-In-Reply-To: <816075b4a7fe7d4234744b7bd29c03139e4c2f38.1772397447.git.balaton@eik.bme.hu>
+ <07a4aa13d7822e0d4b93433f65d781b2384d3d2c.1772397447.git.balaton@eik.bme.hu>
+In-Reply-To: <07a4aa13d7822e0d4b93433f65d781b2384d3d2c.1772397447.git.balaton@eik.bme.hu>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 3 Mar 2026 09:51:34 +0000
-X-Gm-Features: AaiRm52_9YIXMYBndJmhY-xcyfMgSybKD0Xo6W77SVrZHrw7r-tlhYuBdB22cCY
-Message-ID: <CAFEAcA9tiLag6NHMajPH=caqECRw7DT5vmtX4EraTG8Xp5re3w@mail.gmail.com>
-Subject: Re: [PATCH v5 1/8] hw/display/{cg3.tcx}: Do not use
- memory_region_init_rom_nomigrate()
+Date: Tue, 3 Mar 2026 09:52:59 +0000
+X-Gm-Features: AaiRm51MqEGXVSFx8iZHCFaEn8MkwV6qxsTpjh0mf0evlWj7rMbn17W9IWpcX7s
+Message-ID: <CAFEAcA-p-WYNOFN2fpEAc_RHNRaG2Mnuzjijf9RQhPjeT90pxA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/8] memory: Remove memory_region_init_rom_nomigrate()
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
@@ -96,8 +95,8 @@ Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,21 +121,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Sun, 1 Mar 2026 at 21:03, BALATON Zoltan <balaton@eik.bme.hu> wrote:
 >
-> Use memory_region_init_rom() instead which is what other devices do.
-> This is breaks migration but these devices are only used on sparc Sun
-> machines which have no migration compatibility guarantee.
+> All users were converted so no longer needed.
 >
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  hw/display/cg3.c | 5 ++---
->  hw/display/tcx.c | 5 ++---
->  2 files changed, 4 insertions(+), 6 deletions(-)
+>  docs/devel/memory.rst                         |  1 -
+>  include/system/memory.h                       | 26 -----------------
+>  .../memory-region-housekeeping.cocci          | 28 -------------------
+>  system/memory.c                               | 19 ++-----------
+>  4 files changed, 3 insertions(+), 71 deletions(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-I think the compat break on these machines is worth it
-to make progress on the cleanup of these functions.
-
 
 thanks
 -- PMM
