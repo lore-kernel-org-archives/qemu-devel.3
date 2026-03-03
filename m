@@ -4,112 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82167EDA697
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B37EB362F
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Mar 2026 17:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxTvZ-0007g8-Mt; Tue, 03 Mar 2026 12:53:02 -0500
+	id 1vxTxQ-00088X-E9; Tue, 03 Mar 2026 12:54:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vxTvY-0007fr-L2
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:53:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vxTxP-00088N-7Z
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:54:55 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vxTvW-000431-So
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:53:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772560375;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
- b=MUC+6r+jSnA20cNdWH2mLsV4e3LKsMtcy2SpuJFKNVYJL8QE13S8+MkjddAgUP2iSXQvon
- gZIIR+yokYR56uWE34csKaD9TS1uC9uIwhKnbvK4J2Z+8p4ce+IS8074ZqvHTsHKRVEifB
- 5JbeZclms0SA3KfLIcTJruuUoJcwT6M=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-JoJSrvmyPD-nuSFLhU1i2A-1; Tue, 03 Mar 2026 12:52:54 -0500
-X-MC-Unique: JoJSrvmyPD-nuSFLhU1i2A-1
-X-Mimecast-MFC-AGG-ID: JoJSrvmyPD-nuSFLhU1i2A_1772560373
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-79868eae64fso118161767b3.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:52:53 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772560373; cv=none;
- d=google.com; s=arc-20240605;
- b=gwEL1K9cyOgdjJRzUH31LAehJEShea3Rg3c5k/TT7vyak8zckuYMYKSSriVqc0RmR3
- LIXhtzoID7nQduF32ECSkpsqwqkOKPq+2LkEGLgkVmQK1yk2a1hu7996ZSsogGKPwz+p
- L0KxGdUPUdRZ0brqS87T8MCx//U6J8bfSbNswctEOj92tUmCqKg3nOIKC9TnbsIZdvzI
- MqNpTjHgfcw7IlmygycvMWl6db0oWKiuaqbuweolSa7VIcnL/1MC0HmgssRY6U7f111k
- QOWpdRUns6zD0ctC82TEIMM0iWGTXqvzhxsMXd3xSffmkI2K36F/po+LjDvBAt0GEzy3
- rXIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
- fh=Xm1ao//qklFdOPp89/6xUzCVv6E/EI6O1lKNAzhngcE=;
- b=TqKJQ6x4uAef++hWg+szxHDO4eeEVDkHXLaN1UDF4a36OBc2fD7ENoYM4u+FT4YjLf
- 7PjQlaG6BhPvVYK0e9wbgP8jjJDIjwLADXQS9b9zR0ZhXtnEtVht/1Cp8noBu9+bcLd1
- kiEhl7GaCLxCMviccrGIQwvhX7kbYmBNiBj/T2TvHCWfDryhTjNMsvuo7KlGskqf/bjI
- k6rS2d83MhRA7LW+wwCF4qelwNb+dS5Ir53/RYgEjOkaFHGg40fNb+eS2pTOrjZ5gZUB
- iRX17CVZA6w1EDv9nUVBsiOlfFwUzi08yng7MmuZ5GUNxb0KADJGJw6r6ywT39e6tzcG
- gihQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vxTxM-0005Jb-DH
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 12:54:54 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 623H0flg4030535
+ for <qemu-devel@nongnu.org>; Tue, 3 Mar 2026 17:54:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=auGzKh1OgnQZBxnWC8H0Xl
+ +BHDKLB7nuILop82d2b1g=; b=Ox/yfFbb8SZ0kK37TYOuzT0amZ/pm1Yr1KRBBa
+ 81nyxYRtJgRp0+dvct5DpmkedzPdu5zH4IepTZuBUJYasaYzZNsCEcNH3lRpd5Hs
+ VbHxR7RaBmDCnlki6h9DdA4+8RHmGCznTRQUcprELCkvIH3vI9K0xi0zbFrkxhQ6
+ bxbDVjG8tDO0S1UeP+fEl80iOw0WAXYurfwDEQFGFt/ReuRH0+uv5KnsRLRwyJzn
+ ios3IhXiSScPC8HPzslTeP29kRdFe2v999YRMopRM2UPc24KNQn+YcApLyh1T4Aw
+ 9YDqCNBj/k7gueaMNRAKKsJBynhsUAQ0Si3n7l+Zqcf8Y8bg==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cnuqu1xgm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 17:54:50 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-463a1cee56aso58367602b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 09:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772560373; x=1773165173; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
- b=Sy1QdfzZvU0LeaHbNO2hiBVUWQE6/lLhTLBtAycLiU4pMwnYYUDEYykrqbQk/2YC6k
- P0J4cO8cpUEu5T7zD0RRufyDuFlmsIIEAfvxKT/yoRCnlsmuuFCGIab+KnSj9HeQV+lK
- NFMBqU7Ef9Z0OZcQrBjmJRO9KdMh/yKTG4O508KQ+IF5qwImnjDbohj+wXqKI4cNaQfW
- /0oGfbaC+trdOW1RRhpEkbCd840e1kMVNvUAE5H8vPCcQmKN7XwXfr7R5r5FSQluJ3VP
- UNdaFQ25jm88j0FodHR9na5AFg5SOhTLcSRKAdiQ3iEvFAKGYeUTX1M7BTLZDkpTeqtT
- K3Mw==
+ d=oss.qualcomm.com; s=google; t=1772560489; x=1773165289; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=auGzKh1OgnQZBxnWC8H0Xl+BHDKLB7nuILop82d2b1g=;
+ b=ROSfZ/Tyu857ngAsmY4Bi606Yyti9SUG8ChCkszOv/1zWLnEnmISwlEb9Gh5cs+qgh
+ QOOp4Mm1nH3WUkZWOVgvJSos9ho2lBNaPFD78DTVFk9DskG1P01q8qdnUYGojDcibC7z
+ QUaa99i0/gDyrcDLqM7rJJbZX5yXInncveQiVTsvwj9UE3wy4h8XjdcTHbm6gP/ZK+jK
+ N35PBGXtP91YMpZ8KSQ+7TTi+HvCL7QRK57y/ZfEvodouanzdIljhLxoDr+yf8Gg3AdJ
+ 92y4TxR7oQrqWTMaQMuglHPBgAa4NwU8nGIG7j98KZZH6MzaRZPu5LmoQtPaOcMFem+b
+ oyfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772560373; x=1773165173;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bW1tQan0ordKarQCVk1Jil7Sj0ebMaC214ih+ddU4gQ=;
- b=pKDXkdpqmvRL8ldcynZe9CzECv53Bw2qv4/pdJrGqRBB2RQDEjnc8ZWd5+jkqT6FNk
- yv2ayb0i5XaNiKxes98oq9ZI01M8AaTjpMaq33NYLcVkit4uco3kC8fdhjLZW3S9m2RU
- LKdILN/HrDh+XxetTVAoJMGWr24jrDH9ytgL2VgivTAw8rd3MHbwPNpqTqFJ2dtMOvHE
- OkWcQvsO2lLUhlcJncX7sOo9TUM769kzu62/o19kR1NeongRv5wd30HJrEbp2CyPJgcI
- NDlW6TtgG+DPopVDsFiXgagdSiKnzutXhe32cGAoCbKyNrgbOrEajemFt1MI/OVGBpOw
- WQrw==
-X-Gm-Message-State: AOJu0YyZFM/ixku2YqQ3CWpwDi8DyvsnIsnOYj/r/xA4DhiNI1VSaZfi
- DlCyX19xR46uH6d6VawBMcZziHz+y6IVyW4DTL1UExWZ9GismXiQjokftY3+gOu2FkV4T+Afsxp
- G5WgHdb/kH2/f112Z8Ds2R8sFfKR7/3QkCd+zIEisKnrCTgUiWG9Pueb5bbuHpI1QUIYSeNuLBa
- uRuyMClmlpmIcGAW1aBDWvV7xKEH6oIzkp50dw6hr6KA==
-X-Gm-Gg: ATEYQzwnm9xe1BG6rHZS/zFHCYpUACwXdylvLFWtJEwWiH6Ag52tG+SWNeArYKqbEOJ
- u2yy7yiy9z/7ESHn2Rhv1CQqQZCLlFF7Voh1qNhrqbKL3IO3eFg6VH71FlyA5ck/QwAASSlHSAa
- LhxFK+23hFgyE2ONbxVB1B3OMY6JJDqVGowlMwXZvZaTMJDwchUwXJofByLH9kxZ1cOLao9zVej
- PumXvE33oa9t/FS2xxv3SbVYrRD8kxML76giA==
-X-Received: by 2002:a05:690c:4507:b0:798:50ee:5b02 with SMTP id
- 00721157ae682-7988559ca7dmr155384957b3.42.1772560373282; 
- Tue, 03 Mar 2026 09:52:53 -0800 (PST)
-X-Received: by 2002:a05:690c:4507:b0:798:50ee:5b02 with SMTP id
- 00721157ae682-7988559ca7dmr155384657b3.42.1772560372810; Tue, 03 Mar 2026
- 09:52:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772560489; x=1773165289;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=auGzKh1OgnQZBxnWC8H0Xl+BHDKLB7nuILop82d2b1g=;
+ b=Qqq+bJEQPJR5C3xnrzZyVRZMgfDQoXGw+APamb0NE02Glg3rs82C+pCnpdWWZdCVcX
+ g5iurOVlY8VS+WIZ4HFcsDK/TjKYMQbvrdTOdOTLGXhVbdfnn6Hce0QZI7Lse4iDP5TI
+ 9Xo+1cm50bK9qoSaGZKk8X5I0xf4RLpv+Z6O/xBfxO5pWF1mUTTNN3pObaVEBDAat21x
+ KGxUez+TtmhvEO5mLfanHWY1ONanfAqwIoAu1gK3bkY+bp/q/b+KyBsKD0atVqyKoIfb
+ qjp1ywAoQnLFsI4EBZ8R6vxx+1LortbDo4BnG3bND3ZxPlHIxwh/4fzLa09qCrTDXqaR
+ Rpgw==
+X-Gm-Message-State: AOJu0Yyb3SmuWNdP/syRzIEepPASR8nIUHHGvKeNJfk/0GQIvjQNOjwb
+ M6JF5jQHYfoCHlhtDetlSn9bcEncNXJr9/ZofnB9tJhqEHCDwkumzTZAFalJxr3+RfIjYWnRPsg
+ omXVbovorUyA2Et2jV3KeNuFGtoJU8FlxgiyTCTdhcp8zwbyHWlajGmHv+ar7KbRrmg==
+X-Gm-Gg: ATEYQzzHZFUgQsxew+7jU50b9zNry/pFtoQopfn0ccHlYJd5rX2m9/tV4D7aYMo00Jr
+ fVNP6Uto2Y5KvYcHRi2Hyig/WleyHkJr4Ry3irF9NHWs3ADhuJzxOGOtRIZf959ku4YQjrZxpIn
+ 9fVvXoefOyy2taqFb6sSI0R0yDi27uIQKGoR8Lr2397VXEOF+b9LdBR4GNJl4fK1SCXCPrW/FOP
+ KVXwzAS1MyKPkL0Is8ORpQ3UeafCqH8FKwIxYBTGw4LRT3Y5cPehb73wmt+dN7LSXVLHa45nsbF
+ I2eRaVBYwgtrtjUn4aIBKfeCopW4jc5nUNFTGqxntSw2SpSllyXvXMHiJsUWY/f/dQhghx8+vNm
+ JS3FAzQ297/3ZsNh/5lrRQnjsyBlIKeekN7rqAjPIcgXcGpn4FqER32oITX5CZDSZfZo4Cg==
+X-Received: by 2002:a05:6808:2205:b0:45f:1b74:2192 with SMTP id
+ 5614622812f47-464bea41373mr10666953b6e.10.1772560489558; 
+ Tue, 03 Mar 2026 09:54:49 -0800 (PST)
+X-Received: by 2002:a05:6808:2205:b0:45f:1b74:2192 with SMTP id
+ 5614622812f47-464bea41373mr10666920b6e.10.1772560489081; 
+ Tue, 03 Mar 2026 09:54:49 -0800 (PST)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-464bb59b656sm9621444b6e.12.2026.03.03.09.54.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Mar 2026 09:54:48 -0800 (PST)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: brian.cain@oss.qualcomm.com, ltaylorsimpson@gmail.com,
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng
+Subject: [PATCH v2] tests/docker: Update hexagon cross toolchain to 22.1.0
+Date: Tue,  3 Mar 2026 09:54:44 -0800
+Message-Id: <20260303175444.1540049-1-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 3 Mar 2026 12:52:42 -0500
-X-Gm-Features: AaiRm51tKqhqlmym-Hb4gRHgvgEX2gcaA3JIMdX1PrUM63qawHV-v3K_lbJIxQQ
-Message-ID: <CAFn=p-bNbEwV+1ijfs=+_bCVfexjvN9WRNZwL13Qas+i_HmUBQ@mail.gmail.com>
-Subject: QAPIDoc Total Section Ordering
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=M85A6iws c=1 sm=1 tr=0 ts=69a7206a cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=ovJmrJClAAAA:8 a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=-sABcnEt6TUt-BKrMGoA:9
+ a=QEXdDO2ut3YA:10 a=_Y9Zt4tPzoBS9L09Snn2:22 a=brTEhlvMp4NY0_u118I2:22
+ a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-GUID: CtybIaTK1neCcNW9UqE7wMbZHxqGUwXA
+X-Proofpoint-ORIG-GUID: CtybIaTK1neCcNW9UqE7wMbZHxqGUwXA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE0NCBTYWx0ZWRfX40akdGrtoAtZ
+ fs0Qg5mSWk26nX2EdWGIbMQZx+M11beX4VZdaJ+q/pB2X7XJotvz1KJ5ECHP2UFBGeW2bnKBFfQ
+ am+n5oWtgYrBEXDt6WeBAp6qg3+onwvoEDdeGFmHJFuuscO4kq1twlHS9yqI/zXAM6yrpjLJlpn
+ cy/Iov1fLMzlQJ53WY/H8F+bKaWxc26Xg6Cg8h316GY3C/hElghLVVhhBLCFKB9wbygqOoAfzRm
+ b7pOEQg7rxWJtKFqkTZaqb4n/tlOpZEzzDb1xNPWcpsasOQ0AJ9FHD4iNU7zVR6x6HTMcX1KLip
+ hLyLvz2SNwcW45LteRmIh+mavoQX1SI/TZBBN/fa0XN8vcBeMg16LXKAD9CYxZq/0tj3iPLdtMU
+ 1k79nDCLwpV16dXGCro+aBoJMyuZtAtFBWnL4/Ow3ZL+6hNtfsbsAQkJWz+Qhe7DhNA33zyvJsX
+ x521PUqYGZX6AhIT0CA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-03_02,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 spamscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603030144
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,65 +148,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, let's recap...
+Update the hexagon cross-compiler Docker container to use toolchain
+version 22.1.0, replacing the previous 12.Dec.2023 release.  This release
+has valuable compiler and linker bugfixes, but more importantly it will
+enable us to target DSP arches up to v81.
 
-In general, it would be nice to have a strict inter-section ordering
-for a few reasons:
+This requires upgrading the base image from Debian 11 to Debian 12
+because the new toolchain needs glibc >= 2.34. Additional changes
+to accommodate the new base image and toolchain:
 
-(1) It makes it easier to add generated sections such as return
-values, undocumented members, or undocumented features/flags (such as
-Out-of-band execution), because there is a clear and obvious place
-where we should insert the generated doc. We have a few spots in the
-code now where we have a bespoke algorithm to find the correct
-insertion point, and it would be nice to consolidate this logic.
+* Use DEB822 format for enabling deb-src
+* Add libc++1, libc++abi1, libunwind-14 runtime deps for the new
+toolchain
+* Add zstd for the new .tar.zst archive format
+* Replace pip3 install tomli with python3-tomli system package
+(Debian 12 enforces PEP 668)
 
-(2) It makes the inliner easier, because merging two doc sections is
-more obvious when there is a normal order that must be adhered to;
-fields that are absent in one or the other docs list do not cause
-problems or complex edge cases.
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+---
+ .../dockerfiles/debian-hexagon-cross.docker   | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-(3) It allows us to design around a unified look and layout in the
-HTML generator, which increases visual cohesion and yadda yadda yadda.
-In particular, each "group" of doc types is laid out in a block where
-having multiple fields of the same type be non-contiguous greatly
-increases visual clutter. i.e. all arguments should be contiguous, all
-features should be contiguous, etc. I have in the past referred to
-these groupings of doc section types as "doc regions".
-
-For these reasons, I'd like to nail down the order once and for all,
-and clarify a few things.
-
-The order I think you prefer is something like this:
-
-(1) Introduction ("Plain text", currently) - Always the first section,
-always precisely one section. (But may be multiple paragraphs housed
-within that single section.)
-(2) Arguments/members/values/alternatives
-(3) Return(s)
-(4) Error(s)
-(5) Feature(s)
-(6) Details ("Plain text", currently - generally used for clarifying
-detail, examples, and other information.)
-
-Before I go any further, is this order "roughly correct" to you?
-
-...
-
-We previously discussed prohibiting "plain text" from appearing
-anywhere except in (1) or (6). From memory, the summary of that
-discussion is:
-
-Me: Prohibiting plaintext from appearing between 2-5 makes inlining
-easier, and improves HTML output by preventing plaintext paragraphs
-from interrupting the "tabular" output used to render metadata fields.
-
-You: Although it is not often utilized, we may want the freedom/power
-to use plaintext paragraphs to add addendums/notes attached to
-specific sections, i.e. adding a "Note:" to the tail of the arguments
-section specifically.
-
-I recall we debated this particular restriction quite a few times and
-at length; does this summary sound roughly accurate as far as you
-remember?
+diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+index 23152b4918..00d7834506 100644
+--- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
++++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+@@ -5,10 +5,10 @@
+ # needs to be able to build QEMU itself in CI we include its
+ # build-deps.
+ #
+-FROM docker.io/library/debian:11-slim
++FROM docker.io/library/debian:12-slim
+ 
+-# Duplicate deb line as deb-src
+-RUN cat /etc/apt/sources.list | sed "s/^deb\ /deb-src /" >> /etc/apt/sources.list
++# Enable deb-src for build-dep support
++RUN sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/debian.sources
+ RUN apt-get update && \
+     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
+     DEBIAN_FRONTEND=noninteractive eatmydata \
+@@ -17,7 +17,11 @@ RUN apt-get update && \
+         curl \
+         ccache \
+         xz-utils \
++        zstd \
+         ca-certificates \
++        libc++1 \
++        libc++abi1 \
++        libunwind-14 \
+         bison \
+         flex \
+         git \
+@@ -25,6 +29,7 @@ RUN apt-get update && \
+         python3-pip \
+         python3-setuptools \
+         python3-venv \
++        python3-tomli \
+         python3-wheel && \
+ # Install QEMU build deps for use in CI
+     DEBIAN_FRONTEND=noninteractive eatmydata \
+@@ -36,15 +41,13 @@ RUN apt-get update && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
+     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+-RUN /usr/bin/pip3 install tomli
+-
+ ENV TOOLCHAIN_INSTALL /opt
+-ENV TOOLCHAIN_RELEASE 12.Dec.2023
++ENV TOOLCHAIN_RELEASE 22.1.0
+ ENV TOOLCHAIN_BASENAME "clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl"
+-ENV TOOLCHAIN_URL https://codelinaro.jfrog.io/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}/${TOOLCHAIN_BASENAME}.tar.xz
++ENV TOOLCHAIN_URL https://artifacts.codelinaro.org/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}_/${TOOLCHAIN_BASENAME}.tar.zst
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ 
+-RUN curl -#SL "$TOOLCHAIN_URL" | tar -xJC "$TOOLCHAIN_INSTALL"
++RUN curl -#SL "$TOOLCHAIN_URL" | tar --zstd -xC "$TOOLCHAIN_INSTALL"
+ ENV PATH $PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
+ ENV MAKE /usr/bin/make
+ # As a final step configure the user (if env is defined)
+-- 
+2.34.1
 
 
