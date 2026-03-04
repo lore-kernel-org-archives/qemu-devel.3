@@ -4,54 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A07E6EF8FE7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E998BEF8FE6
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmPE-0005kk-TE; Wed, 04 Mar 2026 08:36:52 -0500
+	id 1vxmRa-0006C0-4F; Wed, 04 Mar 2026 08:39:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxmP8-0005kS-2w
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:36:49 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vxmRY-0006Bi-AO; Wed, 04 Mar 2026 08:39:16 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vxmP5-0004kI-Mx
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:36:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=nMyZE8Di4GzyLyiPGZcDscRYYnfjL+xdgUvo7OQN6t4=; b=Hg5zp0RTByRJ+wk
- Zadrzs6nKr02CjDyxQ1n4RY+CjteCzAXGH139VHyt/fr2Yao2K8Djb+YKH52eX3DnuLmchfLZAzNk
- nbhp0As0FxQcpxnRH+8nNnOn8iBnD2gbR31cWgudnkgxJVml7ak29Cq8ig1yZvpW0X1ISy5Z3eYzr
- h4=;
-Date: Wed, 4 Mar 2026 14:40:11 +0100
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, ltaylorsimpson@gmail.com, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, 
- sid.manning@oss.qualcomm.com, ale@rev.ng, Brian Cain <bcain@quicinc.com>
-Subject: Re: [PATCH v3 05/37] target/hexagon: Handle system/guest registers
- in gen_analyze_funcs.py and hex_common.py
-Message-ID: <aagjarOCvf_gSv-8@hive.localdomain>
-References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
- <20260227203627.932864-6-brian.cain@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vxmRW-0004wM-AD; Wed, 04 Mar 2026 08:39:16 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 623KGaHf2165137; Wed, 4 Mar 2026 13:39:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=fzMrhT
+ dEZzQDGyazRjLI51YG834KtEZA3DIXnykzB3M=; b=oUdLA5J/SFObq6UN8P+1D6
+ HE+/Wmkh+C8Ml6DIAGC5u+9xV7Js6HU93YIfqvsMSvd8WJ8wjMpXZlGUq3a5Yxr3
+ c6dtrjD6/vF9JtBeWQV1Q21otKO6d4fwGBmiv8n3e3PvW9Zr9Ccf5zn6a7I4uXwB
+ BR+uniFZLohZ0azYx7JlvKyi4KRLxK5QvdphPy3pBbRM4QolxuGczz53mOfRuRB6
+ PIi9UW1TLWRsba0uhJBc+2NbMNSCBMPDrIp8jMhWYlKf9gSEevYEFl8vVUa3wdQZ
+ 1BpDeOuDBVugUuzhiWq4AieJNlqmP15G9wUdSSJOgdYaJKIHjfha09UOBaIAB3Yg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjdfgxf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 13:39:10 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 624B5RE0010327;
+ Wed, 4 Mar 2026 13:39:09 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmc6k6rqx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 13:39:09 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 624Dd8Jm33030694
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Mar 2026 13:39:08 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 45C4658062;
+ Wed,  4 Mar 2026 13:39:08 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9EBBE5805C;
+ Wed,  4 Mar 2026 13:39:07 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.97.94]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Mar 2026 13:39:07 +0000 (GMT)
+Message-ID: <7cf98378dcf4223bc999c89a45311e6cff4161b7.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 03/15] pc-bios/s390-ccw: Always reset virtio device
+ on failed boot attempt
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+Date: Wed, 04 Mar 2026 08:39:07 -0500
+In-Reply-To: <20260304025917.2157032-4-jrossi@linux.ibm.com>
+References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
+ <20260304025917.2157032-4-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260227203627.932864-6-brian.cain@oss.qualcomm.com>
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: 0
-X-Spam_score: -0.0
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69a835fe cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=zJBeZKDU5A6KwnCt2W4A:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+ a=ZXulRonScM0A:10 a=zZCYzV9kfG8A:10
+X-Proofpoint-ORIG-GUID: 1aXADHdi7ASkFn6Gv4Ww5TLdTKz2tv2V
+X-Proofpoint-GUID: 1aXADHdi7ASkFn6Gv4Ww5TLdTKz2tv2V
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDExMCBTYWx0ZWRfX9XAV9nl3uCn6
+ UoNprVbgBq2uzWZmRW/sDY0c2rRmd2QBLkbKZQZW8q2y8BU4iuIuAcXUEVHAJc1xLSZdq9KMUzJ
+ 4b5lU8ij/jgt8Tab2Tjd1RFuoySyB4P8XddgBU7nHnwp7F5HALmpYhxTh962GlQTHXpi7mDPC/U
+ HILiMs5GiSswkwBCqUUAVH66ScukGGwjIg22BnCYKSMfeHmtI9ZbrlEFOE+JyyyiQprQNR2x5PA
+ iabkcUucl+SYQxXI75wrDCbA9pD3ZkvpM7JpRtiTacA79qOjwuVGvjwZ3ILu4/9IaZOdvXWZqjV
+ 8VAH7p8bOqFYSm86WaTYhvhyEf4gOkGWnNyVYPKmRE4uRm50AUK9frh5QzKN5ggQfm8aDB99wq/
+ bEIBCQLnV2+q+E7lTSXOpGk/baj6+EVornnwfhQ7HighhVPGn5ehWEqNewqzVfLndy8NbxyD1Ou
+ /6yFjybgC7+314YosRg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-04_06,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040110
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,137 +121,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/02/26, Brian Cain wrote:
-> From: Brian Cain <bcain@quicinc.com>
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+On Tue, 2026-03-03 at 21:59 -0500, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>=20
+> The virtio spec necessitates that live virtqueues must not be altered.  R=
+eset
+> the failed device so that the queues are not live before we attempt to bo=
+ot any
+> fallback devices.
+>=20
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  target/hexagon/gen_analyze_funcs.py |  21 +++-
->  target/hexagon/hex_common.py        | 161 ++++++++++++++++++++++++++++
->  2 files changed, 179 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
-> index fdefd5b4b36..985386c1309 100755
-> --- a/target/hexagon/gen_analyze_funcs.py
-> +++ b/target/hexagon/gen_analyze_funcs.py
-> @@ -22,6 +22,8 @@
->  import string
->  import hex_common
->  
-> +def has_analyze_func(reg, mode):
-> +    return callable(getattr(reg, f"analyze_{mode}", None))
->  
->  ##
->  ## Generate the code to analyze the instruction
-> @@ -42,6 +44,14 @@ def gen_analyze_func(f, tag, regs, imms):
->      f.write(f"static void analyze_{tag}(DisasContext *ctx)\n")
->      f.write("{\n")
->  
-> +    if hex_common.tag_ignore(tag):
-> +        f.write("}\n\n")
-> +        return
-> +
-> +    if ("A_PRIV" in hex_common.attribdict[tag] or
-> +        "A_GUEST" in hex_common.attribdict[tag]):
-> +        f.write("#ifndef CONFIG_USER_ONLY\n")
+>  pc-bios/s390-ccw/main.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 
-use hex_common.is_sysemu_tag(tag) here instead! 
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-
-
-> +
->      f.write("    Insn *insn G_GNUC_UNUSED = ctx->insn;\n")
->      if (hex_common.is_hvx_insn(tag)):
->          if hex_common.has_hvx_helper(tag):
-> @@ -58,13 +68,14 @@ def gen_analyze_func(f, tag, regs, imms):
->      for regno, register in enumerate(regs):
->          reg_type, reg_id = register
->          reg = hex_common.get_register(tag, reg_type, reg_id)
-> -        reg.decl_reg_num(f, regno)
-> +        if has_analyze_func(reg, "read") or has_analyze_func(reg, "write"):
-> +            reg.decl_reg_num(f, regno)
-
-I'm not a huge fan of redirecting control flow based on whether or not
-the register class has certain functions, feels hard to follow.  It's
-also unclear to me why this is needed, I assume we have some registers
-where reg.is_read()/reg.is_written() are false but we still want to emit
-analyze code for them?
-
-
->  
->      ## Analyze the register reads
->      for regno, register in enumerate(regs):
->          reg_type, reg_id = register
->          reg = hex_common.get_register(tag, reg_type, reg_id)
-> -        if reg.is_read():
-> +        if reg.is_read() and has_analyze_func(reg, "read"):
->              reg.analyze_read(f, regno)
->  
->      f.write("    mark_implicit_reads(ctx);\n")
-> @@ -73,11 +84,15 @@ def gen_analyze_func(f, tag, regs, imms):
->      for regno, register in enumerate(regs):
->          reg_type, reg_id = register
->          reg = hex_common.get_register(tag, reg_type, reg_id)
-> -        if reg.is_written():
-> +        if reg.is_written() and has_analyze_func(reg, "write"):
->              reg.analyze_write(f, tag, regno)
->  
->      f.write("    mark_implicit_writes(ctx);\n")
->  
-> +    if ("A_PRIV" in hex_common.attribdict[tag] or
-> +        "A_GUEST" in hex_common.attribdict[tag]):
-> +        f.write("#endif /* !CONFIG_USER_ONLY */\n")
-
-and use hex_common.is_sysemu_tag(tag) here also
-
-
-> +
->      f.write("}\n\n")
->  
->  
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index 63f83a8de2a..b5ab2efa5a5 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -33,6 +33,42 @@
->  overrides = {}  # tags with helper overrides
->  idef_parser_enabled = {}  # tags enabled for idef-parser
->  
-> +
-> +def is_sysemu_tag(tag):
-> +    return "A_PRIV" in attribdict[tag] or "A_GUEST" in attribdict[tag]
-> +
-> +
-> +def tag_ignore(tag):
-> +    tag_skips = (
-> +        "Y6_diag",
-> +        "Y6_diag0",
-> +        "Y6_diag1",
-> +    )
-> +    attr_skips = (
-> +        "A_FAKEINSN",
-> +        "A_MAPPING",
-> +        "A_CONDMAPPING",
-> +    )
-> +    return tag in tag_skips or \
-> +        any(attr in attribdict[tag] for attr in attr_skips)
-
-Up to you if you think this is easier to read or not, but you could make
-attr_skips a set and do set intsersection instead 
-
-    attr_skips = {
-        "A_FAKEINSN",
-        "A_MAPPING",
-        "A_CONDMAPPING",
-    }
-    return tag in tag_skips or attribdict[tag] & attr_skips
-
--- 
-Anton Johansson
-rev.ng Labs Srl.
+>=20
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index 76bf743900..8e2c99bee1 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -277,7 +277,8 @@ static void ipl_boot_device(void)
+>          break;
+>      case CU_TYPE_VIRTIO:
+>          if (virtio_setup() =3D=3D 0) {
+> -            zipl_load();
+> +            zipl_load(); /* only return on error */
+> +            virtio_reset(virtio_get_device());
+>          }
+>          break;
+>      default:
 
