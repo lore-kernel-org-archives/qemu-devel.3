@@ -4,121 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B35EC1425
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 08:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DA3EB7EA1
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 08:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxhGj-0007N7-Rt; Wed, 04 Mar 2026 03:07:45 -0500
+	id 1vxhIm-0008AV-4B; Wed, 04 Mar 2026 03:09:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxhGi-0007Mo-9k
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:07:44 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxhIk-0008AC-Hb
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:09:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxhGg-00066I-RF
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:07:44 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxhIi-0006Jl-Qn
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:09:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772611661;
+ s=mimecast20190719; t=1772611787;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F7Z1esJ/J5oEpVBGty65yuY625YiGVfcmErYzn9k5oE=;
- b=YrUD8BHRFhkSwl9CIFkbrLWaPTUjVeZlEk7+d8IMwiQke7rK29nwEmmL2PfeB7ZkliuYr/
- gAeK2sEqVS2G+jwTyU/mL1QC+8tdVLdlEpM2U2zW+kVoQXdtdp5ihQea9cvUzhhY3EJH72
- dEM6Ex0ndJ2d2ZsKPmz/YNtv0cV92dw=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-_MeFvBdSNgqMx8oNLcodSg-1; Wed, 04 Mar 2026 03:07:40 -0500
-X-MC-Unique: _MeFvBdSNgqMx8oNLcodSg-1
-X-Mimecast-MFC-AGG-ID: _MeFvBdSNgqMx8oNLcodSg_1772611659
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2ae49080364so27611095ad.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 00:07:40 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772611659; cv=none;
- d=google.com; s=arc-20240605;
- b=cJnwvquIT0kileaSydqXPFxUAqjgODy72MORyjSGFkd5UCalORUDas/NjoY1zJwtZc
- 5Fn1t/zkuU5tlPxoIG667K6IMNxg88jo4E7Qmpm2i1W9HNwgx4Dw94ythT4AHJD4kg9d
- Efkv2Ms0twIxFZlgEUPfm72LqMtBnIHGmxNaRUR1yGQNVO3g7l9oXJLkqB8W8kP0q2C5
- mgiKPSngd289e671AnRFh3fVbUMr5Jo7Er6yzF6djHnQbJvFxZ4j0vK+PV1BaAAK7Ind
- Fe2KPw8/j1DsubgKBfUdVpp592YB78zl01BG81+PwwrtIsEXVRdeyPv2ZJL0nVDN2KV6
- upSw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=F7Z1esJ/J5oEpVBGty65yuY625YiGVfcmErYzn9k5oE=;
- fh=lqgO2lOGbWCk7XWjZay7GKu0eUWYY0MLXCk5dOVr3UE=;
- b=iPBdxVR0ll2rPpYYWiXW1ba/t7RNIk307Pg9HLRHJUnW/dO2UJyZpCKkOigW51e2yW
- 6URiVlu3XVv9pKYu1ORn5JQjcOOUiZsNEhCOH8g1I6unadSWJc5BZ6RY7Au4idGuM15v
- QZWzFQ8sJwapzIiKFf1p3k1oMs1vHbHuRICBYMA/9XCx14gzWyDIb3WfxlJ3qjy56D3d
- 67UTA4Z71t5HepYgPie/Uo8IxOGvvdKJ1qD5Yw6+odnxnb9lPdP9hIXl4Lbje4ZGIZgL
- RSh7rrgxZS/encqkOMLNIzzXJonOQteX1Z8MC7pRFrXlrYrIDI1pma3Xl0MQpLwjfCbA
- lyqg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772611659; x=1773216459; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F7Z1esJ/J5oEpVBGty65yuY625YiGVfcmErYzn9k5oE=;
- b=CEn4UyPeEb8Sdsj5S5u6d8XpO53huOW0Lqj/Xc5IjNM1Dx8POByLUwOVxh5UDzD2tK
- XMBnY09d/QYzvRllNL+bw9OShe3WQfcU8bDSffALiZ3hrfdxAuBR0m3aq0Sq7dAiDayT
- QHQ7eKHknVtztgHK8qfF6Jq8bRoz81Xa+5WND2st3YHvxH0upD/nmPd69vlBkl9rhBZc
- BSPBHxYHd9mvXGddvOxOP5sjpJ2kycqM7/ehFfWinKlJnMr7iWcHnyvIeGGRXNCXUolh
- Od4JiU0VuaUKndoxjy073a0Jj7pCoeUuWIpl3K5wbPACMYU3Q7PfDSBss7+wTragwP40
- tVUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772611659; x=1773216459;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=F7Z1esJ/J5oEpVBGty65yuY625YiGVfcmErYzn9k5oE=;
- b=PRZGn+OMSRmw9oZU2HLZqMFTvflKnJVBoDfjQl/uOzZCvx0yfnGQifbE9LdYy2ww9Y
- WWsg5+k8JnMb6OzZDc9wy3FYmjs0RcY9n3qmsFD53Yt3sYBZtdjTthSPKSTEyKUg/BWs
- tHvGjBSOvqfT+9hTMbsJ/69bWs3JdAdr6BNwy2MzL3S4BWJ5qITgxYlcXNLQjzYqunsH
- X+TxeLUL0uxI/Qn7bkGDmYOPpa/F7h8fiVsnFWFaF3kIyO/k+9Xna6YkhSZHq4lpC6PD
- W3dWBC2SP0W+DjFCKG0EYrQ7ecbaY6+KqpNSDadQcMm2OUmGMgopxf4JrvmEvX5H0elh
- 2vhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFgKJRMJF1Ornqffm+ZIzD/ZnmmkhQ66Z3D9Y98TZ9TYw79X5bBtNx2A+OVrnfMM9NDoZRQPbAfuXl@nongnu.org
-X-Gm-Message-State: AOJu0YxOFwdN5zpeIok4DVAqe4OeZZkTZSfVZh30g4CqIcPdx9yKIBMC
- w4HlBDvw8kjpYuY/v1DhgfudpeBONEFNGuOHs9pKpKQGJOhvA3oVk1jIj/XAL4OVseOkOoI97fE
- fYHg2Uc8kAh0y7G+memObtJDfobYcWwiiBBGRjC3vvut25m4+xt9Zc1doVeChydQbnCfesEz86i
- c4Bg9V0pT2aEyM/zf8w/xuVaNueWEz5Tw=
-X-Gm-Gg: ATEYQzy32xN9YHOeRa/N8LdVzJmi/m98JH/5nVNf95vivOzwwmjF3BWxp0NM8NPbG6c
- jEaL6P62KIX98NPP/rg6GNycaDPW3rn236yzfxpXQSPkK5y5y3jmfYSt+Q+RlSAUGc2/v8b4CYo
- kVW1IEuZv2Q1USWkLXHGjBlmXsOfoJsAkJS7PxhfcMly7PqYRKRUAsoxv3L70jvrXzjuVuOKlvY
- DDeQq2Dln5kqQHV3R/5twn3msGWEnsO14WXTlinWBrOPc11BKa/cusiQMKwnNnk+ScvypAlT4jt
- eeLX6g10amLq44v2O0x9wJS8
-X-Received: by 2002:a17:902:f545:b0:2a0:a0cc:9994 with SMTP id
- d9443c01a7336-2ae6ab64894mr12325315ad.47.1772611659559; 
- Wed, 04 Mar 2026 00:07:39 -0800 (PST)
-X-Received: by 2002:a17:902:f545:b0:2a0:a0cc:9994 with SMTP id
- d9443c01a7336-2ae6ab64894mr12325175ad.47.1772611659189; Wed, 04 Mar 2026
- 00:07:39 -0800 (PST)
+ bh=9HVX+qXWxd39WKrRnp3gKJXk5cmnNo78UAv2CZGDf0M=;
+ b=gSJjy+rtPHMJXW+G/tG6ZOCEqsrRbyK+y1jLlwIZlChsdgxxVawsjv7FQqJXFLfBR7tstI
+ WkHWcRDD1RvXsi+mMc/rOhAVzxdr0bDjLJpPTQVNVJJgvyAkI7n9FChNyprLdEA21jtHEg
+ W/e+YXBfEUcoKSSeV9uSm9TOLH6f9jc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-_GCIbBA4P5eqRZs0xm8V7A-1; Wed,
+ 04 Mar 2026 03:09:46 -0500
+X-MC-Unique: _GCIbBA4P5eqRZs0xm8V7A-1
+X-Mimecast-MFC-AGG-ID: _GCIbBA4P5eqRZs0xm8V7A_1772611785
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABE0D18002CF; Wed,  4 Mar 2026 08:09:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.30])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B3C530001A1; Wed,  4 Mar 2026 08:09:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 70AD421E692F; Wed, 04 Mar 2026 09:09:42 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 12/16] scripts/qapi: generate high-level Rust bindings
+In-Reply-To: <CABgObfYBVbpLfzFiYaCjzTL5zTqynWcUepV=o-AesJJF3jENEQ@mail.gmail.com>
+ (Paolo Bonzini's message of "Tue, 3 Mar 2026 16:55:30 +0100")
+References: <20260108131043.490084-1-pbonzini@redhat.com>
+ <20260108131043.490084-13-pbonzini@redhat.com>
+ <87jyw0khu2.fsf@pond.sub.org>
+ <3cd5ac78-1833-4671-a866-60a57f29c3c1@redhat.com>
+ <87v7fdm6w6.fsf@pond.sub.org>
+ <CABgObfYBVbpLfzFiYaCjzTL5zTqynWcUepV=o-AesJJF3jENEQ@mail.gmail.com>
+Date: Wed, 04 Mar 2026 09:09:42 +0100
+Message-ID: <87bjh4koc9.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <20260304-coreaudio-v8-1-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260304-coreaudio-v8-1-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 4 Mar 2026 09:07:28 +0100
-X-Gm-Features: AaiRm53dZA4U8FR0Ew-tnk2aFUsL3qOMBQhKgSn7YR9OCfpwMaTVsq_xQGLdTc8
-Message-ID: <CAMxuvayTOj64eVp6kYGR9A+bLMrEYwVf1ATPKNzooc5Av6O=Lg@mail.gmail.com>
-Subject: Re: [PATCH v8 1/6] coreaudio: Remove unnecessary explicit casts
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org, 
- devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
@@ -143,55 +92,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 4, 2026 at 7:17=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> coreaudio had unnecessary explicit casts and they had extra whitespaces
-> around them so remove them.
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> On Tue, Mar 3, 2026 at 1:31=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>
+>> >> You replied "In this case it doesn't really matter: public items (such
+>> >> as QAPI enum entries, or struct fields) do not raise the unused warni=
+ng
+>> >> anyway."
+>> >>
+>> >> What gives us confidence rs_name() will only be used where it doesn't
+>> >> really matter?
+>> >
+>> > The fact that all QAPI type definitions are (more or less by design) p=
+ublic.
+>>
+>> Any particular reason not to use the same 'q_' prefix as in C?
+>
+> The other Rust convention is that you usually have enums in CamelCase
+> (starting with an uppercase letter). "q_" or "Q_" would also trigger a
+> warning, and they would complicate to_camel_case a bit (because the
+> prefix would have to be kept including the underscore).
 
-> ---
->  audio/coreaudio.m | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+Alright.
+
+One of the QAPI generator's known shortcomings is weak protection
+against name clashes in generated code.
+
+The generator was built with cavalier disregard for name clashes.  The
+existing naming rules and their enforcement was retrofitted to limit the
+damage.
+
+There are two kinds:
+
+* The user's names clashing with the generator's.
+
+  Naming rules help avoid such clashes.
+
+  Example: ['Frob'] makes the generator define a C type FrobList, which
+  could clash with a user-defined 'FrobList' if we didn't reject
+  user-defined names ending with 'List'.  Test case reserved-type-list.
+
+  But there are gaps.
+
+  Example: a user-defined type QAPIEvent clashes with generated enum
+  QAPIEvent.
+
+  The naming rules should reflect the names the generator wants to use.
+  When we add new patterns of generated names, we should update the
+  rules.  One pattern this series adds is names ending with 'Variant',
+  as I pointed out in the review of the generated code I sent yesterday.
+
+* The user's names clashing with themselves.
+
+  Naming rules again help avoid such clashes.
+
+  Example: struct members 'a_b and 'a-b' would both map to C identifier
+  a_b if we didn't reject that.  Test case struct-member-name-clash.
+
+  The rejection code checks for clashes among the values of c_name().
+  This guards against clashes in generated C.  To also guard against
+  clashes in generated Rust, we'd need to check the values of rs_name().
+  I'd accept a TODO comment for now.
+
+  Again, there are gaps.
+
+  Example: value 'ni-cator' of enum 'Frob' and value 'cator' of enum
+  'FrobNi' both generate C enumeration constant FROB_NI_CATOR.
+
+  The more the generator massages names, the more we risk such clashes.
+  The C generator doesn't massage all that much, mostly funny characters
+  to '_', and enumeration constants.  The Rust generator needs to
+  massage more, because Rust's naming rules differ from C's.  I think we
+  should at least document the problem clearly.  Anything else?  Better
+  ideas?
+
+See also docs/devel/qapi-code-gen.rst section "Naming rules and reserved
+names".
+
+>> >> This maps 'foo-0123-bar' to 'Foo_0123Bar'.  Intentional?  I'd kind of
+>> >> expect 'Foo0123Bar'.
+>> >
+>> > Will fix (it is meant for 0123-45).  New version is:
+>> >
+>> >    def to_camel_case(value: str) -> str:
+>> >        result =3D ''
+>> >        for p in re.split(r'[-_]+', value):
+>> >            if not p:
+>> >                pass
+>> >            elif p[0].isalpha() or (result and result[-1].isalpha()):
+>> >                result +=3D p[0].upper() + p[1:]
+>> >            else:
+>> >                result +=3D '_' + p
+>> >        return result
+>>
+>> Maps '0123-45' to '_0123_45'.  Is the leading '_' intentional?
 >
-> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-> index a28fa77d73ff..cbda4f143698 100644
-> --- a/audio/coreaudio.m
-> +++ b/audio/coreaudio.m
-> @@ -310,7 +310,7 @@ static OSStatus audioDeviceIOProc(
->      UInt32 frameCount, pending_frames;
->      void *out =3D outOutputData->mBuffers[0].mData;
->      HWVoiceOut *hw =3D hwptr;
-> -    coreaudioVoiceOut *core =3D (coreaudioVoiceOut *) hwptr;
-> +    coreaudioVoiceOut *core =3D hwptr;
->      size_t len;
+> Yes, because otherwise the output is not an identifier; but it doesn't
+> matter since the input is actually an identifier already and
+> to_camel_case('_0123_45') does give '_0123_45'. In neither case you
+> get the invalid identifier '0123_45'.
+
+Shouldn't that be left to rs_name()?
+
+>> I'm fine with not running rustfmt, and I'm fine with running it always
+>> (makes it a hard requirement).  Running it sometimes feels like more
+>> trouble than it's worth.
 >
->      if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
-> @@ -394,11 +394,11 @@ static OSStatus init_out_device(coreaudioVoiceOut *=
-core)
->      }
+> Yeah, I will drop it. I changed mcgen to allow removing empty lines in
+> the middle of a declaration, like this:
 >
->      if (frameRange.mMinimum > core->frameSizeSetting) {
-> -        core->audioDevicePropertyBufferFrameSize =3D (UInt32) frameRange=
-.mMinimum;
-> +        core->audioDevicePropertyBufferFrameSize =3D frameRange.mMinimum=
-;
->          warn_report("coreaudio: Upsizing buffer frames to %f",
->                      frameRange.mMinimum);
->      } else if (frameRange.mMaximum < core->frameSizeSetting) {
-> -        core->audioDevicePropertyBufferFrameSize =3D (UInt32) frameRange=
-.mMaximum;
-> +        core->audioDevicePropertyBufferFrameSize =3D frameRange.mMaximum=
-;
->          warn_report("coreaudio: Downsizing buffer frames to %f",
->                      frameRange.mMaximum);
->      } else {
+> def mcgen(*code: T.Sequence[str], **kwds: object) -> str:
+>     '''
+>     Generate ``code`` with ``kwds`` interpolated.  Separate
+>     positional arguments represent separate segments that could
+>     expand to empty strings; empty segments are omitted and no
+>     blank lines are introduced at their boundaries.
+>     '''
+>     last =3D len(code) - 1
+>     result =3D []
+>     for i, s in enumerate(code):
+>         if s.startswith('\n'):
+>             s =3D s[1:]
+>         if i !=3D last:
+>             s =3D s.rstrip()
+>         s =3D cgen(s, **kwds)
+>         if s:
+>             result.append(s)
+>     return '\n'.join(result)
 >
-> --
-> 2.53.0
+> For the case of a single argument, the result is equivalent to the
+> existing implementation:
 >
+>         # already checked by current mcgen()
+>         if s.startswith('\n'):
+>             s =3D s[1:]
+>         # skipped for a single argument
+>         if i !=3D last:
+>             s =3D s.rstrip()
+>         s =3D cgen(s, **kwds)
+>         if s:
+>             result.append(s)
+>     # result has zero or a single element, no '\n' added
+>     return '\n'.join(result)
+
+I wonder how the generated C would change if we used this there.
 
 
