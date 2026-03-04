@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3464AEDEC14
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C780EEDEC14
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:30:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxfjc-00005D-BF; Wed, 04 Mar 2026 01:29:28 -0500
+	id 1vxfjc-000064-On; Wed, 04 Mar 2026 01:29:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxfjN-0008Fg-7Z; Wed, 04 Mar 2026 01:29:14 -0500
+ id 1vxfjQ-0008Fy-Dd; Wed, 04 Mar 2026 01:29:18 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxfjE-000583-K5; Wed, 04 Mar 2026 01:29:12 -0500
+ id 1vxfjE-000580-K0; Wed, 04 Mar 2026 01:29:13 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6246SbBO071191
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6246SbBP071191
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Wed, 4 Mar 2026 15:28:44 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=zEGuWpwSPorKgdOr8uqnGxj5GoiSbQsHVJNvDM8QBj0=; 
+DKIM-Signature: a=rsa-sha256; bh=kEjoFE/z8v1YBz7rlA1tyZsjYl3ZY+R8+UlHKj3jxpQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1772605724; v=1;
- b=YBNTs8rQy9azmep5P1sotMZElqJ6Ak5Es/EiAMa/HLH+QKff4GOC1PREjtov+ZYp
- y1RzCw8ysVL5gx67QBa2pQ6h1BCuPaBP9CUyDYnjEid5L7+XxGqouvznvTFiSGHk
- cJpGJ/HOTwaCc/kgekiYth31orOWF+HgMf7n0JamAT4jcWfeL9a5uR24DXeWCdN0
- FCKgja46SJLMJKKQkC1u+d+R1C0i1dB9ONT89eeL/gpun2279qkjDDMfsZ0XJsec
- xw5D5KMcP3bUvm8iAL+ODjWZTZhojcKx4UbWRivttQnWr+yMpixmox+OIiLRyMtb
- /R4SiXv5eL1vgD3Bdz5xsA==
+ b=Hop2eBHVAochxYlzcSAtBAAV/I6v6yqQ0va1Do2f8eJyYH2O10p8gez4NbG2+uQ6
+ 5HUFALYaTw8vdcbfgZNV95McgaBvPDKNPeqlIawX1mUtkUz76HIrnBNIPj+52Pp+
+ E3Er3hx0ZMspTTw/kyuy2PZ/Zn8wYcIVezTIiobCTGBypzkOXnxBY2llI+mQ5JXc
+ CDFvs922qou6V+6n4Sgi0zs5zeJ/2KDTgPA2LKF5JNJQvoCKNx/NLTojfpSfNgn6
+ IfWw49JhLB5xLGteXEBNjnq6X9mZ8Ux3qySTZP1vIwNT9eJgrMT8KFMyeF0SUtKi
+ 8m5aIsTxvyhONo8u9n2LwA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 04 Mar 2026 15:28:34 +0900
-Subject: [PATCH v3 2/4] vfio/pci: Grow buffer in vfio_pci_host_match()
+Date: Wed, 04 Mar 2026 15:28:35 +0900
+Subject: [PATCH v3 3/4] tests: Avoid sprintf() with "%.6f"
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260304-nvme-v3-2-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260304-nvme-v3-3-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260304-nvme-v3-0-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260304-nvme-v3-0-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -54,8 +54,7 @@ Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alex Williamson <alex.williamson@nvidia.com>
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.15-dev-5ab4c
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
@@ -81,33 +80,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each field of PCIHostDeviceAddress is an unsigned int, therefore
-while a valid address is limited to 13 characters, an invalid
-address could exceed the specified format, up to:
-
-        ffffffff:ffffffff:ffffffff.ffffffff<NUL>
-
-This requires 36 characters with the terminator.
+A string that represents a double can be long if it is an exponentially
+large number.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Alex Williamson <alex.williamson@nvidia.com>
 ---
- hw/vfio/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/test-qobject-input-visitor.c  | 8 ++------
+ tests/unit/test-qobject-output-visitor.c | 7 ++-----
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c89f3fbea348..94c174a773fb 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2739,7 +2739,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
+diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
+index 84bdcdf702e0..beee11db4e47 100644
+--- a/tests/unit/test-qobject-input-visitor.c
++++ b/tests/unit/test-qobject-input-visitor.c
+@@ -500,7 +500,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
+     g_string_append_printf(json, "'number': [");
+     sep = "";
+     for (i = 0; i < 32; i++) {
+-        g_string_append_printf(json, "%s%f", sep, (double)i / 3);
++        g_string_append_printf(json, "%s%f", sep, (double)i / FLT_RADIX);
+         sep = ", ";
+     }
+     g_string_append_printf(json, "], ");
+@@ -583,11 +583,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
  
- bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name)
- {
--    char tmp[13];
-+    char tmp[36];
+     i = 0;
+     for (num_list = arrs->number; num_list; num_list = num_list->next) {
+-        char expected[32], actual[32];
+-
+-        sprintf(expected, "%.6f", (double)i / 3);
+-        sprintf(actual, "%.6f", num_list->value);
+-        g_assert_cmpstr(expected, ==, actual);
++        g_assert_cmpfloat(num_list->value, ==, (double)i / FLT_RADIX);
+         i++;
+     }
  
-     sprintf(tmp, "%04x:%02x:%02x.%1x", addr->domain,
-             addr->bus, addr->slot, addr->function);
+diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
+index 407ab9ed505a..3c47b28f6638 100644
+--- a/tests/unit/test-qobject-output-visitor.c
++++ b/tests/unit/test-qobject-output-visitor.c
+@@ -538,7 +538,7 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
+     }
+ 
+     for (i = 31; i >= 0; i--) {
+-        QAPI_LIST_PREPEND(arrs->number, (double)i / 3);
++        QAPI_LIST_PREPEND(arrs->number, (double)i / FLT_RADIX);
+     }
+ 
+     for (i = 31; i >= 0; i--) {
+@@ -571,12 +571,9 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
+     i = 0;
+     QLIST_FOREACH_ENTRY(qlist, e) {
+         QNum *qvalue = qobject_to(QNum, qlist_entry_obj(e));
+-        char expected[32], actual[32];
+ 
+         g_assert(qvalue);
+-        sprintf(expected, "%.6f", (double)i / 3);
+-        sprintf(actual, "%.6f", qnum_get_double(qvalue));
+-        g_assert_cmpstr(actual, ==, expected);
++        g_assert_cmpfloat(qnum_get_double(qvalue), ==, (double)i / FLT_RADIX);
+         i++;
+     }
+ 
 
 -- 
 2.53.0
