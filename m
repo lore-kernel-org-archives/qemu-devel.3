@@ -4,90 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E2DEF8FEB
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25ADBEF8FE5
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmvm-0002vQ-JB; Wed, 04 Mar 2026 09:10:31 -0500
+	id 1vxn5O-0007Hr-EE; Wed, 04 Mar 2026 09:20:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1vxl4W-00041x-7m
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:24 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1vxl4S-0005yd-2D
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:23 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48373a4bca3so41767535e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vxn5M-0007Gy-Nv
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:20:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vxn5K-00060y-WD
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:20:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772634021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TTNLtjd++5EwhPshwF2uPEW1UsbxTpJ0xekMUPbdZSM=;
+ b=hdZMWVK4nKkbl3H87VdJVw/5/rC6bPH31Nh/IakWsIMUsTehh/NqMvPq1VtzpR4UwFEg1S
+ gYauUsoUtw62qdrjUTZT9Hkxd3B4+QujnJAHkTB4Jke1ujiQvXUeq0pcpSAXZ+ALgoFQpx
+ NRurS/lC4LOh2FqeyP9Xwd3uGsBwDy0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-549-B_Ap6dYTM0OewZAfI_pVAQ-1; Wed, 04 Mar 2026 09:20:19 -0500
+X-MC-Unique: B_Ap6dYTM0OewZAfI_pVAQ-1
+X-Mimecast-MFC-AGG-ID: B_Ap6dYTM0OewZAfI_pVAQ_1772634017
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48378df3469so46514135e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 06:20:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lowrisc.org; s=google; t=1772626278; x=1773231078; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gXllnGhQidqZrDVGqKSjjFZUjVGYWI2DyLiloMauAo0=;
- b=PuUyZG+3OMsyxRfX5OyzTfol2NgglxNG3wmYBQ21h2nL3DhfiReP5QYjkuCjB9qq+S
- gUJLyb/d2hVuRz8EMKdZWplXgFoNUH3dDviwNrKI09VQy042ckzzhlEtUGxCyBplyvvg
- wisMuoe+VSrnxMC6eilgq7oishLuBa1x09RCJJwFX9LQn6iKT0Aes+0cOxeCd9daz0RW
- hRGwGIp31ZWfks6D+UJd9q+yepSyAWh+AqWaJ85VIGaMAlefVAvClZfwfI7IanmxtO4X
- XqmihjCqoyWPyA8u0i/6sRj/uwqA3YrZfbYHFDR2mS8JKveGWomQ5dmuHeCjaUojpvJD
- MnZw==
+ d=redhat.com; s=google; t=1772634016; x=1773238816; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TTNLtjd++5EwhPshwF2uPEW1UsbxTpJ0xekMUPbdZSM=;
+ b=Zvp7PHOVdS8WHwwJLr8DAGQt0FBr3eN8LdE9dGpRzKWLiPgedCBD1+C7ESKFLMwAnP
+ lpk5FQmCHei7+/kGFxpno80YSESx6B30fZ1UegfMfZIYLET3ZGYeuNQ4k3fPE2j1U/d6
+ GfGMD8omgB5r0s5Rq0A4jd9CNlczo+pXE4LCj2JrRgB9KMcspMao0dP4+R74KMmWqmwl
+ f6D4ERc7LpR2cX16E7jmATtysVORct1N0HrIgPlTmJRqkSjLaF7PRBuZtP+r9vCuVgGq
+ KIptSFP5xrhmfT96haMu5EF9n+QzRwT0VztLWPCE3PdRCf88jmO/GFmnd/rWI92ZFFoL
+ nDdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772626278; x=1773231078;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gXllnGhQidqZrDVGqKSjjFZUjVGYWI2DyLiloMauAo0=;
- b=SBO2uEqdbKesFMOByncXCK633zTs2hWg4za0mdR7n8R4GhqSAIalbH3CHt74noTxcl
- MFHmpHzyyO3KzOmg/SDc09DJbFZFouav8dkhHWugADhcsNbGPXBTIZcGP7SS6i2FGjrG
- g7badZvydzUn2cgqyMp1zrTKhz8+ipgwHC7OyCDLLjkmQJXNXzY2k5j+qPfZIvsTWHmy
- 4oO1I/oDV1mZzqxTfWpt+/HdTIw3YTpRuDOFg3EQn/mr3aQarBSTL9bOEAy6glzR8XhP
- RI39uf+piDhtbUdIe5YqBB83K2pHZC/SIJxNCAmkYdaLDEmDJ8hSsMuKBnr1hFKBZk8V
- Rotw==
-X-Gm-Message-State: AOJu0Yw9h+5Diprrrns3HXg9pWDqvOR3WtBWDpZOLhWMrEMX+lmtQ/ZP
- tY+qNQR4VZChHcakx+HeIa/jz/W0x1amKnhEThq4pITD0+jDJZlXs16mDx6hjFwGFbs=
-X-Gm-Gg: ATEYQzyuVMLbtFZ8BPghGtR54Om5KPBb8JoTBO7qw5meQqELq1oO56b9nkL8uOV76Vp
- JWj9n6jIBIB9ncdeMRslbKjioX+XD68fc+NN3XzRPi7gPA+lFJQx4l97+lWpH10+xu/1PFiMTnv
- ywF1Q3J6o4vPg43q3tEN18Y5wv5vz7aMoQwWnkPqpgYQ54+LwKA1kqO+Ar59ql8EPh0ZRiZLLgD
- pUqDCzLNu8YUKTzTiLXww5a6/xTZzlx5dtEzKwxRsbKRPcEOHudrAiNCwlbrmJQkxrJMpRHBI4g
- xFYdHzkixag0YHIJneR0/wCWrfrQ8QpIsTBQOzPESX0aBcOneLHettquQwoM0eeRRXNzfPnF4Al
- zX2Fo1mci+4mObFFwFF/3jhGGfgingCfYMeceNVif48LbOKQSp0gNu8/Hozb6Al6qvtEEyscGwY
- X/fXhJbUmq3VBpHGp3GcR4fmvIaPtfbYzQ4bJVVrRAI7QzUJZ9gZHSzwYU8JOpejZ3keZybV5Af
- NvBjSifrUJSRD5FMCn4xC43A2J3POc=
-X-Received: by 2002:a05:600c:8b4c:b0:480:1a9a:e571 with SMTP id
- 5b1f17b1804b1-4851987fdbamr27379155e9.22.1772626277543; 
- Wed, 04 Mar 2026 04:11:17 -0800 (PST)
-Received: from jw-ThinkPad-T14-Gen-3.home (128.70.159.143.dyn.plus.net.
- [143.159.70.128]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b0549600sm28217570f8f.35.2026.03.04.04.11.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 04:11:17 -0800 (PST)
-From: James Wainwright <james.wainwright@lowrisc.org>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
- James Wainwright <james.wainwright@lowrisc.org>
-Subject: [PATCH 1/3] util: export CRC32[C] lookup tables
-Date: Wed,  4 Mar 2026 12:11:11 +0000
-Message-ID: <20260304121113.117299-2-james.wainwright@lowrisc.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260304121113.117299-1-james.wainwright@lowrisc.org>
-References: <20260304121113.117299-1-james.wainwright@lowrisc.org>
+ d=1e100.net; s=20230601; t=1772634016; x=1773238816;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TTNLtjd++5EwhPshwF2uPEW1UsbxTpJ0xekMUPbdZSM=;
+ b=RiMKz9/rwqaDOJ7cvNdwdUoXH1/Nbu4U/6IzHuAvtOLX5kU6//MhozY7l3Ut4y+rs+
+ E/SQkDqh5UxqZ5JfXc6YFGkBoy4ZG7VruXZTWz8PZqS74aKMBHt3c0bBu5DCtwj7BT6c
+ UXokWuyrvA3tnhxsULZ0zSQ77gk0lz3fpT4ToSBay2IRyMhqualK5AdQDpkeN/B1R4Jt
+ TIqpmtZyyRa3bVFO/UmI+3M0RajZel2YI1HKHf6yBHrljvfdO4M/yUkl8aNnd9gpraM0
+ Wo90hp3GKPthSSb8obCPmBUnq8lRF0GpdGJbbPiAZVazm64E80dG2CHWoJ5APyrTw7BV
+ og5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrk0sZnqmaw2w4MxENjT/1Mbx2oa8oYLCMyBI0wLatUyLW9iB+k8frZce4WeISnxJaOKGxeHx1IdTR@nongnu.org
+X-Gm-Message-State: AOJu0YxuVfKK/+762LdkOO9/yxczhT94U3TQCzLG1oeAgm5JWT783qrJ
+ rqibQhF9zDNaNIAepqL/1oTXGW6I6GoKM8K1EI8R0K8wtn/c7iJRGTia0OgvDITKLjYfa0nQe8S
+ Mc3+eUMQOfNRevAzLqyBKi1qjBYePzwdZ4EEqHxQq6Fz7+Mp8614y6pnUh6s2FE7O
+X-Gm-Gg: ATEYQzyQNFdJ69VxdFz9xqBWJBSDBmjw9IcIYV0BXIoV25nTan9ZispTMBOOYy3GbZg
+ JKmHpIVnGp56rKCVcD+afor7sRNkoGIi+tGIBX/pJmjaOfROqFSs/iDhSHuTbiOf1L/G/SJzdd6
+ 5KH3XNvrTMpKuugZgDP1zsCvmnBcDotLu1vMet1eTsGZ9GoBd0IlC7yePvIt8dk/e6OZA+Qm4HW
+ 8V6VkIpNWJRM7w/3uKYzhYRzSnhKsyXKTwPv/hnRelHj4w4soBkOG8UptRRkb6k5O5sm++dwh93
+ j700C2WZaBFmyqabcZbqfOJw8nMW6517H/UhpDfWNgYcJotqhdqxoOTZokXM0//RErhRGU/OHHl
+ LcJyKnQag4781PzW9DgNgpX34tyzfCDy7wrrDlFmhxUHh05wiRE3J3XwodnR4IfDgDaEqi+/S4i
+ +j85GZRZ1XZFjTX1UOfURuW+F4C44E5Satvot5wF+nV+/vSEiG4o0=
+X-Received: by 2002:a05:600c:81c8:b0:481:a662:b3f3 with SMTP id
+ 5b1f17b1804b1-48519881c4amr37952795e9.7.1772634016301; 
+ Wed, 04 Mar 2026 06:20:16 -0800 (PST)
+X-Received: by 2002:a05:600c:81c8:b0:481:a662:b3f3 with SMTP id
+ 5b1f17b1804b1-48519881c4amr37952065e9.7.1772634015755; 
+ Wed, 04 Mar 2026 06:20:15 -0800 (PST)
+Received: from ?IPV6:2003:cf:d737:d046:71eb:fade:f648:b219?
+ (p200300cfd737d04671ebfadef648b219.dip0.t-ipconnect.de.
+ [2003:cf:d737:d046:71eb:fade:f648:b219])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b503425asm25711418f8f.25.2026.03.04.06.20.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Mar 2026 06:20:15 -0800 (PST)
+Message-ID: <83ed45e5-b1f5-447a-8489-6f13edb2372c@redhat.com>
+Date: Wed, 4 Mar 2026 15:20:13 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] block: Introduce BDRV_O_NO_DATA_{WRITE,RESIZE}
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+References: <20260205144737.31131-1-hreitz@redhat.com>
+ <20260205144737.31131-3-hreitz@redhat.com> <aaWfEfuBZGW4BHPD@redhat.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <aaWfEfuBZGW4BHPD@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=james.wainwright@lowrisc.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 04 Mar 2026 09:09:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,185 +126,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are needed for the RISC-V Zbr0p93 CRC32 instructions which pre-XOR
-the data into the CRC state before the instruction is executed, making
-the zlib crc32 and QEMU crc32c implementations inappropriate.
+On 02.03.26 15:30, Kevin Wolf wrote:
+> Am 05.02.2026 um 15:47 hat Hanna Czenczek geschrieben:
+>> Add BDS flags that prevent taking WRITE and/or RESIZE permissions on
+>> pure data (no metadata) children.  These are going to be used by qcow2
+>> during formatting, when we need write access to format the metadata
+>> file, but no write access to an external data file.  This will allow
+>> creating a qcow2 image for a raw image while the latter is currently in
+>> use by the VM.
+>>
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> ---
+>>   include/block/block-common.h | 11 +++++++++++
+>>   block.c                      | 15 +++++++++++++++
+>>   2 files changed, 26 insertions(+)
+>>
+>> diff --git a/include/block/block-common.h b/include/block/block-common.h
+>> index c8c626daea..504f6aa113 100644
+>> --- a/include/block/block-common.h
+>> +++ b/include/block/block-common.h
+>> @@ -245,6 +245,17 @@ typedef enum {
+>>   
+>>   #define BDRV_O_CBW_DISCARD_SOURCE 0x80000 /* for copy-before-write filter */
+>>   
+>> +/*
+>> + * Promise not to write any data to pure (non-metadata-bearing) data storage
+>> + * children, so we don't need the WRITE permission for them.
+>> + * For image creation, formatting requires write access to the image, but not
+>> + * necessarily to its pure storage children.  This allows creating an image on
+>> + * top of an existing raw storage image that is already attached to the VM.
+>> + */
+>> +#define BDRV_O_NO_DATA_WRITE  0x100000
+> Can't we just use BDRV_O_NO_IO for this one? It is stricter because it
+> doesn't allow reading either, but I don't think image creation ever
+> requires reading from the image?
 
-https://github.com/riscv/riscv-bitmanip/releases/download/v0.93/bitmanip-0.93.pdf
+How would qcow2 set it?  It opens the qcow2 image, so it can only set 
+the flag on the qcow2 BDS (via a BlockBackend), but BDRV_O_NO_IO needs 
+to go on the data-file child.  Maybe we can construct the graph 
+manually…? It would be quite painful, I imagine, but I haven’t tried yet.
 
-Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
----
- include/qemu/crc32.h  | 18 +++++++++
- include/qemu/crc32c.h |  1 +
- util/crc32.c          | 85 +++++++++++++++++++++++++++++++++++++++++++
- util/crc32c.c         |  4 +-
- util/meson.build      |  1 +
- 5 files changed, 107 insertions(+), 2 deletions(-)
- create mode 100644 include/qemu/crc32.h
- create mode 100644 util/crc32.c
+Hanna
 
-diff --git a/include/qemu/crc32.h b/include/qemu/crc32.h
-new file mode 100644
-index 0000000000..a320151acc
---- /dev/null
-+++ b/include/qemu/crc32.h
-@@ -0,0 +1,18 @@
-+/*
-+ * CRC32 Checksum
-+ *
-+ * Copyright (c) 2026 QEMU contributors
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the Free
-+ * Software Foundation; either version 2 of the License, or (at your option)
-+ * any later version.
-+ *
-+ */
-+
-+#ifndef QEMU_CRC32_H
-+#define QEMU_CRC32_H
-+
-+extern const uint32_t crc32_table[256];
-+
-+#endif
-diff --git a/include/qemu/crc32c.h b/include/qemu/crc32c.h
-index 88b4d2b3b3..3d5ba189ef 100644
---- a/include/qemu/crc32c.h
-+++ b/include/qemu/crc32c.h
-@@ -28,6 +28,7 @@
- #ifndef QEMU_CRC32C_H
- #define QEMU_CRC32C_H
- 
-+extern const uint32_t crc32c_table[256];
- 
- uint32_t crc32c(uint32_t crc, const uint8_t *data, unsigned int length);
- uint32_t iov_crc32c(uint32_t crc, const struct iovec *iov, size_t iov_cnt);
-diff --git a/util/crc32.c b/util/crc32.c
-new file mode 100644
-index 0000000000..590dd6e3a2
---- /dev/null
-+++ b/util/crc32.c
-@@ -0,0 +1,85 @@
-+/*
-+ * Constants for computing CRC32 checksums
-+ *
-+ * Copyright (c) 2026 QEMU contributors
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the Free
-+ * Software Foundation; either version 2 of the License, or (at your option)
-+ * any later version.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/crc32.h"
-+
-+/*
-+ * CRC-32 table (reversed; polynomial 0xEDB88320).
-+ */
-+
-+const uint32_t crc32_table[256] = {
-+    0x00000000u, 0x77073096u, 0xee0e612cu, 0x990951bau,
-+    0x076dc419u, 0x706af48fu, 0xe963a535u, 0x9e6495a3u,
-+    0x0edb8832u, 0x79dcb8a4u, 0xe0d5e91eu, 0x97d2d988u,
-+    0x09b64c2bu, 0x7eb17cbdu, 0xe7b82d07u, 0x90bf1d91u,
-+    0x1db71064u, 0x6ab020f2u, 0xf3b97148u, 0x84be41deu,
-+    0x1adad47du, 0x6ddde4ebu, 0xf4d4b551u, 0x83d385c7u,
-+    0x136c9856u, 0x646ba8c0u, 0xfd62f97au, 0x8a65c9ecu,
-+    0x14015c4fu, 0x63066cd9u, 0xfa0f3d63u, 0x8d080df5u,
-+    0x3b6e20c8u, 0x4c69105eu, 0xd56041e4u, 0xa2677172u,
-+    0x3c03e4d1u, 0x4b04d447u, 0xd20d85fdu, 0xa50ab56bu,
-+    0x35b5a8fau, 0x42b2986cu, 0xdbbbc9d6u, 0xacbcf940u,
-+    0x32d86ce3u, 0x45df5c75u, 0xdcd60dcfu, 0xabd13d59u,
-+    0x26d930acu, 0x51de003au, 0xc8d75180u, 0xbfd06116u,
-+    0x21b4f4b5u, 0x56b3c423u, 0xcfba9599u, 0xb8bda50fu,
-+    0x2802b89eu, 0x5f058808u, 0xc60cd9b2u, 0xb10be924u,
-+    0x2f6f7c87u, 0x58684c11u, 0xc1611dabu, 0xb6662d3du,
-+    0x76dc4190u, 0x01db7106u, 0x98d220bcu, 0xefd5102au,
-+    0x71b18589u, 0x06b6b51fu, 0x9fbfe4a5u, 0xe8b8d433u,
-+    0x7807c9a2u, 0x0f00f934u, 0x9609a88eu, 0xe10e9818u,
-+    0x7f6a0dbbu, 0x086d3d2du, 0x91646c97u, 0xe6635c01u,
-+    0x6b6b51f4u, 0x1c6c6162u, 0x856530d8u, 0xf262004eu,
-+    0x6c0695edu, 0x1b01a57bu, 0x8208f4c1u, 0xf50fc457u,
-+    0x65b0d9c6u, 0x12b7e950u, 0x8bbeb8eau, 0xfcb9887cu,
-+    0x62dd1ddfu, 0x15da2d49u, 0x8cd37cf3u, 0xfbd44c65u,
-+    0x4db26158u, 0x3ab551ceu, 0xa3bc0074u, 0xd4bb30e2u,
-+    0x4adfa541u, 0x3dd895d7u, 0xa4d1c46du, 0xd3d6f4fbu,
-+    0x4369e96au, 0x346ed9fcu, 0xad678846u, 0xda60b8d0u,
-+    0x44042d73u, 0x33031de5u, 0xaa0a4c5fu, 0xdd0d7cc9u,
-+    0x5005713cu, 0x270241aau, 0xbe0b1010u, 0xc90c2086u,
-+    0x5768b525u, 0x206f85b3u, 0xb966d409u, 0xce61e49fu,
-+    0x5edef90eu, 0x29d9c998u, 0xb0d09822u, 0xc7d7a8b4u,
-+    0x59b33d17u, 0x2eb40d81u, 0xb7bd5c3bu, 0xc0ba6cadu,
-+    0xedb88320u, 0x9abfb3b6u, 0x03b6e20cu, 0x74b1d29au,
-+    0xead54739u, 0x9dd277afu, 0x04db2615u, 0x73dc1683u,
-+    0xe3630b12u, 0x94643b84u, 0x0d6d6a3eu, 0x7a6a5aa8u,
-+    0xe40ecf0bu, 0x9309ff9du, 0x0a00ae27u, 0x7d079eb1u,
-+    0xf00f9344u, 0x8708a3d2u, 0x1e01f268u, 0x6906c2feu,
-+    0xf762575du, 0x806567cbu, 0x196c3671u, 0x6e6b06e7u,
-+    0xfed41b76u, 0x89d32be0u, 0x10da7a5au, 0x67dd4accu,
-+    0xf9b9df6fu, 0x8ebeeff9u, 0x17b7be43u, 0x60b08ed5u,
-+    0xd6d6a3e8u, 0xa1d1937eu, 0x38d8c2c4u, 0x4fdff252u,
-+    0xd1bb67f1u, 0xa6bc5767u, 0x3fb506ddu, 0x48b2364bu,
-+    0xd80d2bdau, 0xaf0a1b4cu, 0x36034af6u, 0x41047a60u,
-+    0xdf60efc3u, 0xa867df55u, 0x316e8eefu, 0x4669be79u,
-+    0xcb61b38cu, 0xbc66831au, 0x256fd2a0u, 0x5268e236u,
-+    0xcc0c7795u, 0xbb0b4703u, 0x220216b9u, 0x5505262fu,
-+    0xc5ba3bbeu, 0xb2bd0b28u, 0x2bb45a92u, 0x5cb36a04u,
-+    0xc2d7ffa7u, 0xb5d0cf31u, 0x2cd99e8bu, 0x5bdeae1du,
-+    0x9b64c2b0u, 0xec63f226u, 0x756aa39cu, 0x026d930au,
-+    0x9c0906a9u, 0xeb0e363fu, 0x72076785u, 0x05005713u,
-+    0x95bf4a82u, 0xe2b87a14u, 0x7bb12baeu, 0x0cb61b38u,
-+    0x92d28e9bu, 0xe5d5be0du, 0x7cdcefb7u, 0x0bdbdf21u,
-+    0x86d3d2d4u, 0xf1d4e242u, 0x68ddb3f8u, 0x1fda836eu,
-+    0x81be16cdu, 0xf6b9265bu, 0x6fb077e1u, 0x18b74777u,
-+    0x88085ae6u, 0xff0f6a70u, 0x66063bcau, 0x11010b5cu,
-+    0x8f659effu, 0xf862ae69u, 0x616bffd3u, 0x166ccf45u,
-+    0xa00ae278u, 0xd70dd2eeu, 0x4e048354u, 0x3903b3c2u,
-+    0xa7672661u, 0xd06016f7u, 0x4969474du, 0x3e6e77dbu,
-+    0xaed16a4au, 0xd9d65adcu, 0x40df0b66u, 0x37d83bf0u,
-+    0xa9bcae53u, 0xdebb9ec5u, 0x47b2cf7fu, 0x30b5ffe9u,
-+    0xbdbdf21cu, 0xcabac28au, 0x53b39330u, 0x24b4a3a6u,
-+    0xbad03605u, 0xcdd70693u, 0x54de5729u, 0x23d967bfu,
-+    0xb3667a2eu, 0xc4614ab8u, 0x5d681b02u, 0x2a6f2b94u,
-+    0xb40bbe37u, 0xc30c8ea1u, 0x5a05df1bu, 0x2d02ef8du
-+};
-diff --git a/util/crc32c.c b/util/crc32c.c
-index ea7f345de8..f40597f80d 100644
---- a/util/crc32c.c
-+++ b/util/crc32c.c
-@@ -1,7 +1,7 @@
- /*
-  *  Castagnoli CRC32C Checksum Algorithm
-  *
-- *  Polynomial: 0x11EDC6F41
-+ *  Polynomial: 0x1EDC6F41
-  *
-  *  Castagnoli93: Guy Castagnoli and Stefan Braeuer and Martin Herrman
-  *               "Optimization of Cyclic Redundancy-Check Codes with 24
-@@ -37,7 +37,7 @@
-  * reflect output bytes = true
-  */
- 
--static const uint32_t crc32c_table[256] = {
-+const uint32_t crc32c_table[256] = {
-     0x00000000L, 0xF26B8303L, 0xE13B70F7L, 0x1350F3F4L,
-     0xC79A971FL, 0x35F1141CL, 0x26A1E7E8L, 0xD4CA64EBL,
-     0x8AD958CFL, 0x78B2DBCCL, 0x6BE22838L, 0x9989AB3BL,
-diff --git a/util/meson.build b/util/meson.build
-index e7a2a2a64c..d5789b1316 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -44,6 +44,7 @@ util_ss.add(files('id.c'))
- util_ss.add(files('qemu-config.c', 'notify.c'))
- util_ss.add(files('qemu-option.c', 'qemu-progress.c'))
- util_ss.add(files('keyval.c'))
-+util_ss.add(files('crc32.c'))
- util_ss.add(files('crc32c.c'))
- util_ss.add(files('uuid.c'))
- util_ss.add(files('getauxval.c'))
--- 
-2.48.1
+>
+>> +/* Same as O_NO_DATA_WRITE, but for resizing */
+>> +#define BDRV_O_NO_DATA_RESIZE 0x200000
+> How does this differ from BDRV_O_RESIZE (apart from being negative)?
+> Doesn't resizing always refer to the data part?
+>
+> Kevin
+>
 
 
