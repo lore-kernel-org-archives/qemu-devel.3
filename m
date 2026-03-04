@@ -4,53 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93373EDEBFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 00:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E96EDEBFC
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:09:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxaGE-00044F-5L; Tue, 03 Mar 2026 19:38:46 -0500
+	id 1vxajA-0007R3-MN; Tue, 03 Mar 2026 20:08:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxaGA-00043u-6a
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 19:38:42 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxaG8-0002YK-0w
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 19:38:41 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D2BA55969FA;
- Wed, 04 Mar 2026 01:38:37 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id qu2C-Udq_ttw; Wed,  4 Mar 2026 01:38:35 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C44C65969F2; Wed, 04 Mar 2026 01:38:35 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C29305969F0;
- Wed, 04 Mar 2026 01:38:35 +0100 (CET)
-Date: Wed, 4 Mar 2026 01:38:35 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Chad Jablonski <chad@jablonski.xyz>
-cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v11 17/17] ati-vga: Implement HOST_DATA flush to VRAM
-In-Reply-To: <20260303024730.1489136-18-chad@jablonski.xyz>
-Message-ID: <6cd73946-b4e5-873b-eafc-64be19a5a51b@eik.bme.hu>
-References: <20260303024730.1489136-1-chad@jablonski.xyz>
- <20260303024730.1489136-18-chad@jablonski.xyz>
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vxaj9-0007Qk-7y
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:08:39 -0500
+Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vxaj7-0006HP-1t
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:08:38 -0500
+X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ bbad38fcc903f08aac8a34fb38bf4536185f8411583b835b7bb0c42ea97dc03e with SMTP id
+ 69a7860b4ce38e3214e11674; Wed, 04 Mar 2026 01:08:27 GMT
+X-Mailgun-Sending-Ip: 143.55.232.12
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
+ s=rsa2048; t=1772586507;
+ bh=kDjXa0tH01bQbdhHxQjGRUx6dbdyLDrjECGJFp5Aw10=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
+ Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
+ References;
+ b=IPkMENs/d6xofws+6b1WDVIXedG7M6VSzMCj+5MpZQ1hFLCTNXKqN+yr+nY2GTrTJ
+ iFfcfJpONanGwlisAm+2SxT6Ulvs9EeZg4G1O1PhQA3b+ToJH7WXH+Nhsh/RE5Jj5J
+ kDJYaggfUBQ/Q2J1SOLap+HUQa/Iv9FdATdPx/lPVhY8O4Zcg3L/zPNP+yBRj4vzEx
+ K41Lr6JeMri/9V9jgiHggVBYGQurwlQqsGFuuM3gMTLuIOl8QVClFfL4JGbBBsFJjS
+ Hv09NvAzQBbOgyNpX1dF1xbpR8ggB+QRH31xoeXmSBT3ZzEDlCL5E/l9HQ8q8ILLAB
+ qZMBgPsU57bSA==
+Message-ID: <f999293f-c424-497a-8bca-2634bcd68108@yodel.dev>
+Date: Tue, 3 Mar 2026 19:08:25 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [RFC PATCH v2] configure: Use clang for sanitizer builds or
+ disable Werror
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260303012054.484837-1-yodel.eldar@yodel.dev>
+Content-Language: en-US
+X-Mailgun-Dkim: no
+X-Mailgun-Dkim: no
+From: Yodel Eldar <yodel.eldar@yodel.dev>
+Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
+ xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
+ I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
+ AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
+ Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
+ 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
+ imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
+ TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
+In-Reply-To: <20260303012054.484837-1-yodel.eldar@yodel.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=143.55.232.12;
+ envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
+ helo=v512.v5f06b487.use4.send.mailgun.net
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,258 +94,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Mar 2026, Chad Jablonski wrote:
-> Implement flushing the 128-bit HOST_DATA accumulator to VRAM to enable
-> text rendering in X. Supports all datatypes (monochrome frgd/bkgd,
-> monochrome frgd, and color), however monochrome frgd support is
-> partial and does not properly handle transparency/leave-alone.
->
-> The flush is broken up into two steps. First, if necessary, expansion of the
-> monochrome bits to the destination color depth. Then the expanded pixels
-> are sent to the ati_2d_do_blt one scanline at a time. ati_2d_do_blt then
-> clips and performs the blit.
->
-> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
++Daniel (thanks for your comments)
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-
-Also tested that it works with MorphOS that was known to need it for some 
-font rendering so this fixes Xorg and MorphOS. It is now fully reviewed, 
-but I can't send pull requests so is there anybody collecting patches for 
-hw/display and will send a pull before the freeze? I may have one more 
-patch to send before the freeze but otherwise this series is all we would 
-like to include for ati-vga in the coming release.
-
-Thank you,
-BALATON Zoltan
-
+On 02/03/2026 19:20, Yodel Eldar wrote:
+> From: Yodel Eldar <yodel.eldar@yodel.dev>
+> 
+> Builds with --enable-{asan,tsan,safe-stack} fail under GCC, so use
+> clang if available, otherwise disable the treatment of warnings as
+> errors.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 > ---
-> hw/display/ati.c      |   6 +-
-> hw/display/ati_2d.c   | 131 +++++++++++++++++++++++++++++++++++++++++-
-> hw/display/ati_int.h  |   3 +
-> hw/display/ati_regs.h |   4 ++
-> 4 files changed, 138 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index fa31401ba6..c93ef64525 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -1038,11 +1038,9 @@ static void ati_mm_write(void *opaque, hwaddr addr,
->         }
->         s->host_data.acc[s->host_data.next++] = data;
->         if (addr == HOST_DATA_LAST) {
-> -            qemu_log_mask(LOG_UNIMP, "HOST_DATA finish not yet implemented\n");
-> -            s->host_data.next = 0;
-> +            ati_host_data_finish(s);
->         } else if (s->host_data.next >= 4) {
-> -            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-> -            s->host_data.next = 0;
-> +            ati_host_data_flush(s);
->         }
->         break;
->     default:
-> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-> index e240093f12..549a85dd3c 100644
-> --- a/hw/display/ati_2d.c
-> +++ b/hw/display/ati_2d.c
-> @@ -47,6 +47,7 @@ static int ati_bpp_from_datatype(const ATIVGAState *s)
-> typedef struct {
->     int bpp;
->     uint32_t rop3;
-> +    bool host_data_active;
->     bool left_to_right;
->     bool top_to_bottom;
->     uint32_t frgd_clr;
-> @@ -85,6 +86,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-> {
->     ctx->bpp = ati_bpp_from_datatype(s);
->     ctx->rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
-> +    ctx->host_data_active = s->host_data.active;
->     ctx->left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
->     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
->     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
-> @@ -181,10 +183,10 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
->             return false;
->         }
->         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
-> -        if (vis_src.x > 0x3fff || vis_src.y > 0x3fff
-> +        if (!ctx->host_data_active && (vis_src.x > 0x3fff || vis_src.y > 0x3fff
->             || ctx->src_bits >= ctx->vram_end
->             || ctx->src_bits + vis_src.x + (vis_src.y + vis_dst.height)
-> -             * ctx->src_stride >= ctx->vram_end) {
-> +             * ctx->src_stride >= ctx->vram_end)) {
->             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
->             return false;
->         }
-> @@ -298,8 +300,133 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-> void ati_2d_blt(ATIVGAState *s)
-> {
->     ATI2DCtx ctx;
-> +    uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
+> Hi,
+> 
+> The previous version only disabled Werror whenever `--skip-meson` wasn't
+> used and the build occurred in a git repo, but this change should
+> probably apply to all types of builds. So, let's use meson_option_add
+> to globally disable Werror instead; IIUC (and according to my testing),
+> this will override the value in config-meson.cross.new.
+> 
+> I'm still not sure if we should be disabling Werror for ubsan, even
+> though it's not currently breaking builds with GCC; please let me know
+> what you think.
+> 
+> Special thanks to Peter for looking into the cause of the reports around
+> this, for sharing the findings, and suggesting approaches to resolve it.
+> I couldn't pick one over the other, so I went with using clang when
+> available with Werror disable as a fallback; please let me know if you
+> think this is an XOR kind of policy decision.
+> 
+> Link to RFCv1:
+> https://lore.kernel.org/qemu-devel/20260302210039.261325-1-yodel.eldar@yodel.dev/
+> 
+> Link to mentioned discussion:
+> https://lore.kernel.org/qemu-devel/CAFEAcA88hc4UsgpuPXBWpbeN0tW26159kPn7jx2J9erBA5DLBw@mail.gmail.com/
+> 
+> v2:
+> - Fix misnomer in commit message
+> - Simplify condition by using the same variable for all sanitizers
+> - Use meson_option_add to disable Werror
+> 
+> Thanks,
+> Yodel
+> ---
+>   configure | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
+> 
+> diff --git a/configure b/configure
+> index 5e114acea2..e457e8a17d 100755
+> --- a/configure
+> +++ b/configure
+> @@ -762,6 +762,12 @@ for opt do
+>     ;;
+>     --wasm64-32bit-address-limit)
+>     ;;
+> +  --enable-asan) use_sanitizer="yes"
+> +  ;;
+> +  --enable-tsan) use_sanitizer="yes"
+> +  ;;
+> +  --enable-safe-stack) use_sanitizer="yes"
+> +  ;;
+>     # everything else has the same name in configure and meson
+>     --*) meson_option_parse "$opt" "$optarg"
+>     ;;
+> @@ -771,6 +777,18 @@ for opt do
+>     esac
+>   done
+>   
+> +if test "$use_sanitizer" = "yes"; then
+> +    if has clang; then
+> +        echo "Sanitizer requested: setting compiler suite to clang"
+> +        cc=clang
+> +        cxx=clang++
+> +        host_cc=clang
+> +    else
+> +        echo "Sanitizer requested: disabling Werror for non-clang compilers"
+> +        meson_option_add -Dwerror=false
+> +    fi
+> +fi
 > +
-> +    /* Finish any active HOST_DATA blits before starting a new blit */
-> +    ati_host_data_finish(s);
-> +
-> +    if (src_source == DP_SRC_HOST || src_source == DP_SRC_HOST_BYTEALIGN) {
-> +        /* Begin a HOST_DATA blit */
-> +        s->host_data.active = true;
-> +        s->host_data.next = 0;
-> +        s->host_data.col = 0;
-> +        s->host_data.row = 0;
-> +        return;
-> +    }
->     setup_2d_blt_ctx(s, &ctx);
->     if (ati_2d_do_blt(&ctx, s->use_pixman)) {
->         ati_set_dirty(&s->vga, &ctx);
->     }
-> }
-> +
-> +bool ati_host_data_flush(ATIVGAState *s)
-> +{
-> +    ATI2DCtx ctx, chunk;
-> +    uint32_t fg = s->regs.dp_src_frgd_clr;
-> +    uint32_t bg = s->regs.dp_src_bkgd_clr;
-> +    unsigned bypp, pix_count, row, col, idx;
-> +    uint8_t pix_buf[ATI_HOST_DATA_ACC_BITS * sizeof(uint32_t)];
-> +    uint32_t byte_pix_order = s->regs.dp_datatype & DP_BYTE_PIX_ORDER;
-> +    uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
-> +    uint32_t src_datatype = s->regs.dp_datatype & DP_SRC_DATATYPE;
-> +
-> +    if (!s->host_data.active) {
-> +        return false;
-> +    }
-> +    if (src_source != DP_SRC_HOST) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "host_data_blt: unsupported src_source %x\n", src_source);
-> +        return false;
-> +    }
-> +    if (src_datatype != SRC_MONO_FRGD_BKGD && src_datatype != SRC_MONO_FRGD &&
-> +        src_datatype != SRC_COLOR) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "host_data_blt: undefined src_datatype %x\n",
-> +                      src_datatype);
-> +        return false;
-> +    }
-> +
-> +    setup_2d_blt_ctx(s, &ctx);
-> +
-> +    if (!ctx.left_to_right || !ctx.top_to_bottom) {
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "host_data_blt: unsupported blit direction %c%c\n",
-> +                      ctx.left_to_right ? '>' : '<',
-> +                      ctx.top_to_bottom ? 'v' : '^');
-> +        return false;
-> +    }
-> +
-> +    bypp = ctx.bpp / 8;
-> +
-> +    if (src_datatype == SRC_COLOR) {
-> +        pix_count = ATI_HOST_DATA_ACC_BITS / ctx.bpp;
-> +        memcpy(pix_buf, &s->host_data.acc[0], sizeof(s->host_data.acc));
-> +    } else {
-> +        pix_count = ATI_HOST_DATA_ACC_BITS;
-> +        /* Expand monochrome bits to color pixels */
-> +        idx = 0;
-> +        for (int word = 0; word < 4; word++) {
-> +            for (int byte = 0; byte < 4; byte++) {
-> +                uint8_t byte_val = s->host_data.acc[word] >> (byte * 8);
-> +                for (int i = 0; i < 8; i++) {
-> +                    bool is_fg = byte_val & BIT(byte_pix_order ? i : 7 - i);
-> +                    uint32_t color = is_fg ? fg : bg;
-> +                    stn_he_p(&pix_buf[idx], bypp, color);
-> +                    idx += bypp;
-> +                }
-> +            }
-> +        }
-> +    }
-> +
-> +    /* Copy and then modify blit ctx for use in a chunked blit */
-> +    chunk = ctx;
-> +    chunk.src_bits = pix_buf;
-> +    chunk.src.y = 0;
-> +    chunk.src_stride = ATI_HOST_DATA_ACC_BITS * bypp;
-> +
-> +    /* Blit one scanline chunk at a time */
-> +    row = s->host_data.row;
-> +    col = s->host_data.col;
-> +    idx = 0;
-> +    DPRINTF("blt %dpx @ row: %d, col: %d\n", pix_count, row, col);
-> +    while (idx < pix_count && row < ctx.dst.height) {
-> +        unsigned pix_in_scanline = MIN(pix_count - idx,
-> +                                       ctx.dst.width - col);
-> +        chunk.src.x = idx;
-> +        /* Build a rect for this scanline chunk */
-> +        chunk.dst.x = ctx.dst.x + col;
-> +        chunk.dst.y = ctx.dst.y + row;
-> +        chunk.dst.width = pix_in_scanline;
-> +        chunk.dst.height = 1;
-> +        DPRINTF("blt %dpx span @ row: %d, col: %d to dst (%d,%d)\n",
-> +                pix_in_scanline, row, col, chunk.dst.x, chunk.dst.y);
-> +        if (ati_2d_do_blt(&chunk, s->use_pixman)) {
-> +            ati_set_dirty(&s->vga, &chunk);
-> +        }
-> +        idx += pix_in_scanline;
-> +        col += pix_in_scanline;
-> +        if (col >= ctx.dst.width) {
-> +            col = 0;
-> +            row += 1;
-> +        }
-> +    }
-> +
-> +    /* Track state of the overall blit for use by the next flush */
-> +    s->host_data.next = 0;
-> +    s->host_data.row = row;
-> +    s->host_data.col = col;
-> +    if (s->host_data.row >= ctx.dst.height) {
-> +        s->host_data.active = false;
-> +    }
-> +
-> +    return s->host_data.active;
-> +}
-> +
-> +void ati_host_data_finish(ATIVGAState *s)
-> +{
-> +    if (ati_host_data_flush(s)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "HOST_DATA blit ended before all data was written\n");
-> +    }
-> +    s->host_data.active = false;
-> +}
-> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-> index baa264215c..28f4e9d977 100644
-> --- a/hw/display/ati_int.h
-> +++ b/hw/display/ati_int.h
-> @@ -32,6 +32,7 @@
->
-> #define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
-> #define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
-> +#define ATI_HOST_DATA_ACC_BITS 128
->
-> #define TYPE_ATI_VGA "ati-vga"
-> OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
-> @@ -126,5 +127,7 @@ struct ATIVGAState {
-> const char *ati_reg_name(int num);
->
-> void ati_2d_blt(ATIVGAState *s);
-> +bool ati_host_data_flush(ATIVGAState *s);
-> +void ati_host_data_finish(ATIVGAState *s);
->
-> #endif /* ATI_INT_H */
-> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-> index 48f15e9b1d..b813fa119e 100644
-> --- a/hw/display/ati_regs.h
-> +++ b/hw/display/ati_regs.h
-> @@ -397,7 +397,11 @@
-> #define DST_32BPP                               0x00000006
-> #define DP_DST_DATATYPE                         0x0000000f
-> #define DP_BRUSH_DATATYPE                       0x00000f00
-> +#define SRC_MONO_FRGD_BKGD                      0x00000000
-> +#define SRC_MONO_FRGD                           0x00010000
-> +#define SRC_COLOR                               0x00030000
-> #define DP_SRC_DATATYPE                         0x00030000
-> +#define DP_BYTE_PIX_ORDER                       0x40000000
->
-> #define BRUSH_SOLIDCOLOR                        0x00000d00
->
->
+>   if ! test -e "$source_path/.git"
+>   then
+>       git_submodules_action="validate"
+
+We could treat the rtl8139 as a one-off by carving out the
+offending code with a GCC pragma or finagling GCC into cooperation
+by substituting eth_payload_data with the expression assigned to it
+(thank you, Thomas and Daniel, respectively); indeed, AFAICT the
+rtl8139 is currently the only code that triggers the GCC bug
+(and is overdue for a refactor/cleanup), so it's tempting to go with
+either of these helpful suggestions; *however*, until the GCC team
+fixes their buggy pairing between sanitizer and -Werror
+(a pairing that they themselves disavow [1]), IMHO there's a
+significant risk of recurrence if we went with either option, and
+it's not clear to me whether reviewers will be able easily spot the
+next one before it's too late (post-acceptance).
+
+That said, I fully share Daniel's concerns about "overriding the
+user's choice of compiler"; so, what if we instead moved the
+sanitizer check into the existing "Preferred compiler" section
+in configure, such that we only set cc=clang when the user hasn't
+explicitly specified CC/CXX (diff below)? Note: there's already
+precedent for this with the Obj-C compiler [2].
+
+I'm definitely onboard with Daniel's warning message in meson whenever
+the user: 1) explicitly opts for gcc/g++, 2) enables sanitizers, and 3)
+-Werror is enabled. At the risk of overengineering, though, what if we
+made it an error message instead, and gave users an escape hatch like
+`--force-werror-sanitizers` (name TBD)? I can see that being too much,
+but it may prevent some grief if they missed the warning, and the build
+breaks several minutes later. WDYT? It's not included in the diff below,
+but I'll gladly add it to v3 if there's interest; if not, I'll go with
+the warning message as suggested.
+
+Thanks,
+Yodel
+
+[1] https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html (Peter)
+[2] 
+https://gitlab.com/qemu-project/qemu/-/blob/master/configure?ref_type=heads#L302-315
+
+-- >8 --
+
+diff --git a/configure b/configure
+index 5e114acea2..861723b0a4 100755
+--- a/configure
++++ b/configure
+@@ -245,6 +245,12 @@ for opt do
+    ;;
+    --wasm64-32bit-address-limit) wasm64_memory64="2"
+    ;;
++  --enable-asan) use_sanitizers="yes"
++  ;;
++  --enable-tsan) use_sanitizers="yes"
++  ;;
++  --enable-safe-stack) use_sanitizers="yes"
++  ;;
+    esac
+  done
+
+@@ -286,15 +292,25 @@ static="no"
+  # Preferred compiler:
+  #  ${CC} (if set)
+  #  ${cross_prefix}gcc (if cross-prefix specified)
+-#  system compiler
++#  clang if sanitizer requested, otherwise system compiler
+  if test -z "${CC}${cross_prefix}"; then
+-  cc="cc"
++  if test "$use_sanitizers" = "yes" && has clang; then
++    cc=clang
++    echo "Sanitizer requested: setting cc to clang"
++  else
++    cc="cc"
++  fi
+  else
+    cc="${CC-${cross_prefix}gcc}"
+  fi
+
+  if test -z "${CXX}${cross_prefix}"; then
+-  cxx="c++"
++  if test "$use_sanitizers" = "yes" && has clang; then
++    cxx=clang++
++    echo "Sanitizer requested: setting cxx to clang++"
++  else
++    cxx="c++"
++  fi
+  else
+    cxx="${CXX-${cross_prefix}g++}"
+  fi
+
 
