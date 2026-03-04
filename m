@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF408EFCE47
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC4A7EFCE47
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxth8-0004ri-V3; Wed, 04 Mar 2026 16:23:50 -0500
+	id 1vxth4-0004oV-Al; Wed, 04 Mar 2026 16:23:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgb-0004k3-Hn; Wed, 04 Mar 2026 16:23:20 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1vxtgg-0004m6-Hd; Wed, 04 Mar 2026 16:23:25 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgX-0003RO-RJ; Wed, 04 Mar 2026 16:23:17 -0500
+ id 1vxtge-0003Ty-NM; Wed, 04 Mar 2026 16:23:22 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 34BA880809;
- Thu, 05 Mar 2026 00:23:09 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 7027480809;
+ Thu, 05 Mar 2026 00:23:17 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:921::1:1b])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5NwBA90AmW20-q645lfnf; Thu, 05 Mar 2026 00:23:08 +0300
+ ESMTPSA id 5NwBA90AmW20-eBKyXR3h; Thu, 05 Mar 2026 00:23:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1772659388;
- bh=8TqJW7KLyOGPsDaRdrX1G44CVXku6VnJ+G8bo1vDuhM=;
+ s=default; t=1772659396;
+ bh=amU9C2f3rJ88akoLojIH8Spv0Mmp5f3aJg0j9G5aQFQ=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=dX9anVb6r1fJF6Y6RKCbjksWmwTvtr7zdkfSaAFnNGxaZ1IrvbVNN107sDh3KGp5R
- c7SvDmgYzhARsY/9+IW/IQjaH07mSRAnwaJV0y3HsryLDiJwgVmrA9Ug/s0NjjaTdg
- LhOa6aR4Ma0e8+8KzLyEFjqo34TktjkK65Ga4Lj4=
+ b=JpfjPQsp4t+8GWRCxp9StcVvbXCm1rwsiMAiVv0Iucz2pIz9n+RdcIb/3UO+cAw/J
+ hiZsCpkULwdvzqVHsMjSKtstksuOf8DJxYs+pt2NnVsMaQltzDLKigzfB3sActcSI8
+ R1JyqswaK1SZhXb5n7ISrCCJ440hYkTM8JTeYkS0=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, vsementsov@yandex-team.ru, qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-ppc@nongnu.org (open list:sPAPR (pseries)),
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH v3 03/18] migration: make .post_save() a void function
-Date: Thu,  5 Mar 2026 00:22:47 +0300
-Message-ID: <20260304212303.667141-4-vsementsov@yandex-team.ru>
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-s390x@nongnu.org (open list:S390 channel subs...)
+Subject: [PATCH v3 16/18] hw/s390x/css: drop use of .err_hint for vmstate
+Date: Thu,  5 Mar 2026 00:23:00 +0300
+Message-ID: <20260304212303.667141-17-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,153 +79,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All other handlers now have _errp() variants. Should we go this way
-for .post_save()? Actually it's rather strange, when the vmstate do
-successful preparations in .pre_save(), then successfully save all
-sections and subsections, end then fail when all the state is
-successfully transferred to the target.
-
-Happily, we have only three .post_save() realizations, all always
-successful. Let's make this a rule.
-
-Also note, that we call .post_save() in two places, and handle
-its (theoretical) failure inconsistently. Fix that too.
+That's the only usage through the whole base. Doesn't
+worth keeping the whole complexity. And 2.7 machines were
+long ago.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- docs/devel/migration/main.rst |  2 +-
- hw/ppc/spapr_pci.c            |  3 +--
- include/migration/vmstate.h   |  8 +++++++-
- migration/savevm.c            |  3 +--
- migration/vmstate.c           | 12 +++---------
- target/arm/machine.c          |  4 +---
- 6 files changed, 14 insertions(+), 18 deletions(-)
+ hw/s390x/css.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
-index 234d280249a..2de70507640 100644
---- a/docs/devel/migration/main.rst
-+++ b/docs/devel/migration/main.rst
-@@ -439,7 +439,7 @@ The functions to do that are inside a vmstate definition, and are called:
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index 04ce3178a0b..df5f0bc27f1 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -192,10 +192,6 @@ static const VMStateDescription vmstate_schdev_orb = {
+ static int subch_dev_post_load(void *opaque, int version_id);
+ static int subch_dev_pre_save(void *opaque);
  
-   This function is called before we save the state of one device.
- 
--- ``int (*post_save)(void *opaque);``
-+- ``void (*post_save)(void *opaque);``
- 
-   This function is called after we save the state of one device
-   (even upon failure, unless the call to pre_save returned an error).
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index ea998bdff15..1dc3b02659f 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -2093,14 +2093,13 @@ static int spapr_pci_pre_save(void *opaque)
-     return 0;
- }
- 
--static int spapr_pci_post_save(void *opaque)
-+static void spapr_pci_post_save(void *opaque)
- {
-     SpaprPhbState *sphb = opaque;
- 
-     g_free(sphb->msi_devs);
-     sphb->msi_devs = NULL;
-     sphb->msi_devs_num = 0;
--    return 0;
- }
- 
- static int spapr_pci_post_load(void *opaque, int version_id)
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 3695afd483f..85838a49aee 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -223,7 +223,13 @@ struct VMStateDescription {
-     bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
-     int (*pre_save)(void *opaque);
-     bool (*pre_save_errp)(void *opaque, Error **errp);
--    int (*post_save)(void *opaque);
-+
-+    /*
-+     * Unless .pre_save() fails, .post_save() is called after saving
-+     * fields and subsections. It should not fail because at this
-+     * point the state has potentially already been transferred.
-+     */
-+    void (*post_save)(void *opaque);
-     bool (*needed)(void *opaque);
-     bool (*dev_unplug_pending)(void *opaque);
- 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 3a16c467b25..c5236e71ba1 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -321,14 +321,13 @@ static int configuration_pre_save(void *opaque)
-     return 0;
- }
- 
--static int configuration_post_save(void *opaque)
-+static void configuration_post_save(void *opaque)
- {
-     SaveState *state = opaque;
- 
-     g_free(state->capabilities);
-     state->capabilities = NULL;
-     state->caps_count = 0;
--    return 0;
- }
- 
- static int configuration_pre_load(void *opaque)
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 651c3fe0115..5111e7a141f 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -550,10 +550,7 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 if (ret) {
-                     error_prepend(errp, "Save of field %s/%s failed: ",
-                                   vmsd->name, field->name);
--                    if (vmsd->post_save) {
--                        vmsd->post_save(opaque);
--                    }
--                    return ret;
-+                    goto out;
-                 }
- 
-                 /* Compressed arrays only care about the first element */
-@@ -578,12 +575,9 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
- 
-     ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
- 
-+out:
-     if (vmsd->post_save) {
--        int ps_ret = vmsd->post_save(opaque);
--        if (!ret && ps_ret) {
--            ret = ps_ret;
--            error_setg(errp, "post-save failed: %s", vmsd->name);
--        }
-+        vmsd->post_save(opaque);
-     }
-     return ret;
- }
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index bbaae344492..de810220e25 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -993,15 +993,13 @@ static int cpu_pre_save(void *opaque)
-     return 0;
- }
- 
--static int cpu_post_save(void *opaque)
-+static void cpu_post_save(void *opaque)
- {
-     ARMCPU *cpu = opaque;
- 
-     if (!kvm_enabled()) {
-         pmu_op_finish(&cpu->env);
-     }
+-const char err_hint_devno[] = "Devno mismatch, tried to load wrong section!"
+-    " Likely reason: some sequences of plug and unplug  can break"
+-    " migration for machine versions prior to  2.7 (known design flaw).";
 -
--    return 0;
- }
- 
- static int cpu_pre_load(void *opaque)
+ const VMStateDescription vmstate_subch_dev = {
+     .name = "s390_subch_dev",
+     .version_id = 1,
+@@ -203,10 +199,15 @@ const VMStateDescription vmstate_subch_dev = {
+     .post_load = subch_dev_post_load,
+     .pre_save = subch_dev_pre_save,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT8_EQUAL(cssid, SubchDev, "Bug!"),
+-        VMSTATE_UINT8_EQUAL(ssid, SubchDev, "Bug!"),
++        VMSTATE_UINT8_EQUAL(cssid, SubchDev, NULL),
++        VMSTATE_UINT8_EQUAL(ssid, SubchDev, NULL),
+         VMSTATE_UINT16(migrated_schid, SubchDev),
+-        VMSTATE_UINT16_EQUAL(devno, SubchDev, err_hint_devno),
++        /*
++         * If devno mismatch on target, it may be due to some
++         * sequences of plug and unplug breaks migration for
++         * machine versions prior to 2.7 (known design flaw).
++         */
++        VMSTATE_UINT16_EQUAL(devno, SubchDev, NULL),
+         VMSTATE_BOOL(thinint_active, SubchDev),
+         VMSTATE_STRUCT(curr_status, SubchDev, 0, vmstate_schib, SCHIB),
+         VMSTATE_UINT8_ARRAY(sense_data, SubchDev, 32),
 -- 
 2.52.0
 
