@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A540EB7ED5
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B67EB7ED5
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxkbp-0006Sj-El; Wed, 04 Mar 2026 06:41:46 -0500
+	id 1vxkhB-0007VA-Ml; Wed, 04 Mar 2026 06:47:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxkbn-0006ST-6v
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:41:43 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vxkh9-0007Ur-R9
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:47:15 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxkbl-0006fk-GH
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:41:42 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4ACC7596D9A;
- Wed, 04 Mar 2026 12:41:40 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id kMjSQu4YxhYS; Wed,  4 Mar 2026 12:41:38 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B37F2596D9D; Wed, 04 Mar 2026 12:41:37 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B2100596D9B;
- Wed, 04 Mar 2026 12:41:37 +0100 (CET)
-Date: Wed, 4 Mar 2026 12:41:37 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH 1/7] stubs: Merge physmem.c within ram-block.c
-In-Reply-To: <fb933416-cef9-43a0-806d-16ea4957a2f6@linaro.org>
-Message-ID: <78304201-4515-3246-ff7f-c3ea0192b838@eik.bme.hu>
-References: <20260226220226.20164-1-philmd@linaro.org>
- <20260226220226.20164-2-philmd@linaro.org>
- <8a2872f3-dfbb-3fed-dd95-3cd474e3ca2b@eik.bme.hu>
- <82dfe6e2-22c1-4df1-9e49-a2c7a2970082@rsg.ci.i.u-tokyo.ac.jp>
- <ef6b34f6-7e72-4aea-9436-c2bda69c2c0e@linaro.org>
- <1dfb1673-082e-2748-9887-bb7efd2df4f4@eik.bme.hu>
- <fb933416-cef9-43a0-806d-16ea4957a2f6@linaro.org>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vxkh8-0000BJ-0T
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:47:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=VgKu0AFQK3TSs5iVFfLlM/mtQw8G5qXKb386ZCubW7o=; b=TZAw5CEu0+bH296A
+ gaWT1E3j14tQuyB0Jsh4lJaivlXxcsXIdb9mfvWwKwUOXZ2xQ3Ka1o9TsvVkAbUxHbUCRZYzZEuLt
+ qK7mkapUKI1ePkL7VVva+EJqlbBq0K7V5Kf3ZqNhwvkASFnD3aXoXvQKdtXXx4pKjZsi7xWe+64gL
+ 7sK3NDuHSP8x8vpJEpFA1sdMyvNgxlhTprWfnk7EQifb+ZK/IPybv4zdG6hgxdAOh1QzsTPqC172V
+ rZ9tVO3cpxrDqyzTMcvArnq24IwELM7wB4X0usYjK6t+iqNddG+1/v1A8v/t+7jb5LUlm7vqrUDoU
+ JXL309VgiZ3Iv9cATw==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vxkh3-000000075in-36ns;
+ Wed, 04 Mar 2026 11:47:09 +0000
+Date: Wed, 4 Mar 2026 11:47:09 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 02/16] target/alpha: Use explicit little-endian LD/ST API
+Message-ID: <aagbvX7zC_aj3Spr@gallifrey>
+References: <20260202212019.94205-1-philmd@linaro.org>
+ <20260202212019.94205-3-philmd@linaro.org>
+ <aaRSXzwmZBoRD0e7@gallifrey>
+ <dae98d2b-6e0a-42bc-bfdf-5c33e74cd390@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-482950783-1772624497=:5388"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dae98d2b-6e0a-42bc-bfdf-5c33e74cd390@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 11:46:31 up 128 days, 11:22,  3 users,  load average: 0.03, 0.02,
+ 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,52 +73,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+* Philippe Mathieu-Daud� (philmd@linaro.org) wrote:
+> On 1/3/26 15:51, Dr. David Alan Gilbert wrote:
+> > * Philippe Mathieu-Daud� (philmd@linaro.org) wrote:
+> > > The Alpha architecture uses little endianness. Directly
+> > 
+> > Wasn't there one, odd case of the T3E running it big-endian?
+> > (I have no idea how that worked in practice).
+> 
+> Richard said it was not necessary to mention it in the code:
+> https://lore.kernel.org/qemu-devel/20260106155755.53646-7-philmd@linaro.org/
+> https://lore.kernel.org/qemu-devel/75b13774-93f3-45db-bc1a-5b8687fcb3b9@linaro.org/
+> 
+> I could have mentioned it here in the commit description
+> for clarity but didn't think about it...
 
---3866299591-482950783-1772624497=:5388
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Ah right, didn't spot that review.
 
-On Wed, 4 Mar 2026, Philippe Mathieu-Daudé wrote:
-> On 3/3/26 18:20, BALATON Zoltan wrote:
->> On Tue, 3 Mar 2026, Philippe Mathieu-Daudé wrote:
->>> On 2/3/26 07:21, Akihiko Odaki wrote:
->>>> On 2026/02/27 7:22, BALATON Zoltan wrote:
->>>>> On Thu, 26 Feb 2026, Philippe Mathieu-Daudé wrote:
->>>>>> physmem.c defines 2 stubs which are related to ram-block:
->>>>>> qemu_ram_block_from_host() and qemu_ram_get_fd().
->>>>>> Move them with the other ram-block stubs.
->>>>>> 
->>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>> ---
->>>>>> stubs/physmem.c   | 13 -------------
->>>>>> stubs/ram-block.c | 11 +++++++++++
->>>>> 
->>>>> Maybe should be the other way around moving what's in subs/ram- block.c 
->>>>> to stubs/physmem.c considering the the functions these stub out are in 
->>>>> system/physmem.c and there's no system/ram-block.c.
->>> 
->>> Fine, I'll drop this patch if you think it is not worthwhile.
->> 
->> I did not say that, only that the functions are in system/physmem.c so why 
->> not put the stubs in stubs/physmem.c to match? Since there's no 
->> system/ram-block.c I think it makes more sense to merge these into 
->> stubs/physmem.c instead.
->
-> Unfortunately I won't have time to address this change before
-> soft-freeze, do you mind posting the patch?
+Thanks for the reply,
 
-I don't think this is a big issue to put much effort in so as I said 
-dropping the patch and not changing it is probably the simplest.
+Dave
 
-> Thanks for your review and help here,
->
-> Phil.
->
->> But just leaving it as it is is also OK.
-
-Regards,
-BALATON Zoltan
---3866299591-482950783-1772624497=:5388--
+> > 
+> > Dave
+> > 
+> > > use the little-endian LD/ST API.
+> > > 
+> > > Mechanical change running:
+> > > 
+> > >    $ for a in uw w l q; do \
+> > >        sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
+> > >          $(git grep -wlE '(ld|st)u?[wlq]_p' target/alpha/);
+> > >      done
+> > > 
+> > > Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
+> > > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > > Message-Id: <20251224160040.88612-2-philmd@linaro.org>
+> > > ---
+> > >   target/alpha/helper.c | 11 ++++++-----
+> > >   1 file changed, 6 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/target/alpha/helper.c b/target/alpha/helper.c
+> > > index a9af52a928f..80542cb0665 100644
+> > > --- a/target/alpha/helper.c
+> > > +++ b/target/alpha/helper.c
+> > > @@ -214,17 +214,18 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+> > >       pt = env->ptbr;
+> > > -    /* TODO: rather than using ldq_phys() to read the page table we should
+> > > +    /*
+> > > +     * TODO: rather than using ldq_phys_le() to read the page table we should
+> > >        * use address_space_ldq() so that we can handle the case when
+> > >        * the page table read gives a bus fault, rather than ignoring it.
+> > > -     * For the existing code the zero data that ldq_phys will return for
+> > > +     * For the existing code the zero data that ldq_phys_le will return for
+> > >        * an access to invalid memory will result in our treating the page
+> > >        * table as invalid, which may even be the right behaviour.
+> > >        */
+> > >       /* L1 page table read.  */
+> > >       index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
+> > > -    L1pte = ldq_phys(cs->as, pt + index*8);
+> > > +    L1pte = ldq_phys_le(cs->as, pt + index * 8);
+> > >       if (unlikely((L1pte & PTE_VALID) == 0)) {
+> > >           ret = MM_K_TNV;
+> > > @@ -237,7 +238,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+> > >       /* L2 page table read.  */
+> > >       index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
+> > > -    L2pte = ldq_phys(cs->as, pt + index*8);
+> > > +    L2pte = ldq_phys_le(cs->as, pt + index * 8);
+> > >       if (unlikely((L2pte & PTE_VALID) == 0)) {
+> > >           ret = MM_K_TNV;
+> > > @@ -250,7 +251,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
+> > >       /* L3 page table read.  */
+> > >       index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
+> > > -    L3pte = ldq_phys(cs->as, pt + index*8);
+> > > +    L3pte = ldq_phys_le(cs->as, pt + index * 8);
+> > >       phys = L3pte >> 32 << TARGET_PAGE_BITS;
+> > >       if (unlikely((L3pte & PTE_VALID) == 0)) {
+> > > -- 
+> > > 2.52.0
+> > > 
+> > > 
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
