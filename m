@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F048AEFCE33
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F309EFCE38
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 18:04:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxqSs-0005Pq-5x; Wed, 04 Mar 2026 12:56:54 -0500
+	id 1vxqZX-0001f6-Le; Wed, 04 Mar 2026 13:03:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxqSq-0005Pc-BJ
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:56:52 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vxqZW-0001eN-8z
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 13:03:46 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxqSo-0000KA-J2
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:56:52 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2aaf59c4f7cso32764065ad.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 09:56:50 -0800 (PST)
+ id 1vxqZU-0002GG-Hp
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 13:03:46 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-82980945556so68989b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 10:03:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772647009; x=1773251809; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772647423; x=1773252223; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yujQbXx9ep/Dg1gAtxd3zBTRU1BfVfRuYXXRipd8iDA=;
- b=TUi322AlU+veEpXTad/bYApniiPIwE2mBROEhHaY5aZMgXLZIqlmIpau+Fl88YlykE
- /mfABGC2jvV+LfHafrVfCDpk5eqpANc7PnolKFZ2VDvuSQNMrKIsninOJnCuK5tdo3Z0
- esXdt6XSzQh62m7oIXRP8WbsevFB4I+pXEDZERBFyyxRAR+3nWMVtDF6SJDK2hBrEv7Q
- gHUsAfut6KQnLcmOxd9VWNaL31Zkm8Wq2Df3GeVa1ghkJzzAUZdc4hmh9g+bLI4GqbZ1
- uGK/Rq2NWNQ3Puz2t7kMzc4yChmwD75oO0YVP3RyUqdc9K+5EubK+kAyleZQ2buW2eQL
- Wndg==
+ bh=o1n06u65coHmbbH97JVv4Cn9RvR/5WCDNfdtfq5lDZI=;
+ b=qrt3/zkO96QnADE7LDpHEZC5lQ2yyBqizkkS9hob5xe0TiS2msOxXD8GBJWSyew/FE
+ LMmTlnJDRkplURlJlRsrizhKx7l6Gz7MlR3D2bpmpVSFrCQ8UddvtP6yK0PI37cPyWLs
+ GqpuG96xjkkvUQZb9XfXe+m48WaMQ3zHUDTLvpIxwP6HYR1+JFESnZEZOyFV0ouTAiKi
+ AysWfXAylxssAjt3wzZcxYetfpqSuvOxHsSh9CkKLgkgHEamOuppMu9wGmiwHzgA81+z
+ DdUqUr+2vJSpi/yVZnzTj+zP+sqUmtKW6d9atTQF1ydkTHu9qkzt6c7dUDrzhr+vMgoX
+ u3UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772647009; x=1773251809;
+ d=1e100.net; s=20230601; t=1772647423; x=1773252223;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yujQbXx9ep/Dg1gAtxd3zBTRU1BfVfRuYXXRipd8iDA=;
- b=NP/KHyocMcZ+8APUG8vTtI64qavV6xB+1/zwErp+UtT9vn+vs9icvw7EMGKvctF+Xb
- a/9XqKMlvVXYCzlNRtPkYOkXCg9i1g2QeuSucfBAL+KKI8Q2+agCKTOdNv9OccwOboI8
- lOPbAs5fpDw1/Pq62F1OCOJz07GkNFxkX7p47xeLWh/dj1sMFnYZKHH3nHpHxefBhs+3
- Z3O8pfVcMCyCAQEEX72ATGhybYwwF6i0UHLao86hg7OfeQyDgh74rrO/I1oVL+VRN9MI
- +rF8faoShCs0UjVBcESZUWoJserZu83JSZYh2ii5vv0Nnv4gcw/GqzbuETeb8Az+qqhl
- QPfg==
+ bh=o1n06u65coHmbbH97JVv4Cn9RvR/5WCDNfdtfq5lDZI=;
+ b=bTMI6Hk8XRAYcCgG8OIC4btCnM8MGRbIhHMQldLL+2sGWyxyKRDKBZnQlRMUK+KeZi
+ E6E5+mxttk8Ofa5MMWcJxEzM6Sdt56KfrQf9k1MMt++8jTv8SekF5QH3mYNHGbtWlOI/
+ 6UySR3CZkslgD/SkE4ekBVlHVNRAChkGl8f4CYaxaBKWLQe/YK/W0MJKap7yPg78Pz1q
+ nZewx7+OtElMiIJuAJma7Q6/tJhrowcdJbfSv1w3w4PMg6EwpUr2jhSGqDZ5pvsVcBim
+ 521Fe8Xss/mFRqBLCew+nebmAcvoTVKHY3C+hGbvn5oSgxrU9tmc+H1g2R4wJ4gSmkK4
+ BEuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2xOE6IgT0kUOmo8j/hmOtKZygkVzeoKsiKbMMnCcLCk3UTmTWxlFH4a8wObiU6vwY53xWFKx0XkcB@nongnu.org
-X-Gm-Message-State: AOJu0YyxVNYZd7vbEWfvN4so7VSBxBrdXdDr/jrvxWpzEWKmJhDGIACg
- 9vgxYvKuWTISOKy3cNyy8oJa7vvkpELnwIWgE0dLp3TLyURJECp7bcfmmpf6kSEsbGQ=
-X-Gm-Gg: ATEYQzye2J4zq3Dlujrak9anDdQPnZoOdXKsTuyGvEdy0nD2bBcs+dde7jQP9fiAWW9
- 5pefGWctANLNmItMmbxB5fxp7NfuDDGSrBZyQwNznXT1NJlxY+cnRtMcOhsYu7yWtsx9vJXaWAN
- GYybZ5TogrvirocH49cBfxpRnLDjEmpO3AVgOjpSfbs3Y5Kt8BMr9kA5H9SblJNiiPNg834ztv+
- LzR9kx2oGHFd0QtK4NDP9qbbuiQ3c4JzZZBjm2oC1EaqyKePBG+BLVYe6eEZXQm7LXMo3cZX8nQ
- RL8AG4E2DxtJhv2YpeadaJWxNsq2wnOYHl3leess90hpIuJcBcSi83vxxbBxw3kl1Epp4LFLr12
- spP8aJ1ln+4fe48FKRID4VnF9HQ3KQC2fT8uXf4rK5oH5lcalaj1lwRIzNXhpzKFeRVzI4bsZUs
- L3n8zix/QFU55mktsCHMDDUQ4PuGxHx7WDbnSY2L7eqV/DsjYm1Kgiq1/UtO90eO2GLdQA
-X-Received: by 2002:a17:903:46c8:b0:2ae:6364:e6f1 with SMTP id
- d9443c01a7336-2ae6a9c77fdmr32512465ad.1.1772647008915; 
- Wed, 04 Mar 2026 09:56:48 -0800 (PST)
+ AJvYcCVQ5G1fAmJjeDsl28s89iPIRsNanyr6E0SMqiFh0l3Y9xcyr0EiM6l86XaXYLqJc21oZlzsVtDflBvk@nongnu.org
+X-Gm-Message-State: AOJu0Ywm4huMHk9B2nC4SgCQl95jUJ7faYWKhy+j4gPye4C/dGwDwCyU
+ +x4u+M2Gx5NbDbC+OdwhU3YnwsTbAv5x129inKhs4LXjPmRTzPSIPOtQJKpm0dMP5t0=
+X-Gm-Gg: ATEYQzyi95Z/pg9/29ll2bP5HSNzhpp6M9q2Xo5dKfRfqhuUReyK1VVJuZV3rSWiHY3
+ VyEiG4wTuO2R5Q/lsSsKoHF9sGodGdgDvAeSCBSp/g3YPm0hHyGVsxXxCc0Y9+S0YuLbprHU640
+ fts3mEpAf+CSuJMatjhz386CotTNmeXh2AS8art+lZDkFDLJyxaOPk+QJXK1LOdNsr1cffeHNTo
+ xnH8c6h4ShWARVfCN9HTeVwvjkPMDgkHnM3RjWZgwPU5iRUBUdRhGmW5Ako0yfHXOX/RYvwtyBU
+ qXt/6WhiXC5aDXyejMlBzZwXQluUg1v8dK2nMNB84uo6Xnt2iPgi0RhhBtzgzyp6Ky472fnFZkZ
+ 9GfsQrP3Cri11OA3vazw5vMzxD+93A7DyFjEdqRO0P7EIwxVSFiGi9lbmAV4cKx1Q6N4FPthLJ5
+ wEaOh9+vgu9tQRxAcl3oRSr7kZUp0qumm0LgP00pSVJuhHifLrfb08tnc+WB16XtIxRMSY
+X-Received: by 2002:a05:6a00:32c5:b0:824:3eb9:11e2 with SMTP id
+ d2e1a72fcca58-82972d0f5f4mr2293990b3a.46.1772647422498; 
+ Wed, 04 Mar 2026 10:03:42 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae5e1699c9sm56853655ad.10.2026.03.04.09.56.48
+ d2e1a72fcca58-8297faf677bsm374009b3a.60.2026.03.04.10.03.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Mar 2026 09:56:48 -0800 (PST)
-Message-ID: <9e830f45-840b-4e5a-8548-c618663f9500@linaro.org>
-Date: Wed, 4 Mar 2026 09:56:48 -0800
+ Wed, 04 Mar 2026 10:03:42 -0800 (PST)
+Message-ID: <7904b95a-c48d-41e0-80ae-63759e5a24ab@linaro.org>
+Date: Wed, 4 Mar 2026 10:03:41 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/7] tests/tcg: add tests for qemu_plugin_set_pc API
+Subject: Re: [PATCH] contrib/plugins/cpp: Add -fcoroutines
 Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
- richard.henderson@linaro.org, imp@bsdimp.com
-References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
- <20260303-setpc-v5-v6-4-15c77cfe184e@epfl.ch>
- <430d1aa6-c36c-4399-8e5f-b38a9ae1bd35@linaro.org>
- <5b8bbc1e-cb8b-44ea-822b-0bdcb6ac225f@epfl.ch>
- <5a9a17dc-9781-418c-ae23-a183234e4a53@epfl.ch>
- <eb4a6f15-a63c-48aa-a7c0-832d123b98f5@epfl.ch>
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20260304-cpp-v1-1-7d87b975fc1e@rsg.ci.i.u-tokyo.ac.jp>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -118,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <eb4a6f15-a63c-48aa-a7c0-832d123b98f5@epfl.ch>
+In-Reply-To: <20260304-cpp-v1-1-7d87b975fc1e@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,92 +139,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/26 8:18 AM, Florian Hofhammer wrote:
->>>>> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
->>>>> +                                int64_t num, uint64_t a1, uint64_t a2,
->>>>> +                                uint64_t a3, uint64_t a4, uint64_t a5,
->>>>> +                                uint64_t a6, uint64_t a7, uint64_t a8,
->>>>> +                                uint64_t *sysret)
->>>>> +{
->>>>> +    if (num == 4095) {
->>>>> +        qemu_plugin_outs("Communication syscall detected, set target_pc / "
->>>>> +                         "target_vaddr\n");
->>>>> +        source_pc = a1;
->>>>> +        target_pc = a2;
->>>>> +        target_vaddr = a3;
->>>>> +        if (source_pc >> 63 || target_pc >> 63 || target_vaddr >> 63) {
->>>>> +            /*
->>>>> +             * Some architectures (e.g., m68k) use 32-bit addresses with the
->>>>> +             * top bit set, which causes them to get sign-extended somewhere in
->>>>> +             * the chain to this callback. We mask the top bits off here to get
->>>>> +             * the actual addresses.
->>>>> +             */
->>>>
->>>> This looks like an actual bug. Using a backtrace here, can you find which function extended it?
->>>> Parameter should be treated as unsigned everywhere, else something is really going wrong.
->>>
->>> tl;dr: register values are considered signed in the syscall handling
->>> code, which seems incorrect to me. Details below.
->>>
->>> This seems to be a bigger issue in the syscall handling code and I'm
->>> surprised this never surfaced before. Generally, the CPUArchState struct
->>> in target/*/cpu.h defines the registers as unsigned types. When a
->>> syscall is encountered, the main cpu loop calls do_syscall() from
->>> linux-user/syscall.c, which takes and returns abi_long values. abi_long
->>> is defined as either int32_t or target_long in include/user/abitypes.h
->>> and therefore a signed type, so the register values get converted from
->>> unsigned to signed types here. do_syscall() passes those abi_long values
->>> on, e.g., to record_syscall_start() and send_through_syscall_filters(),
->>> which still take the register values in as abi_long. Those in turn
->>> however pass the values on to qemu_plugin_vcpu_syscall() and
->>> qemu_plugin_vcpu_syscall_filter(), respectively. Those two functions now
->>> take uint64_t values for the arguments, so for 32-bit architectures the
->>> conversion chain is uint32_t (CPUArchState) -> int32_t (do_syscall) ->
->>> uint64_t (callbacks).
->>>
->>> This seems to be some bigger refactoring changing all those abi_longs to
->>> abi_ulongs. Would you like me to prepare a separate patch series for
->>> this?
->>
-
-Indeed, they are signed in linux-user, so maybe my original assumption 
-that it *should* be unsigned is wrong. Let me take a look to see what 
-should be the correct semantic here.
-
->> As a follow-up on this, changing this seems to be a bit more complicated
->> than I initially thought. The arguments could be simply made unsigned,
->> but the return value (which is also just a register content and should
->> therefore be unsigned if I understand correctly) can't easily be made
->> unsigned. The per-target main loop relies on the return value of
->> do_syscall() to be signed to determine whether one of the QEMU-specific
->> errors (e.g., QEMU_ERESTARTSYS) was returned.
-> 
-> Note: some architectures already define the return value as unsigned in
-> the main cpu loop and implicitly cast the return value of do_syscall().
-> Given that in theory, a syscall's return value could always coincide
-> with the values of QEMU's special errors, I'm wondering whether it would
-> make sense to make do_syscall()'s return value unsigned and signal those
-> special error codes out-of-band instead of in the syscall return value,
-> e.g., either via a separate pointer argument to do_syscall() or by
-> making do_syscall() return a struct containing both the return value and
-> a potential error code.
->
-
-It could be a solution. I'm just a little bit relunctant to make such a 
-change now because we have limited time (soft freeze is coming next 
-week), so not the right time to make such deep changes and... it has 
-been working like that for long time.
-
-> But maybe I'm getting ahead of myself here, please let me know what you
-> think!
->
-Thanks for your very good analysis. I'll come back once I have more 
-information about what should be the correct fix.
-
-Meanwhile, and because we are close from softfreeze, just keep the 
-current hack in the test. This way, we can focus on sending your series 
-and the additional comment patch you sent.
-
-Thanks,
-Pierrick
+T24gMy8zLzI2IDExOjU5IFBNLCBBa2loaWtvIE9kYWtpIHdyb3RlOg0KPiBHQ0MgMTUuMi4x
+IHJlcXVpcmVzIGl0Og0KPiANCj4gWzY3LzYxMTFdIENvbXBpbGluZyBDKysgb2JqZWN0IGNv
+bnRyaWIvcGx1Z2lucy9saWJjcHAuc28ucC9jcHAuY3BwLm8NCj4gRkFJTEVEOiBjb250cmli
+L3BsdWdpbnMvbGliY3BwLnNvLnAvY3BwLmNwcC5vDQo+IGMrKyAtSWNvbnRyaWIvcGx1Z2lu
+cy9saWJjcHAuc28ucCAtSWNvbnRyaWIvcGx1Z2lucyAtSS4uL2NvbnRyaWIvcGx1Z2lucyAt
+SS4uL2luY2x1ZGUvcGx1Z2lucyAtSS91c3IvaW5jbHVkZS9nbGliLTIuMCAtSS91c3IvbGli
+NjQvZ2xpYi0yLjAvaW5jbHVkZSAtSS91c3IvaW5jbHVkZS9zeXNwcm9mLTYgLWZkaWFnbm9z
+dGljcy1jb2xvcj1hdXRvIC1EX0dMSUJDWFhfQVNTRVJUSU9OUz0xIC1XYWxsIC1XaW52YWxp
+ZC1wY2ggLVdlcnJvciAtTzIgLWcgLURfR05VX1NPVVJDRSAtRF9GSUxFX09GRlNFVF9CSVRT
+PTY0IC1EX0xBUkdFRklMRV9TT1VSQ0UgLWZuby1zdHJpY3QtYWxpYXNpbmcgLWZuby1jb21t
+b24gLWZ3cmFwdiAtZnRyaXZpYWwtYXV0by12YXItaW5pdD16ZXJvIC1memVyby1jYWxsLXVz
+ZWQtcmVncz11c2VkLWdwciAtRF9fU1REQ19MSU1JVF9NQUNST1MgLURfX1NURENfQ09OU1RB
+TlRfTUFDUk9TIC1EX19TVERDX0ZPUk1BVF9NQUNST1MgLWZzYW5pdGl6ZT1hZGRyZXNzIC1m
+c3RhY2stcHJvdGVjdG9yLXN0cm9uZyAtZnNhbml0aXplPXVuZGVmaW5lZCAtV2VtcHR5LWJv
+ZHkgLVdlbmRpZi1sYWJlbHMgLVdleHBhbnNpb24tdG8tZGVmaW5lZCAtV2Zvcm1hdC1zZWN1
+cml0eSAtV2Zvcm1hdC15MmsgLVdpZ25vcmVkLXF1YWxpZmllcnMgLVdpbXBsaWNpdC1mYWxs
+dGhyb3VnaD0yIC1XaW5pdC1zZWxmIC1XbWlzc2luZy1mb3JtYXQtYXR0cmlidXRlIC1XcmVk
+dW5kYW50LWRlY2xzIC1Xc2hhZG93PWxvY2FsIC1XdHlwZS1saW1pdHMgLVd1bmRlZiAtV3Zs
+YSAtV3dyaXRlLXN0cmluZ3MgLVduby1taXNzaW5nLWluY2x1ZGUtZGlycyAtV25vLXBzYWJp
+IC1Xbm8tc2hpZnQtbmVnYXRpdmUtdmFsdWUgLWlzeXN0ZW0gL2hvbWUvbWUvcS92YXIvcWVt
+dS9saW51eC1oZWFkZXJzIC1pc3lzdGVtIGxpbnV4LWhlYWRlcnMgLWlxdW90ZSAuIC1pcXVv
+dGUgL2hvbWUvbWUvcS92YXIvcWVtdSAtaXF1b3RlIC9ob21lL21lL3EvdmFyL3FlbXUvIQ0K
+PiAgIGluY2x1ZGUgLWlxdW90ZSAvaG9tZS9tZS9xL3Zhci9xZW11L2hvc3QvaW5jbHVkZS9h
+YXJjaDY0IC1pcXVvdGUgL2hvbWUvbWUvcS92YXIvcWVtdS9ob3N0L2luY2x1ZGUvZ2VuZXJp
+YyAtaXF1b3RlIC9ob21lL21lL3EvdmFyL3FlbXUvdGNnL2FhcmNoNjQgLXB0aHJlYWQgLWZQ
+SUMgLU1EIC1NUSBjb250cmliL3BsdWdpbnMvbGliY3BwLnNvLnAvY3BwLmNwcC5vIC1NRiBj
+b250cmliL3BsdWdpbnMvbGliY3BwLnNvLnAvY3BwLmNwcC5vLmQgLW8gY29udHJpYi9wbHVn
+aW5zL2xpYmNwcC5zby5wL2NwcC5jcHAubyAtYyAuLi9jb250cmliL3BsdWdpbnMvY3BwLmNw
+cA0KPiBJbiBmaWxlIGluY2x1ZGVkIGZyb20gLi4vY29udHJpYi9wbHVnaW5zL2NwcC5jcHA6
+OTE6DQo+IC91c3IvaW5jbHVkZS9jKysvMTUvY29yb3V0aW5lOjQzOjM6IGVycm9yOiAjZXJy
+b3IgInRoZSA8Y29yb3V0aW5lPiBoZWFkZXIgcmVxdWlyZXMgLWZjb3JvdXRpbmVzIg0KPiAg
+ICAgNDMgfCAjIGVycm9yICJ0aGUgPGNvcm91dGluZT4gaGVhZGVyIHJlcXVpcmVzIC1mY29y
+b3V0aW5lcyINCj4gICAgICAgIHwgICBefn5+fg0KPiANCj4gU2lnbmVkLW9mZi1ieTogQWtp
+aGlrbyBPZGFraSA8b2Rha2lAcnNnLmNpLmkudS10b2t5by5hYy5qcD4NCj4gLS0tDQo+ICAg
+Y29udHJpYi9wbHVnaW5zL21lc29uLmJ1aWxkIHwgOCArKysrKysrLQ0KPiAgIDEgZmlsZSBj
+aGFuZ2VkLCA3IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1n
+aXQgYS9jb250cmliL3BsdWdpbnMvbWVzb24uYnVpbGQgYi9jb250cmliL3BsdWdpbnMvbWVz
+b24uYnVpbGQNCj4gaW5kZXggMDk5MzE5ZTdhMTczLi5jYWEwZmNhMTcyNDUgMTAwNjQ0DQo+
+IC0tLSBhL2NvbnRyaWIvcGx1Z2lucy9tZXNvbi5idWlsZA0KPiArKysgYi9jb250cmliL3Bs
+dWdpbnMvbWVzb24uYnVpbGQNCj4gQEAgLTI2LDggKzI2LDE0IEBAIGVuZGlmDQo+ICAgdCA9
+IFtdDQo+ICAgaWYgZ2V0X29wdGlvbigncGx1Z2lucycpDQo+ICAgICBmb3JlYWNoIGkgOiBj
+b250cmliX3BsdWdpbnMNCj4gKyAgICBpZiBpID09ICdjcHAuY3BwJyBhbmQgY3h4Lmhhc19h
+cmd1bWVudCgnLWZjb3JvdXRpbmVzJykNCj4gKyAgICAgIGNwcF9hcmdzID0gWyctZmNvcm91
+dGluZXMnXQ0KPiArICAgIGVsc2UNCj4gKyAgICAgIGNwcF9hcmdzID0gW10NCj4gKyAgICBl
+bmRpZg0KPiArDQo+ICAgICAgIHQgKz0gc2hhcmVkX21vZHVsZShmcy5zdGVtKGkpLCBmaWxl
+cyhpKSwNCj4gLSAgICAgICAgICAgICAgICAgICAgICAgZGVwZW5kZW5jaWVzOiBwbHVnaW5z
+X2RlcHMpDQo+ICsgICAgICAgICAgICAgICAgICAgICAgIGNwcF9hcmdzOiBjcHBfYXJncywg
+ZGVwZW5kZW5jaWVzOiBwbHVnaW5zX2RlcHMpDQo+ICAgICBlbmRmb3JlYWNoDQo+ICAgZW5k
+aWYNCj4gICBpZiB0Lmxlbmd0aCgpID4gMA0KPiANCj4gLS0tDQo+IGJhc2UtY29tbWl0OiBh
+ZmU2NTM2NzZkYzZkZmQ0OWYwMzkwMjM5ZmY5MGIyZjAwNTJjMmI4DQo+IGNoYW5nZS1pZDog
+MjAyNjAzMDQtY3BwLWRkYzIxOTM3NGU0Zg0KPiANCj4gQmVzdCByZWdhcmRzLA0KPiAtLQ0K
+PiBBa2loaWtvIE9kYWtpIDxvZGFraUByc2cuY2kuaS51LXRva3lvLmFjLmpwPg0KPiANCg0K
+SGkgQWtpaGlrbywNCg0KaXQgc2VlbXMgbGlrZSB5b3UgcmFuIGludG8gdGhpcyBpc3N1ZToN
+Cmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvODc1eDhmdDV2cS5mc2ZAcmVk
+aGF0LmNvbS8NCg0KWW91IGNhbiBqdXN0IGNsZWFuIHlvdXIgYnVpbGQgZm9sZGVyIGFuZCBy
+ZXN0YXJ0IGZyb20gc2NyYXRjaC4NClNlZSB0aGUgdGhyZWFkIGFib3ZlLCBpdCdzIGEgbGlt
+aXRhdGlvbiBvZiBtZXNvbiAoYnkgZGVzaWduKSBub3QgDQp1cGRhdGluZyBsYW5ndWFnZSBz
+dGFuZGFyZC4NCg0KVGhlIGJlc3QgZml4IG9uIG91ciBzaWRlIHdvdWxkIGJlIHRvIGFkZCAt
+c3RkPS4uLiBkaXJlY3RseSBpbiBjL2N4eCANCmZsYWdzIGluc3RlYWQgb2YgcmVseWluZyBv
+biBkZWZhdWx0IG9wdGlvbnMuDQoNClJlZ2FyZHMsDQpQaWVycmljaw0K
 
