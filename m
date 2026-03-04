@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20689EF8FEF
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21862EF8FEE
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxnO3-00057D-UL; Wed, 04 Mar 2026 09:39:43 -0500
+	id 1vxnUN-0007Ff-65; Wed, 04 Mar 2026 09:46:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxnNo-0004yO-IW
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:39:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxnUK-0007F4-BK
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:46:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxnNl-0002tV-69
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:39:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxnUH-0004M8-Ej
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:46:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772635163;
+ s=mimecast20190719; t=1772635568;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=m9OPJsTq6sWHEKq4+8vA07yEMq2OdUFKsUyqwcWfSnU=;
- b=GVS9tMZ5R1pPaMsSzGQ+R2Fbt1vPbTgsr7Tmcg7JqjKKu1gU5OXsGy0R2t4MyE5VVCNA4c
- 2scN3/Wqf1uspv8SBCNozPVI3r67KSqQKFugIxUkfbZD718LuznO1kHcyLCgiWdd6/DIaT
- UXe3fdS092+nTAtPO22JBtxpIwNGdj8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=/HKAg/M/7fchwg8gWbi8rhGUvGA7tFfuZRZD9WYJXxs=;
+ b=UMRqhpdB9BHDpTaZOxUHH/QsvESHZ2NkY+/mp2UVQdmBd/Q4TaoXBv59Hs/mwYcPUQ5slA
+ KqOnXu0sJSwAB6uZ9mvtqt2MF0ZxyJwH2pExB5vSm8TprshR1+Z5LWx8uNsQi8Oe06psBX
+ oXc59GpUmFSVtOq8DJWayKJIVVPt/Lw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-fDM9geQiNVK5R8Ikppe6Ag-1; Wed,
- 04 Mar 2026 09:39:20 -0500
-X-MC-Unique: fDM9geQiNVK5R8Ikppe6Ag-1
-X-Mimecast-MFC-AGG-ID: fDM9geQiNVK5R8Ikppe6Ag_1772635159
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-3Vtq3HjYMr6s56pW87nJDw-1; Wed,
+ 04 Mar 2026 09:46:03 -0500
+X-MC-Unique: 3Vtq3HjYMr6s56pW87nJDw-1
+X-Mimecast-MFC-AGG-ID: 3Vtq3HjYMr6s56pW87nJDw_1772635562
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D389718005BF; Wed,  4 Mar 2026 14:39:18 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 51DD0195605A; Wed,  4 Mar 2026 14:46:02 +0000 (UTC)
 Received: from [10.45.224.194] (unknown [10.45.224.194])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D003300019F; Wed,  4 Mar 2026 14:39:13 +0000 (UTC)
-Message-ID: <79fb74d7-4b42-4ffc-902f-2498e1de5a52@redhat.com>
-Date: Wed, 4 Mar 2026 15:39:12 +0100
+ id 2A216300019F; Wed,  4 Mar 2026 14:45:56 +0000 (UTC)
+Message-ID: <9e25024a-59d8-408d-86fe-41f502effdec@redhat.com>
+Date: Wed, 4 Mar 2026 15:45:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/15] pc-bios/s390-ccw: Add support for virtio-blk-pci
- IPL
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
- <20260304025917.2157032-13-jrossi@linux.ibm.com>
- <d359ade1-7e86-40c0-bfa2-6452fc48f69d@redhat.com>
- <c8b28b9c-51e1-44aa-93c4-c94846676b93@linux.ibm.com>
+Subject: Re: [PATCH v5 01/15] gitlab: ensure all meson jobs capture
+ build/meson-logs by default
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-block@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260304142120.2635617-1-berrange@redhat.com>
+ <20260304142120.2635617-2-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -103,20 +105,21 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <c8b28b9c-51e1-44aa-93c4-c94846676b93@linux.ibm.com>
+In-Reply-To: <20260304142120.2635617-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 33
+X-Spam_score: 3.3
+X-Spam_bar: +++
+X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,116 +135,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2026 15.29, Jared Rossi wrote:
+On 04/03/2026 15.21, Daniel P. Berrangé wrote:
+> The build-without-defaults and build-tci jobs do not capture any
+> artifacts, despite running 'make check'. This has proved a repeated
+> bug with CI jobs, so introduce a new '.meson_job_template' rule
+> which always captures 'build/meson-logs'. Jobs can still provide
+> their own 'artifacts:' config which will override this default
+> behaviour.
 > 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/buildtest-template.yml | 30 ++++++++++++++++++-----------
+>   .gitlab-ci.d/buildtest.yml          |  4 +++-
+>   2 files changed, 22 insertions(+), 12 deletions(-)
 > 
-> On 3/4/26 4:53 AM, Thomas Huth wrote:
->> On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
->>> From: Jared Rossi <jrossi@linux.ibm.com>
->>>
->>> Add little-endian virt-queue configuration and support for virtio-blk-pci 
->>> IPL
->>> devices.
->>>
->>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->>> ---
->> ...
->>> +static int virtio_pci_get_blk_config(void)
->>> +{
->>> +    VirtioBlkConfig *cfg = &virtio_get_device()->config.blk;
->>> +    int rc = vpci_read_flex(d_cap.off, d_cap.bar, cfg, 
->>> sizeof(VirtioBlkConfig));
->>> +
->>> +    /* single byte fields are not touched */
->>> +    cfg->capacity = bswap64(cfg->capacity);
->>> +    cfg->size_max = bswap32(cfg->size_max);
->>> +    cfg->seg_max = bswap32(cfg->seg_max);
->>> +
->>> +    cfg->geometry.cylinders = bswap16(cfg->geometry.cylinders);
->>> +
->>> +    cfg->blk_size = bswap32(cfg->blk_size);
->>> +    cfg->min_io_size = bswap16(cfg->min_io_size);
->>> +    cfg->opt_io_size = bswap32(cfg->opt_io_size);
->>
->> So it looks like you read a bunch of optional config fields here ...
->>
->>> +    return rc;
->>> +}
->> ...
->>> +int virtio_pci_setup(VDev *vdev)
->>> +{
->>> +    VRing *vr;
->>> +    int rc;
->>> +    uint8_t status;
->>> +    uint16_t vq_size;
->>> +    int i = 0;
->>> +
->>> +    vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
->>> +    vdev->cmd_vr_idx = 0;
->>> +
->>> +    if (virtio_pci_read_pci_cap_config()) {
->>> +        puts("Invalid virtio PCI capabilities");
->>> +        return -EIO;
->>> +    }
->>> +
->>> +    if (enable_pci_bus_master()) {
->>> +        return -EIO;
->>> +    }
->>> +
->>> +    if (virtio_reset(vdev)) {
->>> +        return -EIO;
->>> +    }
->>> +
->>> +    status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
->>> +    if (virtio_pci_set_status(status)) {
->>> +        puts("Virtio-pci device Failed to ACKNOWLEDGE");
->>> +        return -EIO;
->>> +    }
->>
->> ... so I think you should enable the corresponding feature bits in vdev- 
->> >guest_features[0] here? QEMU might be very forgiving and provide you with 
->> the fields anyway, but let's better play safe. Something like:
->>
->>     vdev->guest_features[0] = VIRTIO_BLK_F_SIZE_MAX |
->>                               VIRTIO_BLK_F_SEG_MAX |
->>                               VIRTIO_BLK_F_GEOMETRY |
->>                               VIRTIO_BLK_F_BLK_SIZE;
->>
->> ?
-> 
-> VIRTIO_BLK_F_GEOMETRY and VIRTIO_BLK_F_BLK_SIZE are already set during the 
-> virtio-blk setup.  I actually don't think the other two fields are used, I 
-> jut swapped any fields larger than 1 byte.  I suppose the feature bits 
-> should be enabled though... otherwise we could just just not touch the 
-> unused fields at all?
+> diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+> index d866cb12bb..005058625e 100644
+> --- a/.gitlab-ci.d/buildtest-template.yml
+> +++ b/.gitlab-ci.d/buildtest-template.yml
+> @@ -1,5 +1,20 @@
+> -.native_build_job_template:
+> +
+> +# Any job running meson should capture meson logs
+> +# by default. Some jobs might override the artifacts
+> +# to capture further files
+> +.meson_job_template:
+>     extends: .base_job_template
+> +  artifacts:
+> +    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+> +    when: always
+> +    expire_in: 7 days
+> +    paths:
+> +      - build/meson-logs
+> +    reports:
+> +      junit: build/meson-logs/*.junit.xml
+> +
+> +.native_build_job_template:
+> +  extends: .meson_job_template
+>     stage: build
+>     image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+>     cache:
+> @@ -60,7 +75,7 @@
+>         - build/**/*.c.o.d
+>   
+>   .common_test_job_template:
+> -  extends: .base_job_template
+> +  extends: .meson_job_template
+>     stage: test
+>     image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+>     script:
+> @@ -87,14 +102,7 @@
+>       # Prevent logs from the build job that run earlier
+>       # from being duplicated in the test job artifacts
+>       - rm -f build/meson-logs/*
+> -  artifacts:
+> -    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+> -    when: always
+> -    expire_in: 7 days
+> -    paths:
+> -      - build/meson-logs
+> -    reports:
+> -      junit: build/meson-logs/*.junit.xml
+> +
+>   
+>   .functional_test_job_template:
+>     extends: .common_test_job_template
+> @@ -125,7 +133,7 @@
+>       QEMU_JOB_FUNCTIONAL: 1
+>   
+>   .wasm_build_job_template:
+> -  extends: .base_job_template
+> +  extends: .meson_job_template
+>     stage: build
+>     image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+>     before_script:
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index 6ad3594522..4b20429c7f 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -652,7 +652,9 @@ build-tci:
+>   
+>   # Check our reduced build configurations
+>   build-without-defaults:
+> -  extends: .native_build_job_template
+> +  extends:
+> +    - .native_build_job_template
+> +    - .native_build_artifact_template
 
-Ah, right, I missed the initialization in virtio_blk_setup_device(), so we 
-should be fine here, indeed!
-
->>
->>> +    vdev->guest_features[1] = VIRTIO_F_VERSION_1;
->>> +    if (virtio_pci_negotiate()) {
->>> +        panic("Virtio feature negotation failed!");
->>> +    }
->>
->> Maybe double-check whether VIRTIO_F_VERSION_1 has really been negotiated? 
->> Otherwise, what happens if a user runs QEMU with "-device virtio-blk- 
->> pci,disable-modern=on" ?
-> 
-> I haven't tried running it with "disable-modern=on" (I will test that next) 
-> but the config is big endian if I don't negotiate that feature bit, and 
-> little endian if I do, which I think is the expected behavior when 
-> VIRTIO_F_VERSION_1 is set.
-> 
-> Just for my understanding, do you see something that makes you suspect the 
-> negotiation isn't actually happening?  I will try running with "disable- 
-> modern=on" and let you know the results.
-
-No, I think it's fine for the default case. I'm just wondering what happens 
-when someone uses "disable-modern=on" ... I guess the code will currently 
-behave in weird ways since the endianness is wrong ... thus I thought it 
-might be better to check VIRTIO_F_VERSION_1 again and emit a proper error 
-message in this case?
+Why do we need native_build_artifact_template here?
 
   Thomas
 
