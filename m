@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CDBEFCE20
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCEB9EFCE23
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxq90-0003MU-Fa; Wed, 04 Mar 2026 12:36:23 -0500
+	id 1vxq8e-0003Be-KF; Wed, 04 Mar 2026 12:36:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vxq8n-0003De-P0
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:36:10 -0500
+ id 1vxq8W-0003AK-Uw
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:35:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vxq8l-0004uk-Ho
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:36:09 -0500
+ id 1vxq8V-0004rE-Dj
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:35:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772645766;
+ s=mimecast20190719; t=1772645750;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CH5QCvElWuMKlv3q8MrRwa9vvlKsZCp58YnKNPAF+ZU=;
- b=JQ14q7HPvBIpwqcCC5B9rufPvQXLUcXhxs18Mn2nqnk2L4OLT2T80uiYfo5XFZFIJv0F62
- hlBQdbZsSVB2rV78t3Cblkx8iUdh/Sw8d4F7+jUVDLkwvi1FENKW/5Nc5kF3IJjI28F/rN
- QzVQDwRtmKWYHLWaE/lP2PMNnK1URRE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RnTF0bzItgxS8wl6QLBtm3YJkJAnJBXxnfqNeCkSIJA=;
+ b=OUYg9Gz09NShtkVe9nlw8rHCA69XuLinSXZHCuzM6ZmjG0vaewo2fl6pakcmu4BUtDTIal
+ EY/2LmPoVDmV31h59qbvq0YeY1/TM9NxVyyvIrElyDkmGWoAZXVOtvS1HsUO0xbcO/f/zS
+ IDAAPfWOLBLwGPYRL2cFpjB1/9REu+M=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553--pSsULqLMf2bfkhrxF4vdg-1; Wed,
- 04 Mar 2026 12:36:05 -0500
-X-MC-Unique: -pSsULqLMf2bfkhrxF4vdg-1
-X-Mimecast-MFC-AGG-ID: -pSsULqLMf2bfkhrxF4vdg_1772645764
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-7jrVYYEFPROajdBDapMF0A-1; Wed,
+ 04 Mar 2026 12:35:47 -0500
+X-MC-Unique: 7jrVYYEFPROajdBDapMF0A-1
+X-Mimecast-MFC-AGG-ID: 7jrVYYEFPROajdBDapMF0A_1772645746
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BACD18005B4; Wed,  4 Mar 2026 17:36:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 408ED180034E; Wed,  4 Mar 2026 17:35:46 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.45.224.212])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C70D1958DC5; Wed,  4 Mar 2026 17:36:00 +0000 (UTC)
+ id 47CAD1958DC5; Wed,  4 Mar 2026 17:35:42 +0000 (UTC)
 From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Lei Yang <leiyang@redhat.com>, Koushik Dutta <kdutta@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
  Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
-Subject: [PATCH 5/7] vhost: factor out the detach buf logic in SVQ
-Date: Wed,  4 Mar 2026 18:35:33 +0100
-Message-ID: <20260304173535.2702587-6-eperezma@redhat.com>
+Subject: [PATCH 1/7] virtio: Allow to fill a whole virtqueue in order
+Date: Wed,  4 Mar 2026 18:35:29 +0100
+Message-ID: <20260304173535.2702587-2-eperezma@redhat.com>
 In-Reply-To: <20260304173535.2702587-1-eperezma@redhat.com>
 References: <20260304173535.2702587-1-eperezma@redhat.com>
 MIME-Version: 1.0
@@ -91,61 +91,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This code path is modified to handle in order devices.  Abstract here so
-we can generalize on the caller.
+As the while steps < max_steps is already one less than the vq size, the
+right maximum max_steps variable is queue length, not the maximum
+possible remainder of % vq->vring.num.
 
+Fixes: b44135daa37 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support")
 Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+Personally I'd just remove max_steps and let it be vq->vring.num, but
+let's make the minimal changes for now.
+---
+ hw/virtio/virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index e7e3c9155cd0..2d8fc82cc06f 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -473,11 +473,24 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-     return i;
- }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index e9d553295257..17f171551892 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -980,7 +980,7 @@ static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
+      * We shouldn't need to increase 'i' by more than or equal to
+      * the distance between used_idx and last_avail_idx (max_steps).
+      */
+-    max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
++    max_steps = MIN(vq->last_avail_idx - vq->used_idx, vq->vring.num);
  
-+G_GNUC_WARN_UNUSED_RESULT
-+static VirtQueueElement *vhost_svq_detach_buf(VhostShadowVirtqueue *svq,
-+                                              uint16_t id)
-+{
-+    uint16_t num = svq->desc_state[id].ndescs;
-+    uint16_t last_used_chain = vhost_svq_last_desc_of_chain(svq, num, id);
-+
-+    svq->desc_state[last_used_chain].next = svq->free_head;
-+    svq->free_head = id;
-+
-+    return g_steal_pointer(&svq->desc_state[id].elem);
-+}
-+
- G_GNUC_WARN_UNUSED_RESULT
- static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
-                                            uint32_t *len)
- {
--    uint16_t last_used, last_used_chain, num;
-+    uint16_t last_used;
- 
-     if (!vhost_svq_more_used(svq)) {
-         return NULL;
-@@ -500,14 +513,9 @@ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
-         return NULL;
-     }
- 
--    num = svq->desc_state[last_used].ndescs;
-+    svq->num_free += svq->desc_state[last_used].ndescs;
-     svq->desc_state[last_used].ndescs = 0;
--    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, last_used);
--    svq->desc_state[last_used_chain].next = svq->free_head;
--    svq->free_head = last_used;
--    svq->num_free += num;
--
--    return g_steal_pointer(&svq->desc_state[last_used].elem);
-+    return vhost_svq_detach_buf(svq, last_used);
- }
- 
- /**
+     /* Search for element in vq->used_elems */
+     while (steps < max_steps) {
 -- 
 2.53.0
 
