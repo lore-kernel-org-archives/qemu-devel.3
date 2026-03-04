@@ -4,60 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1E0EB7ECD
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 10:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EFDEB7EC9
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:00:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxjqf-0003KH-Et; Wed, 04 Mar 2026 05:53:01 -0500
+	id 1vxjxO-00050K-UZ; Wed, 04 Mar 2026 05:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1vxjqc-0003Jl-Mt
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:52:58 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vxjxE-0004x3-Lz
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:59:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1vxjqa-0002BF-9x
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:52:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=mvV0qFWDMzYnlr6mMNTEw1XBw+udOguA2hzHdQQtbQM=; b=FTl8tKXAn1RPCvaLsSpoCkGj4y
- SBQBlp76Z1jlcoUVEyblfQdS/BfiN42wKdyt8UgZm5cGrM6Fj/2c9rcnX8rNNHp2Wba6+kFptOqQY
- YDzs7QeEFnvWUcXzgeRroj1f4txaiZUliRFe+5GKnyOQM4fiHarfuzZoLq617Ei+9JaYL/P6G/vcu
- 0jX52GfnLhgoMbaxjHbUgaVM8E05igHCK216nFMBZu+mIJXbaOaQKqTpzEp9vdoVTKmREFHiR4K8i
- j8/Qam8A8qoXbpMVJ5aBsv/2B7BFPY9rwOazequLm4aS8IOKr2PJNamfZJCN/AwCQu+nTPa2xNVxB
- QNdFAH0wi4xyz5VCgvMhe5nW/o45aCCkiUohZmZ4xE5P74KlQaz3XZB0DzOS7qPvt/LVxCXKLySqV
- HugXV1Q51gGG+8Z+sDG/8N1mPOI8A1LLJqe9F2Fq0pYlzAKJFxaDZmpnuZSfd+y0L5n+HkRi7QDAG
- GvqjGEg5ndZ0zR5vs8k4hPbY0NBoH6QSrDWul/dh1iVZVxea6zh5TLA1NogcZnvsbgh3WT6K8p6BP
- hy/O1hjrwRojMUfzlB1w31XrX+1l8xP80MzBG1XxsB7Q2UpoVxtf/QQaxHxrLU1sy/LXP4DUMVCCM
- 4yQH14VSmKoTa+/HCB4Z/3DJEK3ijdR+cy2i4PU7s=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: devel@daynix.com,
- =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v8 3/6] coreaudio: Improve naming
-Date: Wed, 04 Mar 2026 11:52:51 +0100
-Message-ID: <6136780.MhkbZ0Pkbq@weasel>
-In-Reply-To: <7c389f35-2da9-4e40-a695-731a1484cb04@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <3933555.kQq0lBPeGt@weasel>
- <7c389f35-2da9-4e40-a695-731a1484cb04@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vxjxC-0004Mj-CC
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:59:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772621984;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Iivn8XOjwJxpF6oqnYAmAsA73+7/qREzatlgGFWUfd8=;
+ b=QTxuS/8jIyX7IF+XvGCZNSCqT7aEJb58a/kJ9lsth95jrjc9eyDPAxw/94nWfE31O5qIl1
+ 8g+yo2uIF6cIuBOUM0+KBqzoMSyQv3QbTwtvIPTM5lAYuN0cL7fQcXECTA2TEckuOmVPaT
+ u3Rv3mgT/vmD6ksCxyxOIKN29DXxCoo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-FLPBVoq7PraE55nOnEpeNA-1; Wed,
+ 04 Mar 2026 05:59:41 -0500
+X-MC-Unique: FLPBVoq7PraE55nOnEpeNA-1
+X-Mimecast-MFC-AGG-ID: FLPBVoq7PraE55nOnEpeNA_1772621980
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0AEE1800589; Wed,  4 Mar 2026 10:59:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.201])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 285D81800759; Wed,  4 Mar 2026 10:59:36 +0000 (UTC)
+Date: Wed, 4 Mar 2026 11:59:34 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: hreitz@redhat.com, xeor@yandex-team.ru, vsementsov@yandex-team.ru,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH] block: Never drop BLOCK_IO_ERROR with action=stop for
+ rate limiting
+Message-ID: <aagQlnN7ejiPSD_V@redhat.com>
+References: <20260212212738.141780-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260212212738.141780-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -75,48 +83,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wednesday, 4 March 2026 11:42:41 CET Akihiko Odaki wrote:
-> On 2026/03/04 18:25, Christian Schoenebeck wrote:
-> > On Wednesday, 4 March 2026 07:16:56 CET Akihiko Odaki wrote:
-> >> coreaudio had names that are not conforming to QEMU codding style.
-> >=20
-> > coding
-> >=20
-> >> coreaudioVoiceOut also had some members that are prefixed with redunda=
-nt
-> >> words like "output" or "audio".
-> >> Global names included "out" to tell they are specific to output device=
-s,
-> >> but this rule was not completely enforced.
-> >> The frame size had three different names "frameSize", "bufferFrameSize=
-",
-> >> and "frameCount".
-> >>=20
-> >> Replace identifiers to fix these problems.
-> >>=20
-> >> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> >> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-[...]
-> >> @@ -349,16 +351,16 @@ static OSStatus audioDeviceIOProc(
-> >>=20
-> >>           out +=3D write_len;
-> >>      =20
-> >>       }
-> >>=20
-> >> -    coreaudio_buf_unlock(core, "audioDeviceIOProc");
-> >> +    coreaudio_voice_out_buf_unlock(core, "out_device_ioproc");
-> >=20
-> > Behaviour change. Not pure refactoring. Should be split into a separate
-> > patch.
-> Two things are renamed here.
-> - coreaudio_buf_unlock() is renamed to coreaudio_voice_out_buf_unlock().
-> - "audioDeviceIOProc" is the name of this function. This function is
->    renamed to "out_device_ioproc".
+Am 12.02.2026 um 22:27 hat Kevin Wolf geschrieben:
+> Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
+> event only once a second. This makes sense for cases in which the guest
+> keeps running and can submit more requests that would possibly also fail
+> because there is a problem with the backend.
+> 
+> However, if the error policy is configured so that the VM is stopped on
+> errors, this is both unnecessary because stopping the VM means that the
+> guest can't issue more requests and in fact harmful because stopping the
+> VM is an important state change that management tools need to keep track
+> of even if it happens more than once in a given second. If an event is
+> dropped, the management tool would see a VM randomly going to paused
+> state without an associated error, so it has a hard time deciding how to
+> handle the situation.
+> 
+> This patch disables rate limiting for action=stop by essentially
+> considering all BLOCK_IO_ERRORs with action=stop different errors. If
+> the error is reported to the guest or ignored, the rate limiting stays
+> in place.
+> 
+> Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
-Ah, these strings just end up being used in a log message. My bad, fine the=
-n!
+> diff --git a/monitor/monitor.c b/monitor/monitor.c
+> index 1273eb72605..93bd2b93e65 100644
+> --- a/monitor/monitor.c
+> +++ b/monitor/monitor.c
+> @@ -525,6 +525,18 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
+>                         qdict_get_str(evb->data, "node-name"));
+>      }
+>  
+> +    /*
+> +     * If the VM is stopped after an I/O error, this is important information
+> +     * for the management tool to keep track of the state of QEMU and we can't
+> +     * merge any events. At the same time, stopping the VM means that the guest
+> +     * can't send additional requests and the number of events is already
+> +     * limited, so we can do without rate limiting.
+> +     */
+> +    if (eva->event == QAPI_EVENT_BLOCK_IO_ERROR &&
+> +        !strcmp(qdict_get_str(eva->data, "action"), "stop")) {
+> +        return FALSE;
+> +    }
+> +
 
-/Christian
+It turns out that this approach is completely wrong. The harmless part
+is that the hash table is filled up with many events that don't actually
+need throttling. The worse part is that events aren't even considered
+equal to themselves, which means that the hash table can't find them to
+remove them, which in turn causes use after free crashes.
 
+I'll post a v2 that avoids the whole rate limiting code path for I/O
+errors that don't need the throttling.
+
+Kevin
 
 
