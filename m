@@ -4,68 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EFDEB7EC9
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27360EB7EB8
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxjxO-00050K-UZ; Wed, 04 Mar 2026 05:59:58 -0500
+	id 1vxkEG-00084h-HI; Wed, 04 Mar 2026 06:17:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vxjxE-0004x3-Lz
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:59:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vxkEE-00084V-D6
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:17:22 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vxjxC-0004Mj-CC
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:59:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772621984;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Iivn8XOjwJxpF6oqnYAmAsA73+7/qREzatlgGFWUfd8=;
- b=QTxuS/8jIyX7IF+XvGCZNSCqT7aEJb58a/kJ9lsth95jrjc9eyDPAxw/94nWfE31O5qIl1
- 8g+yo2uIF6cIuBOUM0+KBqzoMSyQv3QbTwtvIPTM5lAYuN0cL7fQcXECTA2TEckuOmVPaT
- u3Rv3mgT/vmD6ksCxyxOIKN29DXxCoo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-FLPBVoq7PraE55nOnEpeNA-1; Wed,
- 04 Mar 2026 05:59:41 -0500
-X-MC-Unique: FLPBVoq7PraE55nOnEpeNA-1
-X-Mimecast-MFC-AGG-ID: FLPBVoq7PraE55nOnEpeNA_1772621980
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0AEE1800589; Wed,  4 Mar 2026 10:59:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.201])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 285D81800759; Wed,  4 Mar 2026 10:59:36 +0000 (UTC)
-Date: Wed, 4 Mar 2026 11:59:34 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: hreitz@redhat.com, xeor@yandex-team.ru, vsementsov@yandex-team.ru,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH] block: Never drop BLOCK_IO_ERROR with action=stop for
- rate limiting
-Message-ID: <aagQlnN7ejiPSD_V@redhat.com>
-References: <20260212212738.141780-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vxkEC-0008GN-SF
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:17:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=kR2yzKLtDRXmaYvCxMIUxe9fQ5w4TqH6p0NCpb8Qhlg=; b=Bt+SSBtRSV9hzRr5mUfZyZnIKs
+ yLizPeOeg/le9cbyc0bdmCTGUXiUVbb4P6Nqj21FsamVnj5brVKknbDBQ/EJh06aaQIPTnk657u9D
+ 8PIeoow3lzf1XyycH39413ZYRXqs+YVGrJAlvdUJXlOPq2eObDR2pV9AjlMg6M1H3TviLqF81ys+Q
+ DjilPqwMoA4O1z8lU6rewz2lKA5b025udfZgn2NpEyUJM8MpOYgI7wXKo4vD7nhmtDsVx+lswucPc
+ 8ZffIbUIXxKSTPZ1Hg+SV1WDFmz8PLeH5Dsm9ZYt6UvXQRvDrlH5kJfGeL9aZUB6CXSD4yAiAF6J/
+ p7k0QTg7inezcPlnfQfriNXrTbfcfW0QGuUUDceDvxfOX5BpA6oZtvny/8Q9z6xvG083FUHsSLem8
+ AKiq6mGvC+1hXA7GWkj2qxbJaQ2rfXXrMp3TKYQ4H1zeTOkyQXWeJ9zS+GoCwZ0Ck2Rb2qH+NC5Qh
+ 2v8tW+ws2vt/DBndEzuwdsoEcoHfODLhObHFAzf7WPe1ANPHoIT2tlF0lbhZBfY7y/L1DgLdUePME
+ B3Gsjf1Bu/HU01PZQ1nJG3qauCJ5sJ5blQtGua4uWYQCsRnPpdRsVMLP7337+ksjt6qL44PsY3Xee
+ q/7UrqIZ2Osw+Uxnwl0bnkvyScatZsf4gBTFEZiNQ=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: devel@daynix.com,
+ =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH v8 5/6] audio: Add functions to initialize buffers
+Date: Wed, 04 Mar 2026 12:17:14 +0100
+Message-ID: <3742853.R56niFO833@weasel>
+In-Reply-To: <8d6f53c2-417a-4e4e-a75e-e0038cfd7f9c@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+ <12848166.O9o76ZdvQC@weasel>
+ <8d6f53c2-417a-4e4e-a75e-e0038cfd7f9c@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260212212738.141780-1-kwolf@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -83,59 +76,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.02.2026 um 22:27 hat Kevin Wolf geschrieben:
-> Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
-> event only once a second. This makes sense for cases in which the guest
-> keeps running and can submit more requests that would possibly also fail
-> because there is a problem with the backend.
+On Wednesday, 4 March 2026 11:47:01 CET Akihiko Odaki wrote:
+> On 2026/03/04 17:36, Christian Schoenebeck wrote:
+> > On Wednesday, 4 March 2026 07:16:58 CET Akihiko Odaki wrote:
+> >> These functions can be used to re-initialize buffers when hardware
+> >> parameters change due to device hotplug, for example.
+> >> 
+> >> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> >> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> >> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> >> ---
+[...]
+> >> 
+> >> +void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
+> >> +{
+> >> +    g_free(hw->buf_emul);
+> >> +    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> >> +    hw->buf_emul = g_malloc(hw->size_emul);
+> >> +    hw->pos_emul = hw->pending_emul = 0;
+> >> +}
+> >> +
+> >> 
+> >>   void audio_generic_run_buffer_in(HWVoiceIn *hw)
+> >>   {
+> >>   
+> >>       AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_GET_CLASS(hw->s);
+> >>       
+> >>       if (unlikely(!hw->buf_emul)) {
+> >> 
+> >> -        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+> >> -        hw->buf_emul = g_malloc(hw->size_emul);
+> >> -        hw->pos_emul = hw->pending_emul = 0;
+> >> +        audio_generic_initialize_buffer_in(hw);
+> >> 
+> >>       }
+> > 
+> > It would be cleaner having split this patch over 2 patches. One for pure
+> > refactoring (no behaviour change), and one that adds g_free(hw->buf_emul);
 > 
-> However, if the error policy is configured so that the VM is stopped on
-> errors, this is both unnecessary because stopping the VM means that the
-> guest can't issue more requests and in fact harmful because stopping the
-> VM is an important state change that management tools need to keep track
-> of even if it happens more than once in a given second. If an event is
-> dropped, the management tool would see a VM randomly going to paused
-> state without an associated error, so it has a hard time deciding how to
-> handle the situation.
-> 
-> This patch disables rate limiting for action=stop by essentially
-> considering all BLOCK_IO_ERRORs with action=stop different errors. If
-> the error is reported to the guest or ignored, the rate limiting stays
-> in place.
-> 
-> Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> g_free() was added because the extracted function can be called with
+> hw->buf_emul set. Extracting this into a function without adding
+> g_free() makes the function dangerous with non-NULL hw->buf_emul. Adding
+> g_free() without extracting it into a function doesn't make sense as it
+> checks !hw->buf_emul immediate above.
 
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 1273eb72605..93bd2b93e65 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -525,6 +525,18 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
->                         qdict_get_str(evb->data, "node-name"));
->      }
->  
-> +    /*
-> +     * If the VM is stopped after an I/O error, this is important information
-> +     * for the management tool to keep track of the state of QEMU and we can't
-> +     * merge any events. At the same time, stopping the VM means that the guest
-> +     * can't send additional requests and the number of events is already
-> +     * limited, so we can do without rate limiting.
-> +     */
-> +    if (eva->event == QAPI_EVENT_BLOCK_IO_ERROR &&
-> +        !strcmp(qdict_get_str(eva->data, "action"), "stop")) {
-> +        return FALSE;
-> +    }
-> +
+You are adding the function. So at this point, nobody could have called the
+function by accident except you. And as you would have added g_malloc()
+immediately with the next patch, there would be no danger.
 
-It turns out that this approach is completely wrong. The harmless part
-is that the hash table is filled up with many events that don't actually
-need throttling. The worse part is that events aren't even considered
-equal to themselves, which means that the hash table can't find them to
-remove them, which in turn causes use after free crashes.
+In general it does make sense splitting pure refactoring from behaviour
+changes. And by adding g_free() you are changing existing behaviour. That's
+not bike shedding, it's for the sake of being able to skip all those white
+noise changes when investigating if something breaks.
 
-I'll post a v2 that avoids the whole rate limiting code path for I/O
-errors that don't need the throttling.
+And the potential danger argument contradicts itself, because if the function
+was called with an uninitialized structure then g_free() would crash. Without
+g_free() it was just a potential memory leak OTOH. Choose your poison.
 
-Kevin
+/Christian
+
 
 
