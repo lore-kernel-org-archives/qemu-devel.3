@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A32EF9008
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89581EF9008
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpR9-0003xU-KF; Wed, 04 Mar 2026 11:51:03 -0500
+	id 1vxpR9-0003xS-1S; Wed, 04 Mar 2026 11:51:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpR7-0003wk-VA
+ id 1vxpR7-0003wX-Jz
  for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:51:01 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpR2-0002Ry-53
+ id 1vxpR3-0002SI-7f
  for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:51:01 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-6610bd5f322so1127533a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:55 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-6611d20c026so876955a12.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772643054; x=1773247854; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772643055; x=1773247855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rD8sfDTiye3PlqSCB8qDZy6AtX8/oF36wNt1WbZ4BO0=;
- b=nUcp8nWEcwK2ONA8EK+rYXvTzRdUQ6SgGvrEfu4dxBnwW73F1H38HkAhhrmihMlfDg
- ixlTwlNLNBWoojXGYwHDSI12U5bAJOTioEHtL+biThT5zXTV6ZxR5wXLRF1stFBGQUBd
- Y/lbHjOYaOi9vFjvjwg80xZfud5ymVQLbwLZJVIUHXlsCW8UXyr6QYcPIYGpYDisFx17
- JyjBdRnnCWClYRFCG2pZwySsuSESPoJ1OVmjLjQcOAdWt5WtWm1hrtXjiYZQwnGTaOyq
- GbzHAvFPtsYPdKjdlbJciE7AvuqSJxHz31uM9bRThUwIAm4IprLBmj0LJUVRMVF+NdfF
- gHaw==
+ bh=EzHkTR4JqWnhH9thHwZCJ8/0KIT+iOpkuJdDWK3JNNc=;
+ b=DEcdXsp+r6NcAaFG26wCRyzBNbM1mvRwRjz5dmer0bdjQksHtivdNclMOtNNl9fXRH
+ mRZGThM0bodRPmAaZn3vVOUj6RJDhooj3+yQHAraxMm9kyVdzOxmzCcyUKUIV7LSO5cR
+ cj6/Z8Kkrl4RMxnM/TBmHiNyBi8qpNYHZqP4CURtwBtOewnfk3NcDRP94brG/hp/ZrzR
+ Z0Kvy1VsEfT79hKB/z0FYmStrxg3c3nYGxHnjW4tg/uIAxV8G3zuCWslgDS+peXWEUyK
+ 1uVqzY7X0rpKKZx2R61p+95w3qvBEBb3vrdMKrP9UjpT5aHVvb2OPUzgZOXePpu6+Dhu
+ bV+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772643054; x=1773247854;
+ d=1e100.net; s=20230601; t=1772643055; x=1773247855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rD8sfDTiye3PlqSCB8qDZy6AtX8/oF36wNt1WbZ4BO0=;
- b=ulvrR6xfBpKklvljS2G/SbPwv+4/V2bCu6Uzor/KRR8zXe2BBi8dHes0sWX5qZ3dnW
- 5V6Kse8lvzW4RE9m90oWEfbKXE4RHjs2ixYNb0JlwDMQAJFNJks0NdhITFy6JSiDsR7C
- 6R9lOoqSWIKo8qtN7jMcQn5vrVkBGXr4pLUBJ0qvTaxpgpjWPKEMDXChGNQPTt4TOe+3
- HezjEikuBbX+wVvaHn8HoBcI+PT3QNj0EwSWdPqLgzs6uzQkpKrJH1SuSp8GrSKWrKHn
- ObIKVY7hU/YtBYfanY2CY7VmKwVPybk6t9icxLOQsWXpXdyI892skHuQwQ/ueehkOas5
- gXRA==
-X-Gm-Message-State: AOJu0YwDEi5vql4aODPb38G43XQmdd+iy92EPiolAvGzmhfZiUpL40J9
- gm7oUzwcvR3izHSawp3r1Vs78WzIorbA0Qjj6gAcyM8U4BbPMRD9y7e8ZNk1eKCczq8=
-X-Gm-Gg: ATEYQzwXTeVe3HivesnHrP7ZG24zsPp/KJowVn5arjcRf/qO8s8J8gfrz3dBZbxVAYy
- DMP3nBUDmbTdM5A60+dB/AEO3bB9uKZ0OuKG/w7+RL4U6WrdpMEdQr+dzI2LAHCQPFxqsyWfnIp
- kWOpGamJ/qhApImrXkcPXfqKR2rH1sdEpfMa0pwvPYbq2eJCT5e/l+FurSn7rdRROA+i5u5qssQ
- wuyaQZWfG+RGUsFfao+Iv+8XVeqQaeOhBbD5zpRrWL+QZDuAEs+gUcwBEfOBKQIjsypYaAzRdt0
- 2w3g2+ovyWjwk4bGkCn2fgrWZFh06aMujvP4KYLukmPOI8zEtMQ3BCqvuPM4m85DVirfWuWkvCD
- A9T8f3/ry2EPUwSXCp9yIdEpax4DL1Roxv9qlYTlOwyrfa59PszNw5lOu9utU5Oo1Rj1USbNo2b
- ZIgHCC76m4DrhVa2QcrTp8vLm6FHpCCh3RKg==
-X-Received: by 2002:a17:906:ef0a:b0:b90:6a9b:a6cb with SMTP id
- a640c23a62f3a-b93f1405d9bmr142983866b.30.1772643054147; 
- Wed, 04 Mar 2026 08:50:54 -0800 (PST)
+ bh=EzHkTR4JqWnhH9thHwZCJ8/0KIT+iOpkuJdDWK3JNNc=;
+ b=fB2d29TO3cga7F4widJTOVCzqcJXl9tRgMRWtbAwPu9g+73e022zOVfgNqALa0T84K
+ yBQrrieecxMqgEUIyXmUoU7zRuoUG87kCMtkvXYCj8LruYHspdw4dMHpx32mVbN218j6
+ M0/eTy73p+RqosMVdqHysJICowhfCAiWTKvs3cvOS9a+2i+kb0leV+Zk2PJP5YLR1rE/
+ 7K1slxPJM50E5AbbSFbvoXcSEvt9VIKrOLPAGREt4Z0tY5VpVG0nPrrffmIfeSn7ojnD
+ bTAzrkS3qh7zG1Cxh+tP7Wfv4HI5JMLziXHlWW4bHUpxmvhXFaqt/TH5ZFXBw9IHOYpr
+ kJsQ==
+X-Gm-Message-State: AOJu0YzS5udPBku2C0pmgDLPOTp2GRtnMePCRKxpM5fQW2ObaOeFen8X
+ Rq3kAqXslwwaKPNOZcYLt5LGfFms7gQi9xSqKhCgmVBZKQssdWl9acD6vYxYWY/0+rQ=
+X-Gm-Gg: ATEYQzyoZm6EV5+4uhbFqLtv7euctlHCsI3T2v5PwBdDXwlgn70lzko9E9sYYHXQJeV
+ L6sJ8pC9CyX+0wMycY6pSQkEjWtbH7tM6JCzRXmtquwDwZZ6GNLB0oK4nrjezPk8QTdSzYranyc
+ exAHE0vDHC4Ya9GWewVMsAvdXdp/ev+hXiD98UPfgwUdaRq01akMZyY6WJ5FQBT9hKcyjLjMLiK
+ Aju7winJnDbIiziMYrpuT0aM+lO+Ih69mYLj7n6NQygYIRHSUYi/RfW07YlpDHJn63NrJjW5mUw
+ cLHZjaSRmv6J8XrCUDNxRiudOCumJGtp4m6ci3ct7C7ORhRIJ5AeIuT2UUH6N+fBZLjiS11RXaE
+ 8HCia+jAYv8gGIZMdlGn4J1rPVnQkHK3I0JCMJYIxrZSkGmJHKm5qRFO6AL9moBWtJCJp09L+1D
+ N8hCEXAadx667BRHw1UVYfXmUSZNga/StwbQ==
+X-Received: by 2002:a05:6402:4403:b0:649:cec1:6cf1 with SMTP id
+ 4fb4d7f45d1cf-660eef457a9mr1609764a12.0.1772643055531; 
+ Wed, 04 Mar 2026 08:50:55 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935ac51843sm791234466b.16.2026.03.04.08.50.48
+ 4fb4d7f45d1cf-65fabf6d113sm5470817a12.19.2026.03.04.08.50.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 04 Mar 2026 08:50:51 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0477762D92;
- Wed, 04 Mar 2026 16:50:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id E384E62D8C;
+ Wed, 04 Mar 2026 16:50:44 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -83,16 +83,16 @@ Cc: Peter Xu <peterx@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Yiwei Zhang <zzyiwei@gmail.com>
-Subject: [PATCH 14/20] docs/system: virtio-gpu: Update Venus link
-Date: Wed,  4 Mar 2026 16:50:36 +0000
-Message-ID: <20260304165043.1437519-15-alex.bennee@linaro.org>
+Subject: [PATCH 13/20] docs/system: virtio-gpu: Add link to Mesa VirGL doc
+Date: Wed,  4 Mar 2026 16:50:35 +0000
+Message-ID: <20260304165043.1437519-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260304165043.1437519-1-alex.bennee@linaro.org>
 References: <20260304165043.1437519-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,33 +117,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Change virtio-gpu Venus link, pointing it at the Mesa Venus
-documentation instead of the protocol. The Mesa doc provides more
-information and also has a link to the protocol.
+Extend virtio-gpu documentation with a link to the Mesa VirGL
+documentation.
 
 Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-13-dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-12-dmitry.osipenko@collabora.com>
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/system/devices/virtio/virtio-gpu.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 89153103b9f..ef5fb0401d5 100644
+index 086e2fcf27b..89153103b9f 100644
 --- a/docs/system/devices/virtio/virtio-gpu.rst
 +++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -83,7 +83,7 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
+@@ -61,7 +61,7 @@ on typical modern Linux distributions.
+ virtio-gpu virglrenderer
+ ------------------------
+ 
+-When using virgl accelerated graphics mode in the guest, OpenGL API calls
++When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
+ are translated into an intermediate representation (see `Gallium3D`_). The
+ intermediate representation is communicated to the host and the
+ `virglrenderer`_ library on the host translates the intermediate
+@@ -70,6 +70,7 @@ representation back to OpenGL API calls.
  .. parsed-literal::
-     -device virtio-gpu-gl,hostmem=8G,blob=true,venus=true
+     -device virtio-gpu-gl
  
--.. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
-+.. _venus: https://docs.mesa3d.org/drivers/venus.html
++.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
+ .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
+ .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
  
- DRM native context is supported since release of `virglrenderer`_ v1.0.0
- using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
 -- 
 2.47.3
 
