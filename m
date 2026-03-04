@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45E7EDEC01
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 03:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507DCEDEC02
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 03:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxcTL-0002pb-LC; Tue, 03 Mar 2026 22:00:27 -0500
+	id 1vxcSV-0002MW-Lf; Tue, 03 Mar 2026 21:59:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vxcSj-0002Qm-0h; Tue, 03 Mar 2026 21:59:50 -0500
+ id 1vxcSR-0002KX-DL; Tue, 03 Mar 2026 21:59:31 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vxcSh-0000Xx-An; Tue, 03 Mar 2026 21:59:48 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1vxcSP-0000Tx-JN; Tue, 03 Mar 2026 21:59:31 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 623JFJpA1996000; Wed, 4 Mar 2026 02:59:44 GMT
+ 623ETaI9658904; Wed, 4 Mar 2026 02:59:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tjFBUSGGGGMUfAtbS
- xZDSvhNFdg0g4My7DJNwfecPy4=; b=qv7ONai+1eYqo4NoOworN0kYrIWU/Li6A
- G+24hV/nFy99mfyRTFhgDBuR4VSIVzv71uutvNc/j06kQN7YTh4IFnY2lN2iBmKW
- H6pDW32BKxKagtP3mivBAcQKQXYiHgqWcjCrUfDDNYCcnNOhFmk5FZFlIVMVRwZd
- j1Zf9FeKWgVHSE8XhpaoP8UOvhZS5Holy+jKytEz1I9cmskM7BjjEJVfUtoJhyP+
- nxY0bCaNs3ZUToci6xFog4ikoakw3QrEIfDp1eobORjEAFMHw/cp6FVg9jmvIO4S
- hwRwa1pSOGVX6ca8P/lq9GZw3gD4fs2YWgrga3OLO28QtKUwRpOOg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskcwpm3-1
+ :mime-version:references:subject:to; s=pp1; bh=Z/WZ4Ued9sMaAzGDa
+ Mk8e5bEKDML/ZEaTDWfLPabYF4=; b=g/HL6k1g1dCqo/iEUnwWFSK50LAyGaRDW
+ /Az0n2kVa7yhKQVntZOJi7S+/j+A8k2/q/n5cRb+mxX2qCyzjzWPqi91NUPoSw2a
+ IJyh1aOELs9y0EUZ8O+3D1oMb5FIct1X9U3+YyJeOH79ZUuwtlVb366Dkgkrvmc8
+ agUxFKsNrGq23ip4xyF5fl+OvpgcvWQRDgitMXrMnO/RM9gsRp4SYk90zxWwDqV+
+ m6fiphR//cTv+6tZ6a7ttCm80WyknJ9jjaWdym+Ii9zMUC9AVhsTQ6KKH3gQa3wO
+ rurEIxHg/wnN1WzP0dUWkafhgzDY+TREyQJNgxk//aatTSyRCUj/A==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjddq73-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Mar 2026 02:59:44 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62405cE7027704;
- Wed, 4 Mar 2026 02:59:43 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjcr94-1
+ Wed, 04 Mar 2026 02:59:27 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 623MF9Tn029080;
+ Wed, 4 Mar 2026 02:59:27 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmaps557b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Mar 2026 02:59:43 +0000
+ Wed, 04 Mar 2026 02:59:27 +0000
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6242xJLg30016020
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6242xPKL28508714
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 4 Mar 2026 02:59:20 GMT
+ Wed, 4 Mar 2026 02:59:26 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 989F558059;
- Wed,  4 Mar 2026 02:59:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B47645805D;
+ Wed,  4 Mar 2026 02:59:25 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 75E4358043;
- Wed,  4 Mar 2026 02:59:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8417658043;
+ Wed,  4 Mar 2026 02:59:24 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.180.105])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  4 Mar 2026 02:59:40 +0000 (GMT)
+ Wed,  4 Mar 2026 02:59:24 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v4 10/15] pc-bios/s390-ccw: Introduce PCI device
-Date: Tue,  3 Mar 2026 21:59:12 -0500
-Message-ID: <20260304025917.2157032-11-jrossi@linux.ibm.com>
+Subject: [PATCH v4 02/15] pc-bios/s390-ccw: Remove redundant vring schid
+ attribute
+Date: Tue,  3 Mar 2026 21:59:04 -0500
+Message-ID: <20260304025917.2157032-3-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260304025917.2157032-1-jrossi@linux.ibm.com>
 References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: RViLyPv1418g4KP2XU6TterBp4hMRC2o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDAyMSBTYWx0ZWRfX9+2hsdfY6NGS
- sa9jHHn9t7nqtM2pLI+4ltGEj5blwIYAUbYrNUP7ttmgqbB/Y8cG010NOc0uCsdDdPxFJDTPDzr
- C5gXKbK6xWpjwZnp6MG+ric3Xn1drd8S3pU9DY33FBZANumyGxt1TFf1yAqFjuBiLDAYMnoKgCe
- Dl4i3rcbElMncLCkvUHMBvPYh9UlaKIpc/2rGpqazF5JeXKS37LuRBxx191m3vRjMsWnO/GVs1c
- aCHOyRda7DPcXFjVMRWHZXA6Pyda+xzQDwRokXhI4zla7SCCP5tkBraNs1LVg2jffBZbZBZos49
- pXpFDUaDjLapCw4AfmnZX7YxGwF10Na3jndwDlPF9/DsTKhWuR8HpzjSLDKevz/qc06Zo6rMNaD
- KKU+KuYyFursZzcsjIeviIuvwF+1aKQND0Kttp726uW6y+IBEqMoBYwV5frnV6jVSr4gLE2fHpb
- 5fmKDzT/+5F153D5BmQ==
-X-Authority-Analysis: v=2.4 cv=H7DWAuYi c=1 sm=1 tr=0 ts=69a7a020 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69a7a00f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=p5Q4SJhZOU-7DgXL5goA:9
-X-Proofpoint-ORIG-GUID: RViLyPv1418g4KP2XU6TterBp4hMRC2o
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=IrE9pShrE_OzcS6fqDcA:9
+X-Proofpoint-ORIG-GUID: DVPzLvqYyWAHL6x0fxGMldgOqB6WLdZr
+X-Proofpoint-GUID: DVPzLvqYyWAHL6x0fxGMldgOqB6WLdZr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDAyMSBTYWx0ZWRfX55VhTNreKm8T
+ Tp6qyoe+Dxsw7l+uoRUO4CHkE425BSWOyJFiYXLWt1rR8/2Nxd9IDWkqteYC3VI0cyvXZAmxe4D
+ fouLRfEJcsPg2KiovnFj+TpZdVfGF6Nn/f2PX15DmX+RMzOAk0xQQ8zBEKupcsr1bP8b+U4/T96
+ t5pOue6+GoWXeFBEi96PJ7FEVsHEA/Ar4KgPvJ2GnC9LJCHFbet4cVEXHOR26SuFbuG4EEfwM24
+ Nif4LwrNh3jxRCNI7p+m602++89FUU7m2NO0q3gGz2K0gKCKq9Yv2q+ON2qnykX/8l7EgVt0hqx
+ DwFRwEj/VgrzhPH69NNZ1t1Q8DGpFPF3bujqzRHnDN1KqpNhfwSO7Bp8yO1Egoyzg+FKPmroPjE
+ UC53ANzsGhc6+UPRIrebUl/QPBZ7r/u3O7AFLoLHlHt057Pdxnm2sWiDCNpEaI9T+YKNT8YOaaO
+ pldGdijlpfVo92KtvvA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-04_01,2026-03-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040021
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
@@ -120,199 +122,115 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Define selected s390x PCI instructions.
+The schid is already stored as an attribute of the VDev itself and any other
+instances are copies of this same value.  To avoid CCW specific attributes in
+the VRing let's just access the existing VDev schid attribute as needed.
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- pc-bios/s390-ccw/Makefile |   2 +-
- pc-bios/s390-ccw/pci.c    | 118 ++++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/pci.h    |  39 +++++++++++++
- 3 files changed, 158 insertions(+), 1 deletion(-)
- create mode 100644 pc-bios/s390-ccw/pci.c
- create mode 100644 pc-bios/s390-ccw/pci.h
+ pc-bios/s390-ccw/virtio-blkdev.c | 2 +-
+ pc-bios/s390-ccw/virtio-net.c    | 2 +-
+ pc-bios/s390-ccw/virtio.c        | 9 ++++-----
+ pc-bios/s390-ccw/virtio.h        | 3 +--
+ 4 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 9c29548f84..a62fc9d766 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 4b819dd80f..019c2718b1 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -42,7 +42,7 @@ static int virtio_blk_read_many(VDev *vdev, unsigned long sector, void *load_add
+     /* Now we can tell the host to read */
+     vring_wait_reply();
  
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
- 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
--	  virtio-ccw.o clp.o
-+	  virtio-ccw.o clp.o pci.o
+-    if (drain_irqs(vr->schid)) {
++    if (drain_irqs()) {
+         /* Well, whatever status is supposed to contain... */
+         status = 1;
+     }
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+index 301445bf97..7eb0850069 100644
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -88,7 +88,7 @@ int send(int fd, const void *buf, int len, int flags)
+     while (!vr_poll(txvq)) {
+         yield();
+     }
+-    if (drain_irqs(txvq->schid)) {
++    if (drain_irqs()) {
+         puts("send: drain irqs failed");
+         return -1;
+     }
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index cd6c99c7e3..f384a990dc 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -72,14 +72,14 @@ static long virtio_notify(SubChannelId schid, int vq_idx, long cookie)
+  *             Virtio functions                *
+  ***********************************************/
  
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+-int drain_irqs(SubChannelId schid)
++int drain_irqs(void)
+ {
+     Irb irb = {};
+     int r = 0;
  
-diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
-new file mode 100644
-index 0000000000..36e86fcc71
---- /dev/null
-+++ b/pc-bios/s390-ccw/pci.c
-@@ -0,0 +1,118 @@
-+/*
-+ * s390x PCI functionality
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "clp.h"
-+#include "pci.h"
-+#include "bswap.h"
-+#include <stdio.h>
-+#include <stdbool.h>
-+
-+/* PCI load */
-+static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset,
-+                        uint8_t *status)
-+{
-+    union register_pair req_off = {.even = req, .odd = offset};
-+    int cc = -1;
-+    uint64_t __data;
-+
-+    asm volatile (
-+        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
-+        "     ipm     %[cc]\n"
-+        "     srl     %[cc],28\n"
-+        : [cc] "+d" (cc), [data] "=d" (__data),
-+          [req_off] "+d" (req_off.pair) :: "cc");
-+    *status = req_off.even >> 24 & 0xff;
-+    *data = __data;
-+    return cc;
-+}
-+
-+/* PCI store */
-+static inline int pcistg(uint64_t data, uint64_t req, uint64_t offset,
-+                         uint8_t *status)
-+{
-+    union register_pair req_off = {.even = req, .odd = offset};
-+    int cc = -1;
-+
-+    asm volatile (
-+        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
-+        "     ipm     %[cc]\n"
-+        "     srl     %[cc],28\n"
-+        : [cc] "+d" (cc), [req_off] "+d" (req_off.pair)
-+        : [data] "d" (data)
-+        : "cc");
-+    *status = req_off.even >> 24 & 0xff;
-+    return cc;
-+}
-+
-+int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
-+              uint8_t len)
-+{
-+
-+    uint64_t req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-+    uint8_t status;
-+    int rc;
-+
-+    /* len must be non-zero power of 2 with a maximum of 8 bytes per write */
-+    switch (len) {
-+    case 1:
-+    case 2:
-+    case 4:
-+    case 8:
-+        rc = pcistg(data, req, offset, &status);
-+        break;
-+    default:
-+        return -1;
-+    }
-+
-+    /* Error condition detected */
-+    if (rc != 0) {
-+        printf("PCI store failed with status condition %d, return code %d\n",
-+               status, rc);
-+        return -1;
-+    }
-+
-+    return rc ? -1 : 0;
-+}
-+
-+int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
-+             uint8_t len)
-+{
-+    uint64_t req, data;
-+    uint8_t status;
-+    int rc;
-+
-+    req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-+    rc = pcilg(&data, req, offset, &status);
-+
-+    /* Error condition detected */
-+    if (rc != 0) {
-+        printf("PCI load failed with status condition %d, return code %d\n",
-+               status, rc);
-+        return -1;
-+    }
-+
-+    switch (len) {
-+    case 1:
-+        *(uint8_t *)buf = data;
-+        break;
-+    case 2:
-+        *(uint16_t *)buf = data;
-+        break;
-+    case 4:
-+        *(uint32_t *)buf = data;
-+        break;
-+    case 8:
-+        *(uint64_t *)buf = data;
-+        break;
-+    default:
-+        return -1;
-+    }
-+
-+    return rc ? -1 : 0;
-+}
-diff --git a/pc-bios/s390-ccw/pci.h b/pc-bios/s390-ccw/pci.h
-new file mode 100644
-index 0000000000..40a0bf9dcb
---- /dev/null
-+++ b/pc-bios/s390-ccw/pci.h
-@@ -0,0 +1,39 @@
-+/*
-+ * s390x PCI definitions
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef PCI_H
-+#define PCI_H
-+
-+#include <stdint.h>
-+#include <stdbool.h>
-+#include "clp.h"
-+
-+#define ZPCI_CREATE_REQ(handle, space, len)                    \
-+    ((uint64_t) handle << 32 | space << 16 | len)
-+
-+union register_pair {
-+    unsigned __int128 pair;
-+    struct {
-+        unsigned long even;
-+        unsigned long odd;
-+    };
-+};
-+
-+#define PCIST_DISABLED         0x0
-+#define PCIST_ENABLED          0x1
-+
-+#define PCI_CFGBAR             0xF  /* Base Address Register for config space */
-+#define PCI_CAPABILITY_LIST    0x34 /* Offset of first capability list entry */
-+
-+int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
-+              uint8_t len);
-+int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
-+             uint8_t len);
-+
-+#endif
+     while (1) {
+         /* FIXME: make use of TPI, for that enable subchannel and isc */
+-        if (tsch(schid, &irb)) {
++        if (tsch(vdev.schid, &irb)) {
+             /* Might want to differentiate error codes later on. */
+             if (irb.scsw.cstat) {
+                 r = -EIO;
+@@ -134,7 +134,7 @@ static void vring_init(VRing *vr, VqInfo *info)
+ 
+ bool vring_notify(VRing *vr)
+ {
+-    vr->cookie = virtio_notify(vr->schid, vr->id, vr->cookie);
++    vr->cookie = virtio_notify(vdev.schid, vr->id, vr->cookie);
+     return vr->cookie >= 0;
+ }
+ 
+@@ -211,7 +211,7 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
+     } while (cmd[i++].flags & VRING_DESC_F_NEXT);
+ 
+     vring_wait_reply();
+-    if (drain_irqs(vr->schid)) {
++    if (drain_irqs()) {
+         return -1;
+     }
+     return 0;
+@@ -316,7 +316,6 @@ int virtio_setup_ccw(VDev *vdev)
+         }
+         info.num = config.num;
+         vring_init(&vdev->vrings[i], &info);
+-        vdev->vrings[i].schid = vdev->schid;
+         if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false)) {
+             puts("Cannot set VQ info");
+             return -EIO;
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 597bd42358..06ba4e45ac 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -103,7 +103,6 @@ struct VRing {
+     VRingDesc *desc;
+     VRingAvail *avail;
+     VRingUsed *used;
+-    SubChannelId schid;
+     long cookie;
+     int id;
+ };
+@@ -269,7 +268,7 @@ struct VirtioCmd {
+ typedef struct VirtioCmd VirtioCmd;
+ 
+ bool vring_notify(VRing *vr);
+-int drain_irqs(SubChannelId schid);
++int drain_irqs(void);
+ void vring_send_buf(VRing *vr, void *p, int len, int flags);
+ int vr_poll(VRing *vr);
+ int vring_wait_reply(void);
 -- 
 2.52.0
 
