@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4D9EDEC12
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4C4EDEC12
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxfng-0002uP-Dn; Wed, 04 Mar 2026 01:33:40 -0500
+	id 1vxfrB-0004Gt-Os; Wed, 04 Mar 2026 01:37:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxfnd-0002tb-T0
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:33:37 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxfr6-0004GU-HG
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:37:12 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxfnb-0008RQ-Ef
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:33:37 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-480706554beso70169735e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 22:33:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxfr4-0000SL-7c
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:37:12 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48375f10628so43190785e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 22:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772606014; x=1773210814; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1772606229; x=1773211029; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D1Jdkna8xBKWEFLan2pGv1KxEcd9H//urP3rlR+Qexk=;
- b=gMkkhf4Vd8z0ubYgkmR9Uhq/Itmp3xdOLE7BxJ2xtiHEK7BGj5ZVsbqjcwqjWxkk75
- HqcdGw6sIMgsn+oS98ZQpBdFm1+MXuq18uCiXQuLuNwfhSqrhshZMEqCxhvdyh7BZ15A
- L3+tknJhrlPeTZBhIqd8VDS7mRdeFVrgP+OFgHOSf1IIyV7tx8YkzgX6hxGEBbV7+BqM
- MSn/cPIwkLL4Nifbu3On4lYWj9VX8ZzBG6jYAXHMBv/M/SfGj2nK2JG1gqTJdrTUP90E
- sg7dkXuAly0A98HPZvYOCl6FAGRKnP15+AsgyDZkmn7xG4oDem3reZ3BBf+2ueyp94pS
- Nj/g==
+ bh=HxzWagOJqO7R5U3L51QnnW6yyqaJbFLHyWbHyAwE3qE=;
+ b=BEJuoSPDTg3OZxEHIKbCh60UY+OA17tBHDFdrI2g03lQCvCO4LUaX0pq0CCoU4EsWi
+ JRHOuK13XEgvrTFxXIjv6ZeqwSkdyDMBOJV6eAIEQfLgUZf3LSc4DkfFwtWZaZDyHflE
+ L/kQF0G9vz5t3/RPtKL/W9uF66PRzWfryUFHSPE1oYgxcUSaqeamLJtOMmArGx/2DoqV
+ EOL80bdp1BGCoOOpVT7vEWsf1Xl6mzuN5ZnGXXYUihwcO2UpIzjFhmR8YlVsWKAQhttF
+ Z8tCn09VwupP1xzZsaxvsN6EmYpbSOD6Hjlv6OEwDSLsYtQYE7uixaFFx1FT8VAz7fVc
+ PqiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772606014; x=1773210814;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1772606229; x=1773211029;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=D1Jdkna8xBKWEFLan2pGv1KxEcd9H//urP3rlR+Qexk=;
- b=Z8zXqaoQh0tAfQCTftaeeivFnXrIl+IKbxPc6zcPWTUmyyJ8poE7QfLgoNQ8fwwdKr
- a4FCk78uAeWiOfDLU+cii2sPpKPLQpy5fqMi6RitklrmHOvCplvNam0MkiN4wP6VvMD5
- wMPIp11EN7Sv46YNWJopf4v60r0k3x5MnZPhfcPPMe53hdVEK08QkTxout5IvP5H1MvJ
- Pp7RJWbJCjmNI5/d98iygSoagayh67Ij/LVQ39uCQZkli8BzvWXJ9Lxpp/E4SIKZHUNH
- yNn3cQ2M9APUTKAhYcnIa14y0ZEVV4MlTSMz0hhqSYnLc4lUPjV3nwFppA6X6maBjfOe
- HhBQ==
-X-Gm-Message-State: AOJu0YwoZnSKTQ+B4rhZ6yEFtaWjTPWYhdSjhToJSPxafXPSJf3QN9A6
- L8eKtDfDgKNadbvaFLkUW2ZTSgQoPpUtuxL0rKDbnOdFc08hL29PGEp8LBsuJEXVUfWhKhz1nBn
- fYzBmurg=
-X-Gm-Gg: ATEYQzxGP97N7SpWhlBqVdcXcnLXBe2jjmnVIHJlz8yuA7mnu0YYmnmaoJ7vMMP5w0a
- lVUpaDjhpX+W/fPy9a+YHZMc6CSAG3ZBBHiLJW2DQCdMqyLdXT8qDMv38h3wuspOaBM04cbNWW1
- fVbcYOlA3lPD2lYt7C1lhDdoiX9pqvVeu5ZVs48C7r5Z5ccjkBYgaXHlKgR8G/IezwcGTvN0Wqs
- XutxJVmMUprCFXPRi0Tg4iJVkBD/mTu9zGO1Zt8B00P0WBd3mATtEangDu28GqzbpwS/PCLGSgS
- CAgKZxhi75TLcQ4SLIPj9wjzo1WNiiDRiOEmV0trvOjHa64bHsXUoPs1GS9vA9e9e4/ALflqP1s
- 68DeCjIdSlQIpNjneAe6vmGTcIAOBSRe82IGaqtiRukaoRtEQr7ZHcr/YcXl2G1ujGOngKaQu1u
- gjwj3gxM4YT2nl+9P0QRtzNDFcH91JG0eSE5SuwRRZVIC3l5rd0Y45we4fqXeJH6xdiA==
-X-Received: by 2002:a05:600c:870f:b0:483:7432:a761 with SMTP id
- 5b1f17b1804b1-485198902e2mr14002055e9.24.1772606013525; 
- Tue, 03 Mar 2026 22:33:33 -0800 (PST)
+ bh=HxzWagOJqO7R5U3L51QnnW6yyqaJbFLHyWbHyAwE3qE=;
+ b=U/JEXo2Uz7rpGFy2HSrdkDlCZUMkSSOpeQ3IHCNyFZZSnwR5Kh7ugz+IryKCdYtf38
+ 3Lsozm6skTsH/Q2hkCx5xThfKiG3WPqp+5BBCcjkFoipGEGPS8/4m4Bs7IINfhi26J8B
+ wJAg2RzDhY79zghUXmSHvwhDspoKSSiXf3MDVfcqQNgxxcGzvr3vwtnbsdTJVd2XLW7V
+ MTVSyEstHYC+Qua6jx/CvDdJ68lqMUs9YOl7Dk/R7GdC5hv2f6jec0FZ+TGHbHjkF2ag
+ dtNjPCI8EgX5tUcdlf/plDvb532xKk7Xw/P+vk0dEuV4Db7mzHnds5YvrFBb74cWvVLf
+ znxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXr6EKajHDEEaNULbu2dYqwCzj1HhqX8JqPr31qA5l+pOkxYWQrlbWIZUh1z29hn37x5EpWosMZliA5@nongnu.org
+X-Gm-Message-State: AOJu0Ywt3Hi7yYbsXj6LUyJT33wMlmRjV1zJQHgC2nmIhj4kGigJYONC
+ NQJr2gQijLQjBUBkL/plleh6ROfxMhfK15EbLioHxS0gCoh0hoD4tVvt1zd0cxu7Ehc=
+X-Gm-Gg: ATEYQzy60164QHZ3Rg3+VRCePYj+97Odvwa8VB+Mzg3KYZjeNP0kxbQdt2bhUEIdR2S
+ BKU+7alkrjWr+v1IJDN3eTSJ2RwkVqfD6cHtttnvK/lgzDK7P121/Qu/pdypzCxf/gRPKP8N6xE
+ CN6KbXSScb87d/d4+mgFneRJCD3vFFaUgpeQwAqKgVAL5TLIopiwtdTEVi+ZvDJKP/CELFJtwuv
+ KzMZoq7+FLJ8lB/5S7TrN6ZZhBXCIeEbD0W8OyP+PgW6DwJRw2ldWb8iDiLhgOClWWBaVuuojTY
+ iduPrWDSwlm5aBGR5rfrxbKax7+38a7Qjg1vsVznNOqdQUJkixf+34EuqfWqfZTCpTIRMNUEvv3
+ eIr+iDni9xuR4z2lpj4zSkIex7HKkmz58ZW9o4QYMtYim2qLjXjEbP9VMgxoLQsFPlbkgz0/UV/
+ +0Asg47uzsMTbWbRJs1sG31lrA+oxQqlRbM7TZZPuVMQn9Zo7HLFPJFWswNMYeGxSyHw==
+X-Received: by 2002:a05:600c:4e8a:b0:480:3a71:92b2 with SMTP id
+ 5b1f17b1804b1-4851988ade2mr11214895e9.26.1772606228584; 
+ Tue, 03 Mar 2026 22:37:08 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851883a007sm31524385e9.2.2026.03.03.22.33.32
+ 5b1f17b1804b1-4851887fc54sm32506415e9.10.2026.03.03.22.37.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 22:33:32 -0800 (PST)
-Message-ID: <80410890-1418-43b4-9265-184fb1910257@linaro.org>
-Date: Wed, 4 Mar 2026 07:33:32 +0100
+ Tue, 03 Mar 2026 22:37:07 -0800 (PST)
+Message-ID: <e64fa21c-a2a8-42af-b725-f7ac8c1747bf@linaro.org>
+Date: Wed, 4 Mar 2026 07:37:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] gdbstub: Remove @g_pos argument in
- gdb_register_coprocessor()
+Subject: Re: [PATCH v3 04/37] target/hexagon: Add missing A_CALL attr,
+ hintjumpr to multi_cof
 Content-Language: en-US
+To: Anton Johansson <anjo@rev.ng>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, ale@rev.ng, Brian Cain <bcain@quicinc.com>
+References: <20260227203627.932864-1-brian.cain@oss.qualcomm.com>
+ <20260227203627.932864-5-brian.cain@oss.qualcomm.com>
+ <d949b2f4-d31a-4890-8e27-6f05e9977323@linaro.org>
+ <aacknZiSQhhIaS-8@hive.localdomain>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Florian Hofhammer
- <florian.hofhammer@fhofhammer.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- qemu-ppc@nongnu.org
-References: <20260227213958.21170-1-philmd@linaro.org>
- <20260227213958.21170-5-philmd@linaro.org>
-In-Reply-To: <20260227213958.21170-5-philmd@linaro.org>
+In-Reply-To: <aacknZiSQhhIaS-8@hive.localdomain>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,95 +109,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/26 22:39, Philippe Mathieu-Daudé wrote:
-> gdb_register_coprocessor()'s @g_pos argument is always '0',
-> meaning it is inferred from cpu->gdb_num_regs. Use instead
-> feature->base_reg, but check we don't overwrite other indexed
-> registers.
+On 3/3/26 19:15, Anton Johansson wrote:
+> On 27/02/26, Philippe Mathieu-Daudé wrote:
+>> On 27/2/26 21:35, Brian Cain wrote:
+>>> From: Brian Cain <bcain@quicinc.com>
+>>>
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>> ---
+>>>    target/hexagon/hex_common.py | 6 +++++-
+>>>    1 file changed, 5 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+>>> index c0e9f26aebe..63f83a8de2a 100755
+>>> --- a/target/hexagon/hex_common.py
+>>> +++ b/target/hexagon/hex_common.py
+>>> @@ -247,7 +247,11 @@ def need_next_PC(tag):
+>>>    def need_pkt_has_multi_cof(tag):
+>>> -    return "A_COF" in attribdict[tag]
+>>> +    if "A_JUMP" in attribdict[tag] or "A_CALL" in attribdict[tag]:
+>>> +        if tag == "J4_hintjumpr":
+>>> +            return False
+>>> +        return True
+>>
+>> Alternatively:
+>>
+>>         if attribdict[tag] in ['A_JUMP', 'A_CALL']:
+>>             return tag != "J4_hintjumpr"
 > 
-> This fixes a bug with the "power-fpu.xml" file [*] which was
-> loaded at index 70 while the base register is 71. This latent
-> bug was exposed by commit 1ec0fbe2dda ("target/ppc: Fix
-> CPUClass::gdb_num_core_regs value").
-> 
-> [*] https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
-> 
-> Reported-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/gdbstub.h     |  3 +--
->   gdbstub/gdbstub.c          | 16 +++++-----------
->   target/arm/gdbstub.c       | 21 ++++++++-------------
->   target/arm/gdbstub64.c     | 19 +++++++------------
->   target/hexagon/cpu.c       |  2 +-
->   target/i386/gdbstub.c      |  8 +++-----
->   target/loongarch/gdbstub.c |  6 +++---
->   target/m68k/helper.c       |  4 ++--
->   target/microblaze/cpu.c    |  3 +--
->   target/ppc/gdbstub.c       | 11 +++++------
->   target/riscv/gdbstub.c     | 18 ++++++------------
->   target/s390x/gdbstub.c     | 15 +++++++--------
->   target/sparc/gdbstub.c     | 12 ++++--------
->   13 files changed, 53 insertions(+), 85 deletions(-)
-> 
-> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-> index 12e7b5b7282..75eb4d9c365 100644
-> --- a/include/exec/gdbstub.h
-> +++ b/include/exec/gdbstub.h
-> @@ -35,11 +35,10 @@ void gdb_init_cpu(CPUState *cpu);
->    * @set_reg - set function (gdb modifying)
->    * @num_regs - number of registers in set
->    * @xml - xml name of set
-> - * @gpos - non-zero to append to "general" register set at @gpos
->    */
->   void gdb_register_coprocessor(CPUState *cpu,
->                                 gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-> -                              const GDBFeature *feature, int g_pos);
-> +                              const GDBFeature *feature);
->   
->   /**
->    * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 6eadae3804e..882bc67e182 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -604,13 +604,14 @@ void gdb_init_cpu(CPUState *cpu)
->   
->   void gdb_register_coprocessor(CPUState *cpu,
->                                 gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-> -                              const GDBFeature *feature, int g_pos)
-> +                              const GDBFeature *feature)
->   {
->       GDBRegisterState *s;
->       guint i;
-> -    int base_reg = cpu->gdb_num_regs;
-> +    int base_reg;
->   
-> -    assert(!g_pos || g_pos == feature->base_reg);
-> +    assert(feature->base_reg >= cpu->gdb_num_regs);
+> I don't think this is valid,
 
-This should be:
+Doh I was too quick and mis-understood that code :/
 
-   +    assert(!feature->base_reg || feature->base_reg >= 
-cpu->gdb_num_regs);
+> but set intersection would work
+> 
+>         if attribdict[tag] & {'A_JUMP', 'A_CALL'}:
+>             return tag != "J4_hintjumpr"
+>         return False
 
-> +    base_reg = feature->base_reg;
->   
->       for (i = 0; i < cpu->gdb_regs->len; i++) {
->           /* Check for duplicates.  */
-> @@ -624,14 +625,7 @@ void gdb_register_coprocessor(CPUState *cpu,
->   
->       /* Add to end of list.  */
->       cpu->gdb_num_regs += feature->num_regs;
-> -    if (g_pos) {
-> -        if (g_pos != base_reg) {
-> -            error_report("Error: Bad gdb register numbering for '%s', "
-> -                         "expected %d got %d", feature->xml, g_pos, base_reg);
-> -        } else {
-> -            cpu->gdb_num_g_regs = cpu->gdb_num_regs;
-> -        }
-> -    }
-> +    cpu->gdb_num_g_regs = cpu->gdb_num_regs;
->   }
->   
+Nice!
+
 
