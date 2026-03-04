@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02736EFCE4B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF408EFCE47
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxth2-0004oN-BB; Wed, 04 Mar 2026 16:23:46 -0500
+	id 1vxth8-0004ri-V3; Wed, 04 Mar 2026 16:23:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgc-0004k5-Lz
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:20 -0500
+ id 1vxtgb-0004k3-Hn; Wed, 04 Mar 2026 16:23:20 -0500
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgZ-0003SR-Np
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:18 -0500
+ id 1vxtgX-0003RO-RJ; Wed, 04 Mar 2026 16:23:17 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5BFF980885;
- Thu, 05 Mar 2026 00:23:14 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 34BA880809;
+ Thu, 05 Mar 2026 00:23:09 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:921::1:1b])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5NwBA90AmW20-BNhmuhJR; Thu, 05 Mar 2026 00:23:13 +0300
+ ESMTPSA id 5NwBA90AmW20-q645lfnf; Thu, 05 Mar 2026 00:23:08 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1772659393;
- bh=jM+edWLBaGe5x10EknnS2lq0Zw3RvzU/TRD06qcJuJ8=;
+ s=default; t=1772659388;
+ bh=8TqJW7KLyOGPsDaRdrX1G44CVXku6VnJ+G8bo1vDuhM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=LkpKhwfJ+D/bKVGvVCk0NX29gPOkNqA7hR9w5pd4i4fuY0XJMw+jrsfvE1kzNPWlI
- pt+6TodvWTwi6maDNoIs2FvQuiXpndXg47itGco+4ytp6dhNQfc3jsNyjHNEjdXUMC
- Mh6EU3ms/ZUgm8lr4fqQz8F0XrrE/eXF74EnUEKQ=
+ b=dX9anVb6r1fJF6Y6RKCbjksWmwTvtr7zdkfSaAFnNGxaZ1IrvbVNN107sDh3KGp5R
+ c7SvDmgYzhARsY/9+IW/IQjaH07mSRAnwaJV0y3HsryLDiJwgVmrA9Ug/s0NjjaTdg
+ LhOa6aR4Ma0e8+8KzLyEFjqo34TktjkK65Ga4Lj4=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
-Cc: farosas@suse.de,
-	vsementsov@yandex-team.ru,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3 12/18] migration: VMStateInfo: introduce new handlers with
- errp
-Date: Thu,  5 Mar 2026 00:22:56 +0300
-Message-ID: <20260304212303.667141-13-vsementsov@yandex-team.ru>
+Cc: farosas@suse.de, vsementsov@yandex-team.ru, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-ppc@nongnu.org (open list:sPAPR (pseries)),
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PATCH v3 03/18] migration: make .post_save() a void function
+Date: Thu,  5 Mar 2026 00:22:47 +0300
+Message-ID: <20260304212303.667141-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
@@ -76,76 +77,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new APIs with errp, to allow handlers report good
-error messages. We'll convert existing handlers soon.
+All other handlers now have _errp() variants. Should we go this way
+for .post_save()? Actually it's rather strange, when the vmstate do
+successful preparations in .pre_save(), then successfully save all
+sections and subsections, end then fail when all the state is
+successfully transferred to the target.
+
+Happily, we have only three .post_save() realizations, all always
+successful. Let's make this a rule.
+
+Also note, that we call .post_save() in two places, and handle
+its (theoretical) failure inconsistently. Fix that too.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- include/migration/vmstate.h | 17 ++++++++++++++---
- migration/vmstate.c         |  4 ++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ docs/devel/migration/main.rst |  2 +-
+ hw/ppc/spapr_pci.c            |  3 +--
+ include/migration/vmstate.h   |  8 +++++++-
+ migration/savevm.c            |  3 +--
+ migration/vmstate.c           | 12 +++---------
+ target/arm/machine.c          |  4 +---
+ 6 files changed, 14 insertions(+), 18 deletions(-)
 
+diff --git a/docs/devel/migration/main.rst b/docs/devel/migration/main.rst
+index 234d280249a..2de70507640 100644
+--- a/docs/devel/migration/main.rst
++++ b/docs/devel/migration/main.rst
+@@ -439,7 +439,7 @@ The functions to do that are inside a vmstate definition, and are called:
+ 
+   This function is called before we save the state of one device.
+ 
+-- ``int (*post_save)(void *opaque);``
++- ``void (*post_save)(void *opaque);``
+ 
+   This function is called after we save the state of one device
+   (even upon failure, unless the call to pre_save returned an error).
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index ea998bdff15..1dc3b02659f 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -2093,14 +2093,13 @@ static int spapr_pci_pre_save(void *opaque)
+     return 0;
+ }
+ 
+-static int spapr_pci_post_save(void *opaque)
++static void spapr_pci_post_save(void *opaque)
+ {
+     SpaprPhbState *sphb = opaque;
+ 
+     g_free(sphb->msi_devs);
+     sphb->msi_devs = NULL;
+     sphb->msi_devs_num = 0;
+-    return 0;
+ }
+ 
+ static int spapr_pci_post_load(void *opaque, int version_id)
 diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 85838a49aee..77d58d27d41 100644
+index 3695afd483f..85838a49aee 100644
 --- a/include/migration/vmstate.h
 +++ b/include/migration/vmstate.h
-@@ -32,12 +32,16 @@
- typedef struct VMStateInfo VMStateInfo;
- typedef struct VMStateField VMStateField;
+@@ -223,7 +223,13 @@ struct VMStateDescription {
+     bool (*post_load_errp)(void *opaque, int version_id, Error **errp);
+     int (*pre_save)(void *opaque);
+     bool (*pre_save_errp)(void *opaque, Error **errp);
+-    int (*post_save)(void *opaque);
++
++    /*
++     * Unless .pre_save() fails, .post_save() is called after saving
++     * fields and subsections. It should not fail because at this
++     * point the state has potentially already been transferred.
++     */
++    void (*post_save)(void *opaque);
+     bool (*needed)(void *opaque);
+     bool (*dev_unplug_pending)(void *opaque);
  
--/* VMStateInfo allows customized migration of objects that don't fit in
-+/*
-+ * VMStateInfo allows customized migration of objects that don't fit in
-  * any category in VMStateFlags. Additional information is always passed
-- * into get and put in terms of field and vmdesc parameters. However
-+ * into load and save in terms of field and vmdesc parameters. However
-  * these two parameters should only be used in cases when customized
-  * handling is needed, such as QTAILQ. For primitive data types such as
-- * integer, field and vmdesc parameters should be ignored inside get/put.
-+ * integer, field and vmdesc parameters should be ignored inside load/save.
-+ *
-+ * @get and @put are deprecated copies of @load and @save. For new interfaces
-+ * use @load and @save.
-  */
- struct VMStateInfo {
-     const char *name;
-@@ -46,6 +50,13 @@ struct VMStateInfo {
-     int coroutine_mixed_fn (*put)(QEMUFile *f, void *pv, size_t size,
-                                   const VMStateField *field,
-                                   JSONWriter *vmdesc);
-+    bool coroutine_mixed_fn (*load)(QEMUFile *f, void *pv, size_t size,
-+                                    const VMStateField *field,
-+                                    Error **errp);
-+    bool coroutine_mixed_fn (*save)(QEMUFile *f, void *pv, size_t size,
-+                                    const VMStateField *field,
-+                                    JSONWriter *vmdesc,
-+                                    Error **errp);
- };
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 3a16c467b25..c5236e71ba1 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -321,14 +321,13 @@ static int configuration_pre_save(void *opaque)
+     return 0;
+ }
  
- enum VMStateFlags {
+-static int configuration_post_save(void *opaque)
++static void configuration_post_save(void *opaque)
+ {
+     SaveState *state = opaque;
+ 
+     g_free(state->capabilities);
+     state->capabilities = NULL;
+     state->caps_count = 0;
+-    return 0;
+ }
+ 
+ static int configuration_pre_load(void *opaque)
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 8825aa3b1f1..f16626d7d11 100644
+index 651c3fe0115..5111e7a141f 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -170,6 +170,8 @@ static bool vmstate_load_field(QEMUFile *f, void *pv, size_t size,
-     } else if (field->flags & VMS_VSTRUCT) {
-         return vmstate_load_state(f, field->vmsd, pv, field->struct_version_id,
-                                   errp) >= 0;
-+    } else if (field->info->load) {
-+        return field->info->load(f, pv, size, field, errp);
-     }
+@@ -550,10 +550,7 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 if (ret) {
+                     error_prepend(errp, "Save of field %s/%s failed: ",
+                                   vmsd->name, field->name);
+-                    if (vmsd->post_save) {
+-                        vmsd->post_save(opaque);
+-                    }
+-                    return ret;
++                    goto out;
+                 }
  
-     if (field->info->get(f, pv, size, field) < 0) {
-@@ -495,6 +497,8 @@ static bool vmstate_save_field(QEMUFile *f, void *pv, size_t size,
-         return vmstate_save_state_v(f, field->vmsd, pv, vmdesc,
-                                     field->struct_version_id,
-                                     errp) >= 0;
-+    } else if (field->info->save) {
-+        return field->info->save(f, pv, size, field, vmdesc, errp);
-     }
+                 /* Compressed arrays only care about the first element */
+@@ -578,12 +575,9 @@ static int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
  
-     if (field->info->put(f, pv, size, field, vmdesc) < 0) {
+     ret = vmstate_subsection_save(f, vmsd, opaque, vmdesc, errp);
+ 
++out:
+     if (vmsd->post_save) {
+-        int ps_ret = vmsd->post_save(opaque);
+-        if (!ret && ps_ret) {
+-            ret = ps_ret;
+-            error_setg(errp, "post-save failed: %s", vmsd->name);
+-        }
++        vmsd->post_save(opaque);
+     }
+     return ret;
+ }
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index bbaae344492..de810220e25 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -993,15 +993,13 @@ static int cpu_pre_save(void *opaque)
+     return 0;
+ }
+ 
+-static int cpu_post_save(void *opaque)
++static void cpu_post_save(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+ 
+     if (!kvm_enabled()) {
+         pmu_op_finish(&cpu->env);
+     }
+-
+-    return 0;
+ }
+ 
+ static int cpu_pre_load(void *opaque)
 -- 
 2.52.0
 
