@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B0AEEFCE4B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA20FEFCE47
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxth7-0004p0-46; Wed, 04 Mar 2026 16:23:49 -0500
+	id 1vxth7-0004q9-Rz; Wed, 04 Mar 2026 16:23:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgd-0004kE-Hy
+ id 1vxtgc-0004k6-NF
  for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:20 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgZ-0003S8-Ou
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:19 -0500
+ id 1vxtgZ-0003S2-NC
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:18 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 08ACC80BAA;
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8AFFF80866;
  Thu, 05 Mar 2026 00:23:12 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:921::1:1b])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5NwBA90AmW20-xSnsZKe7; Thu, 05 Mar 2026 00:23:11 +0300
+ ESMTPSA id 5NwBA90AmW20-aWaeuria; Thu, 05 Mar 2026 00:23:12 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1772659391;
- bh=yUwaxEoj8/RJhMUIeV+z4vL/mWgiT7aABoMoIYemUT4=;
+ s=default; t=1772659392;
+ bh=AYhuDznNbNKEuGRtnHstzOlf8J/9DuMPGwXu4Ztobew=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=IW5IgrpJBD7q4uZW9ZJN+ntvNLXap2lbuHJBBhbFwcT/9Y6GPfgWlmI16+38Dlf+p
- JO5DRNF+bWqgti/jx2VFXVamdrcqvD9UtRUH401dreKOHRkFDORxvMF2T1zVAvSFo2
- aSn3sl4mLfc5K/8Sdsye7i5irvAG3u9cidZkfgFg=
+ b=HGNMhxMWXpLpTNQk6zd2nA7J037HFkZpGG7emzQqQzOokZ5G7XAltKMtvwXg/8rnS
+ K2+unpZJFJy4qIRvKbfkh2XOWxEu9yKLGaXW3YN02LrOpvKSjwOZ7A4yyXdUTjv2tG
+ Hi8uS4HBddolHLt3/82LZoyDkLnkE4RhCShhvXEY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,17 +44,17 @@ To: peterx@redhat.com
 Cc: farosas@suse.de,
 	vsementsov@yandex-team.ru,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 08/18] migration: factor out vmstate_pre_load() from
+Subject: [PATCH v3 09/18] migration: factor out vmstate_load_field() from
  vmstate_load_state()
-Date: Thu,  5 Mar 2026 00:22:52 +0300
-Message-ID: <20260304212303.667141-9-vsementsov@yandex-team.ru>
+Date: Thu,  5 Mar 2026 00:22:53 +0300
+Message-ID: <20260304212303.667141-10-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -82,39 +82,33 @@ refactoring.
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- migration/vmstate.c | 46 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ migration/vmstate.c | 41 +++++++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 2ce26527124..35dbe1550e9 100644
+index 35dbe1550e9..32944c04443 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -134,6 +134,33 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
-     }
+@@ -161,6 +161,27 @@ static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaque,
+     return true;
  }
  
-+static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaque,
-+                             Error **errp)
++static bool vmstate_load_field(QEMUFile *f, void *pv, size_t size,
++                               const VMStateField *field, Error **errp)
 +{
-+    ERRP_GUARD();
++    if (field->flags & VMS_STRUCT) {
++        return vmstate_load_state(f, field->vmsd, pv, field->vmsd->version_id,
++                                  errp) >= 0;
++    } else if (field->flags & VMS_VSTRUCT) {
++        return vmstate_load_state(f, field->vmsd, pv, field->struct_version_id,
++                                  errp) >= 0;
++    }
 +
-+    if (vmsd->pre_load_errp) {
-+        if (!vmsd->pre_load_errp(opaque, errp)) {
-+            error_prepend(errp, "pre load hook failed for: '%s', "
-+                          "version_id: %d, minimum version_id: %d: ",
-+                          vmsd->name, vmsd->version_id,
-+                          vmsd->minimum_version_id);
-+            return false;
-+        }
-+    } else if (vmsd->pre_load) {
-+        int ret = vmsd->pre_load(opaque);
-+        if (ret) {
-+            error_setg(errp, "pre load hook failed for: '%s', "
-+                       "version_id: %d, minimum version_id: %d, ret: %d",
-+                       vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
-+                       ret);
-+            return false;
-+        }
++    if (field->info->get(f, pv, size, field) < 0) {
++        error_setg(errp,
++                   "Failed to load element of type %s for %s",
++                   field->info->name, field->name);
++        return false;
 +    }
 +
 +    return true;
@@ -123,32 +117,33 @@ index 2ce26527124..35dbe1550e9 100644
  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
                         void *opaque, int version_id, Error **errp)
  {
-@@ -159,23 +186,8 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         return -EINVAL;
-     }
+@@ -225,24 +246,8 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                     inner_field = field;
+                 }
  
--    if (vmsd->pre_load_errp) {
--        if (!vmsd->pre_load_errp(opaque, errp)) {
--            error_prepend(errp, "pre load hook failed for: '%s', "
--                          "version_id: %d, minimum version_id: %d: ",
--                          vmsd->name, vmsd->version_id,
--                          vmsd->minimum_version_id);
--            return -EINVAL;
--        }
--    } else if (vmsd->pre_load) {
--        ret = vmsd->pre_load(opaque);
--        if (ret) {
--            error_setg(errp, "pre load hook failed for: '%s', "
--                       "version_id: %d, minimum version_id: %d, ret: %d",
--                       vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
--                       ret);
--            return ret;
--        }
-+    if (!vmstate_pre_load(vmsd, opaque, errp)) {
-+        return -EINVAL;
-     }
+-                if (inner_field->flags & VMS_STRUCT) {
+-                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
+-                                             inner_field->vmsd->version_id,
+-                                             errp);
+-                } else if (inner_field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
+-                                             inner_field->struct_version_id,
+-                                             errp);
+-                } else {
+-                    ret = inner_field->info->get(f, curr_elem, size,
+-                                                 inner_field);
+-                    if (ret < 0) {
+-                        error_setg(errp,
+-                                   "Failed to load element of type %s for %s: "
+-                                   "%d", inner_field->info->name,
+-                                   inner_field->name, ret);
+-                    }
+-                }
++                ret = vmstate_load_field(f, curr_elem, size, inner_field,
++                                         errp) ? 0 : -EINVAL;
  
-     while (field->name) {
+                 /* If we used a fake temp field.. free it now */
+                 if (inner_field != field) {
 -- 
 2.52.0
 
