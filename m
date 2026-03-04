@@ -4,79 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1C3EFCE23
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A769EFCE20
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxq8y-0003JU-61; Wed, 04 Mar 2026 12:36:20 -0500
+	id 1vxqAp-0006fK-UF; Wed, 04 Mar 2026 12:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vxq8k-0003Cd-Ox
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:36:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vxqAn-0006Li-F7
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:38:13 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vxq8j-0004tu-30
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:36:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772645764;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jAOW4K1EpW75YeuYdYjpjD4JVh2qQvzbdBEf2KCXE/Q=;
- b=V3u1J747omeN+D3eaAJj1bCx6yAeymcf4S6b2Jz/mBc87AZHlCdKoD+tgDLVyiK3btWPQ0
- 84B/BaGYtKNkbZonHWOZz56ig7NCLhYVnJTMwuvfCPahj5Vrg128R4cm2PiROb3V4mhe+f
- yZAE1UBles5l0viupP/h8z+yMnw4nBQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-9AtE4JQEOXG_we_zdqTudA-1; Wed,
- 04 Mar 2026 12:36:01 -0500
-X-MC-Unique: 9AtE4JQEOXG_we_zdqTudA-1
-X-Mimecast-MFC-AGG-ID: 9AtE4JQEOXG_we_zdqTudA_1772645760
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E56D319560B5; Wed,  4 Mar 2026 17:35:59 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.45.224.212])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C55D81958DC5; Wed,  4 Mar 2026 17:35:55 +0000 (UTC)
-From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Dragos Tatulea DE <dtatulea@nvidia.com>,
- Jonah Palmer <jonah.palmer@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Lei Yang <leiyang@redhat.com>, Koushik Dutta <kdutta@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
- Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
-Subject: [PATCH 4/7] vhost: factor out the get of last used desc in SVQ
-Date: Wed,  4 Mar 2026 18:35:32 +0100
-Message-ID: <20260304173535.2702587-5-eperezma@redhat.com>
-In-Reply-To: <20260304173535.2702587-1-eperezma@redhat.com>
-References: <20260304173535.2702587-1-eperezma@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vxqAk-00058L-GP
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:38:13 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id AD9B3C01D0;
+ Wed, 04 Mar 2026 20:38:05 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:921::1:1b] (unknown
+ [2a02:6bf:8080:921::1:1b])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 4cs2c60AvOs0-PDJfs0XZ; Wed, 04 Mar 2026 20:38:05 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1772645885;
+ bh=LBDin7RkGLtF/pmrNQGsLtrNzXgQAOz9a/M93JH2U/s=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=gD5q+5NCEYRoiS1pI3essX7B2EqWmBx1EdoZBey/NXd7akbtWKMKc/S/RQn30ZM37
+ PMDhY16W792wrclXStV+NsVMCZdqp7BSzExhhmhJrxh/2IamcRg1fooSltFe3yNIAq
+ gL/12+IEeMExrT49kUC9GY6EzB/Usk/L5OL1G+yo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <6ca052d7-c7b1-4ab0-9bb4-39a78874cf96@yandex-team.ru>
+Date: Wed, 4 Mar 2026 20:38:04 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 33
-X-Spam_score: 3.3
-X-Spam_bar: +++
-X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/16] migration/vmstate-types: move to new migration
+ APIs
+To: Peter Xu <peterx@redhat.com>
+Cc: farosas@suse.de, "open list:All patches CC here" <qemu-devel@nongnu.org>
+References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
+ <20260220210214.800050-17-vsementsov@yandex-team.ru>
+ <aacS1YUD0xesMufw@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aacS1YUD0xesMufw@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,98 +79,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This code path is modified to handle in order devices.  Abstract here so
-we can generalize on the caller.
+On 03.03.26 19:56, Peter Xu wrote:
+> On Sat, Feb 21, 2026 at 12:02:14AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> 
+> Likewise.. one trivial thing to mention below..
+> 
+> [...]
+> 
+>>   /* 32 bit int. See that the received value is the same than the one
+>>      in the field */
+>>   
+>> -static int get_int32_equal(QEMUFile *f, void *pv, size_t size,
+>> -                           const VMStateField *field)
+>> +static bool load_int32_equal(QEMUFile *f, void *pv, size_t size,
+>> +                             const VMStateField *field, Error **errp)
+>>   {
+>> +    ERRP_GUARD();
+>>       int32_t *v = pv;
+>>       int32_t v2;
+>>       qemu_get_sbe32s(f, &v2);
+>>   
+>>       if (*v == v2) {
+>> -        return 0;
+>> +        return true;
+>>       }
+>> -    error_report("%" PRIx32 " != %" PRIx32, *v, v2);
+>> +
+>> +    error_setg(errp, "%" PRIx32 " != %" PRIx32, *v, v2);
+>>       if (field->err_hint) {
+>> -        error_printf("%s\n", field->err_hint);
+>> +        error_append_hint(errp, "%s\n", field->err_hint);
+> 
+> According to doc for error_append_hint():
+> 
+> /*
+>   * Append a printf-style human-readable explanation to an existing error.
+>   * If the error is later reported to a human user with
+>   * error_report_err() or warn_report_err(), the hints will be shown,
+>   * too.  If it's reported via QMP, the hints will be ignored.
+>   * Intended use is adding helpful hints on the human user interface,
+>   * e.g. a list of valid values.  It's not for clarifying a confusing
+>   * error message.
+>   * @errp may be NULL, but not &error_fatal or &error_abort.
+>   * Trivially the case if you call it only after error_setg() or
+>   * error_propagate().
+>   * May be called multiple times.  The resulting hint should end with a
+>   * newline.
+>   */
+> 
+> It may be ignored if the errp will be finally persisted in MigrationState.
+> 
+> Not a huge deal because I believe we also do error_report_err()
+> somewhere.. but if we want, I think we could use error_append() to make the
+> hint available to both.
+> 
+> This comment applies to all 5 similar occurances in this patch.
 
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
----
- hw/virtio/vhost-shadow-virtqueue.c | 45 +++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+Agree, will do. That was intuitive choice "err_hint" -> "append_hint".
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 7adacd4f542a..e7e3c9155cd0 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -444,6 +444,25 @@ static void vhost_svq_disable_notification(VhostShadowVirtqueue *svq)
-     }
- }
- 
-+/*
-+ * Gets the next buffer id and moves forward the used idx, so the next time
-+ * SVQ calls this function will get the next one.
-+ *
-+ * @svq: Shadow VirtQueue
-+ * @len: Consumed length by the device.
-+ *
-+ * Return the next descriptor consumed by the device.
-+ */
-+static uint16_t vhost_svq_get_last_used_split(VhostShadowVirtqueue *svq,
-+                                              uint32_t *len)
-+{
-+    const vring_used_t *used = svq->vring.used;
-+    uint16_t last_used = svq->last_used_idx++ & (svq->vring.num - 1);
-+
-+    *len = le32_to_cpu(used->ring[last_used].len);
-+    return le32_to_cpu(used->ring[last_used].id);
-+}
-+
- static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-                                              uint16_t num, uint16_t i)
- {
-@@ -458,8 +477,6 @@ G_GNUC_WARN_UNUSED_RESULT
- static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
-                                            uint32_t *len)
- {
--    const vring_used_t *used = svq->vring.used;
--    vring_used_elem_t used_elem;
-     uint16_t last_used, last_used_chain, num;
- 
-     if (!vhost_svq_more_used(svq)) {
-@@ -468,33 +485,29 @@ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
- 
-     /* Only get used array entries after they have been exposed by dev */
-     smp_rmb();
--    last_used = svq->last_used_idx & (svq->vring.num - 1);
--    used_elem.id = le32_to_cpu(used->ring[last_used].id);
--    used_elem.len = le32_to_cpu(used->ring[last_used].len);
-+    last_used = vhost_svq_get_last_used_split(svq, len);
- 
--    svq->last_used_idx++;
--    if (unlikely(used_elem.id >= svq->vring.num)) {
-+    if (unlikely(last_used >= svq->vring.num)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Device %s says index %u is used",
--                      svq->vdev->name, used_elem.id);
-+                      svq->vdev->name, last_used);
-         return NULL;
-     }
- 
--    if (unlikely(!svq->desc_state[used_elem.id].ndescs)) {
-+    if (unlikely(!svq->desc_state[last_used].ndescs)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-             "Device %s says index %u is used, but it was not available",
--            svq->vdev->name, used_elem.id);
-+            svq->vdev->name, last_used);
-         return NULL;
-     }
- 
--    num = svq->desc_state[used_elem.id].ndescs;
--    svq->desc_state[used_elem.id].ndescs = 0;
--    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, used_elem.id);
-+    num = svq->desc_state[last_used].ndescs;
-+    svq->desc_state[last_used].ndescs = 0;
-+    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, last_used);
-     svq->desc_state[last_used_chain].next = svq->free_head;
--    svq->free_head = used_elem.id;
-+    svq->free_head = last_used;
-     svq->num_free += num;
- 
--    *len = used_elem.len;
--    return g_steal_pointer(&svq->desc_state[used_elem.id].elem);
-+    return g_steal_pointer(&svq->desc_state[last_used].elem);
- }
- 
- /**
+Actually, I'm unsure, how much is good to omit hints for QMP interface.
+Of course, QMP is for machines. But provided errors are for humans anyway,
+machines never parse them (OK, sometimes they do, but that's not a good
+practice).
+
+I always wandered, why we try to hide information when reporting errors:
+don't report filename, line number.. Don't report these hints. In production
+solutions final user will never see any errors from QEMU, so these error
+messages are only for engineers. Why we have to grep error messages in
+code, instead of get exact filename and line number?
+
+> 
+>>       }
+>> -    return -EINVAL;
+>> +    return false;
+>>   }
+> 
+
+
 -- 
-2.53.0
-
+Best regards,
+Vladimir
 
