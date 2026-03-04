@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8656EF8FEA
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85258EF8FEA
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxn79-0008F5-TP; Wed, 04 Mar 2026 09:22:15 -0500
+	id 1vxn7S-0000SJ-Lp; Wed, 04 Mar 2026 09:22:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxn6x-00082Z-7y
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:22:07 -0500
+ id 1vxn7J-00008V-Fg
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:22:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vxn6v-0006B3-Hj
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:22:02 -0500
+ id 1vxn7H-0006FS-W4
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:22:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772634120;
+ s=mimecast20190719; t=1772634143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bZGhitS9/tFNn+lON4YJ0r/JYsLmguosRzmtEOjaQb0=;
- b=SQst1nRszen5ya6YSnseuVhp59HXuE3CnVDVHF6xHxt/KA2DbgGkOtfFq5LU/yT0FPR1ay
- xPtH5T+0nxYVk3kWixIDgFzjZNm7j2n2B077frIh/2scJJNOWAooTob46yP3vh4AsWcH7i
- u84ZhX41IL90SpHp40hAU3PMHDvgKAQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=dSyY2gs17CHbTM/spZ5TzyaOpGRwJyz45XfDOslDrhU=;
+ b=LtHhfeP/bHs90570CmWBt/Go73K1PpuSQI90Ql+2lkgKNm6+lblK9+P0q2ga0262hfr17T
+ 0kzEPJksgQFsQwVU4GZPkKtE9feXByzi1qE6Jqm9mc+ZrJQHnuIC19TXWCC2iggrg/1zVw
+ mCM2Dw1x0Cy8l2R0DWtEEy1AAVMgqrM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-_DsSQvF5OU-lxksTrbsBUg-1; Wed,
- 04 Mar 2026 09:21:58 -0500
-X-MC-Unique: _DsSQvF5OU-lxksTrbsBUg-1
-X-Mimecast-MFC-AGG-ID: _DsSQvF5OU-lxksTrbsBUg_1772634117
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-OMTzS4F8OrWdjjEE9IoQyQ-1; Wed,
+ 04 Mar 2026 09:22:20 -0500
+X-MC-Unique: OMTzS4F8OrWdjjEE9IoQyQ-1
+X-Mimecast-MFC-AGG-ID: OMTzS4F8OrWdjjEE9IoQyQ_1772634139
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BAAE71800281; Wed,  4 Mar 2026 14:21:57 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 187801956094; Wed,  4 Mar 2026 14:22:19 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.75])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2E75F1958DC5; Wed,  4 Mar 2026 14:21:52 +0000 (UTC)
+ id 6D7B01958DC2; Wed,  4 Mar 2026 14:22:15 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -57,10 +57,9 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  qemu-block@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v5 07/15] tests: add a meson suite / make target per block I/O
- tests format
-Date: Wed,  4 Mar 2026 14:21:12 +0000
-Message-ID: <20260304142120.2635617-8-berrange@redhat.com>
+Subject: [PATCH v5 12/15] tests: fix check for sudo access in LUKS I/O test
+Date: Wed,  4 Mar 2026 14:21:17 +0000
+Message-ID: <20260304142120.2635617-13-berrange@redhat.com>
 In-Reply-To: <20260304142120.2635617-1-berrange@redhat.com>
 References: <20260304142120.2635617-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -69,14 +68,15 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 33
+X-Spam_score: 3.3
+X-Spam_bar: +++
+X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,58 +92,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently each block format is classified as either 'quick', 'slow' or
-'thorough' and this controls whether its I/O tests are added to the meson
-suites 'block-quick', 'block-slow' or 'block-thorough'.
+The test did not cope with the possibility that 'sudo' was not installed
+at all, merely that it was not configured. This broke tests in any CI
+env which lacks 'sudo'.
 
-This suites are exposed the 'check-block' make target, accepting the
-optional SPEED variable.
-
-As we add more formats to the 'thorough' group, however, it becomes
-increasingly large and time consuming to run. What is needed is a make
-target that can exercise all tests for an individual format, regardless
-of speed classification.
-
-This makes use of the previous enhancement to mtest2make.py to introduce
-new meson suites 'block-$FORMAT-optional', which translate to new top
-level make targets 'check-block-$FORMAT'. These new targets always run
-all tests and as such do not need the SPEED variable to be set, but are
-not triggered by 'make check' or 'make check-block'.
-
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/Makefile.include         | 3 ++-
- tests/qemu-iotests/meson.build | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ tests/qemu-iotests/149 | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 59b9a4b922..53f47972a3 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -14,7 +14,8 @@ check-help:
- 	@echo " $(MAKE) check-unit                    Run qobject tests"
- 	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
- 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
--	@echo " $(MAKE) check-block                   Run block tests"
-+	@echo " $(MAKE) check-block                   Run block tests (all formats)"
-+	@echo " $(MAKE) check-block-FORMAT            Run block tests (only for FORMAT)"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
- 	@echo " $(MAKE) check-tcg                     Run TCG tests"
- 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 1a24d801a3..16a5e39476 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -62,7 +62,8 @@ foreach format, speed: qemu_iotests_formats
-     endforeach
-   endif
+diff --git a/tests/qemu-iotests/149 b/tests/qemu-iotests/149
+index c13343d7ef..6dff39a28a 100755
+--- a/tests/qemu-iotests/149
++++ b/tests/qemu-iotests/149
+@@ -95,11 +95,14 @@ def verify_passwordless_sudo():
  
--  suites = []
-+  # Every format gets put in the format specific suite
-+  suites = ['block-' + format + '-optional']
-   # Any format tagged quick or slow also gets added to slow
-   # otherwise its tagged thorough
-   if speed != 'thorough'
+     args = ["sudo", "-n", "/bin/true"]
+ 
+-    proc = subprocess.Popen(args,
+-                            stdin=subprocess.PIPE,
+-                            stdout=subprocess.PIPE,
+-                            stderr=subprocess.STDOUT,
+-                            universal_newlines=True)
++    try:
++        proc = subprocess.Popen(args,
++                                stdin=subprocess.PIPE,
++                                stdout=subprocess.PIPE,
++                                stderr=subprocess.STDOUT,
++                                universal_newlines=True)
++    except FileNotFoundError as e:
++        iotests.notrun('requires sudo binary: %s' % e)
+ 
+     msg = proc.communicate()[0]
+ 
 -- 
 2.53.0
 
