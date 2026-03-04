@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F87BEF9008
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D03EF900B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpR8-0003wn-47; Wed, 04 Mar 2026 11:51:02 -0500
+	id 1vxpR3-0003t2-EV; Wed, 04 Mar 2026 11:50:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpR4-0003td-BS
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:58 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1vxpR0-0003qu-P5
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:54 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpR2-0002SB-Pa
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:58 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6610bd5f322so1127564a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:56 -0800 (PST)
+ id 1vxpQz-0002QX-8k
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:54 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-660ea6ceb5aso1280551a12.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772643055; x=1773247855; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772643051; x=1773247851; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FVqtGVIEK9vja40Xgli2/kgvV58XTVhVk4cWJgJ+jnE=;
- b=poWnQjkrisD6UEb/MpEdwx6pJoXyEngXursLg21i/epan3J9/kQMY1oXmDlIbiOVuY
- Cmg6h9kFtrMmd8EEUxgK/AA6oPbCt27lUZXc1VNJ72GVTpbAPmcN1ewzdEPypMv1qm4y
- 497STNdZUAVG8tmYqD3qIvFM3xEIJLqJqLNtd1tiw0lsqVP7CRN5FBN5snRP0Tgj8VPP
- Ftj6d2myjU4gzxZ6KJccvkoWsKov66R9KDQBVmniYIK8O4Q292Eq+JuIYk462Ca4vwap
- +AIIKySH+mP+axwjigU3mDw+y3+SOSxGa4HOCGwaPzUFD/Cm/KEt7CzFxpSJ+5henrVJ
- wycQ==
+ bh=yhaySwZ2sfnt3X/6sKY9hea4XoP3N+AuPAHONsS0p10=;
+ b=El6jTeRtuI/CLNfSwCDZV2XkNk9Sy82plR842jZa99GSrp6S90jKwj+8HA+lBfU+H6
+ GciO15vWzyvCePRGK/2I2E/KEbip26jODnE9uy7zLfDxfLTC1ikaCvBoX9BtmLxcqA6p
+ oPb8mGULho7XVlwu2Mq4EvRg9TY1dtD+wIzvR5tD9idWL404yFRCIMeXmECBu5gPnr7w
+ VQIyuFqfD+O4vmoLW6eml7PuCgx+J3kk0f7Fj8J9CzqqZ4ufzhSWh+K8oTpjKFFqd++k
+ xoHuvux9dyPqPegqfTnwvOref7ygAPsUzxxr+P/KwNyICaSyJl0rsjPzdhVPUuErQggD
+ 2Kkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772643055; x=1773247855;
+ d=1e100.net; s=20230601; t=1772643051; x=1773247851;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FVqtGVIEK9vja40Xgli2/kgvV58XTVhVk4cWJgJ+jnE=;
- b=jIxd57TxoCz98xy5/ocjE6u2jMznD45H91n4xdWQUHcQEuMvoFXohqxZI9b9KYRJlY
- /0BzIFnXX3OXEpXV5xCyqUZByyHGiA2E5qNZhLlQfpSACCLurQKP2LcM1mvfioOsmgp1
- 4FUH81OcjVaVbAiyWS3fNGM512a/CXCGrN3y7DWFxiM1zEO+otVCMg3Zx8VpqnB4e+Fc
- B/YgXtnk1vczq2Fwffgu+zqZzPH68fcJaUGMFRQ0PyTJAcMYWbJYPm6RtJ+DTkJKUPTR
- NxK8kPKeWW7noMyru31aQz8BQa4IV+yqpoJapRUFh65bzmsxGWLPV3Zzl8aRGqfh/9T+
- s1Rw==
-X-Gm-Message-State: AOJu0Yy2fE0samuAxU7/ismBG4ziAZtCN7Ez9eeomydkrBiWUY2/Bwgf
- 307/YXWkCa7AYZ8OCT3i1AfDRtJqzJCLRmtM+Bc04ilkMuvA7h7xbh9xu9uCqykOjS77oopVgdp
- K+8G8
-X-Gm-Gg: ATEYQzzFpwo1GD60viaVxV8aVXDXFIEak+O5PRfE9kfLZYQNaaSvcU1OFY0jR1x2GY/
- wcoREQ2tMajnIXquB/tUbp0FXtsV5+AH22z+JClqxBjpXqc0SxHobjNurAFgfkD3WIr5F6uwjGH
- ynArH9wDlpUxETvI8qDdhaZ8f/f/9aNl/2bkPN8GnoeAJltyQJ+7wYglfb3nZSVkG1IwLj8lbsF
- Dd17bZ27i8mja+j2daXdS5XkT+ac4ivJXbLgLVfTukOVcPbAQ+2ZjBxMpPaFLk0+SXeyBOYObse
- lL1c3K7k8oEYQ6DPr1k64rHosidLK/u4WAxOJHeIRv+JGXOB+2w43KQaUkzdEQtB0z4C7+X6r/c
- KOW83dPMKqiduUGnwBqPvaR7AMK4AnT09ZCsjsDFTwTDsZTCv9pv/8Wpv5YJhYe4z1yyeZFRitH
- bvTooSd1x2k1mVI6n/Oc09gEU=
-X-Received: by 2002:a17:906:6a1a:b0:b8f:bb98:b8f6 with SMTP id
- a640c23a62f3a-b93f11c5ad3mr167593166b.19.1772643054950; 
- Wed, 04 Mar 2026 08:50:54 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b93973d3ec4sm558572266b.66.2026.03.04.08.50.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=yhaySwZ2sfnt3X/6sKY9hea4XoP3N+AuPAHONsS0p10=;
+ b=YLQIJHIWleNA69GL5YjBA/sIbpgq+kS/JbRkz/SKydYmKIyulqV7nVYpKiU/piPeL7
+ BcYVERX87AJ4OTbm0n2CbsoTK7YUs/wepscoNlWMVnGHjcKjSd4QvMgTth8GE0IQaK7r
+ pOCBLbnGlOYzPhMGC2glSutXqBXxF6gbf++hUhSLDRMXNZsE3orNZxO3/rTSl3BGCF51
+ lwzMr4qVp/TNxTG8sNSWpb96OOkpUGlcIyU8QSdQyifGCoPXsxelQWjYbBNB36DzysFz
+ 48xIADZSvlTadx591XIs4b4lkTipLSrssYIcrPD1Ry/nHwpBy7qeonbLmMJNeu/tRWf8
+ BhaQ==
+X-Gm-Message-State: AOJu0YzXcPGb/fPBpephAxVoIyxFsAGs6wxNqPcV2MB7l2jLhvjHTo5n
+ 9Gv4PFScKuVhaQj3iCalMEs+9SmgCN2t0FI96bOMZIp9ZTDfVvALkVlcgblaxUatQFM=
+X-Gm-Gg: ATEYQzyz8rq6cpefkQv1glbcLCAPtWvfs/jywR/HDrFeogwZ28KeTVMsdghcvXE8hJl
+ Zvmiqlwx0hCXG3HlmQ4xritwJ7N6x8GKIIEX0KlupsrBwo38nm7EhOwGsoVF6/aEmBvZ8lJtu9q
+ jn7A4m6GsJ8Rr8pYsL3SPAoKqQsCNkOK19DQRCRaeaTNjO6QLpZIAiwnq08KZ3Lri792UF1lcWz
+ BCvumsfZr+zeKLINIDFmXGINkHQzFZUIj2KKRclVEDPIMthoKTwOeP+q3WNhduGAeAHBFWBBl0Z
+ j/w//8JvZcAaYtzbRbDoFvQTyED7M3I36iEHJZGD6DAxoJ8XbJZZkhfYYscLaFFUeIbDAgdCnSq
+ vfH7K1H8QliuQarO2yBtG+0G31c3Aljo3/XfBJhAZdlpNUEWbmfSbuq3ZxEOk3RDq4L9gz00gMh
+ 3firslJLxTuyaEng+yv5UwoFE=
+X-Received: by 2002:a17:906:c151:b0:b90:b959:4c72 with SMTP id
+ a640c23a62f3a-b93ef735016mr183997766b.6.1772643051542; 
  Wed, 04 Mar 2026 08:50:51 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b935ac51431sm767064366b.17.2026.03.04.08.50.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 08:50:47 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2E94062D9A;
- Wed, 04 Mar 2026 16:50:45 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 9CF6662D69;
+ Wed, 04 Mar 2026 16:50:44 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -80,19 +79,21 @@ Cc: Peter Xu <peterx@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 16/20] virtio-gpu: Remove superfluous
- memory_region_set_enabled()
-Date: Wed,  4 Mar 2026 16:50:38 +0000
-Message-ID: <20260304165043.1437519-17-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>
+Subject: [PATCH 10/20] virtio-gpu: Handle virgl fence creation errors
+Date: Wed,  4 Mar 2026 16:50:32 +0000
+Message-ID: <20260304165043.1437519-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260304165043.1437519-1-alex.bennee@linaro.org>
 References: <20260304165043.1437519-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,39 +118,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-There is no need to explicitly enable/disable memory region when it's
-added or deleted respectively. Remove superfluous set_enabled() calls
-for consistency.
+Print out error messages when virgl fence creation fails to aid debugging
+of the fence-related bugs.
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-15-dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-9-dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 2 --
- 1 file changed, 2 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index f5fe1bf4e73..abf7c176a65 100644
+index 10c4b5160f4..f00c666f61f 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -171,7 +171,6 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     mr = &vmr->mr;
-     memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
--    memory_region_set_enabled(mr, true);
+@@ -900,6 +900,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                       struct virtio_gpu_ctrl_command *cmd)
+ {
+     bool cmd_suspended = false;
++    int ret;
  
-     res->mr = mr;
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
  
-@@ -225,7 +224,6 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-         b->renderer_blocked++;
- 
-         /* memory region owns self res->mr object and frees it by itself */
--        memory_region_set_enabled(mr, false);
-         memory_region_del_subregion(&b->hostmem, mr);
-         object_unparent(OBJECT(vmr));
+@@ -1000,14 +1001,30 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+ #if VIRGL_VERSION_MAJOR >= 1
+     if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+-        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
+-                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
+-                                            cmd->cmd_hdr.ring_idx,
+-                                            cmd->cmd_hdr.fence_id);
++        const uint32_t flags = VIRGL_RENDERER_FENCE_FLAG_MERGEABLE;
++
++        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
++                                                  cmd->cmd_hdr.ring_idx,
++                                                  cmd->cmd_hdr.fence_id);
++        if (ret) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: virgl_renderer_context_create_fence error: %s",
++                          __func__, strerror(-ret));
++        }
+         return;
      }
+ #endif
+-    virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
++
++    /*
++     * Unlike other virglrenderer functions, this one returns a positive
++     * error code.
++     */
++    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
++    if (ret) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: virgl_renderer_create_fence error: %s",
++                      __func__, strerror(ret));
++    }
+ }
+ 
+ static void virgl_write_fence(void *opaque, uint32_t fence)
 -- 
 2.47.3
 
