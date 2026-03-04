@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D27EB7EAC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D27EB7EAC
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxiHb-00010j-7E; Wed, 04 Mar 2026 04:12:43 -0500
+	id 1vxiHk-00014G-Ic; Wed, 04 Mar 2026 04:12:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxiHX-000102-GY
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:39 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1vxiHa-00010l-1j
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:43 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxiHS-0000Hv-IN
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:35 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439b9cf8cb5so2606278f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:12:33 -0800 (PST)
+ id 1vxiHX-0000IJ-B3
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:41 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-483bd7354efso88409655e9.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:12:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1772615552; x=1773220352; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lwzz4kxfMbBjOhChGv+TPEiXdtwY6I/0AWARAPWIn4U=;
- b=cYk5yCAudwYIXUlBECeaD9rQ0ojV5R0MIpwHvmtInx6UabHUoO0UbArDTf+rZ5Dv6x
- xm1MYslyN+76XuBNn/cM38JaR/u+VkzGvLlt2nFWCuD6wXv3pk3zu6cWep1wpzGIa1nf
- TALTGNnUl9SCOSlo4vlq5n3IyFQIrEXOPbrhE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772615552; x=1773220352;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=mihalicyn.com; s=mihalicyn; t=1772615554; x=1773220354; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lwzz4kxfMbBjOhChGv+TPEiXdtwY6I/0AWARAPWIn4U=;
- b=mCrbwYIP0WhkTlnRhSnilIYafu6VfL7FTPMVBhwekY1CMhwVIdCFeOBNWnQV2rTid9
- 0IPsK0XPSGZQgcaUphNlB8f18w4+6XjVVi5Q9Q++BZF8MhGDhcrBYZE3ZiAg/D/keHFT
- 8pxfSKwT+Agpv+MmDr0L2tsOIQiNo2rCNuLldnTVaVRhFtzBoK1Ja9TzXiOUWkEZZCAp
- efDqNoY+XAobSiuS/8wfOht1GzdveiDlMiJR6IMk+apJFsQm1tiY2JL6F9WVg+Of5rEW
- PeA/Il78Iy6cIdC1QkgMEK3UM9u9P5i4YuYMIKlriL5fjJni3Tf+sj4BTimdNBtgou5e
- NC/A==
-X-Gm-Message-State: AOJu0Yw/kc981OIQKNgVF+g0daOoNgcZKTVhGXiV/cilmLQVgLJOfYGq
- 1ZOcjV48XAia+ydgtBMT7PZt47d8GJBtK0hvJgJwF/zHfhRRK4TgJ6b6WuKhFC/81RIMNkRIbG3
- /g66bmUQ=
-X-Gm-Gg: ATEYQzxiHZhwRV0f6GtUQejDFUqgawVU3i+vk8e3SJ/jr8J0wFaZCe3UlzWuA2TphGE
- I9Ydoxho8xT//yaJOUv3xwzjuXkWUA3mCCMSI0ittKLoJpcDBUR7BvxjHMLIVjd0Wt9ex04R4j3
- QCvGZJP0K4RIL+Lf7xkTDBzNNTSPibLnJnKj8+siTlj0Ct1MyqnkQwwLyMkD0qPgkMERIRC+MTy
- GhiDWshdzSLNvTrZRf+68z6y3dcC47YnHQr9UL9yYzuvIAWt8q3c/+jdFFQCTnck5c4AmpfcZJo
- awsHZo8GdFx3+nWMjnbMPKh3BsuGl2jAHfkjdHK6M4t53px+MWYTcboLEfzEZcI+h8bPUbLaYlj
- fONgkU0IKNGHKNaKe4XZQmFUXq9mRKfF7wn/RZMRuymiz1XK+jiKrfENB7C84dhru/bO+hruAO6
- IXbMVvFFuXMzfxu3Vm9vFhi9WYC2OVZ+6ucP6g838F/Tym9pITa9zS1/QU64b7HN0vSv2ulxX5x
- U8zPZe+f3xfhETxGv6eXyM=
-X-Received: by 2002:a05:6000:26ce:b0:439:c356:9f65 with SMTP id
- ffacd0b85a97d-439c7fadd3dmr2432173f8f.15.1772615551391; 
- Wed, 04 Mar 2026 01:12:31 -0800 (PST)
+ bh=ZTBRdCe4EKhZ7QFgzj0snqvNaQKXZdaqV+19ND1Hpu0=;
+ b=JEMIQTkxcNFbViMZZuM6etBjv2XFFbd2KKEQqsy3PM81A7ikHo2d86EIsi9bL3qgP6
+ SQzCaik6czem7wG+qgubtpBqh/w5DIbhyb2fw+iBvcfe8WyYV4/31dqWJmKhFPHfUb42
+ Ybijd6jWICI4ee1Q5ulNq/s26Kv2Ua63q/dT0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772615554; x=1773220354;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZTBRdCe4EKhZ7QFgzj0snqvNaQKXZdaqV+19ND1Hpu0=;
+ b=jgpUFWGlW6EUHF0jb71fw/G80bkBCrn8VVCfALsjmV6My0Tfxel/Ts9wLKlYRr6w0N
+ WDgyFEciRkxwNxeERF97n+stcCvIFMn9PJhqNnnbFsD0DvfI8tPAeMlp7iDC6I2hWYnJ
+ rX/GuVZ19c2I4ErzfB3841czWjvH79ZZbObz8QGKFT0le7LBrbtZkjxC5RM2EbNSC0Oe
+ bmIBs1oD9azyKUXpiqDkmE88c7e+u1sI09tHloSMulxEAw+e4pwtZ0mtJiiPtq7ccSva
+ I1Uizw9XvzblAJhyxHHdMYRGm7m0fC8LD9mf36s+3UKQr1aIicbLovtyctyxIYFE/Tcn
+ uchw==
+X-Gm-Message-State: AOJu0YwARjQTnqOLSTNaiVJlAVE8qNK9pwNTK9jGBwVzbvfewBfI5KOK
+ Ao9pB4cxDdZTqkBP+GNhAfRFVY2FShLIRI8d6UeF7uFMGJ4ZTMH9GXEPGVUYMWf7STZvam8+n3H
+ HWO59xfU=
+X-Gm-Gg: ATEYQzwZd0wbTpUYHzrEmZQoN/xPn5JOa+ZrQjK5BuzRNAnflS9SlxtiPLy6Y85Ppgf
+ lFLs9i3xY6/QCWlm+ARe3zku8JQ5xgRJEwxxpY9AgAM/E1QVwYAaWs583MSPqH2Ce0w5Cxybov6
+ EDf1UtK3vnnQbTcXmzHd+/5TISncgV5Xa7iZw6P2/kitaCAwQl0O5edivX1/CFkv/yjpd60dUYs
+ o0bh9IpTDS+EbLif/Bj42wEHnGKJw64ZhfJ0hi924QMMuPKScLQKG5/uDPV+fryHFXzkoI2oaEa
+ dgYQKE6aWENusEpKcmv/zDlOY0JBRz+Qsc9Tpr9bxE8jFRioeB7bpL5F12sqonlv5X/UlEkP/YT
+ biGRfdsBj+CJLfW8B7eR/d9Xpbtp/6DfWgaAOmN8cOiYtSVFbBX7PWUYBQ7NXWh9JH6hoQQn3vN
+ oniP98gUtkkOEizz4Ai1qIwko+47Ntv5/nDAikqD/2bKSiR80eXAxwvRKZLk696vHgVXMCiXfqA
+ hqGhDW5ELHLiysuuZp+n4k=
+X-Received: by 2002:a05:600c:a03:b0:47d:264e:b35a with SMTP id
+ 5b1f17b1804b1-48519854e97mr23177625e9.13.1772615553822; 
+ Wed, 04 Mar 2026 01:12:33 -0800 (PST)
 Received: from alex-laptop.lan
  (p200300cf57228c00bac66d1b6d99e025.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:bac6:6d1b:6d99:e025])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439c4489279sm9674234f8f.20.2026.03.04.01.12.30
+ ffacd0b85a97d-439c4489279sm9674234f8f.20.2026.03.04.01.12.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 01:12:30 -0800 (PST)
+ Wed, 04 Mar 2026 01:12:32 -0800 (PST)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
@@ -73,22 +74,23 @@ Cc: Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
  =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
  qemu-block@nongnu.org,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v2 0/4] hw/nvme: add basic live migration support
-Date: Wed,  4 Mar 2026 10:12:25 +0100
-Message-ID: <20260304091229.80725-1-alexander@mihalicyn.com>
+Subject: [PATCH v2 1/4] hw/nvme: add migration blockers for non-supported cases
+Date: Wed,  4 Mar 2026 10:12:26 +0100
+Message-ID: <20260304091229.80725-2-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260304091229.80725-1-alexander@mihalicyn.com>
+References: <20260304091229.80725-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,64 +108,113 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Dear friends,
+Let's block migration for cases we don't support:
+- SR-IOV
+- CMB
+- PMR
+- SPDM
 
-This patchset adds basic live migration support for
-QEMU emulated NVMe device.
+No functional changes here, because NVMe migration is
+not supported at all as of this commit.
 
-Implementation has some limitations:
-- only one NVMe namespace is supported
-- SMART counters are not preserved
-- CMB is not supported
-- PMR is not supported
-- SPDM is not supported
-- SR-IOV is not supported
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ hw/nvme/ctrl.c | 35 +++++++++++++++++++++++++++++++++++
+ hw/nvme/nvme.h |  3 +++
+ 2 files changed, 38 insertions(+)
 
-I believe this is something I can support in next patchset versions or
-separately on-demand (when usecase appears).
-
-Testing.
-
-This patch series was manually tested on:
-- Debian 13.3 VM (kernel 6.12.69+deb13-amd64) using fio on *non-root* NVMe disk
-  (root disk was virtio-scsi):
-
-time fio --name=nvme-verify \
-    --filename=/dev/nvme0n1 \
-    --size=5G \
-    --rw=randwrite \
-    --bs=4k \
-    --iodepth=16 \
-    --numjobs=1 \
-    --direct=0 \
-    --ioengine=io_uring \
-    --verify=crc32c \
-    --verify_fatal=1
-
-- Windows Server 2022 VM (NVMe drive was a *root* disk) with opened browser
-  playing video.
-
-No defects were found.
-
-Changelog for version 2:
-- full support for AERs (in-flight requests and queued events too)
-
-Kind regards,
-Alex
-
-Alexander Mikhalitsyn (4):
-  hw/nvme: add migration blockers for non-supported cases
-  hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
-  migration: add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
-  hw/nvme: add basic live migration support
-
- hw/nvme/ctrl.c              | 665 ++++++++++++++++++++++++++++++++++--
- hw/nvme/nvme.h              |   5 +
- hw/nvme/trace-events        |  11 +
- include/migration/vmstate.h |  33 ++
- migration/vmstate-types.c   |  88 +++++
- 5 files changed, 772 insertions(+), 30 deletions(-)
-
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index cc4593cd427..4694bdb4d02 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -207,6 +207,7 @@
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pcie_sriov.h"
+ #include "system/spdm-socket.h"
++#include "migration/blocker.h"
+ #include "migration/vmstate.h"
+ 
+ #include "nvme.h"
+@@ -8962,6 +8963,14 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+     pcie_endpoint_cap_init(pci_dev, 0x80);
+     pcie_cap_flr_init(pci_dev);
+     if (n->params.sriov_max_vfs) {
++        if (n->migration_blocker == NULL) {
++            error_setg(&n->migration_blocker,
++                       "Migration is disabled when SR-IOV capability is set");
++            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
++                return false;
++            }
++        }
++
+         pcie_ari_init(pci_dev, 0x100);
+     }
+ 
+@@ -9025,6 +9034,14 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+     if (pci_dev->spdm_port) {
+         uint16_t doe_offset = PCI_CONFIG_SPACE_SIZE;
+ 
++        if (n->migration_blocker == NULL) {
++            error_setg(&n->migration_blocker,
++                       "Migration is disabled when SPDM responder is used");
++            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
++                return false;
++            }
++        }
++
+         switch  (pci_dev->spdm_trans) {
+         case SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE:
+             if (n->params.sriov_max_vfs) {
+@@ -9053,10 +9070,26 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+     }
+ 
+     if (n->params.cmb_size_mb) {
++        if (n->migration_blocker == NULL) {
++            error_setg(&n->migration_blocker,
++                       "Migration is disabled when CMB feature is used");
++            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
++                return false;
++            }
++        }
++
+         nvme_init_cmb(n, pci_dev);
+     }
+ 
+     if (n->pmr.dev) {
++        if (n->migration_blocker == NULL) {
++            error_setg(&n->migration_blocker,
++                       "Migration is disabled when PMR feature is used");
++            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
++                return false;
++            }
++        }
++
+         if (!nvme_init_pmr(n, pci_dev, errp)) {
+             return false;
+         }
+@@ -9365,6 +9398,8 @@ static void nvme_exit(PCIDevice *pci_dev)
+     }
+ 
+     memory_region_del_subregion(&n->bar0, &n->iomem);
++
++    migrate_del_blocker(&n->migration_blocker);
+ }
+ 
+ static const Property nvme_props[] = {
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index d66f7dc82d5..457b6637249 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -666,6 +666,9 @@ typedef struct NvmeCtrl {
+ 
+     /* Socket mapping to SPDM over NVMe Security In/Out commands */
+     int spdm_socket;
++
++    /* Migration-related stuff */
++    Error *migration_blocker;
+ } NvmeCtrl;
+ 
+ typedef enum NvmeResetType {
 -- 
 2.47.3
 
