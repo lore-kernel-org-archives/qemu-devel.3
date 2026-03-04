@@ -4,87 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDD7EF8FEA
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F266AEF8FE5
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmTr-0007zc-F9; Wed, 04 Mar 2026 08:41:39 -0500
+	id 1vxmgN-0007PD-33; Wed, 04 Mar 2026 08:54:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vxmTJ-0007E8-K9
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:41:05 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxmgB-0007Np-8b
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:54:23 -0500
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vxmTH-0005L9-J3
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:41:04 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-82735a41985so4084617b3a.2
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:40:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vxmg9-0007qQ-FY
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:54:23 -0500
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64ca1ba0089so5972406d50.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:54:19 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772632459; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UU8/0Au2rMBxgpZ32gvsn/PiPyR42pfqIci22/QA5TTYbXGT+Upb1BKY2EpUUYPwJ4
+ YS6HVKsf95FpbnwqSmr7S2403bT5Bd+W9F5WFW+Rf5JqRfOtvxT1kPAVDSgS1zMZWSj9
+ n+SMdzA345jybxXPdcmkaJGQVILfK0is8IFkWrELEMTDFKg4mgbuNJzjC0lvkPqAdfPG
+ h/iUjdOpQzqYy1UuNTMR0OwBi85XZOhF+5q4CXDa+wiT1lq+sevNdL7vyhHFiuQXp3kd
+ LwjzoZ/Yfryp9W3lMibM5Mg72cipzGCGIIV9wxAVzZXr0MHLw72vPZKIjgLoYeXFDXaC
+ i9pw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=lJWA8F8Fxnn1rli1uylq1S8dOlBhWu2ZtTc/9dJQ5M4=;
+ fh=3PqfOa9uK16u2Qa4uM4K361/yknu0rs7kGjCoDZdQVE=;
+ b=Xef2tZWW4P8NGORIAR7WnueEwveaNdAXsFClTsGAl0yiFX4tget6kBm+0i8ix9DYsA
+ KXH7PcHxI9ah2K/Qjq7ySnwwyxz5xQduznpZFjd1psD2uNJ2gKf72cOZL0bezAfFrjvb
+ uQRySV+IB5Ru8iLY8mp64K3P1Wt2A/PXcnmaaXRjddnaIMOYRk56TS4uJrPEqX3fyHSX
+ 4zr95dV8bjYah9ooqv3fgvelb7rpnv44z9TSf0fOT53CAUpnI4RU+VVh1EZro2QO0T0k
+ VGmRQ143tVRuyWgtFv6/9XgEkrvVqOecRwTww36ytVrX88znnWZBveQPEZ1J19gQy+7v
+ 5KXw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1772631656; x=1773236456; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+JT1mHQyii4VDWEe70HVQ+1DzFVc0uaDHKkQZnAv4e8=;
- b=fTeV1tmB3Y/pyut4A08dgEgS3EpIhy/si9M6orwC8sBMOOj4ZomYsMBeG4gIhxEE4m
- 3AT2ZazcohFmRmgG6knl8P+2lbof10DnvgnuPsE3FuEkBX6WTbMWQu3SQ7jHs+SsG3I8
- rFYDJ8zEyNTn446d7tFb1EVNb22nmpaDv5S8X0F+VctgJHSsd6vQS3Q9ELBrKV00Fm+F
- kSZQH6TG+11wC09v8MMaaDsYFPNzuie81uDmebFAz6U8oin9MKl67ZbuI+kc8FGOLvxy
- 1OqskeCImnVJnf+ZpHdLhiq/2TySUV6UIdymFmr3Og/SzMwpbX0JfZ/1J06Pq2W2pWMr
- kwvQ==
+ d=linaro.org; s=google; t=1772632459; x=1773237259; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lJWA8F8Fxnn1rli1uylq1S8dOlBhWu2ZtTc/9dJQ5M4=;
+ b=XmgfOXpI0jxSkws262DcDtxukmGNjacp+0B0cs9gZxiqH9occuLp+iS0ZF8uO7HCmm
+ 44Woxi8JuLjdQd/uiYgmZYx0oKb9E2LZtFVegyr9szVpz9xLMPOmjb6RqHSU45Sk5cTX
+ CRPTPWOshu9IJnhkfJ2lx8bR+uv3hvpRjuBO6ed3FDpqjRsZh9MOgJ6XVt17vhzQMmkf
+ UP0Z55wO9hw6WCWZJlAxTGzBHXpulTezPgTOH82hY1OtZqoj1/h8TQhk4nKpwjiim/yG
+ vyuSzTCPFQ77cmXiUaqbTvcfVrXH7/KOPgIACl0yF1vVhS2GZ24YLbjRue4LS+AU6/3V
+ FpUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772631656; x=1773236456;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+JT1mHQyii4VDWEe70HVQ+1DzFVc0uaDHKkQZnAv4e8=;
- b=VcW5irhqAV+mgUBPH3jPKaGMQKTMg+rYvGX105QAn3WRuIGJpM1Ty8l5ebqs4GJWmH
- qUovHjvKyVHZD+EfDvPM1W/bS3c/DJUzCOwq5GDXhNlWhy3OweLTuo3/NqV1kIN0yAXD
- KhG/hg3pwVvLO8ivRwGy4OstSZAa19TbQz652JYEgrozb7ooQpgZYdMjT1PNiVa5TR1U
- IZYzKcABjXaYem5/u0OTQROSCUmbe3oBGArES0fJyIC0j/UvobH1lC0c9PbdhNs3pI31
- epZu1fxHySkzblCuaTszHM+b+m+Py3ApxpgTWQ1vfWvaAYf+vyy5xQHeFIQaazshTYRQ
- SCUg==
-X-Gm-Message-State: AOJu0YxniSTMpkFTTENSrohkV1pOTXHjzIj7Uw4QbKZlBQ20LohsH3Bo
- mW6Z5zA6Uu1qzJhw894gn5E8n0DxIwUb4Hd7vH0MhHMXRJ0p3v7FH3/w5OD+w6ccbjLak8Sshn7
- Egp34vfGOnoi7HvBc34J3lq2rzerNL5MM1gQQgD8CL9KX1BWOFlQdEbaGX6t2p4cl9MvgrHa/ML
- s8f8Ihb01pfTGOfN743PGXlXLULMM9NlM5g7ACjOFTDg==
-X-Gm-Gg: ATEYQzw4tMkQIav8j6NhOXPIjrnP6mbXDaBo0t11m1ooG/ouclCr+jok7q8uDUWfBUX
- RdWNaDzoj/xy74xiQGrX+glyI231LhWagMNpTJBATlgZ5bz2qtNmsmAJdtIn/fHWSAhtp+QUiez
- TZ+PgyRJjQub8ZTh69SV6ZYYa0T39BHI9fFW9k+pBgv36q5oRGWo5WboeYAJVwFEOS7QWRAEOvV
- Sroc5mtCbmlABhgsMn1y3gB1VGMyDSGnwydKa0gtBm2ukTmp4Guoei4xFmnaW9rGNK/VuVWvy+P
- nmyL4bcmm777qtzDFkWeAh7MVK/5V/cx2HcMBnQyOZTaxtUAD67PNVQTpZNNDbzb7PJPBgIFXWb
- I9UQqxrboCJHA1e2TvD2A1lYzV1DSDB6W5vRl774aEPNxDjSKvqBhnqJkIPyOJbj5Qev/aUj2pB
- S7EDXrg7acRHU1nVE66EXNttEcD/l1JUJuDGDAfRh6pckHQpYhBk3h2pU1wPIFwbzuiDKLrVDai
- 9U+10Zi64mcUrQFuqMhr7FcN3o=
-X-Received: by 2002:a05:6a00:2e12:b0:81f:40e5:34b6 with SMTP id
- d2e1a72fcca58-82972b4404dmr2102082b3a.15.1772631655705; 
- Wed, 04 Mar 2026 05:40:55 -0800 (PST)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8297e11bf5dsm251921b3a.28.2026.03.04.05.40.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 05:40:55 -0800 (PST)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v4 14/14] disas/riscv: Add support of Zvfofp4min extension
-Date: Wed,  4 Mar 2026 21:40:06 +0800
-Message-ID: <20260304134006.2908449-15-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260304134006.2908449-1-max.chou@sifive.com>
-References: <20260304134006.2908449-1-max.chou@sifive.com>
+ d=1e100.net; s=20230601; t=1772632459; x=1773237259;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lJWA8F8Fxnn1rli1uylq1S8dOlBhWu2ZtTc/9dJQ5M4=;
+ b=xPemgpcA8NMDDQNJUkcbCMF8uYLNnEZZMDnN6iCgrvmHehwIwlOd7DIWlfGIsowO2l
+ 04I0j8lRIZgG35DXBkTe9ZvqgLDj1gPM6dJVzKNzp0tgMUctAc0r/GNCKjv//qNyJ9R8
+ qtO23l6kyytUHLM026gtUX5/6KrzB+JkB2VPLLH8kquiX03L8759LMxJlPN7QlE83IAU
+ NOYJcfAKnoePlA3kKQtdzXkmfW+Tv7Kjkrt0twIWMiuMtquffM6pyUkZW51cv10O0I6U
+ fXvLWzTsqJXyDea1bLdbGSzHT9+w288yrVJ1G5ALpye0s39TlhOLZuXnthmdRMwBihHl
+ 6BmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmBn+fPQ85pIBn2dXzuByLX9GjfmJKlPssqKWPzUSSyqq3sUcOGW9347otLiDfskH/BSxjY/uAHjQ/@nongnu.org
+X-Gm-Message-State: AOJu0Yw2ndcPBdz5u9/THMxEWTHDrONwXDGvYf8Mf2KMF78xJUg9wNP6
+ y0gWnOY96GoZQ7UtFVNKsjUNCUyRXf3q6WaXFPRUFQhjLGs6Ko+kJRxFZzMxqCgGPcesHq/2WXb
+ g37zupepxIGV2QgJ/OaSqiJ2+ppfahrN5iYUFEZPjSw==
+X-Gm-Gg: ATEYQzxEeXMjaSDvcV3QbMq65Fl3GfQYRTV8LBnXtn0oEPWFEe6iA7Hj8qHj21iYxF4
+ Ld2mflqUtE7/i/ArcNr/WRwMpyDbyVWggrT9+psuxC8V5BRdXCtNWzcpzHGlpD/BjEp5JDgqHGr
+ c0TJ0vUY4g3qqryjoPwf7YPgH1KiZjJPGwhBULPPcKHx60qmeGuz2MSXPQamyGLhozGmCORjSlp
+ n9ivtd39rxfG8okNzjvfjcybikbhQ6BdrBJDVR3vICGj6BcglJUHLWifYMKDu9CnXgJAdpoVRyi
+ vAxjPSCzoxbnVW3qOjhHk1dxQ8MgoluOa+z5pIcy14M0l2bmLH0dxdnDIfwmUZckyNA=
+X-Received: by 2002:a05:690e:12c6:b0:64a:d1a9:a64 with SMTP id
+ 956f58d0204a3-64cf9ba2e55mr1438935d50.55.1772632458775; Wed, 04 Mar 2026
+ 05:54:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42b.google.com
+References: <20260303222143.142741-1-shentey@gmail.com>
+ <20260303222143.142741-13-shentey@gmail.com>
+ <87ikbbixy5.fsf_-_@pond.sub.org>
+In-Reply-To: <87ikbbixy5.fsf_-_@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 4 Mar 2026 13:54:07 +0000
+X-Gm-Features: AaiRm53KWbc1dj0-NO-OsLLEnoU2Kn0i_aSJhEbsYzmgUg0kxK1ZM-7lwhHO624
+Message-ID: <CAFEAcA_WYkAYccog-BiA6MJAvoFVwa6niKvFZ7UpLjzkRyd6aA@mail.gmail.com>
+Subject: Re: QOM parent type "sys-bus-device" vs. "device" (was: [PATCH v2
+ 12/13] hw/char/serial: Inherit from SysBusDevice)
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
+ Helge Deller <deller@gmx.de>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Troy Lee <leetroy@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,43 +128,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds support to disassemble Zvfofp4min instructions.
+On Wed, 4 Mar 2026 at 12:25, Markus Armbruster <armbru@redhat.com> wrote:
+> We might be at a crossroads here.
+>
+> Paul Brook designed qdev around "a device plugs into some bus, and may
+> provide buses".  To make this work, he added a main system bus to serve
+> as root of a single tree.
+>
+> The parent of a device in that tree is the bus it plugs into, and the
+> parent of a bus is the device that provides it, except for the main
+> system bus, which has no parent.  "info qtree" shows this tree.
+>
+> Note a machine had just this one system bus back then.
+>
+> The system bus isn't something hardware people would call a bus.
+>
+> The qtree is a qdev thing.  It is *not* the QOM composition tree ("info
+> qom-tree /").
+>
+> We actually abandoned "a device plugs into some bus" a long time ago.
+> Moe on that below.
+>
+> Qdev was later rebased onto QOM, as follows.
+>
+> A bus QOM type is a subtype of "bus".
+>
+> A device QOM type is a subtype of "device".
+>
+> If a device type has a @bus_type, then it plugs into a bus of that QOM
+> type.  Such a concrete device is commonly[*] not a direct subtype of
+> "device".  Instead, it's a subtype of the abstract device that plugs
+> into that bus type.  Example: "isa-serial" is a direct subtype of
+> "isa-device", and it inherits its bus type "ISA" from there.
+>
+> If a device has no @bus_type, it doesn't plug into any bus.  It doesn't
+> show up in "info qtree" (it does in "info qom-tree", of course).
+> Example: "serial" is a direct subtype of "device".
+>
+> This lets us build devices from components without having to make up
+> buses to connect them.  Example: "isa-serial" has a direct QOM child of
+> type "serial".  Good!
+>
+> Except infrastructure useful to such bus-less devices lives in sysbus,
+> where bus-less devices can't access it.  This tempts us to make devices
+> sysbus devices just to be able to use the infrastructure, and to create
+> additional sysbuses.
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- disas/riscv.c | 3 +++
- 1 file changed, 3 insertions(+)
+There is only one sysbus -- it is impossible to create more than one,
+and there wouldn't be much point in creating a second one anyway.
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 30f585772a..5dbeb52c20 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -987,6 +987,7 @@ typedef enum {
-     rv_op_vfncvtbf16_sat_f_f_w = 956,
-     rv_op_vfncvt_f_f_q = 957,
-     rv_op_vfncvt_sat_f_f_q = 958,
-+    rv_op_vfext_vf2 = 959,
- } rv_op;
- 
- /* register names */
-@@ -2260,6 +2261,7 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vfncvtbf16.sat.f.f.w", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-     { "vfncvt.f.f.q", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-     { "vfncvt.sat.f.f.q", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
-+    { "vfext.vf2", rv_codec_v_r, rv_fmt_vd_vs2_vm, NULL, 0, 0, 0 },
- };
- 
- /* CSR names */
-@@ -3715,6 +3717,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-                     case 12: op = rv_op_vclz_v; break;
-                     case 13: op = rv_op_vctz_v; break;
-                     case 14: op = rv_op_vcpop_v; break;
-+                    case 22: op = rv_op_vfext_vf2; break;
-                     }
-                     break;
-                 case 20:
--- 
-2.52.0
+> We can elect to go down this path further: make more sysbus devices.
+> Create more sysbuses.  If this is the right path, then bus-less devices
+> were a mistake, and we should consider eliminating them.
+>
+> Or we can pick the other branch: put the infrastructure where bus-less
+> devices can use it.  If this is the right path, then sysbus is
+> obsolescent.
 
+I do think that at some point it would be good to move all that
+stuff into the base "device" class, and drop sysbus. The real
+problem, though, is reset. Currently reset propagates along the
+qtree (the tree of buses). So something (like TYPE_SERIAL, and
+also like CPU objects) that is a direct child of TYPE_DEVICE does
+not get automatically reset. The major overriding reason why
+(as it currently stands) I favour making things sysbus devices
+and not plain devices is that devices that don't get reset are
+either broken or need all their users to take extra steps that
+most don't take, or do in a weird way. We can't just push the
+reset handling into TYPE_DEVICE because by definition it is tied
+to "being a thing on a bus, i.e. the sysbus".
+
+Disentangling reset is extremely painful -- I don't even know
+what it ought to be doing. Maybe propagating along the QOM tree?
+So for now, we muddle along.
+
+-- PMM
 
