@@ -4,108 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74761EDEBF5
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 00:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C182EEDEBF7
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 00:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxZrN-00082a-Q5; Tue, 03 Mar 2026 19:13:05 -0500
+	id 1vxaAc-0002tY-2Z; Tue, 03 Mar 2026 19:32:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vxZrL-00082K-Jo
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 19:13:03 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vxZrI-0007aO-PW
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 19:13:03 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-65f980cea07so9133161a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 16:13:00 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772583179; cv=none;
- d=google.com; s=arc-20240605;
- b=b3dWlNnkmAbr7rbZhiXsJuEfHqz2DgImAlH1Bvm/gzb1ERuE8m1BYfYZtfVnlwfXJb
- MCvniaEFPPDUvinG+bWwVq+rMNGfcNuc9kkDKCyrEb4mDXKYxPHm5QOPJV1bfbPmxkz0
- vmiDo6oppP65ewWK1Fa3MlqfGlaGUhmHFO7iOMDjisys02hGIku7V0m3nBvPR0gW9KAY
- uiNuvoz+nC3Px6nA7qfvZG1VVGqXImciuXNKgqjKI8QKHAf5pi9ts2zNukKjNDuJvFaN
- ErWG5XkugeEVsybP6UtgZu5LXwZrDLkEkkR/ZIXwU5/K4cmf8dOCgwdfQTs5IRRpqV9f
- pbJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=N3B7mOdFJr2uoi+HUat2oCaARVzoRK4Yg6coFkprYbc=;
- fh=vs0FEKFvkLszxoagLOegSdcICLH/wdkLYp1JQdQZTgE=;
- b=JX0ZJ3B0pRbz3Chjo2ftAyAwoS+L7VF1R+GsjxgCbPm0SS7H9WPAKzIxfdiSCtMN6B
- 4GmmlIEj18i2SI/Pflp6j9JJvtCpmLi4Uqop4Ee9NqHhamZalvwBAlkybS9YdS04coNg
- K9jdrJae48FMB/mkW48AFXi0tLk1PycA7X13Qjfq4CdWPgvqpL0KUPN8vu6cTo5Ojukf
- nM/VWb2Qtd3nRVp+q0Gxwx2sXIyf0ll44QAZvrQh3CJssVOVTcigne0qErwkioKO1mPW
- GZ0CUfQm3lETJY42MpagYr2BrQg+kM9UZNXj0wjJwvzJCIx8kED2vKrMwdYEQYNb0RqQ
- 7Vyw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772583179; x=1773187979; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N3B7mOdFJr2uoi+HUat2oCaARVzoRK4Yg6coFkprYbc=;
- b=OD2+dZK9lS4ZydbL/Im5DPxiILxu1/QEuwrijJcLmSeE9rzjCOCA9b3akOisSe6mdf
- B6jZ7mtdWomA3p2nxSHmL3FGO+YnbKdwKclDUIe32+rlUi3iXjg1lAzCpldLyIPQySS7
- F10LuRi9F8ivDq8wAIVJgB06YQX4lx43vbZKg7+rDM2zJWNHbpxaQTzJJG18t20lCYx1
- NmXdHVzUsOIMZmCIeh7nn5TFOSLiDhgSvEd7fn2pMcR5/5ipFybuQlCqqUgLQLrtFgox
- gVbZHhg+HkbWWrsN8K0lW2Fxz5dnWZYZpEs32uEEpKeaEMMo2/osyFWTyiyoc06YWGeQ
- 50oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772583179; x=1773187979;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=N3B7mOdFJr2uoi+HUat2oCaARVzoRK4Yg6coFkprYbc=;
- b=A+cWCQao+8Rrxu7AMXWeh9Fn9ZTfAB+EjS6WPgQMUiE3XdlwlhbvZCZFhNpY7e5ChH
- L4odmmvoOkyfUc4SORdNIrIpH4FmiUOqqE3QT2cp25JBYcm/gj1abc3TMUieTTMxmpzh
- XfSv+BRSmr5Dby+w0cNnymtN9lvHR47vaxFCFLeoJAHZ7SqpMQeibKX1ZgyT5qC0Y8vV
- DNwxqx3JElgz6NIy9G2mm6bMWIqNELkJklkbspDCXEDnCKB1fSH1YlRSSdHNsS9hnG1R
- PbTD2wtgv+VmOnodpum/zIjt/s9XoEYWvsyruRo1sKDqR0VbWneIzib6m4xM+CXIrvaH
- qQXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXnVRG9MxIvdwt1QQKCphoSjJ2bnNNYmzt2oJVjlARREx0nsgrfufCmlZ1TRlWL0mVG7gGxGWM4a2K@nongnu.org
-X-Gm-Message-State: AOJu0YyUUqkPPNSa1Som7YKEirK3BApv0wkgF39k8b489YT4aI71Mx0B
- vGkgk88HikReqVJ0EzaVSpe0/KnawoEdjfmOwzhVaHVvyiMmE2TGwBzByoZB63d/GA6SW5UiANZ
- gFZ5Ls5p+zfJaiOL2pdAD7EIeQckHTgw=
-X-Gm-Gg: ATEYQzzMX/B+XoAHkn086rexl2AUMwybxTEYUtmpsGq5rZHZDGVLlQ6whK9cIHCW5p3
- tZlkNSOe/iD7dD7GKCN5YV6uureLZVt9eVPai+o9sUylrVnahkGr8zcBOVdXAfckPo8/VpABJuX
- Y2YiMb90M5mH4awX9UNNuK5CB7AmXmvmiT3sdXeiKQLErooO/3w3kTQ1BFvisvDXtOKK5S6o2Sc
- HwslXgE7/9pKMMZ7sTfmXensqlwZk41LwT0ibuvjw5sREsa27El9rr4ZE/j8GBEHNdXPbUCrw+C
- HVOhe2FWDaZ0fZOfgcOl3HjvnDJ/fgdjK3oe+g==
-X-Received: by 2002:a17:906:4fd3:b0:b87:39d:2bb4 with SMTP id
- a640c23a62f3a-b93765c7448mr1256511866b.59.1772583178342; Tue, 03 Mar 2026
- 16:12:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxaAa-0002tO-5z
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 19:32:56 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxaAX-0001R6-R5
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 19:32:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 56CBB596A0A;
+ Wed, 04 Mar 2026 01:32:51 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id aBssKv2cZ43V; Wed,  4 Mar 2026 01:32:49 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 0494F5969FA; Wed, 04 Mar 2026 01:32:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 028915969F0;
+ Wed, 04 Mar 2026 01:32:48 +0100 (CET)
+Date: Wed, 4 Mar 2026 01:32:48 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH v11 16/17] ati-vga: Implement HOST_DATA register writes
+In-Reply-To: <20260303024730.1489136-17-chad@jablonski.xyz>
+Message-ID: <7a814f0f-464a-78f9-38e3-d9dcac418705@eik.bme.hu>
+References: <20260303024730.1489136-1-chad@jablonski.xyz>
+ <20260303024730.1489136-17-chad@jablonski.xyz>
 MIME-Version: 1.0
-References: <20260303172718.437015-1-peter.maydell@linaro.org>
-In-Reply-To: <20260303172718.437015-1-peter.maydell@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 4 Mar 2026 10:12:31 +1000
-X-Gm-Features: AaiRm52txa99YVFzDkQpkcVktZH1QDd9HYCLNlPsLCVfplLNduzG22mTqN9cFok
-Message-ID: <CAKmqyKN3G_b0+gVo9HyRjYRs70RVdZ97i_6gzskudpdWbnPUbQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/xilinx_ethlite: Check for oversized TX packets
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- Jason Wang <jasowang@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,72 +66,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 4, 2026 at 3:29=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
+On Mon, 2 Mar 2026, Chad Jablonski wrote:
+> Writing to any of the HOST_DATA0-7 registers pushes the written data
+> into a 128-bit accumulator. When the accumulator is full a flush is
+> triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
+> will also initiate a flush. The flush itself is left for the next patch.
 >
-> The xilinx_ethlite network device wasn't checking that the TX packet
-> size set by the guest was within the size of its dual port RAM, with
-> the effect that the guest could get it to read off the end of the RAM
-> block.
+> Unaligned HOST_DATA* writes result in, from what I can tell, undefined
+> behavior on real hardware. A well-behaved driver shouldn't be doing this
+> anyway. For that reason they are not handled here at all.
 >
-> Check the length.  There is no provision in this very simple device
-> for reporting errors, so as with various RX errors we just report via
-> tracepoint.
->
-> This lack of length check has been present since the device was first
-> introduced, though the code implementing the tx path has changed
-> somewhat since then.
->
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
-> Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 
 > ---
->  hw/net/trace-events     |  1 +
->  hw/net/xilinx_ethlite.c | 12 +++++++++---
->  2 files changed, 10 insertions(+), 3 deletions(-)
+> hw/display/ati.c      | 26 ++++++++++++++++++++++++++
+> hw/display/ati_dbg.c  |  9 +++++++++
+> hw/display/ati_int.h  |  9 +++++++++
+> hw/display/ati_regs.h |  9 +++++++++
+> 4 files changed, 53 insertions(+)
 >
-> diff --git a/hw/net/trace-events b/hw/net/trace-events
-> index 23efa91d05..001a20b0e2 100644
-> --- a/hw/net/trace-events
-> +++ b/hw/net/trace-events
-> @@ -527,3 +527,4 @@ xen_netdev_rx(int dev, int idx, int status, int flags=
-) "vif%u idx %d status %d f
->  # xilinx_ethlite.c
->  ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
->  ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
-> +ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
-> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-> index ba3acd4c77..75e6520569 100644
-> --- a/hw/net/xilinx_ethlite.c
-> +++ b/hw/net/xilinx_ethlite.c
-> @@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr,=
- uint64_t value,
->          break;
->      case TX_CTRL:
->          if ((value & (CTRL_P | CTRL_S)) =3D=3D CTRL_S) {
-> -            qemu_send_packet(qemu_get_queue(s->nic),
-> -                             txbuf_ptr(s, port_index),
-> -                             s->port[port_index].reg.tx_len);
-> +            uint32_t size =3D s->port[port_index].reg.tx_len;
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 6cf243bcf9..fa31401ba6 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -1024,6 +1024,27 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+>     case SRC_SC_BOTTOM:
+>         s->regs.src_sc_bottom = data & 0x3fff;
+>         break;
+> +    case HOST_DATA0:
+> +    case HOST_DATA1:
+> +    case HOST_DATA2:
+> +    case HOST_DATA3:
+> +    case HOST_DATA4:
+> +    case HOST_DATA5:
+> +    case HOST_DATA6:
+> +    case HOST_DATA7:
+> +    case HOST_DATA_LAST:
+> +        if (!s->host_data.active) {
+> +            break;
+> +        }
+> +        s->host_data.acc[s->host_data.next++] = data;
+> +        if (addr == HOST_DATA_LAST) {
+> +            qemu_log_mask(LOG_UNIMP, "HOST_DATA finish not yet implemented\n");
+> +            s->host_data.next = 0;
+> +        } else if (s->host_data.next >= 4) {
+> +            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
+> +            s->host_data.next = 0;
+> +        }
+> +        break;
+>     default:
+>         break;
+>     }
+> @@ -1129,6 +1150,11 @@ static void ati_vga_reset(DeviceState *dev)
+>     /* reset vga */
+>     vga_common_reset(&s->vga);
+>     s->mode = VGA_MODE;
 > +
-> +            if (size >=3D BUFSZ_MAX) {
-> +                trace_ethlite_pkt_tx_size_too_big(size);
-> +            } else {
-> +                qemu_send_packet(qemu_get_queue(s->nic),
-> +                                 txbuf_ptr(s, port_index),
-> +                                 size);
-> +            }
->              if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
->                  eth_pulse_irq(s);
->              }
-> --
-> 2.43.0
+> +    s->host_data.active = false;
+> +    s->host_data.next = 0;
+> +    s->host_data.row = 0;
+> +    s->host_data.col = 0;
+> }
 >
+> static void ati_vga_exit(PCIDevice *dev)
+> diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
+> index 3ffa7f35df..5c799d540a 100644
+> --- a/hw/display/ati_dbg.c
+> +++ b/hw/display/ati_dbg.c
+> @@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
+>     {"MC_SRC1_CNTL", 0x19D8},
+>     {"TEX_CNTL", 0x1800},
+>     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
+> +    {"HOST_DATA0", 0x17c0},
+> +    {"HOST_DATA1", 0x17c4},
+> +    {"HOST_DATA2", 0x17c8},
+> +    {"HOST_DATA3", 0x17cc},
+> +    {"HOST_DATA4", 0x17d0},
+> +    {"HOST_DATA5", 0x17d4},
+> +    {"HOST_DATA6", 0x17d8},
+> +    {"HOST_DATA7", 0x17dc},
+> +    {"HOST_DATA_LAST", 0x17e0},
+>     {NULL, -1}
+> };
+>
+> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+> index 98f57ca5fa..baa264215c 100644
+> --- a/hw/display/ati_int.h
+> +++ b/hw/display/ati_int.h
+> @@ -95,6 +95,14 @@ typedef struct ATIVGARegs {
+>     uint32_t default_tile;
+> } ATIVGARegs;
+>
+> +typedef struct ATIHostDataState {
+> +    bool active;
+> +    uint32_t row;
+> +    uint32_t col;
+> +    uint32_t next;
+> +    uint32_t acc[4];
+> +} ATIHostDataState;
+> +
+> struct ATIVGAState {
+>     PCIDevice dev;
+>     VGACommonState vga;
+> @@ -112,6 +120,7 @@ struct ATIVGAState {
+>     MemoryRegion io;
+>     MemoryRegion mm;
+>     ATIVGARegs regs;
+> +    ATIHostDataState host_data;
+> };
+>
+> const char *ati_reg_name(int num);
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index 3999edb9b7..48f15e9b1d 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -252,6 +252,15 @@
+> #define DP_T12_CNTL                             0x178c
+> #define DST_BRES_T1_LNTH                        0x1790
+> #define DST_BRES_T2_LNTH                        0x1794
+> +#define HOST_DATA0                              0x17c0
+> +#define HOST_DATA1                              0x17c4
+> +#define HOST_DATA2                              0x17c8
+> +#define HOST_DATA3                              0x17cc
+> +#define HOST_DATA4                              0x17d0
+> +#define HOST_DATA5                              0x17d4
+> +#define HOST_DATA6                              0x17d8
+> +#define HOST_DATA7                              0x17dc
+> +#define HOST_DATA_LAST                          0x17e0
+> #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
+> #define SCALE_OFFSET_0                          0x1998
+> #define SCALE_PITCH                             0x199c
 >
 
