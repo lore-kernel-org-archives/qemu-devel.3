@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5D8EF8FEB
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385C0EF8FEB
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:24:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxn8z-0004HV-FU; Wed, 04 Mar 2026 09:24:09 -0500
+	id 1vxn99-0005lA-L0; Wed, 04 Mar 2026 09:24:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vxn8x-00044E-5N; Wed, 04 Mar 2026 09:24:07 -0500
+ id 1vxn98-0005Zm-5h; Wed, 04 Mar 2026 09:24:18 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vxn8s-00070x-Ej; Wed, 04 Mar 2026 09:24:06 -0500
+ id 1vxn96-00075Z-HN; Wed, 04 Mar 2026 09:24:17 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDHzpp9QKhpqAPBBw--.184S2;
- Wed, 04 Mar 2026 22:23:57 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDXLNCKQKhpSKysAA--.31585S2;
+ Wed, 04 Mar 2026 22:24:10 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwDHHux7QKhpz_keAA--.38844S3;
- Wed, 04 Mar 2026 22:23:56 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwDHHux7QKhpz_keAA--.38844S4;
+ Wed, 04 Mar 2026 22:24:05 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
@@ -32,21 +32,24 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [PATCH 0/3] hw/arm/smmuv3: small fixes (spec compliance / robustness)
-Date: Wed,  4 Mar 2026 22:23:41 +0800
-Message-Id: <20260304142344.3341444-1-tangtao1634@phytium.com.cn>
+Subject: [PATCH 1/3] hw/arm/smmuv3-common: Fix incorrect reserved mask for
+ SMMU CR0 register
+Date: Wed,  4 Mar 2026 22:23:42 +0800
+Message-Id: <20260304142344.3341444-2-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260304142344.3341444-1-tangtao1634@phytium.com.cn>
+References: <20260304142344.3341444-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDHHux7QKhpz_keAA--.38844S3
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAEBWmnT6AGHwACs6
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+X-CM-TRANSID: AQAAfwDHHux7QKhpz_keAA--.38844S4
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAEBWmnT6AGWQAAs+
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWrGF45Jw4fAr45Xw1kCrW3Jrb_yoWxWFcE9w
- 4vv34kXw4xuFnrWF13CF429ayUGFW5ur18X3ZYqry2yrZxury5Ar1kt3s3X34fWF1rGF1f
- AFW5Cw4fGr1qgjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Zw47Kr4kAw1rtw1kGrW7Jwb_yoW8Jw17pa
+ ySkryvg348Ww1Syr9rJr4fury3Ga1kWr4ftrW7ur12vrsrtF95tFWUKa98Kw1kurZ0yF43
+ uFn29FyfZ34FyFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
  envelope-from=tangtao1634@phytium.com.cn;
  helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
@@ -72,27 +75,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a small fixes-only series extracted from larger Secure SMMU RFC.
+The current definition of the SMMU_CR0_RESERVED mask is incorrect.
+It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
+treating bit 9 (RES0) as an implemented bit.
 
-These three patches are self-contained, already reviewed in the RFC thread,
-and can be applied independently. Sending them separately should make review
-and merging easier.
+According to the SMMU architecture specification, the layout for CR0 is:
+| 31:11| RES0           |
+| 10   | DPT_WALK_EN    |
+| 9    | RES0           |
+| 8:6  | VMW            |
+| 5    | RES0           |
+| 4    | ATSCHK         |
+| 3    | CMDQEN         |
+| 2    | EVENTQEN       |
+| 1    | PRIQEN         |
+| 0    | SMMUEN         |
 
-Thanks,
-Tao Tang
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Fixes: fae4be38b35 ("hw/arm/smmuv3: Implement MMIO write operations")
+Link: https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00088.html
+---
+ include/hw/arm/smmuv3-common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Tao Tang (3):
-  hw/arm/smmuv3-common: Fix incorrect reserved mask for SMMU CR0
-    register
-  hw/arm/smmuv3: Correct SMMUEN field name in CR0
-  hw/arm/smmuv3: Fix CFGI_CD handling when stage-1 is unsupported
-
- hw/arm/smmuv3-internal.h       | 2 +-
- hw/arm/smmuv3.c                | 9 +++++++++
- include/hw/arm/smmuv3-common.h | 4 ++--
- 3 files changed, 12 insertions(+), 3 deletions(-)
-
---
+diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+index 67a23fbeaae..2df54ba60f9 100644
+--- a/include/hw/arm/smmuv3-common.h
++++ b/include/hw/arm/smmuv3-common.h
+@@ -355,7 +355,7 @@ REG32(CR0,                 0x20)
+     FIELD(CR0, EVENTQEN,      2, 1)
+     FIELD(CR0, CMDQEN,        3, 1)
+ 
+-#define SMMU_CR0_RESERVED 0xFFFFFC20
++#define SMMU_CR0_RESERVED 0xFFFFFA20
+ 
+ REG32(CR0ACK,              0x24)
+ REG32(CR1,                 0x28)
+-- 
 2.34.1
 
 
