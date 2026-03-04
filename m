@@ -4,64 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4494E67A8A
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CC5EDEC1E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxgdc-0008DN-Kx; Wed, 04 Mar 2026 02:27:20 -0500
+	id 1vxgot-0001OT-NK; Wed, 04 Mar 2026 02:38:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgdY-0008Ch-HT
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:27:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgoq-0001O1-9r
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:38:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgdW-0004tW-KR
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:27:16 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgom-0007s0-H5
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:38:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772609232;
+ s=mimecast20190719; t=1772609931;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1fc9ay7NzjXtfsscKXTAxpRwfiO5hSpLDvIN8UUix/Y=;
- b=ZxDWktXDjYlW0THlZIANSaEye+8C8GT89lU3+vFVDGmmzm38zJSUxfwsj5pj6siHwbxNqe
- iRnuGeVnsjC23lv5KlBlz7G9P1Nc1cnSdEZzCiqZ6ERAlR4BtTDMs9ClumZcaHjo23AaJf
- bbG6Kxmc3mXhShIf1p70V5EWZlY5X6Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=cl4WrG2F/geB5QN0fMF69n9RNAObVArhKxorRCZFJMg=;
+ b=Kbpdzrf9itSLzzT+JNzJs3yi9P247At7dpZCnnIr2AYg4iawr3gV2a08P75676jfyZBDCw
+ AHlyfrTjv8MYiqZJzSLD1YQAGJm6VBJ013yjSJ667v+ZUgjRNXA5EzrUysE/eHV82gl9n8
+ IKg3D13lug8j/zpXT/c4rPICkt2m8jQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-XtecwpchPiiyzF-3-2YqDw-1; Wed,
- 04 Mar 2026 02:27:08 -0500
-X-MC-Unique: XtecwpchPiiyzF-3-2YqDw-1
-X-Mimecast-MFC-AGG-ID: XtecwpchPiiyzF-3-2YqDw_1772609226
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-6amolIZhNyy2Z_A1sSnMJg-1; Wed,
+ 04 Mar 2026 02:38:47 -0500
+X-MC-Unique: 6amolIZhNyy2Z_A1sSnMJg-1
+X-Mimecast-MFC-AGG-ID: 6amolIZhNyy2Z_A1sSnMJg_1772609926
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACDC018002CF; Wed,  4 Mar 2026 07:27:06 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0D07195608D; Wed,  4 Mar 2026 07:38:45 +0000 (UTC)
 Received: from [10.45.224.194] (unknown [10.45.224.194])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B296519560AB; Wed,  4 Mar 2026 07:26:58 +0000 (UTC)
-Message-ID: <1423d381-5e73-4f8c-b0f3-3b71b3f8ea19@redhat.com>
-Date: Wed, 4 Mar 2026 08:26:56 +0100
+ id 51528195608E; Wed,  4 Mar 2026 07:38:42 +0000 (UTC)
+Message-ID: <8b2855dc-44eb-417f-8a18-f40b1036637a@redhat.com>
+Date: Wed, 4 Mar 2026 08:38:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 08/30] crypto/x509-utils: Add helper functions for DIAG
- 320 subcode 2
-To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
- richard.henderson@linaro.org, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-9-zycai@linux.ibm.com>
- <a876fd40-c80a-4cbd-8969-b0c3cde6b7d9@redhat.com>
- <35d6bae0-533e-43a0-85ae-45aacdb66542@linux.ibm.com>
+Subject: Re: [RFC PATCH v2] configure: Use clang for sanitizer builds or
+ disable Werror
+To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260303012054.484837-1-yodel.eldar@yodel.dev>
+ <f999293f-c424-497a-8bca-2634bcd68108@yodel.dev>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -106,20 +101,21 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <35d6bae0-533e-43a0-85ae-45aacdb66542@linux.ibm.com>
+In-Reply-To: <f999293f-c424-497a-8bca-2634bcd68108@yodel.dev>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,127 +131,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/03/2026 22.02, Zhuoying Cai wrote:
-> On 2/28/26 8:43 AM, Thomas Huth wrote:
->> On 12/02/2026 21.43, Zhuoying Cai wrote:
->>> Introduce new helper functions to extract certificate metadata:
->>>
->>> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
->>> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
->>> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
->>> qcrypto_x509_check_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
->>>
->>> These functions provide support for metadata extraction and validity checking
->>> for X.509 certificates.
->>>
->>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->>> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
->>> ---
->>>    crypto/x509-utils.c         | 236 ++++++++++++++++++++++++++++++++++++
->>>    include/crypto/x509-utils.h |  51 ++++++++
->>>    2 files changed, 287 insertions(+)
->>>
->>> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
->>> index 2696d48155..906d5e5e87 100644
->>> --- a/crypto/x509-utils.c
->>> +++ b/crypto/x509-utils.c
->>> @@ -27,6 +27,16 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
->>>        [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
->>
->> So there is a mapping for RIPEMD160 - everything else will be mapped to 0,
->> which is GNUTLS_DIG_UNKNOWN if I got the gnutls.h header right ...
->>
->>>    };
->> ...
->>> +int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
->>> +                                 QCryptoHashAlgo hash_alg,
->>> +                                 uint8_t **result,
->>> +                                 size_t *resultlen,
->>> +                                 Error **errp)
->>
->> ... and in patch 09/30, you call this function with:
->>
->> +    rc = qcrypto_x509_get_cert_key_id(cert->raw, cert->size,
->> +                                      QCRYPTO_HASH_ALGO_SHA256,
->> +                                      &key_id_data, &key_id_len, &err);
->>
->> i.e. hash_alg is QCRYPTO_HASH_ALGO_SHA256...
->>
->>> +{
->>> +    int rc;
->>> +    int ret = -1;
->>> +    gnutls_x509_crt_t crt;
->>> +    gnutls_datum_t datum = {.data = cert, .size = size};
->>> +
->>> +    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
->>> +        error_setg(errp, "Unknown hash algorithm %d", hash_alg);
->>> +        return ret;
->>> +    }
->>> +
->>> +    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map) ||
->>> +        qcrypto_to_gnutls_keyid_flags_map[hash_alg] == -1) {
->>> +        error_setg(errp, "Unsupported key id flag %d", hash_alg);
->>> +        return ret;
->>> +    }
->>> +
->>> +    rc = gnutls_x509_crt_init(&crt);
->>> +    if (rc < 0) {
->>> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
->>> +        return ret;
->>> +    }
->>> +
->>> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
->>> +    if (rc != 0) {
->>> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
->>> +        goto cleanup;
->>> +    }
->>> +
->>> +    *resultlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[hash_alg]);
->>
->> ... so qcrypto_to_gnutls_hash_alg_map[hash_alg] should result in
->> GNUTLS_DIG_UNKNOWN as far as I can see. How is this supposed to work? Is
->> this code used at all? Or is the error simply ignored somewhere up in the
->> call chain? Or did I miss something?
->>
->>    Thomas
+On 04/03/2026 02.08, Yodel Eldar wrote:
+> +Daniel (thanks for your comments)
 > 
-> Thanks for the review!
+> On 02/03/2026 19:20, Yodel Eldar wrote:
+>> From: Yodel Eldar <yodel.eldar@yodel.dev>
+>>
+>> Builds with --enable-{asan,tsan,safe-stack} fail under GCC, so use
+>> clang if available, otherwise disable the treatment of warnings as
+>> errors.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
+>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+>> ---
+>> Hi,
+>>
+>> The previous version only disabled Werror whenever `--skip-meson` wasn't
+>> used and the build occurred in a git repo, but this change should
+>> probably apply to all types of builds. So, let's use meson_option_add
+>> to globally disable Werror instead; IIUC (and according to my testing),
+>> this will override the value in config-meson.cross.new.
+>>
+>> I'm still not sure if we should be disabling Werror for ubsan, even
+>> though it's not currently breaking builds with GCC; please let me know
+>> what you think.
+>>
+>> Special thanks to Peter for looking into the cause of the reports around
+>> this, for sharing the findings, and suggesting approaches to resolve it.
+>> I couldn't pick one over the other, so I went with using clang when
+>> available with Werror disable as a fallback; please let me know if you
+>> think this is an XOR kind of policy decision.
+>>
+>> Link to RFCv1:
+>> https://lore.kernel.org/qemu-devel/20260302210039.261325-1- 
+>> yodel.eldar@yodel.dev/
+>>
+>> Link to mentioned discussion:
+>> https://lore.kernel.org/qemu-devel/ 
+>> CAFEAcA88hc4UsgpuPXBWpbeN0tW26159kPn7jx2J9erBA5DLBw@mail.gmail.com/
+>>
+>> v2:
+>> - Fix misnomer in commit message
+>> - Simplify condition by using the same variable for all sanitizers
+>> - Use meson_option_add to disable Werror
+>>
+>> Thanks,
+>> Yodel
+>> ---
+>>   configure | 18 ++++++++++++++++++
+>>   1 file changed, 18 insertions(+)
+>>
+>> diff --git a/configure b/configure
+>> index 5e114acea2..e457e8a17d 100755
+>> --- a/configure
+>> +++ b/configure
+>> @@ -762,6 +762,12 @@ for opt do
+>>     ;;
+>>     --wasm64-32bit-address-limit)
+>>     ;;
+>> +  --enable-asan) use_sanitizer="yes"
+>> +  ;;
+>> +  --enable-tsan) use_sanitizer="yes"
+>> +  ;;
+>> +  --enable-safe-stack) use_sanitizer="yes"
+>> +  ;;
+>>     # everything else has the same name in configure and meson
+>>     --*) meson_option_parse "$opt" "$optarg"
+>>     ;;
+>> @@ -771,6 +777,18 @@ for opt do
+>>     esac
+>>   done
+>> +if test "$use_sanitizer" = "yes"; then
+>> +    if has clang; then
+>> +        echo "Sanitizer requested: setting compiler suite to clang"
+>> +        cc=clang
+>> +        cxx=clang++
+>> +        host_cc=clang
+>> +    else
+>> +        echo "Sanitizer requested: disabling Werror for non-clang compilers"
+>> +        meson_option_add -Dwerror=false
+>> +    fi
+>> +fi
+>> +
+>>   if ! test -e "$source_path/.git"
+>>   then
+>>       git_submodules_action="validate"
 > 
-> To clarify: the diff context only showed the RIPEMD160 line, but the
-> existing qcrypto_to_gnutls_hash_alg_map[] also includes SHA256 in
-> x509-utils.c.
+> We could treat the rtl8139 as a one-off by carving out the
+> offending code with a GCC pragma or finagling GCC into cooperation
+> by substituting eth_payload_data with the expression assigned to it
+> (thank you, Thomas and Daniel, respectively); indeed, AFAICT the
+> rtl8139 is currently the only code that triggers the GCC bug
+> (and is overdue for a refactor/cleanup), so it's tempting to go with
+> either of these helpful suggestions; *however*, until the GCC team
+> fixes their buggy pairing between sanitizer and -Werror
+> (a pairing that they themselves disavow [1]), IMHO there's a
+> significant risk of recurrence if we went with either option, and
+> it's not clear to me whether reviewers will be able easily spot the
+> next one before it's too late (post-acceptance).
 > 
-> static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
->      [QCRYPTO_HASH_ALGO_MD5] = GNUTLS_DIG_MD5,
->      [QCRYPTO_HASH_ALGO_SHA1] = GNUTLS_DIG_SHA1,
->      [QCRYPTO_HASH_ALGO_SHA224] = GNUTLS_DIG_SHA224,
->      [QCRYPTO_HASH_ALGO_SHA256] = GNUTLS_DIG_SHA256,
->      [QCRYPTO_HASH_ALGO_SHA384] = GNUTLS_DIG_SHA384,
->      [QCRYPTO_HASH_ALGO_SHA512] = GNUTLS_DIG_SHA512,
->      [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
-> };
+> That said, I fully share Daniel's concerns about "overriding the
+> user's choice of compiler"; so, what if we instead moved the
+> sanitizer check into the existing "Preferred compiler" section
+> in configure, such that we only set cc=clang when the user hasn't
+> explicitly specified CC/CXX (diff below)? Note: there's already
+> precedent for this with the Obj-C compiler [2].
 > 
-> For the call in patch 09/30, hash_alg is QCRYPTO_HASH_ALGO_SHA256, so
-> qcrypto_to_gnutls_hash_alg_map[hash_alg] resolves to GNUTLS_DIG_SHA256
-> (value 6), and gnutls_hash_get_len(...) returns 32 as expected.
+> I'm definitely onboard with Daniel's warning message in meson whenever
+> the user: 1) explicitly opts for gcc/g++, 2) enables sanitizers, and 3)
+> -Werror is enabled. At the risk of overengineering, though, what if we
+> made it an error message instead, and gave users an escape hatch like
+> `--force-werror-sanitizers` (name TBD)? I can see that being too much,
+> but it may prevent some grief if they missed the warning, and the build
+> breaks several minutes later. WDYT? It's not included in the diff below,
+> but I'll gladly add it to v3 if there's interest; if not, I'll go with
+> the warning message as suggested.
 
-Ooops, sorry, I've been fooled by the line wrapping of my e-mail client.
+I think I would rather avoid another switch like --force-werror-sanitizers 
+and making it a hard error instead of a warning. Think of the point in time 
+when GCC fixed their bug - if someone then wants to compile QEMU with that 
+new GCC, this becomes rather obstructive.
 
-It broke the lines like this:
-
-diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-index 2696d48155..906d5e5e87 100644
---- a/crypto/x509-utils.c
-+++ b/crypto/x509-utils.c
-@@ -27,6 +27,16 @@ static const int
-qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
-      [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
-  };
-
-So without having a real close look, it indeed looked like there is only one 
-entry in the array here :-/
-
-Sorry for the noise!
+Alternative idea: What about adding -Wno-stringop-overflow to the CFLAGS 
+when we detect the problematic situation (GCC + sanitizers + -Werror)? Then 
+the build could also continue with GCC without running into the problem.
 
   Thomas
 
