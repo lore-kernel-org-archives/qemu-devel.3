@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3EFEDEC12
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4D9EDEC12
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxflz-0002RV-QU; Wed, 04 Mar 2026 01:31:56 -0500
+	id 1vxfng-0002uP-Dn; Wed, 04 Mar 2026 01:33:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxflv-0002RM-L6
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:31:51 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxfnd-0002tb-T0
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:33:37 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxflt-0006EA-Nx
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:31:51 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48371119eacso78530925e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 22:31:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxfnb-0008RQ-Ef
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 01:33:37 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-480706554beso70169735e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 22:33:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772605908; x=1773210708; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1772606014; x=1773210814; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FDbF8zS72eIt9AcTW/DeoO98hhUFmOmOdyOOYdakiks=;
- b=wLG1QUvSlQwRuocQDOZSErIg8cXNANP0pDBZrIpYlpL4+3+Asuuh1nsPO33RHKEJ6H
- D0o5XJiSemSb5iCPhl8sZLeNZRSHnBc/ivTutzhha/KAwrxZmGeDHjT+MjxUbrFgqe3l
- I1L+a6U30/DjoVUyuqMSP4qxpEz4eUGGCBeYFuacBoF9p1bVcI0Aks50fCXGywKbM9DB
- fq1SQxNjnE28bNqrMWvZ7CottiIlcjE2yZn/pEIV1e7+ceMZMIJ1USPsrdy9u3YzWyUg
- fdnsRantD6lqP6+LvHRFU3EUL+TK2/EjlEnJZpJIGz9CgFGyaHa1uDSnqouQRCzBdyVF
- SRog==
+ bh=D1Jdkna8xBKWEFLan2pGv1KxEcd9H//urP3rlR+Qexk=;
+ b=gMkkhf4Vd8z0ubYgkmR9Uhq/Itmp3xdOLE7BxJ2xtiHEK7BGj5ZVsbqjcwqjWxkk75
+ HqcdGw6sIMgsn+oS98ZQpBdFm1+MXuq18uCiXQuLuNwfhSqrhshZMEqCxhvdyh7BZ15A
+ L3+tknJhrlPeTZBhIqd8VDS7mRdeFVrgP+OFgHOSf1IIyV7tx8YkzgX6hxGEBbV7+BqM
+ MSn/cPIwkLL4Nifbu3On4lYWj9VX8ZzBG6jYAXHMBv/M/SfGj2nK2JG1gqTJdrTUP90E
+ sg7dkXuAly0A98HPZvYOCl6FAGRKnP15+AsgyDZkmn7xG4oDem3reZ3BBf+2ueyp94pS
+ Nj/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772605908; x=1773210708;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1772606014; x=1773210814;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FDbF8zS72eIt9AcTW/DeoO98hhUFmOmOdyOOYdakiks=;
- b=UfoRAddayXP/oJkGwcegfjZOKoWv/ahmUc8/lxqRXRVYlbCc5aPo8Y/5WhgRPTqRum
- wBXKII0qRrGO2zjAnNCsMZZvVZ2/z0wwmfz9gxnvQHsAdzOhg6uL/oZAuDHXgltbQ/XN
- gvy9HWbF6XbpB2utwEJVDSn35TYCzZydIvpnV+QTrLtdl55P421qNgpRt6DMLxLLFGGe
- fTlZ77mAMaSg80y9jkS0WqTx7Jnj6NDU1W9aK9q0GmxHfl+sG6q5c7zMdpy/cqlQdwrE
- 3YrpmI4QPNqxQcrcWBCNV17zh/kungoieqqzs4r/ZHW8ewtob5/WjQXY48DbgTEmHFcc
- yWcQ==
-X-Gm-Message-State: AOJu0YxqVcozDvsHcb2MyGgb8QZ9PgP64tFJr00waJFvcibDuQWWu0oW
- VaVXObzuGN3s4ybrr3XO1jAvDQ4YRZ6fhu5+84q0w95vSJhCiKuuJhmnuoXjjU8ZxZOV50R5Wsl
- ukuUN+nk=
-X-Gm-Gg: ATEYQzyEgSdfjCbhJQ04ChSAnGpoSrw5DK0VkpIbsNDLXZoQaKotsrJAsbqbGX5UUsA
- 9VRrhIjruzD52ufBB8LCKMnn8vvukhpyvHzwr6USnUKk4zl/RLRx1//CfoK1IyXjOpQpaUIvRKi
- ykX9jlOQy4hSSv19IzI+s7eUnJFNNiDxBa/lI965Jeovz4G6hkpyshzgKNycsu40PMuLoY7UAIy
- wl9r95XCrvjLgEo/+XICA+E0PhiCVeQRph++e5uq7O2fXiIW4nmj6gpX9M+cLRd6dNwpZQSiCMq
- DXSGz+MdLKTbqRHzhwiWb0qKHB0EDfef5OyYfkKb+RtK3D6uQ37R6cchwBiArZ7eeE+c+qfzbk6
- 17xhSmVGyS51UZ7Lh0fdHimr51zuBbL93w6W8TViIF+M/ZH7H2EyqlFqqZPp4u6TTQwSBbV8Hcl
- trG6jcXQ5iXCKSV2Z01li1K80ViVVYg8T0uwb1UoPs2vMVxiIATUmStsDv2u21j7xDRg==
-X-Received: by 2002:a05:600c:8b53:b0:483:498f:7963 with SMTP id
- 5b1f17b1804b1-4851989024emr12093475e9.26.1772605907471; 
- Tue, 03 Mar 2026 22:31:47 -0800 (PST)
+ bh=D1Jdkna8xBKWEFLan2pGv1KxEcd9H//urP3rlR+Qexk=;
+ b=Z8zXqaoQh0tAfQCTftaeeivFnXrIl+IKbxPc6zcPWTUmyyJ8poE7QfLgoNQ8fwwdKr
+ a4FCk78uAeWiOfDLU+cii2sPpKPLQpy5fqMi6RitklrmHOvCplvNam0MkiN4wP6VvMD5
+ wMPIp11EN7Sv46YNWJopf4v60r0k3x5MnZPhfcPPMe53hdVEK08QkTxout5IvP5H1MvJ
+ Pp7RJWbJCjmNI5/d98iygSoagayh67Ij/LVQ39uCQZkli8BzvWXJ9Lxpp/E4SIKZHUNH
+ yNn3cQ2M9APUTKAhYcnIa14y0ZEVV4MlTSMz0hhqSYnLc4lUPjV3nwFppA6X6maBjfOe
+ HhBQ==
+X-Gm-Message-State: AOJu0YwoZnSKTQ+B4rhZ6yEFtaWjTPWYhdSjhToJSPxafXPSJf3QN9A6
+ L8eKtDfDgKNadbvaFLkUW2ZTSgQoPpUtuxL0rKDbnOdFc08hL29PGEp8LBsuJEXVUfWhKhz1nBn
+ fYzBmurg=
+X-Gm-Gg: ATEYQzxGP97N7SpWhlBqVdcXcnLXBe2jjmnVIHJlz8yuA7mnu0YYmnmaoJ7vMMP5w0a
+ lVUpaDjhpX+W/fPy9a+YHZMc6CSAG3ZBBHiLJW2DQCdMqyLdXT8qDMv38h3wuspOaBM04cbNWW1
+ fVbcYOlA3lPD2lYt7C1lhDdoiX9pqvVeu5ZVs48C7r5Z5ccjkBYgaXHlKgR8G/IezwcGTvN0Wqs
+ XutxJVmMUprCFXPRi0Tg4iJVkBD/mTu9zGO1Zt8B00P0WBd3mATtEangDu28GqzbpwS/PCLGSgS
+ CAgKZxhi75TLcQ4SLIPj9wjzo1WNiiDRiOEmV0trvOjHa64bHsXUoPs1GS9vA9e9e4/ALflqP1s
+ 68DeCjIdSlQIpNjneAe6vmGTcIAOBSRe82IGaqtiRukaoRtEQr7ZHcr/YcXl2G1ujGOngKaQu1u
+ gjwj3gxM4YT2nl+9P0QRtzNDFcH91JG0eSE5SuwRRZVIC3l5rd0Y45we4fqXeJH6xdiA==
+X-Received: by 2002:a05:600c:870f:b0:483:7432:a761 with SMTP id
+ 5b1f17b1804b1-485198902e2mr14002055e9.24.1772606013525; 
+ Tue, 03 Mar 2026 22:33:33 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851884a7absm33103745e9.8.2026.03.03.22.31.46
+ 5b1f17b1804b1-4851883a007sm31524385e9.2.2026.03.03.22.33.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 22:31:46 -0800 (PST)
-Message-ID: <dae98d2b-6e0a-42bc-bfdf-5c33e74cd390@linaro.org>
-Date: Wed, 4 Mar 2026 07:31:46 +0100
+ Tue, 03 Mar 2026 22:33:32 -0800 (PST)
+Message-ID: <80410890-1418-43b4-9265-184fb1910257@linaro.org>
+Date: Wed, 4 Mar 2026 07:33:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/16] target/alpha: Use explicit little-endian LD/ST API
+Subject: Re: [PATCH 4/4] gdbstub: Remove @g_pos argument in
+ gdb_register_coprocessor()
 Content-Language: en-US
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org
-References: <20260202212019.94205-1-philmd@linaro.org>
- <20260202212019.94205-3-philmd@linaro.org> <aaRSXzwmZBoRD0e7@gallifrey>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aaRSXzwmZBoRD0e7@gallifrey>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Florian Hofhammer
+ <florian.hofhammer@fhofhammer.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ qemu-ppc@nongnu.org
+References: <20260227213958.21170-1-philmd@linaro.org>
+ <20260227213958.21170-5-philmd@linaro.org>
+In-Reply-To: <20260227213958.21170-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,87 +106,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/3/26 15:51, Dr. David Alan Gilbert wrote:
-> * Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
->> The Alpha architecture uses little endianness. Directly
+On 27/2/26 22:39, Philippe Mathieu-Daudé wrote:
+> gdb_register_coprocessor()'s @g_pos argument is always '0',
+> meaning it is inferred from cpu->gdb_num_regs. Use instead
+> feature->base_reg, but check we don't overwrite other indexed
+> registers.
 > 
-> Wasn't there one, odd case of the T3E running it big-endian?
-> (I have no idea how that worked in practice).
-
-Richard said it was not necessary to mention it in the code:
-https://lore.kernel.org/qemu-devel/20260106155755.53646-7-philmd@linaro.org/
-https://lore.kernel.org/qemu-devel/75b13774-93f3-45db-bc1a-5b8687fcb3b9@linaro.org/
-
-I could have mentioned it here in the commit description
-for clarity but didn't think about it...
-
+> This fixes a bug with the "power-fpu.xml" file [*] which was
+> loaded at index 70 while the base register is 71. This latent
+> bug was exposed by commit 1ec0fbe2dda ("target/ppc: Fix
+> CPUClass::gdb_num_core_regs value").
 > 
-> Dave
+> [*] https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
 > 
->> use the little-endian LD/ST API.
->>
->> Mechanical change running:
->>
->>    $ for a in uw w l q; do \
->>        sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
->>          $(git grep -wlE '(ld|st)u?[wlq]_p' target/alpha/);
->>      done
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Message-Id: <20251224160040.88612-2-philmd@linaro.org>
->> ---
->>   target/alpha/helper.c | 11 ++++++-----
->>   1 file changed, 6 insertions(+), 5 deletions(-)
->>
->> diff --git a/target/alpha/helper.c b/target/alpha/helper.c
->> index a9af52a928f..80542cb0665 100644
->> --- a/target/alpha/helper.c
->> +++ b/target/alpha/helper.c
->> @@ -214,17 +214,18 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
->>   
->>       pt = env->ptbr;
->>   
->> -    /* TODO: rather than using ldq_phys() to read the page table we should
->> +    /*
->> +     * TODO: rather than using ldq_phys_le() to read the page table we should
->>        * use address_space_ldq() so that we can handle the case when
->>        * the page table read gives a bus fault, rather than ignoring it.
->> -     * For the existing code the zero data that ldq_phys will return for
->> +     * For the existing code the zero data that ldq_phys_le will return for
->>        * an access to invalid memory will result in our treating the page
->>        * table as invalid, which may even be the right behaviour.
->>        */
->>   
->>       /* L1 page table read.  */
->>       index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
->> -    L1pte = ldq_phys(cs->as, pt + index*8);
->> +    L1pte = ldq_phys_le(cs->as, pt + index * 8);
->>   
->>       if (unlikely((L1pte & PTE_VALID) == 0)) {
->>           ret = MM_K_TNV;
->> @@ -237,7 +238,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
->>   
->>       /* L2 page table read.  */
->>       index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
->> -    L2pte = ldq_phys(cs->as, pt + index*8);
->> +    L2pte = ldq_phys_le(cs->as, pt + index * 8);
->>   
->>       if (unlikely((L2pte & PTE_VALID) == 0)) {
->>           ret = MM_K_TNV;
->> @@ -250,7 +251,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
->>   
->>       /* L3 page table read.  */
->>       index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
->> -    L3pte = ldq_phys(cs->as, pt + index*8);
->> +    L3pte = ldq_phys_le(cs->as, pt + index * 8);
->>   
->>       phys = L3pte >> 32 << TARGET_PAGE_BITS;
->>       if (unlikely((L3pte & PTE_VALID) == 0)) {
->> -- 
->> 2.52.0
->>
->>
+> Reported-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/exec/gdbstub.h     |  3 +--
+>   gdbstub/gdbstub.c          | 16 +++++-----------
+>   target/arm/gdbstub.c       | 21 ++++++++-------------
+>   target/arm/gdbstub64.c     | 19 +++++++------------
+>   target/hexagon/cpu.c       |  2 +-
+>   target/i386/gdbstub.c      |  8 +++-----
+>   target/loongarch/gdbstub.c |  6 +++---
+>   target/m68k/helper.c       |  4 ++--
+>   target/microblaze/cpu.c    |  3 +--
+>   target/ppc/gdbstub.c       | 11 +++++------
+>   target/riscv/gdbstub.c     | 18 ++++++------------
+>   target/s390x/gdbstub.c     | 15 +++++++--------
+>   target/sparc/gdbstub.c     | 12 ++++--------
+>   13 files changed, 53 insertions(+), 85 deletions(-)
+> 
+> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+> index 12e7b5b7282..75eb4d9c365 100644
+> --- a/include/exec/gdbstub.h
+> +++ b/include/exec/gdbstub.h
+> @@ -35,11 +35,10 @@ void gdb_init_cpu(CPUState *cpu);
+>    * @set_reg - set function (gdb modifying)
+>    * @num_regs - number of registers in set
+>    * @xml - xml name of set
+> - * @gpos - non-zero to append to "general" register set at @gpos
+>    */
+>   void gdb_register_coprocessor(CPUState *cpu,
+>                                 gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+> -                              const GDBFeature *feature, int g_pos);
+> +                              const GDBFeature *feature);
+>   
+>   /**
+>    * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index 6eadae3804e..882bc67e182 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -604,13 +604,14 @@ void gdb_init_cpu(CPUState *cpu)
+>   
+>   void gdb_register_coprocessor(CPUState *cpu,
+>                                 gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+> -                              const GDBFeature *feature, int g_pos)
+> +                              const GDBFeature *feature)
+>   {
+>       GDBRegisterState *s;
+>       guint i;
+> -    int base_reg = cpu->gdb_num_regs;
+> +    int base_reg;
+>   
+> -    assert(!g_pos || g_pos == feature->base_reg);
+> +    assert(feature->base_reg >= cpu->gdb_num_regs);
 
+This should be:
+
+   +    assert(!feature->base_reg || feature->base_reg >= 
+cpu->gdb_num_regs);
+
+> +    base_reg = feature->base_reg;
+>   
+>       for (i = 0; i < cpu->gdb_regs->len; i++) {
+>           /* Check for duplicates.  */
+> @@ -624,14 +625,7 @@ void gdb_register_coprocessor(CPUState *cpu,
+>   
+>       /* Add to end of list.  */
+>       cpu->gdb_num_regs += feature->num_regs;
+> -    if (g_pos) {
+> -        if (g_pos != base_reg) {
+> -            error_report("Error: Bad gdb register numbering for '%s', "
+> -                         "expected %d got %d", feature->xml, g_pos, base_reg);
+> -        } else {
+> -            cpu->gdb_num_g_regs = cpu->gdb_num_regs;
+> -        }
+> -    }
+> +    cpu->gdb_num_g_regs = cpu->gdb_num_regs;
+>   }
+>   
 
