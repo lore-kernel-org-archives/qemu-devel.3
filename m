@@ -4,111 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535BDEF8FEF
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20689EF8FEF
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxnNU-0004q6-EI; Wed, 04 Mar 2026 09:39:08 -0500
+	id 1vxnO3-00057D-UL; Wed, 04 Mar 2026 09:39:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vxnNS-0004pI-QC; Wed, 04 Mar 2026 09:39:06 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxnNo-0004yO-IW
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:39:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vxnNR-0002qU-5y; Wed, 04 Mar 2026 09:39:06 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6243MWpX613117; Wed, 4 Mar 2026 14:39:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=I/emfc
- DfQEdyi4PCDzS0ho/68iyMxH47JWbIFVQpC8Q=; b=PebXAOpBIJn/rvqGeQV+nz
- bk25HcNQfZ8UTnY7QYFJaLs21eyBWhC3B4/YillI8C6RoqURm7+gPqEfwzWmruCR
- x5KJgSwSVKRMgDarDnT2zBZPj2ScEdGREIaP/d9UC7E+8uxiRtFiTBX0eXet7rBQ
- 8acxnrG5MsXMKbvrPXDfnbpP/j0cMA7gDNSQ5M1hEvWcPZHEcnjR/LHrQSIBs6Y4
- CO5npiPs2wdaMIJprzhOBL91Ur8cZlbd9qLPs+5LlEuuM1cOTAv1oHYjNifP9Ogf
- q1pKq4Ce4JG2UuD5nSUOn1U8AlNbmNFxV+Dd2FimYKy8jYB92cmgo4/RH6FFVUDw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjdfr74-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Mar 2026 14:39:03 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 624E81BE003266;
- Wed, 4 Mar 2026 14:39:02 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2y75d7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Mar 2026 14:39:02 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 624Ed0Nd66191684
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 4 Mar 2026 14:39:00 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8429058058;
- Wed,  4 Mar 2026 14:39:00 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43B4A5805B;
- Wed,  4 Mar 2026 14:38:59 +0000 (GMT)
-Received: from [9.61.180.105] (unknown [9.61.180.105])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  4 Mar 2026 14:38:59 +0000 (GMT)
-Message-ID: <f2d88cdf-843f-4d23-a288-43056e383e59@linux.ibm.com>
-Date: Wed, 4 Mar 2026 09:38:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxnNl-0002tV-69
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:39:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772635163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=m9OPJsTq6sWHEKq4+8vA07yEMq2OdUFKsUyqwcWfSnU=;
+ b=GVS9tMZ5R1pPaMsSzGQ+R2Fbt1vPbTgsr7Tmcg7JqjKKu1gU5OXsGy0R2t4MyE5VVCNA4c
+ 2scN3/Wqf1uspv8SBCNozPVI3r67KSqQKFugIxUkfbZD718LuznO1kHcyLCgiWdd6/DIaT
+ UXe3fdS092+nTAtPO22JBtxpIwNGdj8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-fDM9geQiNVK5R8Ikppe6Ag-1; Wed,
+ 04 Mar 2026 09:39:20 -0500
+X-MC-Unique: fDM9geQiNVK5R8Ikppe6Ag-1
+X-Mimecast-MFC-AGG-ID: fDM9geQiNVK5R8Ikppe6Ag_1772635159
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D389718005BF; Wed,  4 Mar 2026 14:39:18 +0000 (UTC)
+Received: from [10.45.224.194] (unknown [10.45.224.194])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3D003300019F; Wed,  4 Mar 2026 14:39:13 +0000 (UTC)
+Message-ID: <79fb74d7-4b42-4ffc-902f-2498e1de5a52@redhat.com>
+Date: Wed, 4 Mar 2026 15:39:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/15] pc-bios/s390-ccw: Introduce virtio-pci functions
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+Subject: Re: [PATCH v4 12/15] pc-bios/s390-ccw: Add support for virtio-blk-pci
+ IPL
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org, mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, zycai@linux.ibm.com
 References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
- <20260304025917.2157032-12-jrossi@linux.ibm.com>
- <5f8d78a4-175d-49fc-b397-b699c49cf0a6@redhat.com>
+ <20260304025917.2157032-13-jrossi@linux.ibm.com>
+ <d359ade1-7e86-40c0-bfa2-6452fc48f69d@redhat.com>
+ <c8b28b9c-51e1-44aa-93c4-c94846676b93@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <5f8d78a4-175d-49fc-b397-b699c49cf0a6@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <c8b28b9c-51e1-44aa-93c4-c94846676b93@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69a84407 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=y7DE19vXhTpJ5KtiWeAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: -fFoNtcUzoGxpJ1mazMatxOHsZU4ZyyM
-X-Proofpoint-GUID: -fFoNtcUzoGxpJ1mazMatxOHsZU4ZyyM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDExOCBTYWx0ZWRfX9SOLYk7M4o2r
- lo5h/SHStSS3IIOosbWzcmMnOMqShXsRQZPBs/dCsIMcKwRcgyikP0ltgR/vpNkJaZSx0w/jQDj
- tpwkQEaxBUGlvpEGbmAWZFIxTtKVrz4vaX3wGydjj4ebJkmTJR71MfcOGsXdEGd3/73ZYwhFclN
- 23YmRVZOxv60qhwhnagFgLf0SIGl2vwE63mxn11sxpAktLzqQ7mShOtYsUL1yOrRLoV6K+FKzZn
- stHbWWIa1pjXc6FLrnn1DY927mixdTzuEtxAzuvUn1ExvRfqIuss3IZQVJg6x5hAYNrsFVHchEJ
- AONzUoP392dfLoxmikxOAcE+vCMc7ET3cpd29zNwKfAK1vJ5E4krSzB5ZdQsQstCsOdpQLDaPlW
- h781ByidI9Qdjh+Q+bEV59KdgXwtV4OOhGuRKQavTb4nVhbTNcCFEbJb8xS1cxBWU91fzxjMYI8
- lW8r0PO9ZaYa2OLUr4A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-04_06,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040118
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,83 +132,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/4/26 4:18 AM, Thomas Huth wrote:
-> On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
->> From: Jared Rossi <jrossi@linux.ibm.com>
+On 04/03/2026 15.29, Jared Rossi wrote:
+> 
+> 
+> On 3/4/26 4:53 AM, Thomas Huth wrote:
+>> On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
+>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> Add little-endian virt-queue configuration and support for virtio-blk-pci 
+>>> IPL
+>>> devices.
+>>>
+>>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>>> ---
+>> ...
+>>> +static int virtio_pci_get_blk_config(void)
+>>> +{
+>>> +    VirtioBlkConfig *cfg = &virtio_get_device()->config.blk;
+>>> +    int rc = vpci_read_flex(d_cap.off, d_cap.bar, cfg, 
+>>> sizeof(VirtioBlkConfig));
+>>> +
+>>> +    /* single byte fields are not touched */
+>>> +    cfg->capacity = bswap64(cfg->capacity);
+>>> +    cfg->size_max = bswap32(cfg->size_max);
+>>> +    cfg->seg_max = bswap32(cfg->seg_max);
+>>> +
+>>> +    cfg->geometry.cylinders = bswap16(cfg->geometry.cylinders);
+>>> +
+>>> +    cfg->blk_size = bswap32(cfg->blk_size);
+>>> +    cfg->min_io_size = bswap16(cfg->min_io_size);
+>>> +    cfg->opt_io_size = bswap32(cfg->opt_io_size);
 >>
->> Define common functionality for interacting with virtio-pci devices.
+>> So it looks like you read a bunch of optional config fields here ...
 >>
->> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->> ---
-> ...
->> diff --git a/pc-bios/s390-ccw/virtio-pci.c 
->> b/pc-bios/s390-ccw/virtio-pci.c
->> new file mode 100644
->> index 0000000000..2cfb84bf66
->> --- /dev/null
->> +++ b/pc-bios/s390-ccw/virtio-pci.c
->> @@ -0,0 +1,167 @@
->> +/*
->> + * Functionality for virtio-pci
->> + *
->> + * Copyright 2025 IBM Corp.
->> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "clp.h"
->> +#include "pci.h"
->> +#include "helper.h"
->> +#include "virtio.h"
->> +#include "bswap.h"
->> +#include "virtio-pci.h"
->> +#include "s390-time.h"
->> +#include <stdio.h>
->> +
->> +/* Variable offsets used for reads/writes to modern memory regions */
->> +VirtioPciCap c_cap; /* Common capabilities  */
->> +VirtioPciCap d_cap; /* Device capabilities  */
->> +VirtioPciCap n_cap; /* Notify capabilities  */
->> +uint32_t notify_mult;
->> +uint16_t q_notify_offset;
->> +
->> +static int virtio_pci_set_status(uint8_t status)
->> +{
->> +    int rc = vpci_write_byte(c_cap.off + VPCI_C_OFFSET_STATUS, 
->> c_cap.bar, status);
->> +    if (rc) {
->> +        puts("Failed to write virtio-pci status");
->> +        return -EIO;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +static int virtio_pci_get_status(uint8_t *status)
->> +{
->> +    int rc = vpci_read_byte(c_cap.off + VPCI_C_OFFSET_STATUS, 
->> c_cap.bar, status);
->> +    if (rc) {
->> +        puts("Failed to read virtio-pci status");
->> +        return -EIO;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->> +/* virtio spec v1.3 section 4.1.2.1 */
->> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
->> +{
->> +    switch (device_id) {
->> +    case 0x1402:
->
-> I think it's 0x1042, not 0x1402 ?
+>>> +    return rc;
+>>> +}
+>> ...
+>>> +int virtio_pci_setup(VDev *vdev)
+>>> +{
+>>> +    VRing *vr;
+>>> +    int rc;
+>>> +    uint8_t status;
+>>> +    uint16_t vq_size;
+>>> +    int i = 0;
+>>> +
+>>> +    vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+>>> +    vdev->cmd_vr_idx = 0;
+>>> +
+>>> +    if (virtio_pci_read_pci_cap_config()) {
+>>> +        puts("Invalid virtio PCI capabilities");
+>>> +        return -EIO;
+>>> +    }
+>>> +
+>>> +    if (enable_pci_bus_master()) {
+>>> +        return -EIO;
+>>> +    }
+>>> +
+>>> +    if (virtio_reset(vdev)) {
+>>> +        return -EIO;
+>>> +    }
+>>> +
+>>> +    status = VIRTIO_CONFIG_S_ACKNOWLEDGE;
+>>> +    if (virtio_pci_set_status(status)) {
+>>> +        puts("Virtio-pci device Failed to ACKNOWLEDGE");
+>>> +        return -EIO;
+>>> +    }
+>>
+>> ... so I think you should enable the corresponding feature bits in vdev- 
+>> >guest_features[0] here? QEMU might be very forgiving and provide you with 
+>> the fields anyway, but let's better play safe. Something like:
+>>
+>>     vdev->guest_features[0] = VIRTIO_BLK_F_SIZE_MAX |
+>>                               VIRTIO_BLK_F_SEG_MAX |
+>>                               VIRTIO_BLK_F_GEOMETRY |
+>>                               VIRTIO_BLK_F_BLK_SIZE;
+>>
+>> ?
+> 
+> VIRTIO_BLK_F_GEOMETRY and VIRTIO_BLK_F_BLK_SIZE are already set during the 
+> virtio-blk setup.  I actually don't think the other two fields are used, I 
+> jut swapped any fields larger than 1 byte.  I suppose the feature bits 
+> should be enabled though... otherwise we could just just not touch the 
+> unused fields at all?
 
-Good catch.  You are correct.  I'll fix it.
+Ah, right, I missed the initialization in virtio_blk_setup_device(), so we 
+should be fine here, indeed!
 
-Thanks again,
-Jared Rossi
+>>
+>>> +    vdev->guest_features[1] = VIRTIO_F_VERSION_1;
+>>> +    if (virtio_pci_negotiate()) {
+>>> +        panic("Virtio feature negotation failed!");
+>>> +    }
+>>
+>> Maybe double-check whether VIRTIO_F_VERSION_1 has really been negotiated? 
+>> Otherwise, what happens if a user runs QEMU with "-device virtio-blk- 
+>> pci,disable-modern=on" ?
+> 
+> I haven't tried running it with "disable-modern=on" (I will test that next) 
+> but the config is big endian if I don't negotiate that feature bit, and 
+> little endian if I do, which I think is the expected behavior when 
+> VIRTIO_F_VERSION_1 is set.
+> 
+> Just for my understanding, do you see something that makes you suspect the 
+> negotiation isn't actually happening?  I will try running with "disable- 
+> modern=on" and let you know the results.
+
+No, I think it's fine for the default case. I'm just wondering what happens 
+when someone uses "disable-modern=on" ... I guess the code will currently 
+behave in weird ways since the endianness is wrong ... thus I thought it 
+might be better to check VIRTIO_F_VERSION_1 again and emit a proper error 
+message in this case?
+
+  Thomas
+
 
