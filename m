@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C561BEDEC02
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 03:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45E7EDEC01
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 03:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxcSZ-0002NK-9Q; Tue, 03 Mar 2026 21:59:39 -0500
+	id 1vxcTL-0002pb-LC; Tue, 03 Mar 2026 22:00:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vxcSV-0002Mi-Sq; Tue, 03 Mar 2026 21:59:36 -0500
+ id 1vxcSj-0002Qm-0h; Tue, 03 Mar 2026 21:59:50 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vxcST-0000Vl-W4; Tue, 03 Mar 2026 21:59:35 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1vxcSh-0000Xx-An; Tue, 03 Mar 2026 21:59:48 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 623HvHwU1952726; Wed, 4 Mar 2026 02:59:32 GMT
+ 623JFJpA1996000; Wed, 4 Mar 2026 02:59:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=n+N8UjgYu+ZVREocE
- a8IHzcYlbCk86QXId/QmuRnE1s=; b=hxz/PB33K9jI3IcZz7o/aAuwwmbu2LBri
- Lm1LGXi8DRM70HXb4ceCuW17QCIeZxItE052+J+Rz6tJ/bEGTrm6NGK32KLQd1yg
- YChMmUQo6SSzZEFR7nyifnQhzO7OLpYRpnF+SNQDKKJAGBBl7SSOp59L1u0ygfir
- 3eSwR75Od2K2xE/X+JfqPA/VYLwopySu1W2OS6tirIyhg3mHSe+SdtEpbdqgszjw
- 97qmq396iEO7mXisG//2fy1jvQZRNoJu8ciVv7jf7o5+AqLisYgkVMpi5KZoXoRv
- f0rCuGO4vCJ296cpvPC/46OlVuH6gkWOB+LObyxRBWfg0cF4UfRtg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksrj5qh7-1
+ :mime-version:references:subject:to; s=pp1; bh=tjFBUSGGGGMUfAtbS
+ xZDSvhNFdg0g4My7DJNwfecPy4=; b=qv7ONai+1eYqo4NoOworN0kYrIWU/Li6A
+ G+24hV/nFy99mfyRTFhgDBuR4VSIVzv71uutvNc/j06kQN7YTh4IFnY2lN2iBmKW
+ H6pDW32BKxKagtP3mivBAcQKQXYiHgqWcjCrUfDDNYCcnNOhFmk5FZFlIVMVRwZd
+ j1Zf9FeKWgVHSE8XhpaoP8UOvhZS5Holy+jKytEz1I9cmskM7BjjEJVfUtoJhyP+
+ nxY0bCaNs3ZUToci6xFog4ikoakw3QrEIfDp1eobORjEAFMHw/cp6FVg9jmvIO4S
+ hwRwa1pSOGVX6ca8P/lq9GZw3gD4fs2YWgrga3OLO28QtKUwRpOOg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskcwpm3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Mar 2026 02:59:32 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 623MNA8M029748;
- Wed, 4 Mar 2026 02:59:31 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmaps557e-1
+ Wed, 04 Mar 2026 02:59:44 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62405cE7027704;
+ Wed, 4 Mar 2026 02:59:43 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjcr94-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Mar 2026 02:59:31 +0000
+ Wed, 04 Mar 2026 02:59:43 +0000
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6242xTMI31654460
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6242xJLg30016020
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 4 Mar 2026 02:59:29 GMT
+ Wed, 4 Mar 2026 02:59:20 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B64E558059;
- Wed,  4 Mar 2026 02:59:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 989F558059;
+ Wed,  4 Mar 2026 02:59:41 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 94C8058053;
- Wed,  4 Mar 2026 02:59:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 75E4358043;
+ Wed,  4 Mar 2026 02:59:40 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.180.105])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  4 Mar 2026 02:59:28 +0000 (GMT)
+ Wed,  4 Mar 2026 02:59:40 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v4 04/15] s390x: Remove duplicate definitions of IPL types
-Date: Tue,  3 Mar 2026 21:59:06 -0500
-Message-ID: <20260304025917.2157032-5-jrossi@linux.ibm.com>
+Subject: [PATCH v4 10/15] pc-bios/s390-ccw: Introduce PCI device
+Date: Tue,  3 Mar 2026 21:59:12 -0500
+Message-ID: <20260304025917.2157032-11-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260304025917.2157032-1-jrossi@linux.ibm.com>
 References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Rp/I7SmK c=1 sm=1 tr=0 ts=69a7a014 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-GUID: RViLyPv1418g4KP2XU6TterBp4hMRC2o
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDAyMSBTYWx0ZWRfX9+2hsdfY6NGS
+ sa9jHHn9t7nqtM2pLI+4ltGEj5blwIYAUbYrNUP7ttmgqbB/Y8cG010NOc0uCsdDdPxFJDTPDzr
+ C5gXKbK6xWpjwZnp6MG+ric3Xn1drd8S3pU9DY33FBZANumyGxt1TFf1yAqFjuBiLDAYMnoKgCe
+ Dl4i3rcbElMncLCkvUHMBvPYh9UlaKIpc/2rGpqazF5JeXKS37LuRBxx191m3vRjMsWnO/GVs1c
+ aCHOyRda7DPcXFjVMRWHZXA6Pyda+xzQDwRokXhI4zla7SCCP5tkBraNs1LVg2jffBZbZBZos49
+ pXpFDUaDjLapCw4AfmnZX7YxGwF10Na3jndwDlPF9/DsTKhWuR8HpzjSLDKevz/qc06Zo6rMNaD
+ KKU+KuYyFursZzcsjIeviIuvwF+1aKQND0Kttp726uW6y+IBEqMoBYwV5frnV6jVSr4gLE2fHpb
+ 5fmKDzT/+5F153D5BmQ==
+X-Authority-Analysis: v=2.4 cv=H7DWAuYi c=1 sm=1 tr=0 ts=69a7a020 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=IO535qWdJy4Oo3HXDe8A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDAyMSBTYWx0ZWRfX4kM0LAmxBLFa
- 6jlKrGiLeIOJBTiE8PcFjOvIyuyRdQVW0uI4SeHpAWY8E2WOVFlk8LxlEkTlJurYmbk1IODfKXn
- soVqCVM3c5d00EJbQg1TpJu7eBAH3ufA3ZeLhJC1zzAsFGMKNQAsFjTLDgAiwvR3rX7ou0hXDm+
- mE0EMHDxl0IDt4z1Eo2tDqQZVFfBc6GiJ1lHbxe4MExVdOZxKKb8cJ1evZCBObzEpfIzTNw2Ggz
- ZiHbodKInwvfXmjqUK7vaPT6D+NMFs/DAkzGUtGo7g4bwTZ5LOagTI/kmdhfBZ5T8SaqqHo2Fvb
- FoYXkEdaE8QcZR7+RWpkhSMB3+yJMfQnZVp7rRRh6o30NV78b8+yW3I0Dq7MR2FsHX5sbxrSfyI
- M8y75FuXUS57+EFmFZ7WCuwje5rBJB9AJ8nUqtNtLX78w+khRFO05/W5P8h+zcRekt6smsfH5ls
- TEQiaGrujWpAEFZjcng==
-X-Proofpoint-GUID: LPTOLttHJBrM8SO6L93wVoMPN5uVdLHm
-X-Proofpoint-ORIG-GUID: LPTOLttHJBrM8SO6L93wVoMPN5uVdLHm
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=p5Q4SJhZOU-7DgXL5goA:9
+X-Proofpoint-ORIG-GUID: RViLyPv1418g4KP2XU6TterBp4hMRC2o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-04_01,2026-03-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0 adultscore=0
- bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040021
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
@@ -120,134 +120,199 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Remove the duplicate definitions from hw/s390x/ipl.h and pc-bios/s390-ccw/iplb.h
-and add a shared definition.  The new definition is an enum to enforce default
-handling in switches.
-
-Because the IPL type is determined by the IPLB, and because an IPLB is not
-strictly necessary, the IPL type is set to a default value if not otherwise
-specified.  A default IPL type is required so future functionality may add
-IPL new bus and/or device types that dictate specific behavior during IPL.
+Define selected s390x PCI instructions.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- hw/s390x/ipl.h              |  5 -----
- include/hw/s390x/ipl/qipl.h | 10 ++++++++++
- pc-bios/s390-ccw/iplb.h     |  4 ----
- pc-bios/s390-ccw/main.c     |  9 +++++++--
- pc-bios/s390-ccw/virtio.h   |  1 +
- 5 files changed, 18 insertions(+), 11 deletions(-)
+ pc-bios/s390-ccw/Makefile |   2 +-
+ pc-bios/s390-ccw/pci.c    | 118 ++++++++++++++++++++++++++++++++++++++
+ pc-bios/s390-ccw/pci.h    |  39 +++++++++++++
+ 3 files changed, 158 insertions(+), 1 deletion(-)
+ create mode 100644 pc-bios/s390-ccw/pci.c
+ create mode 100644 pc-bios/s390-ccw/pci.h
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 086e57681c..c542d30ce2 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -103,11 +103,6 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
- #define DIAG308_PV_STORE            9
- #define DIAG308_PV_START            10
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index 9c29548f84..a62fc9d766 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
  
--#define S390_IPL_TYPE_FCP 0x00
--#define S390_IPL_TYPE_CCW 0x02
--#define S390_IPL_TYPE_PV 0x05
--#define S390_IPL_TYPE_QEMU_SCSI 0xff
--
- #define S390_IPLB_HEADER_LEN 8
- #define S390_IPLB_MIN_PV_LEN 148
- #define S390_IPLB_MIN_CCW_LEN 200
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index 6824391111..6dc12dd859 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -20,6 +20,16 @@
- #define LOADPARM_LEN    8
- #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
+ OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+ 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+-	  virtio-ccw.o clp.o
++	  virtio-ccw.o clp.o pci.o
  
-+enum S390IplType {
-+    S390_IPL_TYPE_FCP = 0x00,
-+    S390_IPL_TYPE_CCW = 0x02,
-+    S390_IPL_TYPE_PV = 0x05,
-+    S390_IPL_TYPE_QEMU_SCSI = 0xff
-+};
-+typedef enum S390IplType S390IplType;
+ SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+ 
+diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
+new file mode 100644
+index 0000000000..36e86fcc71
+--- /dev/null
++++ b/pc-bios/s390-ccw/pci.c
+@@ -0,0 +1,118 @@
++/*
++ * s390x PCI functionality
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+#define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
++#include "clp.h"
++#include "pci.h"
++#include "bswap.h"
++#include <stdio.h>
++#include <stdbool.h>
 +
- /*
-  * The QEMU IPL Parameters will be stored at absolute address
-  * 204 (0xcc) which means it is 32-bit word aligned but not
-diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-index 08f259ff31..926e8eed5d 100644
---- a/pc-bios/s390-ccw/iplb.h
-+++ b/pc-bios/s390-ccw/iplb.h
-@@ -23,10 +23,6 @@ extern QemuIplParameters qipl;
- extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
- extern bool have_iplb;
- 
--#define S390_IPL_TYPE_FCP 0x00
--#define S390_IPL_TYPE_CCW 0x02
--#define S390_IPL_TYPE_QEMU_SCSI 0xff
--
- static inline bool manage_iplb(IplParameterBlock *iplb, bool store)
- {
-     register unsigned long addr asm("0") = (unsigned long) iplb;
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 8e2c99bee1..ef5acc1985 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -162,11 +162,12 @@ static void menu_setup(void)
-         return;
-     }
- 
--    switch (iplb.pbt) {
-+    switch (virtio_get_device()->ipl_type) {
-     case S390_IPL_TYPE_CCW:
-     case S390_IPL_TYPE_QEMU_SCSI:
-         menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
-                        qipl.boot_menu_timeout);
++/* PCI load */
++static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset,
++                        uint8_t *status)
++{
++    union register_pair req_off = {.even = req, .odd = offset};
++    int cc = -1;
++    uint64_t __data;
++
++    asm volatile (
++        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "+d" (cc), [data] "=d" (__data),
++          [req_off] "+d" (req_off.pair) :: "cc");
++    *status = req_off.even >> 24 & 0xff;
++    *data = __data;
++    return cc;
++}
++
++/* PCI store */
++static inline int pcistg(uint64_t data, uint64_t req, uint64_t offset,
++                         uint8_t *status)
++{
++    union register_pair req_off = {.even = req, .odd = offset};
++    int cc = -1;
++
++    asm volatile (
++        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
++        "     ipm     %[cc]\n"
++        "     srl     %[cc],28\n"
++        : [cc] "+d" (cc), [req_off] "+d" (req_off.pair)
++        : [data] "d" (data)
++        : "cc");
++    *status = req_off.even >> 24 & 0xff;
++    return cc;
++}
++
++int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
++              uint8_t len)
++{
++
++    uint64_t req = ZPCI_CREATE_REQ(fhandle, pcias, len);
++    uint8_t status;
++    int rc;
++
++    /* len must be non-zero power of 2 with a maximum of 8 bytes per write */
++    switch (len) {
++    case 1:
++    case 2:
++    case 4:
++    case 8:
++        rc = pcistg(data, req, offset, &status);
++        break;
 +    default:
-         return;
-     }
- }
-@@ -190,6 +191,7 @@ static void css_setup(void)
- static void boot_setup(void)
- {
-     char lpmsg[] = "LOADPARM=[________]\n";
-+    VDev *vdev = virtio_get_device();
- 
-     if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
-         ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
-@@ -198,7 +200,10 @@ static void boot_setup(void)
-     }
- 
-     if (have_iplb) {
-+        vdev->ipl_type = iplb.pbt;
-         menu_setup();
-+    } else {
-+        vdev->ipl_type = QEMU_DEFAULT_IPL;
-     }
- 
-     memcpy(lpmsg + 10, loadparm_str, 8);
-@@ -216,7 +221,7 @@ static bool find_boot_device(void)
-     VDev *vdev = virtio_get_device();
-     bool found = false;
- 
--    switch (iplb.pbt) {
-+    switch (vdev->ipl_type) {
-     case S390_IPL_TYPE_CCW:
-         vdev->scsi_device_selected = false;
-         debug_print_int("device no. ", iplb.ccw.devno);
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 06ba4e45ac..391d6ff2f7 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -238,6 +238,7 @@ struct VDev {
-     VirtioGDN guessed_disk_nature;
-     SubChannelId schid;
-     SenseId senseid;
-+    S390IplType ipl_type;
-     union {
-         VirtioBlkConfig blk;
-         VirtioScsiConfig scsi;
++        return -1;
++    }
++
++    /* Error condition detected */
++    if (rc != 0) {
++        printf("PCI store failed with status condition %d, return code %d\n",
++               status, rc);
++        return -1;
++    }
++
++    return rc ? -1 : 0;
++}
++
++int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
++             uint8_t len)
++{
++    uint64_t req, data;
++    uint8_t status;
++    int rc;
++
++    req = ZPCI_CREATE_REQ(fhandle, pcias, len);
++    rc = pcilg(&data, req, offset, &status);
++
++    /* Error condition detected */
++    if (rc != 0) {
++        printf("PCI load failed with status condition %d, return code %d\n",
++               status, rc);
++        return -1;
++    }
++
++    switch (len) {
++    case 1:
++        *(uint8_t *)buf = data;
++        break;
++    case 2:
++        *(uint16_t *)buf = data;
++        break;
++    case 4:
++        *(uint32_t *)buf = data;
++        break;
++    case 8:
++        *(uint64_t *)buf = data;
++        break;
++    default:
++        return -1;
++    }
++
++    return rc ? -1 : 0;
++}
+diff --git a/pc-bios/s390-ccw/pci.h b/pc-bios/s390-ccw/pci.h
+new file mode 100644
+index 0000000000..40a0bf9dcb
+--- /dev/null
++++ b/pc-bios/s390-ccw/pci.h
+@@ -0,0 +1,39 @@
++/*
++ * s390x PCI definitions
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef PCI_H
++#define PCI_H
++
++#include <stdint.h>
++#include <stdbool.h>
++#include "clp.h"
++
++#define ZPCI_CREATE_REQ(handle, space, len)                    \
++    ((uint64_t) handle << 32 | space << 16 | len)
++
++union register_pair {
++    unsigned __int128 pair;
++    struct {
++        unsigned long even;
++        unsigned long odd;
++    };
++};
++
++#define PCIST_DISABLED         0x0
++#define PCIST_ENABLED          0x1
++
++#define PCI_CFGBAR             0xF  /* Base Address Register for config space */
++#define PCI_CAPABILITY_LIST    0x34 /* Offset of first capability list entry */
++
++int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
++              uint8_t len);
++int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
++             uint8_t len);
++
++#endif
 -- 
 2.52.0
 
