@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38502EDEC1B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F31EDEC1E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxgy2-0002w8-0X; Wed, 04 Mar 2026 02:48:26 -0500
+	id 1vxh03-0003X6-8m; Wed, 04 Mar 2026 02:50:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1vxgxy-0002vV-UV
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:48:23 -0500
+ id 1vxh01-0003Ww-Lx
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:50:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1vxgxj-00022b-8X
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:48:09 -0500
+ id 1vxgzz-0002ei-Td
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:50:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772610485;
+ s=mimecast20190719; t=1772610626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mWPQkYSv9CCOZUAaCEQcCnFWU2jfi+WNj+abG9bHF2U=;
- b=JnlATQOSu4yheW4zve/o999kx2F01Ib18lotr9Cf4UdSWevKKGcsl+3iLZJvjeQgWy5uJM
- K+atMC8bxEQDo8JuyKObBAbLc+74UpzgdKnDuKWR2gUTbE3JE6kb33m8XCHFgjpw9yOYvX
- WlZXI48Xw6zxu8mGwJBqaZVmY9GuaKY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jceWmQVXH0yzJzdeni8fkbI6OW8LtfYSIlzm4J4f+j4=;
+ b=cyfwmZajaO6gIeKwhl/4NJhNjYmqm67R3Z0vjViy0FzJjgi3ljZ3AEx1Xs44FJ/f76bMzw
+ w6TUtt7GvvXxwug/wVjqO8jok/YwetzU/3iCPSvxoFRlHThuUKTCnefKLCF36bzy3MlFTh
+ m+bcZf/G9vOjioUUjxLUym9i0Oqv1b0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-3-dEbOaqjjOzabOxv3Q8yMxA-1; Wed, 04 Mar 2026 02:48:04 -0500
-X-MC-Unique: dEbOaqjjOzabOxv3Q8yMxA-1
-X-Mimecast-MFC-AGG-ID: dEbOaqjjOzabOxv3Q8yMxA_1772610483
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439ae2cba40so2619448f8f.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 23:48:04 -0800 (PST)
+ us-mta-673--1MZVIkaOyW97Rd4wMUqVQ-1; Wed, 04 Mar 2026 02:50:25 -0500
+X-MC-Unique: -1MZVIkaOyW97Rd4wMUqVQ-1
+X-Mimecast-MFC-AGG-ID: -1MZVIkaOyW97Rd4wMUqVQ_1772610624
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-439af7ba802so3452111f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 23:50:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772610483; x=1773215283; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772610624; x=1773215424; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mWPQkYSv9CCOZUAaCEQcCnFWU2jfi+WNj+abG9bHF2U=;
- b=XN/fpifo7LrsOZaDkJJgPsI0GmPyU+8+pAqwnHDqExya7cR+NPwrJillwmIscjiQ0O
- iX4WMd6t1ZtAoom6Lk/8UyyfQ/nKrcrmHstA5WvjAe/LjwTYYPdqwYlae/w6q7kV5UWz
- LHub4qdSmKwo0VUN/AMQJj2UZdiO6Dx9c05t6TtMHs/zAVf/Wwq5YR56fvkc3WNhJoG1
- 0ys9gQJvH0T2Gaq4Ea1OrFrsRKjgSSfolwKo359WDB+iNSNJKemehAqxRxVUW4AJL59R
- vFTfWqK8bloQc1rqyeSSpgleKescMiAfF5Bqb9TGtt8qnPNBvV8uvUegbbyv/z1Fcdwp
- QGhg==
+ bh=jceWmQVXH0yzJzdeni8fkbI6OW8LtfYSIlzm4J4f+j4=;
+ b=Wk9n8EM8blVFameU5PWySj5O5Np4NhwD/x9b2fg3ZBeA6Qw5xTzO0Ch0FmBFz1Nb1f
+ IvaUp3b2SdN4Fwvf2fi9+/nRmpRD4BOGhhFYEPHqgnCvQjsqwkKFaz3YCydh3s2mZTdG
+ iLUunt3MZYYFRtnP5dKh1lOK0n0FCxKHl3mYF43TleYJRePcfu8EY+GrgTjuFpH6XTpd
+ pBg8F8EqYhksAO226++f7c7Vm3K5uI6LlO1d/BEWuEsNWN0PpeiD3skmPIwsjgQbJCHz
+ RMc3G98UIYHzHvmEDOZquJsaTKDA67zGlaUGlF4D5AMoV68YzZD8MQf6NxYua8kO4z3b
+ U15w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772610483; x=1773215283;
+ d=1e100.net; s=20230601; t=1772610624; x=1773215424;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mWPQkYSv9CCOZUAaCEQcCnFWU2jfi+WNj+abG9bHF2U=;
- b=Vn1jx+vpev+4zUQvBCgo4J9lkQwdY0TufipBmmnLsaSoWegiy8zniXCLgSR3vXHw2W
- cWIwGGEZC/PapbYukmjsZjNu876kRxXYQwlYVDeOGmnA4VHFU32izMVEq0C0p+5BXGOt
- 7TXr03Z5NBcaVDrgX7ZgVBR2bTrj4lDV09WLYcwbAhNkRT0XbyGkFul3IF88wlkyqLNj
- Vt+79bZSJ65kHhb6boKKQvRYx+kj6+BsrmIhZrao/ZZFlluUurvqDNbWYGtymR0/+zKt
- EyvhsFathdRHThsTUyTsB2PhRaRotYsUXqfoCJgHt44WUexv+Wz6DlPdM8rb/rg2f3Ol
- xqXg==
+ bh=jceWmQVXH0yzJzdeni8fkbI6OW8LtfYSIlzm4J4f+j4=;
+ b=twL/FkBogtDoJAzV8bs/TlVgyB2/MM8vW50EbaLgTiRez+CBIuJqrE4/Nq+hEhcSxk
+ z6wN9WERISh4ENCsWDKy/Ln1p/5QLPVeLl4h82/pgDTYR640S8a7fGf9NrXVoo7VfePm
+ lxRb/3TtSoxrIGhKJgrJLRchl5aE904DHAcNGpaXLBhPp4viylxKAejKqgiR+WzC5iSs
+ ra3/JOgNHTANa8e9LskgE94snlDJON9/oNqddwanHYHeY00V6DmCb1fPtzeMXKz34tXW
+ IlyOkhvgKM+gZZDib5uXHwM6T0YKYiru+/VN/f1RTvUZvcIp9sHUV0E9AYCn2AFYsEvy
+ xhng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpQ11y4Rk7zjp50qa/uW0fQ031Op1NA3IcZMr9X14ZZSwEX86dtJnZJKtkc/ZqRCLBjMWHedvqdAma@nongnu.org
-X-Gm-Message-State: AOJu0YxCJaDVOzzXmthHIwFZHPVtTtIjyY4czfcNkqNIMgJhxpHMFyRO
- ZLXlSFFzYLPIIXYezwHMGJOJtz8yZW9EWVkNxBZSTEUp3NXUnCWMmsjf7IiyqlltXXP1ugPanxk
- vX3qZNfzJKFT1EP6XFVGQJSiOci2p8u28e7r2k8SgqvMzdMH3Vadlst++8VSlmG6q
-X-Gm-Gg: ATEYQzyJM9cICkqsJt9kT3+OYxBDw+eiXnN5Lo136GE/Q7K3Ij1Z0blQmcCcxLP4vri
- bbL7tZkfXJcQ9Qpp/XUkQvMqiQt2EnY6jL+0R2E0fAPs0vqancGBOZHZWfAMmY7VKOhsOpMBAzL
- gz/UEr8JhJgUAhG9551Ad1J9BSr8GOtg5E/pBfnbV4mkCL/luVCZAjpzUQFf0hbD7UP3bIlkqLf
- 0Z14mYr0JkqukwZaencB/NgNbj54JeHimxqMF7RSdx75WuTuJ+suXuWoHr3NADnFDUlLb/5xHua
- KnxKoX13KX3FNymZMvM+13kq6bo3C/WQdsSp3UEvmSyzo73cKJZTYs+FusvA8jC3yqrTG8QR9kG
- CTVwY2Y6ND131I9TolBkmDoxLl+ROJb9+XTQikVaCQjFH4SsyUy8NIOoVcW7BH+gMbA==
-X-Received: by 2002:a05:6000:1447:b0:439:b11e:a5c6 with SMTP id
- ffacd0b85a97d-439c7fb236amr1747410f8f.24.1772610483120; 
- Tue, 03 Mar 2026 23:48:03 -0800 (PST)
-X-Received: by 2002:a05:6000:1447:b0:439:b11e:a5c6 with SMTP id
- ffacd0b85a97d-439c7fb236amr1747372f8f.24.1772610482617; 
- Tue, 03 Mar 2026 23:48:02 -0800 (PST)
+ AJvYcCU9ZTd8upeR8i54FrmaOSxEmZJGSNj0UaZmk7bdPEEUcwce2tchwA7mCUTzl4FqWgcbGAcBX0erxK//@nongnu.org
+X-Gm-Message-State: AOJu0YygTVvL9qRHfXjjQEDxC00Refyej8uFF+KPoAmvHgcmO+KAvfuS
+ VqcYI5VCyIY/e93ttfNS+LKdaVVhDyzsTuoi81oRWYgW1NEOZ2Iu9MNLmO+gf9PyAlZgTR/m74V
+ YPNVve2fmkwUtq5ZcT/BZIGMMlVJe67F/66Rcpvw2uUa9lsr2hfXeGezc
+X-Gm-Gg: ATEYQzzDg4XO0x+z9c4WAmTGSAAVRSHGH/Pi7tSNkok5EwoKyIiiFV6YOt0vA8sMNTS
+ Cvg+4FOrQqcY+aVndizBdOcIewrv9WvB4Jr2n4xhvXlEbAvC3LpQummuONGsKVO8wt8jARLvyYh
+ qnXASNGlFfUj0UuEDFsOTREIlIyiRe9AJPN1DYLeUEIiSQyCLbmTM4I67cn/zFhbdFdKs1TxicA
+ ih9HBikzm5ZhJOZPWzSYj16fDV2w5vpHN2d0Fvk1wS37Yb/umMts6FrdqikjoeCI/Ud9saol+Ri
+ 8raQneQVhi0sZ0tJvU/0ZJCQrxVl53JrIB4uLj0Bz80AYzBKlRD0fn6m7qjgN3t3JEHpkPY8rUo
+ +5r+0EYs4646V6DPhze64GLXZSybJXbQup2E1EtwGwoGsAx2nMEd3aWn4ZjxSoC5GbQ==
+X-Received: by 2002:a05:6000:310d:b0:436:369f:39f5 with SMTP id
+ ffacd0b85a97d-439c7fe4149mr1915433f8f.43.1772610624338; 
+ Tue, 03 Mar 2026 23:50:24 -0800 (PST)
+X-Received: by 2002:a05:6000:310d:b0:436:369f:39f5 with SMTP id
+ ffacd0b85a97d-439c7fe4149mr1915402f8f.43.1772610623817; 
+ Tue, 03 Mar 2026 23:50:23 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:e10:ef90:4326:a36e:a7cb:624b?
  ([2a01:e0a:e10:ef90:4326:a36e:a7cb:624b])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b55df68dsm21418882f8f.26.2026.03.03.23.48.01
+ ffacd0b85a97d-439b4175fd2sm25223168f8f.14.2026.03.03.23.50.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Mar 2026 23:48:02 -0800 (PST)
-Message-ID: <e0651889-1d1d-4308-9e7e-36d1416c7638@redhat.com>
-Date: Wed, 4 Mar 2026 08:48:01 +0100
+ Tue, 03 Mar 2026 23:50:23 -0800 (PST)
+Message-ID: <4df4b611-f60a-4b4d-ac10-69b7562be037@redhat.com>
+Date: Wed, 4 Mar 2026 08:50:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] Only kill passt if it wrote a pidfile
+Subject: Re: [PATCH 2/2] Don't try to read the pidfile if passt got a signal
 To: Peter Foley <pefoley@google.com>, qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>
 References: <20260223-passt-v1-0-101c6ba1c88a@google.com>
- <20260223-passt-v1-1-101c6ba1c88a@google.com>
+ <20260223-passt-v1-2-101c6ba1c88a@google.com>
 Content-Language: en-US
 From: Laurent Vivier <lvivier@redhat.com>
 Autocrypt: addr=lvivier@redhat.com; keydata=
@@ -140,7 +140,7 @@ Autocrypt: addr=lvivier@redhat.com; keydata=
  oDqSoLt5w9GoQQ6gDVP2ZjTWqwSRMLzNr37rJjZ1pt0DCMMTbiYIUcrhX8eveCJtY7NGWNyx
  FCRkhxRuGcpwPmRVDwOl39MB3iTsRighiMnijkbLXiKoJ5CDVvX5yicNqYJPKh5MFXN1bvsB
  kmYiStMRbrD0HoY1kx5/VozBtc70OU0EB8Wrv9hZD+Ofp0T3KOr1RUHvCZoLURfFhSQ=
-In-Reply-To: <20260223-passt-v1-1-101c6ba1c88a@google.com>
+In-Reply-To: <20260223-passt-v1-2-101c6ba1c88a@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
@@ -169,31 +169,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/23/26 22:52, Peter Foley wrote:
-> Avoid killing qemu if passt failed before writing a pidfile.
+> g_subprocess_get_if_exited returns false if passt was killed by a signal, so we fall through to trying to read the pidfile.
 > 
-> pid is initialized to 0, so calling pid in this scenario would kill the
-> entire process group.
+> Update the error when passt exits to include the exit code.
 > 
 > Signed-off-by: Peter Foley <pefoley@google.com>
 > ---
->   net/passt.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   net/passt.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
 > 
 > diff --git a/net/passt.c b/net/passt.c
-> index 9ed811a514..b3d4b71314 100644
+> index b3d4b71314..053c2f5f57 100644
 > --- a/net/passt.c
 > +++ b/net/passt.c
-> @@ -102,7 +102,9 @@ static void net_passt_cleanup(NetClientState *nc)
+> @@ -270,8 +270,17 @@ static int net_passt_start_daemon(NetPasstState *s, int sock, Error **errp)
+>           return -1;
 >       }
->   #endif
 >   
-> -    kill(s->pid, SIGTERM);
-> +    if (s->pid > 0) {
-> +        kill(s->pid, SIGTERM);
+> -    if (g_subprocess_get_if_exited(daemon) &&
+> -        g_subprocess_get_exit_status(daemon)) {
+> +    if (g_subprocess_get_if_exited(daemon)) {
+> +        gint status = g_subprocess_get_exit_status(daemon);
+> +        if (status) {
+> +            error_setg(errp, "Passt exited with code %d", status);
+> +            return -1;
+> +      }
+        ^^^
+Indentation problem (6 spaces instead of 8)
+
 > +    }
->       if (g_remove(s->pidfile) != 0) {
->           warn_report("Failed to remove passt pidfile %s: %s",
->                       s->pidfile, strerror(errno));
+> +
+> +    if (g_subprocess_get_if_signaled(daemon)) {
+> +        error_setg(errp, "Passt killed with signal %d",
+> +                   g_subprocess_get_term_sig(daemon));
+>           return -1;
+>       }
+>   
 > 
 
 Reviewed-by: Laurent Vivier <lvivier@redhat.com>
