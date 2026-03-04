@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1ED9EF8FEB
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21AFEF8FEA
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmvo-0002yY-CL; Wed, 04 Mar 2026 09:10:32 -0500
+	id 1vxmvr-00033v-8B; Wed, 04 Mar 2026 09:10:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1vxl4X-00043p-9U
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:25 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1vxl4U-0003z6-L3
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:23 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1vxl4U-0005yx-Ae
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:25 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-439b97a8a8cso3140139f8f.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:20 -0800 (PST)
+ id 1vxl4S-0005yY-1L
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:22 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439b6d9c981so2207209f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lowrisc.org; s=google; t=1772626279; x=1773231079; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GN/MBojFObjW4hTk6+kFYXvCHrFVsuEJkNUYUuvnHoA=;
- b=JAYouUjLAtQ0SoikggyVfeTE/HiqFh+zM7tURngmXCtj3HJTKYAjpStAAAn/rJmFEq
- eZPk4ciYNPXpnTJXPftsz1BYjSHDkLDcKET6vhAVY7ydS21WfW9Rm7Qcu6rirBJ+q8PC
- fYJC9+FnNXYm+AJWmnOPdgrkCjDcR4sEZr45FiuFAOqRBP6IjulYC8zTtWV37/AymoRd
- wjQvhkp1jj4seUAbBLERWdUjE2s7TkOdBYar7DRZYng2oOiwiF22TRqjCib1YwOBXzWi
- j6ktD8/vGUrPzdFBxTbFF+VdoDXD9IVItQK3koBmEx67q5+ijGgE50thjpyNZhOIqEz3
- tUpw==
+ d=lowrisc.org; s=google; t=1772626277; x=1773231077; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=evG91mDXXm2KIXJefdQAMtzpLE2N7OrQgLHa+Na8298=;
+ b=ipejcRtPYFJYTRks9h72wOR4K95h6yaxWvYQAYr2866rtbuc5pHGqN4PO9LuCAF14R
+ YP5d7axpQH0NWiAxlqgrbCiGCZjQGkBAMIuHTLM55H1qJryrrndL2Gb0NIW767ezG80O
+ ElrhWyVCBPmc7WssgrwJOJFoInZn/Xolyb+R0wcwEi4FR12lJVftRMSGO+9Vm1hzEX1z
+ bAZVfKey5dPtpnEZTXwy2d/sLcAn8z8O3kVVx4EWQgTv8TdnpZjC4fw0WrCk9B9L3eNW
+ bHDD6gFzDS86WwXYkHhG7BgnOiKCBf2678/R0A3W/Vs8xhEEBR/WM5eJGbb/tIXzmykn
+ bVEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772626279; x=1773231079;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GN/MBojFObjW4hTk6+kFYXvCHrFVsuEJkNUYUuvnHoA=;
- b=imuMOUM4AQxJMy5hbraH3jXufEcziCPAPrzeU1FdGKXhCpK8cb8nwaQM+r7HpJIkOT
- v20CHAUUO+UEO4xShvg0WYeplpvMr84VtS3TQTj9bsaBo/qr37ttx9Da0H2t5YboW/EM
- hXvoSc8+xLyeDNzPtWKi/ZWneGdEgIPYx9hhlI63RiS5BkN2J+VVgtcN15Ne/R4LlBYn
- cAVCPvDgSUIFy31FtplnBaogNUMOz5WRlj7B1kciN63SE26n7KT3RhCFphb4wfcniNzZ
- i86IfbtpuN3UOptRu3JvsS409BcwurXvCaxVFc4WIhCO9wa2gy8TNaKkDUBmDxnAdBIu
- BVkg==
-X-Gm-Message-State: AOJu0YzgobvAWZ3r5TdiEVZEOO1CJJTNSoiQQPoIT6iaVT39O8aOCQTL
- obIkRQjUEiZn+r9EY1HGH7Yh2oO5NOZUkaYWpUhpQLWjSnUETasi6cYxGaLLp97ZhxY=
-X-Gm-Gg: ATEYQzxiuAvJHWVJNxRsRIVwOaBRqQkMzTlcBp8yhDTLFumY8vcy2UpGCALCzQK6FD6
- LU2Gyi30UrbWEmaEs3yFg4SfIYpRJAY69cdjIWnufIrl8FbDrPSD+vzHSO+jA11ov+eJF+wugna
- OgVXoFeCYbu4lRezpp5V7jo2iYyvCYWc6VPf9SxbUBHO0rFaFk+FcHseylc1bdogkaTxH9ic6N2
- W96cMaVEpie5NPcVa9g5mZBcwCtmfUJ8MzBhHc2AZYNriLXvbOm+3ETeLgqZIn2dBewo2LerlPb
- npuePjkdHRYZxrGQtzY0A5ucOWx+/++scwIug/Anw2hmQ8JTZ9UEK+h0X/9uDrBRLarb6V6UEvi
- q2rF/RBJpgqoZrwJJvWHOTJC+WAQKmoHBz3II8c9mYaPeLNcINp/7R82J5/WRikxRWt8cCyLOym
- yIVOFUrS35b0ego8oSM95JGu1evDWd7M+VI+uEQmIHS9c/NEqK/LEcsxooXWnsEsj/AeJ++1TJ9
- dABXHMpY4pZRAtbOnyo
-X-Received: by 2002:a05:6000:40e0:b0:439:af81:1b23 with SMTP id
- ffacd0b85a97d-439c7f791a0mr3524305f8f.21.1772626279158; 
- Wed, 04 Mar 2026 04:11:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772626277; x=1773231077;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=evG91mDXXm2KIXJefdQAMtzpLE2N7OrQgLHa+Na8298=;
+ b=rErO4NcVkt7QbhEe0uAjYjSJG/SFfmNBenfICiimVvJE7qQnnou5kVgycFFB9qIgPB
+ AUpzazTTmhDqFAfvHBj9WJb4792nSZnGNYJKE8EXvVqQMnpgAjjWczDLf//hAHaLz2AQ
+ iN4Fa4AJ/DlKeL675SFcYjnRgUKCp7gOG1KSd4cuhoDqEpTmmmel0yBND4DPGnVPXNBb
+ KcuBBLK/wDu9SP5E+nmsMRRyvRKHfGD2OVXoV2TgelxWI7gyiLXfDdeSwLLQ9QBkFk9y
+ G8wyo4cImCD1bG1uh6Z8659QgnWtci5dIivI8/eyfVfkhkkViTYKfqnvQel4gG+hJZBz
+ 3s7A==
+X-Gm-Message-State: AOJu0Yxr7Aa3sJE+8+JTkmTDZbzxinjOw5X+xrhih6jezXtugc0jEc6V
+ aQ/7X9ZA1Ym9zSE4pSt7qx+CDTf91HUT3vgZo/PMyvjixCzMTECISSJBW26i60S68bY=
+X-Gm-Gg: ATEYQzzBTFM9DVWWZDyUeOVnYA8yNrchrNpT5W5hZyaTS4iSegloNUNfvYZdg5zCzwL
+ klaRj//ZqdYDtp7oiKq89F0SaqZMH5WtIPJq/53o3Uq9YDimBumK4QlAdiB9kM0rV0HKwA7caIg
+ izC8y9Z2GKDiIL9SPkYzp6/ky2xj2IN+Lqx0x/dAMFhrMKcfp2/AnWToNX7wZ9W76kMWeS57y7a
+ hdQjspRqg5JJbgfPbi1si9CdT2eKacksQwgdtv+c1KIynIaIqxXDltcC32OiVI59b1SfA9eB2HR
+ tUjZaPKAU6AELW/i2GxCThmOzVvX41DR76HqtC+7xK0qZTB6IfOGj4uZyV7KcN/mMjfbWlj2r35
+ d1jKrQpiF6wyyTmmmA+Y1GAQx5+52dQicNL+AN8z426RnmG4ppP47Kw3AtpydQzHpowx/0qeB/o
+ Gj2ExGrhXfgI+7lkzoCHvP9WUgpnqjV4fPzk2RtkBXgzE0oCiWHne0+C0PSuVsTAyPBHU1n4ROG
+ 19e8rjzpfcUv49jnGTl
+X-Received: by 2002:a05:6000:178d:b0:439:9812:35ea with SMTP id
+ ffacd0b85a97d-439c108ceb8mr9778672f8f.3.1772626276788; 
+ Wed, 04 Mar 2026 04:11:16 -0800 (PST)
 Received: from jw-ThinkPad-T14-Gen-3.home (128.70.159.143.dyn.plus.net.
  [143.159.70.128]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b0549600sm28217570f8f.35.2026.03.04.04.11.18
+ ffacd0b85a97d-439b0549600sm28217570f8f.35.2026.03.04.04.11.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 04:11:18 -0800 (PST)
+ Wed, 04 Mar 2026 04:11:16 -0800 (PST)
 From: James Wainwright <james.wainwright@lowrisc.org>
 To: qemu-riscv@nongnu.org
 Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
  James Wainwright <james.wainwright@lowrisc.org>
-Subject: [PATCH 3/3] disas: diassemble RISC-V Zbr0p93 instructions
-Date: Wed,  4 Mar 2026 12:11:13 +0000
-Message-ID: <20260304121113.117299-4-james.wainwright@lowrisc.org>
+Subject: [PATCH 0/3] RISC-V Zbr0p93 extension
+Date: Wed,  4 Mar 2026 12:11:10 +0000
+Message-ID: <20260304121113.117299-1-james.wainwright@lowrisc.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260304121113.117299-1-james.wainwright@lowrisc.org>
-References: <20260304121113.117299-1-james.wainwright@lowrisc.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=james.wainwright@lowrisc.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=james.wainwright@lowrisc.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 04 Mar 2026 09:09:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,176 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Placed in a separate file as an unratified extension.
+This patch series adds support for the unratified RISC-V Zbr0p93
+extension which is implemented by the Ibex core and used in the (now
+taped-out) OpenTitan mask ROM.
 
-Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
----
- MAINTAINERS       |  2 +-
- disas/meson.build |  3 +-
- disas/riscv-zbr.c | 78 +++++++++++++++++++++++++++++++++++++++++++++++
- disas/riscv-zbr.h | 18 +++++++++++
- disas/riscv.c     |  4 +++
- 5 files changed, 103 insertions(+), 2 deletions(-)
+Because this extension uses the standard reserved encoding space, it's
+possible that it could conflict with a ratified extension in the future.
+
+These patches were written by Rivos for the OpenTitan fork of QEMU, but
+lowRISC is choosing to upstream them.
+
+Emmanuel Blot (3):
+  util: export CRC32[C] lookup tables
+  target/riscv: add unratified RISC-V Zbr0p93 ext
+  disas: diassemble RISC-V Zbr0p93 instructions
+
+ MAINTAINERS                               |  2 +-
+ disas/meson.build                         |  3 +-
+ disas/riscv-zbr.c                         | 78 +++++++++++++++++++++
+ disas/riscv-zbr.h                         | 18 +++++
+ disas/riscv.c                             |  4 ++
+ include/qemu/crc32.h                      | 18 +++++
+ include/qemu/crc32c.h                     |  1 +
+ target/riscv/bitmanip_helper.c            | 20 ++++++
+ target/riscv/cpu.c                        |  4 +-
+ target/riscv/cpu_cfg.h                    |  3 +
+ target/riscv/cpu_cfg_fields.h.inc         |  1 +
+ target/riscv/helper.h                     |  2 +
+ target/riscv/insn32.decode                | 12 ++++
+ target/riscv/insn_trans/trans_rvb.c.inc   | 37 ++++++++++
+ tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
+ tests/tcg/riscv64/test-crc32.S            | 64 +++++++++++++++++
+ util/crc32.c                              | 85 +++++++++++++++++++++++
+ util/crc32c.c                             |  4 +-
+ util/meson.build                          |  1 +
+ 19 files changed, 357 insertions(+), 5 deletions(-)
  create mode 100644 disas/riscv-zbr.c
  create mode 100644 disas/riscv-zbr.h
+ create mode 100644 include/qemu/crc32.h
+ create mode 100644 tests/tcg/riscv64/test-crc32.S
+ create mode 100644 util/crc32.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6698e5ff69..a3b747148d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4144,7 +4144,7 @@ M: Alistair Francis <Alistair.Francis@wdc.com>
- L: qemu-riscv@nongnu.org
- S: Maintained
- F: tcg/riscv64/
--F: disas/riscv.[ch]
-+F: disas/riscv*.[ch]
- 
- S390 TCG target
- M: Richard Henderson <richard.henderson@linaro.org>
-diff --git a/disas/meson.build b/disas/meson.build
-index bbfa119783..d549b9b072 100644
---- a/disas/meson.build
-+++ b/disas/meson.build
-@@ -7,7 +7,8 @@ common_ss.add(when: 'CONFIG_MIPS_DIS', if_true: files('mips.c', 'nanomips.c'))
- common_ss.add(when: 'CONFIG_RISCV_DIS', if_true: files(
-     'riscv.c',
-     'riscv-xthead.c',
--    'riscv-xventana.c'
-+    'riscv-xventana.c',
-+    'riscv-zbr.c'
- ))
- common_ss.add(when: 'CONFIG_SH4_DIS', if_true: files('sh4.c'))
- common_ss.add(when: 'CONFIG_SPARC_DIS', if_true: files('sparc.c'))
-diff --git a/disas/riscv-zbr.c b/disas/riscv-zbr.c
-new file mode 100644
-index 0000000000..b8bde6026a
---- /dev/null
-+++ b/disas/riscv-zbr.c
-@@ -0,0 +1,78 @@
-+/*
-+ * QEMU RISC-V Disassembler for Zbr v0.93 (unratified)
-+ *
-+ * Copyright (c) 2023 Rivos Inc
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+
-+#include "disas/riscv.h"
-+#include "disas/riscv-zbr.h"
-+
-+typedef enum {
-+    /* 0 is reserved for rv_op_illegal. */
-+    rv_op_crc32_b = 1,
-+    rv_op_crc32_h = 2,
-+    rv_op_crc32_w = 3,
-+    rv_op_crc32_d = 4,
-+    rv_op_crc32c_b = 5,
-+    rv_op_crc32c_h = 6,
-+    rv_op_crc32c_w = 7,
-+    rv_op_crc32c_d = 8,
-+} rv_zbr_op;
-+
-+const rv_opcode_data rv_zbr_opcode_data[] = {
-+    { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "crc32.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32.w", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32.d", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32c.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32c.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32c.w", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+    { "crc32c.d", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-+};
-+
-+void decode_zbr(rv_decode *dec, rv_isa isa)
-+{
-+    rv_inst inst = dec->inst;
-+    rv_opcode op = rv_op_illegal;
-+
-+    switch ((inst >> 0) & 0b1111111) {
-+    case 0b0010011:
-+        switch ((inst >> 12) & 0b111) {
-+        case 0b001:
-+            switch ((inst >> 20 & 0b111111111111)) {
-+            case 0b011000010000:
-+                op = rv_op_crc32_b;
-+                break;
-+            case 0b011000010001:
-+                op = rv_op_crc32_h;
-+                break;
-+            case 0b011000010010:
-+                op = rv_op_crc32_w;
-+                break;
-+            case 0b011000010011:
-+                op = rv_op_crc32_d;
-+                break;
-+            case 0b011000011000:
-+                op = rv_op_crc32c_b;
-+                break;
-+            case 0b011000011001:
-+                op = rv_op_crc32c_h;
-+                break;
-+            case 0b011000011010:
-+                op = rv_op_crc32c_w;
-+                break;
-+            case 0b011000011011:
-+                op = rv_op_crc32c_d;
-+                break;
-+            }
-+            break;
-+        }
-+        break;
-+    }
-+    dec->op = op;
-+}
-diff --git a/disas/riscv-zbr.h b/disas/riscv-zbr.h
-new file mode 100644
-index 0000000000..327cdaea17
---- /dev/null
-+++ b/disas/riscv-zbr.h
-@@ -0,0 +1,18 @@
-+/*
-+ * QEMU RISC-V Disassembler for Zbr v0.93 (unratified)
-+ *
-+ * Copyright (c) 2023 Rivos Inc
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef DISAS_RISCV_ZBR_H
-+#define DISAS_RISCV_ZBR_H
-+
-+#include "disas/riscv.h"
-+
-+extern const rv_opcode_data rv_zbr_opcode_data[];
-+
-+void decode_zbr(rv_decode *, rv_isa);
-+
-+#endif /* DISAS_RISCV_ZBR_H */
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 6f2667482d..ebb77ea4ee 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -27,6 +27,9 @@
- #include "disas/riscv-xthead.h"
- #include "disas/riscv-xventana.h"
- 
-+/* Unratified extensions */
-+#include "disas/riscv-zbr.h"
-+
- typedef enum {
-     /* 0 is reserved for rv_op_illegal. */
-     rv_op_lui = 1,
-@@ -5434,6 +5437,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
-         { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair },
-         { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
-         { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacondops },
-+        { has_zbr_p, rv_zbr_opcode_data, decode_zbr },
-     };
- 
-     for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
 -- 
 2.48.1
 
