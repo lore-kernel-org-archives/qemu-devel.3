@@ -4,105 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348AEEB7EAC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85471EB7EB2
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxim4-0001nq-QT; Wed, 04 Mar 2026 04:44:12 -0500
+	id 1vxipG-0003Tu-2A; Wed, 04 Mar 2026 04:47:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxim1-0001kn-8p
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:44:10 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxily-00004s-VJ
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:44:08 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-38a2544b52bso23890071fa.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:44:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772617445; cv=none;
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1vxioL-0003Ji-Vd
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:46:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1vxioJ-0000rV-8W
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:46:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772617587;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EiAMEFW1jWXYrmKJgZqXPA/D+gQfmsyc9aMT5lcSRSs=;
+ b=S2JJi/UkBDda9r0C8DrydbOFpSFyIEO67DtVBupfWawc9qu8yVsL7qOoUO1otmWcU19h4K
+ NNvX4clC2iqtOZoc3cbgHr4Vap1H6uyuPtMYpCUUCn3ZU/XEjwRd2sRY++YZdGGRZuMIlf
+ Mrdvj+5xhYFctJSNig/sUopoIjbUZNA=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-57-H4QnLkoGPV-a9RXMjeYW8A-1; Wed, 04 Mar 2026 04:46:26 -0500
+X-MC-Unique: H4QnLkoGPV-a9RXMjeYW8A-1
+X-Mimecast-MFC-AGG-ID: H4QnLkoGPV-a9RXMjeYW8A_1772617586
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-79881805767so71225557b3.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:46:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772617584; cv=none;
  d=google.com; s=arc-20240605;
- b=cywX5e3ytP5wgH+Zexhnfc8nOFkJoOJGQ9f6Vz9FQW0Njm2qROUGR5pRMa2If6u3BM
- 913F/Eyu4svcs4fW3tqCr7sndlRxo4fdKpbPpTe8B/FpjEDMRS2FABqV8SAmfaEa+KnB
- fYiuaN2S4OaLDvOMqAV55Mt64zehCS3iD8brGpYGTPxJ8ls08M1ZQlx/Ny/EAlUorHwG
- 6Z/9y+hiANMG/7It5xxlXpv0PICxDrY9MOOBLheylipVJQZS7SIVZAYXehABZpi+nt+9
- Ev98IT8sF96IcF0t3j0afjVwNZpNb873ugOJt4LvTuLlvqwl1hJyENvej5vg+OFntQVv
- dytg==
+ b=laB0trSICg7N+7KDE53F4MprQi5U9Ghkfe26G5H0HCV77nDa+4Cb2n1L0iMkp+RSfx
+ vwPdzMKMkWVcjDh+zYDj9LGXfTYmcsjflmHwMcdOPILTD/Ei6FvCzaCEWIK0d86NIy4K
+ +e3WdXOa6ykE0IibwAcjVhRkNMwU9YX7iCMSZSjwrsbkTUDJTumUKg/QToC/e6wz6Yyk
+ HvJ1tTUvF1bwlBPdkxSDksReDO89sVHb2rjpW1WtWCOiL8AU1DcpfHw/EondTxJ4b5Hz
+ vy9vOH+zNEy+QGuAoh+pwr+QdfBFds+5wqhMFA17b3TDwY9Gjo3uLCE94XzVnRv8f7PB
+ 2kZg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=7Ne5NgbMDf+M3J7+4FxHxF/NrMNCqB8HtZSDmJ0RYS8=;
- fh=/sr5iJO/HVyIXQgA+DkOdUcKrP7sTctbjJN6vR+WNMo=;
- b=OxrbX8BJ0O7oPI/XPG/C0T90mDR2rZzJXJGL4CR4QCBXEuKVhuWniK9EZ+PyW2GqUC
- mt2qnWBidB9ByU2t2xO4MfKLa0O1cu6Ay2sUZlNBl25Ma3VJYIwyQDrXZz+2MGvANDIK
- kzA6++3xxl4R4+zJ1UmDxbT+4QRPnFIR93sTa8dWud4BSoHNpOmx9pA+R5Wxc9HODdP8
- iBj14Lza0N/7crg8ALuhgyrOWVPh8mKU9mI7W7brr/Q80S+4rox1mMLYOtGZawozUVVr
- /dtDFfwn9EheyBPFAi0oqkhBVFud+HWSvIPDPafjZitL08VJstcuh809ytit806I1Km0
- 85ZA==; darn=nongnu.org
+ bh=EiAMEFW1jWXYrmKJgZqXPA/D+gQfmsyc9aMT5lcSRSs=;
+ fh=/+XR4WOjNW1VKJ2gGmSXII/te/TjZO5mQ455a1KsGjQ=;
+ b=Sq/AcdqzS1fxyQqZ2CffC35KI4q+Wh2ABXmbqTN1V46r2nEPE/ofyRhcVi4VuUSD5C
+ scxj3TNpYIbQgXb8Mq6ubtq2uwSmJSRrT1lcHqYn7d5EXNFIRx+6uwE4Q9C8xrC+QS0t
+ nFeuQHim1OM/EqgEdigQ/IvdcNgiSKj3uvHFqNjk9SPVwmdV1Ed6G5JS6C7aC5Tcw+eN
+ 7Csw+4rF2gjJgJllDKxvPkRG9GmZicSvQccqwtnnYfb6xdJ4eSUnDe/4JaVyNLyOh7Pp
+ 3ZIeazabtp8Tf8Em3uxv8UJb/Aae5Dx8DkDWL+7uEKSvPJQDkUaweJH4nx32896f/UKa
+ 1JJg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1772617445; x=1773222245; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772617584; x=1773222384; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7Ne5NgbMDf+M3J7+4FxHxF/NrMNCqB8HtZSDmJ0RYS8=;
- b=YHn0mu141de8Sba0DwY9ymVIajqR7EFYUiruEng4c8y9EJuGAXmcxmkH44vsf/ktZa
- pqXxaNxuQ+CmSoM28EDxKmklmqdSMINg08qNXKwvS1VXHKle+OBABmZ396htWdRlgULP
- /Vd03avv68sn6Nqty+bJp+phc/kNIqQGMCm08=
+ bh=EiAMEFW1jWXYrmKJgZqXPA/D+gQfmsyc9aMT5lcSRSs=;
+ b=GUhgUvsqRiJdVYlp1tvxj8kbWvywfO7jKbn+gK6hIRLoKbWJl/PPadvfa6CflWm2D7
+ BpJr/m96/8OeerSBP4gllVXTQ1sxDiizSIxboDA/peEUTPRc04Xuebz9Bm5lihCrAyZB
+ BGRnNdsKCgysx4+NBAsuhzNeDcf3FWvyN/oquI6QiVztZTtoKS1oGUd4C9xzcMPmwwBV
+ WWedChlUHVVu9iU7D+SJV9MtZU2XxRPvsEgFTVuPlQNFijB8txTel8dbUY5n9Rz5CBBc
+ sPoC973/ltPaBmc5swu1JGiPBcVH/2pven9goUuuvqRug/FsHKmPiVUmZ9mwLaI0/k3o
+ d8Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772617445; x=1773222245;
+ d=1e100.net; s=20230601; t=1772617584; x=1773222384;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7Ne5NgbMDf+M3J7+4FxHxF/NrMNCqB8HtZSDmJ0RYS8=;
- b=mIXqQt8T+Vfahd51bs4MHNyTqLKKVWt0Ky/bQa7tE0yBMLXiwFtT6kfQcpxvgGLY0U
- kP0tJdTsZM9wMJkYtBo0MWd5yRqQSSlRUYB8BDTmz2T/+ogrr5H0JZWDVbICmOcMp5zL
- qWIQb1aS1TCzXRTA6/lYPeNscssFvcoKWeOc4iMmJIxkHqzF9egfBCtcHIfmVfX8ZiBj
- fD3y3FdfVW9guGT1Xl3WSm0lgPtaebhfDHrOEerGJXw0bPv8zz8B/nkVr/y2xZVi6jki
- 4GblGwPO4yBXOM6GUegH9ePI/hi/09CRPwbiBnCWyzfuoKnvkx1jwjdbNF5JXF5rEK6Q
- WmYQ==
-X-Gm-Message-State: AOJu0Yx3zZMHJmdOAY9MNlfRZ3wm1LJnFfrwA/8CTjxm2kBVY1xYa2t7
- aXkQV+J6rWzTpZwBPPxzOCVp7Qt41YdBVxTqvxsNpF1+KjP3XSfd6Tq2DnncUtkkwmLdUyb3JO+
- 2YUSe9rUpCLnZcvaIjHejv5IHs8S9eBXsl9ppJqyl7A==
-X-Gm-Gg: ATEYQzysJVk2E0XAEYGUEmqeU0xznZyqpRlrG7ILap2z+Pl2T5TxgH+plRzrVG2nAvh
- k1ZPF47bLEHIstjIbhZrn6GS0Zh7z/jLZLS44S3rxrHeh371UU0aO+sIYcKfJ02WmRYRtmXvIby
- +uCRpot+JIMJ4YF1JC8rB9sV8pZCrjhfdFBH1cGxs1P7PKVCKp0ufdyd4R3XLsWiMkylyxRufXa
- gI/A/2i/F82gBh46FgLrxbgROl4n5by3zkrtnLard4WdI4XojBKuw8XkPEd4WpzQsz1MHpRrw8S
- Q/gUM8zEx6Ike8+eiVA+/b/UerJCuxdF7hy6W1c=
-X-Received: by 2002:a05:651c:995:b0:389:f5b4:46cc with SMTP id
- 38308e7fff4ca-38a2c564858mr12025861fa.4.1772617444541; Wed, 04 Mar 2026
- 01:44:04 -0800 (PST)
+ bh=EiAMEFW1jWXYrmKJgZqXPA/D+gQfmsyc9aMT5lcSRSs=;
+ b=qDPnvvNyRLZvp/CaeoAUWM/9wiCWzlUXZFWXQW4zwdXUFsc9fw1DMY7PqyjQoPFbrj
+ tx34e7W5Uy7nTfzd8DPuKZYpMadN1XvzGowo/almyH8Zm+F9T4tCte4/7tjqspxMAdfK
+ IzAvoKw7dCR4C8E1yd6oP5y7KRVz/veWBQ2qHmlQnlspPsQU2/tZuZS5l+NTw9eNR+uz
+ ZYaJ9oMIrIKFBEEuEcWjcn89jRTq+DrjSyRUunqhiEVgSlGldh+e91Ln8DFHui97hyT5
+ 5HShjxGo185YvJR4XWv8nKTypkAkxgbxw53ycg3SewZioCQeA8rzzsGQKko9StxiNnuN
+ lRYQ==
+X-Gm-Message-State: AOJu0YzLFc2n7bfEP2sTL6OBWVkGgpwrnJa5HkazFm9uCh9WbJ48biBC
+ DG6hKxEb2xlV0eN8zyltPeNBqXYzadUfwjuTo8FdfbAv9KALaL/peqZARQpTb4uSu+QtGtusD4m
+ Pj+XGE6JrYiOyznPIsrktSgIjb9DXnPas6OG6gVqhZAPG84YBvcUf1WMIHFDmGlQMgZUZgZ5Wzb
+ AzTa1GHg0zLzvXd0log8sBTkoSJRv2LEmBQPtgJCsatknV
+X-Gm-Gg: ATEYQzxkrBsqZ/SR7HTA8VFc8ma3BRV0Uaefpour1YAg0G1cux2JRIXuLIZZe6HRD5n
+ vv06HjSMVs//vNyM3JbvDHccFYIkHfs2CvMSLjvhqaMvDpmmlZaDm3I0CRc7yyagkrJA7yi09Lm
+ fv2Bz56Fwe71Z2tMCBczQ3co3C6+GoJbGTws/552DSQA1pKmOEySWfjLO/Rh1ZpZ0TCqpr+JEfV
+ Q==
+X-Received: by 2002:a05:690c:6983:b0:798:8577:dbba with SMTP id
+ 00721157ae682-798c6c2d28bmr12099977b3.29.1772617584084; 
+ Wed, 04 Mar 2026 01:46:24 -0800 (PST)
+X-Received: by 2002:a05:690c:6983:b0:798:8577:dbba with SMTP id
+ 00721157ae682-798c6c2d28bmr12099827b3.29.1772617583674; Wed, 04 Mar 2026
+ 01:46:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20260217152517.271422-1-alexander@mihalicyn.com>
- <20260217152517.271422-4-alexander@mihalicyn.com> <aaYFbKP8o6A2QY8D@x1.local>
-In-Reply-To: <aaYFbKP8o6A2QY8D@x1.local>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Wed, 4 Mar 2026 10:43:53 +0100
-X-Gm-Features: AaiRm525YEjsjzOsOpvWGY2VsetTuL4KVfNB6iryJcz6vdoDlFI1E6kudtuP-dU
-Message-ID: <CAJqdLrqucwgVJA3bFu5ApayGkKiheCxO_tWJnbvpVPpRmrVAfQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] migration: add
- VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>, 
- Klaus Jensen <its@irrelevant.dk>, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>
+References: <20260219130334.787858-1-aesteve@redhat.com>
+ <20260219130334.787858-4-aesteve@redhat.com>
+In-Reply-To: <20260219130334.787858-4-aesteve@redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Wed, 4 Mar 2026 10:46:12 +0100
+X-Gm-Features: AaiRm52bjdJQDw3VC4emRsprH9GS_v5LuFemhjHt59b1Kj4_6zGaoc6CXQcMhz4
+Message-ID: <CADSE00KJdqPp=mnC0zxPsZucWD+6-0zdiFM3XbZmSsTU1oMang@mail.gmail.com>
+Subject: Re: [PATCH v13 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, mst@redhat.com, 
+ dbassey@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ stefanha@redhat.com, 
+ manos.pitsidianakis@linaro.org, Stefano Garzarella <sgarzare@redhat.com>,
+ jasowang@redhat.com, 
+ Laurent Vivier <lvivier@redhat.com>, slp@redhat.com, hi@alyssa.is,
+ stevensd@chromium.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=alexander@mihalicyn.com; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,293 +146,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mo., 2. M=C3=A4rz 2026 um 22:47 Uhr schrieb Peter Xu <peterx@redhat.com>=
-:
+On Thu, Feb 19, 2026 at 2:04=E2=80=AFPM Albert Esteve <aesteve@redhat.com> =
+wrote:
 >
-> On Tue, Feb 17, 2026 at 04:25:16PM +0100, Alexander Mikhalitsyn wrote:
-> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >
-> > Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC, which
-> > helps to save/restore a dynamic array of pointers to
-> > structures.
-
-Dear Peter,
-
+> Add SHMEM_MAP/_UNMAP request to the vhost-user
+> spec documentation.
 >
-> Sorry for the late response.
-
-No problem at all, thanks for reviewing ;)
-
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> ---
+>  docs/interop/vhost-user.rst | 61 +++++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 >
-> >
-> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
-.io>
-> > ---
-> >  include/migration/vmstate.h | 21 +++++++++
-> >  migration/vmstate-types.c   | 88 +++++++++++++++++++++++++++++++++++++
-> >  2 files changed, 109 insertions(+)
-> >
-> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> > index 89f9f49d20a..bc6495a7f67 100644
-> > --- a/include/migration/vmstate.h
-> > +++ b/include/migration/vmstate.h
-> > @@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
-> >  extern const VMStateInfo vmstate_info_qtailq;
-> >  extern const VMStateInfo vmstate_info_gtree;
-> >  extern const VMStateInfo vmstate_info_qlist;
-> > +extern const VMStateInfo vmstate_info_ptrs_array_entry;
-> >
-> >  #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
-> >  /*
-> > @@ -537,6 +538,26 @@ extern const VMStateInfo vmstate_info_qlist;
-> >      .offset     =3D vmstate_offset_array(_s, _f, _type*, _n),         =
- \
-> >  }
-> >
-> > +/*
-> > + * For migrating a dynamically allocated uint32-indexed array
-> > + * of pointers to structures (with NULL entries and with auto memory a=
-llocation).
-> > + *
-> > + * _type: type of structure pointed to
-> > + * _vmsd: VMSD for structure
-> > + * start: size of structure pointed to (for auto memory allocation)
-> > + */
-> > +#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC(_field, _state, _fie=
-ld_num, _version, _vmsd, _type) { \
-> > +    .name       =3D (stringify(_field)),                              =
-  \
-> > +    .version_id =3D (_version),                                       =
-  \
-> > +    .num_offset =3D vmstate_offset_value(_state, _field_num, uint32_t)=
-, \
-> > +    .info       =3D &vmstate_info_ptrs_array_entry,                   =
-  \
+> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> index 17a68a62eb..ae4ad6f441 100644
+> --- a/docs/interop/vhost-user.rst
+> +++ b/docs/interop/vhost-user.rst
+> @@ -350,6 +350,27 @@ Device state transfer parameters
+>    In the future, additional phases might be added e.g. to allow
+>    iterative migration while the device is running.
 >
-> I wonder if we need this hard-coded new info structure for this, more
-> below.
+> +MMAP request
+> +^^^^^^^^^^^^
+> +
+> ++-------+---------+-----------+------------+-----+-------+
+> +| shmid | padding | fd_offset | shm_offset | len | flags |
+> ++-------+---------+-----------+------------+-----+-------+
+> +
+> +:shmid: a 8-bit shared memory region identifier
+> +
+> +:fd_offset: a 64-bit offset of this area from the start
+> +            of the supplied file descriptor
+> +
+> +:shm_offset: a 64-bit offset from the start of the
+> +             pointed shared memory region
+> +
+> +:len: a 64-bit size of the memory to map
+> +
+> +:flags: a 64-bit value:
+> +  - 0: Pages are mapped read-only
+> +  - 1: Pages are mapped read-write
+> +
+>  C structure
+>  -----------
 >
-> > +    .vmsd       =3D &(_vmsd),                                         =
-  \
-> > +    .start      =3D sizeof(_type),                                    =
-  \
-> > +    .size       =3D sizeof(_type *),                                  =
-  \
-> > +    .flags      =3D VMS_VARRAY_UINT32|VMS_POINTER,                    =
-  \
-> > +    .offset     =3D vmstate_offset_pointer(_state, _field, _type *),  =
-  \
-> > +}
-> > +
-> >  #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _=
-version, _info, _type) { \
-> >      .name       =3D (stringify(_field)),                              =
-      \
-> >      .version_id =3D (_version),                                       =
-      \
-> > diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-> > index 89cb2114721..3335377cd07 100644
-> > --- a/migration/vmstate-types.c
-> > +++ b/migration/vmstate-types.c
-> > @@ -942,3 +942,91 @@ const VMStateInfo vmstate_info_qlist =3D {
-> >      .get  =3D get_qlist,
-> >      .put  =3D put_qlist,
-> >  };
-> > +
-> > +static int put_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_=
-size,
-> > +                                const VMStateField *field, JSONWriter =
-*vmdesc)
-> > +{
-> > +    const VMStateDescription *vmsd =3D field->vmsd;
-> > +    int ret;
-> > +    Error *local_err =3D NULL;
-> > +    void *pv;
-> > +
-> > +    /*
-> > +     * (ppv) is an address of an i-th element of a dynamic array.
-> > +     *
-> > +     * (ppv) can not be NULL unless we have some regression/bug in
-> > +     * vmstate_save_state_v(), because it is result of pointer arithem=
-ic like:
-> > +     * first_elem + size * i.
-> > +     */
-> > +    if (ppv =3D=3D NULL) {
-> > +        error_report("vmstate: put_ptrs_array_entry must be called wit=
-h ppv !=3D NULL");
-> > +        return -EINVAL;
-> > +    }
-> > +
-> > +    /* get a pointer to a structure */
-> > +    pv =3D *(void **)ppv;
+> @@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with th=
+e following struct:
+>            VhostUserInflight inflight;
+>            VhostUserShared object;
+>            VhostUserTransferDeviceState transfer_state;
+> +          VhostUserMMap mmap;
+>        };
+>    } QEMU_PACKED VhostUserMsg;
 >
-> Here IIUC it's almost what VMS_ARRAY_OF_POINTER should do.  Could we
-> declare the vmsd with VMS_ARRAY_OF_POINTER so as to save this open-coded
-> dereference of pointer?
+> @@ -1064,6 +1086,7 @@ Protocol features
+>    #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
+>    #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
+>    #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
+> +  #define VHOST_USER_PROTOCOL_F_SHMEM                20
 
-Yes, this is something I tried to do in the first place, but this
-didn't work for my use-case.
+Commit cda83adc62b6108afc8a82d0f54d9a9a861e7aa8 got upstream first and
+took feature number 20, so this should be 21 now.
 
-Let me explain what I'm doing in detail. I have the following structure:
-
-typedef struct NvmeCtrl {
-     ...
-     uint32_t num_queues; // < MAX number of elements in sq
-     NvmeSQueue **sq;
-     ...
-} NvmeCtrl;
-
-Suppose we have variable n with type NvmeCtrl *.
-
-// somewhere early during initialization of QEMU device:
-n->sq =3D g_new0(NvmeSQueue *, n->num_queues);
-
-// then in runtime (depending on what *guest* wants) we might create
-some sq[i], e.g:
-NvmeSQueue *sq;
-sq =3D g_malloc0(sizeof(*sq));
-n->sq[3] =3D sq;
-
-please, note that n->sq[0], n->sq[1], n->sq[2] can still be NULL. So,
-we allow holes in that array.
-
-What I found is that if I raise VMS_ARRAY_OF_POINTER flag on VMStateField, =
-then
-migration code in vmstate_load_state() will expect to see so-called
-"fake nullptr field" (vmsd_create_fake_nullptr_field() function call).
-
-But this is a problem, because our array at the time of
-vmstate_load_state() looks like (N =3D=3D NULL):
-0     1     2     3     4     5
-N    N    N     N     N    N
-
-while after vmstate_load_state() I expect it to be:
-0     1     2     3     4     5
-N    N     N   SQ   N    N
-
-so, somebody should allocate memory for sq[3] and load data from image
-into that memory.
-
-Probably, it makes sense to somehow implement a combination of
-VMS_ARRAY_OF_POINTER and  VMS_ALLOC,
-but I tried to be as less invasive as I can and decided to introduce a
-new kind of VMStateField instead.
+@Michael Tsirkin Is it worth sending a new version or will you handle
+the change?
 
 >
-> > +
-> > +    if (pv =3D=3D NULL) {
-> > +        /* write a mark telling that there was a NULL pointer */
-> > +        qemu_put_byte(f, false);
-> > +        return 0;
-> > +    }
-> > +
-> > +    /* if pointer is not NULL, dump the structure contents with help o=
-f vmsd */
-> > +    qemu_put_byte(f, true);
-> > +    ret =3D vmstate_save_state(f, vmsd, pv, vmdesc, &local_err);
+>  Front-end message types
+>  -----------------------
+> @@ -1872,6 +1895,44 @@ is sent by the front-end.
+>    when the operation is successful, or non-zero otherwise. Note that if =
+the
+>    operation fails, no fd is sent to the backend.
 >
-> This looks really like VMS_STRUCT, except that it also tries to detect if
-> the pointer is NULL, then save some dumps.
-
-Precisely, I'm mimicking behavior of VMS_STRUCT | VMS_ALLOC and
-VMS_ARRAY_OF_POINTER here.
-
+> +``VHOST_USER_BACKEND_SHMEM_MAP``
+> +  :id: 9
+> +  :equivalent ioctl: N/A
+> +  :request payload: fd and ``struct VhostUserMMap``
+> +  :reply payload: N/A
+> +
+> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
+> +  successfully negotiated, this message can be submitted by the backends=
+ to
+> +  advertise a new mapping to be made in a given VIRTIO Shared Memory Reg=
+ion.
+> +  Upon receiving the message, the front-end will mmap the given fd into =
+the
+> +  VIRTIO Shared Memory Region with the requested ``shmid``.
+> +  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
+> +  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
+> +  must respond with zero when operation is successfully completed,
+> +  or non-zero otherwise.
+> +
+> +  Mapping over an already existing map is not allowed and requests shall=
+ fail.
+> +  Therefore, the memory range in the request must correspond with a vali=
+d,
+> +  free region of the VIRTIO Shared Memory Region. Also, note that mappin=
+gs
+> +  consume resources and that the request can fail when there are no reso=
+urces
+> +  available. Lastly, mappings are automatically unmapped by the front-en=
+d
+> +  across device reset operation.
+> +
+> +``VHOST_USER_BACKEND_SHMEM_UNMAP``
+> +  :id: 10
+> +  :equivalent ioctl: N/A
+> +  :request payload: ``struct VhostUserMMap``
+> +  :reply payload: N/A
+> +
+> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
+> +  successfully negotiated, this message can be submitted by the backends=
+ so
+> +  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in=
+ the
+> +  VIRTIO Shared Memory Region with the requested ``shmid``. Note that th=
+e
+> +  given range shall correspond to the entirety of a valid mapped region.
+> +  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and the back-end
+> +  sets the ``VHOST_USER_NEED_REPLY`` flag, the front-end must respond wi=
+th
+> +  zero when operation is successfully completed, or non-zero otherwise.
+> +
+>  .. _reply_ack:
 >
-> Is it feasible to make both queues to always be available so as to reuse
-> VMS_STRUCT?  Or is it intentional here to avoid dumping queues where the
-> pointer is NULL?
-
-By "available" you mean to always allocate memory for all n->sq[i] elements=
-?
-
->
-> Even if for the latter, I wonder if we can have better way to do it.  For
-> example, if we can integrate this directly into vmstate_save/load_state()
-> to support some new flag, VMS_ARRAY_OF_POINTER_DYNAMIC, then we can decla=
-re
-> some more "official" way to say some pointer of an dynamic array is NULL.
->
-
-Yeah, I thought about this too, I believe this is a great idea. But
-taking into account that
-this is my first contribution to QEMU and I'm learning code around I tried =
-to be
-very conservative and don't change any generic code ;-)
-
-I'm happy to do this work in -v3 if you would like me to do it and
-guide me a bit (I have just send a v2 series,
-but there was no changes in migration API part, only NVMe specifics).
-
-Kind regards,
-Alex
-
-> Thanks,
->
-> > +    if (ret) {
-> > +        error_report_err(local_err);
-> > +        return ret;
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +static int get_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_=
-size,
-> > +                                const VMStateField *field)
-> > +{
-> > +    int ret =3D 0;
-> > +    Error *local_err =3D NULL;
-> > +    const VMStateDescription *vmsd =3D field->vmsd;
-> > +    /* size of structure pointed to by elements of array */
-> > +    size_t size =3D field->start;
-> > +
-> > +    if (ppv =3D=3D NULL) {
-> > +        error_report("vmstate: get_ptrs_array_entry must be called wit=
-h ppv !=3D NULL");
-> > +        return -EINVAL;
-> > +    }
-> > +
-> > +    /*
-> > +     * We start from a clean array, all elements must be NULL, unless
-> > +     * something we haven't prepared for has changed in vmstate_save_s=
-tate_v().
-> > +     * Let's check for this just in case.
-> > +     */
-> > +    if (*(void **)ppv !=3D NULL) {
-> > +        error_report("vmstate: get_ptrs_array_entry must be called wit=
-h *ppv =3D=3D NULL");
-> > +        return -EINVAL;
-> > +    }
-> > +
-> > +    if (qemu_get_byte(f)) {
-> > +        void *pv;
-> > +
-> > +        /* allocate memory for structure */
-> > +        pv =3D g_malloc0(size);
-> > +        ret =3D vmstate_load_state(f, vmsd, pv, vmsd->version_id, &loc=
-al_err);
-> > +        if (ret) {
-> > +            error_report_err(local_err);
-> > +            g_free(pv);
-> > +            return ret;
-> > +        }
-> > +
-> > +        *(void **)ppv =3D pv;
-> > +    }
-> > +
-> > +    return ret;
-> > +}
-> > +
-> > +const VMStateInfo vmstate_info_ptrs_array_entry =3D {
-> > +    .name =3D "ptrs_array_entry",
-> > +    .get  =3D get_ptrs_array_entry,
-> > +    .put  =3D put_ptrs_array_entry,
-> > +};
-> > --
-> > 2.47.3
-> >
->
+>  VHOST_USER_PROTOCOL_F_REPLY_ACK
 > --
-> Peter Xu
+> 2.52.0
 >
+>
+
 
