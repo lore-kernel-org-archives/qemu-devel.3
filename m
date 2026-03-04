@@ -4,116 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40814EFCE4B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B714EFCE4C
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 22:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxuA3-0001wj-MZ; Wed, 04 Mar 2026 16:53:43 -0500
+	id 1vxuX9-0005DZ-3L; Wed, 04 Mar 2026 17:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxu9z-0001wH-QA
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:53:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1vxuX5-0005D2-IW; Wed, 04 Mar 2026 17:17:32 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vxu9w-00017F-J7
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:53:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772661213;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7s4K94cv2LV330Z2NbpFVpmuFH3/JxkTPb+z10ngAmQ=;
- b=ZLvaqXYoupS0+CvS4o2SQFFj0i8JWnnQx5e3DemJy8ERAyx9kDNRrmFXh/FCtpFtgZu2W/
- 0+39nrSCwQU7OJiBKCgbv8HLAG65PSLJ5CuOGFYy8MT11Ft8y3IKwvGVAJ2MMq6hiqjAvQ
- GcruIYJxqswlUHh57rWX8E30iEnA7No=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-yUpDlcVsOQeMy0o8urqDiQ-1; Wed, 04 Mar 2026 16:53:31 -0500
-X-MC-Unique: yUpDlcVsOQeMy0o8urqDiQ-1
-X-Mimecast-MFC-AGG-ID: yUpDlcVsOQeMy0o8urqDiQ_1772661211
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8c70d16d5a9so4178141485a.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 13:53:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772661211; x=1773266011; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=7s4K94cv2LV330Z2NbpFVpmuFH3/JxkTPb+z10ngAmQ=;
- b=D/quCWwBylLj9wXrkT/jLYf0vzLQo/dXuxmpyCBCrkjHoyqZtKC1l8nI8zVab0rwHN
- uG5WIfwoWI4D/pJh8FwcWs5VRy7TzisT+Ol/l8PeoR0u2QG4oMchtmSwOXfrkCnkPlok
- fp9v9BU5aygf2bfTWMfIsJQY0kSFv2EfAKE5LH+DIjNC0E1abgMm56WIwkyV0RNzcz0P
- 3noQrKaYZxjuNSx7ifc7xWry2qZLaL8Ox3NU7/Ibd9DzVZ0k6Wr68NXcjA9adR9czAoJ
- T1kt5sFTDWIIp3AikBlkdLTfSjQSEPG6cZa4Mtj3rSEKbFqJ29ISof5KoXXLwlbuwcXK
- Q7xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772661211; x=1773266011;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7s4K94cv2LV330Z2NbpFVpmuFH3/JxkTPb+z10ngAmQ=;
- b=uvOF+1g18Q1rFwEmaiHG0RzMN4SrH2KwjY5ql/ALu+O9mY1/RuC5fO8gVuvgWkqMVY
- QWlxbh4nymct1r2p6UFxMKbT/hexi1OgPHGJB+zAtw3D13KdJg+L/VBCInBxJBDvHzWP
- xzvs9yQ+4Rx5RiTUC2XkhQvuNmS8RmHOz3ily+mUwhhQj+CvShXn9EatZFyrWqNbFNGr
- l/MEaeLdwLWgZxp1JAe1zxNzm4tw6vAsUJezvY6UCCy/jWTc5tebv/OP2H1OqociKBR6
- RFs1q4eBvh1HAwqY8aKCShDOV4gMyL5YHPyhtq1SZFWVnxNkZl7/yXdfHWHWgw9UQ5wW
- PO3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3oKmUphna/WVJA2JF78oByZWemMy9QfUP2VZl+acko70vdLTQPwMCxt+ygfNXv5eb1bQqUX4gA/CQ@nongnu.org
-X-Gm-Message-State: AOJu0YzEeI5QThTkjaRNwwi2fw28kt1FUeyMgdVJI2bvBE+lAt56hTt8
- yiPnidnuPEAeeVOu8bWP1RfBPZuJG0u8/qsrvtvwY5p5K3s4ESWqI6wl8eTGJTMPGv9I3G1bMb8
- BBCYeUyKDxsOuhFTErMpRd342KSoaBEUHBsLlLvzpp15LlR4Cw8v9RGIL
-X-Gm-Gg: ATEYQzxyJlb7pMCe8Ls7AyZ+bEVRmYEZkrcyXT3e+fgSe0+FXh905sY20tqjfqtsPnW
- 56WvYwUmJ0tCcepLQDxwbo062qyoLFhOeeLMfugb1WTUbX53mum1jORbRYP7FgIHbB51dLJKuAR
- afPP1/Wt8CUOO9RgjNZ3AuBDQCP4Gob8r6uSej2Qqn4o4NxwAjwXk9C86QaYPTblci64X3bW0Mw
- NcAj03fr0r6098IH+rmzzwLlo80R6wqg+4hpRaIi0UD5OIIL9aJL/aVfJnLDi1zD+qtuXLISFaZ
- Krk/7gMXSexRHGdKyre5JGihSSqTXhd4rIDJiPII0SSwc8xt4ic6Z5JEk1A7tkw/2PWrqV2Kauu
- Oi2aU+YQtb/3z5QW+mzAHLSNHq1kjkarkLVrduVR/IYpcQDfJBGH5wqWg+dpXarj4yrU125TcFy
- UWZdCWHg==
-X-Received: by 2002:a05:620a:1990:b0:8c7:eb5:8528 with SMTP id
- af79cd13be357-8cd5aec67edmr429161185a.1.1772661210962; 
- Wed, 04 Mar 2026 13:53:30 -0800 (PST)
-X-Received: by 2002:a05:620a:1990:b0:8c7:eb5:8528 with SMTP id
- af79cd13be357-8cd5aec67edmr429158385a.1.1772661210444; 
- Wed, 04 Mar 2026 13:53:30 -0800 (PST)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-899f8ad5b8asm99266496d6.0.2026.03.04.13.53.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 13:53:29 -0800 (PST)
-Date: Wed, 4 Mar 2026 16:53:28 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: farosas@suse.de, "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, alifm@linux.ibm.com,
- "open list:virtio-ccw" <qemu-s390x@nongnu.org>
-Subject: Re: [PATCH v2 16/16] migration/vmstate-types: move to new migration
- APIs
-Message-ID: <aaip2CvQicudpdOC@x1.local>
-References: <20260220210214.800050-1-vsementsov@yandex-team.ru>
- <20260220210214.800050-17-vsementsov@yandex-team.ru>
- <aacS1YUD0xesMufw@x1.local>
- <842c669b-21f0-4a17-bf4f-f2723f0e5466@yandex-team.ru>
- <aaiGCalvQNX3WQxl@x1.local>
- <23c33857-65a8-4f4b-b933-f7e2e86f7ab2@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1vxuX3-0005N4-9g; Wed, 04 Mar 2026 17:17:31 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 624KAGdO1233029; Wed, 4 Mar 2026 22:17:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YRk2QV
+ 9qZZXaPBBK33ZusSJOaSjOqATsWhIKb3pXaJM=; b=MK86MQMLPKxVXJJ9VQ9Fln
+ s/dXmO72xlHWoFFY75QDiqiP8YqYFoZruiTlaP7rxwUoPuxNllo3kO4CjwK/T5hd
+ Weav1IqJof+Nxyx/vUpCPN8hgzwD1MgD+8vthLYOYs/7PRbAR0AafIrkmyaKM7xa
+ 9x012pTkwNnANpH50T4ILbfH8hbf1VOQj6lGnudcKfiwG2/bSVsuFGHuivQuAxhZ
+ NejGuq1EijOIo1qzkGJxiBTF+PeYW6R1CyjeWMQALGr/yfEjRVxDPimxJRlEkA+6
+ xaQLaR4oGvh6mtwd1TBc8BMEiDZD5wO2PtoJXEhVuNjAFSbnVBsRDKah6IHZn/RQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksk40yq2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 22:17:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 624IBbwl003266;
+ Wed, 4 Mar 2026 22:17:22 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2y8rak-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 22:17:22 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 624MHLhl29229768
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Mar 2026 22:17:21 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1E7025805A;
+ Wed,  4 Mar 2026 22:17:21 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E15758054;
+ Wed,  4 Mar 2026 22:17:19 +0000 (GMT)
+Received: from [9.61.37.248] (unknown [9.61.37.248])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Mar 2026 22:17:19 +0000 (GMT)
+Message-ID: <d3207adf-e23d-4c8f-a5f9-0a2a0e56c564@linux.ibm.com>
+Date: Wed, 4 Mar 2026 17:17:18 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <23c33857-65a8-4f4b-b933-f7e2e86f7ab2@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 19/30] pc-bios/s390-ccw: Add signature verification for
+ secure IPL in audit mode
+To: Farhan Ali <alifm@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, jrossi@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, brueckner@linux.ibm.com
+References: <20260212204352.1044699-1-zycai@linux.ibm.com>
+ <20260212204352.1044699-20-zycai@linux.ibm.com>
+ <e434be13-1099-4d4d-b689-e4f6b7752b45@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <e434be13-1099-4d4d-b689-e4f6b7752b45@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: UAv3JHgYd7q4de0QBvQbbUGDO9fwiiSX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDE4MiBTYWx0ZWRfX7iK3LsseQPFX
+ OyaF8qhPqLmdOE0dRUyRGaamj6Yed7r58V+teYVQj1pPHMXOy9Rd/eAER2a6kh0x/QoL20auPm4
+ ptIWTqB7e0cMwATIhwGZJM0p8ECxlTZR7sTXbzKlA2PHyvyDHZDnH8v/ncMGXib46JYIRXkAAhu
+ 8b6CO8emJj3LHRcs2cWI186A/zK4h1KDnLUuIWVZeg5JBKBbnBgOAEBa1m+w8GIdLOwaV4rj7PK
+ bV6b4ehEP9B/Z/bQvwM0taC5YfG6nUkJQqbflOEft2BXL66WyqtyNfO7oNwQ1sgSJcbRHrULvTr
+ KOktEdka2fFlOSh20q0tbB/ng6GLeQgVKU2BuouS04dYpCILnxnfF97OJ068ozczfpHIF7GRZd4
+ 6Xbq7kdfvv5gJhnwTnvN9Z/elpydRLfPIMXEvvlTMZfn2bycVmebw0LSxGPcOdenCtzDBhRdIx2
+ FXbaBeR9SP4MuValddw==
+X-Authority-Analysis: v=2.4 cv=csCWUl4i c=1 sm=1 tr=0 ts=69a8af73 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=abkHmWJOmZPixc9wqO0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: UAv3JHgYd7q4de0QBvQbbUGDO9fwiiSX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-04_08,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040182
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,76 +128,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 04, 2026 at 11:06:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> [add s390 channel maintainers]
+On 3/3/26 4:46 PM, Farhan Ali wrote:
+> <...snip...>
 > 
-> On 04.03.26 22:20, Peter Xu wrote:
-> > On Wed, Mar 04, 2026 at 10:15:01PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > The only problem is that we don't have error_append() function)
-> > 
-> > I definitely wanted to type error_prepend() when replying... :(
-> > 
-> > I think it might be better when putting upfront / prepend, say, the
-> > original error should look like this, which is weird to me:
-> > 
-> >    "XXX != YYY NAME"
-> > 
-> > (maybe even no space???)
-> > 
-> > With append (when doing that, we may also want to add a comma and some "0x"
-> > prefix?), it can be:
-> > 
-> >    "NAME: XXX != YYY"
-> > 
+> On 2/12/2026 12:43 PM, Zhuoying Cai wrote:
+>> uint8_t vcssb_data[VCSSB_MIN_LEN] __attribute__((__aligned__(PAGE_SIZE)));
 > 
+> I don't see us setting vcssb_data set to 0 before we even start secure 
+> ipl verification. I think we should be safe and set it to 0 before the 
+> first time we touch this? otherwise if its pointing to garbage data it 
+> can break the length checks.
 > 
-> Hmm. I'm now trying to find, where this .err_hint is set to not-NULL.. Don't see...
+> Thanks
 > 
-> O, I see them:
+> Farhan
 > 
-> in hw/s390x/css.c
 
-Ouch.. This is the 2nd time in exactly the same day I saw a feature
-introduced into migration core with an use case only in s390's css.c file,
-which only works for very limited use case but likely not usable for the
-rest...  The other one is VMS_NULLPTR_MARKER..
+I'll declare the array as static, as Thomas suggested. My understanding
+is that an explicit zero initialization isn’t required, since static
+variables are initialized to zero by default. Please let me know if I’m
+missing anything.
 
-https://lore.kernel.org/all/aahgfLaybfjOpsX1@x1.local/#t
-
+>> +
+>> +VCStorageSizeBlock *zipl_secure_get_vcssb(void)
+>> +{
+>> +    VCStorageSizeBlock *vcssb;
+>> +
+>> +    vcssb = (VCStorageSizeBlock *)vcssb_data;
+>> +    /* avoid retrieving vcssb multiple times */
+>> +    if (vcssb->length >= VCSSB_MIN_LEN) {
+>> +        return vcssb;
+>> +    }
+>> +
+>> +    if (!is_cert_store_facility_supported()) {
+>> +        puts("Certificate Store Facility is not supported by the hypervisor!");
+>> +        return NULL;
+>> +    }
+>> +
+>> +    vcssb->length = VCSSB_MIN_LEN;
+>> +    if (diag320(vcssb, DIAG_320_SUBC_QUERY_VCSI) != DIAG_320_RC_OK) {
+>> +        return NULL;
+>> +    }
+>> +
+>> +    return vcssb;
+>> +}
 > 
-> const char err_hint_devno[] = "Devno mismatch, tried to load wrong section!"
->     " Likely reason: some sequences of plug and unplug  can break"
->     " migration for machine versions prior to  2.7 (known design flaw).";
-> 
-> const VMStateDescription vmstate_subch_dev = {
->     .name = "s390_subch_dev",
->     .version_id = 1,
->     .minimum_version_id = 1,
->     .post_load = subch_dev_post_load,
->     .pre_save = subch_dev_pre_save,
->     .fields = (const VMStateField[]) {
->         VMSTATE_UINT8_EQUAL(cssid, SubchDev, "Bug!"),   <<<<<<<<<
->         VMSTATE_UINT8_EQUAL(ssid, SubchDev, "Bug!"),    <<<<<<<<<
->         VMSTATE_UINT16(migrated_schid, SubchDev),
->         VMSTATE_UINT16_EQUAL(devno, SubchDev, err_hint_devno),   <<<<<<<<
+> <...snip...>
 > 
 > 
-> 
-> "Bug" hints are obviously useless.
-> 
-> About err_hint_devno.. Doesn't seem a good reason to have this .err_hint
-> field and the whole logic, including extra parameter to several vmstate
-> macros through the whole code base. And at least mention about 2.7 looks
-> not relevant today.
-> 
-> I'd replace definition of err_hint_devno by a comment, and drop the whole
-> .err_hint feature.
-> 
-> What do you think?
-
-Yes, I'd agree.
-
--- 
-Peter Xu
 
 
