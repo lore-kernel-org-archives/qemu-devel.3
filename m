@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89C7EFCE4B
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618ACEFCE4B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 21:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxth2-0004oK-AS; Wed, 04 Mar 2026 16:23:46 -0500
+	id 1vxtgq-0004mw-FJ; Wed, 04 Mar 2026 16:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgd-0004kF-UE
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:20 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vxtgZ-0004jw-VS
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:17 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vxtgZ-0003SA-O3
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:19 -0500
+ id 1vxtgW-0003R6-6k
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 16:23:15 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 27BBF80884;
- Thu, 05 Mar 2026 00:23:13 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 000DD80861;
+ Thu, 05 Mar 2026 00:23:06 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:921::1:1b])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 5NwBA90AmW20-y3zHomAZ; Thu, 05 Mar 2026 00:23:12 +0300
+ ESMTPSA id 5NwBA90AmW20-LJ3gwjOq; Thu, 05 Mar 2026 00:23:06 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1772659392;
- bh=A+WiueIXETLIeMIRZIQgBqkxh+hFRPAHRreOOCK2W/c=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=Ox5aAvEOjhjk6cutgQvi9cq/0CpY38upe73SK5zvh9gLsyfSGshdFQl+Hft2SSsxk
- IhPnvOGBeNS1e4xqI0nRRbAW4WK9dqZvVBgVhOmvqpo8Me82/dmcBOlnY+ihLKCh2s
- Yfvbe703bTVVSpHX7LVGqpolDWMeAgqEawGrCyDc=
+ s=default; t=1772659386;
+ bh=vbqSuSScSZ8F9CxLTW5J64QpP+OI3UQwzjbtHl3/oFE=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=PCB5BTnG60T3eyBCoBMruP25tKLSePk3XXCZgl7/7C9r5lG4KG1F0bLYdRkaGGZCK
+ j2YAtc3GF+eEy5bq41r85iDN/udkALJsoAQTLJbdpk81GWjx3zr4eTVvSIv69lWN6H
+ X9m8Bn0CdXZ3HxhB4zp/ApWXX0H924SFoCMGvcgc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,23 +43,21 @@ To: peterx@redhat.com
 Cc: farosas@suse.de,
 	vsementsov@yandex-team.ru,
 	qemu-devel@nongnu.org
-Subject: [PATCH v3 10/18] migration: factor out vmstate_post_load() from
- vmstate_load_state()
-Date: Thu,  5 Mar 2026 00:22:54 +0300
-Message-ID: <20260304212303.667141-11-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 00/18] migration: more bool+errp APIs
+Date: Thu,  5 Mar 2026 00:22:44 +0300
+Message-ID: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260304212303.667141-1-vsementsov@yandex-team.ru>
-References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,82 +73,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify vmstate_load_state() which is rather big, and simplify further
-refactoring.
+v3:
+01,02: add r-bs by Fabiano and Peter
+03: improve comment, add r-b by Peter
+04: add r-bs by Fabiano and Peter
+05: new, replacement for dropped "[PATCH v2 05/16] migration: vmstate_save/load_state(): stop tracing errors"
+06: rebase on kept trace-points, keep r-b by Peter
+07-09: add r-b by Peter
+10: rebase on kept trace-points, keep r-b by Peter
+11-12: add r-b by Peter
+13: rebase ion kept traces and logic around trace_vmstate_load_field_error() already refactored, fix indent, drop r-b
+14: add r-b by Peter
+15: add r-b by Peter, use "else { if () {} }"
+16-17: new
+18: rebased on dropped err_hint, drop r-b
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Peter Xu <peterx@redhat.com>
----
- migration/vmstate.c | 49 +++++++++++++++++++++++++++------------------
- 1 file changed, 30 insertions(+), 19 deletions(-)
+Vladimir Sementsov-Ogievskiy (18):
+  migration: vmstate_save_state_v: fix double error_setg
+  migration: make vmstate_save_state_v() static
+  migration: make .post_save() a void function
+  migration: vmstate_load_state(): add some newlines
+  migration: vmstate_save/load_state(): refactor tracing errors
+  migration: factor out vmstate_pre_save() from vmstate_save_state()
+  migration: factor out vmstate_save_field() from vmstate_save_state()
+  migration: factor out vmstate_pre_load() from vmstate_load_state()
+  migration: factor out vmstate_load_field() from vmstate_load_state()
+  migration: factor out vmstate_post_load() from vmstate_load_state()
+  migration: convert vmstate_subsection_save/load functions to bool
+  migration: VMStateInfo: introduce new handlers with errp
+  migration: introduce vmstate_load_vmsd() and vmstate_save_vmsd()
+  migration/cpr: move to new migration APIs
+  migration/savevm: move to new migration APIs
+  hw/s390x/css: drop use of .err_hint for vmstate
+  migration: drop VMStateField.err_hint
+  migration/vmstate-types: move to new migration APIs
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 32944c04443..53b57c09d82 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -182,6 +182,33 @@ static bool vmstate_load_field(QEMUFile *f, void *pv, size_t size,
-     return true;
- }
- 
-+static bool vmstate_post_load(const VMStateDescription *vmsd,
-+                              void *opaque, int version_id, Error **errp)
-+{
-+    ERRP_GUARD();
-+
-+    if (vmsd->post_load_errp) {
-+        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
-+            error_prepend(errp, "post load hook failed for: %s, version_id: "
-+                          "%d, minimum_version: %d: ", vmsd->name,
-+                          vmsd->version_id, vmsd->minimum_version_id);
-+            return false;
-+        }
-+    } else if (vmsd->post_load) {
-+        int ret = vmsd->post_load(opaque, version_id);
-+        if (ret < 0) {
-+            error_setg(errp,
-+                       "post load hook failed for: %s, version_id: %d, "
-+                       "minimum_version: %d, ret: %d",
-+                       vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
-+                       ret);
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
- int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                        void *opaque, int version_id, Error **errp)
- {
-@@ -284,25 +311,9 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-         return ret;
-     }
- 
--    if (vmsd->post_load_errp) {
--        if (!vmsd->post_load_errp(opaque, version_id, errp)) {
--            error_prepend(errp, "post load hook failed for: %s, version_id: "
--                          "%d, minimum_version: %d: ", vmsd->name,
--                          vmsd->version_id, vmsd->minimum_version_id);
--            trace_vmstate_load_state_fail(vmsd->name, "post-load");
--            return -EINVAL;
--        }
--    } else if (vmsd->post_load) {
--        ret = vmsd->post_load(opaque, version_id);
--        if (ret < 0) {
--            error_setg(errp,
--                       "post load hook failed for: %s, version_id: %d, "
--                       "minimum_version: %d, ret: %d",
--                       vmsd->name, vmsd->version_id, vmsd->minimum_version_id,
--                       ret);
--            trace_vmstate_load_state_fail(vmsd->name, "post-load");
--            return ret;
--        }
-+    if (!vmstate_post_load(vmsd, opaque, version_id, errp)) {
-+        trace_vmstate_load_state_fail(vmsd->name, "post-load");
-+        return -EINVAL;
-     }
- 
-     trace_vmstate_load_state_success(vmsd->name);
+ docs/devel/migration/main.rst |   2 +-
+ hw/block/fdc.c                |   2 +-
+ hw/display/qxl.c              |   4 +-
+ hw/display/vga.c              |   2 +-
+ hw/display/virtio-gpu.c       |   2 +-
+ hw/display/vmware_vga.c       |   2 +-
+ hw/i386/vmmouse.c             |   2 +-
+ hw/ide/ahci.c                 |   2 +-
+ hw/intc/openpic.c             |   2 +-
+ hw/intc/spapr_xive.c          |   2 +-
+ hw/intc/xics.c                |   2 +-
+ hw/intc/xive.c                |   2 +-
+ hw/nvram/eeprom93xx.c         |   2 +-
+ hw/pci/pci.c                  |   2 +-
+ hw/pci/pcie_aer.c             |   2 +-
+ hw/ppc/spapr_iommu.c          |   2 +-
+ hw/ppc/spapr_pci.c            |   7 +-
+ hw/ppc/spapr_vio.c            |   4 +-
+ hw/s390x/css.c                |  15 +-
+ hw/usb/hcd-uhci.c             |   2 +-
+ include/migration/cpr.h       |   2 +-
+ include/migration/vmstate.h   |  73 ++--
+ migration/cpr.c               |  22 +-
+ migration/savevm.c            | 108 +++---
+ migration/trace-events        |  30 +-
+ migration/vmstate-types.c     | 642 +++++++++++++++++-----------------
+ migration/vmstate.c           | 354 +++++++++++--------
+ target/arm/machine.c          |   4 +-
+ target/ppc/machine.c          |   6 +-
+ 29 files changed, 691 insertions(+), 612 deletions(-)
+
 -- 
 2.52.0
 
