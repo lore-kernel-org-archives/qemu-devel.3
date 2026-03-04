@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FABEF8FF0
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE8AEF8FEE
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxnZU-00011U-Ru; Wed, 04 Mar 2026 09:51:32 -0500
+	id 1vxnfv-0002TR-Cs; Wed, 04 Mar 2026 09:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxnZR-00010l-2V
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:51:29 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vxnfg-0002RU-CJ
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:57:57 -0500
+Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxnZO-0005Lp-RK
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:51:28 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-65c187dfc82so10731366a12.2
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 06:51:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vxnfe-00083T-CK
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:57:56 -0500
+Received: by mail-dy1-x1344.google.com with SMTP id
+ 5a478bee46e88-2be1b5fe11cso3091786eec.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 06:57:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772635884; x=1773240684; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kPYXYvTIGA0fsHs2INz/i9YJKEWs32cUx533EdVlXKs=;
- b=HGoCC5hyPrQfNcqGIE7rz8MZ6ybCPMMo38FJDdTYi9Ey1Zl68CjEq3plw9LiDT9gMU
- /Tmeu6gqZrZN2n4CCOn8ahGL0yPlewG9NZ5yGucVremWvOcpedyV0rzAdP8DwUv18uLN
- w/NhKq7ZHhDEHltq4X60ZLi66AN2GRnjwdpFpu7Ej82yZeZD0kktOZA0NoYTVMSgto8M
- Ak513UQLqQnRgOWOgoTScmNFcAEGPyukpCC0k8zhWwkr+9xTLtnrUBMcsQJCjbioWSTl
- bhCEqN2rZ9jTUpBrlmOX2UhmhKOqEngtQqNPfWv1p4XIUXbm10/LtUX1FTrjuTxepxIC
- z8ag==
+ d=gmail.com; s=20230601; t=1772636269; x=1773241069; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=YCnDpxticsBLd7T/cVukvDnzRsXq4UqrVFdlPu+OeGM=;
+ b=fiiNQQA2Arh/Oj9J/irG4in+ar1q4SCHaPyT1UmBT01QsMiCNRHA2VD2+bdLCsgies
+ hC/07LWf0eKOWJbMz73oIMTl91j0YuKYtbQY8HxFhvw8aZ2sV2uOtFApUK99eecbidme
+ axgM+VOae/xkgjC/Jgq6bgoMntor30Wc3Hzy31YjCfQOSq7g76EAHsC8ekd0BUqMBXJc
+ BxKrm6eCTAi8z3UqohQqoisnCgDT7huuLzxUojGPjZvjgrWp0LUjU/fvEiwvN2QGjLIH
+ dxewz/4rbQQcX35Ga0nx4+pOmEgk7tN8WG163Lx0EZvE1c4maHEGF7O5k3+3lL+K9rKm
+ qxMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772635884; x=1773240684;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kPYXYvTIGA0fsHs2INz/i9YJKEWs32cUx533EdVlXKs=;
- b=Y3mFEccSzHEY5u9wh0TniN7Y8l0Xsgqa0eTPnQ4FFF8s8MnfzjOrk1C9pQF+jQ3vrO
- khN4503aw3Hoif8aU40DWZZRUhx2e0xi3CQ9d1aMDutznivhMVUfnjlVxezKTT56luIg
- nW+0XUNYmO5pFi+RBTHc0GFJMn4HAWi6F4E4ZYFic7USEqST4lU2eauofqOvF1yazzaJ
- Vfpi4cLpbffWsAyF1gMfHvBsXdyFdV/8HTVNUc9Zj4rqqG215ahjyUbW26hGLd1IrM66
- wdXfz58gIcxvQbcPjQ1Qw71dUz8Fl9A3SCBWotYRd6JqnpKhjg50LR7JRv9eQv/xuyet
- er0A==
-X-Gm-Message-State: AOJu0Yy7QV5lbfuLhSzhr/fsWcMfJXSa9mc00dGDU5DxA3MQq/ENL3/T
- FOR0cLHRxQFaYMa+35t/Vzv8RzxN5/gPotPUD5zOy3Vv+7fVYXCOt+v8+AS3kAyE09U=
-X-Gm-Gg: ATEYQzyTAnB4qauZ8yosRzOgENEM2AZW6ahfiCMLR4QuI1u25Q4jlce5jpkXqRL6KZW
- PPo0/7LBhG+lhahY2hshvVEOAcV9f6NxqUnERfkYOLI0Dtk9jFYDFjEhFtLpiSe2lDyNvT7xd41
- cS9aA1nzStBxIXrBpTmd2R2oGzisB5WjsoQhoQ35c6tDXspUsE+1klcBwmGSg0O5PRu7REHSZEh
- mg6OCVWt0ZN+bqtkViA6VgQEye2JES/awwz9cYyyE7R1NozDZufWsAsDrj5E5zgYflg/tNE1e0Q
- nSuEGzm5VGABKTGhdTtjOg4aoSdF8EcxkZyNzLXnTtOhg7EmpOFhu4EmokYaLoKtg81+n9CpjLl
- hZIl9RSOG7GNzPo3ih31cFEtJmLlB2smHvAJkztG9KYrS7y8fedtO63WHyKuTf5u7IG6eFp/nfT
- reg7TuC4DnsyeasjBkUN/DXng=
-X-Received: by 2002:a17:907:9607:b0:b90:71a2:3e76 with SMTP id
- a640c23a62f3a-b93f15e1f28mr114520466b.61.1772635884114; 
- Wed, 04 Mar 2026 06:51:24 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935aeaff4csm750667466b.52.2026.03.04.06.51.23
+ d=1e100.net; s=20230601; t=1772636269; x=1773241069;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YCnDpxticsBLd7T/cVukvDnzRsXq4UqrVFdlPu+OeGM=;
+ b=fZMhmGyAGYWSrFfiGdMVp7X/b6+UIpP9KOHxMvf/mD7pxyqEgupR5YxPOYc2sqWNj0
+ M5+WggY/qTrdhkitCpCfNbSglNf8yrv0qxVeD57zGG2+XsaVdAbhBHgWfxBLca/5rv2z
+ AYvTmGFG6vzjNhWWf7Mp47iuVtaecQvKtacjQRBFdFQZAnxBfXVY/zgARGxGNpIVY1Xq
+ X3GFcV7STCmYamioH4oA1xQNUIj7/rBC6nCUZ5y43nhNxLhfOIGfPrXQrH3repcZSRyq
+ Jf9C1aLTIJpCqlh4d3XukZ96yfLvvmCELNEuXODtv+47GtImijOy1ATuUIiD5V66knm5
+ p4og==
+X-Gm-Message-State: AOJu0YyCuBkCy7cGJEcVj471iJbq3FM1NlRr60S8t4jEEsf72/jflQM4
+ iWBcxBeolHAs3wGTWouKPrIvFxBwR7Ce5nS7gfr6IN4JtPPjDHNya+v1LMFb7EHp
+X-Gm-Gg: ATEYQzwTYBjQtYebBO1lv18T9McgUltFe9qUDor63ZlCcmq1jd2U1NTMVsoqKDICBJP
+ byK7HcpT8no3MjfWV4PtKZ9QFL78BG7hCvtd+b2ocEhu3mQeMDoXIhmEBLVK3mT2o2eAYAdtAtx
+ utChqLOUhuI6Ct0hNZP98OnAqFQrl+G7ONDectjH4cUKNzz89DmaysADCR2PxOXC8jjDPAJyVuZ
+ SSL2vhiBtAt6grH32OBDgUZiW/Bx2iIHGS2tl+Xyq8CFPfEMF51m2y2iVcYU4I7EfEQgnJhKkak
+ S6LAarEJv9V9LFdrUN/F9NmF8kF+lAejWO+aNYtPcyj/AOZQvV+jhCnshPR5zaUI/et6CagZbju
+ rVUnxIb5vc3jZMZ9uNUW31akclBrNtZgULuxxHc9CP3T9lhl7Hjivdh1J4suiHyD5hQ66pe6SbI
+ 6GM0GbngICI2glXuQwImGD2fyd9GpanM35Q+COvJv7GOvhhLN77QTnYx7L0pwWc90sgbHH+7Wfp
+ q2i7kiWlZq9ZEfjCZjW64LDznj+SjY=
+X-Received: by 2002:a05:7301:1287:b0:2ba:7863:f0a8 with SMTP id
+ 5a478bee46e88-2be311df87fmr952715eec.36.1772636268777; 
+ Wed, 04 Mar 2026 06:57:48 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2bdd1a45a58sm14642229eec.0.2026.03.04.06.57.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 06:51:23 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 88B3E5F7F5;
- Wed, 04 Mar 2026 14:51:22 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  ltaylorsimpson@gmail.com,
- matheus.bernardino@oss.qualcomm.com,  marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com,  sid.manning@oss.qualcomm.com,  ale@rev.ng,
- anjo@rev.ng,  berrange@redhat.com,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v3 1/1] tests/docker: Update hexagon cross toolchain to
- 22.1.0
-In-Reply-To: <20260303210553.2044313-2-brian.cain@oss.qualcomm.com> (Brian
- Cain's message of "Tue, 3 Mar 2026 13:05:53 -0800")
-References: <20260303210553.2044313-1-brian.cain@oss.qualcomm.com>
- <20260303210553.2044313-2-brian.cain@oss.qualcomm.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Wed, 04 Mar 2026 14:51:22 +0000
-Message-ID: <87bjh3ps0l.fsf@draig.linaro.org>
+ Wed, 04 Mar 2026 06:57:48 -0800 (PST)
+Date: Wed, 4 Mar 2026 22:57:23 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Nutty Liu <nutty.liu@hotmail.com>
+Subject: Re: [PATCH v4 2/9] target/riscv: Add the Zvfbfa extension implied rule
+Message-ID: <aahH8AJMazH4q6rM@ZEVORN-PC.localdomain>
+References: <20260304132514.2889449-1-max.chou@sifive.com>
+ <20260304132514.2889449-3-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260304132514.2889449-3-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,31 +107,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Brian Cain <brian.cain@oss.qualcomm.com> writes:
+On Wed, Mar 04, 2026 at 09:25:06PM +0800, Max Chou wrote:
+> According to the Zvfbfa isa spec:
+> The Zvfbfa extension requires the Zve32f and Zfbfmin extensions.
+> 
+typo in commit subject -- "properity" should be
+"property".
 
-> Update the hexagon cross-compiler Docker container to use toolchain
-> version 22.1.0, replacing the previous 12.Dec.2023 release.
->
-> This requires upgrading the base image from Debian 11 to Debian 13
-> because the new toolchain needs glibc >=3D 2.34. Additional changes
-> to accommodate the new base image and toolchain:
->
-> - Use DEB822 format for enabling deb-src (Debian 13 sources format)
-> - Add libc++1, libc++abi1, libunwind-19 runtime deps for the new
->   LLVM-based toolchain
-> - Add zstd for the new .tar.zst archive format
-> - Replace pip3 install tomli with python3-tomli system package
->   (Debian 13 enforces PEP 668)
-> - Update artifact URL domain to artifacts.codelinaro.org
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-I assume you will merge with your next hexagon PR?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks
+Chao
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>  target/riscv/cpu.c | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 2ddc26c837..376517755e 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2619,6 +2619,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
+>      },
+>  };
+>  
+> +static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
+> +    .ext = CPU_CFG_OFFSET(ext_zvfbfa),
+> +    .implied_multi_exts = {
+> +        CPU_CFG_OFFSET(ext_zve32f), CPU_CFG_OFFSET(ext_zfbfmin),
+> +
+> +        RISCV_IMPLIED_EXTS_RULE_END
+> +    },
+> +};
+> +
+>  RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
+>      &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
+>      &RVM_IMPLIED, &RVV_IMPLIED, NULL
+> @@ -2632,8 +2641,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+>      &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
+>      &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
+>      &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
+> -    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
+> -    &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
+> +    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
+> +    &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
+>      &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
+>      &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
+>      &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+> -- 
+> 2.52.0
+> 
 
