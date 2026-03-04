@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB600EF9011
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61144EF9008
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpTJ-0002Jh-6F; Wed, 04 Mar 2026 11:53:17 -0500
+	id 1vxpVk-0005fX-S4; Wed, 04 Mar 2026 11:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxpTG-0002CO-94
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:53:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxpTE-0002gN-Sj
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:53:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772643190;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=POIGA0TdhwgOcV5gif+U97gr41z8jC9z2Bscrr2zLow=;
- b=euamUJaGZPIlQ+wE0KAYVsjS3l5J+TKskg0znR9t455ugcv9qwb8O07JC9UrWly1FFtZkj
- P6lCgByMH2uEUmaImrrND81JUYT3KCl8dqDDZrFKFXahewVmye9b4SfhpUJj8QEqXLTVJO
- xQ5Yel8/SXxgEFbTx+4PJu5JEaaKAQw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-hXcbmq_mPi6iGmU8Uff1ZQ-1; Wed,
- 04 Mar 2026 11:53:07 -0500
-X-MC-Unique: hXcbmq_mPi6iGmU8Uff1ZQ-1
-X-Mimecast-MFC-AGG-ID: hXcbmq_mPi6iGmU8Uff1ZQ_1772643186
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5F031956059; Wed,  4 Mar 2026 16:53:05 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.32.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D8B918005AE; Wed,  4 Mar 2026 16:52:59 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- manos.pitsidianakis@linaro.org, slp@redhat.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- stefanha@redhat.com, stevensd@chromium.org,
- Laurent Vivier <lvivier@redhat.com>, jasowang@redhat.com,
- Peter Xu <peterx@redhat.com>, hi@alyssa.is,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, dbassey@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v14 5/7] vhost_user.rst: Add GET_SHMEM_CONFIG message
-Date: Wed,  4 Mar 2026 17:52:21 +0100
-Message-ID: <20260304165223.2166175-6-aesteve@redhat.com>
-In-Reply-To: <20260304165223.2166175-1-aesteve@redhat.com>
-References: <20260304165223.2166175-1-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vxpVj-0005fC-O1
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:55:47 -0500
+Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vxpVi-0003o1-3f
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:55:47 -0500
+Received: by mail-dy1-x1342.google.com with SMTP id
+ 5a478bee46e88-2ba9c484e5eso6603915eec.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:55:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772643345; x=1773248145; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5fi9HW2CT3G0OGmSZ2vDozZ8N8j3QwBVhy3wU+AZtuQ=;
+ b=GbhM1iqWCTiWkX+awwdNM5vPCgHB4n8/Gp4O8J6wpRqHpwy/FvCTCNOwTXPOLDHC3y
+ +v6UsZ9kyIU4y5rNH87yNYIn+MrTTJQ0T2BP2XEWrSatnIBjOqm5xhJnJVu9+F7rZYTO
+ J3lYlD0VlqSS3Ed+5EGepZYowzWmGhJR4Y2lG/jkdiKMjXL3UWYUIJAfwIlTtDnwD2z7
+ 9Mg0hOMLf3BxZ1nv6UWkmuGgid3SgH3oJLChRXQ9g1Nr7wHaKGyFMXr90lq8uAOuJsFg
+ ZCw7O1pr6J1Uwx2ps9+x1VZQPtdfVG08HhFzzq3vNYWLkj+6Y7TfrjfnoP4iQVV3wKox
+ NBKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772643345; x=1773248145;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5fi9HW2CT3G0OGmSZ2vDozZ8N8j3QwBVhy3wU+AZtuQ=;
+ b=ORxFZ37wPBsVZQEKM1YzdJqZlJJtpojFtMSsh+sdi9OZ4Bah1/HHn2qQKafO7gIqjV
+ +kp6dEohjkmSSR3rBIJvFdwqxScTpv+6aa2JxJHcx2fsArkfvCd6OtvBw82s1xZRD+D9
+ YiOv4609k7eWpXH3AS/cvuqlkJ5Qr+ISVcaI3Jr1dB4sHc+9EzCXCj9LxfQgVpmF6WZt
+ +KEF2nwndtUmukOkbDbcTq+ftDJ1Ssy7/6w8WH6+6TCAf0ug9A0mA2VpeANjvRxlGNrp
+ rhaCgRAh+q8P7NSb0SVl0YNNNqE+1f4Ch84HGZcLZpnVqR3PkpplV7TjDdlQC837uZ+M
+ 6CTg==
+X-Gm-Message-State: AOJu0YzxPMKdpCoGPTE0d4rRfGM9MqzfSsdE68YkpM02sGrd4oTEIgjY
+ aVEPGUxLZd54+5VTkikP3Cag/2BwGS4uUcnvgNTKRLtt4dcsvhPj7CuJ
+X-Gm-Gg: ATEYQzxnzCvoMJOLcKiw4Ab3N/OfPSbpsa4JlK5Xtl73IAnONrD8N1ONjp+aWI6gvKv
+ opuiSSK0FyBffOknbdOvONKn5tGRPDEqp3A9mjYit08UzkRBb5iF9ieyq0WL2WcAjjKAVEuwZi8
+ 4ZEhY70Ro2qOyMGMoJiFoWRFjCOTww6vO6eJaRWQnx8RBq9U6X1FKYDiQD+MTTQzm8nmTXUmb8e
+ 7Ue8i41ogTn7PWWvh0yM86sCiXHsNNeyuOqib7IXTt2LcpYWCxNmChFDzJ17RGvNZg3IDWrB2ga
+ KxAJudCJrZ5Ba3RtFr340Hvf5caQlIkQDj5rjDFDH9dXJnqKpKj803Rp/MBTumlF3Bk8pT3D8cK
+ Gus6GBRQiaV9zz4TIzonsp7jXhg7/eq3knUXF0DZTM5iuOpa8vPV7C/2D7xaNheEbxfHUnyX4NT
+ Y5ZkKZabXm0fq1TbBkLkpb9F91jz4ajPKVXhfUvhOl4kuAX8IncvHgp+gz6fDzKzw573MxMok0/
+ n/5wYQqnpGDfsCeEivqvk60EKe7rUE=
+X-Received: by 2002:a05:7300:a14a:b0:2ba:7069:686c with SMTP id
+ 5a478bee46e88-2be310308f5mr1110410eec.17.1772643344512; 
+ Wed, 04 Mar 2026 08:55:44 -0800 (PST)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2bdd1e02f95sm15307836eec.13.2026.03.04.08.55.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 08:55:44 -0800 (PST)
+Date: Thu, 5 Mar 2026 00:55:19 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v4 8/9] target/riscv: rvv: Support Zvfbfa vector bf16
+ operations
+Message-ID: <aahcp3fivs8UbRcw@ZEVORN-PC.localdomain>
+References: <20260304132514.2889449-1-max.chou@sifive.com>
+ <20260304132514.2889449-9-max.chou@sifive.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 33
-X-Spam_score: 3.3
-X-Spam_bar: +++
-X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260304132514.2889449-9-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,82 +106,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GET_SHMEM_CONFIG vhost-user frontend
-message to the spec documentation.
+On Wed, Mar 04, 2026 at 09:25:12PM +0800, Max Chou wrote:
+> According to the Zvfbfa ISA spec v0.1, the following vector floating
+> point instructions have different bahaviors depend on the ALTFMT and
+"bahaviors" -> "behaviors".
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+[...]
+>  static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+> -                        uint32_t data, gen_helper_opfvf *fn, DisasContext *s)
+> +                        uint32_t data, gen_helper_opfvf *fn, DisasContext *s,
+> +                        bool do_bf16_nanbox)
+>  {
+>      TCGv_ptr dest, src2, mask;
+>      TCGv_i32 desc;
+> @@ -2403,7 +2461,7 @@ static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+>  
+>      /* NaN-box f[rs1] */
+>      t1 = tcg_temp_new_i64();
+> -    do_nanbox(s, t1, cpu_fpr[rs1]);
+> +    do_nanbox(s, t1, cpu_fpr[rs1], do_bf16_nanbox);
+this is a bug.
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 08a5e43988..4ee663d10b 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -371,6 +371,22 @@ MMAP request
-   - 0: Pages are mapped read-only
-   - 1: Pages are mapped read-write
- 
-+VIRTIO Shared Memory Region configuration
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-++-------------+---------+------------+----+--------------+
-+| num regions | padding | mem size 0 | .. | mem size 255 |
-++-------------+---------+------------+----+--------------+
-+
-+:num regions: a 32-bit number of regions
-+
-+:padding: 32-bit
-+
-+:mem size: an array of 256 64-bit fields representing the size of each
-+           VIRTIO Shared Memory Region. ``num regions`` specifies the
-+           number of valid regions (non-zero size). The array index
-+           corresponds to the shared memory ID (shmid).
-+
- C structure
- -----------
- 
-@@ -397,6 +413,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-           VhostUserMMap mmap;
-+          VhostUserShMemConfig shmem;
-       };
-   } QEMU_PACKED VhostUserMsg;
- 
-@@ -1777,6 +1794,28 @@ Front-end message types
-   Using this function requires prior negotiation of the
-   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
- 
-+``VHOST_USER_GET_SHMEM_CONFIG``
-+  :id: 44
-+  :equivalent ioctl: N/A
-+  :request payload: N/A
-+  :reply payload: ``struct VhostUserShMemConfig``
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the front-end
-+  to gather the VIRTIO Shared Memory Region configuration. The back-end will
-+  respond with the number of VIRTIO Shared Memory Regions it requires, and
-+  each shared memory region size in an array. The shared memory IDs are
-+  represented by the array index. The information returned shall comply
-+  with the following rules:
-+
-+  * The shared information will remain valid and unchanged for the entire
-+    lifetime of the connection.
-+
-+  * The Shared Memory Region size must be a multiple of the page size
-+    supported by mmap(2).
-+
-+  * The size may be 0 if the region is unused.
-+
- Back-end message types
- ----------------------
- 
--- 
-2.52.0
+All arithmetic OPFVF BFA instructions pass
+`do_bf16_nanbox=false`, but they should pass `true`.
 
+When altfmt=1 and a scalar f-register operand is
+improperly NaN-boxed, the code substitutes FP16
+canonical NaN (0x7e00). But 0x7e00 interpreted as
+BF16 is a normal finite number (~2^125), NOT NaN.
+This produces incorrect arithmetic results.
+
+static void do_nanbox(DisasContext *s, TCGv_i64 out, TCGv_i64 in,
+                      bool do_bf16_nanbox)
+{
+    if (s->sew == MO_16) {
+        if (s->altfmt && do_bf16_nanbox) {  /* real: s->altfmt && false */
+            gen_check_nanbox_h_bf16(out, in); /* NaN: 0x7fc0 */
+        } else {
+            gen_check_nanbox_h(out, in);      /* NaN: 0x7e00 */
+        }
+    }
+    [...]
+}
+
+Affected callers:
+
+> GEN_OPFVF_BFA_TRANS(vfadd_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfsub_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfrsub_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmul_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmacc_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfnmacc_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmsac_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfnmsac_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmadd_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfnmadd_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmsub_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfnmsub_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmin_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vfmax_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vmfeq_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vmfne_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vmflt_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vmfle_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vmfgt_vf, ..., false)
+> GEN_OPFVF_BFA_TRANS(vmfge_vf, ..., false)
+[...]
+
+All of these should be `true`. The widen macros
+(GEN_OPFVF_WIDEN_BFA_TRANS, GEN_OPFWF_WIDEN_BFA_TRANS)
+hardcode `false` and should also be `true`.
+
+The sign-injection (vfsgnj/vfsgnjn/vfsgnjx),
+vfmerge, vfslide1up/down, vfmv.v.f, and vfmv.s.f
+correctly pass `true`. The intent seems clear --
+the `false` values are simply a mistake.
+
+I suggest that since all BFA callers are supposed to
+pass true, we consider removing the BF16_NANBOX parameter
+entirely and having do_nanbox() directly check s->altfmt
+(this is what patch 7 originally implemented before
+patch 8 added the parameter).
+
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
+Best regards,
+Chao Liu
 
