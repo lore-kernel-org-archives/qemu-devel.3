@@ -4,120 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77A5EDEC1D
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35233EDEC1D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxgNL-0001r8-CE; Wed, 04 Mar 2026 02:10:31 -0500
+	id 1vxgO2-0002Hd-CS; Wed, 04 Mar 2026 02:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vxgNJ-0001qe-Sl
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:10:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vxgNx-00028n-M8
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:11:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vxgNH-00017p-M6
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:10:29 -0500
+ id 1vxgNv-0001Ni-Ty
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:11:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772608226;
+ s=mimecast20190719; t=1772608266;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=drdGS2Gs6IfnJMxASEiR3IZCY2Tzj5FC8u7f0jjJs8Q=;
- b=QcKmimt3v0w9eCoZvZrsAT4K4i3ateCQsDZPgHLZnd3ZQ8cU+p0UXF+4JwFZMSU1/kO8/2
- cPjDT/c0o/lY7/FF34QOldJu0+ew/J7vz3gsxQpdx8zzqwIUzu8tScvQ3NJaxYxb8bHe+U
- owW/MwH1uxqVXkW8fO+NBLa0j/bAzq0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FEnTXRD+uqUitIvcHcs41eGxcDpYOi/zYR4RoDlAkCE=;
+ b=RSQWKV46IUWetCAnYFhEn2JqFVOTy457aJTN1+eu8SKF2c3lLuLGQYL4SMrsmYVx3sDWQ7
+ eZcpAEVF/q6JpN+9q1vU6C7ltdLx8a4VnqNzUXphGz5Wi/dbyxhGCYRd2LclXtklfJ4eIH
+ QsgKKQKXTeSzZGPLBPLGXv+XmZUyw9o=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-nTw97DkTPd2cpF9KvU1Qlw-1; Wed, 04 Mar 2026 02:10:25 -0500
-X-MC-Unique: nTw97DkTPd2cpF9KvU1Qlw-1
-X-Mimecast-MFC-AGG-ID: nTw97DkTPd2cpF9KvU1Qlw_1772608224
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-359887aece0so3553385a91.1
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 23:10:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772608224; cv=none;
+ us-mta-299-DfNpJhQCNMehmFFm_h_IzQ-1; Wed, 04 Mar 2026 02:11:05 -0500
+X-MC-Unique: DfNpJhQCNMehmFFm_h_IzQ-1
+X-Mimecast-MFC-AGG-ID: DfNpJhQCNMehmFFm_h_IzQ_1772608264
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c5269fcecdeso3502273a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 23:11:05 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772608264; cv=none;
  d=google.com; s=arc-20240605;
- b=Kfsn08vmmibRcZ5np71TGjr2wFQQB0Ef8Oe/4WYmbaQMayhkNatIdPFcfhnbv20YKv
- aJMXn3QaOOPdVwVLQUIDY8TQZKJrBaYqlV2VvkRdvss5z2H3vvCPclaBccumiJfvlz3k
- 57sgCmqhxy/XH90wdzhjsJpOLZXru2lf/PGlGmUFVDsOg8wz+tXliKrLCXKGjZcbGmTw
- JhRx9KqmeDCMTARGFW8Y3WFjRvtKR3VuiHwWe7qPSIKJVHIOv0U0s0+MK+i5cGUnHFOt
- d9Qk80h0sbnFP7HQFVLsFFvZn1z/rGBBHoCm5SpIAyXc+yuwk6pbBYS+pQ/tT7kmTtzz
- jPlQ==
+ b=AItlUmRVWfcLHPJ9SmrdROI3qWd1bHanFvgUDsymGs5/KD3hpfPvpAc6ERL94lut81
+ N5uYe5bMZcfZPbAqHPw5IoXQqa0ksZJ9WZsbUeIC4yNVlR6ytVAIrKy0yVEIRsCatvzv
+ IqRgwy5PCewMyhmcdCYQ3cDaYNcGfia54z5IhFZRnR9nFot5GpndalJ6petX+ZTDF1IU
+ tvfxa2o8AfsWJr9UmiMYVRhn8Ps58y48LnlteSQCoZxqgOz9zsulIW1TJnxHlQ+luSc6
+ jQxXL7kZBMx2q6JkleQllSSRj5wkL9gyO0vXX7Jw7S3Vc1rYo9auM/OyeHlFawckT+mC
+ hDnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=drdGS2Gs6IfnJMxASEiR3IZCY2Tzj5FC8u7f0jjJs8Q=;
- fh=oGrUa+3+zZJlwX9g6i0Sv0qHBgVtqlDxZdsNKzb+sks=;
- b=RXatFC9qGyGVxF1mMkL10vRv/E3STlVuR/VeM2GxTo/Z9PdKbGwnJp7qjy1081t5/+
- 51vDSJvFyQTroPKv4PczZXX/6a8ojP7l9UH1BsQu9rnaijaOafHUXKY6g3b+UKlVoPlq
- eonJkGCftdJZ22mM3mskEa+qlt+I0A5OJcHW5SHy6YKA67kSDGCP/s7nhktneRakU5re
- +x20TS8vRjSSRRs6v1AK0+Tr4KqeimcJ3RQsxVLQgw2xfzMl+h4UWSQbLkz/eMpOhG/N
- iYxw7FTfYySxfvqkYtaD/cqgPO433rC0K09eRfl/8fXxNmjdJ4dBFCFBb7KlV1APcFuF
- 27ug==; darn=nongnu.org
+ bh=FEnTXRD+uqUitIvcHcs41eGxcDpYOi/zYR4RoDlAkCE=;
+ fh=LyWEs+lL45hwsi57wRrCWsHyfzy7Svw7PUUmpiLqeKE=;
+ b=D6dprc/NSr3bMjuKHp7KenmoNritObUPewk5QbnCfzLCP0b5iyvEDQAwybMjcvNChu
+ eJqCpOOHYFISZDY28C8xICIXBc+jup5Y6A5m9ZKuPijOxKoMcMmUQxFOY4HeLvq0kcu7
+ q5dkgFPjs3hmUyLAo7l7k6k2X5kqATq/oKZ3+H51kF1lfhdtkDA2EHYHSmVhcNuGfLvp
+ PQGymzCpCzFa0hZUtmY/5kIObXjh70id7OK0XM7RE0AiDAtSVUIKxTVnaupoIUzc9CDr
+ W2YVVOUAQXYWCuR1AtdnHNpuer5qEATXWGQyVTH0yqLT9UsQtPvEfElOy5QD7kjbCft8
+ WkgA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772608224; x=1773213024; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772608264; x=1773213064; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=drdGS2Gs6IfnJMxASEiR3IZCY2Tzj5FC8u7f0jjJs8Q=;
- b=CfmTyeoh5/C7YqqRCkURG54CewbLQhH0ho1IUdB9XddEb4C19ZFrTHs+2s/bRr5o0S
- klIapg8c7rfZl+0dOCSo0JzlVO+G3ZAPrAgfKN2/mponNaq68IiFL2dVW4Hsr2P+kvqx
- PK7e+jA8WF/5bM/CgQxvLB12nRnFOUhrmUrv6uX84bM7gcyac0HVICHBMYaQjLc9Fr2z
- B8uUoAvHkl+45xAsWLDQEFfQpBkGKH9xfevefDI/Ndyhjd4XPIuGL+CVmR60oxG+dGgL
- fLVpsPw02tK7QYwi2Ft2ENTeGlVhx2SbG78lHnWNThQGO5VWgS7e5WLlXHU5WdKBVfiO
- Q5yQ==
+ bh=FEnTXRD+uqUitIvcHcs41eGxcDpYOi/zYR4RoDlAkCE=;
+ b=L47aQyYkRce7v5QS7VSq+W4TRZQSW2u+5ctB3ukK/JQp+rpMOqI5dt0ZoQVQiFiSPY
+ fDiYE5PLF7nLj+6JtuyduUMbbOru/sJ4HOQf4ISBGhKZVhiFSOo/LprG6/PrIjRre7et
+ +pmUBrFJj2IjqtzlE1p0g1EwlKNuHhdGx0A1rcNMjS9Y1iACz1PJ2ctq32+O3i6Xc1MW
+ qafW+2Qfq2c/1WCgYMHMvWIjI22eg9oJJU9bWX2K6gHHOf7imjjQllQ6k6qCZhrMxpS1
+ Y+otV6CskkCcMQJetT13YPPhp3Lp38e7+9KN9MQ5arY9sz78tr3/91GphJH4xRsOfeWv
+ gqqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772608224; x=1773213024;
+ d=1e100.net; s=20230601; t=1772608264; x=1773213064;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=drdGS2Gs6IfnJMxASEiR3IZCY2Tzj5FC8u7f0jjJs8Q=;
- b=czSYCmeQve5iey6nLT2hPMUhfsUrkM0U+W+XsSCuM2A41Zd0f5km9UqI8RJ0baSt+M
- HqPHbTypeV3DGLTrqn4EGhFWvFGSjbWxfKeICnPzmsV9frwOH7v8WzoQFODphWUhvspV
- OcSpxBweU5RCNdzYViXA7BpAzN2PF/LXXbe7fRzz+Qh10wCuUHaBU30/ILnCJzNRCoQN
- hG3XkKNZTy/mGBJVo833gmRwzPjDwwC21C8xH5VhIIIFSXJugJMzmy9TviHrUgYTPM2q
- cCL4SBoJifu4eyAnawUds8PmzHWnUrXYndYKzGHheYZaYhOn2q1dzfgA4sKqlwtFENkA
- 1cxg==
-X-Gm-Message-State: AOJu0Ywpm21309Zt/5F2TZPlX9dBDoNC0vAjaH1R9tS6XWVBqqh2D8pv
- WdbybxXDXCo3b4qtDR0jTCUT8Em1feaedr1WdVcZ6cK7MCAuG3sdDAgophR0F/PHwH8aEqPm7ri
- hRL7ZWbNmrXCrryQ43iFt7dbum3WDuuy2IwXrl8DyU+t2cwZDIYXv+MeIwi37Mf2/xhltUH32OL
- EpV7POx2eN9ux+7eLcIkF8TYyp0RJBhxg=
-X-Gm-Gg: ATEYQzzh88aSqFsY/cUszwkhmP9IXHCqf2CU0GI2uYBLRgbn8XkVJU9a0oZVUjVAe/H
- Xvemm0mva8fc0h7572RGBlIcq6jRehBw70c6vuc2x3Kl1tupmmE998Fy78WL+F79o5ulplfcf4G
- Y5Ej50++PxTjE0nazAcHKdb6z4llwSbjvpb/wa4B9Qxzv2UaYkqmypnyATc1D3ErJbWFMfj6bh5
- rb7Wbw=
-X-Received: by 2002:a17:90b:1fc5:b0:359:8c9a:fdf6 with SMTP id
- 98e67ed59e1d1-359a69ae8d6mr1051423a91.6.1772608224128; 
- Tue, 03 Mar 2026 23:10:24 -0800 (PST)
-X-Received: by 2002:a17:90b:1fc5:b0:359:8c9a:fdf6 with SMTP id
- 98e67ed59e1d1-359a69ae8d6mr1051393a91.6.1772608223203; Tue, 03 Mar 2026
- 23:10:23 -0800 (PST)
+ bh=FEnTXRD+uqUitIvcHcs41eGxcDpYOi/zYR4RoDlAkCE=;
+ b=SrFaseGuT4pm+G2eB1SlaU55WG7twMN/PeP+vgCBNvj+Hdr+eFMsrVP6e/aguO1LdA
+ p2rnNuTI3Rm6iGdxIwtX9DmhPnDWRa3jZVoROvOHYLuOGtCdFuvYs7/L8D4b3BwdIVEg
+ f7xVo1Dbv52qhhcFvcXuj3KHVxGObl22YyO35+HR66ueTbNres3W6H6fKWF61FsgaKOx
+ fx58rp0K8bEffpQ7NwvnBgX5Y6JMDA531a1xBd3JtX2rQKJ0UdGxsZcxevJ6E4ykanFN
+ iZiuKrPlkEfMM4o8jOASyk3Q4rEskJXpLfmjqwGzM/Ou2DSMLY7ZkIlDqfOcgv/eo1db
+ kXEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKYToDUYbkaZIQAinrTAlW9wbOUWcFAFNZkPU+OOkEpx9jv7MkgOxVZj/POgmNWKudblpnYqp5IUS/@nongnu.org
+X-Gm-Message-State: AOJu0YyKk7PcEt/GmK9mUVZLjmdNAC1vOvojrLGmpzeRwtGQWn8LIorY
+ VVpRlFIi1VZT0fQzvpoTElnELoR9WmjNqOdUz1MKNGMRBtNc9dT7erFG31kbJe8ewC37HVv26R5
+ nKK/BJA3fleTuyha5IyJ5Vht+CBrF6r+r4b3nrB3glt04WcVmmcGtZEf9p/ihaAkwMS6GBshNFH
+ tl7NDzVomeg/xubPR2p/LiPFJsjPFiWzA=
+X-Gm-Gg: ATEYQzzw1wuvGDfGs/37sew7AWRMo/KYkOi2LyvcSKm/wIIRNaM1qf3m4qwyq2WcQv2
+ OvScHY+SyBr81mJL4EnedTJOR8iTQwx4QcB+OQR/CsWHOHTzGPlnEkp+Lr4/i84c4qDgP9Y7G9i
+ 8EU9vLnjSEJgrxuN5iFcRm/jMI7YcI8WU3ktbj0U+kDgPELjlf2sFDfF+/AqrS6rG0lnXBOZXUU
+ ByHAlo=
+X-Received: by 2002:a05:6a21:696:b0:387:dfb3:cd0a with SMTP id
+ adf61e73a8af0-3982e260e1cmr1089062637.63.1772608264360; 
+ Tue, 03 Mar 2026 23:11:04 -0800 (PST)
+X-Received: by 2002:a05:6a21:696:b0:387:dfb3:cd0a with SMTP id
+ adf61e73a8af0-3982e260e1cmr1089041637.63.1772608263967; Tue, 03 Mar 2026
+ 23:11:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20260223203454.347800-1-kdutta@redhat.com>
-In-Reply-To: <20260223203454.347800-1-kdutta@redhat.com>
+References: <20260127173849.588F25969F0@zero.eik.bme.hu>
+ <597883bc-c6a3-cd7f-42dc-1ee7fb8e213c@eik.bme.hu>
+ <35356f16-3a1f-4ba3-8d10-bece637d9c4e@linaro.org>
+In-Reply-To: <35356f16-3a1f-4ba3-8d10-bece637d9c4e@linaro.org>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 4 Mar 2026 15:10:11 +0800
-X-Gm-Features: AaiRm501q8wCv1VHiJVteYN11In5mRDJZfuRbUjN4QigaSqQ9LuqxXrOfniETMw
-Message-ID: <CACGkMEu7XhQ147s1VBo-wALFLXvPuv8m6ORJgm_STXYX3WvZUA@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/virtio-net: add support for notification coalescing
-To: Koushik Dutta <kdutta@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
+Date: Wed, 4 Mar 2026 15:10:52 +0800
+X-Gm-Features: AaiRm52_rDLETpRVzQBMp-EuoZdN7XPwqJUP6PPtWawjzCFYQph2c_WzMyeGrU8
+Message-ID: <CACGkMEsRwnRAEGoff5m5QU_KfxDMXw1jhMj5Re+KNrm-5sRmXw@mail.gmail.com>
+Subject: Re: [PATCH] rtl8139: Remove ineffective parameter
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -135,267 +140,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 24, 2026 at 4:35=E2=80=AFAM Koushik Dutta <kdutta@redhat.com> w=
-rote:
+On Mon, Feb 23, 2026 at 5:57=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> Implement VirtIO Network Notification Coalescing (Bit 53).
-> This allows the guest to manage interrupt frequency using ethtool
-> -C for both RX and TX paths.
+> On 12/2/26 19:45, BALATON Zoltan wrote:
+> > On Tue, 27 Jan 2026, BALATON Zoltan wrote:
+> >> The do_interrupt parameter for rtl8139_do_receive was originally added
+> >> in commit 6cadb320c7 to avoid generating interrupt when receiving in
+> >> loopback mode. Later commit 5311fb805a changed this so that this
+> >> parameter became ineffective and now this parameter is unused and
+> >> always 1. If this turns out to be a problem maybe there's a better way
+> >> to fix this so remove the do_interrupt parameter for now to simplify
+> >> code.
+> >
+> > Ping?
 >
-> - Added VIRTIO_NET_F_NOTF_COAL to host features.
-> - Implemented VIRTIO_NET_CTRL_NOTF_COAL class handling in
->   virtio_net_handle_ctrl_iov.
-> - Added logic to store and apply rx/tx usecs and max_packets.
-> - Added packet counters and threshold logic for both RX and TX data paths=
-.
-> - Dynamic Dispatcher: Implemented a dispatcher mechanism that
->   dynamically switches/activates the notification callback logic
->   only after the guest enables TX coalescing via ethtool.
+> Jason usually only does 1 pull request per dev cycle, close to soft
+> freeze.
 >
-> This reduces interrupt overhead by batching notifications based on
-> either a packet count or a time-based threshold.
->
-> Signed-off-by: Koushik Dutta <kdutta@redhat.com>
-> ---
->  hw/net/virtio-net.c            | 110 ++++++++++++++++++++++++++++-----
->  include/hw/virtio/virtio-net.h |   7 +++
->  2 files changed, 100 insertions(+), 17 deletions(-)
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index eccb48ad42..e30aa198f3 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -157,6 +157,15 @@ static void flush_or_purge_queued_packets(NetClientS=
-tate *nc)
->   * - we could suppress RX interrupt if we were so inclined.
->   */
->
-> +static void virtio_net_rx_timer_cb(void *opaque)
-> +{
-> +    VirtIONet *n =3D opaque;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +
-> +    n->rx_pkt_cnt =3D 0;
-> +    virtio_notify(vdev, n->vqs[0].rx_vq);
-> +}
-> +
->  static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
->  {
->      VirtIONet *n =3D VIRTIO_NET(vdev);
-> @@ -1081,6 +1090,29 @@ static int virtio_net_handle_offloads(VirtIONet *n=
-, uint8_t cmd,
->      }
->  }
->
-> +static int virtio_net_handle_coal(VirtIONet *n, uint8_t cmd,
-> +                                  struct iovec *iov, unsigned int iov_cn=
-t)
-> +{
-> +    struct virtio_net_ctrl_coal coal;
-> +    size_t s;
-> +
-> +    s =3D iov_to_buf(iov, iov_cnt, 0, &coal, sizeof(coal));
-> +    if (s !=3D sizeof(coal)) {
-> +        return VIRTIO_NET_ERR;
-> +    }
-> +
-> +    if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_RX_SET) {
-> +        n->rx_coal_usecs =3D le32_to_cpu(coal.max_usecs);
-> +        n->rx_coal_packets =3D le32_to_cpu(coal.max_packets);
-> +    } else if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_TX_SET) {
-> +        n->tx_coal_usecs =3D le32_to_cpu(coal.max_usecs);
-> +        n->tx_coal_packets =3D le32_to_cpu(coal.max_packets);
-> +        n->tx_timeout =3D n->tx_coal_usecs * 1000;
-> +    }
-> +
-> +    return VIRTIO_NET_OK;
-> +}
-> +
->  static int virtio_net_handle_mac(VirtIONet *n, uint8_t cmd,
->                                   struct iovec *iov, unsigned int iov_cnt=
-)
->  {
-> @@ -1582,6 +1614,8 @@ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vde=
-v,
->          status =3D virtio_net_handle_mq(n, ctrl.cmd, iov, out_num);
->      } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_GUEST_OFFLOADS) {
->          status =3D virtio_net_handle_offloads(n, ctrl.cmd, iov, out_num)=
-;
-> +    } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_NOTF_COAL) {
-> +        status =3D virtio_net_handle_coal(n, ctrl.cmd, iov, out_num);
->      }
->
->      s =3D iov_from_buf(in_sg, in_num, 0, &status, sizeof(status));
-> @@ -2041,7 +2075,18 @@ static ssize_t virtio_net_receive_rcu(NetClientSta=
-te *nc, const uint8_t *buf,
->      }
->
->      virtqueue_flush(q->rx_vq, i);
-> -    virtio_notify(vdev, q->rx_vq);
-> +
-> +    /* rx coalescing */
-> +    n->rx_pkt_cnt +=3D i;
-> +    if (n->rx_coal_usecs =3D=3D 0 || n->rx_pkt_cnt >=3D n->rx_coal_packe=
-ts) {
-> +        timer_del(n->rx_index_timer);
-> +        virtio_net_rx_timer_cb(n);
-> +    } else {
-> +        if (n->rx_pkt_cnt =3D=3D i) {
-> +            timer_mod(n->rx_index_timer,
-> +                      qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + n->rx_coal=
-_usecs);
-> +        }
-> +    }
->
->      return size;
->
-> @@ -2900,6 +2945,7 @@ static void virtio_net_tx_timer(void *opaque)
->      if (ret =3D=3D -EBUSY || ret =3D=3D -EINVAL) {
->          return;
->      }
-> +    n->tx_pkt_cnt -=3D ret;
->      /*
->       * If we flush a full burst of packets, assume there are
->       * more coming and immediately rearm
-> @@ -2919,6 +2965,7 @@ static void virtio_net_tx_timer(void *opaque)
->      ret =3D virtio_net_flush_tx(q);
->      if (ret > 0) {
->          virtio_queue_set_notification(q->tx_vq, 0);
-> +        n->tx_pkt_cnt -=3D ret;
->          q->tx_waiting =3D 1;
->          timer_mod(q->tx_timer,
->                    qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout)=
-;
-> @@ -2974,27 +3021,45 @@ static void virtio_net_tx_bh(void *opaque)
->      }
->  }
->
-> -static void virtio_net_add_queue(VirtIONet *n, int index)
-> +static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue =
-*vq)
->  {
-> -    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +    VirtIONet *n =3D VIRTIO_NET(vdev);
->
-> -    n->vqs[index].rx_vq =3D virtio_add_queue(vdev, n->net_conf.rx_queue_=
-size,
-> -                                           virtio_net_handle_rx);
-> +    n->tx_pkt_cnt++;
-> +    bool use_timer =3D (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer=
-")) ||
-> +                     (n->tx_coal_usecs > 0) || (n->tx_coal_packets > 0);
->
-> -    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
-> -        n->vqs[index].tx_vq =3D
-> -            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-> -                             virtio_net_handle_tx_timer);
-> -        n->vqs[index].tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> -                                              virtio_net_tx_timer,
-> -                                              &n->vqs[index]);
-> +    if (use_timer && n->tx_pkt_cnt < n->tx_coal_packets) {
-> +        virtio_net_handle_tx_timer(vdev, vq);
->      } else {
-> -        n->vqs[index].tx_vq =3D
-> -            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
-> -                             virtio_net_handle_tx_bh);
-> -        n->vqs[index].tx_bh =3D qemu_bh_new_guarded(virtio_net_tx_bh, &n=
-->vqs[index],
-> -                                                  &DEVICE(vdev)->mem_ree=
-ntrancy_guard);
-> +        n->tx_pkt_cnt =3D 0;
-> +        virtio_net_handle_tx_bh(vdev, vq);
->      }
-> +}
-> +
-> +static void virtio_net_add_queue(VirtIONet *n, int index)
-> +{
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +
-> +    n->vqs[index].rx_vq =3D
-> +        virtio_add_queue(vdev,
-> +                         n->net_conf.rx_queue_size,
-> +                         virtio_net_handle_rx);
-> +
-> +    n->vqs[index].tx_vq =3D
-> +        virtio_add_queue(vdev,
-> +                         n->net_conf.tx_queue_size,
-> +                         virtio_net_handle_tx_dispatch);
-> +
-> +    n->vqs[index].tx_timer =3D
-> +        timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> +                     virtio_net_tx_timer,
-> +                     &n->vqs[index]);
-> +
-> +    n->vqs[index].tx_bh =3D
-> +        qemu_bh_new_guarded(virtio_net_tx_bh,
-> +                            &n->vqs[index],
-> +                            &DEVICE(vdev)->mem_reentrancy_guard);
->
->      n->vqs[index].tx_waiting =3D 0;
->      n->vqs[index].n =3D n;
-> @@ -3089,6 +3154,7 @@ static void virtio_net_get_features(VirtIODevice *v=
-dev, uint64_t *features,
->      virtio_features_or(features, features, n->host_features_ex);
->
->      virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
-> +    virtio_add_feature_ex(features, VIRTIO_NET_F_NOTF_COAL);
->
->      if (!peer_has_vnet_hdr(n)) {
->          virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-> @@ -4048,6 +4114,14 @@ static void virtio_net_device_realize(DeviceState =
-*dev, Error **errp)
->              n->rss_data.specified_hash_types.on_bits |
->              n->rss_data.specified_hash_types.auto_bits;
->      }
-> +    n->rx_pkt_cnt =3D 0;
-> +    n->tx_pkt_cnt =3D 0;
-> +    n->rx_coal_usecs =3D 0;
-> +    n->tx_coal_usecs =3D 0;
-> +    n->rx_coal_packets =3D 1;
-> +    n->tx_coal_packets =3D 0;
-> +    n->rx_index_timer =3D timer_new_us(QEMU_CLOCK_VIRTUAL,
-> +                                     virtio_net_rx_timer_cb, n);
->  }
->
->  static void virtio_net_device_unrealize(DeviceState *dev)
-> @@ -4262,6 +4336,8 @@ static const Property virtio_net_properties[] =3D {
->                        VIRTIO_NET_F_GUEST_USO6, true),
->      DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
->                        VIRTIO_NET_F_HOST_USO, true),
-> +    DEFINE_PROP_BIT64("vq_notf_coal", VirtIONet, host_features,
-> +                      VIRTIO_NET_F_NOTF_COAL, true),
+> Jason, since this patch is trivial enough, I'll take it via my
+> hw-misc tree for convenience. Please object if you disagree :)
 
-If we start as "true," we need to deal with migration compatibility,
-which is known to be hard even when using machine types.
-
-So I'd suggest starting with "false"
+Feel free to do that.
 
 Thanks
 
->      DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
->                                    rss_data.specified_hash_types,
->                                    VIRTIO_NET_HASH_REPORT_IPv4 - 1,
-> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-ne=
-t.h
-> index 5b8ab7bda7..33d01d080b 100644
-> --- a/include/hw/virtio/virtio-net.h
-> +++ b/include/hw/virtio/virtio-net.h
-> @@ -231,6 +231,13 @@ struct VirtIONet {
->      struct EBPFRSSContext ebpf_rss;
->      uint32_t nr_ebpf_rss_fds;
->      char **ebpf_rss_fds;
-> +    QEMUTimer *rx_index_timer;
-> +    uint32_t rx_coal_usecs;
-> +    uint32_t rx_coal_packets;
-> +    uint32_t rx_pkt_cnt;
-> +    uint32_t tx_coal_usecs;
-> +    uint32_t tx_coal_packets;
-> +    uint32_t tx_pkt_cnt;
->  };
 >
->  size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-> --
-> 2.53.0
+> Regards,
+>
+> Phil.
+>
+> >
+> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >> ---
+> >> hw/net/rtl8139.c | 24 ++++++++----------------
+> >> 1 file changed, 8 insertions(+), 16 deletions(-)
+> >>
+> >> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+> >> index 9fd00574d2..2ad6338ebe 100644
+> >> --- a/hw/net/rtl8139.c
+> >> +++ b/hw/net/rtl8139.c
+> >> @@ -815,7 +815,8 @@ static bool rtl8139_can_receive(NetClientState *nc=
+)
+> >>     return avail =3D=3D 0 || avail >=3D 1514 || (s->IntrMask & RxOverf=
+low);
+> >> }
+> >>
+> >> -static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t
+> >> *buf, size_t size_, int do_interrupt)
+> >> +static ssize_t rtl8139_receive(NetClientState *nc,
+> >> +                               const uint8_t *buf, size_t size_)
+> >> {
+> >>     RTL8139State *s =3D qemu_get_nic_opaque(nc);
+> >>     PCIDevice *d =3D PCI_DEVICE(s);
+> >> @@ -1173,20 +1174,11 @@ static ssize_t
+> >> rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t
+> >>     }
+> >>
+> >>     s->IntrStatus |=3D RxOK;
+> >> -
+> >> -    if (do_interrupt)
+> >> -    {
+> >> -        rtl8139_update_irq(s);
+> >> -    }
+> >> +    rtl8139_update_irq(s);
+> >>
+> >>     return size_;
+> >> }
+> >>
+> >> -static ssize_t rtl8139_receive(NetClientState *nc, const uint8_t
+> >> *buf, size_t size)
+> >> -{
+> >> -    return rtl8139_do_receive(nc, buf, size, 1);
+> >> -}
+> >> -
+> >> static void rtl8139_reset_rxring(RTL8139State *s, uint32_t bufferSize)
+> >> {
+> >>     s->RxBufferSize =3D bufferSize;
+> >> @@ -1745,7 +1737,7 @@ static uint32_t
+> >> rtl8139_RxConfig_read(RTL8139State *s)
+> >> }
+> >>
+> >> static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int
+> >> size,
+> >> -    int do_interrupt, const uint8_t *dot1q_buf)
+> >> +                                   const uint8_t *dot1q_buf)
+> >> {
+> >>     struct iovec *iov =3D NULL;
+> >>     struct iovec vlan_iov[3];
+> >> @@ -1828,7 +1820,7 @@ static int rtl8139_transmit_one(RTL8139State *s,
+> >> int descriptor)
+> >>     s->TxStatus[descriptor] |=3D TxHostOwns;
+> >>     s->TxStatus[descriptor] |=3D TxStatOK;
+> >>
+> >> -    rtl8139_transfer_frame(s, txbuffer, txsize, 0, NULL);
+> >> +    rtl8139_transfer_frame(s, txbuffer, txsize, NULL);
+> >>
+> >>     DPRINTF("+++ transmitted %d bytes from descriptor %d\n", txsize,
+> >>         descriptor);
+> >> @@ -2246,7 +2238,7 @@ static int
+> >> rtl8139_cplus_transmit_one(RTL8139State *s)
+> >>                     DPRINTF("+++ C+ mode TSO transferring packet size =
+"
+> >>                         "%d\n", tso_send_size);
+> >>                     rtl8139_transfer_frame(s, saved_buffer,
+> >> tso_send_size,
+> >> -                        0, (uint8_t *) dot1q_buffer);
+> >> +                                           (uint8_t *)dot1q_buffer);
+> >>
+> >>                     /* add transferred count to TCP sequence number */
+> >>                     stl_be_p(&p_tcp_hdr->th_seq,
+> >> @@ -2323,8 +2315,8 @@ skip_offload:
+> >>
+> >>         DPRINTF("+++ C+ mode transmitting %d bytes packet\n",
+> >> saved_size);
+> >>
+> >> -        rtl8139_transfer_frame(s, saved_buffer, saved_size, 1,
+> >> -            (uint8_t *) dot1q_buffer);
+> >> +        rtl8139_transfer_frame(s, saved_buffer, saved_size,
+> >> +                               (uint8_t *)dot1q_buffer);
+> >>
+> >>         /* restore card space if there was no recursion and reset
+> >> offset */
+> >>         if (!s->cplus_txbuffer)
+> >>
 >
 
 
