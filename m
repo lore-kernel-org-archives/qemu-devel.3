@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 198EEEB7EB5
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4196CEB7EAC
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxiHg-00012u-Sk; Wed, 04 Mar 2026 04:12:49 -0500
+	id 1vxiHi-00013q-1U; Wed, 04 Mar 2026 04:12:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxiHa-00010o-EH
+ id 1vxiHa-00010n-3W
  for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:43 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxiHX-0000Ie-Ap
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:42 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4836f363d0dso58338165e9.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:12:37 -0800 (PST)
+ id 1vxiHX-0000IP-BH
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:41 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-439b78b638eso3177689f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:12:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1772615556; x=1773220356; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1772615555; x=1773220355; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Aa7YS8YRAQ8yRhQF9Whg1Qcoxr3p3yRf12L+u0hXtWc=;
- b=V8sOSHHoGkICQW31sdmwjyIlSkdMZpg6GaA/89QAEwu7jmvG70eO9o39U7tlMQIBws
- 3ki00JeRkVo/IF1e1RfOs3bLHUn/5u4i0CfNewbA9vxRiA5EqOzDyezdSM2aBLv3FOsm
- 4B5LyD+PNJlmVH47s0sl5wND8g/yxIRY2GiWc=
+ bh=gpP959L10hBsg4INOewg8w8g5XRXZUc7QBJng71AuUU=;
+ b=TiTEL0nGnMVnEbYs6tYd/Qk97RpZBWQEmikzZLKWM4gY9ogL3MwgMfHoUlvIr/OtND
+ Hz+u5bEccJpUrOxmPrpAg5bPPwC5/mLGsiYH+gsWi7/m6y6f2W+gX5vOQm4/l/gOiBx1
+ Es9aNbRUn+e+vjSTZq0niYHt4DGotPNcj2jFs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772615556; x=1773220356;
+ d=1e100.net; s=20230601; t=1772615555; x=1773220355;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Aa7YS8YRAQ8yRhQF9Whg1Qcoxr3p3yRf12L+u0hXtWc=;
- b=XJAIHtGDzDcYymvNcDvor/RwL5nbwFKZ9QLxEv1DWsADxWRebUxOqDylWegTqC0bqY
- 0rVCKPfKUsYm8IqPxZv3MpznNldijEcxfpNUvqumfJiBx4QGR7vGog2XzU9w/mPnJIvL
- S4AbAnW2kfIouyrWQYrqpmhJg9/dnXDB5Nvmiy1oRl1q8Qy13T4B/oIutkC8xSpsVMCU
- UbahtcXzVGBwN7SJ3y5bLnoWi8XO+pIyu3UgNig7S4kkPFd2i3o00X+11JBuquL7Q+NZ
- XjqQZ+6DNOUmdqmzfbt5CDMka78CfTJRSXOm7rRnR5vFgpIV3sFsGw3yRVyeZMtFE8XO
- W8kg==
-X-Gm-Message-State: AOJu0Yxjkqc/KYOv3dwMRFwBH9qX9RTRpXwD9SEiqbMQhaK50IK/GwoS
- APdZzod2f8FTXB51EM6nPsoFCJnfEroKJhjXceAXlfN0YNvtirWtHbIhs1Z5sizWgYjCYjh8kKi
- Xw1gYJ1k=
-X-Gm-Gg: ATEYQzwL/rqvD2LsPTdUhPc6N29iSzuFIIssV6pwLJ9a/U1zQCrAkcB+yimhW6Px0Qy
- 855flS2D/EnzXncud49CUiG5hv9spjcN3rIgL8PBmUtPmXYeTnM98tXj2OLZjEivo62y+2jRFLR
- QFo2ITcSTSi8FfyZ3CQM7jWZIn22IJtyjIGYnWNa8xumAsIztj3HzfG+74fXhPtiWF91py0j9Mi
- 4sXne+EAgL58wz5PF8q305TyTU8ww1wlitimeGHz7f4zG3sZFH84qAH7CiQUugjEg5VPKO4Jeqz
- ulZvTm/bqoHlS+6JBzuWvkJ3+exFMGvA3PqHYZwUZsAG0ZxzTemvW0dEAx8kVDq+3BARIQubpON
- D858j17OPdRZDPJmflgSenb8s8mH0wyTLbjgLLUeykZGkFzSi+r69t/RIm1JaTloHebePgqXyqB
- CyRYZ+xNk/MHCMsNQESaZK1R4HHMQg095wDyvR5urHN0NbY/hTPgRBP6/TlbzstxD019BLJ/tg7
- feVhGf3oxq0ibpEnKfQS2I=
-X-Received: by 2002:a05:600c:4e0f:b0:483:8f0f:36fe with SMTP id
- 5b1f17b1804b1-48519837c8cmr20689175e9.1.1772615555873; 
- Wed, 04 Mar 2026 01:12:35 -0800 (PST)
+ bh=gpP959L10hBsg4INOewg8w8g5XRXZUc7QBJng71AuUU=;
+ b=hoDN05hzKVcA7AcvgICntN58XM/3Yges8FZ2mp8v0XWbXQYNH17rBaIl+lVaZZ5fPL
+ tLMvYsw4d1qh1yYftr1r57txVhGVAl4RaH12DXf41T7NHvEANEAuuXM9Gz03IfAk3Wf1
+ ZsviBhCIpgoA4fCPW1cIBzqjQuPV5S5Ztg0MZkp8ofq/l7CSbYHV7W9YZKmffp8cce93
+ zGxM9yVhl65d94wgsQ+VVxQHLQ/I3H33cDsnzt2xgP9kTjVQHO/4nN8hEzpI0dcLH/T2
+ u/Dno5bAs8T+hpqLrXVr9P2purOhMDiri3xwdpDrLWaJl2cZnbr/QucO7fHtesxtyDqM
+ ekSA==
+X-Gm-Message-State: AOJu0Yx+4WmC/cqM9A5043W+lq7F3Zp3B0V35nJhKUvaWVjD2lfBxSa3
+ zrpmNH8t4dmMVjsQ/cma+a0vKD/uWq803fftzN8GGKSWEU8CbzClezRhZ0WB2YiUboPPuOdGdgA
+ 5fmoS8QU=
+X-Gm-Gg: ATEYQzx0kMv0rnEKRBUdxJxEmBcHxnme2v9BLDjUYheUh6lp4xBEc2DfuHFMeY+nUYd
+ wb/fNWoiM0bCsLOlQGJiOnbNVxQeH3FB1s5s4/Nk/lAnZKpWFdcF38BN/h1ttPwFQlIK6GmmsJ/
+ lLZ0ihhgP+0jJPzTR6LetRVZ8vr77s57GKvaN86JKzQp44k2ds/Ioz6pSMXZuN7FwNnDWBWxf/i
+ LzDDM6kwb0SbzRXKzNrOp6aWPVZFl+yY2+YCRhO5KxsBzZr8BXbP0mvLFKjvGK5pXN+25EdbObr
+ ssD8tSShI1QGnYv65zI0bfax6taCiJDz5HZDZXvirtrMjnNL5MAWm3qwK/u2WL2buAMPvaYx1qK
+ kn/bSeRgUPciTjN6n2/gWMk8XZioDBBxML8sEqUPNajSGFYdZ+RNkrnm+fPOSubF7ERxjVYz1xx
+ wFO/rEdRW9O3aUHzC7+QEo8vBPaWyGcoWdnNuyo5J6TOmWPkXfUhFO0s+e/snj/psgsPDoVDXzE
+ opTpmEMMGrwUHdQRuRKBGs=
+X-Received: by 2002:a05:6000:200c:b0:439:9282:e728 with SMTP id
+ ffacd0b85a97d-439c7f64ff6mr2512939f8f.2.1772615554982; 
+ Wed, 04 Mar 2026 01:12:34 -0800 (PST)
 Received: from alex-laptop.lan
  (p200300cf57228c00bac66d1b6d99e025.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:bac6:6d1b:6d99:e025])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439c4489279sm9674234f8f.20.2026.03.04.01.12.35
+ ffacd0b85a97d-439c4489279sm9674234f8f.20.2026.03.04.01.12.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 01:12:35 -0800 (PST)
+ Wed, 04 Mar 2026 01:12:34 -0800 (PST)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
@@ -74,17 +74,16 @@ Cc: Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
  =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
  qemu-block@nongnu.org,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v2 3/4] migration: add
- VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
-Date: Wed,  4 Mar 2026 10:12:28 +0100
-Message-ID: <20260304091229.80725-4-alexander@mihalicyn.com>
+Subject: [PATCH v2 2/4] hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+Date: Wed,  4 Mar 2026 10:12:27 +0100
+Message-ID: <20260304091229.80725-3-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260304091229.80725-1-alexander@mihalicyn.com>
 References: <20260304091229.80725-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,165 +108,109 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC, which
-helps to save/restore a dynamic array of pointers to
-structures.
-
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-v2:
-- added VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC
 ---
- include/migration/vmstate.h | 33 ++++++++++++++
- migration/vmstate-types.c   | 88 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 121 insertions(+)
+ hw/nvme/ctrl.c | 57 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 89f9f49d20a..0bbe3317740 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_ptrs_array_entry;
- 
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -537,6 +538,38 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 4694bdb4d02..89cc26d745b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4852,18 +4852,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
+     return NVME_SUCCESS;
  }
  
-+/*
-+ * For migrating a dynamically allocated uint32-indexed array
-+ * of pointers to structures (with NULL entries and with auto memory allocation).
-+ *
-+ * _type: type of structure pointed to
-+ * _vmsd: VMSD for structure
-+ * start: size of structure pointed to (for auto memory allocation)
-+ */
-+#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
-+    .name       = (stringify(_field)),                                \
-+    .version_id = (_version),                                         \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
-+    .info       = &vmstate_info_ptrs_array_entry,                     \
-+    .vmsd       = &(_vmsd),                                           \
-+    .start      = sizeof(_type),                                      \
-+    .size       = sizeof(_type *),                                    \
-+    .flags      = VMS_VARRAY_UINT8|VMS_POINTER,                      \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
-+}
-+
-+#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
-+    .name       = (stringify(_field)),                                \
-+    .version_id = (_version),                                         \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-+    .info       = &vmstate_info_ptrs_array_entry,                     \
-+    .vmsd       = &(_vmsd),                                           \
-+    .start      = sizeof(_type),                                      \
-+    .size       = sizeof(_type *),                                    \
-+    .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                      \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
-+}
-+
- #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-     .name       = (stringify(_field)),                                    \
-     .version_id = (_version),                                             \
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb2114721..3335377cd07 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -942,3 +942,91 @@ const VMStateInfo vmstate_info_qlist = {
-     .get  = get_qlist,
-     .put  = put_qlist,
- };
-+
-+static int put_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
-+                                const VMStateField *field, JSONWriter *vmdesc)
+-static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
+-                         uint16_t sqid, uint16_t cqid, uint16_t size)
++static void __nvme_init_sq(NvmeSQueue *sq)
+ {
++    NvmeCtrl *n = sq->ctrl;
++    uint16_t sqid = sq->sqid;
++    uint16_t cqid = sq->cqid;
+     int i;
+     NvmeCQueue *cq;
+ 
+-    sq->ctrl = n;
+-    sq->dma_addr = dma_addr;
+-    sq->sqid = sqid;
+-    sq->size = size;
+-    sq->cqid = cqid;
+-    sq->head = sq->tail = 0;
+     sq->io_req = g_new0(NvmeRequest, sq->size);
+ 
+     QTAILQ_INIT(&sq->req_list);
+@@ -4893,6 +4889,18 @@ static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
+     n->sq[sqid] = sq;
+ }
+ 
++static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
++                         uint16_t sqid, uint16_t cqid, uint16_t size)
 +{
-+    const VMStateDescription *vmsd = field->vmsd;
-+    int ret;
-+    Error *local_err = NULL;
-+    void *pv;
-+
-+    /*
-+     * (ppv) is an address of an i-th element of a dynamic array.
-+     *
-+     * (ppv) can not be NULL unless we have some regression/bug in
-+     * vmstate_save_state_v(), because it is result of pointer arithemic like:
-+     * first_elem + size * i.
-+     */
-+    if (ppv == NULL) {
-+        error_report("vmstate: put_ptrs_array_entry must be called with ppv != NULL");
-+        return -EINVAL;
-+    }
-+
-+    /* get a pointer to a structure */
-+    pv = *(void **)ppv;
-+
-+    if (pv == NULL) {
-+        /* write a mark telling that there was a NULL pointer */
-+        qemu_put_byte(f, false);
-+        return 0;
-+    }
-+
-+    /* if pointer is not NULL, dump the structure contents with help of vmsd */
-+    qemu_put_byte(f, true);
-+    ret = vmstate_save_state(f, vmsd, pv, vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-+    return 0;
++    sq->ctrl = n;
++    sq->dma_addr = dma_addr;
++    sq->sqid = sqid;
++    sq->size = size;
++    sq->cqid = cqid;
++    sq->head = sq->tail = 0;
++    __nvme_init_sq(sq);
 +}
 +
-+static int get_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
-+                                const VMStateField *field)
+ static uint16_t nvme_create_sq(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeSQueue *sq;
+@@ -5553,24 +5561,16 @@ static uint16_t nvme_del_cq(NvmeCtrl *n, NvmeRequest *req)
+     return NVME_SUCCESS;
+ }
+ 
+-static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+-                         uint16_t cqid, uint16_t vector, uint16_t size,
+-                         uint16_t irq_enabled)
++static void __nvme_init_cq(NvmeCQueue *cq)
+ {
++    NvmeCtrl *n = cq->ctrl;
+     PCIDevice *pci = PCI_DEVICE(n);
++    uint16_t cqid = cq->cqid;
+ 
+-    if (msix_enabled(pci) && irq_enabled) {
+-        msix_vector_use(pci, vector);
++    if (msix_enabled(pci) && cq->irq_enabled) {
++        msix_vector_use(pci, cq->vector);
+     }
+ 
+-    cq->ctrl = n;
+-    cq->cqid = cqid;
+-    cq->size = size;
+-    cq->dma_addr = dma_addr;
+-    cq->phase = 1;
+-    cq->irq_enabled = irq_enabled;
+-    cq->vector = vector;
+-    cq->head = cq->tail = 0;
+     QTAILQ_INIT(&cq->req_list);
+     QTAILQ_INIT(&cq->sq_list);
+     if (n->dbbuf_enabled) {
+@@ -5588,6 +5588,21 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+                                  &DEVICE(cq->ctrl)->mem_reentrancy_guard);
+ }
+ 
++static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
++                         uint16_t cqid, uint16_t vector, uint16_t size,
++                         uint16_t irq_enabled)
 +{
-+    int ret = 0;
-+    Error *local_err = NULL;
-+    const VMStateDescription *vmsd = field->vmsd;
-+    /* size of structure pointed to by elements of array */
-+    size_t size = field->start;
-+
-+    if (ppv == NULL) {
-+        error_report("vmstate: get_ptrs_array_entry must be called with ppv != NULL");
-+        return -EINVAL;
-+    }
-+
-+    /*
-+     * We start from a clean array, all elements must be NULL, unless
-+     * something we haven't prepared for has changed in vmstate_save_state_v().
-+     * Let's check for this just in case.
-+     */
-+    if (*(void **)ppv != NULL) {
-+        error_report("vmstate: get_ptrs_array_entry must be called with *ppv == NULL");
-+        return -EINVAL;
-+    }
-+
-+    if (qemu_get_byte(f)) {
-+        void *pv;
-+
-+        /* allocate memory for structure */
-+        pv = g_malloc0(size);
-+        ret = vmstate_load_state(f, vmsd, pv, vmsd->version_id, &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+            g_free(pv);
-+            return ret;
-+        }
-+
-+        *(void **)ppv = pv;
-+    }
-+
-+    return ret;
++    cq->ctrl = n;
++    cq->cqid = cqid;
++    cq->size = size;
++    cq->dma_addr = dma_addr;
++    cq->phase = 1;
++    cq->irq_enabled = irq_enabled;
++    cq->vector = vector;
++    cq->head = cq->tail = 0;
++    __nvme_init_cq(cq);
 +}
 +
-+const VMStateInfo vmstate_info_ptrs_array_entry = {
-+    .name = "ptrs_array_entry",
-+    .get  = get_ptrs_array_entry,
-+    .put  = put_ptrs_array_entry,
-+};
+ static uint16_t nvme_create_cq(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeCQueue *cq;
 -- 
 2.47.3
 
