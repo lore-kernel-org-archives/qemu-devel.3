@@ -4,77 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B7B5EF9011
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF5FEF900B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpSm-0000HD-Je; Wed, 04 Mar 2026 11:52:44 -0500
+	id 1vxpR4-0003tV-1J; Wed, 04 Mar 2026 11:50:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxpSj-0000Dt-Ve
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:52:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxpSi-0002cx-7C
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:52:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772643159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=QZ1WGgz4P7BxMhR4knvZucV4wOQuME4+9WzQOkJrn6w=;
- b=HhOsNhtcOCRy5OJGJACHn1yOnBh1g5uszMzTp//INJ0HZAM0cZlt207TIyGuKfym9OpKIm
- U5IjtWT3GuERms+tW7dqLAyexjKdgXy9EGOMs1tHSf0M9HVdENW0RmclPWAtXkIeHzITzj
- IxINmT1TKcgETfkIytqCsqsMCN/2bgE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-244-dVKuqHvFNGGuIEIHh_yDOQ-1; Wed,
- 04 Mar 2026 11:52:35 -0500
-X-MC-Unique: dVKuqHvFNGGuIEIHh_yDOQ-1
-X-Mimecast-MFC-AGG-ID: dVKuqHvFNGGuIEIHh_yDOQ_1772643153
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E65B518002CB; Wed,  4 Mar 2026 16:52:32 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.32.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81CAA1800361; Wed,  4 Mar 2026 16:52:25 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vxpQz-0003qD-Im
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:53 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vxpQw-0002Pw-5z
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:53 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-65fb991d7eeso9568946a12.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772643049; x=1773247849; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t95kWQWOrKB4N4tylTfItpGqfNMJL0Byyr/GwBmoQ4E=;
+ b=kXMrmSnjZrNJHiqxY8y1+YQfJpwXLOkbzH1iXzY/QgQ2W7PkMqx1pdGLcyJgqyeRuV
+ /tqYaT3aR2N4NlnG5pFo0uBqntXy0XH0JW20VAUsLcdGj1IzLPYa/vtATNb+2zNuIxAr
+ jt5RnZ+Us3Vpq2/g2ZSj4qUDh49BHcWz+8kHy2uE/u06GVJWBML0p5XpLq8KRA6ll8Gc
+ SZ8JQ3MdBDJf43XoErxd8ZwWNGwvkasRuV4lRVgD/tRSIGCEhyXZkK44amMPtqKh00C8
+ Y0jXzD2vzwOZWCyIhcFqQMVjBvsYpC5178PxyuusXaBaMf4inM7klfHRSOp5Z2xLdTe4
+ cKkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772643049; x=1773247849;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t95kWQWOrKB4N4tylTfItpGqfNMJL0Byyr/GwBmoQ4E=;
+ b=CyN18voeyqhR+aayrClshZe+IPevVNjkSQ0oNGo3/Dkxu21oJ/6BF+gmoWRQmQFAsF
+ uHSE8QNm5q88VSwpeCwft2cVACQkJrH1ErEV72TwKtz19ibIBGTfGTUtDQXKEQu//qTb
+ pBGtKvdhvEnAhY5cuHOZEV8iwumoHQaxDXVNNP8HMZhjNH/G9U6+jaEy2XrzEY0ai0LD
+ kx80oV1U4WrUlME71GskRDGaSnCIFjac2FXY9mnO2CgYeLQg0meYmM64tp4PyW9zSZHF
+ C++w+SoDlKEYoI8k+JWQa0COCZ+Ffozd72CrfCFu8eOMxgzNBWHJY/Iw/7DBSG+tISDL
+ sYqg==
+X-Gm-Message-State: AOJu0Yx/KRpo7v4BcAYph/JlUsL0qgUxHDIfgcmSuMpiWiMwPjBPtyHD
+ J/5+k+jWSnWfnLGSwPVh6nZl8sBzeh5QZ5DAzHrhgJCfAjP/W7IkyIgE12ZVQG/m4Vo=
+X-Gm-Gg: ATEYQzz03IeszUbXgIm00wjfEKL868O2klbmQcH30A0KmIs3Q05Fdzz0kt0c8NiyfZT
+ Qpk4cCHP6+JqOTZ6ePuke5THYe+zY0ZEvKbevvLUATjSg3da+5r5I/FVD9KfW2hDQ1g7NNYHvhX
+ QyEqPFLzBsU7xMNWhz42LEMoFIXWE+c+loBr331Zg3nDChW5j29NbL5mwznb39+4G3IiQxOImZ3
+ mYD3cdTrRmjW3sChQjoT6Rhzh7e25fmtJKwkLmIDJqk2ZBRuJRTD0TIdyxvIumegh2lf+SMrsD4
+ jpRie46DARni8jM4Hjlo9qhHXFBOQdn/uas/QKgoURS25PeoNPz7FWSbcHBc7Rpj7qBMol9DBRf
+ 8q4yiPijT7DfitptajAOjVKr9AZPrZYWTYcwE53qv5gJwerbLrUDP7dAKNWu2BwyZEQ1VSet3k9
+ w20E+Jbyg87/wHt4FUDN8FBdI=
+X-Received: by 2002:a05:6402:34c2:b0:660:dd8e:5382 with SMTP id
+ 4fb4d7f45d1cf-660efa94b11mr1640523a12.13.1772643048745; 
+ Wed, 04 Mar 2026 08:50:48 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-660e793b7d4sm894036a12.7.2026.03.04.08.50.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 08:50:47 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4443761EF4;
+ Wed, 04 Mar 2026 16:50:44 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- manos.pitsidianakis@linaro.org, slp@redhat.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- stefanha@redhat.com, stevensd@chromium.org,
- Laurent Vivier <lvivier@redhat.com>, jasowang@redhat.com,
- Peter Xu <peterx@redhat.com>, hi@alyssa.is,
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, dbassey@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v14 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
-Date: Wed,  4 Mar 2026 17:52:16 +0100
-Message-ID: <20260304165223.2166175-1-aesteve@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 06/20] ui/gdk: Restore original context after new context
+ creation
+Date: Wed,  4 Mar 2026 16:50:28 +0000
+Message-ID: <20260304165043.1437519-7-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260304165043.1437519-1-alex.bennee@linaro.org>
+References: <20260304165043.1437519-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,95 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-v13->v14
-- Switched F_SHMEM id to 21 to avoid collision after rebasing
-- Fixed all occurrences of shmem->mr.size to memory_region_size()
-- Other small fixes following reviews from previous version
-v12->v13
-- SMEM_UNMAP spec update to explicitly state the use of
-  VHOST_USER_PROTOCOL_F_REPLY_ACK for replies
-- Removed confusing remark for 0-sized regions in
-  GET_SHMEM_CONFIG
-v11->v12
-- Refined VIRTIO Shared Memory Region configuration mem size
-  spec description
-- Removed unused name in vhost-user-base's vub_device_realize to
-  avoid build error
-- Initialize shmem in vhost_user_backend_handle_shmem_unmap
-  to avoid compiler being confused
-- Added stub for memory_region_init_ram_from_fd in memory.h
-  for windows builds
-- Use memory_region_size for shmem_region handlers instead
-  of accessing size member directly in shmem mrs
-v10->v11
-- Rebase to grab commit fde5930cc37175cfcd0f03a089e26f4458a52311
-  and explicitly unset reply_ack on the SHMEM_MAP/UNMAP msg.
-- Mention mapping cleanup on device reset in the spec.
+Get currently bound GL context when creating new GL context and restore
+it after the creation for consistency with behavior expected by virglrenderer
+that assumes context-creation doesn't switch context.
 
-This patch series implements dynamic fd-backed memory mapping support
-for vhost-user backends, enabling backends to dynamically request memory
-mappings and unmappings during runtime through the new
-VHOST_USER_BACKEND_SHMEM_MAP/UNMAP protocol messages.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-5-dmitry.osipenko@collabora.com>
+---
+ ui/gtk-gl-area.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-This feature benefits various VIRTIO devices that require dynamic shared
-memory management, including virtiofs (for DAX mappings), virtio-gpu
-(for resource sharing), and the recently standardized virtio-media.
-
-The implementation introduces a QOM-based architecture for managing
-shared memory lifecycle:
-
-- VirtioSharedMemoryMapping: an intermediate object that manages
-  individual memory mappings by acting as generic container for regions
-  declared in any vhost-user device type
-- Dynamic Mapping: backends can request mappings via SHMEM_MAP messages,
-  with the frontend creating MemoryRegions from the provided file
-  descriptors and adding them as subregions
-
-When a SHMEM_MAP request is received, the frontend:
-1. Creates VirtioSharedMemoryMapping to manage the mapping lifecycle
-2. Maps the provided fd with memory_region_init_ram_from_fd()
-3. Creates a MemoryRegion backed by the mapped memory
-4. Adds it as a subregion of the appropiate VIRTIO Shared Memory Region
-
-The QOM reference counting ensures automatic cleanup when mappings are
-removed or the device is destroyed.
-
-This patch also includes:
-- VHOST_USER_GET_SHMEM_CONFIG: a new frontend request allowing generic
-  vhost-user devices to query shared memory configuration from backends
-  at device initialization, enabling the generic vhost-user-device
-  frontend to work with any backend regardless of specific shared memory
-  requirements.
-
-The implementation has been tested with rust-vmm based backends.
-
-Albert Esteve (7):
-  vhost-user: Add VirtIO Shared Memory map request
-  vhost_user.rst: Align VhostUserMsg excerpt members
-  vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-  vhost_user: Add frontend get_shmem_config command
-  vhost_user.rst: Add GET_SHMEM_CONFIG message
-  qmp: add shmem feature map
-  vhost-user-device: Add shared memory BAR
-
- docs/interop/vhost-user.rst               | 104 ++++++++
- hw/virtio/vhost-user-base.c               |  46 +++-
- hw/virtio/vhost-user-test-device-pci.c    |  42 +++-
- hw/virtio/vhost-user.c                    | 274 ++++++++++++++++++++++
- hw/virtio/virtio-qmp.c                    |   3 +
- hw/virtio/virtio.c                        | 201 ++++++++++++++++
- include/hw/virtio/vhost-backend.h         |  10 +
- include/hw/virtio/vhost-user.h            |   1 +
- include/hw/virtio/virtio.h                | 136 +++++++++++
- include/system/memory.h                   |   2 +-
- subprojects/libvhost-user/libvhost-user.c |  70 ++++++
- subprojects/libvhost-user/libvhost-user.h |  54 +++++
- system/memory.c                           |  14 ++
- 13 files changed, 951 insertions(+), 6 deletions(-)
-
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index c709b2ce0f6..ce49000d3f1 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -250,11 +250,13 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
+                                         QEMUGLParams *params)
+ {
+     VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
++    GdkGLContext *ctx, *current_ctx;
+     GdkWindow *window;
+-    GdkGLContext *ctx;
+     GError *err = NULL;
+     int major, minor;
+ 
++    current_ctx = gdk_gl_context_get_current();
++
+     window = gtk_widget_get_window(vc->gfx.drawing_area);
+     ctx = gdk_window_create_gl_context(window, &err);
+     if (err) {
+@@ -275,8 +277,12 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
+ 
+     gdk_gl_context_make_current(ctx);
+     gdk_gl_context_get_version(ctx, &major, &minor);
+-    gdk_gl_context_clear_current();
+-    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
++
++    if (current_ctx) {
++        gdk_gl_context_make_current(current_ctx);
++    } else {
++        gdk_gl_context_clear_current();
++    }
+ 
+     if (gd_cmp_gl_context_version(major, minor, params) == -1) {
+         /* created ctx version < requested version */
 -- 
-2.52.0
+2.47.3
 
 
