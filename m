@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F0BEFCE24
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92378EFCE21
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 17:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxqBm-0007Ku-2y; Wed, 04 Mar 2026 12:39:14 -0500
+	id 1vxqHH-0000uq-3N; Wed, 04 Mar 2026 12:44:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxqBj-0007KR-Rq
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:39:13 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1vxqHB-0000uV-Ul
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:44:50 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vxqBh-0005C5-Qr
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:39:11 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-827336c0994so4155315b3a.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 09:39:09 -0800 (PST)
+ id 1vxqHA-00060U-97
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 12:44:49 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8297310ce0aso538586b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 09:44:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772645948; x=1773250748; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772646286; x=1773251086; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KhHiGh8vkizbsKnyXel0YdZmzbHTnB5jnEToCS8KKeA=;
- b=ZtYw/ZNYtgoKqJ4LuD6hjLSswRYsAo57p3JqxH9O5MxqA0H+xRwFNzdm4SJ5Oa+VVq
- yin67mGHQcl4TYHKGV4Xe4eA6Gpa3ltElKUFK4+HmAgNnoUft8HzyN+cwqcHvxYG7O3q
- vpVngPPVCLhbpXZXPCTr9bZLLhbs0GIV3pW4MXGS2iilG7vt6nWiZgSdjWNB0vksV8q+
- eNCX/6j1otuZglxYI0h8/sam5b7J8q4d5cjFSXY/rRH6iVwKJIsAthNArwM1j+aoG5cF
- z3BWeeQqGOkGSMaBlRxN/RjzXYaIjNpPhIutgAPax1uAMhgYX5mZeSQ+3ZJIp3DVHKGt
- ovyg==
+ bh=CaKm5LTeedHr6ap72scGgGDw+lkhf4XyHHd8LVqk1Gs=;
+ b=qPLzXp+ORPIDYT0bPi5BDRXCOvtT7vlJgXr98K7ic/+yWBYZ01KhG1G65ue3I9TdUD
+ Hs+EnmshkJOZ9hfb8WJ5tKNXPWPUVU16ihUD83ms6JclqYY4v6ZQl/CgC8H7I8/RnpAS
+ ZfklV3+aChBKvDEwBoSXayTCKUXF5uZAYk/gDY+5HEqsGATwtxhfGHFNahhj7hoNlaD4
+ eynGq+5plub5D2LNwyumaQCUSnTtkrrKUoK1ZoPXtD8kAxRxSuEsZbUlBqPIrGLhA+2V
+ JnRmj80D3wol6jNSf0AK/6XcQXYBlP9+JYVSo/l4Jo6HH6qSOzyFSrxQVMizCK9xWoIf
+ wTGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772645948; x=1773250748;
+ d=1e100.net; s=20230601; t=1772646286; x=1773251086;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KhHiGh8vkizbsKnyXel0YdZmzbHTnB5jnEToCS8KKeA=;
- b=U/Dr6iPNlFnzYt8qc9PWPe+Vhvdj6WZWURlPSmG+FczgvPKC6Bb4lBRqq9diuVnpsj
- AMFDaCJu5rHGFbThfqlTMxwQKaILPjeWjMsS61/OoLzm3qdzplL5WpTMSlg77runzrAZ
- zsMifuoaRGuDuqt7d1cqB4fkrl5yHP6C6EBDL1ElDql1w6i5LKHXOsnWPlNPO+zqKQJN
- t6ZAR1CLMsAOSblpJH1DIuKPNKuY4Mw8368TLlEQ9peFbt+cBt4f4uz07hrvZFgBEcfq
- BqVwQyXzTmVz0JA/elTeF0UW/wV/LQYfLTGdTn4fx48992N/iIsIeaUuifde1XulStjQ
- 6+TQ==
+ bh=CaKm5LTeedHr6ap72scGgGDw+lkhf4XyHHd8LVqk1Gs=;
+ b=ccmsx22anBwNtz40VLF60qdudxWWWsr+fg0lt6t8KhORX/IWaqP3o4/l84NheZcQLI
+ E/msjzUJsJhz4rplF0vdC3py+AP/WCrPEcmMqA9IZwPHImCY0SLz9rwbXDtH0CfP23yT
+ cOmZzjcsR9dmxSTBOfEj7BhyIF2MRVxfzcPvJ7kVtD4NcaoZ5IoYx6RRN09sZKf0V1rm
+ Vwq3vflpbsYyWvNWUHBAwSXHmHOG1U0grqPJb3xVy2HETO+zHB7B+bm2DPoI0B/qJBMo
+ 5h1IFYu6QX4NC1AUjrDCzX8rAk4AkcuIOZWfAxa7u5rr2ueINwiRDvaNUYOSOs9BOyZk
+ RVpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUSUrXoUnwf6QMpSkaHA/OD4ONEAoJqOwjZ0y7AnAmYZZJC07kb3aAvxtE5vEIWn1VjtrkVOvyWRS38@nongnu.org
-X-Gm-Message-State: AOJu0Yxma0Lowuz5/PtYaRI+H8QGX37LE4V8ElqoRoVljRqhwXIdK4Dq
- nLxF1bxLtMfuBAnZtOlLAl91zrwCTlSqjTpWfL9376WiDk0vVd2mEbthXt/veM1Ptxo=
-X-Gm-Gg: ATEYQzyQhI5F5r9uRx3Z1HmFjrQHsNzdWd5/6Mnn8pnPzCTdKvtBzNj20UlCpfH0+oB
- PxOis1UPaHGDTPJNt6ULTWRyVuljftit9CKaQy7ybAng4TivlETdHUNcCWthwLrSp1SuyVu+w6O
- DjRdYLGDLG3k3SIL1KkHXZ1pauyv1Q1gvjI6ci0kwFLLp6xudaE/58L1bRC4kwkpZj89kZEiLda
- Jqxplu7GE1U54LpKrg91TcxYiQiple6INu0YhZ9eQT7T1P27mP0cvm6eRc5w2j3ViqOOOhfWnlp
- Eji2IBTjS0PqubuP1WJDbCFDAK3J/mQf8UaKxTyDlW5Yjh28at3riPBFaOSHiyRsUazeusW22Bo
- BCzcxJiMFS2mjHxEZBB0gxNBbEsAtLX/VfYJE99oc+AXHpssbVu1B/+uzVN8XnaPVCfLHtbevq1
- UaMFWeKy/EU9pazype0wmnytub/t74eDtlZoNani9UJ++H5SSeUEyHytG+/+sPpmwUYYDn
-X-Received: by 2002:a17:90b:4b09:b0:359:8dfc:d39a with SMTP id
- 98e67ed59e1d1-3599cdf2eeemr5853530a91.4.1772645948055; 
- Wed, 04 Mar 2026 09:39:08 -0800 (PST)
+ AJvYcCVOANCTpCHJje46hQECC7wQuKnoHW/ZhNx1noM5wUfHheAv8iFWUY5jPq8cfA0jM/+IKaZj2orljQzb@nongnu.org
+X-Gm-Message-State: AOJu0Yx+z8eH8M3VXnIVpUHkvKs4n5MJUhUk8irMOQ+PO2hYgbiHH4bt
+ nyLS0aZNa8iepgkmW08rPg0raK6cfuuT+4hbdA1RbszjnD5KABT4kXE2ojJ23HIfDp8=
+X-Gm-Gg: ATEYQzy/CY52nhn2bUDKiyiNw/p64vs1MRewz0SG+zKjEEyuypvbatFzWqmKdY1ATj4
+ HW6eAuaNV+NXTnOgUU91klbriA5o0GuR3dy3624kjWnkWowS/MzYhPM82Vaa3CIAumd4277/2Kg
+ Uu77JI9n/betEAKe3VZRoNfeo1bRWA0LLVbjFyrKR+tBXhiGTbuWz5ufvmhUqiJyXgAFylKIzP4
+ yvI95rGJDQP7cumLfCY6Ud39Ab5X42OJdeodNrbmFRrs+ER0YAdREJc7+JYslJDyIZZmGzkAIZf
+ AHvCQ//DnvX8CVRHNUAvIm/aAotc0s0cEIy1Qmy17M0e0Fu/am2Wid/TJuszdq0Zz2KD43Q96wr
+ 1vfdI0AQTrFGTAwAiOu8RoEHNAnXtTf6vcy0gCzeJIaCX1kCk1H3sBLfOWTUfPLxxnchllVWnsm
+ BpKtdAavDF5goKJ4v19kNszUVNp/SXTbNHcdaGtRL8Q83rnBkQ2vWNLEcNO1Lx4/tmmzjQ
+X-Received: by 2002:a05:6300:220d:b0:392:e5eb:f0b with SMTP id
+ adf61e73a8af0-3982e268f01mr2709296637.64.1772646285995; 
+ Wed, 04 Mar 2026 09:44:45 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3599c49eb5bsm5502699a91.11.2026.03.04.09.39.07
+ 41be03b00d2f7-c70fa8479aasm17745798a12.31.2026.03.04.09.44.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Mar 2026 09:39:07 -0800 (PST)
-Message-ID: <dcafbd00-66a5-4e69-81ba-567c141a26a6@linaro.org>
-Date: Wed, 4 Mar 2026 09:39:07 -0800
+ Wed, 04 Mar 2026 09:44:45 -0800 (PST)
+Message-ID: <5e000e7a-d2ee-4a77-ba07-4545f42b6e01@linaro.org>
+Date: Wed, 4 Mar 2026 09:44:45 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/7] Enable PC diversion via the plugin API
+Subject: Re: [PATCH v6 4/7] tests/tcg: add tests for qemu_plugin_set_pc API
 Content-Language: en-US
 To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
  richard.henderson@linaro.org, imp@bsdimp.com
 References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
- <acd9b835-ae52-42aa-87f8-9fedccd79d04@linaro.org>
- <a9b4cb93-24e7-41fb-bb72-bacd48216c1c@epfl.ch>
+ <20260303-setpc-v5-v6-4-15c77cfe184e@epfl.ch>
+ <430d1aa6-c36c-4399-8e5f-b38a9ae1bd35@linaro.org>
+ <5b8bbc1e-cb8b-44ea-822b-0bdcb6ac225f@epfl.ch>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -115,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <a9b4cb93-24e7-41fb-bb72-bacd48216c1c@epfl.ch>
+In-Reply-To: <5b8bbc1e-cb8b-44ea-822b-0bdcb6ac225f@epfl.ch>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,141 +143,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/26 2:36 AM, Florian Hofhammer wrote:
-> On 03/03/2026 20:20, Pierrick Bouvier wrote:
+On 3/4/26 7:35 AM, Florian Hofhammer wrote:
+> On 03/03/2026 20:46, Pierrick Bouvier wrote:
 >> On 3/3/26 5:07 AM, Florian Hofhammer wrote:
->>> Hi,
+>>> The test plugin intercepts execution in different contexts. Without the
+>>> plugin, any of the implemented test functions would trigger an assert
+>>> and fail. With the plugin, control flow is redirected to skip the assert
+>>> and return cleanly via the qemu_plugin_set_pc() API.
 >>>
->>> This patch series builds on top of the discussion from the thread at
->>> https://lore.kernel.org/qemu-devel/e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch/
->>> and adds a plugin API function to set the program counter of the guest,
->>> as just writing to it via qemu_plugin_write_register() has no direct
->>> effect.
->>>
->>> This version v6 of the patch series addresses the requested changes from
->>> the previous v4 submission and an incorrect commit message from v5
->>> (details below).
->>> Note: checkpatch.pl still reports a warning about line length violations
->>> in patch nr. 6/7 but I did not fix this, as the line was already > 80
->>> characters long previously, the change added only a single character,
->>> and I think the readability of the code is better as it is now. Please
->>> let me know if you disagree and would like me to fix this!
->>>
->>> Best regards,
->>> Florian
->>>
->>> Changes:
->>> v6:
->>> - update commit message for patch 4/7
->>> v5:
->>> - make QEMU abort via asserts instead of just returning an error from
->>>     the plugin API if preconditions are violated
->>> - extend tests for qemu_plugin_set_pc() to different contexts
->>> - fix issues highlighted by checkpatch.pl
->>> v4:
->>> - switch strcmp out in favor of g_strcmp0
->>> - split the patch introducing the qemu_plugin_set_pc() API into three
->>>     patches, two for preparing the plugin infrastructure and the syscall
->>>     handling code and a third introducing the actual plugin API
->>> v3:
->>> - make PC registers read-only across architectures
->>> - add tests for read-only registers
->>> - adjust test structure for qemu_plugin_set_pc() by moving
->>>      architecture-specific tests into corresponding directories
->>> v2:
->>> - add setjmp() in syscall handling path to allow PC redirection from
->>>      syscall callbacks (via longjmp(), the cpu_loop()'s setjmp() for
->>>      exiting a TB would not be live anymore in syscall handlers)
->>> - add flags to ensure the qemu_plugin_set_pc() API is only called from
->>>      contexts where the CPU is live
->>> - add test for qemu_plugin_set_pc() API
->>> v1:
->>> - initial version
->>>
+>>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 >>> ---
->>> Florian Hofhammer (7):
->>>         plugins: add flag to specify whether PC is rw
->>>         linux-user: make syscall emulation interruptible
->>>         plugins: add PC diversion API function
->>>         tests/tcg: add tests for qemu_plugin_set_pc API
->>>         plugins: add read-only property for registers
->>>         plugins: prohibit writing to read-only registers
->>>         tests/tcg/plugins: test register accesses
->>>
 >>>    MAINTAINERS                                        |   1 +
->>>    include/plugins/qemu-plugin.h                      |  19 +++
->>>    linux-user/aarch64/cpu_loop.c                      |   2 +-
->>>    linux-user/alpha/cpu_loop.c                        |   2 +-
->>>    linux-user/arm/cpu_loop.c                          |   2 +-
->>>    linux-user/hexagon/cpu_loop.c                      |   2 +-
->>>    linux-user/hppa/cpu_loop.c                         |   1 +
->>>    linux-user/i386/cpu_loop.c                         |   8 +-
->>>    linux-user/include/special-errno.h                 |   8 ++
->>>    linux-user/loongarch64/cpu_loop.c                  |   5 +-
->>>    linux-user/m68k/cpu_loop.c                         |   2 +-
->>>    linux-user/microblaze/cpu_loop.c                   |   2 +-
->>>    linux-user/mips/cpu_loop.c                         |   9 +-
->>>    linux-user/or1k/cpu_loop.c                         |   2 +-
->>>    linux-user/ppc/cpu_loop.c                          |  10 +-
->>>    linux-user/riscv/cpu_loop.c                        |   2 +-
->>>    linux-user/s390x/cpu_loop.c                        |   2 +-
->>>    linux-user/sh4/cpu_loop.c                          |   2 +-
->>>    linux-user/sparc/cpu_loop.c                        |   4 +-
->>>    linux-user/syscall.c                               |  16 +++
->>>    linux-user/xtensa/cpu_loop.c                       |   1 +
->>>    plugins/api.c                                      |  42 ++++++-
->>>    plugins/core.c                                     |  29 +++--
 >>>    tests/tcg/arm/Makefile.target                      |   6 +
 >>>    tests/tcg/multiarch/Makefile.target                |  17 ++-
 >>>    .../multiarch/{ => plugin}/check-plugin-output.sh  |   0
 >>>    .../{ => plugin}/test-plugin-mem-access.c          |   0
 >>>    tests/tcg/multiarch/plugin/test-plugin-set-pc.c    | 140 +++++++++++++++++++++
->>>    tests/tcg/plugins/meson.build                      |   2 +
->>>    tests/tcg/plugins/registers.c                      |  79 ++++++++++++
+>>>    tests/tcg/plugins/meson.build                      |   1 +
 >>>    tests/tcg/plugins/setpc.c                          | 120 ++++++++++++++++++
->>>    31 files changed, 495 insertions(+), 42 deletions(-)
->>> ---
->>> base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
->>> change-id: 20260303-setpc-v5-c1df30bad07f
+>>>    8 files changed, 282 insertions(+), 3 deletions(-)
+>>>
+
+...
+
 >>
->> Hi Florian,
+>> As mentioned on v4, you can simply use an external function for failing the test, which won't be tainted with noreturn attribute.
+>> This way, you don't need any guard at all or assert(0), and resulting code is linear and easier to read.
+>> It test completes, it all worked. If it crashes, something was wrong.
 >>
->> it seems like there is a small issue building documentation with this series, which should be trivial to fix.
->> https://github.com/p-b-o/qemu-ci/actions/runs/22632339221
+>> void panic(void)
+>> {
+>>       g_assert_not_reached();
+>> }
+>>
+>> void test_...() {
+>> ...
+>> on_panic:
+>>       panic();
+>> after_panic:
+>>       printf("Hello World\n");
+>> }
 > 
-> Sorry, I didn't catch this one before. I didn't have sphinx installed
-> locally and built without the docs.
+> I've reworked it to look similar to this (without g_assert_not_reached()
+> though, because glib is not available in the test itself). Still
+> required some shuffling of stuff to make sure the compiler doesn't
+> optimize things away then :) Especially on hexagon, which is the only
+> target (by default) built with clang instead of gcc. Clang/LLVM seems to
+> be way more aggressive even at -O0 to do deadcode elimination and
+> inlining, so I had to add extra CFLAGS for the hexagon target.
 >
+You're right, I forgot glib is not available there.
+assert(0), exit for abort works instead of g_assert_not_reached().
 
-No worries, it's hard to guess all the things that you *might* miss, and 
-it's a common mistake even for regular contributors, including myself.
-
-> It seems as if the issue is coming from the declaration of the new API
-> as "QEMU_PLUGIN_API G_NORETURN void ..." and sphinx is tripping over the
-> "G_NORETURN" macro. To fix this, I could either change the sphinx config
-> to accept the macro, or remove the attribute from the declaration. I'd
-> personally prefer the former but I'd be happy to get your opinion on
-> this.
->
-
-Simply move the attribute after prototype, it's the same semantic.
-
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 791d223df40..0825bc9279d 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -1055,8 +1055,7 @@ bool qemu_plugin_write_register(struct 
-qemu_plugin_register *handle,
-   * resumes execution at that address. This function does not return.
-   */
-  QEMU_PLUGIN_API
--G_NORETURN
--void qemu_plugin_set_pc(uint64_t vaddr);
-+void qemu_plugin_set_pc(uint64_t vaddr) G_NORETURN;
-
-  /**
-   * qemu_plugin_read_memory_vaddr() - read from memory using a virtual 
-address
+Sounds good for hexagon target.
+We can always update the test later if needed, and at least it stays 
+simple. Thanks for doing this extra step.
 
 Regards,
 Pierrick
