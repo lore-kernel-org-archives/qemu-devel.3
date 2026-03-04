@@ -4,60 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B67EB7ED5
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C2DEB7ED8
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxkhB-0007VA-Ml; Wed, 04 Mar 2026 06:47:17 -0500
+	id 1vxkpp-0000Yt-0K; Wed, 04 Mar 2026 06:56:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vxkh9-0007Ur-R9
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:47:15 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vxkpn-0000YM-HK
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:56:11 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vxkh8-0000BJ-0T
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:47:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=VgKu0AFQK3TSs5iVFfLlM/mtQw8G5qXKb386ZCubW7o=; b=TZAw5CEu0+bH296A
- gaWT1E3j14tQuyB0Jsh4lJaivlXxcsXIdb9mfvWwKwUOXZ2xQ3Ka1o9TsvVkAbUxHbUCRZYzZEuLt
- qK7mkapUKI1ePkL7VVva+EJqlbBq0K7V5Kf3ZqNhwvkASFnD3aXoXvQKdtXXx4pKjZsi7xWe+64gL
- 7sK3NDuHSP8x8vpJEpFA1sdMyvNgxlhTprWfnk7EQifb+ZK/IPybv4zdG6hgxdAOh1QzsTPqC172V
- rZ9tVO3cpxrDqyzTMcvArnq24IwELM7wB4X0usYjK6t+iqNddG+1/v1A8v/t+7jb5LUlm7vqrUDoU
- JXL309VgiZ3Iv9cATw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vxkh3-000000075in-36ns;
- Wed, 04 Mar 2026 11:47:09 +0000
-Date: Wed, 4 Mar 2026 11:47:09 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 02/16] target/alpha: Use explicit little-endian LD/ST API
-Message-ID: <aagbvX7zC_aj3Spr@gallifrey>
-References: <20260202212019.94205-1-philmd@linaro.org>
- <20260202212019.94205-3-philmd@linaro.org>
- <aaRSXzwmZBoRD0e7@gallifrey>
- <dae98d2b-6e0a-42bc-bfdf-5c33e74cd390@linaro.org>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vxkpm-0002Om-2H
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:56:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=6PMrR4E3chN1Jk29FHl0Zg22BWjCvEAUxwgU9bPXgsM=; b=w6TEdSvPowOJxWqOvaJZTYiSYz
+ iaseISHePKMYyYdv31aIS2++0skkpNoWypTIP5kgvG/DJ3B91SzVsy4JRgdc1Ag6jgEAZt2SaGSuG
+ uRUi7AHzea2VTwvKd8lgsveJHS1DEy/NaG+6986zec7wgPPuwD55MVQHz3JdwndoHfgfEaLIH8UDe
+ 4NAo7DcqyyaevR5Zv8ETOT47GjoeAiJWjt6vQ2Pqv17aa5g0Ml+sDXwizi3SabQRs4Ltx2hx0XoZc
+ uPm6GP5Pf6X7roR4+PFy+8EoOxYT58ySPwNdB4ORTSpEqcqo4YDYCHmKB0BX5klmvQQc3fqb/fMhQ
+ 8clVaVL7O8R3zGU0MldjSqIXMq1HwZ3zhH7dM9FXjyDyi8eyK/j7AFou/nJmdcSdiiwedEGaTa07O
+ a8BTPOcfi0ZnViYocRoQVGRF+sqS9IP7/AAdIBUjRmwgqS4uLfHuM/2qc2L3nCFNM+Pp9iYx89nDr
+ r7PUmnGOi3+32DCODf548o4kfJflQ0F6foQWT1K3z6KdbQujE8meT3ARjvnew9NQJg05MrLAbcyTS
+ ydrc4Q1AciMeC2vj5SIjLi4oMbbbZtqb1oFPm2Gbed2g71RexRCv87gr9UvkTkiQfRA34rBl6GEIJ
+ DB+cW++tmn5VlIxgSzGLQ7w98fC8253qk86QsxOiQ=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, devel@daynix.com,
+ =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH v8 4/6] coreaudio: Commit the result of init in the end
+Date: Wed, 04 Mar 2026 12:56:04 +0100
+Message-ID: <2042987.yKVeVyVuyW@weasel>
+In-Reply-To: <20260304-coreaudio-v8-4-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+ <20260304-coreaudio-v8-4-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dae98d2b-6e0a-42bc-bfdf-5c33e74cd390@linaro.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 11:46:31 up 128 days, 11:22,  3 users,  load average: 0.03, 0.02,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,91 +75,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
-> On 1/3/26 15:51, Dr. David Alan Gilbert wrote:
-> > * Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
-> > > The Alpha architecture uses little endianness. Directly
-> > 
-> > Wasn't there one, odd case of the T3E running it big-endian?
-> > (I have no idea how that worked in practice).
+On Wednesday, 4 March 2026 07:16:57 CET Akihiko Odaki wrote:
+> init_out_device may only commit some part of the result and leave the
+> state inconsistent when it encounters a fatal error or the device gets
+> unplugged during the operation, which is expressed by
+> kAudioHardwareBadObjectError or kAudioHardwareBadDeviceError. Commit the
+> result in the end of the function so that it commits the result iff it
+> sees no fatal error and the device remains plugged.
 > 
-> Richard said it was not necessary to mention it in the code:
-> https://lore.kernel.org/qemu-devel/20260106155755.53646-7-philmd@linaro.org/
-> https://lore.kernel.org/qemu-devel/75b13774-93f3-45db-bc1a-5b8687fcb3b9@linaro.org/
+> With this change, handle_voice_change can rely on core->outputDeviceID
+> to know whether the output device is initialized after calling
+> init_out_device.
 > 
-> I could have mentioned it here in the commit description
-> for clarity but didn't think about it...
-
-Ah right, didn't spot that review.
-
-Thanks for the reply,
-
-Dave
-
-> > 
-> > Dave
-> > 
-> > > use the little-endian LD/ST API.
-> > > 
-> > > Mechanical change running:
-> > > 
-> > >    $ for a in uw w l q; do \
-> > >        sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
-> > >          $(git grep -wlE '(ld|st)u?[wlq]_p' target/alpha/);
-> > >      done
-> > > 
-> > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> > > Message-Id: <20251224160040.88612-2-philmd@linaro.org>
-> > > ---
-> > >   target/alpha/helper.c | 11 ++++++-----
-> > >   1 file changed, 6 insertions(+), 5 deletions(-)
-> > > 
-> > > diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-> > > index a9af52a928f..80542cb0665 100644
-> > > --- a/target/alpha/helper.c
-> > > +++ b/target/alpha/helper.c
-> > > @@ -214,17 +214,18 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
-> > >       pt = env->ptbr;
-> > > -    /* TODO: rather than using ldq_phys() to read the page table we should
-> > > +    /*
-> > > +     * TODO: rather than using ldq_phys_le() to read the page table we should
-> > >        * use address_space_ldq() so that we can handle the case when
-> > >        * the page table read gives a bus fault, rather than ignoring it.
-> > > -     * For the existing code the zero data that ldq_phys will return for
-> > > +     * For the existing code the zero data that ldq_phys_le will return for
-> > >        * an access to invalid memory will result in our treating the page
-> > >        * table as invalid, which may even be the right behaviour.
-> > >        */
-> > >       /* L1 page table read.  */
-> > >       index = (addr >> (TARGET_PAGE_BITS + 20)) & 0x3ff;
-> > > -    L1pte = ldq_phys(cs->as, pt + index*8);
-> > > +    L1pte = ldq_phys_le(cs->as, pt + index * 8);
-> > >       if (unlikely((L1pte & PTE_VALID) == 0)) {
-> > >           ret = MM_K_TNV;
-> > > @@ -237,7 +238,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
-> > >       /* L2 page table read.  */
-> > >       index = (addr >> (TARGET_PAGE_BITS + 10)) & 0x3ff;
-> > > -    L2pte = ldq_phys(cs->as, pt + index*8);
-> > > +    L2pte = ldq_phys_le(cs->as, pt + index * 8);
-> > >       if (unlikely((L2pte & PTE_VALID) == 0)) {
-> > >           ret = MM_K_TNV;
-> > > @@ -250,7 +251,7 @@ static int get_physical_address(CPUAlphaState *env, target_ulong addr,
-> > >       /* L3 page table read.  */
-> > >       index = (addr >> TARGET_PAGE_BITS) & 0x3ff;
-> > > -    L3pte = ldq_phys(cs->as, pt + index*8);
-> > > +    L3pte = ldq_phys_le(cs->as, pt + index * 8);
-> > >       phys = L3pte >> 32 << TARGET_PAGE_BITS;
-> > >       if (unlikely((L3pte & PTE_VALID) == 0)) {
-> > > -- 
-> > > 2.52.0
-> > > 
-> > > 
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  audio/coreaudio.m | 47 ++++++++++++++++++++++++++---------------------
+>  1 file changed, 26 insertions(+), 21 deletions(-)
 > 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+> index 736227eb2b7a..23c3d1f80ac5 100644
+> --- a/audio/coreaudio.m
+> +++ b/audio/coreaudio.m
+> @@ -357,8 +357,11 @@ static OSStatus out_device_ioproc(
+> 
+>  static OSStatus init_out_device(CoreaudioVoiceOut *core)
+>  {
+> +    AudioDeviceID device_id;
+> +    AudioDeviceIOProcID ioprocid;
+>      AudioValueRange value_range;
+>      OSStatus status;
+> +    UInt32 device_frame_size;
+
+Shouldn't then be this here at the beginning?
+
+  core->device_id = kAudioDeviceUnknown;
+  core->ioprocid = NULL;
+  ...
+
+[...]
+>      if (status != kAudioHardwareNoError) {
+>          coreaudio_playback_logerr(status,
+>                                    "Could not set device buffer frame size %" PRIu32,
+> -                                  (uint32_t)core->device_frame_size);
+> +                                  (uint32_t)device_frame_size);
+>          return status;
+>      }
+
+Why the cast here? device_frame_size is declared as UInt32.
+
+/Christian
+
+
 
