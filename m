@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA8DEF8FE0
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EAEEF8FE0
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxm1q-0001hP-M2; Wed, 04 Mar 2026 08:12:42 -0500
+	id 1vxm2C-0002Rv-SZ; Wed, 04 Mar 2026 08:13:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1vxm1o-0001Y0-9M
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:12:40 -0500
+ id 1vxm28-0002Q2-3X
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:13:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1vxm1m-0006ym-KR
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:12:39 -0500
+ id 1vxm26-00070Y-Dr
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:12:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772629957;
+ s=mimecast20190719; t=1772629977;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=jZ3DZwWjlXKrMSvfHPfpJOwLofANBMVgYFcMLsX/WHc=;
- b=UZl9glnG5niFnnYioZtbFfwUlSyVQ30I0T7BuvPpnEoXM9FJFgPsJlkdgviIDp/TiTulEU
- x3R/aG4wMtQGdq5wSDLGYYAOjQp4gbWQZGvLcoRYLWxfQb5YsFobCCXmoLUIylyx3kZ3ob
- Do1FPsOcvYP6LqMwJL9lFyg+ntBq9NA=
+ bh=06w7ivhzxzqxYmRkVrp0VcGzAKKtp45TLSL5UGbqZDA=;
+ b=CKla0Ny1noCM9pFWYbH9TrNxrcCai42G07asT9kQQuBDrcVzndYr4GLbWrktwqta7U0/cf
+ N024jwZFaDkmEitXN6WjxjBn2PJPDm4UREXXzCc7ka4mkTchMTEdvfnmzgPjjQXtwfUghO
+ YtALaqK2xlNM8qFWuhLMGEOauiRILXU=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-6rHWkJ0LO1Stour2W6nO9A-1; Wed, 04 Mar 2026 08:12:36 -0500
-X-MC-Unique: 6rHWkJ0LO1Stour2W6nO9A-1
-X-Mimecast-MFC-AGG-ID: 6rHWkJ0LO1Stour2W6nO9A_1772629955
+ us-mta-637-LpdwnDx7Mm6Ftv5PIR4OgA-1; Wed, 04 Mar 2026 08:12:55 -0500
+X-MC-Unique: LpdwnDx7Mm6Ftv5PIR4OgA-1
+X-Mimecast-MFC-AGG-ID: LpdwnDx7Mm6Ftv5PIR4OgA_1772629975
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48379489438so65132705e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:12:36 -0800 (PST)
+ 5b1f17b1804b1-4830e7c6131so73492335e9.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:12:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772629955; x=1773234755; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772629974; x=1773234774; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=jZ3DZwWjlXKrMSvfHPfpJOwLofANBMVgYFcMLsX/WHc=;
- b=i/ZHQIohY5If/a1giPKaXSeRx20uFR6kC+ZTw0UJlW3aHg4xIniZOFEqCPZo+/F7zU
- oVS1/Kz8WkLO7/TjXKgCZ/EQukNkfwjWtmfeQwggCFIK9btaljIoLZkGlI9/SfsTQRdt
- r7kHX2x9Ra62MRSj0PmMzoSmpwn7NhnsUTeESDooPxKPgsvlWaCG0Z2ZnkzN029caLPJ
- Fy1lP6wrb1c7nitxoFj2HY1ThkTPVfJ3P/6Kp/tsGyy30QmneEylqjo7vm5Fzf6BVyyX
- JsH1f9rhGUFJz4lA6jH6p9oNSHqh6vpgiUasc7jb8WYfIxXl8xknf48LwoMZbcm5tEXf
- YXzA==
+ bh=06w7ivhzxzqxYmRkVrp0VcGzAKKtp45TLSL5UGbqZDA=;
+ b=a0m6K1vbOoo6uJM7N6iSw8pdo1F2HMNVtLPuXGRXdo8raBc0Lz2YCAJeNcOKunkeve
+ oMVBZ8XrEt05spDlAXdOk3LCPT0WDJ+bFT3KwOQ/L2ofAftTPB+dDjXs2YUB31poeD0R
+ 1A8tjnbTpEo7EpxknFH959jkZTvYNv+N7hXD/wjArB7VCJJvvWTmyE/otLD482Chu3AL
+ Dbk9+/Mlqp9xnnbm28ot9Ps9kPWbuNdV7Y8nhbfgqDtHoUPdOipO4afv3hGaK3y8o4OJ
+ ukGpUtqAYF+FLvyZU1jcfzHBH6Up1r6RMl2ll9Nnhe3CkhgXN3q+f5nzPjTnXLl/ukv7
+ Pilg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772629955; x=1773234755;
+ d=1e100.net; s=20230601; t=1772629974; x=1773234774;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jZ3DZwWjlXKrMSvfHPfpJOwLofANBMVgYFcMLsX/WHc=;
- b=OigklZk0dBVbAA0VE1XvbjcrvcnBZON86xFc/GzsDK/9rWlwASEOWpqO5t21ppPH0b
- RRJ5u7fmbXA7s1OgxBckMp2m4TIuU7dsqYeuS1CK81WC71YUgjzZj9z/YMOO89B0+6VX
- jSdhh3Ki4XO5+UbmlbU3ib28LcCHTttE3i5mlPcBfJlw8uMh5U0q04YK2hbZhxze4LAS
- bWkXHSEH5J3IyLNcTGa1JbZpqMBpZlq02PPsyNHkXT67QCJQYzQCUjAp5MkndyFs+Oej
- /1O6Puvd/FEJVcHxf1bUWAjvmCkPHRpJQo59VIkptPjRVeCsW5QfhuJajhV594qTHLhm
- 8h/Q==
-X-Gm-Message-State: AOJu0YxenL6q/W10LnOWMcW1jMCSuBop9nUB8TqEsJoxEb12dj7Sq2Xh
- gCOoh2eDk9a1Br+DgUd0dDZh2X3YrOqxGZRe9vONuOk/WpogYbKtFG6m+wS1yKp0UYwwcDEu1+0
- z4G6S0OX/7PQ5/djczKJ/O3EC5y1Kc6zFTTMGQE+TTzitwRZOPaJJ0D+a
-X-Gm-Gg: ATEYQzwgkixSVW7+9qB3uR5mMepDM74QefQlLsUmx74wwcP26MYLQsXKd32p1YlWwhl
- QMC0Xl/JI3Awu2JpPSYtQJ0cHuPSdXcEe4P3patM0854rqj2aEX0BxBbFyhyY0fCMmZP+yNMEex
- gXQIKwf+by7nHSUSpUe43aWKrA8dhsZ8lN+NP5Lt6wSSMpFM162Km6MrioYD2Dv0Fa9An/Ml7N6
- 5iY5dTRHt7PWMarKbctwhG9TK4cq4Kn5+Fegady0RK0IMfE3q2VvO2InUZnTrcZApIARhXL5CV3
- BqdWlS4zsYxwUpeJ4NktqGJ9btMibIj/IB/3f1IKmRrGpOy8aIrFVJ5B2IoPCIG9dPptittK7cB
- wUGkEvyzjcV9M4LGZcJfUUnX+XTWpdb/JRoSDThTIqA+Hk4sQa86A2M97iqG4A8RW3mHlULY=
-X-Received: by 2002:a05:600c:1e2a:b0:465:a51d:d4 with SMTP id
- 5b1f17b1804b1-48519848388mr28850235e9.6.1772629955406; 
- Wed, 04 Mar 2026 05:12:35 -0800 (PST)
-X-Received: by 2002:a05:600c:1e2a:b0:465:a51d:d4 with SMTP id
- 5b1f17b1804b1-48519848388mr28849705e9.6.1772629954938; 
- Wed, 04 Mar 2026 05:12:34 -0800 (PST)
+ bh=06w7ivhzxzqxYmRkVrp0VcGzAKKtp45TLSL5UGbqZDA=;
+ b=JFxCp5o01JIWTBQjNMeTir8eqCLwiegL33kqgUMnEWsnu0HNoBH4vwqGE5M5/C7m99
+ HhcWtwSiYcn3jX65aN0BY43rWYbJmcbD6zArQiM6iQapIYNMg9nv/g0ELdnUEyEWL3Th
+ gatybkMXtrG1Am2EOJHt+8VPuOlCRZiHi4Lnt7S98UQhh3ZvBsdXd/TJCYO38K1yySgJ
+ tP6sC2Hfn0ajQBd3sHLvkyt3wWPuvYe94owZpoMfQb529ipaaDL7kaXfr6nOKNFIi3fo
+ 9ZVYVaYF0mbh0lugasgVYC4JEVwdgOKLX7m4EC0drpib1ty0xmexLENCo8/YmeTAeM0j
+ 0i+w==
+X-Gm-Message-State: AOJu0YyhWGTGhL551L4JfKqnh1GLZu/PzOhxpSQGMMMCi3DMmo7b7+ue
+ Ap84hyGJVcPrZV6kQIV4wq3V6eg2e3D3/i1eUNV1xYgzES2pLzrxXo/zEBJnzvRgM0UDpzQCXiU
+ UVNQ1avisVjzwkXyGiDnD8xuNOS9TFItIq7kZFjc1yXoOoBfgFjN8IkjK
+X-Gm-Gg: ATEYQzxCljmAHSNRSExwEVCkrxgnUpL2w8igTOxaoh7Zl53j2xq4spZvCqBORk4Iqnt
+ Tgo6Ce4CCoKIDdqdfromQiXLWNt45EL40rRp3/cwSHbglcsrlD8owqn5X97norSEvxylBCbvtY2
+ XaRPSIZkaNtnowAZYgdjjVSwoyOYWr0jCgCNVU571Rr7j0KnYMEdsnxrsIdlLeq+uJHN/AaxpL+
+ i73l/AoFZLNIE/vgdiQgJCBH2p3t5kBa4pSFdPVs6LtS2deWiEsCzv9s30VET+GklED+rMf3rgn
+ 1yzxI7/L+Z4tH5jV2KNf/WyWOZvInVmDK+Prh36jIT+SQsJvqWeI/T+prsd3fFkLgVx9UR4lebN
+ ZwVe+ewUHdbBX80joEwGrzBDQyhENP2xPpaBJ6ek6FHahC1YKAUoW4EMCGGzQEGcOHFXHoU4=
+X-Received: by 2002:a05:600c:4503:b0:480:1b65:b744 with SMTP id
+ 5b1f17b1804b1-485198992cdmr34797895e9.28.1772629974524; 
+ Wed, 04 Mar 2026 05:12:54 -0800 (PST)
+X-Received: by 2002:a05:600c:4503:b0:480:1b65:b744 with SMTP id
+ 5b1f17b1804b1-485198992cdmr34797395e9.28.1772629974018; 
+ Wed, 04 Mar 2026 05:12:54 -0800 (PST)
 Received: from sgarzare-redhat (host-82-53-134-58.retail.telecomitalia.it.
  [82.53.134.58]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851887fc54sm57899885e9.10.2026.03.04.05.12.33
+ 5b1f17b1804b1-485188923c2sm51896675e9.14.2026.03.04.05.12.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 05:12:34 -0800 (PST)
-Date: Wed, 4 Mar 2026 14:12:32 +0100
+ Wed, 04 Mar 2026 05:12:53 -0800 (PST)
+Date: Wed, 4 Mar 2026 14:12:50 +0100
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: Albert Esteve <aesteve@redhat.com>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
@@ -93,14 +93,14 @@ Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
  stefanha@redhat.com, manos.pitsidianakis@linaro.org, jasowang@redhat.com,
  Laurent Vivier <lvivier@redhat.com>, 
  slp@redhat.com, hi@alyssa.is, stevensd@chromium.org
-Subject: Re: [PATCH v13 4/7] vhost_user: Add frontend get_shmem_config command
-Message-ID: <aagvt31Of3MhAl95@sgarzare-redhat>
+Subject: Re: [PATCH v13 5/7] vhost_user.rst: Add GET_SHMEM_CONFIG message
+Message-ID: <aagvzHxU9FZCHnj7@sgarzare-redhat>
 References: <20260219130334.787858-1-aesteve@redhat.com>
- <20260219130334.787858-5-aesteve@redhat.com>
+ <20260219130334.787858-6-aesteve@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260219130334.787858-5-aesteve@redhat.com>
+In-Reply-To: <20260219130334.787858-6-aesteve@redhat.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 0
@@ -126,79 +126,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 19, 2026 at 02:03:31PM +0100, Albert Esteve wrote:
->The frontend can use this command to retrieve
->VirtIO Shared Memory Regions configuration from
->the backend. The response contains the number of
->shared memory regions, their size, and shmid.
+On Thu, Feb 19, 2026 at 02:03:32PM +0100, Albert Esteve wrote:
+>Add GET_SHMEM_CONFIG vhost-user frontend
+>message to the spec documentation.
 >
->This is useful when the frontend is unaware of
->specific backend type and configuration,
->for example, in the `vhost-user-device` case.
->
+>Reviewed-by: Alyssa Ross <hi@alyssa.is>
 >Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 >Signed-off-by: Albert Esteve <aesteve@redhat.com>
 >---
-> include/hw/virtio/vhost-backend.h | 10 ++++++++++
-> include/hw/virtio/vhost-user.h    |  1 +
-> include/hw/virtio/virtio.h        |  2 ++
-> 3 files changed, 13 insertions(+)
+> docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
+> 1 file changed, 39 insertions(+)
 
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
 >
->diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
->index ff94fa1734..ce58b4d2d6 100644
->--- a/include/hw/virtio/vhost-backend.h
->+++ b/include/hw/virtio/vhost-backend.h
->@@ -163,6 +163,15 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
->                                             int *reply_fd,
->                                             Error **errp);
-> typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
->+/*
->+ * Max regions is VIRTIO_MAX_SHMEM_REGIONS, so that is the maximum
->+ * number of memory_sizes that will be accepted.
->+ */
->+typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
->+                                         int *nregions,
->+                                         uint64_t *memory_sizes,
->+                                         Error **errp);
+>diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>index ae4ad6f441..77a763c7c3 100644
+>--- a/docs/interop/vhost-user.rst
+>+++ b/docs/interop/vhost-user.rst
+>@@ -371,6 +371,22 @@ MMAP request
+>   - 0: Pages are mapped read-only
+>   - 1: Pages are mapped read-write
+>
+>+VIRTIO Shared Memory Region configuration
+>+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 >+
->
-> typedef struct VhostOps {
->     VhostBackendType backend_type;
->@@ -220,6 +229,7 @@ typedef struct VhostOps {
->     vhost_supports_device_state_op vhost_supports_device_state;
->     vhost_set_device_state_fd_op vhost_set_device_state_fd;
->     vhost_check_device_state_op vhost_check_device_state;
->+    vhost_get_shmem_config_op vhost_get_shmem_config;
-> } VhostOps;
->
-> int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
->diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
->index 55d5725ef8..8ac2120cfd 100644
->--- a/include/hw/virtio/vhost-user.h
->+++ b/include/hw/virtio/vhost-user.h
->@@ -32,6 +32,7 @@ enum VhostUserProtocolFeature {
->     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
->     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
->     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
->+    VHOST_USER_PROTOCOL_F_SHMEM = 20,
->     VHOST_USER_PROTOCOL_F_MAX
-> };
->
->diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->index 40d881ca09..9aef913af0 100644
->--- a/include/hw/virtio/virtio.h
->+++ b/include/hw/virtio/virtio.h
->@@ -82,6 +82,8 @@ typedef struct VirtQueueElement
->
-> #define VIRTIO_NO_VECTOR 0xffff
->
->+#define VIRTIO_MAX_SHMEM_REGIONS 256
+>++-------------+---------+------------+----+--------------+
+>+| num regions | padding | mem size 0 | .. | mem size 255 |
+>++-------------+---------+------------+----+--------------+
 >+
-> /* special index value used internally for config irqs */
-> #define VIRTIO_CONFIG_IRQ_IDX -1
+>+:num regions: a 32-bit number of regions
+>+
+>+:padding: 32-bit
+>+
+>+:mem size: an array of 256 64-bit fields representing the size of each
+>+           VIRTIO Shared Memory Region. ``num regions`` specifies the
+>+           number of valid regions (non-zero size). The array index
+>+           corresponds to the shared memory ID (shmid).
+>+
+> C structure
+> -----------
+>
+>@@ -397,6 +413,7 @@ In QEMU the vhost-user message is implemented with the following struct:
+>           VhostUserShared object;
+>           VhostUserTransferDeviceState transfer_state;
+>           VhostUserMMap mmap;
+>+          VhostUserShMemConfig shmem;
+>       };
+>   } QEMU_PACKED VhostUserMsg;
+>
+>@@ -1761,6 +1778,28 @@ Front-end message types
+>   Using this function requires prior negotiation of the
+>   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
+>
+>+``VHOST_USER_GET_SHMEM_CONFIG``
+>+  :id: 44
+>+  :equivalent ioctl: N/A
+>+  :request payload: N/A
+>+  :reply payload: ``struct VhostUserShMemConfig``
+>+
+>+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
+>+  successfully negotiated, this message can be submitted by the front-end
+>+  to gather the VIRTIO Shared Memory Region configuration. The back-end will
+>+  respond with the number of VIRTIO Shared Memory Regions it requires, and
+>+  each shared memory region size in an array. The shared memory IDs are
+>+  represented by the array index. The information returned shall comply
+>+  with the following rules:
+>+
+>+  * The shared information will remain valid and unchanged for the entire
+>+    lifetime of the connection.
+>+
+>+  * The Shared Memory Region size must be a multiple of the page size
+>+    supported by mmap(2).
+>+
+>+  * The size may be 0 if the region is unused.
+>+
+> Back-end message types
+> ----------------------
 >
 >-- 
 >2.52.0
