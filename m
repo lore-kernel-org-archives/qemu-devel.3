@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4402EF8FEA
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C69EF8FE7
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:42:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmTj-0007dJ-8w; Wed, 04 Mar 2026 08:41:32 -0500
+	id 1vxmTz-000899-1k; Wed, 04 Mar 2026 08:41:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vxmSw-000770-Qd
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:40:47 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1vxmTF-0007Ca-Mu
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:41:03 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vxmSu-0005Hy-AV
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:40:41 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-829756f3ee9so485397b3a.2
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:40:39 -0800 (PST)
+ id 1vxmT7-0005KJ-RP
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:40:57 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-824ac5d28f9so6912338b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:40:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1772631639; x=1773236439; darn=nongnu.org;
+ d=sifive.com; s=google; t=1772631651; x=1773236451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wQhK6dmWDOa1gBz5c44K1WDUuXSMny0o88foILV0BxU=;
- b=FDhcDPXPyGvrL/pda8ArrGccXqdF+J8VyBADXNEvskDncpeodyVkDyEu3/zj2XkusB
- PflV7KDQpOP40TVPPMnJfdn9dTWuB8gDUgplhVam6+EfUhTgCzoHoPGIdyc4OnntDrkA
- /oO6JIiWm8JEjPxqiM1vVHXKhb/owaoftFTkcAPFVCN8DVnvsyZaGQAda5Rp16ZMnqXI
- B70CUmLZnJQXTkaqITFg9e6M8vx8nC1YrzZRZnn5swmTXjTFU+M24To354HrP2Kkc38T
- qMv4oKPk/nP7bNimT0JWLNDr7rPSaNCyPsmSLvK0GY9Mqa3BDSs1+FiHvknLSfWnI7Yo
- rU9Q==
+ bh=sldBpiO/vTJjGnkQ9fu8n4HA0ecPhur9Ke2QVeCPD0w=;
+ b=bybjg6ypPW9vvcqn7RLTIEXhnFJYtfH5ktkOTV2cOM757QFfTDa6DP/5h1sCBwdoDx
+ uEeTFg9EnY+xZCIv9CCwJBozlDlTIiYCU4a05sMyK98XWcw1fwev8+xmn5x542j8aAQI
+ d4zVzRbsEgzZjHuxit/g3I1+iMGzn8KeWb2MWpklYpbNPJNUH6BEGrr7q/IRNAHsxSp/
+ 5BO7fdr/z7u623Cy5xVw1WvkqKRi7fA1PhXTj8DCpXplOJwetyRcVqgkCnSmA9lwo+0l
+ ENNRIX8b6eo9lCTwqwvLXBEnInzM9vOVFNjN1gskcbEitcgwKP2kYsZ0Iab/DavVCqFb
+ Zsnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772631639; x=1773236439;
+ d=1e100.net; s=20230601; t=1772631651; x=1773236451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wQhK6dmWDOa1gBz5c44K1WDUuXSMny0o88foILV0BxU=;
- b=a+RdryzkHmaA1+/A6+lDmy7Sg3Wg8mayU+DbR/J9mLSL4Z8+zyaSvI5nG5StR3EkEs
- w/0yJOZbU89USgDtGfrIQkquyVcb3Xi8Qa2OKm7OFB4kNbEduiEzzxgcZxKVHuCEZRAQ
- PhEfzYfZ7k4c5TrEKnJs4tQnPu3Ymkh1I6Q2cmIY/gO2elxtIWqvAAqKoTzoS9TI+8LW
- AXmFmtdLL8mMLJcZF8mr2qPlZwAQR5fQf/BQ6dCHvzWRpKDCKPtAKAZx3VTBTAD1tAci
- AnvQ7sSZdFQaC31QyQkNdqqYu/gtdhJ/jktgCbMgsLu+2nn5+UvdrSJF29Lim/f+khph
- R+VQ==
-X-Gm-Message-State: AOJu0Yyky2PqfkEqjOw8H5NUltSvs2Rt3jr1SPNvdFRkdaIKvz5ixi38
- mu6gCmUK8IewlBXkyMsuf7RP5fzpEOrtUN39rX1Ni1ilPfwefycmWLln9JPBLVWZmDX3NCWC/Pq
- iBn+m3AwMTDiOuetlIG6sKkMifbhu/iTNzqaByx84DHvMtuU83ImaQvJPnxMxd2bekHHuEHZZUX
- Ge9JCg3cJrvGVfi9VNPpHCqJTbmLIjwvYqVxuHvRUUug==
-X-Gm-Gg: ATEYQzzSTNi5JWxWtawGoMAxt80E36bC4LVqrM9mMc3Iy4wEwjoUBWISxaBawjCbvk/
- jt/Jdmv8tjSdLo06D4WfgynT9mOXOiMRU7TiKh7cI5hHKnlw7b3ZP2kfVwgZwAgz+obywBYzFr6
- szV+mLyUILDO3+aTPE57BVPzoSSN0QM4CchxeC5tvG87Dy0FL44TVW0M86rx34ilAuYP/IUEHQ5
- BJJOxJYBWp/sLATV5uTV8Zm/S3eHVFVZR1/7Djx/qwlVDcBnySw3sZ4KjSIN17Rk6DC5xhwYvNC
- +KJb6zANqTR5WqUuu1ayQhcvyTQcKa2vg2WRu1+GFPufIZfuRSpCyd2wSvSOOEVYrJ+KqLMW64I
- Ysk9RmaC+DvGg3M5Sb6Ykz5+4ame25fscVIUbRFpnd05BGuRaHnX6mt552zk6VWeH7v5d3kAUWv
- kEZqCcxOPLCwqf8kz4sv8frvnr7e3QcKF1rkw3dSqsuQZ7dPezREzbvNdpSYUzV/rJWl7zu+u8X
- eObhankF0Iwvn7XdYQG97hrBgc=
-X-Received: by 2002:a05:6a00:4504:b0:81d:e9b1:b6e3 with SMTP id
- d2e1a72fcca58-8297291a6a5mr1846982b3a.14.1772631638669; 
- Wed, 04 Mar 2026 05:40:38 -0800 (PST)
+ bh=sldBpiO/vTJjGnkQ9fu8n4HA0ecPhur9Ke2QVeCPD0w=;
+ b=j3nsLFBqq0FsLNUzkxSaY+rnmYOe7mUWSUrCxgtEIPhVys13nKW7GtRRsCp9UUrHIW
+ cAtSkYUP7qJdTDE3BxhtiwIxyYo4uLbF7j98jWp2yD3tvQp0eptCx+WWOb2ED3R1sbse
+ kqZBd6YJa8okOIjBJaNMptJfZo0CpTzkeshfKFfksvne4ujz1qthHJ1wnkiGPCHNUzX2
+ hTHJT2uoMF9w/fkD1wP2Tkry7S6uTYeEaLBnVCCdTdQxZUEu151jfwxZOB3oGK0KbD+S
+ pKt+3X9sohtC5sjlLUrmaohyJWrxKi9tL8e5jEK0eh600LHzEZcNOtyq6AWmVlkRET0g
+ dSrw==
+X-Gm-Message-State: AOJu0Yw7TVZU4d8AZeu6WnfvOgCQ4XQxBx7RdC8hi1zVrSVzdVmznOoe
+ aBEbp7jd+GUo239CYmn++KwhyJgujZBfnS1mSsTMkcvPpaPA0sUexYnlr9QyZuXHyx9Kx6GskJx
+ KJlE2D3Q4zdvVJpAhDg/pn6TzgEsbi+qx6NTIhvIZzRTpaVYZsK4g+zQBl7rR7opaQB5MeiSGzR
+ 8fnHaHXqth9F2fC5WAC2AxdazBehX8SHU3tb9umhvqXQ==
+X-Gm-Gg: ATEYQzy/jkzpT38WQcg5ud+jOKdGmB8HcxrsoE8CA1oqNJlF76oy2aoo0TRkdRaHoHw
+ vfL3tiDUauO7HSoo5xCspd51rkDYx2TeAUzz5N7dr7xNLXNcCxfrjpKckLDyGvDf6BKntVClYWe
+ VUiJX0E7kTlXkSjRlZfm8uDwx9T9WEwoKFCrcdTAQV63W98Ukc9cfKIzmMId4uP9gEqvPUw7s8I
+ ewJbNNQGNU4SNTe5QrSjAc4kEICj9O6IHBQsxGqMuN6sQERcbKMBky536ii4VlqfopaDut9CKIr
+ arGV9n5EsKd9fLnXZbktZ9BXrRJ+gPdjPxnfAceEQK5TK7FresGM1ZgPCLQO85JTOS1A9smmyB5
+ XI561kAygx4L4pMpSHymXJ2ClLe1PYmRrwVnBkvJitIuN4J5UXMA5RII696sn9fzkWmD+82RP+T
+ N6RXTHG+SZ6JW2WijXz5DXtS9XaJci55EffmuSutZzc904w3YzKuZH7ZnY9BiotQkxe0nNOOFjN
+ 3VkqPz10I/KoEclMN0cGdhcbX8=
+X-Received: by 2002:a05:6a00:4f86:b0:827:300d:52c9 with SMTP id
+ d2e1a72fcca58-82972cd4028mr2297359b3a.54.1772631651078; 
+ Wed, 04 Mar 2026 05:40:51 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8297e11bf5dsm251921b3a.28.2026.03.04.05.40.36
+ d2e1a72fcca58-8297e11bf5dsm251921b3a.28.2026.03.04.05.40.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 05:40:38 -0800 (PST)
+ Wed, 04 Mar 2026 05:40:50 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -76,17 +76,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v4 07/14] target/riscv: rvv: Add vfncvt.f.f.q and
- vfncvt.sat.f.f.q instructions for Zvfofp8min extension
-Date: Wed,  4 Mar 2026 21:39:59 +0800
-Message-ID: <20260304134006.2908449-8-max.chou@sifive.com>
+Subject: [PATCH v4 12/14] target/riscv: rvv: Add vfext.vf2 instruction for
+ Zvfofp4min extension
+Date: Wed,  4 Mar 2026 21:40:04 +0800
+Message-ID: <20260304134006.2908449-13-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260304134006.2908449-1-max.chou@sifive.com>
 References: <20260304134006.2908449-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,162 +109,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vfncvt.f.f.q and vfncvt.sat.f.f.q instructions convert a vector of
-FP32 elements to a vector of OFP8 elements. The vfncvt.sat.f.fq instruction
-converts a vector of FP32 elements to a vector of OFP8 elements with saturation.
-The VTYPE.altfmt field is used to select the OFP8 format.
-* altfmt = 0: FP32 to OFP8.e4m3
-* altfmt = 1: FP32 to OFP8.e5m2
+The vfext.vf2 instruction converts a vector of OCP FP4 E2M1
+floating-point numbers to a vector of OFP FP8 E4M3 floating-points
+numbers.
 
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/insn32.decode                 |  2 +
- target/riscv/insn_trans/trans_rvofp8.c.inc | 63 ++++++++++++++++++++++
- target/riscv/insn_trans/trans_rvv.c.inc    | 39 ++++++++++++++
- 3 files changed, 104 insertions(+)
+ target/riscv/helper.h                      |  3 ++
+ target/riscv/insn32.decode                 |  3 ++
+ target/riscv/insn_trans/trans_rvofp4.c.inc | 43 ++++++++++++++++++++++
+ target/riscv/translate.c                   |  1 +
+ target/riscv/vector_helper.c               | 33 +++++++++++++++++
+ 5 files changed, 83 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvofp4.c.inc
 
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 356c24d9fb..162303fb6c 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1259,6 +1259,9 @@ DEF_HELPER_5(vfncvt_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
+ 
++/* OFP4 function */
++DEF_HELPER_5(vfext_vf2, void, ptr, ptr, ptr, env, i32)
++
+ /* Vector crypto functions */
+ DEF_HELPER_6(vclmul_vv, void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_6(vclmul_vx, void, ptr, ptr, tl, ptr, env, i32)
 diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 49201c0c20..f2b413c7d4 100644
+index f2b413c7d4..c58223ebd8 100644
 --- a/target/riscv/insn32.decode
 +++ b/target/riscv/insn32.decode
-@@ -974,6 +974,8 @@ vfwmaccbf16_vv    111011 . ..... ..... 001 ..... 1010111 @r_vm
- vfwmaccbf16_vf    111011 . ..... ..... 101 ..... 1010111 @r_vm
+@@ -754,6 +754,9 @@ vsext_vf2       010010 . ..... 00111 010 ..... 1010111 @r2_vm
+ vsext_vf4       010010 . ..... 00101 010 ..... 1010111 @r2_vm
+ vsext_vf8       010010 . ..... 00011 010 ..... 1010111 @r2_vm
  
- # *** Zvfofp8min Extension ***
-+vfncvt_f_f_q          010010 . ..... 11001 001 ..... 1010111 @r2_vm
-+vfncvt_sat_f_f_q      010010 . ..... 11011 001 ..... 1010111 @r2_vm
- vfncvtbf16_sat_f_f_w  010010 . ..... 11111 001 ..... 1010111 @r2_vm
- 
- # *** Zvbc vector crypto extension ***
-diff --git a/target/riscv/insn_trans/trans_rvofp8.c.inc b/target/riscv/insn_trans/trans_rvofp8.c.inc
-index d28f92e050..619ee4d773 100644
---- a/target/riscv/insn_trans/trans_rvofp8.c.inc
-+++ b/target/riscv/insn_trans/trans_rvofp8.c.inc
-@@ -12,6 +12,13 @@
-     }                                       \
- } while (0)
- 
-+static bool zvfofp8min_narrow_quad_check(DisasContext *s, arg_rmr *a)
-+{
-+    return require_rvv(s) &&
-+           vext_check_isa_ill(s) &&
-+           vext_check_sq(s, a->rd, a->rs2, a->vm) &&
-+           (s->sew == MO_8);
-+}
- 
- static bool trans_vfncvtbf16_sat_f_f_w(DisasContext *ctx, arg_rmr *a)
- {
-@@ -40,3 +47,59 @@ static bool trans_vfncvtbf16_sat_f_f_w(DisasContext *ctx, arg_rmr *a)
-     }
-     return false;
- }
++# Zvfofp4min Extension
++vfext_vf2       010010 . ..... 10110 010 ..... 1010111 @r2_vm
 +
-+static bool trans_vfncvt_f_f_q(DisasContext *ctx, arg_rmr *a)
-+{
-+    REQUIRE_FPU;
-+    REQUIRE_ZVFOFP8MIN(ctx);
-+
-+    if (zvfofp8min_narrow_quad_check(ctx, a)) {
-+        gen_helper_gvec_3_ptr *fn;
-+        uint32_t data = 0;
-+
-+        fn = ctx->altfmt ? gen_helper_vfncvt_f_f_q_ofp8e5m2 :
-+                           gen_helper_vfncvt_f_f_q_ofp8e4m3;
-+
-+        gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
-+
-+        data = FIELD_DP32(data, VDATA, VM, a->vm);
-+        data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
-+        data = FIELD_DP32(data, VDATA, VTA, ctx->vta);
-+        data = FIELD_DP32(data, VDATA, VMA, ctx->vma);
-+        tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
-+                           vreg_ofs(ctx, a->rs2), tcg_env,
-+                           ctx->cfg_ptr->vlenb,
-+                           ctx->cfg_ptr->vlenb, data, fn);
-+        finalize_rvv_inst(ctx);
-+        return true;
-+    }
-+    return false;
-+}
-+
-+static bool trans_vfncvt_sat_f_f_q(DisasContext *ctx, arg_rmr *a)
-+{
-+    REQUIRE_FPU;
-+    REQUIRE_ZVFOFP8MIN(ctx);
-+
-+    if (zvfofp8min_narrow_quad_check(ctx, a)) {
-+        gen_helper_gvec_3_ptr *fn;
-+        uint32_t data = 0;
-+
-+        fn = ctx->altfmt ? gen_helper_vfncvt_sat_f_f_q_ofp8e5m2 :
-+                           gen_helper_vfncvt_sat_f_f_q_ofp8e4m3;
-+
-+        gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
-+
-+        data = FIELD_DP32(data, VDATA, VM, a->vm);
-+        data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
-+        data = FIELD_DP32(data, VDATA, VTA, ctx->vta);
-+        data = FIELD_DP32(data, VDATA, VMA, ctx->vma);
-+        tcg_gen_gvec_3_ptr(vreg_ofs(ctx, a->rd), vreg_ofs(ctx, 0),
-+                           vreg_ofs(ctx, a->rs2), tcg_env,
-+                           ctx->cfg_ptr->vlenb,
-+                           ctx->cfg_ptr->vlenb, data, fn);
-+        finalize_rvv_inst(ctx);
-+        return true;
-+    }
-+    return false;
-+}
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 161bf94a07..bbe864dd7c 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -621,6 +621,45 @@ static bool vext_check_sds(DisasContext *s, int vd, int vs1, int vs2, int vm)
-            require_align(vs1, s->lmul);
- }
- 
+ vsetvli         0 ........... ..... 111 ..... 1010111  @r2_zimm11
+ vsetivli        11 .......... ..... 111 ..... 1010111  @r2_zimm10
+ vsetvl          1000000 ..... ..... 111 ..... 1010111  @r
+diff --git a/target/riscv/insn_trans/trans_rvofp4.c.inc b/target/riscv/insn_trans/trans_rvofp4.c.inc
+new file mode 100644
+index 0000000000..0fb5d7d534
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvofp4.c.inc
+@@ -0,0 +1,43 @@
 +/*
-+ * Common check function for vector narrowing instructions
-+ * of single-width result (SEW) and quad-width source (4*SEW).
++ * RISC-V translation routines for the OFP4 Standard Extensions.
 + *
-+ * Rules to be checked here:
-+ *   1. The largest vector register group used by an instruction
-+ *      can not be greater than 8 vector registers
-+ *      (Section 31.5.2)
-+ *   2. Quad-width SEW cannot greater than ELEN.
-+ *      (Section 31.2)
-+ *   3. Source vector register number is multiples of 4 * LMUL.
-+ *      (Section 31.3.4.2)
-+ *   4. Destination vector register number is multiples of LMUL.
-+ *      (Section 31.3.4.2)
-+ *   5. Destination vector register group for a masked vector
-+ *      instruction cannot overlap the source mask register (v0).
-+ *      (Section 31.5.3)
-+ * risc-v unprivileged spec
++ * Copyright (C) 2025 SiFive, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static bool vext_quad_narrow_check_common(DisasContext *s, int vd, int vs2,
-+                                          int vm)
++
++static bool vext_zvfofp4min_check(DisasContext *s, arg_rmr *a)
 +{
-+    return (s->lmul <= 1) &&
-+           (s->sew < MO_32) &&
-+           ((s->sew + 2) <= (s->cfg_ptr->elen >> 4)) &&
-+           require_align(vs2, s->lmul + 2) &&
-+           require_align(vd, s->lmul) &&
-+           require_vm(vm, vd);
++    return s->cfg_ptr->ext_zvfofp4min &&
++           (s->sew == MO_8) &&
++           vext_check_altfmt(s, -1) &&
++           (s->lmul >= -2) &&
++           require_rvv(s) &&
++           vext_check_isa_ill(s) &&
++           (a->rd != a->rs2) &&
++           require_align(a->rd, s->lmul) &&
++           require_align(a->rs2, s->lmul - 1) &&
++           require_vm(a->vm, a->rd) &&
++           require_noover(a->rd, s->lmul, a->rs2, s->lmul - 1);
 +}
 +
-+static bool vext_check_sq(DisasContext *s, int vd, int vs, int vm)
++static bool trans_vfext_vf2(DisasContext *s, arg_rmr *a)
 +{
-+    bool ret = vext_quad_narrow_check_common(s, vd, vs, vm);
-+    if (vd != vs) {
-+        ret &= require_noover(vd, s->lmul, vs, s->lmul + 2);
++    if (vext_zvfofp4min_check(s, a)) {
++        uint32_t data = 0;
++
++        data = FIELD_DP32(data, VDATA, VM, a->vm);
++        data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
++        data = FIELD_DP32(data, VDATA, VTA, s->vta);
++        data = FIELD_DP32(data, VDATA, VMA, s->vma);
++        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, 0),
++                           vreg_ofs(s, a->rs2), tcg_env,
++                           s->cfg_ptr->vlenb, s->cfg_ptr->vlenb, data,
++                           gen_helper_vfext_vf2);
++        tcg_gen_movi_tl(cpu_vstart, 0);
++        finalize_rvv_inst(s);
++
++        return true;
 +    }
-+    return ret;
++    return false;
 +}
-+
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 0c546a3aff..4311b388cb 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1221,6 +1221,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_svinval.c.inc"
+ #include "insn_trans/trans_rvbf16.c.inc"
+ #include "insn_trans/trans_rvofp8.c.inc"
++#include "insn_trans/trans_rvofp4.c.inc"
+ #include "decode-xthead.c.inc"
+ #include "decode-xmips.c.inc"
+ #include "insn_trans/trans_xthead.c.inc"
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index e7b187a57d..86a174ed9d 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5131,6 +5131,7 @@ RVVCALL(OPFVV1, vfncvt_sat_f_f_q_ofp8e5m2, QOP_UU_B, H1, H4,
+ GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e4m3, 1)
+ GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e5m2, 1)
+ 
++/* Zvfofp4min: vfext.vf2 - OFP4 E2M1 to OFP8 E4M3 conversion */
  /*
-  * Check function for vector reduction instructions.
-  *
+  * Vector Reduction Operations
+  */
+@@ -5930,3 +5931,35 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
+ GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
+ GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
+ GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
++
++
++void HELPER(vfext_vf2)(void *vd, void *v0, void *vs2, CPURISCVState *env,
++                       uint32_t desc)
++{
++    float_status fp_status = env->fp_status;
++    uint32_t vl = env->vl;
++    uint32_t vm = vext_vm(desc);
++    uint32_t esz = sizeof(uint8_t);
++    uint32_t total_elems = vext_get_total_elems(env, desc, esz);
++    uint32_t vta = vext_vta(desc);
++    uint32_t vma = vext_vma(desc);
++    uint32_t i;
++
++    VSTART_CHECK_EARLY_EXIT(env, vl);
++
++    for (i = env->vstart; i < vl; ++i) {
++        if (!vm && !vext_elem_mask(v0, i)) {
++            /* set masked-off elements to 1s */
++            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
++            continue;
++        }
++
++        uint8_t input = *((uint8_t *)vs2 + H1((i % 2 ? i - 1 : i) / 2));
++        input = (i % 2) ? ((input >> 4) & 0xf) : (input & 0xf);
++        *((uint8_t *)vd + H1(i)) = float4_e2m1_to_float8_e4m3(input,
++                                                              &fp_status);
++    }
++    env->vstart = 0;
++    /* set tail elements to 1s */
++    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
++}
 -- 
 2.52.0
 
