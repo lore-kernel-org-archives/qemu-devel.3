@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89581EF9008
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DC4EF900B
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpR9-0003xS-1S; Wed, 04 Mar 2026 11:51:03 -0500
+	id 1vxpR1-0003rs-Ja; Wed, 04 Mar 2026 11:50:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpR7-0003wX-Jz
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:51:01 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1vxpQx-0003pS-UQ
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:52 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpR3-0002SI-7f
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:51:01 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-6611d20c026so876955a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:56 -0800 (PST)
+ id 1vxpQt-0002PC-U4
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:51 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-65bfc858561so3383315a12.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772643055; x=1773247855; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772643046; x=1773247846; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EzHkTR4JqWnhH9thHwZCJ8/0KIT+iOpkuJdDWK3JNNc=;
- b=DEcdXsp+r6NcAaFG26wCRyzBNbM1mvRwRjz5dmer0bdjQksHtivdNclMOtNNl9fXRH
- mRZGThM0bodRPmAaZn3vVOUj6RJDhooj3+yQHAraxMm9kyVdzOxmzCcyUKUIV7LSO5cR
- cj6/Z8Kkrl4RMxnM/TBmHiNyBi8qpNYHZqP4CURtwBtOewnfk3NcDRP94brG/hp/ZrzR
- Z0Kvy1VsEfT79hKB/z0FYmStrxg3c3nYGxHnjW4tg/uIAxV8G3zuCWslgDS+peXWEUyK
- 1uVqzY7X0rpKKZx2R61p+95w3qvBEBb3vrdMKrP9UjpT5aHVvb2OPUzgZOXePpu6+Dhu
- bV+Q==
+ bh=UZAvHG40jXQMBngawC8NrPyT3mArKFlvPG9XrbzWnFE=;
+ b=r80TizfW5A0K2c5OUJzq1zs/7w9Biwtl0zL6OdhnQot2cQl79qbbOJ2eGtvvl0VKI2
+ fVnpPWBGIH1KCjTtV+coDKfNBQ5i8kBqMKHA/LN3qXziNbTJFHg/5SDSMaQLQAaXeQl7
+ x8wB3anTNbX8i9jE6OEueJ9q5kg6EZoW8YQMis9E6/F6PfV6Ahr+uvRW7Z1xU2jP4duJ
+ PaMYeVqRR6u5Vf94UnT3BvYqo5ojPsgpCkM7d6/243F2+LE+V1jlAnWnCihQxLMFggvO
+ stXlh+9ImaKC751DpMO8aFMc6aX8qb8TL2DStaO1unKvkIwi2yNkIvxZmgQw1QD2Q1G4
+ qP6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772643055; x=1773247855;
+ d=1e100.net; s=20230601; t=1772643046; x=1773247846;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EzHkTR4JqWnhH9thHwZCJ8/0KIT+iOpkuJdDWK3JNNc=;
- b=fB2d29TO3cga7F4widJTOVCzqcJXl9tRgMRWtbAwPu9g+73e022zOVfgNqALa0T84K
- yBQrrieecxMqgEUIyXmUoU7zRuoUG87kCMtkvXYCj8LruYHspdw4dMHpx32mVbN218j6
- M0/eTy73p+RqosMVdqHysJICowhfCAiWTKvs3cvOS9a+2i+kb0leV+Zk2PJP5YLR1rE/
- 7K1slxPJM50E5AbbSFbvoXcSEvt9VIKrOLPAGREt4Z0tY5VpVG0nPrrffmIfeSn7ojnD
- bTAzrkS3qh7zG1Cxh+tP7Wfv4HI5JMLziXHlWW4bHUpxmvhXFaqt/TH5ZFXBw9IHOYpr
- kJsQ==
-X-Gm-Message-State: AOJu0YzS5udPBku2C0pmgDLPOTp2GRtnMePCRKxpM5fQW2ObaOeFen8X
- Rq3kAqXslwwaKPNOZcYLt5LGfFms7gQi9xSqKhCgmVBZKQssdWl9acD6vYxYWY/0+rQ=
-X-Gm-Gg: ATEYQzyoZm6EV5+4uhbFqLtv7euctlHCsI3T2v5PwBdDXwlgn70lzko9E9sYYHXQJeV
- L6sJ8pC9CyX+0wMycY6pSQkEjWtbH7tM6JCzRXmtquwDwZZ6GNLB0oK4nrjezPk8QTdSzYranyc
- exAHE0vDHC4Ya9GWewVMsAvdXdp/ev+hXiD98UPfgwUdaRq01akMZyY6WJ5FQBT9hKcyjLjMLiK
- Aju7winJnDbIiziMYrpuT0aM+lO+Ih69mYLj7n6NQygYIRHSUYi/RfW07YlpDHJn63NrJjW5mUw
- cLHZjaSRmv6J8XrCUDNxRiudOCumJGtp4m6ci3ct7C7ORhRIJ5AeIuT2UUH6N+fBZLjiS11RXaE
- 8HCia+jAYv8gGIZMdlGn4J1rPVnQkHK3I0JCMJYIxrZSkGmJHKm5qRFO6AL9moBWtJCJp09L+1D
- N8hCEXAadx667BRHw1UVYfXmUSZNga/StwbQ==
-X-Received: by 2002:a05:6402:4403:b0:649:cec1:6cf1 with SMTP id
- 4fb4d7f45d1cf-660eef457a9mr1609764a12.0.1772643055531; 
- Wed, 04 Mar 2026 08:50:55 -0800 (PST)
+ bh=UZAvHG40jXQMBngawC8NrPyT3mArKFlvPG9XrbzWnFE=;
+ b=RMc3XIZcONiAyE5aWdED00+BK2RXLogXwxJsacAvDmXYlR8y4ebq5uMFTM8lhU9oJG
+ tF3zXshwuY3y+sFRhr1KJNq1DC4ZxtuhN0AcNZ1Uc4Q+4Z0ZtHGh0EhY3dDA6nzgyJs5
+ iacphJFJ6syrnU6bvpTIo0hz2nFEG2SscpDMQGdmOZ1nvIA8rCuHX0GUph8VOEDUbSQO
+ mOr2FOs0Aj6TC+UHnE2iqZ4EV82W6kHvzc7lZ3MVwaEHG5+95m3IqLLlM1RfyaycDttC
+ 5fG4diKkfcyc+LTBOvo8Cose/FfzfJT0ZR9cKY+oRfk5voQtVOymV1tMBozCad32o3/x
+ nBNg==
+X-Gm-Message-State: AOJu0YxmK0LlU/2/9pERIrPd5t9RcObfEfurAMPWEaWnNYKthx+2I+cG
+ E7qibGdjDk7pXLI+9QaAzuMylcOrhVnr+eHFsGmhnVyxgF6jBszGzPD0ggnr52H72cs=
+X-Gm-Gg: ATEYQzxwjWiXh/XwDS2XraqRmz3pApFo/xNty13+2hmHz9mhDJx2XWwa7ZZDWFpTZK4
+ Km7voceZAmskO6kqOhAO98s7TnL842+pNU9r9AMSgnppbm4BIQac7QskWC3andJ/ZKrlvfEa1V3
+ lXrNYVOlCsePS0ql80GexUlO4+6bgI9hyNs31AbrmhJkYdojQ+NZwwgGN/EloxwW5SaoLMKkGkB
+ 95/rbAus+EMRoFXDop7g/53HfEa+j3L7Ux8tyD7VD3Cj+FtvdWA7SiWOl4M9yAb5kMgztvDbeqk
+ xiv1s0jSi0t3iKbEhY+cQ/e6NOSims9WdFs9MLsOipY3RId4SLsxRtNrklPXCIbBonDt2fj7MnD
+ HaztbV2cPD+624E5w7Fx6kKZT+AfE7aLmnWDiWmOk+TopFqm4GPvVMGJ742DodJhltG8bc4785S
+ NOOWI5Bl03zC+y96017onK2VI=
+X-Received: by 2002:a05:6402:40c8:b0:660:48f:22b9 with SMTP id
+ 4fb4d7f45d1cf-660ef78bfc7mr1456247a12.12.1772643045513; 
+ Wed, 04 Mar 2026 08:50:45 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-65fabf6d113sm5470817a12.19.2026.03.04.08.50.48
+ 4fb4d7f45d1cf-65fac06e3fasm5775501a12.25.2026.03.04.08.50.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 08:50:51 -0800 (PST)
+ Wed, 04 Mar 2026 08:50:44 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E384E62D8C;
- Wed, 04 Mar 2026 16:50:44 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C78285FB2D;
+ Wed, 04 Mar 2026 16:50:43 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
@@ -80,19 +80,18 @@ Cc: Peter Xu <peterx@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Yiwei Zhang <zzyiwei@gmail.com>
-Subject: [PATCH 13/20] docs/system: virtio-gpu: Add link to Mesa VirGL doc
-Date: Wed,  4 Mar 2026 16:50:35 +0000
-Message-ID: <20260304165043.1437519-14-alex.bennee@linaro.org>
+ Andrew Keesler <ankeesler@google.com>
+Subject: [PATCH 01/20] Support per-head resolutions with virtio-gpu
+Date: Wed,  4 Mar 2026 16:50:23 +0000
+Message-ID: <20260304165043.1437519-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260304165043.1437519-1-alex.bennee@linaro.org>
 References: <20260304165043.1437519-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,42 +114,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Andrew Keesler <ankeesler@google.com>
 
-Extend virtio-gpu documentation with a link to the Mesa VirGL
-documentation.
+In 454f4b0f, we started down the path of supporting separate
+configurations per display head (e.g., you have 2 heads - one with
+EDID name "AAA" and the other with EDID name "BBB").
 
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-12-dmitry.osipenko@collabora.com>
+In this change, we add resolution to this configuration surface (e.g.,
+you have 2 heads - one with resolution 111x222 and the other with
+resolution 333x444).
+
+  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
+  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
+  -device '{"driver":"virtio-vga",
+            "max_outputs":2,
+            "id":"vga",
+            "outputs":[
+              {
+                 "name":"AAA",
+                 "xres":111,
+                 "yres":222
+              },
+              {
+                 "name":"BBB",
+                 "xres":333,
+                 "yres":444
+              }
+            ]}'
+
+Here is the behavior matrix of the current resolution configuration
+surface (xres/yres) with the new resolution configuration surface
+(outputs[i].xres/yres).
+
+Note - we use "xres" and "yres" (instead of, say, "width" and "height")
+to match analogous virtio_gpu_base_conf.xres/yres.
+
+Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with default xres/yres
+
+Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
+Behavior: current behavior - outputs[0] enabled with xres/yres
+
+Case: outputs[i].has_xres && outputs[i].has_yres
+Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
+
+Case: outputs[i].has_xres != outputs[i].has_yres
+Behavior: error
+
+Signed-off-by: Andrew Keesler <ankeesler@google.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20260210123038.2332364-2-ankeesler@google.com>
+[AJB: fix format strings for size_t in error_setg]
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/system/devices/virtio/virtio-gpu.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ qapi/virtio.json             | 13 +++++++++++--
+ hw/display/virtio-gpu-base.c | 16 ++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 086e2fcf27b..89153103b9f 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -61,7 +61,7 @@ on typical modern Linux distributions.
- virtio-gpu virglrenderer
- ------------------------
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index cd67c4f52e3..09dd0e6d05a 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -970,15 +970,24 @@
+ ##
+ # @VirtIOGPUOutput:
+ #
+-# Describes configuration of a VirtIO GPU output.
++# Describes configuration of a VirtIO GPU output.  If both @xres and
++# @yres are set, they take precedence over root virtio-gpu resolution
++# configuration and enable the corresponding output.  If none of @xres
++# and @yres are set, root virtio-gpu resolution configuration takes
++# precedence and only the first output is enabled.  Only setting one
++# of @xres or @yres is an error.
+ #
+ # @name: the name of the output
+ #
++# @xres: horizontal resolution of the output in pixels (since 11.0)
++#
++# @yres: vertical resolution of the output in pixels (since 11.0)
++#
+ # Since: 10.1
+ ##
  
--When using virgl accelerated graphics mode in the guest, OpenGL API calls
-+When using `virgl`_ accelerated graphics mode in the guest, OpenGL API calls
- are translated into an intermediate representation (see `Gallium3D`_). The
- intermediate representation is communicated to the host and the
- `virglrenderer`_ library on the host translates the intermediate
-@@ -70,6 +70,7 @@ representation back to OpenGL API calls.
- .. parsed-literal::
-     -device virtio-gpu-gl
+ { 'struct': 'VirtIOGPUOutput',
+-  'data': { 'name': 'str' } }
++  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
  
-+.. _virgl: https://docs.mesa3d.org/drivers/virgl.html
- .. _Gallium3D: https://www.freedesktop.org/wiki/Software/gallium/
- .. _virglrenderer: https://gitlab.freedesktop.org/virgl/virglrenderer/
+ ##
+ # @DummyVirtioForceArrays:
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 7269477a1c8..cb76302e2d8 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -233,6 +233,22 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+     g->req_state[0].width = g->conf.xres;
+     g->req_state[0].height = g->conf.yres;
  
++    for (output_idx = 0, node = g->conf.outputs;
++         node && output_idx < g->conf.max_outputs;
++         output_idx++, node = node->next) {
++        if (node->value->has_xres != node->value->has_yres) {
++            error_setg(errp,
++                       "must set both outputs[%zd].xres and outputs[%zd].yres",
++                       output_idx, output_idx);
++            return false;
++        }
++        if (node->value->has_xres && node->value->has_yres) {
++            g->enabled_output_bitmask |= (1 << output_idx);
++            g->req_state[output_idx].width = node->value->xres;
++            g->req_state[output_idx].height = node->value->yres;
++        }
++    }
++
+     g->hw_ops = &virtio_gpu_ops;
+     for (i = 0; i < g->conf.max_outputs; i++) {
+         g->scanout[i].con =
 -- 
 2.47.3
 
