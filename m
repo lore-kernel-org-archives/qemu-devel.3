@@ -4,64 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C02EF8FEF
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535BDEF8FEF
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxnMS-0004LC-Kj; Wed, 04 Mar 2026 09:38:04 -0500
+	id 1vxnNU-0004q6-EI; Wed, 04 Mar 2026 09:39:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxnMN-0004KC-AM; Wed, 04 Mar 2026 09:38:00 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vxnNS-0004pI-QC; Wed, 04 Mar 2026 09:39:06 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxnMK-0002hV-O6; Wed, 04 Mar 2026 09:37:58 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D1A60596D97;
- Wed, 04 Mar 2026 15:37:53 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id HAgW-eYnIJJI; Wed,  4 Mar 2026 15:37:51 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AC700596DA1; Wed, 04 Mar 2026 15:37:50 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A9CBB596D9D;
- Wed, 04 Mar 2026 15:37:50 +0100 (CET)
-Date: Wed, 4 Mar 2026 15:37:50 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: Markus Armbruster <armbru@redhat.com>, 
- Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- Helge Deller <deller@gmx.de>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Troy Lee <leetroy@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org, 
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>
-Subject: Re: QOM parent type "sys-bus-device" vs. "device" (was: [PATCH v2
- 12/13] hw/char/serial: Inherit from SysBusDevice)
-In-Reply-To: <CAFEAcA_WYkAYccog-BiA6MJAvoFVwa6niKvFZ7UpLjzkRyd6aA@mail.gmail.com>
-Message-ID: <75b86ecb-1248-c0a8-5c44-3da48ff0891e@eik.bme.hu>
-References: <20260303222143.142741-1-shentey@gmail.com>
- <20260303222143.142741-13-shentey@gmail.com> <87ikbbixy5.fsf_-_@pond.sub.org>
- <CAFEAcA_WYkAYccog-BiA6MJAvoFVwa6niKvFZ7UpLjzkRyd6aA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1vxnNR-0002qU-5y; Wed, 04 Mar 2026 09:39:06 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6243MWpX613117; Wed, 4 Mar 2026 14:39:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=I/emfc
+ DfQEdyi4PCDzS0ho/68iyMxH47JWbIFVQpC8Q=; b=PebXAOpBIJn/rvqGeQV+nz
+ bk25HcNQfZ8UTnY7QYFJaLs21eyBWhC3B4/YillI8C6RoqURm7+gPqEfwzWmruCR
+ x5KJgSwSVKRMgDarDnT2zBZPj2ScEdGREIaP/d9UC7E+8uxiRtFiTBX0eXet7rBQ
+ 8acxnrG5MsXMKbvrPXDfnbpP/j0cMA7gDNSQ5M1hEvWcPZHEcnjR/LHrQSIBs6Y4
+ CO5npiPs2wdaMIJprzhOBL91Ur8cZlbd9qLPs+5LlEuuM1cOTAv1oHYjNifP9Ogf
+ q1pKq4Ce4JG2UuD5nSUOn1U8AlNbmNFxV+Dd2FimYKy8jYB92cmgo4/RH6FFVUDw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjdfr74-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 14:39:03 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 624E81BE003266;
+ Wed, 4 Mar 2026 14:39:02 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2y75d7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 14:39:02 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 624Ed0Nd66191684
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Mar 2026 14:39:00 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8429058058;
+ Wed,  4 Mar 2026 14:39:00 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 43B4A5805B;
+ Wed,  4 Mar 2026 14:38:59 +0000 (GMT)
+Received: from [9.61.180.105] (unknown [9.61.180.105])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed,  4 Mar 2026 14:38:59 +0000 (GMT)
+Message-ID: <f2d88cdf-843f-4d23-a288-43056e383e59@linux.ibm.com>
+Date: Wed, 4 Mar 2026 09:38:53 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: 2
-X-Spam_score: 0.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 11/15] pc-bios/s390-ccw: Introduce virtio-pci functions
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
+ <20260304025917.2157032-12-jrossi@linux.ibm.com>
+ <5f8d78a4-175d-49fc-b397-b699c49cf0a6@redhat.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <5f8d78a4-175d-49fc-b397-b699c49cf0a6@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69a84407 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=y7DE19vXhTpJ5KtiWeAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: -fFoNtcUzoGxpJ1mazMatxOHsZU4ZyyM
+X-Proofpoint-GUID: -fFoNtcUzoGxpJ1mazMatxOHsZU4ZyyM
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDExOCBTYWx0ZWRfX9SOLYk7M4o2r
+ lo5h/SHStSS3IIOosbWzcmMnOMqShXsRQZPBs/dCsIMcKwRcgyikP0ltgR/vpNkJaZSx0w/jQDj
+ tpwkQEaxBUGlvpEGbmAWZFIxTtKVrz4vaX3wGydjj4ebJkmTJR71MfcOGsXdEGd3/73ZYwhFclN
+ 23YmRVZOxv60qhwhnagFgLf0SIGl2vwE63mxn11sxpAktLzqQ7mShOtYsUL1yOrRLoV6K+FKzZn
+ stHbWWIa1pjXc6FLrnn1DY927mixdTzuEtxAzuvUn1ExvRfqIuss3IZQVJg6x5hAYNrsFVHchEJ
+ AONzUoP392dfLoxmikxOAcE+vCMc7ET3cpd29zNwKfAK1vJ5E4krSzB5ZdQsQstCsOdpQLDaPlW
+ h781ByidI9Qdjh+Q+bEV59KdgXwtV4OOhGuRKQavTb4nVhbTNcCFEbJb8xS1cxBWU91fzxjMYI8
+ lW8r0PO9ZaYa2OLUr4A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-04_06,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040118
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -79,92 +124,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Mar 2026, Peter Maydell wrote:
-> On Wed, 4 Mar 2026 at 12:25, Markus Armbruster <armbru@redhat.com> wrote:
->> We might be at a crossroads here.
->>
->> Paul Brook designed qdev around "a device plugs into some bus, and may
->> provide buses".  To make this work, he added a main system bus to serve
->> as root of a single tree.
->>
->> The parent of a device in that tree is the bus it plugs into, and the
->> parent of a bus is the device that provides it, except for the main
->> system bus, which has no parent.  "info qtree" shows this tree.
->>
->> Note a machine had just this one system bus back then.
->>
->> The system bus isn't something hardware people would call a bus.
->>
->> The qtree is a qdev thing.  It is *not* the QOM composition tree ("info
->> qom-tree /").
->>
->> We actually abandoned "a device plugs into some bus" a long time ago.
->> Moe on that below.
->>
->> Qdev was later rebased onto QOM, as follows.
->>
->> A bus QOM type is a subtype of "bus".
->>
->> A device QOM type is a subtype of "device".
->>
->> If a device type has a @bus_type, then it plugs into a bus of that QOM
->> type.  Such a concrete device is commonly[*] not a direct subtype of
->> "device".  Instead, it's a subtype of the abstract device that plugs
->> into that bus type.  Example: "isa-serial" is a direct subtype of
->> "isa-device", and it inherits its bus type "ISA" from there.
->>
->> If a device has no @bus_type, it doesn't plug into any bus.  It doesn't
->> show up in "info qtree" (it does in "info qom-tree", of course).
->> Example: "serial" is a direct subtype of "device".
->>
->> This lets us build devices from components without having to make up
->> buses to connect them.  Example: "isa-serial" has a direct QOM child of
->> type "serial".  Good!
->>
->> Except infrastructure useful to such bus-less devices lives in sysbus,
->> where bus-less devices can't access it.  This tempts us to make devices
->> sysbus devices just to be able to use the infrastructure, and to create
->> additional sysbuses.
->
-> There is only one sysbus -- it is impossible to create more than one,
-> and there wouldn't be much point in creating a second one anyway.
->
->> We can elect to go down this path further: make more sysbus devices.
->> Create more sysbuses.  If this is the right path, then bus-less devices
->> were a mistake, and we should consider eliminating them.
->>
->> Or we can pick the other branch: put the infrastructure where bus-less
->> devices can use it.  If this is the right path, then sysbus is
->> obsolescent.
->
-> I do think that at some point it would be good to move all that
-> stuff into the base "device" class, and drop sysbus. The real
-> problem, though, is reset. Currently reset propagates along the
-> qtree (the tree of buses). So something (like TYPE_SERIAL, and
-> also like CPU objects) that is a direct child of TYPE_DEVICE does
-> not get automatically reset. The major overriding reason why
-> (as it currently stands) I favour making things sysbus devices
-> and not plain devices is that devices that don't get reset are
-> either broken or need all their users to take extra steps that
-> most don't take, or do in a weird way. We can't just push the
-> reset handling into TYPE_DEVICE because by definition it is tied
-> to "being a thing on a bus, i.e. the sysbus".
->
-> Disentangling reset is extremely painful -- I don't even know
-> what it ought to be doing. Maybe propagating along the QOM tree?
-> So for now, we muddle along.
 
-This suggests maybe we need a way to represent qtree in QOM. So while QOM 
-devices are organised by parent-child relationship in the qom-tree they 
-could have standardised properties that tell which bus they are connected 
-to (or buses have properties that list devices connected to them, 
-whichever is easier to walk) then the reset or info qtree could select 
-devices based on these properties. Could that replace the qtree of sysbus 
-devices and thus allow merging SysBusDevice into Device? There are link 
-properties in QOM to connect objects so it should be possible to represent 
-object relationships with such properties not just by their parent-child 
-(which I think are also represented by properties but I did not check it).
 
-Regards,
-BALATON Zoltan
+On 3/4/26 4:18 AM, Thomas Huth wrote:
+> On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> Define common functionality for interacting with virtio-pci devices.
+>>
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+> ...
+>> diff --git a/pc-bios/s390-ccw/virtio-pci.c 
+>> b/pc-bios/s390-ccw/virtio-pci.c
+>> new file mode 100644
+>> index 0000000000..2cfb84bf66
+>> --- /dev/null
+>> +++ b/pc-bios/s390-ccw/virtio-pci.c
+>> @@ -0,0 +1,167 @@
+>> +/*
+>> + * Functionality for virtio-pci
+>> + *
+>> + * Copyright 2025 IBM Corp.
+>> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "clp.h"
+>> +#include "pci.h"
+>> +#include "helper.h"
+>> +#include "virtio.h"
+>> +#include "bswap.h"
+>> +#include "virtio-pci.h"
+>> +#include "s390-time.h"
+>> +#include <stdio.h>
+>> +
+>> +/* Variable offsets used for reads/writes to modern memory regions */
+>> +VirtioPciCap c_cap; /* Common capabilities  */
+>> +VirtioPciCap d_cap; /* Device capabilities  */
+>> +VirtioPciCap n_cap; /* Notify capabilities  */
+>> +uint32_t notify_mult;
+>> +uint16_t q_notify_offset;
+>> +
+>> +static int virtio_pci_set_status(uint8_t status)
+>> +{
+>> +    int rc = vpci_write_byte(c_cap.off + VPCI_C_OFFSET_STATUS, 
+>> c_cap.bar, status);
+>> +    if (rc) {
+>> +        puts("Failed to write virtio-pci status");
+>> +        return -EIO;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static int virtio_pci_get_status(uint8_t *status)
+>> +{
+>> +    int rc = vpci_read_byte(c_cap.off + VPCI_C_OFFSET_STATUS, 
+>> c_cap.bar, status);
+>> +    if (rc) {
+>> +        puts("Failed to read virtio-pci status");
+>> +        return -EIO;
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +/* virtio spec v1.3 section 4.1.2.1 */
+>> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+>> +{
+>> +    switch (device_id) {
+>> +    case 0x1402:
+>
+> I think it's 0x1042, not 0x1402 ?
+
+Good catch.  You are correct.  I'll fix it.
+
+Thanks again,
+Jared Rossi
 
