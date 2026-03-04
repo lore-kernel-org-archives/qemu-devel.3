@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E667EF8FF7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 15:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E98CEF8FF9
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 15:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxoEC-0003ht-Oj; Wed, 04 Mar 2026 10:33:36 -0500
+	id 1vxoFY-0004I9-JY; Wed, 04 Mar 2026 10:35:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxoEA-0003hR-TK
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 10:33:34 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vxoE8-0007Zj-FF
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 10:33:34 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-439c9bdc241so533547f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 07:33:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772638411; x=1773243211; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CY8olNvc/9zQdb1hW0WSqp0dl0J0E5Y4Sr7RA5QqcP0=;
- b=uty61TIUxiTOF6QVQsITVwCY0wQnxePF3dl4VBXmkzud8zRLMenaMnupX2avNpSKMd
- NwiD6PH/TDcsTda7Z2LobNNgcHBImmr+EXUCx50MjqkOytcmAXvTF1IPlayjyZhKFU12
- /4mX4QmmLpVMkspVJgz+iLekU/aOgzUzTSO7vpnXNjRXFswVo+UfBBGSDyR+JI/ITJ2D
- NGnwyVcHXjVQDhU/nC8DF5o7+iRc5M3bItDwmgIaqvCRV6oUxhWeBTPNiB1iJo/h71oI
- sUO4hxmVVJ71Ds0zyPfGlvdU2SSH1gloJJmlnmzMCgcnc41QMUpaI4caDAuKWFpG66L9
- /BNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772638411; x=1773243211;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CY8olNvc/9zQdb1hW0WSqp0dl0J0E5Y4Sr7RA5QqcP0=;
- b=oR5vOhapHRB/AuH9tcemgYLrxDImuKfipmHnzhcCFeRKJ5hZfByNtcHU+A7k1LrIwu
- 9kDi12XmOypaXRkmSSgsJTB4vLfDH3pcCIM15twfi+Xsi2kDZfn3dL4e4lOn/l5AIDRW
- RfcN0mFGXMMreeVxSO++eY4pWW1LulgzZ9j7GJKNeM4H+s6kCA+4WjKzyCJr1W/i18ES
- c1/05eOYTENvoPkc4IyGnSzTUx3Ax17aPhXgII8mLloFOMSClTPEDckEA1gSLr3N835p
- wI5iLKik+YBFINTKq3/TbP0GDfvJR3CpX2Ldld2rQFi9cZ7uMRGnhCiQ8G8qcTC/a2nt
- Z4KA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDs0rLaBqQw52IYYSdqWacbhOcD0xiwf8wn8Yb/63MoyyhctHPKKE9zm+taTmtjBkr9xvKIh3ClXQH@nongnu.org
-X-Gm-Message-State: AOJu0Yy6p/RkYe3jk9c927hnee0nPxQ1jER/Ux3P+E1CzcwOonKQoVZo
- 5cwCgwC3NA2s3QTIM+hnoX2Y1ilpsOQjjkI6G/ZLZLph7YFVwQlTiYvi7M327mmJZeg=
-X-Gm-Gg: ATEYQzwX/zEKS+WeRNGhUYmcWEIwENZWuV/Dj/NqW04WZ0Hoo/Fq2kzwHwlM15d3NLS
- bMQJBhoN3v9OFCnyyLA63I84lUHscVjozkx0HsxDDyhsKlT2C5ERgHUS2Pd/DuFoaLJ+dv0Sg28
- ykDPPFLXJzJKyt4vsMvMCNCyDhEvkyRJFw8dBNso0aeBOJhhX6PDOMkK2EEg+pzdZkyccONcMtK
- 2c5yNIKYB2ogazYJFfS3kd63H9FgwkAPHNYO7msVL2wYlP1esIFlCibtZjKT8ySiJGUxivlEdZw
- LozGHCVsnmV9nQam0Z/ZqOn52ennooOC5QbLoOn+Mek/GGD26V/C3PLPmJksftA2/lvfGs7o+Sh
- N8KWY2dkmmF7cuICoDlqsTIaIZoQohCN2r1RN3lNwMMDRQ4YUrnxd3u3rYqj37dhuXgzQr5QIs5
- jSnpbkA6WNN2jp3P13IVjoapozVYg25/ZF87odOOdfmatBoqRD8v/zIaZQAXgSqfptnQ==
-X-Received: by 2002:a05:6000:268a:b0:439:be86:5051 with SMTP id
- ffacd0b85a97d-439c8020c62mr4652858f8f.59.1772638410377; 
- Wed, 04 Mar 2026 07:33:30 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b130abfasm26701098f8f.34.2026.03.04.07.33.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Mar 2026 07:33:29 -0800 (PST)
-Message-ID: <233e0a3c-9174-48d6-88af-93e291fad172@linaro.org>
-Date: Wed, 4 Mar 2026 16:33:28 +0100
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vxoFR-0004Hm-BZ; Wed, 04 Mar 2026 10:34:53 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vxoFO-00080f-21; Wed, 04 Mar 2026 10:34:53 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCH3dERUahpPsqsAA--.31418S2;
+ Wed, 04 Mar 2026 23:34:41 +0800 (CST)
+Received: from [192.168.31.94] (unknown [113.246.233.224])
+ by mail (Coremail) with SMTP id AQAAfwB3zusOUahpMPweAA--.38826S2;
+ Wed, 04 Mar 2026 23:34:38 +0800 (CST)
+Message-ID: <7a50275c-46bb-45b2-a419-135cc0e43c45@phytium.com.cn>
+Date: Wed, 4 Mar 2026 23:34:37 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/4] hppa: Restructure CPU Class heirarchy
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-References: <20260303-hppa-c3600-v5-0-277bfe6b40b8@rev.ng>
- <20260303-hppa-c3600-v5-1-277bfe6b40b8@rev.ng>
- <977a9933-caf9-4fb0-823a-cd8503d5e25f@linaro.org>
-In-Reply-To: <977a9933-caf9-4fb0-823a-cd8503d5e25f@linaro.org>
+Subject: Re: [RFC v4 16/31] hw/arm/smmuv3: Plumb SEC_SID through IOMMU
+ notifier path
+To: eric.auger@redhat.com, Mostafa Saleh <smostafa@google.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101706.2994213-1-tangtao1634@phytium.com.cn>
+ <aaGumxmrKRelouE7@google.com>
+ <6a6144fe-3db3-4ce8-8a8c-c1391d7aa550@redhat.com>
+ <aaXiQ84t1vxTH-EE@google.com>
+ <adbb1e4f-2103-4927-aa5e-638c5dbc3896@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <adbb1e4f-2103-4927-aa5e-638c5dbc3896@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAfwB3zusOUahpMPweAA--.38826S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAEBWmnT6AGiwAAss
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxuw4xWF15Kr1UGFW3Ar47urg_yoW7KFWDpr
+ WkKF4YkFW8Ja4fJF42vw4UCF9Iqr1DK34rXryUG3W5tFyqyr9FqF4Du34j9F98Cr48Ar4q
+ q34UWF43Zw1jy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,69 +82,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/3/26 16:31, Philippe Mathieu-Daudé wrote:
-> On 3/3/26 17:11, Anton Johansson via qemu development wrote:
->> Clarifies current CPU model names, assuming 32-bit HPPA runs a PA-7300LC
->> whereas 64-bit runs a PA-8700.  The PA-8500 model is added, which will
->> later be used by the A400 machine.  All CPU models are made into children
->> of the now abstract TYPE_HPPA_CPU base class.
->>
->> References to "hppa/hppa64" models in test cases are also updated.
->>
->> Reviewed-by: Helge Deller <deller@gmx.de>
->> Signed-off-by: Anton Johansson <anjo@rev.ng>
->> ---
->>   target/hppa/cpu-qom.h           |  8 +++++++-
->>   hw/hppa/machine.c               | 21 +++++++++++++--------
->>   linux-user/hppa/elfload.c       |  2 +-
->>   target/hppa/cpu.c               | 25 ++++++++++++++++++++-----
->>   tests/qtest/machine-none-test.c |  2 +-
->>   5 files changed, 42 insertions(+), 16 deletions(-)
-> 
-> 
->> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
->> index 714f3bbdaf..910a919923 100644
->> --- a/target/hppa/cpu.c
->> +++ b/target/hppa/cpu.c
->> @@ -207,7 +207,9 @@ static void hppa_cpu_initfn(Object *obj)
->>   {
->>       CPUHPPAState *env = cpu_env(CPU(obj));
->> -    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
->> +    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8500) ||
->> +                   !!object_dynamic_cast(obj, TYPE_HPPA_CPU_PA_8700);
-> 
-> Don't we have an architectural bit to test? Does this scale? Could we
-> propagate in per-CPU_TYPE class_init handler?
+Hi all,
 
-I just read the following patch. Maybe squash together for clarity?
-> 
->> +
->>   }
-> 
-> 
->>   #ifndef CONFIG_USER_ONLY
->> @@ -314,12 +321,20 @@ static const TypeInfo hppa_cpu_type_infos[] = {
->>           .instance_size = sizeof(HPPACPU),
->>           .instance_align = __alignof(HPPACPU),
->>           .instance_init = hppa_cpu_initfn,
->> -        .abstract = false,
->> +        .abstract = true,
->>           .class_size = sizeof(HPPACPUClass),
->>           .class_init = hppa_cpu_class_init,
->>       },
->>       {
->> -        .name = TYPE_HPPA64_CPU,
->> +        .name = TYPE_HPPA_CPU_PA_7300LC,
->> +        .parent = TYPE_HPPA_CPU,
->> +    },
->> +    {
->> +        .name = TYPE_HPPA_CPU_PA_8500,
->> +        .parent = TYPE_HPPA_CPU,
->> +    },
->> +    {
->> +        .name = TYPE_HPPA_CPU_PA_8700,
->>           .parent = TYPE_HPPA_CPU,
->>       },
->>   };
+On 2026/3/3 PM3:49, Eric Auger wrote:
+> Hi Mostafa,
+>
+> On 3/2/26 8:17 PM, Mostafa Saleh wrote:
+>> On Mon, Mar 02, 2026 at 07:26:10PM +0100, Eric Auger wrote:
+>>> On 2/27/26 3:47 PM, Mostafa Saleh wrote:
+>>>> On Sat, Feb 21, 2026 at 06:17:06PM +0800, Tao Tang wrote:
+>>>>> Extend IOMMU notifier functions to be SEC_SID-aware, ensuring that
+>>>>> invalidation notifications are dispatched to the correct security-aware
+>>>>> address space.
+>>>>>
+>>>>> This ensures IOMMU notifier events (e.g., to VFIO) are correctly routed
+>>>>> to the appropriate security world's address space, maintaining isolation
+>>>>> between secure and non-secure DMA operations.
+>>>> I don’t think that VFIO cares about secure regime, my guess is to
+>>>> keep the functions as this and don’t call them for secure invalidations.
+>>> So do we want to prevent VFIO devices from working in secure mode along
+>>> with the SMMU?
+>> Yes, my impression was that VFIO only works with NS devices, for example
+>> I see vfio_iommu_map_notify() only deals with system memory:
+>>
+>>      if (iotlb->target_as != &address_space_memory) {
+>>          error_setg(&local_err,
+>>                     "Wrong target AS \"%s\", only system memory is allowed",
+> Indeed this would need to be changed. I am totally fine not supporting
+> VFIO nor vhost devices (which also use unmap notifiers) in secure more.
+> However in that case I think the series would need to properly check
+> that those devices are not used in secure regime.
+
+
+Thanks for the clarification.
+
+
+For this series, I’m fine not supporting VFIO/vhost in Secure regime. 
+I’ll add a fail-fast check at smmuv3_inv_notifiers_iova to reject 
+devices using IOMMU notifiers when the selected regime is non-NS. The NS 
+path stays unchanged.
+
+
+/* invalidate an asid/vmid/iova range tuple in all mr's */
+static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
+                                       dma_addr_t iova, uint8_t tg,
+                                       uint64_t num_pages, int stage,
+                                       SMMUSecSID sec_sid)
+{
+     SMMUDevice *sdev;
+     if (sec_sid != SMMU_SEC_SID_NS) {     // fail-fast check
+         return;
+     }
+     ......
+}
+
+
+Best regards,
+
+Tao
+
+
+>
+> Thanks
+>
+> Eric
+>>
+>> Otherwise, the callback needs to be enlighted by different address
+>> spaces, I am not sure how (and what uses cases?) will that be done, does
+>> QEMU emulate TZ in that case? (and present some devices as secure?)
+>>
+>> Thanks,
+>> Mostafa
+>>
+>>> Eric
+>>>> Thanks,
+>>>> Mostafa
+>>>>
+>>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>>> ---
+>>>>>   hw/arm/smmuv3.c | 18 +++++++++++-------
+>>>>>   1 file changed, 11 insertions(+), 7 deletions(-)
+>>>>>
+>>>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>>>>> index 4a4de719a7c..e33a7babd1c 100644
+>>>>> --- a/hw/arm/smmuv3.c
+>>>>> +++ b/hw/arm/smmuv3.c
+>>>>> @@ -1195,15 +1195,16 @@ epilogue:
+>>>>>    * @tg: translation granule (if communicated through range invalidation)
+>>>>>    * @num_pages: number of @granule sized pages (if tg != 0), otherwise 1
+>>>>>    * @stage: Which stage(1 or 2) is used
+>>>>> + * @sec_sid: StreamID Security state
+>>>>>    */
+>>>>>   static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+>>>>>                                  IOMMUNotifier *n,
+>>>>>                                  int asid, int vmid,
+>>>>>                                  dma_addr_t iova, uint8_t tg,
+>>>>> -                               uint64_t num_pages, int stage)
+>>>>> +                               uint64_t num_pages, int stage,
+>>>>> +                               SMMUSecSID sec_sid)
+>>>>>   {
+>>>>>       SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>>>>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>>>>>       SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
+>>>>>                                  .inval_ste_allowed = true};
+>>>>>       SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo, sec_sid);
+>>>>> @@ -1251,7 +1252,8 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+>>>>>       }
+>>>>>   
+>>>>>       event.type = IOMMU_NOTIFIER_UNMAP;
+>>>>> -    event.entry.target_as = &address_space_memory;
+>>>>> +    event.entry.target_as = smmu_get_address_space(sdev->smmu, sec_sid);
+>>>>> +    g_assert(event.entry.target_as);
+>>>>>       event.entry.iova = iova;
+>>>>>       event.entry.addr_mask = num_pages * (1 << granule) - 1;
+>>>>>       event.entry.perm = IOMMU_NONE;
+>>>>> @@ -1262,7 +1264,8 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+>>>>>   /* invalidate an asid/vmid/iova range tuple in all mr's */
+>>>>>   static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
+>>>>>                                         dma_addr_t iova, uint8_t tg,
+>>>>> -                                      uint64_t num_pages, int stage)
+>>>>> +                                      uint64_t num_pages, int stage,
+>>>>> +                                      SMMUSecSID sec_sid)
+>>>>>   {
+>>>>>       SMMUDevice *sdev;
+>>>>>   
+>>>>> @@ -1274,7 +1277,8 @@ static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
+>>>>>                                           iova, tg, num_pages, stage);
+>>>>>   
+>>>>>           IOMMU_NOTIFIER_FOREACH(n, mr) {
+>>>>> -            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages, stage);
+>>>>> +            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg,
+>>>>> +                               num_pages, stage, sec_sid);
+>>>>>           }
+>>>>>       }
+>>>>>   }
+>>>>> @@ -1307,7 +1311,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
+>>>>>       if (!tg) {
+>>>>>           trace_smmuv3_range_inval(sec_sid, vmid, asid, addr,
+>>>>>                                    tg, 1, ttl, leaf, stage);
+>>>>> -        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage);
+>>>>> +        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage, sec_sid);
+>>>>>           if (stage == SMMU_STAGE_1) {
+>>>>>               smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl, sec_sid);
+>>>>>           } else {
+>>>>> @@ -1331,7 +1335,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
+>>>>>           trace_smmuv3_range_inval(sec_sid, vmid, asid, addr, tg,
+>>>>>                                    num_pages, ttl, leaf, stage);
+>>>>>           smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg,
+>>>>> -                                  num_pages, stage);
+>>>>> +                                  num_pages, stage, sec_sid);
+>>>>>           if (stage == SMMU_STAGE_1) {
+>>>>>               smmu_iotlb_inv_iova(s, asid, vmid, addr, tg,
+>>>>>                                   num_pages, ttl, sec_sid);
+>>>>> -- 
+>>>>> 2.34.1
+>>>>>
 
 
