@@ -4,118 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81583EB7EA4
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 08:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A812EB7EA3
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 08:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxhWK-0002bx-RN; Wed, 04 Mar 2026 03:23:52 -0500
+	id 1vxhXf-0003CM-CM; Wed, 04 Mar 2026 03:25:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxhWI-0002bL-MI
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:23:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ganeshgr@linux.ibm.com>)
+ id 1vxhXc-00038y-Hf; Wed, 04 Mar 2026 03:25:12 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxhWG-0002z0-PK
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:23:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772612626;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Xdl0IaZd1dtd8J6n7FOpq/IiMnQqMl9aiLMQavhQ9o8=;
- b=Xzt6CGMGuTrVDxULu8CfEf/kh8hsbkS+Tvg01XUKEDoHkwJauoOuoZmOoBQVD+3CAbkCjj
- 6QEug8c+W5ZQwXP/XDl3gnSasTBvbjgxtxgLhLoQwR8l/wtZcbZs0KM02FdFDxOMAzXpCk
- b88AX0Tq88dfuv12q0f5ve/kZsvK5qA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-4Gv9-RKEOl-um6EjaGzZpw-1; Wed,
- 04 Mar 2026 03:23:42 -0500
-X-MC-Unique: 4Gv9-RKEOl-um6EjaGzZpw-1
-X-Mimecast-MFC-AGG-ID: 4Gv9-RKEOl-um6EjaGzZpw_1772612620
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79B93195605B; Wed,  4 Mar 2026 08:23:40 +0000 (UTC)
-Received: from [10.45.224.194] (unknown [10.45.224.194])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 168D8300019F; Wed,  4 Mar 2026 08:23:34 +0000 (UTC)
-Message-ID: <ecab6c1d-f379-42d6-9acd-95b7b631afce@redhat.com>
-Date: Wed, 4 Mar 2026 09:23:32 +0100
+ (Exim 4.90_1) (envelope-from <ganeshgr@linux.ibm.com>)
+ id 1vxhXa-0003It-Uk; Wed, 04 Mar 2026 03:25:12 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 623Ixw9d2161919; Wed, 4 Mar 2026 08:25:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=EdmO/z
+ d4Efc6gEZeTJNjKqjq/jq9pH+nKnQHND6o8NI=; b=Q1nYCG0qjh+nyjkdx+35NG
+ BURQ4I7ivc9L1qug2smbF5s3NT0Zhge496BqgZWB8P8mNDCr3rHRNJ8K0PECngHN
+ 7RQH9akmBI0vzt8K5LBk0sBFCbyLSTKnpctVNrxWGTXvqIqt71uLW46mv6AXGK0F
+ XLkx/dyWnIDzG3flV+2PKn7rIxXDtlceEFTue0ONXmgarsCqYJX9tiBXtsLKLoNv
+ WtvJok/CjIdfbVba7vPgczmCjoh+RrwOmGuBpnbKGEsrDOPyus7/doLBVapgk0bO
+ SDr5sdKT7A145KnsQWg1AJlapPqk38/OG04xHivhmwui6Vh/Ed5Tnge49rAZArkQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskbx3b9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 08:25:07 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 624781OR027725;
+ Wed, 4 Mar 2026 08:25:06 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjdkm6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Mar 2026 08:25:06 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6248P3JP33030558
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Mar 2026 08:25:03 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2B28820043;
+ Wed,  4 Mar 2026 08:25:03 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E876F20040;
+ Wed,  4 Mar 2026 08:25:01 +0000 (GMT)
+Received: from [9.98.111.182] (unknown [9.98.111.182])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Mar 2026 08:25:01 +0000 (GMT)
+Message-ID: <f9dcadd2-b4b8-4f9f-a66d-2f438de11b96@linux.ibm.com>
+Date: Wed, 4 Mar 2026 13:55:00 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/15] pc-bios/s390-ccw: Always reset virtio device on
- failed boot attempt
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
- <20260304025917.2157032-4-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [RFC 0/4] ppc/spapr: Add support for RTAS PCI error injection on
+ pseries
+To: Narayana Murty N <nnmlinux@linux.ibm.com>, npiggin@gmail.com,
+ harshpb@linux.ibm.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: mahesh@linux.ibm.com
+References: <20251029150618.186803-1-nnmlinux@linux.ibm.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260304025917.2157032-4-jrossi@linux.ibm.com>
+From: Ganesh G R <ganeshgr@linux.ibm.com>
+In-Reply-To: <20251029150618.186803-1-nnmlinux@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: jOO7rEo3m-WuUqV9MlMc5EBpjRI_8nT8
+X-Authority-Analysis: v=2.4 cv=b66/I9Gx c=1 sm=1 tr=0 ts=69a7ec64 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=i4Ubzu5d0fLcHI9DJ4kA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDA2MyBTYWx0ZWRfXzNPAFVQ9Hn0C
+ Em3U8Me37/QINFIojLydWRZc4xJBTp6U/1JK7XBn0E0Q4YI5epZQq7YW8ijRghSOkTkqInhNzXF
+ pvBJX++4DZCfS9dk2IQfl4CHhfAwt6kYKV2ACmeSDz4FJV3LUlZTvYiqeHIL7ZAtfpgRW6TUnRa
+ EizNeBsA4ZMAfeL/jMSPDtC6sCw+7vl0MO+Q25WkzACircXvs7WT+wmBlQc/ufIiJAJ77CQTNk/
+ HqIL8uIK7Z397/igVUsK3WiUfVbB3q/DwHsHrf3iP1VB8Vp9w9wfCooSa8LVXp+OAfW1UIZil2n
+ NW/R7Dm3vS0rZ8dKVWRHyvUASA7JY88VKSfWOARQsAjZtu6d7e6iNbHMzkYQKAJF9nV5RVt6moO
+ h2WA/grYHaH/kA88EOM/Hps7Pz7cN31yGPeGxHRGTgkTMVfwio8rc5qUePSzDWQ5NuOARpjSrwE
+ Ie+C4nfJfHLbdwjLSIg==
+X-Proofpoint-GUID: HdUu6MMucLC2R2SjxTOQccdtys3H5ckv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-04_04,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040063
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=ganeshgr@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,36 +123,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 10/29/25 8:36 PM, Narayana Murty N wrote:
+> This patch series introduces RTAS-based PCI error injection infrastructure
+> for the QEMU pseries (sPAPR) platform. The goal is to enable QEMU to simulate
+> enhanced error handling (EEH) behavior for PCI devices using RTAS interfaces,
+> aligned with existing firmware (OPAL/RTAS) conventions on IBM Power systems.
 > 
-> The virtio spec necessitates that live virtqueues must not be altered.  Reset
-> the failed device so that the queues are not live before we attempt to boot any
-> fallback devices.
+> The proposed implementation supports:
 > 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>    - Backend error injection via VFIO for passthrough PCI devices
+>    - RTAS calls for injecting specific PCI errors (e.g., cache/TLB/bus errors)
+>    - Controlled access to error injection via open/close RTAS calls
+>    - Device Tree (DT) updates to advertise supported error injection tokens
+> 
+> This series tested on pseries host with kernel version v6.16.0-rc7
+> 
+> This series has been split into four self-contained patches for clarity:
+> 
+> Patch 1 introduces the VFIO error injection backend:
+>    - Adds 'spapr_phb_vfio_errinjct()' which injects EEH-like faults
+>    - Includes minimal enum definitions ('rtas_err_type', 'EEH_ERR_FUNC_...')
+>    - Introduces stub and headers to integrate with the PHB VFIO path
+> 
+> Patch 2 implements the 'ibm,errinjct' RTAS call handler:
+>    - Adds 'rtas_ibm_errinjct()' in spapr_pci.c
+>    - Handles parameter parsing, validation, and backend call dispatch
+>    - Registers the token in 'spapr_pci_rtas_init()'
+> 
+> Patch 3 adds support for session control:
+>    - Introduces 'ibm,open-errinjct' and 'ibm,close-errinjct' handlers
+>    - Tracks exclusive access using 'SpaprMachineState'
+>    - Provides useful RTAS return codes for access errors
+> 
+> Patch 4 updates the device tree:
+>    - Adds 'ibm,errinjct-tokens' under each PHB node
+>    - Lists supported tokens for guest firmware/userspace to query
+>    - Adds fallback blob support for token discovery
+> 
+> 
+> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/main.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+> Narayana Murty N (4):
+>    ppc/spapr: Add VFIO EEH error injection backend
+>    ppc/spapr: Add ibm,errinjct RTAS call handler
+>    ppc/spapr: Add support for 'ibm,open-errinjct' and
+>      'ibm,close-errinjct'
+>    ppc/spapr: Advertise RTAS error injection call support via FDT
+>      property
 > 
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 76bf743900..8e2c99bee1 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -277,7 +277,8 @@ static void ipl_boot_device(void)
->           break;
->       case CU_TYPE_VIRTIO:
->           if (virtio_setup() == 0) {
-> -            zipl_load();
-> +            zipl_load(); /* only return on error */
-> +            virtio_reset(virtio_get_device());
->           }
->           break;
->       default:
-
-Good idea! (Reminds me of 68c95ed1db070f7545e487e742715f01a545aab0 where we 
-had to do something similar for virtio-net already).
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
+>   include/hw/pci-host/spapr.h |   7 ++
+>   include/hw/ppc/spapr.h      |  56 ++++++++-
+>   hw/ppc/spapr.c              | 106 +++++++++++++++++
+>   hw/ppc/spapr_pci.c          | 220 ++++++++++++++++++++++++++++++++++++
+>   hw/ppc/spapr_pci_vfio.c     |  53 +++++++++
+>   5 files changed, 441 insertions(+), 1 deletion(-)
+> 
+Thanks for working on this, looks good to me.
 
