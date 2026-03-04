@@ -4,111 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9600AEB7ED7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A540EB7ED5
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 11:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxkax-0005cQ-U8; Wed, 04 Mar 2026 06:40:51 -0500
+	id 1vxkbp-0006Sj-El; Wed, 04 Mar 2026 06:41:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxkav-0005bv-Gb
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:40:49 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxkas-0006LC-Vi
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:40:49 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-65f980cea07so9888894a12.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 03:40:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772624445; x=1773229245; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EQvZ4gBS3W/9k90NG+g/VmG33dbO61dpSaaraS91Vn8=;
- b=xevhjJkli0spE0k7RaEA810D2ojSe08GHK6GiYIv0TfxvylDVX5YagComdwIwvVQwR
- MUcCzLKU5ybrDFpWTytCU/dRW1GNMzKgLOSyxOOb5JNV0QKO7QFvPliy4nWhiaoqJ1JB
- sX9dbx6X0vuN6PW6aR/VbtmWwiIKBzGF0opmNwardpWubKXrtKGwZ0p7lg/0P3utESjh
- 2cQAm5w9DkAoJJbDxUiT6NeQzmuqe+ESuDz1jJSz48Z69cGy8UTK/OugF6VKBbeJ643f
- qMbdsWLrYK1uyeV1Rk6VPvmSyQPNcqlWlS0eJfVrYKFT+J82De9YmUZg9RWrhwHagqxO
- diNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772624445; x=1773229245;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EQvZ4gBS3W/9k90NG+g/VmG33dbO61dpSaaraS91Vn8=;
- b=YJJ7xSXoZmdUjhtNFs66iCkXbjwB3OCi50PvorIqlaX4pXkoPFSfi+E/bhhKrN5Tht
- VRVlPZUI/0dyGvJLri8salL2nG87plEG9+UvYthuzQcaMDJGdOGgaqoF0SuzrAkMKtAM
- PbDteJcDjhvwTBLCwDHoKoqdEyH2u/dO91upNxIVODVx3lwpJHuCeJJ1u7PGFPjwk2Rz
- x0x5gjuK6QiEYaPgYUd/jcAmuC6fhX5nKsoxOpIGsoFo/wiu2ZzcJJ0ytvGH/+pJJcnA
- kEdGBO6QIHX99G73Fj0/C+9L16NCpTWuluGQO5bV8PFqhKNa1P352U7JZ5kN3xX4jdIo
- +76Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDEJGMe9Q+96BLNhODi89L9h/P+s5/IVMEqCz3hnDKTvcA3cuxRKUNWw/86/X1YKM2/0e85pcYTBRU@nongnu.org
-X-Gm-Message-State: AOJu0YwEQDunIQtZ2UWOpOD18fQiWAuTCWaoZ2RdTugG7iXwNS0OaiwP
- WfFCm++6/LJZX4FGSjd7YCXhyqghoLsTZHEQMS61F5Kq6fGqBOdJowvnMriAkxennj8=
-X-Gm-Gg: ATEYQzyBJ6L+xE6kkhcC4WrOXEwMMxrDbrFl7/Ef9GlZFbyJ5mxqyNQfkrpZVNxo9us
- CTd0lUI9zx3moBLNSZ2cRZYVqeUQr6qQiAWRML0J1xw8I5/oewyELcNulY64iSKuwmbt98nTqpj
- tjjVspCoHtiM84TJk6jFsmuYCfNdAuTm/pk/NwexACb6y04HacqMoPdmmIC5lV9lyjtaK8C1bnR
- y3l2MeGshw72GbDl9ymPShl7QQkgd9jUF8bVAMofetAVznApkIlMlz3Gauj8VoF9l0HwIhiIzD9
- yrE3ZNGyFSZx2z0gAxjj1qcb3CUpCbRKgXrX003mne9v1u2EFbZU3RojmwqH3ot4Q7wfPWCsRt+
- kvadiXlzm4hUZtGyJjqaaJf9dbF4sd/7PCpgXd3YdZf0iYqov3VfgnZMSxKN2auRykRbX1uZaez
- 7OPCCoQen0Akb4ix5vhR+4lh0=
-X-Received: by 2002:a17:907:a4e:b0:b8f:8ff5:439 with SMTP id
- a640c23a62f3a-b93f147bcb8mr114724866b.43.1772624443431; 
- Wed, 04 Mar 2026 03:40:43 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935ae666d6sm725272266b.37.2026.03.04.03.40.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 03:40:42 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0644E5F7F5;
- Wed, 04 Mar 2026 11:40:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei Zhang
- <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert Wollny
- <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan Singh
- <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger Pau
- =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
- <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K?=
- =?utf-8?Q?=C3=B6nig?=
- <christian.koenig@amd.com>,  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>,  Julia Zhang
- <julia.zhang@amd.com>,  Chen Jiqian <Jiqian.Chen@amd.com>,  Rob Clark
- <robdclark@gmail.com>,  Robert Beckett <bob.beckett@collabora.com>
-Subject: Re: [PATCH v22 06/18] ui/sdl2: Implement dpy dmabuf functions
-In-Reply-To: <feff43ef-1618-4a09-aba4-e4e9c2d07e2c@collabora.com> (Dmitry
- Osipenko's message of "Wed, 4 Mar 2026 13:33:34 +0300")
-References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
- <20260303151422.977399-7-dmitry.osipenko@collabora.com>
- <874imwq8rj.fsf@draig.linaro.org>
- <feff43ef-1618-4a09-aba4-e4e9c2d07e2c@collabora.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Wed, 04 Mar 2026 11:40:41 +0000
-Message-ID: <87y0k7q0ue.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxkbn-0006ST-6v
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:41:43 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxkbl-0006fk-GH
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 06:41:42 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4ACC7596D9A;
+ Wed, 04 Mar 2026 12:41:40 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id kMjSQu4YxhYS; Wed,  4 Mar 2026 12:41:38 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B37F2596D9D; Wed, 04 Mar 2026 12:41:37 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B2100596D9B;
+ Wed, 04 Mar 2026 12:41:37 +0100 (CET)
+Date: Wed, 4 Mar 2026 12:41:37 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH 1/7] stubs: Merge physmem.c within ram-block.c
+In-Reply-To: <fb933416-cef9-43a0-806d-16ea4957a2f6@linaro.org>
+Message-ID: <78304201-4515-3246-ff7f-c3ea0192b838@eik.bme.hu>
+References: <20260226220226.20164-1-philmd@linaro.org>
+ <20260226220226.20164-2-philmd@linaro.org>
+ <8a2872f3-dfbb-3fed-dd95-3cd474e3ca2b@eik.bme.hu>
+ <82dfe6e2-22c1-4df1-9e49-a2c7a2970082@rsg.ci.i.u-tokyo.ac.jp>
+ <ef6b34f6-7e72-4aea-9436-c2bda69c2c0e@linaro.org>
+ <1dfb1673-082e-2748-9887-bb7efd2df4f4@eik.bme.hu>
+ <fb933416-cef9-43a0-806d-16ea4957a2f6@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed; boundary="3866299591-482950783-1772624497=:5388"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,75 +73,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 3/4/26 11:49, Alex Benn=C3=A9e wrote:
->> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->>=20
->>> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
->>>
-<snip>
->>> @@ -120,6 +124,9 @@ void sdl2_window_create(struct sdl2_console *scon)
->>>          /* The SDL renderer is only used by sdl2-2D, when OpenGL is di=
-sabled */
->>>          scon->real_renderer =3D SDL_CreateRenderer(scon->real_window, =
--1, 0);
->>>      }
->>> +
->>> +    qemu_egl_display =3D eglGetCurrentDisplay();
->>> +
->>=20
->> This fails on MacOS for some reason:
->>=20
->>   o libsystem.a.p/ui_sdl2.c.o -c ../ui/sdl2.c
->>   ../ui/sdl2.c:128:5: error: use of undeclared identifier 'qemu_egl_disp=
-lay'
->>     128 |     qemu_egl_display =3D eglGetCurrentDisplay();
->>         |     ^
->>   ../ui/sdl2.c:128:24: error: call to undeclared function 'eglGetCurrent=
-Display'; ISO C99 and later do not support implicit function declarations [=
--Wimplicit-function-declaration]
->>     128 |     qemu_egl_display =3D eglGetCurrentDisplay();
->>         |                        ^
->>   2 errors generated.
->>=20
->> See: https://gitlab.com/stsquad/qemu/-/jobs/13340079105
->>=20
->> Not sure what the include differences are because --enable-sdl builds
->> fine on Linux.
->
-> Please try with this change and let me know if you could squash it or I
-> need to send a patch:
->
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index 3bb2676f847b..2603b0c2bdd8 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -125,7 +125,9 @@ void sdl2_window_create(struct sdl2_console *scon)
->          scon->real_renderer =3D SDL_CreateRenderer(scon->real_window, -1=
-, 0);
->      }
->
-> +#ifdef CONFIG_OPENGL
->      qemu_egl_display =3D eglGetCurrentDisplay();
-> +#endif
->
->      sdl_update_caption(scon);
->  }
+--3866299591-482950783-1772624497=:5388
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-heh, I had got to something similar but then ran into a link failure at
-the end:
+On Wed, 4 Mar 2026, Philippe Mathieu-Daudé wrote:
+> On 3/3/26 18:20, BALATON Zoltan wrote:
+>> On Tue, 3 Mar 2026, Philippe Mathieu-Daudé wrote:
+>>> On 2/3/26 07:21, Akihiko Odaki wrote:
+>>>> On 2026/02/27 7:22, BALATON Zoltan wrote:
+>>>>> On Thu, 26 Feb 2026, Philippe Mathieu-Daudé wrote:
+>>>>>> physmem.c defines 2 stubs which are related to ram-block:
+>>>>>> qemu_ram_block_from_host() and qemu_ram_get_fd().
+>>>>>> Move them with the other ram-block stubs.
+>>>>>> 
+>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>> ---
+>>>>>> stubs/physmem.c   | 13 -------------
+>>>>>> stubs/ram-block.c | 11 +++++++++++
+>>>>> 
+>>>>> Maybe should be the other way around moving what's in subs/ram- block.c 
+>>>>> to stubs/physmem.c considering the the functions these stub out are in 
+>>>>> system/physmem.c and there's no system/ram-block.c.
+>>> 
+>>> Fine, I'll drop this patch if you think it is not worthwhile.
+>> 
+>> I did not say that, only that the functions are in system/physmem.c so why 
+>> not put the stubs in stubs/physmem.c to match? Since there's no 
+>> system/ram-block.c I think it makes more sense to merge these into 
+>> stubs/physmem.c instead.
+>
+> Unfortunately I won't have time to address this change before
+> soft-freeze, do you mind posting the patch?
 
-  Undefined symbols for architecture arm64:
-    "_sdl2_gl_console_init", referenced from:
-        _sdl2_display_init in ui_sdl2.c.o
-  ld: symbol(s) not found for architecture arm64
-  clang: error: linker command failed with exit code 1 (use -v to see invoc=
-ation)
-  ninja: build stopped: subcommand failed.
-  make: *** [run-ninja] Error 1
+I don't think this is a big issue to put much effort in so as I said 
+dropping the patch and not changing it is probably the simplest.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> Thanks for your review and help here,
+>
+> Phil.
+>
+>> But just leaving it as it is is also OK.
+
+Regards,
+BALATON Zoltan
+--3866299591-482950783-1772624497=:5388--
 
