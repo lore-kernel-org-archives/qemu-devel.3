@@ -4,117 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13A2EB7EAC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 198EEEB7EB5
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxiFW-0008Tb-FT; Wed, 04 Mar 2026 04:10:34 -0500
+	id 1vxiHg-00012u-Sk; Wed, 04 Mar 2026 04:12:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxiFU-0008TA-Ab
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:10:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxiFS-00009B-GG
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:10:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772615428;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NwUzEWhxQuvYWsD9ciz/C4Vee2vYzEn0O8vLwsbI7ig=;
- b=O3gFzZ+3mds9BG+wY/IPO5Ae8qIGQ1nTaorp+j3PHLF97NTd8skjY3SA86EfGs9maj3yPT
- g3AXkx4SSCHxhSQrsdn1HeFzX3TRR8cxY3Mik/PN3cHoXqSQPo3VYfPR6APkc2vxx1kLo1
- U4aUgeXnkmb/ZCkNhM6cQ9y/HIVkgd0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-wYu1rRi9NaCTGwAYsckctw-1; Wed,
- 04 Mar 2026 04:10:24 -0500
-X-MC-Unique: wYu1rRi9NaCTGwAYsckctw-1
-X-Mimecast-MFC-AGG-ID: wYu1rRi9NaCTGwAYsckctw_1772615422
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A8AC19560B3; Wed,  4 Mar 2026 09:10:22 +0000 (UTC)
-Received: from [10.45.224.194] (unknown [10.45.224.194])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C482300019F; Wed,  4 Mar 2026 09:10:17 +0000 (UTC)
-Message-ID: <b88f3358-2c15-4430-8263-d4538df8e2be@redhat.com>
-Date: Wed, 4 Mar 2026 10:10:15 +0100
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vxiHa-00010o-EH
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:43 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vxiHX-0000Ie-Ap
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:42 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4836f363d0dso58338165e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:12:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1772615556; x=1773220356; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Aa7YS8YRAQ8yRhQF9Whg1Qcoxr3p3yRf12L+u0hXtWc=;
+ b=V8sOSHHoGkICQW31sdmwjyIlSkdMZpg6GaA/89QAEwu7jmvG70eO9o39U7tlMQIBws
+ 3ki00JeRkVo/IF1e1RfOs3bLHUn/5u4i0CfNewbA9vxRiA5EqOzDyezdSM2aBLv3FOsm
+ 4B5LyD+PNJlmVH47s0sl5wND8g/yxIRY2GiWc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772615556; x=1773220356;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Aa7YS8YRAQ8yRhQF9Whg1Qcoxr3p3yRf12L+u0hXtWc=;
+ b=XJAIHtGDzDcYymvNcDvor/RwL5nbwFKZ9QLxEv1DWsADxWRebUxOqDylWegTqC0bqY
+ 0rVCKPfKUsYm8IqPxZv3MpznNldijEcxfpNUvqumfJiBx4QGR7vGog2XzU9w/mPnJIvL
+ S4AbAnW2kfIouyrWQYrqpmhJg9/dnXDB5Nvmiy1oRl1q8Qy13T4B/oIutkC8xSpsVMCU
+ UbahtcXzVGBwN7SJ3y5bLnoWi8XO+pIyu3UgNig7S4kkPFd2i3o00X+11JBuquL7Q+NZ
+ XjqQZ+6DNOUmdqmzfbt5CDMka78CfTJRSXOm7rRnR5vFgpIV3sFsGw3yRVyeZMtFE8XO
+ W8kg==
+X-Gm-Message-State: AOJu0Yxjkqc/KYOv3dwMRFwBH9qX9RTRpXwD9SEiqbMQhaK50IK/GwoS
+ APdZzod2f8FTXB51EM6nPsoFCJnfEroKJhjXceAXlfN0YNvtirWtHbIhs1Z5sizWgYjCYjh8kKi
+ Xw1gYJ1k=
+X-Gm-Gg: ATEYQzwL/rqvD2LsPTdUhPc6N29iSzuFIIssV6pwLJ9a/U1zQCrAkcB+yimhW6Px0Qy
+ 855flS2D/EnzXncud49CUiG5hv9spjcN3rIgL8PBmUtPmXYeTnM98tXj2OLZjEivo62y+2jRFLR
+ QFo2ITcSTSi8FfyZ3CQM7jWZIn22IJtyjIGYnWNa8xumAsIztj3HzfG+74fXhPtiWF91py0j9Mi
+ 4sXne+EAgL58wz5PF8q305TyTU8ww1wlitimeGHz7f4zG3sZFH84qAH7CiQUugjEg5VPKO4Jeqz
+ ulZvTm/bqoHlS+6JBzuWvkJ3+exFMGvA3PqHYZwUZsAG0ZxzTemvW0dEAx8kVDq+3BARIQubpON
+ D858j17OPdRZDPJmflgSenb8s8mH0wyTLbjgLLUeykZGkFzSi+r69t/RIm1JaTloHebePgqXyqB
+ CyRYZ+xNk/MHCMsNQESaZK1R4HHMQg095wDyvR5urHN0NbY/hTPgRBP6/TlbzstxD019BLJ/tg7
+ feVhGf3oxq0ibpEnKfQS2I=
+X-Received: by 2002:a05:600c:4e0f:b0:483:8f0f:36fe with SMTP id
+ 5b1f17b1804b1-48519837c8cmr20689175e9.1.1772615555873; 
+ Wed, 04 Mar 2026 01:12:35 -0800 (PST)
+Received: from alex-laptop.lan
+ (p200300cf57228c00bac66d1b6d99e025.dip0.t-ipconnect.de.
+ [2003:cf:5722:8c00:bac6:6d1b:6d99:e025])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439c4489279sm9674234f8f.20.2026.03.04.01.12.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 01:12:35 -0800 (PST)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
+ Peter Xu <peterx@redhat.com>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Keith Busch <kbusch@kernel.org>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ qemu-block@nongnu.org,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v2 3/4] migration: add
+ VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
+Date: Wed,  4 Mar 2026 10:12:28 +0100
+Message-ID: <20260304091229.80725-4-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260304091229.80725-1-alexander@mihalicyn.com>
+References: <20260304091229.80725-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/15] pc-bios/s390-ccw: Introduce PCI device
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
- <20260304025917.2157032-11-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260304025917.2157032-11-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,146 +107,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Define selected s390x PCI instructions.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
-...
-> diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
-> new file mode 100644
-> index 0000000000..36e86fcc71
-> --- /dev/null
-> +++ b/pc-bios/s390-ccw/pci.c
-> @@ -0,0 +1,118 @@
-> +/*
-> + * s390x PCI functionality
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "clp.h"
-> +#include "pci.h"
-> +#include "bswap.h"
-> +#include <stdio.h>
-> +#include <stdbool.h>
-> +
-> +/* PCI load */
-> +static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset,
-> +                        uint8_t *status)
-> +{
-> +    union register_pair req_off = {.even = req, .odd = offset};
-> +    int cc = -1;
-> +    uint64_t __data;
-> +
-> +    asm volatile (
-> +        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "+d" (cc), [data] "=d" (__data),
-> +          [req_off] "+d" (req_off.pair) :: "cc");
-> +    *status = req_off.even >> 24 & 0xff;
-> +    *data = __data;
-> +    return cc;
-> +}
-> +
-> +/* PCI store */
-> +static inline int pcistg(uint64_t data, uint64_t req, uint64_t offset,
-> +                         uint8_t *status)
-> +{
-> +    union register_pair req_off = {.even = req, .odd = offset};
-> +    int cc = -1;
-> +
-> +    asm volatile (
-> +        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
-> +        "     ipm     %[cc]\n"
-> +        "     srl     %[cc],28\n"
-> +        : [cc] "+d" (cc), [req_off] "+d" (req_off.pair)
-> +        : [data] "d" (data)
-> +        : "cc");
-> +    *status = req_off.even >> 24 & 0xff;
-> +    return cc;
-> +}
-> +
-> +int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
-> +              uint8_t len)
-> +{
-> +
-> +    uint64_t req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-> +    uint8_t status;
-> +    int rc;
-> +
-> +    /* len must be non-zero power of 2 with a maximum of 8 bytes per write */
-> +    switch (len) {
-> +    case 1:
-> +    case 2:
-> +    case 4:
-> +    case 8:
-> +        rc = pcistg(data, req, offset, &status);
-> +        break;
-> +    default:
-> +        return -1;
-> +    }
-> +
-> +    /* Error condition detected */
-> +    if (rc != 0) {
-> +        printf("PCI store failed with status condition %d, return code %d\n",
-> +               status, rc);
-> +        return -1;
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Here you already return -1 if rc != 0 ...
+Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC, which
+helps to save/restore a dynamic array of pointers to
+structures.
 
-> +    }
-> +
-> +    return rc ? -1 : 0;
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+v2:
+- added VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC
+---
+ include/migration/vmstate.h | 33 ++++++++++++++
+ migration/vmstate-types.c   | 88 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 121 insertions(+)
 
-... so the check here is redundant. Please simply always return 0 here instead.
-
-> +}
-> +
-> +int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
-> +             uint8_t len)
-> +{
-> +    uint64_t req, data;
-> +    uint8_t status;
-> +    int rc;
-> +
-> +    req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-> +    rc = pcilg(&data, req, offset, &status);
-> +
-> +    /* Error condition detected */
-> +    if (rc != 0) {
-> +        printf("PCI load failed with status condition %d, return code %d\n",
-> +               status, rc);
-> +        return -1;
-> +    }
-> +
-> +    switch (len) {
-> +    case 1:
-> +        *(uint8_t *)buf = data;
-> +        break;
-> +    case 2:
-> +        *(uint16_t *)buf = data;
-> +        break;
-> +    case 4:
-> +        *(uint32_t *)buf = data;
-> +        break;
-> +    case 8:
-> +        *(uint64_t *)buf = data;
-> +        break;
-> +    default:
-> +        return -1;
-> +    }
-> +
-> +    return rc ? -1 : 0;
-
-dito, you checked for rc != 0 already earlier in this function.
-
-  Thomas
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 89f9f49d20a..0bbe3317740 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
+ extern const VMStateInfo vmstate_info_qtailq;
+ extern const VMStateInfo vmstate_info_gtree;
+ extern const VMStateInfo vmstate_info_qlist;
++extern const VMStateInfo vmstate_info_ptrs_array_entry;
+ 
+ #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
+ /*
+@@ -537,6 +538,38 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
+ }
+ 
++/*
++ * For migrating a dynamically allocated uint32-indexed array
++ * of pointers to structures (with NULL entries and with auto memory allocation).
++ *
++ * _type: type of structure pointed to
++ * _vmsd: VMSD for structure
++ * start: size of structure pointed to (for auto memory allocation)
++ */
++#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
++    .name       = (stringify(_field)),                                \
++    .version_id = (_version),                                         \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
++    .info       = &vmstate_info_ptrs_array_entry,                     \
++    .vmsd       = &(_vmsd),                                           \
++    .start      = sizeof(_type),                                      \
++    .size       = sizeof(_type *),                                    \
++    .flags      = VMS_VARRAY_UINT8|VMS_POINTER,                      \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
++}
++
++#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
++    .name       = (stringify(_field)),                                \
++    .version_id = (_version),                                         \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
++    .info       = &vmstate_info_ptrs_array_entry,                     \
++    .vmsd       = &(_vmsd),                                           \
++    .start      = sizeof(_type),                                      \
++    .size       = sizeof(_type *),                                    \
++    .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                      \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
++}
++
+ #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
+     .name       = (stringify(_field)),                                    \
+     .version_id = (_version),                                             \
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index 89cb2114721..3335377cd07 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -942,3 +942,91 @@ const VMStateInfo vmstate_info_qlist = {
+     .get  = get_qlist,
+     .put  = put_qlist,
+ };
++
++static int put_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
++                                const VMStateField *field, JSONWriter *vmdesc)
++{
++    const VMStateDescription *vmsd = field->vmsd;
++    int ret;
++    Error *local_err = NULL;
++    void *pv;
++
++    /*
++     * (ppv) is an address of an i-th element of a dynamic array.
++     *
++     * (ppv) can not be NULL unless we have some regression/bug in
++     * vmstate_save_state_v(), because it is result of pointer arithemic like:
++     * first_elem + size * i.
++     */
++    if (ppv == NULL) {
++        error_report("vmstate: put_ptrs_array_entry must be called with ppv != NULL");
++        return -EINVAL;
++    }
++
++    /* get a pointer to a structure */
++    pv = *(void **)ppv;
++
++    if (pv == NULL) {
++        /* write a mark telling that there was a NULL pointer */
++        qemu_put_byte(f, false);
++        return 0;
++    }
++
++    /* if pointer is not NULL, dump the structure contents with help of vmsd */
++    qemu_put_byte(f, true);
++    ret = vmstate_save_state(f, vmsd, pv, vmdesc, &local_err);
++    if (ret) {
++        error_report_err(local_err);
++        return ret;
++    }
++
++    return 0;
++}
++
++static int get_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
++                                const VMStateField *field)
++{
++    int ret = 0;
++    Error *local_err = NULL;
++    const VMStateDescription *vmsd = field->vmsd;
++    /* size of structure pointed to by elements of array */
++    size_t size = field->start;
++
++    if (ppv == NULL) {
++        error_report("vmstate: get_ptrs_array_entry must be called with ppv != NULL");
++        return -EINVAL;
++    }
++
++    /*
++     * We start from a clean array, all elements must be NULL, unless
++     * something we haven't prepared for has changed in vmstate_save_state_v().
++     * Let's check for this just in case.
++     */
++    if (*(void **)ppv != NULL) {
++        error_report("vmstate: get_ptrs_array_entry must be called with *ppv == NULL");
++        return -EINVAL;
++    }
++
++    if (qemu_get_byte(f)) {
++        void *pv;
++
++        /* allocate memory for structure */
++        pv = g_malloc0(size);
++        ret = vmstate_load_state(f, vmsd, pv, vmsd->version_id, &local_err);
++        if (ret) {
++            error_report_err(local_err);
++            g_free(pv);
++            return ret;
++        }
++
++        *(void **)ppv = pv;
++    }
++
++    return ret;
++}
++
++const VMStateInfo vmstate_info_ptrs_array_entry = {
++    .name = "ptrs_array_entry",
++    .get  = get_ptrs_array_entry,
++    .put  = put_ptrs_array_entry,
++};
+-- 
+2.47.3
 
 
