@@ -4,93 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D27EB7EAC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F9EEB7EB2
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 09:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxiHk-00014G-Ic; Wed, 04 Mar 2026 04:12:52 -0500
+	id 1vxiN8-0003aD-A9; Wed, 04 Mar 2026 04:18:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxiHa-00010l-1j
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:43 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1vxiHX-0000IJ-B3
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:12:41 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-483bd7354efso88409655e9.2
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 01:12:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1772615554; x=1773220354; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZTBRdCe4EKhZ7QFgzj0snqvNaQKXZdaqV+19ND1Hpu0=;
- b=JEMIQTkxcNFbViMZZuM6etBjv2XFFbd2KKEQqsy3PM81A7ikHo2d86EIsi9bL3qgP6
- SQzCaik6czem7wG+qgubtpBqh/w5DIbhyb2fw+iBvcfe8WyYV4/31dqWJmKhFPHfUb42
- Ybijd6jWICI4ee1Q5ulNq/s26Kv2Ua63q/dT0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772615554; x=1773220354;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZTBRdCe4EKhZ7QFgzj0snqvNaQKXZdaqV+19ND1Hpu0=;
- b=jgpUFWGlW6EUHF0jb71fw/G80bkBCrn8VVCfALsjmV6My0Tfxel/Ts9wLKlYRr6w0N
- WDgyFEciRkxwNxeERF97n+stcCvIFMn9PJhqNnnbFsD0DvfI8tPAeMlp7iDC6I2hWYnJ
- rX/GuVZ19c2I4ErzfB3841czWjvH79ZZbObz8QGKFT0le7LBrbtZkjxC5RM2EbNSC0Oe
- bmIBs1oD9azyKUXpiqDkmE88c7e+u1sI09tHloSMulxEAw+e4pwtZ0mtJiiPtq7ccSva
- I1Uizw9XvzblAJhyxHHdMYRGm7m0fC8LD9mf36s+3UKQr1aIicbLovtyctyxIYFE/Tcn
- uchw==
-X-Gm-Message-State: AOJu0YwARjQTnqOLSTNaiVJlAVE8qNK9pwNTK9jGBwVzbvfewBfI5KOK
- Ao9pB4cxDdZTqkBP+GNhAfRFVY2FShLIRI8d6UeF7uFMGJ4ZTMH9GXEPGVUYMWf7STZvam8+n3H
- HWO59xfU=
-X-Gm-Gg: ATEYQzwZd0wbTpUYHzrEmZQoN/xPn5JOa+ZrQjK5BuzRNAnflS9SlxtiPLy6Y85Ppgf
- lFLs9i3xY6/QCWlm+ARe3zku8JQ5xgRJEwxxpY9AgAM/E1QVwYAaWs583MSPqH2Ce0w5Cxybov6
- EDf1UtK3vnnQbTcXmzHd+/5TISncgV5Xa7iZw6P2/kitaCAwQl0O5edivX1/CFkv/yjpd60dUYs
- o0bh9IpTDS+EbLif/Bj42wEHnGKJw64ZhfJ0hi924QMMuPKScLQKG5/uDPV+fryHFXzkoI2oaEa
- dgYQKE6aWENusEpKcmv/zDlOY0JBRz+Qsc9Tpr9bxE8jFRioeB7bpL5F12sqonlv5X/UlEkP/YT
- biGRfdsBj+CJLfW8B7eR/d9Xpbtp/6DfWgaAOmN8cOiYtSVFbBX7PWUYBQ7NXWh9JH6hoQQn3vN
- oniP98gUtkkOEizz4Ai1qIwko+47Ntv5/nDAikqD/2bKSiR80eXAxwvRKZLk696vHgVXMCiXfqA
- hqGhDW5ELHLiysuuZp+n4k=
-X-Received: by 2002:a05:600c:a03:b0:47d:264e:b35a with SMTP id
- 5b1f17b1804b1-48519854e97mr23177625e9.13.1772615553822; 
- Wed, 04 Mar 2026 01:12:33 -0800 (PST)
-Received: from alex-laptop.lan
- (p200300cf57228c00bac66d1b6d99e025.dip0.t-ipconnect.de.
- [2003:cf:5722:8c00:bac6:6d1b:6d99:e025])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439c4489279sm9674234f8f.20.2026.03.04.01.12.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 01:12:32 -0800 (PST)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-To: qemu-devel@nongnu.org
-Cc: Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Peter Xu <peterx@redhat.com>,
- Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Keith Busch <kbusch@kernel.org>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- qemu-block@nongnu.org,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v2 1/4] hw/nvme: add migration blockers for non-supported cases
-Date: Wed,  4 Mar 2026 10:12:26 +0100
-Message-ID: <20260304091229.80725-2-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260304091229.80725-1-alexander@mihalicyn.com>
-References: <20260304091229.80725-1-alexander@mihalicyn.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxiN0-0003ZD-MB
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:18:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxiMw-0001BV-I8
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 04:18:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772615893;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=O4Zx8r8kYlZ8Qc4dmGN5rNFU4ECFb7KCafeXGXLGnOY=;
+ b=YwAW4y2+m2bYnhc5N4QX7CUodHladZl8dJz0EqY6i/tE0vWj9h6jNgqAl7z/G/NRICfso1
+ uJ7zhL76QX0LqT0G/37XYVll0yTzk6CbdrYkoTRpxt/O87n4kEeKAYA93s++Lpx113blT2
+ Yiyv9qyicjh85aa/MHE4smDx1Lt3keQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-FqK4C136O224ryvMcr7AlA-1; Wed,
+ 04 Mar 2026 04:18:12 -0500
+X-MC-Unique: FqK4C136O224ryvMcr7AlA-1
+X-Mimecast-MFC-AGG-ID: FqK4C136O224ryvMcr7AlA_1772615890
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D171C19560A1; Wed,  4 Mar 2026 09:18:10 +0000 (UTC)
+Received: from [10.45.224.194] (unknown [10.45.224.194])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 859BB18001FE; Wed,  4 Mar 2026 09:18:07 +0000 (UTC)
+Message-ID: <5f8d78a4-175d-49fc-b397-b699c49cf0a6@redhat.com>
+Date: Wed, 4 Mar 2026 10:18:05 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 11/15] pc-bios/s390-ccw: Introduce virtio-pci functions
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
+ <20260304025917.2157032-12-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260304025917.2157032-12-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,116 +130,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Define common functionality for interacting with virtio-pci devices.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+...
+> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+> new file mode 100644
+> index 0000000000..2cfb84bf66
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/virtio-pci.c
+> @@ -0,0 +1,167 @@
+> +/*
+> + * Functionality for virtio-pci
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "clp.h"
+> +#include "pci.h"
+> +#include "helper.h"
+> +#include "virtio.h"
+> +#include "bswap.h"
+> +#include "virtio-pci.h"
+> +#include "s390-time.h"
+> +#include <stdio.h>
+> +
+> +/* Variable offsets used for reads/writes to modern memory regions */
+> +VirtioPciCap c_cap; /* Common capabilities  */
+> +VirtioPciCap d_cap; /* Device capabilities  */
+> +VirtioPciCap n_cap; /* Notify capabilities  */
+> +uint32_t notify_mult;
+> +uint16_t q_notify_offset;
+> +
+> +static int virtio_pci_set_status(uint8_t status)
+> +{
+> +    int rc = vpci_write_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.bar, status);
+> +    if (rc) {
+> +        puts("Failed to write virtio-pci status");
+> +        return -EIO;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static int virtio_pci_get_status(uint8_t *status)
+> +{
+> +    int rc = vpci_read_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.bar, status);
+> +    if (rc) {
+> +        puts("Failed to read virtio-pci status");
+> +        return -EIO;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +/* virtio spec v1.3 section 4.1.2.1 */
+> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+> +{
+> +    switch (device_id) {
+> +    case 0x1402:
 
-Let's block migration for cases we don't support:
-- SR-IOV
-- CMB
-- PMR
-- SPDM
+I think it's 0x1042, not 0x1402 ?
 
-No functional changes here, because NVMe migration is
-not supported at all as of this commit.
+> +    case 0x1001:
+> +        vdev->dev_type = VIRTIO_ID_BLOCK;
+> +        break;
+> +    default:
+> +        vdev->dev_type = 0;
+> +    }
+> +}
 
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
- hw/nvme/ctrl.c | 35 +++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h |  3 +++
- 2 files changed, 38 insertions(+)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index cc4593cd427..4694bdb4d02 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -207,6 +207,7 @@
- #include "hw/pci/msix.h"
- #include "hw/pci/pcie_sriov.h"
- #include "system/spdm-socket.h"
-+#include "migration/blocker.h"
- #include "migration/vmstate.h"
- 
- #include "nvme.h"
-@@ -8962,6 +8963,14 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     pcie_endpoint_cap_init(pci_dev, 0x80);
-     pcie_cap_flr_init(pci_dev);
-     if (n->params.sriov_max_vfs) {
-+        if (n->migration_blocker == NULL) {
-+            error_setg(&n->migration_blocker,
-+                       "Migration is disabled when SR-IOV capability is set");
-+            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+                return false;
-+            }
-+        }
-+
-         pcie_ari_init(pci_dev, 0x100);
-     }
- 
-@@ -9025,6 +9034,14 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     if (pci_dev->spdm_port) {
-         uint16_t doe_offset = PCI_CONFIG_SPACE_SIZE;
- 
-+        if (n->migration_blocker == NULL) {
-+            error_setg(&n->migration_blocker,
-+                       "Migration is disabled when SPDM responder is used");
-+            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+                return false;
-+            }
-+        }
-+
-         switch  (pci_dev->spdm_trans) {
-         case SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE:
-             if (n->params.sriov_max_vfs) {
-@@ -9053,10 +9070,26 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     }
- 
-     if (n->params.cmb_size_mb) {
-+        if (n->migration_blocker == NULL) {
-+            error_setg(&n->migration_blocker,
-+                       "Migration is disabled when CMB feature is used");
-+            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+                return false;
-+            }
-+        }
-+
-         nvme_init_cmb(n, pci_dev);
-     }
- 
-     if (n->pmr.dev) {
-+        if (n->migration_blocker == NULL) {
-+            error_setg(&n->migration_blocker,
-+                       "Migration is disabled when PMR feature is used");
-+            if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+                return false;
-+            }
-+        }
-+
-         if (!nvme_init_pmr(n, pci_dev, errp)) {
-             return false;
-         }
-@@ -9365,6 +9398,8 @@ static void nvme_exit(PCIDevice *pci_dev)
-     }
- 
-     memory_region_del_subregion(&n->bar0, &n->iomem);
-+
-+    migrate_del_blocker(&n->migration_blocker);
- }
- 
- static const Property nvme_props[] = {
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index d66f7dc82d5..457b6637249 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -666,6 +666,9 @@ typedef struct NvmeCtrl {
- 
-     /* Socket mapping to SPDM over NVMe Security In/Out commands */
-     int spdm_socket;
-+
-+    /* Migration-related stuff */
-+    Error *migration_blocker;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
--- 
-2.47.3
+  Thomas
 
 
