@@ -4,133 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B126EF8FE7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E2DEF8FEB
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmwP-0004YI-1E; Wed, 04 Mar 2026 09:11:09 -0500
+	id 1vxmvm-0002vQ-JB; Wed, 04 Mar 2026 09:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxmwN-0004MH-Ew
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:11:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxmwL-0004aq-5Y
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 09:11:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772633463;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NFYA4ajU3TENwATn1xfHwwf1hZNKIqDQQQ0OVNE47E4=;
- b=RwyRAV07AdGa5WWJRUgregjcEKfHoXUlaHYoQs9RWJW49W4+c4x1dZ+VYER4OZEvkIVZSs
- hnDIF8PHpQGTSKGaaXXiEr9Mjrn4n6utcdkRuQJjvLvM/hBc49J6T+eHpwCyC2z2nY06X9
- preROYsi2ZqHtDmi7mqHBKXqZS028zY=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-tZawWTeEOHyBXfUnc0fqRg-1; Wed, 04 Mar 2026 09:11:02 -0500
-X-MC-Unique: tZawWTeEOHyBXfUnc0fqRg-1
-X-Mimecast-MFC-AGG-ID: tZawWTeEOHyBXfUnc0fqRg_1772633461
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-794b74a8b2bso95757197b3.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 06:11:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772633461; cv=none;
- d=google.com; s=arc-20240605;
- b=BFY80a5tzibCvzN35x5fWeV9U4fFYmIKkYwiwulNScXDuGEQs5Faid8vKmPi2sPGv3
- n2lVAZN+Vw3sE7uIRQ6rRKZcs8/qADQncPMrQurUwretutBwynHbAwrJv3+n0x1O45Up
- IiU5+JoHmahVYcuH5yIwvgHB4lgm3gRi94MK9rZkyYy2HM8oLzuxq3iSgsEM/FJPTifz
- +5TDhwqlLrxOdNLPIbs51EAg2v/FTyz2x7ibBnEUOSVma0EZt9PQPZ9tTiyW/+7DBbdi
- GNZSp456K9lUGJ+Mih6sCgWciwCY6WdANFjFKV3y4se4dqK+2QvpNzFKuIcfMLIEn8Ml
- SUqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NFYA4ajU3TENwATn1xfHwwf1hZNKIqDQQQ0OVNE47E4=;
- fh=4ut0VWvdeFwSfmTm/Ki/2jEZaA5lSfo5qoMDWVqAkBs=;
- b=Fk38LksEJL/GSv3/W7676YxXkBwK3nJItulbSDhBAHZ3rIXpYlQ3Ksa6gW+EOGIPdI
- VWxFAfCk9D+4xuHl2Ih9SyY2mKlwN1V78qTrc6qdICym5GJaD9uZDeem0FkcArCd2uW/
- IeRC5yz/uPVWb8/1EuvypLuf2c/8GoHwnLIyDnu4ag7RDMnQX/+x+4uaT1PUAgktwMfU
- 7lCbwbxiNil4iEy7hT1D3kE9eE9vN+AZK1wuV7yjggQygR/NhKrAxaw+nIHe2QufDF8S
- Yy5m7aX3kE6MBLomfOZdHLcHi5NgvigMcmYpgTUWH473D3ITk0roKinwZVgjMBKLb4Ed
- leyg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1vxl4W-00041x-7m
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1vxl4S-0005yd-2D
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:23 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48373a4bca3so41767535e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772633461; x=1773238261; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=lowrisc.org; s=google; t=1772626278; x=1773231078; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NFYA4ajU3TENwATn1xfHwwf1hZNKIqDQQQ0OVNE47E4=;
- b=NurL/52yxiTMTXq2DCTHF0Qn05j6SydeVAbTUbos0NRjOIye1h3SiumqsG0DC3w1+y
- tbf16xnQsjk6mjHYpM/+7+vJdU1Gha6MStYeQQ4eVuYOgRXeodOvgt3wNOJ3PJQMBUGT
- LORaO4sL8VRYP9PBFmqpzB03EmIZ3HUjIPtC9Vr4OxLOdzfs8wCBpsoFctWBRTtfnUBA
- 8rx91GK/eaYxreLFNc8L/NgFW8N5DhWg8XJ+FCZbhul0/jK/cRWmKAuE8s7XvsZIUcQC
- pkZgDykRa5qDduRAAav23JWsF3brK6mp3S1gW75OlN0JVnOlEjpBWkWYl6aWwnrI/ROf
- U9Cg==
+ bh=gXllnGhQidqZrDVGqKSjjFZUjVGYWI2DyLiloMauAo0=;
+ b=PuUyZG+3OMsyxRfX5OyzTfol2NgglxNG3wmYBQ21h2nL3DhfiReP5QYjkuCjB9qq+S
+ gUJLyb/d2hVuRz8EMKdZWplXgFoNUH3dDviwNrKI09VQy042ckzzhlEtUGxCyBplyvvg
+ wisMuoe+VSrnxMC6eilgq7oishLuBa1x09RCJJwFX9LQn6iKT0Aes+0cOxeCd9daz0RW
+ hRGwGIp31ZWfks6D+UJd9q+yepSyAWh+AqWaJ85VIGaMAlefVAvClZfwfI7IanmxtO4X
+ XqmihjCqoyWPyA8u0i/6sRj/uwqA3YrZfbYHFDR2mS8JKveGWomQ5dmuHeCjaUojpvJD
+ MnZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772633461; x=1773238261;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1772626278; x=1773231078;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NFYA4ajU3TENwATn1xfHwwf1hZNKIqDQQQ0OVNE47E4=;
- b=OmHNM7cvpAYzNGEGCB0cYzL/zA90TSSTJhvUkg3UQ+YsrzyvrJrAie/MUDV9v10Alz
- P8Gf3r4cRvRVPLXo7g1dJ7dO3u7+8HRoqiFDydaCVprP7jWB94ouPaaEz0/h3Wg+tukg
- jIVigmKM7gBAkIMa4Cl4wMEnIA952c0Z3YmHHMhSdk07OQS2Szvd1XwJy62wwhOvF0X3
- FhPRnbr20/KSt4hYwg1i+PMQs6kwK0ou8p0SXXxxVSUIkeHtfDR644JkZz6AsBG06hVQ
- zsyhXLQGmupytAQggnuzYcUlijEZVQLgMuxfcs/5OETWniLxZL+o9n5hTGpvDIm2ukq6
- bCDA==
-X-Gm-Message-State: AOJu0YwknXZHgrbipD8APO6gZJ3L9MZUgSODvcnAcHok6/+vY0ud8Jwb
- 3K3KY64UhYG0nI2CdzQ+KK1NFlYIkRLL+4HM6qaAYsK8OmGtQeb1UCns1eMJNtU4Y0IdM5jcAyx
- o9gTeIsNU2AvhOqBrbLO52y8323rfhrOXnvX4WaBMMr5vRaxQiDkakW+XFi4Q8+V2SxthcaqWa1
- 1yeWTvNwp4jyD90CX++vvLblywtxGxjq8=
-X-Gm-Gg: ATEYQzy+MsuTfXh0g+bxmbGDrjXVU/QphkI1BjUmoKHRqBMEgCA/cdU1YZHcm/zdJIG
- pH5C6ueGW/VxDdPeoVOzFzM/mjMoV9tz9M001361ZhWQUdGCLoTk6hy9eGxG6hZg+qf/yuUv7CL
- Er4JVdOZRzb4IVJhCeWAVgQ06XTIs4iIzx8ow1NegUGhmU433Kp2H4ydweN8ogoW7u1VK9FR7mX
- g==
-X-Received: by 2002:a05:690e:12ca:b0:64c:99d7:8d14 with SMTP id
- 956f58d0204a3-64cf9b3173emr1938280d50.13.1772633461479; 
- Wed, 04 Mar 2026 06:11:01 -0800 (PST)
-X-Received: by 2002:a05:690e:12ca:b0:64c:99d7:8d14 with SMTP id
- 956f58d0204a3-64cf9b3173emr1938249d50.13.1772633461071; Wed, 04 Mar 2026
- 06:11:01 -0800 (PST)
+ bh=gXllnGhQidqZrDVGqKSjjFZUjVGYWI2DyLiloMauAo0=;
+ b=SBO2uEqdbKesFMOByncXCK633zTs2hWg4za0mdR7n8R4GhqSAIalbH3CHt74noTxcl
+ MFHmpHzyyO3KzOmg/SDc09DJbFZFouav8dkhHWugADhcsNbGPXBTIZcGP7SS6i2FGjrG
+ g7badZvydzUn2cgqyMp1zrTKhz8+ipgwHC7OyCDLLjkmQJXNXzY2k5j+qPfZIvsTWHmy
+ 4oO1I/oDV1mZzqxTfWpt+/HdTIw3YTpRuDOFg3EQn/mr3aQarBSTL9bOEAy6glzR8XhP
+ RI39uf+piDhtbUdIe5YqBB83K2pHZC/SIJxNCAmkYdaLDEmDJ8hSsMuKBnr1hFKBZk8V
+ Rotw==
+X-Gm-Message-State: AOJu0Yw9h+5Diprrrns3HXg9pWDqvOR3WtBWDpZOLhWMrEMX+lmtQ/ZP
+ tY+qNQR4VZChHcakx+HeIa/jz/W0x1amKnhEThq4pITD0+jDJZlXs16mDx6hjFwGFbs=
+X-Gm-Gg: ATEYQzyuVMLbtFZ8BPghGtR54Om5KPBb8JoTBO7qw5meQqELq1oO56b9nkL8uOV76Vp
+ JWj9n6jIBIB9ncdeMRslbKjioX+XD68fc+NN3XzRPi7gPA+lFJQx4l97+lWpH10+xu/1PFiMTnv
+ ywF1Q3J6o4vPg43q3tEN18Y5wv5vz7aMoQwWnkPqpgYQ54+LwKA1kqO+Ar59ql8EPh0ZRiZLLgD
+ pUqDCzLNu8YUKTzTiLXww5a6/xTZzlx5dtEzKwxRsbKRPcEOHudrAiNCwlbrmJQkxrJMpRHBI4g
+ xFYdHzkixag0YHIJneR0/wCWrfrQ8QpIsTBQOzPESX0aBcOneLHettquQwoM0eeRRXNzfPnF4Al
+ zX2Fo1mci+4mObFFwFF/3jhGGfgingCfYMeceNVif48LbOKQSp0gNu8/Hozb6Al6qvtEEyscGwY
+ X/fXhJbUmq3VBpHGp3GcR4fmvIaPtfbYzQ4bJVVrRAI7QzUJZ9gZHSzwYU8JOpejZ3keZybV5Af
+ NvBjSifrUJSRD5FMCn4xC43A2J3POc=
+X-Received: by 2002:a05:600c:8b4c:b0:480:1a9a:e571 with SMTP id
+ 5b1f17b1804b1-4851987fdbamr27379155e9.22.1772626277543; 
+ Wed, 04 Mar 2026 04:11:17 -0800 (PST)
+Received: from jw-ThinkPad-T14-Gen-3.home (128.70.159.143.dyn.plus.net.
+ [143.159.70.128]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b0549600sm28217570f8f.35.2026.03.04.04.11.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 04:11:17 -0800 (PST)
+From: James Wainwright <james.wainwright@lowrisc.org>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
+ James Wainwright <james.wainwright@lowrisc.org>
+Subject: [PATCH 1/3] util: export CRC32[C] lookup tables
+Date: Wed,  4 Mar 2026 12:11:11 +0000
+Message-ID: <20260304121113.117299-2-james.wainwright@lowrisc.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260304121113.117299-1-james.wainwright@lowrisc.org>
+References: <20260304121113.117299-1-james.wainwright@lowrisc.org>
 MIME-Version: 1.0
-References: <20260219130334.787858-1-aesteve@redhat.com>
- <20260219130334.787858-8-aesteve@redhat.com>
- <aagv94qy56VjyNba@sgarzare-redhat>
-In-Reply-To: <aagv94qy56VjyNba@sgarzare-redhat>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Wed, 4 Mar 2026 15:10:50 +0100
-X-Gm-Features: AaiRm51Z9ffkM-7Bv8XdG4R-ZZpOqlBu64qB-mcQJdK1fuGhRseDeOwwIN3FQGc
-Message-ID: <CADSE00KjOmtNhAhAnFODtBLAPEAx5aS4q=PRMw_KEeW7ovV68g@mail.gmail.com>
-Subject: Re: [PATCH v13 7/7] vhost-user-device: Add shared memory BAR
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, mst@redhat.com,
- dbassey@redhat.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- stefanha@redhat.com, manos.pitsidianakis@linaro.org, jasowang@redhat.com, 
- Laurent Vivier <lvivier@redhat.com>, slp@redhat.com, hi@alyssa.is,
- stevensd@chromium.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=james.wainwright@lowrisc.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 04 Mar 2026 09:09:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -145,256 +102,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 4, 2026 at 2:26=E2=80=AFPM Stefano Garzarella <sgarzare@redhat.=
-com> wrote:
->
-> On Thu, Feb 19, 2026 at 02:03:34PM +0100, Albert Esteve wrote:
-> >Add shared memory BAR support to vhost-user-device-pci
-> >to enable direct file mapping for VIRTIO Shared
-> >Memory Regions.
-> >
-> >The implementation creates a consolidated shared
-> >memory BAR that contains all VIRTIO Shared
-> >Memory Regions as subregions. Each region is
-> >configured with its proper shmid, size, and
-> >offset within the BAR. The number and size of
-> >regions are retrieved via VHOST_USER_GET_SHMEM_CONFIG
-> >message sent by vhost-user-base during realization
-> >after virtio_init().
-> >
-> >Specifiically, it uses BAR 3 to avoid conflicts, as
->
-> nit: s/Specifiically/Specifically
->
-> Discussed offline, this should be BAR 4 IIUC.
->
-> >it is currently unused.
-> >
-> >The shared memory BAR is only created when the
-> >backend supports VHOST_USER_PROTOCOL_F_SHMEM and
-> >has configured shared memory regions. This maintains
-> >backward compatibility with backends that do not
-> >support shared memory functionality.
-> >
-> >Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> >Signed-off-by: Albert Esteve <aesteve@redhat.com>
-> >---
-> > hw/virtio/vhost-user-base.c            | 46 ++++++++++++++++++++++++--
-> > hw/virtio/vhost-user-test-device-pci.c | 38 +++++++++++++++++++--
-> > 2 files changed, 79 insertions(+), 5 deletions(-)
-> >
-> >diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-> >index 01ab9ca56b..e5e8abae96 100644
-> >--- a/hw/virtio/vhost-user-base.c
-> >+++ b/hw/virtio/vhost-user-base.c
-> >@@ -16,6 +16,7 @@
-> > #include "hw/virtio/virtio-bus.h"
-> > #include "hw/virtio/vhost-user-base.h"
-> > #include "qemu/error-report.h"
-> >+#include "migration/blocker.h"
-> >
-> > static void vub_start(VirtIODevice *vdev)
-> >{
-> >@@ -276,7 +277,8 @@ static void vub_device_realize(DeviceState *dev, Err=
-or **errp)
-> > {
-> >     VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> >     VHostUserBase *vub =3D VHOST_USER_BASE(dev);
-> >-    int ret;
-> >+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-> >+    int i, ret, nregions, regions_processed =3D 0;
-> >
-> >     if (!vub->chardev.chr) {
-> >         error_setg(errp, "vhost-user-base: missing chardev");
-> >@@ -319,7 +321,7 @@ static void vub_device_realize(DeviceState *dev, Err=
-or **errp)
-> >
-> >     /* Allocate queues */
-> >     vub->vqs =3D g_ptr_array_sized_new(vub->num_vqs);
-> >-    for (int i =3D 0; i < vub->num_vqs; i++) {
-> >+    for (i =3D 0; i < vub->num_vqs; i++) {
-> >         g_ptr_array_add(vub->vqs,
-> >                         virtio_add_queue(vdev, vub->vq_size,
-> >                                          vub_handle_output));
-> >@@ -333,11 +335,49 @@ static void vub_device_realize(DeviceState *dev, E=
-rror **errp)
-> >                          VHOST_BACKEND_TYPE_USER, 0, errp);
-> >
-> >     if (ret < 0) {
-> >-        do_vhost_user_cleanup(vdev, vub);
-> >+        goto err;
-> >+    }
-> >+
-> >+    ret =3D vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhos=
-t_dev,
-> >+                                                           &nregions,
-> >+                                                           memory_sizes=
-,
-> >+                                                           errp);
-> >+
-> >+    if (ret < 0) {
-> >+        goto err;
-> >+    }
-> >+
-> >+    for (i =3D 0; i < VIRTIO_MAX_SHMEM_REGIONS && regions_processed < n=
-regions; i++) {
-> >+        if (memory_sizes[i]) {
-> >+            regions_processed++;
-> >+            if (vub->vhost_dev.migration_blocker =3D=3D NULL) {
-> >+                error_setg(&vub->vhost_dev.migration_blocker,
-> >+                       "Migration disabled: devices with VIRTIO Shared =
-Memory "
-> >+                       "Regions do not support migration yet.");
-> >+                ret =3D migrate_add_blocker_normal(
-> >+                    &vub->vhost_dev.migration_blocker,
-> >+                    errp);
-> >+
-> >+                if (ret < 0) {
-> >+                    goto err;
-> >+                }
-> >+            }
-> >+
-> >+            if (memory_sizes[i] % qemu_real_host_page_size() !=3D 0) {
-> >+                error_setg(errp, "Shared memory %d size must be a power=
- of 2 "
-> >+                                 "no smaller than the page size", i);
->
-> Is this error message updated?
+These are needed for the RISC-V Zbr0p93 CRC32 instructions which pre-XOR
+the data into the CRC state before the instruction is executed, making
+the zlib crc32 and QEMU crc32c implementations inappropriate.
 
-It is a bit misleading indeed. I will reword it, the size must be a
-multiple of the host page size.
+https://github.com/riscv/riscv-bitmanip/releases/download/v0.93/bitmanip-0.93.pdf
 
+Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
+---
+ include/qemu/crc32.h  | 18 +++++++++
+ include/qemu/crc32c.h |  1 +
+ util/crc32.c          | 85 +++++++++++++++++++++++++++++++++++++++++++
+ util/crc32c.c         |  4 +-
+ util/meson.build      |  1 +
+ 5 files changed, 107 insertions(+), 2 deletions(-)
+ create mode 100644 include/qemu/crc32.h
+ create mode 100644 util/crc32.c
 
->
-> >+                goto err;
-> >+            }
-> >+
-> >+            virtio_new_shmem_region(vdev, i, memory_sizes[i]);
-> >+        }
-> >     }
-> >
-> >     qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NULL=
-,
-> >                              dev, NULL, true);
-> >+    return;
-> >+err:
-> >+    do_vhost_user_cleanup(vdev, vub);
-> > }
-> >
-> > static void vub_device_unrealize(DeviceState *dev)
-> >diff --git a/hw/virtio/vhost-user-test-device-pci.c b/hw/virtio/vhost-us=
-er-test-device-pci.c
-> >index 7f6d751690..22678e3277 100644
-> >--- a/hw/virtio/vhost-user-test-device-pci.c
-> >+++ b/hw/virtio/vhost-user-test-device-pci.c
-> >@@ -12,10 +12,13 @@
-> > #include "hw/virtio/vhost-user-base.h"
-> > #include "hw/virtio/virtio-pci.h"
-> >
-> >+#define VIRTIO_DEVICE_PCI_SHMEM_BAR 4
-> >+
-> > struct VHostUserDevicePCI {
-> >     VirtIOPCIProxy parent_obj;
-> >
-> >     VHostUserBase vub;
-> >+    MemoryRegion shmembar;
-> > };
-> >
-> > #define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci-bas=
-e"
-> >@@ -25,10 +28,41 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST=
-_USER_TEST_DEVICE_PCI)
-> > static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Err=
-or **errp)
-> > {
-> >     VHostUserDevicePCI *dev =3D VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
-> >-    DeviceState *vdev =3D DEVICE(&dev->vub);
-> >+    DeviceState *dev_state =3D DEVICE(&dev->vub);
-> >+    VirtIODevice *vdev =3D VIRTIO_DEVICE(dev_state);
-> >+    VirtioSharedMemory *shmem, *next;
-> >+    uint64_t offset =3D 0, shmem_size =3D 0;
-> >
->
-> I'd add a comment here to explain this since it's not immediately clear
-> IMHO.
->
-> >+    vpci_dev->modern_mem_bar_idx =3D 2;
-> >     vpci_dev->nvectors =3D 1;
-> >-    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-> >+    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
->
-> IIUC before this patch qdev_realize() was the last step in this
-> function, so we didn't check for any error, but now should we return
-> earlier if it fails?
-
-Agreed.
-
->
-> >+
-> >+    QSIMPLEQ_FOREACH_SAFE(shmem, &vdev->shmem_list, entry, next) {
->
-> Is QSIMPLEQ_FOREACH_SAFE really needed here? IIUC we are not modifying
-> the list, so can we use QSIMPLEQ_FOREACH ?
-
-Agreed.
-
->
-> >+        if (shmem->mr.size > UINT64_MAX - shmem_size) {
->
-> Same here about using memory_region_size().
->
-> >+            error_setg(errp, "Total shared memory required overflow");
-> >+            return;
-> >+        }
-> >+        shmem_size =3D shmem_size + shmem->mr.size;
->
-> Ditto about memory_region_size().
->
-> >+    }
-> >+    if (shmem_size) {
-> >+        if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
-> >+            error_setg(errp, "modern-pio-notify is not supported due to=
- PCI BAR layout limitations");
-> >+            return;
-> >+        }
-> >+        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
-> >+                           "vhost-device-pci-shmembar", shmem_size);
-> >+        QSIMPLEQ_FOREACH_SAFE(shmem, &vdev->shmem_list, entry, next) {
->
-> Ditto about QSIMPLEQ_FOREACH_SAFE.
->
-> BTW my comments can eventually be fixed with a followup, overall LGTM,
-> but if you need to resend, maybe we can fix them now.
-
-I'm already applying these, I will resend them shortly. Thanks!
-
->
-> In any case:
->
-> Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->
->
-> >+            memory_region_add_subregion(&dev->shmembar, offset, &shmem-=
->mr);
-> >+            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BA=
-R,
-> >+                                   offset, shmem->mr.size, shmem->shmid=
-);
-> >+            offset =3D offset + shmem->mr.size;
-> >+        }
-> >+        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHMEM_BA=
-R,
-> >+                        PCI_BASE_ADDRESS_SPACE_MEMORY |
-> >+                        PCI_BASE_ADDRESS_MEM_PREFETCH |
-> >+                        PCI_BASE_ADDRESS_MEM_TYPE_64,
-> >+                        &dev->shmembar);
-> >+    }
-> > }
-> >
-> > static void vhost_user_device_pci_class_init(ObjectClass *klass,
-> >--
-> >2.52.0
-> >
->
+diff --git a/include/qemu/crc32.h b/include/qemu/crc32.h
+new file mode 100644
+index 0000000000..a320151acc
+--- /dev/null
++++ b/include/qemu/crc32.h
+@@ -0,0 +1,18 @@
++/*
++ * CRC32 Checksum
++ *
++ * Copyright (c) 2026 QEMU contributors
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the Free
++ * Software Foundation; either version 2 of the License, or (at your option)
++ * any later version.
++ *
++ */
++
++#ifndef QEMU_CRC32_H
++#define QEMU_CRC32_H
++
++extern const uint32_t crc32_table[256];
++
++#endif
+diff --git a/include/qemu/crc32c.h b/include/qemu/crc32c.h
+index 88b4d2b3b3..3d5ba189ef 100644
+--- a/include/qemu/crc32c.h
++++ b/include/qemu/crc32c.h
+@@ -28,6 +28,7 @@
+ #ifndef QEMU_CRC32C_H
+ #define QEMU_CRC32C_H
+ 
++extern const uint32_t crc32c_table[256];
+ 
+ uint32_t crc32c(uint32_t crc, const uint8_t *data, unsigned int length);
+ uint32_t iov_crc32c(uint32_t crc, const struct iovec *iov, size_t iov_cnt);
+diff --git a/util/crc32.c b/util/crc32.c
+new file mode 100644
+index 0000000000..590dd6e3a2
+--- /dev/null
++++ b/util/crc32.c
+@@ -0,0 +1,85 @@
++/*
++ * Constants for computing CRC32 checksums
++ *
++ * Copyright (c) 2026 QEMU contributors
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License as published by the Free
++ * Software Foundation; either version 2 of the License, or (at your option)
++ * any later version.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/crc32.h"
++
++/*
++ * CRC-32 table (reversed; polynomial 0xEDB88320).
++ */
++
++const uint32_t crc32_table[256] = {
++    0x00000000u, 0x77073096u, 0xee0e612cu, 0x990951bau,
++    0x076dc419u, 0x706af48fu, 0xe963a535u, 0x9e6495a3u,
++    0x0edb8832u, 0x79dcb8a4u, 0xe0d5e91eu, 0x97d2d988u,
++    0x09b64c2bu, 0x7eb17cbdu, 0xe7b82d07u, 0x90bf1d91u,
++    0x1db71064u, 0x6ab020f2u, 0xf3b97148u, 0x84be41deu,
++    0x1adad47du, 0x6ddde4ebu, 0xf4d4b551u, 0x83d385c7u,
++    0x136c9856u, 0x646ba8c0u, 0xfd62f97au, 0x8a65c9ecu,
++    0x14015c4fu, 0x63066cd9u, 0xfa0f3d63u, 0x8d080df5u,
++    0x3b6e20c8u, 0x4c69105eu, 0xd56041e4u, 0xa2677172u,
++    0x3c03e4d1u, 0x4b04d447u, 0xd20d85fdu, 0xa50ab56bu,
++    0x35b5a8fau, 0x42b2986cu, 0xdbbbc9d6u, 0xacbcf940u,
++    0x32d86ce3u, 0x45df5c75u, 0xdcd60dcfu, 0xabd13d59u,
++    0x26d930acu, 0x51de003au, 0xc8d75180u, 0xbfd06116u,
++    0x21b4f4b5u, 0x56b3c423u, 0xcfba9599u, 0xb8bda50fu,
++    0x2802b89eu, 0x5f058808u, 0xc60cd9b2u, 0xb10be924u,
++    0x2f6f7c87u, 0x58684c11u, 0xc1611dabu, 0xb6662d3du,
++    0x76dc4190u, 0x01db7106u, 0x98d220bcu, 0xefd5102au,
++    0x71b18589u, 0x06b6b51fu, 0x9fbfe4a5u, 0xe8b8d433u,
++    0x7807c9a2u, 0x0f00f934u, 0x9609a88eu, 0xe10e9818u,
++    0x7f6a0dbbu, 0x086d3d2du, 0x91646c97u, 0xe6635c01u,
++    0x6b6b51f4u, 0x1c6c6162u, 0x856530d8u, 0xf262004eu,
++    0x6c0695edu, 0x1b01a57bu, 0x8208f4c1u, 0xf50fc457u,
++    0x65b0d9c6u, 0x12b7e950u, 0x8bbeb8eau, 0xfcb9887cu,
++    0x62dd1ddfu, 0x15da2d49u, 0x8cd37cf3u, 0xfbd44c65u,
++    0x4db26158u, 0x3ab551ceu, 0xa3bc0074u, 0xd4bb30e2u,
++    0x4adfa541u, 0x3dd895d7u, 0xa4d1c46du, 0xd3d6f4fbu,
++    0x4369e96au, 0x346ed9fcu, 0xad678846u, 0xda60b8d0u,
++    0x44042d73u, 0x33031de5u, 0xaa0a4c5fu, 0xdd0d7cc9u,
++    0x5005713cu, 0x270241aau, 0xbe0b1010u, 0xc90c2086u,
++    0x5768b525u, 0x206f85b3u, 0xb966d409u, 0xce61e49fu,
++    0x5edef90eu, 0x29d9c998u, 0xb0d09822u, 0xc7d7a8b4u,
++    0x59b33d17u, 0x2eb40d81u, 0xb7bd5c3bu, 0xc0ba6cadu,
++    0xedb88320u, 0x9abfb3b6u, 0x03b6e20cu, 0x74b1d29au,
++    0xead54739u, 0x9dd277afu, 0x04db2615u, 0x73dc1683u,
++    0xe3630b12u, 0x94643b84u, 0x0d6d6a3eu, 0x7a6a5aa8u,
++    0xe40ecf0bu, 0x9309ff9du, 0x0a00ae27u, 0x7d079eb1u,
++    0xf00f9344u, 0x8708a3d2u, 0x1e01f268u, 0x6906c2feu,
++    0xf762575du, 0x806567cbu, 0x196c3671u, 0x6e6b06e7u,
++    0xfed41b76u, 0x89d32be0u, 0x10da7a5au, 0x67dd4accu,
++    0xf9b9df6fu, 0x8ebeeff9u, 0x17b7be43u, 0x60b08ed5u,
++    0xd6d6a3e8u, 0xa1d1937eu, 0x38d8c2c4u, 0x4fdff252u,
++    0xd1bb67f1u, 0xa6bc5767u, 0x3fb506ddu, 0x48b2364bu,
++    0xd80d2bdau, 0xaf0a1b4cu, 0x36034af6u, 0x41047a60u,
++    0xdf60efc3u, 0xa867df55u, 0x316e8eefu, 0x4669be79u,
++    0xcb61b38cu, 0xbc66831au, 0x256fd2a0u, 0x5268e236u,
++    0xcc0c7795u, 0xbb0b4703u, 0x220216b9u, 0x5505262fu,
++    0xc5ba3bbeu, 0xb2bd0b28u, 0x2bb45a92u, 0x5cb36a04u,
++    0xc2d7ffa7u, 0xb5d0cf31u, 0x2cd99e8bu, 0x5bdeae1du,
++    0x9b64c2b0u, 0xec63f226u, 0x756aa39cu, 0x026d930au,
++    0x9c0906a9u, 0xeb0e363fu, 0x72076785u, 0x05005713u,
++    0x95bf4a82u, 0xe2b87a14u, 0x7bb12baeu, 0x0cb61b38u,
++    0x92d28e9bu, 0xe5d5be0du, 0x7cdcefb7u, 0x0bdbdf21u,
++    0x86d3d2d4u, 0xf1d4e242u, 0x68ddb3f8u, 0x1fda836eu,
++    0x81be16cdu, 0xf6b9265bu, 0x6fb077e1u, 0x18b74777u,
++    0x88085ae6u, 0xff0f6a70u, 0x66063bcau, 0x11010b5cu,
++    0x8f659effu, 0xf862ae69u, 0x616bffd3u, 0x166ccf45u,
++    0xa00ae278u, 0xd70dd2eeu, 0x4e048354u, 0x3903b3c2u,
++    0xa7672661u, 0xd06016f7u, 0x4969474du, 0x3e6e77dbu,
++    0xaed16a4au, 0xd9d65adcu, 0x40df0b66u, 0x37d83bf0u,
++    0xa9bcae53u, 0xdebb9ec5u, 0x47b2cf7fu, 0x30b5ffe9u,
++    0xbdbdf21cu, 0xcabac28au, 0x53b39330u, 0x24b4a3a6u,
++    0xbad03605u, 0xcdd70693u, 0x54de5729u, 0x23d967bfu,
++    0xb3667a2eu, 0xc4614ab8u, 0x5d681b02u, 0x2a6f2b94u,
++    0xb40bbe37u, 0xc30c8ea1u, 0x5a05df1bu, 0x2d02ef8du
++};
+diff --git a/util/crc32c.c b/util/crc32c.c
+index ea7f345de8..f40597f80d 100644
+--- a/util/crc32c.c
++++ b/util/crc32c.c
+@@ -1,7 +1,7 @@
+ /*
+  *  Castagnoli CRC32C Checksum Algorithm
+  *
+- *  Polynomial: 0x11EDC6F41
++ *  Polynomial: 0x1EDC6F41
+  *
+  *  Castagnoli93: Guy Castagnoli and Stefan Braeuer and Martin Herrman
+  *               "Optimization of Cyclic Redundancy-Check Codes with 24
+@@ -37,7 +37,7 @@
+  * reflect output bytes = true
+  */
+ 
+-static const uint32_t crc32c_table[256] = {
++const uint32_t crc32c_table[256] = {
+     0x00000000L, 0xF26B8303L, 0xE13B70F7L, 0x1350F3F4L,
+     0xC79A971FL, 0x35F1141CL, 0x26A1E7E8L, 0xD4CA64EBL,
+     0x8AD958CFL, 0x78B2DBCCL, 0x6BE22838L, 0x9989AB3BL,
+diff --git a/util/meson.build b/util/meson.build
+index e7a2a2a64c..d5789b1316 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -44,6 +44,7 @@ util_ss.add(files('id.c'))
+ util_ss.add(files('qemu-config.c', 'notify.c'))
+ util_ss.add(files('qemu-option.c', 'qemu-progress.c'))
+ util_ss.add(files('keyval.c'))
++util_ss.add(files('crc32.c'))
+ util_ss.add(files('crc32c.c'))
+ util_ss.add(files('uuid.c'))
+ util_ss.add(files('getauxval.c'))
+-- 
+2.48.1
 
 
