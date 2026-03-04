@@ -4,75 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE79FEB7ECF
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 12:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AEAEB7ECF
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 12:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxlI3-0000uy-6B; Wed, 04 Mar 2026 07:25:23 -0500
+	id 1vxlLt-0001su-Ti; Wed, 04 Mar 2026 07:29:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxlI1-0000uc-Av
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:25:21 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vxlLs-0001sO-FP
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:29:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxlHz-0002La-Ac
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:25:21 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vxlLn-0002hv-Sm
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:29:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772627117;
+ s=mimecast20190719; t=1772627353;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FMXpkjpiUoQui+4FslcpcM+k6VSmSqXFAp5s3o7dmXA=;
- b=dhKPgw+ytvfklzA2t50LISD+uw+mLO7X+xaFOAf6N3YrklopJXX/IvELWEs9irOYR/F448
- fHFG2h7zYdOy8na6ERV1jC3j7VB1oFgn8pI6gVAhrQ88y4tBPSqYYj1vrNNraJx8+HZisc
- 1CdXDrjJROnefDtNoxy9y1ePllj9Dzs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uUO9apoCTG6e/J+8/LyzATgtyfuwsHJ40yHagC1ufac=;
+ b=ZtsHOhQHOT/XGtniN/dCJtE1qf/nucARfGyMLwL6f5nCR033amNCIbx7nHIYfMRmVDn8eS
+ MqJa/NbFF2KVi6R2eDlFAnrHc5bxLK896DUSUTsRD+muTtpH3xzM7GBoAnmz8ETsC/tDeI
+ +3Lqn+/EHRq8a46IGzjvwjSJy41JvH0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-SJ5kYy4RPEaeWTG5zteZoQ-1; Wed,
- 04 Mar 2026 07:25:12 -0500
-X-MC-Unique: SJ5kYy4RPEaeWTG5zteZoQ-1
-X-Mimecast-MFC-AGG-ID: SJ5kYy4RPEaeWTG5zteZoQ_1772627111
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-El0SvASCNzaITr0Js0zjBQ-1; Wed,
+ 04 Mar 2026 07:29:11 -0500
+X-MC-Unique: El0SvASCNzaITr0Js0zjBQ-1
+X-Mimecast-MFC-AGG-ID: El0SvASCNzaITr0Js0zjBQ_1772627350
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F6F31956096; Wed,  4 Mar 2026 12:25:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.30])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22D8A180075B; Wed,  4 Mar 2026 12:25:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 81DAC21E692F; Wed, 04 Mar 2026 13:25:06 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org,  Helge Deller <deller@gmx.de>,  =?utf-8?Q?Marc-?=
- =?utf-8?Q?Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Steven Lee <steven_lee@aspeedtech.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,  Troy Lee
- <leetroy@gmail.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Mark Cave-Ayland
- <mark.caveayland@nutanix.com>,  qemu-arm@nongnu.org,  Jamin Lin
- <jamin_lin@aspeedtech.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,  Peter
- Maydell <peter.maydell@linaro.org>,  Joel Stanley <joel@jms.id.au>
-Subject: QOM parent type "sys-bus-device" vs. "device" (was: [PATCH v2
- 12/13] hw/char/serial: Inherit from SysBusDevice)
-In-Reply-To: <20260303222143.142741-13-shentey@gmail.com> (Bernhard Beschow's
- message of "Tue, 3 Mar 2026 23:21:42 +0100")
-References: <20260303222143.142741-1-shentey@gmail.com>
- <20260303222143.142741-13-shentey@gmail.com>
-Date: Wed, 04 Mar 2026 13:25:06 +0100
-Message-ID: <87ikbbixy5.fsf_-_@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B762D18AB316; Wed,  4 Mar 2026 12:28:22 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.44.32.201])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D9564300019F; Wed,  4 Mar 2026 12:28:19 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, xeor@yandex-team.ru,
+ vsementsov@yandex-team.ru, pkrempa@redhat.com, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+Subject: [PATCH v2] block: Never drop BLOCK_IO_ERROR with action=stop for rate
+ limiting
+Date: Wed,  4 Mar 2026 13:28:00 +0100
+Message-ID: <20260304122800.51923-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 33
 X-Spam_score: 3.3
@@ -98,80 +82,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bernhard Beschow <shentey@gmail.com> writes:
+Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
+event only once a second. This makes sense for cases in which the guest
+keeps running and can submit more requests that would possibly also fail
+because there is a problem with the backend.
 
-> SerialState currently inherits just from DeviceState and serial devices
-> use SerialState as an "IP block". Since DeviceState doesn't have an API
-> to provide MMIO regions or IRQs, all serial devices access attributes
-> internal to SerialState directly. Fix this by having SerialState inherit
-> from SysBusDevice.
->
-> In addition, DeviceState doesn't participate in the reset framework
-> while SysBusDevice does. This allows for implementing reset
-> functionality more idiomatically.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+However, if the error policy is configured so that the VM is stopped on
+errors, this is both unnecessary because stopping the VM means that the
+guest can't issue more requests and in fact harmful because stopping the
+VM is an important state change that management tools need to keep track
+of even if it happens more than once in a given second. If an event is
+dropped, the management tool would see a VM randomly going to paused
+state without an associated error, so it has a hard time deciding how to
+handle the situation.
 
-We might be at a crossroads here.
+This patch disables rate limiting for action=stop by not relying on the
+event type alone any more in monitor_qapi_event_queue_no_reenter(), but
+checking action for BLOCK_IO_ERROR, too. If the error is reported to the
+guest or ignored, the rate limiting stays in place.
 
-Paul Brook designed qdev around "a device plugs into some bus, and may
-provide buses".  To make this work, he added a main system bus to serve
-as root of a single tree.
+Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ qapi/block-core.json |  2 +-
+ monitor/monitor.c    | 21 ++++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-The parent of a device in that tree is the bus it plugs into, and the
-parent of a bus is the device that provides it, except for the main
-system bus, which has no parent.  "info qtree" shows this tree.
-
-Note a machine had just this one system bus back then.
-
-The system bus isn't something hardware people would call a bus.
-
-The qtree is a qdev thing.  It is *not* the QOM composition tree ("info
-qom-tree /").
-
-We actually abandoned "a device plugs into some bus" a long time ago.
-Moe on that below.
-
-Qdev was later rebased onto QOM, as follows.
-
-A bus QOM type is a subtype of "bus".
-
-A device QOM type is a subtype of "device".
-
-If a device type has a @bus_type, then it plugs into a bus of that QOM
-type.  Such a concrete device is commonly[*] not a direct subtype of
-"device".  Instead, it's a subtype of the abstract device that plugs
-into that bus type.  Example: "isa-serial" is a direct subtype of
-"isa-device", and it inherits its bus type "ISA" from there.
-
-If a device has no @bus_type, it doesn't plug into any bus.  It doesn't
-show up in "info qtree" (it does in "info qom-tree", of course).
-Example: "serial" is a direct subtype of "device".
-
-This lets us build devices from components without having to make up
-buses to connect them.  Example: "isa-serial" has a direct QOM child of
-type "serial".  Good!
-
-Except infrastructure useful to such bus-less devices lives in sysbus,
-where bus-less devices can't access it.  This tempts us to make devices
-sysbus devices just to be able to use the infrastructure, and to create
-additional sysbuses.
-
-We can elect to go down this path further: make more sysbus devices.
-Create more sysbuses.  If this is the right path, then bus-less devices
-were a mistake, and we should consider eliminating them.
-
-Or we can pick the other branch: put the infrastructure where bus-less
-devices can use it.  If this is the right path, then sysbus is
-obsolescent.
-
-Or we can elect to muddle on without giving it much thought.  Always an
-option :)
-
-
-[...]
-
-
-[*] Are there any exceptions?  I don't know.
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b66bf316e2f..da0b36a3751 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -5794,7 +5794,7 @@
+ # .. note:: If action is "stop", a `STOP` event will eventually follow
+ #    the `BLOCK_IO_ERROR` event.
+ #
+-# .. note:: This event is rate-limited.
++# .. note:: This event is rate-limited, except if action is "stop".
+ #
+ # Since: 0.13
+ #
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 1273eb72605..37fa674cfe6 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -367,14 +367,33 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent event, QDict *qdict)
+ {
+     MonitorQAPIEventConf *evconf;
+     MonitorQAPIEventState *evstate;
++    bool throttled;
+ 
+     assert(event < QAPI_EVENT__MAX);
+     evconf = &monitor_qapi_event_conf[event];
+     trace_monitor_protocol_event_queue(event, qdict, evconf->rate);
++    throttled = evconf->rate;
++
++    /*
++     * Rate limit BLOCK_IO_ERROR only for action != "stop".
++     *
++     * If the VM is stopped after an I/O error, this is important information
++     * for the management tool to keep track of the state of QEMU and we can't
++     * merge any events. At the same time, stopping the VM means that the guest
++     * can't send additional requests and the number of events is already
++     * limited, so we can do without rate limiting.
++     */
++    if (event == QAPI_EVENT_BLOCK_IO_ERROR) {
++        QDict *data = qobject_to(QDict, qdict_get(qdict, "data"));
++        const char *action = qdict_get_str(data, "action");
++        if (!strcmp(action, "stop")) {
++            throttled = false;
++        }
++    }
+ 
+     QEMU_LOCK_GUARD(&monitor_lock);
+ 
+-    if (!evconf->rate) {
++    if (!throttled) {
+         /* Unthrottled event */
+         monitor_qapi_event_emit(event, qdict);
+     } else {
+-- 
+2.53.0
 
 
