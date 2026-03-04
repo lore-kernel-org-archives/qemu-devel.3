@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E001EDEBFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BABEDEC01
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxbPi-000637-C5; Tue, 03 Mar 2026 20:52:38 -0500
+	id 1vxbPf-00062c-Am; Tue, 03 Mar 2026 20:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxbPh-00062y-4i
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:37 -0500
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ id 1vxbPa-00061d-8h
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:31 -0500
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxbPf-0004UM-MV
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:36 -0500
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-5ffa0b23a1aso250650137.3
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 17:52:35 -0800 (PST)
+ id 1vxbPY-0004TP-W4
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:30 -0500
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-5ff14dd9be4so4433832137.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 17:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772589154; x=1773193954; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fdxVAJZzyfNVW1udrhdUFVJfrw+pt2l9y2/jEQPXbUc=;
- b=RbZQvrbyB5hHHP7v7rZRbPB16EcAfe6KYvixmS5vIsFpD8J5FCyrV2cVlzES5hJvzH
- EGgKZ7pOFSLtNU3SeI48L/02DeOpXTTk14pGku6j4dLWB+ZdXaAMpkYSUoC8r+9Adk8d
- 1fTzpseJ8KXrCZUAO4dPZl2rvdgVbX+5m3Xx/yIlI2FXxQKzRP3SjZGlue26tRI7KTCX
- yNJEw/+RbW5LL2HtfkIt1sjMwNNrOA4g34ewOvWaAXSeAge7OTwOyjh2TukRN65ADwE8
- lthWrhcs5s84DXKtwVIiBFlwP/kp9RO0MuhEkHGc/Iklrffy/kEtL+zkW26TwKhsHMW2
- 9xkA==
+ d=gmail.com; s=20230601; t=1772589147; x=1773193947; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AZ079vS7A/A4BZyc3h4DSpRr2ArVx5hvIslaT33EcVI=;
+ b=MA6V6VZ/PU3cdLzgysvtO75CSyAyoBfdLx/eDSWuLcAEbWe7sEsSazuB4JG0mJsNtX
+ HWI1up2ppff3L6BTGhVESYhmiH+9HezsDY8OafUWM3jRBsCnNX4pM2LHl4hDGIVklrhk
+ 16Li9nYYqUe0nFzMPJJ8cPhsB7lcmCarpUr2b/+tOLP/pchpGkkK/Obubw1o+Mf/EAs3
+ Rdpy0cxfHTh0/fJBhdYrinqI9XJoBNXSy40gxhJ/o6qSF4aLlyGyGp6bwLgItJZEJheG
+ vmlSqPXbGPb1t4SEhdw6EGXqGWbYBl3zEEAXDdreDFU56AZ/vhfEoWrkcb9bP/SZKwVO
+ EGLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772589154; x=1773193954;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fdxVAJZzyfNVW1udrhdUFVJfrw+pt2l9y2/jEQPXbUc=;
- b=tETsVvR8VF7eBbcUblZw6ZVMMd1ZAEhwXiA1NOPlt0kbLB1eiqTVdRKk90XfspNfQo
- IO7ZtoNJIg3cDe6d02QgV0vvgcUevQXptMgq1syfP6hTIBImpXlQqOVLyJBYBoQKzNo7
- Vx/RBTEumnSv+gS7dzk68HgxZcPsEaixcXzFuUKKbaYw+WSHGimwkDQEx6Qw1OwCg2ge
- b/ICaswi6JHRHCGXAGqO7LXpbmu8fWp6QPpoDKlcATX+q5H7Dgtl9KbldcTKQ3QP7cpw
- T0LQ4X0epVsgD92XlLrtz4w1ncTOJcI9xAGydnS1WMNfg824JXyuS2McbEWxViPagcrY
- HJ7Q==
-X-Gm-Message-State: AOJu0YweLcr8w9G6qn9/WgM2SJChpRf5hEqCndVgvGKhXX4LMAiEcWvh
- RV7UCUR0J6HpxyJ9RM1NdQVSghzBfRaD3S4VdPT/3LZmif2+0g1xn69xfLPGeX2O
-X-Gm-Gg: ATEYQzwoyEWiwWq95s0U140Z9voLBnlAek2lNUTTWe6e7B2Jbwapyw3UB5YBfHHLL1+
- 1S9V77FXA1OYQdWnmzyXWEs5K7GuRJZhO76Injrxugpn+LWVBiu8ZpDxgt1VuXbj+Y1ZBhIi7Zh
- QHksFXzLxnSboRcjM+FUXELInS7ZvncnfiRRW+nc6Qa7W7le6CM52GxP2tsz1aufEaPuSRrUyLH
- CrKJRfYk7LEzPX9bFpGboVnfmSR9HNwpSaVa7p3IWmyIcoperIrPjApjiIcM2vgBWTWkpPrKH26
- x9m9HOV+fMvuGaIgDBgA20WtFCvVNIEBieiPNvKCA8gFQ5B86soWWJC0g1Cgjpdo05VhLUbdgjb
- FYBD84KkeXiyShcZjqOXI16NoCX0mH8mybj81vgPdI5NrZ4pcOHdZEEb1Dsx4nt/G45koDIcKSx
- R1M11WEtw1yoJT/AuIW0Umlivvlx66g81u+IUUVd9zo8BvqV2yBUG/E77EsQ==
-X-Received: by 2002:a05:6102:2922:b0:5fc:2b19:f7de with SMTP id
- ada2fe7eead31-5ffaae9984fmr215631137.25.1772589153980; 
- Tue, 03 Mar 2026 17:52:33 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772589147; x=1773193947;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AZ079vS7A/A4BZyc3h4DSpRr2ArVx5hvIslaT33EcVI=;
+ b=DZGXd6RzN0sv1IaHTatwgaUDN1/wBu2SCFqgCU6BMwomjiV6FbOiju/YwCCr2UzUel
+ b+rjsK6mzvaPzInwx2cqrkj9GrZwiQ0QQMfeuQlH6Oic4n1UKS62ZB9Lww8l/lxZN1j7
+ m4igJKUs9pmxiCg76PB6b+VuBjVJNRVEHnM5xlWIS+yShqnbSb9cx9Ist+8FmyKDiPkk
+ q4LOQybdeUKh673EFlRXFnDohHHH5YsugmNf8FS/rOGs7rABXFAyJBXJ9bv6pGEr712q
+ Oz399tcA/JxzCiiIzhY6IUEdXOA1I4o/yogYzRctP6OqrW5PqRkJx6ReTMJxTCnghLX8
+ pP6A==
+X-Gm-Message-State: AOJu0Yx466MQ1Mh/ouvI+H+L5NOTg8Q485PJbQ7D0+VwyN5hKBIzxbE1
+ iV5BaZWwWwAFVwkfgi42n59Lfl+7OBGO2WbgItFUFfch0ECL9OZtBpodQDMzGXJn
+X-Gm-Gg: ATEYQzz3YHsVJRPVVHvADph2mUWD+UKomphZJx73JrsDWLPayg5wMzZEGyfkp/XbF/K
+ LtU+s/szUqaWV6TzMpHH3lvQfUittLCnzZFzNgqBm+BDtp3xHpR2GQggeT2YamR7n6PW8Zw4puh
+ 7sCF5WQ6VHSrmWGRr9uKFRTP+bswWXpnuWlVVmHd32PpNOtoeKV+z0nrfbYxgzvYOQPwJnr928/
+ BQXEqodcw64eZ1GtuS7EXhctw3U+7ZcsQgoZsYRDM3kpnI09eZwjXo2ph5I1oXBPc1am8rRtx28
+ 1L3VrDKQHb8vVI8mI387ZU9KCn3bEhP4YGiOCeoemTzzjQ+a/RHuZzHxwOYghBLs0BGBmzjn0Mj
+ mCCbirVARSHLh+Vd47wzdb1iVW5a7qdllCunTlE7W/mnqHdhdb36XSZiiqqZZoSW+GMU91IjO33
+ BUlLw48uE1H+0wS3Fy6XkAo9JqgBbx2iVw+fY6hNX/oVq389EaUEsfPeb/SA==
+X-Received: by 2002:a05:6102:f10:b0:5f7:307e:80d9 with SMTP id
+ ada2fe7eead31-5ffaafc647dmr351581137.28.1772589146690; 
+ Tue, 03 Mar 2026 17:52:26 -0800 (PST)
 Received: from gmail.com (ip190-5-140-138.intercom.com.sv. [190.5.140.138])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-94df641e133sm16763221241.5.2026.03.03.17.52.33
+ ada2fe7eead31-5ffaca9c848sm303553137.10.2026.03.03.17.52.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 17:52:33 -0800 (PST)
+ Tue, 03 Mar 2026 17:52:26 -0800 (PST)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@amd.com,
  xen-devel@lists.xenproject.org
-Subject: [PATCH v1 3/5] physmem: xen: Conditionalize use of the mapcache
-Date: Wed,  4 Mar 2026 02:52:19 +0100
-Message-ID: <20260304015222.979224-4-edgar.iglesias@gmail.com>
+Subject: [PATCH v1 0/5] xen: pvh: Add machine option to disable the mapcache
+Date: Wed,  4 Mar 2026 02:52:16 +0100
+Message-ID: <20260304015222.979224-1-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260304015222.979224-1-edgar.iglesias@gmail.com>
-References: <20260304015222.979224-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-vs1-xe2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,73 +99,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Conditionalize use of the mapcache. This is in preparation
-to optionally disable the mapcache at runtime.
+This adds a mapcache option to the PVH machines allowing users to disable the
+mapcache. To remain backwards compatible, the option defaults to "on".
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- system/physmem.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+When disabled, all guest memory is mapped at startup rather than on demand.
+Starting QEMU may take longer in this mode, but runtime overhead is reduced and
+it also enables virtio vhost backends to work.
 
-diff --git a/system/physmem.c b/system/physmem.c
-index e5ff26acec..64e6d50f8f 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -578,7 +578,8 @@ MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
-                                     is_write, true, &as, attrs);
-     mr = section.mr;
+As a trade-off, grants are unavailable without the mapcache and guests with
+large amounts of RAM can take quite a while to start.
+
+Cheers,
+Edgar
  
--    if (xen_enabled() && memory_access_is_direct(mr, is_write, attrs)) {
-+    if (xen_map_cache_enabled() &&
-+        memory_access_is_direct(mr, is_write, attrs)) {
-         hwaddr page = ((addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE) - addr;
-         *plen = MIN(page, *plen);
-     }
-@@ -2577,7 +2578,7 @@ static void reclaim_ramblock(RAMBlock *block)
- {
-     if (block->flags & RAM_PREALLOC) {
-         ;
--    } else if (xen_enabled()) {
-+    } else if (xen_map_cache_enabled()) {
-         xen_invalidate_map_cache_entry(block->host);
- #if !defined(_WIN32) && !defined(EMSCRIPTEN)
-     } else if (block->fd >= 0) {
-@@ -2736,7 +2737,7 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-         len = *size;
-     }
- 
--    if (xen_enabled() && block->host == NULL) {
-+    if (xen_map_cache_enabled() && block->host == NULL) {
-         /* We need to check if the requested address is in the RAM
-          * because we don't want to map the entire memory in QEMU.
-          * In that case just map the requested area.
-@@ -2785,7 +2786,7 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-     RAMBlock *block;
-     uint8_t *host = ptr;
- 
--    if (xen_enabled()) {
-+    if (xen_map_cache_enabled()) {
-         ram_addr_t ram_addr;
-         RCU_READ_LOCK_GUARD();
-         ram_addr = xen_ram_addr_from_mapcache(ptr);
-@@ -3787,7 +3788,7 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-         if (is_write) {
-             invalidate_and_set_dirty(mr, addr1, access_len);
-         }
--        if (xen_enabled()) {
-+        if (xen_map_cache_enabled()) {
-             xen_invalidate_map_cache_entry(buffer);
-         }
-         memory_region_unref(mr);
-@@ -3898,7 +3899,7 @@ void address_space_cache_destroy(MemoryRegionCache *cache)
-         return;
-     }
- 
--    if (xen_enabled()) {
-+    if (xen_map_cache_enabled()) {
-         xen_invalidate_map_cache_entry(cache->ptr);
-     }
-     memory_region_unref(cache->mrs.mr);
+Edgar E. Iglesias (5):
+  xen: mapcache: Assert mapcache existance
+  xen: mapcache: Add function to check if the mapcache is enabled
+  physmem: xen: Conditionalize use of the mapcache
+  hw/xen-hvm: Add a mapcache arg to xen_register_ioreq()
+  hw/xen: xenpvh: Add prop to enable/disable the mapcache
+
+ hw/i386/xen/xen-hvm.c           |   2 +-
+ hw/xen/xen-hvm-common.c         |  18 +++--
+ hw/xen/xen-mapcache.c           |  16 ++++
+ hw/xen/xen-pvh-common.c         | 134 +++++++++++++++++++++++++++++---
+ hw/xen/xen_stubs.c              |   5 ++
+ include/hw/xen/xen-hvm-common.h |   3 +-
+ include/hw/xen/xen-pvh-common.h |   2 +
+ include/system/xen-mapcache.h   |   1 +
+ system/physmem.c                |  13 ++--
+ 9 files changed, 169 insertions(+), 25 deletions(-)
+
 -- 
 2.43.0
 
