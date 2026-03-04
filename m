@@ -4,139 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7382FEB7EC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 10:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06D6EB7ECA
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 10:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxjas-0004xQ-K7; Wed, 04 Mar 2026 05:36:42 -0500
+	id 1vxji1-0006En-3x; Wed, 04 Mar 2026 05:44:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vxjan-0004wm-1C
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:36:38 -0500
-Received: from
- mail-switzerlandwestazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c214::1] helo=GVAP278CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vxjhy-0006Ea-GF
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:44:02 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vxjah-0004yh-Vz
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:36:36 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=o7zRQjZ0NzLFyegreb/3Yx5MM9gjbJYMp27HFlZ3gN1bsAJEAfs4V5WEysLWQpwgQnRZsRnZyaWu1/amgLlKYo26TNzPzbS7E/HXwQ+7J5frgtbQAIebplupmVp7HxDgOV5PgnXHohlCZdiI6pG6INUPztUH4oeYyIboEzrF9zEbciQV1W/YhMq50kEzFeXTo/9X4oS+U1DnxrxpNscCjvWXn8gjH2nocT+7zuU4luQPs7P1KJGOoSJftSOWoGUX1xsrDbgvA5T4V5alfuo4fJDFsNaoRMcGAs80qvUzEkP6fDlwBEYXS3HJ3pL1JKYJcipI603sK8HYcOTkj6i+bg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nIakPCLP2KcqRZbqWst75xFmd/pLcqdPo5RYJqmTPZs=;
- b=FjUK9ldPFgllFKjKofyepvVq6oRRPQQtkwAp7lzt2KCddi79JFBrGagLvSoFerhTnykEotgP4Ztv+haIe25wTr5U19Qjr46XcOliIP94sBvybWUwH9x00eLtcit0NWhNzc13CPZpgky9A0d8OWH+ogzLaSEd77Is13PHW9hgzhJWtTJrDDNF125B8LZWkn5PfciBE2+UnFllVNDE+dHQWIkZv7mMcSksoP5jLtaDMKjOTEx9R5SA6zrakABH7Ouzli7t3XvFnxVwQfJO8Ig+/Y9caadF/T9q6S1IjS/0sq/ZX/6aS9De+8W9PxBTFYj0Grx2hJVZ4MnzFCk0EgogJQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nIakPCLP2KcqRZbqWst75xFmd/pLcqdPo5RYJqmTPZs=;
- b=ZfuXJ6dRPo9HQxtu/Exdmwq6nY7LpaR97c+Ik636sENfAMecImsG6LIBtIWi5+234Qbb17cTEss44HWx8NIds88jJtiPk2k6M5U9nif900ENgGUz4OnjYoFsX56EEktG4LMrkQNkuTb8L+ZRZHc1WRR/haspGF+Yj1VmjVsOqx4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by ZR3P278MB1665.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:8d::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.17; Wed, 4 Mar
- 2026 10:36:27 +0000
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9678.016; Wed, 4 Mar 2026
- 10:36:26 +0000
-Message-ID: <a9b4cb93-24e7-41fb-bb72-bacd48216c1c@epfl.ch>
-Date: Wed, 4 Mar 2026 11:36:25 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/7] Enable PC diversion via the plugin API
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
- richard.henderson@linaro.org, imp@bsdimp.com
-References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
- <acd9b835-ae52-42aa-87f8-9fedccd79d04@linaro.org>
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-In-Reply-To: <acd9b835-ae52-42aa-87f8-9fedccd79d04@linaro.org>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-256; boundary="------------ms070708060403040400060306"
-X-ClientProxiedBy: GV0P278CA0084.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:2b::17) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::220)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vxjhu-0008S5-7B
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:44:02 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 624Agg5d095478
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 4 Mar 2026 19:43:28 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=TMUOJBqbFhozNXn6v2pOg3fBR80DHjOFHd8yk1emWrA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1772621008; v=1;
+ b=COIPrJ/tTtkBbOOj5GGKYmtkUM5VX6mGNZXOZvCYd/JzyYsbgq12gg1hao8bsegW
+ e8n77W/oO+WXcuUPKQqzRw5we4cxPvjeIAeLfbsM1WqAetMXxbwV++UajEQZNYkt
+ TaYcJYIjCLSyuqVW1GjnMD04vLqu5ZKsZzXWZ8pZhqxgZPcCCpwm9Ig+QMsCHjpe
+ pj1y4WX8rfJaIlEq8tdCdXvY957ySNrdYTwMqtxxavAoHHlhQWuxbmuPFUAsk1u4
+ Ud+fFQ7bOQuNEu+SCyXOEHYL/j0A5Y39ZkMmOqSMZqrNHvNG52xI4QklJ0ZnRtF7
+ Ub75iWQ2ZkgtPgvwxZ2rkw==
+Message-ID: <7c389f35-2da9-4e40-a695-731a1484cb04@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 4 Mar 2026 19:42:41 +0900
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR3P278MB1665:EE_
-X-MS-Office365-Filtering-Correlation-Id: ac5af0c2-2322-4a89-d2bc-08de79d9e377
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|19092799006|786006|1800799024; 
-X-Microsoft-Antispam-Message-Info: BSbH1WlSkt7kw36Hb9CtPqdID8CqlqSK++/iqE/FD2CF5wtskzSirg8EycOvSeqVbwn6LxODE1vf8yZQP+WJNLor+9iW7OpJ5zFXUPvasQYlA5QOcaDduf9Pp6J4YrdwrYhm0EXhqTBlHUssY/il/q6nQQnS2hxVGul7cyjIVOtunSaBdoVkpKX4HRwxwvNiMsNy0Cq4bi5kU/mGPnYzn3YZDNJlWNYzbvE0HL8MTKY8xmqrC2DvHaiTep9OropZ/SOQ+nM2VUUzT1qrwiyhZ12YUfAGMLNB0ZG9kXrhupuzBWeLWl8eTkF4vEuTALf/JYYiO3JDMGKnmUfq7M9gF9cWhjXSYIrx/9lS69ttZBNCBHCHyIWB+MG0EX6T5XjG43//Qurk+xS//FMxzhUOM6ZI0JiapP8Wm7pPal9FGYPRWPzQ7+ovScfO425+Z2OEwQ8Sp+JVA8BkGwjr9m5wHTs2ueMwwCtz1hydYN14jPZTjtkBhs0QNg7B2kKjYwUVaYf8d2Uo8c1pnzRAIpyPDWWimQ0ao9UCphnmHzfkB8j8uq8GbFjQQwBvQAQhGCZ8xluB6qUZH4m9phyPFHgpIy8Wujl9/8F+biK8v2bPNg3yeWDNKm8/AbMyorgJU65ciTV3rzk1Ieu2FxfnLDjat70DbvVtgXNW5347g7nshr2rSLy0GdN4ZDxUs4A1aTtmYZJOI3gnYoLhEE1N2askvYzkLS23s9zn3WclOxTrT96vz98ZHf1pSm2tAm3Ktp1V
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(19092799006)(786006)(1800799024); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?c2g1aGdUTXF0djZxUHB0V0ZnVHR4M3ZiVDhkOXZ5dUhVWTV1SDAzdzZFRkcx?=
- =?utf-8?B?RnVyM0k0aFlBcHl5bUt0a1Q1UE1JblpNQ3ZyMEdUTnhQNVI3RVZjNEttczlP?=
- =?utf-8?B?cFN4YUNaQ0s5WWR4UytMdFp2VkxTWkFmTC9sOEUzZHVweXVFZ0toTWlGS244?=
- =?utf-8?B?NFZZR2Q1UGQxemNqSnFja3hsYUxCbTVoQ2NHKzhVOGN6RGs2YkVFSnpzc3VC?=
- =?utf-8?B?cndvS2IyTldnUzdDdzRQL2RXLy82ZE9lVElGb3lGZ29Jd2U5MXNKVFp0WFZW?=
- =?utf-8?B?M05uY2VQb0F2akdTeDd5ZWhDZlBjTUdxeFhSbzFuS2VQT0hIUFN5anAvd0c5?=
- =?utf-8?B?dDVSQUY3ZnJuOEJ5TkYzaFdKZHFjMklnR1ZzT2dNcElCU0tCVVdCM1lxWTlJ?=
- =?utf-8?B?c3IzSHlpVUdXN1pUeDV3aElNdTdsZGN1d1AxU3YyN1lXaFZtenJyOXhQUmlD?=
- =?utf-8?B?RHBhb01kNHN4ZHhoSTZpbSt4OURwK3JhNEFjYUVKR2dQejJOdE4zNmwwMW01?=
- =?utf-8?B?VDJiNDNIY0tmbXBsM0wxQnRrOFNRblE2TzljbUV3dFZpWWRPZUxlOUQ3TEVu?=
- =?utf-8?B?dm96MThFeTBaeUdSbkZtWndxUkxtdUthZjVrU1VSdW1jTzQwRGZaSEIxYUph?=
- =?utf-8?B?ank4MjFZYzEvT0hCT05yb0pVdVdzb2o2MEpxc0o2ZllzalpFUzc4SURsMURu?=
- =?utf-8?B?Q0N0bityendYMTZCUnlwTjJTVW1Oc1FYUG96UHh5dm1QSitDY25yRVhnOFBS?=
- =?utf-8?B?T3BFNnVaY2Z0MmJFMFVrbjQzR0FkZnVVMHhJakhRQ01oWXh4WWF3LzF1WllB?=
- =?utf-8?B?LzMxak1EUlFrRXpQT2dGREJXaUhyN3VWYW5YQXZYWnBuYjlOWS84MEhhRzlH?=
- =?utf-8?B?enY4MVRKSVRncStVRVc2bzFoMkVibjZaOC93eGdRci9kWk5oK3JacVRyaWdD?=
- =?utf-8?B?aTR0cko5dHRGcnI4UzFXOW1vSVJOOFZRSjg5V29lY0pFcXE4bTdodWRzY1lQ?=
- =?utf-8?B?N0ZOQWdSTlYvZWg3VUU0dFRmeFMvS1dtREtEeFNWekFVdEpaaUh1RFFIYkV4?=
- =?utf-8?B?MVF0S0M1UTVuMnQ5cUxPa2RjNzRHRnZDWW11ZFdVaTdGaFFhWlhxcTluYkdp?=
- =?utf-8?B?aytWMEtZMTVwN1NYTFR6WVVsd3ZIMk8vcVMwNHhoUkRxeitkSHk0MWYxbTRN?=
- =?utf-8?B?OEsrNmFENEZNU203OVBWUDdZQVVrMG1zc2Zxd0RHL2NjVnpQQU0vZUZ6SDFR?=
- =?utf-8?B?K1UyL25CUXNtSElPbmUybU9OZEZobHI1cmpjdlcxelhiWStQbHdPUEROd0s0?=
- =?utf-8?B?UHdqS0pla2RkQndpVlp3UlN0N2MwY3JINjFaMms2bUwyalpNMnhabk90UzNH?=
- =?utf-8?B?QkYvZmFtR3Z2bCtWallzb0xZbUFTQm5hMlFaQVFEellJVEhDejhDRG9aaGdk?=
- =?utf-8?B?WWcvOHZBeTIrek00NzB5end1czhPTG4xTnVaMVp5KytiUnJOczBnTTFreUNn?=
- =?utf-8?B?bHBaYnhHZjZpM0pxK2NLdVk4Umt0dExxUEVPU1RNSGxYR1puU24yUjJDZXZl?=
- =?utf-8?B?WWVlcEptTU4wcHp5eWxubGlIQ05GdHdkYWpMMldaRkRZQStRMXdmREJ6RmVl?=
- =?utf-8?B?Y2xnQXpITFNxeVhUNDB0Z0VLNDg1MzJtN0VtdmU2S2lYaFM5alZENklJVFNQ?=
- =?utf-8?B?ZXJ0Y0lLYWd4Z3Nqb1c1YUlHWENVa0dGN29lVGp0aCtmVWdQZzZaa08vbGV0?=
- =?utf-8?B?dGJqTjAwRkxTb2NXSktRL2grWjRZY0Rjc0pETGhWbThuOHgvc3ZSTGhIc0Rh?=
- =?utf-8?B?TDVsK01EVkxwdHBERm9ZclExU3N2VzJ3dm4yWGl5SG5NVEhTTGlxdzBjTjBo?=
- =?utf-8?B?bHlvbmh0Y0JVY0ZxSU8rbTNWTWQ4V0N1WllQQXFhdXlFeFVSTURrS3MxUy9z?=
- =?utf-8?B?bkgzeHlYb0xjU3hOUnVVSzVKVlRRNlVBK3NRL0VmWkFKWWNnTG5hN0ROU3JN?=
- =?utf-8?B?amp4djl5MjV6NE9vNjZXYm9TcXlkUk1pTk5Nbkc0RXJ4ekxEMWxvanlMaEZy?=
- =?utf-8?B?YzFjZHdKbkEyeWhPMnB0cW1KeWNyNzNIMk84dk44Qk41UWt4SXFyVUJ5MkFz?=
- =?utf-8?B?U1docGdCYlpQNndXcEFGQWF1VUFBY3hsVlZkNlFoMjNHcSswNUxsU2UySFNH?=
- =?utf-8?B?K0pLc0tKQ2J3OEFEVDRLVHBibUNrSHZLWm8zQ0QrbnRqVFhWNmpLdnpZRDNn?=
- =?utf-8?B?bEhoL01jYVhNTzJOL1FXUDlIYWprc2lXVUNpcHAvQ1VHUkgxVE5JZlNtNHN1?=
- =?utf-8?B?S0k0cXJRMUJlSmJqcVpPU1NQNGh1MDNTU3BxVGpYSFYvSUZZbnNwdz09?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: ac5af0c2-2322-4a89-d2bc-08de79d9e377
-X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2026 10:36:26.6630 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XxhDHqOOODV4z0fpGXB8GeFAZrcDVRaiARiKnSKwJHVmDv0Dhu2q71hfjl+amWUcPrygrcsjXRxtBqQG5jg1oWrNOOUVIHTstb6zyoFTGfo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR3P278MB1665
-Received-SPF: pass client-ip=2a01:111:f403:c214::1;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=GVAP278CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 3/6] coreaudio: Improve naming
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+ <20260304-coreaudio-v8-3-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+ <3933555.kQq0lBPeGt@weasel>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <3933555.kQq0lBPeGt@weasel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,233 +79,560 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------ms070708060403040400060306
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 03/03/2026 20:20, Pierrick Bouvier wrote:
-> On 3/3/26 5:07 AM, Florian Hofhammer wrote:
->> Hi,
+On 2026/03/04 18:25, Christian Schoenebeck wrote:
+> On Wednesday, 4 March 2026 07:16:56 CET Akihiko Odaki wrote:
+>> coreaudio had names that are not conforming to QEMU codding style.
+> 
+> coding
+> 
+>> coreaudioVoiceOut also had some members that are prefixed with redundant
+>> words like "output" or "audio".
+>> Global names included "out" to tell they are specific to output devices,
+>> but this rule was not completely enforced.
+>> The frame size had three different names "frameSize", "bufferFrameSize",
+>> and "frameCount".
 >>
->> This patch series builds on top of the discussion from the thread at
->> https://lore.kernel.org/qemu-devel/e9bcd7c7-2d67-469e-b2f3-d1a68e456b2=
-b@epfl.ch/
->> and adds a plugin API function to set the program counter of the guest=
-,
->> as just writing to it via qemu_plugin_write_register() has no direct
->> effect.
+>> Replace identifiers to fix these problems.
 >>
->> This version v6 of the patch series addresses the requested changes fr=
-om
->> the previous v4 submission and an incorrect commit message from v5
->> (details below).
->> Note: checkpatch.pl still reports a warning about line length violatio=
-ns
->> in patch nr. 6/7 but I did not fix this, as the line was already > 80
->> characters long previously, the change added only a single character,
->> and I think the readability of the code is better as it is now. Please=
-
->> let me know if you disagree and would like me to fix this!
->>
->> Best regards,
->> Florian
->>
->> Changes:
->> v6:
->> - update commit message for patch 4/7
->> v5:
->> - make QEMU abort via asserts instead of just returning an error from
->>    the plugin API if preconditions are violated
->> - extend tests for qemu_plugin_set_pc() to different contexts
->> - fix issues highlighted by checkpatch.pl
->> v4:
->> - switch strcmp out in favor of g_strcmp0
->> - split the patch introducing the qemu_plugin_set_pc() API into three
->>    patches, two for preparing the plugin infrastructure and the syscal=
-l
->>    handling code and a third introducing the actual plugin API
->> v3:
->> - make PC registers read-only across architectures
->> - add tests for read-only registers
->> - adjust test structure for qemu_plugin_set_pc() by moving
->>     architecture-specific tests into corresponding directories
->> v2:
->> - add setjmp() in syscall handling path to allow PC redirection from
->>     syscall callbacks (via longjmp(), the cpu_loop()'s setjmp() for
->>     exiting a TB would not be live anymore in syscall handlers)
->> - add flags to ensure the qemu_plugin_set_pc() API is only called from=
-
->>     contexts where the CPU is live
->> - add test for qemu_plugin_set_pc() API
->> v1:
->> - initial version
->>
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->> Florian Hofhammer (7):
->>        plugins: add flag to specify whether PC is rw
->>        linux-user: make syscall emulation interruptible
->>        plugins: add PC diversion API function
->>        tests/tcg: add tests for qemu_plugin_set_pc API
->>        plugins: add read-only property for registers
->>        plugins: prohibit writing to read-only registers
->>        tests/tcg/plugins: test register accesses
+>>   audio/coreaudio.m | 188
+>> +++++++++++++++++++++++++++--------------------------- 1 file changed, 95
+>> insertions(+), 93 deletions(-)
 >>
->>   MAINTAINERS                                        |   1 +
->>   include/plugins/qemu-plugin.h                      |  19 +++
->>   linux-user/aarch64/cpu_loop.c                      |   2 +-
->>   linux-user/alpha/cpu_loop.c                        |   2 +-
->>   linux-user/arm/cpu_loop.c                          |   2 +-
->>   linux-user/hexagon/cpu_loop.c                      |   2 +-
->>   linux-user/hppa/cpu_loop.c                         |   1 +
->>   linux-user/i386/cpu_loop.c                         |   8 +-
->>   linux-user/include/special-errno.h                 |   8 ++
->>   linux-user/loongarch64/cpu_loop.c                  |   5 +-
->>   linux-user/m68k/cpu_loop.c                         |   2 +-
->>   linux-user/microblaze/cpu_loop.c                   |   2 +-
->>   linux-user/mips/cpu_loop.c                         |   9 +-
->>   linux-user/or1k/cpu_loop.c                         |   2 +-
->>   linux-user/ppc/cpu_loop.c                          |  10 +-
->>   linux-user/riscv/cpu_loop.c                        |   2 +-
->>   linux-user/s390x/cpu_loop.c                        |   2 +-
->>   linux-user/sh4/cpu_loop.c                          |   2 +-
->>   linux-user/sparc/cpu_loop.c                        |   4 +-
->>   linux-user/syscall.c                               |  16 +++
->>   linux-user/xtensa/cpu_loop.c                       |   1 +
->>   plugins/api.c                                      |  42 ++++++-
->>   plugins/core.c                                     |  29 +++--
->>   tests/tcg/arm/Makefile.target                      |   6 +
->>   tests/tcg/multiarch/Makefile.target                |  17 ++-
->>   .../multiarch/{ =3D> plugin}/check-plugin-output.sh  |   0
->>   .../{ =3D> plugin}/test-plugin-mem-access.c          |   0
->>   tests/tcg/multiarch/plugin/test-plugin-set-pc.c    | 140 +++++++++++=
-++++++++++
->>   tests/tcg/plugins/meson.build                      |   2 +
->>   tests/tcg/plugins/registers.c                      |  79 +++++++++++=
-+
->>   tests/tcg/plugins/setpc.c                          | 120 +++++++++++=
-+++++++
->>   31 files changed, 495 insertions(+), 42 deletions(-)
->> ---
->> base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
->> change-id: 20260303-setpc-v5-c1df30bad07f
->=20
-> Hi Florian,
->=20
-> it seems like there is a small issue building documentation with this s=
-eries, which should be trivial to fix.
-> https://github.com/p-b-o/qemu-ci/actions/runs/22632339221
+>> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+>> index bc9ab7477b68..736227eb2b7a 100644
+>> --- a/audio/coreaudio.m
+>> +++ b/audio/coreaudio.m
+>> @@ -43,34 +43,34 @@
+>>   typedef struct coreaudioVoiceOut {
+> 
+> Leaving this lower case?
+> 
+>>       HWVoiceOut hw;
+>>       pthread_mutex_t buf_mutex;
+>> -    AudioDeviceID outputDeviceID;
+>> -    int frameSizeSetting;
+>> -    uint32_t bufferCount;
+>> -    UInt32 audioDevicePropertyBufferFrameSize;
+>> +    AudioDeviceID device_id;
+>> +    int frame_size_setting;
+>> +    uint32_t buffer_count;
+>> +    UInt32 device_frame_size;
+>>       AudioDeviceIOProcID ioprocid;
+>>       bool enabled;
+>> -} coreaudioVoiceOut;
+>> +} CoreaudioVoiceOut;
+>>
+>> -static const AudioObjectPropertyAddress voice_addr = {
+>> +static const AudioObjectPropertyAddress voice_out_addr = {
+>>       kAudioHardwarePropertyDefaultOutputDevice,
+>>       kAudioObjectPropertyScopeGlobal,
+>>       kAudioObjectPropertyElementMain
+>>   };
+>>
+>> -static OSStatus coreaudio_get_voice(AudioDeviceID *id)
+>> +static OSStatus coreaudio_get_voice_out(AudioDeviceID *id)
+>>   {
+>>       UInt32 size = sizeof(*id);
+>>
+>>       return AudioObjectGetPropertyData(kAudioObjectSystemObject,
+>> -                                      &voice_addr,
+>> +                                      &voice_out_addr,
+>>                                         0,
+>>                                         NULL,
+>>                                         &size,
+>>                                         id);
+>>   }
+>>
+>> -static OSStatus coreaudio_get_framesizerange(AudioDeviceID id,
+>> -                                             AudioValueRange *framerange)
+>> +static OSStatus coreaudio_get_out_framesizerange(AudioDeviceID id,
+>> +                                                 AudioValueRange
+>> *framerange) {
+>>       UInt32 size = sizeof(*framerange);
+>>       AudioObjectPropertyAddress addr = {
+>> @@ -87,7 +87,7 @@ static OSStatus coreaudio_get_framesizerange(AudioDeviceID
+>> id, framerange);
+>>   }
+> 
+> So here it is "framerange" and not "frame_range".
+> 
+>> -static OSStatus coreaudio_get_framesize(AudioDeviceID id, UInt32
+>> *framesize) +static OSStatus coreaudio_get_out_framesize(AudioDeviceID id,
+>> UInt32 *framesize) {
+>>       UInt32 size = sizeof(*framesize);
+>>       AudioObjectPropertyAddress addr = {
+>> @@ -104,7 +104,7 @@ static OSStatus coreaudio_get_framesize(AudioDeviceID
+>> id, UInt32 *framesize) framesize);
+>>   }
+> 
+> Here it is "framesize" and not "frame_size".
+> 
+>> -static OSStatus coreaudio_set_framesize(AudioDeviceID id, UInt32
+>> *framesize) +static OSStatus coreaudio_set_out_framesize(AudioDeviceID id,
+>> UInt32 *framesize) {
+>>       UInt32 size = sizeof(*framesize);
+>>       AudioObjectPropertyAddress addr = {
+>> @@ -121,8 +121,8 @@ static OSStatus coreaudio_set_framesize(AudioDeviceID
+>> id, UInt32 *framesize) framesize);
+>>   }
+>>
+>> -static OSStatus coreaudio_set_streamformat(AudioDeviceID id,
+>> -                                           AudioStreamBasicDescription *d)
+>> +static OSStatus coreaudio_set_out_streamformat(AudioDeviceID id,
+>> +                                               AudioStreamBasicDescription
+>> *d) {
+>>       UInt32 size = sizeof(*d);
+>>       AudioObjectPropertyAddress addr = {
+>> @@ -139,7 +139,7 @@ static OSStatus coreaudio_set_streamformat(AudioDeviceID
+>> id, d);
+>>   }
+>>
+>> -static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
+>> +static OSStatus coreaudio_get_out_isrunning(AudioDeviceID id, UInt32
+>> *result) {
+>>       UInt32 size = sizeof(*result);
+>>       AudioObjectPropertyAddress addr = {
+>> @@ -243,7 +243,8 @@ static void G_GNUC_PRINTF(3, 4)
+>> coreaudio_logerr2(OSStatus status, #define
+>> coreaudio_playback_logerr(status, ...) \
+>>       coreaudio_logerr2(status, "playback", __VA_ARGS__)
+>>
+>> -static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
+>> +static int coreaudio_voice_out_buf_lock(CoreaudioVoiceOut *core,
+>> +                                        const char *fn_name)
+>>   {
+>>       int err;
+>>
+>> @@ -256,7 +257,8 @@ static int coreaudio_buf_lock(coreaudioVoiceOut *core,
+>> const char *fn_name) return 0;
+>>   }
+>>
+>> -static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char
+>> *fn_name) +static int coreaudio_voice_out_buf_unlock(CoreaudioVoiceOut
+>> *core, +                                          const char *fn_name)
+>>   {
+>>       int err;
+>>
+>> @@ -269,20 +271,20 @@ static int coreaudio_buf_unlock(coreaudioVoiceOut
+>> *core, const char *fn_name) return 0;
+>>   }
+>>
+>> -#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args) \
+>> -    static ret_type glue(coreaudio_, name)args_decl             \
+>> -    {                                                           \
+>> -        coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;      \
+>> -        ret_type ret;                                           \
+>> -                                                                \
+>> -        if (coreaudio_buf_lock(core, "coreaudio_" #name)) {         \
+>> -            return 0;                                           \
+>> -        }                                                       \
+>> -                                                                \
+>> -        ret = glue(audio_generic_, name)args;                   \
+>> -                                                                \
+>> -        coreaudio_buf_unlock(core, "coreaudio_" #name);             \
+>> -        return ret;                                             \
+>> +#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args)       \
+>> +    static ret_type glue(coreaudio_, name)args_decl                   \
+>> +    {                                                                 \
+>> +        CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;            \
+>> +        ret_type ret;                                                 \
+>> +                                                                      \
+>> +        if (coreaudio_voice_out_buf_lock(core, "coreaudio_" #name)) { \
+>> +            return 0;                                                 \
+>> +        }                                                             \
+>> +                                                                      \
+>> +        ret = glue(audio_generic_, name)args;                         \
+>> +                                                                      \
+>> +        coreaudio_voice_out_buf_unlock(core, "coreaudio_" #name);     \
+>> +        return ret;                                                   \
+>>       }
+>>   COREAUDIO_WRAPPER_FUNC(buffer_get_free, size_t, (HWVoiceOut *hw), (hw))
+>>   COREAUDIO_WRAPPER_FUNC(get_buffer_out, void *, (HWVoiceOut *hw, size_t
+>> *size), @@ -298,7 +300,7 @@ static ret_type glue(coreaudio_, name)args_decl
+>>              \ * callback to feed audiooutput buffer. called without BQL.
+>>    * allowed to lock "buf_mutex", but disallowed to have any other locks.
+>>    */
+>> -static OSStatus audioDeviceIOProc(
+>> +static OSStatus out_device_ioproc(
+>>       AudioDeviceID inDevice,
+>>       const AudioTimeStamp *inNow,
+>>       const AudioBufferList *inInputData,
+>> @@ -307,33 +309,33 @@ static OSStatus audioDeviceIOProc(
+>>       const AudioTimeStamp *inOutputTime,
+>>       void *hwptr)
+>>   {
+>> -    UInt32 frameCount, pending_frames;
+>> +    UInt32 frame_size, pending_frames;
+> 
+> And here it is "frame_size".
+> 
+> That's why I try to avoid looking at such kind of refactoring patches. Never
+> ending white noise added to the universe.
 
-Sorry, I didn't catch this one before. I didn't have sphinx installed
-locally and built without the docs.
+This patch addresses naming concerns raised for an old version of this 
+series. I will address the suggestions you made with the next version.
 
-It seems as if the issue is coming from the declaration of the new API
-as "QEMU_PLUGIN_API G_NORETURN void ..." and sphinx is tripping over the
-"G_NORETURN" macro. To fix this, I could either change the sphinx config
-to accept the macro, or remove the attribute from the declaration. I'd
-personally prefer the former but I'd be happy to get your opinion on
-this.
+> 
+>>       void *out = outOutputData->mBuffers[0].mData;
+>>       HWVoiceOut *hw = hwptr;
+>> -    coreaudioVoiceOut *core = hwptr;
+>> +    CoreaudioVoiceOut *core = hwptr;
+>>       size_t len;
+>>
+>> -    if (coreaudio_buf_lock(core, "audioDeviceIOProc")) {
+>> +    if (coreaudio_voice_out_buf_lock(core, "out_device_ioproc")) {
+>>           inInputTime = 0;
+>>           return 0;
+>>       }
+>>
+>> -    if (inDevice != core->outputDeviceID) {
+>> -        coreaudio_buf_unlock(core, "audioDeviceIOProc(old device)");
+>> +    if (inDevice != core->device_id) {
+>> +        coreaudio_voice_out_buf_unlock(core, "out_device_ioproc(old
+>> device)"); return 0;
+>>       }
+>>
+>> -    frameCount = core->audioDevicePropertyBufferFrameSize;
+>> +    frame_size = core->device_frame_size;
+>>       pending_frames = hw->pending_emul / hw->info.bytes_per_frame;
+>>
+>>       /* if there are not enough samples, set signal and return */
+>> -    if (pending_frames < frameCount) {
+>> +    if (pending_frames < frame_size) {
+>>           inInputTime = 0;
+>> -        coreaudio_buf_unlock(core, "audioDeviceIOProc(empty)");
+>> +        coreaudio_voice_out_buf_unlock(core, "out_device_ioproc(empty)");
+>>           return 0;
+>>       }
+>>
+>> -    len = frameCount * hw->info.bytes_per_frame;
+>> +    len = frame_size * hw->info.bytes_per_frame;
+>>       while (len) {
+>>           size_t write_len, start;
+>>
+>> @@ -349,16 +351,16 @@ static OSStatus audioDeviceIOProc(
+>>           out += write_len;
+>>       }
+>>
+>> -    coreaudio_buf_unlock(core, "audioDeviceIOProc");
+>> +    coreaudio_voice_out_buf_unlock(core, "out_device_ioproc");
+> 
+> Behaviour change. Not pure refactoring. Should be split into a separate patch.
 
-Best regards,
-Florian
+Two things are renamed here.
+- coreaudio_buf_unlock() is renamed to coreaudio_voice_out_buf_unlock().
+- "audioDeviceIOProc" is the name of this function. This function is
+   renamed to "out_device_ioproc".
 
-> For v7, you can run this by yourself before sending the series. It's ea=
-sy, quick and instructions are here:
-> https://github.com/p-b-o/qemu-ci?tab=3Dreadme-ov-file#qemu-ci
->=20
-> It simply saves time by making sure we don't need to pull, build and ru=
-n any test by ourselves. If any failure is left when making a pull reques=
-t on GitLab, it will be our personal responsibility to fix it.
->=20
-> Regards,
-> Pierrick
+Regards,
+Akihiko Odaki
 
---------------ms070708060403040400060306
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+> 
+>>       return 0;
+>>   }
+>>
+>> -static OSStatus init_out_device(coreaudioVoiceOut *core)
+>> +static OSStatus init_out_device(CoreaudioVoiceOut *core)
+>>   {
+>> +    AudioValueRange value_range;
+>>       OSStatus status;
+>> -    AudioValueRange frameRange;
+>>
+>> -    AudioStreamBasicDescription streamBasicDescription = {
+>> +    AudioStreamBasicDescription stream_basic_description = {
+>>           .mBitsPerChannel = audio_format_bits(core->hw.info.af),
+>>           .mBytesPerFrame = core->hw.info.bytes_per_frame,
+>>           .mBytesPerPacket = core->hw.info.bytes_per_frame,
+>> @@ -369,21 +371,20 @@ static OSStatus init_out_device(coreaudioVoiceOut
+>> *core) .mSampleRate = core->hw.info.freq
+>>       };
+>>
+>> -    status = coreaudio_get_voice(&core->outputDeviceID);
+>> +    status = coreaudio_get_voice_out(&core->device_id);
+>>       if (status != kAudioHardwareNoError) {
+>>           coreaudio_playback_logerr(status,
+>>                                     "Could not get default output device");
+>>           return status;
+>>       }
+>> -    if (core->outputDeviceID == kAudioDeviceUnknown) {
+>> +    if (core->device_id == kAudioDeviceUnknown) {
+>>           error_report("coreaudio: Could not initialize playback: "
+>>                        "Unknown audio device");
+>>           return status;
+>>       }
+>>
+>>       /* get minimum and maximum buffer frame sizes */
+>> -    status = coreaudio_get_framesizerange(core->outputDeviceID,
+>> -                                          &frameRange);
+>> +    status = coreaudio_get_out_framesizerange(core->device_id,
+>> &value_range); if (status == kAudioHardwareBadObjectError) {
+>>           return 0;
+>>       }
+>> @@ -393,34 +394,34 @@ static OSStatus init_out_device(coreaudioVoiceOut
+>> *core) return status;
+>>       }
+>>
+>> -    if (frameRange.mMinimum > core->frameSizeSetting) {
+>> -        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
+>> +    if (value_range.mMinimum > core->frame_size_setting) {
+>> +        core->device_frame_size = value_range.mMinimum;
+>>           warn_report("coreaudio: Upsizing buffer frames to %f",
+>> -                    frameRange.mMinimum);
+>> -    } else if (frameRange.mMaximum < core->frameSizeSetting) {
+>> -        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
+>> +                    value_range.mMinimum);
+>> +    } else if (value_range.mMaximum < core->frame_size_setting) {
+>> +        core->device_frame_size = value_range.mMaximum;
+>>           warn_report("coreaudio: Downsizing buffer frames to %f",
+>> -                    frameRange.mMaximum);
+>> +                    value_range.mMaximum);
+>>       } else {
+>> -        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+>> +        core->device_frame_size = core->frame_size_setting;
+>>       }
+>>
+>>       /* set Buffer Frame Size */
+>> -    status = coreaudio_set_framesize(core->outputDeviceID,
+>> -
+>> &core->audioDevicePropertyBufferFrameSize); +    status =
+>> coreaudio_set_out_framesize(core->device_id,
+>> +                                         &core->device_frame_size);
+>>       if (status == kAudioHardwareBadObjectError) {
+>>           return 0;
+>>       }
+>>       if (status != kAudioHardwareNoError) {
+>>           coreaudio_playback_logerr(status,
+>>                                     "Could not set device buffer frame size
+>> %" PRIu32, -
+>> (uint32_t)core->audioDevicePropertyBufferFrameSize); +
+>>              (uint32_t)core->device_frame_size); return status;
+>>       }
+>>
+>>       /* get Buffer Frame Size */
+>> -    status = coreaudio_get_framesize(core->outputDeviceID,
+>> -
+>> &core->audioDevicePropertyBufferFrameSize); +    status =
+>> coreaudio_get_out_framesize(core->device_id,
+>> +                                         &core->device_frame_size);
+>>       if (status == kAudioHardwareBadObjectError) {
+>>           return 0;
+>>       }
+>> @@ -429,19 +430,19 @@ static OSStatus init_out_device(coreaudioVoiceOut
+>> *core) "Could not get device buffer frame size"); return status;
+>>       }
+>> -    core->hw.samples = core->bufferCount *
+>> core->audioDevicePropertyBufferFrameSize; +    core->hw.samples =
+>> core->buffer_count * core->device_frame_size;
+>>
+>>       /* set Samplerate */
+>> -    status = coreaudio_set_streamformat(core->outputDeviceID,
+>> -                                        &streamBasicDescription);
+>> +    status = coreaudio_set_out_streamformat(core->device_id,
+>> +                                            &stream_basic_description);
+>>       if (status == kAudioHardwareBadObjectError) {
+>>           return 0;
+>>       }
+>>       if (status != kAudioHardwareNoError) {
+>>           coreaudio_playback_logerr(status,
+>>                                     "Could not set samplerate %lf",
+>> -                                  streamBasicDescription.mSampleRate);
+>> -        core->outputDeviceID = kAudioDeviceUnknown;
+>> +                                  stream_basic_description.mSampleRate);
+>> +        core->device_id = kAudioDeviceUnknown;
+>>           return status;
+>>       }
+>>
+>> @@ -456,8 +457,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+>> * with the callers of AudioObjectGetPropertyData.
+>>        */
+>>       core->ioprocid = NULL;
+>> -    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
+>> -                                       audioDeviceIOProc,
+>> +    status = AudioDeviceCreateIOProcID(core->device_id,
+>> +                                       out_device_ioproc,
+>>                                          &core->hw,
+>>                                          &core->ioprocid);
+>>       if (status == kAudioHardwareBadDeviceError) {
+>> @@ -465,20 +466,20 @@ static OSStatus init_out_device(coreaudioVoiceOut
+>> *core) }
+>>       if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
+>>           coreaudio_playback_logerr(status, "Could not set IOProc");
+>> -        core->outputDeviceID = kAudioDeviceUnknown;
+>> +        core->device_id = kAudioDeviceUnknown;
+>>           return status;
+>>       }
+>>
+>>       return 0;
+>>   }
+>>
+>> -static void fini_out_device(coreaudioVoiceOut *core)
+>> +static void fini_out_device(CoreaudioVoiceOut *core)
+>>   {
+>>       OSStatus status;
+>>       UInt32 isrunning;
+>>
+>>       /* stop playback */
+>> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
+>> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
+>>       if (status != kAudioHardwareBadObjectError) {
+>>           if (status != kAudioHardwareNoError) {
+>>               coreaudio_logerr(status,
+>> @@ -486,7 +487,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
+>>           }
+>>
+>>           if (isrunning) {
+>> -            status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
+>> +            status = AudioDeviceStop(core->device_id, core->ioprocid); if
+>> (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError)
+>> { coreaudio_logerr(status, "Could not stop playback"); }
+>> @@ -494,20 +495,20 @@ static void fini_out_device(coreaudioVoiceOut *core)
+>>       }
+>>
+>>       /* remove callback */
+>> -    status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
+>> +    status = AudioDeviceDestroyIOProcID(core->device_id,
+>>                                           core->ioprocid);
+>>       if (status != kAudioHardwareBadDeviceError && status !=
+>> kAudioHardwareNoError) { coreaudio_logerr(status, "Could not remove
+>> IOProc");
+>>       }
+>> -    core->outputDeviceID = kAudioDeviceUnknown;
+>> +    core->device_id = kAudioDeviceUnknown;
+>>   }
+>>
+>> -static void update_device_playback_state(coreaudioVoiceOut *core)
+>> +static void update_out_device_playback_state(CoreaudioVoiceOut *core)
+>>   {
+>>       OSStatus status;
+>>       UInt32 isrunning;
+>>
+>> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
+>> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
+>>       if (status != kAudioHardwareNoError) {
+>>           if (status != kAudioHardwareBadObjectError) {
+>>               coreaudio_logerr(status,
+>> @@ -520,7 +521,7 @@ static void
+>> update_device_playback_state(coreaudioVoiceOut *core) if (core->enabled) {
+>>           /* start playback */
+>>           if (!isrunning) {
+>> -            status = AudioDeviceStart(core->outputDeviceID,
+>> core->ioprocid); +            status = AudioDeviceStart(core->device_id,
+>> core->ioprocid); if (status != kAudioHardwareBadDeviceError && status !=
+>> kAudioHardwareNoError) { coreaudio_logerr(status, "Could not resume
+>> playback"); }
+>> @@ -528,7 +529,7 @@ static void
+>> update_device_playback_state(coreaudioVoiceOut *core) } else {
+>>           /* stop playback */
+>>           if (isrunning) {
+>> -            status = AudioDeviceStop(core->outputDeviceID,
+>> +            status = AudioDeviceStop(core->device_id,
+>>                                        core->ioprocid);
+>>               if (status != kAudioHardwareBadDeviceError && status !=
+>> kAudioHardwareNoError) { coreaudio_logerr(status, "Could not pause
+>> playback"); @@ -538,22 +539,22 @@ static void
+>> update_device_playback_state(coreaudioVoiceOut *core) }
+>>
+>>   /* called without BQL. */
+>> -static OSStatus handle_voice_change(
+>> +static OSStatus handle_voice_out_change(
+>>       AudioObjectID in_object_id,
+>>       UInt32 in_number_addresses,
+>>       const AudioObjectPropertyAddress *in_addresses,
+>>       void *in_client_data)
+>>   {
+>> -    coreaudioVoiceOut *core = in_client_data;
+>> +    CoreaudioVoiceOut *core = in_client_data;
+>>
+>>       bql_lock();
+>>
+>> -    if (core->outputDeviceID) {
+>> +    if (core->device_id) {
+>>           fini_out_device(core);
+>>       }
+>>
+>>       if (!init_out_device(core)) {
+>> -        update_device_playback_state(core);
+>> +        update_out_device_playback_state(core);
+>>       }
+>>
+>>       bql_unlock();
+>> @@ -563,7 +564,7 @@ static OSStatus handle_voice_change(
+>>   static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+>>   {
+>>       OSStatus status;
+>> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
+>> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
+>>       int err;
+>>       Audiodev *dev = hw->s->dev;
+>>       AudiodevCoreaudioPerDirectionOptions *cpdo = dev->u.coreaudio.out;
+>> @@ -581,13 +582,14 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct
+>> audsettings *as) as->fmt = AUDIO_FORMAT_F32;
+>>       audio_pcm_init_info(&hw->info, as);
+>>
+>> -    core->frameSizeSetting = audio_buffer_frames(
+>> +    core->frame_size_setting = audio_buffer_frames(
+>>           qapi_AudiodevCoreaudioPerDirectionOptions_base(cpdo), as, 11610);
+>>
+>> -    core->bufferCount = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
+>> +    core->buffer_count = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
+>>
+>>       status = AudioObjectAddPropertyListener(kAudioObjectSystemObject,
+>> -                                            &voice_addr,
+>> handle_voice_change, +
+>> &voice_out_addr,
+>> +                                            handle_voice_out_change,
+>>                                               core);
+>>       if (status != kAudioHardwareNoError) {
+>>           coreaudio_playback_logerr(status,
+>> @@ -597,8 +599,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct
+>> audsettings *as)
+>>
+>>       if (init_out_device(core)) {
+>>           status =
+>> AudioObjectRemovePropertyListener(kAudioObjectSystemObject, -
+>>                                      &voice_addr,
+>> -                                                   handle_voice_change,
+>> +                                                   &voice_out_addr,
+>> +                                                   handle_voice_out_change,
+>> core);
+>>           if (status != kAudioHardwareNoError) {
+>>               coreaudio_playback_logerr(status,
+>> @@ -615,11 +617,11 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+>>   {
+>>       OSStatus status;
+>>       int err;
+>> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
+>> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
+>>
+>>       status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
+>> -                                               &voice_addr,
+>> -                                               handle_voice_change,
+>> +                                               &voice_out_addr,
+>> +                                               handle_voice_out_change,
+>>                                                  core);
+>>       if (status != kAudioHardwareNoError) {
+>>           coreaudio_logerr(status, "Could not remove voice property change
+>> listener"); @@ -636,10 +638,10 @@ static void coreaudio_fini_out
+>> (HWVoiceOut *hw)
+>>
+>>   static void coreaudio_enable_out(HWVoiceOut *hw, bool enable)
+>>   {
+>> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
+>> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
+>>
+>>       core->enabled = enable;
+>> -    update_device_playback_state(core);
+>> +    update_out_device_playback_state(core);
+>>   }
+>>
+>>   static void audio_coreaudio_class_init(ObjectClass *klass, const void
+>> *data)
+> 
+> 
+> 
+> 
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
-DD0wggWvMIIEl6ADAgECAhANkOKMSmGXhF5eMl0rsRhvMA0GCSqGSIb3DQEBDAUAMGUxCzAJ
-BgNVBAYTAlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2Vy
-dC5jb20xJDAiBgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBHMjAeFw0yNDAzMTMw
-MDAwMDBaFw0zNDAzMTIyMzU5NTlaMGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2Vy
-dCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNI
-QTM4NCAyMDI0IENBMTCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAOfSIeC0vv1x
-PQ+dgSxbIIrkaru6skAWJYaGFzmvq4Kq+2wU2jxhcWlJg/JeP5jEkq/LM3pn5aaLao79j+XR
-mS7J1ZpJKUODJVoM4s9MQJhTMvo4qS5ZS64g6QR7Obkz3I1Lr3aWeSBmDDEyzue+NKtuWZ1C
-xy3RdXo/w5HgRc3l2AercOM3Gt1XonTzEtTbZ/Hwc0Sn9Gz8RmGRK6Ka4hVDl8q/2l110KaV
-233Kh5etP0csXS8MIMdVRfRu3sc5hp13DG7lCKzK72a2GEpI8Wpl26G6I1/LMzz/98T+FqjT
-qxsdquk7Cj7m2vKGLW1BorpQH7WFGPdJQXJe1hfbfiZACcVdCtl4nAacFacmsiArZBfX7AQG
-L7isvHUwwYFEtcApyGW4p2Lt+t8nvU0CANA6BHOpOz1xOP8WmAESbUriIjyuTUf3fJ9oDNCu
-rVqhASMJCDaWI3lYX/QAoiAzt6akqbbZxo2ujW7mGGqc0KxqE2csh2T79v7pC8aUtHBfwNrT
-R19GnZVxE0eQ7ViIQhR6mpSaUQFA9sG+cmD2G8TnCgYsLa0q8De6F61aCBevQGHNzrbZ3JAM
-neveYg/Jy1XxQHDRcvrMfWKe0jjcWbdKYlaGVPm5V1ILwYz7Yv5ewo3NUrxIGJiywe9qPhuJ
-SDZs7VehTuI0FxGIsgKzVjgbAgMBAAGjggFcMIIBWDASBgNVHRMBAf8ECDAGAQH/AgEAMB0G
-A1UdDgQWBBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAfBgNVHSMEGDAWgBTOw0q5mVXyuNtgv6l+
-vVa1lzan1jAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MHkGCCsGAQUFBwEBBG0wazAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
-MEMGCCsGAQUFBzAChjdodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vRGlnaUNlcnRBc3N1
-cmVkSURSb290RzIuY3J0MEUGA1UdHwQ+MDwwOqA4oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0
-LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RHMi5jcmwwEQYDVR0gBAowCDAGBgRVHSAAMA0G
-CSqGSIb3DQEBDAUAA4IBAQA+b8Uw53sDspdZgukU+qzLyyHkcjlxGGhHlP+zrmDLKm1wEFvC
-RS2pili3Hy67i8N4N5NUvw5Rg6kv3lxb9S9Rktxk43k+tvm68pl7OxQE55ZjVY87P0lUPGwE
-qOOwLLyH02ZQcsfq5p5LrOH90JvmvZ1yy73HS+VpDAqOlytE0NSvTIRqFFkKQGQwfjvtql9Y
-flujuNNvJztjBaHKYZsnNSg+J38ojYq4TP3pSg3UdVH0PncVjPQyqxC9xef5Xae92Kbkzol3
-x7Nel3A1bwAkalrDMspvTHvey6LfiBksFIqviTnoy7fgjaRAJgHS+RXx/cmuRd3rUAclSVVr
-Yu8RMIIGhjCCBG6gAwIBAgIQAggtinx6OJLKM4FVztNyWTANBgkqhkiG9w0BAQsFADBiMQsw
-CQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xOjA4BgNVBAMTMURpZ2lDZXJ0
-IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQgMjAyNCBDQTEwHhcNMjUwNTI4MDAw
-MDAwWhcNMjgwNTMwMjM1OTU5WjCBrDEOMAwGA1UEYRMFR09WQ0gxCzAJBgNVBAYTAkNIMREw
-DwYDVQQHEwhMYXVzYW5uZTE0MDIGA1UECgwrw4ljb2xlIHBvbHl0ZWNobmlxdWUgZsOpZMOp
-cmFsZSBkZSBMYXVzYW5uZTEaMBgGA1UEAxMRRmxvcmlhbiBIb2ZoYW1tZXIxKDAmBgkqhkiG
-9w0BCQEWGWZsb3JpYW4uaG9maGFtbWVyQGVwZmwuY2gwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-DwAwggEKAoIBAQDZkbG07NgfFKDNM3VI4qQdU1fVIGUQnN6BO2zeqoUdytNIzxOX6n7HxM+o
-CLa01AnxaL59DXwFTXIg0OVq5ETAoLshUwnkYeWhKZH4Ysoq74QGVFihjrrs41d+8o+ymG2F
-cZBMzQ/RO4KzFhmlaZ/E+1d2F7/O3x8LohaFxxBsN0+qonMreRQGx+ialMmbARFJkVuinuB4
-3hZ8eRVmXy8A4R8ywakunaCNm15+eIQtptCs3IH5UqPEEOn16ANekWr7z5mZJh3ApxreflA/
-iwJKWd/Ljga90TJXjTFc7sNA0RgA78Edqw7BE+D2VUcPMshdhKYNB1BVHZS81anGL7RFAgMB
-AAGjggHrMIIB5zAfBgNVHSMEGDAWgBT3m6JO05fF9DQPQw6Bhc6RkzKv+TAdBgNVHQ4EFgQU
-ogXJJmzPazWg0eBlf1DbolocD3gwJAYDVR0RBB0wG4EZZmxvcmlhbi5ob2ZoYW1tZXJAZXBm
-bC5jaDAUBgNVHSAEDTALMAkGB2eBDAEFAwEwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQG
-CCsGAQUFBwMCBggrBgEFBQcDBDCBqQYDVR0fBIGhMIGeME2gS6BJhkdodHRwOi8vY3JsMy5k
-aWdpY2VydC5jb20vRGlnaUNlcnRBc3N1cmVkRzJTTUlNRVJTQTQwOTZTSEEzODQyMDI0Q0Ex
-LmNybDBNoEugSYZHaHR0cDovL2NybDQuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcy
-U01JTUVSU0E0MDk2U0hBMzg0MjAyNENBMS5jcmwwgY0GCCsGAQUFBwEBBIGAMH4wJAYIKwYB
-BQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBWBggrBgEFBQcwAoZKaHR0cDovL2Nh
-Y2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0QXNzdXJlZEcyU01JTUVSU0E0MDk2U0hBMzg0
-MjAyNENBMS5jcnQwDQYJKoZIhvcNAQELBQADggIBAD3Ne2mHg2ctxRIflrx/T2yBDnQunFhe
-SRwBnFIaOvCG05KE9iit2I2sazC5xqdp292spCoP9Qa4MOJg22BFmTnN9XnOjcEv9KFPSMaA
-ITLu8CXyewPb0xLET8WqdEe5AravlneZ9/H0ve9Ufhk3wbJPKK5yijcKYmEYH21JBtZ1pnjs
-fVEXAETdKkp9LC5sVeYeFk67BbUTPrFl37pha3TynPwJAiXDJFR2uI2JVGESQFyWkeO/bY5T
-DCf6VIp3d1p++XoOTVseFE8OqaHZYGN+DgSK4ejT19c/GgjQqoWVK+xSvHEEsoLfOADKcYFN
-M0ptGrFYpdRWJO0CKukBUAk8fpriJ/OjhSVQltCpN3pK1DPXnPrXTROXGacb3PNSUyeDlP2/
-y0FqpEY7GjwMZMdu+U/rHhMGbDmv/ZBLGwiGzQVmld5je+d8nvZTamE1iBA8Nhmuz6wg6yN1
-qx9b7Jn/9yQebxvHddnvz6jw6FDnw2bhq7z88eH3mYZYZ48Fhr8J87horGotEDKTDNHkF1Oe
-FSxhIx0a7yoe1I66R5tapkRlNgI5EX53e/npP4ruND5bQFWDI7JGkKrLlAjQR/dNahXXX/Ry
-rCfngiHZcAQakPkQrlrZCxMhlIKvDMunATaICyjnHizEC+1qzJsdvJgSC8sOzLxiEjlx3MRe
-CswFMYIEezCCBHcCAQEwdjBiMQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIElu
-Yy4xOjA4BgNVBAMTMURpZ2lDZXJ0IEFzc3VyZWQgRzIgU01JTUUgUlNBNDA5NiBTSEEzODQg
-MjAyNCBDQTECEAIILYp8ejiSyjOBVc7TclkwDQYJYIZIAWUDBAIBBQCgggLWMBgGCSqGSIb3
-DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDMwNDEwMzYyNVowLwYJKoZI
-hvcNAQkEMSIEILhlscwqoZAxDN1alestIlm/UnOp1/3tGKl2mtsCrrQDMIGFBgkrBgEEAYI3
-EAQxeDB2MGIxCzAJBgNVBAYTAlVTMRcwFQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UE
-AxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBTTUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMQIQ
-Aggtinx6OJLKM4FVztNyWTCBhwYLKoZIhvcNAQkQAgsxeKB2MGIxCzAJBgNVBAYTAlVTMRcw
-FQYDVQQKEw5EaWdpQ2VydCwgSW5jLjE6MDgGA1UEAxMxRGlnaUNlcnQgQXNzdXJlZCBHMiBT
-TUlNRSBSU0E0MDk2IFNIQTM4NCAyMDI0IENBMQIQAggtinx6OJLKM4FVztNyWTCCAVcGCSqG
-SIb3DQEJDzGCAUgwggFEMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcw
-DQYIKoZIhvcNAwICAQUwDQYIKoZIhvcNAwICAQUwBwYFKw4DAgcwDQYIKoZIhvcNAwICAQUw
-BwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgBZQMEAgMwCwYJYIZI
-AWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUDBAIJMAsGCWCGSAFl
-AwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAIBgYrgQQBCwEwCAYG
-K4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgGBiuBBAEOATAIBgYr
-gQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIIBADY06MJSg8NX3S017gc2tkd+pm14
-6vvg0TcQ9f2e7r+29eHldr1P0bRyYoDYDVkm61mFeBPNdAso7LCELNXWROG3Td2WMcEaQYcC
-8w6JXsYyx3fGX9gG0SdF2nZkxQjWRctlq/8oC7dxuLME6xoxLXuhcxeDkQYa5sbD+/dEljn5
-z2ZSqbGXXcTQshMBq0S+HGYAGJbMrbT+iHbchmVPTLFUJjVemwi0gt8+HZQl/GKy79OmM/aJ
-H/38vxgFm5CoCPL7d9dO7M2gJO72sCPh4r9Sv37z1ZXJ1d+4r4DRmVFm0753wwGcVwQ+UADH
-Yz4sV4GiLhkUnAU5psND02ehSnAAAAAAAAA=
-
---------------ms070708060403040400060306--
 
