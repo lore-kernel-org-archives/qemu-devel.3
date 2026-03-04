@@ -4,124 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72E6EDEBF7
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4494E67A8A
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxgZF-0007FK-KK; Wed, 04 Mar 2026 02:22:49 -0500
+	id 1vxgdc-0008DN-Kx; Wed, 04 Mar 2026 02:27:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vxgZC-0007Ey-Kc
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:22:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgdY-0008Ch-HT
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:27:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vxgZB-0003BJ-5S
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:22:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgdW-0004tW-KR
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:27:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772608964;
+ s=mimecast20190719; t=1772609232;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zPCfb2FDxLMxN12huZjUgdujpqtuCf8kw0/k32NLDjM=;
- b=iUq8EXn7q1rewOppBaj4EpOssNTBXLatQ8ihCY7I69eF8Y6QS1V2kcu2H3CFs2kN+Gyw0U
- xa11ErDcNUluJvNyz7Ls9yxCs2k1hTXEG1xs7SujDlB3mWJSEZm7rABdX1z1i5a9V9ge7Z
- 9EKkWvvLq1d8iwx8aoj+I8tvZ/WNhsU=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-193-M-55dQEkNjCl4SrhREuqcA-1; Wed, 04 Mar 2026 02:22:42 -0500
-X-MC-Unique: M-55dQEkNjCl4SrhREuqcA-1
-X-Mimecast-MFC-AGG-ID: M-55dQEkNjCl4SrhREuqcA_1772608962
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2ae405e95f5so39842235ad.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 23:22:42 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772608961; cv=none;
- d=google.com; s=arc-20240605;
- b=akaJVYtuht3apPnCDrulAiZiJYW3P3tvFKp57R9iBaNAt839m61KTM505c1yi05spO
- z1rDyc2TH/nf8aCPxGtMsC7iBsYjW8dDQDFjDWEI5DuArmqPsL4pACw9UspGSRMwI2rs
- HbHh/5B42jz2/qqS83trYuUWo8m+k82Z6lRjKhw/hMD323P/n0cisDNER29WEl02FMDX
- 91TGifWWfu9622gKXkqtyaQ14/j6YFshP79RgnAU4T6MfSge+bFAb9SMTXT1XwNUyCVT
- gh0o2qYbUP9zkvUfEN1cBgRj7Qyw49SnPy67CIJDc3akfb5/c6Z2Yse4PwjzPV2dhZ8S
- s9Jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zPCfb2FDxLMxN12huZjUgdujpqtuCf8kw0/k32NLDjM=;
- fh=0Jvbt9B0s8bGT+BOpSkFXAj7zmYT/Alfm5/SqFIk/6s=;
- b=IbzYueVkchf16alEubK0FLPdis47LemHrqDTX6dvhRMZPp7vEC9WNX80PHP6qVfQHf
- 5qM4V1sIJRBA5CGtR9EzM+RESeVbNLTvFDprX6TooBJHleeA09SVyV40BbPW+W8QnJ1c
- d4EYIRvZmwptBgtj9rSB422BmWG637A9VAmEv/zMezb+B8Q6+7awg212fszodoGKpfSY
- mn38E0xGWnLA8fdhRfa6On0STXTf4z3xLwD5r+eLYNNfrcWppLtjWgCM7hqVhinFeUZI
- 4H7EBLpMjGHixBK4MY5AXgSipUBTE0qrK+zRGdSwmXB+gYzCz4oDrTvVwOAPZ5we9zFu
- 9KHg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772608961; x=1773213761; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zPCfb2FDxLMxN12huZjUgdujpqtuCf8kw0/k32NLDjM=;
- b=PxJAFuxuh7uTd9Wf+bOi4rmNGnrN4lqgcKdxbDaSW0SfFmZ6tjudk41b/jj4Df92sF
- 6CGou099qCF2Rpd1GvwHdRZySlchRTIv3nfGtuUragmosbvnPlLt/B/amKHHJ6wkI92L
- rMdFO4TygHPXeCaoQ/2KXzh48ysdnEj3iV9K5nrdOfkrYcmXdzn2KUbXcDWRbaX9+CSE
- A5CubRuaoYhsaK3BSW2CFUBuG4d1UuZhaLsT+3cFKyr1Uvvx/35Jrby/9HJ9jTBbW5x8
- DTHzdLIJwT0MaI/Q0e2k7A9oeO3QGfdFOqMumNUTazFwRnSmet7nvXtfHlIOlAMM6mhP
- G+sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772608961; x=1773213761;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zPCfb2FDxLMxN12huZjUgdujpqtuCf8kw0/k32NLDjM=;
- b=WF8J36ItwdHsuHYf0Z4bq8/y8qmNhTXVYYH+hbhYbs6iqZwBIU9eGXqlevfe1/bH2L
- sgErRX8gqahEQNZHd8z7V9HwDB+mYpLDgi0ZAKX+ujXDo3pO5Za2yVCPeXRQGs5maLoG
- 9AOOk+aaSihIll+U2VX7SXbz7Fg02Z5sDaek/pygJ+jGzyMJgDhhYuzKemSlgMH87whE
- 1e/cheaCzSfpwkpcLGgsrBp42tUB7zDTy3pDd1yGAvW1wqq83Yk6+GrP+tJER6rqEN59
- tYNMHKe/bQ1ZlZiGEpQGFXz6P/G6zYkNau65QCa4M+0Y8Bcm4Aa32JMp1G4BfjqTalpN
- F2MA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTwId1Oi01TKxnXAn/6nMMHU+trwHKrpxTZj5sUvL2qu+tGzvbcw2O8rAT0HGIqN1uktzLdMsWJnEF@nongnu.org
-X-Gm-Message-State: AOJu0Yxtl1++95wS/uckTc11FXPLVT0xbprePM2Xna8ebO5zykKuAJ7v
- JGJ3Xl9oZdtyZFQkHVQahRJBEtQQNK0Le06qPjsniN4+M7/hnlB6wZZRyhNdBG3xWEBFficbuX1
- i/R/Hqs9jtONkHuvyT9T6m+TzOiUcNsktM9Jp4frO1iq8h1nnX4uRhnZSqz7ew35mQmOqNu65aS
- iauvOzMxTrF+hilG4gXQglzSjvMXD5lk4=
-X-Gm-Gg: ATEYQzzQWqqCrZKfeeF9S15y0jvo9P/BHig8AOagacWcremo8KFax3RLjDE/dBLndRl
- qRTMXZvkM+cGp3d3m+PVPF1ZkZWgTF/k63DHNQ60rlNBzUbutWqc2202iqHqQV2ubKf/kW8c+xX
- GJN/ZCDQ+a6EOBb49mcsDyb9vCoEeHnxSVukEZKD2+80+ixmL4McsHLOs4Vmhl8eViHKbYZjcD6
- V5N8Ug=
-X-Received: by 2002:a17:903:1508:b0:2ae:572a:9f19 with SMTP id
- d9443c01a7336-2ae6aa365b2mr10704245ad.21.1772608961622; 
- Tue, 03 Mar 2026 23:22:41 -0800 (PST)
-X-Received: by 2002:a17:903:1508:b0:2ae:572a:9f19 with SMTP id
- d9443c01a7336-2ae6aa365b2mr10704045ad.21.1772608961148; Tue, 03 Mar 2026
- 23:22:41 -0800 (PST)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1fc9ay7NzjXtfsscKXTAxpRwfiO5hSpLDvIN8UUix/Y=;
+ b=ZxDWktXDjYlW0THlZIANSaEye+8C8GT89lU3+vFVDGmmzm38zJSUxfwsj5pj6siHwbxNqe
+ iRnuGeVnsjC23lv5KlBlz7G9P1Nc1cnSdEZzCiqZ6ERAlR4BtTDMs9ClumZcaHjo23AaJf
+ bbG6Kxmc3mXhShIf1p70V5EWZlY5X6Y=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-XtecwpchPiiyzF-3-2YqDw-1; Wed,
+ 04 Mar 2026 02:27:08 -0500
+X-MC-Unique: XtecwpchPiiyzF-3-2YqDw-1
+X-Mimecast-MFC-AGG-ID: XtecwpchPiiyzF-3-2YqDw_1772609226
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACDC018002CF; Wed,  4 Mar 2026 07:27:06 +0000 (UTC)
+Received: from [10.45.224.194] (unknown [10.45.224.194])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B296519560AB; Wed,  4 Mar 2026 07:26:58 +0000 (UTC)
+Message-ID: <1423d381-5e73-4f8c-b0f3-3b71b3f8ea19@redhat.com>
+Date: Wed, 4 Mar 2026 08:26:56 +0100
 MIME-Version: 1.0
-References: <20260213071042.3733239-1-lulu@redhat.com>
- <20260213071042.3733239-2-lulu@redhat.com>
-In-Reply-To: <20260213071042.3733239-2-lulu@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 4 Mar 2026 15:22:29 +0800
-X-Gm-Features: AaiRm50paf47LG6BqQJjtbXKtkDk1oN3jSdcg3gB85vRVIa5TF9EJ3VTotRAN-A
-Message-ID: <CACGkMEthjvROiDq4p7FyNOA0gHA-O6UpmEx_9nt9-zLh97pp8Q@mail.gmail.com>
-Subject: Re: [RFC 1/5] net/filter: Allow redirector on vhost backends
-To: Cindy Lu <lulu@redhat.com>
-Cc: mst@redhat.com, zhangckid@gmail.com, lizhijian@fujitsu.com, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 08/30] crypto/x509-utils: Add helper functions for DIAG
+ 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, berrange@redhat.com,
+ richard.henderson@linaro.org, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com
+References: <20260212204352.1044699-1-zycai@linux.ibm.com>
+ <20260212204352.1044699-9-zycai@linux.ibm.com>
+ <a876fd40-c80a-4cbd-8969-b0c3cde6b7d9@redhat.com>
+ <35d6bae0-533e-43a0-85ae-45aacdb66542@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <35d6bae0-533e-43a0-85ae-45aacdb66542@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -139,42 +135,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 13, 2026 at 3:10=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
->
-> Allow filter redirector on vhost backends
+On 03/03/2026 22.02, Zhuoying Cai wrote:
+> On 2/28/26 8:43 AM, Thomas Huth wrote:
+>> On 12/02/2026 21.43, Zhuoying Cai wrote:
+>>> Introduce new helper functions to extract certificate metadata:
+>>>
+>>> qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
+>>> qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
+>>> qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
+>>> qcrypto_x509_check_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
+>>>
+>>> These functions provide support for metadata extraction and validity checking
+>>> for X.509 certificates.
+>>>
+>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>>> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+>>> ---
+>>>    crypto/x509-utils.c         | 236 ++++++++++++++++++++++++++++++++++++
+>>>    include/crypto/x509-utils.h |  51 ++++++++
+>>>    2 files changed, 287 insertions(+)
+>>>
+>>> diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+>>> index 2696d48155..906d5e5e87 100644
+>>> --- a/crypto/x509-utils.c
+>>> +++ b/crypto/x509-utils.c
+>>> @@ -27,6 +27,16 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+>>>        [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
+>>
+>> So there is a mapping for RIPEMD160 - everything else will be mapped to 0,
+>> which is GNUTLS_DIG_UNKNOWN if I got the gnutls.h header right ...
+>>
+>>>    };
+>> ...
+>>> +int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
+>>> +                                 QCryptoHashAlgo hash_alg,
+>>> +                                 uint8_t **result,
+>>> +                                 size_t *resultlen,
+>>> +                                 Error **errp)
+>>
+>> ... and in patch 09/30, you call this function with:
+>>
+>> +    rc = qcrypto_x509_get_cert_key_id(cert->raw, cert->size,
+>> +                                      QCRYPTO_HASH_ALGO_SHA256,
+>> +                                      &key_id_data, &key_id_len, &err);
+>>
+>> i.e. hash_alg is QCRYPTO_HASH_ALGO_SHA256...
+>>
+>>> +{
+>>> +    int rc;
+>>> +    int ret = -1;
+>>> +    gnutls_x509_crt_t crt;
+>>> +    gnutls_datum_t datum = {.data = cert, .size = size};
+>>> +
+>>> +    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+>>> +        error_setg(errp, "Unknown hash algorithm %d", hash_alg);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map) ||
+>>> +        qcrypto_to_gnutls_keyid_flags_map[hash_alg] == -1) {
+>>> +        error_setg(errp, "Unsupported key id flag %d", hash_alg);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    rc = gnutls_x509_crt_init(&crt);
+>>> +    if (rc < 0) {
+>>> +        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
+>>> +    if (rc != 0) {
+>>> +        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
+>>> +        goto cleanup;
+>>> +    }
+>>> +
+>>> +    *resultlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[hash_alg]);
+>>
+>> ... so qcrypto_to_gnutls_hash_alg_map[hash_alg] should result in
+>> GNUTLS_DIG_UNKNOWN as far as I can see. How is this supposed to work? Is
+>> this code used at all? Or is the error simply ignored somewhere up in the
+>> call chain? Or did I miss something?
+>>
+>>    Thomas
+> 
+> Thanks for the review!
+> 
+> To clarify: the diff context only showed the RIPEMD160 line, but the
+> existing qcrypto_to_gnutls_hash_alg_map[] also includes SHA256 in
+> x509-utils.c.
+> 
+> static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+>      [QCRYPTO_HASH_ALGO_MD5] = GNUTLS_DIG_MD5,
+>      [QCRYPTO_HASH_ALGO_SHA1] = GNUTLS_DIG_SHA1,
+>      [QCRYPTO_HASH_ALGO_SHA224] = GNUTLS_DIG_SHA224,
+>      [QCRYPTO_HASH_ALGO_SHA256] = GNUTLS_DIG_SHA256,
+>      [QCRYPTO_HASH_ALGO_SHA384] = GNUTLS_DIG_SHA384,
+>      [QCRYPTO_HASH_ALGO_SHA512] = GNUTLS_DIG_SHA512,
+>      [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
+> };
+> 
+> For the call in patch 09/30, hash_alg is QCRYPTO_HASH_ALGO_SHA256, so
+> qcrypto_to_gnutls_hash_alg_map[hash_alg] resolves to GNUTLS_DIG_SHA256
+> (value 6), and gnutls_hash_get_len(...) returns 32 as expected.
 
-This can't work for all type of netfilter I believe unless we
-implemeting a general shadow virtqueue etc.
+Ooops, sorry, I've been fooled by the line wrapping of my e-mail client.
 
->
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
-> ---
->  net/filter.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/net/filter.c b/net/filter.c
-> index 76345c1a9d..bbede6b085 100644
-> --- a/net/filter.c
-> +++ b/net/filter.c
-> @@ -255,8 +255,10 @@ static void netfilter_complete(UserCreatable *uc, Er=
-ror **errp)
->      }
->
->      if (get_vhost_net(ncs[0])) {
-> -        error_setg(errp, "Vhost is not supported");
-> -        return;
-> +        if (!object_dynamic_cast(OBJECT(uc), "filter-redirector")) {
-> +            error_setg(errp, "Vhost is not supported");
-> +            return;
-> +        }
->      }
->
->      if (strcmp(nf->position, "head") && strcmp(nf->position, "tail")) {
-> --
-> 2.52.0
+It broke the lines like this:
 
-Thanks
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 2696d48155..906d5e5e87 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -27,6 +27,16 @@ static const int
+qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+      [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
+  };
 
->
+So without having a real close look, it indeed looked like there is only one 
+entry in the array here :-/
+
+Sorry for the noise!
+
+  Thomas
 
 
