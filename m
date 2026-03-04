@@ -4,154 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20453EF8FFC
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 15:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 171F0EF8FFB
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxock-0001WX-8x; Wed, 04 Mar 2026 10:58:58 -0500
+	id 1vxogZ-0003AX-PR; Wed, 04 Mar 2026 11:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vxocj-0001WC-0m
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 10:58:57 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pl@dlhnet.de>)
+ id 1vxogY-0003A3-9Q; Wed, 04 Mar 2026 11:02:54 -0500
+Received: from mailcow.dlhnet.de ([2a01:b1c0::44ca:22ff:fe9b:798c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vxocf-0007C5-Vf
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 10:58:56 -0500
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 624DAQkf1421868
- for <qemu-devel@nongnu.org>; Wed, 4 Mar 2026 15:58:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=ktZ49vw1gKwqo6ji8I/Nnd/o
- KXPagoDTzo8pU7nLIfE=; b=Lr+o19fX2GnyXRYE5edk7Mp49cPOFRNXVgoHQ1O9
- AdUAMkP/BMmNXvEwKIDy7kLRyp0t4L331+o+7O/U5N2vuCZLjZFECN46TECY6V+4
- 54q+8qainP57MyX9zD9IXTcqBMF1pNg9FiQqMGxABqyVNuLz3FvThJV+hNJLYVtr
- cXV5+3Vgp78GlrsmMLizdF4g9rc/IPnVuapdjypc7PWQ/vv5yQtpIw2trE8KrfqI
- rDD9SMm54EvcilsIRMj996E8P/28K/XrylzPW6p+P3Ivz/J4jOlwe5bfOgNxsG//
- P+L0A5mOMTfDHGP8oVuyFadNAASh+CFWQT6EWKQXS583wQ==
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cpe8u1yqt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 15:58:50 +0000 (GMT)
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-79881805767so74429537b3.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 07:58:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772639930; cv=none;
- d=google.com; s=arc-20240605;
- b=fyplyC6VT5M/jf6viuZzNcDZ/Q95Atqoi3xQ3a7e4PrV6VaE6T9FFIqwdDl7bAAyKl
- V3eb9bGBAlegROIhHnTp0iE/2gGeNgIQLFA1twu8lW+jb38Sy1X+ML3TVabdXiMOcOmT
- aYya07tdF/BqjXEvT4FeTzpl0BAttsGAYo/jM2xI0UJ4D7E4cf3AHa15UNtsMJi5IYYM
- pjGlCBIM7rGFPSGh1mpN0lH62vC3wKPri3wTX6VUM2F+rUJeG3QJtMMrP5uKer3fnoym
- 5oELAM31FnZ3yg821zHdyW+S2fLsz9sIeFsCvMeAUpR9KtNFOEQlvrgtMSVaHBt1DKe7
- 3aBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ktZ49vw1gKwqo6ji8I/Nnd/oKXPagoDTzo8pU7nLIfE=;
- fh=d4znsSXZpCzOW1zLdZJM7PLBsdVc7xqkYVVjtCgJLzg=;
- b=P/xDeTvs+kIEdt2L8DLipokkPJF942d+qcuWfFL83e0bAO84/RF3odIRrhrAG4w5UR
- 4kzR2gwLmFjGSbojlqguXFyjHAuh1eidzHawdmkxTk+He09C2pGl64HrXw6FebLkWCzF
- 0jFU8QY0eD9CSrPUtFgbXpib8IvntHWie33S4u3fudcEKMs/mFDMnbNLXyxvwcUCsDXx
- R2qAssF3m0xxQ4/qatCN0Inu+QYHkrtaLT2m4N7zVD61mEkdR8ZtJBmufPWJujxEsRtA
- bStmoSfqjTR7crOg0uEdWqrPhKTK3xIS41QZwZhCC3h5p1LWvkl9n7z2inKRHXLa07UP
- 0V9A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1772639930; x=1773244730; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ktZ49vw1gKwqo6ji8I/Nnd/oKXPagoDTzo8pU7nLIfE=;
- b=UV/9XVfwyffLjvK43vKwJtwtDJsRIGTlMCGPJMVLSNeQlkW9v/7F8LNFe89jwwtr6L
- 5+b/VauuI9SafnUx1R+32y0YzSxptSRT5PjexAjtQRKASLlM5S81twSrBo7zf2TN4/Sw
- GQnW5r7g8Xa+rmz3HtZ7Hf0iz+6vOyVo6q1xJZGH+tEMPX0j95enalbLNimWPnzEKeTm
- zUeE9kKBZOfTa1gQPJNgawaKVYWsiFXieU35klI/CNgMfnQItvg7r5x2svFH2Tq6Jgzv
- ENPqi+Hgw+isFDtnuDv4QC5AdFJLFaLFf5RrL5jHh2L4eU/+SUWlQeC26ZHY2IRbFhdv
- +WMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772639930; x=1773244730;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ktZ49vw1gKwqo6ji8I/Nnd/oKXPagoDTzo8pU7nLIfE=;
- b=kOa7ihcrrAkiu4uAcC87DfGbAkxkLYkPulp3u3D3aA84yIT76vBcAGE8QEu9uZigX/
- cPqDZ8T4bTzbix0qUW+poCNYEbrjclF9APEyGPFNF+mx+gAjQuyJWa09pUmtqpCxx2Pe
- wEYVp2UGioSAmsGYZ+Y2KmPncQ9cI/Z4JiCFTslMZ040W17YQrrSpZSWFtjfa4QcH+yI
- VL5V3Tok16/ZZ2s3/N6diC6nuglTtwvLeNknyFzIXwP9KQ5Z4c1fh0vun3+7Ue6sTYdN
- 9VAC+tXr+EFwTmvAEp+1nN59JwjgoAwPOxlG8i7fP5b9XcFzuFVGoSv4J1mzW+UAMHst
- MdOw==
-X-Gm-Message-State: AOJu0YzKQ8tjGqD40/l4XQxTJXSswMS73lhCmwLuaGeu7usCFEPVFqEw
- GhRO9wPnrSH/xj0ptqflnDh0mfafXc4mSoD6Z7W8nZfNgSWxW8+wh1xylXX6PwYQBtdX9OcnMwZ
- j1HTCgeg742biK60n8/wyRTmvuPyfiPJyG+6D24auNAse7I1wthbeHQHvDzPDTclYgt2Y1kLKnk
- UPBsNHNvUAZQxAT9nqrQ07avEMN3ajE86g
-X-Gm-Gg: ATEYQzw8np+NC9CTmnjLG7voRUD8or7kx6EFTGSB3wuMm/Anlk0CMlqmcaQ0Je5594J
- 6IviswQOr5Oswiy/Xw4bfun2ZPhJgAVTj2q2A2L3yxi7VtnuCwkwK2pb2sarU3PP+jwzxH4etbT
- 0TrgowO4gyEnqPZTeJDWH2AmexGqYqcqpk7FTG8gtW0Ssme3X8uBgiiM1D/X5hvpEdv8Oamv/Uk
- wmiOmg=
-X-Received: by 2002:a05:690c:385:b0:798:65eb:aff5 with SMTP id
- 00721157ae682-798c6bb0892mr19108347b3.8.1772639929882; 
- Wed, 04 Mar 2026 07:58:49 -0800 (PST)
-X-Received: by 2002:a05:690c:385:b0:798:65eb:aff5 with SMTP id
- 00721157ae682-798c6bb0892mr19108187b3.8.1772639929358; Wed, 04 Mar 2026
- 07:58:49 -0800 (PST)
-MIME-Version: 1.0
-References: <20260303210553.2044313-1-brian.cain@oss.qualcomm.com>
- <20260303210553.2044313-2-brian.cain@oss.qualcomm.com>
- <87bjh3ps0l.fsf@draig.linaro.org>
-In-Reply-To: <87bjh3ps0l.fsf@draig.linaro.org>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Wed, 4 Mar 2026 09:58:33 -0600
-X-Gm-Features: AaiRm53WkGmWf8dfh_OGr4245qISbzGawLP9qKfFjQzL7bPBzbXrt8gseoq7a1Y
-Message-ID: <CAEqNhNaXFb1nn+yhJ94od75XFpx=igYRYfQBkztKreMo+-91Pw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/1] tests/docker: Update hexagon cross toolchain to
- 22.1.0
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, ltaylorsimpson@gmail.com,
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
- anjo@rev.ng, berrange@redhat.com,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000004df0d6064c34e550"
-X-Proofpoint-ORIG-GUID: fZc2fnViWD1pvtk9du_yvQTwndfKmWg-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDEyOSBTYWx0ZWRfXwJSsVgsqy9Zw
- xQQMgvDchaDqKrhq4sx3bBPEJD+v9yP87zCk0/DgWoLvMN9CCizU8+hqS9aTipqwtYGRJ7tKt+K
- yjR9uOSGfff5fPbd8AmEpwZDGqiMN59ARhSPOI5Tmy8TWIvMqZSsU7g9Q8vyEGvwiR//27qEG0Q
- 7VTL1OuvbPJZsT2hDBzIY00p9xviniCLBWEbq1BM/IEKu8ZmdDyFTP5Vl8JfazmACN/lc41QiKk
- ukMfKo7SC1QcEgVdimkcK0uupAaVOMqpE2J64JgdoqWhkbzROsF8ALx2s0RmHpXe/gwQWJMokFv
- sVyvzR0dVJRcpL2MFUktzwhxb057dqbMGyYUcSy/LdAhCPv43ODG5bdWNlQG1Oye+fXYNttHlq2
- +r4NLnFWdT33jhT0tHfx4mCSuJ2oB+sz5664DDFvEYpH0iZXxIelMKuPZjqB6/LbNcEzV//t5Of
- jPMYiW0x9pU6aaoEIOQ==
-X-Authority-Analysis: v=2.4 cv=FpAIPmrq c=1 sm=1 tr=0 ts=69a856ba cx=c_pps
- a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=qC_FGOx9AAAA:8
- a=-xXSUO77XZEE9VOigQ4A:9 a=QEXdDO2ut3YA:10 a=CWF9k5F9zN4m7vfhv9kA:9
- a=x8F-H4h0xVcPpkm1:21 a=lqcHg5cX4UMA:10 a=kLokIza1BN8a-hAJ3hfR:22
- a=cvBusfyB2V15izCimMoJ:22 a=fsdK_YakeE02zTmptMdW:22
-X-Proofpoint-GUID: fZc2fnViWD1pvtk9du_yvQTwndfKmWg-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-04_07,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0
- adultscore=0 phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040129
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <pl@dlhnet.de>)
+ id 1vxogV-0007yR-Fk; Wed, 04 Mar 2026 11:02:54 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id 043F646AE10; Wed,  4 Mar 2026 17:02:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dlhnet.de; s=dkim;
+ t=1772640163; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+ in-reply-to:references; bh=JaKtsmyQx9pQOhTipEWLglahq/xd7Hac/SxoCQr8mNI=;
+ b=bZER21HH+E/GGalzN8JSLFj/3HJQK7TFaQy8aCft8K5OVwPCXrNJ95feFCwLgAOe9cRABs
+ dwdBc00cmvvr7Jpc+ML0ydZVb9ij6h5vOalyOqhUCeHQA+4jzZQSEl2u4Rm46d+mY/Mf6c
+ kveaZvIYRLxQ7AQ7dL4U7sGCCFou83PxXy1l222Nl7n2BBsTq6tmGLNPivIjP8KnH27n4r
+ wGIQDf0sKCNpbYWS9l+uo9OBWK9S5WRmsLCNGHUrwzsQNYhHQfh5FD+ifcWKm1e+6pvUvE
+ odpYbaWpjszPXauwJg6g3fDtCLl1n6+UKeos/kMo7NMn3qNQbMs3qsxLzgeKiA==
+From: Peter Lieven <pl@dlhnet.de>
+Message-Id: <84D9FDAA-1F3C-460C-9548-2018580CEE4D@dlhnet.de>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_B7583B5B-169F-41D0-8CF8-BAD7555B9990"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Subject: =?utf-8?Q?Re=3A_=5BPATCH_v2_04/19=5D_nfs=3A_Run_co_BH_CB_in_the_c?=
+ =?utf-8?Q?oroutine=E2=80=99s_AioContext?=
+Date: Wed, 4 Mar 2026 17:02:30 +0100
+In-Reply-To: <EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>,
+ Ilya Dryomov <idryomov@gmail.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+To: Hanna Czenczek <hreitz@redhat.com>
+References: <20251110154854.151484-1-hreitz@redhat.com>
+ <20251110154854.151484-5-hreitz@redhat.com>
+ <EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+X-Last-TLS-Session-Version: TLSv1.2
+Received-SPF: pass client-ip=2a01:b1c0::44ca:22ff:fe9b:798c;
+ envelope-from=pl@dlhnet.de; helo=mailcow.dlhnet.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,114 +75,406 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004df0d6064c34e550
-Content-Type: text/plain; charset="UTF-8"
+
+--Apple-Mail=_B7583B5B-169F-41D0-8CF8-BAD7555B9990
 Content-Transfer-Encoding: quoted-printable
-
-On Wed, Mar 4, 2026 at 8:51=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
-
-> Brian Cain <brian.cain@oss.qualcomm.com> writes:
->
-> > Update the hexagon cross-compiler Docker container to use toolchain
-> > version 22.1.0, replacing the previous 12.Dec.2023 release.
-> >
-> > This requires upgrading the base image from Debian 11 to Debian 13
-> > because the new toolchain needs glibc >=3D 2.34. Additional changes
-> > to accommodate the new base image and toolchain:
-> >
-> > - Use DEB822 format for enabling deb-src (Debian 13 sources format)
-> > - Add libc++1, libc++abi1, libunwind-19 runtime deps for the new
-> >   LLVM-based toolchain
-> > - Add zstd for the new .tar.zst archive format
-> > - Replace pip3 install tomli with python3-tomli system package
-> >   (Debian 13 enforces PEP 668)
-> > - Update artifact URL domain to artifacts.codelinaro.org
-> >
-> > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->
-> Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> I assume you will merge with your next hexagon PR?
->
->
-Yeah - can do.  But I'd prefer to put it in its own PR just so we isolate
-the impact of toolchain changes from anything else.
-
-Can you review Matheus' dirent64 change when you get a chance?  That is
-required for the new toolchain.
-
-https://lore.kernel.org/qemu-devel/af31d21c4d668cfb940ba4159f584fa6454c3d82=
-.1772107448.git.matheus.bernardino@oss.qualcomm.com/
+Content-Type: text/plain;
+	charset=utf-8
 
 
 
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
+> Am 03.03.2026 um 20:24 schrieb Peter Lieven <pl@dlhnet.de>:
+>=20
+>=20
+>=20
+>> Am 10.11.2025 um 16:48 schrieb Hanna Czenczek <hreitz@redhat.com>:
+>>=20
+>> Like in =E2=80=9Crbd: Run co BH CB in the coroutine=E2=80=99s =
+AioContext=E2=80=9D, drop the
+>> completion flag, yield exactly once, and run the BH in the =
+coroutine=E2=80=99s
+>> AioContext.
+>>=20
+>> (Can be reproduced with multiqueue by adding a usleep(100000) before =
+the
+>> `while (!task.complete)` loops.)
+>>=20
+>> Like in =E2=80=9Ciscsi: Run co BH CB in the coroutine=E2=80=99s =
+AioContext=E2=80=9D, this makes
+>> nfs_co_generic_bh_cb() trivial, so we can drop it in favor of just
+>> calling aio_co_wake() directly.
+>>=20
+>> Cc: qemu-stable@nongnu.org
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> ---
+>> block/nfs.c | 41 ++++++++++++++++-------------------------
+>> 1 file changed, 16 insertions(+), 25 deletions(-)
+>>=20
+>> diff --git a/block/nfs.c b/block/nfs.c
+>> index 0a7d38db09..1d3a34a30c 100644
+>> --- a/block/nfs.c
+>> +++ b/block/nfs.c
+>> @@ -69,7 +69,6 @@ typedef struct NFSClient {
+>> typedef struct NFSRPC {
+>>     BlockDriverState *bs;
+>>     int ret;
+>> -    int complete;
+>>     QEMUIOVector *iov;
+>>     struct stat *st;
+>>     Coroutine *co;
+>> @@ -230,14 +229,6 @@ static void coroutine_fn =
+nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)
+>>     };
+>> }
+>>=20
+>> -static void nfs_co_generic_bh_cb(void *opaque)
+>> -{
+>> -    NFSRPC *task =3D opaque;
+>> -
+>> -    task->complete =3D 1;
+>> -    aio_co_wake(task->co);
+>> -}
+>> -
+>> /* Called (via nfs_service) with QemuMutex held.  */
+>> static void
+>> nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+>> @@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct nfs_context =
+*nfs, void *data,
+>>     if (task->ret < 0) {
+>>         error_report("NFS Error: %s", nfs_get_error(nfs));
+>>     }
+>> -    replay_bh_schedule_oneshot_event(task->client->aio_context,
+>> -                                     nfs_co_generic_bh_cb, task);
+>> +
+>> +    /*
+>> +     * Safe to call: nfs_service(), which called us, is only run =
+from the FD
+>> +     * handlers, never from the request coroutine.  The request =
+coroutine in
+>> +     * turn will yield unconditionally.
+>> +     * No need to release the lock, even if we directly enter the =
+coroutine, as
+>> +     * the lock is never re-taken after yielding.  (Note: If we do =
+enter the
+>> +     * coroutine, @task will probably be dangling once aio_co_wake() =
+returns.)
+>> +     */
+>> +    aio_co_wake(task->co);
+>> }
+>>=20
+>> static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t =
+offset,
+>> @@ -278,9 +277,7 @@ static int coroutine_fn =
+nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+>>=20
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>=20
+>>     if (task.ret < 0) {
+>>         return task.ret;
+>> @@ -328,9 +325,7 @@ static int coroutine_fn =
+nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
+>>=20
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>=20
+>>     if (my_buffer) {
+>>         g_free(buf);
+>> @@ -358,9 +353,7 @@ static int coroutine_fn =
+nfs_co_flush(BlockDriverState *bs)
+>>=20
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>=20
+>>     return task.ret;
+>> }
+>> @@ -723,8 +716,8 @@ nfs_get_allocated_file_size_cb(int ret, struct =
+nfs_context *nfs, void *data,
+>>     if (task->ret < 0) {
+>>         error_report("NFS Error: %s", nfs_get_error(nfs));
+>>     }
+>> -    replay_bh_schedule_oneshot_event(task->client->aio_context,
+>> -                                     nfs_co_generic_bh_cb, task);
+>> +    /* Safe to call, see nfs_co_generic_cb() */
+>> +    aio_co_wake(task->co);
+>> }
+>>=20
+>> static int64_t coroutine_fn =
+nfs_co_get_allocated_file_size(BlockDriverState *bs)
+>> @@ -748,9 +741,7 @@ static int64_t coroutine_fn =
+nfs_co_get_allocated_file_size(BlockDriverState *bs)
+>>=20
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>=20
+>>     return (task.ret < 0 ? task.ret : st.st_blocks * 512);
+>> }
+>> --=20
+>> 2.51.1
+>>=20
+>=20
+> Hallo Hanna,
+>=20
+> it has been a long time where I was inactive in Qemu development and I =
+should have checked this earlier, but it seems that this patch =
+accidentally broke libnfs usage with at least qemu cmdline tools like =
+qemu-img. Again, sorry for not testing this earlier, but I have only =
+recently entered the Qemu show again.
+>=20
+> I found this glitch while working on a patch to include libnfs v6 =
+support in qemu to avoid dropping libnfs support.
+>=20
+> A simple call like:
+>=20
+> qemu-img create -f qcow2 nfs://nfsserver/image.qcow2 10G
+>=20
+> hangs forever in the second write request.
+>=20
+> I have not confirmed, but this might also hold true for libiscsi which =
+internally is quite identical (at least it was 3 years ago ;-))
+>=20
+> You are right, the coroutine can only yield once, but it seems that =
+the bottom half logic is still needed.
+> Maybe you have an idea why? I remember that we had this differently =
+first and implemented it after Stefan pointed out that it might be =
+needed.
+> I will try to find the thread about this discussion.
 
---0000000000004df0d6064c34e550
-Content-Type: text/html; charset="UTF-8"
+The BH for the iscsi driver was actually introduced here:
+
+commit 8b9dfe9098d91e06a3dd6376624307fe5fa13be8
+Author: Peter Lieven <pl@kamp.de>
+Date:   Sat Dec 14 17:31:40 2013 +0100
+
+    block/iscsi: use a bh to schedule co reentrance
+
+I am not 100% sure if the justification for this commit is still the =
+same or if it was fixed by switching to aio_co_wake anyway.
+
+I meanwhile tested libiscsi support and it seems not to hang, but it =
+might still have a performance impact (maybe).
+
+If someone has a clue I could go ahead and send the libnfs v6 support =
+patches.
+The hang happens also with older libnfs versions so it has nothing to do =
+with libnfs v6.
+
+Best
+Peter
+
+
+
+--Apple-Mail=_B7583B5B-169F-41D0-8CF8-BAD7555B9990
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:monospace"><br></div></div><br><div class=3D"gmail_quote gmail_quo=
-te_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 4, 2026 at =
-8:51=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.o=
-rg">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.q=
-ualcomm.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt; writes:<=
-br>
-<br>
-&gt; Update the hexagon cross-compiler Docker container to use toolchain<br=
->
-&gt; version 22.1.0, replacing the previous 12.Dec.2023 release.<br>
-&gt;<br>
-&gt; This requires upgrading the base image from Debian 11 to Debian 13<br>
-&gt; because the new toolchain needs glibc &gt;=3D 2.34. Additional changes=
-<br>
-&gt; to accommodate the new base image and toolchain:<br>
-&gt;<br>
-&gt; - Use DEB822 format for enabling deb-src (Debian 13 sources format)<br=
->
-&gt; - Add libc++1, libc++abi1, libunwind-19 runtime deps for the new<br>
-&gt;=C2=A0 =C2=A0LLVM-based toolchain<br>
-&gt; - Add zstd for the new .tar.zst archive format<br>
-&gt; - Replace pip3 install tomli with python3-tomli system package<br>
-&gt;=C2=A0 =C2=A0(Debian 13 enforces PEP 668)<br>
-&gt; - Update artifact URL domain to <a href=3D"http://artifacts.codelinaro=
-.org" rel=3D"noreferrer" target=3D"_blank">artifacts.codelinaro.org</a><br>
-&gt;<br>
-&gt; Reviewed-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@l=
-inaro.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
-&gt; Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcom=
-m.com" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
-<br>
-Acked-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org" ta=
-rget=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
-<br>
-I assume you will merge with your next hexagon PR?<br>
-<br></blockquote><div><br></div><div><div class=3D"gmail_default" style=3D"=
-font-family:monospace">Yeah - can do.=C2=A0 But I&#39;d prefer to put it in=
- its own PR just so we isolate the impact of toolchain changes from anythin=
-g else.</div><br></div><div><div class=3D"gmail_default" style=3D"font-fami=
-ly:monospace">Can you review Matheus&#39; dirent64 change when you get a ch=
-ance?=C2=A0 That is required for the new toolchain.</div><div class=3D"gmai=
-l_default" style=3D"font-family:monospace"><br></div><div class=3D"gmail_de=
-fault" style=3D"font-family:monospace"><a href=3D"https://lore.kernel.org/q=
-emu-devel/af31d21c4d668cfb940ba4159f584fa6454c3d82.1772107448.git.matheus.b=
-ernardino@oss.qualcomm.com/">https://lore.kernel.org/qemu-devel/af31d21c4d6=
-68cfb940ba4159f584fa6454c3d82.1772107448.git.matheus.bernardino@oss.qualcom=
-m.com/</a></div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br>
-</blockquote></div></div>
+<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>Am 03.03.2026 um 20:24 schrieb Peter Lieven =
+&lt;pl@dlhnet.de&gt;:</div><br =
+class=3D"Apple-interchange-newline"><div><meta http-equiv=3D"content-type"=
+ content=3D"text/html; charset=3Dutf-8"><div style=3D"overflow-wrap: =
+break-word; -webkit-nbsp-mode: space; line-break: =
+after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>Am 10.11.2025 um 16:48 schrieb Hanna Czenczek =
+&lt;hreitz@redhat.com&gt;:</div><br =
+class=3D"Apple-interchange-newline"><div><div>Like in =E2=80=9Crbd: Run =
+co BH CB in the coroutine=E2=80=99s AioContext=E2=80=9D, drop =
+the<br>completion flag, yield exactly once, and run the BH in the =
+coroutine=E2=80=99s<br>AioContext.<br><br>(Can be reproduced with =
+multiqueue by adding a usleep(100000) before the<br>`while =
+(!task.complete)` loops.)<br><br>Like in =E2=80=9Ciscsi: Run co BH CB in =
+the coroutine=E2=80=99s AioContext=E2=80=9D, this =
+makes<br>nfs_co_generic_bh_cb() trivial, so we can drop it in favor of =
+just<br>calling aio_co_wake() directly.<br><br>Cc: =
+qemu-stable@nongnu.org<br>Signed-off-by: Hanna Czenczek =
+&lt;hreitz@redhat.com&gt;<br>---<br> block/nfs.c | 41 =
+++++++++++++++++-------------------------<br> 1 file changed, 16 =
+insertions(+), 25 deletions(-)<br><br>diff --git a/block/nfs.c =
+b/block/nfs.c<br>index 0a7d38db09..1d3a34a30c 100644<br>--- =
+a/block/nfs.c<br>+++ b/block/nfs.c<br>@@ -69,7 +69,6 @@ typedef struct =
+NFSClient {<br> typedef struct NFSRPC {<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;BlockDriverState *bs;<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;int ret;<br>- &nbsp;&nbsp;&nbsp;int =
+complete;<br> &nbsp;&nbsp;&nbsp;&nbsp;QEMUIOVector *iov;<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;struct stat *st;<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;Coroutine *co;<br>@@ -230,14 +229,6 @@ static =
+void coroutine_fn nfs_co_init_task(BlockDriverState *bs, NFSRPC =
+*task)<br> &nbsp;&nbsp;&nbsp;&nbsp;};<br> }<br><br>-static void =
+nfs_co_generic_bh_cb(void *opaque)<br>-{<br>- &nbsp;&nbsp;&nbsp;NFSRPC =
+*task =3D opaque;<br>-<br>- &nbsp;&nbsp;&nbsp;task-&gt;complete =3D =
+1;<br>- &nbsp;&nbsp;&nbsp;aio_co_wake(task-&gt;co);<br>-}<br>-<br> /* =
+Called (via nfs_service) with QemuMutex held. &nbsp;*/<br> static =
+void<br> nfs_co_generic_cb(int ret, struct nfs_context *nfs, void =
+*data,<br>@@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct =
+nfs_context *nfs, void *data,<br> &nbsp;&nbsp;&nbsp;&nbsp;if =
+(task-&gt;ret &lt; 0) {<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_report("NFS Error: =
+%s", nfs_get_error(nfs));<br> &nbsp;&nbsp;&nbsp;&nbsp;}<br>- =
+&nbsp;&nbsp;&nbsp;replay_bh_schedule_oneshot_event(task-&gt;client-&gt;aio=
+_context,<br>- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nfs_co=
+_generic_bh_cb, task);<br>+<br>+ &nbsp;&nbsp;&nbsp;/*<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;* Safe to call: nfs_service(), which called us, =
+is only run from the FD<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* handlers, never =
+from the request coroutine. &nbsp;The request coroutine in<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;* turn will yield unconditionally.<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;* No need to release the lock, even if we =
+directly enter the coroutine, as<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* the lock =
+is never re-taken after yielding. &nbsp;(Note: If we do enter the<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;* coroutine, @task will probably be dangling =
+once aio_co_wake() returns.)<br>+ &nbsp;&nbsp;&nbsp;&nbsp;*/<br>+ =
+&nbsp;&nbsp;&nbsp;aio_co_wake(task-&gt;co);<br> }<br><br> static int =
+coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,<br>@@ =
+-278,9 +277,7 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState =
+*bs, int64_t offset,<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nfs_set_events(client);<br=
+> &nbsp;&nbsp;&nbsp;&nbsp;}<br>- &nbsp;&nbsp;&nbsp;while =
+(!task.complete) {<br>- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br>- =
+&nbsp;&nbsp;&nbsp;}<br>+ =
+&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;if (task.ret &lt; 0) {<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return task.ret;<br>@@ =
+-328,9 +325,7 @@ static int coroutine_fn nfs_co_pwritev(BlockDriverState =
+*bs, int64_t offset,<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nfs_set_events(client);<br=
+> &nbsp;&nbsp;&nbsp;&nbsp;}<br>- &nbsp;&nbsp;&nbsp;while =
+(!task.complete) {<br>- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br>- =
+&nbsp;&nbsp;&nbsp;}<br>+ =
+&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;if (my_buffer) {<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_free(buf);<br>@@ =
+-358,9 +353,7 @@ static int coroutine_fn nfs_co_flush(BlockDriverState =
+*bs)<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nfs_set_events(client);<br=
+> &nbsp;&nbsp;&nbsp;&nbsp;}<br>- &nbsp;&nbsp;&nbsp;while =
+(!task.complete) {<br>- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br>- =
+&nbsp;&nbsp;&nbsp;}<br>+ =
+&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;return task.ret;<br> }<br>@@ -723,8 +716,8 @@ =
+nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void =
+*data,<br> &nbsp;&nbsp;&nbsp;&nbsp;if (task-&gt;ret &lt; 0) {<br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_report("NFS Error: =
+%s", nfs_get_error(nfs));<br> &nbsp;&nbsp;&nbsp;&nbsp;}<br>- =
+&nbsp;&nbsp;&nbsp;replay_bh_schedule_oneshot_event(task-&gt;client-&gt;aio=
+_context,<br>- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nfs_co=
+_generic_bh_cb, task);<br>+ &nbsp;&nbsp;&nbsp;/* Safe to call, see =
+nfs_co_generic_cb() */<br>+ =
+&nbsp;&nbsp;&nbsp;aio_co_wake(task-&gt;co);<br> }<br><br> static int64_t =
+coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)<br>@@ =
+-748,9 +741,7 @@ static int64_t coroutine_fn =
+nfs_co_get_allocated_file_size(BlockDriverState *bs)<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nfs_set_events(client);<br=
+> &nbsp;&nbsp;&nbsp;&nbsp;}<br>- &nbsp;&nbsp;&nbsp;while =
+(!task.complete) {<br>- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br>- =
+&nbsp;&nbsp;&nbsp;}<br>+ =
+&nbsp;&nbsp;&nbsp;qemu_coroutine_yield();<br><br> =
+&nbsp;&nbsp;&nbsp;&nbsp;return (task.ret &lt; 0 ? task.ret : =
+st.st_blocks * 512);<br> }<br>-- =
+<br>2.51.1<br><br></div></div></blockquote><br></div><div>Hallo =
+Hanna,</div><div><br></div><div>it has been a long time where I was =
+inactive in Qemu development and I should have checked this earlier, but =
+it seems that this patch accidentally broke libnfs usage with at least =
+qemu cmdline tools like qemu-img. Again, sorry for not testing this =
+earlier, but I have only recently entered the Qemu show =
+again.</div><div><br></div><div>I found this glitch while working on a =
+patch to include libnfs v6 support in qemu to avoid dropping libnfs =
+support.</div><div><br></div><div>A simple call =
+like:</div><div><br></div><div>qemu-img create -f qcow2 <a =
+href=3D"nfs://nfsserver/image.qcow2">nfs://nfsserver/image.qcow2</a>&nbsp;=
+10G</div><div><br></div><div>hangs forever in the second write =
+request.</div><div><br></div><div>I have not confirmed, but this might =
+also hold true for libiscsi which internally is quite identical (at =
+least it was 3 years ago ;-))</div><div><br></div><div>You are right, =
+the coroutine can only yield once, but it seems that the bottom half =
+logic is still needed.</div><div>Maybe you have an idea why? I remember =
+that we had this differently first and implemented it after Stefan =
+pointed out that it might be needed.</div><div>I will try to find the =
+thread about this =
+discussion.</div></div></div></blockquote><div><br></div><div>The BH for =
+the iscsi driver was actually introduced =
+here:</div><div><br></div><div><p style=3D"margin: 0px; font-style: =
+normal; font-variant-caps: normal; font-width: normal; font-size: 13px; =
+line-height: normal; font-family: &quot;Helvetica Neue&quot;; =
+font-size-adjust: none; font-kerning: auto; font-variant-alternates: =
+normal; font-variant-ligatures: normal; font-variant-numeric: normal; =
+font-variant-east-asian: normal; font-variant-position: normal; =
+font-variant-emoji: normal; font-feature-settings: normal; =
+font-optical-sizing: auto; font-variation-settings: normal;">commit =
+8b9dfe9098d91e06a3dd6376624307fe5fa13be8</p>
+<p style=3D"margin: 0px; font-style: normal; font-variant-caps: normal; =
+font-width: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-variant-emoji: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal;">Author: Peter Lieven =
+&lt;pl@kamp.de&gt;</p>
+<p style=3D"margin: 0px; font-style: normal; font-variant-caps: normal; =
+font-width: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-variant-emoji: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal;">Date: &nbsp; Sat Dec 14 17:31:40 2013 =
++0100</p>
+<p style=3D"margin: 0px; font-style: normal; font-variant-caps: normal; =
+font-width: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-variant-emoji: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal; min-height: 15px;"><br></p>
+<p style=3D"margin: 0px; font-style: normal; font-variant-caps: normal; =
+font-width: normal; font-size: 13px; line-height: normal; font-family: =
+&quot;Helvetica Neue&quot;; font-size-adjust: none; font-kerning: auto; =
+font-variant-alternates: normal; font-variant-ligatures: normal; =
+font-variant-numeric: normal; font-variant-east-asian: normal; =
+font-variant-position: normal; font-variant-emoji: normal; =
+font-feature-settings: normal; font-optical-sizing: auto; =
+font-variation-settings: normal;">&nbsp; &nbsp; block/iscsi: use a bh to =
+schedule co reentrance</p><div><br></div><div>I am not 100% sure if the =
+justification for this commit is still the same or if it was fixed by =
+switching to aio_co_wake anyway.</div><div><br></div><div>I meanwhile =
+tested libiscsi support and it seems not to hang, but it might still =
+have a performance impact (maybe).</div><div><br></div><div>If someone =
+has a clue I could go ahead and send the libnfs v6 support =
+patches.</div><div>The hang happens also with older libnfs versions so =
+it has nothing to do with libnfs =
+v6.</div><div><br></div><div>Best</div><div>Peter</div><div><br></div><div=
+><br></div></div></div></body></html>=
 
---0000000000004df0d6064c34e550--
+--Apple-Mail=_B7583B5B-169F-41D0-8CF8-BAD7555B9990--
 
