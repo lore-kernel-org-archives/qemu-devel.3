@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6791AEFCE22
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 23:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 575DFEFCE4D
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 23:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxvoZ-00013y-7S; Wed, 04 Mar 2026 18:39:39 -0500
+	id 1vxw6h-00048c-9M; Wed, 04 Mar 2026 18:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxvoX-00013k-B4
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 18:39:37 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1vxw6g-00048E-98
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 18:58:22 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vxvoV-0004cz-2A
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 18:39:36 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 950D5596D98;
- Thu, 05 Mar 2026 00:39:30 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id OGOjeCctJBtj; Thu,  5 Mar 2026 00:39:28 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7EF65596D9B; Thu, 05 Mar 2026 00:39:28 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7D292596D9D;
- Thu, 05 Mar 2026 00:39:28 +0100 (CET)
-Date: Thu, 5 Mar 2026 00:39:28 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Xu <peterx@redhat.com>
-cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v6 0/8] memory: Remove most _nomigrate variants
-In-Reply-To: <aaiCvPrtcIRK4NmX@x1.local>
-Message-ID: <83e20c34-6bd6-4862-f079-0359d206a799@eik.bme.hu>
-References: <cover.1772572714.git.balaton@eik.bme.hu>
- <aaiCvPrtcIRK4NmX@x1.local>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1vxw6f-0008TD-0n
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 18:58:22 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 2403A44100;
+ Wed,  4 Mar 2026 23:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241F4C4CEF7;
+ Wed,  4 Mar 2026 23:58:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1772668697;
+ bh=DPt5htaOCfcgqP4MO7Lq2RngC1FbWjZzqXZYuC57Qy8=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=c5S9RKS4ZjuSN0YHIAeMDXCJyy8MzdXORIQXJew3n0sUik9MbmfH9yqGvq1d4/xxz
+ PAC4Lrb69SAI8lHjtSQUCl8NgfS70S348p4d0ActpJkbWGlM92PplCAUXXk9NRBuiJ
+ zq9W2mQ2t/nVIFfq0nFcy+XyDBNdJBp2k54cN2frZt9i0JtodIxBFAN4dA+bYhj28d
+ 4KLyMl+Jmcl5u0yhRzUTl628lxOWl3pOLkRnuD5dLn3dbnN6qx3vQGSH1sqQ9K33Vd
+ bApM1gpqiLc+1QHLXwtxMZXvz0wFYhiY8nxrq0MvabSeKOzPdCrQmP8TTtql++xZmn
+ BEIo81ePGzN5g==
+Date: Wed, 4 Mar 2026 15:58:12 -0800 (PST)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, 
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v1 1/5] xen: mapcache: Assert mapcache existance
+In-Reply-To: <20260304015222.979224-2-edgar.iglesias@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2603041558040.250016@ubuntu-linux-20-04-desktop>
+References: <20260304015222.979224-1-edgar.iglesias@gmail.com>
+ <20260304015222.979224-2-edgar.iglesias@gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=sstabellini@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,18 +73,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Mar 2026, Peter Xu wrote:
-> On Tue, Mar 03, 2026 at 10:47:49PM +0100, BALATON Zoltan wrote:
->> BALATON Zoltan (8):
->>   hw/display/{cg3.tcx}: Do not use memory_region_init_rom_nomigrate()
->>   memory: Remove memory_region_init_rom_nomigrate()
->>   sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
->
-> If no objections, I can queue these three patch (1-3) for 11.0-rc0 for now.
+On Wed, 4 Mar 2026, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> 
+> Assert that the mapcache was created prior to being used.
+> 
+> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-What about the rest of this series? These are all simple clean ups so 
-should not be hard to review. Patches 4-5 and 7-8 need review. Anybody?
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
-Regards,
-BALATON Zoltan
 
