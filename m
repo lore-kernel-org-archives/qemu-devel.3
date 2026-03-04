@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A143BEF9008
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D80EF9008
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpX5-00074j-Jm; Wed, 04 Mar 2026 11:57:11 -0500
+	id 1vxpX7-000760-95; Wed, 04 Mar 2026 11:57:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpX4-000737-EM
+ id 1vxpX4-00073w-Nn
  for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:57:10 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxpX1-0003xn-8N
+ id 1vxpX1-0003xY-9H
  for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:57:10 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-65f980cea07so10544936a12.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:57:03 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-65b9d8d6b7dso11658598a12.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:57:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772643422; x=1773248222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772643421; x=1773248221; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dZE+DbnvVFmXd+2ruIxq3RTojaKZzSNmRAGkBSCjGF0=;
- b=aUa524PBYhCMQ1J9QDFCf2JMklSgmUr9dsnxXRboGwTSIejjtyT0iSqwuHAYDbTVeu
- nF+J98zRxZhYKDHCytJgTxdorJ4d4Ee42jPwAkAdmEWtBkKtY1NQauuKc3rjefkdsHIO
- wYPquJuI5bGoNzXaeMk75Ne/bl6jjIqM5G/NzjGDyvV80bGgh1tc274QSrIyEfvN8nVO
- d+UUVU8mgDNMoy8oKEywdEeGjmWNBhsMfDEkQb13EOWSPwsRHvKDxF/3pJwzZfi/pPN1
- dt1iKlcTeABgh+6vZN0QFHhtbwOIKPTMEVFCdymxXwzniHmMs498wqlcGLexY+QUmXtw
- hSBw==
+ bh=+8JBFWACv1j8RnRNzU3WVG0i9zfzm4NzlWXfncEOBU0=;
+ b=FqPHkR52C45AR0KXKYV9yOYNTH7Teb+T1xHjfHP8DPGLO+8qquYR8A2V2wtUVxbfjs
+ +PDd+YU+PPDuZQV+kkEHdrMybUNcFw8fy3BugF2a6/NVs9chN/7nVaQVmodjYYIgEI2l
+ K6KSYHAxqC1XcUfX0vIIpDwLErRivFZyl9Dgjd6M7SvIedJp+XquCnVTU8SGlpfhzbq1
+ J5gTjci1hbph9vgytWpdIuPaApz0UVIHuhQnbpRp/zZ1+ywN8Rf8pkZS94ON6lbVugIV
+ 27ob4z3EwOa/Gkv3wvfKt6s4fNk8GIXDZuB8lMOYSVqjqZBumV8KniMYrBTvBkNkdlZK
+ F1Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772643422; x=1773248222;
+ d=1e100.net; s=20230601; t=1772643421; x=1773248221;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dZE+DbnvVFmXd+2ruIxq3RTojaKZzSNmRAGkBSCjGF0=;
- b=Jia5bLsrDEpQqfNZvU2gD3sZs/JZFMNbQmG8fKGUg6okfYCQC/oBtEF/WVlu8jrbFa
- JI89hjL+hwl7afLD1q8nyampTRf8wL4/bOrfjpIhkzc6bvlNZR1HY2ehTlBu497BIrIE
- xEzp7rfkEkd01shkHzBZO+O+Ggv7Agl4UmJMsdoVkv3eZ+Ia2ZrThUoOWvhzNOW9IdPx
- UhO/m4falzBLomba8j7Xnrc49xvhuBl7PnSKcSWXDKT0ZNt+AmAKwThHBfXx3UtwY1qs
- 8QLjVDdTIiwLq20vR0W5rOEQcs1kaa9DqeBn/RXVieJ4px7mov4S5Yt9d/fN7wdME6cy
- eALg==
-X-Gm-Message-State: AOJu0YxKA66OscSRw7sXnAiWfHXxyeNuvBehNPPVE9r3Q3KJja5MOehG
- vZGP1MQD6jCLTUxJVhqynH6Oujk8nsclMwYY/sFyE8eWBiBABIosocAw7CoKTUHF26E=
-X-Gm-Gg: ATEYQzxSqApEHVUZhxkiD2o17m7s11/f9W3MGmbaA+7GadgPoCkfHQNwQDr6/hpB+Oh
- ljJ7p1wDxS2F8cwc5PwRGzc0B/xB9zQQglIRWPCTlWudT/3Nxf5VRuuU5P/TlK37pPWUyyJVCFE
- HIu2X6QNtfvXq9yehjMP3M/l3B7SsxK/2ziLxboX5yXbQyC62wRCbkx8FnCETWCPAzN/a1xhhOb
- v5BxxVgXTF4s12wPFbkKy18nQ+Q9jBMTHTkAgIwKM0A6QNrxTNJhMEAGecRoBB9lXnyyK5WGDgU
- VuWwX5zYBmBCHfSdxhcL3gvU3/Iuy95ZZLJN2M5tdhwLwzB+0ZWE7N4Gir7uIYAEAQ/mxGMkAU+
- onQOfeIsxXyF+qphaUOZMEvgMaGdUfPvx3QRkiVTu5LAgiNsx6zOE0KL2U6nAydMz72GGrsZ6Ey
- jHDrqaFB40NmjPbWaZMfAyNiA1tbkiC+uemQ==
-X-Received: by 2002:a05:6402:440b:b0:658:b87a:6eba with SMTP id
- 4fb4d7f45d1cf-660f00d29bemr1530969a12.16.1772643422461; 
- Wed, 04 Mar 2026 08:57:02 -0800 (PST)
+ bh=+8JBFWACv1j8RnRNzU3WVG0i9zfzm4NzlWXfncEOBU0=;
+ b=esSPfuE5HZqTldDx4kBCeC99UFHjGnd8ubj8U/Irvh06wi/AXDSnxBILM1pownHQ33
+ QHBYBp6nqYO+RKwzj++fvclAL/yGIiapqL1PgRszxNN3YaJZjdmPMqqrvogsDnaOg2Dz
+ LGztGu9ZBezeUqoaUnK/oYpWfUZwn0qtSrleDyLK+zUFTDR34CBGPzPyePKZiUaKZaWw
+ 9X4f1/7RBQwTP5TCGKAxFsTnlmJzFqEwRCgLl2sSejQ+cVWout2X/f5fdjf7c4nPjdiN
+ aFj9b8R4gx3zuis7hSjO/PwfBecIGdC2wgifYWMbiuEbA3DWP/sOtfuapCoV3ZzhgK5p
+ fHkA==
+X-Gm-Message-State: AOJu0YxFXeCiATB2pOkFi4wFpbfOcz7+wq85VapMQb1rVj0iVYzj2jvu
+ w+wYfdWV+1Q2T6Yij0Rp7ywNST3Hg8HSgaGlOqQr99C5k7WV5bd1ENFmJxYiZ9PaIvwmNh5EFAB
+ nNN7v
+X-Gm-Gg: ATEYQzxhA0I3Zcq+jMrwphhyVAtavvHObYptviB9bH3or1V2lfjbPc0EGkWWcijakje
+ FkJWvY+bb0NIsronlyFta5wmqLq7tSkHVIcTpbPyzqf+CKEGDehE10u3DHZns+gjqD762+LDsJJ
+ 8q2z0P4MiPkZ8YboNQnFxrAUOPl91G6pZN/JBQzJWn1PbirCuPQo98Vi4Fw7Y7puo+g3vSzkuVm
+ i4YoBDgXiGAUaVVpiCgiX8SX5wZkFmPHPPwE9yBE+JtrEki8ZF+g5yCls4rvHfGcNQE8x/xnkbQ
+ tZ6OyS8X46FKbFqgiJ8+YY3vobWimoFJoFZi5yXIGL6W3vsi5eiz7mpVPNVPg6TS8lnA+qpAkkz
+ IUZJ2qbA9DJSQf6YIl6n1hYyQ5bdPlpIuQucu35uN2KJn7eKATLVLwJjXmg26zVNozbZIUnO9na
+ UUr7DFH6L6GXVOXVreAKUEAMg=
+X-Received: by 2002:a17:907:6d2a:b0:b8a:f9d7:1afe with SMTP id
+ a640c23a62f3a-b93f159304bmr147707566b.57.1772643421094; 
+ Wed, 04 Mar 2026 08:57:01 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-660ce1727d2sm1469813a12.27.2026.03.04.08.57.00
+ a640c23a62f3a-b935ae6132asm773379966b.32.2026.03.04.08.57.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 04 Mar 2026 08:57:00 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 41A815F832;
+ by draig.lan (Postfix) with ESMTP id 5683062D9E;
  Wed, 04 Mar 2026 16:50:45 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,16 +82,16 @@ Cc: Peter Xu <peterx@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 17/20] virtio-gpu: Validate hostmem mapping offset
-Date: Wed,  4 Mar 2026 16:50:39 +0000
-Message-ID: <20260304165043.1437519-18-alex.bennee@linaro.org>
+Subject: [PATCH 18/20] virtio-gpu: Replace finish_unmapping with mapping_state
+Date: Wed,  4 Mar 2026 16:50:40 +0000
+Message-ID: <20260304165043.1437519-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260304165043.1437519-1-alex.bennee@linaro.org>
 References: <20260304165043.1437519-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,44 +116,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Check hostmem mapping boundaries originated from guest.
+Allow virtio_gpu_virgl_unmap_resource_blob() to be invoked while async
+unmapping is in progress. Do it in preparation to improvement of virtio-gpu
+resetting that will require this change.
 
 Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-16-dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-17-dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/display/virtio-gpu-virgl.c | 28 ++++++++++++++++++++++------
+ hw/display/trace-events       |  2 +-
+ 2 files changed, 23 insertions(+), 7 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index abf7c176a65..f4d1113827e 100644
+index f4d1113827e..d1b5162f440 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -791,6 +791,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-     struct virtio_gpu_resource_map_blob mblob;
-     struct virtio_gpu_virgl_resource *res;
-     struct virtio_gpu_resp_map_info resp;
-+    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-     int ret;
+@@ -68,11 +68,17 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+ #endif
  
-     VIRTIO_GPU_FILL_CMD(mblob);
-@@ -804,6 +805,15 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+ #if VIRGL_VERSION_MAJOR >= 1
++enum virtio_gpu_virgl_hostmem_region_mapping_state {
++    VIRTIO_GPU_MR_MAPPED,
++    VIRTIO_GPU_MR_UNMAP_STARTED,
++    VIRTIO_GPU_MR_UNMAP_COMPLETED,
++};
++
+ struct virtio_gpu_virgl_hostmem_region {
+     Object parent_obj;
+     MemoryRegion mr;
+     struct VirtIOGPU *g;
+-    bool finish_unmapping;
++    enum virtio_gpu_virgl_hostmem_region_mapping_state mapping_state;
+ };
+ 
+ #define TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION "virtio-gpu-virgl-hostmem-region"
+@@ -109,7 +115,7 @@ static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
          return;
      }
  
-+    if (mblob.offset + res->base.blob_size > b->conf.hostmem ||
-+        mblob.offset + res->base.blob_size < mblob.offset) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: failed to map virgl resource: invalid offset\n",
-+                      __func__);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
+-    vmr->finish_unmapping = true;
++    vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_COMPLETED;
+ 
+     b = VIRTIO_GPU_BASE(vmr->g);
+     b->renderer_blocked--;
+@@ -167,6 +173,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     object_initialize_child(OBJECT(g), name, vmr,
+                             TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION);
+     vmr->g = g;
++    vmr->mapping_state = VIRTIO_GPU_MR_MAPPED;
+ 
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+@@ -195,7 +202,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+ 
+     vmr = to_hostmem_region(res->mr);
+ 
+-    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
++    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr,
++                                        vmr->mapping_state);
+ 
+     /*
+      * Perform async unmapping in 3 steps:
+@@ -206,7 +214,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+      *    asynchronously by virtio_gpu_virgl_hostmem_region_finalize().
+      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
+      */
+-    if (vmr->finish_unmapping) {
++    switch (vmr->mapping_state) {
++    case VIRTIO_GPU_MR_UNMAP_COMPLETED:
+         res->mr = NULL;
+         g_free(vmr);
+ 
+@@ -217,15 +226,22 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+                           __func__, strerror(-ret));
+             return ret;
+         }
+-    } else {
+-        *cmd_suspended = true;
++        break;
+ 
++    case VIRTIO_GPU_MR_MAPPED:
+         /* render will be unblocked once MR is freed */
+         b->renderer_blocked++;
+ 
++        vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED;
 +
-     ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
-     if (ret) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_del_subregion(&b->hostmem, mr);
+         object_unparent(OBJECT(vmr));
++
++        /* Fallthrough */
++    case VIRTIO_GPU_MR_UNMAP_STARTED:
++        *cmd_suspended = true;
++        break;
+     }
+ 
+     return 0;
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index e323a82cff2..4bfc457fbac 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -39,7 +39,7 @@ virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h)
+ virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
+ virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res 0x%x, size %" PRId64
+ virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res 0x%x, vmr %p, mr %p"
+-virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
++virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, int mapping_state) "res 0x%x, mr %p, mapping_state %d"
+ virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
+ virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
+ virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
 -- 
 2.47.3
 
