@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE0BEB7ECF
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 12:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E93EEB7ECF
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 12:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxl3d-0003m4-Uu; Wed, 04 Mar 2026 07:10:30 -0500
+	id 1vxl4O-0003vR-Pq; Wed, 04 Mar 2026 07:11:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxl3V-0003gx-M0
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:10:21 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1vxl4M-0003vD-Pt
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:15 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxl3S-0005sw-U3
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:10:20 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-65c5a7785b4so9952344a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:10:18 -0800 (PST)
+ id 1vxl4K-0005xl-Nr
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:14 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b935a74b7c2so918884466b.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772626217; x=1773231017; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772626271; x=1773231071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x+whlWxiLSjccWeC0CFtSzU9Ma9NWKm9TVUOYv9KoZI=;
- b=NnjB4tegdqcF5csq1fINwDEWPtOOh9zm+7DsF97FYIj9msjx09PSHD0O9Ka3p1TDqa
- twQ+GcIX03VmQlUa1KYF8zh5l0BhTm7ytHpXAhO99z+JDEra4SvOZ41gLWbv2/hN1EPC
- uCOefsvdFQIHue0cJspUjSvFnHcCX71lzbhKzUxXFEWeBwkZ+BMTeE6aW45hrzATRyIx
- uNFqhysE+DViTpwaQ30QKjv7naN0EvdIQerVfu83qbSf0WsCDhjCw6iUfSiM2/DIetmJ
- oK3AxgSqV8I2Xtn6pbYaLB4uxx86gDVaj3oHlA9wJGgZyBPesczLlJKz0jf1wY1vhw5E
- EQUQ==
+ bh=dyswVzSYu2bNIYUixRTP9TDLLf2WN2d7TAh3uYxSVCA=;
+ b=vk98N/IEWmsy9BNABQ9fBUDybkD/UjzYAfa178Y2SJCaJJ/j9KTfehO7sHj/yIRpTW
+ ORUIFf5qi935dcGiee1PjBfQTL9d2TzaUdaVAiuZaiq+9KVPDINLE6cKI6SPceYgkM2D
+ MpDw9qbd9RN0kqm3EHQVFHTj76s6Kwj7w8xhyKOErh7zjcCdUNdJMHqVsK3eJpu5Xsuh
+ VWWYDYuY0UVJ1LAtKOUZBQLH2H1RUNCN41vr5H36x/ibvMB4RCRr+RrhiHKE/pMdbot0
+ jx6ZXVuYoE4LT53EN1MZaktL3ZXtBkTKXKVwC/4lDU2nYn/pjj+hd8hJYjiy6q6srquW
+ FoEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772626217; x=1773231017;
+ d=1e100.net; s=20230601; t=1772626271; x=1773231071;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x+whlWxiLSjccWeC0CFtSzU9Ma9NWKm9TVUOYv9KoZI=;
- b=I8QQjPdhAOdfGSuABx6YWJnpKlCEW884aRWQsSA7RZ8vsx3/bRSxFpAEnyuTk6bAUO
- XHfrHRcaWf3FHljrbv1rqWWdyKu5fz3goJ4fM3/BHK7i/ZbXn8dpwXFWWqUdZ4txMB4H
- JFDp/DQn1CiNYMDXGHtZJpx0fn0keOoi4iw7/JbSaa6jYztBRM9+LghRzus7uH880vwU
- NYnXssgO2dRjamo1jITFtFakrm2hdyD5UkNEXVEuTnACEib7F6Q06hhIxjfeYCjl60eG
- q1wdpzLvLC/LiaMF1DfzTZHeG2vYEPH5pm9CyO4RL5d80vKHK5O6iS3Cw9qq/IpqyyTu
- D2Wg==
+ bh=dyswVzSYu2bNIYUixRTP9TDLLf2WN2d7TAh3uYxSVCA=;
+ b=G0Y6OZtco9FvJ5uaWyhKnqRTjRFnA6ti8b9XXd3lo4KFGrwED1p3nOgqrzgcstv9SL
+ YzMwrlrUHwpjFuSx8ZgmGG+fPp7jw64V02blC3aRYLd10/KPaK7jrsy327KaZn+VO1BM
+ 0JLXd8RqACz8c4oSeS66ysFxjMsQqSo3WhoxMnDR0CrOJkMZI6l0RK2QC8MDwfdrL3qp
+ 2bFV0Zo6C3LVe5T9gKkofU4YkIvwA9m3q4Z0syhcmUGKHxI/da7105p2ytyWn7WYJVhy
+ SUDaG+zkTGjOFBD7yxSrE2DUxTd5WPf9jCdfrWl5MSRkrTzPWAN4NdEIpSYjLT39nHWa
+ E13w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX46agDw0t4ChGXNILmvsS/fNQBbcyAu9wESlBAKFru77ar4y43UlrMLJ+oT2xbohqMmvcPO6emGDdT@nongnu.org
-X-Gm-Message-State: AOJu0YwQdJ3JJI1nUrzl38zJ0IGJAs6ypkMp/bnkte+DmSdaPBHDCkse
- VPZu89+YhxzmWI8lx+ftU4Zsm76rxUHooPbQBSjWOi7+MD5niLe7SuSYYrluD7T/ZeI=
-X-Gm-Gg: ATEYQzzl5y68WNefnZDb5qCd9oyAlqWQ04YnPDljyIcYqt98cA4+TYgXeY7VEFdlSls
- 1gOOruK9BA7Mxl8xlgXn3JoZl4ubmCTzZQWpgMAq/z4I4bxUofKWJFFlDYBpLMXVEL2Yo7fZdJ3
- Kjp+KUf62gzA29rh3SZib0TXXNEvApp/58XZ1wYdqTHVjPVwJ7h1VcdYLR1t9QC2yMlGiwzTAp4
- X5y7m3bbAPayw3PY+eRXZd86s9jOUiitzUp3nAhJegTIK61vJttQpCoZdvkR/IvVR7JqXIWo26E
- LBQqQB68g61K2XAm+7x67KD4dB+IugEDtpsRFq/bEEtx6Mz3T2DpyEMto88+sbZvWsfGOMVAxoK
- mhyHg7o8jN+8TVdrcATKysOuuSZZa4nmWYrUZdAPRXMkIST0A97KeUUS9eaH09he0PJRqDasZgC
- JM7+eS8UBFZIIl4d3dKD+ILlo=
-X-Received: by 2002:a17:907:6d15:b0:b8e:d1f3:4744 with SMTP id
- a640c23a62f3a-b93f1594108mr107075766b.55.1772626216728; 
- Wed, 04 Mar 2026 04:10:16 -0800 (PST)
+ AJvYcCWrpMPvu+hg11PNZytIVppy5IPArEveIlDyuLUvSk4pQOCIC+Kw/aFDjoTfwmGJnIt9wKA/RhXUu5jS@nongnu.org
+X-Gm-Message-State: AOJu0YymaQ87Wh60u4EtOjt3FqcMCXE1NoJkOg5pX/GV5Nnn0L+BoX5W
+ AIWdLyPr2jFN3eWHViVanEAYpy7WyolfaApfaagkJoiY87ECejXelW/Um8M6tvGHgEg=
+X-Gm-Gg: ATEYQzy1XjaxupEV9VIAtUJu2jRDQNJgNZck0leexmRCUtGVFWmxLdwatBnvUCUOYe7
+ ZWLmr3KXcEns+RcfaTTqRfahfZ61c2My7xOTzybObYGRh1Uq8DdMJCpcuR8EzTk2J/65excn1sF
+ vDsrI9YDD/W4/2SSoJ1NJ1TdAcit5GaX+PQm0HOfyumed2iRDsQCl2mD0NKKpezpgGzTzo2Whxw
+ y5ni826fOX5FhcS5E0pBs6dY8ZSQebsuh0iJFVWIF6tMg9jb1FdrHwKQwDBBOY51QxosnjaHLjy
+ ogUpk3PxN/PL2GgSPay/N3EjyHHpKTz76e7qSXbpBOc/Ol4Snw3LX4drztsZHBDJW7ybDKv3/1L
+ bEqbJqP5dPDStiDKWAkwsNMTyKkn/6V240xRlwQAmN2lcMdWu4MO0vPcman+AWFjHGxgvqCLvnh
+ G+NNIWWg8h2YHe2mga2eYLetY=
+X-Received: by 2002:a17:907:e8e:b0:b93:80f3:b36b with SMTP id
+ a640c23a62f3a-b93f11ec4d2mr115363066b.7.1772626270905; 
+ Wed, 04 Mar 2026 04:11:10 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935aead96bsm734783266b.51.2026.03.04.04.10.15
+ a640c23a62f3a-b935aec3243sm728387266b.53.2026.03.04.04.11.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 04:10:16 -0800 (PST)
+ Wed, 04 Mar 2026 04:11:10 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 308E25F7F5;
- Wed, 04 Mar 2026 12:10:15 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 9959A5F7F5;
+ Wed, 04 Mar 2026 12:11:09 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
@@ -96,13 +96,13 @@ References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
  <874imwq8rj.fsf@draig.linaro.org>
  <feff43ef-1618-4a09-aba4-e4e9c2d07e2c@collabora.com>
 User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Wed, 04 Mar 2026 12:10:15 +0000
-Message-ID: <87seafpzh4.fsf@draig.linaro.org>
+Date: Wed, 04 Mar 2026 12:11:09 +0000
+Message-ID: <87ms0npzfm.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -347,35 +347,29 @@ lay'
 >      sdl_update_caption(scon);
 >  }
 
---8<---------------cut here---------------start------------->8---
-modified   =EE=98=9E ui/sdl2.c
-@@ -125,7 +125,9 @@ void sdl2_window_create(struct sdl2_console *scon)
-         scon->real_renderer =3D SDL_CreateRenderer(scon->real_window, -1, =
-0);
-     }
-=20
-+#ifdef CONFIG_OPENGL
-     qemu_egl_display =3D eglGetCurrentDisplay();
-+#endif
-=20
-     sdl_update_caption(scon);
- }
-@@ -947,10 +949,12 @@ static void sdl2_display_init(DisplayState *ds, Displ=
-ayOptions *o)
- #endif
-         sdl2_console[i].dcl.con =3D con;
-         sdl2_console[i].kbd =3D qkbd_state_init(con);
-+#ifdef CONFIG_OPENGL
-         if (display_opengl) {
-             qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
-             sdl2_gl_console_init(&sdl2_console[i]);
-         }
-+#endif
-         register_displaychangelistener(&sdl2_console[i].dcl);
-=20
- #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
---8<---------------cut here---------------end--------------->8---
+There is one remaining build failure for win64:
 
+  ../ui/sdl2-gl.c: In function 'sdl2_gl_scanout_dmabuf':
+  ../ui/sdl2-gl.c:265:5: error: implicit declaration of function 'egl_dmabu=
+f_import_texture'; did you mean 'qemu_dmabuf_set_texture'? [-Wimplicit-func=
+tion-declaration]
+    265 |     egl_dmabuf_import_texture(dmabuf);
+        |     ^~~~~~~~~~~~~~~~~~~~~~~~~
+        |     qemu_dmabuf_set_texture
+  ../ui/sdl2-gl.c:265:5: error: nested extern declaration of 'egl_dmabuf_im=
+port_texture' [-Werror=3Dnested-externs]
+  ../ui/sdl2-gl.c: In function 'sdl2_gl_release_dmabuf':
+  ../ui/sdl2-gl.c:288:5: error: implicit declaration of function 'egl_dmabu=
+f_release_texture'; did you mean 'qemu_dmabuf_set_texture'? [-Wimplicit-fun=
+ction-declaration]
+    288 |     egl_dmabuf_release_texture(dmabuf);
+        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+        |     qemu_dmabuf_set_texture
+  ../ui/sdl2-gl.c:288:5: error: nested extern declaration of 'egl_dmabuf_re=
+lease_texture' [-Werror=3Dnested-externs]
+  cc1: all warnings being treated as errors
+
+See: https://gitlab.com/stsquad/qemu/-/jobs/13340078806
 
 --=20
 Alex Benn=C3=A9e
