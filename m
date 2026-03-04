@@ -4,118 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20CC5EDEC1E
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A954EDEC1E
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 07:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxgot-0001OT-NK; Wed, 04 Mar 2026 02:38:59 -0500
+	id 1vxgxF-0002Xp-NO; Wed, 04 Mar 2026 02:47:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgoq-0001O1-9r
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:38:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vxgxD-0002XW-EE
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:47:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxgom-0007s0-H5
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:38:55 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vxgxB-0001w4-L9
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 02:47:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772609931;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1772610452;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cl4WrG2F/geB5QN0fMF69n9RNAObVArhKxorRCZFJMg=;
- b=Kbpdzrf9itSLzzT+JNzJs3yi9P247At7dpZCnnIr2AYg4iawr3gV2a08P75676jfyZBDCw
- AHlyfrTjv8MYiqZJzSLD1YQAGJm6VBJ013yjSJ667v+ZUgjRNXA5EzrUysE/eHV82gl9n8
- IKg3D13lug8j/zpXT/c4rPICkt2m8jQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-6amolIZhNyy2Z_A1sSnMJg-1; Wed,
- 04 Mar 2026 02:38:47 -0500
-X-MC-Unique: 6amolIZhNyy2Z_A1sSnMJg-1
-X-Mimecast-MFC-AGG-ID: 6amolIZhNyy2Z_A1sSnMJg_1772609926
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0D07195608D; Wed,  4 Mar 2026 07:38:45 +0000 (UTC)
-Received: from [10.45.224.194] (unknown [10.45.224.194])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 51528195608E; Wed,  4 Mar 2026 07:38:42 +0000 (UTC)
-Message-ID: <8b2855dc-44eb-417f-8a18-f40b1036637a@redhat.com>
-Date: Wed, 4 Mar 2026 08:38:40 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=ZvUPKYkxpX6p5uo9rCWImCxrWe8EsHHLUaB5/uPujno=;
+ b=TsJlhJ9wxaha8Rqowe9FMKeXdgSySfhSN2AIViqQLAm02YLG5CgbGR+csPUxs3t95joVXy
+ Ozmhw4ZQYguc0g01ZIwPmP4n1WJeYYYh0dZTy8PatX/+Lww0BXJR4LgzP/Zzk5p95M/Ndn
+ hQ/NRIvixeuCl+5soBvDoeDiebNi4FM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-395-6oTblHAyMQqrV5T8kCCZ4w-1; Wed, 04 Mar 2026 02:47:31 -0500
+X-MC-Unique: 6oTblHAyMQqrV5T8kCCZ4w-1
+X-Mimecast-MFC-AGG-ID: 6oTblHAyMQqrV5T8kCCZ4w_1772610450
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4837b6f6b93so45554985e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 23:47:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772610450; x=1773215250;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZvUPKYkxpX6p5uo9rCWImCxrWe8EsHHLUaB5/uPujno=;
+ b=u9M/vsQosKsfhxjbi1/wLkRP20/J7tAkkUiMfEE3BdEpv6sjI95DjPz5kr6Y/gjEXD
+ Fzg2bs6fpoaIqUv0ykACivo7oHLM8twjZVW29WFMxiTw7lC9em/0+ag9H8fOkNc/tP0F
+ SOG3/A8k0+jJP8/C85RbKdiJ7KAoWFQQBt9dWpbtJYRc9O+2xJO6NtTm882RWEsAs3RJ
+ ANTkFRL8JKyU6Bwz5BhJwTLdHP+DhzUWU9wIMMr/7LxkGQEQFQz5pFp2Fk6NOqIvUCF9
+ zP0J39IIDPJ4OewtahI+dV1q9mEtrch+ZeRWqpSKyOLpCbtdwdhfqvEDnzqF/IZr/LTr
+ DpKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXKA4DneafZx6EPoElLr1X1817h2pV7PtWYB4Sqry3rb4VQOAVJosmn7UE4D3wXBrItv/bsz6e+e7rQ@nongnu.org
+X-Gm-Message-State: AOJu0YxRIIOwCyCxJ/MJcyumPWyHjycnn0VFx7PEaEYOpALaZViRRO4Z
+ D3Nc7GCjLvnf8XUi/QlLavYRmR02fn76XqwhotZpaHMXNbOeaQTSPNGLY0FHHfrgtr7ZHU4KTrT
+ JRS7WXwmgD4FHUKB091h7oY1pPlvs7I8lSR9uO6O1RjMBewIO2wv6xuzF
+X-Gm-Gg: ATEYQzzBSYS9Sp1qr3NfbMH2a1DZnLM8V9j1MvBhkluQcBta4vk5XHgIdPmwfI8ADTZ
+ t75GDTI0q9FPbQ9NaxPKiyWoKlIKAbV93ZJojEt4Q2UDr5YUY6Q/wX865EO5XdVkltQqsn66sIK
+ 432oWvWubOrayhzsoMqtR9KBLb2/RWdkwdZTrpfWpxPiTa7+0Gh0FJhEzR8luW3AdgSso6ECOrd
+ Y5XTOnGDdNwxT6jBA5eJeVfHfgCdh3xlD2QBNGKf09gGOIBiXyiwI4C8QGZD0ZuplPTok6pR5vM
+ i+0/mcONFHTbGvrnJsLC8iIO0TvYFS5aTBU6VExzTI9oPeGoUqeMSwnXXduPLWRU18ksSoxD2fa
+ dj+MWYCN8GAlsEhg/s9DiwN/7xJPQQLzQZYvEVn0jLTvE9G/uwLF9hr3vmLun/L172o7uBQ==
+X-Received: by 2002:a05:600c:620f:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-485198a2bcfmr14417405e9.31.1772610449825; 
+ Tue, 03 Mar 2026 23:47:29 -0800 (PST)
+X-Received: by 2002:a05:600c:620f:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-485198a2bcfmr14416935e9.31.1772610449335; 
+ Tue, 03 Mar 2026 23:47:29 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851a8a9542sm9494755e9.1.2026.03.03.23.47.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Mar 2026 23:47:28 -0800 (PST)
+Message-ID: <41aaf959-b417-469e-89aa-41c20a4b906c@redhat.com>
+Date: Wed, 4 Mar 2026 08:47:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2] configure: Use clang for sanitizer builds or
- disable Werror
-To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260303012054.484837-1-yodel.eldar@yodel.dev>
- <f999293f-c424-497a-8bca-2634bcd68108@yodel.dev>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v9 31/37] hw/arm/smmuv3-accel: Add property to specify OAS
+ bits
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <f999293f-c424-497a-8bca-2634bcd68108@yodel.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 27
-X-Spam_score: 2.7
-X-Spam_bar: ++
-X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Pavel Hrdina <phrdina@redhat.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Nicolin Chen <nicolinc@nvidia.com>, "ddutile@redhat.com"
+ <ddutile@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nathan Chen <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>
+References: <20260126104342.253965-1-skolothumtho@nvidia.com>
+ <20260126104342.253965-32-skolothumtho@nvidia.com>
+ <d9192ae6-a94f-479a-b19f-734cc52a6be0@redhat.com>
+ <CH3PR12MB754867E986856DC7718D4051AB9AA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <20260202151917.GO2223369@nvidia.com>
+ <CH3PR12MB754835BE4A5C54387122504AAB9AA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <20260202160000.GR2223369@nvidia.com>
+ <CH3PR12MB7548DFE7F7CE555A3B3BF947AB9AA@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <CH3PR12MB7548515EDA96BD03F64DCAA2AB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB7548515EDA96BD03F64DCAA2AB62A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,135 +135,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2026 02.08, Yodel Eldar wrote:
-> +Daniel (thanks for your comments)
-> 
-> On 02/03/2026 19:20, Yodel Eldar wrote:
->> From: Yodel Eldar <yodel.eldar@yodel.dev>
->>
->> Builds with --enable-{asan,tsan,safe-stack} fail under GCC, so use
->> clang if available, otherwise disable the treatment of warnings as
->> errors.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
->> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
->> ---
->> Hi,
->>
->> The previous version only disabled Werror whenever `--skip-meson` wasn't
->> used and the build occurred in a git repo, but this change should
->> probably apply to all types of builds. So, let's use meson_option_add
->> to globally disable Werror instead; IIUC (and according to my testing),
->> this will override the value in config-meson.cross.new.
->>
->> I'm still not sure if we should be disabling Werror for ubsan, even
->> though it's not currently breaking builds with GCC; please let me know
->> what you think.
->>
->> Special thanks to Peter for looking into the cause of the reports around
->> this, for sharing the findings, and suggesting approaches to resolve it.
->> I couldn't pick one over the other, so I went with using clang when
->> available with Werror disable as a fallback; please let me know if you
->> think this is an XOR kind of policy decision.
->>
->> Link to RFCv1:
->> https://lore.kernel.org/qemu-devel/20260302210039.261325-1- 
->> yodel.eldar@yodel.dev/
->>
->> Link to mentioned discussion:
->> https://lore.kernel.org/qemu-devel/ 
->> CAFEAcA88hc4UsgpuPXBWpbeN0tW26159kPn7jx2J9erBA5DLBw@mail.gmail.com/
->>
->> v2:
->> - Fix misnomer in commit message
->> - Simplify condition by using the same variable for all sanitizers
->> - Use meson_option_add to disable Werror
->>
->> Thanks,
->> Yodel
->> ---
->>   configure | 18 ++++++++++++++++++
->>   1 file changed, 18 insertions(+)
->>
->> diff --git a/configure b/configure
->> index 5e114acea2..e457e8a17d 100755
->> --- a/configure
->> +++ b/configure
->> @@ -762,6 +762,12 @@ for opt do
->>     ;;
->>     --wasm64-32bit-address-limit)
->>     ;;
->> +  --enable-asan) use_sanitizer="yes"
->> +  ;;
->> +  --enable-tsan) use_sanitizer="yes"
->> +  ;;
->> +  --enable-safe-stack) use_sanitizer="yes"
->> +  ;;
->>     # everything else has the same name in configure and meson
->>     --*) meson_option_parse "$opt" "$optarg"
->>     ;;
->> @@ -771,6 +777,18 @@ for opt do
->>     esac
->>   done
->> +if test "$use_sanitizer" = "yes"; then
->> +    if has clang; then
->> +        echo "Sanitizer requested: setting compiler suite to clang"
->> +        cc=clang
->> +        cxx=clang++
->> +        host_cc=clang
->> +    else
->> +        echo "Sanitizer requested: disabling Werror for non-clang compilers"
->> +        meson_option_add -Dwerror=false
->> +    fi
->> +fi
->> +
->>   if ! test -e "$source_path/.git"
->>   then
->>       git_submodules_action="validate"
-> 
-> We could treat the rtl8139 as a one-off by carving out the
-> offending code with a GCC pragma or finagling GCC into cooperation
-> by substituting eth_payload_data with the expression assigned to it
-> (thank you, Thomas and Daniel, respectively); indeed, AFAICT the
-> rtl8139 is currently the only code that triggers the GCC bug
-> (and is overdue for a refactor/cleanup), so it's tempting to go with
-> either of these helpful suggestions; *however*, until the GCC team
-> fixes their buggy pairing between sanitizer and -Werror
-> (a pairing that they themselves disavow [1]), IMHO there's a
-> significant risk of recurrence if we went with either option, and
-> it's not clear to me whether reviewers will be able easily spot the
-> next one before it's too late (post-acceptance).
-> 
-> That said, I fully share Daniel's concerns about "overriding the
-> user's choice of compiler"; so, what if we instead moved the
-> sanitizer check into the existing "Preferred compiler" section
-> in configure, such that we only set cc=clang when the user hasn't
-> explicitly specified CC/CXX (diff below)? Note: there's already
-> precedent for this with the Obj-C compiler [2].
-> 
-> I'm definitely onboard with Daniel's warning message in meson whenever
-> the user: 1) explicitly opts for gcc/g++, 2) enables sanitizers, and 3)
-> -Werror is enabled. At the risk of overengineering, though, what if we
-> made it an error message instead, and gave users an escape hatch like
-> `--force-werror-sanitizers` (name TBD)? I can see that being too much,
-> but it may prevent some grief if they missed the warning, and the build
-> breaks several minutes later. WDYT? It's not included in the diff below,
-> but I'll gladly add it to v3 if there's interest; if not, I'll go with
-> the warning message as suggested.
+Hi Shameer,
 
-I think I would rather avoid another switch like --force-werror-sanitizers 
-and making it a hard error instead of a warning. Think of the point in time 
-when GCC fixed their bug - if someone then wants to compile QEMU with that 
-new GCC, this becomes rather obstructive.
+On 2/10/26 4:12 PM, Shameer Kolothum Thodi wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Shameer Kolothum Thodi
+>> Sent: 02 February 2026 16:04
+>> To: Jason Gunthorpe <jgg@nvidia.com>
+>> Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
+>> devel@nongnu.org; peter.maydell@linaro.org; Nicolin Chen
+>> <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>> clg@redhat.com; alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>;
+>> Matt Ochs <mochs@nvidia.com>; smostafa@google.com;
+>> wangzhou1@hisilicon.com; jiangkunkun@huawei.com;
+>> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+>> zhenzhong.duan@intel.com; yi.l.liu@intel.com; Krishnakant Jaju
+>> <kjaju@nvidia.com>
+>> Subject: RE: [PATCH v9 31/37] hw/arm/smmuv3-accel: Add property to
+>> specify OAS bits
+>>
+>>
+>>
+>>> -----Original Message-----
+>>> From: Jason Gunthorpe <jgg@nvidia.com>
+>>> Sent: 02 February 2026 16:00
+>>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+>>> Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
+>>> devel@nongnu.org; peter.maydell@linaro.org; Nicolin Chen
+>>> <nicolinc@nvidia.com>; ddutile@redhat.com; berrange@redhat.com;
+>>> clg@redhat.com; alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>;
+>>> Matt Ochs <mochs@nvidia.com>; smostafa@google.com;
+>>> wangzhou1@hisilicon.com; jiangkunkun@huawei.com;
+>>> jonathan.cameron@huawei.com; zhangfei.gao@linaro.org;
+>>> zhenzhong.duan@intel.com; yi.l.liu@intel.com; Krishnakant Jaju
+>>> <kjaju@nvidia.com>
+>>> Subject: Re: [PATCH v9 31/37] hw/arm/smmuv3-accel: Add property to
+>>> specify OAS bits
+>>>
+>>> On Mon, Feb 02, 2026 at 03:38:50PM +0000, Shameer Kolothum Thodi
+>>> wrote:
+>>>
+>>>>> We can treat ATS as a per-PCIe device property.. I think it would
+>>>>> be fine to tell the SMMU that it always has ATS support, it will
+>>>>> never do anything with it unless it sees a PCIe device with an ATS
+>>>>> cap, and the physical STE generated by the hypervisor should sanitize the
+>> EATS.
+>>>>> BIOS overriding it should be reflected as the devices being
+>>>>> reported as not supporting ATS, qemu should have a per-device flag
+>>>>> to disable ATS.
+>>>> Do we have way to detect that(IOMMU_FWSPEC_PCI_RC_ATS) from
+>>>> userspace now?
+>>> I don't think so.. I was describing how I suspect that should work.
+>>>
+>>> The iommu driver is the only entity that decides if ATS should be
+>>> enabled per-device, so it should report back to userspace in iommufd
+>>> if the device is allowed to enable ATS or not. That should roll up any
+>>> FW overrides and the PCI cap block.
+>> Right. May be just like the out_max_pasid_log2. Will take a look.
+> Looking at adding the ATS detection support through iommufd, one
+> idea is to extend the enum iommufd_hw_capabilities with
+> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED. The question I have
+> now is whether we need to differentiate an old kernel which doesn't
+> have this support or not.
+>
+> This is how the usage would look with an added "ats" property on the
+> vfio-pci device:
+>
+> -device vfio-pci,...,ats=on
+>     if ATS_NOT_SUPPORTED then reject
+> -device vfio-pci,...,ats=off
+>     keep ATS off
+> -device vfio-pci,...,ats=auto (default)
+>    if ATS_NOT_SUPPORTED, disable ATS
+>     otherwise, enable ATS if the PCIe ATS capability is present
+>     (this also covers behaviour on older kernels)
+>
+> Does the above make sense?
+Do you have plans wrt the migration to auto properties for the various
+vSMMU properties (RIL, ssidsize, OAS, ATS)? I just would like to make
+sure libvirt integrators take this new design into account.
+Please let me know if some help is needed for the conversion of some of
+the properties?
 
-Alternative idea: What about adding -Wno-stringop-overflow to the CFLAGS 
-when we detect the problematic situation (GCC + sanitizers + -Werror)? Then 
-the build could also continue with GCC without running into the problem.
+Thanks
 
-  Thomas
+Eric
+>
+> Thanks,
+> Shameer
+>
 
 
