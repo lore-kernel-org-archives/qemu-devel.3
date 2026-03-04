@@ -4,165 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD04CEF8FEA
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06747EF8FEA
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 14:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmuu-0002DE-LC; Wed, 04 Mar 2026 09:09:38 -0500
+	id 1vxmv3-0002Gy-U0; Wed, 04 Mar 2026 09:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Bertrand.Marquis@arm.com>)
- id 1vxhfF-0005Ot-Az
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:33:05 -0500
-Received: from mail-westeuropeazon11013041.outbound.protection.outlook.com
- ([52.101.72.41] helo=AM0PR02CU008.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Bertrand.Marquis@arm.com>)
- id 1vxhfC-0004PL-CZ
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:33:05 -0500
-ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
- b=Opq3Q6rxBzx836EuwoMLndzdeMiQZWRpkU+jDgwQKW05lCHD9G8921KKDu+dtNDu18gQFQJ5ihD75JNnHiN7zcF5X402fGeGHUvvkCreOfbb+2YAxhaBVDnpP9e0wtsVwNV3ByI/hKP1GkWVW/XzxQ47jaJ1hykVfnxGLBCrrmSHu4HFoeQ+Azc1NxbatpwpVjXWSlUKHuG1uzE6REUPGQJymEMuisclhQ6iO4s9ICOYGAo8HvLsmMonem+QK+g5UeP+nIelMAjFzE5KP1HQnQiqIF/OOT1+3XD5wkHdJbubL6BgbzZUoq0wxw3MfdS8Ufuo7IYcfuDhohgZrwoAPw==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0rn9GaHmcQe5kglpJXqmMQZANOB93M/YwhgAmfRBSoA=;
- b=CKikDYYpgQwpkcQuNqGNUDyrdz9IqKrmtyYgfcvArT0nw7yqR4Z+WtTg3G7W7yTm6PWgDH+KyhG/o4mzluaR5nBKs+dV86s5w5dq4xC6NzJuSJ3j0cGU7/g/uc0LlTVtXGUDRMgc0DUpHxdgGq1KNExW+eC8ns8c0dfceaO+qHyMvalk5fwrlOx73AYYXFO64fF1upoRTvZAd5NQbjA9zu48/lYrAMKONVBNzcV5q+lDDHVhTu5z/P4vv20S1prGVEAib0yi3vyYbJkPz5Q8zwH7C4y0Gb5EfPEcZJXr9lS4gVvVLGUIvYIELf4/muCTAmcOkg+qUoCggrW04n3w0Q==
-ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
- 4.158.2.129) smtp.rcpttodomain=gmail.com smtp.mailfrom=arm.com; dmarc=pass
- (p=none sp=none pct=100) action=none header.from=arm.com; dkim=pass
- (signature was verified) header.d=arm.com; arc=pass (0 oda=1 ltdi=1
- spf=[1,1,smtp.mailfrom=arm.com] dkim=[1,1,header.d=arm.com]
- dmarc=[1,1,header.from=arm.com])
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0rn9GaHmcQe5kglpJXqmMQZANOB93M/YwhgAmfRBSoA=;
- b=fGFAQngZHZCZjgpmOwBLj6PGvAoFQwHxuWAcGBlKOfIV4pi12sR4vflyggFX/caK8wuZHLq01Pf+3FlUexPgk5cBty0GjMrwJ1yDAgGZ+o2fYrRcd3jZ2GFUgfx7/uR5oVwoprLkweWxs1cE4nQZjQGT5rDW6PcpHMvO5onBNPk=
-Received: from AM0PR10CA0025.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:208:17c::35)
- by AS4PR08MB7529.eurprd08.prod.outlook.com (2603:10a6:20b:4f8::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Wed, 4 Mar
- 2026 08:27:53 +0000
-Received: from AM3PEPF00009BA2.eurprd04.prod.outlook.com
- (2603:10a6:208:17c:cafe::43) by AM0PR10CA0025.outlook.office365.com
- (2603:10a6:208:17c::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9654.22 via Frontend Transport; Wed,
- 4 Mar 2026 08:27:33 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 4.158.2.129)
- smtp.mailfrom=arm.com; dkim=pass (signature was verified)
- header.d=arm.com;dmarc=pass action=none header.from=arm.com;
-Received-SPF: Pass (protection.outlook.com: domain of arm.com designates
- 4.158.2.129 as permitted sender) receiver=protection.outlook.com;
- client-ip=4.158.2.129; helo=outbound-uk1.az.dlp.m.darktrace.com; pr=C
-Received: from outbound-uk1.az.dlp.m.darktrace.com (4.158.2.129) by
- AM3PEPF00009BA2.mail.protection.outlook.com (10.167.16.27) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9654.16
- via Frontend Transport; Wed, 4 Mar 2026 08:27:53 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZMWkBqBSQyfP18zHuZjgx0EgM2As1iOoCs2EmX515wht4f5INZslIsVCF8AtcHyJpGBvPw6pWSbBQNWMppB6fNxmjD6RAMHGQgb3Oc0lUK9wH3lEJDywdStsxQ70auSeruByRP907gnSLR3gMmThhjFpX1XGNkL6N63FiZywGXU3nmkxFSvYj5xHh6hXKfn0NKC/BO1fntt38oC++5HS+/16joNavbn/9Z4CjQd+N3WmdK0mly8km8Ya4FP23f/YPDXPCWYQ/RZDc6f4dtjc3WDLHAtqbzeMamt7EKAE+9eIR5Kny4lsobDc05VVbW+/30shVb8Aci7u9xTYbjBl+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0rn9GaHmcQe5kglpJXqmMQZANOB93M/YwhgAmfRBSoA=;
- b=q/T1wG9GeqGPjs6ZdAH+3wSgSIVz9IUI/fAPWiCEH28/j98wRcd1AGy5/bpeIV77zhKxvJDzHMmgmjLHAY3C/UjsmxahsqmT6p0Cgchq/EbR2gxnK+qT6XFEL35jBqQY0MoFA0r2ZYZTNJ6NXTX1YitviP3q/aIoU1D1rEUpNh/mek5qjbBzzIQjjPWHu/93cKb1qjLEyTRT9QZ/hx13osywfHF6x2AWPvaxufqLMXZLGIaa15SgmKDhN7UtYw2VMfynNonkW5fZpvLZeosaJzwWXxiLQgxL2Q9YAriZ5emi/Kps9L57kXcJcwF0/6cHMLS3fDKrOHXXzpUDzlejlg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=arm.com; dmarc=pass action=none header.from=arm.com; dkim=pass
- header.d=arm.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arm.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0rn9GaHmcQe5kglpJXqmMQZANOB93M/YwhgAmfRBSoA=;
- b=fGFAQngZHZCZjgpmOwBLj6PGvAoFQwHxuWAcGBlKOfIV4pi12sR4vflyggFX/caK8wuZHLq01Pf+3FlUexPgk5cBty0GjMrwJ1yDAgGZ+o2fYrRcd3jZ2GFUgfx7/uR5oVwoprLkweWxs1cE4nQZjQGT5rDW6PcpHMvO5onBNPk=
-Received: from PR3PR08MB5593.eurprd08.prod.outlook.com (2603:10a6:102:84::13)
- by DB9PR08MB8625.eurprd08.prod.outlook.com (2603:10a6:10:3d3::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Wed, 4 Mar
- 2026 08:26:49 +0000
-Received: from PR3PR08MB5593.eurprd08.prod.outlook.com
- ([fe80::aae1:6871:afc4:620e]) by PR3PR08MB5593.eurprd08.prod.outlook.com
- ([fe80::aae1:6871:afc4:620e%4]) with mapi id 15.20.9654.022; Wed, 4 Mar 2026
- 08:26:49 +0000
-From: Bertrand Marquis <Bertrand.Marquis@arm.com>
-To: Demi Marie Obenour <demiobenour@gmail.com>
-CC: Alyssa Ross <hi@alyssa.is>, Bo Chen <bchen@crusoe.ai>, Rob Bradford
- <rbradford@meta.com>, Wei Liu <liuwe@microsoft.com>, Sebastien Boeuf
- <seb@rivosinc.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "dev@lists.cloudhypervisor.org" <dev@lists.cloudhypervisor.org>, Spectrum OS
- Development <devel@spectrum-os.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, =?utf-8?B?QWxleCBCZW5uw6ll?=
- <alex.bennee@linaro.org>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?=
- <marcandre.lureau@redhat.com>, "virtio-comment@lists.linux.dev"
- <virtio-comment@lists.linux.dev>
-Subject: Re: virtio-msg inter-VM transport vs virtio-vhost-user
-Thread-Topic: virtio-msg inter-VM transport vs virtio-vhost-user
-Thread-Index: AQHcqzep5HvZkOgsvEi4uRh6zzeLULWeCs4A
-Date: Wed, 4 Mar 2026 08:26:48 +0000
-Message-ID: <08706B81-11D1-47DA-BC0B-756CF3705C69@arm.com>
-References: <b291c8af-58ee-46e4-9033-e681ff9677db@gmail.com>
-In-Reply-To: <b291c8af-58ee-46e4-9033-e681ff9677db@gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Apple Mail (2.3864.400.21)
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=arm.com;
-x-ms-traffictypediagnostic: PR3PR08MB5593:EE_|DB9PR08MB8625:EE_|AM3PEPF00009BA2:EE_|AS4PR08MB7529:EE_
-X-MS-Office365-Filtering-Correlation-Id: dfc29d7a-aa06-47e1-a61e-08de79c7ee2f
-x-checkrecipientrouted: true
-nodisclaimer: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700021; 
-X-Microsoft-Antispam-Message-Info-Original: Fz2cw1YjBTCgn5sL9XuEOsL1mm0Idang6Vi6Uyywz12ulb4soXEw/ZmNsbrwXQ3oBfdZKKyH4A0IkDRcOKG+z3355Ya3/jv1rU/DxkO2eYPcSmYktchIApywUwxpJ3iGqmPB/KGpxs/92/uE2exRMBLLvbhqWvwGbsjuvLNP4jzswq0BH5RGXLt0NrlbENezmvpvPrsx3T2svvQcfyQ8wZNmqYdh+7mzW8fWSvxXojWaFs8610aZKSn+xsL4ZBY8TU606FkKDm15pG6Zwj2fdEmwZiUooPLJe5Ivlb+8IhCqApmXFhov2LNST4qZ1tuko509OUJ5sZLIo9EO3wBSilGZ4notL4O7JWOv8yNk56hEm4i9tB4RHMCeqWmkkE/JZbVM54O0daQd1qIlbaZ0ExEB/lwGR17SkcuRVI59sQTOFhuDYlGWebG97nrcv2143w/hB1uCabRqthLbTnG+eDvrf089ES2g6FWg0Cw67X2I1unddNLN97xX44fpz+y68bmM2B8FZEQqZHhWSRmAexCOd9Wos1eL6sj3pYYH1EVnWkdhJvyR0fxkiLTE57w6Uh9rRpljsZC4pPvFUU3ueFvLdjPwG0VhMT2bfWj2z0Ly5Ef2Z4o1trtnznHDguFqyOmLidDRvf5jVXinBF9xIlBUCXW0VHEoI4kcppicLkFmAH/PdP9ysd2GQc9Pd/0MNlOzZD943vjtuk7em7QsqXUhF+NFPDnXmvxOBUmshuw=
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:PR3PR08MB5593.eurprd08.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021); DIR:OUT;
- SFP:1101; 
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5C302A4A3D88CE458D751666AFD127EC@eurprd08.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1vxl4W-00041z-7s
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:24 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1vxl4S-0005yo-2b
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:23 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-439c9bdc241so348143f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lowrisc.org; s=google; t=1772626278; x=1773231078; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gd2joM6rY/li7wvdJlP/PMgv1E2ePvup/TViSbVH7sg=;
+ b=Cq830qF1+u1DlRYC7I6sZ2p9POW30egMJyBRAMbMMsfKNVEeMp3csIv2qREDiYQGzK
+ faf4TITuZhx9ChhWV6a84GdLWWNBHqmd9eA8GeG4wktz6BPy4dunX/IdKVb56KT8SJEj
+ O13I6Cd5o+El3St9A5Damuu2v4Tmudwv8SCeVhfVqZ78cW66MaVPabGF2edD1fS24Jwa
+ N5aKSYwQdluIaTFjaSp/OMBmEWZiA/RG0ykSGFx3AAxt/AmpisE5k7ESAzpyLFCFfh06
+ jxpY5AYWmk8lnnUmi+cUPl4+C+cFQOG7h0Q3W+/1a7STzfSIQ6Aa4m3ctQ7vuN5jQzEh
+ yHdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772626278; x=1773231078;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Gd2joM6rY/li7wvdJlP/PMgv1E2ePvup/TViSbVH7sg=;
+ b=vLzyWKOVSYcqa4p3EkFWJV1cUoj2hrnzWvenaz1KRMRG1Z43joc2PuQwgjps2ER02q
+ mou0aXcrvsXCWt3rSKhu3xdlKmEPr8RMbrdm5pu6VmOtEue38GPgjNxmd0FUXg+mu2Ar
+ 5C5QcX3BxxEaQ0Od6zOP0f9DBvr+4c6S6N8VlsgV1T+P16wR3ar4Mf2TEOCU+698R7oF
+ SFpqFVX2y1nyr5/Jnjx9RR9jV4GyTICQTNwBivCegUWU8di7xA2rhdF6xyazzNHudb7/
+ uUUhiirxgppUf59+byHODIXSazwsijarKN2O3osoreXLxTWB7GGNPzX63LQrXeffkjct
+ CUeQ==
+X-Gm-Message-State: AOJu0YzFv9YZUPVfR799XtLcVs6SBH414wTbdHxvnK0uJxHoRkPJADty
+ b51d/GcHA88GgWMIF1jbAQQgDYZAokjQcGjtKiRbTa4gjbzmIA90kUpnKQeERnrRAXzGs9hQtJJ
+ fupw+hxk=
+X-Gm-Gg: ATEYQzw3TyZyi3OB7stMVkOwA8LoTRO1iTl3yScgm/BiP330Ts5Ry5nbeFI8h9iVdE5
+ dX2OzHECRMQnsYsjTeJV9oIgD8l8A/f4q/4wGMxTPiaambco5nAaFtf9WZKEaWBOuDPFJN52PiB
+ 0VbRWKoQ+u6pxUaKnIpko96gIRIm0BOefY/fXQGXbrj01Snl1/Fbi8SS7Kf45uIw4gbjGFLxzMX
+ K4HC0cTV6khrPk3QHzAWqsKU+VjoOZv+7gZZmdoGSGnPwgalA3r1Twm0eAVLVB1GoInI7IsvUeW
+ v9KcnCGB/1OjgdIa76LJxkxVMevUWFq/bvNyCt96sQdljagdy2SjSvHs2zITpPrg2CYNPvrxF9T
+ PUfhjoeAm4wIubo3CrMPbydRXZg0D5YCqHxn/ocEvgne8EDzaHbGZjY+0Kj0ioQqwaKdefvVAId
+ aAX2rXav1UlvHHFJA49EClZ1Z6FkmSjjf+JCW/zkVDuLh+++16Ml2ToOdFekotJNZrneow2ef6Q
+ UVoe6PIQ5s5oX19yTen
+X-Received: by 2002:a05:6000:1861:b0:436:1a2e:9f1c with SMTP id
+ ffacd0b85a97d-439c7fa4521mr3360041f8f.19.1772626278291; 
+ Wed, 04 Mar 2026 04:11:18 -0800 (PST)
+Received: from jw-ThinkPad-T14-Gen-3.home (128.70.159.143.dyn.plus.net.
+ [143.159.70.128]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b0549600sm28217570f8f.35.2026.03.04.04.11.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 04:11:17 -0800 (PST)
+From: James Wainwright <james.wainwright@lowrisc.org>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
+ James Wainwright <james.wainwright@lowrisc.org>
+Subject: [PATCH 2/3] target/riscv: add unratified RISC-V Zbr0p93 ext
+Date: Wed,  4 Mar 2026 12:11:12 +0000
+Message-ID: <20260304121113.117299-3-james.wainwright@lowrisc.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260304121113.117299-1-james.wainwright@lowrisc.org>
+References: <20260304121113.117299-1-james.wainwright@lowrisc.org>
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB8625
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: AM3PEPF00009BA2.eurprd04.prod.outlook.com
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 730bf17b-3e1e-4678-8cb7-08de79c7c7bd
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|14060799003|1800799024|82310400026|35042699022|376014|7416014|13003099007|7053199007;
-X-Microsoft-Antispam-Message-Info: DK4YxdDTCotUlWPdqq+HcHGwI2ePwG/C8YGCwzjPjfkaInS/irDqCHpxKkbQLMIQr1iR9tjbO+4W+yIn6YNVvNZqwHJlJyaIh/9t8I8hj/Eukjc1EIAtXogFRoLhNIe2L1KT33aiX8nCYX5660dkK0wyb+zqhviDcQimOoGCZSQtCjZsZ1/uXw20r1nCK5OWYih717zJGrQ1Lt1BgTwkXtWrP2+nUfFy4rPeILS7VbUfYb/Ur/pZM+MEhb4YaJ0+QbPO5C/+3ESVw7Gr0Xq8K1UhEL9hL6NVAvFiBMeGfL/zA2E/mq+GMmBkHohIftEimLgZ+l/qrakP0VTN8o94obxlyKlx4qrOe534eg0cz/DMnSwHEVuaTDjbexcSKkZXD1mlmQlbgp0IVjAyNgTP5Yy+zLn/fmaNk7AOMh+lWJ0bwMBLQF8QTzf5YoaXfPWXM9LYf+cIUf0onG5oDAdDY2Hio/RBZkvMypDqx08lxI7sNLoSU4ryxT+VktQN4oR8LVlr2DSJRWBeOyEC/GaxWhAMUqgje2AnNfHl5bH/7u8whSYiydkdx5BVnT9jH116NCJ9f1jeysK1cmnz9JQDjnT0NZPt4FTti/kiJaiI+lEw3lSKEqjsEd9PsfVoM0uBo1sOydDc3NaHCDXpBFacpvRosH29pLxLDkaVJraKQoI7AnxcJd0+mVoF98PcUcF7FMjajAOOZkhmN4EZBGtL3g==
-X-Forefront-Antispam-Report: CIP:4.158.2.129; CTRY:GB; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:outbound-uk1.az.dlp.m.darktrace.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(14060799003)(1800799024)(82310400026)(35042699022)(376014)(7416014)(13003099007)(7053199007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 9Ng8TdPapf0fHJZaM6I/9W7Jk53W6NqMUb1Zo5/v0l5nHcOrEx9no0yrLdLdcaKTR1ykpKWR4T+20TudjTbdhYcHLkILzjPTdRuUZgpMTeV/ZI5rsrLtRb+yRAy3dmSNZVyj1YCqsAHRDf6ENV9KY/HXy+kvNTEjH8AW0PA90LtE0ouBTlwuuVDLGWjG1BXeWmnFCbsaAE3J4YAw1whKNO1PKnU9MP443YMZiadTMd+ALpR4gMJ5qWSR73g0hsMhcus0LHyoGAb6/xWyxkURH6jZndNf5LBTl88JHmG1+3s9Kn7zfiFjHIyJoW/A1UIDjl5n3pQPi8Wd4gGtctsXwKYL8U9E0rzeyNT7xAcaH73XKQ0A4uXvdDB1xKVTt3QWkAwAj8qlFqYRedVjShiIW+AnN845D8u6FHs30MvswRIz0PKuaoyPPAQ3ik6atp47
-X-OriginatorOrg: arm.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2026 08:27:53.3665 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: dfc29d7a-aa06-47e1-a61e-08de79c7ee2f
-X-MS-Exchange-CrossTenant-Id: f34e5979-57d9-4aaa-ad4d-b122a662184d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=f34e5979-57d9-4aaa-ad4d-b122a662184d; Ip=[4.158.2.129];
- Helo=[outbound-uk1.az.dlp.m.darktrace.com]
-X-MS-Exchange-CrossTenant-AuthSource: AM3PEPF00009BA2.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7529
-Received-SPF: pass client-ip=52.101.72.41;
- envelope-from=Bertrand.Marquis@arm.com;
- helo=AM0PR02CU008.outbound.protection.outlook.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=james.wainwright@lowrisc.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 04 Mar 2026 09:09:20 -0500
+X-Mailman-Approved-At: Wed, 04 Mar 2026 09:09:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -177,88 +103,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgRGVtaSwNCg0KPiBPbiAzIE1hciAyMDI2LCBhdCAxODo1NiwgRGVtaSBNYXJpZSBPYmVub3Vy
-IDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+IHdyb3RlOg0KPg0KPiBTcGVjdHJ1bSAoaHR0cHM6Ly9z
-cGVjdHJ1bS1vcy5vcmcpIGlzIGdvaW5nIHRvIGJlIGltcGxlbWVudGluZw0KPiB2aXJ0aW8gZGV2
-aWNlcyBvdXRzaWRlIG9mIHRoZSBob3N0LiAgT25lIHByb3Bvc2VkIG1ldGhvZCBvZiBkb2luZw0K
-PiB0aGlzIGlzIHZpcnRpby12aG9zdC11c2VyLCB3aGljaCBpcyBhIHZpcnRpbyBkZXZpY2UgdGhh
-dCBhbGxvd3MgYQ0KPiBWTSB0byBleHBvc2UgYSB2aG9zdC11c2VyIGRldmljZSB0byBhbm90aGVy
-IFZNLiAgRm9yIGluc3RhbmNlLCBvbmUNCj4gY291bGQgYXNzaWduIGEgTklDIHRvIG9uZSBWTSBh
-bmQgaGF2ZSBpdCBwcm92aWRlIGEgdmhvc3QtdXNlci1uZXQNCj4gZGV2aWNlIGZvciB1c2UgYnkg
-YSBkaWZmZXJlbnQgVk0uDQo+DQo+IEkgYnJvdWdodCB0aGlzIHVwIG9uIHRoZSBLVk0vUUVNVSBj
-b21tdW5pdHkgY2FsbCB0b2RheS4gIEFsZXggQmVubsOpZQ0KPiByZWNvbW1lbmRlZCB1c2luZyB2
-aXJ0aW8tbXNnIGluc3RlYWQuICBIb3dldmVyLCBJIGhhdmUgYSBmZXcgY29uY2VybnMNCj4gd2l0
-aCB0aGlzOg0KPg0KPiAxLiBWaXJ0aW8tbXNnIGJ1c2VzIGFyZSBzcGVjaWZpYyB0byBhIGdpdmVu
-IGh5cGVydmlzb3Igb3IgKGluIHRoZQ0KPiAgIGNhc2Ugb2YgRkYtQSkgdG8gYSBnaXZlbiBDUFUg
-YXJjaGl0ZWN0dXJlLiAgTm9uZSBvZiB0aGUgY3VycmVudA0KPiAgIGJ1c2VzIHN1cHBvcnQgS1ZN
-IG9uIHBsYXRmb3JtcyBvdGhlciB0aGFuIEFybTY0LiAgVGhlcmVmb3JlLA0KPiAgIGEgYnJhbmQt
-bmV3IGJ1cyB3b3VsZCBiZSBuZWVkZWQuDQoNCkV2ZW4gRkYtQSBpcyBub3QgdXNlYWJsZSBhdCB0
-aGUgbW9tZW50IHdpdGggS1ZNIGFzIHRoZXJlIGlzIG5vIEZGLUENCnN1cHBvcnQgZm9yIFZNIHRv
-IFZNIGluIEtWTSAob25seSBob3N0IGNhbiBjb21tdW5pY2F0ZSB3aXRoIHRoZSBzZWN1cmUNCndv
-cmxkKS4NCg0KTU1JTyBvciBQQ0kgYmFzZWQgdmlydGlvIGluIEtWTSBjYXNlIGlzIHdvcmtpbmcg
-YW5kIHdhcyBub3QgcmVhbGx5DQp0aGUgdGFyZ2V0IG9mIG91ciB3b3JrLg0KDQpwS1ZNIGlzIGEg
-dGFyZ2V0IGFuZCBpcyBiZWluZyB3b3JrZWQgb24gdXNpbmcgRkYtQSBidXQgcFZNIHRvIEhvc3QN
-CnZpcnRpbyBpcyBzdGlsbCB1c2luZyBQQ0kgYXQgdGhlIG1vbWVudA0KDQpOb3cgY3JlYXRpbmcg
-YSBLVk0gc3BlY2lmaWMgYnVzIHJldXNpbmcgdGhlIGNvbmNlcHQgb2YgYSBGSUZPDQp0byB0cmFu
-c2ZlciB0aGUgbWVzc2FnZXMgYmV0d2VlbiBhIFZNIGFuZCBIb3N0IGlzIGRlZmluaXRlbHkgcG9z
-c2libGUNCnRvIGRvIGFuZCBzaG91bGQgbm90IGJlIHRoYXQgY29tcGxleC4NCg0KUmlnaHQgbm93
-IGkgYW0gd29ya2luZyBvbiBiYWNrZW5kIGltcGxlbWVudGF0aW9uIHdoZXJlOg0KLSB0aGUgYnVz
-IGltcGxlbWVudGF0aW9uIHdvdWxkIGJlIGluIGxpbnV4IGtlcm5lbCBhbGxvd2luZyBzZXZlcmFs
-DQppbXBsZW1lbnRhdGlvbnMgbGlrZSBGRi1BLCB4ZW4gb3Igb3RoZXJzIHRvIGJlIGRvbmUgYXMg
-bGludXggZHJpdmVycy4NCi0gaGF2ZSBhIGJ1cyBpbnRlcmZhY2UgcHJvdmlkZWQgdG8gdXNlciBs
-YW5kIHNvIHRoYXQgUWVtdSBjb3VsZCBjb250YWluDQp0aGUgdHJhbnNwb3J0IGltcGxlbWVudGF0
-aW9uIGJ1dCB3b3VsZCBub3QgbmVlZCB0byBiZSBtb2RpZmllZCBmb3IgbmV3DQpidXMgaW1wbGVt
-ZW50YXRpb25zLg0KDQpSZXVzaW5nIHRoaXMsIGl0IHNob3VsZCBiZSBmYWlybHkgc2ltcGxlIHRv
-IGRlZmluZSBhIEtWTSBidXMgYW5kIHJldXNlDQp0aGUgb3RoZXIgcGFydHMgb2YgdGhlIGltcGxl
-bWVudGF0aW9ucy4NCg0KPg0KPiAyLiBWaXJ0aW8tbXNnIHJlcXVpcmVzIG5vdC15ZXQtdXBzdHJl
-YW0gZHJpdmVycyBpbiBib3RoIHRoZSBmcm9udGVuZA0KPiAgICh0aGUgVk0gdXNpbmcgdGhlIGRl
-dmljZSkgYW5kIHRoZSBiYWNrZW5kICh0aGUgVk0gcHJvdmlkaW5nIHRoZQ0KPiAgIGRldmljZSku
-ICBWaG9zdC11c2VyIHVzZXMgYW55IG9mIHRoZSBleGlzdGluZyB0cmFuc3BvcnRzLCBzdWNoIGFz
-DQo+ICAgUENJIG9yIE1NSU8uICBUaGlzIG1lYW5zIHRoYXQgdXBzdHJlYW0gZHJpdmVycyBjYW4g
-YmUgdXNlZCBpbiB0aGUNCj4gICBmcm9udGVuZCwgYW5kIGFsc28gZW5hYmxlcyBzdXBwb3J0cyBm
-b3IgV2luZG93cyBhbmQgb3RoZXIgZ3Vlc3RzDQo+ICAgdGhhdCBsYWNrIHN1cHBvcnQgZm9yIHZp
-cnRpby1tc2cuDQoNClRoaXMgaXMgZGVmaW5pdGVseSB0cnVlIGFuZCB3aWxsIGFsd2F5cyBzdGF5
-IHRydWUuIFRvIHVzZSB2aXJ0aW8tbXNnIHlvdQ0Kd2lsbCBuZWVkIGEgbmV3IHRyYW5zcG9ydCBp
-bXBsZW1lbnRhdGlvbiBmb3IgaXQgd2hlbiB5b3Ugd2FudCB0byB1c2UNCml0IGFuZCB0aGUgYnVz
-IGltcGxlbWVudGF0aW9uKHMpIHlvdSByZXF1aXJlLiBUbyBiZSB1c2VkIGluIHdpbmRvd3MNCnRo
-b3NlIHBhcnQgd2lsbCBhbHNvIGJlIG5lZWRlZC4NCg0KSW4geW91ciBleGFtcGxlIGhlcmUgeW91
-IHJlbHkgb24gZXhpc3RpbmcgTU1JTyBvciBQQ0kgdHJhbnNwb3J0IGFuZA0KZXhpc3Rpbmcgdmhv
-c3QgaW1wbGVtZW50YXRpb25zLiBUaGlzIGlzIGRlZmluaXRlbHkgcXVpY2tlciB0byBkbyBhbmQg
-dXNlLg0KVGhlIGdvYWwgaXMgbm90IHJlcGxhY2Ugd2hhdCB3b3JrcyBidXQgdG8gcHJvdmlkZSBz
-b2x1dGlvbnMgZm9yIHVzZSBjYXNlcw0Kd2hlcmUgTU1JTyBvciBQQ0kgY3VycmVudGx5IGRvIG5v
-dCB3b3JrIG9yIG5lZWQgdG8gYmUgb3B0aW1pemVkLg0KDQo+DQo+IDMuIFZob3N0LXVzZXIgaXMg
-YWxyZWFkeSB3aWRlbHkgZGVwbG95ZWQsIHNvIGZyb250ZW5kIGltcGxlbWVudGF0aW9ucw0KPiAg
-IGFyZSBxdWl0ZSB3ZWxsIHRlc3RlZC4gIEEgS1ZNLXNwZWNpZmljIHZpcnRpby1tc2cgdHJhbnNw
-b3J0IHdvdWxkDQo+ICAgc2VydmUgb25seSBvbmUgcHVycG9zZTogZHJpdmVyIFZNcyAod2l0aCBh
-c3NpZ25lZCBkZXZpY2VzKSBvbg0KPiAgIG5vbi1Bcm02NCBwbGF0Zm9ybXMuICBUaGlzIGlzIGEg
-cXVpdGUgbmljaGUgdXNlLWNhc2UuICBUaGVyZWZvcmUsDQo+ICAgSSdtIGNvbmNlcm5lZCB0aGF0
-IHRoZSBuZWVkZWQgZnJvbnRlbmQgY29kZSB3aWxsIGJlIHBvb3JseSB0ZXN0ZWQNCj4gICBhbmQg
-Yml0cm90Lg0KDQpXZSBhcmUgaW4gdGhlIHByb2Nlc3Mgb2YgZGVmaW5pbmcgdGhlIHNwZWNpZmlj
-YXRpb24gZm9yIHZpcnRpby1tc2cgYW5kIHdlDQphcmUgd29ya2luZyBvbiBpbXBsZW1lbnRhdGlv
-bnMgaW4gcGFyYWxsZWwgc28gb3VyIGltcGxlbWVudGF0aW9ucyBhcmUNCmZvciBub3cgbm90IHdp
-ZGVseSB0ZXN0ZWQgdGhhdCBpcyBjbGVhci4NCk5vdyBhIHNwZWNpZmljIEtWTSB2aXJ0aW8gbWVz
-c2FnZSBidXMgaW1wbGVtZW50YXRpb24gd291bGQgcmV1c2UNCnRoZSB0cmFuc3BvcnQgYW5kIGRy
-aXZlciBpbXBsZW1lbnRhdGlvbnMgd2hpY2ggd291bGQgYmUgdXNlZCBvbiBhbnkNCnBsYXRmb3Jt
-cyBpbiB0aGUgZnV0dXJlLiBJIGFtIG5vdCBmb2xsb3dpbmcgeW91ciBuaWNoZSB1c2UtY2FzZSBo
-ZXJlDQphbmQgdGhlIHBvb3JseSB0ZXN0ZWQgYXJndW1lbnQuIE1heWJlIGkgYW0gbWlzc2luZyBz
-b21ldGhpbmcuDQoNCj4NCj4gTWFub3MgUGl0c2lkaWFuYWtpcyBzdGF0ZWQgdGhhdCB2aG9zdC11
-c2VyIGRvZXMgbm90IG1ha2Ugc2Vuc2UgaW4NCj4gdGhpcyBjYXNlLiAgV2h5IGlzIHRoYXQ/ICBX
-b3VsZCBpdCBtYWtlIHNlbnNlIHRvIHVzZSB2aXJ0aW8tbXNnDQo+IGJldHdlZW4gVk1NIGFuZCBp
-dHMgVk0sIGFuZCBleHBvc2UgYSB2aG9zdC11c2VyIGRldmljZSB0byB0aGUNCj4gb3V0c2lkZSB3
-b3JsZD8gIFdoYXQgYWJvdXQgaGF2aW5nIHRoZSB2aXJ0aW8tdmhvc3QtdXNlciBndWVzdCBkcml2
-ZXINCj4gZW11bGF0ZSBhIHZpcnRpby1tc2cgdHJhbnNwb3J0LCBzbyB0aGF0IGl0IGNhbiBiZSB1
-c2VkIHdpdGggYW55IGRldmljZQ0KPiBpbXBsZW1lbnRhdGlvbiBzdXBwb3J0aW5nIHZpcnRpby1t
-c2c/DQoNCkkgYW0gbm90IGZvbGxvd2luZyB5b3VyIHBvaW50IGhlcmUuIFlvdSB3YW50IHRvIGRv
-IHZpcnRpbyBvbiB0b3Agb2YgdmlydGlvID8NCg0KUmVnYXJkcw0KQmVydHJhbmQNCg0KPg0KPiBJ
-IHdvdWxkIGdyZWF0bHkgYXBwcmVjaWF0ZSBhbnkgYW5kIGFsbCBzdWdnZXN0aW9ucyBoZXJlLiAg
-VGhpcyBpcyBhDQo+IHNlcmlvdXMgcHJvamVjdCB0aGF0IGlzIGdvaW5nIHRvIGJlIHVzZWQgaW4g
-cHJvZHVjdGlvbiwgYnV0IEkgd2FudA0KPiB0byBlbnN1cmUgdGhhdCB0aGUgZGVzaWduIGlzIHRo
-ZSBiZXN0IHBvc3NpYmxlLg0KPiAtLQ0KPiBTaW5jZXJlbHksDQo+IERlbWkgTWFyaWUgT2Jlbm91
-ciAoc2hlL2hlci9oZXJzKQ0KPiA8T3BlblBHUF8weEIyODhCNTVGRkY5QzIyQzEuYXNjPg0KDQpJ
-TVBPUlRBTlQgTk9USUNFOiBUaGUgY29udGVudHMgb2YgdGhpcyBlbWFpbCBhbmQgYW55IGF0dGFj
-aG1lbnRzIGFyZSBjb25maWRlbnRpYWwgYW5kIG1heSBhbHNvIGJlIHByaXZpbGVnZWQuIElmIHlv
-dSBhcmUgbm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRl
-ciBpbW1lZGlhdGVseSBhbmQgZG8gbm90IGRpc2Nsb3NlIHRoZSBjb250ZW50cyB0byBhbnkgb3Ro
-ZXIgcGVyc29uLCB1c2UgaXQgZm9yIGFueSBwdXJwb3NlLCBvciBzdG9yZSBvciBjb3B5IHRoZSBp
-bmZvcm1hdGlvbiBpbiBhbnkgbWVkaXVtLiBUaGFuayB5b3UuDQo=
+This extension was not ratified with the Zb[abcs] bitmanip extensions.
+This is the latest draft version (0.93) as implemented by the Ibex core.
+
+These instructions are in the reserved encoding space but have not been
+ratified and could conflict with future ratified instructions.
+
+Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
+---
+ target/riscv/bitmanip_helper.c            | 20 +++++++
+ target/riscv/cpu.c                        |  4 +-
+ target/riscv/cpu_cfg.h                    |  3 ++
+ target/riscv/cpu_cfg_fields.h.inc         |  1 +
+ target/riscv/helper.h                     |  2 +
+ target/riscv/insn32.decode                | 12 +++++
+ target/riscv/insn_trans/trans_rvb.c.inc   | 37 +++++++++++++
+ tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
+ tests/tcg/riscv64/test-crc32.S            | 64 +++++++++++++++++++++++
+ 9 files changed, 147 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/riscv64/test-crc32.S
+
+diff --git a/target/riscv/bitmanip_helper.c b/target/riscv/bitmanip_helper.c
+index e9c8d7f778..1156a87dd3 100644
+--- a/target/riscv/bitmanip_helper.c
++++ b/target/riscv/bitmanip_helper.c
+@@ -23,6 +23,8 @@
+ #include "exec/target_long.h"
+ #include "exec/helper-proto.h"
+ #include "tcg/tcg.h"
++#include "qemu/crc32.h"
++#include "qemu/crc32c.h"
+ 
+ target_ulong HELPER(clmul)(target_ulong rs1, target_ulong rs2)
+ {
+@@ -129,3 +131,21 @@ target_ulong HELPER(xperm8)(target_ulong rs1, target_ulong rs2)
+ {
+     return do_xperm(rs1, rs2, 3);
+ }
++
++target_ulong HELPER(crc32)(target_ulong rs1, target_ulong sz)
++{
++    for (target_ulong i = 0; i < sz; i++) {
++        rs1 = crc32_table[rs1 & 0xFF] ^ (rs1 >> 8);
++    }
++
++    return rs1;
++}
++
++target_ulong HELPER(crc32c)(target_ulong rs1, target_ulong sz)
++{
++    for (target_ulong i = 0; i < sz; i++) {
++        rs1 = crc32c_table[rs1 & 0xFF] ^ (rs1 >> 8);
++    }
++
++    return rs1;
++}
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e56470a374..b83efb210e 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1377,6 +1377,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+ /* These are experimental so mark with 'x-' */
+ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+     MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
++    MULTI_EXT_CFG_BOOL("x-zbr", ext_zbr, false),
+ 
+     { },
+ };
+@@ -3056,7 +3057,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zba = true,
+         .cfg.ext_zbb = true,
+         .cfg.ext_zbc = true,
+-        .cfg.ext_zbs = true
++        .cfg.ext_zbs = true,
++        .cfg.ext_zbr = true
+     ),
+ 
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index cd1cba797c..2f18d16de2 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -70,4 +70,7 @@ MATERIALISE_EXT_PREDICATE(xtheadmempair)
+ MATERIALISE_EXT_PREDICATE(xtheadsync)
+ MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
+ 
++/* Extensions that are not yet upstream */
++MATERIALISE_EXT_PREDICATE(zbr);
++
+ #endif
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 70ec650abf..38cb512010 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -11,6 +11,7 @@ BOOL_FIELD(ext_zbc)
+ BOOL_FIELD(ext_zbkb)
+ BOOL_FIELD(ext_zbkc)
+ BOOL_FIELD(ext_zbkx)
++BOOL_FIELD(ext_zbr)
+ BOOL_FIELD(ext_zbs)
+ BOOL_FIELD(ext_zca)
+ BOOL_FIELD(ext_zcb)
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index b785456ee0..7722c590bd 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -84,6 +84,8 @@ DEF_HELPER_FLAGS_1(unzip, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_1(zip, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_2(xperm4, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+ DEF_HELPER_FLAGS_2(xperm8, TCG_CALL_NO_RWG_SE, tl, tl, tl)
++DEF_HELPER_FLAGS_2(crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl)
++DEF_HELPER_FLAGS_2(crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+ 
+ /* Floating Point - Half Precision */
+ DEF_HELPER_FLAGS_3(fadd_h, TCG_CALL_NO_RWG, i64, env, i64, i64)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..97bf9687b7 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -847,6 +847,18 @@ binvi      01101. ........... 001 ..... 0010011 @sh
+ bset       0010100 .......... 001 ..... 0110011 @r
+ bseti      00101. ........... 001 ..... 0010011 @sh
+ 
++# *** RV32 Zbr Experimental Extension ***
++crc32_b    0110000  10000 ..... 001 ..... 0010011 @r2
++crc32_h    0110000  10001 ..... 001 ..... 0010011 @r2
++crc32_w    0110000  10010 ..... 001 ..... 0010011 @r2
++crc32c_b   0110000  11000 ..... 001 ..... 0010011 @r2
++crc32c_h   0110000  11001 ..... 001 ..... 0010011 @r2
++crc32c_w   0110000  11010 ..... 001 ..... 0010011 @r2
++
++# *** RV64 Zbr Experimental Extension (in addition to RV32 Zbr) ***
++crc32_d    0110000  10011 ..... 001 ..... 0010011 @r2
++crc32c_d   0110000  11011 ..... 001 ..... 0010011 @r2
++
+ # *** Zfa Standard Extension ***
+ fli_s       1111000 00001 ..... 000 ..... 1010011 @r2
+ fli_d       1111001 00001 ..... 000 ..... 1010011 @r2
+diff --git a/target/riscv/insn_trans/trans_rvb.c.inc b/target/riscv/insn_trans/trans_rvb.c.inc
+index e4dcc7c991..59db8b047f 100644
+--- a/target/riscv/insn_trans/trans_rvb.c.inc
++++ b/target/riscv/insn_trans/trans_rvb.c.inc
+@@ -36,6 +36,12 @@
+     }                                            \
+ } while (0)
+ 
++#define REQUIRE_ZBR(ctx) do {                    \
++    if (!ctx->cfg_ptr->ext_zbr) {                \
++        return false;                            \
++    }                                            \
++} while (0)
++
+ #define REQUIRE_ZBS(ctx) do {                    \
+     if (!ctx->cfg_ptr->ext_zbs) {                \
+         return false;                            \
+@@ -569,3 +575,34 @@ static bool trans_xperm8(DisasContext *ctx, arg_xperm8 *a)
+     REQUIRE_ZBKX(ctx);
+     return gen_arith(ctx, a, EXT_NONE, gen_helper_xperm8, NULL);
+ }
++
++static bool gen_crc(DisasContext *ctx, arg_r2 *a,
++                    void (*func)(TCGv, TCGv, TCGv), TCGv tsz)
++{
++    REQUIRE_ZBR(ctx);
++    TCGv dest = dest_gpr(ctx, a->rd);
++    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);
++
++    func(dest, src1, tsz);
++    gen_set_gpr(ctx, a->rd, dest);
++
++    return true;
++}
++
++#define TRANS_CRC32(NAME, SIZE) \
++    static bool trans_crc32_##NAME(DisasContext *ctx, arg_r2 *a) \
++    { if (SIZE == 8) { REQUIRE_64BIT(ctx); }; \
++      return gen_crc(ctx, a, gen_helper_crc32, tcg_constant_tl(SIZE)); }
++#define TRANS_CRC32C(NAME, SIZE) \
++    static bool trans_crc32c_##NAME(DisasContext *ctx, arg_r2 *a) \
++    { if (SIZE == 8) { REQUIRE_64BIT(ctx); }; \
++      return gen_crc(ctx, a, gen_helper_crc32c, tcg_constant_tl(SIZE)); }
++
++TRANS_CRC32(b, 1);
++TRANS_CRC32(h, 2);
++TRANS_CRC32(w, 4);
++TRANS_CRC32(d, 8);
++TRANS_CRC32C(b, 1);
++TRANS_CRC32C(h, 2);
++TRANS_CRC32C(w, 4);
++TRANS_CRC32C(d, 8);
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index eb1ce6504a..f0bf4fa124 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -36,5 +36,10 @@ run-plugin-interruptedmemory: interruptedmemory
+ 	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $<.pout \
+ 	  $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-crc32
++comma:= ,
++run-test-crc32: test-crc32
++	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-zbr=true $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-crc32.S b/tests/tcg/riscv64/test-crc32.S
+new file mode 100644
+index 0000000000..70d70b16a9
+--- /dev/null
++++ b/tests/tcg/riscv64/test-crc32.S
+@@ -0,0 +1,64 @@
++/*
++ * Copyright (c) 2026 lowRISC CIC
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define crc32(op, rd, rs1) .insn r 19, 1, 48, rd, rs1, x##op
++
++#define crc32_b(rd, rs1) crc32(16, rd, rs1)
++#define crc32_h(rd, rs1) crc32(17, rd, rs1)
++#define crc32_w(rd, rs1) crc32(18, rd, rs1)
++#define crc32_d(rd, rs1) crc32(19, rd, rs1)
++#define crc32c_b(rd, rs1) crc32(24, rd, rs1)
++#define crc32c_h(rd, rs1) crc32(25, rd, rs1)
++#define crc32c_w(rd, rs1) crc32(26, rd, rs1)
++#define crc32c_d(rd, rs1) crc32(27, rd, rs1)
++
++	.option norvc
++
++	.text
++	.globl _start
++_start:
++	lla t0, trap
++	csrw mtvec, t0
++
++	li	t0, 0x34e24a2cd65650d4
++
++	crc32_b 	(t0, t0)
++	crc32_h 	(t0, t0)
++	crc32_w 	(t0, t0)
++	crc32_d 	(t0, t0)
++	crc32c_b	(t0, t0)
++	crc32c_h	(t0, t0)
++	crc32c_w	(t0, t0)
++	crc32c_d	(t0, t0)
++
++	li	t1, 0x68167e78
++
++	li	a0, 0
++	beq	t0, t1, _exit
++fail:
++	li	a0, 1
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
++
++trap:
++	csrr t0, mepc
++	addi t0, t0, 4
++	mret
+-- 
+2.48.1
+
 
