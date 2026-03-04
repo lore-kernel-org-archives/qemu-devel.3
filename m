@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06D6EB7ECA
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 10:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D3A6EB7ECD
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 10:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxji1-0006En-3x; Wed, 04 Mar 2026 05:44:05 -0500
+	id 1vxjkR-0007CK-3J; Wed, 04 Mar 2026 05:46:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxjhy-0006Ea-GF
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:44:02 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxjkN-0007Br-Fo
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:46:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxjhu-0008S5-7B
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:44:02 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 624Agg5d095478
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 4 Mar 2026 19:43:28 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=TMUOJBqbFhozNXn6v2pOg3fBR80DHjOFHd8yk1emWrA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772621008; v=1;
- b=COIPrJ/tTtkBbOOj5GGKYmtkUM5VX6mGNZXOZvCYd/JzyYsbgq12gg1hao8bsegW
- e8n77W/oO+WXcuUPKQqzRw5we4cxPvjeIAeLfbsM1WqAetMXxbwV++UajEQZNYkt
- TaYcJYIjCLSyuqVW1GjnMD04vLqu5ZKsZzXWZ8pZhqxgZPcCCpwm9Ig+QMsCHjpe
- pj1y4WX8rfJaIlEq8tdCdXvY957ySNrdYTwMqtxxavAoHHlhQWuxbmuPFUAsk1u4
- Ud+fFQ7bOQuNEu+SCyXOEHYL/j0A5Y39ZkMmOqSMZqrNHvNG52xI4QklJ0ZnRtF7
- Ub75iWQ2ZkgtPgvwxZ2rkw==
-Message-ID: <7c389f35-2da9-4e40-a695-731a1484cb04@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 4 Mar 2026 19:42:41 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxjkJ-0000RZ-JC
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 05:46:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772621185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kF/Pfe93qFheXxScWzkYvuR/QJ/ghvYjrv4iPNDY740=;
+ b=aDRbxN4Ps3+KcJxBTfdgoVK73Qtysp0ThaHT9AOhF8E2UJypv2mTLNXYbjxfrsSb4L+m4S
+ /NiwAlgYcJDIYxENWL0qpOklEH81+G5V9tAHqq6iDpNOfEg6xQ2R8BsLHeXRzBflD9gHRL
+ k1LR+VvkaC2IXtOFKDmRePLX53SnNeY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-yxmy-_FvPBStON61ajSJjw-1; Wed,
+ 04 Mar 2026 05:46:23 -0500
+X-MC-Unique: yxmy-_FvPBStON61ajSJjw-1
+X-Mimecast-MFC-AGG-ID: yxmy-_FvPBStON61ajSJjw_1772621182
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD1A31956048
+ for <qemu-devel@nongnu.org>; Wed,  4 Mar 2026 10:46:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.30])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BA13180035F
+ for <qemu-devel@nongnu.org>; Wed,  4 Mar 2026 10:46:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 060A021E692F; Wed, 04 Mar 2026 11:46:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: QAPIDoc Total Section Ordering
+In-Reply-To: <CAFn=p-bNbEwV+1ijfs=+_bCVfexjvN9WRNZwL13Qas+i_HmUBQ@mail.gmail.com>
+ (John Snow's message of "Tue, 3 Mar 2026 12:52:42 -0500")
+References: <CAFn=p-bNbEwV+1ijfs=+_bCVfexjvN9WRNZwL13Qas+i_HmUBQ@mail.gmail.com>
+Date: Wed, 04 Mar 2026 11:46:19 +0100
+Message-ID: <87ldg7kh38.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/6] coreaudio: Improve naming
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <20260304-coreaudio-v8-3-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <3933555.kQq0lBPeGt@weasel>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <3933555.kQq0lBPeGt@weasel>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,560 +87,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/04 18:25, Christian Schoenebeck wrote:
-> On Wednesday, 4 March 2026 07:16:56 CET Akihiko Odaki wrote:
->> coreaudio had names that are not conforming to QEMU codding style.
-> 
-> coding
-> 
->> coreaudioVoiceOut also had some members that are prefixed with redundant
->> words like "output" or "audio".
->> Global names included "out" to tell they are specific to output devices,
->> but this rule was not completely enforced.
->> The frame size had three different names "frameSize", "bufferFrameSize",
->> and "frameCount".
->>
->> Replace identifiers to fix these problems.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   audio/coreaudio.m | 188
->> +++++++++++++++++++++++++++--------------------------- 1 file changed, 95
->> insertions(+), 93 deletions(-)
->>
->> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->> index bc9ab7477b68..736227eb2b7a 100644
->> --- a/audio/coreaudio.m
->> +++ b/audio/coreaudio.m
->> @@ -43,34 +43,34 @@
->>   typedef struct coreaudioVoiceOut {
-> 
-> Leaving this lower case?
-> 
->>       HWVoiceOut hw;
->>       pthread_mutex_t buf_mutex;
->> -    AudioDeviceID outputDeviceID;
->> -    int frameSizeSetting;
->> -    uint32_t bufferCount;
->> -    UInt32 audioDevicePropertyBufferFrameSize;
->> +    AudioDeviceID device_id;
->> +    int frame_size_setting;
->> +    uint32_t buffer_count;
->> +    UInt32 device_frame_size;
->>       AudioDeviceIOProcID ioprocid;
->>       bool enabled;
->> -} coreaudioVoiceOut;
->> +} CoreaudioVoiceOut;
->>
->> -static const AudioObjectPropertyAddress voice_addr = {
->> +static const AudioObjectPropertyAddress voice_out_addr = {
->>       kAudioHardwarePropertyDefaultOutputDevice,
->>       kAudioObjectPropertyScopeGlobal,
->>       kAudioObjectPropertyElementMain
->>   };
->>
->> -static OSStatus coreaudio_get_voice(AudioDeviceID *id)
->> +static OSStatus coreaudio_get_voice_out(AudioDeviceID *id)
->>   {
->>       UInt32 size = sizeof(*id);
->>
->>       return AudioObjectGetPropertyData(kAudioObjectSystemObject,
->> -                                      &voice_addr,
->> +                                      &voice_out_addr,
->>                                         0,
->>                                         NULL,
->>                                         &size,
->>                                         id);
->>   }
->>
->> -static OSStatus coreaudio_get_framesizerange(AudioDeviceID id,
->> -                                             AudioValueRange *framerange)
->> +static OSStatus coreaudio_get_out_framesizerange(AudioDeviceID id,
->> +                                                 AudioValueRange
->> *framerange) {
->>       UInt32 size = sizeof(*framerange);
->>       AudioObjectPropertyAddress addr = {
->> @@ -87,7 +87,7 @@ static OSStatus coreaudio_get_framesizerange(AudioDeviceID
->> id, framerange);
->>   }
-> 
-> So here it is "framerange" and not "frame_range".
-> 
->> -static OSStatus coreaudio_get_framesize(AudioDeviceID id, UInt32
->> *framesize) +static OSStatus coreaudio_get_out_framesize(AudioDeviceID id,
->> UInt32 *framesize) {
->>       UInt32 size = sizeof(*framesize);
->>       AudioObjectPropertyAddress addr = {
->> @@ -104,7 +104,7 @@ static OSStatus coreaudio_get_framesize(AudioDeviceID
->> id, UInt32 *framesize) framesize);
->>   }
-> 
-> Here it is "framesize" and not "frame_size".
-> 
->> -static OSStatus coreaudio_set_framesize(AudioDeviceID id, UInt32
->> *framesize) +static OSStatus coreaudio_set_out_framesize(AudioDeviceID id,
->> UInt32 *framesize) {
->>       UInt32 size = sizeof(*framesize);
->>       AudioObjectPropertyAddress addr = {
->> @@ -121,8 +121,8 @@ static OSStatus coreaudio_set_framesize(AudioDeviceID
->> id, UInt32 *framesize) framesize);
->>   }
->>
->> -static OSStatus coreaudio_set_streamformat(AudioDeviceID id,
->> -                                           AudioStreamBasicDescription *d)
->> +static OSStatus coreaudio_set_out_streamformat(AudioDeviceID id,
->> +                                               AudioStreamBasicDescription
->> *d) {
->>       UInt32 size = sizeof(*d);
->>       AudioObjectPropertyAddress addr = {
->> @@ -139,7 +139,7 @@ static OSStatus coreaudio_set_streamformat(AudioDeviceID
->> id, d);
->>   }
->>
->> -static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
->> +static OSStatus coreaudio_get_out_isrunning(AudioDeviceID id, UInt32
->> *result) {
->>       UInt32 size = sizeof(*result);
->>       AudioObjectPropertyAddress addr = {
->> @@ -243,7 +243,8 @@ static void G_GNUC_PRINTF(3, 4)
->> coreaudio_logerr2(OSStatus status, #define
->> coreaudio_playback_logerr(status, ...) \
->>       coreaudio_logerr2(status, "playback", __VA_ARGS__)
->>
->> -static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
->> +static int coreaudio_voice_out_buf_lock(CoreaudioVoiceOut *core,
->> +                                        const char *fn_name)
->>   {
->>       int err;
->>
->> @@ -256,7 +257,8 @@ static int coreaudio_buf_lock(coreaudioVoiceOut *core,
->> const char *fn_name) return 0;
->>   }
->>
->> -static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char
->> *fn_name) +static int coreaudio_voice_out_buf_unlock(CoreaudioVoiceOut
->> *core, +                                          const char *fn_name)
->>   {
->>       int err;
->>
->> @@ -269,20 +271,20 @@ static int coreaudio_buf_unlock(coreaudioVoiceOut
->> *core, const char *fn_name) return 0;
->>   }
->>
->> -#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args) \
->> -    static ret_type glue(coreaudio_, name)args_decl             \
->> -    {                                                           \
->> -        coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;      \
->> -        ret_type ret;                                           \
->> -                                                                \
->> -        if (coreaudio_buf_lock(core, "coreaudio_" #name)) {         \
->> -            return 0;                                           \
->> -        }                                                       \
->> -                                                                \
->> -        ret = glue(audio_generic_, name)args;                   \
->> -                                                                \
->> -        coreaudio_buf_unlock(core, "coreaudio_" #name);             \
->> -        return ret;                                             \
->> +#define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args)       \
->> +    static ret_type glue(coreaudio_, name)args_decl                   \
->> +    {                                                                 \
->> +        CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;            \
->> +        ret_type ret;                                                 \
->> +                                                                      \
->> +        if (coreaudio_voice_out_buf_lock(core, "coreaudio_" #name)) { \
->> +            return 0;                                                 \
->> +        }                                                             \
->> +                                                                      \
->> +        ret = glue(audio_generic_, name)args;                         \
->> +                                                                      \
->> +        coreaudio_voice_out_buf_unlock(core, "coreaudio_" #name);     \
->> +        return ret;                                                   \
->>       }
->>   COREAUDIO_WRAPPER_FUNC(buffer_get_free, size_t, (HWVoiceOut *hw), (hw))
->>   COREAUDIO_WRAPPER_FUNC(get_buffer_out, void *, (HWVoiceOut *hw, size_t
->> *size), @@ -298,7 +300,7 @@ static ret_type glue(coreaudio_, name)args_decl
->>              \ * callback to feed audiooutput buffer. called without BQL.
->>    * allowed to lock "buf_mutex", but disallowed to have any other locks.
->>    */
->> -static OSStatus audioDeviceIOProc(
->> +static OSStatus out_device_ioproc(
->>       AudioDeviceID inDevice,
->>       const AudioTimeStamp *inNow,
->>       const AudioBufferList *inInputData,
->> @@ -307,33 +309,33 @@ static OSStatus audioDeviceIOProc(
->>       const AudioTimeStamp *inOutputTime,
->>       void *hwptr)
->>   {
->> -    UInt32 frameCount, pending_frames;
->> +    UInt32 frame_size, pending_frames;
-> 
-> And here it is "frame_size".
-> 
-> That's why I try to avoid looking at such kind of refactoring patches. Never
-> ending white noise added to the universe.
+John Snow <jsnow@redhat.com> writes:
 
-This patch addresses naming concerns raised for an old version of this 
-series. I will address the suggestions you made with the next version.
+> Hi, let's recap...
+>
+> In general, it would be nice to have a strict inter-section ordering
+> for a few reasons:
+>
+> (1) It makes it easier to add generated sections such as return
+> values, undocumented members, or undocumented features/flags (such as
+> Out-of-band execution), because there is a clear and obvious place
+> where we should insert the generated doc. We have a few spots in the
+> code now where we have a bespoke algorithm to find the correct
+> insertion point, and it would be nice to consolidate this logic.
+>
+> (2) It makes the inliner easier, because merging two doc sections is
+> more obvious when there is a normal order that must be adhered to;
+> fields that are absent in one or the other docs list do not cause
+> problems or complex edge cases.
+>
+> (3) It allows us to design around a unified look and layout in the
+> HTML generator, which increases visual cohesion and yadda yadda yadda.
+> In particular, each "group" of doc types is laid out in a block where
+> having multiple fields of the same type be non-contiguous greatly
+> increases visual clutter. i.e. all arguments should be contiguous, all
+> features should be contiguous, etc. I have in the past referred to
+> these groupings of doc section types as "doc regions".
+>
+> For these reasons, I'd like to nail down the order once and for all,
+> and clarify a few things.
+>
+> The order I think you prefer is something like this:
+>
+> (1) Introduction ("Plain text", currently) - Always the first section,
+> always precisely one section. (But may be multiple paragraphs housed
+> within that single section.)
+> (2) Arguments/members/values/alternatives
+> (3) Return(s)
+> (4) Error(s)
+> (5) Feature(s)
+> (6) Details ("Plain text", currently - generally used for clarifying
+> detail, examples, and other information.)
 
-> 
->>       void *out = outOutputData->mBuffers[0].mData;
->>       HWVoiceOut *hw = hwptr;
->> -    coreaudioVoiceOut *core = hwptr;
->> +    CoreaudioVoiceOut *core = hwptr;
->>       size_t len;
->>
->> -    if (coreaudio_buf_lock(core, "audioDeviceIOProc")) {
->> +    if (coreaudio_voice_out_buf_lock(core, "out_device_ioproc")) {
->>           inInputTime = 0;
->>           return 0;
->>       }
->>
->> -    if (inDevice != core->outputDeviceID) {
->> -        coreaudio_buf_unlock(core, "audioDeviceIOProc(old device)");
->> +    if (inDevice != core->device_id) {
->> +        coreaudio_voice_out_buf_unlock(core, "out_device_ioproc(old
->> device)"); return 0;
->>       }
->>
->> -    frameCount = core->audioDevicePropertyBufferFrameSize;
->> +    frame_size = core->device_frame_size;
->>       pending_frames = hw->pending_emul / hw->info.bytes_per_frame;
->>
->>       /* if there are not enough samples, set signal and return */
->> -    if (pending_frames < frameCount) {
->> +    if (pending_frames < frame_size) {
->>           inInputTime = 0;
->> -        coreaudio_buf_unlock(core, "audioDeviceIOProc(empty)");
->> +        coreaudio_voice_out_buf_unlock(core, "out_device_ioproc(empty)");
->>           return 0;
->>       }
->>
->> -    len = frameCount * hw->info.bytes_per_frame;
->> +    len = frame_size * hw->info.bytes_per_frame;
->>       while (len) {
->>           size_t write_len, start;
->>
->> @@ -349,16 +351,16 @@ static OSStatus audioDeviceIOProc(
->>           out += write_len;
->>       }
->>
->> -    coreaudio_buf_unlock(core, "audioDeviceIOProc");
->> +    coreaudio_voice_out_buf_unlock(core, "out_device_ioproc");
-> 
-> Behaviour change. Not pure refactoring. Should be split into a separate patch.
+  (7) Since
 
-Two things are renamed here.
-- coreaudio_buf_unlock() is renamed to coreaudio_voice_out_buf_unlock().
-- "audioDeviceIOProc" is the name of this function. This function is
-   renamed to "out_device_ioproc".
+> Before I go any further, is this order "roughly correct" to you?
 
-Regards,
-Akihiko Odaki
+Yes!
 
-> 
->>       return 0;
->>   }
->>
->> -static OSStatus init_out_device(coreaudioVoiceOut *core)
->> +static OSStatus init_out_device(CoreaudioVoiceOut *core)
->>   {
->> +    AudioValueRange value_range;
->>       OSStatus status;
->> -    AudioValueRange frameRange;
->>
->> -    AudioStreamBasicDescription streamBasicDescription = {
->> +    AudioStreamBasicDescription stream_basic_description = {
->>           .mBitsPerChannel = audio_format_bits(core->hw.info.af),
->>           .mBytesPerFrame = core->hw.info.bytes_per_frame,
->>           .mBytesPerPacket = core->hw.info.bytes_per_frame,
->> @@ -369,21 +371,20 @@ static OSStatus init_out_device(coreaudioVoiceOut
->> *core) .mSampleRate = core->hw.info.freq
->>       };
->>
->> -    status = coreaudio_get_voice(&core->outputDeviceID);
->> +    status = coreaudio_get_voice_out(&core->device_id);
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not get default output device");
->>           return status;
->>       }
->> -    if (core->outputDeviceID == kAudioDeviceUnknown) {
->> +    if (core->device_id == kAudioDeviceUnknown) {
->>           error_report("coreaudio: Could not initialize playback: "
->>                        "Unknown audio device");
->>           return status;
->>       }
->>
->>       /* get minimum and maximum buffer frame sizes */
->> -    status = coreaudio_get_framesizerange(core->outputDeviceID,
->> -                                          &frameRange);
->> +    status = coreaudio_get_out_framesizerange(core->device_id,
->> &value_range); if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -393,34 +394,34 @@ static OSStatus init_out_device(coreaudioVoiceOut
->> *core) return status;
->>       }
->>
->> -    if (frameRange.mMinimum > core->frameSizeSetting) {
->> -        core->audioDevicePropertyBufferFrameSize = frameRange.mMinimum;
->> +    if (value_range.mMinimum > core->frame_size_setting) {
->> +        core->device_frame_size = value_range.mMinimum;
->>           warn_report("coreaudio: Upsizing buffer frames to %f",
->> -                    frameRange.mMinimum);
->> -    } else if (frameRange.mMaximum < core->frameSizeSetting) {
->> -        core->audioDevicePropertyBufferFrameSize = frameRange.mMaximum;
->> +                    value_range.mMinimum);
->> +    } else if (value_range.mMaximum < core->frame_size_setting) {
->> +        core->device_frame_size = value_range.mMaximum;
->>           warn_report("coreaudio: Downsizing buffer frames to %f",
->> -                    frameRange.mMaximum);
->> +                    value_range.mMaximum);
->>       } else {
->> -        core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
->> +        core->device_frame_size = core->frame_size_setting;
->>       }
->>
->>       /* set Buffer Frame Size */
->> -    status = coreaudio_set_framesize(core->outputDeviceID,
->> -
->> &core->audioDevicePropertyBufferFrameSize); +    status =
->> coreaudio_set_out_framesize(core->device_id,
->> +                                         &core->device_frame_size);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not set device buffer frame size
->> %" PRIu32, -
->> (uint32_t)core->audioDevicePropertyBufferFrameSize); +
->>              (uint32_t)core->device_frame_size); return status;
->>       }
->>
->>       /* get Buffer Frame Size */
->> -    status = coreaudio_get_framesize(core->outputDeviceID,
->> -
->> &core->audioDevicePropertyBufferFrameSize); +    status =
->> coreaudio_get_out_framesize(core->device_id,
->> +                                         &core->device_frame_size);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->> @@ -429,19 +430,19 @@ static OSStatus init_out_device(coreaudioVoiceOut
->> *core) "Could not get device buffer frame size"); return status;
->>       }
->> -    core->hw.samples = core->bufferCount *
->> core->audioDevicePropertyBufferFrameSize; +    core->hw.samples =
->> core->buffer_count * core->device_frame_size;
->>
->>       /* set Samplerate */
->> -    status = coreaudio_set_streamformat(core->outputDeviceID,
->> -                                        &streamBasicDescription);
->> +    status = coreaudio_set_out_streamformat(core->device_id,
->> +                                            &stream_basic_description);
->>       if (status == kAudioHardwareBadObjectError) {
->>           return 0;
->>       }
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not set samplerate %lf",
->> -                                  streamBasicDescription.mSampleRate);
->> -        core->outputDeviceID = kAudioDeviceUnknown;
->> +                                  stream_basic_description.mSampleRate);
->> +        core->device_id = kAudioDeviceUnknown;
->>           return status;
->>       }
->>
->> @@ -456,8 +457,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
->> * with the callers of AudioObjectGetPropertyData.
->>        */
->>       core->ioprocid = NULL;
->> -    status = AudioDeviceCreateIOProcID(core->outputDeviceID,
->> -                                       audioDeviceIOProc,
->> +    status = AudioDeviceCreateIOProcID(core->device_id,
->> +                                       out_device_ioproc,
->>                                          &core->hw,
->>                                          &core->ioprocid);
->>       if (status == kAudioHardwareBadDeviceError) {
->> @@ -465,20 +466,20 @@ static OSStatus init_out_device(coreaudioVoiceOut
->> *core) }
->>       if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
->>           coreaudio_playback_logerr(status, "Could not set IOProc");
->> -        core->outputDeviceID = kAudioDeviceUnknown;
->> +        core->device_id = kAudioDeviceUnknown;
->>           return status;
->>       }
->>
->>       return 0;
->>   }
->>
->> -static void fini_out_device(coreaudioVoiceOut *core)
->> +static void fini_out_device(CoreaudioVoiceOut *core)
->>   {
->>       OSStatus status;
->>       UInt32 isrunning;
->>
->>       /* stop playback */
->> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
->> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
->>       if (status != kAudioHardwareBadObjectError) {
->>           if (status != kAudioHardwareNoError) {
->>               coreaudio_logerr(status,
->> @@ -486,7 +487,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
->>           }
->>
->>           if (isrunning) {
->> -            status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
->> +            status = AudioDeviceStop(core->device_id, core->ioprocid); if
->> (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError)
->> { coreaudio_logerr(status, "Could not stop playback"); }
->> @@ -494,20 +495,20 @@ static void fini_out_device(coreaudioVoiceOut *core)
->>       }
->>
->>       /* remove callback */
->> -    status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
->> +    status = AudioDeviceDestroyIOProcID(core->device_id,
->>                                           core->ioprocid);
->>       if (status != kAudioHardwareBadDeviceError && status !=
->> kAudioHardwareNoError) { coreaudio_logerr(status, "Could not remove
->> IOProc");
->>       }
->> -    core->outputDeviceID = kAudioDeviceUnknown;
->> +    core->device_id = kAudioDeviceUnknown;
->>   }
->>
->> -static void update_device_playback_state(coreaudioVoiceOut *core)
->> +static void update_out_device_playback_state(CoreaudioVoiceOut *core)
->>   {
->>       OSStatus status;
->>       UInt32 isrunning;
->>
->> -    status = coreaudio_get_isrunning(core->outputDeviceID, &isrunning);
->> +    status = coreaudio_get_out_isrunning(core->device_id, &isrunning);
->>       if (status != kAudioHardwareNoError) {
->>           if (status != kAudioHardwareBadObjectError) {
->>               coreaudio_logerr(status,
->> @@ -520,7 +521,7 @@ static void
->> update_device_playback_state(coreaudioVoiceOut *core) if (core->enabled) {
->>           /* start playback */
->>           if (!isrunning) {
->> -            status = AudioDeviceStart(core->outputDeviceID,
->> core->ioprocid); +            status = AudioDeviceStart(core->device_id,
->> core->ioprocid); if (status != kAudioHardwareBadDeviceError && status !=
->> kAudioHardwareNoError) { coreaudio_logerr(status, "Could not resume
->> playback"); }
->> @@ -528,7 +529,7 @@ static void
->> update_device_playback_state(coreaudioVoiceOut *core) } else {
->>           /* stop playback */
->>           if (isrunning) {
->> -            status = AudioDeviceStop(core->outputDeviceID,
->> +            status = AudioDeviceStop(core->device_id,
->>                                        core->ioprocid);
->>               if (status != kAudioHardwareBadDeviceError && status !=
->> kAudioHardwareNoError) { coreaudio_logerr(status, "Could not pause
->> playback"); @@ -538,22 +539,22 @@ static void
->> update_device_playback_state(coreaudioVoiceOut *core) }
->>
->>   /* called without BQL. */
->> -static OSStatus handle_voice_change(
->> +static OSStatus handle_voice_out_change(
->>       AudioObjectID in_object_id,
->>       UInt32 in_number_addresses,
->>       const AudioObjectPropertyAddress *in_addresses,
->>       void *in_client_data)
->>   {
->> -    coreaudioVoiceOut *core = in_client_data;
->> +    CoreaudioVoiceOut *core = in_client_data;
->>
->>       bql_lock();
->>
->> -    if (core->outputDeviceID) {
->> +    if (core->device_id) {
->>           fini_out_device(core);
->>       }
->>
->>       if (!init_out_device(core)) {
->> -        update_device_playback_state(core);
->> +        update_out_device_playback_state(core);
->>       }
->>
->>       bql_unlock();
->> @@ -563,7 +564,7 @@ static OSStatus handle_voice_change(
->>   static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
->>   {
->>       OSStatus status;
->> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
->> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
->>       int err;
->>       Audiodev *dev = hw->s->dev;
->>       AudiodevCoreaudioPerDirectionOptions *cpdo = dev->u.coreaudio.out;
->> @@ -581,13 +582,14 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct
->> audsettings *as) as->fmt = AUDIO_FORMAT_F32;
->>       audio_pcm_init_info(&hw->info, as);
->>
->> -    core->frameSizeSetting = audio_buffer_frames(
->> +    core->frame_size_setting = audio_buffer_frames(
->>           qapi_AudiodevCoreaudioPerDirectionOptions_base(cpdo), as, 11610);
->>
->> -    core->bufferCount = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
->> +    core->buffer_count = cpdo->has_buffer_count ? cpdo->buffer_count : 4;
->>
->>       status = AudioObjectAddPropertyListener(kAudioObjectSystemObject,
->> -                                            &voice_addr,
->> handle_voice_change, +
->> &voice_out_addr,
->> +                                            handle_voice_out_change,
->>                                               core);
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->> @@ -597,8 +599,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct
->> audsettings *as)
->>
->>       if (init_out_device(core)) {
->>           status =
->> AudioObjectRemovePropertyListener(kAudioObjectSystemObject, -
->>                                      &voice_addr,
->> -                                                   handle_voice_change,
->> +                                                   &voice_out_addr,
->> +                                                   handle_voice_out_change,
->> core);
->>           if (status != kAudioHardwareNoError) {
->>               coreaudio_playback_logerr(status,
->> @@ -615,11 +617,11 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
->>   {
->>       OSStatus status;
->>       int err;
->> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
->> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
->>
->>       status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
->> -                                               &voice_addr,
->> -                                               handle_voice_change,
->> +                                               &voice_out_addr,
->> +                                               handle_voice_out_change,
->>                                                  core);
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_logerr(status, "Could not remove voice property change
->> listener"); @@ -636,10 +638,10 @@ static void coreaudio_fini_out
->> (HWVoiceOut *hw)
->>
->>   static void coreaudio_enable_out(HWVoiceOut *hw, bool enable)
->>   {
->> -    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
->> +    CoreaudioVoiceOut *core = (CoreaudioVoiceOut *)hw;
->>
->>       core->enabled = enable;
->> -    update_device_playback_state(core);
->> +    update_out_device_playback_state(core);
->>   }
->>
->>   static void audio_coreaudio_class_init(ObjectClass *klass, const void
->> *data)
-> 
-> 
-> 
-> 
+> ...
+>
+> We previously discussed prohibiting "plain text" from appearing
+> anywhere except in (1) or (6). From memory, the summary of that
+> discussion is:
+>
+> Me: Prohibiting plaintext from appearing between 2-5 makes inlining
+> easier, and improves HTML output by preventing plaintext paragraphs
+> from interrupting the "tabular" output used to render metadata fields.
+>
+> You: Although it is not often utilized, we may want the freedom/power
+> to use plaintext paragraphs to add addendums/notes attached to
+> specific sections, i.e. adding a "Note:" to the tail of the arguments
+> section specifically.
+>
+> I recall we debated this particular restriction quite a few times and
+> at length; does this summary sound roughly accurate as far as you
+> remember?
+
+It does.
+
+What breaks right now if you prohibit untagged sections between (2) to
+(5)?
 
 
