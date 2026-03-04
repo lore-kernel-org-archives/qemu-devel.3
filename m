@@ -4,112 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E93EEB7ECF
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 12:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE79FEB7ECF
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 12:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxl4O-0003vR-Pq; Wed, 04 Mar 2026 07:11:16 -0500
+	id 1vxlI3-0000uy-6B; Wed, 04 Mar 2026 07:25:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxl4M-0003vD-Pt
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:15 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vxl4K-0005xl-Nr
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:11:14 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b935a74b7c2so918884466b.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 04:11:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772626271; x=1773231071; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dyswVzSYu2bNIYUixRTP9TDLLf2WN2d7TAh3uYxSVCA=;
- b=vk98N/IEWmsy9BNABQ9fBUDybkD/UjzYAfa178Y2SJCaJJ/j9KTfehO7sHj/yIRpTW
- ORUIFf5qi935dcGiee1PjBfQTL9d2TzaUdaVAiuZaiq+9KVPDINLE6cKI6SPceYgkM2D
- MpDw9qbd9RN0kqm3EHQVFHTj76s6Kwj7w8xhyKOErh7zjcCdUNdJMHqVsK3eJpu5Xsuh
- VWWYDYuY0UVJ1LAtKOUZBQLH2H1RUNCN41vr5H36x/ibvMB4RCRr+RrhiHKE/pMdbot0
- jx6ZXVuYoE4LT53EN1MZaktL3ZXtBkTKXKVwC/4lDU2nYn/pjj+hd8hJYjiy6q6srquW
- FoEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772626271; x=1773231071;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dyswVzSYu2bNIYUixRTP9TDLLf2WN2d7TAh3uYxSVCA=;
- b=G0Y6OZtco9FvJ5uaWyhKnqRTjRFnA6ti8b9XXd3lo4KFGrwED1p3nOgqrzgcstv9SL
- YzMwrlrUHwpjFuSx8ZgmGG+fPp7jw64V02blC3aRYLd10/KPaK7jrsy327KaZn+VO1BM
- 0JLXd8RqACz8c4oSeS66ysFxjMsQqSo3WhoxMnDR0CrOJkMZI6l0RK2QC8MDwfdrL3qp
- 2bFV0Zo6C3LVe5T9gKkofU4YkIvwA9m3q4Z0syhcmUGKHxI/da7105p2ytyWn7WYJVhy
- SUDaG+zkTGjOFBD7yxSrE2DUxTd5WPf9jCdfrWl5MSRkrTzPWAN4NdEIpSYjLT39nHWa
- E13w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWrpMPvu+hg11PNZytIVppy5IPArEveIlDyuLUvSk4pQOCIC+Kw/aFDjoTfwmGJnIt9wKA/RhXUu5jS@nongnu.org
-X-Gm-Message-State: AOJu0YymaQ87Wh60u4EtOjt3FqcMCXE1NoJkOg5pX/GV5Nnn0L+BoX5W
- AIWdLyPr2jFN3eWHViVanEAYpy7WyolfaApfaagkJoiY87ECejXelW/Um8M6tvGHgEg=
-X-Gm-Gg: ATEYQzy1XjaxupEV9VIAtUJu2jRDQNJgNZck0leexmRCUtGVFWmxLdwatBnvUCUOYe7
- ZWLmr3KXcEns+RcfaTTqRfahfZ61c2My7xOTzybObYGRh1Uq8DdMJCpcuR8EzTk2J/65excn1sF
- vDsrI9YDD/W4/2SSoJ1NJ1TdAcit5GaX+PQm0HOfyumed2iRDsQCl2mD0NKKpezpgGzTzo2Whxw
- y5ni826fOX5FhcS5E0pBs6dY8ZSQebsuh0iJFVWIF6tMg9jb1FdrHwKQwDBBOY51QxosnjaHLjy
- ogUpk3PxN/PL2GgSPay/N3EjyHHpKTz76e7qSXbpBOc/Ol4Snw3LX4drztsZHBDJW7ybDKv3/1L
- bEqbJqP5dPDStiDKWAkwsNMTyKkn/6V240xRlwQAmN2lcMdWu4MO0vPcman+AWFjHGxgvqCLvnh
- G+NNIWWg8h2YHe2mga2eYLetY=
-X-Received: by 2002:a17:907:e8e:b0:b93:80f3:b36b with SMTP id
- a640c23a62f3a-b93f11ec4d2mr115363066b.7.1772626270905; 
- Wed, 04 Mar 2026 04:11:10 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b935aec3243sm728387266b.53.2026.03.04.04.11.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 04:11:10 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9959A5F7F5;
- Wed, 04 Mar 2026 12:11:09 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei Zhang
- <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert Wollny
- <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan Singh
- <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger Pau
- =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
- <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K?=
- =?utf-8?Q?=C3=B6nig?=
- <christian.koenig@amd.com>,  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>,  Julia Zhang
- <julia.zhang@amd.com>,  Chen Jiqian <Jiqian.Chen@amd.com>,  Rob Clark
- <robdclark@gmail.com>,  Robert Beckett <bob.beckett@collabora.com>
-Subject: Re: [PATCH v22 06/18] ui/sdl2: Implement dpy dmabuf functions
-In-Reply-To: <feff43ef-1618-4a09-aba4-e4e9c2d07e2c@collabora.com> (Dmitry
- Osipenko's message of "Wed, 4 Mar 2026 13:33:34 +0300")
-References: <20260303151422.977399-1-dmitry.osipenko@collabora.com>
- <20260303151422.977399-7-dmitry.osipenko@collabora.com>
- <874imwq8rj.fsf@draig.linaro.org>
- <feff43ef-1618-4a09-aba4-e4e9c2d07e2c@collabora.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Wed, 04 Mar 2026 12:11:09 +0000
-Message-ID: <87ms0npzfm.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxlI1-0000uc-Av
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:25:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vxlHz-0002La-Ac
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 07:25:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772627117;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FMXpkjpiUoQui+4FslcpcM+k6VSmSqXFAp5s3o7dmXA=;
+ b=dhKPgw+ytvfklzA2t50LISD+uw+mLO7X+xaFOAf6N3YrklopJXX/IvELWEs9irOYR/F448
+ fHFG2h7zYdOy8na6ERV1jC3j7VB1oFgn8pI6gVAhrQ88y4tBPSqYYj1vrNNraJx8+HZisc
+ 1CdXDrjJROnefDtNoxy9y1ePllj9Dzs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-SJ5kYy4RPEaeWTG5zteZoQ-1; Wed,
+ 04 Mar 2026 07:25:12 -0500
+X-MC-Unique: SJ5kYy4RPEaeWTG5zteZoQ-1
+X-Mimecast-MFC-AGG-ID: SJ5kYy4RPEaeWTG5zteZoQ_1772627111
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F6F31956096; Wed,  4 Mar 2026 12:25:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.30])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22D8A180075B; Wed,  4 Mar 2026 12:25:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 81DAC21E692F; Wed, 04 Mar 2026 13:25:06 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org,  Helge Deller <deller@gmx.de>,  =?utf-8?Q?Marc-?=
+ =?utf-8?Q?Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Steven Lee <steven_lee@aspeedtech.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,  Troy Lee
+ <leetroy@gmail.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  Mark Cave-Ayland
+ <mark.caveayland@nutanix.com>,  qemu-arm@nongnu.org,  Jamin Lin
+ <jamin_lin@aspeedtech.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Joel Stanley <joel@jms.id.au>
+Subject: QOM parent type "sys-bus-device" vs. "device" (was: [PATCH v2
+ 12/13] hw/char/serial: Inherit from SysBusDevice)
+In-Reply-To: <20260303222143.142741-13-shentey@gmail.com> (Bernhard Beschow's
+ message of "Tue, 3 Mar 2026 23:21:42 +0100")
+References: <20260303222143.142741-1-shentey@gmail.com>
+ <20260303222143.142741-13-shentey@gmail.com>
+Date: Wed, 04 Mar 2026 13:25:06 +0100
+Message-ID: <87ikbbixy5.fsf_-_@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 33
+X-Spam_score: 3.3
+X-Spam_bar: +++
+X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,253 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+Bernhard Beschow <shentey@gmail.com> writes:
 
-> On 3/4/26 11:49, Alex Benn=C3=A9e wrote:
->> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->>=20
->>> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
->>>
->>> If EGL is used, we can rely on dmabuf to import textures without
->>> doing copies.
->>>
->>> To get this working on X11, we use the existing SDL hint:
->>> SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
->>>
->>> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@a=
-md.com>
->>> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
->>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> ---
->>>  include/ui/sdl2.h |  7 +++++
->>>  meson.build       |  6 ++---
->>>  ui/sdl2-gl.c      | 66 +++++++++++++++++++++++++++++++++++++++++++++++
->>>  ui/sdl2.c         | 42 ++++++++++++++++++++++++++++++
->>>  4 files changed, 117 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
->>> index dbe6e3d9739b..9daf5ecffae7 100644
->>> --- a/include/ui/sdl2.h
->>> +++ b/include/ui/sdl2.h
->>> @@ -45,6 +45,7 @@ struct sdl2_console {
->>>      bool gui_keysym;
->>>      SDL_GLContext winctx;
->>>      QKbdState *kbd;
->>> +    bool has_dmabuf;
->>>  #ifdef CONFIG_OPENGL
->>>      QemuGLShader *gls;
->>>      egl_fb guest_fb;
->>> @@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *=
-dcl,
->>>                               void *d3d_tex2d);
->>>  void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
->>>                             uint32_t x, uint32_t y, uint32_t w, uint32_=
-t h);
->>> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
->>> +                            QemuDmaBuf *dmabuf);
->>> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
->>> +                            QemuDmaBuf *dmabuf);
->>> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
->>> +void sdl2_gl_console_init(struct sdl2_console *scon);
->>>=20=20
->>>  #endif /* SDL2_H */
->>> diff --git a/meson.build b/meson.build
->>> index 3cd1d8dbc669..0ce84d45e6f3 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -1937,10 +1937,8 @@ if get_option('gtk') \
->>>    endif
->>>  endif
->>>=20=20
->>> -x11 =3D not_found
->>> -if gtkx11.found()
->>> -  x11 =3D dependency('x11', method: 'pkg-config', required: gtkx11.fou=
-nd())
->>> -endif
->>> +x11 =3D dependency('x11', method: 'pkg-config', required: gtkx11.found=
-())
->>> +
->>>  png =3D not_found
->>>  if get_option('png').allowed() and have_system
->>>     png =3D dependency('libpng', version: '>=3D1.6.34', required: get_o=
-ption('png'),
->>> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
->>> index fbac3edbc09d..697ba2169c34 100644
->>> --- a/ui/sdl2-gl.c
->>> +++ b/ui/sdl2-gl.c
->>> @@ -26,6 +26,8 @@
->>>   */
->>>=20=20
->>>  #include "qemu/osdep.h"
->>> +#include "qemu/main-loop.h"
->>> +#include "qemu/error-report.h"
->>>  #include "ui/console.h"
->>>  #include "ui/input.h"
->>>  #include "ui/sdl2.h"
->>> @@ -250,3 +252,67 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *=
-dcl,
->>>=20=20
->>>      SDL_GL_SwapWindow(scon->real_window);
->>>  }
->>> +
->>> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
->>> +                            QemuDmaBuf *dmabuf)
->>> +{
->>> +    struct sdl2_console *scon =3D container_of(dcl, struct sdl2_consol=
-e, dcl);
->>> +    const int *fds;
->>> +
->>> +    assert(scon->opengl);
->>> +    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
->>> +
->>> +    egl_dmabuf_import_texture(dmabuf);
->>> +    if (!qemu_dmabuf_get_texture(dmabuf)) {
->>> +        fds =3D qemu_dmabuf_get_fds(dmabuf, NULL);
->>> +        error_report("%s: failed fd=3D%d", __func__, fds ? fds[0] : -1=
-);
->>> +        return;
->>> +    }
->>> +
->>> +    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), fals=
-e,
->>> +                            qemu_dmabuf_get_width(dmabuf),
->>> +                            qemu_dmabuf_get_height(dmabuf),
->>> +                            0, 0,
->>> +                            qemu_dmabuf_get_width(dmabuf),
->>> +                            qemu_dmabuf_get_height(dmabuf),
->>> +                            NULL);
->>> +
->>> +    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
->>> +        scon->guest_fb.dmabuf =3D dmabuf;
->>> +    }
->>> +}
->>> +
->>> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
->>> +                            QemuDmaBuf *dmabuf)
->>> +{
->>> +    egl_dmabuf_release_texture(dmabuf);
->>> +}
->>> +
->>> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
->>> +{
->>> +    struct sdl2_console *scon =3D container_of(dcl, struct sdl2_consol=
-e, dcl);
->>> +
->>> +    return scon->has_dmabuf;
->>> +}
->>> +
->>> +void sdl2_gl_console_init(struct sdl2_console *scon)
->>> +{
->>> +    bool hidden =3D scon->hidden;
->>> +
->>> +    scon->hidden =3D true;
->>> +    scon->surface =3D qemu_create_displaysurface(1, 1);
->>> +    sdl2_window_create(scon);
->>> +
->>> +    /*
->>> +     * QEMU checks whether console supports dma-buf before switching
->>> +     * to the console.  To break this chicken-egg problem we pre-check
->>> +     * dma-buf availability beforehand using a dummy SDL window.
->>> +     */
->>> +    scon->has_dmabuf =3D qemu_egl_has_dmabuf();
->>> +
->>> +    sdl2_window_destroy(scon);
->>> +    qemu_free_displaysurface(scon->surface);
->>> +
->>> +    scon->surface =3D NULL;
->>> +    scon->hidden =3D hidden;
->>> +}
->>> diff --git a/ui/sdl2.c b/ui/sdl2.c
->>> index 032dc14bc398..3bb2676f847b 100644
->>> --- a/ui/sdl2.c
->>> +++ b/ui/sdl2.c
->>> @@ -35,6 +35,10 @@
->>>  #include "qemu/log.h"
->>>  #include "qemu-main.h"
->>>=20=20
->>> +#ifdef CONFIG_X11
->>> +#include <X11/Xlib.h>
->>> +#endif
->>> +
->>>  static int sdl2_num_outputs;
->>>  static struct sdl2_console *sdl2_console;
->>>=20=20
->>> @@ -120,6 +124,9 @@ void sdl2_window_create(struct sdl2_console *scon)
->>>          /* The SDL renderer is only used by sdl2-2D, when OpenGL is di=
-sabled */
->>>          scon->real_renderer =3D SDL_CreateRenderer(scon->real_window, =
--1, 0);
->>>      }
->>> +
->>> +    qemu_egl_display =3D eglGetCurrentDisplay();
->>> +
->>=20
->> This fails on MacOS for some reason:
->>=20
->>   o libsystem.a.p/ui_sdl2.c.o -c ../ui/sdl2.c
->>   ../ui/sdl2.c:128:5: error: use of undeclared identifier 'qemu_egl_disp=
-lay'
->>     128 |     qemu_egl_display =3D eglGetCurrentDisplay();
->>         |     ^
->>   ../ui/sdl2.c:128:24: error: call to undeclared function
->> 'eglGetCurrentDisplay'; ISO C99 and later do not support implicit
->> function declarations [-Wimplicit-function-declaration]
->>     128 |     qemu_egl_display =3D eglGetCurrentDisplay();
->>         |                        ^
->>   2 errors generated.
->>=20
->> See: https://gitlab.com/stsquad/qemu/-/jobs/13340079105
->>=20
->> Not sure what the include differences are because --enable-sdl builds
->> fine on Linux.
+> SerialState currently inherits just from DeviceState and serial devices
+> use SerialState as an "IP block". Since DeviceState doesn't have an API
+> to provide MMIO regions or IRQs, all serial devices access attributes
+> internal to SerialState directly. Fix this by having SerialState inherit
+> from SysBusDevice.
 >
-> Please try with this change and let me know if you could squash it or I
-> need to send a patch:
+> In addition, DeviceState doesn't participate in the reset framework
+> while SysBusDevice does. This allows for implementing reset
+> functionality more idiomatically.
 >
-> diff --git a/ui/sdl2.c b/ui/sdl2.c
-> index 3bb2676f847b..2603b0c2bdd8 100644
-> --- a/ui/sdl2.c
-> +++ b/ui/sdl2.c
-> @@ -125,7 +125,9 @@ void sdl2_window_create(struct sdl2_console *scon)
->          scon->real_renderer =3D SDL_CreateRenderer(scon->real_window, -1=
-, 0);
->      }
->
-> +#ifdef CONFIG_OPENGL
->      qemu_egl_display =3D eglGetCurrentDisplay();
-> +#endif
->
->      sdl_update_caption(scon);
->  }
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-There is one remaining build failure for win64:
+We might be at a crossroads here.
 
-  ../ui/sdl2-gl.c: In function 'sdl2_gl_scanout_dmabuf':
-  ../ui/sdl2-gl.c:265:5: error: implicit declaration of function 'egl_dmabu=
-f_import_texture'; did you mean 'qemu_dmabuf_set_texture'? [-Wimplicit-func=
-tion-declaration]
-    265 |     egl_dmabuf_import_texture(dmabuf);
-        |     ^~~~~~~~~~~~~~~~~~~~~~~~~
-        |     qemu_dmabuf_set_texture
-  ../ui/sdl2-gl.c:265:5: error: nested extern declaration of 'egl_dmabuf_im=
-port_texture' [-Werror=3Dnested-externs]
-  ../ui/sdl2-gl.c: In function 'sdl2_gl_release_dmabuf':
-  ../ui/sdl2-gl.c:288:5: error: implicit declaration of function 'egl_dmabu=
-f_release_texture'; did you mean 'qemu_dmabuf_set_texture'? [-Wimplicit-fun=
-ction-declaration]
-    288 |     egl_dmabuf_release_texture(dmabuf);
-        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~
-        |     qemu_dmabuf_set_texture
-  ../ui/sdl2-gl.c:288:5: error: nested extern declaration of 'egl_dmabuf_re=
-lease_texture' [-Werror=3Dnested-externs]
-  cc1: all warnings being treated as errors
+Paul Brook designed qdev around "a device plugs into some bus, and may
+provide buses".  To make this work, he added a main system bus to serve
+as root of a single tree.
 
-See: https://gitlab.com/stsquad/qemu/-/jobs/13340078806
+The parent of a device in that tree is the bus it plugs into, and the
+parent of a bus is the device that provides it, except for the main
+system bus, which has no parent.  "info qtree" shows this tree.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Note a machine had just this one system bus back then.
+
+The system bus isn't something hardware people would call a bus.
+
+The qtree is a qdev thing.  It is *not* the QOM composition tree ("info
+qom-tree /").
+
+We actually abandoned "a device plugs into some bus" a long time ago.
+Moe on that below.
+
+Qdev was later rebased onto QOM, as follows.
+
+A bus QOM type is a subtype of "bus".
+
+A device QOM type is a subtype of "device".
+
+If a device type has a @bus_type, then it plugs into a bus of that QOM
+type.  Such a concrete device is commonly[*] not a direct subtype of
+"device".  Instead, it's a subtype of the abstract device that plugs
+into that bus type.  Example: "isa-serial" is a direct subtype of
+"isa-device", and it inherits its bus type "ISA" from there.
+
+If a device has no @bus_type, it doesn't plug into any bus.  It doesn't
+show up in "info qtree" (it does in "info qom-tree", of course).
+Example: "serial" is a direct subtype of "device".
+
+This lets us build devices from components without having to make up
+buses to connect them.  Example: "isa-serial" has a direct QOM child of
+type "serial".  Good!
+
+Except infrastructure useful to such bus-less devices lives in sysbus,
+where bus-less devices can't access it.  This tempts us to make devices
+sysbus devices just to be able to use the infrastructure, and to create
+additional sysbuses.
+
+We can elect to go down this path further: make more sysbus devices.
+Create more sysbuses.  If this is the right path, then bus-less devices
+were a mistake, and we should consider eliminating them.
+
+Or we can pick the other branch: put the infrastructure where bus-less
+devices can use it.  If this is the right path, then sysbus is
+obsolescent.
+
+Or we can elect to muddle on without giving it much thought.  Always an
+option :)
+
+
+[...]
+
+
+[*] Are there any exceptions?  I don't know.
+
 
