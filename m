@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C780EEDEC14
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBCAEDEC12
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 06:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxfjc-000064-On; Wed, 04 Mar 2026 01:29:28 -0500
+	id 1vxfjb-0008T2-8Y; Wed, 04 Mar 2026 01:29:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxfjQ-0008Fy-Dd; Wed, 04 Mar 2026 01:29:18 -0500
+ id 1vxfjN-0008Ff-8i; Wed, 04 Mar 2026 01:29:16 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vxfjE-000580-K0; Wed, 04 Mar 2026 01:29:13 -0500
+ id 1vxfjE-000582-Je; Wed, 04 Mar 2026 01:29:12 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6246SbBP071191
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6246SbBQ071191
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Wed, 4 Mar 2026 15:28:44 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=kEjoFE/z8v1YBz7rlA1tyZsjYl3ZY+R8+UlHKj3jxpQ=; 
+DKIM-Signature: a=rsa-sha256; bh=FW1M35ADo1rOGTkjkUKBAtfBI7U6bavuPH5VmSHyiJw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1772605724; v=1;
- b=Hop2eBHVAochxYlzcSAtBAAV/I6v6yqQ0va1Do2f8eJyYH2O10p8gez4NbG2+uQ6
- 5HUFALYaTw8vdcbfgZNV95McgaBvPDKNPeqlIawX1mUtkUz76HIrnBNIPj+52Pp+
- E3Er3hx0ZMspTTw/kyuy2PZ/Zn8wYcIVezTIiobCTGBypzkOXnxBY2llI+mQ5JXc
- CDFvs922qou6V+6n4Sgi0zs5zeJ/2KDTgPA2LKF5JNJQvoCKNx/NLTojfpSfNgn6
- IfWw49JhLB5xLGteXEBNjnq6X9mZ8Ux3qySTZP1vIwNT9eJgrMT8KFMyeF0SUtKi
- 8m5aIsTxvyhONo8u9n2LwA==
+ s=rs20250326; t=1772605725; v=1;
+ b=mPgjr0ffes2Huq4KG+MqZOT2GSDkv+KFNnCS4uA1oSbxX5Z/85yPwsZ3N0vYnFKH
+ OXjmI4iI9fOFk9UcVYxWjac3d2T2CWuMtsM+SzvXqldZHctRzcRigkTbOAPBF+5E
+ iCxj8+0TLP6CqrF5/+jkyrbATh7gUPuAZjeLM2SV48NgNUrBK4qegc6vhoBrIImn
+ A3y08yCIY69o+4QJmomTOMbHvWnrayt1+UmjSFbgerK+Ur+FwrJ5HYKJszpj3aaA
+ mrSnOhLClevCePbWI2e9c5E/IVqmcZZxI0Hw213Ex31+GBAypE6+4cFY51udiQin
+ htYrT/GGbV7wFw9G4RbbYQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 04 Mar 2026 15:28:35 +0900
-Subject: [PATCH v3 3/4] tests: Avoid sprintf() with "%.6f"
+Date: Wed, 04 Mar 2026 15:28:36 +0900
+Subject: [PATCH v3 4/4] meson: Add -Wformat-overflow=2
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260304-nvme-v3-3-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260304-nvme-v3-4-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260304-nvme-v3-0-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260304-nvme-v3-0-bbb1b7fd2d0b@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -80,68 +80,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A string that represents a double can be long if it is an exponentially
-large number.
+https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Warning-Options.html
+> Level 2 warns also about calls that might overflow the destination
+> buffer given an argument of sufficient length or magnitude. At level
+> 2, unknown numeric arguments are assumed to have the minimum
+> representable value for signed types with a precision greater than 1,
+> and the maximum representable value otherwise. Unknown string
+> arguments whose length cannot be assumed to be bounded either by the
+> directive’s precision, or by a finite set of string literals they may
+> evaluate to, or the character array they may point to, are assumed to
+> be 1 character long.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- tests/unit/test-qobject-input-visitor.c  | 8 ++------
- tests/unit/test-qobject-output-visitor.c | 7 ++-----
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
-index 84bdcdf702e0..beee11db4e47 100644
---- a/tests/unit/test-qobject-input-visitor.c
-+++ b/tests/unit/test-qobject-input-visitor.c
-@@ -500,7 +500,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
-     g_string_append_printf(json, "'number': [");
-     sep = "";
-     for (i = 0; i < 32; i++) {
--        g_string_append_printf(json, "%s%f", sep, (double)i / 3);
-+        g_string_append_printf(json, "%s%f", sep, (double)i / FLT_RADIX);
-         sep = ", ";
-     }
-     g_string_append_printf(json, "], ");
-@@ -583,11 +583,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
- 
-     i = 0;
-     for (num_list = arrs->number; num_list; num_list = num_list->next) {
--        char expected[32], actual[32];
--
--        sprintf(expected, "%.6f", (double)i / 3);
--        sprintf(actual, "%.6f", num_list->value);
--        g_assert_cmpstr(expected, ==, actual);
-+        g_assert_cmpfloat(num_list->value, ==, (double)i / FLT_RADIX);
-         i++;
-     }
- 
-diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
-index 407ab9ed505a..3c47b28f6638 100644
---- a/tests/unit/test-qobject-output-visitor.c
-+++ b/tests/unit/test-qobject-output-visitor.c
-@@ -538,7 +538,7 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
-     }
- 
-     for (i = 31; i >= 0; i--) {
--        QAPI_LIST_PREPEND(arrs->number, (double)i / 3);
-+        QAPI_LIST_PREPEND(arrs->number, (double)i / FLT_RADIX);
-     }
- 
-     for (i = 31; i >= 0; i--) {
-@@ -571,12 +571,9 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
-     i = 0;
-     QLIST_FOREACH_ENTRY(qlist, e) {
-         QNum *qvalue = qobject_to(QNum, qlist_entry_obj(e));
--        char expected[32], actual[32];
- 
-         g_assert(qvalue);
--        sprintf(expected, "%.6f", (double)i / 3);
--        sprintf(actual, "%.6f", qnum_get_double(qvalue));
--        g_assert_cmpstr(actual, ==, expected);
-+        g_assert_cmpfloat(qnum_get_double(qvalue), ==, (double)i / FLT_RADIX);
-         i++;
-     }
- 
+diff --git a/meson.build b/meson.build
+index 414c8ea7e280..cf50bc492f9c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -692,6 +692,7 @@ warn_flags = [
+   '-Wempty-body',
+   '-Wendif-labels',
+   '-Wexpansion-to-defined',
++  '-Wformat-overflow=2',
+   '-Wformat-security',
+   '-Wformat-y2k',
+   '-Wignored-qualifiers',
 
 -- 
 2.53.0
