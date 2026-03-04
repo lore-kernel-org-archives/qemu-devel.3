@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D34B9EDEBFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D24FEDEC01
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxbPl-00063c-E5; Tue, 03 Mar 2026 20:52:41 -0500
+	id 1vxbPo-00064D-6k; Tue, 03 Mar 2026 20:52:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxbPj-00063Q-R8
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:39 -0500
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
+ id 1vxbPm-00063x-0U
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:42 -0500
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vxbPi-0004Uz-6T
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:39 -0500
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-5ff18242343so1634991137.2
- for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 17:52:37 -0800 (PST)
+ id 1vxbPk-0004VF-7b
+ for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:52:41 -0500
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-56a9c5cb48bso2032695e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Mar 2026 17:52:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772589157; x=1773193957; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772589159; x=1773193959; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rZOO08zLikZY030P2ehrGV6veLejKIl076oxwM9/gTs=;
- b=X+ANL9c2Z5oDkVFP2VEW1xFELup1bBMXDJA8JRNHxCe9cjrPtA4kPVk97Vsja42sZI
- v0BJdg8q+yVdz4QcSlTxsxRQr7JQkhbQKSeO4FOn53nPFzhBqAJxZuZwWYMUfuNIA/yT
- 0cLJkJ56w56IM5JnDsx5fvjZhkIAP0oM5hxan3IkNrfgVFbA0FgAOwVa/8IU4PTdJtN9
- bpaOqWd0c87l39ZXpC9GsZD4ZnZV7tkA+DqL2pwGoXArCb5NGuipZN0NSodsdGeAayC9
- u0WqnS7lavoXU1MAUPt+etYyFT+LBgI52ZFbkbsod63GuOTRi7Id7GlKOGszE2K4RsMO
- 0wpA==
+ bh=EJHpqZ1+MwG7a9L0vy9H75K3KJbsmHXRI7gW76g6PSg=;
+ b=FAMtoxv4V5Uo0CVVMIFXONs99k0bCo+/dnn/Jsk/Ri1Tbp1o5mW1qWHZ9b2gVtRDRA
+ 59csICh0MTt5Rb1BN8ocOKg/NxY+1umtRqS6MNqb3NwS1wUW3ps4FbujuXOzKJKV7c/0
+ TSXLhLQ3tLo40HzFCej/1+d6Bw4Opp8Gp1h+ydrktG7jhUVSLiHP2Svc2VLwh6eb3Fnh
+ rHam9fITf6si2CIoX5qjE3IXe2CWdjScPOIW2xiZvKZemVfZLZ/M/fyqMR8GzVo2uRl3
+ jXn0JDtfZg5pGhyMMZQRfGqQJDuT8JVJfTPnagnNtGK2WblpytxEFaUIICLd8xkCDtmX
+ JNkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772589157; x=1773193957;
+ d=1e100.net; s=20230601; t=1772589159; x=1773193959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rZOO08zLikZY030P2ehrGV6veLejKIl076oxwM9/gTs=;
- b=dn4gi6EawyHoGDn0M7cj40emYXSpzhJcwAevLkuJQDCQiqqzL6vN2pT24nq1LrrsJw
- eofJyh99x6yY5DrfqcfESh3NmUlAoEOHS8T1ObjXuoizg9ZdCVxvOgXlwL+3KK/wfau4
- nDk3Gw3SAOySs4em2e9kkEPPA6/pPHJGeGXf6kvgDhaeWBnURzht/xrV1goN7zE43Afc
- 1XA7m6gUKrbpo827vfQDKGZlErf0VIGq2+oQ8oLmVrYuwYOr20i1x5+yjjwFHiqStm4i
- AKB390gC94w0cwgOEr837XzeWSgNuKearKy9rV9y9s9oroGiCT2rmIPKunxBdAYwYLBF
- M01A==
-X-Gm-Message-State: AOJu0YxsV7oibcfTyqf+6To1T2UDJUfi96qVkihUrZNVWtYJveRH7udt
- MY39xDKYkJLU27+5HTmi/qsonhyErqc8DHlBGUFCMQp0ahclrSapjuT8NH+IyfX0
-X-Gm-Gg: ATEYQzx4mbGHyDQ+R30WLRMho0KftAyKDRlrHyfB5ELh2+0Cxgeb2lPPukHH6bmdvzA
- 4so6TwGq1ZLwT/b1EjbWzDTtvQrysw9kRCavYuvZUMDGPBbS6oOBTaekVFi7eR1yYMVQQQz6pnx
- vku5HScnACsWvSVebMAkQVmKHlGE4l9k+fZljbJpuk0LgGVD/o7GiD1+Q0VhCu0qZ/LlqRrpmC7
- T96H5e/ku7CS4vNAj8aSrtZ8bMVCUesXH90ON9tRAiaZ7xwsrHjKmTrFn4RfClXGMzqflk9B/Hh
- 1z2XSYr/ZTtxZF2eDvBmMHHNrkiDvDA+Xi7nzXxEKc4K5GHXflrYYYafgfnKu2MRFdKYKulfmko
- RzU5RiFFYjuN1AxBr8rnt8Ys/zjBkt2ZM0ieOqoMXXyBw6+Riw8xA7cMZ19hlrnWhJkbc+PX/iI
- MBhBOjSvhg7i05nSbComEpiEkSjjQbTa5PZT+4OBBMAPiO4ieD0ewOiPhIMg==
-X-Received: by 2002:a05:6102:c52:b0:5fe:13bc:f13a with SMTP id
- ada2fe7eead31-5ffaafb23f5mr239107137.36.1772589156590; 
- Tue, 03 Mar 2026 17:52:36 -0800 (PST)
+ bh=EJHpqZ1+MwG7a9L0vy9H75K3KJbsmHXRI7gW76g6PSg=;
+ b=dPTxy39wJ3CjDyET8+LwbeAUAUvj2FLiHPseUpo3DIhv9XuSLObZhSkmC5gz8qBy+u
+ BQUtMQT3NIIFFzrB5ZM0KEYOKFZwIxbFhatUewraWKFC32IcmO4EvDVh33DC3ssjeU5d
+ eMxjIQOAiZRAiUG55nSGK7lAZCjIG4te3yW/b9jGLDEaW9/pNehwj2/qyMAgdLAAc/8k
+ ZruJPZZwiozV4y1A1agdhAInWdzduiYv7kGfdZIItXCYsydXgtsuKc9aoV723pWRhD2D
+ VYeWqbAkDlfmZO6vVwN5roptJEhEQjq0p7OxpJ2XYyJUE0zEwH1BJhz68sHPS+9CcQaS
+ 8QdQ==
+X-Gm-Message-State: AOJu0YzDkUeR5a6VP1wit9OyX0B0aSKqpnAxHDtp8cPl9cN2TT7Osd/W
+ biU28mJNihp1CHR4tcxCj65AUkpPChnbQNrbdVYqeOl44qZ/9D6zuFBDPyCy4ksJ
+X-Gm-Gg: ATEYQzxdRT9h8gQeW/rNq/c4ew0bLMttCaTb2LYEZxlTjsAWXcUUZft/dyHd34LsE/O
+ 8Vx6PjhUdKCfQFDlgs01eTmaj9G36/p0emfhys5GulPlL0QIssMlQO6geV97VsxZM8fsxrSSil3
+ SvAiN66vp6LqEMDQlbO84HkusBFUdspY+nO1UbYSwoVid9egnFDFv4O3u1hMZP4sCmfJQU9b8ed
+ AW+Z+Q98pWrZY2Fk566UjZ48bEYtwPDf4MkS7KjYxkUj1athsNSQlS0NNQ5oyfaGfP87vOhg8QT
+ HLxldfboFn5BiDHE7hIqXegZxq0ZnJSU8o45od+xI4bl9dYPgxRYsjVDh49cXXOtTClPlouu/Fn
+ zbXz3EM7XpAX6vzz2vsA0AJgVwL+YfB2+Ck4seEFnbHbN7Px8453OyKwmQs9Rw2tHrfB02RCcQ7
+ MOcBK5dQ7bAjsAeSnvBnhp6WcN3OPwlvRdkTUT/JKCDUe8vvmX0yPZ1FcyFUYUaiFOPH1P
+X-Received: by 2002:a05:6122:2a43:b0:55b:305b:4e47 with SMTP id
+ 71dfb90a1353d-56ae78214b9mr229902e0c.19.1772589158517; 
+ Tue, 03 Mar 2026 17:52:38 -0800 (PST)
 Received: from gmail.com (ip190-5-140-138.intercom.com.sv. [190.5.140.138])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-94df6577693sm16742382241.9.2026.03.03.17.52.35
+ 71dfb90a1353d-56ae7a29c2esm466482e0c.7.2026.03.03.17.52.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Mar 2026 17:52:35 -0800 (PST)
+ Tue, 03 Mar 2026 17:52:37 -0800 (PST)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
  Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Cc: edgar.iglesias@amd.com,
 	xen-devel@lists.xenproject.org
-Subject: [PATCH v1 4/5] hw/xen-hvm: Add a mapcache arg to xen_register_ioreq()
-Date: Wed,  4 Mar 2026 02:52:20 +0100
-Message-ID: <20260304015222.979224-5-edgar.iglesias@gmail.com>
+Subject: [PATCH v1 5/5] hw/xen: xenpvh: Add prop to enable/disable the mapcache
+Date: Wed,  4 Mar 2026 02:52:21 +0100
+Message-ID: <20260304015222.979224-6-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260304015222.979224-1-edgar.iglesias@gmail.com>
 References: <20260304015222.979224-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-vs1-xe2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-vk1-xa30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,121 +104,220 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Add a mapcache argument to xen_register_ioreq() allowing
-the caller to optionally disable the mapcache.
-
-All callers still call it with mapcache = true so there's no
-functional change yet.
+Add a machine property to enable/disable the mapcache.
+Default it to enabled for backwards compatibility.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/i386/xen/xen-hvm.c           |  2 +-
- hw/xen/xen-hvm-common.c         | 18 ++++++++++++------
- hw/xen/xen-pvh-common.c         |  3 ++-
- include/hw/xen/xen-hvm-common.h |  3 ++-
- 4 files changed, 17 insertions(+), 9 deletions(-)
+ hw/xen/xen-pvh-common.c         | 133 +++++++++++++++++++++++++++++---
+ include/hw/xen/xen-pvh-common.h |   2 +
+ 2 files changed, 124 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index a6e1683885..c7bfcaae8e 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -622,7 +622,7 @@ void xen_hvm_init_pc(PCMachineState *pcms, MemoryRegion **ram_memory)
- 
-     xen_register_ioreq(state, max_cpus,
-                        HVM_IOREQSRV_BUFIOREQ_ATOMIC,
--                       &xen_memory_listener);
-+                       &xen_memory_listener, true);
- 
-     xen_is_stubdomain = xen_check_stubdomain(state->xenstore);
- 
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index 59c73dfaeb..8c825588ae 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -473,7 +473,9 @@ static void handle_ioreq(XenIOState *state, ioreq_t *req)
-         case IOREQ_TYPE_TIMEOFFSET:
-             break;
-         case IOREQ_TYPE_INVALIDATE:
--            xen_invalidate_map_cache();
-+            if (xen_map_cache_enabled()) {
-+                xen_invalidate_map_cache();
-+            }
-             break;
-         case IOREQ_TYPE_PCI_CONFIG:
-             cpu_ioreq_config(state, req);
-@@ -823,7 +825,8 @@ void xen_shutdown_fatal_error(const char *fmt, ...)
- 
- static void xen_do_ioreq_register(XenIOState *state,
-                                   unsigned int max_cpus,
--                                  const MemoryListener *xen_memory_listener)
-+                                  const MemoryListener *xen_memory_listener,
-+                                  bool mapcache)
- {
-     int i, rc;
- 
-@@ -874,11 +877,13 @@ static void xen_do_ioreq_register(XenIOState *state,
-         state->bufioreq_local_port = rc;
-     }
-     /* Init RAM management */
-+    if (mapcache) {
- #ifdef XEN_COMPAT_PHYSMAP
--    xen_map_cache_init(xen_phys_offset_to_gaddr, state);
-+        xen_map_cache_init(xen_phys_offset_to_gaddr, state);
- #else
--    xen_map_cache_init(NULL, state);
-+        xen_map_cache_init(NULL, state);
- #endif
-+    }
- 
-     qemu_add_vm_change_state_handler(xen_hvm_change_state_handler, state);
- 
-@@ -901,7 +906,8 @@ err:
- 
- void xen_register_ioreq(XenIOState *state, unsigned int max_cpus,
-                         uint8_t handle_bufioreq,
--                        const MemoryListener *xen_memory_listener)
-+                        const MemoryListener *xen_memory_listener,
-+                        bool mapcache)
- {
-     int rc;
- 
-@@ -922,7 +928,7 @@ void xen_register_ioreq(XenIOState *state, unsigned int max_cpus,
-     state->has_bufioreq = handle_bufioreq != HVM_IOREQSRV_BUFIOREQ_OFF;
-     rc = xen_create_ioreq_server(xen_domid, handle_bufioreq, &state->ioservid);
-     if (!rc) {
--        xen_do_ioreq_register(state, max_cpus, xen_memory_listener);
-+        xen_do_ioreq_register(state, max_cpus, xen_memory_listener, mapcache);
-     } else {
-         warn_report("xen: failed to create ioreq server");
-     }
 diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-index 1381310fc7..4fade017bb 100644
+index 4fade017bb..cca37202ff 100644
 --- a/hw/xen/xen-pvh-common.c
 +++ b/hw/xen/xen-pvh-common.c
-@@ -202,7 +202,8 @@ static void xen_pvh_init(MachineState *ms)
-     xen_pvh_init_ram(s, sysmem);
+@@ -29,6 +29,69 @@ static const MemoryListener xen_memory_listener = {
+     .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
+ };
+ 
++/*
++ * Map foreign RAM in bounded chunks so we don't build a PFN array for the
++ * entire guest size (which can be huge for large guests). We reserve a VA
++ * range once and then MAP_FIXED each chunk into place.
++ */
++#define XEN_PVH_MAP_CHUNK_PAGES 65535
++
++static void *xen_map_guest_ram(XenPVHMachineState *s,
++                               uint64_t addr, uint64_t size)
++{
++    size_t total_pages = size >> XC_PAGE_SHIFT;
++    size_t chunk_pages = MIN(XEN_PVH_MAP_CHUNK_PAGES, total_pages);
++    g_autofree xen_pfn_t *pfns = NULL;
++    void *base = NULL;
++    size_t offset;
++
++    if (!total_pages) {
++        goto done;
++    }
++
++    base = mmap(NULL, size, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    if (base == MAP_FAILED) {
++        base = NULL;
++        goto done;
++    }
++
++    pfns = g_new0(xen_pfn_t, chunk_pages);
++    if (!pfns) {
++        munmap(base, size);
++        base = NULL;
++        goto done;
++    }
++
++    for (offset = 0; offset < total_pages; offset += chunk_pages) {
++        size_t num_pages = MIN(chunk_pages, total_pages - offset);
++        void *mapped;
++        size_t i;
++
++        for (i = 0; i < num_pages; i++) {
++            pfns[i] = (addr >> XC_PAGE_SHIFT) + offset + i;
++        }
++
++        mapped = xenforeignmemory_map2(
++            xen_fmem, xen_domid,
++            (uint8_t *)base + (offset << XC_PAGE_SHIFT),
++            PROT_READ | PROT_WRITE, MAP_FIXED,
++            num_pages, pfns, NULL);
++        if (!mapped) {
++            munmap(base, size);
++            base = NULL;
++            goto done;
++        }
++    }
++done:
++    if (!base) {
++        /* We can't recover from this.  */
++        error_report("FATAL: Failed to foreign-map %" PRIx64 " - %" PRIx64,
++                     addr, addr + size);
++        exit(EXIT_FAILURE);
++    }
++    return base;
++}
++
+ static void xen_pvh_init_ram(XenPVHMachineState *s,
+                              MemoryRegion *sysmem)
+ {
+@@ -45,22 +108,42 @@ static void xen_pvh_init_ram(XenPVHMachineState *s,
+         block_len = s->cfg.ram_high.base + ram_size[1];
+     }
+ 
+-    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
+-                           &error_fatal);
++    if (s->cfg.mapcache) {
++        memory_region_init_ram(&xen_memory, NULL, "xen.ram",
++                               block_len, &error_fatal);
++        memory_region_init_alias(&s->ram.low, NULL, "xen.ram.lo", &xen_memory,
++                                 s->cfg.ram_low.base, ram_size[0]);
++        if (ram_size[1] > 0) {
++            memory_region_init_alias(&s->ram.high, NULL, "xen.ram.hi",
++                                     &xen_memory,
++                                     s->cfg.ram_high.base, ram_size[1]);
++        }
++    } else {
++        void *p;
++
++        p = xen_map_guest_ram(s, s->cfg.ram_low.base, ram_size[0]);
++        memory_region_init_ram_ptr(&s->ram.low, NULL, "xen.ram.lo",
++                                   ram_size[0], p);
++        if (ram_size[1] > 0) {
++            p = xen_map_guest_ram(s, s->cfg.ram_high.base, ram_size[1]);
++            memory_region_init_ram_ptr(&s->ram.high, NULL, "xen.ram.hi",
++                                       ram_size[1], p);
++        }
++    }
+ 
+-    memory_region_init_alias(&s->ram.low, NULL, "xen.ram.lo", &xen_memory,
+-                             s->cfg.ram_low.base, ram_size[0]);
++    /* Map them onto QEMU's address-space.  */
+     memory_region_add_subregion(sysmem, s->cfg.ram_low.base, &s->ram.low);
+     if (ram_size[1] > 0) {
+-        memory_region_init_alias(&s->ram.high, NULL, "xen.ram.hi", &xen_memory,
+-                                 s->cfg.ram_high.base, ram_size[1]);
+         memory_region_add_subregion(sysmem, s->cfg.ram_high.base, &s->ram.high);
+     }
+ 
+-    /* Setup support for grants.  */
+-    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
+-                           &error_fatal);
+-    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
++    /* Grants are only supported when the mapcache is on.  */
++    if (s->cfg.mapcache) {
++        /* Setup support for grants.  */
++        memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
++                &error_fatal);
++        memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
++    }
+ }
+ 
+ static void xen_set_irq(void *opaque, int irq, int level)
+@@ -203,7 +286,7 @@ static void xen_pvh_init(MachineState *ms)
      xen_register_ioreq(&s->ioreq, ms->smp.max_cpus,
                         xpc->handle_bufioreq,
--                       &xen_memory_listener);
-+                       &xen_memory_listener,
-+                       true);
+                        &xen_memory_listener,
+-                       true);
++                       s->cfg.mapcache);
  
      if (s->cfg.virtio_mmio_num) {
          xen_create_virtio_mmio_devices(s);
-diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
-index e1beca062f..d177ff14ea 100644
---- a/include/hw/xen/xen-hvm-common.h
-+++ b/include/hw/xen/xen-hvm-common.h
-@@ -91,7 +91,8 @@ void xen_device_unrealize(DeviceListener *listener, DeviceState *dev);
- void xen_hvm_change_state_handler(void *opaque, bool running, RunState rstate);
- void xen_register_ioreq(XenIOState *state, unsigned int max_cpus,
-                         uint8_t handle_bufioreq,
--                        const MemoryListener *xen_memory_listener);
-+                        const MemoryListener *xen_memory_listener,
-+                        bool mapcache);
+@@ -285,6 +368,20 @@ XEN_PVH_PROP_MEMMAP(pci_ecam)
+ XEN_PVH_PROP_MEMMAP(pci_mmio)
+ XEN_PVH_PROP_MEMMAP(pci_mmio_high)
  
- void cpu_ioreq_pio(ioreq_t *req);
- #endif /* HW_XEN_HVM_COMMON_H */
++static void xen_pvh_set_mapcache(Object *obj, bool value, Error **errp)
++{
++    XenPVHMachineState *xp = XEN_PVH_MACHINE(obj);
++
++    xp->cfg.mapcache = value;
++}
++
++static bool xen_pvh_get_mapcache(Object *obj, Error **errp)
++{
++    XenPVHMachineState *xp = XEN_PVH_MACHINE(obj);
++
++    return xp->cfg.mapcache;
++}
++
+ static void xen_pvh_set_pci_intx_irq_base(Object *obj, Visitor *v,
+                                           const char *name, void *opaque,
+                                           Error **errp)
+@@ -338,6 +435,12 @@ do {                                                                      \
+         OC_MEMMAP_PROP_SIZE(c, prop_name, name);                          \
+ } while (0)
+ 
++    object_class_property_add_bool(oc, "mapcache", xen_pvh_get_mapcache,
++                                   xen_pvh_set_mapcache);
++    object_class_property_set_description(oc, "mapcache",
++                                      "Set on/off to enable/disable the "
++                                      "mapcache");
++
+     /*
+      * We provide memmap properties to allow Xen to move things to other
+      * addresses for example when users need to accomodate the memory-map
+@@ -377,6 +480,13 @@ do {                                                                      \
+ #endif
+ }
+ 
++static void xen_pvh_instance_init(Object *obj)
++{
++    XenPVHMachineState *xp = XEN_PVH_MACHINE(obj);
++
++    xp->cfg.mapcache = true;
++}
++
+ static void xen_pvh_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -395,6 +505,7 @@ static const TypeInfo xen_pvh_info = {
+     .parent = TYPE_MACHINE,
+     .abstract = true,
+     .instance_size = sizeof(XenPVHMachineState),
++    .instance_init = xen_pvh_instance_init,
+     .class_size = sizeof(XenPVHMachineClass),
+     .class_init = xen_pvh_class_init,
+ };
+diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
+index 0ed07c5694..0209b798f3 100644
+--- a/include/hw/xen/xen-pvh-common.h
++++ b/include/hw/xen/xen-pvh-common.h
+@@ -84,6 +84,8 @@ struct XenPVHMachineState {
+         /* PCI */
+         MemMapEntry pci_ecam, pci_mmio, pci_mmio_high;
+         uint32_t pci_intx_irq_base;
++
++        bool mapcache;
+     } cfg;
+ };
+ 
 -- 
 2.43.0
 
