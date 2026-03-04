@@ -4,130 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41E1EB7EA0
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 08:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81583EB7EA4
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 08:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxhKk-0000jm-0G; Wed, 04 Mar 2026 03:11:54 -0500
+	id 1vxhWK-0002bx-RN; Wed, 04 Mar 2026 03:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxhKh-0000iQ-J1
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:11:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxhWI-0002bL-MI
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:23:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vxhKf-0006ol-SV
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:11:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vxhWG-0002z0-PK
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 03:23:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772611909;
+ s=mimecast20190719; t=1772612626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9GegA8rrbWUVZfe74eoQ37n9/545WGh8jtOMensLPLY=;
- b=Y9dBA/eVNmHrtLMVgts3iQg/MGLNQhOAmMkQWN56C+YJyXmD0GMY4WJffuV/D9H4VDm4F0
- 06Ivmhc0wQwmnrhRS5FArbfwz9yZ62PGx5Zgvqy13ZBavQlSvUH7HNPa/y26hZaCmP1D8D
- r23l7VPwq3fuL5CwZIZFiqJX6QvxrzQ=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-167-3z57_VwZOg2-etryHlp9xw-1; Wed, 04 Mar 2026 03:11:47 -0500
-X-MC-Unique: 3z57_VwZOg2-etryHlp9xw-1
-X-Mimecast-MFC-AGG-ID: 3z57_VwZOg2-etryHlp9xw_1772611906
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-354bc535546so5363811a91.3
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 00:11:47 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772611906; cv=none;
- d=google.com; s=arc-20240605;
- b=j1YaHLQadVPqOfGnJBGBG3q1hYkSr3G+e4X7TQpyuAv/xaMoDKcKzelgK3oUAf1FLV
- DZNQw9uyFoQ3Js+saLseygczxtY4OMwfGQQAEqDocaiwdaco89e9hsZBLgD/NyUGKP3u
- PlGak84cOZ4aJuit1a/tdpVwy9Z4xXplZC0X9EUDU7Pjy7DY5SBonPEyLy2BWiVSdDYd
- 2D3+FJ5f4WMVCeevspz/L/03/SaUVl8At3jLlviuBq7YINaRE50UZHNHHQmCKaNVLH7A
- Qhg1WvICzPSxLJBpuaRzdVCHIKJyoI2zNQbB1Bt09nF3aYdptuxcalVdSAtddZ1u7Tmu
- Ctuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9GegA8rrbWUVZfe74eoQ37n9/545WGh8jtOMensLPLY=;
- fh=WFisdxRSjGamusVjE4eRDV0PNHrnps+0eqArk6R4K14=;
- b=fz/9qDjIF3GOoVdERsohiRiM5kli+W3j/ktzLcRhEmwdlr04alClwf+2wCKovwC7lE
- t/p3wPrJezZISFWcPN6v+dCEyRUt1KDwGZP9QuB95PYWNxXVDS99Keu3cS6yVrtlYJo9
- QB+n3x55HTYJBBnmuzZPbYHctG/nTy2Hewc+jmHIP+5q4e0n4J+0TN9C6rfjnN1vsSbk
- QJLEKAY6gy63QChD47zvBTquTOEhhCFr+VhWtzGF161c+bOf6Wljfi7pcvRN46kjh5AZ
- MoSPOPxoLBYkGE2C6Dgo/0BqAHBmwJqK8km2szV04125Be8pp284q0NM2M3MSndZpic+
- bt2A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772611906; x=1773216706; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9GegA8rrbWUVZfe74eoQ37n9/545WGh8jtOMensLPLY=;
- b=A2jB7nU3Qstv7GQ1KaAoyPYjp2E2fp6HqJmtIAeSmt2p3s89BJKpwTL52b+ZfCJOOg
- 7lAWwfKM8eK+o3JbsGd7WwYextd4IUwE0ohlhJZ4w1zOq+pQD3U/Z9u827arBskpHs77
- LUjvQuQWSzQL5QfZi3qerHyAOFPZzZYeVN7byerOTlVTCKy4VjdHWIzy0K4mmCu+Akcn
- D9BU0unkSKd6vQBTNozZhPlogVfX6JuNfuBULcd2doRrVakjwuePga9kyH0c+0MX6O/h
- LHS5+Rb3gA++KlJLx51MNjggbO3eHP9K5UaOFwHgCeQpazjDdBCsf7k5KmfzPWETvITJ
- vPMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772611906; x=1773216706;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9GegA8rrbWUVZfe74eoQ37n9/545WGh8jtOMensLPLY=;
- b=bOQQsx6DW03mACM6d0CRJpJvdi2NMGHwfb9mT4pbHqy/KJj7KvxStehNW9+pbCoMsC
- RA570AnQTlcKSb5QAKFp23cz6rJMPcqvl/YZLtARkDphA6Ck8tNErlNoLLkGcT9b6GqV
- MGrlV5sEFmgoCRwX+6YMLD+xvNMR0M+G6P6yzGF+71RRnLCgZ7Jj5gW923Du4hYCb0DA
- iNsOFYhdDImEzPhJVjntG9MQdvF6vofCCPDbsZ/Xs0Uwapw6xHAHxKJ0JEm6ZSo5+W2y
- Nv3iPiB20M1rlgjBIvyA3FOC2qSG6TlB1JiWs5TU7Ofo1wxHyspMG+7r74MMqE+/Ga75
- xQbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxdJXWBDtTJQB0QGRlTlFCWzmURHKR3Ss8ZtA2u6O5uXfBJ2JyBSZTPmbKiZh1jfjGy01wBzRRNyoa@nongnu.org
-X-Gm-Message-State: AOJu0Yx//QFKvC5IYuEmfIdSqIraGRNGHbmGQYBvWecCQ0PQh7T0+o1E
- 8NdF2nfE87WraHZeboc0Jqt15gAFcy3pw5bmxDMRNYCRxktTau9WSSiLIOs0LX20LtheOjxc9B5
- L8cpPVvWqIHhIOU3A85GjYV4kTvLPx0jmIXz5eMlkCxIE1LCPyTY16DEsdRO660YwTJ4fAQSwxV
- qK77SYteWSYoNNUzyjx41/nmHFfu1FmVzh+KXUBO3Ikw==
-X-Gm-Gg: ATEYQzy6xDY1yH9y1ybCW6NhwKbvhOhX2yDDrkpp8s7oqOWnxxngFA6kQ4F1ZwuE1Co
- lnkeWH1AJMulGq7HmyQxtvpFAdqXpdg9AkJIMZmT1QNjXFMleybRYiJtkBHD9xidR5E9LsXPac6
- 6ToNcA8uB8orZtp5KdfLM6lfKl72A+MMf0JxJ9D5KuhPohhGY5GlaYYiH7RARKHEHMa4YN6M4Wm
- Vdpq2I7+PTNyhZbY9ivlJvP6S0G7X20gtltEWNE2p5AhFUFW4jxftvRzU+xICLub3w5AUvJRYJV
- EYw6j76O8N2HSKSmeBlERWeS
-X-Received: by 2002:a17:90b:510f:b0:359:7e05:cc8d with SMTP id
- 98e67ed59e1d1-359a69bddf5mr1076555a91.8.1772611905972; 
- Wed, 04 Mar 2026 00:11:45 -0800 (PST)
-X-Received: by 2002:a17:90b:510f:b0:359:7e05:cc8d with SMTP id
- 98e67ed59e1d1-359a69bddf5mr1076523a91.8.1772611905631; Wed, 04 Mar 2026
- 00:11:45 -0800 (PST)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Xdl0IaZd1dtd8J6n7FOpq/IiMnQqMl9aiLMQavhQ9o8=;
+ b=Xzt6CGMGuTrVDxULu8CfEf/kh8hsbkS+Tvg01XUKEDoHkwJauoOuoZmOoBQVD+3CAbkCjj
+ 6QEug8c+W5ZQwXP/XDl3gnSasTBvbjgxtxgLhLoQwR8l/wtZcbZs0KM02FdFDxOMAzXpCk
+ b88AX0Tq88dfuv12q0f5ve/kZsvK5qA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-4Gv9-RKEOl-um6EjaGzZpw-1; Wed,
+ 04 Mar 2026 03:23:42 -0500
+X-MC-Unique: 4Gv9-RKEOl-um6EjaGzZpw-1
+X-Mimecast-MFC-AGG-ID: 4Gv9-RKEOl-um6EjaGzZpw_1772612620
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79B93195605B; Wed,  4 Mar 2026 08:23:40 +0000 (UTC)
+Received: from [10.45.224.194] (unknown [10.45.224.194])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 168D8300019F; Wed,  4 Mar 2026 08:23:34 +0000 (UTC)
+Message-ID: <ecab6c1d-f379-42d6-9acd-95b7b631afce@redhat.com>
+Date: Wed, 4 Mar 2026 09:23:32 +0100
 MIME-Version: 1.0
-References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <20260304-coreaudio-v8-6-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260304-coreaudio-v8-6-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 4 Mar 2026 09:11:34 +0100
-X-Gm-Features: AaiRm52XaazqqN-Wvj5GNNZc3AdrljCS49oFuhPK9CH73zWgoGlOW05OQ08vk-k
-Message-ID: <CAMxuvazWNDURE2rUTvFPf7M-BGHEmbwFgoPwoHANq=Vj74k5UQ@mail.gmail.com>
-Subject: Re: [PATCH v8 6/6] coreaudio: Initialize the buffer for device change
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org, 
- devel@daynix.com, Phil Dennis-Jordan <phil@philjordan.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/15] pc-bios/s390-ccw: Always reset virtio device on
+ failed boot attempt
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
+ <20260304025917.2157032-4-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260304025917.2157032-4-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 27
+X-Spam_score: 2.7
+X-Spam_bar: ++
+X-Spam_report: (2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,38 +131,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 4, 2026 at 7:17=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> Reallocate buffers when the active device change as the required buffer
-> size may differ.
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+On 04/03/2026 03.59, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> The virtio spec necessitates that live virtqueues must not be altered.  Reset
+> the failed device so that the queues are not live before we attempt to boot any
+> fallback devices.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  audio/coreaudio.m | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-> index 23c3d1f80ac5..e4ec1df971c8 100644
-> --- a/audio/coreaudio.m
-> +++ b/audio/coreaudio.m
-> @@ -471,6 +471,7 @@ static OSStatus init_out_device(CoreaudioVoiceOut *co=
-re)
->      core->device_id =3D device_id;
->      core->device_frame_size =3D device_frame_size;
->      core->hw.samples =3D core->buffer_count * core->device_frame_size;
-> +    audio_generic_initialize_buffer_out(&core->hw);
+>   pc-bios/s390-ccw/main.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index 76bf743900..8e2c99bee1 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -277,7 +277,8 @@ static void ipl_boot_device(void)
+>           break;
+>       case CU_TYPE_VIRTIO:
+>           if (virtio_setup() == 0) {
+> -            zipl_load();
+> +            zipl_load(); /* only return on error */
+> +            virtio_reset(virtio_get_device());
+>           }
+>           break;
+>       default:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Good idea! (Reminds me of 68c95ed1db070f7545e487e742715f01a545aab0 where we 
+had to do something similar for virtio-net already).
 
->      core->ioprocid =3D ioprocid;
->
->      return 0;
->
-> --
-> 2.53.0
->
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
