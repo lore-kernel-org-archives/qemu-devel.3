@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61144EF9008
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F57EF9008
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpVk-0005fX-S4; Wed, 04 Mar 2026 11:55:48 -0500
+	id 1vxpW3-0005ll-Uv; Wed, 04 Mar 2026 11:56:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vxpVj-0005fC-O1
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:55:47 -0500
-Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ id 1vxpW2-0005lB-BF
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:56:06 -0500
+Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vxpVi-0003o1-3f
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:55:47 -0500
-Received: by mail-dy1-x1342.google.com with SMTP id
- 5a478bee46e88-2ba9c484e5eso6603915eec.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:55:45 -0800 (PST)
+ id 1vxpVz-0003q4-Ts
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:56:06 -0500
+Received: by mail-dy1-x1341.google.com with SMTP id
+ 5a478bee46e88-2bdecd00ebdso2790302eec.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:56:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772643345; x=1773248145; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772643362; x=1773248162; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=5fi9HW2CT3G0OGmSZ2vDozZ8N8j3QwBVhy3wU+AZtuQ=;
- b=GbhM1iqWCTiWkX+awwdNM5vPCgHB4n8/Gp4O8J6wpRqHpwy/FvCTCNOwTXPOLDHC3y
- +v6UsZ9kyIU4y5rNH87yNYIn+MrTTJQ0T2BP2XEWrSatnIBjOqm5xhJnJVu9+F7rZYTO
- J3lYlD0VlqSS3Ed+5EGepZYowzWmGhJR4Y2lG/jkdiKMjXL3UWYUIJAfwIlTtDnwD2z7
- 9Mg0hOMLf3BxZ1nv6UWkmuGgid3SgH3oJLChRXQ9g1Nr7wHaKGyFMXr90lq8uAOuJsFg
- ZCw7O1pr6J1Uwx2ps9+x1VZQPtdfVG08HhFzzq3vNYWLkj+6Y7TfrjfnoP4iQVV3wKox
- NBKA==
+ bh=jBt2OZCqmhbsCaq9spV7ZYFNN525fo1cmf4cuE/cWkk=;
+ b=Rec/IfCRGqv01P0qQ2D36eojo7EMbJ2vm/C1V4UY4KYExIrtGt+jnp9KYWM0GEzX2z
+ CFh6DBXdTeoL2rkutpmBkyxIOj9MOuYlNZ8wZWTx8VAGABfzs9xOljJU+93zXm3gEPaA
+ rwPuw+iZPegdE991u0s27OGzwdnrs1v/mVep+wvHnx0q40z/wLmdyW9aJNUOikwv7HJ8
+ 6t1YttFjxhnQrCkuw7NVs480LcGqYpaaB7fY5vM68jrC/FL/dJDDcDqhDNoLeKoG+SHw
+ 2EYgl8TR8aWQSUUrNwdbPObT5OgyxOVPZuO1s2S+mkE8B3sZu3LGBBC0lGbveORRBzus
+ wTSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772643345; x=1773248145;
+ d=1e100.net; s=20230601; t=1772643362; x=1773248162;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5fi9HW2CT3G0OGmSZ2vDozZ8N8j3QwBVhy3wU+AZtuQ=;
- b=ORxFZ37wPBsVZQEKM1YzdJqZlJJtpojFtMSsh+sdi9OZ4Bah1/HHn2qQKafO7gIqjV
- +kp6dEohjkmSSR3rBIJvFdwqxScTpv+6aa2JxJHcx2fsArkfvCd6OtvBw82s1xZRD+D9
- YiOv4609k7eWpXH3AS/cvuqlkJ5Qr+ISVcaI3Jr1dB4sHc+9EzCXCj9LxfQgVpmF6WZt
- +KEF2nwndtUmukOkbDbcTq+ftDJ1Ssy7/6w8WH6+6TCAf0ug9A0mA2VpeANjvRxlGNrp
- rhaCgRAh+q8P7NSb0SVl0YNNNqE+1f4Ch84HGZcLZpnVqR3PkpplV7TjDdlQC837uZ+M
- 6CTg==
-X-Gm-Message-State: AOJu0YzxPMKdpCoGPTE0d4rRfGM9MqzfSsdE68YkpM02sGrd4oTEIgjY
- aVEPGUxLZd54+5VTkikP3Cag/2BwGS4uUcnvgNTKRLtt4dcsvhPj7CuJ
-X-Gm-Gg: ATEYQzxnzCvoMJOLcKiw4Ab3N/OfPSbpsa4JlK5Xtl73IAnONrD8N1ONjp+aWI6gvKv
- opuiSSK0FyBffOknbdOvONKn5tGRPDEqp3A9mjYit08UzkRBb5iF9ieyq0WL2WcAjjKAVEuwZi8
- 4ZEhY70Ro2qOyMGMoJiFoWRFjCOTww6vO6eJaRWQnx8RBq9U6X1FKYDiQD+MTTQzm8nmTXUmb8e
- 7Ue8i41ogTn7PWWvh0yM86sCiXHsNNeyuOqib7IXTt2LcpYWCxNmChFDzJ17RGvNZg3IDWrB2ga
- KxAJudCJrZ5Ba3RtFr340Hvf5caQlIkQDj5rjDFDH9dXJnqKpKj803Rp/MBTumlF3Bk8pT3D8cK
- Gus6GBRQiaV9zz4TIzonsp7jXhg7/eq3knUXF0DZTM5iuOpa8vPV7C/2D7xaNheEbxfHUnyX4NT
- Y5ZkKZabXm0fq1TbBkLkpb9F91jz4ajPKVXhfUvhOl4kuAX8IncvHgp+gz6fDzKzw573MxMok0/
- n/5wYQqnpGDfsCeEivqvk60EKe7rUE=
-X-Received: by 2002:a05:7300:a14a:b0:2ba:7069:686c with SMTP id
- 5a478bee46e88-2be310308f5mr1110410eec.17.1772643344512; 
- Wed, 04 Mar 2026 08:55:44 -0800 (PST)
+ bh=jBt2OZCqmhbsCaq9spV7ZYFNN525fo1cmf4cuE/cWkk=;
+ b=YptwuKuFgf+bd+ZL7/AVLpFgsAO7iDw+hwL6IucumHgQzn9TL1zDvLpsA/s1ug4qqU
+ Qegsx1Yd0jm6RQgIuUVFf3pPZbwi+jYImFu7aUawrCRFP2ZOr5Dxu3YO2qUZ7mKyaDJb
+ O5LOEMUHHoTer3+511hIuVRTuYreN8Y0tjOJ+U9XNFh6NWWRJH12yTJHBEIhfRtVRSeT
+ c1KEaNBx/nZ5owRuUyuGv7GU/2mT1j1MGOQM3XgYdAMryEa/qBF4Mu29HjGNhAl//lGY
+ 82JT+03ay91CJ9DB+0zrK5mav3xJ0FH8Ws+R80NgULLNnrC71EHp7uol6iZmmbPZiHQx
+ Grhw==
+X-Gm-Message-State: AOJu0Yzyn3/QCGTSJI1zYCmeEKrGosXJxelFSy2MQDb+L0Sh3PjAAaO7
+ 1WahOr7q9fFqyQam/VEHgeXrAmxbx/HMZ9FQfOGZm6jFX6Z3kFNZzI4I
+X-Gm-Gg: ATEYQzyoMQk0RuhY2+xqK9X91OFaPwP4JxYZV/iS8i9uftE3FGjreA65KxupKyabJ++
+ vBwzgIaQ4KIo91svFUJdh6Sh9d65k9x5WAWoaXey/geyjGugN6W0gyYcTr5t5zU0s+JeNZDpQiR
+ ojU+Du/pXziERwluEXXpwb4kGg414UGMpTDZpjHubjjTKgk1Cddb8jK5x0TMddZDmPuQK5xWDj0
+ MvFdYMwuSCEweXfrKsqNzsYsXnN5ilUh/cNrLL7hG5Co8yM6Wq4JGGyu/8L0PIl/Le8w9i+cT3Q
+ 6+4WVet/4vhtT32HvDn3VtwyQMSq+8GhuTuP73/16bYHNnOAdWMwPUCPwHM7NeI1WY/sQ7SaTBk
+ I6VhZKiVe3elDGl45jbLaOHJd1vFNLgK/hbN5OpGVLwUUt/mvZLrcXUh+RZfci+OHqbqVwyP9TO
+ i4onM9dQexT/JKi9jdUQShztuKt63WrHJd0SSDE8ZNSpNtrflDbN9OVjNPPWu9z1enzt8lYj2m4
+ 90ueCp7wZyXUeZoSb53V+NwtawLqCg=
+X-Received: by 2002:a05:7300:e61a:b0:2a4:3593:645b with SMTP id
+ 5a478bee46e88-2be30ff3b4amr1111433eec.11.1772643362018; 
+ Wed, 04 Mar 2026 08:56:02 -0800 (PST)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2bdd1e02f95sm15307836eec.13.2026.03.04.08.55.40
+ 5a478bee46e88-2be2800c89asm2859024eec.31.2026.03.04.08.55.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 08:55:44 -0800 (PST)
-Date: Thu, 5 Mar 2026 00:55:19 +0800
+ Wed, 04 Mar 2026 08:56:01 -0800 (PST)
+Date: Thu, 5 Mar 2026 00:55:37 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
@@ -73,24 +73,24 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v4 8/9] target/riscv: rvv: Support Zvfbfa vector bf16
- operations
-Message-ID: <aahcp3fivs8UbRcw@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH v4 9/9] target/riscv: Expose Zvfbfa extension as an
+ experimental cpu property
+Message-ID: <aahkALNY52AD1LKS@ZEVORN-PC.localdomain>
 References: <20260304132514.2889449-1-max.chou@sifive.com>
- <20260304132514.2889449-9-max.chou@sifive.com>
+ <20260304132514.2889449-10-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260304132514.2889449-9-max.chou@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
+In-Reply-To: <20260304132514.2889449-10-max.chou@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,90 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 04, 2026 at 09:25:12PM +0800, Max Chou wrote:
-> According to the Zvfbfa ISA spec v0.1, the following vector floating
-> point instructions have different bahaviors depend on the ALTFMT and
-"bahaviors" -> "behaviors".
-
-[...]
->  static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-> -                        uint32_t data, gen_helper_opfvf *fn, DisasContext *s)
-> +                        uint32_t data, gen_helper_opfvf *fn, DisasContext *s,
-> +                        bool do_bf16_nanbox)
->  {
->      TCGv_ptr dest, src2, mask;
->      TCGv_i32 desc;
-> @@ -2403,7 +2461,7 @@ static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
->  
->      /* NaN-box f[rs1] */
->      t1 = tcg_temp_new_i64();
-> -    do_nanbox(s, t1, cpu_fpr[rs1]);
-> +    do_nanbox(s, t1, cpu_fpr[rs1], do_bf16_nanbox);
-this is a bug.
-
-All arithmetic OPFVF BFA instructions pass
-`do_bf16_nanbox=false`, but they should pass `true`.
-
-When altfmt=1 and a scalar f-register operand is
-improperly NaN-boxed, the code substitutes FP16
-canonical NaN (0x7e00). But 0x7e00 interpreted as
-BF16 is a normal finite number (~2^125), NOT NaN.
-This produces incorrect arithmetic results.
-
-static void do_nanbox(DisasContext *s, TCGv_i64 out, TCGv_i64 in,
-                      bool do_bf16_nanbox)
-{
-    if (s->sew == MO_16) {
-        if (s->altfmt && do_bf16_nanbox) {  /* real: s->altfmt && false */
-            gen_check_nanbox_h_bf16(out, in); /* NaN: 0x7fc0 */
-        } else {
-            gen_check_nanbox_h(out, in);      /* NaN: 0x7e00 */
-        }
-    }
-    [...]
-}
-
-Affected callers:
-
-> GEN_OPFVF_BFA_TRANS(vfadd_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfsub_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfrsub_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmul_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmacc_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfnmacc_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmsac_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfnmsac_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmadd_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfnmadd_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmsub_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfnmsub_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmin_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vfmax_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vmfeq_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vmfne_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vmflt_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vmfle_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vmfgt_vf, ..., false)
-> GEN_OPFVF_BFA_TRANS(vmfge_vf, ..., false)
-[...]
-
-All of these should be `true`. The widen macros
-(GEN_OPFVF_WIDEN_BFA_TRANS, GEN_OPFWF_WIDEN_BFA_TRANS)
-hardcode `false` and should also be `true`.
-
-The sign-injection (vfsgnj/vfsgnjn/vfsgnjx),
-vfmerge, vfslide1up/down, vfmv.v.f, and vfmv.s.f
-correctly pass `true`. The intent seems clear --
-the `false` values are simply a mistake.
-
-I suggest that since all BFA callers are supposed to
-pass true, we consider removing the BF16_NANBOX parameter
-entirely and having do_nanbox() directly check s->altfmt
-(this is what patch 7 originally implemented before
-patch 8 added the parameter).
-
+On Wed, Mar 04, 2026 at 09:25:13PM +0800, Max Chou wrote:
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 Best regards,
 Chao Liu
+> ---
+>  target/riscv/cpu.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 376517755e..73cfcbdf6f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1379,6 +1379,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+>  /* These are experimental so mark with 'x-' */
+>  const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+>      MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
+> +    MULTI_EXT_CFG_BOOL("x-zvfbfa", ext_zvfbfa, false),
+>  
+>      { },
+>  };
+> -- 
+> 2.52.0
+> 
 
