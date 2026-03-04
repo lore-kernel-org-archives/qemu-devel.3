@@ -4,106 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2FBEDEBFD
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A5AEDEBFF
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 01:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxb0s-0001eJ-Oq; Tue, 03 Mar 2026 20:26:58 -0500
+	id 1vxb7R-000371-4f; Tue, 03 Mar 2026 20:33:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vxb0r-0001dw-0w
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:26:57 -0500
-Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxb7P-00036M-9J; Tue, 03 Mar 2026 20:33:43 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vxb0p-0003JS-96
- for qemu-devel@nongnu.org; Tue, 03 Mar 2026 20:26:56 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id 6DAD7EC0616;
- Tue,  3 Mar 2026 20:26:52 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Tue, 03 Mar 2026 20:26:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1772587612; x=1772674012; bh=mBIt7eRDL1CQ6j6SdOzmGRng6lo2Lwo7
- t02TOJKw384=; b=Vrye3xi6Yqi6GyLaKbMOjBstnvnNaTf7uJfKn1HrhqjLJVKJ
- sPVnvrozAQln1S5D+GqlrezIvqRoYhpRSahtJ8evPIj8SqjRqYeuKhD0a2GX2Plj
- MjwqFGa1K3QobPAOKs6CJvaMGX7+SkvJqr1XgiZdOQ3moBvr7tp9Zajp8GCV9dTW
- 9UsyY4RXbCvJT2PWDwhm4Rj1t3vbcVwGcpv4Zi1O7V4Me7aGp8Rs2dDZIs8gubuS
- Hku/HX6c7DSBNaAdsw4FGomNpKAgUsRMGUWZQiBl2cnthUCWbDq0imGTgcpzI6xO
- +B/ipvCXoxjR5OBd3QxBmyMaXIdJO3sXLlD9fw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772587612; x=
- 1772674012; bh=mBIt7eRDL1CQ6j6SdOzmGRng6lo2Lwo7t02TOJKw384=; b=2
- JAERbZszjQUxk8uOX3LVXxOLnTYQYx8/LiQ0/j/2ls/HQU88CTLtgBbZtMwPxOQs
- Hj3/OvhNR+4CcrQ6djMH/+xelP15LEbyow1zpSlVB2XP2RBzLti5z/EcHCHDVvCh
- /1dvbgfZ1ByjzY1Guuy1rCaZ0R/2+ZSLXNorioAMUqH2+sPdJ5AyGXu5t85cg5ic
- D/WYAoQ39SHxDtOdvlEIwRNmsa5a5rXxf2RSmJ2Lr0cdeyzF1Q6+UNj0B4/vZmOF
- T/d+T5r2DHOh9+9Ri1gel4ipMM5ROOyHml0FQN3AKOL2UAzFakgRaWkQvSJExVAc
- nPhIh/44frxc2SwJFkcPg==
-X-ME-Sender: <xms:XIqnaXntlz2P0zzvXUQ0V38QfB1Yg10cEiYWEcsES2kVWY1fzq4m3A>
- <xme:XIqnaRu5w63TYhJm3D1lbgNPYRumU6xkgKFHB5Qa3nc2Nm-EPoRok8jd6XABNIk4z
- xAJP_yqFAGo-vUTdOVGN1rxQ3QOFTME09SLilFLd-9ahNbOhvd02oA>
-X-ME-Received: <xmr:XIqnaV-lmoa3B7XhNTtC2xDrZfA36-GYsuSIEWHVnPqfp8qNVECHB70l9zPn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedvudehucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvfevuffhofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeekffekuddvtdehjeduhfekteet
- gedvfeffieeugfefffevheeggfdtkeeuteekteenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmh
- huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegthhgrugesjhgrsghl
- ohhnshhkihdrgiihiidprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuh
- dprhgtphhtthhopehmrghrtggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhm
- pdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:XIqnabPtoJuY8cjUAggB-mYV71rxDClZJfnioKgXswAyPOZjqgsy0w>
- <xmx:XIqnaTHELWnPRNe7UuHF8P5IbLz5Q7_vtFBKCB7ebpo2gvsHwQoPRg>
- <xmx:XIqnaZTo6EVPSY6AWLCUf1X5N0iG9aP_aUh5QlTUV_r-NsjpIYgpcA>
- <xmx:XIqnaQtHyRvpt0bK8RyoUUeMljraiqMoibegova3bHt7XCy976g_5Q>
- <xmx:XIqnaeLgm_W0Zyz897cYYvBFmG8YOtVETXp2QffqwbSAdH5QqusJ6EWu>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 20:26:51 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 3bd63ca8;
- Wed, 4 Mar 2026 01:26:51 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 03 Mar 2026 20:26:51 -0500
-Message-Id: <DGTLV6S10ROE.37PRQWXFH73W@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
-Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v11 17/17] ati-vga: Implement HOST_DATA flush to VRAM
-From: "Chad Jablonski" <chad@jablonski.xyz>
-X-Mailer: aerc 0.21.0
-References: <20260303024730.1489136-1-chad@jablonski.xyz>
- <20260303024730.1489136-18-chad@jablonski.xyz>
- <6cd73946-b4e5-873b-eafc-64be19a5a51b@eik.bme.hu>
-In-Reply-To: <6cd73946-b4e5-873b-eafc-64be19a5a51b@eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.146; envelope-from=chad@jablonski.xyz;
- helo=fout-a3-smtp.messagingengine.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.499,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.322, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.141,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vxb7L-0007Ew-OS; Tue, 03 Mar 2026 20:33:42 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8FB585969FA;
+ Wed, 04 Mar 2026 02:33:36 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id hhwOqD2WwtvA; Wed,  4 Mar 2026 02:33:34 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 777025969F2; Wed, 04 Mar 2026 02:33:34 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7574C5969F0;
+ Wed, 04 Mar 2026 02:33:34 +0100 (CET)
+Date: Wed, 4 Mar 2026 02:33:34 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Troy Lee <leetroy@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v2 11/13] hw/char/serial: Keep MemoryRegionOps private
+In-Reply-To: <8a363801-914d-7870-3b1b-a4c9182ba4cc@eik.bme.hu>
+Message-ID: <d77f00da-83b9-4499-5458-305eaf9f1470@eik.bme.hu>
+References: <20260303222143.142741-1-shentey@gmail.com>
+ <20260303222143.142741-12-shentey@gmail.com>
+ <8a363801-914d-7870-3b1b-a4c9182ba4cc@eik.bme.hu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,14 +75,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 3 Mar 2026, BALATON Zoltan wrote:
+> On Tue, 3 Mar 2026, Bernhard Beschow wrote:
+>> Rather than requiring users of TYPE_SERIAL to initialize the MMIO region
+>> themselves, make it generic enough to be configured via properties. This
+>> makes TYPE_SERIAL more self-contained and prepares it for being turned
+>> into a SysBusDevice.
+>> 
+>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>> ---
+>> include/hw/char/serial-mm.h |  3 --
+>> include/hw/char/serial.h    |  4 +-
+>> hw/char/diva-gsp.c          |  5 ---
+>> hw/char/serial-isa.c        |  1 -
+>> hw/char/serial-mm.c         | 51 -------------------------
+>> hw/char/serial-pci-multi.c  |  5 ---
+>> hw/char/serial-pci.c        |  1 -
+>> hw/char/serial.c            | 76 ++++++++++++++++++++++++++++++-------
+>> 8 files changed, 66 insertions(+), 80 deletions(-)
+>> 
+>> diff --git a/include/hw/char/serial-mm.h b/include/hw/char/serial-mm.h
+>> index 0076bdc061..4c18e2a609 100644
+>> --- a/include/hw/char/serial-mm.h
+>> +++ b/include/hw/char/serial-mm.h
+>> @@ -39,9 +39,6 @@ struct SerialMM {
+>>     SysBusDevice parent;
+>>
+>>     SerialState serial;
+>> -
+>> -    uint8_t regshift;
+>> -    uint8_t endianness;
+>> };
 >
-> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
->
-> Also tested that it works with MorphOS that was known to need it for some=
-=20
-> font rendering so this fixes Xorg and MorphOS. It is now fully reviewed,=
-=20
+> This effectively makes TYPE_SERIAL the same as TYPE_SERIAL_MM so you could 
+> just merge the two and have everything embed a SERIAL_MM device. But the idea 
+> here is to make TYPE_SERIAL a superclass of all serial devices and SERIAL_MM 
+> is the memory mapped version. Memory mapped devices are usually SysBusDevices 
+> but others are not so this seems to be trying to model things in the wrong 
+> way. Maybe you could just add accessor functions to TYPE_SERIAL to get the 
+> memory regions and use that from subclasses to avoid poking in the state 
+> struct and not try to reuse SysBusDevice for this.
 
-This is great! Thank you Zoltan for all of your time and patience
-reviewing.
+Or instead of TYPE_SERIAL exporting memory regions it could export ops or 
+functions for it (like PCI IDE or PCI does) and let subclasses implement 
+the regions that call these exported functions with the register layout 
+they need?
+
+Regards,
+BALATON Zoltan
 
