@@ -4,97 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7822EF8FE1
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 761E1EF8FE2
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 13:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxmEJ-0006gE-Ta; Wed, 04 Mar 2026 08:25:36 -0500
+	id 1vxmFB-00080a-BU; Wed, 04 Mar 2026 08:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vxmEE-0006fC-Ry
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:25:30 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vxmEA-00022a-HR
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:25:28 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-8297e0b27e5so47498b3a.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:25:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vxmF4-0007ph-NN
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:26:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vxmF1-00028W-8N
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 08:26:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772630776;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kbGRTxsnC4Qo/ve0Mm1ICfb+uW/E6lI+zpOLAUNxUhA=;
+ b=RNoajOfsnEVFsOjYJjLq/lyBlBbXiHvsJilqEFX6Py7hz0k4vYwZx5gz7YZDdT+k+HPvjv
+ KB9zVbz6FAjC5M4HdJT1V1v3ioqwVF2N+ibCuNAupMHff/p+zIZwnQs0WVisGComHXqBi+
+ cpO0ctubFIFOooeVezUsmJ/Jn98UZzQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-524-VdbreKghOWeUNoqWsNuNXg-1; Wed, 04 Mar 2026 08:26:15 -0500
+X-MC-Unique: VdbreKghOWeUNoqWsNuNXg-1
+X-Mimecast-MFC-AGG-ID: VdbreKghOWeUNoqWsNuNXg_1772630774
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4836abfc742so53480335e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 05:26:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1772630725; x=1773235525; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KCAb2faB2fyT2II3L9Q2raCeFq1NF7CQPXyacWR21d8=;
- b=Ga6mmPlS1eqXY9Ds1LTOlV6Hoj3g7m5UjF6J+Azcto7FQpLkBoP5zz98XJkwH1ik7Y
- u/OXC3nFKggnYpHoWxVddOigCgqTsenwZr4BL9liF8/sW+gjyphTQ1p/B6HJg7Xbe1TW
- hSmkydFB6SHcPPnz9ScmjcBBGtHTrw/e7Z7N97KkbknpejH6KZuLTWHM8pNgjXZ2P//t
- hfaPdESm3uRhazqRnsih2VPD/94TMIwvxcXTpYmBhxaJ4TonOOzqj0ROgiCpF8nsmVFc
- WI5YkDkOp2DoBeJjBxbW+oVG1Csmmdg3A8wSeIJYgBqTGASjT//sNELYzrAbPn8ojBea
- aKdg==
+ d=redhat.com; s=google; t=1772630774; x=1773235574; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=kbGRTxsnC4Qo/ve0Mm1ICfb+uW/E6lI+zpOLAUNxUhA=;
+ b=qD7+FEPjCViYOyrC1kYTH80KqusBaZgpy4GD6NF6nlL1LIcXT8FfeAh6nTjpzjso6F
+ tK9RotyEzndhGwyquiR7uHy14tMsOxSaWbrqhNlFrSDX5nK6rxz74DvwvdD6pxUPb1Yk
+ CSq03sgygToVTz5Nq9UfpFUseivPBMT80VtME9ipUsSkDjxuBxELEiikKpGspt068yuL
+ k0xH8H6poqJmTCJFE3n6nfCbJ33FgRSLtOEoAUPuHAzqYr9Q03BI2A+yD7PVJ9wXUNFX
+ /Lj0laIr+z9G+X2KxiFZdhVPBVd9p4GPdu3C6c/8M01acD+zhzflXjH3kgDEgjBMh1UN
+ 1/0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772630725; x=1773235525;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KCAb2faB2fyT2II3L9Q2raCeFq1NF7CQPXyacWR21d8=;
- b=TamudR2GQQbwl/6tbsanARnI3foJ/ITVeRksA9fHUz9EHOXbo/8Nqw223i0uRLNLsR
- iSZNaJn6hsYC+NuQCIpM86HBmyFXxeEPvHnXzLPYiTwfgnHGuxYAIW9zELq0swklZeRm
- LdDRd7u6lNeTMLREL8VnyVxrQWuEJu0kGocFcdrKiLpeq3wkPgz3ErrcoVrj0pJBeZrr
- g7Df6ifycWRYjkaWc7S13Vg04lG4Ey2EfY0mRnxhuD8OxuFmCx+Xh7vwih/z2rnZCx7k
- VdGVi7d40Z8cu+S3qVl3rGzXK5VP1x4SwYIQaWWS9WTI5Xv2dt6D06l1oOFW3tcSVurK
- HDmA==
-X-Gm-Message-State: AOJu0Yzvp7smZu3uXE8bdEg4elgVmtNmv16vyqPEJqq19viQzZH1eOec
- 4qLUsLvNDiXICamqklU9bPHTymuKN1oI42oxZPuymxBmhjHWNpjoqGyTEMQ/KK0DPv/6twS0Cf3
- PFHTOoBZV3uH/2Tp8gquru9JqYKUFoeSQR0ZeHoRg8+Ur+e+8kqVtwAnOsrrgb9RiJvMyAaE8MV
- 3F0Tic9iTxrSVk8ApgwQYJil6q4VG+SAmf5g7GzTlBOQ==
-X-Gm-Gg: ATEYQzxlLwWiUI95kk6l75JzRzoXIT1uRJ6S7aWDIcNbtCbzD7bA68B8lEyo/yDRBv3
- WhFqcz57TLkII9HeLqxhvduAaKuT82ziQ+UDykfnkmJV+pGkrNXflmi8IFltXpWGbciB4TlM5zd
- svHWAlUx0ccIBoTi9DgqPg+bFnMCGrmDyQLEJmSFH+f5nlXk3tCLy3+SVLUA4Rk9R6kixPjgrHM
- Y76rc6dpO/C7jEugmDlVQm7HNwkBoCJOhyhCxkGZCpP9khvH9SQxbc2EAlh36YhbVDg4wyF+evF
- ZreF41alo+QG+s7gLUuE118I6aBBWwT9iBqmHoAOrasIsE1R71p9rmpYFdJ9GWfqV2Oy33f1raZ
- Diw1Zo33Pfyjvi98xLXEcqwxV47uIXdkarp5wvKHZ7w5kdPKxXLUruLgvoeQvdFYf1QvjDJ4zBZ
- Ap4eRe672zUtAxNxbPGjlpsCIX7fAuQ4MRd1CEUCxdIzxKNTM3fx7twsuVSJza1dBPkuPAnZZzr
- 5oaQ3tPtyztu25BOFWkFVxWgv0=
-X-Received: by 2002:a05:6a00:894:b0:824:b181:f492 with SMTP id
- d2e1a72fcca58-82972d0efa8mr1845812b3a.45.1772630724662; 
- Wed, 04 Mar 2026 05:25:24 -0800 (PST)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82739db1d6dsm16968505b3a.26.2026.03.04.05.25.22
+ d=1e100.net; s=20230601; t=1772630774; x=1773235574;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kbGRTxsnC4Qo/ve0Mm1ICfb+uW/E6lI+zpOLAUNxUhA=;
+ b=ewHtM2XTGo/gI4RMOBJa9vuzXCAJNgC5LxZ3iqDWaDvPT8TkyDBPP/N14PG6aR93kV
+ TN/o0wMM9MMBvbX9Eg6Ru3Reg+8MmWxddCG0/BsyGH2rBkfmOj3/h2IhYb8U6nhKc1FS
+ 8EyHIXd9j7xaR6IrJ40aUH4nF78kOXYbeMm/wx0xYlaEC9MYpzG2d266GSIgfyVpNyqk
+ cwLK7qGYMJ/Nw9cXkVP1p9VYKQEQd3BRm9G93smGd1hpAcDMRVQx1l2YHZtYMaLB6qJS
+ BIUywtNPJmhxUkXhdzA/3+W/zxuKijeqB9f88BrtRlc/Y93sF0vosVO1BEuuOD/2T3tc
+ 4ySQ==
+X-Gm-Message-State: AOJu0YxY9DEakwEaesKIDssHu4+fUeATtTo1mRGubi6dmQBYGhdatdh9
+ hPdvVcL59PkfEZvOlCgc90GXeKuVMW/NXMYk4PMgeyMPIKN3BXwtv3eF6Jf8KCY6+X6ExWnLmwY
+ O8zPgTNMWT+Vk+3Xuv4kPB9aHCTCFh0IXAFHi0h1Cs8tEIYhgOlaJWss/
+X-Gm-Gg: ATEYQzyn4c9zYByeGWwxPO3RL+PtQEHcj8jgV5g8aguDqdC3K5g1xqMiKdWcbLufkFS
+ EP+Czf2wECsxwTFMjckDwqVg5zDqd9C6exFUIqlrK59verWer6TSyeR8fIKnH94dK59IWkBSH1i
+ Hq+Zfwndg4Qw2Nz+gBD7eKH7v89NKnogX/S/kXnwvgyIqLyuUBbcRJ26/pxyhfcm3wqxf6kDPGx
+ p8dDbhHp7Uiv11usXoWaeiw6Kzr8nhaG4oTl9qw2UG2NA3lSbt7F1Abe9h49wIHslrn0n8sukzU
+ yWNd3zU8h4oOwqdZh3ih6dwjFdXgKA67s1yx2mXsY4p6a7+X2WIcFbUGjk14xjNfp3ubG/oKJx2
+ QogBzUekGWkHPSMC73S2VP6++1F6pajVExn6SRPmGVIFxdBFdZVWEJ/7z7cNut0MggIFwvOE=
+X-Received: by 2002:a05:600c:c4a5:b0:477:7ae0:cd6e with SMTP id
+ 5b1f17b1804b1-48519826fadmr33825805e9.5.1772630774216; 
+ Wed, 04 Mar 2026 05:26:14 -0800 (PST)
+X-Received: by 2002:a05:600c:c4a5:b0:477:7ae0:cd6e with SMTP id
+ 5b1f17b1804b1-48519826fadmr33825245e9.5.1772630773707; 
+ Wed, 04 Mar 2026 05:26:13 -0800 (PST)
+Received: from sgarzare-redhat (host-82-53-134-58.retail.telecomitalia.it.
+ [82.53.134.58]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485187c2ef2sm53639885e9.5.2026.03.04.05.26.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 05:25:24 -0800 (PST)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PATCH v4 2/9] target/riscv: Add the Zvfbfa extension implied rule
-Date: Wed,  4 Mar 2026 21:25:06 +0800
-Message-ID: <20260304132514.2889449-3-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260304132514.2889449-1-max.chou@sifive.com>
-References: <20260304132514.2889449-1-max.chou@sifive.com>
+ Wed, 04 Mar 2026 05:26:13 -0800 (PST)
+Date: Wed, 4 Mar 2026 14:26:07 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, mst@redhat.com,
+ dbassey@redhat.com, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ stefanha@redhat.com, manos.pitsidianakis@linaro.org, jasowang@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, 
+ slp@redhat.com, hi@alyssa.is, stevensd@chromium.org
+Subject: Re: [PATCH v13 7/7] vhost-user-device: Add shared memory BAR
+Message-ID: <aagv94qy56VjyNba@sgarzare-redhat>
+References: <20260219130334.787858-1-aesteve@redhat.com>
+ <20260219130334.787858-8-aesteve@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260219130334.787858-8-aesteve@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,48 +126,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the Zvfbfa isa spec:
-The Zvfbfa extension requires the Zve32f and Zfbfmin extensions.
+On Thu, Feb 19, 2026 at 02:03:34PM +0100, Albert Esteve wrote:
+>Add shared memory BAR support to vhost-user-device-pci
+>to enable direct file mapping for VIRTIO Shared
+>Memory Regions.
+>
+>The implementation creates a consolidated shared
+>memory BAR that contains all VIRTIO Shared
+>Memory Regions as subregions. Each region is
+>configured with its proper shmid, size, and
+>offset within the BAR. The number and size of
+>regions are retrieved via VHOST_USER_GET_SHMEM_CONFIG
+>message sent by vhost-user-base during realization
+>after virtio_init().
+>
+>Specifiically, it uses BAR 3 to avoid conflicts, as
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+nit: s/Specifiically/Specifically
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 2ddc26c837..376517755e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2619,6 +2619,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_zvfbfa),
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zve32f), CPU_CFG_OFFSET(ext_zfbfmin),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-     &RVM_IMPLIED, &RVV_IMPLIED, NULL
-@@ -2632,8 +2641,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-     &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
-     &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
-     &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
--    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
--    &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-+    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED, &ZVE64X_IMPLIED,
-+    &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
-     &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
-     &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
-     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
--- 
-2.52.0
+Discussed offline, this should be BAR 4 IIUC.
+
+>it is currently unused.
+>
+>The shared memory BAR is only created when the
+>backend supports VHOST_USER_PROTOCOL_F_SHMEM and
+>has configured shared memory regions. This maintains
+>backward compatibility with backends that do not
+>support shared memory functionality.
+>
+>Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+>Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>---
+> hw/virtio/vhost-user-base.c            | 46 ++++++++++++++++++++++++--
+> hw/virtio/vhost-user-test-device-pci.c | 38 +++++++++++++++++++--
+> 2 files changed, 79 insertions(+), 5 deletions(-)
+>
+>diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+>index 01ab9ca56b..e5e8abae96 100644
+>--- a/hw/virtio/vhost-user-base.c
+>+++ b/hw/virtio/vhost-user-base.c
+>@@ -16,6 +16,7 @@
+> #include "hw/virtio/virtio-bus.h"
+> #include "hw/virtio/vhost-user-base.h"
+> #include "qemu/error-report.h"
+>+#include "migration/blocker.h"
+>
+> static void vub_start(VirtIODevice *vdev)
+>{
+>@@ -276,7 +277,8 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+> {
+>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>     VHostUserBase *vub = VHOST_USER_BASE(dev);
+>-    int ret;
+>+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
+>+    int i, ret, nregions, regions_processed = 0;
+>
+>     if (!vub->chardev.chr) {
+>         error_setg(errp, "vhost-user-base: missing chardev");
+>@@ -319,7 +321,7 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+>
+>     /* Allocate queues */
+>     vub->vqs = g_ptr_array_sized_new(vub->num_vqs);
+>-    for (int i = 0; i < vub->num_vqs; i++) {
+>+    for (i = 0; i < vub->num_vqs; i++) {
+>         g_ptr_array_add(vub->vqs,
+>                         virtio_add_queue(vdev, vub->vq_size,
+>                                          vub_handle_output));
+>@@ -333,11 +335,49 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+>                          VHOST_BACKEND_TYPE_USER, 0, errp);
+>
+>     if (ret < 0) {
+>-        do_vhost_user_cleanup(vdev, vub);
+>+        goto err;
+>+    }
+>+
+>+    ret = vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
+>+                                                           &nregions,
+>+                                                           memory_sizes,
+>+                                                           errp);
+>+
+>+    if (ret < 0) {
+>+        goto err;
+>+    }
+>+
+>+    for (i = 0; i < VIRTIO_MAX_SHMEM_REGIONS && regions_processed < nregions; i++) {
+>+        if (memory_sizes[i]) {
+>+            regions_processed++;
+>+            if (vub->vhost_dev.migration_blocker == NULL) {
+>+                error_setg(&vub->vhost_dev.migration_blocker,
+>+                       "Migration disabled: devices with VIRTIO Shared Memory "
+>+                       "Regions do not support migration yet.");
+>+                ret = migrate_add_blocker_normal(
+>+                    &vub->vhost_dev.migration_blocker,
+>+                    errp);
+>+
+>+                if (ret < 0) {
+>+                    goto err;
+>+                }
+>+            }
+>+
+>+            if (memory_sizes[i] % qemu_real_host_page_size() != 0) {
+>+                error_setg(errp, "Shared memory %d size must be a power of 2 "
+>+                                 "no smaller than the page size", i);
+
+Is this error message updated?
+
+>+                goto err;
+>+            }
+>+
+>+            virtio_new_shmem_region(vdev, i, memory_sizes[i]);
+>+        }
+>     }
+>
+>     qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NULL,
+>                              dev, NULL, true);
+>+    return;
+>+err:
+>+    do_vhost_user_cleanup(vdev, vub);
+> }
+>
+> static void vub_device_unrealize(DeviceState *dev)
+>diff --git a/hw/virtio/vhost-user-test-device-pci.c b/hw/virtio/vhost-user-test-device-pci.c
+>index 7f6d751690..22678e3277 100644
+>--- a/hw/virtio/vhost-user-test-device-pci.c
+>+++ b/hw/virtio/vhost-user-test-device-pci.c
+>@@ -12,10 +12,13 @@
+> #include "hw/virtio/vhost-user-base.h"
+> #include "hw/virtio/virtio-pci.h"
+>
+>+#define VIRTIO_DEVICE_PCI_SHMEM_BAR 4
+>+
+> struct VHostUserDevicePCI {
+>     VirtIOPCIProxy parent_obj;
+>
+>     VHostUserBase vub;
+>+    MemoryRegion shmembar;
+> };
+>
+> #define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci-base"
+>@@ -25,10 +28,41 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_TEST_DEVICE_PCI)
+> static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+> {
+>     VHostUserDevicePCI *dev = VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
+>-    DeviceState *vdev = DEVICE(&dev->vub);
+>+    DeviceState *dev_state = DEVICE(&dev->vub);
+>+    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
+>+    VirtioSharedMemory *shmem, *next;
+>+    uint64_t offset = 0, shmem_size = 0;
+>
+
+I'd add a comment here to explain this since it's not immediately clear 
+IMHO.
+
+>+    vpci_dev->modern_mem_bar_idx = 2;
+>     vpci_dev->nvectors = 1;
+>-    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
+>+    qdev_realize(dev_state, BUS(&vpci_dev->bus), errp);
+
+IIUC before this patch qdev_realize() was the last step in this 
+function, so we didn't check for any error, but now should we return 
+earlier if it fails?
+
+>+
+>+    QSIMPLEQ_FOREACH_SAFE(shmem, &vdev->shmem_list, entry, next) {
+
+Is QSIMPLEQ_FOREACH_SAFE really needed here? IIUC we are not modifying 
+the list, so can we use QSIMPLEQ_FOREACH ?
+
+>+        if (shmem->mr.size > UINT64_MAX - shmem_size) {
+
+Same here about using memory_region_size().
+
+>+            error_setg(errp, "Total shared memory required overflow");
+>+            return;
+>+        }
+>+        shmem_size = shmem_size + shmem->mr.size;
+
+Ditto about memory_region_size().
+
+>+    }
+>+    if (shmem_size) {
+>+        if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
+>+            error_setg(errp, "modern-pio-notify is not supported due to PCI BAR layout limitations");
+>+            return;
+>+        }
+>+        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
+>+                           "vhost-device-pci-shmembar", shmem_size);
+>+        QSIMPLEQ_FOREACH_SAFE(shmem, &vdev->shmem_list, entry, next) {
+
+Ditto about QSIMPLEQ_FOREACH_SAFE.
+
+BTW my comments can eventually be fixed with a followup, overall LGTM,
+but if you need to resend, maybe we can fix them now.
+
+In any case:
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+
+
+>+            memory_region_add_subregion(&dev->shmembar, offset, &shmem->mr);
+>+            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
+>+                                   offset, shmem->mr.size, shmem->shmid);
+>+            offset = offset + shmem->mr.size;
+>+        }
+>+        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
+>+                        PCI_BASE_ADDRESS_SPACE_MEMORY |
+>+                        PCI_BASE_ADDRESS_MEM_PREFETCH |
+>+                        PCI_BASE_ADDRESS_MEM_TYPE_64,
+>+                        &dev->shmembar);
+>+    }
+> }
+>
+> static void vhost_user_device_pci_class_init(ObjectClass *klass,
+>-- 
+>2.52.0
+>
 
 
