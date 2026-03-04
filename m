@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBDFFEF9002
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAAE4EF9002
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:23:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxozn-0003d5-8p; Wed, 04 Mar 2026 11:22:47 -0500
+	id 1vxp0K-0003m7-AV; Wed, 04 Mar 2026 11:23:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vxozm-0003cZ-8a
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:22:46 -0500
+ id 1vxp05-0003ju-Hu
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:23:07 -0500
 Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vxozk-0004ii-LJ
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:22:46 -0500
+ id 1vxp03-0004mc-MN
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:23:04 -0500
 Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-2bdd40d3c61so5751994eec.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:22:44 -0800 (PST)
+ 5a478bee46e88-2bded9bf7a7so5357603eec.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:23:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772641363; x=1773246163; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772641381; x=1773246181; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4yNY4cJ3BCQYHHUP9kxjaqJsM3SYq28BKZCWz/DTJ6g=;
- b=PPDndnYGrHEZg9nsZPqmE0730/gc/cT5/S3FJAqc0iX5XN0rk+v8D2LYIGO6kR8/BR
- X6wwJ3ZHFW46xBiKzvW0LeksXKC242rGHm12F3IJ71dHshuMFmV98NC2DbWRQ1w7K4sG
- AWb/ie3m1Crge22H42qWyj7OjHs6cAzySt8k+SOenQSXlJQOLwKdBcKYxMAhVSp6t6ae
- VswA8ywhc+OTXUk99X+xxkXINgPg4YIweXtuVv9HL6jwa3ZqR3/yp2w4PVwcBkqmhE1v
- cDRPfWl1QBS4Gdm7G6WC1RasgDXJR2csca8CXn4w97p/RON9ALYC7Kllh/cSstx8ayn0
- O80w==
+ bh=Wvai6nObWrt0k14mB4BR+N0ihyOurz8m0Lw0tApaKFc=;
+ b=B7Wq8WAe4bsw9GCjUOphMHjM57j/kx3lTfI4ARsED1x91AaGeVreZsjyEQ74nkA7gb
+ omTQJitkXFGbWYvtetR378R0oxpqJCAZzL74Lqwz1RmnNlpNDfMUqErJi9+QgYVkARPP
+ UQIAmPdqJ2WrF8gH4cYcn32zW/hObo7vxEsETiP3xeuVF/TnNqW12da78nyL0qVuQUEi
+ nz5DVfy+z+ZjSn7V8Wvt3Z8kItribkfCA7ayZyFMLdtYwTnuboBt37ZL2a9dSRCTPBeS
+ bcri20hN/EnRVI/sZH/B0mc2UfTEDAou8G/dzcH6AigMWykbN61abUjPfQDfeUuUyMVp
+ cKFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772641363; x=1773246163;
+ d=1e100.net; s=20230601; t=1772641381; x=1773246181;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4yNY4cJ3BCQYHHUP9kxjaqJsM3SYq28BKZCWz/DTJ6g=;
- b=iX3lVL7mTVtWRM39ixKWIYZ3rY4aSpHl9UXpJY1BE7AgY8M8W2q2zu/0ogC2zRk/2N
- +oXo8U+gI29nqx4agBoMV6QIyYayuGr0T8hYw8ntV67rlGB7LMBQvdp8qgauhhO8wP5u
- jdCjP5i0hwRtWMV1/l2mr/3MVo2qvN4pxga168lBO9FqXpfkfdEyTsj90UWY9t/eE++N
- yZCCVpuh3FB7wmIj/FwQl9pDxRrA3aUWkE8dU5UZlh6S6Hr753odXqCm+sG3xsftCrup
- XFtiq91jacuamCaUSIgHPWtf97LmVl8RjdjI+SrN2isZUOlLrDJEG9+funL0SIBqZwxM
- Mtdw==
-X-Gm-Message-State: AOJu0Yy/AAVRxSobO/bRiaD5Lw1o8NyirvhwxTYkwJ/K2Fx5Alt2eTyK
- fD6YMTmXvUi3X4OUTSPLSlrMcGJOG6rWrHzQ/Z1TIOoRBGee4/c6SWdX
-X-Gm-Gg: ATEYQzzPHZvs6/NGeaLDk7OBtxGGE5LKdfy+Iw8+UmAqp+wyu/bEjww2QIsbOGHlxex
- pqU2UFbY7EpzeHIqRO1V0CRNEwHs8dbcu6Lv8h8ZtGNLxiVcvmudN8VIX2uyC/H5Y4QiDlqfUIQ
- NyCvtugWaBAB35eX7R1/b3tX4y9nKJkSGUP7Y90Gk6JdZ/WEx3r7smm5upUqRTSXHdxFzNuco1b
- ClEoqTrhP1b98CZ1ff/4PgR4gVECpoWPJ7QV7YtRP0Xjcy7NAOJ8yn1Kgn0Iqm0we/5cIYcfyZ1
- tCd8t4N6Js5r3H1u1GlR2+h/eRtJUGRAsJ5xXOlHXKmUV4Op27x+VRdZdmcWbOB9WyDuOncAAvt
- q0NRoQHgrlnZ/4wKRmCyY0FI3SoMGHhnw7t4KRGKwNoKc8i7e1wf80i742g3y8d+DtAJy8Qi19m
- NxZ3PabzLTDgiGHOVoSflqGYuhqLu5JtqltZ7l1g1by1ZkqTHUsqmWKGeDd/frt0qnqaF3dzVLa
- IS0eyQFofQGv6PWNZTRCU8CIcq//ckpphVCrbu9Pg==
-X-Received: by 2002:a05:7300:cd93:b0:2be:e4b:60ca with SMTP id
- 5a478bee46e88-2be30fcfebemr1012870eec.4.1772641362731; 
- Wed, 04 Mar 2026 08:22:42 -0800 (PST)
+ bh=Wvai6nObWrt0k14mB4BR+N0ihyOurz8m0Lw0tApaKFc=;
+ b=hIOdh+3LAuK1CZHdewoc3LkkED75GVD5QdEhb7VNt06lyYawxs/9obBnGQt3OYmrZj
+ KEBnfSoWEAyypvXp6ar3ymrhiJESaIbx2efMaY1Hgsk3uw59aIijnOkSpSCLJXrAxux7
+ kadv7E1hGQs5ylxzZkFYf5xjnLhyBGUTv3S0M3edTjG87uPWTY/9E0cy+tKnwYWxsO1J
+ 95v6KXd/+QAior7lncEFgICKhwoCgok9kWYdBlOingrNJu1iI2PfREeI6ur93d7eoKXo
+ p8W3br8co1fF08ezCsew2UpjFNhZOHzq/mPscqI0XMpNUvhy9dis2fO7lWa5DRUC1jP7
+ b2Jw==
+X-Gm-Message-State: AOJu0YyN4pumuYDreUXqXcNSweZ04p0Zy4Kk9UCB7r2VuXIikc+tNCtm
+ LB52Hvi/ucDQKlVFKwxzXe+j+tRtL3cx6KmoWM/AdmkrepS4L9Qn6DEAMVpNLGKG
+X-Gm-Gg: ATEYQzwNhqPsqJ5ObOqwk64vXmjMn47rTJrrKY+HMeuzm4vhNoeBihnCvA49V9Itgvh
+ /SzKB4YGkC5teg72a58LhES5usRl/MWbGZtr3QPjD4MIgmknb92D3A/l8WwpIVYI1c5+FRUjpYI
+ ft3gAbwvMdK0mbcFvOl4Ec0ROXuPrkYIuo8Hv4kh9R5JORqEUmyx3J2ew9YwayyF02My0MjfVXU
+ 0pds7uF/mFxr4RFS/Uv+uSvegU2eFjXVlO3HOwFsb64XTo1+b8tu74X3afQozELFjFYm+5QwoJS
+ 7pFDMWvd0wis+jkfInDbYLz8HOPmriN7a3OQqB/srDBOYjO4Yowo0pELLTL2cpPyXC+PavXpWWV
+ a5rH0fVFcgTajnnru6B1hd7FJzyTm/MaV6WhbZuq3ovS57Jn8Ai4ApguzoH7ZIa7faQKBPFx9OF
+ 9NvaoeNZfBX9adWGZUYyZ/5XHfrhl660L+1PQ2hIqpu3FQdkfdhG1Haa4fRytybtoemb5gFDa9F
+ SCqCiFm9TWfDGkybVpc5+RE1kaKAEE=
+X-Received: by 2002:a05:7300:6423:b0:2b8:4a34:6c39 with SMTP id
+ 5a478bee46e88-2be30fdb77amr1027610eec.16.1772641380989; 
+ Wed, 04 Mar 2026 08:23:00 -0800 (PST)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be2056acd1sm4167867eec.22.2026.03.04.08.22.39
+ 5a478bee46e88-2be16992009sm7113244eec.3.2026.03.04.08.22.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2026 08:22:42 -0800 (PST)
-Date: Thu, 5 Mar 2026 00:22:17 +0800
+ Wed, 04 Mar 2026 08:23:00 -0800 (PST)
+Date: Thu, 5 Mar 2026 00:22:36 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
@@ -73,15 +73,14 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v4 5/9] target/riscv: Use the tb->cs_base as the extend
- tb flags.
-Message-ID: <aahbh2OFUNIsMtN2@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH v4 6/9] target/riscv: Introduce altfmt into DisasContext
+Message-ID: <aahcQyu5LpQyNFeU@ZEVORN-PC.localdomain>
 References: <20260304132514.2889449-1-max.chou@sifive.com>
- <20260304132514.2889449-6-max.chou@sifive.com>
+ <20260304132514.2889449-7-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260304132514.2889449-6-max.chou@sifive.com>
+In-Reply-To: <20260304132514.2889449-7-max.chou@sifive.com>
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
  envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
 X-Spam_score_int: -20
@@ -106,101 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 04, 2026 at 09:25:09PM +0800, Max Chou wrote:
-> We have more than 32-bits worth of state per TB, so use the
-> tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
-> 
+On Wed, Mar 04, 2026 at 09:25:10PM +0800, Max Chou wrote:
 > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > Signed-off-by: Max Chou <max.chou@sifive.com>
-Nit: trailing period in the commit subject is unconventional.
-
-please remove it.
-
-> ---
->  include/exec/translation-block.h | 1 +
->  target/riscv/cpu.h               | 3 +++
->  target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
->  3 files changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-> index 4f83d5bec9..40cc699031 100644
-> --- a/include/exec/translation-block.h
-> +++ b/include/exec/translation-block.h
-> @@ -65,6 +65,7 @@ struct TranslationBlock {
->       * arm: an extension of tb->flags,
->       * s390x: instruction data for EXECUTE,
->       * sparc: the next pc of the instruction queue (for delay slots).
-> +     * riscv: an extension of tb->flags,
->       */
->      uint64_t cs_base;
->  
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 962cc45073..4c0676ed53 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -703,6 +703,9 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
->  FIELD(TB_FLAGS, PM_PMM, 29, 2)
->  FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
->  
-> +FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
-> +FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
-The layout is sensible -- misa_ext in low 32 bits,
-altfmt at bit 32. Good use of the previously wasted
-cs_base field.
-
-I also adopted this design in my debug spec series,
-thanks for the idea.
-
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 Best regards,
 Chao Liu
-> +
->  #ifdef TARGET_RISCV32
->  #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
->  #else
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 720ff0c2a3..378b298886 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -104,6 +104,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->      RISCVCPU *cpu = env_archcpu(env);
->      RISCVExtStatus fs, vs;
->      uint32_t flags = 0;
-> +    uint64_t ext_flags = 0;
->      bool pm_signext = riscv_cpu_virt_mem_enabled(env);
+> ---
+>  target/riscv/translate.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index cb4f443601..89d4f6fe67 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -101,6 +101,7 @@ typedef struct DisasContext {
+>      bool cfg_vta_all_1s;
+>      bool vstart_eq_zero;
+>      bool vl_eq_vlmax;
+> +    bool altfmt;
+>      CPUState *cs;
+>      TCGv zero;
+>      /* actual address width */
+> @@ -1307,6 +1308,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>      RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
+>      RISCVCPU *cpu = RISCV_CPU(cs);
+>      uint32_t tb_flags = ctx->base.tb->flags;
+> +    uint64_t ext_tb_flags = ctx->base.tb->cs_base;
 >  
->      if (cpu->cfg.ext_zve32x) {
-> @@ -118,6 +119,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->  
->          /* lmul encoded as in DisasContext::lmul */
->          int8_t lmul = sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL), 0, 3);
-> +        uint8_t altfmt = FIELD_EX64(env->vtype, VTYPE, ALTFMT);
->          uint32_t vsew = FIELD_EX64(env->vtype, VTYPE, VSEW);
->          uint32_t vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
->          uint32_t maxsz = vlmax << vsew;
-> @@ -133,6 +135,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->          flags = FIELD_DP32(flags, TB_FLAGS, VMA,
->                             FIELD_EX64(env->vtype, VTYPE, VMA));
->          flags = FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstart == 0);
-> +        ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, ALTFMT, altfmt);
->      } else {
->          flags = FIELD_DP32(flags, TB_FLAGS, VILL, 1);
->      }
-> @@ -189,10 +192,12 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
->      flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
->      flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
->  
-> +    ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->misa_ext);
-> +
->      return (TCGTBCPUState){
->          .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
->          .flags = flags,
-> -        .cs_base = env->misa_ext,
-> +        .cs_base = ext_flags,
->      };
->  }
->  
+>      ctx->pc_save = ctx->base.pc_first;
+>      ctx->priv = FIELD_EX32(tb_flags, TB_FLAGS, PRIV);
+> @@ -1326,6 +1328,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+>      ctx->cfg_vta_all_1s = cpu->cfg.rvv_ta_all_1s;
+>      ctx->vstart_eq_zero = FIELD_EX32(tb_flags, TB_FLAGS, VSTART_EQ_ZERO);
+>      ctx->vl_eq_vlmax = FIELD_EX32(tb_flags, TB_FLAGS, VL_EQ_VLMAX);
+> +    ctx->altfmt = FIELD_EX64(ext_tb_flags, EXT_TB_FLAGS, ALTFMT);
+>      ctx->misa_mxl_max = mcc->def->misa_mxl_max;
+>      ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
+>      ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
 > -- 
 > 2.52.0
 > 
