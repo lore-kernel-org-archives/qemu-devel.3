@@ -4,80 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA74EF9011
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805C6EF9008
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Mar 2026 16:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxpTB-00021N-33; Wed, 04 Mar 2026 11:53:09 -0500
+	id 1vxpR4-0003tS-0A; Wed, 04 Mar 2026 11:50:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxpT8-0001wz-UV
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:53:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vxpT7-0002fo-EV
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:53:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772643184;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rfV0gEUJC+rSPvPi445xgxocRWiYcV/AAmpU7HARrQc=;
- b=L4S52V4DCQ+Y+qcBQ+nyWFnzeDWKFJ0kEHoWqn+Bl81HLaOE9EhWvGV1WkghyleAk4AmSL
- sAQhk8iGsC83CkI1jchnjS+bfWdTMT4GELKcnWTnNxaDc4agiqFsxHO/z/J5VfxfXEf1SG
- dhobK7i+0SevKK9plX0PGusicNNQ3Qk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-DGSIqf_hMvWVGhD-nYTXIw-1; Wed,
- 04 Mar 2026 11:53:01 -0500
-X-MC-Unique: DGSIqf_hMvWVGhD-nYTXIw-1
-X-Mimecast-MFC-AGG-ID: DGSIqf_hMvWVGhD-nYTXIw_1772643180
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B32DC195605B; Wed,  4 Mar 2026 16:52:59 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.32.26])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 10DBD180035F; Wed,  4 Mar 2026 16:52:53 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vxpQz-0003qF-Lc
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:53 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vxpQx-0002Q0-MQ
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 11:50:53 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-65faaa8b807so3594670a12.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 08:50:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772643049; x=1773247849; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+kubWz9KDgycCqkZClTxhaq/ye7WarZSE8+MZWS4vpo=;
+ b=iUSIXFMfE5ZLFMU3kTXxNmi5r2iO8obG/tHKwRIuI+O7Mp8W3LWDtdVIASe29O+I1T
+ h4+RcPZgsX4aVUSkuDuC1s08ElqW9Wv7QsqjS4i8wlgZ5tBlf7vX6UqaNRzDQ5ThwnAc
+ 6dLQzU4HHfSQwY+NzNgdd4XMBGs6Qrl28nE/t1wWIPORgGMYjF0uUG+KP/F/sYXKTSox
+ 0AXMjmepL6K0S4XzLI6Zfqr/F8PmwXSs2VuJAGvMOk0wFFBtNPFq/YDP8CJ8bhzhRleb
+ GGWsMfFGq40qFDMHdR/g4kH4JeeZJT7rT9GGRZv4gVagCg//r+3iw2hxjiUjLLr3SZdN
+ reeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772643049; x=1773247849;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+kubWz9KDgycCqkZClTxhaq/ye7WarZSE8+MZWS4vpo=;
+ b=GgpylXNGstZTAM0gzCrBitDZGcJnTYe0agc89H8pAzUoXJAn6fFD0VDm1jZZWBhEnG
+ zEQ937BU8TPp8HddX4Bwzdwom1U78nVyNzFmIywjcBZjnlAzLTeUKHi88sSrPsLfAfKA
+ 05T0x/u3OP8PIrCpqUjMr9Xpu64TqHl5S5amfq+teG921WfdUxfjE8gGOLJssJC18Rdw
+ NnSFac0l6OLD6zdbG0oNDAvSSx0HIku6pNNxpagV8SIHfZHNE4BRvHKivI6fG95V6aed
+ eQ92d895UyiN5c1FKmos4wBMmmxwGTFNLTmO7ELsmRP8lQTzNpKxuHqKO7Mooy0tJqCg
+ KX3Q==
+X-Gm-Message-State: AOJu0YzZhzxSIsY0DpilqFyRXy80Bt38Yfm412/d7xIEmIhuOI/+R6jG
+ K+NBmzBTzLrYhi7BGpWkzRR36Iy/zq7vXbkTDlv7vCnWL8uD5QJdXKQIvfMYNw4G4UA=
+X-Gm-Gg: ATEYQzymrz97nB64FDhDjC+8UEve0IBnhJUcmxp3zivv+hpEx5NWnbDx8rV1E3HaC4r
+ IsAhEdrz6eiFX2fQo6S47FVWUrNMpu2sOg7xJPaQX8r1eXAs+ityboGvBcNslEUfLVR9C1fIboc
+ 45PhA0ONQxQvgVAo/6nP8U49JGwZXwwwYfeKbZaEZib0gk6c2KGQ2EwId1b0FIFqSLT1cTbR7HM
+ xNxXabBOX47lBApv16Fg+mmnojmN5GIiFXcbVmXEZQfJB398iJaNC070LSY6RWOVghQ2898zHKr
+ AL5+Cbi4l2K42xATSM3BSOdCAJyCyD8PxGqzjkVjJbqCARHtzSfvSe7xDb35t+XCNILwuPE7dgk
+ qlN2cunpKbg7H+mfOgcZNrYIeadbFctu1XU5YZT/6MgG3GMIORJoybIBiOWL9e8mXogyH2OUEFh
+ WilfaB1Bjt4M9K7XiwikzPliw=
+X-Received: by 2002:a05:6402:27cd:b0:65f:8271:3f7a with SMTP id
+ 4fb4d7f45d1cf-660efcac9e1mr1509478a12.16.1772643049273; 
+ Wed, 04 Mar 2026 08:50:49 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-65fabd4695bsm5941315a12.12.2026.03.04.08.50.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2026 08:50:47 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 163DD6016A;
+ Wed, 04 Mar 2026 16:50:44 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, Stefano Garzarella <sgarzare@redhat.com>,
- manos.pitsidianakis@linaro.org, slp@redhat.com,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- stefanha@redhat.com, stevensd@chromium.org,
- Laurent Vivier <lvivier@redhat.com>, jasowang@redhat.com,
- Peter Xu <peterx@redhat.com>, hi@alyssa.is,
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, dbassey@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v14 4/7] vhost_user: Add frontend get_shmem_config command
-Date: Wed,  4 Mar 2026 17:52:20 +0100
-Message-ID: <20260304165223.2166175-5-aesteve@redhat.com>
-In-Reply-To: <20260304165223.2166175-1-aesteve@redhat.com>
-References: <20260304165223.2166175-1-aesteve@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>
+Subject: [PATCH 04/20] ui/sdl2: Don't disable scanout when display is refreshed
+Date: Wed,  4 Mar 2026 16:50:26 +0000
+Message-ID: <20260304165043.1437519-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260304165043.1437519-1-alex.bennee@linaro.org>
+References: <20260304165043.1437519-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 33
-X-Spam_score: 3.3
-X-Spam_bar: +++
-X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,78 +116,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The frontend can use this command to retrieve
-VirtIO Shared Memory Regions configuration from
-the backend. The response contains the number of
-shared memory regions, their size, and shmid.
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-This is useful when the frontend is unaware of
-specific backend type and configuration,
-for example, in the `vhost-user-device` case.
+Display refreshment is invoked by a timer and it erroneously disables
+the active scanout if it happens to be invoked after scanout has been
+enabled. This offending scanout-disable race condition with a timer
+can be easily hit when Qemu runs with a disabled vsync by using SDL or
+GTK displays (with vblank_mode=0 for GTK). Refreshment of display's
+content shouldn't disable the active display. Fix it by keeping the
+scanout's state unchanged when display is redrawn.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-3-dmitry.osipenko@collabora.com>
 ---
- include/hw/virtio/vhost-backend.h | 10 ++++++++++
- include/hw/virtio/vhost-user.h    |  1 +
- include/hw/virtio/virtio.h        |  2 ++
- 3 files changed, 13 insertions(+)
+ ui/sdl2-gl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index ff94fa1734..ce58b4d2d6 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -163,6 +163,15 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
-                                             int *reply_fd,
-                                             Error **errp);
- typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
-+/*
-+ * Max regions is VIRTIO_MAX_SHMEM_REGIONS, so that is the maximum
-+ * number of memory_sizes that will be accepted.
-+ */
-+typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
-+                                         int *nregions,
-+                                         uint64_t *memory_sizes,
-+                                         Error **errp);
-+
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 3be17d1079a..5eca0248233 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -51,7 +51,6 @@ static void sdl2_gl_render_surface(struct sdl2_console *scon)
+     int ww, wh;
  
- typedef struct VhostOps {
-     VhostBackendType backend_type;
-@@ -220,6 +229,7 @@ typedef struct VhostOps {
-     vhost_supports_device_state_op vhost_supports_device_state;
-     vhost_set_device_state_fd_op vhost_set_device_state_fd;
-     vhost_check_device_state_op vhost_check_device_state;
-+    vhost_get_shmem_config_op vhost_get_shmem_config;
- } VhostOps;
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+-    sdl2_set_scanout_mode(scon, false);
  
- int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 53fe996686..0d8c7f1006 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -33,6 +33,7 @@ enum VhostUserProtocolFeature {
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-     VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
-+    VHOST_USER_PROTOCOL_F_SHMEM = 21,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 2dcf58639d..3d1b1b5e6d 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -82,6 +82,8 @@ typedef struct VirtQueueElement
- 
- #define VIRTIO_NO_VECTOR 0xffff
- 
-+#define VIRTIO_MAX_SHMEM_REGIONS 256
-+
- /* special index value used internally for config irqs */
- #define VIRTIO_CONFIG_IRQ_IDX -1
- 
+     SDL_GetWindowSize(scon->real_window, &ww, &wh);
+     surface_gl_setup_viewport(scon->gls, scon->surface, ww, wh);
 -- 
-2.52.0
+2.47.3
 
 
