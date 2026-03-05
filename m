@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEA6F33A6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA61F33A68
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9Kg-0002PY-BC; Thu, 05 Mar 2026 09:05:42 -0500
+	id 1vy9Kf-0002Od-3z; Thu, 05 Mar 2026 09:05:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KL-0002Ma-Cl
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0002MU-Vx
  for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0007qa-PR
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:21 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KH-0007pc-TN
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772719518;
+ s=mimecast20190719; t=1772719515;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XhfFN8U15NqB4Bc6DcRHQSgS6GgvH/Lw/q/0TJZP/GA=;
- b=XQJu28lcShunCPDaIlLtBByhaTIbpfPxRW9lY7mbt3Nb6loSV1+2N4ejnEbMVQK1pM10wT
- IVETtW2MhlbmiQHQGt5ttVluVf7EGRf4iDP5lNZYOPNhO/d3reeqOf1Covy8yhfXf4xK1m
- m8HsFcjLgszsDE7W/P1ieFHY3MBEE0Y=
+ bh=1irJfiuTeLYmrFQgiEJV2oCPyJwcQvTBvig1YRu5fGs=;
+ b=DPePTSvpq0RqnQm53H7MUBplwyizl2LwdNAY0AVyRBmKjqclfzRiBpatKrhWT2CjpcE6jL
+ hsHjkPDDGVyqXJq2RdRuow6BhhwEwna1bHbGFRGTNu/Z9g0mBHr8rDqXd6B4K4g+bab/rS
+ uAgR9pkPyAR/VneCHz+U4EHNmXOPHr8=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-ObZrjnyJOueoy86V0dWong-1; Thu,
- 05 Mar 2026 09:05:15 -0500
-X-MC-Unique: ObZrjnyJOueoy86V0dWong-1
-X-Mimecast-MFC-AGG-ID: ObZrjnyJOueoy86V0dWong_1772719514
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-DK2YRkKIPLGC3egyxwViYQ-1; Thu,
+ 05 Mar 2026 09:05:12 -0500
+X-MC-Unique: DK2YRkKIPLGC3egyxwViYQ-1
+X-Mimecast-MFC-AGG-ID: DK2YRkKIPLGC3egyxwViYQ_1772719511
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BDF118005BD; Thu,  5 Mar 2026 14:05:14 +0000 (UTC)
+ id 880EE180062B; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF7C01800576; Thu,  5 Mar 2026 14:05:13 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 252721958DD2; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A6D5421E6884; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
+ id A31F121E6883; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 5/6] qemu-print: Document qemu_fprintf(),
- qemu_vfprintf() failure
-Date: Thu,  5 Mar 2026 15:05:07 +0100
-Message-ID: <20260305140508.218316-6-armbru@redhat.com>
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 4/6] error: Restore error_printf()'s function comment
+Date: Thu,  5 Mar 2026 15:05:06 +0100
+Message-ID: <20260305140508.218316-5-armbru@redhat.com>
 In-Reply-To: <20260305140508.218316-1-armbru@redhat.com>
 References: <20260305140508.218316-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
@@ -84,44 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These functions fail when @stream is null and the current monitor
-isn't HMP.
+Lost in commit 397d30e9401 (qemu-error: remove dependency of stubs on
+monitor) many moons ago.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260114124713.3308719-4-armbru@redhat.com>
-[Comments rewritten in review]
+Message-ID: <20260114124713.3308719-3-armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/qemu-print.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ util/error-report.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/util/qemu-print.c b/util/qemu-print.c
-index 4a30cd1a8e..7b9591035e 100644
---- a/util/qemu-print.c
-+++ b/util/qemu-print.c
-@@ -44,7 +44,10 @@ int qemu_printf(const char *fmt, ...)
+diff --git a/util/error-report.c b/util/error-report.c
+index ee8c5f3db7..3d4e8854b4 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -29,6 +29,9 @@ bool message_with_timestamp;
+ bool error_with_guestname;
+ const char *error_guest_name;
  
- /*
-  * Print like vfprintf()
-- * Print to @stream if non-null, else to current monitor.
-+ * Print to @stream if non-null, else to current HMP monitor if we
-+ * have one, else fail without printing anything.
-+ * Return number of characters printed on success, negative value on
-+ * error.
-  */
- int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
++/*
++ * Print to current HMP monitor if we have one, else to stderr.
++ */
+ int error_printf(const char *fmt, ...)
  {
-@@ -56,7 +59,10 @@ int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
- 
- /*
-  * Print like fprintf().
-- * Print to @stream if non-null, else to current monitor.
-+ * Print to @stream if non-null, else to current HMP monitor if we
-+ * have one, else fail without printing anything.
-+ * Return number of characters printed on success, negative value on
-+ * error.
-  */
- int qemu_fprintf(FILE *stream, const char *fmt, ...)
- {
+     va_list ap;
 -- 
 2.53.0
 
