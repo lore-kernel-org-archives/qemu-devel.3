@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB714F47CA2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8E3F47CA5
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCyD-0000eY-OS; Thu, 05 Mar 2026 12:58:45 -0500
+	id 1vyCyp-00035U-2d; Thu, 05 Mar 2026 12:59:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCxU-0007q2-Pj
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:01 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy3-0000E8-Gy
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCxT-0003cb-8a
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:00 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCxy-0003jz-Hp
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772733478;
+ s=mimecast20190719; t=1772733504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mqw39E/eN3Hl6vfY2SrffLmWqTKqLStb0rAb47goL50=;
- b=LNEIb3hA+JNy2QpkTUChxHT/ENFRof5qrVdQDjoR4WXZqRGwNKKNpKnSTEr/hL1fQejrg8
- Z/lQkJnklF0Ic7nllNbltfUkWyMRRK5OIr9xPCyknFJtdJsGsBKxge57Kx3WRVf+zIqX5B
- IY7+VNkAASqjnHiJBCZYtlLOvIfKjOw=
+ bh=A+iUGbaYOBij/Y7K5KX9hTqnCX7y4muLNDOI1VQalGI=;
+ b=YQrR78oR205M+geIJ2qKNY1v6qcYfAFwGO3saV2XLvh1JKnTBG0DXExlEyzhrQEWOUR42R
+ Ut53x1Lha7cKO5Q7R5V5GPLxBeQ3bUr42dceN6fMfNXMMZO7DqnHWwPjfA1xP/IEThXNiS
+ fL+QQcu5HvQ6XWU1Ke4Ws+2RisDd9Ew=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-TZoLH7nRPnWhnBz2YS6cNA-1; Thu,
- 05 Mar 2026 12:57:55 -0500
-X-MC-Unique: TZoLH7nRPnWhnBz2YS6cNA-1
-X-Mimecast-MFC-AGG-ID: TZoLH7nRPnWhnBz2YS6cNA_1772733468
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-BoMmzXaDNuqzeDu-eA-NvQ-1; Thu,
+ 05 Mar 2026 12:58:21 -0500
+X-MC-Unique: BoMmzXaDNuqzeDu-eA-NvQ-1
+X-Mimecast-MFC-AGG-ID: BoMmzXaDNuqzeDu-eA-NvQ_1772733499
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7833118002D6; Thu,  5 Mar 2026 17:57:48 +0000 (UTC)
+ id BC54D1800344; Thu,  5 Mar 2026 17:58:19 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.26])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C57813003EA1; Thu,  5 Mar 2026 17:57:45 +0000 (UTC)
+ id 17A833003E9E; Thu,  5 Mar 2026 17:58:16 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Patrick Venture <venture@google.com>, Titus Rwantare <titusr@google.com>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Nabih Estefan <nabihestefan@google.com>,
  Jithu Joseph <jithu.joseph@oss.qualcomm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 12/38] hw/i3c/dw-i3c: Use 32 bits on MMIO writes
-Date: Thu,  5 Mar 2026 18:56:45 +0100
-Message-ID: <20260305175711.1119025-13-clg@redhat.com>
+Subject: [PULL 23/38] MAINTAINERS: Add I3C maintainers and reviewer
+Date: Thu,  5 Mar 2026 18:56:56 +0100
+Message-ID: <20260305175711.1119025-24-clg@redhat.com>
 In-Reply-To: <20260305175711.1119025-1-clg@redhat.com>
 References: <20260305175711.1119025-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -88,47 +88,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The registers are only 32 bits wide, so we should cast the 64-bit value
-passed in to only be 32 bits wide.
+Add a new I3C section to the MAINTAINERS file.
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
-Reviewed-by: Patrick Venture <venture@google.com>
-Reviewed-by: Titus Rwantare <titusr@google.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+List Joe Komlodi, Cédric Le Goater and Jamin Lin
+as maintainers, and Nabih Estefan as the reviewer,
+covering the I3C core and related files under hw/i3c/
+and include/hw/i3c/.
+
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Tested-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260225021158.1586584-12-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20260225021158.1586584-23-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/i3c/dw-i3c.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ MAINTAINERS | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index eeaf1125e41c..7ca99fb87e44 100644
---- a/hw/i3c/dw-i3c.c
-+++ b/hw/i3c/dw-i3c.c
-@@ -363,10 +363,11 @@ static void dw_i3c_write(void *opaque, hwaddr offset, uint64_t value,
- {
-     DWI3C *s = DW_I3C(opaque);
-     uint32_t addr = offset >> 2;
-+    uint32_t val32 = (uint32_t)value;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6698e5ff69c0..55fcb9b4bbaf 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3956,6 +3956,19 @@ F: include/hw/i2c/smbus_master.h
+ F: include/hw/i2c/smbus_slave.h
+ F: include/hw/i2c/smbus_eeprom.h
  
-     trace_dw_i3c_write(s->id, offset, value);
- 
--    value &= ~dw_i3c_ro[addr];
-+    val32 &= ~dw_i3c_ro[addr];
-     switch (addr) {
-     case R_HW_CAPABILITY:
-     case R_RESPONSE_QUEUE_PORT:
-@@ -392,7 +393,7 @@ static void dw_i3c_write(void *opaque, hwaddr offset, uint64_t value,
-     case R_RESET_CTRL:
-         break;
-     default:
--        s->regs[addr] = value;
-+        s->regs[addr] = val32;
-         break;
-     }
- }
++I3C
++M: Joe Komlodi <komlodi@google.com>
++M: Cédric Le Goater <clg@kaod.org>
++M: Jamin Lin <jamin_lin@aspeedtech.com>
++R: Nabih Estefan <nabihestefan@google.com>
++S: Maintained
++F: hw/i3c/*.c
++F: hw/i3c/.h
++F: hw/i3c/Kconfig
++F: hw/i3c/meson.build
++F: hw/i3c/trace-events
++F: include/hw/i3c/*.h
++
+ PMBus
+ M: Titus Rwantare <titusr@google.com>
+ S: Maintained
 -- 
 2.53.0
 
