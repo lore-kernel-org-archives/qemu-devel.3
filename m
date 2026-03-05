@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46E9EEF311
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3086EEF315
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy3I5-0000ft-NS; Thu, 05 Mar 2026 02:38:37 -0500
+	id 1vy3Ls-0001bg-NS; Thu, 05 Mar 2026 02:42:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy3I4-0000fc-8E
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:38:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy3Ln-0001bE-UX
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:42:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy3I2-0004ol-Q8
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:38:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy3Ll-0005H6-Ql
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:42:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772696313;
+ s=mimecast20190719; t=1772696544;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=41eyhwPGfxiAPfxTkdC0+LemSRax5h1mGK9YYi83UbI=;
- b=NFOOqgir0nTKEH8hvvXa+NjLkvlc/UEkjCPVS6ACO6XbLwmu4InuxftI1OWHg5s05UwgEP
- nJ2Tv2G47qC6CB4vJyEs6PQMM/rR1M7dvM+KmJIR7v1+UrB1AwTj1i+HAXBu+R2ecVmYgf
- 9Z0pebUR0o1sxhJvTXS9CsHFhd0TDmc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=L/wEMwojydyYhPTwrVUmUnYeoWipv18js9XDYGLPjTY=;
+ b=cCWTxS1iN9y6rnHqx/mPS8VjWAGS1+1zvU2vCXDsZsovNQXLHziio3S8DGveYZSY3YRZU4
+ mGiSP/0ZyeYRgXuNBrCHl83smG2h53U7kBs8pirvDN0wcVAQP+hxasAor7jeQC35Lkdkzd
+ 0B+YfShRCVr7wq6S2rvdokldYvSKNTs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-fVZHiVmZNpuj5Kw3WiyTHA-1; Thu,
- 05 Mar 2026 02:38:30 -0500
-X-MC-Unique: fVZHiVmZNpuj5Kw3WiyTHA-1
-X-Mimecast-MFC-AGG-ID: fVZHiVmZNpuj5Kw3WiyTHA_1772696309
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-IsVFf7fYObazzDY3sPCxEg-1; Thu,
+ 05 Mar 2026 02:42:23 -0500
+X-MC-Unique: IsVFf7fYObazzDY3sPCxEg-1
+X-Mimecast-MFC-AGG-ID: IsVFf7fYObazzDY3sPCxEg_1772696541
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEF7B18005B6; Thu,  5 Mar 2026 07:38:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 59D5A1956088; Thu,  5 Mar 2026 07:42:21 +0000 (UTC)
 Received: from [10.45.224.75] (unknown [10.45.224.75])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 007891800576; Thu,  5 Mar 2026 07:38:22 +0000 (UTC)
-Message-ID: <bcded5c4-e446-438f-ab25-3b0a147d7c70@redhat.com>
-Date: Thu, 5 Mar 2026 08:38:20 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EAF301958DD2; Thu,  5 Mar 2026 07:42:15 +0000 (UTC)
+Message-ID: <129be417-a06c-41d7-97aa-4925f9cd0f28@redhat.com>
+Date: Thu, 5 Mar 2026 08:42:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] hw/core/machine: Remove hw_compat_2_11[] array
+Subject: Re: [PATCH 05/10] hw/timer/hpet: Remove HPETState::hpet_offset_saved
+ field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  Gerd Hoffmann <kraxel@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
- <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-rust@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>
 References: <20250501230129.2596-1-philmd@linaro.org>
- <20250501230129.2596-5-philmd@linaro.org>
+ <20250501230129.2596-6-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -105,20 +106,21 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250501230129.2596-5-philmd@linaro.org>
+In-Reply-To: <20250501230129.2596-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 33
+X-Spam_score: 3.3
+X-Spam_bar: +++
+X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,47 +137,85 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 02/05/2025 01.01, Philippe Mathieu-Daudé wrote:
-> The hw_compat_2_11[] array was only used by the pc-q35-2.11,
-> pc-i440fx-2.11 and s390-ccw-virtio-2.11 machines, which got
-> removed. Remove it.
+> The HPETState::hpet_offset_saved boolean was only set in the
+> hw_compat_2_11[] array, via the 'hpet-offset-saved=false'
+> property. We removed all machines using that array, lets remove
+> that property and all the code around it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/boards.h | 3 ---
->   hw/core/machine.c   | 8 --------
->   2 files changed, 11 deletions(-)
+>   hw/timer/hpet.c                | 9 +--------
+>   rust/hw/timer/hpet/src/hpet.rs | 9 ---------
+>   2 files changed, 1 insertion(+), 17 deletions(-)
 > 
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index f2f58ec4ed8..16cef33beae 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -826,7 +826,4 @@ extern const size_t hw_compat_3_0_len;
->   extern GlobalProperty hw_compat_2_12[];
->   extern const size_t hw_compat_2_12_len;
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index d1b7bc52b7b..47b8fc0d880 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -71,7 +71,6 @@ struct HPETState {
 >   
-> -extern GlobalProperty hw_compat_2_11[];
-> -extern const size_t hw_compat_2_11_len;
-> -
->   #endif
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 816d503b2a1..8f1b44b70f7 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -230,14 +230,6 @@ GlobalProperty hw_compat_2_12[] = {
+>       MemoryRegion iomem;
+>       uint64_t hpet_offset;
+> -    bool hpet_offset_saved;
+>       qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
+>       uint32_t flags;
+>       uint8_t rtc_irq_level;
+> @@ -264,11 +263,6 @@ static int hpet_post_load(void *opaque, int version_id)
+>           t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
+>           t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
+>       }
+> -    /* Recalculate the offset between the main counter and guest time */
+> -    if (!s->hpet_offset_saved) {
+> -        s->hpet_offset = ticks_to_ns(s->hpet_counter)
+> -                        - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> -    }
+>   
+>       return 0;
+>   }
+> @@ -277,7 +271,7 @@ static bool hpet_offset_needed(void *opaque)
+>   {
+>       HPETState *s = opaque;
+>   
+> -    return hpet_enabled(s) && s->hpet_offset_saved;
+> +    return hpet_enabled(s);
+>   }
+>   
+>   static bool hpet_rtc_irq_level_needed(void *opaque)
+> @@ -733,7 +727,6 @@ static const Property hpet_device_properties[] = {
+>       DEFINE_PROP_UINT8("timers", HPETState, num_timers, HPET_MIN_TIMERS),
+>       DEFINE_PROP_BIT("msi", HPETState, flags, HPET_MSI_SUPPORT, false),
+>       DEFINE_PROP_UINT32(HPET_INTCAP, HPETState, intcap, 0),
+> -    DEFINE_PROP_BOOL("hpet-offset-saved", HPETState, hpet_offset_saved, true),
 >   };
->   const size_t hw_compat_2_12_len = G_N_ELEMENTS(hw_compat_2_12);
 >   
-> -GlobalProperty hw_compat_2_11[] = {
-> -    { "hpet", "hpet-offset-saved", "false" },
-> -    { "virtio-blk-pci", "vectors", "2" },
-> -    { "vhost-user-blk-pci", "vectors", "2" },
-> -    { "e1000", "migrate_tso_props", "off" },
-> -};
-> -const size_t hw_compat_2_11_len = G_N_ELEMENTS(hw_compat_2_11);
-> -
->   MachineState *current_machine;
+>   static void hpet_device_class_init(ObjectClass *klass, const void *data)
+> diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
+> index cbd2ed4f6bf..9e681391176 100644
+> --- a/rust/hw/timer/hpet/src/hpet.rs
+> +++ b/rust/hw/timer/hpet/src/hpet.rs
+> @@ -544,7 +544,6 @@ pub struct HPETState {
 >   
->   static char *machine_get_kernel(Object *obj, Error **errp)
+>       /// Offset of main counter relative to qemu clock.
+>       hpet_offset: BqlCell<u64>,
+> -    hpet_offset_saved: bool,
+>   
+>       irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
+>       rtc_irq_level: BqlCell<u32>,
+> @@ -885,14 +884,6 @@ impl ObjectImpl for HPETState {
+>           u32,
+>           default = 0
+>       ),
+> -    qemu_api::define_property!(
+> -        c_str!("hpet-offset-saved"),
+> -        HPETState,
+> -        hpet_offset_saved,
+> -        unsafe { &qdev_prop_bool },
+> -        bool,
+> -        default = true
+> -    ),
+>   }
+>   
+>   impl DeviceImpl for HPETState {
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
