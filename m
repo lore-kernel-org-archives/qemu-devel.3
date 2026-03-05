@@ -4,75 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D8F0F3D32A
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:41:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2650F3D332
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyBk4-00067Y-Gt; Thu, 05 Mar 2026 11:40:04 -0500
+	id 1vyBsO-0002Sw-8z; Thu, 05 Mar 2026 11:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vyBjz-00062M-F7
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:39:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vyBjt-0000YQ-P9
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:39:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772728793;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xKblfboIEcoo6KaZTrWP7K6ZzZXW+hRgTkfdNeolCmA=;
- b=T25WGJ2CazBXTCPpUvv88UDY7KB9h8kqIrp4gKpA+1Oid59QlYb4Bz+Zs6WYkUIglYPcfP
- 0p6YjEpiFM7lMbyrh0CQOHK+B16ZqLlsbjRmFOE2gAtr9ZI7zn1woX2tVC4SD7PEv1gj7R
- YB00DnlL7lB4KzD1cFP8zHOX9Il3N1M=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-DSR_7XXAOaSRZkACBW2E2Q-1; Thu,
- 05 Mar 2026 11:39:51 -0500
-X-MC-Unique: DSR_7XXAOaSRZkACBW2E2Q-1
-X-Mimecast-MFC-AGG-ID: DSR_7XXAOaSRZkACBW2E2Q_1772728790
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A10831956052; Thu,  5 Mar 2026 16:39:50 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.34.122])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AB5B1958DC5; Thu,  5 Mar 2026 16:39:47 +0000 (UTC)
-From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Maxime Coquelin <mcoqueli@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Koushik Dutta <kdutta@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [RFC PATCH 2/8] tests: vhost-vdpa: parameterize VDUSE operations
-Date: Thu,  5 Mar 2026 17:39:32 +0100
-Message-ID: <20260305163938.3200787-3-eperezma@redhat.com>
-In-Reply-To: <20260305163938.3200787-1-eperezma@redhat.com>
-References: <20260305163938.3200787-1-eperezma@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyBsM-0002Sc-45
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:48:38 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyBsJ-0001eC-Qb
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:48:37 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso75376555e9.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:48:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772729312; x=1773334112; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OiOTV/AO7GsPyd2nhvUEiE9+55PqnE/0NjxiC2SkIt0=;
+ b=F8qzbWLZ5rWZw2lsmGZyW6bHt23aqVYev5qBBm0hm0XPwQQV0dIyNXotM72mlJlI1q
+ JMKCcSphQyMSkRRmsonFg56e7f/ZDNfFF7gT+9biuFOnUfj8PEylpKUxLgdaMFob0AT/
+ vnQ3x1yfZz8yMO8iGTLWsoXvsieS0s4l9xlf/DHq8i4DRbvsjdC/p+VKXBviydadQAwn
+ KZleA+nGDY3Bp19OtZK5R/FSx3RNRlQrvlDEaeLI+J8/tYr3bdZvgt69J73m/Zt760zt
+ urXPgYaL/oGqpcdvX42YFk/sSiMJsXMvOjLEwd+2tCRDYqdiCJ6ivPX05PowM84oI5ps
+ A/pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772729312; x=1773334112;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OiOTV/AO7GsPyd2nhvUEiE9+55PqnE/0NjxiC2SkIt0=;
+ b=blMmj9WH6GjP769JpwPHnrz40jQO9Z+0EiCfc7SS2GpLs//xEVd9j58yJObALCddA7
+ NqhCgGTdBb1sI1XoU2UCJlIozNfJG9ZH7KNyNb8X91zSE/hIchjlvAQ5OD4wMvGexYQ3
+ mU0LdVFPHb8syzxPq+ZY/h7ktf63RwvarpSEEJtbnSu7uCYggdzbsgUTF4pOQfO+CWWr
+ VqiLv399mku8ler8es2DV3P85FUk6/IRpppFlHxsylXFwAfjXlmbdGG/oX1jT4nxkKAR
+ BOI212WPAx0s2dPQhtE11qaHB7k9xYiZ8aMTjnd9RPJ3Fmo47UfOwiCPt1BwIuzyCflP
+ IpiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVv/IFtalO6C+gXSI8Kr66R8cya1gRUrawOXr8tuEdiRCwBRjqZH4Z+SLLAGQoIAeboWtdMjhKEPuLk@nongnu.org
+X-Gm-Message-State: AOJu0YynV88YUwWEI40tSun6NUYxDVRu9BfVVcUqWAEI6ctBLYc5Fe5g
+ NiHLlqJlTWJRynrurNIiVJSP79MYuIcnkHF42ZOrczWMCDBnEhp/QddVpjclpL83ajA=
+X-Gm-Gg: ATEYQzyKD8NfCeOaxwHdzmBnrFEFHGrm6oucjFtrM75vJHNBpZVF7c6lCrG5d/F0AZy
+ mSxA4+r0G+DuzZ1dJw5kKCHJNIQKA1B8deV8qr4uUQrIl4wW77+Zs2d9LLFiSG6ALa1H3F8DxX7
+ CGO9Y3BTF+fxUGHfShPJmq50CKJr/8hqWwUMEE6aHJMBfk/dPp4BJ2M1vf/dxgk07iHgh5aGv1S
+ Mdi0E+/EEuXINUyiNn8AgPfnDVPh1A3EFAuRGujTkk+tRWZyPkkhIuvcbjscuQIDu54PfHexviZ
+ uM4co8WEGvAjB5FRwO+CvSGDmRxkczfmSh5r/XyHaFqs9mkEvlurv6BQbSWvXlFhn7RpXegNdCQ
+ 6FojsfnAvs3uM7qIw4zk4ULP4oL6AOhhh4891o/qdJYMAjXGFiXpPuq8Zby4oaor30AzGuyyZOM
+ elQPvSEkUzZ4NCv6w8EhpqjUPl09ZpHSH9xxz31iwASjHxH4GLRMOM4sqgyjqQIafbmw==
+X-Received: by 2002:a05:600c:c173:b0:471:14af:c715 with SMTP id
+ 5b1f17b1804b1-4851983b3dfmr112191445e9.3.1772729311993; 
+ Thu, 05 Mar 2026 08:48:31 -0800 (PST)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851faf3938sm50505985e9.13.2026.03.05.08.48.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Mar 2026 08:48:31 -0800 (PST)
+Message-ID: <1a23f69f-fba4-4f7c-9679-d06ad65be1d0@linaro.org>
+Date: Thu, 5 Mar 2026 17:48:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 00/12] HVF: Add support for platform vGIC and nested
+ virtualisation
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>
+References: <20260228220837.35275-1-mohamed@unpredictable.fr>
+ <0BFFD4B5-6B69-4F75-B329-5C429E65532C@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0BFFD4B5-6B69-4F75-B329-5C429E65532C@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,49 +109,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the VduseOps callbacks a parameter to test_server_new() instead
-of hardcoding vduse_read_guest_mem_ops.
+On 1/3/26 02:34, Mohamed Mediouni wrote:
+> 
+>> On 28. Feb 2026, at 23:08, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>>
+>> Link to branch: https://github.com/mediouni-m/qemu hvf-irqchip-and-nested
+>> (tag for this submission: hvf-irqchip-and-nested-v11)
+>>
+>> This series adds supports for nested virtualisation when using HVF on arm64 Macs.
+>>
+>> Reviews would be very welcome :-) It's maybe a bit unlikely that this will make
+>> it to QEMU 11.0 I might as well try.
+>>
+> 
+> The patches remaining for review:
+> 
+> 1, 2, 3, 4, 5, 8, 10, 12
 
-This allows different test cases to provide custom queue enable/disable
-handlers for testing various vhost-vdpa scenarios.
+Cc'ing Manos who recently worked on SME2 in this area,
+hopefully he has some review time available.
 
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
----
- tests/qtest/vhost-vdpa-test.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/tests/qtest/vhost-vdpa-test.c b/tests/qtest/vhost-vdpa-test.c
-index 1fc5acacfed3..1c7d8540bd19 100644
---- a/tests/qtest/vhost-vdpa-test.c
-+++ b/tests/qtest/vhost-vdpa-test.c
-@@ -277,7 +277,7 @@ static bool test_setup_reconnect_log(VduseDev *vdev, const char *tmpfs)
-     return ok;
- }
- 
--static TestServer *test_server_new(const gchar *name)
-+static TestServer *test_server_new(const gchar *name, const VduseOps *ops)
- {
-     TestServer *server = g_new0(TestServer, 1);
-     g_autoptr(GError) err = NULL;
-@@ -302,7 +302,7 @@ static TestServer *test_server_new(const gchar *name)
-                                     2, /* num_queues */
-                                     sizeof(config),
-                                     config,
--                                    &vduse_read_guest_mem_ops,
-+                                    ops,
-                                     server);
- 
-     if (!server->vdev) {
-@@ -387,7 +387,7 @@ static void vhost_vdpa_test_cleanup(void *s)
- 
- static void *vhost_vdpa_test_setup_memfile(GString *cmd_line, void *arg)
- {
--    TestServer *server = test_server_new("vdpa-memfile");
-+    TestServer *server = test_server_new("vdpa-memfile", &vduse_read_guest_mem_ops);
- 
-     if (!server->ready) {
-         g_test_skip("Failed to create VDUSE device");
--- 
-2.53.0
+> 
+>> It has two parts:
+>> - Apple vGICv3 support and necessary infrastructure changes for it
+>> - Nested virtualisation support. Note that the nested virtualisation implementation
+>> shipping as of macOS 26.3 is nVHE only (but it _does_ use VNCR as shipped).
+>>
+>> This series doesn't contain EL2 physical timer emulation, which is
+>> needed if not leveraging the Apple vGIC. As such, nested virt requires kernel-irqchip=on.
+>>
+>> Known issues:
+>> - when nested virt is enabled, no UI response within EDK2
+>> and a permanent wait. Workaround: -boot menu=on,splash-time=0.
+>>
+> 
+> For reference this is a platform bug pending resolution an OS update.
+> Would it be good to add a specific warning about it? (In a separate commit)
+> 
+>> Apple Feedback Assistant item: FB21649319
+>>
+>> When the VM is running at EL2 at the very moment the virtual timer fires:
+>> HV_EXIT_REASON_VTIMER_ACTIVATED doesn’t fire (when not using the provided vGIC)
+>> - using a GICv2 doesn’t require having transition notifiers which Hypervisor.framework doesn’t have…)
+>>
+>> and when using the provided vGIC, the interrupt never gets delivered back to the guest
+>>
+>> Linux as a guest OS is fine with this… but the reference ArmVirtQemu edk2 build always uses the virtual timer even when running EFI at EL2, so it gets broken unless this patch is applied to edk2:
+>>
+>> diff of ArmVirtPkg/ArmVirt.dsc.inc:
+>>
+>> -  ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerVirtCounterLib/ArmGenericTimerVirtCounterLib.inf
+>> +  ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerPhyCounterLib/ArmGenericTimerPhyCounterLib.inf^M
+>>
+>> Changelog:
+>>
+>> v1->v2:
+>> Oops. I did a mistake when preparing my patches.
+>>
+>> - Add hvf_arm_el2_enable(_) call to virt_set_virt
+>> - Fix nested virt support check to add HVF
+>>
+>> v2->v3:
+>> - LORC_EL1 patch was merged separately, remove from this series.
+>> - fix LPIs when kernel-irqchip disabled and using TCG
+>> - remove spurious if case in vGIC supported version detection (inapplicable now)
+>> - Add hvf_enabled() check in combination with hvf kernel-irqchip checks
+>> - cleanly fail on attempt to use the platform vGIC together with ITS
+>>
+>> v3->v4:
+>> - GIC state save improvements, including saving the opaque Apple-specific state
+>> - Saving HVF system register state when using the vGIC and/or EL2
+>>
+>> v5:
+>> - oops, fixed up save/restore to be functional
+>> - misc changes otherwise
+>>
+>> v6:
+>> - Addressing review comments
+>>
+>> v7:
+>> - Address review comments, adapt around Qemu changes and bugfixes.
+>>
+>> v8:
+>> - Rebase, and misc fixes
+>>
+>> v9:
+>> - Misc fixes from WHPX review comments
+>> - Split enablement commit for EL2 into its own separate commit
+>>
+>> v10:
+>>
+>> - A bit of changes across the board
+>> - move HVF irqchip save/restore into irqchip code
+>> - block nested virt support when kernel-irqchip=off with a GICv2 as
+>> we don't implement an emulated physical timer yet.
+>>
+>> v11:
+>> - fixups for the save/restore Apple GIC state patch
+>> - block the same registers as the revert in 28b0ed32b32c7e5094cf2f1ec9c0645c65fad2aa
+>> for "hvf: sync registers used at EL2"
+>> - drop patch that warns instead of aborts on mismatch
+>>
+>> Mohamed Mediouni (12):
+>>   hw/intc: Add hvf vGIC interrupt controller support
+>>   hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
+>>   accel, hw/arm, include/system/hvf: infrastructure changes for HVF vGIC
+>>   target/arm: hvf: instantiate GIC early
+>>   hw/arm, target/arm: nested virtualisation on HVF
+>>   hvf: only call hvf_sync_vtimer() when running without the platform
+>>     vGIC
+>>   hvf: gate ARM_FEATURE_PMU register emulation behind not being at EL2
+>>   hvf: arm: allow exposing minimal PMU when running with nested virt on
+>>   target/arm: hvf: add asserts for code paths not leveraged when using
+>>     the vGIC
+>>   hvf: sync registers used at EL2
+>>   target/arm: hvf: pass through CNTHCTL_EL2 and MDCCINT_EL1
+>>   hvf: enable nested virtualisation support
+>>
+>> accel/hvf/hvf-all.c                |  51 ++
+>> accel/stubs/hvf-stub.c             |   2 +
+>> hw/arm/virt.c                      |  37 +-
+>> hw/intc/arm_gicv3_common.c         |   4 +
+>> hw/intc/arm_gicv3_hvf.c            | 822 +++++++++++++++++++++++++++++
+>> hw/intc/arm_gicv3_hvf_stub.c       |  25 +
+>> hw/intc/meson.build                |   2 +
+>> include/hw/intc/arm_gicv3_common.h |   4 +
+>> include/system/hvf.h               |   8 +
+>> system/vl.c                        |   2 +
+>> target/arm/hvf/hvf.c               | 124 ++++-
+>> target/arm/hvf/sysreg.c.inc        |  45 ++
+>> 12 files changed, 1112 insertions(+), 14 deletions(-)
+>> create mode 100644 hw/intc/arm_gicv3_hvf.c
+>> create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
+>>
+>> -- 
+>> 2.50.1 (Apple Git-155)
+>>
+>>
+> 
+> 
 
 
