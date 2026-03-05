@@ -4,189 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EC1EEF30E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E510EEF312
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy2vN-0002jc-By; Thu, 05 Mar 2026 02:15:10 -0500
+	id 1vy36S-0006ev-6D; Thu, 05 Mar 2026 02:26:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vy2vI-0002f3-KU
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:15:04 -0500
-Received: from
- mail-switzerlandnorthazlp170100000.outbound.protection.outlook.com
- ([2a01:111:f403:c213::] helo=ZRAP278CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy36K-0006eE-T6
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:26:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vy2vD-0001W8-P3
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:15:01 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gMS7D3fAJHaHoLKdkpFzm7aE/9xGkM0KhLAE3BnL3jCiHpnBfLjf+CscbI74v8TuOWY1N0/2cRZwISMPl2Qdkd1Ld7mU/OtuhGsD3C1BWbJqGsLHm+9gqfZn73/hgMr77gG4S8n8m67WcU1KDo7DOxLaXqZlTM4jrVPxqeSz9jkGnAPB3eVZW/Syye00VZU1gHzbFCU3eciQ/jnoGWTD7hJUU3RX+6ZioT265UI9utnsfseJTrEtWhSnK99h9txM7abtB1LNW98CJ9f7o1KTKKMyUh6zUg3u6Bh0bUCLqre+AqrziNAOkDf1v90ijIlDGxPJ5Km0kKcjzvYA7LOWgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2hREnMPuv4mu/HRE0Uqt2VMxv/fHyvx36nclV/php9E=;
- b=F142nIOSwGRh/5fulLK8GX/GVghP3cVIl5cKGryHhYSXc/RAfXFFJlG3NMhblyMVFgWluoLHYfr/oozmEJkdX7LBoB4K44wibEw/QbMPLt9zawVoEQGKyP+N+oeSTB1QxMc1bkhqfs/xEN7JcmkyeVEofypjXtXEyoVXGmjeCLaUOYx77ZMCs3SawRtkzy+GfiD8kqu5Si+eGtKuN96XkTT1aYgfqaCRue/ezgf7+l64Dg1wNAhC8sFP61y/u3zlmLNKZyQ9/pKEftzxcYUe8inB4YfYwGY/dwF4opF2cOd+h5zMSFkxSIY5kv/Xl3Gw7HfLxtRrquulsER97xz2/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2hREnMPuv4mu/HRE0Uqt2VMxv/fHyvx36nclV/php9E=;
- b=BzcLNDRNWg3vKkOFKYpLzDIzYUFz/xJwh1sxK39VxnNpMdp8xBA/ymCwQ3O8RJg7aDVW6rQnZDVY9netzF/Y4Sazc9lr/9yn8EsE0nr9F6lMnIwk5X2tl/OQIU/J2hw/E2w5YNBLTxOCJiiEcFzzGP+2D6WnzhPSEmsqIAuP8sQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by ZR0P278MB1091.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:54::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Thu, 5 Mar
- 2026 07:14:54 +0000
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9678.016; Thu, 5 Mar 2026
- 07:14:54 +0000
-Message-ID: <5bb69d54-4f76-4c18-b55d-321d870f7fd7@epfl.ch>
-Date: Thu, 5 Mar 2026 08:14:53 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/7] tests/tcg: add tests for qemu_plugin_set_pc API
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
- richard.henderson@linaro.org, imp@bsdimp.com
-References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
- <20260303-setpc-v5-v6-4-15c77cfe184e@epfl.ch>
- <430d1aa6-c36c-4399-8e5f-b38a9ae1bd35@linaro.org>
- <5b8bbc1e-cb8b-44ea-822b-0bdcb6ac225f@epfl.ch>
- <5a9a17dc-9781-418c-ae23-a183234e4a53@epfl.ch>
- <eb4a6f15-a63c-48aa-a7c0-832d123b98f5@epfl.ch>
- <9e830f45-840b-4e5a-8548-c618663f9500@linaro.org>
- <ba377425-cefb-4ae5-9b56-8c6c675f27c9@linaro.org>
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
- 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
- 5hMMZIzTI4AtIcgA3xe4Ew==
-In-Reply-To: <ba377425-cefb-4ae5-9b56-8c6c675f27c9@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV0P278CA0062.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:2a::13) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::220)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy36H-00037B-7H
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:26:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772695582;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NL3f0EGSswzQeAwhriXYm+RMalrsEETw4ZtJcHQIJOw=;
+ b=PZwptD39L0IzJZtP346Lvc4XOE7wMUxcAVh3iFY3SHYkHZ+umCxbLq7BlvRl1KVCgbtuDN
+ i7BvIr36iUIT1ruO9d5+tCPC8V0XIs/NPrQ+XZGK61oPh6t23MyGfeSUF43DOIzXKUy+FY
+ 6KfIq9Teenem7lwvpBvsyPcYH6U71hQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-3bmyOv9VNx-g9Ed_5_kcFA-1; Thu,
+ 05 Mar 2026 02:26:18 -0500
+X-MC-Unique: 3bmyOv9VNx-g9Ed_5_kcFA-1
+X-Mimecast-MFC-AGG-ID: 3bmyOv9VNx-g9Ed_5_kcFA_1772695577
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0923D18005B6; Thu,  5 Mar 2026 07:26:16 +0000 (UTC)
+Received: from [10.45.224.75] (unknown [10.45.224.75])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A536918002A6; Thu,  5 Mar 2026 07:26:09 +0000 (UTC)
+Message-ID: <64f5656d-65f1-4ab9-a2e7-a668173b8658@redhat.com>
+Date: Thu, 5 Mar 2026 08:26:07 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR0P278MB1091:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89b4bc78-eae8-4a61-d23c-08de7a86e655
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|786006|1800799024|366016|376014|19092799006; 
-X-Microsoft-Antispam-Message-Info: H+T5Jfl00LpAb8Hi2fie2jO64FCpX+PB+L/cD2+uqdI6e9IbA7YGTWHASC4h8ESHKASsX6qOJGMomOK147GXnu2Dk/yWI3TVuGLo65cOaH4dQLZ6RsIezjEeejhnTtwmpfs4yEFw/ubINiYWp3mlgZ6s9846p5EEHAouNOjKk2YJ3wWfKDTrdccNDLoo3UnwiuU3E2jZ0YTyW9kfm62Wwavm1AzqkU2t1PlWv3D9hqdmOfgxA4PoZPsNv8m0EDLK/T49/sWn5vPX1hibBeOdK8qU4SYKTSITxDk0VkvAYh3TZFndmBY4ubgMHmgHrHFIEkfgQsskd0zwFrPuT2V1ZwvZwJxNd4zVWhC5KiiE1szC9/7h/NapcoqxYxjxePti/OGGg14lKPf7ZSntCjrZPqwhE45ElH/8zY0Ygnx0IrnWqirM23lPF1b5rI8uTRX8A0GvaMR/K6kIGy5ywhKDOMwKMzsFzybRQflv6/v4Jvn//xv0L4sb10ICIhucf2a3NQTV50dVMhH/FWPlXRK3CVYFr86ePFRdFPY8lORp/lYvEsWQ+yvYN8BTiAWkAK+Onhg6VlSjDJXfsoxXvuU6ktAhpPMTnLmp8LIY/DMt1PjePKMDVYkG6xwoFybshKWz9fz3hQ6qDCGTR5zF46I9u2nKpJKQwWSXkxccC30+2b1iaGIbaK7wT6CqBfFNBQKCuXGnxXkrrpyv8NPgaZ36zBKjnLPxG9RZdRSWbCC9JDc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(786006)(1800799024)(366016)(376014)(19092799006); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VERjeFFBUVIxelFvR0paR2x5RE9HM253K1hrQTdxRnd6MVVEQnVkWXhHSGI3?=
- =?utf-8?B?aThqdUlFT1Q0Z1RSMkZDQVJIZWRrNUxvZEs5YWhRdTZhbzNMZ0ZKcGMya25J?=
- =?utf-8?B?VHBnZHhWTGZEdi9TNUQyTk9IQ3hkR3FiSUZNUWlzNlNGZ1dlQUNLV0IwN0xj?=
- =?utf-8?B?dWc3cEM5SDVhN2RJTmEyTC9UMk9DQmNXOGd1RmxuZGpmZzBkUUd0MEloc1dw?=
- =?utf-8?B?Umo1TkVUNHEwUVYrQ1A3VTVzSWRJdWJxKzlSVXlvM2hEem9uTy9weEMwRDFh?=
- =?utf-8?B?SWoyczNXVlFqMS9WUmFkKzlKSE9EMURrM3BncUF1cFV2cEV1SHVKUnBDSWxK?=
- =?utf-8?B?R0Fra0w5OTlhK0RDRFh0dEZxY2dyWVdnYm9DQnhXL3FCTVhWZ2lCeVJqb3Av?=
- =?utf-8?B?NVU5bEZJcGpRcmdERCttV0N0TnpTS1hRZjh1N243eDlzS1dxV1RodG9QVlhG?=
- =?utf-8?B?RWJiWlYwTld4TlhiZ1NVS2x4ZmllM21KZmQzSkRaeHgzemhNcDJhd21zSmZH?=
- =?utf-8?B?OVd0ZFFUdU5jZzgyaUN6RHMwdlN4ZmwzalNsbVNaUkRZM2xZOUoyUjRZODd6?=
- =?utf-8?B?bjRaaTMwRngzYUJjdkltVVMyc29mcGJKbGJXbG1FRk12c3hxNFQ3S2NtWlc4?=
- =?utf-8?B?bTlhaEV1OHRWZlFkUzRDMWUzKy9DUGZ3eTQvMXd1UzJlTkY1bnJOU01VQUlT?=
- =?utf-8?B?QUduN3ZQeGlxTU9wZzE2aWlNMkl2TGNxcmlObnBFS0xzak1paXVTSzE2YlFR?=
- =?utf-8?B?dDh2R1pSaXlxYW4wOTM1S1JYRW9GYWY0WlZHMVBjTTZhNUx6S2xiZE4ydnh2?=
- =?utf-8?B?VWFjM2w2NmFER3RHSXFSZUwvTGluNmdnbjB4NWYvWWlMT2RDNXAyUXk1cnZa?=
- =?utf-8?B?dmNncm03V24yeFJmTGY0Qlo1cy9DUVNJZkFqQkJxd1FzQks0VEZzeGtobXdi?=
- =?utf-8?B?eDE0UU1aN2hrUVFDSUpYNTZQK1BtZWdvc3dCbm1vNUgyL1dPaEk3aUd5M0VH?=
- =?utf-8?B?UGxJNXFpSk54WitCTkNya2dzMGpDWVNrU0ZzdzJOZHg3dW5FdEZWQWpXNUpv?=
- =?utf-8?B?NG9nSEJ3b2tkZFFLbDBBYTdINURDdXR6RURkUHlYY2lYMWpYSDlpUjg2aUpm?=
- =?utf-8?B?TlBuSFh6YWJnaWZOZmMvaVl3SE4wUjhkVXhacXlNbDJ1RzFXYy84eThvdDBF?=
- =?utf-8?B?YUpQenVBc3VKTnYxbkJNaXpzMHFQeklzbG1UMHNQZklkcmg5WUNyVkxrdStL?=
- =?utf-8?B?SWpwNnlHUlJOVjZUb09XOHZNeEttb1ZhVVpTMG5xc1FmYk42UDdWU2Q5R1pR?=
- =?utf-8?B?S3FBeVh0KzZkMDAvbmFIVE91MlNQcmMrbGpxWXpVbUU5M1Bzc2h0dXcrbkgv?=
- =?utf-8?B?N2xCVGNiUkV5dkc3QklxcFFsL1VBamd2SkRFT0YwY1d3ZCt4S1haZ2VnbVZO?=
- =?utf-8?B?TTZzN1o2M1hZRWVRMFdodFB4Q3NoVkg3VjBYMGVKZnFKV0hVNWFZNVFOOHZ6?=
- =?utf-8?B?NWhvSG0rb3dka09EU0xDS2NUUUY5bWZKRVNnWW9BZys4SXUyS0dzUlorcktu?=
- =?utf-8?B?OUJCK2JBeWNqd1A3bGhEU1pXSlpSenFPanpHbks0N2dzOFdqOHZTMk9DNkZP?=
- =?utf-8?B?SzZCUFJ1RndqY0NPajJTbFRsTnNTRVNFL2dubytTby9zcjJjNU9OZHkyanl6?=
- =?utf-8?B?RUNuNHowTWkxbFhrS2pUT2cvTVdYVGUxT2hDNnIzV2tyblcrb1NMUmtpSnJi?=
- =?utf-8?B?L3BscmkzWm9YcnM2K2xoQ3lLeStkRmUwb1lRYUVGcERNSG4yeUlMNXVWWDdw?=
- =?utf-8?B?MThEa09BU0ZNdktLS2l3cFlGeDNrRjNIUnBxUWJRWHRBbVJTZFhhM3hXVXNR?=
- =?utf-8?B?dEZNS0NzSThZNkhWNkJhbnZWRzhVYUw0bStneUd4czMrZFNoYTJROC9aalNS?=
- =?utf-8?B?TlJncHhDY05jSUNwMGpLQnJ1REx4Qm9MQmNVY0hDWDlFY09xNlRRSHNVeXdR?=
- =?utf-8?B?WGgwYU1XVFVtTUkzK0lzNEcxSGgzVGJLVnJreEwxakoxUnhWYXBLMlA1TnN6?=
- =?utf-8?B?YzlEMzdGcDdwK09sZkc2V0daTHJpTGpPVmJucGt2R3VhVVg5N2FHWkxKbUdw?=
- =?utf-8?B?R25ZWXZOQkthSDVJTE9VKzZoamtjQnVQS0hIZFYwVzlVZHF1RWprRjVFMWJw?=
- =?utf-8?B?c0M4OTdGcUlmSmI0ZXUxMzNwNkFCMHd4KzRHb1ZpZDNEYXVKR0s0YVI3eHRB?=
- =?utf-8?B?NVg2Mk9WR0o4Y241THEzZ2dvTUFaUHRiYlBvd2hrU0lnT2VGYXY2cjM3VHdZ?=
- =?utf-8?B?TGczaGVSYm1lVnVMelVpTDg5KzN3MHNJK010Yi8vZ0c1WGZIeU5OQT09?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89b4bc78-eae8-4a61-d23c-08de7a86e655
-X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 07:14:54.3217 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KXWCrGMnXKHwcOscFXHHerya1b4wyzRdx3LMGvAgQYGzhXRzixugfvPEv+SCLQn+/EEVYmpMpQrKDLiypRnywqYMXLyLGH4RBcJ3vIKhkU0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR0P278MB1091
-Received-SPF: pass client-ip=2a01:111:f403:c213::;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=ZRAP278CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/16] hw/i386/pc: Remove deprecated 2.8 and 2.9 PC
+ machines
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+References: <20260225092024.794595-1-thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -202,106 +133,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2026 20:38, Pierrick Bouvier wrote:
-> On 3/4/26 9:56 AM, Pierrick Bouvier wrote:
->> On 3/4/26 8:18 AM, Florian Hofhammer wrote:
->>>>>>> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
->>>>>>> +                                int64_t num, uint64_t a1, uint64_t a2,
->>>>>>> +                                uint64_t a3, uint64_t a4, uint64_t a5,
->>>>>>> +                                uint64_t a6, uint64_t a7, uint64_t a8,
->>>>>>> +                                uint64_t *sysret)
->>>>>>> +{
->>>>>>> +    if (num == 4095) {
->>>>>>> +        qemu_plugin_outs("Communication syscall detected, set target_pc / "
->>>>>>> +                         "target_vaddr\n");
->>>>>>> +        source_pc = a1;
->>>>>>> +        target_pc = a2;
->>>>>>> +        target_vaddr = a3;
->>>>>>> +        if (source_pc >> 63 || target_pc >> 63 || target_vaddr >> 63) {
->>>>>>> +            /*
->>>>>>> +             * Some architectures (e.g., m68k) use 32-bit addresses with the
->>>>>>> +             * top bit set, which causes them to get sign-extended somewhere in
->>>>>>> +             * the chain to this callback. We mask the top bits off here to get
->>>>>>> +             * the actual addresses.
->>>>>>> +             */
->>>>>>
->>>>>> This looks like an actual bug. Using a backtrace here, can you find which function extended it?
->>>>>> Parameter should be treated as unsigned everywhere, else something is really going wrong.
->>>>>
->>>>> tl;dr: register values are considered signed in the syscall handling
->>>>> code, which seems incorrect to me. Details below.
->>>>>
->>>>> This seems to be a bigger issue in the syscall handling code and I'm
->>>>> surprised this never surfaced before. Generally, the CPUArchState struct
->>>>> in target/*/cpu.h defines the registers as unsigned types. When a
->>>>> syscall is encountered, the main cpu loop calls do_syscall() from
->>>>> linux-user/syscall.c, which takes and returns abi_long values. abi_long
->>>>> is defined as either int32_t or target_long in include/user/abitypes.h
->>>>> and therefore a signed type, so the register values get converted from
->>>>> unsigned to signed types here. do_syscall() passes those abi_long values
->>>>> on, e.g., to record_syscall_start() and send_through_syscall_filters(),
->>>>> which still take the register values in as abi_long. Those in turn
->>>>> however pass the values on to qemu_plugin_vcpu_syscall() and
->>>>> qemu_plugin_vcpu_syscall_filter(), respectively. Those two functions now
->>>>> take uint64_t values for the arguments, so for 32-bit architectures the
->>>>> conversion chain is uint32_t (CPUArchState) -> int32_t (do_syscall) ->
->>>>> uint64_t (callbacks).
->>>>>
->>>>> This seems to be some bigger refactoring changing all those abi_longs to
->>>>> abi_ulongs. Would you like me to prepare a separate patch series for
->>>>> this?
->>>>
->>
->> Indeed, they are signed in linux-user, so maybe my original assumption
->> that it *should* be unsigned is wrong. Let me take a look to see what
->> should be the correct semantic here.
->>
->>>> As a follow-up on this, changing this seems to be a bit more complicated
->>>> than I initially thought. The arguments could be simply made unsigned,
->>>> but the return value (which is also just a register content and should
->>>> therefore be unsigned if I understand correctly) can't easily be made
->>>> unsigned. The per-target main loop relies on the return value of
->>>> do_syscall() to be signed to determine whether one of the QEMU-specific
->>>> errors (e.g., QEMU_ERESTARTSYS) was returned.
->>>
->>> Note: some architectures already define the return value as unsigned in
->>> the main cpu loop and implicitly cast the return value of do_syscall().
->>> Given that in theory, a syscall's return value could always coincide
->>> with the values of QEMU's special errors, I'm wondering whether it would
->>> make sense to make do_syscall()'s return value unsigned and signal those
->>> special error codes out-of-band instead of in the syscall return value,
->>> e.g., either via a separate pointer argument to do_syscall() or by
->>> making do_syscall() return a struct containing both the return value and
->>> a potential error code.
->>>
->>
->> It could be a solution. I'm just a little bit relunctant to make such a
->> change now because we have limited time (soft freeze is coming next
->> week), so not the right time to make such deep changes and... it has
->> been working like that for long time.
->>
->>> But maybe I'm getting ahead of myself here, please let me know what you
->>> think!
->>>
->> Thanks for your very good analysis. I'll come back once I have more
->> information about what should be the correct fix.
->>
->> Meanwhile, and because we are close from softfreeze, just keep the
->> current hack in the test. This way, we can focus on sending your series
->> and the additional comment patch you sent.
->>
->> Thanks,
->> Pierrick
+On 25/02/2026 10.20, Thomas Huth wrote:
+> The -2.8 and -2.9 machine types of the i440fx and q35 machines are
+> older than 6 years, so according to our support policy we can remove
+> them, together with a lot of the compatibility knobs that they were
+> using.
 > 
-> The attached patch fixes the problem by clamping syscall arguments for 32-bit targets. Return type has to be signed anyway, so no change is needed on this side.
+> This is a respin of Philippe's original series here:
 > 
-> You can add it as the first patch on your next version, and remove the hack checking the highest bit in this test, now that the problem is solved.
+>   https://lore.kernel.org/qemu-devel/20250501210456.89071-1-philmd@linaro.org
 > 
-> Regards,
-> Pierrick
+> The following three patches still need a review:
+> 
+> - hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
+> - hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field
+> - tests/qtest/test-x86-cpuid-compat: Remove the test with the i440fx-2.9 machine
+> 
+> Changes in v2:
+> 
+> - Rebased all patches to current master, and fixed the contextual conflicts
+> - Added Igor's Reviewed-bys
+> - Dropped the "hw/southbridge/ich9: Remove ICH9_LPC_SMI_F_BROADCAST_BIT
+>    definition" patch since the code is still required (the guest can decide
+>    whether to use this feature or not)
+> - Dropped the two "hw/nvram/fw_cfg" patches since Igor mentioned that it
+>    still might be useful to keep this configuration knob
+> - Fix "hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition" according to
+>    Igor's review
+> - Adjusted "hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field":
+>    The problematic hunk has already been merged in upstream, so I dropped
+>    it from this patch.
+> - Added the final patch to drop a qtest that required this machine
+> 
+> Philippe Mathieu-Daudé (15):
+>    hw/i386/pc: Remove deprecated pc-q35-2.8 and pc-i440fx-2.8 machines
+>    hw/i386/pc: Remove pc_compat_2_8[] array
+>    hw/i386/kvm: Remove KVMClockState::mach_use_reliable_get_clock field
+>    hw/core/machine: Remove hw_compat_2_8[] array
+>    hw/block/pflash: Remove PFlashCFI01::old_multiple_chip_handling field
+>    hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
+>    hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_DEVERR definition
+>    hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_LNKCTL definition
+>    hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_PM definition
+>    hw/i386/pc: Remove deprecated pc-q35-2.9 and pc-i440fx-2.9 machines
+>    hw/i386/pc: Remove pc_compat_2_9[] array
+>    hw/core/machine: Remove hw_compat_2_9[] array
+>    hw/net/virtio-net: Remove VirtIONet::mtu_bypass_backend field
+>    hw/pci-bridge/gen_pcie_rp: Remove GenPCIERootPort::migrate_msix field
+>    hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field
+> 
+> Thomas Huth (1):
+>    tests/qtest/test-x86-cpuid-compat: Remove the test with the i440fx-2.9
+>      machine
 
-Ack, thanks for the patch!
+If there are no objections (and Paolo or Michael do not plan to take these 
+with their next pull request anyway), I'll add these patches (excluding 17 
+which needs some more work) to my next pull request, so that we finally get 
+these in before the next softfreeze.
 
-Best regards,
-Florian
+  Thomas
+
 
