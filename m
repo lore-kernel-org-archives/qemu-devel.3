@@ -4,105 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C16AF33A8D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 15:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 596D2F33A88
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 15:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyAWy-0006Mt-Qi; Thu, 05 Mar 2026 10:22:28 -0500
+	id 1vyAfL-0000Km-02; Thu, 05 Mar 2026 10:31:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vyAWt-0006LN-V0
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:22:24 -0500
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vyAWr-00030k-IL
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:22:23 -0500
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-506a6cf8242so58424541cf.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 07:22:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772724139; cv=none;
- d=google.com; s=arc-20240605;
- b=M35gNdqwcduxWN6N1ydsbNZSPAdBnvGPc8EHXhjX8xSjgGzupX8xfEMdyh+kk2hj7G
- NVEV5q9jRyyg6QNDcIKBU5hRV4tf5hjzVfO55zcDfmPZnufAqctcmflPlEmtLAEznnEs
- ObgkgiPv2H+NvX96N36a7RjG/oxGxM/n/YXgrjHCmkFRfWIR0rn1IsLlztes1aOGuo9x
- NLkls/uVg8dnRn7gchKeV3QiAh6d8N5yRDKk4jMIeO9plV/OQ5saNWfJ3eNhkosYo3sf
- ZCDmpQ1Q/VzSpBTaKqYHS7T0snTuFXuTVvHpKSx1Z2fF3gwLHQXajYkjQioIywySlqnr
- TAzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=J7o+Gn8rtivx7pGMB4y015U+u3MWLF/4oAjLz9+3H5Q=;
- fh=qut9WCGoiumS8buQKfV4VTgRMJrLq2rWzZgt13Ew7uM=;
- b=DcQAZFPwnYqk7sd+4OwDKcBSbX4Jh+aNJIP66KmjQP8jeZRTPFTCoDxiCLdelmdJUY
- 1nKjPmtucGHUf/00SZuiZqA2WZfQ9qjCPausEdBHXAr3nFrE9QF8P0LW7cj1/oCg+qHH
- ilcJRseOkZ46XW5L24oKC6rFcJ+3kvPgbfvV6SCVRXR7QuyZIHkcH/3CB89xKyDv3ejz
- vqBvUf74ZeRYsaHhNw7g6qvbrySdEsqL5pqTi0LwiVliK2uUOaIDrxsNSg3Ix2BsFIfd
- Qf6g1ka7ttSHkYVvX22OO8vQxuWr/uoix+Sz1XSscpHXJu2Jld5qYk38Me4+g4p1B0DC
- XYrw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyAfF-0000EW-5j
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:31:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyAf7-0004o8-QI
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:30:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772724650;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hMePGZTKaNPJXM+gyatCsckDJaQBV44yYmRRO91jrxc=;
+ b=akC+7AfG/Fg98ps07F1q2E9WAtM4XAF11nYyIhAY6sKI03pg5mphIzRrrxEmO031YQNrEy
+ uoUqNCW9JCU/Peb+hIY4SddI2V/FzLgrlX5OZ4O0XZIYPZbTwxkemdoM6XKR9uPk++Uixg
+ imx9ywjTpk0sNe23wgUSR2z0h5526dA=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-468-nOO2Lsx5MzWtRLO8oYdVig-1; Thu, 05 Mar 2026 10:30:48 -0500
+X-MC-Unique: nOO2Lsx5MzWtRLO8oYdVig-1
+X-Mimecast-MFC-AGG-ID: nOO2Lsx5MzWtRLO8oYdVig_1772724648
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-506a1999e44so709821491cf.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 07:30:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772724139; x=1773328939; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J7o+Gn8rtivx7pGMB4y015U+u3MWLF/4oAjLz9+3H5Q=;
- b=BisnyAFUqdPapo/JR8iC/ZVdsSkMO+1abEMzTLj+p9Rx1YpHd53K1QDNdwmbaCqoYt
- SX3ypeWOdwgdhtwiNfzVhLC4KEE+i3+tLCdiWnas+IhU8MU+aN1gMTXGEk+CpWwjP5a/
- WUU8v9kiwXl2LLWlq6U0YrLnY0BUaujSNP15bi5cfEP8nV7g5Gu7pZp2U2GJ4/VLIoXo
- HdN/idyQjpE27TGgZU65yFjwe4Ygwt2xtNcKAOifQJEt92Fph076GF5nr0691sSkBJcg
- xv7iJM34NyVeL/TT8D4q60OPx22w8kxG9z4jlm8LF6KB4vSSoS8tg9upIYFjROzjhr8v
- SpLA==
+ d=redhat.com; s=google; t=1772724648; x=1773329448; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=hMePGZTKaNPJXM+gyatCsckDJaQBV44yYmRRO91jrxc=;
+ b=ZW4SYXv+BHTnQUbMuz3n9UicdVmw6MDAoUOIAvJwQLk32Z4/h0QzaY2/tARYw6nqXT
+ mRECrx6iDTMuworuyJ3F0RACAD2pxwD5YZ/M4Ybycqzfn0/K0J11UOlu/lJbqQw1W3cn
+ cknjgoGRRw2Vc8dnDcr59r8HXA60QcDCkmahqVa9v7jzHjY88jN/2Pq1yaSeGsl1nBUk
+ m8iXlrmfv118/o+38lkVAymUazaoiM2d9gaiocSRHASBeV3TXxbc7iJuCmlMdp6N053d
+ dDpakE8Ws7esZBbN/t9MD4xbsuRteOF3iNDZN8SfJn5ni6UFR44EfkgRWUgIfxqoFteF
+ c7tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772724139; x=1773328939;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=J7o+Gn8rtivx7pGMB4y015U+u3MWLF/4oAjLz9+3H5Q=;
- b=pEbJ93UZmhmTdJs00QOyPDobhA1UVlOsTXBH8n6OL3No2DGg+zm2BCOQBPHxJV2PJf
- yOptncZgAJ4oIz7lbXkXgOOCzDntevR19e2/ytreAqQ7BAAONLC4AcI1EfpBynLW/hzo
- XjZtIW1Jrhg2ChGL3ol10rcojqs2D0eRPKG7mOISleP6Lk5hZq2l6CrItbFD8tHRg3Dx
- KSqmok41QIYrefBH5Z5RX6gm5SkwGVMlfFFC0+x6Bo57nGCrUadE53/qfGhTFXvJhTvO
- JCPO1XVzrVnKDBRTs7r7B9sbhLFJMAKLuiFRPunoXi39AG2qxxfzsJxc1H3FeBuiZdY/
- AxqA==
-X-Gm-Message-State: AOJu0YywLA1hAKu6sbBJqPRIZ67f9uYf1sVacztGT3z51tuIDkrtW7o5
- 9NBhFM8yn1dnbmsEIX2mijVcYQqnsZ6Ezhw7JLfHKukGHq73I6vZz53r+8fcZKtzgQ9/LJsgSrm
- GcsRyqUaVvmds5FV/R7l2IuLXYKgV96c=
-X-Gm-Gg: ATEYQzzDcCGxbCPDBHHvLbUGaOIETAV3M2liUAUylPNJFy0XMGL3PvSYe5iwh05tsNo
- +iE3HV95zwamUHAKyXu5Rd5T88denVzfEpf7/tULyK6vB2eRfrVNoEmBCRMJEdE3lQZLmh5hTbQ
- gNnu5wqbZ9fmxkXX3mCEyyeK/kDKYzxW4oM7SPpfkJlTheM3KFdiccl08FejEAdpOvd0kpPueBn
- 8ND21aDv/Tq6vIenCpME4WtrJW+K2zC83LieY9TP5SRE6WpttW3MaAvu3n0lyLC8V6hR3SzXXSe
- VOHMm6Zs2pHgObuqXw==
-X-Received: by 2002:ac8:7dd0:0:b0:501:4a4a:c24e with SMTP id
- d75a77b69052e-508db2ac5fbmr85764951cf.25.1772724139101; Thu, 05 Mar 2026
- 07:22:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772724648; x=1773329448;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hMePGZTKaNPJXM+gyatCsckDJaQBV44yYmRRO91jrxc=;
+ b=fJoEmBtMPL9N91qjZ5/PFhkSMKqx/RRb95k7JcBBJxtQthH7mewcNxatqg98qR4/q1
+ ImwIz/JolqYR0Xwhs5VxTmUldAp7fXlakVKcMGxvBXIEt2s9pmfjp6WA4TS5QCXbl9Mx
+ g2PZes1mKzGuS2SLSfHIZ6StjP1mmNBhmFvg0j/oNfQS/3pZr8D9jl1upC4TOpSFYnYq
+ KblRny1RgyBRIEcqJaQWVlpq0pv4GXGXe8E6X6pcuhwWxukh9v0rsJ5F1G/7U62+Z+KN
+ zXLpyTewcXEu7nTCzzlIWHUPTgwWtrQkfoZx6lLT1IfSuq97o5phKsicCf3FOALk9MOM
+ Culg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEFe9+9pGAOxJs4CZ2DaOCrORyGRfYi82UqYpjPsJMrp6NpHntYKy8ZAUj+04VUKJT1FTjmeBapWd+@nongnu.org
+X-Gm-Message-State: AOJu0YyIRPKZvBpUwDOfcSS1A2g5xgWQGLxb+nerxAKWvz8/tiHNRWTf
+ +h642KEd6+Qidez1AUI1WIgvSBIGvZrUExyZ+8MO2qm4NzEY9fTWGcxHA2tebhv3zTfakVbvq+l
+ iTGrWo1vGkHfN3rribIOndFSWG3JcJlIwvPEneLLngwuDzuFyBEdqNrTM
+X-Gm-Gg: ATEYQzxo5z3Sh/16lXTKuHTsgYu6zks0U0Y172qQBdslBSZXDCILQor4q1lxG4QXkMX
+ z/lQkw4vvfWiJKGyjj4EUTlXsN2TkIDvha2Uv7us/aLBAc9ALH/gLj5MlSGj9DjU1MsR8w3B2y+
+ NOvUTB0F5fD7U9bKvxIUlOG4I14nNranw5JoQnGJUwckKqpoXkf75AhVihXkRNVIQaGNob9CaEb
+ nuZyNqVTMwJVgHGxBLsXez2BayfpVT4m//JuTIfKXASJRphUU10UGDQGYQNgeQuas1S636DtufZ
+ wkuIgPF68mGHg7lEaVneJSGMNB9vjh963c8HHKBtiKwLXuyBpdRcag+MzAnDGgRtP+Z13wcT2dr
+ eyq96b3egK+NENQ==
+X-Received: by 2002:ac8:5a0c:0:b0:501:4b10:aa9e with SMTP id
+ d75a77b69052e-508db2a632bmr80651501cf.13.1772724647460; 
+ Thu, 05 Mar 2026 07:30:47 -0800 (PST)
+X-Received: by 2002:ac8:5a0c:0:b0:501:4b10:aa9e with SMTP id
+ d75a77b69052e-508db2a632bmr80648531cf.13.1772724645596; 
+ Thu, 05 Mar 2026 07:30:45 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50744afa7d7sm181008531cf.32.2026.03.05.07.30.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 07:30:45 -0800 (PST)
+Date: Thu, 5 Mar 2026 10:30:33 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v5 1/8] hw/display/{cg3.tcx}: Do not use
+ memory_region_init_rom_nomigrate()
+Message-ID: <aamhmXuvcPXPfWSJ@x1.local>
+References: <cover.1772397447.git.balaton@eik.bme.hu>
+ <816075b4a7fe7d4234744b7bd29c03139e4c2f38.1772397447.git.balaton@eik.bme.hu>
+ <CAFEAcA9tiLag6NHMajPH=caqECRw7DT5vmtX4EraTG8Xp5re3w@mail.gmail.com>
+ <97bceb8f-4cdb-461d-9553-c39b18a61063@ilande.co.uk>
 MIME-Version: 1.0
-References: <20260303030714.1926907-1-dongwon.kim@intel.com>
- <CAJ+F1C+ownUskL4troo57_GxJjGaZvX2sHCJoc4KjYm3rU-oQw@mail.gmail.com>
- <PH0PR11MB511248C615D6433E2ED7E7D4FA7FA@PH0PR11MB5112.namprd11.prod.outlook.com>
-In-Reply-To: <PH0PR11MB511248C615D6433E2ED7E7D4FA7FA@PH0PR11MB5112.namprd11.prod.outlook.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 5 Mar 2026 16:22:07 +0100
-X-Gm-Features: AaiRm50JWZdGAvgtZhZrPNjFjr31Ls5zFvSCXhFPuiALFYfgreZZvtCo7Jstt7s
-Message-ID: <CAJ+F1C+BGW3hzLc8jnxKXxmY3-jkQ85=BSWc+sPhOZ86bzsjVQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Implement dpy_gl_ctx_destroy_texture for gtk-egl
- and gtk-gl-area
-To: "Kim, Dongwon" <dongwon.kim@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82d.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <97bceb8f-4cdb-461d-9553-c39b18a61063@ilande.co.uk>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,171 +125,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Tue, Mar 3, 2026 at 7:50=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.com>=
- wrote:
->
-> Hi Marc-Andr=C3=A9,
->
-> > Subject: Re: [PATCH] ui/gtk: Implement dpy_gl_ctx_destroy_texture for g=
-tk-
-> > egl and gtk-gl-area
-> >
-> > Hi
-> >
-> > On Tue, Mar 3, 2026 at 4:13=E2=80=AFAM <dongwon.kim@intel.com> wrote:
-> > >
-> > > From: Dongwon Kim <dongwon.kim@intel.com>
-> > >
-> > > Currently, the texture associated with a DisplaySurface is not delete=
-d
-> > > when the surface is switched or freed, leading to a memory leak in th=
-e
-> > > GPU process. This occurs because the GTK backend lacks a mapping for
-> > > the 'dpy_gl_ctx_destroy_texture' operation.
-> > >
-> > > This patch implements the necessary cleanup functions for both EGL an=
-d
-> > > GL Area backends. Each implementation ensures the appropriate GL
-> > > context is made current before calling surface_gl_destroy_texture(),
-> > > ensuring that the underlying GL texture ID is safely released by the =
-driver.
-> > >
-> > > Cc: Gerd Hoffmann <kraxel@redhat.com>
-> > > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > > Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> > > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+On Thu, Mar 05, 2026 at 11:15:59AM +0000, Mark Cave-Ayland wrote:
+> On 03/03/2026 09:51, Peter Maydell wrote:
+> 
+> > On Sun, 1 Mar 2026 at 21:03, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+> > > 
+> > > Use memory_region_init_rom() instead which is what other devices do.
+> > > This is breaks migration but these devices are only used on sparc Sun
+> > > machines which have no migration compatibility guarantee.
+> > > 
+> > > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > > > ---
-> > >  include/ui/gtk.h |  4 ++++
-> > >  ui/gtk-egl.c     | 10 ++++++++++
-> > >  ui/gtk-gl-area.c |  8 ++++++++
-> > >  ui/gtk.c         |  2 ++
-> > >  4 files changed, 24 insertions(+)
-> > >
-> > > diff --git a/include/ui/gtk.h b/include/ui/gtk.h index
-> > > 3e6ce3cb48..f1765ad5cb 100644
-> > > --- a/include/ui/gtk.h
-> > > +++ b/include/ui/gtk.h
-> > > @@ -170,6 +170,8 @@ void gd_egl_switch(DisplayChangeListener *dcl,
-> > >                     DisplaySurface *surface);  QEMUGLContext
-> > > gd_egl_create_context(DisplayGLCtx *dgc,
-> > >                                      QEMUGLParams *params);
-> > > +void gd_egl_destroy_texture(DisplayGLCtx *dgc,
-> > > +                            DisplaySurface *surface);
-> > >  void gd_egl_scanout_disable(DisplayChangeListener *dcl);  void
-> > > gd_egl_scanout_texture(DisplayChangeListener *dcl,
-> > >                              uint32_t backing_id, @@ -206,6 +208,8 @@
-> > > QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
-> > >                                          QEMUGLParams *params);  void
-> > > gd_gl_area_destroy_context(DisplayGLCtx *dgc,
-> > >                                  QEMUGLContext ctx);
-> > > +void gd_gl_area_destroy_texture(DisplayGLCtx *dgc,
-> > > +                                DisplaySurface *surface);
-> > >  void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
-> > >                                 QemuDmaBuf *dmabuf);  void
-> > > gd_gl_area_scanout_texture(DisplayChangeListener *dcl, diff --git
-> > > a/ui/gtk-egl.c b/ui/gtk-egl.c index ae9239999c..c1b32bc41b 100644
-> > > --- a/ui/gtk-egl.c
-> > > +++ b/ui/gtk-egl.c
-> > > @@ -225,6 +225,16 @@ QEMUGLContext
-> > gd_egl_create_context(DisplayGLCtx *dgc,
-> > >      return qemu_egl_create_context(dgc, params);  }
-> > >
-> > > +void gd_egl_destroy_texture(DisplayGLCtx *dgc, DisplaySurface
-> > > +*surface) {
-> > > +    VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc=
-);
-> > > +
-> > > +    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-> > > +                   vc->gfx.esurface, vc->gfx.ectx);
-> > > +
-> > > +    surface_gl_destroy_texture(dgc->gls, surface); }
-> > > +
-> > >  void gd_egl_scanout_disable(DisplayChangeListener *dcl)  {
-> > >      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl=
-);
-> > > diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c index
-> > > cd86022d26..84e41f4221 100644
-> > > --- a/ui/gtk-gl-area.c
-> > > +++ b/ui/gtk-gl-area.c
-> > > @@ -299,6 +299,14 @@ void gd_gl_area_destroy_context(DisplayGLCtx
-> > *dgc, QEMUGLContext ctx)
-> > >      g_clear_object(&ctx);
-> > >  }
-> > >
-> > > +void gd_gl_area_destroy_texture(DisplayGLCtx *dgc, DisplaySurface
-> > > +*surface) {
-> > > +    VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc=
-);
-> > > +
-> > > +    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-> > > +    surface_gl_destroy_texture(dgc->gls, surface); }
-> > > +
-> > >  void gd_gl_area_scanout_texture(DisplayChangeListener *dcl,
-> > >                                  uint32_t backing_id,
-> > >                                  bool backing_y_0_top, diff --git
-> > > a/ui/gtk.c b/ui/gtk.c index 9ebe7e8df0..217f425075 100644
-> > > --- a/ui/gtk.c
-> > > +++ b/ui/gtk.c
-> > > @@ -636,6 +636,7 @@ static const DisplayGLCtxOps gl_area_ctx_ops =3D =
-{
-> > >      .dpy_gl_ctx_is_compatible_dcl =3D gd_gl_area_is_compatible_dcl,
-> > >      .dpy_gl_ctx_create       =3D gd_gl_area_create_context,
-> > >      .dpy_gl_ctx_destroy      =3D gd_gl_area_destroy_context,
-> > > +    .dpy_gl_ctx_destroy_texture =3D gd_gl_area_destroy_texture,
-> > >      .dpy_gl_ctx_make_current =3D gd_gl_area_make_current,  };
-> > >
-> > > @@ -670,6 +671,7 @@ static const DisplayGLCtxOps egl_ctx_ops =3D {
-> > >      .dpy_gl_ctx_is_compatible_dcl =3D gd_egl_is_compatible_dcl,
-> > >      .dpy_gl_ctx_create       =3D gd_egl_create_context,
-> > >      .dpy_gl_ctx_destroy      =3D qemu_egl_destroy_context,
-> > > +    .dpy_gl_ctx_destroy_texture =3D gd_egl_destroy_texture,
-> > >      .dpy_gl_ctx_make_current =3D gd_egl_make_current,
-> >
-> > But there is no dpy_gl_ctx_create_texture(), how can
-> > dpy_gl_ctx_destroy_texture() get called?
->
-> Textures are also created via surface_gl_create_texture in the places lik=
-e,
->
+> > >   hw/display/cg3.c | 5 ++---
+> > >   hw/display/tcx.c | 5 ++---
+> > >   2 files changed, 4 insertions(+), 6 deletions(-)
+> > 
+> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> > 
+> > I think the compat break on these machines is worth it
+> > to make progress on the cleanup of these functions.
+> 
+> Hi Peter,
 
-But surface_gl_{create,destroy}_texture doesn't make use of
-dpy_gl_ctx_destroy_texture. The later is only used by dbus so far, see
-commit 589089feee ("ui/dbus: fix texture sharing").
+Hi, Mark,
 
-> gtk-egl.c
-> static void gtk_egl_set_scanout_mode(VirtualConsole *vc, bool scanout)
-> {
->  .....
->        egl_fb_destroy(&vc->gfx.guest_fb);
->         if (vc->gfx.surface) {
->             surface_gl_destroy_texture(vc->gfx.gls, vc->gfx.ds);
->             surface_gl_create_texture(vc->gfx.gls, vc->gfx.ds);
->         }
->
-> surface_gl_create_texture always come after surface_gl_destroy_texture
-> so there is no leak while the guest is running but texture would remain u=
-nremoved
-> if we do none in dpy_gl_ctx_destroy_texture() when the guest is rebooting=
-.
->
-> >
-> > >  };
-> > >  #endif
-> > > --
-> > > 2.43.0
-> > >
-> > >
-> >
-> >
-> > --
-> > Marc-Andr=C3=A9 Lureau
->
-> Thanks
+[some pure thoughts before PeterM chimes in..]
 
+> 
+> From what I can see there is still on-going discussion on this series,
+> however if the general consensus is that the removal of the last of these
+> legacy functions is now imminent then I won't object if you want to merge
+> this.
 
+In this case it's not easy to reach a consensus collecting "yes"s but
+"no"s, that who still prefer this ABI to be kept.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Personally, I would respect your opinion, and I queued them because from
+what I read the impact seems under control, please correct me otherwise.
+
+There's indeed the dilemma that since sparc machines are not versioned,
+then it's easier to be treated as a system that may not demand the highest
+level of ABI guarantees.
+
+It's also harder to consider ABI compatibility for un-versioned machs
+comparing to versioned.
+
+It's because for other versioned machines, we have the ~6 years lifespan
+nowadays for them so we can drop old things over specific period of time.
+While when a machine is not versioned, it's almost impossible to mark the
+time of deprecation.
+
+We either need to choose to maintain ABI for those machines forever, or we
+allow ABI break to some degree.  When a machine is not versioned, it's
+harder to justify we maintain these machines' ABI even longer than
+versioned machines (which we deemed to be "relatively serious" users).
+
+So if we want to stick with that machine versioning plan, maybe we should
+start version machines that we may care on ABIs.  IIUC it doesn't need to
+introduce one machine type every release, however when versioned we will be
+able to follow the same ~6 years obsoletion phase at least.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
