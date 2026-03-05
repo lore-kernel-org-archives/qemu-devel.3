@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B09F30930
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD71F30930
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6K4-0001L0-28; Thu, 05 Mar 2026 05:52:52 -0500
+	id 1vy6KD-0001WJ-PL; Thu, 05 Mar 2026 05:53:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6K2-0001Jr-1t
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:50 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6KC-0001Uv-FH
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6K0-0005Us-Ka
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:49 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6KB-0005Vo-0M
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772707967;
+ s=mimecast20190719; t=1772707978;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6hsiZRjp9wtNcFrHnonN7EpDfMxmnEWA1JVXjPxVHm0=;
- b=Z5+QcGugCpACMBbsCmAchC6m2eRusdUZuMRoiST6y2JbvFvDU7Xi5j3Z+omgzT6q4go2fM
- KpmCjBNVC2AZm7wo9oWI7dPK6LyhuZgQmHNBAHjNH5l8LF+S7RH5ZTOfWdH5ePoryn2pDJ
- qF7Gf8jaUcOwqx5lJk4cKHdlGt35zTs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=V7aku+/Jhor42OZB+FAMdtWx+1uSJ9bXolR7vnugvTw=;
+ b=V2ZfMUr1g++rYG97HEQlChHRAfAqDC/qf8EtfkBiQYhSH4OMYukGgX4YO6Zn94mxt+JyDm
+ LZILDJ8xEtQ3GVOnb9DU1IAIIu14nVoHTy3UYU5dMYSK7P2uEgZ8HCYDjnXbvEN/mAtllJ
+ +dtkJAfTVcSlDIFsWOcNWwPOrCpDlhQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-6RoG7hpEPm6zgfRzxYY8lQ-1; Thu,
- 05 Mar 2026 05:52:42 -0500
-X-MC-Unique: 6RoG7hpEPm6zgfRzxYY8lQ-1
-X-Mimecast-MFC-AGG-ID: 6RoG7hpEPm6zgfRzxYY8lQ_1772707961
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-37DAFhJPOO-AxHNy3NLxxQ-1; Thu,
+ 05 Mar 2026 05:52:53 -0500
+X-MC-Unique: 37DAFhJPOO-AxHNy3NLxxQ-1
+X-Mimecast-MFC-AGG-ID: 37DAFhJPOO-AxHNy3NLxxQ_1772707972
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96B981956048; Thu,  5 Mar 2026 10:52:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 17C90195609F; Thu,  5 Mar 2026 10:52:52 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.75])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 422D13003E9C; Thu,  5 Mar 2026 10:52:38 +0000 (UTC)
+ id 3FBDD3003E98; Thu,  5 Mar 2026 10:52:48 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 07/28] hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_DEVERR
- definition
-Date: Thu,  5 Mar 2026 11:51:54 +0100
-Message-ID: <20260305105215.302571-8-thuth@redhat.com>
+Subject: [PULL 10/28] hw/i386/pc: Remove deprecated pc-q35-2.9 and
+ pc-i440fx-2.9 machines
+Date: Thu,  5 Mar 2026 11:51:57 +0100
+Message-ID: <20260305105215.302571-11-thuth@redhat.com>
 In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
 References: <20260305105215.302571-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,70 +88,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-VIRTIO_PCI_FLAG_INIT_DEVERR was only used by the hw_compat_2_8[]
-array, via the 'x-pcie-deverr-init=off' property. We removed all
-machines using that array, lets remove all the code around
-VIRTIO_PCI_FLAG_INIT_DEVERR (see commit 9a4c0e220d8 for similar
-VIRTIO_PCI_FLAG_* enum removal).
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-9-philmd@linaro.org>
+Message-ID: <20250501210456.89071-14-philmd@linaro.org>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260225092024.794595-8-thuth@redhat.com>
+Message-ID: <20260225092024.794595-11-thuth@redhat.com>
 ---
- include/hw/virtio/virtio-pci.h | 4 ----
- hw/virtio/virtio-pci.c         | 8 ++------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ hw/i386/pc_piix.c | 9 ---------
+ hw/i386/pc_q35.c  | 9 ---------
+ 2 files changed, 18 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 581bb830b79..405e33a3165 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -35,7 +35,6 @@ enum {
-     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
-     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
-     VIRTIO_PCI_FLAG_ATS_BIT,
--    VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
-     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
-     VIRTIO_PCI_FLAG_INIT_PM_BIT,
-     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
-@@ -63,9 +62,6 @@ enum {
- /* address space translation service */
- #define VIRTIO_PCI_FLAG_ATS (1 << VIRTIO_PCI_FLAG_ATS_BIT)
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 58d76d2d410..d8417d1824f 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -705,15 +705,6 @@ static void pc_i440fx_machine_2_10_options(MachineClass *m)
  
--/* Init error enabling flags */
--#define VIRTIO_PCI_FLAG_INIT_DEVERR (1 << VIRTIO_PCI_FLAG_INIT_DEVERR_BIT)
+ DEFINE_I440FX_MACHINE(2, 10);
+ 
+-static void pc_i440fx_machine_2_9_options(MachineClass *m)
+-{
+-    pc_i440fx_machine_2_10_options(m);
+-    compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+-    compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
+-}
 -
- /* Init Link Control register */
- #define VIRTIO_PCI_FLAG_INIT_LNKCTL (1 << VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT)
+-DEFINE_I440FX_MACHINE(2, 9);
+-
+ #ifdef CONFIG_XEN
+ static void xenfv_machine_4_2_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 7fe6ca64f9d..b94d1839e3f 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -652,12 +652,3 @@ static void pc_q35_machine_2_10_options(MachineClass *m)
+ }
  
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index c7b5a79b936..91d736d71c1 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2307,10 +2307,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-             proxy->last_pcie_cap_offset += PCI_ERR_SIZEOF;
-         }
- 
--        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_DEVERR) {
--            /* Init error enabling flags */
--            pcie_cap_deverr_init(pci_dev);
--        }
-+        /* Init error enabling flags */
-+        pcie_cap_deverr_init(pci_dev);
- 
-         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_LNKCTL) {
-             /* Init Link Control Register */
-@@ -2446,8 +2444,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_ATS_BIT, false),
-     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT, true),
--    DEFINE_PROP_BIT("x-pcie-deverr-init", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_INIT_DEVERR_BIT, true),
-     DEFINE_PROP_BIT("x-pcie-lnkctl-init", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
-     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+ DEFINE_Q35_MACHINE(2, 10);
+-
+-static void pc_q35_machine_2_9_options(MachineClass *m)
+-{
+-    pc_q35_machine_2_10_options(m);
+-    compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+-    compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 9);
 -- 
 2.53.0
 
