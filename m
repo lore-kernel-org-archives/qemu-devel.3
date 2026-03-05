@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E8CF30930
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8033BF30930
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6KT-00026R-03; Thu, 05 Mar 2026 05:53:17 -0500
+	id 1vy6L6-0004wC-Uy; Thu, 05 Mar 2026 05:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6KR-0001yO-26
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:15 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6L3-0004mH-FT
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6KO-0005X7-U5
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:14 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6L1-0005n7-9Z
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772707992;
+ s=mimecast20190719; t=1772708030;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WGufQVVnK5xgBPXxXLTfCZsGiCOh4ONCo+TXCTm/xPM=;
- b=XAtzY2EQQN349o8kHgk0o7FtmyTVigY+on99ur3/KsoPZ2wk0q2Vvvj72BemgbPSG2iw54
- slruMAKU3Mwm5//UHdmprpI789hE7u/myZzqI1EJxM+oXmMujqpC8sxlshNqed6PzvSWuY
- r2FMhdqUHzjARdU09MvpOATKRlyIx38=
+ bh=HZS5GEbGChHfsF72+DUHakymxE4PqwSLiq+7AF0ynGI=;
+ b=DSUG+NH8QqMkwUbTShsZbqny4fmTEYSzi1tDyCpN5lMOe4fYVF8jWk38FCVPr2/bggQsGT
+ Ra58kqjkpdY06DobAGRHWMTWdEtIBdZIdJyrFm0Vm9X7iVhDthmCUtzYNcLvmESzOthzux
+ jC+8qsh/kAZV3OwDxX/aLsL13TJQiBs=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-xKaA29BcPGKUxzleTO3OPA-1; Thu,
- 05 Mar 2026 05:53:09 -0500
-X-MC-Unique: xKaA29BcPGKUxzleTO3OPA-1
-X-Mimecast-MFC-AGG-ID: xKaA29BcPGKUxzleTO3OPA_1772707988
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-_Ii9oJJNMIuOrBalDCrl5A-1; Thu,
+ 05 Mar 2026 05:53:49 -0500
+X-MC-Unique: _Ii9oJJNMIuOrBalDCrl5A-1
+X-Mimecast-MFC-AGG-ID: _Ii9oJJNMIuOrBalDCrl5A_1772708028
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 362421956080; Thu,  5 Mar 2026 10:53:08 +0000 (UTC)
+ id 2B3E6195609D; Thu,  5 Mar 2026 10:53:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.75])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DCFA53003E98; Thu,  5 Mar 2026 10:53:05 +0000 (UTC)
+ id 5A4A43003E98; Thu,  5 Mar 2026 10:53:45 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 15/28] hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported
- field
-Date: Thu,  5 Mar 2026 11:52:02 +0100
-Message-ID: <20260305105215.302571-16-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 28/28] hw/display/vga-pci: Do not expose the 'global-vmstate'
+ property
+Date: Thu,  5 Mar 2026 11:52:15 +0100
+Message-ID: <20260305105215.302571-29-thuth@redhat.com>
 In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
 References: <20260305105215.302571-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,93 +87,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The X86IOMMUState::pt_supported boolean was only set in
-the hw_compat_2_9[] array, via the 'pt=off' property. We
-removed all machines using that array, lets remove that
-property and all the code around it, always setting the
-VTD_ECAP_PT capability.
+The "global-vmstate" property is 'false' by default, and was only
+set to 'true' in the hw_compat_2_12[] array. We removed all machines
+using that array. Stop exposing that property on the PCI devices.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-19-philmd@linaro.org>
-[thuth: Dropped the hunks that were already merged via commit 31753d5a336f]
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-ID: <20250501230129.2596-11-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260225092024.794595-16-thuth@redhat.com>
 ---
- include/hw/i386/x86-iommu.h |  1 -
- hw/i386/intel_iommu.c       | 13 ++-----------
- hw/i386/x86-iommu.c         |  1 -
- 3 files changed, 2 insertions(+), 13 deletions(-)
+ hw/display/cirrus_vga.c | 2 --
+ hw/display/qxl.c        | 1 -
+ hw/display/vga-pci.c    | 1 -
+ hw/display/vmware_vga.c | 2 --
+ 4 files changed, 6 deletions(-)
 
-diff --git a/include/hw/i386/x86-iommu.h b/include/hw/i386/x86-iommu.h
-index c526a047ab6..0a1e1ba7257 100644
---- a/include/hw/i386/x86-iommu.h
-+++ b/include/hw/i386/x86-iommu.h
-@@ -63,7 +63,6 @@ struct X86IOMMUState {
-     SysBusDevice busdev;
-     OnOffAuto intr_supported;   /* Whether vIOMMU supports IR */
-     bool dt_supported;          /* Whether vIOMMU supports DT */
--    bool pt_supported;          /* Whether vIOMMU supports pass-through */
-     bool dma_translation;       /* Whether vIOMMU supports DMA translation */
-     QLIST_HEAD(, IEC_Notifier) iec_notifiers; /* IEC notify list */
- };
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 4924aa43750..d24ba989bfc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -1072,6 +1072,7 @@ static inline bool vtd_ce_type_check(X86IOMMUState *x86_iommu,
- {
-     switch (vtd_ce_get_type(ce)) {
-     case VTD_CONTEXT_TT_MULTI_LEVEL:
-+    case VTD_CONTEXT_TT_PASS_THROUGH:
-         /* Always supported */
-         break;
-     case VTD_CONTEXT_TT_DEV_IOTLB:
-@@ -1080,12 +1081,6 @@ static inline bool vtd_ce_type_check(X86IOMMUState *x86_iommu,
-             return false;
-         }
-         break;
--    case VTD_CONTEXT_TT_PASS_THROUGH:
--        if (!x86_iommu->pt_supported) {
--            error_report_once("%s: PT specified but not supported", __func__);
--            return false;
--        }
--        break;
-     default:
-         /* Unknown type */
-         error_report_once("%s: unknown ce type: %"PRIu32, __func__,
-@@ -5004,7 +4999,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
- {
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
- 
--    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
-+    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
-              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS |
-              VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
-     if (s->dma_drain) {
-@@ -5032,10 +5027,6 @@ static void vtd_cap_init(IntelIOMMUState *s)
-         s->ecap |= VTD_ECAP_DT;
-     }
- 
--    if (x86_iommu->pt_supported) {
--        s->ecap |= VTD_ECAP_PT;
--    }
--
-     if (s->caching_mode) {
-         s->cap |= VTD_CAP_CM;
-     }
-diff --git a/hw/i386/x86-iommu.c b/hw/i386/x86-iommu.c
-index 33ac0bfc97e..a57445404ef 100644
---- a/hw/i386/x86-iommu.c
-+++ b/hw/i386/x86-iommu.c
-@@ -129,7 +129,6 @@ static const Property x86_iommu_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("intremap", X86IOMMUState,
-                             intr_supported, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("device-iotlb", X86IOMMUState, dt_supported, false),
--    DEFINE_PROP_BOOL("pt", X86IOMMUState, pt_supported, true),
-     DEFINE_PROP_BOOL("dma-translation", X86IOMMUState, dma_translation, true),
+diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
+index 37228ff1345..629b34fc68d 100644
+--- a/hw/display/cirrus_vga.c
++++ b/hw/display/cirrus_vga.c
+@@ -2987,8 +2987,6 @@ static const Property pci_vga_cirrus_properties[] = {
+                        cirrus_vga.vga.vram_size_mb, 4),
+     DEFINE_PROP_BOOL("blitter", struct PCICirrusVGAState,
+                      cirrus_vga.enable_blitter, true),
+-    DEFINE_PROP_BOOL("global-vmstate", struct PCICirrusVGAState,
+-                     cirrus_vga.vga.global_vmstate, false),
  };
  
+ static void cirrus_vga_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 0551b38230b..3d4b5635568 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2476,7 +2476,6 @@ static const Property qxl_properties[] = {
+         DEFINE_PROP_UINT16("max_outputs", PCIQXLDevice, max_outputs, 0),
+         DEFINE_PROP_UINT32("xres", PCIQXLDevice, xres, 0),
+         DEFINE_PROP_UINT32("yres", PCIQXLDevice, yres, 0),
+-        DEFINE_PROP_BOOL("global-vmstate", PCIQXLDevice, vga.global_vmstate, false),
+ };
+ 
+ static void qxl_pci_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
+index d0f9de1ab35..4e68dd57a17 100644
+--- a/hw/display/vga-pci.c
++++ b/hw/display/vga-pci.c
+@@ -338,7 +338,6 @@ static const Property vga_pci_properties[] = {
+     DEFINE_PROP_BIT("edid",
+                     PCIVGAState, flags, PCI_VGA_FLAG_ENABLE_EDID, true),
+     DEFINE_EDID_PROPERTIES(PCIVGAState, edid_info),
+-    DEFINE_PROP_BOOL("global-vmstate", PCIVGAState, vga.global_vmstate, false),
+ };
+ 
+ static const Property secondary_pci_properties[] = {
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index ea7a9fca04e..c2c6bc76e90 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -1335,8 +1335,6 @@ static void pci_vmsvga_realize(PCIDevice *dev, Error **errp)
+ static const Property vga_vmware_properties[] = {
+     DEFINE_PROP_UINT32("vgamem_mb", struct pci_vmsvga_state_s,
+                        chip.vga.vram_size_mb, 16),
+-    DEFINE_PROP_BOOL("global-vmstate", struct pci_vmsvga_state_s,
+-                     chip.vga.global_vmstate, false),
+ };
+ 
+ static void vmsvga_class_init(ObjectClass *klass, const void *data)
 -- 
 2.53.0
 
