@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 000EBF33A6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7F7F33A6D
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9KL-0002MT-IW; Thu, 05 Mar 2026 09:05:21 -0500
+	id 1vy9KT-0002Nl-JR; Thu, 05 Mar 2026 09:05:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KI-0002M5-5v
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0002MS-VJ
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KG-0007pd-G8
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:17 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KG-0007pU-Kq
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1772719515;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sj7t5sYEdl/rrqhMX84JuozAOPc9rHFA0SqMD36Pfy0=;
- b=TClb2KlCIV5VnwfnyzPt86ttdiyXB34Z80Pg0Vw3HcChCnjJ0pgn0j/Cu+XNzZMOXJayYC
- WWCyNocuYplO5CR2DiiYFuhQ0UvhGoCL0SKNnELXjgHIEWufDKvvN0wNxnuQb/wrdCeo42
- Pt2sg3wOzaJ4aIHnpI+uPAzi2GLpInI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=zBpnfoTYGAJ2In56hR2qL4c2Q0xWmFwNKxU47aBPoxY=;
+ b=JKg+PyT5E37b/i19RUt5sl5SIvgOA/XD2UVgjxskA21kmdN32JQq5pOyvxabTqIGFhlrn9
+ LFIOUQ7w54HbzORyWrDrVdN4NHbOOhbc2+so2BKqX78fqigDzW8EzS7Djh6EhpTFh8y94o
+ JpJkcC/aebKK8QI5bO40PAt4Rhp2atE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-InPZo3eXNc--eS3BOyg0FQ-1; Thu,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-c1GpcHSOPDO_0hcD4leXxw-1; Thu,
  05 Mar 2026 09:05:12 -0500
-X-MC-Unique: InPZo3eXNc--eS3BOyg0FQ-1
-X-Mimecast-MFC-AGG-ID: InPZo3eXNc--eS3BOyg0FQ_1772719511
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+X-MC-Unique: c1GpcHSOPDO_0hcD4leXxw-1
+X-Mimecast-MFC-AGG-ID: c1GpcHSOPDO_0hcD4leXxw_1772719511
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82B25180057B; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7ACF21955DE2; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 099B01958DC7; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11E8D1956095; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9B43921E6880; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
+ id 9713F21E692D; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 2/6] scripts/checkpatch: Fix MAINTAINERS update warning with
- --terse
-Date: Thu,  5 Mar 2026 15:05:04 +0100
-Message-ID: <20260305140508.218316-3-armbru@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 1/6] hw/core: Deprecate query-kvm
+Date: Thu,  5 Mar 2026 15:05:03 +0100
+Message-ID: <20260305140508.218316-2-armbru@redhat.com>
 In-Reply-To: <20260305140508.218316-1-armbru@redhat.com>
 References: <20260305140508.218316-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
@@ -86,64 +86,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently improved the MAINTAINERS update warning to show the files
-that trigger it.  Example:
+query-accelerators covers all accelerators, and should be used
+instead.
 
-    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-    #105:
-    deleted file mode 100644
-
-improved to
-
-    WARNING: added, moved or deleted file(s):
-
-      migration/threadinfo.h
-      migration/threadinfo.c
-
-    Does MAINTAINERS need updating?
-
-Unfortunately, this made things worse with --terse, as only the first
-line of each warning is shown then.
-
-    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-
-became
-
-    WARNING: added, moved or deleted file(s):
-
-Adjust the warning text to
-
-    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
-      migration/threadinfo.h
-      migration/threadinfo.c
-
-so we get the exact same warning as we used to with --terse.
-
-Fixes: 1d745e6d9635 (scripts/checkpatch: use new hook for MAINTAINERS update check)
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260109071217.2326194-1-armbru@redhat.com>
+Message-ID: <20260108131455.2240598-2-armbru@redhat.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[Rebased, missing section title markup fixed]
 ---
- scripts/checkpatch.pl | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ docs/about/deprecated.rst | 5 +++++
+ qapi/accelerator.json     | 8 +++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index 3a9557417f..6f270becdc 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1473,9 +1473,9 @@ sub process_file_list {
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index d0ce914d85..ee29c4fb89 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -142,6 +142,11 @@ Use ``job-dismiss`` instead.
  
- 	# If we don't see a MAINTAINERS update, prod the user to check
- 	if (int(@maybemaintainers) > 0 && !$sawmaintainers) {
--		WARN("added, moved or deleted file(s):\n\n  " .
--		     join("\n  ", @maybemaintainers) .
--		     "\n\nDoes MAINTAINERS need updating?\n");
-+                WARN("added, moved or deleted file(s),"
-+		     " does MAINTAINERS need updating?\n  "
-+		     . join("\n  ", @maybemaintainers));
- 	}
- }
+ Use ``job-finalize`` instead.
  
++``query-kvm`` (since 11.0)
++''''''''''''''''''''''''''
++
++Use ``query-accelerators`` instead.
++
+ Human Machine Protocol (HMP) commands
+ -------------------------------------
+ 
+diff --git a/qapi/accelerator.json b/qapi/accelerator.json
+index 0cf5e0f9d9..b59df37866 100644
+--- a/qapi/accelerator.json
++++ b/qapi/accelerator.json
+@@ -29,6 +29,11 @@
+ #
+ # Return information about KVM acceleration
+ #
++# Features:
++#
++# @deprecated: This command is deprecated.  Use `query-accelerators`
++#     instead.
++#
+ # Since: 0.14
+ #
+ # .. qmp-example::
+@@ -36,7 +41,8 @@
+ #     -> { "execute": "query-kvm" }
+ #     <- { "return": { "enabled": true, "present": true } }
+ ##
+-{ 'command': 'query-kvm', 'returns': 'KvmInfo' }
++{ 'command': 'query-kvm', 'returns': 'KvmInfo',
++  'features': [ 'deprecated' ] }
+ 
+ ##
+ # @x-accel-stats:
 -- 
 2.53.0
 
