@@ -4,125 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77770F47CA2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB4BF47CA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCev-0000B6-4I; Thu, 05 Mar 2026 12:38:49 -0500
+	id 1vyCnA-0001tD-Oe; Thu, 05 Mar 2026 12:47:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyCet-0000Ar-AM
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:38:47 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyCn9-0001s6-5z
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:47:19 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyCer-0000yO-PQ
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:38:47 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ae5423b02aso34022345ad.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:38:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyCn7-00023P-LS
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:47:18 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-798578e2918so78353727b3.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:47:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772732836; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VRQAGaOshwy5fW1SkocQY/vcdQBDH7lO7GSONsyAlJyp51xxfMq6sySGMmuHBwXK69
+ RrIU2QscI8v3o1mYY0we5Gm4oVFlMuomdnBvixx52GbwapRsmFqqkDlb5Gv9L8qKKy/5
+ 59T7mopRzt8J5w+xpHon0nZbSPRiLI5bN6VSHLxZO5oB8h0UfHGn2TLPDFXK3pWUZWAE
+ 7GEMi4yMyzokrnlv6hZw6TDRzXLaY1TaDab3RIqGEj85JzrKjxXfCv1jgr7g1r5Pw9zp
+ SfyDlbtaEi9rURDpHd10POdRA6i9BC1wvsZw/amst358si29DoJh2QuOzHhApzvhYcBF
+ oEKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=VzOEpTifqDe8W8XBQgO9RHZD40wqT/qXX2JvoFIqRnU=;
+ fh=HEYKxdnOCHCEn5FRF+hHHVM86rDkVhD0oqRuWk6Tuys=;
+ b=lGW6eNUOhErkaCyJoVxVyIFElTl9fEbYCdSe7GpmKccZ3aSNm95aGavDm3ICjOGd0a
+ MhVKEiiP2nKCSugm4MppAzlVx3SlIGwksbHfm6oGVjTpTMFamfVCCZ+QnGxzkCiyMH0K
+ bFjV0TWsSanOEzy6r8EIt59cFbJp7SLYA+mecw2GVsE7oE64/9xW2C2H82zs7Xagjvzm
+ CM+FDTLMZ67hQ/5hKsO2b2Pr+1uWqk+xgUZ8gNknK1te0E4HrjbC+8hCxgP8LjGyazwc
+ TwhWvYkMyejAjVDK9RL1wY878vOTra++kzGYyBBRz8ZmLKs+GXcas2/3Uz0+RPhbTffD
+ oNpw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772732324; x=1773337124; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zczohjyMuSDiCnHZqCOz3jQ+XKpaDvM/myJrEQCLjzw=;
- b=mHLV8xcGF9upjHvY4Jc3E00hyfJybeDPO/I0Ba5cdW/+0INx8E6bXIKk00mXquDRue
- R0rdKQsVWhB8YV5mW11v0nhMGKqFFFWec5VjWWSMorE9Fph0hkz7n1KRcjqB1KQEtBga
- yc60lfNVuM1fZe1+eRM/34GL4cimg7yug2O+U2NI+HP87CrL6zxCFZSoKOUC/i6Wn489
- SJJU7uUwlLqFxOBsxlcLbTV4ooLk5sR0tvLwBb16mzC4mEin6PMECoikoVbCasWM+vwf
- gUszVFCEN2a+z2EqTkm0sRi27y7p7LU+0iypGz8POhZM/+tltjh6mhJZD6tQjb90lvCq
- Hzjw==
+ d=linaro.org; s=google; t=1772732836; x=1773337636; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=VzOEpTifqDe8W8XBQgO9RHZD40wqT/qXX2JvoFIqRnU=;
+ b=xDW7QvnbkFB2IycdWzc/kwO6csS+7Huv73mvgH7Z5dyY3mWDYhERMxzptX4rSR2be4
+ U2+jiZAhyz8hEoSf0cu3pMOteaPVKABng8fCaVNFs3OTZd2gPHjcrgF5haAZRvbwHJx8
+ 8ErDPbqgQ0FmQUNZqusvfJhYfxC1YQNHqgsaFGpxEqdTGawLKjp9BOA7m+rhBidvkzpl
+ 3o58bfg/TPnsYyVdf32ixGfFgmSw2k8EEzZHKM6lLgVDoTX0NUgjjD1l/L1xt1pF4IpG
+ ouPSS1okX2oCJ8lN/vG45P7ynmUGczuCAjmC4SFhBIITZGRVGJFZ2k3JvB+2cn34/Fxa
+ oQdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772732324; x=1773337124;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zczohjyMuSDiCnHZqCOz3jQ+XKpaDvM/myJrEQCLjzw=;
- b=J/g9r0kQPMe7xxe5h82VLMB2od8Yi1rI7/+MXipD3lPeDQj2hY6Ckza70yF5cZlOIi
- NOyCAMcpVMUCimkbw17nVM9lk+0Ns3X9ejJsbtozXgFZR3D9hq0GaxTzCPBmiL7CG5hN
- MTPENt8pp6abWjt9g8xlyA1vH942HB0F7TdoIgkQkSg5D5ESEZis7KcMMqAev7wleK11
- Y+3HvNbeYdafteNItppTqPUo2KavzcecNPiZzt2SExtlprLGkOatLFd9aCoKzHI5k059
- OuBw8NfryCQ1s2QvoFZ1yp8cyuJ9drcZth357cKZ+68NjF2HYIC2xeFsYDCMZ9xlmXe/
- /Yxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVb0lMEM3g4NfiP3NfB7HCugX7N9an+f3yrdQ7uWgfIAQd1bRP8ZflDKaMEsOO1JvGw162hvHEAfuQd@nongnu.org
-X-Gm-Message-State: AOJu0YxnZzgP476mOk2c8cho2cppLUbrbEvQuzw3nhdcqPZOIsRx+8Od
- FqnnzSsdaaIlFaWIcLE750ldrQLPZ1ZEADOtZ3obE9CTXP4qFPlWPCPyXnvfmvP8Ijo3NzIQISQ
- ogFlE
-X-Gm-Gg: ATEYQzxXtwhOI9aD3jpRP3NLrG8RiXotRfKQWhHbWs47J2QEE7iOH5fl+wQmR3dF54T
- My3HIGAKvMDxUR7MPxo2i4PxdGNvVKnqIfGlfPRl9JqcqQ0fyVvb9ApN1jPc91FVY4rAVyy4m6g
- irJ4fAN9rAKLcwL1vmLWAipuHcs8CyeqhPtEx3bcc/MdKlHxYcV1qKeVJGn6Qnxvg8aiRifN2kZ
- KmF3bhgYAynRmHStxCV/qZyK9yA6HuDh12RK1X6KIBFL/gIW/Neoja7Fb+FiqFGMTyNVyJicqtG
- WKPqCNmiISlCmiJ7awPaUHYvSZHUNeQtHkL5o1hfpJPKrrG1AdO1mteOsBdX1JakF8cVeDioIsp
- Y3lO0f38koJMoq86b0i3s/8FpwmEsrRFZgS4i/+81yyxi/ZvFtMUpiFSuh1eZPPTaIbirnLBDLN
- VtCGgRSquiNCYE4QGlT5BLvS7idb+1zXXYkH4R7UQITO7ncucXjEckbhTMmMQ3z4V60Ir9BaZys
- fPRrLY=
-X-Received: by 2002:a17:902:ea0a:b0:2ae:4f81:2f14 with SMTP id
- d9443c01a7336-2ae6aa62179mr61737095ad.24.1772732324330; 
- Thu, 05 Mar 2026 09:38:44 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae4b782c53sm131416345ad.41.2026.03.05.09.38.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 09:38:43 -0800 (PST)
-Message-ID: <6a344053-bbed-4d3d-b12a-aa8664ce132a@linaro.org>
-Date: Thu, 5 Mar 2026 09:38:43 -0800
+ d=1e100.net; s=20230601; t=1772732836; x=1773337636;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VzOEpTifqDe8W8XBQgO9RHZD40wqT/qXX2JvoFIqRnU=;
+ b=Zrp2E4Wtp6N1jBsuQHX3MAeGJvBNYmjFR2rS669KUsitSU9gXMJepCFlqwqXKA58Xv
+ Rkcvzt3iLPh0bp5cCp29eWJZX8q0OF12LJp8uwOmQ0Dd3TqgbCrqz9J6ISZmb49uuISn
+ btZDboyjhGbh6wcY2D/p6Cull+pQ3rEFA0c4DyGur6b4HS9K1lmIV+AeQhRxVbmxp83k
+ XVWSmvB8qPzPoAP38byqGHVFi6hxcfqeum6RO9bGOy3xrUB4NlUbvTBlgp3Ln9/wY9kW
+ uObqpc+/pm4bpGbHt2csVhDi2/LWeu3kEY/FbYywX7JGRNA8e3JwElnYP82hCd881NIX
+ 5WsA==
+X-Gm-Message-State: AOJu0YxzorLPS7Sw11+ecNSQ3lnY2wTs2OJCtuGI5io+zGzyhAa/EEA/
+ BwFdMOR9U3dFR8meFuNDqR1eK/s0yMJ7NROR8wMc+isqtMefFGS9/oQi+XW/2/+XtpBd/ElovSk
+ 7KRnZeeoQiJGb+gKwQUVL+AAsHiyNg/QpzRH+D+WkIiwGoHmyMnzhxwk=
+X-Gm-Gg: ATEYQzxP2r0kw14KGJGTYqPnlP41Fv6sMDJQ7WlFmEPgjSXnAP/9UjwZGya2KuLWFKV
+ ZjZ6Yb0lCshXJJDrUNHYYKUMBDDz1Nhx6AsxJMqtD4q/QZmHFbTSVduBalCtb+JnYDbMmypOCbY
+ sUen8tsluot9jtqhnzbXz2KvlEd/O4ZR5kSdLdEcIiPKOS41zHHhNtd7aGY34LBh12zDPfMQsy/
+ 1GjsgZ5Qn5Ua8zBT5CcVHVNmxevUqFBYeCKcjojLYhKc7ye9trOv9OZCw0BBcwt4JO7/G/6nmd5
+ 0ze2WOItc6w19I4i0/5av+1sDS/vLJFjpzRWIIc6WuVjG7lf2dNwEXEN7DIMCdbiwn7j8jEXCDR
+ qjg==
+X-Received: by 2002:a53:b191:0:b0:64c:b7c9:dffd with SMTP id
+ 956f58d0204a3-64cf9bb00ccmr4188790d50.58.1772732836096; Thu, 05 Mar 2026
+ 09:47:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/8] plugins/core: clamp syscall arguments if target is
- 32-bit
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Mar 2026 17:47:04 +0000
+X-Gm-Features: AaiRm50SbtMPHOsZcmh9-SXSrbn2zVW9NUgnpSWn8X06ZsO2AaonCwRuRXSeddY
+Message-ID: <CAFEAcA9QAyZjjj4kXeC+wM4gg_C+U6Z7McYGrB9u=C1PbiaWZw@mail.gmail.com>
+Subject: duplicating CPUs with memcpy() in cpu_copy() vs memory-allocated
+ things in CPUArchState structs
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: Laurent Vivier <Laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Richard Henderson <richard.henderson@linaro.org>
-References: <20260305-setpc-v5-v7-0-4c3adba52403@epfl.ch>
- <20260305-setpc-v5-v7-1-4c3adba52403@epfl.ch>
- <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,64 +113,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/26 9:33 AM, Philippe Mathieu-Daudé wrote:
-> +Laurent
-> 
-> On 5/3/26 11:05, Florian Hofhammer wrote:
->> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Syscall arguments are abi_long in user code, and plugin syscall
->> interface works with uint64_t only.
->>
->> According to C integer promotion rules, the value is sign extended
->> before becoming unsigned, thus setting high bits when only 32-bit lower
->> ones should have a significant value.
->>
->> As a result, we need to clamp values we receive from user-code
->> accordingly.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    plugins/core.c | 21 +++++++++++++++++++++
->>    1 file changed, 21 insertions(+)
->>
->> diff --git a/plugins/core.c b/plugins/core.c
->> index 42fd986593..d6173422e9 100644
->> --- a/plugins/core.c
->> +++ b/plugins/core.c
->> @@ -513,6 +513,23 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
->>        }
->>    }
->>    
->> +static void clamp_syscall_arguments(uint64_t *a1, uint64_t *a2, uint64_t *a3,
->> +                                    uint64_t *a4, uint64_t *a5, uint64_t *a6,
->> +                                    uint64_t *a7, uint64_t *a8)
->> +{
->> +    if (target_long_bits() == 32) {
-> 
-> IIUC this is related to the target ABI, so maybe we want to
-> unconditionally use:
-> 
->      const uint64_t mask = MAKE_64BIT_MASK(0, TARGET_ABI_BITS);
->
-> Maybe guarded with #if TARGET_ABI_BITS < 64?
->
+In the user-only emulators we need to be able to create a new CPU
+object for a newly created thread that has the same state as the
+one in the parent thread. We currently do that in cpu_copy()
+in linux-user/main.c, which does:
 
-More broadly, I really wonder why we use signed type for syscall 
-arguments in linux-user, while I think they should always be unsigned.
-But since soft freeze is coming very soon, it's not the time for a 
-refactoring solution, thus this pragmatic, but correct, patch.
+    CPUState *cpu = env_cpu(env);
+    CPUState *new_cpu = cpu_create(cpu_type);
+    CPUArchState *new_env = cpu_env(new_cpu);
 
->> +        const uint64_t mask = UINT32_MAX;
->> +        *a1 &= mask;
->> +        *a2 &= mask;
->> +        *a3 &= mask;
->> +        *a4 &= mask;
->> +        *a5 &= mask;
->> +        *a6 &= mask;
->> +        *a7 &= mask;
->> +        *a8 &= mask;
->> +    }
->> +}
+    /* Reset non arch specific state */
+    cpu_reset(new_cpu);
 
+    memcpy(new_env, env, sizeof(CPUArchState));
+
+plus some special casing for things in the CPUState (cflags,
+and breakpoints), and an ifdef for x86.
+
+This makes several assumptions:
+
+(1) nothing in a target's CPU struct is runtime state that needs
+to be copied across from the old thread's CPU
+(2) everything in a target's CPU env struct can be handled by
+a shallow memcpy() from the old to the new
+
+Unfortunately (2) isn't true. The example I ran into was
+MIPS, which allocates a data structure pointed to by env->mvp.
+Copying the pointer from the old CPU means we leak the structure
+the new CPU allocated on creation. (We don't actually try to free
+this at the moment, but if we did try to free it we'd do a double
+free because both CPUs would be pointing to the same thing.)
+It seems likely that there are others too.
+
+(1) seems on somewhat shaky ground too, especially as we don't
+document it.
+
+There are a couple of ways I can see that we could try to fix this:
+
+(A) We could insist that every target's CPUFooState (env struct)
+must be shallow-copiable, and anything that isn't (pointers, etc)
+needs to be moved out to its FOOCPU (QOM CPU object struct).
+Then we could let targets implement any per-target copying specifics
+in some function in linux-user/$ARCH/ that we call from cpu_copy()
+after doing the memcpy(). This would be painful if there are any
+targets that have something non shallow-copiable that they want
+access to directly from generated code, which has the env pointer
+but not the CPU object struct.
+
+(B) We could standardize the "end_reset_fields" convention that
+some targets have in their env struct, where an empty struct
+marks the end of the point in the struct where fields can be
+reset by zeroing them. If they can be reset by zeroing they can
+also be safely shallow copied with memcpy(). We could then let the
+target handle anything else via some target hook as above.
+This would require a lot of targets having this field marker added,
+which could be a pain if they don't have their structs ordered in
+a convenient way for this.
+
+(C) We could say that trying to write generic code that can
+copy a target-specific structure is a fool's errand, and require
+the targets to implement it entirely themselves (only copying the
+stuff in the common CPU base class in common code). If a plain
+memcpy() works for them then their implementation can be simple.
+
+Any preferences ?
+
+thanks
+-- PMM
 
