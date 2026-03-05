@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9E0EEF310
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB030EEF30F
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy2gN-0003Ro-QO; Thu, 05 Mar 2026 01:59:40 -0500
+	id 1vy2gl-0003Y9-BE; Thu, 05 Mar 2026 02:00:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vy2gL-0003RJ-BC
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:37 -0500
+ id 1vy2ga-0003XN-Qg
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:56 -0500
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vy2gJ-0007qG-SB
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:37 -0500
+ id 1vy2gZ-0007qy-49
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772693976; x=1804229976;
+ t=1772693991; x=1804229991;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=8DjDopZg0XVik4k1ICxjRmt2mb1IxbLdY763BFKsh0Y=;
- b=mVFNklcrZr0mKYTVFhok2PTTWkywo4CheFlVw4lSAnHlTMBesk0BYVw3
- 7tURs49PkTHFTJnI6R8RePYg1ObJee25xO6KB8zCgcc8WOKWYPRlZ9zTj
- ODuyUKa+UzXai7oiIs4EmlrwgWVT6YjWSNxdSZ2Ps8QaItUHaHM5WR9u5
- YIha4gFz8lghfSgJfYchSS6bZHl7ZSVPZZ9Z3sHtpC0tN85CC2Qp+UHwb
- zlH+IGlopIxPT2Oishn06zs0am41vuxiisHlGJ/5I4XbN+9ntZPXwBCbR
- IR64odU18xXcOzDBZm3r91LN/4UsiRYtl/fHmMh9aML4CH2FvR8V7WxH9 g==;
-X-CSE-ConnectionGUID: HO6kfL/DRNiyi1iaJKQiKA==
-X-CSE-MsgGUID: 7aTqijcqQXqFy8Cnhudz6g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11719"; a="91343505"
-X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="91343505"
+ bh=YUNbrp4edfd3cukBdHdjKpuhqQeo/bSB3kVXDpXzORs=;
+ b=FV6XvX1CUqiI4TZEVo7ORLLrEfdOEreYdrto9glck7YarH6xJoyQBL6S
+ W7dL43PHgE+N69AD6MKLM/vtFCyIwmTuzYj8VZD3JqhMQQcCspnUdDexP
+ 7EjZDfMaJMIy+QeKZ+/uFrauoJwZ9XPziuVDF+1qQMPn5Lbnj+wLwqbfG
+ xDlJCyfnTSS/FXd5Ftx054GJVsQ1f6/h7UywdpTSO79CjPnTgDAbz772S
+ 0BV2SM8Y30994UI3j/SbUyoMfK8RXHy/e8qMVaoFEVhS6oN9VG0H9R2uD
+ uSxBuA8pcPRCofEFPA6chfzy+g9i54sGXkYBOD5gOrVZbqCW2Tdb7Av07 A==;
+X-CSE-ConnectionGUID: C4DO4CS9Q36LkuioUa3cPQ==
+X-CSE-MsgGUID: s7fl8r8WTZ2JiqvD0k7keA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11719"; a="91343534"
+X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="91343534"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2026 22:59:30 -0800
-X-CSE-ConnectionGUID: +/Wro/ogQAW7VovSrmO3pQ==
-X-CSE-MsgGUID: OaPplAt/QLSK1I8uD2maEw==
+ 04 Mar 2026 22:59:31 -0800
+X-CSE-ConnectionGUID: HWbDSD/iSSmgj15nBe49cQ==
+X-CSE-MsgGUID: bQ1+LUWzSNebDaM/tGvd2Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="218725666"
+X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="218725688"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2026 22:59:29 -0800
+ 04 Mar 2026 22:59:31 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -55,10 +55,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v9 04/10] virtio-gpu-dmabuf: Remove rcu_read_lock/unlock from
- virtio_gpu_create_udmabuf()
-Date: Wed,  4 Mar 2026 22:54:35 -0800
-Message-ID: <20260305065700.1155146-5-vivek.kasireddy@intel.com>
+Subject: [PATCH v9 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Date: Wed,  4 Mar 2026 22:54:41 -0800
+Message-ID: <20260305065700.1155146-11-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
 References: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
@@ -90,10 +90,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need to wrap the call to qemu_ram_block_from_host() with
-rcu_read_lock/unlock as we already hold a reference to the memory
-region that owns the ram block. Note that, the reference was obtained
-via dma_memory_map() while creating the mapping.
+In addition to memfd, a blob resource can also have its backing
+storage in a VFIO device region. Since, there is no effective way
+to determine where the backing storage is located, we first try to
+create a dmabuf assuming it is in memfd. If that fails, we try to
+create a dmabuf assuming it is in VFIO device region.
+
+So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+backing storage is located in a memfd or not. If it is not, we invoke
+the vfio_device_create_dmabuf_fd() API which identifies the right
+VFIO device and eventually creates a dmabuf fd.
+
+Note that, for mmapping the dmabuf, we directly call mmap() if the
+dmabuf fd was created via virtio_gpu_create_udmabuf() since we know
+that the udmabuf driver supports mmap(). However, if the dmabuf was
+created via vfio_device_create_dmabuf_fd(), we use the
+vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -101,27 +113,53 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu-dmabuf.c | 3 ---
- 1 file changed, 3 deletions(-)
+ hw/display/virtio-gpu-dmabuf.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-index c34d4c85bc..0782bcf3a1 100644
+index dd64fbbc2d..7f4c399416 100644
 --- a/hw/display/virtio-gpu-dmabuf.c
 +++ b/hw/display/virtio-gpu-dmabuf.c
-@@ -43,10 +43,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-                      sizeof(struct udmabuf_create_item) * res->iov_cnt);
+@@ -136,7 +136,7 @@ bool virtio_gpu_have_udmabuf(void)
  
-     for (i = 0; i < res->iov_cnt; i++) {
--        rcu_read_lock();
-         rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
--        rcu_read_unlock();
--
-         if (!rb || rb->fd < 0) {
-             g_free(list);
-             return;
+ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+-    Error *local_err = NULL;
++    Error *local_err = NULL, *vfio_err = NULL;
+     void *pdata = NULL;
+     int ret;
+ 
+@@ -155,10 +155,24 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+         }
+ 
+         if (ret == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+-            qemu_log_mask(LOG_GUEST_ERROR,
+-                          "Cannot create dmabuf: incompatible memory\n");
+-            error_free(local_err);
+-            return;
++            ret = vfio_device_create_dmabuf_fd(res->iov, res->iov_cnt,
++                                               &vfio_err);
++            if (ret > 0) {
++                if (vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &pdata,
++                                            res->blob_size, &vfio_err)) {
++                    error_free(local_err);
++                    goto out;
++                }
++            }
++
++            if (ret == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "Cannot create dmabuf: incompatible memory\n");
++                error_free(vfio_err);
++                error_free(local_err);
++                return;
++            }
++            error_report_err(vfio_err);
+         }
+         error_report_err(local_err);
+         return;
 -- 
 2.53.0
 
