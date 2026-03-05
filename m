@@ -4,91 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B65F47CDB
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 21:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4942CF47CDB
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 21:34:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyG0i-0005l3-Ti; Thu, 05 Mar 2026 16:13:32 -0500
+	id 1vyGKM-0000rb-5e; Thu, 05 Mar 2026 16:33:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vyG0g-0005kk-GG
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:13:30 -0500
-Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vyG0e-0000zS-TX
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:13:30 -0500
-Received: by mail-qk1-x731.google.com with SMTP id
- af79cd13be357-8cb38e6d164so1103297285a.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 13:13:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1772745207; x=1773350007; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=AuIW6rUe9wDJjgI+kdtGhlvZPZcNSMX7nz6lR1Qg9lQ=;
- b=DeIqBvDL2MEHQMFVFfJxOmxvkUOCDh9a1q/whZxovFfgjn+sn7M3SSfihlx5hg/Oz9
- lVeussDIYd7UljKm54O2idPuIn48jX5ZuQC+64Ft7qrXvblp0IpPFhwUjdpJjeLzm2Ry
- zRCV65QBJkeaAHJhVO+CvZqpQ5XH02Kiy3vlCQ6leNhONKKY5A3x/FzbzumgLjWCHCFf
- Uz6cB+8BtjmU/L15yXg8NkRk43jK8cadPU0cTWRVr5XCplaGT4kZ4E7Fe63IoD23zgHQ
- WkMtwSQlx1ChRmmFxKHCUBpXxgV9/Z36nDilWb0NmPBfsZvotlojMIvNBFq8YCMljdqR
- eAxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772745207; x=1773350007;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AuIW6rUe9wDJjgI+kdtGhlvZPZcNSMX7nz6lR1Qg9lQ=;
- b=YtYnUS727Bvq1de1IXMhOdEO7ewav9mfVmigeskhw2VclPvsu61gagVz9rZhWqqEUS
- RWi0y8BKmVRAM3Zkut5Ecm1rriSkKB9eXzIqDIl3I43L/7Mt0pPcwvD87305HOQyk/q3
- 8773GqFa7iND9IUaFqTRi45k5FGFG/gCQceJNBqr8GmZ1ItdXadHt06wHOoB9e01oUZH
- Tmbf1rPu6NU9qHBaITLlXqydBef+qQJVxKaGFUdnvKhMxW6qJ8Gp1MIODf1dn8uKLBRz
- kpAUgmjXNW2ir7ELdH12p9or720neo27ioOl4ZBwr0Xuj/mKMZgiojAMhFx5TMby1BTo
- rgSw==
-X-Gm-Message-State: AOJu0YzCFK/OUxYVLwDNrk8ybOCYvs1WpjS/FiQ6I95AUfFoRHmdcA/N
- lEUPqk9aVykGGJlWdbFusfwk+xh5U7n72sVrblNnnwDGkW/eKfQIxDxLaUCqxLhJcik=
-X-Gm-Gg: ATEYQzxitTROxRqY2kcyztYW1DugmleqkC0PrkocYzUxfRLeK/+sV1NnRyHwsX3pPOl
- l5FhWZZ7YvMV3gKSo7z/fikRz/cLPExVoYyHZj42fLEYm4WJxZn8HipR9IY1uszbGgl6Pnsgcq6
- AV+rkaU+FLmhEtm0vipLQJSRLaCdq8P6yWONoT2jdNBuXUipELXxgyyxgs9DzlUKNm1xVjdAtrT
- zOjTtAQ8hk8f1/b2Qosu9cY6VeDFJoUDlQY3/7SnXzXxWKjQSrUkFxAlLh7aPW2NnpAidWwocvN
- 9C3RcHXrDitbkM2/FN+WH3aTBwzTXmx4QJWCDgoU3WwdqFdL7J7EGNPiHU+I7vSnrW4lDqEDwlP
- 0Loinoh2Pd3HM/lSkY1ER8bMxXmxSUpRe/VZEI0iVPDJV9weAx30CcDZq/CzHeXAu36NFxQUAq7
- 0i81kpcFv9KRYsrdZMprbZn8ATxaSaHlTCgTvJzr9clJF77BQWd3vCzwk53exjee3G+k0gs1kfj
- HRiwaMlJA==
-X-Received: by 2002:a05:622a:1917:b0:506:4141:48b0 with SMTP id
- d75a77b69052e-508db290abemr97368401cf.18.1772745207481; 
- Thu, 05 Mar 2026 13:13:27 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F
- (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50744ad8f8bsm188735781cf.27.2026.03.05.13.13.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 13:13:26 -0800 (PST)
-Date: Thu, 5 Mar 2026 16:13:24 -0500
-From: Gregory Price <gourry@gourry.net>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, lizhijian@fujitsu.com, anisa.su887@gmail.com,
- armbru@redhat.com, david@kernel.org, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com, mst@redhat.com,
- nifan.cxl@gmail.com, peterx@redhat.com, philmd@linaro.org,
- ppbonzini@redhat.com, venkataravis@micron.com, xiaoguangrong.eric@gmail.com
-Subject: Re: [PATCH v6 3/3] hw/cxl: Add a performant (and correct) path for
- the non interleaved cases
-Message-ID: <aanx9AVMvca5n2yY@gourry-fedora-PF4VCD3F>
-References: <20260226152034.1523-1-alireza.sanaee@huawei.com>
- <20260226152034.1523-4-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1vyGKK-0000rQ-8E
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:33:48 -0500
+Received: from mail-0701.mail-europe.com ([51.83.17.38]
+ helo=mail-07.mail-europe.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1vyGKH-0004kV-13
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:33:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthewpenney.net;
+ s=protonmail; t=1772746420; x=1773005620;
+ bh=h9d7WdkQLs54uvGRseBuRvb+sN7dCNSdLEmyOh6W2P8=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=iHMb3bgEpna3DSV9iM5YTC6E+EkdSmD155yUFES9j6lZ5QUTRYuPS0WoY9krnVESM
+ 05VuSx045z0+++FJVc0qMuZjliUREEsIZKdbonGAuN63eTINT9MdegzQEJ2gu6vr80
+ l5YZAAYyYnkiiOJ71/xLn02u7XCaHp7ZCOqI43uurE9Vn9Uq8AOEN0heQkjd4NmHgD
+ sPz0MqsggvCrZXQBn1rL/Jumv7l9tYGPfqphxrWSJP+VaEdMffjTmuVpGDRPv/Fd+J
+ tLX2HJiMOAr30m+7ezT4YQ+hDcdtz2tpJzpZIk+8OWTcCHLn0SnBtuQIJSAOvFug77
+ KJAX9VqxNTHzg==
+Date: Thu, 05 Mar 2026 21:33:32 +0000
+To: qemu-devel@nongnu.org
+From: Matthew Penney <matt@matthewpenney.net>
+Cc: Matthew Penney <matt@matthewpenney.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ lvivier@redhat.com, amit@kernel.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v2] hw/char: clear dangling GLib event source tag
+Message-ID: <20260305213308.96441-1-matt@matthewpenney.net>
+Feedback-ID: 185185778:user:proton
+X-Pm-Message-ID: ea41d04d2230d4ab7451e8eb074643f68635e9ac
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260226152034.1523-4-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
- envelope-from=gourry@gourry.net; helo=mail-qk1-x731.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: softfail client-ip=51.83.17.38;
+ envelope-from=matt@matthewpenney.net; helo=mail-07.mail-europe.com
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622, SPF_HELO_NONE=0.001,
+ SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,40 +70,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 03:20:34PM +0000, Alireza Sanaee wrote:
-> +        /*
-> +         * Optimization: Looking for a fully committed path; if the type 3 HDM
-> +         * decoder is not commmitted, it cannot lie on such a path.
-                               ^^^ committed
+Clear dangling GLib event source tag when virtio-console is
+unrealized. This prevents a stale tag from being used, and
+maintains consistency with the rest of virtio-console.
 
-... snip ...
-> +                object_child_foreach_recursive(object_get_root(),
-> +                                               cxl_fmws_direct_passthrough,
-> +                                               &state);
-> +            }
-> +        }
-> +        dpa_base += decoder_size / cxl_interleave_ways_dec(iw, &error_fatal);
-> +    }
-> +
+v2:
+Use g_clear_handle_id() per advice from Marc-Andr=C3=A9 Lureau
 
-Div-by-0 here for invalid values?
+Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+---
+ hw/char/virtio-console.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-int cxl_interleave_ways_dec(uint8_t iw_enc, Error **errp)
-{
-    switch (iw_enc) {
-    ... snip ...
-    default:
-        error_setg(errp, "Encoded interleave ways: %d not supported", iw_enc);
-        return 0;
-    }
-}
+diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
+index 25db0f019b..efe7cd6772 100644
+--- a/hw/char/virtio-console.c
++++ b/hw/char/virtio-console.c
+@@ -257,7 +257,7 @@ static void virtconsole_unrealize(DeviceState *dev)
+     VirtConsole *vcon =3D VIRTIO_CONSOLE(dev);
+=20
+     if (vcon->watch) {
+-        g_source_remove(vcon->watch);
++        g_clear_handle_id(&vcon->watch, g_source_remove);
+     }
+ }
+=20
+--=20
+2.53.0
 
-Or does this abort before return?
 
-> +    return false;
-> +}
-
-You're returning false as an 'int'
-
-~Gregory
 
