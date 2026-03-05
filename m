@@ -4,86 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9527F3D33A
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77770F47CA2
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCZr-0007rg-LY; Thu, 05 Mar 2026 12:33:35 -0500
+	id 1vyCev-0000B6-4I; Thu, 05 Mar 2026 12:38:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyCZo-0007qV-ML
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:33:33 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyCet-0000Ar-AM
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:38:47 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyCZl-0000EH-GS
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:33:30 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so3339093f8f.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:33:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyCer-0000yO-PQ
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:38:47 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2ae5423b02aso34022345ad.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:38:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772732007; x=1773336807; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1772732324; x=1773337124; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ka2HIJsgQAKn0lxDxZQRE6w76KFNVq+d9QNbm4Kyz14=;
- b=RVxDJE170fYRaEM1S8BlAYgyOjBj261xdrvB5pCfvLISh5hWl+1ARjhJpX8/+RdmdW
- wv5dkZeuZgv4lDDykcCs/uFKlG5RbNnFjiAFahUK9KY4oRJ17XESDJQCbZSqxhnBhjEB
- iGTrZKcXOWtAozisWu8agXxZOgzFjxRV4MKEVKFV9MxWGbfBGaX8+b7Up6geLcsyWseA
- +ENPEyqFIBrLc4MN3M13JJCgSmZdSEO9EY5y1/SFOZ/ZXu1Qy5QWv7la26P6kXRW+9Qu
- ao3n45QbsUeQy/N56D0DEogqW0yUX3X5cPR/8kFbvFyUFg0tWwZR7hP6FvLHCKHWZdH/
- Ouig==
+ bh=zczohjyMuSDiCnHZqCOz3jQ+XKpaDvM/myJrEQCLjzw=;
+ b=mHLV8xcGF9upjHvY4Jc3E00hyfJybeDPO/I0Ba5cdW/+0INx8E6bXIKk00mXquDRue
+ R0rdKQsVWhB8YV5mW11v0nhMGKqFFFWec5VjWWSMorE9Fph0hkz7n1KRcjqB1KQEtBga
+ yc60lfNVuM1fZe1+eRM/34GL4cimg7yug2O+U2NI+HP87CrL6zxCFZSoKOUC/i6Wn489
+ SJJU7uUwlLqFxOBsxlcLbTV4ooLk5sR0tvLwBb16mzC4mEin6PMECoikoVbCasWM+vwf
+ gUszVFCEN2a+z2EqTkm0sRi27y7p7LU+0iypGz8POhZM/+tltjh6mhJZD6tQjb90lvCq
+ Hzjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772732007; x=1773336807;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1772732324; x=1773337124;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ka2HIJsgQAKn0lxDxZQRE6w76KFNVq+d9QNbm4Kyz14=;
- b=eRXMqmCJCDKI5+x75R1MzaSWJbPyTOk+6FEeBqfwDiIFRXH72BFMUTp372Ih9ls2hJ
- 31wXjsyYsEMRfmzJniLXo8ltHjaPqzORI2Q/h5dJDjpySfqzpiPJ+Z+Xf6JbiLazgbEj
- hOZQnT2txFoxS5B4wzCb08LnLMpENvyhGYL3GONCc0p63dL3KrU3N5OLX16FmT1afI5a
- mWrz42O367sBK/m8wIRuNg+lRbPfeFz8anidsjLffjo8RjsufFO8nd0EXkAKNFgxbE1x
- Or0YFNnbSItUkMQ2QONx7NhbwiGpf4bE3UbxYCZnYJnN1S01fZEICccH9kO9MX7a3t0r
- v3uA==
+ bh=zczohjyMuSDiCnHZqCOz3jQ+XKpaDvM/myJrEQCLjzw=;
+ b=J/g9r0kQPMe7xxe5h82VLMB2od8Yi1rI7/+MXipD3lPeDQj2hY6Ckza70yF5cZlOIi
+ NOyCAMcpVMUCimkbw17nVM9lk+0Ns3X9ejJsbtozXgFZR3D9hq0GaxTzCPBmiL7CG5hN
+ MTPENt8pp6abWjt9g8xlyA1vH942HB0F7TdoIgkQkSg5D5ESEZis7KcMMqAev7wleK11
+ Y+3HvNbeYdafteNItppTqPUo2KavzcecNPiZzt2SExtlprLGkOatLFd9aCoKzHI5k059
+ OuBw8NfryCQ1s2QvoFZ1yp8cyuJ9drcZth357cKZ+68NjF2HYIC2xeFsYDCMZ9xlmXe/
+ /Yxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8jJwjQuFXiqQlS+Up+a/DbrJTiMD6dizDSnSU7p9WeSHUIntDwuvLYIlyU6RKxf3L/WeIz/ztkYzl@nongnu.org
-X-Gm-Message-State: AOJu0YzpWfCxpChVOVelH03YI8zc958jfCiruioyqbJc3a6vkt/JqRar
- oeBys1VyEMXRLJaF03Zgag47L02NKOKe0eixzUBXPK8aKbYLH+Fix6MDm+tDIQNK0Bg=
-X-Gm-Gg: ATEYQzxDVXNJxzYsearQVj54l2aBN5fHt6LdUFw1LAbXbppyJZ3XHbW7fygXJbWUKh4
- LQwWkZjogl2C9FMxBnZBkY4JAf4jmrGlIEo8fRf5z7i6Nh8OdqRb00YJTz/3ZBtgpPMzigN05gk
- zH7wB5/Z3ylqMEvYWMli2jkg7vkGHgvvXYhYwC5kFeiZnQsnmFEc2GYzV36ALY9TyNwnCw/9q48
- P3JlWi2pzsjxYC3AK9VHj4jCingyCeY1NdhKGiKLV3SPLWDsbKEr7O9CnZMMZfDxxm4U0qFLF+T
- gYlEmoL+pEK1hEgJ+IR9vGwWaX3LKQX140EJqIL6wJhQNULzP8Ll2oG27t5jj7fdTjcoL4ytP8i
- 1pV6KjlECIZNiV7x8TQuLVA+V9rvGgXMTjM+FVtqNVYA05pYjEJKu0i320eHvHYFwzd09o5PI42
- Mw/0KhINbzkFOXVIv31V8EKymfMZ8MkIZcumJ2vcD1gTOfpjIKmm8X0V4CQRdjQkDHNg==
-X-Received: by 2002:a05:6000:420f:b0:439:ad2d:99f7 with SMTP id
- ffacd0b85a97d-439c80005b8mr12153266f8f.28.1772732006782; 
- Thu, 05 Mar 2026 09:33:26 -0800 (PST)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4399c75b272sm50061340f8f.24.2026.03.05.09.33.25
+ AJvYcCVb0lMEM3g4NfiP3NfB7HCugX7N9an+f3yrdQ7uWgfIAQd1bRP8ZflDKaMEsOO1JvGw162hvHEAfuQd@nongnu.org
+X-Gm-Message-State: AOJu0YxnZzgP476mOk2c8cho2cppLUbrbEvQuzw3nhdcqPZOIsRx+8Od
+ FqnnzSsdaaIlFaWIcLE750ldrQLPZ1ZEADOtZ3obE9CTXP4qFPlWPCPyXnvfmvP8Ijo3NzIQISQ
+ ogFlE
+X-Gm-Gg: ATEYQzxXtwhOI9aD3jpRP3NLrG8RiXotRfKQWhHbWs47J2QEE7iOH5fl+wQmR3dF54T
+ My3HIGAKvMDxUR7MPxo2i4PxdGNvVKnqIfGlfPRl9JqcqQ0fyVvb9ApN1jPc91FVY4rAVyy4m6g
+ irJ4fAN9rAKLcwL1vmLWAipuHcs8CyeqhPtEx3bcc/MdKlHxYcV1qKeVJGn6Qnxvg8aiRifN2kZ
+ KmF3bhgYAynRmHStxCV/qZyK9yA6HuDh12RK1X6KIBFL/gIW/Neoja7Fb+FiqFGMTyNVyJicqtG
+ WKPqCNmiISlCmiJ7awPaUHYvSZHUNeQtHkL5o1hfpJPKrrG1AdO1mteOsBdX1JakF8cVeDioIsp
+ Y3lO0f38koJMoq86b0i3s/8FpwmEsrRFZgS4i/+81yyxi/ZvFtMUpiFSuh1eZPPTaIbirnLBDLN
+ VtCGgRSquiNCYE4QGlT5BLvS7idb+1zXXYkH4R7UQITO7ncucXjEckbhTMmMQ3z4V60Ir9BaZys
+ fPRrLY=
+X-Received: by 2002:a17:902:ea0a:b0:2ae:4f81:2f14 with SMTP id
+ d9443c01a7336-2ae6aa62179mr61737095ad.24.1772732324330; 
+ Thu, 05 Mar 2026 09:38:44 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ae4b782c53sm131416345ad.41.2026.03.05.09.38.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 09:33:25 -0800 (PST)
-Message-ID: <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
-Date: Thu, 5 Mar 2026 18:33:25 +0100
+ Thu, 05 Mar 2026 09:38:43 -0800 (PST)
+Message-ID: <6a344053-bbed-4d3d-b12a-aa8664ce132a@linaro.org>
+Date: Thu, 5 Mar 2026 09:38:43 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v7 1/8] plugins/core: clamp syscall arguments if target is
  32-bit
 Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20260305-setpc-v5-v7-0-4c3adba52403@epfl.ch>
  <20260305-setpc-v5-v7-1-4c3adba52403@epfl.ch>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260305-setpc-v5-v7-1-4c3adba52403@epfl.ch>
+ <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,56 +145,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Laurent
-
-On 5/3/26 11:05, Florian Hofhammer wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 3/5/26 9:33 AM, Philippe Mathieu-Daudé wrote:
+> +Laurent
 > 
-> Syscall arguments are abi_long in user code, and plugin syscall
-> interface works with uint64_t only.
+> On 5/3/26 11:05, Florian Hofhammer wrote:
+>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Syscall arguments are abi_long in user code, and plugin syscall
+>> interface works with uint64_t only.
+>>
+>> According to C integer promotion rules, the value is sign extended
+>> before becoming unsigned, thus setting high bits when only 32-bit lower
+>> ones should have a significant value.
+>>
+>> As a result, we need to clamp values we receive from user-code
+>> accordingly.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    plugins/core.c | 21 +++++++++++++++++++++
+>>    1 file changed, 21 insertions(+)
+>>
+>> diff --git a/plugins/core.c b/plugins/core.c
+>> index 42fd986593..d6173422e9 100644
+>> --- a/plugins/core.c
+>> +++ b/plugins/core.c
+>> @@ -513,6 +513,23 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
+>>        }
+>>    }
+>>    
+>> +static void clamp_syscall_arguments(uint64_t *a1, uint64_t *a2, uint64_t *a3,
+>> +                                    uint64_t *a4, uint64_t *a5, uint64_t *a6,
+>> +                                    uint64_t *a7, uint64_t *a8)
+>> +{
+>> +    if (target_long_bits() == 32) {
 > 
-> According to C integer promotion rules, the value is sign extended
-> before becoming unsigned, thus setting high bits when only 32-bit lower
-> ones should have a significant value.
+> IIUC this is related to the target ABI, so maybe we want to
+> unconditionally use:
 > 
-> As a result, we need to clamp values we receive from user-code
-> accordingly.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   plugins/core.c | 21 +++++++++++++++++++++
->   1 file changed, 21 insertions(+)
-> 
-> diff --git a/plugins/core.c b/plugins/core.c
-> index 42fd986593..d6173422e9 100644
-> --- a/plugins/core.c
-> +++ b/plugins/core.c
-> @@ -513,6 +513,23 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
->       }
->   }
->   
-> +static void clamp_syscall_arguments(uint64_t *a1, uint64_t *a2, uint64_t *a3,
-> +                                    uint64_t *a4, uint64_t *a5, uint64_t *a6,
-> +                                    uint64_t *a7, uint64_t *a8)
-> +{
-> +    if (target_long_bits() == 32) {
+>      const uint64_t mask = MAKE_64BIT_MASK(0, TARGET_ABI_BITS);
+>
+> Maybe guarded with #if TARGET_ABI_BITS < 64?
+>
 
-IIUC this is related to the target ABI, so maybe we want to
-unconditionally use:
+More broadly, I really wonder why we use signed type for syscall 
+arguments in linux-user, while I think they should always be unsigned.
+But since soft freeze is coming very soon, it's not the time for a 
+refactoring solution, thus this pragmatic, but correct, patch.
 
-    const uint64_t mask = MAKE_64BIT_MASK(0, TARGET_ABI_BITS);
+>> +        const uint64_t mask = UINT32_MAX;
+>> +        *a1 &= mask;
+>> +        *a2 &= mask;
+>> +        *a3 &= mask;
+>> +        *a4 &= mask;
+>> +        *a5 &= mask;
+>> +        *a6 &= mask;
+>> +        *a7 &= mask;
+>> +        *a8 &= mask;
+>> +    }
+>> +}
 
-Maybe guarded with #if TARGET_ABI_BITS < 64?
-
-> +        const uint64_t mask = UINT32_MAX;
-> +        *a1 &= mask;
-> +        *a2 &= mask;
-> +        *a3 &= mask;
-> +        *a4 &= mask;
-> +        *a5 &= mask;
-> +        *a6 &= mask;
-> +        *a7 &= mask;
-> +        *a8 &= mask;
-> +    }
-> +}
 
