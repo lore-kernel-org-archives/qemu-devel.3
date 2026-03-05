@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC7EF47CD7
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D6EF47CD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyFjV-0003Us-Cp; Thu, 05 Mar 2026 15:55:47 -0500
+	id 1vyFjd-0003Xq-NH; Thu, 05 Mar 2026 15:55:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFjI-0003Oy-8x
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:55:32 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vyFjM-0003QO-A5
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:55:37 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFjE-0006ft-EA
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:55:30 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-827270d50d4so8878560b3a.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:55:27 -0800 (PST)
+ id 1vyFjI-0006gK-2r
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:55:35 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-829756f3ee9so2100179b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:55:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772744127; x=1773348927; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772744129; x=1773348929; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fjVg4k8L5YS0+fbIU3cK5+QxAukvdu0K3zvehSjPnuA=;
- b=gQyRl7wkDZW27QxBw/tTfH5BXTwzGnmq3GABnSkVaJ6vQQXuKJubLcSdr5sPI9APFP
- O+VxOg7XRwrnGLOUj3/C//kYYUkLtqBCPphkL3JHGWNSPowIcQuvBc8COgLDjx+okPD1
- OctUMkHE1BS6m+4UrhOyQsAMi19fwr+Oe/OxcKiywsbVVlzi4Y28AY70XDYbeAD+Buin
- 2W/pQUG114zlpPnsa+jIIVcI8St70kS2WPU8qCyNIdJZsGEOP08HKbEfDzccDCQE7MId
- A8JEfpyYN18knTShPIBHC4JYGLfo+DgHj+1/+AgBumyV4cz9NGU266VHgmzHVMpZrGx+
- nsyQ==
+ bh=nkGRHnWZzEkpTkOUXW6elzMRnuyLVvfMOFl+6+n7Ots=;
+ b=tDpvrEcgnxNNl/GHhIhPUk8WMJPcWQHul30cV7vLcIq+7ukbcxl47DuEjOZo52oDJH
+ 8VQaBvdKeUU3mdMWyGn8mRNCd+Miz7OtYWkuQL+uZFAh0i/LVRmKYtzhH+LDdwliSmou
+ CJSLubsxQaM2sp9XfzRYW8AlIgtmtqPcosIjuZ2Md9ds2TngDycNk/DT8J3FmEKZlYL7
+ Z5MjMV56ASfEmq4mirwZI9OswhDrgM8AGUdUf/1LxMU5vVFkjOHMm19Dy1wwM3Fq5Hew
+ +ZpdxCZ75fQBh9H6gTjnGaS+OougWVNkJYR4Jnu8ZiQlYkAVtd9xU0UGDJB1rHyDR7QH
+ jSzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772744127; x=1773348927;
+ d=1e100.net; s=20230601; t=1772744129; x=1773348929;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fjVg4k8L5YS0+fbIU3cK5+QxAukvdu0K3zvehSjPnuA=;
- b=f4BTd5cL1MCzsbHA4mDWIkUFXug31Y0aMnNBl1HSgiEgw72mX5vPMgz2alq8ffOZJR
- Qt7myZvxHU72e2hkQYxpJidh6k5me4LvFVn1OYTuBEzz2FFccchHw4K22rJYKaHXydPH
- R38+JRH90wuBUivDDKY4mmloajpyInp5FJM0119L9aXsN32iCfBq2uHD/c3im7UTbotl
- khkFAzjjDDmHzRIMkjKkE9u9KVpEwTO3FBVaWH0I6dBNhFdZVpxa81PjJ6oVltHGhCfx
- BziGvCX5zvb/pwk9zxZHkly00MypLhfFjoAV3Mkmx2TvXQU3Va1snHGv0qrQzzvi2TiH
- peGw==
-X-Gm-Message-State: AOJu0Yw9M9X+AcdV7K3Mro0Wo/WjTLcqA7LFZ9zP7GtLH/U1mbcbG/Ff
- eMd+DdRj4v0pHmBJrwCUC+hcs3hDxH8JkZlHMa69DAvcKybZpOM6zEWRMZz1/GgVA30LSUCt17p
- w452U
-X-Gm-Gg: ATEYQzwdjm7l5KUnsHA4yH7DrTzsd6m+RkoBhjCVAFiGd5RsOqt4I8E1GmQF22MLqyf
- v7BhhsqbzcwT+9ka4Fy8DJpBtvSoakTbDMXKpQLsLD2w4g0HG5OIY6+ycA1VVJjeptl3EtIlJa5
- SR5Ocl1d7TDI3G5lpPCUwoEKPrhKEgzoRzBpm22JMKEtv7pLVFniFio+jo8ddPg0wvoD/N26WNg
- zoUtS5G5s+H84/UR/42l4Kg6NEDxsXU9i88jbSyXcYnPMjBC6nXlL1v33lFxQNnPGSqNl7aOy8O
- FTcTYIcOtGmL7nrEDjLPC07F95U0Jvf4h2vUlriyZVjjUMDuUOlvxwIPr446EQnyrt/3aj/pPH+
- nAF4hiJmQT47/pWT9EYKrguFG9y0o0Th99ihb7CWMtxT24dP15W1RgaG8k6qeNNSs8pipGP+PnK
- t0eoQlSmYkIk7mYQJsAXQIXqCjfvj6eDwSOFc9yLxzg7XgwNqUDw+SJyF74KjpePveInTagMBQk
- Aun
-X-Received: by 2002:a05:6a00:a1b:b0:829:8bb4:1034 with SMTP id
- d2e1a72fcca58-8299aa6d247mr984598b3a.28.1772744126676; 
- Thu, 05 Mar 2026 12:55:26 -0800 (PST)
+ bh=nkGRHnWZzEkpTkOUXW6elzMRnuyLVvfMOFl+6+n7Ots=;
+ b=KQfiOPflWAuvNiXRnz+OxREIYrQFi2/VD8kXjl7OiXTRxsQTUoSL9Bi9bPxmNpwzPp
+ NhMmrMyMvjDr1cQF2sGlDRXQxl7NfHNYvh4PdcMPn3DqZde6Rg9Q4Y0v6UdrQ/HXatdh
+ T+iTThhlcpz/HTObV3g5+MXdiVxF29NHxwS9TXf0VU5P5NJ5K/pXV0Odtmxsp70IfWEG
+ 2+QIpilgVF6AdvpRlw7vkdOdVqeBesLlBoxwmW6ShpyQL9WhjAlVr3KrSMqmB6CaOwMp
+ uRQNrzgZMykvlg4kHXgJJ5vXlxwob2mWMbTcZHspV2sku1/rAFBu1YpEXUK6Bd6bfYoC
+ dbCQ==
+X-Gm-Message-State: AOJu0YwFD4B2hhiVJEX9SXjLLhNd/6rfnG0jAi4It4R176Lzz2s8PbKY
+ Tqg6ihWGj7HCgOjAq6sxXeoPTK0h2zzCqK0H2+ysBcfUP2NxXO0BqHEhMVMuJYFHSJPGm9BqjDN
+ D3Hkb
+X-Gm-Gg: ATEYQzxj8iaNje3k87RLuToq4hKSFEnF4lA/CLr235TzbuZhpynYhaOH6jWgr0yW0Tc
+ MES0SgbI3xjVOS59Pmbw6w7f5XVZkxaJURWHnHediOO8iELfD1SdqW4rI+kK5XCS12SXHoVk8V2
+ rakwgK/JmsbG60CC2Ep9sl4Psr3a0ahYEORHrWlFvgH6yU05UfrkuY6g+lV4nUUcMSttcil7+zh
+ Bava0OFEPGe4p8Es0rfI1XqaSpVxly4nIoQvDNIH3trFQot3PVRIZ9+GZeafWdvgsXTd1pyAvCi
+ HjXx/MxReENiO55hR8nhbfiTkUn+sIMclc2CD7smezI9U5w1TL/iUyRoL+xjPfh1akoIlCa57L+
+ G3BCO0WtY4FPb6/oBwNpPB4GUqI20gjPJkJaQVEIo7R2w1BR/muoDzIY0w7yfCfykgvke5RPK+a
+ LEMk5yuCfRnSENZM5ftMaxz07L9v4Hu8RReREk/eSkIzZHruiJmvwEvXykZXN+4oGjZhJaKNDW+
+ Wyt
+X-Received: by 2002:a05:6a00:399b:b0:827:37d5:af5a with SMTP id
+ d2e1a72fcca58-82972b414b7mr5913503b3a.19.1772744129028; 
+ Thu, 05 Mar 2026 12:55:29 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8297e4fbbd4sm3847454b3a.53.2026.03.05.12.55.25
+ d2e1a72fcca58-8297e4fbbd4sm3847454b3a.53.2026.03.05.12.55.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 12:55:26 -0800 (PST)
+ Thu, 05 Mar 2026 12:55:28 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 1/6] hw/virtio: Add virtio_vdev_is_legacy()
-Date: Thu,  5 Mar 2026 12:55:15 -0800
-Message-ID: <20260305205520.2125218-2-pierrick.bouvier@linaro.org>
+Subject: [PULL 3/6] hw/virtio: Inline virtio_access_is_big_endian()
+Date: Thu,  5 Mar 2026 12:55:17 -0800
+Message-ID: <20260305205520.2125218-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260305205520.2125218-1-pierrick.bouvier@linaro.org>
 References: <20260305205520.2125218-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,126 +103,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This simplifies code compared to having
-virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
-!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260225041948.52929-2-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260225041948.52929-4-philmd@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/hw/virtio/virtio-access.h |  2 +-
- include/hw/virtio/virtio.h        |  7 ++++++-
- hw/virtio/vhost.c                 | 12 +++++-------
- hw/virtio/virtio-pci.c            |  6 +++---
- hw/virtio/virtio.c                |  8 ++++----
- 5 files changed, 19 insertions(+), 16 deletions(-)
+ include/hw/virtio/virtio-access.h | 29 ++++++++++++-----------------
+ hw/virtio/virtio.c                |  4 ++--
+ 2 files changed, 14 insertions(+), 19 deletions(-)
 
 diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
-index b58fb6ed7ea..b8aa7a520f5 100644
+index e3148c23881..506be642c9f 100644
 --- a/include/hw/virtio/virtio-access.h
 +++ b/include/hw/virtio/virtio-access.h
-@@ -30,7 +30,7 @@ static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
- #if defined(LEGACY_VIRTIO_IS_BIENDIAN)
-     return virtio_vdev_is_big_endian(vdev);
- #elif TARGET_BIG_ENDIAN
--    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
-+    if (!virtio_vdev_is_legacy(vdev)) {
-         /* Devices conforming to VIRTIO 1.0 or later are always LE. */
-         return false;
-     }
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 9dd93cf965a..42d20899390 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -468,9 +468,14 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
-     return virtio_has_feature(vdev->host_features, fbit);
- }
+@@ -21,14 +21,9 @@
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-bus.h"
  
-+static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
-+{
-+    return !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
-+}
-+
- static inline bool virtio_vdev_is_big_endian(const VirtIODevice *vdev)
+-static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+-{
+-    return virtio_vdev_is_big_endian(vdev);
+-}
+-
+ static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
  {
--    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
-+    if (virtio_vdev_is_legacy(vdev)) {
-         assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
-         return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
-     }
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index b4cdb7762f9..b9dc4ed13ba 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1168,14 +1168,12 @@ static void vhost_log_stop(MemoryListener *listener,
-  */
- static inline bool vhost_needs_vring_endian(VirtIODevice *vdev)
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         stw_be_p(ptr, v);
+     } else {
+         stw_le_p(ptr, v);
+@@ -37,7 +32,7 @@ static inline void virtio_stw_p(VirtIODevice *vdev, void *ptr, uint16_t v)
+ 
+ static inline void virtio_stl_p(VirtIODevice *vdev, void *ptr, uint32_t v)
  {
--    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
--        return false;
-+    if (virtio_vdev_is_legacy(vdev)) {
-+        return vdev->device_endian == (HOST_BIG_ENDIAN
-+                                       ? VIRTIO_DEVICE_ENDIAN_LITTLE
-+                                       : VIRTIO_DEVICE_ENDIAN_BIG);
-     }
--#if HOST_BIG_ENDIAN
--    return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_LITTLE;
--#else
--    return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
--#endif
-+    return false;
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         stl_be_p(ptr, v);
+     } else {
+         stl_le_p(ptr, v);
+@@ -46,7 +41,7 @@ static inline void virtio_stl_p(VirtIODevice *vdev, void *ptr, uint32_t v)
+ 
+ static inline void virtio_stq_p(VirtIODevice *vdev, void *ptr, uint64_t v)
+ {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         stq_be_p(ptr, v);
+     } else {
+         stq_le_p(ptr, v);
+@@ -55,7 +50,7 @@ static inline void virtio_stq_p(VirtIODevice *vdev, void *ptr, uint64_t v)
+ 
+ static inline int virtio_lduw_p(VirtIODevice *vdev, const void *ptr)
+ {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         return lduw_be_p(ptr);
+     } else {
+         return lduw_le_p(ptr);
+@@ -64,7 +59,7 @@ static inline int virtio_lduw_p(VirtIODevice *vdev, const void *ptr)
+ 
+ static inline int virtio_ldl_p(VirtIODevice *vdev, const void *ptr)
+ {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         return ldl_be_p(ptr);
+     } else {
+         return ldl_le_p(ptr);
+@@ -73,7 +68,7 @@ static inline int virtio_ldl_p(VirtIODevice *vdev, const void *ptr)
+ 
+ static inline uint64_t virtio_ldq_p(VirtIODevice *vdev, const void *ptr)
+ {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         return ldq_be_p(ptr);
+     } else {
+         return ldq_le_p(ptr);
+@@ -83,9 +78,9 @@ static inline uint64_t virtio_ldq_p(VirtIODevice *vdev, const void *ptr)
+ static inline uint16_t virtio_tswap16(VirtIODevice *vdev, uint16_t s)
+ {
+ #if HOST_BIG_ENDIAN
+-    return virtio_access_is_big_endian(vdev) ? s : bswap16(s);
++    return virtio_vdev_is_big_endian(vdev) ? s : bswap16(s);
+ #else
+-    return virtio_access_is_big_endian(vdev) ? bswap16(s) : s;
++    return virtio_vdev_is_big_endian(vdev) ? bswap16(s) : s;
+ #endif
  }
  
- static int vhost_virtqueue_set_vring_endian_legacy(struct vhost_dev *dev,
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 0f5654f459e..bcab2d18b80 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1449,11 +1449,11 @@ static bool virtio_pci_queue_enabled(DeviceState *d, int n)
-     VirtIOPCIProxy *proxy = VIRTIO_PCI(d);
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
- 
--    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
--        return proxy->vqs[n].enabled;
-+    if (virtio_vdev_is_legacy(vdev)) {
-+        return virtio_queue_enabled_legacy(vdev, n);
-     }
- 
--    return virtio_queue_enabled_legacy(vdev, n);
-+    return proxy->vqs[n].enabled;
+@@ -97,9 +92,9 @@ static inline void virtio_tswap16s(VirtIODevice *vdev, uint16_t *s)
+ static inline uint32_t virtio_tswap32(VirtIODevice *vdev, uint32_t s)
+ {
+ #if HOST_BIG_ENDIAN
+-    return virtio_access_is_big_endian(vdev) ? s : bswap32(s);
++    return virtio_vdev_is_big_endian(vdev) ? s : bswap32(s);
+ #else
+-    return virtio_access_is_big_endian(vdev) ? bswap32(s) : s;
++    return virtio_vdev_is_big_endian(vdev) ? bswap32(s) : s;
+ #endif
  }
  
- static int virtio_pci_add_mem_cap(VirtIOPCIProxy *proxy,
+@@ -111,9 +106,9 @@ static inline void virtio_tswap32s(VirtIODevice *vdev, uint32_t *s)
+ static inline uint64_t virtio_tswap64(VirtIODevice *vdev, uint64_t s)
+ {
+ #if HOST_BIG_ENDIAN
+-    return virtio_access_is_big_endian(vdev) ? s : bswap64(s);
++    return virtio_vdev_is_big_endian(vdev) ? s : bswap64(s);
+ #else
+-    return virtio_access_is_big_endian(vdev) ? bswap64(s) : s;
++    return virtio_vdev_is_big_endian(vdev) ? bswap64(s) : s;
+ #endif
+ }
+ 
 diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index e9d55329525..c0c4599b586 100644
+index c0c4599b586..22d798e6cdd 100644
 --- a/hw/virtio/virtio.c
 +++ b/hw/virtio/virtio.c
-@@ -2753,7 +2753,7 @@ static bool virtio_device_endian_needed(void *opaque)
-     VirtIODevice *vdev = opaque;
- 
-     assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
--    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
-+    if (virtio_vdev_is_legacy(vdev)) {
-         return vdev->device_endian != virtio_default_endian();
+@@ -222,7 +222,7 @@ static inline uint16_t virtio_lduw_phys_cached(VirtIODevice *vdev,
+                                                MemoryRegionCache *cache,
+                                                hwaddr pa)
+ {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         return lduw_be_phys_cached(cache, pa);
      }
-     /* Devices conforming to VIRTIO 1.0 or later are always LE. */
-@@ -3460,10 +3460,10 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-              * to calculate used and avail ring addresses based on the desc
-              * address.
-              */
--            if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
--                virtio_init_region_cache(vdev, i);
--            } else {
-+            if (virtio_vdev_is_legacy(vdev)) {
-                 virtio_queue_update_rings(vdev, i);
-+            } else {
-+                virtio_init_region_cache(vdev, i);
-             }
- 
-             if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
+     return lduw_le_phys_cached(cache, pa);
+@@ -232,7 +232,7 @@ static inline void virtio_stw_phys_cached(VirtIODevice *vdev,
+                                           MemoryRegionCache *cache,
+                                           hwaddr pa, uint16_t value)
+ {
+-    if (virtio_access_is_big_endian(vdev)) {
++    if (virtio_vdev_is_big_endian(vdev)) {
+         stw_be_phys_cached(cache, pa, value);
+     } else {
+         stw_le_phys_cached(cache, pa, value);
 -- 
 2.47.3
 
