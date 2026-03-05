@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763CFF47CA4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67186F47CA4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCof-0002he-Ii; Thu, 05 Mar 2026 12:48:53 -0500
+	id 1vyCp5-0003hH-WF; Thu, 05 Mar 2026 12:49:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoE-00029V-17
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:32 -0500
+ id 1vyCp3-0003au-Jj
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoC-00029h-NA
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:25 -0500
+ id 1vyCp0-0002F8-Sv
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732904;
+ s=mimecast20190719; t=1772732953;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QzxKcQZIerx9h3cSC+oDOEcZgkGbOak7Y+u4U28djJA=;
- b=KiWokQHDLW0xpbqjn/DSGHRWJGsS3gcjCbFYHbaS6vDHiAkiAsj2RzAbW6DyrMcZTuxsYB
- TayUzl3/E2Ph6tLsGOa5JejqyWIr2ijEclDoI3DjD6FpQX+YoSHPd81ckiK+3ayEnCa/8G
- Ev078BJF82F9vQYa7eGu+Gu4GUWO4vg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ju+WjWg8XQJrJajwVJYGb3mgTwRsUmBi3c6Eevt8AiU=;
+ b=QGirHI+WLfvjf/6i9wBWbLi6zU2VKwbsruy5QM1THddjfYROqsf6YSLEVqd957RAmibcdQ
+ JZz46mOBiM+Ce2pfolGKxY9dqub5jNm/BFyKC+YAIEb+l2GjrssbqwsVnjo8QW7cNa20lI
+ dKzbeM5F2IQn5iWcF+DVGWoUMLN9GuY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-er88v9eSOWGEK41uH8U2Sg-1; Thu,
- 05 Mar 2026 12:48:22 -0500
-X-MC-Unique: er88v9eSOWGEK41uH8U2Sg-1
-X-Mimecast-MFC-AGG-ID: er88v9eSOWGEK41uH8U2Sg_1772732900
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-TjIAmXKxORS8VaL1TeFCcw-1; Thu,
+ 05 Mar 2026 12:49:10 -0500
+X-MC-Unique: TjIAmXKxORS8VaL1TeFCcw-1
+X-Mimecast-MFC-AGG-ID: TjIAmXKxORS8VaL1TeFCcw_1772732948
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75A3719560A7; Thu,  5 Mar 2026 17:48:20 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7733D1956089; Thu,  5 Mar 2026 17:49:08 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4A72E1955D71; Thu,  5 Mar 2026 17:48:15 +0000 (UTC)
+ id 9DD88195419E; Thu,  5 Mar 2026 17:49:03 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -61,11 +61,10 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/27] docs: simplify DiamondRapids CPU docs
-Date: Thu,  5 Mar 2026 17:47:21 +0000
-Message-ID: <20260305174743.3084606-6-berrange@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: [PULL 14/27] util: add API to fetch the current thread name
+Date: Thu,  5 Mar 2026 17:47:30 +0000
+Message-ID: <20260305174743.3084606-15-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -97,44 +96,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This aligns the first line of the docs with the style used for previous
-CPU models, and simplifies the text in the remaining docs.
+This will be used to include the thread name in error reports
+in a later patch. It returns a const string stored in a thread
+local to avoid memory allocation when it is called repeatedly
+in a single thread. The thread name should be set at the very
+start of the thread execution, which is the case when using
+qemu_thread_create.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+This uses the official thread APIs for fetching thread names,
+so that it captures  names of threads spawned by code in 3rd
+party libraries, not merely QEMU spawned thrads.
+
+This also addresses the gap from the previous patch for setting
+the name of the main thread. A constructor is used to initialize
+the 'namebuf' thread-local in the main thread only.
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/system/cpu-models-x86.rst.inc | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ include/qemu/thread.h    |  1 +
+ meson.build              | 21 ++++++++++++++++
+ util/qemu-thread-posix.c | 53 +++++++++++++++++++++++++++++++++++++++-
+ util/qemu-thread-win32.c | 49 ++++++++++++++++++++++++++++++++++---
+ 4 files changed, 119 insertions(+), 5 deletions(-)
 
-diff --git a/docs/system/cpu-models-x86.rst.inc b/docs/system/cpu-models-x86.rst.inc
-index 3605d05a8c..126c5a1972 100644
---- a/docs/system/cpu-models-x86.rst.inc
-+++ b/docs/system/cpu-models-x86.rst.inc
-@@ -72,17 +72,13 @@ compatibility is required, use the newest CPU model that is compatible
- across all desired hosts.
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index 27b888ab0a..98cc5c41ac 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -216,6 +216,7 @@ void qemu_thread_get_self(QemuThread *thread);
+ bool qemu_thread_is_self(QemuThread *thread);
+ G_NORETURN void qemu_thread_exit(void *retval);
+ void qemu_thread_set_name(const char *name);
++const char *qemu_thread_get_name(void);
  
- ``DiamondRapids``
--    Intel Xeon Processor.
-+    Intel Xeon Processor (DiamondRapids, 2026)
+ struct Notifier;
+ /**
+diff --git a/meson.build b/meson.build
+index df841e12e2..51f04d5008 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2856,6 +2856,27 @@ config_host_data.set('CONFIG_PTHREAD_SET_NAME_NP', cc.links(osdep_prefix + '''
+     pthread_set_name_np(thread, "QEMU");
+     return 0;
+   }''', dependencies: threads))
++
++config_host_data.set('CONFIG_PTHREAD_GETNAME_NP', cc.links(osdep_prefix + '''
++  #include <pthread.h>
++
++  int main(void)
++  {
++    char buf[16];
++    pthread_getname_np(pthread_self(), buf, sizeof(buf));
++    return 0;
++  }''', dependencies: threads))
++config_host_data.set('CONFIG_PTHREAD_GET_NAME_NP', cc.links(osdep_prefix + '''
++  #include <pthread.h>
++  #include <pthread_np.h>
++
++  int main(void)
++  {
++    char buf[16];
++    pthread_get_name_np(pthread_self(), buf, sizeof(buf));
++    return 0;
++  }''', dependencies: threads))
++
+ config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix + '''
+   #include <pthread.h>
  
--    Diamond Rapids product has a topology which differs from previous Xeon
--    products. It does not support SMT, but instead features a dual core
--    module (DCM) architecture. It also has core building blocks (CBB - die
--    level in CPU topology). The cache hierarchy is organized as follows:
--    L1 i/d cache is per thread, L2 cache is per DCM, and L3 cache is per
--    CBB. This cache topology can be emulated for DiamondRapids CPU model
--    using the smp-cache configuration as shown below:
--
--    Example:
-+    This does not include SMT but allows the module (dual core module
-+    - DCM) and die (core building block - CBB) topology levels. The
-+    cache hierarchy is L1 i/d cache per thread, L2 cache per module,
-+    and L3 cache per die, which can be emulated using the smp-cache
-+    option:
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index 3be495b8e3..bd1c2ad2a5 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -18,10 +18,41 @@
+ #include "qemu/tsan.h"
+ #include "qemu/bitmap.h"
  
-         ::
+-#ifdef CONFIG_PTHREAD_SET_NAME_NP
++#if defined(CONFIG_PTHREAD_SET_NAME_NP) || defined(CONFIG_PTHREAD_GET_NAME_NP)
+ #include <pthread_np.h>
+ #endif
  
++/*
++ * This is not defined on Linux, but the man page indicates
++ * the buffer must be at least 16 bytes, including the NUL
++ * terminator
++ */
++#ifndef PTHREAD_MAX_NAMELEN_NP
++#define PTHREAD_MAX_NAMELEN_NP 16
++#endif
++
++static __thread char namebuf[PTHREAD_MAX_NAMELEN_NP];
++
++static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
++qemu_thread_init(void)
++{
++    /*
++     * Initialize the main thread name. We must not use
++     * qemu_thread_setname(), since on some platforms (at least Linux)
++     * this can change the process name that is reported by tools like
++     * 'ps'.
++     *
++     * This workaround suffices to ensure QEMU log/error messages
++     * get the main thread name, but at the cost of external tools
++     * like GDB not seeing it.
++     *
++     * NB using a constructor instead of static initializing namebuf,
++     * to ensure it only initializes the thread-local in the main
++     * thread
++     */
++    g_strlcpy(namebuf, "main", sizeof(namebuf));
++}
++
+ static void error_exit(int err, const char *msg)
+ {
+     fprintf(stderr, "qemu: %s: %s\n", msg, strerror(err));
+@@ -526,3 +557,23 @@ void *qemu_thread_join(QemuThread *thread)
+     }
+     return ret;
+ }
++
++const char *qemu_thread_get_name(void)
++{
++    int rv;
++    if (namebuf[0] != '\0') {
++        return namebuf;
++    }
++
++# if defined(CONFIG_PTHREAD_GETNAME_NP)
++    rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
++# elif defined(CONFIG_PTHREAD_GET_NAME_NP)
++    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
++# else
++    rv = -1;
++# endif
++    if (rv != 0) {
++        g_strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
++    }
++    return namebuf;
++}
+diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
+index c330d924af..272afc3385 100644
+--- a/util/qemu-thread-win32.c
++++ b/util/qemu-thread-win32.c
+@@ -19,7 +19,10 @@
+ 
+ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
+                                                  PCWSTR lpThreadDescription);
++typedef HRESULT (WINAPI *pGetThreadDescription) (HANDLE hThread,
++                                                 PWSTR *lpThreadDescription);
+ static pSetThreadDescription SetThreadDescriptionFunc;
++static pGetThreadDescription GetThreadDescriptionFunc;
+ static HMODULE kernel32_module;
+ 
+ static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
+@@ -28,7 +31,7 @@ qemu_thread_init(void)
+     qemu_thread_set_name("main");
+ }
+ 
+-static bool load_set_thread_description(void)
++static bool load_thread_description(void)
+ {
+     static gsize _init_once = 0;
+ 
+@@ -38,14 +41,17 @@ static bool load_set_thread_description(void)
+             SetThreadDescriptionFunc =
+                 (pSetThreadDescription)GetProcAddress(kernel32_module,
+                                                       "SetThreadDescription");
+-            if (!SetThreadDescriptionFunc) {
++            GetThreadDescriptionFunc =
++                (pGetThreadDescription)GetProcAddress(kernel32_module,
++                                                      "GetThreadDescription");
++            if (!SetThreadDescriptionFunc || !GetThreadDescriptionFunc) {
+                 FreeLibrary(kernel32_module);
+             }
+         }
+         g_once_init_leave(&_init_once, 1);
+     }
+ 
+-    return !!SetThreadDescriptionFunc;
++    return (SetThreadDescriptionFunc && GetThreadDescriptionFunc);
+ }
+ 
+ static void error_exit(int err, const char *msg)
+@@ -331,7 +337,7 @@ void qemu_thread_set_name(const char *name)
+ {
+     g_autofree wchar_t *namew = NULL;
+ 
+-    if (!load_set_thread_description()) {
++    if (!load_thread_description()) {
+         return;
+     }
+ 
+@@ -415,3 +421,38 @@ bool qemu_thread_is_self(QemuThread *thread)
+ {
+     return GetCurrentThreadId() == thread->tid;
+ }
++
++static __thread char namebuf[64];
++
++const char *qemu_thread_get_name(void)
++{
++    HRESULT hr;
++    wchar_t *namew = NULL;
++    g_autofree char *name = NULL;
++
++    if (namebuf[0] != '\0') {
++        return namebuf;
++    }
++
++    if (!load_thread_description()) {
++        goto error;
++    }
++
++    hr = GetThreadDescriptionFunc(GetCurrentThread(), &namew);
++    if (!SUCCEEDED(hr)) {
++        goto error;
++    }
++
++    name = g_utf16_to_utf8(namew, -1, NULL, NULL, NULL);
++    LocalFree(namew);
++    if (!name) {
++        goto error;
++    }
++
++    g_strlcpy(namebuf, name, G_N_ELEMENTS(namebuf));
++    return namebuf;
++
++ error:
++    g_strlcpy(namebuf, "unnamed", G_N_ELEMENTS(namebuf));
++    return namebuf;
++}
 -- 
 2.53.0
 
