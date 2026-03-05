@@ -4,122 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB9AEEF319
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 08:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E1EEEF331
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 08:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy47Y-00006E-SM; Thu, 05 Mar 2026 03:31:50 -0500
+	id 1vy4UZ-0003FC-HV; Thu, 05 Mar 2026 03:55:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vy47W-000061-7q
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 03:31:46 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vy4UR-0003Cl-7F
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 03:55:29 -0500
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vy47S-0003Ep-B9
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 03:31:45 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-82748257f5fso4162493b3a.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 00:31:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vy4UO-0006Fw-GY
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 03:55:26 -0500
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-5a1330ac6c3so447346e87.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 00:55:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772700919; cv=none;
+ d=google.com; s=arc-20240605;
+ b=If5Y3e1Y6D6m5nX7jZM+Kt0YU3avgSEzBsLRCzPXOm/ouf8J/2RDKvlUY57sz/wO6n
+ F2nRPmmAXK2B6TX4FyR8GmB59krYIai3+OUOdQCjoAjQTknG2wBBuHl0Iqa7BgQE2PQV
+ X8+zSsqFx7ZXaDpjEx77DG7pJaZqlqhC8Np94o084Xc7e6JQGcupGlEJir8pfMrvpskc
+ KeaUqmYFXfprr3jwJ4X12riED+gN+/XQEVd6wlvP9Kgb53FhVMo56Np5s+vKWTrTG4yk
+ Sc4OVMfsiMfqeGyUsLSb+jSSxKY3im3P3MVEn2V7V1aMlXuDveCfEiK0XRn0sDf8iQyl
+ to4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MWDiRBeLgfiuyR7YorpEiX5JIXos8K9BkhFfIzDIHVE=;
+ fh=/sr5iJO/HVyIXQgA+DkOdUcKrP7sTctbjJN6vR+WNMo=;
+ b=Ln0ry/mUmpBsckYsKb0tO5rcu6ExKa3bqZt0fxFJRLX4zxcJ+akM39kvANzPv8JpAI
+ UHNHSn9DEKD3JWY//xIZdFIM7FDaruoic0CAnUs6Ui03KaKkU5U+9fSFOha5bnbppaid
+ DOq9Va45mDiQHh9j4d0/UEeZIwPNYHL920ljWNVrQFQJAoQOi+cfoLmoG3PBCuJ0+4O+
+ f5Qv1byvsrWkdUDPkbRQ+3/xh09cgucfJ7huLWIxrPsjRXl3LfpBY96WPtalB3TrF5NS
+ 9hq0LxAl5rVuRaGe8fFVnYH2BrTv3FX0JDwH2hEFfJGZIEBqgKbLJ4kuPLKKATa1a/sw
+ cGxw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772699501; x=1773304301; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NCo5MBS0euktFnC5J/YDXnyR2OVNBgMHzvP5I1GAcnc=;
- b=fIVMDpTvtd7+LTNbHe5xaedYLc4gX/FquH8Ufced7bHdOaoG4zKd9RRuF5Du2thr3D
- u6J6rR4zOfY5mmVZWLDbo99q715xxtVpPTFh5Vjf25XBOwvYH0GRicQtb89e/QYAZyvI
- cvjzweLQ1jq5mTLrpySz107nm9LADF38kAjdPIuHAWHNkGLIwUDgCh1gZ3e/vvLIurNB
- 1642SJQEw4FLNqlinoWg3KhtikbVns9h3Bz3lkYpUmSAKZWXzgpAF3Wuq5DTjGXuhr6W
- 8EQ3I0HFlcMGrdN74oH1AEiJpuFzxQFmhp8uFT26TBZzSUvTrT4f1MytyTyHEH4WmD65
- Dh7A==
+ d=mihalicyn.com; s=mihalicyn; t=1772700919; x=1773305719; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MWDiRBeLgfiuyR7YorpEiX5JIXos8K9BkhFfIzDIHVE=;
+ b=NX3Y/WZUeM/bZazwifO5XpPa+g+A6Bs4kWYb0dgB/8/lk+jcEnVJwLDPciSwOGmARA
+ 1Fvh+RI0GPNxr6WZbsvRINI2icNBnkRAKWx4rr3+Poq/O6eiTYt+qeC8cDRJtBjkBqr7
+ iZV09XBl5allnSBt6j2QcVw5wrd4Y49x1zngI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772699501; x=1773304301;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NCo5MBS0euktFnC5J/YDXnyR2OVNBgMHzvP5I1GAcnc=;
- b=OhxkpMCrgUqJLPDmCS+saMfT98GNAQYDVRa3q2xaijaxR3vuDa55PBJ84234BBLtCD
- 8SXKpEszq0YPDdfR0oveMNbkgC38PrvnQyqLxpJ5rVcPHQYLGzhMKy/LBQFc3bENk/n+
- Ie47f45WXyBC2C50/cJeKNzTP2pva0kAcYATyR0NajFNyOp8WhPGeBSmjmRoPUZ+BvPe
- qIGrFMOiiLTsD+E3lNiGGL5DFrSN7kw3g+mfKd/yxoMrP3wd70VFyuEf+3uIwSy20nkK
- aRO5M/0yApwd2L5tuzInocBviCYyZDLAzPMUmuDLW7FQWzWZGUGK815g422WyIkUz+ly
- MCUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUfjzzO3y1hpQkOjMtcfrjJ0xQzuUbBjE6W09AfyUojJs/1Z11yUrOMoYM2v7jdvy+dNRNY4eAecaQq@nongnu.org
-X-Gm-Message-State: AOJu0YwVbelNuiMpiADzMeris19xyxKxPUa886/o7SJslH7a+TVRC1I9
- DBt0sPcqxap+FyEjiO86jsGFCuN9Mbdrx8ptIFDYpmF9cjcx7D86BTiDiraaC3tDvo/8acsWwKG
- wPTN8
-X-Gm-Gg: ATEYQzz17XndwScyiqmMSgnfbcCXFmzxaIhULkNyDg52ndnw/pAdqzPOw0eKcOnJLso
- CEOFMOmLPim3pS95RXzlkbiCdBMSqwI/qNWqWZZLKL6ZEzGrWB+UvcGGGKJ4Drt2j6vl2nI/a6O
- MS/eCDLl3aRyYlr/frCjSoDgC/hNjwjCs0zd/S618hDPgQ210gi7bi8f7W3e2rLoI0lH99knmBM
- 7a9brGtnd+vciV6vxRBItoHK99WTfUu8/WLmXXvFnKrzVv428Bt4C0KKa8R0QT1y+8Zw1JV/05D
- x8aKuIlLpm52D3eJBvXTGibJvsCXxjdD4QumV84kCEVSoz2cd76M5Mq6Q+yjVUxUIQqZIKvE+RR
- jaUTYtrR1yJMzs8zVFPXFjuyI3lMa6aW0h0TTRZBW1WVy2OH7Rob12jloW5nuLgcv706ztYwA6Y
- Wf8JjOMIxXWG+pOsqNymJJBz4ywQOde+utIsSPBTILkPN/VkM6Tb+ahlANv/G8rMgrFkmg
-X-Received: by 2002:a17:90b:3d92:b0:359:8957:7285 with SMTP id
- 98e67ed59e1d1-359b1ba0e86mr1163317a91.3.1772699500550; 
- Thu, 05 Mar 2026 00:31:40 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-359aa2930bbsm1551388a91.6.2026.03.05.00.31.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 00:31:40 -0800 (PST)
-Message-ID: <3cced6bb-94e5-4f2d-b4ff-d7ab78c8d689@linaro.org>
-Date: Thu, 5 Mar 2026 00:31:39 -0800
+ d=1e100.net; s=20230601; t=1772700919; x=1773305719;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MWDiRBeLgfiuyR7YorpEiX5JIXos8K9BkhFfIzDIHVE=;
+ b=uoLJuLXPnaiHzEorg+8zdExjpSrrdBkPyMpSZR78TU7fT68HkB6+vMhy1zUBkuNGDs
+ x4TDs4mo9r7Ut+jZKwCs30WGZyESl0Ya1kwGPv2+cqVQJuQYMXjAwYlmAij1w3s2gtFV
+ oteYmnVdAlxs48cdgFqZfwjlT7uiprJnwMuayHpp8Ze29alDISAsS5EnirY6J+OLVTLn
+ uaZnWWaGLlw9psX4qUfiUD3tnQcmrC+AmaGD5BVfHbNoDqp/HLjkfaDuqjGgnDd+GjA5
+ UKkxlnxlWkFZ53jhDVBitscVpWmkIfpLX54PhgxSuYPZ15lcoUO0CHbS6ronbJ2tnz5s
+ Avrw==
+X-Gm-Message-State: AOJu0YylrWeCSYR55VmIHERRPhOGAfqOGh43dILJrRMaeVOj1AyB6/bL
+ cW9zwDtyPOPSGIbCsDPu/eqR/1PSIyb6N80AZNui1wa+wi5OO8l+HcGvbIuC7hZleKJ8lM+KOjF
+ vsNpWAHNR3fnzrhhLN7PTocCzSaajuqOalJkc94OC1Q==
+X-Gm-Gg: ATEYQzwOaJ7+Eqt7DSACoCL2QonmZiVWVPDdWG+PEtBNWL2Wr7bxyKHEkocxhWtOz+j
+ sD3vfkO9bwb4e2gl7LGyWPOD4GxBMZWAyMitvKOZm8W10hUon6aNBuEQpck4jvL7pgKuwwWF6+c
+ 60pl2aReRPonBa63LZHzizAk4uv+HYp4BbXfCxPYuT5btHYEYK77WfdFN34wtQu/yCCvFhNEu3P
+ jjP9T7Oqq03QjXZlmFLq/p2Yx5UNYzS4vi7z9oH8EniuDDuQXl/UtkXs+hT1ln3avTZGwq3vS9Q
+ xOzvL75KA3tuSPkbquKHLeY7mVF6Grx2dTffz0g=
+X-Received: by 2002:a05:6512:1253:b0:5a1:3539:1181 with SMTP id
+ 2adb3069b0e04-5a1353912bbmr256733e87.20.1772700918320; Thu, 05 Mar 2026
+ 00:55:18 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/cpp: Add -fcoroutines
-Content-Language: en-US
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20260304-cpp-v1-1-7d87b975fc1e@rsg.ci.i.u-tokyo.ac.jp>
- <7904b95a-c48d-41e0-80ae-63759e5a24ab@linaro.org>
- <0f5dbe02-f50a-4c7c-9d48-24aac06b3a2f@rsg.ci.i.u-tokyo.ac.jp>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <0f5dbe02-f50a-4c7c-9d48-24aac06b3a2f@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+References: <20260217152517.271422-1-alexander@mihalicyn.com>
+ <20260217152517.271422-4-alexander@mihalicyn.com> <aaYFbKP8o6A2QY8D@x1.local>
+ <CAJqdLrqucwgVJA3bFu5ApayGkKiheCxO_tWJnbvpVPpRmrVAfQ@mail.gmail.com>
+ <aahgfLaybfjOpsX1@x1.local>
+In-Reply-To: <aahgfLaybfjOpsX1@x1.local>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Thu, 5 Mar 2026 09:55:05 +0100
+X-Gm-Features: AaiRm51kNDU24MXDzWMhi-39lz19iL4GavqHMBVrIqDndgHlSoxrOWIgCKNmaxo
+Message-ID: <CAJqdLrrKK-pTzk+Qm_45p9A6DRgj4VbFzSb6vFtJTkpN3UaFpg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] migration: add
+ VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>, 
+ Klaus Jensen <its@irrelevant.dk>, Fabiano Rosas <farosas@suse.de>,
+ qemu-block@nongnu.org, Keith Busch <kbusch@kernel.org>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,98 +120,336 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/4/26 9:27 PM, Akihiko Odaki wrote:
-> On 2026/03/05 3:03, Pierrick Bouvier wrote:
->> On 3/3/26 11:59 PM, Akihiko Odaki wrote:
->>> GCC 15.2.1 requires it:
->>>
->>> [67/6111] Compiling C++ object contrib/plugins/libcpp.so.p/cpp.cpp.o
->>> FAILED: contrib/plugins/libcpp.so.p/cpp.cpp.o
->>> c++ -Icontrib/plugins/libcpp.so.p -Icontrib/plugins -I../contrib/
->>> plugins -I../include/plugins -I/usr/include/glib-2.0 -I/usr/lib64/
->>> glib-2.0/include -I/usr/include/sysprof-6 -fdiagnostics-color=auto -
->>> D_GLIBCXX_ASSERTIONS=1 -Wall -Winvalid-pch -Werror -O2 -g -
->>> D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-
->>> aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero -fzero-call-
->>> used-regs=used-gpr -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -
->>> D__STDC_FORMAT_MACROS -fsanitize=address -fstack-protector-strong -
->>> fsanitize=undefined -Wempty-body -Wendif-labels -Wexpansion-to-defined
->>> -Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-
->>> fallthrough=2 -Winit-self -Wmissing-format-attribute -Wredundant-decls
->>> -Wshadow=local -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-
->>> missing-include-dirs -Wno-psabi -Wno-shift-negative-value -isystem /
->>> home/me/q/var/qemu/linux-headers -isystem linux-headers -iquote . -
->>> iquote /home/me/q/var/qemu -iquote /home/me/q/var/qemu/!
->>>    include -iquote /home/me/q/var/qemu/host/include/aarch64 -iquote /
->>> home/me/q/var/qemu/host/include/generic -iquote /home/me/q/var/qemu/
->>> tcg/aarch64 -pthread -fPIC -MD -MQ contrib/plugins/libcpp.so.p/
->>> cpp.cpp.o -MF contrib/plugins/libcpp.so.p/cpp.cpp.o.d -o contrib/
->>> plugins/libcpp.so.p/cpp.cpp.o -c ../contrib/plugins/cpp.cpp
->>> In file included from ../contrib/plugins/cpp.cpp:91:
->>> /usr/include/c++/15/coroutine:43:3: error: #error "the <coroutine>
->>> header requires -fcoroutines"
->>>      43 | # error "the <coroutine> header requires -fcoroutines"
->>>         |   ^~~~~
->>>
->>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> ---
->>>    contrib/plugins/meson.build | 8 +++++++-
->>>    1 file changed, 7 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
->>> index 099319e7a173..caa0fca17245 100644
->>> --- a/contrib/plugins/meson.build
->>> +++ b/contrib/plugins/meson.build
->>> @@ -26,8 +26,14 @@ endif
->>>    t = []
->>>    if get_option('plugins')
->>>      foreach i : contrib_plugins
->>> +    if i == 'cpp.cpp' and cxx.has_argument('-fcoroutines')
->>> +      cpp_args = ['-fcoroutines']
->>> +    else
->>> +      cpp_args = []
->>> +    endif
->>> +
->>>        t += shared_module(fs.stem(i), files(i),
->>> -                       dependencies: plugins_deps)
->>> +                       cpp_args: cpp_args, dependencies: plugins_deps)
->>>      endforeach
->>>    endif
->>>    if t.length() > 0
->>>
->>> ---
->>> base-commit: afe653676dc6dfd49f0390239ff90b2f0052c2b8
->>> change-id: 20260304-cpp-ddc219374e4f
->>>
->>> Best regards,
->>> -- 
->>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>>
->>
->> Hi Akihiko,
->>
->> it seems like you ran into this issue:
->> https://lore.kernel.org/qemu-devel/875x8ft5vq.fsf@redhat.com/
->>
->> You can just clean your build folder and restart from scratch.
->> See the thread above, it's a limitation of meson (by design) not
->> updating language standard.
->>
->> The best fix on our side would be to add -std=... directly in c/cxx
->> flags instead of relying on default options.
-> 
-> I withdraw this patch. Passing -fcoroutines is not a right approach when
-> the default option configures the project to use a newer C++ standard.
-> 
-> I hope Meson and QEMU figure out a solution that improves the user
-> experience.
-> 
-> Thank you for point out the thread.
+Am Mi., 4. M=C3=A4rz 2026 um 17:40 Uhr schrieb Peter Xu <peterx@redhat.com>=
+:
+>
+> On Wed, Mar 04, 2026 at 10:43:53AM +0100, Alexander Mikhalitsyn wrote:
+> > Am Mo., 2. M=C3=A4rz 2026 um 22:47 Uhr schrieb Peter Xu <peterx@redhat.=
+com>:
+> > >
+> > > On Tue, Feb 17, 2026 at 04:25:16PM +0100, Alexander Mikhalitsyn wrote=
+:
+> > > > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> > > >
+> > > > Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC, which
+> > > > helps to save/restore a dynamic array of pointers to
+> > > > structures.
+> >
+> > Dear Peter,
+> >
+> > >
+> > > Sorry for the late response.
+> >
+> > No problem at all, thanks for reviewing ;)
+> >
+> > >
+> > > >
+> > > > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfu=
+sion.io>
+> > > > ---
+> > > >  include/migration/vmstate.h | 21 +++++++++
+> > > >  migration/vmstate-types.c   | 88 +++++++++++++++++++++++++++++++++=
+++++
+> > > >  2 files changed, 109 insertions(+)
+> > > >
+> > > > diff --git a/include/migration/vmstate.h b/include/migration/vmstat=
+e.h
+> > > > index 89f9f49d20a..bc6495a7f67 100644
+> > > > --- a/include/migration/vmstate.h
+> > > > +++ b/include/migration/vmstate.h
+> > > > @@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
+> > > >  extern const VMStateInfo vmstate_info_qtailq;
+> > > >  extern const VMStateInfo vmstate_info_gtree;
+> > > >  extern const VMStateInfo vmstate_info_qlist;
+> > > > +extern const VMStateInfo vmstate_info_ptrs_array_entry;
+> > > >
+> > > >  #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
+> > > >  /*
+> > > > @@ -537,6 +538,26 @@ extern const VMStateInfo vmstate_info_qlist;
+> > > >      .offset     =3D vmstate_offset_array(_s, _f, _type*, _n),     =
+     \
+> > > >  }
+> > > >
+> > > > +/*
+> > > > + * For migrating a dynamically allocated uint32-indexed array
+> > > > + * of pointers to structures (with NULL entries and with auto memo=
+ry allocation).
+> > > > + *
+> > > > + * _type: type of structure pointed to
+> > > > + * _vmsd: VMSD for structure
+> > > > + * start: size of structure pointed to (for auto memory allocation=
+)
+> > > > + */
+> > > > +#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_ALLOC(_field, _state, =
+_field_num, _version, _vmsd, _type) { \
+> > > > +    .name       =3D (stringify(_field)),                          =
+      \
+> > > > +    .version_id =3D (_version),                                   =
+      \
+> > > > +    .num_offset =3D vmstate_offset_value(_state, _field_num, uint3=
+2_t), \
+> > > > +    .info       =3D &vmstate_info_ptrs_array_entry,               =
+      \
+> > >
+> > > I wonder if we need this hard-coded new info structure for this, more
+> > > below.
+> > >
+> > > > +    .vmsd       =3D &(_vmsd),                                     =
+      \
+> > > > +    .start      =3D sizeof(_type),                                =
+      \
+> > > > +    .size       =3D sizeof(_type *),                              =
+      \
+> > > > +    .flags      =3D VMS_VARRAY_UINT32|VMS_POINTER,                =
+      \
+> > > > +    .offset     =3D vmstate_offset_pointer(_state, _field, _type *=
+),    \
+> > > > +}
+> > > > +
+> > > >  #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_nu=
+m, _version, _info, _type) { \
+> > > >      .name       =3D (stringify(_field)),                          =
+          \
+> > > >      .version_id =3D (_version),                                   =
+          \
+> > > > diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> > > > index 89cb2114721..3335377cd07 100644
+> > > > --- a/migration/vmstate-types.c
+> > > > +++ b/migration/vmstate-types.c
+> > > > @@ -942,3 +942,91 @@ const VMStateInfo vmstate_info_qlist =3D {
+> > > >      .get  =3D get_qlist,
+> > > >      .put  =3D put_qlist,
+> > > >  };
+> > > > +
+> > > > +static int put_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unu=
+sed_size,
+> > > > +                                const VMStateField *field, JSONWri=
+ter *vmdesc)
+> > > > +{
+> > > > +    const VMStateDescription *vmsd =3D field->vmsd;
+> > > > +    int ret;
+> > > > +    Error *local_err =3D NULL;
+> > > > +    void *pv;
+> > > > +
+> > > > +    /*
+> > > > +     * (ppv) is an address of an i-th element of a dynamic array.
+> > > > +     *
+> > > > +     * (ppv) can not be NULL unless we have some regression/bug in
+> > > > +     * vmstate_save_state_v(), because it is result of pointer ari=
+themic like:
+> > > > +     * first_elem + size * i.
+> > > > +     */
+> > > > +    if (ppv =3D=3D NULL) {
+> > > > +        error_report("vmstate: put_ptrs_array_entry must be called=
+ with ppv !=3D NULL");
+> > > > +        return -EINVAL;
+> > > > +    }
+> > > > +
+> > > > +    /* get a pointer to a structure */
+> > > > +    pv =3D *(void **)ppv;
+> > >
+> > > Here IIUC it's almost what VMS_ARRAY_OF_POINTER should do.  Could we
+> > > declare the vmsd with VMS_ARRAY_OF_POINTER so as to save this open-co=
+ded
+> > > dereference of pointer?
+> >
+> > Yes, this is something I tried to do in the first place, but this
+> > didn't work for my use-case.
+> >
+> > Let me explain what I'm doing in detail. I have the following structure=
+:
+> >
+> > typedef struct NvmeCtrl {
+> >      ...
+> >      uint32_t num_queues; // < MAX number of elements in sq
+> >      NvmeSQueue **sq;
+> >      ...
+> > } NvmeCtrl;
+> >
+> > Suppose we have variable n with type NvmeCtrl *.
+> >
+> > // somewhere early during initialization of QEMU device:
+> > n->sq =3D g_new0(NvmeSQueue *, n->num_queues);
+> >
+> > // then in runtime (depending on what *guest* wants) we might create
+> > some sq[i], e.g:
+> > NvmeSQueue *sq;
+> > sq =3D g_malloc0(sizeof(*sq));
+> > n->sq[3] =3D sq;
+> >
+> > please, note that n->sq[0], n->sq[1], n->sq[2] can still be NULL. So,
+> > we allow holes in that array.
+> >
+> > What I found is that if I raise VMS_ARRAY_OF_POINTER flag on VMStateFie=
+ld, then
+> > migration code in vmstate_load_state() will expect to see so-called
+> > "fake nullptr field" (vmsd_create_fake_nullptr_field() function call).
+> >
+> > But this is a problem, because our array at the time of
+> > vmstate_load_state() looks like (N =3D=3D NULL):
+> > 0     1     2     3     4     5
+> > N    N    N     N     N    N
+
+Hi Peter,
+
+>
+> Yes, I actually just notice that the old nullptr trick only works if the
+> dest QEMU will know if the pointer is NULL... that makes that interface
+> pretty much, useless in most cases.. :(
+>
+> So it's not source telling dest that "there's a null pointer in the array=
+",
+> it's just that both sides know that.  Checking the original patch of that=
+,
+> indeed it mentioned it's used in ChannelSubSys.css in hw/s390x/css.c:
+
+Precisely.
+
+>
+> https://lore.kernel.org/all/20170222160119.52771-4-pasic@linux.vnet.ibm.c=
+om/
+>
+> So I guess the qemu cmdline for that s390 guest will make sure the pointe=
+rs
+> will be pre-initialized already..  So yes, it won't work for you.  You're
+> looking for a full dynamic array of pointers.
+>
+> >
+> > while after vmstate_load_state() I expect it to be:
+> > 0     1     2     3     4     5
+> > N    N     N   SQ   N    N
+> >
+> > so, somebody should allocate memory for sq[3] and load data from image
+> > into that memory.
+> >
+> > Probably, it makes sense to somehow implement a combination of
+> > VMS_ARRAY_OF_POINTER and  VMS_ALLOC,
+> > but I tried to be as less invasive as I can and decided to introduce a
+> > new kind of VMStateField instead.
+>
+> Yes.  We already used VMS_ALLOC for top level allocation.  We may need
+> another flag for per-array allocation.
 >
 
-Sorry for the bad experience on your side, and I hope too meson will end 
-up fixing this, even though the open issues are not very encouraging.
+Yep.
 
-> Regards,
-> Akihiko Odaki
+> >
+> > >
+> > > > +
+> > > > +    if (pv =3D=3D NULL) {
+> > > > +        /* write a mark telling that there was a NULL pointer */
+> > > > +        qemu_put_byte(f, false);
+> > > > +        return 0;
+> > > > +    }
+> > > > +
+> > > > +    /* if pointer is not NULL, dump the structure contents with he=
+lp of vmsd */
+> > > > +    qemu_put_byte(f, true);
+> > > > +    ret =3D vmstate_save_state(f, vmsd, pv, vmdesc, &local_err);
+> > >
+> > > This looks really like VMS_STRUCT, except that it also tries to detec=
+t if
+> > > the pointer is NULL, then save some dumps.
+> >
+> > Precisely, I'm mimicking behavior of VMS_STRUCT | VMS_ALLOC and
+> > VMS_ARRAY_OF_POINTER here.
+> >
+> > >
+> > > Is it feasible to make both queues to always be available so as to re=
+use
+> > > VMS_STRUCT?  Or is it intentional here to avoid dumping queues where =
+the
+> > > pointer is NULL?
+> >
+> > By "available" you mean to always allocate memory for all n->sq[i] elem=
+ents?
+> >
+> > >
+> > > Even if for the latter, I wonder if we can have better way to do it. =
+ For
+> > > example, if we can integrate this directly into vmstate_save/load_sta=
+te()
+> > > to support some new flag, VMS_ARRAY_OF_POINTER_DYNAMIC, then we can d=
+eclare
+> > > some more "official" way to say some pointer of an dynamic array is N=
+ULL.
+> > >
+> >
+> > Yeah, I thought about this too, I believe this is a great idea. But
+> > taking into account that
+> > this is my first contribution to QEMU and I'm learning code around I tr=
+ied to be
+> > very conservative and don't change any generic code ;-)
+> >
+> > I'm happy to do this work in -v3 if you would like me to do it and
+> > guide me a bit (I have just send a v2 series,
+> > but there was no changes in migration API part, only NVMe specifics).
+>
+> Yes, it would be nice if we can use a good base on this part of work.  Th=
+e
+> problem with your proposal is even if it doesn't touch vmstate core, we
+> will then need to maintain that special .info struct, that's also a burde=
+n.
+> So maybe it's better we do it the best we can come up with.
+
+yes, I agree.
+
+>
+> I changed slightly on the name of the new flag, DYNAMIC might be fine but=
+ I
+> wonder if we can choose something clearer on what it does.
+>
+> Maybe VMS_ARRAY_OF_POINTER_ALLOW_NULL? It should at least imply two thing=
+s:
+>
+> (1) The array being migrated can contain NULL pointers anywhere in the
+>     elements.  We will need to change the nullptr trick a bit for this: w=
+e
+>     must send a byte (even if it's non-NULL) beforehand saying if this
+>     element is NULL.  We could reuse 0x30 for NULL, but we need e.g. 0x31
+>     to say it's non-NULL.  Then this will work even if dest QEMU doesn't
+>     know which pointer is NULL (unlike s390's css).
+>
+> (2) If it's non-NULL, dest QEMU allocates the array element memory during
+>     loading the vmsd.  It plays similarly a role of VMS_ALLOC but for the
+>     array elements.  We could use a separate flag but I don't see a case
+>     where this flag can be used without being able to migrate NULL
+>     elements, so maybe we can stick with one flag so far until we see
+>     another use case.
+>
+> The new flag must only be used with VMS_ARRAY_OF_POINTER for sure.  It
+> should likely verify that each pointer on dest is NULL before hand before
+> allocating that array element too in case we leak things.
+
+Yes, this is precisely what I'm currently doing in get_ptrs_array_entry()
+
+>
+> We will also need some coverage in test-vmstate.c for this.
+
+Sure!
+
+>
+> It would be great if you will volunteer on this piece of work, I will try
+> to help whatever way I can on reviews.  You can also consider doing it
+> separately then migration can collect it in advance when ready on its own
+> (proven that it'll be 100% useful here for nvme very soon).
+
+I'm in.
+
+>
+> But I know it might be too much to ask, so if you want I can also take a
+> look at this problem.  Let me know.
+
+No problem at all. I'm happy to pick this up and try to implement.
+And huge thanks for your guidance and advice ;-)
+
+Kind regards,
+Alex
+
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
 
