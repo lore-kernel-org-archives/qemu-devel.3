@@ -4,98 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C69F30946
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 12:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58929F30946
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 12:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy87P-0007yJ-Dm; Thu, 05 Mar 2026 07:47:55 -0500
+	id 1vy88s-0008Ot-1w; Thu, 05 Mar 2026 07:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vy87M-0007xm-DO
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:47:53 -0500
-Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vy88o-0008OV-Qa
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:49:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vy87K-00042m-A1
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:47:52 -0500
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
- by mailfout.phl.internal (Postfix) with ESMTP id 95420EC0098;
- Thu,  5 Mar 2026 07:47:47 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-11.internal (MEProxy); Thu, 05 Mar 2026 07:47:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1772714867; x=
- 1772801267; bh=sOYDO8/TPo347qqhEyHDAVBJYsDiTALu0Qbhvb0Kqjk=; b=C
- dsD8F4eQvE15hQOytfimpBrwwv+0v+m7q1tRC/HokBvw1tSAml+eBiODW8nRBWNP
- 5INe183ob9EFNgpqmoRuVaxCa9tjFvogmcmKxEcnwwR82+E8V56vWHy8FqKDMLxa
- WkAw3GF7tWdv/fE5erMkASChkTSBm7K32kzaGfoXP1ctVwMvo8Pjw/gAcURe0KlZ
- IJ0Hh7FfyXx+QpH97z2XJYSFeY3cDeSf8xmuqEl9HGrHFTgisk98jqpgb1dX8zrN
- H4Xji2nQF2kwC19OTPw3bsGHFz2TudnGUdWn0/fXTGPRPJIJC1XmABDRtKkiVAlH
- DrvwVdazV5CJ2j1CAHr7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1772714867; x=1772801267; bh=sOYDO8/TPo347qqhEyHDAVBJYsDiTALu0Qb
- hvb0Kqjk=; b=lPdxvYNPgmcRXaD6Oa1dXEi+gh+vrgNmJ11nCmdXd0fzHCTDYW1
- dJtqHjEzkPihyVKOmGcD78xnb8ohjEtJfyKxTS0tYIePzKCr8cBncLQiX3GXhd6h
- +Xp5iois4TTLk+5e2M9goaz+n/AMtsW7Fyqh5sR+kXNHiSDky6b3SZ9ClOtSXh9d
- 50bCu1/B79xBTmY1hLJB2c+qUGIim1aT6asp3JFwxvjvDcKuIsQy3wk0GpK48Tba
- oFY1VhtzBUWCxCn21JPTI19Pg2b+9dMEyYD79yqCCpGnxk3duZrEaKaYNkf2O6qf
- gimO/MB46MWjoilqMbhUYUJi9aktGnPRYuA==
-X-ME-Sender: <xms:c3upaQxeW8VLUBJDi5_LNTR24d_rsXVXh0-8-WXBW5LDWGOepat5hw>
- <xme:c3upaUZUB0SsLH1mFk52MAudBtfLV_-lKEpGL4NCXUa_ctDhHnR5aT_M0Ofp5scPv
- 7hqahLe5UBNJ5sO-FcVHlQdsGkOzmkMRKKJTpZ-fmDKfmTxrBHoMg>
-X-ME-Received: <xmr:c3upaaTPMF88zLLJppxmphEM8o4nYLOf_KPLH1-gSOcbsXUftPgc_3a_FZCEOg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieeigedvucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushcu
- lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeev
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
- esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
- phhouhhtpdhrtghpthhtoheprghvihesshgthihllhgruggsrdgtohhmpdhrtghpthhtoh
- epsggvrhhrrghnghgvsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggv
- vhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnh
- htrdgukh
-X-ME-Proxy: <xmx:c3upaWyBtGgs7CTIk-uCGlwZdhA2-t-9po7bOeyVOsvM-WxMtOom3A>
- <xmx:c3upac0wnCYquXqea-ssJtXch7hPAEnku87n8fbJQy0Y_XLuU6A0gA>
- <xmx:c3upaU4DdWCzZM2e6RUn1s-fQy-9bQejJRse5N2G5beScH3goymB8Q>
- <xmx:c3upafWx84_tT3QDXcktK1d2qIAbYlGvE2m-7fK9kZmXee6PBK8xfQ>
- <xmx:c3upaesNLFN-Hs3ZRx2gYXqANOcKh7T_yHDHXGUTw_fCQZh2CeOl_fIr>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Mar 2026 07:47:46 -0500 (EST)
-Date: Thu, 5 Mar 2026 13:47:45 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Avi Kivity <avi@scylladb.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vy88m-00048l-Ml
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:49:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772714959;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CKa/uYwe7FzEpkB8Ki2op6B+BxhKs0XUF7f90olM6qA=;
+ b=Lah7OEKK0/srdz5FT4AazhJceR9AA+cDifM4pGDvgaMY8zZCgLEwaJLhks80q/gVYbRFBG
+ ul7AvLUDWYh9eRd94J6nM7hgzQYKLiHX+GYk2jfgjoZq0ad/KxDbICgC+vyqc23iWB6Fq/
+ 3p3VmFDjXxnPwaE3f6lw70JaTV3Ip1o=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-304-6ZbzMLueNVSHQZP9290T3Q-1; Thu, 05 Mar 2026 07:49:17 -0500
+X-MC-Unique: 6ZbzMLueNVSHQZP9290T3Q-1
+X-Mimecast-MFC-AGG-ID: 6ZbzMLueNVSHQZP9290T3Q_1772714957
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-439c794edd9so1757391f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 04:49:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772714956; x=1773319756; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CKa/uYwe7FzEpkB8Ki2op6B+BxhKs0XUF7f90olM6qA=;
+ b=rTcZj0u1Sy9e0GAvxcH973oxxbPDJ2hPdA9XGvT5HxxLS3v2Y7U9fRbiwZnxKjxMuN
+ gfEiFdlE7CcjIDWEMJhGBulKEk3fYSaM2HlBLdZ8yRwDniXfbnkBhQteNb2/omYGqBkN
+ zNHDm9q11YFpnaVRg1K0pAjsEXP+0+ZqaKKDZ9DcEh1KOKxKw7OunE+4+Fe3z0TraZ5F
+ Jqh0h3L4ig7pOgLU4FngK0/HSHOW4yftCHwquY5svAMveCraJeAcBMzCQvi4lp09KK5f
+ I99B40PZ4eJxWht+hV2l0JG+wU4fDFs9j0zEdjvJWJ7a6NyPrb/RlwkmUuHSNXU94QsL
+ W0zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772714956; x=1773319756;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CKa/uYwe7FzEpkB8Ki2op6B+BxhKs0XUF7f90olM6qA=;
+ b=C4JPxmQNfGD1pnnEzfzxmhQ9ng0PL7nLwNu7AJHRxAu58OGZW1lAuQqtYo+Ucly495
+ XZoryFx67nDzEESiaiV5msC+hX+p2Y+sZOOAUy8puRA8a+rPMs5GSYg3bVba1T1XkXYh
+ +mCuGM17xxm9wcpUhb/B8vFXqRP52/0ODC3X2JqG7g8+24WYCwgOe5Sa9IEIMdWqzMAF
+ vK/BtKDUZ/0Jb6IzzCrmYF6FY1XPmL24WP7r49A8Oj0lX2NdIsJFB60ZCBYCwDLM2fYB
+ 4bLRBDBgRvEkZjewzvjKpk9NLKacQCgVJ4WzgA/gFja4G64bXDg16/K6M2htbk6Hz0gr
+ 33HQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfpO+f9KkF/qvof0mxUlc+Xay5as+rv6aHdsmFqAxESk5aOgRFRMDom6VgFA83xo6j1Lq9SO598Q/t@nongnu.org
+X-Gm-Message-State: AOJu0YygWIbvwBtzwbrvtUJcmfwxNWCAX1Z2S0MoBqjTJBsmSPpilNvj
+ R7COoytdT8e05E7fEjgxNU2/K56duC1id9fCH6LoLWaQn+V8owG/rOi2m5HK1TtT0f6OF0ZwNrG
+ TKfhMwBa6E4lM3ONOmQ67XwyeYJQhhzUbCZYcjwHWzJjacfa7XAeoinek
+X-Gm-Gg: ATEYQzwn5DCqLx4zH3FuyzDvEylyoki06XNKcEZZSdSy9n+M7mjy7QO7ZLpU9h/T4LQ
+ xyZg5q3zqnuNlHJa7bzxFyJEj3+My6t58x/GEoRDHgg1WCNr/JZ9HZCk3trdYV4ALnEaO1dAtC+
+ 15HMWxx/ZUtwb4JCf3UuEoZBk+qCNqjFAcDqMLC6buv9x/kgGFV+2ud8mcUjS2sx9yFHr/aSRNA
+ XSJvBqzkCj/hZCOq5CJDRhPQD404ylUwSex1Es5Cyyw6QHNxcn53Bk0JQjLVwbsQv7CsxzQhnlY
+ 03cyeE6I7pEPAAWSokd0TLq99F9uvmQ58pVg9S35sYj8el1fa3HWVnLYvJsh4KzKCCZvcxJmOug
+ 3z84lIw==
+X-Received: by 2002:a05:6000:268a:b0:439:ae82:6aa7 with SMTP id
+ ffacd0b85a97d-439c8008fb9mr10291830f8f.30.1772714956467; 
+ Thu, 05 Mar 2026 04:49:16 -0800 (PST)
+X-Received: by 2002:a05:6000:268a:b0:439:ae82:6aa7 with SMTP id
+ ffacd0b85a97d-439c8008fb9mr10291772f8f.30.1772714955899; 
+ Thu, 05 Mar 2026 04:49:15 -0800 (PST)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439b1b97927sm36445902f8f.28.2026.03.05.04.49.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 04:49:15 -0800 (PST)
+Date: Thu, 5 Mar 2026 13:49:13 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: mst@redhat.com, anisinha@redhat.com, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
  qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/nvme: add `model` parameter
-Message-ID: <aal7cdCf2A0SUO_u@AALNPWKJENSEN.aal.scsc.local>
-References: <20260302142831.1269291-1-avi@scylladb.com>
- <aaWhHEI4QaDINc8K@redhat.com>
- <CAF950WLOB1BXkJ+rmRea3nWuLRZG=O3gDas9HUhM1LMsmrnffA@mail.gmail.com>
- <CAF950WJJC+Wr+K4DQeyqM=_NdQfz=DJ+mN0fM-nyu0XBQe2pag@mail.gmail.com>
+Subject: Re: [PATCH 4/5] hw/char/serial-isa.c: declare IRQ as shared in ACPI
+ IRQ descriptor
+Message-ID: <20260305134913.78e63dd0@imammedo>
+In-Reply-To: <c578ab0a-d8b8-4474-8d5b-538a26a85c85@nutanix.com>
+References: <20260227134611.1229390-1-mark.caveayland@nutanix.com>
+ <20260227134611.1229390-5-mark.caveayland@nutanix.com>
+ <20260304122251.217cd93b@imammedo>
+ <c578ab0a-d8b8-4474-8d5b-538a26a85c85@nutanix.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="uTzYK1y2qq9X2WuC"
-Content-Disposition: inline
-In-Reply-To: <CAF950WJJC+Wr+K4DQeyqM=_NdQfz=DJ+mN0fM-nyu0XBQe2pag@mail.gmail.com>
-Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
- helo=fout-a4-smtp.messagingengine.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,74 +127,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 4 Mar 2026 14:36:14 +0000
+Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
 
---uTzYK1y2qq9X2WuC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mar  5 13:11, Avi Kivity wrote:
-> On Mon, Mar 2, 2026 at 4:50=E2=80=AFPM Avi Kivity <avi@scylladb.com> wrot=
-e:
->=20
-> >
-> >
-> > On Mon, Mar 2, 2026 at 4:39=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrang=
-e@redhat.com>
-> > wrote:
-> >
-> >> On Mon, Mar 02, 2026 at 04:27:48PM +0200, Avi Kivity wrote:
-> >> > Add a `model` parameter, readable with nvme-cli. This allows
-> >> > impersonating other disk manufacturers or hypervisors, similar
-> >> > to the the -smbios option.
-> >> >
-> >> > Signed-off-by: Avi Kivity <avi@scylladb.com>
-> >> > ---
-> >> >
-> >> > Disclosure: prepared with AI assistance. I believe it to be of good
-> >> > quality.
+> On 04/03/2026 11:22, Igor Mammedov wrote:
+> 
+> > On Fri, 27 Feb 2026 13:44:58 +0000
+> > Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
+> >   
+> >>  From Windows 8.1 onwards ISA serial IRQs cannot be shared when ACPI Revision
+> >> 5.0 is used in the FACP table. The reason for this is that if a 2-byte IRQ
+> >> Descriptor is used then the interrupt is considered to be high true, edge
+> >> sensitive, non-shareable. Since legacy serial ports COM1/3 and COM2/4 share
+> >> an IRQ then if more than 2 serial ports are added, Windows indicates a
+> >> conflict in Device Manager and these combinations cannot be used together.
 > >>
-> >> Can you clarify how AI was involved,
-> >
-> >
-> > I asked an LLM (Claude) to add a model parameter to the nvme code, which
-> > it did, then I asked it to documented it, which it also did.
-> >
-> >
-> >> as QEMU's policy is to decline
-> >> any contributions where AI was involing in an authoring role:
+> >> Add a new 3-byte IRQ Descriptor to the _CRS resource indicating that the
+> >> ISA serial IRQ is low true, edge sensitive and shareable, along with a
+> >> corresponding _PRS resource so that the legacy serial ports also appear
+> >> at a fixed address. This enables all 4 legacy serial ports to be used in
+> >> Windows without conflict.  
+> > 
+> > What happens if we just replace aml_irq_no_flags() with aml_irq()
+> > (without compat knob and _PRS)
+> > 
+> > wrt _PRS could you elaborate some more why it's needed and what happens
+> > if it doesn't exists?  
+> 
+> Good question. I based the implementation on the technote from Microchip 
+> at https://ww1.microchip.com/downloads/en/DeviceDoc/00001879A.pdf and 
+> found that it worked fine here on Windows 11.
+> 
+> My concern from deviating from the document would be that any changes 
+> would work fine on Windows 11, but then fail on older versions of Windows.
+> 
+> I can try and locate a copy of Windows 8.1 internally if you still think 
+> that is worth pursuing?
+
+with _CRS present, I don't think we need _PRS especially in absence of _SRS
+and means to actually changes used IRQs/IO.
+
+What I'd like to avoid is adding not needed code and compat logic
+if it's possible.
+The later unfortunately achievable only by tedious testing of
+the change with older Windows versions (the older it is,
+the more loose spec interperetation).
+
+> 
+> >> Finally add a new x-acpi-shared-irq property to disable the ACPI IRQ descriptor
+> >> changes for older PC machine types, and add it to the pc_compat_10_2[] array.
 > >>
-> >
-> > Very unfortunate. It would have taken me an hour or two to re-orient
-> > myself in the code base, for something that took me a couple of minutes
-> > with AI.
-> >
->=20
-> So what's the verdict?
->=20
-> FWIW I think the probability of AI copying these few lines from some
-> non-GPL project is zero.
+> >> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> >> ---
+> >>   hw/char/serial-isa.c | 23 ++++++++++++++++++++++-
+> >>   hw/i386/pc.c         |  4 +++-
+> >>   2 files changed, 25 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/hw/char/serial-isa.c b/hw/char/serial-isa.c
+> >> index a4be0492c5..1662da86bd 100644
+> >> --- a/hw/char/serial-isa.c
+> >> +++ b/hw/char/serial-isa.c
+> >> @@ -28,6 +28,7 @@
+> >>   #include "qemu/module.h"
+> >>   #include "system/system.h"
+> >>   #include "hw/acpi/acpi_aml_interface.h"
+> >> +#include "hw/acpi/aml-build.h"
+> >>   #include "hw/char/serial.h"
+> >>   #include "hw/char/serial-isa.h"
+> >>   #include "hw/isa/isa.h"
+> >> @@ -43,6 +44,7 @@ struct ISASerialState {
+> >>       uint32_t index;
+> >>       uint32_t iobase;
+> >>       uint32_t isairq;
+> >> +    bool acpi_shared_irq;
+> >>       SerialState state;
+> >>   };
+> >>   
+> >> @@ -92,7 +94,12 @@ static void serial_isa_build_aml(AcpiDevAmlIf *adev, Aml *scope)
+> >>   
+> >>       crs = aml_resource_template();
+> >>       aml_append(crs, aml_io(AML_DECODE16, isa->iobase, isa->iobase, 0x00, 0x08));
+> >> -    aml_append(crs, aml_irq_no_flags(isa->isairq));
+> >> +    if (isa->acpi_shared_irq) {
+> >> +        aml_append(crs, aml_irq(isa->isairq, AML_EDGE, AML_ACTIVE_LOW,
+> >> +                                AML_SHARED));
+> >> +    } else {
+> >> +        aml_append(crs, aml_irq_no_flags(isa->isairq));
+> >> +    }
+> >>   
+> >>       dev = aml_device("COM%d", isa->index + 1);
+> >>       aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0501")));
+> >> @@ -100,6 +107,18 @@ static void serial_isa_build_aml(AcpiDevAmlIf *adev, Aml *scope)
+> >>       aml_append(dev, aml_name_decl("_STA", aml_int(0xf)));
+> >>       aml_append(dev, aml_name_decl("_CRS", crs));
+> >>   
+> >> +    if (isa->acpi_shared_irq) {
+> >> +        Aml *prs = aml_resource_template();
+> >> +
+> >> +        aml_append(prs, aml_start_dependent_function(0, 0));
+> >> +        aml_append(prs, aml_io(AML_DECODE16, isa->iobase, isa->iobase, 0x00,
+> >> +                               0x08));
+> >> +        aml_append(prs, aml_irq(isa->isairq, AML_EDGE, AML_ACTIVE_LOW,
+> >> +                                AML_SHARED));
+> >> +        aml_append(prs, aml_end_dependent_function());
+> >> +        aml_append(dev, aml_name_decl("_PRS", prs));
+> >> +    }
+> >> +
+> >>       aml_append(scope, dev);
+> >>   }
+> >>   
+> >> @@ -117,6 +136,8 @@ static const Property serial_isa_properties[] = {
+> >>       DEFINE_PROP_UINT32("index",  ISASerialState, index,   -1),
+> >>       DEFINE_PROP_UINT32("iobase",  ISASerialState, iobase,  -1),
+> >>       DEFINE_PROP_UINT32("irq",    ISASerialState, isairq,  -1),
+> >> +    DEFINE_PROP_BOOL("x-acpi-shared-irq", ISASerialState, acpi_shared_irq,
+> >> +                     true),
+> >>   };
+> >>   
+> >>   static void serial_isa_class_initfn(ObjectClass *klass, const void *data)
+> >> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> >> index 0dd3fd01d9..c0335b05ba 100644
+> >> --- a/hw/i386/pc.c
+> >> +++ b/hw/i386/pc.c
+> >> @@ -82,7 +82,9 @@
+> >>       { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+> >>       { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+> >>   
+> >> -GlobalProperty pc_compat_10_2[] = {};
+> >> +GlobalProperty pc_compat_10_2[] = {
+> >> +    { "isa-serial", "x-acpi-shared-irq", "false" },
+> >> +};
+> >>   const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
+> >>   
+> >>   GlobalProperty pc_compat_10_1[] = {  
+> 
+> 
+> ATB,
+> 
+> Mark.
+> 
 
-As maintainer I don't have a problem taking this patch, but I'm not sure
-how to deal with the policy in this instance.
-
-Daniel, please advise if I can take this. I'd have written the patch
-like this myself.
-
---uTzYK1y2qq9X2WuC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmmpe24ACgkQTeGvMW1P
-DekfVQf/QxJjmZOPl3uSl/SgIeoWEopSWytVOiq1ge5DWNMrniD6HeQvqMsEx7p6
-LlDpyomLGXvsNEDwc8ycN2Hbwl/wlFwmft1a9m5DMvMe2bqXIAGHbiTJ685eMaXH
-Wa7rTQesQ/xhLF3rpfkFRAa8xRk8Z4qk9OV0+rM7krB44cng8caPqBmeNyAeI3Gd
-OhA7L/PwHAmj+0qYAZ/4KW1GZq6z3o7dCB0CZxUid63a2xFr1RVeF/0byWuBBjq6
-9cAfm0yyGuRvZHa7lpZeyMFt4a0+utyN5MuD4vKpMMifFkKej1gChpvyetJQGWr/
-EH+scqfc57D18Lsh26s/bPNxYer3EA==
-=LB7f
------END PGP SIGNATURE-----
-
---uTzYK1y2qq9X2WuC--
 
