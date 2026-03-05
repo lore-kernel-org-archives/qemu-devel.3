@@ -4,127 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DDE9EFCE53
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 02:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624D5EFCE58
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 02:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxyca-0001Gc-EP; Wed, 04 Mar 2026 21:39:31 -0500
+	id 1vxydW-0001qr-DU; Wed, 04 Mar 2026 21:40:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vxycS-0001Fc-G9; Wed, 04 Mar 2026 21:39:20 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vxycR-0002b5-2b; Wed, 04 Mar 2026 21:39:20 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 624DIHIA2125663; Thu, 5 Mar 2026 02:39:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=WH795i
- sc8bkYTvS5s9OPmox39ayaHb2S5Dyo0VSCfw0=; b=ZMHNEGIKGYre1h5Qjlbboy
- QoV2hF7h5DTUbfLlV91K0pnmdH9vGr7Qodpkb1kdPd7hYaY6lJEgDraW1aRTx2ui
- i9yk9nS2szU7PztmrhgjjUSeri7tuQXeoTPhGTbzYfFBGfrjwnL/EswHHcPiFxlx
- fACsDh1n1gIFHgKVmQwHl/0tQ2DSuMtwzgXIUlBkSSGSXDRlVl4GqmpWk85Bz2t+
- sQKFfoA+NSU38lFDTboQ0W3K/3SOuFLtJaqJu2VRaqZU/j8wvk3PpawkD0a2pbAt
- 2oVmoe5rGA8A1SwjcE67xSFSH/rbZuMOR0mRhtlPG9ofVjJ/j4AYaBcPYXeN3lPA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskc1fu7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 02:39:09 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6251BEjt027713;
- Thu, 5 Mar 2026 02:39:08 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjh2hn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 02:39:08 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6252d6Sm30474754
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 02:39:06 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7337058052;
- Thu,  5 Mar 2026 02:39:06 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 444ED58056;
- Thu,  5 Mar 2026 02:39:03 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.133.56]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 02:39:03 +0000 (GMT)
-Message-ID: <8f8fe4eb19463264ada68f50715f21f514baf352.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 17/18] migration: drop VMStateField.err_hint
-From: Eric Farman <farman@linux.ibm.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
-Cc: farosas@suse.de, qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Gerd
- Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin"	 <mst@redhat.com>, Alex
- =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Dmitry Fleytman
- <dmitry.fleytman@gmail.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini	 <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Gautam Menghani	
- <gautam@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, Nicholas Piggin
- <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>, Stefan
- Weil	 <sw@weilnetz.de>, Halil Pasic <pasic@linux.ibm.com>, Christian
- Borntraeger	 <borntraeger@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
- Matthew Rosato	 <mjrosato@linux.ibm.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, Thomas Huth
- <thuth@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>, "open list:Floppy"
- <qemu-block@nongnu.org>, "open list:XIVE" <qemu-ppc@nongnu.org>, "open
- list:S390 channel subs..."	 <qemu-s390x@nongnu.org>
-Date: Wed, 04 Mar 2026 21:39:02 -0500
-In-Reply-To: <20260304212303.667141-18-vsementsov@yandex-team.ru>
-References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
- <20260304212303.667141-18-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vxydS-0001qH-Bz
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 21:40:22 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vxydQ-0002sA-L3
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 21:40:22 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-65f92a597a1so10704428a12.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 18:40:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772678419; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iyrZK+nDPx0O7jA2swtMDKlYm8DOKHyXh8AmCAjBXClJmHWI0h5Ox5kgfQyFXGrpQr
+ x6BXG4xzJLhsfc9fCly9wfzaH0vKVIrE4PPaSiY8iuI1oA4dmKTVdnoOKxTs/22hzZjv
+ k9Jny2s6gcL0mRBaqlY9GQTYOluy/QiA2dZDPO64EFxgO5GdCtKq4VpOZ9nGAQ+S1/3W
+ bY7i0JwD3aYpG7c/CENP+knrvXjB2wGGGnk+TM9o3l/CTKxhp7muZi3ZeRV5sMaizXlz
+ GZVhUHvFDrI4EN7EFFRlUdzjodbC1IVssswkP1tweofJYHtD/Pz0Z+p8qgbuUSjRp4wI
+ lTKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tZRoCi4mvd3uN3jjL/HgHcTpnPg8rwQ+rxkjkfQDndU=;
+ fh=qVCHIBAmpZfRsxgXEvXh2s/XRWnqGWa8TXLczCTGhXs=;
+ b=PxjVUgeG6MWnf3eUSPI6ay08rn5MuQkq45k4wnx1XzMOWdzep06swtZjv7H+VGrUxT
+ XQvTx2qpQbXlpUEeLQEkxWSxnpRQI+kXPGEBmODvQVHe2JzcLsfIGl2zS8TCp1VYcCEM
+ US6S1GpOA92fchSRnt9lwN/I3FHnxawZA76EH4R2CjJPHFgiPww8KaVQHENf+8EG0xgZ
+ qi5HgloQ/NOTjk4/i0tvNzfFhwd2oa0dwpDy3/Y9XyQhHlT2kAs1GFwUpdlGj1dvQL6U
+ GLqYex7qGs0ob/gx27Yac5cW0UQFt9/9yExRN7xMGfw/xyNqbzaWKatxBleIzCUZ8bHH
+ oHZg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772678419; x=1773283219; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tZRoCi4mvd3uN3jjL/HgHcTpnPg8rwQ+rxkjkfQDndU=;
+ b=AGoS0mmlD2xwoPgdPuRZZbucSkVRSm0YfykF6u8BVpuMzatSxln/72NLroL06YrBaO
+ VghnadUGHXIjI+VBifmX+DYBlJ4rIszzAgq1woY4rTb2DG/KQ7wGzXc680x5StJkvkTW
+ KGcaBrpUzaLdVuWkEpd5blPMeq6SNke5TXkDznkRw7hiDpzs0lKbB5w4hJD4R6U41B3L
+ pupbn+UdfOQLjxa8J3gYRER3z0IQ50uitDwysckq0pMDfWmLUP0I/k02JfSQT9O9NGXo
+ sSVRa8CfyMn7zvI9DAjM4ts7KfIG+DUu/kiBwrAHyCECy689HVhNSu03wF4GEBK+u3JZ
+ QWoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772678419; x=1773283219;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tZRoCi4mvd3uN3jjL/HgHcTpnPg8rwQ+rxkjkfQDndU=;
+ b=rotvWs6r/eJdklSqBlJBqFUc42VUFzyFR6trQex1ME60kJm5lwmQ1gYy9vl6NQ+Xql
+ 1mZQRugnrszK+yK4jgXLT+wkG5QVhRvxbFqjwDjkN4CB9KVu2Z9YFOyDdkQhDyATdHo9
+ 3eeCmqyS8GY9OHgnt+wM0r85kEiGbSMK2Le8k9xosWTPIH5EnD/EmLB1je2uqPKGeqAU
+ kDj9CAN6c8KFTl9SYH/SL8rEisHH8cXq1Od2UCb25bHKAeX/Kp1aZYZssSaZmI/GzSFz
+ Unv1GeVg83Wk4Uq8JwcO5+wDdsV9PA1qTLpMtQwzB0pBsjmFjvKSM+PhhuYv2hBA+BWU
+ 8UzA==
+X-Gm-Message-State: AOJu0Yy6zYCAPEUGbx8uCyDOvHwiB2EoopXHNoGd7Ko5xLI2Ql6eg6cI
+ S/QDT330n7KFvvIjOAU1vt4BAO1AvZ8fh9BcHxi8rRN6VudbMqEBZczzat/SOrvQyzpTn0rhkiY
+ 4jiPsyd8++ADz5qIbk+QTBBEZIWGBjW2Idg==
+X-Gm-Gg: ATEYQzzX90QvuOsonMtzueEJZ/8yGZL4tAn1KLcjlHC6iLxsOWyE9Qdw/3APENnpYgg
+ LK8gZGMXutLSZLjcDAvY9k6w2s5A0gPodCev4T7F2FWhbWrctykPCigGI1YVwLqLuix7OnKrt+W
+ 3TM2EQHCJKxZJu3Q08xszqch7vE3gg4GMFsGjx3xxRAxaF5MXFeix9ALE2qM94jz4DceTloWPqw
+ N7rzj4wW7bTlEek7YbkH3cYxsTSIj+d1Bw4am8CRsr/8dmkO/oK0oZUzZ3LpLOMmVLtJQQ9kWhP
+ 3Ot8NdHZ1QOiw568iMtIapUF8HhB6wIGHIcOdQ==
+X-Received: by 2002:a50:9e27:0:b0:661:2c94:b12c with SMTP id
+ 4fb4d7f45d1cf-6612c94b2e1mr575759a12.31.1772678418769; Wed, 04 Mar 2026
+ 18:40:18 -0800 (PST)
+MIME-Version: 1.0
+References: <20260304134006.2908449-1-max.chou@sifive.com>
+ <20260304134006.2908449-3-max.chou@sifive.com>
+In-Reply-To: <20260304134006.2908449-3-max.chou@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 5 Mar 2026 12:39:51 +1000
+X-Gm-Features: AaiRm50DfcLwjO2Ol3saMwBCNbYkDkzMjp_GPIWEoD-6HOIQlTJ_JSPHzeypQE0
+Message-ID: <CAKmqyKO=6pBxGX9-HFJ+KZ8bDfkO0RSNJJC3QZeLorqy5D_8Kw@mail.gmail.com>
+Subject: Re: [PATCH v4 02/14] target/riscv: Add cfg properity for Zvfofp8min
+ extension
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: hvPaDpiN6Qsua-43U9BMxN_NLnZaMgCg
-X-Authority-Analysis: v=2.4 cv=b66/I9Gx c=1 sm=1 tr=0 ts=69a8ecce cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=6R7veym_AAAA:8
- a=VnNF1IyMAAAA:8 a=GN4Jp0a-f4mWprhMvXEA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
- a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDAyMCBTYWx0ZWRfX0wuxhnHy2m3A
- 54V5VrWhRr8STVnADSbEky31DI9JHI4ZKFBsRHpD3TGzFHB2j+WPDI5KbijJFk6ynVDWXkztXwM
- WhbGhi9lD7G4ptC0TcOJI3yFZrgaOO0dIT9TZUDy65TE1v+3s4xFjtNEaYrQ/7qT2S92rJGO7Qs
- 4CE0LW/2jYjTVY8RwQz0sZxBYm0Pwp5bTTan0fRZ8fJVrwjElBBP5x2500vnnpeU2gaM81VMtiu
- YuH5uMh5n5MK+7MA2z+4iKWjtxCV5CmUkOIdnEYLwRPvj+ci2J/pe4lT+K+EbZ3Zk0r71AV0SK9
- rSejpN5ULugHLU2eJBCZ8LXAzVHA2NkXK/tYGamhRQp3Mj7ae2rzkO7FAG63B+1rOaAEumP1qjh
- rGRpW+FXLKNyXuVK1RhcUgbbBRfZbcRaNA1+UWceLDba84/zjrjyRX4sG0rjsyu/llCMg2j6JVo
- 1zJyZgEusGeN502P1QA==
-X-Proofpoint-GUID: ZX0pSE7uEv7b5Tn0pZm3wZEJD0mQ8GaB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-04_09,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1011 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050020
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,34 +123,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2026-03-05 at 00:23 +0300, Vladimir Sementsov-Ogievskiy wrote:
-> The field is unused, all users of VMSTATE_*_EQUAL pass _err_hint=3DNULL.
->=20
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
->  hw/block/fdc.c              |  2 +-
->  hw/display/qxl.c            |  4 ++--
->  hw/display/vga.c            |  2 +-
->  hw/display/virtio-gpu.c     |  2 +-
->  hw/display/vmware_vga.c     |  2 +-
->  hw/i386/vmmouse.c           |  2 +-
->  hw/ide/ahci.c               |  2 +-
->  hw/intc/openpic.c           |  2 +-
->  hw/intc/spapr_xive.c        |  2 +-
->  hw/intc/xics.c              |  2 +-
->  hw/intc/xive.c              |  2 +-
->  hw/nvram/eeprom93xx.c       |  2 +-
->  hw/pci/pci.c                |  2 +-
->  hw/pci/pcie_aer.c           |  2 +-
->  hw/ppc/spapr_iommu.c        |  2 +-
->  hw/ppc/spapr_pci.c          |  4 ++--
->  hw/ppc/spapr_vio.c          |  4 ++--
->  hw/s390x/css.c              |  6 +++---
->  hw/usb/hcd-uhci.c           |  2 +-
->  include/migration/vmstate.h | 36 +++++++++++++++++-------------------
->  migration/vmstate-types.c   | 15 ---------------
->  target/ppc/machine.c        |  6 +++---
->  22 files changed, 44 insertions(+), 61 deletions(-)
+On Wed, Mar 4, 2026 at 11:43=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
+>
+> According to the ISA spec of Zvfofp8min extension,
+>
+> "The Zvfofp8min extension requires on the Zve32f extension."
+>
+> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 
-Acked-by: Eric Farman <farman@linux.ibm.com>  # s390
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+>  target/riscv/cpu.c                | 1 +
+>  target/riscv/cpu_cfg_fields.h.inc | 1 +
+>  target/riscv/tcg/tcg-cpu.c        | 5 +++++
+>  target/riscv/vector_helper.c      | 3 ++-
+>  4 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 73cfcbdf6f..c3ddcefedc 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -194,6 +194,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+>      ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+>      ISA_EXT_DATA_ENTRY(zvfhmin, PRIV_VERSION_1_12_0, ext_zvfhmin),
+> +    ISA_EXT_DATA_ENTRY(zvfofp8min, PRIV_VERSION_1_12_0, ext_zvfofp8min),
+>      ISA_EXT_DATA_ENTRY(zvkb, PRIV_VERSION_1_12_0, ext_zvkb),
+>      ISA_EXT_DATA_ENTRY(zvkg, PRIV_VERSION_1_12_0, ext_zvkg),
+>      ISA_EXT_DATA_ENTRY(zvkn, PRIV_VERSION_1_12_0, ext_zvkn),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
+lds.h.inc
+> index 3696f02ee0..59302894af 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -104,6 +104,7 @@ BOOL_FIELD(ext_zvfbfmin)
+>  BOOL_FIELD(ext_zvfbfwma)
+>  BOOL_FIELD(ext_zvfh)
+>  BOOL_FIELD(ext_zvfhmin)
+> +BOOL_FIELD(ext_zvfofp8min)
+>  BOOL_FIELD(ext_smaia)
+>  BOOL_FIELD(ext_ssaia)
+>  BOOL_FIELD(ext_smctr)
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 378b298886..ba89436f13 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -710,6 +710,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu=
+, Error **errp)
+>          return;
+>      }
+>
+> +    if (cpu->cfg.ext_zvfofp8min && !cpu->cfg.ext_zve32f) {
+> +        error_setg(errp, "Zvfofp8min extension depends on Zve32f extensi=
+on");
+> +        return;
+> +    }
+> +
+>      if (cpu->cfg.ext_zvfh && !cpu->cfg.ext_zfhmin) {
+>          error_setg(errp, "Zvfh extensions requires Zfhmin extension");
+>          return;
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index b2315ecf9c..57221ab884 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -38,7 +38,8 @@ static target_ulong vtype_reserved(CPURISCVState *env, =
+target_ulong vtype)
+>      int xlen =3D riscv_cpu_xlen(env);
+>      target_ulong reserved =3D 0;
+>
+> -    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
+> +    if (riscv_cpu_cfg(env)->ext_zvfbfa ||
+> +        riscv_cpu_cfg(env)->ext_zvfofp8min) {
+>          reserved =3D vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+>                                             xlen - 1 - R_VTYPE_RESERVED_S=
+HIFT);
+>      } else {
+> --
+> 2.52.0
+>
+>
 
