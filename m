@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68F0F3D337
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1A4CF3D339
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCFa-0006Po-IE; Thu, 05 Mar 2026 12:12:38 -0500
+	id 1vyCGB-00076k-UX; Thu, 05 Mar 2026 12:13:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyCFK-0006JG-Tu
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:12:25 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyCG6-00070v-8m
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:13:11 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyCFI-00057u-Qh
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:12:22 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48372efa020so73896155e9.2
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:12:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyCG4-0005Gx-R7
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:13:10 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4836f4cbe0bso71061975e9.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:13:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772730739; x=1773335539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772730787; x=1773335587; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yh0cwudrIwPmvaWJ2oJ7YlHyhKk2UdElu9Gw84AKPQk=;
- b=Id0JPj/xkhGujgHtgfTAT5f7FHZkb65iqDv8tHUkif/fgCZHgmrTmPeUfRDKw1JWtU
- tdfZMUI34GrazG7kKkMW5Us6qh0dG5aOzPokq1hgT7E9XhnSQuotqj+tGztfDlGdU6/Z
- 6pDH7ZePLkL+oT2qyrdD9E1WopB9atxAigHqqw8u7oGoECibQPpnPJq0l32ODXH9n4CJ
- T/2R3yVcnYyUiYfflfsjJupU5VOhFCbDa99DawrYyqCHLX2fnDAjXBOZgwyOV3m5IPav
- kI8B2ReDwO/fl7gGJXIX0WpESd2hCyvXABo2LA+spw3SAqYpjh8D3fUPMO/eM1YY1a6t
- hebA==
+ bh=rQJKnrKBr/qCTBG6h8cPSxvQwOqA7c4eTumxR9zdYnM=;
+ b=Jjr3Uqu+OtYEMTAiW5OGlcPlLig2MFdL3YGBhvRngMt2iv75Y8SaJTgDIJ/iHhstBu
+ 9NcmWV+0DajLu0ZMLWqMtCUc3Myp+/mzvKZJDyvB8Vg1+7YY8rJ+G231ckDIXAWhXfK9
+ kfnssevyi9B3ZD5Kbmd9JDsMhujxJXyH84/i+BLkUxawu6RCtzAHtXbImKTdeb4TC3MC
+ VmqBdsyW6fUU1phVjexJrlG491lC0p/MHfMQQA2bdnXsA+zXj3XR0sl5hFam/kusenxt
+ qjHNyIZNr9XvYks+NJ+6uF7hghi8moILcY40HbR73Yq1C4yGknEtHuZoVlFxOiSWQz2l
+ dx2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772730739; x=1773335539;
+ d=1e100.net; s=20230601; t=1772730787; x=1773335587;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yh0cwudrIwPmvaWJ2oJ7YlHyhKk2UdElu9Gw84AKPQk=;
- b=rKISaXY/MvR9mchUoa6l+2xUjvlfhWAfofSoxrlxvkC6F5fkdNaFlxbiCwf3uM63xz
- CBOitdyLWF7a8XLv2GKDeLL/xjSTJuYegKOku6zzzVQuuxJOEWmTElZUZ+sKJyEDaI7E
- eCgoE+0e708cRa+gbe1mZq/sfN6o57qBIK25thGCaJDWIgsuSXtx6RyYOct1/U582Aew
- 8xll5K5csvRxANRNhVImhyRmz8vB0z8HxgO7fTlRZ2hAtzulpTJmYzd40Ir2uKYwSaZP
- naejDyV8Dh7YNt5aKqKgsV71TL0Bl+L6GYqaj1qqatiMKmN+qemgM0MPesc16W0IRIcp
- IGpg==
+ bh=rQJKnrKBr/qCTBG6h8cPSxvQwOqA7c4eTumxR9zdYnM=;
+ b=PC3UQ7W+mxEbgCJLK7+1dbY4qjEypvgM0Lw29bS3GHADyXADRWSzY0W4iOjpKsqvfD
+ 3auvBQEyEkjcqUqhd+4pTVP2KZGbxOhi+bLXDUvobueFvwEyBN1s+h09e8M+9pMHWcO7
+ L2weZuz7RC1c61uIQQS2UHKo4GaoXVUQ9TlitceDkyXdw/mds8oj14RdQ3llKDc07Cna
+ 4nxjlvFwbihrQHb1karvWoCA70DbaRO3tCtx4l/hCZf9SZtjNg05Xgobcymzn9IuqhOS
+ EhzrozYQPeLIaG7ZNWMFViO3nmjzXwGSg/U3VjEhOGRJpYAjN7D38zbk8yB3fn8ew5Oz
+ cZQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcuO25vva+vWUbx8SUCTiRsGbJztXYFRm1IS2fP1wx/lRrYlmqSqXIWklqLqgo+INAY5ah0UYIrTTM@nongnu.org
-X-Gm-Message-State: AOJu0YwpwVKXVw4iVMGupNYJepOjSOcjbcjM6hu+Xr+MWMSgNOO/cRAT
- yzqQBexDiQQZa0rV6XhYJ+tiUInIyLT4pKs2Nx3EAAfPHtlqqmvaqLWLJKfIsph4XtY=
-X-Gm-Gg: ATEYQzzH6SHc0DkwRG7KW1Tvz4mDk7fmfT+KjLfsDDrbZMdj6MWZyPAoGe/Sqif4LOR
- pLpxsyzqxcrd8HTJOisrZewVaBVna8r4L7VelGY9PInMJKsrF2iPF/B6eDAs85Atj8MikxqA1UJ
- U6/GQoWJdYQTwGmPxlMY80qaKLrN8NQaMN1BICza7qkAKHEk4F6sl/6XG2kwnGe9Oz70HqqWTv5
- uDOn9Q/E3rpwkWhuhAVXOu3AXNTk/vtCx8JIXdz4f1gSOYuRxJ/xOCM+mHlcjAfqFyJgNm3pjkk
- tZIpWpNPzZOgU56Ay+I+RCASpfwuvWjfYJo6Eb4EsiRTuJkVzwNsDXE6JlEEVscY5lrlLJnvEdX
- ROVLkMBWp6CtIgPknId/KxXc7REER4BakI/3l7M/b0d32vzSG9848FdeePR3Dw0PfUI3fqAWkp5
- ERNwb8S7un1cDNKNtSpXuVbtS0pcUj/rVHuj/AEtlHO3C+NbkVFZLtYzIZvd2Cm/irwQ==
-X-Received: by 2002:a05:600c:6291:b0:47e:e20e:bbb0 with SMTP id
- 5b1f17b1804b1-48519837bbdmr96375175e9.6.1772730738513; 
- Thu, 05 Mar 2026 09:12:18 -0800 (PST)
+ AJvYcCUUOWrDShkx1Wnfqdfzp8hzdlmQnvqytpWISBm5qgfeZwGYrGvign0WDoMipKaVfBoMN/y4/DtadQfH@nongnu.org
+X-Gm-Message-State: AOJu0Yyn1iz4UVQ+5wsPctZL+rgulTWIGDNbcg/DM1rDS1hNlDYW0kNA
+ dprTa9qXsi1dlZ0xdr3QSz72NkseqCSJIh/a75ZQzX0/XloNlyRLr4RTIEtxV6UrFL4=
+X-Gm-Gg: ATEYQzzHIFdzdtQmkLVn1e7tuvCTgQ364aIMd3EsrXAmEX7X8dggTv2TbDrEu9iAoG9
+ Rx1JsZGB1+gwJqPIs8T6Hxtm/5w4tQWHZxRJELyyhrphfBzPZuQkbO2J+gW95iopU3gKajbB3CR
+ +O4TrrEIQ6JtbX/qj4qQI5B/ek6fnq9D76JB8/OlmQO1W1dWwxv+Gm/2BgPMhmHIGyAbWUguDQC
+ ms1eDtHJCcZYIW9KnfzarvjQTbN+jreHT4OgnQwhabm2bHLLC1+0zWnYzbxHipqmloYtI1Scnhn
+ g4oqgUvkTuMkaZWZlL8l6swOY+BX/lVlsESqWlhl7tUF+ZY6TMY/Be6JiCjgO6RxMPce6X9CSkn
+ gdNKInHp6K9FzJXijidOEPuZpFlQ4uqTWOZlRnu3DaggSwFcGR7so/9HXp9SZa//kT5kRgtRBex
+ Z/hB2GXQjre99iO1FLgSVipBGyOcSp779FVLGqZRptWo7/zpEqEJjpylL0M4BPX2SjjA==
+X-Received: by 2002:a05:600c:1989:b0:47a:7fdd:2906 with SMTP id
+ 5b1f17b1804b1-485235aec61mr3432845e9.12.1772730787172; 
+ Thu, 05 Mar 2026 09:13:07 -0800 (PST)
 Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439b1b97927sm38007618f8f.28.2026.03.05.09.12.17
+ 5b1f17b1804b1-4851fafe4c9sm66473635e9.15.2026.03.05.09.13.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 09:12:18 -0800 (PST)
-Message-ID: <1c974eed-8291-4000-bf8d-cdc991b23f6a@linaro.org>
-Date: Thu, 5 Mar 2026 18:12:16 +0100
+ Thu, 05 Mar 2026 09:13:06 -0800 (PST)
+Message-ID: <4f425829-4a4b-4fad-93c4-4eee8584f594@linaro.org>
+Date: Thu, 5 Mar 2026 18:13:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 10/12] hvf: sync registers used at EL2
+Subject: Re: [PATCH v11 12/12] hvf: enable nested virtualisation support
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -78,13 +78,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
  qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>
 References: <20260228220837.35275-1-mohamed@unpredictable.fr>
- <20260228220837.35275-11-mohamed@unpredictable.fr>
+ <20260228220837.35275-13-mohamed@unpredictable.fr>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260228220837.35275-11-mohamed@unpredictable.fr>
+In-Reply-To: <20260228220837.35275-13-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,55 +108,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/2/26 23:08, Mohamed Mediouni wrote:
-> When starting up the VM at EL2, more sysregs are available. Sync the state of those.
-> 
-> In addition, sync the state of the EL1 physical timer when the vGIC is used, even
-> if running at EL1. However, no OS running at EL1 is expected to use those registers.
-> 
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   target/arm/hvf/hvf.c        | 37 ++++++++++++++++++++++++++----
->   target/arm/hvf/sysreg.c.inc | 45 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 78 insertions(+), 4 deletions(-)
-
-
-> +#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID},
-> +#define DEF_SYSREG_EL2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, .el2 = true},
-> +#define DEF_SYSREG_VGIC(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, .vgic = true},
-> +#define DEF_SYSREG_VGIC_EL2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, true, true},
-> +
-> +struct hvf_sreg {
-> +    hv_sys_reg_t sreg;
-> +    bool vgic;
-> +    bool el2;
-> +};
->   
-> -#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  HVF_ID,
-> -
-> -static const hv_sys_reg_t hvf_sreg_list[] = {
-> +static struct hvf_sreg hvf_sreg_list[] = {
->   #include "sysreg.c.inc"
->   };
->   
-> @@ -1052,11 +1073,19 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->   
->       /* Populate cp list for all known sysregs */
->       for (i = 0; i < sregs_match_len; i++) {
-> -        hv_sys_reg_t hvf_id = hvf_sreg_list[i];
-> +        hv_sys_reg_t hvf_id = hvf_sreg_list[i].sreg;
->           uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
->           uint32_t key = kvm_to_cpreg_id(kvm_id);
->           const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
->   
-> +        if (hvf_sreg_list[i].vgic && !hvf_irqchip_in_kernel()) {
-> +            continue;
-> +        }
-> +
-> +        if (hvf_sreg_list[i].el2 && !hvf_nested_virt_enabled()) {
-> +            continue;
-> +        }
-Nice :)
+>   hw/arm/virt.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 
