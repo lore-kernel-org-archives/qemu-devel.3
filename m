@@ -4,134 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEC5F30946
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 11:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1711CF3093A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 11:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6mZ-0000oP-QR; Thu, 05 Mar 2026 06:22:19 -0500
+	id 1vy6ru-0001h3-96; Thu, 05 Mar 2026 06:27:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vy6mX-0000nc-Tz
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:22:17 -0500
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vy6rs-0001gp-MF
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:27:48 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vy6mW-0001E4-DA
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:22:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hMMKfws0Pz3CGRSEaimw26xjPWjHZLXf0+s9m5S3ObVKeX5Ub5d0O7nTG8fiAyV1hHY0/im5VHe0V7cmnJqQjGQNUVI1jjLxTfGSSPZFPNZdJPp/tAZermGrCdminhRtPlKWArdhw8DxvBA1tw7aRFjnu7mtmIBJY3c2hxSONBzepJZL5RnqhGRRVCn+pgPqUJZuvY4E8icdaE/AVshNj/clK5iSF0NJSINCnd7WQX+VgiL3jULlXLCCeHpu3I9KeqTMAKZLKiYLFMZGaLBERHmkN+lOUcGoyEP0LiiNQdgkKbQ6MlxBN3iqkMB7L3G7XQdWi80rVmFpVSAdaG+UpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Sa55lh4XV16qwwdvulpAw4SauRpGRzhtRFZK/6XB4j0=;
- b=fU0VCZOnXFkeoHvO1PDRHm3bO2f5GpFBnpt5FjvQp7sNn6zcgGWtIQ6qelJ5+yuZWo8aKuFX7pSFUlCCDUfVOM7yBcxRomLx29NUdVEbjE0SNcgViOYTr16XdcM9bBMJXsLY95cmMvFMRNAlXZ9x1jsf38qBBf7ef0UNGYxO9k0xDKlmmOLPVKs1344CKDLeCMysoKw6Nbsgkj1dZwm+byz8ohxjHR+cePbAplR5ywTH8ld1Cni96zPsBFhe97TFhLuZJQGPU5vTwcwhIWFfrcS3fddcwIrEA8wbRQhFICWlaFMR/9Qe9UgDd2uLWBLDI79cbfkylc66Q7GPKn7D1g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Sa55lh4XV16qwwdvulpAw4SauRpGRzhtRFZK/6XB4j0=;
- b=YAQz4HPIYcLWAv+N+b3pa4ukgH/TwzCR0S4wv4v7vupPyEX2uULxx08+JprgorgCtm7+iDwFsBdzFvaXB7yqZ3Z4xFaL9QHY6evhlaLMw4dlzOa2cW9qzn6dpMaBmZ2L4Q2t/gza/sWuGXOjRXIcFm8OMMoCZDVwdkrChnUX1RVELr9VRG6uN4HWlip7UjRQiDql8qfgaOvlTIAn5lth1ccz+Ae1D+kDOcTnR8ZbBaPjCBs2idoCp/QXv+5IFCFHXKXVpyDut7VqnY27DGd4FMNw2cuWtQl5tkqL1ijBFCs5AdRhZuZ1sOUj+Any7/+eX/7ReVmG3Nn/QNcT/BZ2Vw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by BY1PR18MB5972.namprd18.prod.outlook.com (2603:10b6:a03:4ab::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Thu, 5 Mar
- 2026 11:22:13 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.20.9678.017; Thu, 5 Mar 2026
- 11:22:13 +0000
-Message-ID: <460c0ea9-005c-4970-9cee-bffb7e9c0c11@axiado.com>
-Date: Thu, 5 Mar 2026 19:22:09 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/1] Add new model for Cadence GPIO controller
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20260305103400.1574217-1-kchiu@axiado.com>
- <CAFEAcA9hcr7sDHvv-o_YRkaBJLTt99Uh=DgLtTHw_=jA6A4j5w@mail.gmail.com>
-Content-Language: en-US
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <CAFEAcA9hcr7sDHvv-o_YRkaBJLTt99Uh=DgLtTHw_=jA6A4j5w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0056.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:3::7)
- To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vy6rq-0001lo-Oy
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:27:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1772710048; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=gU2YG+sMBgYVDxzwMk5RYRtkz1vIa8Q7foBw6eTLETXFZRyas2USss8A5YkcAB1h+DWQr/fgn2N6vh1gJTVCMjZI2dtAPP9xubEgp1vtCZZn2dYsotOR5Av6IB8pzri9KCV++FQxEO3PT+TNUtpt8SfqLLex1sEdtkgJ80fA8b4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1772710048;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=fnETLW+SC3pidVom1ZNtOllb6o+zv/mM5xor2jTL/mM=; 
+ b=HYyOZYZcahw2UmWrqyR9nv3Iu8/oiDRv6qUe7tB5F2h6/NsegcGuKT7WoWkTc9sdcW/A692vJNkFS0nPdbszh7fpvmhrKwm/DaAV07hYo9oRgoeMVoF7cULKLSmbY/jS23MHBNsQjlzwWU8VijxCJlesqFL2JcffAXbvSYgCcTM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1772710048; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=fnETLW+SC3pidVom1ZNtOllb6o+zv/mM5xor2jTL/mM=;
+ b=Jho/OwZpPw/IpyAc3pm1ddZP5OuzdqCqh0eEx2jt7QSNMJloGCgcUpqBZuYnVW0S
+ /uc9cMZvujXmfgdfGn5qeFJhe3zT38DZJXlkxyl4Jl2rsoh52gsvhNwZafrrThfegf9
+ Brg//ULdNt7uWqzxD0p9lsEOxARKsMOcBDTNKk4o=
+Received: by mx.zohomail.com with SMTPS id 17727100436659.43354919566832;
+ Thu, 5 Mar 2026 03:27:23 -0800 (PST)
+Message-ID: <66259f6a-5e7b-4686-912b-7393e28252e2@collabora.com>
+Date: Thu, 5 Mar 2026 14:27:17 +0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|BY1PR18MB5972:EE_
-X-MS-Office365-Filtering-Correlation-Id: afa9b1f7-cfff-4ed1-7da9-08de7aa972fa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: rhbkQj8FK862zne2yCRPx2mmJZ8rG48gFOB+1QwzGSV6913IUxCf7wwAl+cLLVBHxvUZBoygLCbM5MlM36GR9ie03AlcVCExDmaUevXxX5WTHwjh7l41A9Rt767zD3Bzt1c7a28HI9xDP5JsqXRRlAxvfGAPjXbgXF5sz28x3OS+xI3abBEQ/0rhdFTz1iqeQEXbk6r/MFXRfTT9GUK+DjF0U1mPnFWToLeSW1L10iA29f+A+L1RHE4kBARtjbOeDslVXkDJRbnZH9wrjNWBkPpz85c/NBoIiZYIYsY6yDjmJqg2KfrpdZywfZtwNDoJOzacukx1vuqpTWDKIWOwLVRBQQ6MqhDFqrklyHwrYrINVJ20CxzJC5aZDCLSD4QszbeDqSqggn8u0+Lgg46Ggguw8M/ZFiT54gQ2nGaK6Mn+ncAJv9fS26jy58EA1k/plZaqXsXI6eHe4oS+GfXcXC245yVndyBWilVQzy85n45P9zIAtT0iEvnBD34V8l97TYTCRK2uNvZo/o9620cC2092IyCP29OQCDYpTl7XzDWrsGJP5UpM9f1FSR9mKY+MozvCn0TchEIjLPbI7q/zk5MhjsOOeSliy2FGSZJFBkcFzY7JtRDdAqZHHBK/pgKhLGIDwCvU9TQ74ay/KNlMpnL2Id31B7ArQ5ox235wgbY9Svs1pbvtd2mCFvppWeL9rBzmeRZl6rNbHgwmjxv5nfTw3qSGREl4mucoJeWlkJQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aFVVMXBMSmNpRSs2RXNVYzJxbVpFcGI5QkpFSjBjeHpGNWFTUzVNbzYrK3BN?=
- =?utf-8?B?anpSQUg0Zm1pb0NmcktmeURuS1pFU0luNm5IdGJrY3M0emxDQm1MQlh4R09T?=
- =?utf-8?B?bWRDeTB0REh3NGNRWGdqODVoa0lOZlZ0QUp6RzJFQ1JnSENPUzhIbmZHc0h0?=
- =?utf-8?B?NGFzaEVkdnU3QVQzZk5RYnJhQVF5dWJ4ajZOQjNVVDlBZTg2N0JweHdmMWdK?=
- =?utf-8?B?a3VXejRFQ2xWQ1hxc0JNT0FFRWx3Y3VuK2tOL1pyNzkxY3ZCNkJKYWZWZXhn?=
- =?utf-8?B?VmQxbWVsRjFVOU5sZDNTN0x0eGM1eVpwVDNCYnYvRkNmRTdZOW1xWjQvMmlJ?=
- =?utf-8?B?Z3VKREpZNFhuMU94dkNlYW9tTWZQanpVYUk4KzFnVC95ZlpZcGVlZC9RamxE?=
- =?utf-8?B?bys4U3lUREdRSkl2UFg0Rk50eHc3dXY0K3ByM3BIeU0zK1d1ODJPU2ZFcDNs?=
- =?utf-8?B?d3o3QmdCOEkyQTVudEk3SG1lZkMwTGJFNi9nOVR6bWsrbWkrZDVIMDJ4aldo?=
- =?utf-8?B?ZGpkb2gvaGNmaWZ5NUpqZGtBZ1kzUHREMUJmdVpOMUZaT2JqSWxWeU5Sd21s?=
- =?utf-8?B?YXcycWtRWHIxQUpGM25mdkQ2d1k0TXhEbEloK3liWklYYlJEWEFFakNQS3VI?=
- =?utf-8?B?bC95WEw4MEEySnF4SGc5MkdZS2djMDNvRFJ2S0NiRlc4Yy9KbUY3Q3R1OC93?=
- =?utf-8?B?V3lTdExwYkpYbHVQTFdEOTZsbFgreHkyMTRlVExxbXE4SmFzbXFZRVhIckVs?=
- =?utf-8?B?TENpUUxMSXJndHVWdmk1Ymh0YTFtZmNTcnIzMFBReFp4bWZxT2JORTR6NVVx?=
- =?utf-8?B?MU53OTZvMGRQUUUvUmtVamNTUUF5aS9XcEtlQUIrMHl6SVk1Y1REM3R4c2dV?=
- =?utf-8?B?dmdtZk4waVluZ0dJS29hcEhuSklKMVNBUXd1VmVPelM4Q3dZTmFwQldKZVB0?=
- =?utf-8?B?eTYxS1ZpQ0RSVzM3WGlPTTd6NkpaV0tIWGR5Ujl3NkpGNWo4bUtUdWUwVFFY?=
- =?utf-8?B?bnJUZHV4dmJZcTZEQ2hkeVcwUVdMUUVmbmZKU3NUNnUzTG5mQkFXQ3ROcTFK?=
- =?utf-8?B?cVdKL2NOL3p4TlpBdHM2ZktBRklpZUdiYXB5ZVZuaVFRTWZyUlhzKzczWmpa?=
- =?utf-8?B?cjJYQmkvaHNJemFueUVWUStsRGwzZ0pEVXN6TCttUlU5VnVncFNVa2xuOVEr?=
- =?utf-8?B?YzBUYXFZSGZsV1JTWVRUQkFpLzNjUHlPbVVKOUFqWUo2SmhiRWprckpMcU5n?=
- =?utf-8?B?UzhrTkdwbGxwSGFvVzZCTFN3cW1DR3RvRWFaTERpMXJQanRyNnBsWnZnTVMr?=
- =?utf-8?B?VVNtRTg5VmdtQ08va1llYUZEYUxZT2dBRi9PaE9ZYlM4cHhDbGl2RzJ1dXgz?=
- =?utf-8?B?MFAyR0RlWDZ6U2N6ZkFFTThkTm9VQW9DdDhLaXdkSFJaMkx1NzlwV1JMS2VQ?=
- =?utf-8?B?SXhRRGNvSTB6dTRmYkRIY08rWWZBVUhtbmsvOFUycVI2TkVLVG04TFNwQWxq?=
- =?utf-8?B?NU1UV0VPS3hQcWxKWDdqOHY2ZXhlbWJYNVFmTzlPSkUrVzF4dkUrSHAyRFpZ?=
- =?utf-8?B?VXNtZGIwcEc1OGVZTnV1L0Nldk9zTGx0eHBuQ0lNTjlHLzdlOVpNT2hvNGNG?=
- =?utf-8?B?blZqSStLQVVOWTllNk05SGRZZzc5Z3BBY2VEZ0pmalBKcTU1OW9TVmpSei9B?=
- =?utf-8?B?UTdFV2M4UGRpZ3hDUTFiS01GaDhmZkQ2N2ZSeEdTUFF1S0dYMzhFM0E2aldz?=
- =?utf-8?B?RmZwQ0Q1K0t3ZWxYS3RVd0pSWFZmcGl0QkxBVUxPWWtCMnRRQm9mUThsbEpr?=
- =?utf-8?B?M3I0Q2J1aUZjYytZNUhPMTFzLys4Z01UY2JoVEx6eEhQejl2VTBseFowMVYz?=
- =?utf-8?B?Ni82M3ZtM3FYcm8wci92UmUxanhpRDloSEFDeTd6dzEvVWFVNTJ6SkNYRm9y?=
- =?utf-8?B?djVoMlNQVWFMSnJDTmJtQWcrVUhJalppU1RHYXQ3bjUramwvWU5MK0Z2Y2tU?=
- =?utf-8?B?OEZUMTRmZHVOVjZCdmVVSk5DMlVaZzF5a2xObzQ0TTZyalZ3ZnhWQ2Y1SkV3?=
- =?utf-8?B?enoxUlZaVS9NZXFmSHJTTmQ5QlZnQWg4UGRKNGR0ZzNiN3ZjOXMwSm1lMWJS?=
- =?utf-8?B?dWV2UTFiQVVMcE9hUEtQZ1RrODRpanp2UjJqR2hPUTdKcUtCbHBnY0NoS3dY?=
- =?utf-8?B?dm95dnRlYVRQN09ESTh5N1pMMG93RTBNV0x2MWdjV0s3U2tzb3ZqV0tVUCtl?=
- =?utf-8?B?M1paOUpPWC84MC9BUFY1MFd2cXVZUGdsU0JDQ3ZySHBvMmFrQ201Zm1IalBx?=
- =?utf-8?B?a0NSOEVSM3d1QmRwZGpZdk9kY2dCaHpFUVByN0lQeHp0eENuT3dDdz09?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: afa9b1f7-cfff-4ed1-7da9-08de7aa972fa
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 11:22:13.2512 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EN/+6ZcKA2yoqDMEjcJnRqJYjtDt71Iwa0QdIs1kSb9kxvGHeQMfkWx7qRA2TXmhHqsF9OKCigHOhCsy2F9H4Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR18MB5972
-Received-SPF: pass client-ip=2a01:111:f403:c110::1;
- envelope-from=kchiu@axiado.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/20] ui/sdl2: Implement dpy dmabuf functions
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Yiwei Zhang <zzyiwei@gmail.com>
+References: <20260304165043.1437519-1-alex.bennee@linaro.org>
+ <20260304165043.1437519-9-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20260304165043.1437519-9-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,44 +93,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 3/4/26 19:50, Alex Bennée wrote:
+> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> 
+> If EGL is used, we can rely on dmabuf to import textures without
+> doing copies.
+> 
+> To get this working on X11, we use the existing SDL hint:
+> SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
+> 
+> Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> Tested-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Message-ID: <20260303151422.977399-7-dmitry.osipenko@collabora.com>
+> [AJB: ifdef CONFIG_OPENGL/CONFIG_GBM for non-linux hosts]
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>  meson.build       |  6 ++---
+>  include/ui/sdl2.h |  7 +++++
+>  ui/sdl2-gl.c      | 68 +++++++++++++++++++++++++++++++++++++++++++++++
+>  ui/sdl2.c         | 48 +++++++++++++++++++++++++++++++++
+>  4 files changed, 125 insertions(+), 4 deletions(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index df841e12e24..e623f398be9 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1946,10 +1946,8 @@ if get_option('gtk') \
+>    endif
+>  endif
+>  
+> -x11 = not_found
+> -if gtkx11.found()
+> -  x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
+> -endif
+> +x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
+> +
+>  png = not_found
+>  if get_option('png').allowed() and have_system
+>     png = dependency('libpng', version: '>=1.6.34', required: get_option('png'),
+> diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
+> index dbe6e3d9739..9daf5ecffae 100644
+> --- a/include/ui/sdl2.h
+> +++ b/include/ui/sdl2.h
+> @@ -45,6 +45,7 @@ struct sdl2_console {
+>      bool gui_keysym;
+>      SDL_GLContext winctx;
+>      QKbdState *kbd;
+> +    bool has_dmabuf;
+>  #ifdef CONFIG_OPENGL
+>      QemuGLShader *gls;
+>      egl_fb guest_fb;
+> @@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
+>                               void *d3d_tex2d);
+>  void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>                             uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf);
+> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf);
+> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
+> +void sdl2_gl_console_init(struct sdl2_console *scon);
+>  
+>  #endif /* SDL2_H */
+> diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+> index fbac3edbc09..bb066cdd885 100644
+> --- a/ui/sdl2-gl.c
+> +++ b/ui/sdl2-gl.c
+> @@ -26,6 +26,8 @@
+>   */
+>  
+>  #include "qemu/osdep.h"
+> +#include "qemu/main-loop.h"
+> +#include "qemu/error-report.h"
+>  #include "ui/console.h"
+>  #include "ui/input.h"
+>  #include "ui/sdl2.h"
+> @@ -250,3 +252,69 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
+>  
+>      SDL_GL_SwapWindow(scon->real_window);
+>  }
+> +
+> +#ifdef CONFIG_GBM
+> +void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf)
+> +{
+> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+> +    const int *fds;
+> +
+> +    assert(scon->opengl);
+> +    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+> +
+> +    egl_dmabuf_import_texture(dmabuf);
+> +    if (!qemu_dmabuf_get_texture(dmabuf)) {
+> +        fds = qemu_dmabuf_get_fds(dmabuf, NULL);
+> +        error_report("%s: failed fd=%d", __func__, fds ? fds[0] : -1);
+> +        return;
+> +    }
+> +
+> +    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
+> +                            qemu_dmabuf_get_width(dmabuf),
+> +                            qemu_dmabuf_get_height(dmabuf),
+> +                            0, 0,
+> +                            qemu_dmabuf_get_width(dmabuf),
+> +                            qemu_dmabuf_get_height(dmabuf),
+> +                            NULL);
+> +
+> +    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
+> +        scon->guest_fb.dmabuf = dmabuf;
+> +    }
+> +}
+> +
+> +void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
+> +                            QemuDmaBuf *dmabuf)
+> +{
+> +    egl_dmabuf_release_texture(dmabuf);
+> +}
+> +
+> +bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
+> +{
+> +    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
+> +
+> +    return scon->has_dmabuf;
+> +}
+> +#endif
+> +
+> +void sdl2_gl_console_init(struct sdl2_console *scon)
+> +{
+> +    bool hidden = scon->hidden;
+> +
+> +    scon->hidden = true;
+> +    scon->surface = qemu_create_displaysurface(1, 1);
+> +    sdl2_window_create(scon);
+> +
+> +    /*
+> +     * QEMU checks whether console supports dma-buf before switching
+> +     * to the console.  To break this chicken-egg problem we pre-check
+> +     * dma-buf availability beforehand using a dummy SDL window.
+> +     */
+> +    scon->has_dmabuf = qemu_egl_has_dmabuf();
+> +
+> +    sdl2_window_destroy(scon);
+> +    qemu_free_displaysurface(scon->surface);
+> +
+> +    scon->surface = NULL;
+> +    scon->hidden = hidden;
+> +}
+> diff --git a/ui/sdl2.c b/ui/sdl2.c
+> index 032dc14bc39..aaaede56e0e 100644
+> --- a/ui/sdl2.c
+> +++ b/ui/sdl2.c
+> @@ -35,6 +35,10 @@
+>  #include "qemu/log.h"
+>  #include "qemu-main.h"
+>  
+> +#ifdef CONFIG_X11
+> +#include <X11/Xlib.h>
+> +#endif
+> +
+>  static int sdl2_num_outputs;
+>  static struct sdl2_console *sdl2_console;
+>  
+> @@ -120,6 +124,11 @@ void sdl2_window_create(struct sdl2_console *scon)
+>          /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
+>          scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
+>      }
+> +
+> +#ifdef CONFIG_OPENGL
+> +    qemu_egl_display = eglGetCurrentDisplay();
+> +#endif
+> +
+>      sdl_update_caption(scon);
+>  }
+>  
+> @@ -808,6 +817,12 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
+>      .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
+>      .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
+>      .dpy_gl_update           = sdl2_gl_scanout_flush,
+> +
+> +#ifdef CONFIG_GBM
+> +    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
+> +    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
+> +    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
+> +#endif
+>  };
+>  
+>  static bool
+> @@ -835,6 +850,35 @@ static void sdl2_display_early_init(DisplayOptions *o)
+>      }
+>  }
+>  
+> +static void sdl2_set_hint_x11_force_egl(void)
+> +{
+> +#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(CONFIG_OPENGL) && \
+> +    defined(CONFIG_X11)
+> +    Display *x_disp = XOpenDisplay(NULL);
+> +    EGLDisplay egl_display;
+> +
+> +    if (!x_disp) {
+> +        return;
+> +    }
+> +
+> +    /* Prefer EGL over GLX to get dma-buf support. */
+> +    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
+> +
+> +    if (egl_display != EGL_NO_DISPLAY) {
+> +        /*
+> +         * Setting X11_FORCE_EGL hint doesn't make SDL to prefer X11 over
+> +         * Wayland. SDL will use Wayland driver even if XWayland presents.
+> +         * It's always safe to set the hint even if X11 is not used by SDL.
+> +         * SDL will work regardless of the hint.
+> +         */
+> +        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
+> +        eglTerminate(egl_display);
+> +    }
+> +
+> +    XCloseDisplay(x_disp);
+> +#endif
+> +}
+> +
+>  static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>  {
+>      uint8_t data = 0;
+> @@ -862,6 +906,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>      SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+>  #endif
+>      SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
+> +    sdl2_set_hint_x11_force_egl();
+>      SDL_EnableScreenSaver();
+>      memset(&info, 0, sizeof(info));
+>      SDL_VERSION(&info.version);
+> @@ -906,9 +951,12 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+>  #endif
+>          sdl2_console[i].dcl.con = con;
+>          sdl2_console[i].kbd = qkbd_state_init(con);
+> +#ifdef CONFIG_OPENGL
+>          if (display_opengl) {
+>              qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
+> +            sdl2_gl_console_init(&sdl2_console[i]);
+>          }
+> +#endif
+>          register_displaychangelistener(&sdl2_console[i].dcl);
+>  
+>  #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
 
-Understood.
-I verified this device model with our Axiado EVK machine which is still 
-under development
-Does that mean I have to submit patch to add our EVK machine into QEMU 
-first then add this device to it?
+Thanks a lot for adding the ifdefs, all looks good.
 
-B.R.
-Howard Chiu
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
->
->
-> On Thu, 5 Mar 2026 at 10:39, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->> This patch seriers add a new model for Cadence GPIO controller which
->> supports 32 pins and interrupts for level-triggered/edge-triggered type on
->> input pins.
->>
->> Also define new trace functions for analysis purpose and new configuration to
->> enable this model.
->>
->> Kuan-Jui Chiu (1):
->>    hw/gpio: Add Cadence GPIO model
->>
->>   hw/gpio/Kconfig                |   3 +
->>   hw/gpio/cadence_gpio.c         | 312 +++++++++++++++++++++++++++++++++
->>   hw/gpio/meson.build            |   1 +
->>   hw/gpio/trace-events           |   5 +
->>   include/hw/gpio/cadence_gpio.h |  66 +++++++
->>   5 files changed, 387 insertions(+)
-> Hi; this patch adds a new TYPE_SYSBUS (memory-mapped) device,
-> but it doesn't add that new device to any board models, so
-> this is dead code, as it stands.
->
-> What's the intended user? Generally we recommend adding
-> new devices to QEMU along with the machine/SoC/whatever
-> that uses them.
->
-> thanks
-> -- PMM
+-- 
+Best regards,
+Dmitry
 
