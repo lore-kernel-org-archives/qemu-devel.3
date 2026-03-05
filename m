@@ -4,93 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF96EFCE5E
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 03:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAACEFCE5A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 03:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxzdg-000637-L4; Wed, 04 Mar 2026 22:44:40 -0500
+	id 1vxzjb-00073U-18; Wed, 04 Mar 2026 22:50:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vxzdf-00062j-4r
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:44:39 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vxzjZ-00072x-9p
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:50:45 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vxzdd-0004qw-3a
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:44:38 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-354bc7c2c46so4210130a91.0
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 19:44:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1vxzjX-0005l7-P1
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:50:45 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-660b497acd1so1994535a12.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 19:50:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772682642; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lEBqxsH5LFuXINcce4NMPr8MYfrrOv/UOfn0dWgXpDGuvNXCz3Eztdn0ggyHVtBvQ3
+ HdoMZ3xkK4UBKYI3xOoe4GmPNHLy4rNx1l6Uhay8k2Go+yQ6kOFl+sRvLwkjPpvg5NGK
+ LOMB478J7Dg12wAz3r82EZpxAiPzTjEGnOgqImW8bt7p7B0iNvkR9chQ67X6LS8Wm4nT
+ o/R8ZTlcAg9+y5/10QFy7fq3dOnEonIebY6DkjitgH3XOudFTtIyXLrvKxJULztVLaNz
+ IJwcEx9Oz4D16LMBp9e1dzhxsHQIkZT6YSVxDurfelUwjw8PKJ0w0DAYURqYa9OKJzsU
+ emow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ekZaWANbPK7wiouMk/jrX4/9PXt72ytmEogpDA8lQwg=;
+ fh=2PxklpQGkIG/DTOXfi2tMcVDxT3rSvTqUv/+HE+Ue2w=;
+ b=hVkC2zJf+5KsyS9yyjGJZmD0zmu0JYYGtSBrIaRTg0/uby4pyi/IKOx8RuW5udX+QS
+ zmBHcVhyMBMVRO1PtDdplyJ61EL5QuYwbOnuA9n9Iqdu6yhhCawBKYjUIFSD9UDBVkju
+ 8XqhjKLsCqBpgbU/GH8J9o2ytlLf+lwV6FuU8tQh0re6Rdkj60bqiILuy3s737RnA5Fj
+ QIlQeDcbZdxUexB+GF+CtkaDpU5gkQ2iPQgfni78tFLVfwsw8p6jvZarDidaY0zKuWki
+ ewD1x6o8TCX+/QQ4xBR1eZGnBY7kMyL64NX/hlHYXplwNhoqO/6r5bVIRlNCD46N7+fv
+ AeZQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1772682274; x=1773287074; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=a3yBeeMGybkxwe9xCKni5iVnrSxuTxLUIv6stZXLhh8=;
- b=CGX/4GD159OiLrd2hXJNsKKUhsxZ43qMqcps6V4v/AqTg+IKw34NzzYbOG3tHoSyxt
- oQOakt0vdT9b0mqPgL4SeJcs7T0vLpDjujc+CB00KfvWW4+r0JUMvsRmHIRODAIFoTg1
- 8aXCPqP6BaoRyvQ6DQvesseyB65kL8FDB0dBCvPVxz+W8usAARmvH6bkO0whPhCAMm4O
- Bet91ksk+1bokZFHANZr8jxeiSR58NE36boPtJt8khUkSWlLOMitk7msR95trk9xy7NT
- IcXt1fhZQcPB74v1h7pY2BeRiFnUqtqKywH4cOy6XGQ4sHV9MsZysHX93uMAfgI8YdkK
- Uu1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772682274; x=1773287074;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1772682642; x=1773287442; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a3yBeeMGybkxwe9xCKni5iVnrSxuTxLUIv6stZXLhh8=;
- b=iBQnvhZlBbi/XKc/h1XcOhPKMEhZj0L6v1GsIhHPzWyL9pKs4wQOkRau/XfmtxiyEA
- g8IjGKl92YBhf0tkZPfL9oQliEZqH8OzvF+WtUMJpqOTp7Fijhur2WmFtryw4uLpUGbR
- wmbri+AhuQBXJk7kg9GND9SVzMW844p1G7acWM2QpC2d2AicQfi1PikHMmRo1KA0Bu/z
- 5T3xlbfqirdyj3K3q0Ahd7i+GwWs48emnSTunGJwSMwZqD2srOtTUNfx34i/9FLPoNaB
- VbTunca8gnW69TlzKk861fqzcFlguZhP1xne9zWa6tqionPf3sxPSQNke+CGWZtFkgSR
- 3KPA==
-X-Gm-Message-State: AOJu0YzJeCK1+jyY79Fsnz3G4VPBNfXqxfZt7rcc2UAXdpG81DJKp2bE
- NObLpG1hU2pWN3KcbHfc8ovAevFJw+AuJtqMSjppO5FrgvPWYc+hsHVYg1BJk3Yul1DJ8c9cmKy
- p3OpAX+WL9QaGnxsD9k44fuKCjarecAAu7/vAXLaX0XpZOniYMIQ51sjqEvF4WNk8/QlknELaYz
- eM1Gqmf6pel98ZvUWpZJCOmo8i8HbJJz02Ehl/9UnuCew=
-X-Gm-Gg: ATEYQzzPX2YrDHISZhw/lFvZH85eIxRu37I7mkIF75fggR/Ryaa7n45+G2I9LUHGozO
- k21Aon2CzAC3W+NqM/CkFlXzcUblniauYtEtiABgO3XLcqw7HJiUtaOvrHLphSJFMni66MrqeYV
- 6dfTitQtUaISUmUimdbZRt4yQouzmuo3d0G5B4dMbo3MsAzPNFswdsaMDOdUPEjh5+wiTU1isRp
- AOajAQ8YnUiJqgt7FXYmle+mr/oe9cklMmom3JFfu3gjiaZHRurVOBUJhVYqXPoZVA3yG+OphAk
- Fd+Dwr0EQD/P9hg48oA6D8fyHG9LIL7/aZH7CsnrjgRo0ze21UYgvURRxlnY8YtTor8VDiFR6Y7
- dkjtVvHRIG/0PpOUGEQR3SP13z+FSdsknf9+d1oqGhxOFi/ha4P2dePz7kS9ZdQB2Q/MtssItYv
- 8DbUqhErSUEGoN6p1wW5bqztvUMn7JYEfIeQPYRQgzcxjJAUcU99peEU6vBATvqg==
-X-Received: by 2002:a17:90b:2ec4:b0:359:8bcf:eded with SMTP id
- 98e67ed59e1d1-359a6a97a7cmr3383752a91.35.1772682274351; 
- Wed, 04 Mar 2026 19:44:34 -0800 (PST)
-Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-359b2d81068sm390078a91.17.2026.03.04.19.44.32
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 04 Mar 2026 19:44:34 -0800 (PST)
-From: Jay Chang <jay.chang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Jay Chang <jay.chang@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v3] target/riscv: Support Smpmpmt extension
-Date: Thu,  5 Mar 2026 11:44:29 +0800
-Message-ID: <20260305034429.74739-1-jay.chang@sifive.com>
-X-Mailer: git-send-email 2.48.1
+ bh=ekZaWANbPK7wiouMk/jrX4/9PXt72ytmEogpDA8lQwg=;
+ b=S1eVjOqU4vkOzzJUjZsvLJ5Nun08meOGhf3yrtE/bo9T01TNs8OCR7fdG9yHvSihmr
+ p0yTRuIn06vMuvAo8gjdd1zoFO6l++paAufJSF94lNNUcvdpLyNkRYxbpdRDd/P/Y4R5
+ mh8r+Odu3wR9RiqQKW3jkTP47to/g1NR4id/NxHKGWABkrx71JJqLfyPGI+udLpxvav2
+ 6LalYYXiUq4cGDYTaN7IZZiI/rB7KwRfk35I4ZtHDZa+X9Ulf+SOVJG7s3fUdXCgYu3/
+ XYHuJRAKLKY/WNci+IMbjGVVE77iSAttKqwiQGw61XQZuim/sWONu5DZ/NHIVGSzEnXP
+ lqQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772682642; x=1773287442;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ekZaWANbPK7wiouMk/jrX4/9PXt72ytmEogpDA8lQwg=;
+ b=g9m2Pzlkk2SHyYB7hJvoZ7aeHjl11NwOYHnp8rpOWTeSJj+M4N24415rbBeKIY+nYK
+ 8caKWpucDoWPMfRIGmL4u9ujybdhlAYVCAVVCVpOHsUTO7/vHvn6fsiJ66L2p6vFSsRd
+ UQByopfQ767/naepMU1RUrZvisL8CgmR7iBJgxWw8UzqySuycQa+c7rNiH9GtKyh2IsK
+ eQ0ju2ZsQtMAMMzVION4nEPCDZV8S6u7S4PsPhPVAvGit1Xvrg8t3VBuWiWYGprfyLI/
+ GXj2hEWoWAhbeLKk/bNAmZi6jiKHBbI1FWbhrHjVHXNybLMr02ycjMIj964a1nIuvkMq
+ 9Jtw==
+X-Gm-Message-State: AOJu0YyDSIUbCxnL6O2WNM3AbnkSmMfGIu5wHYt7vHNLxBCJFADY/rB1
+ i8rVW/pLA10RxQn0vt1Rto7ZeZryLeyCDbxmB8hWcUvEFUmCnpBMM6qIjAEsBXXh6X+jKeu9WCb
+ fkV3fRjmS5V+LdvOh1MT55qsQrriHqUU=
+X-Gm-Gg: ATEYQzyCeqcWEyVEFNXOY4+X/josAnDcjT3qRjcgyQxhaTso24aAQA479hR9f2Nw34q
+ KY4lt75Wx6liE6UhJmvtqwOL/CEFaVwD2kR6/596Ydeb/GoMtRwdOxxG5cXzkXnyQTy8arYPNMf
+ lQgB09k7mW389eFaqAuqYs72y8NfzjUs2qAbt7W6vtffLvIbsO2xX+9o0ulH4XWTCdaaVMj5KLp
+ GxplFvGI4mKJap6OttEBNoB30nep1Oco5A3o1Krg/sU8bdmGdUos1d9gYvn2jJpDtR2xB5THb9t
+ sWQKKC14Zq7cRMhWd9ajqAz5K2e1+IScQB4BJg==
+X-Received: by 2002:a05:6402:51d3:b0:658:b4b3:4258 with SMTP id
+ 4fb4d7f45d1cf-660efebffa0mr2558335a12.17.1772682642033; Wed, 04 Mar 2026
+ 19:50:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=jay.chang@sifive.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260226071817.1417875-1-max.chou@sifive.com>
+In-Reply-To: <20260226071817.1417875-1-max.chou@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 5 Mar 2026 13:50:15 +1000
+X-Gm-Features: AaiRm52j8NjSqT7gs0jyRkyiwk9ponczgfAqjoNdnQJZXPmbkEQqUGQmbn_d7Xc
+Message-ID: <CAKmqyKOiK8+-VvqXwed0FPZ23_iWSn4=-f-A_uUjK9waOoXB-g@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] fpu: Fix OCP FP8 E4M3 conversion issues
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,111 +119,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Smpmpmt extension provides a mechanism to control memory attributes
-at the granularity of PMP (Physical Memory Protection) registers, similar
-to how Svpbmt controls memory attributes at the page level.
+On Thu, Feb 26, 2026 at 5:19=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
+>
+> This series fix following issues related to OCP FP8 E4M3 conversion.
+>
+> - Numeric overflow to E4M3 produces incorrect exponent values due to a
+>   missing local variable update after calling uncanon_e4m3_overflow.
+> - Converting infinity to E4M3 incorrectly raises OF|NX exception flags.
+>
+> Changes in version 2:
+> - The =E2=80=9Cfpu: Simplify OCP FP8 E4M3 NaN classification in parts_can=
+onicalize=E2=80=9D
+>   patch has been removed. This change retains the flexibility to classify=
+ NaNs.
+>
+> rnax
+>
+> Max Chou (2):
+>   fpu: Fix repacking issues in the uncanonical step for E4M3 overflow
+>   fpu: Fix unexpected exception flags when converting infinity to OCP
+>     E4M3
 
-Version 0.6
-https://github.com/riscv/riscv-isa-manual/blob/smpmpmt/src/smpmpmt.adoc#svpbmt
+Thanks!
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Applied to riscv-to-apply.next
 
----
-v2:
-    Place smpmpmt in the correct riscv,isa order.
-v3:
-    Add note comment in pmp_hart_has_privs() explaining that MT field
-    is stored but not acted upon during access checks.
+Alistair
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
----
- target/riscv/cpu.c                |  2 ++
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- target/riscv/pmp.c                | 16 ++++++++++++++++
- target/riscv/pmp.h                |  1 +
- 4 files changed, 20 insertions(+)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 9be79622f4..8ac935ac06 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -223,6 +223,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(smcsrind, PRIV_VERSION_1_13_0, ext_smcsrind),
-     ISA_EXT_DATA_ENTRY(smdbltrp, PRIV_VERSION_1_13_0, ext_smdbltrp),
-     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-+    ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
-     ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
-     ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-     ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
-@@ -1276,6 +1277,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-     MULTI_EXT_CFG_BOOL("smdbltrp", ext_smdbltrp, false),
-     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-+    MULTI_EXT_CFG_BOOL("smpmpmt", ext_smpmpmt, false),
-     MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
-     MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
-     MULTI_EXT_CFG_BOOL("smnpm", ext_smnpm, false),
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 70ec650abf..cd1a5ec56b 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -59,6 +59,7 @@ BOOL_FIELD(ext_svadu)
- BOOL_FIELD(ext_svinval)
- BOOL_FIELD(ext_svnapot)
- BOOL_FIELD(ext_svpbmt)
-+BOOL_FIELD(ext_smpmpmt)
- BOOL_FIELD(ext_svrsw60t59b)
- BOOL_FIELD(ext_svvptc)
- BOOL_FIELD(ext_svukte)
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 3ef62d26ad..5391caa59c 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -165,6 +165,18 @@ static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
-                           "ignoring pmpcfg write - invalid\n");
-         } else {
-             uint8_t a_field = pmp_get_a_field(val);
-+
-+            if (!riscv_cpu_cfg(env)->ext_smpmpmt) {
-+                /* If smpmpmt not supported, clear the MTMATCH bit */
-+                val &= ~PMP_MTMATCH;
-+            } else if ((val & PMP_MTMATCH) == PMP_MTMATCH) {
-+                /*
-+                 * If trying to set reserved value (0x3) for MT field,
-+                 * preserve the original MT field from current config.
-+                 */
-+                val = (val & ~PMP_MTMATCH) |
-+                    (env->pmp_state.pmp[pmp_index].cfg_reg & PMP_MTMATCH);
-+            }
-             /*
-              * When granularity g >= 1 (i.e., granularity > 4 bytes),
-              * the NA4 (Naturally Aligned 4-byte) mode is not selectable
-@@ -355,6 +367,10 @@ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-  * Check if the address has required RWX privs to complete desired operation
-  * Return true if a pmp rule match or default match
-  * Return false if no match
-+ *
-+ * Note: The MT (Memory Type) field from Smpmpmt extension is stored in
-+ * pmpcfg but is not acted upon during access checks. Cache attributes
-+ * have no functional impact in QEMU emulation.
-  */
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-                         target_ulong size, pmp_priv_t privs,
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index 271cf24169..467fb6b4b1 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -29,6 +29,7 @@ typedef enum {
-     PMP_WRITE = 1 << 1,
-     PMP_EXEC  = 1 << 2,
-     PMP_AMATCH = (3 << 3),
-+    PMP_MTMATCH = (3 << 5),
-     PMP_LOCK  = 1 << 7
- } pmp_priv_t;
- 
--- 
-2.48.1
-
+>
+>  fpu/softfloat-parts.c.inc | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> --
+> 2.52.0
+>
+>
 
