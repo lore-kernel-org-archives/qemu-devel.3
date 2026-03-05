@@ -4,117 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D4FF3D33C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC90F3D332
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCHc-0007yF-UP; Thu, 05 Mar 2026 12:14:44 -0500
+	id 1vyCIV-00011t-5I; Thu, 05 Mar 2026 12:15:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyCHc-0007u5-0J
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:14:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyCII-0000zD-7b
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:15:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyCHZ-0005N7-W7
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:14:43 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyCIG-0005fL-Qg
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:15:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772730881;
+ s=mimecast20190719; t=1772730924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wDS+E0ywxEcabzEhzNrAbczq9vFcntt8roiwPe2hSow=;
- b=e1v9L65GQniocTjppmR16bqVMtb5tv7JrEcKnV+wzNeoWYZB/TvRZ1jpZ0pJq1Ttf9riUO
- M8IjsO+ObbPZ+TPDvaMdt0mT0iT52Fa64M5HRVYXi8dShgdbfiR4z/4WpfOHgGIlzpQUdO
- 1HPD+hMy4u+nlZeZ1nBPerVooCoYvoc=
+ bh=uL6mXpjXurniYA5EoOlsGIbqMSMn4cPbCbbTVPdQmx4=;
+ b=VdC0WSljfCDk/ThSTC6Go6QZx+Kg3vuzq8bD8Sr92wi+JtMErbHmxvlEE1Ob5Hd9o9CFfw
+ ct0VptyjDeys0ii4NSNZDjmzG5NLdZH88mavrh7BKKpR95doAZBUeQpvg6cgesDcwG91RT
+ ObY76yLUM9xBZTOjURsicQXqL3BGCRc=
 Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
  [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-cS4Ox3rbN2qpF7oY4ApYRA-1; Thu, 05 Mar 2026 12:14:39 -0500
-X-MC-Unique: cS4Ox3rbN2qpF7oY4ApYRA-1
-X-Mimecast-MFC-AGG-ID: cS4Ox3rbN2qpF7oY4ApYRA_1772730879
+ us-mta-684-1xhGTv7vMOKY6JxPeYngQg-1; Thu, 05 Mar 2026 12:15:22 -0500
+X-MC-Unique: 1xhGTv7vMOKY6JxPeYngQg-1
+X-Mimecast-MFC-AGG-ID: 1xhGTv7vMOKY6JxPeYngQg_1772730922
 Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-506bfff75edso732673391cf.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:14:39 -0800 (PST)
+ d75a77b69052e-5033b4d599eso633251601cf.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:15:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772730879; x=1773335679; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772730922; x=1773335722; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wDS+E0ywxEcabzEhzNrAbczq9vFcntt8roiwPe2hSow=;
- b=YD+F2/6QixBEWp/LhOaFUUOIvsb72ozBB5PDZwSlw8XWhcYzmToR/GR1cwKtHvJvIR
- dBOMJIs1HHBYr7aUhsQm/wbXBUAGzhzNi1PJjqyMzQUuU/eZJ3Y/L/Z6WoNn+XUfpIcz
- Q7MX6w61HIsqTmahFdBlvxswGAnbxRylgL+TcBqUjJVHNrdf5MQcPy/xqQwi7O0ih8qQ
- P8XGtPDUp5p9cF2LW0lnsHzhGSz5w6QF6jcKvHXLu6uxh943KWA0G9Lg5mJyHyi7MeOf
- vLyJtUZGesJ7CJ4oZaqznBymz+UjaXWxxugZSz9tBAGG7uo02uhKLJNXQy6X7dc8HYcm
- Ng2A==
+ bh=uL6mXpjXurniYA5EoOlsGIbqMSMn4cPbCbbTVPdQmx4=;
+ b=q+kYeYTfeqSQu7vpG6y9ta/qvfINVhZCmPGK2xeMftUzAsJ7kLthwcooEOh2sAT9cc
+ jlvMix8H1Ns+lOKdno7GPKzJhn4CYtlcpkXV6ZzM8DGhMxjPf4qeHwXEl5ZPYE+fOd5R
+ 7CpggDS2mAR3r5BoqlXwpgjym5yxAauEIPIUrx/ivoXX8zYHpLlpGoYrvYzPGMDE6rpk
+ cQbvY8FagOQJRDYAxLBfGGi3yf2Cfq9A62FtxibYiFGlz+XAFeIM2b+1OHhuqPzkM7gY
+ xRpHt4bB3CSUPXJ14dBnfRtvH2XvJ1N5iJzsFYP1kUW8lzG55ix5tr4LVD/Q9NFsB+Vv
+ IyWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772730879; x=1773335679;
+ d=1e100.net; s=20230601; t=1772730922; x=1773335722;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wDS+E0ywxEcabzEhzNrAbczq9vFcntt8roiwPe2hSow=;
- b=LSH+sXHgM/p3pVNt0A4eJvVY6tn7CAaFlUzeYUjYpGH3aXiQNaISm64uxmTjCfSmGS
- yDzP5j3EjmKZgffv/GlrG/Dc3CQRUic5zd964jjNUIiB+p9GHF6OWUR7nrr3zzBuDUWm
- LBufvL+PHiIbi6UEMgFpiY3E2I2MmOBwuxeFQhb4UTxTNlp57gn2+94ou8xSb1Xag7O+
- LRd7PbuojOVd7j6lpX6ng/jQws2BNq8sKXeHiHLtnYPeidUsbpHsaBNQARgADJ5wMUVI
- kV86WgKz8Cg+0xn/itIlFaVdC+JFFdTFn+75XFBfljK2Gx4CeqVDr6lbHvcUqmd+cEkA
- xjCg==
+ bh=uL6mXpjXurniYA5EoOlsGIbqMSMn4cPbCbbTVPdQmx4=;
+ b=UdjcZuqDNerm/oy0NxrhwMIHx4vSIGedKMkCCVX75nDi4ajcf8/10f2qMLm5xleu97
+ 7h8SWw+I5fPQqsZoojB9JHSTDXIT2U9pByzyK4iNOZXM1zPdQ3CVdAOuO4MwV+BQ2HYC
+ LTjekE/cDVyBPTm7XnIQGYYUnrNaFcBwYRkscs5a35TPxc/XTMr53e4tGR/c9ajfWe5M
+ /T5GCgmMANxd4uFM9F6Uss9UXzPqwNEutopd1dGWnldDR2xueiLj4d2yh5/ZfFK2LFwI
+ dMU9hj9NqAe206zXOz38tebuKSRfPiUKmOjdbO5rLwuyTAfWk0PPD9nD0a4QzAFYO2n9
+ vp2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVDQyHAZHNVBAvhIi7Zw68ZxWxU9OYcCqoXUXoJke1tP0X3re92U53FBDTbzlF1wIarr9U+55LUnj6@nongnu.org
-X-Gm-Message-State: AOJu0Yw3/k4jyuxylb/SctiX9ecKEfrwrjciljVILyOnQkRJ9s6cEwfT
- IWJdDw0Z30M1BD32kVLM+5xdqSwxoPNd+UeWCWP9N1H2Z6YBYCX9F2mR1MmBkIFde4/HcMCpgpK
- Bb3528k0rqJn90hw3K+8WWjfk/8ZZDuCvgYG6+mj9/qmAjQrhj5SUZK+V
-X-Gm-Gg: ATEYQzzm/h5asogSUqoR8SH1M13DF3mV4wzVrNlGgTdrVR3M7R6pQ2pcRZmM2f4gUTX
- 2EehjHBEwQ+czQGwMV9myzLxcRVycjWX2eDGFIki1BUVG14i33XBwN0aYZZpxvMTDRj5zRBlatd
- Oo7hdeNA4GTqpQlWbzFP5hmueaWTfxOHWi79XliIU0+B6hLS2BkxCaBVsvIHIh6eR7ONAq4+qe5
- 22ddjUqZcbyqU4iksuOAiumtSDrKa8fA2Ym813EqVf7LcY6azKTpR+LFYrolpXstx1AkNlhr2YL
- sNs5wY5UEjKR71Tte6wLtl3qICwj1CtqJjrLkvDbHH718HfUloYHOiTkKNHVdaBhuO/tW0N6nL7
- h2ZZ68KtrsBG3gA==
-X-Received: by 2002:a05:622a:130f:b0:4ee:155d:b560 with SMTP id
- d75a77b69052e-508f1ce3e30mr4998381cf.8.1772730879074; 
- Thu, 05 Mar 2026 09:14:39 -0800 (PST)
-X-Received: by 2002:a05:622a:130f:b0:4ee:155d:b560 with SMTP id
- d75a77b69052e-508f1ce3e30mr4997881cf.8.1772730878631; 
- Thu, 05 Mar 2026 09:14:38 -0800 (PST)
+ AJvYcCV21u4KXY5p4YR08LhGCYAntKFGS9Ooju9uzH4N1RwgqfBXe+2X0S0kxmmb5ZJ0IBv47c8gWiRL6GnI@nongnu.org
+X-Gm-Message-State: AOJu0YxAybeGimP0khQMpz8tp6uYj09f+EWfyWS9/9N3COLn5lOMkYFn
+ aJ7ryrn5cE/vvgATdMz8Z2CKTAB4tTSJbMxmILkgZm+/VYO2YwY4SYJIqbjWb0xNv2/FcDllpFb
+ Vr89jYXA09orS1M1qQPx9RiVH2ftKbckjN6WU/d+0YZGyYOitNrEfWhNVXTUD4SxU
+X-Gm-Gg: ATEYQzxNDZprGTX2abvjti/68fvnRiWoiHCWKVX+eBXRQFVo+3BMjftkZTGNv59smyE
+ 7IV/cpFGBGrZ43PK70cl48SWszlRJWbClBLkFwwCz1fs6+renffEVd4UDGtICpfSZaQ3Uljjw7j
+ 5aVnhuWT/Qq10WqNd/+dGVHK5Ksj2xPP2W2+jkQEcvlGaLQijXT14YwRWYsk5d1vqb1Ns5QuAsU
+ 7Spz8H/8+vyPZ20WZVZx2vuND9qekthOmZURRNbD3o617mIDMPpKzU103pmDPzORmKUgljEvAmm
+ pHv+mK6E9Jd/dUiIScTmHZYsv/pG+1QzbbUoNY7jEvjwCUQeGX7qM/zWWQL1uxNRFheHBMtf8yj
+ jdVBTgKycBpbLag==
+X-Received: by 2002:a05:622a:15c9:b0:505:e7b8:5523 with SMTP id
+ d75a77b69052e-508db24ab8cmr84173861cf.8.1772730921823; 
+ Thu, 05 Mar 2026 09:15:21 -0800 (PST)
+X-Received: by 2002:a05:622a:15c9:b0:505:e7b8:5523 with SMTP id
+ d75a77b69052e-508db24ab8cmr84172511cf.8.1772730920832; 
+ Thu, 05 Mar 2026 09:15:20 -0800 (PST)
 Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-899e608cfc6sm126484506d6.14.2026.03.05.09.14.36
+ d75a77b69052e-50744af0731sm208969191cf.31.2026.03.05.09.15.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 09:14:38 -0800 (PST)
-Date: Thu, 5 Mar 2026 12:14:26 -0500
+ Thu, 05 Mar 2026 09:15:20 -0800 (PST)
+Date: Thu, 5 Mar 2026 12:15:09 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: farosas@suse.de, qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gautam Menghani <gautam@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Stefan Weil <sw@weilnetz.de>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Thomas Huth <thuth@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
- "open list:Floppy" <qemu-block@nongnu.org>,
- "open list:XIVE" <qemu-ppc@nongnu.org>,
- "open list:S390 channel subs..." <qemu-s390x@nongnu.org>
-Subject: Re: [PATCH v3 17/18] migration: drop VMStateField.err_hint
-Message-ID: <aam58gNtpCRin-NN@x1.local>
+Cc: farosas@suse.de, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 18/18] migration/vmstate-types: move to new migration
+ APIs
+Message-ID: <aam6HfC_4-MD9dBY@x1.local>
 References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
- <20260304212303.667141-18-vsementsov@yandex-team.ru>
+ <20260304212303.667141-19-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260304212303.667141-18-vsementsov@yandex-team.ru>
+In-Reply-To: <20260304212303.667141-19-vsementsov@yandex-team.ru>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
@@ -140,9 +118,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 05, 2026 at 12:23:01AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> The field is unused, all users of VMSTATE_*_EQUAL pass _err_hint=NULL.
-> 
+On Thu, Mar 05, 2026 at 12:23:02AM +0300, Vladimir Sementsov-Ogievskiy wrote:
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
