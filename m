@@ -4,100 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C83CF513E6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15BC9F513E6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:51:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyHUi-0005ic-NR; Thu, 05 Mar 2026 17:48:36 -0500
+	id 1vyHXf-0007fS-5S; Thu, 05 Mar 2026 17:51:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyHUg-0005hk-TY
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:48:34 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyHUf-0007qJ-BK
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:48:34 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso71588195e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 14:48:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772750912; x=1773355712; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N+633dY73xSn08tThGB24JtCEt7w15my9Oj7BSCTrS4=;
- b=bx2WwippWrJYbyijxcLWPnWMGG4y5V62K2MRyuhFLZm437o2bWxOh2reeypX1vRQAJ
- WqpGixOHyksuShabEg1/FG1t9a8+67ri3K1ZH9Y7/k5KAoBbu22ueLv8xxCEiedQ5xIa
- y1Sp7hGZOnT5umKOFUe4DTCk9SlJBaSEVNaegOqm8z1xjyWanVExt2oHM8uJYBcrysvO
- 2+AD0QGOEpdmtYHxbHXKJ4Fx72g2TuJst0K+XzKEJeiSU6qdF/4vCbz8YPw8f16j/8S8
- +W+Hp33QhtQWVLcSnEM77yb/dpq0dKx2WWKB64Jjsj5L8iAHE0ETZhtVwQvQBFxh/SoS
- Msvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772750912; x=1773355712;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=N+633dY73xSn08tThGB24JtCEt7w15my9Oj7BSCTrS4=;
- b=VuXtcvsTARJAYHNsXclhKMySexgdecKZKeDQzyahWV3w5OAvz7Z6S/Ht+9m0qxmj9u
- rPapz8sUAv4Ew7YwGJwl6qIR/wZc2r6oxj1a7kVOmJn2DfWwVXuJdSdbBtDl8pKZ8dh9
- ZV516whzZwMSbafwvXI2hDmk4i9+OLk9by0khWHf4Szv5EQaX/TdoC8PIZx80UUh9z7p
- GsWckDf0pdM7z5TQWpuNXYwvUC0DlR3GLWus/xa0XFeo7o7oBFhi8gEinve+4ixROl+H
- gcI+B7sIUx03kByRmXIcesqiV3BCw0m1KZaGYN/HeBFLjWB40lmQPoOc5lCKYmJuogkb
- iAXA==
-X-Gm-Message-State: AOJu0Yzncex+sFUju5Hsrla3CMZkzlrrGjOR74fDvXL1BuJ/YPzspzU2
- jUpKex7i1GQEQ5Kv7JkZKfQLptF3CIgW9Iy/grHYKXc55d0Z6uDStZwG
-X-Gm-Gg: ATEYQzyxourDKtqHexvONV/Opc+k8DmdgB1l2dv6sFUCZb3d8FS69S0REWUUiQrepLw
- LfGpgvTjd5ACpB1IAfUiWQNK8eEt//tTF5eogZ2z6K28/RpRgDHLSyfdPEqlNdfYbi1ZgY5K6KN
- GXd55NPQTkJkBVdnbUCeY1Bt07KwvxlMeNLXp4hySRRd9RnjaZdjDnj44THRV9r1Zv0UBjCN+Cp
- 6sVglqEcSBWgX3/Zq9hQZ2RMuT6ueE7v7g9Qr6CTqTTEeVngrLd9oawaTnem/KwyTcR3HQcCqCz
- SGeQVMFa+XQwT6NU+TNQJCRr83Y49/vwWeu238P1EtO21UF87ex83wZaKIJnoEGaOMj4X6zEpbX
- 2odfDDECFf18s5tKMej/Pj/St0hCkQ3qeQ+Jf9RhQ8kBqY/DxbzfffDqfz1SRwJTcBmoVRE7lDJ
- D76NPRpyJKU/8wrU2nqyX6MkPvQbf29RVZDca2IGo6onTK/BGQfFEqWYs43YCWK84OC9fmzjbkw
- 4khFFHn9t/HurJJ7y7cgqol3OjgIBHi2Rjfd7aaHGhr5xg=
-X-Received: by 2002:a05:600c:6388:b0:47a:7fd0:9eea with SMTP id
- 5b1f17b1804b1-4852359313emr18122585e9.3.1772750911349; 
- Thu, 05 Mar 2026 14:48:31 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2989-c400-f009-a6c9-39e7-d8fe.310.pool.telefonica.de.
- [2a02:3100:2989:c400:f009:a6c9:39e7:d8fe])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852449e73dsm6187555e9.3.2026.03.05.14.48.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 14:48:29 -0800 (PST)
-Date: Thu, 05 Mar 2026 22:48:28 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
- Troy Lee <leetroy@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH v2 11/13] hw/char/serial: Keep MemoryRegionOps private
-In-Reply-To: <CAFEAcA-bOjd7vRKpnzU18aNUFuMb4eJYcDAH0Xcbf4SDr6ZO5g@mail.gmail.com>
-References: <20260303222143.142741-1-shentey@gmail.com>
- <20260303222143.142741-12-shentey@gmail.com>
- <CAFEAcA-bOjd7vRKpnzU18aNUFuMb4eJYcDAH0Xcbf4SDr6ZO5g@mail.gmail.com>
-Message-ID: <AA6DEE5C-A8B8-4B5C-BED3-2C9FE48A0CA9@gmail.com>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vyHXd-0007Zq-9f
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:51:37 -0500
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vyHXb-0008Q8-0Q
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:51:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=21vQG7vaneBGja49Q9ttUYUjtDN4zWdrOelgdFYyL/Y=; b=CS781HnCbyK0sZs
+ imXPkdopFS6z25237kSo8O9/KAYL1Ew+YJDxQGuaDSJLLWixg/GL8uuIxo/mD9KhEZpbZk52CvBzE
+ rrgu9XLjwER1UnDuFafGLNE4V3h3fq6GLchNl2Y80eowBMXPaMxKlWLLq84mijT9v9yZrP0OwzYx2
+ xU=;
+Date: Thu, 05 Mar 2026 23:54:20 +0100
+Subject: [PATCH v6 1/3] hppa: Introduce HPPACPUDef
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260305-hppa-c3600-v6-1-d51526e5269c@rev.ng>
+References: <20260305-hppa-c3600-v6-0-d51526e5269c@rev.ng>
+In-Reply-To: <20260305-hppa-c3600-v6-0-d51526e5269c@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772751314; l=9903;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=bP5w4Uw4mtobEQawfD2dhbdBX6swNEHwuIIjzpmZsR0=;
+ b=B3FVtHh1uF0UVfAKvZC+Xun0kRW2I4Nu7SLvGWJGrP7Dap4BCxBhungJ1MJDB64smyXMgtcBs
+ 6ytxbUfDRPQBSApOcYxBmx8eA+80BxsdLtfyGv7ohOk7/n/6i211VPm
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,92 +68,299 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Restructures the CPU class heirarchy to clarify model names and allow
+for per-model configuration options via HPPACPUDef. 32-bit HPPA is
+assumed to run a PA-7300LC, and 64-bit assumed to run a PA-8700.
+A new PA-8500 model is added, which will later be used by the A400
+machine.  All CPU models are made into children of the now abstract
+TYPE_HPPA_CPU base class.
 
+Two fields are added to HPPACPUDef describing the size of the physical
+address space, and whether or not the CPU uses the PA-RISC 2.0
+architecture.  The latter was previously a field in CPUHPPAState.
 
-Am 5=2E M=C3=A4rz 2026 10:03:12 UTC schrieb Peter Maydell <peter=2Emaydell=
-@linaro=2Eorg>:
->On Tue, 3 Mar 2026 at 22:22, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> Rather than requiring users of TYPE_SERIAL to initialize the MMIO regio=
-n
->> themselves, make it generic enough to be configured via properties=2E T=
-his
->> makes TYPE_SERIAL more self-contained and prepares it for being turned
->> into a SysBusDevice=2E
->>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>  include/hw/char/serial-mm=2Eh |  3 --
->>  include/hw/char/serial=2Eh    |  4 +-
->>  hw/char/diva-gsp=2Ec          |  5 ---
->>  hw/char/serial-isa=2Ec        |  1 -
->>  hw/char/serial-mm=2Ec         | 51 -------------------------
->>  hw/char/serial-pci-multi=2Ec  |  5 ---
->>  hw/char/serial-pci=2Ec        |  1 -
->>  hw/char/serial=2Ec            | 76 ++++++++++++++++++++++++++++++-----=
---
->>  8 files changed, 66 insertions(+), 80 deletions(-)
->
+phys_addr_bits is currently set but unused, and will be used in the
+following commit.  Likewise, PA-8700 is moved to use 44 bit physical
+addresses in a followup commit to not break bisection.
 
-Hi Peter,
+References to "hppa/hppa64" models in test cases are also updated.
 
->
->
->This does leave TYPE_SERIAL_MM a bit of a do-nothing
->extra wrapper, as Balaton says=2E However I don't think
->it's being used by any versioned machine types,
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ target/hppa/cpu-qom.h           |  8 ++++++-
+ target/hppa/cpu.h               | 24 ++++++++++++++++----
+ hw/hppa/machine.c               | 21 ++++++++++-------
+ linux-user/hppa/elfload.c       |  2 +-
+ target/hppa/cpu.c               | 50 +++++++++++++++++++++++++++++++----------
+ tests/qtest/machine-none-test.c |  2 +-
+ 6 files changed, 80 insertions(+), 27 deletions(-)
 
-Most prominently, the riscv and loongson virt machines use it, but aren't =
-versioned yet AFAICS=2E
+diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
+index 5c454bf543..7541c25b3d 100644
+--- a/target/hppa/cpu-qom.h
++++ b/target/hppa/cpu-qom.h
+@@ -23,7 +23,13 @@
+ #include "hw/core/cpu.h"
+ 
+ #define TYPE_HPPA_CPU "hppa-cpu"
+-#define TYPE_HPPA64_CPU "hppa64-cpu"
++
++#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
++#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
++
++#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
++#define TYPE_HPPA_CPU_PA_8500   HPPA_CPU_TYPE_NAME("pa-8500")
++#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
+ 
+ OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
+ 
+diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
+index 092e647ccf..43b4882fb4 100644
+--- a/target/hppa/cpu.h
++++ b/target/hppa/cpu.h
+@@ -270,8 +270,6 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+ 
+-    bool is_pa20;
+-
+     target_ulong kernel_entry; /* Linux kernel was loaded here */
+     target_ulong cmdline_or_bootorder;
+     target_ulong initrd_base, initrd_end;
+@@ -290,6 +288,18 @@ struct ArchCPU {
+     QEMUTimer *alarm_timer;
+ };
+ 
++/**
++ * HPPACPUDef:
++ * @phys_addr_bits: Number of bits in the physical address space.
++ * @is_pa20: Whether the CPU model follows the PA-RISC 2.0 or 1.1 spec.
++ *
++ * Configuration options for a HPPA CPU model.
++ */
++typedef struct HPPACPUDef {
++    uint8_t phys_addr_bits;
++    bool is_pa20;
++} HPPACPUDef;
++
+ /**
+  * HPPACPUClass:
+  * @parent_realize: The parent class' realize handler.
+@@ -302,11 +312,17 @@ struct HPPACPUClass {
+ 
+     DeviceRealize parent_realize;
+     ResettablePhases parent_phases;
++    const HPPACPUDef *def;
+ };
+ 
+-static inline bool hppa_is_pa20(const CPUHPPAState *env)
++static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
++{
++    return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
++}
++
++static inline bool hppa_is_pa20(CPUHPPAState *env)
+ {
+-    return env->is_pa20;
++    return hppa_def(env)->is_pa20;
+ }
+ 
+ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index f55e84529f..5d0d4de09e 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -801,13 +801,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP B160L workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+@@ -817,13 +817,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8700,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP C3700 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_C3700_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -833,13 +833,13 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8500,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP A400-44 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8500;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_A400_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -849,13 +849,18 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
+ {
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP 715/64 workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    /*
++     * Although the 715 workstation should use a 7100LC, it can be safely
++     * modeled as a 7300LC as the difference is a moving of the L1 data cache
++     * to on-chip.
++     */
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 4600708702..7f7ece6dc1 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -8,7 +8,7 @@
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+-    return "hppa";
++    return "pa-7300lc";
+ }
+ 
+ const char *get_elf_platform(CPUState *cs)
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 714f3bbdaf..cc755da8be 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -203,13 +203,6 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
+     tcg_cflags_set(cs, CF_PCREL);
+ }
+ 
+-static void hppa_cpu_initfn(Object *obj)
+-{
+-    CPUHPPAState *env = cpu_env(CPU(obj));
+-
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
+-}
+-
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ {
+     HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
+@@ -236,9 +229,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
+ {
+-    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
++    ObjectClass *oc;
++    char *typename;
+ 
+-    return object_class_by_name(typename);
++    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
++    oc = object_class_by_name(typename);
++    g_free(typename);
++
++    return oc;
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -279,6 +277,14 @@ static const TCGCPUOps hppa_tcg_ops = {
+ #endif /* !CONFIG_USER_ONLY */
+ };
+ 
++static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
++{
++    HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
++    /* Make sure all CPU models define a HPPACPUDef */
++    g_assert(!object_class_is_abstract(oc) && data != NULL);
++    acc->def = data;
++}
++
+ static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -313,14 +319,34 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+-        .instance_init = hppa_cpu_initfn,
+-        .abstract = false,
++        .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
++        .class_base_init = hppa_cpu_class_base_init,
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_7300LC,
++        .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 32,
++            .is_pa20 = false,
++        },
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8500,
++        .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
+     },
+     {
+-        .name = TYPE_HPPA64_CPU,
++        .name = TYPE_HPPA_CPU_PA_8700,
+         .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
+     },
+ };
+ 
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index c1e22dcecc..bafd7d660e 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -47,7 +47,7 @@ static struct arch2cpu cpus_map[] = {
+     { "tricore", "tc1796" },
+     { "xtensa", "dc233c" },
+     { "xtensaeb", "fsf" },
+-    { "hppa", "hppa" },
++    { "hppa", "pa-7300lc" },
+     { "riscv64", "rv64" },
+     { "riscv32", "rv32" },
+     { "rx", "rx62n" },
 
-> so we
->could maybe look after this at the possibility of dropping
->the wrapper (by having serial_mm_init() create a TYPE_SERIAL
->directly, and dropping TYPE_SERIAL_MM entirely)=2E I don't
->think we strictly need to do that, though -- being able
->to clean up the reset handling here is worthwhile in
->itself=2E
->
->I do have one question:
->
->> +    memory_region_init_io(&s->io, OBJECT(s),
->> +                          s->regshift ? &serial_mm_ops[s->endianness]
->> +                                      : &serial_io_ops,
->> +                          s, "serial", 8 << s->regshift);
->
->This means that users of serial_mm_init() which pass 0 for
->regshift now get serial_io_ops rather than serial_mm_ops=2E
+-- 
+2.52.0
 
-This is correct=2E
-
->That affects a handful of machines=2E I'm not sure if
->this makes a guest-visible difference (very possibly not),
->but for a "refactoring" type patch like this I'd rather
->err on the safe side and keep the same MemoryRegionOps
->if we can=2E This could be awkward, though, because we
->definitely have users of TYPE_SERIAL_MM which rely on
->the default regshift property value being 0=2E Maybe we
->can have the handful of places that want the serial_io_ops
->do an explicit setting of some property to request that?
->
->The other approach is to analyse the code and satisfy
->ourselves that serial_io_ops and serial_mm_ops with
->regshift =3D=3D 0 really do have exactly identical behaviour,
->and note that in the commit message=2E
-
-I've already sent v3 to fix the lifetime issue you pointed out and attempt=
-ed to take the last approach from above=2E But then realized that a justifi=
-cation in the commit message isn't as straight forward as anticipated=2E I'=
-ve left some thoughts there=2E=2E=2E
-
-Best regards,
-Bernhard
-
->
->thanks
->-- PMM
 
