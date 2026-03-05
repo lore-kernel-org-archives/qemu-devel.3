@@ -4,109 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EE1EEF331
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 09:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353A9EEF33C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 09:08:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy4bb-0004jE-AY; Thu, 05 Mar 2026 04:02:51 -0500
+	id 1vy4gw-0006N0-F0; Thu, 05 Mar 2026 04:08:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vy4bX-0004il-F3
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 04:02:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy4g7-00068C-5w
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 04:07:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vy4bU-0006ms-Fb
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 04:02:46 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy4g4-0007Qh-Fo
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 04:07:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772701362;
+ s=mimecast20190719; t=1772701647;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8QoUGmUAa3KUwJmVXNGxYKSxT0FoPFd3CLt2SlmodI8=;
- b=TmtQctibMbPxa+A+1idgiWTMlWJY1TMyUNOCuJAu/sfcASlB1WIFMUIWp/ut2F7143o/bD
- IEY/srOuBA/NuxRK81q3kYY3r15hpWunz/wyLpVJO/Lb3NL7lxQIMEa+bgLOZY2GSQkqji
- 0panTCV7Gw0W8ZBypvhzhAsTItopanM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-vth4Yo9xNn2dYwxMagJDUg-1; Thu, 05 Mar 2026 04:02:40 -0500
-X-MC-Unique: vth4Yo9xNn2dYwxMagJDUg-1
-X-Mimecast-MFC-AGG-ID: vth4Yo9xNn2dYwxMagJDUg_1772701359
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4836abfc742so62401465e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 01:02:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772701359; x=1773306159; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8QoUGmUAa3KUwJmVXNGxYKSxT0FoPFd3CLt2SlmodI8=;
- b=UeZK8eiRF4YNnYAseTNHw69BdaGFFl9nV9uiKL0Q2m4ZwTe5O0Pqq0Y9Cba3ia0moa
- qF0nuMte+BMzvbmglxkh2YVPaCzmLI3GNC5MN1JmUUwqCHXd6dxKf3A+q3z9dahgRbA3
- X5iVLj5afFhDts3kbpcg/GZZC6yhj8EIe18a6VOmmSmqVSSkdjVcuGQtIM9ByucrwGam
- brjGUssz9QOswdTsO5DfQwomgO6eJ0ag56DLhobKR5lg1g090g2KLO8PPeSfbNIujvdo
- jdDdLdv0lceAS/0lJJigZz0Xp7es6xJ9Yjovoi//3DVNI64k/j6kab2clDTQFiFU2B4L
- 8kCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772701359; x=1773306159;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8QoUGmUAa3KUwJmVXNGxYKSxT0FoPFd3CLt2SlmodI8=;
- b=nq/hkP/gyjdnVaoGyHueVr0XRsukTASaejbWhOYv/sRLhoFrLdsqQ8eD3UyobZPALA
- yTCZF0LvjKuMORxnRA+5icCQnmSK1KQnIgaWXFLTzEzHHgeH4rtGWUszWpIKrLGxtPR0
- 24lfhaU6Y9N0gxFe7RSXt0boTd/0ko2OBIgy/5dSxBDJ9fjxI4U//HiN1P9rNu6e/3Vo
- Tpvc90YvciCa4CAw3P4h9WN35BTPu32zdp8Y+rYvaAAYdIloqs0bvf9ifzqzKfDbprIi
- 0nLhanIc9c93k+IyuV9Wg1/lMKWj6uyMDCKf9Hm4neNFBZPbpebEfR8By1uuL4mPq463
- MTxA==
-X-Gm-Message-State: AOJu0Yx/wsRBNeDzuw889g8ci3/GxZLqWoDTllGoJw62w6GLPPa9akBX
- EhW84/z3tngrBuCpWL9PlvpzYWy3NtF21P7khAwZJqnTjc34Y+Ze+r20UP3PMijndY6/E0AMihx
- Ul60TEL7CHzIBAhJQpdvVwdElEnIz9K/lWOIWuPbr3iB0d5iFtJG4IbwC
-X-Gm-Gg: ATEYQzzskfx5deNqC7giZsQrgHjqLSKCV8JQcPY+EaaHFAWOXXHE3qIH01g6q9NAvXW
- eL0LRVXPidt2JOTfkLaH1vNzx/vgBaTM1Qu2dLf0Gj/5tbVZPGUXNGOlpw9bvBGDaDd+kKqkzTM
- aDLBMGGvrjka3/qeo7lTVJIffNcdU20z3o1a6zVFurMafJiVysJU9dpte9Ue4eYZzsBt4wTJD0L
- B43AnP5OvfHYeKJhdAOV32jhXUR/G5TwCTzGjp9hZ9Pu6huOEs+B3zwOhe/jEOVZvvC3ftkdar3
- msiZ4K6P/QTkIx6bCGaoQBV6JC3ebnDI+ew/6BcB+yL0dW6SVLBUaAAxPWjcXwMB7sjA7Fn92xA
- VOGnAsOwEDKkSEC4UOvD9178DtgISr+W1DDnHh7egsOJPRiomXwawfKWvwdaa
-X-Received: by 2002:a05:600c:4454:b0:483:702f:4633 with SMTP id
- 5b1f17b1804b1-4851982700amr74233775e9.4.1772701359229; 
- Thu, 05 Mar 2026 01:02:39 -0800 (PST)
-X-Received: by 2002:a05:600c:4454:b0:483:702f:4633 with SMTP id
- 5b1f17b1804b1-4851982700amr74233265e9.4.1772701358745; 
- Thu, 05 Mar 2026 01:02:38 -0800 (PST)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb27a20sm60045395e9.9.2026.03.05.01.02.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 01:02:37 -0800 (PST)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Thu, 05 Mar 2026 10:02:11 +0100
-Subject: [PATCH] igvm: fix build when igvm is not installed in a well known
- path
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t0Yi1NoQrPTXkGhKfabum6yIpQq/vEoBLwyXo1hU/FU=;
+ b=GXxxUsKfdNY2WFxuSbREZStADE0tHe9m/umXB9j02JHPWj0wxCg/5wWIrhP1vnlvWVHkm8
+ ncDMpXpf2PUhliqjKySlitsFqni3tmISq6R7EUGt//9GvxkH3GpYMMNVT7sGE8VBVZftcr
+ 3E1QTpgx81QYM1WAWsd37WyreaqCRtY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-CZXq2IlbPdy0lcuiky2aMw-1; Thu,
+ 05 Mar 2026 04:07:24 -0500
+X-MC-Unique: CZXq2IlbPdy0lcuiky2aMw-1
+X-Mimecast-MFC-AGG-ID: CZXq2IlbPdy0lcuiky2aMw_1772701642
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6EDF3180035D; Thu,  5 Mar 2026 09:07:21 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F8DB3003E98; Thu,  5 Mar 2026 09:07:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E9E8021E6A04; Thu, 05 Mar 2026 10:07:16 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  Viktor Prutyanov
+ <viktor.prutyanov@phystech.edu>,  Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Keith Busch
+ <kbusch@kernel.org>,  Klaus Jensen <its@irrelevant.dk>,  Jesper Devantier
+ <foss@defmacro.it>,  qemu-block@nongnu.org
+Subject: Re: [PATCH v4 3/4] tests: Clean up double comparisons to avoid
+ compiler warning
+In-Reply-To: <20260305-nvme-v4-3-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp> (Akihiko
+ Odaki's message of "Thu, 05 Mar 2026 15:16:46 +0900")
+References: <20260305-nvme-v4-0-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
+ <20260305-nvme-v4-3-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 05 Mar 2026 10:07:16 +0100
+Message-ID: <87y0k6oda3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260305-master-v1-1-6574442f5ee8@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDYwNT3dzE4pLUIt1UQ0OLJGOLVGNDk1QloOKCotS0zAqwQdGxtbUAfb8
- CSVgAAAA=
-X-Change-ID: 20260305-master-e118b38e314e
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, osteffen@redhat.com, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 0
 X-Spam_score: -0.0
 X-Spam_bar: /
 X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -124,88 +97,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`stubs/igvm.c` includes `igvm-internal.h`, that in turn includes the igvm library.
-This is required just for the QIgvm declaration and creates an
-unnecessary dependency on the library.
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-Since igvm is not listed as a dependency of stubs, this results in build
-failing when the library is not installed in a "well known" path of the
-system.
+> To enable -Wformat-overflow=3D2, we need to clean up a couple of false
+> positives:
+>
+> [2/5] Compiling C object tests/unit/test-qobject-output-visitor.p/test-qo=
+bject-output-visitor.c.o
+> FAILED: tests/unit/test-qobject-output-visitor.p/test-qobject-output-visi=
+tor.c.o
+> cc -Itests/unit/test-qobject-output-visitor.p -Itests/unit -I../tests/uni=
+t -I. -Iqapi -Itrace -Iui -Iui/shader -Itests -Itests/include -I/usr/includ=
+e/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/sysprof-6 -fdiagnos=
+tics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -D_GNU_SO=
+URCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno=
+-common -fwrapv -ftrivial-auto-var-init=3Dzero -fzero-call-used-regs=3Dused=
+-gpr -fsanitize=3Daddress -fstack-protector-strong -fsanitize=3Dundefined -=
+Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-overflow=3D2 -Wf=
+ormat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2=
+ -Winit-self -Wmissing-format-attribute -Wmissing-prototypes -Wnested-exter=
+ns -Wold-style-declaration -Wold-style-definition -Wredundant-decls -Wshado=
+w=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -=
+Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value -isystem /hom=
+e/me/q/var/qemu/linux-headers -isystem linux-headers -iquote . -iquote /hom=
+e/me/q/var/qemu -iquote /home/me/q/var/qemu/include -iquote /home/me/q/var/=
+qemu/host/include/aarch64 -iquote /home/me/q/var/qemu/host/include/generic =
+-iquote /home/me/q/var/qemu/tcg/aarch64 -pthread -fPIE -MD -MQ tests/unit/t=
+est-qobject-output-visitor.p/test-qobject-output-visitor.c.o -MF tests/unit=
+/test-qobject-output-visitor.p/test-qobject-output-visitor.c.o.d -o tests/u=
+nit/test-qobject-output-visitor.p/test-qobject-output-visitor.c.o -c ../tes=
+ts/unit/test-qobject-output-visitor.c
 
-Add a forward declaration for QIgvm and move the definition of
-`qigvm_directive_madt` to `igvm.h` so that we can drop `igvm-internal.h` from
-`stubs/igvm.c`.
+I'd omit the three lines above for brevity's sake.
 
-Fixes: dea1f68a5c ("igvm: Fill MADT IGVM parameter field on x86_64")
+> ../tests/unit/test-qobject-output-visitor.c: In function =E2=80=98test_vi=
+sitor_out_list_struct=E2=80=99:
+> ../tests/unit/test-qobject-output-visitor.c:577:28: error: =E2=80=98%.6f=
+=E2=80=99 directive writing between 3 and 317 bytes into a region of size 3=
+2 [-Werror=3Dformat-overflow=3D]
 
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- include/qemu/typedefs.h        | 1 +
- include/system/igvm-internal.h | 5 -----
- include/system/igvm.h          | 5 +++++
- stubs/igvm.c                   | 1 -
- 4 files changed, 6 insertions(+), 6 deletions(-)
+I'd also omit the remainder of the report.
 
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 416a8c9acead659786f22dfa7542f7af93699cec..cbe6f7f4c7c1092017296cbba09cc79b03b45b79 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -102,6 +102,7 @@ typedef struct QEMUSGList QEMUSGList;
- typedef struct QemuSpin QemuSpin;
- typedef struct QEMUTimer QEMUTimer;
- typedef struct QEMUTimerListGroup QEMUTimerListGroup;
-+typedef struct QIgvm QIgvm;
- typedef struct QList QList;
- typedef struct QNull QNull;
- typedef struct QNum QNum;
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index 38004bd908e773a3ffc2343a9035be86dc6a8ace..1d36519ab082c02e27461e94850a1ccf6b583e66 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -74,9 +74,4 @@ IgvmHandle qigvm_file_init(char *filename, Error **errp);
- QIgvmParameterData*
- qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index);
- 
--/*
-- *  IGVM parameter handlers
-- */
--int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp);
--
- #endif
-diff --git a/include/system/igvm.h b/include/system/igvm.h
-index 5573a6111ae754e2de49ba72a354b36c4b6fe747..f9231f03ec8015928d0968ac59c72a1b6d9f00b9 100644
---- a/include/system/igvm.h
-+++ b/include/system/igvm.h
-@@ -27,4 +27,9 @@ int qigvm_x86_get_mem_map_entry(int index,
- int qigvm_x86_set_vp_context(void *data, int index,
-                              Error **errp);
- 
-+/*
-+ *  IGVM parameter handlers
-+ */
-+int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp);
-+
- #endif
-diff --git a/stubs/igvm.c b/stubs/igvm.c
-index 47d5130d9d7488fb1092a0b5389a864d83e8b2f2..9e9f683fc9607bae85baaaa2f269eba594ae0574 100644
---- a/stubs/igvm.c
-+++ b/stubs/igvm.c
-@@ -12,7 +12,6 @@
- #include "qemu/osdep.h"
- 
- #include "system/igvm.h"
--#include "system/igvm-internal.h"
- 
- int qigvm_x86_get_mem_map_entry(int index,
-                                 ConfidentialGuestMemoryMapEntry *entry,
+>   577 |         sprintf(expected, "%.6f", (double)i / 3);
+>       |                            ^~~~
+> ../tests/unit/test-qobject-output-visitor.c:577:27: note: assuming direct=
+ive output of 8 bytes
+>   577 |         sprintf(expected, "%.6f", (double)i / 3);
+>       |                           ^~~~~~
+> In file included from /usr/include/stdio.h:970,
+>                  from /home/me/q/var/qemu/include/qemu/osdep.h:114,
+>                  from ../tests/unit/test-qobject-output-visitor.c:13:
+> In function =E2=80=98sprintf=E2=80=99,
+>     inlined from =E2=80=98test_visitor_out_list_struct=E2=80=99 at ../tes=
+ts/unit/test-qobject-output-visitor.c:577:9:
+> /usr/include/bits/stdio2.h:30:10: note: =E2=80=98__builtin___sprintf_chk=
+=E2=80=99 output between 4 and 318 bytes into a destination of size 32
+>    30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+>       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    31 |                                   __glibc_objsize (__s), __fmt,
+>       |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    32 |                                   __va_arg_pack ());
+>       |                                   ~~~~~~~~~~~~~~~~~
+> ../tests/unit/test-qobject-output-visitor.c: In function =E2=80=98test_vi=
+sitor_out_list_struct=E2=80=99:
+> ../tests/unit/test-qobject-output-visitor.c:578:26: error: =E2=80=98%.6f=
+=E2=80=99 directive writing between 3 and 317 bytes into a region of size 3=
+2 [-Werror=3Dformat-overflow=3D]
 
----
-base-commit: 333aaa55f051977cc897fb71e0a9ed52bb00a675
-change-id: 20260305-master-e118b38e314e
+I'd similarly abridge this second warning.
 
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
+>   578 |         sprintf(actual, "%.6f", qnum_get_double(qvalue));
+>       |                          ^~~~
+> ../tests/unit/test-qobject-output-visitor.c:578:25: note: assuming direct=
+ive output of 8 bytes
+>   578 |         sprintf(actual, "%.6f", qnum_get_double(qvalue));
+>       |                         ^~~~~~
+> In function =E2=80=98sprintf=E2=80=99,
+>     inlined from =E2=80=98test_visitor_out_list_struct=E2=80=99 at ../tes=
+ts/unit/test-qobject-output-visitor.c:578:9:
+> /usr/include/bits/stdio2.h:30:10: note: =E2=80=98__builtin___sprintf_chk=
+=E2=80=99 output between 4 and 318 bytes into a destination of size 32
+>    30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+>       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    31 |                                   __glibc_objsize (__s), __fmt,
+>       |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>    32 |                                   __va_arg_pack ());
+>       |                                   ~~~~~~~~~~~~~~~~~
+> cc1: all warnings being treated as errors
+>
+> These buffers cannot actually overflow because the doubles are
+> between 0 and 31.0/3 inclusive.
+>
+> However, formatting doubles just to compare them is silly.  Compare
+> them directly instead.  To avoid potential rounding trouble, change
+> the numbers tested to be representable exactly in double.
+>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
+Thanks!
 
 
