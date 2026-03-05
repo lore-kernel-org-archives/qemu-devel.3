@@ -4,110 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568B9F30946
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 12:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC498F30946
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 12:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy7X2-0008Jj-Oz; Thu, 05 Mar 2026 07:10:20 -0500
+	id 1vy7aR-0000gV-6m; Thu, 05 Mar 2026 07:13:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vy7Wz-0008Jb-4e
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:10:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vy7Wt-0007dK-H8
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:10:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772712608;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W/TsE/C3LzMPO8HlJY98uv+W9nWwSgAHHQnJ/StK2sI=;
- b=HEnygobjjA9a5gZ/LEpssGCgSlBldjnH3CLfIdJG3dDdzUzk97Tv4ELdEMbHhA7NYllM8S
- HdgEsDNEt368ucKhvyvd8697x4em5v4gYn7TdYD4PsUgyvS+wFBwE0orxBrpnT73iZgUU8
- nmY8W+XLbVuBCcLkg8queSyvQ5xCnP8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-330-CmGW1C44M_KVVWVp0s-JYg-1; Thu, 05 Mar 2026 07:10:04 -0500
-X-MC-Unique: CmGW1C44M_KVVWVp0s-JYg-1
-X-Mimecast-MFC-AGG-ID: CmGW1C44M_KVVWVp0s-JYg_1772712603
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439c794edd9so1719068f8f.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 04:10:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vy7aP-0000gC-3i
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:13:49 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vy7aN-00080u-Ba
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:13:48 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-439b8a3f2bcso3495358f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 04:13:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772712603; x=1773317403; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W/TsE/C3LzMPO8HlJY98uv+W9nWwSgAHHQnJ/StK2sI=;
- b=uIsfuX3Mkqn3gAVTh5di8oYbQzFyhzwsoUEcH5CRhsX1pwghPbftnTcQ1FNKuB0Dkm
- +K/9TQCma9Tft11M8jH2ZcWlZEHAIiuekYVn1JpaY68OfiqDnasHWUJEsuigMyy5QPfl
- XkoXNpGKaltXvzgrIn2Ng804m0qq9+iTrUxrRPIELhzIgYt/CEpdojj+y8Ma6VrlZWSx
- 0WJyQbczEY5xpg07qgbH+P3ELYUTViJAZgQB7OV0LS5wfbDeQ2AjKZghS7nKjQfE7fPn
- Tqp25ebjJGlX1yI75mcbb8YtohK0bPSLLgrLJWZIUfxUGuDQPDIFz8iA4C/ZQHtQ7EWP
- 7pcg==
+ d=linaro.org; s=google; t=1772712821; x=1773317621; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=o9ySsJCPRrRpMMsEvO5GNe2voaD7Aa2RjkICMkm45GA=;
+ b=Usa2+eSqRF7NZkQzoX3tTsQBIz9ILFkyUpJ5CEHKe76v03rseP0xXuXrrtnSrzYMXi
+ XzUp9gKDHggthSBOVBhg02Dm12RAQ37RZO528tQoARjNg3oRVk4toUaNCbKn+p5J/91g
+ gKIxmgN0HavK3qpo9CqVX7boprd76GGF15JEYANc5EaInMx11y2/Z9eDhokWEnMk4ERT
+ YkrXFxAGfIQ/yQO3/eFtvCZRVqRQXUzzYSx33/UOS70NZ3+XDG+h4Xy+/vzomIppoYNC
+ ZQvHXm+xu0IOa8ukv1/+EznXBjgMT2Pxz0UrqvCxc47M36XBrji8Ql6JLJ5nZdoLvXXN
+ 6LMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772712603; x=1773317403;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W/TsE/C3LzMPO8HlJY98uv+W9nWwSgAHHQnJ/StK2sI=;
- b=EA+MClkbN9LJcjAjJ1PdXrvpV/Io9Sl1WszZQ31zERNAxjJ6VDjoJb1eNnsce1TFIs
- lWeiW6u4A6cuWvCQdYnYPMJNviJpWiJik73p3/J9s4Kw5cjdzyx5FS0KHZa8Wm41ZmrL
- ZFAIR7xxBO//K+Tpc8aojb+tGAfTacuZz+U01uFO+/9uUuHsLyxI3d0Z2/EiG3Txp8Aw
- 1C3bwT7wvu9b7gWz9dTvpYE5uM2SQSY85CAYy5Ushbdo/pyC4Tfi2hsVftNT5DQOi4OQ
- Jbv2JADjznmVkzASWNb1Jylh2VyGBNaCIs/QPHC9UJcV39gJP6uUhGZS4di932unVbO1
- oNyw==
-X-Gm-Message-State: AOJu0Ywj3BD0Xbj1qi8bYypUvLLAqF1Uop8ZGFvU3usNFIuhKdm8O2V1
- X79owhKeEZSg75I0wJsjh91vq5apHvMDhx9meVzcwwXupym0EJIJr4GtCPxEFNL3ama6zrFhB3S
- dStSQHoK7hkhSsCmg15LTvKofSjZBQxOoxPErXAE0CURfxcpB1XpTwemI
-X-Gm-Gg: ATEYQzzgke2zLCTvdEKU5KiY3miPYoLm7IrmvqUWsv1aE7S6zEP5Nunwj8tjUqMdSLs
- 86bN7v8gJfw13o4a9uYlltMzHGjxd/cebPLTojxy//C1QF/GR36+ZxepsUEdfcJ37b/GwfHLS4O
- lDg0yIeolwQqo7IiP30R263QPjRPsE3kKjwO72jpNgOwBJ1vBb/mvdoyjmXGPc/HxPoS5x8rKYI
- UGc4lF/MQMkVXTzdUGom6QY5aLZXZNstgxqq+QTUxxDyTSj0R5JxMa2rBFzfTp7ExCNi7SKQCAQ
- Fn3AEUyyUOY1oC7AsLagS9G0NUC2r0M1Q54LDAO7PrPpgou+GCJ/mocYss9zbUahyOzbFB01IG7
- MKdktUQ==
-X-Received: by 2002:a05:6000:12c2:b0:439:ccd7:cdfb with SMTP id
- ffacd0b85a97d-439ccd7cf74mr5270839f8f.53.1772712603338; 
- Thu, 05 Mar 2026 04:10:03 -0800 (PST)
-X-Received: by 2002:a05:6000:12c2:b0:439:ccd7:cdfb with SMTP id
- ffacd0b85a97d-439ccd7cf74mr5270801f8f.53.1772712602840; 
- Thu, 05 Mar 2026 04:10:02 -0800 (PST)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439abdf5430sm39313088f8f.5.2026.03.05.04.10.02
+ d=1e100.net; s=20230601; t=1772712821; x=1773317621;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o9ySsJCPRrRpMMsEvO5GNe2voaD7Aa2RjkICMkm45GA=;
+ b=i6kaUrFOCL6GG8AOaz0/R+Vt8gJghanVvaTZQ4rLzZyI8u22yprOPk2YN7Z1OZ/lv+
+ 93Zp+YCbmbC5C0CgjE2LO9kCdqho2nkYITzZzcPawV76BX3OyEm298SsrB7bFYQtsTqu
+ s/y4IGBdXjyHT6aH6s2JW5Q4etyCgpU6vYhkXqY/ld3VTgfh/rK0zxujXBjhhQLRMRV2
+ rHqr53kG9EsMBVPZkrkJ8Bz5egXxZq/GILzOQCikdj07K1QnIArX/a5vhvyx5cQgG3mz
+ kbBK9CM4dJqsMP4GkcjhWTPzQGfkt/EOjCm/CvblfBO4s8ZGtW3t0+6UMojLoFr11X/P
+ GnhQ==
+X-Gm-Message-State: AOJu0YybrqpPGUUlDHwHe4JlXgm6VgRa2jPovqOhAWDPP8/KmkWtL2Pi
+ oq++lS+bo58wXm/chn4a/+1i327IU47YpfEgguZCW7QQk4pvCIN7nulPzPlE41+X130=
+X-Gm-Gg: ATEYQzwIvdZ1q69STscFEjYhzMmy353qyh414HJOmaSGsP4/1c8A0+ZOW4HDuTnHOXq
+ 9n0pa/HdcNyNnL2GNasS8JqPG93eW/HZiA0KoDbRXndmAf5RklZriRt6DGblgb5S+09Ahj8u3RR
+ 4qZ5lbPlsRkFom9p2jt1OeATe1wgLrsQY1h5ONZwnwViCQPvw7viGdsQl7ujlQ7i9rzei864rwc
+ Vv6FLLfuA2SdJ14TLLDeetizsaAJglnyRRrYKNo9aV7wHhkt28jt29NAkXDkKx6UlYDIhr3La1J
+ ZumXgGOKEgAt7rOzz9O02iwt7MnB7d2thVMAOTRJlq2dXwh8PZqhrfOrvyo4bhEBe2sdtF0IEaz
+ yj27/I7DPXRrOnresPtFRv4i3gV/YFN2n2YklkmWP2WLW8m5qsEAtKsyJWWN89gywn9n7+Jhr4Y
+ Ys7ZXUNSqvxhzx
+X-Received: by 2002:a05:6000:3113:b0:439:b541:a088 with SMTP id
+ ffacd0b85a97d-439c801f74dmr10840149f8f.54.1772712820859; 
+ Thu, 05 Mar 2026 04:13:40 -0800 (PST)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:e891:67d5:3e8b:cb48])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439ac9f3e5bsm40337904f8f.37.2026.03.05.04.13.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 04:10:02 -0800 (PST)
-Date: Thu, 5 Mar 2026 13:10:01 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
- philmd@linaro.org, kraxel@redhat.com
-Subject: Re: [PATCH 17/16] hw/southbridge/ich9: Remove
- ICH9_LPC_SMI_F_BROADCAST_BIT definition
-Message-ID: <20260305131001.71024353@imammedo>
-In-Reply-To: <061e1cc4-7099-4e2e-a164-04c34a6a0c10@redhat.com>
-References: <20260225092024.794595-1-thuth@redhat.com>
- <20260303140058.2423099-1-imammedo@redhat.com>
- <061e1cc4-7099-4e2e-a164-04c34a6a0c10@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ Thu, 05 Mar 2026 04:13:40 -0800 (PST)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Thu, 05 Mar 2026 12:13:03 +0000
+Subject: [PATCH] hw/net/xilinx_axienet.c: Prevent writes to PHY
+ Identification registers
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAE5zqWkC/x3MTQqAIBBA4avIrBswI/u5SrQQm2ogTFTCiO6et
+ HyL7z0QKTBFGMUDgS6OfLoSdSXA7sZthLyUBiWVlo1sMfPBLqPfb/ThTGRTEWibQRvd9ovsFBT
+ rA62c/+80v+8HXwiGYGcAAAA=
+To: qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Alistair Francis <alistair@alistair23.me>, 
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>, 
+ qemu-arm@nongnu.org, Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,135 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Mar 2026 18:20:27 +0100
-Thomas Huth <thuth@redhat.com> wrote:
+There are other registers in the PHY model which should be partially or
+entirely read-only, but this solves the immediate issue.
 
-> On 03/03/2026 15.00, Igor Mammedov wrote:
-> > From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >=20
-> > v2:
-> >     - do not check for SMI features if hotplug happens when
-> >       SMI is not enabled. (matters for qtest and possibly seabios)
-> >     - removing property also removes default ICH9_LPC_SMI_F_BROADCAST_B=
-IT
-> >       put default back in place only set it initfn() instead
-> >=20
-> > The ICH9_LPC_SMI_F_BROADCAST_BIT feature bit was only set
-> > in the pc_compat_2_8[] array, via the 'x-smi-broadcast=3Doff'
-> > property. We removed all machines using that array, lets remove
-> > that property and all the code around it.
-> >=20
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> > ---
-> >   hw/acpi/ich9.c    |  4 ++--
-> >   hw/isa/lpc_ich9.c | 23 ++++-------------------
-> >   2 files changed, 6 insertions(+), 21 deletions(-)
-> >=20
-> > diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-> > index bbb1bd60a2..87afe86bcc 100644
-> > --- a/hw/acpi/ich9.c
-> > +++ b/hw/acpi/ich9.c
-> > @@ -432,7 +432,7 @@ void ich9_pm_device_pre_plug_cb(HotplugHandler *hot=
-plug_dev, DeviceState *dev,
-> >       if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-> >           uint64_t negotiated =3D lpc->smi_negotiated_features;
-> >  =20
-> > -        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
-> > +        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN &&
-> >               !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
-> >               error_setg(errp, "cpu hotplug with SMI wasn't enabled by =
-firmware");
-> >               error_append_hint(errp, "update machine type to newer tha=
-n 5.1 "
-> > @@ -476,7 +476,7 @@ void ich9_pm_device_unplug_request_cb(HotplugHandle=
-r *hotplug_dev,
-> >       } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-> >           uint64_t negotiated =3D lpc->smi_negotiated_features;
-> >  =20
-> > -        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
-> > +        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN &&
-> >               !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT)=
-)) {
-> >               error_setg(errp, "cpu hot-unplug with SMI wasn't enabled "
-> >                                "by firmware");
-> > diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-> > index 51dc680029..04169ffa24 100644
-> > --- a/hw/isa/lpc_ich9.c
-> > +++ b/hw/isa/lpc_ich9.c
-> > @@ -404,15 +404,6 @@ static void smi_features_ok_callback(void *opaque)
-> >       guest_cpu_hotplug_features =3D guest_features &
-> >                                    (BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_=
-BIT) |
-> >                                     BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPL=
-UG_BIT));
-> > -    if (!(guest_features & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT)) &&
-> > -        guest_cpu_hotplug_features) {
-> > -        /*
-> > -         * cpu hot-[un]plug with SMI requires SMI broadcast,
-> > -         * leave @features_ok at zero
-> > -         */
-> > -        return;
-> > -    }
-> > -
-> >       if (guest_cpu_hotplug_features =3D=3D
-> >           BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT)) {
-> >           /* cpu hot-unplug is unsupported without cpu-hotplug */
-> > @@ -474,14 +465,9 @@ static void ich9_apm_ctrl_changed(uint32_t val, vo=
-id *arg)
-> >  =20
-> >       /* SMI_EN =3D PMBASE + 30. SMI control and enable register */
-> >       if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
-> > -        if (lpc->smi_negotiated_features &
-> > -            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
-> > -            CPUState *cs;
-> > -            CPU_FOREACH(cs) {
-> > -                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
-> > -            }
-> > -        } else {
-> > -            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-> > +        CPUState *cs;
-> > +        CPU_FOREACH(cs) {
-> > +            cpu_interrupt(cs, CPU_INTERRUPT_SMI);
-> >           }
-> >       }
-> >   }
-> > @@ -685,6 +671,7 @@ static void ich9_lpc_initfn(Object *obj)
-> >  =20
-> >       static const uint8_t acpi_enable_cmd =3D ICH9_APM_ACPI_ENABLE;
-> >       static const uint8_t acpi_disable_cmd =3D ICH9_APM_ACPI_DISABLE;
-> > +    lpc->smi_host_features =3D BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT); =
-=20
->=20
-> Shouldn't that rather be a "|=3D" instead of the "=3D" so that we don't l=
-ose the=20
-> other bits?
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3297
 
-Indeed it should be '|=3D',
-can you fix it up on merge or should I better send fixed up version?
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+See:
 
-=20
->   Thomas
->=20
->=20
->=20
-> >       object_initialize_child(obj, "rtc", &lpc->rtc, TYPE_MC146818_RTC);
-> >  =20
-> > @@ -834,8 +821,6 @@ static const Property ich9_lpc_properties[] =3D {
-> >       DEFINE_PROP_BOOL("noreboot", ICH9LPCState, pin_strap.spkr_hi, fal=
-se),
-> >       DEFINE_PROP_BOOL("smm-compat", ICH9LPCState, pm.smm_compat, false=
-),
-> >       DEFINE_PROP_BOOL("smm-enabled", ICH9LPCState, pm.smm_enabled, fal=
-se),
-> > -    DEFINE_PROP_BIT64("x-smi-broadcast", ICH9LPCState, smi_host_featur=
-es,
-> > -                      ICH9_LPC_SMI_F_BROADCAST_BIT, true),
-> >       DEFINE_PROP_BIT64("x-smi-cpu-hotplug", ICH9LPCState, smi_host_fea=
-tures,
-> >                         ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
-> >       DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_f=
-eatures, =20
->=20
+https://gitlab.com/qemu-project/qemu/-/issues/3297
+
+https://lore.kernel.org/qemu-devel/CAJy5ezqTAMr=A3uAfmuWLepK66AdLRu4Q8AmFMh4+4q2HtDrkA@mail.gmail.com/
+
+IEEE 802.3-2022 does not explicitly state that these registers
+should be read-only, but suggests it in 22.2.4.3.1 which says this
+information should be entirely manufacturer-supplied information.
+
+The standard does mention several other registers in the set which
+should be partially or entirely read-only, so further work may be
+required.
+---
+ hw/net/xilinx_axienet.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+index d85f8bb23f..970732b162 100644
+--- a/hw/net/xilinx_axienet.c
++++ b/hw/net/xilinx_axienet.c
+@@ -141,6 +141,10 @@ tdk_write(struct PHY *phy, unsigned int req, unsigned int data)
+     regnum = req & 0x1f;
+     DPHY(qemu_log("%s reg[%d] = %x\n", __func__, regnum, data));
+     switch (regnum) {
++        case 2:
++        case 3:
++            /* Writes to PHY Identification registers are disallowed */
++            break;
+         default:
+             phy->regs[regnum] = data;
+             break;
+
+---
+base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
+change-id: 20260305-xilinx-phy-protection-c396a658d072
+
+Best regards,
+-- 
+Jim MacArthur <jim.macarthur@linaro.org>
 
 
