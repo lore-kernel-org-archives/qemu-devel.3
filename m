@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52486F513E7
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93690F513E7
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyHOq-0001JA-O5; Thu, 05 Mar 2026 17:42:32 -0500
+	id 1vyHOY-00015S-V0; Thu, 05 Mar 2026 17:42:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vyHOp-0001Is-3c; Thu, 05 Mar 2026 17:42:31 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1vyHOW-00013q-KJ; Thu, 05 Mar 2026 17:42:12 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vyHOn-00079g-I3; Thu, 05 Mar 2026 17:42:30 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1vyHOU-000763-Kf; Thu, 05 Mar 2026 17:42:12 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 625H90uv2267739; Thu, 5 Mar 2026 22:42:26 GMT
+ 625APIhI383634; Thu, 5 Mar 2026 22:42:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=dDcE15Pa3eYtqEKd9
- TFkL8ZHtz822jxFq6TzilT77L0=; b=Yydn4HP/6hawiWGvdKChiS8ZyVdiM+iaz
- UP8pEBy9dlQ+mxnAYCot0VaUW1MvqGML4JWT547Ju0e8qS0UPF6BzH10sCj2dTmp
- sASblsSz5vOf0lPw+AQRQsfb4RdopN4MS10ipk0frCyxvMpzQzQaXn/n5oMsINq8
- 00tyT+kl2XlcdVF7Tpvk8VqYvyETpLYWTFjCrsdkH+RuqYr9RtTIPFl32rU5p+l8
- zEvAxAxoiKUpV3wuNa8AQwC5BPKmuhLRXb309DCmlIKg8AeLF+3XeAwUruLPrPC0
- jMA46UEq2ADvlA0buvlGQLS7BZLLDFMLDfiUNNBF+cc1YQ21enVRw==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmwgm8-1
+ :mime-version:references:subject:to; s=pp1; bh=YTvImtdp6bKRkcIJF
+ rlMd3YRl3SOzPgde3i0zWwHJKA=; b=oreel9eqJzlapkxVNSuc1ty0BKioNDBbD
+ Ex05zmLNVT/fd0GqoAhJ6gxGNkNeGsnQdkBLGhflS8nv5cA+YJiPt+Ty5IndNUmV
+ 32vAKMEatIErnDPSfmsK3BBVt70Jv9oE7T0oVhXwzdRmRQEUQP/E2aMF2et4vCc7
+ 3Xm5JAX+MAsnBY06SF/ZvCeC5S9LPIO7ZTv7qUyAkhm+cEEitHuHnuQtG6Pl0aGp
+ 6kQwpaA691HPLQtBwObbfAwtnv5zixP0CV7oVf3c21ofU88HQkZOAxAPJhJICto6
+ O7A8PZqjea2f36xFi9VKdHcWY21A7dfGJrh72+MGcEnsZvYn+t1lw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjdnx92-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 22:42:26 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625LSfXr029748;
- Thu, 5 Mar 2026 22:42:25 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmapsdh9j-1
+ Thu, 05 Mar 2026 22:42:06 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625J77P5027662;
+ Thu, 5 Mar 2026 22:42:05 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjn4kc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 22:42:25 +0000
+ Thu, 05 Mar 2026 22:42:05 +0000
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 625MgNE431720110
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 625Mg3L840370750
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 22:42:23 GMT
+ Thu, 5 Mar 2026 22:42:03 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F61F58061;
- Thu,  5 Mar 2026 22:42:23 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6433A5805D;
+ Thu,  5 Mar 2026 22:42:03 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0D67C58058;
- Thu,  5 Mar 2026 22:42:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 29BFA58057;
+ Thu,  5 Mar 2026 22:42:02 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.36.214])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 22:42:21 +0000 (GMT)
+ Thu,  5 Mar 2026 22:42:02 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -66,41 +66,40 @@ Cc: richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
  brueckner@linux.ibm.com, jdaley@linux.ibm.com
-Subject: [PATCH v9 23/30] Add secure-boot to s390-ccw-virtio machine type
- option
-Date: Thu,  5 Mar 2026 17:41:38 -0500
-Message-ID: <20260305224146.664053-24-zycai@linux.ibm.com>
+Subject: [PATCH v9 08/30] crypto/x509-utils: Add helper functions for DIAG 320
+ subcode 2
+Date: Thu,  5 Mar 2026 17:41:23 -0500
+Message-ID: <20260305224146.664053-9-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260305224146.664053-1-zycai@linux.ibm.com>
 References: <20260305224146.664053-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE5NCBTYWx0ZWRfX4clemjNzK8eG
- yjdjMRJ4+wOU4I2knphyNQbLfDoT8eBmpmPwESA4RINCT2TBhiCduQWght02+X2L7YdkGpPtE4e
- uVok6cdNB3UJOSKr7yWHFhXMNRM3hr6rQUNqt+8m4nXX+AX0tAzBAEoSRGi25REwmFYTR3ZpnNn
- ctAEOPhxKCJtDBsPFwzx+AaqT/PprpRsbR9KlODqL9mBarG5lYBE/NY6pyWUPD3hEfH/BSjhiBh
- uDZa53Gpb1a4uNrXuc1HIPim+l5fnuAcNIJF4iA0r9zscFucen3HAd92cZ8eVo8K7GZIb7EfQZr
- 5/4QG+qkMUUXX1iSsfHuM2YR+qfUdNB5Ah0rjENYvL3ZyVG8Pt/d8TTRPyC35tJPQJMfJBiNcjN
- IBTvBXvVdaS+GnzwxVi3eZKwQ0M9/OoVD3ybowojTRB94QB61Rrnusy0sGMjh39/GwF8QHciFhP
- 9O0LQL0/DOZ7ooY8UFw==
-X-Proofpoint-ORIG-GUID: MmugAv9g-9pXLdqArMHDh4__Ix4a6O5w
-X-Proofpoint-GUID: MmugAv9g-9pXLdqArMHDh4__Ix4a6O5w
-X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aa06d2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69aa06be cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=uyvjcAWwEQu1yBn7KtoA:9
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=cx8EP_J7U0ANkHmDKVUA:9
+X-Proofpoint-ORIG-GUID: TuJkf_IX6KhZxjCxQ4Y1RBKitW3Yq3-C
+X-Proofpoint-GUID: TuJkf_IX6KhZxjCxQ4Y1RBKitW3Yq3-C
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE5NCBTYWx0ZWRfX87+iZQWWJsb+
+ qP6cPLlxxaeorOC1hM4hKL7LdZnpfVVZV5b8k1z37UpdymWHBuqPd7xiMsgRwExDRXSTBu5Kdh5
+ IjYOjzAzslQ7//svi+ujLjUsSptijkG//qCl3e2gfKFgoX3Y29Q2KD+ADtst51rjvCUwJK/PJ6g
+ +pRfBqcJzd3RuZG6msDYMjqfrqRRPOSDjl2Xiuzma4uakPv1zvBXmfxGrmzjJrCm6NM3dGjFXwe
+ 5jxrc6f3cYecGIbknziAbQxFP+c3cQIfc9E+caQviRtEn4l8sTMGh9eiJuQr3CIaeKTwttnu+iw
+ 1F3QjeuMkd7e8/9+pjz23DFhxsBoGpOQcnl5eN+1RtvYSO5+sW8+SGSrjfJLGbnqEqFivha6G2H
+ a8rwEXdAY/yfxSyG/RSwHazH2Ihc4Al4FITR13JcHNPDV0ZySY4s1zIGVi9p+xjZ1FU7D3PbSCi
+ mUUiTiSu6IQdhrwGdHA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-05_06,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- spamscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050194
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -11
 X-Spam_score: -1.2
 X-Spam_bar: -
@@ -124,139 +123,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add secure-boot as a parameter of s390-ccw-virtio machine type option.
+Introduce new helper functions to extract certificate metadata:
 
-The `secure-boot=on|off` parameter is implemented to enable secure IPL.
+qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
+qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
+qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
+qcrypto_x509_check_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
 
-By default, secure-boot is set to false if not specified in
-the command line.
+These functions provide support for metadata extraction and validity checking
+for X.509 certificates.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 ---
- docs/system/s390x/secure-ipl.rst   | 22 +++++++++++++++++-----
- hw/s390x/s390-virtio-ccw.c         | 22 ++++++++++++++++++++++
- include/hw/s390x/s390-virtio-ccw.h |  1 +
- qemu-options.hx                    |  6 +++++-
- 4 files changed, 45 insertions(+), 6 deletions(-)
+ crypto/x509-utils.c         | 236 ++++++++++++++++++++++++++++++++++++
+ include/crypto/x509-utils.h |  51 ++++++++
+ 2 files changed, 287 insertions(+)
 
-diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
-index 3a19b72085..2465f8b26d 100644
---- a/docs/system/s390x/secure-ipl.rst
-+++ b/docs/system/s390x/secure-ipl.rst
-@@ -19,19 +19,31 @@ Note: certificate files must have a .pem extension.
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 2696d48155..906d5e5e87 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -27,6 +27,16 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+     [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
+ };
  
-     qemu-system-s390x -machine s390-ccw-virtio,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
- 
-+Enabling Secure IPL
-+-------------------
++static const int qcrypto_to_gnutls_keyid_flags_map[] = {
++    [QCRYPTO_HASH_ALGO_MD5] = -1,
++    [QCRYPTO_HASH_ALGO_SHA1] = GNUTLS_KEYID_USE_SHA1,
++    [QCRYPTO_HASH_ALGO_SHA224] = -1,
++    [QCRYPTO_HASH_ALGO_SHA256] = GNUTLS_KEYID_USE_SHA256,
++    [QCRYPTO_HASH_ALGO_SHA384] = -1,
++    [QCRYPTO_HASH_ALGO_SHA512] = GNUTLS_KEYID_USE_SHA512,
++    [QCRYPTO_HASH_ALGO_RIPEMD160] = -1,
++};
 +
-+Secure IPL is enabled by explicitly setting ``secure-boot=on``; if not
-+specified, secure boot is considered off.
-+
-+.. code-block:: shell
-+
-+    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on|off
-+
- 
- IPL Modes
- =========
- Multiple IPL modes are available to differentiate between the various IPL
--configurations. These modes are mutually exclusive and enabled based on the
--``boot-certs`` option on the QEMU command line.
-+configurations. These modes are mutually exclusive and enabled based on specific
-+combinations of the ``secure-boot`` and ``boot-certs`` options on the QEMU
-+command line.
- 
- Normal Mode
- -----------
- 
--The absence of certificates will attempt to IPL a guest without secure IPL
--operations. No checks are performed, and no warnings/errors are reported.
--This is the default mode.
-+The absence of both certificates and the ``secure-boot`` option will attempt to
-+IPL a guest without secure IPL operations. No checks are performed, and no
-+warnings/errors are reported.  This is the default mode, and can be explicitly
-+enabled with ``secure-boot=off``.
- 
- Configuration:
- 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index a6f0fc4e00..a24cc14906 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -813,6 +813,21 @@ static void machine_set_boot_certs(Object *obj, Visitor *v, const char *name,
-     ms->boot_certs = cert_list;
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+                                       QCryptoHashAlgo alg,
+                                       uint8_t *result,
+@@ -121,6 +131,210 @@ cleanup:
+     return ret;
  }
  
-+static inline bool machine_get_secure_boot(Object *obj, Error **errp)
++int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp)
 +{
-+    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
++    int rc;
++    int ret = -1;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    time_t now = time(NULL);
++    time_t exp_time;
++    time_t act_time;
 +
-+    return ms->secure_boot;
++    if (now == ((time_t)-1)) {
++        error_setg_errno(errp, errno, "Cannot get current time");
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    exp_time = gnutls_x509_crt_get_expiration_time(crt);
++    if (exp_time == ((time_t)-1)) {
++        error_setg(errp, "Failed to get certificate expiration time");
++        goto cleanup;
++    }
++    if (exp_time < now) {
++        error_setg(errp, "The certificate has expired");
++        goto cleanup;
++    }
++
++    act_time = gnutls_x509_crt_get_activation_time(crt);
++    if (act_time == ((time_t)-1)) {
++        error_setg(errp, "Failed to get certificate activation time");
++        goto cleanup;
++    }
++    if (act_time > now) {
++        error_setg(errp, "The certificate is not yet active");
++        goto cleanup;
++    }
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return ret;
 +}
 +
-+static inline void machine_set_secure_boot(Object *obj, bool value,
-+                                            Error **errp)
++static int qcrypto_x509_get_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
 +{
-+    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
++    int rc;
++    int ret = -1;
++    unsigned int bits;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
 +
-+    ms->secure_boot = value;
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_get_pk_algorithm(crt, &bits);
++    if (rc < 0) {
++        error_setg(errp, "Unknown public key algorithm %d", rc);
++        goto cleanup;
++    }
++
++    ret = rc;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return ret;
 +}
 +
- static void ccw_machine_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -871,6 +886,13 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
-                               machine_get_boot_certs, machine_set_boot_certs, NULL, NULL);
-     object_class_property_set_description(oc, "boot-certs",
-             "provide paths to a directory and/or a certificate file for secure boot");
++int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
++                                 QCryptoHashAlgo hash_alg,
++                                 uint8_t **result,
++                                 size_t *resultlen,
++                                 Error **errp)
++{
++    int rc;
++    int ret = -1;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
 +
-+    object_class_property_add_bool(oc, "secure-boot",
-+                                   machine_get_secure_boot,
-+                                   machine_set_secure_boot);
-+    object_class_property_set_description(oc, "secure-boot",
-+            "enable/disable secure boot");
++    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
++        error_setg(errp, "Unknown hash algorithm %d", hash_alg);
++        return ret;
++    }
 +
++    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map) ||
++        qcrypto_to_gnutls_keyid_flags_map[hash_alg] == -1) {
++        error_setg(errp, "Unsupported key id flag %d", hash_alg);
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    *resultlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[hash_alg]);
++    if (*resultlen == 0) {
++        error_setg(errp, "Failed to get hash algorithn length: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    *result = g_malloc0(*resultlen);
++    if (gnutls_x509_crt_get_key_id(crt,
++                                   qcrypto_to_gnutls_keyid_flags_map[hash_alg],
++                                   *result, resultlen) != 0) {
++        error_setg(errp, "Failed to get key ID from certificate");
++        g_clear_pointer(result, g_free);
++        goto cleanup;
++    }
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return ret;
++}
++
++static int qcrypto_x509_get_ecc_curve(uint8_t *cert, size_t size, Error **errp)
++{
++    int rc;
++    int ret = -1;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_ecc_curve_t curve_id;
++    gnutls_datum_t x = {.data = NULL, .size = 0};
++    gnutls_datum_t y = {.data = NULL, .size = 0};
++
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_get_pk_ecc_raw(crt, &curve_id, &x, &y);
++    if (rc != 0) {
++        error_setg(errp, "Failed to get ECC public key curve: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    ret = curve_id;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    gnutls_free(x.data);
++    gnutls_free(y.data);
++    return ret;
++}
++
++int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
++{
++    int algo;
++    int curve_id;
++
++    algo = qcrypto_x509_get_pk_algorithm(cert, size, errp);
++    if (algo != GNUTLS_PK_ECDSA) {
++        return 0;
++    }
++
++    curve_id = qcrypto_x509_get_ecc_curve(cert, size, errp);
++    if (curve_id == -1) {
++        error_setg(errp, "Failed to get ECC curve");
++        return -1;
++    }
++
++    if (curve_id == GNUTLS_ECC_CURVE_INVALID) {
++        error_setg(errp, "Invalid ECC curve");
++        return -1;
++    }
++
++    return curve_id == GNUTLS_ECC_CURVE_SECP521R1;
++}
++
+ #else /* ! CONFIG_GNUTLS */
+ 
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+@@ -142,4 +356,26 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+     return -1;
  }
  
- static inline void s390_machine_initfn(Object *obj)
-diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-index 5ad1ea2f24..93a4c0ccad 100644
---- a/include/hw/s390x/s390-virtio-ccw.h
-+++ b/include/hw/s390x/s390-virtio-ccw.h
-@@ -29,6 +29,7 @@ struct S390CcwMachineState {
-     bool aes_key_wrap;
-     bool dea_key_wrap;
-     bool pv;
-+    bool secure_boot;
-     uint8_t loadparm[8];
-     uint64_t memory_limit;
-     uint64_t max_pagesize;
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 8873083792..7f58d129de 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -46,7 +46,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-     "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-     "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
-     "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
--    "                boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file provides paths to a directory and/or a certificate file\n",
-+    "                boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file provides paths to a directory and/or a certificate file\n"
-+    "                secure-boot=on|off enable/disable secure boot (default=off) \n",
-     QEMU_ARCH_ALL)
- SRST
- ``-machine [type=]name[,prop=value[,...]]``
-@@ -213,6 +214,9 @@ SRST
- 
-     ``boot-certs.0.path=/path/directory,boot-certs.1.path=/path/file``
-         Provide paths to a directory and/or a certificate file on the host [s390x only].
++int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to get certificate times");
++    return -1;
++}
 +
-+    ``secure-boot=on|off``
-+        Enables or disables secure boot on s390-ccw guest. The default is off.
- ERST
++int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
++                                 QCryptoHashAlgo hash_alg,
++                                 uint8_t **result,
++                                 size_t *resultlen,
++                                 Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to get key ID");
++    return -1;
++}
++
++int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to determine ecc curve");
++    return -1;
++}
++
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index 91ae79fb03..6040894a46 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -40,4 +40,55 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
+                                   size_t *resultlen,
+                                   Error **errp);
  
- DEF("M", HAS_ARG, QEMU_OPTION_M,
++/**
++ * qcrypto_x509_check_cert_times
++ * @cert: pointer to the raw certificate data
++ * @size: size of the certificate
++ * @errp: error pointer
++ *
++ * Check whether the activation and expiration times of @cert
++ * are valid at the current time.
++ *
++ * Returns: 0 if the certificate times are valid,
++ *         -1 on error.
++ */
++int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp);
++
++/**
++ * qcrypto_x509_get_cert_key_id
++ * @cert: pointer to the raw certificate data
++ * @size: size of the certificate
++ * @hash_alg: the hash algorithm flag
++ * @result: output location for the allocated buffer for key ID
++ *          (the function allocates memory which must be freed by the caller)
++ * @resultlen: pointer to the size of the buffer
++ *             (will be updated with the actual size of key id)
++ * @errp: error pointer
++ *
++ * Retrieve the key ID from the @cert based on the specified @flag.
++ *
++ * Returns: 0 if key ID was successfully stored in @result,
++ *         -1 on error.
++ */
++int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
++                                 QCryptoHashAlgo hash_alg,
++                                 uint8_t **result,
++                                 size_t *resultlen,
++                                 Error **errp);
++
++/**
++ * qcrypto_x509_check_ecc_curve_p521
++ * @cert: pointer to the raw certificate data
++ * @size: size of the certificate
++ * @errp: error pointer
++ *
++ * Determine whether the ECC public key in the given certificate uses the P-521
++ * curve.
++ *
++ * Returns: 0 if ECC public key does not use P521 curve.
++ *          1 if ECC public key uses P521 curve.
++ *         -1 on error.
++ */
++int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp);
++
+ #endif
 -- 
 2.53.0
 
