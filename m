@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98418F30937
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 308D0F30930
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6Jk-0001Fp-Sn; Thu, 05 Mar 2026 05:52:32 -0500
+	id 1vy6K3-0001Kw-BJ; Thu, 05 Mar 2026 05:52:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Jj-0001FX-C0
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6K2-0001Jv-5F
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Ji-0005TH-3G
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:31 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6K0-0005Uq-L2
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772707949;
+ s=mimecast20190719; t=1772707967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NYg1EuXlgmxwdFtG8SzoD3sUFm7M8YV+vIWnbYEBMLQ=;
- b=jKL7xnYsL7SNbfYoXp09/nAPlTGUKNSm+CIOOXqxYI3niT4/Ih9ZwQB7CR39Fwzw1aIlMQ
- lrZx4NS+zL5RZJgJtu9+JDDppGrxVw0f/9nGLXg1TaJcU/+rNxI5y46ZntM2HQP64LN+Z+
- lorRLLFy+ArzVoPypBlUGjl0yXevXCU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Bregcc+4oQuYkY0w0aiE1hvjZsqGY726rP2gyP7fHSY=;
+ b=duyXrBzUvwYAd0pdsFihooeYJSJarxNDSt2m8G/JpX2eGN6wBQkAhkViSK4A1LeQKFq3vD
+ aqhoKNmr8CFYwihgxRbQd2+11z6bdQeVusb+oBitUN8zNGPFfFcIIg+pnDfinr9eHFXDDp
+ p7Gvk3VDUE9e4tLgJJ42PLJ1zDh1/nQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-542-fLilHpXRPU2PLDTTCjTjnw-1; Thu,
- 05 Mar 2026 05:52:26 -0500
-X-MC-Unique: fLilHpXRPU2PLDTTCjTjnw-1
-X-Mimecast-MFC-AGG-ID: fLilHpXRPU2PLDTTCjTjnw_1772707945
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-671-yYUk5moPMXy0maEdYyqlDg-1; Thu,
+ 05 Mar 2026 05:52:45 -0500
+X-MC-Unique: yYUk5moPMXy0maEdYyqlDg-1
+X-Mimecast-MFC-AGG-ID: yYUk5moPMXy0maEdYyqlDg_1772707965
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB841195609F; Thu,  5 Mar 2026 10:52:24 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E9B2518005B3; Thu,  5 Mar 2026 10:52:44 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.75])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DACAC3003E98; Thu,  5 Mar 2026 10:52:22 +0000 (UTC)
+ id 50E5A3003E9C; Thu,  5 Mar 2026 10:52:41 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 02/28] hw/i386/pc: Remove pc_compat_2_8[] array
-Date: Thu,  5 Mar 2026 11:51:49 +0100
-Message-ID: <20260305105215.302571-3-thuth@redhat.com>
+Subject: [PULL 08/28] hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_LNKCTL
+ definition
+Date: Thu,  5 Mar 2026 11:51:55 +0100
+Message-ID: <20260305105215.302571-9-thuth@redhat.com>
 In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
 References: <20260305105215.302571-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 33
-X-Spam_score: 3.3
-X-Spam_bar: +++
-X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,53 +87,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The pc_compat_2_8[] array was only used by the pc-q35-2.8
-and pc-i440fx-2.8 machines, which got removed. Remove it.
+VIRTIO_PCI_FLAG_INIT_LNKCTL was only used by the hw_compat_2_8[]
+array, via the 'x-pcie-lnkctl-init=off' property. We removed all
+machines using that array, lets remove all the code around
+VIRTIO_PCI_FLAG_INIT_LNKCTL (see commit 9a4c0e220d8 for similar
+VIRTIO_PCI_FLAG_* enum removal).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-3-philmd@linaro.org>
+Message-ID: <20250501210456.89071-10-philmd@linaro.org>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260225092024.794595-3-thuth@redhat.com>
+Message-ID: <20260225092024.794595-9-thuth@redhat.com>
 ---
- include/hw/i386/pc.h | 3 ---
- hw/i386/pc.c         | 9 ---------
- 2 files changed, 12 deletions(-)
+ include/hw/virtio/virtio-pci.h | 4 ----
+ hw/virtio/virtio-pci.c         | 8 ++------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 1cf88c16975..d8fe1c3c8e5 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -292,9 +292,6 @@ extern const size_t pc_compat_2_10_len;
- extern GlobalProperty pc_compat_2_9[];
- extern const size_t pc_compat_2_9_len;
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 405e33a3165..9760a3837fa 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -35,7 +35,6 @@ enum {
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+     VIRTIO_PCI_FLAG_ATS_BIT,
+-    VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+     VIRTIO_PCI_FLAG_INIT_PM_BIT,
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+@@ -62,9 +61,6 @@ enum {
+ /* address space translation service */
+ #define VIRTIO_PCI_FLAG_ATS (1 << VIRTIO_PCI_FLAG_ATS_BIT)
  
--extern GlobalProperty pc_compat_2_8[];
--extern const size_t pc_compat_2_8_len;
+-/* Init Link Control register */
+-#define VIRTIO_PCI_FLAG_INIT_LNKCTL (1 << VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT)
 -
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
-                                                  const void *data) \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 0dd3fd01d98..d36b4917b31 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -247,15 +247,6 @@ GlobalProperty pc_compat_2_9[] = {
- };
- const size_t pc_compat_2_9_len = G_N_ELEMENTS(pc_compat_2_9);
+ /* Init Power Management */
+ #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
  
--GlobalProperty pc_compat_2_8[] = {
--    { TYPE_X86_CPU, "tcg-cpuid", "off" },
--    { "kvmclock", "x-mach-use-reliable-get-clock", "off" },
--    { "ICH9-LPC", "x-smi-broadcast", "off" },
--    { TYPE_X86_CPU, "vmware-cpuid-freq", "off" },
--    { "Haswell-" TYPE_X86_CPU, "stepping", "1" },
--};
--const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
--
- /*
-  * @PC_FW_DATA:
-  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 91d736d71c1..9e2201be13c 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2310,10 +2310,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+         /* Init error enabling flags */
+         pcie_cap_deverr_init(pci_dev);
+ 
+-        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_LNKCTL) {
+-            /* Init Link Control Register */
+-            pcie_cap_lnkctl_init(pci_dev);
+-        }
++        /* Init Link Control Register */
++        pcie_cap_lnkctl_init(pci_dev);
+ 
+         if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
+             pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
+@@ -2444,8 +2442,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT, true),
+-    DEFINE_PROP_BIT("x-pcie-lnkctl-init", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
 -- 
 2.53.0
 
