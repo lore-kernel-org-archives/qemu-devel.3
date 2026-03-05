@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1093BF47CA2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC92F47CA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCyp-00032A-4r; Thu, 05 Mar 2026 12:59:23 -0500
+	id 1vyCzd-0004E6-LZ; Thu, 05 Mar 2026 13:00:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy7-0000IL-A6
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy7-0000IM-8u
  for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy3-0003m1-5D
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy4-0003n0-3N
  for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772733513;
+ s=mimecast20190719; t=1772733515;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6qU4hDIoHZbeJU4miHApFFtw68jyau+iwJ5Ohe5zWZ4=;
- b=DzYb0fliapqFeEOKDlq5I0GyLt8wKx9Ro9YflkTdmUmqBqruFr7uPn8pK7kHORIc4ZKXOu
- xvv75tiJYWYk7qinus8oX2kiAflAnuDiOUg1EqnD2HwURyToTpgY1rt0JM+8bRpdQTZ9fX
- uew8TqPQ3pH6CrGu2PmRAlle9G/bZ/4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=oVqWreGFCxOxEVN1cMXNwqHjmBSo3Eq8G8YAa3svd0c=;
+ b=hk4NmExKDvZsd1zENzWpjPW02EBIlCxa729F+gxjgMu2xscaLtXv49O+HWfFq1/+8wPGCx
+ rDTeN+j7+syAfRa5/o2TXXJUqmOF6WqQ9x0qpP7Qkz62Lst9Kx+Hj6HuquAD6OK2Cj0xgj
+ sf0EnOhsGEFLCrq+nsxXNLPSqhUQqiw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-lRdEH9qlOqGutn8RblhxrA-1; Thu,
- 05 Mar 2026 12:58:28 -0500
-X-MC-Unique: lRdEH9qlOqGutn8RblhxrA-1
-X-Mimecast-MFC-AGG-ID: lRdEH9qlOqGutn8RblhxrA_1772733506
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138--RGcB68tMT2YvMvKYIbGqg-1; Thu,
+ 05 Mar 2026 12:58:32 -0500
+X-MC-Unique: -RGcB68tMT2YvMvKYIbGqg-1
+X-Mimecast-MFC-AGG-ID: -RGcB68tMT2YvMvKYIbGqg_1772733511
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ABA351956052; Thu,  5 Mar 2026 17:58:26 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 242B418002C7; Thu,  5 Mar 2026 17:58:31 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.26])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D8BF63003E9E; Thu,  5 Mar 2026 17:58:24 +0000 (UTC)
+ id 619823003E9E; Thu,  5 Mar 2026 17:58:29 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  Jithu Joseph <jithu.joseph@oss.qualcomm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 26/38] hw/i3c/mock-i3c-target: Set num_sent in TX callback to
- fix trace reporting
-Date: Thu,  5 Mar 2026 18:56:59 +0100
-Message-ID: <20260305175711.1119025-27-clg@redhat.com>
+Subject: [PULL 28/38] hw/i3c/mock-i3c-target: Simplify GETMRL byte extraction
+ logic
+Date: Thu,  5 Mar 2026 18:57:01 +0100
+Message-ID: <20260305175711.1119025-29-clg@redhat.com>
 In-Reply-To: <20260305175711.1119025-1-clg@redhat.com>
 References: <20260305175711.1119025-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -88,52 +88,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-mock_i3c_target_tx() did not update *num_sent before returning.
+The GETMRL handling logic extracted MSB/LSB bytes from
+s->cfg.buf_size using a mask-and-shift expression:
 
-Although some callers may not directly use this value, i3c_send()
-passes num_sent to trace_i3c_send(). If the target TX callback does
-not initialize *num_sent, the trace output may report an incorrect
-or uninitialized value, leading to confusing debugging information.
+  (buf_size & (0xff00 >> (offset * 8))) >>
+  (8 - (offset * 8))
 
-For example, the following trace was observed:
+While functionally correct, the expression is difficult to read
+and obscures the intent, which is simply to return a 16-bit value
+in MSB-first order.
 
-  mock_i3c_target_tx I3C mock target write 0x12
-  i3c_send I3C send 0/1 bytes, ack=1    (expected 1/1 bytes)
+Replace the mask/shift formula with explicit MSB/LSB extraction:
 
-This happens because *num_sent was never set by the TX callback.
+  offset == 0 -> buf_size >> 8
+  offset == 1 -> buf_size & 0xff
 
-Fix this by setting *num_sent in all return paths,
-including the IBI magic handling case, to accurately reflect
-the number of bytes consumed.
+This makes the code clearer and easier to review without altering
+behavior or data ordering.
+
+No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260303013322.1297499-3-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20260303013322.1297499-5-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/i3c/mock-i3c-target.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/i3c/mock-i3c-target.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/hw/i3c/mock-i3c-target.c b/hw/i3c/mock-i3c-target.c
-index 875cd7c7d09c..b99709a08b52 100644
+index b99709a08b52..1ae2cf9e1de1 100644
 --- a/hw/i3c/mock-i3c-target.c
 +++ b/hw/i3c/mock-i3c-target.c
-@@ -70,6 +70,7 @@ static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,
- 
-     if (s->cfg.ibi_magic && num_to_send == 1 && s->cfg.ibi_magic == *data) {
-         mock_i3c_target_ibi_timer_start(s);
-+        *num_sent = 1;
-         return 0;
-     }
- 
-@@ -86,6 +87,7 @@ static int mock_i3c_target_tx(I3CTarget *i3c, const uint8_t *data,
-         s->buf[s->p_buf] = data[i];
-         s->p_buf++;
-     }
-+    *num_sent = to_write;
-     return ret;
- }
- 
+@@ -146,9 +146,12 @@ static int mock_i3c_target_handle_ccc_read(I3CTarget *i3c, uint8_t *data,
+             if (s->ccc_byte_offset >= 2) {
+                 break;
+             }
+-            data[s->ccc_byte_offset] = (s->cfg.buf_size &
+-                                        (0xff00 >> (s->ccc_byte_offset * 8))) >>
+-                                        (8 - (s->ccc_byte_offset * 8));
++            if (s->ccc_byte_offset == 0) {
++                data[s->ccc_byte_offset] = (uint8_t)(s->cfg.buf_size >> 8);
++            } else {
++                data[s->ccc_byte_offset] = (uint8_t)s->cfg.buf_size;
++            }
++
+             s->ccc_byte_offset++;
+             *num_read = num_to_read;
+         }
 -- 
 2.53.0
 
