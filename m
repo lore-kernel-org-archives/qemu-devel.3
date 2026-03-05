@@ -4,111 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9893EF3092A
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0CFF30931
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy64r-0006YA-F4; Thu, 05 Mar 2026 05:37:09 -0500
+	id 1vy675-00075M-7B; Thu, 05 Mar 2026 05:39:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy64p-0006Xu-I7
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:37:07 -0500
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy64o-0003Q1-4e
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:37:07 -0500
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64ad019bbd4so7140675d50.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 02:37:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772707024; cv=none;
- d=google.com; s=arc-20240605;
- b=HtbiJ/Ljpupt/deDcyagnxg8HprNh9wW33SH0Fe4PKd2XMFcCk/66LqzMZQ+rAhDWH
- QNArSVkfC88fTNeBPCJedaj9j1vdCxAtuGfLjN1tQyPIDWK/VzNWznggC3+ffpIY9ADu
- vIeDQNNq3nEK+8RnSgV0uhf4ib6uzY+ilHDN35GVxmpMIfdpmGc8q8Q3RiHbAzvPkWZS
- ZNbY3U0ZU3d+Zmjt/ks1XmhQwKH+nn/ppaVRUrS4+UYUtcdOC1FbSCQJad87FuA6mS03
- /rXdqrNXpv10zw5+FqDRLRc5huhdwmnsNEgryCwjm3IZ/QtNkxmgriH6bkqMJpxJHdfS
- k22g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AxjPnRuT41SFicNKZIrpim+hvpYn3RgbDx8y2pgwB9w=;
- fh=yWUDLaQibnY7hmzPuZJTzzKnNoc0H77qfbsB9yLK3a0=;
- b=KMnPnphwiq+faDcN9xXiyzCZLEUR+xrJc5F5cpq3NwBgfoDhBzERRkylqGZLyJqPR8
- BqKjPvd2wEm3voJFEpohaSdqrdpyUEZSkz4pN0a9LLzpV4f39iW2F5QCTTVsg/w0P34Q
- zPh7dwx5OwiEFQKYh4FE1oPq7uoLwrlzQGYd77Tdft1OhzrIjfGaeOQdVHsY7L8zOwSR
- YKGYnbO/1FZNOWFx0Acb0MczOurXKw+Ad/UTlNBBFIqNwshZY7YsqW3zEIpaELujd5Tj
- DX2BBueIOoBfRbVLMRvro53KXac95jzcdkTMszVg3Z5E4rTCSzFkfcxNF8i2LfcQlaqv
- L2/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772707024; x=1773311824; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AxjPnRuT41SFicNKZIrpim+hvpYn3RgbDx8y2pgwB9w=;
- b=Oktfc89gKcFM9MTudLBzL5BKjAlMjR1ypfWmon+xm+ToehJmhhpi2h1r90Ia9HT+w9
- tSY11gyTo3B0QVNDwWI3N43pnIBenWVvQ4mIQyX1cP1Ce4/YiI+a0/4c49luW40OMdJL
- MbIR+waemAxGrwvH0YfT7Ny7kbY3Aj32HK2hguwtmkPMiVRgv1l3HDZP9sQR8Tp9XsBy
- WBH5SHkRRdY32OuM1tyTmArzMI6SS2KDkzlKzuODtfmsxXyRRyh0zlWy4ATGdv+ishM+
- IBNgTJZc5z580uz3j1mCipt1ZXdwJBCHUET/pmNNJMhOEEkX71t7YwyjU79314WdUX2M
- WoJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772707024; x=1773311824;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AxjPnRuT41SFicNKZIrpim+hvpYn3RgbDx8y2pgwB9w=;
- b=jtVRx+tuJQ9UvVuPly2jWNtmg6fboDDQbDG/xsupLo9cArqNRgvM3tPbjrTo/Qa3wb
- fAcml3u+4UXdPES18LV1RkTHXgSLZ6XFqLcy2zOxnrF/OJFSTndWL5iBOSQjcCdVeuTa
- ntmfjnPRJwJ4gCHS/93awu0Ah5NDYAeQNaMglJL3eNfQPQoi/ZT7jZvAIqVBtnvy03Dp
- gTqukGGtyRDXA62CDwCt03jZRUnzLYrATR1yrEUAxePSHzPqkC35MKzrRFrSA8ncl83D
- hArt9H43NuAymRgJ2U55GU7X1UMPV4LgOT4J7Izunp4TRAn569yFR/HDZOF7LREUwqfv
- ePcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOCgf22E9x3YEi5fPkLXrzqMma+QLaJ1bFH1Sz52NA+ROgoF2kYiQ6x7Xd+O96edWHyJetcivH1Oxg@nongnu.org
-X-Gm-Message-State: AOJu0Yxg2/+tQNWTufyzTfafbhO6NB3DF110SFX1aoJc7IQwbIUdhntb
- 6rRAUOjZk85aGzNxWDyYTRunbwk4mISkYoAl4DCiWVTnsZA5oYamypZTVOBFoXgmRvN/AVmPDbr
- 0A+ABlI5IFV5vmHqJJmHzVZOD21UnM3bFJKwhvWRHSQ==
-X-Gm-Gg: ATEYQzwMdm1BjFyombsnap1YLgdxqYHEyXojWZKpve4QAq+faCiwMdp1231/aZYkJ08
- Ku0HQ6uINv0F0n3vnfqL3wWqSQpTHEUuegGjskQQLVd2QnJhvSS/LrmUQw9ZzTVUz2CmbeCldNU
- CSE9kfdSfdyM8OSrM7CYinFPKgkzBbM+h17kSJJbOlvLn/XD3nNHMAMkschvt7AiqcEmEZE8PL+
- Wi4WjllB0G+IEx+mvV+HhEFEtAHFAEnNKalJlYo2ceqMzUo9G/7QnQ5lJ1DCsYoWPte9Ot4dZrk
- CLJ4GbhH6+/JG6howKzbL7Md6KSOfME+McCXw6oWo3d1RP1f/PCWHPy5iLA5Yvko1Yg=
-X-Received: by 2002:a05:690e:140f:b0:64c:9f31:e33 with SMTP id
- 956f58d0204a3-64cf9bc0ff6mr4277623d50.65.1772707024618; Thu, 05 Mar 2026
- 02:37:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vy673-000758-TT
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:39:25 -0500
+Received: from mail-westus3azon11022123.outbound.protection.outlook.com
+ ([40.107.209.123] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vy672-0003XR-L9
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:39:25 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pNnstre3UjxDmu5z8brb6plC05EkJlvoSXjCSzFeypvQEfofevq260c8JJMXexUWtc/LfdnMMz92DOKI/oDYZrPdgw5TQw/D5iMNvRLp8U4s8s+tuzRtNByXq4uapC8RNEtwOSkCgKfdXWR+7RCn//cm0ZI9Ow4I9bbY6uny4tZPhfvzi2eEP97bPKgbNSEGV2ELi+uHgh26aArXSdsvq990nnUE4RBGzij2Ubzwfe/Qb/107/UclKP5mlaVEXUqCSYd9PFwYSOa7bAunWLhq70xLqpavKX0gTUpY61A6R+ZoYGbIXQ99qHkB2k5ZZvMxTRxbny/7DE8UhfEd5TjqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=581N8fzFzDe0sAeHlnLRUCLp0qCNHs1ZymVA2xtt/aY=;
+ b=hJ3wAwdJ1+ry7bAn5TsfssOrkAcjY5q9v3WiP43FQIkPr8vxUuHIKEUaxRwLOo52s13xUMrh1lYVrDp61MG7dQ8uMyR7w44X1wKzXCwSlJakgVGkFjZncOQQe2owW3X6w6XcDqg+XyKxVmk46HtyxrbJ5v7Jim2BQfcBFvbTPBV6ASCOLWKkRIJsbbc+wb33ifdZJxytlvK4gPR9aeU6ByBlcILtkO4KAUSdRZFqhkWRvAiDFAVJGFHI1hIesMBq0m9y5iH/3SzepxBO4cg6epqMEu6/bFHBEYd6GtQldq4aHYIqqr3ZAkJliLC1/iuI3R6rF/QELU28a6NIb8eENg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=581N8fzFzDe0sAeHlnLRUCLp0qCNHs1ZymVA2xtt/aY=;
+ b=hE/7i+JwwcI2U8V0BXUtugf2jZvE3EK9zvconAXpPVaUemb3GQDo/1URKAuobJQ3/fQGz7bSXuiQHJA83HFE5cC6zc768AftYndSVe31EX43E2T0pb/RutmXS1BQrsuDfpB4rdQ8SJnIH1k1CLWW3lFNUv7JNQ5Z/0nn+c0vXb9/nHuUPzepwNjFXUbgSWh8yHHGQaAQx/eehDoN0g+q5If7LdQ08cMUIA7GeHfK5C2kSBxbPCKQ5/r6Em7ZnwR1hpDJDgWPIC9JKrj6W81PXHyv4ocpaR1p3ht6Ihf5u7b8fw9DlPDQvV1TYW4H7Deti2iEfMmuazDXljTJL3GWKg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
+ by BY1PR18MB6111.namprd18.prod.outlook.com (2603:10b6:a03:4b4::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Thu, 5 Mar
+ 2026 10:34:19 +0000
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.20.9678.017; Thu, 5 Mar 2026
+ 10:34:19 +0000
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v1 0/1] Add new model for Cadence GPIO controller
+Date: Thu,  5 Mar 2026 02:33:59 -0800
+Message-Id: <20260305103400.1574217-1-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PH8PR07CA0002.namprd07.prod.outlook.com
+ (2603:10b6:510:2cd::9) To SJ0PR18MB4479.namprd18.prod.outlook.com
+ (2603:10b6:a03:37f::19)
 MIME-Version: 1.0
-References: <20260302092225.4088227-1-peter.maydell@linaro.org>
-In-Reply-To: <20260302092225.4088227-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 10:36:50 +0000
-X-Gm-Features: AaiRm52qrZIL8yralBJNN0tU10ziebNEyhhvl6Db87mT2g70DBlX5StRGL-5f3U
-Message-ID: <CAFEAcA8CytxFhwJahCN7CxGtx3RoGkVpfBuoWGQOXGBPTXi==A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] arm (and others): fix some memory leaks
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Alexander Bulekov <alxndr@bu.edu>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Darren Kenny <darren.kenny@oracle.com>, 
- Qiuhao Li <Qiuhao.Li@outlook.com>, Yodel Eldar <yodel.eldar@yodel.dev>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|BY1PR18MB6111:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0f481dfe-fedc-4306-96d2-08de7aa2c1fd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|52116014|376014|366016|1800799024|38350700014; 
+X-Microsoft-Antispam-Message-Info: yl9tpBoTKi9espca2mH43oyzxDG4ewY64Z0CLu/CdHpBLUS7KMNJhExwL7KyFCFHj9GiA1hTFuZZD27Dp5o92LWuV5A1GYKYw6a5ndOrMe7sLLICPhPudXMs0+gTuVbK0uZ9bz7PiV9G3CK8ciY1/fP5cFTPoXxNNItAXIoJO5WZM3KiIavJ8G9zxzC7Z/TqB7hIuQEvzSCVVigSeTSPgqs1lknaPxULTNHSZD+0OAclzYgBCbC5ugxkT8lzTCBFDcvvYIPjtJx6jda3/I5D2oBBUoZ/1ib18YBzPqm+ijGTlgeHheSGbELJJlbIYgESNw3tdc3FYKU6bOCk9mfaM7v7DGI2BUrsi+ynOXjPPPLGbTMdcE2dEQwMSWQklCVt7py5pFKUY6pBdCzeEsu/MYMB+bWs6q3cd3xHsVlQXrQbsEKqdG6tY/Dl82Fc027m2OApp0Huf65mIzagcPg+BtEgsLE/tvcySekxORTrnXAWRdyaM14Xq8vJ7ZbCj6nA7hsatGeXRmxjxkDBRBWHjGxA1m7P+HX5BVUGgiGm83+hroWvbhKh4nQJohm75zoBVtxbjH2jmmS10MqxChzw/b/xOfYfyuCZc7v+aRgrs4R9rpvk/YO5eD9H/lp/Rh+YImbOawMFGqecaUHnmKx059MieTsnQcP35ENuRlC0QItTW9yA4C0KX0iWumliNNp7L8x+bz/J2YkmqmrL2mufirIWGeD90RpiNVUHE7z5hk5Gy4Gu32h/dsxQxymVUDDCAlRHVju/nAALvHvGO/EBHJB2uMrIup9E0vr1Qe9hTD8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(52116014)(376014)(366016)(1800799024)(38350700014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?UzJg2djXJcVAH56AtzpyTBTrQzfzfnvx6gJB1TYjoJIl7LxbzYaaJ+A5y1Xj?=
+ =?us-ascii?Q?MCeXc0Vd7nDZWAcac00CIQ5bIYda5sLFPwUE9D3PcWW+NhzyHSFG4h6G5Gxf?=
+ =?us-ascii?Q?gT4EV3rPDPIuMPy3H75q4FiH1WennvuD4DwbNhjtryjDTm8K5qAafqaMZ9bB?=
+ =?us-ascii?Q?kmlyxpaPspo6CQjl8QRY6M3Zy3Iq5rPlJ086iz5RMLcW+xr+XMjM9f6b/I5g?=
+ =?us-ascii?Q?/OhRzUjUsn23OY2rsfnK03Xvah0/znwEohll3ab2lKH0ADijoo+2/NxtNZ8d?=
+ =?us-ascii?Q?3e6917JqhoeqOPRlMKE5ocjVsEb3/pO/UqhJd82dgvrOP6ivfdbN5fg1pZ1U?=
+ =?us-ascii?Q?xhjhtWzmwKuNn3CR0adE8cBhC9yGfhX13KtKp70NygUQ+xjynCcLm5o9cMmN?=
+ =?us-ascii?Q?S4NW+s1KWZ87TAeTj8PHsMwcu6aW2I4GTJPb7O6C0sZFougxdP+ljw3g3wAm?=
+ =?us-ascii?Q?E6koQpHiI0bQ32T+Y1mmg6sIgdA3EFGbP+2YGZrJV8AeUoB08pdNxkWtIYEU?=
+ =?us-ascii?Q?Zpr/gEQPL0OIXDbtcfVuTJv7zdY2dIUWPdhOCjOCcatl06tDcWerhTK6O9CC?=
+ =?us-ascii?Q?RVcYRCXjihlNV9/E5QzU8OxsbPYJcfX808Ye8Jcy5shMu+nc/eSmTAoPH4fO?=
+ =?us-ascii?Q?yiVHwhP/7z7jSw5p7nnI+w3MKQ6qyppal7KekTIGlCI3grfFKjqCybjR7Jif?=
+ =?us-ascii?Q?yqzHESayJiLOdtoFbtAXFrUp/WMNTQwb27PHNQojlZZwL99gT/AzMlNgl0qg?=
+ =?us-ascii?Q?JFHtHvTkdeUNk6t2NX5mljlvmltVkdwgd8GENVIrBfL9G66HY0PiO6OF9YD+?=
+ =?us-ascii?Q?/imBz7VHIgo3Qf+OrmsYdZHv/iTngzQmzVo4eqrdjfrwXBx8xa1thLv0nbIL?=
+ =?us-ascii?Q?BWysCgQpcHq/5Qh5ZNXnWuVfSf/4pUifOXhgPsGiQylrHPRjO63EUmr56t6/?=
+ =?us-ascii?Q?itvAglWz8PvBJjIaEpmGu+K8BIIt/RdX+qqLW1i9I1gpxjPdQWHUOL+dCcJZ?=
+ =?us-ascii?Q?yVeEFQ5uuOCOo7e8u/3Q/4ZIZFqePV/tagNmHzgDmiXUlVZ4A846kAI531+r?=
+ =?us-ascii?Q?11ya16ZCFZvuOAHBJFTmvkhyGbgFGw+1C8iGiHyKuzmrixo83HxTjYASACpc?=
+ =?us-ascii?Q?rd5gfUShGFY6vNgOd1q5xxwkA5s9U02vysvo68rnYmSjfbEkLj1FIRsUfuZ3?=
+ =?us-ascii?Q?AIi3k1pSHdgfrahbwaF8jmruqMDX10Y15iCX/3/Dq3I8VjcsOCi28XvjnYc/?=
+ =?us-ascii?Q?tp0aTaBbxcW/vdtD2epn9qSziN0VIOuc+eelhzrYWFqg4wYLimxWQiybMep2?=
+ =?us-ascii?Q?+HAOMK2+gvfZdCDKmWQ5mchqKgN56ukoI4M2kaWyTf5IK2jVY63Kn8AscPg6?=
+ =?us-ascii?Q?YxSERvgLJhi4jrturq0e4K8PBxap7DMBOEYfQBd5ICEaOI8bH6CYqovq1P/u?=
+ =?us-ascii?Q?a3oPudFkfAMcjaOfac3vXDfLY/DdAIXs09vHgkquu2W018I0zcEbMx9RYBrT?=
+ =?us-ascii?Q?TA1rbTeJg53ZNj1OcDWpgehsJTBdsVvJNtiHjxXTlNA761cYhjAadA/QIsPB?=
+ =?us-ascii?Q?NobChtiQkjqMZVY3WPinKfihWBU/VoldI7VuQvv0upp9beuph4RotMQwKnTs?=
+ =?us-ascii?Q?gR7E5tQU4G/ucINOnum/KggM6xPrvyonws/xeschceGE/cYXrcukKqA+XX13?=
+ =?us-ascii?Q?CmrWgnmVJR5qg2SVF4y61AqS2bgnB17zOyNLJlkvkBPonwZZw0wF+Dvkd63T?=
+ =?us-ascii?Q?Idoz7IhZUw=3D=3D?=
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f481dfe-fedc-4306-96d2-08de7aa2c1fd
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 10:34:19.4469 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8wa1LHYf6ZADL5/FskOXFpnmxqnibdxMBaaXqu27PexbycSO2tAdD3xIEquH9+Fx2iNucIReKhxkmjj4AVwaCA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY1PR18MB6111
+Received-SPF: pass client-ip=40.107.209.123; envelope-from=kchiu@axiado.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,57 +136,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since these patches have all been reviewed, I'm going to take
-them into target-arm.next. Let me know if you'd prefer something
-else or if anybody wants more time to review.
+This patch seriers add a new model for Cadence GPIO controller which
+supports 32 pins and interrupts for level-triggered/edge-triggered type on
+input pins.
 
-thanks
--- PMM
+Also define new trace functions for analysis purpose and new configuration to
+enable this model.
 
-On Mon, 2 Mar 2026 at 09:22, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> This patchset fixes a couple of minor memory leaks I found by running
-> "make check" for the arm targets with the clang leak sanitizer enabled.
-> Version 2 also includes some patches by Fabiano from last year that
-> fell through the cracks; I've rebased them and included them here.
->
-> Changes in v2:
->  * patch 1 now just moves the file to keep 'git log --follow' happy
->  * patch 1 fixes the filename in tests/docker/test-fuzz
->  * patch 2 has the SPDX/doc comment that were in patch 1 before
->  * patch 2 drops the walk_path suppression as one of Fabiano's
->    patches fixes this leak properly
->  * patches 5-9 are from Fabiano; most were reviewed last year
->
-> Patches still needing review: just patch 1.
->
-> thanks
-> -- PMM
->
-> Fabiano Rosas (5):
->   chardev: Fix QIOChannel refcount
->   chardev: Don't attempt to unregister yank function more than once
->   chardev: Consolidate yank registration
->   tests/qtest/test-x86-cpuid-compat: Free allocated memory
->   tests/qtest/qos-test: Plug a couple of leaks
->
-> Peter Maydell (4):
->   scripts: Move lsan_suppressions.txt out of oss-fuzz subdir
->   scripts/lsan_suppressions.txt: Add more leaks
->   hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
->   tests/qtest/iommu-smmuv3-test: Free QPCIDevice
->
->  .gitlab-ci.d/buildtest.yml             |  2 +-
->  chardev/char-io.c                      |  5 ++++
->  chardev/char-socket.c                  | 34 ++++++------------------
->  hw/gpio/aspeed_gpio.c                  |  2 +-
->  scripts/lsan_suppressions.txt          | 26 +++++++++++++++++++
->  scripts/oss-fuzz/lsan_suppressions.txt |  5 ----
->  tests/docker/test-fuzz                 |  2 +-
->  tests/qtest/iommu-smmuv3-test.c        |  1 +
->  tests/qtest/qos-test.c                 | 36 +++++++++++++++++++-------
->  tests/qtest/test-x86-cpuid-compat.c    |  4 +++
->  10 files changed, 73 insertions(+), 44 deletions(-)
->  create mode 100644 scripts/lsan_suppressions.txt
->  delete mode 100644 scripts/oss-fuzz/lsan_suppressions.txt
+Kuan-Jui Chiu (1):
+  hw/gpio: Add Cadence GPIO model
+
+ hw/gpio/Kconfig                |   3 +
+ hw/gpio/cadence_gpio.c         | 312 +++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build            |   1 +
+ hw/gpio/trace-events           |   5 +
+ include/hw/gpio/cadence_gpio.h |  66 +++++++
+ 5 files changed, 387 insertions(+)
+ create mode 100644 hw/gpio/cadence_gpio.c
+ create mode 100644 include/hw/gpio/cadence_gpio.h
+
+-- 
+2.34.1
+
 
