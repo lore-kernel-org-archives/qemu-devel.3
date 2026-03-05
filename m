@@ -4,104 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9ABFEF8FE4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 13:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6412F33A68
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:05:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy8z5-00071o-3E; Thu, 05 Mar 2026 08:43:23 -0500
+	id 1vy9KZ-0002OB-BX; Thu, 05 Mar 2026 09:05:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy8z1-0006zz-Nd
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 08:43:19 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy8yz-0004C0-RE
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 08:43:19 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso9884658d50.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 05:43:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772718196; cv=none;
- d=google.com; s=arc-20240605;
- b=hXl+eUn4WZN2ijiui75jpSAJmU3Q7WGLsxRKFGzK6LpxUOrUPT+bBD+uBlTu54bT4h
- vmSBBj5ETTvmvwimaAzH9TAGvbggJcGsj4/Jm3NID/LNEBpG4BmcZzgUFadRzo52iNCN
- B5m1U/P5YCilpOz1UjjLiba7WJR9GrVCGaTatpiu3TICVrpyoaUkzs7B1/8DNa68zqdo
- AUfQsUNRLV3bYCsvIeBbz88Il0d+MnPnQfdHnlMImuREzuL9wLkTGMe+gan05/aHG+cL
- N8XQ0yDOb7QFy0+pz2RBIPPi3iKYoUaQePhIFdv6PaGdFEOwcc3FqvrHxJzFA+FZGFt9
- AllQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Y9mBEjmqWn36e+AiRIj1Yn9IYn3x+1lZXwECaKn4kpI=;
- fh=V6/n0/ijm39oi4A+DkC3gv3osqLMyqGjLkit+g5M884=;
- b=jMlRpYmo2xxx6wL0/RQc3RzOt+iLEuJy1T3Sr/yim6KqB3uwWmS3vgmbvl6QdDak7L
- y7or3uwfxEwoz2yGrepXOF6t9+VtozSm63ThBwd8mq42987EY84jW7qb5KK6TbVBECYA
- 5EbArZiw0EWozDpGb8G87A+EyF6nMT+dgvKOrO1MXCshnoBYtxMdERPunIo43VzOfzyu
- Nox8fiAkmUCFgyhHU5L+Oq1Y8mlJ/t/j3I1YaunQJYXdH1KZNXp5rwu4tjWy5ecrOJzf
- pzgPeqvrEFiu9uhAxSe9ZwEfqeS4HMBsl2vazHLb2HIfPMX9rKaPZgFFzXSOQb0GZIoQ
- xO2g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772718196; x=1773322996; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Y9mBEjmqWn36e+AiRIj1Yn9IYn3x+1lZXwECaKn4kpI=;
- b=RHxkrs8oJ9k272Mmrxoa7RWfPOhNYhcw5pXAvPtIHu7SA0jPN7qzjQRyx2bolwVIuI
- jnIcUFWnAp1H/CXLY9fIL6o4gWapSPcMPO/XZF9/WpmkLmZ7IJhH9/NEEFQrdWRb1paI
- dceUMhcQs90zHoA2C7RBsgVnxKdOMlKTBnxqj48x+BQkgThV5K70IvKIx08InTTyrmrD
- nmF0DH6z677tI6siZS0j0Csyx67Z49JtbdtEpCBUyn5tUpn6stsEAA3sqB08cRTbGZN8
- qU/6qsWAcEuaF1ZciAz01JjACWabCX83RW1M2Cd5bygmmAOrOZNLo590vwlSWQfiqrwP
- R+ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772718196; x=1773322996;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y9mBEjmqWn36e+AiRIj1Yn9IYn3x+1lZXwECaKn4kpI=;
- b=fAWPE4lgiqem3Fjoqk9vgbFlwLWezijxgr4OsMHrOkTZMlroiyzL9U4QcyGTlVmNHW
- ah1TObH6g/wW0TtJ9kkmngCjcarq2IhTXWqo5Qga6K8n+jEjdFqo6ZbZSZoR1toweMbx
- IPhKnSXaX56dGH8pHE0jum2075cI7+u4nTvz6AAXLJntt5bJDYfL0fOcIT0evFX6xRIS
- pWFJ0RznGJ6wgVHuLF04zKEe8zzRdnHWUxm3Hdcmd2OFtM5KH1ynD1XVifxM62ult+5W
- W4fetVfxL5ZNHBpLfUh0tA9ZuBXOMer5NAY0f+3TUwI1rxjndLIN/4NWpsr6Kkm0LMES
- iuNw==
-X-Gm-Message-State: AOJu0YwRA3O1oEh487lmGyPo5bF5h4bHVZ57u8Onyd0gI3kTNCA3U45e
- 7dcLdijVFJ1CFP0p4danWoVKYjtQOP0PXeuSV6q6gu6jCpC6thTHhCBjKHnRe4MSkLL7EvmYq8+
- loJ9slFNxVuC3n9hPqvXGLUgYwdw6aRoqq530iJArog==
-X-Gm-Gg: ATEYQzyHgp65Onmv6IUiFoDETrhopc6bDDve7h29fp73qxH/QPkNuSHU3xE56RsJHjP
- QNXSfZOubcrjoTlTINdaT7YGncVpsD+3LHEf1a4dMNfAwsplVt9rSTIrF5jIJIt9QjZoC++Tbqu
- DMvFxjsY4yG/dX/1aEybwyYQBwTaB00pQA6MbNmZEyE6mi5JJDey6u+3YcrvIOjT/bbWavHD48P
- LpFY2q9lq8hKB9uBTZD6rYsPJtTaiPDPbKRsrhILmGKbyXV1K9pJw1bcXH8UMIh7pB43hOF2NDw
- XEv2MVQD9CvU6WEjwDex7FG0o1KgGGMOofb1qZEZ06vbMkdvYm54HqJagbqLbA2s66g=
-X-Received: by 2002:a05:690e:e85:b0:64c:b401:f3e with SMTP id
- 956f58d0204a3-64d0713de0bmr1471670d50.39.1772718196303; Thu, 05 Mar 2026
- 05:43:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KI-0002M7-9l
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KG-0007p9-BV
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772719513;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JLMbFaEAxg7SkMHkD12blcTzS+nqNi4quD4mOZ301BE=;
+ b=fjYV6BAcJrszzxZRTpQPsVqq0VRU5bfAG4lnNNIjEWP5UOkohmbLcf9xsRZG4D0CzuGn6/
+ pH0iyM8MUD+isNI9Pg/QjwSx0EkKzB9Pb1KuMUdFEKt+lkqHzcFg4XwnLf7YvWZrZpOD+e
+ 6CJCS6S4ScDGCdclrcqIzSVe4NAYcUg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-u6623qW2Mu25zYL3nYjGSg-1; Thu,
+ 05 Mar 2026 09:05:12 -0500
+X-MC-Unique: u6623qW2Mu25zYL3nYjGSg-1
+X-Mimecast-MFC-AGG-ID: u6623qW2Mu25zYL3nYjGSg_1772719511
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5E5C1800633; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D9BE1800760; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9F2AF21E6882; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 3/6] error: Fix "to current monitor if we have one" comments
+Date: Thu,  5 Mar 2026 15:05:05 +0100
+Message-ID: <20260305140508.218316-4-armbru@redhat.com>
+In-Reply-To: <20260305140508.218316-1-armbru@redhat.com>
+References: <20260305140508.218316-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20260305111832.1068093-1-peter.maydell@linaro.org>
- <363d2abf-0e7a-4f1b-bd27-59b3e276e300@redhat.com>
-In-Reply-To: <363d2abf-0e7a-4f1b-bd27-59b3e276e300@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 13:43:04 +0000
-X-Gm-Features: AaiRm536W0TVeSr88AQmihxzuQ_ygqRki_8Luchkm5uqGsuXzMz2F-zAVHGidl0
-Message-ID: <CAFEAcA_mi_xFxM8x6ZK5k-R0_7ncyQbrNg4SfO=MXMqKD3PJwg@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/rtl8319: Work around GCC sanitizer /
- -Wstringop-overflow bug
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Yodel Eldar <yodel.eldar@yodel.dev>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,41 +85,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026 at 12:18, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 05/03/2026 12.18, Peter Maydell wrote:
+A number of print functions are documented to print to "current
+monitor if we have one, else stderr".  Wrong, they print to the
+current monitor only when it's HMP.  This is the case since commit
+4ad417baa43 (error: Print error_report() to stderr if using qmp).
 
+Fix the comments to say "current HMP monitor if we have one".
 
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20260114124713.3308719-2-armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qapi/error.h |  3 ++-
+ monitor/monitor.c    |  2 +-
+ util/error-report.c  | 26 ++++++++++++++++----------
+ util/qemu-print.c    |  4 ++--
+ 4 files changed, 21 insertions(+), 14 deletions(-)
 
-> > -            ip = (struct ip_header*)eth_payload_data;
-> > +            /*
-> > +             * It would be more natural to write this as
-> > +             *   ip = (struct ip_header *)eth_payload_data;
-> > +             * (the IP header is at the start of the ethernet payload).
-> > +             * However, writing it that way triggers a GCC bug where an
-> > +             * interaction between -fsanitize=address and -Wstringop-overflow
-> > +             * results in a false-positive stringop-overflow warning that is
-> > +             * only emitted when the address sanitizer is enabled:
-> > +             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
-> > +             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
-> > +             * So we work around this by writing the expression in an equivalent
-> > +             * way that doesn't run into this bug.
-> > +             */
-> > +            ip = (struct ip_header *)saved_buffer + ETH_HLEN;
->
-> Uh, isn't that a different pointer location? I mean, this first casts to
-> struct ip_header*, then does the math on that pointer type, i.e. it adds
-> ETH_HLEN * sizeof(struct ip_header) bytes?
->
-> I think you need this instead:
->
->          ip = (struct ip_header *)(saved_buffer + ETH_HLEN);
->
-> But is the warning still gone in that case?
+diff --git a/include/qapi/error.h b/include/qapi/error.h
+index 2356b84bb3..d1d37fc656 100644
+--- a/include/qapi/error.h
++++ b/include/qapi/error.h
+@@ -64,7 +64,8 @@
+  *
+  * = Reporting and destroying errors =
+  *
+- * Report an error to the current monitor if we have one, else stderr:
++ * Report an error to the current HMP monitor if we have one, else
++ * stderr:
+  *     error_report_err(err);
+  * This frees the error object.
+  *
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 1273eb7260..c42d9fad58 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -269,7 +269,7 @@ void monitor_printc(Monitor *mon, int c)
+ }
+ 
+ /*
+- * Print to current monitor if we have one, else to stderr.
++ * Print to current HMP monitor if we have one, else to stderr.
+  */
+ int error_vprintf(const char *fmt, va_list ap)
+ {
+diff --git a/util/error-report.c b/util/error-report.c
+index d6b7448183..ee8c5f3db7 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -136,7 +136,8 @@ void loc_set_file(const char *fname, int lno)
+ }
+ 
+ /*
+- * Print current location to current monitor if we have one, else to stderr.
++ * Print current location to current HMP monitor if we have one, else
++ * to stderr.
+  */
+ static void print_loc(void)
+ {
+@@ -176,7 +177,8 @@ char *real_time_iso8601(void)
+ }
+ 
+ /*
+- * Print a message to current monitor if we have one, else to stderr.
++ * Print a message to current HMP monitor if we have one, else to
++ * stderr.
+  * @report_type is the type of message: error, warning or informational.
+  * Format arguments like vsprintf().  The resulting message should be
+  * a single phrase, with no newline or trailing punctuation.
+@@ -216,7 +218,8 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+ }
+ 
+ /*
+- * Print an error message to current monitor if we have one, else to stderr.
++ * Print an error message to current HMP monitor if we have one, else
++ * to stderr.
+  * Format arguments like vsprintf().  The resulting message should be
+  * a single phrase, with no newline or trailing punctuation.
+  * Prepend the current location and append a newline.
+@@ -228,7 +231,8 @@ void error_vreport(const char *fmt, va_list ap)
+ }
+ 
+ /*
+- * Print a warning message to current monitor if we have one, else to stderr.
++ * Print a warning message to current HMP monitor if we have one, else
++ * to stderr.
+  * Format arguments like vsprintf().  The resulting message should be
+  * a single phrase, with no newline or trailing punctuation.
+  * Prepend the current location and append a newline.
+@@ -239,8 +243,8 @@ void warn_vreport(const char *fmt, va_list ap)
+ }
+ 
+ /*
+- * Print an information message to current monitor if we have one, else to
+- * stderr.
++ * Print an information message to current HMP monitor if we have one,
++ * else to stderr.
+  * Format arguments like vsprintf().  The resulting message should be
+  * a single phrase, with no newline or trailing punctuation.
+  * Prepend the current location and append a newline.
+@@ -251,7 +255,8 @@ void info_vreport(const char *fmt, va_list ap)
+ }
+ 
+ /*
+- * Print an error message to current monitor if we have one, else to stderr.
++ * Print an error message to current HMP monitor if we have one, else
++ * to stderr.
+  * Format arguments like sprintf().  The resulting message should be
+  * a single phrase, with no newline or trailing punctuation.
+  * Prepend the current location and append a newline.
+@@ -267,7 +272,8 @@ void error_report(const char *fmt, ...)
+ }
+ 
+ /*
+- * Print a warning message to current monitor if we have one, else to stderr.
++ * Print a warning message to current HMP monitor if we have one, else
++ * to stderr.
+  * Format arguments like sprintf(). The resulting message should be a
+  * single phrase, with no newline or trailing punctuation.
+  * Prepend the current location and append a newline.
+@@ -282,8 +288,8 @@ void warn_report(const char *fmt, ...)
+ }
+ 
+ /*
+- * Print an information message to current monitor if we have one, else to
+- * stderr.
++ * Print an information message to current HMP monitor if we have one,
++ * else to stderr.
+  * Format arguments like sprintf(). The resulting message should be a
+  * single phrase, with no newline or trailing punctuation.
+  * Prepend the current location and append a newline.
+diff --git a/util/qemu-print.c b/util/qemu-print.c
+index 69ba612f56..4a30cd1a8e 100644
+--- a/util/qemu-print.c
++++ b/util/qemu-print.c
+@@ -16,7 +16,7 @@
+ 
+ /*
+  * Print like vprintf().
+- * Print to current monitor if we have one, else to stdout.
++ * Print to current HMP monitor if we have one, else to stdout.
+  */
+ int qemu_vprintf(const char *fmt, va_list ap)
+ {
+@@ -29,7 +29,7 @@ int qemu_vprintf(const char *fmt, va_list ap)
+ 
+ /*
+  * Print like printf().
+- * Print to current monitor if we have one, else to stdout.
++ * Print to current HMP monitor if we have one, else to stdout.
+  */
+ int qemu_printf(const char *fmt, ...)
+ {
+-- 
+2.53.0
 
-Rats, you're right -- good catch. And no, if we fix the expression
-then the warning comes back. I guess we'll have to do it with
-a warning-disabling pragma :-(
-
--- PMM
 
