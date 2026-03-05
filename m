@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD111F47CA5
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0CCF47CA4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCoz-0003QI-H1; Thu, 05 Mar 2026 12:49:13 -0500
+	id 1vyCpA-0003xL-Ua; Thu, 05 Mar 2026 12:49:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCow-0003Hl-NP
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:10 -0500
+ id 1vyCp8-0003pO-Ux
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCov-0002Eh-8k
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:10 -0500
+ id 1vyCp7-0002Fo-Al
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732948;
+ s=mimecast20190719; t=1772732960;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mpVb8oMdchf1wgK/9nknbE71DwoeqoPmXbImYgJMYi4=;
- b=MT+UKknTAT8a0NM4rlAnVt13vLe9n+5UyQVpY+piCVODYcF/8RpDUd0m1VfJh8gABXyTIp
- s2FYFavpaskCPO/yM2yKU4BfGp2Y4JL+N8sQQJm/wwZldSyHusPgzNT9ftpXiq1CmTWiAf
- Coygp/LRlT1YuVf3mqAksN7g/P2vVYY=
+ bh=v2A27Bn0eymuRNSFalHPR4qUcCIkQEC0ixxoYIziwMo=;
+ b=ItShQ80y9nvk0pvbmv5boX2B1AweNCFsrOIhCEgWsQV9UvpUbDKKu4rgo+uh71ZSWthgu3
+ Y6bk4uFyrfSBFOeSeliH+JrdGZ0rRnhxeqgC6RxmyYTiAMyfk8x4vDv2R6uWC4xP17D7vx
+ 7gdR0MwmBLXMs7IHi4WDRUPKnZCPPR4=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-mulQxhZNNgitXx2n8QIXrA-1; Thu,
- 05 Mar 2026 12:49:05 -0500
-X-MC-Unique: mulQxhZNNgitXx2n8QIXrA-1
-X-Mimecast-MFC-AGG-ID: mulQxhZNNgitXx2n8QIXrA_1772732943
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-jQDr4JfEPj6YwiJSHFnBwQ-1; Thu,
+ 05 Mar 2026 12:49:15 -0500
+X-MC-Unique: jQDr4JfEPj6YwiJSHFnBwQ-1
+X-Mimecast-MFC-AGG-ID: jQDr4JfEPj6YwiJSHFnBwQ_1772732953
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2874919560A7; Thu,  5 Mar 2026 17:49:03 +0000 (UTC)
+ id C1FDD19560A5; Thu,  5 Mar 2026 17:49:13 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 826101956095; Thu,  5 Mar 2026 17:48:58 +0000 (UTC)
+ id 05E6F1956095; Thu,  5 Mar 2026 17:49:08 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -62,9 +62,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PULL 13/27] util: set the name for the 'main' thread on Windows
-Date: Thu,  5 Mar 2026 17:47:29 +0000
-Message-ID: <20260305174743.3084606-14-berrange@redhat.com>
+Subject: [PULL 15/27] util: introduce some API docs for logging APIs
+Date: Thu,  5 Mar 2026 17:47:31 +0000
+Message-ID: <20260305174743.3084606-16-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -96,43 +96,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default main thread name is undefined, so use a constructor to
-explicitly set it to 'main'. This constructor is marked to run early
-as the thread name is intended to be used in error reporting / logs
-which may be triggered very early in QEMU execution.
+There is a gotcha with qemu_log() usage in a threaded process.
+If fragments of a log message are output via qemu_log() it is
+possible for messages from two threads to get mixed up. To
+prevent this qemu_log_trylock() should be used, along with
+fprintf(f) calls.
 
-This is only done on Windows platforms, because on Linux (and possibly
-other POSIX platforms) changing the main thread name has a side effect
-of changing the process name reported by tools like 'ps' which fetch
-from the file /proc/self/task/tid/comm, expecting it to be the binary
-name.
+This is a subtle problem that needs to be explained in the
+API docs to ensure correct usage.
 
-The subsequent patch will address POSIX platforms in a different way.
+In the Rust code, the log_mask_ln method which is conceptually
+equivalent to the C qemu_log() call will unconditionally append
+a newline so must only ever be used for complete log messages.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reported-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- util/qemu-thread-win32.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/qemu/log-for-trace.h | 17 ++++++++++++++++-
+ include/qemu/log.h           | 32 ++++++++++++++++++++++++++++++++
+ rust/util/src/log.rs         |  6 ++++++
+ 3 files changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index 31ec305a73..c330d924af 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -22,6 +22,12 @@ typedef HRESULT (WINAPI *pSetThreadDescription) (HANDLE hThread,
- static pSetThreadDescription SetThreadDescriptionFunc;
- static HMODULE kernel32_module;
+diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
+index f3a8791f1d..6861a1a4b7 100644
+--- a/include/qemu/log-for-trace.h
++++ b/include/qemu/log-for-trace.h
+@@ -29,7 +29,22 @@ static inline bool qemu_loglevel_mask(int mask)
+     return (qemu_loglevel & mask) != 0;
+ }
  
-+static void __attribute__((__constructor__(QEMU_CONSTRUCTOR_EARLY)))
-+qemu_thread_init(void)
-+{
-+    qemu_thread_set_name("main");
-+}
+-/* main logging function */
++/**
++ * qemu_log: report a log message
++ * @fmt: the format string for the message
++ * @...: the format string arguments
++ *
++ * This will emit a log message to the current output stream.
++ *
++ * The @fmt string should normally represent a complete line
++ * of text, and thus end with a newline character.
++ *
++ * While it is possible to incrementally output fragments of
++ * a complete line using qemu_log, this is inefficient and
++ * races with other threads. For outputting fragments it is
++ * strongly preferred to use the qemu_log_trylock() method
++ * combined with fprintf().
++ */
+ void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
+ 
+ #endif
+diff --git a/include/qemu/log.h b/include/qemu/log.h
+index 7effba4da4..b49a1a5fe3 100644
+--- a/include/qemu/log.h
++++ b/include/qemu/log.h
+@@ -41,7 +41,39 @@ bool qemu_log_separate(void);
+ 
+ /* Lock/unlock output. */
+ 
++/**
++ * Acquires a lock on the current log output stream.
++ * The returned FILE object should be used with the
++ * fprintf() function to output the log message, and
++ * then qemu_log_unlock() called to release the lock.
++ *
++ * The primary use case is to be able to incrementally
++ * output fragments of a complete log message in an
++ * efficient and race free manner.
++ *
++ * The simpler qemu_log() method should normally only
++ * be used to output complete log messages, and not
++ * within scope of a qemu_log_trylock() call.
++ *
++ * A typical usage pattern would be
++ *
++ *    FILE *f = qemu_log_trylock()
++ *
++ *    fprintf(f, "Something ");
++ *    fprintf(f, "Something ");
++ *    fprintf(f, "Something ");
++ *    fprintf(f, "The end\n");
++ *
++ *    qemu_log_unlock(f);
++ *
++ * Returns: the current FILE if available, NULL on error
++ */
+ FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
 +
- static bool load_set_thread_description(void)
- {
-     static gsize _init_once = 0;
++/**
++ * Releases the lock on the log output, previously
++ * acquired by qemu_log_trylock().
++ */
+ void qemu_log_unlock(FILE *fd);
+ 
+ /* Logging functions: */
+diff --git a/rust/util/src/log.rs b/rust/util/src/log.rs
+index 0a4bc4249a..1116570790 100644
+--- a/rust/util/src/log.rs
++++ b/rust/util/src/log.rs
+@@ -135,6 +135,12 @@ fn drop(&mut self) {
+ ///     error_address,
+ /// );
+ /// ```
++///
++/// The `log_mask_ln` macro must only be used for emitting complete
++/// log messages. Where it is required to incrementally output string
++/// fragments to construct a complete message, `LogGuard::new()` must
++/// be directly used in combination with `writeln()` to avoid output
++/// races with other QEMU threads.
+ #[macro_export]
+ macro_rules! log_mask_ln {
+     ($mask:expr, $fmt:tt $($args:tt)*) => {{
 -- 
 2.53.0
 
