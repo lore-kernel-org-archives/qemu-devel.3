@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D638EF8FE4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 09:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D61DBF30920
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 09:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy4v3-0002M9-Lk; Thu, 05 Mar 2026 04:22:57 -0500
+	id 1vy4xy-00036q-Sx; Thu, 05 Mar 2026 04:25:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vy4ux-0002La-Vz; Thu, 05 Mar 2026 04:22:52 -0500
-Received: from mxhk.zte.com.cn ([160.30.148.35])
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1vy4xu-00035w-Hl; Thu, 05 Mar 2026 04:25:55 -0500
+Received: from oxygen.pond.sub.org ([2a01:4f8:13b:3ad0:1::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1vy4uv-0001rK-QO; Thu, 05 Mar 2026 04:22:51 -0500
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
+ (Exim 4.90_1) (envelope-from <armbru@pond.sub.org>)
+ id 1vy4xs-0002F1-9i; Thu, 05 Mar 2026 04:25:54 -0500
+Received: from blackfin.pond.sub.org (p50902e3b.dip0.t-ipconnect.de
+ [80.144.46.59])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4fRPFx31Yjz8Xs7F;
- Thu, 05 Mar 2026 17:22:45 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
- by mse-fl1.zte.com.cn with SMTP id 6259MVax051399;
- Thu, 5 Mar 2026 17:22:31 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp02[null]) by mapi (Zmail) with MAPI id mid32;
- Thu, 5 Mar 2026 17:22:34 +0800 (CST)
-X-Zmail-TransId: 2afa69a94b5a566-76c25
-X-Mailer: Zmail v1.0
-Message-ID: <20260305172234066xnMiqu5iMbkRnaOh-pYss@zte.com.cn>
-In-Reply-To: <20260305171729291ZzfxmqZ48P2Tbz9TGCtST@zte.com.cn>
-References: 20260305171729291ZzfxmqZ48P2Tbz9TGCtST@zte.com.cn
-Date: Thu, 5 Mar 2026 17:22:34 +0800 (CST)
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
- <peterx@redhat.com>, <farosas@suse.de>, <chao.liu.zevorn@gmail.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, <liu.xuemei1@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIHYyIDIvM10gaHcvaW50Yy9yaXNjdl9hcGxpYzogQWRkIGluLWtlcm5lbCBhcGxpYyBzYXZlIGFuZCByZXN0b3JlIGZ1bmN0aW9uwqDCoA==?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 6259MVax051399
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 05 Mar 2026 17:22:45 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69A94B65.000/4fRPFx31Yjz8Xs7F
-Received-SPF: pass client-ip=160.30.148.35;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Client did not present a certificate)
+ by oxygen.pond.sub.org (Postfix) with ESMTPSA id B31B22487B;
+ Thu, 05 Mar 2026 10:29:14 +0100 (CET)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4691721E6A04; Thu, 05 Mar 2026 10:25:43 +0100 (CET)
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,  qemu-devel@nongnu.org,  Helge
+ Deller <deller@gmx.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Steven Lee <steven_lee@aspeedtech.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@kaod.org>, Troy Lee <leetroy@gmail.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Mark Cave-Ayland
+ <mark.caveayland@nutanix.com>,  qemu-arm@nongnu.org,  Jamin Lin
+ <jamin_lin@aspeedtech.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,  Joel
+ Stanley <joel@jms.id.au>
+Subject: Re: QOM parent type "sys-bus-device" vs. "device"
+In-Reply-To: <CAFEAcA_WYkAYccog-BiA6MJAvoFVwa6niKvFZ7UpLjzkRyd6aA@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 4 Mar 2026 13:54:07 +0000")
+References: <20260303222143.142741-1-shentey@gmail.com>
+ <20260303222143.142741-13-shentey@gmail.com>
+ <87ikbbixy5.fsf_-_@pond.sub.org>
+ <CAFEAcA_WYkAYccog-BiA6MJAvoFVwa6niKvFZ7UpLjzkRyd6aA@mail.gmail.com>
+Date: Thu, 05 Mar 2026 10:25:43 +0100
+Message-ID: <87fr6eocfc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+Received-SPF: pass client-ip=2a01:4f8:13b:3ad0:1::3;
+ envelope-from=armbru@pond.sub.org; helo=oxygen.pond.sub.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,285 +72,173 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Markus Armbruster <armbru@redhat.com>
+From:  Markus Armbruster via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Add save and restore function if riscv_use_emulated_aplic return
-false, it is to get and set APLIC irqchip state from KVM kernel.
+> On Wed, 4 Mar 2026 at 12:25, Markus Armbruster <armbru@redhat.com> wrote:
+>> We might be at a crossroads here.
+>>
+>> Paul Brook designed qdev around "a device plugs into some bus, and may
+>> provide buses".  To make this work, he added a main system bus to serve
+>> as root of a single tree.
+>>
+>> The parent of a device in that tree is the bus it plugs into, and the
+>> parent of a bus is the device that provides it, except for the main
+>> system bus, which has no parent.  "info qtree" shows this tree.
+>>
+>> Note a machine had just this one system bus back then.
+>>
+>> The system bus isn't something hardware people would call a bus.
+>>
+>> The qtree is a qdev thing.  It is *not* the QOM composition tree ("info
+>> qom-tree /").
+>>
+>> We actually abandoned "a device plugs into some bus" a long time ago.
+>> Moe on that below.
+>>
+>> Qdev was later rebased onto QOM, as follows.
+>>
+>> A bus QOM type is a subtype of "bus".
+>>
+>> A device QOM type is a subtype of "device".
+>>
+>> If a device type has a @bus_type, then it plugs into a bus of that QOM
+>> type.  Such a concrete device is commonly[*] not a direct subtype of
+>> "device".  Instead, it's a subtype of the abstract device that plugs
+>> into that bus type.  Example: "isa-serial" is a direct subtype of
+>> "isa-device", and it inherits its bus type "ISA" from there.
+>>
+>> If a device has no @bus_type, it doesn't plug into any bus.  It doesn't
+>> show up in "info qtree" (it does in "info qom-tree", of course).
+>> Example: "serial" is a direct subtype of "device".
+>>
+>> This lets us build devices from components without having to make up
+>> buses to connect them.  Example: "isa-serial" has a direct QOM child of
+>> type "serial".  Good!
+>>
+>> Except infrastructure useful to such bus-less devices lives in sysbus,
+>> where bus-less devices can't access it.  This tempts us to make devices
+>> sysbus devices just to be able to use the infrastructure, and to create
+>> additional sysbuses.
+>
+> There is only one sysbus -- it is impossible to create more than one,
+> and there wouldn't be much point in creating a second one anyway.
 
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
----
- hw/intc/riscv_aplic.c         | 200 ++++++++++++++++++++++++++++------
- include/hw/intc/riscv_aplic.h |   4 +
- 2 files changed, 173 insertions(+), 31 deletions(-)
+I was almost entirely mistaken there.  However, you're not quite right,
+either :)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 8f70043111..88b79e9ab2 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -922,14 +922,7 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
-         }
+We *can* create more than one system bus, and we in fact do: abstract
+PCI device "macio" contains a "macio-bus", which is a subtype of the
+system bus type.  Its concrete subtypes are "macio-oldworld" and
+"macio-newworld".  To see the "macio-bus" in "info qtree", try machine
+"g3beige".
 
-         aplic->bitfield_words = (aplic->num_irqs + 31) >> 5;
--        aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
-         aplic->state = g_new0(uint32_t, aplic->num_irqs);
--        aplic->target = g_new0(uint32_t, aplic->num_irqs);
--        if (!aplic->msimode) {
--            for (i = 0; i < aplic->num_irqs; i++) {
--                aplic->target[i] = 1;
--            }
--        }
-         aplic->idelivery = g_new0(uint32_t, aplic->num_harts);
-         aplic->iforce = g_new0(uint32_t, aplic->num_harts);
-         aplic->ithreshold = g_new0(uint32_t, aplic->num_harts);
-@@ -941,6 +934,19 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
-         if (kvm_enabled()) {
-             aplic->kvm_splitmode = true;
-         }
-+    } else {
-+        aplic->nr_words = BITS_TO_U32S(aplic->num_irqs);
-+        aplic->setip = g_new0(uint32_t, aplic->nr_words);
-+        aplic->clrip = g_new0(uint32_t, aplic->nr_words);
-+        aplic->setie = g_new0(uint32_t, aplic->nr_words);
-+    }
-+
-+    aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
-+    aplic->target = g_new0(uint32_t, aplic->num_irqs);
-+    if (!aplic->msimode) {
-+        for (i = 0; i < aplic->num_irqs; i++) {
-+            aplic->target[i] = 1;
-+        }
-     }
+But this is the rare exception.  The rule is us doing something
+differently undesirable.
 
-     /*
-@@ -968,47 +974,179 @@ static const Property riscv_aplic_properties[] = {
-     DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
- };
+Consider ARM machine "ast2700fc".  Its core are three devices:
+"ast2700-a2", "aspeed27x0ssp-coprocessor", and
+"aspeed27x0tsp-coprocessor".  All three contain component devices.  The
+QOM composition tree shows them as "/machine/ca35", "/machine/ssp", and
+"/machine/tsp", i.e. they are direct children of the machine object.
 
--static bool riscv_aplic_state_needed(void *opaque)
-+static bool riscv_aplic_emul_state_needed(void *opaque)
- {
-     RISCVAPLICState *aplic = opaque;
+Here's a closer look at a small part of the composition tree:
 
-     return riscv_use_emulated_aplic(aplic->msimode);
- }
+    /machine (ast2700fc-machine)
+      [...]
+      /ca35 (ast2700-a2)
+        [...]
+        /ioexp[0] (aspeed.ast1700)
+          [...]
+          /uart (serial-mm)
+            /serial (serial)
+            /serial[0] (memory-region)
 
-+static const VMStateDescription vmstate_riscv_aplic_emul = {
-+    .name = "riscv_aplic_emul",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = riscv_aplic_emul_state_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_UINT32(state, RISCVAPLICState,
-+                              num_irqs, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-+        VMSTATE_UINT32(mmsicfgaddrH, RISCVAPLICState),
-+        VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
-+        VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-+        VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
-+        VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
-+        VMSTATE_VARRAY_UINT32(idelivery, RISCVAPLICState,
-+                              num_harts, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_VARRAY_UINT32(iforce, RISCVAPLICState,
-+                              num_harts, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_VARRAY_UINT32(ithreshold, RISCVAPLICState,
-+                              num_harts, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static bool riscv_aplic_in_kernel_state_needed(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    return !riscv_use_emulated_aplic(aplic->msimode);
-+}
-+
-+static int riscv_aplic_in_kernel_pre_save(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        for (uint32_t i = 0; i < aplic->nr_words; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIP_BASE + i * 4,
-+                                     aplic->setip + i, false);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_CLRIP_BASE + i * 4,
-+                                     aplic->clrip + i, false);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIE_BASE + i * 4,
-+                                     aplic->setie + i, false);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static int riscv_aplic_in_kernel_post_load(void *opaque, int version_id)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        for (uint32_t i = 0; i < aplic->nr_words; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIP_BASE + i * 4,
-+                                     aplic->setip + i, true);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_CLRIP_BASE + i * 4,
-+                                     aplic->clrip + i, true);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SETIE_BASE + i * 4,
-+                                     aplic->setie + i, true);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_riscv_aplic_in_kernel = {
-+    .name = "riscv_aplic_in_kernel",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = riscv_aplic_in_kernel_state_needed,
-+    .pre_save = riscv_aplic_in_kernel_pre_save,
-+    .post_load = riscv_aplic_in_kernel_post_load,
-+    .fields = (const VMStateField[]) {
-+            VMSTATE_VARRAY_UINT32(setip, RISCVAPLICState,
-+                                  nr_words, 0,
-+                                  vmstate_info_uint32, uint32_t),
-+            VMSTATE_VARRAY_UINT32(clrip, RISCVAPLICState,
-+                                  nr_words, 0,
-+                                  vmstate_info_uint32, uint32_t),
-+            VMSTATE_VARRAY_UINT32(setie, RISCVAPLICState,
-+                                  nr_words, 0,
-+                                  vmstate_info_uint32, uint32_t),
-+            VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static int riscv_aplic_pre_save(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_DOMAINCFG,
-+                                 &aplic->domaincfg, false);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_GENMSI,
-+                                 &aplic->genmsi, false);
-+
-+        for (uint32_t i = 1; i < aplic->num_irqs; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SOURCECFG_BASE + (i - 1) * 4,
-+                                     aplic->sourcecfg + i, false);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_TARGET_BASE + (i - 1) * 4,
-+                                     aplic->target + i, false);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static int riscv_aplic_post_load(void *opaque, int version_id)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    if (!riscv_use_emulated_aplic(aplic->msimode)) {
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_DOMAINCFG,
-+                                 &aplic->domaincfg, true);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC, APLIC_GENMSI,
-+                                 &aplic->genmsi, true);
-+
-+        for (uint32_t i = 1; i < aplic->num_irqs; i++) {
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_SOURCECFG_BASE + (i - 1) * 4,
-+                                     aplic->sourcecfg + i, true);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_APLIC,
-+                                     APLIC_TARGET_BASE + (i - 1) * 4,
-+                                     aplic->target + i, true);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static const VMStateDescription vmstate_riscv_aplic = {
-     .name = "riscv_aplic",
--    .version_id = 3,
--    .minimum_version_id = 3,
--    .needed = riscv_aplic_state_needed,
-+    .version_id = 4,
-+    .minimum_version_id = 4,
-+    .pre_save = riscv_aplic_pre_save,
-+    .post_load = riscv_aplic_post_load,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
--            VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
--            VMSTATE_UINT32(mmsicfgaddrH, RISCVAPLICState),
--            VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
--            VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-             VMSTATE_UINT32(genmsi, RISCVAPLICState),
--            VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
--            VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
--            VMSTATE_VARRAY_UINT32(sourcecfg, RISCVAPLICState,
--                                  num_irqs, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(state, RISCVAPLICState,
-+            VMSTATE_VARRAY_UINT32(sourcecfg , RISCVAPLICState,
-                                   num_irqs, 0,
-                                   vmstate_info_uint32, uint32_t),
-             VMSTATE_VARRAY_UINT32(target, RISCVAPLICState,
-                                   num_irqs, 0,
-                                   vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(idelivery, RISCVAPLICState,
--                                  num_harts, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(iforce, RISCVAPLICState,
--                                  num_harts, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(ithreshold, RISCVAPLICState,
--                                  num_harts, 0,
--                                  vmstate_info_uint32, uint32_t),
-             VMSTATE_END_OF_LIST()
--        }
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_riscv_aplic_emul,
-+        &vmstate_riscv_aplic_in_kernel,
-+        NULL
-+    }
- };
+I'll refer back to this later.
 
- static void riscv_aplic_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
-index c7a4d4ad01..1976bea68c 100644
---- a/include/hw/intc/riscv_aplic.h
-+++ b/include/hw/intc/riscv_aplic.h
-@@ -53,6 +53,9 @@ struct RISCVAPLICState {
-     uint32_t *idelivery;
-     uint32_t *iforce;
-     uint32_t *ithreshold;
-+    uint32_t *setip;
-+    uint32_t *clrip;
-+    uint32_t *setie;
+A few components end up in the "/machine/unattached" orphanage instead
+due to sloppy modelling.
 
-     /* topology */
- #define QEMU_APLIC_MAX_CHILDREN        16
-@@ -66,6 +69,7 @@ struct RISCVAPLICState {
-     uint32_t num_harts;
-     uint32_t iprio_mask;
-     uint32_t num_irqs;
-+    uint32_t nr_words;
-     bool msimode;
-     bool mmode;
+My point is: the QOM composition tree actually reflects how devices are
+built from components, except for the parts where we got sloppy, which
+should be fixable.
 
--- 
-2.27.0
+The qtree (the thing shown by "info qtree") shows a different picture.
+The three core devices are bus-less, and therefore not in the qtree.
+Their components, however, are mostly sysbus devices, and therefore in
+the qtree right under the root.  Here are the parts of the qtree that
+correspond to the QOM composition tree snippet above:
+
+bus: main-system-bus
+  type System
+  [...]
+  dev: serial-mm, id ""
+    gpio-out "sysbus-irq" 1
+    regshift = 2 (0x2)
+    endianness = 2 (0x2)
+    mmio ffffffffffffffff/0000000000000020
+  dev: aspeed.ast1700, id ""
+    board-idx = 0 (0x0)
+    silicon-rev = 100794627 (0x6020103)
+    dram = "/machine/ca35/ca35-dram[0]"
+    mmio 0000000030000000/0000000001000000
+
+The "aspeed.ast1700" and its "serial-mm" component are siblings.  The
+latter's "serial" component is bus-less, and therefore not in the qtree.
+Bernhard's patches make it a sysbus device instead, and therefore add it
+to the qtree as another sibling.
+
+My point is: the qtree does not reflect how devices are built from
+components / are wired together, at least not where sysbus devices are
+involved.
+
+>> We can elect to go down this path further: make more sysbus devices.
+>> Create more sysbuses.  If this is the right path, then bus-less devices
+>> were a mistake, and we should consider eliminating them.
+>>
+>> Or we can pick the other branch: put the infrastructure where bus-less
+>> devices can use it.  If this is the right path, then sysbus is
+>> obsolescent.
+>
+> I do think that at some point it would be good to move all that
+> stuff into the base "device" class, and drop sysbus. The real
+> problem, though, is reset. Currently reset propagates along the
+> qtree (the tree of buses).
+
+Unfortunately, the qtree is far removed from reality for sysbus devices.
+
+Case in point: "aspeed.ast1700" and its component "serial-mm" are
+siblings in the qtree.  In what order will they be reset?
+
+Physical hardware has reset lines.  Devices generally wire up their
+components' reset pins to their own.  I believe the sane way to model
+this is a reset tree.
+
+>                            So something (like TYPE_SERIAL, and
+> also like CPU objects) that is a direct child of TYPE_DEVICE does
+> not get automatically reset. The major overriding reason why
+> (as it currently stands) I favour making things sysbus devices
+> and not plain devices is that devices that don't get reset are
+> either broken or need all their users to take extra steps that
+> most don't take, or do in a weird way. We can't just push the
+> reset handling into TYPE_DEVICE because by definition it is tied
+> to "being a thing on a bus, i.e. the sysbus".
+>
+> Disentangling reset is extremely painful -- I don't even know
+> what it ought to be doing. Maybe propagating along the QOM tree?
+
+I think this would make more sense.  Unlike the qtree, the QOM
+composition tree contains all devices, and reflects the actual
+composition.  It's certainly closer to the real reset tree than the
+qtree is.  Is it close enough?  I don't know.  If yes, there's our reset
+tree.  If no, I guess we could still use it as a base, with manually
+corrected reset lines where the QOM composition tree is off.
+
+> So for now, we muddle along.
+>
+> -- PMM
 
