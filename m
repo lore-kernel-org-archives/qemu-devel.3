@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91F8F47CA4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EA0F47CA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCpC-0003y7-Ny; Thu, 05 Mar 2026 12:49:26 -0500
+	id 1vyCqX-0007Wb-C8; Thu, 05 Mar 2026 12:50:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCpB-0003xn-2P
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:25 -0500
+ id 1vyCpu-0006C9-Op
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCp8-0002G3-RG
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:24 -0500
+ id 1vyCpr-0002XI-K4
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732962;
+ s=mimecast20190719; t=1772733006;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BDE2PfGfue96vekIeVYQQo7bNNyRh35/o6HWgcGGENI=;
- b=LwMpzOB134q70+3xc37/MCzzXNwa7BBc3AACIRuY6cbyyiCdTRbn8HhYBmWpCqYlW1E+5R
- dN/EgaJ/d9IwIFjIwkTRjCId+vB72ZCRAhjd4Vma1wRaIXy3e8OVsrZNdRIJXn9yu1wPNS
- D60KJCsMKZaTBfsZGvOq0Q8DVSjBqG8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JKT2uXZ9IPbp+nH7ZQ7kgddtWf6rY1l9xOVO64XHbN8=;
+ b=hU3TGTT4iiZtF5rqYsCeyisCBc99GfYKZ1eyE4O1og0bAe7T/0CrqxmqghF+IKj17e21aa
+ jwBI1kKFp8SXPp10rvC9mdiHD/VNxVLfyod5dyXH00M1fGCJIP9tXkAetClXN5Vb2F7QOF
+ +gEa5JdZaQuC4z+guwq/afhjiksb/Uw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-kOKH7dw9MtSvCwrvK0-Hbw-1; Thu,
- 05 Mar 2026 12:49:20 -0500
-X-MC-Unique: kOKH7dw9MtSvCwrvK0-Hbw-1
-X-Mimecast-MFC-AGG-ID: kOKH7dw9MtSvCwrvK0-Hbw_1772732959
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-5B12E497PYeOaHtG3cbE5Q-1; Thu,
+ 05 Mar 2026 12:50:03 -0500
+X-MC-Unique: 5B12E497PYeOaHtG3cbE5Q-1
+X-Mimecast-MFC-AGG-ID: 5B12E497PYeOaHtG3cbE5Q_1772733002
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A916195605F; Thu,  5 Mar 2026 17:49:19 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1CC4F1956089; Thu,  5 Mar 2026 17:50:02 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 45F1F1955D71; Thu,  5 Mar 2026 17:49:14 +0000 (UTC)
+ id 24F3D1956095; Thu,  5 Mar 2026 17:49:56 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -62,9 +62,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PULL 16/27] util: avoid repeated prefix on incremental qemu_log calls
-Date: Thu,  5 Mar 2026 17:47:32 +0000
-Message-ID: <20260305174743.3084606-17-berrange@redhat.com>
+Subject: [PULL 24/27] util: don't skip error prefixes when QMP is active
+Date: Thu,  5 Mar 2026 17:47:40 +0000
+Message-ID: <20260305174743.3084606-25-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -96,157 +96,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are three general patterns to QEMU log output
+The vreport() function will print to HMP if available, otherwise
+to stderr. In the event that vreport() is called during execution
+of a QMP command, it will print to stderr, but mistakenly omit the
+message prefixes (timestamp, guest name, program name).
 
- 1. Single complete message calls
+This new usage of monitor_is_cur_qmp() from vreport() requires that
+we add a stub to satisfy linking of non-system emulator binaries.
 
-      qemu_log("Some message\n");
-
- 2. Direct use of fprintf
-
-      FILE *f = qemu_log_trylock()
-      fprintf(f, "...");
-      fprintf(f, "...");
-      fprintf(f, "...\n");
-      qemu_log_unlock(f)
-
- 3. Mixed use of qemu_log_trylock/qemu_log()
-
-      FILE *f = qemu_log_trylock()
-      qemu_log("....");
-      qemu_log("....");
-      qemu_log("....\n");
-      qemu_log_unlock(f)
-
-When message prefixes are enabled, the timestamp will be
-unconditionally emitted for all qemu_log() calls. This
-works fine in the 1st case, and has no effect in the 2nd
-case. In the 3rd case, however, we get the timestamp
-printed over & over in each fragment.
-
-One can suggest that pattern (3) is pointless as it is
-functionally identical to (2) but with extra indirection
-and overhead. None the less we have a fair bit of code
-that does this.
-
-The qemu_log() call itself is nothing more than a wrapper
-which does pattern (2) with a single fprintf() call.
-
-One might question whether (2) should include the message
-prefix in the same way that (1), but there are scenarios
-where this could be inappropriate / unhelpful such as the
-CPU register dumps or linux-user strace output.
-
-This patch fixes the problem in pattern (3) by keeping
-track of the call depth of qemu_log_trylock() and then
-only emitting the the prefix when the starting depth
-was zero. In doing this qemu_log_trylock_context() is
-also introduced as a variant of qemu_log_trylock()
-that emits the prefix. Callers doing to batch output
-can thus choose whether a prefix is appropriate or
-not.
-
-Fixes: 012842c07552 (log: make '-msg timestamp=on' apply to all qemu_log usage)
-Reported-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/log.h |  7 +++++++
- util/log.c         | 49 ++++++++++++++++++++++++++--------------------
- 2 files changed, 35 insertions(+), 21 deletions(-)
+ stubs/monitor-core.c           | 5 +++++
+ tests/unit/test-util-sockets.c | 1 +
+ util/error-report.c            | 8 ++++++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/include/qemu/log.h b/include/qemu/log.h
-index b49a1a5fe3..92956e5d0f 100644
---- a/include/qemu/log.h
-+++ b/include/qemu/log.h
-@@ -70,6 +70,13 @@ bool qemu_log_separate(void);
-  */
- FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
- 
-+/**
-+ * As qemu_log_trylock(), but will also print the message
-+ * context, if any is configured and this caused the
-+ * acquisition of the FILE lock
-+ */
-+FILE *qemu_log_trylock_with_context(void) G_GNUC_WARN_UNUSED_RESULT;
-+
- /**
-  * Releases the lock on the log output, previously
-  * acquired by qemu_log_trylock().
-diff --git a/util/log.c b/util/log.c
-index c44d66b5ce..66f6dd5eec 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -127,13 +127,39 @@ static FILE *qemu_log_trylock_with_err(Error **errp)
-     return logfile;
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index a7c32297c9..078a5012e9 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -7,6 +7,11 @@ Monitor *monitor_cur(void)
+     return NULL;
  }
  
-+/*
-+ * Zero if there's been no opening qemu_log_trylock call,
-+ * indicating the need for message context to be emitted
-+ *
-+ * Non-zero if we're in the middle of printing a message,
-+ * possibly over multiple lines and must skip further
-+ * message context
-+ */
-+static __thread unsigned int log_depth;
-+
- FILE *qemu_log_trylock(void)
- {
--    return qemu_log_trylock_with_err(NULL);
-+    FILE *f = qemu_log_trylock_with_err(NULL);
-+    log_depth++;
-+    return f;
++bool monitor_cur_is_qmp(void)
++{
++    return false;
 +}
 +
-+FILE *qemu_log_trylock_with_context(void)
-+{
-+    FILE *f = qemu_log_trylock();
-+    if (f && log_depth == 1 && message_with_timestamp) {
-+        g_autofree const char *timestr = NULL;
-+        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-+        timestr = g_date_time_format_iso8601(dt);
-+        fprintf(f, "%s ", timestr);
+ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+ {
+     return NULL;
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index ee66d727c3..b9f2453e29 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -74,6 +74,7 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+ Monitor *monitor_cur(void) { return cur_mon; }
+ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+ int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
++bool monitor_cur_is_qmp(void) { abort(); };
+ 
+ #ifndef _WIN32
+ static void test_socket_fd_pass_name_good(void)
+diff --git a/util/error-report.c b/util/error-report.c
+index f666ca4149..6b9e592bc1 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -226,6 +226,14 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+     Monitor *cur = monitor_cur();
+     gchar *timestr;
+ 
++    /*
++     * When current monitor is QMP, messages must go to stderr
++     * and have prefixes added
++     */
++    if (monitor_cur_is_qmp()) {
++        cur = NULL;
 +    }
-+    return f;
- }
- 
- void qemu_log_unlock(FILE *logfile)
- {
-+    assert(log_depth);
-+    log_depth--;
-     if (logfile) {
-         fflush(logfile);
-         qemu_funlockfile(logfile);
-@@ -145,28 +171,9 @@ void qemu_log_unlock(FILE *logfile)
- 
- void qemu_log(const char *fmt, ...)
- {
--    FILE *f;
--    g_autofree const char *timestr = NULL;
--
--    /*
--     * Prepare the timestamp *outside* the logging
--     * lock so it better reflects when the message
--     * was emitted if we are delayed acquiring the
--     * mutex
--     */
--    if (message_with_timestamp) {
--        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
--        timestr = g_date_time_format_iso8601(dt);
--    }
--
--    f = qemu_log_trylock();
-+    FILE *f = qemu_log_trylock_with_context();
-     if (f) {
-         va_list ap;
--
--        if (timestr) {
--            fprintf(f, "%s ", timestr);
--        }
--
-         va_start(ap, fmt);
-         vfprintf(f, fmt, ap);
-         va_end(ap);
++
+     if (message_with_timestamp && !cur) {
+         timestr = real_time_iso8601();
+         fprintf(stderr, "%s ", timestr);
 -- 
 2.53.0
 
