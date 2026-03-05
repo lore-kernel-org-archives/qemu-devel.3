@@ -4,102 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDD70F3D332
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F26BF3D331
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyByJ-0003so-N3; Thu, 05 Mar 2026 11:54:47 -0500
+	id 1vyByn-0004Br-Js; Thu, 05 Mar 2026 11:55:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vyByH-0003nr-RL
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:54:45 -0500
-Received: from mail-dy1-x132a.google.com ([2607:f8b0:4864:20::132a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyByl-0004BG-4J
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:55:15 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vyByF-0002kr-S7
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:54:45 -0500
-Received: by mail-dy1-x132a.google.com with SMTP id
- 5a478bee46e88-2be3bdfda8eso1262581eec.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:54:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772729682; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyByj-0003Ed-68
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:55:14 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64c9a398bc7so7790631d50.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:55:12 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772729711; cv=none;
  d=google.com; s=arc-20240605;
- b=I30EeHLhbzwgg20wGWH2DLqGGhb5AMy1JsSuQI8QBYiJ5RQvdfE+KmDmQ9hwC7I8S9
- V42SX0oix5Xb9euhUgmZAfUgjNgMAyTmcT9wREB+cq1rXJESbYQiWNXdVFRARKIwY2Vs
- PsKFuS/rNq8rZ/lAePbm29I/XFl4LgQACYyXQFlxZahX0fuXquEygQVRDJw9Imr+RUEn
- jXCEg+rlpIxKoE8JogOf+wDeYYm5WzUHnNHNyLYmCLwQI3puqJXm6yELY2moof/K7yvu
- 06DRKNjSdRJXYp5hAR12Im9yHeZAfuampUZjIXvbnCLfDsF8KhqX16PTlpcOy88tQH0q
- E0yg==
+ b=Kvcyk7bZXMlwi0EO9K61fyrViAzwxW0g3M3t0yZf2iRrd5kRvm1qixGvjeIBvuQyDh
+ EmFECSe5CU5xISlGEcYMwNPFSoP5ruvx2nO+qmRScrtuyHaQYkXW64BenI+rOWZPn1uX
+ oGShLnSUaG2BIoWFhQ2Zl+Gb1a053vVbTyTdqjWmS5ugkuEia02PX+wc9bkDpd9CFMkh
+ eC3HVADypdMj73BU7qEfGGA5iInhMKkCWmXvQFkj3IeE1yNsyRW7Nmesl/oUKlOO3xVu
+ +01G/6CX8D3+St2zUfa5pZSnuGCrp956HK2sQc09OKtdKrXGEeuMzcbUjbFieZ0qxrNk
+ T4Yg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=JN3yz4yDvne1ASqd5+8mt8sQQ2HcG1i6fNccUip6zrA=;
- fh=Pl9qU+tku27Roii/thTg9NkME+EbUadYMX1EnsLfscU=;
- b=k+JtGqmwfTUiYgzt8ZHgh34pdSUxakB55GwPv28QdG4XASNLC6yxAeZ7LD/a7YAe7r
- Iy0DyD9wOPegRlaGe9BPUtWnkWbLc4DlboPCTeqPSqvRYfU/cVUEsdyVoBUZs6a2CBRh
- ld+GVqI4REJcDxTo89UQc7upjkjzJM/+AkU7y749L8pCls0nG6L/Og2ighnr6zuICIoK
- IuaP458RcCfYP/MC6ecQHtR8BaEG8UN2cDlwnnuGFWE9pmbR/T3I9MsdQQ1utqHQ/ZPJ
- m5b2tIlwSHYGhml/iIwqPcB/DK/9qBodiFDqJzamIQLQz/sW/P7stpcqHdFoWfcXBiV7
- 50mQ==; darn=nongnu.org
+ bh=KG5tAxih9N2wv11pDQ6fn5KUPOK01pGHZ3Cg7drQanI=;
+ fh=ARhkxHV/PQEXZBh9/HQAlQt8L6ixFOmgtnPvvMfpZUU=;
+ b=KFYHcOKjbq7pWcv/xwuFsg0F3EbDMN93YGDySCuuLBbg68KBJhdqJqldQ+SU7ITtu2
+ r3vEreUrbM3AJcyvyAYhBpNOQf9jxkR8ACn3P+CDoM5cnfTyHPZZUcG2EEarNlVSucny
+ B1L4SPUQVpzsdKycf5QSI5fhXOm9CKybreLM9xhBh58xNwlf7AA9OwZOxKnMVrk3sPcH
+ /h5HkDR3+hRVcjAkuZ9bX5ZEj4vemZxXEiTqBCwC12bXwgVQvEYsSfYLi85O5ZQSBOHh
+ McJEqd1RKc4CZcnF+wVoWLDbOOMLyy7DZ9WBizyE5Tnlmq0E4JVuh9/+vOxJFUSHLPXy
+ 4Ihg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772729682; x=1773334482; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772729711; x=1773334511; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JN3yz4yDvne1ASqd5+8mt8sQQ2HcG1i6fNccUip6zrA=;
- b=DrS/hv9O5yvZ+80prz4aedf40VXakgpsOK9sY0Z8YNhoSuUVX80dwtsOOB7yMh8nEE
- 9yN4NBaLIk7F59VTKHqktTYvl9YgUg6zwdva5CL+P9S1K0S5NoLVdNM4RnownnPSXFDI
- Nf0U1YNTQ2cf0vmj/GtYjDzug5uGiDfaKPR+Uy6B8S8BlMmuBA/Fm5E5Gdi5WDLiE1px
- 0laSVtpLvSfy30L/4tESTVNHWkM0E8DnyJTZaXX1yduEj1cZ9jHK0PCaKx9RzdIHaT8h
- Jrew2r3mz/+aOACBxpPvnCww/d4gTCCvHY40PEYynbmW2UZegN8U/K65eFIYnVmCkaSF
- AJ7w==
+ bh=KG5tAxih9N2wv11pDQ6fn5KUPOK01pGHZ3Cg7drQanI=;
+ b=ct85XuU4YUFJD8nfLLEUSmcRzC5R/umW4n6JfzOc8uZX2q75kZ+BMd/btaQSIuYmR2
+ cGPJFy3CfZhbdFw9f/d881QSISZaxAwLApSzy/Wh+9Q+6j00zy/VoM9J81F1pf7UmOV8
+ SmNHfGVthCgX+Dknswq74zitsjrkHRs++MRSgRc/ND/GpzT+OQM6raGn6NIK2K6D7II6
+ FJ/68nXW+cLiRNTUYSIQQyw0naj2yseZSGlw926d91nXCtWcWuRftNdkue71s3OKtONB
+ BrswNthA8+gqbfL0Mzp5QbduMNcZvEVMbyj/JkgK7tnbxewmGOzD60foPRQUG4pP8AcB
+ eriQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772729682; x=1773334482;
+ d=1e100.net; s=20230601; t=1772729711; x=1773334511;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JN3yz4yDvne1ASqd5+8mt8sQQ2HcG1i6fNccUip6zrA=;
- b=TvvPlhHwvuP1JbeLiUQc+KjFRGGPfgf8pwJYvwSeg5ExXoZBF5fuy28NcToUynZ13W
- rYV5JXEEWIiWtkxGqU8pdTLaXVpLWNTyEsGwfn+Mw2G5O4u2eJwMlEHKQ02MFni30Eaa
- O868K9KNEfNJDxrRGDJ6bKLfXoY0cuhS8BJahaWA4Y0sD17c/pP4ZEHmkJVMt0rFXQbB
- Y8K3X+5qS/TTbXI5XO/iClqt7CHFsAfl/GAGT2unvyoPU1ODNd4L8QLlIxZya65PVOge
- SChiaVxL+DCmwVrP2u3zqQ+c49bjXgsnc7U+K/rvY4DtQMdTVqgvXkwZwW0kBdjwxExs
- a4vA==
-X-Gm-Message-State: AOJu0YzeBqjfozENGPnpduNTAJHvj+aMw1vODsiMZNNGC8IOAA5FJ3La
- NIpvOVZ95SSeO7kXMDm4IZ3cFyW/vV6eBZlU2ovINcijnRwQqx2nIWFtVVnM+tQCDjU97eYhdcW
- x0tu0ynMQ3EaO6MLz43XuoB4JlobqZvA=
-X-Gm-Gg: ATEYQzxvKoyxWzdlLOJh1XJxlhfgiJJFuTQ9nVb4ZU3xE0/SyHnI0pYtGB+R5H/VH00
- WfB15rf4APWQcfrOtFT2zyVkCbQRJjOdFDpkoA/4ywUSTFPq7L8Td/m/OI+SjIgw5PCzB+f2MnK
- rRE2iHEliWHoSmIQCEG6T2aG1tXJ7jvviiBgf5owXg56bsWROMN2kAjWyXhCatHMROVzrxeWhNQ
- hcRBH3iT2zHzKQh79RRhQsXTb6wDXtHOnArc5LwZyMJwo1/HXTEWEBzXIowj52oHMoYNejXINnV
- VtZiqjajqIilJISqTw==
-X-Received: by 2002:a05:7300:7251:b0:2be:1946:8587 with SMTP id
- 5a478bee46e88-2be4aa03e8cmr187181eec.9.1772729680284; Thu, 05 Mar 2026
- 08:54:40 -0800 (PST)
+ bh=KG5tAxih9N2wv11pDQ6fn5KUPOK01pGHZ3Cg7drQanI=;
+ b=okDuWuF1gJR7zojGwZp5j19d5HTgKVmM+ksgrSlgzZgfBuvQAzjDfXw1pGGvhUmumw
+ oQ8VmpEMTKDep8urdivOnUa87QmtRfuA//ifpwgssKU3xrqfgHvaN8DdS7rFEMMeYJvq
+ SGVErKmxWc5EoHkzwSQ1fReiiOmXA+BiyM+v7ICbGHQ8CrIYYo2P4hMYrHttydMfWuxg
+ 5tPVmHaW+MtWiWCS/sNoX3dN3qE1Uqt5zruieJjCIzEhZ6lKaeDPgDzYBzOEK3byIFWT
+ 2vHy4DPq89CGd3pDKKByCnCIbzrfybhOnn0kVhQ6OqX10igHOEkCBjsfgqn2yG+3fcMj
+ kNJw==
+X-Gm-Message-State: AOJu0YxQZ91kVSn0Gry/cXIFeLAQTAJgGdCc99JZZ5I+EzXuhxcOGdhj
+ Kz+I5b7by8KKzIPLFomOQT6Cs4e4jao87LwG4+mxAJBV/mFxtjWO7htbN81WhHZ5Bi5g7ibt57m
+ ghzAn1YEJN5q0mupYkjWLawnEOz5+fXBZBwdoO/47hQ==
+X-Gm-Gg: ATEYQzzLKKEtNWjF2ErOX5JaUOLyVwq8Yg6lJpQWZwsjQVRKbTRIvPS5lhvWW9bM8FU
+ qgNlrlGSLKsrGPid5v9R62dSunIZ8Xpu2kmc46wp7muuwARZfFeT4YwhQpkqI8AkuUS6+71RCFM
+ TO2X6sKdlo/44BJpYejip6Q6rv6YxGzkFdTDr5vHb0qyRjDueJ13XW23ywO1i6I18vMKRgQvOFG
+ iQ9Ei39a7HF3/mFOTsFRmN1xYo1G9rl/AOGXzMdc9YIi7bmy0JP6JpGvTXNgeenjdsXw8TlupmN
+ B8wddo5ZlDooA6aDLoH/PuXn3KAbCFYKMPHek2AqDq1dBRwO0v1wwxrSdThaTNqD2OCBCmurteX
+ tGg==
+X-Received: by 2002:a53:ee5e:0:b0:64c:a63f:87a with SMTP id
+ 956f58d0204a3-64cfa053badmr4749271d50.79.1772729711376; Thu, 05 Mar 2026
+ 08:55:11 -0800 (PST)
 MIME-Version: 1.0
-References: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
-In-Reply-To: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Thu, 5 Mar 2026 10:54:27 -0600
-X-Gm-Features: AaiRm50vAdVBWD0lXiym5vkC4o8PFO7MdEU108X6AsEyT-cFzG33NfqMJmeelaM
-Message-ID: <CAJy5ezrJ94SEuK2Apd=Fs8azi8Z9YZYWdLpE4GziapQNi3brSA@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/xilinx_axienet.c: Prevent writes to PHY
- Identification registers
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair@alistair23.me>, 
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- qemu-arm@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e04f27064c49ca69"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132a;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-dy1-x132a.google.com
+References: <20240209105813.3590056-1-alistair.francis@wdc.com>
+ <20240209105813.3590056-7-alistair.francis@wdc.com>
+In-Reply-To: <20240209105813.3590056-7-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Mar 2026 16:54:59 +0000
+X-Gm-Features: AaiRm502-daN9rJAWngCXeCq40olEypoeORD7PENFwI0gg73oyRWfgrjXKmheTM
+Message-ID: <CAFEAcA8NpikLhbooY=So0m5RauAD_tJCxXCbTv4wsa1jiAyf+w@mail.gmail.com>
+Subject: Re: [PULL 06/61] target/riscv: move 'pmu-mask' and 'pmu-num' to
+ riscv_cpu_properties[]
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Vladimir Isaev <vladimir.isaev@syntacore.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,150 +118,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e04f27064c49ca69
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Fri, 9 Feb 2024 at 10:59, Alistair Francis <alistair23@gmail.com> wrote:
+>
+> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>
+> Every property in riscv_cpu_options[] will be migrated to
+> riscv_cpu_properties[]. This will make their default values init
+> earlier, allowing cpu_init() functions to overwrite them. We'll also
+> implement common getters and setters that both accelerators will use,
+> allowing them to share validations that TCG is doing.
+>
+> At the same time, some options (namely 'vlen', 'elen' and the cache
+> blocksizes) need a way of tracking if the user set a value for them.
+> This is benign for TCG since the cost of always validating these values
+> are small, but for KVM we need syscalls to read the host values to make
+> the validations, thus knowing whether the user didn't touch the values
+> makes a difference.
+>
+> We'll track user setting for these properties using a hash, like we do
+> in the TCG driver. All riscv cpu options will update this hash in case
+> the user sets it. The KVM driver will use this hash to minimize the
+> amount of syscalls done.
+>
+> For now, both 'pmu-mask' and 'pmu-num' shouldn't be changed for vendor
+> CPUs. The existing setter for 'pmu-num' is changed to add this
+> restriction. New getters and setters are required for 'pmu-mask'
+>
+> While we're at it, add a 'static' modifier to 'prop_pmu_num' since we're
+> not exporting it.
 
-On Thu, Mar 5, 2026 at 6:13=E2=80=AFAM Jim MacArthur <jim.macarthur@linaro.=
-org>
-wrote:
+I've been looking at a memory leak reported by the leak sanitizers
+that seems to be introduced in this commit:
 
-> There are other registers in the PHY model which should be partially or
-> entirely read-only, but this solves the immediate issue.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3297
->
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
->
+Direct leak of 192 byte(s) in 2 object(s) allocated from:
+    #0 0x625956ece9d3 in malloc
+(/home/pm215/qemu/build/san/qemu-riscv64+0x4b89d3) (BuildId:
+f84fd5abb768fcdc651f49f456c8f3cad629a4bf)
+    #1 0x72cd2c919ac9 in g_malloc
+(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId:
+116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x72cd2c8fb45a in g_hash_table_new_full
+(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a) (BuildId:
+116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #3 0x6259570d17e8 in riscv_cpu_init
+/home/pm215/qemu/build/san/../../target/riscv/cpu.c:1102:25
 
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> +/* Hash that stores general user set numeric options */
+> +static GHashTable *general_user_opts;
 
+This is a global; it's shared between all CPUs in the process.
 
+>  static void riscv_cpu_init(Object *obj)
+>  {
 
+This is the CPU init function; it's called once for each CPU.
 
-> ---
-> See:
+> +    RISCVCPU *cpu = RISCV_CPU(obj);
+> +
+>  #ifndef CONFIG_USER_ONLY
+>      qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,
+>                        IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
+>  #endif /* CONFIG_USER_ONLY */
 >
-> https://gitlab.com/qemu-project/qemu/-/issues/3297
->
->
-> https://lore.kernel.org/qemu-devel/CAJy5ezqTAMr=3DA3uAfmuWLepK66AdLRu4Q8A=
-mFMh4+4q2HtDrkA@mail.gmail.com/
->
-> IEEE 802.3-2022 does not explicitly state that these registers
-> should be read-only, but suggests it in 22.2.4.3.1 which says this
-> information should be entirely manufacturer-supplied information.
->
-> The standard does mention several other registers in the set which
-> should be partially or entirely read-only, so further work may be
-> required.
-> ---
->  hw/net/xilinx_axienet.c | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-> index d85f8bb23f..970732b162 100644
-> --- a/hw/net/xilinx_axienet.c
-> +++ b/hw/net/xilinx_axienet.c
-> @@ -141,6 +141,10 @@ tdk_write(struct PHY *phy, unsigned int req, unsigne=
-d
-> int data)
->      regnum =3D req & 0x1f;
->      DPHY(qemu_log("%s reg[%d] =3D %x\n", __func__, regnum, data));
->      switch (regnum) {
-> +        case 2:
-> +        case 3:
-> +            /* Writes to PHY Identification registers are disallowed */
-> +            break;
->          default:
->              phy->regs[regnum] =3D data;
->              break;
->
-> ---
-> base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
-> change-id: 20260305-xilinx-phy-protection-c396a658d072
->
-> Best regards,
-> --
-> Jim MacArthur <jim.macarthur@linaro.org>
->
->
+> +    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
 
---000000000000e04f27064c49ca69
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Here we unconditionally create a new hash table and store it in
+the global. So if there is more than one guest CPU in the system,
+or if we're in linux-user and have more than one thread, each
+new CPU that is created will create a new hash table and overwrite
+global, leaking the old hash table.
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Mar 5, 2026 at 6:13=E2=80=AFAM Ji=
-m MacArthur &lt;<a href=3D"mailto:jim.macarthur@linaro.org">jim.macarthur@l=
-inaro.org</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_contain=
-er"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex">There are other regis=
-ters in the PHY model which should be partially or<br>
-entirely read-only, but this solves the immediate issue.<br>
-<br>
-Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3297" re=
-l=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/i=
-ssues/3297</a><br>
-<br>
-Signed-off-by: Jim MacArthur &lt;<a href=3D"mailto:jim.macarthur@linaro.org=
-" target=3D"_blank">jim.macarthur@linaro.org</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.ig=
-lesias@amd.com">edgar.iglesias@amd.com</a>&gt;<br></div><div><br></div><div=
-><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
----<br>
-See:<br>
-<br>
-<a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/3297" rel=3D"noref=
-errer" target=3D"_blank">https://gitlab.com/qemu-project/qemu/-/issues/3297=
-</a><br>
-<br>
-<a href=3D"https://lore.kernel.org/qemu-devel/CAJy5ezqTAMr=3DA3uAfmuWLepK66=
-AdLRu4Q8AmFMh4+4q2HtDrkA@mail.gmail.com/" rel=3D"noreferrer" target=3D"_bla=
-nk">https://lore.kernel.org/qemu-devel/CAJy5ezqTAMr=3DA3uAfmuWLepK66AdLRu4Q=
-8AmFMh4+4q2HtDrkA@mail.gmail.com/</a><br>
-<br>
-IEEE 802.3-2022 does not explicitly state that these registers<br>
-should be read-only, but suggests it in 22.2.4.3.1 which says this<br>
-information should be entirely manufacturer-supplied information.<br>
-<br>
-The standard does mention several other registers in the set which<br>
-should be partially or entirely read-only, so further work may be<br>
-required.<br>
----<br>
-=C2=A0hw/net/xilinx_axienet.c | 4 ++++<br>
-=C2=A01 file changed, 4 insertions(+)<br>
-<br>
-diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c<br>
-index d85f8bb23f..970732b162 100644<br>
---- a/hw/net/xilinx_axienet.c<br>
-+++ b/hw/net/xilinx_axienet.c<br>
-@@ -141,6 +141,10 @@ tdk_write(struct PHY *phy, unsigned int req, unsigned =
-int data)<br>
-=C2=A0 =C2=A0 =C2=A0regnum =3D req &amp; 0x1f;<br>
-=C2=A0 =C2=A0 =C2=A0DPHY(qemu_log(&quot;%s reg[%d] =3D %x\n&quot;, __func__=
-, regnum, data));<br>
-=C2=A0 =C2=A0 =C2=A0switch (regnum) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case 2:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 case 3:<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Writes to PHY Identification =
-registers are disallowed */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0default:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0phy-&gt;regs[regnum] =3D da=
-ta;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-<br>
----<br>
-base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9<br>
-change-id: 20260305-xilinx-phy-protection-c396a658d072<br>
-<br>
-Best regards,<br>
--- <br>
-Jim MacArthur &lt;<a href=3D"mailto:jim.macarthur@linaro.org" target=3D"_bl=
-ank">jim.macarthur@linaro.org</a>&gt;<br>
-<br></blockquote><div><br></div></div></div>
+How is this intended to work? Is the hashtable global, or per-CPU ?
+Since you are setting hashtable entries based on CPU properties,
+which are per-CPU-object and can be different for different CPU
+objects, my guess is this hashtable should be stored in the
+CPU, not a global.
 
---000000000000e04f27064c49ca69--
+Similar globals in target/riscv/tcg/tcg-cpu.c have similar leaks:
+
+Direct leak of 192 byte(s) in 2 object(s) allocated from:
+    #0 0x625956ece9d3 in malloc
+(/home/pm215/qemu/build/san/qemu-riscv64+0x4b89d3) (BuildId:
+f84fd5abb768fcdc651f49f456c8f3cad629a4bf)
+    #1 0x72cd2c919ac9 in g_malloc
+(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId:
+116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x72cd2c8fb45a in g_hash_table_new_full
+(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a) (BuildId:
+116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #3 0x6259573bcd30 in riscv_tcg_cpu_instance_init
+/home/pm215/qemu/build/san/../../target/riscv/tcg/tcg-cpu.c:1678:26
+
+Direct leak of 192 byte(s) in 2 object(s) allocated from:
+    #0 0x625956ece9d3 in malloc
+(/home/pm215/qemu/build/san/qemu-riscv64+0x4b89d3) (BuildId:
+f84fd5abb768fcdc651f49f456c8f3cad629a4bf)
+    #1 0x72cd2c919ac9 in g_malloc
+(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId:
+116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x72cd2c8fb45a in g_hash_table_new_full
+(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4445a) (BuildId:
+116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #3 0x6259573bcd41 in riscv_tcg_cpu_instance_init
+/home/pm215/qemu/build/san/../../target/riscv/tcg/tcg-cpu.c:1679:27
+
+thanks
+-- PMM
 
