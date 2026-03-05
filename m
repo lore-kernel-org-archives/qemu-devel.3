@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 397D8F33A70
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B45F33A6B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9X1-00086I-Qy; Thu, 05 Mar 2026 09:18:28 -0500
+	id 1vy9XE-0008DZ-3F; Thu, 05 Mar 2026 09:18:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vy9Wi-00084N-Sr
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:09 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vy9Wk-00084e-Kq
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:11 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vy9Wh-0000tu-G5
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:08 -0500
+ id 1vy9Wi-0000u8-Uv
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:10 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9BBA2596DA2;
- Thu, 05 Mar 2026 15:18:05 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B3BC2596D9A;
+ Thu, 05 Mar 2026 15:18:06 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id QPkSQZt60sEZ; Thu,  5 Mar 2026 15:18:03 +0100 (CET)
+ id F2CZASY5D8KK; Thu,  5 Mar 2026 15:18:04 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 96EEA596DA8; Thu, 05 Mar 2026 15:18:03 +0100 (CET)
-Message-ID: <c82d4287280b10476133bbe5dc93b94e1b524278.1772719690.git.balaton@eik.bme.hu>
+ id A6410596DA1; Thu, 05 Mar 2026 15:18:04 +0100 (CET)
+Message-ID: <96de1f8c689adfb45a24279fdf7cfdc3c8285601.1772719690.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1772719690.git.balaton@eik.bme.hu>
 References: <cover.1772719690.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 8/9] memory: Shorten memory_region_init_ram_device_ptr and
- memory_region_init_rom_device
+Subject: [PATCH v7 9/9] memory: Factor out more common ram region
+ initialization
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,15 +45,14 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Thu, 05 Mar 2026 15:18:03 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Thu, 05 Mar 2026 15:18:04 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,39 +68,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can reuse memory_region_init_io in these functions.
+Introduce internal memory_region_setup_ram_ptr() function to remove
+duplicated code from different memory_region_init_ram_*ptr functions.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- system/memory.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ system/memory.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/system/memory.c b/system/memory.c
-index dfbb4b85df..c67c8b126b 100644
+index c67c8b126b..5264c859f1 100644
 --- a/system/memory.c
 +++ b/system/memory.c
-@@ -1686,9 +1686,9 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-                                        const char *name, uint64_t size,
-                                        void *ptr)
+@@ -1672,26 +1672,28 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
+ }
+ #endif
+ 
+-void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
+-                                const char *name, uint64_t size, void *ptr)
++static void memory_region_setup_ram_ptr(MemoryRegion *mr, uint64_t size,
++                                        void *ptr)
  {
 -    memory_region_init(mr, owner, name, size);
-+
-+    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
      memory_region_setup_ram(mr);
--    memory_region_set_ops(mr, &ram_device_mem_ops, mr);
      /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
      assert(ptr != NULL);
      mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-@@ -3712,8 +3712,7 @@ bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
-     Error *err = NULL;
+ }
  
-     assert(ops);
--    memory_region_init(mr, owner, name, size);
--    memory_region_set_ops(mr, ops, opaque);
-+    memory_region_init_io(mr, owner, ops, opaque, name, size);
-     memory_region_setup_ram(mr);
-     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
-     if (err) {
++void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
++                                const char *name, uint64_t size, void *ptr)
++{
++    memory_region_init(mr, owner, name, size);
++    memory_region_setup_ram_ptr(mr, size, ptr);
++}
++
+ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+                                        const char *name, uint64_t size,
+                                        void *ptr)
+ {
+-
+     memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+-    memory_region_setup_ram(mr);
+-    /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
+-    assert(ptr != NULL);
+-    mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
++    memory_region_setup_ram_ptr(mr, size, ptr);
+     mr->ram_device = true;
+ }
+ 
 -- 
 2.41.3
 
