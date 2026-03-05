@@ -4,110 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCFAF3092A
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E8AF3092A
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:12:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy5cR-0004dX-Kv; Thu, 05 Mar 2026 05:07:47 -0500
+	id 1vy5gi-0000Kx-VJ; Thu, 05 Mar 2026 05:12:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy5cI-0004Zf-9k
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:07:38 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy5cG-0007W6-DM
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:07:37 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-7986d231b3cso104040847b3.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 02:07:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772705255; cv=none;
- d=google.com; s=arc-20240605;
- b=fXZGgl6g/TkjnEQ0mB47tKkdVFAbfKzL3TjtwUJDejOSJmFu0uDwfsxLogMNf6iC54
- D812Cqz8Wl4XdGelPVTz4hkh+mBpaNCeu390keVBoRN/Bf9KH53k0CootHiiNyQ5w+/N
- WFeaeNRlwwVm6WlEsAIeMd2O0EXjX4+8+vrwDt4OJenMc7KwMWI+p47BBXaQ17kbEE5s
- nXJwHbZL7MUZKjnRtDxEd44IJsVAxp5Hpf8LUNmWTMbDf2V/Mf5Jqt4T9+tbtXtQDvS0
- PalkTUx8nEf83I/fvPrXQSQPrlKeJbtRhNORaZYm+/CGZTp7olQirKXPPPmcWp1fpPse
- ql2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+46PBAE5dfExJ6zUoKpB0SFCPla//ppQb7h2XoBIa1E=;
- fh=jIzvWV6lmISWZTXv3M0Np2HMsoZAsMa3LTC/2QEOYEg=;
- b=SY0uoKORzORUhq534B/bWYYA7Gd9MyokNq8EyXV5lmaMJjAqNXMQUKPDkRcDmo6Cyc
- Hhk2FgVUHL4o7zR7f9RH6+8i+2FStlHzsCupf1Nr9JZH6dx2G/wryo0+2yc+/qG06bUt
- atFzBEThUO0w0aFCIFy/RI9lp/QW7NvxdrpkDEhwBMCQhjDOHz2s69dpUnt34FD88nam
- eo6soOwgKSLvuPkl3fFIJkH/TqcrcFbFb4+pT8frEJBySk3Y+FnaMjfbYA6m37i1EsUe
- XHxg5evzsjYgqlqk7LTLLa+xdHlLJgyrlztC3u+3FAJnVorK2RQmm+tNXx6+OAPcUMbb
- Pp7Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772705255; x=1773310055; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+46PBAE5dfExJ6zUoKpB0SFCPla//ppQb7h2XoBIa1E=;
- b=xd19bQ6E2STDqTKekquppd9HZoEViVwwuw3iY/ZxTHFCs2fuXYCl8gHwTjnCo5Bhjh
- B8wnYPj0BpAdz2/TzQuxZ909krIOTLjxZ4uQEQwGiA8E7Fy6DzpXYcbSJY/eDjMDHSnH
- jI9LYVNnuAlRUWXTuenLxqn/mlUzZTxYWFqLPVrH+MWqJ1N0cDORQHdnQ9zHnpevQlR9
- 2oNjFXUKPDZ3e4BSfC+cLoD0NE9KHAWHBwH39wMKEmglg6maz8HnLyJz2N5aABQdv0MW
- JwiaWg6M5aSuU+A2n9QU7jwXO+LCnPzVDKl9BjBLMq4VuH3gCa2V811jXpNTJcmOroNA
- 3BXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772705255; x=1773310055;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+46PBAE5dfExJ6zUoKpB0SFCPla//ppQb7h2XoBIa1E=;
- b=tFh0Kj6+zH+T5SBuR2Gn9u7Ptt/kBe2+fPG20wOBBQ9htoDK0884aDZiw4gFLLD+wP
- QHXGCgj0MZkxszo58zddWT4BDbzUQQBFk8sG+egIJlh2oLKTQHU+lyLLTICPlTGUsHvY
- s72gLGELPtx5wXdhcRZdv7+OZJphyiN8TVfhXb2cvL4cW8dJXm8xL2AFW9/5kE1qyyFo
- LhCa6wg+2X7N4ea/TWbZOtT4v3qigRFAXEJJs8LRUae906RuAvpOTW9HN4Tp6fTRb9E8
- ASFXUO7ucj4dJldORhxJd3NuVXt5avHsB7QO+P1Sd+XtGvh3cytNvNHmCxr53MllkjAL
- MDyg==
-X-Gm-Message-State: AOJu0Yyh/bNXoyx+kHaHR7S+F+uJnHYFHtmetvSYdplGsqTrhHkZ3rZW
- VbjzacOmOVH91ZtUhIab+5u1L8yN3luzxFtG888L/8H3bXFiWeqzqR8dfOZKBWjXHkFBEa0ZEWs
- XCFFPoZ/hoKeP82n6q6BN1Q4H5SGxOHtFkvUMKGwNsHWq4LbPHW8k
-X-Gm-Gg: ATEYQzyoI2kkvBaay0n7rpCfC89KqIoVMrx2rJURkCk4uN9XwWIZc3vuH+I7JKS7PJo
- YuVwZAiQ/SHxK/H3RS5IMjSJ3TLGxpscc6pvGjYTtrFDuB4PQcbc2/Mzb+AM+wiMV0hX0jKrZNE
- +R4IBptvRVy38aYFLn6akOaA+gP7xLMCoglPM1gxahBsfkQALJEo3Yy/IYHmtznKurORHWjt8Et
- 6lAzFnDy6Z9fK9mVP/DdlRrhjFFod1l1M9FgWb5Qa02Y5H9lRkUu9HRRzSezv8CdKVdv02M3wbK
- nJzpXubYv+QX9jvjx0rR1LDNI7r1jejr8W7VuE8IGMUy7P3hQ0GTbOFA2mw7+SHkG1s=
-X-Received: by 2002:a05:690e:118d:b0:649:601e:432f with SMTP id
- 956f58d0204a3-64d070f58e1mr1261297d50.16.1772705255009; Thu, 05 Mar 2026
- 02:07:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <qemu@demindiro.com>)
+ id 1vy5ga-0000KX-FJ
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:12:05 -0500
+Received: from mail.salt-inc.org ([104.244.79.104] helo=vm0.salt-inc.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu@demindiro.com>)
+ id 1vy5gS-00085W-T7
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:12:03 -0500
+Received: from [192.168.2.172] (209.60-130-109.adsl-dyn.isp.belgacom.be
+ [109.130.60.209])
+ by vm0.salt-inc.org (Postfix) with ESMTPSA id 64549FF074;
+ Thu,  5 Mar 2026 11:10:45 +0100 (CET)
+Message-ID: <80ea964c-a33d-42ab-b5bc-ae63f6124a08@demindiro.com>
+Date: Thu, 5 Mar 2026 11:10:44 +0100
 MIME-Version: 1.0
-References: <20260303222143.142741-1-shentey@gmail.com>
- <20260303222143.142741-13-shentey@gmail.com>
-In-Reply-To: <20260303222143.142741-13-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 10:07:23 +0000
-X-Gm-Features: AaiRm51NkiPdLBQUrOzgk6o0VMlTRHI-BEEjXNeIbRe9fT-B4AqTejoCmfqH1pc
-Message-ID: <CAFEAcA9LLOTOrkUQW3Q74rrOiXGa7BoC8Lu11O9ESC-36WHtew@mail.gmail.com>
-Subject: Re: [PATCH v2 12/13] hw/char/serial: Inherit from SysBusDevice
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Troy Lee <leetroy@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org, 
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Icedove Daily
+Subject: Re: [PATCH 2/2] hw/i386/amd_iommu.c: fix incorrect page_size for
+ hugepages
+To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Vasant Hegde <vasant.hegde@amd.com>
+References: <20260225145831.28275-1-qemu@demindiro.com>
+ <20260225145831.28275-3-qemu@demindiro.com>
+ <863c6284-812c-495e-a452-a4dec3ed7115@amd.com>
+Content-Language: en-US
+From: David Hoppenbrouwers <qemu@demindiro.com>
+In-Reply-To: <863c6284-812c-495e-a452-a4dec3ed7115@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=104.244.79.104; envelope-from=qemu@demindiro.com;
+ helo=vm0.salt-inc.org
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,78 +68,408 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Mar 2026 at 22:22, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> SerialState currently inherits just from DeviceState and serial devices
-> use SerialState as an "IP block". Since DeviceState doesn't have an API
-> to provide MMIO regions or IRQs, all serial devices access attributes
-> internal to SerialState directly. Fix this by having SerialState inherit
-> from SysBusDevice.
->
-> In addition, DeviceState doesn't participate in the reset framework
-> while SysBusDevice does. This allows for implementing reset
-> functionality more idiomatically.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+On 3/2/26 6:34 AM, Sairaj Kodilkar wrote:
+> 
+> 
+> On 2/25/2026 8:28 PM, David Hoppenbrouwers wrote:
+>> [You don't often get email from qemu@demindiro.com. Learn why this is 
+>> important at https://aka.ms/LearnAboutSenderIdentification ]
+>>
+>> fetch_pte() incorrectly calculated the page_size for the next level 
+>> before
+>> checking whether the entry at the current level is a leaf.
+>>
+>> The incorrect behavior can be observed with a nested Linux guest under
+>> specific conditions (using Alpine with linux-stable kernel):
+>>
+>> 1. Define the first guest as such:
+>>
+>>      /path/to/qemu-system-x86_64 \
+>>          -M q35 \
+>>          -enable-kvm \
+>>          -cpu host \
+>>          -m 8G \
+>>          -device amd-iommu,dma-remap=on \
+>>          -device virtio-blk,drive=boot,bootindex=1 \
+>>          -device nvme,drive=vfio,bootindex=2,serial=nvme-vfio-0 \
+>>          -device virtio-net-pci,netdev=net \
+>>          -netdev user,id=net,hostfwd=tcp::2223-:22 \
+>>          -serial unix:/tmp/genesys.unix \
+>>          -drive if=none,id=boot,file=alpine-vm.qcow2,format=qcow2 \
+>>          -drive if=none,id=vfio,file=vfio.qcow2,format=qcow2 \
+>>          -display none \
+>>          -monitor stdio \
+>>          -trace 'pci*' \
+>>          -trace 'amdvi_fetch_pte*'
+>>
+>>     Add -cdrom path-to-alpine.iso for the first run to install Alpine.
+>>
+>> 2. In /etc/update-extlinux.conf, add the following to 
+>> default_kernel_opts:
+>>
+>>      iommu.strict=1 amd_iommu_dump=1 amd_iommu=v2_pgsizes_only,pgtbl_v2
+>>
+>>     v2_pgsizes_only is important to coerce Linux into using NextLevel=0
+>>     for 2M pages.
+>>
+>> 3. Add /etc/modprobe.d/vfio.conf with the following content:
+>>
+>>      /etc/modprobe.d/vfio.conf
+>>      options vfio-pci ids=1234:11e8,1b36:0010
+>>      options vfio_iommu_type1 allow_unsafe_interrupts=1
+>>      softdep igb pre: vfio-pci
+>>
+>> 4. In /etc/mkinitfs/mkinitfs.conf, add vfio and hugetlbfs to features.
+>>
+>> 5. In /etc/sysctl.conf, add vm.nr_hugepages=512
+>>
+>> 6. mkdir /hugepages
+>>
+>> 7. In /etc/fstab, add hugetlbfs:
+>>
+>>      hugetlbfs  /hugepages  hugetlbfs  defaults  0 0
+>>
+>> 8. Reboot
+>>
+>> 9. Define the second, nested guest as such:
+>>
+>>      qemu-system-x86_64 \
+>>          -M q35 \
+>>          -enable-kvm \
+>>          -cpu host \
+>>          -m 512M \
+>>          -mem-prealloc \
+>>          -mem-path /hugepages/qemu \
+>>          -display none \
+>>          -serial stdio \
+>>          -device vfio-pci,host=0000:00:04.0 \
+>>          -cdrom path-to-alpine.iso
+>>
+>>      scp the original ISO into the guest.
+>>      Doublecheck -device with lspci -nn.
+>>
+>> If you launch the second guest inside the first guest without this patch,
+>> you will observe that booting gets stuck / takes a very long time:
+>>
+>>      ISOLINUX 6.04 6.04-pre1  Copyright (C) 1994-2015 H. Peter Anvin 
+>> et al
+>>      boot:
+>>
+>> The following trace can be observed:
+>>
+>>      amdvi_fetch_pte_translate 0x0000000002867000
+>>      amdvi_fetch_pte_root level=3 pte=6000000103629603
+>>      amdvi_fetch_pte_walk level=3 pte=6000000103629603 NextLevel=3 
+>> page_size=0x40000000
+>>      amdvi_fetch_pte_walk level=2 pte=600000010362c401 NextLevel=2 
+>> page_size=0x200000
+>>      amdvi_fetch_pte_walk level=1 pte=700000016b400001 NextLevel=0 
+>> page_size=0x1000
+>>      amdvi_fetch_pte_found level=0 pte=700000016b400001 NextLevel=0 
+>> page_size=0x1000
+>>      amdvi_fetch_pte_translate 0x0000000002e0e000
+>>      amdvi_fetch_pte_root level=3 pte=6000000103629603
+>>      amdvi_fetch_pte_walk level=3 pte=6000000103629603 NextLevel=3 
+>> page_size=0x40000000
+>>      amdvi_fetch_pte_walk level=2 pte=600000010362c401 NextLevel=2 
+>> page_size=0x200000
+>>      amdvi_fetch_pte_walk level=1 pte=700000016b200001 NextLevel=0 
+>> page_size=0x1000
+>>      amdvi_fetch_pte_found level=0 pte=700000016b200001 NextLevel=0 
+>> page_size=0x1000
+>>
+>> Note that NextLevel skips from 2 to 0, indicating a hugepage. However, it
+>> incorrectly determined the page_size to be 0x1000 when it should be 
+>> 0x200000.
+>> It doesn't seem the "host" (first guest) observes this mismatch, but 
+>> the second
+>> guest is clearly affected.
+>>
+>> I have observed it booting eventually, but I don't remember how long 
+>> it took.
+>> If/when it does, run setup-alpine. When it asks about which disk to 
+>> use it
+>> will be missing the NVMe drive.
+>>
+>> If you apply this patch for the first guest then the second guest will 
+>> boot
+>> much faster and see the NVMe drive. The trace will be longer and look 
+>> like
+>> this:
+>>
+>>      ...
+>>      amdvi_fetch_pte_translate 0x000000001ffd8000
+>>      amdvi_fetch_pte_root level=3 pte=600000010373e603
+>>      amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 
+>> page_size=0x8000000000
+>>      amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 
+>> page_size=0x40000000
+>>      amdvi_fetch_pte_walk level=1 pte=700000014b800001 NextLevel=0 
+>> page_size=0x200000
+>>      amdvi_fetch_pte_found level=0 pte=700000014b800001 NextLevel=0 
+>> page_size=0x200000
+>>      amdvi_fetch_pte_translate 0x0000000000007c00
+>>      amdvi_fetch_pte_root level=3 pte=600000010373e603
+>>      amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 
+>> page_size=0x8000000000
+>>      amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 
+>> page_size=0x40000000
+>>      amdvi_fetch_pte_walk level=1 pte=600000010366c201 NextLevel=1 
+>> page_size=0x200000
+>>      amdvi_fetch_pte_found level=0 pte=700000016b807001 NextLevel=0 
+>> page_size=0x1000
+>>      amdvi_fetch_pte_translate 0x000000001ffdc000
+>>      amdvi_fetch_pte_root level=3 pte=600000010373e603
+>>      amdvi_fetch_pte_walk level=3 pte=600000010373e603 NextLevel=3 
+>> page_size=0x8000000000
+>>      amdvi_fetch_pte_walk level=2 pte=600000010370b401 NextLevel=2 
+>> page_size=0x40000000
+>>      amdvi_fetch_pte_walk level=1 pte=700000014b800001 NextLevel=0 
+>> page_size=0x200000
+>>      amdvi_fetch_pte_found level=0 pte=700000014b800001 NextLevel=0 
+>> page_size=0x200000
+>>      ...
+> 
+> Hi David,
+> 
+> Thanks for the fix, here are few nits,
+> 
+> Please move the description and reproduction steps of the bug to the cover
+> letter and include only necessary information about the bug and what patch
+> is doing to resolve it. Also keep the subsystem name as "amd_iommu" in the
+> commit message.
+> 
+> Please see [1] for more information about commit message
+> [1] https://www.qemu.org/docs/master/devel/submitting-a- 
+> patch.html#write-a-meaningful-commit-message
+> 
+>>
+>> Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
+>> ---
+>>   hw/i386/amd_iommu.c | 13 ++++++++++---
+>>   1 file changed, 10 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+>> index 29999fd776..2e83f8f4de 100644
+>> --- a/hw/i386/amd_iommu.c
+>> +++ b/hw/i386/amd_iommu.c
+>> @@ -684,6 +684,13 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
+>> hwaddr address, uint64_t dte,
+>>       level = mode = get_pte_translation_mode(dte);
+>>       assert(mode > 0 && mode < 7);
+>>
+>> +    /*
+>> +     * TODO what is the actual behavior if NextLevel=0 or 7 in the root?
+>> +     * For now, set the page_size for the root to be consistent with 
+>> earlier
+>> +     * QEMU versions,
+>> +     */
+>> +    *page_size = PTE_LEVEL_PAGE_SIZE(level);
+>> +
+>>       /*
+>>        * If IOVA is larger than the max supported by the current 
+>> pgtable level,
+>>        * there is nothing to do.
+>> @@ -700,9 +707,6 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
+>> hwaddr address, uint64_t dte,
+>>
+>>           level -= 1;
+>>
+>> -        /* Update the page_size */
+>> -        *page_size = PTE_LEVEL_PAGE_SIZE(level);
+>> -
+>>           /* Permission bits are ANDed at every level, including the 
+>> DTE */
+>>           perms &= amdvi_get_perms(*pte);
+>>           if (perms == IOMMU_NONE) {
+>> @@ -720,6 +724,9 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
+>> hwaddr address, uint64_t dte,
+>>               break;
+>>           }
+>>
+>> +        /* Update the page_size */
+>> +        *page_size = PTE_LEVEL_PAGE_SIZE(level);
+>> +
+>>           /*
+>>            * Index the pgtable using the IOVA bits corresponding to 
+>> current level
+>>            * and walk down to the lower level.
+>> -- 
+>> 2.52.0
+> 
+> Looking at the fetch_pte code, it was harder to read as it treats DTE as 
+> regular PTE
+> and creates confusion about how levels are managed.
+> 
+> I propose following patch (tested with FIO) to resolve this bug...
+> 
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 789e09d6f2bc..4570a715c9c0 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -658,13 +658,16 @@ static uint64_t large_pte_page_size(uint64_t pte)
+>    * -AMDVI_FR_PT_ENTRY_INV: A PTE could not be read from guest memory 
+> during a
+>    *      page table walk. This means that the DTE has valid data, but 
+> one of the
+>    *      lower level entries in the Page Table could not be read.
+> + *
+> + *  NOTE: fetch_pte assumes that the provided DTE is valid, i.e. caller 
+> has
+> + *  passed dte with bits 0 and 1 set
+>    */
+>   static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, 
+> uint64_t dte,
+>                             uint64_t *pte, hwaddr *page_size)
+>   {
+>       IOMMUAccessFlags perms = amdvi_get_perms(dte);
+> 
+> -    uint8_t level, mode;
+> +    uint8_t level, mode, next_level;
+>       uint64_t pte_addr;
+> 
+>       *pte = dte;
+> @@ -691,51 +694,47 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
+> hwaddr address, uint64_t dte,
+>           return -AMDVI_FR_PT_ROOT_INV;
+>       }
+> 
+> -    do {
+> -        level -= 1;
+> -
+> -        /* Update the page_size */
+> -        *page_size = PTE_LEVEL_PAGE_SIZE(level);
+> -
+> -        /* Permission bits are ANDed at every level, including the DTE */
+> -        perms &= amdvi_get_perms(*pte);
+> -        if (perms == IOMMU_NONE) {
+> -            return 0;
+> -        }
+> -
+> -        /* Not Present */
+> -        if (!IOMMU_PTE_PRESENT(*pte)) {
+> -            return 0;
+> -        }
+> +    *page_size = PTE_LEVEL_PAGE_SIZE(level);
+> 
+> -        /* Large or Leaf PTE found */
+> -        if (PTE_NEXT_LEVEL(*pte) == 7 || PTE_NEXT_LEVEL(*pte) == 0) {
+> -            /* Leaf PTE found */
+> -            break;
+> -        }
+> -
+> -        /*
+> -         * Index the pgtable using the IOVA bits corresponding to 
+> current level
+> -         * and walk down to the lower level.
+> -         */
+> +    do {
+>           pte_addr = NEXT_PTE_ADDR(*pte, level, address);
+>           *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
+> 
+> -        if (*pte == (uint64_t)-1) {
+> +        if (*pte == (uint64_t) -1) {
+>               /*
+>                * A returned PTE of -1 indicates a failure to read the 
+> page table
+> -             * entry from guest memory.
+> +             * entry from guest memory
+>                */
+>               if (level == mode - 1) {
+>                   /* Failure to retrieve the Page Table from Root 
+> Pointer */
+>                   *page_size = 0;
+>                   return -AMDVI_FR_PT_ROOT_INV;
+>               } else {
+> -                /* Failure to read PTE. Page walk skips a page_size 
+> chunk */
+>                   return -AMDVI_FR_PT_ENTRY_INV;
+>               }
+>           }
+> -    } while (level > 0);
+> +
+> +        next_level = PTE_NEXT_LEVEL(*pte);
+> +        *page_size = PTE_LEVEL_PAGE_SIZE(level - 1);
+> +
+> +        /* Permission bits are ANDed at every level, including the DTE */
+> +        perms &= amdvi_get_perms(*pte);
+> +
+> +        if (!IOMMU_PTE_PRESENT(*pte) || perms == IOMMU_NONE) {
+> +            return 0;
+> +        }
+> +
+> +        /* Large or Leaf PTE found */
+> +        if (next_level == 0 || next_level == 7) {
+> +            break;
+> +        }
+> +
+> +        /* AMD IOMMU supports level skip hence assign next_level to level
+> +         * instead of decrementing it
+> +         */
+> +        level = next_level;
+> +    } while(level > 0);
+> +
+> 
+>       assert(PTE_NEXT_LEVEL(*pte) == 0 || PTE_NEXT_LEVEL(*pte) == 7 ||
+>              level == 0);
+> @@ -745,7 +744,7 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, 
+> hwaddr address, uint64_t dte,
+>        * the range starts in the middle of a contiguous page, the 
+> returned PTE
+>        * must be the first PTE of the series.
+>        */
+> -    if (PTE_NEXT_LEVEL(*pte) == 7) {
+> +    if (next_level == 7) {
+>           /* Update page_size with the large PTE page size */
+>           *page_size = large_pte_page_size(*pte);
+>       }
+> @@ -840,6 +839,12 @@ static void 
+> amdvi_sync_shadow_page_table_range(AMDVIAddressSpace *as,
+>       uint64_t pte;
+>       int ret;
+> 
+> +    /* Return if DTE is not valid */
+> +    if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID) ||
+> +        !(dte[0] & AMDVI_DEV_VALID)) {
+> +        return;
+> +    }
+> +
+>       while (iova < end) {
+> 
+>           ret = fetch_pte(as, iova, dte[0], &pte, &pagesize);
+> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+> index 302ccca5121f..721d69c97311 100644
+> --- a/hw/i386/amd_iommu.h
+> +++ b/hw/i386/amd_iommu.h
+> @@ -190,7 +190,7 @@
+>   #define PT_LEVEL_SHIFT(level)           (12 + ((level) * 9))
+> 
+>   /* Return IOVA bit group used to index the Page Table at specific 
+> level */
+> -#define PT_LEVEL_INDEX(level, iova)     (((iova) >> 
+> PT_LEVEL_SHIFT(level)) & \
+> +#define PT_LEVEL_INDEX(level, iova)     (((iova) >> 
+> PT_LEVEL_SHIFT(level - 1)) & \
+>                                           GENMASK64(8, 0))
+> 
+>   /* Return the max address for a specified level i.e. max_oaddr */
+> -- 
+> 
+> @David Could you please test above patch ?
 
+It appears to work fine with both the Linux VM and my own kernel project.
 
+> I have rearraged some part of code. Along with it I have added a 
+> requirement that caller
+> must validate DTE before calling fetch_pte. This requirement simplifies 
+> the loop.
+> 
+> If @David and @Alejandro are okay with this change, I can prepare and 
+> send official patch.
 
-> diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
-> index 2ea60103ea..55c42effe9 100644
-> --- a/hw/char/diva-gsp.c
-> +++ b/hw/char/diva-gsp.c
-> @@ -56,13 +56,13 @@ typedef struct PCIDivaSerialState {
->  static void diva_pci_exit(PCIDevice *dev)
->  {
->      PCIDivaSerialState *pci = DO_UPCAST(PCIDivaSerialState, dev, dev);
-> -    SerialState *s;
->      int i;
->
->      for (i = 0; i < pci->ports; i++) {
-> -        s = pci->state + i;
-> -        qdev_unrealize(DEVICE(s));
-> -        memory_region_del_subregion(&pci->membar, &s->io);
-> +        SysBusDevice *sbd = SYS_BUS_DEVICE(pci->state + i);
-> +        qdev_unrealize(DEVICE(sbd));
-> +        memory_region_del_subregion(&pci->membar,
-> +                                    sysbus_mmio_get_region(sbd, 0));
->      }
->      qemu_free_irqs(pci->irqs, pci->ports);
->  }
+It is fine with me. I don't need to send a v2?
 
-The ordering here looks a little odd -- is it really OK to
-keep using sbd (passing it to sysbus_mmio_get_region()) after
-we have unrealized the device ? Remove the region from the membar
-first and then unrealize would seem a more natural order.
-Perhaps the MR refcounts here save us, though.
+> Thanks
+> Sairaj
 
-> diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-> index 38e5a78e6f..4e51d14111 100644
-> --- a/hw/char/serial-pci-multi.c
-> +++ b/hw/char/serial-pci-multi.c
-> @@ -50,13 +50,13 @@ typedef struct PCIMultiSerialState {
->  static void multi_serial_pci_exit(PCIDevice *dev)
->  {
->      PCIMultiSerialState *pci = DO_UPCAST(PCIMultiSerialState, dev, dev);
-> -    SerialState *s;
->      int i;
->
->      for (i = 0; i < pci->ports; i++) {
-> -        s = pci->state + i;
-> -        qdev_unrealize(DEVICE(s));
-> -        memory_region_del_subregion(&pci->iobar, &s->io);
-> +        SysBusDevice *sbd = SYS_BUS_DEVICE(pci->state + i);
-> +        qdev_unrealize(DEVICE(sbd));
-> +        memory_region_del_subregion(&pci->iobar,
-> +                                    sysbus_mmio_get_region(sbd, 0));
->      }
->  }
-
-Similarly here.
-
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
