@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74C0F33A72
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56137F33A71
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9dj-0003xL-WC; Thu, 05 Mar 2026 09:25:24 -0500
+	id 1vy9eC-0004DW-1I; Thu, 05 Mar 2026 09:25:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vy9di-0003uQ-AO
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:22 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vy9e9-0004Ae-2d
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:50 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vy9dg-0001mk-Ms
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:22 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ae3a2f6007so38794635ad.2
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:25:20 -0800 (PST)
+ id 1vy9e7-0001oU-Hh
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:48 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c7382731edfso946134a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:25:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772720719; x=1773325519; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772720746; x=1773325546; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9E8rIVeqctfa15bpIWUAXH63OIyPCVMKEx9yQ3jDexs=;
- b=Udt6f5M2w64NeHx8V5KQPfCPyTnLce4X/pcjhG2WC1beN9VTgRWj0GdlxqO3YutPkH
- FDY6Aweei8gTWv51T3f8JCFZapvlyYORkbd19a1OdZDRgjV/AGUuxbf5Quu92Qt10lNA
- PwejGJIekK+Q0xQMnelp5pPlScaPUE27CLk6UtcifpBmv+rI2F8PQd3XOFSsDq1Mihwx
- PTdrmoGbdCBPFfzjGOOYURKI8pV3h1Kd9VNsbQhlxkEWwwIisCXmkHYs5wj0PE7CTlCe
- GLbWP3ov5oNnJB7wQ+0cAJjxLMKVAK/s5w1haxaZikbKwpPZJ27xaSm1BMX1biB+dvEU
- aovQ==
+ bh=XFc1PNVQTk8IE+nRshXy8adghP6nTp9F8kVgZHkj1No=;
+ b=G7doT1KsG1JT/zyGwjzfMih1JgNQFImqlSgctarOJRVqZHQFWLeC2MraO4+6KChyst
+ 2wX4/534w4Wukg8PTjUyUBV4Yeh1l3CRugneQsHPwfcuHl1QM34KGvT3HuGrXi1QUTVz
+ uQvJDDJBSw3T+chUPjZ2PBRAaEAvb9Kir3JGR2ZGQen6MHzt35g2tnR4KNd03FqmZiSa
+ ZufEAC6ZGTQKxp/ntIroqWoFfYzMAuPBVogcZ16ImBgvNyyU0fdG0kC+8YwK3foWPcoI
+ IZ/qK6aFcedBK9cHcGrN+n+vd7b5kC0XAcFswxH34aznzwMXs9f+bv3wosBaNxgDzwjw
+ bKuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772720719; x=1773325519;
+ d=1e100.net; s=20230601; t=1772720746; x=1773325546;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9E8rIVeqctfa15bpIWUAXH63OIyPCVMKEx9yQ3jDexs=;
- b=ABS96Mnst71Sc7kU4QejTPgmowapXiosqZ2B3f+Z28QKgma8sWjCNRIaMGxL8Rj8Nq
- q7QyYVG3EHHgAvdR/a1DDAcvKP7qQCGnEIMlVXm6OHwk1uJswO4gsg8FwNCA8Vm1rEvJ
- /LCMidlICHJjo25gXYjgmTos8kL+Pv8qGUFNOiif1W16TWRCPKYtrVYxQc73qc4+aTE/
- QyMebNWp2IlnPwconE8+RPu/K2F2SoBTgZeHfbpmCGVYSCj3rotzTlyRIl/94ADlizY4
- gQB5ebfuHOxDfSR+4C0pLSYxSGj0/hN1is/GS7EJbTeZA5A6YW3M0WpXFE7X/X4JRhax
- S4EQ==
-X-Gm-Message-State: AOJu0YyCg9DFjVpqBH/B1YdRSoUzM0JhkAjOBwGumhmghvVhCKB1zoVC
- l8jJzmoOPIiM+M9rhm3uEqEqWC1viAKQnqSHwLnepsmvXEI20O8gnBzJoP7j22Zw1LN9OQ==
-X-Gm-Gg: ATEYQzwJXMxTeD7x5MYZ7jMqZQhieP+FA4vFVbhGPIy7/zekm8+mS3TuW1E0w+oYNgC
- 3Esrxqpyd6tATs39fbXC0M327yKJx1TIl5Dts6f3WNsVYslAlGINt88fLndmNj4sGxEIemVcPKz
- HURWHMSf9/l0PEzAEUArt9D/hSwQhzx43W047Rgci3Bx50lsv1IY1Ko9QvStIZUIrOfm/FV6VDA
- fwknVMOXQmkgBsF5zEJMQ+lfp2PAxF30EAGpv456V78ojxrON3Jm3NAA4BNJOmnGyKOWp7HLORd
- yhuIzvBgEqCX+9iqRKAGDKDWV6DUJRGslgEDqsgU8EKEPgibLaUVn84EUbC9oG+NYuwZCHgnP6k
- azT4QE2DE0+hLaO+mDWoA/DI/wDTnYZemikPXGGQQGlx4ZG0v+S2NU2rQn9f4YXRG8ckDagcjSI
- tCQb6A2NzGnf+Qh1XF/GeO6bHOcLalYfb9q6+NadRxAz6qVou+HQuXp2l4PNBBRXoP03eGZdJNa
- OGP+A==
-X-Received: by 2002:a17:902:d58e:b0:2a7:757b:35a1 with SMTP id
- d9443c01a7336-2ae6ab1f396mr70614405ad.38.1772720718769; 
- Thu, 05 Mar 2026 06:25:18 -0800 (PST)
+ bh=XFc1PNVQTk8IE+nRshXy8adghP6nTp9F8kVgZHkj1No=;
+ b=RAH3/Zwu/dIMXnae4witRV8jBSS+GRLAXxXM3Z1pJbvFRGkHULCC/MBxDyYPbLqzlG
+ /O4RRflFap8vW93Rkaa7Trus+Nyer532SECnojFcv+KhVPsZ+qmxDfx4UPTXwUYxUiAu
+ gVvmJgre2FU9P/TUeDK2UH+8tUG0ew5ViHhmVZdbsHJZmlRIvVtUjv+q7IzLeY6Y5fb5
+ JZZkI1/5+KjQ+URe5d9+9rdgh0fHF7W0HeWgprKBIIThJmmVMA8I9E3IQD5+VT6IC9yS
+ lcp7IWQvVbcuh7vUa3usptfBFqE1MO7YBwM5N1exSlEmRGw7Qn6EMTkDa8SGUURRwNp/
+ 2Ejw==
+X-Gm-Message-State: AOJu0Yx2PnpIxDF35tGQfd467zwGAW3Z6jLHXSIjZ+ycRuQ9N9E1QZ++
+ p6v+E2p26J3WEDppDyPDZerwSoJHFx+csNBSI67PD7c4g0YnqcVf45CHrMP7lfCM5SDiSQ==
+X-Gm-Gg: ATEYQzxf1QJ+85nbvekC/dm+dUn6/KdQBYPnouVXjtmHSGp2T7CpBdm4Z64S/s1bNqP
+ Ksvsj+SUGjnZRZwcvpy0MNO5+UcvLcSnx4x55LIq5yf3dgE9K4hmNBrV7ciLryMcqqRPRd67Lpg
+ 12XvDmGcVHZIBVpRB/MTn+AaDtgxtUQUxaQS4YkEPxX5mzilLNntn30CdHzLcciUFLV/HTzfEZq
+ Z5k2MnNRNrpPuicbQscQd3ZnW7u/V8umQW7K890ngBPOzKcnmQ79raYpbmnbNGm7PgpBx9jvrpK
+ 6RZfOXec9TBlbaCsMRjTOQ01PI5tyOJoh09iDFf7MhPO9a1zemg8iyTHeoBeKy/VIkl70sCQrDR
+ oUsp4Kk5HzAhsjMZgBORVmLAnaSXPr+m2b67qAN8f4oAp4eB5GF+wi7I6LvhUSw+MVjHCWpoS9l
+ SndQCHBK4BsFb2694RqXGEN/EQlIr9ciWn9jDqJ2WV/K5QKFTzLbyh8LBxnW4Vqkp0deQ=
+X-Received: by 2002:a17:903:1207:b0:2ae:7f24:4940 with SMTP id
+ d9443c01a7336-2ae7f244ae6mr3151845ad.50.1772720745708; 
+ Thu, 05 Mar 2026 06:25:45 -0800 (PST)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net
  ([2408:80e0:41fc:0:fe49:0:1:b277]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae4650000dsm140204835ad.54.2026.03.05.06.25.16
+ d9443c01a7336-2ae4650000dsm140204835ad.54.2026.03.05.06.25.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 05 Mar 2026 06:25:18 -0800 (PST)
+ Thu, 05 Mar 2026 06:25:45 -0800 (PST)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
@@ -72,16 +71,17 @@ To: qemu-devel <qemu-devel@nongnu.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V5 03/13] iothread: tracking iothread users with holder name
-Date: Thu,  5 Mar 2026 22:24:49 +0800
-Message-ID: <20260305142459.52559-4-zhangckid@gmail.com>
+Subject: [PATCH V5 11/13] vfio-user/proxy: Update tracking iothread users with
+ holder name
+Date: Thu,  5 Mar 2026 22:24:57 +0800
+Message-ID: <20260305142459.52559-12-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260305142459.52559-1-zhangckid@gmail.com>
 References: <20260305142459.52559-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=zhangckid@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,91 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce iothread_get_aio_context() with a 'holder' argument and its
-counterpart iothread_put_aio_context().
-
-Previously, users of an IOThread's AioContext did not explicitly
-record their identity, making it difficult to debug which devices or
-subsystems were pinning an IOThread.
-
-This patch enhances the reference counting mechanism by:
-1. Automatically incrementing the object reference count when a context
-   is retrieved.
-2. Tracking holders by name using iothread_ref() and iothread_unref().
-
-In iothread_instance_finalize(), we now retrieve the source name from
-the GMainContext to correctly unref the initial internal holder.
+Add object_ref/unref calls with iothread_get/put_aio_context.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- include/system/iothread.h |  3 ++-
- iothread.c                | 28 ++++++++++++++++++++++++++--
- 2 files changed, 28 insertions(+), 3 deletions(-)
+ hw/vfio-user/proxy.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index 21a76bd70d..595abeefbe 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -47,7 +47,8 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 314dfd23d8..9db17653d6 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -898,6 +898,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     QIOChannelSocket *sioc;
+     QIOChannel *ioc;
+     char *sockname;
++    char *path;
  
- char *iothread_get_id(IOThread *iothread);
- IOThread *iothread_by_id(const char *id);
--AioContext *iothread_get_aio_context(IOThread *iothread);
-+AioContext *iothread_get_aio_context(IOThread *iothread, const char *holder);
-+void iothread_put_aio_context(IOThread *iothread, const char *holder);
- GMainContext *iothread_get_g_main_context(IOThread *iothread);
+     if (addr->type != SOCKET_ADDRESS_TYPE_UNIX) {
+         error_setg(errp, "vfio_user_connect - bad address family");
+@@ -917,6 +918,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     proxy = g_malloc0(sizeof(VFIOUserProxy));
+     proxy->sockname = g_strdup_printf("unix:%s", sockname);
+     proxy->ioc = ioc;
++    path = object_get_canonical_path(OBJECT(proxy->ioc));
  
- /*
-diff --git a/iothread.c b/iothread.c
-index 80a8cf4b32..da98fbb9ad 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -172,7 +172,8 @@ static void iothread_init_gcontext(IOThread *iothread, const char *thread_name)
-     g_autofree char *name = g_strdup_printf("%s aio-context", thread_name);
+     /* init defaults */
+     proxy->max_xfer_size = VFIO_USER_DEF_MAX_XFER;
+@@ -936,7 +938,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+         vfio_user_iothread = iothread_create("VFIO user", errp);
+     }
  
-     iothread->worker_context = g_main_context_new();
--    source = aio_get_g_source(iothread_get_aio_context(iothread));
-+    /* No need setup itself as the init holder */
-+    source = aio_get_g_source(iothread_get_aio_context(iothread, NULL));
-     g_source_set_name(source, name);
-     g_source_attach(source, iothread->worker_context);
-     g_source_unref(source);
-@@ -362,11 +363,34 @@ char *iothread_get_id(IOThread *iothread)
-     return g_strdup(object_get_canonical_path_component(OBJECT(iothread)));
- }
+-    proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
++    proxy->ctx = iothread_get_aio_context(vfio_user_iothread, path);
+     proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
  
--AioContext *iothread_get_aio_context(IOThread *iothread)
-+AioContext *iothread_get_aio_context(IOThread *iothread, const char *holder)
+     QTAILQ_INIT(&proxy->outgoing);
+@@ -944,6 +946,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+     QTAILQ_INIT(&proxy->free);
+     QTAILQ_INIT(&proxy->pending);
+     QLIST_INSERT_HEAD(&vfio_user_sockets, proxy, next);
++    g_free(path);
+ 
+     return proxy;
+ 
+@@ -967,6 +970,7 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
+ void vfio_user_disconnect(VFIOUserProxy *proxy)
  {
-+    /*
-+     * In some cases, iothread user need the ctx to clearup other resource.
-+     * When holder is empty, back to the legacy way.
-+     */
-+    if (holder) {
-+        /*
-+         * This guarantees that the IOThread and its AioContext remain alive
-+         * as long as there is a holder.
-+         */
-+        object_ref(OBJECT(iothread));
-+
-+        /* Add holder device path to the list */
-+        iothread_ref(iothread, holder);
-+    }
-+
-     return iothread->ctx;
- }
+     VFIOUserMsg *r1, *r2;
++    char *path = object_get_canonical_path(OBJECT(proxy->ioc));
  
-+void iothread_put_aio_context(IOThread *iothread, const char *holder)
-+{
-+    object_unref(OBJECT(iothread));
+     qemu_mutex_lock(&proxy->lock);
+ 
+@@ -1021,12 +1025,15 @@ void vfio_user_disconnect(VFIOUserProxy *proxy)
+     qemu_cond_destroy(&proxy->close_cv);
+     qemu_mutex_destroy(&proxy->lock);
+ 
++    iothread_put_aio_context(vfio_user_iothread, path);
 +
-+    /* Delete holder device path from the list */
-+    iothread_unref(iothread, holder);
-+}
-+
- static int query_one_iothread(Object *object, void *opaque)
- {
-     IOThreadInfoList ***tail = opaque;
+     QLIST_REMOVE(proxy, next);
+     if (QLIST_EMPTY(&vfio_user_sockets)) {
+         iothread_destroy(vfio_user_iothread);
+         vfio_user_iothread = NULL;
+     }
+ 
++    g_free(path);
+     g_free(proxy->sockname);
+     g_free(proxy);
+ }
 -- 
 2.49.0
 
