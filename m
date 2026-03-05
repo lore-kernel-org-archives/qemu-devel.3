@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DC9EEF30D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 06:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF004EEF305
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 06:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy1uS-00027C-Ac; Thu, 05 Mar 2026 01:10:08 -0500
+	id 1vy1uS-00026j-0J; Thu, 05 Mar 2026 01:10:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vy1uB-0001y6-57; Thu, 05 Mar 2026 01:09:51 -0500
+ id 1vy1u9-0001uv-6R; Thu, 05 Mar 2026 01:09:49 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vy1u8-00017h-IR; Thu, 05 Mar 2026 01:09:50 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1vy1u7-00017Y-KU; Thu, 05 Mar 2026 01:09:48 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 624KoFfb1884906; Thu, 5 Mar 2026 06:09:39 GMT
+ 624K6PGw1458432; Thu, 5 Mar 2026 06:09:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YBi5xn
- 6CWbcGQmePGLAubkggX/p/YlgKUc6ne+KNE04=; b=IqG308iCiI8tfv+KJDV/kQ
- ufhszWYeCO5aL543ZV1B2Zmj4A9XOtuFgFCGoiBxBSMLt2R9uCesDKPfQ+Buik0W
- RFQeofiMTYZEjcy/8cIiTQ1h41aBWpXvs06W0wz1T++c0ugO4aEPWXPEzup18T7i
- t5tk2gVJRSManpQmVMfJHCskC+GIrHawrBzwBxc/8Em9uNOtcZtegRy6KNi0ZcYL
- qDRwyGEH/4FypKGjAXOebKexlQYBzbCi9sboyPN3C1R2JpN0uPzaxVsPDa78jQXu
- vHh+HwGUjcHzUf1Px8dXtnOkowXuyuhc31qeU8t2g6MjNFhT56igLh79EATfnYVw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+jOTzC
+ /3lC+KVafGCND8OuaCaDYvt2nFoqez1dvergM=; b=NkgMbVEHT7Ah6AiQocDWsG
+ Necpinh6RDjRvzlqgJVAb41b6R4vi4fL1lvA0AKV160eQvtGWkBxD3LGo//kTrq6
+ J2Ydbyq5bRIli9Cndqy3PTh/Pix7jzTTZ9ztsz82cf6A4UE089oaDseDo32hsHU+
+ bdVHl088qyShvuczoNnp8v9z1obGFnGr9XeviMnaL4Jgps6Zskpzjl+AibRpYhqB
+ vrc2M9j46FBYdQ8G5nJosqJcfg11z6YA9WaDGixNrkk44qN9mB2Yba8L05S0Iqkb
+ zv+cNB1Q6ZeJzoVHNtnyWm1FEQJ5iHFVo4cklevyCgfvPDuAIiQD37nlWBE/q4cA
  ==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskd2d77-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksrjaer4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 06:09:38 +0000 (GMT)
+ Thu, 05 Mar 2026 06:09:43 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6255NIgf003243;
- Thu, 5 Mar 2026 06:09:37 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2y9ynm-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6255NIgg003243;
+ Thu, 5 Mar 2026 06:09:42 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2y9ynt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 06:09:37 +0000
+ Thu, 05 Mar 2026 06:09:42 +0000
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62569aZt18940650
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62569f3Z34603614
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 06:09:36 GMT
+ Thu, 5 Mar 2026 06:09:41 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE1915805D;
- Thu,  5 Mar 2026 06:09:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 319B058058;
+ Thu,  5 Mar 2026 06:09:41 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C5E8158058;
- Thu,  5 Mar 2026 06:09:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 090CD5805B;
+ Thu,  5 Mar 2026 06:09:40 +0000 (GMT)
 Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 06:09:34 +0000 (GMT)
+ Thu,  5 Mar 2026 06:09:39 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
  thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
  saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH v4 5/9] pnv/phb4: Implement write-clear and return 1's on
- unimplemented reg read
-Date: Thu,  5 Mar 2026 00:09:07 -0600
-Message-ID: <20260305060923.3753402-6-saif.abrar@linux.vnet.ibm.com>
+Subject: [PATCH v4 9/9] pnv/phb4: Mask off LSI Source-ID based on number of
+ interrupts
+Date: Thu,  5 Mar 2026 00:09:11 -0600
+Message-ID: <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
 References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
@@ -77,28 +77,28 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: I7SZe-qINWAiOrh3VkSXwNFNtoR40zKM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA0NiBTYWx0ZWRfX3WbLxumpb5Ts
- hD2foAEEtLbVyKKm4eUiUvnAKm7mOSQ+iPeWBJV+P5JI64kkPfqzkn2qCKpwkZGXw89Wxu9kDbx
- OSj3wJaxt+do14I/yPpeoy1WKYUMr6UqpYbaymxIIfSZY5v4QudnDjRSBJF3mEMAc2bdigCDa9o
- Tnj1RN4DrvgYEGNT0PmvNZzPFYk1yH1vVSEsNgYeRDm10CSkO5/e5GE9EK0dcaKB3K+IrdRA5us
- 36Qh4zRJddVpDSzoADAkaCrA55Tw+B6YBQ9L+G4zvPBNh/idWftjy0bjTO2JYH+cChqZPj4KZMD
- n77uNgAs/WxhRwpeMMotbMLvVxoB4k34XnQoecr3MsWqChLS1cG8/4lTw3oo0T3tV0OoL3LYF81
- iw0l2Qeiq/8F+nzD5zyr2C2Gzdun0zzRHuFnhbyRtLABsbzJvebBrzPINM3CWRT8A2wafTcJGqK
- IH54lovhza4bcJRS1GQ==
-X-Authority-Analysis: v=2.4 cv=H7DWAuYi c=1 sm=1 tr=0 ts=69a91e23 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=Rp/I7SmK c=1 sm=1 tr=0 ts=69a91e28 cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=kBXAIK7tWc9G5WBdYtYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-ORIG-GUID: f2pFjT0yPTnid-RzSlFxRlai7Gm60R7f
+ a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
+ a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=Iptbsd0tML7Dy1tiG88A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA0NiBTYWx0ZWRfXxLqZByry2snb
+ QxRyPDibecNk6DsfHU7GWY8q26kvsu63zx/f80RN5efCcQCkojN4pnLL2EN64gCH/2CXWWXNVmv
+ QN2h3OfDqX3OhxaJg81ORTYxbBpmrKgEIZOntL0QUWsrR0qHpbI1inpihr972SyxEooHSeOz7Jw
+ aZ6FjoNycugEWAp/Ui5B6jDuVrGAn5A7a5hGIJ7U8vPdI47/ZLklMqoT731GS/g0joth9cI3uRg
+ Nfv3HARepi/1RIM4JFydkVR5uhzH7GhCF0LEn1VsTiEqJgxYCFxMh7I0p7gToTyScKTXRFE6m9p
+ dwMRQpy5DAfvn8uBAFvJGp9yme/9T7lebIvENRXfDU6xlftptnhA09XV06h/hnVpsiY4PiBHvUG
+ kJtL7jzhSFJFegfXH+Rz2u8j6aU9Ci0NZFPRMsJp1HUS7S/I7LRi5DP7jCVk1hFmkl0FMvUIOfg
+ 0Ri4RmdQQPHc3kSX1oQ==
+X-Proofpoint-GUID: LSMXew_mcNK8X7boV1NJrzXOgnw2aAfw
+X-Proofpoint-ORIG-GUID: udpd0rUZslNB64jQkfbeyr64EiEHOMFb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-05_01,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0 adultscore=0
+ bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050046
 Received-SPF: none client-ip=148.163.156.1;
@@ -110,8 +110,7 @@ X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,359 +126,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement write-1-to-clear and write-X-to-clear logic.
-Update registers with silent simple read and write.
-Return all 1's when an unimplemented/reserved register is read.
-
-Test that reading address 0x0 returns all 1's (i.e. -1).
+Add a method to reset the value of LSI Source-ID.
+Mask off LSI source-id based on number of interrupts in the big/small PHB.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
 v3: Updates for coding guidelines.
+v2: Introduced method pnv_phb4_xsrc_reset().
 
- hw/pci-host/pnv_phb4.c              | 190 ++++++++++++++++++++++------
- include/hw/pci-host/pnv_phb4_regs.h |  11 +-
- tests/qtest/pnv-phb4-test.c         |   9 ++
- 3 files changed, 169 insertions(+), 41 deletions(-)
+ hw/pci-host/pnv_phb4.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 7656c9cc19..25539b7c32 100644
+index 254bbe4089..5e885cb89d 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -655,8 +655,41 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-         return;
-     }
+@@ -490,6 +490,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
  
--    /* Handle masking */
-+    /* Handle RO, W1C, WxC and masking */
-     switch (off) {
-+    /* W1C: Write-1-to-Clear registers */
-+    case PHB_TXE_ERR_STATUS:
-+    case PHB_RXE_ARB_ERR_STATUS:
-+    case PHB_RXE_MRG_ERR_STATUS:
-+    case PHB_RXE_TCE_ERR_STATUS:
-+    case PHB_ERR_STATUS:
-+    case PHB_REGB_ERR_STATUS:
-+    case PHB_PCIE_DLP_ERRLOG1:
-+    case PHB_PCIE_DLP_ERRLOG2:
-+    case PHB_PCIE_DLP_ERR_STATUS:
-+    case PHB_PBL_ERR_STATUS:
-+        phb->regs[off >> 3] &= ~val;
-+        return;
-+
-+    /* WxC: Clear register on any write */
-+    case PHB_PBL_ERR1_STATUS:
-+    case PHB_PBL_ERR_LOG_0 ... PHB_PBL_ERR_LOG_1:
-+    case PHB_REGB_ERR1_STATUS:
-+    case PHB_REGB_ERR_LOG_0 ... PHB_REGB_ERR_LOG_1:
-+    case PHB_TXE_ERR1_STATUS:
-+    case PHB_TXE_ERR_LOG_0 ... PHB_TXE_ERR_LOG_1:
-+    case PHB_RXE_ARB_ERR1_STATUS:
-+    case PHB_RXE_ARB_ERR_LOG_0 ... PHB_RXE_ARB_ERR_LOG_1:
-+    case PHB_RXE_MRG_ERR1_STATUS:
-+    case PHB_RXE_MRG_ERR_LOG_0 ... PHB_RXE_MRG_ERR_LOG_1:
-+    case PHB_RXE_TCE_ERR1_STATUS:
-+    case PHB_RXE_TCE_ERR_LOG_0 ... PHB_RXE_TCE_ERR_LOG_1:
-+    case PHB_ERR1_STATUS:
-+    case PHB_ERR_LOG_0 ... PHB_ERR_LOG_1:
-+        phb->regs[off >> 3] = 0;
-+        return;
-+
-+    /* Write value updated by masks */
-     case PHB_LSI_SOURCE_ID:
-         val &= PHB_LSI_SRC_ID;
-         break;
-@@ -695,7 +728,6 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-     case PHB_LEM_WOF:
-         val = 0;
-         break;
--    /* TODO: More regs ..., maybe create a table with masks... */
+     lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+     lsi_base <<= 3;
++    lsi_base &= (xsrc->nr_irqs - 1);
  
-     /* Read only registers */
-     case PHB_CPU_LOADSTORE_STATUS:
-@@ -704,6 +736,12 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-     case PHB_PHB4_TCE_CAP:
-     case PHB_PHB4_IRQ_CAP:
-     case PHB_PHB4_EEH_CAP:
-+    case PHB_VERSION:
-+    case PHB_DMA_CHAN_STATUS:
-+    case PHB_TCE_TAG_STATUS:
-+    case PHB_PBL_BUF_STATUS:
-+    case PHB_PCIE_BNR:
-+    case PHB_PCIE_PHY_RXEQ_STAT_G3_00_03 ... PHB_PCIE_PHY_RXEQ_STAT_G5_12_15:
-         return;
-     }
- 
-@@ -726,6 +764,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-             pnv_phb4_update_all_msi_regions(phb);
-         }
-         break;
-+
-     case PHB_M32_START_ADDR:
-     case PHB_M64_UPPER_BITS:
-         if (changed) {
-@@ -773,27 +812,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-         break;
- 
-     /* Silent simple writes */
--    case PHB_ASN_CMPM:
--    case PHB_CONFIG_ADDRESS:
--    case PHB_IODA_ADDR:
--    case PHB_TCE_KILL:
--    case PHB_TCE_SPEC_CTL:
--    case PHB_PEST_BAR:
--    case PHB_PELTV_BAR:
-+    /* PHB Fundamental register set A */
-+    case PHB_CONFIG_DATA ... PHB_LOCK1:
-     case PHB_RTT_BAR:
--    case PHB_LEM_FIR_ACCUM:
--    case PHB_LEM_ERROR_MASK:
--    case PHB_LEM_ACTION0:
--    case PHB_LEM_ACTION1:
--    case PHB_TCE_TAG_ENABLE:
-+    case PHB_PELTV_BAR:
-+    case PHB_PEST_BAR:
-+    case PHB_CAPI_CMPM ... PHB_M64_AOMASK:
-+    case PHB_NXLATE_PREFIX ... PHB_DMA_SYNC:
-+    case PHB_TCE_KILL ... PHB_IODA_ADDR:
-+    case PHB_PAPR_ERR_INJ_CTL ... PHB_PAPR_ERR_INJ_MASK:
-     case PHB_INT_NOTIFY_ADDR:
-     case PHB_INT_NOTIFY_INDEX:
--    case PHB_DMA_SYNC:
--       break;
-+    /* Fundamental register set B */
-+    case PHB_AIB_FENCE_CTRL ... PHB_Q_DMA_R:
-+    /* FIR & Error registers */
-+    case PHB_LEM_FIR_ACCUM:
-+    case PHB_LEM_ERROR_MASK:
-+    case PHB_LEM_ACTION0 ... PHB_LEM_WOF:
-+    case PHB_ERR_INJECT ... PHB_ERR_AIB_FENCE_ENABLE:
-+    case PHB_ERR_STATUS_MASK ... PHB_ERR1_STATUS_MASK:
-+    case PHB_TXE_ERR_INJECT ... PHB_TXE_ERR_AIB_FENCE_ENABLE:
-+    case PHB_TXE_ERR_STATUS_MASK ... PHB_TXE_ERR1_STATUS_MASK:
-+    case PHB_RXE_ARB_ERR_INJECT ... PHB_RXE_ARB_ERR_AIB_FENCE_ENABLE:
-+    case PHB_RXE_ARB_ERR_STATUS_MASK ... PHB_RXE_ARB_ERR1_STATUS_MASK:
-+    case PHB_RXE_MRG_ERR_INJECT ... PHB_RXE_MRG_ERR_AIB_FENCE_ENABLE:
-+    case PHB_RXE_MRG_ERR_STATUS_MASK ... PHB_RXE_MRG_ERR1_STATUS_MASK:
-+    case PHB_RXE_TCE_ERR_INJECT ... PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE:
-+    case PHB_RXE_TCE_ERR_STATUS_MASK ... PHB_RXE_TCE_ERR1_STATUS_MASK:
-+    /* Performance monitor & Debug registers */
-+    case PHB_TRACE_CONTROL ... PHB_PERFMON_CTR1:
-+    /* REGB Registers */
-+    /* PBL core */
-+    case PHB_PBL_CONTROL:
-+    case PHB_PBL_TIMEOUT_CTRL:
-+    case PHB_PBL_NPTAG_ENABLE:
-+    case PHB_PBL_SYS_LINK_INIT:
-+    case PHB_PBL_ERR_INF_ENABLE ... PHB_PBL_ERR_FAT_ENABLE:
-+    case PHB_PBL_ERR_STATUS_MASK ... PHB_PBL_ERR1_STATUS_MASK:
-+    /* PCI-E stack */
-+    case PHB_PCIE_SCR:
-+    case PHB_PCIE_DLP_STR ... PHB_PCIE_HOTPLUG_STATUS:
-+    case PHB_PCIE_LMR ... PHB_PCIE_DLP_LSR:
-+    case PHB_PCIE_DLP_RXMGN:
-+    case PHB_PCIE_DLP_LANEZEROCTL ... PHB_PCIE_DLP_TRCRDDATA:
-+    case PHB_PCIE_DLP_ERR_COUNTERS:
-+    case PHB_PCIE_DLP_EIC ...   PHB_PCIE_LANE_EQ_CNTL23:
-+    case PHB_PCIE_TRACE_CTRL:
-+    case PHB_PCIE_MISC_STRAP ... PHB_PCIE_PHY_EQ_CTL:
-+    /* Error registers */
-+    case PHB_REGB_ERR_INJECT:
-+    case PHB_REGB_ERR_INF_ENABLE ... PHB_REGB_ERR_FAT_ENABLE:
-+    case PHB_REGB_ERR_STATUS_MASK ... PHB_REGB_ERR1_STATUS_MASK:
-+        break;
- 
-     /* Noise on anything else */
-     default:
--        qemu_log_mask(LOG_UNIMP, "phb4: reg_write 0x%"PRIx64"=%"PRIx64"\n",
-+        qemu_log_mask(LOG_UNIMP,
-+                      "phb4: unimplemented reg_write 0x%"PRIx64"=%"PRIx64"\n",
-                       off, val);
-     }
- }
-@@ -881,36 +956,75 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-         return val;
- 
-     /* Silent simple reads */
-+    /* PHB Fundamental register set A */
-     case PHB_LSI_SOURCE_ID:
-+    case PHB_DMA_CHAN_STATUS:
-     case PHB_CPU_LOADSTORE_STATUS:
--    case PHB_ASN_CMPM:
-+    case PHB_CONFIG_DATA ... PHB_LOCK1:
-     case PHB_PHB4_CONFIG:
-+    case PHB_RTT_BAR:
-+    case PHB_PELTV_BAR:
-     case PHB_M32_START_ADDR:
--    case PHB_CONFIG_ADDRESS:
--    case PHB_IODA_ADDR:
--    case PHB_RTC_INVALIDATE:
--    case PHB_TCE_KILL:
--    case PHB_TCE_SPEC_CTL:
-     case PHB_PEST_BAR:
--    case PHB_PELTV_BAR:
--    case PHB_RTT_BAR:
-+    case PHB_CAPI_CMPM:
-+    case PHB_M64_AOMASK:
-     case PHB_M64_UPPER_BITS:
--    case PHB_CTRLR:
--    case PHB_LEM_FIR_ACCUM:
--    case PHB_LEM_ERROR_MASK:
--    case PHB_LEM_ACTION0:
--    case PHB_LEM_ACTION1:
--    case PHB_TCE_TAG_ENABLE:
-+    case PHB_NXLATE_PREFIX:
-+    case PHB_RTC_INVALIDATE ... PHB_IODA_ADDR:
-+    case PHB_PAPR_ERR_INJ_CTL ... PHB_ETU_ERR_SUMMARY:
-     case PHB_INT_NOTIFY_ADDR:
-     case PHB_INT_NOTIFY_INDEX:
--    case PHB_Q_DMA_R:
--    case PHB_ETU_ERR_SUMMARY:
--        break;
--
--    /* Noise on anything else */
-+    /* Fundamental register set B */
-+    case PHB_CTRLR:
-+    case PHB_AIB_FENCE_CTRL ... PHB_Q_DMA_R:
-+    case PHB_TCE_TAG_STATUS:
-+    /* FIR & Error registers */
-+    case PHB_LEM_FIR_ACCUM ... PHB_LEM_ERROR_MASK:
-+    case PHB_LEM_ACTION0 ... PHB_LEM_WOF:
-+    case PHB_ERR_STATUS ... PHB_ERR_AIB_FENCE_ENABLE:
-+    case PHB_ERR_LOG_0 ... PHB_ERR1_STATUS_MASK:
-+    case PHB_TXE_ERR_STATUS ... PHB_TXE_ERR_AIB_FENCE_ENABLE:
-+    case PHB_TXE_ERR_LOG_0 ... PHB_TXE_ERR1_STATUS_MASK:
-+    case PHB_RXE_ARB_ERR_STATUS ... PHB_RXE_ARB_ERR_AIB_FENCE_ENABLE:
-+    case PHB_RXE_ARB_ERR_LOG_0 ... PHB_RXE_ARB_ERR1_STATUS_MASK:
-+    case PHB_RXE_MRG_ERR_STATUS ... PHB_RXE_MRG_ERR_AIB_FENCE_ENABLE:
-+    case PHB_RXE_MRG_ERR_LOG_0 ... PHB_RXE_MRG_ERR1_STATUS_MASK:
-+    case PHB_RXE_TCE_ERR_STATUS ... PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE:
-+    case PHB_RXE_TCE_ERR_LOG_0 ... PHB_RXE_TCE_ERR1_STATUS_MASK:
-+    /* Performance monitor & Debug registers */
-+    case PHB_TRACE_CONTROL ... PHB_PERFMON_CTR1:
-+    /* REGB Registers */
-+    /* PBL core */
-+    case PHB_PBL_CONTROL:
-+    case PHB_PBL_TIMEOUT_CTRL:
-+    case PHB_PBL_NPTAG_ENABLE:
-+    case PHB_PBL_SYS_LINK_INIT:
-+    case PHB_PBL_BUF_STATUS:
-+    case PHB_PBL_ERR_STATUS ... PHB_PBL_ERR_INJECT:
-+    case PHB_PBL_ERR_INF_ENABLE ... PHB_PBL_ERR_FAT_ENABLE:
-+    case PHB_PBL_ERR_LOG_0 ... PHB_PBL_ERR1_STATUS_MASK:
-+    /* PCI-E stack */
-+    case PHB_PCIE_BNR ... PHB_PCIE_DLP_STR:
-+    case PHB_PCIE_DLP_LANE_PWR:
-+    case PHB_PCIE_DLP_LSR:
-+    case PHB_PCIE_DLP_RXMGN:
-+    case PHB_PCIE_DLP_LANEZEROCTL ... PHB_PCIE_DLP_CTL:
-+    case PHB_PCIE_DLP_TRCRDDATA:
-+    case PHB_PCIE_DLP_ERRLOG1 ... PHB_PCIE_DLP_ERR_COUNTERS:
-+    case PHB_PCIE_DLP_EIC ...   PHB_PCIE_LANE_EQ_CNTL23:
-+    case PHB_PCIE_TRACE_CTRL:
-+    case PHB_PCIE_MISC_STRAP ... PHB_PCIE_PHY_RXEQ_STAT_G5_12_15:
-+    /* Error registers */
-+    case PHB_REGB_ERR_STATUS ... PHB_REGB_ERR_INJECT:
-+    case PHB_REGB_ERR_INF_ENABLE ... PHB_REGB_ERR_FAT_ENABLE:
-+    case PHB_REGB_ERR_LOG_0 ... PHB_REGB_ERR1_STATUS_MASK:
-+        break;
-+
-+    /* Noise on unimplemented read, return all 1's */
-     default:
--        qemu_log_mask(LOG_UNIMP, "phb4: reg_read 0x%"PRIx64"=%"PRIx64"\n",
--                      off, val);
-+        qemu_log_mask(LOG_UNIMP, "phb4: unimplemented reg_read 0x%"PRIx64"\n",
-+                      off);
-+        val = ~0ull;
-     }
-     return val;
- }
-diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-index dfd0e01d1e..c1d5a83271 100644
---- a/include/hw/pci-host/pnv_phb4_regs.h
-+++ b/include/hw/pci-host/pnv_phb4_regs.h
-@@ -407,6 +407,7 @@
- #define   PHB_PCIE_CRESET_PERST_N       PPC_BIT(3)
- #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
- #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
-+#define PHB_PCIE_DLP_STR                0x1A18
- #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
- #define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
- #define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
-@@ -417,6 +418,7 @@
- #define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
- #define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
- 
-+#define PHB_PCIE_DLP_LANE_PWR           0x1A38
- #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
- #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
- #define   PHB_PCIE_DLP_LINK_SPEED       PPC_BITMASK(36, 39)
-@@ -436,18 +438,21 @@
- #define   PHB_PCIE_DLP_DL_PGRESET       PPC_BIT(22)
- #define   PHB_PCIE_DLP_TRAINING         PPC_BIT(20)
- #define   PHB_PCIE_DLP_INBAND_PRESENCE  PPC_BIT(19)
--
-+#define PHB_PCIE_DLP_LSR                0x1A48
-+#define PHB_PCIE_DLP_RXMGN              0x1A50
-+#define PHB_PCIE_DLP_LANEZEROCTL        0x1A70
- #define PHB_PCIE_DLP_CTL                0x1A78
- #define   PHB_PCIE_DLP_CTL_BYPASS_PH2   PPC_BIT(4)
- #define   PHB_PCIE_DLP_CTL_BYPASS_PH3   PPC_BIT(5)
--
- #define PHB_PCIE_DLP_TRWCTL             0x1A80
- #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
- #define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
-+#define PHB_PCIE_DLP_TRCRDDATA          0x1A88
- #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
- #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
- #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
- #define PHB_PCIE_DLP_ERR_COUNTERS       0x1AB8
-+#define PHB_PCIE_DLP_EIC                0x1AC8
- 
- #define PHB_PCIE_LANE_EQ_CNTL0          0x1AD0
- #define PHB_PCIE_LANE_EQ_CNTL1          0x1AD8
-@@ -459,6 +464,7 @@
- #define PHB_PCIE_LANE_EQ_CNTL23         0x1B08 /* DD1 only */
- #define PHB_PCIE_TRACE_CTRL             0x1B20
- #define PHB_PCIE_MISC_STRAP             0x1B30
-+#define PHB_PCIE_PHY_EQ_CTL             0x1B38
- #define PHB_PCIE_PHY_RXEQ_STAT_G3_00_03 0x1B40
- #define PHB_PCIE_PHY_RXEQ_STAT_G5_12_15 0x1B98
- 
-@@ -592,5 +598,4 @@
- 
- #define IODA3_PEST1_FAIL_ADDR           PPC_BITMASK(3, 63)
- 
--
- #endif /* PCI_HOST_PNV_PHB4_REGS_H */
-diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
-index 2078fab9a9..9ccb75cd5a 100644
---- a/tests/qtest/pnv-phb4-test.c
-+++ b/tests/qtest/pnv-phb4-test.c
-@@ -137,6 +137,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
-     g_assert_cmpuint(val, ==, 0x0);
+     /* TODO: handle reset values of PHB_LSI_SRC_ID */
+     if (!lsi_base) {
+@@ -1944,6 +1945,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+     /* TODO: Add more RO-masks as regs are implemented in the model */
  }
  
-+/* Check that reading an unimplemented address 0x0 returns -1 */
-+static void phb4_unimplemented_read_test(QTestState *qts)
++static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
 +{
-+    g_assert_cmpint(PHB4_XSCOM_READ(0x0), ==, -1);
++    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
++    pnv_phb4_update_xsrc(phb);
 +}
 +
- static void phb4_tests(void)
+ static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
  {
-     QTestState *qts = NULL;
-@@ -152,6 +158,9 @@ static void phb4_tests(void)
-     /* Check write-only logic */
-     phb4_writeonly_read_test(qts);
+     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+@@ -2000,10 +2007,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+     PnvPHB4 *phb = PNV_PHB4(obj);
  
-+    /* Check unimplemented register read */
-+    phb4_unimplemented_read_test(qts);
+     pnv_phb4_pbl_core_reset(phb);
 +
-     qtest_quit(qts);
++    pnv_phb4_xsrc_reset(phb);
+     pnv_phb4_err_reg_reset(phb);
+     pnv_phb4_pcie_stack_reg_reset(phb);
+     pnv_phb4_regb_err_reg_reset(phb);
+-    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
  }
  
+ static void pnv_phb4_instance_init(Object *obj)
+@@ -2080,8 +2088,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    pnv_phb4_update_xsrc(phb);
+-
+     phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
+ 
+     pnv_phb4_xscom_realize(phb);
 -- 
 2.47.3
 
