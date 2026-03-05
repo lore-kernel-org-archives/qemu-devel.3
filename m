@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E649F30939
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98418F30937
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6Ji-0001FI-BF; Thu, 05 Mar 2026 05:52:30 -0500
+	id 1vy6Jk-0001Fp-Sn; Thu, 05 Mar 2026 05:52:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Jg-0001F6-Hy
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Jj-0001FX-C0
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Jf-0005Su-6J
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Ji-0005TH-3G
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:52:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772707946;
+ s=mimecast20190719; t=1772707949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RSquUaLw4knBApgxR05Gik1zrmTuieDfw2Ti1+usve0=;
- b=Zo4ZvzvRMA8jHpu2QuoNqNHkz1UkXbC10UpJ5ppebyShHBUBHceRfWfCBXAQtzsHpZ1vn+
- 7DwT2I7ToHJRgWBeE03v6/hbyh84Me4GSHQMbl6i+BV/2DRaeBexdtvOtBHV4XSNkJ6m4R
- jlJPsNEiMkXi3/Pml22diEq/PdPZncw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=NYg1EuXlgmxwdFtG8SzoD3sUFm7M8YV+vIWnbYEBMLQ=;
+ b=jKL7xnYsL7SNbfYoXp09/nAPlTGUKNSm+CIOOXqxYI3niT4/Ih9ZwQB7CR39Fwzw1aIlMQ
+ lrZx4NS+zL5RZJgJtu9+JDDppGrxVw0f/9nGLXg1TaJcU/+rNxI5y46ZntM2HQP64LN+Z+
+ lorRLLFy+ArzVoPypBlUGjl0yXevXCU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-VxmQHNcINuOKqhbqEyIUhg-1; Thu,
- 05 Mar 2026 05:52:23 -0500
-X-MC-Unique: VxmQHNcINuOKqhbqEyIUhg-1
-X-Mimecast-MFC-AGG-ID: VxmQHNcINuOKqhbqEyIUhg_1772707942
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-542-fLilHpXRPU2PLDTTCjTjnw-1; Thu,
+ 05 Mar 2026 05:52:26 -0500
+X-MC-Unique: fLilHpXRPU2PLDTTCjTjnw-1
+X-Mimecast-MFC-AGG-ID: fLilHpXRPU2PLDTTCjTjnw_1772707945
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 664DE180044D; Thu,  5 Mar 2026 10:52:22 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB841195609F; Thu,  5 Mar 2026 10:52:24 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.75])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8F7283003E98; Thu,  5 Mar 2026 10:52:20 +0000 (UTC)
+ id DACAC3003E98; Thu,  5 Mar 2026 10:52:22 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 01/28] hw/i386/pc: Remove deprecated pc-q35-2.8 and
- pc-i440fx-2.8 machines
-Date: Thu,  5 Mar 2026 11:51:48 +0100
-Message-ID: <20260305105215.302571-2-thuth@redhat.com>
+Subject: [PULL 02/28] hw/i386/pc: Remove pc_compat_2_8[] array
+Date: Thu,  5 Mar 2026 11:51:49 +0100
+Message-ID: <20260305105215.302571-3-thuth@redhat.com>
 In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
 References: <20260305105215.302571-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -62,14 +61,15 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 33
+X-Spam_score: 3.3
+X-Spam_bar: +++
+X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,58 +87,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+The pc_compat_2_8[] array was only used by the pc-q35-2.8
+and pc-i440fx-2.8 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-2-philmd@linaro.org>
+Message-ID: <20250501210456.89071-3-philmd@linaro.org>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260225092024.794595-2-thuth@redhat.com>
+Message-ID: <20260225092024.794595-3-thuth@redhat.com>
 ---
- hw/i386/pc_piix.c | 9 ---------
- hw/i386/pc_q35.c  | 9 ---------
- 2 files changed, 18 deletions(-)
+ include/hw/i386/pc.h | 3 ---
+ hw/i386/pc.c         | 9 ---------
+ 2 files changed, 12 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index f9e0bca9743..58d76d2d410 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -714,15 +714,6 @@ static void pc_i440fx_machine_2_9_options(MachineClass *m)
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 1cf88c16975..d8fe1c3c8e5 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -292,9 +292,6 @@ extern const size_t pc_compat_2_10_len;
+ extern GlobalProperty pc_compat_2_9[];
+ extern const size_t pc_compat_2_9_len;
  
- DEFINE_I440FX_MACHINE(2, 9);
+-extern GlobalProperty pc_compat_2_8[];
+-extern const size_t pc_compat_2_8_len;
+-
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 0dd3fd01d98..d36b4917b31 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -247,15 +247,6 @@ GlobalProperty pc_compat_2_9[] = {
+ };
+ const size_t pc_compat_2_9_len = G_N_ELEMENTS(pc_compat_2_9);
  
--static void pc_i440fx_machine_2_8_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_9_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
--}
+-GlobalProperty pc_compat_2_8[] = {
+-    { TYPE_X86_CPU, "tcg-cpuid", "off" },
+-    { "kvmclock", "x-mach-use-reliable-get-clock", "off" },
+-    { "ICH9-LPC", "x-smi-broadcast", "off" },
+-    { TYPE_X86_CPU, "vmware-cpuid-freq", "off" },
+-    { "Haswell-" TYPE_X86_CPU, "stepping", "1" },
+-};
+-const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
 -
--DEFINE_I440FX_MACHINE(2, 8);
--
- #ifdef CONFIG_XEN
- static void xenfv_machine_4_2_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9158631f761..7fe6ca64f9d 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -661,12 +661,3 @@ static void pc_q35_machine_2_9_options(MachineClass *m)
- }
- 
- DEFINE_Q35_MACHINE(2, 9);
--
--static void pc_q35_machine_2_8_options(MachineClass *m)
--{
--    pc_q35_machine_2_9_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
--}
--
--DEFINE_Q35_MACHINE(2, 8);
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
 -- 
 2.53.0
 
