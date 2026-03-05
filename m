@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3D5F47CD2
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19BF3F47CD6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyFgC-0006cq-Gp; Thu, 05 Mar 2026 15:52:20 -0500
+	id 1vyFgD-0006dF-Jn; Thu, 05 Mar 2026 15:52:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFg9-0006au-6I
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:17 -0500
-Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
+ id 1vyFgC-0006cT-7w
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:20 -0500
+Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFg7-000680-JB
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:16 -0500
-Received: by mail-qv1-xf32.google.com with SMTP id
- 6a1803df08f44-89a000f5adeso84695126d6.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:15 -0800 (PST)
+ id 1vyFgA-00068k-Cn
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:20 -0500
+Received: by mail-qv1-xf2a.google.com with SMTP id
+ 6a1803df08f44-899fc265126so66558426d6.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772743934; x=1773348734; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772743937; x=1773348737; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TmvG9qPfC+MFsV2E2Gt8Szd+mNMYzqsDos9C+QAET0U=;
- b=XHtO3NW2gLlHxxs0o2UPUmiJxD3/cRBkaEu0POOdRETsULlUNUaQysqb2EuafzDFlN
- H6c02eFbAlWfnVKocfKSo1FQLs9W1cir2qCVuR6AX0p2+HAaRWhDkbP5hmw1Q4BaDEAp
- ZfdtCzHBqMMb5TXVhDjm03YgN/xSo47ztovWRoQFzSV1m0F3ywo8whMu62WkET5XGplS
- F4cP3WiUDspYb1rGgz9j1Bpa8nlYfosl+s32V1wRfgxuSg8ArpFoVuEpAahUn9yvidqP
- RGHqZltMv0C8DSVQAYEN29vZ/JD6X0WStvWFJLTWrghQyOWzQDJrgq9f6y30alslJy/H
- uo7g==
+ bh=yewNvrkaWayeKlBhTXGZFJI4Efdx0EXSDMpOkfMlPlI=;
+ b=FfztDeIO3fQ7BMTtvR40x25e32QpheLQUdaI440q6YOarJIoreCM4kCJGYLHV6rbrW
+ zrEPGGGkY8HnQFR5K1IGbuPR95I79u3f0fI+OMT2uTwAGW6Z6LK5dPUqsehv3k/LiYRs
+ uvl8EnWQyi43b24BAACjc7nQJq9V/qIC4mkm8mxv3Whi1fXxho/O9zRP7b8h3rFrNeTs
+ x+MF7kpjIogeAPAuv4pY8Kcg8ixBitlH7m1JyTp+AOHo9xanX9mJtw/rrR0N7BGzaLcb
+ XTjYAIuz2a2WAMYe/M0oZxMiYWsrwhpNTTPsd/v5evOttaGqOgD4ccjG2tETVZzT3FxX
+ t5QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772743934; x=1773348734;
+ d=1e100.net; s=20230601; t=1772743937; x=1773348737;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TmvG9qPfC+MFsV2E2Gt8Szd+mNMYzqsDos9C+QAET0U=;
- b=p7/wikGkF5FqSK8rknxDrYpgTSnclpTTksDzX4uTEjGqn5j/h8qPA5K2mMNm/Qn58B
- L6BWtZjnhk5sJ221IJfGjnZGbqHe0vv6M/LECJa60AoYEavHrVk2tf2ASNcrrPdOW3sy
- ABg6slgwXiwCqBp7O7Ptf8ur5sONAL2b7JyEzWthX/cIEPCBLm1C+5yiJFrHA7Z5U5RR
- 2ve6aHFRnlRDbvrI1wsVsyTVYX8kA90DWq+9KF8qxThe1nwbI57yHF4f1PQPKb5x8QuE
- A5TF/9Xyy+BqKi0k2dG0hdplRrNz/8/h5JtwdS+TtEIL2c/F71vEgB87IHVRsvq8k0EG
- wRUQ==
-X-Gm-Message-State: AOJu0Yx6NbXoUqz+MXx6VkUWCGIO/caEz586AxHbkD5Wpo5OAvs01xtI
- WwmN84k8AJVDHFDuAt6eWH5sdLHIhk0/e8bdk8fUYddKPGQTcgqcse17HBWet57Xz/aCoztx/Y5
- itHMC
-X-Gm-Gg: ATEYQzzV5npfRgJJ4fcFG1TIGq2sDv028c/ePlG6wiMbn7SVPhcU1GCIRZg0xhDxKK5
- voE+dCBnWWR8r/HsBatx+kyjGRXCWgOLQZjDvYGeceAQMyO5QTpRVueMI9N224oXY+qczck/oE1
- VYgagLkTLOQUqMO32oRa4M9hjmNH+1hSW8hpwUvjF5RlIkpqbpG9ssRFdumdB5UoZgeftEQcE6Q
- Jsl6R9sP19XXcBw60v66+Q1Ld2SN7ClKJsPBLpf06J/D2UrNNgjz46pzS1BdLF9iE6DwCBsT6gg
- AcqgLCiigLCQ3b+YEaGeoz8+/F64KeEtpBGWkTaRRHarKYJjJiHsJ6e//t8c3XNFebc3tldHJw4
- Q9+KYfj1rU/6Od8MdkuvA+fzRMeQS9B0ebm9sxzVigpUp/Qz7u+wq/zO8M4bU4fqoq04tzwWa2/
- CRkGxXiLKnfsfTfVtt0IhSHrXeyjEidlASOqyFQ5E7+bdyts4PA/3P4HBZZaGBS1Wj7ubu4veAK
- b+a
-X-Received: by 2002:a05:6214:1bce:b0:89a:ff2:b8ce with SMTP id
- 6a1803df08f44-89a19af3cd5mr110427206d6.41.1772743934287; 
- Thu, 05 Mar 2026 12:52:14 -0800 (PST)
+ bh=yewNvrkaWayeKlBhTXGZFJI4Efdx0EXSDMpOkfMlPlI=;
+ b=LcoOkZpNCV0NDO0MgpaWY+JYKAf4Dwu+QTu3CBmkcpKlZXKZnQL117rL5UxLuarrZ3
+ MY7rDFCL93Z87w0wF+drB2Ww+QrakQLjMOJ6Y//cjealR4veEzxoCHLTRGFBZy4fu7YJ
+ /B/Es2ZTGtkeJjJpeTo55eizcxREQp8Fm5lN3+trH+iKIaN3uDBez2ClhXbN0E31+m9R
+ C+UwpR8O0hKj3qy11Tw/AOHzZJ/u/xKjLHkdcsrGhWJP5e5u1/V6OwcgQcBwKfB5PcB1
+ ObEJShL9f70pWBxasd7FDytm1611hao+kUAqHFgFietJZacpQDsbk1Am8ZrKY8gVgs3b
+ 7xhw==
+X-Gm-Message-State: AOJu0YxhSFt5SXx1GWkFy/yiEnLqDOY+u7upT0ZFpBJp5J8f9qKhHRaj
+ h2jrV+QccrBs7B5eXfHuZh6vLdDz+jO60aEHxxriRVK0hv5LoB8G/2vcRVsU79D796ttGEiNypI
+ Hg2/f
+X-Gm-Gg: ATEYQzyKomXx3D5LNcxgcTudVwT0G2Xr/LPITI5h+kvWQjIjDh8iAaT7HIjcX8yYO64
+ JH56sIW+Bw7pM3GsSj2WAVIQq/zEu1FFQriIQCAI1gC3RjGShUkvH7TdR2qn8Tm24lDMVzjMWpj
+ hNeMK0Xmm6ewocaTJZTr8yM+ZQOX1CEFQbDaAJGVInz0pfEB9xtL9VyM61V5iYKk4VW2AcYQHFs
+ HNl0/nojZ94ItDLP66JMKGa3JrRDhKHeW/SZveyHMC728kg1WCQa5rho7+76JKpvteFFSsC0yzh
+ R+67v7++LPjnZPhJYzrLFG9G3cVViL2At3QZvHWIQaAfRQKn9/kk9GTh3OQcwMs8Pu+kVQmJgkU
+ NEBoGHVisGcdgcpjsO7+zpw3nxh+xvqRDYvXy654eHfR52L872aIwgU2CluZTs86pdL/dJ/XsQU
+ gPi6ZEIGE/pNJmQfr0kvSenyJ6Cf9lRxh+mUH6iPhs2OH5v3Kct4R4utTZoX+ivqnwKzVdXpgcJ
+ bkX
+X-Received: by 2002:a05:6214:f01:b0:899:ad51:fb64 with SMTP id
+ 6a1803df08f44-89a19aee9ebmr111853156d6.41.1772743937383; 
+ Thu, 05 Mar 2026 12:52:17 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.52.13
+ 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.52.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 12:52:13 -0800 (PST)
+ Thu, 05 Mar 2026 12:52:16 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 09/12] plugins: add missing callbacks to version history
-Date: Thu,  5 Mar 2026 12:51:49 -0800
-Message-ID: <20260305205152.2121854-10-pierrick.bouvier@linaro.org>
+Subject: [PULL 11/12] tests/tcg/plugins/mem: Correct hash iteration code in
+ plugin_exit()
+Date: Thu,  5 Mar 2026 12:51:51 -0800
+Message-ID: <20260305205152.2121854-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 References: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +103,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The discontinuity and system call filter callbacks were not reflected in
-the versioning comments before. The callbacks have been introduced in
-aac73d85d2d6f556dbcee6041a2898cb0ef9b0e6 and
-5ed628d1d398b164053f5d5685541ea705275998, respectively.
+In plugin_exit() we call g_hash_table_get_values() to get a GList
+which we look at to print some information. This code has
+multiple issues:
+ * it names the local variable for the GList "count", which
+   shadows the "qemu_plugin_scoreboard *count". This isn't
+   incorrect, but it is unnecessarily confusing
+ * it doesn't free the list, and the leak sanitizer complains:
 
-Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+   Indirect leak of 2328 byte(s) in 97 object(s) allocated from:
+    #0 0x5589b0b72293 in malloc (/home/pm215/qemu/build/x86-tgt-san/qemu-system-i386+0x1a2f293) (BuildId: 26964cad9e3f81d35fc144d7cc88b53adf6f60c7)
+    #1 0x78fd8cfa1ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x78fd8cf96e4a in g_list_prepend (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x57e4a) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #3 0x78fd8cf8b318 in g_hash_table_get_values (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4c318) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #4 0x78fd84d1a90c in plugin_exit /home/pm215/qemu/build/x86-tgt-san/../../tests/tcg/plugins/mem.c:87:25
+ * in iterating through the list it updates "count", so by the
+   time we get to the end of the loop we no longer have a pointer
+   to the head of the list that we could use to free it
+ * it checks for the list being NULL twice (once in an if()
+   and once in the for() loop's "while" condition), which is
+   redundant
+ * it skips the loop if g_list_next(counts) is NULL, which means
+   it will wrongly skip the loop if the list has only one entry
+
+Rewrite the iteration code to fix these problems.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/c4ecefb4-8769-403f-8420-8bce42e43e13@epfl.ch
+Link: https://lore.kernel.org/qemu-devel/20260305161531.1774895-3-peter.maydell@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/plugins/qemu-plugin.h | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/tcg/plugins/mem.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index fceb8194eb8..827e8e17877 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -77,6 +77,9 @@ typedef uint64_t qemu_plugin_id_t;
-  * version 6:
-  * - changed return value of qemu_plugin_{read,write}_register from int to bool
-  * - added qemu_plugin_set_pc
-+ * - added disconinuity callback API (for interrupts, exceptions, host calls)
-+ * - added syscall filter callback API, which allows skipping syscalls and
-+ *   setting custom syscall return values
-  */
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index f3992abc8fb..1ee257f855b 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -84,24 +84,22 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
  
- extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
+ 
+     if (do_region_summary) {
+-        GList *counts = g_hash_table_get_values(regions);
++        g_autoptr(GList) regionlist = g_hash_table_get_values(regions);
+ 
+-        counts = g_list_sort_with_data(counts, addr_order, NULL);
++        regionlist = g_list_sort_with_data(regionlist, addr_order, NULL);
+ 
+         g_string_printf(out, "Region Base, Reads, Writes, Seen all\n");
+ 
+-        if (counts && g_list_next(counts)) {
+-            for (/* counts */; counts; counts = counts->next) {
+-                RegionInfo *ri = (RegionInfo *) counts->data;
++        for (GList *l = regionlist; l; l = g_list_next(l)) {
++            RegionInfo *ri = (RegionInfo *) l->data;
+ 
+-                g_string_append_printf(out,
+-                                       "0x%016"PRIx64", "
+-                                       "%"PRId64", %"PRId64", %s\n",
+-                                       ri->region_address,
+-                                       ri->reads,
+-                                       ri->writes,
+-                                       ri->seen_all ? "true" : "false");
+-            }
++            g_string_append_printf(out,
++                                   "0x%016"PRIx64", "
++                                   "%"PRId64", %"PRId64", %s\n",
++                                   ri->region_address,
++                                   ri->reads,
++                                   ri->writes,
++                                   ri->seen_all ? "true" : "false");
+         }
+         qemu_plugin_outs(out->str);
+     }
 -- 
 2.47.3
 
