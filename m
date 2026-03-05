@@ -4,98 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E65EFCE58
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 03:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE5DEFCE58
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 03:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxzCS-0000CT-H9; Wed, 04 Mar 2026 22:16:32 -0500
+	id 1vxzET-0000s5-7y; Wed, 04 Mar 2026 22:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vxzCQ-0000CA-U6
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:16:30 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1vxzES-0000rp-7L
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:18:36 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vxzCO-0000m6-Rt
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:16:30 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-65c4152313fso11259811a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 19:16:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772680587; cv=none;
+ id 1vxzEQ-0000zR-KA
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 22:18:35 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b9372552059so1037712866b.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Mar 2026 19:18:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772680713; cv=none;
  d=google.com; s=arc-20240605;
- b=bPXldwsrKL+UXq7GWcJE0knbveb9ni8k0tbhtzlVZhY1NbkkEyy2wRm+AtBby+Z/QX
- zo8aHJzdEQHe0I6oaiOgNZammeQLvhcKAvmboaq6+hFe0TKb8GHk31/4CU9iTIwqfLIN
- zxLrCiQaj4DLB+Y5GVjy9+BQuKqNxZVLCbCP/Qi77FvYhYTvKdzqw+igo5EMKLzAGwuX
- svrRNXKQAYBk6fVATECmG6eQdbEfkhD5x0BGPQlGrRqnkELeR7Zt0Uk5CGRXLn5t63ni
- 529mYi8kf1xTnFB1HjINvmzvAbX6/Z/IsyKn5+3LOLXO4pNT4WgHCs6jNHc9q2SDKHBf
- csuQ==
+ b=afRHvJ6iBkwR5ml/RwNKcjSdQCAGk+KeoVUIgi64atSZZ2BYI87c6GfxhBd57Ywqfy
+ nnvJDaFuQBA2PgFGV1vYQ8hbxxjXxpqf09XcUP5seOTgWlfmN1m44AMe85t6gZENCSI6
+ gDcu85n0bWe+P4Rz3Qu10F1i9VAPgZsBLHsN/prjCPhJMbP9WI0veuQMel48YdScpqp7
+ np86moHm9/H05XCvhDhNVQduMmM2mPUDAOhbh9fymSr4wPHYd2vcLqwWiYwP6x9E+aev
+ ZzKE3jcT5rrL5Q7MgHMl77yQlDbx1aeD0oYOowzY/LNK+EdO024fRojuOGQFVpIeeb7k
+ lHtw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=pbU302MELCi/teca0jeDvW57NGgCImF7U/e03l1MfRk=;
- fh=QvIGAaf35YKI2i8bcurTrC78gWR/MpoPGmBVa8ziGBo=;
- b=YWBqeVYST9t26ygxUSW7Mr+zGdF9hyxdYWsWQrtU1mGsMNN6vyv7G5Xck9eS1JavuF
- KkkSAi2WA0o4VBhikT3vVQOyAbCVnJrpvIv4cv7km+xF5F/H83ijYxXjO9UhkMvwPsn0
- yiSCEEP9ifucw74llRZPW3i/ghGx2PNfufbaQDylkEabmvwwE1y2TIBIn6poD8T3I1fx
- ld8at6+UyPUQBEy7zwcN5vXou4w2Ea60jo9bD71NVwZfmBpnIWnzYnR0cy1WmO9W4p1B
- LQhOh4ZZi70YbgN877NA/IVL2ZYfL7PisN4tvoMt5hDjx0aPCwVwhedhwED66ZgxniY/
- bEGw==; darn=nongnu.org
+ bh=RZ9SueSaOP+HPQ4J59QeGSz17z/BstirkdtlH1uRrLY=;
+ fh=bWymoCQQYbMHe/WVa4MGCVBkyVOUobjMdsRMeROUKP4=;
+ b=dExEQQnKCi3COS3WS3kjEG5ry7CbSbT8JPhEJIRmYrTSg/GWffY7ueLNGkUengfqVo
+ yBDHWDQ5/gm/0WA/5nm+cin10qH/vlxWXTYxEhlrhHFBYB9t9X2L6FM3r5UuEmmMNl1w
+ GzWQNO6kJSiuURtpgJtX25CeXY3AOoBf0J4mSt5FY6hdJj1RYmE+iXLgY9NCbrudm3FT
+ 5VJneGNYc9cIVHEx2y1qNhnIzOM9XRE3IF3VI92NgOwHNtWYL/wpJZGxCmytKMM/9ynb
+ 6wg3v+4uC3dM4bNIR2C76jXvP7Q5ZKFM59scqQW8mFSBqniwpwjTRQ7+dKPl7UQWhRqv
+ Q1GA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772680587; x=1773285387; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772680713; x=1773285513; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pbU302MELCi/teca0jeDvW57NGgCImF7U/e03l1MfRk=;
- b=JinARaWcLoxGqEp5MelcIomLaB/UsBmZngFMrlTVbeHsrcZRDDoCRj578kWo/wfcnD
- +if6iDA9aBjviu6nJK1tYDTHh+Rk8E2ooDk2Zy45iHZarq28iz8IJUhIBsjpxp/jE9py
- M8llCQdIoHED0lO/beF4aJcGMlI1Mi1EFhqnJvUlsowl22//kJQ8sHdEK9GZSse3yJEk
- JGo2odbvRmIFFFVw3RmsHl+U6GJMI0StxgCJx9ZLC8atzbtOg98QVaSUJ1pobTUAuKsy
- D49J9uUaidIEtKfU5n+0C4r+9H9Pq9klHEXlQrcpfkaeHY4XyXfizx32ajnPkCeyaWQl
- i37Q==
+ bh=RZ9SueSaOP+HPQ4J59QeGSz17z/BstirkdtlH1uRrLY=;
+ b=bW4uCwRqyrR8RO9+0DvpPq37bm+ww0UvSsoaAAt2AU/A/bRbaYRr4+Cbg1dnD/U83x
+ 70zqhuc+NxAsRj34pLNHk8uGTnhHRtl7Ydz0P7ztRNzZ+FtnU0r2xdvj/K4Cqk4/2wBr
+ XoJ6If1GjHFLmpNElPNX1MRUHV5c4oVNz6Z3YtzSyGc+k6hILGlnAJO4LrUUngUiJCn2
+ u+TvmoAluIJa/Lf8H4GTmGFcMRBx37KlR0HvgLw2Y0C/FIduZHdFTCfyiaAcTIBjnT16
+ TWzUYmIztQsO3RIZ89mb7zMe3GNKnnZhasO6yLwohJIgAVRzh7sXOf/yTyH3F6VU25jU
+ cpZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772680587; x=1773285387;
+ d=1e100.net; s=20230601; t=1772680713; x=1773285513;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pbU302MELCi/teca0jeDvW57NGgCImF7U/e03l1MfRk=;
- b=BC5RaTjINSLfvkLVcWANjnFBp21OIAI5p1duIZBOLwsTwmpyAArU3L3QehdUZbewGD
- 7IfnKo7NipPOHziLzfGjFZVkCMy7gsyHmkMy32MVcikqTqyXC2f76fanxs/NInTx/Ex6
- q/mT/LNnHpGlGXecjZpiSI4BCtNprUvT1LBdEyJdTbUDTxgr3RQpQNFqHwVvJCN7MX5Y
- aeUnwrKYEtBrCbsiPl9kuBHtC4ESShtoMlpgLA1EoUhDZBF/bUgHKlHB+xKzPain1Eqd
- xg+9MLjEowmh+8LmrAQbmPT2g2B+v9ubKEv9Z0JkxagMDWPZkgQd+BSbhjyw4UJPWbYi
- npaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJassYYI+UHEb05r41r60P5XK58Wa5P39lqDAun21fJE3DPlQqxC4CL1K6tENps8pb5VBVLVZyaz5X@nongnu.org
-X-Gm-Message-State: AOJu0Yx/d3iag57LHPRUX/BSbJnRmoDrGz2+5fBBKSE7WiKP52EfvQwe
- nm95BtmgVcmnpRC0LUJhpfxKSZrmFlhJ0WzeeGt962WZC9WcQWpO0BHwZLZ7aSyUQLPcwc5sQzW
- dmIi6CgPlcgrVWjOoL9xVEzUL/tXHJNk=
-X-Gm-Gg: ATEYQzx2AQ7h2T3zUROCAPwcYxTEHGzYseY4fynVy4KUFlxDwwhGOqAQllu/0F5dvS/
- Rfok/g03bN1iY8ednL4GOAyeaLkKs2Iu0DvlAxTevR7PYeas6I5Gs1MlHfEYVTlFC4/IeiLdBkl
- pOEKsqB+wDUcG7xc7xZCaiVQtazrxHciN5gp+OVC7904VX+0bI4gKxREfAUkDntONZz5QF8mRd2
- +yPxuo+hR8a0MfgWYoR5NharHmqCCwrgTUBtbFC/SqfdnfkPdNhZN6U7nZHPdvBpwgYPBXD/gHQ
- zQ3IgaXw8xxfkbIwPUNFh7EH6wnGLds+Tkqzvg==
-X-Received: by 2002:a05:6402:34c9:b0:64b:3225:b771 with SMTP id
- 4fb4d7f45d1cf-660ef779da3mr2343101a12.6.1772680587103; Wed, 04 Mar 2026
- 19:16:27 -0800 (PST)
+ bh=RZ9SueSaOP+HPQ4J59QeGSz17z/BstirkdtlH1uRrLY=;
+ b=wgLK5sjxkUS2ZvPE4apjnzZCPM8YTME24ymq/pWwD3KK5yY98Qj1bPDS9/Q3O0nOoW
+ L7hEGXRW26A53gqiuZKHyNTLi2IBGoB5JfI7p6uZUn+pOlU2CrNyQO/1fEc5KaEJ5UWx
+ E3FCZ4sPO6xiNvEzGDOSVuNMm07vmEqD718pyeohGBxQxJJGp/ZMWY60egwc6GcH4x2r
+ qaJlirtafJPdz4HQqvgZTj5GW7mOhja+/fJMPXlQiHaf6KxhMx//rHB6OL/aWSdqQIct
+ XDeqKil6mqVZsTBxsOHArN6pexM6q/AECpgCKxd/HoAqPEZvJiEn9awArm6aXucdJkCK
+ qPQA==
+X-Gm-Message-State: AOJu0YytS6+B+Dadwr8qTsOVaZsD57wAv9+xGR9yxI2cEyQhoHld+l+N
+ wZKK8tEGkRERVzCJMW5yhqzpIdDWzB1PoGVicsooXE2rOT31e6sre4DOM8Lgi7e0yTQQaisyJYg
+ RZTdiWZBg2TNdZmqMEl4TgVUlESNjYjc=
+X-Gm-Gg: ATEYQzzzsEsZgX/HBVDHPZd6DtgL4VeX1SSZuUI4C+f90okHK+SNFNqwoDqiOaNkMfe
+ U//pbjJ+v3i+5cqYP0CtoPHssS6Tg9sWN6ixzXfijMnPx49DIRtTORNldBiBced09dxhI7vrd7N
+ aFntoLikZgNvgJQxyUpxkmMPXYyJzYrxJpBl9FROx5k/0LNrJyNWWRlAI9otqe/HZPeACRlNECS
+ amYW/VDuqW8U/w7M0IpUax6wyVoMi6A2zcPYjris6cD5K84XC0yl2NoVzokia25IipZC1dP2a5Z
+ n4ZRMrUJSuQ000Ezy5xp6J50kCG+oVGWe0nFGQ==
+X-Received: by 2002:a17:906:ef06:b0:b73:8639:334a with SMTP id
+ a640c23a62f3a-b93f11efe06mr250504166b.13.1772680712914; Wed, 04 Mar 2026
+ 19:18:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20260304121113.117299-1-james.wainwright@lowrisc.org>
- <20260304121113.117299-2-james.wainwright@lowrisc.org>
-In-Reply-To: <20260304121113.117299-2-james.wainwright@lowrisc.org>
+References: <20260227232838.23392-1-philmd@linaro.org>
+In-Reply-To: <20260227232838.23392-1-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 5 Mar 2026 13:16:00 +1000
-X-Gm-Features: AaiRm52wcoDyOHF4uctY4IHJDjDE4B68Yo8vBrhmqIHIS9Lt7TYz29L4NDUuudw
-Message-ID: <CAKmqyKNoZQq0RFtGgoR1cM8bH1z3tpQodYjk=8bM_v_8-Pn0Vw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] util: export CRC32[C] lookup tables
-To: James Wainwright <james.wainwright@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
+Date: Thu, 5 Mar 2026 13:18:06 +1000
+X-Gm-Features: AaiRm51Bwl9wNEETey4KjRBQFLmIArVosB7CTxnoA2KcFsxwP_pN6j3_X6mFTJU
+Message-ID: <CAKmqyKPBtet+2HuXKV20aS6ktYnrqYhZJak7xyM2rKqXV71wzQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv: Remove deprecated 'riscv,
+ delegate' device-tree property
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Conor Dooley <conor@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ qemu-riscv@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Anup Patel <anup.patel@oss.qualcomm.com>, devel@lists.libvirt.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -119,202 +125,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 5, 2026 at 12:11=E2=80=AFAM James Wainwright
-<james.wainwright@lowrisc.org> wrote:
+On Sat, Feb 28, 2026 at 9:29=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> These are needed for the RISC-V Zbr0p93 CRC32 instructions which pre-XOR
-> the data into the CRC state before the instruction is executed, making
-> the zlib crc32 and QEMU crc32c implementations inappropriate.
+> The "riscv,delegate" DT property was added in QEMU 7.0 as part of
+> the AIA APLIC support.  The property changed name during the
+> review process in Linux and the correct name ended up being
+> "riscv,delegation". The incorrect name was added as alias, and
+> deprecated in v9.1 (commit 38facfa8432), so can be removed for
+> v11.0.
 >
-> https://github.com/riscv/riscv-bitmanip/releases/download/v0.93/bitmanip-=
-0.93.pdf
->
-> Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  include/qemu/crc32.h  | 18 +++++++++
->  include/qemu/crc32c.h |  1 +
->  util/crc32.c          | 85 +++++++++++++++++++++++++++++++++++++++++++
->  util/crc32c.c         |  4 +-
->  util/meson.build      |  1 +
->  5 files changed, 107 insertions(+), 2 deletions(-)
->  create mode 100644 include/qemu/crc32.h
->  create mode 100644 util/crc32.c
+> Binary file pc-bios/opensbi-riscv32-generic-fw_dynamic.bin matches
+> Binary file pc-bios/opensbi-riscv64-generic-fw_dynamic.bin matches
+> ---
+>  docs/about/deprecated.rst       | 11 -----------
+>  docs/about/removed-features.rst | 11 +++++++++++
+>  hw/riscv/virt.c                 |  9 ---------
+>  3 files changed, 11 insertions(+), 20 deletions(-)
 >
-> diff --git a/include/qemu/crc32.h b/include/qemu/crc32.h
-> new file mode 100644
-> index 0000000000..a320151acc
-> --- /dev/null
-> +++ b/include/qemu/crc32.h
-> @@ -0,0 +1,18 @@
-> +/*
-> + * CRC32 Checksum
-> + *
-> + * Copyright (c) 2026 QEMU contributors
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms of the GNU General Public License as published by the=
- Free
-> + * Software Foundation; either version 2 of the License, or (at your opt=
-ion)
-> + * any later version.
-> + *
-> + */
-> +
-> +#ifndef QEMU_CRC32_H
-> +#define QEMU_CRC32_H
-> +
-> +extern const uint32_t crc32_table[256];
-> +
-> +#endif
-> diff --git a/include/qemu/crc32c.h b/include/qemu/crc32c.h
-> index 88b4d2b3b3..3d5ba189ef 100644
-> --- a/include/qemu/crc32c.h
-> +++ b/include/qemu/crc32c.h
-> @@ -28,6 +28,7 @@
->  #ifndef QEMU_CRC32C_H
->  #define QEMU_CRC32C_H
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 1d5c4f3707c..cc5502e5394 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -494,17 +494,6 @@ versions, aliases will point to newer CPU model vers=
+ions
+>  depending on the machine type, so management software must
+>  resolve CPU model aliases before starting a virtual machine.
 >
-> +extern const uint32_t crc32c_table[256];
+> -RISC-V "virt" board "riscv,delegate" DT property (since 9.1)
+> -''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> -
+> -The "riscv,delegate" DT property was added in QEMU 7.0 as part of
+> -the AIA APLIC support.  The property changed name during the review
+> -process in Linux and the correct name ended up being
+> -"riscv,delegation".  Changing the DT property name will break all
+> -available firmwares that are using the current (wrong) name.  The
+> -property is kept as is in 9.1, together with "riscv,delegation", to
+> -give more time for firmware developers to change their code.
+> -
+>  x86 "isapc" board use of modern x86 CPUs (since 10.2)
+>  '''''''''''''''''''''''''''''''''''''''''''''''''''''
 >
->  uint32_t crc32c(uint32_t crc, const uint8_t *data, unsigned int length);
->  uint32_t iov_crc32c(uint32_t crc, const struct iovec *iov, size_t iov_cn=
-t);
-> diff --git a/util/crc32.c b/util/crc32.c
-> new file mode 100644
-> index 0000000000..590dd6e3a2
-> --- /dev/null
-> +++ b/util/crc32.c
-> @@ -0,0 +1,85 @@
-> +/*
-> + * Constants for computing CRC32 checksums
-> + *
-> + * Copyright (c) 2026 QEMU contributors
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms of the GNU General Public License as published by the=
- Free
-> + * Software Foundation; either version 2 of the License, or (at your opt=
-ion)
-> + * any later version.
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/crc32.h"
-> +
-> +/*
-> + * CRC-32 table (reversed; polynomial 0xEDB88320).
-> + */
-> +
-> +const uint32_t crc32_table[256] =3D {
-> +    0x00000000u, 0x77073096u, 0xee0e612cu, 0x990951bau,
-> +    0x076dc419u, 0x706af48fu, 0xe963a535u, 0x9e6495a3u,
-> +    0x0edb8832u, 0x79dcb8a4u, 0xe0d5e91eu, 0x97d2d988u,
-> +    0x09b64c2bu, 0x7eb17cbdu, 0xe7b82d07u, 0x90bf1d91u,
-> +    0x1db71064u, 0x6ab020f2u, 0xf3b97148u, 0x84be41deu,
-> +    0x1adad47du, 0x6ddde4ebu, 0xf4d4b551u, 0x83d385c7u,
-> +    0x136c9856u, 0x646ba8c0u, 0xfd62f97au, 0x8a65c9ecu,
-> +    0x14015c4fu, 0x63066cd9u, 0xfa0f3d63u, 0x8d080df5u,
-> +    0x3b6e20c8u, 0x4c69105eu, 0xd56041e4u, 0xa2677172u,
-> +    0x3c03e4d1u, 0x4b04d447u, 0xd20d85fdu, 0xa50ab56bu,
-> +    0x35b5a8fau, 0x42b2986cu, 0xdbbbc9d6u, 0xacbcf940u,
-> +    0x32d86ce3u, 0x45df5c75u, 0xdcd60dcfu, 0xabd13d59u,
-> +    0x26d930acu, 0x51de003au, 0xc8d75180u, 0xbfd06116u,
-> +    0x21b4f4b5u, 0x56b3c423u, 0xcfba9599u, 0xb8bda50fu,
-> +    0x2802b89eu, 0x5f058808u, 0xc60cd9b2u, 0xb10be924u,
-> +    0x2f6f7c87u, 0x58684c11u, 0xc1611dabu, 0xb6662d3du,
-> +    0x76dc4190u, 0x01db7106u, 0x98d220bcu, 0xefd5102au,
-> +    0x71b18589u, 0x06b6b51fu, 0x9fbfe4a5u, 0xe8b8d433u,
-> +    0x7807c9a2u, 0x0f00f934u, 0x9609a88eu, 0xe10e9818u,
-> +    0x7f6a0dbbu, 0x086d3d2du, 0x91646c97u, 0xe6635c01u,
-> +    0x6b6b51f4u, 0x1c6c6162u, 0x856530d8u, 0xf262004eu,
-> +    0x6c0695edu, 0x1b01a57bu, 0x8208f4c1u, 0xf50fc457u,
-> +    0x65b0d9c6u, 0x12b7e950u, 0x8bbeb8eau, 0xfcb9887cu,
-> +    0x62dd1ddfu, 0x15da2d49u, 0x8cd37cf3u, 0xfbd44c65u,
-> +    0x4db26158u, 0x3ab551ceu, 0xa3bc0074u, 0xd4bb30e2u,
-> +    0x4adfa541u, 0x3dd895d7u, 0xa4d1c46du, 0xd3d6f4fbu,
-> +    0x4369e96au, 0x346ed9fcu, 0xad678846u, 0xda60b8d0u,
-> +    0x44042d73u, 0x33031de5u, 0xaa0a4c5fu, 0xdd0d7cc9u,
-> +    0x5005713cu, 0x270241aau, 0xbe0b1010u, 0xc90c2086u,
-> +    0x5768b525u, 0x206f85b3u, 0xb966d409u, 0xce61e49fu,
-> +    0x5edef90eu, 0x29d9c998u, 0xb0d09822u, 0xc7d7a8b4u,
-> +    0x59b33d17u, 0x2eb40d81u, 0xb7bd5c3bu, 0xc0ba6cadu,
-> +    0xedb88320u, 0x9abfb3b6u, 0x03b6e20cu, 0x74b1d29au,
-> +    0xead54739u, 0x9dd277afu, 0x04db2615u, 0x73dc1683u,
-> +    0xe3630b12u, 0x94643b84u, 0x0d6d6a3eu, 0x7a6a5aa8u,
-> +    0xe40ecf0bu, 0x9309ff9du, 0x0a00ae27u, 0x7d079eb1u,
-> +    0xf00f9344u, 0x8708a3d2u, 0x1e01f268u, 0x6906c2feu,
-> +    0xf762575du, 0x806567cbu, 0x196c3671u, 0x6e6b06e7u,
-> +    0xfed41b76u, 0x89d32be0u, 0x10da7a5au, 0x67dd4accu,
-> +    0xf9b9df6fu, 0x8ebeeff9u, 0x17b7be43u, 0x60b08ed5u,
-> +    0xd6d6a3e8u, 0xa1d1937eu, 0x38d8c2c4u, 0x4fdff252u,
-> +    0xd1bb67f1u, 0xa6bc5767u, 0x3fb506ddu, 0x48b2364bu,
-> +    0xd80d2bdau, 0xaf0a1b4cu, 0x36034af6u, 0x41047a60u,
-> +    0xdf60efc3u, 0xa867df55u, 0x316e8eefu, 0x4669be79u,
-> +    0xcb61b38cu, 0xbc66831au, 0x256fd2a0u, 0x5268e236u,
-> +    0xcc0c7795u, 0xbb0b4703u, 0x220216b9u, 0x5505262fu,
-> +    0xc5ba3bbeu, 0xb2bd0b28u, 0x2bb45a92u, 0x5cb36a04u,
-> +    0xc2d7ffa7u, 0xb5d0cf31u, 0x2cd99e8bu, 0x5bdeae1du,
-> +    0x9b64c2b0u, 0xec63f226u, 0x756aa39cu, 0x026d930au,
-> +    0x9c0906a9u, 0xeb0e363fu, 0x72076785u, 0x05005713u,
-> +    0x95bf4a82u, 0xe2b87a14u, 0x7bb12baeu, 0x0cb61b38u,
-> +    0x92d28e9bu, 0xe5d5be0du, 0x7cdcefb7u, 0x0bdbdf21u,
-> +    0x86d3d2d4u, 0xf1d4e242u, 0x68ddb3f8u, 0x1fda836eu,
-> +    0x81be16cdu, 0xf6b9265bu, 0x6fb077e1u, 0x18b74777u,
-> +    0x88085ae6u, 0xff0f6a70u, 0x66063bcau, 0x11010b5cu,
-> +    0x8f659effu, 0xf862ae69u, 0x616bffd3u, 0x166ccf45u,
-> +    0xa00ae278u, 0xd70dd2eeu, 0x4e048354u, 0x3903b3c2u,
-> +    0xa7672661u, 0xd06016f7u, 0x4969474du, 0x3e6e77dbu,
-> +    0xaed16a4au, 0xd9d65adcu, 0x40df0b66u, 0x37d83bf0u,
-> +    0xa9bcae53u, 0xdebb9ec5u, 0x47b2cf7fu, 0x30b5ffe9u,
-> +    0xbdbdf21cu, 0xcabac28au, 0x53b39330u, 0x24b4a3a6u,
-> +    0xbad03605u, 0xcdd70693u, 0x54de5729u, 0x23d967bfu,
-> +    0xb3667a2eu, 0xc4614ab8u, 0x5d681b02u, 0x2a6f2b94u,
-> +    0xb40bbe37u, 0xc30c8ea1u, 0x5a05df1bu, 0x2d02ef8du
-> +};
-> diff --git a/util/crc32c.c b/util/crc32c.c
-> index ea7f345de8..f40597f80d 100644
-> --- a/util/crc32c.c
-> +++ b/util/crc32c.c
-> @@ -1,7 +1,7 @@
->  /*
->   *  Castagnoli CRC32C Checksum Algorithm
->   *
-> - *  Polynomial: 0x11EDC6F41
-> + *  Polynomial: 0x1EDC6F41
->   *
->   *  Castagnoli93: Guy Castagnoli and Stefan Braeuer and Martin Herrman
->   *               "Optimization of Cyclic Redundancy-Check Codes with 24
-> @@ -37,7 +37,7 @@
->   * reflect output bytes =3D true
->   */
+> diff --git a/docs/about/removed-features.rst b/docs/about/removed-feature=
+s.rst
+> index 41bec8b8e38..0a62e87ee35 100644
+> --- a/docs/about/removed-features.rst
+> +++ b/docs/about/removed-features.rst
+> @@ -1232,6 +1232,17 @@ converting to using TCG plugins they should contac=
+t the qemu-devel
+>  mailing list.
 >
-> -static const uint32_t crc32c_table[256] =3D {
-> +const uint32_t crc32c_table[256] =3D {
->      0x00000000L, 0xF26B8303L, 0xE13B70F7L, 0x1350F3F4L,
->      0xC79A971FL, 0x35F1141CL, 0x26A1E7E8L, 0xD4CA64EBL,
->      0x8AD958CFL, 0x78B2DBCCL, 0x6BE22838L, 0x9989AB3BL,
-> diff --git a/util/meson.build b/util/meson.build
-> index e7a2a2a64c..d5789b1316 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -44,6 +44,7 @@ util_ss.add(files('id.c'))
->  util_ss.add(files('qemu-config.c', 'notify.c'))
->  util_ss.add(files('qemu-option.c', 'qemu-progress.c'))
->  util_ss.add(files('keyval.c'))
-> +util_ss.add(files('crc32.c'))
->  util_ss.add(files('crc32c.c'))
->  util_ss.add(files('uuid.c'))
->  util_ss.add(files('getauxval.c'))
+>
+> +Firmware, ACPI, Device Tree
+> +---------------------------
+> +
+> +RISC-V "virt" board "riscv,delegate" DT property (removed in 11.0)
+> +''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+> +
+> +The "riscv,delegate" DT property was added in QEMU 7.0 as part of
+> +the AIA APLIC support.  The property changed name during the review
+> +process in Linux and the correct name ended up being "riscv,delegation".
+> +
+> +
+>  System emulator devices
+>  -----------------------
+>
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index bbce2fb6671..a1c323e66df 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -666,15 +666,6 @@ static void create_fdt_one_aplic(RISCVVirtState *s, =
+int socket,
+>          qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegation",
+>                                 aplic_child_phandle, 0x1,
+>                                 VIRT_IRQCHIP_NUM_SOURCES);
+> -        /*
+> -         * DEPRECATED_9.1: Compat property kept temporarily
+> -         * to allow old firmwares to work with AIA. Do *not*
+> -         * use 'riscv,delegate' in new code: use
+> -         * 'riscv,delegation' instead.
+> -         */
+> -        qemu_fdt_setprop_cells(ms->fdt, aplic_name, "riscv,delegate",
+> -                               aplic_child_phandle, 0x1,
+> -                               VIRT_IRQCHIP_NUM_SOURCES);
+>      }
+>
+>      riscv_socket_fdt_write_id(ms, aplic_name, socket);
 > --
-> 2.48.1
+> 2.52.0
 >
 >
 
