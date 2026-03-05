@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB88CF47CA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF242F47CA4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCoe-0002h9-TU; Thu, 05 Mar 2026 12:48:52 -0500
+	id 1vyCoe-0002dq-7b; Thu, 05 Mar 2026 12:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoU-0002Dj-Hy
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vyCoD-00029T-DM
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoN-0002Aa-R7
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:39 -0500
+ id 1vyCoA-00029T-W0
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732914;
+ s=mimecast20190719; t=1772732902;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4nNBnkbdOoq/TO93m2/cqfU9S+qOIByL3MN/2Z5FSuM=;
- b=ReGyiu4ZjFJF/2WE8eyl2ha8toJ94G+IKtFo9bPY+57gojUv+xQRt8KsfAdmXoRU/pvazh
- dZlPQLCAHKG5ACVslQlpblP3K5RjhO6kRuFhp81EBfsMD/r3JnigcnAuL/K/jnQkne3Hlh
- fvmbQWHLbPMCugMRCa0aYPc2cENlg6c=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=3x5dOLupVL+hjV4GsiegMaAvA6L4zY0/YDT1LJKlaPI=;
+ b=SJvw+tfS/EaxEfVm7447Apx8CkrtR/NmWMfx2ALnUsyt8Wlgj82RADO7rQ7X/VIgEUsn4k
+ YaCddjo+PnVaLVUYWxutKMRZkdkZidj+HvSxFrz6Oeo5LEXcapQeKacdsedMsgc1nu/QkU
+ tyWuj9YxlC2HPdLzGkOIpHIOt9+e4qI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-DS3pzLLvM8K3nfZPDHR7Ag-1; Thu,
- 05 Mar 2026 12:48:32 -0500
-X-MC-Unique: DS3pzLLvM8K3nfZPDHR7Ag-1
-X-Mimecast-MFC-AGG-ID: DS3pzLLvM8K3nfZPDHR7Ag_1772732911
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-zITTJGrlNCeK5O6pU7sUSg-1; Thu,
+ 05 Mar 2026 12:48:16 -0500
+X-MC-Unique: zITTJGrlNCeK5O6pU7sUSg-1
+X-Mimecast-MFC-AGG-ID: zITTJGrlNCeK5O6pU7sUSg_1772732895
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02D8018002CB; Thu,  5 Mar 2026 17:48:31 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB84E195608F; Thu,  5 Mar 2026 17:48:14 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 437361956095; Thu,  5 Mar 2026 17:48:25 +0000 (UTC)
+ id E2EB31956095; Thu,  5 Mar 2026 17:48:09 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -62,23 +62,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PULL 07/27] include: define constant for early constructor priority
-Date: Thu,  5 Mar 2026 17:47:23 +0000
-Message-ID: <20260305174743.3084606-8-berrange@redhat.com>
+Subject: [PULL 04/27] io: fix cleanup for websock I/O source data on
+ cancellation
+Date: Thu,  5 Mar 2026 17:47:20 +0000
+Message-ID: <20260305174743.3084606-5-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -96,49 +97,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Functions marked with __attribute__((__constructor__)) will be
-invoked in linker order. In theory this is well defined, but
-in practice, it is hard to determine what this order will be
-with the layers of indirection through meson, ninja and the
-static libraries QEMU builds.
+The websock code will create a GSource for tracking completion of the
+handshake process, passing a QIOTask which is freed by the callback
+when it completes, which means when a source is cancelled, nothing is
+free'ing the task.
 
-Notably, the order currently appears different between Linux
-and Windows (as tested with Wine on Linux). This can cause
-problems when certain QEMU constructors have a dependancy on
-other QEMU constructors.
+Switch to provide a data free callback to the GSource, which ensures
+the QIOTask is always freed even when the main event callback never
+fires.
 
-To address this define a QEMU_CONSTRUCTOR_EARLY constant which
-provides a priority value that will run before other default
-constructors. This is to be used for QEMU constructors that
-are themselves self-contained, but may be relied upon by other
-constructors.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/compiler.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ io/channel-websock.c | 49 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index 1c2b673c05..4c49f52eb0 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -194,6 +194,14 @@
- # define QEMU_USED
- #endif
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 100faba6b3..9902b014f7 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -526,11 +526,32 @@ static int qio_channel_websock_handshake_read(QIOChannelWebsock *ioc,
+     return 1;
+ }
  
-+/*
-+ * A priority for __attribute__((constructor(...))) that
-+ * will run earlier than the default constructors. Must
-+ * only be used for functions that have no dependency
-+ * on global initialization of other QEMU subsystems.
-+ */
-+#define QEMU_CONSTRUCTOR_EARLY 101
++typedef struct QIOChannelWebsockData {
++    QIOTask *task;
++} QIOChannelWebsockData;
 +
- /*
-  * Disable -ftrivial-auto-var-init on a local variable.
-  *
++static void qio_channel_websock_data_free(gpointer user_data)
++{
++    QIOChannelWebsockData *data = user_data;
++    /*
++     * Usually 'task' will be NULL since the GSource
++     * callback will either complete the task or pass
++     * it on to a new GSource. We'll see a non-NULL
++     * task here only if the GSource was released before
++     * its callback triggers
++     */
++    if (data->task) {
++        qio_task_free(data->task);
++    }
++    g_free(data);
++}
++
+ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+                                                    GIOCondition condition,
+                                                    gpointer user_data)
+ {
+-    QIOTask *task = user_data;
++    QIOChannelWebsockData *data = user_data;
++    QIOTask *task = data->task;
+     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
+         qio_task_get_source(task));
+     Error *err = NULL;
+@@ -545,7 +566,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
+-        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -562,7 +582,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+             trace_qio_channel_websock_handshake_complete(ioc);
+             qio_task_complete(task);
+         }
+-        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -574,7 +593,8 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+                                                  GIOCondition condition,
+                                                  gpointer user_data)
+ {
+-    QIOTask *task = user_data;
++    QIOChannelWebsockData *data = user_data, *newdata = NULL;
++    QIOTask *task = data->task;
+     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
+         qio_task_get_source(task));
+     Error *err = NULL;
+@@ -590,7 +610,6 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
+-        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -603,12 +622,14 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+     error_propagate(&wioc->io_err, err);
+ 
+     trace_qio_channel_websock_handshake_reply(ioc);
++    newdata = g_new0(QIOChannelWebsockData, 1);
++    newdata->task = g_steal_pointer(&data->task);
+     wioc->hs_io_tag = qio_channel_add_watch(
+         wioc->master,
+         G_IO_OUT,
+         qio_channel_websock_handshake_send,
+-        task,
+-        NULL);
++        newdata,
++        qio_channel_websock_data_free);
+     return FALSE;
+ }
+ 
+@@ -904,12 +925,12 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
+                                    gpointer opaque,
+                                    GDestroyNotify destroy)
+ {
+-    QIOTask *task;
++    QIOChannelWebsockData *data = g_new0(QIOChannelWebsockData, 1);
+ 
+-    task = qio_task_new(OBJECT(ioc),
+-                        func,
+-                        opaque,
+-                        destroy);
++    data->task = qio_task_new(OBJECT(ioc),
++                              func,
++                              opaque,
++                              destroy);
+ 
+     trace_qio_channel_websock_handshake_start(ioc);
+     trace_qio_channel_websock_handshake_pending(ioc, G_IO_IN);
+@@ -917,8 +938,8 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
+         ioc->master,
+         G_IO_IN,
+         qio_channel_websock_handshake_io,
+-        task,
+-        NULL);
++        data,
++        qio_channel_websock_data_free);
+ }
+ 
+ 
 -- 
 2.53.0
 
