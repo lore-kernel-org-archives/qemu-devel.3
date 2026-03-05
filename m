@@ -4,92 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A798F3D311
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 15:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201AEF3D311
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 15:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyAqV-0003y0-Kt; Thu, 05 Mar 2026 10:42:39 -0500
+	id 1vyArA-0004lI-GC; Thu, 05 Mar 2026 10:43:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vyAqN-0003xI-Nh
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:42:33 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vyAqL-0007QZ-RL
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:42:31 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b9419e561fcso61801066b.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 07:42:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772725344; x=1773330144; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vc1OU23X0Mtg23wCLwbVaW2tiUjYg/yy7n5MUbPGdZA=;
- b=fHe2k1L/7APnjGDugFm+Luu3Lc1dU10PN4wOz1MXaIoDUsR58dZ323ystxfceNBo5s
- dP3BoJLVc5fHDY9/WihyyuDxPxfHrjmpXAJhDdzHPn2KjdW6/9MMf/8K3vMqhsa4agT5
- lykr+UI6mrEB9PlC/FSOVpd8U4LLIk+U5Sc7PHpKiXcMbtMYCsGceEuhWGRD+EP3TKpn
- 8R0UyPMcMk5g43rgsv+QtduGL1nhiGLwrULo/zz/cpep6K41w0GPjz+AHQyzHMfcYZRC
- jwEp2g7TOhh5V564rv/YBV2zHQs5zovt+9xI8OcIBEctvMPjJsPQym+JQS7CRDs/ddEn
- NvEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772725344; x=1773330144;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vc1OU23X0Mtg23wCLwbVaW2tiUjYg/yy7n5MUbPGdZA=;
- b=nruA7K+zjgIBQFw45lCuL5+fgPouz4qAY/cQwhW0NOzl8SEIvYaTKdD70mOMUJBBAC
- dfe0wxMkdpnakBVdCPNf+HDCrsY0QZg9jtxBuffZzDakms6zYp8YJGwz6IynXbkTHj2h
- VF47aAD33kTN1cCf8qkyhBYmxoyBh+QkfnnauLec9CBpk//WLbmFPybW9LQI/RMUJ9+o
- IHiGF1HIt6jY6m/wEISVoX+Ky49nNY9LON/m6wbVlg557N2hHmUJwatumofMWe3IFVZp
- 4VvteuVrgCDzS0VTJFDgPpFTBZWlbsnzmnpkcvMWSKBLKSiMV+IL1nWIeNnOeZLlb+qY
- 8bhQ==
-X-Gm-Message-State: AOJu0YzTFPzlC7anA4Pu7OIw9DLDaTJUCJC07AytuR0Uyh++752taCSI
- cCQW3K8gOti9rlL2NJ3S8A7omGPuM3CdOLuaV1e+sGjeZ882cGMG1E7VexsP5VFPoGU=
-X-Gm-Gg: ATEYQzyGGTItBeFZF0YQqZzk+iDs9+lZHIE7YrEnutz7y3HWO3pS5bnROWk3PcULQF+
- 1x0TiUxJ9sTdYgIJyb+X5JTi2oHQ2ZLTQnaknGd3Xb2ZVoOwYRnOmRrEYpaN97w1S96H0bbUZzX
- pLHxmmCRH3athYcPeEtUXmElLuUgQhMYink8r6YhWdPT5Ts4rxeNQ69qpQhfTI66Z892rIUu+bq
- 4i4j7ssA91AQQ8bf71+88D5leO92L/iscjRRXiLc8aljGDnFnpjcwax57qjN+Wv9OqPpCGXZDFl
- l6rN2QNNvy/1z557KrycHK6b2EeTLb/SeHX1wXYFYsvwo3lkF3LP4yrGJqJANF3cVAVRo9QDaMv
- CDMzmXQ76/KKZYrB4+B52qSqtwBeKSEC1LZpnORN4YBLonJaEP6CVAimkue2RhZm+OYzTaKkYqL
- nJgUNeLN7dKLvrTge/b/+ByYwzEczBjHDQEw==
-X-Received: by 2002:a17:907:9607:b0:b93:50c8:d126 with SMTP id
- a640c23a62f3a-b93f15d92eemr361260566b.60.1772725344156; 
- Thu, 05 Mar 2026 07:42:24 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b9411ee04easm93852166b.63.2026.03.05.07.42.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 07:42:23 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 726D25F809;
- Thu, 05 Mar 2026 15:42:22 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>
-Subject: Re: [PATCH] tests/plugins/tcg/mem: Don't access unaligned memory
-In-Reply-To: <20260305120104.1254578-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 5 Mar 2026 12:01:04 +0000")
-References: <20260305120104.1254578-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Thu, 05 Mar 2026 15:42:22 +0000
-Message-ID: <877brqnuzl.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vyAr9-0004jy-6J; Thu, 05 Mar 2026 10:43:19 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vyAr7-0007YO-2m; Thu, 05 Mar 2026 10:43:18 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 625C7kxv719151; Thu, 5 Mar 2026 15:43:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=SUx2q5
+ cuA+AR253asGwh4fLaNOLidWmONrnXgnR1q2U=; b=AHKkOrWAYheOTZyVNzM7Sl
+ cwjYZ6PRxTISK9U/sTwXcnaTac22rFMFRobpgD6FnLU2E51Gige8J615xlePy3pm
+ aXDEc1xW6pgAT+oGDVDIxdNzNNag+8yCGOxk58vIa1FGcRioGsj5N9vKxcvl2oyd
+ l5j06LBQ9QJOAP0TYtDIGTfiYYHkg7wUK4XMSuNpM36TGwYvYRnQu9eVz2TU5t3R
+ remk5F8e6iRsEu0jFWbw8KGEhy7v7BsZflBRFW8xjJqksB+GpFIWubpisuA3wLo8
+ cWqMzQaxpa4PX96mrw+bm8GKNCCs8PcTjh7mQJCSOiTw561UnGU2Fmsmwju21rbA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksk43x6q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Mar 2026 15:43:14 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625DYXfL011312;
+ Thu, 5 Mar 2026 15:43:13 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cqau2rea2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Mar 2026 15:43:13 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 625FhC7U33358382
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Mar 2026 15:43:12 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 632775805A;
+ Thu,  5 Mar 2026 15:43:12 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B910358051;
+ Thu,  5 Mar 2026 15:43:11 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.48.183]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Mar 2026 15:43:11 +0000 (GMT)
+Message-ID: <265b8dd6833cfcafe2c9f338d1b64fe92d12a1ac.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 06/15] pc-bios/s390-ccw: Split virtio-ccw and generic
+ virtio
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+Date: Thu, 05 Mar 2026 10:43:11 -0500
+In-Reply-To: <20260304025917.2157032-7-jrossi@linux.ibm.com>
+References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
+ <20260304025917.2157032-7-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Ih75B_9istnYcUXQnAz6_TgiAFippyQr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDEyNSBTYWx0ZWRfX84WsW/CUoC9g
+ 5rS0tQzb3BTnr3BcBSRXEQOzLC4bCmMM6s4Cy0KjE4E66i10KpQJLskbm/k3W8ZDqrwuCp+OSR9
+ 1Zj9spyOU0Fv3B/AXhu5qd6gsqPmjkOdniYABO9WWcjTBmkgRfgNTxklSXf9wilNmhxrxx0suDu
+ l6VBFUpc7f/TnAzXv0AFh6si1YluteUDe0YYlqM8Z1b+vfmmUpWYIsYpD54hi9Bs5cXvZyaO4Bx
+ ZpS8gK+5bZOZnDbHdjcmMEa54OU7z/0kXNNEeFm93IFxc4wCyUH67Bez7zqtX94E9D1gAsTagri
+ vmD07gCDeoc3ie+LNVlbiNO9tzCOk1tZMffy40URYeeSGww5CE3/6fKa9V/XUTkNYrRBYvlW/e5
+ EUIjZstmr31j3m/ZGo1cWT3D66Lrx1Gyf/T/2nh0JUwNKwmUjeGOm0RvtOyonFIF/XL0HzD55ln
+ 4A8DCmK/6ObSXc4q0nw==
+X-Authority-Analysis: v=2.4 cv=csCWUl4i c=1 sm=1 tr=0 ts=69a9a492 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=tD79u1zcvAXxATHVNrEA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Ih75B_9istnYcUXQnAz6_TgiAFippyQr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-05_04,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050125
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,159 +123,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> In commit eb3f69cac62670 we removed the dependency of this
-> mem plugin on the QEMU headers, but in doing that we introduced
-> undefined behaviour when the plugin accesses unaligned memory.
-> This shows up if you build with the gcc or clang address
-
-ubsan
-
-> sanitizer and run 'make check-tcg', in numerous warnings like:
->
-> ../../tests/tcg/plugins/mem.c:167:27: runtime error: load of misaligned a=
-ddress 0x7f1f300354b1 for type 'uint16_t' (aka 'unsigned short'), which req=
-uires 2 byte alignment
-> 0x7f1f300354b1: note: pointer points here
->  00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12 13 =
-14 15 16 17  18 19 1a 1b 1c
->               ^
-> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../tests/tcg/p=
-lugins/mem.c:167:27
->
-> Fix this by rearranging the data reads and writes to use
-> memcpy() instead.
->
-> Fixes: eb3f69cac62670 ("tests/tcg/plugins/mem.c: remove dependency on qem=
-u headers")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-with the extra clarity on the sanitiser:
-
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-
+On Tue, 2026-03-03 at 21:59 -0500, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>=20
+> Separate the CCW specific virtio routines and create generic wrappers for=
+ easier
+> reuse of existing virtio functions with non-CCW devices.
+>=20
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  tests/tcg/plugins/mem.c | 71 +++++++++++++++++------------------------
->  1 file changed, 30 insertions(+), 41 deletions(-)
->
-> diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-> index 7d64e7018f..f3992abc8f 100644
-> --- a/tests/tcg/plugins/mem.c
-> +++ b/tests/tcg/plugins/mem.c
-> @@ -123,6 +123,9 @@ static void update_region_info(uint64_t region, uint6=
-4_t offset,
->      bool is_store =3D qemu_plugin_mem_is_store(meminfo);
->      RegionInfo *ri;
->      bool unseen_data =3D false;
-> +    void *val_ptr;
-> +    unsigned int val_size;
-> +    qemu_plugin_mem_value swapped_value;
->=20=20
->      g_assert(offset + size <=3D region_size);
->=20=20
-> @@ -144,61 +147,46 @@ static void update_region_info(uint64_t region, uin=
-t64_t offset,
->      }
->=20=20
->      void *ri_data =3D &ri->data[offset];
-> +
-> +    swapped_value.type =3D value.type;
->      switch (value.type) {
->      case QEMU_PLUGIN_MEM_VALUE_U8:
-> -    {
-> -        uint8_t val =3D value.data.u8;
-> -        uint8_t *p =3D ri_data;
-> -        if (is_store) {
-> -            *p =3D val;
-> -        } else {
-> -            unseen_data =3D *p !=3D val;
-> -        }
-> +        swapped_value.data.u8 =3D value.data.u8;
-> +        val_ptr =3D &swapped_value.data.u8;
-> +        val_size =3D 1;
->          break;
-> -    }
->      case QEMU_PLUGIN_MEM_VALUE_U16:
-> -    {
-> -        uint16_t val =3D be ? GUINT16_FROM_BE(value.data.u16) :
-> -                            GUINT16_FROM_LE(value.data.u16);
-> -        uint16_t *p =3D ri_data;
-> -        if (is_store) {
-> -            *p =3D val;
-> -        } else {
-> -            unseen_data =3D *p !=3D val;
-> -        }
-> +        swapped_value.data.u16 =3D be ? GUINT16_FROM_BE(value.data.u16) :
-> +            GUINT16_FROM_LE(value.data.u16);
-> +        val_ptr =3D &swapped_value.data.u16;
-> +        val_size =3D 2;
->          break;
-> -    }
->      case QEMU_PLUGIN_MEM_VALUE_U32:
-> -    {
-> -        uint32_t val =3D be ? GUINT32_FROM_BE(value.data.u32) :
-> -                            GUINT32_FROM_LE(value.data.u32);
-> -        uint32_t *p =3D ri_data;
-> -        if (is_store) {
-> -            *p =3D val;
-> -        } else {
-> -            unseen_data =3D *p !=3D val;
-> -        }
-> +        swapped_value.data.u32 =3D be ? GUINT32_FROM_BE(value.data.u32) :
-> +            GUINT32_FROM_LE(value.data.u32);
-> +        val_ptr =3D &swapped_value.data.u32;
-> +        val_size =3D 4;
->          break;
-> -    }
->      case QEMU_PLUGIN_MEM_VALUE_U64:
-> -    {
-> -        uint64_t val =3D be ? GUINT64_FROM_BE(value.data.u64) :
-> -                            GUINT64_FROM_LE(value.data.u64);
-> -        uint64_t *p =3D ri_data;
-> -        if (is_store) {
-> -            *p =3D val;
-> -        } else {
-> -            unseen_data =3D *p !=3D val;
-> -        }
-> +        swapped_value.data.u64 =3D be ? GUINT64_FROM_BE(value.data.u64) :
-> +            GUINT64_FROM_LE(value.data.u64);
-> +        val_ptr =3D &swapped_value.data.u64;
-> +        val_size =3D 8;
->          break;
-> -    }
->      case QEMU_PLUGIN_MEM_VALUE_U128:
-> -        /* non in test so skip */
-> -        break;
-> +        /* none in test so skip */
-> +        goto done;
->      default:
->          g_assert_not_reached();
->      }
->=20=20
-> +    /* ri_data may not be aligned, so we use memcpy/memcmp */
-> +    if (is_store) {
-> +        memcpy(ri_data, val_ptr, val_size);
-> +    } else {
-> +        unseen_data =3D memcmp(ri_data, val_ptr, val_size) !=3D 0;
-> +    }
-> +
->      /*
->       * This is expected for regions initialised by QEMU (.text etc) but =
-we
->       * expect to see all data read and written to the test_data region
-> @@ -213,6 +201,7 @@ static void update_region_info(uint64_t region, uint6=
-4_t offset,
->          ri->seen_all =3D false;
->      }
->=20=20
-> +done:
->      g_mutex_unlock(&lock);
->  }
+>  pc-bios/s390-ccw/Makefile        |   3 +-
+>  pc-bios/s390-ccw/main.c          |   8 +-
+>  pc-bios/s390-ccw/netmain.c       |   2 +-
+>  pc-bios/s390-ccw/s390-ccw.h      |   3 -
+>  pc-bios/s390-ccw/virtio-blkdev.c |  15 +-
+>  pc-bios/s390-ccw/virtio-ccw.c    | 241 +++++++++++++++++++++++++++++++
+>  pc-bios/s390-ccw/virtio-ccw.h    |  24 +++
+>  pc-bios/s390-ccw/virtio-net.c    |   3 +-
+>  pc-bios/s390-ccw/virtio-scsi.c   |   8 +-
+>  pc-bios/s390-ccw/virtio-scsi.h   |   2 +-
+>  pc-bios/s390-ccw/virtio.c        | 239 +++++-------------------------
+>  pc-bios/s390-ccw/virtio.h        |   5 +-
+>  12 files changed, 332 insertions(+), 221 deletions(-)
+>  create mode 100644 pc-bios/s390-ccw/virtio-ccw.c
+>  create mode 100644 pc-bios/s390-ccw/virtio-ccw.h
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+This is some good untangling!
+
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
