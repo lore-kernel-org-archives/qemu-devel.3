@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C515F47CA4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86999F47CA5
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCpu-00068j-KH; Thu, 05 Mar 2026 12:50:11 -0500
+	id 1vyCqS-0007CU-In; Thu, 05 Mar 2026 12:50:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCpX-0005hz-CB
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:57 -0500
+ id 1vyCpz-0006VC-Gu
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCpT-0002JU-6P
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:44 -0500
+ id 1vyCpy-0002ZT-01
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732982;
+ s=mimecast20190719; t=1772733013;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IbVx6h7ufm4kk+pC5TYey/6wcKGTtrcPQQxztMIFIO0=;
- b=QZgNl7fGE2UOFMT5MnIbxypJtB8MilXzB16wGmnEkO08yjRDHOQ25OU/9M6W5q8NWqzW/M
- o2zCHbjzX8UZXdLDMf3RPYp7Kj94zu83DSvf9P0lsF6hWGBrx+/Br97reit16YgXka7L+L
- u9eVDxJyktAj/x7vRLoKELy601pMH+Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=juZS92eO3WbOQRVO+8U3Zr/KTbezJf4zZdiWjx2+nNY=;
+ b=A9l2XaSAwMUe4NV3x/agzx1EFQS3F+VjpneRQ89Zt3Wc4Yo9k3/MyvMwsgCZE1kTptbJBD
+ R3uP/Mx6h0i/PHNYNydK9HTmDx5ObkGzurR/aiOj6SHw1CSqC+wCxFecek1wB6MA0R7OdW
+ GFbeheO/qCHcYjc4qQZhvNvD1N/wBkc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-YG1dY7hbMRyfnSWS7RSSJQ-1; Thu,
- 05 Mar 2026 12:49:37 -0500
-X-MC-Unique: YG1dY7hbMRyfnSWS7RSSJQ-1
-X-Mimecast-MFC-AGG-ID: YG1dY7hbMRyfnSWS7RSSJQ_1772732975
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-nerXnDoDO-aH4e7iRyO6zg-1; Thu,
+ 05 Mar 2026 12:50:08 -0500
+X-MC-Unique: nerXnDoDO-aH4e7iRyO6zg-1
+X-Mimecast-MFC-AGG-ID: nerXnDoDO-aH4e7iRyO6zg_1772733007
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67A52180049D; Thu,  5 Mar 2026 17:49:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 418FA19560B2; Thu,  5 Mar 2026 17:50:07 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 417FD1956095; Thu,  5 Mar 2026 17:49:30 +0000 (UTC)
+ id 8236E1955D71; Thu,  5 Mar 2026 17:50:02 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -62,9 +62,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PULL 19/27] ui: remove redundant use of error_printf_unless_qmp()
-Date: Thu,  5 Mar 2026 17:47:35 +0000
-Message-ID: <20260305174743.3084606-20-berrange@redhat.com>
+Subject: [PULL 25/27] util: fix interleaving of error prefixes
+Date: Thu,  5 Mar 2026 17:47:41 +0000
+Message-ID: <20260305174743.3084606-26-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -96,35 +96,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vnc_display_print_local_addr() method is intended to print the VNC
-listening address on the console at startup, so the user can see the
-auto-chosen port address when using the 'to=' flag. This is only called
-by vnc_display_open() which is in the QEMU startup callpath. The check
-for not being in QMP is thus redundant and can be removed.
+The vreport() function will optionally emit an prefix for error
+messages which is output to stderr incrementally. In the event
+that two vreport() calls execute concurrently, there is a risk
+that the prefix output will interleave. To address this it is
+required to take a lock on 'stderr' when outputting errors.
 
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- ui/vnc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ util/error-report.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 8bf14cf9a7..952976e964 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3578,9 +3578,9 @@ static void vnc_display_print_local_addr(VncDisplay *vd)
-         qapi_free_SocketAddress(addr);
-         return;
+diff --git a/util/error-report.c b/util/error-report.c
+index 6b9e592bc1..bbea49a55d 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -233,6 +233,9 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+     if (monitor_cur_is_qmp()) {
+         cur = NULL;
      }
--    error_printf_unless_qmp("VNC server running on %s:%s\n",
--                            addr->u.inet.host,
--                            addr->u.inet.port);
-+    error_printf("VNC server running on %s:%s\n",
-+                 addr->u.inet.host,
-+                 addr->u.inet.port);
-     qapi_free_SocketAddress(addr);
++    if (!cur) {
++        qemu_flockfile(stderr);
++    }
+ 
+     if (message_with_timestamp && !cur) {
+         timestr = real_time_iso8601();
+@@ -260,6 +263,10 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+ 
+     error_vprintf_mon(cur, fmt, ap);
+     error_printf_mon(cur, "\n");
++
++    if (!cur) {
++        qemu_funlockfile(stderr);
++    }
  }
  
+ /*
 -- 
 2.53.0
 
