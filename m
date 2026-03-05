@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B744F47CA3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91F8F47CA4
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCof-0002hZ-Hx; Thu, 05 Mar 2026 12:48:53 -0500
+	id 1vyCpC-0003y7-Ny; Thu, 05 Mar 2026 12:49:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoF-00029k-5s
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vyCpB-0003xn-2P
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoC-00029l-TX
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:26 -0500
+ id 1vyCp8-0002G3-RG
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732904;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1772732962;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vcB2RECjV5134nspDUKH3Y9bwtq8HW7jkKj1IodMdd8=;
- b=DbLzRP9gn7akWT9EnM67Q5x7d4d8n6EoCCWvTXFiD9vEphd+1hu2TozMGsYVQ21+V+muJo
- fDmGpjx2uEh8bSTuSDICBr2JFHyOSX2Do4/wAUZql9Iq5y2AxunLv1PypI4iOk4rNQ0g5v
- 0MYAFU4roNIT+pkhJ+wwjrvby3xwsPw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BDE2PfGfue96vekIeVYQQo7bNNyRh35/o6HWgcGGENI=;
+ b=LwMpzOB134q70+3xc37/MCzzXNwa7BBc3AACIRuY6cbyyiCdTRbn8HhYBmWpCqYlW1E+5R
+ dN/EgaJ/d9IwIFjIwkTRjCId+vB72ZCRAhjd4Vma1wRaIXy3e8OVsrZNdRIJXn9yu1wPNS
+ D60KJCsMKZaTBfsZGvOq0Q8DVSjBqG8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-RuwiN8zcM4OrwGvgzwv6Pw-1; Thu,
- 05 Mar 2026 12:48:21 -0500
-X-MC-Unique: RuwiN8zcM4OrwGvgzwv6Pw-1
-X-Mimecast-MFC-AGG-ID: RuwiN8zcM4OrwGvgzwv6Pw_1772732900
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-kOKH7dw9MtSvCwrvK0-Hbw-1; Thu,
+ 05 Mar 2026 12:49:20 -0500
+X-MC-Unique: kOKH7dw9MtSvCwrvK0-Hbw-1
+X-Mimecast-MFC-AGG-ID: kOKH7dw9MtSvCwrvK0-Hbw_1772732959
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 19E931956052; Thu,  5 Mar 2026 17:48:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.61])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D5853003E9F; Thu,  5 Mar 2026 17:48:18 +0000 (UTC)
-Date: Thu, 5 Mar 2026 17:48:15 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Subject: Re: [PULL 00/27] Misc patches queue
-Message-ID: <aanB31jS1aN-Cbqo@redhat.com>
-References: <20260303150604.2402872-1-berrange@redhat.com>
- <CAFEAcA8HxfTmY8sSi1hhUE+Hown4RH1guaV5J_QcRsGPWGn2jg@mail.gmail.com>
- <aameG2yyyqhDHE-S@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A916195605F; Thu,  5 Mar 2026 17:49:19 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.44.34.61])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 45F1F1955D71; Thu,  5 Mar 2026 17:49:14 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ devel@lists.libvirt.org, qemu-rust@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: [PULL 16/27] util: avoid repeated prefix on incremental qemu_log calls
+Date: Thu,  5 Mar 2026 17:47:32 +0000
+Message-ID: <20260305174743.3084606-17-berrange@redhat.com>
+In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
+References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aameG2yyyqhDHE-S@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -85,69 +93,161 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 05, 2026 at 03:15:39PM +0000, Daniel P. Berrangé wrote:
-> On Thu, Mar 05, 2026 at 02:47:12PM +0000, Peter Maydell wrote:
-> > On Tue, 3 Mar 2026 at 15:07, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > >
-> > > The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
-> > >
-> > >   Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
-> > >
-> > > are available in the Git repository at:
-> > >
-> > >   https://gitlab.com/berrange/qemu tags/next-pr-pull-request
-> > >
-> > > for you to fetch changes up to 192f59773a6a8fd1e0d3c1d9c9c3f5f59a62c087:
-> > >
-> > >   util/oslib-posix: increase memprealloc thread count to 32 (2026-03-03 15:01:21 +0000)
-> > >
-> > > ----------------------------------------------------------------
-> > > * Increase pre-alloc max thread count to 32
-> > > * Fix checkpatch warning for new/removed files with --terse
-> > > * Detect more GPL boilerplate in checkpatch
-> > > * Fix lean of data in TLS/websock GSource cancellation
-> > > * Tweak CPU docs for DiamondRapids
-> > > * Unconditionally enable thread naming
-> > > * Fix race setting thread naming on Win32
-> > > * Add API docs for logging APIs
-> > > * Fix interleaved error/trace output
-> > > * Fix missing error prefixes with warn_report
-> > > * Add detailed error reporting for VNC passworrd changes
-> > > * Refactoring of error_vprintf & related funcs
-> > >
-> > > ----------------------------------------------------------------
-> > 
-> > Something in this consistently causes the s390x runner
-> > to fail the test-migration test:
-> > 
-> > https://gitlab.com/qemu-project/qemu/-/jobs/13367184083
-> > https://gitlab.com/qemu-project/qemu/-/jobs/13366572115
-> > https://gitlab.com/qemu-project/qemu/-/jobs/13339069533
-> > https://gitlab.com/qemu-project/qemu/-/jobs/13336989367
-> > 
-> > This was a CI run together with the loongarch pullreq, but
-> > that has just passed this job when run in CI on its own:
-> >  https://gitlab.com/qemu-project/qemu/-/jobs/13367800326
-> > so it seems like this pullreq is the one causing the s390x
-> > failures.
-> 
-> Yep, the migration-test seems to be failing in a TLS related test
-> case, which certainly points the finger at the early TLS patch
-> in this series.
+There are three general patterns to QEMU log output
 
-There was a failure to unref an object which caused the hang. I've
-sent a v2 pull request with this fix.
+ 1. Single complete message calls
 
+      qemu_log("Some message\n");
 
-With regards,
-Daniel
+ 2. Direct use of fprintf
+
+      FILE *f = qemu_log_trylock()
+      fprintf(f, "...");
+      fprintf(f, "...");
+      fprintf(f, "...\n");
+      qemu_log_unlock(f)
+
+ 3. Mixed use of qemu_log_trylock/qemu_log()
+
+      FILE *f = qemu_log_trylock()
+      qemu_log("....");
+      qemu_log("....");
+      qemu_log("....\n");
+      qemu_log_unlock(f)
+
+When message prefixes are enabled, the timestamp will be
+unconditionally emitted for all qemu_log() calls. This
+works fine in the 1st case, and has no effect in the 2nd
+case. In the 3rd case, however, we get the timestamp
+printed over & over in each fragment.
+
+One can suggest that pattern (3) is pointless as it is
+functionally identical to (2) but with extra indirection
+and overhead. None the less we have a fair bit of code
+that does this.
+
+The qemu_log() call itself is nothing more than a wrapper
+which does pattern (2) with a single fprintf() call.
+
+One might question whether (2) should include the message
+prefix in the same way that (1), but there are scenarios
+where this could be inappropriate / unhelpful such as the
+CPU register dumps or linux-user strace output.
+
+This patch fixes the problem in pattern (3) by keeping
+track of the call depth of qemu_log_trylock() and then
+only emitting the the prefix when the starting depth
+was zero. In doing this qemu_log_trylock_context() is
+also introduced as a variant of qemu_log_trylock()
+that emits the prefix. Callers doing to batch output
+can thus choose whether a prefix is appropriate or
+not.
+
+Fixes: 012842c07552 (log: make '-msg timestamp=on' apply to all qemu_log usage)
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qemu/log.h |  7 +++++++
+ util/log.c         | 49 ++++++++++++++++++++++++++--------------------
+ 2 files changed, 35 insertions(+), 21 deletions(-)
+
+diff --git a/include/qemu/log.h b/include/qemu/log.h
+index b49a1a5fe3..92956e5d0f 100644
+--- a/include/qemu/log.h
++++ b/include/qemu/log.h
+@@ -70,6 +70,13 @@ bool qemu_log_separate(void);
+  */
+ FILE *qemu_log_trylock(void) G_GNUC_WARN_UNUSED_RESULT;
+ 
++/**
++ * As qemu_log_trylock(), but will also print the message
++ * context, if any is configured and this caused the
++ * acquisition of the FILE lock
++ */
++FILE *qemu_log_trylock_with_context(void) G_GNUC_WARN_UNUSED_RESULT;
++
+ /**
+  * Releases the lock on the log output, previously
+  * acquired by qemu_log_trylock().
+diff --git a/util/log.c b/util/log.c
+index c44d66b5ce..66f6dd5eec 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -127,13 +127,39 @@ static FILE *qemu_log_trylock_with_err(Error **errp)
+     return logfile;
+ }
+ 
++/*
++ * Zero if there's been no opening qemu_log_trylock call,
++ * indicating the need for message context to be emitted
++ *
++ * Non-zero if we're in the middle of printing a message,
++ * possibly over multiple lines and must skip further
++ * message context
++ */
++static __thread unsigned int log_depth;
++
+ FILE *qemu_log_trylock(void)
+ {
+-    return qemu_log_trylock_with_err(NULL);
++    FILE *f = qemu_log_trylock_with_err(NULL);
++    log_depth++;
++    return f;
++}
++
++FILE *qemu_log_trylock_with_context(void)
++{
++    FILE *f = qemu_log_trylock();
++    if (f && log_depth == 1 && message_with_timestamp) {
++        g_autofree const char *timestr = NULL;
++        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
++        timestr = g_date_time_format_iso8601(dt);
++        fprintf(f, "%s ", timestr);
++    }
++    return f;
+ }
+ 
+ void qemu_log_unlock(FILE *logfile)
+ {
++    assert(log_depth);
++    log_depth--;
+     if (logfile) {
+         fflush(logfile);
+         qemu_funlockfile(logfile);
+@@ -145,28 +171,9 @@ void qemu_log_unlock(FILE *logfile)
+ 
+ void qemu_log(const char *fmt, ...)
+ {
+-    FILE *f;
+-    g_autofree const char *timestr = NULL;
+-
+-    /*
+-     * Prepare the timestamp *outside* the logging
+-     * lock so it better reflects when the message
+-     * was emitted if we are delayed acquiring the
+-     * mutex
+-     */
+-    if (message_with_timestamp) {
+-        g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+-        timestr = g_date_time_format_iso8601(dt);
+-    }
+-
+-    f = qemu_log_trylock();
++    FILE *f = qemu_log_trylock_with_context();
+     if (f) {
+         va_list ap;
+-
+-        if (timestr) {
+-            fprintf(f, "%s ", timestr);
+-        }
+-
+         va_start(ap, fmt);
+         vfprintf(f, fmt, ap);
+         va_end(ap);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.53.0
 
 
