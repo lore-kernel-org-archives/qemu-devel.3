@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E967EF513E1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E47F513E6
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyH8n-0004se-Hf; Thu, 05 Mar 2026 17:25:57 -0500
+	id 1vyHEG-00068w-65; Thu, 05 Mar 2026 17:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vyH8l-0004ry-CQ; Thu, 05 Mar 2026 17:25:55 -0500
+ id 1vyHEC-00063y-Iq; Thu, 05 Mar 2026 17:31:32 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vyH8j-00050n-QL; Thu, 05 Mar 2026 17:25:55 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1vyHEB-0005bq-2d; Thu, 05 Mar 2026 17:31:32 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 625IifZ12165137; Thu, 5 Mar 2026 22:25:51 GMT
+ 625HVLdh1959257; Thu, 5 Mar 2026 22:31:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=AOTE1+
- DyYzY8fax7gV7ZoYK0ePRk7KWHaW/kwOJ1GvU=; b=YVoYlenbC42eAKbLDEIXlj
- K8FZhbAGoKTqhGtz5RtkyK6IoTGrFBVoqR5FWkhKZYWFjGRVdMRk4TKEAp9ogrCF
- AwJazMaOl6cMySvstaYjlU9Y2DnTkVCre0wrK/YAXieT4bNGpi5GgiTAwy0Mul5m
- ABvb4ssQVHJSdhCSPAEkVCoga1WX8nsX1f6mP9XE19Kjqkb54JWo6CSR5rB5Di34
- CRDQxGxVORk7enA+3sWU/j8FAWUX5CMC0t9eT+QPrIFBDNFnlIemHluyvpO7B/wu
- 8dujOlNoVwGOIVgYqhnZTbX6clcxgrXNZun9b7/mKpTRX8LtGLxNaHMu1uZRAvQA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=lUsjaq
+ NwrE/CYrGHmE5pTt/kdXzyZSDlO2JtllCMAOE=; b=B9UtKr887o7qe98nk7FDz9
+ SbDJFtGZFlzDXSwIBDwt54j5luwYZzp5z/+kOb/XAizjG8k1SA9QOvwpYj4O6VzR
+ /YmACJ/mf/16+r+99yYeg3bgmH7YlH01tfFR7MJdqsNVqVvl/+1SL1gQQ0SpwdTF
+ iz+Dy3O9zasnI2m43r6cKIHgp6r0sol2IPGdN+O+3TvuBRN6jCWbQl7u/EFDmAO6
+ bxf+Q55QRvAKJduO0Ira5P16TmXTOZZATngpuKJ5y3TD1qw7y4MpHNHEvUECMUg/
+ kT6NCSVOiL+Ev8I3N2A+UxXMwqlejQZX3/b6Ue6qAKwFHeL0GN+Llrdahu+asplQ
  ==
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksjdnvyq-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckskd5wef-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 22:25:51 +0000 (GMT)
+ Thu, 05 Mar 2026 22:31:28 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625Ic6bC010299;
- Thu, 5 Mar 2026 22:25:50 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmc6kd98h-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625IUPWr010327;
+ Thu, 5 Mar 2026 22:31:27 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmc6kd9ph-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 22:25:50 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 625MPnQM29885162
+ Thu, 05 Mar 2026 22:31:27 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 625MVQdW31588916
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 22:25:49 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1050858051;
- Thu,  5 Mar 2026 22:25:49 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B315B5805A;
- Thu,  5 Mar 2026 22:25:47 +0000 (GMT)
+ Thu, 5 Mar 2026 22:31:26 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D69858055;
+ Thu,  5 Mar 2026 22:31:26 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF1735803F;
+ Thu,  5 Mar 2026 22:31:24 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.185.126]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 22:25:47 +0000 (GMT)
-Message-ID: <f866382015b332c83c7b1e65de74883f01f3852d.camel@linux.ibm.com>
-Subject: Re: [PATCH v4 12/15] pc-bios/s390-ccw: Add support for
- virtio-blk-pci IPL
+ [9.61.29.58]) by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Mar 2026 22:31:24 +0000 (GMT)
+Message-ID: <65b5643284037539a5cd47d49d74a7e49302fabd.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 13/15] s390x: Build IPLB for virtio-pci devices
 From: Eric Farman <farman@linux.ibm.com>
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  thuth@redhat.com, mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
  zycai@linux.ibm.com
-In-Reply-To: <20260304025917.2157032-13-jrossi@linux.ibm.com>
+In-Reply-To: <20260304025917.2157032-14-jrossi@linux.ibm.com>
 References: <20260304025917.2157032-1-jrossi@linux.ibm.com>
- <20260304025917.2157032-13-jrossi@linux.ibm.com>
+ <20260304025917.2157032-14-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Date: Thu, 05 Mar 2026 17:25:32 -0500
+Date: Thu, 05 Mar 2026 17:30:55 -0500
 User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M9BA6iws c=1 sm=1 tr=0 ts=69aa02ef cx=c_pps
+X-Proofpoint-GUID: oa5nbWR_8fStcHm6Ax8WOh1RBrywAnU4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE4OSBTYWx0ZWRfX0AGL3yyjQrJ/
+ TpEnVMWTWqI0PaK0LrWo9OFArYE+GfZxVY2WUBWG7jSomffkTBblno0Cpn+9CniKmvjZxBXD1Op
+ 5nrrb7dqeosgXvan+V8T4MK+2PNIxLbBf+Jx6/2pkfwlET4naa2XvKLMmZkgpWTVh+UOEAObonv
+ KMSoNV8yBqm8A8Turj8oI6TPIXRD86PQwOQBScv3BOmZcit0QS29pAjGe+12c8jmcFoUnlZAWzG
+ ZJ42hcn5YV/fe0DKNW/4ejJr8CDAFlOnpOj9vT5+YyPNMk14hKs7lsrL5kZMbPz76ERuVKXYyE+
+ jvm/wgvrC2J8bGx6hfoaOB3BEVPVlpdFPjmw7l1X6t7aqODSO5cQagbSY3nsq0J+Ux5E16LdVk2
+ SfWm3O4xMIpqw/Obpm5cH7azhIIjAbC28gTOM8JrKB6EaPnFtiANardrKRaMp77nBkPOyOZYfcV
+ PacJ2IUEdwiNbnXhltw==
+X-Authority-Analysis: v=2.4 cv=H7DWAuYi c=1 sm=1 tr=0 ts=69aa0440 cx=c_pps
  a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=IB1eNz0_M4T_B0VYkJUA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 8TpMtybVj79Ofqr5IQdmhfAA7SdwTVhp
-X-Proofpoint-GUID: 8TpMtybVj79Ofqr5IQdmhfAA7SdwTVhp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE4OSBTYWx0ZWRfX3lGSMACCuAMd
- DIce66Tr7z/vteRdKxO1uwEiwhuKmuFjly/hAttPwioIkmfZq7jW9gOP5DYnf+8wVg/6BZdpJab
- F8bP1Ds80znkW36OrK7tM28B9gMSuyerg6827RLUx6l3k+01wTNSuRcW8Qj3sK3Tjku/1rXbXXw
- 2xm/nsD/Sc/y8NTRJmru2LuLPPsF3U3XiE5YWGuAwDiyeqM7N5TEx3lGgll/Qmqz0VuClhtsyJE
- VmFv+2aqrwlEGMhtMZ5tx/o5gi+PKj0DA6KY1gg1MSUq912YSrAymoPfYU5ScRd9Eom3ZI0ArKi
- JM7Wj25pWbRAg4MNrHIbz1SZpGz4VoaBHOuzYrzlWlW8hba0wr/83nMd9UnLulqts+JLrQi4Stl
- A8VpaVp1UK8TaDyj7F/zXi0xW/JuHeTszBoDV1Q2WdVwqz4LiJ40mT00t/mFHW9fi9yywBDE/Tw
- 7dy7NlDESfNYbl6LRDA==
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=RYx3NvtF8dpJk1fecJwA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: oa5nbWR_8fStcHm6Ax8WOh1RBrywAnU4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-05_06,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 spamscore=0 adultscore=0 malwarescore=0
- bulkscore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 bulkscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050189
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -126,24 +126,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, 2026-03-03 at 21:59 -0500, jrossi@linux.ibm.com wrote:
 > From: Jared Rossi <jrossi@linux.ibm.com>
 >=20
-> Add little-endian virt-queue configuration and support for virtio-blk-pci=
- IPL
-> devices.
+> Search for a corresponding S390PCIBusDevice and build an IPLB if a device=
+ has
+> been indexed for boot but does not identify as a CCW device,
 >=20
+> PCI devices are not yet included in boot probing (they must have a boot i=
+ndex).
+>=20
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  pc-bios/s390-ccw/main.c          |  61 ++++++-
->  pc-bios/s390-ccw/pci.h           |   3 +
->  pc-bios/s390-ccw/virtio-blkdev.c |  18 +++
->  pc-bios/s390-ccw/virtio-pci.c    | 265 +++++++++++++++++++++++++++++++
->  pc-bios/s390-ccw/virtio-pci.h    |   2 +
->  pc-bios/s390-ccw/virtio.c        |  54 ++++++-
->  pc-bios/s390-ccw/virtio.h        |   1 +
->  7 files changed, 399 insertions(+), 5 deletions(-)
-
-I realize this makes use of vpci_bswapXX_write routines that I made a comme=
-nt on earlier. Feel free
-to disregard that.
+>  hw/s390x/ipl.c                  | 56 ++++++++++++++++++++++++++++++---
+>  hw/s390x/ipl.h                  |  3 ++
+>  hw/s390x/s390-pci-bus.c         |  3 +-
+>  include/hw/s390x/s390-pci-bus.h |  2 ++
+>  4 files changed, 57 insertions(+), 7 deletions(-)
 
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
