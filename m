@@ -4,113 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296A3EEF317
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 21:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FA22F47CDC
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 21:43:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyGLN-0001PL-NS; Thu, 05 Mar 2026 16:34:53 -0500
+	id 1vyGTL-0003Nh-4d; Thu, 05 Mar 2026 16:43:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vyGLK-0001IP-SJ; Thu, 05 Mar 2026 16:34:51 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
- id 1vyGLI-0004wg-Qr; Thu, 05 Mar 2026 16:34:50 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 625DR9T91457437; Thu, 5 Mar 2026 21:34:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=H+v6V5
- aPRp6n6jmozsRAJ581EuSBEx2cwCZqsP9gex4=; b=eEloK309dvNPDlbd9hm5kB
- SgVNmM9/WhhdVGuzQ32H4AA4c9+axhVufWNME5TzH7YJLnFxLGhEel5qbdTBxuqK
- 4Sp9zTgkcOyO6B9yOa+Sb0xywTt5SvWj4kqkV5fMx7IvIZH014Kcpe/32uo3GmhB
- 02o1DNhHKDErcfBjNXw3Q3SUqYU1nPDGeC2VsarIL4axhblT7gHPei5ro7c9aVBp
- qc7uAqun1ntwoD2jyAgG6qdwlSuWR6+C3J5Wxa9QbzswN4hA/o25fZjlmNztrI//
- X90BfWCEI4dp1v8tjDfikAY5U6jEUjH0nd2EGT758psWtLyNhPBq+fUyTEhzYH3Q
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksrjdtu3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 21:34:42 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625Ht13S003275;
- Thu, 5 Mar 2026 21:34:41 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cmb2ydajh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 21:34:41 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 625LYdk428312156
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 21:34:40 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E824D580F2;
- Thu,  5 Mar 2026 21:34:39 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 170CF580F1;
- Thu,  5 Mar 2026 21:34:38 +0000 (GMT)
-Received: from [9.61.243.85] (unknown [9.61.243.85])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 21:34:37 +0000 (GMT)
-Message-ID: <6d403596-571a-4452-8284-3233ee457f4f@linux.ibm.com>
-Date: Thu, 5 Mar 2026 13:34:38 -0800
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vyGTK-0003NS-2G
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:43:06 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vyGTH-0006OO-RW
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:43:05 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8E6015BD27;
+ Thu,  5 Mar 2026 21:42:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1772746979; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=28as3guEhttN1XPrzZNa13gA6fIDulFuPeQXNlEUlqs=;
+ b=o7yzcaw8UU4UImsvs/iLmPSRipDOKRxNJM//jZ4CoAP6sknH0SrnqP/id9UqDlF61ESquW
+ rUmcWRYTpmB/oR89J3Ahru4uoKg5YcL/qcTyC1/0LEBaGZt0OAsF2/uN/bnMdqloTYsPOS
+ aGYOX+OKwyln5sgaBQb/XQVmspHpzng=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1772746979;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=28as3guEhttN1XPrzZNa13gA6fIDulFuPeQXNlEUlqs=;
+ b=d+4KJFV2GhpmKoXelglUlU7JP70vFPUZEzQ7uaPe+QLs+A9aT6Csn8lKYd6OSQJaY3t5+C
+ qEIpQ7mRH2/SzgBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1772746979; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=28as3guEhttN1XPrzZNa13gA6fIDulFuPeQXNlEUlqs=;
+ b=o7yzcaw8UU4UImsvs/iLmPSRipDOKRxNJM//jZ4CoAP6sknH0SrnqP/id9UqDlF61ESquW
+ rUmcWRYTpmB/oR89J3Ahru4uoKg5YcL/qcTyC1/0LEBaGZt0OAsF2/uN/bnMdqloTYsPOS
+ aGYOX+OKwyln5sgaBQb/XQVmspHpzng=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1772746979;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=28as3guEhttN1XPrzZNa13gA6fIDulFuPeQXNlEUlqs=;
+ b=d+4KJFV2GhpmKoXelglUlU7JP70vFPUZEzQ7uaPe+QLs+A9aT6Csn8lKYd6OSQJaY3t5+C
+ qEIpQ7mRH2/SzgBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0B4CA3EA68;
+ Thu,  5 Mar 2026 21:42:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id JuGIMOL4qWmfMwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 05 Mar 2026 21:42:58 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>, Stefan Hajnoczi
+ <stefanha@redhat.com>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org, Peter Xu
+ <peterx@redhat.com>, Zhang Chen <zhangckid@gmail.com>, Hailiang Zhang
+ <zhanghailiang@xfusion.com>, Li Zhijian <lizhijian@fujitsu.com>, Eric
+ Blake <eblake@redhat.com>, Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>
+Subject: Re: COLO concurrency issues
+In-Reply-To: <aZfBNug85Xn_j4o_@gallifrey>
+References: <87ms1cn8n6.fsf@suse.de> <20260219143620.GC817358@fedora>
+ <aZfBNug85Xn_j4o_@gallifrey>
+Date: Thu, 05 Mar 2026 18:42:56 -0300
+Message-ID: <874imu2brz.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/30] hw/s390x/ipl: Create certificate store
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: david@kernel.org, walling@linux.ibm.com, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, brueckner@linux.ibm.com
-References: <20260212204352.1044699-1-zycai@linux.ibm.com>
- <20260212204352.1044699-5-zycai@linux.ibm.com>
-Content-Language: en-US
-From: Farhan Ali <alifm@linux.ibm.com>
-In-Reply-To: <20260212204352.1044699-5-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Rp/I7SmK c=1 sm=1 tr=0 ts=69a9f6f2 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=uIToqUvhtT_G6tQXqXoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE3OSBTYWx0ZWRfX7iNp3nnRo218
- uS1LrDuZCelsIzvmlAzVKqQZ3NxgETZiA2zbuUjEm/76oAPa+tfr+XOyvEq+3Amo5tvF6MrAMMf
- CfBi0RdgWmc0sJA/kAPYhtZIzEG0qnEVfCHTC+DQveL4U/95EeEXDeGHJuSeIz+sYVKcoXPtaac
- 2DGWtmwFXzvnWJAPPyT7BgvUTY30MJlpYhy0wSUBmay1X+JlXJS8SscJm+nBGt/+Miayv3N2V1s
- wtoBPbG6dhA+UeC7r6VqHnje+Ej5n8z/e2rktqejTngsT4AoiXVlbb+Jvfvf4X4oQ8u2T1rUTuw
- HTChTxok38Q9TBa7HtKyzjah7FRoISnHhIuk78jtoLv6YPic+Th08LyTPh/15hHfHiDEOQk5mcg
- c4UrfX08j31tmT237iaXxK/3AlhIMC2sEELI6fYu5S8tTm/ZtO9egNQsd1DufZduF4VD4/izMTs
- zAk1jVHHatx3hPN1nAw==
-X-Proofpoint-GUID: aO6dNaMkLuOQpp7-zHDQ5IN9Nm7ZFDJW
-X-Proofpoint-ORIG-GUID: aO6dNaMkLuOQpp7-zHDQ5IN9Nm7ZFDJW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-05_06,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0 adultscore=0
- bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050179
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=alifm@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[web.de,nongnu.org,redhat.com,gmail.com,xfusion.com,fujitsu.com,yandex-team.ru];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,59 +121,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-<..snip..>
+"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-On 2/12/2026 12:43 PM, Zhuoying Cai wrote:
-> void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
-> +{
-> +    GPtrArray *cert_path_builder;
-> +    Error *err = NULL;
-> +
-> +    /* If cert store is already populated, then no work to do */
-> +    if (cert_store->count) {
-> +        return;
-> +    }
-> +
-> +    cert_path_builder = get_cert_paths(&err);
-> +    if (cert_path_builder == NULL) {
-> +        error_report_err(err);
-> +        exit(1);
-> +    }
-> +
-> +    if (cert_path_builder->len == 0) {
-> +        g_ptr_array_free(cert_path_builder, TRUE);
-> +        return;
-> +    }
-> +
-> +    if (cert_path_builder->len > MAX_CERTIFICATES - 1) {
+> * Stefan Hajnoczi (stefanha@redhat.com) wrote:
+>> On Fri, Feb 13, 2026 at 09:13:49AM -0300, Fabiano Rosas wrote:
+>> > Hi, I've been following the qemu-colo.rst steps to test COLO and
+>> > encountered a couple of issues. Unfortunately, I don't have cycles to
+>> > investigate further. Happens with QEMU master (also tested some versions
+>> > back until the COLO fix 0b5bf4ea76).
+>> > 
+>> > 1) Deadlock at fdmon_io_uring_wait:
+>> > 
+>> > (steps from qemu-colo.rst)
+>> > - Secondary Failover
+>> > - Secondary resume replication
+>> > - Start the new Secondary
+>> > - Sync
+>> > - Wait until disk is synced, then:
+>> > 
+>> >     {"execute": "stop"}
+>> >     {"execute": "block-job-cancel", "arguments":{ "device": "resync" } }
+>> > 
+>> > The above results in the old secondary hanging indefinitely at:
+>> > 
+>> >     do {
+>> >         ret = io_uring_submit_and_wait(&ctx->fdmon_io_uring, wait_nr);
+>> >     } while (ret == -EINTR);
+>> > 
+>> > (gdb) bt                                                                                                                                                                      
+>> > #0  syscall () at ../sysdeps/unix/sysv/linux/x86_64/syscall.S:38
+>> > #1  0x00007f5519e0204e in ??? () at //usr/lib64/liburing.so.2
+>> > #2  0x00007f5519e01b00 in ??? () at //usr/lib64/liburing.so.2
+>> > #3  0x0000563c2dc06cc9 in fdmon_io_uring_wait (ctx=0x563c30411b00, ready_list=0x7ffd0bad8f58, timeout=575708467831) at ../util/fdmon-io_uring.c:416
+>> > #4  0x0000563c2dc00976 in aio_poll (ctx=0x563c30411b00, blocking=true) at ../util/aio-posix.c:699
+>> > #5  0x0000563c2daa01c6 in bdrv_drain_all_begin () at ../block/io.c:529
+>> > #6  0x0000563c2daa03d8 in bdrv_drain_all () at ../block/io.c:574
+>> > #7  0x0000563c2d764aae in do_vm_stop (state=RUN_STATE_PAUSED, send_stop=true) at ../system/cpus.c:312
+>> > #8  0x0000563c2d765964 in vm_stop (state=RUN_STATE_PAUSED) at ../system/cpus.c:754
+>> > #9  0x0000563c2d7f3378 in qmp_stop (errp=0x7ffd0bad9080) at ../monitor/qmp-cmds.c:62
+>> > #10 0x0000563c2dba7a72 in qmp_marshal_stop (args=0x563c306ac070, ret=0x7f5518dffda8, errp=0x7f5518dffda0) at qapi/qapi-commands-misc.c:197
+>> > #11 0x0000563c2dbf1316 in do_qmp_dispatch_bh (opaque=0x7f5518dffe40) at ../qapi/qmp-dispatch.c:128
+>> > #12 0x0000563c2dc1de48 in aio_bh_call (bh=0x563c3040fef0) at ../util/async.c:173
+>> > #13 0x0000563c2dc1df64 in aio_bh_poll (ctx=0x563c3040c070) at ../util/async.c:220
+>> > #14 0x0000563c2dbffff0 in aio_dispatch (ctx=0x563c3040c070) at ../util/aio-posix.c:389
+>> > #15 0x0000563c2dc1e3cd in aio_ctx_dispatch (source=0x563c3040c070, callback=0x0, user_data=0x0) at ../util/async.c:365
+>> > #16 0x00007f551b114f4c in g_main_dispatch (context=0x563c304120f0) at ../glib/gmain.c:3476
+>> > #17 g_main_context_dispatch_unlocked (context=context@entry=0x563c304120f0) at ../glib/gmain.c:4284
+>> > #18 0x00007f551b1170c9 in g_main_context_dispatch (context=0x563c304120f0) at ../glib/gmain.c:4272
+>> > #19 0x0000563c2dc1fa0b in glib_pollfds_poll () at ../util/main-loop.c:290
+>> > #20 0x0000563c2dc1fa85 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:313
+>> > #21 0x0000563c2dc1fb8a in main_loop_wait (nonblocking=0) at ../util/main-loop.c:592
+>> > #22 0x0000563c2d78eb60 in qemu_main_loop () at ../system/runstate.c:903
+>> > #23 0x0000563c2db412fc in qemu_default_main (opaque=0x0) at ../system/main.c:50
+>> > #24 0x0000563c2db413ab in main (argc=40, argv=0x7ffd0bad94d8) at ../system/main.c:93
+>> 
+>> Two ideas on how to debug further:
+>> 
+>> 1. Attach to the hung QEMU process with a debugger and inspect the
+>> block_backends global variable (see block/block-backends.c). The
+>> question is why bdrv_drain_all_begin() is not making progress. There are
+>> probably in-flight requests that can be observed in the
+>> BlockDriverState->tracked_requests list. Also check the BlockDriverState
+>> and BlockBackend in_flight fields. This will let you identify which
+>> block device is causing the hang and what it's doing during the hang.
+>
+> (I've not looked at this for ages)
+> I'd guess it's probably the network block sync; the fun part of this test
+> is it's where the secondary is being restarted after a failure; so is
+> this blocking on the old sync connection or the new one?
+> And if it's blocking on the new one, then is that because the secondary
+> is blocked?
+>
+> Dave
+>
+>> 2. Try disabling io_uring on the host via `sudo sysctl
+>> kernel.io_uring_disabled=2` and then run QEMU again. If this is an issue
+>> with QEMU's recently-enabled io_uring event loop, then there will be no
+>> hang with io_uring disabled.
+>> 
+>> Stefan
 
-I think we are off by 1 here and it should be cert_path_builder->len > 
-MAX_CERTIFICATES. With this fixed
++CC Vladimir and Eric
 
-Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Hi, thanks all for the advice. I managed to get a bit further with
+this. Answering your questions:
+
+Lukas:
+- the minimal test you provided in this thread works fine.
+
+Stefan:
+- it's NBD that appears to be stuck, more on this below.
+- disabling io_uring has no effect on the bug.
+
+David:
+- The hang is caused by the sync on the old secondary.
 
 
-> +        error_report("Cert store exceeds maximum of %d certificates", MAX_CERTIFICATES);
-> +        g_ptr_array_free(cert_path_builder, TRUE);
-> +        exit(1);
-> +    }
-> +
-> +    cert_store->largest_cert_size = 0;
-> +    cert_store->total_bytes = 0;
-> +
-> +    for (int i = 0; i < cert_path_builder->len; i++) {
-> +        g_autofree S390IPLCertificate *cert = init_cert(
-> +                                              (char *) cert_path_builder->pdata[i],
-> +                                              &err);
-> +        if (!cert) {
-> +            error_report_err(err);
-> +            g_ptr_array_free(cert_path_builder, TRUE);
-> +            exit(1);
-> +        }
-> +
-> +        update_cert_store(cert_store, cert);
-> +    }
-> +
-> +    g_ptr_array_free(cert_path_builder, TRUE);
-> +}
+The issue is that the NBD client gets stuck at nbd_read_eof() after the
+channel returns -EAGAIN. The coroutine yields and there's nothing to
+wake it up again.
+
+The setup is:
+
+--> { 'execute': 'drive-mirror', 'arguments':\
+        { 'device': 'colo-disk0', 'job-id': 'resync', \
+          'target': 'nbd://127.0.0.1:9999/parent0', \
+          'mode': 'existing', 'format': 'raw', 'sync': 'full'} }"
+
+<-- {"timestamp": {"seconds": 1772743169, "microseconds": 699207}, "event":
+    "BLOCK_JOB_READY", "data": {"device": "resync", "len": 10737418240,
+    "offset": 10737418240, "speed": 0, "type": "mirror"}}
+
+--> { 'execute': 'stop' }"
+    { 'execute': 'block-job-cancel', 'arguments':{ 'device': 'resync' } }"
+
+-- mirror job drains successfully and exits --
+-- nbd_receive_reply hangs --
+
+Here's the backtrace and the coroutine stack further down:
+
+QEMU master@3fb456e9a0
+
+#3  0x0000558000cf3b35 in fdmon_io_uring_wait (ctx=0x55801ef40860, ready_list=0x7fff9dde38d8, timeout=560311008686) at ../util/fdmon-io_uring.c:427
+#4  0x0000558000ced7e2 in aio_poll (ctx=0x55801ef40860, blocking=true) at ../util/aio-posix.c:700
+#5  0x0000558000c08f1b in bdrv_poll_co (s=0x7fff9dde3970) at /home/fabiano/kvm/qemu/block/block-gen.h:43
+#6  0x0000558000c0a886 in bdrv_flush (bs=0x55801fcd13b0) at block/block-gen.c:923
+#7  0x0000558000b4b055 in bdrv_close (bs=0x55801fcd13b0) at ../block.c:5170
+#8  0x0000558000b4beae in bdrv_delete (bs=0x55801fcd13b0) at ../block.c:5564
+#9  0x0000558000b4f115 in bdrv_unref (bs=0x55801fcd13b0) at ../block.c:7170
+#10 0x0000558000b4f13a in bdrv_schedule_unref_bh (opaque=0x55801fcd13b0) at ../block.c:7178
+#11 0x0000558000d0ac39 in aio_bh_call (bh=0x55801ee828c0) at ../util/async.c:173
+#12 0x0000558000d0ad55 in aio_bh_poll (ctx=0x55801ef40860) at ../util/async.c:220
+#13 0x0000558000b7e55c in bdrv_graph_wrunlock () at ../block/graph-lock.c:198
+#14 0x0000558000b4b14f in bdrv_close (bs=0x55801faf2010) at ../block.c:5188
+#15 0x0000558000b4beae in bdrv_delete (bs=0x55801faf2010) at ../block.c:5564
+#16 0x0000558000b4f115 in bdrv_unref (bs=0x55801faf2010) at ../block.c:7170
+#17 0x0000558000b8ad33 in mirror_exit_common (job=0x55801fc84350) at ../block/mirror.c:850
+#18 0x0000558000b8adc4 in mirror_abort (job=0x55801fc84350) at ../block/mirror.c:870
+#19 0x0000558000b563b5 in job_abort (job=0x55801fc84350) at ../job.c:831
+#20 0x0000558000b5648e in job_finalize_single_locked (job=0x55801fc84350) at ../job.c:861
+#21 0x0000558000b56765 in job_completed_txn_abort_locked (job=0x55801fc84350) at ../job.c:964
+#22 0x0000558000b56b79 in job_completed_locked (job=0x55801fc84350) at ../job.c:1071
+#23 0x0000558000b56c2e in job_exit (opaque=0x55801fc84350) at ../job.c:1094
+#24 0x0000558000d0ac39 in aio_bh_call (bh=0x55801f2a40e0) at ../util/async.c:173
+#25 0x0000558000d0ad55 in aio_bh_poll (ctx=0x55801ef40860) at ../util/async.c:220
+#26 0x0000558000cece5c in aio_dispatch (ctx=0x55801ef40860) at ../util/aio-posix.c:390
+#27 0x0000558000d0b1be in aio_ctx_dispatch (source=0x55801ef40860, callback=0x0, user_data=0x0) at ../util/async.c:365
+#28 0x00007f001bd14f4c in g_main_dispatch (context=0x55801ef40df0) at ../glib/gmain.c:3476
+#29 g_main_context_dispatch_unlocked (context=context@entry=0x55801ef40df0) at ../glib/gmain.c:4284
+#30 0x00007f001bd170c9 in g_main_context_dispatch (context=0x55801ef40df0) at ../glib/gmain.c:4272
+#31 0x0000558000d0c7fc in glib_pollfds_poll () at ../util/main-loop.c:290
+#32 0x0000558000d0c876 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:313
+#33 0x0000558000d0c97b in main_loop_wait (nonblocking=0) at ../util/main-loop.c:592
+#34 0x000055800086bbb5 in qemu_main_loop () at ../system/runstate.c:943
+#35 0x0000558000c2da7e in qemu_default_main (opaque=0x0) at ../system/main.c:50
+#36 0x0000558000c2db2d in main (argc=45, argv=0x7fff9dde41c8) at ../system/main.c:93
+
+p co_tls_bql_locked 
+true
+
+p co_tls_current 
+(Coroutine *) 0x7f001b81fdd0  // the thread leader ucontext
+
+p/x *(BdrvFlush *)0x7fff9dde3970
+{poll_state = {ctx = 0x55801ef40860, in_progress = 0x1, co = 0x55801f205e00}, ret = 0x0, bs = 0x55801fcd13b0}
+
+(gdb) qemu coroutine 0x000055801f205e00
+#0  0x0000558000d0f0c6 in qemu_coroutine_switch (from_=0x55801f205e00, to_=0x7f001b81fdd0, action=COROUTINE_YIELD) at ../util/coroutine-ucontext.c:321
+#1  0x0000558000d0d743 in qemu_coroutine_yield () at ../util/qemu-coroutine.c:339
+#2  0x0000558000b11f3d in qio_channel_yield (ioc=0x7eff9c000b70, condition=G_IO_IN) at ../io/channel.c:714
+#3  0x0000558000b6241c in nbd_read_eof (bs=0x55801fcd13b0, ioc=0x7eff9c000b70, buffer=0x55801fd02d40, size=4, errp=0x7f0016375d28) at ../nbd/client.c:1502
+#4  0x0000558000b624e8 in nbd_receive_reply (bs=0x55801fcd13b0, ioc=0x7eff9c000b70, reply=0x55801fd02d40, mode=NBD_MODE_EXTENDED, errp=0x7f0016375d28)
+    at ../nbd/client.c:1541
+#5  0x0000558000b8f990 in nbd_receive_replies (s=0x55801fd02aa0, cookie=1, errp=0x7f0016375d28) at ../block/nbd.c:463
+#6  0x0000558000b909a7 in nbd_co_do_receive_one_chunk
+    (s=0x55801fd02aa0, cookie=1, only_structured=false, request_ret=0x7f0016375d20, qiov=0x0, payload=0x0, errp=0x7f0016375d28) at ../block/nbd.c:867
+#7  0x0000558000b90d77 in nbd_co_receive_one_chunk
+    (s=0x55801fd02aa0, cookie=1, only_structured=false, request_ret=0x7f0016375d20, qiov=0x0, reply=0x7f0016375d40, payload=0x0, errp=0x7f0016375d28) at ../block/nbd.c:948
+#8  0x0000558000b90f87 in nbd_reply_chunk_iter_receive (s=0x55801fd02aa0, iter=0x7f0016375da0, cookie=1, qiov=0x0, reply=0x7f0016375d40, payload=0x0) at ../block/nbd.c:1031
+#9  0x0000558000b9116d in nbd_co_receive_return_code (s=0x55801fd02aa0, cookie=1, request_ret=0x7f0016375df0, errp=0x7f0016375df8) at ../block/nbd.c:1078
+#10 0x0000558000b91897 in nbd_co_request (bs=0x55801fcd13b0, request=0x7f0016375e50, write_qiov=0x0) at ../block/nbd.c:1229
+#11 0x0000558000b91fc3 in nbd_client_co_flush (bs=0x55801fcd13b0) at ../block/nbd.c:1377
+#12 0x0000558000b862cc in bdrv_co_flush (bs=0x55801fcd13b0) at ../block/io.c:3058
+#13 0x0000558000c0a7d1 in bdrv_co_flush_entry (opaque=0x7fff9dde3970) at block/block-gen.c:901
+#14 0x0000558000d0edf8 in coroutine_trampoline (i0=522214912, i1=21888)
+at ../util/coroutine-ucontext.c:175
+
+p ((BDRVNBDState *)0x55801fd02aa0)->state
+NBD_CLIENT_CONNECTED
+
+What would normally wake up the coroutine? I don't see exactly what
+changes with the job exiting that stops waking it up. During the sync it
+yields and resumes many times without issue.
+
+I see that server.c has nbd_wake_read_bh() which seems to solve the same
+problem on the server side, maybe we need something similar for the
+client?
 
