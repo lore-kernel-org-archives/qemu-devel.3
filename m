@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3A8F30930
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E69F30938
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6KN-0001ss-2S; Thu, 05 Mar 2026 05:53:11 -0500
+	id 1vy6Kz-0004Ol-Tg; Thu, 05 Mar 2026 05:53:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6KK-0001s3-Nz
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Ky-0004FG-IP
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6KI-0005Wc-NO
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Kx-0005ks-45
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772707985;
+ s=mimecast20190719; t=1772708026;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6ekLPVHYOVkLZAradQmSaJNW1TZzwmRdnf71YAxurjM=;
- b=aLSk1+kLGRuKPc21Jr7EQolPgGCWRFA+blww4B1292yIPKwtKuhtHCicUSxXC/SJIE1jK3
- 239W0aZ5Cq1LCKkFBnjORkXdYiHT96BWx4cQQBdEFi6xhcrcSBav270TPknP6YRgC9f1nG
- IQPGG/2Y4j3q8ffeJtI4nno2RXHTxd4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OmXwRo5TDMs9ijAUXPxa+zkoBvxxStM6heY/dQTkUB8=;
+ b=ftiRTYtYdgbQocjWNFhPt6eE5sw9aAdxIayXXKtJa97yblwdO9oEcKsRTYPw00rCdfPfOA
+ uTJUWHeIt/15V7fe4kKy17W59x2YA/BdZa/maJ4UkZRwH+cQy0LRy5lZc2Kj9SCpprcd9C
+ U19seDsQFnZWAmY57f6QFJP5W8cM5HI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-O5rzmCneONaPHOuIok8u9Q-1; Thu,
- 05 Mar 2026 05:53:02 -0500
-X-MC-Unique: O5rzmCneONaPHOuIok8u9Q-1
-X-Mimecast-MFC-AGG-ID: O5rzmCneONaPHOuIok8u9Q_1772707981
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-Kb-ZcRW8O-e4eZHYyr8ALg-1; Thu,
+ 05 Mar 2026 05:53:42 -0500
+X-MC-Unique: Kb-ZcRW8O-e4eZHYyr8ALg-1
+X-Mimecast-MFC-AGG-ID: Kb-ZcRW8O-e4eZHYyr8ALg_1772708021
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7C09195605C; Thu,  5 Mar 2026 10:53:01 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C38EE195609D; Thu,  5 Mar 2026 10:53:41 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.75])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5A743003E98; Thu,  5 Mar 2026 10:52:59 +0000 (UTC)
+ id E5B8C3003E98; Thu,  5 Mar 2026 10:53:39 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 13/28] hw/net/virtio-net: Remove VirtIONet::mtu_bypass_backend
- field
-Date: Thu,  5 Mar 2026 11:52:00 +0100
-Message-ID: <20260305105215.302571-14-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 26/28] hw/core/machine: Remove hw_compat_2_12[] array
+Date: Thu,  5 Mar 2026 11:52:13 +0100
+Message-ID: <20260305105215.302571-27-thuth@redhat.com>
 In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
 References: <20260305105215.302571-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -88,67 +86,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The VirtIONet::mtu_bypass_backend boolean was only set in
-the hw_compat_2_9[] array, via the 'x-mtu-bypass-backend=off'
-property. We removed all machines using that array, lets remove
-that property and all the code around it.
+The hw_compat_2_12[] array was only used by the pc-q35-2.12,
+pc-i440fx-2.12 and s390-ccw-virtio-2.12 machines, which got
+removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501210456.89071-17-philmd@linaro.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-[thuth: Adjusted patch for latest changes in the master branch]
+Message-ID: <20250501230129.2596-9-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260225092024.794595-14-thuth@redhat.com>
 ---
- include/hw/virtio/virtio-net.h | 1 -
- hw/net/virtio-net.c            | 8 ++------
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ include/hw/core/boards.h | 3 ---
+ hw/core/machine.c        | 9 ---------
+ 2 files changed, 12 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 5b8ab7bda79..371e3764282 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -218,7 +218,6 @@ struct VirtIONet {
-     uint64_t saved_guest_offloads;
-     AnnounceTimer announce_timer;
-     bool needs_vnet_hdr_swap;
--    bool mtu_bypass_backend;
-     /* primary failover device is hidden*/
-     bool failover_primary_hidden;
-     bool failover;
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index eccb48ad426..2a5d642a647 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -935,8 +935,7 @@ static void virtio_net_set_features(VirtIODevice *vdev,
-     int i;
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 30a55b61f6d..f4ee68bbea5 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -874,7 +874,4 @@ extern const size_t hw_compat_3_1_len;
+ extern GlobalProperty hw_compat_3_0[];
+ extern const size_t hw_compat_3_0_len;
  
-     virtio_features_copy(features, in_features);
--    if (n->mtu_bypass_backend &&
--            !virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
-+    if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_MTU);
-     }
+-extern GlobalProperty hw_compat_2_12[];
+-extern const size_t hw_compat_2_12_len;
+-
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 3e10aec07e1..4770618b559 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -241,15 +241,6 @@ const size_t hw_compat_3_1_len = G_N_ELEMENTS(hw_compat_3_1);
+ GlobalProperty hw_compat_3_0[] = {};
+ const size_t hw_compat_3_0_len = G_N_ELEMENTS(hw_compat_3_0);
  
-@@ -3160,8 +3159,7 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
-     vhost_net_get_features_ex(get_vhost_net(nc->peer), features);
-     virtio_features_copy(vdev->backend_features_ex, features);
+-GlobalProperty hw_compat_2_12[] = {
+-    { "hda-audio", "use-timer", "false" },
+-    { "cirrus-vga", "global-vmstate", "true" },
+-    { "VGA", "global-vmstate", "true" },
+-    { "vmware-svga", "global-vmstate", "true" },
+-    { "qxl-vga", "global-vmstate", "true" },
+-};
+-const size_t hw_compat_2_12_len = G_N_ELEMENTS(hw_compat_2_12);
+-
+ MachineState *current_machine;
  
--    if (n->mtu_bypass_backend &&
--            (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
-+    if ((n->host_features & 1ULL << VIRTIO_NET_F_MTU) != 0) {
-         virtio_add_feature_ex(features, VIRTIO_NET_F_MTU);
-     }
- 
-@@ -4251,8 +4249,6 @@ static const Property virtio_net_properties[] = {
-     DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_size,
-                        VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
-     DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
--    DEFINE_PROP_BOOL("x-mtu-bypass-backend", VirtIONet, mtu_bypass_backend,
--                     true),
-     DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
-     DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
-     DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.53.0
 
