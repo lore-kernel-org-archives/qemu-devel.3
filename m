@@ -4,105 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AB5F3D333
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90756F3D334
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyC3n-0007Q0-0E; Thu, 05 Mar 2026 12:00:30 -0500
+	id 1vyC5c-0000BP-Aa; Thu, 05 Mar 2026 12:02:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyC3U-0007Oe-60
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:00:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyC3S-0003lj-9k
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:00:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772730005;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zefqOHTxG5vv3Mko1njyQnQmXHEz3QoE0naifHiyX0o=;
- b=dEAJpWUTjo6GpeUthrFk5reymlag7NDLfjMGkXbZTts7nvktTPVpTJiWMyiQegeEJQWng5
- k5lMteyUbP95MgAADTzMiaJMU+TTJI3u9RsMESxEuGYF7kZgt0IZJKjNUzGl/2LXUfDDFG
- C5rqfuVzABViLsMzrJCNcU6p5d1X7jg=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-3Lfz9rCkOGWbJoWcgc25Ww-1; Thu, 05 Mar 2026 12:00:03 -0500
-X-MC-Unique: 3Lfz9rCkOGWbJoWcgc25Ww-1
-X-Mimecast-MFC-AGG-ID: 3Lfz9rCkOGWbJoWcgc25Ww_1772730003
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8cb42f56c4aso4992160385a.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:00:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyC5Y-0008Qr-K8
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:02:16 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyC5W-0003uE-Sa
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:02:16 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48370174e18so49945135e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:02:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772730003; x=1773334803; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=zefqOHTxG5vv3Mko1njyQnQmXHEz3QoE0naifHiyX0o=;
- b=cFMkNjkmNNshGI39nIQEcgr9an6T03/IRrd1p8+lNLHmaYTfNSKH/EEJDb6Dfh8r4r
- X5OV7DGMxEGAslsutlK/wCz8Ta51hDNmsIyAVKZARK8siHbJsGAEWwXmx6BjtslmpAg3
- 4GH8kkquM3udom5Lw6RMOKdzQF/a/1QnIXvFaBeco4Vic319y1d9xYJ2gRG9T2su1fWZ
- ONGUh+MOHutqX6NKLDGfCNATf0KlshoFiSafbu+Sv8ymeREm95Dcopyzk1mCRlk20hYa
- ulrUu6ad/Pf9B9h7iyYLsy4HSUTF35+9tip+05Uhxl5l97WMrMEBHImqAmvPjYU+hO3n
- k1tA==
+ d=linaro.org; s=google; t=1772730133; x=1773334933; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z5S4FWc2b0VCRiyuCVP1osL0L9CAwOiZq+WP/x3uphQ=;
+ b=wWg+/CLoPWhDMfN7ZEmOL7l2cEABcQND7ZPIb06PGhHq+Yr/JMmpKCXM9cE9pblyRL
+ PsjX3r9kddg4uBUkcqjXAKnn4bmXy/64ntKQgiLaLzBKVyJ1qPdYM7/CM/8+9Pn5epRc
+ VSaR4BOx5kxMP5iNDhpemMaSqkt6HXbN7Lw8RQs92pzBMdlPJeNh5k37jl0feMexF/3I
+ aKUpvQ5hlNwqyLq53ch6z1vZAQiDtShry0YFz37Qf+JmvZgeq3l9j2CoWJN5zIP4WSQG
+ TrVugRJPYSbpAk8VrpbULRXYK8GjTBU54pw0frCgQxn81zp8ecxWWTDClyKO6FrGzmex
+ duGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772730003; x=1773334803;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zefqOHTxG5vv3Mko1njyQnQmXHEz3QoE0naifHiyX0o=;
- b=wQohSTx4MO9Nc++P7u1SsXBymGyVQCzvvGcEk5f/tn34ODzgE6qXyXTSF0nVJD0B1h
- 4vwhisvYB2GYeS9OEKBlVsz0Cm9JrWdr10+gSiamlDuWn38uQBslhGnxy9r+bQr+YaXb
- BCcYMJ2dHExoZLz11vez+xN3CU6RtH66EZYuIforD9qe0qd6klbHVY+TyGJoDOSjChtq
- 1G96AAYhZ/e26A6/6jF3cC6Z0BBY1LsnOupenmVjxFfNcSrETEmhJkxKnXSIOaGTCMrk
- qMx4aCE5OXH1b8SC2ExYQNKA4360/7PdLhGnLzb+NTgH0aA/l7hqqPNgFhelFTTjDbjl
- Jzfg==
+ d=1e100.net; s=20230601; t=1772730133; x=1773334933;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z5S4FWc2b0VCRiyuCVP1osL0L9CAwOiZq+WP/x3uphQ=;
+ b=I1vbTb4m4JrBzUWUiubrYKMP1oc+8uWS+ZGccMu7VyeanRwVhMpby6bEX0WHVSWB/l
+ RHuLzTcHwazK1JesMSc9GxlUhP3xiIcvdg4Xs7zeFI/7XmyIhnLXvk25aMpnZ73nZAjg
+ NyZVGpELges7ilnMzzTbDK/mS42dBJ3Yl0rqrBjlSLDnSPmgnDWsYKIOVRmcJGjKeBiR
+ rUWCxgsxYjWkXWRI3XqZP48X7PghtuDyhXzO4aoTCeE+k5p+0v7Fy8Z9T34rK3nQaL6b
+ z8v6Hm4tVhoHop0Io+VCFWNgbkR3ydSM+33tnDMvPZAPsImY6iYQybb639sJdvbCzcYs
+ Qoeg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVJF352HVLa+LILQJ17kuRuX/eGDNm4eoa8fRzrvNZx9NTKqHMKk1t1thnue7GcEqama5KbFKqQ72R@nongnu.org
-X-Gm-Message-State: AOJu0Yx8TKyykHagRhzBHt+C/f9IM1ZNM4nI8jAMlUPYQCQcxUblYV4D
- spHndoBxGCDKH9oPklMybzZEYXTjmc3PI7mCsIBXfHAFXk60E40oi55bfeDkF98Juu1seund8d+
- +3vj8PyXgCQr2EsKRti8Fdu6JxlHrlhfbUvS0CAw8tz1IRZGeP95bsEmu
-X-Gm-Gg: ATEYQzwJ+7at6ym/JkV3Fiittlf4TPE8MgwN6kTe24wFFKbTkk1j5pJODl2ITDnNk6d
- a7bYR0UivXgAhfDuem9K4nMfjTs5QminFa0eurSj1g8K8ALwry/13KnZgmvtKQpyv3exXrHQzkf
- vVnUv7DZ/cmmsS0motKaaUXWFIGYOc+D2yQX2pGmOEAv6VyTz3jWcAOGtSAm+qNloStM88rgMYF
- TVk8w4VH58ISjS0tJnOoaHqOyXj4hD+iJRpIAfmxKsi9mVpCWjlOk1ATWgEyQfjRIZPHlA1l+PL
- VYjplAHKBp/ndGJN1ZMCLi3/TelWM8c9Ii3p5g/yJ3gKjjgQFZ30gKgCA9CO7YaKvcFtgaOr12D
- 0u1t6/E8KULOGvw==
-X-Received: by 2002:a05:620a:708b:b0:8c6:d398:4a76 with SMTP id
- af79cd13be357-8cd6af4101dmr72800885a.2.1772730003156; 
- Thu, 05 Mar 2026 09:00:03 -0800 (PST)
-X-Received: by 2002:a05:620a:708b:b0:8c6:d398:4a76 with SMTP id
- af79cd13be357-8cd6af4101dmr72794385a.2.1772730002531; 
- Thu, 05 Mar 2026 09:00:02 -0800 (PST)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cbbf73451csm1944981985a.47.2026.03.05.09.00.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 09:00:02 -0800 (PST)
-Date: Thu, 5 Mar 2026 11:59:51 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: farosas@suse.de, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 05/18] migration: vmstate_save/load_state(): refactor
- tracing errors
-Message-ID: <aam2h3QdDlsDINFF@x1.local>
-References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
- <20260304212303.667141-6-vsementsov@yandex-team.ru>
+ AJvYcCWO7+o9IdFE8jlH0E1Ba8rDeWNq8qOQk1sCKrbknp/6WiBb0vZxov2feKxsudCLcfHgF6h96cCYV7xW@nongnu.org
+X-Gm-Message-State: AOJu0YweOY+5NshVClB/iF79BKssbZAqpI/tUy2sQiScZ+VxRn7DN7st
+ XK5jVJWpgTs2iREIr+IAyPgMn0wb/FEMYoq6+AuT92vgUEQnRYqNO3v6XWGRsFJ2jO8=
+X-Gm-Gg: ATEYQzxg4cKotc7fLLl68O0v/ETcQTV8Shx+BhclAnKrkBg2uBZdCqnZBkKj7izPsQH
+ NHbEqLRetco6jIRrFvesCEr6Jb02EqxHnEk/Sa7EkWQo1bXHpIJg8Oz8X9aM28AAhC0C0LwBrTt
+ kDjqY2eI07e3SJ9Ux2446XgLIwd8YRF3hoHbFFtNUSQI5/z+B1xH43+0Zw5zPaqHa2cGN0SGAwK
+ W2O07lvSdy0a01mSyqjuSQFPpmMLmgvaQLkG7Rhoxg/XR2m09hPwvvGIkR/OT4rOWRt9Lj5qdPO
+ R7iROID6pgSOhcxy1F+A+vsww7Jl8x+2A97ZtlOQzhrXEewDCuHwNrCXzgwSNA0kqCuDYeC8eHy
+ Ia2RkL/NEPdqgulrOqyiO8pj3e+gG0B85Lvk4xhDZHqAYN54uAOFykLBqfoS5qSHqCivXi2CP4E
+ FyxmqJo47UD9yYj8NslsybfCJnVPuxFEiDcb0MP8CdlvUdolMasNpq9Mrjjka4pWdlaA==
+X-Received: by 2002:a05:600c:1986:b0:476:d494:41d2 with SMTP id
+ 5b1f17b1804b1-48519897e1emr106549205e9.29.1772730132581; 
+ Thu, 05 Mar 2026 09:02:12 -0800 (PST)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851ad28363sm36283015e9.30.2026.03.05.09.02.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Mar 2026 09:02:11 -0800 (PST)
+Message-ID: <3d8b56db-aef0-40a3-81e8-e08803f8c5b7@linaro.org>
+Date: Thu, 5 Mar 2026 18:02:10 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260304212303.667141-6-vsementsov@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 05/12] hw/arm, target/arm: nested virtualisation on HVF
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>
+References: <20260228220837.35275-1-mohamed@unpredictable.fr>
+ <20260228220837.35275-6-mohamed@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260228220837.35275-6-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,22 +107,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 05, 2026 at 12:22:49AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> To simplify further changes (convertion to bool+errp APIs),
-> let's rework some error paths:
-> 
-> - get rid of int ret in traces, as we are moving to bool+errp APIs
-> - split traces to _fail / _success (seems better than add boolean
->   result to the message).
-> - prefer short error paths (return immediately on error)
-> - around trace_vmstate_load_field_error(), do not call
->   qemu_file_set_error(), if the erroc comes from qemu_file_get_error()
-> 
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+On 28/2/26 23:08, Mohamed Mediouni wrote:
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   accel/hvf/hvf-all.c    |  1 +
+>   accel/stubs/hvf-stub.c |  1 +
+>   hw/arm/virt.c          |  5 +++++
+>   include/system/hvf.h   |  5 +++++
+>   target/arm/hvf/hvf.c   | 36 ++++++++++++++++++++++++++++++++++--
+>   5 files changed, 46 insertions(+), 2 deletions(-)
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
