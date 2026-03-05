@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A164F33A77
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97808F33A75
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9ul-0003cN-L9; Thu, 05 Mar 2026 09:42:59 -0500
+	id 1vy9z7-0005OT-KU; Thu, 05 Mar 2026 09:47:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy9uk-0003c6-He
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:42:58 -0500
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1vy9z4-0005OC-UR
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:47:26 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vy9ui-0004VA-Fo
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:42:58 -0500
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso9980259d50.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:42:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772721775; cv=none;
+ id 1vy9z3-0005JG-Be
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:47:26 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7986d231b3cso107493297b3.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:47:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772722044; cv=none;
  d=google.com; s=arc-20240605;
- b=aP4hLrjHBUs/2gyM9zwMV8f2g/UVFzi5CiIRqhEhpKtk5ue6gvj1cpkW57jBYJLDbT
- ihJwId4rUlnnJDRR7mKO4uGyPLdFOz3yIeUth1rnM/jvGAbQhaN84/klxUNgDvFF8rR4
- HXBAiSEg4kMWEnm3Cc0Hy93q4KL14h1bJP5C8JwV4K5TKmKG6OKEjRiusqAoHQsoGHJD
- JjdeNTKlMQ22IE0TeFSoMNBMZtgLULwFl8pXXf3TLbWAnY9HP+uLe1c3/JEjAGUeYMIw
- lGf2clI62tsfD87np99MvS7UE3QlohvpTujUU+ldC+MSQGL7DG9k9qtYrtQh2Cs05WGE
- po7A==
+ b=SJbZohwZMwraMm1Js6gGidsN2QBJUsBqtMIIEVQfwx2n64+cffjbkyIFX2huJqpeXo
+ M3xy0/+UDM4FL39elkw2WpVtDBB8jUIoakc/9IFdLfpEScgq+7WKGD6BmEc6+yqjPHE/
+ YEV7qDrYzZN15Wlhp9F6wb8sQQI55hskqIYNsdsfTRfU0lDR5Uj8/TTQkLN9Au0+CdjP
+ MfORmoZQv9r2lg0diMOpEv+5tJVzV6lopT8XUKzWyTPv79Z/55rtfOsqgZ6hVDkAQxEO
+ TQmY056Lc7JjPusurKZIM+qugqNR+awIX/7lEqx/6oolshtvZugwjctdlB+5CJ/rQRx/
+ xDbQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cDrKQ5010Z3oJx7Ld2AxBFVhSAsu+u4zp8E+NOJOK98=;
- fh=Vz8s/HVZQOzJV0tZXMmAOmhFQB6aATfDutT1YYrem9g=;
- b=HPZ2cifpivR6Q5XWD923G7+tVeQFjPQMSlIEsFrTFrdAmuhzpaUQOwPMP/hdyrcoQV
- gdg040ESnRQ3wkPCtEt8dXR8nszJRSqjPu0qj89fTmrvInVduPO/ceQX1RICuQwPrkrR
- pMCEpBQdYYGBRE63byhuwNxiArwa1l+UlgItV3lwJo4j6SoKiVWQEZCJnhdovUqrpuwz
- MrZGNV01qBDKHrBhchJFr/K6Lp7MB6ReULyi1PhFisRqWGmCP7jgL4xCftrA31hY2dFg
- RlC/+0TPIDDQjq31L/H5O/WfYHy2GMzcWz80BTarP4PTnBboe0BwuJx0fcej50tScWt1
- iFVg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=K/3h0WPRfGP1wmv/zzjhrCWJ+5iPwZ1nQZXO/3o0YWA=;
+ fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
+ b=k3GTXAsy/oDwYWu8jrw0alPzhFO/r5gBBqAdZQDh9Hgn6DT4ufHKdOJuVrmRon/rjQ
+ arLeiVyJGt0FCzHxNT7iiA4ypwYEJyl8JhUJNfvcRXAp8qfZ4ZKvrq1S495rbxxJsWS1
+ 7PiZZ2XZn9Lv73t7Bbw8b+WBpr3GeT+rNoHJe672MLP0NcXTh07TEGCUDCWyqP1Dumf1
+ 8HU8oQ6sWk1dlgO9Cw7auq8Ctl1sxLNKB8jNiBz/tF4kC/QPJ/cgmUyLVDttIDdpRZ4c
+ X64Bm7rWMmIhlYcImcrtgC8Yjx9+FAcJgSXs/6iFNyGbZgwCaTs10WWdZ1tAUi950e6s
+ oCbQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772721775; x=1773326575; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cDrKQ5010Z3oJx7Ld2AxBFVhSAsu+u4zp8E+NOJOK98=;
- b=h4QEaqZEHKvYUXSS8L9VW0Z1oa9gx/WjoBztvKG3fjEjY+21oumvyVDJ0Ho0sidKf1
- M6BfiY4zUYAOTcNKDj9Mrs9HxsmZlIQbLZMf7cp3ajHlxy4DOucplf7tOYC3Hcf1nzwQ
- r02M8jCH1ounELTKqm0zPmNqwEJuDFP7H8xU2R6vRgx1Jax7gRaCvFsROUbb5+ImwZKR
- q4kWXShSJhnFKNAhPEizf+RSGGD9tWc1sd7xf0btJcOzBev9mY4dBSZJSz6X/6LlOohn
- G5LzVL0YX0Lf+VWgwhfwIvIS+bPgVMJq5x2pws3kcJlct8E7W+BOZvjLfyd3M2tozxAw
- xN9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772721775; x=1773326575;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772722044; x=1773326844; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cDrKQ5010Z3oJx7Ld2AxBFVhSAsu+u4zp8E+NOJOK98=;
- b=u5OHQsaF/G/FZZWCzk27N8Xflg40hJLLzDYWWv+Hi1XutO5nKsfxNlGjsbkJiVfIMB
- C7vQjbV/mXpmRH91hbnhSkSUtijOmnIjwYXkhAK6DDxME8mtkj+srOgWBLp5RO9UTB/p
- 69ZFOw0K6h1GJ5jbUSlNvdn7+jd9XpGAY5DbQPEZ5IooVIo9F72f2kX+JpS67n9tJzgh
- B3C8aDg9KWEm+sZM4Ow/gCHfeBglH+qkMPYS6gI2p5aljXBAe9sCvVguoxRysCxSRG3E
- 5qHs/zxrUJrbFw/f629kOpgxnD/VvYtODI7sEtMroArJl7t29VWkPv9mqpvgyRmzcQP7
- A2TA==
-X-Gm-Message-State: AOJu0Yx7TugPhmX+VH/ZCxZPxUfmMR5+vZkP6ob/hdTBhmoWQtMVSW2l
- HJFI+CqaPEbJDMAfrTuXVLB44Lbf7608DEbk5xYgCnxNgRNdzAeJj5HcteRjCxdRCZ4SI3lRYHf
- KmTtvGlTvZmLjSZPoTVVwG9oiu5wMfxpjiCnL2aWzbI4BVVwbZqGYPOM=
-X-Gm-Gg: ATEYQzx17Acr8g7mKp3Mwb+J36fiocXeZha9/AWG+ZV49fqFjqpN6fYgo5F4nrlWN38
- gOjP+W0aj6PA8wUy4z354gbSZtpmUTMI9ITPlViZlOjgveNLXN5LbAcBTM/AzOPkMWgo97jEFdU
- Us+IWL/gM71Ncqsq/1YVEF6zSA46hILTeFIc+OmW7psAiKsn+1fmnOvcO5aVdlJXEiCtWhFmOwR
- YML6PTQc2/d1x+SXzeYQe9pwsIH6DuawhVohy60NO3RFVcj9WFKZ7zyup94ZCgpC8caszbtZISa
- LkGyIIlOBQba87Q6VXh7MG2ajGYvC9vlWhrxSMnMRobYcTwMw19CGzRKLpJazS+0vIA=
-X-Received: by 2002:a05:690e:1a93:b0:64a:d742:6773 with SMTP id
- 956f58d0204a3-64d0715016bmr1388432d50.43.1772721774996; Thu, 05 Mar 2026
- 06:42:54 -0800 (PST)
+ bh=K/3h0WPRfGP1wmv/zzjhrCWJ+5iPwZ1nQZXO/3o0YWA=;
+ b=VdGYqbFDGiRW419pjaO6XLIjhVb+MsmdOGKMIaPUSAzqAEkf4tBYWOLlQJ6bA001tl
+ uc6uEikY+SXmHY76JZGrB7fdWoU3TkO8q5ItBpH5xE9LSKSoBa6e9f0rzQA0TLtUwZEU
+ czsazs45apxMzeNctqg6kRQhGKham+10ZmWT0ghWhZDCI/vAk/I4Sg0A2x/o6CUQrY94
+ mzbdAUShiYrzswtRtl05g1bGIQ5hxj3zUdLT7zPs8iKoG2sbuB8hg5IVYUoFXfXNC4ql
+ Eby+yG5jCIvUYjJZaQXQK7cPFVL79/KKupbATgzVZ5Qj7OHSzA9KbgL7lIn6uEH3ERrx
+ E+jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772722044; x=1773326844;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=K/3h0WPRfGP1wmv/zzjhrCWJ+5iPwZ1nQZXO/3o0YWA=;
+ b=jTvv1fKmk7NRuDumjkD/rcsVoYhnAV4+fitZ9PC2aoxR4+8CB5VR+LoqsTLTHBLSHP
+ qbKjzUuXyQSiwWL6R/OjY8lIDyTaZvPA8xj7nVi5rIyDrJlpoG33hdXQH/owba9C4/dH
+ ftlcIPseMPl6/gztHsbEahITafxy3fVopK4o+e+4sLPxnz+yKe07oyx6SPL5N3A68IWd
+ 9o46PPk/utNxtN4qN3zLtpM0sawZjZuFP7JWq0Z9icPGHXHqhax03YfnCrlwz8MqY8qo
+ X4zGq4SteImXipQt6lgXU0XcETqMVI6NcjYKkXqgn1p58pWYziNXXhjULWwiCWYRqJxj
+ rZVQ==
+X-Gm-Message-State: AOJu0Yzw6qbnWBerpJUw7XB0ar7xersQf5pWWfMVnCU9Smdyl1NxD93g
+ Z1fJaArZi1G7XnKTwICYWb+xV5giWJftMl0f//7iQClxKrVoVgxAGYeRMw4aJXFSrCrv+SuOn/o
+ WwbD8wJAeSVYnKW33KfSbNj+h6QqOGVTjNBRZYWGtUg==
+X-Gm-Gg: ATEYQzwMx+DM+oByhaxn1S+GH/BRuIbcbSxXSE0XUPz782wgmnA3Agyi4bPsD2MmnEC
+ nQL0ZHNVbGq3vcUNxqKrS2mOaTgm8cA9dHrJFWd+N96rQ/u9ZiwiQ3lSTXtsgCmF8POJcIq5Pce
+ Z505khdSlxdDsDKp749jM1Vaqy2wyX33jE7jF3KvvogNBxaMrDWvKhRYc6sne9r7T5b42rwQhOo
+ E1oUYwGGuSg7KraRleU+zddPjJytpJ6j+myR3AtjBOB/dEutrnAYD30oiQTEXQ87ZSKQcrboWhM
+ iKa6oLZig1wlbnonbc341S3yTkVyvKWFQO+1yJCDUWhMDzRCrIyjOoVKptvkPp4lz+8=
+X-Received: by 2002:a05:690e:168a:b0:649:e440:26a8 with SMTP id
+ 956f58d0204a3-64d07047691mr1848979d50.0.1772722043810; Thu, 05 Mar 2026
+ 06:47:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20260305120104.1254578-1-peter.maydell@linaro.org>
-In-Reply-To: <20260305120104.1254578-1-peter.maydell@linaro.org>
+References: <20260303150604.2402872-1-berrange@redhat.com>
+In-Reply-To: <20260303150604.2402872-1-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 14:42:43 +0000
-X-Gm-Features: AaiRm52d3vuWUCD42H6vs6b67LmagQZUTfMnsziXnIzuibnsXkoIcanAOe1J3F0
-Message-ID: <CAFEAcA_kSC9mV-mX0EEZ4+oQomMb5rvpV7ocmauAJVBT4O-Mxw@mail.gmail.com>
-Subject: Re: [PATCH] tests/plugins/tcg/mem: Don't access unaligned memory
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, 
- Mahmoud Mandour <ma.mandourr@gmail.com>
+Date: Thu, 5 Mar 2026 14:47:12 +0000
+X-Gm-Features: AaiRm52SIzjZAST0OV68ICCRJjKmUiUKnEsVWduK46y60oLPRSv8yfX2MGf7luo
+Message-ID: <CAFEAcA8HxfTmY8sSi1hhUE+Hown4RH1guaV5J_QcRsGPWGn2jg@mail.gmail.com>
+Subject: Re: [PULL 00/27] Misc patches queue
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,94 +115,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026 at 12:01, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Tue, 3 Mar 2026 at 15:07, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
 >
-> In commit eb3f69cac62670 we removed the dependency of this
-> mem plugin on the QEMU headers, but in doing that we introduced
-> undefined behaviour when the plugin accesses unaligned memory.
-> This shows up if you build with the gcc or clang address
-> sanitizer and run 'make check-tcg', in numerous warnings like:
-
-This should read "with the gcc or clang undefined behaviour
-sanitizer", which then lines up with what the error message
-below reports itself as:
-
+> The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046=
+e9:
 >
-> ../../tests/tcg/plugins/mem.c:167:27: runtime error: load of misaligned address 0x7f1f300354b1 for type 'uint16_t' (aka 'unsigned short'), which requires 2 byte alignment
-> 0x7f1f300354b1: note: pointer points here
->  00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12 13 14 15 16 17  18 19 1a 1b 1c
->               ^
-> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../tests/tcg/plugins/mem.c:167:27
+>   Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu in=
+to staging (2026-03-02 14:01:46 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/berrange/qemu tags/next-pr-pull-request
+>
+> for you to fetch changes up to 192f59773a6a8fd1e0d3c1d9c9c3f5f59a62c087:
+>
+>   util/oslib-posix: increase memprealloc thread count to 32 (2026-03-03 1=
+5:01:21 +0000)
+>
+> ----------------------------------------------------------------
+> * Increase pre-alloc max thread count to 32
+> * Fix checkpatch warning for new/removed files with --terse
+> * Detect more GPL boilerplate in checkpatch
+> * Fix lean of data in TLS/websock GSource cancellation
+> * Tweak CPU docs for DiamondRapids
+> * Unconditionally enable thread naming
+> * Fix race setting thread naming on Win32
+> * Add API docs for logging APIs
+> * Fix interleaved error/trace output
+> * Fix missing error prefixes with warn_report
+> * Add detailed error reporting for VNC passworrd changes
+> * Refactoring of error_vprintf & related funcs
+>
+> ----------------------------------------------------------------
 
-Specifically, I see this with
-  '../../configure' '--cc=clang' '--cxx=clang++' '--enable-ubsan'
+Something in this consistently causes the s390x runner
+to fail the test-migration test:
 
-Here's a specific failure;
+https://gitlab.com/qemu-project/qemu/-/jobs/13367184083
+https://gitlab.com/qemu-project/qemu/-/jobs/13366572115
+https://gitlab.com/qemu-project/qemu/-/jobs/13339069533
+https://gitlab.com/qemu-project/qemu/-/jobs/13336989367
 
-timeout -s KILL --foreground 120
-/home/pm215/qemu/build/clang/qemu-system-aarch64 -monitor none
--display none -chardev file,path=run-plugin-memory-with-libmem.s
-o.out,id=output -plugin ../plugins/libmem.so,region-summary=true -d
-plugin -D memory-with-libmem.so.pout -M virt -cpu max -display none
--semihosting-config enabl
-e=on,target=native,chardev=output -kernel memory
-../../tests/tcg/plugins/mem.c:167:27: runtime error: load of
-misaligned address 0x754e340357c1 for type 'uint16_t' (aka 'unsigned
-short'), which requires 2 byte
-alignment
-0x754e340357c1: note: pointer points here
- 00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12
-13 14 15 16 17  18 19 1a 1b 1c
-              ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../tests/tcg/plugins/mem.c:167:27
-../../tests/tcg/plugins/mem.c:179:27: runtime error: load of
-misaligned address 0x754e340357c1 for type 'uint32_t' (aka 'unsigned
-int'), which requires 4 byte alignment
-0x754e340357c1: note: pointer points here
- 00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12
-13 14 15 16 17  18 19 1a 1b 1c
-              ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../tests/tcg/plugins/mem.c:179:27
-../../tests/tcg/plugins/mem.c:191:27: runtime error: load of
-misaligned address 0x754e340357c1 for type 'uint64_t' (aka 'unsigned
-long'), which requires 8 byte alignment
-0x754e340357c1: note: pointer points here
- 00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12
-13 14 15 16 17  18 19 1a 1b 1c
-              ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../tests/tcg/plugins/mem.c:191:27
-../../tests/tcg/plugins/mem.c:165:13: runtime error: store to
-misaligned address 0x754e340357c1 for type 'uint16_t' (aka 'unsigned
-short'), which requires 2 byte alignment
-0x754e340357c1: note: pointer points here
- 00 00 00  00 00 00 00 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12
-13 14 15 16 17  18 19 1a 1b 1c
-              ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../tests/tcg/plugins/mem.c:165:13
-../../tests/tcg/plugins/mem.c:177:13: runtime error: store to
-misaligned address 0x754e340357c1 for type 'uint32_t' (aka 'unsigned
-int'), which requires 4 byte alignment
-0x754e340357c1: note: pointer points here
- 00 00 00  00 00 00 00 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12
-13 14 15 16 17  18 19 1a 1b 1c
-              ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../tests/tcg/plugins/mem.c:177:13
-../../tests/tcg/plugins/mem.c:189:13: runtime error: store to
-misaligned address 0x754e340357c1 for type 'uint64_t' (aka 'unsigned
-long'), which requires 8 byte alignment
-0x754e340357c1: note: pointer points here
- 00 00 00  00 00 00 00 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12
-13 14 15 16 17  18 19 1a 1b 1c
-              ^
-SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-../../tests/tcg/plugins/mem.c:189:13
+This was a CI run together with the loongarch pullreq, but
+that has just passed this job when run in CI on its own:
+ https://gitlab.com/qemu-project/qemu/-/jobs/13367800326
+so it seems like this pullreq is the one causing the s390x
+failures.
 
-Similar with i386 and x86-64 targets.
-
+thanks
 -- PMM
 
