@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C992BF47CA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E62F47CA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCob-0002Nk-Ld; Thu, 05 Mar 2026 12:48:49 -0500
+	id 1vyCqL-0006zA-UZ; Thu, 05 Mar 2026 12:50:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyCo5-000230-PM
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:23 -0500
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyCo1-00027x-0h
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:15 -0500
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64ae222d978so7880442d50.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:48:12 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772732892; cv=none;
- d=google.com; s=arc-20240605;
- b=BrEvJata5rp63Iep5dhD6CKO6WWZ9v8ZrpsKP2MxnTMrvy9LtRn/Kgswt+bAhvmboU
- x0WOrMBGA9iLXuD43xJvU6MDZQEMvn0jF3xEQ+S3gCwBdEj+UyFfC2cUDZVJaxHBMiuH
- lIeFVc3mhSBQt2e+acW/Xa/YMJKVC4YXrJGhuZO8fEI4U80FMRApci6j4l5Gq720FoSl
- rCwhIjdqgbQIKVByyrRdSssgyCo8V4u4YEmhZFDgc34Fhw/8JvilYCngIFep3ofpjYsy
- v/CeQfJlIUNUQfZsfhZdwxlHjTXa5ogD4HTp8l5fimbJ2sWVyUgfWsiXNA82iHXb5t8r
- GtHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ioM9RbY8r4gFoM9g3byEC99MHLUkCN1E+7NCBJ6pYcg=;
- fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
- b=gc9KW9/KkFhJMbiLjzkddIjpcWRJ+7n6WBL+OjzjIqWkA7hm784Tfj66X9jiwYPPCa
- 2revyJycomjzvTCieWwekZPiqk958X9hQDNm/G05OaMrV5PePyvvaEmezO/cVVktilwG
- j/AtvXvvr4hKSMH0t18A3eRYgBMTzYYIgEoJt0QR0/ygg0IBBqlvBeGDlG0hkUNGHfao
- TDiWBV29m4D+PlL0InInHLmyH04+C4TTzICYFnVnuQrp/7ft9zkGGDJ2AdOrqGG/RQKQ
- aiBQDHUJ4IFdYpaDPtE3YbIxXr/5dCq6DVrCVvkq1fQ8sqbVDTMXy2UD1u3jg4Re2JMS
- DRPA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772732892; x=1773337692; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ioM9RbY8r4gFoM9g3byEC99MHLUkCN1E+7NCBJ6pYcg=;
- b=Gw3qGdql4Cp0MWh48WuqgCjaMQyOevrABRBBwEkQZBcCAYOEpIH7QzUj//1IAKsGc5
- hfBpBCrdK/6qi/QYYg5Q8L1Ya7Gfmsxdg9FURYk2oy8HG+1ReWGdiXLlnhxonisUD/Z8
- 7hX+GcTISq4griyQhtCv17uXIGmfH4ayLpi8g62Q1WCaZY5liIOV7hrTCD+dedLIohs5
- uhZn7KTd8XoqAOa+T4a1fdeBFHOIQ6qeUSvqvz2tDozkZsomssBrrYnxPyFxMBAUlxDa
- WM6wzI+lQ128jkvkJbirz103KXOugm9d1EjiecZ3yz9ZvpH5b+udVygnQjXs0Aq2dt9E
- iI6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772732892; x=1773337692;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ioM9RbY8r4gFoM9g3byEC99MHLUkCN1E+7NCBJ6pYcg=;
- b=Br33rtpRR1kp+6fys6QZPGK7mFRqUt7mYo1xJyF7NdMBVPWVeRPCLXN6g3Rn5NNT0C
- IHaPbtQOluSevUJivaryet34D2okhvtEh1DMeFPbnQl+BtinNGN8vttFf0EX3Fxpp/Yf
- 71BbYem2heyzBZnnZenkvG1f+FvwnhAugPMMD4NGLdb8gU/AVDvSiUFcYTLbAv96Ds0W
- jMHlgWOiEEfQq7Y/5901Qee8wNQiWSLCHiPJXh+zxUUxQemudYNUUvXSyqhfDER+CyMA
- zKNn3eCQgZVuNCTlO4o7BS2x2ZXiW9VEyf3NNKxm1D23jlwmQ8EZ+/per5nTo5hvVGfh
- KRdA==
-X-Gm-Message-State: AOJu0YxMf0BX6qbHbGz7bhSX5GoSxkOP5Hb/LEAbH93cqu+iF+RDlzp1
- JndKbyKL/BYx4oELgWVHs0eHpLNCv5t9xQL3waC/WBxiQgq1ua4JTPObjMPwzvX6jmqd28ThktA
- sXp6/V15nV7rg/xTtiOcJMCmUEt5pCLX4kb/VmYLAKa9xpnJYzL6V
-X-Gm-Gg: ATEYQzyo0ujUi8PrWplc7hgFfpkqLS8VuPSAhVQ8V8SAYORaJK75AFZF3u6lak+cp5q
- McWdDkfEQpSQIcQ53Z4uLCiLBT0P3eh7zuI64KC5b+WlMCqjsSiovjl+fFkIzYKMIvB+6fD6qEp
- LzBCf+U6199Yinjyk77f6uQVLZu0/ywM7zavgJxNDRDmBnibycwHxj7z+xTp2yLPpdGZKFH8q0e
- vpOJZZ/xbAW32VOegK8Iwg5/jAEl8AfI4FXdMcB+RXnwiGUgM4/sCaTJigwPh330xt4EDnLl/fY
- HcHOgk1sDYeJA3z3gLZkOpYCWpW8HJPaDyO+3JjjbNB7HTuet7NsK53AZXh27k1sWlE=
-X-Received: by 2002:a05:690e:1697:b0:64c:ed24:13da with SMTP id
- 956f58d0204a3-64cf9bbef4dmr5918186d50.57.1772732891738; Thu, 05 Mar 2026
- 09:48:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vyCq3-0006Ws-H1
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vyCq1-0002aF-W9
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772733017;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VR8XVtiHpwhfhggW4CuS+Mz92pEJgvPt3ro8FGlcU0w=;
+ b=SWGCEnftydHFR1mKcwjTyN4wBl6cocB7jSWAa78wB0LKg81jbZG5v8aoxX2hoJ5C3gQe5H
+ Ae4A4A0/qM78/L8SJ/secAe+0i8pjLwcRVfFxAw+lVi6kL2M/DcTiQxgb9w12VwVa++H5z
+ JU9IkqzLRwCqS6jjkyd+ObzvHTPZ2tk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-txkPjcxgN3idxF8PRWQsvQ-1; Thu,
+ 05 Mar 2026 12:50:14 -0500
+X-MC-Unique: txkPjcxgN3idxF8PRWQsvQ-1
+X-Mimecast-MFC-AGG-ID: txkPjcxgN3idxF8PRWQsvQ_1772733012
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99F7418005B3; Thu,  5 Mar 2026 17:50:12 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.44.34.61])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B4A48195419E; Thu,  5 Mar 2026 17:50:07 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ devel@lists.libvirt.org, qemu-rust@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: [PULL 26/27] scripts/checkpatch: Fix MAINTAINERS update warning with
+ --terse
+Date: Thu,  5 Mar 2026 17:47:42 +0000
+Message-ID: <20260305174743.3084606-27-berrange@redhat.com>
+In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
+References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <20260305105215.302571-1-thuth@redhat.com>
-In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 17:47:59 +0000
-X-Gm-Features: AaiRm51q7ttIa4P1IBlIOqQxpJZJ3vdnS1hrSWZbz1Cpoz7wIhjjwVYu2CCMKxI
-Message-ID: <CAFEAcA-PhLaic-XVwFpK89UJ0xuhKmOq=9v=fJxOV9LfxsnU1A@mail.gmail.com>
-Subject: Re: [PULL 00/28] Remove deprecated pc machine types -2.8 up to -2.12
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,33 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026 at 10:52, Thomas Huth <thuth@redhat.com> wrote:
->
->  Hi Peter!
->
-> The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
->
->   Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-05
->
-> for you to fetch changes up to 711de639d571b6ac6981020536ff816130768f58:
->
->   hw/display/vga-pci: Do not expose the 'global-vmstate' property (2026-03-05 10:33:25 +0100)
->
-> ----------------------------------------------------------------
-> * Remove deprecated i440fx and q35 machine types -2.8 up to -2.12
-> * Remove the related hw_compat handling in various devices
->
+From: Markus Armbruster <armbru@redhat.com>
 
+We recently improved the MAINTAINERS update warning to show the files
+that trigger it.  Example:
 
+    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+    #105:
+    deleted file mode 100644
 
-Applied, thanks.
+improved to
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+    WARNING: added, moved or deleted file(s):
 
--- PMM
+      migration/threadinfo.h
+      migration/threadinfo.c
+
+    Does MAINTAINERS need updating?
+
+Unfortunately, this made things worse with --terse, as only the first
+line of each warning is shown then.
+
+    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+
+became
+
+    WARNING: added, moved or deleted file(s):
+
+Adjust the warning text to
+
+    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+      migration/threadinfo.h
+      migration/threadinfo.c
+
+so we get the exact same warning as we used to with --terse.
+
+Fixes: 1d745e6d9635 (scripts/checkpatch: use new hook for MAINTAINERS update check)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[DB: fix typo with missing string concat operator]
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ scripts/checkpatch.pl | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 45b1153a9c..b77bd69328 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -1474,9 +1474,9 @@ sub process_file_list {
+ 
+ 	# If we don't see a MAINTAINERS update, prod the user to check
+ 	if (int(@maybemaintainers) > 0 && !$sawmaintainers) {
+-		WARN("added, moved or deleted file(s):\n\n  " .
+-		     join("\n  ", @maybemaintainers) .
+-		     "\n\nDoes MAINTAINERS need updating?\n");
++                WARN("added, moved or deleted file(s),"
++		     . " does MAINTAINERS need updating?\n  "
++		     . join("\n  ", @maybemaintainers));
+ 	}
+ }
+ 
+-- 
+2.53.0
+
 
