@@ -4,59 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7F7F33A6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D165DF33A6B
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9KT-0002Nl-JR; Thu, 05 Mar 2026 09:05:31 -0500
+	id 1vy9Kf-0002PC-AK; Thu, 05 Mar 2026 09:05:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0002MS-VJ
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:19 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KN-0002NX-Rq
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KG-0007pU-Kq
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0007qV-Nl
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772719515;
+ s=mimecast20190719; t=1772719518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zBpnfoTYGAJ2In56hR2qL4c2Q0xWmFwNKxU47aBPoxY=;
- b=JKg+PyT5E37b/i19RUt5sl5SIvgOA/XD2UVgjxskA21kmdN32JQq5pOyvxabTqIGFhlrn9
- LFIOUQ7w54HbzORyWrDrVdN4NHbOOhbc2+so2BKqX78fqigDzW8EzS7Djh6EhpTFh8y94o
- JpJkcC/aebKK8QI5bO40PAt4Rhp2atE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xlr+uzY4HBmnkdOKg7uUY3lZ/s3hH57O/WC32TVvGlg=;
+ b=RCI9xoRElA7SqaC9xF0hOOAFqzGaYr66GjZZs7emitcVJgLP6DinxGvqiG0sH6KQgcySvY
+ 4qDfyaqjWZhiqhjYDcrvQQf58/R+zLbRoKTp1oYjphvf592i8sYLPwknHjVS2l40ZHpRqj
+ qtT9HRm9jP3guiN/c8yryj0Rf4kuD0w=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-c1GpcHSOPDO_0hcD4leXxw-1; Thu,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-nbzPZejFO8-oFuqKJsTNwg-1; Thu,
  05 Mar 2026 09:05:12 -0500
-X-MC-Unique: c1GpcHSOPDO_0hcD4leXxw-1
-X-Mimecast-MFC-AGG-ID: c1GpcHSOPDO_0hcD4leXxw_1772719511
+X-MC-Unique: nbzPZejFO8-oFuqKJsTNwg-1
+X-Mimecast-MFC-AGG-ID: nbzPZejFO8-oFuqKJsTNwg_1772719511
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7ACF21955DE2; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7062818002FC; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11E8D1956095; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
+ id F0E901955D71; Thu,  5 Mar 2026 14:05:10 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9713F21E692D; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
+ id 9517221E6A04; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/6] hw/core: Deprecate query-kvm
-Date: Thu,  5 Mar 2026 15:05:03 +0100
-Message-ID: <20260305140508.218316-2-armbru@redhat.com>
-In-Reply-To: <20260305140508.218316-1-armbru@redhat.com>
-References: <20260305140508.218316-1-armbru@redhat.com>
+Cc: peter.maydell@linaro.org
+Subject: [PULL 0/6] Miscellaneous patches for 2026-03-05
+Date: Thu,  5 Mar 2026 15:05:02 +0100
+Message-ID: <20260305140508.218316-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,61 +81,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-query-accelerators covers all accelerators, and should be used
-instead.
+The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260108131455.2240598-2-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[Rebased, missing section title markup fixed]
----
- docs/about/deprecated.rst | 5 +++++
- qapi/accelerator.json     | 8 +++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+  Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index d0ce914d85..ee29c4fb89 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -142,6 +142,11 @@ Use ``job-dismiss`` instead.
- 
- Use ``job-finalize`` instead.
- 
-+``query-kvm`` (since 11.0)
-+''''''''''''''''''''''''''
-+
-+Use ``query-accelerators`` instead.
-+
- Human Machine Protocol (HMP) commands
- -------------------------------------
- 
-diff --git a/qapi/accelerator.json b/qapi/accelerator.json
-index 0cf5e0f9d9..b59df37866 100644
---- a/qapi/accelerator.json
-+++ b/qapi/accelerator.json
-@@ -29,6 +29,11 @@
- #
- # Return information about KVM acceleration
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use `query-accelerators`
-+#     instead.
-+#
- # Since: 0.14
- #
- # .. qmp-example::
-@@ -36,7 +41,8 @@
- #     -> { "execute": "query-kvm" }
- #     <- { "return": { "enabled": true, "present": true } }
- ##
--{ 'command': 'query-kvm', 'returns': 'KvmInfo' }
-+{ 'command': 'query-kvm', 'returns': 'KvmInfo',
-+  'features': [ 'deprecated' ] }
- 
- ##
- # @x-accel-stats:
+are available in the Git repository at:
+
+  https://repo.or.cz/qemu/armbru.git tags/pull-misc-2026-03-05
+
+for you to fetch changes up to a1aca41ed08fba3120878fceb7f74af97c6fad93:
+
+  qdev-monitor: Fix qdev ID validation regression (2026-03-05 14:34:11 +0100)
+
+----------------------------------------------------------------
+Miscellaneous patches for 2026-03-05
+
+----------------------------------------------------------------
+Markus Armbruster (6):
+      hw/core: Deprecate query-kvm
+      scripts/checkpatch: Fix MAINTAINERS update warning with --terse
+      error: Fix "to current monitor if we have one" comments
+      error: Restore error_printf()'s function comment
+      qemu-print: Document qemu_fprintf(), qemu_vfprintf() failure
+      qdev-monitor: Fix qdev ID validation regression
+
+ docs/about/deprecated.rst |  5 +++++
+ qapi/accelerator.json     |  8 +++++++-
+ include/qapi/error.h      |  3 ++-
+ monitor/monitor.c         |  2 +-
+ system/qdev-monitor.c     | 12 ++++++++++--
+ util/error-report.c       | 29 +++++++++++++++++++----------
+ util/qemu-print.c         | 14 ++++++++++----
+ scripts/checkpatch.pl     |  6 +++---
+ 8 files changed, 57 insertions(+), 22 deletions(-)
+
 -- 
 2.53.0
 
