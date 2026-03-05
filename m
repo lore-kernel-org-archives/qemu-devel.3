@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02AD5F47CA4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C515F47CA4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:50:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCq3-0006RC-Td; Thu, 05 Mar 2026 12:50:20 -0500
+	id 1vyCpu-00068j-KH; Thu, 05 Mar 2026 12:50:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCpo-0005nI-FS
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vyCpX-0005hz-CB
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCph-0002Kc-Gd
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:04 -0500
+ id 1vyCpT-0002JU-6P
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732994;
+ s=mimecast20190719; t=1772732982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YLrXA6nKBshekuI+UNJVfyeoihxX/zZYZeGgdmFsQDY=;
- b=OtU0WHyyGmYNG7uqljLTVLbl73r7Ib55ohq+zhP14v82we//Kn8NPjOlC/T/pJAGW61kIK
- O5Y+vPcs8LpP7utlqqJ8Rj1K3crX4NVA/BbNAIjILpddulnvo/IsY0mei3I8m+vsWCyDkC
- ZdWpZQ7Gl1+jj9LHiaBDBh77Dt4whAo=
+ bh=IbVx6h7ufm4kk+pC5TYey/6wcKGTtrcPQQxztMIFIO0=;
+ b=QZgNl7fGE2UOFMT5MnIbxypJtB8MilXzB16wGmnEkO08yjRDHOQ25OU/9M6W5q8NWqzW/M
+ o2zCHbjzX8UZXdLDMf3RPYp7Kj94zu83DSvf9P0lsF6hWGBrx+/Br97reit16YgXka7L+L
+ u9eVDxJyktAj/x7vRLoKELy601pMH+Y=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-893brwW4Myq5TcNxAgu2aw-1; Thu,
- 05 Mar 2026 12:49:52 -0500
-X-MC-Unique: 893brwW4Myq5TcNxAgu2aw-1
-X-Mimecast-MFC-AGG-ID: 893brwW4Myq5TcNxAgu2aw_1772732991
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-YG1dY7hbMRyfnSWS7RSSJQ-1; Thu,
+ 05 Mar 2026 12:49:37 -0500
+X-MC-Unique: YG1dY7hbMRyfnSWS7RSSJQ-1
+X-Mimecast-MFC-AGG-ID: YG1dY7hbMRyfnSWS7RSSJQ_1772732975
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 430EC18002C7; Thu,  5 Mar 2026 17:49:51 +0000 (UTC)
+ id 67A52180049D; Thu,  5 Mar 2026 17:49:35 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 626B01956095; Thu,  5 Mar 2026 17:49:46 +0000 (UTC)
+ id 417FD1956095; Thu,  5 Mar 2026 17:49:30 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -61,25 +61,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Eric Blake <eblake@redhat.com>
-Subject: [PULL 22/27] monitor: move error_vprintf back to error-report.c
-Date: Thu,  5 Mar 2026 17:47:38 +0000
-Message-ID: <20260305174743.3084606-23-berrange@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+Subject: [PULL 19/27] ui: remove redundant use of error_printf_unless_qmp()
+Date: Thu,  5 Mar 2026 17:47:35 +0000
+Message-ID: <20260305174743.3084606-20-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -97,150 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current unit tests rely on monitor.o not being linked, such
-that the monitor stubs get linked instead. Since error_vprintf
-is in monitor.o this allows a stub error_vprintf impl to be used
-that calls g_test_message.
+The vnc_display_print_local_addr() method is intended to print the VNC
+listening address on the console at startup, so the user can see the
+auto-chosen port address when using the 'to=' flag. This is only called
+by vnc_display_open() which is in the QEMU startup callpath. The check
+for not being in QMP is thus redundant and can be removed.
 
-This takes a different approach, with error_vprintf moving
-back to error-report.c such that it is always linked into the
-tests. The monitor_vprintf() stub is then changed to use
-g_test_message if QTEST_SILENT_ERRORS is set, otherwise it will
-return -1 and trigger error_vprintf to call vfprintf.
-
-The end result is functionally equivalent for the purposes of
-the unit tests.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Eric Blake <eblake@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/monitor.c    | 18 ------------------
- stubs/error-printf.c | 18 ------------------
- stubs/meson.build    |  1 -
- stubs/monitor-core.c | 14 +++++++++++++-
- util/error-report.c  | 18 ++++++++++++++++++
- 5 files changed, 31 insertions(+), 38 deletions(-)
- delete mode 100644 stubs/error-printf.c
+ ui/vnc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 64c552a047..6dc5a7016d 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -268,24 +268,6 @@ void monitor_printc(Monitor *mon, int c)
-     monitor_printf(mon, "'");
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 8bf14cf9a7..952976e964 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3578,9 +3578,9 @@ static void vnc_display_print_local_addr(VncDisplay *vd)
+         qapi_free_SocketAddress(addr);
+         return;
+     }
+-    error_printf_unless_qmp("VNC server running on %s:%s\n",
+-                            addr->u.inet.host,
+-                            addr->u.inet.port);
++    error_printf("VNC server running on %s:%s\n",
++                 addr->u.inet.host,
++                 addr->u.inet.port);
+     qapi_free_SocketAddress(addr);
  }
  
--/*
-- * Print to the current human monitor if we have one, else to stderr.
-- */
--int error_vprintf(const char *fmt, va_list ap)
--{
--    Monitor *cur_mon = monitor_cur();
--    /*
--     * This will return -1 if 'cur_mon' is NULL, or is QMP.
--     * IOW this will only print if in HMP, otherwise we
--     * fallback to stderr for QMP / no-monitor scenarios.
--     */
--    int ret = monitor_vprintf(cur_mon, fmt, ap);
--    if (ret == -1) {
--        ret = vfprintf(stderr, fmt, ap);
--    }
--    return ret;
--}
--
- static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-     /* Limit guest-triggerable events to 1 per second */
-     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
-diff --git a/stubs/error-printf.c b/stubs/error-printf.c
-deleted file mode 100644
-index 1afa0f62ca..0000000000
---- a/stubs/error-printf.c
-+++ /dev/null
-@@ -1,18 +0,0 @@
--#include "qemu/osdep.h"
--#include "qemu/error-report.h"
--#include "monitor/monitor.h"
--
--int error_vprintf(const char *fmt, va_list ap)
--{
--    int ret;
--
--    if (g_test_initialized() && !g_test_subprocess() &&
--        getenv("QTEST_SILENT_ERRORS")) {
--        char *msg = g_strdup_vprintf(fmt, ap);
--        g_test_message("%s", msg);
--        ret = strlen(msg);
--        g_free(msg);
--        return ret;
--    }
--    return vfprintf(stderr, fmt, ap);
--}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 6ae478bacc..fad796a49d 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -3,7 +3,6 @@
- # below, so that it is clear who needs the stubbed functionality.
- 
- stub_ss.add(files('cpu-get-clock.c'))
--stub_ss.add(files('error-printf.c'))
- stub_ss.add(files('fdset.c'))
- stub_ss.add(files('iothread-lock.c'))
- stub_ss.add(files('is-daemonized.c'))
-diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
-index 1894cdfe1f..a7c32297c9 100644
---- a/stubs/monitor-core.c
-+++ b/stubs/monitor-core.c
-@@ -18,5 +18,17 @@ void qapi_event_emit(QAPIEvent event, QDict *qdict)
- 
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
- {
--    abort();
-+    /*
-+     * Pretend 'g_test_message' is our monitor console to
-+     * stop the caller sending messages to stderr
-+     */
-+    if (g_test_initialized() && !g_test_subprocess() &&
-+        getenv("QTEST_SILENT_ERRORS")) {
-+        char *msg = g_strdup_vprintf(fmt, ap);
-+        g_test_message("%s", msg);
-+        size_t ret = strlen(msg);
-+        g_free(msg);
-+        return ret;
-+    }
-+    return -1;
- }
-diff --git a/util/error-report.c b/util/error-report.c
-index d6b7448183..c7f70bd95b 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -29,6 +29,24 @@ bool message_with_timestamp;
- bool error_with_guestname;
- const char *error_guest_name;
- 
-+/*
-+ * Print to the current human monitor if we have one, else to stderr.
-+ */
-+int error_vprintf(const char *fmt, va_list ap)
-+{
-+    Monitor *cur_mon = monitor_cur();
-+    /*
-+     * This will return -1 if 'cur_mon' is NULL, or is QMP.
-+     * IOW this will only print if in HMP, otherwise we
-+     * fallback to stderr for QMP / no-monitor scenarios.
-+     */
-+    int ret = monitor_vprintf(cur_mon, fmt, ap);
-+    if (ret == -1) {
-+        ret = vfprintf(stderr, fmt, ap);
-+    }
-+    return ret;
-+}
-+
- int error_printf(const char *fmt, ...)
- {
-     va_list ap;
 -- 
 2.53.0
 
