@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCB0F513E7
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E82F513E7
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyHPC-0001ze-7N; Thu, 05 Mar 2026 17:42:54 -0500
+	id 1vyHOY-00015U-Uq; Thu, 05 Mar 2026 17:42:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vyHP9-0001wl-3Z; Thu, 05 Mar 2026 17:42:51 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vyHOW-00013x-WA; Thu, 05 Mar 2026 17:42:13 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vyHP6-00079a-IU; Thu, 05 Mar 2026 17:42:50 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1vyHOU-00076H-LF; Thu, 05 Mar 2026 17:42:12 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 625HVI6N2444784; Thu, 5 Mar 2026 22:42:24 GMT
+ 625ET6MY2080896; Thu, 5 Mar 2026 22:42:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=8HgLi62FiRL/2+pj5
- l9w7+ipsyjUGhr9IR35RVYsEIk=; b=PYbkRw+WLXQgv+MebWyUg+n93/TDGFu2t
- QU3YLlCjSc6DEmTnOZNUTDcA/fKdgpB72tc4vCrwB2m/BhtAV/38cUMVxqhZqRT8
- VIHvaap6MM7JreLGY+o09xapsRX96bxxJXidrj6tjx82TNgI2N1IFrt59Qjt1aXs
- lTLE8izjhzZOjIT+FC9HOlFfZ8LqOgMEqgZG5EzLlaoaF86rZtBwgVLCMT3Rfc9P
- GLl/B6S8ntLaRPlvhdyLg+1QDx2XPiSxU91P4s6cUZpjW5k4iuKQ8xYAfuO7GzgQ
- EsUF4dSQ9VoQuCyjBlaM3MQukK8rH2yBUo/w3aT22Lp9zKuX5ojCg==
+ :mime-version:references:subject:to; s=pp1; bh=xfWWjfQK90X3uxMZe
+ BoHfbn+kWiTFMWTuzqMwFnaSV0=; b=bS/Qp6qd17xs1g+qZMb02cmV5bdPcAA+i
+ 2Ywv6Obgv6xcRjeioO23rPBpnYub2zoYDAhllN3iCU79ffYMq7oVmM/MScoIy51C
+ Zmv94CSQFdbvCK4HehQ0/tRWfuy2vPmq9LIgE0t6K/E+9lELVCbIew+hSFyAq3ZK
+ zb5d+4/rVoz2KYp9IklNGaoCtydRQN4yyUWJhBW/EPdFRJhrDd3dTnnTCTlCP5PD
+ ZLwV19uXkGDHzqxNUcVfIcksZhZAn9D3zSIUrDlO+qiABXNQeVafSExwJm8rQfGL
+ dFs2MDLbcHf6EVjlLrrb0ydytWn8eK/Dvo2Fdu5b4qUvvMh+BquCg==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksrje0q0-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmwgkn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 22:42:23 +0000 (GMT)
+ Thu, 05 Mar 2026 22:42:06 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625LrfN8029112;
- Thu, 5 Mar 2026 22:42:23 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmapsdh9h-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 625LU93F028922;
+ Thu, 5 Mar 2026 22:42:05 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmapsdh8x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 22:42:23 +0000
+ Thu, 05 Mar 2026 22:42:05 +0000
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 625MgM9L31326740
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 625Mg4YD11076182
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 22:42:22 GMT
+ Thu, 5 Mar 2026 22:42:04 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E807358057;
- Thu,  5 Mar 2026 22:42:21 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B3D5058058;
+ Thu,  5 Mar 2026 22:42:04 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A77CD58058;
- Thu,  5 Mar 2026 22:42:20 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7C11658062;
+ Thu,  5 Mar 2026 22:42:03 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.36.214])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 22:42:20 +0000 (GMT)
+ Thu,  5 Mar 2026 22:42:03 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, jrossi@linux.ibm.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org
@@ -66,40 +66,39 @@ Cc: richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com,
  brueckner@linux.ibm.com, jdaley@linux.ibm.com
-Subject: [PATCH v9 22/30] pc-bios/s390-ccw: Add additional security checks for
- secure boot
-Date: Thu,  5 Mar 2026 17:41:37 -0500
-Message-ID: <20260305224146.664053-23-zycai@linux.ibm.com>
+Subject: [PATCH v9 09/30] s390x/diag: Implement DIAG 320 subcode 2
+Date: Thu,  5 Mar 2026 17:41:24 -0500
+Message-ID: <20260305224146.664053-10-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260305224146.664053-1-zycai@linux.ibm.com>
 References: <20260305224146.664053-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Rp/I7SmK c=1 sm=1 tr=0 ts=69aa06d0 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE5NCBTYWx0ZWRfX4ypiVJE0oQ8I
+ FuAwLQsqEVnF0pxwCbP5KxlpJXclfRYwp6jOq2LXFW/9TFUV8PXTcj1eJAn+LcN2wsHPjZ2uxd9
+ g8HdkvfLLFdjRy1gc6vJt2Tjt5aF2IvK0n6rLvKl+XfSCqBJtIEZ/Fl07NxDpNPF5p3MtI6AU1N
+ B7kHVvpztFnNGfS0VujMkr87r6qzYNeFaPjWQ0dMhNMtJ5iqwFv10AZmh8uLuA317dVcTgWbBKO
+ rahBs4QEAK/uV+HqraXo7+6SHN2xsa++BSiKeYeIdJXv8ZuQbzj9/w+N9JBvauM6oVJbhtTtOpm
+ eqfoo/Kc72TWqq7jrZeMjSchv+6oGKcLOep4LgL/KPG+GgC4Zw5L5cITshhDje28IJF+jv9iy0Z
+ 4P/xrEKYxa4sMCq1VSh7C/N+/y90UxoAzNOKL86CWrJZ9qL8fY2HpZwoVDeqF/d5k9ChEZBLCqm
+ isn6wiLWbSXHvHRBJXw==
+X-Proofpoint-ORIG-GUID: Q6MtuL9Kd4DUBFK975gdcmw1x7ucLZRh
+X-Proofpoint-GUID: Q6MtuL9Kd4DUBFK975gdcmw1x7ucLZRh
+X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aa06be cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=IaLYFdo72UbvXhH_9PYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDE5NCBTYWx0ZWRfX2WP48PDDHYXB
- urkkryVfgm4RcYssNy/tLoG34q/VoIXOFDOUoTPFL1eD4FhQDEw7arUncdNchMk/teNXT4lSid9
- whB2+Jj9BKhTVSvCv5u170K9qFj8IG/azSqyqmE8AWpwPRuRHh9tfGUIKrM2WxEktAd8ZquZYw/
- DdbUPXx9AO7sMO8YkofPXj6RgaRvR8/6nBvr0+F2Urn1iGPiLP3CJAlRb2hfbtXstgemm+sb3qW
- qtUZkZGZeq+xjZlqWNsb144784U47IsjT+mLCMPDuNG8pRMBFSWsN7IQ+/dPkWIDzuCpIqFaUu1
- bNX1mS0Fl9Ed5ZW1FRCEusIvgZu0WkbICFVezIOQyzgm8wJ4BecsUPCNQg0+5P+FRoQO2CXRkmT
- pv2qyBlTHMG2ZotA+rU0YjJDv8aYFMq2QJtbTIYxHD5CCs/pWUTmNZ2QHxRsie/VwNZuh8pK3R8
- nE4FayKIVWsAN3coy5Q==
-X-Proofpoint-GUID: XA3JUZbZSHSmdQe_b-MgCFh9TSL1hbF_
-X-Proofpoint-ORIG-GUID: XA3JUZbZSHSmdQe_b-MgCFh9TSL1hbF_
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=Pfmh9_TrOzjRHWOdzC0A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-05_06,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 spamscore=0 phishscore=0 adultscore=0
- bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050194
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -11
 X-Spam_score: -1.2
 X-Spam_bar: -
@@ -123,558 +122,549 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add additional checks to ensure that components do not overlap with
-signed components when loaded into memory.
+DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
+certificate store. Only X509 certificates in DER format and SHA-256 hash
+type are recognized.
 
-Add additional checks to ensure the load addresses of unsigned components
-are greater than or equal to 0x2000.
+The subcode value is denoted by setting the second-left-most bit
+of an 8-byte field.
 
-When the secure IPL code loading attributes facility (SCLAF) is installed,
-all signed components must contain a secure code loading attributes block
-(SCLAB).
+The Verification Certificate Block (VCB) contains the output data
+when the operation completes successfully. It includes a common
+header followed by zero or more Verification Certificate Entries (VCEs),
+depending on the VCB input length and the VC range (from the first VC
+index to the last VC index) in the certificate store.
 
-The SCLAB provides further validation of information on where to load the
-signed binary code from the load device, and where to start the execution
-of the loaded OS code.
+Each VCE contains information about a certificate retrieved from
+the S390IPLCertificateStore, such as the certificate name, key type,
+key ID length, hash length, and the raw certificate data.
+The key ID and hash are extracted from the raw certificate by the crypto API.
 
-When SCLAF is installed, its content must be evaluated during secure IPL.
-However, a missing SCLAB will not be reported in audit mode. The SCALB
-checking will be skipped in this case.
-
-Add IPL Information Error Indicators (IIEI) and Component Error
-Indicators (CEI) for IPL Information Report Block (IIRB).
-
-When SCLAF is installed, additional secure boot checks are performed
-during zipl and store results of verification into IIRB.
+Note: SHA2-256 VC hash type is required for retrieving the hash
+(fingerprint) of the certificate.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- include/hw/s390x/ipl/qipl.h   |  29 +++-
- pc-bios/s390-ccw/s390-ccw.h   |   1 +
- pc-bios/s390-ccw/sclp.c       |   8 +
- pc-bios/s390-ccw/sclp.h       |   1 +
- pc-bios/s390-ccw/secure-ipl.c | 314 +++++++++++++++++++++++++++++++++-
- pc-bios/s390-ccw/secure-ipl.h |  42 +++++
- 6 files changed, 391 insertions(+), 4 deletions(-)
+ docs/specs/s390x-secure-ipl.rst |  22 ++
+ hw/s390x/cert-store.h           |   3 +-
+ include/hw/s390x/ipl/diag320.h  |  55 +++++
+ target/s390x/diag.c             | 343 +++++++++++++++++++++++++++++++-
+ 4 files changed, 420 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-index 1b6cb3231d..9518fcb1dc 100644
---- a/include/hw/s390x/ipl/qipl.h
-+++ b/include/hw/s390x/ipl/qipl.h
-@@ -136,10 +136,20 @@ struct IplInfoReportBlockHeader {
- };
- typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
- 
-+/* IPL Info Error Indicators */
-+#define S390_IIEI_NO_SIGNED_COMP      0x8000 /* bit 0 */
-+#define S390_IIEI_NO_SCLAB            0x4000 /* bit 1 */
-+#define S390_IIEI_NO_GLOBAL_SCLAB     0x2000 /* bit 2 */
-+#define S390_IIEI_MORE_GLOBAL_SCLAB   0x1000 /* bit 3 */
-+#define S390_IIEI_FOUND_UNSIGNED_COMP 0x800 /* bit 4 */
-+#define S390_IIEI_MORE_SIGNED_COMP    0x400 /* bit 5 */
+diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+index 52661fab00..708253ac91 100644
+--- a/docs/specs/s390x-secure-ipl.rst
++++ b/docs/specs/s390x-secure-ipl.rst
+@@ -38,3 +38,25 @@ Subcode 1 - query verification certificate storage information
+     The output is returned in the verification-certificate-storage-size block
+     (VCSSB). A VCSSB length of 4 indicates that no certificates are available
+     in the CS.
 +
- struct IplInfoBlockHeader {
-     uint32_t len;
-     uint8_t  type;
--    uint8_t  reserved1[11];
-+    uint8_t  reserved1[3];
-+    uint16_t iiei;
-+    uint8_t  reserved2[6];
- };
- typedef struct IplInfoBlockHeader IplInfoBlockHeader;
- 
-@@ -163,13 +173,28 @@ typedef struct IplSignatureCertificateList IplSignatureCertificateList;
- #define S390_IPL_DEV_COMP_FLAG_SC  0x80
- #define S390_IPL_DEV_COMP_FLAG_CSV 0x40
- 
-+/* IPL Device Component Error Indicators */
-+#define S390_CEI_INVALID_SCLAB             0x80000000 /* bit 0 */
-+#define S390_CEI_INVALID_SCLAB_LEN         0x40000000 /* bit 1 */
-+#define S390_CEI_INVALID_SCLAB_FORMAT      0x20000000 /* bit 2 */
-+#define S390_CEI_UNMATCHED_SCLAB_LOAD_ADDR 0x10000000 /* bit 3 */
-+#define S390_CEI_UNMATCHED_SCLAB_LOAD_PSW  0x8000000  /* bit 4 */
-+#define S390_CEI_INVALID_LOAD_PSW          0x4000000  /* bit 5 */
-+#define S390_CEI_NUC_NOT_IN_GLOBAL_SCLA    0x2000000  /* bit 6 */
-+#define S390_CEI_SCLAB_OLA_NOT_ONE         0x1000000  /* bit 7 */
-+#define S390_CEI_SC_NOT_IN_GLOBAL_SCLAB    0x800000   /* bit 8 */
-+#define S390_CEI_SCLAB_LOAD_ADDR_NOT_ZERO  0x400000   /* bit 9 */
-+#define S390_CEI_SCLAB_LOAD_PSW_NOT_ZERO   0x200000   /* bit 10 */
-+#define S390_CEI_INVALID_UNSIGNED_ADDR     0x100000   /* bit 11 */
++Subcode 2 - store verification certificates
++    Provides VCs that are in the certificate store.
 +
- struct IplDeviceComponentEntry {
-     uint64_t addr;
-     uint64_t len;
-     uint8_t  flags;
-     uint8_t  reserved1[5];
-     uint16_t cert_index;
--    uint8_t  reserved2[8];
-+    uint32_t cei;
-+    uint8_t  reserved2[4];
++    The output is provided in a VCB, which includes a common header followed by
++    zero or more verification-certificate entries (VCEs).
++
++    The instruction expects the cert store to
++    maintain an origin of 1 for the index (i.e. a retrieval of the first
++    certificate in the store should be denoted by setting first-VC to 1).
++
++    The first-VC index and last-VC index fields of VCB specify the range of VCs
++    to be stored by subcode 2. Stored count and remained count fields specify
++    the number of VCs stored and could not be stored in the VCB due to
++    insufficient storage specified in the VCB input length field.
++
++    Each VCE contains a header followed by information extracted from a
++    certificate within the certificate store. The information includes:
++    key-id, hash, and certificate data. This information is stored
++    contiguously in a VCE (with zero-padding). Following the header, the
++    key-id is immediately stored. The hash and certificate data follow and
++    may be accessed via the respective offset fields stored in the VCE.
+diff --git a/hw/s390x/cert-store.h b/hw/s390x/cert-store.h
+index 7fc9503cb9..6f5ee63177 100644
+--- a/hw/s390x/cert-store.h
++++ b/hw/s390x/cert-store.h
+@@ -11,10 +11,9 @@
+ #define HW_S390_CERT_STORE_H
+ 
+ #include "hw/s390x/ipl/qipl.h"
++#include "hw/s390x/ipl/diag320.h"
+ #include "crypto/x509-utils.h"
+ 
+-#define CERT_NAME_MAX_LEN  64
+-
+ #define CERT_KEY_ID_LEN    QCRYPTO_HASH_DIGEST_LEN_SHA256
+ #define CERT_HASH_LEN      QCRYPTO_HASH_DIGEST_LEN_SHA256
+ 
+diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+index 6e4779c699..bfd6385b40 100644
+--- a/include/hw/s390x/ipl/diag320.h
++++ b/include/hw/s390x/ipl/diag320.h
+@@ -12,19 +12,37 @@
+ 
+ #define DIAG_320_SUBC_QUERY_ISM     0
+ #define DIAG_320_SUBC_QUERY_VCSI    1
++#define DIAG_320_SUBC_STORE_VC      2
+ 
+ #define DIAG_320_RC_OK              0x0001
+ #define DIAG_320_RC_NOT_SUPPORTED   0x0102
+ #define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
++#define DIAG_320_RC_INVAL_VCB_LEN   0x0204
++#define DIAG_320_RC_BAD_RANGE       0x0302
+ 
+ #define DIAG_320_ISM_QUERY_SUBCODES 0x80000000
+ #define DIAG_320_ISM_QUERY_VCSI     0x40000000
++#define DIAG_320_ISM_STORE_VC       0x20000000
+ 
+ #define VCSSB_NO_VC     4
+ #define VCSSB_MIN_LEN   128
+ #define VCE_HEADER_LEN  128
++/*
++ * If the VCE flags indicate an invalid certificate,
++ * the VCE length is set to 72, containing only the
++ * first five fields of VCEntry.
++ */
++#define VCE_INVALID_LEN 72
+ #define VCB_HEADER_LEN  64
+ 
++#define CERT_NAME_MAX_LEN  64
++
++#define DIAG_320_VCE_FLAGS_VALID                0x80
++#define DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING    0
++#define DIAG_320_VCE_KEYTYPE_ECDSA_P521         1
++#define DIAG_320_VCE_FORMAT_X509_DER            1
++#define DIAG_320_VCE_HASHTYPE_SHA2_256          1
++
+ struct VCStorageSizeBlock {
+     uint32_t length;
+     uint8_t reserved0[3];
+@@ -39,4 +57,41 @@ struct VCStorageSizeBlock {
  };
- typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
+ typedef struct VCStorageSizeBlock VCStorageSizeBlock;
  
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index a0d568696a..7d1a9d4acc 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -82,6 +82,7 @@ void sclp_setup(void);
- void sclp_get_loadparm_ascii(char *loadparm);
- bool sclp_is_diag320_on(void);
- bool sclp_is_sipl_on(void);
-+bool sclp_is_sclaf_on(void);
- int sclp_read(char *str, size_t count);
++struct VCBlock {
++    uint32_t in_len;
++    uint32_t reserved0;
++    uint16_t first_vc_index;
++    uint16_t last_vc_index;
++    uint32_t reserved1[5];
++    uint32_t out_len;
++    uint8_t reserved2[4];
++    uint16_t stored_ct;
++    uint16_t remain_ct;
++    uint32_t reserved3[5];
++    uint8_t vce_buf[];
++};
++typedef struct VCBlock VCBlock;
++
++struct VCEntry {
++    uint32_t len;
++    uint8_t flags;
++    uint8_t key_type;
++    uint16_t cert_idx;
++    uint8_t name[CERT_NAME_MAX_LEN];
++    uint8_t format;
++    uint8_t reserved0;
++    uint16_t keyid_len;
++    uint8_t reserved1;
++    uint8_t hash_type;
++    uint16_t hash_len;
++    uint32_t reserved2;
++    uint32_t cert_len;
++    uint32_t reserved3[2];
++    uint16_t hash_offset;
++    uint16_t cert_offset;
++    uint32_t reserved4[7];
++    uint8_t cert_buf[];
++};
++typedef struct VCEntry VCEntry;
++
+ #endif
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index c44624e1e6..5326522fda 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -17,13 +17,16 @@
+ #include "s390x-internal.h"
+ #include "hw/watchdog/wdt_diag288.h"
+ #include "system/cpus.h"
++#include "hw/s390x/cert-store.h"
+ #include "hw/s390x/ipl.h"
+ #include "hw/s390x/ipl/diag320.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "system/kvm.h"
+ #include "kvm/kvm_s390x.h"
+ #include "target/s390x/kvm/pv.h"
++#include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "crypto/x509-utils.h"
  
- /* virtio.c */
-diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
-index e3b6a1f07e..5dbddff9ae 100644
---- a/pc-bios/s390-ccw/sclp.c
-+++ b/pc-bios/s390-ccw/sclp.c
-@@ -151,6 +151,14 @@ bool sclp_is_sipl_on(void)
-     return fac_ipl & SCCB_FAC_IPL_SIPL_BIT;
+ 
+ static inline bool diag_parm_addr_valid(uint64_t addr, size_t size, bool write)
+@@ -236,8 +239,333 @@ static int handle_diag320_query_vcsi(S390CPU *cpu, uint64_t addr, uint64_t r1,
+     return DIAG_320_RC_OK;
  }
  
-+bool sclp_is_sclaf_on(void)
++static bool is_cert_valid(const S390IPLCertificate *cert)
 +{
-+    uint16_t fac_ipl = 0;
++    int rc;
++    Error *err = NULL;
 +
-+    sclp_get_fac_ipl(&fac_ipl);
-+    return fac_ipl & SCCB_FAC_IPL_SCLAF_BIT;
-+}
-+
- int sclp_read(char *str, size_t count)
- {
-     ReadEventData *sccb = (void *)_sccb;
-diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
-index cf147f4634..3441020d6b 100644
---- a/pc-bios/s390-ccw/sclp.h
-+++ b/pc-bios/s390-ccw/sclp.h
-@@ -52,6 +52,7 @@ typedef struct SCCBHeader {
- #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
- #define SCCB_FAC134_DIAG320_BIT 0x4
- #define SCCB_FAC_IPL_SIPL_BIT 0x4000
-+#define SCCB_FAC_IPL_SCLAF_BIT 0x1000
- 
- typedef struct ReadInfo {
-     SCCBHeader h;
-diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-index 68596491c5..840b88a699 100644
---- a/pc-bios/s390-ccw/secure-ipl.c
-+++ b/pc-bios/s390-ccw/secure-ipl.c
-@@ -198,6 +198,12 @@ static bool secure_ipl_supported(void)
-         return false;
-     }
- 
-+    if (!sclp_is_sclaf_on()) {
-+        puts("Secure IPL Code Loading Attributes Facility is not supported by"
-+             " the hypervisor!");
++    rc = qcrypto_x509_check_cert_times(cert->raw, cert->size, &err);
++    if (rc != 0) {
++        error_report_err(err);
 +        return false;
 +    }
 +
-     return true;
- }
++    return true;
++}
++
++static int handle_key_id(VCEntry *vce, const S390IPLCertificate *cert)
++{
++    int rc;
++    g_autofree unsigned char *key_id_data = NULL;
++    size_t key_id_len;
++    Error *err = NULL;
++
++    rc = qcrypto_x509_get_cert_key_id(cert->raw, cert->size,
++                                      QCRYPTO_HASH_ALGO_SHA256,
++                                      &key_id_data, &key_id_len, &err);
++    if (rc < 0) {
++        error_report_err(err);
++        return -1;
++    }
++
++    if (VCE_HEADER_LEN + key_id_len > be32_to_cpu(vce->len)) {
++        error_report("Unable to write key ID: exceeds buffer bounds");
++        return -1;
++    }
++
++    vce->keyid_len = cpu_to_be16(key_id_len);
++
++    memcpy(vce->cert_buf, key_id_data, key_id_len);
++
++    return 0;
++}
++
++static int handle_hash(VCEntry *vce, const S390IPLCertificate *cert,
++                       uint16_t keyid_field_len)
++{
++    int rc;
++    uint16_t hash_offset;
++    g_autofree void *hash_data = NULL;
++    size_t hash_len;
++    Error *err = NULL;
++
++    hash_len = CERT_HASH_LEN;
++    hash_data = g_malloc0(hash_len);
++    rc = qcrypto_get_x509_cert_fingerprint(cert->raw, cert->size,
++                                           QCRYPTO_HASH_ALGO_SHA256,
++                                           hash_data, &hash_len, &err);
++    if (rc < 0) {
++        error_report_err(err);
++        return -1;
++    }
++
++    hash_offset = VCE_HEADER_LEN + keyid_field_len;
++    if (hash_offset + hash_len > be32_to_cpu(vce->len)) {
++        error_report("Unable to write hash: exceeds buffer bounds");
++        return -1;
++    }
++
++    vce->hash_len = cpu_to_be16(hash_len);
++    vce->hash_type = DIAG_320_VCE_HASHTYPE_SHA2_256;
++    vce->hash_offset = cpu_to_be16(hash_offset);
++
++    memcpy((uint8_t *)vce + hash_offset, hash_data, hash_len);
++
++    return 0;
++}
++
++static int handle_cert(VCEntry *vce, const S390IPLCertificate *cert,
++                       uint16_t hash_field_len)
++{
++    int rc;
++    uint16_t cert_offset;
++    g_autofree uint8_t *cert_der = NULL;
++    size_t der_size;
++    Error *err = NULL;
++
++    rc = qcrypto_x509_convert_cert_der(cert->raw, cert->size,
++                                       &cert_der, &der_size, &err);
++    if (rc < 0) {
++        error_report_err(err);
++        return -1;
++    }
++
++    cert_offset = be16_to_cpu(vce->hash_offset) + hash_field_len;
++    if (cert_offset + der_size > be32_to_cpu(vce->len)) {
++        error_report("Unable to write certificate: exceeds buffer bounds");
++        return -1;
++    }
++
++    vce->format = DIAG_320_VCE_FORMAT_X509_DER;
++    vce->cert_len = cpu_to_be32(der_size);
++    vce->cert_offset = cpu_to_be16(cert_offset);
++
++    memcpy((uint8_t *)vce + cert_offset, cert_der, der_size);
++
++    return 0;
++}
++
++static int get_key_type(const S390IPLCertificate *cert)
++{
++    int rc;
++    Error *err = NULL;
++
++    rc = qcrypto_x509_check_ecc_curve_p521(cert->raw, cert->size, &err);
++    if (rc == -1) {
++        error_report_err(err);
++        return -1;
++    }
++
++    return (rc == 1) ? DIAG_320_VCE_KEYTYPE_ECDSA_P521 :
++                        DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
++}
++
++static int build_vce_header(VCEntry *vce, const S390IPLCertificate *cert, int idx)
++{
++    int key_type;
++
++    vce->len = cpu_to_be32(VCE_HEADER_LEN);
++    vce->cert_idx = cpu_to_be16(idx + 1);
++    memcpy(vce->name, cert->name, CERT_NAME_MAX_LEN);
++
++    key_type = get_key_type(cert);
++    if (key_type == -1) {
++        return -1;
++    }
++    vce->key_type = key_type;
++
++    return 0;
++}
++
++static int build_vce_data(VCEntry *vce, const S390IPLCertificate *cert)
++{
++    uint16_t keyid_field_len;
++    uint16_t hash_field_len;
++    uint32_t cert_field_len;
++    uint32_t vce_len;
++    int rc;
++
++    rc = handle_key_id(vce, cert);
++    if (rc) {
++        return -1;
++    }
++    keyid_field_len = ROUND_UP(be16_to_cpu(vce->keyid_len), 4);
++
++    rc = handle_hash(vce, cert, keyid_field_len);
++    if (rc) {
++        return -1;
++    }
++    hash_field_len = ROUND_UP(be16_to_cpu(vce->hash_len), 4);
++
++    rc = handle_cert(vce, cert, hash_field_len);
++    if (rc || !is_cert_valid(cert)) {
++        return -1;
++    }
++    cert_field_len = ROUND_UP(be32_to_cpu(vce->cert_len), 4);
++
++    vce_len = VCE_HEADER_LEN + keyid_field_len + hash_field_len + cert_field_len;
++    if (vce_len > be32_to_cpu(vce->len)) {
++        return -1;
++    }
++
++    vce->flags |= DIAG_320_VCE_FLAGS_VALID;
++
++    /* Update vce length to reflect the actual size used by vce */
++    vce->len = cpu_to_be32(vce_len);
++
++    return 0;
++}
++
++static VCEntry *diag_320_build_vce(const S390IPLCertificate *cert, int idx)
++{
++    g_autofree VCEntry *vce = NULL;
++    uint32_t vce_max_size;
++    int rc;
++
++    /*
++     * Each field of the VCE is word-aligned.
++     * Allocate enough space for the largest possible size for this VCE.
++     * As the certificate fields (key-id, hash, data) are parsed, the
++     * VCE's length field will be updated accordingly.
++     */
++    vce_max_size = VCE_HEADER_LEN +
++                   ROUND_UP(CERT_KEY_ID_LEN, 4) +
++                   ROUND_UP(CERT_HASH_LEN, 4) +
++                   ROUND_UP(cert->der_size, 4);
++
++    vce = g_malloc0(vce_max_size);
++    rc = build_vce_header(vce, cert, idx);
++    if (rc) {
++        /*
++         * Error occurs - VCE does not contain a valid certificate.
++         * Bit 0 of the VCE flags is 0 and the VCE length is set.
++         */
++        vce->len = cpu_to_be32(VCE_INVALID_LEN);
++        goto out;
++    }
++
++    vce->len = cpu_to_be32(vce_max_size);
++    rc = build_vce_data(vce, cert);
++    if (rc) {
++        vce->len = cpu_to_be32(VCE_INVALID_LEN);
++    }
++
++out:
++    return g_steal_pointer(&vce);
++}
++
++static int handle_diag320_store_vc(S390CPU *cpu, uint64_t addr, uint64_t r1, uintptr_t ra,
++                                   S390IPLCertificateStore *cs)
++{
++    g_autofree VCBlock *vcb = NULL;
++    size_t entry_offset;
++    size_t remaining_space;
++    uint32_t vce_len;
++    uint16_t first_vc_index;
++    uint16_t last_vc_index;
++    int cs_start_index;
++    int cs_end_index;
++    uint32_t in_len;
++
++    vcb = g_new0(VCBlock, 1);
++    if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb, sizeof(*vcb))) {
++        s390_cpu_virt_mem_handle_exc(cpu, ra);
++        return -1;
++    }
++
++    in_len = be32_to_cpu(vcb->in_len);
++    first_vc_index = be16_to_cpu(vcb->first_vc_index);
++    last_vc_index = be16_to_cpu(vcb->last_vc_index);
++
++    if (in_len % TARGET_PAGE_SIZE != 0) {
++        return DIAG_320_RC_INVAL_VCB_LEN;
++    }
++
++    if (first_vc_index > last_vc_index) {
++        return DIAG_320_RC_BAD_RANGE;
++    }
++
++    vcb->out_len = VCB_HEADER_LEN;
++
++    /*
++     * DIAG 320 subcode 2 expects to query a certificate store that
++     * maintains an index origin of 1. However, the S390IPLCertificateStore
++     * maintains an index origin of 0. Thus, the indices must be adjusted
++     * for correct access into the cert store. A couple of special cases
++     * must also be accounted for.
++     */
++
++    /* Both indices are 0; return header with no certs */
++    if (first_vc_index == 0 && last_vc_index == 0) {
++        goto out;
++    }
++
++    /* Normalize indices */
++    cs_start_index = (first_vc_index == 0) ? 0 : first_vc_index - 1;
++    cs_end_index = last_vc_index - 1;
++
++    /* Requested range is outside the cert store; return header with no certs */
++    if (cs_start_index >= cs->count || cs_end_index >= cs->count) {
++        goto out;
++    }
++
++    entry_offset = VCB_HEADER_LEN;
++    remaining_space = in_len - VCB_HEADER_LEN;
++
++    for (int i = cs_start_index; i <= cs_end_index; i++) {
++        VCEntry *vce;
++        const S390IPLCertificate *cert = &cs->certs[i];
++
++        /*
++         * Bit 0 of the VCE flags indicates whether the certificate is valid.
++         * The caller of DIAG320 subcode 2 is responsible for verifying that
++         * the VCE contains a valid certificate.
++         */
++        vce = diag_320_build_vce(cert, i);
++        vce_len = be32_to_cpu(vce->len);
++
++        /*
++         * If there is no more space to store the cert,
++         * set the remaining verification cert count and
++         * break early.
++         */
++        if (remaining_space < vce_len) {
++            vcb->remain_ct = cpu_to_be16(last_vc_index - i);
++            g_free(vce);
++            break;
++        }
++
++        /* Write VCE */
++        if (s390_cpu_virt_mem_write(cpu, addr + entry_offset, r1, vce, vce_len)) {
++            s390_cpu_virt_mem_handle_exc(cpu, ra);
++            g_free(vce);
++            return -1;
++        }
++
++        entry_offset += vce_len;
++        vcb->out_len += vce_len;
++        remaining_space -= vce_len;
++        vcb->stored_ct++;
++
++        g_free(vce);
++    }
++    vcb->stored_ct = cpu_to_be16(vcb->stored_ct);
++
++out:
++    vcb->out_len = cpu_to_be32(vcb->out_len);
++
++    if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb, VCB_HEADER_LEN)) {
++        s390_cpu_virt_mem_handle_exc(cpu, ra);
++        return -1;
++    }
++
++    return DIAG_320_RC_OK;
++}
++
+ QEMU_BUILD_BUG_MSG(sizeof(VCStorageSizeBlock) != VCSSB_MIN_LEN,
+                    "size of VCStorageSizeBlock is wrong");
++QEMU_BUILD_BUG_MSG(sizeof(VCBlock) != VCB_HEADER_LEN, "size of VCBlock is wrong");
++QEMU_BUILD_BUG_MSG(sizeof(VCEntry) != VCE_HEADER_LEN, "size of VCEntry is wrong");
  
-@@ -258,6 +264,286 @@ static void addr_overlap_check(SecureIplCompAddrRange *comp_addr_range,
-     *addr_range_index += 1;
- }
- 
-+static void check_unsigned_addr(uint64_t load_addr, IplDeviceComponentEntry *comp_entry)
-+{
-+    /* unsigned load address must be greater than or equal to 0x2000 */
-+    if (load_addr >= 0x2000) {
-+        return;
-+    }
-+
-+    set_comp_cei_with_log(comp_entry, S390_CEI_INVALID_UNSIGNED_ADDR,
-+                          "Load address is less than 0x2000");
-+}
-+
-+static bool check_sclab_presence(uint8_t *sclab_magic,
-+                                 IplDeviceComponentEntry *comp_entry)
-+{
-+    /* identifies the presence of SCLAB */
-+    if (magic_match(sclab_magic, ZIPL_MAGIC)) {
-+        return true;
-+    }
-+
-+    if (comp_entry) {
-+        comp_entry->cei |= S390_CEI_INVALID_SCLAB;
-+    }
-+
-+    /* a missing SCLAB will not be reported in audit mode */
-+    return false;
-+}
-+
-+static void check_sclab_length(uint16_t sclab_len, IplDeviceComponentEntry *comp_entry)
-+{
-+    if (sclab_len >= S390_SECURE_IPL_SCLAB_MIN_LEN) {
-+        return;
-+    }
-+
-+    set_comp_cei_with_log(comp_entry,
-+                          S390_CEI_INVALID_SCLAB_LEN | S390_CEI_INVALID_SCLAB,
-+                          "Invalid SCLAB length");
-+}
-+
-+static void check_sclab_format(uint8_t sclab_format, IplDeviceComponentEntry *comp_entry)
-+{
-+    /* SCLAB format must set to zero, indicating a format-0 SCLAB being used */
-+    if (sclab_format == 0) {
-+        return;
-+    }
-+
-+    set_comp_cei_with_log(comp_entry, S390_CEI_INVALID_SCLAB_FORMAT,
-+                          "Format-0 SCLAB is not being used");
-+}
-+
-+static void check_sclab_opsw(SecureCodeLoadingAttributesBlock *sclab,
-+                             SecureIplSclabInfo *sclab_info,
-+                             IplDeviceComponentEntry *comp_entry)
-+{
-+    const char *msg;
-+    uint32_t cei_flag = 0;
-+
-+    if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW)) {
-+        /* OPSW = 0 - Load PSW field in SCLAB must contain zeros */
-+        if (sclab->load_psw != 0) {
-+            cei_flag |= S390_CEI_SCLAB_LOAD_PSW_NOT_ZERO;
-+            msg = "Load PSW is not zero when Override PSW bit is zero";
-+        }
-+    } else {
-+        /* OPSW = 1 indicating global SCLAB */
-+        sclab_info->global_count += 1;
-+        if (sclab_info->global_count == 1) {
-+            sclab_info->load_psw = sclab->load_psw;
-+            sclab_info->flags = sclab->flags;
-+        }
-+
-+        /* OLA must set to one */
-+        if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OLA)) {
-+            cei_flag |= S390_CEI_SCLAB_OLA_NOT_ONE;
-+            msg = "Override Load Address bit is not set to one in the global SCLAB";
-+        }
-+    }
-+
-+    if (cei_flag) {
-+        set_comp_cei_with_log(comp_entry, cei_flag, msg);
-+    }
-+}
-+
-+static void check_sclab_ola(SecureCodeLoadingAttributesBlock *sclab, uint64_t load_addr,
-+                            IplDeviceComponentEntry *comp_entry)
-+{
-+    const char *msg;
-+    uint32_t cei_flag = 0;
-+
-+    if (!(sclab->flags & S390_SECURE_IPL_SCLAB_FLAG_OLA)) {
-+        /* OLA = 0 - Load address field in SCLAB must contain zeros */
-+        if (sclab->load_addr != 0) {
-+            cei_flag |= S390_CEI_SCLAB_LOAD_ADDR_NOT_ZERO;
-+            msg = "Load Address is not zero when Override Load Address bit is zero";
-+        }
-+    } else {
-+        /* OLA = 1 - Load address field must match storage address of the component */
-+        if (sclab->load_addr != load_addr) {
-+            cei_flag |= S390_CEI_UNMATCHED_SCLAB_LOAD_ADDR;
-+            msg = "Load Address does not match with component load address";
-+        }
-+    }
-+
-+    if (cei_flag) {
-+        set_comp_cei_with_log(comp_entry, cei_flag, msg);
-+    }
-+}
-+
-+static void check_sclab_nuc(uint16_t sclab_flags, IplDeviceComponentEntry *comp_entry)
-+{
-+    const char *msg;
-+    bool is_nuc_set;
-+    bool is_global_sclab;
-+
-+    is_nuc_set = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_NUC;
-+    is_global_sclab = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW;
-+    if (is_nuc_set && !is_global_sclab) {
-+        msg = "No Unsigned Components bit is set, but not in the global SCLAB";
-+        set_comp_cei_with_log(comp_entry, S390_CEI_NUC_NOT_IN_GLOBAL_SCLA, msg);
-+    }
-+}
-+
-+static void check_sclab_sc(uint16_t sclab_flags, IplDeviceComponentEntry *comp_entry)
-+{
-+    const char *msg;
-+    bool is_sc_set;
-+    bool is_global_sclab;
-+
-+    is_sc_set = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_SC;
-+    is_global_sclab = sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_OPSW;
-+    if (is_sc_set && !is_global_sclab) {
-+        msg = "Single Component bit is set, but not in the global SCLAB";
-+        set_comp_cei_with_log(comp_entry, S390_CEI_SC_NOT_IN_GLOBAL_SCLAB, msg);
-+    }
-+}
-+
-+static bool is_psw_valid(uint64_t psw, SecureIplCompAddrRange *comp_addr_range,
-+                         int range_index)
-+{
-+    uint32_t addr = psw & 0x7fffffff;
-+
-+    /* PSW points within a signed binary code component */
-+    for (int i = 0; i < range_index; i++) {
-+        if (comp_addr_range[i].is_signed &&
-+            addr >= comp_addr_range[i].start_addr &&
-+            addr <= comp_addr_range[i].end_addr - 2) {
-+            return true;
-+       }
-+    }
-+
-+    return false;
-+}
-+
-+static void check_load_psw(SecureIplCompAddrRange *comp_addr_range,
-+                           int addr_range_index, uint64_t sclab_load_psw,
-+                           uint64_t load_psw, IplDeviceComponentEntry *comp_entry)
-+{
-+    bool valid;
-+
-+    valid = is_psw_valid(sclab_load_psw, comp_addr_range, addr_range_index) &&
-+            is_psw_valid(load_psw, comp_addr_range, addr_range_index);
-+    if (!valid) {
-+        set_comp_cei_with_log(comp_entry, S390_CEI_INVALID_LOAD_PSW, "Invalid PSW");
-+    }
-+
-+    /* compare load PSW with the PSW specified in component */
-+    if (sclab_load_psw != load_psw) {
-+        set_comp_cei_with_log(comp_entry, S390_CEI_UNMATCHED_SCLAB_LOAD_PSW,
-+                              "Load PSW does not match with PSW in component");
-+    }
-+}
-+
-+static void check_nuc(uint16_t global_sclab_flags, int unsigned_count,
-+                      IplDeviceComponentList *comp_list)
-+{
-+    bool is_nuc_set;
-+
-+    is_nuc_set = global_sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_NUC;
-+    if (is_nuc_set && unsigned_count > 0) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_FOUND_UNSIGNED_COMP;
-+        zipl_secure_handle("Unsigned components are not allowed");
-+    }
-+}
-+
-+static void check_sc(uint16_t global_sclab_flags,
-+                     int signed_count, int unsigned_count,
-+                     IplDeviceComponentList *comp_list)
-+{
-+    bool is_sc_set;
-+
-+    is_sc_set = global_sclab_flags & S390_SECURE_IPL_SCLAB_FLAG_SC;
-+    if (is_sc_set && signed_count != 1 && unsigned_count >= 0) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_MORE_SIGNED_COMP;
-+        zipl_secure_handle("Only one signed component is allowed");
-+    }
-+}
-+
-+void check_global_sclab(SecureIplSclabInfo sclab_info,
-+                        int unsigned_count, int signed_count,
-+                        IplDeviceComponentList *comp_list)
-+{
-+    if (sclab_info.count == 0) {
-+        return;
-+    }
-+
-+    if (sclab_info.global_count == 0) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_NO_GLOBAL_SCLAB;
-+        zipl_secure_handle("Global SCLAB does not exists");
-+        return;
-+    }
-+
-+    if (sclab_info.global_count > 1) {
-+        comp_list->ipl_info_header.iiei |= S390_IIEI_MORE_GLOBAL_SCLAB;
-+        zipl_secure_handle("More than one global SCLAB");
-+        return;
-+    }
-+
-+    if (sclab_info.flags) {
-+        /* Unsigned components are not allowed if NUC flag is set in the global SCLAB */
-+        check_nuc(sclab_info.flags, unsigned_count, comp_list);
-+
-+        /* Only one signed component is allowed is SC flag is set in the global SCLAB */
-+        check_sc(sclab_info.flags, signed_count, unsigned_count, comp_list);
-+    }
-+}
-+
-+static void check_signed_comp(int signed_count, IplDeviceComponentList *comp_list)
-+{
-+    if (signed_count > 0) {
-+        return;
-+    }
-+
-+    comp_list->ipl_info_header.iiei |= S390_IIEI_NO_SIGNED_COMP;
-+    zipl_secure_handle("Secure boot is on, but components are not signed");
-+}
-+
-+static void check_sclab_count(int count, IplDeviceComponentList *comp_list)
-+{
-+    if (count > 0) {
-+        return;
-+    }
-+
-+    comp_list->ipl_info_header.iiei |= S390_IIEI_NO_SCLAB;
-+    zipl_secure_handle("No recognizable SCLAB");
-+}
-+
-+static void check_sclab(uint64_t comp_addr, uint64_t comp_len,
-+                        IplDeviceComponentEntry *comp_entry,
-+                        SecureIplSclabInfo *sclab_info)
-+{
-+    SclabOriginLocator *sclab_locator;
-+    SecureCodeLoadingAttributesBlock *sclab;
-+    bool exist;
-+
-+    /* sclab locator is located at the last 8 bytes of the signed comp */
-+    sclab_locator = (SclabOriginLocator *)(comp_addr + comp_len - 8);
-+
-+    /* return early if sclab does not exist */
-+    exist = check_sclab_presence(sclab_locator->magic, comp_entry);
-+    if (!exist) {
-+        return;
-+    }
-+
-+    check_sclab_length(sclab_locator->len, comp_entry);
-+
-+    /* return early if sclab is invalid */
-+    if (comp_entry && (comp_entry->cei & S390_CEI_INVALID_SCLAB)) {
-+        return;
-+    }
-+
-+    sclab_info->count += 1;
-+    sclab = (SecureCodeLoadingAttributesBlock *)(comp_addr + comp_len -
-+                                                 sclab_locator->len);
-+
-+    check_sclab_format(sclab->format, comp_entry);
-+    check_sclab_opsw(sclab, sclab_info, comp_entry);
-+    check_sclab_ola(sclab, comp_addr, comp_entry);
-+    check_sclab_nuc(sclab->flags, comp_entry);
-+    check_sclab_sc(sclab->flags, comp_entry);
-+}
-+
- static int zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
+ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
  {
-     if (zipl_load_segment(entry, sig_sec) < 0) {
-@@ -304,6 +590,9 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-     SecureIplCompAddrRange comp_addr_range[MAX_CERTIFICATES];
-     int addr_range_index = 0;
-     int signed_count = 0;
-+    int unsigned_count = 0;
-+    SecureIplSclabInfo sclab_info = { 0 };
-+    IplDeviceComponentEntry *comp_entry;
+@@ -268,7 +596,8 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+          * for now.
+          */
+         uint32_t ism_word0 = cpu_to_be32(DIAG_320_ISM_QUERY_SUBCODES |
+-                                         DIAG_320_ISM_QUERY_VCSI);
++                                         DIAG_320_ISM_QUERY_VCSI |
++                                         DIAG_320_ISM_STORE_VC);
  
-     if (!secure_ipl_supported()) {
-         panic("Unable to boot in secure/audit mode");
-@@ -335,10 +624,21 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
-             addr_overlap_check(comp_addr_range, &addr_range_index,
-                                comp_addr, comp_addr + comp_len, sig_len > 0);
- 
-+            comp_entry = (comp_entry_idx < MAX_CERTIFICATES) ?
-+                         &comp_list.device_entries[comp_entry_idx] : NULL;
-+
-             if (!sig_len) {
-+                check_unsigned_addr(comp_addr, comp_entry);
-+                comp_list_add(&comp_list, comp_entry_idx, cert_entry_idx,
-+                              comp_addr, comp_len, 0x00);
-+
-+                unsigned_count += 1;
-+                comp_entry_idx++;
-                 break;
-             }
- 
-+            check_sclab(comp_addr, comp_len,
-+                        &comp_list.device_entries[comp_entry_idx], &sclab_info);
-             verified = verify_signature(comp_len, comp_addr, sig_len, (uint64_t)sig,
-                                         &cert_len, &cert_table_idx);
- 
-@@ -391,10 +691,20 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+         if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism_word0, sizeof(ism_word0))) {
+             s390_cpu_virt_mem_handle_exc(cpu, ra);
+@@ -294,6 +623,18 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
          }
-     }
- 
--    if (signed_count == 0) {
--        zipl_secure_handle("Secure boot is on, but components are not signed");
-+    /* validate load PSW with PSW specified in the final entry */
-+    if (sclab_info.load_psw) {
-+        comp_entry = (comp_entry_idx < MAX_CERTIFICATES) ?
-+                     &comp_list.device_entries[comp_entry_idx] : NULL;
-+        check_load_psw(comp_addr_range, addr_range_index,
-+                       sclab_info.load_psw, entry->compdat.load_psw, comp_entry);
-+        comp_list_add(&comp_list, comp_entry_idx, -1,
-+                      entry->compdat.load_psw, 0, 0x00);
-     }
- 
-+    check_signed_comp(signed_count, &comp_list);
-+    check_sclab_count(sclab_info.count, &comp_list);
-+    check_global_sclab(sclab_info, unsigned_count, signed_count, &comp_list);
+         env->regs[r1 + 1] = rc;
+         break;
++    case DIAG_320_SUBC_STORE_VC:
++        if (addr & ~TARGET_PAGE_MASK) {
++            s390_program_interrupt(env, PGM_SPECIFICATION, ra);
++            return;
++        }
 +
-     update_iirb(&comp_list, &cert_list);
- 
-     *entry_ptr = entry;
-diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
-index 69edfce241..4e9f4f08b9 100644
---- a/pc-bios/s390-ccw/secure-ipl.h
-+++ b/pc-bios/s390-ccw/secure-ipl.h
-@@ -16,6 +16,38 @@
- VCStorageSizeBlock *zipl_secure_get_vcssb(void);
- int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec);
- 
-+#define S390_SECURE_IPL_SCLAB_FLAG_OPSW    0x8000
-+#define S390_SECURE_IPL_SCLAB_FLAG_OLA     0x4000
-+#define S390_SECURE_IPL_SCLAB_FLAG_NUC     0x2000
-+#define S390_SECURE_IPL_SCLAB_FLAG_SC      0x1000
-+
-+#define S390_SECURE_IPL_SCLAB_MIN_LEN      32
-+
-+struct SecureCodeLoadingAttributesBlock {
-+    uint8_t  format;
-+    uint8_t  reserved1;
-+    uint16_t flags;
-+    uint8_t  reserved2[4];
-+    uint64_t load_psw;
-+    uint64_t load_addr;
-+    uint64_t reserved3[];
-+} __attribute__ ((packed));
-+typedef struct SecureCodeLoadingAttributesBlock SecureCodeLoadingAttributesBlock;
-+
-+struct SclabOriginLocator {
-+    uint8_t reserved[2];
-+    uint16_t len;
-+    uint8_t magic[4];
-+} __attribute__ ((packed));
-+typedef struct SclabOriginLocator SclabOriginLocator;
-+
-+typedef struct SecureIplSclabInfo {
-+    int count;
-+    int global_count;
-+    uint64_t load_psw;
-+    uint16_t flags;
-+} SecureIplSclabInfo;
-+
- typedef struct SecureIplCompAddrRange {
-     bool is_signed;
-     uint64_t start_addr;
-@@ -33,6 +65,16 @@ static inline void zipl_secure_handle(const char *message)
-     }
- }
- 
-+static inline void set_comp_cei_with_log(IplDeviceComponentEntry *comp_entry,
-+                                         uint32_t flag, const char *message)
-+{
-+    if (comp_entry) {
-+        comp_entry->cei |= flag;
-+    }
-+
-+    zipl_secure_handle(message);
-+}
-+
- static inline uint64_t diag320(void *data, unsigned long subcode)
- {
-     register unsigned long addr asm("0") = (unsigned long)data;
++        rc = handle_diag320_store_vc(cpu, addr, r1, ra, cs);
++        if (rc == -1) {
++            return;
++        }
++        env->regs[r1 + 1] = rc;
++        break;
+     default:
+         env->regs[r1 + 1] = DIAG_320_RC_NOT_SUPPORTED;
+         break;
 -- 
 2.53.0
 
