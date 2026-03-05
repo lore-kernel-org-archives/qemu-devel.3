@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788E6F47CD4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF7C2F47CD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyFg6-0006ZE-Ma; Thu, 05 Mar 2026 15:52:14 -0500
+	id 1vyFfy-0006X6-Qm; Thu, 05 Mar 2026 15:52:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFg2-0006Y7-Ak
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:10 -0500
-Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
+ id 1vyFfx-0006Wd-Cz
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:05 -0500
+Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFg0-00066J-JK
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:10 -0500
-Received: by mail-qk1-x733.google.com with SMTP id
- af79cd13be357-8cb40277a8bso887014985a.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:07 -0800 (PST)
+ id 1vyFfu-00065B-Gc
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:05 -0500
+Received: by mail-qv1-xf2a.google.com with SMTP id
+ 6a1803df08f44-89a0d53f3d1so36569046d6.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772743927; x=1773348727; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=d4SC8zI77LVYBtxxNYz99rDPWHlviBrZcRQFsEBhS3Q=;
- b=t6dgy+onl2qAM1afPsYRd4JG/vIgeNDbncYWSacCVDFw5xLY5nXqAwXga9fFyK5F5n
- ftL3JxqlC9wHhRYupo4i7E+EWq+OncmBe70fFc4UdrnewGhx/Via7awJte8qHkhOkIjB
- I5SPBnTxp9ZbWwn1+Z7DbHWzgQA+AX4ZiGYiC25NBRSYH6x1yAVwqHeY3OIIb1kMYjXK
- iUf+FQpgS1Cl1c85FaoaPD21J+Sf8NuCWolVr+u5b3VfO2nfyO2r2GSWysH16+tdkQpS
- vN6oi4CUk/xj6Lldx2OTIZcHwqzfzhLNq6e/L9/JW/RX7i8XZ7fW3nx9f8CoPTzPinqE
- VovA==
+ d=linaro.org; s=google; t=1772743921; x=1773348721; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GVUe9ppeL28hfvk2q1FZ1GWr8G4UpRCv4iXib+1mPW0=;
+ b=cvDFPj/fhbU0oGI4kunNaDTxEasZaiFr8o4bGRMnqjzlgDLrT5sntUOjA4z6D56yFi
+ pS6PHhuYo/1yU6hbAaXOFTEfmL1PLGU/xtAM5hvJxKZGz5eUPEU5GjwlEDHuYfLM4yMC
+ HanRpkcIph1bQWujLK9LT3k//7iOlP3/EjurWQgIUoRbWQsD+2OSoirZf4V8dmJBQ3CW
+ iC1nfSf+mQkiiHppvqN/NCjXy1KeA2ul4+L5gqAecI+i6LtQK7cjj9AjT8NBn16cPYDs
+ OdZNggZLAGPUln68/byKWk1mg1EvSuCIfy0EBXpBM0A5sMo5KvxnFAJI4/itDO9rlBX7
+ mD5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772743927; x=1773348727;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=d4SC8zI77LVYBtxxNYz99rDPWHlviBrZcRQFsEBhS3Q=;
- b=hnZsalnQgqoBYnZN9kHwuk3VTe8tThnBVGPIEeMbGFbVi6kzseCqzMW+zph1l4BOZ4
- 7L6XR72F2J/oEL9koIlYt43IFePeHu3aHd3NlRVxFZ0a3tHfYzrcj3TX35Ykaqsi92ug
- fNjN3TLQnOjqChZPXlwOekJHzq+OUZ4FMfobjQeU1kgORD7o+yortucxGB6JhhGRQPwF
- y2Rt8WaNgkbhY68460CObgzhdnLNeqXvXLkDy9xsSvM79dqym7R4tzku5fSPFyHzfDVi
- zLTauYRvlaCZp6VQb2av3pp4g2gEN5x/CBRYAMUEtcctKkracVCQrRW1gQ9faz+3saDt
- 0yLw==
-X-Gm-Message-State: AOJu0Yy9vleezBmNcYCwnlVPKYuxVusRAW8qW/J5NqhOhGICQbQiP8Sj
- CzQTfz3lN3vICOSSTq1XYZbLt8meA59rn/cYnNY3l6neWBTy7zTL1zNsJppTtMVB7XspRkUZTM2
- CX3w5
-X-Gm-Gg: ATEYQzzTPgp+fMhckBF73mTDnXSPNpqpFlMh0cq7gP5wkZlt5RJ1aJLiwZlWTipcIhi
- lFtMwzWq788Qe8kIrTPrQ3W7ymZRVei3xsH9dmHJtVNLFJwkpVwveIkn9xKLWubONrVv7vB7Q05
- sSWESxZpF0sfneEjnhL8X4LeP+MBy8yc7u9HRy5uHJaMyGnFRLGuzEK9TVydOKTMuPO+ImMbm/1
- eTlzPkssxsLy7QeNoEyWGooG27lc1QJnNzYRrCkpTGxi2/n+PuAhKWr00ydi/xl1sBWzbeBftaI
- 6beeLQkFUyVa/zu5/6cKftBshx4oEdmCorO/t07M1zevAd8k0qFRWDP6gHM9nDzZxBzXghZXdMb
- lHVMlArra01ppbLfiRyA70JArjQOyXadcsRjGhKsYFnaOtgRu/+FaYCX8ZMuuRfLgXfkltitGlB
- wdCA0F0XYtEo0aOcOA1aSwJd7HybIn0mSD2YIFOcxIri+QN2Qk5CwHiXCjr2cnY+/xS+vhzB3EJ
- 7gW
-X-Received: by 2002:a05:620a:4102:b0:8cb:9975:cba8 with SMTP id
- af79cd13be357-8cd6b029bf3mr191898385a.62.1772743927082; 
- Thu, 05 Mar 2026 12:52:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772743921; x=1773348721;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GVUe9ppeL28hfvk2q1FZ1GWr8G4UpRCv4iXib+1mPW0=;
+ b=d6FPiSKHFFZK8jBQeDmpZOiIHkfQueEdncCJdxFThqQMbl2Tv4wBgflGUPzJvEj8hu
+ evIIVNDoA3PdUxmDn9jhX3V7y3P6yO1wYzeayGD57SmSk57c4ykzz6Fpmq4s6j+olwpU
+ eujQTf9e1BY03YzAPtsHG2BTTa4hhW0lMs14WCkQvFrDWswvmUiYBpr/YhH3kqRghfMB
+ 8GMDJq3BMvpABS2Y/sVALf6elR+wOs8FdpcAZEac5JGAA9E9hE4FYxVcgY/U2lTY+3wh
+ g7TRawBazCYyAcfcdfG9tMkpD8cRYeUXBLaCWeklO6dLzE6VfcQ8o2nXR1rWUULmRvRD
+ AdWg==
+X-Gm-Message-State: AOJu0YxpcRBnc+7XkYLnne+1071sdjfgQJZEtv99jMbSYgyCk3yFI+kh
+ qipkQ0iJDyYzATDL5UoDxmibE2Y7aqdclKUk84zYWRmjE9PogIVmobCCPZk0wJxr0DQt8rRjlLx
+ ThsCU
+X-Gm-Gg: ATEYQzwidcCn4rAszkDYXHOEI6atPgA225zVvXFQDUPj3v7LzuK0cmpOOI3DRiJh2jv
+ Ms1XsHPpmdfx3xTfsgF2e3hSffVCHrkChRDxjE0eZhXbOLwALW15ZHRmvxS3tUjqJoiIVX415Wn
+ frElTiSIICubkvLifL/ZEedmJCJw2Fzv4TFmT0HXcLBONli7EoJydjdcORRnFgl6DADjMqObYZH
+ UOo+KK85j84y0NDk9auMGLOauOnqizJinQWq0cICSffwvenhWCZlT5jf1kKnR7e7wh4s30i0rE5
+ pe3VzeBdDAdwyNh9rhk+PkKiGo57LfLGwqDm5uzhS0Sw8bwYNDbFayd8XT2FsybriRS0j5ywj/X
+ dFKSYmuDEO8zWWJocW2zsKkZp9N/PyquLRDTRO561hMsEoEu1Xbs2OKw5BLtwCHBIidE/5eDk6H
+ 2WP/q7l7MU3Lx49T91UTayT9PJgHdjL0XNhrbre7UWmsmIxZF66WblEKPXQkxc1K3WFBUe6ZsRX
+ HT1
+X-Received: by 2002:a05:6214:f01:b0:899:ad51:fb64 with SMTP id
+ 6a1803df08f44-89a19aee9ebmr111842336d6.41.1772743921182; 
+ Thu, 05 Mar 2026 12:52:01 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.52.05
+ 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.51.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 12:52:06 -0800 (PST)
+ Thu, 05 Mar 2026 12:52:00 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 04/12] plugins: add PC diversion API function
-Date: Thu,  5 Mar 2026 12:51:44 -0800
-Message-ID: <20260305205152.2121854-5-pierrick.bouvier@linaro.org>
+Subject: [PULL 00/12] Plugins update 2025-03-05
+Date: Thu,  5 Mar 2026 12:51:40 -0800
+Message-ID: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
-References: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x733.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,106 +100,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
+The following changes since commit 314ff2e07ddc6163554077d68aed5d76a50b8e3d:
 
-This patch adds a plugin API function that allows diverting the program
-counter during execution. A potential use case for this functionality is
-to skip over parts of the code, e.g., by hooking into a specific
-instruction and setting the PC to the next instruction in the callback.
+  Merge tag 'pull-request-2026-03-05' of https://gitlab.com/thuth/qemu into staging (2026-03-05 16:58:20 +0000)
 
-Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Link: https://lore.kernel.org/qemu-devel/20260305-setpc-v5-v7-4-4c3adba52403@epfl.ch
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/plugins/qemu-plugin.h  | 13 +++++++++++++
- plugins/api.c                  | 11 +++++++++++
- scripts/qemu-plugin-symbols.py |  9 +++++++--
- 3 files changed, 31 insertions(+), 2 deletions(-)
+are available in the Git repository at:
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index a6ec8e275d8..7b9cd6a9717 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -76,6 +76,7 @@ typedef uint64_t qemu_plugin_id_t;
-  *
-  * version 6:
-  * - changed return value of qemu_plugin_{read,write}_register from int to bool
-+ * - added qemu_plugin_set_pc
-  */
- 
- extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
-@@ -1042,6 +1043,18 @@ QEMU_PLUGIN_API
- bool qemu_plugin_write_register(struct qemu_plugin_register *handle,
-                                 GByteArray *buf);
- 
-+/**
-+ * qemu_plugin_set_pc() - set the program counter for the current vCPU
-+ *
-+ * @vaddr: the new virtual (guest) address for the program counter
-+ *
-+ * This function sets the program counter for the current vCPU to @vaddr and
-+ * resumes execution at that address. This function does not return.
-+ */
-+QEMU_PLUGIN_API
-+__attribute__((__noreturn__))
-+void qemu_plugin_set_pc(uint64_t vaddr);
-+
- /**
-  * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
-  *
-diff --git a/plugins/api.c b/plugins/api.c
-index 32eb086300d..23c291f6444 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -41,6 +41,7 @@
- #include "qemu/log.h"
- #include "system/memory.h"
- #include "tcg/tcg.h"
-+#include "exec/cpu-common.h"
- #include "exec/gdbstub.h"
- #include "exec/target_page.h"
- #include "exec/translation-block.h"
-@@ -467,6 +468,16 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
-     return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1) > 0);
- }
- 
-+void qemu_plugin_set_pc(uint64_t vaddr)
-+{
-+    g_assert(current_cpu);
-+
-+    g_assert(qemu_plugin_get_cb_flags() == QEMU_PLUGIN_CB_RW_REGS_PC);
-+
-+    cpu_set_pc(current_cpu, vaddr);
-+    cpu_loop_exit(current_cpu);
-+}
-+
- bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
- {
-     g_assert(current_cpu);
-diff --git a/scripts/qemu-plugin-symbols.py b/scripts/qemu-plugin-symbols.py
-index 69644979c19..ce99796ce2a 100644
---- a/scripts/qemu-plugin-symbols.py
-+++ b/scripts/qemu-plugin-symbols.py
-@@ -20,9 +20,14 @@ def extract_symbols(plugin_header):
-     # Remove QEMU_PLUGIN_API macro definition.
-     content = content.replace('#define QEMU_PLUGIN_API', '')
-     expected = content.count('QEMU_PLUGIN_API')
--    # Find last word between QEMU_PLUGIN_API and (, matching on several lines.
-+    # Find last word between QEMU_PLUGIN_API and ( to get the function name,
-+    # matching on several lines. Discard attributes, if any.
-     # We use *? non-greedy quantifier.
--    syms = re.findall(r'QEMU_PLUGIN_API.*?(\w+)\s*\(', content, re.DOTALL)
-+    syms = re.findall(
-+        r'QEMU_PLUGIN_API\s+(?:__attribute__\(\(\S+\)\))?.*?(\w+)\s*\(',
-+        content,
-+        re.DOTALL,
-+    )
-     syms.sort()
-     # Ensure we found as many symbols as API markers.
-     assert len(syms) == expected
--- 
-2.47.3
+  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260305
 
+for you to fetch changes up to aca77dfd90c8a17a2b3526c5cc871cc410357a5f:
+
+  tests/tcg/plugins/patch: Free read_data in patch_hwaddr() (2026-03-05 10:54:09 -0800)
+
+----------------------------------------------------------------
+Changes:
+- [PATCH v7 0/8] Enable PC diversion via the plugin API (Florian Hofhammer <florian.hofhammer@epfl.ch>)
+  Link: https://lore.kernel.org/qemu-devel/20260305-setpc-v5-v7-0-4c3adba52403@epfl.ch
+- [PATCH trivial] plugins: add missing callbacks to version history (Florian Hofhammer <florian.hofhammer@epfl.ch>)
+  Link: https://lore.kernel.org/qemu-devel/c4ecefb4-8769-403f-8420-8bce42e43e13@epfl.ch
+- [PATCH 0/3] tests/tcg/plugins: Fix sanitizer issues (Peter Maydell <peter.maydell@linaro.org>)
+  Link: https://lore.kernel.org/qemu-devel/20260305161531.1774895-1-peter.maydell@linaro.org
+
+----------------------------------------------------------------
+Florian Hofhammer (8):
+      plugins: add flag to specify whether PC is rw
+      linux-user: make syscall emulation interruptible
+      plugins: add PC diversion API function
+      tests/tcg: add tests for qemu_plugin_set_pc API
+      plugins: add read-only property for registers
+      plugins: prohibit writing to read-only registers
+      tests/tcg/plugins: test register accesses
+      plugins: add missing callbacks to version history
+
+Peter Maydell (3):
+      tests/tcg/plugins/mem: Don't access unaligned memory
+      tests/tcg/plugins/mem: Correct hash iteration code in plugin_exit()
+      tests/tcg/plugins/patch: Free read_data in patch_hwaddr()
+
+Pierrick Bouvier (1):
+      plugins/core: clamp syscall arguments if target is 32-bit
+
+ MAINTAINERS                                        |   1 +
+ include/plugins/qemu-plugin.h                      |  22 ++++
+ linux-user/include/special-errno.h                 |   8 ++
+ linux-user/aarch64/cpu_loop.c                      |   2 +-
+ linux-user/alpha/cpu_loop.c                        |   2 +-
+ linux-user/arm/cpu_loop.c                          |   2 +-
+ linux-user/hexagon/cpu_loop.c                      |   2 +-
+ linux-user/hppa/cpu_loop.c                         |   1 +
+ linux-user/i386/cpu_loop.c                         |   8 +-
+ linux-user/loongarch64/cpu_loop.c                  |   5 +-
+ linux-user/m68k/cpu_loop.c                         |   2 +-
+ linux-user/microblaze/cpu_loop.c                   |   2 +-
+ linux-user/mips/cpu_loop.c                         |   9 +-
+ linux-user/or1k/cpu_loop.c                         |   2 +-
+ linux-user/ppc/cpu_loop.c                          |  10 +-
+ linux-user/riscv/cpu_loop.c                        |   2 +-
+ linux-user/s390x/cpu_loop.c                        |   2 +-
+ linux-user/sh4/cpu_loop.c                          |   2 +-
+ linux-user/sparc/cpu_loop.c                        |   4 +-
+ linux-user/syscall.c                               |  16 +++
+ linux-user/xtensa/cpu_loop.c                       |   1 +
+ plugins/api.c                                      |  42 ++++++-
+ plugins/core.c                                     |  50 ++++++--
+ .../{ => plugin}/test-plugin-mem-access.c          |   0
+ tests/tcg/multiarch/plugin/test-plugin-set-pc.c    | 134 +++++++++++++++++++++
+ tests/tcg/plugins/mem.c                            |  95 +++++++--------
+ tests/tcg/plugins/patch.c                          |   2 +-
+ tests/tcg/plugins/registers.c                      |  79 ++++++++++++
+ tests/tcg/plugins/setpc.c                          | 105 ++++++++++++++++
+ scripts/qemu-plugin-symbols.py                     |   9 +-
+ tests/tcg/arm/Makefile.target                      |   6 +
+ tests/tcg/hexagon/Makefile.target                  |   8 ++
+ tests/tcg/multiarch/Makefile.target                |  17 ++-
+ .../multiarch/{ => plugin}/check-plugin-output.sh  |   0
+ tests/tcg/plugins/meson.build                      |   2 +
+ 35 files changed, 555 insertions(+), 99 deletions(-)
+ rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+ create mode 100644 tests/tcg/multiarch/plugin/test-plugin-set-pc.c
+ create mode 100644 tests/tcg/plugins/registers.c
+ create mode 100644 tests/tcg/plugins/setpc.c
+ rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
 
