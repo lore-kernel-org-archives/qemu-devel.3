@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 180B9F33A71
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C782CF33A73
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9eA-0004Ay-6H; Thu, 05 Mar 2026 09:25:50 -0500
+	id 1vy9di-0003uP-NN; Thu, 05 Mar 2026 09:25:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vy9e3-00046y-Q3
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:43 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1vy9db-0003tD-TH
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:20 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vy9e1-0001nt-Fw
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:43 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c738d1fa6f1so484519a12.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:25:40 -0800 (PST)
+ id 1vy9da-0001li-DU
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:25:15 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2ae56e68216so31911065ad.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:25:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772720739; x=1773325539; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772720712; x=1773325512; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MLjnMnNIguZ1QWTyzsc2r821O8rNuUtTvzW3geGi3oI=;
- b=l0X3now/VWRaEBp6Fflt+9jn6GHyb5o1qAmbrkMjTM1mleMXeNsKGK9Du2Qtu57ERJ
- vkNvHUBn58ZqURIeEhpk3MEVfJJotNJDi+YOxBXWvF+95w8Bnmd9266ilVWl1xaLX8Rw
- LBmxy5GDCmzZDM9uiNvtxfW/vausgMrLQuGOdm5nIR/Yu6Q2Ju8bA78bz4tqFX6vCqX5
- HjHgxSMunWPecP9SCOTFdYQjGY80+V7XrA9EYS5ynRjxYwRt/LnXTkdgD5xpDjpAIBZ6
- ztmxjaJJH52VQnn8Bp5M2I/B+7IifmxWRS+mFvVUE0fGGI3vUF6+UF7D0eGPsJ+oRfgC
- cImQ==
+ bh=B2QC7hLfF9zjfQ04CPizme4X1fY5wq+GdA4jvJ9NH8A=;
+ b=AyHimFW55bhCqeN4GpooobwLC955AaOVASJTH1QHb2cf+sWsnt4bprwHOKIxmy3x09
+ crFC0TJMpg7NsMFDZ5LTK4XdIpvsQjqgiuwTZvC4CxvT/xRbNwH6NVLi/dHVqL90euTf
+ JDCKd4vG5T0YSNsvlMszHSSRCLrhiTzsi15/AUzKE4e9nyJrsp33nEiFLDrucKE+2PrT
+ HDW+0/zmmUGjZ6NfyjQstBgbjxP5pJ14jD4YKKRP1ovZREqp3nPTGWhHig5hfKvC92vh
+ AJhODdkO6O50ufvHHByZdfsVUndzDKauIIvSwV0caydg5of9UJQLeoIMo2d/hgjz/+9Y
+ 2Vkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772720739; x=1773325539;
+ d=1e100.net; s=20230601; t=1772720712; x=1773325512;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MLjnMnNIguZ1QWTyzsc2r821O8rNuUtTvzW3geGi3oI=;
- b=IPI1rYQYXLDAsCGLl6SkgzRz3bqy8MG4khs/sLfup7m1GLHJa+xZyagOyZ8VPBj5/F
- wvlq+nSJ7jwJLhCqzXATcYv7f1clzjy1fbsHcCVKAup6szXEffVouJypKpnts6QuQw6v
- 338L7Z0OoC7YMh64Q4jA3lkkgftSKY6vAmxoQgGDNIOAHAPdjED1q1V/3npR6PFk9QSh
- OFQMDbOgHh8UZlgObEK9AbWyfP94Prg0tWcaHT5R4Vmwh3FgZymDZ5GMHUwjO+9QMC0x
- uMzhUyyZegLuv6IgZ06CMDm+EGAnbJQGgWrUwYIZ9x87vsxSZVdLn+Vaz6PgKf2tFj+/
- cLjg==
-X-Gm-Message-State: AOJu0YxYqfAausBtKT3ShyAqZxnNzOZtxjJNBXJn/yeCF7Q4CsmUcQhL
- f4VrAb2bOiHhYhGZ/DqgOLDRZHlHJcndxQ+E99Pn5YQG1BU6D+/+ZuJ8QHwmA8rFOnUQWw==
-X-Gm-Gg: ATEYQzya/UyjaV7rGWpj9ymXJkuNFqGAym6P3hPuJVYtofValQC7OuHNxQ6p6eKJyHt
- QJ/r3IigqoPVyYwsP+Jqb0m2RRucqwtY3OJAjB9lZYHlMQXMCE5BO6dmv3LNDsAw40JybyNeBSa
- l+KB6o60Z32XxKiRF2MDhH6VZN9+djyxKbSVSc51MtfJtFHGFSc5QskhQ1auRt8AvqlY+7mPsWa
- ALxcNly9eYTLrBR5eFkW1/8YirGXFRN14Ucdt5cN0fdeFezf3gzh6bb343iHxtPIQCcA8e5BmHJ
- 6YCxfyOqeAHje8lL/OayUDwHJku/TQulj6EUj1Jy6u6HEoH4vTI3uOQq/9ieD9pT5BFuOM3IdRO
- dDmlMS5YVgGme3JgYhQK7Mp6UUYpmMfH47OttLKDusnvTRl8N9jZ3kSQq6mSMS1J2RBlGXkeQIx
- 2+D/8ZJPUF+Fk1phUHeLNZuVlcoAU+5GMfJCx/2n9ivwt46KOJ2HOCYa+q62enLNRp4Qs=
-X-Received: by 2002:a17:902:f64d:b0:2ae:5598:1da8 with SMTP id
- d9443c01a7336-2ae6ab80a25mr56684315ad.57.1772720738551; 
- Thu, 05 Mar 2026 06:25:38 -0800 (PST)
+ bh=B2QC7hLfF9zjfQ04CPizme4X1fY5wq+GdA4jvJ9NH8A=;
+ b=STF+ROJVHY17Y72SzAW1qk4af/kz2KTAiOqKF2vwik/WKPNqnS+6GvzQiQ19oSisqz
+ UT6FfivaFhfjjR3OgD2HgisDFyPRey4dtXIPYGeZnCnjvSe6q4jKRNx+W92NNSNFhkvw
+ cZhM48OiwUYvZqlTbIrOCcgQ3kQ9tjBx4I8pa4jQORCpUWjsGx/BNbEtfbDN/HWgaava
+ rGV/i08XB8BFsP0qujHGySOAP5mMZS5zaATvmeC7GvFjQ5PKrkUoVKEsim7uHE8sVsrO
+ 56owvs3moo4UMYYKphn1lxID6Sz7xQvVfpiJDXKOpfT1vHWdX+axSGekPEgOflTT9YNu
+ n3Nw==
+X-Gm-Message-State: AOJu0Yyinjuk4WVXEd/7JzubuU7KNiGOnRX/vYZytS4M5/456hNmc/dY
+ LKpFU99ltpJMvtgbEdYg8vVEkfiWIeanJqxGiGfvKy9iQyEPqod0KPeP/KblKluALqxz/w==
+X-Gm-Gg: ATEYQzwzfqyMi160TQMYNCrIsuqiXmmg5xOajZa6uys/UonmEFHj8ZxaTKVfAPxflKh
+ kTcu24VfdGeOIvB/XUK4Pz+MOOs61tE6Ic8GsglWm1o5E7a58+843P3zrJhnSK+wPzGsu50U+OO
+ r0GwhA/HAyao7IjBrlHtHxzUOmkeWyihcGk3zA4e35r0qoRVbOz9/dT3BAqjoCZkOuXZ6F0sfps
+ +SvsfOfJS3CqNFb4xWHRUfUh2QkK06irSwn2aSJTNEJKb/HNkQf8vTvOJ1QC5Q7kj4jWbUocmY8
+ OjwwT81OOa5FuXKRf5cMZ7tt/uuvavaLM90St/HpeVQbhcANeE3111Ou/B+O3oMmSfUddUHMGM2
+ AIkGv/H5JGPISx5oiYd4yIg4ePoaQGFaBLZo7Z71KYZwO4m/YPwD1DjBEY0qlj8DALmhzd2touX
+ YkEz3QBUuO0XknPVllWzvL3mQXFgD4LYU5r6Qhc4a7rm5zJkrBFkqI/U5MdtSAi96IcsY=
+X-Received: by 2002:a17:902:e952:b0:2ae:50ec:fa34 with SMTP id
+ d9443c01a7336-2ae6ab9da83mr59865215ad.46.1772720712480; 
+ Thu, 05 Mar 2026 06:25:12 -0800 (PST)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net
  ([2408:80e0:41fc:0:fe49:0:1:b277]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae4650000dsm140204835ad.54.2026.03.05.06.25.35
+ d9443c01a7336-2ae4650000dsm140204835ad.54.2026.03.05.06.25.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 05 Mar 2026 06:25:38 -0800 (PST)
+ Thu, 05 Mar 2026 06:25:12 -0800 (PST)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V5 09/13] monitor: Update tracking iothread users with holder
- name
-Date: Thu,  5 Mar 2026 22:24:55 +0800
-Message-ID: <20260305142459.52559-10-zhangckid@gmail.com>
+Cc: Zhang Chen <zhangckid@gmail.com>,
+	qemu-stable@nongnu.org
+Subject: [PATCH V5 01/13] qapi/misc: Fix missed query-iothreads items
+Date: Thu,  5 Mar 2026 22:24:47 +0800
+Message-ID: <20260305142459.52559-2-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260305142459.52559-1-zhangckid@gmail.com>
 References: <20260305142459.52559-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because of monitor create own iothread, and use the
-iothread suspend/resume with bh handler and chardev handler.
-The QOM lifecycle is hard to track. Update the legacy usage
-of "iothread_get_aio_context()" and "iothread_put_aio_context()".
+The example is incomplete: it misses members @poll-max-ns, @poll-grow,
+@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
+(monitor: add poll-* properties into query-iothreads result) and
+commit 1793ad0247c (iothread: add aio-max-batch parameter).
 
+cc: qemu-stable@nongnu.org
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- monitor/monitor.c | 4 ++--
- monitor/qmp.c     | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ qapi/misc.json | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 1273eb7260..5da3c05e8d 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -547,7 +547,7 @@ int monitor_suspend(Monitor *mon)
-          * Kick I/O thread to make sure this takes effect.  It'll be
-          * evaluated again in prepare() of the watch object.
-          */
--        aio_notify(iothread_get_aio_context(mon_iothread));
-+        aio_notify(iothread_get_aio_context(mon_iothread, NULL));
-     }
- 
-     trace_monitor_suspend(mon, 1);
-@@ -582,7 +582,7 @@ void monitor_resume(Monitor *mon)
-         AioContext *ctx;
- 
-         if (mon->use_io_thread) {
--            ctx = iothread_get_aio_context(mon_iothread);
-+            ctx = iothread_get_aio_context(mon_iothread, NULL);
-         } else {
-             ctx = qemu_get_aio_context();
-         }
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 687019811f..93d0328dcd 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -544,12 +544,13 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-          * handling between the main thread and the I/O thread.
-          */
-         remove_listener_fd_in_watch(chr);
-+
-         /*
-          * We can't call qemu_chr_fe_set_handlers() directly here
-          * since chardev might be running in the monitor I/O
-          * thread.  Schedule a bottom half.
-          */
--        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
-+        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread, NULL),
-                                 monitor_qmp_setup_handlers_bh, mon);
-         /* The bottom half will add @mon to @mon_list */
-     } else {
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 28c641fe2f..1f5062df2a 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -117,11 +117,19 @@
+ #     <- { "return": [
+ #              {
+ #                 "id":"iothread0",
+-#                 "thread-id":3134
++#                 "thread-id":3134,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              },
+ #              {
+ #                 "id":"iothread1",
+-#                 "thread-id":3135
++#                 "thread-id":3135,
++#                 "poll-max-ns":32768,
++#                 "poll-grow":0,
++#                 "poll-shrink":0,
++#                 "aio-max-batch":0
+ #              }
+ #           ]
+ #        }
 -- 
 2.49.0
 
