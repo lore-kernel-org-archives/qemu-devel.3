@@ -4,115 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86350F33A8B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 15:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C16AF33A8D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 15:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyAUB-00056H-DZ; Thu, 05 Mar 2026 10:19:35 -0500
+	id 1vyAWy-0006Mt-Qi; Thu, 05 Mar 2026 10:22:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyAUA-000569-0c
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:19:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyAU8-0002M2-AE
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:19:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772723971;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2g+wy+hRXnB1EJaHBVaDT1VoQJ0dyS6ZsnAfbYiE9m8=;
- b=eSFV08mOBoxtBup3aXuuhdn3d8zc/AwWYJQ1G+wNm9nIgLqoLiLYLK6mmcLy0ClNCg4O/O
- xs+SVbJP3x8UTHH0nWZ0sxjQsFFsNI6K7nT9u3KSsQYIhABxZuP4q/Y1YEHAKOTbTmM/xV
- wpnGTBe7U4EmBuPd3gaBITuY6gQIR6w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-b5TAiMAyNWa8Btl7UJh9xw-1; Thu,
- 05 Mar 2026 10:19:29 -0500
-X-MC-Unique: b5TAiMAyNWa8Btl7UJh9xw-1
-X-Mimecast-MFC-AGG-ID: b5TAiMAyNWa8Btl7UJh9xw_1772723968
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9336418002D6; Thu,  5 Mar 2026 15:19:28 +0000 (UTC)
-Received: from [10.45.224.75] (unknown [10.45.224.75])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7F3433003E9E; Thu,  5 Mar 2026 15:19:26 +0000 (UTC)
-Message-ID: <e2240e03-e60e-4b8e-998a-5c61d9313045@redhat.com>
-Date: Thu, 5 Mar 2026 16:19:24 +0100
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vyAWt-0006LN-V0
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:22:24 -0500
+Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vyAWr-00030k-IL
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 10:22:23 -0500
+Received: by mail-qt1-x82d.google.com with SMTP id
+ d75a77b69052e-506a6cf8242so58424541cf.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 07:22:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772724139; cv=none;
+ d=google.com; s=arc-20240605;
+ b=M35gNdqwcduxWN6N1ydsbNZSPAdBnvGPc8EHXhjX8xSjgGzupX8xfEMdyh+kk2hj7G
+ NVEV5q9jRyyg6QNDcIKBU5hRV4tf5hjzVfO55zcDfmPZnufAqctcmflPlEmtLAEznnEs
+ ObgkgiPv2H+NvX96N36a7RjG/oxGxM/n/YXgrjHCmkFRfWIR0rn1IsLlztes1aOGuo9x
+ NLkls/uVg8dnRn7gchKeV3QiAh6d8N5yRDKk4jMIeO9plV/OQ5saNWfJ3eNhkosYo3sf
+ ZCDmpQ1Q/VzSpBTaKqYHS7T0snTuFXuTVvHpKSx1Z2fF3gwLHQXajYkjQioIywySlqnr
+ TAzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=J7o+Gn8rtivx7pGMB4y015U+u3MWLF/4oAjLz9+3H5Q=;
+ fh=qut9WCGoiumS8buQKfV4VTgRMJrLq2rWzZgt13Ew7uM=;
+ b=DcQAZFPwnYqk7sd+4OwDKcBSbX4Jh+aNJIP66KmjQP8jeZRTPFTCoDxiCLdelmdJUY
+ 1nKjPmtucGHUf/00SZuiZqA2WZfQ9qjCPausEdBHXAr3nFrE9QF8P0LW7cj1/oCg+qHH
+ ilcJRseOkZ46XW5L24oKC6rFcJ+3kvPgbfvV6SCVRXR7QuyZIHkcH/3CB89xKyDv3ejz
+ vqBvUf74ZeRYsaHhNw7g6qvbrySdEsqL5pqTi0LwiVliK2uUOaIDrxsNSg3Ix2BsFIfd
+ Qf6g1ka7ttSHkYVvX22OO8vQxuWr/uoix+Sz1XSscpHXJu2Jld5qYk38Me4+g4p1B0DC
+ XYrw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1772724139; x=1773328939; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J7o+Gn8rtivx7pGMB4y015U+u3MWLF/4oAjLz9+3H5Q=;
+ b=BisnyAFUqdPapo/JR8iC/ZVdsSkMO+1abEMzTLj+p9Rx1YpHd53K1QDNdwmbaCqoYt
+ SX3ypeWOdwgdhtwiNfzVhLC4KEE+i3+tLCdiWnas+IhU8MU+aN1gMTXGEk+CpWwjP5a/
+ WUU8v9kiwXl2LLWlq6U0YrLnY0BUaujSNP15bi5cfEP8nV7g5Gu7pZp2U2GJ4/VLIoXo
+ HdN/idyQjpE27TGgZU65yFjwe4Ygwt2xtNcKAOifQJEt92Fph076GF5nr0691sSkBJcg
+ xv7iJM34NyVeL/TT8D4q60OPx22w8kxG9z4jlm8LF6KB4vSSoS8tg9upIYFjROzjhr8v
+ SpLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772724139; x=1773328939;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=J7o+Gn8rtivx7pGMB4y015U+u3MWLF/4oAjLz9+3H5Q=;
+ b=pEbJ93UZmhmTdJs00QOyPDobhA1UVlOsTXBH8n6OL3No2DGg+zm2BCOQBPHxJV2PJf
+ yOptncZgAJ4oIz7lbXkXgOOCzDntevR19e2/ytreAqQ7BAAONLC4AcI1EfpBynLW/hzo
+ XjZtIW1Jrhg2ChGL3ol10rcojqs2D0eRPKG7mOISleP6Lk5hZq2l6CrItbFD8tHRg3Dx
+ KSqmok41QIYrefBH5Z5RX6gm5SkwGVMlfFFC0+x6Bo57nGCrUadE53/qfGhTFXvJhTvO
+ JCPO1XVzrVnKDBRTs7r7B9sbhLFJMAKLuiFRPunoXi39AG2qxxfzsJxc1H3FeBuiZdY/
+ AxqA==
+X-Gm-Message-State: AOJu0YywLA1hAKu6sbBJqPRIZ67f9uYf1sVacztGT3z51tuIDkrtW7o5
+ 9NBhFM8yn1dnbmsEIX2mijVcYQqnsZ6Ezhw7JLfHKukGHq73I6vZz53r+8fcZKtzgQ9/LJsgSrm
+ GcsRyqUaVvmds5FV/R7l2IuLXYKgV96c=
+X-Gm-Gg: ATEYQzzDcCGxbCPDBHHvLbUGaOIETAV3M2liUAUylPNJFy0XMGL3PvSYe5iwh05tsNo
+ +iE3HV95zwamUHAKyXu5Rd5T88denVzfEpf7/tULyK6vB2eRfrVNoEmBCRMJEdE3lQZLmh5hTbQ
+ gNnu5wqbZ9fmxkXX3mCEyyeK/kDKYzxW4oM7SPpfkJlTheM3KFdiccl08FejEAdpOvd0kpPueBn
+ 8ND21aDv/Tq6vIenCpME4WtrJW+K2zC83LieY9TP5SRE6WpttW3MaAvu3n0lyLC8V6hR3SzXXSe
+ VOHMm6Zs2pHgObuqXw==
+X-Received: by 2002:ac8:7dd0:0:b0:501:4a4a:c24e with SMTP id
+ d75a77b69052e-508db2ac5fbmr85764951cf.25.1772724139101; Thu, 05 Mar 2026
+ 07:22:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/net/rtl8319: Work around GCC sanitizer /
- -Wstringop-overflow bug
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Yodel Eldar <yodel.eldar@yodel.dev>
-References: <20260305140512.1330691-1-peter.maydell@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260305140512.1330691-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260303030714.1926907-1-dongwon.kim@intel.com>
+ <CAJ+F1C+ownUskL4troo57_GxJjGaZvX2sHCJoc4KjYm3rU-oQw@mail.gmail.com>
+ <PH0PR11MB511248C615D6433E2ED7E7D4FA7FA@PH0PR11MB5112.namprd11.prod.outlook.com>
+In-Reply-To: <PH0PR11MB511248C615D6433E2ED7E7D4FA7FA@PH0PR11MB5112.namprd11.prod.outlook.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 5 Mar 2026 16:22:07 +0100
+X-Gm-Features: AaiRm50JWZdGAvgtZhZrPNjFjr31Ls5zFvSCXhFPuiALFYfgreZZvtCo7Jstt7s
+Message-ID: <CAJ+F1C+BGW3hzLc8jnxKXxmY3-jkQ85=BSWc+sPhOZ86bzsjVQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Implement dpy_gl_ctx_destroy_texture for gtk-egl
+ and gtk-gl-area
+To: "Kim, Dongwon" <dongwon.kim@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82d.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,74 +118,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/03/2026 15.05, Peter Maydell wrote:
-> If you compile QEMU with GCC with -fsanitize=address and
-> -Wstringop-overflow, this causes GCC to produce a false-positive
-> warning which it does not produce when the sanitizer is not enabled
-> (and which makes compilation fail if you're using -Werror, as we do
-> by default for builds from git):
-> 
-> ../../hw/net/rtl8139.c: In function ‘rtl8139_io_writeb’:
-> ../../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
->   2264 |                 memcpy(data_to_checksum, saved_ip_header + 12, 8);
->        |                 ^
-> In file included from ../../hw/net/rtl8139.c:62:
-> /home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
->     50 |     uint8_t  ip_ver_len;     /* version and header length */
->        |              ^~~~~~~~~~
-> ../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
->   2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
->        |                     ^
-> /home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
->     50 |     uint8_t  ip_ver_len;     /* version and header length */
->        |              ^~~~~~~~~~
-> ../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
->   2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
->        |                     ^
-> /home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
->     50 |     uint8_t  ip_ver_len;     /* version and header length */
->        |              ^~~~~~~~~~
-> In file included from /home/pm215/qemu/include/system/memory.h:21,
->                   from /home/pm215/qemu/include/hw/pci/pci.h:4,
->                   from /home/pm215/qemu/include/hw/pci/pci_device.h:4,
->                   from ../../hw/net/rtl8139.c:54:
-> In function ‘stl_he_p’,
->      inlined from ‘stl_be_p’ at /home/pm215/qemu/include/qemu/bswap.h:371:5,
->      inlined from ‘rtl8139_cplus_transmit_one’ at ../../hw/net/rtl8139.c:2244:21,
->      inlined from ‘rtl8139_cplus_transmit’ at ../../hw/net/rtl8139.c:2345:28,
->      inlined from ‘rtl8139_io_writeb’ at ../../hw/net/rtl8139.c:2728:17:
-> /home/pm215/qemu/include/qemu/bswap.h:284:5: error: writing 4 bytes into a region of size 0 [-Werror=stringop-overflow=]
->    284 |     __builtin_memcpy(ptr, &v, sizeof(v));
->        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> /home/pm215/qemu/include/net/eth.h: In function ‘rtl8139_io_writeb’:
-> /home/pm215/qemu/include/net/eth.h:50:14: note: at offset [24, 64] into destination object ‘ip_ver_len’ of size 1
->     50 |     uint8_t  ip_ver_len;     /* version and header length */
->        |              ^~~~~~~~~~
-> 
-> This has been triaged as a bug in GCC:
->   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
->   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
-> (the sanitizer pass rewrites the IR in a way that conflicts with its
-> use by the warning pass that runs afterwards).
-> 
-> Since this is the only place in our code where we hit this, work
-> around it by disabling the -Wstringop-overflow in the part of
-> the function that hits it. We do this only when using the
-> address sanitizer on GCC, so that we still get the benefit
-> of the warning in most compilation scenarios.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> v2: disable the warning rather than using the incorrect attempt
-> at a workaround that v1 had.
-> 
-> On the fence about whether this is worth backporting to stable.
+Hi
 
-It's easy enough, so I think it's a good idea to backport to stable.
+On Tue, Mar 3, 2026 at 7:50=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.com>=
+ wrote:
+>
+> Hi Marc-Andr=C3=A9,
+>
+> > Subject: Re: [PATCH] ui/gtk: Implement dpy_gl_ctx_destroy_texture for g=
+tk-
+> > egl and gtk-gl-area
+> >
+> > Hi
+> >
+> > On Tue, Mar 3, 2026 at 4:13=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+> > >
+> > > From: Dongwon Kim <dongwon.kim@intel.com>
+> > >
+> > > Currently, the texture associated with a DisplaySurface is not delete=
+d
+> > > when the surface is switched or freed, leading to a memory leak in th=
+e
+> > > GPU process. This occurs because the GTK backend lacks a mapping for
+> > > the 'dpy_gl_ctx_destroy_texture' operation.
+> > >
+> > > This patch implements the necessary cleanup functions for both EGL an=
+d
+> > > GL Area backends. Each implementation ensures the appropriate GL
+> > > context is made current before calling surface_gl_destroy_texture(),
+> > > ensuring that the underlying GL texture ID is safely released by the =
+driver.
+> > >
+> > > Cc: Gerd Hoffmann <kraxel@redhat.com>
+> > > Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > > Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> > > Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> > > ---
+> > >  include/ui/gtk.h |  4 ++++
+> > >  ui/gtk-egl.c     | 10 ++++++++++
+> > >  ui/gtk-gl-area.c |  8 ++++++++
+> > >  ui/gtk.c         |  2 ++
+> > >  4 files changed, 24 insertions(+)
+> > >
+> > > diff --git a/include/ui/gtk.h b/include/ui/gtk.h index
+> > > 3e6ce3cb48..f1765ad5cb 100644
+> > > --- a/include/ui/gtk.h
+> > > +++ b/include/ui/gtk.h
+> > > @@ -170,6 +170,8 @@ void gd_egl_switch(DisplayChangeListener *dcl,
+> > >                     DisplaySurface *surface);  QEMUGLContext
+> > > gd_egl_create_context(DisplayGLCtx *dgc,
+> > >                                      QEMUGLParams *params);
+> > > +void gd_egl_destroy_texture(DisplayGLCtx *dgc,
+> > > +                            DisplaySurface *surface);
+> > >  void gd_egl_scanout_disable(DisplayChangeListener *dcl);  void
+> > > gd_egl_scanout_texture(DisplayChangeListener *dcl,
+> > >                              uint32_t backing_id, @@ -206,6 +208,8 @@
+> > > QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
+> > >                                          QEMUGLParams *params);  void
+> > > gd_gl_area_destroy_context(DisplayGLCtx *dgc,
+> > >                                  QEMUGLContext ctx);
+> > > +void gd_gl_area_destroy_texture(DisplayGLCtx *dgc,
+> > > +                                DisplaySurface *surface);
+> > >  void gd_gl_area_scanout_dmabuf(DisplayChangeListener *dcl,
+> > >                                 QemuDmaBuf *dmabuf);  void
+> > > gd_gl_area_scanout_texture(DisplayChangeListener *dcl, diff --git
+> > > a/ui/gtk-egl.c b/ui/gtk-egl.c index ae9239999c..c1b32bc41b 100644
+> > > --- a/ui/gtk-egl.c
+> > > +++ b/ui/gtk-egl.c
+> > > @@ -225,6 +225,16 @@ QEMUGLContext
+> > gd_egl_create_context(DisplayGLCtx *dgc,
+> > >      return qemu_egl_create_context(dgc, params);  }
+> > >
+> > > +void gd_egl_destroy_texture(DisplayGLCtx *dgc, DisplaySurface
+> > > +*surface) {
+> > > +    VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc=
+);
+> > > +
+> > > +    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
+> > > +                   vc->gfx.esurface, vc->gfx.ectx);
+> > > +
+> > > +    surface_gl_destroy_texture(dgc->gls, surface); }
+> > > +
+> > >  void gd_egl_scanout_disable(DisplayChangeListener *dcl)  {
+> > >      VirtualConsole *vc =3D container_of(dcl, VirtualConsole, gfx.dcl=
+);
+> > > diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c index
+> > > cd86022d26..84e41f4221 100644
+> > > --- a/ui/gtk-gl-area.c
+> > > +++ b/ui/gtk-gl-area.c
+> > > @@ -299,6 +299,14 @@ void gd_gl_area_destroy_context(DisplayGLCtx
+> > *dgc, QEMUGLContext ctx)
+> > >      g_clear_object(&ctx);
+> > >  }
+> > >
+> > > +void gd_gl_area_destroy_texture(DisplayGLCtx *dgc, DisplaySurface
+> > > +*surface) {
+> > > +    VirtualConsole *vc =3D container_of(dgc, VirtualConsole, gfx.dgc=
+);
+> > > +
+> > > +    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
+> > > +    surface_gl_destroy_texture(dgc->gls, surface); }
+> > > +
+> > >  void gd_gl_area_scanout_texture(DisplayChangeListener *dcl,
+> > >                                  uint32_t backing_id,
+> > >                                  bool backing_y_0_top, diff --git
+> > > a/ui/gtk.c b/ui/gtk.c index 9ebe7e8df0..217f425075 100644
+> > > --- a/ui/gtk.c
+> > > +++ b/ui/gtk.c
+> > > @@ -636,6 +636,7 @@ static const DisplayGLCtxOps gl_area_ctx_ops =3D =
+{
+> > >      .dpy_gl_ctx_is_compatible_dcl =3D gd_gl_area_is_compatible_dcl,
+> > >      .dpy_gl_ctx_create       =3D gd_gl_area_create_context,
+> > >      .dpy_gl_ctx_destroy      =3D gd_gl_area_destroy_context,
+> > > +    .dpy_gl_ctx_destroy_texture =3D gd_gl_area_destroy_texture,
+> > >      .dpy_gl_ctx_make_current =3D gd_gl_area_make_current,  };
+> > >
+> > > @@ -670,6 +671,7 @@ static const DisplayGLCtxOps egl_ctx_ops =3D {
+> > >      .dpy_gl_ctx_is_compatible_dcl =3D gd_egl_is_compatible_dcl,
+> > >      .dpy_gl_ctx_create       =3D gd_egl_create_context,
+> > >      .dpy_gl_ctx_destroy      =3D qemu_egl_destroy_context,
+> > > +    .dpy_gl_ctx_destroy_texture =3D gd_egl_destroy_texture,
+> > >      .dpy_gl_ctx_make_current =3D gd_egl_make_current,
+> >
+> > But there is no dpy_gl_ctx_create_texture(), how can
+> > dpy_gl_ctx_destroy_texture() get called?
+>
+> Textures are also created via surface_gl_create_texture in the places lik=
+e,
+>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+But surface_gl_{create,destroy}_texture doesn't make use of
+dpy_gl_ctx_destroy_texture. The later is only used by dbus so far, see
+commit 589089feee ("ui/dbus: fix texture sharing").
 
+> gtk-egl.c
+> static void gtk_egl_set_scanout_mode(VirtualConsole *vc, bool scanout)
+> {
+>  .....
+>        egl_fb_destroy(&vc->gfx.guest_fb);
+>         if (vc->gfx.surface) {
+>             surface_gl_destroy_texture(vc->gfx.gls, vc->gfx.ds);
+>             surface_gl_create_texture(vc->gfx.gls, vc->gfx.ds);
+>         }
+>
+> surface_gl_create_texture always come after surface_gl_destroy_texture
+> so there is no leak while the guest is running but texture would remain u=
+nremoved
+> if we do none in dpy_gl_ctx_destroy_texture() when the guest is rebooting=
+.
+>
+> >
+> > >  };
+> > >  #endif
+> > > --
+> > > 2.43.0
+> > >
+> > >
+> >
+> >
+> > --
+> > Marc-Andr=C3=A9 Lureau
+>
+> Thanks
+
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
