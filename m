@@ -4,58 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F186F513E6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B83B4F513E9
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 23:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyHXh-0007jT-AP; Thu, 05 Mar 2026 17:51:41 -0500
+	id 1vyIFy-0004L6-GZ; Thu, 05 Mar 2026 18:37:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vyHXf-0007fZ-0E
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:51:39 -0500
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vyIFw-0004Kh-5l
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 18:37:24 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vyHXc-0008QN-1h
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:51:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=ifX8l2AXnBhr9jX31MD23msSqzoVhJezEjl2DuYDoh0=; b=Bb+a/0srScFVqP0
- Ydt4XY6naCZodrbjcORbYjgmDEuKh+cW0fH8+kx2rmYwD3kQQP9gvmXfIx+BoQmngv/szq9rrmvUK
- fTnhhSwQijdFWLcRJj4DYq0YnvWxuSXjeLgXixzpHurgmQjSuKR6c6z9NltGaHFYD+MghOGW/mBkY
- S8=;
-Date: Thu, 05 Mar 2026 23:54:21 +0100
-Subject: [PATCH v6 2/3] hppa: Get physical address space bits from HPPACPUDef
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260305-hppa-c3600-v6-2-d51526e5269c@rev.ng>
-References: <20260305-hppa-c3600-v6-0-d51526e5269c@rev.ng>
-In-Reply-To: <20260305-hppa-c3600-v6-0-d51526e5269c@rev.ng>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vyIFu-00079L-8w
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 18:37:23 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 50303596D9A;
+ Fri, 06 Mar 2026 00:37:19 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id N1zz8Y8xDN1a; Fri,  6 Mar 2026 00:37:17 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 1D08F5969F6; Fri, 06 Mar 2026 00:37:17 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] ati-vga: Allow setting EDID parameters directly
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Helge Deller <deller@gmx.de>, Anton Johansson <anjo@rev.ng>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772751314; l=8538;
- i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=pzPW+/suWpFmxbJncwZH5AV/5sxO/vSuDIBoNyJ+3E4=;
- b=F3lpF9XxeO8S1Oj7bcxT9dGVmWqEELdQNwBxqvxz+MzmvDq9ZCD+2Y9H5CvhkxZ7EJe8519AY
- 7rXAVOlPVvtAxY2jz5Vf6N8dRfV9whJJU8qnG6sunYhixUAexBo9pfi
-X-Developer-Key: i=anjo@rev.ng; a=ed25519;
- pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -5
-X-Spam_score: -0.6
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+    marcandre.lureau@redhat.com
+Message-Id: <20260305233717.1D08F5969F6@zero.eik.bme.hu>
+Date: Fri, 06 Mar 2026 00:37:17 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,244 +56,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
----
- include/hw/pci-host/astro.h |  2 ++
- target/hppa/cpu.h           | 11 ++++++++---
- hw/hppa/machine.c           | 15 ++++++++++-----
- hw/pci-host/astro.c         |  8 +++++++-
- target/hppa/cpu.c           |  5 +++++
- target/hppa/mem_helper.c    | 39 +++++++++++----------------------------
- 6 files changed, 43 insertions(+), 37 deletions(-)
+The EDID generation has some parameters that can be set via properties
+but since ati-vga uses i2c-ddc it is only accessible with -global
+option. Expose these properties so users can more easily set it via
+e.g. -device ati-vga,xres=1024,yres=768.
 
-diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
-index 832125a05a..fce052c9f8 100644
---- a/include/hw/pci-host/astro.h
-+++ b/include/hw/pci-host/astro.h
-@@ -82,6 +82,8 @@ struct AstroState {
-     uint64_t tlb_tcnfg;
-     uint64_t tlb_pdir_base;
- 
-+    uint8_t phys_addr_bits;
-+
-     struct ElroyState *elroy[ELROY_NUM];
- 
-     MemoryRegion this_mem;
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 43b4882fb4..7d47afe8ef 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -320,6 +320,11 @@ static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
-     return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
- }
- 
-+static inline uint8_t hppa_phys_addr_bits(CPUHPPAState *env)
-+{
-+    return hppa_def(env)->phys_addr_bits;
-+}
-+
- static inline bool hppa_is_pa20(CPUHPPAState *env)
- {
-     return hppa_def(env)->is_pa20;
-@@ -352,9 +357,9 @@ static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
-     return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
- }
- 
--hwaddr hppa_abs_to_phys_pa1x(vaddr addr);
--hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
--hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
-+hwaddr hppa_abs_to_phys_pa1x(uint8_t phys_addr_bits, vaddr addr);
-+hwaddr hppa_abs_to_phys_pa2_w0(uint8_t phys_addr_bits, vaddr addr);
-+hwaddr hppa_abs_to_phys_pa2_w1(uint8_t phys_addr_bits, vaddr addr);
- 
- /*
-  * Since PSW_{I,CB} will never need to be in tb->flags, reuse them.
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 5d0d4de09e..6b69a304c2 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -179,19 +179,21 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
-     return addr;
- }
- 
-+static HPPACPU *cpu[HPPA_MAX_CPUS];
-+static uint64_t firmware_entry;
-+
- static uint64_t translate_pa10(void *dummy, uint64_t addr)
- {
--    return hppa_abs_to_phys_pa1x(addr);
-+    const uint8_t pa_bits = hppa_phys_addr_bits(&cpu[0]->env);
-+    return hppa_abs_to_phys_pa1x(pa_bits, addr);
- }
- 
- static uint64_t translate_pa20(void *dummy, uint64_t addr)
- {
--    return hppa_abs_to_phys_pa2_w0(addr);
-+    const uint8_t pa_bits = hppa_phys_addr_bits(&cpu[0]->env);
-+    return hppa_abs_to_phys_pa2_w0(pa_bits, addr);
- }
- 
--static HPPACPU *cpu[HPPA_MAX_CPUS];
--static uint64_t firmware_entry;
--
- static void fw_cfg_boot_set(void *opaque, const char *boot_device,
-                             Error **errp)
- {
-@@ -685,6 +687,9 @@ static AstroState *astro_init(void)
-     DeviceState *dev;
- 
-     dev = qdev_new(TYPE_ASTRO_CHIP);
-+    object_property_set_int(OBJECT(dev), "phys-addr-bits",
-+                            hppa_phys_addr_bits(&cpu[0]->env),
-+                            &error_abort);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     return ASTRO_CHIP(dev);
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 00a904277c..626aa9ce22 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -303,7 +303,7 @@ static IOMMUTLBEntry astro_translate_iommu(IOMMUMemoryRegion *iommu,
-      * language which not-coincidentally matches the PSW.W=0 mapping.
-      */
-     if (addr <= UINT32_MAX) {
--        entry = hppa_abs_to_phys_pa2_w0(addr);
-+        entry = hppa_abs_to_phys_pa2_w0(s->phys_addr_bits, addr);
-     } else {
-         entry = addr;
-     }
-@@ -910,6 +910,10 @@ static void astro_realize(DeviceState *obj, Error **errp)
-     }
- }
- 
-+static const Property astro_props[] = {
-+    DEFINE_PROP_UINT8("phys-addr-bits", AstroState, phys_addr_bits, 32),
-+};
-+
- static void astro_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -922,6 +926,8 @@ static void astro_class_init(ObjectClass *klass, const void *data)
-      * be created without that hardware
-      */
-     dc->user_creatable = false;
-+
-+    device_class_set_props(dc, astro_props);
- }
- 
- static const TypeInfo astro_chip_info = {
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index cc755da8be..5895b9d7c0 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -283,6 +283,11 @@ static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
-     /* Make sure all CPU models define a HPPACPUDef */
-     g_assert(!object_class_is_abstract(oc) && data != NULL);
-     acc->def = data;
-+    /*
-+     * Verify assumptions made in hppa_abs_to_phys_pa2_w1() on the size
-+     * of the physical address space.
-+     */
-+    g_assert(acc->def->phys_addr_bits <= 54);
- }
- 
- static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 9199d1e06a..a4b382069d 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -29,29 +29,12 @@
- #include "hw/core/cpu.h"
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+Based-on: 20260303024730.1489136-1-chad@jablonski.xyz
+
+ hw/display/ati.c     | 13 ++++++++-----
+ hw/display/ati_int.h |  2 ++
+ 2 files changed, 10 insertions(+), 5 deletions(-)
+
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index c93ef64525..bb9e0bba28 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -28,7 +28,6 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "ui/console.h"
+-#include "hw/display/i2c-ddc.h"
  #include "trace.h"
  
--/*
-- * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-- * machines 7300LC.  This should give 44 and 32 bits of physical address
-- * space respectively.
-- *
-- *   CPU model        Physical address space bits
-- *   PA-7000--7300LC  32
-- *   PA-8000--8600    40
-- *   PA-8700--8900    44
-- *
-- * FIXME: However, the SeaBIOS firmware that is that tested against
-- * uses 40-bit physical addresses, despite supposedly running a C3700
-- * with a PA-8700 cpu, so use 40-bits for 64-bit.
-- */
--#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 40
--#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
--
--hwaddr hppa_abs_to_phys_pa1x(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa1x(uint8_t phys_addr_bits, vaddr addr)
+ #define ATI_DEBUG_HW_CURSOR 0
+@@ -1058,6 +1057,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
  {
--    return extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
-+    return extract64(addr, 0, phys_addr_bits);
- }
+     ATIVGAState *s = ATI_VGA(dev);
+     VGACommonState *vga = &s->vga;
++    I2CBus *i2cbus;
+     uint64_t aper_size;
  
--hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa2_w1(uint8_t phys_addr_bits, vaddr addr)
- {
-     /*
-      * Figure H-8 "62-bit Absolute Accesses when PSW W-bit is 1" describes
-@@ -64,11 +47,10 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-      * Since the supported physical address space is below 54 bits, the
-      * H-8 algorithm is moot and all that is left is to truncate.
-      */
--    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
--    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-+    return sextract64(addr, 0, phys_addr_bits);
- }
- 
--hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa2_w0(uint8_t phys_addr_bits, vaddr addr)
- {
-     /*
-      * See Figure H-10, "Absolute Accesses when PSW W-bit is 0",
-@@ -89,7 +71,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-          * is what can be seen on physical machines too.
-          */
-         addr = (uint32_t)addr;
--        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
-+        addr |= -1ull << (phys_addr_bits - 4);
+ #ifndef CONFIG_PIXMAN
+@@ -1106,11 +1106,10 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
      }
-     return addr;
+ 
+     /* ddc, edid */
+-    I2CBus *i2cbus = i2c_init_bus(DEVICE(s), "ati-vga.ddc");
++    i2cbus = i2c_init_bus(DEVICE(s), "ati-vga.ddc");
+     bitbang_i2c_init(&s->bbi2c, i2cbus);
+-    I2CSlave *i2cddc = I2C_SLAVE(qdev_new(TYPE_I2CDDC));
+-    i2c_slave_set_address(i2cddc, 0x50);
+-    qdev_realize_and_unref(DEVICE(i2cddc), BUS(i2cbus), &error_abort);
++    i2c_slave_set_address(I2C_SLAVE(&s->i2cddc), 0x50);
++    qdev_realize(DEVICE(&s->i2cddc), BUS(i2cbus), &error_abort);
+ 
+     /* mmio register space */
+     memory_region_init_io(&s->mm, OBJECT(s), &ati_mm_ops, s,
+@@ -1171,6 +1170,7 @@ static const Property ati_vga_properties[] = {
+     DEFINE_PROP_BOOL("guest_hwcursor", ATIVGAState, cursor_guest_mode, false),
+     /* this is a debug option, prefer PROP_UINT over PROP_BIT for simplicity */
+     DEFINE_PROP_UINT8("x-pixman", ATIVGAState, use_pixman, DEFAULT_X_PIXMAN),
++    DEFINE_EDID_PROPERTIES(ATIVGAState, i2cddc.edid_info),
+ };
+ 
+ static void ati_vga_class_init(ObjectClass *klass, const void *data)
+@@ -1193,6 +1193,9 @@ static void ati_vga_class_init(ObjectClass *klass, const void *data)
+ 
+ static void ati_vga_init(Object *o)
+ {
++    ATIVGAState *s = ATI_VGA(o);
++
++    object_initialize_child(o, "edid", &s->i2cddc, TYPE_I2CDDC);
+     object_property_set_description(o, "x-pixman", "Use pixman for: "
+                                     "1: fill, 2: blit");
  }
-@@ -231,15 +213,16 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
+diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+index 28f4e9d977..21b74511e0 100644
+--- a/hw/display/ati_int.h
++++ b/hw/display/ati_int.h
+@@ -13,6 +13,7 @@
+ #include "qemu/units.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/i2c/bitbang_i2c.h"
++#include "hw/display/i2c-ddc.h"
+ #include "vga_int.h"
+ #include "qom/object.h"
  
-     /* Virtual translation disabled.  Map absolute to physical.  */
-     if (MMU_IDX_MMU_DISABLED(mmu_idx)) {
-+        const uint8_t phys_addr_bits = hppa_phys_addr_bits(env);
-         switch (mmu_idx) {
-         case MMU_ABS_W_IDX:
--            phys = hppa_abs_to_phys_pa2_w1(addr);
-+            phys = hppa_abs_to_phys_pa2_w1(phys_addr_bits, addr);
-             break;
-         case MMU_ABS_IDX:
-             if (hppa_is_pa20(env)) {
--                phys = hppa_abs_to_phys_pa2_w0(addr);
-+                phys = hppa_abs_to_phys_pa2_w0(phys_addr_bits, addr);
-             } else {
--                phys = hppa_abs_to_phys_pa1x(addr);
-+                phys = hppa_abs_to_phys_pa1x(phys_addr_bits, addr);
-             }
-             break;
-         default:
-@@ -580,7 +563,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
-     /* Align per the page size. */
-     ent->pa &= TARGET_PAGE_MASK << mask_shift;
-     /* Ignore the bits beyond physical address space. */
--    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-+    ent->pa = sextract64(ent->pa, 0, hppa_phys_addr_bits(env));
- 
-     ent->t = extract64(r2, 61, 1);
-     ent->d = extract64(r2, 60, 1);
-
+@@ -117,6 +118,7 @@ struct ATIVGAState {
+     QEMUCursor *cursor;
+     QEMUTimer vblank_timer;
+     bitbang_i2c_interface bbi2c;
++    I2CDDCState i2cddc;
+     MemoryRegion linear_aper;
+     MemoryRegion io;
+     MemoryRegion mm;
 -- 
-2.52.0
+2.41.3
 
 
