@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84AC8F47CA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E80F47CAC
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:17:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyD0m-0006l6-9F; Thu, 05 Mar 2026 13:01:24 -0500
+	id 1vyDF8-0003C9-NC; Thu, 05 Mar 2026 13:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1vyCzd-0004Jj-Ki
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:00:17 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyDEw-0003BZ-PT
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:16:04 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1vyCzb-0004Lw-MS
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:00:13 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7986e0553b0so72889967b3.2
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 10:00:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772733610; cv=none;
- d=google.com; s=arc-20240605;
- b=KMdCWwIA7qrINzkmlOIsiQYpISNr3ZRLpZI5N9nSbIgnAoXM809xuPrDBuSYoHT6AQ
- kOlo9kV6ilg0uO9HReqNLrFsPpBJwhPaKe6uy+HIE+9Gn9LLrzClW3VLkvwwh10I99JV
- wJDJX/dNcsUE8m3babjMLg8tvVvjaM94YLMlEwgALmH9TbuiSmSjjjBa2vXXOs55u4lo
- Tl/NhyVOtISh3RO4XODjEH78LlwClmzAt/8Wwhsd/LoYeY0Mal79Yfh66XLIGQpo0pFM
- hMnM/ESGJHyc1pdQJfw1/RVxwTFPDpciG7cdHHcrDSfcRi44+csa7sFVoWI73oAlj0Hp
- 6iqg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jZ5u5q3ziMgdOXUWrazP/s5OxeHEKgwwLExMYXOMjwI=;
- fh=qzhFIIYAcISiKbPNwUsTzJ4u+ko17iB1cY0W5dd0Jz4=;
- b=RjGHM5Nk7MlW7Nr2833Y19Ws9i6uAH+XfKQBUqUX68rb2dmMTVeLkrfIoiC8Fp7GX2
- Et7DC0ey04v4B50s+ZVKU8+nLy8go371IyqpnVIkyavLiz7ytm+kOuu3UWXKhrHLWKN1
- yeLhhItHTZyZWzSNfbY2Hdyv2yMkBP5iuKZIU20KpI/i/qKnUBsncDuy7Hd6nZzL5Tjq
- 5Nt03lf2CtAn2tMWK2JEJIaEVnAWgYHSOUnrBFyVkqunuvsNvBzUVqZcLqCleoAn3uw+
- z3U0WcKEEjRpwYre2m14gVTHGgEZLX6P1KUXIFtHwWjrUHzNuaS5XTTmzU65XNb/X82Q
- oJrw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyDEt-0006gR-5S
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:16:00 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439b790af67so2923994f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 10:15:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lowrisc.org; s=google; t=1772733610; x=1773338410; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jZ5u5q3ziMgdOXUWrazP/s5OxeHEKgwwLExMYXOMjwI=;
- b=Z8a/9W0TudRfWDUDuaUOswmLn5Fc+JRRmZWcT8YXGJO5D4iCF0GonDaf2mUIl8FuAn
- td7ehgVWyoqN6z1RgjDpeG1ZqPd28kgbJW9MqU7HYDkQbal6i0AxkTTpc3emm606hqyk
- Ix2kQ/NZ3JaODD+PDFlrQJJc10JUs5RS6c/i/s/ROL817gYH6pu8HJ94cQx1ryO3bfpz
- ar2MTg8KENI1TcXlyhwE8g0bG+fJ6I3G0wc6JGNldn1xqoFJQDCVIjvTFFB8ylAZpZQ1
- Encpo4lRNPEp86KxBitxLUX8tCCdY0CNo9q1E/rm/sE9xkftgQxP2c7qju1UjjCsN4Kb
- e+BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772733610; x=1773338410;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1772734556; x=1773339356; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jZ5u5q3ziMgdOXUWrazP/s5OxeHEKgwwLExMYXOMjwI=;
- b=VdJWNV7900aGBZoRGDDUTR5cbi0v5Yg2ckV5v9/2tIL897OMKPkquICdtrRBqobT53
- 66Y+uQpLt49XYmM2TL/ZMv38PGhSWyfPAyW0r8dYO8cGlwnl7Q9KvAjENMd8GmM2QgSX
- Db0VXgIZN72MQlHVK6X6AvY2nXWPOIH7Zr0FHJcgW+Nq2N2gOd3KwvzRBZv7Sew/4ZH8
- 3TJO5d/vFBv7tGVkIM5V9VuxILPlloWXFHIH5IBby6fMBj+WfWYhPVU+lTxpgtTv3Bx0
- 5r4DQf7gaHlTFDIWn/skYhjDUq3jxdCyZGBPTmZgScr3nFeTVOVqPD7WbnrDp43cuZqC
- A+EQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhn6fzj9jv20Da3mSb1yFMODcGtKnjfNI26TO7WXkEFLw4C34l1BbUPVenwKuKQ36Cc6j5CcSQqcUL@nongnu.org
-X-Gm-Message-State: AOJu0YwLl2NhJWWZRG2jPQcJjnulzud+qZRTgmo2Y8yOxAaIbhtvGba4
- 2ehKUOXbn3r3R2Re9Bde3vJFQulafzmFoVPAP7+G/yEShW1UvqjgX5JR3OxEuwkYhcKTJvvK5oA
- X4cHpadCHGkg7MS+YjTsK8s1KxL/tyTpxLcvQ2rL173SU6n3FfxSdQ3iaWw==
-X-Gm-Gg: ATEYQzzY3Vc4EpIBEgvTGL+hxlaAOa4Atysmczb/SwEaXGxxistrY6ahfq49H78pHOw
- B4nsy0EnYTE4ClzrtRZfN9npIOdiE+QFVrl2NKSVEteRGb+UuJSUvjmd5lycjP/3PnEHw4IZVRV
- bZsZj01MSRcpmZeYrBWx5hUTWdMzd2aPCRGcfPRcXLjcmXbab3SbXTksmgBrtctbORFWTkJwS0V
- /d48M+V+IYZ72rfURCub+IW0ZQysdS7MxjGPNyE7J3BDe0z/qOpiXZFl2x1oQIN8Vsg5FhAMVjk
- s1ZXWDW1/LpK3vpfliM=
-X-Received: by 2002:a05:690c:dd3:b0:796:312a:b817 with SMTP id
- 00721157ae682-798da405df2mr7805857b3.9.1772733609584; Thu, 05 Mar 2026
- 10:00:09 -0800 (PST)
+ bh=NlmsCJf2fzHTAC0WK8L7tDQENhBUUh9+SRB8PgBoI0Y=;
+ b=PQ+fEu3oz8NR791Tv2BI2BtI9tadlSot14vNfOzFfBCdFC32ZvDNmqZnnb5z9c2aJg
+ uN/fv/B+vpwGc5VDSDytL1RWEHcF2HsnSffTb/FTb5QPtmUdgMAVzF3VEKQxIh4+gnu+
+ FkAHlPcWuMzkGRkPmSTHzG/IH6VAkZqF73CM22QeGvUbWygzmizKXxBg6jaol7YzBVoQ
+ rVUa6ifxSx1p1ThLzu7NUZeU/hbGiqTIotMsLfboAatSx1igbIUNZdmnqXvuQCWvTlfY
+ 0qft7wOygAVYhi8It3AOZBiLV+mQ9wPWBpqkVUxydvaGLYeapPMFUnfIsUIPESRQepyM
+ uv8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772734556; x=1773339356;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NlmsCJf2fzHTAC0WK8L7tDQENhBUUh9+SRB8PgBoI0Y=;
+ b=UXT/kqKBbsUuCUaAXegBn74XBP5DP4/NwBXuYlL2IbOYg0K9+lDcglsTPb0wsrBHXU
+ cTQgWYlEs9telEn9Kf9vNUjb7YZrd3scdHvtwMFIf2C0+hghT7/2iBzpgQRqncWX1tgJ
+ GTzoD6c0bbuTibZmjuRddXa5By+9V2Ugh2MPDCY1TkujHo3JZFpHppgZwy2y0FVmvDHg
+ fFX3uJEKHzL7jkhU0WcNifrAZmeAu8GUHGPJnmPrBflyiAUghUjBXXZqqiSpIl05js3K
+ qF2yN7ISCE4OqMWZerVjniGlVkPXJl8BPOpOu8iTxaT3gvMFqJ8l5zi5SQszw8+LxX/X
+ XJdA==
+X-Gm-Message-State: AOJu0Yyhyvo/jcWZc2gkvDoQ/1AOGzODwapkOPyNzfEASbgCPi2ZzXa2
+ 70JZsSgM+rjhISqG86cA5YPJCW/QC2Pf+SubQxZL3Nq3PF8JxLypVI53
+X-Gm-Gg: ATEYQzw+ul4U0o7UjXDJnfcu0WXNKBF7g7lg3DFhmpLm89W0JpE3pi7kRPvQc49IzVm
+ cdwuh9fjNlnhxjpNNlFiDO9lrFp/v9sSqR7AFJprhhjok0bQ5l3j92zOc4x3P1zriOjRfVOA/5i
+ 2PFjLx+Q8DEJvksJNxAG01288flSKE5fO4b+LNvIBp/j1qwuv3yJCnZCOqhJSRYjCgRgcn38gVJ
+ KJIrGCoCgGmsfjEvvNUkeuftIkoiET1xECr7WRjkvocZO0psbGL0AeclTB1YRrcpkEl3ozt86O+
+ Ro2Lt+9TheOtVqQNy/MR9qis5nsc7hwXoe7M3lZbTTIDR+MMx1MF1p49UN7ISyY8k+/ZZAU1Q0x
+ Phi1ZaH0RNx/avLT43gwSdeiSLP0afNyBx3kokohAStrr+KMWcy0FGjL9oXvJSQXlHvaSgKhLsK
+ HU8Uuy3T93MuXocapWPYMuV/ZZs8xZ+A==
+X-Received: by 2002:a05:6000:438a:b0:439:c560:bb79 with SMTP id
+ ffacd0b85a97d-439cfd65a2emr6126449f8f.17.1772734555672; 
+ Thu, 05 Mar 2026 10:15:55 -0800 (PST)
+Received: from ehlo.thunderbird.net ([185.238.219.34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439ac9f3e5bsm42100771f8f.37.2026.03.05.10.15.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Mar 2026 10:15:55 -0800 (PST)
+Date: Thu, 05 Mar 2026 17:53:29 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
+ Troy Lee <leetroy@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v2 12/13] hw/char/serial: Inherit from SysBusDevice
+In-Reply-To: <CAFEAcA9LLOTOrkUQW3Q74rrOiXGa7BoC8Lu11O9ESC-36WHtew@mail.gmail.com>
+References: <20260303222143.142741-1-shentey@gmail.com>
+ <20260303222143.142741-13-shentey@gmail.com>
+ <CAFEAcA9LLOTOrkUQW3Q74rrOiXGa7BoC8Lu11O9ESC-36WHtew@mail.gmail.com>
+Message-ID: <A0F637F1-BB16-42CB-AC5E-80D71DF8057B@gmail.com>
 MIME-Version: 1.0
-References: <20260304121113.117299-1-james.wainwright@lowrisc.org>
- <20260304121113.117299-3-james.wainwright@lowrisc.org>
- <CAKmqyKN6szjMFhctNsV7EvLXnXanERRFoE8ri3woALrnCHL93Q@mail.gmail.com>
-In-Reply-To: <CAKmqyKN6szjMFhctNsV7EvLXnXanERRFoE8ri3woALrnCHL93Q@mail.gmail.com>
-From: James Wainwright <james.wainwright@lowrisc.org>
-Date: Thu, 5 Mar 2026 17:59:57 +0000
-X-Gm-Features: AaiRm53CTIryvtuh4Pvfba1dCa2JLuzGzzmsIWuhoxqa-Tc4BnTOg79x2lVdLPs
-Message-ID: <CAFFhqSvjMegTx5uQK-wZaiCJ3=nVizmgDWzePtMBKQOfmZxojg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] target/riscv: add unratified RISC-V Zbr0p93 ext
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
-Content-Type: multipart/alternative; boundary="00000000000014bc6d064c4ab505"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=james.wainwright@lowrisc.org; helo=mail-yw1-x112e.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,54 +110,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000014bc6d064c4ab505
-Content-Type: text/plain; charset="UTF-8"
 
-> We don't have a policy on what to do with deprecated draft extensions,
-but I'm reluctant to add these. At some point in the future they will
-conflict with a ratified extension, which will cause all sorts of
-issues.
 
-Agreed, it's not ideal. FWIW it looks like OpenTitan is moving to use the
-ratified `clmul` instructions to implement CRC32 going forward (
-https://github.com/lowRISC/opentitan/pull/28511 and
-https://github.com/lowRISC/opentitan/pull/29200) but the Earl Grey chip has
-already been taped out with Zbr instructions in the ROM, so it would be
-nice if we could emulate that upstream.
+Am 5=2E M=C3=A4rz 2026 10:07:23 UTC schrieb Peter Maydell <peter=2Emaydell=
+@linaro=2Eorg>:
+>On Tue, 3 Mar 2026 at 22:22, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>> SerialState currently inherits just from DeviceState and serial devices
+>> use SerialState as an "IP block"=2E Since DeviceState doesn't have an A=
+PI
+>> to provide MMIO regions or IRQs, all serial devices access attributes
+>> internal to SerialState directly=2E Fix this by having SerialState inhe=
+rit
+>> from SysBusDevice=2E
+>>
+>> In addition, DeviceState doesn't participate in the reset framework
+>> while SysBusDevice does=2E This allows for implementing reset
+>> functionality more idiomatically=2E
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>
+>
+>
+>> diff --git a/hw/char/diva-gsp=2Ec b/hw/char/diva-gsp=2Ec
+>> index 2ea60103ea=2E=2E55c42effe9 100644
+>> --- a/hw/char/diva-gsp=2Ec
+>> +++ b/hw/char/diva-gsp=2Ec
+>> @@ -56,13 +56,13 @@ typedef struct PCIDivaSerialState {
+>>  static void diva_pci_exit(PCIDevice *dev)
+>>  {
+>>      PCIDivaSerialState *pci =3D DO_UPCAST(PCIDivaSerialState, dev, dev=
+);
+>> -    SerialState *s;
+>>      int i;
+>>
+>>      for (i =3D 0; i < pci->ports; i++) {
+>> -        s =3D pci->state + i;
+>> -        qdev_unrealize(DEVICE(s));
+>> -        memory_region_del_subregion(&pci->membar, &s->io);
+>> +        SysBusDevice *sbd =3D SYS_BUS_DEVICE(pci->state + i);
+>> +        qdev_unrealize(DEVICE(sbd));
+>> +        memory_region_del_subregion(&pci->membar,
+>> +                                    sysbus_mmio_get_region(sbd, 0));
+>>      }
+>>      qemu_free_irqs(pci->irqs, pci->ports);
+>>  }
+>
+>The ordering here looks a little odd -- is it really OK to
+>keep using sbd (passing it to sysbus_mmio_get_region()) after
+>we have unrealized the device ? Remove the region from the membar
+>first and then unrealize would seem a more natural order=2E
 
-Does the extension being implemented as experimental and opt-in help,
-similar to how `X` extensions share an encoding space? It seems unlikely
-for machines other than Earl Grey to use Zbr0p93.
+Indeed=2E Will add a patch before this one=2E
 
-> These should probably just be a vendor specific thing
+Thanks,
+Bermhard
 
-It's a shame that it's in the ratified encoding space or it would already
-be like a vendor extension.
-
---00000000000014bc6d064c4ab505
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">&gt;=C2=A0We don&#39;t have a policy on what to do with de=
-precated draft extensions,<br>
-but I&#39;m reluctant to add these. At some point in the future they will<b=
-r>
-conflict with a ratified extension, which will cause all sorts of<br><div>
-issues.</div><div><br></div><div>Agreed, it&#39;s not ideal. FWIW it looks =
-like OpenTitan is moving to use the ratified `clmul` instructions to implem=
-ent CRC32 going forward (<a href=3D"https://github.com/lowRISC/opentitan/pu=
-ll/28511">https://github.com/lowRISC/opentitan/pull/28511</a> and=C2=A0<a h=
-ref=3D"https://github.com/lowRISC/opentitan/pull/29200">https://github.com/=
-lowRISC/opentitan/pull/29200</a>) but the Earl Grey chip has already been t=
-aped out with Zbr instructions in the ROM, so it would be nice if we could =
-emulate that upstream.</div><div><br></div><div>Does the extension being im=
-plemented as experimental and opt-in help, similar to how `X` extensions sh=
-are an encoding space? It seems unlikely for machines other than Earl Grey =
-to use Zbr0p93.</div><div><br></div><div>&gt;=C2=A0These should probably ju=
-st be a vendor specific thing<font color=3D"#888888"><br></font></div><div>=
-<font color=3D"#888888"><br></font></div><div> It&#39;s a shame that it&#39=
-;s in the ratified encoding space or it would already be like a vendor exte=
-nsion.</div></div>
-
---00000000000014bc6d064c4ab505--
+>Perhaps the MR refcounts here save us, though=2E
+>
+>> diff --git a/hw/char/serial-pci-multi=2Ec b/hw/char/serial-pci-multi=2E=
+c
+>> index 38e5a78e6f=2E=2E4e51d14111 100644
+>> --- a/hw/char/serial-pci-multi=2Ec
+>> +++ b/hw/char/serial-pci-multi=2Ec
+>> @@ -50,13 +50,13 @@ typedef struct PCIMultiSerialState {
+>>  static void multi_serial_pci_exit(PCIDevice *dev)
+>>  {
+>>      PCIMultiSerialState *pci =3D DO_UPCAST(PCIMultiSerialState, dev, d=
+ev);
+>> -    SerialState *s;
+>>      int i;
+>>
+>>      for (i =3D 0; i < pci->ports; i++) {
+>> -        s =3D pci->state + i;
+>> -        qdev_unrealize(DEVICE(s));
+>> -        memory_region_del_subregion(&pci->iobar, &s->io);
+>> +        SysBusDevice *sbd =3D SYS_BUS_DEVICE(pci->state + i);
+>> +        qdev_unrealize(DEVICE(sbd));
+>> +        memory_region_del_subregion(&pci->iobar,
+>> +                                    sysbus_mmio_get_region(sbd, 0));
+>>      }
+>>  }
+>
+>Similarly here=2E
+>
+>Otherwise
+>Reviewed-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
+>
+>thanks
+>-- PMM
 
