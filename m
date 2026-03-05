@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4301FEEF312
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9E0EEF310
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy2gU-0003Vj-Bd; Thu, 05 Mar 2026 01:59:46 -0500
+	id 1vy2gN-0003Ro-QO; Thu, 05 Mar 2026 01:59:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vy2gM-0003Rq-OW
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:39 -0500
+ id 1vy2gL-0003RJ-BC
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:37 -0500
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vy2gL-0007qJ-8z
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:38 -0500
+ id 1vy2gJ-0007qG-SB
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772693977; x=1804229977;
+ t=1772693976; x=1804229976;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=R+voCt8gQq6Y2SKx4ENrPxTbBWeBaPJn71IunQUW5Lg=;
- b=AtaETx/rFMk0d4v/p3rzZovt+RdqigmiTlara5U0lCkD+B3V3DnIz0I4
- JMmA87spOGeXj4J1jFGcQvmjqoOZlPuPkBloFbI1Lxve+Y/bmMWI1Ko/i
- 38apgLoJoiI7OwowbySiNV5WFottmBB5VYuLbu08gupc2KwcnZcS1Ulfe
- ywrZ7eiF1RYLGgjOfoeI/RjxmuFIsP2UatBM3vzFw8yE4eqSA7LYQTInq
- cjCsJEpdhdDpSu+fzpYqx5nRJD9xWGrcMR/mW926nTXwbXwAxG7nQ0o7u
- jt6MVMhMU6pp6IGyyp6Oymzieo3i2pNRWIPTvWdluNYVUM/JlJDavBigt w==;
-X-CSE-ConnectionGUID: uHNd4fJDQEOGXlM9PdpTDQ==
-X-CSE-MsgGUID: P1cfGvhZQhavAcEIfzs33A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11719"; a="91343511"
-X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="91343511"
+ bh=8DjDopZg0XVik4k1ICxjRmt2mb1IxbLdY763BFKsh0Y=;
+ b=mVFNklcrZr0mKYTVFhok2PTTWkywo4CheFlVw4lSAnHlTMBesk0BYVw3
+ 7tURs49PkTHFTJnI6R8RePYg1ObJee25xO6KB8zCgcc8WOKWYPRlZ9zTj
+ ODuyUKa+UzXai7oiIs4EmlrwgWVT6YjWSNxdSZ2Ps8QaItUHaHM5WR9u5
+ YIha4gFz8lghfSgJfYchSS6bZHl7ZSVPZZ9Z3sHtpC0tN85CC2Qp+UHwb
+ zlH+IGlopIxPT2Oishn06zs0am41vuxiisHlGJ/5I4XbN+9ntZPXwBCbR
+ IR64odU18xXcOzDBZm3r91LN/4UsiRYtl/fHmMh9aML4CH2FvR8V7WxH9 g==;
+X-CSE-ConnectionGUID: HO6kfL/DRNiyi1iaJKQiKA==
+X-CSE-MsgGUID: 7aTqijcqQXqFy8Cnhudz6g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11719"; a="91343505"
+X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="91343505"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  04 Mar 2026 22:59:30 -0800
-X-CSE-ConnectionGUID: iUWdigfcQ0OJg5D9kUO34g==
-X-CSE-MsgGUID: vd0afW9EQv6eCbED1SoB3w==
+X-CSE-ConnectionGUID: +/Wro/ogQAW7VovSrmO3pQ==
+X-CSE-MsgGUID: OaPplAt/QLSK1I8uD2maEw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="218725669"
+X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="218725666"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2026 22:59:30 -0800
+ 04 Mar 2026 22:59:29 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -55,10 +55,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v9 05/10] virtio-gpu-dmabuf: Use g_autofree for the list
- pointer
-Date: Wed,  4 Mar 2026 22:54:36 -0800
-Message-ID: <20260305065700.1155146-6-vivek.kasireddy@intel.com>
+Subject: [PATCH v9 04/10] virtio-gpu-dmabuf: Remove rcu_read_lock/unlock from
+ virtio_gpu_create_udmabuf()
+Date: Wed,  4 Mar 2026 22:54:35 -0800
+Message-ID: <20260305065700.1155146-5-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
 References: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
@@ -90,8 +90,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid the manual g_free() calls for the list pointer by using
-g_autofree in virtio_gpu_create_udmabuf().
+There is no need to wrap the call to qemu_ram_block_from_host() with
+rcu_read_lock/unlock as we already hold a reference to the memory
+region that owns the ram block. Note that, the reference was obtained
+via dma_memory_map() while creating the mapping.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -102,38 +104,24 @@ Cc: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu-dmabuf.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ hw/display/virtio-gpu-dmabuf.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-index 0782bcf3a1..8d67ef7c2a 100644
+index c34d4c85bc..0782bcf3a1 100644
 --- a/hw/display/virtio-gpu-dmabuf.c
 +++ b/hw/display/virtio-gpu-dmabuf.c
-@@ -29,7 +29,7 @@
+@@ -43,10 +43,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+                      sizeof(struct udmabuf_create_item) * res->iov_cnt);
  
- static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
- {
--    struct udmabuf_create_list *list;
-+    g_autofree struct udmabuf_create_list *list = NULL;
-     RAMBlock *rb;
-     ram_addr_t offset;
-     int udmabuf, i;
-@@ -45,7 +45,6 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
      for (i = 0; i < res->iov_cnt; i++) {
+-        rcu_read_lock();
          rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+-        rcu_read_unlock();
+-
          if (!rb || rb->fd < 0) {
--            g_free(list);
+             g_free(list);
              return;
-         }
- 
-@@ -62,7 +61,6 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-         warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
-                     strerror(errno));
-     }
--    g_free(list);
- }
- 
- static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
 -- 
 2.53.0
 
