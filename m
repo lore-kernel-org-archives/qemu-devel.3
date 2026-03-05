@@ -4,101 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F7D9EEF30C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70944EEF30A
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 06:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy1uW-0002Al-34; Thu, 05 Mar 2026 01:10:12 -0500
+	id 1vy1uM-00020l-DM; Thu, 05 Mar 2026 01:10:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vy1uB-0001y7-5N; Thu, 05 Mar 2026 01:09:51 -0500
+ id 1vy1u6-0001lK-0t; Thu, 05 Mar 2026 01:09:46 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1vy1u9-000180-AF; Thu, 05 Mar 2026 01:09:50 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1vy1u3-00014e-3q; Thu, 05 Mar 2026 01:09:45 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 624Endhs2358989; Thu, 5 Mar 2026 06:09:41 GMT
+ 6252Ie8M1576724; Thu, 5 Mar 2026 06:09:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=b+XhsK
- vRYPW3JE1OvwlBIyYvEPl0zOAy2CVX0NwTbwk=; b=eWjfHK4xbHmCyhuftd5XLi
- mzVh1VkSeEWeniEyAqPbQmSWHDswWrloZmryPfZZDCD/SBIYZMF46EmC+IZHxjuG
- tgQAC9O/26WY6ZlqgtePfpV0o/aSDBLnEg0TpRJWKrYx1W3rHAqWB6+xythrYjA5
- N1ifmFoXYhlOK+NAn8SjGxERmgWpyUbJxRcLiiWaJNpgudhnQLiPgEJAix5z+X8V
- lCWs8Wdbd0F2A3fD2U+mlp81w9t1lelDMJ+J4/69/hJTHdhkzVvlEuPp6+wTDNE6
- /OJtrCPGv7yqRjPDuqH9Gq6CdevGPZOcEZr7BaQpyBfTTFWkXCBV7wU6zPlePqQw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksk41yuk-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=rlVmvqf7TTqxevRDS
+ H6/7XkYiRxu/TeAU/Po896My0E=; b=n5Y2jy/hIrfmob7+idzlFVZY7IiHcRj59
+ 4eHoZqGjOXDgDRKpAsKYWwevCU9SbNBMZ+t7d3DHOFpW4iY2oi7KKqpQtYA0jBkv
+ jJV6jXzEdtjmSaSz1En4vwk87OTjEhW2I9milXAQD8ZzRCoXTArwV804wS7Ag5ox
+ v0aBVzkqL7mPP48fuOBJh2vTkR9SSKcMUVGT8pAs+jTj0BxJzjD01ri2xJhE/qQK
+ KbLWrr8Tgr5YYnTZIgNV4i00hPYwQtVogOd+CvWv4bbNw2aHC3Q8wqT+VXrC4IEI
+ R1/Gb7JJwGlVG4y4qWLNJGrYIwbB86YZkhlx60QDYsk/bszuG6wuA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmt0qq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 06:09:41 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62510Vvu008796;
- Thu, 5 Mar 2026 06:09:40 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmdd1hjxd-1
+ Thu, 05 Mar 2026 06:09:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6250nndg027704;
+ Thu, 5 Mar 2026 06:09:39 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjhkhn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Mar 2026 06:09:40 +0000
+ Thu, 05 Mar 2026 06:09:38 +0000
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62569c9722610464
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62569bep4784902
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Mar 2026 06:09:38 GMT
+ Thu, 5 Mar 2026 06:09:37 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8F9B158061;
- Thu,  5 Mar 2026 06:09:38 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 678F758058;
+ by IMSVA (Postfix) with ESMTP id 4522C58060;
  Thu,  5 Mar 2026 06:09:37 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1CA9F58058;
+ Thu,  5 Mar 2026 06:09:36 +0000 (GMT)
 Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Mar 2026 06:09:37 +0000 (GMT)
+ Thu,  5 Mar 2026 06:09:36 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
  thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
  saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH v4 7/9] pnv/phb4: Set link speed and width in the DLP training
- control register
-Date: Thu,  5 Mar 2026 00:09:09 -0600
-Message-ID: <20260305060923.3753402-8-saif.abrar@linux.vnet.ibm.com>
+Subject: [PATCH v4 6/9] pnv/phb4: Set link-active status in HPSTAT and LMR
+ registers
+Date: Thu,  5 Mar 2026 00:09:08 -0600
+Message-ID: <20260305060923.3753402-7-saif.abrar@linux.vnet.ibm.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
 References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
  <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 1Nk63443AgLpfJcSxwoftSHUdkp09hIO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA0NiBTYWx0ZWRfX1Ret0oC6jIG+
- TsCths/zSnGniT+WKNzyDo2soTa9YQPi9KXQdtSqnjaymBNCTRnes/Ey+/Fvm0mqzXPne4LdJoM
- YWjGLokHTYJkfPnggSJdGbHtP5M8C3IbEQBFbit99soiV8Bz9Ih78FzpbUTORySynoLLCCGcMMv
- KuZ2DgLYgxjZev4eFTtNmddrErR4Scp4ZYFvJhyg1XEQOoV0T/zcq+wT6zjq6JaSIbNOo/Fxihm
- HXBnCa9FaNJKam4PyJp1Rv/zAk8DnkI06tiQIz6FlnGXGWRPArEpSaJu41cf9JOq9VfWFk+yi6R
- 7voBNeR9xMUKwrSL9V+JxhBs41AGqJutsE+xcv41to6Yx0bGeqMU1v39cDaVLr0NlrUdFHPlKFS
- JkWwC+E4J9TmPd1BSwFTZsN09G3L2YexwJcE9GksazlQ0clLYd3N79nFM+LUshdtyO8EcaFjm+t
- oIre/3ZiMTm7nlB7KUA==
-X-Authority-Analysis: v=2.4 cv=csCWUl4i c=1 sm=1 tr=0 ts=69a91e25 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=20KFwNOVAAAA:8 a=ZkoTrUv0hqWFqrPu6skA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: mtAx2-57_bF9H3NRAXj8QPhiBliHY2Kb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA0NiBTYWx0ZWRfX72z8yGDF745i
+ MbKlAN6jFvXeWI2G1dzXSDA73fs1qu1SwP79WoFemsucI5vaWpHbJ7mgWLGKXvECazxlBM8eqKd
+ BJSQlz8sGecBeJxxnLZb4vUcPg3BKfkQQ+2Wz3UMO1AKhBcOt05itLeJO9/WCztU4g7Pg1ygJeh
+ zkEUKmsLeRMGRF2wHY9prshNPFQEDbj2DEGpAS5D795wChOla4YPgtQnH0ehQfLR8m+8wjuHkXy
+ cgUarPs5Ml5yWAFS3qvoAX5WojCitdqeXUm9EUFmCleaw5Z/rqV2z2rK8zzeAIb5IEEPHzd1RET
+ JoCDGjMLk7F+6PqCEyDiqXQEzVUiR154mJ3ppBFQlIogZYcvetmqORmnazqMILVicnOlZHZOPEl
+ 69tDDxY9HoH9Bl8L4inm5y0ayl3hMLmw+Inwl3CiYkPx9GhEU3xAkqqngTjC/A4gLeBxab9wBsh
+ ByCr8F2GRdlqtpcadvQ==
+X-Proofpoint-ORIG-GUID: iUYdCPQtGKFkpqkqBQO7kWf8UVXkRrT7
+X-Proofpoint-GUID: 4XjDsMEv8Lr4vB0NC9uJcq3L4-JpPhY8
+X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69a91e24 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=SX2aUA2rIF85faSKF8YA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-05_01,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0
- clxscore=1015 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050046
 Received-SPF: none client-ip=148.163.158.5;
@@ -126,62 +123,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get the current link-status from PCIE macro.
-Extract link-speed and link-width from the link-status
-and set in the DLP training control (PCIE_DLP_TCR) register.
+Config-read the link-status register in the PCI-E macro,
+Depending on the link-active bit, set the link-active status
+in the HOTPLUG_STATUS and LINK_MANAGEMENT registers
+Also, clear the Presence-status active low bit in HOTPLUG_STATUS reg
+after config-reading the slot-status in the PCI-E macro.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
 v4: Variables declaration moved to the top of the method pnv_phb4_reg_read().
 v3: Updates for coding guidelines.
 
- hw/pci-host/pnv_phb4.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ hw/pci-host/pnv_phb4.c | 59 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 58 insertions(+), 1 deletion(-)
 
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index c35f632e64..a6fa578e85 100644
+index 25539b7c32..c35f632e64 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -900,6 +900,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-     PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
-     uint32_t exp_base = get_exp_offset(pdev);
-     uint64_t val;
-+    uint32_t v, lnkstatus;
+@@ -511,6 +511,20 @@ static uint32_t get_exp_offset(PCIDevice *pdev)
+     return rpc->exp_offset;
+ }
  
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-         return pnv_phb4_config_read(phb, off & 0x3, size);
-@@ -961,10 +962,27 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
-         val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
++/*
++ * Config-read the link-status register in the PCI-E macro,
++ * convert to LE and check the link-active bit.
++ */
++static uint32_t is_link_active(PnvPHB4 *phb)
++{
++    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
++    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
++    uint32_t exp_offset = get_exp_offset(pdev);
++
++    return (bswap32(pnv_phb4_rc_config_read(phb, exp_offset + PCI_EXP_LNKSTA, 4)
++                    ) & PCI_EXP_LNKSTA_DLLLA);
++}
++
+ /*
+  * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
+  * RC-config space values and masks are LE.
+@@ -729,6 +743,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         val = 0;
          break;
  
--    /* Link training always appears trained */
-     case PHB_PCIE_DLP_TRAIN_CTL:
--        /* TODO: Do something sensible with speed ? */
-+        /* Get the current link-status from PCIE */
-+        lnkstatus = bswap32(pnv_phb4_rc_config_read(phb,
-+                                exp_base + PCI_EXP_LNKSTA, 4));
++    case PHB_PCIE_HOTPLUG_STATUS:
++        /* For normal operations, Simspeed diagnostic bit is always zero */
++        val &= PHB_PCIE_HPSTAT_SIMDIAG;
++        break;
 +
-+        /* Extract link-speed from the link-status */
-+        v = lnkstatus & PCI_EXP_LNKSTA_CLS;
-+
-+        /* Link training always appears trained */
+     /* Read only registers */
+     case PHB_CPU_LOADSTORE_STATUS:
+     case PHB_ETU_ERR_SUMMARY:
+@@ -876,6 +895,10 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+ {
+     PnvPHB4 *phb = PNV_PHB4(opaque);
++    /* Get the PCI-E capability offset from the root-port */
++    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
++    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
++    uint32_t exp_base = get_exp_offset(pdev);
+     uint64_t val;
+ 
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
+@@ -944,8 +967,37 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
          val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-+
-+        /* Set the current link-speed at the LINK_SPEED position */
-+        val = SETFIELD(PHB_PCIE_DLP_LINK_SPEED, val, v);
-+
-+        /*
-+         * Extract link-width from the link-status,
-+         * after shifting the required bitfields.
-+         */
-+        v = (lnkstatus & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT;
-+        /* Set the current link-width at the LINK_WIDTH position */
-+        val = SETFIELD(PHB_PCIE_DLP_LINK_WIDTH, val, v);
          return val;
  
-     /*
++    /*
++     * Read PCI-E registers and set status for:
++     * - Card present (active low bit 10)
++     * - Link active  (bit 12)
++     */
+     case PHB_PCIE_HOTPLUG_STATUS:
+-        /* Clear write-only bit */
++        /*
++         * Presence-status bit hpi_present_n is active-low, with reset value 1.
++         * Start by setting this bit to 1, indicating the card is not present.
++         * Then check the PCI-E register and clear the bit if card is present.
++         */
++        val |= PHB_PCIE_HPSTAT_PRESENCE;
++
++        /*
++         * Config-read the PCI-E macro register for slot-status.
++         * Method for config-read converts to BE value.
++         * To check actual bit in the PCI-E register,
++         * convert the value back to LE using bswap32().
++         * Clear the Presence-status active low bit.
++         */
++        if (bswap32(pnv_phb4_rc_config_read(phb, exp_base + PCI_EXP_SLTSTA, 4))
++                    & PCI_EXP_SLTSTA_PDS) {
++            val &= ~PHB_PCIE_HPSTAT_PRESENCE;
++        }
++
++        /* Check if link is active and set the bit */
++        if (is_link_active(phb)) {
++            val |= PHB_PCIE_HPSTAT_LINKACTIVE;
++        }
++
++        /* Clear write-only resample-bit */
+         val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
+         return val;
+ 
+@@ -953,6 +1005,11 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     case PHB_PCIE_LMR:
+         /* These write-only bits always read as 0 */
+         val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
++
++        /* Check if link is active and set the bit */
++        if (is_link_active(phb)) {
++            val |= PHB_PCIE_LMR_LINKACTIVE;
++        }
+         return val;
+ 
+     /* Silent simple reads */
 -- 
 2.47.3
 
