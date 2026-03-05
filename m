@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF242F47CA4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DC1F47CA4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCoe-0002dq-7b; Thu, 05 Mar 2026 12:48:52 -0500
+	id 1vyCq0-0006Oa-FB; Thu, 05 Mar 2026 12:50:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoD-00029T-DM
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:30 -0500
+ id 1vyCpn-0005mL-7L
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:50:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCoA-00029T-W0
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:25 -0500
+ id 1vyCpb-0002KC-Sv
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:49:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732902;
+ s=mimecast20190719; t=1772732987;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3x5dOLupVL+hjV4GsiegMaAvA6L4zY0/YDT1LJKlaPI=;
- b=SJvw+tfS/EaxEfVm7447Apx8CkrtR/NmWMfx2ALnUsyt8Wlgj82RADO7rQ7X/VIgEUsn4k
- YaCddjo+PnVaLVUYWxutKMRZkdkZidj+HvSxFrz6Oeo5LEXcapQeKacdsedMsgc1nu/QkU
- tyWuj9YxlC2HPdLzGkOIpHIOt9+e4qI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=6MgZnSu8FpgfVyxgsvWX6ruETMQfEejfRnUI7Ndvo2E=;
+ b=DZska0vj8Av+venCHTM4qvANzn0aeCWACh6EOapyXlYRxANQ4GJIgHkOMMobjzojeFBqF/
+ LeYxYZY+uysmyaJEyKm8KlShANLjLJ1gYC66a5+VoCpvHX4GaVp2QFQpkA75B/Puo/l4Rs
+ aPJh450V0fOM+p/PiXg7haX079hs3lg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-zITTJGrlNCeK5O6pU7sUSg-1; Thu,
- 05 Mar 2026 12:48:16 -0500
-X-MC-Unique: zITTJGrlNCeK5O6pU7sUSg-1
-X-Mimecast-MFC-AGG-ID: zITTJGrlNCeK5O6pU7sUSg_1772732895
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-5P-6kx64NP6rxJ-oZgwELQ-1; Thu,
+ 05 Mar 2026 12:49:43 -0500
+X-MC-Unique: 5P-6kx64NP6rxJ-oZgwELQ-1
+X-Mimecast-MFC-AGG-ID: 5P-6kx64NP6rxJ-oZgwELQ_1772732980
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB84E195608F; Thu,  5 Mar 2026 17:48:14 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7E0B1800281; Thu,  5 Mar 2026 17:49:40 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E2EB31956095; Thu,  5 Mar 2026 17:48:09 +0000 (UTC)
+ id DEB6E1956095; Thu,  5 Mar 2026 17:49:35 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -62,10 +62,9 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PULL 04/27] io: fix cleanup for websock I/O source data on
- cancellation
-Date: Thu,  5 Mar 2026 17:47:20 +0000
-Message-ID: <20260305174743.3084606-5-berrange@redhat.com>
+Subject: [PULL 20/27] monitor: remove redundant error_[v]printf_unless_qmp
+Date: Thu,  5 Mar 2026 17:47:36 +0000
+Message-ID: <20260305174743.3084606-21-berrange@redhat.com>
 In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
 References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -97,139 +96,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The websock code will create a GSource for tracking completion of the
-handshake process, passing a QIOTask which is freed by the callback
-when it completes, which means when a source is cancelled, nothing is
-free'ing the task.
+The only callers of these functions have been removed. Adding any
+new usage of them is highly undesirable, so they should be entirely
+removed.
 
-Switch to provide a data free callback to the GSource, which ensures
-the QIOTask is always freed even when the main event callback never
-fires.
-
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- io/channel-websock.c | 49 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 35 insertions(+), 14 deletions(-)
+ include/monitor/monitor.h |  3 ---
+ monitor/monitor.c         | 24 ------------------------
+ stubs/error-printf.c      |  5 -----
+ 3 files changed, 32 deletions(-)
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 100faba6b3..9902b014f7 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -526,11 +526,32 @@ static int qio_channel_websock_handshake_read(QIOChannelWebsock *ioc,
-     return 1;
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index c3740ec616..296690e1f1 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -59,7 +59,4 @@ void monitor_register_hmp(const char *name, bool info,
+ void monitor_register_hmp_info_hrt(const char *name,
+                                    HumanReadableText *(*handler)(Error **errp));
+ 
+-int error_vprintf_unless_qmp(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
+-int error_printf_unless_qmp(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
+-
+ #endif /* MONITOR_H */
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index dd2c45ded0..4d26cd9496 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -281,30 +281,6 @@ int error_vprintf(const char *fmt, va_list ap)
+     return vfprintf(stderr, fmt, ap);
  }
  
-+typedef struct QIOChannelWebsockData {
-+    QIOTask *task;
-+} QIOChannelWebsockData;
-+
-+static void qio_channel_websock_data_free(gpointer user_data)
-+{
-+    QIOChannelWebsockData *data = user_data;
-+    /*
-+     * Usually 'task' will be NULL since the GSource
-+     * callback will either complete the task or pass
-+     * it on to a new GSource. We'll see a non-NULL
-+     * task here only if the GSource was released before
-+     * its callback triggers
-+     */
-+    if (data->task) {
-+        qio_task_free(data->task);
-+    }
-+    g_free(data);
-+}
-+
- static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-                                                    GIOCondition condition,
-                                                    gpointer user_data)
- {
--    QIOTask *task = user_data;
-+    QIOChannelWebsockData *data = user_data;
-+    QIOTask *task = data->task;
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
-         qio_task_get_source(task));
-     Error *err = NULL;
-@@ -545,7 +566,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
+-int error_vprintf_unless_qmp(const char *fmt, va_list ap)
+-{
+-    Monitor *cur_mon = monitor_cur();
+-
+-    if (!cur_mon) {
+-        return vfprintf(stderr, fmt, ap);
+-    }
+-    if (!monitor_cur_is_qmp()) {
+-        return monitor_vprintf(cur_mon, fmt, ap);
+-    }
+-    return -1;
+-}
+-
+-int error_printf_unless_qmp(const char *fmt, ...)
+-{
+-    va_list ap;
+-    int ret;
+-
+-    va_start(ap, fmt);
+-    ret = error_vprintf_unless_qmp(fmt, ap);
+-    va_end(ap);
+-    return ret;
+-}
+-
+ static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
+     /* Limit guest-triggerable events to 1 per second */
+     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
+diff --git a/stubs/error-printf.c b/stubs/error-printf.c
+index 0e326d8010..1afa0f62ca 100644
+--- a/stubs/error-printf.c
++++ b/stubs/error-printf.c
+@@ -16,8 +16,3 @@ int error_vprintf(const char *fmt, va_list ap)
      }
-@@ -562,7 +582,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
-         }
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -574,7 +593,8 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-                                                  GIOCondition condition,
-                                                  gpointer user_data)
- {
--    QIOTask *task = user_data;
-+    QIOChannelWebsockData *data = user_data, *newdata = NULL;
-+    QIOTask *task = data->task;
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
-         qio_task_get_source(task));
-     Error *err = NULL;
-@@ -590,7 +610,6 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -603,12 +622,14 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-     error_propagate(&wioc->io_err, err);
- 
-     trace_qio_channel_websock_handshake_reply(ioc);
-+    newdata = g_new0(QIOChannelWebsockData, 1);
-+    newdata->task = g_steal_pointer(&data->task);
-     wioc->hs_io_tag = qio_channel_add_watch(
-         wioc->master,
-         G_IO_OUT,
-         qio_channel_websock_handshake_send,
--        task,
--        NULL);
-+        newdata,
-+        qio_channel_websock_data_free);
-     return FALSE;
+     return vfprintf(stderr, fmt, ap);
  }
- 
-@@ -904,12 +925,12 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
-                                    gpointer opaque,
-                                    GDestroyNotify destroy)
- {
--    QIOTask *task;
-+    QIOChannelWebsockData *data = g_new0(QIOChannelWebsockData, 1);
- 
--    task = qio_task_new(OBJECT(ioc),
--                        func,
--                        opaque,
--                        destroy);
-+    data->task = qio_task_new(OBJECT(ioc),
-+                              func,
-+                              opaque,
-+                              destroy);
- 
-     trace_qio_channel_websock_handshake_start(ioc);
-     trace_qio_channel_websock_handshake_pending(ioc, G_IO_IN);
-@@ -917,8 +938,8 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
-         ioc->master,
-         G_IO_IN,
-         qio_channel_websock_handshake_io,
--        task,
--        NULL);
-+        data,
-+        qio_channel_websock_data_free);
- }
- 
- 
+-
+-int error_vprintf_unless_qmp(const char *fmt, va_list ap)
+-{
+-    return error_vprintf(fmt, ap);
+-}
 -- 
 2.53.0
 
