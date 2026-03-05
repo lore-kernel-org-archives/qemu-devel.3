@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6659BF30937
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB5CF30937
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 10:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6Ke-0002d0-J4; Thu, 05 Mar 2026 05:53:28 -0500
+	id 1vy6Kv-0003sC-Nd; Thu, 05 Mar 2026 05:53:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Kd-0002Qm-3G
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Kt-0003c5-NH
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Kb-0005Yw-Je
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:26 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy6Kr-0005hd-RW
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 05:53:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772708004;
+ s=mimecast20190719; t=1772708021;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UF6Dso2itn/3ESk+NM4HgSMdzC4V7xHqiWg2my0AHdc=;
- b=H0skHejlCm79XzowpS55ymCaIxXTfWn5fbQMEEKl4XjBYjLSsLycvlmkAsERMVOYC84SOf
- lrsDjWxkH3dqTHUXWjYV1ppzQRwpRnRngvF00TdkrRXd5nFt6buv6Ohda484w+9M8hzbR4
- EJt9d3Tg+PW4sgVTm59KKkbsa8jd5Do=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YDtsxtTpETlFmjyggCTqKy4glvqXLb0PRcKFCo8tsRA=;
+ b=Z+aU+MEJ1GnRWd4QUu5yl8aw+JxBrPVGbYKlgtcvStyYXmpWZwVtIom9T2dBkr9m/ywqZS
+ zSlhS6jpwA1ybVGeVKaaUt9/gm1uzkjruB1bCGqSJNArBFirC1zJbEAafDjujiVKtDfQTq
+ zevEYmfkY2kOnmrrYG/A52GNWN4kwig=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-CnmvxvKPPT6O_mzJ7GqUvA-1; Thu,
- 05 Mar 2026 05:53:21 -0500
-X-MC-Unique: CnmvxvKPPT6O_mzJ7GqUvA-1
-X-Mimecast-MFC-AGG-ID: CnmvxvKPPT6O_mzJ7GqUvA_1772708000
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-8gwNAHW1NamWuDc0bvBNOA-1; Thu,
+ 05 Mar 2026 05:53:36 -0500
+X-MC-Unique: 8gwNAHW1NamWuDc0bvBNOA-1
+X-Mimecast-MFC-AGG-ID: 8gwNAHW1NamWuDc0bvBNOA_1772708016
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A7D11800283; Thu,  5 Mar 2026 10:53:20 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D71A0180034F; Thu,  5 Mar 2026 10:53:35 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.75])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CF063003E9E; Thu,  5 Mar 2026 10:53:17 +0000 (UTC)
+ id 13C873003E98; Thu,  5 Mar 2026 10:53:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 19/28] hw/i386/pc: Remove deprecated pc-q35-2.11 and
- pc-i440fx-2.11 machines
-Date: Thu,  5 Mar 2026 11:52:06 +0100
-Message-ID: <20260305105215.302571-20-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 24/28] hw/input/virtio-input: Remove VirtIOInputHID::wheel_axis
+ field
+Date: Thu,  5 Mar 2026 11:52:11 +0100
+Message-ID: <20260305105215.302571-25-thuth@redhat.com>
 In-Reply-To: <20260305105215.302571-1-thuth@redhat.com>
 References: <20260305105215.302571-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -87,59 +86,208 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+The VirtIOInputHID::wheel_axis boolean was only set in the
+hw_compat_2_10[] array, via the 'wheel-axis=false' property.
+We removed all machines using that array, lets remove that
+property and all the code around it. There is only one
+virtio_input_config[] version for each device, rename it
+removing the '_v2' suffix.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501223522.99772-6-philmd@linaro.org>
+Message-ID: <20250501230129.2596-4-philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/i386/pc_piix.c |  9 ---------
- hw/i386/pc_q35.c  | 10 ----------
- 2 files changed, 19 deletions(-)
+ include/hw/virtio/virtio-input.h |   1 -
+ hw/input/virtio-input-hid.c      | 102 ++-----------------------------
+ 2 files changed, 5 insertions(+), 98 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 64927b47d92..8a4b6509444 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -686,15 +686,6 @@ static void pc_i440fx_machine_2_12_options(MachineClass *m)
+diff --git a/include/hw/virtio/virtio-input.h b/include/hw/virtio/virtio-input.h
+index e097b0b5217..1e94f8a03db 100644
+--- a/include/hw/virtio/virtio-input.h
++++ b/include/hw/virtio/virtio-input.h
+@@ -89,7 +89,6 @@ struct VirtIOInputHID {
+     const QemuInputHandler            *handler;
+     QemuInputHandlerState             *hs;
+     int                               ledstate;
+-    bool                              wheel_axis;
+ };
  
- DEFINE_I440FX_MACHINE(2, 12);
- 
--static void pc_i440fx_machine_2_11_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_12_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_11, hw_compat_2_11_len);
--    compat_props_add(m->compat_props, pc_compat_2_11, pc_compat_2_11_len);
--}
--
--DEFINE_I440FX_MACHINE(2, 11);
--
- #ifdef CONFIG_XEN
- static void xenfv_machine_4_2_options(MachineClass *m)
+ struct VirtIOInputHost {
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index bcbfef0b905..14dde90a48b 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -81,7 +81,6 @@ static void virtio_input_extend_config(VirtIOInput *vinput,
+ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+                                       InputEvent *evt)
  {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index ad40e9045b2..60a1b75b450 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -632,13 +632,3 @@ static void pc_q35_machine_2_12_options(MachineClass *m)
- }
+-    VirtIOInputHID *vhid = VIRTIO_INPUT_HID(dev);
+     VirtIOInput *vinput = VIRTIO_INPUT(dev);
+     virtio_input_event event;
+     int qcode;
+@@ -109,8 +108,7 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         btn = evt->u.btn.data;
+-        if (vhid->wheel_axis &&
+-            (btn->button == INPUT_BUTTON_WHEEL_UP ||
++        if ((btn->button == INPUT_BUTTON_WHEEL_UP ||
+              btn->button == INPUT_BUTTON_WHEEL_DOWN) &&
+             btn->down) {
+             event.type  = cpu_to_le16(EV_REL);
+@@ -328,32 +326,7 @@ static const QemuInputHandler virtio_mouse_handler = {
+     .sync  = virtio_input_handle_sync,
+ };
  
- DEFINE_Q35_MACHINE(2, 12);
+-static struct virtio_input_config virtio_mouse_config_v1[] = {
+-    {
+-        .select    = VIRTIO_INPUT_CFG_ID_NAME,
+-        .size      = sizeof(VIRTIO_ID_NAME_MOUSE),
+-        .u.string  = VIRTIO_ID_NAME_MOUSE,
+-    },{
+-        .select    = VIRTIO_INPUT_CFG_ID_DEVIDS,
+-        .size      = sizeof(struct virtio_input_devids),
+-        .u.ids     = {
+-            .bustype = const_le16(BUS_VIRTUAL),
+-            .vendor  = const_le16(0x0627), /* same we use for usb hid devices */
+-            .product = const_le16(0x0002),
+-            .version = const_le16(0x0001),
+-        },
+-    },{
+-        .select    = VIRTIO_INPUT_CFG_EV_BITS,
+-        .subsel    = EV_REL,
+-        .size      = 1,
+-        .u.bitmap  = {
+-            (1 << REL_X) | (1 << REL_Y),
+-        },
+-    },
+-    { /* end of list */ },
+-};
 -
--static void pc_q35_machine_2_11_options(MachineClass *m)
+-static struct virtio_input_config virtio_mouse_config_v2[] = {
++static struct virtio_input_config virtio_mouse_config[] = {
+     {
+         .select    = VIRTIO_INPUT_CFG_ID_NAME,
+         .size      = sizeof(VIRTIO_ID_NAME_MOUSE),
+@@ -379,26 +352,13 @@ static struct virtio_input_config virtio_mouse_config_v2[] = {
+     { /* end of list */ },
+ };
+ 
+-static const Property virtio_mouse_properties[] = {
+-    DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
+-};
+-
+-static void virtio_mouse_class_init(ObjectClass *klass, const void *data)
 -{
--    pc_q35_machine_2_12_options(m);
--    m->default_nic = "e1000";
--    compat_props_add(m->compat_props, hw_compat_2_11, hw_compat_2_11_len);
--    compat_props_add(m->compat_props, pc_compat_2_11, pc_compat_2_11_len);
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    device_class_set_props(dc, virtio_mouse_properties);
 -}
 -
--DEFINE_Q35_MACHINE(2, 11);
+ static void virtio_mouse_init(Object *obj)
+ {
+     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
+     VirtIOInput *vinput = VIRTIO_INPUT(obj);
+ 
+     vhid->handler = &virtio_mouse_handler;
+-    virtio_input_init_config(vinput, vhid->wheel_axis
+-                             ? virtio_mouse_config_v2
+-                             : virtio_mouse_config_v1);
++    virtio_input_init_config(vinput, virtio_mouse_config);
+     virtio_input_extend_config(vinput, keymap_button,
+                                ARRAY_SIZE(keymap_button),
+                                VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
+@@ -409,7 +369,6 @@ static const TypeInfo virtio_mouse_info = {
+     .parent        = TYPE_VIRTIO_INPUT_HID,
+     .instance_size = sizeof(VirtIOInputHID),
+     .instance_init = virtio_mouse_init,
+-    .class_init    = virtio_mouse_class_init,
+ };
+ 
+ /* ----------------------------------------------------------------- */
+@@ -421,44 +380,7 @@ static const QemuInputHandler virtio_tablet_handler = {
+     .sync  = virtio_input_handle_sync,
+ };
+ 
+-static struct virtio_input_config virtio_tablet_config_v1[] = {
+-    {
+-        .select    = VIRTIO_INPUT_CFG_ID_NAME,
+-        .size      = sizeof(VIRTIO_ID_NAME_TABLET),
+-        .u.string  = VIRTIO_ID_NAME_TABLET,
+-    },{
+-        .select    = VIRTIO_INPUT_CFG_ID_DEVIDS,
+-        .size      = sizeof(struct virtio_input_devids),
+-        .u.ids     = {
+-            .bustype = const_le16(BUS_VIRTUAL),
+-            .vendor  = const_le16(0x0627), /* same we use for usb hid devices */
+-            .product = const_le16(0x0003),
+-            .version = const_le16(0x0001),
+-        },
+-    },{
+-        .select    = VIRTIO_INPUT_CFG_EV_BITS,
+-        .subsel    = EV_ABS,
+-        .size      = 1,
+-        .u.bitmap  = {
+-            (1 << ABS_X) | (1 << ABS_Y),
+-        },
+-    },{
+-        .select    = VIRTIO_INPUT_CFG_ABS_INFO,
+-        .subsel    = ABS_X,
+-        .size      = sizeof(virtio_input_absinfo),
+-        .u.abs.min = const_le32(INPUT_EVENT_ABS_MIN),
+-        .u.abs.max = const_le32(INPUT_EVENT_ABS_MAX),
+-    },{
+-        .select    = VIRTIO_INPUT_CFG_ABS_INFO,
+-        .subsel    = ABS_Y,
+-        .size      = sizeof(virtio_input_absinfo),
+-        .u.abs.min = const_le32(INPUT_EVENT_ABS_MIN),
+-        .u.abs.max = const_le32(INPUT_EVENT_ABS_MAX),
+-    },
+-    { /* end of list */ },
+-};
+-
+-static struct virtio_input_config virtio_tablet_config_v2[] = {
++static struct virtio_input_config virtio_tablet_config[] = {
+     {
+         .select    = VIRTIO_INPUT_CFG_ID_NAME,
+         .size      = sizeof(VIRTIO_ID_NAME_TABLET),
+@@ -503,26 +425,13 @@ static struct virtio_input_config virtio_tablet_config_v2[] = {
+     { /* end of list */ },
+ };
+ 
+-static const Property virtio_tablet_properties[] = {
+-    DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
+-};
+-
+-static void virtio_tablet_class_init(ObjectClass *klass, const void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    device_class_set_props(dc, virtio_tablet_properties);
+-}
+-
+ static void virtio_tablet_init(Object *obj)
+ {
+     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
+     VirtIOInput *vinput = VIRTIO_INPUT(obj);
+ 
+     vhid->handler = &virtio_tablet_handler;
+-    virtio_input_init_config(vinput, vhid->wheel_axis
+-                             ? virtio_tablet_config_v2
+-                             : virtio_tablet_config_v1);
++    virtio_input_init_config(vinput, virtio_tablet_config);
+     virtio_input_extend_config(vinput, keymap_button,
+                                ARRAY_SIZE(keymap_button),
+                                VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
+@@ -533,7 +442,6 @@ static const TypeInfo virtio_tablet_info = {
+     .parent        = TYPE_VIRTIO_INPUT_HID,
+     .instance_size = sizeof(VirtIOInputHID),
+     .instance_init = virtio_tablet_init,
+-    .class_init    = virtio_tablet_class_init,
+ };
+ 
+ /* ----------------------------------------------------------------- */
 -- 
 2.53.0
 
