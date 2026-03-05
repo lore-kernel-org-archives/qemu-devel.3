@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C55AF47CB9
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 19:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D313F47CBF
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 19:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyEHT-0007sI-AM; Thu, 05 Mar 2026 14:22:43 -0500
+	id 1vyER2-0001lO-Ig; Thu, 05 Mar 2026 14:32:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyEHN-0007rq-Kn
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 14:22:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vyER0-0001lE-Pe
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 14:32:34 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyEHJ-0008Cg-IV
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 14:22:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772738551;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=a2u2QLcwDtknrPomgW1mPB7MfsAaNiu90w6aKpxoQUQ=;
- b=WBpSzY4l42A4KzWsahJGLDo3/iAzXCt0nHS9LMN3xhE88d6V0D2MzlNXcwEFQw/Xk3wgC5
- 3zipz8U3MKLwFmyYzmjqfst/gCsZ2m8Iv6/BEasvM7k9Ob0gre1YWhVA0txNbAh9iT/IBZ
- GiSCcsIcGjr+x/PWYhchBI0BfNjlPLg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-392-GuuEuoAUOFqyllXR67rWJQ-1; Thu,
- 05 Mar 2026 14:22:29 -0500
-X-MC-Unique: GuuEuoAUOFqyllXR67rWJQ-1
-X-Mimecast-MFC-AGG-ID: GuuEuoAUOFqyllXR67rWJQ_1772738548
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3BC881800464; Thu,  5 Mar 2026 19:22:28 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.41])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D66BF18002A6; Thu,  5 Mar 2026 19:22:25 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
-	qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org
-Subject: [PATCH] MAINTAINERS: Update the maintainer for the CHRP NVRAM section
-Date: Thu,  5 Mar 2026 20:22:23 +0100
-Message-ID: <20260305192223.6214-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vyEQy-0000ml-Mh
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 14:32:34 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id D9739C015F;
+ Thu, 05 Mar 2026 22:32:27 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b93::1:1] (unknown [2a02:6bf:8080:b93::1:1])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id QWvTGN0Am8c0-YBG5PGBB; Thu, 05 Mar 2026 22:32:27 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1772739147;
+ bh=0y1IWc1aMTFpN+HfB2qoF73wTDsynkzLpevmLXGbTyQ=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=D6cPLKpAmyESTcQN+I3C1akanoyC2wK9pwaB4IzZofa+nRyBar3ngQhq6u9RgYwMV
+ n2Zj4hAuPryl/tK7grKKxnx2L9GO36Hbf5OC1fiFvZNt22u3JlmC9w92zVrSe6MpSN
+ AjJ5HxE1dhtanE/irGJieo15PQfH4ouAna+yO2oc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <d6b29837-6eea-49c3-b130-a519f9778c58@yandex-team.ru>
+Date: Thu, 5 Mar 2026 22:32:26 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/12] net/tap: move fds parameters handling to
+ separate functions
+To: "Chaney, Ben" <bchaney@akamai.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "d-tatianin@yandex-team.ru" <d-tatianin@yandex-team.ru>,
+ "davydov-max@yandex-team.ru" <davydov-max@yandex-team.ru>
+References: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
+ <20260218202829.1322088-10-vsementsov@yandex-team.ru>
+ <881F7D8C-E65F-4629-8AE4-68CA9BFCEFB4@akamai.com>
+ <22e274b0-564c-476b-8b8e-b0f6b634fa99@yandex-team.ru>
+ <B4B91407-B42B-4496-8FCD-8AA08B3FC24B@akamai.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <B4B91407-B42B-4496-8FCD-8AA08B3FC24B@akamai.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -79,36 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 19.02.26 21:27, Chaney, Ben wrote:
+> 
+> 
+> ﻿On 2/19/26, 1:10 PM, "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> wrote:
+> 
+>> On 19.02.26 20:00, Chaney, Ben wrote:
+>>>
+>>> On 2/18/26, 3:29 PM, "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru> <mailto:vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>>> wrote:
+>>>
+>>>> + queues = tap_parse_fds_and_queues(tap, &fds, errp);
+>>>> + if (queues < 0) {
+>>>> + return -1;
+>>>> + }
+>>>> +
+>>>
+>>> Are we appropriately validating that queues != 0?
+>>> I believe we need to throw an error in that case.
+>>>
+>> Agree. I'll add the check into tap_parse_fds_and_queues().
+> 
+> That sounds good. You may need a similar check in net_parse_fds to
+> throw an error on an empty fd list, which would result queues = 0
+> through a different mechanism.
+> 
+> Thanks,
+>          Ben
+> 
 
-I am not involved in the ppc machines anymore (the pseries machine was
-the reason why I took over maintainership of the CHRP NVRAM code in the
-past), so it does not make much sense that I'm still listed here as the
-maintainer.
-The CHRP NVRAM code is used by the mac99 / g3beige ppc machines and
-some Sparc machines, too, where Mark is the maintainer, so I asked him
-whether he would be interested in being listed as the maintainer here,
-and fortunately, he agreed! Thanks, Mark!
+I think, I'll just add a patch on top of the series for this.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a3245fdcd2d..ea75f6a62af 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2743,7 +2743,7 @@ F: tests/qtest/hexloader-test.c
- F: tests/data/hex-loader/test.hex
- 
- CHRP NVRAM
--M: Thomas Huth <thuth@redhat.com>
-+M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
- S: Maintained
- F: hw/nvram/chrp_nvram.c
- F: include/hw/nvram/chrp_nvram.h
 -- 
-2.53.0
-
+Best regards,
+Vladimir
 
