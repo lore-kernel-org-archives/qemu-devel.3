@@ -4,61 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9D2EEF30C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EC1EEF30E
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy2uc-0002DC-8j; Thu, 05 Mar 2026 02:14:22 -0500
+	id 1vy2vN-0002jc-By; Thu, 05 Mar 2026 02:15:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vy2uY-0002Bu-LL
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:14:18 -0500
+ id 1vy2vI-0002f3-KU
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:15:04 -0500
 Received: from
  mail-switzerlandnorthazlp170100000.outbound.protection.outlook.com
  ([2a01:111:f403:c213::] helo=ZRAP278CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vy2uU-0001TH-05
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:14:18 -0500
+ id 1vy2vD-0001W8-P3
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:15:01 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ICXON2sg22LSiyhryqw8iTn25Ecc37ny6s/W9mA2KBPyFWIhUoy97Py0/sB7fx4CkxkAYPjIqazBkZ4/S7gCdARCkeCgOF79B9cukkozp0adop2FELS5dwD8I8cWVOIOyh8Xa1Zqdc75v9TAOoxP7icUc2r3QmWD/lkXYwnOpf7MvhikEA5z7G38h5zglFrXebnwPDRz9yNc91wwbSam1o4v6DW4cul/yjr4+lKX+egZ/pyCKiXH16E4XhhsKcGFGlnIIK3rBHuduuOLmoEVqK9AySxR6pCy1MUg0jAyKoC1Nt7w8XGJzo97Ac4b0ffq1kIyW12FxZ2aeyYJsh4k6A==
+ b=gMS7D3fAJHaHoLKdkpFzm7aE/9xGkM0KhLAE3BnL3jCiHpnBfLjf+CscbI74v8TuOWY1N0/2cRZwISMPl2Qdkd1Ld7mU/OtuhGsD3C1BWbJqGsLHm+9gqfZn73/hgMr77gG4S8n8m67WcU1KDo7DOxLaXqZlTM4jrVPxqeSz9jkGnAPB3eVZW/Syye00VZU1gHzbFCU3eciQ/jnoGWTD7hJUU3RX+6ZioT265UI9utnsfseJTrEtWhSnK99h9txM7abtB1LNW98CJ9f7o1KTKKMyUh6zUg3u6Bh0bUCLqre+AqrziNAOkDf1v90ijIlDGxPJ5Km0kKcjzvYA7LOWgg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5qSEv/e+DfHB+HdC4giCJL3dhp09LuT7SfYHOrI+1xs=;
- b=nwFBiTvOUb5eoKs2KaUM3KMeEcsrfIUSZmuqegG8/7txjttf18HXyaL/SWHWhpANQTbeVOtdNBhfsgagbwT6QT2eYuPFEN9La+eMKia0vjuMWSvGpx4zUuFt+uufVck16rMr5WMxu8rzhaftuc7DbxBzFonzZa7ZWzt5GgThKsDwsZykGLXv7LHqvh5ZpES6QEleAWqMJvHNHE/2ZNDefdz7EuDKT3IQ9C0LDKsQVmkYQDKmnVM2HYGC0M2asX44DlGi8vromZTxc1h8RNhClL/tjKjUOFI2vExBNZwllbNTCYlkHAlFMcp/eVuqmpAZM+C1KO6ewn2Z1QntIWD2sw==
+ bh=2hREnMPuv4mu/HRE0Uqt2VMxv/fHyvx36nclV/php9E=;
+ b=F142nIOSwGRh/5fulLK8GX/GVghP3cVIl5cKGryHhYSXc/RAfXFFJlG3NMhblyMVFgWluoLHYfr/oozmEJkdX7LBoB4K44wibEw/QbMPLt9zawVoEQGKyP+N+oeSTB1QxMc1bkhqfs/xEN7JcmkyeVEofypjXtXEyoVXGmjeCLaUOYx77ZMCs3SawRtkzy+GfiD8kqu5Si+eGtKuN96XkTT1aYgfqaCRue/ezgf7+l64Dg1wNAhC8sFP61y/u3zlmLNKZyQ9/pKEftzxcYUe8inB4YfYwGY/dwF4opF2cOd+h5zMSFkxSIY5kv/Xl3Gw7HfLxtRrquulsER97xz2/w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5qSEv/e+DfHB+HdC4giCJL3dhp09LuT7SfYHOrI+1xs=;
- b=mkaCEfx7uqrfpVEsTPhgaCt2D+7uoqVWJlmykABs0Id6H0fsIGlkjhvJ6y3p4re2UyKR6BRLrkIA0e0xvDsb+vCon2nQfekLfRInDyqKM7Xyjjoq5rmWjZgA+3QOWTekwGlyOQtTvLkiLn4drTkGEGBWNAArqhyrbiy8Vm7kFH0=
+ bh=2hREnMPuv4mu/HRE0Uqt2VMxv/fHyvx36nclV/php9E=;
+ b=BzcLNDRNWg3vKkOFKYpLzDIzYUFz/xJwh1sxK39VxnNpMdp8xBA/ymCwQ3O8RJg7aDVW6rQnZDVY9netzF/Y4Sazc9lr/9yn8EsE0nr9F6lMnIwk5X2tl/OQIU/J2hw/E2w5YNBLTxOCJiiEcFzzGP+2D6WnzhPSEmsqIAuP8sQ=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
  by ZR0P278MB1091.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:54::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Thu, 5 Mar
- 2026 07:14:02 +0000
+ 2026 07:14:54 +0000
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::80ea:3d03:40bf:998c%6]) with mapi id 15.20.9678.016; Thu, 5 Mar 2026
- 07:14:02 +0000
-Message-ID: <cf6dd907-0818-45c2-b5ff-f8b60e106e86@epfl.ch>
-Date: Thu, 5 Mar 2026 08:14:00 +0100
+ 07:14:54 +0000
+Message-ID: <5bb69d54-4f76-4c18-b55d-321d870f7fd7@epfl.ch>
+Date: Thu, 5 Mar 2026 08:14:53 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/7] Enable PC diversion via the plugin API
+Subject: Re: [PATCH v6 4/7] tests/tcg: add tests for qemu_plugin_set_pc API
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, berrange@redhat.com,
  richard.henderson@linaro.org, imp@bsdimp.com
 References: <20260303-setpc-v5-v6-0-15c77cfe184e@epfl.ch>
- <acd9b835-ae52-42aa-87f8-9fedccd79d04@linaro.org>
- <a9b4cb93-24e7-41fb-bb72-bacd48216c1c@epfl.ch>
- <dcafbd00-66a5-4e69-81ba-567c141a26a6@linaro.org>
+ <20260303-setpc-v5-v6-4-15c77cfe184e@epfl.ch>
+ <430d1aa6-c36c-4399-8e5f-b38a9ae1bd35@linaro.org>
+ <5b8bbc1e-cb8b-44ea-822b-0bdcb6ac225f@epfl.ch>
+ <5a9a17dc-9781-418c-ae23-a183234e4a53@epfl.ch>
+ <eb4a6f15-a63c-48aa-a7c0-832d123b98f5@epfl.ch>
+ <9e830f45-840b-4e5a-8548-c618663f9500@linaro.org>
+ <ba377425-cefb-4ae5-9b56-8c6c675f27c9@linaro.org>
 Content-Language: en-US
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
 Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
@@ -105,74 +109,74 @@ Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
  pBZkz7hBNr2qTLcl1xeP4MMdMO2ubBUGTR5B+sOzaT1qIBe5XNFkhffLTR+YmkW1PXWz7tcO
  yQcudEYHvYhKegsw0Zjv8iQIQw3yeV0WbQAs+LGQAfwpVURhZgBk3DH9gQBFkZYi8YWX/zEc
  5hMMZIzTI4AtIcgA3xe4Ew==
-In-Reply-To: <dcafbd00-66a5-4e69-81ba-567c141a26a6@linaro.org>
+In-Reply-To: <ba377425-cefb-4ae5-9b56-8c6c675f27c9@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV0P278CA0058.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:2a::9) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+X-ClientProxiedBy: GV0P278CA0062.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:710:2a::13) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  (2603:10a6:918::220)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR0P278MB1091:EE_
-X-MS-Office365-Filtering-Correlation-Id: e63e643f-511a-4065-2521-08de7a86c775
+X-MS-Office365-Filtering-Correlation-Id: 89b4bc78-eae8-4a61-d23c-08de7a86e655
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|786006|1800799024|366016|376014|19092799006; 
-X-Microsoft-Antispam-Message-Info: ckfzih5cIrpwRilDP5uTZ29VuzcyxQgQwbxL//EveI7uokLdl97UKavbQiP7u07e8ubwOYVE+DPf3+JGnkSfVm+j3+HK5Run6671MYga0Gwnlf4u6gVLXo1RmhUTkMNavCD7QXvEVur8lLIZykLjrnLhvou7etAhMXcMzaeGuholXgMfTSxFJrlUHXOTfvpRdvDMaAEHWWw21X45IOFCdjnCR31JP9f2J1auFE8+ogFxfln8cOYUK7u10E+Yv2L0HgCyBIoWHNS+cNmkdfLBDzJdgAi7b0rVVJeT/4kauZIgly0hWtUBDDRe9eOr8Wd3dYIuAsPe7gjoETXkeffoOREkXd3ijdcQKWh/RN2jETRRtSECtJR6jW5r3+JmNn+eh12m8z/JtF4XiHTcODNE+x2EQtAlIn5fNrBGwY79e/VlYCymjdlNO2HQNFpoNDlCJQjIyyVO/CenIyc3PVKnhx0sTcm7+WDOUUes9TMkXXBIdaOWh6eOFquigy+iWFT2c3wtJWmR6o/+Ta8JIZ40eYhl9tt78PDavryLdCGd1pUZIijDLSZOSyu7fhvKMPYHYz5VR3CQb0nHrAjHq5nLeqNrO/9CSbaWrryi+AKQ7JHZxssmHxFRFA1ZgdVx8rgEeY0CkJIq8tMs56AIoRdCXir2wRS81yUwgYr4aIiakLHPsQsAIYuHThBW9ozfIjrRUSFiQ2m8SvMhqPvbTIoYPy3y2qRot1t9X7dp8AJDx94=
+X-Microsoft-Antispam-Message-Info: H+T5Jfl00LpAb8Hi2fie2jO64FCpX+PB+L/cD2+uqdI6e9IbA7YGTWHASC4h8ESHKASsX6qOJGMomOK147GXnu2Dk/yWI3TVuGLo65cOaH4dQLZ6RsIezjEeejhnTtwmpfs4yEFw/ubINiYWp3mlgZ6s9846p5EEHAouNOjKk2YJ3wWfKDTrdccNDLoo3UnwiuU3E2jZ0YTyW9kfm62Wwavm1AzqkU2t1PlWv3D9hqdmOfgxA4PoZPsNv8m0EDLK/T49/sWn5vPX1hibBeOdK8qU4SYKTSITxDk0VkvAYh3TZFndmBY4ubgMHmgHrHFIEkfgQsskd0zwFrPuT2V1ZwvZwJxNd4zVWhC5KiiE1szC9/7h/NapcoqxYxjxePti/OGGg14lKPf7ZSntCjrZPqwhE45ElH/8zY0Ygnx0IrnWqirM23lPF1b5rI8uTRX8A0GvaMR/K6kIGy5ywhKDOMwKMzsFzybRQflv6/v4Jvn//xv0L4sb10ICIhucf2a3NQTV50dVMhH/FWPlXRK3CVYFr86ePFRdFPY8lORp/lYvEsWQ+yvYN8BTiAWkAK+Onhg6VlSjDJXfsoxXvuU6ktAhpPMTnLmp8LIY/DMt1PjePKMDVYkG6xwoFybshKWz9fz3hQ6qDCGTR5zF46I9u2nKpJKQwWSXkxccC30+2b1iaGIbaK7wT6CqBfFNBQKCuXGnxXkrrpyv8NPgaZ36zBKjnLPxG9RZdRSWbCC9JDc=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(786006)(1800799024)(366016)(376014)(19092799006); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aDJhc2s5bFRVL2tURm1VMjJoUzdncDl5Q0FNNTRFc0x3ZDcvVXA3WTlyemlD?=
- =?utf-8?B?UGxEc0dYb0lVemZUcFBGclNDQ0Q3NnZqdzVzZjF5MjF5OHlVQzF2YTBZeE1y?=
- =?utf-8?B?UU1XeW15a0IzZCtRK1lrZ3FGdUMvaS8vWEl4VXFWOXdHSXJYWm5sTjhiZWo3?=
- =?utf-8?B?bkVUUzF5VU4xUnZnSFYvQzQ5UzU1eUU5MGx3VnVSbTliN1JnSlV3UGx2QjNS?=
- =?utf-8?B?M3FseDMzOHluMGdIbGhuZ2ZSKzJVS0gxTzQvQ1NCbmNxb2xDU1FJQmtNaDBq?=
- =?utf-8?B?WmpaM1k0U3MvRU4wRUxvc1lCZEpNOFlRblg0S09yVlJWRXpUVjNCSFIzeVhH?=
- =?utf-8?B?b1ZsenEvdnN2ZkVUcXNwZE5FWnRydWkyNzV1T2thRHcrdXFkV0lQbU1LU2dr?=
- =?utf-8?B?UDFpbUZXSjBZSU8wUEFGL2xvdC9seDRVUnBiOGhVdk5hVFZ4TTJqYXpWMDFm?=
- =?utf-8?B?OUR6Qkp1cFBJczQ4eWd1SGhLTDN5aS9RblkyOUxON2ZqSm1XRkF0dklDNGhW?=
- =?utf-8?B?cTZTVFlvZWRoWXRKaFl3U0M1Qk9vdVlVR05CTjVrL1NveEpwb0svNXoyNjFo?=
- =?utf-8?B?cWRVM3k4UTdSUEVZdDVXWnRmcDVKRUNybnJlTVNXUXkza05FZExxUG5EdFNX?=
- =?utf-8?B?czFKbllyOG9UNFhKR08rOTRlYS9HUjgzcUJMYU9PNlNzTkkrLzFPbGdPUE12?=
- =?utf-8?B?a0FDVDRWTGpQWi9KSjBWWG96dkF3YXAyNGRkWjZZSk9JTExLWFZNLzJWNTNU?=
- =?utf-8?B?dlVVNlJMYjRzUlJXcDNZUUhYWHlTM3Q1VGQ5cWREdTlJTGZQYmhxcWZOWWls?=
- =?utf-8?B?dW5SK1VzaHRERVc0S0ZvcVFZclBUN1N1a2Q4WXh4SkVMcmJMWGU2VUZGR0ty?=
- =?utf-8?B?dHJNL3VDUmNFT3ZVOXJMNzJBNC92Z0w5ektRdUxUSnkreGo3cTJwTzl4RmhP?=
- =?utf-8?B?eFI5eDlsYjdkQVJBQnVFTERFdHArdk1HY1FjMzNXZzc2VDV6cWhkZ1BXTmJI?=
- =?utf-8?B?eGV0MXAvcERGelFjRkllUTl6Q05KV2JESWxOaEhWVkhxbWNlM0l1algyUlox?=
- =?utf-8?B?V1FMZGU0Njk0NjhyVTlnbWRIZ1JDMHcxSzZlRVV4ejFlTEpSanNVcnNpKzBE?=
- =?utf-8?B?ZnFlZ2QweWlaSFJOT1gvU2RZaFVxL2ZhanFlY3RmMHVtR0JOVU9GUWtwWTZI?=
- =?utf-8?B?RmkyK1V3c01zZkhBQ2p2cUJFdmlPWDBGVis4UldLYlVsVEdmc2tWbmJWZC9u?=
- =?utf-8?B?dGpNTkxoUFFWWVI0VStLS2hGS2VlZGNEU2gxeFE2a0s0WGRaSCs0ZE42R2V0?=
- =?utf-8?B?RGl6YlN4VldMVTljYkg0djFkQ2x0cGZJaXNEbE02d0w4Y2dtQjdrNG8yK1gy?=
- =?utf-8?B?RFREdmtvU1Nra2JtdTJ6NjJuSW92SzBJRWJHWUt4SHBMYkExdDNTdnFwcVZr?=
- =?utf-8?B?dFRLMjdFUlMvM0VNdEc2b1MzeGRUN2V0UGdqQ1ltSW9zR25wdUlTVi9aRFZH?=
- =?utf-8?B?b25VNjVCSE43clUrTnNlQ0lvTGNRN3kxemV2NVlRek5OOVZ1djk4TzdKTjlM?=
- =?utf-8?B?ZTdVOWR5SkVkOHh0Rit2a3ZveUpBVnNielI2eVVDVC9xcVM2a2xXSWVmTXR6?=
- =?utf-8?B?ODRvM1oycUpzeHJkM2NwUVQ0Ykt4NUlQMDNVeWNhTkk4MUNEaTdyS1ZhQldP?=
- =?utf-8?B?dlp1MFV6SDlEeitCaFFtdzBpcS9qTkhzTDlNTnJvcGd0d1ZlN3RqS0tTSjI4?=
- =?utf-8?B?NWNldlIzbFdGbjQ1N1dwZlhyR3FSeHhYaW03N2VSRkI4UG5WYjcrL3VvT0FC?=
- =?utf-8?B?YVptQ2tOSjBDK3M3alpEZkNkOXdKOHFLNG5iekNZemFZQkVXNS9UT3JOM3Zr?=
- =?utf-8?B?Y09uZDRYVFpyUS9nYk55aFVWTEFwRDluZ3c4ZDBua2tJUmVQZlNvdHVldHZJ?=
- =?utf-8?B?TnBncVdNRGJ5blZnN0ZGTU1qRTc2cW45bE5TVHRPSURTTmxrYUZkVHdhSDRu?=
- =?utf-8?B?Zm1FeHBreUxQRjdpNWdyZ01xdUJqVDNrOGxHeXUzNGNnbm5QMXltckNZcFlv?=
- =?utf-8?B?OG03emxCckNoaFg3Q1FzaEFLWG1LVk0wd25hbzdBd0gxbUFaS3hTRDBUd1Bs?=
- =?utf-8?B?bWZRb0FQK010SHRaemdvelFLaUFETnowNmZ0cDFsMCt2b3UydGhKc3IvTkZE?=
- =?utf-8?B?R3A5eFBkQ0dIc1RoS2tEQytrRDJKYmg4bmtaSGU1SDF0emxSelpSVGFwd0Ny?=
- =?utf-8?B?S3E0MitiTGVoQ1NTVnZLVGJQT1VSSHFtenNGNjZxM1FPdWJ0My9naVVlMU1D?=
- =?utf-8?B?ZzY1R0xlTjBpWTRJYVBjWGxKN3FYNE45WkZhTTA1RnNCUTZSSGhQQT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VERjeFFBUVIxelFvR0paR2x5RE9HM253K1hrQTdxRnd6MVVEQnVkWXhHSGI3?=
+ =?utf-8?B?aThqdUlFT1Q0Z1RSMkZDQVJIZWRrNUxvZEs5YWhRdTZhbzNMZ0ZKcGMya25J?=
+ =?utf-8?B?VHBnZHhWTGZEdi9TNUQyTk9IQ3hkR3FiSUZNUWlzNlNGZ1dlQUNLV0IwN0xj?=
+ =?utf-8?B?dWc3cEM5SDVhN2RJTmEyTC9UMk9DQmNXOGd1RmxuZGpmZzBkUUd0MEloc1dw?=
+ =?utf-8?B?Umo1TkVUNHEwUVYrQ1A3VTVzSWRJdWJxKzlSVXlvM2hEem9uTy9weEMwRDFh?=
+ =?utf-8?B?SWoyczNXVlFqMS9WUmFkKzlKSE9EMURrM3BncUF1cFV2cEV1SHVKUnBDSWxK?=
+ =?utf-8?B?R0Fra0w5OTlhK0RDRFh0dEZxY2dyWVdnYm9DQnhXL3FCTVhWZ2lCeVJqb3Av?=
+ =?utf-8?B?NVU5bEZJcGpRcmdERCttV0N0TnpTS1hRZjh1N243eDlzS1dxV1RodG9QVlhG?=
+ =?utf-8?B?RWJiWlYwTld4TlhiZ1NVS2x4ZmllM21KZmQzSkRaeHgzemhNcDJhd21zSmZH?=
+ =?utf-8?B?OVd0ZFFUdU5jZzgyaUN6RHMwdlN4ZmwzalNsbVNaUkRZM2xZOUoyUjRZODd6?=
+ =?utf-8?B?bjRaaTMwRngzYUJjdkltVVMyc29mcGJKbGJXbG1FRk12c3hxNFQ3S2NtWlc4?=
+ =?utf-8?B?bTlhaEV1OHRWZlFkUzRDMWUzKy9DUGZ3eTQvMXd1UzJlTkY1bnJOU01VQUlT?=
+ =?utf-8?B?QUduN3ZQeGlxTU9wZzE2aWlNMkl2TGNxcmlObnBFS0xzak1paXVTSzE2YlFR?=
+ =?utf-8?B?dDh2R1pSaXlxYW4wOTM1S1JYRW9GYWY0WlZHMVBjTTZhNUx6S2xiZE4ydnh2?=
+ =?utf-8?B?VWFjM2w2NmFER3RHSXFSZUwvTGluNmdnbjB4NWYvWWlMT2RDNXAyUXk1cnZa?=
+ =?utf-8?B?dmNncm03V24yeFJmTGY0Qlo1cy9DUVNJZkFqQkJxd1FzQks0VEZzeGtobXdi?=
+ =?utf-8?B?eDE0UU1aN2hrUVFDSUpYNTZQK1BtZWdvc3dCbm1vNUgyL1dPaEk3aUd5M0VH?=
+ =?utf-8?B?UGxJNXFpSk54WitCTkNya2dzMGpDWVNrU0ZzdzJOZHg3dW5FdEZWQWpXNUpv?=
+ =?utf-8?B?NG9nSEJ3b2tkZFFLbDBBYTdINURDdXR6RURkUHlYY2lYMWpYSDlpUjg2aUpm?=
+ =?utf-8?B?TlBuSFh6YWJnaWZOZmMvaVl3SE4wUjhkVXhacXlNbDJ1RzFXYy84eThvdDBF?=
+ =?utf-8?B?YUpQenVBc3VKTnYxbkJNaXpzMHFQeklzbG1UMHNQZklkcmg5WUNyVkxrdStL?=
+ =?utf-8?B?SWpwNnlHUlJOVjZUb09XOHZNeEttb1ZhVVpTMG5xc1FmYk42UDdWU2Q5R1pR?=
+ =?utf-8?B?S3FBeVh0KzZkMDAvbmFIVE91MlNQcmMrbGpxWXpVbUU5M1Bzc2h0dXcrbkgv?=
+ =?utf-8?B?N2xCVGNiUkV5dkc3QklxcFFsL1VBamd2SkRFT0YwY1d3ZCt4S1haZ2VnbVZO?=
+ =?utf-8?B?TTZzN1o2M1hZRWVRMFdodFB4Q3NoVkg3VjBYMGVKZnFKV0hVNWFZNVFOOHZ6?=
+ =?utf-8?B?NWhvSG0rb3dka09EU0xDS2NUUUY5bWZKRVNnWW9BZys4SXUyS0dzUlorcktu?=
+ =?utf-8?B?OUJCK2JBeWNqd1A3bGhEU1pXSlpSenFPanpHbks0N2dzOFdqOHZTMk9DNkZP?=
+ =?utf-8?B?SzZCUFJ1RndqY0NPajJTbFRsTnNTRVNFL2dubytTby9zcjJjNU9OZHkyanl6?=
+ =?utf-8?B?RUNuNHowTWkxbFhrS2pUT2cvTVdYVGUxT2hDNnIzV2tyblcrb1NMUmtpSnJi?=
+ =?utf-8?B?L3BscmkzWm9YcnM2K2xoQ3lLeStkRmUwb1lRYUVGcERNSG4yeUlMNXVWWDdw?=
+ =?utf-8?B?MThEa09BU0ZNdktLS2l3cFlGeDNrRjNIUnBxUWJRWHRBbVJTZFhhM3hXVXNR?=
+ =?utf-8?B?dEZNS0NzSThZNkhWNkJhbnZWRzhVYUw0bStneUd4czMrZFNoYTJROC9aalNS?=
+ =?utf-8?B?TlJncHhDY05jSUNwMGpLQnJ1REx4Qm9MQmNVY0hDWDlFY09xNlRRSHNVeXdR?=
+ =?utf-8?B?WGgwYU1XVFVtTUkzK0lzNEcxSGgzVGJLVnJreEwxakoxUnhWYXBLMlA1TnN6?=
+ =?utf-8?B?YzlEMzdGcDdwK09sZkc2V0daTHJpTGpPVmJucGt2R3VhVVg5N2FHWkxKbUdw?=
+ =?utf-8?B?R25ZWXZOQkthSDVJTE9VKzZoamtjQnVQS0hIZFYwVzlVZHF1RWprRjVFMWJw?=
+ =?utf-8?B?c0M4OTdGcUlmSmI0ZXUxMzNwNkFCMHd4KzRHb1ZpZDNEYXVKR0s0YVI3eHRB?=
+ =?utf-8?B?NVg2Mk9WR0o4Y241THEzZ2dvTUFaUHRiYlBvd2hrU0lnT2VGYXY2cjM3VHdZ?=
+ =?utf-8?B?TGczaGVSYm1lVnVMelVpTDg5KzN3MHNJK010Yi8vZ0c1WGZIeU5OQT09?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: e63e643f-511a-4065-2521-08de7a86c775
+X-MS-Exchange-CrossTenant-Network-Message-Id: 89b4bc78-eae8-4a61-d23c-08de7a86e655
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 07:14:02.6479 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Mar 2026 07:14:54.3217 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7OGzzZ95sMFQPwMoyosAF443vbO1ywwh3ukw44GBKB9N4RZ0S5yE+T9DLUmg26zMPCvmCEr3sDPka6W7Q1+FhiAOFAwgpJyIEwYah1ojR+Y=
+X-MS-Exchange-CrossTenant-UserPrincipalName: KXWCrGMnXKHwcOscFXHHerya1b4wyzRdx3LMGvAgQYGzhXRzixugfvPEv+SCLQn+/EEVYmpMpQrKDLiypRnywqYMXLyLGH4RBcJ3vIKhkU0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR0P278MB1091
 Received-SPF: pass client-ip=2a01:111:f403:c213::;
  envelope-from=florian.hofhammer@epfl.ch;
@@ -198,148 +202,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/03/2026 18:39, Pierrick Bouvier wrote:
-> On 3/4/26 2:36 AM, Florian Hofhammer wrote:
->> On 03/03/2026 20:20, Pierrick Bouvier wrote:
->>> On 3/3/26 5:07 AM, Florian Hofhammer wrote:
->>>> Hi,
+On 04/03/2026 20:38, Pierrick Bouvier wrote:
+> On 3/4/26 9:56 AM, Pierrick Bouvier wrote:
+>> On 3/4/26 8:18 AM, Florian Hofhammer wrote:
+>>>>>>> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
+>>>>>>> +                                int64_t num, uint64_t a1, uint64_t a2,
+>>>>>>> +                                uint64_t a3, uint64_t a4, uint64_t a5,
+>>>>>>> +                                uint64_t a6, uint64_t a7, uint64_t a8,
+>>>>>>> +                                uint64_t *sysret)
+>>>>>>> +{
+>>>>>>> +    if (num == 4095) {
+>>>>>>> +        qemu_plugin_outs("Communication syscall detected, set target_pc / "
+>>>>>>> +                         "target_vaddr\n");
+>>>>>>> +        source_pc = a1;
+>>>>>>> +        target_pc = a2;
+>>>>>>> +        target_vaddr = a3;
+>>>>>>> +        if (source_pc >> 63 || target_pc >> 63 || target_vaddr >> 63) {
+>>>>>>> +            /*
+>>>>>>> +             * Some architectures (e.g., m68k) use 32-bit addresses with the
+>>>>>>> +             * top bit set, which causes them to get sign-extended somewhere in
+>>>>>>> +             * the chain to this callback. We mask the top bits off here to get
+>>>>>>> +             * the actual addresses.
+>>>>>>> +             */
+>>>>>>
+>>>>>> This looks like an actual bug. Using a backtrace here, can you find which function extended it?
+>>>>>> Parameter should be treated as unsigned everywhere, else something is really going wrong.
+>>>>>
+>>>>> tl;dr: register values are considered signed in the syscall handling
+>>>>> code, which seems incorrect to me. Details below.
+>>>>>
+>>>>> This seems to be a bigger issue in the syscall handling code and I'm
+>>>>> surprised this never surfaced before. Generally, the CPUArchState struct
+>>>>> in target/*/cpu.h defines the registers as unsigned types. When a
+>>>>> syscall is encountered, the main cpu loop calls do_syscall() from
+>>>>> linux-user/syscall.c, which takes and returns abi_long values. abi_long
+>>>>> is defined as either int32_t or target_long in include/user/abitypes.h
+>>>>> and therefore a signed type, so the register values get converted from
+>>>>> unsigned to signed types here. do_syscall() passes those abi_long values
+>>>>> on, e.g., to record_syscall_start() and send_through_syscall_filters(),
+>>>>> which still take the register values in as abi_long. Those in turn
+>>>>> however pass the values on to qemu_plugin_vcpu_syscall() and
+>>>>> qemu_plugin_vcpu_syscall_filter(), respectively. Those two functions now
+>>>>> take uint64_t values for the arguments, so for 32-bit architectures the
+>>>>> conversion chain is uint32_t (CPUArchState) -> int32_t (do_syscall) ->
+>>>>> uint64_t (callbacks).
+>>>>>
+>>>>> This seems to be some bigger refactoring changing all those abi_longs to
+>>>>> abi_ulongs. Would you like me to prepare a separate patch series for
+>>>>> this?
 >>>>
->>>> This patch series builds on top of the discussion from the thread at
->>>> https://lore.kernel.org/qemu-devel/e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch/
->>>> and adds a plugin API function to set the program counter of the guest,
->>>> as just writing to it via qemu_plugin_write_register() has no direct
->>>> effect.
->>>>
->>>> This version v6 of the patch series addresses the requested changes from
->>>> the previous v4 submission and an incorrect commit message from v5
->>>> (details below).
->>>> Note: checkpatch.pl still reports a warning about line length violations
->>>> in patch nr. 6/7 but I did not fix this, as the line was already > 80
->>>> characters long previously, the change added only a single character,
->>>> and I think the readability of the code is better as it is now. Please
->>>> let me know if you disagree and would like me to fix this!
->>>>
->>>> Best regards,
->>>> Florian
->>>>
->>>> Changes:
->>>> v6:
->>>> - update commit message for patch 4/7
->>>> v5:
->>>> - make QEMU abort via asserts instead of just returning an error from
->>>>     the plugin API if preconditions are violated
->>>> - extend tests for qemu_plugin_set_pc() to different contexts
->>>> - fix issues highlighted by checkpatch.pl
->>>> v4:
->>>> - switch strcmp out in favor of g_strcmp0
->>>> - split the patch introducing the qemu_plugin_set_pc() API into three
->>>>     patches, two for preparing the plugin infrastructure and the syscall
->>>>     handling code and a third introducing the actual plugin API
->>>> v3:
->>>> - make PC registers read-only across architectures
->>>> - add tests for read-only registers
->>>> - adjust test structure for qemu_plugin_set_pc() by moving
->>>>      architecture-specific tests into corresponding directories
->>>> v2:
->>>> - add setjmp() in syscall handling path to allow PC redirection from
->>>>      syscall callbacks (via longjmp(), the cpu_loop()'s setjmp() for
->>>>      exiting a TB would not be live anymore in syscall handlers)
->>>> - add flags to ensure the qemu_plugin_set_pc() API is only called from
->>>>      contexts where the CPU is live
->>>> - add test for qemu_plugin_set_pc() API
->>>> v1:
->>>> - initial version
->>>>
->>>> ---
->>>> Florian Hofhammer (7):
->>>>         plugins: add flag to specify whether PC is rw
->>>>         linux-user: make syscall emulation interruptible
->>>>         plugins: add PC diversion API function
->>>>         tests/tcg: add tests for qemu_plugin_set_pc API
->>>>         plugins: add read-only property for registers
->>>>         plugins: prohibit writing to read-only registers
->>>>         tests/tcg/plugins: test register accesses
->>>>
->>>>    MAINTAINERS                                        |   1 +
->>>>    include/plugins/qemu-plugin.h                      |  19 +++
->>>>    linux-user/aarch64/cpu_loop.c                      |   2 +-
->>>>    linux-user/alpha/cpu_loop.c                        |   2 +-
->>>>    linux-user/arm/cpu_loop.c                          |   2 +-
->>>>    linux-user/hexagon/cpu_loop.c                      |   2 +-
->>>>    linux-user/hppa/cpu_loop.c                         |   1 +
->>>>    linux-user/i386/cpu_loop.c                         |   8 +-
->>>>    linux-user/include/special-errno.h                 |   8 ++
->>>>    linux-user/loongarch64/cpu_loop.c                  |   5 +-
->>>>    linux-user/m68k/cpu_loop.c                         |   2 +-
->>>>    linux-user/microblaze/cpu_loop.c                   |   2 +-
->>>>    linux-user/mips/cpu_loop.c                         |   9 +-
->>>>    linux-user/or1k/cpu_loop.c                         |   2 +-
->>>>    linux-user/ppc/cpu_loop.c                          |  10 +-
->>>>    linux-user/riscv/cpu_loop.c                        |   2 +-
->>>>    linux-user/s390x/cpu_loop.c                        |   2 +-
->>>>    linux-user/sh4/cpu_loop.c                          |   2 +-
->>>>    linux-user/sparc/cpu_loop.c                        |   4 +-
->>>>    linux-user/syscall.c                               |  16 +++
->>>>    linux-user/xtensa/cpu_loop.c                       |   1 +
->>>>    plugins/api.c                                      |  42 ++++++-
->>>>    plugins/core.c                                     |  29 +++--
->>>>    tests/tcg/arm/Makefile.target                      |   6 +
->>>>    tests/tcg/multiarch/Makefile.target                |  17 ++-
->>>>    .../multiarch/{ => plugin}/check-plugin-output.sh  |   0
->>>>    .../{ => plugin}/test-plugin-mem-access.c          |   0
->>>>    tests/tcg/multiarch/plugin/test-plugin-set-pc.c    | 140 +++++++++++++++++++++
->>>>    tests/tcg/plugins/meson.build                      |   2 +
->>>>    tests/tcg/plugins/registers.c                      |  79 ++++++++++++
->>>>    tests/tcg/plugins/setpc.c                          | 120 ++++++++++++++++++
->>>>    31 files changed, 495 insertions(+), 42 deletions(-)
->>>> ---
->>>> base-commit: 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
->>>> change-id: 20260303-setpc-v5-c1df30bad07f
+>>
+>> Indeed, they are signed in linux-user, so maybe my original assumption
+>> that it *should* be unsigned is wrong. Let me take a look to see what
+>> should be the correct semantic here.
+>>
+>>>> As a follow-up on this, changing this seems to be a bit more complicated
+>>>> than I initially thought. The arguments could be simply made unsigned,
+>>>> but the return value (which is also just a register content and should
+>>>> therefore be unsigned if I understand correctly) can't easily be made
+>>>> unsigned. The per-target main loop relies on the return value of
+>>>> do_syscall() to be signed to determine whether one of the QEMU-specific
+>>>> errors (e.g., QEMU_ERESTARTSYS) was returned.
 >>>
->>> Hi Florian,
+>>> Note: some architectures already define the return value as unsigned in
+>>> the main cpu loop and implicitly cast the return value of do_syscall().
+>>> Given that in theory, a syscall's return value could always coincide
+>>> with the values of QEMU's special errors, I'm wondering whether it would
+>>> make sense to make do_syscall()'s return value unsigned and signal those
+>>> special error codes out-of-band instead of in the syscall return value,
+>>> e.g., either via a separate pointer argument to do_syscall() or by
+>>> making do_syscall() return a struct containing both the return value and
+>>> a potential error code.
 >>>
->>> it seems like there is a small issue building documentation with this series, which should be trivial to fix.
->>> https://github.com/p-b-o/qemu-ci/actions/runs/22632339221
 >>
->> Sorry, I didn't catch this one before. I didn't have sphinx installed
->> locally and built without the docs.
+>> It could be a solution. I'm just a little bit relunctant to make such a
+>> change now because we have limited time (soft freeze is coming next
+>> week), so not the right time to make such deep changes and... it has
+>> been working like that for long time.
 >>
-> 
-> No worries, it's hard to guess all the things that you *might* miss, and it's a common mistake even for regular contributors, including myself.
-> 
->> It seems as if the issue is coming from the declaration of the new API
->> as "QEMU_PLUGIN_API G_NORETURN void ..." and sphinx is tripping over the
->> "G_NORETURN" macro. To fix this, I could either change the sphinx config
->> to accept the macro, or remove the attribute from the declaration. I'd
->> personally prefer the former but I'd be happy to get your opinion on
->> this.
+>>> But maybe I'm getting ahead of myself here, please let me know what you
+>>> think!
+>>>
+>> Thanks for your very good analysis. I'll come back once I have more
+>> information about what should be the correct fix.
 >>
+>> Meanwhile, and because we are close from softfreeze, just keep the
+>> current hack in the test. This way, we can focus on sending your series
+>> and the additional comment patch you sent.
+>>
+>> Thanks,
+>> Pierrick
 > 
-> Simply move the attribute after prototype, it's the same semantic.
+> The attached patch fixes the problem by clamping syscall arguments for 32-bit targets. Return type has to be signed anyway, so no change is needed on this side.
 > 
-> diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-> index 791d223df40..0825bc9279d 100644
-> --- a/include/plugins/qemu-plugin.h
-> +++ b/include/plugins/qemu-plugin.h
-> @@ -1055,8 +1055,7 @@ bool qemu_plugin_write_register(struct qemu_plugin_register *handle,
->   * resumes execution at that address. This function does not return.
->   */
->  QEMU_PLUGIN_API
-> -G_NORETURN
-> -void qemu_plugin_set_pc(uint64_t vaddr);
-> +void qemu_plugin_set_pc(uint64_t vaddr) G_NORETURN;
-
-Unfortunately, this only works if there's no C++ compiler present.
-Otherwise, glib's G_NORETURN is defined as [[noreturn]] (it checks
-whether the compiler supports C++11's [[noreturn]] and prioritizes this
-attribute style), which cannot be placed after the function prototype.
-
-> 
->  /**
->   * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
+> You can add it as the first patch on your next version, and remove the hack checking the highest bit in this test, now that the problem is solved.
 > 
 > Regards,
 > Pierrick
+
+Ack, thanks for the patch!
 
 Best regards,
 Florian
