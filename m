@@ -4,100 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1568F3D332
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AB5F3D333
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyC2M-0006Nw-07; Thu, 05 Mar 2026 11:58:58 -0500
+	id 1vyC3n-0007Q0-0E; Thu, 05 Mar 2026 12:00:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyC2K-0006Ni-Ic
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:58:56 -0500
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyC2F-0003Tb-17
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:58:55 -0500
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-64aedd812baso7355651d50.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:58:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772729930; cv=none;
- d=google.com; s=arc-20240605;
- b=GMOwpKJcd/hlc/pgMPHHldRx+hv9w57qbuiGobpuMXnDTQfxc/GwzseFqWGJtTIrdO
- VzFsBmDcD05kV/xrTB8neXuf5JHj5Qf8Qd+XVKzaRIUAKLa/JAjRGxliPNgJF0/Q+AYv
- AJSkgksaRU5CDzjjLn1Hk/EzDnZgHmkqQh4l7HpYhkwDO06snYutnCh+We+JZoos/eQq
- BOX1bjdiDEo8D9dbMhnKF7uHdT84hDvsOMKQcE7lw982ZSuIYjVYKPVPj1g1vvw78iNe
- N6359VmNLy+z0kK7BhCdZw7gjoOOuVDHEUf8EYwlUPR7vUNETR9T45ckJoveXlib4E94
- gwdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=MFmTyxm1/J67fOGNQy86Kslq1dWUNi4PeA3ApEVgYMQ=;
- fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
- b=Eq1OTchNZFgqQXaggz4GxBjDXXkXu8lck/WQWvAiP3LVKzYyzYPRmYhP59b3uOmISs
- 3kboFqzo2AGH63piA7eRCAmVfc2S+aRtVNdC5yUXgoOxOdISnyJGo8ONZDf0ppQs9m36
- M3ObjeAZgcg83V61cPkwHz4tXX/vRor6BBBTSqlQC4y5mE99vNJlFaHbZMh2SUW3rcJH
- OlYkYdAIQYKuz6r3l4+xpuzmkpAZjbWS4NskM/z4C+x4iimJgX45Zr6f+G0Pug5Xmt6/
- UeA4pO7E52vYO5G2XU/qW9/WcnMoDmFUW4ihrZ4vTuG4R0rWKLwGQ1TxHwbVhaAHEPAl
- 6Eew==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyC3U-0007Oe-60
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:00:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyC3S-0003lj-9k
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:00:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772730005;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zefqOHTxG5vv3Mko1njyQnQmXHEz3QoE0naifHiyX0o=;
+ b=dEAJpWUTjo6GpeUthrFk5reymlag7NDLfjMGkXbZTts7nvktTPVpTJiWMyiQegeEJQWng5
+ k5lMteyUbP95MgAADTzMiaJMU+TTJI3u9RsMESxEuGYF7kZgt0IZJKjNUzGl/2LXUfDDFG
+ C5rqfuVzABViLsMzrJCNcU6p5d1X7jg=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-3Lfz9rCkOGWbJoWcgc25Ww-1; Thu, 05 Mar 2026 12:00:03 -0500
+X-MC-Unique: 3Lfz9rCkOGWbJoWcgc25Ww-1
+X-Mimecast-MFC-AGG-ID: 3Lfz9rCkOGWbJoWcgc25Ww_1772730003
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cb42f56c4aso4992160385a.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772729930; x=1773334730; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MFmTyxm1/J67fOGNQy86Kslq1dWUNi4PeA3ApEVgYMQ=;
- b=v1F59KXLc4Bah27pbOFDVGu+UoJkF+osZrS1FjL8Ns3zoDsrL9RwM+NIHgTyGD7LfH
- soX6uHGrZ7/iEXtBgmPDK3Jp3uqXzYRakhI71tbk7sfwUEBwOvwb2cGZkbSRwUu0VetE
- pKgyYIJwzG9ECso/zcFs+d7p5VwS051EPfbSYX2KgXOcwt7H4a20cFTJXPW4qrZqyvtI
- +jq1qyuS2B+wDIVSwdkB6zVZ6dn5q0GZu3MgT6+WLj8o8vOoJ9/m9ejA6TKlZE5TLVIj
- OBped0chzFhq5dhnuxzWLaX2WGFxUZ1LWbjXbwVEtSXK/1NSq5dt66dAUF+rFsSAIkHo
- 6Y+A==
+ d=redhat.com; s=google; t=1772730003; x=1773334803; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=zefqOHTxG5vv3Mko1njyQnQmXHEz3QoE0naifHiyX0o=;
+ b=cFMkNjkmNNshGI39nIQEcgr9an6T03/IRrd1p8+lNLHmaYTfNSKH/EEJDb6Dfh8r4r
+ X5OV7DGMxEGAslsutlK/wCz8Ta51hDNmsIyAVKZARK8siHbJsGAEWwXmx6BjtslmpAg3
+ 4GH8kkquM3udom5Lw6RMOKdzQF/a/1QnIXvFaBeco4Vic319y1d9xYJ2gRG9T2su1fWZ
+ ONGUh+MOHutqX6NKLDGfCNATf0KlshoFiSafbu+Sv8ymeREm95Dcopyzk1mCRlk20hYa
+ ulrUu6ad/Pf9B9h7iyYLsy4HSUTF35+9tip+05Uhxl5l97WMrMEBHImqAmvPjYU+hO3n
+ k1tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772729930; x=1773334730;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MFmTyxm1/J67fOGNQy86Kslq1dWUNi4PeA3ApEVgYMQ=;
- b=c1j70qe/yLeucH6dw4AOmuA8NRsFuuVvd0SRUoeF4qGVsJ0hhttrfnZaiw3F97oeM/
- JB3y9Tg847JJ5crjxMVlaqgIt8LnXzP5j1f3YNezQTS+jYbfv6Evn3MAY5X2xPaz4Vv+
- JbeDIc6EuX69GBQHyEdYkJ6pqg0pq+Us6zsA7388IQMRbZEmHVEZ/ZLoXdqn+gxwBRDG
- z8KsE5aFj79pv4NrhHGk/E1bjM3cIQ1ANcbUf6TgdtOOg/HDHG5JbGkx+kfFJxvr7nAJ
- DSrIDWCq0kZbvNrjx5iTQLIMfh5801bMjYmsZ/1T7LYhRk3k8j1Hn8xTehupQ75HL53Z
- 5Xmw==
-X-Gm-Message-State: AOJu0Yxf/fVOHRS8LDGsngvtVXnT/pADxdNVRB3m8SyFVV30Yq1XbNJp
- 6gQYY3FFrCYSFBaV0jo5W1qzfYVPqXFSfnhj0vbBuT0LlKU515l2w850Znfc6VEdzyUU3IxgXZD
- +92c8nFb5ETTQAMvWa12XQbYA5ai1FBQLu5czEbrGrQ==
-X-Gm-Gg: ATEYQzzdUhEs3JdeXiwVz5lNcPenA5gt2GpO7VPrvhpXq63yRMGD16LDCnIXTTOxS6Y
- MQSWa6D+URzsDH5w/X0F/MpRVtYxRp015WxmQDIl+soiWVlxLjtvUIiZ2sexu2eLkBPcNfsuDsV
- y1Fh++Em2rPZeIYE4qUEpybFkX5x7ceAXdZzfRK+BEkk8vsDuFNtAxkja8G0OQbY/SoTMzwry2n
- 1vk6ZqVox23iVoD9f19Of8bkCKn+fUFedO9dy3pXW5c+RA4hK3Rii9GG45FtKVKTNt3uSh/9GUe
- bUCTgkwwp9hKCNCMrNFP9dJldHBJxSBgNryzcxhz7z5BHtDrK0/6VlQVdfybXwe0vq8=
-X-Received: by 2002:a53:ee5f:0:b0:64a:f69e:bd93 with SMTP id
- 956f58d0204a3-64d10bb30b1mr361417d50.18.1772729929736; Thu, 05 Mar 2026
- 08:58:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772730003; x=1773334803;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zefqOHTxG5vv3Mko1njyQnQmXHEz3QoE0naifHiyX0o=;
+ b=wQohSTx4MO9Nc++P7u1SsXBymGyVQCzvvGcEk5f/tn34ODzgE6qXyXTSF0nVJD0B1h
+ 4vwhisvYB2GYeS9OEKBlVsz0Cm9JrWdr10+gSiamlDuWn38uQBslhGnxy9r+bQr+YaXb
+ BCcYMJ2dHExoZLz11vez+xN3CU6RtH66EZYuIforD9qe0qd6klbHVY+TyGJoDOSjChtq
+ 1G96AAYhZ/e26A6/6jF3cC6Z0BBY1LsnOupenmVjxFfNcSrETEmhJkxKnXSIOaGTCMrk
+ qMx4aCE5OXH1b8SC2ExYQNKA4360/7PdLhGnLzb+NTgH0aA/l7hqqPNgFhelFTTjDbjl
+ Jzfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVJF352HVLa+LILQJ17kuRuX/eGDNm4eoa8fRzrvNZx9NTKqHMKk1t1thnue7GcEqama5KbFKqQ72R@nongnu.org
+X-Gm-Message-State: AOJu0Yx8TKyykHagRhzBHt+C/f9IM1ZNM4nI8jAMlUPYQCQcxUblYV4D
+ spHndoBxGCDKH9oPklMybzZEYXTjmc3PI7mCsIBXfHAFXk60E40oi55bfeDkF98Juu1seund8d+
+ +3vj8PyXgCQr2EsKRti8Fdu6JxlHrlhfbUvS0CAw8tz1IRZGeP95bsEmu
+X-Gm-Gg: ATEYQzwJ+7at6ym/JkV3Fiittlf4TPE8MgwN6kTe24wFFKbTkk1j5pJODl2ITDnNk6d
+ a7bYR0UivXgAhfDuem9K4nMfjTs5QminFa0eurSj1g8K8ALwry/13KnZgmvtKQpyv3exXrHQzkf
+ vVnUv7DZ/cmmsS0motKaaUXWFIGYOc+D2yQX2pGmOEAv6VyTz3jWcAOGtSAm+qNloStM88rgMYF
+ TVk8w4VH58ISjS0tJnOoaHqOyXj4hD+iJRpIAfmxKsi9mVpCWjlOk1ATWgEyQfjRIZPHlA1l+PL
+ VYjplAHKBp/ndGJN1ZMCLi3/TelWM8c9Ii3p5g/yJ3gKjjgQFZ30gKgCA9CO7YaKvcFtgaOr12D
+ 0u1t6/E8KULOGvw==
+X-Received: by 2002:a05:620a:708b:b0:8c6:d398:4a76 with SMTP id
+ af79cd13be357-8cd6af4101dmr72800885a.2.1772730003156; 
+ Thu, 05 Mar 2026 09:00:03 -0800 (PST)
+X-Received: by 2002:a05:620a:708b:b0:8c6:d398:4a76 with SMTP id
+ af79cd13be357-8cd6af4101dmr72794385a.2.1772730002531; 
+ Thu, 05 Mar 2026 09:00:02 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cbbf73451csm1944981985a.47.2026.03.05.09.00.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 09:00:02 -0800 (PST)
+Date: Thu, 5 Mar 2026 11:59:51 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: farosas@suse.de, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 05/18] migration: vmstate_save/load_state(): refactor
+ tracing errors
+Message-ID: <aam2h3QdDlsDINFF@x1.local>
+References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+ <20260304212303.667141-6-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-References: <20260305140508.218316-1-armbru@redhat.com>
-In-Reply-To: <20260305140508.218316-1-armbru@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 16:58:37 +0000
-X-Gm-Features: AaiRm52gv2hkgpLZpeH1y6FsIPuqSSyA1k0Eu-XGMMRSuJ7hJdCY_WqTKf_MWMk
-Message-ID: <CAFEAcA8FLwV14q_nh3L6Cvw58ZnjfBBuG84ANAm5xDd=6zS5GQ@mail.gmail.com>
-Subject: Re: [PULL 0/6] Miscellaneous patches for 2026-03-05
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260304212303.667141-6-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,28 +118,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026 at 14:05, Markus Armbruster <armbru@redhat.com> wrote:
->
-> The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
->
->   Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
->
-> are available in the Git repository at:
->
->   https://repo.or.cz/qemu/armbru.git tags/pull-misc-2026-03-05
+On Thu, Mar 05, 2026 at 12:22:49AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> To simplify further changes (convertion to bool+errp APIs),
+> let's rework some error paths:
+> 
+> - get rid of int ret in traces, as we are moving to bool+errp APIs
+> - split traces to _fail / _success (seems better than add boolean
+>   result to the message).
+> - prefer short error paths (return immediately on error)
+> - around trace_vmstate_load_field_error(), do not call
+>   qemu_file_set_error(), if the erroc comes from qemu_file_get_error()
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-fetching from remote https://repo.or.cz/qemu/armbru.git
-tags/pull-misc-2026-03-05
-fatal: https://repo.or.cz/qemu/armbru.git/info/refs not valid: is this
-a git repository?
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Looking at it in a web browser:
+-- 
+Peter Xu
 
-> The repo.or.cz site is no longer available in the UK.
-
-If you want your pullreqs applied you'll need to find a different
-place to host them, I'm afraid.
-
-thanks
--- PMM
 
