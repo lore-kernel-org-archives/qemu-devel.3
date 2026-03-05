@@ -4,112 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5953AF3D33C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D4FF3D33C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCHi-00082i-LZ; Thu, 05 Mar 2026 12:14:50 -0500
+	id 1vyCHc-0007yF-UP; Thu, 05 Mar 2026 12:14:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyCHg-000824-La
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:14:48 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyCHe-0005ON-Ug
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:14:48 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso10254304d50.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:14:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772730886; cv=none;
- d=google.com; s=arc-20240605;
- b=LP/LdcncQczXk3EOsw86j47REqjHwZdQNdjK3kuh3W/FCYZ7ue0pZk/Ela/WmAHwPd
- 9HDFBX4p90CCnsOm2ZXf2S0lV405yYcP540tg6+UpIrMBMvHNXdV7WeTbARB2X745xVg
- HC4+ICIDTfwScGYSy+21YOq3cKTdGGbeLVnaTMdMZ7bH4VNHxjA1Ql+j0OnO8NhoG5ol
- FxGa+dpcNriRJPsbjLZ3EiSv8/yBQSBfgFtqcuvzurvApdpKCShC9x7RXEr9Q5TWKIVp
- txmEIOdSN1aA1oLbs5b1qM61BS9BNIovGHtKWjHeSL0Rap9+T3GHaJiaweV4Rf/DSYGR
- mwmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3C1yWLF25aLc+4LPJd/Osdo3AdSB4W7k4hoLqnYQcvs=;
- fh=MDrv/iGjC9/T09ari9rQP2ZSJsJ6DYXPSlFFpFTnTDk=;
- b=Y/LVQOUMjCx6XXqV+kJwckpLLc3GyM3xxFtLItTN+YK33bfWSBezOi/3bFchLI4jvV
- IZVd2o+MT2attGvEcAVIv3qa+J0eBlDDGpgt2MAQMQPNaAYxNYiG0AYLxuY0tUY1fMhw
- CKZFt2J8lr0kEIGDebxno2dKUB0khAOc+8yUW3SRhcCWgN0YCZr4mfBJSQjlEepzELRv
- Lh0UtxU2NHn71a7aHxNseP4ALWMPgxQjljthmdw8xcroX9n3MUdDJ5rmIV5Rr5+nDonJ
- XcMdHrmlQUr1VV4RtP0fjxGCh+BdM17d8zhKYRY+qwNA1M6YpCDluaw4GEZcs4jN7dYi
- SisQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyCHc-0007u5-0J
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:14:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyCHZ-0005N7-W7
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:14:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772730881;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wDS+E0ywxEcabzEhzNrAbczq9vFcntt8roiwPe2hSow=;
+ b=e1v9L65GQniocTjppmR16bqVMtb5tv7JrEcKnV+wzNeoWYZB/TvRZ1jpZ0pJq1Ttf9riUO
+ M8IjsO+ObbPZ+TPDvaMdt0mT0iT52Fa64M5HRVYXi8dShgdbfiR4z/4WpfOHgGIlzpQUdO
+ 1HPD+hMy4u+nlZeZ1nBPerVooCoYvoc=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-374-cS4Ox3rbN2qpF7oY4ApYRA-1; Thu, 05 Mar 2026 12:14:39 -0500
+X-MC-Unique: cS4Ox3rbN2qpF7oY4ApYRA-1
+X-Mimecast-MFC-AGG-ID: cS4Ox3rbN2qpF7oY4ApYRA_1772730879
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-506bfff75edso732673391cf.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:14:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772730886; x=1773335686; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3C1yWLF25aLc+4LPJd/Osdo3AdSB4W7k4hoLqnYQcvs=;
- b=jmZ7g2NLP9hUP9vGesKMEbS729txoUc5Px5h2RE1D6gwGBmKwBpkZeQEHWDziNTPwd
- NTcRECLPy92jOxqCP8nXgB5B5ZGvu43b/13ckexhfBdcLQegNZI/6YvLxz0DST0g/q6Y
- 0WfcIPJzQ88ysOB1U0QOda9TT8qrKzZk9ooVkmZw8ksSZSjIENaN28cFsJkgwrPKW8Am
- DbEm7wXa0rKx8TrkjItmHKfWlJloeFe/h58CqmxGZZhvGigVyrFtq/axK64bj2PpmTeB
- iclC2NAiZWbdtn1jVcjZWBGweAF9TcjoUIpikHX24MAclgo0xd5wblLzvEZTmV06kVb6
- vsUw==
+ d=redhat.com; s=google; t=1772730879; x=1773335679; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=wDS+E0ywxEcabzEhzNrAbczq9vFcntt8roiwPe2hSow=;
+ b=YD+F2/6QixBEWp/LhOaFUUOIvsb72ozBB5PDZwSlw8XWhcYzmToR/GR1cwKtHvJvIR
+ dBOMJIs1HHBYr7aUhsQm/wbXBUAGzhzNi1PJjqyMzQUuU/eZJ3Y/L/Z6WoNn+XUfpIcz
+ Q7MX6w61HIsqTmahFdBlvxswGAnbxRylgL+TcBqUjJVHNrdf5MQcPy/xqQwi7O0ih8qQ
+ P8XGtPDUp5p9cF2LW0lnsHzhGSz5w6QF6jcKvHXLu6uxh943KWA0G9Lg5mJyHyi7MeOf
+ vLyJtUZGesJ7CJ4oZaqznBymz+UjaXWxxugZSz9tBAGG7uo02uhKLJNXQy6X7dc8HYcm
+ Ng2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772730886; x=1773335686;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3C1yWLF25aLc+4LPJd/Osdo3AdSB4W7k4hoLqnYQcvs=;
- b=MI5K0+AH1KkJyb+3bMuDrwLfyDNtNaFM8/tcBdvICet/Qhv63iyXAJoyIu8JEPuS/M
- obvgutgxaWfuWrXTOU3tEKcnV0oFxYZveFoqo8ShUop1SvfGxJVK9G0bPLu4HPls5lng
- FwU8R443CKpB7p3GzdFGWFfbTHrqCKz6F9rmuKm4ojQpYO/ZIbpRKsP6AK/0Ypcbjm9p
- L9hNzNPW9X+EXyha6SrwYPBI8W1875eIRdMjTn6FgoCUgSf3Rx/0j4UtPQiif6lIvD12
- dufGxkDCflDT9wnXLar8e5NWkuDIIlyqpf/Iy5c0EkSC1Zu+ouXgxZyo5bYgykIsxhQE
- ORdw==
-X-Gm-Message-State: AOJu0YzgSdawELArbkZ6m5pcrSKVK5TQh9Zkd685XOgYBbRvuWfTzpaY
- ibwh0ragYpVHopNPaPxmmRjSwsTMYlQhvOTXLJ+VM/O91IaJwcI+XxHkEjXgTuIqUD9UcS8hxdm
- S6pg45VS5i49Up/VSQQ56zk0YRandzZtPV//2R7H1SA==
-X-Gm-Gg: ATEYQzxhqMt1pM2kGtO84F9vKLGvUxaQ3XUMQDiwSQFvF8cQfMuMi44UXm2fLrvK+Kg
- nUptfDF7aiAftztNVtxiXfXaeH9ZHrrjmiyok+XIU5PFGY0A3qXO8tox8q64OYhpsV0hMl4FOIy
- cAYifFkqN1qEpixZpxJZjQBztD2QBgIibf2irmuR6iswML/mra6oeX5LqoC0+kBh/Z+LqpjBpDh
- nibtdVPGeh39f6zYpw+KrDKpEnEYjVTw5RykpZwK/xZUP90ln0FoxRu4XNcI9KaKpyQIfh/FQVI
- ppatom8oW4OGEGJaSjrbc8/D7nuybe+w4fORyxPW2WKNJgJE5y2IFk/6eZkYPk6Ba7I=
-X-Received: by 2002:a05:690e:1441:b0:644:7b19:c207 with SMTP id
- 956f58d0204a3-64d0713dcf1mr2276151d50.38.1772730885701; Thu, 05 Mar 2026
- 09:14:45 -0800 (PST)
-MIME-Version: 1.0
-References: <20260305-nvme-v4-0-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
- <20260305-nvme-v4-4-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260305-nvme-v4-4-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 5 Mar 2026 17:14:33 +0000
-X-Gm-Features: AaiRm51JYwBXqMEjS-yZH8L1yCIn6dTuwgID5QnB7m8y6Z-TaTBj3M9clW8N5zg
-Message-ID: <CAFEAcA8xx=h+HYyiemPSicXr6bdkFe+DMPjaSLxsvSDuRe9LqQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] meson: Add -Wformat-overflow=2
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ d=1e100.net; s=20230601; t=1772730879; x=1773335679;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wDS+E0ywxEcabzEhzNrAbczq9vFcntt8roiwPe2hSow=;
+ b=LSH+sXHgM/p3pVNt0A4eJvVY6tn7CAaFlUzeYUjYpGH3aXiQNaISm64uxmTjCfSmGS
+ yDzP5j3EjmKZgffv/GlrG/Dc3CQRUic5zd964jjNUIiB+p9GHF6OWUR7nrr3zzBuDUWm
+ LBufvL+PHiIbi6UEMgFpiY3E2I2MmOBwuxeFQhb4UTxTNlp57gn2+94ou8xSb1Xag7O+
+ LRd7PbuojOVd7j6lpX6ng/jQws2BNq8sKXeHiHLtnYPeidUsbpHsaBNQARgADJ5wMUVI
+ kV86WgKz8Cg+0xn/itIlFaVdC+JFFdTFn+75XFBfljK2Gx4CeqVDr6lbHvcUqmd+cEkA
+ xjCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWVDQyHAZHNVBAvhIi7Zw68ZxWxU9OYcCqoXUXoJke1tP0X3re92U53FBDTbzlF1wIarr9U+55LUnj6@nongnu.org
+X-Gm-Message-State: AOJu0Yw3/k4jyuxylb/SctiX9ecKEfrwrjciljVILyOnQkRJ9s6cEwfT
+ IWJdDw0Z30M1BD32kVLM+5xdqSwxoPNd+UeWCWP9N1H2Z6YBYCX9F2mR1MmBkIFde4/HcMCpgpK
+ Bb3528k0rqJn90hw3K+8WWjfk/8ZZDuCvgYG6+mj9/qmAjQrhj5SUZK+V
+X-Gm-Gg: ATEYQzzm/h5asogSUqoR8SH1M13DF3mV4wzVrNlGgTdrVR3M7R6pQ2pcRZmM2f4gUTX
+ 2EehjHBEwQ+czQGwMV9myzLxcRVycjWX2eDGFIki1BUVG14i33XBwN0aYZZpxvMTDRj5zRBlatd
+ Oo7hdeNA4GTqpQlWbzFP5hmueaWTfxOHWi79XliIU0+B6hLS2BkxCaBVsvIHIh6eR7ONAq4+qe5
+ 22ddjUqZcbyqU4iksuOAiumtSDrKa8fA2Ym813EqVf7LcY6azKTpR+LFYrolpXstx1AkNlhr2YL
+ sNs5wY5UEjKR71Tte6wLtl3qICwj1CtqJjrLkvDbHH718HfUloYHOiTkKNHVdaBhuO/tW0N6nL7
+ h2ZZ68KtrsBG3gA==
+X-Received: by 2002:a05:622a:130f:b0:4ee:155d:b560 with SMTP id
+ d75a77b69052e-508f1ce3e30mr4998381cf.8.1772730879074; 
+ Thu, 05 Mar 2026 09:14:39 -0800 (PST)
+X-Received: by 2002:a05:622a:130f:b0:4ee:155d:b560 with SMTP id
+ d75a77b69052e-508f1ce3e30mr4997881cf.8.1772730878631; 
+ Thu, 05 Mar 2026 09:14:38 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-899e608cfc6sm126484506d6.14.2026.03.05.09.14.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 09:14:38 -0800 (PST)
+Date: Thu, 5 Mar 2026 12:14:26 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: farosas@suse.de, qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gautam Menghani <gautam@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Stefan Weil <sw@weilnetz.de>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Thomas Huth <thuth@redhat.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ "open list:Floppy" <qemu-block@nongnu.org>,
+ "open list:XIVE" <qemu-ppc@nongnu.org>,
+ "open list:S390 channel subs..." <qemu-s390x@nongnu.org>
+Subject: Re: [PATCH v3 17/18] migration: drop VMStateField.err_hint
+Message-ID: <aam58gNtpCRin-NN@x1.local>
+References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+ <20260304212303.667141-18-vsementsov@yandex-team.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260304212303.667141-18-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,44 +140,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026 at 06:19, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> w=
-rote:
->
-> https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Warning-Options.html
-> > Level 2 warns also about calls that might overflow the destination
-> > buffer given an argument of sufficient length or magnitude. At level
-> > 2, unknown numeric arguments are assumed to have the minimum
-> > representable value for signed types with a precision greater than 1,
-> > and the maximum representable value otherwise. Unknown string
-> > arguments whose length cannot be assumed to be bounded either by the
-> > directive=E2=80=99s precision, or by a finite set of string literals th=
-ey may
-> > evaluate to, or the character array they may point to, are assumed to
-> > be 1 character long.
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  meson.build | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/meson.build b/meson.build
-> index 414c8ea7e280..cf50bc492f9c 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -692,6 +692,7 @@ warn_flags =3D [
->    '-Wempty-body',
->    '-Wendif-labels',
->    '-Wexpansion-to-defined',
-> +  '-Wformat-overflow=3D2',
->    '-Wformat-security',
->    '-Wformat-y2k',
->    '-Wignored-qualifiers',
+On Thu, Mar 05, 2026 at 12:23:01AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> The field is unused, all users of VMSTATE_*_EQUAL pass _err_hint=NULL.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-I can build with both gcc and clang with this extra warning enabled
-without it falling over on anything else, so
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+-- 
+Peter Xu
 
-thanks
--- PMM
 
