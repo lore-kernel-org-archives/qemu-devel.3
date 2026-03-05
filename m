@@ -4,95 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E80F47CAC
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D9DF47CAC
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyDF8-0003C9-NC; Thu, 05 Mar 2026 13:16:15 -0500
+	id 1vyDMi-0004Ri-So; Thu, 05 Mar 2026 13:24:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyDEw-0003BZ-PT
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:16:04 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyDMg-0004RW-Ir
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:24:02 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyDEt-0006gR-5S
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:16:00 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-439b790af67so2923994f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 10:15:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyDMf-0007pg-1c
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 13:24:02 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ab077e3f32so37008025ad.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 10:24:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772734556; x=1773339356; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NlmsCJf2fzHTAC0WK8L7tDQENhBUUh9+SRB8PgBoI0Y=;
- b=PQ+fEu3oz8NR791Tv2BI2BtI9tadlSot14vNfOzFfBCdFC32ZvDNmqZnnb5z9c2aJg
- uN/fv/B+vpwGc5VDSDytL1RWEHcF2HsnSffTb/FTb5QPtmUdgMAVzF3VEKQxIh4+gnu+
- FkAHlPcWuMzkGRkPmSTHzG/IH6VAkZqF73CM22QeGvUbWygzmizKXxBg6jaol7YzBVoQ
- rVUa6ifxSx1p1ThLzu7NUZeU/hbGiqTIotMsLfboAatSx1igbIUNZdmnqXvuQCWvTlfY
- 0qft7wOygAVYhi8It3AOZBiLV+mQ9wPWBpqkVUxydvaGLYeapPMFUnfIsUIPESRQepyM
- uv8g==
+ d=linaro.org; s=google; t=1772735040; x=1773339840; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=k8w06LgTi3OvHMjIGI6+FVYERdrl/LwN2mU3b/nWUyw=;
+ b=EwzKgxLFkD7cAJDGorozcKI/Fxtjw0znL0LUxEo7RUzX8gAM+A/vqgXH+FJNIPhXrx
+ 7hYk12s5a3YkbBIQVWH634CE88c1EpgkodI/BJaTdAzQYVWDlgrbJnDM3UzGCbzOFxYN
+ bXv2p255n09CObQATbfoBXaLQTfSJ1TNcu//butZYc5NYJBQ8BE0i13krfn6/Sra1e44
+ WobLVKGsnu0yAQlRcAesovWhtRwMeEBHv09maV9jUvIb532q9uYPG8PJeOLbCRPTOQ1L
+ XGIdFIlwbtQ49a2m4+vkJCTMaQOwgbS/6lKpjh1xNzKnDlKySxLWyusSg3aeGuB9NJAm
+ 1pfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772734556; x=1773339356;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NlmsCJf2fzHTAC0WK8L7tDQENhBUUh9+SRB8PgBoI0Y=;
- b=UXT/kqKBbsUuCUaAXegBn74XBP5DP4/NwBXuYlL2IbOYg0K9+lDcglsTPb0wsrBHXU
- cTQgWYlEs9telEn9Kf9vNUjb7YZrd3scdHvtwMFIf2C0+hghT7/2iBzpgQRqncWX1tgJ
- GTzoD6c0bbuTibZmjuRddXa5By+9V2Ugh2MPDCY1TkujHo3JZFpHppgZwy2y0FVmvDHg
- fFX3uJEKHzL7jkhU0WcNifrAZmeAu8GUHGPJnmPrBflyiAUghUjBXXZqqiSpIl05js3K
- qF2yN7ISCE4OqMWZerVjniGlVkPXJl8BPOpOu8iTxaT3gvMFqJ8l5zi5SQszw8+LxX/X
- XJdA==
-X-Gm-Message-State: AOJu0Yyhyvo/jcWZc2gkvDoQ/1AOGzODwapkOPyNzfEASbgCPi2ZzXa2
- 70JZsSgM+rjhISqG86cA5YPJCW/QC2Pf+SubQxZL3Nq3PF8JxLypVI53
-X-Gm-Gg: ATEYQzw+ul4U0o7UjXDJnfcu0WXNKBF7g7lg3DFhmpLm89W0JpE3pi7kRPvQc49IzVm
- cdwuh9fjNlnhxjpNNlFiDO9lrFp/v9sSqR7AFJprhhjok0bQ5l3j92zOc4x3P1zriOjRfVOA/5i
- 2PFjLx+Q8DEJvksJNxAG01288flSKE5fO4b+LNvIBp/j1qwuv3yJCnZCOqhJSRYjCgRgcn38gVJ
- KJIrGCoCgGmsfjEvvNUkeuftIkoiET1xECr7WRjkvocZO0psbGL0AeclTB1YRrcpkEl3ozt86O+
- Ro2Lt+9TheOtVqQNy/MR9qis5nsc7hwXoe7M3lZbTTIDR+MMx1MF1p49UN7ISyY8k+/ZZAU1Q0x
- Phi1ZaH0RNx/avLT43gwSdeiSLP0afNyBx3kokohAStrr+KMWcy0FGjL9oXvJSQXlHvaSgKhLsK
- HU8Uuy3T93MuXocapWPYMuV/ZZs8xZ+A==
-X-Received: by 2002:a05:6000:438a:b0:439:c560:bb79 with SMTP id
- ffacd0b85a97d-439cfd65a2emr6126449f8f.17.1772734555672; 
- Thu, 05 Mar 2026 10:15:55 -0800 (PST)
-Received: from ehlo.thunderbird.net ([185.238.219.34])
+ d=1e100.net; s=20230601; t=1772735040; x=1773339840;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k8w06LgTi3OvHMjIGI6+FVYERdrl/LwN2mU3b/nWUyw=;
+ b=SO0NrIKeCnq9XBP8gITLHtGWDMIpmpaP+LzJdQe1dQ+8vW0PMaMcCe5EHa/rJ08qQT
+ ++laWwL6fNfDCqv5KQu7ofZabNxuGsrDEv/XB5crJ2ob88ubMtrL2D8R0AAw4Y5+D/YE
+ k4NS79Jg2DLs1ngF/WjieIo2p9isUTQbXeXnU88Q0cvZqyZUD42QWRVKtHYHpWkcnzm7
+ ja6E6E3qt5g7UJo6K4L5A3uhZAnqtsnU/Kzl2+vKIBhN3XAaJ5B5xlDuVkBD1miTFVck
+ XCy/jEnRB/gG8HTHSmayQItJJajElc2cghRyJqkseIl6MqzkdNHGM+VDXPg474FnBvEy
+ K3Zw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5rQVNMDMpxPfn0NPChTIcgyfMswrzlwnFepE0vFAloLNMUjty567LWqePhl7HMB/IyryyTn2zeXuU@nongnu.org
+X-Gm-Message-State: AOJu0YyUuNdG/tCQov3bzTaHVXMpo/86UlNfRuYj2gi4RP3ldMjkidah
+ 5z3pqsghozHGc13mZp02l6vZnTwiyspw43Dfl6iaYie1TAllJUQKw1RbD/XEWfE3q0s=
+X-Gm-Gg: ATEYQzzHr98tn6+Tq7dIFQlcz17/+OG8Wo3ArPpnyUtjAP8l23t/nwFP22ozXtX0Ex/
+ keWmKacy4NHxUa4aCtLwef/FgQX/u6PKPn9AAKGKB9DWlxIMedmgijNNTJZVfJYIDTu8biyxR4i
+ edy3ldH1H4DGIF0HYPLgCtiJOkpDzP+oh65Po/5FTtnIJbjF35nA6w4kUI9GREEO6hBuDMYJo9Q
+ OoIiB3LlcKNKOcrxZaQ53xuNk7v280DlXskcrug2H8zTpaabVnOUhUICkBJiGmepEQxZ6IyClAa
+ 2xx3d7VidZnqjYjnqNIaPJCii1lsuUhMoyWm20kFknG0hsl0E5HOGmhuP8/XXuQbf+gCp9uMcOZ
+ 0/AMV0CkBd4/mlCh4wEtXtJ9XpDCRQukwf/RqIOzGkwMIBbJAxzFBoioP3O0fQ9vvvcN5lUoBS2
+ H9AxhxiKDY223+JIA9bXp4jeo8yhnUyESQASBKOTsez9IZW80IPx4HKOV4vYHa0OvXZiPq
+X-Received: by 2002:a17:902:e80b:b0:2ae:7f29:c1b6 with SMTP id
+ d9443c01a7336-2ae7f29c239mr9842635ad.57.1772735039392; 
+ Thu, 05 Mar 2026 10:23:59 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439ac9f3e5bsm42100771f8f.37.2026.03.05.10.15.54
+ d9443c01a7336-2adfb69f996sm226317655ad.50.2026.03.05.10.23.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 10:15:55 -0800 (PST)
-Date: Thu, 05 Mar 2026 17:53:29 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
- =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
- Troy Lee <leetroy@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-arm@nongnu.org,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH v2 12/13] hw/char/serial: Inherit from SysBusDevice
-In-Reply-To: <CAFEAcA9LLOTOrkUQW3Q74rrOiXGa7BoC8Lu11O9ESC-36WHtew@mail.gmail.com>
-References: <20260303222143.142741-1-shentey@gmail.com>
- <20260303222143.142741-13-shentey@gmail.com>
- <CAFEAcA9LLOTOrkUQW3Q74rrOiXGa7BoC8Lu11O9ESC-36WHtew@mail.gmail.com>
-Message-ID: <A0F637F1-BB16-42CB-AC5E-80D71DF8057B@gmail.com>
+ Thu, 05 Mar 2026 10:23:58 -0800 (PST)
+Message-ID: <653f877e-9183-43fa-b5cf-3ca3ea021bdc@linaro.org>
+Date: Thu, 5 Mar 2026 10:23:58 -0800
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/8] plugins/core: clamp syscall arguments if target is
+ 32-bit
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260305-setpc-v5-v7-0-4c3adba52403@epfl.ch>
+ <20260305-setpc-v5-v7-1-4c3adba52403@epfl.ch>
+ <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <81547e70-5b7b-41dd-89fc-732f4209ef61@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,94 +143,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 5=2E M=C3=A4rz 2026 10:07:23 UTC schrieb Peter Maydell <peter=2Emaydell=
-@linaro=2Eorg>:
->On Tue, 3 Mar 2026 at 22:22, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
+On 3/5/26 9:33 AM, Philippe Mathieu-Daudé wrote:
+> +Laurent
+> 
+> On 5/3/26 11:05, Florian Hofhammer wrote:
+>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >>
->> SerialState currently inherits just from DeviceState and serial devices
->> use SerialState as an "IP block"=2E Since DeviceState doesn't have an A=
-PI
->> to provide MMIO regions or IRQs, all serial devices access attributes
->> internal to SerialState directly=2E Fix this by having SerialState inhe=
-rit
->> from SysBusDevice=2E
+>> Syscall arguments are abi_long in user code, and plugin syscall
+>> interface works with uint64_t only.
 >>
->> In addition, DeviceState doesn't participate in the reset framework
->> while SysBusDevice does=2E This allows for implementing reset
->> functionality more idiomatically=2E
+>> According to C integer promotion rules, the value is sign extended
+>> before becoming unsigned, thus setting high bits when only 32-bit lower
+>> ones should have a significant value.
 >>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->
->
->
->> diff --git a/hw/char/diva-gsp=2Ec b/hw/char/diva-gsp=2Ec
->> index 2ea60103ea=2E=2E55c42effe9 100644
->> --- a/hw/char/diva-gsp=2Ec
->> +++ b/hw/char/diva-gsp=2Ec
->> @@ -56,13 +56,13 @@ typedef struct PCIDivaSerialState {
->>  static void diva_pci_exit(PCIDevice *dev)
->>  {
->>      PCIDivaSerialState *pci =3D DO_UPCAST(PCIDivaSerialState, dev, dev=
-);
->> -    SerialState *s;
->>      int i;
+>> As a result, we need to clamp values we receive from user-code
+>> accordingly.
 >>
->>      for (i =3D 0; i < pci->ports; i++) {
->> -        s =3D pci->state + i;
->> -        qdev_unrealize(DEVICE(s));
->> -        memory_region_del_subregion(&pci->membar, &s->io);
->> +        SysBusDevice *sbd =3D SYS_BUS_DEVICE(pci->state + i);
->> +        qdev_unrealize(DEVICE(sbd));
->> +        memory_region_del_subregion(&pci->membar,
->> +                                    sysbus_mmio_get_region(sbd, 0));
->>      }
->>      qemu_free_irqs(pci->irqs, pci->ports);
->>  }
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    plugins/core.c | 21 +++++++++++++++++++++
+>>    1 file changed, 21 insertions(+)
+>>
+>> diff --git a/plugins/core.c b/plugins/core.c
+>> index 42fd986593..d6173422e9 100644
+>> --- a/plugins/core.c
+>> +++ b/plugins/core.c
+>> @@ -513,6 +513,23 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
+>>        }
+>>    }
+>>    
+>> +static void clamp_syscall_arguments(uint64_t *a1, uint64_t *a2, uint64_t *a3,
+>> +                                    uint64_t *a4, uint64_t *a5, uint64_t *a6,
+>> +                                    uint64_t *a7, uint64_t *a8)
+>> +{
+>> +    if (target_long_bits() == 32) {
+> 
+> IIUC this is related to the target ABI, so maybe we want to
+> unconditionally use:
+> 
+>      const uint64_t mask = MAKE_64BIT_MASK(0, TARGET_ABI_BITS);
+> 
+> Maybe guarded with #if TARGET_ABI_BITS < 64?
 >
->The ordering here looks a little odd -- is it really OK to
->keep using sbd (passing it to sysbus_mmio_get_region()) after
->we have unrealized the device ? Remove the region from the membar
->first and then unrealize would seem a more natural order=2E
 
-Indeed=2E Will add a patch before this one=2E
+TARGET_ABI_BITS is a target specific define, but we are in common code 
+here, so it's not usable.
+As well, since this path is only exercised by linux-user (and not 
+system), target_long_bits() should not be different from its runtime value.
 
-Thanks,
-Bermhard
+>> +        const uint64_t mask = UINT32_MAX;
+>> +        *a1 &= mask;
+>> +        *a2 &= mask;
+>> +        *a3 &= mask;
+>> +        *a4 &= mask;
+>> +        *a5 &= mask;
+>> +        *a6 &= mask;
+>> +        *a7 &= mask;
+>> +        *a8 &= mask;
+>> +    }
+>> +}
 
->Perhaps the MR refcounts here save us, though=2E
->
->> diff --git a/hw/char/serial-pci-multi=2Ec b/hw/char/serial-pci-multi=2E=
-c
->> index 38e5a78e6f=2E=2E4e51d14111 100644
->> --- a/hw/char/serial-pci-multi=2Ec
->> +++ b/hw/char/serial-pci-multi=2Ec
->> @@ -50,13 +50,13 @@ typedef struct PCIMultiSerialState {
->>  static void multi_serial_pci_exit(PCIDevice *dev)
->>  {
->>      PCIMultiSerialState *pci =3D DO_UPCAST(PCIMultiSerialState, dev, d=
-ev);
->> -    SerialState *s;
->>      int i;
->>
->>      for (i =3D 0; i < pci->ports; i++) {
->> -        s =3D pci->state + i;
->> -        qdev_unrealize(DEVICE(s));
->> -        memory_region_del_subregion(&pci->iobar, &s->io);
->> +        SysBusDevice *sbd =3D SYS_BUS_DEVICE(pci->state + i);
->> +        qdev_unrealize(DEVICE(sbd));
->> +        memory_region_del_subregion(&pci->iobar,
->> +                                    sysbus_mmio_get_region(sbd, 0));
->>      }
->>  }
->
->Similarly here=2E
->
->Otherwise
->Reviewed-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->
->thanks
->-- PMM
 
