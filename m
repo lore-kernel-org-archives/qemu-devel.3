@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E9BF3D31C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C59C5F3D31C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyBNx-0001Iz-UU; Thu, 05 Mar 2026 11:17:13 -0500
+	id 1vyBOQ-0001uR-PL; Thu, 05 Mar 2026 11:17:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyBNu-0001FV-Sb
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:17:10 -0500
-Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
+ id 1vyBOL-0001sS-4Q
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:17:38 -0500
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyBNs-0004sF-AU
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:17:10 -0500
-Received: by mail-qv1-xf2e.google.com with SMTP id
- 6a1803df08f44-899ed41208fso94499586d6.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:17:07 -0800 (PST)
+ id 1vyBOJ-00054j-G3
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:17:36 -0500
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-8cbc593a67aso773382985a.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:17:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772727427; x=1773332227; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772727454; x=1773332254; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lByb3b/EvMI1o9ZwzQIMiVAuzl2p739LeJrSqTT9irk=;
- b=M6KZDr8kOt+FUpBB2o1gByySXV7s1d90b+ih1Plxt2AL1RLdjfAQxtt/2oFPpKrG8m
- MFUnMeKzcl1yl+VZ/8vYViLTeboc76xLXh4S8C0wFcjnjZyjaK+LIhcokrcLryio17Bq
- 5ShfoA1tjLM69XI6FSyDclSXmbhBIDc0S/LzsfCakmWrUO3N8QBApYu8Azj72uOvRx0R
- LbH8+mt8GTHHkzIY2Qcrl9ci6QBQ9mza8mOTjW9MaTDE14scSkqbkzLO8b5VuCCYrzGw
- dV5+cF2o5EcZZlTkJFgehlO9AyYXdCNPZcWq90PujtCUxPRyDgo4xaWQxZie3GWWMhT/
- x2AA==
+ bh=glBgEqpSJAIJ02AC7FsJ1DIWIfooMnMH2MhY377g8is=;
+ b=egIJsVqjwRbcLBII+Ctw5wpyz91IVqQRozO1+LboF1ur+MtqBLpM9IeR2ljJgqxKa/
+ 7GV3XtVRzUKWs3FwdHeipAVA32+ohorF7N1F+CjHzfaM0jG5VRxvDAFci5SrC7KKnoTE
+ jS+9Llna/CbsEwtdgmJK/eJTraSLfupKqy+yhY2KBbkaQe2fkOA0pjKdQDWdaQa3BbCJ
+ PfE4hmbER5Js6CgNhV/R1OZVVKymmKK1lK19qHrBMWdT46xoxz0dt0coheowTFFhI4kp
+ 4OpHhT8cF+js33+RY97JBZBuAzCtmHxwAmznmBA5CV4uYOS5TYqIaBjv8t4S01rsVAGr
+ 7M+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772727427; x=1773332227;
+ d=1e100.net; s=20230601; t=1772727454; x=1773332254;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lByb3b/EvMI1o9ZwzQIMiVAuzl2p739LeJrSqTT9irk=;
- b=N+n2F6TYFcHvFekXsJQgJ8d/ABfUMiXQaVVJ7w3rjIs4gPNPpDfuGkkCVcL2E5IQoT
- 0cix7r9Q2V0cPqW2N5RG9ZS5o1AX/lJHwLS2DNa58cdBC6Yg27Z5wvXRUBUn3UpXooL0
- CRFgL0xNmCudMr9PCIVKjv4gHz4TprhRBClMUdPrx5tRNBUUcLqTD5n+OD8yg0qckpj3
- 9MJ6Nrj9J3zOIisoHAjNTC2aMpX62jItOnGPmRRZ5soGdGtkg5t1BpIHav6AZ+e6QzCq
- nnKys9EyDZZeofObuXfUED7CuAtbe74/L63SggGjiBSyp333EOvsWc8Cf4f+G3diV+GQ
- fOhQ==
+ bh=glBgEqpSJAIJ02AC7FsJ1DIWIfooMnMH2MhY377g8is=;
+ b=lZFnWAmj8BbnxRLwlaH+2GjVvU8bERL7y+J4HOZJekQgXllAP7lzAhr2pznqXUSelR
+ SKNh94nVLFwjR6X9xAlW32IkS9IZXSSmmiURpAYexnjukICVKUctD4kWIEt5ZBDKq6UD
+ JIhGxvCKrHkt7W1Z5vysMPvUgd+6+r1NGRl3L1pjiHYnU9MF7NybsogDgDfwoZtsQ7iZ
+ +eNgBOd208AitwiB8dlAnlJUgA3v+y2EB0bHfui8Sv1C4bl9NiV/tbrGDMjZWTpCtgI/
+ 0FKYhkjXBuLF78gg2gtMbWTafVDi/+IZ4O/PUSw2kAde0oc5TMMsP2VTv1NsN8LNBxTW
+ yzFw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEpcg0cfe+7P/F7aOCJY94BHtknS2bTeLGeiLrJ8kQEBjHmo5IIUjQvU0a8wj3YP29QNi44+VbUfTu@nongnu.org
-X-Gm-Message-State: AOJu0YwgkimNFKQDDD/sF2eomY0pRPLGZ3PGqYyX5qm2PXNrBzU8EKU9
- kes22KLGoPzvTg07DAkx91uCS0AXsKZLi6qeTEiwOnJKwwZY9dZVb+Ti4milZdWaGfM=
-X-Gm-Gg: ATEYQzz3yv+LgNmmrAoC6T+tR+h23egRQXEwsRGdRESfBMYVHmhzjCK43ZNMc313jIg
- PV/1WrpDx18P84iXXrN6iflhFAKQYWgM05fp5f1eC0XDUEvttq9jwtXOocX85+p0UMirMLNKhl7
- H47cSAGxsSALmJUhbAs1TJ+KXvwHqJ24HbQcsbel2AFht9XBFxM0vD5IpppcG/G3PgAiZjDUZ1/
- jR39+p+XCaqT/BrAvBapFBukVx7cn2JJqO1BqwN5oJNHErh4t+/7XhK3MUOWBet295eM0e0G8/4
- Cj3CXs2Bj9jQDW7IrL+AEDyfuW7jSPm8vCspuWou2cty6RjQviFCw5/In6Y5hLrCu9kGgL0OnIr
- 7y5Lm6lFC+QkkHdXk4zIE5LaKUsr4hiSAgLSamAI+Mikwk12AyscWycsV7GwNd43YDbGK96XoWw
- AGLnxssXqjgwL8cgmVYAV+Imhm8xvxzlzqxcEQoAmg8qRsLzQ/jzW0GKXQj6sK/adb0cJe
-X-Received: by 2002:a05:6214:ac1:b0:899:e9bf:3747 with SMTP id
- 6a1803df08f44-89a19e41cc0mr87342416d6.53.1772727426936; 
- Thu, 05 Mar 2026 08:17:06 -0800 (PST)
+ AJvYcCXnkEPD1ZPJClLIKdHO7fpyzLMrFWtmKugpNFH6z2J2/Z8/OqJRdDXe4RZKka0hN3RUowP7Gg4r6owc@nongnu.org
+X-Gm-Message-State: AOJu0YzfjwqFDtf1vVSvJYLacmoB+mic5/mw+tvbXs7WcVs23RQpAcMX
+ sBrpmAX2g3BKgjiVVlXNR5E5K2qndr8D4wdiZxyn7klJsDBZR0zHf8Uez4BFl5OqhVY=
+X-Gm-Gg: ATEYQzyM9ysre6qKBe/D+oNgTo6G4V4SxCultsSWUNg6p/VBorKoGDhkscpunpqDTKM
+ lTubj0eRqddRlD1Q3jVU5CvQyr3axFF4TQWKkCC0z8sdrKsiVBFjGDrwoShLbb3uSzRS2c95IYY
+ AQLe51Lv3YRzdyr/DziUzWpzvIvUi1WbwolH83LBCZuwITf+0CPiyPfwnS62FehJQ9TvJvPyqiX
+ qjiJb+a3kr1y+zWIvpfH1S+Er2CnLt1Tvq+lxHclGaxoce7SLAqHNDOq2WSVtEqtfRLxh9yObG9
+ hQwPmrqThWkalcCDMPNdkg9tp713+moUB8+cVwlr1aC9ZSWdUiSkLLhK0pgxi/HPy2V1px8SoQL
+ Ncb0xLEa8eahvdDhdttn3OiEs5M85zB1XO1OxVX9gZKRvABwXSmOPJUH36bpAE9Sqm9XuTM72h/
+ sYDvmMW7HjZxTJ279bQmtBLShWXowKqcFP8aUluclRuHiEPOaVXMcLUIxcbjbIuHrkid2t
+X-Received: by 2002:a05:620a:698b:b0:8c6:a2f2:d874 with SMTP id
+ af79cd13be357-8cd5af7733emr733880685a.39.1772727453815; 
+ Thu, 05 Mar 2026 08:17:33 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-899f8ad5b8asm122617646d6.0.2026.03.05.08.17.05
+ af79cd13be357-8cbbf72d3casm1942840885a.42.2026.03.05.08.17.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 08:17:06 -0800 (PST)
-Message-ID: <45ba39c5-ee1f-4aba-a962-bd25549f5242@linaro.org>
-Date: Thu, 5 Mar 2026 08:17:05 -0800
+ Thu, 05 Mar 2026 08:17:33 -0800 (PST)
+Message-ID: <091b791f-b5f6-40a6-a665-c43b26d287e3@linaro.org>
+Date: Thu, 5 Mar 2026 08:17:31 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] tests/tcg/plugins/mem: Correct hash iteration code in
- plugin_exit()
+Subject: Re: [PATCH 3/3] tests/tcg/plugins/patch: Free read_data in
+ patch_hwaddr()
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20260305161531.1774895-1-peter.maydell@linaro.org>
- <20260305161531.1774895-3-peter.maydell@linaro.org>
+ <20260305161531.1774895-4-peter.maydell@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260305161531.1774895-3-peter.maydell@linaro.org>
+In-Reply-To: <20260305161531.1774895-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,38 +142,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/5/26 8:15 AM, Peter Maydell wrote:
-> In plugin_exit() we call g_hash_table_get_values() to get a GList
-> which we look at to print some information. This code has
-> multiple issues:
->   * it names the local variable for the GList "count", which
->     shadows the "qemu_plugin_scoreboard *count". This isn't
->     incorrect, but it is unnecessarily confusing
->   * it doesn't free the list, and the leak sanitizer complains:
+> In patch_hwaddr() we allocate a GByteArray for the data we read back
+> from the guest; however we forget to free it, and the leak sanitizer
+> complains:
 > 
->     Indirect leak of 2328 byte(s) in 97 object(s) allocated from:
->      #0 0x5589b0b72293 in malloc (/home/pm215/qemu/build/x86-tgt-san/qemu-system-i386+0x1a2f293) (BuildId: 26964cad9e3f81d35fc144d7cc88b53adf6f60c7)
->      #1 0x78fd8cfa1ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x78fd8cf96e4a in g_list_prepend (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x57e4a) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #3 0x78fd8cf8b318 in g_hash_table_get_values (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4c318) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #4 0x78fd84d1a90c in plugin_exit /home/pm215/qemu/build/x86-tgt-san/../../tests/tcg/plugins/mem.c:87:25
->   * in iterating through the list it updates "count", so by the
->     time we get to the end of the loop we no longer have a pointer
->     to the head of the list that we could use to free it
->   * it checks for the list being NULL twice (once in an if()
->     and once in the for() loop's "while" condition), which is
->     redundant
->   * it skips the loop if g_list_next(counts) is NULL, which means
->     it will wrongly skip the loop if the list has only one entry
+> Direct leak of 40 byte(s) in 1 object(s) allocated from:
+>      #0 0x56c00ad48293 in malloc (/home/pm215/qemu/build/x86-tgt-san/qemu-system-x86_64+0x1a9f293) (BuildId: 62e2a7dbe5ff146b2fa14d26e24e443f1967edd9)
+>      #1 0x7b3e4cc91ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x7b3e4cc54c12 in g_array_sized_new (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x25c12) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #3 0x7b3e44b06b49 in patch_hwaddr /home/pm215/qemu/build/x86-tgt-san/../../tests/tcg/plugins/patch.c:68:29
 > 
-> Rewrite the iteration code to fix these problems.
+> Indirect leak of 16 byte(s) in 1 object(s) allocated from:
+>      #0 0x56c00ad486b0 in realloc (/home/pm215/qemu/build/x86-tgt-san/qemu-system-x86_64+0x1a9f6b0) (BuildId: 62e2a7dbe5ff146b2fa14d26e24e443f1967edd9)
+>      #1 0x7b3e4cc92819 in g_realloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63819) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x7b3e4cc54b36  (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x25b36) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #3 0x7b3e4cc55276 in g_array_set_size (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x26276) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #4 0x7b3e4cc55574 in g_byte_array_set_size (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x26574) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #5 0x56c00be2ccc1 in qemu_plugin_read_memory_hwaddr /home/pm215/qemu/build/x86-tgt-san/../../plugins/api.c:524:5
+> 
+> Mark the variable as g_autoptr(), as we already do in the equivalent
+> code in patch_vaddr().
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> I am assuming that not printing the region info when there is
-> exactly one region is a mistake, but perhaps it is intentional?
-> 
->   tests/tcg/plugins/mem.c | 24 +++++++++++-------------
->   1 file changed, 11 insertions(+), 13 deletions(-)
+>   tests/tcg/plugins/patch.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
