@@ -4,60 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645DEEFCE22
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F72EFCE53
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 00:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vxwXR-0001JO-JW; Wed, 04 Mar 2026 19:26:01 -0500
+	id 1vxwXb-0001KQ-7u; Wed, 04 Mar 2026 19:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1vxwXP-0001It-7G
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 19:25:59 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1vxwXY-0001Jg-Vy
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 19:26:09 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1vxwXN-0004vt-Pt
- for qemu-devel@nongnu.org; Wed, 04 Mar 2026 19:25:58 -0500
+ id 1vxwXX-0004wl-La
+ for qemu-devel@nongnu.org; Wed, 04 Mar 2026 19:26:08 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id BF77B408F6;
- Thu,  5 Mar 2026 00:25:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34732C4CEF7;
- Thu,  5 Mar 2026 00:25:54 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id D149361340;
+ Thu,  5 Mar 2026 00:26:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B08C4CEF7;
+ Thu,  5 Mar 2026 00:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772670355;
- bh=T9uUSh3wGNO8C4j8rIVXQSqKyC5PcYdW03zABygi9cI=;
+ s=k20201202; t=1772670365;
+ bh=UepqIuLUKCKQnNwC65D5tmrrRilTbI7Lk7HQcWTAN+4=;
  h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=g3Zyr3Bx8O8NCtMEcZh2kuj7QqM+xaaeOwBUJeG9C3OsjQW93/xCj5tlVcCv4/Pzb
- QMZI7b7AdqJofYa0EZ4IcOb6InxLsGUC6CkCRmKLeIlzsb23MOiwrDbiniHihRp7fk
- bvq10B/elksbGnUo/pPZTqYX/nPMfpfuwSMgU3bGbJvhVNVoj3DrUqmyZjocsHwrqG
- TauERRVsiXiRH8kguCyMMUYkfcI65w8DCc7WidD415uwG8It5rRwcoVs5aclL+ajk8
- WmVP+lxcMGVqhdhL01l3AWuh2lFo7s7Isg+9+3vgNdxosaEwUhpQ4ksX7++ibCGLnq
- umwnayngfMjkA==
-Date: Wed, 4 Mar 2026 16:25:52 -0800 (PST)
+ b=GX9WQERhXAUVKacd6EkeI8nb+Eudhlsnoe568bmhGvFi6Voe8M/SE7e9joocIU7Ue
+ tpds6qLTJ6kOcdokTG6vze9TUGMi6C8iRBAIuXiqJpx97XQnR6BdP/mJhbPD6p1/zc
+ tCKv+eR6PXo28O1KK2bAaE7+8e/568CXRLbKT9cSQgb9i80yDwlFMye2kdaBpMmntG
+ 3+C1IH/p2yeMcgDKPKMx1i7pAQUxVvtBV6RkLJ7Ug8tR7y55hU9ERqISqYHfN51BOB
+ lapA0cqHweXRseVGeyPZBufXX2aYq1ERfUsG3gxR7ObAJEZZcoENcRjAIDOIqvvUd6
+ V5A30nL6s3F3Q==
+Date: Wed, 4 Mar 2026 16:26:03 -0800 (PST)
 From: Stefano Stabellini <sstabellini@kernel.org>
 X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
  Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>, edgar.iglesias@amd.com, 
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v1 4/5] hw/xen-hvm: Add a mapcache arg to
- xen_register_ioreq()
-In-Reply-To: <20260304015222.979224-5-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2603041625430.250016@ubuntu-linux-20-04-desktop>
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v1 5/5] hw/xen: xenpvh: Add prop to enable/disable the
+ mapcache
+In-Reply-To: <20260304015222.979224-6-edgar.iglesias@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2603041625580.250016@ubuntu-linux-20-04-desktop>
 References: <20260304015222.979224-1-edgar.iglesias@gmail.com>
- <20260304015222.979224-5-edgar.iglesias@gmail.com>
+ <20260304015222.979224-6-edgar.iglesias@gmail.com>
 User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=sstabellini@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=sstabellini@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -82,14 +77,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, 4 Mar 2026, Edgar E. Iglesias wrote:
 > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> Add a mapcache argument to xen_register_ioreq() allowing
-> the caller to optionally disable the mapcache.
-> 
-> All callers still call it with mapcache = true so there's no
-> functional change yet.
+> Add a machine property to enable/disable the mapcache.
+> Default it to enabled for backwards compatibility.
 > 
 > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
 Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
 
