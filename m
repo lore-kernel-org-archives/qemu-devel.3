@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE16F3D31C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E9BF3D31C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:17:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyBNs-000161-SI; Thu, 05 Mar 2026 11:17:08 -0500
+	id 1vyBNx-0001Iz-UU; Thu, 05 Mar 2026 11:17:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyBNb-0000yJ-LT
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:16:54 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1vyBNu-0001FV-Sb
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:17:10 -0500
+Received: from mail-qv1-xf2e.google.com ([2607:f8b0:4864:20::f2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyBNY-0004oF-DZ
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:16:49 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-79827d28feaso83015087b3.3
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:16:47 -0800 (PST)
+ id 1vyBNs-0004sF-AU
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:17:10 -0500
+Received: by mail-qv1-xf2e.google.com with SMTP id
+ 6a1803df08f44-899ed41208fso94499586d6.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:17:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772727407; x=1773332207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772727427; x=1773332227; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5gv5MgCkEMh1sx9qjJXHI7ntcf6DXKcKuXxAJibRJ3M=;
- b=x3DGYPJVfpzeX31VTfh+218LIIegBXYJiRKopvs5NbCtVAYeyMPPPOBjEtxapaED1W
- pjNCMTN81LMmU0Y18SGg9R/3qMBhC6MDpWa8+G9q+EIw+pUDJtEN7T0M01oX6i5A0DNG
- ylxUI2pozGob2F+pRePKRNC79wpAEL0HgDz49+mJ8g7yb/3+7e4Ky8fPEDYocyqYIucv
- DSgvUUMLPKo3joNFQkwMVWy3jvNqx2+uMFmbI1ugIaVkHXYaqwA/7A1mcMgVdTo7k5yw
- eR4cFIEDOqoX+1wXKennupZKqXMD81HPG9h2e1bdc+RDPk9nMe6Tij1DG5BH+rJk/rui
- rfCw==
+ bh=lByb3b/EvMI1o9ZwzQIMiVAuzl2p739LeJrSqTT9irk=;
+ b=M6KZDr8kOt+FUpBB2o1gByySXV7s1d90b+ih1Plxt2AL1RLdjfAQxtt/2oFPpKrG8m
+ MFUnMeKzcl1yl+VZ/8vYViLTeboc76xLXh4S8C0wFcjnjZyjaK+LIhcokrcLryio17Bq
+ 5ShfoA1tjLM69XI6FSyDclSXmbhBIDc0S/LzsfCakmWrUO3N8QBApYu8Azj72uOvRx0R
+ LbH8+mt8GTHHkzIY2Qcrl9ci6QBQ9mza8mOTjW9MaTDE14scSkqbkzLO8b5VuCCYrzGw
+ dV5+cF2o5EcZZlTkJFgehlO9AyYXdCNPZcWq90PujtCUxPRyDgo4xaWQxZie3GWWMhT/
+ x2AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772727407; x=1773332207;
+ d=1e100.net; s=20230601; t=1772727427; x=1773332227;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5gv5MgCkEMh1sx9qjJXHI7ntcf6DXKcKuXxAJibRJ3M=;
- b=dVCrOOfhVL8+Tgfy72Xi0fX3Bm0Kj4+QHRT46Zyc9Y8ziIndBlcFKvBFoRi/XSCQMs
- FV9rk+ZhQmkM01POJypWNdKjkmVksqnBDoDhrO7SgQXejO37wLYLEJXwdVk8tPsVA01K
- yUTOL7iJYUx0MeiOd6IVkacZRQLaM+1yUEkTPE9iJjOJ8q+9MkanSGPjoCktwEndKmLX
- ZRFMNS/FRxPNQwKsuEAAHx/rtN/F9BNBLlp8aRP5h49K9EomH9ituIU1TN+44EORHSEw
- niF/5U7mwdtUmM707jPTTpWKs1yOwr92RTl+PhPsY725R+MDklNi7ZGB7qh1WXg5zhII
- oYQQ==
+ bh=lByb3b/EvMI1o9ZwzQIMiVAuzl2p739LeJrSqTT9irk=;
+ b=N+n2F6TYFcHvFekXsJQgJ8d/ABfUMiXQaVVJ7w3rjIs4gPNPpDfuGkkCVcL2E5IQoT
+ 0cix7r9Q2V0cPqW2N5RG9ZS5o1AX/lJHwLS2DNa58cdBC6Yg27Z5wvXRUBUn3UpXooL0
+ CRFgL0xNmCudMr9PCIVKjv4gHz4TprhRBClMUdPrx5tRNBUUcLqTD5n+OD8yg0qckpj3
+ 9MJ6Nrj9J3zOIisoHAjNTC2aMpX62jItOnGPmRRZ5soGdGtkg5t1BpIHav6AZ+e6QzCq
+ nnKys9EyDZZeofObuXfUED7CuAtbe74/L63SggGjiBSyp333EOvsWc8Cf4f+G3diV+GQ
+ fOhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVH6Q5M8JlC4ozkzE3FxUxsGcU62vvqy4DzqPivGVYTu7ySSpWOAQg36XklFLTy0TFAcvS5FjmxK3Lu@nongnu.org
-X-Gm-Message-State: AOJu0Yx+oSOF03lrSMyFCJwYW2VR4NFBNrJ7/ZQwbkwbpcuqboAqmA40
- BZqFH8YFhkAIkEEHoBEt5CSwDCFdMeuPbvSMIgdwFUcGCDlhKwx25l+vLZBZXTYE028=
-X-Gm-Gg: ATEYQzxVctucbVKmX2DxmMwrbsdPaEI2J19RJur68PUjy7tmPkubI5iGMEUuTihcwoa
- 3ZrGORXgY30ku6yAr0huUiHhACisdnefTc9IuP6NCqpavab6/jEOlQMDJbQB0amecPuhC99NaoF
- j0iHRNGDmObLKt3FHcEZ9Gi8dNa5iJtHwnJntxBxcRlnY9/+jfPtjL59C5ynsyMyICGawMmO9wo
- 8objT9cXgQlSFAAMmUFNs8QwuF94MSqiKyH3I5Nqp+ajmbwVwgXSEwZS/QjaU/u/E9cx6AGpQGM
- 546E1C+ghq/oHqWjvtxY0ygmkfMlnmU4VMw9D8iygwLtOyDAU+44xDOxUwthU+eZvoTdbYYc2eU
- nFbT+86hcPnhNWgVfmXlhze8mtkPMDCS7YGv73STqd+gURUOCdeFruveNzsPZHeU9qRemkY2VcT
- sDWoKPNi22GGbj9CGMfA1KycU0cRxABK5qnTnKjJvBijKu9atikwEvzR7DMJlhwYCgavIB
-X-Received: by 2002:a05:690c:6b12:b0:798:23f:7933 with SMTP id
- 00721157ae682-798da4cda78mr3957927b3.37.1772727406667; 
- Thu, 05 Mar 2026 08:16:46 -0800 (PST)
+ AJvYcCWEpcg0cfe+7P/F7aOCJY94BHtknS2bTeLGeiLrJ8kQEBjHmo5IIUjQvU0a8wj3YP29QNi44+VbUfTu@nongnu.org
+X-Gm-Message-State: AOJu0YwgkimNFKQDDD/sF2eomY0pRPLGZ3PGqYyX5qm2PXNrBzU8EKU9
+ kes22KLGoPzvTg07DAkx91uCS0AXsKZLi6qeTEiwOnJKwwZY9dZVb+Ti4milZdWaGfM=
+X-Gm-Gg: ATEYQzz3yv+LgNmmrAoC6T+tR+h23egRQXEwsRGdRESfBMYVHmhzjCK43ZNMc313jIg
+ PV/1WrpDx18P84iXXrN6iflhFAKQYWgM05fp5f1eC0XDUEvttq9jwtXOocX85+p0UMirMLNKhl7
+ H47cSAGxsSALmJUhbAs1TJ+KXvwHqJ24HbQcsbel2AFht9XBFxM0vD5IpppcG/G3PgAiZjDUZ1/
+ jR39+p+XCaqT/BrAvBapFBukVx7cn2JJqO1BqwN5oJNHErh4t+/7XhK3MUOWBet295eM0e0G8/4
+ Cj3CXs2Bj9jQDW7IrL+AEDyfuW7jSPm8vCspuWou2cty6RjQviFCw5/In6Y5hLrCu9kGgL0OnIr
+ 7y5Lm6lFC+QkkHdXk4zIE5LaKUsr4hiSAgLSamAI+Mikwk12AyscWycsV7GwNd43YDbGK96XoWw
+ AGLnxssXqjgwL8cgmVYAV+Imhm8xvxzlzqxcEQoAmg8qRsLzQ/jzW0GKXQj6sK/adb0cJe
+X-Received: by 2002:a05:6214:ac1:b0:899:e9bf:3747 with SMTP id
+ 6a1803df08f44-89a19e41cc0mr87342416d6.53.1772727426936; 
+ Thu, 05 Mar 2026 08:17:06 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a20471119sm40176606d6.40.2026.03.05.08.16.45
+ 6a1803df08f44-899f8ad5b8asm122617646d6.0.2026.03.05.08.17.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 08:16:46 -0800 (PST)
-Message-ID: <85925cff-7e90-405d-9bb4-af2f98f00939@linaro.org>
-Date: Thu, 5 Mar 2026 08:16:44 -0800
+ Thu, 05 Mar 2026 08:17:06 -0800 (PST)
+Message-ID: <45ba39c5-ee1f-4aba-a962-bd25549f5242@linaro.org>
+Date: Thu, 5 Mar 2026 08:17:05 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] tests/tcg/plugins/mem: Don't access unaligned memory
+Subject: Re: [PATCH 2/3] tests/tcg/plugins/mem: Correct hash iteration code in
+ plugin_exit()
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20260305161531.1774895-1-peter.maydell@linaro.org>
- <20260305161531.1774895-2-peter.maydell@linaro.org>
+ <20260305161531.1774895-3-peter.maydell@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260305161531.1774895-2-peter.maydell@linaro.org>
+In-Reply-To: <20260305161531.1774895-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,28 +142,38 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/5/26 8:15 AM, Peter Maydell wrote:
-> In commit eb3f69cac62670 we removed the dependency of this mem plugin
-> on the QEMU headers, but in doing that we introduced undefined
-> behaviour when the plugin accesses unaligned memory.  This shows up
-> if you build with the gcc or clang undefined behaviour sanitizer
-> (--enable-ubsan) and run 'make check-tcg', in numerous warnings like:
+> In plugin_exit() we call g_hash_table_get_values() to get a GList
+> which we look at to print some information. This code has
+> multiple issues:
+>   * it names the local variable for the GList "count", which
+>     shadows the "qemu_plugin_scoreboard *count". This isn't
+>     incorrect, but it is unnecessarily confusing
+>   * it doesn't free the list, and the leak sanitizer complains:
 > 
-> ../../tests/tcg/plugins/mem.c:167:27: runtime error: load of misaligned address 0x7f1f300354b1 for type 'uint16_t' (aka 'unsigned short'), which requires 2 byte alignment
-> 0x7f1f300354b1: note: pointer points here
->   00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12 13 14 15 16 17  18 19 1a 1b 1c
->                ^
-> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../tests/tcg/plugins/mem.c:167:27
+>     Indirect leak of 2328 byte(s) in 97 object(s) allocated from:
+>      #0 0x5589b0b72293 in malloc (/home/pm215/qemu/build/x86-tgt-san/qemu-system-i386+0x1a2f293) (BuildId: 26964cad9e3f81d35fc144d7cc88b53adf6f60c7)
+>      #1 0x78fd8cfa1ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x78fd8cf96e4a in g_list_prepend (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x57e4a) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #3 0x78fd8cf8b318 in g_hash_table_get_values (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x4c318) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #4 0x78fd84d1a90c in plugin_exit /home/pm215/qemu/build/x86-tgt-san/../../tests/tcg/plugins/mem.c:87:25
+>   * in iterating through the list it updates "count", so by the
+>     time we get to the end of the loop we no longer have a pointer
+>     to the head of the list that we could use to free it
+>   * it checks for the list being NULL twice (once in an if()
+>     and once in the for() loop's "while" condition), which is
+>     redundant
+>   * it skips the loop if g_list_next(counts) is NULL, which means
+>     it will wrongly skip the loop if the list has only one entry
 > 
-> Fix this by rearranging the data reads and writes to use
-> memcpy() instead.
+> Rewrite the iteration code to fix these problems.
 > 
-> Fixes: eb3f69cac62670 ("tests/tcg/plugins/mem.c: remove dependency on qemu headers")
-> Tested-by: Alex Bennée <alex.bennee@linaro.org>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tests/tcg/plugins/mem.c | 71 +++++++++++++++++------------------------
->   1 file changed, 30 insertions(+), 41 deletions(-)
+> I am assuming that not printing the region info when there is
+> exactly one region is a mistake, but perhaps it is intentional?
+> 
+>   tests/tcg/plugins/mem.c | 24 +++++++++++-------------
+>   1 file changed, 11 insertions(+), 13 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
