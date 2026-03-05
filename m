@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 700D8F47CA6
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F5FF47CA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 18:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCxe-0008As-D8; Thu, 05 Mar 2026 12:58:10 -0500
+	id 1vyCyI-0001Dt-AB; Thu, 05 Mar 2026 12:58:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCxJ-0007XA-Tz
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:57:51 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy7-0000IK-7G
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCxH-0003ZD-KS
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:57:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vyCy3-0003lw-6i
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:58:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772733467;
+ s=mimecast20190719; t=1772733513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=47an3b/PQ2lQdrCnKgF9UWsrwpElW+uBBwdjpJ1uWKY=;
- b=He1DmxtiesdRN00S8ZkIneJ9/UnASvB4poLhQ05WAqntw+ETNiuNM6e84lMuTopYMu85+s
- jGH4D1AZPWHVa1x7vLPXirAqQ4fWYRUXlPrIGq2FW6IoMLZa9icf3WSxdQFpQDh6obSxn+
- v9G7Q0LyFkhovgsl4UJaEGnD4q6Yq7o=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Co0tAYHCrdAqxSu1AS4NaI/owCp75j7aAjwNLCADJx0=;
+ b=RppuNHxXYtOFB6lmr2/c4v/HE1klDI4NZfKfUB59XpgmE3mYyUScD0mFDg9lB7xAguPdkl
+ 6XHGT/BPPtkaWflvf0VGf/6YBxNtp01lFsBxLhdCN/9Qp5DzKWyaA8lOWn9OFOl8HGEqpZ
+ F100IJQ/56B4r7+stcK4QJiLV+VQARc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-IxElKDkyP-a__0Od9lPJhg-1; Thu,
- 05 Mar 2026 12:57:42 -0500
-X-MC-Unique: IxElKDkyP-a__0Od9lPJhg-1
-X-Mimecast-MFC-AGG-ID: IxElKDkyP-a__0Od9lPJhg_1772733459
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-m07cqy9jMMa_SGPHVbuwgw-1; Thu,
+ 05 Mar 2026 12:58:30 -0500
+X-MC-Unique: m07cqy9jMMa_SGPHVbuwgw-1
+X-Mimecast-MFC-AGG-ID: m07cqy9jMMa_SGPHVbuwgw_1772733509
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CFB301800365; Thu,  5 Mar 2026 17:57:39 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E349D1800610; Thu,  5 Mar 2026 17:58:28 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.26])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2EE903003E9E; Thu,  5 Mar 2026 17:57:36 +0000 (UTC)
+ id 2ACE33003E9E; Thu,  5 Mar 2026 17:58:26 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Patrick Venture <venture@google.com>,
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
  Jithu Joseph <jithu.joseph@oss.qualcomm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/38] hw/i3c/aspeed_i3c: Add register RO field masks
-Date: Thu,  5 Mar 2026 18:56:42 +0100
-Message-ID: <20260305175711.1119025-10-clg@redhat.com>
+Subject: [PULL 27/38] hw/i3c/core: Initialize num_sent in i3c_send_byte()
+Date: Thu,  5 Mar 2026 18:57:00 +0100
+Message-ID: <20260305175711.1119025-28-clg@redhat.com>
 In-Reply-To: <20260305175711.1119025-1-clg@redhat.com>
 References: <20260305175711.1119025-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -88,52 +87,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Adds read-only register masks for the Aspeed I3C controller registers.
+i3c_send_byte() declared num_sent without initializing it before
+passing its address to i3c_send().
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
-Reviewed-by: Patrick Venture <venture@google.com>
+Although i3c_send_byte() itself ignores num_sent after the call,
+i3c_send() forwards it to trace_i3c_send(). If the target send
+callback does not set *num_sent, the trace may print an
+uninitialized value, leading to misleading or garbage output.
+
+Example concern from review:
+  trace_i3c_send(*num_sent, num_to_send, ret == 0);
+
+If *num_sent is not written by the callback, this trace can report
+an incorrect number of transmitted bytes.
+
+Initialize num_sent to 0 to ensure deterministic and predictable
+trace output, even if the callback fails to update it.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Tested-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260225021158.1586584-9-jamin_lin@aspeedtech.com
+Reviewed-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260303013322.1297499-4-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/i3c/aspeed_i3c.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ hw/i3c/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
-index a21570028887..2700c5f4cdeb 100644
---- a/hw/i3c/aspeed_i3c.c
-+++ b/hw/i3c/aspeed_i3c.c
-@@ -74,6 +74,21 @@ REG32(I3C6_REG1, 0x64)
-     FIELD(I3C6_REG1, SA_EN,         15, 1)
-     FIELD(I3C6_REG1, INST_ID,       16, 4)
+diff --git a/hw/i3c/core.c b/hw/i3c/core.c
+index 0a266e00a279..168526003dab 100644
+--- a/hw/i3c/core.c
++++ b/hw/i3c/core.c
+@@ -325,7 +325,7 @@ int i3c_send_byte(I3CBus *bus, uint8_t data)
+      * Ignored, the caller can determine how many were sent based on if this was
+      * ACKed/NACKed.
+      */
+-    uint32_t num_sent;
++    uint32_t num_sent = 0;
+     return i3c_send(bus, &data, 1, &num_sent);
+ }
  
-+static const uint32_t ast2600_i3c_controller_ro[ASPEED_I3C_NR_REGS] = {
-+    [R_I3C1_REG0]                   = 0xcc000000,
-+    [R_I3C1_REG1]                   = 0xfff00000,
-+    [R_I3C2_REG0]                   = 0xcc000000,
-+    [R_I3C2_REG1]                   = 0xfff00000,
-+    [R_I3C3_REG0]                   = 0xcc000000,
-+    [R_I3C3_REG1]                   = 0xfff00000,
-+    [R_I3C4_REG0]                   = 0xcc000000,
-+    [R_I3C4_REG1]                   = 0xfff00000,
-+    [R_I3C5_REG0]                   = 0xcc000000,
-+    [R_I3C5_REG1]                   = 0xfff00000,
-+    [R_I3C6_REG0]                   = 0xcc000000,
-+    [R_I3C6_REG1]                   = 0xfff00000,
-+};
-+
- static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int size)
- {
-     AspeedI3CState *s = ASPEED_I3C(opaque);
-@@ -97,6 +112,7 @@ static void aspeed_i3c_write(void *opaque,
- 
-     addr >>= 2;
- 
-+    data &= ~ast2600_i3c_controller_ro[addr];
-     /* I3C controller register */
-     switch (addr) {
-     case R_I3C1_REG1:
 -- 
 2.53.0
 
