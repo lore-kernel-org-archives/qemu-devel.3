@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F446F47CD8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 21:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433F6F47CDA
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 21:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyFtt-0000hI-L8; Thu, 05 Mar 2026 16:06:29 -0500
+	id 1vyFuZ-0000nD-99; Thu, 05 Mar 2026 16:07:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vyFtq-0000h9-Ie
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:06:26 -0500
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyFuX-0000md-Gs
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:07:09 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vyFtp-0008L5-2e
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:06:26 -0500
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-8cb3e0093e3so819717185a.0
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 13:06:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyFuV-0008O2-KX
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 16:07:09 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2ae43042ea7so58419915ad.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 13:07:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1772744783; x=1773349583; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MBoEe4xqHc/rYoJIP2sBLmEhvLGIur2FtJK6Q+1QFRc=;
- b=f/LFSua15dA65IvKyl0KBSoqAPOkRQ2knIM5N59mcQg7tlSSsgFjY/kuN+970ipeE6
- tgXlBp/rOvIK/D9pqa6yln87lOqNwBPYAgCOBaKd6STAe6uoNRljy7+VFkkN8WIUhCN2
- DUM1SzuWvOvKOo7pRyeLd6c//nNYfTlzTYJ3wkB6X5zFqDYWs5mTdN6MmIEy3GX4ArWL
- yZNm72yz53uweIlMyJEAGC0SpYhQYBYGeENMh+hX0E3D0mOTE+txe06L5vWNeoVwXrTF
- ZUwvWl83cLGJxhUdcRblZrWyqxrxnPx8sSmhmZKWvS4QAavxA8ZN500lLZ/GiJo45U3O
- vbZw==
+ d=linaro.org; s=google; t=1772744826; x=1773349626; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fjVg4k8L5YS0+fbIU3cK5+QxAukvdu0K3zvehSjPnuA=;
+ b=w4SYJPnouxRNhZslUmRzOsubpAkJLfmsMmD2vrctjfKB/2o/nHEjnh7IEMfNu4rQk0
+ 3AOVovjGhKg6ZU9CYqLdrr3zzHRp8P7DsdB3JNOKpYnmGpCcbUWStsBiNS2q00TdDVBW
+ UTjRk3/ohnx6xmZll4esNXfobPcq7EJRyTTdP6Ec67AH8T/7kyFPfQUFPZCSzl0SJULf
+ Ike3KzuL3qstdABBo+sHJpB48M3z4803Mua4i34HUZGm/rHGpEq/qxGLczdpz1rOhsBB
+ /lCYBSDQ3pZSwDYWhrmlERnd5L+Vd/SEUXlXrhqTuePdsECXL+sRAR1xadfMR29nlsqZ
+ uQlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772744783; x=1773349583;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MBoEe4xqHc/rYoJIP2sBLmEhvLGIur2FtJK6Q+1QFRc=;
- b=hYx02w2Jecof8yi+OwlZF5pl5z75ZyO2UUyF4alptMtlNrpr7A06hUOo+TQEWMk1pT
- 3FfTtCQcweFWQxvi3IJGFFldQ+s848gx7QcbBp9Pqk+9FpWmTzfTJAFAirvWyspdhy+J
- rPFRiMcTKAMMPGLyhPNsqineqwrtk+fpjX8rUN5NhnE6La7SR/zV+aAznDVEZp2XpWT2
- YNPkP31k6dw7tcvGRMVlXhIZIK9tsNxyE3Bs9aUyvWKFJUYZthKKTVs7ZAjY3xwYheTZ
- 7ux5AAQPAiIadjWdEjVUZ5G5gQ9UxX9fmG5RRoybHd581Lujr47Gv8hOGHf0UvLEmXAV
- RS0Q==
-X-Gm-Message-State: AOJu0YwTAe/wsFDqzcai49UsZlVtfJUToLaanPJiaYgU+7zZDFAH6q7w
- wnfzStN87xcW8bzRjAHaWHvmFnQfQny1FTyoaCks6L3+rKYPouWWTjSvudgPPQIhCZpJpYFjad1
- SLnOV
-X-Gm-Gg: ATEYQzyOOAKb01iLNESq9PQlvhOb2wkk5RJ/wK6cxjrlyxXoKHDOXG6UMYttBAdnTME
- 9InyxeA4v7iOTIFE0ZcvkmR/tdIR0jh5kinr/JszYhPci7BfiaiTcksbcRSYKYq3vGw6Js8dZIK
- btp2WV5lmPxv9+fI49uOHFQnjg/G2eShb4j77FEMm2HRQDSZKmiwbU3ad6AJ7I8p7Djus0qNlWn
- +ylJuRlt7ZlNLnzM1m6ojI7WwYVi61BGVDwrfyjfqEZL9uSoPv+2icvUQqNH2cGa1eh9tahJGF8
- Q0Ol3PjUnSVktIw4e7B8syJcP+RyhBBCIcuwQzUv9iyULaXdjMCJsbefBijDF/wNjsX9sUpDKlp
- kWCzNOBxRHH35qn/si+ampo1gvoSNrIeuX+JpRzrKkUfEsAImSjrNuOmzOctxthTaHcDznlcAX3
- 5OyUbxkkFTliH1WthFc8gWz+fxXIL0mEZ9oWcUsyi8hTZBPzq8pMIMR7xMiNIXi+p73Cm5W3vhX
- HtUv+D8ow==
-X-Received: by 2002:a05:620a:4481:b0:8b1:7c0c:e27f with SMTP id
- af79cd13be357-8cd5afd2140mr767391785a.82.1772744783468; 
- Thu, 05 Mar 2026 13:06:23 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F
- (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cbbf736bffsm1921875285a.50.2026.03.05.13.06.22
+ d=1e100.net; s=20230601; t=1772744826; x=1773349626;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fjVg4k8L5YS0+fbIU3cK5+QxAukvdu0K3zvehSjPnuA=;
+ b=rnodWLK50MGEJi1t1RNr55vnodPLwbuZgPQqTQB4hlYe6VkKNg/CRbS7ofHizYBqlR
+ taOoWbMvJybHnCkV0sAYK6iBMRQQJZVheXDgjVhhTXWHlKMBC3wEeNU+NkLGKpKUxmVF
+ N+T5goeOe1JSNgFP0zSuIYdvPXTTSa+L583OfPsrLsyYlyVflXjqZCncf0l8EPFJAlLz
+ PPEddxxdugOfgbCNHeZjG0Rzk8goWsJlMMpBEGyHALr8QDnFUK7xZ6nIRKmWWDxLhyW8
+ 2Bu3reXeiOWSdi4o4aHgY+Bsym+12eiF/0tfdb3mdzQbykmKjWLC0Yu9a4OQIqgxVG7A
+ lrmA==
+X-Gm-Message-State: AOJu0YxfKmp7rTirgt3PQhB0DD8p1jj0FFgiOQrAn57vpQSgGdjqDmWY
+ Mi6v8CkWyVVSafBLa0Oh2I1KjHM573q4uolH/RituhjQWTUwqHJiOtlo0XZFKCfybNb6Ufq4lUR
+ +WqMK
+X-Gm-Gg: ATEYQzxhpW+6QHwamct8t+Bucru3if5sDAOSt5Fbt80Ms5YIMyxTDvKxn7D9YN99PHm
+ +HuMczsgsOj4IyaxN5RFTNPB5vjJmYZqOo6+G+31dJiLwhNLr+ljE4JF/4qZ5pbWaQ/8RehbhfO
+ tHEo06E9OSU0wcenNs3uLkVWyBr+POEJ2q+xqtUM5rvlf1vtVQGfCydQ0YKPSCCKkQs40urB7dN
+ RaJk6NNCzzn5FB796agdl765tfhrNLLsn19a3BZC419IU4E7wZgghKUGF0ty6TBZZyZTYcn5AGP
+ a87V/+VPA4eK+tCU5Ohy82KUUOgRcOURQ9nfMtEDDSIYPwXRlUnFLfvJfBStnCftKu/7DC1mDm8
+ I2RKnRx+b/ooWuGfURPAYmN/etpklcbS5a+Njv62hXmVa8ky/UaFAh503Jvpg/VaCYZzHHSqaxE
+ si1JHcUy5gqZsHoC3UZgcMSeHLtO7ar3jcA5/RPc5oMg7GF2mKjaOVMPschaENFCY/LdOrRQD79
+ kZE
+X-Received: by 2002:a17:902:ce02:b0:2ae:7f6d:78a4 with SMTP id
+ d9443c01a7336-2ae7f6d78c1mr12440495ad.56.1772744825937; 
+ Thu, 05 Mar 2026 13:07:05 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2adfb6b5813sm236992505ad.63.2026.03.05.13.07.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 13:06:23 -0800 (PST)
-Date: Thu, 5 Mar 2026 16:06:21 -0500
-From: Gregory Price <gourry@gourry.net>
-To: fanhuang <FangSheng.Huang@amd.com>
-Cc: qemu-devel@nongnu.org, david@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, apopple@nvidia.com,
- dan.j.williams@intel.com, Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
-Subject: Re: [PATCH v6 1/1] numa: add 'memmap-type' option for memory type
- configuration
-Message-ID: <aanwTUHMIh5cJCiR@gourry-fedora-PF4VCD3F>
-References: <20260226105023.256568-1-FangSheng.Huang@amd.com>
- <20260226105023.256568-2-FangSheng.Huang@amd.com>
+ Thu, 05 Mar 2026 13:07:05 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 1/6] hw/virtio: Add virtio_vdev_is_legacy()
+Date: Thu,  5 Mar 2026 13:06:51 -0800
+Message-ID: <20260305210656.2140206-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260305210656.2140206-1-pierrick.bouvier@linaro.org>
+References: <20260305210656.2140206-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260226105023.256568-2-FangSheng.Huang@amd.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=gourry@gourry.net; helo=mail-qk1-x72c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,30 +103,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 06:50:23PM +0800, fanhuang wrote:
-> +
-> +            if (addr < x86ms->below_4g_mem_size) {
-> +                if (addr + node_size <= x86ms->below_4g_mem_size) {
-> +                    guest_addr = addr;
-> +                } else {
-> +                    error_report("NUMA node %d with memmap-type spans across "
-> +                                 "4GB boundary, not supported", i);
-> +                    exit(EXIT_FAILURE);
-> +                }
-> +            } else {
-> +                guest_addr = 0x100000000ULL +
-> +                            (addr - x86ms->below_4g_mem_size);
-> +            }
-> +
+This simplifies code compared to having
+virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1) or
+!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1).
 
-I missed this on my first go around
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260225041948.52929-2-philmd@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/hw/virtio/virtio-access.h |  2 +-
+ include/hw/virtio/virtio.h        |  7 ++++++-
+ hw/virtio/vhost.c                 | 12 +++++-------
+ hw/virtio/virtio-pci.c            |  6 +++---
+ hw/virtio/virtio.c                |  8 ++++----
+ 5 files changed, 19 insertions(+), 16 deletions(-)
 
-Should this be:
+diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+index b58fb6ed7ea..b8aa7a520f5 100644
+--- a/include/hw/virtio/virtio-access.h
++++ b/include/hw/virtio/virtio-access.h
+@@ -30,7 +30,7 @@ static inline bool virtio_access_is_big_endian(VirtIODevice *vdev)
+ #if defined(LEGACY_VIRTIO_IS_BIENDIAN)
+     return virtio_vdev_is_big_endian(vdev);
+ #elif TARGET_BIG_ENDIAN
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
++    if (!virtio_vdev_is_legacy(vdev)) {
+         /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+         return false;
+     }
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 9dd93cf965a..42d20899390 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -468,9 +468,14 @@ static inline bool virtio_host_has_feature(VirtIODevice *vdev,
+     return virtio_has_feature(vdev->host_features, fbit);
+ }
+ 
++static inline bool virtio_vdev_is_legacy(const VirtIODevice *vdev)
++{
++    return !virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1);
++}
++
+ static inline bool virtio_vdev_is_big_endian(const VirtIODevice *vdev)
+ {
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
++    if (virtio_vdev_is_legacy(vdev)) {
+         assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+         return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
+     }
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index b4cdb7762f9..b9dc4ed13ba 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1168,14 +1168,12 @@ static void vhost_log_stop(MemoryListener *listener,
+  */
+ static inline bool vhost_needs_vring_endian(VirtIODevice *vdev)
+ {
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-        return false;
++    if (virtio_vdev_is_legacy(vdev)) {
++        return vdev->device_endian == (HOST_BIG_ENDIAN
++                                       ? VIRTIO_DEVICE_ENDIAN_LITTLE
++                                       : VIRTIO_DEVICE_ENDIAN_BIG);
+     }
+-#if HOST_BIG_ENDIAN
+-    return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_LITTLE;
+-#else
+-    return vdev->device_endian == VIRTIO_DEVICE_ENDIAN_BIG;
+-#endif
++    return false;
+ }
+ 
+ static int vhost_virtqueue_set_vring_endian_legacy(struct vhost_dev *dev,
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 0f5654f459e..bcab2d18b80 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1449,11 +1449,11 @@ static bool virtio_pci_queue_enabled(DeviceState *d, int n)
+     VirtIOPCIProxy *proxy = VIRTIO_PCI(d);
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+ 
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-        return proxy->vqs[n].enabled;
++    if (virtio_vdev_is_legacy(vdev)) {
++        return virtio_queue_enabled_legacy(vdev, n);
+     }
+ 
+-    return virtio_queue_enabled_legacy(vdev, n);
++    return proxy->vqs[n].enabled;
+ }
+ 
+ static int virtio_pci_add_mem_cap(VirtIOPCIProxy *proxy,
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index e9d55329525..c0c4599b586 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2753,7 +2753,7 @@ static bool virtio_device_endian_needed(void *opaque)
+     VirtIODevice *vdev = opaque;
+ 
+     assert(vdev->device_endian != VIRTIO_DEVICE_ENDIAN_UNKNOWN);
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
++    if (virtio_vdev_is_legacy(vdev)) {
+         return vdev->device_endian != virtio_default_endian();
+     }
+     /* Devices conforming to VIRTIO 1.0 or later are always LE. */
+@@ -3460,10 +3460,10 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+              * to calculate used and avail ring addresses based on the desc
+              * address.
+              */
+-            if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
+-                virtio_init_region_cache(vdev, i);
+-            } else {
++            if (virtio_vdev_is_legacy(vdev)) {
+                 virtio_queue_update_rings(vdev, i);
++            } else {
++                virtio_init_region_cache(vdev, i);
+             }
+ 
+             if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
+-- 
+2.47.3
 
-  guest_addr = x86ms->above_4g_mem_start +
-              (addr - x86ms->below_4g_mem_size);
-
-Or is there a reason for the hard-code?
-
-~Gregory
 
