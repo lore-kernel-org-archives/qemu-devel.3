@@ -4,71 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8430F33A6D
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F01F33A70
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:18:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9KX-0002Nt-CN; Thu, 05 Mar 2026 09:05:33 -0500
+	id 1vy9Wi-00084M-UM; Thu, 05 Mar 2026 09:18:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KL-0002MZ-5x
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vy9Wd-00083A-0E
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:03 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0007q5-JE
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772719517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8SkyZpAdoek+6/Kstn8OTn5RccsZembirL7cHTMoe2M=;
- b=ABdh/86G5FK481Ca/4ZKyWPug7wunwGEDMSS1mga36qVXxPjKD9gXqo9eWIBwju5RgQuUj
- OXdRJt/fkD8JOuJpdaLfx655QZ+lqDXWbBme5BaTuLh4Of0De2Pdn2u99ap8O1LYhvqZem
- PNn8hSpEPw8DYgzbsHMacWESwMoJWW4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-8il34bQyMpOPs-jIKQVmgA-1; Thu,
- 05 Mar 2026 09:05:15 -0500
-X-MC-Unique: 8il34bQyMpOPs-jIKQVmgA-1
-X-Mimecast-MFC-AGG-ID: 8il34bQyMpOPs-jIKQVmgA_1772719514
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DCEF180060F; Thu,  5 Mar 2026 14:05:14 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 253A818002A6; Thu,  5 Mar 2026 14:05:14 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AADB721E6885; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
-	Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 6/6] qdev-monitor: Fix qdev ID validation regression
-Date: Thu,  5 Mar 2026 15:05:08 +0100
-Message-ID: <20260305140508.218316-7-armbru@redhat.com>
-In-Reply-To: <20260305140508.218316-1-armbru@redhat.com>
-References: <20260305140508.218316-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vy9Wa-0000sv-8x
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:02 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 53369596D9D;
+ Thu, 05 Mar 2026 15:17:58 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id d4p-DOK7nLqM; Thu,  5 Mar 2026 15:17:56 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 45972596D94; Thu, 05 Mar 2026 15:17:56 +0100 (CET)
+Message-ID: <e10706941b028a9e6293b11ec6a20d7b2b22118d.1772719690.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1772719690.git.balaton@eik.bme.hu>
+References: <cover.1772719690.git.balaton@eik.bme.hu>
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v7 1/9] hw/display/{cg3.tcx}: Do not use
+ memory_region_init_rom_nomigrate()
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Date: Thu, 05 Mar 2026 15:17:56 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,86 +68,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-User-created qdevs with ID show up at /machine/peripheral/ID.
+Use memory_region_init_rom() instead which is what other devices do.
+This breaks migration but these devices are only used by sparc Sun
+machines which have no migration compatibility guarantee.
 
-When we restricted QemOpts IDs to letters, digits, '-', '.', '_',
-starting with a letter in commit b560a9ab9be: (qemu-option: Reject
-anti-social IDs) a long time ago, this also covered qdev IDs.  Looks
-like this:
-
-    (qemu) device_add usb-mouse,id=/
-    qemu-system-x86_64: Parameter 'id' expects an identifier
-    Identifiers consist of letters, digits, '-', '.', '_', starting with a letter.
-    Try "help device_add" for more information
-
-QMP, however:
-
-    {"execute": "device_add", "arguments": {"driver": "usb-mouse", "id": "/"}}
-    {"return": {}}
-
-This creates a device with canonical path "/machine/peripheral//".
-That way is madness.
-
-We accidentally bypassed qdev ID validation for QMP when we cut the
-detour through QemuOpts in commit b30d8054642.
-
-Fix by validating IDs one layer down, in qdev_set_id().
-
-Arguably, QOM should protect itself from QOM path components
-containing '/', but let's just fix the regression for now.
-
-Fixes: be93fd53723c (qdev-monitor: avoid QemuOpts in QMP device_add)
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260123085924.1392134-1-armbru@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- system/qdev-monitor.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ hw/display/cg3.c | 5 ++---
+ hw/display/tcx.c | 5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 1ac6d9a857..5c00bbf483 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -34,6 +34,7 @@
- #include "qemu/config-file.h"
- #include "qemu/error-report.h"
- #include "qemu/help_option.h"
-+#include "qemu/id.h"
- #include "qemu/option.h"
- #include "qemu/qemu-print.h"
- #include "qemu/option_int.h"
-@@ -601,14 +602,17 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
-      * has no parent
-      */
-     if (id) {
-+        if (!id_wellformed(id)) {
-+            error_setg(errp, "Invalid qdev ID '%s'", id);
-+            goto err;
-+        }
-         prop = object_property_try_add_child(qdev_get_peripheral(), id,
-                                              OBJECT(dev), NULL);
-         if (prop) {
-             dev->id = id;
-         } else {
-             error_setg(errp, "Duplicate device ID '%s'", id);
--            g_free(id);
--            return NULL;
-+            goto err;
-         }
-     } else {
-         static int anon_count;
-@@ -619,6 +623,10 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
-     }
+diff --git a/hw/display/cg3.c b/hw/display/cg3.c
+index 568d6048a6..61bdb0552e 100644
+--- a/hw/display/cg3.c
++++ b/hw/display/cg3.c
+@@ -282,8 +282,8 @@ static void cg3_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     CG3State *s = CG3(obj);
  
-     return prop->name;
-+
-+err:
-+    g_free(id);
-+    return NULL;
- }
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "cg3.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_rom(&s->rom, obj, "cg3.prom", FCODE_MAX_ROM_SIZE,
++                           &error_fatal);
+     sysbus_init_mmio(sbd, &s->rom);
  
- BusState *qdev_find_default_bus(DeviceClass *dc, Error **errp)
+     memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
+@@ -299,7 +299,6 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
+     char *fcode_filename;
+ 
+     /* FCode ROM */
+-    vmstate_register_ram_global(&s->rom);
+     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, CG3_ROM_FILE);
+     if (fcode_filename) {
+         ret = load_image_mr(fcode_filename, &s->rom);
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 36cad82abd..16114b9bb8 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -756,8 +756,8 @@ static void tcx_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     TCXState *s = TCX(obj);
+ 
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "tcx.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_rom(&s->rom, obj, "tcx.prom", FCODE_MAX_ROM_SIZE,
++                           &error_fatal);
+     sysbus_init_mmio(sbd, &s->rom);
+ 
+     /* 2/STIP : Stippler */
+@@ -822,7 +822,6 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
+     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
+ 
+     /* 10/ROM : FCode ROM */
+-    vmstate_register_ram_global(&s->rom);
+     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, TCX_ROM_FILE);
+     if (fcode_filename) {
+         ret = load_image_mr(fcode_filename, &s->rom);
 -- 
-2.53.0
+2.41.3
 
 
