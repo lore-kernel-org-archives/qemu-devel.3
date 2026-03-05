@@ -4,94 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90756F3D334
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC85AF3D336
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyC5c-0000BP-Aa; Thu, 05 Mar 2026 12:02:20 -0500
+	id 1vyC5c-0000CJ-EB; Thu, 05 Mar 2026 12:02:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyC5Y-0008Qr-K8
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyC5Y-0008Qh-J8
  for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:02:16 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyC5W-0003uE-Sa
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyC5W-0003uC-Vg
  for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:02:16 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48370174e18so49945135e9.2
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:02:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772730133;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WCx2zXd9UI3yNUIqstamtFkzr9csU9CCFfuDYg8y/h8=;
+ b=gCYSxd2qx3A5YmZuDAcpdZO2tzQ+6ntPufA/woZ2E4uaO1I6g8a4LHjsQNtrWP8sd2wAPD
+ VnTjmX7jtTxoit39cxkCiUK73Yv/BeJu2Oy8LT/AvtSGnRk69nv0I7JY/1GEepFqoNwaOY
+ l4PBFZbIrkyzLEQ4pc1n5noBVKMJ01A=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-aUUCIGa6N9aE3f4In-_v5g-1; Thu, 05 Mar 2026 12:02:11 -0500
+X-MC-Unique: aUUCIGa6N9aE3f4In-_v5g-1
+X-Mimecast-MFC-AGG-ID: aUUCIGa6N9aE3f4In-_v5g_1772730130
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-679f6f264ceso137181844eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 09:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772730133; x=1773334933; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=z5S4FWc2b0VCRiyuCVP1osL0L9CAwOiZq+WP/x3uphQ=;
- b=wWg+/CLoPWhDMfN7ZEmOL7l2cEABcQND7ZPIb06PGhHq+Yr/JMmpKCXM9cE9pblyRL
- PsjX3r9kddg4uBUkcqjXAKnn4bmXy/64ntKQgiLaLzBKVyJ1qPdYM7/CM/8+9Pn5epRc
- VSaR4BOx5kxMP5iNDhpemMaSqkt6HXbN7Lw8RQs92pzBMdlPJeNh5k37jl0feMexF/3I
- aKUpvQ5hlNwqyLq53ch6z1vZAQiDtShry0YFz37Qf+JmvZgeq3l9j2CoWJN5zIP4WSQG
- TrVugRJPYSbpAk8VrpbULRXYK8GjTBU54pw0frCgQxn81zp8ecxWWTDClyKO6FrGzmex
- duGA==
+ d=redhat.com; s=google; t=1772730130; x=1773334930; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=WCx2zXd9UI3yNUIqstamtFkzr9csU9CCFfuDYg8y/h8=;
+ b=kNsjU7xGyBxW3zizXSQdqgCvnv27sR0BjwfNkXqSKxTOIA/pXcLCrKynaDpEjLTaqV
+ B5mtPaI5hMG+i37f209NrkSdSM6fazZCXttcWf54cyHRGNN9p1/L1fFMAyOCFCeVRxZx
+ E1y+2Y0y5t9dN7m5V7+PwTmLUUhR2V684McoFHO9k3WQsQdOxf4HKK+RdfHtyMuhs4NV
+ 9L72SDixnDf3pGGRXCWvUfA5N0Eo31vdZdAx6sH4um+sF/AAGQuB8sg5iBmiIjDeXhLB
+ J7U+HBetMEJVKaeyBfQyzr8CTVjGYINxMBGuVG+Ty33qVkhlbHWMeEwoud1phDiF8AOd
+ HcZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772730133; x=1773334933;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z5S4FWc2b0VCRiyuCVP1osL0L9CAwOiZq+WP/x3uphQ=;
- b=I1vbTb4m4JrBzUWUiubrYKMP1oc+8uWS+ZGccMu7VyeanRwVhMpby6bEX0WHVSWB/l
- RHuLzTcHwazK1JesMSc9GxlUhP3xiIcvdg4Xs7zeFI/7XmyIhnLXvk25aMpnZ73nZAjg
- NyZVGpELges7ilnMzzTbDK/mS42dBJ3Yl0rqrBjlSLDnSPmgnDWsYKIOVRmcJGjKeBiR
- rUWCxgsxYjWkXWRI3XqZP48X7PghtuDyhXzO4aoTCeE+k5p+0v7Fy8Z9T34rK3nQaL6b
- z8v6Hm4tVhoHop0Io+VCFWNgbkR3ydSM+33tnDMvPZAPsImY6iYQybb639sJdvbCzcYs
- Qoeg==
+ d=1e100.net; s=20230601; t=1772730130; x=1773334930;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WCx2zXd9UI3yNUIqstamtFkzr9csU9CCFfuDYg8y/h8=;
+ b=whMIqXdueo4hqu8COnMx1iHsQ0cmAY+2u12+C21EKceYCw9wuvPF714KxJ227Zd4Pj
+ TsWVFEk6zhXb0oAO5KbYhpJ0TmC3zf80cjdhao074ySvB0yzrOXGEnTwjj01e6IEOueE
+ 2LO19ao9yq1zm/jeGSfnR3sEy2DGYySRUYxbzM5brhDwdjejRWU8dYGfnB6s9du6qkT4
+ emp9vTGuDi05OVuyKjO+/z79Slp5iObte0XslrgjJp8OdxVEvPfWSBoEkYSpUFNbknI0
+ csOfeSvBsiMdPx9SZKvph7cmCq8KivqgieIPVZSpFFeifFVQSu3rzBrfD7EyV+Fd/y/5
+ /quQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWO7+o9IdFE8jlH0E1Ba8rDeWNq8qOQk1sCKrbknp/6WiBb0vZxov2feKxsudCLcfHgF6h96cCYV7xW@nongnu.org
-X-Gm-Message-State: AOJu0YweOY+5NshVClB/iF79BKssbZAqpI/tUy2sQiScZ+VxRn7DN7st
- XK5jVJWpgTs2iREIr+IAyPgMn0wb/FEMYoq6+AuT92vgUEQnRYqNO3v6XWGRsFJ2jO8=
-X-Gm-Gg: ATEYQzxg4cKotc7fLLl68O0v/ETcQTV8Shx+BhclAnKrkBg2uBZdCqnZBkKj7izPsQH
- NHbEqLRetco6jIRrFvesCEr6Jb02EqxHnEk/Sa7EkWQo1bXHpIJg8Oz8X9aM28AAhC0C0LwBrTt
- kDjqY2eI07e3SJ9Ux2446XgLIwd8YRF3hoHbFFtNUSQI5/z+B1xH43+0Zw5zPaqHa2cGN0SGAwK
- W2O07lvSdy0a01mSyqjuSQFPpmMLmgvaQLkG7Rhoxg/XR2m09hPwvvGIkR/OT4rOWRt9Lj5qdPO
- R7iROID6pgSOhcxy1F+A+vsww7Jl8x+2A97ZtlOQzhrXEewDCuHwNrCXzgwSNA0kqCuDYeC8eHy
- Ia2RkL/NEPdqgulrOqyiO8pj3e+gG0B85Lvk4xhDZHqAYN54uAOFykLBqfoS5qSHqCivXi2CP4E
- FyxmqJo47UD9yYj8NslsybfCJnVPuxFEiDcb0MP8CdlvUdolMasNpq9Mrjjka4pWdlaA==
-X-Received: by 2002:a05:600c:1986:b0:476:d494:41d2 with SMTP id
- 5b1f17b1804b1-48519897e1emr106549205e9.29.1772730132581; 
- Thu, 05 Mar 2026 09:02:12 -0800 (PST)
-Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851ad28363sm36283015e9.30.2026.03.05.09.02.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Mar 2026 09:02:11 -0800 (PST)
-Message-ID: <3d8b56db-aef0-40a3-81e8-e08803f8c5b7@linaro.org>
-Date: Thu, 5 Mar 2026 18:02:10 +0100
+ AJvYcCWuevGWF+Pgx6qBZ8xLsfHUZdBXQbWeIIGaxiMvrywioeQ2OxJ6OUg4I0ZS+Gmskm3D81GStBrzEybq@nongnu.org
+X-Gm-Message-State: AOJu0YxJmDjO0u4hbY9I9lVOwXrWjRyjzO5fFKuqyfXSQAmkYPdm3zdR
+ CkhDPpuWUL+PEwYYto6m7Ya8l/HJd5RQagb+KPxNuIX+QDBltk8yNCAGpa9I0OodPv7nhzscGIF
+ 1D86Xd8YpapjfHTuTeDSDzLJ5bEoXdG3LaFk1PK3+ng9ryP5ZJmz4NPdo
+X-Gm-Gg: ATEYQzxMA3ipcGgmIe9SHhQesLJa3EM2qKBct4MT7/+G2UKJ0hnCHjOpVh3D7vyMUgb
+ LtkovVD5XATdhJcuOt/n3eeUEppOFDiVDLXROygK2J1broRmwcoklfCIkDEkjPM6C127frsUrun
+ hFtdC/gUHChjQXQ+6+pNldgb1zUDGJ7sHgGGwpulrWH7YOfhYMmhwJq6xYdyANDjrOUeK2TCnMY
+ lfCUHBsLhLGpi/X/LRXalvdpnbThn1FeX2HKik6zVkU559mwofwhjFaVp5+h4XeS0tzJYTzpCjE
+ 2AbE1KXTrFmZ8EkZJInf9RkPDwP3K86XVO/fxTW6J0vNW1ymUkIuqxkVCMBsUzyJXKhuTl2U7UJ
+ D63tgUg/kA636lA==
+X-Received: by 2002:a05:6820:619:b0:67a:1bf4:eb03 with SMTP id
+ 006d021491bc7-67b99cbc27cmr222814eaf.45.1772730128784; 
+ Thu, 05 Mar 2026 09:02:08 -0800 (PST)
+X-Received: by 2002:a05:6820:619:b0:67a:1bf4:eb03 with SMTP id
+ 006d021491bc7-67b99cbc27cmr222757eaf.45.1772730128105; 
+ Thu, 05 Mar 2026 09:02:08 -0800 (PST)
+Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-899fdf30e99sm94801706d6.3.2026.03.05.09.02.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 09:02:07 -0800 (PST)
+Date: Thu, 5 Mar 2026 12:01:56 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: farosas@suse.de, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 13/18] migration: introduce vmstate_load_vmsd() and
+ vmstate_save_vmsd()
+Message-ID: <aam3BKi5kkszjYAM@x1.local>
+References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+ <20260304212303.667141-14-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 05/12] hw/arm, target/arm: nested virtualisation on HVF
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Paolo Bonzini
- <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>
-References: <20260228220837.35275-1-mohamed@unpredictable.fr>
- <20260228220837.35275-6-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260228220837.35275-6-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260304212303.667141-14-vsementsov@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,15 +118,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/2/26 23:08, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/hvf/hvf-all.c    |  1 +
->   accel/stubs/hvf-stub.c |  1 +
->   hw/arm/virt.c          |  5 +++++
->   include/system/hvf.h   |  5 +++++
->   target/arm/hvf/hvf.c   | 36 ++++++++++++++++++++++++++++++++++--
->   5 files changed, 46 insertions(+), 2 deletions(-)
+On Thu, Mar 05, 2026 at 12:22:57AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> Introduce new APIs, returning bool.
+> The analysis
+> https://lore.kernel.org/qemu-devel/aQDdRn8t0B8oE3gf@x1.local/
+> shows, that vmstate_load_state() return value actually only
+> used to check for success, specific errno values doesn't make
+> sense.
+> 
+> With this commit we introduce new functions with modern bool
+> interface, and in following commits we'll update the
+> code base to use them, starting from migration/ code, and
+> finally we will remove old vmstate_load_state() and
+> vmstate_save_state().
+> 
+> This patch reworks existing functions to new one, so that
+> old interfaces are simple wrappers, which will be easy to
+> remove later.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
+
 
