@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E87EF513E1
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73208F513E1
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 22:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyGt4-0001D9-P7; Thu, 05 Mar 2026 17:09:42 -0500
+	id 1vyGtF-0001PX-SP; Thu, 05 Mar 2026 17:09:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyGsr-00011N-Ts
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:09:30 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyGsy-00016g-RJ
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:09:36 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyGsp-0002F4-GJ
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:09:29 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48378136adcso51909395e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 14:09:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vyGsx-0002I8-Fp
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 17:09:36 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso71411555e9.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 14:09:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772748566; x=1773353366; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772748573; x=1773353373; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CJx9Hj31eX7Y3Z+9nYTXa1xFEWa58APXwA1Xzcuwa6k=;
- b=ItokNzedvc7ofVgkURsvuc2LN9/GGusoWA0AeW7ldzUnaDwl+BWTWdT6W5eV0rAWz3
- t3A3/E+HBlA061VSMWlj2oAA+3UCEJOfYNrWE7fqMeGNAd2LN+RD/dNzZJRrED5JJnSZ
- g3/shh8cd8ODUeWdDXc0w/syQZjldX6Da453ne2g7ueA8D98dvWp+4yTb0mMU/mPXiys
- loii/tYXvNmJ7iJRIuKvlPA/BcUAqNG/7CtL+KY6ICjOGXRHLTDeV4YjN2GDB90lhPDM
- Kh+bptIt5B87Dz4EoLhfVYDnuwRmofB9YWEEETCopf6mdsUHSuImQMVtt7acmOtfSwJ9
- /6IQ==
+ bh=oh5fF1cD60o2GgdhvxUuihszrtUOa2nx4hPj7KeeMlk=;
+ b=fKNPIodWeubcYPx8lqIzfuG8axzq0qS+3ItOqrjbsBrWtzMSFmLOg9pR73HAoaMA/Y
+ iw2FtwcPMjLqpXyZCGrqJSFrQNL3t+Gdu6uCY9ZWD1d93vZnzZllfEUkUP/ZSrfAvQQs
+ iYJhhjZROuA+xTK0TZDX8HA2SBCpD3O/yXIc8wwzN7YqCHLgF3IVO9oGGrKgWmXjDgtP
+ BRH3nk8zeJjzaMOdl+kS2RTV9awxuwHSa67XtCDmLwdxmirZbBjWdjwd8o0GA6v+/Ztw
+ UJAOlrdT4CCLPIUac1ATOtfF6dV39lYnYYu3m3TBT1B3PR+83ksUZyRZ6pWo55yYRpsD
+ 2ypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772748566; x=1773353366;
+ d=1e100.net; s=20230601; t=1772748573; x=1773353373;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CJx9Hj31eX7Y3Z+9nYTXa1xFEWa58APXwA1Xzcuwa6k=;
- b=jhxfA+Of+DuHXRRaLO1bBdm8RwC1d8/o5PWMZ/65C7FvHv/K6s8xZNpZ16bRjAei13
- kqaPPwnR1JCfC+yZIPj8Vn6opTxFi8WtltxMaJELl119ZDRCYPePCHbobj2YD0jKMZKM
- A7HK4j5RcJWf5coMFF6D5FUCah/HDWc8FVQXJMw+9b7kYeuuXLt3rIsZtFL7TXs+azHi
- N4El97McdC7hsWmscY+IUNy3j6RPdCAbJn2ruQ9PIkbgPpEjXUJ5PFf4guTui8aMEV3F
- fh4I8nP2h6R3Gqh5a/TwkwnqxH1wYrGXUTJNGHOmyYQJqfMDjOXRCQW4wApkQ4DTXpWj
- LP6Q==
-X-Gm-Message-State: AOJu0YyezvZ6gZYdYMa95W6D/D2C4BwIBQedERerhpWb4ZV2GX3EBvtG
- 42qz+aXJT7UE6DQ5i5JQG0slu2WUPJinPfsCh4C9bqwOxqolxGwrXQbhFoy1XA==
-X-Gm-Gg: ATEYQzwAkWXndiRUpsJM13b2mghBybQzx7ZQPk9EVHtIajEN+MNQI2goMyWJ+4aEK9y
- rxO8AhHXbIXZvDlWawPjZIyL1k3J7E1mkWK8FOg6/bbEibrpv0Db/R3WIHvW4QDG9cqAIuwguD4
- TIzzU4vZPt0I4MwjLnL+HiCSRalG4znwLRC0yRX9Bd6U9ZezpJfI8XrDsdQLS+ZiH2HQx6Q0l7f
- 83nGCgObeIjmxQCkBbk7P3Jf+Q4sGFJslYusQB1GjncPJs1HL6A2EUnqZqbXQnESEQsOwNWmpvu
- 2DdGYRpQzfaYIj6aFw7GT/wIPBGZFqVKiPeiKfPPWkO0Ga0mfjHszcT7f+umGavYsPsaEolQxfs
- WFmUwmW/JHNCPMRgv6O79ExBcodPYjE5mqkjdOuDS8ih+ZHG8HFXFEs/RJfE8Y58T84T2+9PWEk
- PqRCTK2K1HbEyXltG0RxY5lRZC4J0jB4H/MUbXQeE+qqs1g8Hx/UW9QPiALzRSWAVX/jOuC9Kpe
- feM7OZPWzQ7ynpH7Ia8Yb0wFqdcQdozk174mFm1V49ucB4=
-X-Received: by 2002:a05:600c:138c:b0:47e:e952:86c9 with SMTP id
- 5b1f17b1804b1-485197e7678mr141539665e9.0.1772748565495; 
- Thu, 05 Mar 2026 14:09:25 -0800 (PST)
+ bh=oh5fF1cD60o2GgdhvxUuihszrtUOa2nx4hPj7KeeMlk=;
+ b=XiTnOeD7yC7YUXaET4sMiEr2Qs+ppHoPkpKxxWFKt/UdIRo38AjZMhrLjLIHWwPaf5
+ OCEohhjOjF44P27CdC0qTJCi2py5l0/U3QMOulk58nR0Xi6HUCHIsKGMymxw//L30g3g
+ gmGkTVI1BSUDL9QP6Q/rQvE8p35z+3fdtey2JxbtJ+fqFar7C/QrBzmzl8RTBhbLpK1f
+ BP3fC/P12UCAfreEDiLu5qOGZ6Tyvbpwbokxubuvyh7Z5bc+xg0VkWvR35vJbUPGT406
+ Rmlo79kg7EOUExB35teWwEVTyG53cbwLCK5GkAigp2ZwFhSerlQiRJ/Pt6YANgOJ/YjL
+ CJnA==
+X-Gm-Message-State: AOJu0YzwYHtVqMaqiTo0sXEcF3tDsNntBO+XH20X8vGgjR4Xg7eV0B36
+ d+vfcrSmKSZ6k/fO8ojRAZkasEa3T6BLYWV0k/ToPKX97V7Jn8BJ2Lop9IjeEw==
+X-Gm-Gg: ATEYQzwL0nMf/pVOqHp0JJ+S9RBs9/VK1blIbdrAzVQ4uMtpunSyyg7vSoqvA4Za9wK
+ arWa+w9CIxxW8TGAiLp9iuKHWcQLQ+hU+zML9cZDwOkC5YtLlKsFf5abMINqE/a7UIifCXUICgn
+ AW9i1sGBl7xmkv4Q7En3NpgTuW5Su9+78cCj+2B/XVdLhyhkSa2Dx43Alg7YBLExJtq8S3gvfxE
+ Fs974ERwlmQOuoFz0xtGtMCO0dS7/t6HIwt6iAz99/Wx/3oXiVaDJ7kOIekh6i0lc7+fvhN5KJH
+ sly1xSRI+zWkHhiR/tBWoiLI8H1lIoNAaw8scZMQMXQ7a6jmg+mXLfh2x5SeUkfxwNEveFyGXVW
+ gsvzlkeiu1FoUawpBFF3f0cYdABHBgayhENEj2hL/UQmc+2E9Jin1oBRU7lhkPKJLMVsjcDwFMW
+ UufxrAcBLsWhkQp+VHJocAsHOVxrEPhcvF7UJJR5gyRhRdPuv5P1CVDXTt22ilXk12q77UpeO2a
+ O9HP+j1GJa+ss/OW9R1/n0B07/GqarBaikx5PyRbmG3e3I=
+X-Received: by 2002:a05:600c:5394:b0:480:6ab1:ed0d with SMTP id
+ 5b1f17b1804b1-485235a7b78mr16462275e9.9.1772748573093; 
+ Thu, 05 Mar 2026 14:09:33 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-2989-c400-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:2989:c400:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fa87e56sm67419615e9.0.2026.03.05.14.09.24
+ 5b1f17b1804b1-4851fa87e56sm67419615e9.0.2026.03.05.14.09.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 14:09:25 -0800 (PST)
+ Thu, 05 Mar 2026 14:09:32 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -80,17 +80,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org,
  Helge Deller <deller@gmx.de>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 05/14] hw/char/serial: Remove explicit cast from void
- pointer
-Date: Thu,  5 Mar 2026 23:09:02 +0100
-Message-ID: <20260305220911.131508-6-shentey@gmail.com>
+Subject: [PATCH v3 10/14] hw/char/serial: Remove redundant reset
+Date: Thu,  5 Mar 2026 23:09:07 +0100
+Message-ID: <20260305220911.131508-11-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260305220911.131508-1-shentey@gmail.com>
 References: <20260305220911.131508-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,73 +112,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A void pointer asks for being casted, so C allows for omitting the
-explicit cast. Take advantage of that.
+There is no need to invoke the reset method in realize since the reset
+framework will do so anyway before the machine starts.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/char/serial.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ hw/char/serial.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/hw/char/serial.c b/hw/char/serial.c
-index adbd1d1d4a..0f2e79dfba 100644
+index 485b98f03f..0f3469a1e8 100644
 --- a/hw/char/serial.c
 +++ b/hw/char/serial.c
-@@ -715,7 +715,7 @@ static const VMStateDescription vmstate_serial_thr_ipending = {
- 
- static bool serial_tsr_needed(void *opaque)
- {
--    SerialState *s = (SerialState *)opaque;
-+    SerialState *s = opaque;
-     return s->tsr_retry != 0;
+@@ -934,7 +934,6 @@ static void serial_realize(DeviceState *dev, Error **errp)
+                              serial_event, serial_be_change, s, NULL, true);
+     fifo8_create(&s->recv_fifo, UART_FIFO_LENGTH);
+     fifo8_create(&s->xmit_fifo, UART_FIFO_LENGTH);
+-    serial_reset(s);
  }
  
-@@ -734,7 +734,7 @@ static const VMStateDescription vmstate_serial_tsr = {
- 
- static bool serial_recv_fifo_needed(void *opaque)
- {
--    SerialState *s = (SerialState *)opaque;
-+    SerialState *s = opaque;
-     return !fifo8_is_empty(&s->recv_fifo);
- 
- }
-@@ -752,7 +752,7 @@ static const VMStateDescription vmstate_serial_recv_fifo = {
- 
- static bool serial_xmit_fifo_needed(void *opaque)
- {
--    SerialState *s = (SerialState *)opaque;
-+    SerialState *s = opaque;
-     return !fifo8_is_empty(&s->xmit_fifo);
- }
- 
-@@ -769,7 +769,7 @@ static const VMStateDescription vmstate_serial_xmit_fifo = {
- 
- static bool serial_fifo_timeout_timer_needed(void *opaque)
- {
--    SerialState *s = (SerialState *)opaque;
-+    SerialState *s = opaque;
-     return timer_pending(s->fifo_timeout_timer);
- }
- 
-@@ -786,7 +786,7 @@ static const VMStateDescription vmstate_serial_fifo_timeout_timer = {
- 
- static bool serial_timeout_ipending_needed(void *opaque)
- {
--    SerialState *s = (SerialState *)opaque;
-+    SerialState *s = opaque;
-     return s->timeout_ipending != 0;
- }
- 
-@@ -803,7 +803,7 @@ static const VMStateDescription vmstate_serial_timeout_ipending = {
- 
- static bool serial_poll_needed(void *opaque)
- {
--    SerialState *s = (SerialState *)opaque;
-+    SerialState *s = opaque;
-     return s->poll_msl >= 0;
- }
- 
+ static void serial_unrealize(DeviceState *dev)
 -- 
 2.53.0
 
