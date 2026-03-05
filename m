@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A755F47CA4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805F8F47CA4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 17:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyCoL-000279-IT; Thu, 05 Mar 2026 12:48:38 -0500
+	id 1vyCoc-0002OS-0O; Thu, 05 Mar 2026 12:48:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCnr-0001wd-8j
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vyCo4-00022x-0d
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyCnm-00026l-Cs
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:03 -0500
+ id 1vyCnz-00027U-KH
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 12:48:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772732875;
+ s=mimecast20190719; t=1772732887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=U/GF1jS37Mr90bbf8ilU5P9jvycnugt+I099M69dJ8k=;
- b=WwHyVBiz84kIGFASjX6/Y9bg7pTCkl2uwDB1GzpUZZmUtWYnSw6G6tV/JcaKnqBm81Ee5U
- 4kGxiDaKdZWRCDnYCS9qYfBmG+IoRHMs/5CtmBty8OGoPruE/km/o/9EY+PxsIQP7kjoc/
- mFhDQtmqqvyd1/zv4nfpQbsRyWEaN5g=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BFi2sJa2unIQOT19osXlDgAQoFr8Ob8UN0cCnqaZMb0=;
+ b=TOMVwjS5tGsGPvZw2Ns1HA0ETeDvnmQuGm0flXERT7uqUHng7oIfAzPS7Jv3xtcI27DHxb
+ nS+xHWZluyt6hzUFBhSHW7x2xFEt8xR11tbkrwr8/IXkNwm7GcVwBFWuU6FzWiIIp35a2Z
+ CSER6fb9XGJKUoweESas08dUVokN874=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-lBOTWUNrM9K6Zzs18b9mlA-1; Thu,
- 05 Mar 2026 12:47:54 -0500
-X-MC-Unique: lBOTWUNrM9K6Zzs18b9mlA-1
-X-Mimecast-MFC-AGG-ID: lBOTWUNrM9K6Zzs18b9mlA_1772732872
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-wvEwSNZsMgC5YiZg_TwGIw-1; Thu,
+ 05 Mar 2026 12:48:05 -0500
+X-MC-Unique: wvEwSNZsMgC5YiZg_TwGIw-1
+X-Mimecast-MFC-AGG-ID: wvEwSNZsMgC5YiZg_TwGIw_1772732884
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 906DC195609D; Thu,  5 Mar 2026 17:47:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DFA4D180047F; Thu,  5 Mar 2026 17:48:03 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.44.34.61])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA1C31956095; Thu,  5 Mar 2026 17:47:45 +0000 (UTC)
+ id 803421955D71; Thu,  5 Mar 2026 17:47:58 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -61,21 +62,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Subject: [PULL v2 00/27] Misc patches queue
-Date: Thu,  5 Mar 2026 17:47:16 +0000
-Message-ID: <20260305174743.3084606-1-berrange@redhat.com>
+Subject: [PULL 02/27] io: separate freeing of tasks from marking them as
+ complete
+Date: Thu,  5 Mar 2026 17:47:18 +0000
+Message-ID: <20260305174743.3084606-3-berrange@redhat.com>
+In-Reply-To: <20260305174743.3084606-1-berrange@redhat.com>
+References: <20260305174743.3084606-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
 X-Spam_bar: /
 X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -93,106 +97,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
+The original design of QIOTask was intended to simplify lifecycle
+management by automatically freeing it when the task was marked as
+complete. This overlooked the fact that when a QIOTask is used in
+combination with a GSource, there may be times when the source
+callback is never invoked. This is typically when a GSource is
+released before any I/O event arrives. In such cases it is not
+desirable to mark a QIOTask as complete, but it still needs to be
+freed. To satisfy this, the task must be released manually.
 
-  Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/io/task.h         | 29 +++++++++++++++++++++--------
+ io/channel-tls.c          |  4 ++++
+ io/channel-websock.c      |  3 +++
+ io/task.c                 |  8 ++++++--
+ tests/unit/test-io-task.c | 26 ++++++++++++++++++++++++++
+ 5 files changed, 60 insertions(+), 10 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/berrange/qemu tags/next-pr-pull-request
-
-for you to fetch changes up to ca61f91ef9b0d10333881fd0070303ea33cbc72e:
-
-  util/oslib-posix: increase memprealloc thread count to 32 (2026-03-05 17:40:24 +0000)
-
-----------------------------------------------------------------
-* Increase pre-alloc max thread count to 32
-* Fix checkpatch warning for new/removed files with --terse
-* Detect more GPL boilerplate in checkpatch
-* Fix lean of data in TLS/websock GSource cancellation
-* Tweak CPU docs for DiamondRapids
-* Unconditionally enable thread naming
-* Fix race setting thread naming on Win32
-* Add API docs for logging APIs
-* Fix interleaved error/trace output
-* Fix missing error prefixes with warn_report
-* Add detailed error reporting for VNC passworrd changes
-* Refactoring of error_vprintf & related funcs
-
-----------------------------------------------------------------
-
-Daniel P. Berrangé (25):
-  scripts: detect another GPL license boilerplate variant
-  io: separate freeing of tasks from marking them as complete
-  io: fix cleanup for TLS I/O source data on cancellation
-  io: fix cleanup for websock I/O source data on cancellation
-  docs: simplify DiamondRapids CPU docs
-  qemu-options: remove extraneous [] around arg values
-  include: define constant for early constructor priority
-  monitor: initialize global data from a constructor
-  system: unconditionally enable thread naming
-  util: fix race setting thread name on Win32
-  util: expose qemu_thread_set_name
-  audio: make jackaudio use qemu_thread_set_name
-  util: set the name for the 'main' thread on Windows
-  util: add API to fetch the current thread name
-  util: introduce some API docs for logging APIs
-  util: avoid repeated prefix on incremental qemu_log calls
-  util/log: add missing error reporting in qemu_log_trylock_with_err
-  ui: add proper error reporting for password changes
-  ui: remove redundant use of error_printf_unless_qmp()
-  monitor: remove redundant error_[v]printf_unless_qmp
-  monitor: refactor error_vprintf()
-  monitor: move error_vprintf back to error-report.c
-  util: fix interleaving of error & trace output
-  util: don't skip error prefixes when QMP is active
-  util: fix interleaving of error prefixes
-
-Jon Kohler (1):
-  util/oslib-posix: increase memprealloc thread count to 32
-
-Markus Armbruster (1):
-  scripts/checkpatch: Fix MAINTAINERS update warning with --terse
-
- audio/jackaudio.c                    |  28 +++++--
- docs/about/deprecated.rst            |   7 ++
- docs/system/cpu-models-x86.rst.inc   |  16 ++--
- include/io/task.h                    |  29 +++++--
- include/monitor/monitor.h            |   3 -
- include/qemu/compiler.h              |   8 ++
- include/qemu/log-for-trace.h         |  17 +++-
- include/qemu/log.h                   |  39 ++++++++++
- include/qemu/thread.h                |   3 +-
- include/ui/console.h                 |   2 +-
- include/ui/qemu-spice-module.h       |   3 +-
- io/channel-tls.c                     |  64 ++++++++++-----
- io/channel-websock.c                 |  46 ++++++++---
- io/task.c                            |   8 +-
- meson.build                          |  21 +++++
- monitor/monitor.c                    |  51 +++---------
- qemu-options.hx                      | 112 +++++++++++++--------------
- rust/util/src/log.rs                 |   6 ++
- scripts/checkpatch.pl                |  11 +--
- stubs/error-printf.c                 |  23 ------
- stubs/meson.build                    |   1 -
- stubs/monitor-core.c                 |  19 ++++-
- system/vl.c                          |  12 +--
- tests/functional/generic/test_vnc.py |   4 +-
- tests/unit/test-io-task.c            |  26 +++++++
- tests/unit/test-util-sockets.c       |   1 +
- ui/spice-core.c                      |  25 ++++--
- ui/spice-module.c                    |   7 +-
- ui/ui-qmp-cmds.c                     |  19 ++---
- ui/vnc-stubs.c                       |   6 +-
- ui/vnc.c                             |  16 ++--
- util/error-report.c                  |  92 +++++++++++++++++-----
- util/log.c                           |  50 +++++++-----
- util/oslib-posix.c                   |   2 +-
- util/qemu-thread-posix.c             |  89 +++++++++++++++------
- util/qemu-thread-win32.c             |  87 ++++++++++++++-------
- 36 files changed, 631 insertions(+), 322 deletions(-)
- delete mode 100644 stubs/error-printf.c
-
+diff --git a/include/io/task.h b/include/io/task.h
+index 0b5342ee84..98847f5994 100644
+--- a/include/io/task.h
++++ b/include/io/task.h
+@@ -96,7 +96,7 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
+  *                         1000,
+  *                         myobject_operation_timer,
+  *                         task,
+- *                         NULL);
++ *                         qio_task_free);
+  *    }
+  *   </programlisting>
+  * </example>
+@@ -138,9 +138,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
+  * the callback func 'myobject_operation_notify' shown
+  * earlier to deal with the results.
+  *
+- * Once this function returns false, object_unref will be called
+- * automatically on the task causing it to be released and the
+- * ref on QMyObject dropped too.
++ * Once this function returns FALSE, the task will be freed,
++ * causing it release the ref on QMyObject too.
+  *
+  * The QIOTask module can also be used to perform operations
+  * in a background thread context, while still reporting the
+@@ -208,8 +207,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
+  * 'err' attribute in the task object to determine if
+  * the operation was successful or not.
+  *
+- * The returned task will be released when qio_task_complete()
+- * is invoked.
++ * The returned task must be released by calling
++ * qio_task_free() when no longer required.
+  *
+  * Returns: the task struct
+  */
+@@ -218,6 +217,19 @@ QIOTask *qio_task_new(Object *source,
+                       gpointer opaque,
+                       GDestroyNotify destroy);
+ 
++/**
++ * qio_task_free:
++ * task: the task object to free
++ *
++ * Free the resources associated with the task. Typically
++ * the qio_task_complete() method will be called immediately
++ * before this to trigger the task callback, however, it is
++ * permissible to free the task in the case of cancellation.
++ * The destroy callback will be used to release the opaque
++ * data provided to qio_task_new().
++ */
++void qio_task_free(QIOTask *task);
++
+ /**
+  * qio_task_run_in_thread:
+  * @task: the task struct
+@@ -268,8 +280,9 @@ void qio_task_wait_thread(QIOTask *task);
+  * qio_task_complete:
+  * @task: the task struct
+  *
+- * Invoke the completion callback for @task and
+- * then free its memory.
++ * Invoke the completion callback for @task. This should typically
++ * only be invoked once on a task, and then qio_task_free() used
++ * to free it.
+  */
+ void qio_task_complete(QIOTask *task);
+ 
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index b0cec27cb9..07274c12df 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -170,6 +170,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+         trace_qio_channel_tls_handshake_fail(ioc);
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         return;
+     }
+ 
+@@ -183,6 +184,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+             trace_qio_channel_tls_credentials_allow(ioc);
+         }
+         qio_task_complete(task);
++        qio_task_free(task);
+     } else {
+         GIOCondition condition;
+         QIOChannelTLSData *data = g_new0(typeof(*data), 1);
+@@ -270,11 +272,13 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+         trace_qio_channel_tls_bye_fail(ioc);
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         return;
+     }
+ 
+     if (status == QCRYPTO_TLS_BYE_COMPLETE) {
+         qio_task_complete(task);
++        qio_task_free(task);
+         return;
+     }
+ 
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index d0929ba232..100faba6b3 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -545,6 +545,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -561,6 +562,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+             trace_qio_channel_websock_handshake_complete(ioc);
+             qio_task_complete(task);
+         }
++        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -588,6 +590,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+diff --git a/io/task.c b/io/task.c
+index da79d31782..c3615d2d74 100644
+--- a/io/task.c
++++ b/io/task.c
+@@ -70,8 +70,12 @@ QIOTask *qio_task_new(Object *source,
+     return task;
+ }
+ 
+-static void qio_task_free(QIOTask *task)
++void qio_task_free(QIOTask *task)
+ {
++    if (!task) {
++        return;
++    }
++
+     qemu_mutex_lock(&task->thread_lock);
+     if (task->thread) {
+         if (task->thread->destroy) {
+@@ -108,6 +112,7 @@ static gboolean qio_task_thread_result(gpointer opaque)
+ 
+     trace_qio_task_thread_result(task);
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     return FALSE;
+ }
+@@ -194,7 +199,6 @@ void qio_task_complete(QIOTask *task)
+ {
+     task->func(task, task->opaque);
+     trace_qio_task_complete(task);
+-    qio_task_free(task);
+ }
+ 
+ 
+diff --git a/tests/unit/test-io-task.c b/tests/unit/test-io-task.c
+index 115dba8970..b1c8ecb7ab 100644
+--- a/tests/unit/test-io-task.c
++++ b/tests/unit/test-io-task.c
+@@ -73,6 +73,7 @@ static void test_task_complete(void)
+     src = qio_task_get_source(task);
+ 
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     g_assert(obj == src);
+ 
+@@ -84,6 +85,28 @@ static void test_task_complete(void)
+ }
+ 
+ 
++static void test_task_cancel(void)
++{
++    QIOTask *task;
++    Object *obj = object_new(TYPE_DUMMY);
++    Object *src;
++    struct TestTaskData data = { NULL, NULL, false };
++
++    task = qio_task_new(obj, task_callback, &data, NULL);
++    src = qio_task_get_source(task);
++
++    qio_task_free(task);
++
++    g_assert(obj == src);
++
++    object_unref(obj);
++
++    g_assert(data.source == NULL);
++    g_assert(data.err == NULL);
++    g_assert(data.freed == false);
++}
++
++
+ static void task_data_free(gpointer opaque)
+ {
+     struct TestTaskData *data = opaque;
+@@ -101,6 +124,7 @@ static void test_task_data_free(void)
+     task = qio_task_new(obj, task_callback, &data, task_data_free);
+ 
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     object_unref(obj);
+ 
+@@ -123,6 +147,7 @@ static void test_task_failure(void)
+ 
+     qio_task_set_error(task, err);
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     object_unref(obj);
+ 
+@@ -260,6 +285,7 @@ int main(int argc, char **argv)
+     module_call_init(MODULE_INIT_QOM);
+     type_register_static(&dummy_info);
+     g_test_add_func("/crypto/task/complete", test_task_complete);
++    g_test_add_func("/crypto/task/cancel", test_task_cancel);
+     g_test_add_func("/crypto/task/datafree", test_task_data_free);
+     g_test_add_func("/crypto/task/failure", test_task_failure);
+     g_test_add_func("/crypto/task/thread_complete", test_task_thread_complete);
 -- 
 2.53.0
 
