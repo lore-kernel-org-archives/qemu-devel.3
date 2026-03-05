@@ -4,57 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF06F3092C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 13:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FF5F3095D
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 13:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy8dF-0006vn-3v; Thu, 05 Mar 2026 08:20:49 -0500
+	id 1vy8fb-00007x-Cq; Thu, 05 Mar 2026 08:23:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
- id 1vy8dC-0006ve-Vj
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 08:20:47 -0500
-Received: from mail-05.mail-europe.com ([85.9.206.169])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
- id 1vy8dA-00013g-K1
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 08:20:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthewpenney.net;
- s=protonmail; t=1772716838; x=1772976038;
- bh=/wVLuffEBSb5wkpWmJPmZXOHlnmMqm87ltvW8Gu64qk=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=Znczhf8JaiutHkaaGbK+vm5u4gVESi++MrMneP1fbkG6WnqLMIP0JX9JnCXPZBeW9
- ySRI2emqDVc3t4EtpR93it71Nhdb0bhZKSipzqUmziLzjJHLF5bTCZZS+9tD+Kb1ov
- LNoliuk6YPlLD20NORikiXxRxTUJplZW2NWT2fDxi+EAJeaAx0Gw/MhUcVuUXRra59
- +1lOqb5dLiTMfPqfgM31jO7TP9ufYbD3PkHR9pL3RrqwtLMaUzZjXV4Z2BLsuqNPFl
- 7MGMLJSYAs/yiMNTF4s3wdkFGB9r8TvrN+Tic/EypLrP71LSHAZJr5KdtdbK0MzSBu
- +koIcZbT60X5A==
-Date: Thu, 05 Mar 2026 13:20:35 +0000
-To: =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-From: Matthew Penney <matt@matthewpenney.net>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- lvivier@redhat.com, amit@kernel.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] hw/char: clear dangling GLib event source tag
-Message-ID: <l7SUyMhQt6JPXzWAoUOEWkMw02yJQDvwHWNTpN6NnK6S8jrLk3AExgEqpOvvfSgJLYLBDmJ1ji3Eg5qB_NjhV21c1f01sC8ZkwBY5YQl98I=@matthewpenney.net>
-In-Reply-To: <CAMxuvazif5c-wpPCG4dce-jm_G4MRxkZqP0qyp5TucudmwDLMA@mail.gmail.com>
-References: <20260305003012.108262-1-matt@matthewpenney.net>
- <CAMxuvazif5c-wpPCG4dce-jm_G4MRxkZqP0qyp5TucudmwDLMA@mail.gmail.com>
-Feedback-ID: 185185778:user:proton
-X-Pm-Message-ID: e8bdae0f08fa49a89d98d9d769b54511cc26fa93
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vy8fW-00007Y-0J; Thu, 05 Mar 2026 08:23:10 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vy8fR-0001C9-P1; Thu, 05 Mar 2026 08:23:09 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDXrEStg6lpwG6wAA--.2998S2;
+ Thu, 05 Mar 2026 21:22:53 +0800 (CST)
+Received: from [192.168.31.155] (unknown [113.246.233.224])
+ by mail (Coremail) with SMTP id AQAAfwD3Tuysg6lpnz0fAA--.53199S2;
+ Thu, 05 Mar 2026 21:22:52 +0800 (CST)
+Message-ID: <e42c6868-552b-4eb9-ba76-4e9d69525565@phytium.com.cn>
+Date: Thu, 5 Mar 2026 21:22:49 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=85.9.206.169; envelope-from=matt@matthewpenney.net;
- helo=mail-05.mail-europe.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 11/31] hw/arm/smmu: Add PTE NS/NSTable helpers
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101544.2992355-1-tangtao1634@phytium.com.cn>
+ <67ce2d21-0b7e-4f21-aa3a-d4a7dc52a059@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <67ce2d21-0b7e-4f21-aa3a-d4a7dc52a059@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwD3Tuysg6lpnz0fAA--.53199S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAFBWmooSAF7AAAso
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxJrWUKFy7uryktF43ur4kWFg_yoW8Ar13p3
+ 4DKa98KFW8Ja17Gan7twnavFnYqws5tF1UGFy7W3s8uws0vw1fWr129r15Ka4q9rn5Jwnr
+ ZF1qv34furWY9rJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -72,62 +78,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Marc-Andr=C3=A9,
+Hi Eric,
 
-Thanks for the swift reply!
+On 2026/3/3 01:07, Eric Auger wrote:
+>
+> On 2/21/26 11:15 AM, Tao Tang wrote:
+>> Add helper macros for NS and NSTable bits and group PTE attribute
+>> accessors for clarity. No functional change beyond the new helpers.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   hw/arm/smmu-internal.h | 16 ++++++++++++++--
+>>   1 file changed, 14 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
+>> index d143d296f34..a0454f720da 100644
+>> --- a/hw/arm/smmu-internal.h
+>> +++ b/hw/arm/smmu-internal.h
+>> @@ -58,16 +58,28 @@
+>>       ((level == 3) &&                                                    \
+>>        ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
+>>   
+>> +/* Block & page descriptor attributes */
+> Maybe use the spec terminology:
+> Stage 1 attribute fields in VMSAv8-64 Block and Page descriptors
+> vs 7 Stage 1 VMSAv8-64 Table descriptor fields
+>
+> By the way AF belongs to both
 
-Should I start by sending a V2 with your proposed update just for virtio-co=
-nsole.c, or do you prefer a larger bulk change across the codebase?
-
-Best,
-Matthew
 
 
+I’ll rework the comments to use the spec terminology and avoid grouping 
+AF too narrowly under Block/Page wording.
 
-Sent with Proton Mail secure email.
 
-On Thursday, 5 March 2026 at 10:23, Marc-Andr=C3=A9 Lureau <marcandre.lurea=
-u@redhat.com> wrote:
+Best regards,
 
-> Hi
->=20
-> On Thu, Mar 5, 2026 at 1:40=E2=80=AFAM Matthew Penney <matt@matthewpenney=
-.net> wrote:
-> >
-> > Clear dangling GLib event source tag when virtio-console is
-> > unrealized. This prevents a stale tag from being used, and
-> > maintains consistency with the rest of virtio-console.
-> >
-> > Signed-off-by: Matthew Penney <matt@matthewpenney.net>
-> > ---
-> >  hw/char/virtio-console.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
-> > index 25db0f019b..11bf51e3ea 100644
-> > --- a/hw/char/virtio-console.c
-> > +++ b/hw/char/virtio-console.c
-> > @@ -258,6 +258,7 @@ static void virtconsole_unrealize(DeviceState *dev)
-> >
-> >      if (vcon->watch) {
-> >          g_source_remove(vcon->watch);
-> > +        vcon->watch =3D 0;
->=20
-> The glib >=3D 2.56 way is:
-> g_clear_handle_id(&vcon->watch, g_source_remove);
->=20
-> We could do a bulk change for the whole code base imho
->=20
-> anyway
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->=20
-> >      }
-> >  }
-> >
-> > --
-> > 2.53.0
-> >
-> >
->=20
-> 
+Tao
+
+>
+>> +/* Non-secure bit */
+>> +#define PTE_NS(pte) \
+>> +    (extract64(pte, 5, 1))
+>> +
+>>   /* access permissions */
+>>   
+>>   #define PTE_AP(pte) \
+>>       (extract64(pte, 6, 2))
+>>   
+>> +/* access flag */
+>> +#define PTE_AF(pte) \
+>> +    (extract64(pte, 10, 1))
+>> +
+>> +
+>> +/* Table descriptor attributes */
+>>   #define PTE_APTABLE(pte) \
+>>       (extract64(pte, 61, 2))
+>>   
+>> -#define PTE_AF(pte) \
+>> -    (extract64(pte, 10, 1))
+>> +#define PTE_NSTABLE(pte) \
+>> +    (extract64(pte, 63, 1))
+>> +
+>>   /*
+>>    * TODO: At the moment all transactions are considered as privileged (EL1)
+>>    * as IOMMU translation callback does not pass user/priv attributes.
+> Eric
+
 
