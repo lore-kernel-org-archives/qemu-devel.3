@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27A4F47CCD
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EB61F47CD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyFEa-0006fU-88; Thu, 05 Mar 2026 15:23:48 -0500
+	id 1vyFg6-0006ZD-MT; Thu, 05 Mar 2026 15:52:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vyFEZ-0006f9-1X; Thu, 05 Mar 2026 15:23:47 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vyFEX-0008E4-L2; Thu, 05 Mar 2026 15:23:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=nI4ceTQWcXDKFdqI9Yo79Ybc4D76SciwgNc7GHzUkQI=; b=UCYmIAZ/ZhUzNW/4+zXTrZ9XYf
- lKS2OpinqEvbZ6TRL+IG4Rmo8b2NklEN02XXr5VbESmWDvVWGUMsbdhwuNkIgeDFl+oVBC2l+lH6E
- ewKreXAbL05lG8WlRV3r1aFDZWoPAyNqOvhdc/6k04kc0bSeqrzR8qSniEQbeL8ZanuZtxs0O+ZBh
- WwpqropakhDMSouo0eyoFiwwiSqRUfT1leXSQMzi1jvlKzZNAP3T1kZaOU9uIcLhP0D4bEu0MK7vs
- wzlAGaOHyxySSmKfb/c0gwGFQ0YcFhcTaX68q8kO78ZuhQwEH2rfczOH7O5Zse1AIXQVQHjZZGYAy
- QRNbafYKCMZ6lbeQBG1/up1VAy7iWUom2UMFGRsB63Kh0cR9wYZVNhPy59u/1c5Oa7c7zvdX9lZZC
- bIIBHTGdtOj3D2+qe5aRVxqUWqf0C/zQyxrTKpjZjOBUw051gxrUPSnKHZpne2X2NJ1qQoK+zzrB9
- Ntt8iDDn1lBS9gN8eSqxHDkpF5vrNcItiLpgrjwHnaVUFBrpihDhpd5bHbMs7ZlTxl9cbDyruInUb
- HPDblg14Wi/3DguaK/q99OTlOqK9wcu8l8NKYTTQepJz8VQGznITZdVjDqXGFNzS4t6I14+aEsia8
- pvrIIpVsH+ct0ZAW6LixeVmkf6IujynFCZRaK+NnU=;
-Received: from [2a02:8012:2f01:0:ebef:71c7:bd0f:338d]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vyFBa-0007EK-DA; Thu, 05 Mar 2026 20:20:46 +0000
-Message-ID: <c0fd01c7-fade-4a9c-a451-e239ea8f0641@ilande.co.uk>
-Date: Thu, 5 Mar 2026 20:23:38 +0000
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyFg2-0006YG-Tf
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:10 -0500
+Received: from mail-qv1-xf34.google.com ([2607:f8b0:4864:20::f34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyFfz-000666-Pw
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:10 -0500
+Received: by mail-qv1-xf34.google.com with SMTP id
+ 6a1803df08f44-89a000f5adeso84692536d6.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772743926; x=1773348726; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=31jlvN5wVwa4G/7vyDJs7qSCTlgMRWD/K+uKL2YBkfI=;
+ b=vinssO22YF930Ag97yzyZzrNGHhoN8ByojUDIuYrJvXji6VBPnTZhb48y1EdSDjNZ2
+ O7BGV4minj7ornjNF0XSOguSD2JJchmwe2d+Rm8ObZtMu3mYXM33mZXnliLmIPn4IsBr
+ N/3YsKJgDh81l3hcKTCVBjPM+2bGenlBeUB0jmYf/Z0CyzKnDm0mmh4CT5eO8I9aKmDx
+ Hsu1d20pkCnvB2zW+UQLqybkXDOl2BN0c7levTmZqaCFMPc7eZxKIkWxJxeJzxPh5DKI
+ mquJgNu/6BUcxenxx+S9I0C7sKPu8u3yEjok7R6muhwmood0Z/G58jwwaAYYO+Hq2146
+ FnuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772743926; x=1773348726;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=31jlvN5wVwa4G/7vyDJs7qSCTlgMRWD/K+uKL2YBkfI=;
+ b=EfGG5m25dV2BIXMuL6ld6kxQiW2aiNlCIqG9xRLZy8LjgFVcP2dpVod6i6zcMaCNRu
+ S429V2ItUIeQ14KOyYD+MVF5Lt7h6kXeDW0im4sS3TaQa1EETjKSH24cs8sz/VSXFKS5
+ Q7UKYJ/zQnTFGTc93ELZfMzvXRo78fYFb8ZEM0HX7ydRQ02mjer9SKsqTshbN6U+cbcS
+ Ota+Dq/YPHG4R0n+jvBG762fddY6DkJaPujhG1mIgu3By74VPo3qF3yt8Kzsx1ptMAYb
+ 67+A1OvG+FNuXEYHG6mipCdP0LphxcmZYzUwysFPENi7I+vRrOTWM7Bkcdvjp2p9aAIH
+ CW1Q==
+X-Gm-Message-State: AOJu0Yw67MVEbl2Y4CyXcrWerL4DVSwX/Qd5PtWOMkYI3VmOOefxe45W
+ y081H1v0U+ELmd1sRYM6mTjp4gAD1B4JLj1WnC96qhlmnRJs4G2KZQDBAfGgjZDWBXwei/NM/f9
+ MxBih
+X-Gm-Gg: ATEYQzwc00ZlrBEucs++ukfTJM4Lc4Xdgmb+MP3sLFycQHdIm9i+W4UhUlrarRziCES
+ +o3F5E6zX5q3aOrfl77sLiQCgqRHDPRryG7S0+PWVtnzqHn0FDVJTbIfxZ8RhKKB0GJssEf+oas
+ zAFEj8k7KmtG3Z1Cjt+lAh4UzmxGr+/WTMQbb3Y3tMaGmMLwDJGDAweMtZCZ6AFJyaeOV6A3jzL
+ 1fX7rxN/ANKgFZySsby0iQW1VQJpbOQw84Vt48J5DkeH3tlU/oRa01rkqzknvEqmJKzHWzb2mZB
+ 5U0sWzyqW6SxDzk6rNxO3Qa606tVpRawPh+Subo9KM8xiBEBJXGJvVYzoxwXtKY0ZgrtAEv7856
+ L6wtmr22xmxlVARt38q8gt3YOOcTASZBhDiyktrtM21VFrO+Jv7Ewo6anhiDdl/yiGPAJvDLIdS
+ 7MLQ+kFa1snaof17aKBMT7vpFv8ofS5FQCxZmMSiBBrsRDM0p5M9yjaTeVm8JKXVdihC0PVS5sp
+ LA4
+X-Received: by 2002:ad4:5cc6:0:b0:89a:929:9e4e with SMTP id
+ 6a1803df08f44-89a1998b83dmr107621166d6.14.1772743925710; 
+ Thu, 05 Mar 2026 12:52:05 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.52.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 12:52:05 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 03/12] linux-user: make syscall emulation interruptible
+Date: Thu,  5 Mar 2026 12:51:43 -0800
+Message-ID: <20260305205152.2121854-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
+References: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org
-References: <20260305192223.6214-1-thuth@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20260305192223.6214-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:ebef:71c7:bd0f:338d
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] MAINTAINERS: Update the maintainer for the CHRP NVRAM
- section
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f34;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,43 +103,362 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/03/2026 19:22, Thomas Huth wrote:
+From: Florian Hofhammer <florian.hofhammer@epfl.ch>
 
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> I am not involved in the ppc machines anymore (the pseries machine was
-> the reason why I took over maintainership of the CHRP NVRAM code in the
-> past), so it does not make much sense that I'm still listed here as the
-> maintainer.
-> The CHRP NVRAM code is used by the mac99 / g3beige ppc machines and
-> some Sparc machines, too, where Mark is the maintainer, so I asked him
-> whether he would be interested in being listed as the maintainer here,
-> and fortunately, he agreed! Thanks, Mark!
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index a3245fdcd2d..ea75f6a62af 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2743,7 +2743,7 @@ F: tests/qtest/hexloader-test.c
->   F: tests/data/hex-loader/test.hex
->   
->   CHRP NVRAM
-> -M: Thomas Huth <thuth@redhat.com>
-> +M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->   S: Maintained
->   F: hw/nvram/chrp_nvram.c
->   F: include/hw/nvram/chrp_nvram.h
+The syscall emulation code previously wasn't interruptible via
+cpu_loop_exit(), as this construct relies on a longjmp target that is not
+live anymore in the syscall handling code. Consequently, longjmp() would
+operate on a (potentially overwritten) stale jump buffer. This patch adds an additional
+setjmp and the necessary handling around it to make longjmp() (and by
+proxy cpu_loop_exit() safe to call even within a syscall context.
 
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Link: https://lore.kernel.org/qemu-devel/20260305-setpc-v5-v7-3-4c3adba52403@epfl.ch
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ linux-user/include/special-errno.h |  8 ++++++++
+ linux-user/aarch64/cpu_loop.c      |  2 +-
+ linux-user/alpha/cpu_loop.c        |  2 +-
+ linux-user/arm/cpu_loop.c          |  2 +-
+ linux-user/hexagon/cpu_loop.c      |  2 +-
+ linux-user/hppa/cpu_loop.c         |  1 +
+ linux-user/i386/cpu_loop.c         |  8 +++++---
+ linux-user/loongarch64/cpu_loop.c  |  5 +++--
+ linux-user/m68k/cpu_loop.c         |  2 +-
+ linux-user/microblaze/cpu_loop.c   |  2 +-
+ linux-user/mips/cpu_loop.c         |  9 ++++++---
+ linux-user/or1k/cpu_loop.c         |  2 +-
+ linux-user/ppc/cpu_loop.c          | 10 +++++++---
+ linux-user/riscv/cpu_loop.c        |  2 +-
+ linux-user/s390x/cpu_loop.c        |  2 +-
+ linux-user/sh4/cpu_loop.c          |  2 +-
+ linux-user/sparc/cpu_loop.c        |  4 +++-
+ linux-user/syscall.c               | 16 ++++++++++++++++
+ linux-user/xtensa/cpu_loop.c       |  1 +
+ 19 files changed, 60 insertions(+), 22 deletions(-)
 
-
-ATB,
-
-Mark.
+diff --git a/linux-user/include/special-errno.h b/linux-user/include/special-errno.h
+index 4120455baaf..1db757241a3 100644
+--- a/linux-user/include/special-errno.h
++++ b/linux-user/include/special-errno.h
+@@ -29,4 +29,12 @@
+  */
+ #define QEMU_ESIGRETURN   513
+ 
++/*
++ * This is returned after a plugin has used the qemu_plugin_set_pc API, to
++ * indicate that the plugin deliberately changed the PC and potentially
++ * modified the register values. The main loop should not touch the guest
++ * registers for this reason.
++ */
++#define QEMU_ESETPC       514
++
+ #endif /* SPECIAL_ERRNO_H */
+diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
+index 7f66a879ea9..e7f643d69d5 100644
+--- a/linux-user/aarch64/cpu_loop.c
++++ b/linux-user/aarch64/cpu_loop.c
+@@ -181,7 +181,7 @@ void cpu_loop(CPUARMState *env)
+                              0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->pc -= 4;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->xregs[0] = ret;
+             }
+             break;
+diff --git a/linux-user/alpha/cpu_loop.c b/linux-user/alpha/cpu_loop.c
+index f93597c400d..bef196b1f56 100644
+--- a/linux-user/alpha/cpu_loop.c
++++ b/linux-user/alpha/cpu_loop.c
+@@ -82,7 +82,7 @@ void cpu_loop(CPUAlphaState *env)
+                     env->pc -= 4;
+                     break;
+                 }
+-                if (sysret == -QEMU_ESIGRETURN) {
++                if (sysret == -QEMU_ESIGRETURN || sysret == -QEMU_ESETPC) {
+                     break;
+                 }
+                 /* Syscall writes 0 to V0 to bypass error check, similar
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index 40aefc4c1d7..19874f4c727 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -399,7 +399,7 @@ void cpu_loop(CPUARMState *env)
+                                      0, 0);
+                     if (ret == -QEMU_ERESTARTSYS) {
+                         env->regs[15] -= env->thumb ? 2 : 4;
+-                    } else if (ret != -QEMU_ESIGRETURN) {
++                    } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                         env->regs[0] = ret;
+                     }
+                 }
+diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
+index 5711055aff2..9464246e9e3 100644
+--- a/linux-user/hexagon/cpu_loop.c
++++ b/linux-user/hexagon/cpu_loop.c
+@@ -56,7 +56,7 @@ void cpu_loop(CPUHexagonState *env)
+                              0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->gpr[HEX_REG_PC] -= 4;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->gpr[0] = ret;
+             }
+             break;
+diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
+index 972e85c487d..4b4b663052b 100644
+--- a/linux-user/hppa/cpu_loop.c
++++ b/linux-user/hppa/cpu_loop.c
+@@ -124,6 +124,7 @@ void cpu_loop(CPUHPPAState *env)
+                 break;
+             case -QEMU_ERESTARTSYS:
+             case -QEMU_ESIGRETURN:
++            case -QEMU_ESETPC:
+                 break;
+             }
+             break;
+diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
+index f3f58576af5..fe922fceb5a 100644
+--- a/linux-user/i386/cpu_loop.c
++++ b/linux-user/i386/cpu_loop.c
+@@ -181,7 +181,9 @@ static void emulate_vsyscall(CPUX86State *env)
+     if (ret == -TARGET_EFAULT) {
+         goto sigsegv;
+     }
+-    env->regs[R_EAX] = ret;
++    if (ret != -QEMU_ESETPC) {
++        env->regs[R_EAX] = ret;
++    }
+ 
+     /* Emulate a ret instruction to leave the vsyscall page.  */
+     env->eip = caller;
+@@ -234,7 +236,7 @@ void cpu_loop(CPUX86State *env)
+                              0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->eip -= 2;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->regs[R_EAX] = ret;
+             }
+             break;
+@@ -253,7 +255,7 @@ void cpu_loop(CPUX86State *env)
+                              0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->eip -= 2;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->regs[R_EAX] = ret;
+             }
+             break;
+diff --git a/linux-user/loongarch64/cpu_loop.c b/linux-user/loongarch64/cpu_loop.c
+index 26a5ce3a936..603fcc39c7f 100644
+--- a/linux-user/loongarch64/cpu_loop.c
++++ b/linux-user/loongarch64/cpu_loop.c
+@@ -44,9 +44,10 @@ void cpu_loop(CPULoongArchState *env)
+                 env->pc -= 4;
+                 break;
+             }
+-            if (ret == -QEMU_ESIGRETURN) {
++            if (ret == -QEMU_ESIGRETURN || ret == -QEMU_ESETPC) {
+                 /*
+-                 * Returning from a successful sigreturn syscall.
++                 * Returning from a successful sigreturn syscall or from
++                 * control flow diversion in a plugin callback.
+                  * Avoid clobbering register state.
+                  */
+                 break;
+diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
+index 2c9f628241f..b98ca8ff7b9 100644
+--- a/linux-user/m68k/cpu_loop.c
++++ b/linux-user/m68k/cpu_loop.c
+@@ -66,7 +66,7 @@ void cpu_loop(CPUM68KState *env)
+                                  0, 0);
+                 if (ret == -QEMU_ERESTARTSYS) {
+                     env->pc -= 2;
+-                } else if (ret != -QEMU_ESIGRETURN) {
++                } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                     env->dregs[0] = ret;
+                 }
+             }
+diff --git a/linux-user/microblaze/cpu_loop.c b/linux-user/microblaze/cpu_loop.c
+index 78506ab23d9..06d92c0b90d 100644
+--- a/linux-user/microblaze/cpu_loop.c
++++ b/linux-user/microblaze/cpu_loop.c
+@@ -54,7 +54,7 @@ void cpu_loop(CPUMBState *env)
+             if (ret == -QEMU_ERESTARTSYS) {
+                 /* Wind back to before the syscall. */
+                 env->pc -= 4;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->regs[3] = ret;
+             }
+             /* All syscall exits result in guest r14 being equal to the
+diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
+index 2365de1de1a..fa264b27ec5 100644
+--- a/linux-user/mips/cpu_loop.c
++++ b/linux-user/mips/cpu_loop.c
+@@ -140,9 +140,12 @@ done_syscall:
+                 env->active_tc.PC -= 4;
+                 break;
+             }
+-            if (ret == -QEMU_ESIGRETURN) {
+-                /* Returning from a successful sigreturn syscall.
+-                   Avoid clobbering register state.  */
++            if (ret == -QEMU_ESIGRETURN || ret == -QEMU_ESETPC) {
++                /*
++                 * Returning from a successful sigreturn syscall or from
++                 * control flow diversion in a plugin callback.
++                 * Avoid clobbering register state.
++                 */
+                 break;
+             }
+             if ((abi_ulong)ret >= (abi_ulong)-1133) {
+diff --git a/linux-user/or1k/cpu_loop.c b/linux-user/or1k/cpu_loop.c
+index 2167d880d55..e7e9929e6f5 100644
+--- a/linux-user/or1k/cpu_loop.c
++++ b/linux-user/or1k/cpu_loop.c
+@@ -48,7 +48,7 @@ void cpu_loop(CPUOpenRISCState *env)
+                              cpu_get_gpr(env, 8), 0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->pc -= 4;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 cpu_set_gpr(env, 11, ret);
+             }
+             break;
+diff --git a/linux-user/ppc/cpu_loop.c b/linux-user/ppc/cpu_loop.c
+index b0b0cb14b41..1f9ee20bd0c 100644
+--- a/linux-user/ppc/cpu_loop.c
++++ b/linux-user/ppc/cpu_loop.c
+@@ -340,9 +340,13 @@ void cpu_loop(CPUPPCState *env)
+                 env->nip -= 4;
+                 break;
+             }
+-            if (ret == (target_ulong)(-QEMU_ESIGRETURN)) {
+-                /* Returning from a successful sigreturn syscall.
+-                   Avoid corrupting register state.  */
++            if (ret == (target_ulong)(-QEMU_ESIGRETURN) ||
++                ret == (target_ulong)(-QEMU_ESETPC)) {
++                /*
++                 * Returning from a successful sigreturn syscall or from
++                 * control flow diversion in a plugin callback.
++                 * Avoid corrupting register state.
++                 */
+                 break;
+             }
+             if (ret > (target_ulong)(-515)) {
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index ce542540c28..eecc8d15178 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -65,7 +65,7 @@ void cpu_loop(CPURISCVState *env)
+             }
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->pc -= 4;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->gpr[xA0] = ret;
+             }
+             if (cs->singlestep_enabled) {
+diff --git a/linux-user/s390x/cpu_loop.c b/linux-user/s390x/cpu_loop.c
+index 4929b32e1fc..67d2a803fbc 100644
+--- a/linux-user/s390x/cpu_loop.c
++++ b/linux-user/s390x/cpu_loop.c
+@@ -83,7 +83,7 @@ void cpu_loop(CPUS390XState *env)
+                              env->regs[6], env->regs[7], 0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->psw.addr -= env->int_svc_ilen;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->regs[2] = ret;
+             }
+ 
+diff --git a/linux-user/sh4/cpu_loop.c b/linux-user/sh4/cpu_loop.c
+index 0c9d7e9c46b..ee2958d0d93 100644
+--- a/linux-user/sh4/cpu_loop.c
++++ b/linux-user/sh4/cpu_loop.c
+@@ -50,7 +50,7 @@ void cpu_loop(CPUSH4State *env)
+                              0, 0);
+             if (ret == -QEMU_ERESTARTSYS) {
+                 env->pc -= 2;
+-            } else if (ret != -QEMU_ESIGRETURN) {
++            } else if (ret != -QEMU_ESIGRETURN && ret != -QEMU_ESETPC) {
+                 env->gregs[0] = ret;
+             }
+             break;
+diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
+index 7391e2add8d..ab633eeae3f 100644
+--- a/linux-user/sparc/cpu_loop.c
++++ b/linux-user/sparc/cpu_loop.c
+@@ -229,7 +229,9 @@ void cpu_loop (CPUSPARCState *env)
+                               env->regwptr[2], env->regwptr[3],
+                               env->regwptr[4], env->regwptr[5],
+                               0, 0);
+-            if (ret == -QEMU_ERESTARTSYS || ret == -QEMU_ESIGRETURN) {
++            if (ret == -QEMU_ERESTARTSYS ||
++                ret == -QEMU_ESIGRETURN ||
++                ret == -QEMU_ESETPC) {
+                 break;
+             }
+             if ((abi_ulong)ret >= (abi_ulong)(-515)) {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d466d0e32f1..99e1ed97d9f 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -43,6 +43,7 @@
+ #include <linux/capability.h>
+ #include <sched.h>
+ #include <sys/timex.h>
++#include <setjmp.h>
+ #include <sys/socket.h>
+ #include <linux/sockios.h>
+ #include <sys/un.h>
+@@ -600,6 +601,9 @@ const char *target_strerror(int err)
+     if (err == QEMU_ESIGRETURN) {
+         return "Successful exit from sigreturn";
+     }
++    if (err == QEMU_ESETPC) {
++        return "Successfully redirected control flow";
++    }
+ 
+     return strerror(target_to_host_errno(err));
+ }
+@@ -14410,6 +14414,18 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
+         return -QEMU_ESIGRETURN;
+     }
+ 
++    /*
++     * Set up a longjmp target here so that we can call cpu_loop_exit to
++     * redirect control flow back to the main loop even from within
++     * syscall-related plugin callbacks.
++     * For other types of callbacks or longjmp call sites, the longjmp target
++     * is set up in the cpu loop itself but in syscalls the target is not live
++     * anymore.
++     */
++    if (unlikely(sigsetjmp(cpu->jmp_env, 0) != 0)) {
++        return -QEMU_ESETPC;
++    }
++
+     record_syscall_start(cpu, num, arg1,
+                          arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+ 
+diff --git a/linux-user/xtensa/cpu_loop.c b/linux-user/xtensa/cpu_loop.c
+index a0ff10eff82..d2b4ccdfade 100644
+--- a/linux-user/xtensa/cpu_loop.c
++++ b/linux-user/xtensa/cpu_loop.c
+@@ -186,6 +186,7 @@ void cpu_loop(CPUXtensaState *env)
+                     break;
+ 
+                 case -QEMU_ESIGRETURN:
++                case -QEMU_ESETPC:
+                     break;
+                 }
+                 break;
+-- 
+2.47.3
 
 
