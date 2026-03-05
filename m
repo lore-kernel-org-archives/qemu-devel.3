@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E510EEF312
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C43EEEF312
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy36S-0006ev-6D; Thu, 05 Mar 2026 02:26:36 -0500
+	id 1vy392-0007CP-L5; Thu, 05 Mar 2026 02:29:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy36K-0006eE-T6
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:26:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy38m-0007BC-GM
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:29:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy36H-00037B-7H
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:26:26 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy38k-0003St-S7
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 02:29:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772695582;
+ s=mimecast20190719; t=1772695737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NL3f0EGSswzQeAwhriXYm+RMalrsEETw4ZtJcHQIJOw=;
- b=PZwptD39L0IzJZtP346Lvc4XOE7wMUxcAVh3iFY3SHYkHZ+umCxbLq7BlvRl1KVCgbtuDN
- i7BvIr36iUIT1ruO9d5+tCPC8V0XIs/NPrQ+XZGK61oPh6t23MyGfeSUF43DOIzXKUy+FY
- 6KfIq9Teenem7lwvpBvsyPcYH6U71hQ=
+ bh=mx7XCo4Z30ltJml/S6r+zgQb2+0KBlahdVXGcwDfR+Q=;
+ b=MPn9HKsM3fRqyOW960E37a7e5oKhElsDHiqJj5vTt/8qstQi+uXmD5T25dWj4yvO7+GHND
+ ZnC4+aAb2q3nzrNdeA5JMTCO8WjHSxgdgtVFmFsWedUkJR3Ao7oK5mV/N4cofV/y2eOpBE
+ GRwE10Tw53oFQAgRDnvALCnLV+YrTro=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-3bmyOv9VNx-g9Ed_5_kcFA-1; Thu,
- 05 Mar 2026 02:26:18 -0500
-X-MC-Unique: 3bmyOv9VNx-g9Ed_5_kcFA-1
-X-Mimecast-MFC-AGG-ID: 3bmyOv9VNx-g9Ed_5_kcFA_1772695577
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-tHoPz1uWMzGo-nhGnDz1zw-1; Thu,
+ 05 Mar 2026 02:28:54 -0500
+X-MC-Unique: tHoPz1uWMzGo-nhGnDz1zw-1
+X-Mimecast-MFC-AGG-ID: tHoPz1uWMzGo-nhGnDz1zw_1772695733
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0923D18005B6; Thu,  5 Mar 2026 07:26:16 +0000 (UTC)
+ id A15871800561; Thu,  5 Mar 2026 07:28:52 +0000 (UTC)
 Received: from [10.45.224.75] (unknown [10.45.224.75])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A536918002A6; Thu,  5 Mar 2026 07:26:09 +0000 (UTC)
-Message-ID: <64f5656d-65f1-4ab9-a2e7-a668173b8658@redhat.com>
-Date: Thu, 5 Mar 2026 08:26:07 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B73CC3003E9E; Thu,  5 Mar 2026 07:28:45 +0000 (UTC)
+Message-ID: <163092af-baf5-4094-9b2a-fcc7602225fd@redhat.com>
+Date: Thu, 5 Mar 2026 08:28:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/16] hw/i386/pc: Remove deprecated 2.8 and 2.9 PC
- machines
+Subject: Re: [PATCH 02/10] hw/core/machine: Remove hw_compat_2_10[] array
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20250501230129.2596-1-philmd@linaro.org>
+ <20250501230129.2596-3-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Eduardo Habkost <eduardo@habkost.net>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-References: <20260225092024.794595-1-thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -104,10 +106,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260225092024.794595-1-thuth@redhat.com>
+In-Reply-To: <20250501230129.2596-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 0
@@ -133,64 +135,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/02/2026 10.20, Thomas Huth wrote:
-> The -2.8 and -2.9 machine types of the i440fx and q35 machines are
-> older than 6 years, so according to our support policy we can remove
-> them, together with a lot of the compatibility knobs that they were
-> using.
+On 02/05/2025 01.01, Philippe Mathieu-Daudé wrote:
+> The hw_compat_2_10[] array was only used by the pc-q35-2.10,
+> pc-i440fx-2.10 and s390-ccw-virtio-2.10 machines, which got
+> removed. Remove it.
 > 
-> This is a respin of Philippe's original series here:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/boards.h | 3 ---
+>   hw/core/machine.c   | 6 ------
+>   2 files changed, 9 deletions(-)
 > 
->   https://lore.kernel.org/qemu-devel/20250501210456.89071-1-philmd@linaro.org
-> 
-> The following three patches still need a review:
-> 
-> - hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
-> - hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field
-> - tests/qtest/test-x86-cpuid-compat: Remove the test with the i440fx-2.9 machine
-> 
-> Changes in v2:
-> 
-> - Rebased all patches to current master, and fixed the contextual conflicts
-> - Added Igor's Reviewed-bys
-> - Dropped the "hw/southbridge/ich9: Remove ICH9_LPC_SMI_F_BROADCAST_BIT
->    definition" patch since the code is still required (the guest can decide
->    whether to use this feature or not)
-> - Dropped the two "hw/nvram/fw_cfg" patches since Igor mentioned that it
->    still might be useful to keep this configuration knob
-> - Fix "hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition" according to
->    Igor's review
-> - Adjusted "hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field":
->    The problematic hunk has already been merged in upstream, so I dropped
->    it from this patch.
-> - Added the final patch to drop a qtest that required this machine
-> 
-> Philippe Mathieu-Daudé (15):
->    hw/i386/pc: Remove deprecated pc-q35-2.8 and pc-i440fx-2.8 machines
->    hw/i386/pc: Remove pc_compat_2_8[] array
->    hw/i386/kvm: Remove KVMClockState::mach_use_reliable_get_clock field
->    hw/core/machine: Remove hw_compat_2_8[] array
->    hw/block/pflash: Remove PFlashCFI01::old_multiple_chip_handling field
->    hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
->    hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_DEVERR definition
->    hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_LNKCTL definition
->    hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_INIT_PM definition
->    hw/i386/pc: Remove deprecated pc-q35-2.9 and pc-i440fx-2.9 machines
->    hw/i386/pc: Remove pc_compat_2_9[] array
->    hw/core/machine: Remove hw_compat_2_9[] array
->    hw/net/virtio-net: Remove VirtIONet::mtu_bypass_backend field
->    hw/pci-bridge/gen_pcie_rp: Remove GenPCIERootPort::migrate_msix field
->    hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field
-> 
-> Thomas Huth (1):
->    tests/qtest/test-x86-cpuid-compat: Remove the test with the i440fx-2.9
->      machine
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index 513eb2a54fd..f2f58ec4ed8 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -829,7 +829,4 @@ extern const size_t hw_compat_2_12_len;
+>   extern GlobalProperty hw_compat_2_11[];
+>   extern const size_t hw_compat_2_11_len;
+>   
+> -extern GlobalProperty hw_compat_2_10[];
+> -extern const size_t hw_compat_2_10_len;
+> -
+>   #endif
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 486d1adb4b9..816d503b2a1 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -238,12 +238,6 @@ GlobalProperty hw_compat_2_11[] = {
+>   };
+>   const size_t hw_compat_2_11_len = G_N_ELEMENTS(hw_compat_2_11);
+>   
+> -GlobalProperty hw_compat_2_10[] = {
+> -    { "virtio-mouse-device", "wheel-axis", "false" },
+> -    { "virtio-tablet-device", "wheel-axis", "false" },
+> -};
+> -const size_t hw_compat_2_10_len = G_N_ELEMENTS(hw_compat_2_10);
+> -
+>   MachineState *current_machine;
+>   
+>   static char *machine_get_kernel(Object *obj, Error **errp)
 
-If there are no objections (and Paolo or Michael do not plan to take these 
-with their next pull request anyway), I'll add these patches (excluding 17 
-which needs some more work) to my next pull request, so that we finally get 
-these in before the next softfreeze.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
