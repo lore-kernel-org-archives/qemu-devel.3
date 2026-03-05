@@ -4,60 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C0E8F3D31C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA349F3D329
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 16:09:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyBEC-000436-Oc; Thu, 05 Mar 2026 11:07:09 -0500
+	id 1vyBGS-0005i0-Lo; Thu, 05 Mar 2026 11:09:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyBE9-0003uH-KX
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:07:06 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyBE5-0002nh-BI
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:07:05 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 61630596D94;
- Thu, 05 Mar 2026 17:06:57 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id PtQFvOEELyx6; Thu,  5 Mar 2026 17:06:55 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 55E7C5969F2; Thu, 05 Mar 2026 17:06:55 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 53C955966F5;
- Thu, 05 Mar 2026 17:06:55 +0100 (CET)
-Date: Thu, 5 Mar 2026 17:06:55 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Xu <peterx@redhat.com>
-cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v5 1/8] hw/display/{cg3.tcx}: Do not use
- memory_region_init_rom_nomigrate()
-In-Reply-To: <aamhmXuvcPXPfWSJ@x1.local>
-Message-ID: <1d73d26a-f700-a0af-2c58-06e6b6597506@eik.bme.hu>
-References: <cover.1772397447.git.balaton@eik.bme.hu>
- <816075b4a7fe7d4234744b7bd29c03139e4c2f38.1772397447.git.balaton@eik.bme.hu>
- <CAFEAcA9tiLag6NHMajPH=caqECRw7DT5vmtX4EraTG8Xp5re3w@mail.gmail.com>
- <97bceb8f-4cdb-461d-9553-c39b18a61063@ilande.co.uk>
- <aamhmXuvcPXPfWSJ@x1.local>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyBGQ-0005hY-E4
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:09:26 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyBGP-0003HC-0T
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 11:09:26 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-82980945556so530569b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 08:09:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772726963; x=1773331763; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ILUfHx7lmoVwutHnvpTZoRftind3+3jEU5a8MdRy1nw=;
+ b=dYDjNvswszCWuB6ML7wjB7Cn5svcax3t4uOTjWovzitRWPF9N4w2//NwmUULJd9VcE
+ b+zdL16FIQK2OPqLgBB41oqZuhU36m3IoEtH79k0skUgcj+rkhlDMc0XbLKIfyLSTz26
+ JYpBsTTX0kcvK7qG/wR/MUP18EboIpXDYPG2Ab0M80sD2aR+qfqJDqmuTIluIpccBsNB
+ 46n/L64Kuk91D974E+kHeOE9wCBP5m82OAngKpWr3N1s9KdRffsUyNCYta/PhN99CoPg
+ sFnuls6tMkqd4QDLvNNwAeJvESPMpv75FR7LPJUZ2cqS+Pt9h7adogHEZ/BEdTdgDW1T
+ Imcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772726963; x=1773331763;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ILUfHx7lmoVwutHnvpTZoRftind3+3jEU5a8MdRy1nw=;
+ b=hvCxmiL6sUPmEWbyL64DexzDNqRWYFAhB1MVuQ1+lI5kmDQIbaIKxiKOD83+A1XSR5
+ ln0Kw2aYbpM+grhwHwi+2sZN5JNuuU4nttjZhfjDSEyEh11/9ll+VkFXray9cKPdbtfw
+ 9meuWHoXZmO21ou2AYuvqFvsFxs69BuymOtGDo1egH+Kj8JAIx/P+oX0VQCYh2rxkGZI
+ 2dRSC9SH2/rv6J7nXuy+ZWgTWyaErk+1xUj3NtYwT+tYm2u4YoMBU5j0xtYbTWFDI8UK
+ ZGO5ysi7nphfoEphILe/HltL13rvPNym8Ts9ZkiYls9MhrxbS6rYZSjW1B0uCDjt3V1f
+ e1qQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU38BLQ6r/ZOrzEG2Ykix9pbAOhR349zrteO5Iz8TsUF3glQj3j8s3jd001aqg5ZvGkUfYAnMO/0KEY@nongnu.org
+X-Gm-Message-State: AOJu0YwqA1UU7+2iWaJ+gvO4A61vN7MWNQ4kJe/ISl468augKHHl4N2O
+ iag15ftp8MSskPzxR4afcGesGtpDJOMeZDeueB8qMiHuQDu27hThsvSfIsNBe7KcrSs=
+X-Gm-Gg: ATEYQzzFG4CxcwRqpag7BkEHZyxocqNZIYbqvox8o4vlo5cbhko3ymA2L844glGf59G
+ 5FM9uwPM20jLCw8+pzaTsJz9351UILlQSPLB3rdjBGhb7mSCSWu3Z45SpxENAAd/RuduzkYtdWm
+ MZjcli4lOhwlNMa4t718bqpc5KfsCBiqWYIv/nlPv+R5sHLttegcJNHU32AY3kJZpNwGpXzElgS
+ djK2rNH941uQF6zOvaHTZiic0rCbSn82c1Ie/Ztqrvgh4JKWCXUEjcNwh02dZPcX+a6cP70+dMe
+ JyL0DBGXJW8BO04M4XwuHeA18HUcSfy93u9QKdqS+1Q7ENlcaHBgLsOjeFXhAgFipBd7K8osdQp
+ Y9+XMB1Pb8xq0N0ObovMXlBxJtSBWwKWHEr42Jn2aONHCsazj4OrB1vgyl0HFCacXAES/7IYxPh
+ 3KxPfy+l1tUZsi+WUOetletG1/HAcj6BUY5cof0kT+bdZf+ln2yc914qSoyePxB/4kAeF1
+X-Received: by 2002:a05:6a00:9283:b0:829:883c:1d5e with SMTP id
+ d2e1a72fcca58-829883c21c4mr2378731b3a.30.1772726963297; 
+ Thu, 05 Mar 2026 08:09:23 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82974e75a4csm4557950b3a.30.2026.03.05.08.09.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Mar 2026 08:09:22 -0800 (PST)
+Message-ID: <bee61651-634b-4cdc-992c-cb050c04e851@linaro.org>
+Date: Thu, 5 Mar 2026 08:09:22 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/8] plugins/core: clamp syscall arguments if target is
+ 32-bit
+Content-Language: en-US
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260305-setpc-v5-v7-0-4c3adba52403@epfl.ch>
+ <20260305-setpc-v5-v7-1-4c3adba52403@epfl.ch>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260305-setpc-v5-v7-1-4c3adba52403@epfl.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,75 +141,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026, Peter Xu wrote:
-> On Thu, Mar 05, 2026 at 11:15:59AM +0000, Mark Cave-Ayland wrote:
->> On 03/03/2026 09:51, Peter Maydell wrote:
->>
->>> On Sun, 1 Mar 2026 at 21:03, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>>>
->>>> Use memory_region_init_rom() instead which is what other devices do.
->>>> This is breaks migration but these devices are only used on sparc Sun
->>>> machines which have no migration compatibility guarantee.
->>>>
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>>   hw/display/cg3.c | 5 ++---
->>>>   hw/display/tcx.c | 5 ++---
->>>>   2 files changed, 4 insertions(+), 6 deletions(-)
->>>
->>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->>>
->>> I think the compat break on these machines is worth it
->>> to make progress on the cleanup of these functions.
->>
->> Hi Peter,
->
-> Hi, Mark,
->
-> [some pure thoughts before PeterM chimes in..]
->
->>
->> From what I can see there is still on-going discussion on this series,
->> however if the general consensus is that the removal of the last of these
->> legacy functions is now imminent then I won't object if you want to merge
->> this.
->
-> In this case it's not easy to reach a consensus collecting "yes"s but
-> "no"s, that who still prefer this ABI to be kept.
->
-> Personally, I would respect your opinion, and I queued them because from
-> what I read the impact seems under control, please correct me otherwise.
->
-> There's indeed the dilemma that since sparc machines are not versioned,
-> then it's easier to be treated as a system that may not demand the highest
-> level of ABI guarantees.
->
-> It's also harder to consider ABI compatibility for un-versioned machs
-> comparing to versioned.
->
-> It's because for other versioned machines, we have the ~6 years lifespan
-> nowadays for them so we can drop old things over specific period of time.
-> While when a machine is not versioned, it's almost impossible to mark the
-> time of deprecation.
->
-> We either need to choose to maintain ABI for those machines forever, or we
-> allow ABI break to some degree.  When a machine is not versioned, it's
-> harder to justify we maintain these machines' ABI even longer than
-> versioned machines (which we deemed to be "relatively serious" users).
->
-> So if we want to stick with that machine versioning plan, maybe we should
-> start version machines that we may care on ABIs.  IIUC it doesn't need to
-> introduce one machine type every release, however when versioned we will be
-> able to follow the same ~6 years obsoletion phase at least.
+On 3/5/26 2:05 AM, Florian Hofhammer wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Syscall arguments are abi_long in user code, and plugin syscall
+> interface works with uint64_t only.
+> 
+> According to C integer promotion rules, the value is sign extended
+> before becoming unsigned, thus setting high bits when only 32-bit lower
+> ones should have a significant value.
+> 
+> As a result, we need to clamp values we receive from user-code
+> accordingly.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   plugins/core.c | 21 +++++++++++++++++++++
+>   1 file changed, 21 insertions(+)
+> 
 
-Considering that this was intruduced in 2017 around commit 1cfe48c1ce2 and 
-most other users were converted back then it's well over 6 years now even 
-without versioning. Thanks to Mark for accepting changing it now.
-
-I've dropped the debated part about errp from the v7 of the series so all 
-remaining clean ups should be simple enough to review and merge before the 
-freeze. Could you please have a look at those too?
+@Alex, Philippe: may I ask you a review on this one?
 
 Regards,
-BALATON Zoltan
+Pierrick
 
