@@ -4,87 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0BBEF3093B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 11:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E66DFF30942
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 11:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy6S4-0004pq-QQ; Thu, 05 Mar 2026 06:01:08 -0500
+	id 1vy6c8-0006JB-8f; Thu, 05 Mar 2026 06:11:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy6Rt-0004oP-50
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:00:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy6Rp-0006ov-0J
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:00:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772708451;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=exsvnWhrosw4L5DNyjABIiyzOYZiVGdS6s+3Kw8NrEc=;
- b=eYrIp24UdO1R6B+Dk7cJNUJeh2Qrjaig36I0gY1oxV5Upf3BMtyS2O6qS5bCj/zO2S5HqA
- On3Ph1wbBImNy27hTKlDGW1kBxZ8mqVgU2oro+NFtHpaWoZd92XDvf/L6ihzE8f5S+WvGa
- aPCxdAMUV1INRU82VLzwvNoRVpB1l5Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-iginTUkEMcGMvdrwC30X6A-1; Thu,
- 05 Mar 2026 06:00:47 -0500
-X-MC-Unique: iginTUkEMcGMvdrwC30X6A-1
-X-Mimecast-MFC-AGG-ID: iginTUkEMcGMvdrwC30X6A_1772708444
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDCE91800619; Thu,  5 Mar 2026 11:00:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 248771956095; Thu,  5 Mar 2026 11:00:42 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 849AA21E6A04; Thu, 05 Mar 2026 12:00:40 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Bernhard Beschow <shentey@gmail.com>,  qemu-devel@nongnu.org,  Helge
- Deller <deller@gmx.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Steven Lee <steven_lee@aspeedtech.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@kaod.org>, Troy Lee <leetroy@gmail.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Mark Cave-Ayland
- <mark.caveayland@nutanix.com>,  qemu-arm@nongnu.org,  Jamin Lin
- <jamin_lin@aspeedtech.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,  Joel
- Stanley <joel@jms.id.au>
-Subject: Re: QOM parent type "sys-bus-device" vs. "device"
-In-Reply-To: <CAFEAcA8CTLsKxJ8iza9T3bSafdgaM0dag2=KXqWLdMiXAHiGGQ@mail.gmail.com>
- (Peter Maydell's message of "Thu, 5 Mar 2026 09:30:49 +0000")
-References: <20260303222143.142741-1-shentey@gmail.com>
- <20260303222143.142741-13-shentey@gmail.com>
- <87ikbbixy5.fsf_-_@pond.sub.org>
- <CAFEAcA_WYkAYccog-BiA6MJAvoFVwa6niKvFZ7UpLjzkRyd6aA@mail.gmail.com>
- <87fr6eocfc.fsf@pond.sub.org>
- <CAFEAcA8CTLsKxJ8iza9T3bSafdgaM0dag2=KXqWLdMiXAHiGGQ@mail.gmail.com>
-Date: Thu, 05 Mar 2026 12:00:40 +0100
-Message-ID: <874imuo813.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <avi@scylladb.com>) id 1vy6c6-0006J3-T0
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:11:30 -0500
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <avi@scylladb.com>) id 1vy6c5-0007vy-20
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 06:11:30 -0500
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-948029fb1f2so2334650241.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 03:11:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772709087; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CFgDDH7M19CCQwoZrAkXk1g3I/YVPIZ0inTLvpIV9iE/vjggTkw8wCEnmapFfToX5d
+ ESC2MNB1UT32Xl2pRr5DbRFi55ZUzcRURsnGJS7foLTNI85gyPzKmWdGmu86WTxwnS2U
+ qsL8+WP/KRLFsGIf+YslYV/TYwQpr6FeHhOPNC5y0ydQiSI9oA2Zb9pJZZKc4bWW/MYj
+ HfsujiiH6UfGjguA/2VdgvOB0yH2L+hb5T9X2HkYC6emHNhiDuIvx/qAUf7gZZRZ6V8a
+ Y9zJlXds/vZNUcjgKI5Ny8MD/AEAe7yziwC5lNAgFJDPpjmsXnokVw3LlLZ5ToL/iYDQ
+ an4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=BUoZRMKjTmLLtcaOARxzxh6BEiUTID1mR8KUMoGaarY=;
+ fh=Qpl77bHkcE0bYSjiKXT9vs9obKUyn+uhBwvH7ERnfRM=;
+ b=NciOOIF19ja+TTl74JS5IsEL+O2u5OaFcXBON0GSiirV1AggkCH2rZCQO+vTBhsbFG
+ kKZyZULYLnQZJFvaSmb/UeQ3VMzlxFjk0vWHe586+nzMuosQd2w692cyx30teXmajNwr
+ uaLttkqDmo0BY870+yuGOzrFT/fgpZbIqGuqPAuXXrkm5ba9IqViQjzXlod9YQUkmjF+
+ Chh7s2gU0IC2IRv4I0T0jrcqkrazqLUkgsyy3GgozPi/LXUcdlfOsf/VH8+Ce42I7zZ8
+ iLHTKY+hhIoY2rqhOCp+MpB49pXDf+xHGdRZ0QiUN5iMHrO01QUrkViAjGtHUV97YxwN
+ XnyQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=scylladb.com; s=google; t=1772709087; x=1773313887; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=BUoZRMKjTmLLtcaOARxzxh6BEiUTID1mR8KUMoGaarY=;
+ b=mw9pfEooWDCdgTAvJuhy6aCZt9T+LOJA3pwtfPz9nYAbukmsvmjDOHbM25bM9HdJxn
+ imD1ix+jT8XCCm1GiJ5R/o1LpVN8FO3fKY14H4q0pDQmqOy/OGWAAhAnAAGQnLgvHI/F
+ jjOlo50Javc5B2To2yzGMRDkmG3hkFCTbcAO0K8TOnOefkkY63/1VE9dVZZjovu3BDwN
+ SgeJ5Z1VO6a7dUK6qRUtZB40d0u7ZDvQOsY/hx/zjasHkGJPOatd4QMBy6FBa0fdgeBm
+ apC+Z3VzyZI0gq0iTpn3nsF6HISc/vvFrKFzqvRhDWP55Vi6x1WRBKbGLX2KZD2KXOY6
+ LUaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772709087; x=1773313887;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BUoZRMKjTmLLtcaOARxzxh6BEiUTID1mR8KUMoGaarY=;
+ b=MCfpqXroiN8uhAPmoah123l2+Q36mZO/4hIwcJsb/byotE+YY0wPPAkEcVJhcUOhUJ
+ SSrP+L+0br1QowpVA9uQCJhLZIiqpWBqIEHFtqLiViUttKDoz0NGmar9hGBc4KjfmJOU
+ zd2g/BrvbpuzTmjY6qCNavYDBz2wAqUONixnSgadQm+OUmJ3/ICmKCJkWIaPBeROYkjg
+ qe7WWv+fqdsxseYSv5JpCcPc9ub8GLbIrAW/vrWnCkmcCGaNWTI9j831Mb5rdSSQkI5Z
+ NHnHE46xJsMiJCaHbx+M5PT2JwM2oyrgk3eLsckIh5VuM4SWVN/yuHxJZoBB0mZnRTP4
+ T3Xg==
+X-Gm-Message-State: AOJu0Yzx0LVn0ahre36cf9PIpurJh0nVIJc9H5ZTrL3Kle3L85xKqawk
+ SN/MyusFQkxvs6WDK5SQMFOLuzHxlQxBkwqMCrD/PYQkAf6xKTHm8iRo02yggFAWLMwxaWNGLNU
+ llmrXRyhBix5OYmIYjuvd9rMhIVvwLSBCQ1DdPw7aLGJwfH4RmHdq3j70pzXZ1gN4A2eZlQ+pA6
+ mYBZijOVOtg9ozE+X4pIgc3KAaX9RW5h73PypeRTK4XWrJUz42KNQ8SvyMSpLlADozwy4PaCCSO
+ MF12rVV4tssSAauwTRCcsUbrCqkc9sy6TK48c9CmtIOG6vNF99SNhxV0X5hCYFIx5199osZ9R4s
+ AKMO4FeoECCLfsCzsrGp8RW8JuYznCWGjIci2t7lzjJOIQ66g/AyjPqX+d7ZGJDXD2F5kXzV
+X-Gm-Gg: ATEYQzw/xbWXfz4P+sE5+A2lGEcwx3Nw7FPNlp/7zeQhI5MgVUg7cUPg9D0CI2E+kPQ
+ pmRzXNztoSdWJM4Q0XHxqlf+825MvheQFU2eb69zpHpZZhl4CFQFVYGbGmwiP3lps/6rlaN17T2
+ kKqsHP/5ZY/tjisFURDeeZI/j8ZQTTwYYl6iBz31sdWxIBDSkZWMYztv7eqceQS847GsCAlOaDt
+ bOLZPpbS2pNNOD8YyZOK+/d1qh8sOal0NElyHw+cmauT50742cRgjAHQlGmB3pg/ByP6cS4nApa
+ FHlZfts=
+X-Received: by 2002:a05:6102:32c1:b0:5ff:172c:2d96 with SMTP id
+ ada2fe7eead31-5ffaaa867e8mr1962099137.3.1772709086466; Thu, 05 Mar 2026
+ 03:11:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260302142831.1269291-1-avi@scylladb.com>
+ <aaWhHEI4QaDINc8K@redhat.com>
+ <CAF950WLOB1BXkJ+rmRea3nWuLRZG=O3gDas9HUhM1LMsmrnffA@mail.gmail.com>
+In-Reply-To: <CAF950WLOB1BXkJ+rmRea3nWuLRZG=O3gDas9HUhM1LMsmrnffA@mail.gmail.com>
+From: Avi Kivity <avi@scylladb.com>
+Date: Thu, 5 Mar 2026 13:11:15 +0200
+X-Gm-Features: AaiRm51Sqb9V8NdazBNDd53bZy1i-1uGELCCCxZ_5tO9XtOHGBNJ4e0O2HXLdSM
+Message-ID: <CAF950WJJC+Wr+K4DQeyqM=_NdQfz=DJ+mN0fM-nyu0XBQe2pag@mail.gmail.com>
+Subject: Re: [PATCH] hw/nvme: add `model` parameter
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000063aa19064c44ffc5"
+X-CLOUD-SEC-AV-Sent: true
+X-CLOUD-SEC-AV-Info: scylladb,google_mail,monitor
+X-Gm-Spam: 0
+X-Gm-Phishy: 0
+X-CLOUD-SEC-AV-Sent: true
+X-CLOUD-SEC-AV-Info: scylla,google_mail,monitor
+X-Gm-Spam: 0
+X-Gm-Phishy: 0
+Received-SPF: permerror client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=avi@scylladb.com; helo=mail-ua1-x92c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,81 +124,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+--00000000000063aa19064c44ffc5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Thu, 5 Mar 2026 at 09:25, Markus Armbruster <armbru@redhat.com> wrote:
->> > Disentangling reset is extremely painful -- I don't even know
->> > what it ought to be doing. Maybe propagating along the QOM tree?
+On Mon, Mar 2, 2026 at 4:50=E2=80=AFPM Avi Kivity <avi@scylladb.com> wrote:
+
+>
+>
+> On Mon, Mar 2, 2026 at 4:39=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+> wrote:
+>
+>> On Mon, Mar 02, 2026 at 04:27:48PM +0200, Avi Kivity wrote:
+>> > Add a `model` parameter, readable with nvme-cli. This allows
+>> > impersonating other disk manufacturers or hypervisors, similar
+>> > to the the -smbios option.
+>> >
+>> > Signed-off-by: Avi Kivity <avi@scylladb.com>
+>> > ---
+>> >
+>> > Disclosure: prepared with AI assistance. I believe it to be of good
+>> > quality.
 >>
->> I think this would make more sense.  Unlike the qtree, the QOM
->> composition tree contains all devices, and reflects the actual
->> composition.  It's certainly closer to the real reset tree than the
->> qtree is.  Is it close enough?  I don't know.  If yes, there's our reset
->> tree.  If no, I guess we could still use it as a base, with manually
->> corrected reset lines where the QOM composition tree is off.
+>> Can you clarify how AI was involved,
+>
+>
+> I asked an LLM (Claude) to add a model parameter to the nvme code, which
+> it did, then I asked it to documented it, which it also did.
+>
+>
+>> as QEMU's policy is to decline
+>> any contributions where AI was involing in an authoring role:
+>>
+>
+> Very unfortunate. It would have taken me an hour or two to re-orient
+> myself in the code base, for something that took me a couple of minutes
+> with AI.
+>
 
-A walk to the farmers market jogged my memory: the QOM composition tree
-is in fact off for user-created devices.  These go into
-/machine/peripheral and /machine/peripheral-anon.
+So what's the verdict?
 
-Most of them plug into a bus, and reset should flow through that bus,
-not through their peripheral container.
+FWIW I think the probability of AI copying these few lines from some
+non-GPL project is zero.
 
-A few don't, and I can't say how reset is supposed to work then.
+--00000000000063aa19064c44ffc5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Onboard device can also be connected via some bus.  For instance,
-machine "pc" contains sysbus device "i440FX-pcihost", which provides a
-PCI bus.  It also contains PCI device "PIIX3" (the south bridge)
-connected via that PCI bus.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 2, =
+2026 at 4:50=E2=80=AFPM Avi Kivity &lt;<a href=3D"mailto:avi@scylladb.com">=
+avi@scylladb.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 2, 2026 =
+at 4:39=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@r=
+edhat.com" target=3D"_blank">berrange@redhat.com</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Mar 02, 2026 at 04:=
+27:48PM +0200, Avi Kivity wrote:<br>
+&gt; Add a `model` parameter, readable with nvme-cli. This allows<br>
+&gt; impersonating other disk manufacturers or hypervisors, similar<br>
+&gt; to the the -smbios option.<br>
+&gt; <br>
+&gt; Signed-off-by: Avi Kivity &lt;<a href=3D"mailto:avi@scylladb.com" targ=
+et=3D"_blank">avi@scylladb.com</a>&gt;<br>
+&gt; ---<br>
+&gt; <br>
+&gt; Disclosure: prepared with AI assistance. I believe it to be of good<br=
+>
+&gt; quality.<br>
+<br>
+Can you clarify how AI was involved, </blockquote><div><br></div><div>I ask=
+ed an LLM (Claude) to add a model parameter to the nvme code, which it did,=
+ then I asked it to documented it, which it also did.</div><div>=C2=A0</div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">as QEMU&#39;s policy is =
+to decline<br>
+any contributions where AI was involing in an authoring role:<br></blockquo=
+te><div><br></div><div>Very unfortunate. It would have taken me an hour or =
+two to re-orient myself in the code base, for something that took me a coup=
+le of minutes with AI.</div></div></div></blockquote><div><br></div><div>So=
+ what&#39;s the verdict?</div><div><br></div><div>FWIW I think the probabil=
+ity of AI copying these few lines from some non-GPL project is zero.</div><=
+div>=C2=A0</div></div></div>
 
-The QOM composition tree has "i440FX-pcihost" and its PCI bus in the
-right place, and "PIIX3" in the orphanage:
-
-    /machine (pc-i440fx-11.0-machine)
-      /i440fx (i440FX-pcihost)
-        /pci.0 (PCI)
-      /unattached (container)
-        /device[3] (PIIX3)
-        /sysbus (System)
-
-Say we fixed that like so
-
-    /machine (pc-i440fx-11.0-machine)
-      /i440fx (i440FX-pcihost)
-        /pci.0 (PCI)
-        /piix3 (PIIX3)
-
-then reset flowing along the composition tree is still problematic: we
-probably want to reset the PCI bus before the devices plugged into it.
-
-So maybe reset should flow along the composition tree to buses, from bus
-to devices plugged into it, from such a device again along the
-composition tree, and so forth.
-
-> Yes. We really don't want to add more boilerplate requirements
-> to how you write "container" type devices like SoC objects.
-> It's already bad enough that you have to have an instance_init
-> that manually calls instance_init on all your subcomponents,
-> and a realize that calls realize on all of them. If we add
-> a requirement that you need to have reset methods for 3 phases
-> that call reset on all your subcomponents, people are going to
-> forget. We need the default to be "do the thing that's right
-> almost every time", not "do the thing that's wrong".
-
-Good interfaces make doing the right thing easier than doing the wrong
-thing.  We clearly failed there.
-
-> (And then of course there is the "how do we get there from
-> here?" question :-))
-
-Good question.  Next question?  SCNR!
-
-I'm afraid I don't understand how reset works *now* well enough to come
-up with a workable plan.
-
-In other words, I don't have a clear idea of "here", and I fear we
-together don't have a sufficiently clear idea of "there".
-
-What can we do to improve on both?
-
+--00000000000063aa19064c44ffc5--
 
