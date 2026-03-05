@@ -4,72 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5298EEF30C
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 003A9EEF30C
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 07:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy2gR-0003TX-0d; Thu, 05 Mar 2026 01:59:43 -0500
+	id 1vy2rt-00011r-PU; Thu, 05 Mar 2026 02:11:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vy2gO-0003Ss-T6
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:40 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vy2rs-00011c-0T; Thu, 05 Mar 2026 02:11:32 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vy2gN-0007qJ-2a
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 01:59:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772693979; x=1804229979;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Hhz5My/Nci4MkLLcv1gOxQ5MgaITXA44LkA+ZiKWCXU=;
- b=VBoeo7GJavGfAyNG3dyv+BPnXVWmgXk1y/elTHkzR0Hq+fkofC2rJ4HK
- 7uMrB5Vd5ejcTeQYWoPuuU206poEr5z1t9W7v/uF+eiUROPL4Xpq4CgBN
- Uqmkin/Wy8zt9g6DT432aAuKipOrpRaMIt5xDh3qidGibE0g7iFQtHxqC
- T/gd+YF8TaWWLTicUciZYASRczab5KUvQ879d046FLEZ0g3vliXdhAiO7
- Ltwq9FZUSKYKm+vUx6XWyi/MgxD5074x66WZR6pdF6onojHfRRNED8znW
- iVkjxx1902A1QOM8pRuQrpbr0SOfGe/TDQUJhk4pOUjSwlN5q+e+JgWzI Q==;
-X-CSE-ConnectionGUID: 7BQB39tISb6YstSDUAFG6A==
-X-CSE-MsgGUID: v7lNkjysQ1CluaGLhir8Vg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11719"; a="91343521"
-X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="91343521"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2026 22:59:30 -0800
-X-CSE-ConnectionGUID: 7L3GAONQTVaLrUQO3YOeMg==
-X-CSE-MsgGUID: 2cGyclmARNScgmt565GUcg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,325,1763452800"; d="scan'208";a="218725681"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Mar 2026 22:59:30 -0800
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v9 08/10] vfio/device: Add a helper to mmap a dmabuf
-Date: Wed,  4 Mar 2026 22:54:39 -0800
-Message-ID: <20260305065700.1155146-9-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
-References: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vy2rp-0001Hh-Od; Thu, 05 Mar 2026 02:11:31 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:a189:0:640:4da6:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DE71A808C0;
+ Thu, 05 Mar 2026 10:11:24 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b93::1:1] (unknown [2a02:6bf:8080:b93::1:1])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id NBjeIF0AEW20-YhtfKJKG; Thu, 05 Mar 2026 10:11:24 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1772694684;
+ bh=oEMnPZ5RdNETdGxqaXUbBw3SiUABRO+n0rTDhXAZT3o=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=u5L/As59hSrzp/gEa8AonB6gIYWyZD9d0htAnE2A1P2+to5e4ccK94647XgzZfZEv
+ QgszYX39C826IAKdbnyi/UxZVu3efUdqqEbcjdgoaLlS+aXPe014/CQ6JGUi37XIOt
+ fjyY6WHe2jTI0lNdYmLPPNlGnny1bGS3XeKLdwfU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <364d7cf8-560a-4e3f-b6b6-4a0d208ff023@yandex-team.ru>
+Date: Thu, 5 Mar 2026 10:11:23 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.8;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: fix NULL pointer dereference in
+ legacy-cache=off handling
+To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260305060431.30347-1-heifetz@yandex-team.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260305060431.30347-1-heifetz@yandex-team.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: 0
+X-Spam_score: -0.0
+X-Spam_bar: /
+X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.703, RCVD_IN_VALIDITY_SAFE_BLOCKED=1.386,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,137 +75,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to mmap a dmabuf, we first need to create a placeholder
-mapping that would fit the entire size of the dmabuf. This mapping
-would then be replaced with smaller mappings of individual dmabuf
-segments.
+On 05.03.26 09:04, Sergei Heifetz wrote:
+> The check that xcc->model is not NULL occurs after it is dereferenced
+> inside x86_cpu_get_versioned_cache_info(), so something like
+> `-cpu host,legacy-cache=off` leads to a segfault rather than an error.
+> This patch fixes that.
+> 
+> Fixes: cca0a000d06f897411a8a ("target/i386: allow versioned CPUs to specify new cache_info")
+> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+> ---
+>   target/i386/cpu.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 01b64940b1..00645e1149 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -10023,8 +10023,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+>   
+>       /* Cache information initialization */
+>       if (!cpu->legacy_cache) {
+> -        const CPUCaches *cache_info =
+> -            x86_cpu_get_versioned_cache_info(cpu, xcc->model);
+> +        const CPUCaches *cache_info = xcc->model
+> +            ? x86_cpu_get_versioned_cache_info(cpu, xcc->model)
+> +            : NULL;
+>   
+>           if (!xcc->model || !cache_info) {
+>               g_autofree char *name = x86_cpu_class_get_model_name(xcc);
 
-Cc: Alex Williamson <alex@shazbot.org>
-Cc: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
----
- hw/vfio/device.c              | 65 +++++++++++++++++++++++++++++++++++
- hw/vfio/dmabuf-stubs.c        |  7 ++++
- include/hw/vfio/vfio-device.h | 17 +++++++++
- 3 files changed, 89 insertions(+)
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 2d01059be0..592d901c77 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -725,3 +725,68 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     }
-     return ret;
- }
-+
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp)
-+{
-+    struct vfio_region_info *info = NULL;
-+    VFIODevice *vbasedev = NULL;
-+    ram_addr_t offset, len = 0;
-+    RAMBlock *first_rb, *rb;
-+    void *map, *submap;
-+    int i, index;
-+
-+    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
-+        return false;
-+    }
-+
-+    /*
-+     * We first reserve a contiguous chunk of address space for the entire
-+     * dmabuf, then replace it with smaller mappings that correspond to the
-+     * individual segments of the dmabuf.
-+     */
-+    map = mmap(NULL, total_size, PROT_NONE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+    if (map == MAP_FAILED) {
-+        error_setg_errno(errp, errno, "Could not reserve placeholder mapping");
-+        return false;
-+    }
-+
-+    for (i = 0; i < iov_cnt; i++) {
-+        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
-+        if (i == 0) {
-+            first_rb = rb;
-+        }
-+        if (!rb || rb != first_rb) {
-+            error_setg(errp, "Cannot mmap dmabuf with different regions\n");
-+            goto err;
-+        }
-+
-+        index = vfio_get_region_index_from_mr(rb->mr);
-+        if (index < 0) {
-+            error_setg(errp, "Cannot find region index for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        if (vfio_device_get_region_info(vbasedev, index, &info)) {
-+            error_setg(errp, "Cannot find region info for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        submap = mmap(map + len, iov[i].iov_len, PROT_READ,
-+                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-+                      info->offset + offset);
-+        if (submap == MAP_FAILED) {
-+            error_setg(errp, "Could not mmap dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        len += iov[i].iov_len;
-+    }
-+    *addr = map;
-+    return true;
-+err:
-+    munmap(map, total_size);
-+    error_prepend(errp, "VFIO dmabuf mmap failed: ");
-+    return false;
-+}
-+
-diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
-index e71e2b68dd..c3aa37233d 100644
---- a/hw/vfio/dmabuf-stubs.c
-+++ b/hw/vfio/dmabuf-stubs.c
-@@ -15,3 +15,10 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     error_setg(errp, "VFIO dmabuf support is not enabled");
-     return VFIO_DMABUF_CREATE_HOST_ERROR;
- }
-+
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp)
-+{
-+    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
-+    return false;
-+}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 566e5d8bc0..2de21a3047 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -340,6 +340,23 @@ int vfio_get_region_index_from_mr(MemoryRegion *mr);
-  */
- int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-                                  Error **errp);
-+
-+/**
-+ * Mmap a dmabuf by first translating the addresses in the iovec
-+ * array into VFIO region offsets and then creating a placeholder
-+ * mapping that would be replaced later with mappings that
-+ * correspond to the dmabuf segments.
-+ *
-+ * @iov: array of iovec entries associated with the dmabuf
-+ * @iov_cnt: number of entries in the iovec array
-+ * @addr: pointer to store the resulting mmap address
-+ * @total_size: total size of the dmabuf
-+ * @errp: pointer to Error*, to store an error if it happens.
-+ *
-+ * Returns true on success and false in case of an error.
-+ */
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp);
- #endif
- 
- /* Returns 0 on success, or a negative errno. */
+
 -- 
-2.53.0
-
+Best regards,
+Vladimir
 
