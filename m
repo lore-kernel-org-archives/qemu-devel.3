@@ -4,68 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D165DF33A6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:06:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9B3F33A68
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9Kf-0002PC-AK; Thu, 05 Mar 2026 09:05:41 -0500
+	id 1vy9Kg-0002Pf-NZ; Thu, 05 Mar 2026 09:05:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KN-0002NX-Rq
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vy9KJ-0007qV-Nl
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772719518;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=xlr+uzY4HBmnkdOKg7uUY3lZ/s3hH57O/WC32TVvGlg=;
- b=RCI9xoRElA7SqaC9xF0hOOAFqzGaYr66GjZZs7emitcVJgLP6DinxGvqiG0sH6KQgcySvY
- 4qDfyaqjWZhiqhjYDcrvQQf58/R+zLbRoKTp1oYjphvf592i8sYLPwknHjVS2l40ZHpRqj
- qtT9HRm9jP3guiN/c8yryj0Rf4kuD0w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-nbzPZejFO8-oFuqKJsTNwg-1; Thu,
- 05 Mar 2026 09:05:12 -0500
-X-MC-Unique: nbzPZejFO8-oFuqKJsTNwg-1
-X-Mimecast-MFC-AGG-ID: nbzPZejFO8-oFuqKJsTNwg_1772719511
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7062818002FC; Thu,  5 Mar 2026 14:05:11 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.24])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F0E901955D71; Thu,  5 Mar 2026 14:05:10 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9517221E6A04; Thu, 05 Mar 2026 15:05:08 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vy9KK-0002MY-31
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:21 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vy9KH-0007pR-Sq
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:05:19 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-439b9b190easo3016549f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 06:05:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772719515; x=1773324315; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4KgU2sxbWBTJDn+mZu1vTbHfc0ooH6hgchR3bFTMEcQ=;
+ b=GqjzcKVTCLnIiPlSKA+OFUPKtPQRmiqpWFlKAHFOjx4wFM+vShoLGKl8yHHJ/7Sz2K
+ zvlGQAtL4r/ajcN8MC81PKmFKkE/Qb1IUOpyUhl7EGd0suRSgeBBy4sp2e//7XK/5syl
+ yjQLMrq7PDeNUF7ho1V8OpRo85sUJF0beqek0SaKbBXmIw3lXTfeMfPryVvMWsP/Lcdf
+ UdbysWFpV+jG7OMS2zjz4TmRfd288dd9Sa3xPaV9CM/5WNH+5eEY2TMbFIB7KP6y8TeK
+ rlYOJf7oxnGq6Hq83vHWP19NGZKBtgCGWQgM8U2isEexrPHRzYDfVdfNYR8Xz5kOsE3d
+ HBRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772719515; x=1773324315;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4KgU2sxbWBTJDn+mZu1vTbHfc0ooH6hgchR3bFTMEcQ=;
+ b=GSvkPRQS96g8j/UVxj2YtUKm8pBr3TydzEt/RWxU4LUMZp5gPf87oHgpAoTHKYSKm1
+ pJLGKWc8gh4MzuOiusQLwdhviB1nvuYhPjWeSdr5q3GKWrHTp+KJnmWAtXxsoAEWbpKj
+ z/7BXhcKwi7GSEDmPw8j0EL/8xxE9az6hAA3DNiVV+ZKVHi51hwDDOG02YQQ4/Ng3R+L
+ 7CHThSLwd0oC29rq7Nn+GZc7pqVw+y5S99NAf9oM0albriJIqZi3sIGiTqo62GcoXmvN
+ 4MdDL7kACNJGd27FYcrPgzZJ0RdXmtm4Or6k58Qm13Kc4CwNLZQTVXCPmOHchROC034j
+ MnTA==
+X-Gm-Message-State: AOJu0Yw19VF+7EVVENJXqhQff/n14SYHgfSZKe/Pt7vOH+LlDuRsjC3S
+ sKiZ+EooO2MQnFlfrT2s/DEUFG1sk7THSFoGhSYWxF/uOeaqgbuM5ccCXQ198k+x0w+o4vvczih
+ 657eB
+X-Gm-Gg: ATEYQzwVi49YOMit8M8H8ojtubm3+r08jAcgRMvaTWkLcnYVuhaQuxVAiM1lH6swyiG
+ 0yb8ozU6GMGGm05mP3tsQnUyfEg6noMK9KWQqkpgKFRFrK/BRILDw5s+P1hmv9JMM7rVB9U5xm1
+ QT8MTGlm4FnO4xTsQ+0uobTFU5AnsrRICyaXcZrwKoIfXwL7JdcwrsF9tKdH0m9V4cO91lSTgWP
+ D1hnDX/gKKQTqgQMymuwCa4O4KTzuDT4Glech40lo/vVRX1K8BBW6VT9Yn87dVSNMfpLS0QLTXB
+ tbVuRddGHHcgCoPbrZnb93XSQbrJIIti/0NVPJZ5Q6s8XjNJTkmqy8fL5n8OqBjwXpKwtfBpW4c
+ lHYVC9JULKFwo/gKvvEIsVFXIPL5KLRO5BmrANkCg1qXJ2osEjdi2IGam3OS8zL67dTqpn+9qg+
+ zLGD6ePzMkN0dAHAoyll3AquyShMTdK4D62PIWRP9fCbGfX7GJz2Rjhh+D7kqe2HvPo7Z0/9X8W
+ LFdgiqGbhUZFZAslLjB8k48N0Z6CK8=
+X-Received: by 2002:a05:6000:2f81:b0:437:75c1:578e with SMTP id
+ ffacd0b85a97d-439c7f7901bmr12334791f8f.21.1772719514789; 
+ Thu, 05 Mar 2026 06:05:14 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439c6129017sm15517241f8f.31.2026.03.05.06.05.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 06:05:13 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 0/6] Miscellaneous patches for 2026-03-05
-Date: Thu,  5 Mar 2026 15:05:02 +0100
-Message-ID: <20260305140508.218316-1-armbru@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Yodel Eldar <yodel.eldar@yodel.dev>
+Subject: [PATCH v2] hw/net/rtl8319: Work around GCC sanitizer /
+ -Wstringop-overflow bug
+Date: Thu,  5 Mar 2026 14:05:12 +0000
+Message-ID: <20260305140512.1330691-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,41 +102,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9:
+If you compile QEMU with GCC with -fsanitize=address and
+-Wstringop-overflow, this causes GCC to produce a false-positive
+warning which it does not produce when the sanitizer is not enabled
+(and which makes compilation fail if you're using -Werror, as we do
+by default for builds from git):
 
-  Merge tag 'pull-request-2026-03-02' of https://gitlab.com/thuth/qemu into staging (2026-03-02 14:01:46 +0000)
+../../hw/net/rtl8139.c: In function ‘rtl8139_io_writeb’:
+../../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+ 2264 |                 memcpy(data_to_checksum, saved_ip_header + 12, 8);
+      |                 ^
+In file included from ../../hw/net/rtl8139.c:62:
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
+../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+ 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
+      |                     ^
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
+../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+ 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
+      |                     ^
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
+In file included from /home/pm215/qemu/include/system/memory.h:21,
+                 from /home/pm215/qemu/include/hw/pci/pci.h:4,
+                 from /home/pm215/qemu/include/hw/pci/pci_device.h:4,
+                 from ../../hw/net/rtl8139.c:54:
+In function ‘stl_he_p’,
+    inlined from ‘stl_be_p’ at /home/pm215/qemu/include/qemu/bswap.h:371:5,
+    inlined from ‘rtl8139_cplus_transmit_one’ at ../../hw/net/rtl8139.c:2244:21,
+    inlined from ‘rtl8139_cplus_transmit’ at ../../hw/net/rtl8139.c:2345:28,
+    inlined from ‘rtl8139_io_writeb’ at ../../hw/net/rtl8139.c:2728:17:
+/home/pm215/qemu/include/qemu/bswap.h:284:5: error: writing 4 bytes into a region of size 0 [-Werror=stringop-overflow=]
+  284 |     __builtin_memcpy(ptr, &v, sizeof(v));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/pm215/qemu/include/net/eth.h: In function ‘rtl8139_io_writeb’:
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [24, 64] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
 
-are available in the Git repository at:
+This has been triaged as a bug in GCC:
+ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
+ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
+(the sanitizer pass rewrites the IR in a way that conflicts with its
+use by the warning pass that runs afterwards).
 
-  https://repo.or.cz/qemu/armbru.git tags/pull-misc-2026-03-05
+Since this is the only place in our code where we hit this, work
+around it by disabling the -Wstringop-overflow in the part of
+the function that hits it. We do this only when using the
+address sanitizer on GCC, so that we still get the benefit
+of the warning in most compilation scenarios.
 
-for you to fetch changes up to a1aca41ed08fba3120878fceb7f74af97c6fad93:
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+v2: disable the warning rather than using the incorrect attempt
+at a workaround that v1 had.
 
-  qdev-monitor: Fix qdev ID validation regression (2026-03-05 14:34:11 +0100)
+On the fence about whether this is worth backporting to stable.
+---
+ hw/net/rtl8139.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-----------------------------------------------------------------
-Miscellaneous patches for 2026-03-05
-
-----------------------------------------------------------------
-Markus Armbruster (6):
-      hw/core: Deprecate query-kvm
-      scripts/checkpatch: Fix MAINTAINERS update warning with --terse
-      error: Fix "to current monitor if we have one" comments
-      error: Restore error_printf()'s function comment
-      qemu-print: Document qemu_fprintf(), qemu_vfprintf() failure
-      qdev-monitor: Fix qdev ID validation regression
-
- docs/about/deprecated.rst |  5 +++++
- qapi/accelerator.json     |  8 +++++++-
- include/qapi/error.h      |  3 ++-
- monitor/monitor.c         |  2 +-
- system/qdev-monitor.c     | 12 ++++++++++--
- util/error-report.c       | 29 +++++++++++++++++++----------
- util/qemu-print.c         | 14 ++++++++++----
- scripts/checkpatch.pl     |  6 +++---
- 8 files changed, 57 insertions(+), 22 deletions(-)
-
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 2ad6338ebe..424af73a18 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -2124,6 +2124,26 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+                     hlen, ip->ip_sum);
+             }
+ 
++            /*
++             * The code in this function triggers a GCC bug where an
++             * interaction between -fsanitize=address and -Wstringop-overflow
++             * results in a false-positive stringop-overflow warning that is
++             * only emitted when the address sanitizer is enabled:
++             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
++             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
++             * GCC incorrectly thinks that the eth_payload_data buffer has
++             * the type and size of the first field in 'struct ip_header', i.e.
++             * one byte, and then complains about all other attempts to access
++             * data in the buffer.
++             *
++             * Work around this by disabling the warning when building with
++             * GCC and the address sanitizer is enabled.
++             */
++#pragma GCC diagnostic push
++#if !defined(__clang__) && defined(QEMU_SANITIZE_ADDRESS)
++#pragma GCC diagnostic ignored "-Wstringop-overflow"
++#endif
++
+             if ((txdw0 & CP_TX_LGSEN) && ip_protocol == IP_PROTO_TCP)
+             {
+                 /* Large enough for the TCP header? */
+@@ -2307,6 +2327,9 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+                 /* restore IP header */
+                 memcpy(eth_payload_data, saved_ip_header, hlen);
+             }
++
++#pragma GCC diagnostic pop
++
+         }
+ 
+ skip_offload:
 -- 
-2.53.0
+2.43.0
 
 
