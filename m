@@ -4,58 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1974AF30955
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 12:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40008F30955
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 12:33:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy7sJ-0004h4-MF; Thu, 05 Mar 2026 07:32:20 -0500
+	id 1vy7td-00055f-Vj; Thu, 05 Mar 2026 07:33:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vy7sH-0004gh-II
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:32:17 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy7tX-00055K-LU
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:33:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vy7sE-0001yP-Sn
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:32:17 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fRTRk6B4gzJ46mH;
- Thu,  5 Mar 2026 20:31:30 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 3701F4056A;
- Thu,  5 Mar 2026 20:32:07 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 5 Mar
- 2026 12:32:06 +0000
-Date: Thu, 5 Mar 2026 12:32:05 +0000
-To: fanhuang <FangSheng.Huang@amd.com>
-CC: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
- <gourry@gourry.net>, <apopple@nvidia.com>, <dan.j.williams@intel.com>,
- <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
-Subject: Re: [PATCH v6 0/1] numa: add 'memmap-type' option for memory type
- configuration
-Message-ID: <20260305123205.00006ac0@huawei.com>
-In-Reply-To: <20260226105023.256568-1-FangSheng.Huang@amd.com>
-References: <20260226105023.256568-1-FangSheng.Huang@amd.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vy7tS-00023H-EU
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 07:33:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772714009;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=69+IQZ7XUD4IW5mcgyDksHsob8ONiGpW5g03Cag/QuY=;
+ b=AEok9dc4YZa9tdENgnqN5AB2DY0lyEpowrGPwnqRP9QdvY3TCL/SEzx8QSI3LyaHtHFPH5
+ 6x4WcX65YY3ou71Cuyb7FRrAMRIPsC2gMQ7lP6ZSc9JKNroSwDx85BeqBpz036U+crmbCL
+ i85qDuhxHzq70DazYoMQnPwzYd7P1S8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-Uu5wD8yIPYOhZscRGnIrNg-1; Thu,
+ 05 Mar 2026 07:33:26 -0500
+X-MC-Unique: Uu5wD8yIPYOhZscRGnIrNg-1
+X-Mimecast-MFC-AGG-ID: Uu5wD8yIPYOhZscRGnIrNg_1772714005
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 451AA18005B9; Thu,  5 Mar 2026 12:33:25 +0000 (UTC)
+Received: from [10.45.224.75] (unknown [10.45.224.75])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D0E5B3003E98; Thu,  5 Mar 2026 12:33:22 +0000 (UTC)
+Message-ID: <872edff8-f5b4-4b94-ac0f-33677fb09131@redhat.com>
+Date: Thu, 5 Mar 2026 13:33:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 17/16] hw/southbridge/ich9: Remove
+ ICH9_LPC_SMI_F_BROADCAST_BIT definition
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
+ philmd@linaro.org, kraxel@redhat.com
+References: <20260225092024.794595-1-thuth@redhat.com>
+ <20260303140058.2423099-1-imammedo@redhat.com>
+ <061e1cc4-7099-4e2e-a164-04c34a6a0c10@redhat.com>
+ <20260305131001.71024353@imammedo>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260305131001.71024353@imammedo>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,49 +128,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 26 Feb 2026 18:50:22 +0800
-fanhuang <FangSheng.Huang@amd.com> wrote:
+On 05/03/2026 13.10, Igor Mammedov wrote:
+> On Wed, 4 Mar 2026 18:20:27 +0100
+> Thomas Huth <thuth@redhat.com> wrote:
+> 
+>> On 03/03/2026 15.00, Igor Mammedov wrote:
+>>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>
+>>> v2:
+>>>      - do not check for SMI features if hotplug happens when
+>>>        SMI is not enabled. (matters for qtest and possibly seabios)
+>>>      - removing property also removes default ICH9_LPC_SMI_F_BROADCAST_BIT
+>>>        put default back in place only set it initfn() instead
+>>>
+>>> The ICH9_LPC_SMI_F_BROADCAST_BIT feature bit was only set
+>>> in the pc_compat_2_8[] array, via the 'x-smi-broadcast=off'
+>>> property. We removed all machines using that array, lets remove
+>>> that property and all the code around it.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+>>> ---
+>>>    hw/acpi/ich9.c    |  4 ++--
+>>>    hw/isa/lpc_ich9.c | 23 ++++-------------------
+>>>    2 files changed, 6 insertions(+), 21 deletions(-)
+>>>
+>>> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+>>> index bbb1bd60a2..87afe86bcc 100644
+>>> --- a/hw/acpi/ich9.c
+>>> +++ b/hw/acpi/ich9.c
+>>> @@ -432,7 +432,7 @@ void ich9_pm_device_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+>>>        if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>>>            uint64_t negotiated = lpc->smi_negotiated_features;
+>>>    
+>>> -        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
+>>> +        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN &&
+>>>                !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
+>>>                error_setg(errp, "cpu hotplug with SMI wasn't enabled by firmware");
+>>>                error_append_hint(errp, "update machine type to newer than 5.1 "
+>>> @@ -476,7 +476,7 @@ void ich9_pm_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+>>>        } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+>>>            uint64_t negotiated = lpc->smi_negotiated_features;
+>>>    
+>>> -        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
+>>> +        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN &&
+>>>                !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT))) {
+>>>                error_setg(errp, "cpu hot-unplug with SMI wasn't enabled "
+>>>                                 "by firmware");
+>>> diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+>>> index 51dc680029..04169ffa24 100644
+>>> --- a/hw/isa/lpc_ich9.c
+>>> +++ b/hw/isa/lpc_ich9.c
+>>> @@ -404,15 +404,6 @@ static void smi_features_ok_callback(void *opaque)
+>>>        guest_cpu_hotplug_features = guest_features &
+>>>                                     (BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT) |
+>>>                                      BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
+>>> -    if (!(guest_features & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT)) &&
+>>> -        guest_cpu_hotplug_features) {
+>>> -        /*
+>>> -         * cpu hot-[un]plug with SMI requires SMI broadcast,
+>>> -         * leave @features_ok at zero
+>>> -         */
+>>> -        return;
+>>> -    }
+>>> -
+>>>        if (guest_cpu_hotplug_features ==
+>>>            BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT)) {
+>>>            /* cpu hot-unplug is unsupported without cpu-hotplug */
+>>> @@ -474,14 +465,9 @@ static void ich9_apm_ctrl_changed(uint32_t val, void *arg)
+>>>    
+>>>        /* SMI_EN = PMBASE + 30. SMI control and enable register */
+>>>        if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
+>>> -        if (lpc->smi_negotiated_features &
+>>> -            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
+>>> -            CPUState *cs;
+>>> -            CPU_FOREACH(cs) {
+>>> -                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
+>>> -            }
+>>> -        } else {
+>>> -            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
+>>> +        CPUState *cs;
+>>> +        CPU_FOREACH(cs) {
+>>> +            cpu_interrupt(cs, CPU_INTERRUPT_SMI);
+>>>            }
+>>>        }
+>>>    }
+>>> @@ -685,6 +671,7 @@ static void ich9_lpc_initfn(Object *obj)
+>>>    
+>>>        static const uint8_t acpi_enable_cmd = ICH9_APM_ACPI_ENABLE;
+>>>        static const uint8_t acpi_disable_cmd = ICH9_APM_ACPI_DISABLE;
+>>> +    lpc->smi_host_features = BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT);
+>>
+>> Shouldn't that rather be a "|=" instead of the "=" so that we don't lose the
+>> other bits?
+> 
+> Indeed it should be '|=',
+> can you fix it up on merge or should I better send fixed up version?
 
-> Hi all,
-> 
-> This is v6 of the SPM (Specific Purpose Memory) patch. Thank you for
-> the feedback on v5, especially Gregory's review.
-> 
-> Changes in v6:
-> - Added validation: memmap-type now requires memdev to be specified,
->   to avoid misconfiguration on memory-less NUMA nodes
-> - Simplified pc_update_numa_memory_types() by replacing switch/goto
->   with a direct conditional expression
-> - Reserved memory nodes are now excluded from SRAT memory affinity
->   entries, since E820 already marks them as reserved and SRAT should
->   not report them as enabled memory affinity
-> 
-> Use case:
-> This feature allows marking NUMA node memory as Specific Purpose Memory
-> (SPM) or reserved in the E820 table. SPM serves as a hint to the guest
-> that this memory might be managed by device drivers based on guest policy
-> 
-> Example usage:
->   -object memory-backend-ram,size=8G,id=m0
->   -object memory-backend-memfd,size=8G,id=m1
->   -numa node,nodeid=0,memdev=m0
->   -numa node,nodeid=1,memdev=m1,memmap-type=spm
-> 
-> Supported memmap-type values:
->   - normal:   Regular system RAM (E820 type 1, default)
->   - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF), a hint
->               that this memory might be managed by device drivers
->   - reserved: Reserved memory (E820 type 2), not usable as RAM
-Interface looks good to me.  I'm not familiar enough to confirm the
-x86 specific elements without more time than I have today though so
-no tags from me.
+I tried to fix it, but I still see an issue with the bios-tables-test qtest 
+during "make check" - it does not finish anymore and is finally killed by 
+the timeout. Does "make check-qtest" work for you?
 
-Thanks for doing this! 
+  Thomas
 
-Jonathan
 
