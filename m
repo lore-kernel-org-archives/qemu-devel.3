@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A01F47CD4
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C78F47CD4
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 20:53:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyFgB-0006c8-EN; Thu, 05 Mar 2026 15:52:19 -0500
+	id 1vyFgC-0006d4-W6; Thu, 05 Mar 2026 15:52:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFg7-0006Zk-EY
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:16 -0500
-Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
+ id 1vyFgB-0006c5-2Q
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:19 -0500
+Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyFg4-00066l-D5
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:15 -0500
-Received: by mail-qv1-xf33.google.com with SMTP id
- 6a1803df08f44-89a06bc2f1bso70189586d6.1
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:11 -0800 (PST)
+ id 1vyFg9-00068M-75
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 15:52:18 -0500
+Received: by mail-qk1-x72b.google.com with SMTP id
+ af79cd13be357-8cb20bcff5aso830393185a.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 12:52:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772743930; x=1773348730; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772743936; x=1773348736; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jhU2H5Lji7UkbAGIzyPPNScbnVNC1zzUf1PUJSajVNo=;
- b=XXzIEbis/XwGnCGnAXhQ4UMePfq6E+Afq104B2FajxotlgbBPzZSjfeB37+cK0RVdv
- s0TWyKDq0TD4HWDcAhMfp9SpKPr15JDTjd7EfKwkBLmtZ5SIFISCIRtH47YZ09gt7pIR
- PbvYqSWM3Yxjm0dwXR8B+dH3H4o02ces+HHVFTd98aKHtkqtPix4/8rbJrFFaki2hTnK
- UdjF1LlJZy/7QS4i2G+vihf7/uotFSXC0ncZHJAwtbv7Cd4zsAWyMqf2CJsvt0xBi0WF
- k26+RK5JEmv4bIfBnNNIhmJRq42oulhWpvFb3Lc0i8m0SeY6M9iKf28QEzyVv6HNBRvz
- Jwfg==
+ bh=p6mDXSrb7ToWNoTFIymyzkj+yFpEDh3jkj4Tmoji/Us=;
+ b=J1QawMArSSM2XYmafnVYiEoOzPc7TMBHUL7flZSmlukNCz3UwUGhSZ3A6aoKlRaxbf
+ yCO4ho9pJTeIUB7T1YQacnxbFCNbpjodVOQ268bx9klvBZd38CmGEXfN2gkdbhAHmCbC
+ OjYF6Z64MHnfYkjmU/dRcGESEg3aCXjfy9MmrdJDJcS8Wb6GtFPdoPJm0R7mrWXb4T1e
+ SZVtCJsWOQS4RQ9reIxXWljzR33Zh0I9yPmHknYJ234A8muV0a8dLjg9jtqYT14LwGWi
+ bL+tEyVwRvRlz8P3k9AFS9i2DlrXpwtlktuGmfMShzaiX663ytVOa8SOOo2qSHpZCLcB
+ Tbfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772743930; x=1773348730;
+ d=1e100.net; s=20230601; t=1772743936; x=1773348736;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jhU2H5Lji7UkbAGIzyPPNScbnVNC1zzUf1PUJSajVNo=;
- b=XqQ+sF5uDWmshlPkE3wpX/tXkKeT2DHTEyoHycGwfMkoi13pjTLfpQ5aLwDVno6U3Z
- ig6ZtAbLqYrw+1OfOB9pox3Ej0zsFfPfTq/0pqokOvBXiwwW6y/JrZb4JVuYRSwxPl7F
- d1EqFl9ll8L+VAw9qk0yedSZcbKg8T/PV9QB4WuQjsVRHQAWy/5lCfKTMiMKLjbDFzWW
- G+VlmJ+IJtrGkdiP4NCOnUicMKE6EhsiRjxOrv33nhZL1ViiZMee2EjW5dD8SbOTZY7a
- BtM4BB6g4QLpbWzQAbb9eAvADoDToLoPr59aC34vTcneknHX/lqa1jf+WqtPdgzL8vDu
- IAsw==
-X-Gm-Message-State: AOJu0Yz9UNMmOLSq94AxwcDrZt5OTR5mPLTWR7n/W71RzxALCAM9UGLv
- oIFsK0zrdnyqQidlp8XVTda5IinDeRvGsSuwR4OJBgiHENWiibPts5mC4r6Y0sIRvh+yKmBiRQu
- 5L969
-X-Gm-Gg: ATEYQzyQkM2HQbJU57ohEUUmWtfoGOMFtXMV9BlDIPgVbRRoweKN6bEuAZnhpm5AZUq
- Kj1xoTVit4vERMsBU1PxbJkpsuTwrU88XlJqzUqo96mumFnvYGqc2yhGTJO8kWkrAeyFyWrAK+R
- 53sW/WV8BxfQ40vEQ9MimUOcXiXFGqYoEQ2GqzmK4qiEfZy+0KqPdF25nu+6wN1q5bcf8SSu88y
- YQkQsMOfOBlJEgOhexFmfvz5w44N6lWAV5lx9NPiSqlC9+TiOjDBh+WTrnvTrTkCE/RtGewysgT
- CNZvrGaLmG9yveWncXueLz5+2V1PHfr9huRo5wsWKU9yWBz20zd/YFusC5s2CYxq4kPWFeCV0Rw
- nrVAqs0yBQNi2BozEty/jNLlAMoGD83h9DEAZauyFhFhoi0vFey5rK2GZwgqWdakCZnuBocsO/X
- uAJtKlGWyif1cZsEmYmKYgHWZEzDkhjrGjPpBC4ntruyP0JYDsaXE+Z8TQIXHmHwqs/Gs1cUAVx
- Tbk
-X-Received: by 2002:a05:6214:2585:b0:899:eba1:3c0b with SMTP id
- 6a1803df08f44-89a19af3ac2mr104706976d6.33.1772743930182; 
- Thu, 05 Mar 2026 12:52:10 -0800 (PST)
+ bh=p6mDXSrb7ToWNoTFIymyzkj+yFpEDh3jkj4Tmoji/Us=;
+ b=ioNx87ZgrcrqIB765SQ4pw3lnkaGI8tNBwEvWkVQmhKDo27X35mS3Ue6b88hUfrVtz
+ vz99hwgLGRwy6bex3GkSPsGQTtUEWc7/HEWAjrRcbRzq7ugWy1Bh9B/pAdex3y9aNT2/
+ 2xWC6T0nYpzYlm4XbjI+XIkmbY/etk4rvmd5pEkSo2seRCB2Aawj2q/rpI8sHrHE7Zt0
+ m37Afy+ji40YizFR+QZSGbk3+dOoE2EcYY57hkdtK1BkArpzbffF6RlbDtqayw2142Gn
+ fsQflaXmGJfJ1w2CCCMXe2fCbHFOT+KK2q//Pr1c7hmN7pCueUKKEaFamantfjD98/0e
+ Ao1A==
+X-Gm-Message-State: AOJu0YzWDjopwQtCxUkei79t5lcAeqaNLE2YAg/xxqT1AaHB7sZA14Uv
+ PlcC45376nPR8aBtQsQZ4i0rV40Pcx6giUiwcDRPfxt3NVjVZIC9HtOqCd+QCSJwPCnafIZzWsX
+ VJNuv
+X-Gm-Gg: ATEYQzwiDIOVgSXaTtkEmcoE90QOkVo3HcEwlgZpD5Wf1OwCXM3teiLv9YE7ARIEQQG
+ 2CAcjmfZZeu8JCHn5RW28swW04LX36y4EjGrytcwJa88JAKB1X+jy+Pb3vIPUUqCFe6GwS28YE8
+ xfQC7YQ0kvGV5TX4+U9Rtpg+ohJzJIAy7EcKIdL+7awY2ttmMmOMY8F/GuLev9Sjht6LY9CHdGH
+ OHfNTj315lmseIv5tDGyHXBXCVbKE45scngAiQR1ALCJe54qI/zP2auDuoL3bQtwux4MwOJ3FJp
+ 9B9CmtVPGith7oLLes4aRBj4wmtEm+17jzCpmJR1kHaJFfeS8rUGqp1/P8MgwHL2ZF7YQkvj3ct
+ Y8/x2K95WnwB7DOUZy5kw/9G6TlcsO9umrljOb1PiA1/kqWzNJ8wVHmYZd7NUpaAvgvWpcHVG7Y
+ 2lGQ5RUsaC0U56rW9NVGkzY8bbb0tS/JRC1kM8CM8y0W5yXMCZuzutqgy04WPwnCC0GtVHm5Kpt
+ S/S
+X-Received: by 2002:a05:620a:31a4:b0:8ca:3c67:891e with SMTP id
+ af79cd13be357-8cd5af804a7mr885482585a.42.1772743935696; 
+ Thu, 05 Mar 2026 12:52:15 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.52.08
+ 6a1803df08f44-89a0e31b035sm65559396d6.17.2026.03.05.12.52.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 12:52:09 -0800 (PST)
+ Thu, 05 Mar 2026 12:52:15 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 06/12] plugins: add read-only property for registers
-Date: Thu,  5 Mar 2026 12:51:46 -0800
-Message-ID: <20260305205152.2121854-7-pierrick.bouvier@linaro.org>
+Subject: [PULL 10/12] tests/tcg/plugins/mem: Don't access unaligned memory
+Date: Thu,  5 Mar 2026 12:51:50 -0800
+Message-ID: <20260305205152.2121854-11-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 References: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x72b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,76 +103,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Some registers should be marked as read-only from a plugin API
-perspective, as writing to them via qemu_plugin_write_register has no
-effect. This includes the program counter, and we expose this fact to
-the plugins with this patch.
+In commit eb3f69cac62670 we removed the dependency of this mem plugin
+on the QEMU headers, but in doing that we introduced undefined
+behaviour when the plugin accesses unaligned memory.  This shows up
+if you build with the gcc or clang undefined behaviour sanitizer
+(--enable-ubsan) and run 'make check-tcg', in numerous warnings like:
 
+../../tests/tcg/plugins/mem.c:167:27: runtime error: load of misaligned address 0x7f1f300354b1 for type 'uint16_t' (aka 'unsigned short'), which requires 2 byte alignment
+0x7f1f300354b1: note: pointer points here
+ 00 00 00  00 01 02 03 04 05 06 07  08 09 0a 0b 0c 0d 0e 0f  10 11 12 13 14 15 16 17  18 19 1a 1b 1c
+              ^
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../tests/tcg/plugins/mem.c:167:27
+
+Fix this by rearranging the data reads and writes to use
+memcpy() instead.
+
+Fixes: eb3f69cac62670 ("tests/tcg/plugins/mem.c: remove dependency on qemu headers")
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Link: https://lore.kernel.org/qemu-devel/20260305-setpc-v5-v7-6-4c3adba52403@epfl.ch
+Link: https://lore.kernel.org/qemu-devel/20260305161531.1774895-2-peter.maydell@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/plugins/qemu-plugin.h |  3 +++
- plugins/api.c                 | 16 ++++++++++++++++
- 2 files changed, 19 insertions(+)
+ tests/tcg/plugins/mem.c | 71 +++++++++++++++++------------------------
+ 1 file changed, 30 insertions(+), 41 deletions(-)
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 7b9cd6a9717..fceb8194eb8 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -979,11 +979,14 @@ struct qemu_plugin_register;
-  *          writing value with qemu_plugin_write_register
-  * @name: register name
-  * @feature: optional feature descriptor, can be NULL
-+ * @is_readonly: true if the register cannot be written via
-+ *               qemu_plugin_write_register
-  */
- typedef struct {
-     struct qemu_plugin_register *handle;
-     const char *name;
-     const char *feature;
-+    bool is_readonly;
- } qemu_plugin_reg_descriptor;
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index 7d64e7018f2..f3992abc8fb 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -123,6 +123,9 @@ static void update_region_info(uint64_t region, uint64_t offset,
+     bool is_store = qemu_plugin_mem_is_store(meminfo);
+     RegionInfo *ri;
+     bool unseen_data = false;
++    void *val_ptr;
++    unsigned int val_size;
++    qemu_plugin_mem_value swapped_value;
  
- /**
-diff --git a/plugins/api.c b/plugins/api.c
-index 23c291f6444..85b34949cbb 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -410,6 +410,12 @@ bool qemu_plugin_bool_parse(const char *name, const char *value, bool *ret)
-  * ancillary data the plugin might find useful.
-  */
+     g_assert(offset + size <= region_size);
  
-+static const char pc_str[] = "pc"; /* generic name for program counter */
-+static const char eip_str[] = "eip"; /* x86-specific name for PC */
-+static const char rip_str[] = "rip"; /* x86_64-specific name for PC */
-+static const char pswa_str[] = "pswa"; /* s390x-specific name for PC */
-+static const char iaoq_str[] = "iaoq"; /* HP/PA-specific name for PC */
-+static const char rpc_str[] = "rpc"; /* microblaze-specific name for PC */
- static GArray *create_register_handles(GArray *gdbstub_regs)
- {
-     GArray *find_data = g_array_new(true, true,
-@@ -427,6 +433,16 @@ static GArray *create_register_handles(GArray *gdbstub_regs)
-         /* Create a record for the plugin */
-         desc.handle = GINT_TO_POINTER(grd->gdb_reg + 1);
-         desc.name = g_intern_string(grd->name);
-+        desc.is_readonly = false;
-+        if (g_strcmp0(desc.name, pc_str) == 0
-+            || g_strcmp0(desc.name, eip_str) == 0
-+            || g_strcmp0(desc.name, rip_str) == 0
-+            || g_strcmp0(desc.name, pswa_str) == 0
-+            || g_strcmp0(desc.name, iaoq_str) == 0
-+            || g_strcmp0(desc.name, rpc_str) == 0
-+           ) {
-+            desc.is_readonly = true;
-+        }
-         desc.feature = g_intern_string(grd->feature_name);
-         g_array_append_val(find_data, desc);
+@@ -144,61 +147,46 @@ static void update_region_info(uint64_t region, uint64_t offset,
      }
+ 
+     void *ri_data = &ri->data[offset];
++
++    swapped_value.type = value.type;
+     switch (value.type) {
+     case QEMU_PLUGIN_MEM_VALUE_U8:
+-    {
+-        uint8_t val = value.data.u8;
+-        uint8_t *p = ri_data;
+-        if (is_store) {
+-            *p = val;
+-        } else {
+-            unseen_data = *p != val;
+-        }
++        swapped_value.data.u8 = value.data.u8;
++        val_ptr = &swapped_value.data.u8;
++        val_size = 1;
+         break;
+-    }
+     case QEMU_PLUGIN_MEM_VALUE_U16:
+-    {
+-        uint16_t val = be ? GUINT16_FROM_BE(value.data.u16) :
+-                            GUINT16_FROM_LE(value.data.u16);
+-        uint16_t *p = ri_data;
+-        if (is_store) {
+-            *p = val;
+-        } else {
+-            unseen_data = *p != val;
+-        }
++        swapped_value.data.u16 = be ? GUINT16_FROM_BE(value.data.u16) :
++            GUINT16_FROM_LE(value.data.u16);
++        val_ptr = &swapped_value.data.u16;
++        val_size = 2;
+         break;
+-    }
+     case QEMU_PLUGIN_MEM_VALUE_U32:
+-    {
+-        uint32_t val = be ? GUINT32_FROM_BE(value.data.u32) :
+-                            GUINT32_FROM_LE(value.data.u32);
+-        uint32_t *p = ri_data;
+-        if (is_store) {
+-            *p = val;
+-        } else {
+-            unseen_data = *p != val;
+-        }
++        swapped_value.data.u32 = be ? GUINT32_FROM_BE(value.data.u32) :
++            GUINT32_FROM_LE(value.data.u32);
++        val_ptr = &swapped_value.data.u32;
++        val_size = 4;
+         break;
+-    }
+     case QEMU_PLUGIN_MEM_VALUE_U64:
+-    {
+-        uint64_t val = be ? GUINT64_FROM_BE(value.data.u64) :
+-                            GUINT64_FROM_LE(value.data.u64);
+-        uint64_t *p = ri_data;
+-        if (is_store) {
+-            *p = val;
+-        } else {
+-            unseen_data = *p != val;
+-        }
++        swapped_value.data.u64 = be ? GUINT64_FROM_BE(value.data.u64) :
++            GUINT64_FROM_LE(value.data.u64);
++        val_ptr = &swapped_value.data.u64;
++        val_size = 8;
+         break;
+-    }
+     case QEMU_PLUGIN_MEM_VALUE_U128:
+-        /* non in test so skip */
+-        break;
++        /* none in test so skip */
++        goto done;
+     default:
+         g_assert_not_reached();
+     }
+ 
++    /* ri_data may not be aligned, so we use memcpy/memcmp */
++    if (is_store) {
++        memcpy(ri_data, val_ptr, val_size);
++    } else {
++        unseen_data = memcmp(ri_data, val_ptr, val_size) != 0;
++    }
++
+     /*
+      * This is expected for regions initialised by QEMU (.text etc) but we
+      * expect to see all data read and written to the test_data region
+@@ -213,6 +201,7 @@ static void update_region_info(uint64_t region, uint64_t offset,
+         ri->seen_all = false;
+     }
+ 
++done:
+     g_mutex_unlock(&lock);
+ }
+ 
 -- 
 2.47.3
 
