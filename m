@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B45F33A6B
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04738F33A70
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Mar 2026 14:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vy9XE-0008DZ-3F; Thu, 05 Mar 2026 09:18:40 -0500
+	id 1vy9Wu-00085t-44; Thu, 05 Mar 2026 09:18:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vy9Wk-00084e-Kq
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:11 -0500
+ id 1vy9We-00083g-Rs
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:06 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vy9Wi-0000u8-Uv
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:10 -0500
+ id 1vy9Wc-0000t9-Pm
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 09:18:04 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B3BC2596D9A;
- Thu, 05 Mar 2026 15:18:06 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 66214596DA5;
+ Thu, 05 Mar 2026 15:18:01 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id F2CZASY5D8KK; Thu,  5 Mar 2026 15:18:04 +0100 (CET)
+ id JcA00pLIZmC0; Thu,  5 Mar 2026 15:17:59 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A6410596DA1; Thu, 05 Mar 2026 15:18:04 +0100 (CET)
-Message-ID: <96de1f8c689adfb45a24279fdf7cfdc3c8285601.1772719690.git.balaton@eik.bme.hu>
+ id 63C06596D9B; Thu, 05 Mar 2026 15:17:59 +0100 (CET)
+Message-ID: <28e054fc13ad2f68253d4ada62d8f2a9a3482cf4.1772719690.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1772719690.git.balaton@eik.bme.hu>
 References: <cover.1772719690.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 9/9] memory: Factor out more common ram region
- initialization
+Subject: [PATCH v7 4/9] hw/xtensa/xtfpga:  Do not use
+ memory_region_init_ram_nomigrate()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,7 +45,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Thu, 05 Mar 2026 15:18:04 +0100 (CET)
+Date: Thu, 05 Mar 2026 15:17:59 +0100 (CET)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -68,53 +68,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce internal memory_region_setup_ram_ptr() function to remove
-duplicated code from different memory_region_init_ram_*ptr functions.
+Convert to use memory_region_init_ram() instead. This breaks migration
+but the machines using this device have no migration compatibility
+guarantee.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- system/memory.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ hw/xtensa/xtfpga.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index c67c8b126b..5264c859f1 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1672,26 +1672,28 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
- }
- #endif
+diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
+index d427d68e50..d40fccf9e5 100644
+--- a/hw/xtensa/xtfpga.c
++++ b/hw/xtensa/xtfpga.c
+@@ -163,9 +163,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
+             sysbus_mmio_get_region(s, 1));
  
--void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
--                                const char *name, uint64_t size, void *ptr)
-+static void memory_region_setup_ram_ptr(MemoryRegion *mr, uint64_t size,
-+                                        void *ptr)
- {
--    memory_region_init(mr, owner, name, size);
-     memory_region_setup_ram(mr);
-     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
-     assert(ptr != NULL);
-     mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
- }
- 
-+void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
-+                                const char *name, uint64_t size, void *ptr)
-+{
-+    memory_region_init(mr, owner, name, size);
-+    memory_region_setup_ram_ptr(mr, size, ptr);
-+}
-+
- void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-                                        const char *name, uint64_t size,
-                                        void *ptr)
- {
--
-     memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
--    memory_region_setup_ram(mr);
--    /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
--    assert(ptr != NULL);
--    mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-+    memory_region_setup_ram_ptr(mr, size, ptr);
-     mr->ram_device = true;
+     ram = g_malloc(sizeof(*ram));
+-    memory_region_init_ram_nomigrate(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
++    memory_region_init_ram(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
+                            &error_fatal);
+-    vmstate_register_ram_global(ram);
+     memory_region_add_subregion(address_space, buffers, ram);
  }
  
 -- 
