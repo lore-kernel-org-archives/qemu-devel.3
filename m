@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091DFFCC066
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:51:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA724FCC062
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vybCN-0004B1-Cw; Fri, 06 Mar 2026 14:50:59 -0500
+	id 1vybCN-0004Bd-UB; Fri, 06 Mar 2026 14:51:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCL-0004A9-Vs
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:58 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1vybCL-00049Y-Ha
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:57 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCG-0000Pu-Qh
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:57 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-439cb5af25bso3069796f8f.1
+ id 1vybCG-0000Pt-OL
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:56 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439c56e822eso3880502f8f.2
  for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1772826651; x=1773431451; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ajuMgwjCTtN4ZPB1zEJyv0G4VENDgEDxiFhANRLA7Jg=;
- b=mlAmj90pYLs+MLyCpO/yPBzqySyF1PiwWiw7pNygypm2kL9ZcgSLouuWgIlpxwtAjS
- 1xpxHMk3gLaF/7l2DVW9gUVX5+geBxU9DtiP99Zgwn8zRcUYofZdK81g19yFzXZUIH4P
- aXK5zmiALIaReOWXOKIeM5SbAhpC2+O/86FNFbfSRmuN9zyYXdCjYOwsQcfNMhFcB8RP
- akqGKyImdZvrt5+p2cVP4xkDIOYPJyGVNVpKLQhvCCCVZIU99clHFJTemSILrBfd6zZL
- UQgujpKEJXCkSfZSAbAXghu3nuZTC2V1gkVASHHmvz/xyVFVv5983rz74M19FEAm7pUf
- P7tQ==
+ bh=E6hymyS/XV95BcDo7HFmoPR2rakOhmcWotYixkOfleY=;
+ b=Z8yPgVtkfllI05/0PiXSnxd3Y2fA19sDaXNuZc6T+o1ROPMRv642WVWjeBrqGn0QSx
+ dFydUl+nBUE4Qpl9Hjg2ejC2pu2J/Vkh1sGyi2i5ZZ+EPfAhJOWHemVbPHqtE3JKWIC4
+ BErc+XptwWt5PpLq++R7wSgjZf1djbbtLQ9k1GtAjTbkxL6ph1+fAIs4EWfVUJi0Twlg
+ pHQiKyoU5UVEXLVku83DmYZ6C5ev2jfUAq5ga2OVwX9+/LCyZ/bMN233pUIe15E4Xgmn
+ +QePpDELTLM0S2GYVjfH4NOYQCTMJAA1AhEueQ0lQbnconMkz1FAmdcJgqOnJpYQFlSf
+ ADwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1772826651; x=1773431451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ajuMgwjCTtN4ZPB1zEJyv0G4VENDgEDxiFhANRLA7Jg=;
- b=mI+mVIQ8Vi5vQYyiZtzJ4bCEO6enG4QsjDhVsSXhPywBOcFlqJnPyfxeGKZ38Il+lQ
- 0KmBc9lpIXe5+uGF6Rdge5gRnJ+KF1U4UuTaooVppR9QQxEmAkStQ2f9siyYXLefJETm
- 4u86HKoFBQKd9+EZRGdNjD3Vm2KO152LzUFI2O9bI4negqrpctWuCUWU0o6/MgcOmavb
- cF73nMsZtVkKSg2aqBAmZl5uu1SjvYjSBksZALF7XCYgejPIaRyUoQ7TciwP9yK7lraC
- nbYoaMpcprlosu9ewwL3K+gjGVgARoHvuMgnoApBHvrYT23L9EPMAduTEkUcjHPNJg0t
- +70w==
-X-Gm-Message-State: AOJu0Yw7BwC9F9kmhRO/C49IUu3F5aog9MlZOlzdv5ctebIOHPaLYdXP
- ydOMZWjyOUZnqWa7sWsRo9c5yGMs4Gz43+apNrcxc4/889cZ/FdBe25WgvpTDkD5Q6k=
-X-Gm-Gg: ATEYQzwss1VwkCKJEqmjBWMrbwO1DzdaSS9X0XvyjTpKOIntoSDx99dzY/HNC+RfG9o
- QnI3vwqlK9q47A2greEWLkvPnOt1BlwblGvaDOMG3ZqHQYcPUvw93ry8Xme09RBl6TLPhmzEfP1
- ESvhH1YS5kcaBd8fqWDuaHqxQ10mTCP01Qqjo7iTApkTIDxO9HgecZQpREt0qJQZlFFrMR6u1U1
- jeUqp08kvs9oaqdtWmjKjPtodBphWC6R5oWi65V7/qCSYorOScZT3jt7+mqunDc2D8AkNtXLg+p
- VM/0AMMCdgR67tSILoC6+46n3so61YPAY5tUjga4U5081Gez/YlzGnMSbUWl/fSslkOHaqnhIMf
- vlgc6d6o/Gr4TxLG83HY1WFBOhYqolHJgwjvomwbPqc5Xocc2iJXMB00RglnN6NAQ3Ixstb7v+C
- iZf9Pz3Y0rN2Bx2VfxDW/rgbSTlFd6KHv1hg==
-X-Received: by 2002:a05:6000:400f:b0:439:b59e:5e65 with SMTP id
- ffacd0b85a97d-439da355a90mr6060205f8f.6.1772826651254; 
- Fri, 06 Mar 2026 11:50:51 -0800 (PST)
+ bh=E6hymyS/XV95BcDo7HFmoPR2rakOhmcWotYixkOfleY=;
+ b=o0H2Yi7TaixQKBXoMAX4PhgZMwuJHulSN1YBp6AlulvEvwZhqb+/J31x2NJjAgcLl1
+ REKz6mE1i0rHBLk5F2WkS/AEpjxNa0JRlqNz4OdeEzVKXI4YmlrLSKmkvbk8DAFLi63K
+ SuiJu3qNWGfN9Ln5rC4GKSyZVZB8a1jekmQlaeeEP8kN0E0R9W2PbjT/OSO00PAuvMlw
+ Lc1vGwX3WsvRJ69cDRBnMTPaAINJ+3ubej6I3umM3Mh8+at1P0NsMb93VpPARv6506LP
+ 8HGWWzEFOe/QKGeNcmGAjHsNl/67bH3Frnp6ZcGbSwm3SO+YFtw6DvF72tkPcsti3dch
+ TBPw==
+X-Gm-Message-State: AOJu0YzenTDUp1NnFzykBQ+8rv7DRl6PfAPX0HBelxKrBUd2ee0+KNL4
+ +4a4+fcWSW6zmfBxs/VxsZUF59zc7H8r+yskHoeDTpAfsU86p/6T3i4RvEotJtLRg9k=
+X-Gm-Gg: ATEYQzzqOLGlvo5V1nNejan7n4FTq4D9MTFVWQxwxKSa0agF7AtIK1/+k8BoYlwQsBB
+ D0YBnTWnwYny/CoWjVaX4IJqyVy1Z+Waoe95WQeS3Q/98pRDM/H16GS4qpvGa58oEuR8tN1oMN7
+ m1OmWYc4nX0umBmruEdWTKWPGtJmB7CCFOCgf4NNfM+POhAyXPdAlNur+iMHSl6VDZXKJbs9Edw
+ xoxPqYHyzqEMMl7UpHRHlfEokr47xljK+TkHnnWdxORVMV06qzdDRePuqdLRQ2Vj0QVzECMbd0Z
+ SqiGRHwkxRHt4T4GrrWUBcwUMtVkr4rhv8B7kMgt5v+Frh6ITDvs3KcAL3Gj/G+LPDCcpHUNsZo
+ 59P4UPUCsNYAE2pXx18+mqJ2ey11UJiMIMf29AKdBSiGELB4NS7nkWUIttcgjchAsVCxrO6YBZP
+ ULnWgU9L3TNfnFl7wb2bSJ3PI=
+X-Received: by 2002:a05:6000:2410:b0:439:c20e:5ed1 with SMTP id
+ ffacd0b85a97d-439da5555f2mr6091522f8f.12.1772826650675; 
+ Fri, 06 Mar 2026 11:50:50 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad97be5sm6191805f8f.11.2026.03.06.11.50.49
+ ffacd0b85a97d-439dae2bdf8sm6206702f8f.25.2026.03.06.11.50.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 06 Mar 2026 11:50:49 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 03843689D0;
+ by draig.lan (Postfix) with ESMTP id 1C816689D1;
  Fri, 06 Mar 2026 19:50:49 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Andrew Keesler <ankeesler@google.com>,
- Markus Armbruster <armbru@redhat.com>,
+Cc: Dongwon Kim <dongwon.kim@intel.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 01/20] Support per-head resolutions with virtio-gpu
-Date: Fri,  6 Mar 2026 19:50:28 +0000
-Message-ID: <20260306195048.2869788-2-alex.bennee@linaro.org>
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PULL 02/20] virtio-gpu: Fix scanout dmabuf cleanup during resource
+ destruction
+Date: Fri,  6 Mar 2026 19:50:29 +0000
+Message-ID: <20260306195048.2869788-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260306195048.2869788-1-alex.bennee@linaro.org>
 References: <20260306195048.2869788-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,118 +110,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Keesler <ankeesler@google.com>
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-In 454f4b0f, we started down the path of supporting separate
-configurations per display head (e.g., you have 2 heads - one with
-EDID name "AAA" and the other with EDID name "BBB").
+When a virtio-gpu resource is destroyed, any associated udmabuf must be
+properly torn down. Currently, the code may leave dangling references
+to dmabuf file descriptors in the scanout primary buffers.
 
-In this change, we add resolution to this configuration surface (e.g.,
-you have 2 heads - one with resolution 111x222 and the other with
-resolution 333x444).
+This patch updates virtio_gpu_fini_udmabuf to:
+1. Iterate through all active scanouts.
+2. Identify dmabufs that match the resource's file descriptor.
+3. Close the dmabuf and invalidate the resource's FD reference to
+   prevent use-after-free or double-close scenarios.
+4. Finally, trigger the underlying udmabuf destruction.
 
-  -display vnc=localhost:0,id=aaa,display=vga,head=0 \
-  -display vnc=localhost:1,id=bbb,display=vga,head=1 \
-  -device '{"driver":"virtio-vga",
-            "max_outputs":2,
-            "id":"vga",
-            "outputs":[
-              {
-                 "name":"AAA",
-                 "xres":111,
-                 "yres":222
-              },
-              {
-                 "name":"BBB",
-                 "xres":333,
-                 "yres":444
-              }
-            ]}'
+This ensures that the display backend does not attempt to access
+memory or FDs that have been released by the guest or the host.
 
-Here is the behavior matrix of the current resolution configuration
-surface (xres/yres) with the new resolution configuration surface
-(outputs[i].xres/yres).
-
-Note - we use "xres" and "yres" (instead of, say, "width" and "height")
-to match analogous virtio_gpu_base_conf.xres/yres.
-
-Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with default xres/yres
-
-Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
-Behavior: current behavior - outputs[0] enabled with xres/yres
-
-Case: outputs[i].has_xres && outputs[i].has_yres
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
-
-Case: outputs[i].has_xres != outputs[i].has_yres
-Behavior: error
-
-Signed-off-by: Andrew Keesler <ankeesler@google.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260210123038.2332364-2-ankeesler@google.com>
-[AJB: fix format strings for size_t in error_setg]
-Message-ID: <20260304165043.1437519-2-alex.bennee@linaro.org>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Message-ID: <20260304203230.1955266-1-dongwon.kim@intel.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index cd67c4f52e3..09dd0e6d05a 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -970,15 +970,24 @@
- ##
- # @VirtIOGPUOutput:
- #
--# Describes configuration of a VirtIO GPU output.
-+# Describes configuration of a VirtIO GPU output.  If both @xres and
-+# @yres are set, they take precedence over root virtio-gpu resolution
-+# configuration and enable the corresponding output.  If none of @xres
-+# and @yres are set, root virtio-gpu resolution configuration takes
-+# precedence and only the first output is enabled.  Only setting one
-+# of @xres or @yres is an error.
- #
- # @name: the name of the output
- #
-+# @xres: horizontal resolution of the output in pixels (since 11.0)
-+#
-+# @yres: vertical resolution of the output in pixels (since 11.0)
-+#
- # Since: 10.1
- ##
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 58e0f91fda6..65312f869dd 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -357,7 +357,8 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+ /* virtio-gpu-udmabuf.c */
+ bool virtio_gpu_have_udmabuf(void);
+ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res);
++void virtio_gpu_fini_udmabuf(VirtIOGPU *g,
++                             struct virtio_gpu_simple_resource *res);
+ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+                              uint32_t scanout_id,
+                              struct virtio_gpu_simple_resource *res,
+diff --git a/hw/display/virtio-gpu-udmabuf-stubs.c b/hw/display/virtio-gpu-udmabuf-stubs.c
+index f692e135103..85d03935a33 100644
+--- a/hw/display/virtio-gpu-udmabuf-stubs.c
++++ b/hw/display/virtio-gpu-udmabuf-stubs.c
+@@ -12,7 +12,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+     /* nothing (stub) */
+ }
  
- { 'struct': 'VirtIOGPUOutput',
--  'data': { 'name': 'str' } }
-+  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_fini_udmabuf(VirtIOGPU *g, struct virtio_gpu_simple_resource *res)
+ {
+     /* nothing (stub) */
+ }
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index d804f321aa3..74b6a7766af 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -151,13 +151,6 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+     res->blob = pdata;
+ }
  
- ##
- # @DummyVirtioForceArrays:
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index 7269477a1c8..cb76302e2d8 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -233,6 +233,22 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-     g->req_state[0].width = g->conf.xres;
-     g->req_state[0].height = g->conf.yres;
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
+-{
+-    if (res->remapped) {
+-        virtio_gpu_destroy_udmabuf(res);
+-    }
+-}
+-
+ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+ {
+     struct virtio_gpu_scanout *scanout;
+@@ -169,6 +162,26 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+     g_free(dmabuf);
+ }
  
-+    for (output_idx = 0, node = g->conf.outputs;
-+         node && output_idx < g->conf.max_outputs;
-+         output_idx++, node = node->next) {
-+        if (node->value->has_xres != node->value->has_yres) {
-+            error_setg(errp,
-+                       "must set both outputs[%zd].xres and outputs[%zd].yres",
-+                       output_idx, output_idx);
-+            return false;
-+        }
-+        if (node->value->has_xres && node->value->has_yres) {
-+            g->enabled_output_bitmask |= (1 << output_idx);
-+            g->req_state[output_idx].width = node->value->xres;
-+            g->req_state[output_idx].height = node->value->yres;
++void virtio_gpu_fini_udmabuf(VirtIOGPU *g, struct virtio_gpu_simple_resource *res)
++{
++    int max_outputs = g->parent_obj.conf.max_outputs;
++    int i;
++
++    for (i = 0; i < max_outputs; i++) {
++        VGPUDMABuf *dmabuf = g->dmabuf.primary[i];
++
++        if (dmabuf &&
++            qemu_dmabuf_get_num_planes(dmabuf->buf) > 0 &&
++            qemu_dmabuf_get_fds(dmabuf->buf, NULL)[0] == res->dmabuf_fd &&
++            res->dmabuf_fd != -1) {
++            qemu_dmabuf_close(dmabuf->buf);
++            res->dmabuf_fd = -1;
 +        }
 +    }
 +
-     g->hw_ops = &virtio_gpu_ops;
-     for (i = 0; i < g->conf.max_outputs; i++) {
-         g->scanout[i].con =
++    virtio_gpu_destroy_udmabuf(res);
++}
++
+ static VGPUDMABuf
+ *virtio_gpu_create_dmabuf(VirtIOGPU *g,
+                           uint32_t scanout_id,
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 643e91ca2a7..b2af861f0d8 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -902,7 +902,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+     res->addrs = NULL;
+ 
+     if (res->blob) {
+-        virtio_gpu_fini_udmabuf(res);
++        virtio_gpu_fini_udmabuf(g, res);
+     }
+ }
+ 
 -- 
 2.47.3
 
