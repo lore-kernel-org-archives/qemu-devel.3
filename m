@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818FFF0180C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A18F0180A
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 08:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyQXU-0005yO-WF; Fri, 06 Mar 2026 03:28:05 -0500
+	id 1vyQXX-0005yl-IL; Fri, 06 Mar 2026 03:28:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vyQXR-0005y7-9k
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 03:28:01 -0500
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ id 1vyQXV-0005yb-8x
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 03:28:06 -0500
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vyQXP-00020I-Cf
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 03:28:01 -0500
+ id 1vyQXS-00020S-Ma
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 03:28:05 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cLUUgvrCLORTPjUo94JYkxAj45t6/4oGPDTo020HrTTnLNpsi1Rvfzm8MqnlweEHMk8CSEraKwtNoOqI6RpCspwa+GBTrts5A00BLUQ1Xrz/c7Bl+1CaedrUHIkUP8EZWvbs8xzY/3SA3vL+X3CNlBwD+v4nkU/olICkJq0iN0gH8sKBZlMiiecdvTua9krhNHsaG5yfbtm8czk1IkRDk5oSzXTygi8JPXLZXDoQFonO2AT9Cs0tO/2VIp6e37kGHVFBkjl3jjdg6eq8aOXq4CiKjoBFYwKlcrUygYHGyDcojjBNxZmuBrTXfV/ElEtwtpK6fDOU4ywJGnFzjcJmJw==
+ b=kV+q78NXCSf+CaoqnG+OX5U7tiBYq/fIP5xQFOaPO7I9pd7WVnkOhLE9zbBwYmA00BZO8nxPHN8vOGJRgKjaryX/RZE/40hEdewmwj4TqIb+ED+V3/zCu2WpXL14ntEZ+R4sJU/JOjgxs2eU6b4b7yN+2MtRIwTtYBsbMmczdTSznY7cJcIQWVe22H947l/+VeLbNoM0kXIeGvXEEj2i7BONPrnYyOW7wS8s5OG5uG+jnjbu3b2qY5g/iZ/r6EPYmuZrpMRfhao5BDC9uPcfsAXUJksEIOFY+kJ2NgqTNrKjg1J5nIs/jX6ifsUKqWu6wGT3hai2/TerZM3iByC4Og==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lwLLkMqIq94g8icpnayhcUJMPFZtie/O5S+mL0ew8to=;
- b=kMv8ygVqEfHsge1fz4pMBDXm3/bRwrRcjscJ2u6xRLZE3djV//5DzwieAdeI7aGmYCOVrkaNhZKCl7Q8CJiB3kG4U68N7SW32thKSSlGAKnDhqycpNlY470P+r5FJNeEV0b6Vk+7va3CBGJmYqhnhQHH7UAaOvBKhLBUta6cDLkX/bBvRe5ggFx8FNofFL/8pBCRS1RAwkxjhV50fp6R5mQs4fRQePeD0wtj9ubnMSAApPolWy+9VL5BBckKm13SSTUHkkY+tTJKR/2I4b4giRs4NfzaG5DL+v23/ZNhGdQdCJGxsD77VwN3A8IjAaSKsK/eGXp88vSGgEs7OdXsQw==
+ bh=Nzmy3ufOTGy8V3OC9d7Hq2s7RnWbZt37TXSDEX9X/jk=;
+ b=LeI4UHXnmsqN6CzCfAbYMXM3H/jX5Rm2O8bCI36JlwUB0jksdhcIJj2ECn/quIjBXelaiRUUrXpwhCDNHOdUwLcn1CLHTYfrkS+TK7aIkcYyLOL7Qqsue/f9pKo2MKxjl2MKrAwMtEtxI1kaAU5rHvxJhR1s44B8BeORWyp1tuv7813o/3r3t+mG95mXc4ytdM7pf8dSzvcoCbiWNoRcHj84JzGdlGwfmYxfWb4Ygv+NiAeZsUt9RyhWm2N1hD2jcuOvrQIuXRiddBC0cnOL/+HuosbNWWre8oy3LARBfgNOE5JfWHIdOat+aqr/gLzTBh2WwVT6lsIBCGSVhPrxCg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lwLLkMqIq94g8icpnayhcUJMPFZtie/O5S+mL0ew8to=;
- b=xyOTHdoyeDCq/x/vRlsFC7TksIaihkd8K3oZO737MYK1n0NnYQBWgceyrKTzdiLbDguVhol7uT0O1sZ5K4sD5RHYUy1g+8hlBISjgMJ+tR5wKVY08GXMrqyRiMsIeN0lT7gFHwGV2DM5s91ES+2LgIPjKHTUVYDjivyJwMwawdY=
-Received: from SA9PR03CA0014.namprd03.prod.outlook.com (2603:10b6:806:20::19)
- by CY8PR12MB8316.namprd12.prod.outlook.com (2603:10b6:930:7a::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.18; Fri, 6 Mar
- 2026 08:27:52 +0000
+ bh=Nzmy3ufOTGy8V3OC9d7Hq2s7RnWbZt37TXSDEX9X/jk=;
+ b=VdK/itVaziDV/d2yU6RmfisAUisz4YJbwOM+xnxY52A9KEojELSiTDGyv0cPhLL6tTl6eEWx/ivCOABSSwCKwIvXjeb/KKJSFzXhi6hrgbPvjDyjEKdyRCTky7Fnfj5taTFXPTUP5hay47/8XXireqd2SwmepbjOuWxAT4N6im4=
+Received: from SA9PR03CA0012.namprd03.prod.outlook.com (2603:10b6:806:20::17)
+ by DM4PR12MB6010.namprd12.prod.outlook.com (2603:10b6:8:6a::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9678.18; Fri, 6 Mar 2026 08:27:55 +0000
 Received: from SN1PEPF0002636D.namprd02.prod.outlook.com
- (2603:10b6:806:20:cafe::2) by SA9PR03CA0014.outlook.office365.com
- (2603:10b6:806:20::19) with Microsoft SMTP Server (version=TLS1_3,
+ (2603:10b6:806:20:cafe::3) by SA9PR03CA0012.outlook.office365.com
+ (2603:10b6:806:20::17) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.18 via Frontend Transport; Fri,
- 6 Mar 2026 08:27:51 +0000
+ 6 Mar 2026 08:27:54 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -55,21 +55,24 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from satlexmb07.amd.com (165.204.84.17) by
  SN1PEPF0002636D.mail.protection.outlook.com (10.167.241.138) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9678.18 via Frontend Transport; Fri, 6 Mar 2026 08:27:51 +0000
+ 15.20.9678.18 via Frontend Transport; Fri, 6 Mar 2026 08:27:54 +0000
 Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 6 Mar
- 2026 02:27:48 -0600
+ 2026 02:27:51 -0600
 From: fanhuang <FangSheng.Huang@amd.com>
 To: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
  <gourry@gourry.net>, <jonathan.cameron@huawei.com>
 CC: <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
- <Lianjie.Shi@amd.com>, fanhuang <FangSheng.Huang@amd.com>
-Subject: [PATCH v7 0/1] numa: add 'memmap-type' option for memory type
+ <Lianjie.Shi@amd.com>, fanhuang <FangSheng.Huang@amd.com>, David Hildenbrand
+ <david@kernel.org>
+Subject: [PATCH v7 1/1] numa: add 'memmap-type' option for memory type
  configuration
-Date: Fri, 6 Mar 2026 16:27:34 +0800
-Message-ID: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+Date: Fri, 6 Mar 2026 16:27:35 +0800
+Message-ID: <20260306082735.1106690-2-FangSheng.Huang@amd.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -78,39 +81,38 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002636D:EE_|CY8PR12MB8316:EE_
-X-MS-Office365-Filtering-Correlation-Id: db9133cf-0c04-4edf-003e-08de7b5a41cb
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002636D:EE_|DM4PR12MB6010:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3c668119-d641-4dcc-f872-08de7b5a43da
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700016|82310400026|376014|43062017; 
-X-Microsoft-Antispam-Message-Info: BaHs5V0j75j7rNZhI+bBGKS3AQC6ZyfF0pHaIWIeRqvUOzxzzN9rs7LQEc9upejH6mV5ahPWSjx87YDSCGnkLbvOwzqKwVssiejYni5fXLNmKqmlOEsS+8ee10+VyAkMpVDUnbgOcChfDCPlhXypwLxCDce31rWt26rmbSR1Oex4derE790oYkGmmja6VfR2B+l9ylhOBld5pfFe44/6BIL37Fx7Y6D77ccut72ZQPWizrcSCx6oXll5TIX6T0aLnRbpGcz/66EWxOXZGomFVW6ft/SjmgdL0gLivLLAWWC6/poW7t1UtH4dQLufGN6s0dNxRFUGuLTak8xJUiWxs96QVEVo3+LPznGGfIPV0C8mRDFggFjoT0QtdSPb7Ojt5EbIzedUkEWAXYKmaKiZdI0FyMhvF76+hfJ4UkqQT2xYUUDMvgMzX8AI+Kr2qLHkCD9KChlgA7QD7aioxP8lweSyzIOy7kzEkIoMO3FBGuDl77gH6cngjztnoIvzvCEeBKmBnwDB9bTbBJn6gzNmFcy82za08Gjqx3SpWpw69uvVZwX7G/nIpZM2JfL5qzTDAmywQBJEtzS/amCpA4tmNdv92O+Z+9piNVipiKGoiw9nLrhoNILJG9uG5+EPsuLKw+jPmNuDy9lqTO8RYyMhFGzXUJoIxEBWscekYzOijHcU0gy17iRlRADfIRcH6mXnnW/MSnY96aoy1FHLNfsTZxy4P27vPCv2RuuFIC19r4dukTqJbjpDhbpNtR++YEG8uJjRTt6ojtt+mhOB3GPZVMhie7kdfxpvBtdmOvkY6wBJZssQIfPDOoN/y4glzAro
+ ARA:13230040|82310400026|1800799024|376014|36860700016|43062017; 
+X-Microsoft-Antispam-Message-Info: ugYNd/sz9l43V6O4JotELDR2QOGx2st6ZDcONwOhxbns/gIfquHJCjAR5TMj9rap2cS0NfavjUiK9fCcpwf6fBQe0u2G6NcUYl66YpFB+gXFmwztrAt/sLhYtZif7uC6Sojt0BXXJlrRtBl8WBu5rc7o18cu1uIwZETMukw1Y0UU1OGg7W3LvctCxJFmWR6N4LUVCSREE2NHUm12J/F50rnh1ahPkmg2L0N+ZEt8a+xNHRBAj+wfpg5h4Gs9k8vw6N2DlMCD3X2kD6fZClzJyaEaPuAh36lLaTYpfic/AZK391sFVeFGAeijJFPy8CIldbzsNe0ATyLiZLnBei/uxQyqQRbGL8Junb4San+i9Je/79GXng0K6gozUF0L1wGS23kZGdeLzbNISZsW5KUnOmZYhjx7POAke1+h95FtwNVqu0YEJ2XvDuCCbMd4ZZNLgiWOdsHUP9tueRzdlXDImFGGrdLUyYbDYbwdkKFCYDy0/2Ibei6CkUXFdxjENFHWtJmVj+UsrTVXuqfjdUwNlU+oCgYLk81duYN4U4xd2ytC0fsiWPiBqVvLD9xVD241SSZYNRoxhq3QSkAlCEfGzF1vqo1MIX7Im9pGGon/DX7b99t0zTaNoGNSuCgYD4e00akYfh9+t9tIbAEQKmhqEAvGoebSrDEQ+VFatBUpGWMLR3EN0aCknZ3rvKSWHFg2a/nZj3bL3Zke+f/iSbHxS3C82f6WQZkuJgUQJuSeRqF+8q1ZZz+riQUuvoFKoInsif7wLc8mRKlzNGtnSAcNKtASGvEBehAcV7Bo6RZGk+b/oQvGZEXlOe2jl9pACi98
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700016)(82310400026)(376014)(43062017);
+ SFS:(13230040)(82310400026)(1800799024)(376014)(36860700016)(43062017);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: x61TY9f3eV5aOtR82vW0LdRsQzmDcQP0PI6UXAcqJnLQj72RyRF/Q//CrvYG40/pf0j0cKa4VjPJxSU+S/s2Q5KPvACOErUawdddHI90mT5Rdc0h7vYfpwtO5+oN2VcyLbtMdwcqbcgvnB44v+kwh078etnIu/ub9EDQypBHD/uoAal4G/JwpgYbEQDySF8GC3QKxFxfepI6wJymWp7w54PWLj5f2FbspOobep7Zgzo0b1IRixBl42r+hAcUDPo0o8x1oP50RTmA68KGOZS5vK+TuYQfclxqaKYbr/A1+nc8Sxc06v9KxzXokIHBwEWIfEKcPgW7sVVaB/tzzyNLDdTpnPUu7qcr6MlGfeHOo2Td1FF48+iWWZnjtaDZOgHW2iqj3JVLsSJ55HnQJS/02MiVfP5l+USyITTBxmaKa6nOAXi/qJcwWiNGiLP3jJMi
+X-MS-Exchange-AntiSpam-MessageData-0: vFQnPnm+K18EvHOgRDoYiCHFk0+T96Tn1VsownU4PZbPC4PAXT02lnBmXQx8Xm7u63ivSg+gM4anl6UQq1yvcbQIlDlAgjR5bhbBhu6mk12mwLX3D+VrRq+f9JeY3Ao/6DAfMxt5SQkXPwyOOXqSHQ+4nunN32Rl/EmBriQkU04UOuqIMLmc+ZtG/FRE1Yu8cYLWZh1Jb3n8PKA9+TXW6IWD49KAsy7ZeVONdFLXume06Yxe1NsZwneow7Y+xdP4NOAMo0tvK4CgWmnkiNv+Ir2LOBqToD20nanwJi7Z3jGOdMLJgXkqqeCw9g1WIH5gzJIgrpKeTAtoSnHSBCIGQkh1zhynuG5mJp7ZeAg5kQ+mS9bAbxhSO/EXWQbdv0Pwql0jv838ZDpUpUE4F9ZV5TCZ3wkbo/YH1Ol3tjVYgkpMQu9MVTKHGln0/5qb5GXj
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 08:27:51.3629 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: db9133cf-0c04-4edf-003e-08de7b5a41cb
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 08:27:54.8221 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3c668119-d641-4dcc-f872-08de7b5a43da
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002636D.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8316
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6010
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
  envelope-from=FangSheng.Huang@amd.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
+ helo=CO1PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,52 +128,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+Add a 'memmap-type' option to NUMA node configuration that allows
+specifying the memory type for a NUMA node.
 
-This is v7 of the SPM (Specific Purpose Memory) patch. Thank you
-David for the Acked-by, and Gregory for the Reviewed-by and for
-catching the hardcoded address bug.
+Supported values:
+  - normal:   Regular system RAM (E820 type 1, default)
+  - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF)
+  - reserved: Reserved memory (E820 type 2)
 
-Changes in v7:
-- Fixed pc_update_numa_memory_types() to use x86ms->above_4g_mem_start
-  instead of hardcoded 0x100000000ULL (4 GiB). On AMD hosts with IOMMU,
-  above_4g_mem_start is relocated to above 1 TB, so the hardcode would
-  produce wrong guest physical addresses. (spotted by Gregory Price)
+The 'spm' type indicates Specific Purpose Memory - a hint to the guest
+that this memory might be managed by device drivers based on guest policy.
+The 'reserved' type marks memory as not usable as RAM.
 
-Changes in v6:
-- Added validation: memmap-type now requires memdev to be specified,
-  to avoid misconfiguration on memory-less NUMA nodes
-- Simplified pc_update_numa_memory_types() by replacing switch/goto
-  with a direct conditional expression
-- Reserved memory nodes are now excluded from SRAT memory affinity
-  entries, since E820 already marks them as reserved and SRAT should
-  not report them as enabled memory affinity
+Note: This option is only supported on x86 platforms.
 
-Use case:
-This feature allows marking NUMA node memory as Specific Purpose Memory
-(SPM) or reserved in the E820 table. SPM serves as a hint to the guest
-that this memory might be managed by device drivers based on guest policy
-
-Example usage:
-  -object memory-backend-ram,size=8G,id=m0
-  -object memory-backend-memfd,size=8G,id=m1
-  -numa node,nodeid=0,memdev=m0
+Usage:
   -numa node,nodeid=1,memdev=m1,memmap-type=spm
 
-Supported memmap-type values:
-  - normal:   Regular system RAM (E820 type 1, default)
-  - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF), a hint
-              that this memory might be managed by device drivers
-  - reserved: Reserved memory (E820 type 2), not usable as RAM
-
-Please review. Thanks!
-
-Best regards,
-Jerry Huang
-
-fanhuang (1):
-  numa: add 'memmap-type' option for memory type configuration
-
+Signed-off-by: fanhuang <FangSheng.Huang@amd.com>
+Acked-by: David Hildenbrand <david@kernel.org>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+---
  hw/core/numa.c               | 24 ++++++++++++
  hw/i386/acpi-build.c         |  8 ++++
  hw/i386/e820_memory_layout.c | 72 ++++++++++++++++++++++++++++++++++++
@@ -182,6 +159,354 @@ fanhuang (1):
  qemu-options.hx              | 14 ++++++-
  8 files changed, 202 insertions(+), 7 deletions(-)
 
+diff --git a/hw/core/numa.c b/hw/core/numa.c
+index f462883c87..521c8f10f1 100644
+--- a/hw/core/numa.c
++++ b/hw/core/numa.c
+@@ -38,6 +38,7 @@
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/core/boards.h"
+ #include "hw/mem/memory-device.h"
++#include "hw/i386/x86.h"
+ #include "qemu/option.h"
+ #include "qemu/config-file.h"
+ #include "qemu/cutils.h"
+@@ -164,6 +165,29 @@ static void parse_numa_node(MachineState *ms, NumaNodeOptions *node,
+         numa_info[nodenr].node_memdev = MEMORY_BACKEND(o);
+     }
+ 
++    if (node->has_memmap_type && node->memmap_type != NUMA_MEMMAP_TYPE_NORMAL) {
++        if (!node->memdev) {
++            error_setg(errp, "memmap-type=%s requires memdev to be specified",
++                       NumaMemmapType_str(node->memmap_type));
++            return;
++        }
++        if (!object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
++            error_setg(errp, "memmap-type=%s is only supported on x86 machines",
++                       NumaMemmapType_str(node->memmap_type));
++            return;
++        }
++        switch (node->memmap_type) {
++        case NUMA_MEMMAP_TYPE_SPM:
++            numa_info[nodenr].memmap_type = NUMA_MEMMAP_SPM;
++            break;
++        case NUMA_MEMMAP_TYPE_RESERVED:
++            numa_info[nodenr].memmap_type = NUMA_MEMMAP_RESERVED;
++            break;
++        default:
++            break;
++        }
++    }
++
+     numa_info[nodenr].present = true;
+     max_numa_nodeid = MAX(max_numa_nodeid, nodenr + 1);
+     ms->numa_state->num_nodes++;
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index f622b91b76..521bf66ca1 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1417,6 +1417,14 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+         mem_len = numa_info[i - 1].node_mem;
+         next_base = mem_base + mem_len;
+ 
++        /*
++         * Skip reserved memory nodes - E820 marks them as reserved,
++         * so SRAT should not report them as enabled memory affinity.
++         */
++        if (numa_info[i - 1].memmap_type == NUMA_MEMMAP_RESERVED) {
++            continue;
++        }
++
+         /* Cut out the 640K hole */
+         if (mem_base <= HOLE_640K_START &&
+             next_base > HOLE_640K_START) {
+diff --git a/hw/i386/e820_memory_layout.c b/hw/i386/e820_memory_layout.c
+index 3e848fb69c..4c62b5ddea 100644
+--- a/hw/i386/e820_memory_layout.c
++++ b/hw/i386/e820_memory_layout.c
+@@ -46,3 +46,75 @@ bool e820_get_entry(int idx, uint32_t type, uint64_t *address, uint64_t *length)
+     }
+     return false;
+ }
++
++bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type)
++{
++    uint64_t end = start + length;
++    assert(!e820_done);
++
++    /* For E820_SOFT_RESERVED, validate range is within E820_RAM */
++    if (new_type == E820_SOFT_RESERVED) {
++        bool range_in_ram = false;
++
++        for (size_t j = 0; j < e820_entries; j++) {
++            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
++            uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
++            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
++
++            if (ram_type == E820_RAM && ram_start <= start && ram_end >= end) {
++                range_in_ram = true;
++                break;
++            }
++        }
++        if (!range_in_ram) {
++            return false;
++        }
++    }
++
++    /* Find entry that contains the target range and update it */
++    for (size_t i = 0; i < e820_entries; i++) {
++        uint64_t entry_start = le64_to_cpu(e820_table[i].address);
++        uint64_t entry_length = le64_to_cpu(e820_table[i].length);
++        uint64_t entry_end = entry_start + entry_length;
++
++        if (entry_start <= start && entry_end >= end) {
++            uint32_t original_type = e820_table[i].type;
++
++            /* Remove original entry */
++            memmove(&e820_table[i], &e820_table[i + 1],
++                    (e820_entries - i - 1) * sizeof(struct e820_entry));
++            e820_entries--;
++
++            /* Add split parts inline */
++            if (entry_start < start) {
++                e820_table = g_renew(struct e820_entry, e820_table,
++                                     e820_entries + 1);
++                e820_table[e820_entries].address = cpu_to_le64(entry_start);
++                e820_table[e820_entries].length =
++                    cpu_to_le64(start - entry_start);
++                e820_table[e820_entries].type = original_type;
++                e820_entries++;
++            }
++
++            e820_table = g_renew(struct e820_entry, e820_table,
++                                 e820_entries + 1);
++            e820_table[e820_entries].address = cpu_to_le64(start);
++            e820_table[e820_entries].length = cpu_to_le64(length);
++            e820_table[e820_entries].type = cpu_to_le32(new_type);
++            e820_entries++;
++
++            if (end < entry_end) {
++                e820_table = g_renew(struct e820_entry, e820_table,
++                                     e820_entries + 1);
++                e820_table[e820_entries].address = cpu_to_le64(end);
++                e820_table[e820_entries].length = cpu_to_le64(entry_end - end);
++                e820_table[e820_entries].type = original_type;
++                e820_entries++;
++            }
++
++            return true;
++        }
++    }
++
++    return false;
++}
+diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
+index b50acfa201..a85b4fd14c 100644
+--- a/hw/i386/e820_memory_layout.h
++++ b/hw/i386/e820_memory_layout.h
+@@ -10,11 +10,12 @@
+ #define HW_I386_E820_MEMORY_LAYOUT_H
+ 
+ /* e820 types */
+-#define E820_RAM        1
+-#define E820_RESERVED   2
+-#define E820_ACPI       3
+-#define E820_NVS        4
+-#define E820_UNUSABLE   5
++#define E820_RAM            1
++#define E820_RESERVED       2
++#define E820_ACPI           3
++#define E820_NVS            4
++#define E820_UNUSABLE       5
++#define E820_SOFT_RESERVED  0xEFFFFFFF
+ 
+ struct e820_entry {
+     uint64_t address;
+@@ -26,5 +27,6 @@ void e820_add_entry(uint64_t address, uint64_t length, uint32_t type);
+ bool e820_get_entry(int index, uint32_t type,
+                     uint64_t *address, uint64_t *length);
+ int e820_get_table(struct e820_entry **table);
++bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type);
+ 
+ #endif
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 819e729a6e..c024a34db2 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -740,6 +740,51 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
+     return pc_above_4g_end(pcms) - 1;
+ }
+ 
++/*
++ * Update E820 entries for NUMA nodes with non-default memory types.
++ */
++static void pc_update_numa_memory_types(X86MachineState *x86ms)
++{
++    MachineState *ms = MACHINE(x86ms);
++    uint64_t addr = 0;
++
++    for (int i = 0; i < ms->numa_state->num_nodes; i++) {
++        NodeInfo *numa_info = &ms->numa_state->nodes[i];
++        uint64_t node_size = numa_info->node_mem;
++
++        if (numa_info->node_memdev &&
++            (numa_info->memmap_type == NUMA_MEMMAP_SPM ||
++             numa_info->memmap_type == NUMA_MEMMAP_RESERVED)) {
++            uint64_t guest_addr;
++            uint32_t e820_type = (numa_info->memmap_type == NUMA_MEMMAP_SPM)
++                                  ? E820_SOFT_RESERVED : E820_RESERVED;
++
++            if (addr < x86ms->below_4g_mem_size) {
++                if (addr + node_size <= x86ms->below_4g_mem_size) {
++                    guest_addr = addr;
++                } else {
++                    error_report("NUMA node %d with memmap-type spans across "
++                                 "4GB boundary, not supported", i);
++                    exit(EXIT_FAILURE);
++                }
++            } else {
++                guest_addr = x86ms->above_4g_mem_start +
++                            (addr - x86ms->below_4g_mem_size);
++            }
++
++            if (!e820_update_entry_type(guest_addr, node_size, e820_type)) {
++                warn_report("Failed to update E820 entry for node %d "
++                           "at 0x%" PRIx64 " length 0x%" PRIx64,
++                           i, guest_addr, node_size);
++            }
++        }
++
++        if (numa_info->node_memdev) {
++            addr += node_size;
++        }
++    }
++}
++
+ /*
+  * AMD systems with an IOMMU have an additional hole close to the
+  * 1Tb, which are special GPAs that cannot be DMA mapped. Depending
+@@ -856,6 +901,9 @@ void pc_memory_init(PCMachineState *pcms,
+         e820_add_entry(pcms->sgx_epc.base, pcms->sgx_epc.size, E820_RESERVED);
+     }
+ 
++    /* Update E820 for NUMA nodes with special memory types */
++    pc_update_numa_memory_types(x86ms);
++
+     if (!pcmc->has_reserved_memory &&
+         (machine->ram_slots ||
+          (machine->maxram_size > machine->ram_size))) {
+diff --git a/include/system/numa.h b/include/system/numa.h
+index 1044b0eb6e..64e8f63736 100644
+--- a/include/system/numa.h
++++ b/include/system/numa.h
+@@ -35,12 +35,19 @@ enum {
+ 
+ #define UINT16_BITS       16
+ 
++typedef enum {
++    NUMA_MEMMAP_NORMAL = 0,
++    NUMA_MEMMAP_SPM,
++    NUMA_MEMMAP_RESERVED,
++} NumaMemmapTypeInternal;
++
+ typedef struct NodeInfo {
+     uint64_t node_mem;
+     struct HostMemoryBackend *node_memdev;
+     bool present;
+     bool has_cpu;
+     bool has_gi;
++    NumaMemmapTypeInternal memmap_type;
+     uint8_t lb_info_provided;
+     uint16_t initiator;
+     uint8_t distance[MAX_NODES];
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 685e4e29b8..67ba487f6c 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -466,6 +466,22 @@
+ { 'enum': 'NumaOptionsType',
+   'data': [ 'node', 'dist', 'cpu', 'hmat-lb', 'hmat-cache' ] }
+ 
++##
++# @NumaMemmapType:
++#
++# Memory mapping type for a NUMA node.
++#
++# @normal: Normal system RAM (E820 type 1)
++#
++# @spm: Specific Purpose Memory (E820 type 0xEFFFFFFF)
++#
++# @reserved: Reserved memory (E820 type 2)
++#
++# Since: 10.2
++##
++{ 'enum': 'NumaMemmapType',
++  'data': ['normal', 'spm', 'reserved'] }
++
+ ##
+ # @NumaOptions:
+ #
+@@ -502,6 +518,13 @@
+ # @memdev: memory backend object.  If specified for one node, it must
+ #     be specified for all nodes.
+ #
++# @memmap-type: specifies the memory type for this NUMA node.
++#     'normal' (default) is regular system RAM.
++#     'spm' is Specific Purpose Memory - a hint to the guest that
++#     this memory might be managed by device drivers based on policy.
++#     'reserved' is reserved memory, not usable as RAM.
++#     Currently only supported on x86.  (since 10.2)
++#
+ # @initiator: defined in ACPI 6.3 Chapter 5.2.27.3 Table 5-145, points
+ #     to the nodeid which has the memory controller responsible for
+ #     this NUMA node.  This field provides additional information as
+@@ -516,6 +539,7 @@
+    '*cpus':   ['uint16'],
+    '*mem':    'size',
+    '*memdev': 'str',
++   '*memmap-type': 'NumaMemmapType',
+    '*initiator': 'uint16' }}
+ 
+ ##
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 0da2b4d034..c898428822 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -433,7 +433,7 @@ ERST
+ 
+ DEF("numa", HAS_ARG, QEMU_OPTION_numa,
+     "-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node]\n"
+-    "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node]\n"
++    "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node][,memmap-type=normal|spm|reserved]\n"
+     "-numa dist,src=source,dst=destination,val=distance\n"
+     "-numa cpu,node-id=node[,socket-id=x][,core-id=y][,thread-id=z]\n"
+     "-numa hmat-lb,initiator=node,target=node,hierarchy=memory|first-level|second-level|third-level,data-type=access-latency|read-latency|write-latency[,latency=lat][,bandwidth=bw]\n"
+@@ -442,7 +442,7 @@ DEF("numa", HAS_ARG, QEMU_OPTION_numa,
+ SRST
+ ``-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator]``
+   \ 
+-``-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator]``
++``-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator][,memmap-type=type]``
+   \
+ ``-numa dist,src=source,dst=destination,val=distance``
+   \ 
+@@ -510,6 +510,16 @@ SRST
+     largest bandwidth) to this NUMA node. Note that this option can be
+     set only when the machine property 'hmat' is set to 'on'.
+ 
++    '\ ``memmap-type``\ ' specifies the memory type for this NUMA node:
++
++    - ``normal`` (default): Regular system RAM (E820 type 1)
++    - ``spm``: Specific Purpose Memory (E820 type 0xEFFFFFFF). This is a
++      hint to the guest that the memory might be managed by device drivers
++      based on guest policy.
++    - ``reserved``: Reserved memory (E820 type 2), not usable as RAM.
++
++    This option is only supported on x86 platforms.
++
+     Following example creates a machine with 2 NUMA nodes, node 0 has
+     CPU. node 1 has only memory, and its initiator is node 0. Note that
+     because node 0 has CPU, by default the initiator of node 0 is itself
 -- 
 2.34.1
 
