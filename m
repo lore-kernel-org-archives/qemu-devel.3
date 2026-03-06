@@ -4,61 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F34F01832
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDD7F0182F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyVFP-0002D8-5B; Fri, 06 Mar 2026 08:29:43 -0500
+	id 1vyVGO-00039Z-DI; Fri, 06 Mar 2026 08:30:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vyVFM-0002Cp-Mp
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:29:40 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1vyVFH-0003zW-H1
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:29:40 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fS6fz5JtqzHnGj5;
- Fri,  6 Mar 2026 21:28:27 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 7762A4056F;
- Fri,  6 Mar 2026 21:29:27 +0800 (CST)
-Received: from localhost (10.206.167.72) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Mar
- 2026 13:29:26 +0000
-Date: Fri, 6 Mar 2026 13:29:22 +0000
-To: <qemu-devel@nongnu.org>, <gourry@gourry.net>, <lizhijian@fujitsu.com>
-CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
- <imammedo@redhat.com>, <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
- <mst@redhat.com>, <nifan.cxl@gmail.com>, <peterx@redhat.com>,
- <philmd@linaro.org>, <pbonzini@redhat.com>, <venkataravis@micron.com>,
- <xiaoguangrong.eric@gmail.com>
-Subject: Re: [PATCH v7 0/3] hw/cxl: Add a performant (and correct) path for
- the non interleaved cases
-Message-ID: <20260306132922.000038de.alireza.sanaee@huawei.com>
-In-Reply-To: <20260306121151.883-1-alireza.sanaee@huawei.com>
-References: <20260306121151.883-1-alireza.sanaee@huawei.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vyVGJ-00037s-Q4; Fri, 06 Mar 2026 08:30:39 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vyVGG-0004Q6-I5; Fri, 06 Mar 2026 08:30:39 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDnPNDw1qppOcS0AA--.38013S2;
+ Fri, 06 Mar 2026 21:30:24 +0800 (CST)
+Received: from [192.168.31.155] (unknown [113.246.232.19])
+ by mail (Coremail) with SMTP id AQAAfwCH3erg1qppyYQfAA--.39450S2;
+ Fri, 06 Mar 2026 21:30:16 +0800 (CST)
+Message-ID: <1b6a1849-6cec-4c09-aad4-3e5f33ec768e@phytium.com.cn>
+Date: Fri, 6 Mar 2026 21:30:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.206.167.72]
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: Tao Tang <tangtao1634@phytium.com.cn>
+Subject: Re: [RFC v4 28/31] hw/arm/smmuv3: Select sec-sid from PCI property
+ and validate SECURE_IMPL
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221101907.2997408-1-tangtao1634@phytium.com.cn>
+ <ac35d3e8-c1a6-4f2b-9a96-88f802299bae@redhat.com>
+In-Reply-To: <ac35d3e8-c1a6-4f2b-9a96-88f802299bae@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwCH3erg1qppyYQfAA--.39450S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWmp8qEJhgAAse
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxWFyfKryxJFWrAFy5CF48JFb_yoW5tw4rpF
+ W8C3Z5Kr4DKFyxtan7Jw4UCa4SvayxJa15Xr98GrnxAF45W34SvFWI9ryF9r9rAr48ua4j
+ qayjyrWkuw4DArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,280 +75,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Mar 2026 12:11:48 +0000
-Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+Hi Eric,
 
-Hi,
+On 2026/3/3 18:47, Eric Auger wrote:
+> On 2/21/26 11:19 AM, Tao Tang wrote:
+>> Parse each PCI device's sec-sid property during SMMU device initialization
+>> and cache it in SMMUDevice::sec_sid. Support "non-secure" and "secure",
+>> default to non-secure when unspecified, and reject invalid values with an
+>> explicit error. Use sdev->sec_sid in smmuv3_translate() to select the
+>> register bank instead of hardcoding the non-secure context.
+>>
+>> Keep sec-sid parsing in smmu-common, and add a SMMUv3-specific validation
+>> hook to enforce architectural constraints: fail fast when sec-sid=secure
+>> while SMMU_S_IDR1.SECURE_IMPL is 0 or secure AS is not available.
+>>
+>> Typically, SEC_SID is a system-defined attribute (e.g. sideband or tied-off)
+>> rather than something a PCIe endpoint can freely toggle in pre-RME scenario.
+>> So this PCI sec-sid property is used as a static platform/testing knob to
+>> drive the SMMU bank selection.
+>>
+>> For future RME-DA + TDISP, this will need to become dynamic: the effective
+>> state for PCIe requests is derived from PCIe IDE/TDISP T/XT
+>> (e.g. SEC_SID = (XT || T) ? Realm : Non-secure), so we'll switch from a
+>> static property to a runtime per-device state update when that plumbing
+>> is added.
+> When a translation is triggered, address_space_translate_iommu passes attrs.
+> MemTxAttrs.secure bit should tell you whether the translation is
+> requested in secure mode.
+> Shouldn't we pass that information the smmuv3 translate function()?
+>
+> In address_space_translate_iommu I see:
+> if (imrc->attrs_to_index) {
+>     iommu_idx = imrc->attrs_to_index(iommu_mr, attrs);
+> }
+>
+> iotlb = imrc->translate(iommu_mr, addr, is_write ?
+>                            IOMMU_WO : IOMMU_RO, iommu_idx);
 
-> Hey everyone,
-> 
-> This is v7 of performant CXL type 3 regions set:
-> 
-> 
-> v7 -> v8:
-oops, typo. v8 is wrong.
-v6 -> v7:
->           - Rebased on top of the latest master. Base-commit stated at the end of cover-letter.
->           - Thanks to Gregory and Zhijian for testing and feedback. Addressed
->           their comments. 
-> v5 -> v6: 
->           - Use object_unparent() in the third commit when deleting alias regions. 
->           - Thanks to Gregory for the suggestion and testing.
-> v4 -> v5: 
->           - Fixed some minor patch style like missing trailing white space and such.
-> v3 -> v4: 
->           - Tear down path changed, given that it is done differently than
->           setup.
->           - Dropped Gregory's tested-by tag due to tear down changes.
-> v2 -> v3: 
->           - Addressing Zhijian Li. Thanks for the feedback.
-> v1 -> v2: 
->           - Mainly rebase.
-> 
-> ==========================================================
-> 
-> The CXL address to device decoding logic is complex because of the need
-> to correctly decode fine grained interleave. The current implementation
-> prevents use with KVM where executed instructions may reside in that
-> memory and gives very slow performance even in TCG.
-> 
-> In many real cases non interleaved memory configurations are useful and
-> for those we can use a more conventional memory region alias allowing
-> similar performance to other memory in the system.
-> 
-> Whether this fast path is applicable can be established once the full
-> set of HDM decoders has been committed (in whatever order the guest
-> decides to commit them). As such a check is performed on each commit /
-> uncommit of HDM decoder to establish if the alias should be added or
-> removed.
-> 
-> 
-> Performance numbers:
-> 
-> For a read/write test with 4K block size, 256M region size, and 1 thread
-> with 100 iteration on TCG (it should do similar on KVM):
-> 
->   - Non-interleaved region (fast path): 25-30 seconds.
->   - Interleaved region (no fast path):  Never finishes within 10
->     minutes.
-> 
-> Tested Topologies and Region Layouts
-> ====================================
-> 
-> This series was validated across multiple CXL topology configurations,
-> covering single-device, multi-device, multi-host-bridge, and switched
-> fabrics. Region creation was exercised using the `cxl` userspace tool
-> with both non-interleaved and interleaved setups.
-> 
-> Decoder and memdev identifiers were discovered using:
-> 
->   cxl list
->   cxl list -D
-> 
-> Decoder IDs (e.g. decoder0.0) and memdev names (mem0, mem1) are
-> environment-specific. Commands below use placeholders such as
-> <decoder_span_both> which should be replaced with IDs from `cxl list -D`.
-> 
-> ---------------------------------------------------------------------
-> 
-> Region Layout Notation
-> ----------------------
-> 
-> CFMW (CXL Fixed Memory Window) is shown as a linear address space
-> containing regions:
-> 
->   CFMW: [ R0 | R1 | R2 ]
-> 
-> R0, R1, R2 are regions created by `cxl create-region`.
-> 
-> Non-interleaved region:
-> 
->   R0 (ways=1) -> entirely on one device (mem0 or mem1)
->   Fast path: APPLICABLE
-> 
-> 2-way interleaved region (g=256):
-> 
->   R1 (ways=2, g=256) striped across devices:
-> 
->     |mem0|mem1|mem0|mem1|mem0|mem1| ...
->      256  256  256  256  256  256  bytes
-> 
->   Fast path: NOT APPLICABLE
-> 
-> ---------------------------------------------------------------------
-> 
-> 1) One device, one host bridge, one fixed window
-> ------------------------------------------------
-> 
-> QEMU:
-> 
->   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
->   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
->   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
->   -object memory-backend-ram,id=mem0,size=512M,share=on
->   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
-> 
-> Topology:
-> 
->   Host
->     |
->     +-- CXL Host Bridge (cxl.0)
->          |
->          +-- Root Port (rp0)
->               |
->               +-- Type-3 (dev0, mem0)
-> 
-> Regions created:
-> 
->   cxl create-region ... -w 1 ... mem0   (Fast path: YES)
->   cxl create-region ... -w 1 ... mem0   (Fast path: YES)
-> 
-> Layout:
-> 
->   CFMW: [ R0 | R1 ]
-> 
->   R0 -> mem0  (Fast path: YES)
->   R1 -> mem0  (Fast path: YES)
-> 
-> ---------------------------------------------------------------------
-> 
-> 2) One host bridge, two Type-3 devices (via two root ports)
-> ------------------------------------------------------------
-> 
-> QEMU:
-> 
->   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
->   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
->   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
->   -device cxl-rp,id=rp1,bus=cxl.0,port=1,chassis=0,slot=3
->   -object memory-backend-ram,id=mem0,size=512M,share=on
->   -object memory-backend-ram,id=mem1,size=512M,share=on
->   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
->   -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
-> 
-> Topology:
-> 
->   Host
->     |
->     +-- CXL Host Bridge (cxl.0)
->          |
->          +-- Root Port (rp0) -- Type-3 (dev0, mem0)
->          |
->          +-- Root Port (rp1) -- Type-3 (dev1, mem1)
-> 
-> Region patterns exercised:
-> 
-> 2.1 All non-interleaved:
->   R0 -> mem0  (Fast path: YES)
->   R1 -> mem0  (Fast path: YES)
->   R2 -> mem1  (Fast path: YES)
->   R3 -> mem1  (Fast path: YES)
-> 
-> 2.2 Interleaved + local:
->   R0 -> mem0/mem1 interleaved  (Fast path: NO)
->   R1 -> mem0                   (Fast path: YES)
-> 
-> 2.3 Local + interleaved + local:
->   R0 -> mem0                   (Fast path: YES)
->   R1 -> mem0/mem1 interleaved  (Fast path: NO)
->   R2 -> mem1                   (Fast path: YES)
-> 
-> ---------------------------------------------------------------------
-> 
-> 3) Two host bridges, one device per host bridge
-> ------------------------------------------------
-> 
-> QEMU:
-> 
->   -M q35,cxl=on,
->      cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G,
->      cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=4G,
->      cxl-fmw.2.targets.0=cxl.0,cxl-fmw.2.size=4G
->   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
->   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
->   -object memory-backend-ram,id=mem0,size=512M,share=on
->   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
->   -device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=13
->   -device cxl-rp,id=rp1,bus=cxl.1,port=0,chassis=1,slot=2
->   -object memory-backend-ram,id=mem1,size=512M,share=on
->   -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
-> 
-> Region patterns identical to section 2, and fast-path applicability is
-> identical per region mapping (non-interleaved: YES, interleaved: NO).
-> 
-> ---------------------------------------------------------------------
-> 
-> 4) Switch topology
-> ------------------
-> 
-> QEMU:
-> 
->   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
->   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
->   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
->   -device cxl-rp,id=rp1,bus=cxl.0,port=0,chassis=0,slot=3
->   -device cxl-upstream,id=us0,bus=rp0
->   -device cxl-downstream,id=ds0,bus=us0,port=0,chassis=0,slot=4
->   -object memory-backend-ram,id=mem0,size=512M,share=on
->   -device cxl-type3,id=dev0,bus=ds0,memdev=mem0
-> 
-> Topology (detailed):
-> 
->   Host
->     |
->     +-- CXL Host Bridge (cxl.0)
->          |
->          +-- Root Port (rp0)
->          |     |
->          |     +-- CXL Switch (upstream us0)
->          |           |
->          |           +-- Downstream Port (ds0) -- Type-3 (mem0)
->          |           |
->          |           +-- Downstream Port (ds1) -- Type-3 (mem1) [optional]
->          +-- Root Port (rp1)
->                |
->                +-- More devices/switches.
-> 
-> Fast-path interpretation in this topology:
-> 
->   If only mem0 exists:
->     All regions -> Fast path: YES
-> 
->   If mem0 and mem1 exist:
->     Non-interleaved regions -> Fast path: YES
->     Interleaved regions     -> Fast path: NO
-> 
-> ---------------------------------------------------------------------
-> 
-> Summary
-> -------
-> 
-> Across all topologies, region creation, enablement, and HDM decoder
-> commit/uncommit flows were exercised. The fast path is enabled only when
-> all decoders describe a non-interleaved mapping and is removed when any
-> interleave configuration is introduced.
-> 
-> Alireza Sanaee (3):
->   hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset in
->     window.
->   hw/cxl: Allow cxl_cfmws_find_device() to filter on whether interleaved
->     paths are accepted
->   hw/cxl: Add a performant (and correct) path for the non interleaved
->     cases
-> 
->  hw/cxl/cxl-component-utils.c |   6 +
->  hw/cxl/cxl-host.c            | 231 +++++++++++++++++++++++++++++++++--
->  hw/mem/cxl_type3.c           |   4 +
->  include/hw/cxl/cxl.h         |   1 +
->  include/hw/cxl/cxl_device.h  |   4 +
->  5 files changed, 237 insertions(+), 9 deletions(-)
-> 
-> 
-> base-commit: 483cb5b74cd247b1520e0994b4fae4d8fe44cb00
+
+Thanks for pointing this out.
+
+I agree that per-transaction request intent should eventually come from 
+MemTxAttrs or attrs_to_index().
+
+However, the current producer side is not yet in a state where 
+transaction attrs alone can replace stream-level security wiring: many 
+PCI DMA paths still use MEMTXATTRS_UNSPECIFIED, and space cannot be 
+consumed safely without an explicit validity signal. For example, an 
+incorrect zero-initialized or otherwise unspecified .space value cannot 
+be treated as authoritative by itself as Pierrick mentioned in this thread:
+
+https://lore.kernel.org/qemu-devel/dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org/
+
+In the current codebase, this can easily blur the distinction between 
+“explicitly Secure” and “not specified at all”, especially for legacy or 
+non-Arm-aware producers. So I think there are really two separate 
+concerns here:
+
+1. the per-transaction intent (which should indeed come from MemTxAttrs 
+/ attrs_to_index()); and
+2. the stream-level capability / wiring, i.e. whether this SID is 
+allowed to reach the Secure programming interface in the first place.
+
+My concern with the current patch is not that attrs-based routing is the 
+wrong long-term direction, but that today transaction attrs are not yet 
+propagated consistently enough to replace a stream-level model entirely.
+
+So for now, I think a static sec-sid property is still useful as a 
+platform knob, until producer-side propagation becomes reliable enough. 
+Once that is in place, I agree that the bank selection should ultimately 
+be driven through the standard per-transaction attrs path. How do you 
+think about it?
+
+
+Best regards,
+
+Tao
 
 
