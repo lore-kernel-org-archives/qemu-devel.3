@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34136FCB637
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4ADBFCB63B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyYhA-0003x0-Mq; Fri, 06 Mar 2026 12:10:36 -0500
+	id 1vyYjq-0005B6-6G; Fri, 06 Mar 2026 12:13:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyYh8-0003wQ-PF
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:10:34 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyYjl-0005A5-Pu
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:13:17 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyYh7-0003x7-5y
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:10:34 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-439b790af67so3611891f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 09:10:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyYjk-0005DC-Bb
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:13:17 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4806bf39419so77118135e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 09:13:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772817031; x=1773421831; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772817194; x=1773421994; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=S61AkLMm3JSn0UMvBbohswyBotXvKrhXmq9giBfJLMM=;
- b=dPUheEgzbFOZFRbteXiWHqLZYy5tLEQU3QtOyNSj4+WDVTJOuUMWzucva2RY8qnpGn
- SxmaDvUN99P8lpOuhgsxdf1W4T/Z7UaSjdH9EqUtFfI6dF8s/a5XMyNiKCVorTBBndjb
- izZ6jLyGFW4bQIRhrcsCm9HsphpaVvtlZr7Z6Ge1EJY2LYyvEWZ70MEtGcdfSPsAc32g
- B4jhqYSFtWrF1J3Qi5sp+qWgQrmjeAIR2yn1TjyueExxCD8YvJ8J5JEx7KzjCcM4Y2nu
- /vicO1zvaxXYrEYMkQtzxxGFWMWYF6zIJIgjermTmYoZfTrxoUpmxrWdImyXFSuWp43P
- uVXA==
+ bh=zYx1KXwWajHqFPUcIIXPJhKV+taNgimyOGQ9dkyvWnk=;
+ b=bi8yyQipP7rwDMGAlEJzCjuoKOdS9TpT9j3CryhE2K5SLyBuMz/vFyYl5dF7O14llK
+ 0mWwkb8I75H8qdxDz3B1KTS5m78zPqVGPBQwPdnSfSzXIF/FRcZ3iQkgS45Eur0ieznZ
+ FXoUHVoxbNvJrjxZSFYQKGc9GGu4wfaxNFnA7mmIkAlOfG0B/nUpn1KiVvmCaGFj5OKD
+ X0KX1b+5jlBXNNDmk/gw5SZrS8wgxfy/xFUPzNTAkCgnIkYgpHCGGOOHZWqFYiCadT75
+ Z6dYsm70QYDxKfIDSBeQra4ObcQ6D29ZAfaHuZIRXbrjy7IMlw0e88Excr86RQyFOVrU
+ YINg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772817031; x=1773421831;
+ d=1e100.net; s=20230601; t=1772817194; x=1773421994;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=S61AkLMm3JSn0UMvBbohswyBotXvKrhXmq9giBfJLMM=;
- b=G9NVfQtt2uZZhEVan2NS5kgOFz0YF233IEx18iH9cN+jBE0XYfLViCqsYIxluLwtZe
- 5yLmvlVmVx9TzV9mMZrEGVA+yxk+oqYt00zcXZ4Z4F/CiMZbJsOMDmJ96gl7qLXnTTcu
- 30H98Z80wZZk7BFzTljeGjL5NzmKrkEfuZ3Cmh4NjXk+wOSzYlKuRwhl1nIGpD7OwOYz
- syNyMB2gNS9ZgBrvvuw6rvjduV5Lf7mUSNYRmy8fOAWdn8XWh2eZiUzDfs7ib50vpI7X
- 4AS+DYlqJ8pjxBcOi+zu0ZM7LferkxoFFreWR3ucNuxknyzvFr+Ztgzck+vvCAaT7PGP
- Y+bw==
+ bh=zYx1KXwWajHqFPUcIIXPJhKV+taNgimyOGQ9dkyvWnk=;
+ b=wSj05q2iUIjCD5Ned0RNyD9rvvkya0+4AFD1qyzooBRBXdjLHqZndtXOt2XstwpEWn
+ QlEvhOaFl71oY3zMqIal/MKPZS2t/y3wQkahkOmHulaOrdMFpwt/7OzEy7xw+VVWu7wt
+ 0xrP2n2xEoWCoqFlJJ+R2XOy1QiFrp0Mw5fqpLxhqeU6OIo1W/UoAj6W1WnhxRhkpsF5
+ 5upetgJQUbNASaArrORebrErFmRNUQ1RyZbw3NSITuf/LiwW2sgxOFFZhg9pjIsADzyT
+ cxYXtOAX2R4a8AMK/BCfE2RJ8D4TDYy6/NUtNsBi22VKgcEH/wKAqyvCJi4Sl4Pt65id
+ Y02Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYhcUt4NHT1wfl0BwQGV4c7x6Gqde7lLpKCGCBh5JtFpR16zrwwG08Z3ib1Dag3WQehMbjTrsfRbZX@nongnu.org
-X-Gm-Message-State: AOJu0YzUZl+542lLzFPcBk1qDsdvO5KlEJb09u3vPTuwsar/DNN5+sFs
- Ds3xBNg+fkaCv+1EcxBuVr6xodhEp9k+ooPJ1uL3cIXtxYJjZtVT3UqVU4LNtrZyJBM=
-X-Gm-Gg: ATEYQzwHGHuLkQx2bZ1BJcF+KGnrDNufa17dM0nGefYukOZgqxlKRWTGhId7XIeGXUG
- TnP9vwmo2VMCOGzwXHhSBP+EI91ARvYrSnMlzVmXcZgqdpvSYTJvM1TFwcgbVpMsWeddWHJBgAO
- fOqnjt7sitx4Y9n/pJVZW7xJ51TIAm55DXCe9Hh1F0uHTCV+yJESG40q8wq7RcXtQSH5GMzgolU
- J80Kstvo2cjiHuSOLMlBbRKUzaEBdLy3gpdPe/SAghar8Qv4eiQGyjgwCRx1ZBGwYQhS80yIsYY
- WKhEOraJoONd1r755APGsE39SlibY+AIaPouYCWC3cc/7MTae5IrmQ/uiBMGm4Nz3yXZOtI2nYC
- 4NMtekEq8H2KSDUbZJREaaBntVOllhTzFEui1VmAzSyEC8pJGBLgoxoV/gyprTSoK0Rz0iGLWZ0
- g35Mi52HeQdPaU82r8GooDjdhkiIGFaunTVh0OjOS2QCbWUT2W0ziy0LpK+nWRyqiHvA==
-X-Received: by 2002:a05:6000:2f86:b0:439:c5da:64b7 with SMTP id
- ffacd0b85a97d-439cfd65b13mr12060994f8f.15.1772817030456; 
- Fri, 06 Mar 2026 09:10:30 -0800 (PST)
+ AJvYcCUuUkPQp4foYaT6p7xZQPxc9/yPpXnfBPiYmUhS7bLJOVXwN/UvY8WAG0wMny0vPq+xcvkPAXIHACt9@nongnu.org
+X-Gm-Message-State: AOJu0YyqeeN6bh8NCAhrYyqlqgWOi82r9YpIs+lhTY7Dw4hnv2Z4zs7W
+ n5GEaefUutZ8gCOey8SjsTrIGVk2Io3ygOEjOc5lg65aVIppUZjKx8XaeGDtGP2Ou4E=
+X-Gm-Gg: ATEYQzwRrLwDS2V/E6ujrvHE9UKpbz3bVJTFaZcRZFbSYPpCp4JXoa5bvqPfZ6wqz3p
+ Gj1KISCzo04idJnqQgVdOS2raQpoHQd0dDXqzYQ/n0AKQ9YxGYTu1388ciYQFnXUAuS9pgymB1O
+ aBq0WiN5KNTHB+ZjkGRg46JdtAHMJcM7Sqf5uIwfg9+MzpBmNl+OK7gwL2soZw89f0h7d8xIcIp
+ YUBgSatwQxLa6TAKrVnCP/+jR6GdfDiB5PMJfa1gjkpqHUtXgm20AInVo6sdQbk0DaXLJve80r6
+ SkC0HCCa2A18vmfJSsHypZsomulbiBVWpjUol+wTDxHuULmN0mQ1pRljHxQ7d+uwlrp1E8/aQSj
+ JrzxY2AS5a+sqCkCwTQxKLSAiM71a28FMn0Y5H+0dx1roPC8qBSR0qOac1mwuWsqg5QpaAoPf83
+ DWmx6yQeus1D2fciol9MVHa6+bWi9iu9oFD/sohB4p+0tRvsmIJsU3CUQAUXG6faaZFw==
+X-Received: by 2002:a05:600c:1d27:b0:47e:e2b8:66e6 with SMTP id
+ 5b1f17b1804b1-48526759afbmr49833645e9.14.1772817193725; 
+ Fri, 06 Mar 2026 09:13:13 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2ba66sm4245015f8f.20.2026.03.06.09.10.29
+ 5b1f17b1804b1-485247014besm19787105e9.25.2026.03.06.09.13.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Mar 2026 09:10:29 -0800 (PST)
-Message-ID: <13ab2e58-8de7-4074-8871-4c59406f1110@linaro.org>
-Date: Fri, 6 Mar 2026 18:10:28 +0100
+ Fri, 06 Mar 2026 09:13:13 -0800 (PST)
+Message-ID: <90e44c2b-6d37-49e5-a245-dc2b4b42bd23@linaro.org>
+Date: Fri, 6 Mar 2026 18:13:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/3] hppa: Introduce HPPACPUDef
+Subject: Re: [PATCH v6 2/3] hppa: Get physical address space bits from
+ HPPACPUDef
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>
 References: <20260305-hppa-c3600-v6-0-d51526e5269c@rev.ng>
- <20260305-hppa-c3600-v6-1-d51526e5269c@rev.ng>
+ <20260305-hppa-c3600-v6-2-d51526e5269c@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260305-hppa-c3600-v6-1-d51526e5269c@rev.ng>
+In-Reply-To: <20260305-hppa-c3600-v6-2-d51526e5269c@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,33 +106,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/3/26 23:54, Anton Johansson wrote:
-> Restructures the CPU class heirarchy to clarify model names and allow
-> for per-model configuration options via HPPACPUDef. 32-bit HPPA is
-> assumed to run a PA-7300LC, and 64-bit assumed to run a PA-8700.
-> A new PA-8500 model is added, which will later be used by the A400
-> machine.  All CPU models are made into children of the now abstract
-> TYPE_HPPA_CPU base class.
-> 
-> Two fields are added to HPPACPUDef describing the size of the physical
-> address space, and whether or not the CPU uses the PA-RISC 2.0
-> architecture.  The latter was previously a field in CPUHPPAState.
-> 
-> phys_addr_bits is currently set but unused, and will be used in the
-> following commit.  Likewise, PA-8700 is moved to use 44 bit physical
-> addresses in a followup commit to not break bisection.
-> 
-> References to "hppa/hppa64" models in test cases are also updated.
-> 
-> Reviewed-by: Helge Deller <deller@gmx.de>
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->   target/hppa/cpu-qom.h           |  8 ++++++-
->   target/hppa/cpu.h               | 24 ++++++++++++++++----
->   hw/hppa/machine.c               | 21 ++++++++++-------
->   linux-user/hppa/elfload.c       |  2 +-
->   target/hppa/cpu.c               | 50 +++++++++++++++++++++++++++++++----------
->   tests/qtest/machine-none-test.c |  2 +-
->   6 files changed, 80 insertions(+), 27 deletions(-)
+>   include/hw/pci-host/astro.h |  2 ++
+>   target/hppa/cpu.h           | 11 ++++++++---
+>   hw/hppa/machine.c           | 15 ++++++++++-----
+>   hw/pci-host/astro.c         |  8 +++++++-
+>   target/hppa/cpu.c           |  5 +++++
+>   target/hppa/mem_helper.c    | 39 +++++++++++----------------------------
+>   6 files changed, 43 insertions(+), 37 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
