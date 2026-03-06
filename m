@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB99DFCB609
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA487FCB608
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:04:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWi2-0005vS-6T; Fri, 06 Mar 2026 10:03:22 -0500
+	id 1vyWiz-0008ER-H5; Fri, 06 Mar 2026 10:04:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vyWhz-0005fl-LB
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:03:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vyWhx-0003EX-Tw
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:03:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772809396;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PGTMgxGA8pFIrhh3yN3K+JOqD7A/a5lQ6jTSkgD0O/c=;
- b=OJg+Txs8dXFj9dW1Ab9tYvyn4GECTRTMOPaxdRTQGmb78mmK5ySHagY9ellXKCAVuedcxp
- TDnbd/Q+yl8tWDFmmzzReamZBzwHFVa2P9gYLZMTtOba5asKx/9CqrEelCzXNEjFOlMJBa
- KXdOIVJRGT0vAcJAsZ+AREe3xeIqMBg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-450-AETrIX8QM_mzgxiMLFU9cw-1; Fri,
- 06 Mar 2026 10:03:13 -0500
-X-MC-Unique: AETrIX8QM_mzgxiMLFU9cw-1
-X-Mimecast-MFC-AGG-ID: AETrIX8QM_mzgxiMLFU9cw_1772809392
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4306D18002E3; Fri,  6 Mar 2026 15:03:12 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.126])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E74503003E9F; Fri,  6 Mar 2026 15:03:08 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: [PATCH v9 1/6] target/arm/cpu: Introduce the infrastructure for cpreg
- migration tolerances
-Date: Fri,  6 Mar 2026 16:02:19 +0100
-Message-ID: <20260306150302.203112-2-eric.auger@redhat.com>
-In-Reply-To: <20260306150302.203112-1-eric.auger@redhat.com>
-References: <20260306150302.203112-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vyWif-0007v5-AC
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:04:03 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vyWid-0003Le-Hd
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:04:01 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-439b8a3f2bcso4479694f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1772809437; x=1773414237; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Aa7YS8YRAQ8yRhQF9Whg1Qcoxr3p3yRf12L+u0hXtWc=;
+ b=MU9H0/3cesldAQoj2jQodTuSmj7vCQcTq4wDe+RPIHvJ/R2nw0V1HHR3cL4WLq4nYy
+ mxK9uIxwNlqXM+Flxx06hciNoLuX32LccBh1nNKFfmWEySG6M9ZNeLhsqztzMGSY2NFp
+ MfBtm4nJOSygOTkg64gSj2GjM9uWLJg1vfmDQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772809437; x=1773414237;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Aa7YS8YRAQ8yRhQF9Whg1Qcoxr3p3yRf12L+u0hXtWc=;
+ b=Ai7lsfd8f+NZUJbsJDY8eyw086npbhZhyCY8lxTszA08uwqDYAEdF9tG0AWFCXkxkx
+ Aggt+ATFrNWPp6DIZtPxJOLBMG5AYbJGTNQOpvvTbKQCST+TCiv9sr2A2QS3CmwlFUDH
+ DfUSOxu5Clzh5RC4kPN4Nai5a0GrXeoGMMMyv+b4e3lTK1ceYRKTcoIb0LY8IhK1R2+j
+ Sm+lPnaGIiqeCEx9VkUH4uk7uYjkIwB8bRuR9wtHq9Cq7YC8+P5aMKj8kEXhQ+ix9Wrp
+ zs/C2yNyiNWMjucuYe4YtW5Z7fYMsuuF/0HJNHHW2ud06M95V97rtot5YDjbIc/Tx/M1
+ eFng==
+X-Gm-Message-State: AOJu0YyRIu1c63u8LykGrrTArHPFMA98hidZawAJqBZv8cELzFbNH1e4
+ 5o35FNhXbdR7mWEnDQen3NezZ78437FsKNUSYgfkB3FvPy4c+o1bAotNxyJh59Pu4MGUzG0Do3K
+ vLzYXgS0=
+X-Gm-Gg: ATEYQzwjAPnyRnpOI8K6WBFtpZolSYxNvV5qlWM+retlD9uK9Ven8/iVRn+VmnrJWd0
+ s90g7UHMI4gSW0j6xactjtw4A4IlF3jEI6UAZGngq/geXfOBERJs5xRDIxfkZJj0G1toQteve14
+ dOMlO0ZTCCNj2GmmJ0kRizgs5Bhk9GatgDnCNjauwTwqWHP12y8K7Q0SgfzMOLUmJKIfLTqA3p+
+ nuhzbBLfmTANTRCx6Xs/5++oXma9dhBJEe9Z/Tjda80gJj4w874czPdZx+qg7ZdHfVeCW5p0W/U
+ nw5t8O5sogOlYCI8yy8gLdg2YAyaqXcfrAWZ502mu6w9k/i+vFHqO1B1/HmBgjgZS6h7cJ/y9nM
+ AaTv7oKHkfX3xjs5w7HS9XY/dgXZ8cpBbbpgpXILvhp1Z9/1zNrUSMRPzjxBxh9FmXNZBDkotFM
+ RkxI6YGf0JVQ1zp7toP+eo/rkbx4JW13aauWRm7Vpd3D0ae1rcDaPVeV7Tcc5uhC44wS7yrTWxN
+ JSS0ziNVymTMTePo8MFU4E=
+X-Received: by 2002:a05:6000:1acd:b0:439:c1ca:82be with SMTP id
+ ffacd0b85a97d-439da885f92mr3986014f8f.28.1772809425164; 
+ Fri, 06 Mar 2026 07:03:45 -0800 (PST)
+Received: from alex-laptop.lan
+ (p200300cf57228c00583f1937c9b9cecc.dip0.t-ipconnect.de.
+ [2003:cf:5722:8c00:583f:1937:c9b9:cecc])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae36785sm4703623f8f.27.2026.03.06.07.03.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 07:03:44 -0800 (PST)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Jesper Devantier <foss@defmacro.it>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Klaus Jensen <its@irrelevant.dk>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v3 1/6] migration: add
+ VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
+Date: Fri,  6 Mar 2026 16:03:37 +0100
+Message-ID: <20260306150342.395923-2-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260306150342.395923-1-alexander@mihalicyn.com>
+References: <20260306150342.395923-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,200 +108,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We introduce a datatype for a tolerance with respect to a given
-cpreg migration issue. The tolerance applies to a given cpreg kvm index,
-and can be of different types:
-- ToleranceNotOnBothEnds (cpreg index is allowed to be only present
-  on one end)
-- ToleranceDiffInMask (value differences are allowed only within a mask)
-- ToleranceFieldLT (incoming field value must be less than a given value)
-- ToleranceFieldGT (incoming field value must be greater than a given value)
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-A QLIST of such tolerances can be populated using a new helper:
-arm_register_cpreg_mig_tolerance() and arm_cpu_match_cpreg_mig_tolerance()
-allows to check whether a tolerance exists for a given kvm index and its
-criterion is matched.
+Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC, which
+helps to save/restore a dynamic array of pointers to
+structures.
 
-callers for those helpers will be introduced in subsequent patches.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+v2:
+- added VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC
 ---
-v8 -> v9
-- fix the tolerance type checking
-- rename arm_cpu_cpreg_has_mig_tolerance into arm_cpu_match_cpreg_mig_tolerance
----
- target/arm/cpu.h | 33 +++++++++++++++++++++
- target/arm/cpu.c | 75 ++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 108 insertions(+)
+ include/migration/vmstate.h | 33 ++++++++++++++
+ migration/vmstate-types.c   | 88 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 121 insertions(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 657ff4ab20b..2b1d3af34f0 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -843,6 +843,21 @@ struct ARMELChangeHook {
-     QLIST_ENTRY(ARMELChangeHook) node;
- };
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 89f9f49d20a..0bbe3317740 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
+ extern const VMStateInfo vmstate_info_qtailq;
+ extern const VMStateInfo vmstate_info_gtree;
+ extern const VMStateInfo vmstate_info_qlist;
++extern const VMStateInfo vmstate_info_ptrs_array_entry;
  
-+typedef enum {
-+    ToleranceNotOnBothEnds,
-+    ToleranceDiffInMask,
-+    ToleranceFieldLT,
-+    ToleranceFieldGT,
-+} ARMCPUCPREGMigToleranceType;
-+
-+typedef struct ARMCPUCPREGMigTolerance {
-+    uint64_t kvmidx;
-+    uint64_t mask;
-+    uint64_t value;
-+    ARMCPUCPREGMigToleranceType type;
-+    QLIST_ENTRY(ARMCPUCPREGMigTolerance) node;
-+} ARMCPUCPREGMigTolerance;
-+
- /* These values map onto the return values for
-  * QEMU_PSCI_0_2_FN_AFFINITY_INFO */
- typedef enum ARMPSCIState {
-@@ -1139,6 +1154,7 @@ struct ArchCPU {
- 
-     QLIST_HEAD(, ARMELChangeHook) pre_el_change_hooks;
-     QLIST_HEAD(, ARMELChangeHook) el_change_hooks;
-+    QLIST_HEAD(, ARMCPUCPREGMigTolerance) cpreg_mig_tolerances;
- 
-     int32_t node_id; /* NUMA node this CPU belongs to */
- 
-@@ -2632,6 +2648,23 @@ void arm_register_pre_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
- void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook, void
-         *opaque);
- 
-+/**
-+ * arm_register_cpreg_mig_tolerance:
-+ * Register a migration tolerance wrt one given cpreg identified by its
-+ * @kvmidx. Only one tolerance can be registered by kvm reg idx.
-+ */
-+void arm_register_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                      uint64_t mask, uint64_t value,
-+                                      ARMCPUCPREGMigToleranceType type);
-+
-+/**
-+ * arm_cpu_match_cpreg_mig_tolerance:
-+ * Check whether a tolerance of type @type exists for a given @kvmidx
-+ * and the tolerance criterion is satified
-+ */
-+bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                       uint64_t vmstate_value, uint64_t local_value,
-+                                       ARMCPUCPREGMigToleranceType type);
- /**
-  * arm_rebuild_hflags:
-  * Rebuild the cached TBFLAGS for arbitrary changed processor state.
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 7e3e84b4bbb..79e328c2888 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -181,6 +181,75 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
-     QLIST_INSERT_HEAD(&cpu->el_change_hooks, entry, node);
+ #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
+ /*
+@@ -537,6 +538,38 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
  }
  
-+void arm_register_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                      uint64_t mask, uint64_t value,
-+                                      ARMCPUCPREGMigToleranceType type)
-+{
-+    ARMCPUCPREGMigTolerance *t, *entry;
-+
-+    /* make sure the kvmidx has not tolerance already registered */
-+    QLIST_FOREACH(t, &cpu->cpreg_mig_tolerances, node) {
-+        if (t->kvmidx == kvmidx) {
-+            g_assert_not_reached();
-+        }
-+    }
-+    entry = g_new0(ARMCPUCPREGMigTolerance, 1);
-+
-+    entry->kvmidx = kvmidx;
-+    entry->mask = mask;
-+    entry->value = value;
-+    entry->type = type;
-+
-+    QLIST_INSERT_HEAD(&cpu->cpreg_mig_tolerances, entry, node);
++/*
++ * For migrating a dynamically allocated uint32-indexed array
++ * of pointers to structures (with NULL entries and with auto memory allocation).
++ *
++ * _type: type of structure pointed to
++ * _vmsd: VMSD for structure
++ * start: size of structure pointed to (for auto memory allocation)
++ */
++#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
++    .name       = (stringify(_field)),                                \
++    .version_id = (_version),                                         \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
++    .info       = &vmstate_info_ptrs_array_entry,                     \
++    .vmsd       = &(_vmsd),                                           \
++    .start      = sizeof(_type),                                      \
++    .size       = sizeof(_type *),                                    \
++    .flags      = VMS_VARRAY_UINT8|VMS_POINTER,                      \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
 +}
 +
-+bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                       uint64_t vmstate_value, uint64_t local_value,
-+                                       ARMCPUCPREGMigToleranceType type)
-+{
-+    ARMCPUCPREGMigTolerance *t;
-+    uint64_t diff, diff_outside_mask, field;
-+    bool found = false;
-+
-+    QLIST_FOREACH(t, &cpu->cpreg_mig_tolerances, node) {
-+        if (t->kvmidx == kvmidx && t->type == type)  {
-+            found = true;
-+            break;
-+        }
-+    }
-+    if (!found) {
-+        return false;
-+    }
-+
-+    /* we found one tolerance woth @type associated to the @kvmidx */
-+
-+    if (type == ToleranceNotOnBothEnds) {
-+        return true;
-+    }
-+
-+    /* Need to check the mask */
-+    diff = vmstate_value ^ local_value;
-+    diff_outside_mask = diff & ~t->mask;
-+
-+    if (diff_outside_mask) {
-+        /* there are differences outside of the mask */
-+        return false;
-+    }
-+    if (type == ToleranceDiffInMask) {
-+        /* differences only in the field, tolerance matched */
-+        return true;
-+    }
-+    /* need to compare field value against authorized ones */
-+    field = vmstate_value & t->mask;
-+    if (type == ToleranceFieldLT && (field < t->value)) {
-+        return true;
-+    }
-+    if (type == ToleranceFieldGT && (field > t->value)) {
-+        return true;
-+    }
-+    return false;
++#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
++    .name       = (stringify(_field)),                                \
++    .version_id = (_version),                                         \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
++    .info       = &vmstate_info_ptrs_array_entry,                     \
++    .vmsd       = &(_vmsd),                                           \
++    .start      = sizeof(_type),                                      \
++    .size       = sizeof(_type *),                                    \
++    .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                      \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
 +}
 +
- static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque)
- {
-     /* Reset a single ARMCPRegInfo register */
-@@ -1106,6 +1175,7 @@ static void arm_cpu_initfn(Object *obj)
- 
-     QLIST_INIT(&cpu->pre_el_change_hooks);
-     QLIST_INIT(&cpu->el_change_hooks);
-+    QLIST_INIT(&cpu->cpreg_mig_tolerances);
- 
- #ifdef CONFIG_USER_ONLY
- # ifdef TARGET_AARCH64
-@@ -1550,6 +1620,7 @@ static void arm_cpu_finalizefn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-     ARMELChangeHook *hook, *next;
-+    ARMCPUCPREGMigTolerance *t, *n;
- 
-     g_hash_table_destroy(cpu->cp_regs);
- 
-@@ -1561,6 +1632,10 @@ static void arm_cpu_finalizefn(Object *obj)
-         QLIST_REMOVE(hook, node);
-         g_free(hook);
-     }
-+    QLIST_FOREACH_SAFE(t, &cpu->cpreg_mig_tolerances, node, n) {
-+        QLIST_REMOVE(t, node);
-+        g_free(t);
+ #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
+     .name       = (stringify(_field)),                                    \
+     .version_id = (_version),                                             \
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index 89cb2114721..3335377cd07 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -942,3 +942,91 @@ const VMStateInfo vmstate_info_qlist = {
+     .get  = get_qlist,
+     .put  = put_qlist,
+ };
++
++static int put_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
++                                const VMStateField *field, JSONWriter *vmdesc)
++{
++    const VMStateDescription *vmsd = field->vmsd;
++    int ret;
++    Error *local_err = NULL;
++    void *pv;
++
++    /*
++     * (ppv) is an address of an i-th element of a dynamic array.
++     *
++     * (ppv) can not be NULL unless we have some regression/bug in
++     * vmstate_save_state_v(), because it is result of pointer arithemic like:
++     * first_elem + size * i.
++     */
++    if (ppv == NULL) {
++        error_report("vmstate: put_ptrs_array_entry must be called with ppv != NULL");
++        return -EINVAL;
 +    }
- #ifndef CONFIG_USER_ONLY
-     if (cpu->pmu_timer) {
-         timer_free(cpu->pmu_timer);
++
++    /* get a pointer to a structure */
++    pv = *(void **)ppv;
++
++    if (pv == NULL) {
++        /* write a mark telling that there was a NULL pointer */
++        qemu_put_byte(f, false);
++        return 0;
++    }
++
++    /* if pointer is not NULL, dump the structure contents with help of vmsd */
++    qemu_put_byte(f, true);
++    ret = vmstate_save_state(f, vmsd, pv, vmdesc, &local_err);
++    if (ret) {
++        error_report_err(local_err);
++        return ret;
++    }
++
++    return 0;
++}
++
++static int get_ptrs_array_entry(QEMUFile *f, void *ppv, size_t unused_size,
++                                const VMStateField *field)
++{
++    int ret = 0;
++    Error *local_err = NULL;
++    const VMStateDescription *vmsd = field->vmsd;
++    /* size of structure pointed to by elements of array */
++    size_t size = field->start;
++
++    if (ppv == NULL) {
++        error_report("vmstate: get_ptrs_array_entry must be called with ppv != NULL");
++        return -EINVAL;
++    }
++
++    /*
++     * We start from a clean array, all elements must be NULL, unless
++     * something we haven't prepared for has changed in vmstate_save_state_v().
++     * Let's check for this just in case.
++     */
++    if (*(void **)ppv != NULL) {
++        error_report("vmstate: get_ptrs_array_entry must be called with *ppv == NULL");
++        return -EINVAL;
++    }
++
++    if (qemu_get_byte(f)) {
++        void *pv;
++
++        /* allocate memory for structure */
++        pv = g_malloc0(size);
++        ret = vmstate_load_state(f, vmsd, pv, vmsd->version_id, &local_err);
++        if (ret) {
++            error_report_err(local_err);
++            g_free(pv);
++            return ret;
++        }
++
++        *(void **)ppv = pv;
++    }
++
++    return ret;
++}
++
++const VMStateInfo vmstate_info_ptrs_array_entry = {
++    .name = "ptrs_array_entry",
++    .get  = get_ptrs_array_entry,
++    .put  = put_ptrs_array_entry,
++};
 -- 
-2.53.0
+2.47.3
 
 
