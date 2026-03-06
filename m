@@ -4,100 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B1E9F01832
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72537F01835
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyVVW-0000LK-S5; Fri, 06 Mar 2026 08:46:24 -0500
+	id 1vyVgA-0002I6-Li; Fri, 06 Mar 2026 08:57:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vyVVU-0000Ki-Eb
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:46:20 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vyVVS-0006qw-O9
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:46:20 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 916933E7B4;
- Fri,  6 Mar 2026 13:46:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772804776; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vCGIMwX0POlyXSSo0cPbr34QQ/IDgZQl4nDpVnfGka0=;
- b=WFGt3oUYt9bGnksQfYyYhtmR/XCno9rKgcn53xKrjailNDKRgu+3vM0F2kTWA04oWa39w8
- oeojs5eatp02+CSP58aZ+8kM+lby7L326+px+rKeSs5DULfDCmpAYWLXnUqA2jrnhtqayT
- gs5+ojIrYofBCel+aa8RBy+0GNvFFy4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772804776;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vCGIMwX0POlyXSSo0cPbr34QQ/IDgZQl4nDpVnfGka0=;
- b=jTac2mcqX7G2nqYQESJVN9YBefAgOsByV9DeCjjjKChBlnWf8znVA/JBXho6iJdMpZVYVf
- zDqS39iGjU0cN2Bg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772804776; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vCGIMwX0POlyXSSo0cPbr34QQ/IDgZQl4nDpVnfGka0=;
- b=WFGt3oUYt9bGnksQfYyYhtmR/XCno9rKgcn53xKrjailNDKRgu+3vM0F2kTWA04oWa39w8
- oeojs5eatp02+CSP58aZ+8kM+lby7L326+px+rKeSs5DULfDCmpAYWLXnUqA2jrnhtqayT
- gs5+ojIrYofBCel+aa8RBy+0GNvFFy4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772804776;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vCGIMwX0POlyXSSo0cPbr34QQ/IDgZQl4nDpVnfGka0=;
- b=jTac2mcqX7G2nqYQESJVN9YBefAgOsByV9DeCjjjKChBlnWf8znVA/JBXho6iJdMpZVYVf
- zDqS39iGjU0cN2Bg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 18B9A3EA75;
- Fri,  6 Mar 2026 13:46:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MF+fM6faqmlzDwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Mar 2026 13:46:15 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>, Peter Xu
- <peterx@redhat.com>, Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH v2] vmstate: fix subsection load name check
-In-Reply-To: <20260302070626.613396-1-dtalexundeer@yandex-team.ru>
-References: <20260302070626.613396-1-dtalexundeer@yandex-team.ru>
-Date: Fri, 06 Mar 2026 10:46:13 -0300
-Message-ID: <87y0k5136i.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vyVg1-0002Hp-W5; Fri, 06 Mar 2026 08:57:14 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vyVfw-0008SL-KK; Fri, 06 Mar 2026 08:57:11 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAXMqgn3appIvHTBw--.346S2;
+ Fri, 06 Mar 2026 21:56:55 +0800 (CST)
+Received: from [192.168.31.155] (unknown [113.246.232.19])
+ by mail (Coremail) with SMTP id AQAAfwDHH+0j3appAYYfAA--.39572S2;
+ Fri, 06 Mar 2026 21:56:51 +0800 (CST)
+Message-ID: <4f0bc034-d636-4a4b-8eae-4378af960d9e@phytium.com.cn>
+Date: Fri, 6 Mar 2026 21:56:47 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- TO_DN_EQ_ADDR_SOME(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v4 06/31] hw/arm/smmuv3: Track SEC_SID in configs and events
+To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
+ <20260221100250.2976287-7-tangtao1634@phytium.com.cn>
+ <ab60bb69-e3d9-461d-a353-e5dc2161d644@redhat.com>
+ <436d5125-1118-48ba-a935-a7879daadd25@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <436d5125-1118-48ba-a935-a7879daadd25@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwDHH+0j3appAYYfAA--.39572S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWmp8qEJhgABsf
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3Wr1kCFyxur47Jw4fXF48tFb_yoWxury5pr
+ ykGFn8Kr1ktFySvFy3Xa18Z3W7J397Krn8Gr1DKFyrA3yq9r17XF4DGry5ur98urykAr42
+ vayIgF4fZr1jyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,78 +78,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alexandr Moshkov <dtalexundeer@yandex-team.ru> writes:
+Hi all,
 
-> When loading a subset, its name is checked for the parent prefix. The
-> following bug may occur here:
+On 2026/3/3 15:26, Eric Auger wrote:
 >
-> Let's say there is a vmstate named "virtio-blk", it has a subsection
-> named "virtio-blk/subsection", and it also has another vmstate named
-> "virtio" in the fields.
-> Then, during the migration, when trying to load this subsection for
-> "virtio", the prefix condition will pass for "virtio-blk/subsection" and
-> then the migration will break, because this vmstate does not have such a
-> subsection.
+> On 3/2/26 5:13 PM, Eric Auger wrote:
+>> Hi Tao,
+>>
+>> On 2/21/26 11:02 AM, Tao Tang wrote:
+>>> Cache the SEC_SID inside SMMUTransCfg to keep configuration lookups
+>>> tied to the correct register bank.
+>>>
+>>> Plumb the SEC_SID through tracepoints and queue helpers so diagnostics
+>>> and event logs always show which security interface emitted the record.
+>>> To support this, the SEC_SID is placed in SMMUEventInfo so the bank is
+>>> identified as soon as an event record is built.
+>>>
+>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>>> ---
+>>>   hw/arm/smmuv3-internal.h     |  1 +
+>>>   hw/arm/smmuv3.c              | 20 +++++++++++++-------
+>>>   hw/arm/trace-events          |  2 +-
+>>>   include/hw/arm/smmu-common.h |  1 +
+>>>   4 files changed, 16 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+>>> index 866d62257e3..a1071f7b689 100644
+>>> --- a/hw/arm/smmuv3-internal.h
+>>> +++ b/hw/arm/smmuv3-internal.h
+>>> @@ -274,6 +274,7 @@ static inline const char *smmu_event_string(SMMUEventType type)
+>>>   
+>>>   /*  Encode an event record */
+>>>   typedef struct SMMUEventInfo {
+>>> +    SMMUSecSID sec_sid;
+>>>       SMMUEventType type;
+>>>       uint32_t sid;
+>>>       bool recorded;
+>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>>> index 2c107724e77..3438adcecd2 100644
+>>> --- a/hw/arm/smmuv3.c
+>>> +++ b/hw/arm/smmuv3.c
+>>> @@ -148,9 +148,9 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
+>>>       return MEMTX_OK;
+>>>   }
+>>>   
+>>> -static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
+>>> +static MemTxResult smmuv3_write_eventq(SMMUv3State *s, SMMUSecSID sec_sid,
+>>> +                                       Evt *evt)
+>>>   {
+>>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>>>       SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>>>       SMMUQueue *q = &bank->eventq;
+>>>       MemTxResult r;
+>>> @@ -178,7 +178,8 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
+>>>   {
+>>>       Evt evt = {};
+>>>       MemTxResult r;
+>>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>>> +    SMMUSecSID sec_sid = info->sec_sid;
+>>> +    g_assert(sec_sid < SMMU_SEC_SID_NUM);
+>>>   
+>>>       if (!smmuv3_eventq_enabled(s, sec_sid)) {
+>>>           return;
+>>> @@ -258,8 +259,9 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
+>>>           g_assert_not_reached();
+>>>       }
+>>>   
+>>> -    trace_smmuv3_record_event(smmu_event_string(info->type), info->sid);
+>>> -    r = smmuv3_write_eventq(s, &evt);
+>>> +    trace_smmuv3_record_event(sec_sid, smmu_event_string(info->type),
+>>> +                              info->sid);
+>>> +    r = smmuv3_write_eventq(s, sec_sid, &evt);
+>>>       if (r != MEMTX_OK) {
+>>>           smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
+>>>       }
+>>> @@ -917,6 +919,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
+>>>                               100 * sdev->cfg_cache_hits /
+>>>                               (sdev->cfg_cache_hits + sdev->cfg_cache_misses));
+>>>           cfg = g_new0(SMMUTransCfg, 1);
+>>> +        cfg->sec_sid = SMMU_SEC_SID_NS;
+>>>   
+>>>           if (!smmuv3_decode_config(&sdev->iommu, cfg, event)) {
+>>>               g_hash_table_insert(bc->configs, sdev, cfg);
+>>> @@ -1074,7 +1077,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>>>       SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>>>       SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>>>                              .sid = sid,
+>>> -                           .inval_ste_allowed = false};
+>>> +                           .inval_ste_allowed = false,
+>>> +                           .sec_sid = sec_sid};
+>>>       SMMUTranslationStatus status;
+>>>       SMMUTransCfg *cfg = NULL;
+>>>       IOMMUTLBEntry entry = {
+>>> @@ -1176,7 +1180,9 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
+>>>                                  uint64_t num_pages, int stage)
+>>>   {
+>>>       SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>>> -    SMMUEventInfo eventinfo = {.inval_ste_allowed = true};
+>>> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>>> +    SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
+>>> +                               .inval_ste_allowed = true};
+>>>       SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo);
+>>>       IOMMUTLBEvent event;
+>>>       uint8_t granule;
+>>> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+>>> index 8135c0c7344..9c2cc131ab4 100644
+>>> --- a/hw/arm/trace-events
+>>> +++ b/hw/arm/trace-events
+>>> @@ -40,7 +40,7 @@ smmuv3_cmdq_opcode(const char *opcode) "<--- %s"
+>>>   smmuv3_cmdq_consume_out(uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "prod:%d, cons:%d, prod_wrap:%d, cons_wrap:%d "
+>>>   smmuv3_cmdq_consume_error(const char *cmd_name, uint8_t cmd_error) "Error on %s command execution: %d"
+>>>   smmuv3_write_mmio(uint64_t addr, uint64_t val, unsigned size, uint32_t r) "addr: 0x%"PRIx64" val:0x%"PRIx64" size: 0x%x(%d)"
+>>> -smmuv3_record_event(const char *type, uint32_t sid) "%s sid=0x%x"
+>>> +smmuv3_record_event(int sec_sid, const char *type, uint32_t sid) "sec_sid=%d %s sid=0x%x"
+>>>   smmuv3_find_ste(uint16_t sid, uint32_t features, uint16_t sid_split) "sid=0x%x features:0x%x, sid_split:0x%x"
+>>>   smmuv3_find_ste_2lvl(uint64_t strtab_base, uint64_t l1ptr, int l1_ste_offset, uint64_t l2ptr, int l2_ste_offset, int max_l2_ste) "strtab_base:0x%"PRIx64" l1ptr:0x%"PRIx64" l1_off:0x%x, l2ptr:0x%"PRIx64" l2_off:0x%x max_l2_ste:%d"
+>>>   smmuv3_get_ste(uint64_t addr) "STE addr: 0x%"PRIx64
+>>> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+>>> index 6ea40f6b074..ae1489717fe 100644
+>>> --- a/include/hw/arm/smmu-common.h
+>>> +++ b/include/hw/arm/smmu-common.h
+>>> @@ -107,6 +107,7 @@ typedef struct SMMUS2Cfg {
+>>>   typedef struct SMMUTransCfg {
+>>>       /* Shared fields between stage-1 and stage-2. */
+>>>       SMMUStage stage;           /* translation stage */
+>>> +    SMMUSecSID sec_sid;        /* cached sec sid */
+>> I am now wondering if sec_sid shall be part of the TransCfg as this is
+>> never decoded from STE/CD, sin't it.
+> Having slept over it, caching sed_id here indicates whether the secure
+> stream table was used for decoding. So that can be considered as a
+> result of the config decode process.
 >
-> In other words, if a field inside vmstate1 is set via vmstate2 with a
-> name that is a prefix of the parent vmstate, then the field can "steal"
-> a subsection belonging to the parent state.
->
-> Looks like it happens because migration stream for "virtio-blk" looks
-> like this:
->
->  [virtio-blk header] [virtio-blk fields] [virtio-blk subsections]
->
-> "virtio-blk" contains "virtio" field, so migration stream is:
->
->  [virtio-blk header] [virtio header] [virtio fields] [virtio
-> subsections] [virtio-blk subsections]
->
-> And when we load the subsections of the "virtio" device,
-> vmstate_subsection_load() uses qemu_peek_byte() to try to figure out if
-> this is his subsection. This is where we encounter an error.
->
-> Thus, the error occurs due to the fact that vmsd does not know how many
-> subsections it has when loading (this does not appear anywhere in the
-> migration stream), so it tries to load all the appropriate ones by
-> names.
->
-> Fix it by checking `/` at the end of idstr.
->
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> ---
->  migration/vmstate.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 4d28364f7b..187f3861f2 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -613,7 +613,7 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->  
->      while (qemu_peek_byte(f, 0) == QEMU_VM_SUBSECTION) {
->          char idstr[256], *idstr_ret;
-> -        int ret;
-> +        int ret, vmsd_name_len;
->          uint8_t version_id, len, size;
->          const VMStateDescription *sub_vmsd;
->  
-> @@ -631,7 +631,10 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->          memcpy(idstr, idstr_ret, size);
->          idstr[size] = 0;
->  
-> -        if (strncmp(vmsd->name, idstr, strlen(vmsd->name)) != 0) {
-> +        vmsd_name_len = strlen(vmsd->name);
-> +        if (strncmp(vmsd->name, idstr, vmsd_name_len) != 0 ||
-> +            /* to avoid taking parent subsection here */
-> +            idstr[vmsd_name_len] != '/') {
->              trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(prefix)");
->              /* it doesn't have a valid subsection name */
->              return 0;
+> a minor comment though, I think I would prefer having cfg->sec_sid
+> populated in smmuv3_decode_config as the other cfg fields. Meaning I
+> would rather add sed_sid to smmuv3_decode_config signature.
 
-Hi, this breaks migration for s390x and ppc64:
 
-qemu-system-s390x: Missing section footer for qemu-s390-flic
+Thanks for the suggestion.
 
-qemu-system-ppc64: Missing section footer for spapr_iommu
+I'll add add sec_sid to smmuv3_decode_config as signature and do 
+something like `cfg->sec_sid = sec_sid` inside the function.
+
+
+BTW as Mostafa and Eric discussed in previous thread, a check of sec_sid 
+would be placed at smmuv3_bank instead of asserting everywhere.
+
+
+Thank you all for the review. I will start preparing the v5 according to 
+your feedback.
+
+Tao
+
+> Thanks
+>
+> Eric
+>
+>> Eric
+>>>       bool disabled;             /* smmu is disabled */
+>>>       bool bypassed;             /* translation is bypassed */
+>>>       bool aborted;              /* translation is aborted */
+
 
