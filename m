@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C36F01808
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 07:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B8A4F0180A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 07:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyQ4k-0007Te-Tz; Fri, 06 Mar 2026 02:58:22 -0500
+	id 1vyQ4j-0007So-A7; Fri, 06 Mar 2026 02:58:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyQ4j-0007SY-1z
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:58:21 -0500
-Received: from p-west2-cluster1-host10-snip4-10.eps.apple.com ([57.103.68.123]
+ id 1vyQ4i-0007SB-5H
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:58:20 -0500
+Received: from p-west2-cluster1-host11-snip4-10.eps.apple.com ([57.103.68.33]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyQ4e-00065L-J7
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:58:20 -0500
+ id 1vyQ4f-00065c-Ud
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:58:19 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-3 (Postfix) with ESMTPS id
- 5FCF518001B9; Fri,  6 Mar 2026 07:58:13 +0000 (UTC)
+ B08E21800135; Fri,  6 Mar 2026 07:58:15 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772783895; x=1775375895;
- bh=Zp00OUDs5i7KBbqMJ9QqV+rI4APAR+Ak88cZ5RV37w4=;
+ s=sig1; t=1772783897; x=1775375897;
+ bh=XhMMsyuNqxqx54T1OMmdgINiRA0qeWFXPChvfberBDE=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=azQXVZOoDwmcLpfKMxYlzEtKQE5Zv6HiLD2yJj1RcbTeOsd/tPvR4u89I6NYbiVpVTPlOIyUU00bsnxaRZWF8euPBDXm/xSy6Mb5RFN9dAwWMNCYOPg9kUxJKyZqgveikMmR+h4jrGGXtPiilJb+/JfX/dyWYQs2lFY45UgDaKyCHfNKkFRBXRPyJ4vAYcnd6E5fYN8X6EwcFmrptm83nDQPld37diiaxgcIarfZpg3ZWY5uACA7Wl5VzA9UhsG6WD6fpJ6hpWFvXC0o7ZWJnbk0G/hZr/H5p3YyWbx+wK/E9+/kpO+VWF62Pe3lIEz0WM96B13W3+E7X2uKbxxiwA==
+ b=JXev3j002/Qn6b6hNlBG8bmujauHJNHAqK6DhXMot9f75M8XjsPyEh9Bob9ZkaXxPuXGm8Iic8GZMIMJaQgzGSFk2sjoBheJfC9PMxhRqFOEWBjgTymYkCU8kJ4VJnuYQ21vvUsxkLHHDF8qIG+8GVt16x/Em7EoDNUOoKMBHaS8aiPORiIJ0vQzd3C1gKwNIykXJIsfgqeVrenXnU1lPfzym+NnalYnbWO1UGhV2OzGcyrXA2xxbKQTG01Txb3my8l4p9T45HdRlLCbZep59iNZGo5Y5Cg2Rzx4q2os/5rjzCuMoZcpUhQMG3czjC0pILzd5Ej9BdmK8YpEIozosQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-3 (Postfix) with ESMTPSA id
- 7F074180024B; Fri,  6 Mar 2026 07:58:10 +0000 (UTC)
+ 12B6A18001A7; Fri,  6 Mar 2026 07:58:12 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -42,38 +42,39 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>,
  Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v13 04/17] hw/intc: Add hvf vGIC interrupt controller support
-Date: Fri,  6 Mar 2026 08:57:43 +0100
-Message-ID: <20260306075756.88922-5-mohamed@unpredictable.fr>
+Subject: [PATCH v13 05/17] hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
+Date: Fri,  6 Mar 2026 08:57:44 +0100
+Message-ID: <20260306075756.88922-6-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260306075756.88922-1-mohamed@unpredictable.fr>
 References: <20260306075756.88922-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: A1dzYZR_BtZI2NFtp7NBA81Ec2Er9vnW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDA3NSBTYWx0ZWRfX5I65XNtUIPJW
- wwCJpM3n8yy0Rw+0739S16Z5Xqb5x6YTkDivy4hQE5GY7aQqcj8ct3+RQClyKdQK5IqoQR/4B7A
- sZIkXVb1cAO+98bCGWoLU34zAnvMHyvQ9OyrfZYPAf8UN7QnwKe2i9LpwptK3Wnqzfi9fdQRsAK
- RAmkp++2cEYeICGq5C+aBgUwyGn9oQYulis4/pXdsU5vpE1JjGIjfkVj8dREEfXSGs52KT4S30t
- dvSoqSGZ+3vV6GScWSGrt4CrDBbHSkjJ2TZOcbNGv2hR2bKe+YZTBsi3f5L7bDeStoa6/gcNv7j
- KWVjI0IjUVeOhALRRTSOyf2ola239akYH+9HfDV0uIwwJA4Jk7IhtwWJc89P90=
-X-Authority-Info-Out: v=2.4 cv=KNtXzVFo c=1 sm=1 tr=0 ts=69aa8916
+X-Proofpoint-GUID: qGw-ey-Dc9Kl5Gwh5qigbYcUzQ3N2x2a
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDA3NSBTYWx0ZWRfXwuWZTAS/Z9Hx
+ HTQz9exXNhFr2Ka/NmOpvGhlQUyJFoor8yqkJqxFpQCB/Uyc9GelNlkA+uGjCKhFKXeh+BradHf
+ mqaHaDdPcHRm8UlC7dGH7tWrbLZhilzBVGZ5vTHOFTRn8Szo2tMFRQmwAiKePVXqvWTh3KCNIAY
+ J9XPjpgCrJpvLQcHO7yP107m8EOGMfchrXpbKuB21JxVtJwZ3lbv/vqv5R2SmRjeOBCTiAuPc3+
+ goYh/TvrkqgF/qJqHNJJ3NeDYhXcROutd886mMpRmYil8c/sfrI4/cgzmoG2MjqpsdsuvJhXdr6
+ EaFeRf8iBpIoRRPvdhLsqzDtPzH8jWJXdVZcSnedX1kGyqrFIY7DnBSsyw6v+o=
+X-Proofpoint-ORIG-GUID: qGw-ey-Dc9Kl5Gwh5qigbYcUzQ3N2x2a
+X-Authority-Info-Out: v=2.4 cv=ArvjHe9P c=1 sm=1 tr=0 ts=69aa8918
  cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
  a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=D2JAlcJVxmvnjXxMMLIA:9
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=kNOF8fv34t_zTB2Y_VIA:9
  a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: A1dzYZR_BtZI2NFtp7NBA81Ec2Er9vnW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-06_02,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- malwarescore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 clxscore=1030
- phishscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 mlxscore=0
+ mlxlogscore=999 spamscore=0
+ adultscore=0 suspectscore=0 phishscore=0 clxscore=1030 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603060075
-X-JNJ: AAAAAAABxpAq6twtB34dwGXV/64MN/Q5eoBiY95LXmlIIRQBTEVJPIM4Rvx6TglztKxwmEPymrLwTNdYsvQafYYZuLDvJJ5Oz07HJHEAKf42mdAbOJpEuklGGpMiRltifaIbg/gDEz5pNt8K3CXhq13gDSBUaXxYm0jtcNVVtGkyanHL4p9F6vO5wKmSjz4veOzxSpMQvD51uw2FkeSm8j8wzJ+xxdfvLI3SieZWGkkJJzgVlgJfRzworj/OXxctYldjyTn7mwSTAcVpMiz+byFm0+4d+Br9ZBHnALqkcbsFot25g1ZIaoVusHhyfS+3z3yuJhr/XEPSTxWxottpGl8Y/95awQmMqkC1VjfRG85jm9t6db2ncauzv6Tn3GALIWEgLaHROItq4LleMVIUfXKU3esuFtsY6KgSbEGrpT8wVzlX254i0VEh5kiliIIwG5XmPVmoMONurOrHnqg9WjrQ46ywv5rr96AWl+LwMQPi3+tv1gTLXJDMg9aYcmFqHa8LlFNM49FK3BUSgHL7MHVTfp/WwUP8ymHISqZyRGbi0823F288z5sIRG60rF5oumwFz5CR1AW/jo8b7WzbpH5kXvhr1amlnNh05QZPwhTZ/K9Yo9wETnncmar7inem4RwiSXYK7Zc+71Ck//kPEBd+bdtX0HsCvRRhHEVa8NtxJzChl0VdA/omSKAhR6JreUbLrL/2tvSDDJ5sfSnwjX+keqCahNcHUtVzsP2SqMoYOhkGUDd+KLIxqlXLNXNo8UQjhjSZ0w==
-Received-SPF: pass client-ip=57.103.68.123;
+X-JNJ: AAAAAAABNQ/FdLk++zi7tdLLt1agwTB1y0ur/W/myN52FsSDEZkBS4lLPNTgG7d83VQgT49scz6yNYIWvyGripem8afkBauGeegVb0yTPFnffb/fWgsPwycq+auq/MKzdoOIrdgcTi/PtAGu3duxblwQVeXmJnnLkhPbZrgHUN8Lh8UkVIcfEaTnzpUBvty9nfpSGUjpNuslajfp0qV9eAd/bylLcf7GQGqxRlJe0AC459ceEtqValX2MVPZzjsgAktQqr4clCrofqux+oDxtCbQpix4UXL+sxdzIjYBUBeistZ7KS5jrk31MHw88ov5R8GPAcVglSHcip7tuXowsfYkb+GI9Oi0jIjCBz5Si6iwPVbZxxtSrDk30ByqjxS5shIrvG3rTjz2n61l241+huYoh7q2XskmyU81cQZqB+EfgYCzQVhjgb6qoyLrR06kepMKsjwEaU3fsjWPE2s5NaTglWgVqtRoBzhzGeVH6yE4IExhVqqusKr8YQHnb8DQVKSrZaFfnAxD2q6GEc4yJnzyzbS5A1Zg1JDFsjYIyrqwvhEncGBGKO7woMQ5sXHmJEfM+Ws9avn4DoS8s6LNx4Gs4M9X1cZgIbZyS6wKS/Z2tVc3xx1Gha4kTM72PjrruDdKszlWq1Jvzh1CXrO5up5THMevDMH3YwtQtn5Y8ZgpJJOzQTfezQYpFIimoFqD94N/nutOHAhdkIAj1FLIT4yav2AMQRCRPsvuPshk/iQ8Ruo//b6b1M/PzWD8rOIIcqIsy3SbuOs/AsGV/dHVNa8fvv6YMXbWbJ/MCyOhTcVS9TTteO8=
+Received-SPF: pass client-ip=57.103.68.33;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -12
 X-Spam_score: -1.3
@@ -98,782 +99,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This opens up the door to nested virtualisation support.
+On HVF, some of the GIC state is in an opaque Apple-provided structure.
+
+Save/restore that state to be able to save/restore VMs that use the hardware GIC.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/arm_gicv3_hvf.c            | 735 +++++++++++++++++++++++++++++
- hw/intc/meson.build                |   1 +
- include/hw/intc/arm_gicv3_common.h |   1 +
- 3 files changed, 737 insertions(+)
- create mode 100644 hw/intc/arm_gicv3_hvf.c
+ hw/intc/arm_gicv3_common.c         |  1 +
+ hw/intc/arm_gicv3_hvf.c            | 95 ++++++++++++++++++++++++++++--
+ hw/intc/arm_gicv3_hvf_stub.c       | 25 ++++++++
+ hw/intc/meson.build                |  1 +
+ include/hw/intc/arm_gicv3_common.h |  3 +
+ 5 files changed, 121 insertions(+), 4 deletions(-)
+ create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
 
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index 9200671c7a..9c3fb2f4bf 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -305,6 +305,7 @@ static const VMStateDescription vmstate_gicv3 = {
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_gicv3_gicd_no_migration_shift_bug,
+         &vmstate_gicv3_gicd_nmi,
++        &vmstate_gicv3_hvf,
+         NULL
+     }
+ };
 diff --git a/hw/intc/arm_gicv3_hvf.c b/hw/intc/arm_gicv3_hvf.c
-new file mode 100644
-index 0000000000..d6a46b7d53
---- /dev/null
+index d6a46b7d53..f2249a7e7c 100644
+--- a/hw/intc/arm_gicv3_hvf.c
 +++ b/hw/intc/arm_gicv3_hvf.c
-@@ -0,0 +1,735 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
+@@ -13,6 +13,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "system/runstate.h"
++#include "migration/vmstate.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+ #include "hvf_arm.h"
+@@ -30,8 +31,13 @@ struct HVFARMGICv3Class {
+ 
+ typedef struct HVFARMGICv3Class HVFARMGICv3Class;
+ 
+-/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
+-DECLARE_OBJ_CHECKERS(GICv3State, HVFARMGICv3Class,
++typedef struct HVFGICv3State {
++    GICv3State gicv3_state;
++    uint32_t size;
++    void *state;
++} HVFGICv3State;
++
++DECLARE_OBJ_CHECKERS(HVFGICv3State, HVFARMGICv3Class,
+                      HVF_GICV3, TYPE_HVF_GICV3);
+ 
+ /*
+@@ -656,7 +662,7 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
+ static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
+ {
+     ERRP_GUARD();
+-    GICv3State *s = HVF_GICV3(dev);
++    GICv3State *s = (GICv3State *)HVF_GICV3(dev);
+     HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
+     int i;
+ 
+@@ -703,6 +709,87 @@ static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
+     }
+ }
+ 
 +/*
-+ * ARM Generic Interrupt Controller using HVF platform support
-+ *
-+ * Copyright (c) 2025 Mohamed Mediouni
-+ * Based on vGICv3 KVM code by Pavel Fedin
-+ *
++ * HVF doesn't have a way to save the RDIST pending tables
++ * to guest memory, only to an opaque data structure.
 + */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "qemu/error-report.h"
-+#include "qemu/module.h"
-+#include "system/runstate.h"
-+#include "system/hvf.h"
-+#include "system/hvf_int.h"
-+#include "hvf_arm.h"
-+#include "gicv3_internal.h"
-+#include "vgic_common.h"
-+#include "qom/object.h"
-+#include "target/arm/cpregs.h"
-+#include <Hypervisor/Hypervisor.h>
-+
-+struct HVFARMGICv3Class {
-+    ARMGICv3CommonClass parent_class;
-+    DeviceRealize parent_realize;
-+    ResettablePhases parent_phases;
-+};
-+
-+typedef struct HVFARMGICv3Class HVFARMGICv3Class;
-+
-+/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
-+DECLARE_OBJ_CHECKERS(GICv3State, HVFARMGICv3Class,
-+                     HVF_GICV3, TYPE_HVF_GICV3);
-+
-+/*
-+ * Loop through each distributor IRQ related register; since bits
-+ * corresponding to SPIs and PPIs are RAZ/WI when affinity routing
-+ * is enabled, we skip those.
-+ */
-+#define for_each_dist_irq_reg(_irq, _max, _field_width) \
-+    for (_irq = GIC_INTERNAL; _irq < _max; _irq += (32 / _field_width))
-+
-+/*
-+ * Wrap calls to the vGIC APIs to assert_hvf_ok()
-+ * as a macro to keep the code clean.
-+ */
-+#define hv_gic_get_distributor_reg(offset, reg) \
-+    assert_hvf_ok(hv_gic_get_distributor_reg(offset, reg))
-+
-+#define hv_gic_set_distributor_reg(offset, reg) \
-+    assert_hvf_ok(hv_gic_set_distributor_reg(offset, reg))
-+
-+#define hv_gic_get_redistributor_reg(vcpu, reg, value) \
-+    assert_hvf_ok(hv_gic_get_redistributor_reg(vcpu, reg, value))
-+
-+#define hv_gic_set_redistributor_reg(vcpu, reg, value) \
-+    assert_hvf_ok(hv_gic_set_redistributor_reg(vcpu, reg, value))
-+
-+#define hv_gic_get_icc_reg(vcpu, reg, value) \
-+    assert_hvf_ok(hv_gic_get_icc_reg(vcpu, reg, value))
-+
-+#define hv_gic_set_icc_reg(vcpu, reg, value) \
-+    assert_hvf_ok(hv_gic_set_icc_reg(vcpu, reg, value))
-+
-+#define hv_gic_get_ich_reg(vcpu, reg, value) \
-+    assert_hvf_ok(hv_gic_get_ich_reg(vcpu, reg, value))
-+
-+#define hv_gic_set_ich_reg(vcpu, reg, value) \
-+    assert_hvf_ok(hv_gic_set_ich_reg(vcpu, reg, value))
-+
-+static void hvf_dist_get_priority(GICv3State *s, hv_gic_distributor_reg_t offset
-+    , uint8_t *bmp)
++static bool gicv3_is_hvf(void *opaque)
 +{
-+    uint64_t reg;
-+    uint32_t *field;
-+    int irq;
-+    field = (uint32_t *)(bmp);
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 8) {
-+        hv_gic_get_distributor_reg(offset, &reg);
-+        *field = reg;
-+        offset += 4;
-+        field++;
-+    }
++    return hvf_enabled() && hvf_irqchip_in_kernel();
 +}
 +
-+static void hvf_dist_put_priority(GICv3State *s, hv_gic_distributor_reg_t offset
-+    , uint8_t *bmp)
++static int hvf_gic_opaque_state_save(void* opaque)
 +{
-+    uint32_t reg, *field;
-+    int irq;
-+    field = (uint32_t *)(bmp);
++    HVFGICv3State* gic = opaque;
++    hv_gic_state_t gic_state;
++    hv_return_t err;
++    size_t size;
 +
-+    for_each_dist_irq_reg(irq, s->num_irq, 8) {
-+        reg = *field;
-+        hv_gic_set_distributor_reg(offset, reg);
-+        offset += 4;
-+        field++;
++    gic_state = hv_gic_state_create();
++    if (gic_state == NULL) {
++        error_report("hvf: vgic: failed to create hv_gic_state_create.");
++        return 1;
 +    }
++    err = hv_gic_state_get_size(gic_state, &size);
++    gic->size = size;
++    if (err != HV_SUCCESS) {
++        error_report("hvf: vgic: failed to get GIC state size.");
++        os_release(gic_state);
++        return 1;
++    }
++    gic->state = g_malloc(gic->size);
++    err = hv_gic_state_get_data(gic_state, gic->state);
++    if (err != HV_SUCCESS) {
++        error_report("hvf: vgic: failed to get GIC state.");
++        os_release(gic_state);
++        return 1;
++    }
++
++    os_release(gic_state);
++    return 0;
 +}
 +
-+static void hvf_dist_get_edge_trigger(GICv3State *s, hv_gic_distributor_reg_t offset,
-+                                      uint32_t *bmp)
++static int hvf_gic_opaque_state_free(void* opaque)
 +{
-+    uint64_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 2) {
-+        hv_gic_get_distributor_reg(offset, &reg);
-+        reg = half_unshuffle32(reg >> 1);
-+        if (irq % 32 != 0) {
-+            reg = (reg << 16);
-+        }
-+        *gic_bmp_ptr32(bmp, irq) |= reg;
-+        offset += 4;
-+    }
++    HVFGICv3State* gic = opaque;
++    free(gic->state);
++    return 0;
 +}
 +
-+static void hvf_dist_put_edge_trigger(GICv3State *s, hv_gic_distributor_reg_t offset,
-+                                      uint32_t *bmp)
++static int hvf_gic_opaque_state_restore(void* opaque, int version_id)
 +{
-+    uint32_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 2) {
-+        reg = *gic_bmp_ptr32(bmp, irq);
-+        if (irq % 32 != 0) {
-+            reg = (reg & 0xffff0000) >> 16;
-+        } else {
-+            reg = reg & 0xffff;
-+        }
-+        reg = half_shuffle32(reg) << 1;
-+        hv_gic_set_distributor_reg(offset, reg);
-+        offset += 4;
++    HVFGICv3State* gic = opaque;
++    hv_return_t err;
++    if (!gic->size) {
++        return 0;
 +    }
++    err = hv_gic_set_state(gic->state, gic->size);
++    if (err != HV_SUCCESS) {
++        error_report("hvf: vgic: failed to restore GIC state.");
++        return 1;
++    }
++    return 0;
 +}
 +
-+/* Read a bitmap register group from the kernel VGIC. */
-+static void hvf_dist_getbmp(GICv3State *s, hv_gic_distributor_reg_t offset, uint32_t *bmp)
-+{
-+    uint64_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 1) {
-+
-+        hv_gic_get_distributor_reg(offset, &reg);
-+        *gic_bmp_ptr32(bmp, irq) = reg;
-+        offset += 4;
-+    }
-+}
-+
-+static void hvf_dist_putbmp(GICv3State *s, hv_gic_distributor_reg_t offset,
-+                            hv_gic_distributor_reg_t clroffset, uint32_t *bmp)
-+{
-+    uint32_t reg;
-+    int irq;
-+
-+    for_each_dist_irq_reg(irq, s->num_irq, 1) {
-+        /*
-+         * If this bitmap is a set/clear register pair, first write to the
-+         * clear-reg to clear all bits before using the set-reg to write
-+         * the 1 bits.
-+         */
-+        if (clroffset != 0) {
-+            reg = 0;
-+            hv_gic_set_distributor_reg(clroffset, reg);
-+            clroffset += 4;
-+        }
-+        reg = *gic_bmp_ptr32(bmp, irq);
-+        hv_gic_set_distributor_reg(offset, reg);
-+        offset += 4;
-+    }
-+}
-+
-+static void hvf_gicv3_check(GICv3State *s)
-+{
-+    uint64_t reg;
-+    uint32_t num_irq;
-+
-+    /* Sanity checking s->num_irq */
-+    hv_gic_get_distributor_reg(HV_GIC_DISTRIBUTOR_REG_GICD_TYPER, &reg);
-+    num_irq = ((reg & 0x1f) + 1) * 32;
-+
-+    if (num_irq < s->num_irq) {
-+        error_report("Model requests %u IRQs, but HVF supports max %u",
-+                     s->num_irq, num_irq);
-+        abort();
-+    }
-+}
-+
-+static void hvf_gicv3_put_cpu_el2(CPUState *cpu_state, run_on_cpu_data arg)
-+{
-+    int num_pri_bits;
-+
-+    /* Redistributor state */
-+    GICv3CPUState *c = arg.host_ptr;
-+    hv_vcpu_t vcpu = c->cpu->accel->fd;
-+
-+    hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_VMCR_EL2, c->ich_vmcr_el2);
-+    hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_HCR_EL2, c->ich_hcr_el2);
-+
-+    for (int i = 0; i < GICV3_LR_MAX; i++) {
-+        hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_LR0_EL2, c->ich_lr_el2[i]);
-+    }
-+
-+    num_pri_bits = c->vpribits;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 3,
-+                         c->ich_apr[GICV3_G0][3]);
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 2,
-+                         c->ich_apr[GICV3_G0][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 1,
-+                         c->ich_apr[GICV3_G0][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2,
-+                         c->ich_apr[GICV3_G0][0]);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 3,
-+                         c->ich_apr[GICV3_G1NS][3]);
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 2,
-+                         c->ich_apr[GICV3_G1NS][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 1,
-+                         c->ich_apr[GICV3_G1NS][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_set_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2,
-+                         c->ich_apr[GICV3_G1NS][0]);
-+    }
-+}
-+
-+static void hvf_gicv3_put_cpu(CPUState *cpu_state, run_on_cpu_data arg)
-+{
-+    uint32_t reg;
-+    uint64_t reg64;
-+    int i, num_pri_bits;
-+
-+    /* Redistributor state */
-+    GICv3CPUState *c = arg.host_ptr;
-+    hv_vcpu_t vcpu = c->cpu->accel->fd;
-+
-+    reg = c->gicr_waker;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
-+
-+    reg = c->gicr_igroupr0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0, reg);
-+
-+    reg = ~0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICENABLER0, reg);
-+    reg = c->gicr_ienabler0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0, reg);
-+
-+    /* Restore config before pending so we treat level/edge correctly */
-+    reg = half_shuffle32(c->edge_trigger >> 16) << 1;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1, reg);
-+
-+    reg = ~0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICPENDR0, reg);
-+    reg = c->gicr_ipendr0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0, reg);
-+
-+    reg = ~0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICACTIVER0, reg);
-+    reg = c->gicr_iactiver0;
-+    hv_gic_set_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0, reg);
-+
-+    for (i = 0; i < GIC_INTERNAL; i += 4) {
-+        reg = c->gicr_ipriorityr[i] |
-+            (c->gicr_ipriorityr[i + 1] << 8) |
-+            (c->gicr_ipriorityr[i + 2] << 16) |
-+            (c->gicr_ipriorityr[i + 3] << 24);
-+        hv_gic_set_redistributor_reg(vcpu,
-+            HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, reg);
-+    }
-+
-+    /* CPU interface state */
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_SRE_EL1, c->icc_sre_el1);
-+
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_CTLR_EL1,
-+                    c->icc_ctlr_el1[GICV3_NS]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN0_EL1,
-+                    c->icc_igrpen[GICV3_G0]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN1_EL1,
-+                    c->icc_igrpen[GICV3_G1NS]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_PMR_EL1, c->icc_pmr_el1);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_BPR0_EL1, c->icc_bpr[GICV3_G0]);
-+    hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_BPR1_EL1, c->icc_bpr[GICV3_G1NS]);
-+
-+    num_pri_bits = ((c->icc_ctlr_el1[GICV3_NS] &
-+                    ICC_CTLR_EL1_PRIBITS_MASK) >>
-+                    ICC_CTLR_EL1_PRIBITS_SHIFT) + 1;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+           reg64 = c->icc_apr[GICV3_G0][3];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 3, reg64);
-+        reg64 = c->icc_apr[GICV3_G0][2];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 2, reg64);
-+        /* fall through */
-+    case 6:
-+        reg64 = c->icc_apr[GICV3_G0][1];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 1, reg64);
-+        /* fall through */
-+    default:
-+        reg64 = c->icc_apr[GICV3_G0][0];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1, reg64);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+        reg64 = c->icc_apr[GICV3_G1NS][3];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 3, reg64);
-+        reg64 = c->icc_apr[GICV3_G1NS][2];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 2, reg64);
-+        /* fall through */
-+    case 6:
-+        reg64 = c->icc_apr[GICV3_G1NS][1];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 1, reg64);
-+        /* fall through */
-+    default:
-+        reg64 = c->icc_apr[GICV3_G1NS][0];
-+        hv_gic_set_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1, reg64);
-+    }
-+
-+    /* Registers beyond this point are with nested virt only */
-+    if (c->gic->maint_irq) {
-+        hvf_gicv3_put_cpu_el2(cpu_state, arg);
-+    }
-+}
-+
-+static void hvf_gicv3_put(GICv3State *s)
-+{
-+    uint32_t reg;
-+    int ncpu, i;
-+
-+    hvf_gicv3_check(s);
-+
-+    reg = s->gicd_ctlr;
-+    hv_gic_set_distributor_reg(HV_GIC_DISTRIBUTOR_REG_GICD_CTLR, reg);
-+
-+    /* per-CPU state */
-+
-+    for (ncpu = 0; ncpu < s->num_cpu; ncpu++) {
-+        run_on_cpu_data data;
-+        data.host_ptr = &s->cpu[ncpu];
-+        run_on_cpu(s->cpu[ncpu].cpu, hvf_gicv3_put_cpu, data);
-+    }
-+
-+    /* s->enable bitmap -> GICD_ISENABLERn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISENABLER0
-+        , HV_GIC_DISTRIBUTOR_REG_GICD_ICENABLER0, s->enabled);
-+
-+    /* s->group bitmap -> GICD_IGROUPRn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_IGROUPR0
-+        , 0, s->group);
-+
-+    /* Restore targets before pending to ensure the pending state is set on
-+     * the appropriate CPU interfaces in the kernel
-+     */
-+
-+    /* s->gicd_irouter[irq] -> GICD_IROUTERn */
-+    for (i = GIC_INTERNAL; i < s->num_irq; i++) {
-+        uint32_t offset = HV_GIC_DISTRIBUTOR_REG_GICD_IROUTER32 + (8 * i)
-+            - (8 * GIC_INTERNAL);
-+        hv_gic_set_distributor_reg(offset, s->gicd_irouter[i]);
-+    }
-+
-+    /*
-+     * s->trigger bitmap -> GICD_ICFGRn
-+     * (restore configuration registers before pending IRQs so we treat
-+     * level/edge correctly)
-+     */
-+    hvf_dist_put_edge_trigger(s, HV_GIC_DISTRIBUTOR_REG_GICD_ICFGR0, s->edge_trigger);
-+
-+    /* s->pending bitmap -> GICD_ISPENDRn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISPENDR0,
-+        HV_GIC_DISTRIBUTOR_REG_GICD_ICPENDR0, s->pending);
-+
-+    /* s->active bitmap -> GICD_ISACTIVERn */
-+    hvf_dist_putbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISACTIVER0,
-+        HV_GIC_DISTRIBUTOR_REG_GICD_ICACTIVER0, s->active);
-+
-+    /* s->gicd_ipriority[] -> GICD_IPRIORITYRn */
-+    hvf_dist_put_priority(s, HV_GIC_DISTRIBUTOR_REG_GICD_IPRIORITYR0, s->gicd_ipriority);
-+}
-+
-+static void hvf_gicv3_get_cpu_el2(CPUState *cpu_state, run_on_cpu_data arg)
-+{
-+    int num_pri_bits;
-+
-+    /* Redistributor state */
-+    GICv3CPUState *c = arg.host_ptr;
-+    hv_vcpu_t vcpu = c->cpu->accel->fd;
-+
-+    hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_VMCR_EL2, &c->ich_vmcr_el2);
-+    hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_HCR_EL2, &c->ich_hcr_el2);
-+
-+    for (int i = 0; i < GICV3_LR_MAX; i++) {
-+        hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_LR0_EL2, &c->ich_lr_el2[i]);
-+    }
-+
-+    num_pri_bits = c->vpribits;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 3,
-+                         &c->ich_apr[GICV3_G0][3]);
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 2,
-+                         &c->ich_apr[GICV3_G0][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2 + 1,
-+                         &c->ich_apr[GICV3_G0][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP0R0_EL2,
-+                         &c->ich_apr[GICV3_G0][0]);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 3,
-+                         &c->ich_apr[GICV3_G1NS][3]);
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 2,
-+                         &c->ich_apr[GICV3_G1NS][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2 + 1,
-+                         &c->ich_apr[GICV3_G1NS][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_ich_reg(vcpu, HV_GIC_ICH_REG_AP1R0_EL2,
-+                         &c->ich_apr[GICV3_G1NS][0]);
-+    }
-+}
-+
-+static void hvf_gicv3_get_cpu(CPUState *cpu_state, run_on_cpu_data arg)
-+{
-+    uint64_t reg;
-+    int i, num_pri_bits;
-+
-+    /* Redistributor state */
-+    GICv3CPUState *c = arg.host_ptr;
-+    hv_vcpu_t vcpu = c->cpu->accel->fd;
-+
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IGROUPR0,
-+                                 &reg);
-+    c->gicr_igroupr0 = reg;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISENABLER0,
-+                                 &reg);
-+    c->gicr_ienabler0 = reg;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ICFGR1,
-+                                 &reg);
-+    c->edge_trigger = half_unshuffle32(reg >> 1) << 16;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISPENDR0,
-+                                 &reg);
-+    c->gicr_ipendr0 = reg;
-+    hv_gic_get_redistributor_reg(vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_ISACTIVER0,
-+                                 &reg);
-+    c->gicr_iactiver0 = reg;
-+
-+    for (i = 0; i < GIC_INTERNAL; i += 4) {
-+        hv_gic_get_redistributor_reg(
-+          vcpu, HV_GIC_REDISTRIBUTOR_REG_GICR_IPRIORITYR0 + i, &reg);
-+        c->gicr_ipriorityr[i] = extract32(reg, 0, 8);
-+        c->gicr_ipriorityr[i + 1] = extract32(reg, 8, 8);
-+        c->gicr_ipriorityr[i + 2] = extract32(reg, 16, 8);
-+        c->gicr_ipriorityr[i + 3] = extract32(reg, 24, 8);
-+    }
-+
-+    /* CPU interface */
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_SRE_EL1, &c->icc_sre_el1);
-+
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_CTLR_EL1,
-+                       &c->icc_ctlr_el1[GICV3_NS]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN0_EL1,
-+                       &c->icc_igrpen[GICV3_G0]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_IGRPEN1_EL1,
-+                       &c->icc_igrpen[GICV3_G1NS]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_PMR_EL1, &c->icc_pmr_el1);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_BPR0_EL1, &c->icc_bpr[GICV3_G0]);
-+    hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_BPR1_EL1, &c->icc_bpr[GICV3_G1NS]);
-+    num_pri_bits = ((c->icc_ctlr_el1[GICV3_NS] & ICC_CTLR_EL1_PRIBITS_MASK) >>
-+                    ICC_CTLR_EL1_PRIBITS_SHIFT) +
-+                   1;
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 3,
-+                         &c->icc_apr[GICV3_G0][3]);
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 2,
-+                         &c->icc_apr[GICV3_G0][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1 + 1,
-+                         &c->icc_apr[GICV3_G0][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP0R0_EL1,
-+                         &c->icc_apr[GICV3_G0][0]);
-+    }
-+
-+    switch (num_pri_bits) {
-+    case 7:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 3,
-+                         &c->icc_apr[GICV3_G1NS][3]);
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 2,
-+                         &c->icc_apr[GICV3_G1NS][2]);
-+      /* fall through */
-+    case 6:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1 + 1,
-+                         &c->icc_apr[GICV3_G1NS][1]);
-+      /* fall through */
-+    default:
-+      hv_gic_get_icc_reg(vcpu, HV_GIC_ICC_REG_AP1R0_EL1,
-+                         &c->icc_apr[GICV3_G1NS][0]);
-+    }
-+
-+    /* Registers beyond this point are with nested virt only */
-+    if (c->gic->maint_irq) {
-+        hvf_gicv3_get_cpu_el2(cpu_state, arg);
-+    }
-+}
-+
-+static void hvf_gicv3_get(GICv3State *s)
-+{
-+    uint64_t reg;
-+    int ncpu, i;
-+
-+    hvf_gicv3_check(s);
-+
-+    hv_gic_get_distributor_reg(HV_GIC_DISTRIBUTOR_REG_GICD_CTLR, &reg);
-+    s->gicd_ctlr = reg;
-+
-+    /* Redistributor state (one per CPU) */
-+
-+    for (ncpu = 0; ncpu < s->num_cpu; ncpu++) {
-+        run_on_cpu_data data;
-+        data.host_ptr = &s->cpu[ncpu];
-+        run_on_cpu(s->cpu[ncpu].cpu, hvf_gicv3_get_cpu, data);
-+    }
-+
-+    /* GICD_IGROUPRn -> s->group bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_IGROUPR0, s->group);
-+
-+    /* GICD_ISENABLERn -> s->enabled bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISENABLER0, s->enabled);
-+
-+    /* GICD_ISPENDRn -> s->pending bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISPENDR0, s->pending);
-+
-+    /* GICD_ISACTIVERn -> s->active bitmap */
-+    hvf_dist_getbmp(s, HV_GIC_DISTRIBUTOR_REG_GICD_ISACTIVER0, s->active);
-+
-+    /* GICD_ICFGRn -> s->trigger bitmap */
-+    hvf_dist_get_edge_trigger(s, HV_GIC_DISTRIBUTOR_REG_GICD_ICFGR0
-+        , s->edge_trigger);
-+
-+    /* GICD_IPRIORITYRn -> s->gicd_ipriority[] */
-+    hvf_dist_get_priority(s, HV_GIC_DISTRIBUTOR_REG_GICD_IPRIORITYR0
-+        , s->gicd_ipriority);
-+
-+    /* GICD_IROUTERn -> s->gicd_irouter[irq] */
-+    for (i = GIC_INTERNAL; i < s->num_irq; i++) {
-+        uint32_t offset = HV_GIC_DISTRIBUTOR_REG_GICD_IROUTER32
-+            + (8 * i) - (8 * GIC_INTERNAL);
-+        hv_gic_get_distributor_reg(offset, &s->gicd_irouter[i]);
-+    }
-+}
-+
-+static void hvf_gicv3_set_irq(void *opaque, int irq, int level)
-+{
-+    GICv3State *s = opaque;
-+    if (irq > s->num_irq) {
-+        return;
-+    }
-+    hv_gic_set_spi(GIC_INTERNAL + irq, !!level);
-+}
-+
-+static void hvf_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    GICv3CPUState *c;
-+
-+    c = env->gicv3state;
-+    c->icc_pmr_el1 = 0;
-+    /*
-+     * Architecturally the reset value of the ICC_BPR registers
-+     * is UNKNOWN. We set them all to 0 here; when the kernel
-+     * uses these values to program the ICH_VMCR_EL2 fields that
-+     * determine the guest-visible ICC_BPR register values, the
-+     * hardware's "writing a value less than the minimum sets
-+     * the field to the minimum value" behaviour will result in
-+     * them effectively resetting to the correct minimum value
-+     * for the host GIC.
-+     */
-+    c->icc_bpr[GICV3_G0] = 0;
-+    c->icc_bpr[GICV3_G1] = 0;
-+    c->icc_bpr[GICV3_G1NS] = 0;
-+
-+    c->icc_sre_el1 = 0x7;
-+    memset(c->icc_apr, 0, sizeof(c->icc_apr));
-+    memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
-+}
-+
-+static void hvf_gicv3_reset_hold(Object *obj, ResetType type)
-+{
-+    GICv3State *s = ARM_GICV3_COMMON(obj);
-+    HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
-+
-+    if (kgc->parent_phases.hold) {
-+        kgc->parent_phases.hold(obj, type);
-+    }
-+
-+    hvf_gicv3_put(s);
-+}
-+
-+
-+/*
-+ * CPU interface registers of GIC needs to be reset on CPU reset.
-+ * For the calling arm_gicv3_icc_reset() on CPU reset, we register
-+ * below ARMCPRegInfo. As we reset the whole cpu interface under single
-+ * register reset, we define only one register of CPU interface instead
-+ * of defining all the registers.
-+ */
-+static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
-+    { .name = "ICC_CTLR_EL1", .state = ARM_CP_STATE_BOTH,
-+      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 12, .opc2 = 4,
-+      /*
-+       * If ARM_CP_NOP is used, resetfn is not called,
-+       * So ARM_CP_NO_RAW is appropriate type.
-+       */
-+      .type = ARM_CP_NO_RAW,
-+      .access = PL1_RW,
-+      .readfn = arm_cp_read_zero,
-+      .writefn = arm_cp_write_ignore,
-+      /*
-+       * We hang the whole cpu interface reset routine off here
-+       * rather than parcelling it out into one little function
-+       * per register
-+       */
-+      .resetfn = hvf_gicv3_icc_reset,
++const VMStateDescription vmstate_gicv3_hvf = {
++    .name = "arm_gicv3/hvf_gic_state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = gicv3_is_hvf,
++    .pre_save = hvf_gic_opaque_state_save,
++    .post_save = hvf_gic_opaque_state_free,
++    .post_load = hvf_gic_opaque_state_restore,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(size, HVFGICv3State),
++        VMSTATE_VBUFFER_ALLOC_UINT32(state,
++                                     HVFGICv3State, 0, 0,
++                                     size),
++        VMSTATE_END_OF_LIST()
 +    },
 +};
 +
-+static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
+ static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -722,7 +809,7 @@ static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
+ static const TypeInfo hvf_arm_gicv3_info = {
+     .name = TYPE_HVF_GICV3,
+     .parent = TYPE_ARM_GICV3_COMMON,
+-    .instance_size = sizeof(GICv3State),
++    .instance_size = sizeof(HVFGICv3State),
+     .class_init = hvf_gicv3_class_init,
+     .class_size = sizeof(HVFARMGICv3Class),
+ };
+diff --git a/hw/intc/arm_gicv3_hvf_stub.c b/hw/intc/arm_gicv3_hvf_stub.c
+new file mode 100644
+index 0000000000..a587332c7c
+--- /dev/null
++++ b/hw/intc/arm_gicv3_hvf_stub.c
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * ARM Generic Interrupt Controller using HVF platform support stub
++ *
++ * Copyright (c) 2026 Mohamed Mediouni
++ *
++ */
++#include "qemu/osdep.h"
++#include "hw/intc/arm_gicv3_common.h"
++#include "migration/vmstate.h"
++#include "qemu/typedefs.h"
++
++static bool needed_never(void *opaque)
 +{
-+    ERRP_GUARD();
-+    GICv3State *s = HVF_GICV3(dev);
-+    HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
-+    int i;
-+
-+    kgc->parent_realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
-+
-+    if (s->revision != 3) {
-+        error_setg(errp, "unsupported GIC revision %d for platform GIC",
-+                   s->revision);
-+    }
-+
-+    if (s->security_extn) {
-+        error_setg(errp, "the platform vGICv3 does not implement the "
-+                   "security extensions");
-+        return;
-+    }
-+
-+    if (s->nmi_support) {
-+        error_setg(errp, "NMI is not supported with the platform GIC");
-+        return;
-+    }
-+
-+    if (s->nb_redist_regions > 1) {
-+        error_setg(errp, "Multiple VGICv3 redistributor regions are not "
-+                   "supported by HVF");
-+        error_append_hint(errp, "A maximum of %d VCPUs can be used",
-+                          s->redist_region_count[0]);
-+        return;
-+    }
-+
-+    gicv3_init_irqs_and_mmio(s, hvf_gicv3_set_irq, NULL);
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(i));
-+
-+        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
-+    }
-+
-+    if (s->maint_irq && s->maint_irq != HV_GIC_INT_MAINTENANCE) {
-+        error_setg(errp, "vGIC maintenance IRQ mismatch with the hardcoded one in HVF.");
-+        return;
-+    }
++    return false;
 +}
 +
-+static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    ARMGICv3CommonClass *agcc = ARM_GICV3_COMMON_CLASS(klass);
-+    HVFARMGICv3Class *kgc = HVF_GICV3_CLASS(klass);
-+
-+    agcc->pre_save = hvf_gicv3_get;
-+    agcc->post_load = hvf_gicv3_put;
-+
-+    device_class_set_parent_realize(dc, hvf_gicv3_realize,
-+                                    &kgc->parent_realize);
-+    resettable_class_set_parent_phases(rc, NULL, hvf_gicv3_reset_hold, NULL,
-+                                       &kgc->parent_phases);
-+}
-+
-+static const TypeInfo hvf_arm_gicv3_info = {
-+    .name = TYPE_HVF_GICV3,
-+    .parent = TYPE_ARM_GICV3_COMMON,
-+    .instance_size = sizeof(GICv3State),
-+    .class_init = hvf_gicv3_class_init,
-+    .class_size = sizeof(HVFARMGICv3Class),
++const VMStateDescription vmstate_gicv3_hvf = {
++    .name = "arm_gicv3/hvf_gic_state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = needed_never,
++    .version_id = 1,
++    .minimum_version_id = 1,
 +};
-+
-+static void hvf_gicv3_register_types(void)
-+{
-+    type_register_static(&hvf_arm_gicv3_info);
-+}
-+
-+type_init(hvf_gicv3_register_types)
 diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 96742df090..b7baf8a0f6 100644
+index b7baf8a0f6..c6de2d9d00 100644
 --- a/hw/intc/meson.build
 +++ b/hw/intc/meson.build
-@@ -42,6 +42,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gicv3_cpuif_common
- arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
+@@ -43,6 +43,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
  specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
  specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: files('arm_gicv3_whpx.c'))
-+specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
+ specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
++specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_false: files('arm_gicv3_hvf_stub.c'))
  specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
  arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
  specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
 diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index c55cf18120..9adcab0a0c 100644
+index 9adcab0a0c..03ab3e8f2f 100644
 --- a/include/hw/intc/arm_gicv3_common.h
 +++ b/include/hw/intc/arm_gicv3_common.h
-@@ -315,6 +315,7 @@ DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
+@@ -339,4 +339,7 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
+  */
+ const char *gicv3_class_name(void);
  
- /* Types for GICv3 kernel-irqchip */
- #define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
-+#define TYPE_HVF_GICV3 "hvf-arm-gicv3"
- 
- struct ARMGICv3CommonClass {
-     /*< private >*/
++/* HVF vGIC-specific state: stubbed out on a build with HVF disabled */
++extern const VMStateDescription vmstate_gicv3_hvf;
++
+ #endif
 -- 
 2.50.1 (Apple Git-155)
 
