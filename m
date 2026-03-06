@@ -4,85 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34600FCC05D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB82FCC066
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyaTV-00058t-GO; Fri, 06 Mar 2026 14:04:37 -0500
+	id 1vybBa-0003xl-Uh; Fri, 06 Mar 2026 14:50:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyaTS-00058X-GF
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:04:34 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyaTO-0001ex-A3
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:04:34 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4852c9b4158so1205255e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:04:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772823868; x=1773428668; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VzhIZPxk//VX1ktJTYRZ47iapQxAY1fuSLVGdAwm/Ko=;
- b=Dq9X9rM039Cljq+dq4vD4iGt944ArDa61T3F7lXUXPEn7f2gEZHe6bTu3xumPJseeb
- AWQ0yVLKWBGHq62R63fsJ3Smp3FUEHaIUwVRXBoInuA9thqYK+gl1tR7KWuv8Ou/sdF3
- FWoZZquzyEA9T2zn5dv7bcGfENJo22cEJ6mD/vVpB35xP6aEXiwILTKcLtY0PZ+pDt4s
- sLNxpRJ8daByAezC6u7UAnqZQp0TXjKFQwXnt4TnRvRkAl/P9rzxuSsonXK6TuSFXTKn
- aof0YU5uJ6zTSa0cj4ir9Omqfz5eLT1PgC82Z239QFkMzRXWlUPhiuKoX65xYVKNMoy0
- TfDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772823868; x=1773428668;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VzhIZPxk//VX1ktJTYRZ47iapQxAY1fuSLVGdAwm/Ko=;
- b=vfirIrStDyqwD2QqhxnpO8Iua6VbEHV8Hy416QeQ6thPIZBBBj2p3Y42EDfJWSVi5A
- IxmHS+Z+Cib1JJ4Qh7F9Rl58XGkfCndMu+BRP6qSRzk/1ZlEoGGzDwA2hiLgu2ZFQ+hB
- B/+tl8isVsVSRJua0YSDM/XfKDeTPVhLaPrwLJhLYLJaMFxUwBaG++3la+FQbtkdoOJy
- FMLhRRlFF0n75yVxmR0OKQG61bB7x5RZ+zo10NY6Yne5m8VZ0FucUrlYaDOxEM/miSmp
- AGdAKD3KqP5cPMhVgHCNe+wCHRc+bK9H+jCJ+gXVkAtZ5rApdAIYMbpDh0SltgllPcB/
- CyCQ==
-X-Gm-Message-State: AOJu0Yx0fpeUwJ5o3pvoomlMtEk7ORpzb5+qjiFrJJJiURqwWz7Tnn1g
- NSgkBzESb07D74r2VjxYaJxj051ypVpjbdv1Vn+i/eGY0YkS2IOS0iSIeAFsuSlcfaskkECr9Q8
- pgJE8
-X-Gm-Gg: ATEYQzxMoqb7bAL+Y+CEjTmlqsP5W7+tJ3f9T4NWZa7jaCRKSOag17qiG9jbMYiFHvO
- vz9x7BFEhoMJmNGabt3EmHWpIq1ghZau+ipqz7+MRL8vwpDJIz37M7ajMQwHtjFqfmOzd8tRgtE
- +hKqg5rToEjycsy2xMs/EpCKJSfKK0pGPJ/z9URB56/BMNSvahIP/xUkI5r4MF7UTS9Ojz5RkIc
- MyQXpEqAc6JG7/3/ELiQBMpuImsvLYM1BQdZ0PyMzW1UI18YknquQYZuYeq/4arMtTNyKMF9B7w
- +DdiEOFeORAoBs7RlWHR47s2yEV9CIsEuhOwVWmxlI9jxrnzNBWiKVWqH3bIl9tjcYi29L/ORTB
- GNOq6YmAnYzgcRgMNQPgDDmbfHq9U36kRv8eOD/o2RqrldyuBWDNhYv5tUP2z4N9u1iSxPy0p6g
- dPjh6DpoeNzMu+7pR8qC/PnRzmtnn3oj+YS0GZ4L7odkikvthBcPaxmQCr3ukA8NWc/T1Z++5N7
- i960TA++S+qYq9/RWuosoi/PlEhcZ4=
-X-Received: by 2002:a05:600c:4451:b0:483:71f9:37ef with SMTP id
- 5b1f17b1804b1-48526923bf0mr54072415e9.8.1772823867753; 
- Fri, 06 Mar 2026 11:04:27 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48529f019a4sm9195915e9.12.2026.03.06.11.04.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 11:04:27 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>
-Subject: [PATCH] hw/m68k/mcf_intc: Use qdev input gpios for input IRQs
-Date: Fri,  6 Mar 2026 19:04:25 +0000
-Message-ID: <20260306190425.3047580-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vybBY-0003wc-Op
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vybBW-0000N2-QH
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772826605;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sCYLGZEYzhbkl5aSp6h56feyLWogRvLGH0hvqEyJ8oY=;
+ b=dlORX3azjtFhKef0xkSV6E2CD/K3EbT/7QOly9tZjZgMaQwWN3sYIaVpC8THS1gGKvIz3I
+ hGG5BWccfQh6FK/jq9heVEoDxnZHAqNOsHWtfb0nsUudGodqNJ7oPHeSeR/H6q39MPRzmm
+ 7H98Ysq+neCTMfcsyvCISZvULOXSjc0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-t5JlFxvRMESEWZczf9fXLg-1; Fri,
+ 06 Mar 2026 14:49:59 -0500
+X-MC-Unique: t5JlFxvRMESEWZczf9fXLg-1
+X-Mimecast-MFC-AGG-ID: t5JlFxvRMESEWZczf9fXLg_1772826598
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D940195608D; Fri,  6 Mar 2026 19:49:57 +0000 (UTC)
+Received: from [10.45.224.53] (unknown [10.45.224.53])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3B5A818001FE; Fri,  6 Mar 2026 19:49:52 +0000 (UTC)
+Message-ID: <5b256604-0463-454d-90f7-f1c00b22ace2@redhat.com>
+Date: Fri, 6 Mar 2026 20:49:51 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] tests/functional: teach uncompress about zip files
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
+ <20260306161728.2657486-5-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260306161728.2657486-5-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,161 +133,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The m68k mcf_intc interrupt controller currently implements its
-inbound IRQ lines by calling qemu_allocate_irqs() in mcf_intc_init().
-This results in leaks like this:
+On 06/03/2026 17.17, Alex Bennée wrote:
+> Yes people still use them.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/qemu_test/uncompress.py | 25 ++++++++++++++++++++++++
+>   1 file changed, 25 insertions(+)
+> 
+> diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+> index 5bbdf8fe323..f1a0e583a5b 100644
+> --- a/tests/functional/qemu_test/uncompress.py
+> +++ b/tests/functional/qemu_test/uncompress.py
+> @@ -12,6 +12,7 @@
+>   import os
+>   import stat
+>   import shutil
+> +import zipfile
+>   from urllib.parse import urlparse
+>   from subprocess import run, CalledProcessError
+>   
+> @@ -58,6 +59,26 @@ def zstd_uncompress(zstd_path, output_path):
+>       os.chmod(output_path, stat.S_IRUSR | stat.S_IWUSR)
+>   
+>   
+> +def zip_uncompress(zip_path, output_path):
+> +    if os.path.exists(output_path):
+> +        return
+> +    with zipfile.ZipFile(zip_path, 'r') as zip_in:
+> +        try:
+> +            # Get the first file from the archive
+> +            names = zip_in.namelist()
+> +            if len(names) != 1:
+> +                raise Exception(
+> +                    f"Zip file {zip_path} should contain exactly one file, "
+> +                    f"but contains {len(names)}")
+> +            with zip_in.open(names[0], 'r') as archived_file:
+> +                with open(output_path, 'wb') as raw_out:
+> +                    shutil.copyfileobj(archived_file, raw_out)
+> +        except:
+> +            if os.path.exists(output_path):
+> +                os.remove(output_path)
+> +            raise
+> +
+> +
+>   def uncompress(compressed, uncompressed, format=None):
+>       '''
+>       @params compressed: filename, Asset, or file-like object to uncompress
+> @@ -81,6 +102,8 @@ def uncompress(compressed, uncompressed, format=None):
+>           gzip_uncompress(str(compressed), uncompressed)
+>       elif format == "zstd":
+>           zstd_uncompress(str(compressed), uncompressed)
+> +    elif format == "zip":
+> +        zip_uncompress(str(compressed), uncompressed)
+>       else:
+>           raise Exception(f"Unknown compression format {format}")
 
-Direct leak of 2944 byte(s) in 46 object(s) allocated from:
-    #0 0x5cf95ec15323 in malloc (/home/pm215/qemu/build/san/qemu-system-m68k+0xf9e323) (BuildId: 18d55ef8ea9856e68ee30802078af5050b8b06c5)
-    #1 0x7637c65c5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5cf95f6b2f27 in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:767:15
-    #3 0x5cf95f6aa62e in qemu_allocate_irq /home/pm215/qemu/build/san/../../hw/core/irq.c:91:25
-    #4 0x5cf95f6aa62e in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:79:16
-    #5 0x5cf95f5f6d99 in mcf5208evb_init /home/pm215/qemu/build/san/../../hw/m68k/mcf5208.c:310:11
+I think you should rather use archive_extract() instead of uncompress() for 
+zip files, shouldn't you? ... and if I've got that right, support for zip is 
+already included in there.
 
-This isn't an important leak, as it is memory we allocate once at
-QEMU startup and that has to stay live for the lifetime of the
-system.  However it does point at a code improvement.
-
-Modernise this to have the device itself create inbound GPIOs with
-qdev_init_gpio_in() that the board can then refer to and wire up
-individually.
-
-As the device is used in only a single board, we can update device
-and board in a single patch rather than having to try to figure out
-some way to change the API more piecemeal.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-there's quite a bit more in this board which could be
-modernised, but I stuck to just the thing getting reported
-as a memory leak...
----
- hw/m68k/mcf5208.c     | 24 +++++++++++-------------
- hw/m68k/mcf_intc.c    |  8 +++-----
- include/hw/m68k/mcf.h |  5 ++---
- 3 files changed, 16 insertions(+), 21 deletions(-)
-
-diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
-index c6d1c5fae9..0e07aa45e9 100644
---- a/hw/m68k/mcf5208.c
-+++ b/hw/m68k/mcf5208.c
-@@ -227,7 +227,7 @@ static const MemoryRegionOps m5208_rcm_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
- };
- 
--static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic,
-+static void mcf5208_sys_init(MemoryRegion *address_space, DeviceState *intc,
-                              M68kCPU *cpu)
- {
-     MemoryRegion *iomem = g_new(MemoryRegion, 1);
-@@ -250,11 +250,11 @@ static void mcf5208_sys_init(MemoryRegion *address_space, qemu_irq *pic,
-                               "m5208-timer", 0x00004000);
-         memory_region_add_subregion(address_space, 0xfc080000 + 0x4000 * i,
-                                     &s->iomem);
--        s->irq = pic[4 + i];
-+        s->irq = qdev_get_gpio_in(intc, 4 + i);
-     }
- }
- 
--static void mcf_fec_init(MemoryRegion *sysmem, hwaddr base, qemu_irq *irqs)
-+static void mcf_fec_init(MemoryRegion *sysmem, hwaddr base, DeviceState *intc)
- {
-     DeviceState *dev;
-     SysBusDevice *s;
-@@ -268,7 +268,7 @@ static void mcf_fec_init(MemoryRegion *sysmem, hwaddr base, qemu_irq *irqs)
-     s = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(s, &error_fatal);
-     for (i = 0; i < FEC_NUM_IRQ; i++) {
--        sysbus_connect_irq(s, i, irqs[i]);
-+        sysbus_connect_irq(s, i, qdev_get_gpio_in(intc, i + 36));
-     }
- 
-     memory_region_add_subregion(sysmem, base, sysbus_mmio_get_region(s, 0));
-@@ -283,10 +283,10 @@ static void mcf5208evb_init(MachineState *machine)
-     int kernel_size;
-     uint64_t elf_entry;
-     hwaddr entry;
--    qemu_irq *pic;
-     MemoryRegion *address_space_mem = get_system_memory();
-     MemoryRegion *rom = g_new(MemoryRegion, 1);
-     MemoryRegion *sram = g_new(MemoryRegion, 1);
-+    DeviceState *intc;
- 
-     cpu = M68K_CPU(cpu_create(machine->cpu_type));
-     env = &cpu->env;
-@@ -307,17 +307,15 @@ static void mcf5208evb_init(MachineState *machine)
-     memory_region_add_subregion(address_space_mem, 0x80000000, sram);
- 
-     /* Internal peripherals.  */
--    pic = mcf_intc_init(address_space_mem, 0xfc048000, cpu);
-+    intc = mcf_intc_init(address_space_mem, 0xfc048000, cpu);
- 
--    mcf_uart_create_mmap(0xfc060000, pic[26], serial_hd(0));
--    mcf_uart_create_mmap(0xfc064000, pic[27], serial_hd(1));
--    mcf_uart_create_mmap(0xfc068000, pic[28], serial_hd(2));
-+    mcf_uart_create_mmap(0xfc060000, qdev_get_gpio_in(intc, 26), serial_hd(0));
-+    mcf_uart_create_mmap(0xfc064000, qdev_get_gpio_in(intc, 27), serial_hd(1));
-+    mcf_uart_create_mmap(0xfc068000, qdev_get_gpio_in(intc, 28), serial_hd(2));
- 
--    mcf5208_sys_init(address_space_mem, pic, cpu);
-+    mcf5208_sys_init(address_space_mem, intc, cpu);
- 
--    mcf_fec_init(address_space_mem, 0xfc030000, pic + 36);
--
--    g_free(pic);
-+    mcf_fec_init(address_space_mem, 0xfc030000, intc);
- 
-     /*  0xfc000000 SCM.  */
-     /*  0xfc004000 XBS.  */
-diff --git a/hw/m68k/mcf_intc.c b/hw/m68k/mcf_intc.c
-index 20112c94be..1014fe6fa5 100644
---- a/hw/m68k/mcf_intc.c
-+++ b/hw/m68k/mcf_intc.c
-@@ -175,6 +175,7 @@ static void mcf_intc_instance_init(Object *obj)
- 
-     memory_region_init_io(&s->iomem, obj, &mcf_intc_ops, s, "mcf", 0x100);
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+    qdev_init_gpio_in(DEVICE(s), mcf_intc_set_irq, 64);
- }
- 
- static const Property mcf_intc_properties[] = {
-@@ -206,9 +207,7 @@ static void mcf_intc_register_types(void)
- 
- type_init(mcf_intc_register_types)
- 
--qemu_irq *mcf_intc_init(MemoryRegion *sysmem,
--                        hwaddr base,
--                        M68kCPU *cpu)
-+DeviceState *mcf_intc_init(MemoryRegion *sysmem, hwaddr base, M68kCPU *cpu)
- {
-     DeviceState  *dev;
- 
-@@ -218,6 +217,5 @@ qemu_irq *mcf_intc_init(MemoryRegion *sysmem,
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(sysmem, base,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
--
--    return qemu_allocate_irqs(mcf_intc_set_irq, dev, 64);
-+    return dev;
- }
-diff --git a/include/hw/m68k/mcf.h b/include/hw/m68k/mcf.h
-index 5d9f876ffe..b2a599adaa 100644
---- a/include/hw/m68k/mcf.h
-+++ b/include/hw/m68k/mcf.h
-@@ -14,9 +14,8 @@ DeviceState *mcf_uart_create(qemu_irq irq, Chardev *chr);
- DeviceState *mcf_uart_create_mmap(hwaddr base, qemu_irq irq, Chardev *chr);
- 
- /* mcf_intc.c */
--qemu_irq *mcf_intc_init(struct MemoryRegion *sysmem,
--                        hwaddr base,
--                        M68kCPU *cpu);
-+DeviceState *mcf_intc_init(struct MemoryRegion *sysmem,
-+                           hwaddr base, M68kCPU *cpu);
- 
- /* mcf5206.c */
- #define TYPE_MCF5206_MBAR "mcf5206-mbar"
--- 
-2.43.0
+  Thomas
 
 
