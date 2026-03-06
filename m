@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AE9F01829
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 11:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89592F01828
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 11:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyTIi-00069a-3f; Fri, 06 Mar 2026 06:25:01 -0500
+	id 1vyTJn-0006rO-QM; Fri, 06 Mar 2026 06:26:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vyTId-00067z-Ku
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:24:55 -0500
+ id 1vyTJi-0006pg-Bx
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:26:02 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vyTIb-00087f-Um
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:24:55 -0500
+ id 1vyTJg-00006W-LI
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:26:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772796292;
+ s=mimecast20190719; t=1772796359;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8J+rNbFQAx5jX5lfY9+v3Pzc65niXB7ws+uQZtwz7WM=;
- b=Lv2/3ZzurbBxqrgQIhLPnZorHOqhd6kdPBRsT6XWQJgpepW/dYmd/wpvyCf6ao1ECTokg5
- DPUad2DrXp2/3LzY0lh23ObZgzImLATN6l1r+m7gnjk+50wzfLcPggvTqRqaVCgcd+8i+Q
- kvJ5e1wqhUn5j+1AsyYzxfyHmATtjSo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sYlEUlW/q2KCNVBJcYkE4AnArRDazI/bQcyRoVFTtRg=;
+ b=QXdPIdjh04aLzLBD8L0BI9FA31cMFqHGZQN0X+Dme4Ineg3QEZQth65aY6o5nm37LM7K7j
+ moaP4d4nkHYi6VCNudA/rkUZ5ZCdc3AiIu28bOlexWBR9yPLeP4r8Oez5D3AezGxK9NGKD
+ 7Y5pjQTo8XBZTmpIh8JWDMCt4GFheb4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-RWkNX78TOVq1BsTH9NlHaw-1; Fri, 06 Mar 2026 06:24:49 -0500
-X-MC-Unique: RWkNX78TOVq1BsTH9NlHaw-1
-X-Mimecast-MFC-AGG-ID: RWkNX78TOVq1BsTH9NlHaw_1772796288
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4836cd6dfe6so79288115e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 03:24:49 -0800 (PST)
+ us-mta-537-2AfBOf9JP4-px1JZMc29Lg-1; Fri, 06 Mar 2026 06:25:56 -0500
+X-MC-Unique: 2AfBOf9JP4-px1JZMc29Lg-1
+X-Mimecast-MFC-AGG-ID: 2AfBOf9JP4-px1JZMc29Lg_1772796355
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48071615686so78143875e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 03:25:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772796288; x=1773401088;
+ d=1e100.net; s=20230601; t=1772796355; x=1773401155;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8J+rNbFQAx5jX5lfY9+v3Pzc65niXB7ws+uQZtwz7WM=;
- b=e7G6QwvDfxgBZ9tYk53IajBbSjb34WM/ny+KfFYDpmR+wFvu9Erva0HaA5sTBIWnIg
- HYGBiIA3m/z3sY/JMBJGApQIVVkgfWKAGvM9Nbl9ZsR8MZPjWnR3NBXT766Nw9ZCE7mH
- LKt2RMWSwNn6e4/EnWDa/P3MMwFs2dsnkUX29Z0vy/0OHum4anLRjFVgClSDYpKh2Ys+
- pTMkQqbtPXWW0P3JkH/71OCjfPCVz766NKs6PzINdnfVz6RlapBrlFOu31Z6cmjKNZrM
- 2EPemspFfx8ldYxhjBSKturvwbKgeY4vOm5egX0VhM78YZhDMAfWUk0XO6kncxC7j1zl
- luSw==
+ bh=sYlEUlW/q2KCNVBJcYkE4AnArRDazI/bQcyRoVFTtRg=;
+ b=HxyQlUYAX4sBF3HEpwssIY/Zbu51Ccy4E7iGCAdqeExfmmPxVRgu9liiAd0IOMI3ui
+ HvKaPx4YS+u5Vq2L0jaDCMwlkSpMAz8DNUcdim2chlx8rKDby9JiKLxd9U+ypdSWqWxl
+ j8peL91fdtfZ9DEvoMqocjiV2+h5aaEMjoce4R9iQvINUIWzw36db/3yLrYnJLFrzICe
+ moXYv6JJ1/Xb4jdtt0TLDssMppgYWwA+aIK2zQKV86c5w3gKDl0q6X3RNRVDfq4CiL7Y
+ Kjzv8pnOsk226giKDTOLB+E6Nlinb9nrM9J1MzTFLmucF65JpBKunzpIpYHXezylvuO0
+ gaTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUA3uP+kpr+xb9JMkMiOYFF53fRAWhbNlqGJy6O0TrDxIJx7gezkQxXSDJGLdxckXG9o8vQeN8UPnBj@nongnu.org
-X-Gm-Message-State: AOJu0YyUDglLr4aaUWW1B574c2v+fImoIrGdkx3kg2hvd8MO4jRIeNWR
- yB4sWCQs0tmb1yvOKQclPAc1VlaKUaFAli1WFXzHAmIsfIDN6dmpERsyah21t5z+pBOJOPokT9n
- e3+X6GErMtHnoGNkPfGHIwDK583Q0bAMUzYIgN3Vnfr4VhnmOXPhegTix
-X-Gm-Gg: ATEYQzwHGO/gaIUlPWhDKqLlvget5Qr+Vyv765gvoXokNViq/WNW/aOFhq4tbjcLFl3
- Q46xywemFSm+oagtBWeroHt3nOyea1R9Jaz7Q8w+QJXZjMbX/PGaz5Zabjt/dncE7wDqHlCyKOr
- ggfml/4bd3Whq9tyQz2XeXIaPszo8OjLIY34lvkY/0LXITMCFFVYXo9mbm9+ZmyRGdMRTis0E3Z
- AC5Ah84byuvS+vkjKKXuGQOu9BHqO6YTBIVDVaNrvE2B0TEn0hD2EwstyfF951Zay4Av5DhNFhm
- yTIYRtChcxdlsCxkGDlGra6X3EdaDoetyTBNkfXrGCH650hw3s5RQv2gVxNBH1LsX2gGSQaonR/
- Wwi05orkG2bpZLBhQ6Vhvqfzopxvi1cgo1zX5tcg4o0qvaueagX3fcnuXdnbBbRaEYedj6A==
-X-Received: by 2002:a05:600c:350f:b0:459:db7b:988e with SMTP id
- 5b1f17b1804b1-4852693a59amr29421935e9.13.1772796288389; 
- Fri, 06 Mar 2026 03:24:48 -0800 (PST)
-X-Received: by 2002:a05:600c:350f:b0:459:db7b:988e with SMTP id
- 5b1f17b1804b1-4852693a59amr29421495e9.13.1772796287970; 
- Fri, 06 Mar 2026 03:24:47 -0800 (PST)
+ AJvYcCWaGhcfWwh6SHRLq1Oklb44QqyXAJoXS2v1WDuzsn9vXJwAiuIhtHb5qTO3wHFtLeOaSWoHz+bo70FD@nongnu.org
+X-Gm-Message-State: AOJu0YyISlPSdIZzZCycqT6ijkTdj5/X1rcNU56heivNJnjoAJMg5cLe
+ Xs7M2jLEOUe7tx7IPO1NbtFqXfPMPxY986TEQ0rV6uyWLk4Sju+CY0CEoW0kpB95vO46XVsKiqA
+ uQPAmL2iXawCITedAjMzNSTa4y3zAB4sC+JcPt2Yzti5PF6NkWglGkFfa
+X-Gm-Gg: ATEYQzws2I4WweCzT5e781CcLnDyc1qR6uxVg3y5lO6f3/bPw7HRP1NfQhE8KIWFAAP
+ 4AhtrlRrcDPwRr36fy+LCOg1Gb8gPEAl1hQfmgJ7D3GboT98hAGYAEVht7dTeZQZASCTghErxey
+ irfBWOPd6PhBd5Q2ImSLBsjgfpaTgZM+C61dQXzgRfvDJVJJQzzxDV0kImW83T7Yg+5Xu/4BagO
+ /a+WmopgdUwEhHmYUy232BjtNDQaHO9/U5kso6j/UTAfNufoWEO7XdZj4GczJySDQBZP5nfvlZS
+ C5lOsSP6vKIWE1rIdV3mHYRv3z9r5Jg8b+9YpBMnwZc4a5EX+j5ZcPFRrL9cjXvpBVGlyvp1GKA
+ 6v89JXuXjYVIr3C6Bp7s7mLdXZHumVgjCYFgrWmn09NOHZhjxaS7JK/pnxcPzjTKFvWivOg==
+X-Received: by 2002:a05:600c:4752:b0:483:b505:9db7 with SMTP id
+ 5b1f17b1804b1-48526976a4cmr23374665e9.32.1772796355139; 
+ Fri, 06 Mar 2026 03:25:55 -0800 (PST)
+X-Received: by 2002:a05:600c:4752:b0:483:b505:9db7 with SMTP id
+ 5b1f17b1804b1-48526976a4cmr23374265e9.32.1772796354659; 
+ Fri, 06 Mar 2026 03:25:54 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb277e3sm100102965e9.10.2026.03.06.03.24.46
+ 5b1f17b1804b1-4851fb4257csm174314465e9.15.2026.03.06.03.25.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Mar 2026 03:24:47 -0800 (PST)
-Message-ID: <e60def83-cfeb-4c65-a4c8-44b20f8f17ca@redhat.com>
-Date: Fri, 6 Mar 2026 12:24:46 +0100
+ Fri, 06 Mar 2026 03:25:54 -0800 (PST)
+Message-ID: <69272bc3-e4da-48f1-a160-18a386fefd99@redhat.com>
+Date: Fri, 6 Mar 2026 12:25:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v8 2/6] target/arm/machine: Take account cpreg mig
@@ -161,11 +161,7 @@ On 3/6/26 11:51 AM, Sebastian Ott wrote:
 > tolerance registered for this kvmidx. But this can be changed by someone
 > registering a different type. 
 
-OK so we know the cpreg is missing in the input stream. If there is a
-tolerance of type ToleranceNotOnBothEnds for this kvmidx, that's fine,
-we just trace and do not report any warning. Otherwise we warn_report
-the issue but do not fail.
-Does it clarify?
+Note at the moment, only one tolerance can be registered for a kvmidx
 
 Eric
 >
