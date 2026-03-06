@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C7CF0182B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F5AF01830
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 12:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyTwl-00013f-Rh; Fri, 06 Mar 2026 07:06:23 -0500
+	id 1vyTwh-00012U-Pq; Fri, 06 Mar 2026 07:06:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyTwU-00011P-MP
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:06:11 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vyTwR-00010U-VW
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:06:04 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyTwQ-0005Mw-DK
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:06:05 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso83782375e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 04:06:00 -0800 (PST)
+ id 1vyTwO-0005Mc-Ga
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:06:03 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4837f27cf2dso85439905e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 04:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772798760; x=1773403560; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NxOBnzQxTJgWwjiPp6IkXP/wGFk0Sz5c7edRawQl4pY=;
- b=zrWSkijQx6NtnKJ6zNvfV1keOj3uHZWIvgKdurub7IiTVl3w0inkZ+YAfFXAU1YN3M
- CAqiuA1+c4yJzJ8EfPPtdHcJ+Q1epAZJonUvlIIYWPgd12Q40u+KplFvYwcRqmBdlp6D
- ECopVCnnFN7qFrDyLu7+5uH2dgmj+VgSY2pK+ismfa2DLuIyPI4ABFv2+QpjE9LmqYI/
- eVGaubAkEFAMhpaza5Jw/XR7NwJnw8VDtl6SRs8ICqFgmeX3wtOOEvqNvv9KoI+agOLS
- 6PwugtXXXd/JIeXDPknQdlkDDIag0qA/CmLu8uUclWe306Z39LZxEiXMi6X9LS4sxcJ7
- FJEA==
+ d=linaro.org; s=google; t=1772798757; x=1773403557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xjTySljdoOafAgUarglKvNAbtMoISIWDjJDpZqFUIWE=;
+ b=AMDqwhM/YwBW4OflsRZaEQHyJhqajRU1T9mS/pdMEh75/Q59KRbUDxGsUUeyf7+lmt
+ LP4wi93jFjOOjQ9uXLGD1ur0zt0NlbNeAD2afVrRCpJDWvMAPPmxcCBTzROVirmxo2mu
+ yTzDUquZEPbwNEBpHamGJNZYEXpALZ7UMpUstLw3pvzf01kjpuS0BN3NrUDQIWdpzd2I
+ E34IzSdBUa1RZZ3142DmJuiH4N2/xM3waXsjVn0Oxo0DGxVWr8Sb+dXgCvH53N2Q5hCY
+ T+FPuy+64MGFcZAMegbYsz6k65Bs/8PrlIg0cxdlDb4apbCz8pgLrXgbD0iwwdfB2viX
+ ia5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772798760; x=1773403560;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=NxOBnzQxTJgWwjiPp6IkXP/wGFk0Sz5c7edRawQl4pY=;
- b=pOtca3a5AvLOnIZA9yEpUpafN9c3YhAbD8ks7Bl3qGayblCobV4sK1qsaFddQUVHOo
- 2XXHB8Bn8SjF3+5qrB3Qc7YnuC1WWEMxCyYF/bf5gK8V1w+GmGjl51C3k61X0lwVPfkw
- BJwgCBWlGazaatDBjX8jECUpxL0Exvpecr3laIHKm38wv7qzTyJIw4BgmJbHuSDG8nXk
- +wPwhrJtcyRpw7xL5cp9YLi3XDKpM5RJuHqYAuV+IyZeHCs5JOm94mKEgmj15NHontvw
- lxapu1coxX5BIr2JPRoGJSMCAweXQ7LiWrJxbewSE/dN7KD/TDChnUDXmrzpuXRNVK9F
- kjng==
-X-Gm-Message-State: AOJu0YycqYYsme9jIWDLBN2oay7QLDSLeYN53s/S4yJayQ06bI5rXBk9
- WPVPSm3sAIGLJ6Ff6HD7XvKzFLpql7zMvXSau4QPYjbJUkmHTdUIOV3nftU0jwIFWIOM30ygFdg
- LEbaj
-X-Gm-Gg: ATEYQzyQPgPs9XQdrqbBtYHMVOBqY3K2xNSL9gYG1Q4mlBrvo5/1aDvsbkD+LknQf3i
- 2mq5I+mpsyxkfhlB06qbSgGMA2f6T1PWxUnD933G7G1Vz6GhQwn/IOY50fE8i35CaNGO47vz8hu
- SgcXGZgY9pVRHj+nS8k3PXH3R3MhaOo9QkK3i0ZdpwEeUMZob78158klJt/cPO5q0Z7QHj9tYJN
- VRK3s2ia2dqpcNNz+EtOGmZm/gmY0LWALW/Vbv8oEfVOIRmKkQ2Ro7iVRXXTROGADdiEtRX+d9B
- euSxhu3ZJKbt2Cwj82bly7GtvazLYWmUjwRMfvFFY9yu9O5cdyAtR4qf+ctPVR7nJgEYS5ZyFDf
- L+K+bfQ1smqVZb+AXpHwcg8buiLZXsFgDyVCiq2zSGipPmZ7MbacCevc6FfNRzCDMVkTOmb2sNb
- EwFhazRgvhIU+jVVsS+LIU1Rig/WTY4gaTRwTLsPEWRZDzi+J8JH3A/MHf6YXgSEVejIIkE6JtW
- AkDHbX9gm/8waSvRAo7UOJf46Nfm6g=
-X-Received: by 2002:a05:600c:3596:b0:483:709e:f22d with SMTP id
- 5b1f17b1804b1-48526964c5bmr27894285e9.27.1772798759858; 
- Fri, 06 Mar 2026 04:05:59 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772798757; x=1773403557;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xjTySljdoOafAgUarglKvNAbtMoISIWDjJDpZqFUIWE=;
+ b=EXyT7WfVRfKpl+8nbgNJISx6JNspW27p6gzTfAjIp4whp0jqtoC66Gsm9dLPLhI15J
+ cH7xVtTWfqx81xELR65Y2erOa7bn0mv3i5gYa+N5QPIfKqfvR/AD73iBBwBCjkmED6JG
+ dh8YtAlKr06GldEQQtY/l20wSHGxLz69R+PHbwbeihxiRN9wJHvGJlv0RZtBBeiKlI0z
+ hyEIpE/jrGMyXZcD6FgvBqD39nTrlfIRfZpsUYa/AwCvuYMqdKyAzQPnMp4ybpcHF3mn
+ ELt8fZcykdYKss5c31CLgRCSVshszOrMq/edXF+Z56ev/7cz/UcWdrwuvyjImRBdQD9c
+ Fj9Q==
+X-Gm-Message-State: AOJu0YwvMFcjxEBCVwF1x6EpV/xUEbU0qcnqVExVAVa759TcIOMqOJOH
+ JAxlAf7PqTitc01AlwgmZZq/ZV0loRPKdy8ux8WaM4tZ36XAQx/Vq29F3YGqBiX0HNKfkTLhRHE
+ WEUFA
+X-Gm-Gg: ATEYQzz3Y7O2551gT6QXgO5xTQZ339fj4ph8lgZpu0xXl4LJDLL2X0lbgoGNH/el+LY
+ wt9D7CfD6xk0xrFAVUYrFsjlvqaJZ/v7pMCRbG9ETLeMnEuY52Vm4ZXzd1dyYwp2gvMK+ip3auh
+ WbO9yPruifv1eJRGQanDSxIqu0v72SOEhIjJ2/AJmuCHgk6WRa12IHIoXOfKJQokXUKjEvwPPzT
+ L2sgNfAICOvgoQN5ttBEw8hkfUp8bLPzPPzxb6i/BUpshCopoACSIO9rzc4xLefJ7wWIR5hI6Az
+ 6/i2i1EbMms1gBmmsCuW3rjfYkuSCUtWLaxVbDK8NCRe/cY3euBC/DT38P80m2JjfSNZCWgAAo5
+ MpT8KT0omISNyb2Js6tz/5/KTsHkCv7ahlsbuNwAWCmw7s+TqLEYoe2mG65LaOl5+ZG8vFTOYXP
+ d7xmLZeYPcSp1C/oZWvZydSqbzmYKNdrKoFPvUUALcll4fINZecNrZkT8zRI5lxVsDAil8lziw3
+ vVf5aAhvcbRv/ZU/2eKyMU9Ie91fl8=
+X-Received: by 2002:a05:600c:4f0b:b0:480:68ed:1e70 with SMTP id
+ 5b1f17b1804b1-4852697a114mr28480465e9.35.1772798757167; 
+ Fri, 06 Mar 2026 04:05:57 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48527681e2bsm32841945e9.5.2026.03.06.04.05.59
+ 5b1f17b1804b1-48527681e2bsm32841945e9.5.2026.03.06.04.05.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 04:05:59 -0800 (PST)
+ Fri, 06 Mar 2026 04:05:56 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 3/6] MAINTAINERS: Remove Eduardo Habkost
-Date: Fri,  6 Mar 2026 12:05:52 +0000
-Message-ID: <20260306120555.2035421-4-peter.maydell@linaro.org>
+Subject: [PATCH 0/6] MAINTAINERS: Remove people who no longer wish to be listed
+Date: Fri,  6 Mar 2026 12:05:49 +0000
+Message-ID: <20260306120555.2035421-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260306120555.2035421-1-peter.maydell@linaro.org>
-References: <20260306120555.2035421-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,79 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eduardo Habkost doesn't wish to be listed in MAINTAINERS any more;
-remove his email, and also the git trees he used to use.
+I recently sent some emails to people who are listed in our
+MAINTAINERS file but who have not sent any emails to qemu-devel in
+the last few years, to ask if they still wished to be listed as a
+maintainer.  (The motivation is to avoid sending people patch emails
+they're no longer interested in receiving, and to give us a better
+idea of which parts of the project are maintained and which are not.)
 
-Move the QOM boilerplate conversion script scripts/codeconverter
-to "Orphan" status, as it no longer has any listed maintainers.
+In this series I'm removing the entries for people who replied to let
+me know they didn't wish to be listed in the file any more.  I also
+in the last patch remove the one email address that was not
+deliverable.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- MAINTAINERS | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+At the end of March I'll send more patches to remove anybody who
+hasn't replied to my query by then.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 256859737c..5aa369e6e4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -422,7 +422,6 @@ F: tests/tcg/sparc64/
- X86 TCG CPUs
- M: Paolo Bonzini <pbonzini@redhat.com>
- M: Richard Henderson <richard.henderson@linaro.org>
--M: Eduardo Habkost <eduardo@habkost.net>
- S: Maintained
- F: target/i386/tcg/
- F: tests/tcg/i386/
-@@ -430,7 +429,6 @@ F: tests/tcg/x86_64/
- F: hw/i386/
- F: docs/system/i386/cpu.rst
- F: docs/system/cpu-models-x86*
--T: git https://gitlab.com/ehabkost/qemu.git x86-next
- 
- Xtensa TCG CPUs
- M: Max Filippov <jcmvbkbc@gmail.com>
-@@ -2024,7 +2022,6 @@ F: include/hw/i386/nitro_enclave.h
- F: docs/system/i386/nitro-enclave.rst
- 
- Machine core
--M: Eduardo Habkost <eduardo@habkost.net>
- M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Yanan Wang <wangyanan55@huawei.com>
-@@ -2047,7 +2044,6 @@ F: include/system/numa.h
- F: tests/functional/x86_64/test_cpu_queries.py
- F: tests/functional/generic/test_empty_cpu_model.py
- F: tests/unit/test-smp-parse.c
--T: git https://gitlab.com/ehabkost/qemu.git machine-next
- 
- TargetInfo API
- M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-@@ -3456,7 +3452,6 @@ S: Maintained
- F: backends/hostmem*.c
- F: include/system/hostmem.h
- F: docs/system/vm-templating.rst
--T: git https://gitlab.com/ehabkost/qemu.git machine-next
- 
- Cryptodev Backends
- M: Gonglei <arei.gonglei@huawei.com>
-@@ -3559,7 +3554,6 @@ T: git https://github.com/kostyanf14/qemu.git qga-win32
- QOM
- M: Paolo Bonzini <pbonzini@redhat.com>
- R: Daniel P. Berrange <berrange@redhat.com>
--R: Eduardo Habkost <eduardo@habkost.net>
- S: Supported
- F: docs/devel/qom.rst
- F: docs/qdev-device-use.txt
-@@ -3582,8 +3576,7 @@ F: tests/unit/test-qdev-global-props.c
- F: tests/qtest/qom-test.c
- 
- QOM boilerplate conversion script
--M: Eduardo Habkost <eduardo@habkost.net>
--S: Maintained
-+S: Orphan
- F: scripts/codeconverter/
- 
- QMP
+In all of these cases, I'd like to say thank you on behalf of the
+project for your work on QEMU, and for helping us in reviewing code
+and maintainer duties.
+
+-- PMM
+
+Peter Maydell (6):
+  MAINTAINERS: Remove Hannes Reinecke
+  MAINTAINERS: Remove Cameron Esfahani
+  MAINTAINERS: Remove Eduardo Habkost
+  MAINTAINERS: Remove Radoslaw Biernacki
+  MAINTAINERS: Remove Andrey Smirnov
+  MAINTAINERS: Remove Chris Browy
+
+ MAINTAINERS | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
+
 -- 
 2.43.0
 
