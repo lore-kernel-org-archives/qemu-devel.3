@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FABFCC056
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0975FCC056
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vya4Y-0001Tw-Hs; Fri, 06 Mar 2026 13:38:50 -0500
+	id 1vya44-000129-4L; Fri, 06 Mar 2026 13:38:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4G-00017P-PG
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:40 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya42-000110-HF
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4E-000679-Eu
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:32 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya40-00063T-CT
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772822309;
+ s=mimecast20190719; t=1772822295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mfBrz5F6+B1wu2Yn47FtG6YOUdns1u9EJnrTS3JkzBg=;
- b=fyHl807Yv5dDf4FnFn+xPFrsg+G+c/8JskwcuosDjTvmKZjZzqSbRldCS4pyhHMhxuIrGt
- +vIMSf20wGScZP8BsKzV/j82/8mHat4q5gohyrTvS3pMUw/Ro0ZxlctsRKzg4uWLU45hXy
- obWfOOFbXzaCBNvytcoS5wFarg3K0Mw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=NWQanKCnun5kNRbLxR1iy3Ws6TAaTZ3SCHpHTbvOpjY=;
+ b=ellC+FjDBAQreFFRr1Dk1jGcT+KwGwM0jLooPuiV8t6YbOPfubwzqRJOWGMoxtq5+zWe5E
+ /M1iWtBzotOzIM0HKo35yvrExjH2YwbZtiQvgWDDke4/MT8To9YMZs7P4uDWSSKlL7Oii7
+ 5ySlHtE/MJrbJ6Q+HeDFU4QtOOJsSPQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-3TIv98CiPGCZ5SdV3AvXvA-1; Fri,
- 06 Mar 2026 13:38:25 -0500
-X-MC-Unique: 3TIv98CiPGCZ5SdV3AvXvA-1
-X-Mimecast-MFC-AGG-ID: 3TIv98CiPGCZ5SdV3AvXvA_1772822305
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-rxeFLpfUPXK6sLHeikbuPA-1; Fri,
+ 06 Mar 2026 13:38:14 -0500
+X-MC-Unique: rxeFLpfUPXK6sLHeikbuPA-1
+X-Mimecast-MFC-AGG-ID: rxeFLpfUPXK6sLHeikbuPA_1772822293
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F192718005B4; Fri,  6 Mar 2026 18:38:24 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 743211956096; Fri,  6 Mar 2026 18:38:13 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.224.210])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C27BC1800576; Fri,  6 Mar 2026 18:38:23 +0000 (UTC)
+ id 4EC6E1800576; Fri,  6 Mar 2026 18:38:12 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 11/12] iotests/common.filter: Sort keep_data_file
-Date: Fri,  6 Mar 2026 19:37:04 +0100
-Message-ID: <20260306183705.410357-12-kwolf@redhat.com>
+Subject: [PULL 04/12] block/curl: fix concurrent completion handling
+Date: Fri,  6 Mar 2026 19:36:57 +0100
+Message-ID: <20260306183705.410357-5-kwolf@redhat.com>
 In-Reply-To: <20260306183705.410357-1-kwolf@redhat.com>
 References: <20260306183705.410357-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -82,33 +82,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Antoine Damhet <adamhet@scaleway.com>
 
-Sort the new keep_data_file creation option together with data_file and
-data_file_raw.
+curl_multi_check_completion would bail upon the first completed
+transfer even if more completion messages were available thus leaving
+some in flight IOs stuck.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20250530084448.192369-4-hreitz@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Rework a bit the loop to make the iterations clearer and drop the breaks.
+
+The original hang can be somewhat reproduced with the following command:
+
+$ qemu-img convert -p -m 16 -O qcow2 -c --image-opts \
+  'file.driver=https,file.url=https://scaleway.testdebit.info/10G.iso,file.readahead=1M' \
+  /tmp/test.qcow2
+
+Fixes: 1f2cead32443 ("curl: Ensure all informationals are checked for completion")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+Message-ID: <20260212162730.440855-2-adamhet@scaleway.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/common.filter | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/curl.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
-index 26e6b45b041..ce4213cb974 100644
---- a/tests/qemu-iotests/common.filter
-+++ b/tests/qemu-iotests/common.filter
-@@ -182,7 +182,7 @@ _do_filter_img_create()
-             -e 's/^\(fmt\)/0-\1/' \
-             -e 's/^\(size\)/1-\1/' \
-             -e 's/^\(backing\)/2-\1/' \
--            -e 's/^\(data_file\)/3-\1/' \
-+            -e 's/^\(\(keep_\)\?data_file\)/3-\1/' \
-             -e 's/^\(encryption\)/4-\1/' \
-             -e 's/^\(preallocation\)/8-\1/' \
-         | LC_ALL=C sort \
+diff --git a/block/curl.c b/block/curl.c
+index 4e77c93b46e..6dccf002564 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -324,17 +324,11 @@ curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
+ static void curl_multi_check_completion(BDRVCURLState *s)
+ {
+     int msgs_in_queue;
++    CURLMsg *msg;
+ 
+     /* Try to find done transfers, so we can free the easy
+      * handle again. */
+-    for (;;) {
+-        CURLMsg *msg;
+-        msg = curl_multi_info_read(s->multi, &msgs_in_queue);
+-
+-        /* Quit when there are no more completions */
+-        if (!msg)
+-            break;
+-
++    while ((msg = curl_multi_info_read(s->multi, &msgs_in_queue))) {
+         if (msg->msg == CURLMSG_DONE) {
+             int i;
+             CURLState *state = NULL;
+@@ -397,7 +391,6 @@ static void curl_multi_check_completion(BDRVCURLState *s)
+             }
+ 
+             curl_clean_state(state);
+-            break;
+         }
+     }
+ }
 -- 
 2.53.0
 
