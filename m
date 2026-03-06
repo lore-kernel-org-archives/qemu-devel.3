@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B03EFF513F2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 04:01:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72555F513F4
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 04:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyMMt-0003AI-6s; Thu, 05 Mar 2026 23:00:51 -0500
+	id 1vyMUc-0004GR-AR; Thu, 05 Mar 2026 23:08:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vyMMi-00039m-FZ; Thu, 05 Mar 2026 23:00:41 -0500
+ id 1vyMUY-0004Ft-6Y; Thu, 05 Mar 2026 23:08:47 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <maobibo@loongson.cn>)
- id 1vyMMe-0008Mo-VW; Thu, 05 Mar 2026 23:00:40 -0500
+ id 1vyMUW-0000eg-1U; Thu, 05 Mar 2026 23:08:45 -0500
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxacJUUappEgoYAA--.5655S3;
- Fri, 06 Mar 2026 12:00:21 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Bx36tGU6ppYwoYAA--.12804S3;
+ Fri, 06 Mar 2026 12:08:38 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJBxbcJRUappdUFPAA--.17577S3;
- Fri, 06 Mar 2026 12:00:19 +0800 (CST)
-Subject: Re: [PATCH 2/2] target/loongarch: Avoid recursive PNX exception on
- CSR_BADI fetch
+ by front1 (Coremail) with SMTP id qMiowJAxXcJBU6pp6kFPAA--.16843S3;
+ Fri, 06 Mar 2026 12:08:35 +0800 (CST)
+Subject: Re: [PATCH 1/2] target/loongarch: Preserve PTE permission bits in
+ LDDIR/LDPTE
 To: "Andrew S. Rightenburg" <andrew@rail5.org>, qemu-devel@nongnu.org
 Cc: gaosong@loongson.cn, qemu-stable@nongnu.org
 References: <20260305135403.831693-1-andrew@rail5.org>
- <20260305135403.831693-3-andrew@rail5.org>
+ <20260305135403.831693-2-andrew@rail5.org>
 From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <e87710ce-4c64-086f-1054-aa3cfba97983@loongson.cn>
-Date: Fri, 6 Mar 2026 11:57:38 +0800
+Message-ID: <cf6c2571-129d-84a7-1684-2446e3daca62@loongson.cn>
+Date: Fri, 6 Mar 2026 12:05:54 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260305135403.831693-3-andrew@rail5.org>
+In-Reply-To: <20260305135403.831693-2-andrew@rail5.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxbcJRUappdUFPAA--.17577S3
+X-CM-TRANSID: qMiowJAxXcJBU6pp6kFPAA--.16843S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uw4xuw4kKw43Xr43Cw15GFX_yoW8XFy7pF
- WIk34UJrWrtryDA3s5JayYgr15Ww4DC3yIg3W2qa4fGw4ft3sYq3Z5ta90qF13Jay5JrW7
- ZF1Sy348XayUAagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxAr43ZrW7tF43Jry3Jr1DJwc_yoWrZw4DpF
+ WfCr13CF4rKrZrA3Z3u3WqgFyrZws7Cw1rXF4IkrySy3y5Jr1ku3yUt39xtF48JwsxZw45
+ ZrsrZa1Dua4xZFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
  6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
  14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
  AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
  rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
  CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
  67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtx
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7XTm
  DUUUU
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
@@ -87,44 +87,121 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026/3/5 下午9:54, Andrew S. Rightenburg via qemu development wrote:
 > From: rail5 <andrew@rail5.org>
 > 
-> loongarch_cpu_do_interrupt() updates CSR_BADI by fetching the faulting
-> instruction with cpu_ldl_code_mmu().
+> The LDDIR/LDPTE helpers load a page table entry (or huge page entry)
+> from guest memory and currently apply the PALEN mask to the whole
+> 64-bit value.
 > 
-> For a PNX exception (instruction fetch prohibited by NX), fetching the
-> instruction at env->pc will fault with PNX again. This can lead to an
-> infinite exception loop.
+> That mask is intended to constrain the physical address bits, but masking
+> the full entry also clears permission bits in the upper part of the PTE,
+> including NX (bit 62). As a result, LoongArch TCG can incorrectly allow
+> instruction fetches from NX mappings when translation is driven through
+> these helpers.
+Good catch.
+yeap, it is actually one problem, the upper HW PTE bits are lost.
+
 > 
-> Treat PNX like other instruction-fetch exceptions (PIF/ADEF) and do not
-> update CSR_BADI for it.
+> Mask only the PPN/address field and preserve the rest of the PTE.
 > 
-> Fixes: 410dfbf620a ("target/loongarch: Move TCG specified functions to tcg_cpu.c")
+> This was reported as a bug at:
+> https://gitlab.com/qemu-project/qemu/-/issues/3319
+> 
+> Fixes: 56599a705f2 ("target/loongarch: Introduce loongarch_palen_mask()")
 > Cc: qemu-stable@nongnu.org
 > Signed-off-by: rail5 (Andrew S. Rightenburg) <andrew@rail5.org>
 > ---
->   target/loongarch/tcg/tcg_cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/loongarch/tcg/tlb_helper.c | 29 +++++++++++++++++++++++++----
+>   1 file changed, 25 insertions(+), 4 deletions(-)
 > 
-> diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-> index af92277669..31d3db6e8e 100644
-> --- a/target/loongarch/tcg/tcg_cpu.c
-> +++ b/target/loongarch/tcg/tcg_cpu.c
-> @@ -109,6 +109,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index c1dc77a8f8..8747fa2a0f 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -686,6 +686,24 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>       cpu_loop_exit_restore(cs, retaddr);
+>   }
+>   
+> +static inline uint64_t loongarch_mask_pte_ppn(CPULoongArchState *env,
+> +                                              uint64_t pte)
+> +{
+> +    uint64_t palen_mask = loongarch_palen_mask(env);
+> +
+> +    if (is_la64(env)) {
+> +        uint64_t ppn_bits = pte & MAKE_64BIT_MASK(12, 36);
+> +        uint64_t ppn_masked = ppn_bits & palen_mask;
+> +
+> +        return (pte & ~MAKE_64BIT_MASK(12, 36)) | ppn_masked;
+value 36 is hard-code, also I think software PTE bit should be cleared.
+how about add HW PTE mask element in structure CPULoongArchState?
+
+> +    } else {
+> +        uint64_t ppn_bits = pte & MAKE_64BIT_MASK(8, 24);
+> +        uint64_t ppn_masked = ppn_bits & palen_mask;
+> +
+> +        return (pte & ~MAKE_64BIT_MASK(8, 24)) | ppn_masked;
+> +    }
+> +}
+> +
+>   target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>                             uint32_t level, uint32_t mem_idx)
+>   {
+> @@ -721,7 +739,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>       get_dir_base_width(env, &dir_base, &dir_width, level);
+>       index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+>       phys = base | index << 3;
+> -    return ldq_le_phys(cs->as, phys) & palen_mask;
+> +    return loongarch_mask_pte_ppn(env, ldq_le_phys(cs->as, phys));
+I think that it is not needed with lddir() API, lddir returns physical 
+address of page table without PTE permission. only helper_ldpte() need 
+modification.
+
+Regards
+Bibo Mao
+
+>   }
+>   
+>   void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+> @@ -729,6 +747,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>   {
+>       CPUState *cs = env_cpu(env);
+>       hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
+> +    uint64_t pte_raw;
+>       uint64_t badv;
+>       uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+>       uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
+> @@ -744,7 +763,6 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>        * and the other is the huge page entry,
+>        * whose bit 6 should be 1.
+>        */
+> -    base = base & palen_mask;
+>       if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+>           /*
+>            * Gets the huge page level and Gets huge page size.
+> @@ -768,7 +786,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>            * when loaded into the tlb,
+>            * so the tlb page size needs to be divided by 2.
+>            */
+> -        tmp0 = base;
+> +        tmp0 = loongarch_mask_pte_ppn(env, base);
+>           if (odd) {
+>               tmp0 += MAKE_64BIT_MASK(ps, 1);
 >           }
->           QEMU_FALLTHROUGH;
->       case EXCCODE_PIF:
-> +    case EXCCODE_PNX:
->       case EXCCODE_ADEF:
->           cause = cs->exception_index;
->           update_badinstr = 0;
-> @@ -129,7 +130,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
->       case EXCCODE_PIS:
->       case EXCCODE_PME:
->       case EXCCODE_PNR:
-> -    case EXCCODE_PNX:
->       case EXCCODE_PPI:
->           cause = cs->exception_index;
->           break;
+> @@ -780,12 +798,15 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>       } else {
+>           badv = env->CSR_TLBRBADV;
+>   
+> +        base = base & palen_mask;
+> +
+>           ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
+>           ptindex = ptindex & ~0x1;   /* clear bit 0 */
+>           ptoffset0 = ptindex << 3;
+>           ptoffset1 = (ptindex + 1) << 3;
+>           phys = base | (odd ? ptoffset1 : ptoffset0);
+> -        tmp0 = ldq_le_phys(cs->as, phys) & palen_mask;
+> +        pte_raw = ldq_le_phys(cs->as, phys);
+> +        tmp0 = loongarch_mask_pte_ppn(env, pte_raw);
+>           ps = ptbase;
+>       }
+>   
 > 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
