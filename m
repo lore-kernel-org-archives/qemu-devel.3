@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC32FCC062
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B32EFCC067
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vybDC-0004sR-1H; Fri, 06 Mar 2026 14:51:51 -0500
+	id 1vybDH-0005Js-CP; Fri, 06 Mar 2026 14:51:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCO-0004Ci-UA
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:02 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1vybCQ-0004Cm-M9
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:03 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCL-0000QU-9f
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:00 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4837584120eso74144715e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:56 -0800 (PST)
+ id 1vybCN-0000RN-Ts
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:02 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48371119eacso114188165e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772826655; x=1773431455; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772826658; x=1773431458; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zgbYRpk8ljdnbZv89/v2Xx4zmhiXOdG5XIL02YG2oOc=;
- b=r2HBE0Jof+O1EhMAIrae3wmzXNtc2X9ClcZF7k4i9bXGchFOvKLm493cBNBvCiU1zn
- GNU4W3BYDdXUHQZrFXDk2Fzoz/raMHr3VtBbLziMySB1nEqbDXqmlxi6anqzSQ2J35L5
- EqnoJ32Gf9Apl54rLandKkEwf2hCDid6tjmXAov7KBF+a8NQivR68U1nBbWu+O3BRIZO
- Cf8LTGjSVGN6uEahfXEDBhINk9QhEvR3p9hfF7jvUn9jGmK76AbfwlU9RhCFfuRS/lmQ
- vpByJU2hXScCaDixW34FODkpNQbhmUdeLHMeE0vf3XnG1tOMMzqdoNWJIs9ttOzZCP4l
- RzGg==
+ bh=TRS02MZ6aEMRyeENzvEVRS+yAlrpGP763UJyGyRbzXc=;
+ b=oJx4mc1nXrJNLYxKPzxCpRyxkha4kdp6Xhey9n1IV9kqMLgociMFkTGVfJQdgWKJdP
+ +3WiopOt4J6GJTdIfAqhCEdahEXHujILI62MbG8DJkoQFmmrurxhFn9xgHfqJh6OBSF0
+ kPWzYG/LgM53otGodpaEVhzuA8pjZ2NQMkNAnnsyoh4hBlDP9LxxbuDE6Ko3n/nMiR/H
+ MUaeps+L4R4VGhNB7VxDVfzcSj7lIyl8Ui4FrxC3qnIHk0q79QfqAk4uzZ9jE6IIqYqe
+ wUFQ641OnFmpv9c5WmxSPSaf5GUAOKeR9EfJqWNoIWZAoMluwOfEBknkM917F7atVWxB
+ D/xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772826655; x=1773431455;
+ d=1e100.net; s=20230601; t=1772826658; x=1773431458;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zgbYRpk8ljdnbZv89/v2Xx4zmhiXOdG5XIL02YG2oOc=;
- b=F7ItaHIpP3RUtoFQ5E/WV9aVjehgrcqdxGnSPoiY0TtOgPpsqG5kX6XvRUMOW13SfE
- Ug6V4kEiIXiygXivlNdyihjEJnGIuZMy1aswDkFTQLrWf7oW1r9T9Qk63+LkyEtR9rlE
- 16AXYT+7AFGosCI1rZjIFV+e54fSxjVCJ0E3dIEb59eCT6S6VQ1PzGMhZuz3JwyaIJ8x
- VpGIdsTY1AjhnHFHfYUhH6gjT0crZRG4slwjuyYIRVGVaxlLTgjxqAzi+FqtQAsRhySH
- eNbYD6IGj6AGpnufrr7IXOiyRrHlFJC8pHcBvFmsseQlt91Rw+ExEd+BB3ZySqF53q6q
- j2Aw==
-X-Gm-Message-State: AOJu0Ywb/WPcT2APypPCXTOPLEN6GGYx65Kx6XsNxTyYwF0nhFH5Hymu
- uMyK9ur4CenYnseXPMpc9bVHOHThVfWHVei9Ji6NsuTX/keftw4w47u5T864addU8ss=
-X-Gm-Gg: ATEYQzwWT+6OpexXDJ6ELB2PTAmJI+kg1EAzg5qpyrp+ARVGIzEaklKkblXzbRrfFSf
- G3BkAGokAXNl+zTH8tRb+Ge7h+x+hkuWN+/9wC2Cy5dB1K/CacIlcNZ4V6bXVVUWiwS3mm/IqKe
- JL53cp2nG71YYtfB/DDN2JOTGPES081lWkNPI8nFi28Vuy+HaY689q3WvYr5VMl00fSo/Lrgvg/
- XwtqyLBRDMQposMcSUyw9n65wu3wMfKjtzU6/xM3w1LqRvY0fgdCu918lvYAPansFGc2DweqyeA
- yrDewHJ+X6Ux9aS9UbEsVS5s3XAiTNXg2iLthh5kKzjLlPNDNNnDsWDD5kCnHZc0IQW+aV3RCpo
- /iI+gYf+wOqpya7zqmvgAYtKBjQ2lWAqCCBEwWEyGTBTeFNSmuvijX0phJ4rrvPOPA1rDulRKQt
- SjvT0SIcPcLD9cABZ5ig/NiSk=
-X-Received: by 2002:a05:600c:4591:b0:483:6d4a:7e6d with SMTP id
- 5b1f17b1804b1-48526978644mr51581675e9.30.1772826655452; 
- Fri, 06 Mar 2026 11:50:55 -0800 (PST)
+ bh=TRS02MZ6aEMRyeENzvEVRS+yAlrpGP763UJyGyRbzXc=;
+ b=Qzdm5hc9LNGO0/jxuk3WMagTlL5Kys4ENbQw3uJIbJQpff0zo0HIKyYJbTzp3ecEmC
+ QoV83YwuKgojC9HbBps3/f+zv8uSDO1ay70txOeekEP58dJ2mT06427D0CpQJzahcl3n
+ oaVE7Bn7e8LQzL1JX+EWUsFPvmxHnrHyItL0pw2BeKXrQXAx7BUaOfqFhAawAhJdJ8UE
+ TKR7U/K0Rkl5Lb1+qi5fXOFO/FWreaQDvyWAWloogSXjSHEAK6VjTYeOsgnCIno+pKkx
+ NtwqCgcGEWflzwVcGwVR5LVmE3a4IvKoWwH9bK3pUdnJiI5l9ZFlnMFy7sVJTBwsCtGf
+ w4gA==
+X-Gm-Message-State: AOJu0Yxlt5JrnBOgcxoe0ppJZzWmfQg7QVkF/QvKqfgNV5lH20t5f2Cv
+ FyRYhDcAQc9BsOFSjc94nHmErMoDOsXXEN++q/H9VlX5+LTq3ie+sFyTjZhHEZ+yN4w=
+X-Gm-Gg: ATEYQzxSYssu99b9M5Aa9T9lIdoc0iBq3fvfJlQp930toQ1wE4A1Kglt4bKPs29rjYG
+ UKKG4tXUqpd4JSvsgpTT09jIJjUoU+Jw5Xmv/1BQyLOaRW5GtG68ZlUCXbFX09VqKXmuAvVdCsO
+ x/VRjLxEu3hL3lUFgVhkQWfrvJDYyysnuduTpAZRB1qQOuzSdenxFxKOQyaz1uiaNlJ+++TF6/Z
+ 4vFv+Uko3xYVn3Le5v6pwe5TCSnMnN5nrvq3tkIanTImW1XFCypaTz2SAVdcBYcQ21CIh1fS/4I
+ DRTQfpA1b4pPmIiquhL74qIdiZXio4f3fvl38FI1k0Gr/tJUDgdhHAjKt/E/3BuUcMINiDaMApN
+ q5h6FxCNusAjPthuSNCEpqb72sNo5El9N1XZ4bZJ++oKd31aesLtXz9dj4uQKDDq9RQ+JKzNEkZ
+ cttkWRxSRUa6eCwnCBaMSIYnqz4gIsim9Ojg==
+X-Received: by 2002:a05:600c:8714:b0:477:6374:6347 with SMTP id
+ 5b1f17b1804b1-48526957d50mr50072905e9.22.1772826658421; 
+ Fri, 06 Mar 2026 11:50:58 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm36441285e9.4.2026.03.06.11.50.52
+ 5b1f17b1804b1-4852470b412sm50445705e9.8.2026.03.06.11.50.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 11:50:53 -0800 (PST)
+ Fri, 06 Mar 2026 11:50:54 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A9953689D7;
- Fri, 06 Mar 2026 19:50:49 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 1C692689DB;
+ Fri, 06 Mar 2026 19:50:50 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Yiwei Zhang <zzyiwei@gmail.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/20] ui/sdl2: Implement dpy dmabuf functions
-Date: Fri,  6 Mar 2026 19:50:35 +0000
-Message-ID: <20260306195048.2869788-9-alex.bennee@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 12/20] virtio-gpu: Support DRM native context
+Date: Fri,  6 Mar 2026 19:50:39 +0000
+Message-ID: <20260306195048.2869788-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260306195048.2869788-1-alex.bennee@linaro.org>
 References: <20260306195048.2869788-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,246 +109,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-If EGL is used, we can rely on dmabuf to import textures without
-doing copies.
+Add support for DRM native contexts to VirtIO-GPU. DRM context is enabled
+using a new virtio-gpu-gl device option "drm_native_context=on".
 
-To get this working on X11, we use the existing SDL hint:
-SDL_HINT_VIDEO_X11_FORCE_EGL (because dmabuf can't be used with GLX).
+Unlike Virgl and Venus contexts that operate on application API level,
+DRM native contexts work on a kernel UAPI level. This lower level results
+in a lightweight context implementations that yield better performance.
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-7-dmitry.osipenko@collabora.com>
-[AJB: ifdef CONFIG_OPENGL/CONFIG_GBM for non-linux hosts]
-Message-ID: <20260304165043.1437519-9-alex.bennee@linaro.org>
+Message-ID: <20260303151422.977399-11-dmitry.osipenko@collabora.com>
+Message-ID: <20260304165043.1437519-13-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/meson.build b/meson.build
-index 7b4e5bc72b5..6b1838b159e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1946,10 +1946,8 @@ if get_option('gtk') \
-   endif
- endif
+diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
+index 0f4bb304a9b..086e2fcf27b 100644
+--- a/docs/system/devices/virtio/virtio-gpu.rst
++++ b/docs/system/devices/virtio/virtio-gpu.rst
+@@ -84,6 +84,17 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
  
--x11 = not_found
--if gtkx11.found()
--  x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
--endif
-+x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
-+
- png = not_found
- if get_option('png').allowed() and have_system
-    png = dependency('libpng', version: '>=1.6.34', required: get_option('png'),
-diff --git a/include/ui/sdl2.h b/include/ui/sdl2.h
-index dbe6e3d9739..9daf5ecffae 100644
---- a/include/ui/sdl2.h
-+++ b/include/ui/sdl2.h
-@@ -45,6 +45,7 @@ struct sdl2_console {
-     bool gui_keysym;
-     SDL_GLContext winctx;
-     QKbdState *kbd;
-+    bool has_dmabuf;
- #ifdef CONFIG_OPENGL
-     QemuGLShader *gls;
-     egl_fb guest_fb;
-@@ -96,5 +97,11 @@ void sdl2_gl_scanout_texture(DisplayChangeListener *dcl,
-                              void *d3d_tex2d);
- void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
-                            uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf);
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl);
-+void sdl2_gl_console_init(struct sdl2_console *scon);
+ .. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
  
- #endif /* SDL2_H */
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index fbac3edbc09..bb066cdd885 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -26,6 +26,8 @@
-  */
++DRM native context is supported since release of `virglrenderer`_ v1.0.0
++using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
++host blob support (``hostmem`` and ``blob`` fields) and should be enabled
++using ``drm_native_context`` field.  The ``hostmem`` field specifies the size
++of virtio-gpu host memory window. This is typically between 256M and 8G.
++
++.. parsed-literal::
++    -device virtio-gpu-gl,hostmem=8G,blob=on,drm_native_context=on
++
++.. _drm: https://gitlab.freedesktop.org/virgl/virglrenderer/-/tree/main/src/drm
++
+ virtio-gpu rutabaga
+ -------------------
  
- #include "qemu/osdep.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/input.h"
- #include "ui/sdl2.h"
-@@ -250,3 +252,69 @@ void sdl2_gl_scanout_flush(DisplayChangeListener *dcl,
- 
-     SDL_GL_SwapWindow(scon->real_window);
- }
-+
-+#ifdef CONFIG_GBM
-+void sdl2_gl_scanout_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+    const int *fds;
-+
-+    assert(scon->opengl);
-+    SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
-+
-+    egl_dmabuf_import_texture(dmabuf);
-+    if (!qemu_dmabuf_get_texture(dmabuf)) {
-+        fds = qemu_dmabuf_get_fds(dmabuf, NULL);
-+        error_report("%s: failed fd=%d", __func__, fds ? fds[0] : -1);
-+        return;
-+    }
-+
-+    sdl2_gl_scanout_texture(dcl, qemu_dmabuf_get_texture(dmabuf), false,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            0, 0,
-+                            qemu_dmabuf_get_width(dmabuf),
-+                            qemu_dmabuf_get_height(dmabuf),
-+                            NULL);
-+
-+    if (qemu_dmabuf_get_allow_fences(dmabuf)) {
-+        scon->guest_fb.dmabuf = dmabuf;
-+    }
-+}
-+
-+void sdl2_gl_release_dmabuf(DisplayChangeListener *dcl,
-+                            QemuDmaBuf *dmabuf)
-+{
-+    egl_dmabuf_release_texture(dmabuf);
-+}
-+
-+bool sdl2_gl_has_dmabuf(DisplayChangeListener *dcl)
-+{
-+    struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
-+
-+    return scon->has_dmabuf;
-+}
-+#endif
-+
-+void sdl2_gl_console_init(struct sdl2_console *scon)
-+{
-+    bool hidden = scon->hidden;
-+
-+    scon->hidden = true;
-+    scon->surface = qemu_create_displaysurface(1, 1);
-+    sdl2_window_create(scon);
-+
-+    /*
-+     * QEMU checks whether console supports dma-buf before switching
-+     * to the console.  To break this chicken-egg problem we pre-check
-+     * dma-buf availability beforehand using a dummy SDL window.
-+     */
-+    scon->has_dmabuf = qemu_egl_has_dmabuf();
-+
-+    sdl2_window_destroy(scon);
-+    qemu_free_displaysurface(scon->surface);
-+
-+    scon->surface = NULL;
-+    scon->hidden = hidden;
-+}
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 032dc14bc39..aaaede56e0e 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -35,6 +35,10 @@
- #include "qemu/log.h"
- #include "qemu-main.h"
- 
-+#ifdef CONFIG_X11
-+#include <X11/Xlib.h>
-+#endif
-+
- static int sdl2_num_outputs;
- static struct sdl2_console *sdl2_console;
- 
-@@ -120,6 +124,11 @@ void sdl2_window_create(struct sdl2_console *scon)
-         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
-         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
-     }
-+
-+#ifdef CONFIG_OPENGL
-+    qemu_egl_display = eglGetCurrentDisplay();
-+#endif
-+
-     sdl_update_caption(scon);
- }
- 
-@@ -808,6 +817,12 @@ static const DisplayChangeListenerOps dcl_gl_ops = {
-     .dpy_gl_scanout_disable  = sdl2_gl_scanout_disable,
-     .dpy_gl_scanout_texture  = sdl2_gl_scanout_texture,
-     .dpy_gl_update           = sdl2_gl_scanout_flush,
-+
-+#ifdef CONFIG_GBM
-+    .dpy_gl_scanout_dmabuf   = sdl2_gl_scanout_dmabuf,
-+    .dpy_gl_release_dmabuf   = sdl2_gl_release_dmabuf,
-+    .dpy_has_dmabuf          = sdl2_gl_has_dmabuf,
-+#endif
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 2610a32e408..1a999887481 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -100,6 +100,7 @@ enum virtio_gpu_base_conf_flags {
+     VIRTIO_GPU_FLAG_RUTABAGA_ENABLED,
+     VIRTIO_GPU_FLAG_VENUS_ENABLED,
+     VIRTIO_GPU_FLAG_RESOURCE_UUID_ENABLED,
++    VIRTIO_GPU_FLAG_DRM_ENABLED,
  };
  
- static bool
-@@ -835,6 +850,35 @@ static void sdl2_display_early_init(DisplayOptions *o)
+ #define virtio_gpu_virgl_enabled(_cfg) \
+@@ -122,6 +123,8 @@ enum virtio_gpu_base_conf_flags {
+     (_cfg.hostmem > 0)
+ #define virtio_gpu_venus_enabled(_cfg) \
+     (_cfg.flags & (1 << VIRTIO_GPU_FLAG_VENUS_ENABLED))
++#define virtio_gpu_drm_enabled(_cfg) \
++    (_cfg.flags & (1 << VIRTIO_GPU_FLAG_DRM_ENABLED))
+ 
+ struct virtio_gpu_base_conf {
+     uint32_t max_outputs;
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index 3e0680880e1..b941e9a4b78 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -159,6 +159,8 @@ static const Property virtio_gpu_gl_properties[] = {
+                     VIRTIO_GPU_FLAG_STATS_ENABLED, false),
+     DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
+                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
++    DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.flags,
++                    VIRTIO_GPU_FLAG_DRM_ENABLED, false),
+ };
+ 
+ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index ae1880c358b..f5fe1bf4e73 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1323,6 +1323,25 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
+         flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
      }
- }
++    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
++        flags |= VIRGL_RENDERER_DRM;
++
++        if (!(flags & VIRGL_RENDERER_ASYNC_FENCE_CB)) {
++            /*
++             * Virglrenderer skips enabling DRM context support without
++             * enabled async-fence feature. VirtIO-GPU will initialize
++             * successfully, but DRM context won't be available in guest.
++             *
++             * For vrend async-fencing can be enabled only if EGL display
++             * is used. Vrend can't be disabled in QEMU, hence DRM implicitly
++             * requires EGL too.
++             *
++             * Async-fence was bugged in virglrenderer versions <= 1.1.1.
++             */
++            error_report("drm requires egl display and virglrenderer >= 1.2.0");
++            return -EINVAL;
++        }
++    }
+ #endif
  
-+static void sdl2_set_hint_x11_force_egl(void)
-+{
-+#if defined(SDL_HINT_VIDEO_X11_FORCE_EGL) && defined(CONFIG_OPENGL) && \
-+    defined(CONFIG_X11)
-+    Display *x_disp = XOpenDisplay(NULL);
-+    EGLDisplay egl_display;
-+
-+    if (!x_disp) {
-+        return;
-+    }
-+
-+    /* Prefer EGL over GLX to get dma-buf support. */
-+    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
-+
-+    if (egl_display != EGL_NO_DISPLAY) {
-+        /*
-+         * Setting X11_FORCE_EGL hint doesn't make SDL to prefer X11 over
-+         * Wayland. SDL will use Wayland driver even if XWayland presents.
-+         * It's always safe to set the hint even if X11 is not used by SDL.
-+         * SDL will work regardless of the hint.
-+         */
-+        SDL_SetHint(SDL_HINT_VIDEO_X11_FORCE_EGL, "1");
-+        eglTerminate(egl_display);
-+    }
-+
-+    XCloseDisplay(x_disp);
-+#endif
-+}
-+
- static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- {
-     uint8_t data = 0;
-@@ -862,6 +906,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
- #endif
-     SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
-+    sdl2_set_hint_x11_force_egl();
-     SDL_EnableScreenSaver();
-     memset(&info, 0, sizeof(info));
-     SDL_VERSION(&info.version);
-@@ -906,9 +951,12 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
- #endif
-         sdl2_console[i].dcl.con = con;
-         sdl2_console[i].kbd = qkbd_state_init(con);
-+#ifdef CONFIG_OPENGL
-         if (display_opengl) {
-             qemu_console_set_display_gl_ctx(con, &sdl2_console[i].dgc);
-+            sdl2_gl_console_init(&sdl2_console[i]);
+     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+@@ -1386,5 +1405,14 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
          }
-+#endif
-         register_displaychangelistener(&sdl2_console[i].dcl);
+     }
  
- #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
++    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
++        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_DRM,
++                                   &capset_max_ver,
++                                   &capset_max_size);
++        if (capset_max_size) {
++            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_DRM);
++        }
++    }
++
+     return capset_ids;
+ }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index a89d49aa8cc..de7a86a73d2 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1517,6 +1517,21 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+ #endif
+     }
+ 
++    if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
++#ifdef VIRGL_VERSION_MAJOR
++    #if VIRGL_VERSION_MAJOR >= 1
++        if (!virtio_gpu_blob_enabled(g->parent_obj.conf) ||
++            !virtio_gpu_hostmem_enabled(g->parent_obj.conf)) {
++            error_setg(errp, "drm requires enabled blob and hostmem options");
++            return;
++        }
++    #else
++        error_setg(errp, "old virglrenderer, drm unsupported");
++        return;
++    #endif
++#endif
++    }
++
+     if (!virtio_gpu_base_device_realize(qdev,
+                                         virtio_gpu_handle_ctrl_cb,
+                                         virtio_gpu_handle_cursor_cb,
 -- 
 2.47.3
 
