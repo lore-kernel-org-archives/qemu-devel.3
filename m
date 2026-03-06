@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A218FCB605
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2C9FCB60A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWet-0004CW-RK; Fri, 06 Mar 2026 10:00:07 -0500
+	id 1vyWfw-0006kP-MG; Fri, 06 Mar 2026 10:01:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWes-0004Az-IL
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:06 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vyWfT-0004qm-UW
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:53 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWeq-0002WP-Sn
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:06 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-483bd7354efso121936085e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:04 -0800 (PST)
+ id 1vyWfS-0002pQ-Ac
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:43 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439c6fc2910so2301590f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809203; x=1773414003; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809241; x=1773414041; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=URmUpxDAKxkZF/tpctzfZNZZvCGQY0Hg4ZEcA6KURzU=;
- b=bX2uHWddwPw+QZGpFhbSuxbjazNCIQiVupdW+cB8Fi8EtYAtK9GajKcrDepXAaIrAR
- AafCONbR605HtH5zaWwQsLNxxPhc2lM4EnHyokgOHxAKd3Qpm0hSwqbYvYb9CqRbLdYt
- CYVNb01hdq7XYAU+bVhJig/co7tCya2R9v4I0UBWfYByP2nQ2pNb8SZeMzPe5FUmlTb1
- DqrZx2FciO5a6oGTbVg65AKnPU9dydiCTkh4nJWzhiQyGl4oe8yz/5xiMPMdMXsUo4xy
- PU4rP5iOj1gWnQc0/ErjVhL+HG1d/fwL20IArfUwX0r1ADNZqvdwnJVVu5GbdtI4Oosm
- rPdA==
+ :reply-to; bh=TUbzVPCJHafQ9ANhUjINzIDMnhhGghwfl2F9rNmrhP0=;
+ b=sN0ZykfN0RCA9mjuWxSwU9KtVWIDWGwH4ywm2rCbB+tv9WiYTqgrB6lo9MQ5IdeJh4
+ RRSGpLNzdRJkLTK36Hf4ii7pH8zkAVBQbvSVdKK9kUH3tdWy+Mf10Pr+CtAhqgclkjQt
+ RA2e2UpA0um3cw/SfPmwB1Ur6Qv73unhIU4zTUOK807IJwWL6gMQos1DuaeqJbVirFsS
+ xdRVx8vdkc/JuzHZKF/9g3mfwRDdhwYYAk76iFzfDfUu12Zz/EEdEihstlhQqDdJXZVi
+ Jx/Z/OLwtwa6O1XPihkom0zZkami2po5TKetHUKeH6MrhLCVzLqpGEdFmBhk/4wCW1hM
+ 8mww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809203; x=1773414003;
+ d=1e100.net; s=20230601; t=1772809241; x=1773414041;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=URmUpxDAKxkZF/tpctzfZNZZvCGQY0Hg4ZEcA6KURzU=;
- b=Rif761tipWr/AWCQF1biTyDU2fZnce0fjZPit7Ug16PhqnipR2C94Im58DqKUnyS3+
- hbXh7PQPaz4NouvytV5rhvszN/fo7PPR0G5b7GgwsmhLntxvx5EMvVaNZQA7C7Oz6kC6
- jtmCaRSmjM/qoEEfp4oZSNgJE0hKHr0r7lKhHoQ8/4HWRkYwDXsTd7M8kbqr9xZfvIdZ
- YGIapUorPjUguP6kA5MpXAQ5SOuZ3/poNV/9uOartELcrqO3Jx0UFMTnGFONnLeZupQk
- cnX4OeWiDa7QpkIpf+xj0Wu8JKMcCcHI4EqxHuORUasowOTDwkhBr2K13nMd0WAHnmom
- 7e8Q==
-X-Gm-Message-State: AOJu0YyJVaZq68ommaix9YEOuMgJDwDIUI1L3rBNQv/XsajgVqbIBBiG
- PWV8M7XSEPr5xP4NXSIrljWqaFWB4AmO0l/AlCOm1h8VoTy7djvnRATm67x+RRtJqAVuDtRbrTb
- /3sjt
-X-Gm-Gg: ATEYQzzwODXhzbizj875ZVMw9c0/9+7fSELhRZSXr5nbKzoHgKgQgzW9X+IKh38Yg5E
- qcEWCu5KRZ3Xa744t00UTdO4SOUY9QjSxDgd44Qx35RzHK/BVpFsIVGC/V4xtcu91tQvgwYlyST
- gRANPnXeR/ld5JjDRGzYwvySnuTszqPXZzwqe/plgubDO87ybCiTfglLBmFHrzLNjvYUHo0xila
- kcztcvAEQaHC05rqNCo5ZZAodrWJtjecEwAu5xnpuTwsI2/nwbunTTtj1yEw1ICzOLt9PFRrlA/
- LdEXo6bvxCPcAQwqr/lj/aXTRxn3+i+pr1W2EM6gujRMhAYxK7N2KvyZz8/6fsywVAe/d4yt5hv
- BhXjyNBf3e+MPUc10VaFvqXWqrxNTJotT8hwkmIFYv9kCE/7h5bWiZTFRVy6g8CXl7GYGJVIuNP
- lvaTiG+lFnyzyJJ67doPtTYB39X49PUOCZp8uhMcZxiM38k5e+DJcmzOWuaO8tmD85Sh4Bh/mdB
- Sem9c9e+qGgypIwT7SJ4x9whDAZLQY=
-X-Received: by 2002:a05:600c:1e86:b0:483:5310:dc67 with SMTP id
- 5b1f17b1804b1-4852695b81cmr36947285e9.20.1772809203096; 
- Fri, 06 Mar 2026 07:00:03 -0800 (PST)
+ bh=TUbzVPCJHafQ9ANhUjINzIDMnhhGghwfl2F9rNmrhP0=;
+ b=SzmbGMXEkPC606Vf5TGCzAarN65tmBSfq98EVHV3FDKBAMy2ULemLEvf0Z6zTsOZwc
+ yD9RQw1KpucABtfE03Ve1b5dgb4E398N3D0ya/OmkgB1rGizbNx2uO0xiP6L4B+TSmWp
+ is+4HtUdK/MA1a/gMr0+rbcaWqgj2Zjg93UFeCVyI4fO3MT3RNWj18ZS4GVzLKPm8Fgv
+ jtqHX16YfQXDPGMPL/3NChVNyOxMs6D9vRP95pNSdURO30ngI3uLjerLyVc3LNzkwBUU
+ eQ2yRyEy1b1Lua7GI4aPhG6fLrCHNLsqu3OSbXfgJioEeSvXhcso07C8BhFJTsp94rvh
+ sv/w==
+X-Gm-Message-State: AOJu0Yy/HJpbxhWWkZIFay6djveF85S2aWEQkPEF8DZXAObLEs0q+K4q
+ syjy2SL04l8bhfXYrONW1qpP6yWYF4KLuNp6j0NfjJLc004gjRaM0kH74zmQaEB9H5Sf/B08Nho
+ udUvb
+X-Gm-Gg: ATEYQzzG7c/i+V/wnOxVHU3Fpl02/9PRDpJibeXjlaKMycCqgXZ5yPOJtYY+YALmsyf
+ YgEqYOCOaYdP+Sx7iPLn6Cer9ShiHkexcfI/KQmVxwaB9WoGWJQXorOCRnFwHT5LU+UyUizvFEL
+ ZyE0OSY4DRj2Q5BHgbMD2lUZ+63NRl6ayXG6N0uwWIZDsL837xdcTojaULzi4NgeftwjUkkMA8Q
+ JddESc9vYZxYkK/MbO+00DA+B9HZ0Wan+Zbf5NcLmPviP90KAPc2dh7juQV+UzXOowsdfDTtbWV
+ nUQnhtH9lhfgePFQzgfOT2p7VcHWOHGcb3g3zOtUV9H5VnatvVY4Lupw0WTsSj1FwHOytn3ripO
+ HPqbESevntMkrPl7gp+HOiVZI1a0QMZ4mw2wJ8vZBYqGlrBeI/2wl29Vxzsg3/WKiDRFBa3irAg
+ up0guBTwO7PfFTblGzs3EXlfb52fK0BKQfQfMoNsif5nHr6QjHFMOXDOjGhH98QaIH2bo4LqbRA
+ DaW81l9yNbnngaVGhHDM1XRSWIUGok=
+X-Received: by 2002:a05:600c:4710:b0:483:2c98:435e with SMTP id
+ 5b1f17b1804b1-485269792ddmr35632595e9.34.1772809240632; 
+ Fri, 06 Mar 2026 07:00:40 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.02
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:00:02 -0800 (PST)
+ Fri, 06 Mar 2026 07:00:39 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/49] hw/arm/aspeed_gpio: Don't leak string in
- aspeed_gpio_init()
-Date: Fri,  6 Mar 2026 14:59:13 +0000
-Message-ID: <20260306145939.2162189-24-peter.maydell@linaro.org>
+Subject: [PULL 49/49] hvf: enable nested virtualisation support
+Date: Fri,  6 Mar 2026 14:59:39 +0000
+Message-ID: <20260306145939.2162189-50-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,30 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We allocate the string for the GPIO property name, but never free it.
-Use g_autofree to avoid this.
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-id: 20260306130107.35359-18-mohamed@unpredictable.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260302092225.4088227-4-peter.maydell@linaro.org
 ---
- hw/gpio/aspeed_gpio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/arm/virt.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index d9237d4360..7d0f87e90c 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -1488,7 +1488,7 @@ static void aspeed_gpio_init(Object *obj)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 90769936d0..bced9f67f4 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2393,13 +2393,20 @@ static void machvirt_init(MachineState *machine)
+         exit(1);
      }
  
-     for (int i = 0; i < agc->nr_gpio_sets; i++) {
--        char *name = g_strdup_printf("gpio-set[%d]", i);
-+        g_autofree char *name = g_strdup_printf("gpio-set[%d]", i);
-         object_property_add(obj, name, "uint32", aspeed_gpio_get_set,
-         aspeed_gpio_set_set, NULL, NULL);
+-    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
++    if (vms->virt && !kvm_enabled() && !tcg_enabled()
++       && !hvf_enabled() && !qtest_enabled()) {
+         error_report("mach-virt: %s does not support providing "
+                      "Virtualization extensions to the guest CPU",
+                      current_accel_name());
+         exit(1);
      }
+ 
++    if (vms->virt && hvf_enabled() && !hvf_irqchip_in_kernel()) {
++        error_report("mach-virt: For HVF and Virtualization extensions "
++                     "only kernel-irqchip=on is currently supported");
++        exit(1);
++    }
++
+     if (vms->mte && hvf_enabled()) {
+         error_report("mach-virt: %s does not support providing "
+                      "MTE to the guest CPU",
 -- 
 2.43.0
 
