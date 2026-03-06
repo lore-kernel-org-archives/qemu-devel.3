@@ -4,85 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F259FCB61A
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09096FCB61A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXNf-0005a1-Bl; Fri, 06 Mar 2026 10:46:23 -0500
+	id 1vyXPn-0000te-00; Fri, 06 Mar 2026 10:48:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyXNa-0005Nd-Lp
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:46:19 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <dmitry.guryanov@gmail.com>)
+ id 1vyXPk-0000rv-VG
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:48:32 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyXNY-0002Dl-6w
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:46:18 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4852afd42ceso1877355e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:46:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dmitry.guryanov@gmail.com>)
+ id 1vyXPi-0002TU-U3
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:48:32 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b941762394aso199865066b.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:48:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772812109; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QSuYZik0esii21vFqhuHE2C9nMmVX5Pq+2sDBPSyL9X1pVWdwwC7nJUp6qME0eS0mG
+ hBKt1fcwasnFV1sF61QXTSUD4AK+vdy75vvb8e4E5e8uJqqHrQ/AF53AVk/hUssSvE+L
+ 8FDtACVEuKqegRx3/9uDOzPJqojZ8qHei6sIDFenqWO/n8t2l/eBFOlQBnpqkmu5+jD+
+ 8H0VxYxPioBHXKWa9DmtqQ7vPNaKgDL4Ezqg6qhCeNi85xb5QMtyNjLx132vPrx3kaTj
+ N6KBCUsFDen8PyWl4TphZh21TZHbRaRvHqxDC9ND/PjAeCls2Bs9+Fgv+4SUNRxHQUd1
+ G5Dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fVsMFMSOYZJfhvmYU50CxoqdqB0YpaFwqntL/HcQ0FE=;
+ fh=6kGXI8wt330dRbM/wQRAR4SHXwQ9vhne35h5TbR7PNk=;
+ b=W6HudYLkvdCmpnlEvMKs1zRMR78R06sd4hTmqhTqe7qaAzmU1Z15zdhU5ymQOr+3ME
+ lIZ7opW0MU3X9zD9lvF64O9mOmTmkoS2RYIgAMfdC0oZL5Bt4s0TR9GqM04BBEhLhI7h
+ B1TtwA5cl8vAkMW4jtEWrcpmJzUWuAiTdVoOhfah/vNpZDLYLKL6frYPKG5+9Sij8kEp
+ kOvn58k7TBKLmAa759OmZNYI/2+n9O1j3OIytsykYKMDYEKRgMbksLLnV2Md9qxK/2pN
+ ZM2fu1zAScIinw3lqbnyhZbNQtiJM0iKwUFd7oEB5gLhm+OfGin07X7YyHEeMAXsw/3i
+ rzWA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772811974; x=1773416774; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=4Zp+GO0jZOlq9CH5HmHi4J1cmVnJhE95FM7W/42vfr4=;
- b=h4XfXX+cmq7/bJqG/kBZiYMIBDHo3N5eC3YWNkIJq6bhV9jf2LLj5r/RAWbXVpp/mW
- jmyvz9F0u6B+WKIAOqJTSDb4aFJBAQjuzz+leVGp5q9/fmhPa8rvwZ0F23doFY3QteKp
- NvHyiPr+7gBfcgvWwvAfRyjiMoMABaR2EH3LxOLQhI5io6bAQqzgIR+w1sI6+FjuBX7C
- ut+7A3zj2MLuXaFtYjlyxDoyjM7BMIjGEoA8E+mJ/CR33KzuXZU7EBLjbP84lPRipWyt
- NmNTORJnVCBHcx6GQurCGh4dp3vwcKj/NaMKcj4yJw9OEpopha/U6GaktLwq7Z/nrjom
- oRWg==
+ d=gmail.com; s=20230601; t=1772812109; x=1773416909; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fVsMFMSOYZJfhvmYU50CxoqdqB0YpaFwqntL/HcQ0FE=;
+ b=NaEH+BYCrejCd+x18Ud8cAcYkyagg9BMJg9dzK+Clmv+ccCY0sxzATC4ZZp2qBHeeO
+ /8O/MqH6WOLDS37ZntXEilfS6lcsxpx74FefIpdLcPjsRqSkQCkzW7GWqbGQO5K/VZtu
+ /rqMBe+o2DXn/nT77lVGLb4YvhTv0DR0xH82/pnJsXyx9Ne35TtWVFOwwout14O+CU2+
+ f3DtPwPGWB+9rSErP1Dus60oUGFwkjK12vaQrd1ORigc3ruXxkw9p6RW89KstVjr3xYm
+ P889Yt8/D8yv2Ll8WATLYnOR1GkXdzMHQ5feczuGxUDqcItWldA3yqekQtQEKElLrzPf
+ zGrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772811974; x=1773416774;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4Zp+GO0jZOlq9CH5HmHi4J1cmVnJhE95FM7W/42vfr4=;
- b=SQeXza+X8nOVw0K+dg3J6CWauNn0etWGVkzSH+/lwQPBS1GEs1z7zVQ/zAjYIpNyWU
- 76sAAlJEZc7DnttlvVzg1ErBlGr11fJWzcQGBOTY5pBrCb/RmJ/Tg0ropZmXzKKaCynT
- ePj0Ladmi6KYv6QiQrfBqby2NRun/41dXA89mqWLJ0n7Q9el01UOkGyFUkC0z14dTr4P
- B6Hj5+uJMQmFDO2dxoeXzejrnN/1b8cP7wgFpYDr54176GIjYAzVO+6d48smmEwxPwQN
- pqa4X5hH0H8xJsUZ6D5Umwi4XjlFxS7Gau+NxlM0zc/VACNcgj3BMXn6KK9N2zLx+Dsd
- wDng==
-X-Gm-Message-State: AOJu0YzVshdPx+6vB/l+gX6Rv2jKvZ8HppzZPRm5sI8jT3SDpcrPArMV
- c8EfTvmnu4vL+H9YW026yBvoKO0jClw+cxJXMkkTSDb6TUjBx7D3T/WQm8J8vZC5Fyvx//1go/f
- eKOy8
-X-Gm-Gg: ATEYQzwMpoWdZGtubWbrbFPcsQ3WP5ug2wniwob4JnjLihv4qYdxFhU0FjG6vyOr/NM
- 5ii4gHDqSa1nThz0NudZegpooRQcHndS9hPlFeKIhBnq+2Y5ovFWJIcboDqmUwBI/WHGj//KHRM
- ys1Q1iS82paPdFu3n/f9GWz6CzXj6NErTpvsiLf11aBsxDW9wiBSnAuI4GfZsxmD7vMssKFfzhD
- flU/cT6E7Dt4YqggexZETl7Ds+EASYQqcusKwUsQZJm+7fIfe3yJdj3jZohmww7IpWbHeiWfqLi
- cpVDf2JTZbaJ/7o9d3XXSezujj78Mcl0ohHFGrt2M2osxjm0cWGFawcXo4O4fo/qGFnLRvR2tEb
- Jvr/G3UDoUG6uUW/fubXcmDxqsBXDf5wXty+yENLifqND9Iq18vSUTvo9fWGXnFSvleD+mGuz9B
- MwWt08m58dSbFbq+xzviDtNOHL1tKsD+2xA3hpvpA2svgdN3zNq/mclQcWsbbPucDiW5ySHCy+6
- xUBS2qJMpDdN1jMlsHpzIGR8LHC6SU=
-X-Received: by 2002:a05:600c:37cc:b0:46e:761b:e7ff with SMTP id
- 5b1f17b1804b1-48526967a63mr41141325e9.28.1772811973879; 
- Fri, 06 Mar 2026 07:46:13 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246fd237sm36788275e9.7.2026.03.06.07.46.13
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:46:13 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/45] target-arm queue
-Date: Fri,  6 Mar 2026 15:46:12 +0000
-Message-ID: <20260306154612.2196216-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1772812109; x=1773416909;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fVsMFMSOYZJfhvmYU50CxoqdqB0YpaFwqntL/HcQ0FE=;
+ b=wLcTEia+J9x9++FGEERXbKvLjTCRFEyscnCtRJy9tf8Dgb+vN0zbbEAV4fPOcwX/5Z
+ HVTDwozX4rOVRt+A4vy5AhxhiA/zTMVrWmPYoyAIVbdOe4TKoAPoLzya1YtQJD1o5MXT
+ wWL5PnSfmeOrO+FRj2aDh57X3kockmmrPtoCpExA+TDKvTzMiAxjD3itp/jgTRt8RNIR
+ f6G4MpXPQEeGLdhPT75sCFpjlk9QH7K+CxzJt/SA6xy2SIgKK86KMODv3is9cqQiuvWh
+ gG0cXecNDNjH7UpICWNSnt81MWcy5RV7ExR63NeA/6DqdGDtsAiAHSaj1B9Y7nvcpBXc
+ vIHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU509yWUCP/vptdIsivHo47hw6NAz2anvO11wBTXBxs0drQ5p9o2JEhzmxVT/EYdkciJv+xjMtwqOLg@nongnu.org
+X-Gm-Message-State: AOJu0Ywe6fccrq9gXeiLOcv34XnHSbfkTYOUSocwIOGVddJCl2+yU8dY
+ lovTIK2AXiw1+g9hPoQiZlG6j410eNNMFEcgmF4MFwT7mmysMj/PqHhhO3h0NVAg7LMKz4M2YRo
+ cmM49hjqXYzqviOMgOMTzfPKJs5w+5CUCGFl+
+X-Gm-Gg: ATEYQzxOn3DQ1Dw0VKKheUiLsctpgR5LdgS3zvlLOB3TNf6hFzAvMGv2BoUnMHtl4ps
+ bs9rjgTO33nhG4008z+QzUjJdqAowHMWZpCbgw7reQ4tsZAZhC/UO+ON4+k9ES0vy3dJx7U1Unm
+ 0stGelhDcnUZMLylG4bIvY91VIHCPCPIdxrfSx1Xcb4skKM6ZOboqG07RvETzN7ylqX88wgtOwj
+ IMulTN/7HANq29t9+fWlfe2qqgW1pC2qUtgvzgOVjL0P2Ih+85DClIXaC8amabWnL75G136PETE
+ 9TIgxEq+KSdjW7Kd
+X-Received: by 2002:a17:907:6d11:b0:b87:3168:2ccc with SMTP id
+ a640c23a62f3a-b942dfb434emr150988166b.39.1772812108553; Fri, 06 Mar 2026
+ 07:48:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+References: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
+ <5011ccf5-7af5-4f88-8261-35514c72bc84@redhat.com>
+ <aaCmmgtIlDQMaj8V@redhat.com>
+In-Reply-To: <aaCmmgtIlDQMaj8V@redhat.com>
+From: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+Date: Fri, 6 Mar 2026 18:48:16 +0300
+X-Gm-Features: AaiRm50URzpCYsciIATHoEtn9X30x4pUW_vPWHCHxTh2Gamzn_HbBCDa4tMWZ70
+Message-ID: <CABOTTXt8_VQt3UoqWYUTqir9=+PLpDd_RhEjKL4mRQqKxPttbw@mail.gmail.com>
+Subject: Re: [PATCH resend] block/throttle-groups: fix deadlock with iolimits
+ and muliple iothreads
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>
+Content-Type: multipart/alternative; boundary="000000000000fbe268064c5cfb8e"
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=dmitry.guryanov@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,176 +119,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes from v1: dropped the last 4 patches from the hvf virtualization
-series as they caused the macos CI job to fail.
+--000000000000fbe268064c5cfb8e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--- PMM
+Thanks!
 
-The following changes since commit 314ff2e07ddc6163554077d68aed5d76a50b8e3d:
+On Thu, Feb 26, 2026 at 11:01=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrot=
+e:
 
-  Merge tag 'pull-request-2026-03-05' of https://gitlab.com/thuth/qemu into staging (2026-03-05 16:58:20 +0000)
+> Am 26.02.2026 um 15:37 hat Hanna Czenczek geschrieben:
+> > On 08.12.25 09:55, Dmitry Guryanov wrote:
+> > > Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
+> > >
+> > > The function schedule_next_request is called with tg->lock held and
+> > > it may call throttle_group_co_restart_queue, which takes
+> > > tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
+> > > coroutine if other iothread has taken the lock. If the next
+> > > coroutine will call throttle_group_co_io_limits_intercept - it
+> > > will try to take the mutex tg->lock which will never be released.
+> > >
+> > > Here is the backtrace of the iothread:
+> > > Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) "IO iothread2"):
+> > >   #0  futex_wait (futex_word=3D0x5611adb7d828, expected=3D2, private=
+=3D0) at
+> ../sysdeps/nptl/futex-internal.h:146
+> > >   #1  __GI___lll_lock_wait (futex=3Dfutex@entry=3D0x5611adb7d828,
+> private=3D0) at lowlevellock.c:49
+> > >   #2  0x00007f8ab5a97501 in lll_mutex_lock_optimized
+> (mutex=3D0x5611adb7d828) at pthread_mutex_lock.c:48
+> > >   #3  ___pthread_mutex_lock (mutex=3D0x5611adb7d828) at
+> pthread_mutex_lock.c:93
+> > >   #4  0x00005611823f5482 in qemu_mutex_lock_impl
+> (mutex=3D0x5611adb7d828, file=3D0x56118289daca "../block/throttle-groups.=
+c",
+> line=3D372) at ../util/qemu-thread-posix.c:94
+> > >   #5  0x00005611822b0b39 in throttle_group_co_io_limits_intercept
+> (tgm=3D0x5611af1bb4d8, bytes=3D4096, direction=3DTHROTTLE_READ) at
+> ../block/throttle-groups.c:372
+> > >   #6  0x00005611822473b1 in blk_co_do_preadv_part (blk=3D0x5611af1bb4=
+90,
+> offset=3D15972311040, bytes=3D4096, qiov=3D0x7f8aa4000f98, qiov_offset=3D=
+0,
+> flags=3DBDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354
+> > >   #7  0x0000561182247fa0 in blk_aio_read_entry (opaque=3D0x7f8aa40059=
+10)
+> at ../block/block-backend.c:1619
+> > >   #8  0x000056118241952e in coroutine_trampoline (i0=3D-1543497424,
+> i1=3D32650) at ../util/coroutine-ucontext.c:175
+> > >   #9  0x00007f8ab5a56f70 in ?? () at
+> ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66 from
+> target:/lib64/libc.so.6
+> > >   #10 0x00007f8aad1ef190 in ?? ()
+> > >   #11 0x0000000000000000 in ?? ()
+> > >
+> > > The lock is taken in line 386:
+> > > (gdb) p tg.lock
+> > > $1 =3D {lock =3D {__data =3D {__lock =3D 2, __count =3D 0, __owner =
+=3D 24240,
+> __nusers =3D 1, __kind =3D 0, __spins =3D 0, __elision =3D 0, __list =3D =
+{__prev =3D
+> 0x0, __next =3D 0x0}},
+> > >      __size =3D "\002\000\000\000\000\000\000\000\260^\000\000\001",
+> '\000' <repeats 26 times>, __align =3D 2}, file =3D 0x56118289daca
+> "../block/throttle-groups.c",
+> > >    line =3D 386, initialized =3D true}
+> > >
+> > > The solution is to use tg->lock to protect both ThreadGroup fields an=
+d
+> > > ThrottleGroupMember.throttled_reqs. It doesn't seem to be possible
+> > > to use separate locks because we need to first manipulate ThrottleGro=
+up
+> > > fields, then schedule next coroutine using throttled_reqs and after
+> than
+> > > update token field from ThrottleGroup depending on the throttled_reqs
+> > > state.
+> > >
+> > > Signed-off-by: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+> > > ---
+> > >   block/throttle-groups.c         | 21 ++++++---------------
+> > >   include/block/throttle-groups.h |  1 -
+> > >   2 files changed, 6 insertions(+), 16 deletions(-)
+> > >
+> > > diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+> > > index 66fdce9a90..bb01e52516 100644
+> > > --- a/block/throttle-groups.c
+> > > +++ b/block/throttle-groups.c
+> > > @@ -295,19 +295,15 @@ static bool
+> throttle_group_schedule_timer(ThrottleGroupMember *tgm,
+> > >   /* Start the next pending I/O request for a ThrottleGroupMember.
+> Return whether
+> > >    * any request was actually pending.
+> > >    *
+> > > + * This assumes that tg->lock is held.
+> > > + *
+> > >    * @tgm:       the current ThrottleGroupMember
+> > >    * @direction: the ThrottleDirection
+> > >    */
+> > >   static bool coroutine_fn
+> throttle_group_co_restart_queue(ThrottleGroupMember *tgm,
+> > >
+> ThrottleDirection direction)
+> > >   {
+> > > -    bool ret;
+> > > -
+> > > -    qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+> > > -    ret =3D qemu_co_queue_next(&tgm->throttled_reqs[direction]);
+> > > -    qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+> > > -
+> > > -    return ret;
+> > > +    return qemu_co_queue_next(&tgm->throttled_reqs[direction]);;
+> >
+> > Double semicolon here, should just be one.
+> >
+> > >   }
+> > >   /* Look for the next pending I/O request and schedule it.
+> >
+> > [...]
+> >
+> > > diff --git a/include/block/throttle-groups.h
+> b/include/block/throttle-groups.h
+> > > index 2355e8d9de..374c7c0215 100644
+> > > --- a/include/block/throttle-groups.h
+> > > +++ b/include/block/throttle-groups.h
+> > > @@ -36,7 +36,6 @@
+> > >   typedef struct ThrottleGroupMember {
+> > >       AioContext   *aio_context;
+> > >       /* throttled_reqs_lock protects the CoQueues for throttled
+> requests.  */
+> >
+> > This comment should be updated to something like "Protected by
+> > ThrottleGroup.lock".
+> >
+> > With both of these fixed:
+> >
+> > Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+>
+> Thanks, I applied the series based on your review and made the changes
+> you suggested.
+>
+> Kevin
+>
+>
 
-are available in the Git repository at:
+--=20
+Dmitry Guryanov
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260306-1
+--000000000000fbe268064c5cfb8e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-for you to fetch changes up to 394144821aa8d4b704d6013f421bf8bfd43a333a:
+<div dir=3D"ltr">Thanks!</div><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 26, 2026 at 11:01=
+=E2=80=AFPM Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com">kwolf@redhat=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">Am 26.02.2026 um 15:37 hat Hanna Czenczek geschrieben:<br>
+&gt; On 08.12.25 09:55, Dmitry Guryanov wrote:<br>
+&gt; &gt; Details: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues=
+/3144" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project=
+/qemu/-/issues/3144</a><br>
+&gt; &gt; <br>
+&gt; &gt; The function schedule_next_request is called with tg-&gt;lock hel=
+d and<br>
+&gt; &gt; it may call throttle_group_co_restart_queue, which takes<br>
+&gt; &gt; tgm-&gt;throttled_reqs_lock, qemu_co_mutex_lock may leave current=
+<br>
+&gt; &gt; coroutine if other iothread has taken the lock. If the next<br>
+&gt; &gt; coroutine will call throttle_group_co_io_limits_intercept - it<br=
+>
+&gt; &gt; will try to take the mutex tg-&gt;lock which will never be releas=
+ed.<br>
+&gt; &gt; <br>
+&gt; &gt; Here is the backtrace of the iothread:<br>
+&gt; &gt; Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) &quot;IO iothread2&q=
+uot;):<br>
+&gt; &gt;=C2=A0 =C2=A0#0=C2=A0 futex_wait (futex_word=3D0x5611adb7d828, exp=
+ected=3D2, private=3D0) at ../sysdeps/nptl/futex-internal.h:146<br>
+&gt; &gt;=C2=A0 =C2=A0#1=C2=A0 __GI___lll_lock_wait (futex=3Dfutex@entry=3D=
+0x5611adb7d828, private=3D0) at lowlevellock.c:49<br>
+&gt; &gt;=C2=A0 =C2=A0#2=C2=A0 0x00007f8ab5a97501 in lll_mutex_lock_optimiz=
+ed (mutex=3D0x5611adb7d828) at pthread_mutex_lock.c:48<br>
+&gt; &gt;=C2=A0 =C2=A0#3=C2=A0 ___pthread_mutex_lock (mutex=3D0x5611adb7d82=
+8) at pthread_mutex_lock.c:93<br>
+&gt; &gt;=C2=A0 =C2=A0#4=C2=A0 0x00005611823f5482 in qemu_mutex_lock_impl (=
+mutex=3D0x5611adb7d828, file=3D0x56118289daca &quot;../block/throttle-group=
+s.c&quot;, line=3D372) at ../util/qemu-thread-posix.c:94<br>
+&gt; &gt;=C2=A0 =C2=A0#5=C2=A0 0x00005611822b0b39 in throttle_group_co_io_l=
+imits_intercept (tgm=3D0x5611af1bb4d8, bytes=3D4096, direction=3DTHROTTLE_R=
+EAD) at ../block/throttle-groups.c:372<br>
+&gt; &gt;=C2=A0 =C2=A0#6=C2=A0 0x00005611822473b1 in blk_co_do_preadv_part =
+(blk=3D0x5611af1bb490, offset=3D15972311040, bytes=3D4096, qiov=3D0x7f8aa40=
+00f98, qiov_offset=3D0, flags=3DBDRV_REQ_REGISTERED_BUF) at ../block/block-=
+backend.c:1354<br>
+&gt; &gt;=C2=A0 =C2=A0#7=C2=A0 0x0000561182247fa0 in blk_aio_read_entry (op=
+aque=3D0x7f8aa4005910) at ../block/block-backend.c:1619<br>
+&gt; &gt;=C2=A0 =C2=A0#8=C2=A0 0x000056118241952e in coroutine_trampoline (=
+i0=3D-1543497424, i1=3D32650) at ../util/coroutine-ucontext.c:175<br>
+&gt; &gt;=C2=A0 =C2=A0#9=C2=A0 0x00007f8ab5a56f70 in ?? () at ../sysdeps/un=
+ix/sysv/linux/x86_64/__start_context.S:66 from target:/lib64/libc.so.6<br>
+&gt; &gt;=C2=A0 =C2=A0#10 0x00007f8aad1ef190 in ?? ()<br>
+&gt; &gt;=C2=A0 =C2=A0#11 0x0000000000000000 in ?? ()<br>
+&gt; &gt; <br>
+&gt; &gt; The lock is taken in line 386:<br>
+&gt; &gt; (gdb) p tg.lock<br>
+&gt; &gt; $1 =3D {lock =3D {__data =3D {__lock =3D 2, __count =3D 0, __owne=
+r =3D 24240, __nusers =3D 1, __kind =3D 0, __spins =3D 0, __elision =3D 0, =
+__list =3D {__prev =3D 0x0, __next =3D 0x0}},<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 __size =3D &quot;\002\000\000\000\000\000\000=
+\000\260^\000\000\001&quot;, &#39;\000&#39; &lt;repeats 26 times&gt;, __ali=
+gn =3D 2}, file =3D 0x56118289daca &quot;../block/throttle-groups.c&quot;,<=
+br>
+&gt; &gt;=C2=A0 =C2=A0 line =3D 386, initialized =3D true}<br>
+&gt; &gt; <br>
+&gt; &gt; The solution is to use tg-&gt;lock to protect both ThreadGroup fi=
+elds and<br>
+&gt; &gt; ThrottleGroupMember.throttled_reqs. It doesn&#39;t seem to be pos=
+sible<br>
+&gt; &gt; to use separate locks because we need to first manipulate Throttl=
+eGroup<br>
+&gt; &gt; fields, then schedule next coroutine using throttled_reqs and aft=
+er than<br>
+&gt; &gt; update token field from ThrottleGroup depending on the throttled_=
+reqs<br>
+&gt; &gt; state.<br>
+&gt; &gt; <br>
+&gt; &gt; Signed-off-by: Dmitry Guryanov &lt;<a href=3D"mailto:dmitry.gurya=
+nov@gmail.com" target=3D"_blank">dmitry.guryanov@gmail.com</a>&gt;<br>
+&gt; &gt; ---<br>
+&gt; &gt;=C2=A0 =C2=A0block/throttle-groups.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0| 21 ++++++---------------<br>
+&gt; &gt;=C2=A0 =C2=A0include/block/throttle-groups.h |=C2=A0 1 -<br>
+&gt; &gt;=C2=A0 =C2=A02 files changed, 6 insertions(+), 16 deletions(-)<br>
+&gt; &gt; <br>
+&gt; &gt; diff --git a/block/throttle-groups.c b/block/throttle-groups.c<br=
+>
+&gt; &gt; index 66fdce9a90..bb01e52516 100644<br>
+&gt; &gt; --- a/block/throttle-groups.c<br>
+&gt; &gt; +++ b/block/throttle-groups.c<br>
+&gt; &gt; @@ -295,19 +295,15 @@ static bool throttle_group_schedule_timer(T=
+hrottleGroupMember *tgm,<br>
+&gt; &gt;=C2=A0 =C2=A0/* Start the next pending I/O request for a ThrottleG=
+roupMember. Return whether<br>
+&gt; &gt;=C2=A0 =C2=A0 * any request was actually pending.<br>
+&gt; &gt;=C2=A0 =C2=A0 *<br>
+&gt; &gt; + * This assumes that tg-&gt;lock is held.<br>
+&gt; &gt; + *<br>
+&gt; &gt;=C2=A0 =C2=A0 * @tgm:=C2=A0 =C2=A0 =C2=A0 =C2=A0the current Thrott=
+leGroupMember<br>
+&gt; &gt;=C2=A0 =C2=A0 * @direction: the ThrottleDirection<br>
+&gt; &gt;=C2=A0 =C2=A0 */<br>
+&gt; &gt;=C2=A0 =C2=A0static bool coroutine_fn throttle_group_co_restart_qu=
+eue(ThrottleGroupMember *tgm,<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Throt=
+tleDirection direction)<br>
+&gt; &gt;=C2=A0 =C2=A0{<br>
+&gt; &gt; -=C2=A0 =C2=A0 bool ret;<br>
+&gt; &gt; -<br>
+&gt; &gt; -=C2=A0 =C2=A0 qemu_co_mutex_lock(&amp;tgm-&gt;throttled_reqs_loc=
+k);<br>
+&gt; &gt; -=C2=A0 =C2=A0 ret =3D qemu_co_queue_next(&amp;tgm-&gt;throttled_=
+reqs[direction]);<br>
+&gt; &gt; -=C2=A0 =C2=A0 qemu_co_mutex_unlock(&amp;tgm-&gt;throttled_reqs_l=
+ock);<br>
+&gt; &gt; -<br>
+&gt; &gt; -=C2=A0 =C2=A0 return ret;<br>
+&gt; &gt; +=C2=A0 =C2=A0 return qemu_co_queue_next(&amp;tgm-&gt;throttled_r=
+eqs[direction]);;<br>
+&gt; <br>
+&gt; Double semicolon here, should just be one.<br>
+&gt; <br>
+&gt; &gt;=C2=A0 =C2=A0}<br>
+&gt; &gt;=C2=A0 =C2=A0/* Look for the next pending I/O request and schedule=
+ it.<br>
+&gt; <br>
+&gt; [...]<br>
+&gt; <br>
+&gt; &gt; diff --git a/include/block/throttle-groups.h b/include/block/thro=
+ttle-groups.h<br>
+&gt; &gt; index 2355e8d9de..374c7c0215 100644<br>
+&gt; &gt; --- a/include/block/throttle-groups.h<br>
+&gt; &gt; +++ b/include/block/throttle-groups.h<br>
+&gt; &gt; @@ -36,7 +36,6 @@<br>
+&gt; &gt;=C2=A0 =C2=A0typedef struct ThrottleGroupMember {<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0AioContext=C2=A0 =C2=A0*aio_context;<br=
+>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* throttled_reqs_lock protects the CoQ=
+ueues for throttled requests.=C2=A0 */<br>
+&gt; <br>
+&gt; This comment should be updated to something like &quot;Protected by<br=
+>
+&gt; ThrottleGroup.lock&quot;.<br>
+&gt; <br>
+&gt; With both of these fixed:<br>
+&gt; <br>
+&gt; Reviewed-by: Hanna Czenczek &lt;<a href=3D"mailto:hreitz@redhat.com" t=
+arget=3D"_blank">hreitz@redhat.com</a>&gt;<br>
+<br>
+Thanks, I applied the series based on your review and made the changes<br>
+you suggested.<br>
+<br>
+Kevin<br>
+<br>
+</blockquote></div><div><br clear=3D"all"></div><br><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Dm=
+itry Guryanov<br></div>
 
-  target/arm: hvf: add asserts for code paths not leveraged when using the vGIC (2026-03-06 13:28:49 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * Remove deprecated 'highbank' and 'midway' machines
- * hw/arm: Add missing dependencies for STM32F405 SoC
- * hw/arm/smmuv3-accel: Read and propagate host vIOMMU events
- * Minor MAINTAINERS updates
- * target/arm: Improve logging of migration errors due to system
-   register mismatches between source and destination
- * hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
- * tests/qtest/iommu-smmuv3-test: Free QPCIDevice
- * chardev: Fix various sanitizer detected leaks
- * tests/qtest/test-x86-cpuid-compat: Free allocated memory
- * tests/qtest/qos-test: Plug a couple of leaks
- * hw/arm/smmuv3: Fix various minor bugs
- * hvf/arm: expose FEAT_SME2 to guest if available
- * hvf/arm: Add hvf vGIC interrupt controller support
- * hvf: preliminaries for nested virtualisation support
-
-----------------------------------------------------------------
-CLEMENT MATHIEU--DRIF (1):
-      MAINTAINERS: Update Clement Mathieu--Drif's email address
-
-Chisheng Chen (1):
-      hw/arm: Add missing dependencies for STM32F405 SoC
-
-Eric Auger (7):
-      vmstate: Introduce VMSTATE_VARRAY_INT32_ALLOC
-      target/arm/machine: Use VMSTATE_VARRAY_INT32_ALLOC for cpreg arrays
-      target/arm/kvm: Export kvm_print_register_name()
-      target/arm/kvm: Tweak print_register_name() for arm64 system register
-      target/arm/machine: Trace cpreg names which do not match on migration
-      target/arm/machine: Trace all register mismatches
-      target/arm/machine: Fix detection of unknown incoming cpregs
-
-Fabiano Rosas (5):
-      chardev: Fix QIOChannel refcount
-      chardev: Don't attempt to unregister yank function more than once
-      chardev: Consolidate yank registration
-      tests/qtest/test-x86-cpuid-compat: Free allocated memory
-      tests/qtest/qos-test: Plug a couple of leaks
-
-Magnus Kulke (1):
-      MAINTAINERS: fix magnuskulke email-address
-
-Manos Pitsidianakis (2):
-      hvf/arm: handle FEAT_SME2 migration
-      hvf/arm: expose FEAT_SME2 to guest if available
-
-Mohamed Mediouni (11):
-      hw/arm: virt: remove hvf_arm.h include
-      hvf: hvf-all: stop including hvf_arm.h
-      hw/intc: Add hvf vGIC interrupt controller support
-      hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
-      accel, hw/arm, include/system/hvf: infrastructure changes for HVF vGIC
-      target/arm: hvf: instantiate GIC early
-      hw/arm, target/arm: nested virtualisation on HVF
-      hvf: only call hvf_sync_vtimer() when running without the platform vGIC
-      hvf: gate ARM_FEATURE_PMU register emulation behind not being at EL2
-      hvf: arm: allow exposing minimal PMU when running with nested virt on
-      target/arm: hvf: add asserts for code paths not leveraged when using the vGIC
-
-Nicolin Chen (2):
-      backends/iommufd: Introduce iommufd_backend_alloc_veventq
-      hw/arm/smmuv3-accel: Allocate vEVENTQ for accelerated SMMUv3 devices
-
-Paul Durrant (1):
-      MAINTAINERS: remove myself as a Xen maintainer
-
-Peter Maydell (6):
-      system/qtest: Support comments in input commands
-      hw/net/smc91c111: Don't allow negative-length packets
-      scripts: Move lsan_suppressions.txt out of oss-fuzz subdir
-      scripts/lsan_suppressions.txt: Add more leaks
-      hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
-      tests/qtest/iommu-smmuv3-test: Free QPCIDevice
-
-Shameer Kolothum (3):
-      hw/arm/smmuv3-accel: Add viommu free helper
-      hw/arm/smmuv3: Introduce a helper function for event propagation
-      hw/arm/smmuv3-accel: Read and propagate host vIOMMU events
-
-Tao Tang (3):
-      hw/arm/smmuv3-common: Fix incorrect reserved mask for SMMU CR0 register
-      hw/arm/smmuv3: Correct SMMUEN field name in CR0
-      hw/arm/smmuv3: Fix CFGI_CD handling when stage-1 is unsupported
-
-Thomas Huth (2):
-      hw/arm: Remove the deprecated "highbank" and "midway" machines
-      hw/net: Remove the xgmac device
-
- .gitlab-ci.d/buildtest.yml              |   2 +-
- MAINTAINERS                             |  16 +-
- accel/hvf/hvf-all.c                     |  52 +-
- accel/stubs/hvf-stub.c                  |   2 +
- backends/iommufd.c                      |  31 ++
- backends/trace-events                   |   1 +
- chardev/char-io.c                       |   5 +
- chardev/char-socket.c                   |  34 +-
- configs/devices/arm-softmmu/default.mak |   1 -
- docs/about/deprecated.rst               |   7 -
- docs/about/removed-features.rst         |   7 +
- docs/system/arm/highbank.rst            |  19 -
- docs/system/target-arm.rst              |   1 -
- hw/arm/Kconfig                          |  21 +-
- hw/arm/highbank.c                       | 404 ----------------
- hw/arm/meson.build                      |   1 -
- hw/arm/smmuv3-accel.c                   | 146 +++++-
- hw/arm/smmuv3-accel.h                   |   6 +
- hw/arm/smmuv3-internal.h                |   6 +-
- hw/arm/smmuv3.c                         |  35 +-
- hw/arm/trace-events                     |   2 +-
- hw/arm/virt.c                           |  29 +-
- hw/gpio/aspeed_gpio.c                   |   2 +-
- hw/intc/arm_gicv3_common.c              |   4 +
- hw/intc/arm_gicv3_hvf.c                 | 822 ++++++++++++++++++++++++++++++++
- hw/intc/arm_gicv3_hvf_stub.c            |  25 +
- hw/intc/meson.build                     |   2 +
- hw/net/Kconfig                          |   3 -
- hw/net/meson.build                      |   1 -
- hw/net/smc91c111.c                      |  16 +-
- hw/net/xgmac.c                          | 443 -----------------
- include/hw/arm/smmuv3-common.h          |   4 +-
- include/hw/intc/arm_gicv3_common.h      |   4 +
- include/migration/vmstate.h             |  10 +
- include/system/hvf.h                    |   8 +
- include/system/iommufd.h                |  14 +
- scripts/coverity-scan/COMPONENTS.md     |   2 +-
- scripts/lsan_suppressions.txt           |  26 +
- scripts/oss-fuzz/lsan_suppressions.txt  |   5 -
- system/qtest.c                          |   5 +-
- system/vl.c                             |   2 +
- target/arm/helper.c                     |   5 -
- target/arm/hvf/hvf.c                    | 399 +++++++++++++++-
- target/arm/hvf/hvf_sme_stubs.h          | 172 +++++++
- target/arm/hvf/sysreg.c.inc             |   8 +
- target/arm/hvf_arm.h                    |  41 ++
- target/arm/kvm-stub.c                   |   5 +
- target/arm/kvm.c                        |   9 +-
- target/arm/kvm_arm.h                    |   9 +
- target/arm/machine.c                    | 117 ++++-
- target/arm/trace-events                 |   3 +
- target/arm/whpx/whpx-all.c              |   7 -
- tests/docker/test-fuzz                  |   2 +-
- tests/qtest/iommu-smmuv3-test.c         |   1 +
- tests/qtest/qos-test.c                  |  36 +-
- tests/qtest/test-x86-cpuid-compat.c     |   4 +
- 56 files changed, 2006 insertions(+), 1038 deletions(-)
- delete mode 100644 docs/system/arm/highbank.rst
- delete mode 100644 hw/arm/highbank.c
- create mode 100644 hw/intc/arm_gicv3_hvf.c
- create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
- delete mode 100644 hw/net/xgmac.c
- create mode 100644 scripts/lsan_suppressions.txt
- delete mode 100644 scripts/oss-fuzz/lsan_suppressions.txt
- create mode 100644 target/arm/hvf/hvf_sme_stubs.h
+--000000000000fbe268064c5cfb8e--
 
