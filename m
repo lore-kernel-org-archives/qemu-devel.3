@@ -4,62 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0859BF01818
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39B1F01818
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyRZk-0006Ix-TW; Fri, 06 Mar 2026 04:34:29 -0500
+	id 1vyRbU-0008PB-2v; Fri, 06 Mar 2026 04:36:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyRZj-0006Ia-Qt
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:34:27 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vyRbR-0008Ox-JW
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:36:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyRZi-0002Hk-2e
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:34:27 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vyRbP-0002a9-Op
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:36:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772789665;
+ s=mimecast20190719; t=1772789770;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7/BNLapENNaprDFIGP4KuFqzdjFtXvPNLmh6qyGwT1Y=;
- b=RMuEc8W8iY8nlVxpLQNx0XfO22sL3kVFMsaVdFL0Kxz+C6mBQqcXb+/TrSaolS/ojNXBmD
- tdrWku0AJZ/+Ex0ee7RlCks+NqChS0HQobwLXACgDWeUeRgtd6CTVojrtQv8imPzFRaF9p
- pW1fVGVd95w9F2RR7SFRn/2FlJWUT+8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=FMt6DAxebeFGsJ3SRnbPlEhI9MCrsNrLTfLV9WYCPyA=;
+ b=NT4wxIbfZVA6U8q/qOB3Pr9it9J6deRsrMBOmSWQ4D9tm5e1Cw/1OVgloHj3MPb1RV9CUG
+ k+XG59KkSF7CcjUgaXBeg/lvq/j0fjSWB8pW30hTHyz+mnCDxbBS3kOKnArLV4w6MDSrwU
+ 1+kimTnm5MmyFs1WOqJ4HkV6IxBc7h0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-IBjw6t6_PbaXKOi50By6tA-1; Fri,
- 06 Mar 2026 04:34:22 -0500
-X-MC-Unique: IBjw6t6_PbaXKOi50By6tA-1
-X-Mimecast-MFC-AGG-ID: IBjw6t6_PbaXKOi50By6tA_1772789661
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-FKELRIajOFmHrCSOIVNqVQ-1; Fri,
+ 06 Mar 2026 04:36:07 -0500
+X-MC-Unique: FKELRIajOFmHrCSOIVNqVQ-1
+X-Mimecast-MFC-AGG-ID: FKELRIajOFmHrCSOIVNqVQ_1772789766
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A3A918005B9; Fri,  6 Mar 2026 09:34:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.210])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D074C3003E9F; Fri,  6 Mar 2026 09:34:16 +0000 (UTC)
-Date: Fri, 6 Mar 2026 10:34:14 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, f.ebner@proxmox.com,
- jsnow@redhat.com, jean-louis@dupond.be, dionbosschieter@gmail.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org, pbonzini@redhat.com
-Subject: Re: [PATCH] mirror: Fix missed dirty bitmap writes during startup
-Message-ID: <aaqflohdSVTFpkRZ@redhat.com>
-References: <20260219202446.312493-1-kwolf@redhat.com>
- <d7c3d44a-d42f-4232-b5e5-a7504fb62a73@yandex-team.ru>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80E0A1800464; Fri,  6 Mar 2026 09:36:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 863C91956095; Fri,  6 Mar 2026 09:36:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1BF4D21E6A04; Fri, 06 Mar 2026 10:36:02 +0100 (CET)
+Resent-To: balaton@eik.bme.hu, eduardo@habkost.net, zhao1.liu@intel.com,
+ zide.chen@intel.com, peter.maydell@linaro.org, philmd@linaro.org,
+ pierrick.bouvier@linaro.org, richard.henderson@linaro.org,
+ dapeng1.mi@linux.intel.com, devel@lists.libvirt.org,
+ qemu-devel@nongnu.org, mark.caveayland@nutanix.com
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Fri, 06 Mar 2026 10:36:01 +0100
+Resent-Message-ID: <87qzpxi9ku.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Thomas Huth <thuth@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  "Michael S . Tsirkin"
+ <mst@redhat.com>,  BALATON Zoltan <balaton@eik.bme.hu>,  Mark Cave-Ayland
+ <mark.caveayland@nutanix.com>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  Zide Chen <zide.chen@intel.com>,  Dapeng
+ Mi <dapeng1.mi@linux.intel.com>,  qemu-devel@nongnu.org,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev properties
+ accept flags
+In-Reply-To: <aYy1R-JQjZ-Y38Am@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 11 Feb 2026 16:58:47 +0000")
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <20260210032348.987549-15-zhao1.liu@intel.com>
+ <aYsAuFNQQvwYiLPI@redhat.com> <aYwv/mcUBXy9kUYZ@intel.com>
+ <aYy1R-JQjZ-Y38Am@redhat.com>
+Date: Fri, 06 Mar 2026 10:30:04 +0100
+Message-ID: <877brpjof7.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d7c3d44a-d42f-4232-b5e5-a7504fb62a73@yandex-team.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
 X-Spam_score: -0.6
@@ -84,169 +109,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 05.03.2026 um 19:34 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> On 19.02.26 23:24, Kevin Wolf wrote:
-> > Currently, mirror disables the block layer's dirty bitmap before its own
-> > replacement is working. This means that during startup, there is a
-> > window in which the allocation status of blocks in the source has
-> > already been checked, but new writes coming in aren't tracked yet,
-> > resulting in a corrupted copy:
-> > 
-> > 1. Dirty bitmap is disabled in mirror_start_job()
-> > 2. Some request are started in mirror_top_bs while s->job == NULL
-> > 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-> >     the request hasn't completed yet, the block isn't allocated
-> > 4. The request completes, still sees s->job == NULL and skips the
-> >     bitmap, and nothing else will mark it dirty either
-> > 
-> > One ingredient is that mirror_top_opaque->job is only set after the
-> > job is fully initialized. For the rationale, see commit 32125b1460
-> > ("mirror: Fix access of uninitialised fields during start").
-> > 
-> > Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-> > to track writes from the beginning. Disabling the block layer's tracking
-> > and enabling the mirror_top_bs one happens in a drained section, so
-> > there is no danger of races with in-flight requests any more. All of
-> > this happens well before the block allocation status is checked, so we
-> > can be sure that no writes will be missed.
-> > 
-> > Cc: qemu-stable@nongnu.org
-> > Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-> > Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> > Supersedes: <20260212120411.369498-1-f.ebner@proxmox.com>
-> > ---
-> >   block/mirror.c | 48 +++++++++++++++++++++++++++++-------------------
-> >   1 file changed, 29 insertions(+), 19 deletions(-)
-> > 
-> > diff --git a/block/mirror.c b/block/mirror.c
-> > index b344182c747..f38636e7457 100644
-> > --- a/block/mirror.c
-> > +++ b/block/mirror.c
-> > @@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
-> >   typedef struct MirrorBDSOpaque {
-> >       MirrorBlockJob *job;
-> > +    BdrvDirtyBitmap *dirty_bitmap;
-> >       bool stop;
-> >       bool is_commit;
-> >   } MirrorBDSOpaque;
-> > @@ -1672,9 +1673,9 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-> >           abort();
-> >       }
-> > -    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
-> > +    if (!copy_to_target) {
-> >           qatomic_set(&s->job->actively_synced, false);
-> > -        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-> > +        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-> >       }
-> >       if (ret < 0) {
-> > @@ -1901,13 +1902,35 @@ static BlockJob *mirror_start_job(
-> >       bdrv_drained_begin(bs);
-> >       ret = bdrv_append(mirror_top_bs, bs, errp);
-> > -    bdrv_drained_end(bs);
-> > -
-> >       if (ret < 0) {
-> > +        bdrv_drained_end(bs);
-> > +        bdrv_unref(mirror_top_bs);
-> > +        return NULL;
-> > +    }
-> > +
-> > +    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-> > +                                                       granularity,
-> > +                                                       NULL, errp);
-> > +    if (!bs_opaque->dirty_bitmap) {
-> > +        bdrv_drained_end(bs);
-> >           bdrv_unref(mirror_top_bs);
-> >           return NULL;
-> >       }
-> > +    /*
-> > +     * The mirror job doesn't use the block layer's dirty tracking because it
-> > +     * needs to be able to switch seemlessly between background copy mode (which
-> > +     * does need dirty tracking) and write blocking mode (which doesn't) and
-> > +     * doing that would require draining the node. Instead, mirror_top_bs takes
-> > +     * care of updating the dirty bitmap as appropriate.
-> > +     *
-> > +     * Note that write blocking mode only becomes effective after mirror_run()
-> > +     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
-> > +     * we're still in background copy mode irrespective of @copy_mode.
-> > +     */
-> > +    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-> > +    bdrv_drained_end(bs);
-> > +
-> >       /* Make sure that the source is not resized while the job is running */
-> >       s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-> >                            BLK_PERM_CONSISTENT_READ,
-> > @@ -2002,24 +2025,13 @@ static BlockJob *mirror_start_job(
-> >       s->base_overlay = bdrv_find_overlay(bs, base);
-> >       s->granularity = granularity;
-> >       s->buf_size = ROUND_UP(buf_size, granularity);
-> > +    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-> >       s->unmap = unmap;
-> >       if (auto_complete) {
-> >           s->should_complete = true;
-> >       }
-> >       bdrv_graph_rdunlock_main_loop();
-> > -    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
-> > -                                               NULL, errp);
-> > -    if (!s->dirty_bitmap) {
-> > -        goto fail;
-> > -    }
-> > -
-> > -    /*
-> > -     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
-> > -     * mode.
-> > -     */
-> > -    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
-> > -
-> >       bdrv_graph_wrlock_drained();
-> >       ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-> >                                BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-> > @@ -2099,9 +2111,6 @@ fail:
-> >           g_free(s->replaces);
-> >           blk_unref(s->target);
-> >           bs_opaque->job = NULL;
-> > -        if (s->dirty_bitmap) {
-> > -            bdrv_release_dirty_bitmap(s->dirty_bitmap);
-> > -        }
-> >           job_early_fail(&s->common.job);
-> >       }
-> > @@ -2115,6 +2124,7 @@ fail:
-> >       bdrv_graph_wrunlock();
-> >       bdrv_drained_end(bs);
-> > +    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-> 
-> 
-> Hmm. Shouldn't we change position of _release_ in mirror_exit_common() too?
-> 
-> Now the sequence is:
-> 
-> bdrv_release_dirty_bitmap(s->dirty_bitmap);
-> 
-> 
-> < could mirror_top_bs access dirty_bitmap here, before drained begin? >
-> 
-> ...
-> 
-> drained begin
-> 
-> .. a lot of logic, including actual removing of the mirror_top_bs from the chain ..
-> 
-> drained end
-> 
-> bdrv_unref(mirror_top_bs)
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-I think you're right, but isn't this already a preexisting bug in
-master? After releasing, we don't set s->dirty_bitmap = NULL, which
-could have prevented the access in the code before this patch. So this
-should probably be a separate patch.
+> On Wed, Feb 11, 2026 at 03:30:06PM +0800, Zhao Liu wrote:
+>> On Tue, Feb 10, 2026 at 09:56:08AM +0000, Daniel P. Berrang=C3=A9 wrote:
+>> > Date: Tue, 10 Feb 2026 09:56:08 +0000
+>> > From: "Daniel P. Berrang=C3=A9" <berrange@redhat.com>
+>> > Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev
+>> >  properties accept flags
+>> >=20
+>> > On Tue, Feb 10, 2026 at 11:23:41AM +0800, Zhao Liu wrote:
+>> > > Update qdev property interfaces (qdev_property_add_static() and
+>> > > qdev_class_add_property()) to accept and pass 'ObjectPropertyFlags'.
+>> > > This enables marking qdev properties with flags such as DEPRECATED or
+>> > > INTERNAL.
+>> > >=20
+>> > > To facilitate this at the definition level, extend the boolean and
+>> > > uint8_t property macros (as the examples) to accept variable argumen=
+ts
+>> > > (VA_ARGS). This allows callers to optionally specify flags in the
+>> > > property definition.
+>> > >=20
+>> > > Example:
+>> > >=20
+>> > > DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_=
+DEF,
+>> > >                   .flags =3D OBJECT_PROPERTY_DEPRECATED),
+>> >=20
+>> > In other places where we track deprecation in QEMU, we have not used
+>> > a boolean flag. Instead we have used a "const char *deprecation_note"
+>> > internally, which lets us provide a user facing message, to be printed
+>> > out in the warn_report, informing them what to do instead (either the
+>> > feature is entirely removed, or there is a better alternative). IMHO
+>> > we should be following the same pattern for properties, as it is much
+>> > more user friendly than just printing a totally generic message
+>> > "XXXX is deprecated, stop using it"=20
 
-mirror_exit_common() runs in the main loop, so I assume you can
-hit this when using an iothread.
+Not entirely true.
 
-It seems that initially the release was later, but commit 2119882 moved
-it earlier, without saying why it did that. Paolo, do you remember?
+QAPI/QMP uses special feature flag @deprecated, i.e. a boolean.
 
-Kevin
+We cannot emit a "user facing message": QMP cannot transport warnings.
+We could at best log one, in the hope that the user finds it.  But we
+don't.
+
+Instead the deprecation note is in the documentation.
+
+The deprecation flag is visible in QAPI/QMP introspection.  Management
+application developers need this; see Peter Krempa's reply.
+
+QEMU can be configured to reject input that makes use of deprecated
+stuff, and to hide deprecated stuff in output.  This is intended for
+"testing the future".
+
+>> Yes, rich deprecation hint is better. I think this still depends on
+>> USER_SET - distinguish internal/external or not :-(.
+>>=20
+>> Since when we mark a property as deprecated, its code remains in the
+>> code tree, and internal calls should not trigger warnings. Deprecation
+>> hints are intended to reminder external users.
+>
+> This depends on where you put the deprecation check. IIUC, all the user
+> facing codepaths for setting properties end up calling through
+> object_set_properties_from_qdict, but internal codepaths don't use that.
+
+This may well be true (I didn't check), but how can we ensure it remains
+true?
+
+> That method can check & emit the deprecation warnings, without us needing
+> any explicit tracking of "user set" - the use context is derived from the
+> codepath
+>
+>
+> With regards,
+> Daniel
 
 
