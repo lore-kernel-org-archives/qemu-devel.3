@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2251FCC04D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5C4FCC04F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyZB1-0000rP-Kv; Fri, 06 Mar 2026 12:41:27 -0500
+	id 1vyZDE-0002VV-Iu; Fri, 06 Mar 2026 12:43:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyZAz-0000ma-Qu
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:41:25 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vyZDD-0002V9-B3
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:43:43 -0500
+Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vyZAy-0005oL-4Y
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:41:25 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-823c56765fdso4932624b3a.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 09:41:23 -0800 (PST)
+ id 1vyZDB-0005wC-Jc
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:43:43 -0500
+Received: by mail-qv1-xf2d.google.com with SMTP id
+ 6a1803df08f44-89a133cdd4aso49259386d6.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 09:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772818883; x=1773423683; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772819020; x=1773423820; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wTy488E1rgEmqqX+pe4K8lUXT/VnW1eejnnubBalO9Y=;
- b=oWXP/uTStUCaSF0jUbO+j3LMdjnCr3y+I9UY5Px+e/Kit4k/5pFzM0NsUnN1jwY5U4
- TIOujOMrmHHhXOwmIFTvoCqVeWktsUn1W2pxT4eMZ+yoDVaYy0SqkaJvwP257DkW54eT
- XaSDiXwxH9MOLWF9urb1OO4f3wLeGBvFxnesgjcsNnUGmCcrBsfPKT7JKY/8eJm8NKfe
- IWHFBHnE+dtU/Vs5COXWJk8g3+lijBNon5W1uOc1I2XOW+dcXvQd5fJ81E5aiS8TCaDV
- cvcq/AZpwleMsQwURkuL16XpZrQdW6nZhLq2c+nzJOy4CIzwTNPKw2uIpYTX6w8aCq39
- +4QA==
+ bh=DWa2D5lR49IJ11tY8Mm7osQUN8nI2qfyLzOunqnFXWQ=;
+ b=xRxK49RgPzNINYimXChq8fuJGB0NqHxH9gPJ2Iilpobz6DLx6CULu8EMNJGFJuXpkT
+ 3czz9+x8AA2rqM7IxLmvj37/3SiMo1q8LzxzZ0zHAi6ZJ+3pxB6F1szUVLplHHDjZ694
+ 7kYbqit41mfpxsyvwJ2HLT995car9L4iM2d0ZJvff1fmgno1Xu5auvbA9tRI/A7PI6Rk
+ UIX/9Rcuj57wXYOgwPKDAmOWSt0nF3TQJ1taU0mIWzETpHdVxYCobp9X0ycxZ4fMgfwZ
+ qDePfbUzRTRnqeZAEMSuml03ebA+JLahYzDvnLokxnnvaLRwyJkchA42YXhodyhMNeQa
+ pQ9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772818883; x=1773423683;
+ d=1e100.net; s=20230601; t=1772819020; x=1773423820;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wTy488E1rgEmqqX+pe4K8lUXT/VnW1eejnnubBalO9Y=;
- b=HBD2PoWsnSlxs9QT+sKczkJtxh/VSYlcyI60p2/b0nNGsgCaqPIg5b4uk00Uh/nfqW
- 8H5qdEruFEv2gcusEgATXO1opWJKZxOtn/opIKn/rTKm3YDNZkgJUhlIyYOeN7jhTj3i
- 8Fh/vPSZIyU1inv++QNKZoXv4usq/4jzVkgbROAu7BpwSitAur8kgEPYXF9wxtUy90Fl
- LIBAgNCF3gs9sWIRGLRAtwRDSGiVAI2EbmmwQgzWkqynLXE8U+A2wHwn8G/4AQtaJTaj
- mvGRxkyWhqoDOqR1NRMgJ83Q6p+i8Q50o5GXkWRGY68Qlfy/2WLOHJVHPOPrEQQ9PhEF
- BgmQ==
+ bh=DWa2D5lR49IJ11tY8Mm7osQUN8nI2qfyLzOunqnFXWQ=;
+ b=cqFf0PthZPupDFyMkVNlf2yQ2tN4s5WSVD4wXCse+ktI6+2d0ZSic0v5ISs+FAo6UE
+ j1Dvq7AHF7/vvi6IzIueLsA6HGuv7DnwQKstpbN0bWCJZW2CCbm5tnDsxD1CNTus7wKl
+ QBxmpoBi8ZNvqfmC8l4nBbkBgMozaLIJx1IWYuxfhp/ze71BXMeKtUF7eZDPUkFCWNhM
+ zEvLI7GvYUBuICLIoRDGA6TGbzf4Vt3XD3D19cNx16xoS/bWsndT2Yn13i8KNczwQi8o
+ Q9skuEtWC9t+G2ufFZgEWeUYEMYhmsJGGpV5DorSG7d7mWe4N4+Df740glP5ATZ+9Qvm
+ cSQQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBI1G0qVj/Gk05LjssF8/JVsBZHOS95KzUgBuAl37GTcwDpiNck4upA9bBoQOSNA7R9Dv5g/t8rjOu@nongnu.org
-X-Gm-Message-State: AOJu0YwPssb4Naw4exiI6jl0UlnOVf0xmpiV9ybj1WTAAO3PE5+r+9aS
- rscCK0Jr7+F14Zmzx8BGvQIASi/jBW+77qicVjHmW7H4mmW3zCtQ8cDAB4o4xWAeZdk=
-X-Gm-Gg: ATEYQzwhaHmvig8f2jiubO4A27Jl7Gk8IQeXa0z8d0hyBjBOhVvAWhkDTtm2mP0uiKc
- enfPxPtJVu91Z9HBzS8kjzTNSAeFwSgtmfjjqLKPW7QDDyyPvF2eNj6wZA6gxuwrWuKDqrdBGxP
- KUU1DY0+DCcbVsdx6kwXGGJBUaDXdDtKIlJqKdwQZHh9IEMKZgO42j3/7KorXxhVqNIweOag97h
- 1ckVoMyLVBqWbfJjJSx6QsHapK5oPyM56y9iNw5+Q7Wk4I3q4Vcn/hWBVZfcRAFvCMGHm4d43Da
- ZvQ8xqByVqsREwzofA0wutzOTTppsr5IdaItvRLD2RmkI4JsCSjc/BI/1PSRdFoAtRNaEhSTUxt
- WiDOejpuX+htNl51uw7DrkjqoXDKEPpWLGb8gJsvOoFfashCYwQWaMhS3cj/ZnWhMomWNHwXcU4
- 5R8Iy7oZDCPcCtLX0jnmRDV8I7PAQyXfiiUKnUYEyuCdYg57HGZaLr9l4dU9qQNjqgsRZP
-X-Received: by 2002:a05:6a00:9510:b0:829:8942:2c93 with SMTP id
- d2e1a72fcca58-829a2d86b43mr2935656b3a.9.1772818882618; 
- Fri, 06 Mar 2026 09:41:22 -0800 (PST)
+ AJvYcCVYEQuSTm+0WVgibUGrkUly+vycBm64RttOKCPjm9oa38fGnl8I+7r6QH1+JlVZQqKWfIIbVmsYbcfg@nongnu.org
+X-Gm-Message-State: AOJu0Yyeid6NP3sfEtiJNwxLU8qCwQKeA9+B6eOWQ/VzCeeZ/JWsGbxS
+ ujnS20amQd4l95Pv07zTtZDLIlSc04yEF9TJ3frwutn+jpwO2ufSvUFYd03jhwekdew=
+X-Gm-Gg: ATEYQzztDGYqBhkGmq5hJdHvvskcbeYL9VLAbJpYPM7GU9Paa7R6Rq6A2Kd+ZNVh5Iw
+ 53YU/leqPLLJbSU3JaIB1BEPvoOjjeQHDHbUzLakJ7EyokWn+CVz20wCdkadLdGY1eODeTJEH4x
+ 4KHe5Tel/E5V/qZZ+E0GcQU6ZwL0rgcQSitDCvS/Ipl+CI+ftYymwJtFlGNpfomx8OcczvJQiWZ
+ V1NDevI8N0M5SKAUluYYV1TZF+9qZRmlkfG1jD6U78G/cGJM7AfzIiMayzdlOZMEjJ7CUWPv5qT
+ OsoPsGOD2Ljai2AmHhSI9QsxkPWCUQG1zLAxEcjP9m5skN/TrO8m3R9cSpJWldDlPL8IVfrSmUB
+ lS77G2Y19G6/7gwDtpNrvUneCn2/Jvroil25N58NzGJjgylO0OX1iKG41jiqX/KQ4Px7rmS8DDN
+ 7a7LUugIdx64VuspF3cmQOJ4r4Wn/86ahdaQzq5IfALqrVUCFxg+CrWWhxiodcnVsNr24A
+X-Received: by 2002:a05:6214:2244:b0:89a:e77:1f7c with SMTP id
+ 6a1803df08f44-89a30ad2384mr42869576d6.41.1772819019675; 
+ Fri, 06 Mar 2026 09:43:39 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-829a46369d3sm2418657b3a.2.2026.03.06.09.41.21
+ 6a1803df08f44-89a3140da14sm20659966d6.9.2026.03.06.09.43.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Mar 2026 09:41:22 -0800 (PST)
-Message-ID: <9898100f-b6e4-4386-ae3d-bfc88d5b909b@linaro.org>
-Date: Fri, 6 Mar 2026 09:41:21 -0800
+ Fri, 06 Mar 2026 09:43:39 -0800 (PST)
+Message-ID: <d9ffeb97-df9d-4888-857e-76ddc345c651@linaro.org>
+Date: Fri, 6 Mar 2026 09:43:37 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] tests/functional: add the ability to send keys
+Subject: Re: [PATCH v2 0/6] hw/virtio/virtio-access.h: remove target specific
+ code
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
- Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20260306161728.2657486-1-alex.bennee@linaro.org>
- <20260306161728.2657486-7-alex.bennee@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Greg Kurz <groug@kaod.org>
+References: <20260225041948.52929-1-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -118,11 +120,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260306161728.2657486-7-alex.bennee@linaro.org>
+In-Reply-To: <20260225041948.52929-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,16 +147,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/26 8:17 AM, Alex Bennée wrote:
-> To navigate things like grub we need to send individual keys without
-> trying to look for success messages.
+On 2/24/26 8:19 PM, Philippe Mathieu-Daudé wrote:
+> v2:
+> - Rebased
+> - Removed virtio_vdev_is_modern (Zoltan, myself)
+> - Include Stefan's Acked-by tag
+> - Include "make compilation unit common" patches from [3]
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> This series eliminates some target specifics in hw/virtio and replace them with
+> runtime functions where needed, to be able to link virtio code in single-binary.
+> After a first try on a series [0] doing this change and making all virtio files
+> common, Richard asked to refactor this part, thus this independent series.
+> 
+> By diving into virtio initialization, I noticed that device_endian is always
+> storing endianness of cpu associated on device reset. The root issue, is when
+> dealing with target who dynamically change their endianness during execution.
+> ppc64 is the main use case, as cpu always boot in BE and most of OS use LE. arm
+> use case is more limited, as big endian systems are mostly dead nowadays.
+> 
+> Because of this, initialization is tricky, and goes through different hoops to
+> have the expected value. My first approach has been to try to change this, by
+> simply setting endianness on the first access. However, it fell flat, because
+> current_cpu is not always available at this time.
+> A second approach was to set endianness to LE by default, and change it only
+> when setting device features, and potentially discovering it's a legacy virtio
+> device. It brought other issues, that showed that current initialization code,
+> even though it's complex, does the right thing.
+> Thus, I focused on refactoring virtio_access_is_big_endian, and noticed that it
+> was not even needed at this point.
+> 
+> Patches 1 and 2 are refactoring names to clear some confusion.
+> Patch 3 eliminates virtio_access_is_big_endian, with a lenghty commit message
+> explaining the change. By doing this, we remove target specifics from
+> hw/virtio/virtio-access.h.
+> 
+> Of course, performance has been tested, and it is on par with upstream/master.
+> 
+> Results are on 20 runs and expressed in kIOPS:
+> reference: mean=239.2 std_dev=3.48
+> with_series: mean=238.1 std_dev=3.56
+> 
 > ---
->   tests/functional/qemu_test/__init__.py |  3 ++-
->   tests/functional/qemu_test/cmd.py      | 15 +++++++++++++++
->   2 files changed, 17 insertions(+), 1 deletion(-)
+> 
+> Performance has been measured with this automated fio benchmark [1], with
+> original instructions from Stefan [2].
+> 
+> Download artifacts and run benchmark with:
+> $ wget https://github.com/pbo-linaro/qemu-linux-stack/releases/download/build/x86_64_io_benchmark-a55f2d6.tar.xz
+> $ tar xvf x86_64_io_benchmark-a55f2d6.tar.xz
+> $ ./run.sh /path/to/qemu-system-x86_64
+> 
+> [0] https://lore.kernel.org/qemu-devel/20260206221908.1451528-1-pierrick.bouvier@linaro.org/
+> [1] https://github.com/pbo-linaro/qemu-linux-stack/tree/x86_64_io_benchmark
+> [2] https://lore.kernel.org/qemu-devel/20260202185233.GC405548@fedora/
+> [3] https://lore.kernel.org/qemu-devel/20260206221908.1451528-1-pierrick.bouvier@linaro.org/
+> 
+> Pierrick Bouvier (6):
+>    hw/virtio: Add virtio_vdev_is_legacy()
+>    hw/virtio: Simplify virtio_access_is_big_endian()
+>    hw/virtio: Inline virtio_access_is_big_endian()
+>    hw/virtio/vhost-user: make compilation unit common
+>    hw/virtio/virtio-qmp: make compilation unit common
+>    hw/virtio/: make all compilation units common
+> 
+>   include/hw/virtio/virtio-access.h | 43 ++++++-------------
+>   include/hw/virtio/virtio.h        |  7 +++-
+>   hw/virtio/vhost-user.c            | 11 ++---
+>   hw/virtio/vhost.c                 | 12 +++---
+>   hw/virtio/virtio-pci.c            |  6 +--
+>   hw/virtio/virtio-qmp.c            | 70 -------------------------------
+>   hw/virtio/virtio.c                | 12 +++---
+>   hw/9pfs/meson.build               |  2 +-
+>   hw/block/meson.build              |  4 +-
+>   hw/char/meson.build               |  2 +-
+>   hw/net/meson.build                |  2 +-
+>   hw/scsi/meson.build               |  6 +--
+>   hw/virtio/meson.build             | 17 ++++----
+>   13 files changed, 50 insertions(+), 144 deletions(-)
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+This was merged into master (2940018747e31842cf34334394c7d32517e73fbd).
+
+Regards,
+Pierrick
 
