@@ -4,55 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A1FF01834
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F34F01832
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyV5u-0005It-EB; Fri, 06 Mar 2026 08:19:54 -0500
+	id 1vyVFP-0002D8-5B; Fri, 06 Mar 2026 08:29:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyV5p-0005I7-MN
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:19:50 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vyVFM-0002Cp-Mp
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:29:40 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyV5n-00026l-Tr
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:19:49 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B79D6596D94;
- Fri, 06 Mar 2026 14:19:46 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id eVxzET5vpFZ2; Fri,  6 Mar 2026 14:19:44 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A90B7596D97; Fri, 06 Mar 2026 14:19:44 +0100 (CET)
-Message-ID: <7f48af77076c9d7f6121420e91afc744760c4868.1772802886.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1772802886.git.balaton@eik.bme.hu>
-References: <cover.1772802886.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v9 5/8] memory: Remove memory_region_init_ram_nomigrate()
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1vyVFH-0003zW-H1
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:29:40 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fS6fz5JtqzHnGj5;
+ Fri,  6 Mar 2026 21:28:27 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7762A4056F;
+ Fri,  6 Mar 2026 21:29:27 +0800 (CST)
+Received: from localhost (10.206.167.72) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Mar
+ 2026 13:29:26 +0000
+Date: Fri, 6 Mar 2026 13:29:22 +0000
+To: <qemu-devel@nongnu.org>, <gourry@gourry.net>, <lizhijian@fujitsu.com>
+CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
+ <imammedo@redhat.com>, <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
+ <mst@redhat.com>, <nifan.cxl@gmail.com>, <peterx@redhat.com>,
+ <philmd@linaro.org>, <pbonzini@redhat.com>, <venkataravis@micron.com>,
+ <xiaoguangrong.eric@gmail.com>
+Subject: Re: [PATCH v7 0/3] hw/cxl: Add a performant (and correct) path for
+ the non interleaved cases
+Message-ID: <20260306132922.000038de.alireza.sanaee@huawei.com>
+In-Reply-To: <20260306121151.883-1-alireza.sanaee@huawei.com>
+References: <20260306121151.883-1-alireza.sanaee@huawei.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Fri, 06 Mar 2026 14:19:44 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.206.167.72]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,168 +71,280 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the last remaining use outside of memory.c in vga to use
-memory_region_init_ram_flags_nomigrate() instead and inline and remove
-the memory_region_init_ram_nomigrate() variant. This leaves
-memory_region_init_ram_flags_nomigrate() as the only nomigrate variant
-that is still needed at a few places.
+On Fri, 6 Mar 2026 12:11:48 +0000
+Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- docs/devel/memory.rst                         |  8 +++----
- hw/display/vga.c                              |  4 ++--
- include/system/memory.h                       | 23 -------------------
- .../memory-region-housekeeping.cocci          | 19 ---------------
- system/memory.c                               | 13 ++---------
- 5 files changed, 7 insertions(+), 60 deletions(-)
+Hi,
 
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 0bb5acab21..9083b18f08 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -110,11 +110,9 @@ migrated:
- 
- For most devices and boards this is the correct thing. If you
- have a special case where you need to manage the migration of
--the backing memory yourself, you can call the functions:
--
--- memory_region_init_ram_nomigrate()
--
--which only initialize the MemoryRegion and leave handling
-+the backing memory yourself, you can call the function
-+memory_region_init_ram_flags_nomigrate()
-+which only initializes the MemoryRegion and leaves handling
- migration to the caller.
- 
- The functions:
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 59a65cbbff..ee7d97b5c2 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -2235,8 +2235,8 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
-         return false;
-     }
- 
--    memory_region_init_ram_nomigrate(&s->vram, obj, "vga.vram", s->vram_size,
--                                     &local_err);
-+    memory_region_init_ram_flags_nomigrate(&s->vram, obj, "vga.vram",
-+                                           s->vram_size, 0, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return false;
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 7117699b10..d4793a08a7 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1374,29 +1374,6 @@ void memory_region_init_io(MemoryRegion *mr,
-                            const char *name,
-                            uint64_t size);
- 
--/**
-- * memory_region_init_ram_nomigrate:  Initialize RAM memory region.  Accesses
-- *                                    into the region will modify memory
-- *                                    directly.
-- *
-- * @mr: the #MemoryRegion to be initialized.
-- * @owner: the object that tracks the region's reference count
-- * @name: Region name, becomes part of RAMBlock name used in migration stream
-- *        must be unique within any device
-- * @size: size of the region.
-- * @errp: pointer to Error*, to store an error if it happens.
-- *
-- * Note that this function does not do anything to cause the data in the
-- * RAM memory region to be migrated; that is the responsibility of the caller.
-- *
-- * Return: true on success, else false setting @errp with error.
-- */
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp);
--
- /**
-  * memory_region_init_ram_flags_nomigrate:  Initialize RAM memory region.
-  *                                          Accesses into the region will
-diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
-index e45703141a..b23647a3d8 100644
---- a/scripts/coccinelle/memory-region-housekeeping.cocci
-+++ b/scripts/coccinelle/memory-region-housekeeping.cocci
-@@ -26,15 +26,9 @@ symbol true;
- expression E1, E2, E3, E4, E5;
- position p;
- @@
--(
-   memory_region_init_ram@p(E1, E2, E3, E4, E5);
-   ...
-   memory_region_set_readonly(E1, true);
--|
--  memory_region_init_ram_nomigrate@p(E1, E2, E3, E4, E5);
--  ...
--  memory_region_set_readonly(E1, true);
--)
- @script:python@
- p << possible_memory_region_init_rom.p;
- @@
-@@ -52,23 +46,10 @@ expression ALIAS, E5, E6, E7, E8;
- -  memory_region_set_readonly(ALIAS, true);
- 
- 
--// Replace by-hand memory_region_init_ram_nomigrate/vmstate_register_ram
--// code sequences with use of the new memory_region_init_ram function.
--// Similarly for the _rom and _rom_device functions.
- // We don't try to replace sequences with a non-NULL owner, because
- // there are none in the tree that can be automatically converted
- // (and only a handful that can be manually converted).
- @@
--expression MR;
--expression NAME;
--expression SIZE;
--expression ERRP;
--@@
---memory_region_init_ram_nomigrate(MR, NULL, NAME, SIZE, ERRP);
--+memory_region_init_ram(MR, NULL, NAME, SIZE, ERRP);
-- ...
---vmstate_register_ram_global(MR);
--@@
- typedef DeviceState;
- identifier device_fn, dev, obj;
- expression E1, E2, E3, E4, E5;
-diff --git a/system/memory.c b/system/memory.c
-index 65042bd9fa..e15f931a8a 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1579,16 +1579,6 @@ void memory_region_init_io(MemoryRegion *mr,
-     memory_region_set_ops(mr, ops, opaque);
- }
- 
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp)
--{
--    return memory_region_init_ram_flags_nomigrate(mr, owner, name,
--                                                  size, 0, errp);
--}
--
- bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-                                             Object *owner,
-                                             const char *name,
-@@ -3695,7 +3685,8 @@ bool memory_region_init_ram(MemoryRegion *mr,
- {
-     DeviceState *owner_dev;
- 
--    if (!memory_region_init_ram_nomigrate(mr, owner, name, size, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-+                                                size, 0, errp)) {
-         return false;
-     }
-     /* This will assert if owner is neither NULL nor a DeviceState.
--- 
-2.41.3
+> Hey everyone,
+> 
+> This is v7 of performant CXL type 3 regions set:
+> 
+> 
+> v7 -> v8:
+oops, typo. v8 is wrong.
+v6 -> v7:
+>           - Rebased on top of the latest master. Base-commit stated at the end of cover-letter.
+>           - Thanks to Gregory and Zhijian for testing and feedback. Addressed
+>           their comments. 
+> v5 -> v6: 
+>           - Use object_unparent() in the third commit when deleting alias regions. 
+>           - Thanks to Gregory for the suggestion and testing.
+> v4 -> v5: 
+>           - Fixed some minor patch style like missing trailing white space and such.
+> v3 -> v4: 
+>           - Tear down path changed, given that it is done differently than
+>           setup.
+>           - Dropped Gregory's tested-by tag due to tear down changes.
+> v2 -> v3: 
+>           - Addressing Zhijian Li. Thanks for the feedback.
+> v1 -> v2: 
+>           - Mainly rebase.
+> 
+> ==========================================================
+> 
+> The CXL address to device decoding logic is complex because of the need
+> to correctly decode fine grained interleave. The current implementation
+> prevents use with KVM where executed instructions may reside in that
+> memory and gives very slow performance even in TCG.
+> 
+> In many real cases non interleaved memory configurations are useful and
+> for those we can use a more conventional memory region alias allowing
+> similar performance to other memory in the system.
+> 
+> Whether this fast path is applicable can be established once the full
+> set of HDM decoders has been committed (in whatever order the guest
+> decides to commit them). As such a check is performed on each commit /
+> uncommit of HDM decoder to establish if the alias should be added or
+> removed.
+> 
+> 
+> Performance numbers:
+> 
+> For a read/write test with 4K block size, 256M region size, and 1 thread
+> with 100 iteration on TCG (it should do similar on KVM):
+> 
+>   - Non-interleaved region (fast path): 25-30 seconds.
+>   - Interleaved region (no fast path):  Never finishes within 10
+>     minutes.
+> 
+> Tested Topologies and Region Layouts
+> ====================================
+> 
+> This series was validated across multiple CXL topology configurations,
+> covering single-device, multi-device, multi-host-bridge, and switched
+> fabrics. Region creation was exercised using the `cxl` userspace tool
+> with both non-interleaved and interleaved setups.
+> 
+> Decoder and memdev identifiers were discovered using:
+> 
+>   cxl list
+>   cxl list -D
+> 
+> Decoder IDs (e.g. decoder0.0) and memdev names (mem0, mem1) are
+> environment-specific. Commands below use placeholders such as
+> <decoder_span_both> which should be replaced with IDs from `cxl list -D`.
+> 
+> ---------------------------------------------------------------------
+> 
+> Region Layout Notation
+> ----------------------
+> 
+> CFMW (CXL Fixed Memory Window) is shown as a linear address space
+> containing regions:
+> 
+>   CFMW: [ R0 | R1 | R2 ]
+> 
+> R0, R1, R2 are regions created by `cxl create-region`.
+> 
+> Non-interleaved region:
+> 
+>   R0 (ways=1) -> entirely on one device (mem0 or mem1)
+>   Fast path: APPLICABLE
+> 
+> 2-way interleaved region (g=256):
+> 
+>   R1 (ways=2, g=256) striped across devices:
+> 
+>     |mem0|mem1|mem0|mem1|mem0|mem1| ...
+>      256  256  256  256  256  256  bytes
+> 
+>   Fast path: NOT APPLICABLE
+> 
+> ---------------------------------------------------------------------
+> 
+> 1) One device, one host bridge, one fixed window
+> ------------------------------------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
+> 
+> Topology:
+> 
+>   Host
+>     |
+>     +-- CXL Host Bridge (cxl.0)
+>          |
+>          +-- Root Port (rp0)
+>               |
+>               +-- Type-3 (dev0, mem0)
+> 
+> Regions created:
+> 
+>   cxl create-region ... -w 1 ... mem0   (Fast path: YES)
+>   cxl create-region ... -w 1 ... mem0   (Fast path: YES)
+> 
+> Layout:
+> 
+>   CFMW: [ R0 | R1 ]
+> 
+>   R0 -> mem0  (Fast path: YES)
+>   R1 -> mem0  (Fast path: YES)
+> 
+> ---------------------------------------------------------------------
+> 
+> 2) One host bridge, two Type-3 devices (via two root ports)
+> ------------------------------------------------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -device cxl-rp,id=rp1,bus=cxl.0,port=1,chassis=0,slot=3
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -object memory-backend-ram,id=mem1,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
+>   -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
+> 
+> Topology:
+> 
+>   Host
+>     |
+>     +-- CXL Host Bridge (cxl.0)
+>          |
+>          +-- Root Port (rp0) -- Type-3 (dev0, mem0)
+>          |
+>          +-- Root Port (rp1) -- Type-3 (dev1, mem1)
+> 
+> Region patterns exercised:
+> 
+> 2.1 All non-interleaved:
+>   R0 -> mem0  (Fast path: YES)
+>   R1 -> mem0  (Fast path: YES)
+>   R2 -> mem1  (Fast path: YES)
+>   R3 -> mem1  (Fast path: YES)
+> 
+> 2.2 Interleaved + local:
+>   R0 -> mem0/mem1 interleaved  (Fast path: NO)
+>   R1 -> mem0                   (Fast path: YES)
+> 
+> 2.3 Local + interleaved + local:
+>   R0 -> mem0                   (Fast path: YES)
+>   R1 -> mem0/mem1 interleaved  (Fast path: NO)
+>   R2 -> mem1                   (Fast path: YES)
+> 
+> ---------------------------------------------------------------------
+> 
+> 3) Two host bridges, one device per host bridge
+> ------------------------------------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,
+>      cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G,
+>      cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=4G,
+>      cxl-fmw.2.targets.0=cxl.0,cxl-fmw.2.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
+>   -device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=13
+>   -device cxl-rp,id=rp1,bus=cxl.1,port=0,chassis=1,slot=2
+>   -object memory-backend-ram,id=mem1,size=512M,share=on
+>   -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
+> 
+> Region patterns identical to section 2, and fast-path applicability is
+> identical per region mapping (non-interleaved: YES, interleaved: NO).
+> 
+> ---------------------------------------------------------------------
+> 
+> 4) Switch topology
+> ------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -device cxl-rp,id=rp1,bus=cxl.0,port=0,chassis=0,slot=3
+>   -device cxl-upstream,id=us0,bus=rp0
+>   -device cxl-downstream,id=ds0,bus=us0,port=0,chassis=0,slot=4
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=ds0,memdev=mem0
+> 
+> Topology (detailed):
+> 
+>   Host
+>     |
+>     +-- CXL Host Bridge (cxl.0)
+>          |
+>          +-- Root Port (rp0)
+>          |     |
+>          |     +-- CXL Switch (upstream us0)
+>          |           |
+>          |           +-- Downstream Port (ds0) -- Type-3 (mem0)
+>          |           |
+>          |           +-- Downstream Port (ds1) -- Type-3 (mem1) [optional]
+>          +-- Root Port (rp1)
+>                |
+>                +-- More devices/switches.
+> 
+> Fast-path interpretation in this topology:
+> 
+>   If only mem0 exists:
+>     All regions -> Fast path: YES
+> 
+>   If mem0 and mem1 exist:
+>     Non-interleaved regions -> Fast path: YES
+>     Interleaved regions     -> Fast path: NO
+> 
+> ---------------------------------------------------------------------
+> 
+> Summary
+> -------
+> 
+> Across all topologies, region creation, enablement, and HDM decoder
+> commit/uncommit flows were exercised. The fast path is enabled only when
+> all decoders describe a non-interleaved mapping and is removed when any
+> interleave configuration is introduced.
+> 
+> Alireza Sanaee (3):
+>   hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset in
+>     window.
+>   hw/cxl: Allow cxl_cfmws_find_device() to filter on whether interleaved
+>     paths are accepted
+>   hw/cxl: Add a performant (and correct) path for the non interleaved
+>     cases
+> 
+>  hw/cxl/cxl-component-utils.c |   6 +
+>  hw/cxl/cxl-host.c            | 231 +++++++++++++++++++++++++++++++++--
+>  hw/mem/cxl_type3.c           |   4 +
+>  include/hw/cxl/cxl.h         |   1 +
+>  include/hw/cxl/cxl_device.h  |   4 +
+>  5 files changed, 237 insertions(+), 9 deletions(-)
+> 
+> 
+> base-commit: 483cb5b74cd247b1520e0994b4fae4d8fe44cb00
 
 
