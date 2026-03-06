@@ -4,111 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7297BF01826
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B2FDF01821
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vySjo-0004m2-I6; Fri, 06 Mar 2026 05:48:56 -0500
+	id 1vySmJ-0005iT-Qe; Fri, 06 Mar 2026 05:51:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vySjf-0004kT-WA; Fri, 06 Mar 2026 05:48:48 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vySmH-0005iD-44
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 05:51:29 -0500
+Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vySjd-0007sp-Rf; Fri, 06 Mar 2026 05:48:47 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 625L490C329165; Fri, 6 Mar 2026 10:48:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=+AP79i
- fkjfhMER60db9jG5G7pQkrj7KQUPObrBNDwIA=; b=N86LzA6aOaM1O0vEvzOKVY
- UobkSfxgsLp+xrKdqOJXiQr1LyNfepTPB6jIXO4cKlty0XUKNxhvFPYHr0piWH9x
- KrsFSidMYbsMzswyJmLIdtv/kypkDmUZgTNZIICzsvHwb1C5YpXntzYfroSq+vOU
- q07wG73465i/MFE9B1DP4BYE6+f04piV/9sHr6mQiLomK0oLCupfT6TiXrQJ2kyo
- CEhbJdWgw0Vjxpn+nzjeU1SMBSNI9eXlYq4c6WlRebxoTlOvJfoemdrQNtPg2630
- 2t3YhRgXELHma+6BXqofLt/URaQk2xxpiwrrYa/i9P+ipSLDbkBhhP1+w93sPAIA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmyjhk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:48:41 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6268AEgo011312;
- Fri, 6 Mar 2026 10:48:40 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cqau2v0yn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:48:40 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 626Ama7B33816856
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Mar 2026 10:48:36 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9060B20043;
- Fri,  6 Mar 2026 10:48:36 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CE6E120040;
- Fri,  6 Mar 2026 10:48:34 +0000 (GMT)
-Received: from [9.78.106.17] (unknown [9.78.106.17])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Mar 2026 10:48:34 +0000 (GMT)
-Message-ID: <b8f14d86-25a5-48c4-a982-b728371964a8@linux.ibm.com>
-Date: Fri, 6 Mar 2026 16:18:33 +0530
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1vySmF-0008F3-Al
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 05:51:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1772794284; x=1773399084; i=deller@gmx.de;
+ bh=X29NPps80v6y2LKnT2t7Gga3cJD0C6A6wzXoosV/4rA=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=as+8sGKz5YcpyH2a0Pg3Di3Ne0oUArGbrwUwfQnoGI1CKiuUvvWrouwU9tt+rNp+
+ mt8s1r0ljGs0hgegbvI5O5voypXI9CxO87l2MXC5mDdXnSQ1faxDUr7HdPJWin6dn
+ ZTH/JEaCTXLzSmyTKW2wMrrJw2p9226G8tLJwEoNqkQ2CDi6whps5fUhNnR6w6OiB
+ 7HXRVRP7dDnDm0EEj0twR5JBGxyKWXJAEKttlm48xp9VpIsah6r/qa41yygsV7RMV
+ Uv6VcJd0AKn1f59sMo2XMxkkm2wmsMjkQ4OVu2E0Lm80p1kp0HJQsI7KwNc7NXbKW
+ WDjqikZaxwYO2+7/AQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1My32L-1vjohv0nTL-014XBK; Fri, 06
+ Mar 2026 11:51:24 +0100
+Message-ID: <2d7da6f4-7fe0-4cd0-9048-b36108dbd298@gmx.de>
+Date: Fri, 6 Mar 2026 11:51:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/10] ppc/mpipl: Implement S0 SBE interrupt
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-References: <20260225124633.1841222-1-adityag@linux.ibm.com>
- <20260225124633.1841222-3-adityag@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: Check if RESOLVE_CACHED flag is defined
+ before using it
+To: frank.chang@sifive.com, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20260212095449.683135-1-frank.chang@sifive.com>
 Content-Language: en-US
-From: Hari Bathini <hbathini@linux.ibm.com>
-In-Reply-To: <20260225124633.1841222-3-adityag@linux.ibm.com>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
+ HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
+ r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
+ CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
+ 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
+ dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
+ Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
+ GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
+ aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
+ 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
+ ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+ FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
+ uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
+ uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
+ REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
+ qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
+ iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
+ gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
+ Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
+ qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
+ 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
+ dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
+ rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
+ UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
+ eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
+ ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
+ dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
+ lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
+ 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
+ xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
+ wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
+ fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
+ Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
+ l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
+ RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
+ BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
+ Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
+ XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
+ MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
+ FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
+ 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
+ ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
+In-Reply-To: <20260212095449.683135-1-frank.chang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEwMSBTYWx0ZWRfX8c5Pe1wFdpWP
- 0mQzSKY8zm7Wo/4RJfCvwaLMqYAip3Q9zrO5vfBaqd3WxV28PwPscnHOx+Zn4QT4Z+qcm0P6/h3
- ThWbTfB3z8tmaKXGxGDJeS0Nyy59Qxc4lJIu9QSzDjuJtBsNKXzx1FgAGoEKx2+/DbRAsMS6qb4
- GUUDjtHXfDUXTiYz+OQ6IC0uRjIheQ57sq54x64MkGlVnNmDkmqLPtfiAm8MCia+pkVC/xM+qQs
- HNbUsAG2zE37sMJcWvJPxP50usQZpgIORA+CJeVyYE3XxSbQ3eS1Zl6hzpWXqrFF5CTQKLDdgB/
- 2aN5mqhZYlP5Qko5j9x6UhpWDD75ZAk4vfX6qZ/Je3BhxzJ641Vu9oBbHoFtd/eFIv1iWsk2NjO
- jpwGWP0br2q4ravYEPlKVTxE785k52R3N1/aaIFR7KY7UqgCMPKN1mwEK6AolH6rCIHVZb59yd+
- N2pyYNC7zZOwm1M9QPw==
-X-Proofpoint-ORIG-GUID: _5UFQnn_i0tiCGlnObgSosVCj_f1ujI8
-X-Proofpoint-GUID: sW_4L2GlnL4xAGvrWiwiL93zj-m9yp0V
-X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aab109 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=PLBsYqVowcRC1OSvligA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_03,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- spamscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060101
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:kTslA+imshXH836r2eidnOyN5qovVXfQ2Cs4FyisjwcpG6devG0
+ /DnUMzP2t5v6rBTxX2dT4egwo7VngGnIzGHpFpa6xYyHdt6zLRxwULT3bJ0Ftic2Clq679l
+ aI441iZJW0zaXw6d3cCzz7VEEm1LkpFeiMxa3gsLzOJkbc2dfWNgxTWG+j/4Z0I2Rawfrfk
+ xGYq3jmFcEf61c7+nvfDA==
+UI-OutboundReport: notjunk:1;M01:P0:OqNQ9BPWB/4=;OnJn6on/6X8FPsWjHAUOnWesxcj
+ f0hha5YrTcn45Qphi8XkZO5qDSNzPo7/u2iK9cgHw111LR00Ai0iDgb/DMS5lApdlK7smTFXK
+ NMg+kMEJTKhL6ennet1zP6whQ0eG0FGd6hGfJvOuo0XSn9d8s6+vMSUMH2/NPPFzjFjAdkvPe
+ D+fNaHvGvXp69gde5DiJNg+J+lo+VbrNvmonPFjOFWr3ajJkRUmBw8xChCQagpkWQfa9z5jgV
+ PZ8JTkKVe1ZohBlk9woi7Ixo0cLYWOzcYRiJY89MASe0mtSUVsknOMeEoM9PD5Qn2l6ZoN7h3
+ 0fWnd7qcJ2y+Tr5WRALbieqsAdNDp6CF75f0rXXcTPYj+9IH+mpPgc6n3UDcbnbHJQX0d4Ktb
+ wB/zwQr1RWdRGF3tWGFHsHGhkPaCtYODfrVqi4mMiQ1gdKkqrbyoeFAVOEViG85V/afo1vJS6
+ uddg7AXxarl08E0Fv2aagUF/tvlaGjj+YCO0SRr5Pnf2Q8mRceGFhno35uXtfA4wyRi7DNX42
+ B2iQvE5xu8Bassp+P+imAI3r6Xmffr8iwz35LNDFLRW5ANoQLSw0zWOkAUXB3zPLPYtxKcWsY
+ gRmZnjR0yKvypTW8BFz5FM3gqqLWIUU84Y8WyAY9o9J8pmoQEhAtHqVx1a6KxXuL5GUZJHAuY
+ I31Bz0Eu+roW3gArpcQF7OuiE618mvQURCmV+tfsMtKA2LGeSfrdRHp76aAFhLreMEj+9PPwp
+ 33pM56cpxY9aZoLU7UDx/py1KrIUDD25xvpLoXAQWhY3JtK08NpNIo3y9eQijmbQOrTOySKI3
+ jPjCkX78DwUSonaYu4g9zGhGFW8PEyyt6O4KvEQc8p4eLYPFnZ9t4/+8rxZRBPLfPE0RcpynB
+ xTTnlf93TMRIRymAy32YA6rXe/A2JKoyr6/e8n21Rf3X6lz1Ur3bsatcq6x8tC4pFXJWd+nbx
+ tutp93/6IiLIHPJQdeCHJhizIQzbzmtsS0j3SPmgcBiP1CXtsTqT9eDfeMNOR7CJYiaXjvvtk
+ N6XWnuAz5qQycnhECE2T37hJiZ4Vb6t7PMXCoz7PzOFOZcUCe8UqHGRPFBwlBXUDp7cw2B+dj
+ VDn4b68HzWh1NoE/1Dv+hd7mlHBnBecqxmOJ13WiR1t5dVgGSp8yEzHrh4ycaAletFnubZF8X
+ 2+QpiC1hyxmwnZG0+RbR/OwOtqihyn9h1gjT9/O9qrWLNpMg8hNIDu1XB2biUSiFszQh30Un2
+ 3/scKYAm3hnISgwfTbL+IQX0Fjl1HgSxjdeuqlusgLBCSJHnsAr9EuvI/it3hOttCdVofRUrO
+ KSSN12RN6rE7rKUlkaZQnlaLewcZqzNBiuaeR9t6taNukUomJ+jHsNPPIbBVpEVkvGBgSxbCJ
+ atA8iddUPQs0je1SaX9aNB9ZWzeX4Vh/+IP7OQx+E65mYCBSh/Z0Ji5bRRf7cs08iqi7oYs8N
+ boJf9xpVx2IEwmWsXPte2vkAl8dHsowF1yJGJkoA4KyEXXwNy+ahmyBfqe4PnD6LzQYyQIizI
+ SpKLPtBiLMhbYdlD4jsl0jVhI579o1UwRhM5GTVnnTlPMk7j9XQD5vNqZ56PFoqff6M4u+0lI
+ gVbcSfiPTKRQmbBOGsiD6rcX9UhbpMsLkXal4IMEUcNAIXv7L2w+n3hALncwBrosFoc474oe5
+ 9ON9T0M5TI1xAc3q94L+AI/cN/AM2vScXwI4jAUeOqQwvoLhrGDwFN6QdUlqx44OD8ymdLJHO
+ XnveS1TW9ZivFRqgZhl9a2zUF0hTKH7G5hiOfFrr6CSP6Bx7LfAmOSkDZuKs4m4RV3w0GTJ45
+ Bn7vczkF1C09StX6y70FcfoI7gQz97aq0+Q+Gd0AH6gsMKSXdZoR+s5fudNkb6ibUsmx1lxXF
+ mOg4YrZvixwysc6DPwTvziisB9BEQdKJmhA3axmr1KhxDI8hkTYablg4K3az4Z0ZpN+WOlBib
+ gjDvCTTQaj1Ik7mdQMi5BVJi+meAGMxCTaTmNeReoKpzb7jjcMypDmkwUjAGKBA8A2bofabxH
+ tYcntJcUcBXH0H6MTplXk94lZWXQ+GtbVMdlBmAq2Hoj5OuofFSK25dKUYswYfEnHbbo3hnoc
+ 4OHb+808Wdvr08EZSCEQA6a+2woom1xK7YQBkzmTPrprOXOdCxantgGnLXYKNxzCSbgCBjCzF
+ 6CECNHal+Y3Slom3yHSZqSM1tb3WbQ+0tdGBfLGI/+HfEJaWXxmN3diHXQH5WS3vFhXRNTDiq
+ lN+wl5EkDiKlNIe88IXKJZdvlgu9eQNGbSXdft4i+t7EInstgV57/Y+LJ5US0T0lCbUf0qFGH
+ BhPpDPiR/SZousKPmF3AZZ0pvWtvuHJ1QBdcL1ZqbojKmo3fQExOY2d7g7dlrQJ8EWdcSt9et
+ 7glarHafhjUZ+SLlNgFxkoPjD6R77SH4GdxTZ+YWuhHxFN3ws3heu7BdyhwEYq/Y5QxnM19ld
+ 3eNeTOK1Ve5tdezl7wP9oCHivw80EHxHIleyRKy9br3bf5+SJrQZw0En3QEnjNNv65kUzSY/4
+ K4tGT4ZsnSKxQhttUut8xqicCD3vHQIeqXTCXd2PMS6p972QFpauJdpFcRLUUle+jgXfSw63y
+ UzWzw/gJtDwKDI+70ytMAoHuZxNFjkkxzPFv07+rXMkEvOmoCeozIbSgWg45RHjZT/6DoeRU5
+ UCSxPBLph/IMh93c1hEwIVkgvar1Hc+pcXlk5drHS/GoxHNju7fD9JmE2K9ThxwoPhtCgucPv
+ T6ygiuWFO8j0I+vdNg+L/vhZ1NlOeISe22mC1F1R6vdDvvF06EfSpk+2DZSXMIR+JfKegDLVu
+ LJN/1dkCDNxPxsNmc5RxP6JYSyCRBKnuwAhOdbYZ+0nkYeQalIgsJotcyYcFpvdvAvdjZMN4T
+ tRZxUH+PDK0zbzNCgIl5/B25RYtnIjtDAw4HhLunaOhgk/MK/cEO3ICo6WJZtEbqj9Ddn88F/
+ e76AlSvxf8k2sx2s7rc/HbW9dJ0ykYt2Ww1wQEtqbc2McQy6GFGBRTiM9kBy1SkWZ5ZZbQWuf
+ qo87YmMklF5UdWM96A5TuetGUpjbT2KoLjHJ30hoBqrr1l1k7eaXWwX/jA4qiZbjIqQOnvoz8
+ QM5udBbcRUEwjojeXLhT6Gu0FJYHs3B14uwnwAGMqTajMlPwXEv5FgMJJGLWRZ6WwuFYuToVR
+ q9+ZRKddZY12RLAtM7mgkvi8sDUT5Dv7DtZR/efdECWTHeyqTQaAgGTY0yZUx9IM7EjvBz6Cb
+ 38++r94Awx6VZu2h8JduPkcnhnLEO5x+b2I2fbApHxlhdWtm8lYyOMIeSBJrkZTVgLSlr/XDa
+ m61CdwwI885coPdkVtJS5XpLlpXoVPPUCFAYYW8r5wkHJTmq8jOYnWFDE6FD8cIvyc12QVdIh
+ VTYL7uHCsgzXQ4fNuZdumN1S9mnkt/fNpfxeOWPfLkg8ZLPMEKxoFrisZ28H003P91U5CMe2i
+ xQEfDjS41KNMMvpZxHY5q5Rn/VT3rZJFmZEREMkKBx5E9In7OHkx8CNSaEeG+X8rFH1SM9vaU
+ oKIKazEndBmZfZuPFiZpL/ey0g2hRkCRy3InCB5FW8sK+huAgXH5Z2GThKMPkHJLIuOAkCg9/
+ VxYa5l8RnV1wTtxyGbqa9OhFoRJ4OkxxIr2C58lEHDxRHl2zPBxEhZZVzKjs6YO+Yr5+Glaqp
+ SdVx/BxSs3pdQw3tLO82Fjo/PpEoNwRl+Jck/usaGqZnO5TjDudFW0e0OR9mW+qSAfAsxz82r
+ H8eI9d2u/twH5x7F55iK1vKIPAI2yGvgETT7w3j9S8G0w4WGtPlZrB86gYBjL7cFKy3kHhMas
+ TgAsetnh39F39gYZZVUhdSvLSX6BU8l2igRy9iSej0oRcxYctKCtEjXtNy4XcTHfHqY2OsR6S
+ pWsU/ME0t/0QjFjzOzqzyMXtzBTjM8eaklgtmbkX8Rwp7Mmxt+l6o60WJMRkBsoqRaII68V+d
+ HIO05YJwh9QY2ofhJd8i17GeeWh+5GrocIudUUptjAxJLwx4Y85ni6FcISdxdKtlPxG8YhLC6
+ AGws2SldrhvrnhMzeaHFF162Wi1kr6AkCNOlbv4SjvnuEw9D2g4aak6mbD1ggs5AJ6YVQRaCq
+ BbCLsI0YTIhc55U9zSzYopZXfHW26M+ABAOc2azgW/xf+qpg1oZhqLROirinab3OwBuhxt7B8
+ 9OneXzpnRcJ+TOqM1dQMmzNuw7S8I2RmFH1LfcJxxvkG/vTy+J6zJ5XqHQ89u9XLn8kT5OdLh
+ UeCkrbc90TzE1BrGcdj2Z+C/uhV+FM6bOCcl+JE5L0/LRy8OTPBVWRYbqeBmyYw2KXBbfrM03
+ UC7FVinK9rOqIY6nvNBHQLAtlRnnkbEkwWZfDl0PAUvelaNmIEBbNYZ0hN7tX9AEXi77Ww/xl
+ dq3xpG/ePsiE8NYZeUjOyOt6VraY/7zb0GNZ6lqZidIprzqJ5BHvo11Zg6EFXN3l+YbVqxSP6
+ KcHMgQsS25qndd4+1IN7X1nvLiqLpQbBxxOFhRYQxrQpFm93oc2uujj0rnq8JWCkAYMagKvss
+ gUn237HIox3Te3jMtoz3eRUX3mrhReLTm//BXMOOAapZ398emO30GoMQ6JiN91okqKWWtOBhA
+ ZHbJMdhMLIIBpwSYc08TsFbwzbHxYnkmoG5avgjZe9uBuKxPMSCyyf7quAvQHiKTw7j8dBMEp
+ yn/TlikHEJ9yQsqLV+Qhz1D7GAz2ACh9B6jVxSAMAm0cf/UcJCqIDjRhSp8U0T5Kb8l0Y0gEM
+ Um+y4tRgFW92CSNH9SeUOFRWcng7R976chwLG6o61ilt+Whu2I9pJgC1WpS+OzOKWe33+SgIQ
+ rUMKH/zw2WMOtzE4BBb7dsBpSZ6hf3q+FZsrZdIbsm21BwSfi0ttwVFVd58+kEFWaC7OrpsYT
+ 1MDm/Af4q17Ojj2o9onVpbYD79raAxhzavCZkKWghV9I+xLHiBQjYsP1zuI/YGaf8MOgJCR/N
+ rZ690FQl8+pV5KuutQlyr92TkyRuXF9tmHNvbgnLZB1vNc0EYlMBl1t9KmBXX3lt+YBrYqBKj
+ wJFxOlyTNYWGyUsAzL/5LxRWdEqR40JA2X8c2bB67N86nXZQWe/DZXtde0NA9Bqxy3WAUywd7
+ H3j7duKEgFyzNWDM6DzdJcEK0d1tjfEW7UCewoIspGpXCedNC8RybyZK0KcoLJZiGDg2Ufk7j
+ fGqGUfBnWme2q8huMcmS2tl85I1MA+o4a7y5sJrwsR3+wQHGqtLoiUBWwblT1XSkFR/F0oz2M
+ WDetv62pzeLtyv35hux5Yrytpm2wkJAE2HtB/ksNxA==
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -126,192 +197,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2/12/26 10:54, frank.chang@sifive.com wrote:
+> From: Frank Chang <frank.chang@sifive.com>
+>=20
+> openat2.h was introduced in Linux kernel 5.6. However, RESOLVE_CACHED
+> flag was only added in kernel 5.12 and later. Therefore, we need to chec=
+k
+> if RESOLVE_CACHED flag is defined before using it.
 
-On 25/02/26 6:16 pm, Aditya Gupta wrote:
-> During MPIPL (aka fadump), after a kernel crash, the kernel does
-> opal_cec_reboot2 opal call, signifying an abnormal termination.
+Is there any documentation which states what the "minimum"
+required kernel for building qemu is? If we require any kernel >5.12
+anyway, then this patch isn't needed.
 
-Minor nit..
+Otherwise it's of course correct, so:
+Reviewed-by: Helge Deller <deller@gmx.de>
 
-> When OPAL recieves this opal call, it further triggers SBE S0 interrupt,
+Helge
 
-s/recieves/receives/
-
-> to trigger a MPIPL boot.
-> 
-> Currently S0 interrupt is unimplemented in QEMU.
-> 
-> Implement S0 interrupt as 'pause_vcpus' + 'guest_reset' in QEMU, as the
-> SBE's implementation of S0 seems to be basically "stop all clocks" and
-> then "host reset".
-> 
-> pause_vcpus is done in a later patch when register preserving support is
-> added
-> 
-> See 'stopClocksS0' in SBE source code for more information.
-> 
-> Also log both S0 and S1 interrupts.
-> 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+ =20
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
 > ---
->   hw/ppc/meson.build         |  1 +
->   hw/ppc/pnv_mpipl.c         | 26 ++++++++++++++++++++++++++
->   hw/ppc/pnv_sbe.c           | 29 +++++++++++++++++++++++++++++
->   include/hw/ppc/pnv.h       |  6 ++++++
->   include/hw/ppc/pnv_mpipl.h | 19 +++++++++++++++++++
->   5 files changed, 81 insertions(+)
->   create mode 100644 hw/ppc/pnv_mpipl.c
->   create mode 100644 include/hw/ppc/pnv_mpipl.h
-> 
-> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-> index f7dac87a2a48..c61fba4ec8f2 100644
-> --- a/hw/ppc/meson.build
-> +++ b/hw/ppc/meson.build
-> @@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
->     'pnv_pnor.c',
->     'pnv_nest_pervasive.c',
->     'pnv_n1_chiplet.c',
-> +  'pnv_mpipl.c',
->   ))
->   # PowerPC 4xx boards
->   ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
-> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-> new file mode 100644
-> index 000000000000..d8c9b7a428b7
-> --- /dev/null
-> +++ b/hw/ppc/pnv_mpipl.c
-> @@ -0,0 +1,26 @@
-> +/*
-> + * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "system/runstate.h"
-> +#include "hw/ppc/pnv.h"
-> +#include "hw/ppc/pnv_mpipl.h"
-> +
-> +void do_mpipl_preserve(PnvMachineState *pnv)
-> +{
-> +    /* Mark next boot as Memory-preserving boot */
-> +    pnv->mpipl_state.is_next_boot_mpipl = true;
-> +
-> +    /*
-> +     * Do a guest reset.
-> +     * Next reset will see 'is_next_boot_mpipl' as true, and trigger MPIPL
-> +     *
-> +     * Requirement:
-> +     * GUEST_RESET is expected to NOT clear the memory, as is the case when
-> +     * this is merged
-> +     */
-> +    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> +}
-> diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
-> index 247617338a0d..5a2b3342d199 100644
-> --- a/hw/ppc/pnv_sbe.c
-> +++ b/hw/ppc/pnv_sbe.c
-> @@ -26,6 +26,9 @@
->   #include "hw/ppc/pnv.h"
->   #include "hw/ppc/pnv_xscom.h"
->   #include "hw/ppc/pnv_sbe.h"
-> +#include "hw/ppc/pnv_mpipl.h"
-> +#include "system/cpus.h"
-> +#include "system/runstate.h"
->   #include "trace.h"
->   
->   /*
-> @@ -113,11 +116,37 @@ static uint64_t pnv_sbe_power9_xscom_ctrl_read(void *opaque, hwaddr addr,
->   static void pnv_sbe_power9_xscom_ctrl_write(void *opaque, hwaddr addr,
->                                          uint64_t val, unsigned size)
->   {
-> +    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-> +    PnvSBE *sbe = opaque;
->       uint32_t offset = addr >> 3;
->   
->       trace_pnv_sbe_xscom_ctrl_write(addr, val);
->   
->       switch (offset) {
-> +    case SBE_CONTROL_REG_RW:
-> +        switch (val) {
-> +        case SBE_CONTROL_REG_S0:
-> +            qemu_log_mask(LOG_UNIMP, "SBE: S0 Interrupt triggered\n");
-> +
-> +            pnv_sbe_set_host_doorbell(sbe, sbe->host_doorbell | SBE_HOST_RESPONSE_MASK);
-> +
-> +            /* Preserve memory regions and CPU state, if MPIPL is registered */
-> +            do_mpipl_preserve(pnv);
-> +
-> +            /*
-> +             * Control may not come back here as 'do_mpipl_preserve' triggers
-> +             * a guest reboot
-> +             */
-> +            break;
-> +        case SBE_CONTROL_REG_S1:
-> +            qemu_log_mask(LOG_UNIMP, "SBE: S1 Interrupt triggered\n");
-> +            break;
-> +        default:
-> +            qemu_log_mask(LOG_UNIMP,
-> +                "SBE: CONTROL_REG_RW: Unknown value: Ox%."
-> +                  HWADDR_PRIx "\n", val);
-> +        }
-> +        break;
->       default:
->           qemu_log_mask(LOG_UNIMP, "SBE Unimplemented register: Ox%"
->                         HWADDR_PRIx "\n", addr >> 3);
-> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> index 24f8843a4090..7d73629f112a 100644
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -25,6 +25,7 @@
->   #include "hw/core/sysbus.h"
->   #include "hw/ipmi/ipmi.h"
->   #include "hw/ppc/pnv_pnor.h"
-> +#include "hw/ppc/pnv_mpipl.h"
->   
->   #define TYPE_PNV_CHIP "pnv-chip"
->   
-> @@ -111,6 +112,8 @@ struct PnvMachineState {
->   
->       bool         big_core;
->       bool         lpar_per_core;
-> +
-> +    MpiplPreservedState mpipl_state;
->   };
->   
->   PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
-> @@ -290,4 +293,7 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
->   
->   #define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
->   
-> +/* MPIPL helpers */
-> +void do_mpipl_preserve(PnvMachineState *pnv);
-> +
->   #endif /* PPC_PNV_H */
-> diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
-> new file mode 100644
-> index 000000000000..c544984dc76d
-> --- /dev/null
-> +++ b/include/hw/ppc/pnv_mpipl.h
-> @@ -0,0 +1,19 @@
-> +/*
-> + * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef PNV_MPIPL_H
-> +#define PNV_MPIPL_H
-> +
-> +#include "qemu/osdep.h"
-> +
-> +typedef struct MpiplPreservedState MpiplPreservedState;
-> +
-> +/* Preserved state to be saved in PnvMachineState */
-> +struct MpiplPreservedState {
-> +    bool       is_next_boot_mpipl;
-> +};
-> +
+>   linux-user/strace.c | 2 ++
+>   1 file changed, 2 insertions(+)
+>=20
+> diff --git a/linux-user/strace.c b/linux-user/strace.c
+> index 758c5d32b6c..a903b414fd2 100644
+> --- a/linux-user/strace.c
+> +++ b/linux-user/strace.c
+> @@ -1125,7 +1125,9 @@ UNUSED static const struct flags openat2_resolve_f=
+lags[] =3D {
+>       FLAG_GENERIC(RESOLVE_NO_SYMLINKS),
+>       FLAG_GENERIC(RESOLVE_BENEATH),
+>       FLAG_GENERIC(RESOLVE_IN_ROOT),
+> +#ifdef RESOLVE_CACHED
+>       FLAG_GENERIC(RESOLVE_CACHED),
 > +#endif
+>   #endif
+>       FLAG_END,
+>   };
 
 
