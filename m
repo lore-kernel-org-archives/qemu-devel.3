@@ -4,117 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E1F6F0182F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F1FF01832
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:10:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyUtl-0002Mu-PP; Fri, 06 Mar 2026 08:07:21 -0500
+	id 1vyUwL-0002wK-Q2; Fri, 06 Mar 2026 08:10:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vyUtj-0002MX-ND
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:07:19 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyUw7-0002uo-Ta
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:09:47 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vyUth-000098-MO
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:07:19 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C67EC5BDEC;
- Fri,  6 Mar 2026 13:07:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772802435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OahT7wfhb1Cn/aMdjoCcI6fHZUEMeCKZ4+C1lKrf1iM=;
- b=ScjiPgikoxUGMxbwlZMLp/28ikISwiPtC+hwgtTDELiheNa+NyAuPqMjEpaQoFhLtv5ZLH
- GGdZOtToHvkvwNEkt1HC+H6O9HgYR3cdRoC98hLiR6RkcJZC2ZEehDijL52Ye0x/g10ikn
- r4pDomCYER7uEwR560e4nRay34lDZWw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772802435;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OahT7wfhb1Cn/aMdjoCcI6fHZUEMeCKZ4+C1lKrf1iM=;
- b=kYa24o5Y2U29wd4sTvI1KKCkGpuj0ycEhgWcaBUcfkcv/wx6wqpPEBLgyZmvy/omEpXN7A
- BEepfrZ7DLmrqFBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ScjiPgik;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=kYa24o5Y
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1772802435; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OahT7wfhb1Cn/aMdjoCcI6fHZUEMeCKZ4+C1lKrf1iM=;
- b=ScjiPgikoxUGMxbwlZMLp/28ikISwiPtC+hwgtTDELiheNa+NyAuPqMjEpaQoFhLtv5ZLH
- GGdZOtToHvkvwNEkt1HC+H6O9HgYR3cdRoC98hLiR6RkcJZC2ZEehDijL52Ye0x/g10ikn
- r4pDomCYER7uEwR560e4nRay34lDZWw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1772802435;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OahT7wfhb1Cn/aMdjoCcI6fHZUEMeCKZ4+C1lKrf1iM=;
- b=kYa24o5Y2U29wd4sTvI1KKCkGpuj0ycEhgWcaBUcfkcv/wx6wqpPEBLgyZmvy/omEpXN7A
- BEepfrZ7DLmrqFBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D9B83EA75;
- Fri,  6 Mar 2026 13:07:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0CgmBYPRqmniYQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Mar 2026 13:07:15 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Zhang
- Chen <zhangckid@gmail.com>, Hailiang Zhang <zhanghailiang@xfusion.com>, Li
- Zhijian <lizhijian@fujitsu.com>, Juan Quintela <quintela@trasno.org>
-Subject: Re: [PATCH v11 00/21] migration: Add COLO multifd support and COLO
- migration unit test
-In-Reply-To: <20260306135335.5413bef0@penguin>
-References: <20260302-colo_unit_test_multifd-v11-0-d653fb3b1d80@web.de>
- <20260306135335.5413bef0@penguin>
-Date: Fri, 06 Mar 2026 10:07:12 -0300
-Message-ID: <871phx2jjz.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyUw6-0000gW-4t
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:09:47 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so7966279d50.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 05:09:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772802585; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WRQfjCLxrZ6D66GRmeBAjQxHiGiL3qwTdMFc81V7k7rHUVPu0dXmAB4KyxaiyxYkSC
+ m3+EEyVasbLu3TwPZM9LIQ4Co3H1U+pQq2tEbRx2yJmUemoFgUJmQO6ImExZMxOFa4Dd
+ MbOnVpXduS4V1Qke4MYxjlcT4Pheav1s5pwEbqYeVnp0U9+U1aLxK+8xHsTqyj7LqGED
+ DgGVJmEAytgLkQLuU+SupJcPQKsJWYUYTtlX81B43MmaqxvAkUBuoQkYB3qLEb0okn4r
+ yA46PHzqOH6ENeHazgH47Ite1zVkcvnmumlFUqLKaBv2JuijzDD/nJUksi55N3iBTDu7
+ 6Oog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Swf1K3gZWqxMPuwFx8GjZ1bCIultsIOQVBWJg7tJVms=;
+ fh=BAyh76Dt9lJjY3uGbG9gye4E4bNa4dvV51FFfKIqCkc=;
+ b=e66nhWWhxW+bG0D0gA2WaReFuj35eRmu2XSwi0qSMt3njiuyg4++rZ7KWKmuYc7Tmw
+ /oshWUTHAyWSefNEgk4PlA5QG3NsO3XbcJ5mbQADGjjA/jaLXcY3pqtjAQeDjgvbcGg5
+ s+ehVHWhJa/TEcEsSbMQH+tD23EiyBb9nhQL6SZzLyoM4uQQcTLIZEfuQdDegJtYj30k
+ hR3p5EqIQ92FyiYhyUfTcAz6nc3soe0cIXpEG3niTkvHUjGOXVJoXcF4gKdwnJYSPQV+
+ hGJRAePMWxz5Hyq3OvVFWuA6tiEZtkZGL3nRHtJMHbVVMS7U/dZsQnwVyUV+3l5f3IPM
+ LLxA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772802585; x=1773407385; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Swf1K3gZWqxMPuwFx8GjZ1bCIultsIOQVBWJg7tJVms=;
+ b=RSKhnrGVeuWMinQ5hy+/9qnbz24/HjoRJQ5davb/Z1BaUDqrdxkkRp/IG+GX0BXuU9
+ Nehk7DdDcmiZqGUGEkZ3Bq8FZj5bUvTGnleoOFVyDYEYGIEk3UVUZHr0hTjJSQWCHnbp
+ YYCldyNy95X6rE2zhuJtxDLLW/p19XIP7anQAFToXDPlsJKoyTHGz6hyVLmU19U9UBEF
+ ulC3eVYtiqk2huyW9QyFeTQ4FFJNwMumKPrzxnkQbB07cE8gCvdMqCk3o6qXDzbpP6xC
+ 84wYEzWjCzjTzqtM7VEc7PUnQrHCx/P16G0TfW/pMRkQtsEGd844w7yvsj+ZK0cFWqg7
+ rerQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772802585; x=1773407385;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Swf1K3gZWqxMPuwFx8GjZ1bCIultsIOQVBWJg7tJVms=;
+ b=opB4je3dilRToV+u+tAutrKR9ypLPkn3BLE3eoMPc45S8RUhKSb9SlN4D7yM9rbAGD
+ TOnd1WrK/+IFacwfUdefBhjUUiWzBJnQDy88xCpYnZosyGEmCT54xLa+XsuTHnWsh3Ct
+ FIYeV55xyrAnKnxbxLI4xW0DQQCbsVLGvfNyaRo8wTQGOXo1XhuuPUO99DrWt6M7SlkO
+ aKRHKhIHBKE1HQuwcYiz4EAoENwrrQoc1Phx3fY1eb/vYvstP127flWQdPQh/0H2hECL
+ ETetbZE7oZYw42PHidF08On87fa24kyBB8tSf+FZiXymWa828eUihkKU9Q07z8iCt9H5
+ WuxQ==
+X-Gm-Message-State: AOJu0YyE0Njpwq7kfHOT/9zS5xPsAfq0fBnIse2tleX2yCiABPj48/5f
+ xD9755ftndS7IiuD/BGRZkHi6eID38+fX++7CmMygyqr3c4ZTqyT8+rXgyF7ekGyqpCPA0jNol3
+ ehnQG25QsZvVUp6QLraqGBB678Dy7w+SEaIrwAWdjrQ==
+X-Gm-Gg: ATEYQzwEsNYA0ACtjcmPy1Z5Oiti3Zs0mik9WNH18tVo3jkIPt54iqd28+K4d9iKbUu
+ +1DioL9+9wnNeboz97U/I1ZJkuB0SnVa9/Cdk8UjB+9hC+6oUJFufp6SxAPPGjzOPxUfHZ3uADw
+ Ox5LZZgsbI8TaS0/0itzz7HaihKI43WpDdtjdffv0OenY8YOfoObClyro3nEg876xQyUvATp1oC
+ NtYb+S6TPEnDCYWyNrVdXgsQH8uch30hpJQVq2EIZ9WYSugeMH4q0dWzHAm0hozNJ5o/TiUDbOi
+ 0aGlS1yuSPjBwQaDcHbDxz4f7UsLqLbYFUrHEyaZJR3iNLlQQogKu15IVmyH9El1fUg=
+X-Received: by 2002:a53:b44a:0:b0:64c:c267:7f82 with SMTP id
+ 956f58d0204a3-64d14279a74mr1398364d50.48.1772802584764; Fri, 06 Mar 2026
+ 05:09:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[web.de,nongnu.org];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+];
- FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]; RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,xfusion.com,fujitsu.com,trasno.org];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid]
-X-Rspamd-Queue-Id: C67EC5BDEC
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260306-sme2-hvf-v7-0-e72eeda41ed3@linaro.org>
+In-Reply-To: <20260306-sme2-hvf-v7-0-e72eeda41ed3@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Mar 2026 13:09:33 +0000
+X-Gm-Features: AaiRm52fzqlmbRbXO6JlHmq9ubx2lGn2wCk2wvvNTZ_cAmQGSZgd-t4nYNjl6WA
+Message-ID: <CAFEAcA_V3FeSrhWdeegs6XoO-VQXH0Y-A_X9ChcRDR9ZYUjiSw@mail.gmail.com>
+Subject: Re: [PATCH v7 0/2] arm/hvf: Add SME2 support
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,132 +116,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Lukas Straub <lukasstraub2@web.de> writes:
+On Fri, 6 Mar 2026 at 12:45, Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> M4/M5 Macs support SME2, and HVF exposes this functionality in its
+> public API.
+>
+> Add support for it in QEMU.
+>
+> This was tested by running an SME2 benchmark from Arm [0]. savevm and
+> loadvm during the benchmark's run were used to verify migration works.
+>
+> [0]:
+> https://learn.arm.com/learning-paths/cross-platform/multiplying-matrices-with-sme2/1-get-started/
+>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-> On Mon,  2 Mar 2026 12:43:30 +0100
-> Lukas Straub <lukasstraub2@web.de> wrote:
->
->> 
->> Hello everyone,
->> This has some cleanups for and adds multifd support and migration unit tests
->> for COLO migration.
->> 
->> Regards,
->> Lukas
->
-> Hello Peter, Hello Fabiano,
-> Will you apply this?
->
+Thanks for the respin -- applied to target-arm.next.
 
-Very likely yes. I'm starting the tests on migration-next, if all goes
-well I'll send the pull request later today.
-
-> Best regards,
-> Lukas Straub
->
->> 
->> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
->> ---
->> Changes in v11:
->> - Use colo with return-path capability
->> - Link to v10: https://lore.kernel.org/qemu-devel/20260220-colo_unit_test_multifd-v10-0-bfe67d422ef1@web.de
->> 
->> Changes in v10:
->> - multifd: always kick the main thread
->> - always open the return path socket on source
->> - Link to v9: https://lore.kernel.org/qemu-devel/20260218-colo_unit_test_multifd-v9-0-d8dbdb0ca6f6@web.de
->> 
->> Changes in v9:
->> - Rebase onto master
->> - Fix two rare bugs discovered during sresstesting the colo unit test
->> - Link to v8: https://lore.kernel.org/qemu-devel/20260210-colo_unit_test_multifd-v8-0-7f9e5f7d082b@web.de
->> 
->> Changes in v8:
->> - Fix peter's review comments
->> - Link to v7: https://lore.kernel.org/qemu-devel/20260210-colo_unit_test_multifd-v7-0-23bd32f36828@web.de
->> 
->> Changes in v7:
->> - Fix peter's review comments
->> - Link to v6: https://lore.kernel.org/qemu-devel/20260206-colo_unit_test_multifd-v6-0-27779dda139d@web.de
->> 
->> Changes in v6:
->> - Fix the crash when running COLO with TCG accel.
->> - Link to v5: https://lore.kernel.org/qemu-devel/20260203-colo_unit_test_multifd-v5-0-57508b7389f6@web.de
->> 
->> Changes in v5:
->> - Remove unused inmports from multifd-colo.c
->> - Mention the checkpoint overhead of reset to the Q35 fix
->> - Link to v4: https://lore.kernel.org/qemu-devel/20260130-colo_unit_test_multifd-v4-0-7115ab6f0e77@web.de
->> 
->> Changes in v4:
->> - Add cleanup patches to remove migration_incoming_colo_enabled() and MIG_CMD_ENABLE_COLO
->> - Add more comments to the colo unit test
->> - Call colo_release_ram_cache() after multifd threads terminate
->> - Link to v3: https://lore.kernel.org/qemu-devel/20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de
->> 
->> Changes in v3:
->> - Fix peter's review comments.
->> - Fix COLO with Q35 machine
->> - Link to v2: https://lore.kernel.org/qemu-devel/20260117-colo_unit_test_multifd-v2-0-ab521777fa51@web.de
->> 
->> Changes in v2:
->> - Fix review comments
->> - Hide stderr in colo migration test since the logged errors are expected
->> - Add benchmarking data for multifd
->> - Add myself as maintainer for COLO migration framework
->> - Link to v1: https://lore.kernel.org/qemu-devel/20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de
->> 
->> ---
->> Lukas Straub (21):
->>       MAINTAINERS: Add myself as maintainer for COLO migration framework
->>       MAINTAINERS: Remove Hailiang Zhang from COLO migration framework
->>       colo: Setup ram cache in normal migration path
->>       colo: Replace migration_incoming_colo_enabled() with migrate_colo()
->>       colo: Remove ENABLE_COLO savevm command and mark it as deprecated
->>       ram: Remove colo special-casing
->>       multifd: Move ram state receive into multifd_ram_state_recv()
->>       multifd: Add COLO support
->>       Call colo_release_ram_cache() after multifd threads terminate
->>       colo: Fix crash during device vmstate load
->>       colo: Hold the BQL while sending ram state
->>       colo: Do not hold the BQL while receiving ram state.
->>       migration-test: Add COLO migration unit test
->>       Convert colo main documentation to restructuredText
->>       qemu-colo.rst: Miscellaneous changes
->>       qemu-colo.rst: Add my copyright
->>       qemu-colo.rst: Simplify the block replication setup
->>       multifd: Fix hang if send thread errors during sync
->>       colo: Use file lock in primary_vm_do_failover()
->>       migration: Keep s->rp_state.from_dst_file open until migration ends
->>       colo: Reuse the return path from migration on primary and secondary side
->> 
->>  MAINTAINERS                        |   6 +-
->>  docs/COLO-FT.txt                   | 334 ----------------------------------
->>  docs/system/index.rst              |   1 +
->>  docs/system/qemu-colo.rst          | 362 +++++++++++++++++++++++++++++++++++++
->>  include/migration/colo.h           |   3 -
->>  migration/colo.c                   |  59 +++---
->>  migration/meson.build              |   2 +-
->>  migration/migration.c              |  80 ++++----
->>  migration/multifd-colo.c           |  44 +++++
->>  migration/multifd-colo.h           |  26 +++
->>  migration/multifd-nocomp.c         |  10 +-
->>  migration/multifd.c                |  26 ++-
->>  migration/multifd.h                |   5 +-
->>  migration/options.c                |  10 +-
->>  migration/ram.c                    |  12 +-
->>  migration/savevm.c                 |  37 +---
->>  migration/savevm.h                 |   1 -
->>  migration/trace-events             |   1 -
->>  tests/qtest/meson.build            |   7 +-
->>  tests/qtest/migration-test.c       |   1 +
->>  tests/qtest/migration/colo-tests.c | 199 ++++++++++++++++++++
->>  tests/qtest/migration/framework.c  |  13 ++
->>  tests/qtest/migration/framework.h  |   5 +
->>  23 files changed, 777 insertions(+), 467 deletions(-)
->> ---
->> base-commit: d8a9d97317d03190b34498741f98f22e2a9afe3e
->> change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
->> 
->> Best regards,
+-- PMM
 
