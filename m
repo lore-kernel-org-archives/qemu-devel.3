@@ -4,114 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B346F01826
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DE4F01821
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:56:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vySpV-0008Aa-40; Fri, 06 Mar 2026 05:54:49 -0500
+	id 1vySqa-0000ii-T6; Fri, 06 Mar 2026 05:55:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vySpT-000897-Pm; Fri, 06 Mar 2026 05:54:47 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vySqZ-0000iI-Aq
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 05:55:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vySpS-0008VI-EN; Fri, 06 Mar 2026 05:54:47 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6268b3Lx2188183; Fri, 6 Mar 2026 10:54:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NiFYH4
- xaXq38MRxHq5CuJWP2oDAeLeyAPE2eW0oGegk=; b=ntgIQLK8NFtYPOO37l0dhq
- +qDgzVV4ulJOFsIytxcEb8eIxHv39dkLFNDyHkC/jNwJgotcxWLismEXD4qyxTQH
- C7jG0p/ruLUeu+4YWiCkDkWnckNoxITTszvNVvcUmutnYa3gBufJZN1I81KJOAi4
- y0JUF0a1nj09osTBkIMGYcN/+uKLkSjoEeSdSGsGorI8Bu13jAPJqqOD9cStYNGo
- nZMWuYdOIoM9WlQlSCaRVCQKGFEUSZ0U9ij04zFUwvX2t2LIihVbBnT9MwEQtIL6
- Z7lYOx4ezJ8ftDTBsmHHs79uG6tlNqVRlpqcK/W8zxIThHEKkrPhHHHw+HFOSJLg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cksk47hh6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:54:44 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6267k8sq029748;
- Fri, 6 Mar 2026 10:54:43 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmapsfmdm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:54:43 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 626AscYR44106034
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Mar 2026 10:54:38 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69B0920043;
- Fri,  6 Mar 2026 10:54:38 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C096820040;
- Fri,  6 Mar 2026 10:54:36 +0000 (GMT)
-Received: from [9.78.106.17] (unknown [9.78.106.17])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Mar 2026 10:54:36 +0000 (GMT)
-Message-ID: <ced81a3c-41d0-404e-a910-43dbe76a1112@linux.ibm.com>
-Date: Fri, 6 Mar 2026 16:24:35 +0530
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vySqX-0000LY-Tj
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 05:55:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772794553;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLk9U3cnn9WXVQRPdQEQwYgcUewFMNjqG4kY0PtkobY=;
+ b=BWyaBmiHdc2ybQ2f9Letyztbw6e1nLxWDBn/rSTofKawy/gMj78J0+5IQv7xLlrYlCOANX
+ TRMR7XeNKkKTpLvI2IL2Nh32Wjs9JsCtakSJeLQ2Pml/cZsN/cYvSrWfDNN1jYYG03mS+8
+ FBa1ivcbSER9SpmPzroxO+91HyuNm+U=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-673-eLYbrbPUMympmDCI49wN-Q-1; Fri, 06 Mar 2026 05:55:51 -0500
+X-MC-Unique: eLYbrbPUMympmDCI49wN-Q-1
+X-Mimecast-MFC-AGG-ID: eLYbrbPUMympmDCI49wN-Q_1772794551
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-439a85832c0so5048740f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 02:55:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772794551; x=1773399351; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZLk9U3cnn9WXVQRPdQEQwYgcUewFMNjqG4kY0PtkobY=;
+ b=Ab6S3nJZ34VB8o9E1AQc/dMjCcc0Qx3NMMKqCM/jR67kdJx4ojIeGaj3RaAmbsV+/c
+ CclgZ52c+l/IJExZZdg9bAQtjJ1RwmM4yt30DJDk3XkwXe4ideTjRw0SBdBKDsBUe6TS
+ UMWlLTZMBTrrfuub8dsX2hee1tcOW0rNpgr80wbkuAq07l9TS+df6IAYQNshpAzL7OvR
+ tV5fqdFKx96M40jhje//dERarNN6w6/8rBDD1q+lCh7N8VteGzxV+JQ8T9TmYgX/z6Mx
+ 4KODeBi/W5HiJCJ0kzShSwNb1wyXEWLa7Ehd+SbT2JqK7m3c2HkbDD0zgMQd5XxtPo9k
+ sNkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772794551; x=1773399351;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZLk9U3cnn9WXVQRPdQEQwYgcUewFMNjqG4kY0PtkobY=;
+ b=AXTAmI/MpgcqdvwCyOcYlubcWKqH1FLFzxEWxt62qWz/aualQ4JTDaeBPBxbICxFNQ
+ zxMG/gb99VCkRCYSOmAdCSJ1Eo9vxW6Vccaxa2dM4LFAz/KfiIZaIBPO4CVVN7aCZ4Ji
+ 4FVU6ZBYp+hG2Naoope8/hOQq/wnjMorhgYpp4dIqoW46B3ftEhdhIQzpDo2HvvMw6AY
+ oHy1X7Em8TOk5BbHz+zQhZoUdsL6JNLlWNnYSGq8DbOgeXjGsnxuXaJN3MKeqJgwUTgi
+ 9Yaid/4LUj9HMwo5c/AlpXwIwo8O+nUYj0pZ8bSzPf52jZgHPurO0agn+jtK7JdcNE8H
+ 4rqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBUdkmz/TS/g75xE7/qTIbthGc3wP4eDfR6EI94jxW3rCrJ2S5WXwKhXYyTy7UWq8RZJvymPdUTeZs@nongnu.org
+X-Gm-Message-State: AOJu0YyqG96pGv+yo2pl+KS+fGQb7r9S51Ns9usk8BTx3tOqROcPvM4h
+ V3/gFUiT3QkrxQe0rua5rD6BttkWaHANyDgUlUiXjsDfCf88/2H0yB6rUcXHZtSydP4uxNFMUzL
+ qO9YxZbCl6HAog52yYuSmaTppJz6jlun/DWcOEnIw4CwG87mdtqDnGNRY
+X-Gm-Gg: ATEYQzx2n4zdxSUXEWhOWOPVVyR0jm16r5iGk4HQPq7MhCMPhI/0u020A2jk/INWfpr
+ DTVwyHY8cn/Sjcn+ykVz7go1NQGIFm5QDormnk+FNRIl4PslgLWTdCz7uYBvo4vRHn6tu782orR
+ bLhwewNThF7xYRhg3YQYXYI++LgGVXXW7dH3dcpnx8N4h84Ht5N9WK2Y2NbfvC//f0kdiOKP7ym
+ P3Hu8ykRfMyLstdzj575WwlE94CvvtTkHhp9BAUXyLKjw0qNYE0b1JOxF9tYMpYGpsLw7OgxIIP
+ QOaN42e9mRT/1czkzmxKmlN4m41qUnN8vlstjQnxV0ZrcyOuDGNrfN5KmWbDKL3M/NsLxUcZMP3
+ 3PKyzOU7Ca8PRYdOJJkRRF+P8TaxSNrHJik0XAucywRQJkNDLahoLJOOFzYYOk6jnyoII
+X-Received: by 2002:a05:6000:612:b0:439:be3e:52fe with SMTP id
+ ffacd0b85a97d-439da35cbe7mr2896820f8f.26.1772794550690; 
+ Fri, 06 Mar 2026 02:55:50 -0800 (PST)
+X-Received: by 2002:a05:6000:612:b0:439:be3e:52fe with SMTP id
+ ffacd0b85a97d-439da35cbe7mr2896782f8f.26.1772794550276; 
+ Fri, 06 Mar 2026 02:55:50 -0800 (PST)
+Received: from rh (p200300f6af4a490003d6f56739ca055c.dip0.t-ipconnect.de.
+ [2003:f6:af4a:4900:3d6:f567:39ca:55c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dad8d968sm2789308f8f.6.2026.03.06.02.55.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 02:55:49 -0800 (PST)
+Date: Fri, 6 Mar 2026 11:55:48 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ peter.maydell@linaro.org, cohuck@redhat.com, peterx@redhat.com, 
+ philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v8 4/6] target/arm/cpu64: Define cpreg migration tolerance
+ for KVM_REG_ARM_VENDOR_HYP_BMAP_2
+In-Reply-To: <20260304102249.1963784-5-eric.auger@redhat.com>
+Message-ID: <1c804bd6-7a54-53db-15fc-1c7a0865e157@redhat.com>
+References: <20260304102249.1963784-1-eric.auger@redhat.com>
+ <20260304102249.1963784-5-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/10] MAINTAINERS: Add entry for MPIPL (PowerNV)
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-References: <20260225124633.1841222-1-adityag@linux.ibm.com>
- <20260225124633.1841222-11-adityag@linux.ibm.com>
-Content-Language: en-US
-From: Hari Bathini <hbathini@linux.ibm.com>
-In-Reply-To: <20260225124633.1841222-11-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: MfdCrVUbsF-6xitG1vFeXo_N-V3ZoEqu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEwMSBTYWx0ZWRfX43th2O/LvGfl
- TpvjxK7uWJOFlbYIQcuo8rEs0qQsK7b0bN4CLIpO8tm89eQhxdckRos63eUeift4qO50f68gZDE
- y1eiYcI7hqM57BWtYC5RJja0REYR/RBJ8vKS59Mv5tJqt2YS0jIBu3DZr3w270fXDUMW+u1NPka
- tgK+alYnJGXRgYp390f8wNtnyx9GxEdfVpsDX28FO8TikHX0U2L8YYR3DYcTQwUdggza9/8LoW2
- qarxBU1YkG6YAZmdwYF1/oaWjXfTQSJG+v0GbD98Ri3oaBPTao7u/tdXJV1KyKIPXlblQZpfmVc
- bHmCajVDvo464k7LgdIVmPW5rTU+revSsJ8dWmAknFFUd/TQeG/i/xHieC+jUBKkwpb3oYTY12V
- Z0OIrNZCe9ZZhvSwc4eJCmMBnV1c6Qyi90UyuEMtf2cMsOJcEi9Krz9J7Kxsq0hrQXCjXqTKln6
- hOwHnISrapicnmrf8gw==
-X-Authority-Analysis: v=2.4 cv=csCWUl4i c=1 sm=1 tr=0 ts=69aab274 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=KKAkSRfTAAAA:8 a=fyyUhb9IhzwmOEVt19AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Oq2MXIiwD3boi1hsaxwXoyMavggJXu3b
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_03,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0
- clxscore=1015 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060101
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,40 +121,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 4 Mar 2026, Eric Auger wrote:
+> KVM_REG_ARM_VENDOR_HYP_BMAP_2 pseudo FW register is exposed
+> from v6.15 onwards. Backward migration from a >= v6.15 to an older
+> kernel would fail without cpreg migration tolerance definition
+> for this register.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-
-On 25/02/26 6:16 pm, Aditya Gupta wrote:
-> Add maintainer and reviewer for MPIPL subsystem.
-> 
-
-Couple of minor nits in patch 2 & 7.
-None the less, for the series...
-
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   MAINTAINERS | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 233d2a5e71ff..f536356faf49 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3289,6 +3289,14 @@ F: include/hw/ppc/spapr_fadump.h
->   F: hw/ppc/spapr_fadump.c
->   F: tests/functional/ppc64/test_fadump.py
->   
-> +Memory-Preserving Initial Program Load (MPIPL) for PowerNV
-> +M: Aditya Gupta <adityag@linux.ibm.com>
-> +R: Hari Bathini <hbathini@linux.ibm.com>
-> +S: Maintained
-> +F: include/hw/ppc/pnv_mpipl.h
-> +F: hw/ppc/pnv_mpipl.c
-> +F: tests/functional/ppc64/test_fadump.py
-> +
->   GDB stub
->   M: Alex Bennée <alex.bennee@linaro.org>
->   R: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
 
