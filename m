@@ -4,68 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456B4F0180E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A216BF01816
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyRXn-0004uW-F6; Fri, 06 Mar 2026 04:32:27 -0500
+	id 1vyRXn-0004uq-UT; Fri, 06 Mar 2026 04:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyRX9-0004s4-K0
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:31:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyRX7-00022r-Ol
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:31:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772789503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Aaoy2eA1BSi13H8uLpxF/EJnOkB4xxeI3t9FtpCwLow=;
- b=Q2j3GSUnOmSRV2BxS5kcr62D4j2r4SfdPl1z/UTJazQS5VyEZMUisllK268v4IvZFaXY6u
- 3x/5AmKQucZm749gpVEPp/JRjCBHojf6QyPH6uLVY76Xv5zGV9J6nK5WPLu/I0Mg+hlan+
- cyh1h/JeStI62pK8trn5BwcRBahqBds=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-BNCf_mr9NBewaW4ljV_RxA-1; Fri,
- 06 Mar 2026 04:31:40 -0500
-X-MC-Unique: BNCf_mr9NBewaW4ljV_RxA-1
-X-Mimecast-MFC-AGG-ID: BNCf_mr9NBewaW4ljV_RxA_1772789499
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 50B57180060D; Fri,  6 Mar 2026 09:31:39 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.19])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7D3281958DC7; Fri,  6 Mar 2026 09:31:35 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
-	qemu-rust@nongnu.org
-Subject: [PATCH v2] hw/timer/hpet: Remove HPETState::hpet_offset_saved field
-Date: Fri,  6 Mar 2026 10:31:34 +0100
-Message-ID: <20260306093134.27789-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vyRXU-0004tF-JI
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:32:18 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vyRXR-00025J-5m
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:32:07 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-483bd7354efso118097595e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 01:31:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772789512; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eYYFxWa6+kcdpSgh+UCQcxM6TkbpXT0nNLwVtT1n9lrmPqDU+HOwQRi64FliQDI61i
+ U4aspC16gYNmrha9BemIKLsdyOMAnBq4YOUNplBoTvp2dMzrMQkKN5569QTLTQE3fQZc
+ K0W7MsogJlS+9TrHwh35czOSRGVWJ704LTuA7DRyqDBmsOES8qKNcQ52gXEGgkg53WhO
+ MIsnr/DCJ919QMUa5CwHkwIRHFYq3TFsmlm5rr7yMhDuvyBQwV6NB/6GE1uQ4kUsgfm6
+ yTI+zfSMqkU4tsNPBU+3rK8u21cskKFvpS0AqQ0X5oICGEDxI7tEXjs1pC6TCRsJIKUG
+ Rk2Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=qvcGBQuS3QfzV0JdzUqqf1NGYvG1FrQLFPBmrjC0hQY=;
+ fh=pwbqm79EF4bnzcNJxti/08VsKIG75t/tIteUZN/fgpw=;
+ b=UB0YHlisaf130MYGZAzsaSPlKi7nmOgAbcEBP7rocA+11jvXk0JJFHSBgOrfeptr6Z
+ 4vURhcxmeUGcar/QMQDRzcviTAcn3924prlSLJw5x6DGPr3YXd+N+DZ3z2kFc4udL8bP
+ hiqYm+adYcgx957Mpx1PR1xEqqN5h2NBWwnrWUgPEPuxTCVr5Zxv+rH2sOwtw/dm5ImK
+ lSsuVzPzUwsOYxyd87YjYxnWk2XMsH9JOtZBwWBeG+xq86uaBwjvirO1Kjnjl0mnN5s6
+ vfn33qwk1D0ZuEM/jseumQfB6dF5KbzGOoB/e5fsypbxk1uoXkEhwbvzaADdJXOYIDSA
+ jeww==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772789512; x=1773394312; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qvcGBQuS3QfzV0JdzUqqf1NGYvG1FrQLFPBmrjC0hQY=;
+ b=jgh58OI43T5OkKdd92Kx5WbErRZaeT8nmoH32oaGvIDyn/pNGOjOBu98VBcvkqzNQV
+ 4r9EhXD/6QPIZtIY1amh4rE4vXr1gSY6wZUNIMwV7k/ygcEIC1/sGELrc2U8yqbwyePE
+ HgXOLxNyYnygalJoNB9OLqSxgSVOe8nO6j3608dbiPku1cKAG1YPKJcGZK/gNMZtjPOW
+ z84Z6Sio+0m2ODRlNtWnC57kuy6CaZngsi3K5XBj0rvEQSMjLfIxZYmK5k9VoTQ8uW8N
+ zx2YeLs5+5FLdw5dBfOLU4+AJrAVeK+gcUUcWedFPVAsNO77sDemlrppkU42PxekrKzU
+ ZIAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772789512; x=1773394312;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qvcGBQuS3QfzV0JdzUqqf1NGYvG1FrQLFPBmrjC0hQY=;
+ b=DZQGW7swOu+2w+b2WQ37IkuzClwtgcS7ZlNRSAFSpdu8FQTyoOtKNQUSQkbF7QjUZq
+ f5038p03b43XOs0XuooEnW0nOgfv64VuaAoxMPiveUBQaEoNA54TgMYZEE54QCYX1qrq
+ CgrinR4We/muJ1KZFpchQtez72lxMP2hb68aLodizfQ49i51q818GBSwuBDCGTHO5IyU
+ DG1AQOd+cbgRT54RuunfRp/ecdaqu9yo51BeFK3YYkTlKY+QEsrae2rHbtPfWT0o9gdf
+ ajtrrf1ok7cQd5fdysF77Rh6ZVMnMA4H8WPVAj0RUBP75FyQj2hR9Wul5SKKSRzzlOcL
+ KM/A==
+X-Gm-Message-State: AOJu0YwkJYuKmNiRVnu31Yfu4Na9usSJLp6yW4aXbxOs9QCuyVU+j78h
+ jMdKBcmyDIPYFRhj0LoVGbu+BlF5W+ka5iWBbhS8kJI9zVbNDhbTXP+dwhS38ZrNqWYvDtFYQ6u
+ HA+2iX+e03MOEXAK0qGwpPfwptoXs1lF1srDhqGSpWg==
+X-Gm-Gg: ATEYQzwQ7Bfv7rSl6Gzqj7mL9Ik/x8klbMkOfp4n3C/R8fEctuKlaAdowoMDZSjd1pl
+ UwNSUhXl//5++X8AbuYyHKx4ZeeIuDTG/6jIkW40yC7OH4ktLzt5nvkkqZB4J8oZ6UCwOcUkS/6
+ FcYjo7nNG5yEdUAff4dkwB9nq/0TCO+eoVAWzA7W287buifw6D1QxEw8KNjRz4xXEUEOthfjngg
+ jnB++MiMq8SVz5cAVnnMnH+TWc1UjKaaGeyLwTreZ77FIKYwtZERmHNPcJrl2+ZKTOZ7T5GK8mY
+ xJTTHv7+wVoN6ygqfRavNq4xwduoemBBuMFJNDNMbPu73Yr7sQ==
+X-Received: by 2002:a05:600c:1551:b0:47e:e87f:4bba with SMTP id
+ 5b1f17b1804b1-4852696934emr22390385e9.29.1772789512440; Fri, 06 Mar 2026
+ 01:31:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260303-sme2-hvf-v6-0-b473702d8287@linaro.org>
+ <20260303-sme2-hvf-v6-1-b473702d8287@linaro.org>
+ <CAFEAcA8zTkc4pyHQKoDkTMhGPLQmxBaJS3bZiGRrPgux3rDLzw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8zTkc4pyHQKoDkTMhGPLQmxBaJS3bZiGRrPgux3rDLzw@mail.gmail.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 6 Mar 2026 11:31:26 +0200
+X-Gm-Features: AaiRm531CxY9a4swvztKYl0fEGNIqco6Qum_hqbWYxHto7dV761FAriOPA1jokY
+Message-ID: <CAAjaMXbXdrW9N1xLMPxL9OmjLqti6A3rqAmYipu6OkdBY8JPNQ@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] hvf/arm: handle FEAT_SME2 migration
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,98 +120,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri, Mar 6, 2026 at 11:19=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Tue, 3 Mar 2026 at 07:42, Manos Pitsidianakis
+> <manos.pitsidianakis@linaro.org> wrote:
+> >
+> > SME2 support adds the following state for HVF guests:
+> >
+> > - Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
+> >   not support it)
+> > - Predicate registers P0, .., P15 (also FEAT_SVE)
+> > - ZA register
+> > - ZT0 register
+> > - PSTATE.{SM,ZA} bits (SVCR pseudo-register)
+> > - SMPRI_EL1 which handles the PE's priority in the SMCU
+> > - TPIDR2_EL0 the thread local ID register for SME
+>
+> Mohamed points out that this breaks the build when compiling
+> with GCC (which I hadn't noticed because I happen to do my testing
+> of target-arm with clang on Linux these days):
 
-The HPETState::hpet_offset_saved boolean was only set in the
-hw_compat_2_11[] array, via the 'hpet-offset-saved=false'
-property. We removed all machines using that array, let's remove
-that property and all the code around it.
+Oops. same here, I was using clang.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250501230129.2596-6-philmd@linaro.org>
-[thuth: Adapted the rust part to the current master branch]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/timer/hpet.c                  | 9 +--------
- rust/hw/timer/hpet/src/device.rs | 9 +--------
- 2 files changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 0d7b8e0c7a3..767093c431a 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -75,7 +75,6 @@ struct HPETState {
-     QemuMutex lock;
-     MemoryRegion iomem;
-     uint64_t hpet_offset;
--    bool hpet_offset_saved;
-     QemuSeqLock state_version;
-     qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
-     uint32_t flags;
-@@ -272,11 +271,6 @@ static int hpet_post_load(void *opaque, int version_id)
-         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
-         t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
-     }
--    /* Recalculate the offset between the main counter and guest time */
--    if (!s->hpet_offset_saved) {
--        s->hpet_offset = ticks_to_ns(s->hpet_counter)
--                        - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    }
- 
-     return 0;
- }
-@@ -285,7 +279,7 @@ static bool hpet_offset_needed(void *opaque)
- {
-     HPETState *s = opaque;
- 
--    return hpet_enabled(s) && s->hpet_offset_saved;
-+    return hpet_enabled(s);
- }
- 
- static bool hpet_rtc_irq_level_needed(void *opaque)
-@@ -766,7 +760,6 @@ static const Property hpet_device_properties[] = {
-     DEFINE_PROP_UINT8("timers", HPETState, num_timers, HPET_MIN_TIMERS),
-     DEFINE_PROP_BIT("msi", HPETState, flags, HPET_MSI_SUPPORT, false),
-     DEFINE_PROP_UINT32(HPET_INTCAP, HPETState, intcap, 0),
--    DEFINE_PROP_BOOL("hpet-offset-saved", HPETState, hpet_offset_saved, true),
- };
- 
- static void hpet_device_class_init(ObjectClass *klass, const void *data)
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index ebf715d3995..0a5c131819b 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -627,8 +627,6 @@ pub struct HPETState {
-     flags: u32,
- 
-     hpet_offset_migration: BqlCell<u64>,
--    #[property(rename = "hpet-offset-saved", default = true)]
--    hpet_offset_saved: bool,
- 
-     irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
-     rtc_irq_level: BqlCell<u32>,
-@@ -947,11 +945,6 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-         }
- 
--        // Recalculate the offset between the main counter and guest time
--        if !self.hpet_offset_saved {
--            self.hpet_offset_migration
--                .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
--        }
-         regs.hpet_offset = self.hpet_offset_migration.get();
- 
-         Ok(())
-@@ -962,7 +955,7 @@ fn is_rtc_irq_level_needed(&self) -> bool {
-     }
- 
-     fn is_offset_needed(&self) -> bool {
--        self.regs.borrow().is_hpet_enabled() && self.hpet_offset_saved
-+        self.regs.borrow().is_hpet_enabled()
-     }
- 
-     fn validate_num_timers(&self, _version_id: u8) -> bool {
--- 
-2.53.0
+>
+> > --- /dev/null
+> > +++ b/target/arm/hvf/hvf_sme_stubs.h
+> > @@ -0,0 +1,158 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> > +
+> > +typedef int32_t hv_return_t;
+> > +typedef uint64_t hv_vcpu_t;
+>
+>
+> > +typedef __attribute__((ext_vector_type(64))) uint8_t hv_sme_zt0_uchar6=
+4_t;
+>
+> The "ext_vector_type()" attribute is clang specific and gcc
+> doesn't recognize it.
+>
+> Since we're defining all these types specifically because the system
+> headers are not providing them and only for the prototypes, my
+> preference would be to simply drop the attribute from this
+> declaration:
+>
+> typedef uint8_t hv_sme_zt0_uchar64_t;
+>
+> Could somebody confirm that that works OK on the relevant macos
+> configurations ?
 
+I think this works. Do you want me to send a new revision?
+
+>
+> thanks
+> -- PMM
+
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
