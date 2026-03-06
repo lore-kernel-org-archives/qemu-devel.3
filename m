@@ -4,110 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50021F01827
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27F2F01827
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vySo1-0006gv-T4; Fri, 06 Mar 2026 05:53:17 -0500
+	id 1vySo1-0006h1-T7; Fri, 06 Mar 2026 05:53:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vySnu-0006ef-3W; Fri, 06 Mar 2026 05:53:10 -0500
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1vySnq-0006dh-Dl; Fri, 06 Mar 2026 05:53:08 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
- id 1vySnr-0008MD-9j; Fri, 06 Mar 2026 05:53:08 -0500
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1vySnn-0008Lc-JJ; Fri, 06 Mar 2026 05:53:06 -0500
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6264OjQe1528090; Fri, 6 Mar 2026 10:53:06 GMT
+ 6268NGRf1941479; Fri, 6 Mar 2026 10:52:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3ICnYf
- U5ozG0J8GiAIefUELUqOrkIQ9au71ROCMmxxA=; b=pN9jffH/NOoFg7A8GQC3LF
- +0RjnLy00HJeyUZv7nPeL6opaYtGNkiVKlm+NkvM4ASeZND7JgNxDBjMBL1J5Vly
- 0VrlECJ7dADeyfp07/iaqnZ8iAVTAv3LM5cX6T80TNRqmd/xW4JezIU28V3s9v40
- c0zT+7B3WHJ2HDsW1A2hwEGPb3IpWvYvZauV2xU5KPYBpHpa0sc79z36eFTNJw0n
- wYiKWOldmdgTwUMu5dYfDebytWlJOZjmJVWG8xCiUqBNhfBngRvH936tIyucmMoX
- MaMNkJzRT92HOqxbRkSRzASYF2gMzXZuwmkh9JJJkuqzr/hAgkVNKjm/2N0YLqYQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmyjwr-1
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=GRb/9ZxVgGfsDZfEOPVKrqp6PL2J
+ Osh6V+gjqVEviQQ=; b=XKMCDMtfK0MlL3lMrGJTStVsVOg2rTZ8TzmYPMwYSYdF
+ tncFY50ucoNJEPTcoiNWvzGncDHm9jwl4VPkT67+jNEzZznlMmqr2S9U4Lrb0sqI
+ XG+tokf7ngDLA0xPg8b6btnBo4oS6odIkTpMBY+i9Uw/9yBGN7WgjTnyrIaTZpjV
+ 2suahnzPRGgC5hh6i/ogmr5+qDdU9JHyGhqVYvrxJW3KcJtRYpBo62YSt3qEC83K
+ bm+d9L8UBb/6N7LAqyPfGyDDWbv2HgMt26An9WsaXc2nFtGDTGrE3mEqiYb8Kqv6
+ 0K26cUD+NWsRO158cbdLKdfk2PTHQEgVSnDHyXOePg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmyjwf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:53:05 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 626ApmTq027733;
- Fri, 6 Mar 2026 10:53:04 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmcwjq77x-1
+ Fri, 06 Mar 2026 10:52:58 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6267kDHJ029080;
+ Fri, 6 Mar 2026 10:52:57 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmapsfm9g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:53:04 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 626Ar1wU29819148
+ Fri, 06 Mar 2026 10:52:57 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 626AquTR8978994
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Mar 2026 10:53:01 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 170CD20040;
- Fri,  6 Mar 2026 10:53:01 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7880220063;
- Fri,  6 Mar 2026 10:52:59 +0000 (GMT)
-Received: from [9.78.106.17] (unknown [9.78.106.17])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Mar 2026 10:52:59 +0000 (GMT)
-Message-ID: <ff24299d-d95b-4376-8b75-84cb7269bf62@linux.ibm.com>
-Date: Fri, 6 Mar 2026 16:22:58 +0530
+ Fri, 6 Mar 2026 10:52:57 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B2E4558055;
+ Fri,  6 Mar 2026 10:52:56 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4966D58063;
+ Fri,  6 Mar 2026 10:52:56 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Mar 2026 10:52:56 +0000 (GMT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/10] pnv/mpipl: Write the preserved CPU and MDRT state
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-References: <20260225124633.1841222-1-adityag@linux.ibm.com>
- <20260225124633.1841222-8-adityag@linux.ibm.com>
-Content-Language: en-US
-From: Hari Bathini <hbathini@linux.ibm.com>
-In-Reply-To: <20260225124633.1841222-8-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Fri, 06 Mar 2026 16:22:55 +0530
+From: Misbah Anjum N <misanjum@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, anisinha@redhat.com, pbonzini@redhat.com
+Subject: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
+ commit 98884e0c
+Message-ID: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
+X-Sender: misanjum@linux.ibm.com
+Organization: IBM
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEwMSBTYWx0ZWRfX+DP72Osuotii
- dTbs3Qk5AM/5nBiWKkBU4HlO0jylRcC0N2OZ5b5loFwROOp+9PPWLYn591ju9lP6Ml7qMoT05Pm
- nnk37B0V/zv54TsY7Gs1XB73D3+hT8CUxdQURgh0ZLBhTqazSlULjJO5jYMx9mCzVtoSGDSrhZk
- kRY+FEseh0B+nHKFcxk7U8V6I8cCmTyf+v1v43FedCIgcXu27H4RmiH0LlNFulE6iLKpPxlT6H5
- QoP+hPvs/8Mt2FC3RIKxXBbG6Oup8myTcTdRlNujWEVTrbs+f1KSp5RX9vENFdU5DcL828EYbbm
- sLCid5IuBv6tH/r4FZQIhLIM5pn3YxGK4euI6wkVtew/E8SvWMbW7GPo934NWO8BSUNPd1e9c2I
- vUvkHjZgrxPKD874GGPtmUcxjTwEc+pxE43kM84Sd4gxJu5nZTyTZ/ssj7S807lZzu2XJMbKuld
- MLFUAcXCaJkj5U5wtMw==
-X-Proofpoint-ORIG-GUID: fdzs2_WeSp2xENNvoNTDx4ImjklGs7Sc
-X-Proofpoint-GUID: tI1ItnGrfOM3fD5l1Shr2hBL_kxMfg7S
-X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aab212 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=J9v9EyAk_XTl8f_c-twA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEwMSBTYWx0ZWRfX8neXklghXiC5
+ eP5TlSS50J4M+2RQjLDSYk+fJHO2Xkq8LmUQPnE8lHy3taFjp4VLTawgVJedzX94wJxluOF+BUP
+ 15QQt7aKlrwRkngezxdNfDm5qxqy7nbLcEz+WsIXO40hlTh8Qa0WPw9pnUFmFvzNCcTAFPP9zxY
+ I+G1uDoneTIraYW04gjtaHwNcaUFZEOQ5g1vnsIP4NVAIFjFAYnsKkQXMd1+K1GW5WpYPD4wuw5
+ Ta+czrEv+8CLxsw7Xi6x/Q3Pr4GidrjIIzOH9786Rvrh7i5T+BpUpBoQES2TBtw+hANsy0SeX3j
+ O/SWC7oTO3B7HYPakjzkg69CO2Sbm1RJhH+QxCsdHLp3y+8choWPsBJDN9BV28a3PF7xMLk7WbL
+ Ib9XuAgEtcy8J2FgyUt8oo5HcqdnsSmGk4d9NluvNmlfnmZnVirieQQnhtCQqE+oFensJ6cftpd
+ 5EI722KzPqGdHvCFhEg==
+X-Proofpoint-ORIG-GUID: x7QNeEZmURnZc8sQ0HA4JoOqAsNX09wx
+X-Proofpoint-GUID: x7QNeEZmURnZc8sQ0HA4JoOqAsNX09wx
+X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aab20a cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=UETNnugvo_MbejD8BVAA:9
+ a=CjuIK1q_8ugA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-06_03,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- spamscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
+ spamscore=0 clxscore=1011 suspectscore=0 adultscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060101
 Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: 18
+X-Spam_score: 1.8
+X-Spam_bar: +
+X-Spam_report: (1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_EF=-0.1, HEXHASH_WORD=2.999, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
@@ -126,268 +120,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
+I'm reporting a critical regression on ppc64le that causes all KVM 
+guests to hang immediately during startup. Git bisect identified commit 
+98884e0cc10997a17ce9abfd6ff10be19224ca6a as the first bad commit. The 
+commit completely breaks KVM functionality on ppc64le.
 
+Regression Details:
+Working Version: QEMU 10.2.50 (v10.2.0-1669-gffcf1a7981)
+Broken Version: QEMU 10.2.50 (v10.2.0-1816-g3fb456e9a0)
+Bad Commit: 98884e0cc10997a17ce9abfd6ff10be19224ca6a "accel/kvm: add 
+changes required to support KVM VM file descriptor change"
+Commit Link: 
+https://gitlab.com/qemu-project/qemu/-/commit/98884e0cc10997a17ce9abfd6ff10be19224ca6a
 
-On 25/02/26 6:16 pm, Aditya Gupta wrote:
-> Logic for preserving the CPU registers and memory regions has been done
-> in previous patches.
-> 
-> Write those data at the relevant memory address, such as PROC_DUMP_AREA
-> for CPU registers, and MDRT for preserved memory regions.
-> 
-> Also export "mpipl-boot" device tree node, for kernel to know that it's
-> a 'dump active' boot
-> 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   hw/ppc/pnv.c         |  45 +++++++++++++-
->   hw/ppc/pnv_mpipl.c   | 141 +++++++++++++++++++++++++++++++++++++++++++
->   include/hw/ppc/pnv.h |   1 +
->   3 files changed, 186 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 3038b1626c54..0b94e0c7a19b 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -751,6 +751,8 @@ static void pnv_reset(MachineState *machine, ResetType type)
->       PnvMachineState *pnv = PNV_MACHINE(machine);
->       IPMIBmc *bmc;
->       void *fdt;
-> +    int node_offset;
-> +    bool is_next_boot_mpipl = false;
->   
->       qemu_devices_reset(type);
->   
-> @@ -781,7 +783,48 @@ static void pnv_reset(MachineState *machine, ResetType type)
->           _FDT((fdt_pack(fdt)));
->       }
->   
-> -    if (!pnv->mpipl_state.is_next_boot_mpipl) {
-> +    /*
-> +     * Only on success of writing MPIPL data will the next boot be provided
-> +     * "mpipl-boot" property in device tree
-> +     * Otherwise boot like a normal non-MPIPL boot
-> +     */
-> +    if (pnv->mpipl_state.is_next_boot_mpipl) {
-> +        /* Write the preserved MDRT and CPU State Data */
-> +        bool mpipl_write_succeeded = do_mpipl_write(pnv);
-> +
-> +        if (!mpipl_write_succeeded) {
-> +            is_next_boot_mpipl = false;
-> +        } else {
-> +            is_next_boot_mpipl = true;
-> +        }
-> +    }
-> +
-> +    /*
-> +     * If it's a MPIPL boot, add the "mpipl-boot" property, and reset the
-> +     * boolean for MPIPL boot for next boot
-> +     */
-> +    if (is_next_boot_mpipl) {
-> +        void *fdt_copy = g_malloc0(FDT_MAX_SIZE);
-> +
-> +        /* Create a writable copy of the fdt */
-> +        _FDT((fdt_open_into(fdt, fdt_copy, FDT_MAX_SIZE)));
-> +
-> +        node_offset = fdt_path_offset(fdt_copy, "/ibm,opal/dump");
-> +        _FDT((fdt_appendprop_u64(fdt_copy, node_offset, "mpipl-boot", 1)));
-> +
-> +        /* Update the fdt, and free the original fdt */
-> +        if (fdt != machine->fdt) {
-> +            /*
-> +             * Only free the fdt if it's not machine->fdt, to prevent
-> +             * double free, since we already free machine->fdt later
-> +             */
-> +            g_free(fdt);
-> +        }
-> +        fdt = fdt_copy;
-> +
-> +        /* This boot is an MPIPL, reset the boolean for next boot */
-> +        pnv->mpipl_state.is_next_boot_mpipl = false;
-> +    } else {
->           /*
->            * Set the "Thread Register State Entry Size", so that firmware can
->            * allocate enough memory to capture CPU state in the event of a
-> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-> index 37f498051254..d10ff5bc922d 100644
-> --- a/hw/ppc/pnv_mpipl.c
-> +++ b/hw/ppc/pnv_mpipl.c
-> @@ -20,6 +20,8 @@
->       (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
->   #define MDDT_TABLE_RELOCATED                            \
->       (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
-> +#define MDRT_TABLE_RELOCATED                            \
-> +    (pnv->mpipl_state.skiboot_base + MDRT_TABLE_OFF)
->   #define PROC_DUMP_RELOCATED                             \
->       (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
->   
-> @@ -319,6 +321,139 @@ static bool pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
->       return true;
->   }
->   
-> +/*
-> + * Write the preserved CPU state data in Processor Dump Area (PROC_DUMP_AREA)
-> + *
-> + * Returns true if everything went fine, else false for any error
-> + */
-> +static bool pnv_mpipl_write_cpu_state(PnvMachineState *pnv)
-> +{
-> +    MpiplProcDumpArea *proc_area = &pnv->mpipl_state.proc_area;
-> +    MpiplPreservedCPUState *cpu_state = pnv->mpipl_state.cpu_states;
-> +    const uint32_t num_cpu_states = pnv->mpipl_state.num_cpu_states;
-> +    hwaddr next_regentries_hdr;
-> +    AddressSpace *default_as = &address_space_memory;
-> +    MemTxResult io_result;
-> +    MemTxAttrs attrs;
-> +
-> +    /* Mark the memory transactions as privileged memory access */
-> +    attrs.user = 0;
-> +    attrs.memory = 1;
-> +
-> +    if (be32_to_cpu(proc_area->alloc_size) <
-> +       (num_cpu_states * sizeof(MpiplPreservedCPUState))) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +            "MPIPL: Size of buffer allocate by skiboot (%u bytes) is not"
-> +            "enough to save all CPUs registers needed (%zu bytes)",
-> +            be32_to_cpu(proc_area->alloc_size),
-> +            num_cpu_states * sizeof(MpiplPreservedCPUState));
-> +
-> +        return false;
-> +    }
-> +
-> +    proc_area->version = PROC_DUMP_AREA_VERSION_P9;
-> +
-> +    /*
-> +     * This is the stride kernel/firmware should use to jump from a
-> +     * register entries header to next CPU's header
-> +     */
-> +    proc_area->thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
-> +
-> +    /* Write the header and register entries for each CPU */
-> +    next_regentries_hdr = be64_to_cpu(proc_area->alloc_addr) & (~HRMOR_BIT);
-> +    for (int i = 0; i < num_cpu_states; ++i) {
-> +        io_result = address_space_write(default_as, next_regentries_hdr, attrs,
-> +            &cpu_state->hdr, sizeof(MpiplRegDataHdr));
-> +        if (io_result != MEMTX_OK) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                "MPIPL: Failed to write RegEntries Header\n");
-> +            return false;
-> +        }
-> +
-> +        io_result = address_space_write(default_as,
-> +            next_regentries_hdr + sizeof(MpiplRegDataHdr), attrs,
-> +            &cpu_state->reg_entries,
-> +            NUM_REGS_PER_CPU * (sizeof(MpiplRegEntry)));
-> +        if (io_result != MEMTX_OK) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                "MPIPL: Failed to write Register Entries\n");
-> +            return false;
-> +        }
-> +
-> +        /*
-> +         * According to HDAT section:
-> +         *  "15.3.1.5 Architected Register Data content":
-> +         *
-> +         * The next register entries header will be at current header +
-> +         * "Thread Register State Entry size"
-> +         *
-> +         * Note: proc_area.thread_size == sizeof(MpiplPreservedCPUState)
-> +         */
-> +        next_regentries_hdr += sizeof(MpiplPreservedCPUState);
-> +        ++cpu_state;
-> +    }
-> +
-> +    /* Point the destination address to the preserved memory region */
-> +    proc_area->dest_addr = proc_area->alloc_addr;
-> +    proc_area->act_size  = cpu_to_be32(num_cpu_states *
-> +            sizeof(MpiplPreservedCPUState));
-> +
-> +    io_result = address_space_write(default_as, PROC_DUMP_AREA_OFF, attrs,
-> +        proc_area, sizeof(MpiplProcDumpArea));
-> +    if (io_result != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +            "MPIPL: Failed to write Register Entries\n");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +/*
-> + * Write the preserved MDRT table, representing preserved memory regions
-> + *
-> + * Returns true if everything went fine, else false for any error
-> + */
-> +static bool pnv_mpipl_write_mdrt(PnvMachineState *pnv)
-> +{
-> +    MpiplPreservedState *state = &pnv->mpipl_state;
-> +    AddressSpace *default_as = &address_space_memory;
-> +    MemTxResult io_result;
-> +    MemTxAttrs attrs;
-> +
-> +    /* Mark the memory transactions as privileged memory access */
-> +    attrs.user = 0;
-> +    attrs.memory = 1;
-> +
-> +    /*
-> +     * Generally writes from platform during MPIPL don't go to a relocated
-> +     * skiboot address
-> +     *
-> +     * Though for MDRT we are doing so, as this is the address skiboot
-> +     * considers by default for MDRT
-> +     *
-> +     * MDRT/MDST/MDDT base addresses are actually meant to be shared by
-> +     * platform in SPIRA structures.
-> +     *
-> +     * Not implementing SPIRA as it increases complexity for no gains.
-> +     * Using the default address skiboot expects for MDRT, which is the
-> +     * relocated MDRT, hence writing to it
-> +     *
-> +     * Other tables like MDST/MDDT should not be written to relocated
-> +     * addresses, as skiboot will overwrite anything from SKIBOOT_BASE till
-> +     * SKIBOOT_BASE+SKIBOOT_SIZE (which is 0x30000000-0x31c00000 by default)
-> +     */
-> +    io_result = address_space_write(default_as, MDRT_TABLE_RELOCATED, attrs,
-> +            state->mdrt_table,
-> +            state->num_mdrt_entries * sizeof(MdrtTableEntry));
-> +    if (io_result != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "MPIPL: Failed to write MDRT table\n");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   void do_mpipl_preserve(PnvMachineState *pnv)
->   {
->       pause_all_vcpus();
-> @@ -339,3 +474,9 @@ void do_mpipl_preserve(PnvMachineState *pnv)
->        */
->       qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
->   }
-> +
-> +bool do_mpipl_write(PnvMachineState *pnv)
-> +{
-> +    return pnv_mpipl_write_mdrt(pnv) && pnv_mpipl_write_cpu_state(pnv);
-> +}
+Environment:
+Host: Fedora 42, Kernel 7.0.0-rc2, Power11 (ppc64le)
+Libvirt: 12.1.0
+Guest: Fedora 42, Kernel 7.0.0-rc2
+Machine Type: pseries with KVM acceleration
 
-Another minor nit..
+Build Configuration:
+git clone https://gitlab.com/qemu-project/qemu.git
+cd qemu
+git submodule init
+git submodule update --recursive
+./configure --target-list=ppc64-softmmu --disable-tcg --prefix=/usr
+make && make install
 
-> +
+Reproduction:
+Using virt-install:
+/usr/bin/virt-install --connect=qemu:///system --hvm --accelerate --name 
+'avocado-vt-vm1' --machine pseries --memory=32768 
+--vcpu=32,sockets=1,cores=32,threads=1 --import --nographics 
+--os-variant rhel8.0 --serial pty --memballoon model=virtio --controller 
+type=scsi,model=virtio-scsi --disk 
+path=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,bus=scsi,size=10,format=qcow2 
+--network=bridge=virbr0,model=virtio --boot 
+emulator=/usr/bin/qemu-system-ppc64
+Result: Starting install...
+         <hangs indefinitely with no output>
 
-blank line at EOF.
+Using direct QEMU command:
+/usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
+pseries,accel=kvm -enable-kvm -m 32768 -smp 
+32,sockets=1,cores=32,threads=1 -nographic -serial pty -device 
+virtio-balloon -device virtio-scsi-pci,id=scsi0 -drive 
+file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,if=none,id=drive-scsi0-0-0,format=qcow2 
+-device scsi-hd,bus=scsi0.0,drive=drive-scsi0-0-0 -netdev 
+bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
+Result: <hangs indefinitely with no output>
 
+Analysis:
+The commit introduces VM file descriptor change support with 
+architecture-specific hooks.
+I attempted the following fixes without success:
+1. Changed abort() to return 0; in stubs/kvm.c
+2. Added early return in kvm_reset_vmfd() when 
+kvm_arch_supports_vmfd_change() returns false
 
-> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> index 7d73629f112a..98fe10fb4f2e 100644
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -295,5 +295,6 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
->   
->   /* MPIPL helpers */
->   void do_mpipl_preserve(PnvMachineState *pnv);
-> +bool do_mpipl_write(PnvMachineState *pnv);
->   
->   #endif /* PPC_PNV_H */
+Git Bisect Log:
+# git bisect bad
+98884e0cc10997a17ce9abfd6ff10be19224ca6a is the first bad commit
+commit 98884e0cc10997a17ce9abfd6ff10be19224ca6a (HEAD)
+Author: Ani Sinha <anisinha@redhat.com>
+Date:   Wed Feb 25 09:19:10 2026 +0530
 
+     accel/kvm: add changes required to support KVM VM file descriptor 
+change
+
+     This change adds common kvm specific support to handle KVM VM file 
+descriptor
+     change. KVM VM file descriptor can change as a part of confidential 
+guest reset
+     mechanism. A new function api kvm_arch_on_vmfd_change() per
+     architecture platform is added in order to implement architecture 
+specific
+     changes required to support it. A subsequent patch will add x86 
+specific
+     implementation for kvm_arch_on_vmfd_change() as currently only x86 
+supports
+     confidential guest reset.
+
+     Signed-off-by: Ani Sinha <anisinha@redhat.com>
+     Link: 
+https://lore.kernel.org/r/20260225035000.385950-6-anisinha@redhat.com
+     Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+  MAINTAINERS            |  6 ++++++
+  accel/kvm/kvm-all.c    | 88 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+  accel/kvm/trace-events |  1 +
+  include/system/kvm.h   |  3 +++
+  stubs/kvm.c            | 22 ++++++++++++++++++++++
+  stubs/meson.build      |  1 +
+  target/i386/kvm/kvm.c  | 10 ++++++++++
+  7 files changed, 128 insertions(+), 3 deletions(-)
+  create mode 100644 stubs/kvm.c
+
+# git bisect log
+git bisect start
+git bisect good ffcf1a7981793973ffbd8100a7c3c6042d02ae23
+git bisect bad 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
+git bisect bad e76c30bb13ecb9dc716fa629954bfb6253056ce2
+git bisect good 9bdc612a18588975f5776ee4e562df607fea1b2c
+git bisect bad 40c015e96942fd2a3e4d5ace6063b3333a3dd372
+git bisect good df8df3cb6b743372ebb335bd8404bc3d748da350
+git bisect bad 0f53f021ad1ede28dc8944686544e496cab02e5e
+git bisect bad 9f0c2b3032639315faf141010a2603b0dbf56230
+git bisect bad 98884e0cc10997a17ce9abfd6ff10be19224ca6a
+first bad commit: [98884e0cc10997a17ce9abfd6ff10be19224ca6a]
+
+Thanks,
+Misbah Anjum N <misanjum@linux.ibm.com>
 
