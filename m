@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81724F01814
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F8F3F01814
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyRLL-0007JN-4o; Fri, 06 Mar 2026 04:19:36 -0500
+	id 1vyRLx-0007eN-O3; Fri, 06 Mar 2026 04:20:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyRLH-0007FZ-DM
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:19:32 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyRLD-0000iJ-Oy
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:19:29 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-793fdbb8d3aso112052617b3.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 01:19:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772788766; cv=none;
- d=google.com; s=arc-20240605;
- b=HspMHhj1q1MwGNm3MRuq8TMxgBIbQjQ16dyJre9au0Ot/xAjxj3HuPj72TMvI7ce9K
- MqJAo1M0ZzlrOW5mBVPKe+dIHg7qbWLFRLL9s4fTM3XnEfUeePYfPUVpM8bIz6UctP6Z
- C90JzZ/8zmU6gxncy+YipJDYTnt58qoeAaYhL4ymz+BQfZogVO4wV8AAenmd1b1sCtOs
- FtuFAiNK8VXzEQmV5Yr1mSILHcbyfhxa6t9Jslfxhyh/CUWtdjFx7Ecr2xKFnYeb+/or
- hzjvplLtAwmYcTbAf3AUD6EjNxowJ153YSswwYErw/de3ebSNU06KtMwEB117X04Oh3o
- thUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=0/6zAoZ/NERSIqrcdz6q0tgy2YPJ35UoP2Tv4Gcm+RY=;
- fh=BAyh76Dt9lJjY3uGbG9gye4E4bNa4dvV51FFfKIqCkc=;
- b=Y6i/HQAr0u1nw/bfx/1UX/g5GXwb4rDr6DaWdVDbwl4B3Tof5SnuTIHY8+LIsD4Syr
- 7BX6JyA4lpXr4f2ziUSATPyYI37Oru8VMr6XWMNwMN7H5kYzVfM0WBi3Fej3uGbNqd73
- b4eSyqF2xTWUmmM1tPFC4bntMlDWDYClkQglN6CjjtoVp5XRthYgVmwneb+FaTWouL0F
- 6BlefzqnRbfv3RNNqShpuBfcXezIDlcaRF74fUA0IXk/rQcv0CdiLdubwUJkA6NmFio4
- Ad5wM2ol2RYu1GPr8jmep8gnFMgxuc/625aT5bMEUAv36SrR5Ct1SU8OUM8A2TvRhbsp
- tzCA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772788766; x=1773393566; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0/6zAoZ/NERSIqrcdz6q0tgy2YPJ35UoP2Tv4Gcm+RY=;
- b=ase6/rxM65pS26h+W3jkeKZNfxHVFqL6/sZCjlr/SgOTYMf1gKRkRXLH9jOOxIoiaD
- HJ31mtCfHEd1XvyuLqMI1Dj3+x779ww4QCXGuAIpaIzBUz9CaR/FwuBsKL92ZfofXv6C
- oG5nFwdSdHH3EejvbPF6/t3dEGY+A0iM3FMmb5loiMHc5p9ubvUT73wdoxBS7tHn055T
- lq+8vPq3DnhZGPxmpKoii5FfXPaTTPoiplQ6vcTGLsrLmEnOJgcmVqieZKBYmJITqNg4
- ecaSYpAmnekYaMXP4sZLfQj/pqftP/KmG0gmXfgZV2IfUPxnex83XhMukxPAkHfFcRqp
- KRqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772788766; x=1773393566;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0/6zAoZ/NERSIqrcdz6q0tgy2YPJ35UoP2Tv4Gcm+RY=;
- b=Q3qpIq8PErHssE9y50RLM42a9U47RUiv0z2sA2H8Fv4prcT0BjmaGNHmdRj55wJxRs
- XyVRGA+HD317+04Fn7HMONo2nbs11uBdWPmtVATHlVidGOt83SvEtjfp0alTjDYkYjft
- vnXdH9/DwHUHe3tUJcbgBaoV2+zN1iQA3iS22xi3RDW/KUNa+ZjsoFawrz7ivnQwcBpt
- 740D8LtRoWG5nvjQUk+URG6qU10soQCJ1sTrrrEFdrjuiVyidwM6hAC0+AHkjzvyCC5Y
- RpAyU5sagj7RaUWItOTUDuqtKj7GBJnf+hQqKR2FtItyW4Nm3y1+g5FNzHsaeN3/Q3/D
- P5sg==
-X-Gm-Message-State: AOJu0YwrAJjh8Jsh9fLb/VMhaqW0TezCHOZWUjSBkb7fuLkOwD3OwhhM
- fP5XiExlvhVems2hGLgi2aEWckrdy/n7xaRZegAixDS/wD0UTORHIG3WUHake6zC0TPT7g5tYHj
- NAYUAKnF1J5I0e8jAwlXKbfSLi1cyg9DCsT+wUEvmvA==
-X-Gm-Gg: ATEYQzzjvsBd3i59Jh3egC8KE1IiF3SrRcEsTfnv4AUxOo7CzZINLO+h4+PoR4EzGWR
- zleuBLsWYEu9Nrh6YiwdxMoCCX1K0kjm6FUNvslgyfZvnI3hgRlFNhIJq4823qShKAiJZZR1lNR
- Ymz+RotWrKvViCHb1aSqU93aChbaOtWQo+sdyyd/dKiOyjwGB1q26zqQ61aPVRGiZ0nHqmESq6B
- WV17Mpd8rDCr44EwpYTF1qmzY0nRTioAnO04PiTjpIKCjxoiRYq5daI+cArAPBjKK5+zuXYTE7d
- NZZLWIrJ+xa6I6fvnBvUSIToBPw8FZTkPUazaphbkZDZn8GiS7xDkLdWmHBl9gMePAY=
-X-Received: by 2002:a05:690e:1516:b0:64c:ba9a:f1da with SMTP id
- 956f58d0204a3-64d143757f4mr1022633d50.87.1772788766241; Fri, 06 Mar 2026
- 01:19:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vyRLv-0007c4-VO
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:20:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vyRLp-0000ku-Td
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:20:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772788802;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=/iE6Uz00m+Wd597RZDSF9kxAb6fhSW1vartUiW7H/T4=;
+ b=WRViYgnGsCk5qdHwiXAumgTorAZMZ+KIWA2q6J9T8+ZaQ1+ndYCdP+utNnAxG+CB3Pc3Fd
+ BR+iyk8ULQzy62lZ809Rt0neGoE7J9jWuScHZL6yXCVuBiaXo2bOG9yHXisUrlr8fs6GBN
+ nrWPJ4wnPIswumKznsPlHx+n5Yy5WWg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-JXA58BYOMK2px65VziLKgw-1; Fri,
+ 06 Mar 2026 04:20:01 -0500
+X-MC-Unique: JXA58BYOMK2px65VziLKgw-1
+X-Mimecast-MFC-AGG-ID: JXA58BYOMK2px65VziLKgw_1772788799
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7DF2180044D; Fri,  6 Mar 2026 09:19:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.197])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C96E91800361; Fri,  6 Mar 2026 09:19:52 +0000 (UTC)
+Date: Fri, 6 Mar 2026 09:19:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zide Chen <zide.chen@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev properties
+ accept flags
+Message-ID: <aaqcNeyNO2nmqEje@redhat.com>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <20260210032348.987549-15-zhao1.liu@intel.com>
+ <aYsAuFNQQvwYiLPI@redhat.com> <aYwv/mcUBXy9kUYZ@intel.com>
+ <aYy1R-JQjZ-Y38Am@redhat.com> <20260218105120.5e55ad07@imammedo>
+ <87seadjp5c.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20260303-sme2-hvf-v6-0-b473702d8287@linaro.org>
- <20260303-sme2-hvf-v6-1-b473702d8287@linaro.org>
-In-Reply-To: <20260303-sme2-hvf-v6-1-b473702d8287@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 09:19:15 +0000
-X-Gm-Features: AaiRm52yZxeAMvaUZ1XA7Duqx1hN1BfK7WKnC0qBF5S-Bx3DlbyHktkeKt2Ee_s
-Message-ID: <CAFEAcA8zTkc4pyHQKoDkTMhGPLQmxBaJS3bZiGRrPgux3rDLzw@mail.gmail.com>
-Subject: Re: [PATCH v6 1/2] hvf/arm: handle FEAT_SME2 migration
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
- qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87seadjp5c.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,51 +98,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Mar 2026 at 07:42, Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> SME2 support adds the following state for HVF guests:
->
-> - Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
->   not support it)
-> - Predicate registers P0, .., P15 (also FEAT_SVE)
-> - ZA register
-> - ZT0 register
-> - PSTATE.{SM,ZA} bits (SVCR pseudo-register)
-> - SMPRI_EL1 which handles the PE's priority in the SMCU
-> - TPIDR2_EL0 the thread local ID register for SME
+On Fri, Mar 06, 2026 at 10:14:23AM +0100, Markus Armbruster wrote:
+> Igor Mammedov <imammedo@redhat.com> writes:
+> 
+> > I might be totally wrong, but occasionally I've considered using
+> > object_set_properties_from_qdict() internally as much more compact form
+> > compared to 'object_new()/set_this_property and set that one too' noodle.
+> 
+> Clear signal our C interface to QOM object configuration is lacking.
+> 
+> Going through a QDict is disgusting, though.  There has to be a more
+> direct way.  One that doesn't involve building temporary trees just so
+> we can use existing visitors.
+> 
+> What if we could pass the entire configuration as a struct?  Instead of
+> setting properties one by one, pass a struct literal and be done.
 
-Mohamed points out that this breaks the build when compiling
-with GCC (which I hadn't noticed because I happen to do my testing
-of target-arm with clang on Linux these days):
+Or we pass things as typed variadic args.
 
-> --- /dev/null
-> +++ b/target/arm/hvf/hvf_sme_stubs.h
-> @@ -0,0 +1,158 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +typedef int32_t hv_return_t;
-> +typedef uint64_t hv_vcpu_t;
+  object_new_args(TYPE_NAME,
+                  "foo": someval,
+		  "bar: otherval,
+		  NULL);
 
+we know the QAPI type for each named property, so we know how to
+interpret type-correct values for each property in the var-args.
 
-> +typedef __attribute__((ext_vector_type(64))) uint8_t hv_sme_zt0_uchar64_t;
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-The "ext_vector_type()" attribute is clang specific and gcc
-doesn't recognize it.
-
-Since we're defining all these types specifically because the system
-headers are not providing them and only for the prototypes, my
-preference would be to simply drop the attribute from this
-declaration:
-
-typedef uint8_t hv_sme_zt0_uchar64_t;
-
-Could somebody confirm that that works OK on the relevant macos
-configurations ?
-
-thanks
--- PMM
 
