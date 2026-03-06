@@ -4,106 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7112FCC04F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB00FCC04D
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyZ4a-000599-5K; Fri, 06 Mar 2026 12:34:48 -0500
+	id 1vyZ4o-0005GC-1l; Fri, 06 Mar 2026 12:35:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyZ4V-00058s-7c
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:34:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vyZ4R-0004ub-3F
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:34:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772818477;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UdmMq58TJaQQ0THEKXyT3Ga+qmrGCeydNatkV9xIxfg=;
- b=gexPKEIF/T0QUtXVj0DGacpNNdgajnoqQ0Utgr2m2lymxVP5a0yLNRYAocoGHVEDIQUJkH
- whWaEalEAcytcbYKrtxh73/jyhMt/MQ/2WqHwDnBdfjNcsycMR5SJJJCdxsBnhw4WuQK9c
- FGO32ktGatN6LWTGWkeumyFt8+sWEdg=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-HjT03ExLPPGKaV0O0pauIQ-1; Fri, 06 Mar 2026 12:34:36 -0500
-X-MC-Unique: HjT03ExLPPGKaV0O0pauIQ-1
-X-Mimecast-MFC-AGG-ID: HjT03ExLPPGKaV0O0pauIQ_1772818476
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-506c0231e63so831958301cf.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 09:34:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyZ4n-0005FO-0y
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:35:01 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyZ4l-00051P-Hz
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:35:00 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82987437624so1207886b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 09:34:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772818476; x=1773423276; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=UdmMq58TJaQQ0THEKXyT3Ga+qmrGCeydNatkV9xIxfg=;
- b=KOFpOYnIzGCHnJ4PsQ/gF2F+aokUD2XdABmDsBHjLA8HULVBu3LmMPD3eyEnzyLlkQ
- i/29yuj0LLDVK1xIW1wi5WGZxJu3o+ULVfnR0aG6rB9Lvp2YIUnMnC3kriSwQgtGNHlg
- kh0nYKrg1x4yUUN8NlkcN3oXV5FhrgpKF567ei05s8ySD2PDdQPnwQoO0j91urDxSmOJ
- x+wbqdRWBoKa2HE3IcFKYn3n3fgf7yyC9X2B7YivcNaCjV86gK90K6EY5f9a8Br4jXqt
- gxB8uxB2Z+JTN1N6rBI1jYH9C1QHGj0f5Zx2uDlcU4+43KLg9tvUCXlNvcHBPdurG7v1
- 3uSw==
+ d=linaro.org; s=google; t=1772818498; x=1773423298; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LZffydFpCQ8oX1deZ7Z+K6vD3hblkojF+uIgSi9+5bg=;
+ b=F5X4XSf+9LIGQEKCW6Njo3UgrDS4jHQqaDjTXSaGztFS71PCJcHtuBgFfFYOlN+SKn
+ dawv8QJK7i1Rm4ktudYkap+GSjlrOh57cxf6dcoNvIoyr5cXvPJIF5UPBZUf95sJg8Ri
+ 7mDYMOhHIRGuUot8KTFskPdi2Diezq54uXc+zJLPoLW0v7otp8o9Hk68oZxnAgQSk+Bx
+ 8nO6VdRVKvjWMMZDJ99k21DmiZggYyTuOjtn+3Y8JzNfeRBWaDZ1X+A+TZLgX88PYqIY
+ K6SuBCabFDJysg7ZU1NiQS62S5+0fR1OEfcPOU72UmbiTPBSfqTLazoGIIjqABDXLNaC
+ DaNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772818476; x=1773423276;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UdmMq58TJaQQ0THEKXyT3Ga+qmrGCeydNatkV9xIxfg=;
- b=M9JLw1TARwVoKZCL4HLr6Z0o81Ac8VLsP169/yYkVaXEJktQnxStddwooAtjOQPkpv
- 7QX/2Z0yfpXXDEcRe2Nk2xjg9wQUlWZMkT2K86ohXMKscEAyzRw+lhwKqZBApM2NOpYb
- gK1b7gQIULuL8bgO6yJRGmNaVUfHzZxNj2etuV6v23UGssnzSWkJImpu1zp5+eiOju2F
- sp/xkBbz48knvvl2k3ECq97G4piSI9zTwYuQIXBbkrYOu9XFuJCydKp/ghwKTW07Ewnw
- v6j+XTD3CvrtZNMbU84q4mDUb5BY4ifNgCAuXFnDfqocOuEAcXboM5vtfmR8GTPJJ/UD
- 6vcg==
-X-Gm-Message-State: AOJu0Yz7d2W9/gWX58p6Jl8GvKWeuvzB8244Wp/8bBJdg37lqfSglgct
- eBo7rD1wYn/PMY4lvT6JzVumqNlmwwEQnUm3JP+YK95MU9k02FVIF5gIN9r883LcTb3pdU90H+v
- c90On6VUe1PCfgSwjiM9q2bu9DwLIEyd+9s9CK67qJvSGopVoiblCtgiK
-X-Gm-Gg: ATEYQzywDjGKzn8WS5fUBj2+XtI5XTxwYW8Y6OznwdCOlLl7NGfy/fPVqAVpk+r3sm4
- W0ypL3j2Xxau1S6nQ1NOSAz/Bfdca5qWlmaqCVhCgO0/ogngNk+e/NEabTwRG7yD8pX9tIuOD/h
- hZwR4Q+pT/i2YTkyLD/PWyYOMHMkn7vdtfMN75oH0YARoxV1GWloPIrEnoWSiT7fKMJO+O7preh
- SIyC5e+jLMZEBnDMdLRS+f1Ty50I9Ap2g8QkQGbeKn7aYzcBb1l+72rrPT9kafMXz3R5Fh2UNlv
- bHFYeNm2Lgyrm8s/wxsw8iM6T1BV3II8q8KMGdPUQuU1QSeZQdOuydK8S9L0H1mrqKItHpUU0o/
- WVgG0yGox/xuizBbc9B/q3ffLsloPNrfbnGhzYf6lFR6aUOYWkMGwm67oAfASz3tVUQ56Db5/hQ
- EBRyZ8+Q==
-X-Received: by 2002:ac8:5a96:0:b0:4b3:8ee:520c with SMTP id
- d75a77b69052e-508f4b17dc2mr33113481cf.19.1772818474159; 
- Fri, 06 Mar 2026 09:34:34 -0800 (PST)
-X-Received: by 2002:ac8:5a96:0:b0:4b3:8ee:520c with SMTP id
- d75a77b69052e-508f4b17dc2mr33113041cf.19.1772818473577; 
- Fri, 06 Mar 2026 09:34:33 -0800 (PST)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
+ d=1e100.net; s=20230601; t=1772818498; x=1773423298;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LZffydFpCQ8oX1deZ7Z+K6vD3hblkojF+uIgSi9+5bg=;
+ b=lJXYxypDuTpA+eKK9QjT78D5W1VOerwoUc1jbO2JEl6RC/CT8R58PvYMN4hdSMGko4
+ k6n0/7emIlDgSnLbN2uigNE2TYNiqDZg+sjeggfdeRG5F8n9XujgztAB8tuZ4Yo7Lo3Y
+ zAbdN6FXTJ8qtJKMTvT7+LEYBY6j71IT7geCEs1n3SfO6sGscAdZOuoERPej2LoQukYa
+ cKdX5iyO9/0iIw/Ll28i6ZGeaPapkoOCcqC1TXApkvktYmQgbZJ9hniU7AMEs/yOi3Rr
+ na0LpmXMHvPxdH+rCEkVZCB7TfMNecqDZORbGn2dpzG569brp1PCRVn5k7KWOD+a6TCm
+ LgPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtI3GdqCICgibGhDeLDLeN4aPs25faldHTgLlSwJD2Ted3LJqWCz6WttCEKECaXyLKZkfGwkhqpqeO@nongnu.org
+X-Gm-Message-State: AOJu0YxJMxhsCzd3BlRjD6pGXG/1XP6t3nyxWTACxsqgi3KTOkgEdESK
+ NsdherktdZOI/XIxHN13R7Q6gZLXDjJ+dSYHVmqMmy45vbjddXfa1zwO65L21cltxzs=
+X-Gm-Gg: ATEYQzynS2YbJvMZwc1WlngDFGfuNFRF70Kq6XNVmNWh1RGbEKjgwFe+LCTSrg5SE72
+ A+YIRJWzwrrCMZ8XC4pCR4JoZ5kNH907Ym6TcXb0/XI3A1hFu8MGhrRSKTpDoYQOWR/koDeyw+C
+ hg5yrHjmhjwRsI/4x+NKFe2DCQHdFFTKdVY4oF3hlzL5cP2//sZeP5YO+N/IDL15t8/Q3pRFObG
+ LuY26JRsmCi4EgcR4EwllV/TMq2QduKOTAVn2f81uDvamz8+Ovavl4UwCaP1PD7PoPIyRULau4R
+ HXsiSLByGOdctX6ErXXgSBZfwgiNdUKPKQHZxGR3ypsV3jNKAvM70PUGUaYzKoIq21Os264WBS8
+ nZ6FIT7nLnrg7VLqTmVggqdEt1qLTu5T9XaHEW8/wYLEmbDg+d/FMKoGNVKOUf2AxWKyo2eeWvl
+ +KAgAIyvoO8G2sl5Kd5QL8Sd8ybx7+LfRqMJ5nSQ4hA2t860VH9+jTsbl5nYX/OG8IzcA6
+X-Received: by 2002:a05:6a00:418f:b0:822:69b2:7ed0 with SMTP id
+ d2e1a72fcca58-829a29d2a52mr2440724b3a.6.1772818498185; 
+ Fri, 06 Mar 2026 09:34:58 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-508f651149fsm17690551cf.2.2026.03.06.09.34.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 09:34:33 -0800 (PST)
-Date: Fri, 6 Mar 2026 12:34:32 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Tejus GK <tejus.gk@nutanix.com>
-Cc: qemu-devel@nongnu.org,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, farosas@suse.de
-Subject: Re: [PATCH v1 1/1] io: avoid false zerocopy missed accounting on
- empty flushes
-Message-ID: <aasQKAlYOmnbqzIF@x1.local>
-References: <20260306055121.3277731-1-tejus.gk@nutanix.com>
+ d2e1a72fcca58-829a48de551sm2385053b3a.57.2026.03.06.09.34.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Mar 2026 09:34:57 -0800 (PST)
+Message-ID: <0d6e2c8f-8014-4560-b032-8d25a1d05d84@linaro.org>
+Date: Fri, 6 Mar 2026 09:34:57 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260306055121.3277731-1-tejus.gk@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] tests/tcg/multiarch/linux-test: use portable
+ alternative for dirent64
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
+ <20260306161728.2657486-4-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260306161728.2657486-4-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,176 +148,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 06, 2026 at 05:51:17AM +0000, Tejus GK wrote:
-> qio_channel_socket_flush could return 1 when no new zero-copy send
-> completions were queued, which incorrectly inflated the
-> dirty-sync-missed-zero-copy stat. Fix this by returning 0, when there's
-> nothing to flush, similar to what qio_channel_socket_flush_internal
-> does.
+On 3/6/26 8:17 AM, Alex Bennée wrote:
+> From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 > 
-> Signed-off-by: Tejus GK <tejus.gk@nutanix.com>
+> dirent64 and readdir64 are glibc-specific and not portable to other
+> C libraries such as musl. Define _FILE_OFFSET_BITS=64 instead, which
+> portably instructs all libc implementations to use 64-bit file offsets,
+> making readdir() and struct dirent equivalent to their 64-bit variants.
+> 
+> Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+> Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Message-ID: <af31d21c4d668cfb940ba4159f584fa6454c3d82.1772107448.git.matheus.bernardino@oss.qualcomm.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->  io/channel-socket.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> index 3053b35ad8..6f647e471b 100644
-> --- a/io/channel-socket.c
-> +++ b/io/channel-socket.c
-> @@ -895,6 +895,10 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
->      QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
->      int ret;
->  
-> +    if (sioc->zero_copy_queued == sioc->zero_copy_sent) {
-> +        return 0;
-> +    }
-> +
->      ret = qio_channel_socket_flush_internal(ioc, true, errp);
->      if (ret < 0) {
->          return ret;
-> -- 
-> 2.43.7
+>   tests/tcg/multiarch/linux/linux-test.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 > 
 
-This looks fine (weird to explicitly check this while the _internal check
-it again), I have a major confusion on this zerocopy statistic counter.
-
-Right now, as long as there's one successful zerocopy happened, the whole
-batch (before a io_flush() collecting the result) will be marked "all IOs
-are successfully zero-copied".
-
-AFAIU, that may not always reflect the reality even if no fallback
-reported, instead we do have finer granule results ready when flushing.
-
-Instead of fixing this report based on an already inaccurate stats, shall
-we make this stats more useful?  Say, report all fallback IOs happened?
-Then if it return 0, it solidly says ZEROCOPY fallback never happened.
-
-Something like this?
-
-diff --git a/include/io/channel-socket.h b/include/io/channel-socket.h
-index a1ef3136ea..e3c8ad4320 100644
---- a/include/io/channel-socket.h
-+++ b/include/io/channel-socket.h
-@@ -49,12 +49,9 @@ struct QIOChannelSocket {
-     socklen_t remoteAddrLen;
-     ssize_t zero_copy_queued;
-     ssize_t zero_copy_sent;
-+    /* Record how many ZEROCOPY requested IOs fallbacked to copy */
-+    ssize_t zero_copy_fallback;
-     bool blocking;
--    /**
--     * This flag indicates whether any new data was successfully sent with
--     * zerocopy since the last qio_channel_socket_flush() call.
--     */
--    bool new_zero_copy_sent_success;
- };
- 
- 
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 1b02350437..12aecb327f 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -1013,13 +1013,12 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
-  *
-  * If not implemented, acts as a no-op, and returns 0.
-  *
-- * Returns -1 if any error is found,
-- *          1 if every send failed to use zero copy.
-- *          0 otherwise.
-+ * Returns -1 if any error is found, otherwise return a non-negative number
-+ * of IO requests that got falled back to copy.
-  */
- 
--int qio_channel_flush(QIOChannel *ioc,
--                      Error **errp);
-+ssize_t qio_channel_flush(QIOChannel *ioc,
-+                          Error **errp);
- 
- /**
-  * qio_channel_get_peercred:
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3053b35ad8..cb6a82324d 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -71,8 +71,8 @@ qio_channel_socket_new(void)
-     sioc->fd = -1;
-     sioc->zero_copy_queued = 0;
-     sioc->zero_copy_sent = 0;
-+    sioc->zero_copy_fallback = 0;
-     sioc->blocking = false;
--    sioc->new_zero_copy_sent_success = false;
- 
-     ioc = QIO_CHANNEL(sioc);
-     qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-@@ -880,9 +880,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-         /* No errors, count successfully finished sendmsg()*/
-         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
- 
--        /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
--        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
--            sioc->new_zero_copy_sent_success = true;
-+        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-+            sioc->zero_copy_fallback++;
-         }
-     }
- 
-@@ -900,12 +899,7 @@ static int qio_channel_socket_flush(QIOChannel *ioc,
-         return ret;
-     }
- 
--    if (sioc->new_zero_copy_sent_success) {
--        sioc->new_zero_copy_sent_success = false;
--        return 0;
--    }
--
--    return 1;
-+    return sioc->zero_copy_fallback;
- }
- 
- #endif /* QEMU_MSG_ZEROCOPY */
-diff --git a/io/channel.c b/io/channel.c
-index cc02d997a4..5e7c3a8968 100644
---- a/io/channel.c
-+++ b/io/channel.c
-@@ -572,8 +572,7 @@ off_t qio_channel_io_seek(QIOChannel *ioc,
-     return klass->io_seek(ioc, offset, whence, errp);
- }
- 
--int qio_channel_flush(QIOChannel *ioc,
--                                Error **errp)
-+ssize_t qio_channel_flush(QIOChannel *ioc, Error **errp)
- {
-     QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
- 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index ad6261688f..d0a4213f8d 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -593,7 +593,7 @@ void multifd_send_shutdown(void)
- 
- static int multifd_zero_copy_flush(QIOChannel *c)
- {
--    int ret;
-+    ssize_t ret;
-     Error *err = NULL;
- 
-     ret = qio_channel_flush(c, &err);
-@@ -601,8 +601,10 @@ static int multifd_zero_copy_flush(QIOChannel *c)
-         error_report_err(err);
-         return -1;
-     }
--    if (ret == 1) {
--        qatomic_add(&mig_stats.dirty_sync_missed_zero_copy, 1);
-+    if (mig_stats.dirty_sync_missed_zero_copy != (uint64_t)ret) {
-+        /* Update statistics if more fallback detected */
-+        qatomic_set(&mig_stats.dirty_sync_missed_zero_copy,
-+                    (uint64_t)ret);
-     }
- 
-     return ret;
-
--- 
-Peter Xu
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
