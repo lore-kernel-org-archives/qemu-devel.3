@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7423FCB61E
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150E0FCB61C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXsB-0000DT-89; Fri, 06 Mar 2026 11:17:55 -0500
+	id 1vyXqA-0004EU-9T; Fri, 06 Mar 2026 11:15:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vyXrw-0007OQ-C1
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:42 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vyXq3-0004BE-SJ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:15:43 -0500
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vyXru-0007kf-AM
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:40 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48375f10628so62476635e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vyXq0-00078B-4X
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:15:43 -0500
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-5069df1d711so80350751cf.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:15:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772813856; x=1773418656; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rFrNo7xt4cWsD82/Y1vv1GAovu90HiLaptxTyNhWut8=;
- b=xjhH6QY9jrEXCaQHUNhsyHO4PWaffxYDeQagALEseE5Um7alA9OlYXrB64IWF6eBjM
- wr1MxQmaZNWElC6aeYowqPf+MWUdMPjGQPTpnOvqNoYU+IYjkXBSugnmti+7Q1op0rra
- C8R7PU84fqqGv+D/d9o7dr3yngwF5cBHOOVjpff9RFcr/7Ic7dTqq+Jqz3g8mua3ePJy
- nZN5vys9ZDULLTtX+lURP+IPZ4GG8Ipib6dK51Du8ipBeiyugYcxiFFnAfu38/XGNL89
- BV1Mj9LD1mG930onC+CVlUcTGQ+rJIFwIIyDpNXAcHJLtr9eH8ifIPuMrJXxD5SMp16j
- VcXg==
+ d=gourry.net; s=google; t=1772813739; x=1773418539; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=GbmWTzpazKoJULiA6CTXvYX+uhQm31hgupo0LDSYz2g=;
+ b=dzI1uoFWecAN+8P1ZsbOmvDur0Agj29O6Uiji28DFLWzIoQAyflHAIfcqRN4f9KlDG
+ bqd6y5T0aUBN8btnMESETg7rdKBjcJIulnq06lkcHB2tQjk4Y6qTe2GT73o9CUBzO5Dj
+ ZQDKjcGTXL9Aw0myAbtlGXGL+Qt7Pif7ZPynCr5uvO8Z1jxXEXqqZcknCqMyo++aXNCE
+ lG9KR+FRpkM6UdtVb4jWNVn8W8opsC4PQ7hZ39GGiz4ZJI6yneF85dEdEdawEJqr5M1S
+ vdS75o7UD6boJEVqgPLw2oklI67odowMr6xeVUYjbI6mTpmyw2i2qiNtfsduxaS1Y8ZB
+ YIxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772813856; x=1773418656;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rFrNo7xt4cWsD82/Y1vv1GAovu90HiLaptxTyNhWut8=;
- b=kbJI/AZMvQC17dmpKkKwqr1kMUmS6OEueutJQJYEWNV0GItPC8X6zve+3f5l7uGafT
- iWLMGVZVgwTc2wqkXedeuhB4j6i7mx+TsFQb8x/bnpDXAmHfsMsN5LorR19GmsJPrmWj
- MrtBXQhRBYM9Hb7YBCVn+3p0E19V337xqWuaaYBP6KKBAtGGTYP0KrSHuSlO6f87nS8k
- VD2cVu+OAgGztsaX6kiYxWSqMondkLbbyHCYnKx55GOY7fIzEWEgmRRzgNhteEX/c5Ok
- m0GnQ0qi7z64RXk/7nNWdk5a3eGqs39QCq0vJv17yMkSOuQpEmdl0AybGv3iLPFc+ybh
- 7aOg==
-X-Gm-Message-State: AOJu0YwcK/CsLnPoGtBoJI3beSmZqczrCwDTCdlHLaVeJVwpukudoo/w
- ylfF0iVO5pVzRA7RKGu/Ipo5rB0QGTN3E6KzYQxphEIepIFaoccSIYHE381PS1d+iQk=
-X-Gm-Gg: ATEYQzzQE0j85NuHEMu89sji4hXrPshkxdBc+h031CRMs6rUTuhgVtWr68ixsH15wGs
- 3HIN4krRm/kXc9hnKrLmGgFgsJqnvDj42pfgXz4Qn/Up1LUf5fmLMYLJiFRhy0Fv18XWh2m4C8h
- McCiilvIjf32OPRhjQDAx5isjOJkoCO4yfkmGz0f3+XbPdmJaHbE26FNESKJ9Gr2QkXAtVOOW0x
- 8JiZlDicY9pAwsLJ4nHIW71Sf8cxNaZawMwd4UqxLW2NGRpJ3tXojDPinBuyzp0/IxTlBbXAvVF
- A5mKQk5E1f6sCS4Ge6y7FbTxH1b+DTU934BA43vyU5emryL306aB3uEOV3e9pm9iqgGVPdE3Kob
- Pu4FwhZ1T58JACdgBx3sDCUt0PVFbJVvaslZFlU7Z44O1gDPME2P8OcmkC2EdnS2WoITQwDumXZ
- HRiWPq+Qe5B/AOzTfjM3MkRyc=
-X-Received: by 2002:a05:600c:45c6:b0:480:3a71:92b2 with SMTP id
- 5b1f17b1804b1-48526979652mr41566045e9.26.1772813855827; 
- Fri, 06 Mar 2026 08:17:35 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fae00absm121465195e9.4.2026.03.06.08.17.31
+ d=1e100.net; s=20230601; t=1772813739; x=1773418539;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GbmWTzpazKoJULiA6CTXvYX+uhQm31hgupo0LDSYz2g=;
+ b=OK5MT0Zllwy9QJavcOKPhSBsbpOzo2QpsT67aX0WruvIVtDGX7bJBNDQU3H2pC6+vZ
+ cX8FT74gspHI32FUcesQ1FbhyC/0Ehn34trUTzQ5brm6kZ6oC3fk8Zc6KeQm+CxXjMjP
+ 11rYl3ug69kq8UwFsW83PDiHsk7qihiizkjE5c5ZRmrbM12OQAiGZFuwaeeXjygtvqII
+ 93vW1b10tP373g/RP3pmNgZBSjqHcXxKntNtstAfvhe/pVVLW8FVrpblbEb+HRpGb6Vb
+ UiTStiyZQhIR8CB/ekI17sOvKMVxNJdoHIXKu6eXu7qlPzB0A7OEjV5ArVJKrT6Tmsnc
+ tpnw==
+X-Gm-Message-State: AOJu0YxYhLsTKtyIL2IsxEBFjpLsf+LdnyTJSaW7Wp0PBOkdHS7oYW5Q
+ 8Kbmm7zsu2feY7zZb7o7FIphPpf6gffy7adTyoUsoUhlzCEmiRmw02Absi3zTnIHb3I=
+X-Gm-Gg: ATEYQzw86TlfYYCUEpAgb/GnifYBAN92EMqNzafXgavwWHCMAWOYic79ggo44dlkDRo
+ zXGsphw51RSI5pujchjstYQSHzs2mdzVGF1OS3tCMab+dh3IhAAaQjxSDwGUqQAbku60b9K3KZe
+ qOsaVWguA9OIt+kO6+ifUZJMuPsB5yLIA52WQwkkUFpmkSyqNLdP+DL82NEhQOpIFBVzm8Cw71q
+ w6RMnBqpbN8Uttm/GK90lUDGlL+mqvs6PY34/696BLkXwkmW2A1Uo71CxYG8S+3uF8czm7vniHT
+ oUag7/6Xvg75bZUnpVqlipcgHTe2DFDGUExwt1tw1nVYR6e1HAyt7FxtDpGqa+mgrhmBqvn7Cns
+ Glq7WDgHs/hqw/roFsPZHpHnqnOaNokyoc2ha0JBBHe1y0bGbTyO9l/XCzuhd5Zkg/7O+v6mDPx
+ qY7PMP7ja70jkuJs6LM0zrcnONDeFe7K6sg3j9nsORtcjIES0+Kiv5RLiDAXevViWRhMSupdCsx
+ sqgG0mRgLjKllDE2oO4
+X-Received: by 2002:ac8:5acc:0:b0:4eb:a6c9:e839 with SMTP id
+ d75a77b69052e-508f4960f26mr30743651cf.47.1772813737094; 
+ Fri, 06 Mar 2026 08:15:37 -0800 (PST)
+Received: from gourry-fedora-PF4VCD3F
+ (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-508f66b620dsm12901861cf.23.2026.03.06.08.15.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 08:17:33 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6CB69689D5;
- Fri, 06 Mar 2026 16:17:29 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 6/7] tests/functional: add the ability to send keys
-Date: Fri,  6 Mar 2026 16:17:27 +0000
-Message-ID: <20260306161728.2657486-7-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260306161728.2657486-1-alex.bennee@linaro.org>
-References: <20260306161728.2657486-1-alex.bennee@linaro.org>
+ Fri, 06 Mar 2026 08:15:36 -0800 (PST)
+Date: Fri, 6 Mar 2026 11:15:34 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: qemu-devel@nongnu.org, lizhijian@fujitsu.com, anisa.su887@gmail.com,
+ armbru@redhat.com, david@kernel.org, imammedo@redhat.com,
+ jonathan.cameron@huawei.com, linuxarm@huawei.com, mst@redhat.com,
+ nifan.cxl@gmail.com, peterx@redhat.com, philmd@linaro.org,
+ pbonzini@redhat.com, venkataravis@micron.com, xiaoguangrong.eric@gmail.com
+Subject: Re: [PATCH v7 1/3] hw/cxl: Use HPA in cxl_cfmws_find_device() rather
+ than offset in window.
+Message-ID: <aar9pq7_-kqcB6MC@gourry-fedora-PF4VCD3F>
+References: <20260306121151.883-1-alireza.sanaee@huawei.com>
+ <20260306121151.883-2-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260306121151.883-2-alireza.sanaee@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=gourry@gourry.net; helo=mail-qt1-x829.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,56 +104,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To navigate things like grub we need to send individual keys without
-trying to look for success messages.
+On Fri, Mar 06, 2026 at 12:11:49PM +0000, Alireza Sanaee wrote:
+> This function will shortly be used to help find if there is a route to a
+> device, serving an HPA, under a particular fixed memory window. Rather than
+> having that new use case subtract the base address in the caller, only to
+> add it again in cxl_cfmws_find_device(), push the responsibility for
+> calculating the HPA to the caller.
+> 
+> This also reduces the inconsistency in the meaning of the hwaddr addr
+> parameter between this function and the calls made within it that access
+> the HDM decoders that operating on HPA.
+> 
+> Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/functional/qemu_test/__init__.py |  3 ++-
- tests/functional/qemu_test/cmd.py      | 15 +++++++++++++++
- 2 files changed, 17 insertions(+), 1 deletion(-)
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Tested-by: Gregory Price <gourry@gourry.net>
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 03e5c73d39d..9ed8c6a4b53 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -10,7 +10,8 @@
- from .config import BUILD_DIR, dso_suffix
- from .cmd import is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
--    exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
-+    exec_command, exec_command_and_wait_for_pattern, get_qemu_img, \
-+    which, send_key
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
- from .linuxkernel import LinuxKernelTest
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index f544566245b..381e5162f02 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -142,6 +142,21 @@ def _console_interaction(test, success_message, failure_message,
- 
-     return out
- 
-+def send_key(test, key, delay=0.2, vm=None):
-+    """
-+    Send a single key to the console.
-+
-+    :key: key to send
-+    :delay: debounce delay to wait
-+    :vm: the vm to send to, defaults to test.vm
-+    """
-+    if vm is None:
-+        vm = test.vm
-+
-+    test.log.debug(f"Sending key: {key}")
-+    vm.console_socket.sendall(key.encode())
-+
-+
- def interrupt_interactive_console_until_pattern(test, success_message,
-                                                 failure_message=None,
-                                                 interrupt_string='\r',
--- 
-2.47.3
-
+> ---
+> Thanks to Li for the tag.
+> Change log:
+> v6->v7: No change.
+> 
+>  hw/cxl/cxl-host.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index f3479b1991..a94b893e99 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+> @@ -168,9 +168,6 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+>      bool target_found;
+>      PCIDevice *rp, *d;
+>  
+> -    /* Address is relative to memory region. Convert to HPA */
+> -    addr += fw->base;
+> -
+>      rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
+>      hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+>      if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
+> @@ -254,7 +251,7 @@ static MemTxResult cxl_read_cfmws(void *opaque, hwaddr addr, uint64_t *data,
+>      CXLFixedWindow *fw = opaque;
+>      PCIDevice *d;
+>  
+> -    d = cxl_cfmws_find_device(fw, addr);
+> +    d = cxl_cfmws_find_device(fw, addr + fw->base);
+>      if (d == NULL) {
+>          *data = 0;
+>          /* Reads to invalid address return poison */
+> @@ -271,7 +268,7 @@ static MemTxResult cxl_write_cfmws(void *opaque, hwaddr addr,
+>      CXLFixedWindow *fw = opaque;
+>      PCIDevice *d;
+>  
+> -    d = cxl_cfmws_find_device(fw, addr);
+> +    d = cxl_cfmws_find_device(fw, addr + fw->base);
+>      if (d == NULL) {
+>          /* Writes to invalid address are silent */
+>          return MEMTX_OK;
+> -- 
+> 2.43.0
+> 
 
