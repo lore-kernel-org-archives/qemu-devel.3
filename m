@@ -4,96 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39B1F01818
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7832CF01812
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyRbU-0008PB-2v; Fri, 06 Mar 2026 04:36:16 -0500
+	id 1vyRn2-0001OC-Lj; Fri, 06 Mar 2026 04:48:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vyRbR-0008Ox-JW
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:36:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vyRbP-0002a9-Op
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:36:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772789770;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:resent-to:
- resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
- bh=FMt6DAxebeFGsJ3SRnbPlEhI9MCrsNrLTfLV9WYCPyA=;
- b=NT4wxIbfZVA6U8q/qOB3Pr9it9J6deRsrMBOmSWQ4D9tm5e1Cw/1OVgloHj3MPb1RV9CUG
- k+XG59KkSF7CcjUgaXBeg/lvq/j0fjSWB8pW30hTHyz+mnCDxbBS3kOKnArLV4w6MDSrwU
- 1+kimTnm5MmyFs1WOqJ4HkV6IxBc7h0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-FKELRIajOFmHrCSOIVNqVQ-1; Fri,
- 06 Mar 2026 04:36:07 -0500
-X-MC-Unique: FKELRIajOFmHrCSOIVNqVQ-1
-X-Mimecast-MFC-AGG-ID: FKELRIajOFmHrCSOIVNqVQ_1772789766
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80E0A1800464; Fri,  6 Mar 2026 09:36:05 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 863C91956095; Fri,  6 Mar 2026 09:36:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1BF4D21E6A04; Fri, 06 Mar 2026 10:36:02 +0100 (CET)
-Resent-To: balaton@eik.bme.hu, eduardo@habkost.net, zhao1.liu@intel.com,
- zide.chen@intel.com, peter.maydell@linaro.org, philmd@linaro.org,
- pierrick.bouvier@linaro.org, richard.henderson@linaro.org,
- dapeng1.mi@linux.intel.com, devel@lists.libvirt.org,
- qemu-devel@nongnu.org, mark.caveayland@nutanix.com
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Fri, 06 Mar 2026 10:36:01 +0100
-Resent-Message-ID: <87qzpxi9ku.fsf@pond.sub.org>
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Thomas Huth <thuth@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  BALATON Zoltan <balaton@eik.bme.hu>,  Mark Cave-Ayland
- <mark.caveayland@nutanix.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Zide Chen <zide.chen@intel.com>,  Dapeng
- Mi <dapeng1.mi@linux.intel.com>,  qemu-devel@nongnu.org,
- devel@lists.libvirt.org
-Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev properties
- accept flags
-In-Reply-To: <aYy1R-JQjZ-Y38Am@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 11 Feb 2026 16:58:47 +0000")
-References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-15-zhao1.liu@intel.com>
- <aYsAuFNQQvwYiLPI@redhat.com> <aYwv/mcUBXy9kUYZ@intel.com>
- <aYy1R-JQjZ-Y38Am@redhat.com>
-Date: Fri, 06 Mar 2026 10:30:04 +0100
-Message-ID: <877brpjof7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyRn1-0001Nl-Nf
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:48:11 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyRmz-0004dZ-Ob
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:48:11 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64ca09f2170so9456811d50.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 01:48:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772790488; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bZJxc1LaD3I2JmcPPmC3hMFdI/SI5nldjAISrwt75Uah0WS9pX+dhA0E3eALyzbJXC
+ k3d6jOY66EeOSySxtvHSiG2K3taq4vk0Gd6p01CowD9+UYpxe3l3rDBtODSRloCY9nrO
+ jTUrJqb/S92tGYYtlEM1z8zQMpX00DSF2pqwEgUvy6wNNHtdesEQj/jL3x8lNLIHEm9N
+ NTll9y1vzmerpvq+rmlMgYjP25oyWcmmWADodjGAFjP5oH0PT5bOCDRrmBGx6H8Uq4cH
+ EJGn9Xj7bJSEq4CbdAhTf3JGMkulPlqFtxdkeOg5qAtBFlcr57Aau0UA+IHFRmIeMba7
+ CcYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1aqSBlqDr1uj9MQOZACHT1mU2eY2ox33fOiMTA41tp4=;
+ fh=BAyh76Dt9lJjY3uGbG9gye4E4bNa4dvV51FFfKIqCkc=;
+ b=X9foBXCUtPWoQVLaMJstL/U8RlhZZEgsK8I6PBHmNWQoP0PxNIaIFJMvY73i9Hh3B3
+ 7npU50GKxAVLisjPEjiqUcGZJd11G9SkpEfcwprPMs7IOS9017JJIUT1B02cfhlx6mh3
+ WDJtJ+vOzlAo7UUTDy2cIAtbVdH9ZxM9I2jJZWjscN0+mHGYOWI9zY3+B4/RgV5Gfk7Y
+ bAS4nSzWjsHcIU0LsJZbv4HhB9lb9H3ia+EiIf38Rn0oncoGwGYMzO17gAZqgJBnXPRq
+ +0d3IbREt0UJkF7n+6Kuz+V7B8Ga1h9/djrvOkYmYCL3hJdn3RAlptuqR7iXaKjV3jtu
+ g7yQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772790488; x=1773395288; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1aqSBlqDr1uj9MQOZACHT1mU2eY2ox33fOiMTA41tp4=;
+ b=TJVsUefQiCNVqkDEO2IqDjRZeVcRsL5IO0L1vLjOSa/SgHiYdgRVlGfsy3AtToYmL+
+ fcSZo4mbNfT1/Cdpxiw8jYPgeOibLXShDB6QnpYTlkoB6eU+Az2wMs08orrordJKjyjd
+ eMV0OtDNkVxdAJ81FYMUYZph3WYHjM7+EnYJvWzRHcTtRG4SsWuhXvKYIvXg3rc2ceTo
+ wNJEP/Y8A5BldvRODTTUqDvDIh8XsZ0F4CWIpjwyhFh9WyhWftEdZMetvxciyjEr6kVr
+ VFGrcSOYDy53ypAIpmqbmPInlqusdXFnWbvy05Cw6O4K31y6aY3V5Uk0K1nd694iswCP
+ upHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772790488; x=1773395288;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1aqSBlqDr1uj9MQOZACHT1mU2eY2ox33fOiMTA41tp4=;
+ b=xPkLogAmJO9oNzK2tFat0WTi+pKQbtF1S8U5RrgbXsjoAo/SmjZGlzf4Q3KIiCte0B
+ NKWXCvojAjt9TWqOD5GCiFhZkL/Czk+Ciyg1Nhk1r3QFj5lD+1SG80tKK+rirdfahPVl
+ S2uxIp3OiT/GLI0yQIereMf8o9LaHleRC1Wy8GFu03YAGklEdCBXkDjk4q9zKtLGotB5
+ T6LF+u71yiVWyyhc2KOxSToUMLVY4g7TuiqpCeCaI8+RwVHyE/2FdyzzjTW0elX9MyFp
+ DM9UhnW9iz6JPzEkqU9qX98RYR/g3dkUK0YDb2znZvTf1zcZxAiXScvVLERy7OClOAbG
+ i7fQ==
+X-Gm-Message-State: AOJu0YwX6o3EymE9sTzpNZ/cDz5dUX2zk1A7KdUqXR1bDRRp2sISzaKW
+ 4XMgfQt7U+rShEL9VQJ8Asbegml+KGhZC5nffwUE7AitFH1aZ1/DpXOhVpJIdj3g1AAwSP3a0dG
+ x8ycQ94GLYJe5VzTsx/QQxl4Zd4t8QtDvlr1hT5MTSQ==
+X-Gm-Gg: ATEYQzyQGW69UEhmsX+zLJNSB+hGL0m5XOdFeGaH/wjtRFHr82LqNYePqJ1+7iypbEP
+ aB00owa0uD+gHcc1qs6FJObRIBgo2tP9s77IRH51JT7qdKByn0IuGO6IQ0uKUZkRlC1zgUxW/Y8
+ FZHmlDc+K+YKEAAJ0QXidn0IrDE+Cu1/kHGQQbKTvA0xHFqIH94DNRSwajL3iyJQvw2sMVtg7zt
+ cGyXiwEvbceitN9oDhbtJrV52r7ohiajBUAFu421CN73wlMPFleGqziiS8DhZsht3FZ4swT7SVp
+ QihD3QYKdB8NfMYF7HM6bum/lmSZoZe0Z2AfKhosGUOzj6tzuk7PykbYF4DbsLHU2yU=
+X-Received: by 2002:a05:690e:1286:b0:64a:d541:bc3d with SMTP id
+ 956f58d0204a3-64d141271f3mr1292041d50.25.1772790488328; Fri, 06 Mar 2026
+ 01:48:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260303-sme2-hvf-v6-0-b473702d8287@linaro.org>
+ <20260303-sme2-hvf-v6-1-b473702d8287@linaro.org>
+ <CAFEAcA8zTkc4pyHQKoDkTMhGPLQmxBaJS3bZiGRrPgux3rDLzw@mail.gmail.com>
+ <CAAjaMXbXdrW9N1xLMPxL9OmjLqti6A3rqAmYipu6OkdBY8JPNQ@mail.gmail.com>
+In-Reply-To: <CAAjaMXbXdrW9N1xLMPxL9OmjLqti6A3rqAmYipu6OkdBY8JPNQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Mar 2026 09:47:57 +0000
+X-Gm-Features: AaiRm52PxOMDhyEx1vSCa8UvcQppyNGVohLxbT9VnoVhUVsuDEV-s0Cny4-vA7Q
+Message-ID: <CAFEAcA_MuZH8d=Z=NfrNQ78k+Kv9mSx+=DLLt8AxZeEjccN8yw@mail.gmail.com>
+Subject: Re: [PATCH v6 1/2] hvf/arm: handle FEAT_SME2 migration
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,79 +121,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Wed, Feb 11, 2026 at 03:30:06PM +0800, Zhao Liu wrote:
->> On Tue, Feb 10, 2026 at 09:56:08AM +0000, Daniel P. Berrang=C3=A9 wrote:
->> > Date: Tue, 10 Feb 2026 09:56:08 +0000
->> > From: "Daniel P. Berrang=C3=A9" <berrange@redhat.com>
->> > Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev
->> >  properties accept flags
->> >=20
->> > On Tue, Feb 10, 2026 at 11:23:41AM +0800, Zhao Liu wrote:
->> > > Update qdev property interfaces (qdev_property_add_static() and
->> > > qdev_class_add_property()) to accept and pass 'ObjectPropertyFlags'.
->> > > This enables marking qdev properties with flags such as DEPRECATED or
->> > > INTERNAL.
->> > >=20
->> > > To facilitate this at the definition level, extend the boolean and
->> > > uint8_t property macros (as the examples) to accept variable argumen=
-ts
->> > > (VA_ARGS). This allows callers to optionally specify flags in the
->> > > property definition.
->> > >=20
->> > > Example:
->> > >=20
->> > > DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_=
-DEF,
->> > >                   .flags =3D OBJECT_PROPERTY_DEPRECATED),
->> >=20
->> > In other places where we track deprecation in QEMU, we have not used
->> > a boolean flag. Instead we have used a "const char *deprecation_note"
->> > internally, which lets us provide a user facing message, to be printed
->> > out in the warn_report, informing them what to do instead (either the
->> > feature is entirely removed, or there is a better alternative). IMHO
->> > we should be following the same pattern for properties, as it is much
->> > more user friendly than just printing a totally generic message
->> > "XXXX is deprecated, stop using it"=20
-
-Not entirely true.
-
-QAPI/QMP uses special feature flag @deprecated, i.e. a boolean.
-
-We cannot emit a "user facing message": QMP cannot transport warnings.
-We could at best log one, in the hope that the user finds it.  But we
-don't.
-
-Instead the deprecation note is in the documentation.
-
-The deprecation flag is visible in QAPI/QMP introspection.  Management
-application developers need this; see Peter Krempa's reply.
-
-QEMU can be configured to reject input that makes use of deprecated
-stuff, and to hide deprecated stuff in output.  This is intended for
-"testing the future".
-
->> Yes, rich deprecation hint is better. I think this still depends on
->> USER_SET - distinguish internal/external or not :-(.
->>=20
->> Since when we mark a property as deprecated, its code remains in the
->> code tree, and internal calls should not trigger warnings. Deprecation
->> hints are intended to reminder external users.
+On Fri, 6 Mar 2026 at 09:31, Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
 >
-> This depends on where you put the deprecation check. IIUC, all the user
-> facing codepaths for setting properties end up calling through
-> object_set_properties_from_qdict, but internal codepaths don't use that.
-
-This may well be true (I didn't check), but how can we ensure it remains
-true?
-
-> That method can check & emit the deprecation warnings, without us needing
-> any explicit tracking of "user set" - the use context is derived from the
-> codepath
+> On Fri, Mar 6, 2026 at 11:19=E2=80=AFAM Peter Maydell <peter.maydell@lina=
+ro.org> wrote:
+> > Mohamed points out that this breaks the build when compiling
+> > with GCC (which I hadn't noticed because I happen to do my testing
+> > of target-arm with clang on Linux these days):
 >
->
-> With regards,
-> Daniel
+> Oops. same here, I was using clang.
 
+> > typedef uint8_t hv_sme_zt0_uchar64_t;
+> >
+> > Could somebody confirm that that works OK on the relevant macos
+> > configurations ?
+>
+> I think this works. Do you want me to send a new revision?
+
+If you can test it for the macos configs I can just make the change
+locally. I have:
+
++/*
++ * The system version of this type declares it with
++ *    __attribute__((ext_vector_type(64)))
++ * However, that is clang specific and not supported by GCC.
++ * Since these headers are only here for the case where the system
++ * headers do not provide these types (including both older macos
++ * and non-macos hosts), we don't need to make the type match
++ * exactly, so we declare it as a plain uint8_t.
++ */
++typedef uint8_t hv_sme_zt0_uchar64_t;
+
+While you're retesting, could you also look at / test patches
+17 and 18 in Mohamed's series
+https://lore.kernel.org/qemu-devel/20260306083113.74177-18-mohamed@unpredic=
+table.fr/T/#m2d1e3dfbfa5aecd41af6c0aa9e3b574a72c6f04d
+
+?
+
+They look to me like bugfixes that we should be squashing/including
+in the "enable SME2 for hvf" handling.
+
+thanks
+-- PMM
 
