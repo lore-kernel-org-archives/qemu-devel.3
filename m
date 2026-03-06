@@ -4,135 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50C5F513E9
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 03:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204AEF513ED
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 03:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyLSe-0003Eo-F0; Thu, 05 Mar 2026 22:02:44 -0500
+	id 1vyLZH-0005Hh-Dw; Thu, 05 Mar 2026 22:09:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vyLSc-0003EY-1r
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 22:02:42 -0500
-Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
- ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vyLZG-0005HY-Na
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 22:09:34 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vyLSa-0000SX-G7
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 22:02:41 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KOOvu5KK4rT79/ZyAjCVUh8tnXzW9xR0pVj6/Pt4RXInsoGX3r8dEPgd043bu7Tgsj7xVA5rkQckMYU4wZV6FQhju7RYv0CdF9OFKW+Yj2vF1LqT0aSjBbZXV4XJevpMd7yQDs6AXnNVfFqppQqCUOzBYjAa3Tr/DaEywb7eKk5bmdqFa/TJmZL9f9hIdQhPYw3IreFvbd6VJ7qMa3QE4R0uJXonV/VjZBMde6UbXWdX6E06f/AU7ct/AKzoBwI6d3h/MxF3DalOLV0+0vhF70ib/H5ruguXjvd6+D3E3Qy9WVFiytBQzSpdnx0j8OUhK1oO0lCXBpiOEAi9vD2KIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V12xKeUocB04UUiXOBgNCaKo3rqQfq1Xn6uaywjWB6U=;
- b=qeJ+L6oCw1lgu724F/w9vi7POGHEEfR1+J61tXFShNYeTRIEc76TN2uo+7zuOGzhhnpuW/sQ6egmw9hMzu7gpZtzyW0uINmxpz8x5eGiuE0MWt6+SUsFU0LJyaFW2Ubc2PCDn0Y1+Iv2HOXhIMzEntO4fIVRBxo9jqslk00b3tjKXOHclEZ9rFCe/BE7aBW3iDbYnDtgLVnKXOapTm6E6b9dR67zGbiRSu39mU80B+Awalnjv+CRqXtsxiJFd8yrmHxSY9egYXMc7NnKeOXSn6JggRLMgwIh+HApv1ROk4zyz7hWp4eu+OR7MB7JAgwpKtGNXrcjhRK3vd7jsw/T0A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V12xKeUocB04UUiXOBgNCaKo3rqQfq1Xn6uaywjWB6U=;
- b=b3UxTg5ucn/nYZHVRIQolX69Ijygvusm0/NrGVq01K6RT+enq3E0VRvv76nQXwf/58PIbG/7cc0gMeFDvA626rZ7J7tD/RflQD3KIQb9c48mLtwXa2uaYTcFkXiyuxabR1fNssmgN0Gob0EUjQu5ZXRC2xeIWtzLXOpnp43JFl03dk/ynuwcweOilfZiFlW7NwSDTihFJ6UjQM77bSTVlmaNHxwMjg8ExqrRYzcetzODZRIlFSql6YvHlWg1u27FTKfOiPAlL68wXBrqFsFD6wYkwSvipteYfy9mvCXeiCtsssxmQCLeDh71uDf+Rlhqjl54EULg3ubveAxQIv++Eg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by PH0PR18MB3829.namprd18.prod.outlook.com (2603:10b6:510:20::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.19; Fri, 6 Mar
- 2026 03:02:36 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.20.9678.017; Fri, 6 Mar 2026
- 03:02:36 +0000
-Message-ID: <8bf90b8c-7a8e-4b21-ab77-f3c8a8506ebc@axiado.com>
-Date: Fri, 6 Mar 2026 11:02:32 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/1] Add new model for Cadence GPIO controller
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20260305103400.1574217-1-kchiu@axiado.com>
- <CAFEAcA9hcr7sDHvv-o_YRkaBJLTt99Uh=DgLtTHw_=jA6A4j5w@mail.gmail.com>
- <460c0ea9-005c-4970-9cee-bffb7e9c0c11@axiado.com>
- <CAFEAcA_w6DDdBRnpYDNDPUOO5Quf_7J6ty8XNVCe=8N7KAy5Sg@mail.gmail.com>
-Content-Language: en-US
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <CAFEAcA_w6DDdBRnpYDNDPUOO5Quf_7J6ty8XNVCe=8N7KAy5Sg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TPYP295CA0014.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:7d0:9::20) To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1vyLZE-0001Hd-Mm
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 22:09:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1772766571; x=1804302571;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=LYj3xVqXBi2J7Efjkcv9Cxc9JLd6L4uoKCTZQxPc7dU=;
+ b=YiQCOrsg8hiUKcTrNyOYxofvJgBn/ZzCnXf7DlotzwgaJxBpgdmne6y6
+ uJdBFs6Sxn5LvEnjjICo7iCWtEn5neUheKqEZylAbpIrGbhoWsdWZ7xv1
+ EznQSOcFoEug84ZCbgZv0IV/asjevybhJ1X5JqIj589vN7jYexLQcYOn6
+ LqroYFro7BZHcX0tv8c9Imj2enck99g/6ceXlqnP4YHDNyOP3XsCXc04r
+ 8QmaRyYSKOfLxWWrPoUHYX7f3dAx+XJyjWLwtWI572JKyWaZeW/dL4n+t
+ aoYpMoHxAvkY03yJAdrarHcz4laxA37sBIKQyP8/HH+86vA2kRBPDUAVV w==;
+X-CSE-ConnectionGUID: /kBaIq8yTz+i9CvZRxONrQ==
+X-CSE-MsgGUID: UZZxHOccS7y9+dSPCNb7fg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11720"; a="84955009"
+X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; d="scan'208";a="84955009"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Mar 2026 19:09:27 -0800
+X-CSE-ConnectionGUID: wZHDxNX4SF6XZRTor3gUtg==
+X-CSE-MsgGUID: WB5o8Q1mTZ6+FiAh9AjHlA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; d="scan'208";a="219016666"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.241.147])
+ ([10.124.241.147])
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Mar 2026 19:09:25 -0800
+Message-ID: <198db4f2-4aec-4930-97bf-ed0c3418083e@linux.intel.com>
+Date: Fri, 6 Mar 2026 11:09:23 +0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|PH0PR18MB3829:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7c4a0ab0-9032-4be1-79d5-08de7b2cd1b8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: wAOPpJXjUjUQmnXI1b1lxTId3UcJQ7REr6wOIpgu13lzikYn9PWsvv9TZeCcGp0vlrez1eE+oQ8Pu0g8FU+XPXKC7I9UZBgTJoeVnoVXPu6DYKhHme25vlF2ktK7XD91i8gXij6H8BS65XPnEcpEr4U3rasbzoxS6d9vg7c8LzEfouxSpd/HOiHdxnl9EGAGaMg8pGke5MienxRZt6K6zGGmQdXm5kpTvBegI6aTW8ZxE8A0ahMPqkdI3Kq94BFnwyyq5GJHlmAmc1lXIZ54wclmX8ZjEb156YMM1nbIjnM3f3GQhGsVBdtaqL3o3roieehJMEDFebauDVHama9wruOgyZY7LasHXmJs5/5Axy2Cw3hw1cN73OVjKlci9FZ/XdmyVJ6lK8ueX8QXU59MJr2SSE3QQepyp0yIp1N2Xh+leCB/HbQia5tt4jQ2bkJPDC/0ATpc6NH/w+a4Y12qBACLAZoAdSUO+FWeqzitnarsoG7rbRFpox0cmqjEYN6783xxUJaBJ4HAvwBZPxKC2g6QIvVAoYo1UGcysDUO16PmGU9lGx+LlAfi7Ag+neKoZzVTF+LcrphWKYi8sH3kDMj4/hMbJREZFMF6FnDPSb7mrqKX9TVluzx14S182FCwBHwWDOUoDG7YaEzVfY8VeXzXd7EoA3uWdS8oW4egkmzENHtyr5X8ueXg6sQoLDE+OaIzG7JQe7suahavFtRjzRG9MAgvA6S74zSxQc+4CaQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q2Q5K2p2SW02YnYwbVFGVXJtYisxalJPWWZmSWFSOEFpdHhmRlZ6czJJczlS?=
- =?utf-8?B?SERwVTFzUy92UWNic3V1OUxOZld6ekhWcjFjQkg1aEhLdDBnSWZYVVdFd1Az?=
- =?utf-8?B?cERNM3YwL1Z6emVpaTd5Y0hjQXBVbURoQ1hQMDR2Vks0YUl5TExaeU5HK1ZH?=
- =?utf-8?B?RUVsanQvV252NE5wYkQvOVZVVGNlSkhlVUxhNzJBR2d0WVBod3lzYTB3UTY1?=
- =?utf-8?B?UmF0Y0ZHbnd6dklIanpGNnRPT3FYc1V6dHBmNFdkSUpEb1gzN2h0TXVVVndM?=
- =?utf-8?B?U0szOVlCOWg1VEt3WnlyL2N0RDhEeHI5R1BFOXNWV3BBcGdhUmRDa2duVUVQ?=
- =?utf-8?B?SC9GcGp4d0lJamZ1blF0cGtlbW1RSTF2UCtBQnp3ZklmLzRrVDloeDBMZ0Yr?=
- =?utf-8?B?bWM1ZlRWN09lazVwOE9EdW1jYzVZWFBNbFNpNDczQzQrakUrRFlQSHFRaDR5?=
- =?utf-8?B?bGQ3WnI1bHVaZFlpWlM3UmZjU3ByRWdmR282UkRYd0JjR2N0dmxoRGxRNjlJ?=
- =?utf-8?B?dUdZUjZWK284ajBDZjlxN3FGb3E5VEFHTVZ5cDJNYnlIOE9sWCtIVzU2T09u?=
- =?utf-8?B?TzRJMmg4eXNMWVc3VHZsQ25WOWNqcmtENVdMa1lUbWFxWE9PRzhXYVkzbHRl?=
- =?utf-8?B?N1hERnhtUGd3a1JINCtIWDg4Y2plb2NVTUV5OHJLS1RnV0xzb1h1QUVGbUlx?=
- =?utf-8?B?bHo0dWdIanJ0ZWt3MWc5WU1reW1NaGdUN3BCLzZISXYxZ0xidTJSK3piVzJX?=
- =?utf-8?B?d1JXYmtHelo1Q0krZWRRenEwR3JmcEg0eUZuUmgyb0RxN3Vqdllja00wWDFp?=
- =?utf-8?B?WjlwOTB4MC9DWTZIQ0EvZlA0VHBzZWF6S1FJZ1AzZXJ3L0JWbUx0Q3RnWjBu?=
- =?utf-8?B?KzdhbHpmTTMxUC9pRkxxUHA0Uy9xSFVIL0NKYkRzbHVVdnQ3aHY4a1F2WW5W?=
- =?utf-8?B?cnRHZ3Yya0ZOUm82UjQzUGI5VzZra01yL3hYMmpEQXkyMXdudEhOMTJqbEFJ?=
- =?utf-8?B?QW0vYnFuUXQ4NURVckZaYkFMeEtMbkVrajE3WjEwZGRVRzdvMlAvZGdSWHIw?=
- =?utf-8?B?N2VKQ0phSGZ0Rjg4TDlPQkpRU0k0ZFY0eHd3c0VWU0hvQ3p6TnA3a0F6Ky9y?=
- =?utf-8?B?ZGdKck9vN1JIMmlRMjNLVDB6QW1LV21sVnRHd2lqUTZlbjgxK2taSGtIY2Ns?=
- =?utf-8?B?TW9FYlJpWjE2V2R6OGpIdVhwVDcxYjFsNnBLTU9SZWtXSGYvZ1p5ZTJoNmZq?=
- =?utf-8?B?eDhQd05Ca2h2SXBjRW8xOUZMandFeUhkYkdabmF3WGhBS21zQzFqTnFvQVRq?=
- =?utf-8?B?SlpPUmFTMWVmcU82ZWtzMXBGOXJrSFRMWWtXNUhLRWc0YjBxc0tLSWhGWklI?=
- =?utf-8?B?dlc3a1JtcmtoWi9RMkNid3ZCaXNKeG9Pc0tnZkFmLytmYUFFLzBuL0diVDNi?=
- =?utf-8?B?dVp3Si83cWpqclNHVUZPekNtcWkwb2hZQzNrMC9ocURWck5TUGpEcnRJaEtH?=
- =?utf-8?B?QzZLSGE1NldSSFIvN2tDWHQ1VmUzVlVCV1hiVDJTL05TYkptUjEyYm1OQm93?=
- =?utf-8?B?MjBTVW9RVU9YNGVPRkJuRzhTSnZycVRsZC9GOUhDSmJwemQ4MVh4ZVpra1FV?=
- =?utf-8?B?cFVIQlJlQlBVb1Z2VEU4R05JNTNDeVF6RHRxTGZuQ2ZlUXRFaG1DN0dFa052?=
- =?utf-8?B?WmxMaGpEemQ5WDM1SlhZTFg5M0pZRUZOQ3FxZUp0aXFSd282VGFZTWJVTUZ6?=
- =?utf-8?B?MHpZKzBsKzcrZ1BnY0RtV0U4UVhUcVJTNmR4dDYyRVI5ajFrcXJ6a3plZVA3?=
- =?utf-8?B?MXpXWjlPSGFwN1FzRFJtWDBlOSsyU2xTVnFreFpSUkUyZjN3akpoVDVCVERx?=
- =?utf-8?B?M09oTU5XYmRSUHhmTSs3b1c0NFAzWERXVmFCQ1N0MUdEcW5UV0wzQXNUUE01?=
- =?utf-8?B?c3MreXZMYm1HNGxDMVlORHVQWGlSa0FwMzliamZ5Ry8zQkVBMkVScXRSU1Fk?=
- =?utf-8?B?cFJmS3RkQ01xcW1DSWV6bXBMMXIxM0tMRkt4NFRnVUxPR0l0eUtWc09CS3d0?=
- =?utf-8?B?OVU1VFVIS2F4eXFnTkZrbmJ4dXEyZDdyM3BWS3ord3hXQ1NFZ2V4dmkvLzBF?=
- =?utf-8?B?cnE5ZThaRDJ5d1VFMDhRRjVrRDJPNi9Ld1hNQnloSGtKeXlmblg3Zmhsdkpj?=
- =?utf-8?B?aGlZUG1ZekREZDNXRTZMWjNvclgzOUlCK3hsWWE5R0dqNUxKcGVWNzRlaTlo?=
- =?utf-8?B?SXF1TDkva01lWFVFM3FUWThlOVdpVEZNdlNNRWI2TzlVbzJCcDBZOTlFTHYv?=
- =?utf-8?B?cUJXVEkwdndnZ0pnd2dxaDVUZE9LL2MwcmFCZk5pSlJ6Vy8wS1BMQT09?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7c4a0ab0-9032-4be1-79d5-08de7b2cd1b8
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 03:02:36.3332 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: sAi9AKI6gvrp/RaRizL9XMIQITGNKfrp4VFMC8ZSl9MqFHEyxzyWS+7H1Twvg5npE2R77sOWHqL0dnKxXNbxXw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR18MB3829
-Received-SPF: pass client-ip=2a01:111:f403:c107::9;
- envelope-from=kchiu@axiado.com;
- helo=PH7PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 06/13] target/i386: Increase MSR_BUF_SIZE and split
+ KVM_[GET/SET]_MSRS calls
+To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Sandipan Das <sandipan.das@amd.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>
+References: <20260304180713.360471-1-zide.chen@intel.com>
+ <20260304180713.360471-7-zide.chen@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20260304180713.360471-7-zide.chen@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.13;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,32 +89,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Understood.
+LGTM. Thanks.
 
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-I did not find any existing device trees in current upstream kernel 
-using Cadence GPIO except for our EVK
-So I would submit another patch to QEMU for our EVK machine then update 
-this patch
-
-B.R.
-Howard Chiu
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
+On 3/5/2026 2:07 AM, Zide Chen wrote:
+> Newer Intel server CPUs support a large number of PMU MSRs.  Currently,
+> QEMU allocates cpu->kvm_msr_buf as a single-page buffer, which is not
+> sufficient to hold all possible MSRs.
 >
+> Increase MSR_BUF_SIZE to 8192 bytes, providing space for up to 511 MSRs.
+> This is sufficient even for the theoretical worst case, such as
+> architectural LBR with a depth of 64.
 >
-> On Thu, 5 Mar 2026 at 11:22, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->> Hi
->>
->> Understood.
->> I verified this device model with our Axiado EVK machine which is still
->> under development
->> Does that mean I have to submit patch to add our EVK machine into QEMU
->> first then add this device to it?
-> Yes, that's generally the way we would prefer. Or if this
-> device is used in some existing board we already model
-> (and we just haven't implemented it there) then that would
-> be the other option.
+> KVM_[GET/SET]_MSRS is limited to 255 MSRs per call.  Raising this limit
+> to 511 would require changes in KVM and would introduce backward
+> compatibility issues.  Instead, split requests into multiple
+> KVM_[GET/SET]_MSRS calls when the number of MSRs exceeds the API limit.
 >
-> thanks
-> -- PMM
+> Signed-off-by: Zide Chen <zide.chen@intel.com>
+> ---
+> v3:
+> - Address Dapeng's comments.
+> ---
+>  target/i386/kvm/kvm.c | 110 +++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 92 insertions(+), 18 deletions(-)
+>
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 39a67c58ac22..4ba54151320f 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -97,9 +97,12 @@
+>  #define KVM_APIC_BUS_CYCLE_NS       1
+>  #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
+>  
+> -/* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
+> - * 255 kvm_msr_entry structs */
+> -#define MSR_BUF_SIZE 4096
+> +/* A 8192-byte buffer can hold the 8-byte kvm_msrs header, plus
+> + * 511 kvm_msr_entry structs */
+> +#define MSR_BUF_SIZE      8192
+> +
+> +/* Maximum number of MSRs in one single KVM_[GET/SET]_MSRS call. */
+> +#define KVM_MAX_IO_MSRS   255
+>  
+>  typedef bool QEMURDMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t *val);
+>  typedef bool QEMUWRMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t val);
+> @@ -4016,21 +4019,99 @@ static void kvm_msr_entry_add_perf(X86CPU *cpu, FeatureWordArray f)
+>      }
+>  }
+>  
+> -static int kvm_buf_set_msrs(X86CPU *cpu)
+> +static int __kvm_buf_set_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
+>  {
+> -    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, cpu->kvm_msr_buf);
+> +    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, msrs);
+>      if (ret < 0) {
+>          return ret;
+>      }
+>  
+> -    if (ret < cpu->kvm_msr_buf->nmsrs) {
+> -        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
+> +    if (ret < msrs->nmsrs) {
+> +        struct kvm_msr_entry *e = &msrs->entries[ret];
+>          error_report("error: failed to set MSR 0x%" PRIx32 " to 0x%" PRIx64,
+>                       (uint32_t)e->index, (uint64_t)e->data);
+>      }
+>  
+> -    assert(ret == cpu->kvm_msr_buf->nmsrs);
+> -    return 0;
+> +    assert(ret == msrs->nmsrs);
+> +    return ret;
+> +}
+> +
+> +static int __kvm_buf_get_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
+> +{
+> +    int ret;
+> +
+> +    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, msrs);
+> +    if (ret < 0) {
+> +        return ret;
+> +    }
+> +
+> +    if (ret < msrs->nmsrs) {
+> +        struct kvm_msr_entry *e = &msrs->entries[ret];
+> +        error_report("error: failed to get MSR 0x%" PRIx32,
+> +                     (uint32_t)e->index);
+> +    }
+> +
+> +    assert(ret == msrs->nmsrs);
+> +    return ret;
+> +}
+> +
+> +static int kvm_buf_set_or_get_msrs(X86CPU *cpu, bool is_write)
+> +{
+> +    struct kvm_msr_entry *entries = cpu->kvm_msr_buf->entries;
+> +    struct kvm_msrs *buf = NULL;
+> +    int current, remaining, ret = 0;
+> +    size_t buf_size;
+> +
+> +    buf_size = KVM_MAX_IO_MSRS * sizeof(struct kvm_msr_entry) +
+> +               sizeof(struct kvm_msrs);
+> +    buf = g_malloc(buf_size);
+> +
+> +    remaining = cpu->kvm_msr_buf->nmsrs;
+> +    current = 0;
+> +    while (remaining) {
+> +        size_t size;
+> +
+> +        memset(buf, 0, buf_size);
+> +
+> +        if (remaining > KVM_MAX_IO_MSRS) {
+> +            buf->nmsrs = KVM_MAX_IO_MSRS;
+> +        } else {
+> +            buf->nmsrs = remaining;
+> +        }
+> +
+> +        size = buf->nmsrs * sizeof(entries[0]);
+> +        memcpy(buf->entries, &entries[current], size);
+> +
+> +        if (is_write) {
+> +            ret = __kvm_buf_set_msrs(cpu, buf);
+> +        } else {
+> +            ret = __kvm_buf_get_msrs(cpu, buf);
+> +        }
+> +
+> +        if (ret < 0) {
+> +            goto out;
+> +        }
+> +
+> +        if (!is_write)
+> +            memcpy(&entries[current], buf->entries, size);
+> +
+> +        current += buf->nmsrs;
+> +        remaining -= buf->nmsrs;
+> +    }
+> +
+> +out:
+> +    g_free(buf);
+> +    return ret < 0 ? ret : cpu->kvm_msr_buf->nmsrs;
+> +}
+> +
+> +static inline int kvm_buf_set_msrs(X86CPU *cpu)
+> +{
+> +    return kvm_buf_set_or_get_msrs(cpu, true);
+> +}
+> +
+> +static inline int kvm_buf_get_msrs(X86CPU *cpu)
+> +{
+> +    return kvm_buf_set_or_get_msrs(cpu, false);
+>  }
+>  
+>  static void kvm_init_msrs(X86CPU *cpu)
+> @@ -4066,7 +4147,7 @@ static void kvm_init_msrs(X86CPU *cpu)
+>      if (has_msr_ucode_rev) {
+>          kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
+>      }
+> -    assert(kvm_buf_set_msrs(cpu) == 0);
+> +    kvm_buf_set_msrs(cpu);
+>  }
+>  
+>  static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+> @@ -4959,18 +5040,11 @@ static int kvm_get_msrs(X86CPU *cpu)
+>          }
+>      }
+>  
+> -    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
+> +    ret = kvm_buf_get_msrs(cpu);
+>      if (ret < 0) {
+>          return ret;
+>      }
+>  
+> -    if (ret < cpu->kvm_msr_buf->nmsrs) {
+> -        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
+> -        error_report("error: failed to get MSR 0x%" PRIx32,
+> -                     (uint32_t)e->index);
+> -    }
+> -
+> -    assert(ret == cpu->kvm_msr_buf->nmsrs);
+>      /*
+>       * MTRR masks: Each mask consists of 5 parts
+>       * a  10..0: must be zero
 
