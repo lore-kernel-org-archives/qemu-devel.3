@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021EEFCB61E
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56969FCB61C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXqP-0004Nd-2Y; Fri, 06 Mar 2026 11:16:05 -0500
+	id 1vyXs6-0008IE-43; Fri, 06 Mar 2026 11:17:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXqN-0004MJ-4E
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:16:03 -0500
-Received: from p-west3-cluster3-host7-snip4-5.eps.apple.com ([57.103.72.196]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXqL-0007Eg-Jt
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:16:02 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPS id
- 3CDE218007A0; Fri,  6 Mar 2026 16:15:59 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772813760; x=1775405760;
- bh=ijV/TFHDkMx/sDtjnbI4Tcf5/3qsWHHZ7tvtB+wJk+k=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=cSBN92suwee11dbvU1n1NykgNdpxvn90GB2XLHYes9IJMTbe+iU5yaI1AdbGpxNJZY/3T6rD7axywq6WSVf3t17CQkzpOU/wYv7RdOYPvgPjLthPjRB1DJdooRV+zxe8477F/UVKP1E+1aNK/oHsJry7Bc73R11IOuysbXZdkVv8wQiYC7lVbs12wNYnCAhwe0WFE/wpbvr89G8tTol+QL7+hTl1rRJ9AiUTbBFWB0hqx59qrZrX0vg59dZSYYItV/TqQM1sdFlVWnrbD0SGLPGfDU1w2jBbKawFIaKwxm55olRA/z3KcwB7zspfUpimi5Na46k0jUXPYs/cDnOodg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPSA id
- 7B80B180010E; Fri,  6 Mar 2026 16:15:56 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXru-0007Kn-OA
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:42 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXrq-0007ji-MB
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:38 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so108186735e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772813853; x=1773418653; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vllX98KGLiZLLrBT8HEqhhUqOqA+FrnDnUy3NTzv/l0=;
+ b=YeCXZtqFDHDCAaHNjRUbYeQYZK+0+Ea2oA7dmM/04Dp6aDZTVqCSvpJUnarfDlS4S6
+ 4rupG8FVo6aF+eC5gmQ6bPM8OiUa1Gn8Snc8e6dJVyhcHOxPV/kIMvy1dvrPhY7fGKqn
+ zY36HbsRIGjl166CXuvEDoLtHgRjDDM0TeUn4HyoqTKcKhIz/KKhGrKf7Z6XShFXCWc6
+ qk+6sTZR6WKHWAckJvppnmkMIgtmrstJnAVZUYW5GnHPClR5TcWo+CENXKiEe2qIhPGp
+ GndeS1eHJ8aKl/vgRLFfJbyR9kcN8Yo+VZTPFR39SYDpEtMgAw1F7xCva51wz/LGGcx0
+ S+Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772813853; x=1773418653;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vllX98KGLiZLLrBT8HEqhhUqOqA+FrnDnUy3NTzv/l0=;
+ b=rohEd8DJ9QGbRld/O9zIL55Gz4ERvWBLSKYtgAeSkeCfjhO3sE4G3Gfh/OUHm2fPcG
+ lNguQ+PT8Ax46I4Y94N0bKFkhpZhpN1IYuv/vAxkSIpZVcMpuMfZj0Eb1gToh8XodpQG
+ 7+LkwrKsDQBqaCGu6OagTZBXArRd47PMferD5ngcky5SO1BQPTF7HNbiyufmrVs3g8Mg
+ qPKVJvJgaVFdGR5uX2n1YkyJmTtl6d2A9mYzrGD0b+yBRcrueVpVM4dkm+tn7CFCX63V
+ A6MTcBpfNkWpGAqCmCo4+1gtC9GU4ZePSVdI5k7m4JVAc9CsMjzQBcfbFg/AoSIu2xdg
+ QZ1g==
+X-Gm-Message-State: AOJu0YycoAhYmiR6nIHvirwidUao4P1cV4Zemn0iT+Kw+Gyv7PZyzlkT
+ yS3mJNC1QITJfAmSqViRlTF9+lcZGahAo1Dg7Kgs7wO2nUEviTS5+4gy7pxGTwESNEw=
+X-Gm-Gg: ATEYQzwBoFJ0admuXhD4mCWKr5rzVADm2nmazwmijwmyT7gzha5RGvNxIT54g5/eVvn
+ YX6dFndKEutAR7MC04Vn5Xo09RYOiwsiiA7RZRmoiCss55u8SHieUzztj/THNoD13fAlrp4G6Zc
+ Btxjg/uxJduj7aVS7TwSEGZyXfEW0VUjwWjj7cM8vVKcf9quKMFxnp/xIeJHkio6TxOPhzS37eK
+ K2/BksDH9RTF6duaSiQRFzm8x7Nb2McOTML0nshHZOPRXVwWZWwRm0aVyRTxy56k549OGqIxKtB
+ jYYp6u2izuYqFWeK5ZVbSM3szqy5GWikept5p7vuVyLJO1ot/mjHzRyYIoICbV648Pffnzq5glP
+ CL6XKAfoGao4jzftrmZAL7ROzWKhm8cFzrISPKK2Lg8vRyKsZ7GKGvJyKYtmKea6ZYvDOjXBRQb
+ DnH445jtb+u1P+J6BdIqoRHIM=
+X-Received: by 2002:a05:600c:c491:b0:480:20f1:7aa6 with SMTP id
+ 5b1f17b1804b1-4852695880emr47085425e9.21.1772813853014; 
+ Fri, 06 Mar 2026 08:17:33 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851fad2812sm207962975e9.1.2026.03.06.08.17.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 08:17:30 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3D204689D3;
+ Fri, 06 Mar 2026 16:17:29 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v16 17/17] hvf: enable nested virtualisation support
-Date: Fri,  6 Mar 2026 17:15:09 +0100
-Message-ID: <20260306161509.79712-18-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260306161509.79712-1-mohamed@unpredictable.fr>
-References: <20260306161509.79712-1-mohamed@unpredictable.fr>
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 4/7] tests/functional: teach uncompress about zip files
+Date: Fri,  6 Mar 2026 16:17:25 +0000
+Message-ID: <20260306161728.2657486-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260306161728.2657486-1-alex.bennee@linaro.org>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: SHk51t-eAu_qDSYTmJ5Hyb6aw5lJIaHN
-X-Proofpoint-ORIG-GUID: SHk51t-eAu_qDSYTmJ5Hyb6aw5lJIaHN
-X-Authority-Info-Out: v=2.4 cv=c5+mgB9l c=1 sm=1 tr=0 ts=69aafdc0
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=5Chse3eIq3h0lgOaJ4gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE1NCBTYWx0ZWRfX1ssP9WRv0f+D
- 1rA+AqDN9L8oLBolHfWQHW+EPWJ/DayD+HKWXIzE0VOosIczDoFIBDGli/Qb/TmS4+tLxlbrEQn
- lhFFquuovOqYAipOoFgVm/7PGA8ZqtssR97plBh5wAHHEA6gBEOa47Pz8WvA8Qh3OI40lqQ08KL
- mamZhH4jEiaq3fmzWDTpEPlxB6YWdmgDzlrw2AEpDDiirYXkyoJi9GHMWhAivIqvaRXrgBxZV8k
- WHrp/bzA6Jw9J2CjuQUEtH54A2JMyKY7pjRbSvPqQOtMeRjVpP4Y2fdmBfGYejQTpGtpns5Fo3r
- xkISTnIyHclYNA7FWadBwDFqYOIsnUGUjhjPV0ZI6WjWj653QUwWTsJCYGoY+U=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- adultscore=0 malwarescore=0 mlxlogscore=985
- phishscore=0 lowpriorityscore=0
- spamscore=0 mlxscore=0 clxscore=1030 bulkscore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603060154
-X-JNJ: AAAAAAABHYgTnmz2yZhp0t6uKmhyjPwfoLAK7hv314F+TwF9QUuJNtNAltZDd3svmPBNAZ4q168+scWMpCNTG1ykW4tNPnjj3JPLi6GiCkTt3E+9Q/rcJ8u8s265YF8CovXDcEyrXAa65ohz+/4mm0dtL5Ttd72YST8QAmhks1S0PlD3f2KINmSXnbBQV2C8vzRV8for5etJRO0A88bgvyNK2GwkIxO2lOZHSpy4fbo75EPIwnCT/fakV+rr68UvgepvoFjuxmtDwrgs+S36/RvhgAuy4i/UMKgCJ7cqFGY0Oh8p6D58RsvephYk3cmDbMAXDoQ2b4UJ+mRd4ojN26x7xlkVPn0l92VJDTkmgAwIsGo3TUnF+gRRW5J+aTjyRPCl1TglVvqRtr7X+Hr53EMgWXGTQXxZr2ucm7bHmPNB9pCI0p1KK49eUTdzyg80WAluLCcKzgUEW4fzgrv6/h8g1cnnGrGjGvGWSXtWMIbdrclweDeUrSpmVUt9yDCrqb/QbDhbPSKiTHhAvELYQ9+SyM3cHY3sZuD3T4CS3FYpmX3CydJVRiuS72YNVZ8MX8ot0JMrV0wrCvjDYNW18lX/UTd7aEJArd2UWcKlekXgZvG/wWGbfzuPsNMn38QzyTrZsl27baDFzdaY2xnlCg7bvX5nQl/VUsgi7R+DSnFjxjUPFlI774upNhxiUhnuJ5RH3GycBg3pHmVT3xgFE9G1B5Zlmx+XSfMKhxtRio1t7Sw6ZNOzDLjI6TZi+YQPCeEV9YtHFLE0lg==
-Received-SPF: pass client-ip=57.103.72.196;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,39 +109,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/virt.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+Yes people still use them.
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 90769936d0..bced9f67f4 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2393,13 +2393,20 @@ static void machvirt_init(MachineState *machine)
-         exit(1);
-     }
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/functional/qemu_test/uncompress.py | 25 ++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+index 5bbdf8fe323..f1a0e583a5b 100644
+--- a/tests/functional/qemu_test/uncompress.py
++++ b/tests/functional/qemu_test/uncompress.py
+@@ -12,6 +12,7 @@
+ import os
+ import stat
+ import shutil
++import zipfile
+ from urllib.parse import urlparse
+ from subprocess import run, CalledProcessError
  
--    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
-+    if (vms->virt && !kvm_enabled() && !tcg_enabled()
-+       && !hvf_enabled() && !qtest_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "Virtualization extensions to the guest CPU",
-                      current_accel_name());
-         exit(1);
-     }
+@@ -58,6 +59,26 @@ def zstd_uncompress(zstd_path, output_path):
+     os.chmod(output_path, stat.S_IRUSR | stat.S_IWUSR)
  
-+    if (vms->virt && hvf_enabled() && !hvf_irqchip_in_kernel()) {
-+        error_report("mach-virt: For HVF and Virtualization extensions "
-+                     "only kernel-irqchip=on is currently supported");
-+        exit(1);
-+    }
+ 
++def zip_uncompress(zip_path, output_path):
++    if os.path.exists(output_path):
++        return
++    with zipfile.ZipFile(zip_path, 'r') as zip_in:
++        try:
++            # Get the first file from the archive
++            names = zip_in.namelist()
++            if len(names) != 1:
++                raise Exception(
++                    f"Zip file {zip_path} should contain exactly one file, "
++                    f"but contains {len(names)}")
++            with zip_in.open(names[0], 'r') as archived_file:
++                with open(output_path, 'wb') as raw_out:
++                    shutil.copyfileobj(archived_file, raw_out)
++        except:
++            if os.path.exists(output_path):
++                os.remove(output_path)
++            raise
 +
-     if (vms->mte && hvf_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "MTE to the guest CPU",
++
+ def uncompress(compressed, uncompressed, format=None):
+     '''
+     @params compressed: filename, Asset, or file-like object to uncompress
+@@ -81,6 +102,8 @@ def uncompress(compressed, uncompressed, format=None):
+         gzip_uncompress(str(compressed), uncompressed)
+     elif format == "zstd":
+         zstd_uncompress(str(compressed), uncompressed)
++    elif format == "zip":
++        zip_uncompress(str(compressed), uncompressed)
+     else:
+         raise Exception(f"Unknown compression format {format}")
+ 
+@@ -103,5 +126,7 @@ def guess_uncompress_format(compressed):
+         return "gz"
+     elif ext in [".zstd", ".zst"]:
+         return 'zstd'
++    elif ext == ".zip":
++        return 'zip'
+     else:
+         raise Exception(f"Unknown compression format for {compressed}")
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
