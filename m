@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B0CBFCC056
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A77FCC05A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vya4X-0001QI-Ke; Fri, 06 Mar 2026 13:38:49 -0500
+	id 1vya4X-0001P6-A7; Fri, 06 Mar 2026 13:38:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya48-00014N-8D
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4B-00015W-7J
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya45-00064Y-2j
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:23 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya48-00065c-Ol
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772822300;
+ s=mimecast20190719; t=1772822304;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qVGDVxGD0tLT4QGayoeRrXuNGBv8Ixvg3B40YKtCRw0=;
- b=VfkVKUXMUZB80bQI/obVIGtP4hEXm8c8dYhzi+3S/8Ls5JJCBMSLHI7TzhfhHeTqJkfUyp
- o8RaX46qg6Hu2fYoabF4qHdKaJxmGY7D0JPBByLa05w8zKdyX+a33FnhHgST0Y32kW/Xwr
- 8f5eS77gUQX2aibLncWxJc9Pqz7qB1o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=SuTZteIe+ykuBflM5F6Q7j9etA3GKomQ8BBwdHEvyxY=;
+ b=e7bVFGNBk/Y+Z8dyxUlwQ2DPYPTF7X3U1Z6yikJ9FQT19jqnmMgDqEcYvKQG37Ny0fR0l3
+ 7O01VzCKwTxl0B50UvINkbJHv0a3T6+DTRqCNZOBfqB0ACBUi4koMOQxvmCtkHJ3WG9lh5
+ OjV7RK3pEvLSHLOW///wnnajkzLVF/U=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-3am_SvU-PdGd3oDJO7qVaw-1; Fri,
- 06 Mar 2026 13:38:15 -0500
-X-MC-Unique: 3am_SvU-PdGd3oDJO7qVaw-1
-X-Mimecast-MFC-AGG-ID: 3am_SvU-PdGd3oDJO7qVaw_1772822295
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-yoZqUgqnOfGo_Fh5XInQpQ-1; Fri,
+ 06 Mar 2026 13:38:22 -0500
+X-MC-Unique: yoZqUgqnOfGo_Fh5XInQpQ-1
+X-Mimecast-MFC-AGG-ID: yoZqUgqnOfGo_Fh5XInQpQ_1772822301
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 214EC19560A5; Fri,  6 Mar 2026 18:38:15 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F4F7180049D; Fri,  6 Mar 2026 18:38:21 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.224.210])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DDC071800576; Fri,  6 Mar 2026 18:38:13 +0000 (UTC)
+ id 5C3871800361; Fri,  6 Mar 2026 18:38:20 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 05/12] mirror: Fix missed dirty bitmap writes during startup
-Date: Fri,  6 Mar 2026 19:36:58 +0100
-Message-ID: <20260306183705.410357-6-kwolf@redhat.com>
+Subject: [PULL 09/12] qcow2: Add keep_data_file command-line option
+Date: Fri,  6 Mar 2026 19:37:02 +0100
+Message-ID: <20260306183705.410357-10-kwolf@redhat.com>
 In-Reply-To: <20260306183705.410357-1-kwolf@redhat.com>
 References: <20260306183705.410357-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
 X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -82,151 +82,326 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, mirror disables the block layer's dirty bitmap before its own
-replacement is working. This means that during startup, there is a
-window in which the allocation status of blocks in the source has
-already been checked, but new writes coming in aren't tracked yet,
-resulting in a corrupted copy:
+From: Hanna Czenczek <hreitz@redhat.com>
 
-1. Dirty bitmap is disabled in mirror_start_job()
-2. Some request are started in mirror_top_bs while s->job == NULL
-3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-   the request hasn't completed yet, the block isn't allocated
-4. The request completes, still sees s->job == NULL and skips the
-   bitmap, and nothing else will mark it dirty either
+Add a command-line-only option to prevent overwriting the file specified
+as external data file.
 
-One ingredient is that mirror_top_opaque->job is only set after the
-job is fully initialized. For the rationale, see commit 32125b1460
-("mirror: Fix access of uninitialised fields during start").
+This option is only available on the qemu-img create command line, not
+via blockdev-create, as it makes no sense there: That interface
+separates file creation and formatting, so where the external data file
+attached to a newly formatted qcow2 node comes from is completely up to
+the user.
 
-Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-to track writes from the beginning. Disabling the block layer's tracking
-and enabling the mirror_top_bs one happens in a drained section, so
-there is no danger of races with in-flight requests any more. All of
-this happens well before the block allocation status is checked, so we
-can be sure that no writes will be missed.
+Implementation detail: Enabling this option will not only not overwrite
+the external data file, but also assume it already exists, for two
+reasons:
+- It is simpler than checking whether the file exists, and only skipping
+  creating it when it does not.  It is therefore also less error-prone,
+  i.e. we can never accidentally overwrite an existing file because we
+  made some mistake in checking whether it exists.
+- I think it makes sense from a user's perspective: You set this option
+  when you want to use an existing data file, and you unset it when you
+  want a new one.  Getting an error when you expect to use an existing
+  data file seems to me a nice warning that something is not right.
 
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260219202446.312493-1-kwolf@redhat.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20250530084448.192369-2-hreitz@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+[kwolf: Removed redundant has_data_file_raw check]
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/mirror.c | 52 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 20 deletions(-)
+ include/block/block_int-common.h |  1 +
+ block/qcow2.c                    | 72 ++++++++++++++++++++++++++++++--
+ tests/qemu-iotests/082.out       | 18 ++++++++
+ 3 files changed, 87 insertions(+), 4 deletions(-)
 
-diff --git a/block/mirror.c b/block/mirror.c
-index bc982cb99a8..fa1d975eb9f 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 9324af903d0..147c08155f7 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -56,6 +56,7 @@
+ #define BLOCK_OPT_DATA_FILE_RAW     "data_file_raw"
+ #define BLOCK_OPT_COMPRESSION_TYPE  "compression_type"
+ #define BLOCK_OPT_EXTL2             "extended_l2"
++#define BLOCK_OPT_KEEP_DATA_FILE    "keep_data_file"
  
- typedef struct MirrorBDSOpaque {
-     MirrorBlockJob *job;
-+    BdrvDirtyBitmap *dirty_bitmap;
-     bool stop;
-     bool is_commit;
- } MirrorBDSOpaque;
-@@ -1675,9 +1676,11 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-         abort();
+ #define BLOCK_PROBE_BUF_SIZE        512
+ 
+diff --git a/block/qcow2.c b/block/qcow2.c
+index e29810d86a3..e3728806203 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -3991,6 +3991,8 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+     BlockDriverState *bs = NULL;
+     BlockDriverState *data_bs = NULL;
+     const char *val;
++    bool keep_data_file = false;
++    BlockdevCreateOptionsQcow2 *qcow2_opts;
+     int ret;
+ 
+     /* Only the keyval visitor supports the dotted syntax needed for
+@@ -4022,6 +4024,22 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+         qdict_put_str(qdict, BLOCK_OPT_COMPAT_LEVEL, "v3");
      }
  
--    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
--        qatomic_set(&s->job->actively_synced, false);
--        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-+    if (!copy_to_target) {
-+        if (s->job) {
-+            qatomic_set(&s->job->actively_synced, false);
++    val = qdict_get_try_str(qdict, BLOCK_OPT_KEEP_DATA_FILE);
++    if (val) {
++        if (!strcmp(val, "on")) {
++            keep_data_file = true;
++        } else if (!strcmp(val, "off")) {
++            keep_data_file = false;
++        } else {
++            error_setg(errp,
++                       "Invalid value '%s' for '%s': Must be 'on' or 'off'",
++                       val, BLOCK_OPT_KEEP_DATA_FILE);
++            ret = -EINVAL;
++            goto finish;
 +        }
-+        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-     }
- 
-     if (ret < 0) {
-@@ -1904,13 +1907,35 @@ static BlockJob *mirror_start_job(
- 
-     bdrv_drained_begin(bs);
-     ret = bdrv_append(mirror_top_bs, bs, errp);
--    bdrv_drained_end(bs);
--
-     if (ret < 0) {
-+        bdrv_drained_end(bs);
-+        bdrv_unref(mirror_top_bs);
-+        return NULL;
++        qdict_del(qdict, BLOCK_OPT_KEEP_DATA_FILE);
 +    }
 +
-+    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-+                                                       granularity,
-+                                                       NULL, errp);
-+    if (!bs_opaque->dirty_bitmap) {
-+        bdrv_drained_end(bs);
-         bdrv_unref(mirror_top_bs);
-         return NULL;
+     /* Change legacy command line options into QMP ones */
+     static const QDictRenames opt_renames[] = {
+         { BLOCK_OPT_BACKING_FILE,       "backing-file" },
+@@ -4058,9 +4076,11 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+     /* Create and open an external data file (protocol layer) */
+     val = qdict_get_try_str(qdict, BLOCK_OPT_DATA_FILE);
+     if (val) {
+-        ret = bdrv_co_create_file(val, opts, false, errp);
+-        if (ret < 0) {
+-            goto finish;
++        if (!keep_data_file) {
++            ret = bdrv_co_create_file(val, opts, false, errp);
++            if (ret < 0) {
++                goto finish;
++            }
+         }
+ 
+         data_bs = bdrv_co_open(val, NULL, NULL,
+@@ -4073,6 +4093,11 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+ 
+         qdict_del(qdict, BLOCK_OPT_DATA_FILE);
+         qdict_put_str(qdict, "data-file", data_bs->node_name);
++    } else if (keep_data_file) {
++        error_setg(errp, "Must not use '%s=on' without '%s'",
++                   BLOCK_OPT_KEEP_DATA_FILE, BLOCK_OPT_DATA_FILE);
++        ret = -EINVAL;
++        goto finish;
      }
  
-+    /*
-+     * The mirror job doesn't use the block layer's dirty tracking because it
-+     * needs to be able to switch seemlessly between background copy mode (which
-+     * does need dirty tracking) and write blocking mode (which doesn't) and
-+     * doing that would require draining the node. Instead, mirror_top_bs takes
-+     * care of updating the dirty bitmap as appropriate.
-+     *
-+     * Note that write blocking mode only becomes effective after mirror_run()
-+     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
-+     * we're still in background copy mode irrespective of @copy_mode.
-+     */
-+    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-+    bdrv_drained_end(bs);
+     /* Set 'driver' and 'node' options */
+@@ -4093,6 +4118,37 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+         goto finish;
+     }
+ 
++    qcow2_opts = &create_options->u.qcow2;
 +
-     /* Make sure that the source is not resized while the job is running */
-     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-                          BLK_PERM_CONSISTENT_READ,
-@@ -2005,24 +2030,13 @@ static BlockJob *mirror_start_job(
-     s->base_overlay = bdrv_find_overlay(bs, base);
-     s->granularity = granularity;
-     s->buf_size = ROUND_UP(buf_size, granularity);
-+    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-     s->unmap = unmap;
-     if (auto_complete) {
-         s->should_complete = true;
-     }
-     bdrv_graph_rdunlock_main_loop();
- 
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
--    }
--
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -2102,9 +2116,6 @@ fail:
-         g_free(s->replaces);
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
--        if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
--        }
-         job_early_fail(&s->common.job);
-     }
- 
-@@ -2118,6 +2129,7 @@ fail:
-     bdrv_graph_wrunlock();
-     bdrv_drained_end(bs);
- 
-+    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-     bdrv_unref(mirror_top_bs);
- 
-     return NULL;
++    if (!qcow2_opts->has_preallocation) {
++        qcow2_opts->preallocation = PREALLOC_MODE_OFF;
++    }
++
++    if (keep_data_file &&
++        qcow2_opts->preallocation != PREALLOC_MODE_OFF &&
++        qcow2_opts->preallocation != PREALLOC_MODE_METADATA)
++    {
++        error_setg(errp, "Preallocating more than only metadata would "
++                   "overwrite the external data file's content and is "
++                   "therefore incompatible with '%s=on'",
++                   BLOCK_OPT_KEEP_DATA_FILE);
++        ret = -EINVAL;
++        goto finish;
++    }
++
++    if (keep_data_file &&
++        qcow2_opts->preallocation == PREALLOC_MODE_OFF &&
++        !qcow2_opts->data_file_raw)
++    {
++        error_setg(errp, "'%s=on' requires '%s=metadata' or '%s=on', or the "
++                   "file contents will not be visible",
++                   BLOCK_OPT_KEEP_DATA_FILE,
++                   BLOCK_OPT_PREALLOC,
++                   BLOCK_OPT_DATA_FILE_RAW);
++        ret = -EINVAL;
++        goto finish;
++    }
++
+     /* Silently round up size */
+     create_options->u.qcow2.size = ROUND_UP(create_options->u.qcow2.size,
+                                             BDRV_SECTOR_SIZE);
+@@ -4103,7 +4159,9 @@ finish:
+     if (ret < 0) {
+         bdrv_graph_co_rdlock();
+         bdrv_co_delete_file_noerr(bs);
+-        bdrv_co_delete_file_noerr(data_bs);
++        if (!keep_data_file) {
++            bdrv_co_delete_file_noerr(data_bs);
++        }
+         bdrv_graph_co_rdunlock();
+     } else {
+         ret = 0;
+@@ -6202,6 +6260,12 @@ static QemuOptsList qcow2_create_opts = {
+             .help = "Compression method used for image cluster "        \
+                     "compression",                                      \
+             .def_value_str = "zlib"                                     \
++        },                                                              \
++        {                                                               \
++            .name = BLOCK_OPT_KEEP_DATA_FILE,                           \
++            .type = QEMU_OPT_BOOL,                                      \
++            .help = "Assume the external data file already exists and " \
++                    "do not overwrite it"                               \
+         },
+         QCOW_COMMON_OPTIONS,
+         { /* end of list */ }
+diff --git a/tests/qemu-iotests/082.out b/tests/qemu-iotests/082.out
+index d0dd333117a..e0463815c65 100644
+--- a/tests/qemu-iotests/082.out
++++ b/tests/qemu-iotests/082.out
+@@ -66,6 +66,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -92,6 +93,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -118,6 +120,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -144,6 +147,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -170,6 +174,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -196,6 +201,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -222,6 +228,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -248,6 +255,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -288,6 +296,7 @@ Supported qcow2 options:
+   encrypt.key-secret=<str> - ID of secret providing qcow AES key or LUKS passphrase
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+   refcount_bits=<num>    - Width of a reference count entry in bits
+@@ -376,6 +385,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -402,6 +412,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -428,6 +439,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -454,6 +466,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -480,6 +493,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -506,6 +520,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -532,6 +547,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -558,6 +574,7 @@ Supported options:
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
+   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+@@ -598,6 +615,7 @@ Supported qcow2 options:
+   encrypt.key-secret=<str> - ID of secret providing qcow AES key or LUKS passphrase
+   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
+   extended_l2=<bool (on/off)> - Extended L2 tables
++  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
+   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
+   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
+   refcount_bits=<num>    - Width of a reference count entry in bits
 -- 
 2.53.0
 
