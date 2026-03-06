@@ -4,106 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E36FCB607
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE69FFCB608
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWe2-0002yR-SY; Fri, 06 Mar 2026 09:59:14 -0500
+	id 1vyWeY-0003QV-82; Fri, 06 Mar 2026 09:59:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWe0-0002xL-NP
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:13 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1vyWeX-0003Pc-5w
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:45 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWdx-0002GW-Sc
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:11 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64ad9238d8fso9191375d50.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772809148; cv=none;
- d=google.com; s=arc-20240605;
- b=XOX1FjVIXl4zkfr6/TBRi3x3naMGMXsU+tVRFQpmpd46yV8U7+5YCacN/EXQzMnCee
- mE3k0wIDA/DoCj4RhpLXzDcPmqRW2SCRJVNDVq0vs4vKm8gGKa2saqnnOnP1cFsEw9DN
- 3nlT6wcOuhvytx7l08pk1U6ZCm9CP/Ml2YpvqTkfMyWjsiBiuo/cWZWdFjxEoePLFgEf
- WJFBkZD4Y8DiVZZLJxtE4+Oq0B8Bz5cXbmR427lwfH4SY3/x6r8hTKmgHV3I57BpYyg7
- w/fymy24MLpyIg92svNAVJLtIgNusduIbY2grX9O0x3LiS8WOhCWf7QRcj3hrExky+ma
- l4eA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=kqLiNDrMG9u9CrtCxuMN9Ra3KZe+gyeOFGxvnlKdFJc=;
- fh=jUYsI/2acYShRiXxoUq/Pm9LQcAd+S5Ayx7Ab2mBfmk=;
- b=ObFC892QHh2KJ+QjEIwufxdfrR1rhA/CbxLsKTOTjCwmcaUWYxuf3gVuWqZU9vUP+b
- d19QEvXPQwWGu1YhChft69+t49bZMbCiw7fFCM4tdgdb95wfOiRBDx740drQYgozsrt4
- px8luTDTuGS1Qpko3qieQmv0kPvoW2tBy9w4Gzisdeypmb5S2Rt6j4cc6XQAOL9K+N06
- M3c1OZO2dhCIVPhELQcOZPkXPvyE9UIyJufBX5Ld3V2WmLiLMmfiKm2f1PBpEVvNR+DK
- BTCW3FN6aBLKMjTAxIBEC+vIZ+hRnWbkifSzGOJrbACSx+/0NCSO6S6+Z1Oc0p9PLRR7
- XbEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1vyWeV-0002Hm-2x
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:44 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4836f4cbe0bso81283305e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809148; x=1773413948; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kqLiNDrMG9u9CrtCxuMN9Ra3KZe+gyeOFGxvnlKdFJc=;
- b=XnW/Bb3oQUW7p7jUqws2DOAFQU/BnCepTj+H5tekEEBRIYFnfRhLJV6WSN0Eb5r3Vf
- /PT7ocjCyUYc5ABWudoYwubg58k039VCVzQnB7sEoxlXcXM39F8C2Lthl+gzNUraygYE
- rgUpZlGLzC1mlUxwEHynk46GHvaC5YwVdmm7B2lhuAQTdxXSbyGzos+lS/MpPXdl5yk3
- G59hQ0XEXfWKcmdLH0pSvlqS/FqcVUx7MV2BlhUYXmB9OLoG06/QUiUJ+uDQS1HwsVqc
- 7UhcoiyssVfjR6McJ/Y1TJ0/xHku71ZBCCwBrM1sD4DiPNB+BPp5wzn+DWW4z+pELj5v
- WBkg==
+ d=linaro.org; s=google; t=1772809181; x=1773413981; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SdvCtpzv/Ffm1sB9T9kJKAPgrm0KyX88uhV9MujN1S0=;
+ b=UID4bMs672iubl8OaUqjjg8qXaWktTcuhYtyR4HqsAkMtEMjXPz7+Ps5WLWjpMQZQ0
+ tMBfUlRv+kh+5v4kxagNYiSzwmn6QYaPZp3OiR8iy5fTM4/xtzl+tbDh4+i3gHtZ42jZ
+ 6rEbdXlX8iu4B/e+M5YXcU7eeyOsfoaEqf7wdgJglhYu/65L5ZgRo9ZKqqic9dq1VPL3
+ Bx/A+IrbSsFelF0w0vIUHn1Im5QOD7NqHLSxRYpO7A8XpXVc4DWi5AYxbzPrApo9SeM8
+ U00a0HqO2Wv9iHRFTXSx+n+cpEkoxuWWLnBsWi/UgaeeU/xXeCo8lerzMCk9sL/PauUY
+ j44w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809148; x=1773413948;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kqLiNDrMG9u9CrtCxuMN9Ra3KZe+gyeOFGxvnlKdFJc=;
- b=sDkJFVSj1stERvXKYpoewbOhasaF1N2l4gQvL4o43EV79AdnZaDCmAH9vcuDmR+Zuo
- +VJ/dlaiwDP8OxUcQ2+bVrkzYRhFVach4ZWl3IgtfyOgMP5+dCtVpwAy2+gVXt0J/ZP9
- JsqHHDT7nj9t35hU+irSQ/qMh+xUgMGiNJdFrbP/tSvYQId/CcpU3Oowr701CWvaio7Z
- XTISP1ABV+hvcgQ6h+8Iw0l5658eGMOapzSK9owAjYjGYwZOvRTufklqglzQtK80IELb
- EHeFPcLk8aiet8abAFwvfEg87ZZk1WjzfnYs+c6TD50OaZ4OAU4jDxsSjHlbi5XfVU8R
- p5FQ==
-X-Gm-Message-State: AOJu0Yx6ThR3Q6sSNS5TgT/w46btRH0jZRJzz+YLkFXxXlFZADmGyuF8
- PM4CdKDSBi7vQWcxHdaSTx13reGH96zw/iHK5ifxsB2FNMMYyUS+wPIxkXh1d0Zwf47J13SJbqL
- dimKZF0/UrcmfpF00jv9xGHqpt278rl12j7oOALFtvw==
-X-Gm-Gg: ATEYQzxrodCr4LOXVDiaSL7g9KVyfL1aavc7H1+v0h3sCbqqSX1QHVz8Nl2+HDGSdji
- 0VcPVGoUa95VxfroZqK1KevIVci60JA4KUWqkhSKPMgaNf7XUHfb16qSkAq48VlBDG3d7o9onqc
- lnUhiGohW3HlvQMl7VQ+nEmwVKPST3jwvk5PPPaLg9prqL1kdKqbJeFqurKJmHSWpyMjk5hN/qT
- UNd3vNLP6O77U14aMqlcdGdouZ3lhD/Ch5VRiGeH/xxreBCooCRZdxZAd5vLfXNXhxbZvgPdNTV
- JXJ5923/z2bjh3UFNYvbndcFpgyRGpndfDva1Hh9Fgc5eKbz+NJp3au+Yi78aigar0E=
-X-Received: by 2002:a53:ac9c:0:b0:64c:f53b:d3d9 with SMTP id
- 956f58d0204a3-64d14384e56mr2143910d50.75.1772809148424; Fri, 06 Mar 2026
- 06:59:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20260306130107.35359-1-mohamed@unpredictable.fr>
-In-Reply-To: <20260306130107.35359-1-mohamed@unpredictable.fr>
+ d=1e100.net; s=20230601; t=1772809181; x=1773413981;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SdvCtpzv/Ffm1sB9T9kJKAPgrm0KyX88uhV9MujN1S0=;
+ b=ij9y2l1ZjFXkcPz7wTBgGH7eZMAHClqACO8a7+kPtOKjsTaH1PHuWITIpBO6wMFmT6
+ VP/QVo3XAudt0N5dmsI6o9zNLVZzYYlz60ID2L+zkG+ru7dqKfwt4RqdBoliNHwaLqS1
+ X3zFArO+WEWjXOVHcrL0sWiQRx4Bmwt0pmhSbAnheNszR0m/09k24sPGUetHnk3CFev5
+ wGGWQ2ZgZt74mkt8qkqWV6V90TK/5ZACCrBV7UvmdD6VyAcKt2ZM1iD8XdLH922KNPji
+ M9q1sox7hfDLehhW9upgPhOYhRWGdGmGOXjVMKScacWHnaDkWKnEq30iU4nbvUuLUo2O
+ i53A==
+X-Gm-Message-State: AOJu0YwLuAjQvGihEr1UOXH63T8KlMpoVdTDBWGzPZaz/RW3YkuNHkG8
+ I0KTeXdV/714R/CWOF+FN6VS26GsrB+BrzdawYQi3h/BKjLlbY8b6KeEjvj07LNfo64MqRSF6gb
+ skI4O
+X-Gm-Gg: ATEYQzymNyRdKtf4yUUpqrQBs4tpxADa1SVVVHQ+gqoj0fBvFaSzJk/MfhYgoy88Jds
+ CtBgP6XIj3qw1nU+g1Yu7dKNClhtX/uSa9VbJOfPbO58/r9/scwshw+nH/35WFcjLUfkSolxwzd
+ oyQ6ZDFYw+fkx+ArF4J6iikNNp2g8qWOgVpvcbZX1iJWBav6u7Z0DoVKWK3matoinivnCqWpI9m
+ r+P61UOCld65Zy5wrcSvf3umhHr2PdXdv7qisoDtpnNlx1zEU6/t5UKRTdrXLpbU0olHYTHTkge
+ HB+s7HDuJZB6WxcJhq8EjLHXRrDAh6w9nlclQu+XVSG2/8mTWSrIe7vTH8LaHcRNeXdERv6T0b4
+ IuEaA5K08JYsvfWMzbOu+7v0Nv9hkPDy7B9jFVdAQ3mnE+y++hAZPNzwHMux9tJdFXmXQXNl9Du
+ 4p6jmsLBf7nMLQ7cQaeOLg3hMoKf51HwjvO0J3RNJmf0Mrh8gbwOhHEWYuDGpOjoUIFxd2szrnC
+ I2SZCFT2fTw55w+mpu54cnQ/waJ0Gg=
+X-Received: by 2002:a05:600c:1d1e:b0:483:709e:f239 with SMTP id
+ 5b1f17b1804b1-48526951ca9mr40117445e9.22.1772809181094; 
+ Fri, 06 Mar 2026 06:59:41 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.40
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 06:59:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 14:58:57 +0000
-X-Gm-Features: AaiRm51VBQPLO4FWA1bXltCpVpvd7PXApj30YfPW5iQkdhzSjA63fi_bOrjM9FA
-Message-ID: <CAFEAcA-e4GZB_TRG7Jm3O-RNJneUtk_WufiXNn6=UDHsgG4kdw@mail.gmail.com>
-Subject: Re: [PATCH v15 00/17] HVF: Add support for platform vGIC and nested
- virtualisation
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/49] target-arm queue
+Date: Fri,  6 Mar 2026 14:58:50 +0000
+Message-ID: <20260306145939.2162189-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,22 +99,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Mar 2026 at 13:01, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Link to branch: https://github.com/mediouni-m/qemu hvf-irqchip-and-nested
-> (tag for this submission: hvf-irqchip-and-nested-v15)
->
-> This series adds supports for nested virtualisation when using HVF on arm64 Macs.
->
-> Reviews would be very welcome :-) It's maybe a bit unlikely that this will make
-> it to QEMU 11.0 I might as well try.
->
-> The first two patches are from the SME enablement series and are present for the
-> series to be buildable on its own.
-
-
-
-Applied to target-arm.next, thanks.
+Hopefully last target-arm pull before the softfreeze. Certainly the
+last large one.
 
 -- PMM
+
+The following changes since commit 314ff2e07ddc6163554077d68aed5d76a50b8e3d:
+
+  Merge tag 'pull-request-2026-03-05' of https://gitlab.com/thuth/qemu into staging (2026-03-05 16:58:20 +0000)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260306
+
+for you to fetch changes up to 9c3ae30d411a94ddd4a0e09d26ba095748b75be3:
+
+  hvf: enable nested virtualisation support (2026-03-06 13:33:58 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * Remove deprecated 'highbank' and 'midway' machines
+ * hw/arm: Add missing dependencies for STM32F405 SoC
+ * hw/arm/smmuv3-accel: Read and propagate host vIOMMU events
+ * Minor MAINTAINERS updates
+ * target/arm: Improve logging of migration errors due to system
+   register mismatches between source and destination
+ * hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
+ * tests/qtest/iommu-smmuv3-test: Free QPCIDevice
+ * chardev: Fix various sanitizer detected leaks
+ * tests/qtest/test-x86-cpuid-compat: Free allocated memory
+ * tests/qtest/qos-test: Plug a couple of leaks
+ * hw/arm/smmuv3: Fix various minor bugs
+ * hvf/arm: expose FEAT_SME2 to guest if available
+ * hvf/arm: Add hvf vGIC interrupt controller support
+ * hvf: enable nested virtualisation support
+
+----------------------------------------------------------------
+CLEMENT MATHIEU--DRIF (1):
+      MAINTAINERS: Update Clement Mathieu--Drif's email address
+
+Chisheng Chen (1):
+      hw/arm: Add missing dependencies for STM32F405 SoC
+
+Eric Auger (7):
+      vmstate: Introduce VMSTATE_VARRAY_INT32_ALLOC
+      target/arm/machine: Use VMSTATE_VARRAY_INT32_ALLOC for cpreg arrays
+      target/arm/kvm: Export kvm_print_register_name()
+      target/arm/kvm: Tweak print_register_name() for arm64 system register
+      target/arm/machine: Trace cpreg names which do not match on migration
+      target/arm/machine: Trace all register mismatches
+      target/arm/machine: Fix detection of unknown incoming cpregs
+
+Fabiano Rosas (5):
+      chardev: Fix QIOChannel refcount
+      chardev: Don't attempt to unregister yank function more than once
+      chardev: Consolidate yank registration
+      tests/qtest/test-x86-cpuid-compat: Free allocated memory
+      tests/qtest/qos-test: Plug a couple of leaks
+
+Magnus Kulke (1):
+      MAINTAINERS: fix magnuskulke email-address
+
+Manos Pitsidianakis (2):
+      hvf/arm: handle FEAT_SME2 migration
+      hvf/arm: expose FEAT_SME2 to guest if available
+
+Mohamed Mediouni (15):
+      hw/arm: virt: remove hvf_arm.h include
+      hvf: hvf-all: stop including hvf_arm.h
+      hw/intc: Add hvf vGIC interrupt controller support
+      hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
+      accel, hw/arm, include/system/hvf: infrastructure changes for HVF vGIC
+      target/arm: hvf: instantiate GIC early
+      hw/arm, target/arm: nested virtualisation on HVF
+      hvf: only call hvf_sync_vtimer() when running without the platform vGIC
+      hvf: gate ARM_FEATURE_PMU register emulation behind not being at EL2
+      hvf: arm: allow exposing minimal PMU when running with nested virt on
+      target/arm: hvf: add asserts for code paths not leveraged when using the vGIC
+      hvf: sync registers used at EL2
+      target/arm: hvf: pass through CNTHCTL_EL2 and MDCCINT_EL1
+      hvf: arm: disable SME when nested virt is active
+      hvf: enable nested virtualisation support
+
+Nicolin Chen (2):
+      backends/iommufd: Introduce iommufd_backend_alloc_veventq
+      hw/arm/smmuv3-accel: Allocate vEVENTQ for accelerated SMMUv3 devices
+
+Paul Durrant (1):
+      MAINTAINERS: remove myself as a Xen maintainer
+
+Peter Maydell (6):
+      system/qtest: Support comments in input commands
+      hw/net/smc91c111: Don't allow negative-length packets
+      scripts: Move lsan_suppressions.txt out of oss-fuzz subdir
+      scripts/lsan_suppressions.txt: Add more leaks
+      hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
+      tests/qtest/iommu-smmuv3-test: Free QPCIDevice
+
+Shameer Kolothum (3):
+      hw/arm/smmuv3-accel: Add viommu free helper
+      hw/arm/smmuv3: Introduce a helper function for event propagation
+      hw/arm/smmuv3-accel: Read and propagate host vIOMMU events
+
+Tao Tang (3):
+      hw/arm/smmuv3-common: Fix incorrect reserved mask for SMMU CR0 register
+      hw/arm/smmuv3: Correct SMMUEN field name in CR0
+      hw/arm/smmuv3: Fix CFGI_CD handling when stage-1 is unsupported
+
+Thomas Huth (2):
+      hw/arm: Remove the deprecated "highbank" and "midway" machines
+      hw/net: Remove the xgmac device
+
+ .gitlab-ci.d/buildtest.yml              |   2 +-
+ MAINTAINERS                             |  16 +-
+ accel/hvf/hvf-all.c                     |  52 +-
+ accel/stubs/hvf-stub.c                  |   2 +
+ backends/iommufd.c                      |  31 ++
+ backends/trace-events                   |   1 +
+ chardev/char-io.c                       |   5 +
+ chardev/char-socket.c                   |  34 +-
+ configs/devices/arm-softmmu/default.mak |   1 -
+ docs/about/deprecated.rst               |   7 -
+ docs/about/removed-features.rst         |   7 +
+ docs/system/arm/highbank.rst            |  19 -
+ docs/system/target-arm.rst              |   1 -
+ hw/arm/Kconfig                          |  21 +-
+ hw/arm/highbank.c                       | 404 ----------------
+ hw/arm/meson.build                      |   1 -
+ hw/arm/smmuv3-accel.c                   | 146 +++++-
+ hw/arm/smmuv3-accel.h                   |   6 +
+ hw/arm/smmuv3-internal.h                |   6 +-
+ hw/arm/smmuv3.c                         |  35 +-
+ hw/arm/trace-events                     |   2 +-
+ hw/arm/virt.c                           |  38 +-
+ hw/gpio/aspeed_gpio.c                   |   2 +-
+ hw/intc/arm_gicv3_common.c              |   4 +
+ hw/intc/arm_gicv3_hvf.c                 | 822 ++++++++++++++++++++++++++++++++
+ hw/intc/arm_gicv3_hvf_stub.c            |  25 +
+ hw/intc/meson.build                     |   2 +
+ hw/net/Kconfig                          |   3 -
+ hw/net/meson.build                      |   1 -
+ hw/net/smc91c111.c                      |  16 +-
+ hw/net/xgmac.c                          | 443 -----------------
+ include/hw/arm/smmuv3-common.h          |   4 +-
+ include/hw/intc/arm_gicv3_common.h      |   4 +
+ include/migration/vmstate.h             |  10 +
+ include/system/hvf.h                    |   8 +
+ include/system/iommufd.h                |  14 +
+ scripts/coverity-scan/COMPONENTS.md     |   2 +-
+ scripts/lsan_suppressions.txt           |  26 +
+ scripts/oss-fuzz/lsan_suppressions.txt  |   5 -
+ system/qtest.c                          |   5 +-
+ system/vl.c                             |   2 +
+ target/arm/helper.c                     |   5 -
+ target/arm/hvf/hvf.c                    | 466 +++++++++++++++++-
+ target/arm/hvf/hvf_sme_stubs.h          | 172 +++++++
+ target/arm/hvf/sysreg.c.inc             |  52 ++
+ target/arm/hvf_arm.h                    |  46 ++
+ target/arm/kvm-stub.c                   |   5 +
+ target/arm/kvm.c                        |   9 +-
+ target/arm/kvm_arm.h                    |   9 +
+ target/arm/machine.c                    | 117 ++++-
+ target/arm/trace-events                 |   3 +
+ target/arm/whpx/whpx-all.c              |   7 -
+ tests/docker/test-fuzz                  |   2 +-
+ tests/qtest/iommu-smmuv3-test.c         |   1 +
+ tests/qtest/qos-test.c                  |  36 +-
+ tests/qtest/test-x86-cpuid-compat.c     |   4 +
+ 56 files changed, 2128 insertions(+), 1041 deletions(-)
+ delete mode 100644 docs/system/arm/highbank.rst
+ delete mode 100644 hw/arm/highbank.c
+ create mode 100644 hw/intc/arm_gicv3_hvf.c
+ create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
+ delete mode 100644 hw/net/xgmac.c
+ create mode 100644 scripts/lsan_suppressions.txt
+ delete mode 100644 scripts/oss-fuzz/lsan_suppressions.txt
+ create mode 100644 target/arm/hvf/hvf_sme_stubs.h
 
