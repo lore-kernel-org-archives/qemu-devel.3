@@ -4,111 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F2FFCB60B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2A1FCB614
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWvR-0007K7-Fx; Fri, 06 Mar 2026 10:17:13 -0500
+	id 1vyWyA-0008F2-IE; Fri, 06 Mar 2026 10:20:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vyWvP-0007JY-Kd
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:17:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vyWy9-0008Du-C0
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:20:01 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vyWvN-0006Fh-Ru
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:17:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772810229;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tR9P6wZJVn3Be7DBqKtwoMlRUtYfRrgjFxyxPPHBdIg=;
- b=GTOBI3zT0QB8m9YqkFE9VG+hPcJgDmdl08Ki8XOFE2fzVh6Omc5aIVPo/wHPfQdB2oNN+j
- 2x4dbtN3y7ClojlRB6P2TcNLQ2F7297gHRjdQaOSYpyy/JCdj3gpZaZpjy8a/pzqt1WTkt
- fjfgb/BmGACWOi5rrEQcY0pwVcIjbOU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-5a0MiiJfPIyi8GLFZgwfTQ-1; Fri, 06 Mar 2026 10:17:05 -0500
-X-MC-Unique: 5a0MiiJfPIyi8GLFZgwfTQ-1
-X-Mimecast-MFC-AGG-ID: 5a0MiiJfPIyi8GLFZgwfTQ_1772810225
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-483786a09b1so94664685e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:17:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772810224; x=1773415024; darn=nongnu.org;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=tR9P6wZJVn3Be7DBqKtwoMlRUtYfRrgjFxyxPPHBdIg=;
- b=DzM6WgOexHweTq93+kL9JC2K9jat+TeNgwTOARelXbwaGQPsxTdDRdQjSzYBOoGWuk
- TCQ8FvuRt0cOQHjrPviXCe3kYD7P/ANfnAFGY10hB7kguUlWfO/ZtwPWpiLGi86NjzPU
- mYRHwMJ2gzeyPN+aHnJGFl37r1fKxoLCyNO22XTBPQLLfCNpqEmQxfRn9I90WfsvxwFa
- OZWpE1aU7VGgCojKffEx2vuj8ioXl/9wEywHA0GnBReW8XpDbUWpa7/WeiKMFeZwoI3D
- XT8bhrkvle9Shsshk1oQH9320XVUk2cM0rGyQ1iKBPlZNeYodyZVMc6LQNhv8/rh3Uy3
- 8Qjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772810224; x=1773415024;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tR9P6wZJVn3Be7DBqKtwoMlRUtYfRrgjFxyxPPHBdIg=;
- b=ikwlz5lgiq1tX8g0G+wbKB96cPGWp35+bTRUHgdkJyAfNzAYA2YYTTsTsv+SuyafrJ
- aeFyKvjA8gbNMIhnIk9ZhDgoqJ2fjg49xo2Sy6vJC7v4+EZZNElYcsFJ/d/Kdp7gPUS6
- 30dZPFO6cmyfKMOK31ReG3LnUYlN61adesb0qTgldDp63q3aiP3HwBoKzK283pHXm7xZ
- fcunO+F0e1fMcs6mur76VKHgxn2wUidMWJ86tHXObxT/IgnR952ruZYV+GgQKjp+6gRE
- nWzLOinRamC1oC13OQFjd3DxCbnNh0v2V5nUeNf4GDWJUfxf8xc4fcVEvbHqTSMudrqM
- SQiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXx/P+KCaVKxrfTMRTb/HMnCptI9UcwPjSRTSqZp1sgDW4JCJrXXviYdS0D71vwoBnF74WZ5l87WKIF@nongnu.org
-X-Gm-Message-State: AOJu0YzeoUjn8A6ZRndCvFGLnlgaKRbyL2aDXRIp0zsGkqebvnRx8l6W
- Ob5LKbqvFeFpxrz20kdCD/s4UbCznETeuWSn0Vm2xa/+GiRAVc/r8pH+yG9sFMr7IExlbav8Ubg
- 7hf1T0cEhBwjw7T9s0EuUgAy0PolftKk+mjaXVrARR0mau98UJk7v8eqG
-X-Gm-Gg: ATEYQzxK+rWFvRDpQlIWKU6oO5qQfQcQiSNIlSXkptxfXYGVCnDKLTOQv7JILBWIDYO
- 4RyFVXtLSD+yRW3lm0b6wPWVS45Xkgur91biElXlfgGpLZ4TbtAD1QD8m+VXMfcgJq8oMGHLbEm
- nMuO7vxl4iQ8upPw2ZVLpOU1ikWyhq7MBEKOXTTLseSBBA6op25Qk5Bx8wYct4rkA6NstkpNfnP
- SIoOXLe8h4LhnESHIOKrVrGb3QERhFO3Lo3DnVO3AzXWAzXwve08zXEnNfz+gNGESZ22YX1zaoL
- BCa9PYthLhxdV9OIXr8C0KcQ8UscD+xafkzo8IVK9s4itfKzuz5hqN2S3iKuuAtXiAjbXHwaOeh
- PbF85BWGyCUfa9WMlpLD1bnUX5uuxECCajWW2GkhA2SKgM9ipxcI927CQ0pf2ld+SOyGw
-X-Received: by 2002:a05:600c:c088:b0:483:79a6:e7e1 with SMTP id
- 5b1f17b1804b1-48526919935mr36895315e9.7.1772810224557; 
- Fri, 06 Mar 2026 07:17:04 -0800 (PST)
-X-Received: by 2002:a05:600c:c088:b0:483:79a6:e7e1 with SMTP id
- 5b1f17b1804b1-48526919935mr36894675e9.7.1772810224049; 
- Fri, 06 Mar 2026 07:17:04 -0800 (PST)
-Received: from rh (p200300f6af4a490003d6f56739ca055c.dip0.t-ipconnect.de.
- [2003:f6:af4a:4900:3d6:f567:39ca:55c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb4257csm194675115e9.15.2026.03.06.07.17.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:17:03 -0800 (PST)
-Date: Fri, 6 Mar 2026 16:17:02 +0100 (CET)
-From: Sebastian Ott <sebott@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- peter.maydell@linaro.org, cohuck@redhat.com, peterx@redhat.com, 
- philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v8 2/6] target/arm/machine: Take account cpreg mig
- tolerances in case of mismatch
-In-Reply-To: <e60def83-cfeb-4c65-a4c8-44b20f8f17ca@redhat.com>
-Message-ID: <10e0b91a-4c1e-e12d-98fe-2c92ffa9a223@redhat.com>
-References: <20260304102249.1963784-1-eric.auger@redhat.com>
- <20260304102249.1963784-3-eric.auger@redhat.com>
- <5ddefbe2-3514-fda2-a933-e2df46b4db89@redhat.com>
- <e60def83-cfeb-4c65-a4c8-44b20f8f17ca@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vyWy7-0006SN-5D
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:20:01 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fS96t45BQzJ46Zc;
+ Fri,  6 Mar 2026 23:19:18 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id B99374056B;
+ Fri,  6 Mar 2026 23:19:56 +0800 (CST)
+Received: from localhost (10.48.149.21) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Mar
+ 2026 15:19:55 +0000
+Date: Fri, 6 Mar 2026 15:19:54 +0000
+To: Alireza Sanaee <alireza.sanaee@huawei.com>, <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, <gourry@gourry.net>, <lizhijian@fujitsu.com>,
+ <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
+ <imammedo@redhat.com>, <linuxarm@huawei.com>, <nifan.cxl@gmail.com>,
+ <peterx@redhat.com>, <philmd@linaro.org>, <pbonzini@redhat.com>,
+ <venkataravis@micron.com>, <xiaoguangrong.eric@gmail.com>
+Subject: Re: [PATCH v7 0/3] hw/cxl: Add a performant (and correct) path for
+ the non interleaved cases
+Message-ID: <20260306151954.0000681a@huawei.com>
+In-Reply-To: <20260306121151.883-1-alireza.sanaee@huawei.com>
+References: <20260306121151.883-1-alireza.sanaee@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="-1463806286-824434614-1772810223=:21642"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.48.149.21]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,81 +70,295 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, 6 Mar 2026 12:11:48 +0000
+Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
----1463806286-824434614-1772810223=:21642
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+> Hey everyone,
 
-On Fri, 6 Mar 2026, Eric Auger wrote:
-> On 3/6/26 11:51 AM, Sebastian Ott wrote:
->> On Wed, 4 Mar 2026, Eric Auger wrote:
->>> If there is a mismatch between the cpreg indexes found on both ends,
->>> check whether a tolerance was registered for the given kvmidx. If any,
->>> silence warning/errors.
->>>
->>> Create dedicated helper functions that print the name of the culprit reg
->>> and analyze whether a tolerance is set. According set the level of
->>> traces
->>> and analyze whether the migration must eventually fail.
->>>
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> ---
->>> target/arm/machine.c    | 30 ++++++++++++++++++++----------
->>> target/arm/trace-events |  2 ++
->>> 2 files changed, 22 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/target/arm/machine.c b/target/arm/machine.c
->>> index 476dad00ee7..13b8a0b2220 100644
->>> --- a/target/arm/machine.c
->>> +++ b/target/arm/machine.c
->>> @@ -1065,24 +1065,34 @@ static void
->>> handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx
->>> {
->>>     g_autofree gchar *name = print_register_name(kvmidx);
->>>
->>> -    warn_report("%s: %s "
->>> -                "expected by the destination but not in the incoming
->>> stream: "
->>> -                 "skip it", __func__, name);
->>> +    if (!arm_cpu_cpreg_has_mig_tolerance(cpu, kvmidx,
->>> +                                         0, 0,
->>> ToleranceNotOnBothEnds)) {
->>
->> I don't get this. You apply a different tolerance type than the one
->> (potentially) registered. This check will only fail when there was no
->> tolerance registered for this kvmidx. But this can be changed by someone
->> registering a different type. 
->
-> OK so we know the cpreg is missing in the input stream. If there is a
-> tolerance of type ToleranceNotOnBothEnds for this kvmidx, that's fine,
-> we just trace and do not report any warning. Otherwise we warn_report
-> the issue but do not fail.
-> Does it clarify?
+Michael,
 
-Yes, it does.
+Assuming all other feedback that might come in is good, I consider this series
+ready for upstream.  So if you happen to do another pull request before
+the soft freeze feel free to pick it up directly.
 
-It just feels a bit odd that we identify specific issues when comparing
-destination vs incomming stream and then test if that specific issue is
-tolerated. With the infrastructure from patch 1 I would have expected
-that arm_cpu_cpreg_has_mig_tolerance() can already handle the specific
-issues - something like:
+If not I'll carry it on my staging tree and post a rebased version next cycle.
 
-if (dest[i] == incomming[i]) {
- 	//all good
-} else if (arm_cpu_cpreg_has_mig_tolerance()) {
- 	//all good
-} else
- 	fail();
+Otherwise for CXL stuff there are a few fixes being revised. I don't currently
+see anything new other than this as being ready for upstream.
 
+Thanks for picking up so much earlier this cycle. That has made things
+a lot more manageable!
 
-..but I guess I'm just missing smth.
+Thanks,
 
-Sebastian
----1463806286-824434614-1772810223=:21642--
+Jonathan
+ 
+> 
+> This is v7 of performant CXL type 3 regions set:
+> 
+> 
+> v7 -> v8:
+>           - Rebased on top of the latest master. Base-commit stated at the end of cover-letter.
+>           - Thanks to Gregory and Zhijian for testing and feedback. Addressed
+>           their comments. 
+> v5 -> v6: 
+>           - Use object_unparent() in the third commit when deleting alias regions. 
+>           - Thanks to Gregory for the suggestion and testing.
+> v4 -> v5: 
+>           - Fixed some minor patch style like missing trailing white space and such.
+> v3 -> v4: 
+>           - Tear down path changed, given that it is done differently than
+>           setup.
+>           - Dropped Gregory's tested-by tag due to tear down changes.
+> v2 -> v3: 
+>           - Addressing Zhijian Li. Thanks for the feedback.
+> v1 -> v2: 
+>           - Mainly rebase.
+> 
+> ==========================================================
+> 
+> The CXL address to device decoding logic is complex because of the need
+> to correctly decode fine grained interleave. The current implementation
+> prevents use with KVM where executed instructions may reside in that
+> memory and gives very slow performance even in TCG.
+> 
+> In many real cases non interleaved memory configurations are useful and
+> for those we can use a more conventional memory region alias allowing
+> similar performance to other memory in the system.
+> 
+> Whether this fast path is applicable can be established once the full
+> set of HDM decoders has been committed (in whatever order the guest
+> decides to commit them). As such a check is performed on each commit /
+> uncommit of HDM decoder to establish if the alias should be added or
+> removed.
+> 
+> 
+> Performance numbers:
+> 
+> For a read/write test with 4K block size, 256M region size, and 1 thread
+> with 100 iteration on TCG (it should do similar on KVM):
+> 
+>   - Non-interleaved region (fast path): 25-30 seconds.
+>   - Interleaved region (no fast path):  Never finishes within 10
+>     minutes.
+> 
+> Tested Topologies and Region Layouts
+> ====================================
+> 
+> This series was validated across multiple CXL topology configurations,
+> covering single-device, multi-device, multi-host-bridge, and switched
+> fabrics. Region creation was exercised using the `cxl` userspace tool
+> with both non-interleaved and interleaved setups.
+> 
+> Decoder and memdev identifiers were discovered using:
+> 
+>   cxl list
+>   cxl list -D
+> 
+> Decoder IDs (e.g. decoder0.0) and memdev names (mem0, mem1) are
+> environment-specific. Commands below use placeholders such as
+> <decoder_span_both> which should be replaced with IDs from `cxl list -D`.
+> 
+> ---------------------------------------------------------------------
+> 
+> Region Layout Notation
+> ----------------------
+> 
+> CFMW (CXL Fixed Memory Window) is shown as a linear address space
+> containing regions:
+> 
+>   CFMW: [ R0 | R1 | R2 ]
+> 
+> R0, R1, R2 are regions created by `cxl create-region`.
+> 
+> Non-interleaved region:
+> 
+>   R0 (ways=1) -> entirely on one device (mem0 or mem1)
+>   Fast path: APPLICABLE
+> 
+> 2-way interleaved region (g=256):
+> 
+>   R1 (ways=2, g=256) striped across devices:
+> 
+>     |mem0|mem1|mem0|mem1|mem0|mem1| ...
+>      256  256  256  256  256  256  bytes
+> 
+>   Fast path: NOT APPLICABLE
+> 
+> ---------------------------------------------------------------------
+> 
+> 1) One device, one host bridge, one fixed window
+> ------------------------------------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
+> 
+> Topology:
+> 
+>   Host
+>     |
+>     +-- CXL Host Bridge (cxl.0)
+>          |
+>          +-- Root Port (rp0)
+>               |
+>               +-- Type-3 (dev0, mem0)
+> 
+> Regions created:
+> 
+>   cxl create-region ... -w 1 ... mem0   (Fast path: YES)
+>   cxl create-region ... -w 1 ... mem0   (Fast path: YES)
+> 
+> Layout:
+> 
+>   CFMW: [ R0 | R1 ]
+> 
+>   R0 -> mem0  (Fast path: YES)
+>   R1 -> mem0  (Fast path: YES)
+> 
+> ---------------------------------------------------------------------
+> 
+> 2) One host bridge, two Type-3 devices (via two root ports)
+> ------------------------------------------------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -device cxl-rp,id=rp1,bus=cxl.0,port=1,chassis=0,slot=3
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -object memory-backend-ram,id=mem1,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
+>   -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
+> 
+> Topology:
+> 
+>   Host
+>     |
+>     +-- CXL Host Bridge (cxl.0)
+>          |
+>          +-- Root Port (rp0) -- Type-3 (dev0, mem0)
+>          |
+>          +-- Root Port (rp1) -- Type-3 (dev1, mem1)
+> 
+> Region patterns exercised:
+> 
+> 2.1 All non-interleaved:
+>   R0 -> mem0  (Fast path: YES)
+>   R1 -> mem0  (Fast path: YES)
+>   R2 -> mem1  (Fast path: YES)
+>   R3 -> mem1  (Fast path: YES)
+> 
+> 2.2 Interleaved + local:
+>   R0 -> mem0/mem1 interleaved  (Fast path: NO)
+>   R1 -> mem0                   (Fast path: YES)
+> 
+> 2.3 Local + interleaved + local:
+>   R0 -> mem0                   (Fast path: YES)
+>   R1 -> mem0/mem1 interleaved  (Fast path: NO)
+>   R2 -> mem1                   (Fast path: YES)
+> 
+> ---------------------------------------------------------------------
+> 
+> 3) Two host bridges, one device per host bridge
+> ------------------------------------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,
+>      cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G,
+>      cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=4G,
+>      cxl-fmw.2.targets.0=cxl.0,cxl-fmw.2.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=rp0,memdev=mem0
+>   -device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=13
+>   -device cxl-rp,id=rp1,bus=cxl.1,port=0,chassis=1,slot=2
+>   -object memory-backend-ram,id=mem1,size=512M,share=on
+>   -device cxl-type3,id=dev1,bus=rp1,memdev=mem1
+> 
+> Region patterns identical to section 2, and fast-path applicability is
+> identical per region mapping (non-interleaved: YES, interleaved: NO).
+> 
+> ---------------------------------------------------------------------
+> 
+> 4) Switch topology
+> ------------------
+> 
+> QEMU:
+> 
+>   -M q35,cxl=on,cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G
+>   -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=12
+>   -device cxl-rp,id=rp0,bus=cxl.0,port=0,chassis=0,slot=2
+>   -device cxl-rp,id=rp1,bus=cxl.0,port=0,chassis=0,slot=3
+>   -device cxl-upstream,id=us0,bus=rp0
+>   -device cxl-downstream,id=ds0,bus=us0,port=0,chassis=0,slot=4
+>   -object memory-backend-ram,id=mem0,size=512M,share=on
+>   -device cxl-type3,id=dev0,bus=ds0,memdev=mem0
+> 
+> Topology (detailed):
+> 
+>   Host
+>     |
+>     +-- CXL Host Bridge (cxl.0)
+>          |
+>          +-- Root Port (rp0)
+>          |     |
+>          |     +-- CXL Switch (upstream us0)
+>          |           |
+>          |           +-- Downstream Port (ds0) -- Type-3 (mem0)
+>          |           |
+>          |           +-- Downstream Port (ds1) -- Type-3 (mem1) [optional]
+>          +-- Root Port (rp1)
+>                |
+>                +-- More devices/switches.
+> 
+> Fast-path interpretation in this topology:
+> 
+>   If only mem0 exists:
+>     All regions -> Fast path: YES
+> 
+>   If mem0 and mem1 exist:
+>     Non-interleaved regions -> Fast path: YES
+>     Interleaved regions     -> Fast path: NO
+> 
+> ---------------------------------------------------------------------
+> 
+> Summary
+> -------
+> 
+> Across all topologies, region creation, enablement, and HDM decoder
+> commit/uncommit flows were exercised. The fast path is enabled only when
+> all decoders describe a non-interleaved mapping and is removed when any
+> interleave configuration is introduced.
+> 
+> Alireza Sanaee (3):
+>   hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset in
+>     window.
+>   hw/cxl: Allow cxl_cfmws_find_device() to filter on whether interleaved
+>     paths are accepted
+>   hw/cxl: Add a performant (and correct) path for the non interleaved
+>     cases
+> 
+>  hw/cxl/cxl-component-utils.c |   6 +
+>  hw/cxl/cxl-host.c            | 231 +++++++++++++++++++++++++++++++++--
+>  hw/mem/cxl_type3.c           |   4 +
+>  include/hw/cxl/cxl.h         |   1 +
+>  include/hw/cxl/cxl_device.h  |   4 +
+>  5 files changed, 237 insertions(+), 9 deletions(-)
+> 
+> 
+> base-commit: 483cb5b74cd247b1520e0994b4fae4d8fe44cb00
 
 
