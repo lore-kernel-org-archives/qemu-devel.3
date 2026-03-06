@@ -4,69 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A77FCC05A
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D661FCC063
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vya4X-0001P6-A7; Fri, 06 Mar 2026 13:38:49 -0500
+	id 1vyaLr-0002NJ-Ft; Fri, 06 Mar 2026 13:56:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4B-00015W-7J
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya48-00065c-Ol
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772822304;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SuTZteIe+ykuBflM5F6Q7j9etA3GKomQ8BBwdHEvyxY=;
- b=e7bVFGNBk/Y+Z8dyxUlwQ2DPYPTF7X3U1Z6yikJ9FQT19jqnmMgDqEcYvKQG37Ny0fR0l3
- 7O01VzCKwTxl0B50UvINkbJHv0a3T6+DTRqCNZOBfqB0ACBUi4koMOQxvmCtkHJ3WG9lh5
- OjV7RK3pEvLSHLOW///wnnajkzLVF/U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-yoZqUgqnOfGo_Fh5XInQpQ-1; Fri,
- 06 Mar 2026 13:38:22 -0500
-X-MC-Unique: yoZqUgqnOfGo_Fh5XInQpQ-1
-X-Mimecast-MFC-AGG-ID: yoZqUgqnOfGo_Fh5XInQpQ_1772822301
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F4F7180049D; Fri,  6 Mar 2026 18:38:21 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.45.224.210])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C3871800361; Fri,  6 Mar 2026 18:38:20 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 09/12] qcow2: Add keep_data_file command-line option
-Date: Fri,  6 Mar 2026 19:37:02 +0100
-Message-ID: <20260306183705.410357-10-kwolf@redhat.com>
-In-Reply-To: <20260306183705.410357-1-kwolf@redhat.com>
-References: <20260306183705.410357-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyaLp-0002N5-Ln
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:56:41 -0500
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyaLo-0000n5-7b
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:56:41 -0500
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64937edbc9eso9122202d50.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 10:56:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772823399; cv=none;
+ d=google.com; s=arc-20240605;
+ b=H4vz78cb6Eu6JddG78tMbkFkb587QQrPu6eGRVDMquqCJba0h2vrUzhnkjATVzSOVL
+ QoZ34DL+9M0KIHqwMOUET4jVUJU4tfEdoYQBd/0ZYLLlXvjle1jPELGLO6sr4rlVM5Fc
+ BPrHMsvs0B5/Tur3vRDGHHNX+zqIPwkI7FNWxK9+4EHekNfXh54Wtxd1iYXs0dfHRhy9
+ cckkughVF/ZVAl7208RVTGW1jMX01ghl4ViFyRbFoiSyqnAiwkkd/Kl5S057usim9K69
+ R9yZQpJdQyetygZYm9t/EZvIdIx4JU7kxLhSYXTgkoyJot+HreuljLRYxleku4P0OSUZ
+ ipzA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=GMd0bAU475cICXObPQniWwAoEGHrY5SmerX5uGpjrv4=;
+ fh=F6bOIkOA5aBYREcZAmFgJCjXkzyN1AsEyw/DQQWelOI=;
+ b=M6HVh+nlUAXO4kOOYMfS3+GjxcVAXJdfRBir9VUiR8+7cDvaEJCH0EjBFQ/7ctxlaE
+ thjH/bKX+tTleBRxnKI8TeQvOh2ooGy7Jovf+8SpGvJTaTqchY2SNs+mh5y3T0Igm9YY
+ mgL2Ge0/HVBbYdqnX5JLRjgY3zMMPXnDsG3mUUBpnPxWh4oVYfb53vSfi1abEX3ELKjL
+ EBQpzBSsrWkMas6HmUMbLrFVtvkLMlUx3HqIvzzKXakBfXSW6/TwID46L8/1oghnao2q
+ fINc0Ie0Ao3+8e/umwWu/UJQz2ZtMuHvW+TVFf3DoOh8GPfwuqQMNXX6D/Ht+3qn4rPb
+ uHlA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772823399; x=1773428199; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GMd0bAU475cICXObPQniWwAoEGHrY5SmerX5uGpjrv4=;
+ b=T0TvSZQUW9h3eeq3/+Dj0Emnpq+BxG/L9nvyaHZjiuqCZ0SPBRkVapJ9ybDpYWOJDy
+ 0f8FUbVGb+JZ3e/kxoBwqywnaIc4LRcUPPeuM2JVUfU0KSk7OelFmkqcdmwCIEh1XAr1
+ Fu8pixTBREmM7khmxalAdA1bOS+mb7Du84kMszbQnVUcghQHlWTObtW9RzNikxoFoO/O
+ 9A6QxrX8Kg1MLZkUGMPxk8KfCrLGIx0YfvXE+6fRBl003VITYpyZ5VLrFOaIq4K/O4Ao
+ P4UnOSIvvSuUV1027Di8sKpaFmdGXIkV7Odqx+0eeEhDq6bj+2TjpX8xcy/oSYXyMlzf
+ MWMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772823399; x=1773428199;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GMd0bAU475cICXObPQniWwAoEGHrY5SmerX5uGpjrv4=;
+ b=c0lo6vzCsmkkii7QX8SXY7xRbQWLK0CLGk0rw56iriZgHIrEflgzXUhdu8xdvKDIra
+ 1dDQEph2CYiVtn9kZKHzGGeC61NP1/mD6LQ2t4xDfNjTa+yGSK9+PsD3g3kCgaZ9/9WG
+ sFCF3t28nEEitrMsDNsDBiykLS3lJfJOVRHIc3vAbe+V8TI0zWquOdbPyN4S8DA8SrFZ
+ LkRanZcu8G9awOIXQEIEBOOd0yNu2uAbNzbQ70qGMYLEr6mXo3cPGkleVa+/LVbZ6s6X
+ Rwyx47kACrKBTkDvYixSbh1gejLgMjYx38DSE3m9ySknhMmjDiKbBE0FHXpS6tGlqPsM
+ VK9A==
+X-Gm-Message-State: AOJu0YwYkXaezBhwqSMOV2NHDwXee/FqzwhLK1gi3EMSWHZN3yw3BS/Q
+ cCxlk86Qu/vj/AXjfInLsWIlkCme4aR6dmxzMjscTcRB6hMKazBKBhO1pRTL4r8nGywku2FCM5T
+ Z5dvXPZQ2mgPY5Z1GRTjFf/9vWAEi1auM2eJB/I1S/Q==
+X-Gm-Gg: ATEYQzw6kk4bxPEN7zawZ3ITvJhAialehfVh02yHJpuESQrh5SFT+y7fixsgfDdsbys
+ DthqqaZAM5rqJv5VKpmBs1kMcMHcCRLFoaWsOyrKrBUjNiaVpwq2P0mBqcoDA0cOJHwt3OvG3IQ
+ rD6Bca6tTf0lku2wbSNrdG9Ib28euckV9ms+4+LvR4zP/CKNl+mdf7lV9WDfCJzVyNQ1jjWDZxf
+ vrhNqbpNfnZc3y+JHKBWjUULD64jzbsQud0Jcmp4bKDTPXmEweXPGeKsKCCcCpiJOmTqseNVztM
+ hmRrCKmglQVlesQhgcC62WnXC5GlwBrGQ3qYT838YZ3bIRL9uwjqO6I5iRpx7NkqBrY=
+X-Received: by 2002:a05:690e:12c6:b0:63f:9fcb:2050 with SMTP id
+ 956f58d0204a3-64d142c4da1mr2840171d50.50.1772823398896; Fri, 06 Mar 2026
+ 10:56:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250207210540.24594-1-deller@kernel.org>
+ <20250207210540.24594-3-deller@kernel.org>
+ <CAFEAcA_VWSYYE+GdDRwxpWzOX6qVYptjYOe--azOzo4_pre_+A@mail.gmail.com>
+ <aasZKZ1FQY5ytrb2@p100>
+ <CAFEAcA8MLNYfDe_0chBmo+wwwNJoUHWj4Sg1nhCNSjodCzTOtw@mail.gmail.com>
+ <aaseBa-3GVyjKGXh@p100>
+In-Reply-To: <aaseBa-3GVyjKGXh@p100>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Mar 2026 18:56:27 +0000
+X-Gm-Features: AaiRm51ajFoRQ-kk5fkpR2GlH5Q4kKA6CGQBVBoYXFPn2RKFSgXYrDfLAnjJ0uU
+Message-ID: <CAFEAcA_g4tT2dTyWHoTn0hVZ_Soy7W_exh2JEE-C9U+PN4LGPg@mail.gmail.com>
+Subject: Re: [PULL 2/6] hw/hppa: Wire up Diva GSP card
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,327 +119,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+On Fri, 6 Mar 2026 at 18:33, Helge Deller <deller@kernel.org> wrote:
+>
+> * Peter Maydell <peter.maydell@linaro.org>:
+> > On Fri, 6 Mar 2026 at 18:13, Helge Deller <deller@kernel.org> wrote:
+> > > Background: During development of the various machines it was
+> > > easier for me to just disable/enable the Diva card from the command
+> > > line via the "disable" property.
+> > ...
+> > I think we can also now delete the "disable" propertyi
+> > in the diva-gsp device itself, right?
+>
+> True.
+> Patch is below.
+> Ok?
+>
+> Helge
+>
+> From: Helge Deller <deller@gmx.de>
+> Subject: [PATCH] hw/char: Drop disable property of Diva GSP card
+>
+> The "disable" property is not used, so drop it.
+>
+> Noticed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+>
+> diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+> index 280d0413c6..b945dab37d 100644
+> --- a/hw/char/diva-gsp.c
+> +++ b/hw/char/diva-gsp.c
+> @@ -51,7 +51,6 @@ typedef struct PCIDivaSerialState {
+>      SerialState  state[PCI_SERIAL_MAX_PORTS];
+>      uint32_t     level[PCI_SERIAL_MAX_PORTS];
+>      qemu_irq     *irqs;
+> -    bool         disable;
+>  } PCIDivaSerialState;
+>
+>  static void diva_pci_exit(PCIDevice *dev)
+> @@ -166,13 +165,11 @@ static const VMStateDescription vmstate_pci_diva = {
+>          VMSTATE_STRUCT_ARRAY(state, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS,
+>                               0, vmstate_serial, SerialState),
+>          VMSTATE_UINT32_ARRAY(level, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS),
+> -        VMSTATE_BOOL(disable, PCIDivaSerialState),
 
-Add a command-line-only option to prevent overwriting the file specified
-as external data file.
+You need to increment the version_id and minimum_version_id
+to change the vmstate. Or you could instead replace the line with
+           VMSTATE_UNUSED(1), /* was "disable" */
+(which keeps the migration data structure the same, so no
+version bump needed).
 
-This option is only available on the qemu-img create command line, not
-via blockdev-create, as it makes no sense there: That interface
-separates file creation and formatting, so where the external data file
-attached to a newly formatted qcow2 node comes from is completely up to
-the user.
+I have no strong preference; I would probably just bump
+the version numbers personally.
 
-Implementation detail: Enabling this option will not only not overwrite
-the external data file, but also assume it already exists, for two
-reasons:
-- It is simpler than checking whether the file exists, and only skipping
-  creating it when it does not.  It is therefore also less error-prone,
-  i.e. we can never accidentally overwrite an existing file because we
-  made some mistake in checking whether it exists.
-- I think it makes sense from a user's perspective: You set this option
-  when you want to use an existing data file, and you unset it when you
-  want a new one.  Getting an error when you expect to use an existing
-  data file seems to me a nice warning that something is not right.
+FWIW it was a mistake to put the "disable" field into the vmstate
+in the first place -- properties are set on device creation and
+don't change at runtime, so there is no need to migrate them,
+as the destination machine will have the same configuration.
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20250530084448.192369-2-hreitz@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-[kwolf: Removed redundant has_data_file_raw check]
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- include/block/block_int-common.h |  1 +
- block/qcow2.c                    | 72 ++++++++++++++++++++++++++++++--
- tests/qemu-iotests/082.out       | 18 ++++++++
- 3 files changed, 87 insertions(+), 4 deletions(-)
-
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 9324af903d0..147c08155f7 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -56,6 +56,7 @@
- #define BLOCK_OPT_DATA_FILE_RAW     "data_file_raw"
- #define BLOCK_OPT_COMPRESSION_TYPE  "compression_type"
- #define BLOCK_OPT_EXTL2             "extended_l2"
-+#define BLOCK_OPT_KEEP_DATA_FILE    "keep_data_file"
- 
- #define BLOCK_PROBE_BUF_SIZE        512
- 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index e29810d86a3..e3728806203 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -3991,6 +3991,8 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-     BlockDriverState *bs = NULL;
-     BlockDriverState *data_bs = NULL;
-     const char *val;
-+    bool keep_data_file = false;
-+    BlockdevCreateOptionsQcow2 *qcow2_opts;
-     int ret;
- 
-     /* Only the keyval visitor supports the dotted syntax needed for
-@@ -4022,6 +4024,22 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-         qdict_put_str(qdict, BLOCK_OPT_COMPAT_LEVEL, "v3");
-     }
- 
-+    val = qdict_get_try_str(qdict, BLOCK_OPT_KEEP_DATA_FILE);
-+    if (val) {
-+        if (!strcmp(val, "on")) {
-+            keep_data_file = true;
-+        } else if (!strcmp(val, "off")) {
-+            keep_data_file = false;
-+        } else {
-+            error_setg(errp,
-+                       "Invalid value '%s' for '%s': Must be 'on' or 'off'",
-+                       val, BLOCK_OPT_KEEP_DATA_FILE);
-+            ret = -EINVAL;
-+            goto finish;
-+        }
-+        qdict_del(qdict, BLOCK_OPT_KEEP_DATA_FILE);
-+    }
-+
-     /* Change legacy command line options into QMP ones */
-     static const QDictRenames opt_renames[] = {
-         { BLOCK_OPT_BACKING_FILE,       "backing-file" },
-@@ -4058,9 +4076,11 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-     /* Create and open an external data file (protocol layer) */
-     val = qdict_get_try_str(qdict, BLOCK_OPT_DATA_FILE);
-     if (val) {
--        ret = bdrv_co_create_file(val, opts, false, errp);
--        if (ret < 0) {
--            goto finish;
-+        if (!keep_data_file) {
-+            ret = bdrv_co_create_file(val, opts, false, errp);
-+            if (ret < 0) {
-+                goto finish;
-+            }
-         }
- 
-         data_bs = bdrv_co_open(val, NULL, NULL,
-@@ -4073,6 +4093,11 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
- 
-         qdict_del(qdict, BLOCK_OPT_DATA_FILE);
-         qdict_put_str(qdict, "data-file", data_bs->node_name);
-+    } else if (keep_data_file) {
-+        error_setg(errp, "Must not use '%s=on' without '%s'",
-+                   BLOCK_OPT_KEEP_DATA_FILE, BLOCK_OPT_DATA_FILE);
-+        ret = -EINVAL;
-+        goto finish;
-     }
- 
-     /* Set 'driver' and 'node' options */
-@@ -4093,6 +4118,37 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
-         goto finish;
-     }
- 
-+    qcow2_opts = &create_options->u.qcow2;
-+
-+    if (!qcow2_opts->has_preallocation) {
-+        qcow2_opts->preallocation = PREALLOC_MODE_OFF;
-+    }
-+
-+    if (keep_data_file &&
-+        qcow2_opts->preallocation != PREALLOC_MODE_OFF &&
-+        qcow2_opts->preallocation != PREALLOC_MODE_METADATA)
-+    {
-+        error_setg(errp, "Preallocating more than only metadata would "
-+                   "overwrite the external data file's content and is "
-+                   "therefore incompatible with '%s=on'",
-+                   BLOCK_OPT_KEEP_DATA_FILE);
-+        ret = -EINVAL;
-+        goto finish;
-+    }
-+
-+    if (keep_data_file &&
-+        qcow2_opts->preallocation == PREALLOC_MODE_OFF &&
-+        !qcow2_opts->data_file_raw)
-+    {
-+        error_setg(errp, "'%s=on' requires '%s=metadata' or '%s=on', or the "
-+                   "file contents will not be visible",
-+                   BLOCK_OPT_KEEP_DATA_FILE,
-+                   BLOCK_OPT_PREALLOC,
-+                   BLOCK_OPT_DATA_FILE_RAW);
-+        ret = -EINVAL;
-+        goto finish;
-+    }
-+
-     /* Silently round up size */
-     create_options->u.qcow2.size = ROUND_UP(create_options->u.qcow2.size,
-                                             BDRV_SECTOR_SIZE);
-@@ -4103,7 +4159,9 @@ finish:
-     if (ret < 0) {
-         bdrv_graph_co_rdlock();
-         bdrv_co_delete_file_noerr(bs);
--        bdrv_co_delete_file_noerr(data_bs);
-+        if (!keep_data_file) {
-+            bdrv_co_delete_file_noerr(data_bs);
-+        }
-         bdrv_graph_co_rdunlock();
-     } else {
-         ret = 0;
-@@ -6202,6 +6260,12 @@ static QemuOptsList qcow2_create_opts = {
-             .help = "Compression method used for image cluster "        \
-                     "compression",                                      \
-             .def_value_str = "zlib"                                     \
-+        },                                                              \
-+        {                                                               \
-+            .name = BLOCK_OPT_KEEP_DATA_FILE,                           \
-+            .type = QEMU_OPT_BOOL,                                      \
-+            .help = "Assume the external data file already exists and " \
-+                    "do not overwrite it"                               \
-         },
-         QCOW_COMMON_OPTIONS,
-         { /* end of list */ }
-diff --git a/tests/qemu-iotests/082.out b/tests/qemu-iotests/082.out
-index d0dd333117a..e0463815c65 100644
---- a/tests/qemu-iotests/082.out
-+++ b/tests/qemu-iotests/082.out
-@@ -66,6 +66,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -92,6 +93,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -118,6 +120,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -144,6 +147,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -170,6 +174,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -196,6 +201,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -222,6 +228,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -248,6 +255,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -288,6 +296,7 @@ Supported qcow2 options:
-   encrypt.key-secret=<str> - ID of secret providing qcow AES key or LUKS passphrase
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-   refcount_bits=<num>    - Width of a reference count entry in bits
-@@ -376,6 +385,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -402,6 +412,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -428,6 +439,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -454,6 +466,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -480,6 +493,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -506,6 +520,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -532,6 +547,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -558,6 +574,7 @@ Supported options:
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-   extent_size_hint=<size> - Extent size hint for the image file, 0 to disable
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   nocow=<bool (on/off)>  - Turn off copy-on-write (valid only on btrfs)
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-@@ -598,6 +615,7 @@ Supported qcow2 options:
-   encrypt.key-secret=<str> - ID of secret providing qcow AES key or LUKS passphrase
-   encryption=<bool (on/off)> - Encrypt the image with format 'aes'. (Deprecated in favor of encrypt.format=aes)
-   extended_l2=<bool (on/off)> - Extended L2 tables
-+  keep_data_file=<bool (on/off)> - Assume the external data file already exists and do not overwrite it
-   lazy_refcounts=<bool (on/off)> - Postpone refcount updates
-   preallocation=<str>    - Preallocation mode (allowed values: off, metadata, falloc, full)
-   refcount_bits=<num>    - Width of a reference count entry in bits
--- 
-2.53.0
-
+thanks
+-- PMM
 
