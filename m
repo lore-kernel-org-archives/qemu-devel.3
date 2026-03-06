@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D769FCB605
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B7CFCB608
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:00:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWeo-00042E-U2; Fri, 06 Mar 2026 10:00:02 -0500
+	id 1vyWel-0003vd-Cy; Fri, 06 Mar 2026 09:59:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWen-0003zs-6o
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:01 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1vyWej-0003s7-C2
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:57 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWel-0002PN-Lp
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:00 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439afc58ac7so6374878f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:59 -0800 (PST)
+ id 1vyWeh-0002KO-No
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:57 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439c5b40f60so2778934f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809198; x=1773413998; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809194; x=1773413994; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1gtuIMarbcGPXHXbhN62xYNjrLlfncGqcgn1fgiOBeA=;
- b=aL7DNDK9SXTSc+IsAU2p50+rlSHARsV5uyB08IqiOAtFRLhn9/cooT1oHL2UVge0tW
- Dh5Uwk9cf95qeYxLNQagACVzFaFXuSEXd8ds3mQn57L+Qfl9YRieRrS0FWsypEHKq3L1
- aTHEI1RNiLyqP5Ib6tTibRct3rVqcHXKfYYjS1JZl3DpryfROK3rA0olMRA+4F+R2Ehg
- AdrDSX1dlNDYrwdRlzAAIa/aabKbkhobXA5iJWqCATgMew5IN81m/D+gjLqgfDgGOQ1v
- JrwDjZK/gQ9Ra7CN0bqnS5ip9KSZMY+t9G6HqYJ+lIOKeKbJpIp87SYdpUR5wb0wBbSb
- Nc/Q==
+ :reply-to; bh=hDDY3r22JGwcDao4tzCI6uIgo6JsYupYAptKIjoTmEI=;
+ b=c5S+Clhw8rRYs/hsr5ibBIIkEVaKK/prMTYBIOeYLvA5Kb7na9bKvg6zfjWtEvZjJn
+ kZjejH+Nrxhl8GVh8qWfuLEn/8qxtx4dGeLnnG1Q/Lc26wma70XMC8//9h87YqBdwtdN
+ tZUuP42gRv7wsjosqGAJ9ekMPFWo1ZwqktltO9O9BqNNU6/CB1tpyrIGmJIL4mvj3R4X
+ 9+dZUz/vav5j/wlv1Tb8t2kwCIVkgSgABoopAbCIACgzeoYkWgMTUdOwxWtK5ZEQJvCq
+ lhz5Z9c5tnvO1KJLkfvM899M7+O1dRvOYHLobaKApc+b4HauEKfmgABnnVnoJMY19n49
+ EVQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809198; x=1773413998;
+ d=1e100.net; s=20230601; t=1772809194; x=1773413994;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=1gtuIMarbcGPXHXbhN62xYNjrLlfncGqcgn1fgiOBeA=;
- b=smSujrzkseoikdQSa/DY44uo4wMW2Pis1qG2WJbqtCUpme5KhzNR4vvfIuvXxND8em
- UZpMo9x26+WYbyj0BJXu2azInOMqWgIIUXy3u6xIc6EhXrk82jOE80dFo3NunxmNs03n
- CwNlD16H++Rcjl6kRZmxZlJ04DekH5/Pbnbo3/QM8orTu2yJ/UiJDU9lr7qHXlXVlw8K
- a+sLVyJCUXWBiF+kknAgkzvGxm/rHf5G53vNtL9OrW5CV098F9Zb4YD7ZexT3q51ZYZ0
- +wEacoAz+l1Xa+z9CNVOmuqOyXZg0HgYRc0vA2WTww8lsqCcxsWhjwszbmA89b8W0tqj
- 9tew==
-X-Gm-Message-State: AOJu0Yws/19iGy3a0ZrUOtg2SYht9CdZCTazXmCafSMQILR8+b89rjbD
- gu1P+5SJkEfLqqGhafwhjllmSzWgBFr0q8Gjj8eJSMvw/GTnsAVPxHjqMeupslvIz2OOsiRQ2+P
- mSXuY
-X-Gm-Gg: ATEYQzz0skhLM2XdU4FMhVP70ISVAI4DjgWUNeYxYnREiLk0EhFX8+QVyzr/IExlusC
- aSKJpF0Y/E4/q08LWXQmgR4b3M+WmbvBNc7zn+udDWqfu8nVvrfCnMctISDwg7DRcg1ovHDKwkU
- oyKc4FvvMj2+u33B7za1n/DHYBpFN3nTa0SGGevEk7A2Nj6E0Eg4FjrTKLO1wOZsOHtrO0Y9lVJ
- 17vKAgnEcYADU0lJGOkqVIZ1VCrojwvFllnErWbHhsfBxAQJEBr3J5JdKxec6UjIDN0gHc+Sv1M
- FGFI8vqxaZ0cYHTsNeK/yIY+qasRrYWkCLPJ6HC8AyUwYbWas/yYnz34jVPOdMpopZt3S7vsYDB
- YUaRQFFta1jpiZqDeYE80qY1rEV1GdBXc+JuPZmebw9EFjJCDiyk5DpItrc6C7B4/RQYU4WQDki
- KpJcUR2C5A1gM8DxRBBPnlyYcMbb931H5she5mpYq32GMIpVFdPg3OEivcp2GwrgGn9CRlFk4b7
- cYlrhOPynJtmk+BBgepG2rjxIlmNgg=
-X-Received: by 2002:a05:600c:1e88:b0:482:eec4:76d with SMTP id
- 5b1f17b1804b1-48526959464mr39591675e9.17.1772809198203; 
- Fri, 06 Mar 2026 06:59:58 -0800 (PST)
+ bh=hDDY3r22JGwcDao4tzCI6uIgo6JsYupYAptKIjoTmEI=;
+ b=hEMrxM9pMwX7SDqMBaHIPDGa9lXF3/+toMutVt073hLm3HPYNJk/VcU5PXKbKZ3Z8l
+ SFUvPN7huEKeZ+gLic6JcLAM1vylVvfURkmE7IJwRBeZyzhr0Y+R4ygrAnSa/sUDnSZz
+ 9rdnmQpkSlVpAD1Is2QkYMnKkaOBSa6rOpEVRCs9fB8JeKoj/zx6qUrreN5nBI6dOUmK
+ Fn81Zhd04hsxq2X7EEH4Q2TtYCuuBWro5ITPatE3Ec0zCH6AXaxPECrDdC+XVPe5S6Mo
+ JHyMmhyFsxmm74/vgGkcS7l+NznafV+ZlfZybPVaSvcEMvLmUehc/sko2H1S4EdZYiX4
+ 1tpg==
+X-Gm-Message-State: AOJu0YxPSNRbia9fdSh7Slx6aRqrFbiUVsSuwFwB3n8MnoCcUSef1kEw
+ TlLR0vC+bxZNT3n6pBoCHCwU/4/kf9GlM+2ihnBWYzt0/35L2YbXVFUiTFXsCeI4eUsTssH7UId
+ FDyZu
+X-Gm-Gg: ATEYQzzj2oEyelApZyJi2kWPgOODwqaUgvvRx050V9CdYB0KeOpWXNzaBlx9NpPpoLU
+ llq30azFX8EgmNON2hvQtxNqjIDNr4cPNNJg9dDKpPpl3+1eIbj12HuZZLDOEa9NzK+LMsXmngT
+ FQT/u6Jzf+eLWTOuFT19dU9pkyXEOiSTdGXL36vdGylSGNpRXFN9McJKPCiWFRwR0IBjPDVkadT
+ 2TbjVkK7GTWsNjoKKYngNHWCHlXoSlGkiW3XZ4JDF+GPznfuGtGhqJM5SSn3ELcDmSOLLuBB059
+ 3idZwShhV27pVquaWW3Nc3duTNtu6vdpe+rjVqwK9YfEElbb8Zox2n+2q1RxHHMYLC4hP47Zt2L
+ /rTpfi+jqNqd4AgFO6iUmRMc5X5hVdXJrcgiDV6IhpmJw7nGXRpupuU7vmJ+b76RWlsBiNm6Yez
+ fXrSM8ePHp2IukyLrwn61o//bCxToQ0aOjnM4IJOxsdhGggpAHojTv1FvS5/kT+jNbthr5NUZ05
+ jw6imOxTKOYXhENQYk9awpzoLbK1hLJ5YuHgKjilQ==
+X-Received: by 2002:a05:600c:46c3:b0:480:6bef:63a0 with SMTP id
+ 5b1f17b1804b1-48526959433mr41222625e9.21.1772809194172; 
+ Fri, 06 Mar 2026 06:59:54 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.56
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 06:59:57 -0800 (PST)
+ Fri, 06 Mar 2026 06:59:53 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/49] target/arm/machine: Trace cpreg names which do not match
- on migration
-Date: Fri,  6 Mar 2026 14:59:08 +0000
-Message-ID: <20260306145939.2162189-19-peter.maydell@linaro.org>
+Subject: [PULL 14/49] vmstate: Introduce VMSTATE_VARRAY_INT32_ALLOC
+Date: Fri,  6 Mar 2026 14:59:04 +0000
+Message-ID: <20260306145939.2162189-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,80 +102,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eric Auger <eric.auger@redhat.com>
 
-Whenever there is a mismatch between cpreg indexes in the incoming
-stream and cpregs exposed by the destination output the name of
-the register. We use a print_register_name() wrapper helper. At the
-moment we are only able to do a nice decoding of the index for
-KVM regs.
+Already existing VMSTATE_VARRAY_INT32 requires an array to be
+pre-allocated, however there are cases when the size is not known in
+advance and there is no real need to enforce it.
 
-Without this patch, the error would be:
-qemu-system-aarch64: load of migration failed: Operation not permitted:
-error while loading state for instance 0x0 of device 'cpu': post load
-hook failed for: cpu, version_id: 22, minimum_version: 22, ret: -1
-which is not helpful for the end user to understand the actual
-issue.
+Introduce VMSTATE_VARRAY_INT32_ALLOC as we currently have for UINT32
+and UINT16.
 
-This patch adds the actual information about the probme:
-qemu-system-aarch64: cpu_post_load: system register
-op0:3 op1:0 crn:2 crm:0 op2:3 in the incoming stream but
-unknown on the destination, fail migration
+The first user of this variant will be the target/arm/machine.c cpreg
+indexes/values arrays.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260304101625.1962633-6-eric.auger@redhat.com
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Message-id: 20260304101625.1962633-2-eric.auger@redhat.com
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/machine.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ include/migration/vmstate.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index d3d4f2ddc1..d9b65b5eed 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -1,5 +1,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "cpregs.h"
- #include "trace.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
-@@ -1047,6 +1048,15 @@ static int cpu_pre_load(void *opaque)
-     return 0;
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 89f9f49d20..62c2abd0c4 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -447,6 +447,16 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
  }
  
-+static gchar *print_register_name(uint64_t kvm_regidx)
-+{
-+    if (kvm_enabled()) {
-+        return kvm_print_register_name(kvm_regidx);
-+    } else {
-+        return g_strdup_printf("system register 0x%x", kvm_to_cpreg_id(kvm_regidx));
-+    }
++#define VMSTATE_VARRAY_INT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
++    .name       = (stringify(_field)),                               \
++    .version_id = (_version),                                        \
++    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
++    .info       = &(_info),                                          \
++    .size       = sizeof(_type),                                     \
++    .flags      = VMS_VARRAY_INT32 | VMS_POINTER | VMS_ALLOC,        \
++    .offset     = vmstate_offset_pointer(_state, _field, _type),     \
 +}
 +
- static int cpu_post_load(void *opaque, int version_id)
- {
-     ARMCPU *cpu = opaque;
-@@ -1085,11 +1095,18 @@ static int cpu_post_load(void *opaque, int version_id)
-     for (i = 0, v = 0; i < cpu->cpreg_array_len
-              && v < cpu->cpreg_vmstate_array_len; i++) {
-         if (cpu->cpreg_vmstate_indexes[v] > cpu->cpreg_indexes[i]) {
--            /* register in our list but not incoming : skip it */
-+            g_autofree gchar *name = print_register_name(cpu->cpreg_indexes[i]);
-+
-+            warn_report("%s: %s "
-+                        "expected by the destination but not in the incoming stream: "
-+                        "skip it", __func__, name);
-             continue;
-         }
-         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
--            /* register in their list but not ours: fail migration */
-+            g_autofree gchar *name = print_register_name(cpu->cpreg_vmstate_indexes[v]);
-+
-+            error_report("%s: %s in the incoming stream but unknown on the destination: "
-+                         "fail migration", __func__, name);
-             return -1;
-         }
-         /* matching register, copy the value over */
+ #define VMSTATE_VARRAY_UINT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
+     .name       = (stringify(_field)),                               \
+     .version_id = (_version),                                        \
 -- 
 2.43.0
 
