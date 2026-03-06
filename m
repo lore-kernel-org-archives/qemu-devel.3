@@ -4,107 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5122F01812
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D51F01815
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 09:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyRQb-0001dw-Im; Fri, 06 Mar 2026 04:25:01 -0500
+	id 1vyRV8-0003Te-KH; Fri, 06 Mar 2026 04:29:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyRQY-0001cU-CV
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:24:58 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyRQW-0001Am-WC
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:24:58 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso11165566d50.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 01:24:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772789095; cv=none;
- d=google.com; s=arc-20240605;
- b=C0xbIFWkUB1TQ15kX4Th75hKu9GrcRepCxYOpYxoDhcTrBoRktaXn65qpbkIIcvAIQ
- 12RclUGnnuPed29IsVRtxqOV/2U4743YNl8ip1U5RRgauEGMyNSdK23DTDnAVt8ydRup
- jSTQD6Rzg+6nh+Vhygmwt68kPZXCzikWIYxv9+h11TZsOQoL3skrwJViV0iMPOBkxHnP
- Pa+hxzRNtmophk/jg1NjEic4BKeiY2UfJphpifrJxKbPAehTunNB0t/DzE+KNLJFH2ig
- SEV52nRTe1Um6yv3m3xekEVOrpz0ict1lz+aG3vOoZ7/lwUPvG80LKGM+job6yf5naKs
- FalQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=xkgGQzMEwUzolE3oLVrHcVLK36Dc8YqjciFFaSttqwg=;
- fh=9VbhhDmhTaYYuDQ1iBoJ535oPzjxqBxO6nj9daI7qUQ=;
- b=EPlWdpva7HHL4XCRQA3qIHf/yVeAoTgP9GX+AXXuG02eHvl21zbpEQbytbFnaYIq7q
- 3aqfWDYLbmrWaBuLjHleweA1ICk4b3Qe8fLWzWFDdxcdIGZkGEiZHWhjN88KOSO96Fip
- ZqPKx9ahKz3kqqvzq6w2EChyynWf5Ty/CBOd0EeWHaKhYiJNfcHVBmVYMJRTst81il9z
- +jnRREuuoKG/Qtw534h3xNDhJOGBqxp8M+m6pbXVlGJ2uqxEj7+CcbK4J0O0IJoZcEKc
- W6CdYaLksuHvU4DoZmHzn3RwBtWzmDAM2Bo6ApHPos64CBPn/Dr02gyKqvnZxjPaLj2b
- EMpw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772789095; x=1773393895; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xkgGQzMEwUzolE3oLVrHcVLK36Dc8YqjciFFaSttqwg=;
- b=RVWVOIQdlX6yzPK+L1d9QiUFS8TCAtC+cNrH5Jrm8yInuz5T3GaB6/oFuYshT1WOh/
- IiKfuhOYpPs4sSI3AB/HgrAJVE7GX0f3ehoqbm8H122NWKly6M0crCN98Juxbemkp2+1
- DfJotFE+uyN4wTtae8haKhv+VCJkcZidDiC2wQ3NUlpDdhUREcYoLVy3hmi0txRxHY5e
- 4isNPh1vHt7w2plt/Inx+aw+mKpoorLrLHt/an51j8mRCuLQmE24odTh938LPRz5tgh6
- AKhQdxQgKhT590+YwkUNv9QhLOcyNO3Yk19UMrfMwsKZrp/9WYsnj10i2wqiIgofEJ2q
- Wb0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772789095; x=1773393895;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xkgGQzMEwUzolE3oLVrHcVLK36Dc8YqjciFFaSttqwg=;
- b=Vv0StZRde6Vm4HuXKLYdFr73C+YoZ0Dwt/AdneIgVrJ0VLIjZnfNiBUGuCyiOJdxq6
- NmgUP715XzojrfUs7mvZ1NnAEAN9n5mlVauJTP/1txOFQAMWsGV5grMG9i5clucoJ2fj
- mpN24+LYdlWEki0/Gc6Qy7IJ3NgobnI/W8gFSS4dUDm9fzK+QrWVqi+ehisjtzIDh4f+
- AvmI/MdI76AS9vBrlVUxdkoDrqFAiM3z7o07KFMyDmWlaDRQRhsCMUZmQ48G9p0/NgqQ
- By1CeWRj4bujR4IKPkwSUAwGE3ozAx+PXFTYpZdC28aAZ2A5FxkFi7eGAPiigxrZfK//
- nk7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUVbWeEa8aDw7xtLUPU+e6PIp1iREk8E4ibR8+StTRMmvmpKiXxZVhWMIPnfEbmRRNRsPs15cZnEKW@nongnu.org
-X-Gm-Message-State: AOJu0YwVw2fNwRXKR3b5XAMDSQTvipKwYhgKwUX/w24j1r+G0JQLskMP
- ddnXiXDZvREOfN+51Lm+IiGVxpEENkkguunr7pVKByPlqkEQxTXQ5Yijv8r+8/3NbpV0zLRddSa
- oGi8TgNX0f6XspojN+KsDfdcX+QSN0czrRh25f2wXkA==
-X-Gm-Gg: ATEYQzy8fpLfaD5vvXn63QWSENpGWyPg1R/wpN+w1kX5GBAb15DkuuA9AITWp2JT+pp
- sYCG3t3PV91Xuu6dDBglGCK3VSTactpE0qYbv4yaHq+vBWVpStRaaAkv2QaRT7D0v5bg7tvf/yc
- 2v/TfHTHw0fJ94RUJaadQzo8A08Fyz7dvDaQhZv8ORphvC8IR1F6EGkTyA9TQRTn079WLaDtmq5
- a89RXUkBPIbKQwoBFI5ghdHTb4HTLUsYb5gJ59cpMMQpYbS8/isBqqQeEtk9hwXs4tvKVfI+CDc
- CqhjjQ1Y7rBGQL1rGzM9hqoRGABlPh0P2M1Y/8DCtZA6QiJXtct4ozLXu7MT9wdMbAE=
-X-Received: by 2002:a05:690e:134c:b0:649:db34:c512 with SMTP id
- 956f58d0204a3-64d07108346mr4665928d50.21.1772789095322; Fri, 06 Mar 2026
- 01:24:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vyRV6-0003TB-Db
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:29:40 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vyRV3-0001lY-PL
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 04:29:40 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6269TQ3x064370
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 6 Mar 2026 18:29:30 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=4OuVxmaVR54DDooiuI8WJ8ijJebwIfcEq+SgvV86iXc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1772789370; v=1;
+ b=BjQkIW6JEnReOZm4kCkd79soKVt7O2r4I4jL1xGcbhxm+8IExLtz9qxO504s8ipj
+ IfwQTsf/+/a83Cqjn5Fp0tTv6P3yEfYkeXvDJVluxI9adNgH9vA7vd3d8nb6+WIS
+ b5wba+Nn9OBNDRg/EyVgWpPWP2mxpCji+6eyY6rtJ4IpXvJU6Li3iK15nLy7o96W
+ lL8jfYCmjD8ZV6HfejgccbGB15ZVDZ8vFbW3NcVlH4ZSl/8IaJWk7xVOVekorvEU
+ 2kWKfaP3KaNK9LR5rkDnmccAivk/lQTHFOzjXfW4cysN3/nX1K8el3TiFKyajWm9
+ OqCOs3vryM9y/20RZ5+j9Q==
+Message-ID: <adfd8f81-1f65-4354-9c12-d0449f16849f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 6 Mar 2026 18:29:26 +0900
 MIME-Version: 1.0
-References: <20260304142344.3341444-1-tangtao1634@phytium.com.cn>
-In-Reply-To: <20260304142344.3341444-1-tangtao1634@phytium.com.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 09:24:44 +0000
-X-Gm-Features: AaiRm53AnZqqesJvufABADgC0QBIVKHIB4T580lGm8FPp5aoic4CsW4dyW4EetU
-Message-ID: <CAFEAcA9T+=wF=N0nayH02x+g84fbSbfARDT6M2YRBk9XSgRyqQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] hw/arm/smmuv3: small fixes (spec compliance /
- robustness)
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Eric Auger <eric.auger@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mostafa Saleh <smostafa@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260305065700.1155146-1-vivek.kasireddy@intel.com>
+ <20260305065700.1155146-11-vivek.kasireddy@intel.com>
+ <6d5d1e1c-2ed3-4f2f-ac35-f7086b877fad@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185E548B48C9E6A8E4E595EF87AA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB7185E548B48C9E6A8E4E595EF87AA@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,26 +82,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 4 Mar 2026 at 14:24, Tao Tang <tangtao1634@phytium.com.cn> wrote:
->
-> This is a small fixes-only series extracted from larger Secure SMMU RFC.
->
-> These three patches are self-contained, already reviewed in the RFC thread,
-> and can be applied independently. Sending them separately should make review
-> and merging easier.
->
+On 2026/03/06 16:47, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v9 10/10] virtio-gpu-dmabuf: Create dmabuf for
+>> blobs associated with VFIO devices
+>>
+>> On 2026/03/05 15:54, Vivek Kasireddy wrote:
+>>> In addition to memfd, a blob resource can also have its backing
+>>> storage in a VFIO device region. Since, there is no effective way
+>>> to determine where the backing storage is located, we first try to
+>>> create a dmabuf assuming it is in memfd. If that fails, we try to
+>>> create a dmabuf assuming it is in VFIO device region.
+>>>
+>>> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+>>> backing storage is located in a memfd or not. If it is not, we invoke
+>>> the vfio_device_create_dmabuf_fd() API which identifies the right
+>>> VFIO device and eventually creates a dmabuf fd.
+>>>
+>>> Note that, for mmapping the dmabuf, we directly call mmap() if the
+>>> dmabuf fd was created via virtio_gpu_create_udmabuf() since we
+>> know
+>>> that the udmabuf driver supports mmap(). However, if the dmabuf
+>> was
+>>> created via vfio_device_create_dmabuf_fd(), we use the
+>>> vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu-dmabuf.c | 24 +++++++++++++++++++-----
+>>>    1 file changed, 19 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>> dmabuf.c
+>>> index dd64fbbc2d..7f4c399416 100644
+>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>> @@ -136,7 +136,7 @@ bool virtio_gpu_have_udmabuf(void)
+>>>
+>>>    void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>>>    {
+>>> -    Error *local_err = NULL;
+>>> +    Error *local_err = NULL, *vfio_err = NULL;
+>>>        void *pdata = NULL;
+>>>        int ret;
+>>>
+>>> @@ -155,10 +155,24 @@ void virtio_gpu_init_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>            }
+>>>
+>>>            if (ret == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>> -            qemu_log_mask(LOG_GUEST_ERROR,
+>>> -                          "Cannot create dmabuf: incompatible memory\n");
+>>> -            error_free(local_err);
+>>> -            return;
+>>> +            ret = vfio_device_create_dmabuf_fd(res->iov, res->iov_cnt,
+>>> +                                               &vfio_err);
+>>> +            if (ret > 0) {
+>>
+>> Zero represents a success by convention.
+>>
+>>> +                if (vfio_device_mmap_dmabuf(res->iov, res->iov_cnt,
+>> &pdata,
+>>> +                                            res->blob_size, &vfio_err)) {
+>>> +                    error_free(local_err);
+>>> +                    goto out;
+>>> +                }
+>>> +            }
+>>> +
+>>> +            if (ret == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>> +                qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                              "Cannot create dmabuf: incompatible memory\n");
+>>> +                error_free(vfio_err);
+>>> +                error_free(local_err);
+>>> +                return;
+>>> +            }
+>>> +            error_report_err(vfio_err);
+>>>            }
+>>>            error_report_err(local_err);
+>>
+>> This reports invalid IOV even when it is actually a valid pointer to
+>> VFIO and the VFIO is failing. Such an error report does not help and we
+>> should instead report only the VFIO error.
+> I thought reporting more errors to the user made sense here in this case.
+
+In that case we know udmabuf is doing fine but it still reports an 
+error, which is misleading.
+
+> 
+>>
+>> And there is another bug with the previous patch where res-
+>>> dmabuf_fd is
+>> invalid when virtio_gpu_remap_dmabuf() uses it.
+> Yeah, I see it. Will fix it in the next version. FYI, this was the only version
+> I did not test as my test environment was not available.
+> 
+>>
+>> Below is my attempt to fix these issues:
+> It is a different style and structure (compared to mine) but I guess I'll adopt
+> it in the next version to get things going. I do have one comment/question below.
+> 
+>>
+>>       if (res->iov_cnt == 1 &&
+>>           res->iov[0].iov_len < 4096) {
+>>           res->dmabuf_fd = -1;
+>>           pdata = res->iov[0].iov_base;
+>>       } else {
+>>           res->dmabuf_fd = virtio_gpu_create_udmabuf(res, &local_err);
+>>           if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>               error_free_or_abort(local_err);
+>>
+>>               res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
+>>                                                             res->iov_cnt,
+>>                                                             &local_err);
+>>               if (res->dmabuf_fd ==
+>> VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+>>                   res->dmabuf_fd = -1;
+>>                   error_free_or_abort(local_err);
+>>                   qemu_log_mask(LOG_GUEST_ERROR,
+>>                                 "Cannot create dmabuf: incompatible
+>> memory\n");
+>>                   return;
+>>               }
+>>
+>>               if (res->dmabuf_fd < 0 ||
+>>                   !vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &pdata,
+>>                                            res->blob_size, &local_err)) {
+>>                   res->dmabuf_fd = -1;
+> I am wondering here and in the below else if what is the benefit of setting
+> res->dmabuf_fd to -1 if it is already negative? Also, if res->dmabuf_fd is
+> valid (non-negative) and mmap fails, shouldn't we call virtio_gpu_destroy_dmabuf()
+> to close the dmabuf fd?
+
+Setting -1 is not strictly needed but improves consistency. You are 
+right about virtio_gpu_destroy_dmabuf().
+
+Regards,
+Akihiko Odaki
+
+> 
 > Thanks,
-> Tao Tang
->
-> Tao Tang (3):
->   hw/arm/smmuv3-common: Fix incorrect reserved mask for SMMU CR0
->     register
->   hw/arm/smmuv3: Correct SMMUEN field name in CR0
->   hw/arm/smmuv3: Fix CFGI_CD handling when stage-1 is unsupported
+> Vivek
+> 
+>>               }
+>>           } else if (res->dmabuf_fd < 0 ||
+>>                      !virtio_gpu_remap_dmabuf(res, &pdata, &local_err)) {
+>>               res->dmabuf_fd = -1;
+>>           }
+>>
+>>           if (res->dmabuf_fd < 0) {
+>>               error_report_err(local_err);
+>>               return;
+>>           }
+>>
+>>           res->remapped = pdata;
+>>       }
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>            return;
+> 
 
-
-
-Applied to target-arm.next, thanks.
-
--- PMM
 
