@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B79BFCB61E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91238FCB61D
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXpy-00047L-Dq; Fri, 06 Mar 2026 11:15:38 -0500
+	id 1vyXs3-00080F-HO; Fri, 06 Mar 2026 11:17:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXpp-00044K-E2
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:15:29 -0500
-Received: from p-west3-cluster3-host9-snip4-1.eps.apple.com ([57.103.72.232]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXpo-00075p-1Q
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:15:29 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPS id
- A1238180011B; Fri,  6 Mar 2026 16:15:25 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772813726; x=1775405726;
- bh=IzVSt1aVpyTkgRI+sV6HgtQSQ/A0iOy/FaOFV8C9G40=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=cQqhIHQfibx3xU/hymfWocKcNgX1fIOvu3fVCH7TRh9QpnpdOj1B5o+juumo3oxNfVcl5WBoyjfQ7fDT7vV7Pb/rBYUqmWPJZCEsqnDiurOvTVqQiaJcFsWT9GR7Tq+tFO6eH/vfL/U3W9CtZunU4FtBvMu3zkHSDaz7FcQ+4K85MTod+H1tVcU3TaH8OtY8abnj6MArf5bD1bi8QY+ZitJoCErk1HupTMPJ1Rw0ErZYVhu5URirFbtCy0c2VFolMXorjNRXystcz1lhlNOo8IB+aM6kUg2Tjzv3ccWlE8MCn4ROUNdrUP49iYaPzrLEQKU6T9qu4c4THvNZJLB4Mg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPSA id
- E92B7180013A; Fri,  6 Mar 2026 16:15:22 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXrv-0007NR-VJ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:42 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXrs-0007kG-Ty
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:39 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4837584120eso72591345e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772813855; x=1773418655; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1mzSYGcm7/qr5Cg9HP7x8g6LlDTTQX7yElD9yTvaHjc=;
+ b=u4n5NJzD/iYXIldQMpc8cxCny2yP/HQaHb8qtvvFfYBZ7LEn6364CfZhePUJO/XYwr
+ f9McFSaRTQffrkDvhRWZVXN/0xvUaFycCahpbvBbl4EEeJVtiZ3gclW2USuPbLoA49XO
+ axTQXkL2zeIig/BfcJ0c+lh+bZUHzD9zElTbddD1SfAPyH3mizChVy/yrH2FVvdpeDZw
+ BgDFoinIxf/z5VRAbLTNDWHA8d9LPvpb/vd9+MUDeQbNixpCDOT/uNqpI6CYjRCm2jz5
+ sK04IkHJI+pIw18l8d6MfRKuY8c5VwVan8PgUQplGWt9kUgm9Nfzb18Mb4iO8sDvb1Ii
+ mCdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772813855; x=1773418655;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1mzSYGcm7/qr5Cg9HP7x8g6LlDTTQX7yElD9yTvaHjc=;
+ b=L2JsvH7r90hANoCkq2Y0I8LBSALoK7hu3+M/oiM+lLdMjJSaLFgBXe4uZyWIccAK0+
+ 6G6rl0dMa5ZQbnYim0LrJ8HdBWdGaj29rfUgVAHZhA0Z5+ef7Zximy2DdCmKdV+uWaRV
+ gOX/LI8VY/1d60/RZ7AP3OpwZJF7vX1/H93O0bvHVzGMm0hanKtI3B93sOKjE92N7Rh/
+ LYaL4U8RacJSTIuP6uFMJEc2grn+0z0M1xeYDmVKQ7uBX5RheMjyRWZ3fNPvmiaVeRdj
+ z4h5stGOFnxc4oZUaER5nrxzsQ+1XeBZjf8A05cqPIGFAj5qqD+oG21JCpeqncYvJ7H/
+ 8BPg==
+X-Gm-Message-State: AOJu0YypNGidMdKY3mfai7+Fs48qyo0C9dwGti4nCmCXyYiLgtBhO7u/
+ e66SSi+QWpiib3mOTx28s/W6c8fqOZffke1aQFiwfw0yu16i6c7wfzVQicTIOV0pUvo=
+X-Gm-Gg: ATEYQzyjm13yeemd5Rkco5xrSkaC9DplHcS6v+wc98QwxthB6kRmjZ+SNpu0W01v3E9
+ aUTx1/Wb773PmoDRJl0u5SE1NTfQCaUBnRidBC5ZaaUdP7rbbJ/Fdv0Z+M7wButMWnyVR1UDa7l
+ AiKM3K99cY9w+SYKd3jX5VYQDa1phgz20Vleqf5DDXVDgPogcTJ3OXxB4oUH0nAfQ5hN1kGzExf
+ N58NWhQkM9v1IzqEsIrFwnV+UDB8uOH6g88kd+rMnMrFNmp5SuUwm8SJpd7UJc4C2reTvg2YXfi
+ dYeqV07VeN+3CuVuRQMCRVgm2lAXTpNAQ+ye+to3nm98aJG/LqB70xqOGJ2wI3Gxnkl2SRBgHOM
+ ZxX4uXXrrbf+QXr1q6f5rFappYSpFnbYkyeDnFuM4Pl0k6tTrhi/tVlfFhE46UbdKAku1sF8b5g
+ pBjxspPd50Td5NxFZbR5zP6fWPBnJTFK9Nww==
+X-Received: by 2002:a05:600c:470d:b0:483:7f4e:fef6 with SMTP id
+ 5b1f17b1804b1-48526966afamr43721675e9.26.1772813855073; 
+ Fri, 06 Mar 2026 08:17:35 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48527686fa9sm55371075e9.8.2026.03.06.08.17.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 08:17:33 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5477D689D4;
+ Fri, 06 Mar 2026 16:17:29 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v16 04/17] hvf: hvf-all: stop including hvf_arm.h
-Date: Fri,  6 Mar 2026 17:14:56 +0100
-Message-ID: <20260306161509.79712-5-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260306161509.79712-1-mohamed@unpredictable.fr>
-References: <20260306161509.79712-1-mohamed@unpredictable.fr>
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 5/7] tests/functional: allow tests to define decompression
+ target
+Date: Fri,  6 Mar 2026 16:17:26 +0000
+Message-ID: <20260306161728.2657486-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260306161728.2657486-1-alex.bennee@linaro.org>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: rwMDNeTmymxBSJKsoiQrNXdGM0BpUgyG
-X-Proofpoint-ORIG-GUID: rwMDNeTmymxBSJKsoiQrNXdGM0BpUgyG
-X-Authority-Info-Out: v=2.4 cv=TZObdBQh c=1 sm=1 tr=0 ts=69aafd9e
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=uNs1HyugXjh6PdyaFdwA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE1NCBTYWx0ZWRfXx8qLeGzW7H2w
- LmsEnMqod2Pea+yWGtCjNrPbiJBqHBPeBpsGLxtnL547D7j1VucyJDdQPTcqX18VXM248hdw+0K
- s+k8xwSVbkHH8JtHgEglCaneNckVGnEewQpqM7XIX7CiqbmbLbmbe8PeAzZu6h/9+UPQh0qd4b7
- TVKBO+YdwP+II3SeV+wQ625pxdDpIiB7q6KL7eTKUoqmARdw5/fWa2sJrpfyiONuL40LOihzmi8
- 3fUz62QJVIEhfO4YXCErHvwvm7c4ZL/AgBHZyVjKkrsKHamRVoGL8gH8u7YAFmDhR8EOdlZMq3q
- 7rcTKqix8Hk98xuL5Q2gHqXD3NmabTe+caop+4eCTLsm31Huf7emTDKZOcyWK4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- mlxscore=0 bulkscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=660 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603060154
-X-JNJ: AAAAAAAB2ubFuceEpBhTfP5Qsdy3PqUfrwjSahhyCAutZ77y6O3Qq/BkctSGjpRzM9kMXTqx4+Sc2umhwMxDTqNDECeyfhC48j71JFu7lkkRZJ1p/lt6JQ6gRgIuQZTL3ZPc28Vv4fodieb7CYEnBQD+Nq0XHvxxTzHIaPw+OyTMTtsMq3I14vlZCr1ftXoTrYmsYSRvQPQC/no0q1ZUPBgB7jG4KPSD809WgcI738NZyhspTebWZyzW0ZkK0VUKw9cGml9Gt5SWoDl8lbjq9/Y2UB3FQgruBrohhh6CPiHDG1YFOwCbHoKytUNznxdrUnXr/fCW1mO8kYivcX+cwNJdE82GQDThaFqIUt6ZWKHe21ByHGC2GYuG+r2uIaPJnTHoh/cB9Ii+YAjzuec/1lk2LzxtpDyIaAIsTj4AOr7x49ZbUN3deyk7pQlIrnnrIO8ZCuVEjVEUb/Z4TuYgK0JeMoAd/99gSWntGT+flCYWad1KKLsfBzkp2ytZLXQCbUOo2TeX6gIov9fyVtW4+sMxdYp3ZIYB5JynZFN+L2aKqeAdN1McfVPyYuDxIpc8+K3IXdmaWeHx6as9P8RUdIFhygGph9Fk/QWcLRBs8Y8f40jWpAmcCB/dPPwp1eOTdkOktUREaacAPFqLPdvJM/r53rNKjXdt++RH+pYrJE5b8BrTEstwq7xM9/+3Y2SqTx3IllUou97pMG2NdmNd//BotNAcHqzE1nzBcAI5boxwSDwMxXssxNQ5KpSlcPW2UHwHtEU/zOekV+w=
-Received-SPF: pass client-ip=57.103.72.232;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,25 +110,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
----
- accel/hvf/hvf-all.c | 1 -
- 1 file changed, 1 deletion(-)
+When dealing with multi-stage decompression we want to specify the
+target file name lest we just overload the cache name. It also allows
+for something is little more friendly than the cache hash.
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 033c677b6f..5f357c6d19 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -18,7 +18,6 @@
- #include "system/hvf_int.h"
- #include "hw/core/cpu.h"
- #include "hw/core/boards.h"
--#include "target/arm/hvf_arm.h"
- #include "trace.h"
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/functional/qemu_test/testcase.py | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index c2c916f6077..eaec1bea138 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -35,7 +35,7 @@
  
- bool hvf_allowed;
+ class QemuBaseTest(unittest.TestCase):
+ 
+-    def uncompress(self, compressed, format=None):
++    def uncompress(self, compressed, target=None, format=None):
+         '''
+         @params compressed: filename, Asset, or file-like object to uncompress
+         @params format: optional compression format (gzip, lzma)
+@@ -52,8 +52,11 @@ def uncompress(self, compressed, format=None):
+         if isinstance(compressed, Asset):
+             compressed.fetch()
+ 
+-        (name, _ext) = os.path.splitext(str(compressed))
+-        uncompressed = self.scratch_file(os.path.basename(name))
++        if target is not None:
++            uncompressed = self.scratch_file(target)
++        else:
++            (name, _ext) = os.path.splitext(str(compressed))
++            uncompressed = self.scratch_file(os.path.basename(name))
+ 
+         uncompress(compressed, uncompressed, format)
+ 
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
