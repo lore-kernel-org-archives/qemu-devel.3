@@ -4,108 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555CBF0182F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:36:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6268F01835
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyVM4-0006C9-MQ; Fri, 06 Mar 2026 08:36:37 -0500
+	id 1vyVRZ-00083L-Vp; Fri, 06 Mar 2026 08:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyVM3-0006C1-Il
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:36:35 -0500
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyVM1-0005SU-F1
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:36:35 -0500
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-79898953985so48514887b3.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 05:36:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772804190; cv=none;
- d=google.com; s=arc-20240605;
- b=jEGto0MWbclS+cJ4JnXHLicbOlWwnV20dvngugiW90jAHB0lBjissgZ5Up3JJ1kM0E
- ZsnkKpsxWUAccv+4nYUVyzJiAV6mNfhmDe1DpfNQ/43T0Lb7H9KaeCXuZ6roVQEV/kAA
- CpnAGSmxaiBQ1kifUn2RTsccwNeYavnB2xg2EW3q/zviQJtkCYrfrd8YnyH1ZVXxn2l1
- PE3mRi7ZQRUuQ8ndh5ts1BeJPHfamELvjZ5T7cTaGzzThl9dmbI7K4zHxUD5P1WXxsIH
- 8JxBMODRhj1MARkvQ8MCLnft9nrvv3oe7NfQ5YSt08Zh5Wm+/ZfZZCUdvTRJSTR5H9Pv
- gSeA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=HCQLd+EiglPdY8lR++J1vWDeZLDuOmfJaUc4kL430Hs=;
- fh=jUYsI/2acYShRiXxoUq/Pm9LQcAd+S5Ayx7Ab2mBfmk=;
- b=YPG+NiKedB+4Svu7aJaC929pFu0th5ad6QpNio3jnL8LUyXRrP5KdMoOI+54kuOdxy
- 1t35eedZlWuqQUGSpkX1TQu5xpg5zd0s5y2vw60D0kVqreatQlKc2hsMnaenAfGvbOqn
- uFPaPWah/nn1iztJEwFifTDqPJT5zSnpf6LPbclyPY9yckJdFQ4eNMONT7vAhaVjyCoE
- wgpwDNBHP2kP2d6ZAZd4vI049+Eg1ScLd1hXiZJPQbO4c6bIbBmybP34TNNmXnJZ7PXd
- jMP0rFHTK8xthDE5RfN2tbiHV0YNgNLbrzoTtkPvS02fsXpTlF9TDAiuawAXQ+g+bFa5
- 2yIQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vyVRW-00082W-O7
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:42:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vyVRT-0006Ga-PZ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:42:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772804530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XKhfAih6jfv9yK+mEQsJz6z4UPDnXGK5YiG2nfvnK2o=;
+ b=UobRGcSHy/oWOkLqdYipai5kWvGkffxnHX85y8In/r7xpq7rms2SogJYz0KAvGgXv7eSEt
+ 8DZD6oKvD1g0TpWO3ePcqUpCIaBwCwEmRboqr3Hv67taRgN7TPVk/C1ar9cqOxAzmOOg+I
+ TYClgVUcTBhwrebU2ksWp1jj7hPwGKs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-jhVUc_NpMrusOEyOfE3okQ-1; Fri, 06 Mar 2026 08:42:08 -0500
+X-MC-Unique: jhVUc_NpMrusOEyOfE3okQ-1
+X-Mimecast-MFC-AGG-ID: jhVUc_NpMrusOEyOfE3okQ_1772804527
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4837a718f41so50023625e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 05:42:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772804190; x=1773408990; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HCQLd+EiglPdY8lR++J1vWDeZLDuOmfJaUc4kL430Hs=;
- b=Po3taHwgFmdFr879NBBHWdjw/8SHGYBpWC8fPrZwJU4QwPbQn2BRIUf5R9e80I8gRr
- uGLcanxdyRFGCT2QhX+JPTDX2n39asAtOI1t1FoQYDozphiWZhbCeN2xfzzODLxePNeT
- llRrVS0I0HTwz/42SUVawZip2W+uonjO4DU46WNyfhA9fKy8wTbWlyUfdu3dBmY4rew1
- mlSbR9GT6eyI+zS7eHkhX25/fkh8XsIRjw6+abAwxpdibZz0DldL6DBjfO9VmBJ7sMdJ
- zMSi58/xdkp7n9XX9Wa6vI3gUaQ34DWvZjDxja087LgLoW4mV5LatWnNCjfKwuEC3fKZ
- T+ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772804190; x=1773408990;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1772804527; x=1773409327; darn=nongnu.org;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HCQLd+EiglPdY8lR++J1vWDeZLDuOmfJaUc4kL430Hs=;
- b=tc6y9Pekz2opya7sNeWRgQcWIZhzGeQ/pII9hYCAyzpMrWb+FigIcJw9Bnsc017e/b
- tnJteGBvGvJPpT7jWdZGav7l5BKFi8iqVeqcMzckaCANYKnFrBX49DYdY2c7+I3hLH8L
- hXylW/LgPNdswW04lri4WgHxzdNleV2OLUPQKjzm8boRgxiUpGlYPT2+lkJPFk0N42Gw
- XymniUXyH7EL6HRO8LCpDS8Ca9mZKbPaUWfCrXP2icbKV+ztwLSxErYGH+h1oKeHnXle
- X4zsceKWXckR/EeRZL4jwFdh0JeZvDxRgyx6oSGIxTNUN6YT2l8eOS1YwtElrl/TI5SV
- Z2JA==
-X-Gm-Message-State: AOJu0YzsEN2111AQVxgn4D9dh80KBa3scphHy+Ea8HmbJ6hqpT6/PgAX
- fnAMDFVfEKdQFaQhcBgeUjOjQZTMXXGkF9+lzNFQSeE6QS4wc33O54B3xLaJ0oQ31052xbCDvqz
- UJuq0KMgif+0v52NlRgudJXnWiYAFuXnm07f+FTYuwgoZNw8M+cmr
-X-Gm-Gg: ATEYQzwDlPi34fSvXef+4FrXwQFM+FD7etNV81oCxeCoObrUK0IpXi/HvNFWe/8rj8r
- c8GE//YzT4Z7fwgYaDIis65Ts8WehKqms896DMfyV9UaTs0dvWxpFwfI4olrCU3QXAO8lrrAnaf
- 6D50+DsMyOUqq0vVKJLl61OdFPD3sTzP3tivYLVTRoi/X8vFimVBhzMb3riojGYCMubzhaijydZ
- YwpAW4jkBfqF5YyCE6f7CpRDKU0/gRA5WY8Cjkk4iwR42AZaLoSPecG5SAdPhROUW1bG+fLCASU
- YXW2dM4ojhH8nf/OgUlOGUkOMf7LpW1sOz4Hgh2tAmaAovu+6SV06/l9uwsywZlMTxw=
-X-Received: by 2002:a05:690c:6d83:b0:794:ede8:16c with SMTP id
- 00721157ae682-798dd7d07d5mr18565807b3.60.1772804189543; Fri, 06 Mar 2026
- 05:36:29 -0800 (PST)
+ bh=XKhfAih6jfv9yK+mEQsJz6z4UPDnXGK5YiG2nfvnK2o=;
+ b=GkbW/QBNjFJcIMaV1kvJWTcE/3Pxj45alvk/HyAOrlXSs553DPHpWL+CYtB48AIR0N
+ Oj9rQzIECsHgatZRPE146n1ydAFVGpFLNzy+qZHIXzCmtcq2QuPTHP43euj2A5V7LLHG
+ 56jqgcrz14CggSI+2F26hZAHaU856uVyxPEyXgdlhxtCO7BNRveo9TqBl/2peNqfXarm
+ bUNZQmxvNBBzVnce6TPa6yHh6IP5fPj7ZRI4qJoIxOLLc42HcNmBn3SUeWpC/OEjyV6w
+ zsdPuijtgA8TGNz16Hv6s570kRCwxaiQjGU8HcI/nxNJKc7ph8G5k1I989KkolRqVk/M
+ yD4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772804527; x=1773409327;
+ h=in-reply-to:from:content-language:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XKhfAih6jfv9yK+mEQsJz6z4UPDnXGK5YiG2nfvnK2o=;
+ b=FzNfkgUGVUQE0AwcrhOW3f4xBKPJRCkj6TtRX3/v8fldRx39i0yuUnuY9Ki6pQkF3C
+ UDUP4BfP70i0BbaMCi+mDLVOPm8jQ7A926Y711aa7RWLa/ipDkhGwlUxbhVBtw+nWJVM
+ fx1sCA4vSE67swvEMQv/BDY+uU+KmKgpvsHH6AnePfE4RKXgEbyJ95Xs11/0wj/Oqc42
+ Jt1R3gHQ92CZ6bKyUqsTqEn+2+P3muKxxjPdqNS6FU+TkG2YOFKwLruJFE0jAbdXJ5OB
+ PMw7fkKTMzfy4YAGgRL30DVTodJY87npf2vFM2dVGZDgrO410Tp5hyGt6yBjunndy2R7
+ VdaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUAZEwFrRTcTr/N46xYqA17d/9vrr9BQYhVKXW/wm2FbE6bab+ZVnYKwdOE4XbUl9nF7qnhaMzGbTxe@nongnu.org
+X-Gm-Message-State: AOJu0YzDmhELa+cZqkt8Kcd3R9iG2JyChPMtg5VcSeduY1zhMWh+CojO
+ +jn1hYdIY3fy3WvpMGDt/l+28FqnN4AxOt0IfdFqkkVR2sm/RpjwprpNIK85XPLUY1yqNvmo7bg
+ OqKuP1Uzx2ALALgfv6JU5B6mqHxKs0iunPeVfleerVHaxMQu3ppuzoC1x
+X-Gm-Gg: ATEYQzydSbhbdu2utLx56snQLzbulYmg51A6KDFYmMwqIVU1iWU53qAR6KWvuBB/025
+ brHku50P/XSKasKGWs+UhSDqBITzg+pwVyppWVhsykB4XDilBSgGhLcvG4XeXI2DAUl91/z2llk
+ dosA4Rn6mcJIec4MPhGcOqXEC9FoRFUh/XCDC1Owwy8xcwXKVFZpot44Z4CSakHeJH03VPUVwyd
+ hyBH+iYoxgIDf7mlhhxhfrLF4WFvth8OXglB/qVxM+axg6745KdplCnefr9EJKYBKGM0Te6wJ/z
+ WFSPuM6m1/lH+FQHdtlvSs4EMjbch5YHq68BiudWO4FJP4MJ588Ul82n/RcqLybU8idQ+d/37AQ
+ goaRhXvktiKJb4orDCWVTm0zlR7nFtT38MjV8K+uCd+welsbIvm9HEWpsQdvL5QiFpuQXovUGC3
+ 4KAhEqc0+nj8AscmZL8KEOoCqmgIuSrBqhis0n9wyI+Von7/Jhgyo=
+X-Received: by 2002:a05:600c:8218:b0:480:69ae:f0e9 with SMTP id
+ 5b1f17b1804b1-48526958b30mr40575085e9.16.1772804526878; 
+ Fri, 06 Mar 2026 05:42:06 -0800 (PST)
+X-Received: by 2002:a05:600c:8218:b0:480:69ae:f0e9 with SMTP id
+ 5b1f17b1804b1-48526958b30mr40574395e9.16.1772804526267; 
+ Fri, 06 Mar 2026 05:42:06 -0800 (PST)
+Received: from ?IPV6:2003:cf:d737:d076:615b:37d9:f4c0:4867?
+ (p200300cfd737d076615b37d9f4c04867.dip0.t-ipconnect.de.
+ [2003:cf:d737:d076:615b:37d9:f4c0:4867])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851fad2812sm194663545e9.1.2026.03.06.05.41.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Mar 2026 05:42:05 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------DHcHyZfWnVkaACiYEbRe9lES"
+Message-ID: <1d11486a-f592-49ff-837a-346f7c493ca7@redhat.com>
+Date: Fri, 6 Mar 2026 14:41:55 +0100
 MIME-Version: 1.0
-References: <20260306130107.35359-1-mohamed@unpredictable.fr>
- <20260306130107.35359-17-mohamed@unpredictable.fr>
- <CAFEAcA-bh0s0mkUEsunwDRAjRsCDJaJkzHToUg77e-6X=ejbyw@mail.gmail.com>
- <38911692-67DC-4212-AF8B-E647F488390D@unpredictable.fr>
-In-Reply-To: <38911692-67DC-4212-AF8B-E647F488390D@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 13:36:17 +0000
-X-Gm-Features: AaiRm52CPQ59ijZV9yxcu93XNoafMzYAV-is9X3aSFUE-_yXXGf0SGtosf0SR3w
-Message-ID: <CAFEAcA_dzEjy8knHkARmAhCqc1rRxAK8S5ptaj3kzu54rT=x0A@mail.gmail.com>
-Subject: Re: [PATCH v15 16/17] hvf: arm: disable SME when nested virt is active
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v2_04/19=5D_nfs=3A_Run_co_BH_CB_in_the_cor?=
+ =?UTF-8?Q?outine=E2=80=99s_AioContext?=
+To: Peter Lieven <pl@dlhnet.de>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Richard W . M . Jones" <rjones@redhat.com>,
+ Ilya Dryomov <idryomov@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20251110154854.151484-1-hreitz@redhat.com>
+ <20251110154854.151484-5-hreitz@redhat.com>
+ <EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,45 +134,728 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Mar 2026 at 13:34, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
->
->
-> > On 6. Mar 2026, at 14:32, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > On Fri, 6 Mar 2026 at 13:02, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> >>
-> >> Currently, Apple doesn't support the nested virtualisation + SME combination.
-> >>
-> >> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> >> ---
-> >> target/arm/hvf/hvf.c | 3 +++
-> >> target/arm/hvf_arm.h | 5 +++++
-> >> 2 files changed, 8 insertions(+)
-> >>
-> >> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> >> index 0183dd8a60..61ba5acce4 100644
-> >> --- a/target/arm/hvf/hvf.c
-> >> +++ b/target/arm/hvf/hvf.c
-> >> @@ -1181,6 +1181,9 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> >>
-> >>     if (hvf_nested_virt_enabled()) {
-> >>         FIELD_DP64_IDREG(&host_isar, ID_AA64DFR0, PMUVER, 0x1);
-> >> +        /* SME is not implemented with nested virt on the Apple side */
-> >> +        SET_IDREG(&host_isar, ID_AA64PFR1,
-> >> +              GET_IDREG(&host_isar, ID_AA64PFR1) & ~R_ID_AA64PFR1_SME_MASK);
-> >
-> > This is
-> >  FIELD_DP64_IDREG(&host_isar, ID_AA64PFR1, SME, 0);
-> >
-> > isn't it?
-> >
-> Hi,
->
-> That's an equivalent sequence indeed. Should I respin for this?
+This is a multi-part message in MIME format.
+--------------DHcHyZfWnVkaACiYEbRe9lES
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-No, I'll fix it locally.
+On 03.03.26 20:24, Peter Lieven wrote:
+>
+>
+>> Am 10.11.2025 um 16:48 schrieb Hanna Czenczek <hreitz@redhat.com>:
+>>
+>> Like in “rbd: Run co BH CB in the coroutine’s AioContext”, drop the
+>> completion flag, yield exactly once, and run the BH in the coroutine’s
+>> AioContext.
+>>
+>> (Can be reproduced with multiqueue by adding a usleep(100000) before the
+>> `while (!task.complete)` loops.)
+>>
+>> Like in “iscsi: Run co BH CB in the coroutine’s AioContext”, this makes
+>> nfs_co_generic_bh_cb() trivial, so we can drop it in favor of just
+>> calling aio_co_wake() directly.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>> ---
+>> block/nfs.c | 41 ++++++++++++++++-------------------------
+>> 1 file changed, 16 insertions(+), 25 deletions(-)
+>>
+>> diff --git a/block/nfs.c b/block/nfs.c
+>> index 0a7d38db09..1d3a34a30c 100644
+>> --- a/block/nfs.c
+>> +++ b/block/nfs.c
+>> @@ -69,7 +69,6 @@ typedef struct NFSClient {
+>> typedef struct NFSRPC {
+>>     BlockDriverState *bs;
+>>     int ret;
+>> -    int complete;
+>>     QEMUIOVector *iov;
+>>     struct stat *st;
+>>     Coroutine *co;
+>> @@ -230,14 +229,6 @@ static void coroutine_fn 
+>> nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)
+>>     };
+>> }
+>>
+>> -static void nfs_co_generic_bh_cb(void *opaque)
+>> -{
+>> -    NFSRPC *task = opaque;
+>> -
+>> -    task->complete = 1;
+>> -    aio_co_wake(task->co);
+>> -}
+>> -
+>> /* Called (via nfs_service) with QemuMutex held.  */
+>> static void
+>> nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+>> @@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct nfs_context 
+>> *nfs, void *data,
+>>     if (task->ret < 0) {
+>>         error_report("NFS Error: %s", nfs_get_error(nfs));
+>>     }
+>> -    replay_bh_schedule_oneshot_event(task->client->aio_context,
+>> -                                     nfs_co_generic_bh_cb, task);
+>> +
+>> +    /*
+>> +     * Safe to call: nfs_service(), which called us, is only run 
+>> from the FD
+>> +     * handlers, never from the request coroutine.  The request 
+>> coroutine in
+>> +     * turn will yield unconditionally.
+>> +     * No need to release the lock, even if we directly enter the 
+>> coroutine, as
+>> +     * the lock is never re-taken after yielding.  (Note: If we do 
+>> enter the
+>> +     * coroutine, @task will probably be dangling once aio_co_wake() 
+>> returns.)
+>> +     */
+>> +    aio_co_wake(task->co);
+>> }
+>>
+>> static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t 
+>> offset,
+>> @@ -278,9 +277,7 @@ static int coroutine_fn 
+>> nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+>>
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>
+>>     if (task.ret < 0) {
+>>         return task.ret;
+>> @@ -328,9 +325,7 @@ static int coroutine_fn 
+>> nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
+>>
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>
+>>     if (my_buffer) {
+>>         g_free(buf);
+>> @@ -358,9 +353,7 @@ static int coroutine_fn 
+>> nfs_co_flush(BlockDriverState *bs)
+>>
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>
+>>     return task.ret;
+>> }
+>> @@ -723,8 +716,8 @@ nfs_get_allocated_file_size_cb(int ret, struct 
+>> nfs_context *nfs, void *data,
+>>     if (task->ret < 0) {
+>>         error_report("NFS Error: %s", nfs_get_error(nfs));
+>>     }
+>> -    replay_bh_schedule_oneshot_event(task->client->aio_context,
+>> -                                     nfs_co_generic_bh_cb, task);
+>> +    /* Safe to call, see nfs_co_generic_cb() */
+>> +    aio_co_wake(task->co);
+>> }
+>>
+>> static int64_t coroutine_fn 
+>> nfs_co_get_allocated_file_size(BlockDriverState *bs)
+>> @@ -748,9 +741,7 @@ static int64_t coroutine_fn 
+>> nfs_co_get_allocated_file_size(BlockDriverState *bs)
+>>
+>>         nfs_set_events(client);
+>>     }
+>> -    while (!task.complete) {
+>> -        qemu_coroutine_yield();
+>> -    }
+>> +    qemu_coroutine_yield();
+>>
+>>     return (task.ret < 0 ? task.ret : st.st_blocks * 512);
+>> }
+>> -- 
+>> 2.51.1
+>>
+>
+> Hallo Hanna,
+>
+> it has been a long time where I was inactive in Qemu development and I 
+> should have checked this earlier, but it seems that this patch 
+> accidentally broke libnfs usage with at least qemu cmdline tools like 
+> qemu-img. Again, sorry for not testing this earlier, but I have only 
+> recently entered the Qemu show again.
+>
+> I found this glitch while working on a patch to include libnfs v6 
+> support in qemu to avoid dropping libnfs support.
+>
+> A simple call like:
+>
+> qemu-img create -f qcow2 nfs://nfsserver/image.qcow2 10G
+>
+> hangs forever in the second write request.
 
-thanks
--- PMM
+I sent a patch for this, which is basically the same as yours below: 
+https://lists.nongnu.org/archive/html/qemu-block/2026-01/msg00000.html
+
+Hanna
+
+>
+> I have not confirmed, but this might also hold true for libiscsi which 
+> internally is quite identical (at least it was 3 years ago ;-))
+>
+> You are right, the coroutine can only yield once, but it seems that 
+> the bottom half logic is still needed.
+> Maybe you have an idea why? I remember that we had this differently 
+> first and implemented it after Stefan pointed out that it might be needed.
+> I will try to find the thread about this discussion.
+>
+> This patch here restores functionality for me:
+>
+> *diff --git a/block/nfs.c b/block/nfs.c*
+>
+> *index 1d3a34a30c..45731ea3da 100644*
+>
+> *--- a/block/nfs.c*
+>
+> *+++ b/block/nfs.c*
+>
+> @@ -75,6 +75,12 @@typedef struct NFSRPC {
+>
+> NFSClient *client;
+>
+>  } NFSRPC;
+>
+> +static void nfs_co_generic_bh_cb(void *opaque)
+>
+> +{
+>
+> + NFSRPC *task = opaque;
+>
+> + aio_co_wake(task->co);
+>
+> +}
+>
+> +
+>
+>  static int nfs_parse_uri(const char *filename, QDict *options, Error 
+> **errp)
+>
+>  {
+>
+> g_autoptr(GUri) uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
+>
+> @@ -248,15 +254,8 @@nfs_co_generic_cb(int ret, struct nfs_context 
+> *nfs, void *data,
+>
+> error_report("NFS Error: %s", nfs_get_error(nfs));
+>
+>      }
+>
+> -    /*
+>
+> -     * Safe to call: nfs_service(), which called us, is only run from 
+> the FD
+>
+> -     * handlers, never from the request coroutine.  The request 
+> coroutine in
+>
+> -     * turn will yield unconditionally.
+>
+> -     * No need to release the lock, even if we directly enter the 
+> coroutine, as
+>
+> -     * the lock is never re-taken after yielding.  (Note: If we do 
+> enter the
+>
+> -     * coroutine, @task will probably be dangling once aio_co_wake() 
+> returns.)
+>
+> -     */
+>
+> - aio_co_wake(task->co);
+>
+> + replay_bh_schedule_oneshot_event(task->client->aio_context,
+>
+> +                               nfs_co_generic_bh_cb, task);
+>
+>  }
+>
+>  static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t 
+> offset,
+>
+> @@ -716,8 +715,8 @@nfs_get_allocated_file_size_cb(int ret, struct 
+> nfs_context *nfs, void *data,
+>
+>      if (task->ret < 0) {
+>
+> error_report("NFS Error: %s", nfs_get_error(nfs));
+>
+>      }
+>
+> -    /* Safe to call, see nfs_co_generic_cb() */
+>
+> - aio_co_wake(task->co);
+>
+> + replay_bh_schedule_oneshot_event(task->client->aio_context,
+>
+> +                               nfs_co_generic_bh_cb, task);
+>
+>  }
+>
+>  static int64_t coroutine_fn 
+> nfs_co_get_allocated_file_size(BlockDriverState *bs)
+>
+>
+>
+>
+> Best
+>
+> Peter
+>
+>
+
+--------------DHcHyZfWnVkaACiYEbRe9lES
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 03.03.26 20:24, Peter Lieven wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <br id="lineBreakAtBeginningOfMessage">
+      <div><br>
+        <blockquote type="cite">
+          <div>Am 10.11.2025 um 16:48 schrieb Hanna Czenczek
+            <a class="moz-txt-link-rfc2396E" href="mailto:hreitz@redhat.com">&lt;hreitz@redhat.com&gt;</a>:</div>
+          <br class="Apple-interchange-newline">
+          <div>
+            <div>Like in “rbd: Run co BH CB in the coroutine’s
+              AioContext”, drop the<br>
+              completion flag, yield exactly once, and run the BH in the
+              coroutine’s<br>
+              AioContext.<br>
+              <br>
+              (Can be reproduced with multiqueue by adding a
+              usleep(100000) before the<br>
+              `while (!task.complete)` loops.)<br>
+              <br>
+              Like in “iscsi: Run co BH CB in the coroutine’s
+              AioContext”, this makes<br>
+              nfs_co_generic_bh_cb() trivial, so we can drop it in favor
+              of just<br>
+              calling aio_co_wake() directly.<br>
+              <br>
+              Cc: <a class="moz-txt-link-abbreviated" href="mailto:qemu-stable@nongnu.org">qemu-stable@nongnu.org</a><br>
+              Signed-off-by: Hanna Czenczek <a class="moz-txt-link-rfc2396E" href="mailto:hreitz@redhat.com">&lt;hreitz@redhat.com&gt;</a><br>
+              ---<br>
+              block/nfs.c | 41 ++++++++++++++++-------------------------<br>
+              1 file changed, 16 insertions(+), 25 deletions(-)<br>
+              <br>
+              diff --git a/block/nfs.c b/block/nfs.c<br>
+              index 0a7d38db09..1d3a34a30c 100644<br>
+              --- a/block/nfs.c<br>
+              +++ b/block/nfs.c<br>
+              @@ -69,7 +69,6 @@ typedef struct NFSClient {<br>
+              typedef struct NFSRPC {<br>
+                  BlockDriverState *bs;<br>
+                  int ret;<br>
+              -    int complete;<br>
+                  QEMUIOVector *iov;<br>
+                  struct stat *st;<br>
+                  Coroutine *co;<br>
+              @@ -230,14 +229,6 @@ static void coroutine_fn
+              nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)<br>
+                  };<br>
+              }<br>
+              <br>
+              -static void nfs_co_generic_bh_cb(void *opaque)<br>
+              -{<br>
+              -    NFSRPC *task = opaque;<br>
+              -<br>
+              -    task-&gt;complete = 1;<br>
+              -    aio_co_wake(task-&gt;co);<br>
+              -}<br>
+              -<br>
+              /* Called (via nfs_service) with QemuMutex held.  */<br>
+              static void<br>
+              nfs_co_generic_cb(int ret, struct nfs_context *nfs, void
+              *data,<br>
+              @@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct
+              nfs_context *nfs, void *data,<br>
+                  if (task-&gt;ret &lt; 0) {<br>
+                      error_report("NFS Error: %s", nfs_get_error(nfs));<br>
+                  }<br>
+              -
+                 replay_bh_schedule_oneshot_event(task-&gt;client-&gt;aio_context,<br>
+              -
+                                                  nfs_co_generic_bh_cb,
+              task);<br>
+              +<br>
+              +    /*<br>
+              +     * Safe to call: nfs_service(), which called us, is
+              only run from the FD<br>
+              +     * handlers, never from the request coroutine.  The
+              request coroutine in<br>
+              +     * turn will yield unconditionally.<br>
+              +     * No need to release the lock, even if we directly
+              enter the coroutine, as<br>
+              +     * the lock is never re-taken after yielding.  (Note:
+              If we do enter the<br>
+              +     * coroutine, @task will probably be dangling once
+              aio_co_wake() returns.)<br>
+              +     */<br>
+              +    aio_co_wake(task-&gt;co);<br>
+              }<br>
+              <br>
+              static int coroutine_fn nfs_co_preadv(BlockDriverState
+              *bs, int64_t offset,<br>
+              @@ -278,9 +277,7 @@ static int coroutine_fn
+              nfs_co_preadv(BlockDriverState *bs, int64_t offset,<br>
+              <br>
+                      nfs_set_events(client);<br>
+                  }<br>
+              -    while (!task.complete) {<br>
+              -        qemu_coroutine_yield();<br>
+              -    }<br>
+              +    qemu_coroutine_yield();<br>
+              <br>
+                  if (task.ret &lt; 0) {<br>
+                      return task.ret;<br>
+              @@ -328,9 +325,7 @@ static int coroutine_fn
+              nfs_co_pwritev(BlockDriverState *bs, int64_t offset,<br>
+              <br>
+                      nfs_set_events(client);<br>
+                  }<br>
+              -    while (!task.complete) {<br>
+              -        qemu_coroutine_yield();<br>
+              -    }<br>
+              +    qemu_coroutine_yield();<br>
+              <br>
+                  if (my_buffer) {<br>
+                      g_free(buf);<br>
+              @@ -358,9 +353,7 @@ static int coroutine_fn
+              nfs_co_flush(BlockDriverState *bs)<br>
+              <br>
+                      nfs_set_events(client);<br>
+                  }<br>
+              -    while (!task.complete) {<br>
+              -        qemu_coroutine_yield();<br>
+              -    }<br>
+              +    qemu_coroutine_yield();<br>
+              <br>
+                  return task.ret;<br>
+              }<br>
+              @@ -723,8 +716,8 @@ nfs_get_allocated_file_size_cb(int
+              ret, struct nfs_context *nfs, void *data,<br>
+                  if (task-&gt;ret &lt; 0) {<br>
+                      error_report("NFS Error: %s", nfs_get_error(nfs));<br>
+                  }<br>
+              -
+                 replay_bh_schedule_oneshot_event(task-&gt;client-&gt;aio_context,<br>
+              -
+                                                  nfs_co_generic_bh_cb,
+              task);<br>
+              +    /* Safe to call, see nfs_co_generic_cb() */<br>
+              +    aio_co_wake(task-&gt;co);<br>
+              }<br>
+              <br>
+              static int64_t coroutine_fn
+              nfs_co_get_allocated_file_size(BlockDriverState *bs)<br>
+              @@ -748,9 +741,7 @@ static int64_t coroutine_fn
+              nfs_co_get_allocated_file_size(BlockDriverState *bs)<br>
+              <br>
+                      nfs_set_events(client);<br>
+                  }<br>
+              -    while (!task.complete) {<br>
+              -        qemu_coroutine_yield();<br>
+              -    }<br>
+              +    qemu_coroutine_yield();<br>
+              <br>
+                  return (task.ret &lt; 0 ? task.ret : st.st_blocks *
+              512);<br>
+              }<br>
+              -- <br>
+              2.51.1<br>
+              <br>
+            </div>
+          </div>
+        </blockquote>
+        <br>
+      </div>
+      <div>Hallo Hanna,</div>
+      <div><br>
+      </div>
+      <div>it has been a long time where I was inactive in Qemu
+        development and I should have checked this earlier, but it seems
+        that this patch accidentally broke libnfs usage with at least
+        qemu cmdline tools like qemu-img. Again, sorry for not testing
+        this earlier, but I have only recently entered the Qemu show
+        again.</div>
+      <div><br>
+      </div>
+      <div>I found this glitch while working on a patch to include
+        libnfs v6 support in qemu to avoid dropping libnfs support.</div>
+      <div><br>
+      </div>
+      <div>A simple call like:</div>
+      <div><br>
+      </div>
+      <div>qemu-img create -f qcow2 <a
+          href="nfs://nfsserver/image.qcow2" moz-do-not-send="true"
+          class="moz-txt-link-freetext">nfs://nfsserver/image.qcow2</a> 10G</div>
+      <div><br>
+      </div>
+      <div>hangs forever in the second write request.</div>
+    </blockquote>
+    <br>
+    I sent a patch for this, which is basically the same as yours below:
+<a class="moz-txt-link-freetext" href="https://lists.nongnu.org/archive/html/qemu-block/2026-01/msg00000.html">https://lists.nongnu.org/archive/html/qemu-block/2026-01/msg00000.html</a><br>
+    <br>
+    Hanna<br>
+    <br>
+    <blockquote type="cite"
+      cite="mid:EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de">
+      <div><br>
+      </div>
+      <div>I have not confirmed, but this might also hold true for
+        libiscsi which internally is quite identical (at least it was 3
+        years ago ;-))</div>
+      <div><br>
+      </div>
+      <div>You are right, the coroutine can only yield once, but it
+        seems that the bottom half logic is still needed.</div>
+      <div>Maybe you have an idea why? I remember that we had this
+        differently first and implemented it after Stefan pointed out
+        that it might be needed.</div>
+      <div>I will try to find the thread about this discussion.</div>
+      <div><br>
+      </div>
+      <div>This patch here restores functionality for me:</div>
+      <div><br>
+      </div>
+      <div>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><b>diff
+              --git a/block/nfs.c b/block/nfs.c</b></span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><b>index
+              1d3a34a30c..45731ea3da 100644</b></span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><b>---
+              a/block/nfs.c</b></span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><b>+++
+              b/block/nfs.c</b></span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+style="font-variant-ligatures: no-common-ligatures; color: #38b9c7">@@
+            -75,6 +75,12 @@</span><span
+            style="font-variant-ligatures: no-common-ligatures"> typedef
+            struct NFSRPC {</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">    
+            NFSClient *client;</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> }
+            NFSRPC;</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0); min-height: 13px;"><span
+            style="font-variant-ligatures: no-common-ligatures"> </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+static
+            void nfs_co_generic_bh_cb(void *opaque)</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+{</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+   
+            NFSRPC *task = opaque;</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+   
+            aio_co_wake(task-&gt;co);</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+}</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> static
+            int nfs_parse_uri(const char *filename, QDict *options,
+            Error **errp)</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> {</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">    
+            g_autoptr(GUri) uri = g_uri_parse(filename,
+            G_URI_FLAGS_NONE, NULL);</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+style="font-variant-ligatures: no-common-ligatures; color: #38b9c7">@@
+            -248,15 +254,8 @@</span><span
+            style="font-variant-ligatures: no-common-ligatures">
+            nfs_co_generic_cb(int ret, struct nfs_context *nfs, void
+            *data,</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">        
+            error_report("NFS Error: %s", nfs_get_error(nfs));</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">     }</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0); min-height: 13px;"><span
+            style="font-variant-ligatures: no-common-ligatures"> </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-    /*</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     *
+            Safe to call: nfs_service(), which called us, is only run
+            from the FD</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     *
+            handlers, never from the request coroutine.  The request
+            coroutine in</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     *
+            turn will yield unconditionally.</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     *
+            No need to release the lock, even if we directly enter the
+            coroutine, as</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     *
+            the lock is never re-taken after yielding.  (Note: If we do
+            enter the</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     *
+            coroutine, @task will probably be dangling once
+            aio_co_wake() returns.)</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-     */</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-   
+            aio_co_wake(task-&gt;co);</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+   
+            replay_bh_schedule_oneshot_event(task-&gt;client-&gt;aio_context,</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+      
+                                          nfs_co_generic_bh_cb, task);</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> }</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0); min-height: 13px;"><span
+            style="font-variant-ligatures: no-common-ligatures"> </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> static
+            int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t
+            offset,</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+style="font-variant-ligatures: no-common-ligatures; color: #38b9c7">@@
+            -716,8 +715,8 @@</span><span
+            style="font-variant-ligatures: no-common-ligatures">
+            nfs_get_allocated_file_size_cb(int ret, struct nfs_context
+            *nfs, void *data,</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">     if
+            (task-&gt;ret &lt; 0) {</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">        
+            error_report("NFS Error: %s", nfs_get_error(nfs));</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">     }</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-    /*
+            Safe to call, see nfs_co_generic_cb() */</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(202, 51, 35);"><span
+            style="font-variant-ligatures: no-common-ligatures">-   
+            aio_co_wake(task-&gt;co);</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+   
+            replay_bh_schedule_oneshot_event(task-&gt;client-&gt;aio_context,</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(57, 192, 38);"><span
+            style="font-variant-ligatures: no-common-ligatures">+      
+                                          nfs_co_generic_bh_cb, task);</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> }</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0); min-height: 13px;"><span
+            style="font-variant-ligatures: no-common-ligatures"> </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"> static
+            int64_t coroutine_fn
+            nfs_co_get_allocated_file_size(BlockDriverState *bs)</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><br>
+          </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><br>
+          </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures"><br>
+          </span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">Best</span></p>
+        <p
+style="margin: 0px; font-style: normal; font-variant-caps: normal; font-width: normal; font-size: 11px; line-height: normal; font-family: Menlo; font-size-adjust: none; font-kerning: auto; font-variant-alternates: normal; font-variant-ligatures: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-position: normal; font-variant-emoji: normal; font-feature-settings: normal; font-optical-sizing: auto; font-variation-settings: normal; color: rgb(0, 0, 0);"><span
+            style="font-variant-ligatures: no-common-ligatures">Peter</span></p>
+      </div>
+      <br>
+    </blockquote>
+    <br>
+  </body>
+</html>
+
+--------------DHcHyZfWnVkaACiYEbRe9lES--
+
 
