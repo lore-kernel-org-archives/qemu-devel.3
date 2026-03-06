@@ -4,69 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E8FF51416
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6036CF33A92
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWBE-0007DU-Ic; Fri, 06 Mar 2026 09:29:28 -0500
+	id 1vyWAy-00079H-IG; Fri, 06 Mar 2026 09:29:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyWBD-0007CZ-2b
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:29:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pl@dlhnet.de>)
+ id 1vyWAp-00078J-5a; Fri, 06 Mar 2026 09:29:03 -0500
+Received: from mailcow.dlhnet.de ([2a01:b1c0::44ca:22ff:fe9b:798c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyWBB-0004tD-Nl
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:29:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772807365;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3uePhOIw7V33gcTtcHzAfCvatCscfEm67Ki3tJ5CTXE=;
- b=a46RPpjBOWuvfYPkh3V/UWFHqBfR5ln7n2Q+WC5Kk3YmTm7i0MYoRM5tdxw0rt+6LMWP7a
- dz75lGahUrPh1AnO7+eehSN/1tvejHFKf1LzwERYNBmMfRXqCZf/DF1KB4CAAxyDHqMVtA
- /feGmAXcMusqHTwCU4q1wOo+yquHoAM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-OnhERoQbPBSGP2ajjyilDw-1; Fri,
- 06 Mar 2026 09:29:22 -0500
-X-MC-Unique: OnhERoQbPBSGP2ajjyilDw-1
-X-Mimecast-MFC-AGG-ID: OnhERoQbPBSGP2ajjyilDw_1772807361
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0794C18002CF; Fri,  6 Mar 2026 14:29:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.210])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCE851800673; Fri,  6 Mar 2026 14:29:19 +0000 (UTC)
-Date: Fri, 6 Mar 2026 15:29:17 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/4] qcow2: Add keep_data_file command-line option
-Message-ID: <aarkvZt4Ww4ekTTu@redhat.com>
-References: <20250530084448.192369-1-hreitz@redhat.com>
- <20250530084448.192369-2-hreitz@redhat.com>
+ (Exim 4.90_1) (envelope-from <pl@dlhnet.de>)
+ id 1vyWAi-0004pc-9f; Fri, 06 Mar 2026 09:29:02 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon)
+ with ESMTPSA id AFB4946AEA2; Fri,  6 Mar 2026 15:28:51 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dlhnet.de; s=dkim;
+ t=1772807332; h=from:subject:date:message-id:to:cc:mime-version:
+ content-transfer-encoding; bh=YVduhRvlfmWCULF5ggKnw9zwhlMXrPGN+aN1A3qn2Dk=;
+ b=aCcq9EouDTbhnVKRTKNtDSW8d3fCeIWgwETmFNgsXKSMM7XZPvy2eBlfUBZPqnlu547a7g
+ 4zGwXcKb38wW5+g+iOzrfKsPJlXVq3qF3244sZDl0tNUxIlF2dMp90UDy3HCRIjqhDctjI
+ WyTGwgavKr69ucus+khlYuU6MTYi2+6D0+1v0f5rP5lG8xwemj2aGfhu7PnH9sO4GT70UQ
+ GDO7Rx1jJxZjC2l0E2eO0CpIGzuVH619bNG+ESAdAX7ixpJ1mlEVAaN9O9wzBTJ/Kf6rig
+ EFX5G0BHJ9fsl66Ptm5o4CgW+1pckrlXWAsP3ad+/hcNbdmboNzrzCocpAq7ZQ==
+Received: by pkgbuilder.localdomain (Postfix, from userid 0)
+ id 90747402DC; Fri, 06 Mar 2026 14:28:51 +0000 (UTC)
+From: Peter Lieven <pl@dlhnet.de>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, pbonzini@redhat.com,
+ hreitz@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ philmd@linaro.org, armbru@redhat.com, jsnow@redhat.com, thuth@redhat.com,
+ Peter Lieven <pl@dlhnet.de>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Subject: [PATCH] block/nfs: add support for libnfs v6
+Date: Fri,  6 Mar 2026 14:28:40 +0000
+Message-ID: <20260306142840.72923-1-pl@dlhnet.de>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250530084448.192369-2-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
+Received-SPF: pass client-ip=2a01:b1c0::44ca:22ff:fe9b:798c;
+ envelope-from=pl@dlhnet.de; helo=mailcow.dlhnet.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,47 +66,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 30.05.2025 um 10:44 hat Hanna Czenczek geschrieben:
-> Add a command-line-only option to prevent overwriting the file specified
-> as external data file.
-> 
-> This option is only available on the qemu-img create command line, not
-> via blockdev-create, as it makes no sense there: That interface
-> separates file creation and formatting, so where the external data file
-> attached to a newly formatted qcow2 node comes from is completely up to
-> the user.
-> 
-> Implementation detail: Enabling this option will not only not overwrite
-> the external data file, but also assume it already exists, for two
-> reasons:
-> - It is simpler than checking whether the file exists, and only skipping
->   creating it when it does not.  It is therefore also less error-prone,
->   i.e. we can never accidentally overwrite an existing file because we
->   made some mistake in checking whether it exists.
-> - I think it makes sense from a user's perspective: You set this option
->   when you want to use an existing data file, and you unset it when you
->   want a new one.  Getting an error when you expect to use an existing
->   data file seems to me a nice warning that something is not right.
-> 
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+libnfs v6 added a new api structure for read and write requests.
 
-> @@ -4004,6 +4029,40 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
->          goto finish;
->      }
->  
-> +    qcow2_opts = &create_options->u.qcow2;
-> +
-> +    if (!qcow2_opts->has_preallocation) {
-> +        qcow2_opts->preallocation = PREALLOC_MODE_OFF;
-> +    }
-> +    if (!qcow2_opts->has_data_file_raw) {
-> +        qcow2_opts->data_file_raw = false;
-> +    }
+This effectively also adds zero copy read support for cases where
+the qiov coming from the block layer has only one vector.
 
-These checks are technically redundant, QAPI already gives us a zeroed
-object. At least for the enum, it might still be nice not to rely on the
-order. I don't think there's a reason for the bool one, though.
+The .brdv_refresh_limits implementation is needed because libnfs v6
+silently dropped support for splitting large read/write request into
+chunks.
 
-Kevin
+Signed-off-by: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Signed-off-by: Peter Lieven <pl@dlhnet.de>
+---
+ block/nfs.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ meson.build |  2 +-
+ 2 files changed, 50 insertions(+), 2 deletions(-)
+
+diff --git a/block/nfs.c b/block/nfs.c
+index b78f4f86e8..53e267fa75 100644
+--- a/block/nfs.c
++++ b/block/nfs.c
+@@ -69,7 +69,9 @@ typedef struct NFSClient {
+ typedef struct NFSRPC {
+     BlockDriverState *bs;
+     int ret;
++#ifndef LIBNFS_API_V2
+     QEMUIOVector *iov;
++#endif
+     struct stat *st;
+     Coroutine *co;
+     NFSClient *client;
+@@ -237,6 +239,7 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+     NFSRPC *task = private_data;
+     task->ret = ret;
+     assert(!task->st);
++#ifndef LIBNFS_API_V2
+     if (task->ret > 0 && task->iov) {
+         if (task->ret <= task->iov->size) {
+             qemu_iovec_from_buf(task->iov, 0, data, task->ret);
+@@ -244,6 +247,7 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+             task->ret = -EIO;
+         }
+     }
++#endif
+     if (task->ret < 0) {
+         error_report("NFS Error: %s", nfs_get_error(nfs));
+     }
+@@ -266,13 +270,36 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+ {
+     NFSClient *client = bs->opaque;
+     NFSRPC task;
++    char *buf = NULL;
++    bool my_buffer = false;
+ 
+     nfs_co_init_task(bs, &task);
+-    task.iov = iov;
++
++#ifdef LIBNFS_API_V2
++    if (iov->niov != 1) {
++        buf = g_try_malloc(bytes);
++        if (bytes && buf == NULL) {
++            return -ENOMEM;
++        }
++        my_buffer = true;
++    } else {
++        buf = iov->iov[0].iov_base;
++    }
++#endif
+ 
+     WITH_QEMU_LOCK_GUARD(&client->mutex) {
++#ifdef LIBNFS_API_V2
++        if (nfs_pread_async(client->context, client->fh,
++                            buf, bytes, offset,
++                            nfs_co_generic_cb, &task) != 0) {
++#else
++        task.iov = iov;
+         if (nfs_pread_async(client->context, client->fh,
+                             offset, bytes, nfs_co_generic_cb, &task) != 0) {
++#endif
++            if (my_buffer) {
++                g_free(buf);
++            }
+             return -ENOMEM;
+         }
+ 
+@@ -280,6 +307,13 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
+     }
+     qemu_coroutine_yield();
+ 
++    if (my_buffer) {
++        if (task.ret > 0) {
++            qemu_iovec_from_buf(iov, 0, buf, task.ret);
++        }
++        g_free(buf);
++    }
++
+     if (task.ret < 0) {
+         return task.ret;
+     }
+@@ -315,9 +349,15 @@ static int coroutine_fn nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
+     }
+ 
+     WITH_QEMU_LOCK_GUARD(&client->mutex) {
++#ifdef LIBNFS_API_V2
++        if (nfs_pwrite_async(client->context, client->fh,
++                             buf, bytes, offset,
++                             nfs_co_generic_cb, &task) != 0) {
++#else
+         if (nfs_pwrite_async(client->context, client->fh,
+                              offset, bytes, buf,
+                              nfs_co_generic_cb, &task) != 0) {
++#endif
+             if (my_buffer) {
+                 g_free(buf);
+             }
+@@ -856,6 +896,13 @@ static void coroutine_fn nfs_co_invalidate_cache(BlockDriverState *bs,
+ }
+ #endif
+ 
++static void nfs_refresh_limits(BlockDriverState *bs, Error **errp)
++{
++    NFSClient *client = bs->opaque;
++    bs->bl.max_transfer = MIN((uint32_t)nfs_get_readmax(client->context),
++                              (uint32_t)nfs_get_writemax(client->context));
++}
++
+ static const char *nfs_strong_runtime_opts[] = {
+     "path",
+     "user",
+@@ -893,6 +940,7 @@ static BlockDriver bdrv_nfs = {
+     .bdrv_detach_aio_context        = nfs_detach_aio_context,
+     .bdrv_attach_aio_context        = nfs_attach_aio_context,
+     .bdrv_refresh_filename          = nfs_refresh_filename,
++    .bdrv_refresh_limits            = nfs_refresh_limits,
+     .bdrv_dirname                   = nfs_dirname,
+ 
+     .strong_runtime_opts            = nfs_strong_runtime_opts,
+diff --git a/meson.build b/meson.build
+index df841e12e2..3bb78c0788 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1156,7 +1156,7 @@ endif
+ 
+ libnfs = not_found
+ if not get_option('libnfs').auto() or have_block
+-  libnfs = dependency('libnfs', version: ['>=1.9.3', '<6.0.0'],
++  libnfs = dependency('libnfs', version: '>=1.9.3',
+                       required: get_option('libnfs'),
+                       method: 'pkg-config')
+ endif
+-- 
+2.47.3
 
 
