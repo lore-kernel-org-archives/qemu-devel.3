@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A58FCB61C
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820EEFCB61F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXs5-0008Em-Gs; Fri, 06 Mar 2026 11:17:49 -0500
+	id 1vyXs6-0008Ln-BV; Fri, 06 Mar 2026 11:17:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vyXrw-0007NT-8B
+ id 1vyXru-0007KW-LF
  for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:42 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vyXrs-0007k7-EG
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:39 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4852a8482fcso3415785e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:35 -0800 (PST)
+ id 1vyXrq-0007jd-Dr
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:38 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4836f363ad2so110085915e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772813854; x=1773418654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772813852; x=1773418652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dqXQr4uENYp7Zhjhp+PlBR4pffBHMkJZVYziiA75uYo=;
- b=zV4C65+4jPK7wTIZV5THW0GzSzqehAr0P7LD+5Nj/gBxGzIFZKU52tp4GUBLeodq+2
- oJKT6P2rWVSNAQxeE/G7Vfkx4AD70HLx5BJ5mqm/wksMy154qvhrmgaKhv+c1ldYaFXN
- uJzn6ux8qWsAF8e/qMCxiJo9mCWEmCPN8F7uKDJL/1STEujZREwhUkOHgyRqUQNXp2Sj
- r/9Q9IwcQIn6L+icYvaGzgNlGOzM6dHC9BFxmrBdzaoPtDowjKZX3DZSQwMvTqaZPY00
- LGuvhPONQy6Xez+DTgUZpuYdK/5R3u5BL7Xj6Co1eFv93kvnMio7x6yq22EduMpGgEV3
- jhlg==
+ bh=urxW2gg1DQqa1lFTmb1r3ld5F0FP1d2hWKlK17rzMHU=;
+ b=Esr1DXZzIc01HPZGvXgIip5XRzdZGG576UoECKxs8mOsdmyBlqX4+NEOufbvDSMwlt
+ 4hcQZiMO9UC62zLtlQRi4dCb/JVQJqm6PXZg0X/AG+w6/f0W4wnTXuMlr+lzZTwu3iFH
+ /DXoYBfYNBL9cVcDMAen/oEj0EgJbk5WmuOxPI0XUMp2NJg4RoSRfl2C1oEyJF99Jg6X
+ wOnx/zqcdpitEbf9fW1n2lUHKfjhm/W9xq7JRj5D5MdEgAXN4dd7zrFuG59qrrHbExFH
+ db8bNTAJ/2PX7ET9cVYdbVe9pp925MTmHpVjYnkw2imOlrN7KJ84ofGF2HSVvqD5R/3V
+ Bk5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772813854; x=1773418654;
+ d=1e100.net; s=20230601; t=1772813852; x=1773418652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dqXQr4uENYp7Zhjhp+PlBR4pffBHMkJZVYziiA75uYo=;
- b=RdryjssjdxdbhRZhG9T31FRkSfrOoZSVN1Fky6nMZZ4clg+9CDC5058L0SNKOR5ZKD
- lhrDznfU5lRVbdNs88OnpwInke7ZzS36fGc8FGS2h3pGUO2PnhzJ+VuvbkyibQv4MR8v
- uoZQvJwJd2+1zZXMQ3Nlb3OiNClqEWHUNrg3EuVJrwtsLWGsPyq4boMDXU1KgpadokQf
- GK/uuyX9b3DQv9RTxwKyZh3P9+Wut83H3zW6LpaChrtzvYnrx9f6Qts1qHl0QHbl42bb
- I0twVqTT3D1gszQCQZwIszcRCd5jI9CCZ9/jfNHLapROfMUoRzPqAepdvXGIygLW4Pgw
- nRIw==
-X-Gm-Message-State: AOJu0YwVgVk+oTaPaMCAX2/Q8IYqW6c9qlHEtRJrFgsKQpsRSzOphXdy
- di4i6SwTrhaqUHgP0QhKSqeWt88F12beUdNvU/P2TMHnFXSqmKTZqg7DGExdDTYlOzI=
-X-Gm-Gg: ATEYQzzdpxNEJAA/Nky6pQDn2E60P5jc8myZpg+Il/2eYK8t3J93qvmcUnVNAXKW7/Y
- 9B6TQq7nFcvaZa5CtHWlIFAq7WoRMb/rrzT3fqny1RVCH5JTYRJE4imU12dgxxQvPUx/RC0pMUV
- pYUDX348GGXReC9pL2reTBG2OZH2mBi5cBosa+75Slcq7T/Fds0y05CjB+uvNLcLeni4jvCeu5L
- npp2h14g2A/o7BrhdAsYCtxia/he2KJ6pUmcanqEvwc7H1Ri3jDyp85Sh5Y8NI2GVjVAfqeDeaJ
- tdO95lv02629SjMuEubm4ok3wkV8a3drD41rDsKSUnaM0R3XKc6+OU6PmVxXrqVLQHw62JYOYsF
- wRNeh9c3D2DDRSwaw2LYDVh6SrHTO3YMvmGEU4wk477M+M3MN4xb5S1kg7aRshMcmlq5vIOO6hk
- XTwjzQ8QWFYP+8EfRpm8yny8VHaMX+WxGFvA==
-X-Received: by 2002:a05:600c:1c03:b0:480:1dc6:2686 with SMTP id
- 5b1f17b1804b1-48526930d92mr47852765e9.13.1772813854432; 
- Fri, 06 Mar 2026 08:17:34 -0800 (PST)
+ bh=urxW2gg1DQqa1lFTmb1r3ld5F0FP1d2hWKlK17rzMHU=;
+ b=pYbONQ0alBjWDEEuAe1D+zzBQHg7KgM6Kib1upqRK/5lw1lxTwnXszshwW5m7cDCIr
+ QFVNgKTBUk8RE0a5wLLTtC5K31u/dBCpG21S92wRJvUNrRQNsMhacHDg0S7N21AXjE98
+ tO/E4w7A0wVcoqhiMjpZ4M08CT5DBiV0ycZ/AdzC+ezEx1nJoAHjMCE0Cag0VO1qhguE
+ 12PybS5fuqhpkfyqqnBQsVUhXkl5Ry3ibGKXgyBMqv0x7VDCq5CDrSgBzB1zwFu5YZTd
+ ItAZcgZv1LtRePAQWfeYAQyNvYnx6XJzKWf2TXuWkiWEqXPpkOlKxF/PyWGoTYP+03Ly
+ n6wA==
+X-Gm-Message-State: AOJu0YzxYETEiR1m90K+pStPzFuFwlkRdqDWMT+x9lHj9AFQwvSmtrKR
+ oGSHdnC2+TokSLLX+8jtkZ1coipt3Md/VvIg6JFwdTlgswJgMzt0fHZYwX6Qbor1dkE=
+X-Gm-Gg: ATEYQzyr4FuwvDJNq46k30P/6ML3qSgIN6FfK5+J+j973LoZTv18LyXJybt8BCd0pUn
+ dSzir7uJCM4z1j0kmawPzXxxAlodopbMSYLLWbdWCOUQmCnIOKly/gZPSwHTBcmbIGFZ1zQwJsr
+ PiM/HaqF4691WEaMZWlrN7zPnQDnD7FgK8WR+Nt6X4kG3vwiLMoQwRk95w6VCIS3VOwXlpqoGkL
+ obL2WtbrLXdJqsgVB/i45OhhNsGJOmwgijVB5kvWZFgNSy9GBJnIh4Mo7tt5XT6GJ0Me7pD+HbM
+ IcEiq80Rrcj380cNnEtBsMFlVBzcnuEcflxbHPkdNttjLQkgQkRUof+P2p+r3PN+IxtaMuOSexg
+ Tzq5lZCOlIpi8gky7BuInh3E5+FH699fGmky3OBSTQdvzWXsi2OU84W+mjGtCMOSkp+8820DPii
+ LhxL8DBIB67oBGDUQ9kwe/5ig=
+X-Received: by 2002:a05:600c:4e04:b0:483:b3d7:2e80 with SMTP id
+ 5b1f17b1804b1-485269792e8mr41238865e9.33.1772813852424; 
+ Fri, 06 Mar 2026 08:17:32 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852767d8e4sm42639265e9.2.2026.03.06.08.17.31
+ 5b1f17b1804b1-485246fd237sm38156665e9.7.2026.03.06.08.17.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 08:17:33 -0800 (PST)
+ Fri, 06 Mar 2026 08:17:29 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 80092689D6;
- Fri, 06 Mar 2026 16:17:29 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id EDD0E689D0;
+ Fri, 06 Mar 2026 16:17:28 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
@@ -76,17 +76,17 @@ Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 7/7] tests/functional: add VBSA linux tests
-Date: Fri,  6 Mar 2026 16:17:28 +0000
-Message-ID: <20260306161728.2657486-8-alex.bennee@linaro.org>
+Subject: [PATCH 1/7] tests/docker: add gdb-multiarch to all-test-cross
+Date: Fri,  6 Mar 2026 16:17:22 +0000
+Message-ID: <20260306161728.2657486-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260306161728.2657486-1-alex.bennee@linaro.org>
 References: <20260306161728.2657486-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,188 +109,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This extends the VBSA test to run the linux tests. The sysarch-acs
-test suite does provide some pre-built images which is good because
-the tests require a patched kernel. However due to the structure of
-the image we need to jump one or two hoops to get something useful:
-
-  - download and double decompress (zip then xz) the image
-  - navigate grub to launch the Linux Execution Environment
-  - shutdown the system once tests are done
-  - extract the logs from the MSDOS file system and parse them
-
-It does make the code a bit ugly but it works for me at least. So far
-the subset of tests run is limited but that might be solved by adding
-some more devices to the PCIe bus to exercise the SMMU behaviour.
+This allows the gdb integration tests to be run as well.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/aarch64/test_virt_vbsa.py | 123 +++++++++++++++++++--
- 1 file changed, 112 insertions(+), 11 deletions(-)
+ tests/docker/dockerfiles/debian-all-test-cross.docker | 1 +
+ tests/lcitool/refresh                                 | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/functional/aarch64/test_virt_vbsa.py
-index 1dd4cecde1e..0456dfe9fd5 100755
---- a/tests/functional/aarch64/test_virt_vbsa.py
-+++ b/tests/functional/aarch64/test_virt_vbsa.py
-@@ -10,12 +10,15 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- import shutil
--from subprocess import check_call, DEVNULL
-+import re
-+from subprocess import check_call, check_output, DEVNULL
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import get_qemu_img, skipIfMissingCommands
- from qemu_test import wait_for_console_pattern
-+from qemu_test import interrupt_interactive_console_until_pattern as int_until
- from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
-+from qemu_test import send_key
- 
- 
- @skipIfMissingCommands("mformat", "mcopy", "mmd")
-@@ -28,6 +31,20 @@ def wait_for_console_pattern(self, success_message, vm=None):
-                                  failure_message='FAILED',
-                                  vm=vm)
- 
-+    def append_firmware_blobs(self):
-+        """
-+        Setup QEMU firmware blobs for boot.
-+        """
-+        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
-+        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
-+        vars_path = self.scratch_file('vars.fd')
-+        shutil.copy(vars_source, vars_path)
-+
-+        self.vm.add_args('-drive',
-+                         f'if=pflash,format=raw,readonly=on,file={code_path}')
-+        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
-+
-+
-     ASSET_VBSA_EFI = Asset(
-         'https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
-         '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Vbsa.efi',
-@@ -45,20 +62,12 @@ def test_aarch64_vbsa_uefi_tests(self):
- 
-         self.vm.set_console()
- 
--        # virt machine wi
-+        # virt machine
-         self.set_machine('virt')
-         self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on')
-         self.vm.add_args('-cpu', 'max', '-m', '1024')
- 
--        # We will use the QEMU firmware blobs to boot
--        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
--        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
--        vars_path = self.scratch_file('vars.fd')
--        shutil.copy(vars_source, vars_path)
--
--        self.vm.add_args('-drive',
--                         f'if=pflash,format=raw,readonly=on,file={code_path}')
--        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
-+        self.append_firmware_blobs()
- 
-         # Build an EFI FAT32 file-system for the UEFI tests
-         vbsa_efi = self.ASSET_VBSA_EFI.fetch()
-@@ -102,5 +111,97 @@ def test_aarch64_vbsa_uefi_tests(self):
-         self.wait_for_console_pattern('VBSA tests complete. Reset the system.')
- 
- 
-+    ASSET_SYSREADY_IMAGE = Asset(
-+        'https://github.com/ARM-software/arm-systemready/'
-+        'releases/download/v25.10_SR_3.1.0/systemready_acs_live_image.img.xz.zip',
-+        'df2c359de15784b1da6a8e6f3c98a053ee38ac0b3f241ccea62e17db092eb03a')
-+
-+    ROOT_PROMPT = '/ # '
-+    DOWN_KEY = "\x1b[B"
-+
-+    @skipIfMissingCommands("sfdisk", "jq")
-+    def test_aarch64_vbsa_linux_tests(self):
-+        """
-+        Launch the Linux based VBSA test from the ACS prebuilt images.
-+
-+        We can use the pre-built images and then trigger the Linux
-+        build and run the tests. We then need to slurp the results
-+        from the partition.
-+        """
-+
-+        self.vm.set_console()
-+
-+        # virt machine with SMMU
-+        self.set_machine('virt')
-+        self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on,iommu=smmuv3')
-+        self.vm.add_args('-cpu', 'max', '-m', '1024', '-smp', '4')
-+
-+        self.append_firmware_blobs()
-+
-+        # First fetch, decompress (twice) and prepare the disk image
-+        # on an NVME device (the kernel only has drivers for that).
-+        disk_image_zip = self.ASSET_SYSREADY_IMAGE.fetch()
-+        disk_image_xz = self.uncompress(disk_image_zip,
-+                                        target="sysacs.xz", format="zip")
-+        disk_image = self.uncompress(disk_image_xz,
-+                                     target="sysacs.img", format="xz")
-+
-+        self.vm.add_args('-device',
-+                         'nvme,drive=hd,serial=QEMU_ROOT_SSD')
-+        self.vm.add_args('-blockdev',
-+                         f'driver=raw,node-name=hd,file.driver=file,file.filename={disk_image}')
-+
-+        # Launch QEMU and wait for grub and select the "Linux
-+        # Execution Environment" so we can launch the test.
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Use the ^ and v keys to select which entry is highlighted')
-+
-+        # 3 down arrows then return to select entry
-+        send_key(self, self.DOWN_KEY)
-+        send_key(self, self.DOWN_KEY)
-+        send_key(self, self.DOWN_KEY)
-+
-+        ec_and_wait(self, "\n", self.ROOT_PROMPT)
-+
-+        ec_and_wait(self, "/usr/bin/bsa.sh --skip B_REP_1,B_IEP_1,B_PCIe_11,B_MEM_06",
-+                    self.ROOT_PROMPT)
-+
-+        # Now we can shutdown
-+        ec_and_wait(self, "halt -f", "reboot: System halted")
-+        self.vm.shutdown()
-+
-+        # and extract the test logs
-+        offset = int(check_output(f"sfdisk --json {disk_image} |"
-+                                  "jq '.partitiontable.partitions[0].start * 512'",
-+                                  shell = True))
-+        bsa_app_res = self.scratch_file("BsaResultsApp.log")
-+        bsa_kern_res = self.scratch_file("BsaResultsKernel.log")
-+
-+        check_call(["mcopy", "-i", f"{disk_image}@@{offset}",
-+                    f"::acs_results/Linux/BsaResultsApp.log", bsa_app_res])
-+        check_call(["mcopy", "-i", f"{disk_image}@@{offset}",
-+                    f"::acs_results/Linux/BsaResultsKernel.log", bsa_kern_res])
-+
-+        # for now just check the kernel log for the result summary
-+        test_result_re = re.compile(r"\[.*\]\s+(.+): Result:\s+(\w+)")
-+        summary_re = re.compile(r"Total Tests Run =\s*(\d+), Tests Passed =\s*(\d+), Tests Failed =\s*(\d+)")
-+
-+        with open(bsa_kern_res, 'r') as f:
-+            for line in f:
-+                test_match = test_result_re.search(line)
-+                if test_match:
-+                    desc = test_match.group(1)
-+                    status = test_match.group(2)
-+                    self.log.info(f"Test: {desc} status: {status}")
-+
-+                match = summary_re.search(line)
-+                if match:
-+                    total, passed, failed = match.groups()
-+
-+                    if int(failed) > 0:
-+                        self.fail(f"{failed} tests failed ({total})")
-+
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index b73776d95b5..287770a995a 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -59,6 +59,7 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+   apt install -y --no-install-recommends \
+   clang\
+   dpkg-dev\
++  gdb-multiarch\
+   libclang-rt-dev
+ ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
+   libc6-dev-arm64-cross \
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 3e4b026035b..259e6ea0729 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -167,6 +167,7 @@ debian_all_test_cross_compilers = [
+     "  apt install -y --no-install-recommends \\\n",
+     "  clang\\\n",
+     "  dpkg-dev\\\n",
++    "  gdb-multiarch\\\n",
+     "  libclang-rt-dev\n",
+     "ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \\\n",
+     "  libc6-dev-arm64-cross \\\n",
 -- 
 2.47.3
 
