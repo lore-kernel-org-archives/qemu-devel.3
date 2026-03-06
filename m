@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B93CFCB61D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD91FCB61C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXqH-0004IS-C0; Fri, 06 Mar 2026 11:15:57 -0500
+	id 1vyXs1-0007ee-Nt; Fri, 06 Mar 2026 11:17:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXqD-0004Gw-J5
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:15:53 -0500
-Received: from p-west3-cluster3-host9-snip4-10.eps.apple.com ([57.103.72.241]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXqB-0007BJ-B3
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:15:53 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPS id
- DC91A18007BF; Fri,  6 Mar 2026 16:15:48 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772813750; x=1775405750;
- bh=XPN2ek9vzGXI2utFTvmBBZ3jL3DtXEEa5/J5j669tcA=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=dKn0r181O0qB3pXW21bj1UfDAZG6KJw0oc41YwN/mznXJ4mBXZvxjVptTCRYDm3enLB3kIJZm7MpKxvZtpB8bMePF0TsyRWUYIEAv9VkwrAmKt1rmrz+6FweQsiR1FhQMoh8SSi1OK3AFc5GlGCK4chLTc0DJsCYUsPV1ZWx/XkBlQ3jz3v9y/2pH8y0A5O576YNOrdJK5Q1H3D3PceWn5SpohDTLbohpQO1wB7AvSK/BCWmOmJ1kbB8q2l7qihLq89l6Y3f4u6eqsc6HjkdnR34Vxu0JiRhi8zmMaXBVVLuG8xkCIEtnsgoJ+4N31ht9rak13yaPfJyzQ4O55Zb+g==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPSA id
- 27B7718007A5; Fri,  6 Mar 2026 16:15:46 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXrr-0007Be-Ri
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:36 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXro-0007jE-V7
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:35 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-483bd7354efso123314995e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772813851; x=1773418651; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mLlYhevNBx1GJAJSsKhF0X5f1ICD6COWMYXfp0jSceg=;
+ b=akb0ncBVVZMQMcgoGQVk7DnKpT4DgXNSSc9DgXnPs9xaL+ExSsz2au3UeXLgYLnU6e
+ xhy0WdS/nQBXgpZ10SofaSOT6uzfiTkLcYFVSG6TpqC0n7U6rHWSCnEYrhe1wlGHgpKa
+ YK9u6UPbA1C8gp/PdmALS9pAoFsFlrZexgm4BuowlxMt2knnpZmHAFRqRpFbjanI9Qi7
+ UaF92ANELQgJ5niQzunaSLTDJZVudtfkyCIYbei/zmMyhzY3VIvK25cOo1Xi1Zs6n0ZE
+ E4cJt6QJBOkfAVReGxINwc85YUjr/n9WdZV58RzNjw1CXwveyWl9o19q1rRV8MyK1YqM
+ NJCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772813851; x=1773418651;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mLlYhevNBx1GJAJSsKhF0X5f1ICD6COWMYXfp0jSceg=;
+ b=mgvWUjrdUSRsri+a9pdUViARL8Bw01U/qpf4/A0PkyQQ73kQLCeC0hnOONoQwpL9a7
+ 3NKbihnzNxYM9ZunoPQb6rL8wzoPSliwShN+QRZ0o4LEhSbYAG1sY5VI27puHaBt6gFr
+ 7rK28c5x1aa8a6p7+70GdYidLqAEku2J1iUjCTuoYNi+fN0GzVOiHd76c2vEybcJfK4s
+ Z7SSLJMge00ajmHOf8zTfrL5eqcR+yJxjsrrumPHe4LMYf4ENxujR941533oqVGHuYJj
+ Cbfx/a2UjzyhMp2p2fUdIFPElyqWHLF0HJI4KwF/6iCilwwCzyZGkOc/NwWbszBK/CDX
+ JmJQ==
+X-Gm-Message-State: AOJu0YyElmNKM9sdbmV3RgFQPWdifjxJxug3+iRbTJ0uA71DtHpb0xeL
+ 93A2n8B2yy/fIlP24astQVa3E0tM2q1Xnd8lDeR2q9OF6JvtwR3dh4lsXxX0eha3Um0=
+X-Gm-Gg: ATEYQzzlOkCOG7RrQ/AmbbINMdrYUKpOAGdzBFFjiktwVQxfGhglcF5tgx46iG33BWb
+ idrqBwsWqRw4QqmQwClgAkARa8KFbqdLJxgXO8/8twlILwF04X3ArzW5W0utupShIe/7+pd5SNo
+ fpaEzyR2dSj5nnclIEod/WLTaDTJ2ejH3RAiCqVsdfNvPHioyiPUCt6SNEYtvNTdL0steZOuzpa
+ xVpYvNloDG+1wGiSYju2HY77zi9rCFw2Hi+xgvqxWGXpp1bTEp0As/d6Q/CRS4wGpY6Pic7ZumK
+ h+Ao6ECrSHo5BmRV8nECCWEPIJK0V4FjwJSrc0vBOcKXurW0AnyvEzAwsm/lICpCMcjyASp3fW6
+ TWu+Cg0VoB+MAfOAvtSr2q0a9jyGsCto4lqLUJhhx3h+3Kf4hH295XzIZfDUPS5VLGUT6Jg0c7o
+ kQ3vwo7qDf7HPsO0NQVlDzujc=
+X-Received: by 2002:a05:600c:3d90:b0:482:f564:d613 with SMTP id
+ 5b1f17b1804b1-48526930529mr45918845e9.15.1772813850868; 
+ Fri, 06 Mar 2026 08:17:30 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851fb277e3sm113616975e9.10.2026.03.06.08.17.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 08:17:29 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D5B9D689CF;
+ Fri, 06 Mar 2026 16:17:28 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v16 13/17] target/arm: hvf: add asserts for code paths not
- leveraged when using the vGIC
-Date: Fri,  6 Mar 2026 17:15:05 +0100
-Message-ID: <20260306161509.79712-14-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260306161509.79712-1-mohamed@unpredictable.fr>
-References: <20260306161509.79712-1-mohamed@unpredictable.fr>
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 0/7] testing/next: gdb-multiarch, check-tcg, vbsa tests
+Date: Fri,  6 Mar 2026 16:17:21 +0000
+Message-ID: <20260306161728.2657486-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: moVBsHTQ_TTLJcBvWeKdjOWrB4Dm7pZz
-X-Authority-Info-Out: v=2.4 cv=G70R0tk5 c=1 sm=1 tr=0 ts=69aafdb6
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=vbFX7M0ab_H1AmF9bzsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: moVBsHTQ_TTLJcBvWeKdjOWrB4Dm7pZz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE1NCBTYWx0ZWRfXyrGKOoJcs8NJ
- hz+UqjNNXhD/A8twf27W6JpPVIKr8ib30g2id+a6pbsI+u/he3zhGAVBhRre91etisrbCHXCnzc
- NwKmiN77T5S6iD/Xl/S/Zt55nkRfRKTtqkMAPL0iMfbSROxMYTH90wxPtWdK0XJGqa7izTzBo97
- 3LxH58ck6CwsJVoVL0Z8wwsGMBbunIfDIB5EevuGXoRBVmMnU2Nb/tjXQt3QSK/T8w4g1vNi2Qk
- Lc2bsFcAz1SHBj+LjYoJsVaTl94gZKAC8tZzohipifkUXbJ3BjU04Ql1qvON5sguHONrwmHUX/B
- d6fWgXEXvzm4zjUoCdg2aQnFmQzkBPUlgXsVJ5u5Hi8bKWznxhTQemN0Ke0H0Q=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=531 clxscore=1030 adultscore=0
- mlxscore=0 suspectscore=0 spamscore=0 malwarescore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603060154
-X-JNJ: AAAAAAABWjXv4Pt+xvF/071PrRQ+POfaoQCjRbBVCCyO296PNEfjSoD0smykXHBW+vzYRbC1PttvMZOh8Gz009uw3l04qB0oAGtKHphZdzybbqXsbw0PKUiG7cs7xRaE7Lf3ao0AEwAjDDgcbEIW4jTexzohNexIBxq9JQd2bhi+Kh6xcoYdU3XuAHXm+AjBVS9rj7JMo7uQe++cHdGgjPe5uUN7FQpkrjN84U5JMjMe1Izbeih+ZVMaaowcQj4os3rUq2KuIqN429gGkYuzYzbfOiS+6xBO2LmhICMBDGJXAkpXaJGnnoFU7zcp+C4RYbWmSB15nQ4DOBkMqf0veEbgouEqGXMcUblRXWrIJ+kFJLQhQixDtkIgXtkxnQFZ9dLoMh25Fbn4zv9Co0H50Tryvy8qxPq7KzEPlHLngTOmrVw/+QUtAwoyqJvboxn916XQzikIqNPj3vJLE/zFmxgf2DoSEvxZWNzKK9D3bmdl+DTmpjIPWBbknTRA3aUeRDYJpj794JBRkiXSp0QiLHC4VZ30PuZnaxKAhZKIST7LZULwTC9KoxjQ4JsJ6NEVjNBWbittMV0EDG76J+j5EJr5Btg+mfrQfiAeZzCAFNlZS/LWKD3GtNHbnssKlm10RCmjTc2xu1RO8EYIbc9S7w68uUIDTPEMmyuvEdQhidf98qQKUGHqG3XlrC5eS4ngtwkbUJ6QpHuo5oRqJxCUFErWg+nIHX2OZwncEdQpNSubYqQVCW5sMJ6BKmnOnnSkihnlwWnsiIp6gOel
-Received-SPF: pass client-ip=57.103.72.241;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +106,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using the vGIC, timers are directly handled by the platform.
-No vmexits ought to happen in that case. Abort if reaching those code paths.
+This is the current status of my testing tree. The gdb-multiarch and
+filtering changes should be pretty uncontroversial. Due to the
+enhancements I needed to make to get the vbsa linux tests running they
+may want to cook a bit longer and wait until the 11.0 release is out
+of the way.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/hvf/hvf.c | 3 +++
- 1 file changed, 3 insertions(+)
+Please review
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 2daa2ab132..9c986178c4 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1678,6 +1678,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
-     case SYSREG_ICC_SGI1R_EL1:
-     case SYSREG_ICC_SRE_EL1:
-     case SYSREG_ICC_CTLR_EL1:
-+        assert(!hvf_irqchip_in_kernel());
-         /* Call the TCG sysreg handler. This is only safe for GICv3 regs. */
-         if (hvf_sysreg_read_cp(cpu, "GICv3", reg, val)) {
-             return 0;
-@@ -1968,6 +1969,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-     case SYSREG_ICC_SGI0R_EL1:
-     case SYSREG_ICC_SGI1R_EL1:
-     case SYSREG_ICC_SRE_EL1:
-+        assert(!hvf_irqchip_in_kernel());
-         /* Call the TCG sysreg handler. This is only safe for GICv3 regs. */
-         if (hvf_sysreg_write_cp(cpu, "GICv3", reg, val)) {
-             return 0;
-@@ -2375,6 +2377,7 @@ static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
-         ret = hvf_handle_exception(cpu, &exit->exception);
-         break;
-     case HV_EXIT_REASON_VTIMER_ACTIVATED:
-+        assert(!hvf_irqchip_in_kernel());
-         qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
-         cpu->accel->vtimer_masked = true;
-         break;
+Alex.
+
+Alex Bennée (6):
+  tests/docker: add gdb-multiarch to all-test-cross
+  tests/tcg: allow filtering of TCG tests
+  tests/functional: teach uncompress about zip files
+  tests/functional: allow tests to define decompression target
+  tests/functional: add the ability to send keys
+  tests/functional: add VBSA linux tests
+
+Matheus Tavares Bernardino (1):
+  tests/tcg/multiarch/linux-test: use portable alternative for dirent64
+
+ tests/tcg/multiarch/linux/linux-test.c        |   5 +-
+ tests/Makefile.include                        |   8 +-
+ .../dockerfiles/debian-all-test-cross.docker  |   1 +
+ tests/functional/aarch64/test_virt_vbsa.py    | 123 ++++++++++++++++--
+ tests/functional/qemu_test/__init__.py        |   3 +-
+ tests/functional/qemu_test/cmd.py             |  15 +++
+ tests/functional/qemu_test/testcase.py        |   9 +-
+ tests/functional/qemu_test/uncompress.py      |  25 ++++
+ tests/lcitool/refresh                         |   1 +
+ tests/tcg/Makefile.target                     |  12 +-
+ 10 files changed, 181 insertions(+), 21 deletions(-)
+
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
