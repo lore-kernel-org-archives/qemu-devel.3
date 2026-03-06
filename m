@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB30FCB613
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F646FCB61A
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyX8x-0004k2-Cp; Fri, 06 Mar 2026 10:31:11 -0500
+	id 1vyXHt-00018i-50; Fri, 06 Mar 2026 10:40:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyX8d-0004d4-AB
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:30:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyX8b-0007uV-FK
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:30:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772811047;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tDbgmgw+Jl+N8n8jYhMKt3SJXMrjyMwKj3gWiyfjdkc=;
- b=iCJKL/lnDV07750z4I3HZwOTIUpa6BFJVV8Yj5Lfp1xuD9T9J5e6P077BLenrzWdwAcMuy
- BfB94DiTHhE2LxhTQ40bUvuYENzjvUsqAwS6zTLqxaV+2tgkQyQlLRfLftskODzoiwcQl8
- jcgVAheXGJTHeK1JZLcJLAKYbX1ah6s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-Q5I6DiF3M4ufDgBS4J0HoA-1; Fri,
- 06 Mar 2026 10:30:44 -0500
-X-MC-Unique: Q5I6DiF3M4ufDgBS4J0HoA-1
-X-Mimecast-MFC-AGG-ID: Q5I6DiF3M4ufDgBS4J0HoA_1772811042
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1BF5F180049D; Fri,  6 Mar 2026 15:30:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.210])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F4461956095; Fri,  6 Mar 2026 15:30:37 +0000 (UTC)
-Date: Fri, 6 Mar 2026 16:30:35 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Lieven <pl@dlhnet.de>
-Cc: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>,
- Ilya Dryomov <idryomov@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 04/19] nfs: Run =?utf-8?Q?co?=
- =?utf-8?Q?_BH_CB_in_the_coroutine=E2=80=99s?= AioContext
-Message-ID: <aarzG5k8LULdB-b0@redhat.com>
-References: <20251110154854.151484-1-hreitz@redhat.com>
- <20251110154854.151484-5-hreitz@redhat.com>
- <EE9E2AC3-32F0-452D-AF2D-14BCBA48A3B2@dlhnet.de>
- <1d11486a-f592-49ff-837a-346f7c493ca7@redhat.com>
- <D366BE0D-C606-4DE1-9BC6-6DE522616F0C@dlhnet.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyXHp-00013c-7C
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:40:21 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyXHn-0000y1-GY
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:40:20 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439b9b1900bso4256040f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:40:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772811618; x=1773416418; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GdtUZgYJO/AkZ54kOEVmR9jlUu/MzOeYTvNR+pXLkow=;
+ b=QiMPnfP84n11YEFWZ3qONNrtKjhqt7ksKbnu6SGRMhCr7i4mvEXcWEZB+Nc3Ay7gms
+ uyWlONrudX/8BH9nfPd4EFcZKY1LlESeE8rCaF9p2G3LDdq06CoAKR1e0Cqt22xTclUA
+ lnoV+rM6YxzwnwYq+dZwERa1ohHaSEEytKOmo4WkUWeCbnM5ihaHqLoqR4DTXKBiO76G
+ kr3mDAzP2ckI4BRbhLks3bOudcecUJWcH7Gzf79miAeN0kEJAZ8OdbWd+ENCUbZRSYl0
+ UUwwrheh/Vx5XCPxHE+xy36j/C5DhklhcLdE56JANTOY95wnFppAR+y8ycQOclhqV43d
+ casA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772811618; x=1773416418;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GdtUZgYJO/AkZ54kOEVmR9jlUu/MzOeYTvNR+pXLkow=;
+ b=XQ+5M4Z37Ya4CRtAiRQc2UJxXOzwtXFLRNN+JJrFsgxCnlxNsi8FFWfSqRpmSPlEZG
+ tWlO3WlpLgFzDqkjsMvLINAASOSaVVU9txcScNpjodogbSyhvxkrQIOwaRwIaEm7vhhW
+ jAkdcB1e36LZQnPfouLwtV3Hp3IB3tqx00cYK7koPRO5zIAERNEGulZDXtzGfc/j3Mro
+ HoYuTy5CkDlXRBL2WZFiVCwOdot9Nbucp8qoaOhmlXFI2YeWPLR1qXOk8AZWSjSwKvhB
+ JZYZdHDjl3mqjSOq/C7nvs5OhJYGzaIIozFMgdCfwM0Pq1c5FiTBJv5+28JOHtgR+3FA
+ Gx2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNp29u4DIG7dBP/UkZLHBsTtaGiIbhrIUuzliEJfPmqRHIQd4qTjY5GJJV20m0XQGZbMjZTkw+nT2S@nongnu.org
+X-Gm-Message-State: AOJu0Yzxnve5cGPu3Lh5103MuoaYVA76ekI0vv8JAxp91iIk3MfGtU26
+ IXwV6kEc6Dj9gh0fJiJ8DTZdFmXHeDUOq6Dq6zLw4U53OZkQZvpflf2jtHvACNbeKrA=
+X-Gm-Gg: ATEYQzztwW8F9l98AWAtPfVvqS2Q6kI7aPlZYp1USiMAAgovFA80ELxXKuaMyrCgXwc
+ T/ghSA6sHGwBy/f46xNNgsHVL2j5HKJ0oUaEAqf84mivadVGIxsirTIRwKxxVumqS6x0Lu/R6L2
+ KSwEzSrnQapWyOH29gDzz7pz9XA4fq2ezksPSBqfWLZrpX2i5A9oJcDVQMrm+K/jnHwBQuqpIRR
+ hyrpXxhWchD7l4s4HB9An553lq7uD18WFDyKBmQ8brVt4/4MDnAfbopXI4EkOjEVEv1WOM+IiNN
+ yu2uNqhngmLp7eorxjLBkuwg7n9LokCh+Yif5tIV1UK026bOx94kuHi/g3onSBZUrif6HwxCYLe
+ ZC9/D6S57+WfX3K6UaqQmXYPYbgh/lWKBh062KpYxXl94nJ3cEziODNtlPgRMknopXFi1FShhrn
+ N7qUIXAscbDFkSAtisdxk6PGOKe4bd9wRdMZpL+jym337qh6/+yeDo7tNK0/xCMZvueWYVBT/SY
+ YN2ozEFeaYTCvxd6GjUbpENjoSp3dg=
+X-Received: by 2002:a05:600c:4ec9:b0:483:7783:5373 with SMTP id
+ 5b1f17b1804b1-4852697a0d8mr39970575e9.23.1772811617839; 
+ Fri, 06 Mar 2026 07:40:17 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4852470c258sm17921205e9.30.2026.03.06.07.40.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 07:40:17 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PATCH] hw/net/npcm_gmac: Catch accesses off the end of the register
+ array
+Date: Fri,  6 Mar 2026 15:40:16 +0000
+Message-ID: <20260306154016.2194091-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <D366BE0D-C606-4DE1-9BC6-6DE522616F0C@dlhnet.de>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,168 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 06.03.2026 um 14:57 hat Peter Lieven geschrieben:
-> 
-> 
-> > Am 06.03.2026 um 14:41 schrieb Hanna Czenczek <hreitz@redhat.com>:
-> > 
-> > On 03.03.26 20:24, Peter Lieven wrote:
-> >> 
-> >> 
-> >>> Am 10.11.2025 um 16:48 schrieb Hanna Czenczek <hreitz@redhat.com> <mailto:hreitz@redhat.com>:
-> >>> 
-> >>> Like in “rbd: Run co BH CB in the coroutine’s AioContext”, drop the
-> >>> completion flag, yield exactly once, and run the BH in the coroutine’s
-> >>> AioContext.
-> >>> 
-> >>> (Can be reproduced with multiqueue by adding a usleep(100000) before the
-> >>> `while (!task.complete)` loops.)
-> >>> 
-> >>> Like in “iscsi: Run co BH CB in the coroutine’s AioContext”, this makes
-> >>> nfs_co_generic_bh_cb() trivial, so we can drop it in favor of just
-> >>> calling aio_co_wake() directly.
-> >>> 
-> >>> Cc: qemu-stable@nongnu.org <mailto:qemu-stable@nongnu.org>
-> >>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com> <mailto:hreitz@redhat.com>
-> >>> ---
-> >>> block/nfs.c | 41 ++++++++++++++++-------------------------
-> >>> 1 file changed, 16 insertions(+), 25 deletions(-)
-> >>> 
-> >>> diff --git a/block/nfs.c b/block/nfs.c
-> >>> index 0a7d38db09..1d3a34a30c 100644
-> >>> --- a/block/nfs.c
-> >>> +++ b/block/nfs.c
-> >>> @@ -69,7 +69,6 @@ typedef struct NFSClient {
-> >>> typedef struct NFSRPC {
-> >>>     BlockDriverState *bs;
-> >>>     int ret;
-> >>> -    int complete;
-> >>>     QEMUIOVector *iov;
-> >>>     struct stat *st;
-> >>>     Coroutine *co;
-> >>> @@ -230,14 +229,6 @@ static void coroutine_fn nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)
-> >>>     };
-> >>> }
-> >>> 
-> >>> -static void nfs_co_generic_bh_cb(void *opaque)
-> >>> -{
-> >>> -    NFSRPC *task = opaque;
-> >>> -
-> >>> -    task->complete = 1;
-> >>> -    aio_co_wake(task->co);
-> >>> -}
-> >>> -
-> >>> /* Called (via nfs_service) with QemuMutex held.  */
-> >>> static void
-> >>> nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
-> >>> @@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
-> >>>     if (task->ret < 0) {
-> >>>         error_report("NFS Error: %s", nfs_get_error(nfs));
-> >>>     }
-> >>> -    replay_bh_schedule_oneshot_event(task->client->aio_context,
-> >>> -                                     nfs_co_generic_bh_cb, task);
-> >>> +
-> >>> +    /*
-> >>> +     * Safe to call: nfs_service(), which called us, is only run from the FD
-> >>> +     * handlers, never from the request coroutine.  The request coroutine in
-> >>> +     * turn will yield unconditionally.
-> >>> +     * No need to release the lock, even if we directly enter the coroutine, as
-> >>> +     * the lock is never re-taken after yielding.  (Note: If we do enter the
-> >>> +     * coroutine, @task will probably be dangling once aio_co_wake() returns.)
-> >>> +     */
-> >>> +    aio_co_wake(task->co);
-> >>> }
-> >>> 
-> >>> static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
-> >>> @@ -278,9 +277,7 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
-> >>> 
-> >>>         nfs_set_events(client);
-> >>>     }
-> >>> -    while (!task.complete) {
-> >>> -        qemu_coroutine_yield();
-> >>> -    }
-> >>> +    qemu_coroutine_yield();
-> >>> 
-> >>>     if (task.ret < 0) {
-> >>>         return task.ret;
-> >>> @@ -328,9 +325,7 @@ static int coroutine_fn nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
-> >>> 
-> >>>         nfs_set_events(client);
-> >>>     }
-> >>> -    while (!task.complete) {
-> >>> -        qemu_coroutine_yield();
-> >>> -    }
-> >>> +    qemu_coroutine_yield();
-> >>> 
-> >>>     if (my_buffer) {
-> >>>         g_free(buf);
-> >>> @@ -358,9 +353,7 @@ static int coroutine_fn nfs_co_flush(BlockDriverState *bs)
-> >>> 
-> >>>         nfs_set_events(client);
-> >>>     }
-> >>> -    while (!task.complete) {
-> >>> -        qemu_coroutine_yield();
-> >>> -    }
-> >>> +    qemu_coroutine_yield();
-> >>> 
-> >>>     return task.ret;
-> >>> }
-> >>> @@ -723,8 +716,8 @@ nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void *data,
-> >>>     if (task->ret < 0) {
-> >>>         error_report("NFS Error: %s", nfs_get_error(nfs));
-> >>>     }
-> >>> -    replay_bh_schedule_oneshot_event(task->client->aio_context,
-> >>> -                                     nfs_co_generic_bh_cb, task);
-> >>> +    /* Safe to call, see nfs_co_generic_cb() */
-> >>> +    aio_co_wake(task->co);
-> >>> }
-> >>> 
-> >>> static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
-> >>> @@ -748,9 +741,7 @@ static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
-> >>> 
-> >>>         nfs_set_events(client);
-> >>>     }
-> >>> -    while (!task.complete) {
-> >>> -        qemu_coroutine_yield();
-> >>> -    }
-> >>> +    qemu_coroutine_yield();
-> >>> 
-> >>>     return (task.ret < 0 ? task.ret : st.st_blocks * 512);
-> >>> }
-> >>> -- 
-> >>> 2.51.1
-> >>> 
-> >> 
-> >> Hallo Hanna,
-> >> 
-> >> it has been a long time where I was inactive in Qemu development and I should have checked this earlier, but it seems that this patch accidentally broke libnfs usage with at least qemu cmdline tools like qemu-img. Again, sorry for not testing this earlier, but I have only recently entered the Qemu show again.
-> >> 
-> >> I found this glitch while working on a patch to include libnfs v6 support in qemu to avoid dropping libnfs support.
-> >> 
-> >> A simple call like:
-> >> 
-> >> qemu-img create -f qcow2 nfs://nfsserver/image.qcow2 10G
-> >> 
-> >> hangs forever in the second write request.
-> > 
-> > I sent a patch for this, which is basically the same as yours below: https://lists.nongnu.org/archive/html/qemu-block/2026-01/msg00000.html
-> 
-> Thanks, I will rebase by NFS patches for libnfs v6 on top of that.
-> 
-> Do we need the same fix for iSCSI?
+In the npcm_gmac device, we create the iomem MemoryRegion with
+a size of 8KB, but NPCM_GMAC_NR_REGS is only 0x1060 / 4. This
+means there's a range of offsets that the guest can access
+that don't have gmac->regs[] entries. We weren't catching this,
+so the guest could get us to index off the end of the regs array.
 
-iscsi drops the lock temporarily. This means that the deadlock won't
-happen. What might be worth double checking is if temporarily dropping
-the lock still gives enough guarantees for iscsi_service() and its
-callers to work correctly.
+Catch and log these invalid accesses.
 
-I don't think I fully understand what the lock is protecting.
-Apparently it comes from mass conversions from the original automatic
-locking in AioContext callbacks, so nobody really seems to have thought
-about it other than asserting that it's as safe as before. Maybe locking
-more locally could be a better alternative that would be easier to
-understand.
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3316
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/net/npcm_gmac.c         | 14 ++++++++++++++
+ include/hw/net/npcm_gmac.h |  3 ++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-Kevin
+diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
+index 123fb92ca4..d9902d9ab5 100644
+--- a/hw/net/npcm_gmac.c
++++ b/hw/net/npcm_gmac.c
+@@ -700,6 +700,13 @@ static uint64_t npcm_gmac_read(void *opaque, hwaddr offset, unsigned size)
+     NPCMGMACState *gmac = opaque;
+     uint32_t v = 0;
+ 
++    if (offset >= NPCM_GMAC_REG_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid register offset: 0x%04" HWADDR_PRIx"\n",
++                      DEVICE(gmac)->canonical_path, offset);
++        return v;
++    }
++
+     switch (offset) {
+     /* Write only registers */
+     case A_NPCM_DMA_XMT_POLL_DEMAND:
+@@ -724,6 +731,13 @@ static void npcm_gmac_write(void *opaque, hwaddr offset,
+ 
+     trace_npcm_gmac_reg_write(DEVICE(gmac)->canonical_path, offset, v);
+ 
++    if (offset >= NPCM_GMAC_REG_SIZE) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid register offset: 0x%04" HWADDR_PRIx"\n",
++                      DEVICE(gmac)->canonical_path, offset);
++        return;
++    }
++
+     switch (offset) {
+     /* Read only registers */
+     case A_NPCM_GMAC_VERSION:
+diff --git a/include/hw/net/npcm_gmac.h b/include/hw/net/npcm_gmac.h
+index d4fe49ada5..23b9841a80 100644
+--- a/include/hw/net/npcm_gmac.h
++++ b/include/hw/net/npcm_gmac.h
+@@ -24,7 +24,8 @@
+ #include "hw/core/sysbus.h"
+ #include "net/net.h"
+ 
+-#define NPCM_GMAC_NR_REGS (0x1060 / sizeof(uint32_t))
++#define NPCM_GMAC_REG_SIZE 0x1060
++#define NPCM_GMAC_NR_REGS (NPCM_GMAC_REG_SIZE / sizeof(uint32_t))
+ 
+ #define NPCM_GMAC_MAX_PHYS 32
+ #define NPCM_GMAC_MAX_PHY_REGS 32
+-- 
+2.43.0
 
 
