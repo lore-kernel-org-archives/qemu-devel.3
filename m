@@ -4,78 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ACC4FCB625
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D74EFCB626
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyYUr-0004h0-03; Fri, 06 Mar 2026 11:57:53 -0500
+	id 1vyYW2-0005Ws-4K; Fri, 06 Mar 2026 11:59:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyYUl-0004g8-Nj
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:57:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyYUk-0006jY-7X
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:57:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772816265;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bixJFigiCkrl9cifpW4RVb45ej0zL75PQtxcTkRAlW4=;
- b=drH6kQ6BaxocwD6fXppxgBKarPvd6eVtimCfTNJuGBiN00FrwsNKD0QQSt8cQt58PfOEOP
- oXhrBzcjmo+3bO/n7isIWCDMSonu/o/xBEwOK5PyB5LrKMKUTJxGO1EpEwIFVWf5WKJk7A
- y1P/QYkukf7u3HHatv/8791dL/PYGCw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-tngVE4uSM_-rldvWeSK-Uw-1; Fri,
- 06 Mar 2026 11:57:41 -0500
-X-MC-Unique: tngVE4uSM_-rldvWeSK-Uw-1
-X-Mimecast-MFC-AGG-ID: tngVE4uSM_-rldvWeSK-Uw_1772816260
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 069BF1800344; Fri,  6 Mar 2026 16:57:40 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.45.225.197])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A53618001FE; Fri,  6 Mar 2026 16:57:35 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Keith Busch <kbusch@kernel.org>, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Avi Kivity <avi@scylladb.com>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
- Klaus Jensen <its@irrelevant.dk>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 3/4] hw/nvme: add user controlled 'model' property
-Date: Fri,  6 Mar 2026 16:57:16 +0000
-Message-ID: <20260306165717.3360110-4-berrange@redhat.com>
-In-Reply-To: <20260306165717.3360110-1-berrange@redhat.com>
-References: <20260306165717.3360110-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyYVs-0005NK-Tc
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:58:57 -0500
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyYVp-0006tu-Tx
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:58:55 -0500
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-64ca1ba0089so8693824d50.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:58:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772816325; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NYmereDyC6I653puC1Te+A2Vj4eyJnqmcBX4ndlOXAjmD7h5XcUo9vzjuinhzX1q6+
+ pATHaR2chTeH5aLD+hqk0IpyfTg8sP+xIr1b5bXPbeuZyQ3oIE25C8Duzz4PDHI3dhEC
+ bIJizpUNCD/vM1gxs9xsoz4gce/akFkdfv4ZhqDXZn4alx7a8/gk5fPQUomnPxrmXelN
+ TYai5DNkq2qS/WIhYMW3yHsOng92vXzcrPiBvi2VGJcttuUJJCCnxTJDzOq92Glb1P0F
+ 8Wkoa3BIbAN3h3HzjBiSXJTvhZGFq02c64O2d3yqJqs9Cla7TW9gy/GoQ8u4X5s4adaL
+ Z99w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :dkim-signature;
+ bh=wMp9iT2oBHVioXDMeR9lJeHUwdoXY49xeXeV9GbpoRY=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=EYA8XrjHXaUn3w4K2xTd9Eo1xBjXe8iWz9MHszZHmZSDai8Z5EQ3BtZlWw7ykpDqCo
+ DZwFaBAnvE2ts4zyM7vyXmghR/XqjIntKvdbyckP8V8syJIUjttI/LhRlgJcwU3dsv0l
+ P0yyyEP+7t+TCd6j7PriVsN/YMLvIZmXiUjHWY26v7qOPXTuihvFXqJPzdwLBl6ucVSQ
+ BKOTILThzPjIQM6AXcenZhMKnAP7PZWKq/ijad1ChLPgsnqYR4RccQSQ5OBXvvPYqoGD
+ l/HwNuW7vs7SVz+M9Q146FRi/tMNpdGri3WKWjglSQ2mklZtBOgewjWMadJ1U6m2DYsn
+ NLUQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772816325; x=1773421125; darn=nongnu.org;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wMp9iT2oBHVioXDMeR9lJeHUwdoXY49xeXeV9GbpoRY=;
+ b=iyhe6Uja6Wx3YsFKRwhbJwm7Mkub+f1RIq3mjWd/RePCb1Fd8r8Rr8Zntd5YtzTusR
+ 0MvnrpSUZMfm1ogIObA40xpPX6GK0X10o1NkdBlXfhIZCkEVIKqUQJjhkOX80sal9m2B
+ taPUW8Zf5kYgJL2cT34t+dmzDuoWFrtE2MozSf4xhrXpK3G8YXroNLl56F1AsrQIZWGv
+ doY3toMkhKJUl8jJp/xtilosON4TD02K4/aOuZVFsp37sc5O6F+bXCAsQ0nCz1OKujYm
+ g+1Z3sGPJ1f5cbQrwUen9utvsF0vU6V62mqKanPc+tw1WkO5W/rM3LOF5X9zbO8OTHD8
+ M6rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772816325; x=1773421125;
+ h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wMp9iT2oBHVioXDMeR9lJeHUwdoXY49xeXeV9GbpoRY=;
+ b=Zc7Ej8kGF2rC/rv9iHN92qiEDKyPsi8CCi1nPYmbCt+mtIO5SVusM6PhPj9Ty+bxD8
+ L0ZIM+oMyIYUE6SiWP0bXsI7xzWBZCahrBVyvNg7TTH5ljBgeuycwsNZSnn+Gs78HoKU
+ tkEddHuQ6XELCOUsSZdep7XQF70jh5sXhPhBQ8YBQB4k8+TtvN4gIjV0krIGVkreffYx
+ lS0B1liy/CkCn5Y5ZXaJRFwJbgsyU5OXPSzFdWMOFKrJvvSz05IbvTT8PT0FUwKx60YH
+ +F1QhnHP93OMtg5+P8t79j8WSACzKE015oDCrHj0JrsRv3BC3fb+Z8IV/k9rGRhwI4BX
+ sIqg==
+X-Gm-Message-State: AOJu0Yzs0r7AVsext57JW8hyPGsGLHnihMhu9KDqpkeIabdd8Zw03+Ce
+ +DMtwC+GnfXiA9rUWiOeBcpwNuTOJMcfXsNC9KzmKWy1apdvKCJw2kP7SgemhCGgTN29Pnba1/t
+ za4t9zpojrBqOKOi1LLI9btV25+l+8rw2OThkWKVajQVndsfsQl1Y
+X-Gm-Gg: ATEYQzzMVcDxOMqJBDeRVgZRE92zZYlgHeDHe3ePRy4n6/Xf7sbae6PilcKfx90a5O+
+ CJTTTn/ZbiTUvaf1GLy8qxRW3m0GqSq6a5zN00jghm+1uNMHKbnu6YuRc1E5BhGUGs4DDUxXIt+
+ G4uO8D0N35pWaZq6lEj5Ah5R24PYL8MAs2YJx0LWQQ2YcAKOQJwP1VxLhFyahU8Gdiwg5l6vy7d
+ o8vQR1JSP+of5KLbn3SNWquDBLRdFKIJ0KOarUPs4IcVjcDY5hrfsNOaqvQjKBEJP+VjBeIBHJh
+ 6KUVuFabFDVHNcwGuxF3kY+iHlxh7Kr5v2LNUSzYOHUi9YanCEjfaawOYVNJWthbSVM=
+X-Received: by 2002:a05:690e:11c8:b0:64c:9fe1:38d7 with SMTP id
+ 956f58d0204a3-64d143a1751mr2511543d50.85.1772816324698; Fri, 06 Mar 2026
+ 08:58:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260306155801.2198582-1-peter.maydell@linaro.org>
+In-Reply-To: <20260306155801.2198582-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Mar 2026 16:58:33 +0000
+X-Gm-Features: AaiRm52o92kkDTAv2njZL6BVIdMui3xfzHkS_rnoVXMivW8KcgqkujPVzHXKXqk
+Message-ID: <CAFEAcA9DHJpMbpWP0_1igx7Qxo8N_7jJ8iaCepeUkVNiCKFKVA@mail.gmail.com>
+Subject: Re: [PULL v3 00/36] target-arm queue
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,92 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables overriding the built in default "QEMU NVMe Ctrl" string
-with a user specified string. The value can be at most 40 characters
-in length.
+On Fri, 6 Mar 2026 at 15:58, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Dropped almost all of the hvf gicv3 and nested virt series.
+>
+> -- PMM
+>
+> The following changes since commit 314ff2e07ddc6163554077d68aed5d76a50b8e3d:
+>
+>   Merge tag 'pull-request-2026-03-05' of https://gitlab.com/thuth/qemu into staging (2026-03-05 16:58:20 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260306-2
+>
+> for you to fetch changes up to 7b6a3c3349e8ccc11c1857abee7fa218bfdf53e1:
+>
+>   hvf: hvf-all: stop including hvf_arm.h (2026-03-06 13:27:24 +0000)
+>
+> ----------------------------------------------------------------
+>  * Remove deprecated 'highbank' and 'midway' machines
+>  * hw/arm: Add missing dependencies for STM32F405 SoC
+>  * hw/arm/smmuv3-accel: Read and propagate host vIOMMU events
+>  * Minor MAINTAINERS updates
+>  * target/arm: Improve logging of migration errors due to system
+>    register mismatches between source and destination
+>  * hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
+>  * tests/qtest/iommu-smmuv3-test: Free QPCIDevice
+>  * chardev: Fix various sanitizer detected leaks
+>  * tests/qtest/test-x86-cpuid-compat: Free allocated memory
+>  * tests/qtest/qos-test: Plug a couple of leaks
+>  * hw/arm/smmuv3: Fix various minor bugs
+>  * hvf/arm: expose FEAT_SME2 to guest if available
+>  * hvf/arm: drop unneeded includes
+>
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- docs/system/devices/nvme.rst |  5 +++++
- hw/nvme/ctrl.c               | 14 ++++++++++++--
- hw/nvme/nvme.h               |  1 +
- 3 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
-index 6509b35fcb..109c01a70d 100644
---- a/docs/system/devices/nvme.rst
-+++ b/docs/system/devices/nvme.rst
-@@ -60,6 +60,11 @@ parameters.
-   the SMART / Health information extended log become available in the
-   controller. We emulate version 5 of this log page.
- 
-+``model`` (default: ``QEMU NVMe Ctrl``)
-+  Override the default reported model, which can be used when needing
-+  to more closely impersonate a particular device type. The model name
-+  can be a maximum of 40 characters in length.
-+
- Additional Namespaces
- ---------------------
- 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e6b2e3b70a..4067443309 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -43,7 +43,8 @@
-  *              atomic.dn=<on|off[optional]>, \
-  *              atomic.awun<N[optional]>, \
-  *              atomic.awupf<N[optional]>, \
-- *              subsys=<subsys_id>
-+ *              subsys=<subsys_id>, \
-+ *              model=<model-str>
-  *      -device nvme-ns,drive=<drive_id>,bus=<bus_name>,nsid=<nsid>,\
-  *              zoned=<true|false[optional]>, \
-  *              subsys=<subsys_id>,shared=<true|false[optional]>, \
-@@ -8606,6 +8607,13 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
-         return false;
-     }
- 
-+    if (params->model &&
-+        strlen(params->model) > NVME_ID_CTRL_MN_MAX_LEN) {
-+        error_setg(errp, "'model' parameter '%s' can be at most '%d' characters",
-+                   params->model, NVME_ID_CTRL_MN_MAX_LEN);
-+        return false;
-+    }
-+
-     if (params->mqes < 1) {
-         error_setg(errp, "mqes property cannot be less than 1");
-         return false;
-@@ -9099,7 +9107,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
- 
-     id->vid = cpu_to_le16(pci_get_word(pci_conf + PCI_VENDOR_ID));
-     id->ssvid = cpu_to_le16(pci_get_word(pci_conf + PCI_SUBSYSTEM_VENDOR_ID));
--    strpadcpy((char *)id->mn, sizeof(id->mn), "QEMU NVMe Ctrl", ' ');
-+    strpadcpy((char *)id->mn, sizeof(id->mn),
-+              n->params.model ? n->params.model : "QEMU NVMe Ctrl", ' ');
-     strpadcpy((char *)id->fr, sizeof(id->fr), QEMU_VERSION, ' ');
-     strpadcpy((char *)id->sn, sizeof(id->sn), n->params.serial, ' ');
- 
-@@ -9379,6 +9388,7 @@ static const Property nvme_props[] = {
-     DEFINE_PROP_LINK("subsys", NvmeCtrl, subsys, TYPE_NVME_SUBSYS,
-                      NvmeSubsystem *),
-     DEFINE_PROP_STRING("serial", NvmeCtrl, params.serial),
-+    DEFINE_PROP_STRING("model", NvmeCtrl, params.model),
-     DEFINE_PROP_UINT32("cmb_size_mb", NvmeCtrl, params.cmb_size_mb, 0),
-     DEFINE_PROP_UINT32("num_queues", NvmeCtrl, params.num_queues, 0),
-     DEFINE_PROP_UINT32("max_ioqpairs", NvmeCtrl, params.max_ioqpairs, 64),
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index d66f7dc82d..ebf1fcfdcd 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -542,6 +542,7 @@ typedef struct NvmeCQueue {
- 
- typedef struct NvmeParams {
-     char     *serial;
-+    char     *model;
-     uint32_t num_queues; /* deprecated since 5.1 */
-     uint32_t max_ioqpairs;
-     uint16_t msix_qsize;
--- 
-2.53.0
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
