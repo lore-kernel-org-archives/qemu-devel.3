@@ -4,105 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3DAF01828
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 11:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79017F01829
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 11:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyTC8-0004H5-Rt; Fri, 06 Mar 2026 06:18:12 -0500
+	id 1vyTGb-00057X-NV; Fri, 06 Mar 2026 06:22:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyTC7-0004Ga-BA
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:18:11 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyTC4-00078z-Rt
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:18:11 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ca4dfdd88so8851632d50.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 03:18:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772795887; cv=none;
- d=google.com; s=arc-20240605;
- b=KcbTqI0QJ/2FwzUnOgp4+/gfMPfKdSudOAOLisFDdT1cNDeltghkHXILFjPiIdN7Pi
- 4ygRoKsP5XretZ9e5XnLtWn1IjTMy3DfoWrXzwf5WA+rnR6TI+oNqOVDpKhlkpQzCFbp
- 4ftcZHfht4rco9BO6KcrIsRVcn0MGLTmCx/0OrpLy7JMbgBn1t5Mge3HrlTPlOhcVCGT
- aBZJYNvVuEwEbeW2v8gnJFDtugAxJRc9ogCOl+i0kkwT36daDcQK6UT0RgRCiI0gA1mF
- ANFCvcf8OcBqVCqD8hs/vuqSDgPs3uSsLwyzyQmQxXYy+s8Ipg+y7xvj0naoPgs3C4X1
- E1TQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=L0WoHVrZpBPnhKgVUpIXPIw520ltzzeccYgBNsC3m7A=;
- fh=5UOKKzWagLcV08YkT2vKsZhGHO5ztHCRoSDsijPOCSQ=;
- b=fOfe0K6abpjTIXUms+clLqu5P9Ma8GQRee1+erGxsJFtiE+yNIHQLc3/rWmLscfB5G
- LSu0OdqgW94zqRDIo1L9LeMdljWvbTU0DDNZLtIP1jAkT5w1c7y1iI+FZ/UAfIoE/BtE
- ZMny3sMiFQSxa7hktcIgpJ4E1K3CaFwRdLKVnxhywdQTH0TdsFJ5hal/5JCap/sSavRh
- y880eEOygFEwMTZJhPucEawAweICvy0deTrLehZ9j0iN83XyZbt/gMbzDw+Bql2qWcEg
- cPI9IPZdkSrVuKAhHFDv4I5nmGvKKIgwUfeXUZuWRiWT4tAqXyMNk+GS6i7hgqWKix5q
- Nixg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772795887; x=1773400687; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=L0WoHVrZpBPnhKgVUpIXPIw520ltzzeccYgBNsC3m7A=;
- b=xzH7gLWFTUv4OpqFLdsvPZIYm3XJ7X8Z53k7DVox26T/evsxmpXJzdIa8mpP8Xnydx
- SAQ0vD1rgcNJJuLOxge+TNhBr8HjviQ55JFhfDu1iYrHdvuYorgJUEvdZ6V8FjzppBVQ
- L+WAcsZdNIW/pP3WfGaBsh1StB8RaY+ICppd6gH2CEEWBWtmv/d4w0qLxE1Eq/o7qXD4
- QY4vFfNUTp2l/U93o8Cgo/st1L4s+FR3IHyOjjXUjFCB8Kp3ByjbOU3Sjh+MWuHRVpfT
- KVf92miaJhf0dA61/f/weq+gKkFmFMN9WMoPqUg+UiwsJZnvwt5nPq7/EqQIF6yVlkN4
- la1Q==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vyTGa-00057F-Hq
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:22:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vyTGY-0007rY-M5
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:22:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772796164;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K5AdUkg3LCkbOmcqvxqODsNWKpYTyk9eDnjuhRRoOwc=;
+ b=iQA38iNmdTkQ8757Wj5ERQZdGLX2+foOtNF14RhPst86KGiIHdQytbnMQB0yjIz2mLsEcI
+ pI3kYMCf2l5PA07K3QYQHOw/Zo0+PS7efFdISTmcZS5SgcxRmMOHKCRN7u3k2JZ3tA2TIX
+ VPTkDjhd/iJxldotR6rADVpU7swjQ7c=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-BN_hrqHMPPeasrxRKLuNfw-1; Fri, 06 Mar 2026 06:22:43 -0500
+X-MC-Unique: BN_hrqHMPPeasrxRKLuNfw-1
+X-Mimecast-MFC-AGG-ID: BN_hrqHMPPeasrxRKLuNfw_1772796163
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-483bcfdaf7dso90721955e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 03:22:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772795887; x=1773400687;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1772796162; x=1773400962;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L0WoHVrZpBPnhKgVUpIXPIw520ltzzeccYgBNsC3m7A=;
- b=eCUpWVhQBFo0eN5K2W/bKuXL9tQqjkTXayk8igoe0jrdYzoxPyxqDP9+37hAxuzqg5
- d9gOUZ1qn1s6MgQflFDd+WnBoTTwC9x45J9FVHlJcvZKi/6BrRFlkrvetvSEbXKTX3eC
- nxJHm4N3PWTSUaoSPeEKKrrlE3a8R/ocljF9D4bQsaUeoBdCJTq90se8lH4l9J+R6cOy
- WEH+KrbmI6Y27NkWeqAJLV+arFXsi+EOvl5+BN7qfNC9KhRNKQ8VvbCKm3SkaAdT7sk9
- GKBtDJbREFdolezrUEyBv2mWQ4AiouKp1/E7HCkE8Scd/KO9hPnDOpRxY0EHPCAQKigt
- EF/A==
+ bh=K5AdUkg3LCkbOmcqvxqODsNWKpYTyk9eDnjuhRRoOwc=;
+ b=ZhfwpCuGvkoN2URLLAIWBskq9vz6N1R+yGvO7N8aAian/PO3U92Tok8SobbQ6czm+N
+ GfXlPwOIABMl52PQb4x1S8k5rX8zqsZosnADmrO51jbrhYk/z25OLvqYHKG/g11dnOEr
+ X9FePU4B7zh/ab8hywq23zlIeAr3e4Vlev4fZyvdHG3w4jI5iQc1k2pMGPt3Uh0p9xCX
+ cmVqRuYf4mpa+pHhbbwfcqVqn7LxJ06aEBFZcjVQh6v4OmuVWmKYpMXU8O4xo5RQgbMK
+ z4JG+LGEFcwKCmRyEPI5ZNMQKeihnKnieOn1pZ3PoOEwhKNzxVjRONYlos8XAHnBAUD7
+ 2x8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUD6kkjqTs1iEhEsB4o1AYPfdI6fxJnzw3zZYBWFsWBGTXhuG2uDo3U+FhMkiNIueGnB/a07gW8k0lB@nongnu.org
-X-Gm-Message-State: AOJu0YxVbpG2pwcKDkuchPF1qWuRx5Dt8qXkz4b5/7yGxGGWl3pN2EaC
- dcr+1QZ1k7q7vL5sG+rNH668LKI1U63e9d246Gcndno0NDEliTBh3wza+efWFqWkkoS3FIhlyQM
- FGCz2uUvmT7aK/bXO/qSntbbs5rFAftJAuzbD6ywbwg==
-X-Gm-Gg: ATEYQzzghuteWg1QQAgTxAQSucAZG9qOqwRwrWERuqwiCw7tpeHbgZlV++1y/8vfXtN
- YUdQbQ6jCmW//xesJ/pGblD2s7rPTyH3bpavHvDNqM9XtJQFaYwCrlXZIfDb+iXyeGF9U9u1gUH
- UZna2mGsLkgmLZeT9W+2ZruxtG3ZX5z318PEj4CcfMFyAeEScuJIbL2KoM9AdrIblLoXHmE0GNy
- VXTv4cv4Zw/ro93sOsqSWX2jlLXGnkm+Y2Zx23cAWQCxH+H5Sus8EO81JfC6jwjIPFCmcryT+PZ
- J3tsCHnoYNaYo76CZOOk3u8EtsZqmduySbltf6p+3/blICqZsJXpLGBcTCehDLQWLl8=
-X-Received: by 2002:a05:690e:4012:b0:64c:9bc9:307f with SMTP id
- 956f58d0204a3-64d142c4c22mr1631670d50.42.1772795887386; Fri, 06 Mar 2026
- 03:18:07 -0800 (PST)
+ AJvYcCWWVTmc9TjdSa7AfkZbvF/bqjR/pldqE5TcmF6PsHi9x8nxx/YrtuqmLk5nwZmYBmkur+nXewdGjNY8@nongnu.org
+X-Gm-Message-State: AOJu0YzKoII2Hu7izyhz8SwRYj7V4KdLIjoeE5unuKB/vy5+qzehuQkq
+ Nc4/aSjLv+Z1NMtAHB/HJJCFr3qlTLi4WQeMPXgHTAajyy9aV0JYYdYzqP6z7o1SEU6r6dabwtF
+ LgDssRevaLlVeXsr/jv1pJkX/OwtaNsNqk5YvWSrcJvMSkbO48l0UIzZr
+X-Gm-Gg: ATEYQzwOrFU6Zm551AW3sQWZJ/V/XTPqyo+ky1Y2tid+wuFoyoGC8ptvW0PLmmeoG/0
+ NyWV1iiHTKlanRrThQd4yn6pAyV145aIWeu9+/qD/Q6rKeWNrlGER9L1KM2rlnZUJXo6ay37NG4
+ Dxu8AAqicSv8hbJbsrx550WfpfJfnadihlbjVPvG8XU5FkXNQ0/Cbes3ZNX9U08Tx5J4mA6FuS5
+ bzqszIaujPXCdxi0W6zXjAGlUlxeAI7GZA2frphs9kgimkFrvzuE0kDZUAnzdodC/wNqp5XjE34
+ 1eYHQfC1xTCZ3UybGq9q8S7EAxxCWl2KonHXv1q5na3tzckSl6ZGd2g46KHqEn3QQOCYo3OT4T5
+ FnFZ7WpsiBXn7BwOIquNt2ocJTg86diLfQ1DXsn31hvAB/v75ugiNCX3opEOlHrqX18au8Q==
+X-Received: by 2002:a05:600c:45d1:b0:480:4a90:1b06 with SMTP id
+ 5b1f17b1804b1-48526978962mr26933785e9.34.1772796162348; 
+ Fri, 06 Mar 2026 03:22:42 -0800 (PST)
+X-Received: by 2002:a05:600c:45d1:b0:480:4a90:1b06 with SMTP id
+ 5b1f17b1804b1-48526978962mr26933085e9.34.1772796161685; 
+ Fri, 06 Mar 2026 03:22:41 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485237ec557sm25393575e9.2.2026.03.06.03.22.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Mar 2026 03:22:40 -0800 (PST)
+Message-ID: <36cd0b42-adb8-4aed-8c91-afe4a37ce0ac@redhat.com>
+Date: Fri, 6 Mar 2026 12:22:39 +0100
 MIME-Version: 1.0
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
- <20260223170212.441276-2-peter.maydell@linaro.org>
- <20260306111106.0000023a@huawei.com>
-In-Reply-To: <20260306111106.0000023a@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 11:17:54 +0000
-X-Gm-Features: AaiRm502UAUKkhnhn5gz1eS_ZSn9tbnOJWP6HZ4fIlSFajipkMs8F4xt1wXA9-U
-Message-ID: <CAFEAcA-LSSryT4VmkbHNaZJhG5_SWVXApom7TEuTADhQRsOCXQ@mail.gmail.com>
-Subject: Re: [PATCH 01/65] hw/core: Permit devices to define an array of link
- properties
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/6] target/arm/cpu: Introduce the infrastructure for
+ cpreg migration tolerances
+Content-Language: en-US
+To: Sebastian Ott <sebott@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, cohuck@redhat.com, peterx@redhat.com,
+ philmd@linaro.org, alex.bennee@linaro.org
+References: <20260304102249.1963784-1-eric.auger@redhat.com>
+ <20260304102249.1963784-2-eric.auger@redhat.com>
+ <a1dc92c5-2f13-8951-adf7-48d46992bf83@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <a1dc92c5-2f13-8951-adf7-48d46992bf83@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,128 +116,253 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Mar 2026 at 11:11, Jonathan Cameron
-<jonathan.cameron@huawei.com> wrote:
->
-> On Mon, 23 Feb 2026 17:01:08 +0000
-> Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> > Currently we allow devices to define "link properties" with
-> > DEFINE_PROP_LINK(): these are a way to give a device a pointer to
-> > another QOM object.  (Under the hood this is done by handing it the
-> > canonical QOM path for the object.)
-> >
-> > We also allow devices to define "array properties" with
-> > DEFINE_PROP_ARRAY(): these are a way to give a device a
-> > variable-length array of properties.
-> >
-> > However, there is no way to define an array of link properties.  If
-> > you try to do it by passing qdev_prop_link as the arrayprop argument
-> > to DEFINE_PROP_ARRAY() you will get a crash because qdev_prop_link
-> > does not provide the .set and .get methods in its PropertyInfo
-> > struct.
-> >
-> > This patch implements a new DEFINE_PROP_LINK_ARRAY(). In
-> > a device you can use it like this:
-> >
-> > struct MyDevice {
-> >     ...
-> >     uint32_t num_cpus;
-> >     ARMCPU **cpus;
-> > }
-> >
-> > and in your Property array:
-> >     DEFINE_PROP_LINK_ARRAY("cpus", MyDevice, num_cpus, cpus,
-> >                            TYPE_ARM_CPU, ARMCPU *),
-> >
-> > The array property code will fill in s->num_cpus, allocate memory in
-> > s->cpus, and populate it with pointers.
-> >
-> > On the device-creation side you set the property in the same way as
-> > the existing array properties, using the new qlist_append_link()
-> > function to append to the QList:
-> >
-> >     QList *cpulist = qlist_new();
-> >     for (int i = 0; i < cpus; i++) {
-> >         qlist_append_link(cpulist, OBJECT(cpu[i]));
-> >     }
-> >     qdev_prop_set_array(mydev, "cpus", cpulist);
-> >
-> > The implementation is mostly in the provision of the .set and
-> > .get methods to the qdev_prop_link PropertyInfo struct. The
-> > code of these methods parallels the code in
-> > object_set_link_property() and object_get_link_property().  We can't
-> > completely share the code with those functions because of differences
-> > in where we get the information like the target QOM type, but I have
-> > pulled out a new function object_resolve_and_typecheck() for the
-> > shared "given a QOM path and a type, give me the object or an error"
-> > code.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Hi Peter,
->
-> Looks good to me, but I'm not confident enough on this stuff to give
-> tags.  A couple of trivial things inline.
->
-> Jonathan
->
-> > ---
-> > I want this specifically for the GICv5 interrupt controller device
-> > I'm working on.  I'd like to be able to pass in links to the CPUs
-> > connected to the GIC, so that we don't have to have the code assume
-> > that it's connected to CPU numbers 0,1,2... the way the current
-> > GICv3 code does.
-> >
-> > I think Phil also had a proposed series a while back that wanted
-> > to do something similar with one of the existing devices.
-> >
-> > I figured I'd post this early for review, though obviously it's a
-> > little unmotivated until I have my new GICv5 code into enough shape
-> > to submit. This is tested, but with my work-in-progress code.
->
-> You probably want to update this set of notes given it's in your
-> GICv5 set now!
+Hi Sebastian,
 
-Yes :-)
-
-> > diff --git a/include/qom/object.h b/include/qom/object.h
-> > index 26df6137b9..48fdbf353e 100644
-> > --- a/include/qom/object.h
-> > +++ b/include/qom/object.h
-> > @@ -1750,6 +1750,25 @@ ObjectProperty *object_class_property_add_link(ObjectClass *oc,
-> >                                              Object *val, Error **errp),
-> >                                ObjectPropertyLinkFlags flags);
-> >
-> > +
-> > +/**
-> > + * object_resolve_and_typecheck:
-> > + * @path: path to look up
-> > + * @name: name of property we are resolving for (used only in error messages)
-> > + * @target_type: QOM type we expect @path to resolve to
-> > + * @errp: error
-> > + *
-> > + * Look up the object at @path and return it. If it does not have
-> > + * the correct type @target_type, return NULL and set @errp.
-> > + *
-> > + * This is similar to object_resolve_path_type(), but it insists on
-> > + * a non-ambiguous path and it produces error messages that are specialised
-> > + * to the use case of setting a link property on an object.
-> > + */
-> > +Object *object_resolve_and_typecheck(const char *path,
-> > +                                     const char *name,
-> > +                                     const char *target_type, Error **errp);
+On 3/6/26 11:28 AM, Sebastian Ott wrote:
+> On Wed, 4 Mar 2026, Eric Auger wrote:
+>> We introduce a datatype for a tolerance with respect to a given
+>> cpreg migration issue. The tolerance applies to a given cpreg kvm index,
+>> and can be of different types:
+>> - ToleranceNotOnBothEnds (cpreg index is allowed to be only on one end)
+>                                                              ^
+>                                                        available/present?
 >
-> I'm not sure why you went with this wrapping. I'd combine the first two lines.
+>> - ToleranceDiffInMask (value differences are allowed only within a mask)
+>> - ToleranceFieldLT (incoming field value must be less than a given
+>> value)
+>> - ToleranceFieldGT (incoming field value must be greater than a given
+>> value)
+>>
+>> A QLIST of such tolerances can be populated using a new helper:
+>> arm_register_cpreg_mig_tolerance() and arm_cpu_cpreg_has_mig_tolerance()
+>> allows to check whether a tolerance exists for a given kvm index.
+>>
+>> callers for those helpers will be introduced in subsequent patches.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>> target/arm/cpu.h | 32 +++++++++++++++++++++
+>> target/arm/cpu.c | 75 ++++++++++++++++++++++++++++++++++++++++++++++++
+>> 2 files changed, 107 insertions(+)
+>>
+>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>> index 657ff4ab20b..9dcc838f611 100644
+>> --- a/target/arm/cpu.h
+>> +++ b/target/arm/cpu.h
+>> @@ -843,6 +843,21 @@ struct ARMELChangeHook {
+>>     QLIST_ENTRY(ARMELChangeHook) node;
+>> };
+>>
+>> +typedef enum {
+>> +    ToleranceNotOnBothEnds,
+>> +    ToleranceDiffInMask,
+>> +    ToleranceFieldLT,
+>> +    ToleranceFieldGT,
+>> +} ARMCPUCPREGMigToleranceType;
+>> +
+>> +typedef struct ARMCPUCPREGMigTolerance {
+>> +    uint64_t kvmidx;
+>> +    uint64_t mask;
+>> +    uint64_t value;
+>> +    ARMCPUCPREGMigToleranceType type;
+>> +    QLIST_ENTRY(ARMCPUCPREGMigTolerance) node;
+>> +} ARMCPUCPREGMigTolerance;
+>> +
+>> /* These values map onto the return values for
+>>  * QEMU_PSCI_0_2_FN_AFFINITY_INFO */
+>> typedef enum ARMPSCIState {
+>> @@ -1139,6 +1154,7 @@ struct ArchCPU {
+>>
+>>     QLIST_HEAD(, ARMELChangeHook) pre_el_change_hooks;
+>>     QLIST_HEAD(, ARMELChangeHook) el_change_hooks;
+>> +    QLIST_HEAD(, ARMCPUCPREGMigTolerance) cpreg_mig_tolerances;
+>>
+>>     int32_t node_id; /* NUMA node this CPU belongs to */
+>>
+>> @@ -2632,6 +2648,22 @@ void arm_register_pre_el_change_hook(ARMCPU
+>> *cpu, ARMELChangeHookFn *hook,
+>> void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn
+>> *hook, void
+>>         *opaque);
+>>
+>> +/**
+>> + * arm_register_cpreg_mig_tolerance:
+>> + * Register a migration tolerance wrt one given cpreg identified by its
+>> + * @kvmidx. Only one tolerance can be registered by kvm reg idx.
+>> + */
+>> +void arm_register_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+>> +                                      uint64_t mask, uint64_t value,
+>> +                                      ARMCPUCPREGMigToleranceType
+>> type);
+>> +
+>> +/**
+>> + * arm_cpu_cpreg_has_mig_tolerance:
+>> + * Check whether a tolerance of type @type exists for a given @kvmidx
+>> + */
+>
+> This function does more than the name and description suggests - it not
+> only checks if the tolerance exists but also if it applies..
+>
+> arm_cpu_cpreg_mig_tolerated ? 
+Well it is supposed to really check a tolerance exists (and thus
+applies), of a given type, for a given kvmidx.
+But I admit the check of ->type versus type is missing below. 
+>
+>> +bool arm_cpu_cpreg_has_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+>> +                                     uint64_t vmstate_value,
+>> uint64_t local_value,
+>> +                                     ARMCPUCPREGMigToleranceType type);
+>> /**
+>>  * arm_rebuild_hflags:
+>>  * Rebuild the cached TBFLAGS for arbitrary changed processor state.
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 7e3e84b4bbb..1c499d1b15c 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -181,6 +181,75 @@ void arm_register_el_change_hook(ARMCPU *cpu,
+>> ARMELChangeHookFn *hook,
+>>     QLIST_INSERT_HEAD(&cpu->el_change_hooks, entry, node);
+>> }
+>>
+>> +void arm_register_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+>> +                                      uint64_t mask, uint64_t value,
+>> +                                      ARMCPUCPREGMigToleranceType type)
+>> +{
+>> +    ARMCPUCPREGMigTolerance *t, *entry;
+>> +
+>> +    /* make sure the kvmidx has not tolerance already registered */
+>> +    QLIST_FOREACH(t, &cpu->cpreg_mig_tolerances, node) {
+>> +        if (t->kvmidx == kvmidx) {
+>> +            g_assert_not_reached();
+>> +        }
+>> +    }
+>> +    entry = g_new0(ARMCPUCPREGMigTolerance, 1);
+>> +
+>> +    entry->kvmidx = kvmidx;
+>> +    entry->mask = mask;
+>> +    entry->value = value;
+>> +    entry->type = type;
+>> +
+>> +    QLIST_INSERT_HEAD(&cpu->cpreg_mig_tolerances, entry, node);
+>> +}
+>> +
+>> +bool arm_cpu_cpreg_has_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+>> +                                     uint64_t vmstate_value,
+>> uint64_t local_value,
+>> +                                     ARMCPUCPREGMigToleranceType type)
+>> +{
+>> +    ARMCPUCPREGMigTolerance *t;
+>> +    uint64_t diff, diff_outside_mask, field;
+>> +    bool found = false;
+>> +
+>> +    QLIST_FOREACH(t, &cpu->cpreg_mig_tolerances, node) {
+>> +        if (t->kvmidx == kvmidx)  {
+>> +            found = true;
+>> +            break;
+>> +        }
+>> +    }
+>> +    if (!found) {
+>> +        return false;
+>> +    }
+>> +
+>> +    /* we found one tolerance associated to the @kvmidx */
+>> +
+>> +    if (type == ToleranceNotOnBothEnds) {
+>
+> This should use t->type and type can be removed as an argument. 
+Actually if we found a tolerance registered for this regidx, I should
+test the @type matches the registered tolerance once. This is missing.
+>
+>> +        return true;
+>> +    }
+>> +
+>> +    /* Need to check mask */
+>> +    diff = vmstate_value ^ local_value;
+>> +    diff_outside_mask = diff & ~t->mask;
+>> +
+>> +    if (diff_outside_mask) {
+>> +        /* there are differences outside of the mask */
+>> +        return false;
+>> +    }
+>> +    if (type == ToleranceDiffInMask) {
+>> +        /* differences only in the field, tolerance granted */
+>> +        return true;
+>> +    }
+>> +    /* need to compare field value against authorized ones */
+>> +    field = vmstate_value & t->mask;
+>> +    if (type == ToleranceFieldLT && (field < t->value)) {
+>> +        return true;
+>> +    }
+>> +    if (type == ToleranceFieldGT && (field > t->value)) {
+>> +        return true;
+>> +    }
+>
+> Ah, so this is only compared with a static value not with the
+> local_value.
+> Would there be a need for a more sophisticated check than
+> ToleranceDiffInMask?
+>
+> We could instead of having the type per ARMCPUCPREGMigTolerance
+> register a
+> callback that makes the decision. The 4 types would be 4 pre-defined
+> callbacks and if a user needs something more sophisticated it can create
+> a custom callback. 
+The goal is to tolerate some differences in a fields versus a given
+static value. For instance if we know a field value was corrected in the
+kernel.
+This we have no example of such usage, it is a bit difficult to provide
+a comprehensive infra. Maybe I should even remove that code until we get
+the need.
+>
+> But yea, that's just an idea - not sure if we'll ever need something like
+> this..
+>
+>> +    return false;
+>> +}
+>> +
+>> static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque)
+>> {
+>>     /* Reset a single ARMCPRegInfo register */
+>> @@ -1106,6 +1175,7 @@ static void arm_cpu_initfn(Object *obj)
+>>
+>>     QLIST_INIT(&cpu->pre_el_change_hooks);
+>>     QLIST_INIT(&cpu->el_change_hooks);
+>> +    QLIST_INIT(&cpu->cpreg_mig_tolerances);
+>>
+>> #ifdef CONFIG_USER_ONLY
+>> # ifdef TARGET_AARCH64
+>> @@ -1550,6 +1620,7 @@ static void arm_cpu_finalizefn(Object *obj)
+>> {
+>>     ARMCPU *cpu = ARM_CPU(obj);
+>>     ARMELChangeHook *hook, *next;
+>> +    ARMCPUCPREGMigTolerance *t, *n;
+>>
+>>     g_hash_table_destroy(cpu->cp_regs);
+>>
+>> @@ -1561,6 +1632,10 @@ static void arm_cpu_finalizefn(Object *obj)
+>>         QLIST_REMOVE(hook, node);
+>>         g_free(hook);
+>>     }
+>> +    QLIST_FOREACH_SAFE(t, &cpu->cpreg_mig_tolerances, node, n) {
+>> +        QLIST_REMOVE(t, node);
+>> +        g_free(t);
+>> +    }
+>> #ifndef CONFIG_USER_ONLY
+>>     if (cpu->pmu_timer) {
+>>         timer_free(cpu->pmu_timer);
+>> -- 
+>> 2.53.0
+>>
+>>
+>
+> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+>
+Thank you for the review
 
-Yeah, I'm not sure why it ended up like this either. Sometimes that happens
-because I change my mind on the name of a function and don't notice that it
-means the wrapping can be done differently, but I have no recollection of
-what the process was in this specific case. I agree that putting the first
-two arguments on one line is better.
+Eric
 
--- PMM
 
