@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B7CFCB608
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE2DFCB608
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:01:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWel-0003vd-Cy; Fri, 06 Mar 2026 09:59:59 -0500
+	id 1vyWfA-0004bQ-Qu; Fri, 06 Mar 2026 10:00:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWej-0003s7-C2
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:57 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1vyWf2-0004To-Jo
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:16 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWeh-0002KO-No
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:57 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439c5b40f60so2778934f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:55 -0800 (PST)
+ id 1vyWf0-0002jj-SV
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:16 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-480706554beso101650975e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809194; x=1773413994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809213; x=1773414013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hDDY3r22JGwcDao4tzCI6uIgo6JsYupYAptKIjoTmEI=;
- b=c5S+Clhw8rRYs/hsr5ibBIIkEVaKK/prMTYBIOeYLvA5Kb7na9bKvg6zfjWtEvZjJn
- kZjejH+Nrxhl8GVh8qWfuLEn/8qxtx4dGeLnnG1Q/Lc26wma70XMC8//9h87YqBdwtdN
- tZUuP42gRv7wsjosqGAJ9ekMPFWo1ZwqktltO9O9BqNNU6/CB1tpyrIGmJIL4mvj3R4X
- 9+dZUz/vav5j/wlv1Tb8t2kwCIVkgSgABoopAbCIACgzeoYkWgMTUdOwxWtK5ZEQJvCq
- lhz5Z9c5tnvO1KJLkfvM899M7+O1dRvOYHLobaKApc+b4HauEKfmgABnnVnoJMY19n49
- EVQw==
+ :reply-to; bh=SEBQ3zr5qos7anNs6cmfSusx7r3fjVf7mNrIRdPgNsI=;
+ b=gvu3L9PnXV7Mx8LxXcFJvxCbAo7zZCdUX26Xk3MrRhueYO6kSrT9mcTAlnSmMAobKM
+ 53jWeMn4m96Zs3/0qkscUUG39ILBmbJtZgLcXsGCkscGAWvozMzjQsp1FpvO00JElcmG
+ FCrnMJo9x5zPz/PynLKsOVX4y0F5mEOBZkWRijET3g4efZv5D/lY5TIbyqnRIYvFiCmP
+ NR+404Ap24PFFvd4Q7OdRURqppJXzJNBMn8XQ51a9bCNTL1tMW7f+N2Uhr2bW4440k4g
+ DfpqTmPOim+XhNn+Z73Hf7nE+8ADzNEJ7A6lY4pOJYt8I2FEncM7DArMPqNzsqeeWViU
+ BQgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809194; x=1773413994;
+ d=1e100.net; s=20230601; t=1772809213; x=1773414013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hDDY3r22JGwcDao4tzCI6uIgo6JsYupYAptKIjoTmEI=;
- b=hEMrxM9pMwX7SDqMBaHIPDGa9lXF3/+toMutVt073hLm3HPYNJk/VcU5PXKbKZ3Z8l
- SFUvPN7huEKeZ+gLic6JcLAM1vylVvfURkmE7IJwRBeZyzhr0Y+R4ygrAnSa/sUDnSZz
- 9rdnmQpkSlVpAD1Is2QkYMnKkaOBSa6rOpEVRCs9fB8JeKoj/zx6qUrreN5nBI6dOUmK
- Fn81Zhd04hsxq2X7EEH4Q2TtYCuuBWro5ITPatE3Ec0zCH6AXaxPECrDdC+XVPe5S6Mo
- JHyMmhyFsxmm74/vgGkcS7l+NznafV+ZlfZybPVaSvcEMvLmUehc/sko2H1S4EdZYiX4
- 1tpg==
-X-Gm-Message-State: AOJu0YxPSNRbia9fdSh7Slx6aRqrFbiUVsSuwFwB3n8MnoCcUSef1kEw
- TlLR0vC+bxZNT3n6pBoCHCwU/4/kf9GlM+2ihnBWYzt0/35L2YbXVFUiTFXsCeI4eUsTssH7UId
- FDyZu
-X-Gm-Gg: ATEYQzzj2oEyelApZyJi2kWPgOODwqaUgvvRx050V9CdYB0KeOpWXNzaBlx9NpPpoLU
- llq30azFX8EgmNON2hvQtxNqjIDNr4cPNNJg9dDKpPpl3+1eIbj12HuZZLDOEa9NzK+LMsXmngT
- FQT/u6Jzf+eLWTOuFT19dU9pkyXEOiSTdGXL36vdGylSGNpRXFN9McJKPCiWFRwR0IBjPDVkadT
- 2TbjVkK7GTWsNjoKKYngNHWCHlXoSlGkiW3XZ4JDF+GPznfuGtGhqJM5SSn3ELcDmSOLLuBB059
- 3idZwShhV27pVquaWW3Nc3duTNtu6vdpe+rjVqwK9YfEElbb8Zox2n+2q1RxHHMYLC4hP47Zt2L
- /rTpfi+jqNqd4AgFO6iUmRMc5X5hVdXJrcgiDV6IhpmJw7nGXRpupuU7vmJ+b76RWlsBiNm6Yez
- fXrSM8ePHp2IukyLrwn61o//bCxToQ0aOjnM4IJOxsdhGggpAHojTv1FvS5/kT+jNbthr5NUZ05
- jw6imOxTKOYXhENQYk9awpzoLbK1hLJ5YuHgKjilQ==
-X-Received: by 2002:a05:600c:46c3:b0:480:6bef:63a0 with SMTP id
- 5b1f17b1804b1-48526959433mr41222625e9.21.1772809194172; 
- Fri, 06 Mar 2026 06:59:54 -0800 (PST)
+ bh=SEBQ3zr5qos7anNs6cmfSusx7r3fjVf7mNrIRdPgNsI=;
+ b=EQSYQP82UaUV86mhPEp6RJCPVcvvCfthv3PFHqcQw8IU4Uk4ZUR/6WeH7lC442kaE7
+ 8uYE+E0tQ0tqncDqKvmJ9J3vzW+RvezuL3fgLmzAzQOz+W6b6/BDvN53igZQI8gSXUVZ
+ sOE8ocWz8iNhaEZZw7lboPkDGAndBgbZDWiFgA1yli2hmEAlE+5obOEVEPbRv3CXWKOJ
+ 16g9ZOJQ5cSVMGZWWFQ9AQMKtymCKaxHzpuTvyv/zCPFuEYBvpdF5zASYG3/JTvmlvcu
+ VUV4q8QmR8KsE6ZzG57S1hHInsD+qbx0hIAN+ScdQKsb8fL2lDochy9teYq4iuhBfsrW
+ Y1lg==
+X-Gm-Message-State: AOJu0YwP6/ZXcyUGrMh/mZHws+3c3QBP5PACAkThJKE/6+fYoPaExIyi
+ e6JvHzqVqGjtYG3ihHIkwSf0CJhl2J/hfXwhcfJ9vot6DVHkA62QRB6Tkqw9F24D0+vtX049gc1
+ gIvsZ
+X-Gm-Gg: ATEYQzzvMEwzWUNtQMkga7o8UsmRephPlrr2sbF7tkLsn0aWgPqkSZEuYfwVKWPoG9q
+ MER+gO1vNy3Tp/hDDh03FNT9cU7+PQmOAtFOnW5WTefk8Otoy273IeU3jYm5lZyKdQBHtItJUoh
+ 9uVNwXpHS4HvPDye2mFtpbMCtjp+iQClgOS2gaTh+TGz6hWoKfNnnOpVlLfVOTp92lC7E+A2R4U
+ SXJqnsLH5bWRD5pFYufVr2Z4oRMpmIqMI0EPUobLTJHtxv2spwj64Q5MeUk7UzP0GM6qEqs6LqB
+ 4WlYoGyNBbluUEpr8jYhjRtzESG/Ql0BQcRBO7kb8YrR+oCApeyBTS7c3cbr/SbGZlGsLzUG3IA
+ 2HDDH0AzxSWsuVS6DS14XcX7ePaDiyAlkUC7f1OsCGPLQ2qT8IHadCo3Jfgd8rfPkrzZzfm+cDH
+ QHtGhpIiBaa0xAPJGxXdkugax/cxgNHFRAIU7Lpjdfeo4Qi8H2VlwKugs3C4A4VM7bScue5pIJy
+ gpkX6O2GW2Y2CRluDdipm8UNzC/tH4=
+X-Received: by 2002:a05:600c:8115:b0:477:a219:cdb7 with SMTP id
+ 5b1f17b1804b1-485268bd69fmr43876055e9.0.1772809212630; 
+ Fri, 06 Mar 2026 07:00:12 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.53
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 06:59:53 -0800 (PST)
+ Fri, 06 Mar 2026 07:00:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/49] vmstate: Introduce VMSTATE_VARRAY_INT32_ALLOC
-Date: Fri,  6 Mar 2026 14:59:04 +0000
-Message-ID: <20260306145939.2162189-15-peter.maydell@linaro.org>
+Subject: [PULL 31/49] hw/arm/smmuv3: Correct SMMUEN field name in CR0
+Date: Fri,  6 Mar 2026 14:59:21 +0000
+Message-ID: <20260306145939.2162189-32-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
 
-Already existing VMSTATE_VARRAY_INT32 requires an array to be
-pre-allocated, however there are cases when the size is not known in
-advance and there is no real need to enforce it.
+The FIELD macro for the SMMU enable bit in the CR0 register was
+incorrectly named SMMU_ENABLE.
 
-Introduce VMSTATE_VARRAY_INT32_ALLOC as we currently have for UINT32
-and UINT16.
+The ARM SMMUv3 Architecture Specification (both older IHI 0070.E.a and
+newer IHI 0070.G.b) consistently refers to the SMMU enable bit as SMMUEN.
 
-The first user of this variant will be the target/arm/machine.c cpreg
-indexes/values arrays.
+This change makes our implementation consistent with the manual.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-id: 20260304101625.1962633-2-eric.auger@redhat.com
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Message-id: 20260304142344.3341444-3-tangtao1634@phytium.com.cn
+Fixes: 10a83cb9887 ("hw/arm/smmuv3: Skeleton")
+Link: https://lists.nongnu.org/archive/html/qemu-arm/2025-09/msg01270.html
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/migration/vmstate.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/arm/smmuv3-internal.h       | 2 +-
+ include/hw/arm/smmuv3-common.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 89f9f49d20..62c2abd0c4 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -447,6 +447,16 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
+diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+index b666109ad9..eb482c7000 100644
+--- a/hw/arm/smmuv3-internal.h
++++ b/hw/arm/smmuv3-internal.h
+@@ -41,7 +41,7 @@ typedef enum SMMUTranslationClass {
+ 
+ static inline int smmu_enabled(SMMUv3State *s)
+ {
+-    return FIELD_EX32(s->cr[0], CR0, SMMU_ENABLE);
++    return FIELD_EX32(s->cr[0], CR0, SMMUEN);
  }
  
-+#define VMSTATE_VARRAY_INT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
-+    .name       = (stringify(_field)),                               \
-+    .version_id = (_version),                                        \
-+    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
-+    .info       = &(_info),                                          \
-+    .size       = sizeof(_type),                                     \
-+    .flags      = VMS_VARRAY_INT32 | VMS_POINTER | VMS_ALLOC,        \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type),     \
-+}
-+
- #define VMSTATE_VARRAY_UINT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
+ /* Command Queue Entry */
+diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+index 2df54ba60f..9f78bbe89e 100644
+--- a/include/hw/arm/smmuv3-common.h
++++ b/include/hw/arm/smmuv3-common.h
+@@ -351,7 +351,7 @@ REG32(IDR5,                0x14)
+ REG32(IIDR,                0x18)
+ REG32(AIDR,                0x1c)
+ REG32(CR0,                 0x20)
+-    FIELD(CR0, SMMU_ENABLE,   0, 1)
++    FIELD(CR0, SMMUEN,   0, 1)
+     FIELD(CR0, EVENTQEN,      2, 1)
+     FIELD(CR0, CMDQEN,        3, 1)
+ 
 -- 
 2.43.0
 
