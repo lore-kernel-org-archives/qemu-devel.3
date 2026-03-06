@@ -4,125 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3071FF0182F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 12:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB16F01832
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 12:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyUAb-0000Br-Bd; Fri, 06 Mar 2026 07:20:41 -0500
+	id 1vyUYr-0004R3-S4; Fri, 06 Mar 2026 07:45:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vyUAU-0000Ai-E0
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:20:35 -0500
-Received: from mail-westusazon11020127.outbound.protection.outlook.com
- ([52.101.85.127] helo=BYAPR05CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1vyUAS-0000gD-05
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:20:34 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NI24q1oLU6IOCqZu108BbaSAuqwlHADCjXG9ubAwHebeTivNHxxuALXr24DhmIg+qJlsY/3euQpiW3vmRzMxGXJv3RidmIJ7PUao0otZHsxy+sHQu8mCs2ZM06mmhEYmo4normgx06ut3/kR5JNwrY3k+OHumfWybUMnZ0uNwHZR6eodDLj9xiRps9FdOYV+9RZuhqtLPCG+SUj++DVWzTiAFB/5G+3FGG0IA3Q43wHbeWHCDElI0A4j3g3jDOGkVoNJ7jBCL1olu7XvjYEdzHyfCuMy+oFiBPMjQTPd9dkI873b83gCWtYYakTQdPTUUmpJTF5QY5UjjnPpxQvG+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iv/6lhr0aDU0UYnEjhHhx5koSgVgigHXltmbsBKWSfo=;
- b=amCqEChIGNzl8PDrQFrPJDQoZ98uSulBJYcGJuh40ZA7wGxwZOD8wbAADVUNW1huAAirYJ71BD1HT7hZlccmXkD9/vdLgAy4aefnvmSgBmKMqCyqoC/+oSHCb6HQIJKBkhk8S+YBr4F/qcMUEiUxi3avt3X5566uH/mJxlBzItexRT7Hn8S8WePdgGnmKsCftLATCPPTG3PgQsVo4GmVD9nrodycwA5x/eUU+Im0oUGamlF1vQetcedHTK3Cllp6RDEy8pgUPNIl9kWHQBpJCneSTMWCxrlCPvTtyRg9BDc/7x+fJytW1/MOSsa7GQx8CZrYesXTaR5MGJbHSsHFjA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iv/6lhr0aDU0UYnEjhHhx5koSgVgigHXltmbsBKWSfo=;
- b=HY23xkR5QLAbJIVvJL0hNZcYUnjlu8yHL+Sq+aOerbq2fB2tcda4A1B8bGlD+8eUtBVXVx8FhL00LiQ5Ok9RDSi84PGWu89RMmpT8svXmhrKi7B/6k81zJCHm2m+Tvx5BFaiO6YCR+gr+L+MaP4SoPYd0H1xW4c8Ti60zMC7nFGRG87FnM/5YZ5xliDGUIeETBsafMq/RAbB1wyvjaSvo/Hvccx51TozCzaH2Q0xlL+GGrK4hy+b+RfyjArFnBgXgmJDKmI6v230+ooJEt5m7mLYKXdRfLNcDxFg4KC+ZgdxmkbsuFlw4u0VYnNns8PNT6qIKbYzk5hCG9wjKMte5g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by IA2PR18MB5977.namprd18.prod.outlook.com (2603:10b6:208:4ba::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.17; Fri, 6 Mar
- 2026 12:15:27 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.20.9678.017; Fri, 6 Mar 2026
- 12:15:27 +0000
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-To: qemu-devel@nongnu.org
-Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v1 1/2] hw/arm: Add Axiado SoC AX3000
-Date: Fri,  6 Mar 2026 04:15:10 -0800
-Message-Id: <20260306121511.1781020-2-kchiu@axiado.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260306121511.1781020-1-kchiu@axiado.com>
-References: <20260306121511.1781020-1-kchiu@axiado.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PH5P222CA0007.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:510:34b::13) To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vyUYn-0004PN-29
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:45:41 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1vyUYh-0004KH-4w
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:45:37 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439ac15f35fso5848334f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 04:45:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772801133; x=1773405933; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=UlsafoO6/cUrDUJLxaZu/7QBmgESzKKbQNS+7kbLn94=;
+ b=keoPE2HSdZ5v21LPPObJ3XfDQuZ4JHR7TvXs8LGI+lLyKKgVQEnbIQ5txO8ybG0aOH
+ b4V8gnN8g8sGdyRhqv/2GppxRO4HMQHefe+3suB42vLw/YFwRg+D8bLanJn2cSvhzPaO
+ 3bGRacyhOvMoi+JVr9Kv6Rm1y0hVZdGLSj3kibXxT8kuKQSbj61g8maUZZS7bowJCBWp
+ 1w2AalVBT5cgnZ7JsxwfL5HIn5SECnxlFxdSEY5/i1qX+XFlOVJAezWZKDk3Vey6gvQ+
+ G7aLiSJO5t5kBbWa9QhHqMGSIyY/3cupppIJvpSPW3QOW/U+4oaAN7A4Nqoy4PDlgk9U
+ dKLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772801133; x=1773405933;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=UlsafoO6/cUrDUJLxaZu/7QBmgESzKKbQNS+7kbLn94=;
+ b=qt6za1lIS3AhpjJZs8OTCOPvVZ94e9Vqmtq9R1AOsMQ3VwZT5w7Dt217C/QBynJO6W
+ BGFmubFyX8WFoRItq/NmNsOpA1kITaQfy+X0FdLcX1bGCelV9VCIJqHzEJwvIpFKfSUj
+ +BXohAP/6p9ZZbwAiDanMb3J9la3xtr51Qm1EAu3C5eUqqgOWstxn34fDrmRf1FefVf3
+ 0wXDa7pYT9Omge3mvvHntafLWz+Zj66E/8Z1MuezqHms1u4zihq64t0kW1beiVzFU9Kn
+ Hmpa2Ia3OHRqEZq9kpAUsSt2X2CzdrXEJq+Ml35DV6xmmp668Wlz8rmHAR3WAVComlY7
+ NGFQ==
+X-Gm-Message-State: AOJu0YwV1g7LybKBHEelsQMoAajttsmjvq9SzOg05/VtuCfbP2EGsNOX
+ XGDJ3S+r8YcV4h852SyOkOWhJo+YXY+904JikcX6S81rtwdACmQ2sRz6/9D9p7jfUeo=
+X-Gm-Gg: ATEYQzwev2xdLHNyYQ0H+/j24CgEZwBN5PclWDftkgOorsbaNHxoqT2vRHJQrLMC04r
+ YFk0bw37ZxJQyYAk/QCdL3nD+a1sZk5pHf/2dZnqrw3rYPoBLcyywcO7G/3aayAWCzTnEnDQj+c
+ /ZpHJmcoVu07q3tDu0noxvVtuUEreuuEmxDmj2t5Njxe31Rfaxzjm0t+JcFZKA3efKzSiLuXdNm
+ 7Qgt6k1Muhgf+2SOjJcnBP3wyu3Ti9xiRSh6FvxWQDUvLnnbFJZGhpmjuLqZva9ysOlmhwxwjKK
+ FC+j9/e5ssgafDydQhO0voZIHyQzK2G53rlzivHXLiB3/nrVbte14EvmNHwGDtM5S5sA/DGIwOz
+ qMTrCybcc3BCH6467nJv1ejN4019clhV9iAVb/WD/ESADYSDunDN0nJi6wg+f0lDdRzxf0JLBm6
+ Yq4M8y5l2z5vOmsvgorXx2DK1gntYE5t3i88hMFB28d9G+hf//BgpCckewxnt9CCEDNFTzdBRuV
+ Yy+SgsSSKDV1Im7ZT7l+ExiEWhbZI+Z8Jn2pwTpzn25VR+8qA==
+X-Received: by 2002:a05:600c:3509:b0:477:7f4a:44b4 with SMTP id
+ 5b1f17b1804b1-4852691c673mr34717855e9.1.1772801133415; 
+ Fri, 06 Mar 2026 04:45:33 -0800 (PST)
+Received: from [127.0.1.1] (ppp-2-86-215-248.home.otenet.gr. [2.86.215.248])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485276b7571sm32301335e9.13.2026.03.06.04.45.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 04:45:33 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 06 Mar 2026 14:45:24 +0200
+Subject: [PATCH v7 1/2] hvf/arm: handle FEAT_SME2 migration
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|IA2PR18MB5977:EE_
-X-MS-Office365-Filtering-Correlation-Id: c6b6d4f9-5953-4661-23f8-08de7b7a0d0c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|52116014|38350700014|13003099007; 
-X-Microsoft-Antispam-Message-Info: +iS3WC8fq5SgLbOinzQwiIpeyiLm0kZNOVihgI84a2MQKV7z9kzoZgHZv4YnAy/dG49ua98gaTlayBcnF9bO4GdmDl2ZsMGn8jCGghYd5AjU0PDH+2HHl2QaO0hMH9UU0bg7lzW3p1rU22rYk2p1yNXR80DBvvcYrA09+oX9jCP1/k4RV/mFHOui+21rsItAIapAdFZeTGX7+DhWHnfbyvMDZTKduo5VJpzTNPyd1QzX3ZTvW48wBvmlaep70R5IPHkl9/ORrO1J6kPM8mfS6PZncZtgQ4WgKsrxuXrUQoMs5qijjBTQNI2KmMpy1PfigpdApT5zSzwcyY6bOe/VQT5qS6I2OCaaM+Kj6SMTmquA8pqMoU2mou/mR3+DkLZRhRQhIpRhVbVOjhVx3Clz3VxlEu1LNCtdQYRt3bm8JiMPbf9qJMEYwHGDuDQ/umMY/wde6SLNyydrJZ8ErvC9JWG+PsJPUkVkp7aT2rJc3p4KUa20eu1rwA+DVyU/fYFLyjM/FfvTEoyWLgTB5t7ctjbNcwrdPgLFbvpqF6e7eN/gCJJ86kcMgZXgWvbpY9JohGwymQYd2e6xRd5rslKZFBxKlNeN/Ule0KQ96NpTRpgpITpm+7YfAGKXo6Rkyf2DM41yDVnUJ+7EivqmPrOAGz8FzEuJ4bCTNJ04I/eDO/HnlJSNR0oKmZsCgpWoY0F5fHznTtO7qGgW/etptvDiibuaueu/muUj+dS3ILgw5R2loEnuj4ZwAWJTsFnWrFgKi11iU46U53CI6nbSEnM20aDLnauRKZNuWBG/qRhBzG0=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(52116014)(38350700014)(13003099007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ep6FBwrFKT8oXQ6LIYHdf9P3gMDOFubtN2rGs4C4sPCzYPHlH6LhCOh/tOWN?=
- =?us-ascii?Q?Lo3lsIfa8tEjNQrWOnglm6kdGq3QzWnmlzBY3x/Q6niaN7T0Ftm5t/OwCkmC?=
- =?us-ascii?Q?obIwtFcBriVS4TskKV8X82qY1JhG8Y0a5PYU783NbgWJAiupCMu2Mmjj4qCZ?=
- =?us-ascii?Q?12fNd6ckrdPXnLQdPR3ptilWpBYcqo2XzFwTyU09gjYY5xeWF7UvU6jGDK4K?=
- =?us-ascii?Q?0Eo0RE+cL4DMGGwwRPOAvuCqXBp368a5SQfKLak9mJs28u0N+IM4MOUgnSqE?=
- =?us-ascii?Q?PthRmnDLEtU0qQ4+4v8HUIZ5UTvxo99trjy7igryLPuGbVCznYAJhpbb0d1w?=
- =?us-ascii?Q?BERl2MRc1I+asn9R2ASGrT8z01Cn0edY3US3Sud4azxWAaI6PStaSbyR0dWw?=
- =?us-ascii?Q?ekG/aKYAA82Jb6SGVedq1fD3O5emt/F7Sh0dE7OVe2p7NCXn06TxaWfTSN2U?=
- =?us-ascii?Q?u9+eJxmuEnMHWP97gXP2Cv1g4oOoEUPTHBtFgeE2vimA9hD799InV4szRz9f?=
- =?us-ascii?Q?fz6vXPm4L9eczRnHOob8g2L04+2eWliv0JrlgVfiJhERPk3AqHsbDlAxSAo5?=
- =?us-ascii?Q?Wh6pb4LzzdZ1hjYuBahfNzchtWobRIauf3OuyHmCOUWZPdxJEuyvrVi1qM90?=
- =?us-ascii?Q?7hQy2PPCILvHbmegPamoiC26wNaObTUnDVCO+sOrOs/JAf5f18iX/MbNVe5P?=
- =?us-ascii?Q?S2X0FCFL6bHbw73P/xLP4J9Azcr3W6iGRgbExltPiwP/Ct2OROruzdQm5m94?=
- =?us-ascii?Q?6pfo/WNI5VfhTuQOShG8A1qxVIylfYqbvYdHxYdN3KfJyUkwzx3hN+F3q908?=
- =?us-ascii?Q?jpcKYAYgOGbBcpmxOwwV4PkELFSdwutz4RY/8pxrkv/EOyMWqrgpLzTFqRbD?=
- =?us-ascii?Q?Fyjqq7xt3viOj3wTrZFzVwZ1Dhaw+1L/W7kGVEKjj9aMIUi2I9cQn+RPJ88a?=
- =?us-ascii?Q?mJExmwyhxk+vq5emQTw0l9OBGeRMsc9zwW8zW2YKJBjSJasraLiFBdqemyx6?=
- =?us-ascii?Q?aE/07czfK4nPfQtjDxK7fIMCpi+CBDniCTe1jFk0JqEoxzp9G7QKmfHR8ElC?=
- =?us-ascii?Q?3pn/6ExE3a3NEW5evddpwTJY5a8ZeqXRMrlIzHWWiUcdmr6Gml7y8CWwWywV?=
- =?us-ascii?Q?OBQbqjUDZcUCK/g72vRyEM7W7CdYh2DwAIVLV6wCNarMED41i62iQ39BGYRb?=
- =?us-ascii?Q?KnUpBMBuSfknG62Ht0BDuDB0LxiYbU0sDAiTNLdvTmiUhEq00wLQyool9kMa?=
- =?us-ascii?Q?t+mIgtYEWF13UOIBC+aTlvUZwmMd9BWO21DJZx8mwoHaWMdd82hL17HCYhhh?=
- =?us-ascii?Q?X6O6ADD9/H/jrgIgrBqE+a1AlKojA/5nGNeznXgOVoBYTMLMH9zUYyNQmAy/?=
- =?us-ascii?Q?rq/zaEV7RBC1L3Yom8rlIaHwQXmEnsnEXciNuvCKBWsXxzM0/wlvuXrRs+vx?=
- =?us-ascii?Q?oVdx7W2BOosdvsHMljp95i/mtaICqofdztqR7l1Bb0IyeyZUbFZeiWWq+D9c?=
- =?us-ascii?Q?smO/UsSTqtUECXeZWhOdzh8JQIEc8mZIKHaJkgJijlUMHS88SznwGN4YsBxW?=
- =?us-ascii?Q?SA39/te2QgaAGILWGHq6K7m9ZermvifoP0ehh3N9sYRniyWuA5k+TPpmuShb?=
- =?us-ascii?Q?lxr2uRmsXCkPH1T5ukNGy2nAkjrqqa8J/kysHWmzjBov2y4hY8GaEiL+qkoS?=
- =?us-ascii?Q?FAgNB8Q20/pFizz7n2ohLzUY/FP1e0eE0C3E/dq62KVbvSpFEZbFQ9XgeJVk?=
- =?us-ascii?Q?LF2HLLaDSQ=3D=3D?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6b6d4f9-5953-4661-23f8-08de7b7a0d0c
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 12:15:27.0089 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TH88eEfkXjoo8a8R0cMY7ZHWxRBg+mLP5fSpjWNFRXUDVZuHVIjuEiqUoLx2FOHCRj5uxwvAMsrW1VIk3JYLHA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA2PR18MB5977
-Received-SPF: pass client-ip=52.101.85.127; envelope-from=kchiu@axiado.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260306-sme2-hvf-v7-1-e72eeda41ed3@linaro.org>
+References: <20260306-sme2-hvf-v7-0-e72eeda41ed3@linaro.org>
+In-Reply-To: <20260306-sme2-hvf-v7-0-e72eeda41ed3@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ =?utf-8?q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=23999;
+ i=manos.pitsidianakis@linaro.org; h=from:subject:message-id;
+ bh=wFPZ5LTaM3HPvxDvE/LHAFY8bmEp7UOLv1uX++XKZHg=;
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0VCYlFLUy9aQU5Bd0FLQVhjcHgzQi9mZ
+ 25RQWNzbVlnQnBxc3hxdFlLcGJobzh6TnFDZGJFMzdkNjl6bWpDCmRjejlRVG9zWEFOa0hHbUNH
+ dytKQWpNRUFBRUtBQjBXSVFUTVhCdE9SS0JXODRkd0hSQjNLY2R3ZjM0SjBBVUMKYWFyTWFnQUt
+ DUkIzS2Nkd2YzNEowSUU1RC85K1A1UjYxeTE5QytrZG9IZHZjMmRZT2J2cERGL3A4S3p6UXU2Sw
+ pFMjc5OFM3L2lzS0ZNYUwwQUtheHkwYVhFTVVhemc5OHpXd2RGMmdiT3J6RGk5bVFiQ1BmSWdWT
+ lBPYkNGMk9XCnVhd3RieW1sa1RpemNCOStUUS9GQmduSk82S2pYbzJDaGJjdXZkbTdBTHZpbDUw
+ SExUQnNQWjJ1ZUFwZEVRQWMKTnE4V3ZhWVlYTWhwUmJmQ2ZneUM0MlNaeWRXc3pXZkJjU2gxZmQ
+ xNHNZOTA2RzRsOHEyQnhONVBnOWcvbkdBWgp2WFJKWFZLRWZ1OWg0U3o3WHJSNXdSMzZKNGxzY1
+ pLdmFETmVtRFFLeWFIem05L3A5SHBsd3B6QXNCVXpwK3kvCjJ4L1BqR2N3VlNlS0d2NXFXWkZiT
+ FBIOTJ6SzBtSk5Rc2xHZWhqOFUvTXZhOFFhZVdvN0V2UTJqV3BvdTlvZ1oKdVFMWlk0a1lRRUlC
+ S3BhZEVXWVpUMnZmK1pLNDl6WE03em0xaFNDVWFoRGpEcFVUcmF2ODBXdlFZMjNoMzlidwoySWt
+ tcXNTdlZScHZQQ3FWOFFQNFYyNFgxZTlXV1NnTk91aUtNOGszS293dTdHSENGTVhLa20wd2s2NX
+ RzVk5rClpobDh2VnVIZXhCZFI0dk9nMlVNTVNuY0IvUmw0aWQwRGphTUovOUxERnM5SVJ3YmhqY
+ TVyd2FHYVRXNzZBTTQKSTBxTVNRcXo2MWtDT0VxanNPM2U0RG1EdjByUE0vOGNpTnViL3RXcS82
+ Tno3VkZubldWNFhRdzVPdUlEYzhtQQpkSHZKS2xXbkdwc29HNEpOdlFGczlaaktlVEZtcTVSY1V
+ vTDJoc00zeWJQaW9GekFtVXZiRU8yTSs0TUxxaS9pCnV4czJKQT09Cj1GaHJNCi0tLS0tRU5EIF
+ BHUCBNRVNTQUdFLS0tLS0K
+X-Developer-Key: i=manos.pitsidianakis@linaro.org; a=openpgp;
+ fpr=7C721DF9DB3CC7182311C0BF68BC211D47B421E1
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,503 +127,665 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds new model for Axiado SoC AX3000 which supports
-    4 Cortex-A53 ARM64 CPUs
-    Arm Generic Interrupt Controller v3
-    4 Cadence UARTs
-    1 SDHCI controller with PHY
+SME2 support adds the following state for HVF guests:
 
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+- Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
+  not support it)
+- Predicate registers P0, .., P15 (also FEAT_SVE)
+- ZA register
+- ZT0 register
+- PSTATE.{SM,ZA} bits (SVCR pseudo-register)
+- SMPRI_EL1 which handles the PE's priority in the SMCU
+- TPIDR2_EL0 the thread local ID register for SME
+
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/arm/Kconfig              |   8 +
- hw/arm/axiado-soc.c         | 287 ++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build          |   2 +
- include/hw/arm/axiado-soc.h | 152 +++++++++++++++++++
- 4 files changed, 449 insertions(+)
- create mode 100644 hw/arm/axiado-soc.c
- create mode 100644 include/hw/arm/axiado-soc.h
+ target/arm/hvf/hvf.c           | 298 ++++++++++++++++++++++++++++++++++++++++-
+ target/arm/hvf/hvf_sme_stubs.h | 172 ++++++++++++++++++++++++
+ target/arm/hvf/sysreg.c.inc    |   8 ++
+ target/arm/hvf_arm.h           |  41 ++++++
+ target/arm/machine.c           |   2 +-
+ 5 files changed, 518 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index c66c452737..a91b81b298 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -699,3 +699,11 @@ config ARMSSE
-     select UNIMP
-     select SSE_COUNTER
-     select SSE_TIMER
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index d79469ca27f794139b8073e25fc16d470b1942d5..21b16dfe429762c66714a4f04af0833033614c63 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -395,6 +395,60 @@ static const struct hvf_reg_match hvf_fpreg_match[] = {
+     { HV_SIMD_FP_REG_Q31, offsetof(CPUARMState, vfp.zregs[31]) },
+ };
+ 
++static const struct hvf_reg_match hvf_sme2_zreg_match[] = {
++    { HV_SME_Z_REG_0, offsetof(CPUARMState, vfp.zregs[0]) },
++    { HV_SME_Z_REG_1, offsetof(CPUARMState, vfp.zregs[1]) },
++    { HV_SME_Z_REG_2, offsetof(CPUARMState, vfp.zregs[2]) },
++    { HV_SME_Z_REG_3, offsetof(CPUARMState, vfp.zregs[3]) },
++    { HV_SME_Z_REG_4, offsetof(CPUARMState, vfp.zregs[4]) },
++    { HV_SME_Z_REG_5, offsetof(CPUARMState, vfp.zregs[5]) },
++    { HV_SME_Z_REG_6, offsetof(CPUARMState, vfp.zregs[6]) },
++    { HV_SME_Z_REG_7, offsetof(CPUARMState, vfp.zregs[7]) },
++    { HV_SME_Z_REG_8, offsetof(CPUARMState, vfp.zregs[8]) },
++    { HV_SME_Z_REG_9, offsetof(CPUARMState, vfp.zregs[9]) },
++    { HV_SME_Z_REG_10, offsetof(CPUARMState, vfp.zregs[10]) },
++    { HV_SME_Z_REG_11, offsetof(CPUARMState, vfp.zregs[11]) },
++    { HV_SME_Z_REG_12, offsetof(CPUARMState, vfp.zregs[12]) },
++    { HV_SME_Z_REG_13, offsetof(CPUARMState, vfp.zregs[13]) },
++    { HV_SME_Z_REG_14, offsetof(CPUARMState, vfp.zregs[14]) },
++    { HV_SME_Z_REG_15, offsetof(CPUARMState, vfp.zregs[15]) },
++    { HV_SME_Z_REG_16, offsetof(CPUARMState, vfp.zregs[16]) },
++    { HV_SME_Z_REG_17, offsetof(CPUARMState, vfp.zregs[17]) },
++    { HV_SME_Z_REG_18, offsetof(CPUARMState, vfp.zregs[18]) },
++    { HV_SME_Z_REG_19, offsetof(CPUARMState, vfp.zregs[19]) },
++    { HV_SME_Z_REG_20, offsetof(CPUARMState, vfp.zregs[20]) },
++    { HV_SME_Z_REG_21, offsetof(CPUARMState, vfp.zregs[21]) },
++    { HV_SME_Z_REG_22, offsetof(CPUARMState, vfp.zregs[22]) },
++    { HV_SME_Z_REG_23, offsetof(CPUARMState, vfp.zregs[23]) },
++    { HV_SME_Z_REG_24, offsetof(CPUARMState, vfp.zregs[24]) },
++    { HV_SME_Z_REG_25, offsetof(CPUARMState, vfp.zregs[25]) },
++    { HV_SME_Z_REG_26, offsetof(CPUARMState, vfp.zregs[26]) },
++    { HV_SME_Z_REG_27, offsetof(CPUARMState, vfp.zregs[27]) },
++    { HV_SME_Z_REG_28, offsetof(CPUARMState, vfp.zregs[28]) },
++    { HV_SME_Z_REG_29, offsetof(CPUARMState, vfp.zregs[29]) },
++    { HV_SME_Z_REG_30, offsetof(CPUARMState, vfp.zregs[30]) },
++    { HV_SME_Z_REG_31, offsetof(CPUARMState, vfp.zregs[31]) },
++};
 +
-+config AXIADO_SOC
-+    bool
-+    default y
-+    depends on ARM
-+    select ARM_GIC
-+    select CADENCE # UART
-+    select SDHCI
-diff --git a/hw/arm/axiado-soc.c b/hw/arm/axiado-soc.c
-new file mode 100644
-index 0000000000..e23410c147
---- /dev/null
-+++ b/hw/arm/axiado-soc.c
-@@ -0,0 +1,287 @@
++static const struct hvf_reg_match hvf_sme2_preg_match[] = {
++    { HV_SME_P_REG_0, offsetof(CPUARMState, vfp.pregs[0]) },
++    { HV_SME_P_REG_1, offsetof(CPUARMState, vfp.pregs[1]) },
++    { HV_SME_P_REG_2, offsetof(CPUARMState, vfp.pregs[2]) },
++    { HV_SME_P_REG_3, offsetof(CPUARMState, vfp.pregs[3]) },
++    { HV_SME_P_REG_4, offsetof(CPUARMState, vfp.pregs[4]) },
++    { HV_SME_P_REG_5, offsetof(CPUARMState, vfp.pregs[5]) },
++    { HV_SME_P_REG_6, offsetof(CPUARMState, vfp.pregs[6]) },
++    { HV_SME_P_REG_7, offsetof(CPUARMState, vfp.pregs[7]) },
++    { HV_SME_P_REG_8, offsetof(CPUARMState, vfp.pregs[8]) },
++    { HV_SME_P_REG_9, offsetof(CPUARMState, vfp.pregs[9]) },
++    { HV_SME_P_REG_10, offsetof(CPUARMState, vfp.pregs[10]) },
++    { HV_SME_P_REG_11, offsetof(CPUARMState, vfp.pregs[11]) },
++    { HV_SME_P_REG_12, offsetof(CPUARMState, vfp.pregs[12]) },
++    { HV_SME_P_REG_13, offsetof(CPUARMState, vfp.pregs[13]) },
++    { HV_SME_P_REG_14, offsetof(CPUARMState, vfp.pregs[14]) },
++    { HV_SME_P_REG_15, offsetof(CPUARMState, vfp.pregs[15]) },
++};
++
+ /*
+  * QEMU uses KVM system register ids in the migration format.
+  * Conveniently, HVF uses the same encoding of the op* and cr* parameters
+@@ -406,22 +460,201 @@ static const struct hvf_reg_match hvf_fpreg_match[] = {
+ #define HVF_TO_KVMID(HVF)  \
+     (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
+ 
+-/* Verify this at compile-time. */
 +/*
-+ * Axiado SoC AX3000
++ * Verify this at compile-time.
 + *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License as
-+ * published by the Free Software Foundation; either version 2 or
-+ * (at your option) version 3 of the License.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SME2 registers are guarded by a runtime availability attribute instead of a
++ * compile-time def, so verify those at runtime in hvf_arch_init_vcpu() below.
 + */
+ 
+ #define DEF_SYSREG(HVF_ID, ...) \
+   QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
++#define DEF_SYSREG_15_02(...)
+ 
+ #include "sysreg.c.inc"
+ 
+ #undef DEF_SYSREG
++#undef DEF_SYSREG_15_02
+ 
+ #define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  HVF_ID,
++#define DEF_SYSREG_15_02(...)
+ 
+ static const hv_sys_reg_t hvf_sreg_list[] = {
+ #include "sysreg.c.inc"
+ };
+ 
+ #undef DEF_SYSREG
++#undef DEF_SYSREG_15_02
 +
-+#include "qemu/osdep.h"
-+#include "system/address-spaces.h"
-+#include "hw/arm/bsa.h"
-+#include "hw/arm/axiado-soc.h"
-+#include "system/system.h"
-+#include "qobject/qlist.h"
-+#include "qom/object.h"
++#define DEF_SYSREG(...)
++#define DEF_SYSREG_15_02(HVF_ID, op0, op1, crn, crm, op2) HVF_ID,
 +
-+static uint64_t sdhci_phy_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    uint32_t val = 0x00;
-+
-+    switch (offset) {
-+    case REG_ID:
-+        val = 0x3dff6870;
-+        break;
-+    case REG_STATUS:
-+        // Make DLL_RDY | CAL_DONE
-+        val =  (1u << 0) | (1u << 6);
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return val;
-+}
-+
-+static void sdhci_phy_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+{
-+    /* TBD */
-+}
-+
-+static const MemoryRegionOps sdhci_phy_ops = {
-+    .read = sdhci_phy_read,
-+    .write = sdhci_phy_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
++API_AVAILABLE(macos(15.2))
++static const hv_sys_reg_t hvf_sreg_list_sme2[] = {
++#include "sysreg.c.inc"
 +};
 +
-+static uint64_t timer_ctrl_read(void *opaque, hwaddr offset, unsigned size)
++#undef DEF_SYSREG
++#undef DEF_SYSREG_15_02
++
++/*
++ * For FEAT_SME2 migration, we need to store PSTATE.{SM,ZA} bits which are
++ * accessible with the SVCR pseudo-register. However, in the HVF API this is
++ * not exposed as a system-register (i.e. HVF_SYS_REG_SVCR) but a custom
++ * struct, hv_vcpu_sme_state_t. So we need to define our own KVMID in order to
++ * store it in cpreg_values and make it migrateable.
++ */
++#define SVCR KVMID_AA64_SYS_REG64(3, 3, 4, 2, 2)
++
++API_AVAILABLE(macos(15.2))
++static void hvf_arch_put_sme(CPUState *cpu)
 +{
-+    return 0x0;
-+}
-+
-+static void timer_ctrl_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+{
-+    /* TBD */
-+}
-+
-+static const MemoryRegionOps timer_ctrl_ops = {
-+    .read = timer_ctrl_read,
-+    .write = timer_ctrl_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    switch (offset) {
-+    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
-+        return 0x20891b;
-+    case CLKRST_CPU_PLL_STS_OFFSET:
-+        return 0x01;
-+    default:
-+        return 0x00;
-+    }
-+}
-+
-+static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+{
-+    /* TBD */
-+}
-+
-+static const MemoryRegionOps pll_ops = {
-+    .read = pll_read,
-+    .write = pll_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static void ax3000_init(Object *obj)
-+{
-+    AxiadoSoCState *s = AXIADO_SOC(obj);
-+    AxiadoSoCClass *sc = AXIADO_SOC_GET_CLASS(s);
-+    int i;
-+
-+    for (i = 0; i < sc->num_cpus; i++) {
-+        g_autofree char *name = g_strdup_printf("cpu%d", i);
-+        object_initialize_child(obj, name, &s->cpu[i], ARM_CPU_TYPE_NAME("cortex-a53"));
-+    }
-+
-+    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
-+
-+    for (i = 0; i < AX3000_NUM_UARTS; i++) {
-+        g_autofree char *name = g_strdup_printf("uart%d", i);
-+        object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
-+    }
-+
-+    object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_SYSBUS_SDHCI);
-+}
-+
-+static void ax3000_realize(DeviceState *dev, Error **errp)
-+{
-+    AxiadoSoCState *s = AXIADO_SOC(dev);
-+    AxiadoSoCClass *sc = AXIADO_SOC_GET_CLASS(s);
-+    SysBusDevice *gicsbd = SYS_BUS_DEVICE(&s->gic);
-+    DeviceState *gicdev = DEVICE(&s->gic);
-+    QList *redist_region_count;
-+    int i;
-+
-+    /* CPUs */
-+    for (i = 0; i < sc->num_cpus; i++) {
-+        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
-+                                &error_abort);
-+
-+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
-+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
-+                                     false, &error_abort);
-+        }
-+
-+        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
-+            return;
-+        }
-+    }
-+
-+    /* GIC */
-+    qdev_prop_set_uint32(gicdev, "num-cpu", sc->num_cpus);
-+    qdev_prop_set_uint32(gicdev, "num-irq",
-+                         AX3000_NUM_IRQS + GIC_INTERNAL);
-+
-+    redist_region_count = qlist_new();
-+    qlist_append_int(redist_region_count, sc->num_cpus);
-+    qdev_prop_set_array(gicdev, "redist-region-count", redist_region_count);
-+
-+    if (!sysbus_realize(gicsbd, errp)) {
-+        return;
-+    }
-+
-+    sysbus_mmio_map(gicsbd, 0, AX3000_GIC_DIST_BASE);
-+    sysbus_mmio_map(gicsbd, 1, AX3000_GIC_REDIST_BASE);
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    const size_t svl_bytes = hvf_arm_sme2_get_svl();
++    const size_t z_size = svl_bytes;
++    const size_t preg_size = DIV_ROUND_UP(z_size, 8);
++    const size_t za_size = svl_bytes * svl_bytes;
++    hv_vcpu_sme_state_t sme_state = { 0 };
++    hv_return_t ret;
++    uint64_t svcr;
++    int n;
 +
 +    /*
-+     * Wire the outputs from each CPU's generic timer and the GICv3
-+     * maintenance interrupt signal to the appropriate GIC PPI inputs, and
-+     * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
++     * Set PSTATE.{SM,ZA} bits
 +     */
-+    for (i = 0; i < sc->num_cpus; i++) {
-+        DeviceState *cpudev = DEVICE(&s->cpu[i]);
-+        int intidbase = AX3000_NUM_IRQS + i * GIC_INTERNAL;
-+        qemu_irq irq;
++    svcr = arm_cpu->cpreg_values[arm_cpu->cpreg_array_len - 1];
++    env->svcr = svcr;
 +
-+        /*
-+         * Mapping from the output timer irq lines from the CPU to the
-+         * GIC PPI inputs.
-+         */
-+        static const int timer_irqs[] = {
-+            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
-+            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
-+            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
-+            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ
-+        };
++    /*
++     * Construct SVCR (PSTATE.{SM,ZA}) state to pass to HVF:
++     */
++    sme_state.streaming_sve_mode_enabled = FIELD_EX64(env->svcr, SVCR, SM) > 0;
++    sme_state.za_storage_enabled = FIELD_EX64(env->svcr, SVCR, ZA) > 0;
++    ret = hv_vcpu_set_sme_state(cpu->accel->fd, &sme_state);
++    assert_hvf_ok(ret);
 +
-+        for (int j = 0; j < ARRAY_SIZE(timer_irqs); j++) {
-+            irq = qdev_get_gpio_in(gicdev, intidbase + timer_irqs[j]);
-+            qdev_connect_gpio_out(cpudev, j, irq);
++    /*
++     * We only care about Z/P registers if we're in streaming SVE mode, i.e.
++     * PSTATE.SM is set, because only then can instructions that access them be
++     * used. We don't care about the register values otherwise. This is because
++     * when the processing unit exits/enters this mode, it zeroes out those
++     * registers.
++     */
++    if (sme_state.streaming_sve_mode_enabled) {
++        for (n = 0; n < ARRAY_SIZE(hvf_sme2_zreg_match); ++n) {
++            ret = hv_vcpu_set_sme_z_reg(cpu->accel->fd,
++                                        hvf_sme2_zreg_match[n].reg,
++                                        (uint8_t *)&env->vfp.zregs[n].d[0],
++                                        z_size);
++            assert_hvf_ok(ret);
 +        }
 +
-+        irq = qdev_get_gpio_in(gicdev, intidbase + ARCH_GIC_MAINT_IRQ);
-+        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
-+                                        0, irq);
-+
-+        sysbus_connect_irq(gicsbd, i,
-+                           qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
-+        sysbus_connect_irq(gicsbd, i + sc->num_cpus,
-+                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
-+        sysbus_connect_irq(gicsbd, i + 2 * sc->num_cpus,
-+                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
-+        sysbus_connect_irq(gicsbd, i + 3 * sc->num_cpus,
-+                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
-+    }
-+
-+    /* DRAM */
-+    for (i = 0; i < AX3000_NUM_BANKS; i++) {
-+        struct {
-+            hwaddr addr;
-+            size_t size;
-+            const char *name;
-+        } dram_table[] = {
-+            { AX3000_DRAM0_BASE, AX3000_DRAM0_SIZE, "dram0" },
-+            { AX3000_DRAM1_BASE, AX3000_DRAM1_SIZE, "dram1" }
-+        };
-+
-+        memory_region_init_ram(&s->dram[i], OBJECT(s), dram_table[i].name,
-+                               dram_table[i].size, &error_fatal);
-+        memory_region_add_subregion(get_system_memory(), dram_table[i].addr,
-+                                    &s->dram[i]);
-+    }
-+
-+    /* UARTs */
-+    for (i = 0; i < AX3000_NUM_UARTS; i++) {
-+        struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } serial_table[] = {
-+            { AX3000_UART0_BASE, AX3000_UART0_IRQ },
-+            { AX3000_UART1_BASE, AX3000_UART1_IRQ },
-+            { AX3000_UART2_BASE, AX3000_UART2_IRQ },
-+            { AX3000_UART3_BASE, AX3000_UART3_IRQ }
-+        };
-+
-+        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
-+            return;
++        for (n = 0; n < ARRAY_SIZE(hvf_sme2_preg_match); ++n) {
++            ret = hv_vcpu_set_sme_p_reg(cpu->accel->fd,
++                                        hvf_sme2_preg_match[n].reg,
++                                        (uint8_t *)&env->vfp.pregs[n].p[0],
++                                        preg_size);
++            assert_hvf_ok(ret);
 +        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
-+                           qdev_get_gpio_in(gicdev, serial_table[i].irq));
 +    }
 +
-+    /* Timer control*/
-+    memory_region_init_io(&s->timer_ctrl, OBJECT(s), &timer_ctrl_ops, s,
-+                          "timer_ctrl", 32);
-+    memory_region_add_subregion(get_system_memory(), AX3000_TIMER_CTRL,
-+                                &s->timer_ctrl);
++    /*
++     * If PSTATE.ZA bit is set then ZA and ZT0 are valid, otherwise they are
++     * zeroed out.
++     */
++    if (sme_state.za_storage_enabled) {
++        hv_sme_zt0_uchar64_t tmp = { 0 };
 +
-+    /* PLL control */
-+    memory_region_init_io(&s->pll_ctrl, OBJECT(s), &pll_ops, s, "pll_ctrl",
-+                          32);
-+    memory_region_add_subregion(get_system_memory(), AX3000_PLL_BASE,
-+                                &s->pll_ctrl);
++        memcpy(&tmp, &env->za_state.zt0, 64);
++        ret = hv_vcpu_set_sme_zt0_reg(cpu->accel->fd, &tmp);
++        assert_hvf_ok(ret);
 +
-+    /* SDHCI */
-+    qdev_prop_set_uint64(DEVICE(&s->sdhci0), "capareg", 0x216737eed0b0);
-+    qdev_prop_set_uint64(DEVICE(&s->sdhci0), "sd-spec-version", 3);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci0), errp)) {
-+        return;
++        ret = hv_vcpu_set_sme_za_reg(cpu->accel->fd,
++                                     (uint8_t *)&env->za_state.za,
++                                     za_size);
++        assert_hvf_ok(ret);
 +    }
 +
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sdhci0), 0, AX3000_SDHCI0_BASE);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci0), 0,
-+                       qdev_get_gpio_in(gicdev, AX3000_SDHCI0_IRQ));
-+
-+    memory_region_init_io(&s->sdhci_phy, OBJECT(s), &sdhci_phy_ops, s,
-+                           "sdhci_phy", AX3000_SDHCI0_PHY_SIZE);
-+    memory_region_add_subregion(get_system_memory(), AX3000_SDHCI0_PHY_BASE,
-+                                &s->sdhci_phy);
++    return;
 +}
 +
-+static void ax3000_class_init(ObjectClass *oc, const void *data)
++API_AVAILABLE(macos(15.2))
++static void hvf_arch_get_sme(CPUState *cpu)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    AxiadoSoCClass *sc = AXIADO_SOC_CLASS(oc);
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    const size_t svl_bytes = hvf_arm_sme2_get_svl();
++    const size_t z_size = svl_bytes;
++    const size_t preg_size = DIV_ROUND_UP(z_size, 8);
++    const size_t za_size = svl_bytes * svl_bytes;
++    hv_vcpu_sme_state_t sme_state = { 0 };
++    hv_return_t ret;
++    uint64_t svcr;
++    int n;
 +
-+    dc->desc = "Axiado SoC AX3000";
-+    dc->realize = ax3000_realize;
-+    sc->num_cpus = AX3000_NUM_CPUS;
++    /*
++     * Get SVCR (PSTATE.{SM,ZA}) state from HVF:
++     */
++    ret = hv_vcpu_get_sme_state(cpu->accel->fd, &sme_state);
++    assert_hvf_ok(ret);
++
++    /*
++     * Set SVCR first because changing it will zero out Z/P regs
++     */
++    svcr =
++        (sme_state.za_storage_enabled ? R_SVCR_ZA_MASK : 0)
++        | (sme_state.streaming_sve_mode_enabled ? R_SVCR_SM_MASK : 0);
++
++    aarch64_set_svcr(env, svcr, R_SVCR_ZA_MASK | R_SVCR_SM_MASK);
++    arm_cpu->cpreg_values[arm_cpu->cpreg_array_len - 1] = svcr;
++
++    /*
++     * We only care about Z/P registers if we're in streaming SVE mode, i.e.
++     * PSTATE.SM is set, because only then can instructions that access them be
++     * used. We don't care about the register values otherwise. This is because
++     * when the processing unit exits/enters this mode, it zeroes out those
++     * registers.
++     */
++    if (sme_state.streaming_sve_mode_enabled) {
++        for (n = 0; n < ARRAY_SIZE(hvf_sme2_zreg_match); ++n) {
++            ret = hv_vcpu_get_sme_z_reg(cpu->accel->fd,
++                                        hvf_sme2_zreg_match[n].reg,
++                                        (uint8_t *)&env->vfp.zregs[n].d[0],
++                                        z_size);
++            assert_hvf_ok(ret);
++        }
++
++        for (n = 0; n < ARRAY_SIZE(hvf_sme2_preg_match); ++n) {
++            ret = hv_vcpu_get_sme_p_reg(cpu->accel->fd,
++                                        hvf_sme2_preg_match[n].reg,
++                                        (uint8_t *)&env->vfp.pregs[n].p[0],
++                                        preg_size);
++            assert_hvf_ok(ret);
++        }
++    }
++
++    /*
++     * If PSTATE.ZA bit is set then ZA and ZT0 are valid, otherwise they are
++     * zeroed out.
++     */
++    if (sme_state.za_storage_enabled) {
++        hv_sme_zt0_uchar64_t tmp = { 0 };
++
++        /* Get ZT0 in a tmp vector, and then copy it to env.za_state.zt0 */
++        ret = hv_vcpu_get_sme_zt0_reg(cpu->accel->fd, &tmp);
++        assert_hvf_ok(ret);
++
++        memcpy(&env->za_state.zt0, &tmp, 64);
++        ret = hv_vcpu_get_sme_za_reg(cpu->accel->fd,
++                                     (uint8_t *)&env->za_state.za,
++                                     za_size);
++        assert_hvf_ok(ret);
++
++    }
++
++    return;
++}
+ 
+ static uint32_t hvf_reg2cp_reg(uint32_t reg)
+ {
+@@ -534,6 +767,10 @@ int hvf_arch_get_registers(CPUState *cpu)
+         uint64_t kvm_id = arm_cpu->cpreg_indexes[i];
+         int hvf_id = KVMID_TO_HVF(kvm_id);
+ 
++        if (kvm_id == HVF_TO_KVMID(SVCR)) {
++            continue;
++        }
++
+         if (cpu->accel->guest_debug_enabled) {
+             /* Handle debug registers */
+             switch (hvf_id) {
+@@ -627,6 +864,13 @@ int hvf_arch_get_registers(CPUState *cpu)
+ 
+         arm_cpu->cpreg_values[i] = val;
+     }
++    if (cpu_isar_feature(aa64_sme, arm_cpu)) {
++        if (__builtin_available(macOS 15.2, *)) {
++            hvf_arch_get_sme(cpu);
++        } else {
++            g_assert_not_reached();
++        }
++    }
+     assert(write_list_to_cpustate(arm_cpu));
+ 
+     aarch64_restore_sp(env, arm_current_el(env));
+@@ -643,6 +887,18 @@ int hvf_arch_put_registers(CPUState *cpu)
+     hv_simd_fp_uchar16_t fpval;
+     int i, n;
+ 
++    /*
++     * Set SVCR first because changing it will zero out Z/P (including NEON)
++     * regs
++     */
++    if (cpu_isar_feature(aa64_sme, arm_cpu)) {
++        if (__builtin_available(macOS 15.2, *)) {
++            hvf_arch_put_sme(cpu);
++        } else {
++            g_assert_not_reached();
++        }
++    }
++
+     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+         val = *(uint64_t *)((void *)env + hvf_reg_match[i].offset);
+         ret = hv_vcpu_set_reg(cpu->accel->fd, hvf_reg_match[i].reg, val);
+@@ -672,6 +928,10 @@ int hvf_arch_put_registers(CPUState *cpu)
+         uint64_t kvm_id = arm_cpu->cpreg_indexes[i];
+         int hvf_id = KVMID_TO_HVF(kvm_id);
+ 
++        if (kvm_id == HVF_TO_KVMID(SVCR)) {
++            continue;
++        }
++
+         if (cpu->accel->guest_debug_enabled) {
+             /* Handle debug registers */
+             switch (hvf_id) {
+@@ -985,6 +1245,20 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     hv_return_t ret;
+     int i;
+ 
++    if (__builtin_available(macOS 15.2, *)) {
++        if (hvf_arm_sme2_supported()) {
++            sregs_match_len += ARRAY_SIZE(hvf_sreg_list_sme2) + 1;
++        }
++
++#define DEF_SYSREG_15_02(HVF_ID, ...) \
++        g_assert(HVF_ID == KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
++#define DEF_SYSREG(...)
++
++#include "sysreg.c.inc"
++
++#undef DEF_SYSREG
++#undef DEF_SYSREG_15_02
++    }
+     env->aarch64 = true;
+ 
+     /* system count frequency sanity check */
+@@ -1005,7 +1279,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+     memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_t));
+ 
+     /* Populate cp list for all known sysregs */
+-    for (i = 0; i < sregs_match_len; i++) {
++    for (i = 0; i < ARRAY_SIZE(hvf_sreg_list); i++) {
+         hv_sys_reg_t hvf_id = hvf_sreg_list[i];
+         uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
+         uint32_t key = kvm_to_cpreg_id(kvm_id);
+@@ -1016,6 +1290,26 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+             arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
+         }
+     }
++    if (__builtin_available(macOS 15.2, *)) {
++        if (hvf_arm_sme2_supported()) {
++            for (i = 0; i < ARRAY_SIZE(hvf_sreg_list_sme2); i++) {
++                hv_sys_reg_t hvf_id = hvf_sreg_list_sme2[i];
++                uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
++                uint32_t key = kvm_to_cpreg_id(kvm_id);
++                const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
++
++                if (ri) {
++                    assert(!(ri->type & ARM_CP_NO_RAW));
++                    arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
++                }
++            }
++            /*
++             * Add SVCR last. It is elsewhere assumed its index is after
++             * hvf_sreg_list and hvf_sreg_list_sme2.
++             */
++            arm_cpu->cpreg_indexes[sregs_cnt++] = HVF_TO_KVMID(SVCR);
++        }
++    }
+     arm_cpu->cpreg_array_len = sregs_cnt;
+     arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
+ 
+diff --git a/target/arm/hvf/hvf_sme_stubs.h b/target/arm/hvf/hvf_sme_stubs.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..43686f782431c003c6878a276c4cfccfc95cc1f0
+--- /dev/null
++++ b/target/arm/hvf/hvf_sme_stubs.h
+@@ -0,0 +1,172 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++typedef int32_t hv_return_t;
++typedef uint64_t hv_vcpu_t;
++
++static inline bool hvf_arm_sme2_supported(void)
++{
++    return false;
 +}
 +
-+static const TypeInfo axiado_soc_types[] = {
-+    {
-+        .name           = TYPE_AXIADO_SOC,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(AxiadoSoCState),
-+        .instance_init  = ax3000_init,
-+        .class_init     = ax3000_class_init,
-+    }
-+};
++static inline uint32_t hvf_arm_sme2_get_svl(void)
++{
++    g_assert_not_reached();
++}
 +
-+DEFINE_TYPES(axiado_soc_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 47cdc51d13..c3c96c0a70 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -105,6 +105,8 @@ arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
- arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
- arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
- arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
-+arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
-+  'axiado-soc.c'))
- 
- arm_common_ss.add(files('boot.c'))
- 
-diff --git a/include/hw/arm/axiado-soc.h b/include/hw/arm/axiado-soc.h
-new file mode 100644
-index 0000000000..2483bdd8c2
---- /dev/null
-+++ b/include/hw/arm/axiado-soc.h
-@@ -0,0 +1,152 @@
++typedef enum hv_sme_p_reg_t {
++    HV_SME_P_REG_0,
++    HV_SME_P_REG_1,
++    HV_SME_P_REG_2,
++    HV_SME_P_REG_3,
++    HV_SME_P_REG_4,
++    HV_SME_P_REG_5,
++    HV_SME_P_REG_6,
++    HV_SME_P_REG_7,
++    HV_SME_P_REG_8,
++    HV_SME_P_REG_9,
++    HV_SME_P_REG_10,
++    HV_SME_P_REG_11,
++    HV_SME_P_REG_12,
++    HV_SME_P_REG_13,
++    HV_SME_P_REG_14,
++    HV_SME_P_REG_15,
++} hv_sme_p_reg_t;
++
 +/*
-+ * Axiado SoC AX3000
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License as
-+ * published by the Free Software Foundation; either version 2 or
-+ * (at your option) version 3 of the License.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ * The system version of this type declares it with
++ *    __attribute__((ext_vector_type(64)))
++ * However, that is clang specific and not supported by GCC.
++ * Since these headers are only here for the case where the system
++ * headers do not provide these types (including both older macos
++ * and non-macos hosts), we don't need to make the type match
++ * exactly, so we declare it as a uint8_t array.
 + */
++typedef uint8_t hv_sme_zt0_uchar64_t[64];
 +
-+#ifndef AXIADO_AX3000_H
-+#define AXIADO_AX3000_H
++typedef enum hv_sme_z_reg_t {
++    HV_SME_Z_REG_0,
++    HV_SME_Z_REG_1,
++    HV_SME_Z_REG_2,
++    HV_SME_Z_REG_3,
++    HV_SME_Z_REG_4,
++    HV_SME_Z_REG_5,
++    HV_SME_Z_REG_6,
++    HV_SME_Z_REG_7,
++    HV_SME_Z_REG_8,
++    HV_SME_Z_REG_9,
++    HV_SME_Z_REG_10,
++    HV_SME_Z_REG_11,
++    HV_SME_Z_REG_12,
++    HV_SME_Z_REG_13,
++    HV_SME_Z_REG_14,
++    HV_SME_Z_REG_15,
++    HV_SME_Z_REG_16,
++    HV_SME_Z_REG_17,
++    HV_SME_Z_REG_18,
++    HV_SME_Z_REG_19,
++    HV_SME_Z_REG_20,
++    HV_SME_Z_REG_21,
++    HV_SME_Z_REG_22,
++    HV_SME_Z_REG_23,
++    HV_SME_Z_REG_24,
++    HV_SME_Z_REG_25,
++    HV_SME_Z_REG_26,
++    HV_SME_Z_REG_27,
++    HV_SME_Z_REG_28,
++    HV_SME_Z_REG_29,
++    HV_SME_Z_REG_30,
++    HV_SME_Z_REG_31,
++} hv_sme_z_reg_t;
 +
-+#include "cpu.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "hw/char/cadence_uart.h"
-+#include "hw/sd/sdhci.h"
-+#include "hw/core/sysbus.h"
-+#include "qemu/units.h"
-+
-+#define TYPE_AXIADO_SOC "ax3000"
-+OBJECT_DECLARE_TYPE(AxiadoSoCState, AxiadoSoCClass, AXIADO_SOC)
-+
-+#define AX3000_RAM_START        0x3C000000
-+#define AX3000_RAM_SIZE_MAX     (16 * GiB)
-+
-+#define AX3000_DRAM0_BASE       AX3000_RAM_START
-+#define AX3000_DRAM0_SIZE       (1088 * MiB)
-+#define AX3000_DRAM1_BASE       0x400000000
-+#define AX3000_DRAM1_SIZE       (2 * GiB)
-+
-+#define AX3000_GIC_DIST_BASE    0x80300000
-+#define AX3000_GIC_DIST_SIZE    (64 * KiB)
-+#define AX3000_GIC_REDIST_BASE  0x80380000
-+#define AX3000_GIC_REDIST_SIZE  (512 * KiB)
-+
-+#define AX3000_UART0_BASE       0x80520000
-+#define AX3000_UART0_SIZE       (256)
-+#define AX3000_UART1_BASE       0x805a0000
-+#define AX3000_UART1_SIZE       (256)
-+#define AX3000_UART2_BASE       0x80620000
-+#define AX3000_UART2_SIZE       (256)
-+#define AX3000_UART3_BASE       0x80520800
-+#define AX3000_UART3_SIZE       (256)
-+
-+#define AX3000_SDHCI0_BASE      0x86000000
-+#define AX3000_SDHCI0_PHY_BASE  0x80801C00
-+#define AX3000_SDHCI0_PHY_SIZE  (256)
-+
-+#define AX3000_GPIO0_BASE       0x80500000
-+#define AX3000_GPIO0_SIZE       (1024)
-+#define AX3000_GPIO1_BASE       0x80580000
-+#define AX3000_GPIO1_SIZE       (1024)
-+#define AX3000_GPIO2_BASE       0x80600000
-+#define AX3000_GPIO2_SIZE       (1024)
-+#define AX3000_GPIO3_BASE       0x80680000
-+#define AX3000_GPIO3_SIZE       (1024)
-+#define AX3000_GPIO4_BASE       0x80700000
-+#define AX3000_GPIO4_SIZE       (1024)
-+#define AX3000_GPIO5_BASE       0x80780000
-+#define AX3000_GPIO5_SIZE       (1024)
-+#define AX3000_GPIO6_BASE       0x80800000
-+#define AX3000_GPIO6_SIZE       (1024)
-+#define AX3000_GPIO7_BASE       0x80880000
-+#define AX3000_GPIO7_SIZE       (1024)
-+
-+#define AX3000_TIMER_CTRL        0x8A020000
-+#define AX3000_PLL_BASE          0x80000000
-+#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
-+#define CLKRST_CPU_PLL_STS_OFFSET       0x14
-+
-+
-+enum Ax3000Configuration {
-+    AX3000_NUM_CPUS     = 4,
-+    AX3000_NUM_IRQS     = 224,
-+    AX3000_NUM_BANKS    = 2,
-+    AX3000_NUM_UARTS    = 4,
-+    AX3000_NUM_GPIOS    = 8,
++enum {
++  HV_SYS_REG_SMCR_EL1,
++  HV_SYS_REG_SMPRI_EL1,
++  HV_SYS_REG_TPIDR2_EL0,
++  HV_SYS_REG_ID_AA64ZFR0_EL1,
++  HV_SYS_REG_ID_AA64SMFR0_EL1,
 +};
 +
-+typedef struct AxiadoSoCState {
-+    SysBusDevice        parent;
-+
-+    ARMCPU              cpu[AX3000_NUM_CPUS];
-+    GICv3State          gic;
-+    MemoryRegion        dram[AX3000_NUM_BANKS];
-+    MemoryRegion        timer_ctrl;
-+    MemoryRegion        pll_ctrl;
-+    CadenceUARTState    uart[AX3000_NUM_UARTS];
-+    SDHCIState          sdhci0;
-+    MemoryRegion        sdhci_phy;
-+} AxiadoSoCState;
-+
-+typedef struct AxiadoSoCClass {
-+    SysBusDeviceClass   parent;
-+
-+    uint32_t            num_cpus;
-+} AxiadoSoCClass;
-+
-+enum Ax3000MemoryRegions {
-+    AX3000_GIC_DIST,
-+    AX3000_GIC_REDIST,
-+    AX3000_DRAM0,
-+    AX3000_DRAM1,
-+    AX3000_UART0,
-+    AX3000_UART1,
-+    AX3000_UART2,
-+    AX3000_UART3,
-+    AX3000_SDHCI0,
-+    AX3000_GPIO0,
-+    AX3000_GPIO1,
-+    AX3000_GPIO2,
-+    AX3000_GPIO3,
-+    AX3000_GPIO4,
-+    AX3000_GPIO5,
-+    AX3000_GPIO6,
-+    AX3000_GPIO7,
++enum {
++  HV_FEATURE_REG_ID_AA64SMFR0_EL1,
++  HV_FEATURE_REG_ID_AA64ZFR0_EL1,
 +};
 +
-+enum Ax3000Irqs {
-+    AX3000_UART0_IRQ    = 112,
-+    AX3000_UART1_IRQ    = 113,
-+    AX3000_UART2_IRQ    = 114,
-+    AX3000_UART3_IRQ    = 170,
++typedef struct {
++    bool streaming_sve_mode_enabled;
++    bool za_storage_enabled;
++} hv_vcpu_sme_state_t;
 +
-+    AX3000_SDHCI0_IRQ    = 123,
++static inline hv_return_t hv_sme_config_get_max_svl_bytes(size_t *value)
++{
++    g_assert_not_reached();
++}
 +
-+    AX3000_GPIO0_IRQ    = 183,
-+    AX3000_GPIO1_IRQ    = 184,
-+    AX3000_GPIO2_IRQ    = 185,
-+    AX3000_GPIO3_IRQ    = 186,
-+    AX3000_GPIO4_IRQ    = 187,
-+    AX3000_GPIO5_IRQ    = 188,
-+    AX3000_GPIO6_IRQ    = 189,
-+    AX3000_GPIO7_IRQ    = 190,
-+};
++static inline hv_return_t hv_vcpu_get_sme_state(hv_vcpu_t vcpu,
++                                                hv_vcpu_sme_state_t *sme_state)
++{
++    g_assert_not_reached();
++}
 +
-+enum SDHCI_PHY_REG {
-+    REG_ID        = 0x00,   // ID
-+    REG_STATUS    = 0x50,   // READY/LOCK/CAL_DONE bits
-+};
++static inline hv_return_t hv_vcpu_set_sme_state(hv_vcpu_t vcpu,
++                                                const hv_vcpu_sme_state_t *sme_state)
++{
++    g_assert_not_reached();
++}
 +
-+#endif /* AXIADO_AX3000_H */
++static inline hv_return_t hv_vcpu_get_sme_z_reg(hv_vcpu_t vcpu,
++                                                hv_sme_z_reg_t reg,
++                                                uint8_t *value,
++                                                size_t length)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_set_sme_z_reg(hv_vcpu_t vcpu,
++                                                hv_sme_z_reg_t reg,
++                                                const uint8_t *value,
++                                                size_t length)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_get_sme_p_reg(hv_vcpu_t vcpu,
++                                                hv_sme_p_reg_t reg,
++                                                uint8_t *value,
++                                                size_t length)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_set_sme_p_reg(hv_vcpu_t vcpu,
++                                                hv_sme_p_reg_t reg,
++                                                const uint8_t *value,
++                                                size_t length)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_get_sme_za_reg(hv_vcpu_t vcpu,
++                                                 uint8_t *value,
++                                                 size_t length)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_set_sme_za_reg(hv_vcpu_t vcpu,
++                                                 const uint8_t *value,
++                                                 size_t length)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_get_sme_zt0_reg(hv_vcpu_t vcpu,
++                                                  hv_sme_zt0_uchar64_t *value)
++{
++    g_assert_not_reached();
++}
++
++static inline hv_return_t hv_vcpu_set_sme_zt0_reg(hv_vcpu_t vcpu,
++                                                  const hv_sme_zt0_uchar64_t *value)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/arm/hvf/sysreg.c.inc b/target/arm/hvf/sysreg.c.inc
+index 067a8603fa785593ed0879cea26d036b0ec2823e..7a2f880f784b7610b14a6eb91fec1817e98bfd2e 100644
+--- a/target/arm/hvf/sysreg.c.inc
++++ b/target/arm/hvf/sysreg.c.inc
+@@ -145,3 +145,11 @@ DEF_SYSREG(HV_SYS_REG_TPIDRRO_EL0, 3, 3, 13, 0, 3)
+ DEF_SYSREG(HV_SYS_REG_CNTV_CTL_EL0, 3, 3, 14, 3, 1)
+ DEF_SYSREG(HV_SYS_REG_CNTV_CVAL_EL0, 3, 3, 14, 3, 2)
+ DEF_SYSREG(HV_SYS_REG_SP_EL1, 3, 4, 4, 1, 0)
++
++DEF_SYSREG_15_02(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
++DEF_SYSREG_15_02(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
++DEF_SYSREG_15_02(HV_SYS_REG_TPIDR2_EL0, 3, 3, 13, 0, 5)
++DEF_SYSREG_15_02(HV_SYS_REG_ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
++DEF_SYSREG_15_02(HV_SYS_REG_ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF_SYSREG_15_02(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
++DEF_SYSREG_15_02(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
+diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
+index 5d19d82e5ded66bc02da10523c0f7138840ecff3..6b1c3b9792dfd7d81ef747d8a6676a23fd212d84 100644
+--- a/target/arm/hvf_arm.h
++++ b/target/arm/hvf_arm.h
+@@ -22,4 +22,45 @@ void hvf_arm_init_debug(void);
+ 
+ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
+ 
++/*
++ * We need access to types from macOS SDK >=15.2, so expose stubs if the
++ * headers are not available until we raise our minimum macOS version.
++ */
++#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
++  #if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200)
++    #include "system/hvf_int.h"
++
++    static inline bool hvf_arm_sme2_supported(void)
++    {
++        if (__builtin_available(macOS 15.2, *)) {
++            size_t svl_bytes;
++            hv_return_t result = hv_sme_config_get_max_svl_bytes(&svl_bytes);
++            if (result == HV_UNSUPPORTED) {
++                return false;
++            }
++            assert_hvf_ok(result);
++            return svl_bytes > 0;
++        } else {
++            return false;
++        }
++    }
++
++    static inline uint32_t hvf_arm_sme2_get_svl(void)
++    {
++        if (__builtin_available(macOS 15.2, *)) {
++            size_t svl_bytes;
++            hv_return_t result = hv_sme_config_get_max_svl_bytes(&svl_bytes);
++            assert_hvf_ok(result);
++            return svl_bytes;
++        } else {
++            abort();
++        }
++    }
++  #else /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
++      #include "hvf/hvf_sme_stubs.h"
++  #endif /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
++#else /* ifdef __MAC_OS_X_VERSION_MAX_ALLOWED */
++  #include "hvf/hvf_sme_stubs.h"
++#endif /* ifdef __MAC_OS_X_VERSION_MAX_ALLOWED */
++
+ #endif
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index bbaae3444928985813b7dcc91888784d06cfe305..81a506ce4cc09493dd7faed88652d8d246e23187 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -231,7 +231,7 @@ static bool sve_needed(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+ 
+-    return cpu_isar_feature(aa64_sve, cpu);
++    return cpu_isar_feature(aa64_sve, cpu) || cpu_isar_feature(aa64_sme, cpu);
+ }
+ 
+ /* The first two words of each Zreg is stored in VFP state.  */
+
 -- 
-2.34.1
+2.47.3
 
 
