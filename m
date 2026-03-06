@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9181CFCB604
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFB84FCB606
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:53:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWUl-0006lg-M1; Fri, 06 Mar 2026 09:49:39 -0500
+	id 1vyWXz-0008Lh-FH; Fri, 06 Mar 2026 09:53:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyWUj-0006gJ-9i
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:49:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyWXx-0008KT-0V
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:52:57 -0500
+Received: from qs-2003c-snip4-2.eps.apple.com ([57.103.86.25]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyWUg-0000bZ-TG
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:49:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772808573;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2sCsWAMeZm3P2Dc1lVbRc3TpazSb714n0pST0OwkVcA=;
- b=ACg3GogCK72bRjsU8rWnL+yk3JJhSI1B+YrWKo4bSFYnOgsOwbXBvBCwmdG+5MbrXE6nrc
- 6FDRmeCPkM4RVHdWndtemez+A1qi+jxC4MB4xrEL2n9aodwC3jsQva1LNwfwUkijorOXgf
- inA6EWuvYm77bt9fZc57GmXmb6BQn5s=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-OsJ4AgIcPH614uN7zVRLYA-1; Fri,
- 06 Mar 2026 09:49:29 -0500
-X-MC-Unique: OsJ4AgIcPH614uN7zVRLYA-1
-X-Mimecast-MFC-AGG-ID: OsJ4AgIcPH614uN7zVRLYA_1772808568
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A08A9195605F; Fri,  6 Mar 2026 14:49:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.197])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 90CD61956095; Fri,  6 Mar 2026 14:49:26 +0000 (UTC)
-Date: Fri, 6 Mar 2026 14:49:22 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- marcandre.lureau@redhat.com, pbonzini@redhat.com
-Subject: Re: [PATCH 4/4] chardev: Introduce a lock for hup_source
-Message-ID: <aarpcvImyt35Hido@redhat.com>
-References: <20250515222014.4161-1-farosas@suse.de>
- <20250515222014.4161-5-farosas@suse.de>
- <aCsPOyZCu-AcZOI3@redhat.com>
- <CAFEAcA_BvkKaF-qgJm25wSwuLEBedxL_pRVedQadCh1fVQBr8w@mail.gmail.com>
- <aagKqykyAO1svo_f@redhat.com>
- <CAFEAcA88RR05VXhz=j_+EiDYHUUtsMW0kX9PV04B1toK_dd95Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyWXv-0001Iq-Bv
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:52:56 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-7 (Postfix) with ESMTPS id
+ 9AF9C18000AA; Fri,  6 Mar 2026 14:52:50 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772808772; x=1775400772;
+ bh=i5Z3FaQ3PZL5FR3YbtcTuPrIbZMkfcJmcFWynUHXOR4=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=WnkjPzxScvqpos4EjwaHMFbUs+zUc6qbbJ6oMgV7syWqvvtIMgUb6tPXCf0jfyoUmARezaYQ+QI4yuIDckXW6OLFbeUDuZkGKEd3sQw5HePAi+gZR6iqiLdac/2CWJk5DgbhhdTZSaSOfLq7mI2CulR9PV6rJ7SBJqUSjUVYytyqJQPae2II9ejA6zsnFjtLyTzQlMJWMiCz1o5+BWsMyt1wwp7f3c/+A0xA8OFU2C5/2YhO7tpT1p6/f3E7qtdOVll66Zsl7KGIZsEFHu1C3viOMiH6rIDNrQn229+mcSGsq1O+rbh4QQQ60MqccajEmYjnHGou5JPNqyrDXwoeWw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-7 (Postfix) with ESMTPSA id
+ DA58918000A3; Fri,  6 Mar 2026 14:52:48 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v5 0/2] vmapple: making it work on the latest macOS host
+ releases
+Date: Fri,  6 Mar 2026 15:52:44 +0100
+Message-ID: <20260306145246.10274-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA88RR05VXhz=j_+EiDYHUUtsMW0kX9PV04B1toK_dd95Q@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-GUID: vZuz9HqkWR9hxzCh7s0xjQ9FWfpGe5pJ
+X-Proofpoint-ORIG-GUID: vZuz9HqkWR9hxzCh7s0xjQ9FWfpGe5pJ
+X-Authority-Info-Out: v=2.4 cv=TZObdBQh c=1 sm=1 tr=0 ts=69aaea42
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=PWwuWOSklEzM4Y2Y:21 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=hPhA3OiWSYROIRs07GQA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE0MyBTYWx0ZWRfXzquykPTaOEYb
+ k+Kezbqhk6R72a9G2yNn70XTJ0NWP4HVJfWzfTtghGptVreEkdc5EOzW9n5hDWbou7IgTpKeu29
+ MP9q1X9D9z7a7xqeRrctyKPRsj1FS/fQJ5Vu4RTF8SjXmVfP1HSktayCI89mhA5lcG8R2tiEh1R
+ xgTTUUXNxR5iwrlfVSjTV6C5NJhphoWv00MEVoId5u1xofeS7uDzTaOjasq5Hs08fPP2fK1NQ22
+ eluMuOajtmKtrvH0mcUACTjBeN7eFhHqe+BNnJAMXb5oOJGFFkS1YBkCK5EqWsf7l/S2+MvKf6E
+ e4RwkxFfr/skgDtgA8Xeb+k7QwvcIexapSeiH0ZiLEu4yDn9tiQpUE4QBaI0rI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-06_04,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ mlxscore=0 bulkscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=534 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603060143
+X-JNJ: AAAAAAABkqDcuRfwvwOt2GeRjls6M6iGcb+Rw2Orpb9Lh5Lu4ZUFlr3cHRNNMeXp9lHUITQAvD09wVs3KThQe50o4bV4rkLxxt4Xr5hX5gRKTL8KTnlefk8IfkkcQcKNoZ9tkilegKbLEEjTZkvsdgdL52hb18ti8gcAO9xtmIgEIC2Ck0+hDOPChvINfPRRaDCUmzAv5xMncjyayW74dCDKgFGaUJUbKuezC+pNbvC8GRRIspqb4/NbTt5LoFI52TMmgTWbVBu6xP4Uqy5k6bd4XP6Br2y7P3KUozH4Rft7rxoCwvSk05lMO1zahjxZtkBa1IpvX65RZbv75jYj0+xB/T5J50g8VX0Pu8KNCmnhk5nB+LdafB+FJLY8gObZPSoqO1H44SFSnB5JIDyE/sZlpCWuPRzLHJW5v8ZGaKCQ5Nm8kAjSDcdMWrnSVvn3RilwDOYhAQzYfgc0E5E0nd/Y7vlvgwaOdEg/5+MGZqitMML8GDUfeHYAvSwEU3CfzHJzCSmtF1Y2QUXnUClxpQues7m2G8yCjCVePxdBIfrBld5VKVL9L+hTZzhTAz4jBbq9tgw6CQfiUutudIVskp40xK4tPBLSTsWvtEVYCfW6If+PFz7bU/Rk0Qr4SFMsZQdBuKEy33JHHQJtx/Dn0++M1NafdAiHi4xdT/JeoQF8GDIvjg/gwFIqyDRNLUm702yA0cZ+FHaQotGnBc9ek3A2rkunmKDdM27H5snFM5vnMmtjk81N1RZcQ9bBpb1Hzg==
+Received-SPF: pass client-ip=57.103.86.25;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -90,105 +91,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 06, 2026 at 01:57:45PM +0000, Peter Maydell wrote:
-> On Wed, 4 Mar 2026 at 10:34, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > On Sat, Feb 28, 2026 at 03:16:11PM +0000, Peter Maydell wrote:
-> > > I had a look at this, and although I couldn't get a specific
-> > > backtrace, I got enough information from asan leak backtraces
-> > > and looking at the code that I think I understand where the race
-> > > is here:
-> > >
-> > > vhost-user-test.c:test_server_create_chr() sets up a chardev with:
-> > >  qemu_chr_new()
-> > >  qemu_chr_fe_init()
-> > >  qemu_chr_fe_set_handlers()
-> > >
-> > > For the "connect-fail" and "flags-mismatch" tests, it includes in
-> > > the options to the chardev "reconnect-ms=1000".
-> > >
-> > > qemu_chr_new() ends up in tcp_chr_open(), which calls
-> > > qmp_chardev_open_socket_client().
-> > >
-> > > If reconnect_ms is not 0, qmp_chardev_open_socket_client() calls
-> > > tcp_chr_connect_client_async() instead of doing the connect synchronously.
-> > > That kicks off a qio_task_new() to do the connecting, and immediately
-> > > returns, so we return successfully from qemu_chr_new(). So
-> > > test_server_create_chr() will continue execution into qemu_chr_fe_init()
-> > > and qemu_chr_fe_set_handlers().
-> > >
-> > > qemu_chr_fe_set_handlers() calls qemu_chr_be_update_read_handlers(), which
-> > > calls the chr_update_read_handler method for the ChardevClass, which here
-> > > is tcp_chr_update_read_handler(). That function calls update_ioc_handlers().
-> > >
-> > > Meanwhile, the thread that got kicked off to do the connect is
-> > > running in parallel. If the connect succeeds then qemu_chr_socket_conneted()
-> > > will call tcp_chr_connect(), which will also call
-> > > update_ioc_handlers(). (If the connect fails then presumably we end
-> > > up in the tcp_char_disconnect or otherwise destroying the chardev,
-> > > though I haven't figured out exactly what happens in this case.)
-> > >
-> > > None of this appears to be taking any kind of lock while it modifies
-> > > the SocketChardev fields, so we could have two threads in
-> > > update_ioc_handlers() simultaneously.
-> >
-> > It is subtle, as the QIOTask object deals with 2 separate callbacks.
-> >
-> > The callback that is provided to qio_task_new() is what is invoked when
-> > the task is marked as completed. This is guaranteed to always be
-> > invoked in main event loop context.
-> >
-> > The callback that is provided to qio_task_run_in_thread() is what runs
-> > in the throwaway background thread.  When this callback returns, the
-> > QIOTask creates a glib idle source in the main event loop to run the
-> > completion callback.
-> >
-> >
-> > So wrt char-socket.c, tcp_chr_connect_client_task will run in the
-> > background thread, but it only calls QIOChannel APIs so is safe.
-> >
-> > The qemu_chr_socket_connected method will run in main event loop
-> > context, so it does not need locking wrt other chardev I/O
-> > callbacks.
-> 
-> This is starting to sound like the problem is the test code. The
-> test code is calling qemu_chr_new() and qemu_chr_fe_set_handlers()
-> from a random thread it created by directly calling g_thread_new().
-> So these calls from this thread do not have any kind of lock and
-> can run in parallel with the qemu_chr_socket_connected method from
-> the main event loop.
-> 
-> I guess we need to take a lock here, but which one?
-> 
-> > >  How is this intended to work ? Is the test case code incorrect to assume
-> > > it can work with the chardev it got back from qemu_chr_new(), or should
-> > > the chardev be handling this case?
-> >
-> > The test is really rather had to understand, but I feel like something
-> > in the test ought to be looking at the CHR_EVENT_OPENED event to
-> > identify when the connection is actually established ?
-> 
-> The way to get a CHR_EVENT_OPENED would be to set the frontend
-> handlers with qemu_chr_fe_set_handlers(). It's the call to set
-> the frontend handlers that is already going wrong. (But the test
-> doesn't really need to care about the EVENT_OPENED: it can
-> just wait til it gets the "you have some data to read" callback.)
+Support for newer guest OSes isn't part of this series.
 
-I'm rather feeling that the test program would be better off not
-using chardevs at all, and instead using QIOChannelSocket directly.
-The chardevs are horribly complex when trying to deal with
-connection oriented semantics, as they are really not a connection
-based API; the event stuff is a hacky afterthought that barely
-gets us by.
+v5:
+Address review comments and rebase.
 
-With regards,
-Daniel
+v4:
+Rebase and resend without the RFC tag as I didn't get feedback.
+Drop patch 1 (version I posted was incomplete anyways). Last patch isn't worth it too tbh.
+
+v2->v3:
+Remove the Apple M4 support workaround part for now, to be part of another patchset perhaps
+Address comments
+
+v1->v2:
+Remove some lines that shouldn't have been present...
+
+Mohamed Mediouni (2):
+  vmapple: apple-gfx: make it work on the latest macOS release
+  Revert "hw/arm: Do not build VMapple machine by default"
+
+ configs/devices/aarch64-softmmu/default.mak |  1 -
+ hw/display/apple-gfx-mmio.m                 | 62 ++++++++++++++++-----
+ hw/display/apple-gfx.h                      | 18 ++++++
+ hw/display/apple-gfx.m                      | 43 +++++++++++++-
+ 4 files changed, 107 insertions(+), 17 deletions(-)
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.50.1 (Apple Git-155)
 
 
