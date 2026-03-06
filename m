@@ -4,98 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB887FCC056
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7517FCC056
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vya1w-0000IW-RF; Fri, 06 Mar 2026 13:36:08 -0500
+	id 1vya3z-0000xF-1H; Fri, 06 Mar 2026 13:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vya1u-0000IL-CQ
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:36:06 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vya1s-0005oZ-5R
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:36:06 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-483770e0b25so82017515e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 10:36:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772822162; x=1773426962; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YiCX6ga24zD3RmkJYcZJqji3xTxNrBSaoqg/AAeKEyw=;
- b=PXnzf6E1GD9few5ZJtd6FwYTsBh9c6zmvVRm0LTbsFUmCnhapUyBpiLirYnn73B/PQ
- zDJB9YCJKSsaTDUeWIqTk4AUWQAzxyO4tTZjJm8m24BwGRS65aCYFZFzAZzMILt0NS+0
- zh38E4dnX73skXa8hXUFohrEEhUWRcylgtLxa2E9QRMT0cFZ0GRh1NNha4NGYaiWZXok
- AlApnZGyvuhhOWrlkTwZ/Xe2o4k3wr3OZYwykMROTE/XoUwQntvUZASZUp4UHlvDOlVr
- SBozjyBupv/WC1EP6tKJOArLKjgxqwMweH3Mf4Eku6zoP4gfZ4ZHN122rHC0o0Ta/zZp
- k7eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772822162; x=1773426962;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YiCX6ga24zD3RmkJYcZJqji3xTxNrBSaoqg/AAeKEyw=;
- b=MYt+OrvxYmt07dn52+OHv9BRY7FCxkKpj8I7fOoeLYQxTNKw/rn2Qr7D/2RIft6E2V
- Bl33wp+hS/9uYf2JdesrVnSvb/4T5EWVZ2EK/XygxbmUQduENe4SomkuYMhzl3P/BBI6
- wnHOdTmcR7ezNX7NRZfTXR62ciJEyYOZT6HNn6B0M1XQFooMQgGko4pzKB5Wi1QKSdwQ
- WJB/B/M1m0HnimE9tImfgH+RMzcYsUcAhqbfOeOF4W4pPpfsolc2P9A8ULx3FRa0INK5
- RiIlPWaIoHb3NrnwZdbjAW0m7L9AtUyrj1g+6a2Dq4dEDPSIZ5aBR5MytQCQKwOAqh18
- KB5A==
-X-Gm-Message-State: AOJu0Yy3Tx0S5Q1HFJFtQBOGCK7rEZTXmX2oJiCZPy6QtAr4kyHCOLIv
- ZNZZKP2aonz4U9wIo9qRvOO5k1/gqA8beZfjwSAEHrdkDC2GV+vQ9cq/CjtIHg+9E1s=
-X-Gm-Gg: ATEYQzx5HDVD3jgffuPmdnf4aI3vtnmMLrp+DFgkYezKVRvbTRQKGIQmWQBJoAMGfON
- c77ZXLuOBJtMSvH6TSJkyGxazfMJgTvHLiAYsmIqJ2+aD919+sbMzoAKISIvuCVPML58JMOPFvz
- HiSuFZo0+vdnnonSmLtf+Uqazy6TAVAqywQ+3Ot3T6aeGc+N9UEWuKxJJSk9N9TBhC/4dUDtAcR
- XYm6/sQZMNILMBoPiQT/zwBHO3FeLibNB3XxfKe4wMD+/5+9ozsCBmkYl1ROzCiQ+F6jyJjfSU0
- gCWWS4cobdDm10u8mC2jgOd9n8eAJ8mApsTTCR0R23NOB6KX/MrRBLK8SZnckyMZUzFMy7kvkpL
- 7MQ5nG5rGD8h1JzK8cx9+rup2nb9il/WPpqsNeUIJNbRqzi29nHxd9L+waquZqXp+Pzee1P9dEk
- 7DqKGrM6Pe39wY7xb1X0yHos5Qyh9/1sgd/Q==
-X-Received: by 2002:a05:600c:698d:b0:483:acd9:bd18 with SMTP id
- 5b1f17b1804b1-48526917263mr59113965e9.1.1772822162237; 
- Fri, 06 Mar 2026 10:36:02 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48527681a3esm118051075e9.4.2026.03.06.10.36.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 10:36:01 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9DA34689CF;
- Fri, 06 Mar 2026 18:36:00 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Brad Smith <brad@comstyle.com>,
- qemu-arm@nongnu.org,  Kyle Evans <kevans@freebsd.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Peter
- Maydell <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,
- Warner Losh <imp@bsdimp.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 2/7] tests/tcg: allow filtering of TCG tests
-In-Reply-To: <5342a38e-ee34-4d52-928c-e60028848e2b@linaro.org> (Pierrick
- Bouvier's message of "Fri, 6 Mar 2026 09:34:44 -0800")
-References: <20260306161728.2657486-1-alex.bennee@linaro.org>
- <20260306161728.2657486-3-alex.bennee@linaro.org>
- <5342a38e-ee34-4d52-928c-e60028848e2b@linaro.org>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Fri, 06 Mar 2026 18:36:00 +0000
-Message-ID: <87v7f8n6un.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya3x-0000w7-Dv
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya3v-00062J-Rj
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772822291;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1/ixJwhTmLKE/B7wma8nXLs9K2IWlmY5qpGMeH3Ckr8=;
+ b=T+YlMJQ9tgFZDT5q4qPefBj58IX8Uyq7VGqy5h/4jS2zLL1nanSkKzjsKhkz7IxcfM4lkA
+ QXuFYL40wlXkXWr2/54vW/irIrQQCTg005Hr4eAMHO+VpwrXziyvpuulTG3UPsE7Bf5BrA
+ a/AoPf38DqwWaRnktc9YRYSiMMGWglM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-0Tgacjh-NRqdT-K_0VO7_Q-1; Fri,
+ 06 Mar 2026 13:38:09 -0500
+X-MC-Unique: 0Tgacjh-NRqdT-K_0VO7_Q-1
+X-Mimecast-MFC-AGG-ID: 0Tgacjh-NRqdT-K_0VO7_Q_1772822288
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 78F93195608E; Fri,  6 Mar 2026 18:38:08 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.45.224.210])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5545F1800576; Fri,  6 Mar 2026 18:38:07 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL 01/12] block/vmdk: fix OOB read in vmdk_read_extent()
+Date: Fri,  6 Mar 2026 19:36:54 +0100
+Message-ID: <20260306183705.410357-2-kwolf@redhat.com>
+In-Reply-To: <20260306183705.410357-1-kwolf@redhat.com>
+References: <20260306183705.410357-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,58 +82,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+From: "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>
 
-> On 3/6/26 8:17 AM, Alex Benn=C3=A9e wrote:
->> We have a lot of TCG tests now which can be fiddly if we just want to
->> check one particular test type across the targets. Introduce
->> TCG_TEST_FILTER to allow this:
->>    make check-tcg TCG_TEST_FILTER=3Dgdb
->> to run all the gdb tests across the suites.
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   tests/Makefile.include    |  8 +++++---
->>   tests/tcg/Makefile.target | 12 +++++++++++-
->>   2 files changed, 16 insertions(+), 4 deletions(-)
->>=20
->
-> Ideally, we should have a list command available also, so we don't
-> have to guess what magic pattern names follow.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Bounds check for marker.size doesn't account for the 12-byte marker
+header, allowing zlib to read past the allocated buffer.
 
-If you run "make help" in one of the TCG test dirs you will get a list:
+Move the check inside the has_marker block and subtract the marker size.
 
-  =E2=9E=9C  cd tests/tcg/aarch64-softmmu/
-  =F0=9F=95=9918:35:48 alex@draig:tests/tcg/aarch64-softmmu  on =EE=82=A0 p=
-r/060326-11.0-virtio-gpu-updates-1:master [$?=E2=87=A1]=20
-  =E2=9E=9C  make help
-  tests/tcg/aarch64-softmmu: -march=3Darmv8.3-a detected
-  tests/tcg/aarch64-softmmu: -march=3Darmv8.5-a+memtag detected
-  TCG tests help aarch64
-  Built with aarch64-linux-gnu-gcc
-  Available tests:
-    run-asid2
-    run-feat-xs
-    run-pauth-3
-    run-semiconsole
-    run-semiheap
-    run-vtimer
-    run-mte
-    run-hello
-    run-interrupt
-    run-memory-sve
-    run-plugin-hello-with-libdiscons.so
-    run-plugin-interrupt-with-libempty.so
-    run-gdbstub-memory
-    run-gdbstub-interrupt
-    run-gdbstub-untimely-packet
-    run-gdbstub-registers
-    run-memory-replay
-    run-gdbstub-mte
-    run-plugin-memory-with-libmem.so
+Fixes: CVE-2026-2243
+Reported-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
+Signed-off-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block/vmdk.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 89e89cd10e3..cd8b4ec7c88 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -1951,10 +1951,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t cluster_offset,
+         marker = (VmdkGrainMarker *)cluster_buf;
+         compressed_data = marker->data;
+         data_len = le32_to_cpu(marker->size);
+-    }
+-    if (!data_len || data_len > buf_bytes) {
+-        ret = -EINVAL;
+-        goto out;
++        if (!data_len || data_len > buf_bytes - sizeof(VmdkGrainMarker)) {
++            ret = -EINVAL;
++            goto out;
++        }
+     }
+     ret = uncompress(uncomp_buf, &buf_len, compressed_data, data_len);
+     if (ret != Z_OK) {
+-- 
+2.53.0
+
 
