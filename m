@@ -4,118 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 975E3FCC073
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 20:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF836FCC076
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 20:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyc8G-0004vG-JZ; Fri, 06 Mar 2026 15:50:48 -0500
+	id 1vycBl-0006Ix-Sf; Fri, 06 Mar 2026 15:54:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyc8F-0004v0-Hk
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 15:50:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vyc8D-00015A-SE
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 15:50:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772830244;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CS/G0MzuhWx8kXjW+zo1kSJ7UxqcP5JFpjiIEArN+aA=;
- b=hW5Y9iSUOwisX6ZNqv2YkYDBKLzyrQiw6IwxSqehNkdf/BGcqrAg7gRlbwhh+OZntAp8o7
- BzsTIhELhfSMxKDh0S5Ng4ZLe27tiA+7o7QY+vyJeWKIBvRDcoy+vXzriUntIStS8BssGM
- 5qPjvlm5BUXoykz1SBdqW2C23e7hBzY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-GK-llV8_Ml6hJWdcCVUGwg-1; Fri,
- 06 Mar 2026 15:50:41 -0500
-X-MC-Unique: GK-llV8_Ml6hJWdcCVUGwg-1
-X-Mimecast-MFC-AGG-ID: GK-llV8_Ml6hJWdcCVUGwg_1772830240
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vycBg-0006Ij-Rt
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 15:54:20 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vycBb-0001Iy-Ie
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 15:54:19 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E69181956096; Fri,  6 Mar 2026 20:50:39 +0000 (UTC)
-Received: from [10.45.224.53] (unknown [10.45.224.53])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4C7CC1958DD2; Fri,  6 Mar 2026 20:50:35 +0000 (UTC)
-Message-ID: <963438c0-69df-4052-8e4c-645ff1ece712@redhat.com>
-Date: Fri, 6 Mar 2026 21:50:34 +0100
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C9A1B5BEC4;
+ Fri,  6 Mar 2026 20:53:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1772830440; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qSangVyA/Vm38pop4hbPvfKmeC9YLMHQejLY9W9vZrk=;
+ b=VlNomPX+ah6H38vrivBq3aTIEzw5BuNHwIBk4AvnHLRwsnSHD5DeByEyd9ZrH9TAGU0uiz
+ mO5RwzG1CvrNv5prequwBqXtNkI2SpeSRlAyxN4XqjRI/nRhSg14FFMt0bKJSjspWT71H8
+ Peb8HLQs+k6H/gHseRY1s94rDLsMzw4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1772830440;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qSangVyA/Vm38pop4hbPvfKmeC9YLMHQejLY9W9vZrk=;
+ b=pzQ3jLYgCb9nkwAdp4GJ2OFObts0Nvya1rAAQitddn0HUxJoQbvVirHYKq+DUDACj5Db4t
+ J2QR5fK1kcr120BA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="U9qj/kxm";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2xAC2SLJ
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1772830439; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qSangVyA/Vm38pop4hbPvfKmeC9YLMHQejLY9W9vZrk=;
+ b=U9qj/kxmJPfQgVRhfM2y87+ggsh5nWRHZpBsKEa3diRunjCP859yR0fUaJNYZG3zRsDhAL
+ f/3TEP94huXy/A3/MM80DvTLWowznSnDkEvmbCnDljP7zMsDqKWGhFn6Qdlds99nkrLbMo
+ aHolsbjk7esQnAmG6UMEilVJ22IbRvw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1772830439;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qSangVyA/Vm38pop4hbPvfKmeC9YLMHQejLY9W9vZrk=;
+ b=2xAC2SLJIesw3yPQ7fTZsGf8h09I1Zd5fSRomyeEqwLKnnXrAzu/cW66EdxR5SYjx0MMq4
+ vpi8p2AMRqMjN4Bw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 504A63EA75;
+ Fri,  6 Mar 2026 20:53:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id X2WcBec+q2mDSgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 06 Mar 2026 20:53:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
+Cc: vsementsov@yandex-team.ru, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 00/18] migration: more bool+errp APIs
+In-Reply-To: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+Date: Fri, 06 Mar 2026 17:53:56 -0300
+Message-ID: <87seac1xy3.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pc-bios/s390-ccw: Fix compiler warning when compiling
- with DEBUG enabled
-To: Farhan Ali <alifm@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org
-References: <20260306203645.28232-1-thuth@redhat.com>
- <8fb6a32c-ea14-497c-8ec1-dd456d561d0b@linux.ibm.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <8fb6a32c-ea14-497c-8ec1-dd456d561d0b@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: C9A1B5BEC4
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,56 +123,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/03/2026 21.45, Farhan Ali wrote:
-> 
-> On 3/6/2026 12:36 PM, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> When compiling with DEBUG=1, there is currently a compiler warning:
->>
->>   pc-bios/s390-ccw: Compiling main.o
->>   In file included from /home/thuth/devel/qemu/pc-bios/s390-ccw/main.c:14:
->>   In file included from /home/thuth/devel/qemu/pc-bios/s390-ccw/helper.h:16:
->>   /home/thuth/devel/qemu/pc-bios/s390-ccw/s390-ccw.h:122:31: warning: 
->> format specifies type
->>         'unsigned int' but the argument has type 'u64' (aka 'unsigned long 
->> long') [-Wformat]
->>     122 |     printf("%s 0x%X\n", desc, addr);
->>         |                  ~~           ^~~~
->>         |                  %llX
->>   1 warning generated.
->>
->> Fix it by using the right format string here.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   pc-bios/s390-ccw/s390-ccw.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
->> index b1dc35cdedf..6a0b987e303 100644
->> --- a/pc-bios/s390-ccw/s390-ccw.h
->> +++ b/pc-bios/s390-ccw/s390-ccw.h
->> @@ -119,7 +119,7 @@ static inline void fill_hex_val(char *out, void *ptr, 
->> unsigned size)
->>   static inline void debug_print_int(const char *desc, u64 addr)
->>   {
->>   #ifdef DEBUG
->> -    printf("%s 0x%X\n", desc, addr);
->> +    printf("%s 0x%llx\n", desc, addr);
->>   #endif
->>   }
-> 
-> I am curious, this change has been there for at least 2 years...any reason 
-> the compiler tripped now? Or we never built with DEBUG=1 before?
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-The pc-bios is rather low traffic - I guess nobody really tried compiling 
-with DEBUG=1 within the last two years.
+> v3:
+> 01,02: add r-bs by Fabiano and Peter
+> 03: improve comment, add r-b by Peter
+> 04: add r-bs by Fabiano and Peter
+> 05: new, replacement for dropped "[PATCH v2 05/16] migration: vmstate_save/load_state(): stop tracing errors"
+> 06: rebase on kept trace-points, keep r-b by Peter
+> 07-09: add r-b by Peter
+> 10: rebase on kept trace-points, keep r-b by Peter
+> 11-12: add r-b by Peter
+> 13: rebase ion kept traces and logic around trace_vmstate_load_field_error() already refactored, fix indent, drop r-b
+> 14: add r-b by Peter
+> 15: add r-b by Peter, use "else { if () {} }"
+> 16-17: new
+> 18: rebased on dropped err_hint, drop r-b
+>
+> Vladimir Sementsov-Ogievskiy (18):
+>   migration: vmstate_save_state_v: fix double error_setg
+>   migration: make vmstate_save_state_v() static
+>   migration: make .post_save() a void function
+>   migration: vmstate_load_state(): add some newlines
+>   migration: vmstate_save/load_state(): refactor tracing errors
+>   migration: factor out vmstate_pre_save() from vmstate_save_state()
+>   migration: factor out vmstate_save_field() from vmstate_save_state()
+>   migration: factor out vmstate_pre_load() from vmstate_load_state()
+>   migration: factor out vmstate_load_field() from vmstate_load_state()
+>   migration: factor out vmstate_post_load() from vmstate_load_state()
+>   migration: convert vmstate_subsection_save/load functions to bool
+>   migration: VMStateInfo: introduce new handlers with errp
+>   migration: introduce vmstate_load_vmsd() and vmstate_save_vmsd()
+>   migration/cpr: move to new migration APIs
+>   migration/savevm: move to new migration APIs
+>   hw/s390x/css: drop use of .err_hint for vmstate
+>   migration: drop VMStateField.err_hint
+>   migration/vmstate-types: move to new migration APIs
+>
+>  docs/devel/migration/main.rst |   2 +-
+>  hw/block/fdc.c                |   2 +-
+>  hw/display/qxl.c              |   4 +-
+>  hw/display/vga.c              |   2 +-
+>  hw/display/virtio-gpu.c       |   2 +-
+>  hw/display/vmware_vga.c       |   2 +-
+>  hw/i386/vmmouse.c             |   2 +-
+>  hw/ide/ahci.c                 |   2 +-
+>  hw/intc/openpic.c             |   2 +-
+>  hw/intc/spapr_xive.c          |   2 +-
+>  hw/intc/xics.c                |   2 +-
+>  hw/intc/xive.c                |   2 +-
+>  hw/nvram/eeprom93xx.c         |   2 +-
+>  hw/pci/pci.c                  |   2 +-
+>  hw/pci/pcie_aer.c             |   2 +-
+>  hw/ppc/spapr_iommu.c          |   2 +-
+>  hw/ppc/spapr_pci.c            |   7 +-
+>  hw/ppc/spapr_vio.c            |   4 +-
+>  hw/s390x/css.c                |  15 +-
+>  hw/usb/hcd-uhci.c             |   2 +-
+>  include/migration/cpr.h       |   2 +-
+>  include/migration/vmstate.h   |  73 ++--
+>  migration/cpr.c               |  22 +-
+>  migration/savevm.c            | 108 +++---
+>  migration/trace-events        |  30 +-
+>  migration/vmstate-types.c     | 642 +++++++++++++++++-----------------
+>  migration/vmstate.c           | 354 +++++++++++--------
+>  target/arm/machine.c          |   4 +-
+>  target/ppc/machine.c          |   6 +-
+>  29 files changed, 691 insertions(+), 612 deletions(-)
 
- > Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
-
-Thanks!
-
-  Thomas
-
+Queued, thanks!
 
