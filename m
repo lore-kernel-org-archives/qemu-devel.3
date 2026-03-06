@@ -4,66 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95978F01825
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7297BF01826
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:49:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vySbF-0002aG-Vq; Fri, 06 Mar 2026 05:40:07 -0500
+	id 1vySjo-0004m2-I6; Fri, 06 Mar 2026 05:48:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vySb8-0002ZT-Gx; Fri, 06 Mar 2026 05:39:58 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vySb6-0006E4-07; Fri, 06 Mar 2026 05:39:58 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBnvdHvrqppu2m0AA--.49472S2;
- Fri, 06 Mar 2026 18:39:43 +0800 (CST)
-Received: from [10.31.91.115] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3DuztrqppV3QfAA--.39956S2;
- Fri, 06 Mar 2026 18:39:41 +0800 (CST)
-Message-ID: <57126277-be72-4c95-b4da-184b862bd2bc@phytium.com.cn>
-Date: Fri, 6 Mar 2026 18:39:40 +0800
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1vySjf-0004kT-WA; Fri, 06 Mar 2026 05:48:48 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1vySjd-0007sp-Rf; Fri, 06 Mar 2026 05:48:47 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 625L490C329165; Fri, 6 Mar 2026 10:48:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+AP79i
+ fkjfhMER60db9jG5G7pQkrj7KQUPObrBNDwIA=; b=N86LzA6aOaM1O0vEvzOKVY
+ UobkSfxgsLp+xrKdqOJXiQr1LyNfepTPB6jIXO4cKlty0XUKNxhvFPYHr0piWH9x
+ KrsFSidMYbsMzswyJmLIdtv/kypkDmUZgTNZIICzsvHwb1C5YpXntzYfroSq+vOU
+ q07wG73465i/MFE9B1DP4BYE6+f04piV/9sHr6mQiLomK0oLCupfT6TiXrQJ2kyo
+ CEhbJdWgw0Vjxpn+nzjeU1SMBSNI9eXlYq4c6WlRebxoTlOvJfoemdrQNtPg2630
+ 2t3YhRgXELHma+6BXqofLt/URaQk2xxpiwrrYa/i9P+ipSLDbkBhhP1+w93sPAIA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmyjhk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Mar 2026 10:48:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6268AEgo011312;
+ Fri, 6 Mar 2026 10:48:40 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cqau2v0yn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Mar 2026 10:48:40 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 626Ama7B33816856
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Mar 2026 10:48:36 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9060B20043;
+ Fri,  6 Mar 2026 10:48:36 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CE6E120040;
+ Fri,  6 Mar 2026 10:48:34 +0000 (GMT)
+Received: from [9.78.106.17] (unknown [9.78.106.17])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Mar 2026 10:48:34 +0000 (GMT)
+Message-ID: <b8f14d86-25a5-48c4-a982-b728371964a8@linux.ibm.com>
+Date: Fri, 6 Mar 2026 16:18:33 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Tao Tang <tangtao1634@phytium.com.cn>
-Subject: Re: [RFC v4 14/31] hw/arm/smmu-common: Implement secure state
- handling in ptw
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260221100250.2976287-1-tangtao1634@phytium.com.cn>
- <20260221101649.2993830-1-tangtao1634@phytium.com.cn>
- <0b346363-9450-4397-8e1b-cfd46b45ed9c@redhat.com>
-In-Reply-To: <0b346363-9450-4397-8e1b-cfd46b45ed9c@redhat.com>
+Subject: Re: [PATCH v3 02/10] ppc/mpipl: Implement S0 SBE interrupt
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+References: <20260225124633.1841222-1-adityag@linux.ibm.com>
+ <20260225124633.1841222-3-adityag@linux.ibm.com>
+Content-Language: en-US
+From: Hari Bathini <hbathini@linux.ibm.com>
+In-Reply-To: <20260225124633.1841222-3-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAfwC3DuztrqppV3QfAA--.39956S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWmp8qEHpgAAsw
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3Jw4UKw4UAr1xWw1kAr17GFg_yoWxCFy8pr
- W8GFn0yrs3tFyIyws2qr4jv3W3J3ykKF4DGrZ7GFn3C3W5tr1kJr9FkrW5uFWDZF1rXa18
- Z34UKrs7uw4DJaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEwMSBTYWx0ZWRfX8c5Pe1wFdpWP
+ 0mQzSKY8zm7Wo/4RJfCvwaLMqYAip3Q9zrO5vfBaqd3WxV28PwPscnHOx+Zn4QT4Z+qcm0P6/h3
+ ThWbTfB3z8tmaKXGxGDJeS0Nyy59Qxc4lJIu9QSzDjuJtBsNKXzx1FgAGoEKx2+/DbRAsMS6qb4
+ GUUDjtHXfDUXTiYz+OQ6IC0uRjIheQ57sq54x64MkGlVnNmDkmqLPtfiAm8MCia+pkVC/xM+qQs
+ HNbUsAG2zE37sMJcWvJPxP50usQZpgIORA+CJeVyYE3XxSbQ3eS1Zl6hzpWXqrFF5CTQKLDdgB/
+ 2aN5mqhZYlP5Qko5j9x6UhpWDD75ZAk4vfX6qZ/Je3BhxzJ641Vu9oBbHoFtd/eFIv1iWsk2NjO
+ jpwGWP0br2q4ravYEPlKVTxE785k52R3N1/aaIFR7KY7UqgCMPKN1mwEK6AolH6rCIHVZb59yd+
+ N2pyYNC7zZOwm1M9QPw==
+X-Proofpoint-ORIG-GUID: _5UFQnn_i0tiCGlnObgSosVCj_f1ujI8
+X-Proofpoint-GUID: sW_4L2GlnL4xAGvrWiwiL93zj-m9yp0V
+X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aab109 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=PLBsYqVowcRC1OSvligA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-06_03,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ spamscore=0 clxscore=1015 suspectscore=0 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060101
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,188 +126,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
 
-On 2026/3/3 17:41, Eric Auger wrote:
-> Hi Tao,
->
-> On 2/21/26 11:16 AM, Tao Tang wrote:
->> Enhance the page table walker to correctly handle secure and non-secure
->> memory accesses. This change introduces logic to select the appropriate
->> address space and enforce architectural security policies during walks.
->>
->> The page table walker now correctly processes Secure Stage 1
->> translations. Key changes include:
->>
->> - The get_pte function now uses the security context to fetch table
->> entries from either the Secure or Non-secure address space.
->>
->> - The stage 1 walker tracks the security state, respecting the NSCFG
->> and NSTable attributes. It correctly handles the hierarchical security
->> model: if a table descriptor in a secure walk has NSTable=1, all
->> subsequent lookups for that walk are forced into the Non-secure space.
->> This is a one-way transition, as specified by the architecture.
->>
->> - The final TLB entry is tagged with the correct output address space,
->> ensuring proper memory isolation.
->>
->> Note: We do not yet support secure stage 2 translations. So ns_as member
->> in SMMUTransCfg is used to cache non-secure AS instead of refactoring
->> smmu_ptw_64_s2 to pass SMMUState context.
->>
->> Signed-off-by: Tao Tang<tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmu-common.c | 50 ++++++++++++++++++++++++++++++++++++++++----
->>   hw/arm/smmuv3.c      |  1 +
->>   2 files changed, 47 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index a732303b28b..84e71df6767 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -406,15 +406,16 @@ void smmu_iotlb_inv_vmid_s1(SMMUState *s, int vmid)
->>   /**
->>    * get_pte - Get the content of a page table entry located at
->>    * @base_addr[@index]
->> + * @as: AddressSpace to read from
-> while at it let's properly document all parameters in the doc comment.
+On 25/02/26 6:16 pm, Aditya Gupta wrote:
+> During MPIPL (aka fadump), after a kernel crash, the kernel does
+> opal_cec_reboot2 opal call, signifying an abnormal termination.
 
+Minor nit..
 
-I'll doc attrs in V5.
+> When OPAL recieves this opal call, it further triggers SBE S0 interrupt,
 
->>    */
->>   static int get_pte(dma_addr_t baseaddr, uint32_t index, uint64_t *pte,
->> -                   SMMUPTWEventInfo *info)
->> +                   SMMUPTWEventInfo *info, AddressSpace *as, MemTxAttrs attrs)
->>   {
->>       int ret;
->>       dma_addr_t addr = baseaddr + index * sizeof(*pte);
->>   
->>       /* TODO: guarantee 64-bit single-copy atomicity */
->> -    ret = ldq_le_dma(&address_space_memory, addr, pte, MEMTXATTRS_UNSPECIFIED);
->> +    ret = ldq_le_dma(as, addr, pte, attrs);
->>   
->>       if (ret != MEMTX_OK) {
->>           info->type = SMMU_PTW_ERR_WALK_EABT;
->> @@ -538,6 +539,9 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
->>       SMMUStage stage = cfg->stage;
->>       SMMUTransTableInfo *tt = select_tt(cfg, iova);
->>       uint8_t level, granule_sz, inputsize, stride;
->> +    int nscfg, current_ns, new_nstable;
->> +    bool sid_is_ns = cfg->sec_sid == SMMU_SEC_SID_NS;
->> +    bool forced_ns = false;  /* Once true, NSTable is ignored */
->>   
->>       if (!tt || tt->disabled) {
->>           info->type = SMMU_PTW_ERR_TRANSLATION;
->> @@ -552,6 +556,8 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
->>   
->>       baseaddr = extract64(tt->ttb, 0, cfg->oas);
->>       baseaddr &= ~indexmask;
->> +    nscfg = tt->nscfg;
->> +    forced_ns = sid_is_ns || nscfg;
-> do you really need this forced_ns
-> can't you simply set current_ns = sid_is_ns || nscfg
-> with first value of nscfg set to tt->nscfg and next level ones set to
-> aptable is !current_ns
+s/recieves/receives/
 
-
-You're right. forced_ns could be simplified.
-
-
->>   
->>       while (level < VMSA_LEVELS) {
->>           uint64_t subpage_size = 1ULL << level_shift(level, granule_sz); @@ -560,8 +566,17 @@ static int 
->> smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg, uint64_t pte, gpa; 
->> dma_addr_t pte_addr = baseaddr + offset * sizeof(pte); uint8_t ap; + 
->> AddressSpace *pte_as; + MemTxAttrs pte_attrs; - if (get_pte(baseaddr, 
->> offset, &pte, info)) { + /* + * Start in NS for Non-secure streams or 
->> CD.NSCFGx == 1. + * Once walk is in NS, NSTable is ignored on 
->> subsequent levels. + */ + current_ns = forced_ns || nscfg; + pte_as = 
->> current_ns ? &bs->memory_as : &bs->secure_memory_as;
->> +        pte_attrs = current_ns ? MEMTXATTRS_UNSPECIFIED : cfg->txattrs;
->> +        if (get_pte(baseaddr, offset, &pte, info, pte_as, pte_attrs)) {
->>                   goto error;
->>           }
->>           trace_smmu_ptw_level(stage, level, iova, subpage_size,
->> @@ -586,6 +601,23 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
->>                       goto error;
->>                   }
->>               }
->> +
->> +            /*
->> +             * NSTable can switch the walk to NS only while the current walk
->> +             * level is Secure. Once switched to NS, NSTable is ignored according
->> +             * to hierarchical control of Secure/Non-secure accesses:
->> +             * (IHI 0070G.b)13.4.1 Stage 1 page permissions and
->> +             * (DDI 0487H.a)D8.4.2 Control of Secure or Non-secure memory access
->> +             */
->> +            if (!forced_ns) {
->> +                new_nstable = PTE_NSTABLE(pte);
->> +                if (new_nstable) {
->> +                    forced_ns = true;
->> +                    nscfg = 1;
->> +                } else {
->> +                    nscfg = 0;
->> +                }
->> +            }
->>               level++;
->>               continue;
->>           } else if (is_page_pte(pte, level)) {
->> @@ -628,6 +660,13 @@ static int smmu_ptw_64_s1(SMMUState *bs, SMMUTransCfg *cfg,
->>               goto error;
->>           }
->>   
->> +        if (current_ns) {
->> +            tlbe->sec_sid = SMMU_SEC_SID_NS;
->> +        } else {
->> +            tlbe->sec_sid = PTE_NS(pte) ? SMMU_SEC_SID_NS : SMMU_SEC_SID_S;
->> +        }
->> +        tlbe->entry.target_as = (tlbe->sec_sid == SMMU_SEC_SID_S)
->> +                                ? &bs->secure_memory_as : &bs->memory_as;
-> So I understand you need to set the target_as depending on sec_sid but
-> not sure why need to store the sec_sid in the tlbe?
-
-
-I will directly use a local sec_sid instead to generate target_as and 
-drop sec_sid in tlbe as the previous thread mentioned.
-
-
->>           tlbe->entry.translated_addr = gpa;
->>           tlbe->entry.iova = iova & ~mask;
->>           tlbe->entry.addr_mask = mask;
->> @@ -697,7 +736,8 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
->>           dma_addr_t pte_addr = baseaddr + offset * sizeof(pte);
->>           uint8_t s2ap;
->>   
->> -        if (get_pte(baseaddr, offset, &pte, info)) {
->> +        if (get_pte(baseaddr, offset, &pte, info, cfg->ns_as,
->> +                    MEMTXATTRS_UNSPECIFIED)) {
->>                   goto error;
->>           }
->>           trace_smmu_ptw_level(stage, level, ipa, subpage_size,
->> @@ -750,6 +790,8 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
->>               goto error_ipa;
->>           }
->>   
->> +        tlbe->sec_sid = SMMU_SEC_SID_NS;
->> +        tlbe->entry.target_as = cfg->ns_as;
-> Shouldn't you handle STE.NSCFG in case STE belongs to the secure stream
-> table (ns_sid=secure) and stage 1 is disabled?
->
-> Also shall we handle SMMU_IDR1.ATTR_PERMS_OVR?
-
-
-I indeed ignored all Secure-related handling in stage-2, as I originally 
-planned to implement those parts in the upcoming S_IDR1.SEL2 feature series.
-
-
-But the senario you mentioned seems to unrelated to SEL2 feature afer I 
-rechecked the manual. So I'll implement it in V5 with handling 
-SMMU_IDR1.ATTR_PERMS_OVR.
-
-
-Best regards,
-
-Tao
+> to trigger a MPIPL boot.
+> 
+> Currently S0 interrupt is unimplemented in QEMU.
+> 
+> Implement S0 interrupt as 'pause_vcpus' + 'guest_reset' in QEMU, as the
+> SBE's implementation of S0 seems to be basically "stop all clocks" and
+> then "host reset".
+> 
+> pause_vcpus is done in a later patch when register preserving support is
+> added
+> 
+> See 'stopClocksS0' in SBE source code for more information.
+> 
+> Also log both S0 and S1 interrupts.
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/meson.build         |  1 +
+>   hw/ppc/pnv_mpipl.c         | 26 ++++++++++++++++++++++++++
+>   hw/ppc/pnv_sbe.c           | 29 +++++++++++++++++++++++++++++
+>   include/hw/ppc/pnv.h       |  6 ++++++
+>   include/hw/ppc/pnv_mpipl.h | 19 +++++++++++++++++++
+>   5 files changed, 81 insertions(+)
+>   create mode 100644 hw/ppc/pnv_mpipl.c
+>   create mode 100644 include/hw/ppc/pnv_mpipl.h
+> 
+> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+> index f7dac87a2a48..c61fba4ec8f2 100644
+> --- a/hw/ppc/meson.build
+> +++ b/hw/ppc/meson.build
+> @@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+>     'pnv_pnor.c',
+>     'pnv_nest_pervasive.c',
+>     'pnv_n1_chiplet.c',
+> +  'pnv_mpipl.c',
+>   ))
+>   # PowerPC 4xx boards
+>   ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
+> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+> new file mode 100644
+> index 000000000000..d8c9b7a428b7
+> --- /dev/null
+> +++ b/hw/ppc/pnv_mpipl.c
+> @@ -0,0 +1,26 @@
+> +/*
+> + * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "system/runstate.h"
+> +#include "hw/ppc/pnv.h"
+> +#include "hw/ppc/pnv_mpipl.h"
+> +
+> +void do_mpipl_preserve(PnvMachineState *pnv)
+> +{
+> +    /* Mark next boot as Memory-preserving boot */
+> +    pnv->mpipl_state.is_next_boot_mpipl = true;
+> +
+> +    /*
+> +     * Do a guest reset.
+> +     * Next reset will see 'is_next_boot_mpipl' as true, and trigger MPIPL
+> +     *
+> +     * Requirement:
+> +     * GUEST_RESET is expected to NOT clear the memory, as is the case when
+> +     * this is merged
+> +     */
+> +    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> +}
+> diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+> index 247617338a0d..5a2b3342d199 100644
+> --- a/hw/ppc/pnv_sbe.c
+> +++ b/hw/ppc/pnv_sbe.c
+> @@ -26,6 +26,9 @@
+>   #include "hw/ppc/pnv.h"
+>   #include "hw/ppc/pnv_xscom.h"
+>   #include "hw/ppc/pnv_sbe.h"
+> +#include "hw/ppc/pnv_mpipl.h"
+> +#include "system/cpus.h"
+> +#include "system/runstate.h"
+>   #include "trace.h"
+>   
+>   /*
+> @@ -113,11 +116,37 @@ static uint64_t pnv_sbe_power9_xscom_ctrl_read(void *opaque, hwaddr addr,
+>   static void pnv_sbe_power9_xscom_ctrl_write(void *opaque, hwaddr addr,
+>                                          uint64_t val, unsigned size)
+>   {
+> +    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+> +    PnvSBE *sbe = opaque;
+>       uint32_t offset = addr >> 3;
+>   
+>       trace_pnv_sbe_xscom_ctrl_write(addr, val);
+>   
+>       switch (offset) {
+> +    case SBE_CONTROL_REG_RW:
+> +        switch (val) {
+> +        case SBE_CONTROL_REG_S0:
+> +            qemu_log_mask(LOG_UNIMP, "SBE: S0 Interrupt triggered\n");
+> +
+> +            pnv_sbe_set_host_doorbell(sbe, sbe->host_doorbell | SBE_HOST_RESPONSE_MASK);
+> +
+> +            /* Preserve memory regions and CPU state, if MPIPL is registered */
+> +            do_mpipl_preserve(pnv);
+> +
+> +            /*
+> +             * Control may not come back here as 'do_mpipl_preserve' triggers
+> +             * a guest reboot
+> +             */
+> +            break;
+> +        case SBE_CONTROL_REG_S1:
+> +            qemu_log_mask(LOG_UNIMP, "SBE: S1 Interrupt triggered\n");
+> +            break;
+> +        default:
+> +            qemu_log_mask(LOG_UNIMP,
+> +                "SBE: CONTROL_REG_RW: Unknown value: Ox%."
+> +                  HWADDR_PRIx "\n", val);
+> +        }
+> +        break;
+>       default:
+>           qemu_log_mask(LOG_UNIMP, "SBE Unimplemented register: Ox%"
+>                         HWADDR_PRIx "\n", addr >> 3);
+> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+> index 24f8843a4090..7d73629f112a 100644
+> --- a/include/hw/ppc/pnv.h
+> +++ b/include/hw/ppc/pnv.h
+> @@ -25,6 +25,7 @@
+>   #include "hw/core/sysbus.h"
+>   #include "hw/ipmi/ipmi.h"
+>   #include "hw/ppc/pnv_pnor.h"
+> +#include "hw/ppc/pnv_mpipl.h"
+>   
+>   #define TYPE_PNV_CHIP "pnv-chip"
+>   
+> @@ -111,6 +112,8 @@ struct PnvMachineState {
+>   
+>       bool         big_core;
+>       bool         lpar_per_core;
+> +
+> +    MpiplPreservedState mpipl_state;
+>   };
+>   
+>   PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+> @@ -290,4 +293,7 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+>   
+>   #define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
+>   
+> +/* MPIPL helpers */
+> +void do_mpipl_preserve(PnvMachineState *pnv);
+> +
+>   #endif /* PPC_PNV_H */
+> diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+> new file mode 100644
+> index 000000000000..c544984dc76d
+> --- /dev/null
+> +++ b/include/hw/ppc/pnv_mpipl.h
+> @@ -0,0 +1,19 @@
+> +/*
+> + * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef PNV_MPIPL_H
+> +#define PNV_MPIPL_H
+> +
+> +#include "qemu/osdep.h"
+> +
+> +typedef struct MpiplPreservedState MpiplPreservedState;
+> +
+> +/* Preserved state to be saved in PnvMachineState */
+> +struct MpiplPreservedState {
+> +    bool       is_next_boot_mpipl;
+> +};
+> +
+> +#endif
 
 
