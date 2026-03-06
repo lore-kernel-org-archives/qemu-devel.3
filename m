@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7301EFCB605
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9B0FCB605
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWed-0003Zn-R2; Fri, 06 Mar 2026 09:59:51 -0500
+	id 1vyWeg-0003m8-R0; Fri, 06 Mar 2026 09:59:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWea-0003Sd-Jb
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:48 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1vyWef-0003eq-76
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:53 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWeX-0002I1-Qa
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:48 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-483703e4b08so91108905e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:45 -0800 (PST)
+ id 1vyWed-0002JH-Jj
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:52 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48529c325f0so2588325e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809184; x=1773413984; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809190; x=1773413990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qem4NSUeey+gyvvqF8jLOvpUBmOw/plAG9yiUehSpt8=;
- b=rUdsyQIspNWCC87m7mjjzvlMW+zaibM56RiS8s+5vXKpFrOigIiT9aCy3Ut03RAJbU
- ZgEam3lGF7Y/VY5p1bisYp6yzwW73yQhx7Gyu5bHgbP7F2ciyC0sHJpk0EdfnPMkUgEX
- LOeTXPUur6fF+Tpslf27O7nw7tjFu9739mF+xfOC/OIfS7kWQ1JPG1MfDjsN/nWTN52w
- acRd0p2jYRx0vJsqXOoydovWhp6fyVVPDb5W2c0csgi2HQXA0oHu+Gs+nleZtnJLRyyT
- QivX9BhKiZvTZPLU238S1nNaK344eiP5d4Jri/ncvkjijVTSetNwfQ2mp8VPSRp5FuVZ
- cn7w==
+ :reply-to; bh=cCN+SNdahMWTqcQKACyPmGcrF0RK5lEl6zLjOWcoCMY=;
+ b=n5HVz/rq6nuEtZtCeaENXPm6YkbzoQRTDlBF3aOjWZWYOwVojCCwWVLsWP5rbpD/tv
+ j3kceOVlKag3VzaQqQEd+O3bV1Py7wfL0xdERTL35Sa01BeZMWC/qWFAVJvZGyTDHXEk
+ Zqj94nXMRzr/9QD29z16xnCda4kMI9SzieCGxOkLoZUephdT2tjTkpAY4MHSr1a04Xpv
+ lgcrW8GBBQBqUDDJ9SrdCMAUbFclZuPRiNaTQYRYCgnLyXOKVhq/8QgG8MtjvCS6a1dv
+ ONoJe/E6sQkZy2hxvHTf1//TLwI6WoZ2JiwGq7fpJ2cgpL9c/nJyVNFkjRo1KlHpLaTM
+ Q75w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809184; x=1773413984;
+ d=1e100.net; s=20230601; t=1772809190; x=1773413990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qem4NSUeey+gyvvqF8jLOvpUBmOw/plAG9yiUehSpt8=;
- b=d+1Kj1+X5OB8tNyHOdvKMEsbr+FjTCsDLGyLz5KeuCt/OOEdFl3e257DCFptAlMFEM
- vxqTf/OMJ8ZZC1xS8VWJ98CkpaLAJ4nrA5vLPUOPaq4E/nXR1h8BuuaKBmNKOMDaEkGi
- sVfBz4knSAWW9SBUmM0ML9pS9ocM5E8y2PFcbSDQqeG1riBxQnCnuItTA1KxkUgtOnn+
- +el/yVTAr3LspN2OLXyXn/MqZHmr9zuZ4pXDr3C+Aj558b3t1b2JqUiwTayJa/8LD/1j
- jQk3uzKwxomYmSyUg2949Rl2oaObgBCFnfrWm3jGhZkLaMhOPBQEa4JMl8z28sw0cefr
- PX0w==
-X-Gm-Message-State: AOJu0YwgdWLepRp7QHKpm9RFrXoXQ5+xiTD9PsRSJDJribgnFXygb5ZP
- LMI+oYpbrpCXyJhBYq3Tv3QoTaOz1AC5PufELsbcSB1GVfutG9lYOmC3UYpgwk/kWwEQx9T+jEa
- AnbAV
-X-Gm-Gg: ATEYQzx7g7yW3AtlRxgOFRD/SFx4dDswFZL1tDPkdKLIFOlmj7+S7pZ3PdVXr5d9iFb
- T/3dFzCNayJqWxjE+Xeq8pSstpDUioDasu8c765PzhCxNDuCIsnGtZ6zxtUcMfyBYarNmQ4jcVY
- 0Us5+9WEtq83X+Br6llx/xymfNCoNILCa8jAQBwwbbCQh98tROyAmZMmlXbOfafDSC9XCeB/J5e
- 7pV6DCP+QbyDdny3a7bpFB9ZP5eQaktV/NVgH1zxiq0Bpe9ypZYQfmux0ow0etijiAU/uTqik5z
- Ci8ihVU0qtk6qIr/CgNFFj9glbhoBFdLaqUU7nKrv/AmNlLxmEpKfmxpzt7FVje+E1Vk7iYWw6M
- hE+3t+hzE1AIF2TZoiwJjqqDUu8ZUdKLO/QimgefyTbVGSzcdTwGMQ+zS0LfDnmrQOL9OPG/x6a
- a6DbtReVBuHW696G7JHY1INAQPZVvPwcR+8hjkpTfh34ALHIeEZZEEacCkltT7NFpbJsa0T27LM
- 0LUE77UxxMZMtfS5U/BjqtAOVyga+g=
-X-Received: by 2002:a05:600c:4446:b0:483:29f4:26b3 with SMTP id
- 5b1f17b1804b1-48526715248mr37914635e9.1.1772809183720; 
- Fri, 06 Mar 2026 06:59:43 -0800 (PST)
+ bh=cCN+SNdahMWTqcQKACyPmGcrF0RK5lEl6zLjOWcoCMY=;
+ b=OWSyOuzD/pnKV4G/Bn0roph0IDGv83BKd776+K4Ki7ZKgDMTWbPK5OGjUMslvkrFmB
+ SyRT7SLFJbNLQo+9aL8Pb3qZwZyuwhAMER/qLFVnt652IHXzkxBWge1fAh8xpRmLA6Dt
+ bz9scU3FLM12W3vQOnaUn2886T58oyf79o9OstrNcF2jQaNUGWAaF9ZYqsXaSh9LRwad
+ x2j/b+EyMKB5OSBpV9ujfVQq4mvh10lwKk64kNk0eBCrNhbmrnET/vpsijZVqB630hhz
+ /jeE0InqINwmoHNUZ8TqOGNENn+pazKxiR9BeHxb0VOmvUyQqCVM5TLz71lkkh4dygj3
+ bCrw==
+X-Gm-Message-State: AOJu0YyzNAxGik+qctsZykxLX8OOZLkpBAQCnv0L2Syuj7stJmbwdmM1
+ JBoBQUEavjTA0BW+DkIGk01e2QTvBkjy3vA8FKAkDZTp4sirzJ9gBHnY2/GwcBGMAgmHlf6JeeV
+ XaLBs
+X-Gm-Gg: ATEYQzzK4UKyVGM1dISqiNJRvGogDySF58rxCooBTOs2lkWpZEEdBRqw0AJj1P2+G2z
+ BH126PKWnkQtN29LGJz6oTq3JWtImcjTnPyS79h62ybvNdeGOq/+pyfhwLUfkVUDgqEuvJAE+H/
+ tWsy40Qoypa7G1/exw7sOqSdp1n5026S0hxgpP3wz7EcocPBY4Ne+lr8NQERSPnUHuuOOSERAT9
+ WUPpssCnf/2QSUokBwDrAleeZSSqNWze/bAl4DxCF1h6xBRLSufvGcyg9VubJNgDibnT4QoBggA
+ HWO7SoglR+8Stfhi95yif58ZAgbccFuAwYoGGXQPuXWF0GEuZGu6PNsEEakFe5HVHX8fd6t9lRO
+ HMWnox0kg3/7PoJ4b34pVowaEnC2sRR+6dvnT4g8n4HOUoiI/dQKfOJMk46jtA4xqzgetRv7Tuk
+ CpmXVhBteCvlfzPrv92jwKjenhCLwTMe43UVTzAJyjG+4KXI6ocDP3B8SmgwP+Ze94KBb53E9v/
+ SLPwDPk9Iqs5NMpD9OO/6dwnI272DY=
+X-Received: by 2002:a05:600c:3b17:b0:477:76bf:e1fb with SMTP id
+ 5b1f17b1804b1-485269587bbmr41502965e9.16.1772809189985; 
+ Fri, 06 Mar 2026 06:59:49 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.42
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 06:59:42 -0800 (PST)
+ Fri, 06 Mar 2026 06:59:49 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/49] hw/net: Remove the xgmac device
-Date: Fri,  6 Mar 2026 14:58:52 +0000
-Message-ID: <20260306145939.2162189-3-peter.maydell@linaro.org>
+Subject: [PULL 09/49] MAINTAINERS: remove myself as a Xen maintainer
+Date: Fri,  6 Mar 2026 14:58:59 +0000
+Message-ID: <20260306145939.2162189-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,511 +100,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Paul Durrant <pdurrant@amazon.com>
 
-The xgmac device was only used by the highbank machine that just
-has been removed. Being a sysbus device that cannot be instantiated
-by the user, this is dead code now and thus can be removed, too.
+I am no longer actively involved in the Xen Project.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paul Durrant <pdurrant@amazon.com>
+Message-id: 20260224112215.83355-1-paul@xen.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/Kconfig                      |   3 -
- hw/net/meson.build                  |   1 -
- hw/net/xgmac.c                      | 443 ----------------------------
- scripts/coverity-scan/COMPONENTS.md |   2 +-
- 4 files changed, 1 insertion(+), 448 deletions(-)
- delete mode 100644 hw/net/xgmac.c
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/net/Kconfig b/hw/net/Kconfig
-index 2b513d6895..f9a1dfb80d 100644
---- a/hw/net/Kconfig
-+++ b/hw/net/Kconfig
-@@ -79,9 +79,6 @@ config NE2000_ISA
- config OPENCORES_ETH
-     bool
- 
--config XGMAC
--    bool
--
- config ALLWINNER_EMAC
-     bool
- 
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index 913eaedbc5..1feabe991f 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -22,7 +22,6 @@ system_ss.add(when: 'CONFIG_LAN9118', if_true: files('lan9118.c'))
- system_ss.add(when: 'CONFIG_LAN9118_PHY', if_true: files('lan9118_phy.c'))
- system_ss.add(when: 'CONFIG_NE2000_ISA', if_true: files('ne2000-isa.c'))
- system_ss.add(when: 'CONFIG_OPENCORES_ETH', if_true: files('opencores_eth.c'))
--system_ss.add(when: 'CONFIG_XGMAC', if_true: files('xgmac.c'))
- system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('xilinx_axienet.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_EMAC', if_true: files('allwinner_emac.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_SUN8I_EMAC', if_true: files('allwinner-sun8i-emac.c'))
-diff --git a/hw/net/xgmac.c b/hw/net/xgmac.c
-deleted file mode 100644
-index 204c78aba3..0000000000
---- a/hw/net/xgmac.c
-+++ /dev/null
-@@ -1,443 +0,0 @@
--/*
-- * QEMU model of XGMAC Ethernet.
-- *
-- * derived from the Xilinx AXI-Ethernet by Edgar E. Iglesias.
-- *
-- * Copyright (c) 2011 Calxeda, Inc.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--#include "qemu/osdep.h"
--#include "hw/core/irq.h"
--#include "hw/core/qdev-properties.h"
--#include "hw/core/sysbus.h"
--#include "exec/cpu-common.h"
--#include "migration/vmstate.h"
--#include "qemu/module.h"
--#include "net/net.h"
--#include "qom/object.h"
--
--#ifdef DEBUG_XGMAC
--#define DEBUGF_BRK(message, args...) do { \
--                                         fprintf(stderr, (message), ## args); \
--                                     } while (0)
--#else
--#define DEBUGF_BRK(message, args...) do { } while (0)
--#endif
--
--#define XGMAC_CONTROL           0x00000000   /* MAC Configuration */
--#define XGMAC_FRAME_FILTER      0x00000001   /* MAC Frame Filter */
--#define XGMAC_FLOW_CTRL         0x00000006   /* MAC Flow Control */
--#define XGMAC_VLAN_TAG          0x00000007   /* VLAN Tags */
--#define XGMAC_VERSION           0x00000008   /* Version */
--/* VLAN tag for insertion or replacement into tx frames */
--#define XGMAC_VLAN_INCL         0x00000009
--#define XGMAC_LPI_CTRL          0x0000000a   /* LPI Control and Status */
--#define XGMAC_LPI_TIMER         0x0000000b   /* LPI Timers Control */
--#define XGMAC_TX_PACE           0x0000000c   /* Transmit Pace and Stretch */
--#define XGMAC_VLAN_HASH         0x0000000d   /* VLAN Hash Table */
--#define XGMAC_DEBUG             0x0000000e   /* Debug */
--#define XGMAC_INT_STATUS        0x0000000f   /* Interrupt and Control */
--/* HASH table registers */
--#define XGMAC_HASH(n)           ((0x00000300/4) + (n))
--#define XGMAC_NUM_HASH          16
--/* Operation Mode */
--#define XGMAC_OPMODE            (0x00000400/4)
--/* Remote Wake-Up Frame Filter */
--#define XGMAC_REMOTE_WAKE       (0x00000700/4)
--/* PMT Control and Status */
--#define XGMAC_PMT               (0x00000704/4)
--
--#define XGMAC_ADDR_HIGH(reg)    (0x00000010+((reg) * 2))
--#define XGMAC_ADDR_LOW(reg)     (0x00000011+((reg) * 2))
--
--#define DMA_BUS_MODE            0x000003c0   /* Bus Mode */
--#define DMA_XMT_POLL_DEMAND     0x000003c1   /* Transmit Poll Demand */
--#define DMA_RCV_POLL_DEMAND     0x000003c2   /* Received Poll Demand */
--#define DMA_RCV_BASE_ADDR       0x000003c3   /* Receive List Base */
--#define DMA_TX_BASE_ADDR        0x000003c4   /* Transmit List Base */
--#define DMA_STATUS              0x000003c5   /* Status Register */
--#define DMA_CONTROL             0x000003c6   /* Ctrl (Operational Mode) */
--#define DMA_INTR_ENA            0x000003c7   /* Interrupt Enable */
--#define DMA_MISSED_FRAME_CTR    0x000003c8   /* Missed Frame Counter */
--/* Receive Interrupt Watchdog Timer */
--#define DMA_RI_WATCHDOG_TIMER   0x000003c9
--#define DMA_AXI_BUS             0x000003ca   /* AXI Bus Mode */
--#define DMA_AXI_STATUS          0x000003cb   /* AXI Status */
--#define DMA_CUR_TX_DESC_ADDR    0x000003d2   /* Current Host Tx Descriptor */
--#define DMA_CUR_RX_DESC_ADDR    0x000003d3   /* Current Host Rx Descriptor */
--#define DMA_CUR_TX_BUF_ADDR     0x000003d4   /* Current Host Tx Buffer */
--#define DMA_CUR_RX_BUF_ADDR     0x000003d5   /* Current Host Rx Buffer */
--#define DMA_HW_FEATURE          0x000003d6   /* Enabled Hardware Features */
--
--/* DMA Status register defines */
--#define DMA_STATUS_GMI          0x08000000   /* MMC interrupt */
--#define DMA_STATUS_GLI          0x04000000   /* GMAC Line interface int */
--#define DMA_STATUS_EB_MASK      0x00380000   /* Error Bits Mask */
--#define DMA_STATUS_EB_TX_ABORT  0x00080000   /* Error Bits - TX Abort */
--#define DMA_STATUS_EB_RX_ABORT  0x00100000   /* Error Bits - RX Abort */
--#define DMA_STATUS_TS_MASK      0x00700000   /* Transmit Process State */
--#define DMA_STATUS_TS_SHIFT     20
--#define DMA_STATUS_RS_MASK      0x000e0000   /* Receive Process State */
--#define DMA_STATUS_RS_SHIFT     17
--#define DMA_STATUS_NIS          0x00010000   /* Normal Interrupt Summary */
--#define DMA_STATUS_AIS          0x00008000   /* Abnormal Interrupt Summary */
--#define DMA_STATUS_ERI          0x00004000   /* Early Receive Interrupt */
--#define DMA_STATUS_FBI          0x00002000   /* Fatal Bus Error Interrupt */
--#define DMA_STATUS_ETI          0x00000400   /* Early Transmit Interrupt */
--#define DMA_STATUS_RWT          0x00000200   /* Receive Watchdog Timeout */
--#define DMA_STATUS_RPS          0x00000100   /* Receive Process Stopped */
--#define DMA_STATUS_RU           0x00000080   /* Receive Buffer Unavailable */
--#define DMA_STATUS_RI           0x00000040   /* Receive Interrupt */
--#define DMA_STATUS_UNF          0x00000020   /* Transmit Underflow */
--#define DMA_STATUS_OVF          0x00000010   /* Receive Overflow */
--#define DMA_STATUS_TJT          0x00000008   /* Transmit Jabber Timeout */
--#define DMA_STATUS_TU           0x00000004   /* Transmit Buffer Unavailable */
--#define DMA_STATUS_TPS          0x00000002   /* Transmit Process Stopped */
--#define DMA_STATUS_TI           0x00000001   /* Transmit Interrupt */
--
--/* DMA Control register defines */
--#define DMA_CONTROL_ST          0x00002000   /* Start/Stop Transmission */
--#define DMA_CONTROL_SR          0x00000002   /* Start/Stop Receive */
--#define DMA_CONTROL_DFF         0x01000000   /* Disable flush of rx frames */
--
--struct desc {
--    uint32_t ctl_stat;
--    uint16_t buffer1_size;
--    uint16_t buffer2_size;
--    uint32_t buffer1_addr;
--    uint32_t buffer2_addr;
--    uint32_t ext_stat;
--    uint32_t res[3];
--};
--
--#define R_MAX 0x400
--
--typedef struct RxTxStats {
--    uint64_t rx_bytes;
--    uint64_t tx_bytes;
--
--    uint64_t rx;
--    uint64_t rx_bcast;
--    uint64_t rx_mcast;
--} RxTxStats;
--
--#define TYPE_XGMAC "xgmac"
--OBJECT_DECLARE_SIMPLE_TYPE(XgmacState, XGMAC)
--
--struct XgmacState {
--    SysBusDevice parent_obj;
--
--    MemoryRegion iomem;
--    qemu_irq sbd_irq;
--    qemu_irq pmt_irq;
--    qemu_irq mci_irq;
--    NICState *nic;
--    NICConf conf;
--
--    struct RxTxStats stats;
--    uint32_t regs[R_MAX];
--};
--
--static const VMStateDescription vmstate_rxtx_stats = {
--    .name = "xgmac_stats",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT64(rx_bytes, RxTxStats),
--        VMSTATE_UINT64(tx_bytes, RxTxStats),
--        VMSTATE_UINT64(rx, RxTxStats),
--        VMSTATE_UINT64(rx_bcast, RxTxStats),
--        VMSTATE_UINT64(rx_mcast, RxTxStats),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--static const VMStateDescription vmstate_xgmac = {
--    .name = "xgmac",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]) {
--        VMSTATE_STRUCT(stats, XgmacState, 0, vmstate_rxtx_stats, RxTxStats),
--        VMSTATE_UINT32_ARRAY(regs, XgmacState, R_MAX),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--static void xgmac_read_desc(XgmacState *s, struct desc *d, int rx)
--{
--    uint32_t addr = rx ? s->regs[DMA_CUR_RX_DESC_ADDR] :
--        s->regs[DMA_CUR_TX_DESC_ADDR];
--    cpu_physical_memory_read(addr, d, sizeof(*d));
--}
--
--static void xgmac_write_desc(XgmacState *s, struct desc *d, int rx)
--{
--    int reg = rx ? DMA_CUR_RX_DESC_ADDR : DMA_CUR_TX_DESC_ADDR;
--    uint32_t addr = s->regs[reg];
--
--    if (!rx && (d->ctl_stat & 0x00200000)) {
--        s->regs[reg] = s->regs[DMA_TX_BASE_ADDR];
--    } else if (rx && (d->buffer1_size & 0x8000)) {
--        s->regs[reg] = s->regs[DMA_RCV_BASE_ADDR];
--    } else {
--        s->regs[reg] += sizeof(*d);
--    }
--    cpu_physical_memory_write(addr, d, sizeof(*d));
--}
--
--static void xgmac_enet_send(XgmacState *s)
--{
--    struct desc bd;
--    int frame_size;
--    int len;
--    QEMU_UNINITIALIZED uint8_t frame[8192];
--    uint8_t *ptr;
--
--    ptr = frame;
--    frame_size = 0;
--    while (1) {
--        xgmac_read_desc(s, &bd, 0);
--        if ((bd.ctl_stat & 0x80000000) == 0) {
--            /* Run out of descriptors to transmit.  */
--            break;
--        }
--        len = (bd.buffer1_size & 0xfff) + (bd.buffer2_size & 0xfff);
--
--        /*
--         * FIXME: these cases of malformed tx descriptors (bad sizes)
--         * should probably be reported back to the guest somehow
--         * rather than simply silently stopping processing, but we
--         * don't know what the hardware does in this situation.
--         * This will only happen for buggy guests anyway.
--         */
--        if ((bd.buffer1_size & 0xfff) > 2048) {
--            DEBUGF_BRK("qemu:%s:ERROR...ERROR...ERROR... -- "
--                        "xgmac buffer 1 len on send > 2048 (0x%x)\n",
--                         __func__, bd.buffer1_size & 0xfff);
--            break;
--        }
--        if ((bd.buffer2_size & 0xfff) != 0) {
--            DEBUGF_BRK("qemu:%s:ERROR...ERROR...ERROR... -- "
--                        "xgmac buffer 2 len on send != 0 (0x%x)\n",
--                        __func__, bd.buffer2_size & 0xfff);
--            break;
--        }
--        if (frame_size + len >= sizeof(frame)) {
--            DEBUGF_BRK("qemu:%s: buffer overflow %d read into %zu "
--                        "buffer\n" , __func__, frame_size + len, sizeof(frame));
--            DEBUGF_BRK("qemu:%s: buffer1.size=%d; buffer2.size=%d\n",
--                        __func__, bd.buffer1_size, bd.buffer2_size);
--            break;
--        }
--
--        cpu_physical_memory_read(bd.buffer1_addr, ptr, len);
--        ptr += len;
--        frame_size += len;
--        if (bd.ctl_stat & 0x20000000) {
--            /* Last buffer in frame.  */
--            qemu_send_packet(qemu_get_queue(s->nic), frame, len);
--            ptr = frame;
--            frame_size = 0;
--            s->regs[DMA_STATUS] |= DMA_STATUS_TI | DMA_STATUS_NIS;
--        }
--        bd.ctl_stat &= ~0x80000000;
--        /* Write back the modified descriptor.  */
--        xgmac_write_desc(s, &bd, 0);
--    }
--}
--
--static void enet_update_irq(XgmacState *s)
--{
--    int stat = s->regs[DMA_STATUS] & s->regs[DMA_INTR_ENA];
--    qemu_set_irq(s->sbd_irq, !!stat);
--}
--
--static uint64_t enet_read(void *opaque, hwaddr addr, unsigned size)
--{
--    XgmacState *s = opaque;
--    uint64_t r = 0;
--    addr >>= 2;
--
--    switch (addr) {
--    case XGMAC_VERSION:
--        r = 0x1012;
--        break;
--    default:
--        if (addr < ARRAY_SIZE(s->regs)) {
--            r = s->regs[addr];
--        }
--        break;
--    }
--    return r;
--}
--
--static void enet_write(void *opaque, hwaddr addr,
--                       uint64_t value, unsigned size)
--{
--    XgmacState *s = opaque;
--
--    addr >>= 2;
--    switch (addr) {
--    case DMA_BUS_MODE:
--        s->regs[DMA_BUS_MODE] = value & ~0x1;
--        break;
--    case DMA_XMT_POLL_DEMAND:
--        xgmac_enet_send(s);
--        break;
--    case DMA_STATUS:
--        s->regs[DMA_STATUS] = s->regs[DMA_STATUS] & ~value;
--        break;
--    case DMA_RCV_BASE_ADDR:
--        s->regs[DMA_RCV_BASE_ADDR] = s->regs[DMA_CUR_RX_DESC_ADDR] = value;
--        break;
--    case DMA_TX_BASE_ADDR:
--        s->regs[DMA_TX_BASE_ADDR] = s->regs[DMA_CUR_TX_DESC_ADDR] = value;
--        break;
--    default:
--        if (addr < ARRAY_SIZE(s->regs)) {
--            s->regs[addr] = value;
--        }
--        break;
--    }
--    enet_update_irq(s);
--}
--
--static const MemoryRegionOps enet_mem_ops = {
--    .read = enet_read,
--    .write = enet_write,
--    .endianness = DEVICE_LITTLE_ENDIAN,
--};
--
--static int eth_can_rx(XgmacState *s)
--{
--    /* RX enabled?  */
--    return s->regs[DMA_CONTROL] & DMA_CONTROL_SR;
--}
--
--static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
--{
--    XgmacState *s = qemu_get_nic_opaque(nc);
--    static const unsigned char sa_bcast[6] = {0xff, 0xff, 0xff,
--                                              0xff, 0xff, 0xff};
--    int unicast, broadcast, multicast;
--    struct desc bd;
--    ssize_t ret;
--
--    if (!eth_can_rx(s)) {
--        return -1;
--    }
--    unicast = ~buf[0] & 0x1;
--    broadcast = memcmp(buf, sa_bcast, 6) == 0;
--    multicast = !unicast && !broadcast;
--    if (size < 12) {
--        s->regs[DMA_STATUS] |= DMA_STATUS_RI | DMA_STATUS_NIS;
--        ret = -1;
--        goto out;
--    }
--
--    xgmac_read_desc(s, &bd, 1);
--    if ((bd.ctl_stat & 0x80000000) == 0) {
--        s->regs[DMA_STATUS] |= DMA_STATUS_RU | DMA_STATUS_AIS;
--        ret = size;
--        goto out;
--    }
--
--    cpu_physical_memory_write(bd.buffer1_addr, buf, size);
--
--    /* Add in the 4 bytes for crc (the real hw returns length incl crc) */
--    size += 4;
--    bd.ctl_stat = (size << 16) | 0x300;
--    xgmac_write_desc(s, &bd, 1);
--
--    s->stats.rx_bytes += size;
--    s->stats.rx++;
--    if (multicast) {
--        s->stats.rx_mcast++;
--    } else if (broadcast) {
--        s->stats.rx_bcast++;
--    }
--
--    s->regs[DMA_STATUS] |= DMA_STATUS_RI | DMA_STATUS_NIS;
--    ret = size;
--
--out:
--    enet_update_irq(s);
--    return ret;
--}
--
--static NetClientInfo net_xgmac_enet_info = {
--    .type = NET_CLIENT_DRIVER_NIC,
--    .size = sizeof(NICState),
--    .receive = eth_rx,
--};
--
--static void xgmac_enet_realize(DeviceState *dev, Error **errp)
--{
--    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
--    XgmacState *s = XGMAC(dev);
--
--    memory_region_init_io(&s->iomem, OBJECT(s), &enet_mem_ops, s,
--                          "xgmac", 0x1000);
--    sysbus_init_mmio(sbd, &s->iomem);
--    sysbus_init_irq(sbd, &s->sbd_irq);
--    sysbus_init_irq(sbd, &s->pmt_irq);
--    sysbus_init_irq(sbd, &s->mci_irq);
--
--    qemu_macaddr_default_if_unset(&s->conf.macaddr);
--    s->nic = qemu_new_nic(&net_xgmac_enet_info, &s->conf,
--                          object_get_typename(OBJECT(dev)), dev->id,
--                          &dev->mem_reentrancy_guard, s);
--    qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
--
--    s->regs[XGMAC_ADDR_HIGH(0)] = (s->conf.macaddr.a[5] << 8) |
--                                   s->conf.macaddr.a[4];
--    s->regs[XGMAC_ADDR_LOW(0)] = (s->conf.macaddr.a[3] << 24) |
--                                 (s->conf.macaddr.a[2] << 16) |
--                                 (s->conf.macaddr.a[1] << 8) |
--                                  s->conf.macaddr.a[0];
--}
--
--static const Property xgmac_properties[] = {
--    DEFINE_NIC_PROPERTIES(XgmacState, conf),
--};
--
--static void xgmac_enet_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->realize = xgmac_enet_realize;
--    dc->vmsd = &vmstate_xgmac;
--    device_class_set_props(dc, xgmac_properties);
--}
--
--static const TypeInfo xgmac_enet_info = {
--    .name          = TYPE_XGMAC,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(XgmacState),
--    .class_init    = xgmac_enet_class_init,
--};
--
--static void xgmac_enet_register_types(void)
--{
--    type_register_static(&xgmac_enet_info);
--}
--
--type_init(xgmac_enet_register_types)
-diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
-index 95805b536b..02131f1388 100644
---- a/scripts/coverity-scan/COMPONENTS.md
-+++ b/scripts/coverity-scan/COMPONENTS.md
-@@ -4,7 +4,7 @@ alpha
-   ~ .*/qemu((/include)?/hw/alpha/.*|/target/alpha/.*)
- 
- arm
--  ~ .*/qemu((/include)?/hw/arm/.*|(/include)?/hw/.*/(arm|allwinner-a10|bcm28|digic|exynos|imx|omap|stellaris|pxa2xx|versatile|zynq|cadence).*|/hw/net/xgmac.c|/hw/ssi/xilinx_spips.c|/target/arm/.*)
-+  ~ .*/qemu((/include)?/hw/arm/.*|(/include)?/hw/.*/(arm|allwinner-a10|bcm28|digic|exynos|imx|omap|stellaris|pxa2xx|versatile|zynq|cadence).*|/hw/ssi/xilinx_spips.c|/target/arm/.*)
- 
- avr
-   ~ .*/qemu((/include)?/hw/avr/.*|/target/avr/.*)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a3245fdcd2..57524906fd 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -619,7 +619,6 @@ Guest CPU Cores (Xen)
+ X86 Xen CPUs
+ M: Stefano Stabellini <sstabellini@kernel.org>
+ M: Anthony PERARD <anthony@xenproject.org>
+-M: Paul Durrant <paul@xen.org>
+ M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+ L: xen-devel@lists.xenproject.org
+ S: Supported
 -- 
 2.43.0
 
