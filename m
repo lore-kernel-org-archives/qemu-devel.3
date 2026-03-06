@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27F2F01827
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9D9F01821
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 10:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vySo1-0006h1-T7; Fri, 06 Mar 2026 05:53:17 -0500
+	id 1vySpR-0007yP-6h; Fri, 06 Mar 2026 05:54:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1vySnq-0006dh-Dl; Fri, 06 Mar 2026 05:53:08 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vySpJ-0007mk-61
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 05:54:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1vySnn-0008Lc-JJ; Fri, 06 Mar 2026 05:53:06 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6268NGRf1941479; Fri, 6 Mar 2026 10:52:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=GRb/9ZxVgGfsDZfEOPVKrqp6PL2J
- Osh6V+gjqVEviQQ=; b=XKMCDMtfK0MlL3lMrGJTStVsVOg2rTZ8TzmYPMwYSYdF
- tncFY50ucoNJEPTcoiNWvzGncDHm9jwl4VPkT67+jNEzZznlMmqr2S9U4Lrb0sqI
- XG+tokf7ngDLA0xPg8b6btnBo4oS6odIkTpMBY+i9Uw/9yBGN7WgjTnyrIaTZpjV
- 2suahnzPRGgC5hh6i/ogmr5+qDdU9JHyGhqVYvrxJW3KcJtRYpBo62YSt3qEC83K
- bm+d9L8UBb/6N7LAqyPfGyDDWbv2HgMt26An9WsaXc2nFtGDTGrE3mEqiYb8Kqv6
- 0K26cUD+NWsRO158cbdLKdfk2PTHQEgVSnDHyXOePg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ckssmyjwf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:52:58 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6267kDHJ029080;
- Fri, 6 Mar 2026 10:52:57 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cmapsfm9g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Mar 2026 10:52:57 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 626AquTR8978994
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Mar 2026 10:52:57 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B2E4558055;
- Fri,  6 Mar 2026 10:52:56 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4966D58063;
- Fri,  6 Mar 2026 10:52:56 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Mar 2026 10:52:56 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vySpH-0008TY-GQ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 05:54:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772794474;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=K2J7yrP7K6ql0nVObH6p1+KWN6oROw76uvlCKXfBMSE=;
+ b=WRQ4FXgAgFzg+ibuedkDGlarJyhnPnjBv6hqrF+YvnaarXuV6Vkp7QvNABNtMiUT9Y1zjm
+ 2CihMxHHhp1EYHiC4vB83nsPTHDetMYuJtRB3ubHA4CQ616BkvxIKe9GaDhp9FNhY3lYFW
+ IwJ8sDcFR/J7S5uyI/qtWg37w//fQiA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-512-4q8GCp4gN0y09Ur6g99i6g-1; Fri, 06 Mar 2026 05:54:33 -0500
+X-MC-Unique: 4q8GCp4gN0y09Ur6g99i6g-1
+X-Mimecast-MFC-AGG-ID: 4q8GCp4gN0y09Ur6g99i6g_1772794472
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48069a43217so91045885e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 02:54:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1772794472; x=1773399272; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=K2J7yrP7K6ql0nVObH6p1+KWN6oROw76uvlCKXfBMSE=;
+ b=SfRtwXHtkxgB2XyAUWUeB36eP4pJog9StIqm7xfeZcOtaAq0cMMwcc04GGFlMQSGFO
+ kTksRxnBxncDmE7g94OZBzHU9H83AWtUzW1Xx/KjaGmnS06k6ujUlDOFZ21O4KnDVPO+
+ k6CZkWmABSWaC35UiWg0MPcrxtAI7Gq1NZUT8o2K5S0HphETEbxwPH1nvXm4fgeas7yP
+ nRWeUBo3pjFU+KpfqYkm6GxK4jio7RI6FfMZ3BOrzWMegE8uzah5tslCXWNpQhsdgZvs
+ pWRzwxB+Tc1Cdn4XMb1t8lTRlTgRT4V8ZxAx8r5yBqz/eCEjgphEr90IcfKUArq4zgVb
+ G0iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772794472; x=1773399272;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K2J7yrP7K6ql0nVObH6p1+KWN6oROw76uvlCKXfBMSE=;
+ b=cyA9bvD7c8iM9BlVZ2zqmdLIFUVyHdA2CcQ9BXKd0SYVtIHrNsW9gQMgybW8BhXbJM
+ bVulunS6r6WikLNyvk6osEmtxj5E7VdXyZbTJAeTb3ehmbG6h8+319sHAEe00LR8Zeav
+ JohQDTAvo3rWoXcYzJZZTX4WvRC0Tk4a/97SBYEMKe6SugUxPFbL30qSlheTJ7F6L1an
+ 7RK4ocPEfy/Oy9WomaLp703WOEwPV7JiYIfsmGwZLqTdnbE0EdiA/FZFCh/Q1Y/aP/DV
+ Rp8nO7Q2uRk26R9GZDqFryO7Ai4/lcxW3EmZBa3Dvimvyt5pkAVfJ1SiyywJEi/uDa8v
+ K+mg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVbnUwoUObgp51jKWo8s6IMs4hSKe+t9nMyKytScPXT265Lfit7iNcan7cTngpXtYfgcu8C4Q40G+F@nongnu.org
+X-Gm-Message-State: AOJu0YzureAmafQ3lCs6ACYlOS77+UnB5gqRT7JPdUEpo0fiqGWlBAzn
+ pxjN0W8gxEppaDykJYA9CBVU5nwKqMmRcPNvDcO3ObCSKBkcIEbhX9hH40d+SAnjcB7/0+7w0BK
+ AvNOKMEvL6frpyTgf8UROOs3JttaCgqggyEYmWvDIRV6AP5rDYLAIyQJM
+X-Gm-Gg: ATEYQzw1a/WKH7YFPInH+T8owDSc9bmyGRBm1ZP2OxurB3LwayE2VaFZ3ZGBYsJ6ZLX
+ LOhQ9ArSgmO75ogG+m3TdbJGkmdY5mvXWjRFxBBpn32ZhenMkt7DjdiTI8mb/cSeMacGjOxvaSK
+ 9IbvRX/nJVfi+sNqsYTyawgksg/V/BKlKRbnfZ4iPVHOviBqft3rW8WFNxUmUR8HvSiJShlKAOv
+ UKnNX8z2WVJgMg6BO+bc5Y2p5A9jzrfej7GF7702H5Fj4sNOijN5MP9YWy/mzQzqvvBkTlRBYp3
+ VwKqxZmfzMcA+Ek7KpDmlD5nxXrgGXBEtxOEk3MtNAWFqactDGw+2TKlT/ZkwVgB+L3y2JHPUqZ
+ 2dcP87syAWSkE5M8MmYPV+HF3VG7r7YsUE6Pqv63KbO+FOPAQ5DDjcizLKGD4Jqjga/aU
+X-Received: by 2002:a05:600c:138a:b0:477:7ae0:cd6e with SMTP id
+ 5b1f17b1804b1-485269196ffmr27190765e9.5.1772794471860; 
+ Fri, 06 Mar 2026 02:54:31 -0800 (PST)
+X-Received: by 2002:a05:600c:138a:b0:477:7ae0:cd6e with SMTP id
+ 5b1f17b1804b1-485269196ffmr27190435e9.5.1772794471429; 
+ Fri, 06 Mar 2026 02:54:31 -0800 (PST)
+Received: from rh (p200300f6af4a490003d6f56739ca055c.dip0.t-ipconnect.de.
+ [2003:f6:af4a:4900:3d6:f567:39ca:55c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dad8d968sm2781144f8f.6.2026.03.06.02.54.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 02:54:31 -0800 (PST)
+Date: Fri, 6 Mar 2026 11:54:29 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ peter.maydell@linaro.org, cohuck@redhat.com, peterx@redhat.com, 
+ philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v8 3/6] target/arm/cpu64: Mitigate migration failures
+ due to spurious TCR_EL1, PIRE0_EL1 and PIR_EL1
+In-Reply-To: <20260304102249.1963784-4-eric.auger@redhat.com>
+Message-ID: <14fca05b-b07b-e44a-dc01-76bafa087d61@redhat.com>
+References: <20260304102249.1963784-1-eric.auger@redhat.com>
+ <20260304102249.1963784-4-eric.auger@redhat.com>
 MIME-Version: 1.0
-Date: Fri, 06 Mar 2026 16:22:55 +0530
-From: Misbah Anjum N <misanjum@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, anisinha@redhat.com, pbonzini@redhat.com
-Subject: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
- commit 98884e0c
-Message-ID: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
-X-Sender: misanjum@linux.ibm.com
-Organization: IBM
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEwMSBTYWx0ZWRfX8neXklghXiC5
- eP5TlSS50J4M+2RQjLDSYk+fJHO2Xkq8LmUQPnE8lHy3taFjp4VLTawgVJedzX94wJxluOF+BUP
- 15QQt7aKlrwRkngezxdNfDm5qxqy7nbLcEz+WsIXO40hlTh8Qa0WPw9pnUFmFvzNCcTAFPP9zxY
- I+G1uDoneTIraYW04gjtaHwNcaUFZEOQ5g1vnsIP4NVAIFjFAYnsKkQXMd1+K1GW5WpYPD4wuw5
- Ta+czrEv+8CLxsw7Xi6x/Q3Pr4GidrjIIzOH9786Rvrh7i5T+BpUpBoQES2TBtw+hANsy0SeX3j
- O/SWC7oTO3B7HYPakjzkg69CO2Sbm1RJhH+QxCsdHLp3y+8choWPsBJDN9BV28a3PF7xMLk7WbL
- Ib9XuAgEtcy8J2FgyUt8oo5HcqdnsSmGk4d9NluvNmlfnmZnVirieQQnhtCQqE+oFensJ6cftpd
- 5EI722KzPqGdHvCFhEg==
-X-Proofpoint-ORIG-GUID: x7QNeEZmURnZc8sQ0HA4JoOqAsNX09wx
-X-Proofpoint-GUID: x7QNeEZmURnZc8sQ0HA4JoOqAsNX09wx
-X-Authority-Analysis: v=2.4 cv=AobjHe9P c=1 sm=1 tr=0 ts=69aab20a cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=p0WdMEafAAAA:8
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=UETNnugvo_MbejD8BVAA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_03,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- spamscore=0 clxscore=1011 suspectscore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060101
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: 18
-X-Spam_score: 1.8
-X-Spam_bar: +
-X-Spam_report: (1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_EF=-0.1, HEXHASH_WORD=2.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="-1463806286-1495611457-1772794471=:10135"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,117 +122,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-I'm reporting a critical regression on ppc64le that causes all KVM 
-guests to hang immediately during startup. Git bisect identified commit 
-98884e0cc10997a17ce9abfd6ff10be19224ca6a as the first bad commit. The 
-commit completely breaks KVM functionality on ppc64le.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Regression Details:
-Working Version: QEMU 10.2.50 (v10.2.0-1669-gffcf1a7981)
-Broken Version: QEMU 10.2.50 (v10.2.0-1816-g3fb456e9a0)
-Bad Commit: 98884e0cc10997a17ce9abfd6ff10be19224ca6a "accel/kvm: add 
-changes required to support KVM VM file descriptor change"
-Commit Link: 
-https://gitlab.com/qemu-project/qemu/-/commit/98884e0cc10997a17ce9abfd6ff10be19224ca6a
+---1463806286-1495611457-1772794471=:10135
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Environment:
-Host: Fedora 42, Kernel 7.0.0-rc2, Power11 (ppc64le)
-Libvirt: 12.1.0
-Guest: Fedora 42, Kernel 7.0.0-rc2
-Machine Type: pseries with KVM acceleration
+On Wed, 4 Mar 2026, Eric Auger wrote:
 
-Build Configuration:
-git clone https://gitlab.com/qemu-project/qemu.git
-cd qemu
-git submodule init
-git submodule update --recursive
-./configure --target-list=ppc64-softmmu --disable-tcg --prefix=/usr
-make && make install
+> Before linux v6.13 those registers were erroneously unconditionally
+> exposed and this was fixed by commits:
+> - 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace when
+>                 disabled for guests")
+> - a68cddbe47ef ("KVM: arm64: Hide S1PIE registers from userspace
+>                 when disabled for guests")
+> in v6.13.
+>
+> This means if we migrate from an old kernel host to a >= 6.13 kernel
+> host, migration currently fails.
+>
+> Declare cpreg migration tolerance for those registers.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-Reproduction:
-Using virt-install:
-/usr/bin/virt-install --connect=qemu:///system --hvm --accelerate --name 
-'avocado-vt-vm1' --machine pseries --memory=32768 
---vcpu=32,sockets=1,cores=32,threads=1 --import --nographics 
---os-variant rhel8.0 --serial pty --memballoon model=virtio --controller 
-type=scsi,model=virtio-scsi --disk 
-path=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,bus=scsi,size=10,format=qcow2 
---network=bridge=virbr0,model=virtio --boot 
-emulator=/usr/bin/qemu-system-ppc64
-Result: Starting install...
-         <hangs indefinitely with no output>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
-Using direct QEMU command:
-/usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
-pseries,accel=kvm -enable-kvm -m 32768 -smp 
-32,sockets=1,cores=32,threads=1 -nographic -serial pty -device 
-virtio-balloon -device virtio-scsi-pci,id=scsi0 -drive 
-file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2,if=none,id=drive-scsi0-0-0,format=qcow2 
--device scsi-hd,bus=scsi0.0,drive=drive-scsi0-0-0 -netdev 
-bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
-Result: <hangs indefinitely with no output>
 
-Analysis:
-The commit introduces VM file descriptor change support with 
-architecture-specific hooks.
-I attempted the following fixes without success:
-1. Changed abort() to return 0; in stubs/kvm.c
-2. Added early return in kvm_reset_vmfd() when 
-kvm_arch_supports_vmfd_change() returns false
 
-Git Bisect Log:
-# git bisect bad
-98884e0cc10997a17ce9abfd6ff10be19224ca6a is the first bad commit
-commit 98884e0cc10997a17ce9abfd6ff10be19224ca6a (HEAD)
-Author: Ani Sinha <anisinha@redhat.com>
-Date:   Wed Feb 25 09:19:10 2026 +0530
+> ---
+> target/arm/cpu64.c | 26 ++++++++++++++++++++++++++
+> 1 file changed, 26 insertions(+)
+>
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index d6feba220e8..4cfddc6e8c0 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -810,6 +810,31 @@ static void aarch64_a53_initfn(Object *obj)
+>     define_cortex_a72_a57_a53_cp_reginfo(cpu);
+> }
+>
+> +static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
+> +{
+> +    /*
+> +     * Registers that may be in the incoming stream and not exposed
+> +     * on the destination
+> +     */
+> +
+> +    /*
+> +     * TCR_EL1 was erroneously unconditionnally exposed before linux v6.13.
+> +     * See commit 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace
+> +     * when disabled for guests")
+> +     */
+> +    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 2, 0, 3),
+> +                                     0, 0, ToleranceNotOnBothEnds);
+> +    /*
+> +     * PIRE0_EL1 and PIR_EL1 were erroneously unconditionnally exposed
+> +     * before linux v6.13. See commit a68cddbe47ef ("KVM: arm64: Hide
+> +     * S1PIE registers from userspace when disabled for guests")
+> +     */
+> +    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 2),
+> +                                     0, 0, ToleranceNotOnBothEnds);
+> +    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
+> +                                     0, 0, ToleranceNotOnBothEnds);
+> +}
+> +
+> static void aarch64_host_initfn(Object *obj)
+> {
+>     ARMCPU *cpu = ARM_CPU(obj);
+> @@ -822,6 +847,7 @@ static void aarch64_host_initfn(Object *obj)
+> #endif
+>
+> #if defined(CONFIG_KVM)
+> +    kvm_arm_set_cpreg_mig_tolerances(cpu);
+>     kvm_arm_set_cpu_features_from_host(cpu);
+>     aarch64_add_sve_properties(obj);
+> #elif defined(CONFIG_HVF)
+> -- 
+> 2.53.0
+>
+>
+---1463806286-1495611457-1772794471=:10135--
 
-     accel/kvm: add changes required to support KVM VM file descriptor 
-change
-
-     This change adds common kvm specific support to handle KVM VM file 
-descriptor
-     change. KVM VM file descriptor can change as a part of confidential 
-guest reset
-     mechanism. A new function api kvm_arch_on_vmfd_change() per
-     architecture platform is added in order to implement architecture 
-specific
-     changes required to support it. A subsequent patch will add x86 
-specific
-     implementation for kvm_arch_on_vmfd_change() as currently only x86 
-supports
-     confidential guest reset.
-
-     Signed-off-by: Ani Sinha <anisinha@redhat.com>
-     Link: 
-https://lore.kernel.org/r/20260225035000.385950-6-anisinha@redhat.com
-     Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-  MAINTAINERS            |  6 ++++++
-  accel/kvm/kvm-all.c    | 88 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
-  accel/kvm/trace-events |  1 +
-  include/system/kvm.h   |  3 +++
-  stubs/kvm.c            | 22 ++++++++++++++++++++++
-  stubs/meson.build      |  1 +
-  target/i386/kvm/kvm.c  | 10 ++++++++++
-  7 files changed, 128 insertions(+), 3 deletions(-)
-  create mode 100644 stubs/kvm.c
-
-# git bisect log
-git bisect start
-git bisect good ffcf1a7981793973ffbd8100a7c3c6042d02ae23
-git bisect bad 3fb456e9a0e9eef6a71d9b49bfff596a0f0046e9
-git bisect bad e76c30bb13ecb9dc716fa629954bfb6253056ce2
-git bisect good 9bdc612a18588975f5776ee4e562df607fea1b2c
-git bisect bad 40c015e96942fd2a3e4d5ace6063b3333a3dd372
-git bisect good df8df3cb6b743372ebb335bd8404bc3d748da350
-git bisect bad 0f53f021ad1ede28dc8944686544e496cab02e5e
-git bisect bad 9f0c2b3032639315faf141010a2603b0dbf56230
-git bisect bad 98884e0cc10997a17ce9abfd6ff10be19224ca6a
-first bad commit: [98884e0cc10997a17ce9abfd6ff10be19224ca6a]
-
-Thanks,
-Misbah Anjum N <misanjum@linux.ibm.com>
 
