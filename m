@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92CDCFCB61C
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A58FCB61C
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyXqO-0004Mq-4k; Fri, 06 Mar 2026 11:16:04 -0500
+	id 1vyXs5-0008Em-Gs; Fri, 06 Mar 2026 11:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXqL-0004Lj-SR
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:16:01 -0500
-Received: from p-west3-cluster3-host4-snip4-6.eps.apple.com ([57.103.72.187]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyXqJ-0007Dx-B2
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:16:01 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPS id
- 9CFF618007AF; Fri,  6 Mar 2026 16:15:56 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772813758; x=1775405758;
- bh=kOA1yy4anKfg0TU4LmBU8Uljdi+od0eTtMcvlK7MTEY=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=f8lXDTYXLN1HzTes37p3QLo9+gt2A0RGmTq1ibpXgnuY56NXkjcgNBplajGDJgzOkQFA2NBw/ulNnnzJRrwUGjeDQ0bPHkB1rqA89a2gcVlFpgprFs6gSKiuBopeniD/Rz1j2kOiLzp2QtlsuMIXfe4ScKcRb1uHHMpgADUciiHA21x01ZbRPm0UM4J/UEcLdAxYnYLRUDPLV7WccmPI+dE6oSaxzLBPVQxYfnzYwKUrrBfkWCcPUUZItNb5o5b6XudbrWq3Uq7CzVHVZEulD5BjXAG03OIwRSBYJVuQJqfWT5EMaX81iPyBEHIcMow9VX5d6Uxb1htw2hKwFxiYzQ==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-20-percent-2 (Postfix) with ESMTPSA id
- E057518007BC; Fri,  6 Mar 2026 16:15:53 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXrw-0007NT-8B
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:42 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vyXrs-0007k7-EG
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:17:39 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4852a8482fcso3415785e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:17:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772813854; x=1773418654; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dqXQr4uENYp7Zhjhp+PlBR4pffBHMkJZVYziiA75uYo=;
+ b=zV4C65+4jPK7wTIZV5THW0GzSzqehAr0P7LD+5Nj/gBxGzIFZKU52tp4GUBLeodq+2
+ oJKT6P2rWVSNAQxeE/G7Vfkx4AD70HLx5BJ5mqm/wksMy154qvhrmgaKhv+c1ldYaFXN
+ uJzn6ux8qWsAF8e/qMCxiJo9mCWEmCPN8F7uKDJL/1STEujZREwhUkOHgyRqUQNXp2Sj
+ r/9Q9IwcQIn6L+icYvaGzgNlGOzM6dHC9BFxmrBdzaoPtDowjKZX3DZSQwMvTqaZPY00
+ LGuvhPONQy6Xez+DTgUZpuYdK/5R3u5BL7Xj6Co1eFv93kvnMio7x6yq22EduMpGgEV3
+ jhlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772813854; x=1773418654;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dqXQr4uENYp7Zhjhp+PlBR4pffBHMkJZVYziiA75uYo=;
+ b=RdryjssjdxdbhRZhG9T31FRkSfrOoZSVN1Fky6nMZZ4clg+9CDC5058L0SNKOR5ZKD
+ lhrDznfU5lRVbdNs88OnpwInke7ZzS36fGc8FGS2h3pGUO2PnhzJ+VuvbkyibQv4MR8v
+ uoZQvJwJd2+1zZXMQ3Nlb3OiNClqEWHUNrg3EuVJrwtsLWGsPyq4boMDXU1KgpadokQf
+ GK/uuyX9b3DQv9RTxwKyZh3P9+Wut83H3zW6LpaChrtzvYnrx9f6Qts1qHl0QHbl42bb
+ I0twVqTT3D1gszQCQZwIszcRCd5jI9CCZ9/jfNHLapROfMUoRzPqAepdvXGIygLW4Pgw
+ nRIw==
+X-Gm-Message-State: AOJu0YwVgVk+oTaPaMCAX2/Q8IYqW6c9qlHEtRJrFgsKQpsRSzOphXdy
+ di4i6SwTrhaqUHgP0QhKSqeWt88F12beUdNvU/P2TMHnFXSqmKTZqg7DGExdDTYlOzI=
+X-Gm-Gg: ATEYQzzdpxNEJAA/Nky6pQDn2E60P5jc8myZpg+Il/2eYK8t3J93qvmcUnVNAXKW7/Y
+ 9B6TQq7nFcvaZa5CtHWlIFAq7WoRMb/rrzT3fqny1RVCH5JTYRJE4imU12dgxxQvPUx/RC0pMUV
+ pYUDX348GGXReC9pL2reTBG2OZH2mBi5cBosa+75Slcq7T/Fds0y05CjB+uvNLcLeni4jvCeu5L
+ npp2h14g2A/o7BrhdAsYCtxia/he2KJ6pUmcanqEvwc7H1Ri3jDyp85Sh5Y8NI2GVjVAfqeDeaJ
+ tdO95lv02629SjMuEubm4ok3wkV8a3drD41rDsKSUnaM0R3XKc6+OU6PmVxXrqVLQHw62JYOYsF
+ wRNeh9c3D2DDRSwaw2LYDVh6SrHTO3YMvmGEU4wk477M+M3MN4xb5S1kg7aRshMcmlq5vIOO6hk
+ XTwjzQ8QWFYP+8EfRpm8yny8VHaMX+WxGFvA==
+X-Received: by 2002:a05:600c:1c03:b0:480:1dc6:2686 with SMTP id
+ 5b1f17b1804b1-48526930d92mr47852765e9.13.1772813854432; 
+ Fri, 06 Mar 2026 08:17:34 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4852767d8e4sm42639265e9.2.2026.03.06.08.17.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 08:17:33 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 80092689D6;
+ Fri, 06 Mar 2026 16:17:29 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v16 16/17] hvf: arm: disable SME when nested virt is active
-Date: Fri,  6 Mar 2026 17:15:08 +0100
-Message-ID: <20260306161509.79712-17-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260306161509.79712-1-mohamed@unpredictable.fr>
-References: <20260306161509.79712-1-mohamed@unpredictable.fr>
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 7/7] tests/functional: add VBSA linux tests
+Date: Fri,  6 Mar 2026 16:17:28 +0000
+Message-ID: <20260306161728.2657486-8-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260306161728.2657486-1-alex.bennee@linaro.org>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=MN1tWcZl c=1 sm=1 tr=0 ts=69aafdbd
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=h9724yil-ocX87RSi0QA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE1NCBTYWx0ZWRfX1aIKJfMIeB+A
- 0aEa/RM1TQJZz9z3sBEWJ0Z7iwaLd7ay1frsYDS2jCcQWhuhjWA/q9rmpQ5s3PCd/3vpXnc91z/
- 31WzsL1XQzHADSvNOpgz0iqA1O6bOMpKpXPTkcyIDTvwmOHepvI5jiusczS8FZ5fPCflEJRuqSt
- +Z+9rNde9wpv/0Zw6K7TLGJ86bf5WqCEhnFgc09JjaKavrNmKkYTFmox/DTTopjZkJuz0FCMqTF
- iCcW4jRLQNi20VP0kyF4/eyD+xH4Q3Y25+M3E5QlM5RZr8ZkFkUtbzmNyfWSmze0RoKz1ynuN90
- NILMRqNrcYf8c5yEea5HWPf298RbtrvsmjAyRd47Llry29SIVtq12eUvEkl+OY=
-X-Proofpoint-GUID: tnnvevIHsj-9OfYQhUf30NWQRCwX_EFZ
-X-Proofpoint-ORIG-GUID: tnnvevIHsj-9OfYQhUf30NWQRCwX_EFZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=842
- phishscore=0 suspectscore=0 adultscore=0 clxscore=1030 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603060154
-X-JNJ: AAAAAAABv/G9bUoWe8Uzu0ra9ykAJedqPaWTdP6BJTUbjBGUKEwTRM9TzTfy7nwOrRJz6+shjsXwVQb7GsevLmYP7LIoCBcfr3pSFNSfVVjHFsk19G+IGDngv1Ct+ztqhdw7mWVxN0l/Cp53K4niEHtGsrR5uj/bdcwNDp/6ZR5WAQ/pOHGJi2ls765UCMBgH00vqD3c5GOS0pbEekIx1g5nNhHgWaR7DPpJmT0vBXJAX9Qg3F7rY5sxzYgXXonugkOuejn6J90CSqs47M11yzXWKSrE5WQEs+vlNi9b9QG17k9bTJwalbAQRvkb/DAgazsmgf9iGggi+EfreKU1CVc9t6uxH9XtxfdvOB/kIlkWWMyBYD/wnTZnkqDC5a1v7RP/y+Z/yE+sneuCccxCk1tN1R2AJckkH89tyFX/YseDZWYIX9jB3Vo0SEZ7Zi/e4GQadkr285w0vmSedH/IoSAGm+Rzo95y5jNIa5CwYB/Ev8AU/20kiQ6cXvWv6b1L3JOtDOgbU9sWwUiKWSAwhwXW8Un7ArgM3Ubz8yZFxWTfPWiMw0RXzQ/kcbzL5odoKNAbiVXbKQ4li2q1/1MMs3Xvx3+73DRRNcefZq0ls96V6q/JrZeTNG0wRzG0Ds9d3XrF85iP8gKQpmhe9fyJIvVvyAjWcZgtkTTJCCTDeH58s5GDKTkgC5p/R9dk77Xhla0OJoTifzcBa7ETk34+bRxynof23r2pjGbOfm0zq9gCbq4gX2vK9a09HrC/fbEz63kHZf4ecaecXGkEJQ==
-Received-SPF: pass client-ip=57.103.72.187;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,52 +109,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, Apple doesn't support the nested virtualisation + SME combination.
+This extends the VBSA test to run the linux tests. The sysarch-acs
+test suite does provide some pre-built images which is good because
+the tests require a patched kernel. However due to the structure of
+the image we need to jump one or two hoops to get something useful:
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+  - download and double decompress (zip then xz) the image
+  - navigate grub to launch the Linux Execution Environment
+  - shutdown the system once tests are done
+  - extract the logs from the MSDOS file system and parse them
+
+It does make the code a bit ugly but it works for me at least. So far
+the subset of tests run is limited but that might be solved by adding
+some more devices to the PCIe bus to exercise the SMMU behaviour.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/hvf/hvf.c | 3 +++
- target/arm/hvf_arm.h | 5 +++++
- 2 files changed, 8 insertions(+)
+ tests/functional/aarch64/test_virt_vbsa.py | 123 +++++++++++++++++++--
+ 1 file changed, 112 insertions(+), 11 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index fd5d248e20..1559b2eecd 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1189,6 +1189,9 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/functional/aarch64/test_virt_vbsa.py
+index 1dd4cecde1e..0456dfe9fd5 100755
+--- a/tests/functional/aarch64/test_virt_vbsa.py
++++ b/tests/functional/aarch64/test_virt_vbsa.py
+@@ -10,12 +10,15 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-     if (hvf_nested_virt_enabled()) {
-         FIELD_DP64_IDREG(&host_isar, ID_AA64DFR0, PMUVER, 0x1);
-+        /* SME is not implemented with nested virt on the Apple side */
-+        SET_IDREG(&host_isar, ID_AA64PFR1,
-+              GET_IDREG(&host_isar, ID_AA64PFR1) & ~R_ID_AA64PFR1_SME_MASK);
-     }
+ import shutil
+-from subprocess import check_call, DEVNULL
++import re
++from subprocess import check_call, check_output, DEVNULL
  
-     ahcf->isar = host_isar;
-diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-index 6b1c3b9792..9cb58ad9ab 100644
---- a/target/arm/hvf_arm.h
-+++ b/target/arm/hvf_arm.h
-@@ -11,6 +11,7 @@
- #ifndef QEMU_HVF_ARM_H
- #define QEMU_HVF_ARM_H
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import get_qemu_img, skipIfMissingCommands
+ from qemu_test import wait_for_console_pattern
++from qemu_test import interrupt_interactive_console_until_pattern as int_until
+ from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
++from qemu_test import send_key
  
-+#include "system/hvf.h"
- #include "target/arm/cpu-qom.h"
  
- /**
-@@ -35,6 +36,10 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
-         if (__builtin_available(macOS 15.2, *)) {
-             size_t svl_bytes;
-             hv_return_t result = hv_sme_config_get_max_svl_bytes(&svl_bytes);
-+            /* Nested virt not supported together with SME right now. */
-+            if (hvf_nested_virt_enabled()) {
-+                return false;
-+            }
-             if (result == HV_UNSUPPORTED) {
-                 return false;
-             }
+ @skipIfMissingCommands("mformat", "mcopy", "mmd")
+@@ -28,6 +31,20 @@ def wait_for_console_pattern(self, success_message, vm=None):
+                                  failure_message='FAILED',
+                                  vm=vm)
+ 
++    def append_firmware_blobs(self):
++        """
++        Setup QEMU firmware blobs for boot.
++        """
++        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
++        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
++        vars_path = self.scratch_file('vars.fd')
++        shutil.copy(vars_source, vars_path)
++
++        self.vm.add_args('-drive',
++                         f'if=pflash,format=raw,readonly=on,file={code_path}')
++        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
++
++
+     ASSET_VBSA_EFI = Asset(
+         'https://github.com/ARM-software/sysarch-acs/raw/refs/heads/main'
+         '/prebuilt_images/VBSA/v25.12_VBSA_0.7.0/Vbsa.efi',
+@@ -45,20 +62,12 @@ def test_aarch64_vbsa_uefi_tests(self):
+ 
+         self.vm.set_console()
+ 
+-        # virt machine wi
++        # virt machine
+         self.set_machine('virt')
+         self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on')
+         self.vm.add_args('-cpu', 'max', '-m', '1024')
+ 
+-        # We will use the QEMU firmware blobs to boot
+-        code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
+-        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
+-        vars_path = self.scratch_file('vars.fd')
+-        shutil.copy(vars_source, vars_path)
+-
+-        self.vm.add_args('-drive',
+-                         f'if=pflash,format=raw,readonly=on,file={code_path}')
+-        self.vm.add_args('-drive', f'if=pflash,format=raw,file={vars_path}')
++        self.append_firmware_blobs()
+ 
+         # Build an EFI FAT32 file-system for the UEFI tests
+         vbsa_efi = self.ASSET_VBSA_EFI.fetch()
+@@ -102,5 +111,97 @@ def test_aarch64_vbsa_uefi_tests(self):
+         self.wait_for_console_pattern('VBSA tests complete. Reset the system.')
+ 
+ 
++    ASSET_SYSREADY_IMAGE = Asset(
++        'https://github.com/ARM-software/arm-systemready/'
++        'releases/download/v25.10_SR_3.1.0/systemready_acs_live_image.img.xz.zip',
++        'df2c359de15784b1da6a8e6f3c98a053ee38ac0b3f241ccea62e17db092eb03a')
++
++    ROOT_PROMPT = '/ # '
++    DOWN_KEY = "\x1b[B"
++
++    @skipIfMissingCommands("sfdisk", "jq")
++    def test_aarch64_vbsa_linux_tests(self):
++        """
++        Launch the Linux based VBSA test from the ACS prebuilt images.
++
++        We can use the pre-built images and then trigger the Linux
++        build and run the tests. We then need to slurp the results
++        from the partition.
++        """
++
++        self.vm.set_console()
++
++        # virt machine with SMMU
++        self.set_machine('virt')
++        self.vm.add_args('-M', 'virt,gic-version=max,virtualization=on,iommu=smmuv3')
++        self.vm.add_args('-cpu', 'max', '-m', '1024', '-smp', '4')
++
++        self.append_firmware_blobs()
++
++        # First fetch, decompress (twice) and prepare the disk image
++        # on an NVME device (the kernel only has drivers for that).
++        disk_image_zip = self.ASSET_SYSREADY_IMAGE.fetch()
++        disk_image_xz = self.uncompress(disk_image_zip,
++                                        target="sysacs.xz", format="zip")
++        disk_image = self.uncompress(disk_image_xz,
++                                     target="sysacs.img", format="xz")
++
++        self.vm.add_args('-device',
++                         'nvme,drive=hd,serial=QEMU_ROOT_SSD')
++        self.vm.add_args('-blockdev',
++                         f'driver=raw,node-name=hd,file.driver=file,file.filename={disk_image}')
++
++        # Launch QEMU and wait for grub and select the "Linux
++        # Execution Environment" so we can launch the test.
++
++        self.vm.launch()
++        self.wait_for_console_pattern('Use the ^ and v keys to select which entry is highlighted')
++
++        # 3 down arrows then return to select entry
++        send_key(self, self.DOWN_KEY)
++        send_key(self, self.DOWN_KEY)
++        send_key(self, self.DOWN_KEY)
++
++        ec_and_wait(self, "\n", self.ROOT_PROMPT)
++
++        ec_and_wait(self, "/usr/bin/bsa.sh --skip B_REP_1,B_IEP_1,B_PCIe_11,B_MEM_06",
++                    self.ROOT_PROMPT)
++
++        # Now we can shutdown
++        ec_and_wait(self, "halt -f", "reboot: System halted")
++        self.vm.shutdown()
++
++        # and extract the test logs
++        offset = int(check_output(f"sfdisk --json {disk_image} |"
++                                  "jq '.partitiontable.partitions[0].start * 512'",
++                                  shell = True))
++        bsa_app_res = self.scratch_file("BsaResultsApp.log")
++        bsa_kern_res = self.scratch_file("BsaResultsKernel.log")
++
++        check_call(["mcopy", "-i", f"{disk_image}@@{offset}",
++                    f"::acs_results/Linux/BsaResultsApp.log", bsa_app_res])
++        check_call(["mcopy", "-i", f"{disk_image}@@{offset}",
++                    f"::acs_results/Linux/BsaResultsKernel.log", bsa_kern_res])
++
++        # for now just check the kernel log for the result summary
++        test_result_re = re.compile(r"\[.*\]\s+(.+): Result:\s+(\w+)")
++        summary_re = re.compile(r"Total Tests Run =\s*(\d+), Tests Passed =\s*(\d+), Tests Failed =\s*(\d+)")
++
++        with open(bsa_kern_res, 'r') as f:
++            for line in f:
++                test_match = test_result_re.search(line)
++                if test_match:
++                    desc = test_match.group(1)
++                    status = test_match.group(2)
++                    self.log.info(f"Test: {desc} status: {status}")
++
++                match = summary_re.search(line)
++                if match:
++                    total, passed, failed = match.groups()
++
++                    if int(failed) > 0:
++                        self.fail(f"{failed} tests failed ({total})")
++
++
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
