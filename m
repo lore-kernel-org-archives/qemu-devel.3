@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2C9FCB60A
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5DFFCB609
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWfw-0006kP-MG; Fri, 06 Mar 2026 10:01:12 -0500
+	id 1vyWff-0004rS-MN; Fri, 06 Mar 2026 10:00:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWfT-0004qm-UW
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:53 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1vyWf4-0004WE-2b
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:18 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWfS-0002pQ-Ac
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:43 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-439c6fc2910so2301590f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:41 -0800 (PST)
+ id 1vyWf2-0002js-Bu
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:17 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-483703e4b08so91114665e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809241; x=1773414041; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809215; x=1773414015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TUbzVPCJHafQ9ANhUjINzIDMnhhGghwfl2F9rNmrhP0=;
- b=sN0ZykfN0RCA9mjuWxSwU9KtVWIDWGwH4ywm2rCbB+tv9WiYTqgrB6lo9MQ5IdeJh4
- RRSGpLNzdRJkLTK36Hf4ii7pH8zkAVBQbvSVdKK9kUH3tdWy+Mf10Pr+CtAhqgclkjQt
- RA2e2UpA0um3cw/SfPmwB1Ur6Qv73unhIU4zTUOK807IJwWL6gMQos1DuaeqJbVirFsS
- xdRVx8vdkc/JuzHZKF/9g3mfwRDdhwYYAk76iFzfDfUu12Zz/EEdEihstlhQqDdJXZVi
- Jx/Z/OLwtwa6O1XPihkom0zZkami2po5TKetHUKeH6MrhLCVzLqpGEdFmBhk/4wCW1hM
- 8mww==
+ :reply-to; bh=rU++RBZU+fmL8WD1pH8gqsuKdHir+HDXpF1JUF63s+w=;
+ b=qdDBpKTv97HnDoUEAdUUMasIFCFJaN9Y/lTbgcTrqIIkoOVmfjiZINwGbmz1p//8/S
+ hvTTR4+6ddTUmV2etTvwf/SnY/TY6fvxns/fEHo3s1yuItOipi56WFwwtcgaNydg9UrD
+ qlI0wXrziEiBi7QOeb1fLAj6uv+v1V3piMH88zaOD51U8iuX9riBowr0Q6lcJWNxtpgJ
+ o/o0bWrYgc7EJiSCeiGy8JMKKhftxJt6T4NkWdea3MzCBR8pfTl/rNhnIZ0nNO7V3CUB
+ 94MIiYPKSY05WGtU7RVhjMvaxgIc3p5dBrynTebLCCMOVSl11W+pBpObf+vznZ9W2Q7s
+ 8xmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809241; x=1773414041;
+ d=1e100.net; s=20230601; t=1772809215; x=1773414015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=TUbzVPCJHafQ9ANhUjINzIDMnhhGghwfl2F9rNmrhP0=;
- b=SzmbGMXEkPC606Vf5TGCzAarN65tmBSfq98EVHV3FDKBAMy2ULemLEvf0Z6zTsOZwc
- yD9RQw1KpucABtfE03Ve1b5dgb4E398N3D0ya/OmkgB1rGizbNx2uO0xiP6L4B+TSmWp
- is+4HtUdK/MA1a/gMr0+rbcaWqgj2Zjg93UFeCVyI4fO3MT3RNWj18ZS4GVzLKPm8Fgv
- jtqHX16YfQXDPGMPL/3NChVNyOxMs6D9vRP95pNSdURO30ngI3uLjerLyVc3LNzkwBUU
- eQ2yRyEy1b1Lua7GI4aPhG6fLrCHNLsqu3OSbXfgJioEeSvXhcso07C8BhFJTsp94rvh
- sv/w==
-X-Gm-Message-State: AOJu0Yy/HJpbxhWWkZIFay6djveF85S2aWEQkPEF8DZXAObLEs0q+K4q
- syjy2SL04l8bhfXYrONW1qpP6yWYF4KLuNp6j0NfjJLc004gjRaM0kH74zmQaEB9H5Sf/B08Nho
- udUvb
-X-Gm-Gg: ATEYQzzG7c/i+V/wnOxVHU3Fpl02/9PRDpJibeXjlaKMycCqgXZ5yPOJtYY+YALmsyf
- YgEqYOCOaYdP+Sx7iPLn6Cer9ShiHkexcfI/KQmVxwaB9WoGWJQXorOCRnFwHT5LU+UyUizvFEL
- ZyE0OSY4DRj2Q5BHgbMD2lUZ+63NRl6ayXG6N0uwWIZDsL837xdcTojaULzi4NgeftwjUkkMA8Q
- JddESc9vYZxYkK/MbO+00DA+B9HZ0Wan+Zbf5NcLmPviP90KAPc2dh7juQV+UzXOowsdfDTtbWV
- nUQnhtH9lhfgePFQzgfOT2p7VcHWOHGcb3g3zOtUV9H5VnatvVY4Lupw0WTsSj1FwHOytn3ripO
- HPqbESevntMkrPl7gp+HOiVZI1a0QMZ4mw2wJ8vZBYqGlrBeI/2wl29Vxzsg3/WKiDRFBa3irAg
- up0guBTwO7PfFTblGzs3EXlfb52fK0BKQfQfMoNsif5nHr6QjHFMOXDOjGhH98QaIH2bo4LqbRA
- DaW81l9yNbnngaVGhHDM1XRSWIUGok=
-X-Received: by 2002:a05:600c:4710:b0:483:2c98:435e with SMTP id
- 5b1f17b1804b1-485269792ddmr35632595e9.34.1772809240632; 
- Fri, 06 Mar 2026 07:00:40 -0800 (PST)
+ bh=rU++RBZU+fmL8WD1pH8gqsuKdHir+HDXpF1JUF63s+w=;
+ b=YY1cVY4/38YxW5b5bbJciZE1HxJSL/bdFx7rHLBbA+kGAtLqUP15ztj66Ce914W0qq
+ hxsGKxTFG/RXGvmxcAjCNj3fJq6iZO4McHOI8YP11pkBFurl4ROyEURCqEujwKbDjfQv
+ R3AeFH3TQi3X6b6dx58qNAYU3RI2YHKFV0lBGrvHjwKiF+p8qpxWvHZK1XvafOLO80fi
+ AxHDtcRoOicc/PYNcPn+j6qfTViyf3PePghEYXrItEABH3anxr4KmmXunHsg5iQr08gb
+ beDcYVPzHLEyzK9WQta5kTwNiB8PWX09mkGXSzAC4uYbmmWLEsuBzDfbl5k7XRVBvew3
+ o04g==
+X-Gm-Message-State: AOJu0YxtSfoXEMozDvQmOy/5PL9cwq0H55LDl+o2mm/pX+IcrPa3xn1d
+ 2B7IwP1jIq3i/AZqvgi0zJFEBE1EPxTLC2yH/74IKdrreHxfAuOdbaL0Mn6FOfp4m8Fx7wjfCnX
+ eZ/AE
+X-Gm-Gg: ATEYQzwd4xkU+qN/2qSxnEFnzUPWsrpWUzCMIRl/jFCXhU4M9DNX/4wFpy5sQB9iD2H
+ RHDDrcZRdqZ7FkFaLEfHOjvrQ/D380vdZwPJJgObsU3qQjWMsL38s6RH7LgNYC8F4k0DXMqfmOh
+ tQQ/5eENiHS7fQfX9LV8WRFQCkFUOoTi9yWwPqTD7pMXqCwsNSaWGAkFhip57yF6R9/joyKqmtf
+ 3iY8L+bDqHRgl1DVl/kA9+FU4PBkilLWpgL2osQZTraZJ4uv+58EyM7W4O5qAmsAaSQVOajq3IZ
+ us2OJ0WbeTzHWpqTLA8Cf09YPpJpy+kwKATmct9HyzBFQWvTly9AoTeVfeoHlQKweeHR2cVxSIa
+ 4Hr2e8TBIaGtlvpx4Aru95tGCMfrxjiIEn/7HPqqNzh7LJbVYsUEyuN804pbQ3iks6ir7UpOwUG
+ eKVrZfY9esshcs8js++DnAYL1pzbazYkUGLRRpClZqgdWkIz114MYhC7JIRDVlckeIbJ1O7VCgc
+ qrt35Rr2UwQyAzYBXAGau+751y+myU1cDhc1dW17Q==
+X-Received: by 2002:a05:600c:8b2b:b0:477:9890:9ab8 with SMTP id
+ 5b1f17b1804b1-48526715213mr35369995e9.3.1772809214787; 
+ Fri, 06 Mar 2026 07:00:14 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.39
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:00:39 -0800 (PST)
+ Fri, 06 Mar 2026 07:00:13 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/49] hvf: enable nested virtualisation support
-Date: Fri,  6 Mar 2026 14:59:39 +0000
-Message-ID: <20260306145939.2162189-50-peter.maydell@linaro.org>
+Subject: [PULL 32/49] hw/arm/smmuv3: Fix CFGI_CD handling when stage-1 is
+ unsupported
+Date: Fri,  6 Mar 2026 14:59:22 +0000
+Message-ID: <20260306145939.2162189-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Tao Tang <tangtao1634@phytium.com.cn>
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260306130107.35359-18-mohamed@unpredictable.fr
+Add a STAGE1_SUPPORTED check in the CMD_CFGI_CD and CMD_CFGI_CD_ALL path
+and return CERROR_ILL when stage-1 translation is not implemented,
+matching the architecture requirement (IHI 0070G.b, page 176).
+
+Fixes: 32cfd7f39e08 ("hw/arm/smmuv3: Cache/invalidate config data")
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260304142344.3341444-4-tangtao1634@phytium.com.cn
+Links: https://lore.kernel.org/qemu-devel/20260221101733.2995020-1-tangtao1634@phytium.com.cn/
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/arm/smmuv3.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 90769936d0..bced9f67f4 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2393,13 +2393,20 @@ static void machvirt_init(MachineState *machine)
-         exit(1);
-     }
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index af7a54143f..068108e49b 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1407,6 +1407,15 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
+                 break;
+             }
  
--    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
-+    if (vms->virt && !kvm_enabled() && !tcg_enabled()
-+       && !hvf_enabled() && !qtest_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "Virtualization extensions to the guest CPU",
-                      current_accel_name());
-         exit(1);
-     }
- 
-+    if (vms->virt && hvf_enabled() && !hvf_irqchip_in_kernel()) {
-+        error_report("mach-virt: For HVF and Virtualization extensions "
-+                     "only kernel-irqchip=on is currently supported");
-+        exit(1);
-+    }
++            /*
++             * This command raises CERROR_ILL when stage 1 is not implemented
++             * according to (IHI 0070G.b) Page 176.
++             */
++            if (!STAGE1_SUPPORTED(s)) {
++                cmd_error = SMMU_CERROR_ILL;
++                break;
++            }
 +
-     if (vms->mte && hvf_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "MTE to the guest CPU",
+             trace_smmuv3_cmdq_cfgi_cd(sid);
+             smmuv3_flush_config(sdev);
+             if (!smmuv3_accel_issue_inv_cmd(s, &cmd, sdev, errp)) {
 -- 
 2.43.0
 
