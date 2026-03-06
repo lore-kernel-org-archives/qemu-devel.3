@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84193FCC056
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FABFCC056
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 18:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vya4m-0001om-Kd; Fri, 06 Mar 2026 13:39:07 -0500
+	id 1vya4Y-0001Tw-Hs; Fri, 06 Mar 2026 13:38:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4I-00017h-Ab
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:42 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4G-00017P-PG
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4G-00067Q-CM
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:33 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vya4E-000679-Eu
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 13:38:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772822310;
+ s=mimecast20190719; t=1772822309;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pEw7CRRKiV55uRQW7Rpex8IC2UFh2VTwGd0OB6L3YvQ=;
- b=BLe/zypx+DYF2ua3fZpBIc//bHToyLtN6xTOk23j/B6IYWKXnpT98Dte8Wcm4WEFxYKtnZ
- 2T5TEx+gq6arQh7+vzqjqk79BFZr33W/A53XtFwv9P/D6Z/DyJkTCsxHONBRgjXN+otuVB
- XK/hRuB2ogrzOU2kqdc96HekxcM4Bz8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=mfBrz5F6+B1wu2Yn47FtG6YOUdns1u9EJnrTS3JkzBg=;
+ b=fyHl807Yv5dDf4FnFn+xPFrsg+G+c/8JskwcuosDjTvmKZjZzqSbRldCS4pyhHMhxuIrGt
+ +vIMSf20wGScZP8BsKzV/j82/8mHat4q5gohyrTvS3pMUw/Ro0ZxlctsRKzg4uWLU45hXy
+ obWfOOFbXzaCBNvytcoS5wFarg3K0Mw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-aWAvbgp4Pu2e-bRymjtgkg-1; Fri,
- 06 Mar 2026 13:38:27 -0500
-X-MC-Unique: aWAvbgp4Pu2e-bRymjtgkg-1
-X-Mimecast-MFC-AGG-ID: aWAvbgp4Pu2e-bRymjtgkg_1772822306
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-3TIv98CiPGCZ5SdV3AvXvA-1; Fri,
+ 06 Mar 2026 13:38:25 -0500
+X-MC-Unique: 3TIv98CiPGCZ5SdV3AvXvA-1
+X-Mimecast-MFC-AGG-ID: 3TIv98CiPGCZ5SdV3AvXvA_1772822305
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BC4B1956096; Fri,  6 Mar 2026 18:38:26 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F192718005B4; Fri,  6 Mar 2026 18:38:24 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.45.224.210])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 670901800361; Fri,  6 Mar 2026 18:38:25 +0000 (UTC)
+ id C27BC1800576; Fri,  6 Mar 2026 18:38:23 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 12/12] iotests/244: Add test cases for keep_data_file
-Date: Fri,  6 Mar 2026 19:37:05 +0100
-Message-ID: <20260306183705.410357-13-kwolf@redhat.com>
+Subject: [PULL 11/12] iotests/common.filter: Sort keep_data_file
+Date: Fri,  6 Mar 2026 19:37:04 +0100
+Message-ID: <20260306183705.410357-12-kwolf@redhat.com>
 In-Reply-To: <20260306183705.410357-1-kwolf@redhat.com>
 References: <20260306183705.410357-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -84,172 +84,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-Add various test cases around keep_data_file to the existing data_file
-test suite 244.
+Sort the new keep_data_file creation option together with data_file and
+data_file_raw.
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20250530084448.192369-5-hreitz@redhat.com>
+Message-ID: <20250530084448.192369-4-hreitz@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
-[kwolf: Added prealloc=full to the test]
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/244     | 71 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/244.out | 61 ++++++++++++++++++++++++++++++++
- 2 files changed, 132 insertions(+)
+ tests/qemu-iotests/common.filter | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qemu-iotests/244 b/tests/qemu-iotests/244
-index bb9cc6512f3..2a98ad58f5d 100755
---- a/tests/qemu-iotests/244
-+++ b/tests/qemu-iotests/244
-@@ -384,6 +384,77 @@ $QEMU_IMG compare --image-opts \
-     "driver=raw,file.filename=$TEST_IMG.data"  \
-     "file.filename=$TEST_IMG,backing.file.filename=$TEST_IMG.base"
- 
-+echo
-+echo '=== keep_data_file tests ==='
-+
-+echo
-+echo '--- Creating test data file ---'
-+
-+# Easiest way to create the raw data file without having to create and
-+# access it manually
-+_make_test_img -o "data_file=$TEST_IMG.data,data_file_raw=on" 1M
-+# Values chosen by a fair random.org evaluation
-+$QEMU_IO -c 'write -P 3 0 512k' -c 'write -P 96 512k 512k' "$TEST_IMG" |
-+    _filter_qemu_io
-+
-+echo
-+echo '--- Testing stand-alone option ---'
-+
-+# Cannot work, needs data file
-+_make_test_img -o "keep_data_file=on" 1M
-+
-+# Invalid option value
-+_make_test_img -o "keep_data_file=true" 1M
-+
-+# Should be the same as omitting
-+_make_test_img -o "keep_data_file=off" 1M
-+
-+# No preallocation is OK when also specifying data_file_raw; otherwise, none of
-+# the data file will be mapped, i.e. its contents will stay hidden, so
-+# requesting its contents to be kept (but hidden) doesn't make much sense.
-+#
-+# Metadata preallocation is OK: It will not overwrite the data file's contents,
-+# but ensure the contents are mapped and visible.
-+#
-+# Any data preallocation (like falloc) is not OK, as this would overwrite the
-+# data file's contents despite keep_data_file requesting they should not be
-+# overwritten.
-+#
-+# Note that all of these cases use the data file created above: This verifies
-+# that when passing keep_data_file=on, the data file is always kept as-is (and
-+# e.g. not deleted on error).
-+for prealloc in off metadata falloc full; do
-+    # Without metadata preallocation, the data_file_raw flag is required so that
-+    # the data file's contents are visible.
-+    for data_file_raw in off on; do
-+        echo
-+        echo "--- Testing prealloc=$prealloc data_file_raw=$data_file_raw ---"
-+
-+        # Remove previously existing qcow2 (metadata) file
-+        _cleanup_test_img
-+
-+        opts="data_file=$TEST_IMG.data,keep_data_file=on"
-+        opts+=",preallocation=$prealloc"
-+        opts+=",data_file_raw=$data_file_raw"
-+
-+        _make_test_img -o "$opts" 1M
-+        if [ -f "$TEST_IMG" ]; then
-+            $QEMU_IO -c 'read -P 3 0 512k' -c 'read -P 96 512k 512k' "$TEST_IMG" |
-+                _filter_qemu_io
-+        fi
-+    done
-+done
-+
-+echo
-+echo '--- Testing non-existent data file ---'
-+
-+# Maybe a matter of taste whether this should fail or create the file, but
-+# failing is simpler (= will always skip create) and seems safer (users may
-+# expect the file to exist, and the error will warn them when it does not).
-+_make_test_img \
-+    -o "data_file=$TEST_IMG.doesnotexist,keep_data_file=on,data_file_raw=on" \
-+    1M
-+
- # success, all done
- echo "*** done"
- rm -f $seq.full
-diff --git a/tests/qemu-iotests/244.out b/tests/qemu-iotests/244.out
-index f46cfe93f11..c62f5aec25b 100644
---- a/tests/qemu-iotests/244.out
-+++ b/tests/qemu-iotests/244.out
-@@ -197,4 +197,65 @@ wrote 1048576/1048576 bytes at offset 0
- 
- Comparing qcow2 image and raw data file:
- Images are identical.
-+
-+=== keep_data_file tests ===
-+
-+--- Creating test data file ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=on
-+wrote 524288/524288 bytes at offset 0
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote 524288/524288 bytes at offset 524288
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+--- Testing stand-alone option ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 keep_data_file=on
-+qemu-img: TEST_DIR/t.IMGFMT: Must not use 'keep_data_file=on' without 'data_file'
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 keep_data_file=true
-+qemu-img: TEST_DIR/t.IMGFMT: Invalid value 'true' for 'keep_data_file': Must be 'on' or 'off'
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 keep_data_file=off
-+
-+--- Testing prealloc=off data_file_raw=off ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=off keep_data_file=on preallocation=off
-+qemu-img: TEST_DIR/t.IMGFMT: 'keep_data_file=on' requires 'preallocation=metadata' or 'data_file_raw=on', or the file contents will not be visible
-+
-+--- Testing prealloc=off data_file_raw=on ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=on keep_data_file=on preallocation=off
-+read 524288/524288 bytes at offset 0
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 524288/524288 bytes at offset 524288
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+--- Testing prealloc=metadata data_file_raw=off ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=off keep_data_file=on preallocation=metadata
-+read 524288/524288 bytes at offset 0
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 524288/524288 bytes at offset 524288
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+--- Testing prealloc=metadata data_file_raw=on ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=on keep_data_file=on preallocation=metadata
-+read 524288/524288 bytes at offset 0
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 524288/524288 bytes at offset 524288
-+512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+
-+--- Testing prealloc=falloc data_file_raw=off ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=off keep_data_file=on preallocation=falloc
-+qemu-img: TEST_DIR/t.IMGFMT: Preallocating more than only metadata would overwrite the external data file's content and is therefore incompatible with 'keep_data_file=on'
-+
-+--- Testing prealloc=falloc data_file_raw=on ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=on keep_data_file=on preallocation=falloc
-+qemu-img: TEST_DIR/t.IMGFMT: Preallocating more than only metadata would overwrite the external data file's content and is therefore incompatible with 'keep_data_file=on'
-+
-+--- Testing prealloc=full data_file_raw=off ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=off keep_data_file=on preallocation=full
-+qemu-img: TEST_DIR/t.IMGFMT: Preallocating more than only metadata would overwrite the external data file's content and is therefore incompatible with 'keep_data_file=on'
-+
-+--- Testing prealloc=full data_file_raw=on ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.data data_file_raw=on keep_data_file=on preallocation=full
-+qemu-img: TEST_DIR/t.IMGFMT: Preallocating more than only metadata would overwrite the external data file's content and is therefore incompatible with 'keep_data_file=on'
-+
-+--- Testing non-existent data file ---
-+Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 data_file=TEST_DIR/t.IMGFMT.doesnotexist data_file_raw=on keep_data_file=on
-+qemu-img: TEST_DIR/t.IMGFMT: Could not open 'TEST_DIR/t.IMGFMT.doesnotexist': No such file or directory
- *** done
+diff --git a/tests/qemu-iotests/common.filter b/tests/qemu-iotests/common.filter
+index 26e6b45b041..ce4213cb974 100644
+--- a/tests/qemu-iotests/common.filter
++++ b/tests/qemu-iotests/common.filter
+@@ -182,7 +182,7 @@ _do_filter_img_create()
+             -e 's/^\(fmt\)/0-\1/' \
+             -e 's/^\(size\)/1-\1/' \
+             -e 's/^\(backing\)/2-\1/' \
+-            -e 's/^\(data_file\)/3-\1/' \
++            -e 's/^\(\(keep_\)\?data_file\)/3-\1/' \
+             -e 's/^\(encryption\)/4-\1/' \
+             -e 's/^\(preallocation\)/8-\1/' \
+         | LC_ALL=C sort \
 -- 
 2.53.0
 
