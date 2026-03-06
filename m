@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE750F5140F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 07:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C07D5F5140F
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 07:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyPLc-0003Gd-En; Fri, 06 Mar 2026 02:11:44 -0500
+	id 1vyPLN-0003Cl-1f; Fri, 06 Mar 2026 02:11:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vyPLT-0003Ex-6x
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:11:36 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1vyPLL-0003CK-T1
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:11:27 -0500
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vyPLR-0007m4-LK
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:11:34 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-82989744ee0so1424225b3a.2
- for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 23:11:33 -0800 (PST)
+ id 1vyPLK-0007kU-Dg
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 02:11:27 -0500
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-824af5e5c81so8839379b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 23:11:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1772781092; x=1773385892; darn=nongnu.org;
+ d=sifive.com; s=google; t=1772781085; x=1773385885; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bTk7Tk9WP/zMZlQp66wDxav6fYDPL0KXwlM2E2GIdnc=;
- b=UbNiPRP0eSKeCqGXrIv6dpalKn9Z39hemBXPBWHz1bW5W0Gita7pbdoY/v5tLzIrFj
- OX4DAXknHI2kNOO++TOb7ysE7EiUN4Jt/um8C6/qe6b/304prolFwkMmlNKzvS7do9e8
- RYEVwfTe9LlMSPb/bUEDlnwmp4Iqws7lSJf+qsWR6RLTM8tC9QB79zMF4kg7dKt6Qfst
- O2MJyJgzyysXivGJzK/XqRLLcVtQ80KvUTWullCe5lp6ovqT0boOOs51cRfW0CW4YTa+
- h6QKOwaPUX6+X1Gns/UKYSCFW+MV8uKNJ2YhSlK31WoYi9L5qo74dFUdtWM66Libcupi
- ZTYA==
+ bh=7M4+raLDnlsy7KZxdfXOt2SaMfVSiy+jv/eZ9IfwtZI=;
+ b=WvyPgzqd5s8HMzale2YE8Kit7NbTygCAWf40qdzE224Bfpp2qfBy/QvRV5N+KIgaXV
+ C4WtPY9kDBFMjA7jV7yI5BRakTXw++tJRt0+2ojhvB0c+U1f6q3hPBnf6JFdSMDN9YbQ
+ q3tCR2Yb7AO9CpPjUJXPo+8T2OeoNroyo0DF24qFp/fNOzhNt+fMxuAu10f1TKkudeUM
+ aQ91ecyVzmGXIo0sr/RPRQFkVWFluxXPDBc4LOSD06O6svVvOGcYR8YyYJXVYut/PjDM
+ AVSyDEhAWkgJ7Sg5WppWG+HSR51b+LPDmbzgfZecF9tY5FxH8Hp47rGGfEqmJcOoR84V
+ DJhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772781092; x=1773385892;
+ d=1e100.net; s=20230601; t=1772781085; x=1773385885;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bTk7Tk9WP/zMZlQp66wDxav6fYDPL0KXwlM2E2GIdnc=;
- b=kVgE6vGYTKSwUpVheiDTTJxP1jHbwtWljaXS5JXpgXEvt8uzaw1SM3S9v8DxsOTrq5
- JLoaYfR2ZxgxGpVbSrSu5lU+nBYcTfeVDKnu7imszbISwDnSejaFSa35jFdQ+fmVun0s
- lINBqGJusnuaRxFzroZhbvcsVtwZBP6hb4sdhHNk+0g7pURgMSkUkuioD3ErxcQbzfOv
- jI+V/F+A4wroFKSMLNs/U17SnC3hPlQRNP/PrmDAInVbDUKdbgmO7xfddvPR/LV8RtxQ
- 1ICy7lihODenzw2/ftgmGs+18oFyzZyhkXgjg2zRqt1nlG7bbSakr1AvUpuYnRZ2HGOA
- IFvg==
-X-Gm-Message-State: AOJu0YwL5FySjxiLOFpAXujg9tJQ1tswr1Q70Katom59pLdv2rWJ74bV
- Fvsivv2ZCJPUvhPZ3cX24rc36z4apT5y7nBrKZwXQU/XdgpvL/jWGUPCoRM9Vzqgumdy0akYkks
- 9cIY2zBQzMy0DnUEjyabIwDxDEJdE164Ne5+fnZcUVjcyj7WNuzFcUoZTyr0Fwc1xB8uZ9EHkGD
- 2xUmHYdxyYUB+g6cLvDOb+sERtLlXBXZM+ZUu4060OguXb
-X-Gm-Gg: ATEYQzyMtKM7ND8eXYrUYkgLqe8g4H/T7iBvyuJ12grbDs68q6++egIuvf2FbaXBWe4
- QrNshHqlvunk+QC2pfoAIOyvFMdDqlqt1F++Ynxk2quVFbXh7LslupoEiri0+jfcx10LNu0SqtQ
- JEuijndVuOpTVOtXQsufrZDhelUibgTpY5CmKF5aMTmg/dsfM8kmOLCPjcq0srYHBCDD0Zhju8L
- orblKKcGC3qPYVZDUizw/zVfYtmWzfYpXi0Ug1S4t3GHt7ucaba9GOkImdnpc7VfDVh+CJFxO6h
- 9+xyaz3fyXzETrlVh/9todezmu+QdMBJWj73lgXfZlAKHmIJcjXK/lokKxkb1rw1JPafeObgY/a
- BGjaJYjlFjmtr5thYvDq0wi0ELeOic1hjurjL2EJYA1eLX6KzAef2Qw7AIrYl3x0bP9Lb50EnbZ
- n5QJXmd/5kGDSeL6QRh8Eh4vxS/XUWs35P7ZN7zTFuXcuRqb+Hm2izRPYTFt2d+bXWLpuQW5kle
- TdQkwzhk65u6UkMzjRGe0NlBsl7NVfonqrQVA==
-X-Received: by 2002:a05:6a00:249b:b0:827:3e19:574a with SMTP id
- d2e1a72fcca58-829a2f14307mr949536b3a.42.1772781091994; 
- Thu, 05 Mar 2026 23:11:31 -0800 (PST)
+ bh=7M4+raLDnlsy7KZxdfXOt2SaMfVSiy+jv/eZ9IfwtZI=;
+ b=XfzBpbIEtOMjuGqMLeAkxvzcEcAT51nwfGfm4ekPjsZCe4ZH/bX8XsoJh+3wdXRu4P
+ PWn3Ndl14sixUA6asSb5RHwC7lYhNXsJkgMsUwGixS3rQmOCm6KjiJ8sFwqH+rlUMwSZ
+ IRKYlGClqFwfnEYYMqQP5sJ4yCJuEfAmk//DOXlCeZCBUHpyrmDYmUDGuCduQ1/gVkrf
+ nJ8gUytFIUR8ImmeDXlmZYu6/h+RfWOpNFBx7ur1Z3wfNBIQEQABml8vLN7ks5luGBjB
+ VCI7ZZzW9Nwv0PshB3W5YMvQJUbHm8DzDNpiS2DuHb024hVeQCqitxW0SoakRcS0lokn
+ nS1g==
+X-Gm-Message-State: AOJu0Yy3KVa1QE8M92ka1lSiciFdmsSYwnMa8pPJ0zHsFd3hNT9/LUSS
+ O7Y+x4ycGvcD36WNAMLVGJKvbN3AcXaRRiBjkV4uL3aruYqxUa78Yp3G2lT+xYHnvP27bLNMZIw
+ WNWvVlUx+kMY8epNkvuUN4OKmDfYxdd58RzDo+/Qn1XPM47f9YztZgxre8fIAP1Ga+74C4bQxZe
+ kM/tmS2d1CJ5CfKQE+/+5uU17l/aZXMKtr7CQbngYCgjhc
+X-Gm-Gg: ATEYQzyMRmbwHKQEW3qH0J1ZA3msQnD9YGW3d2r8JOIBeVQhpSY2cbJ31txYfJPpcPA
+ Wb7DG1R8fJzkZajGrgGx8PEefaydKSBNXMMMcJGzKuv1BZmlE3Aqgj7JrN/CMUYr642RJ75gukJ
+ xW1rESXNOUnt4wy8gnIClW1BInYrMsryP8pO4y/wP5oYjZbqJHTmaFCezGBkGUL+rIY/fkJxdJV
+ zcunaASwjoAnhG6SFyZTZY+RMciK7J4XSBYjEba0KTyjsSedFhOHliJHoLuai9X2u/vdmAaQGzF
+ mueqendM6/zEakJPOoRYrwOC72l3DvMa1PzyrqwZicjPr5/aO6U81ZlrtK3F4CMm2QJRBlbez16
+ KKFGWDxZ0Vw5XBpRWmypmx/9tgFXtJj5gPPh/6A3aDbIPJMQMt9WjFMcRIR4d72+46GXsxxdbW4
+ IoJA/r9kbOFMlNkmVH5c25fP8Y8ScmC8EGPzmJcnRO9DHKgSxKg5XaAhPlaElexjV4pDyCDMphH
+ eUe/R2QRbeHdsUJYMAuI7A5/xo=
+X-Received: by 2002:a05:6a00:1408:b0:824:93e4:2de1 with SMTP id
+ d2e1a72fcca58-829a2eaed31mr1140486b3a.30.1772781084799; 
+ Thu, 05 Mar 2026 23:11:24 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-829a4636c74sm956093b3a.12.2026.03.05.23.11.29
+ d2e1a72fcca58-829a4636c74sm956093b3a.12.2026.03.05.23.11.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Mar 2026 23:11:31 -0800 (PST)
+ Thu, 05 Mar 2026 23:11:24 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -76,24 +76,23 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH v5 9/9] target/riscv: Expose Zvfbfa extension as an
- experimental cpu property
-Date: Fri,  6 Mar 2026 15:11:04 +0800
-Message-ID: <20260306071105.3328365-10-max.chou@sifive.com>
+Subject: [PATCH v5 6/9] target/riscv: Introduce altfmt into DisasContext
+Date: Fri,  6 Mar 2026 15:11:01 +0800
+Message-ID: <20260306071105.3328365-7-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306071105.3328365-1-max.chou@sifive.com>
 References: <20260306071105.3328365-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,21 +112,37 @@ Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/riscv/translate.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 376517755e..73cfcbdf6f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1379,6 +1379,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
- /* These are experimental so mark with 'x-' */
- const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-     MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
-+    MULTI_EXT_CFG_BOOL("x-zvfbfa", ext_zvfbfa, false),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index cb4f443601..89d4f6fe67 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -101,6 +101,7 @@ typedef struct DisasContext {
+     bool cfg_vta_all_1s;
+     bool vstart_eq_zero;
+     bool vl_eq_vlmax;
++    bool altfmt;
+     CPUState *cs;
+     TCGv zero;
+     /* actual address width */
+@@ -1307,6 +1308,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     uint32_t tb_flags = ctx->base.tb->flags;
++    uint64_t ext_tb_flags = ctx->base.tb->cs_base;
  
-     { },
- };
+     ctx->pc_save = ctx->base.pc_first;
+     ctx->priv = FIELD_EX32(tb_flags, TB_FLAGS, PRIV);
+@@ -1326,6 +1328,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->cfg_vta_all_1s = cpu->cfg.rvv_ta_all_1s;
+     ctx->vstart_eq_zero = FIELD_EX32(tb_flags, TB_FLAGS, VSTART_EQ_ZERO);
+     ctx->vl_eq_vlmax = FIELD_EX32(tb_flags, TB_FLAGS, VL_EQ_VLMAX);
++    ctx->altfmt = FIELD_EX64(ext_tb_flags, EXT_TB_FLAGS, ALTFMT);
+     ctx->misa_mxl_max = mcc->def->misa_mxl_max;
+     ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
+     ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
 -- 
 2.52.0
 
