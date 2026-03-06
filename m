@@ -4,99 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D74EFCB626
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E092BFCB636
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 17:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyYW2-0005Ws-4K; Fri, 06 Mar 2026 11:59:06 -0500
+	id 1vyYYY-0008Fv-Qi; Fri, 06 Mar 2026 12:01:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyYVs-0005NK-Tc
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:58:57 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyYVp-0006tu-Tx
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:58:55 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64ca1ba0089so8693824d50.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:58:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772816325; cv=none;
- d=google.com; s=arc-20240605;
- b=NYmereDyC6I653puC1Te+A2Vj4eyJnqmcBX4ndlOXAjmD7h5XcUo9vzjuinhzX1q6+
- pATHaR2chTeH5aLD+hqk0IpyfTg8sP+xIr1b5bXPbeuZyQ3oIE25C8Duzz4PDHI3dhEC
- bIJizpUNCD/vM1gxs9xsoz4gce/akFkdfv4ZhqDXZn4alx7a8/gk5fPQUomnPxrmXelN
- TYai5DNkq2qS/WIhYMW3yHsOng92vXzcrPiBvi2VGJcttuUJJCCnxTJDzOq92Glb1P0F
- 8Wkoa3BIbAN3h3HzjBiSXJTvhZGFq02c64O2d3yqJqs9Cla7TW9gy/GoQ8u4X5s4adaL
- Z99w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=wMp9iT2oBHVioXDMeR9lJeHUwdoXY49xeXeV9GbpoRY=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=EYA8XrjHXaUn3w4K2xTd9Eo1xBjXe8iWz9MHszZHmZSDai8Z5EQ3BtZlWw7ykpDqCo
- DZwFaBAnvE2ts4zyM7vyXmghR/XqjIntKvdbyckP8V8syJIUjttI/LhRlgJcwU3dsv0l
- P0yyyEP+7t+TCd6j7PriVsN/YMLvIZmXiUjHWY26v7qOPXTuihvFXqJPzdwLBl6ucVSQ
- BKOTILThzPjIQM6AXcenZhMKnAP7PZWKq/ijad1ChLPgsnqYR4RccQSQ5OBXvvPYqoGD
- l/HwNuW7vs7SVz+M9Q146FRi/tMNpdGri3WKWjglSQ2mklZtBOgewjWMadJ1U6m2DYsn
- NLUQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772816325; x=1773421125; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wMp9iT2oBHVioXDMeR9lJeHUwdoXY49xeXeV9GbpoRY=;
- b=iyhe6Uja6Wx3YsFKRwhbJwm7Mkub+f1RIq3mjWd/RePCb1Fd8r8Rr8Zntd5YtzTusR
- 0MvnrpSUZMfm1ogIObA40xpPX6GK0X10o1NkdBlXfhIZCkEVIKqUQJjhkOX80sal9m2B
- taPUW8Zf5kYgJL2cT34t+dmzDuoWFrtE2MozSf4xhrXpK3G8YXroNLl56F1AsrQIZWGv
- doY3toMkhKJUl8jJp/xtilosON4TD02K4/aOuZVFsp37sc5O6F+bXCAsQ0nCz1OKujYm
- g+1Z3sGPJ1f5cbQrwUen9utvsF0vU6V62mqKanPc+tw1WkO5W/rM3LOF5X9zbO8OTHD8
- M6rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772816325; x=1773421125;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wMp9iT2oBHVioXDMeR9lJeHUwdoXY49xeXeV9GbpoRY=;
- b=Zc7Ej8kGF2rC/rv9iHN92qiEDKyPsi8CCi1nPYmbCt+mtIO5SVusM6PhPj9Ty+bxD8
- L0ZIM+oMyIYUE6SiWP0bXsI7xzWBZCahrBVyvNg7TTH5ljBgeuycwsNZSnn+Gs78HoKU
- tkEddHuQ6XELCOUsSZdep7XQF70jh5sXhPhBQ8YBQB4k8+TtvN4gIjV0krIGVkreffYx
- lS0B1liy/CkCn5Y5ZXaJRFwJbgsyU5OXPSzFdWMOFKrJvvSz05IbvTT8PT0FUwKx60YH
- +F1QhnHP93OMtg5+P8t79j8WSACzKE015oDCrHj0JrsRv3BC3fb+Z8IV/k9rGRhwI4BX
- sIqg==
-X-Gm-Message-State: AOJu0Yzs0r7AVsext57JW8hyPGsGLHnihMhu9KDqpkeIabdd8Zw03+Ce
- +DMtwC+GnfXiA9rUWiOeBcpwNuTOJMcfXsNC9KzmKWy1apdvKCJw2kP7SgemhCGgTN29Pnba1/t
- za4t9zpojrBqOKOi1LLI9btV25+l+8rw2OThkWKVajQVndsfsQl1Y
-X-Gm-Gg: ATEYQzzMVcDxOMqJBDeRVgZRE92zZYlgHeDHe3ePRy4n6/Xf7sbae6PilcKfx90a5O+
- CJTTTn/ZbiTUvaf1GLy8qxRW3m0GqSq6a5zN00jghm+1uNMHKbnu6YuRc1E5BhGUGs4DDUxXIt+
- G4uO8D0N35pWaZq6lEj5Ah5R24PYL8MAs2YJx0LWQQ2YcAKOQJwP1VxLhFyahU8Gdiwg5l6vy7d
- o8vQR1JSP+of5KLbn3SNWquDBLRdFKIJ0KOarUPs4IcVjcDY5hrfsNOaqvQjKBEJP+VjBeIBHJh
- 6KUVuFabFDVHNcwGuxF3kY+iHlxh7Kr5v2LNUSzYOHUi9YanCEjfaawOYVNJWthbSVM=
-X-Received: by 2002:a05:690e:11c8:b0:64c:9fe1:38d7 with SMTP id
- 956f58d0204a3-64d143a1751mr2511543d50.85.1772816324698; Fri, 06 Mar 2026
- 08:58:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vyYXh-00080r-PQ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:00:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vyYXf-0007Oa-Ud
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 12:00:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772816447;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KLzwEjeBMchNV63gBdE1LUgL5fiWC1CwtrxXEtnhMUE=;
+ b=GhJJ+DiTvhq9fUaoGOlrWVPkq7lKgBGhRwMD/uT7RB26UsDm6oFdhaEV46AQdsksIlAy/o
+ /iiLIKHE0sI0fA1kcrz1az4SXVWKLMLu5tiQHiGfFQFhI66jbP7hT1SSnnJ9kZhmGJ6T1e
+ OH++VCZNFwz2acMz90LKTt3XawA3wBQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-581-1UGYQnt4PeSY8rb9KvprZQ-1; Fri,
+ 06 Mar 2026 12:00:45 -0500
+X-MC-Unique: 1UGYQnt4PeSY8rb9KvprZQ-1
+X-Mimecast-MFC-AGG-ID: 1UGYQnt4PeSY8rb9KvprZQ_1772816444
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 742BF1955DA6; Fri,  6 Mar 2026 17:00:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.197])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1472F180035F; Fri,  6 Mar 2026 17:00:42 +0000 (UTC)
+Date: Fri, 6 Mar 2026 17:00:39 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: Avi Kivity <avi@scylladb.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/nvme: add `model` parameter
+Message-ID: <aasIN6T7aN8RhUfz@redhat.com>
+References: <20260302142831.1269291-1-avi@scylladb.com>
+ <aaWhHEI4QaDINc8K@redhat.com>
+ <CAF950WLOB1BXkJ+rmRea3nWuLRZG=O3gDas9HUhM1LMsmrnffA@mail.gmail.com>
+ <CAF950WJJC+Wr+K4DQeyqM=_NdQfz=DJ+mN0fM-nyu0XBQe2pag@mail.gmail.com>
+ <aal7cdCf2A0SUO_u@AALNPWKJENSEN.aal.scsc.local>
 MIME-Version: 1.0
-References: <20260306155801.2198582-1-peter.maydell@linaro.org>
-In-Reply-To: <20260306155801.2198582-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 16:58:33 +0000
-X-Gm-Features: AaiRm52o92kkDTAv2njZL6BVIdMui3xfzHkS_rnoVXMivW8KcgqkujPVzHXKXqk
-Message-ID: <CAFEAcA9DHJpMbpWP0_1igx7Qxo8N_7jJ8iaCepeUkVNiCKFKVA@mail.gmail.com>
-Subject: Re: [PULL v3 00/36] target-arm queue
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aal7cdCf2A0SUO_u@AALNPWKJENSEN.aal.scsc.local>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,50 +88,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Mar 2026 at 15:58, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Dropped almost all of the hvf gicv3 and nested virt series.
->
-> -- PMM
->
-> The following changes since commit 314ff2e07ddc6163554077d68aed5d76a50b8e3d:
->
->   Merge tag 'pull-request-2026-03-05' of https://gitlab.com/thuth/qemu into staging (2026-03-05 16:58:20 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260306-2
->
-> for you to fetch changes up to 7b6a3c3349e8ccc11c1857abee7fa218bfdf53e1:
->
->   hvf: hvf-all: stop including hvf_arm.h (2026-03-06 13:27:24 +0000)
->
-> ----------------------------------------------------------------
->  * Remove deprecated 'highbank' and 'midway' machines
->  * hw/arm: Add missing dependencies for STM32F405 SoC
->  * hw/arm/smmuv3-accel: Read and propagate host vIOMMU events
->  * Minor MAINTAINERS updates
->  * target/arm: Improve logging of migration errors due to system
->    register mismatches between source and destination
->  * hw/arm/aspeed_gpio: Don't leak string in aspeed_gpio_init()
->  * tests/qtest/iommu-smmuv3-test: Free QPCIDevice
->  * chardev: Fix various sanitizer detected leaks
->  * tests/qtest/test-x86-cpuid-compat: Free allocated memory
->  * tests/qtest/qos-test: Plug a couple of leaks
->  * hw/arm/smmuv3: Fix various minor bugs
->  * hvf/arm: expose FEAT_SME2 to guest if available
->  * hvf/arm: drop unneeded includes
->
+On Thu, Mar 05, 2026 at 01:47:45PM +0100, Klaus Jensen wrote:
+> On Mar  5 13:11, Avi Kivity wrote:
+> > On Mon, Mar 2, 2026 at 4:50 PM Avi Kivity <avi@scylladb.com> wrote:
+> > 
+> > >
+> > >
+> > > On Mon, Mar 2, 2026 at 4:39 PM Daniel P. Berrangé <berrange@redhat.com>
+> > > wrote:
+> > >
+> > >> On Mon, Mar 02, 2026 at 04:27:48PM +0200, Avi Kivity wrote:
+> > >> > Add a `model` parameter, readable with nvme-cli. This allows
+> > >> > impersonating other disk manufacturers or hypervisors, similar
+> > >> > to the the -smbios option.
+> > >> >
+> > >> > Signed-off-by: Avi Kivity <avi@scylladb.com>
+> > >> > ---
+> > >> >
+> > >> > Disclosure: prepared with AI assistance. I believe it to be of good
+> > >> > quality.
+> > >>
+> > >> Can you clarify how AI was involved,
+> > >
+> > >
+> > > I asked an LLM (Claude) to add a model parameter to the nvme code, which
+> > > it did, then I asked it to documented it, which it also did.
+> > >
+> > >
+> > >> as QEMU's policy is to decline
+> > >> any contributions where AI was involing in an authoring role:
+> > >>
+> > >
+> > > Very unfortunate. It would have taken me an hour or two to re-orient
+> > > myself in the code base, for something that took me a couple of minutes
+> > > with AI.
+> > >
+> > 
+> > So what's the verdict?
+> > 
+> > FWIW I think the probability of AI copying these few lines from some
+> > non-GPL project is zero.
+> 
+> As maintainer I don't have a problem taking this patch, but I'm not sure
+> how to deal with the policy in this instance.
 
+When introducing the policy we had debated whether to allow so called
+"trivial" patches where one might argue the copyrightability concerns
+are negligible, but could not come to agreement on that matter so left
+it as strict policy.
 
+> Daniel, please advise if I can take this. I'd have written the patch
+> like this myself.
 
-Applied, thanks.
+To avoid having to exhaust time debating this, I've wrote new
+patches myself without direct reference to Avi's proposal, which
+do the equivalent thing, plus some more on top.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
--- PMM
 
