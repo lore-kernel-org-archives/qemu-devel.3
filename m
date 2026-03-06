@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC0CFCC067
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA4FFCC06A
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vybDY-0006T0-S1; Fri, 06 Mar 2026 14:52:14 -0500
+	id 1vybDH-0005Gy-1d; Fri, 06 Mar 2026 14:51:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCO-0004Cc-QJ
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:02 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vybCN-0004BD-BP
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:59 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCM-0000Qf-2h
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:00 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48375f1defeso72344085e9.0
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:57 -0800 (PST)
+ id 1vybCJ-0000QD-43
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:59 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-439b73f4ab4so6371058f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772826656; x=1773431456; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772826653; x=1773431453; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1Msw/rTa8Xu2Of6o1/fUJKClgRIjYd2FntFGU5RPSt8=;
- b=RdqUKpk41Pi0wNveg95z2Rlm5vvmCb109tgotCdupyPgCwVC/bxQYxrZ3+aYy1L8MD
- h4CIvE3UeSv6Jhs9vyEyXi0w5h8c/NdfrlMChD0dRCGE8SRX9YZ5QGK6szfKHLgPMv2N
- 92r8FmHJzkno4pBMCJhMyOBACawgTOs+b/jmayBk6bk0qmpeHGn1EVoP4U5Ql8w1QVRr
- F7iRE432dmQK6BmJILqxIi2Dp1gWwLgjh72pluEdN86Uz4oGqS9P3sqhmDz+LeglfMZd
- NW8+82Yp773/Dkwvqw9z8ZXNxuGfGvp1h0xh+q76ZM/+s4oz49ldRDIxUIF1dyNWXAat
- AQfA==
+ bh=9Ywt0UlJuFZem0wHlvStS/BsneoI1aIANoubc5aE6vw=;
+ b=w05TMZUvypXaCSn7WrSUvV6g3HF/PolzmHoHRSENn2QtLiQPXrDDZVRzSF0TU6f3sX
+ 30P5rQORmoQx6Aymuw6ItTIjkVeIjwBR+tAXSdmRyARrtdHt99BjGQf4GC5lNmBJk7vt
+ 2iB/mDqr7BDYgw+IvTd46Q7Sddf6C6+7pHDzFiPacYkYXUXLHEPT8AGg0CpHt5ZkZJVV
+ vnb5h9qt9HsWk1TuRmBAzZoxRGXcudP18epWul9vKtxTXhrurkWeGg72nWkoHiZSwtKO
+ RYGFCEM7BaML2tcTVxQHxgcoMyAZpDgVokN7Rs/1mdpSJ40dH5Fo0vT0h5uTa6fXbDyz
+ I14Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772826656; x=1773431456;
+ d=1e100.net; s=20230601; t=1772826653; x=1773431453;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1Msw/rTa8Xu2Of6o1/fUJKClgRIjYd2FntFGU5RPSt8=;
- b=KK0cMdCM9lmlgXiNIA659dqpst6e2utaGvIVu7K9loLfcezUTB7B66nu6W8Lg9mCqZ
- E7KewPnrbgRU2Z8aO9HXPsob2dvZ0GrmN/JoVCpeqqnhqqu/qnafoFN5WoFo2yP29/YP
- A+5qAXyIPHUkU0OXnWDhueDIMrwAkjgADVz9ed9Q9GdDUF9TeU7xu4i3SWnG0a3WJVwI
- RsT+Gg2qHYKTkMzvO0ybDuAw5vAXNEToRPqvMRslw8HvZq8+OrocGEm9MP9cIgtsXMXM
- 0ncGACYygPzHMn1jYf8glyGdHaovwo6Gw6aiSpMOzjCsl9Oc6m0150auHMNWti+2nm+I
- kbOQ==
-X-Gm-Message-State: AOJu0YzecvM/2xYtpxEh5edkPwDPCjBoSMk5BF7aXSMsnoE3mAPODa5I
- K7jcfoEIjxMyNX9nxpt1QpamV6nSZjFQAxEQazGHeyVZHs7DFVD7utw8H4r9MGovuY4=
-X-Gm-Gg: ATEYQzw96cEoPiB25mXUxNadCeZ5w2f6L2D/rCiEFDotj7rt+GsZZUPiSFYrJ+3Q7YX
- tgFUMHsW8/JweYPBpcVFcs8M+hUm0eWQGYdGxQ7iOQBJtsjzZz/IZCLuKLdspXFgpBOhaZsdLuD
- /+F7BMnWxAGwfhxb0bpmtFImFPzvtlSqyH3iMfPSHx/s41fnmvdeokQyaHAY2jf3eSoMFPSX0UT
- fB+Gd+8oa3DyBx6vf295sGGT8PbEQKysiy56sd173sksbluosfPlv81sYmwa5+z0zvhSuRQmytk
- Bdi/taPwXODz8p5Yccxqc4Esl5ZuRyDluhoBacw7+cgburUsiKUuW8nStGRv53+i0A5W20e6Cp/
- ttRL5zUNzXc/ke39yXwVriVBVWZq0QzyBb1G+FOzMfQtTQ8JYWTnyFh76utAjgvCJKemFLNDr0H
- lU/Zq6+xAOQbBbWfpSjE0Y8nE=
-X-Received: by 2002:a05:600c:8714:b0:477:6374:6347 with SMTP id
- 5b1f17b1804b1-48526957d50mr50071825e9.22.1772826656552; 
- Fri, 06 Mar 2026 11:50:56 -0800 (PST)
+ bh=9Ywt0UlJuFZem0wHlvStS/BsneoI1aIANoubc5aE6vw=;
+ b=oYwSH/E0sMHta89OsgVrZJl4P+5IPojQjY5gbFy0mWUzSo7t51ftZ+EcFNRavk64g3
+ vYqThgH4GeZGGLsW/WRtmpYbY3EUUg5qRp76vR3+wCR50jrzMGJDtSRtKbsomHU5g6Jh
+ WmhsWkWWKm2aULWLeTTWRPrnmuzmryZdstin3/nlbV3syvEYfUfgLAlI1I89381smpEg
+ DoMYEb2NlzVTjPK3QULShmJcjh/LwtstOceIb4kYpgduSDDTP8vpOEKY02TP+UAkpneh
+ onafsPRqp5KuJTn4NX5PrJ5hYNGFmIkOuqVnmqdiaPAcICLcZZBmBbO1bqpyPKi4OQqr
+ hu2g==
+X-Gm-Message-State: AOJu0Ywbuhdc9qSqIfmaRmbzFX2ad0ZxnYW77ad6yMQqR397dkZJsVia
+ 5MTAOokPBsYypFpuc4lKVGXE+kRGMOnATOud/GSuzTZ7NHVB+fY/1GwSruxPRGwrznLEFpny6GL
+ LvvOJ
+X-Gm-Gg: ATEYQzywfnXBcngaCK6xLifaxAqL72qN5QtlInsgelyo+Zj21SqJKDSCFNTxxRSeiSk
+ fNlerb922M+JC3pnCU65sv58/48N1j0E7iC4cAJzGpOR14ZaVk/W2VbEBtk4/LM5LRpODpC+b91
+ It86Ol3WAoSl8WBiGc4Qn3fpRhq7qq22jQ1wPVhjUP+S6eKyFj87XB/x+JvPtFSiO+CdkwaFkDY
+ Zy4mfszCknIZxdWB3TYfBB4NfnHzQQFBSqSSGxU+nSFUQGeJ3JBdU5nSw++PG9UfJ6cw7BNO/gd
+ iUtWjHVmu6drV38vilExu1UWnw24lfwMU+177kSwAbG4Z2ecvWPlplWZimFYLWydDpjDVf3XtMu
+ N1gsbs/2VyLRnSEKPbCuGzgAKbswqvdADFTA6Xt9aswx/X9ydnBXO/mXAFoEPH80XJ5SqUXVlLt
+ M4OirFLQOHuAlszhk9FEE3vU4=
+X-Received: by 2002:a05:6000:258a:b0:439:bdd7:425f with SMTP id
+ ffacd0b85a97d-439da882125mr5981887f8f.35.1772826653452; 
+ Fri, 06 Mar 2026 11:50:53 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fad2812sm227680615e9.1.2026.03.06.11.50.54
+ ffacd0b85a97d-439dae35cf7sm6608821f8f.26.2026.03.06.11.50.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 11:50:56 -0800 (PST)
+ Fri, 06 Mar 2026 11:50:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 49E4B689DD;
- Fri, 06 Mar 2026 19:50:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 76A4C689D5;
+ Fri, 06 Mar 2026 19:50:49 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Yiwei Zhang <zzyiwei@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 14/20] docs/system: virtio-gpu: Update Venus link
-Date: Fri,  6 Mar 2026 19:50:41 +0000
-Message-ID: <20260306195048.2869788-15-alex.bennee@linaro.org>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 06/20] ui/gdk: Restore original context after new context
+ creation
+Date: Fri,  6 Mar 2026 19:50:33 +0000
+Message-ID: <20260306195048.2869788-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260306195048.2869788-1-alex.bennee@linaro.org>
 References: <20260306195048.2869788-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,32 +108,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Change virtio-gpu Venus link, pointing it at the Mesa Venus
-documentation instead of the protocol. The Mesa doc provides more
-information and also has a link to the protocol.
+Get currently bound GL context when creating new GL context and restore
+it after the creation for consistency with behavior expected by virglrenderer
+that assumes context-creation doesn't switch context.
 
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-13-dmitry.osipenko@collabora.com>
-Message-ID: <20260304165043.1437519-15-alex.bennee@linaro.org>
+Message-ID: <20260303151422.977399-5-dmitry.osipenko@collabora.com>
+Message-ID: <20260304165043.1437519-7-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/docs/system/devices/virtio/virtio-gpu.rst b/docs/system/devices/virtio/virtio-gpu.rst
-index 89153103b9f..ef5fb0401d5 100644
---- a/docs/system/devices/virtio/virtio-gpu.rst
-+++ b/docs/system/devices/virtio/virtio-gpu.rst
-@@ -83,7 +83,7 @@ of virtio-gpu host memory window. This is typically between 256M and 8G.
- .. parsed-literal::
-     -device virtio-gpu-gl,hostmem=8G,blob=true,venus=true
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index c709b2ce0f6..ce49000d3f1 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -250,11 +250,13 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
+                                         QEMUGLParams *params)
+ {
+     VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
++    GdkGLContext *ctx, *current_ctx;
+     GdkWindow *window;
+-    GdkGLContext *ctx;
+     GError *err = NULL;
+     int major, minor;
  
--.. _venus: https://gitlab.freedesktop.org/virgl/venus-protocol/
-+.. _venus: https://docs.mesa3d.org/drivers/venus.html
++    current_ctx = gdk_gl_context_get_current();
++
+     window = gtk_widget_get_window(vc->gfx.drawing_area);
+     ctx = gdk_window_create_gl_context(window, &err);
+     if (err) {
+@@ -275,8 +277,12 @@ QEMUGLContext gd_gl_area_create_context(DisplayGLCtx *dgc,
  
- DRM native context is supported since release of `virglrenderer`_ v1.0.0
- using `drm`_ protocol.  ``DRM`` virtio-gpu capability set ("capset") requires
+     gdk_gl_context_make_current(ctx);
+     gdk_gl_context_get_version(ctx, &major, &minor);
+-    gdk_gl_context_clear_current();
+-    gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
++
++    if (current_ctx) {
++        gdk_gl_context_make_current(current_ctx);
++    } else {
++        gdk_gl_context_clear_current();
++    }
+ 
+     if (gd_cmp_gl_context_version(major, minor, params) == -1) {
+         /* created ctx version < requested version */
 -- 
 2.47.3
 
