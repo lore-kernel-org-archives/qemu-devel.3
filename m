@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26BEFCB608
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 139C4FCB609
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWfp-0005tJ-GA; Fri, 06 Mar 2026 10:01:05 -0500
+	id 1vyWie-0007q4-4M; Fri, 06 Mar 2026 10:04:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWfT-0004ql-Ro
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:53 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vyWia-0007i8-Qu
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:03:56 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWfR-0002pB-I7
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:43 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4833115090dso96362195e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1vyWiY-0003Kz-Vb
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:03:56 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so7181087f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:03:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809240; x=1773414040; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1772809433; x=1773414233; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3L9keBAgygnmQFdbbQgwX9U1zoCpckZ2GX7ejdHIGUs=;
- b=Kue5OOMzq9SB6dgU3lJNMiS7lfmGJiBA/FQCfwnDgwWgPEJ0j6qmCwwDWQLAAJelcs
- toDeur1gsoTjQmbcg9EKGM90+SgjSVgNVPYyJXO+yU5l4lB3z0WrRoYAOeV+nwBFMSzs
- L1DO7aCSLpmjD5QnQ51H94D7FXj8bGgh/RnR6reaY8SAniY8xsngbWIs+5nn2Hi5UZ+5
- OHAvNt+jQ/XCAPviiifHidtj9fvAj41tFm0qzXFjbSXqbsnMWwcH87LhvpMQElBnGsmq
- XR/IQdeGxIyPSngRWa2kVofrzsFiGERLJfif2j/VpY7gD0GTQpjpUgihYLazzs5wmgqC
- FBzA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gpP959L10hBsg4INOewg8w8g5XRXZUc7QBJng71AuUU=;
+ b=Axyj4MNH+RGBrjyeNA93sq56r1V3eRQBhUC64tYn2zv1hQV7AiNN1xaONZA3+J5crk
+ FMxlr5U3B93fG60iAA80z2HcnSwjXQh7FG0rtDbQ2FFaoQVTjp3OsMDbHiQ5TNqnAL39
+ It1Hr6UcXTzbx+sm3eTDUthk3goh9Kud9vfJs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809240; x=1773414040;
+ d=1e100.net; s=20230601; t=1772809433; x=1773414233;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3L9keBAgygnmQFdbbQgwX9U1zoCpckZ2GX7ejdHIGUs=;
- b=AGY38NHWyWJadxN3oBEJrr96nrqSydV6ZTG22mM47LFoWMduLsxWouJjJaNwPFwHlP
- hjimsIOyqmvGfTcD4naxBQT3lZnY0VYMbvve0XMHvASeKgJ60V4kmqMTwVahlBNnIcwy
- 3E1mRmvYAgsvIyHvnxTDZ5coiLQAEMgBtCy4vRoW3wzwMvrgz9suWN6nQAQTAVOR3U6H
- ot0JhJU23GIwcdTDbQ1Wglu18iqws/g2TcTJtgsM8XCZB8wiTj3Txt+q9yQ4Odmz7+2F
- Dn5R46kVLOZMSld+G+ozwquzN8qVF9pH6K8LNzMVuT4Y7+mNsFd5DbFlWz3U250PQ/Ed
- gsOg==
-X-Gm-Message-State: AOJu0Yzt6T4LlSGU7wpfF426CkzEJxSxS7/wOJmVJKbt+MNuymDXYJLB
- 69ztZGm+dhXrvKQLAIDmS7ZabwON+KYsArUTvvxcPpwMYHai5lDTTXotuCXxIfYIeV+94frZvRP
- SO2mA
-X-Gm-Gg: ATEYQzytX36qJ6hwCqeRyzq3kSQr83/KTCpTr7fzK050lUY9vHjU96BTrSk/VGbOcK8
- wtCgSsuaqmq6WfHAGH+R1sAMvwKfIxJWCF1f5ljBbQkMMTMWCH9Rif//mIg9HzYYSmkteCoMfwV
- 9VpidQyjEm5jKxeLDInJ+UiZdyDqHFkGGBSOJ5FLCAhPrU9oyBqvmdo5s1anTnUq6Qbn1n2qSia
- dMGQaqfNe288Hp8n+tpN3emJEfSb7jHUdeu04GCffkAqHODtiQs1kpguMaFc+Uu98Wu5S+ui+tR
- uNq/EPcW6abBXUfbDsZhHcPD9UaC9HAMj0XFUy+pso8US0ULSbunc/WFwMv9D8n7PcbnL7KiFvm
- wEeBLJ0MTywOzudpTG0JASfTzSIqQmtxMPly2bvXD1E+ltXSRM981jRTi9VTY52NHbRQFKAt8bx
- Plg5MaiPUaLfSli0yK274XlpeXI1aRwHDQTuOPs8ptAs6lD34IuJgv0bY/OWvIvObSpI0eR9K1i
- SVLqtZF1YpfLskQexmzRDz+ZlwVq1g=
-X-Received: by 2002:a05:600c:3acf:b0:483:b505:9db4 with SMTP id
- 5b1f17b1804b1-48526978d8fmr38235955e9.31.1772809239758; 
- Fri, 06 Mar 2026 07:00:39 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gpP959L10hBsg4INOewg8w8g5XRXZUc7QBJng71AuUU=;
+ b=cfOJ9vibXiz/XmP8sFwI5oBDQOyPAyt5BB1eQYAg81Ntb15X2RzPBU4oUf/fJPxBLR
+ +r7CJb4zldD+DebOELSHeA46cMRCZM7OENkPn87UEzE4u5YgtFTkUhwrQrc6uuvJNwnM
+ VRPfFN5l3TPoq/y/nGrsKfatl5cG4ezwrrRxhjVOVVN18Eajp4Wv+Hzts8prZIVXJEXT
+ +PTI6wDslixKT3piUf+rP1Q1xQ+OHLC3CtFifMbzSkG0SbVJowBPTdnZwC+UYAKqQO7D
+ jouY4tTznjveg+TEHRQcJCf6tmghboR2gMWQ9C/46sdGVJPg06dE1MsXH98b3Qw1RxzY
+ 4unQ==
+X-Gm-Message-State: AOJu0Yy/xuUzxSkBpYFUnBFaI5RWlLinxbduzjTAJde/6XgSh11Sm7Xq
+ zf1vPbHfMdd1embxgYBhspge0EaJxngHBJYeO4+3X+ygQPjZBm3zuTokAJsS6b2iXn7xOYhLeXK
+ bFRiS0Qo=
+X-Gm-Gg: ATEYQzx5r+HK4tWPAqFN0uiLjvtY8OAoLln/RFGiIJv//UpNXz21mwpEQMjqQqpJPb4
+ WzEVYr4ZzIE6+br/X3mcBthwV3bqXaqX5YQQVWIvLG78w7sd7diRb3fM5WWuj/M75F3DTz4en6B
+ SuzT01w7UBEXsNkbiXO4VycQZP+Gbg76oGEQFuM1ssw5jjA/cQudk+2CkCjjnlCbWLo8U37QCay
+ AU8j9C/QRnFrc8Dtn29iVYy2AYjYvwKDWIjUVEzzxS0/qTkfPi5OGwjTWVsNSpqL1aWVeXkp8nC
+ wLMzUOGIOHlrgneAjVbXmcT6c5BYZ5JdYrMcV28ZQkX5wmIWwMPtMWNFGFgSxoke2kR3bh0BUvS
+ fwqxWMyOtdVAs749j1kjSfQkgnmwMJCi0xUCrmDmKnnn9L7pCb3BFkaUeQYW13idyxCbFfcGZS7
+ erIZPPCFmmvRqma5MHhXyCmgz3c5jbXMmK7FnZk7vAsXtd/DNa19f0Z7i0IVt9BxUeTu9jFe1sa
+ QsboZ05zUbGNmRbUJereww=
+X-Received: by 2002:a05:6000:24c1:b0:439:bf2f:123e with SMTP id
+ ffacd0b85a97d-439da55aa93mr3929690f8f.11.1772809428239; 
+ Fri, 06 Mar 2026 07:03:48 -0800 (PST)
+Received: from alex-laptop.lan
+ (p200300cf57228c00583f1937c9b9cecc.dip0.t-ipconnect.de.
+ [2003:cf:5722:8c00:583f:1937:c9b9:cecc])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.38
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-439dae36785sm4703623f8f.27.2026.03.06.07.03.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:00:39 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Fri, 06 Mar 2026 07:03:47 -0800 (PST)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 48/49] hvf: arm: disable SME when nested virt is active
-Date: Fri,  6 Mar 2026 14:59:38 +0000
-Message-ID: <20260306145939.2162189-49-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
-References: <20260306145939.2162189-1-peter.maydell@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Jesper Devantier <foss@defmacro.it>,
+ Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Klaus Jensen <its@irrelevant.dk>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v3 4/6] hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+Date: Fri,  6 Mar 2026 16:03:40 +0100
+Message-ID: <20260306150342.395923-5-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260306150342.395923-1-alexander@mihalicyn.com>
+References: <20260306150342.395923-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +107,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Currently, Apple doesn't support the nested virtualisation + SME combination.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-id: 20260306130107.35359-17-mohamed@unpredictable.fr
-[PMM: use FIELD_DP64_IDREG()]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- target/arm/hvf/hvf.c | 2 ++
- target/arm/hvf_arm.h | 5 +++++
- 2 files changed, 7 insertions(+)
+ hw/nvme/ctrl.c | 57 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 0183dd8a60..e22a4d16f8 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1181,6 +1181,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 4694bdb4d02..89cc26d745b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -4852,18 +4852,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequest *req)
+     return NVME_SUCCESS;
+ }
  
-     if (hvf_nested_virt_enabled()) {
-         FIELD_DP64_IDREG(&host_isar, ID_AA64DFR0, PMUVER, 0x1);
-+        /* SME is not implemented with nested virt on the Apple side */
-+        FIELD_DP64_IDREG(&host_isar, ID_AA64PFR1, SME, 0);
+-static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
+-                         uint16_t sqid, uint16_t cqid, uint16_t size)
++static void __nvme_init_sq(NvmeSQueue *sq)
+ {
++    NvmeCtrl *n = sq->ctrl;
++    uint16_t sqid = sq->sqid;
++    uint16_t cqid = sq->cqid;
+     int i;
+     NvmeCQueue *cq;
+ 
+-    sq->ctrl = n;
+-    sq->dma_addr = dma_addr;
+-    sq->sqid = sqid;
+-    sq->size = size;
+-    sq->cqid = cqid;
+-    sq->head = sq->tail = 0;
+     sq->io_req = g_new0(NvmeRequest, sq->size);
+ 
+     QTAILQ_INIT(&sq->req_list);
+@@ -4893,6 +4889,18 @@ static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
+     n->sq[sqid] = sq;
+ }
+ 
++static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
++                         uint16_t sqid, uint16_t cqid, uint16_t size)
++{
++    sq->ctrl = n;
++    sq->dma_addr = dma_addr;
++    sq->sqid = sqid;
++    sq->size = size;
++    sq->cqid = cqid;
++    sq->head = sq->tail = 0;
++    __nvme_init_sq(sq);
++}
++
+ static uint16_t nvme_create_sq(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeSQueue *sq;
+@@ -5553,24 +5561,16 @@ static uint16_t nvme_del_cq(NvmeCtrl *n, NvmeRequest *req)
+     return NVME_SUCCESS;
+ }
+ 
+-static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+-                         uint16_t cqid, uint16_t vector, uint16_t size,
+-                         uint16_t irq_enabled)
++static void __nvme_init_cq(NvmeCQueue *cq)
+ {
++    NvmeCtrl *n = cq->ctrl;
+     PCIDevice *pci = PCI_DEVICE(n);
++    uint16_t cqid = cq->cqid;
+ 
+-    if (msix_enabled(pci) && irq_enabled) {
+-        msix_vector_use(pci, vector);
++    if (msix_enabled(pci) && cq->irq_enabled) {
++        msix_vector_use(pci, cq->vector);
      }
  
-     ahcf->isar = host_isar;
-diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-index 6b1c3b9792..9cb58ad9ab 100644
---- a/target/arm/hvf_arm.h
-+++ b/target/arm/hvf_arm.h
-@@ -11,6 +11,7 @@
- #ifndef QEMU_HVF_ARM_H
- #define QEMU_HVF_ARM_H
+-    cq->ctrl = n;
+-    cq->cqid = cqid;
+-    cq->size = size;
+-    cq->dma_addr = dma_addr;
+-    cq->phase = 1;
+-    cq->irq_enabled = irq_enabled;
+-    cq->vector = vector;
+-    cq->head = cq->tail = 0;
+     QTAILQ_INIT(&cq->req_list);
+     QTAILQ_INIT(&cq->sq_list);
+     if (n->dbbuf_enabled) {
+@@ -5588,6 +5588,21 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+                                  &DEVICE(cq->ctrl)->mem_reentrancy_guard);
+ }
  
-+#include "system/hvf.h"
- #include "target/arm/cpu-qom.h"
- 
- /**
-@@ -35,6 +36,10 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
-         if (__builtin_available(macOS 15.2, *)) {
-             size_t svl_bytes;
-             hv_return_t result = hv_sme_config_get_max_svl_bytes(&svl_bytes);
-+            /* Nested virt not supported together with SME right now. */
-+            if (hvf_nested_virt_enabled()) {
-+                return false;
-+            }
-             if (result == HV_UNSUPPORTED) {
-                 return false;
-             }
++static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
++                         uint16_t cqid, uint16_t vector, uint16_t size,
++                         uint16_t irq_enabled)
++{
++    cq->ctrl = n;
++    cq->cqid = cqid;
++    cq->size = size;
++    cq->dma_addr = dma_addr;
++    cq->phase = 1;
++    cq->irq_enabled = irq_enabled;
++    cq->vector = vector;
++    cq->head = cq->tail = 0;
++    __nvme_init_cq(cq);
++}
++
+ static uint16_t nvme_create_cq(NvmeCtrl *n, NvmeRequest *req)
+ {
+     NvmeCQueue *cq;
 -- 
-2.43.0
+2.47.3
 
 
