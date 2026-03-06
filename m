@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF43EFCB605
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BF0FCB608
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWfq-0005zX-Ie; Fri, 06 Mar 2026 10:01:06 -0500
+	id 1vyWew-0004Fm-C6; Fri, 06 Mar 2026 10:00:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWfG-0004ha-IP
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:35 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1vyWeu-0004Cv-GJ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:08 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWfD-0002mP-UA
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:30 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4852afd42ceso1372115e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:26 -0800 (PST)
+ id 1vyWes-0002hQ-Ju
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:08 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4806f3fc50bso101964225e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809226; x=1773414026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809205; x=1773414005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=I1bZ8nhuwxwX9BX57Sucbp1Bxm79tBvkjf4sRE4Bo1s=;
- b=wfsnsvpFCweBCWFWawukWVRtxcSRfCbAaLxBKptghkyyyDUfOvnikUUYoYEtCRMZmA
- aHU51u7L0qqsGWZbR6AiOaKVUI1oqBArQ0hyEmaKRXgG1uUTwbg0yiDeiFJe+uVMMiMf
- 1h3K7JzbOu2DgWZKISD3qj8RLvDL70PVRs9iK139MRcG+9T9vi3F5bC+bvYrKlVe+IgR
- hGB0NTcH+1iejT9IQk0Git+TROvmqKmkXANqdwVQTnYLVPqqPs6DS8qjyi5FKIm954je
- wCq7q2qX5oRhO+aYIIGyzH6YHjJddxGT9pQ2cQQkCwRE/c9ujIUj7kXyBBaznBBaHlBM
- FRPQ==
+ :reply-to; bh=wo0rXQ6D0LSglAMllL+ii/BMzV/Kw9eNTOAdJyQWzn0=;
+ b=jA+v2S8CWuv/efphyyu/h+0qTQpFsXi1nfWbNi2J0tuREtZPZRZq/Tcx/qpSEII3k0
+ gcR+Ruvfn9TdMb7tJjh5Ye9PDgoUWyYFN4wWUx9Ng/0AHdAJeZ8xIQCaDvYDIx22nDxj
+ RZGkVCA4LhHcTFaYa1ZlwvkjuIVgHIDGYnjADsv//L1TjUHQU8K9ZnSEhDMsnf/pCj06
+ lWKxQCHnqqH7pChpESwgUZ7U9Oq9LLuGAc4FaDkp5H/7vzop0KJXEZ1+cCmatRlO73bA
+ csc9myZ9Kg/j3QrRRnierb8P+38bYgMH3Es1+cfPn1UFctAzmWjq05BcaGotDpRYnUSZ
+ o0gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809226; x=1773414026;
+ d=1e100.net; s=20230601; t=1772809205; x=1773414005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=I1bZ8nhuwxwX9BX57Sucbp1Bxm79tBvkjf4sRE4Bo1s=;
- b=cXT9EPW9z8quU260DXhlXpdtEirTqHcX983AymMqyMRyZ/FuZo5H3Q8O9exYddWVQi
- Ou9jis3jHdgNULowwI2avipxAO1d0U8pfbn1eVNnmWZka9mqWO+5HOW87vlfg5ea641a
- BC85PPmhH1iLgZY52UngoC/KtjUKN6aV64uHD+bv+Phori8GHJPLkwNGO0rkqG2j6sYH
- DTLXqSirLsIBqZRxtDs4r0lRpUffem/Gp5fNYFgO5ZywdD+OrHHEveC6MXme59WjqxWA
- yC9aVwFyFmfyUKCUwhY/IZ1iUKeFo0aUFAjyO8kqZMV02EpmeIg0UI3H2/7nP8kjLiRo
- A8nA==
-X-Gm-Message-State: AOJu0YxKTYblV4NY4QGtd4FoOb1kwO/jB1/DCsW6HQlP1QuhaJLW1tDK
- ed0FcIKFoUAV82Bgckosewr8oTTDo+k/Cza4AN9X+KaLuIVGOgoYtC9aiv8WrwpIkDIILdjunJe
- rw2ek
-X-Gm-Gg: ATEYQzx0+942CkUVHDrdLzqgZ7EZl/OLd/OfTdRtkASemLNcyFsBg6UxDF+vSTtkjXM
- geeVk1fU9YAnQvfI45a/nLd3qcvWH1FaZC1wX8NGnZewCRyoSsrolcoQuj8qbo8OWRBsrgsUTdg
- 3Se40/dlcpvatgV0CSzuRqDtK/rAYaMDJSrNKbMrwpmJTVuvPdbmC/YBT8ZbawE6GUbVOPikufH
- LfkdJ8X4y7U4U4LL4MhsMBA2uDs6XfBnEVSgKvkOFGZL2b/S/Vmg9pUqDX7CE2qfCz6pw0KKI5i
- aWjzL6x+WKjVh+s487htPeIU+EJjxPcxGo73pwbZvtzoGDWuue7qj7ebrpXMYFEYumpahkGX6xS
- u6JRVBFvb6pwIW8rbkpGd+0JsWFT/AXGOUPWORmmAex6ADi7pB5PGfkptnnis8rC1lUjmkCEBSG
- /tZfDF4+tA4rWgxHhHv8JJ08E1q6RVWoHKvqnezKMYhgb4fE6Gw8s7RwA3mZrkGVzUdBqX0kJdy
- pyqkgHl0cz7ZMay2LVhwpNN3E5Sa9o=
-X-Received: by 2002:a05:600c:c088:b0:483:79a6:e7e1 with SMTP id
- 5b1f17b1804b1-48526919935mr35859445e9.7.1772809225589; 
- Fri, 06 Mar 2026 07:00:25 -0800 (PST)
+ bh=wo0rXQ6D0LSglAMllL+ii/BMzV/Kw9eNTOAdJyQWzn0=;
+ b=UxaGdIxC/tM59DVjDXr6fd8+GrmESifevdvVv7qlpiKmmfH+nIXGhxHvIYQCZOkNWV
+ XYcYpV/A+oy52VaKPhSQuPoGoY0N+otY5QpEQCLD4dGS/SKStR+jAjq4Zqqe6IU4fhaU
+ 0hIPbZSD93FTV10EEiRMBnTLGn/Y+FOs1q7Dotg2LMq9feROnGTGeuYh+vjNJYXDyRe3
+ pP3gp3niWHyeZ7LjjL6v8/YrGOWA00+CC1RamJKsH4NnmKyclUguMCfHmGRnGw6/Lnab
+ XGh/ITAZdCshrJOBAxaLuWorkPafL0VBjxHN6TURHrbV8+dU1fVsGuLvgtWCfLCLvMr0
+ HsKA==
+X-Gm-Message-State: AOJu0YyJTqMrpZ2MIt7D/6f+DGLyDhFKjql0DJwEB9m/5+LBPE6paGdA
+ R42LfJ696kERdxOwFmOAGZYkI/nCGngt8Ikp2owZHZXFeaJywrbBg0dogffLhvoM7mx0ryeDcYa
+ 2kQex
+X-Gm-Gg: ATEYQzwMXHn/dMRl5OzgPamh/zOOe3dKsJiSOcfoMFx7ewfiwUpyeIuW4Ftyrz8asoI
+ mC9sVndrBlxnGD2KYtpOXAVmb6t0IZPPUvB+2JsRQyAm5t8iHJ3bLP/0UKPiTYUHi2TtEZtbT+E
+ b00OdqrLmgWkYRIFBB+3CHYGMCwoFq6koNJw6Lkc4OWh7O95nycXljRJl56tj22Grb+zC+uP5rU
+ r+bEowHIFB37WpQKzTTGWdaW/pXF5AktZPD3vW4/EcYCelIFr+2zA4iBFBQImaoUpezbG4w9CTz
+ JZiDp93jvCh6Z3QQg4n7pHKMlfDFOUVzbLO2chfquVGoELhumOWm5qJJ4Vy2eQ74QaKF2mdYmjJ
+ 2gED1QwXTc/9scEHjyv9NLjwMvBZXZ03nvzOzl3NRzOsMTy0F6vVzuQo1Q7tjOu52pFQ9WGHsTF
+ c7ZFZXRpfDDuG0WOjlWqmo92xO5LMkVuuqs9KRlRzU7tQyZ0vJ0vDlgt3uvukSFFH0HlADkeBKM
+ C7TWGjQu9sQZV1TWjSfePZI0WpdgjltV5kYr+VlmA==
+X-Received: by 2002:a05:600c:a0d:b0:485:1878:7b8c with SMTP id
+ 5b1f17b1804b1-4852695b6fcmr38290185e9.18.1772809204932; 
+ Fri, 06 Mar 2026 07:00:04 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.24
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:00:24 -0800 (PST)
+ Fri, 06 Mar 2026 07:00:04 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 39/49] accel, hw/arm,
- include/system/hvf: infrastructure changes for HVF vGIC
-Date: Fri,  6 Mar 2026 14:59:29 +0000
-Message-ID: <20260306145939.2162189-40-peter.maydell@linaro.org>
+Subject: [PULL 25/49] chardev: Fix QIOChannel refcount
+Date: Fri,  6 Mar 2026 14:59:15 +0000
+Message-ID: <20260306145939.2162189-26-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,238 +101,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Fabiano Rosas <farosas@suse.de>
 
-Misc changes needed for HVF vGIC enablement.
+The IOWatchPoll holds a reference to the iochannel while the "child"
+source (iwp->src) is removed from the context and freed. Freeing the
+source leads to the iochannel being also freed at
+qio_channel_fd_source_finalize().
 
-Note: x86_64 macOS exposes interrupt controller virtualisation since macOS 12.
-Keeping an #ifdef here in case we end up supporting that...
+Later, io_watch_poll_prepare() tries to create another source with the
+same iochannel and hits an use after free:
 
-However, given that x86_64 macOS is on its way out, it'll probably (?) not be supported in Qemu.
+==8241==ERROR: AddressSanitizer: heap-use-after-free on address 0x514000000040
+READ of size 8 at 0x514000000040 thread T2
+    #0 0x561c2d272fcd in object_get_class  ../qom/object.c:1043:17
+    #1 0x561c2d338f84 in QIO_CHANNEL_GET_CLASS  include/io/channel.h:29:1
+    #2 0x561c2d33b26f in qio_channel_create_watch  ../io/channel.c:388:30
+    #3 0x561c2d2f0993 in io_watch_poll_prepare  ../chardev/char-io.c:65:20
+    ...
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260306130107.35359-8-mohamed@unpredictable.fr
+0x514000000040 is located 0 bytes inside of 392-byte region [0x514000000040,0x5140000001c8)
+freed by thread T2 here:
+    #0 0x561c2d2319a5 in free
+    #1 0x7fb2c0926638 in g_free
+    #2 0x561c2d276507 in object_finalize  ../qom/object.c:734:9
+    #3 0x561c2d271d0d in object_unref  ../qom/object.c:1231:9
+    #4 0x561c2d32ef1d in qio_channel_fd_source_finalize  ../io/channel-watch.c:95:5
+    #5 0x7fb2c091d124 in g_source_unref_internal ../glib/gmain.c:2298
+    #6 0x561c2d2f0b6c in io_watch_poll_prepare  ../chardev/char-io.c:71:9
+    ...
+
+previously allocated by thread T3 (connect) here:
+    #0 0x561c2d231c69 in malloc
+    #1 0x7fb2c0926518 in g_malloc
+    #2 0x561c2d27246e in object_new_with_type  ../qom/object.c:767:15
+    #3 0x561c2d272530 in object_new  ../qom/object.c:789:12
+    #4 0x561c2d320193 in qio_channel_socket_new  ../io/channel-socket.c:64:31
+    #5 0x561c2d308013 in tcp_chr_connect_client_async  ../chardev/char-socket.c:1181:12
+    #6 0x561c2d3002e7 in qmp_chardev_open_socket_client  ../chardev/char-socket.c:1281:9
+    ...
+
+Fix the issue by incrementing the iochannel reference count when the
+IOWatchPoll takes a reference and decrementing when it is finalized.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260302092225.4088227-6-peter.maydell@linaro.org
+[PMM: rebased]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- accel/hvf/hvf-all.c        | 50 ++++++++++++++++++++++++++++++++++++++
- accel/stubs/hvf-stub.c     |  1 +
- hw/arm/virt.c              | 23 +++++++++++++++---
- hw/intc/arm_gicv3_common.c |  3 +++
- include/system/hvf.h       |  3 +++
- system/vl.c                |  2 ++
- 6 files changed, 78 insertions(+), 4 deletions(-)
+ chardev/char-io.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 5f357c6d19..a296b108bc 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -10,6 +10,8 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qapi/error.h"
-+#include "qapi/qapi-visit-common.h"
- #include "accel/accel-ops.h"
- #include "exec/cpu-common.h"
- #include "system/address-spaces.h"
-@@ -21,6 +23,7 @@
- #include "trace.h"
- 
- bool hvf_allowed;
-+bool hvf_kernel_irqchip;
- 
- const char *hvf_return_string(hv_return_t ret)
+diff --git a/chardev/char-io.c b/chardev/char-io.c
+index beac5cd245..0e5ba316ed 100644
+--- a/chardev/char-io.c
++++ b/chardev/char-io.c
+@@ -88,6 +88,9 @@ static gboolean io_watch_poll_dispatch(GSource *source, GSourceFunc callback,
+ static void io_watch_poll_finalize(GSource *source)
  {
-@@ -216,6 +219,43 @@ static int hvf_gdbstub_sstep_flags(AccelState *as)
-     return SSTEP_ENABLE | SSTEP_NOIRQ;
- }
- 
-+static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
-+                                   const char *name, void *opaque,
-+                                   Error **errp)
-+{
-+    OnOffSplit mode;
-+    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
-+        return;
-+    }
+     IOWatchPoll *iwp = io_watch_poll_from_source(source);
 +
-+    switch (mode) {
-+    case ON_OFF_SPLIT_ON:
-+#ifdef HOST_X86_64
-+        /* macOS 12 onwards exposes an HVF virtual APIC. */
-+        error_setg(errp, "HVF: kernel irqchip is not currently implemented for x86.");
-+        break;
-+#else
-+        hvf_kernel_irqchip = true;
-+        break;
-+#endif
++    object_unref(OBJECT(iwp->ioc));
 +
-+    case ON_OFF_SPLIT_OFF:
-+        hvf_kernel_irqchip = false;
-+        break;
+     if (iwp->src) {
+         g_source_destroy(iwp->src);
+         g_source_unref(iwp->src);
+@@ -117,6 +120,8 @@ GSource *io_add_watch_poll(Chardev *chr,
+     iwp->fd_can_read = fd_can_read;
+     iwp->opaque = user_data;
+     iwp->ioc = ioc;
++    object_ref(OBJECT(iwp->ioc));
 +
-+    case ON_OFF_SPLIT_SPLIT:
-+        error_setg(errp, "HVF: split irqchip is not supported on HVF.");
-+        break;
-+
-+    default:
-+        /*
-+         * The value was checked in visit_type_OnOffSplit() above. If
-+         * we get here, then something is wrong in QEMU.
-+         */
-+        abort();
-+    }
-+}
-+
- static void hvf_accel_class_init(ObjectClass *oc, const void *data)
- {
-     AccelClass *ac = ACCEL_CLASS(oc);
-@@ -223,6 +263,16 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
-     ac->init_machine = hvf_accel_init;
-     ac->allowed = &hvf_allowed;
-     ac->gdbstub_supported_sstep_flags = hvf_gdbstub_sstep_flags;
-+#ifdef HOST_X86_64
-+    hvf_kernel_irqchip = false;
-+#else
-+    hvf_kernel_irqchip = true;
-+#endif
-+    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
-+        NULL, hvf_set_kernel_irqchip,
-+        NULL, NULL);
-+    object_class_property_set_description(oc, "kernel-irqchip",
-+        "Configure HVF irqchip");
- }
- 
- static const TypeInfo hvf_accel_type = {
-diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
-index 42eadc5ca9..6bd08759ba 100644
---- a/accel/stubs/hvf-stub.c
-+++ b/accel/stubs/hvf-stub.c
-@@ -10,3 +10,4 @@
- #include "system/hvf.h"
- 
- bool hvf_allowed;
-+bool hvf_kernel_irqchip;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 7456614d05..7a6fad1094 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -837,7 +837,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-      * interrupts; there are always 32 of the former (mandated by GIC spec).
-      */
-     qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
--    if (!kvm_irqchip_in_kernel()) {
-+    if (!kvm_irqchip_in_kernel() && !hvf_irqchip_in_kernel()) {
-         qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
-     }
- 
-@@ -860,7 +860,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-         qdev_prop_set_array(vms->gic, "redist-region-count",
-                             redist_region_count);
- 
--        if (!kvm_irqchip_in_kernel()) {
-+        if (!kvm_irqchip_in_kernel() &&
-+         !(hvf_enabled() && hvf_irqchip_in_kernel())) {
-             if (vms->tcg_its) {
-                 object_property_set_link(OBJECT(vms->gic), "sysmem",
-                                          OBJECT(mem), &error_fatal);
-@@ -871,7 +872,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-                                  ARCH_GIC_MAINT_IRQ);
-         }
-     } else {
--        if (!kvm_irqchip_in_kernel()) {
-+        if (!kvm_irqchip_in_kernel() && !hvf_irqchip_in_kernel()) {
-             qdev_prop_set_bit(vms->gic, "has-virtualization-extensions",
-                               vms->virt);
-         }
-@@ -2118,7 +2119,15 @@ static void finalize_gic_version(VirtMachineState *vms)
-         accel_name = "KVM with kernel-irqchip=off";
-     } else if (whpx_enabled()) {
-         gics_supported |= VIRT_GIC_VERSION_3_MASK;
--    } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
-+    } else if (hvf_enabled()) {
-+        if (!hvf_irqchip_in_kernel()) {
-+            gics_supported |= VIRT_GIC_VERSION_2_MASK;
-+        }
-+        /* Hypervisor.framework doesn't expose EL2<->1 transition notifiers */
-+        if (!(!hvf_irqchip_in_kernel() && vms->virt)) {
-+            gics_supported |= VIRT_GIC_VERSION_3_MASK;
-+        }
-+    } else if (tcg_enabled() || qtest_enabled())  {
-         gics_supported |= VIRT_GIC_VERSION_2_MASK;
-         if (module_object_class_by_name("arm-gicv3")) {
-             gics_supported |= VIRT_GIC_VERSION_3_MASK;
-@@ -2160,6 +2169,8 @@ static void finalize_msi_controller(VirtMachineState *vms)
-             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-         } else if (whpx_enabled()) {
-             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-+        }  else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
-+            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-         } else {
-             vms->msi_controller = VIRT_MSI_CTRL_ITS;
-         }
-@@ -2179,6 +2190,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
-             error_report("ITS not supported on WHPX.");
-             exit(1);
-         }
-+        if (hvf_enabled() && hvf_irqchip_in_kernel()) {
-+            error_report("ITS not supported on HVF when using the hardware vGIC.");
-+            exit(1);
-+        }
-     }
- 
-     assert(vms->msi_controller != VIRT_MSI_CTRL_AUTO);
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 9c3fb2f4bf..f7ba74e6d5 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -33,6 +33,7 @@
- #include "hw/arm/linux-boot-if.h"
- #include "system/kvm.h"
- #include "system/whpx.h"
-+#include "system/hvf.h"
- 
- 
- static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
-@@ -659,6 +660,8 @@ const char *gicv3_class_name(void)
-         return "kvm-arm-gicv3";
-     } else if (whpx_enabled()) {
-         return TYPE_WHPX_GICV3;
-+    } else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
-+        return TYPE_HVF_GICV3;
-     } else {
-         if (kvm_enabled()) {
-             error_report("Userspace GICv3 is not supported with KVM");
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index d3dcf088b3..dc8da85979 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -26,8 +26,11 @@
- #ifdef CONFIG_HVF_IS_POSSIBLE
- extern bool hvf_allowed;
- #define hvf_enabled() (hvf_allowed)
-+extern bool hvf_kernel_irqchip;
-+#define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
- #else /* !CONFIG_HVF_IS_POSSIBLE */
- #define hvf_enabled() 0
-+#define hvf_irqchip_in_kernel() 0
- #endif /* !CONFIG_HVF_IS_POSSIBLE */
- 
- #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
-diff --git a/system/vl.c b/system/vl.c
-index 3e341142a0..7a3db97ee6 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1778,6 +1778,8 @@ static void qemu_apply_legacy_machine_options(QDict *qdict)
-                                    false);
-         object_register_sugar_prop(ACCEL_CLASS_NAME("whpx"), "kernel-irqchip", value,
-                                    false);
-+        object_register_sugar_prop(ACCEL_CLASS_NAME("hvf"), "kernel-irqchip", value,
-+                                   false);
-         qdict_del(qdict, "kernel-irqchip");
-     }
- 
+     iwp->fd_read = (GSourceFunc) fd_read;
+     iwp->src = NULL;
+     iwp->context = context;
 -- 
 2.43.0
 
