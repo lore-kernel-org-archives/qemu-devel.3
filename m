@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83409F513F7
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 05:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F5CF513F6
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 05:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyNUo-0006qx-Cy; Fri, 06 Mar 2026 00:13:06 -0500
+	id 1vyNXn-0007XI-3g; Fri, 06 Mar 2026 00:16:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyNUk-0006qZ-Iw
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 00:13:02 -0500
-Received: from qs-2005f-snip4-11.eps.apple.com ([57.103.86.191]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyNUh-0000zp-RT
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 00:13:02 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-14 (Postfix) with ESMTPS id
- 75C4918000EE; Fri,  6 Mar 2026 05:12:56 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772773977; x=1775365977;
- bh=898eIGoLOpYlcd+UUxhcKOH95en53IGLXOoElDDvJmE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=FGS+BCE20TGguUl1zkGla6QODuC7CN6xiLhp6vZ4C8hHLqwPJLE4wAqHC2KEip7EcpoqEz/Tihk3s9Hff3Uwpy4O3l+Jhh90nThxUjDx7hhRYAMCdxDbFqIenUQD3iRaFSkDW8fSZ1BHl4fcGLprYZBVJXxTUZSB4bRwdvV1Y8vVBigok8I53lq5IpSHo+DHN7eaQ7yp0UWcNP48clXb/IbNgPUiKI6+fuQKG8OJrUbhFI4zhfI/oDzQGF88MRknm0BZjKAg0d8cEC++MOI+Twf5sEDWlvKBVwO8WgVyrzIDMWwhbNRt95SsvlSZPOKpJmdjUwD7PAwmQlyaJ4ZlNA==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-100-percent-14 (Postfix) with ESMTPSA id
- 126E81800104; Fri,  6 Mar 2026 05:12:54 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyNXj-0007X0-1F
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 00:16:07 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vyNXg-0001Lo-MJ
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 00:16:06 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c737d3a51bdso1004140a12.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Mar 2026 21:16:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772774162; x=1773378962; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dsBT40L5Kio9aj+ttGst+u5bikeAKdLXfj7F/2y97LU=;
+ b=aANwoJhopuqUw0v9wGiJa6onrpYsS8mebCd2FPya1tXfpfEK6CbOM/83Ozu+FT2Bch
+ ISsIs5VGjpgDBqV0T+9l0p5gVWdyG0Oo4VC5fjPfSjSvnmlG28NSu1OTkYG2Sv+ilX2c
+ 0CV822LSinjzL1sf9oJfSkw8mZH2LbfZPW7/Fb9TSm5q4VXCRNIqqnNqmUU9+eUNjVUr
+ aOX6DZmMG/Si1W52HNjLpEx/tCOcabWIOEmu5qc2GFMlfcd+URptvCxJDJ4H5gM5dTuy
+ 2C9m3nGUnfZ1WxsGKKUaEo2IhEnHd09WyBBULlSkB/jdYqDL6X4w045AKhmFwdJZENkp
+ l1wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772774162; x=1773378962;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dsBT40L5Kio9aj+ttGst+u5bikeAKdLXfj7F/2y97LU=;
+ b=KvhD3WFLXBHHEjKBEMLfjZ4urU4wgF2OhwEpG13ZBb1Lgi9DBIIUe1z/5gVmHPnqAM
+ NMc9Fej9vNtJo4X4mzS2MLkfgV1iHUB4vBthBUeo/on0NUKqLDJTj4KRtTuDHWktcJ9y
+ IoQr79Ao1RPbmrdfGqxhY6ejx6bYSHDUXXIIanGsVPBK81foa9K0BWuj0/5STJkHl4A7
+ hQJMHSwLW856yNg8Bfmb8qRq1E/S1mDjo+9oWI3fegnHxTwKUk97oUe1MRronvv397az
+ MpW/hTi8cipkgzpszlkUhsEg7zhMXJrjUtxBN4rs7AlpMrvmQMLCVdafftVNk2odv4w3
+ IB9g==
+X-Gm-Message-State: AOJu0Yw4aYWlSN2WGe9VvdDvBX9H6AaGmSgGHHlkrzNPp151iUJqjVGA
+ b9ayKFPCCeqDBkpDJHy49swEYzalIifjiLMVElOe9nDeMLndHcDJCBnFaqNhAFsKkZX660qpoMS
+ WTk7y
+X-Gm-Gg: ATEYQzwDyYL62DTRlrh8vb9FXOf+ucOuIfnpWvwrof5Ad3zkz09fDXWcHl9LPWM8nJn
+ j8f7acVdsYirLf6epaR03kUyMvOufl8Q4i8RtkmOOzDgdvZquAEqUgBpizC226o3DHSLOBvLwNy
+ q/vde6knEHuiUj4nbddPTWWu+XgLx0zxAWHhWPjh/n8fdhGuKby7TFzb+5CcTiC5wulSrSPrObi
+ g4jf2DnGKg7vgJQMEDX+sak1VRxuNFJh5zLEh+AnszBa67qFhjG8/+JFodMYa/0RLVICfh0WXL2
+ aS6g4kvEa9gOP0pgpikacyY1C6wj7zsSW8fEgsLopo22LpGtP4pXSxsU8w7vvqdcqD4egDQq0LS
+ SpXU5YYJaDZZFAJeezKsoX+/2/DdLKsrObmnLztwss492DsfScoU5jPtrtpEk5jo+8bs2t0+5eJ
+ NIb9z7hCh7FRiy2kJ9a6NiwB3cIhsPB4g0Xdn8bVVctByvRGbtOUO1P8tmO26kf3dkv9KWUZKro
+ lRh
+X-Received: by 2002:a05:6a21:4603:b0:395:7fb:9362 with SMTP id
+ adf61e73a8af0-39858fdf098mr1160061637.19.1772774161607; 
+ Thu, 05 Mar 2026 21:16:01 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c739e0c9666sm364776a12.14.2026.03.05.21.16.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Mar 2026 21:16:01 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] hvf: arm: fix SME capabilities reporting
-Date: Fri,  6 Mar 2026 06:12:52 +0100
-Message-ID: <20260306051252.91660-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+Cc: philmd@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH] contrib/plugins/uftrace_symbols.py: ignore zero sized symbols
+Date: Thu,  5 Mar 2026 21:15:53 -0800
+Message-ID: <20260306051553.2778652-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 50cpm4J6B64yOI7tXEvCCk1zZA6YyNrn
-X-Authority-Info-Out: v=2.4 cv=RKu+3oi+ c=1 sm=1 tr=0 ts=69aa6259
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=-YisE-5-8EYoV4yVs6QA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDA0OCBTYWx0ZWRfX45XnGVaiQ6Ku
- sH7GWjBKsiA55JzV9sBwKhxWBZKqCaTSqadjAYO8wj5QK5/KM5F3Zso3iNyajxKfg3NAQ94GO6o
- XorC0LEsNgf62BF8GMFfmqqizt+7Sb5OguMU1Nq6/4Ke6J6T+/RLqEvYP56e7qwHsZgIyb7AJ7z
- GYEiWaUW3Aj0SQiLSwiehmbW09MLexjl4+xByTxXtYr1052n4FzmNd5mRy9fcQX13RjXev8656H
- lXpndCHfCz8ak9c6jecqhhfQCPW8XWZVWsSumNQbYD3jIB4ZT6MeiG13kteQCuiHcJXRnjUaK2E
- KhpTf/lD4nhekl+IycsRjnzZeun2KC6mkV13Ntejcj7MIkg/4rG8xaYWOh993Q=
-X-Proofpoint-GUID: 50cpm4J6B64yOI7tXEvCCk1zZA6YyNrn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_01,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0 adultscore=0 mlxlogscore=738 clxscore=1030 phishscore=0
- malwarescore=0 spamscore=0 lowpriorityscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603060048
-X-JNJ: AAAAAAABeQwDY0rcZQhVaduRsLBcqCoTRPUYMw2gaHiptHXIYtQm1BSOkMGa6cQ/3llKzWyZCuAaE/9SmCKy2lIw7iJFnCNidmcxlvAITCmA3PBiMuR1S/YB5p3ssDwjHu8/WIaWC+IQnFWpx+DYowFFQPfbXXByXtU84zQnOQvMj03l1M+82zk53skNp88hgN2yJptbEE9TygHZNE3ApfaiBXagQQzN5iPqHcdX/uLQ4N4OFmDVKiUtmxMMdsolyFCoPR2+phGnBOc4Tw+sRggKCcqRTglH1b13K22LgfhiGwlQljCqHvTmX3u8xwGgbNBCkdM8TQvdqLB+Vm+kvUaeCx7eIEQ02FfU9vMJ4g/VAI28x2VnCjly82MaSWs5ubAUkZYlG/nLYnwWKtjVAhJy5oP2w5phkxxiwL/4xV3cwuM/fVLqxd7lYxnA3+403rSLnVuQZkbhUlNP38/RJAVp44VBzDVfgZyVdDi3p0TJFR1akQnT1tLvM0ACFK6FvHIq1mR9bFGevdjKabl2mVug++QUfFU12ddh8JnzWAu18sFFF7qQp6DKV4oYqGmTDmn/THfvg6GcXdUU7UniF24jmVjBKluAwDjVEKnCEyKX5tyKb2wky1SVSsaOV6LmXM3lHaRvHh01H5ggGVJ2Yoo9PUQM7pEA4MAEyKI=
-Received-SPF: pass client-ip=57.103.86.191;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,54 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sync capabilities for the SME-specific ID registers to the host CPU config.
-This fixes SME2 functionality.
+When using llvm-addr2line in replacement of addr2line, it will output
+zero sized symbols, which can shadow other binaries depending on where
+there location is (happens with arm-trusted-firmware and its different
+binaries). Thus, those symbols.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-Based-on: <20260306041747.54554-1-mohamed@unpredictable.fr>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/hvf/hvf.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ contrib/plugins/uftrace_symbols.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index cb05db2358..b7c5aea505 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1126,6 +1126,15 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         { HV_FEATURE_REG_ID_AA64MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
-         /* Add ID_AA64MMFR3_EL1 here when HVF supports it */
-     };
-+
-+    API_AVAILABLE(macos(15.2)) static const struct sme_isar_regs {
-+        hv_feature_reg_t reg;
-+        ARMIDRegisterIdx index;
-+    } sme_regs[] = {
-+        { HV_FEATURE_REG_ID_AA64SMFR0_EL1, ID_AA64SMFR0_EL1_IDX },
-+        { HV_FEATURE_REG_ID_AA64ZFR0_EL1, ID_AA64ZFR0_EL1_IDX },
-+    };
-+
-     hv_return_t r = HV_SUCCESS;
-     hv_vcpu_config_t config = hv_vcpu_config_create();
-     uint64_t t;
-@@ -1146,6 +1155,16 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         r |= hv_vcpu_config_get_feature_reg(config, regs[i].reg,
-                                             &host_isar.idregs[regs[i].index]);
-     }
-+
-+    if (__builtin_available(macOS 15.2, *)) {
-+        if (hvf_arm_sme2_supported()) {
-+            for (i = 0; i < ARRAY_SIZE(sme_regs); i++) {
-+                r |= hv_vcpu_config_get_feature_reg(config, sme_regs[i].reg,
-+                                            &host_isar.idregs[sme_regs[i].index]);
-+            }
-+        }
-+    }
-+
-     os_release(config);
- 
-     /*
+diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+index 7d79b81cdec..02d1221228c 100755
+--- a/contrib/plugins/uftrace_symbols.py
++++ b/contrib/plugins/uftrace_symbols.py
+@@ -45,6 +45,8 @@ def get_symbols(elf_file):
+             continue
+         addr = int(addr, 16)
+         size = int(size, 16)
++        if size == 0:
++            continue
+         symbols.append(Symbol(name, addr, size))
+     symbols.sort(key = lambda x: x.addr)
+     return symbols
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
