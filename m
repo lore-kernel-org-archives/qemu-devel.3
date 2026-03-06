@@ -4,83 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1446F0182F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D50FDF01832
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyUo6-00013Z-Ft; Fri, 06 Mar 2026 08:01:30 -0500
+	id 1vyUrh-0001At-36; Fri, 06 Mar 2026 08:05:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyUo4-000136-Ow
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:01:28 -0500
-Received: from p-west2-cluster1-host6-snip4-10.eps.apple.com ([57.103.68.63]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyUrX-00018V-Vj
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:05:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyUo2-0006tj-F2
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:01:28 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-10-percent-1 (Postfix) with ESMTPS id
- 930291802E61; Fri,  6 Mar 2026 13:01:22 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772802084; x=1775394084;
- bh=trev5yEM/Tw+YfL0dNm2dQEQ23YGcRwkTpeHpvFNoFQ=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=aM/Co5eX60TkVd9CMaZhAhWz229OzJ3gs5NJ5zMriU0k+egZOdUDIouwbQ/3gBJdpj7Gx/z89Li4SsCcraUjxBZku0/mW1cvxZqrh6AaN0bA7sUYTEeV+OEjRDZkQApP7WF5slSFwqaEED5u7UlnoJ5eINTrSKKu7Np4wXlHP01Z0ewQE+m5AIL+MtvHOw65385bLUtkfeyPjEn33Z81W9YFtTyX8/jNbr9VL6GGDwYpNTSoCOeSiXfPVxZ5NRCRNSXSw7DT0UcluAJmrpRw+b8vJatoAxjXLrxCT9+ihHDuebod0Z4A69LQwD7Vokx7UVzdrGgxSTZ8FiwyXzttrQ==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-10-percent-1 (Postfix) with ESMTPSA id
- 62A731800846; Fri,  6 Mar 2026 13:01:10 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v15 00/17] HVF: Add support for platform vGIC and nested
- virtualisation
-Date: Fri,  6 Mar 2026 14:00:50 +0100
-Message-ID: <20260306130107.35359-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyUrV-0007yx-6p
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:05:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772802299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kJ3/xJpc2vik7pXFjnyZ3yqyRbJZCzukY4HKU1BYiw8=;
+ b=MG9EmHbKP3ZzEKFV4/ovMs2iHR+IuqbouJguzHQoTesP1e9oGwuCLy6Amx8H2xEO7Nohr6
+ BgHAhy/S3MZd2BM0Gz4PZXAg+9aqaZLU12d2BUsgg2vLgFTh3651NGpDE8EQEiYjQFJsX8
+ ok4Xb55Gk4g/nfOorNYOgNhgtfYlinE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-ICiU5OqEOZ2TTi1LkeCiAw-1; Fri,
+ 06 Mar 2026 08:04:58 -0500
+X-MC-Unique: ICiU5OqEOZ2TTi1LkeCiAw-1
+X-Mimecast-MFC-AGG-ID: ICiU5OqEOZ2TTi1LkeCiAw_1772802297
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 125C419560AD; Fri,  6 Mar 2026 13:04:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.210])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6B9218001FE; Fri,  6 Mar 2026 13:04:55 +0000 (UTC)
+Date: Fri, 6 Mar 2026 14:04:53 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/5] block: Introduce BDRV_O_NO_DATA_{WRITE,RESIZE}
+Message-ID: <aarQ9RSHeFHfsdwB@redhat.com>
+References: <20260205144737.31131-1-hreitz@redhat.com>
+ <20260205144737.31131-3-hreitz@redhat.com>
+ <aaWfEfuBZGW4BHPD@redhat.com>
+ <83ed45e5-b1f5-447a-8489-6f13edb2372c@redhat.com>
+ <aahaDEON0LMkioKz@redhat.com>
+ <0331f8e8-8654-45a3-9049-0d4c7b43172b@redhat.com>
+ <aaq2rtctmiYgi-4y@redhat.com>
+ <538cb2b6-5a4f-4927-afbf-ce4512320d21@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: Ngd9Yt9OGRuiw55G73Ztnksba1pvJoAn
-X-Proofpoint-ORIG-GUID: Ngd9Yt9OGRuiw55G73Ztnksba1pvJoAn
-X-Authority-Info-Out: v=2.4 cv=TZObdBQh c=1 sm=1 tr=0 ts=69aad023
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=jwI92-NncrociDarPsAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEyNSBTYWx0ZWRfX5pl1PXZAjQL7
- lDviE7b5PlV/zQdDmEGPXB/NGyX3+T5Q5tFBsKWdj3aHLFm9YSm8+kvoyu2BuiwlLPN8ay+lA48
- HwEQIxaZSD1uFsH24Deud37NCshbcveITGsKf/+Gywi2nyePrghCdY0LS3YNTtr7iHrKr82bwat
- YBigKaPY8K7j0ajGyu/h96dxZyTTZNvzIxZRFinESH6Y+Oj64Q1XNzvF22v9SPKCbBAqZQdndSt
- LdM0ZsDLsCC5lnaqNSpQ6U4zkopyaB+xfjVSFP2Datsahn8z0Lc+GtA2sXK8LCmH+9cmixnu82Y
- bv1TXAidfBnEO3VkTygkytmsIc2onjfKbduyDVEFqmsFA0qxv9JiRsne44I8K8=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-06_04,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- mlxscore=0 bulkscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=999 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603060125
-X-JNJ: AAAAAAAB/ugHRR4jZZ8tV+EHKMLcW28H54PqhIUQlRP9fv75FXSZ2jDPjqwMav4mx+Mv8mN/Wwl4D9m1pykunEQWEzP8FJCTf1WmskM4tGfUUrx0KA9J5cYjgKzVZJre0S5t/rE67bLcZL0xzHm+7KQMm3f5kx6wYY24XDhomHmzqmB3RsQxzJLgZtXdCJM6A+x7HmbZeHhAb4J5IOb+YUKdR6U3UJSrx6rUBfMTkR+SSoBttIw04xXdg3WJxRzrYV9yp6VR/H+bI9hCG7nlWQMgoHoaF9eFeLmGqTemsSJfl3SSE54dlOLtJlQW6FB9DUBmRo8zH91qiyCk+SFhGJBonhLh+1Z2SlTj2jYfl4KsHEeoc79K71AxOEMeCVSLBn21XYh2gncXdJ27k3YilqAvmeQTxhtXYFtmicjXkUf3MMdC3WchVt0qKz1IK8bq6ajo4S+hx1Lvmrbjtq3guLjFda1Wy1qPeIjsFlwB27rFwXQxTVJSed/xIibprHzxOFndrDc7SN8QKylasNPtUKbIzByiYp1FlXWLfMUpUwHELR0PIbZg28JwVDseQa6Jj2B0lp9C6glNeCTkR+Uuy41Pt7r0bRaR4yJtV/XhFX42HvdIC9Qjo96DCG/QvSdQ8ixGlUaLr/ykiMj7jKUbmSjh8lTgsptWqk+rhIMGsFZFgWOW1WJnAbzQobyuZtkOV6QOTM7nFCTVrZunBTWv07S1gj4AFWDKj/1fKYA5pjSbc2Ov+zGun88rpQFoP35ROsvR0SPwiLzzG35LPHWpmT2+Lk/vJ6bqPy7P0hSyIV9C7OyCc1Qe2aY=
-Received-SPF: pass client-ip=57.103.68.63;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+In-Reply-To: <538cb2b6-5a4f-4927-afbf-ce4512320d21@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -98,156 +90,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Link to branch: https://github.com/mediouni-m/qemu hvf-irqchip-and-nested
-(tag for this submission: hvf-irqchip-and-nested-v15)
+Am 06.03.2026 um 12:28 hat Hanna Czenczek geschrieben:
+> On 06.03.26 12:12, Kevin Wolf wrote:
+> > Am 06.03.2026 um 11:20 hat Hanna Czenczek geschrieben:
+> > > On 04.03.26 17:13, Kevin Wolf wrote:
+> > > > Am 04.03.2026 um 15:20 hat Hanna Czenczek geschrieben:
+> > > > > On 02.03.26 15:30, Kevin Wolf wrote:
+> > > > > > Am 05.02.2026 um 15:47 hat Hanna Czenczek geschrieben:
+> > > > > > > Add BDS flags that prevent taking WRITE and/or RESIZE permissions on
+> > > > > > > pure data (no metadata) children.  These are going to be used by qcow2
+> > > > > > > during formatting, when we need write access to format the metadata
+> > > > > > > file, but no write access to an external data file.  This will allow
+> > > > > > > creating a qcow2 image for a raw image while the latter is currently in
+> > > > > > > use by the VM.
+> > > > > > > 
+> > > > > > > Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> > > > > > > ---
+> > > > > > >     include/block/block-common.h | 11 +++++++++++
+> > > > > > >     block.c                      | 15 +++++++++++++++
+> > > > > > >     2 files changed, 26 insertions(+)
+> > > > > > > 
+> > > > > > > diff --git a/include/block/block-common.h b/include/block/block-common.h
+> > > > > > > index c8c626daea..504f6aa113 100644
+> > > > > > > --- a/include/block/block-common.h
+> > > > > > > +++ b/include/block/block-common.h
+> > > > > > > @@ -245,6 +245,17 @@ typedef enum {
+> > > > > > >     #define BDRV_O_CBW_DISCARD_SOURCE 0x80000 /* for copy-before-write filter */
+> > > > > > > +/*
+> > > > > > > + * Promise not to write any data to pure (non-metadata-bearing) data storage
+> > > > > > > + * children, so we don't need the WRITE permission for them.
+> > > > > > > + * For image creation, formatting requires write access to the image, but not
+> > > > > > > + * necessarily to its pure storage children.  This allows creating an image on
+> > > > > > > + * top of an existing raw storage image that is already attached to the VM.
+> > > > > > > + */
+> > > > > > > +#define BDRV_O_NO_DATA_WRITE  0x100000
+> > > > > > Can't we just use BDRV_O_NO_IO for this one? It is stricter because it
+> > > > > > doesn't allow reading either, but I don't think image creation ever
+> > > > > > requires reading from the image?
+> > > > > How would qcow2 set it?  It opens the qcow2 image, so it can only set the
+> > > > > flag on the qcow2 BDS (via a BlockBackend), but BDRV_O_NO_IO needs to go on
+> > > > > the data-file child.  Maybe we can construct the graph manually…? It would
+> > > > > be quite painful, I imagine, but I haven’t tried yet.
+> > > > Why should it go on the data-file child? The child permissions are
+> > > > defined by the qcow2 node. If the caller promises not to do any I/O (and
+> > > > I'm fairly sure that apart from preallocation, creating the image
+> > > > doesn't involve any I/O on the qcow2 node, just on the primary child),
+> > > > then qcow2 doesn't need any permissions on data-file.
+> > > > 
+> > > > Or am I missing a reason why BDRV_O_NO_IO can't be set for the qcow2
+> > > > node?
+> > > First, bdrv_co_write_req_prepare() requires !BDRV_O_NO_IO and the RESIZE
+> > > permission.
+> > Ah, I wasn't aware that truncate requires !BDRV_O_NO_IO. It's not what I
+> > would intuitively call I/O, but it's also justifiable because it changes
+> > the result of reading some blocks.
+> > 
+> > The part where things start to feel questionable is with the way
+> > qcow2_co_create() uses truncate. It doesn't actually want to truncate
+> > the image (especially with an existing data file), but just allocate the
+> > metadata for the full image size.
+> > 
+> > If the problem is just bdrv_co_write_req_prepare(), would a request flag
+> > for the truncate solve it without having to introduce two global BDS
+> > flags that can never be set by the user? BDRV_REQ_NO_DATA_IO or
+> > something?
+> 
+> Oh, only one new flag.  We can drop the RESIZE flag, as you said, and make
+> it !BDRV_O_RESIZE.  (If we call qcow2_co_truncate() directly, that is.)
 
-This series adds supports for nested virtualisation when using HVF on arm64 Macs.
+The per-request part feels almost more important to me than having only
+one flag. But yes, two separate flags for a single purpose isn't great
+either, so moving to one would already be some improvement.
 
-Reviews would be very welcome :-) It's maybe a bit unlikely that this will make
-it to QEMU 11.0 I might as well try.
+> Dropping that flag changes the error messages sometimes (because without
+> this flag, WRITE will always imply RESIZE, so with a guest device that
+> prevents concurrent resize, you will then always get RESIZE conflicts
+> alongside WRITE), but that’s OK (because it’s only when you get a WRITE
+> conflict anyway).
+> 
+> > > We could bypass this by calling qcow2_co_truncate() instead of
+> > > blk_co_truncate().  Feels wrong to me to pass BDRV_O_NO_IO and
+> > > !BDRV_O_RESIZE to blk_co_new_open() when we actually kind of want those
+> > > things and just bypass the BB to get them, but only morally wrong. Not
+> > > technically wrong.
+> > > 
+> > > Bigger problem: BDRV_O_NO_IO makes qcow2 skip opening the data-file
+> > > altogether.  So we would need to distinguish between qemu-img info and
+> > > this case somehow.
+> > Do we need to have it opened, except for preallocation, which can't set
+> > BDRV_O_NO_IO anyway?
+> 
+> Yes, for resizing it without preallocation (growing to fit).
 
-The first two patches are from the SME enablement series and are present for the
-series to be buildable on its own.
+Right. In this case, this series wouldn't set BDRV_O_NO_DATA_RESIZE
+either, but it would set BDRV_O_NO_DATA_WRITE. This makes me wonder if
+it would make sense...
 
-Patches pending review: 14, 16
+> We could have qcow2_do_open() distinguish by checking whether the
+> "data-file" option in the QDict is set and a string (a node-name), because
+> if it is, it’s safe to take that existing BDS despite BDRV_O_NO_IO.
 
-It has two parts:
-- Apple vGICv3 support and necessary infrastructure changes for it
-- Nested virtualisation support. Note that the nested virtualisation implementation
-shipping as of macOS 26.3 is nVHE only (but it _does_ use VNCR as shipped).
+...to let qcow2_do_open() still open the data file with BDRV_O_NO_IO if
+BDRV_O_RESIZE is given at the same time.
 
-This series doesn't contain EL2 physical timer emulation, which is
-needed if not leveraging the Apple vGIC. As such, nested virt requires kernel-irqchip=on.
+> I’m still not sure how I morally feel about passing BDRV_O_NO_IO when we do
+> want to do I/O.  Yes, only metadata.  I know.  But I understand BDRV_O_NO_IO
+> was introduced specifically for nothing at all, just querying image
+> information.
 
-Known issues:
-- when nested virt is enabled, no UI response within EDK2
-and a permanent wait. Workaround: -boot menu=on,splash-time=0.
+"Just querying image information" is reading metadata. So if you include
+metadata in your definition, you're already inconsistent.
 
-Apple Feedback Assistant item: FB21649319
+For me I/O means reads, writes, discards etc. on the node. That is,
+operations that actually access data. Metadata was never part of this
+for me and obviously it is always accessed read-only at least because
+otherwise you can't open the image. What's different here is that it's
+also written to, but that's what BDRV_O_RDWR means. If you don't want to
+write either data or metadata, you should just open the image read-only.
 
-When the VM is running at EL2 at the very moment the virtual timer fires:
-HV_EXIT_REASON_VTIMER_ACTIVATED doesn’t fire (when not using the provided vGIC)
-- using a GICv2 doesn’t require having transition notifiers which Hypervisor.framework doesn’t have…)
+> And it works, yes – you just have to make sure you keep
+> BDRV_O_RDWR in there, too, because otherwise the whole thing will be
+> read-only and not work.  Feels really wrong to me, but I guess we already do
+> the same thing at the end of qcow2_co_create() to flush the image, so…  Too
+> late to protest now, I suppose.
 
-and when using the provided vGIC, the interrupt never gets delivered back to the guest
+Yes, that seems like the same case to me. Nothing is doing I/O on the
+qcow2 node, but some metadata writes may be involved.
 
-Linux as a guest OS is fine with this… but the reference ArmVirtQemu edk2 build always uses the virtual timer even when running EFI at EL2, so it gets broken unless this patch is applied to edk2:
-
-diff of ArmVirtPkg/ArmVirt.dsc.inc:
-
--  ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerVirtCounterLib/ArmGenericTimerVirtCounterLib.inf
-+  ArmGenericTimerCounterLib|ArmPkg/Library/ArmGenericTimerPhyCounterLib/ArmGenericTimerPhyCounterLib.inf^M
-
-Changelog:
-
-v1->v2:
-Oops. I did a mistake when preparing my patches.
-
-- Add hvf_arm_el2_enable(_) call to virt_set_virt
-- Fix nested virt support check to add HVF
-
-v2->v3:
-- LORC_EL1 patch was merged separately, remove from this series.
-- fix LPIs when kernel-irqchip disabled and using TCG
-- remove spurious if case in vGIC supported version detection (inapplicable now)
-- Add hvf_enabled() check in combination with hvf kernel-irqchip checks
-- cleanly fail on attempt to use the platform vGIC together with ITS
-
-v3->v4:
-- GIC state save improvements, including saving the opaque Apple-specific state
-- Saving HVF system register state when using the vGIC and/or EL2
-
-v5:
-- oops, fixed up save/restore to be functional
-- misc changes otherwise
-
-v6:
-- Addressing review comments
-
-v7:
-- Address review comments, adapt around Qemu changes and bugfixes.
-
-v8:
-- Rebase, and misc fixes
-
-v9:
-- Misc fixes from WHPX review comments
-- Split enablement commit for EL2 into its own separate commit
-
-v10:
-
-- A bit of changes across the board
-- move HVF irqchip save/restore into irqchip code
-- block nested virt support when kernel-irqchip=off with a GICv2 as
-we don't implement an emulated physical timer yet.
-
-v11:
-- fixups for the save/restore Apple GIC state patch
-- block the same registers as the revert in 28b0ed32b32c7e5094cf2f1ec9c0645c65fad2aa
-for "hvf: sync registers used at EL2"
-- drop patch that warns instead of aborts on mismatch
-
-v12:
-- Have the SME2 series at the start of this.
-- Adaptation for the SME2 series.
-
-v13:
-- include "fix SME capabilities reporting" patch instead of it being standalone
-- include "remove hvf_arm.h include" patch at the beginning of the series
-
-v14:
-- Turns out that the HVF SME2 patches broke the build for pretty much anything
-non-macOS, and didn't address that properly in v13
-- Addressed some checkpatch nits
-
-v15:
-- Pick new revision of SME2 patches
-- separate disable nested virt when SME on patch
-
-Manos Pitsidianakis (2):
-  hvf/arm: handle FEAT_SME2 migration
-  hvf/arm: expose FEAT_SME2 to guest if available
-
-Mohamed Mediouni (15):
-  hw/arm: virt: remove hvf_arm.h include
-  hvf: hvf-all: stop including hvf_arm.h
-  hw/intc: Add hvf vGIC interrupt controller support
-  hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
-  accel, hw/arm, include/system/hvf: infrastructure changes for HVF vGIC
-  target/arm: hvf: instantiate GIC early
-  hw/arm, target/arm: nested virtualisation on HVF
-  hvf: only call hvf_sync_vtimer() when running without the platform
-    vGIC
-  hvf: gate ARM_FEATURE_PMU register emulation behind not being at EL2
-  hvf: arm: allow exposing minimal PMU when running with nested virt on
-  target/arm: hvf: add asserts for code paths not leveraged when using
-    the vGIC
-  hvf: sync registers used at EL2
-  target/arm: hvf: pass through CNTHCTL_EL2 and MDCCINT_EL1
-  hvf: arm: disable SME when nested virt is active
-  hvf: enable nested virtualisation support
-
- accel/hvf/hvf-all.c                |  52 +-
- accel/stubs/hvf-stub.c             |   2 +
- hw/arm/virt.c                      |  38 +-
- hw/intc/arm_gicv3_common.c         |   4 +
- hw/intc/arm_gicv3_hvf.c            | 822 +++++++++++++++++++++++++++++
- hw/intc/arm_gicv3_hvf_stub.c       |  25 +
- hw/intc/meson.build                |   2 +
- include/hw/intc/arm_gicv3_common.h |   4 +
- include/system/hvf.h               |   8 +
- system/vl.c                        |   2 +
- target/arm/hvf/hvf.c               | 465 +++++++++++++++-
- target/arm/hvf/hvf_sme_stubs.h     | 172 ++++++
- target/arm/hvf/sysreg.c.inc        |  52 ++
- target/arm/hvf_arm.h               |  46 ++
- target/arm/machine.c               |   2 +-
- 15 files changed, 1668 insertions(+), 28 deletions(-)
- create mode 100644 hw/intc/arm_gicv3_hvf.c
- create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
- create mode 100644 target/arm/hvf/hvf_sme_stubs.h
-
--- 
-2.50.1 (Apple Git-155)
+Kevin
 
 
