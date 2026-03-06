@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC5AF01825
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 11:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787A2F01826
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 11:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyT9L-0002MD-Si; Fri, 06 Mar 2026 06:15:19 -0500
+	id 1vyT9z-0002xz-O3; Fri, 06 Mar 2026 06:15:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vyT9J-0002Kl-QA
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:15:18 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vyT9w-0002uu-VY
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:15:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vyT9I-0006xg-3Y
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:15:17 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vyT9v-000705-Hd
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 06:15:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772795713;
+ s=mimecast20190719; t=1772795754;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EZhNksprdYhJsFBJGHpehsA641Ev1DzrhMR/qi8A+aY=;
- b=QWxnBMcqne8GLNR9MROCLJNmfe0SeOYZgJAalu8GDrPU2CG+jOoSh/Hr4EZzAgp/4/c2bO
- e0bvtXyCYCJrUSvK4XkfmYIftWb3rrk10J8+rCF4W4fkbwbDLRE1NobgZUfDIAK7Hvdio9
- viAgiGMjZBQj22uzEemtAE1GZqRQ/Lk=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Qo3kIthpbu86oqvhJHhcBYejXdkDE3R4zfUK2Kn/520=;
+ b=Zg4Pr/Hn7tAhZT0+iB9II/ZbKS3mjYhaTQG0tgWVOL1pw7i9fOne99xeUQitw9bdqTjy3s
+ 6hx+bXZxYt3lm4nHJ43XoiBfO9qrEO1t8J3flHg8cJUJrt4Y4R7EhdT2lNld4N5OzsDeiS
+ RiEQRL3Je7WFDfwNVStzqs++U6X0HUg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-3b4miCXnN_uD2RDzB0f9cg-1; Fri, 06 Mar 2026 06:15:12 -0500
-X-MC-Unique: 3b4miCXnN_uD2RDzB0f9cg-1
-X-Mimecast-MFC-AGG-ID: 3b4miCXnN_uD2RDzB0f9cg_1772795711
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-439c112b1a4so2951432f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 03:15:12 -0800 (PST)
+ us-mta-331-7ApibkUuOSWWdUY9cJiWxA-1; Fri, 06 Mar 2026 06:15:53 -0500
+X-MC-Unique: 7ApibkUuOSWWdUY9cJiWxA-1
+X-Mimecast-MFC-AGG-ID: 7ApibkUuOSWWdUY9cJiWxA_1772795752
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4837a718f41so47621535e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 03:15:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1772795711; x=1773400511; darn=nongnu.org;
+ d=redhat.com; s=google; t=1772795752; x=1773400552; darn=nongnu.org;
  h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=EZhNksprdYhJsFBJGHpehsA641Ev1DzrhMR/qi8A+aY=;
- b=DCBGmhdkkSrvH299m/u/Lc4abK3hFSZrIKHLZpqk+sfXQSvDIiMBiQgbNXbiXRAM7j
- S4BuD8B4+HgKAeIPPHAT12WuHAbLL4+pneH3e8UxYzy1zsyJ4zUu4aHrvsFcsK7sQCQB
- HW7CxRf+WU0G8gh8RVYUFlw+OiHluq2fJZCTZp3Xtki9DthUxYfPhXo094B7/h1Mzd0W
- Cv8kHwZqdxY8/5doDRC2dNnGkffvGvlNrJJF+egR2QgPsOYKhA/OKj12zB6abz+jL6g6
- xinpGc7IWA24g+hStRHHtRoIIBv7pfWGIIVXHkUmxY9m6Q8iXDTSl9OxaqU6F1F2dfnZ
- Gesw==
+ bh=Qo3kIthpbu86oqvhJHhcBYejXdkDE3R4zfUK2Kn/520=;
+ b=RPDLljDndKFm3HF0dduHW8Zy+GDQ26gPd1NCIVxn2b3smaQr36hZfZvBLA/B1fc+Nm
+ 9s4zlUAhDZURzxvqra/M3m0JeHVUBBKIPIgw3tW/vtO0dZlrGI8beyOADw+xiGzg2ahH
+ HxO1kJT4CC7fjimM8iTc7p3u3rvT2+OZoE/BijiB+50kvRdGiBAK4HvFfDw24AHA31YZ
+ 12HnuGEzo4ymBAycFpNPoWmSes2Yaqp//4aOu7fY/wZWgND57piyqRukJjkrZ0M98lZX
+ e2ZUnhVu1YodSw+AJgsB5D+lxzzBCyiVnQt79UWLf0aJVwMjER5B9TR9XGi8lwtYmY1a
+ OThw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772795711; x=1773400511;
+ d=1e100.net; s=20230601; t=1772795752; x=1773400552;
  h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
  :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EZhNksprdYhJsFBJGHpehsA641Ev1DzrhMR/qi8A+aY=;
- b=O7uV2zYD+UMy1/DV02AFzrCVT2NTN1A7GyHYckPSYiiP/Lfk4WsFWPjdbXsW1W6rEk
- VLEBtKnt1lE1ecigaCCDV2UPUMHhA67fWPKh5kKZdgX1V/rrO7boWQmCaWzqbt6thOvV
- PwE2eVrwuw0cbDjKb+9KlrEiuGMX3IgHEYsgt5h8740fGfP7+aBFSnNmJUPRfkb3JUAI
- 1XL57/QPq3o18CLLUrZsMpa814YSVUFUuSoXCUF6dlDpl4oVhGosxnJERicoPbtARs/Z
- Hy6NKb6yhQKUs+mIpZwxFpPtBRE7+FlFJ7Adzmw0Zet28pIoN+K9IDm6rppHii4SA3Ye
- Pk0g==
+ bh=Qo3kIthpbu86oqvhJHhcBYejXdkDE3R4zfUK2Kn/520=;
+ b=O7kQnIK0sQsI2lpYxu686N3Z9Xw5By28tXd2JOA/1R3odQ9zh5b5jSbqd0fEly4h05
+ EB5GZMyJMUif/zDSiZ6Ez4ln91WldreDNXcRtMplW5Rhruijtdk5SSHHJJzXP56n7Zmn
+ Kc2yb6+AbSw3/vnW00LDw8TuIEb4rimdOv5xOAFJpdfdhNRyOzzlYuz3q/mHQ1LJulFR
+ 4Ps5UJ6SQLEM1Z9Pa5tRTtATd8pEbptolKwdrjHNAH8bAPuR8/8/tEv/gf26TTLelwHr
+ qjUuuEabQihMEz5IGt6AgXRdn1Kia7rLqSkIvdVNmpP8+LYVyEzLK8/AejDPsOO0dz9u
+ yvTA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlb3om6v90bXYICXDpoDqPL4ov6n4joJwnntbUtW14ce2FuYih9P0+fVIJCWi/lan1xP2RhAiDvfzd@nongnu.org
-X-Gm-Message-State: AOJu0YwV+f6LYsYiAjabzlbcE+MHRec+5vmxDpj/NrsNk5tiN9LD4BS7
- BGa2ek9/FvawwTH/UK+h5sBQEXtafdJjMIbZ5k7xmAw4e0d6Edkwt+27MHnU/Q88etd4sJRmLf0
- 9LhoTv0QQZzI+3rZVVCmYrs0TrCqmmg+lJqoYYJS3bNH7su3eYj+A9vA5
-X-Gm-Gg: ATEYQzzSeZN3R9w4Sk0hYhHEM/nJ565tibhfZ605CBt7AdFlKORLkTPVlJxL+nH4j/b
- M+4D2U4nJTOGD5FooGK1HYaXJql7EK6oNIuqOgpeifT7Bj6PF48/TGRufGc0Jik0P5t+qqEPIEE
- IiV+aMIFwdzhq8/B0xLgIQaeVzI62PrdjSWgDYvPXFNvD4SgyfUWqUfr+ryXEMvSsQqactbkutw
- 4ugiqY3tCvzwD7fF0cLSjKe5C8Q374L3HtkqYAPMwdwiohKC+dUNF94zxbeYI/YTdc/X++sgYlp
- bMALdKZvdHvBElnQ5zTUjr62K+zwow5D6QetKsc+gdnoZJui9ky74gA1hPsD2broW9lOIjQhtDi
- dAOrr9pvojf9ynGCjp+mloXyO/4IUFOB7IWorqh82wbUSHpeosPyzhRHiZEJwe5bkw50s
-X-Received: by 2002:a5d:64c9:0:b0:439:cee7:714f with SMTP id
- ffacd0b85a97d-439da86f5afmr2779353f8f.53.1772795711110; 
- Fri, 06 Mar 2026 03:15:11 -0800 (PST)
-X-Received: by 2002:a5d:64c9:0:b0:439:cee7:714f with SMTP id
- ffacd0b85a97d-439da86f5afmr2779286f8f.53.1772795710612; 
- Fri, 06 Mar 2026 03:15:10 -0800 (PST)
+ AJvYcCVRX76T338DtSGG1K49yAPx9vaCZXjFWA56a6U4Uo4NUgL4/8YjBxq20u774U5QRndpupNkcI3ulg/k@nongnu.org
+X-Gm-Message-State: AOJu0YzMeSs34fgPAxHWn1bTDS/JtFVeVljOxaSu4vaFizUynTOSi66I
+ ZHBfU3t8k92Ohbeu3B1x83c8IwaGTRhiDaaw1XBiobIFwtaye6RKfu39bsRvuLq1zhhmtROHp37
+ sbHWwZygbXrWzCo171Zdg0xFeGlplgHYg0VJFNxZOAgi7CwBR0e5zta7U
+X-Gm-Gg: ATEYQzxPVDCG4OImYFZ0Dn9anfE3fKTq1olXcI33+12jCaWXtkvZ3vw+LpqRlKw86d8
+ ligCAqT20GS50p674B47PXnJ9oksHl9mFmKwfy1U1X0no6Ih0E6QVOKQ8GAG090+OAPMEBHlio2
+ faTK/mZb4oXaeKGUvuGf2vQJAmHOJ8OcDmwxFFT8vVSvSrsomxNswgsKGQ592HMlAy6vyHfB2un
+ Fmk7ed4A3K6vcxzwi2pGhMuDtraiEHEyY9A9ARuH+I6VnsiYQLGHCumz+y27qHM96tD2FVev9/q
+ 9bI9UDkPTC22U2H8NkDyrCmY5/9qeuPNxvTJ3d/cBzmkTsIDcyElNG+HoRKfv8yjYODXwEBte9D
+ YiCaOefPCWIl8dpyhjnYEtT9fUFpLXiR7KZ/IBS0M+sgHHHx09hpLwnSlE53+Zpi/71/b
+X-Received: by 2002:a05:600c:3488:b0:47a:81b7:9a20 with SMTP id
+ 5b1f17b1804b1-48526923bc7mr26113415e9.9.1772795752214; 
+ Fri, 06 Mar 2026 03:15:52 -0800 (PST)
+X-Received: by 2002:a05:600c:3488:b0:47a:81b7:9a20 with SMTP id
+ 5b1f17b1804b1-48526923bc7mr26112845e9.9.1772795751835; 
+ Fri, 06 Mar 2026 03:15:51 -0800 (PST)
 Received: from rh (p200300f6af4a490003d6f56739ca055c.dip0.t-ipconnect.de.
  [2003:f6:af4a:4900:3d6:f567:39ca:55c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae483desm2884818f8f.34.2026.03.06.03.15.09
+ 5b1f17b1804b1-485276b0adasm27151425e9.10.2026.03.06.03.15.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 03:15:10 -0800 (PST)
-Date: Fri, 6 Mar 2026 12:15:09 +0100 (CET)
+ Fri, 06 Mar 2026 03:15:51 -0800 (PST)
+Date: Fri, 6 Mar 2026 12:15:50 +0100 (CET)
 From: Sebastian Ott <sebott@redhat.com>
 To: Eric Auger <eric.auger@redhat.com>
 cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  peter.maydell@linaro.org, cohuck@redhat.com, peterx@redhat.com, 
  philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v8 5/6] target/arm/helper: Define cpreg migration tolerance
- for DGBDTR_EL0
-In-Reply-To: <20260304102249.1963784-6-eric.auger@redhat.com>
-Message-ID: <ec81a766-8a0c-48e1-be74-fdd4cdf90f66@redhat.com>
+Subject: Re: [PATCH v8 6/6] Revert "target/arm: Reinstate bogus AArch32
+ DBGDTRTX register for migration compat"
+In-Reply-To: <20260304102249.1963784-7-eric.auger@redhat.com>
+Message-ID: <4c2ed24a-039f-4312-0512-209f446deead@redhat.com>
 References: <20260304102249.1963784-1-eric.auger@redhat.com>
- <20260304102249.1963784-6-eric.auger@redhat.com>
+ <20260304102249.1963784-7-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=US-ASCII
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
@@ -122,13 +122,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 4 Mar 2026, Eric Auger wrote:
-> We want to remove AArch32 DBGDTRTX which was erroneously exposed.
-> This was attempted by 655659a74a36b ("target/arm: Correct encoding
-> of Debug Communications Channel registers") but it was discovered
-> that the removal of this debug register broke forward migration on
-> TCG. Now we have the cpreg migration tolerance infrastructure, we
-> can declare one for the DBGDTRTX. This allow to revert the reinstate
-> patch.
+> This reverts commit 4f2b82f60431 ("target/arm: Reinstate bogus AArch32
+> DBGDTRTX register for migration compat). We don't need that commit
+> anymore as the AArch32 DBGDTRTX register is declared to
+> be safe to ignore in the incoming migration stream.
 >
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
