@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72555F513F4
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 04:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 075FFF513FB
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 04:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyMUc-0004GR-AR; Thu, 05 Mar 2026 23:08:51 -0500
+	id 1vyMdY-0005f9-MC; Thu, 05 Mar 2026 23:18:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vyMUY-0004Ft-6Y; Thu, 05 Mar 2026 23:08:47 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1vyMUW-0000eg-1U; Thu, 05 Mar 2026 23:08:45 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx36tGU6ppYwoYAA--.12804S3;
- Fri, 06 Mar 2026 12:08:38 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxXcJBU6pp6kFPAA--.16843S3;
- Fri, 06 Mar 2026 12:08:35 +0800 (CST)
-Subject: Re: [PATCH 1/2] target/loongarch: Preserve PTE permission bits in
- LDDIR/LDPTE
-To: "Andrew S. Rightenburg" <andrew@rail5.org>, qemu-devel@nongnu.org
-Cc: gaosong@loongson.cn, qemu-stable@nongnu.org
-References: <20260305135403.831693-1-andrew@rail5.org>
- <20260305135403.831693-2-andrew@rail5.org>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <cf6c2571-129d-84a7-1684-2446e3daca62@loongson.cn>
-Date: Fri, 6 Mar 2026 12:05:54 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyMdW-0005eL-VS
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 23:18:02 -0500
+Received: from p-west2-cluster1-host5-snip4-5.eps.apple.com ([57.103.68.48]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyMdV-0002RJ-AE
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 23:18:02 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPS id
+ 33F121800110; Fri,  6 Mar 2026 04:17:58 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772770679; x=1775362679;
+ bh=uXYQoqD+b6enx0yN1GfreUu+eHC54GkioqxlyRGkbEw=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=SiT1xRZto2vZUzpWartqU65QpFfJxT5BGIPKaAWs9jsmE1u4wEk5BCisR5LeQJHO5yBqyk5C9trV52KqqbbqgycfAVXBktCD1DKuqC2GWIxgJ9fjF0d8pkM6t4B747ERWhWKBczB3+6HWnO+1o9DUSHCNR1WZM2X+iFfEfeomHV5v2sdrW/b3L8YFtG76wNptyq0TNMr2JRVUp5WH5aKSqmfvSUNAm3DL+tQ+uyPSbuzkfwdtDy6wqyjth9iupdBBJID5R1q8StbHKjJr0L0SJx8Gdxqhfj+AaN747lAJZvTGCfpdmJQqL6i656ZA8VVxhy+Dik2qx5irh1UJzJNvA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPSA id
+ 6A845180011D; Fri,  6 Mar 2026 04:17:55 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v12 02/15] hvf/arm: expose FEAT_SME2 to guest if available
+Date: Fri,  6 Mar 2026 05:17:33 +0100
+Message-ID: <20260306041747.54554-3-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260306041747.54554-1-mohamed@unpredictable.fr>
+References: <20260306041747.54554-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-In-Reply-To: <20260305135403.831693-2-andrew@rail5.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxXcJBU6pp6kFPAA--.16843S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAr43ZrW7tF43Jry3Jr1DJwc_yoWrZw4DpF
- WfCr13CF4rKrZrA3Z3u3WqgFyrZws7Cw1rXF4IkrySy3y5Jr1ku3yUt39xtF48JwsxZw45
- ZrsrZa1Dua4xZFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU7XTm
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.337,
+X-Authority-Info-Out: v=2.4 cv=ddGNHHXe c=1 sm=1 tr=0 ts=69aa5577
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=oZ2wCSY6f7DP8ugrgSYA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: GAzMWzeGWqvkW9JDSWtg-tuBkkezmc_D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDAzOCBTYWx0ZWRfXzNhKCuBUGid7
+ GfPF9lMo0IqRpjCDfI0IeZxi/1frdU3HEP1MTH1JVEgGkZ55IeEL+xRg/Yfb6gd174FLlPGoG1a
+ DA+Ny5Npxg462fndsP8uy/OnBbVhI9iKI0oiOpEEP5prCNGGObofM+fjPjV4IoyWjPOw5vgJvbI
+ K3+ejR3JaE6AEY6tkZAGadYXeQ7WMXqQf2XExgGOFH0PacOk8FRG4OFQMz6ZJPeX2Z26QQ377Pu
+ 1ntVeUcJfaCeP1wOS93YpbE7W4IXpfbJNSYTFMGakn/N6j9iBXkW3Xys+A8iVdo+lp++AVrqVUJ
+ 7nMwMSOhETc7KYdRPgD0/bLfOVRWlnfNGAExT2Cf5a+dOM6g3CiRgjT7dbK9Wc=
+X-Proofpoint-ORIG-GUID: GAzMWzeGWqvkW9JDSWtg-tuBkkezmc_D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-06_01,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 mlxlogscore=999 clxscore=1030
+ suspectscore=0 bulkscore=0 spamscore=0 mlxscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603060038
+X-JNJ: AAAAAAABuAMaIt2nMQp6a4qzWaOyWVqC0OvpoLua3nErH4VUQuIzHu03OrAceKfkoke9NfiKStZymOQqpliTV1VjPBNndTJzt/qjIMzh05mPYCSXgZDAgjqXNrajmx5Y6zl8I5unSjXCYo4Gr4hIFpyZ1vZ5432Hno5RrGiIATD51MIfT1K77PcxyjeEc9TsA+bxedZroCncpTK1rIRv9k4+FJXK0k+jC4hCxCaQNmMlsElKMhH4f/ePct03Gj6Zlm7Z/F6mCDSIg5DDI2p7yvpz0iFjKoSKiTeaCWFBYzDgoLvD0CFVHEKRRZKqG2lIKzwGPAjFLHELvX1hAHj9xl9wPGF0k/iXPRsIw8sQWqaBG4yobw9roKE82f56XwiY5tTIbV/otlIUluE0CDplFJWH1tKJD9kIdnVQKzPvrLOdX0EyD3mwR5XrB5cXsV8JYKYZWKqSCPfjhYudO/aE+lGfSS1UCx5/putiTGCYY19XrjTzi6AgPDZsy1BK3oZSpCo9jSR1E2Xvx/Bg9fesSHnYoTMARIfQLrCgc5aPOO0CIZtEUl2xQ98KYlgIgb0tpz1LZNRXUyq7WH6+iIKsgbVWUEgIapccxgJz2tir+8SUknwCGMbYb8j5AP6RjGk42cVQvaXzQkQ2LSViODLUeFyK8bk0/45itrJcUz9/TDeNNLgVZxMXVVof0Hw5UR/t23krBE10eKjWnc31vtj9nHJGDNAJXeyJlc1sCDlflLlkffQX6cLtHSRryXqkwOiVpfFDyyvPruMOPhV5Q1D3i/W4
+Received-SPF: pass client-ip=57.103.68.48;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,126 +96,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
+Starting from M4 cores and MacOS 15.2 SDK, HVF can virtualise FEAT_SME2.
 
-On 2026/3/5 下午9:54, Andrew S. Rightenburg via qemu development wrote:
-> From: rail5 <andrew@rail5.org>
-> 
-> The LDDIR/LDPTE helpers load a page table entry (or huge page entry)
-> from guest memory and currently apply the PALEN mask to the whole
-> 64-bit value.
-> 
-> That mask is intended to constrain the physical address bits, but masking
-> the full entry also clears permission bits in the upper part of the PTE,
-> including NX (bit 62). As a result, LoongArch TCG can incorrectly allow
-> instruction fetches from NX mappings when translation is driven through
-> these helpers.
-Good catch.
-yeap, it is actually one problem, the upper HW PTE bits are lost.
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260303-sme2-hvf-v6-2-b473702d8287@linaro.org>
+---
+ target/arm/hvf/hvf.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-> 
-> Mask only the PPN/address field and preserve the rest of the PTE.
-> 
-> This was reported as a bug at:
-> https://gitlab.com/qemu-project/qemu/-/issues/3319
-> 
-> Fixes: 56599a705f2 ("target/loongarch: Introduce loongarch_palen_mask()")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: rail5 (Andrew S. Rightenburg) <andrew@rail5.org>
-> ---
->   target/loongarch/tcg/tlb_helper.c | 29 +++++++++++++++++++++++++----
->   1 file changed, 25 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-> index c1dc77a8f8..8747fa2a0f 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -686,6 +686,24 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->       cpu_loop_exit_restore(cs, retaddr);
->   }
->   
-> +static inline uint64_t loongarch_mask_pte_ppn(CPULoongArchState *env,
-> +                                              uint64_t pte)
-> +{
-> +    uint64_t palen_mask = loongarch_palen_mask(env);
-> +
-> +    if (is_la64(env)) {
-> +        uint64_t ppn_bits = pte & MAKE_64BIT_MASK(12, 36);
-> +        uint64_t ppn_masked = ppn_bits & palen_mask;
-> +
-> +        return (pte & ~MAKE_64BIT_MASK(12, 36)) | ppn_masked;
-value 36 is hard-code, also I think software PTE bit should be cleared.
-how about add HW PTE mask element in structure CPULoongArchState?
-
-> +    } else {
-> +        uint64_t ppn_bits = pte & MAKE_64BIT_MASK(8, 24);
-> +        uint64_t ppn_masked = ppn_bits & palen_mask;
-> +
-> +        return (pte & ~MAKE_64BIT_MASK(8, 24)) | ppn_masked;
-> +    }
-> +}
-> +
->   target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
->                             uint32_t level, uint32_t mem_idx)
->   {
-> @@ -721,7 +739,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
->       get_dir_base_width(env, &dir_base, &dir_width, level);
->       index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
->       phys = base | index << 3;
-> -    return ldq_le_phys(cs->as, phys) & palen_mask;
-> +    return loongarch_mask_pte_ppn(env, ldq_le_phys(cs->as, phys));
-I think that it is not needed with lddir() API, lddir returns physical 
-address of page table without PTE permission. only helper_ldpte() need 
-modification.
-
-Regards
-Bibo Mao
-
->   }
->   
->   void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-> @@ -729,6 +747,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
->   {
->       CPUState *cs = env_cpu(env);
->       hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
-> +    uint64_t pte_raw;
->       uint64_t badv;
->       uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
->       uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-> @@ -744,7 +763,6 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
->        * and the other is the huge page entry,
->        * whose bit 6 should be 1.
->        */
-> -    base = base & palen_mask;
->       if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->           /*
->            * Gets the huge page level and Gets huge page size.
-> @@ -768,7 +786,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
->            * when loaded into the tlb,
->            * so the tlb page size needs to be divided by 2.
->            */
-> -        tmp0 = base;
-> +        tmp0 = loongarch_mask_pte_ppn(env, base);
->           if (odd) {
->               tmp0 += MAKE_64BIT_MASK(ps, 1);
->           }
-> @@ -780,12 +798,15 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
->       } else {
->           badv = env->CSR_TLBRBADV;
->   
-> +        base = base & palen_mask;
-> +
->           ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
->           ptindex = ptindex & ~0x1;   /* clear bit 0 */
->           ptoffset0 = ptindex << 3;
->           ptoffset1 = (ptindex + 1) << 3;
->           phys = base | (odd ? ptoffset1 : ptoffset0);
-> -        tmp0 = ldq_le_phys(cs->as, phys) & palen_mask;
-> +        pte_raw = ldq_le_phys(cs->as, phys);
-> +        tmp0 = loongarch_mask_pte_ppn(env, pte_raw);
->           ps = ptbase;
->       }
->   
-> 
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 3d194680cc..c9787b3ea1 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -315,6 +315,7 @@ typedef struct ARMHostCPUFeatures {
+     uint64_t features;
+     uint64_t midr;
+     uint32_t reset_sctlr;
++    uint32_t sme_vq_supported;
+     const char *dtb_compatible;
+ } ARMHostCPUFeatures;
+ 
+@@ -1121,19 +1122,6 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ 
+     clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar);
+ 
+-    /*
+-     * Disable SME, which is not properly handled by QEMU hvf yet.
+-     * To allow this through we would need to:
+-     * - make sure that the SME state is correctly handled in the
+-     *   get_registers/put_registers functions
+-     * - get the SME-specific CPU properties to work with accelerators
+-     *   other than TCG
+-     * - fix any assumptions we made that SME implies SVE (since
+-     *   on the M4 there is SME but not SVE)
+-     */
+-    SET_IDREG(&host_isar, ID_AA64PFR1,
+-              GET_IDREG(&host_isar, ID_AA64PFR1) & ~R_ID_AA64PFR1_SME_MASK);
+-
+     ahcf->isar = host_isar;
+ 
+     /*
+@@ -1148,6 +1136,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      */
+     ahcf->reset_sctlr |= 0x00800000;
+ 
++    ahcf->sme_vq_supported = hvf_arm_sme2_supported() ? hvf_arm_sme2_get_svl() : 0;
++
+     /* Make sure we don't advertise AArch32 support for EL0/EL1 */
+     if ((GET_IDREG(&host_isar, ID_AA64PFR0) & 0xff) != 0x11) {
+         return false;
+@@ -1199,6 +1189,7 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     cpu->env.features = arm_host_cpu_features.features;
+     cpu->midr = arm_host_cpu_features.midr;
+     cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
++    cpu->sme_vq.supported = arm_host_cpu_features.sme_vq_supported;
+ }
+ 
+ void hvf_arch_vcpu_destroy(CPUState *cpu)
+@@ -1339,6 +1330,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+                               arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
+     assert_hvf_ok(ret);
+ 
++    aarch64_add_sme_properties(OBJECT(cpu));
+     return 0;
+ }
+ 
+-- 
+2.50.1 (Apple Git-155)
 
 
