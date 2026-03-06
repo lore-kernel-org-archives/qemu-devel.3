@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6340AF513ED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74DD1F513EF
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 01:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyKBZ-0008IU-3v; Thu, 05 Mar 2026 20:41:01 -0500
+	id 1vyKBb-0008Jd-Cl; Thu, 05 Mar 2026 20:41:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyKBX-0008Hy-Is
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:40:59 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vyKBZ-0008IW-1Y
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:41:01 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyKBV-0006ED-Qx
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:40:59 -0500
+ id 1vyKBW-0006EJ-MA
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:41:00 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B6445596DA4;
- Fri, 06 Mar 2026 02:40:55 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9C3EB596DA1;
+ Fri, 06 Mar 2026 02:40:56 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id YE5wm4bxLcVe; Fri,  6 Mar 2026 02:40:53 +0100 (CET)
+ id 98KER3vuqtrd; Fri,  6 Mar 2026 02:40:54 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 834BC596D9B; Fri, 06 Mar 2026 02:40:53 +0100 (CET)
-Message-ID: <cf090a57b03b8c21a56772d90f8b1934ae32a64d.1772760714.git.balaton@eik.bme.hu>
+ id 8F41B596DA2; Fri, 06 Mar 2026 02:40:54 +0100 (CET)
+Message-ID: <ea26eb95a2593a68012e3c0d7cc72ef18f9fbe87.1772760714.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1772760714.git.balaton@eik.bme.hu>
 References: <cover.1772760714.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v8 1/8] hw/display/{cg3.tcx}: Do not use
- memory_region_init_rom_nomigrate()
+Subject: [PATCH v8 2/8] memory: Remove memory_region_init_rom_nomigrate()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,15 +44,14 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Fri, 06 Mar 2026 02:40:53 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Fri, 06 Mar 2026 02:40:54 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,63 +67,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use memory_region_init_rom() instead which is what other devices do.
-This breaks migration but these devices are only used by sparc Sun
-machines which have no migration compatibility guarantee.
+All users were converted so no longer needed.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/display/cg3.c | 5 ++---
- hw/display/tcx.c | 5 ++---
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ docs/devel/memory.rst                         |  1 -
+ include/system/memory.h                       | 26 -----------------
+ .../memory-region-housekeeping.cocci          | 28 -------------------
+ system/memory.c                               | 19 ++-----------
+ 4 files changed, 3 insertions(+), 71 deletions(-)
 
-diff --git a/hw/display/cg3.c b/hw/display/cg3.c
-index 568d6048a6..61bdb0552e 100644
---- a/hw/display/cg3.c
-+++ b/hw/display/cg3.c
-@@ -282,8 +282,8 @@ static void cg3_initfn(Object *obj)
-     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-     CG3State *s = CG3(obj);
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 8558f70a42..0bb5acab21 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -113,7 +113,6 @@ have a special case where you need to manage the migration of
+ the backing memory yourself, you can call the functions:
  
--    memory_region_init_rom_nomigrate(&s->rom, obj, "cg3.prom",
--                                     FCODE_MAX_ROM_SIZE, &error_fatal);
-+    memory_region_init_rom(&s->rom, obj, "cg3.prom", FCODE_MAX_ROM_SIZE,
-+                           &error_fatal);
-     sysbus_init_mmio(sbd, &s->rom);
+ - memory_region_init_ram_nomigrate()
+-- memory_region_init_rom_nomigrate()
  
-     memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
-@@ -299,7 +299,6 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
-     char *fcode_filename;
+ which only initialize the MemoryRegion and leave handling
+ migration to the caller.
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 0562af3136..7117699b10 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1588,32 +1588,6 @@ void memory_region_init_alias(MemoryRegion *mr,
+                               hwaddr offset,
+                               uint64_t size);
  
-     /* FCode ROM */
--    vmstate_register_ram_global(&s->rom);
-     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, CG3_ROM_FILE);
-     if (fcode_filename) {
-         ret = load_image_mr(fcode_filename, &s->rom);
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 36cad82abd..16114b9bb8 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -756,8 +756,8 @@ static void tcx_initfn(Object *obj)
-     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-     TCXState *s = TCX(obj);
+-/**
+- * memory_region_init_rom_nomigrate: Initialize a ROM memory region.
+- *
+- * This has the same effect as calling memory_region_init_ram_nomigrate()
+- * and then marking the resulting region read-only with
+- * memory_region_set_readonly().
+- *
+- * Note that this function does not do anything to cause the data in the
+- * RAM side of the memory region to be migrated; that is the responsibility
+- * of the caller.
+- *
+- * @mr: the #MemoryRegion to be initialized.
+- * @owner: the object that tracks the region's reference count
+- * @name: Region name, becomes part of RAMBlock name used in migration stream
+- *        must be unique within any device
+- * @size: size of the region.
+- * @errp: pointer to Error*, to store an error if it happens.
+- *
+- * Return: true on success, else false setting @errp with error.
+- */
+-bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
+-                                      Object *owner,
+-                                      const char *name,
+-                                      uint64_t size,
+-                                      Error **errp);
+-
+ /**
+  * memory_region_init_iommu: Initialize a memory region of a custom type
+  * that translates addresses
+diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
+index 7f89e9712e..e45703141a 100644
+--- a/scripts/coccinelle/memory-region-housekeeping.cocci
++++ b/scripts/coccinelle/memory-region-housekeeping.cocci
+@@ -16,17 +16,10 @@
+ expression E1, E2, E3, E4, E5;
+ symbol true;
+ @@
+-(
+ - memory_region_init_ram(E1, E2, E3, E4, E5);
+ + memory_region_init_rom(E1, E2, E3, E4, E5);
+   ... WHEN != E1
+ - memory_region_set_readonly(E1, true);
+-|
+-- memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
+-+ memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
+-  ... WHEN != E1
+-- memory_region_set_readonly(E1, true);
+-)
  
--    memory_region_init_rom_nomigrate(&s->rom, obj, "tcx.prom",
--                                     FCODE_MAX_ROM_SIZE, &error_fatal);
-+    memory_region_init_rom(&s->rom, obj, "tcx.prom", FCODE_MAX_ROM_SIZE,
-+                           &error_fatal);
-     sysbus_init_mmio(sbd, &s->rom);
  
-     /* 2/STIP : Stippler */
-@@ -822,7 +822,6 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
-     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
+ @possible_memory_region_init_rom@
+@@ -53,11 +46,7 @@ cocci.print_main("potential use of memory_region_init_rom*() in ", p)
+ expression ROM, E1, E2, E3, E4;
+ expression ALIAS, E5, E6, E7, E8;
+ @@
+-(
+   memory_region_init_rom(ROM, E1, E2, E3, E4);
+-|
+-  memory_region_init_rom_nomigrate(ROM, E1, E2, E3, E4);
+-)
+   ...
+    memory_region_init_alias(ALIAS, E5, E6, ROM, E7, E8);
+ -  memory_region_set_readonly(ALIAS, true);
+@@ -80,23 +69,6 @@ expression ERRP;
+  ...
+ -vmstate_register_ram_global(MR);
+ @@
+-expression MR;
+-expression NAME;
+-expression SIZE;
+-expression ERRP;
+-@@
+--memory_region_init_rom_nomigrate(MR, NULL, NAME, SIZE, ERRP);
+-+memory_region_init_rom(MR, NULL, NAME, SIZE, ERRP);
+- ...
+--vmstate_register_ram_global(MR);
+-@@
+-expression MR;
+-expression OPS;
+-expression OPAQUE;
+-expression NAME;
+-expression SIZE;
+-expression ERRP;
+-@@
+ typedef DeviceState;
+ identifier device_fn, dev, obj;
+ expression E1, E2, E3, E4, E5;
+diff --git a/system/memory.c b/system/memory.c
+index c51d0798a8..65042bd9fa 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1738,21 +1738,6 @@ void memory_region_init_alias(MemoryRegion *mr,
+     mr->alias_offset = offset;
+ }
  
-     /* 10/ROM : FCode ROM */
--    vmstate_register_ram_global(&s->rom);
-     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, TCX_ROM_FILE);
-     if (fcode_filename) {
-         ret = load_image_mr(fcode_filename, &s->rom);
+-bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
+-                                      Object *owner,
+-                                      const char *name,
+-                                      uint64_t size,
+-                                      Error **errp)
+-{
+-    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
+-                                                size, 0, errp)) {
+-         return false;
+-    }
+-    mr->readonly = true;
+-
+-    return true;
+-}
+-
+ void memory_region_init_iommu(void *_iommu_mr,
+                               size_t instance_size,
+                               const char *mrtypename,
+@@ -3757,9 +3742,11 @@ bool memory_region_init_rom(MemoryRegion *mr,
+ {
+     DeviceState *owner_dev;
+ 
+-    if (!memory_region_init_rom_nomigrate(mr, owner, name, size, errp)) {
++    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
++                                                size, 0, errp)) {
+         return false;
+     }
++    mr->readonly = true;
+     /* This will assert if owner is neither NULL nor a DeviceState.
+      * We only want the owner here for the purposes of defining a
+      * unique name for migration. TODO: Ideally we should implement
 -- 
 2.41.3
 
