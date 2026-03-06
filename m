@@ -4,104 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82303F01832
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 12:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE4AF01832
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 13:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyUi7-0007zN-Il; Fri, 06 Mar 2026 07:55:19 -0500
+	id 1vyUoI-0001Ai-Ud; Fri, 06 Mar 2026 08:01:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyUi4-0007wY-BW
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:55:16 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyUi2-0005xD-DE
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 07:55:15 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64ae222d978so8812778d50.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 04:55:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772801713; cv=none;
- d=google.com; s=arc-20240605;
- b=bdt6uIPq4xlCIt8bZYE0qA0YBDA6FXmBar1B7rqpyz7F2Ht5W0u5sBEcoA2u6Nj6s+
- 62BDvgEY2+Nu5dWOfyldFS2MdwjoSZ+qL++BMl1hJhjd84YcE4cmQ0hHsAjId+HjS1xD
- eElARE9nd8lOjgoQAvA4zJCMkCXo/iQ9gpb3YFbMS1ylkHBhFOk1Lt0OxKmuj8nZCOKB
- 8s31BXgWTBCc+pne7vlFNLCeSMQjEZY677FcJWAY7HijUjal2NyVQn+DBYGpUcPtHUB+
- 2Ovo8zF7PrEBEI4NmUKvXt3xH4wntNuzFco4PRnVBSb/cKfxaMf4nJvbrinnQJaOzmBK
- r0yQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zLZ5XQi3wxMRFR5Uc3e80yxjBAASCbrgfZjbhYmh57Q=;
- fh=7nIYNV/zHmiWJg+HPMkRRPPgN56L8Zkg39I9U1zf+Uk=;
- b=BYs6Pjzo9+wTUro6F8Ay4ObspfB8QZAtK2JdEztw+0yH0HCV/+zrdJz+BNKT2kg5wH
- c3rWyglU9hzX7L6bUVEYJtR7riiDY+0fWm8y/ulK3/KjbcvRzkMEd3AfNtezaae4in8g
- rLeuA+Xksj0gOTOZP+h5/f9j3yj70P6HbECLM/Y7KDIYQNdqBa5FaaA+/a6b7POVCJkS
- 3Rti8ESFjmclx2GSvcDo8cgt4LnhkDNECJ46nYFMBF5t+iMf2fzh7Mq7ez4JUnQ26jiC
- xdeIbS+7htTamGpsHxsl9qe4cc5jJrj1bzNHMNwuQwsVziovyCZNSn3wvSJfZogDWbXL
- /WgQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772801713; x=1773406513; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zLZ5XQi3wxMRFR5Uc3e80yxjBAASCbrgfZjbhYmh57Q=;
- b=vtxE1R/HDdiPo4dcVzBE4nUnpb1iKCTs7EmsAbqoa4OTUdUHsBlTuOscK+CEg8vUHE
- EDnM9MiOEf+GUBwIQKhiAiMoWsIXsuyW6tTraII5yp5CB/9T64ezMTBUkqDUMCsjgd86
- lK9w5vmwud/GXa31j9jaoXy35cN06i1iDdAOBA/2N4XawXIxb4pjC99slHFKL2QWTc9r
- inOmoesCskltNunPJaQfJyf8H/uwAdy1OUEcHb/Iuvt7ckMmNYZd5UEHrHk/+qVfEIsy
- F2LOAhZcAePRLXmd7klv94Yy/bh6vd3BICF82FicvWt+0Z1hbstJAFkWhjovJRmaC0Hr
- oYkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772801713; x=1773406513;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zLZ5XQi3wxMRFR5Uc3e80yxjBAASCbrgfZjbhYmh57Q=;
- b=qyHy6fZ/j9BMWuUnpDMV8E05H4sacTLaVBAmWEotU1ApgZ1U2pLJmUBtOW7HnkSpeG
- YXRyth5gqOXpwxubGOwl/2gL5IT4H8xuWWSfToHbue/mkcF7JfT1loS4KhgNWLn0dWbe
- 1j44M58l+wzW4L1Nrw+C9q/tsF3WaFJhgj7bG4CpcdejQiPDQbl1BxKfR7sq+onXvEnJ
- 5ZB3dGwISPupth6HrWWC0t4BlirIl+jfgR/YszE0uSmPHN9zzFI6hcXGuQXF1jxJ2xIg
- f7ke4ehPeL43iNjNVzN61nHnK0/5X9kLqDJWoMuVfVG4CPl48yYPvBL0HDLqoPDVPkNd
- w4Jg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9JS6J7Z1wFkhtNcuB/7B8JDUF/NY/J2ZtTVH7D4aV1kX+luKrXdIMPtmp/LEX6oztjlTOCRm1zU2O@nongnu.org
-X-Gm-Message-State: AOJu0YyiAbK/K17Iu80vceVz/DiNUaDSFSYmhpr0Mgi61zTi7Xi8tZcL
- FZSWOXsBvGOXZ+XBTBULcRQmNxMrZYxMnik8jDrwxOTQ67ge8dQc8Cr6moq45ddnjHPnn4r4bJ7
- 9SV8PUhXEFprxSRrVjcBeVkRYrloDorgzRCKLHMsUUJAAKyI68GL6
-X-Gm-Gg: ATEYQzxC8UfSO04XazlwArmGaFP/vR0SOk7lgLWSlrmL7HNaU7WUoniVJpuABZlIBp/
- dx+TxQbMq9L4MfAHqDnpGLJ7aZu3EPpL3MLGcFWQHBm0Qph9LK3i5bkj7NogksYqIIHJIrOHVNk
- +fdp4Dt63RfGBNiGPt8ZhtjozFJ4sSaUPGhUS+UcXMon7HDlHWzIIw6yfNPGg06I9vOZnGUUe/Y
- W8SfnxYud77c+4NeFjtt3fqxKL2dV+mxGnZfZyQjuKgIrv41gG376TKhuAY2wwFswaj/Jw/ccCU
- eB0BS3Wy+L+sjO9etONntAowDuUXulkyZJQhEXA7rdr19Y/tej6XYUcGablpbR0tDEE=
-X-Received: by 2002:a05:690e:191c:b0:649:e501:21af with SMTP id
- 956f58d0204a3-64d1407efeamr1690715d50.14.1772801712546; Fri, 06 Mar 2026
- 04:55:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyUoF-00019F-2J
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:01:39 -0500
+Received: from p-west2-cluster5-host4-snip4-2.eps.apple.com ([57.103.71.95]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyUoD-0006zr-MH
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 08:01:38 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-10-percent-1 (Postfix) with ESMTPS id
+ 503791802E5C; Fri,  6 Mar 2026 13:01:35 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772802096; x=1775394096;
+ bh=IzVSt1aVpyTkgRI+sV6HgtQSQ/A0iOy/FaOFV8C9G40=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=N33zhOxvJ5cIJHUW20eKbvAApI8FXOZYqJ7F1SPmpnJbAWoL9wx//3xdL7jwuBCNPy8u5thiy1R+mWSDurUjcafMZbA7p82gB9XJ2x48fiiUxZKXd6knsjkeCMRKRyRRW3xSlZy2v88WkQ+94nM6KTEkkAsBp6MsZ6K6xYwfJnhF/DtQiYrPCbDOliUtUhjLdTFCuOyiO7aKw3Qr3DDH13C66fk/C6JueqpA2KVLqaH6t1C7IRBRTJfnR9Lz80C4Yrxk/oIYqZZWKJlLZsDSw31+opQP3GV8hDyw+LOGhBd1E3GVS/MNXPfaiFBiqz19S6Zvjcj1hQfEeFL47SYv7A==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-10-percent-1 (Postfix) with ESMTPSA id
+ DF7D21800859; Fri,  6 Mar 2026 13:01:20 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v15 04/17] hvf: hvf-all: stop including hvf_arm.h
+Date: Fri,  6 Mar 2026 14:00:54 +0100
+Message-ID: <20260306130107.35359-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260306130107.35359-1-mohamed@unpredictable.fr>
+References: <20260306130107.35359-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-References: <20260305175711.1119025-1-clg@redhat.com>
-In-Reply-To: <20260305175711.1119025-1-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Mar 2026 12:55:01 +0000
-X-Gm-Features: AaiRm50NA0K-bBGJPO62ii9Vs0LBZqUlrHmxj-_xci6bijdT2fZbOVV5-Eqn8kE
-Message-ID: <CAFEAcA_dAZird_b0kPTaSDu0oBPyBkobj92xw7haQJR53jvgKQ@mail.gmail.com>
-Subject: Re: [PULL 00/38] aspeed queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=T7iBjvKQ c=1 sm=1 tr=0 ts=69aad02f
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=uNs1HyugXjh6PdyaFdwA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: k2vaSFakcYZDnX5l7PtvjTA4ohEWIX4S
+X-Proofpoint-ORIG-GUID: k2vaSFakcYZDnX5l7PtvjTA4ohEWIX4S
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEyNSBTYWx0ZWRfX79/NpwEgpRZ6
+ g+IYNUN+rI7kIaOpWtWF1lQfxyaPJcYgI4RapvamT58QSPRkzb8dIM2MfWdArBFGQXjmEwfokKC
+ LnotQIzD224YrQ3lUixptyPdUP1bjfjfrD1SESQRaMZCTGMr/f8zPAyHuLNOIVtIwID+nwSGW9s
+ 1U3ydwwn9WU8bKRFwaDXOU+QWmVcOpXaOGEWZ61UVfqEiiOyZHTye4RglNHkiV0JUIeMG0XukNx
+ N7bI7zATq8np4t1zfRQLARqdBAThavCObxZE9xt5+C0b1nN7zFemTbFwHeWXkBLc/+7+n/YEJgV
+ mpKE2J9RIPlKtdpWmkPxRNudSu0tsACPNbwkz+MXxNu1GbPbrE+lfcKW4uEEGs=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-06_04,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ adultscore=0 spamscore=0 bulkscore=0 mlxlogscore=660 suspectscore=0
+ lowpriorityscore=0 mlxscore=0 phishscore=0 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603060125
+X-JNJ: AAAAAAABdMORiN5fBp1tSvQzvEG9bpMEr6I62Az21jg8BxTv3+3QEf0mHbhwz6RDDCSEtY1G4+ja87Dwerri6mvjsr65mVTqXHNVVOHiLqfkijQaU0GuKnNOzvXRSUvYZMa4B+DU7Mn6yGOrBoxVOYOanCV5ViiJ3eIwJBOxF+FYKi5H1CktQe/mpWzkFLiTWVX6L15EKYZqOL5YsrXSel9PEOQ81IusAkfb95kD/Bm6Oi1OxeQ/nQmufZ0h2K7JzW2sdO+iyG7X9D47L68sDI2kPavzqDkGqzRPvUDB7erBYVfnCdt0ATSAtK5MHHqqjw15vW2eCMb3AjnTCb83QcNNsvnKJ35Zj/YD2nik4F550Jmy3aILZJY4P9M9OLzzZcrRBT5yX48o35vuNLJOOHf0YVT9OX+mWKgQYkjzxwdXvzQD0BlKXEp0Lep/8Lc4EVCaZii+iTwAJ8bhGfdWrT4330ja82haaxqPNTIwbuoPl42sVui0c26Ib3agOkX/V2W1v64BuGQTsmKwhJ38F0o89v17IMG8W9W6Vk+ZaJXziDePHsfbesyt5+Px9KVM/76PO/zn/XGTurcRt9zSbE5C6NjfboDOEObUSa57gIw3RHs5tQ0zKfe4nnOijTaRxqTXX6IEnBLogHKWAk6xUx5yr2x99TZ/YsXNyadBhiX4koXurwsW44EJy44m5MFHsAy+nc0UTxPTX9J2AwxXHGSym4rA78GmdlBPJF2AKtD60EP0JJI9dQ5tOYIsvTYA1vR0PcUH0cCALK0=
+Received-SPF: pass client-ip=57.103.71.95;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,37 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Mar 2026 at 17:57, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
-> The following changes since commit ae6e281633769bbc7424523d0ca1163e214571=
-ad:
->
->   Merge tag 'pull-loongarch-20260302' of https://github.com/gaosong715/qe=
-mu into staging (2026-03-05 10:48:38 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/legoater/qemu/ tags/pull-aspeed-20260305
->
-> for you to fetch changes up to ee357844b13904a826ffa77834cd08e10ba1e9ba:
->
->   tests/functional/aarch64/test_aspeed_ast2700fc: Update test ASPEED Open=
-BMC SDK v11.01 (2026-03-05 18:47:46 +0100)
->
-> ----------------------------------------------------------------
-> aspeed queue:
->
-> * Add I3C support to QEMU, add an dummy I3C device and extend the
->   Aspeed I3C controller
-> * Update test ASPEED OpenBMC SDK v11.01
-> * Fix DMA64 address handling in Aspeed I2C model (AST2700 SoC)
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ accel/hvf/hvf-all.c | 1 -
+ 1 file changed, 1 deletion(-)
 
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 033c677b6f..5f357c6d19 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -18,7 +18,6 @@
+ #include "system/hvf_int.h"
+ #include "hw/core/cpu.h"
+ #include "hw/core/boards.h"
+-#include "target/arm/hvf_arm.h"
+ #include "trace.h"
+ 
+ bool hvf_allowed;
+-- 
+2.50.1 (Apple Git-155)
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
