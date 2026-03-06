@@ -4,95 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9614FCB621
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9B5FCB623
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 16:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyYCK-00014t-Ef; Fri, 06 Mar 2026 11:38:44 -0500
+	id 1vyYMe-0002pp-Qv; Fri, 06 Mar 2026 11:49:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyYCH-000149-D3
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:38:41 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyYCF-0003Iy-Oz
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:38:41 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48371119eacso112159135e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 08:38:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772815117; x=1773419917; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=D6jWx1BGRFQjklrs2kWhg2v+cB8X8lSpsYI+htxB8Qs=;
- b=IepeR3jwMJSTIuFCW9WGPPLZ+pzDnCHONxnyHvcaRLtvYUlSe30og1wFAl4Bn61Uw9
- pDtEVjNhV7ruS42LcVt8+fht63hie9aQaSPmSBYwRKERakYAG1ko3BUN8x6jUrByn2jp
- OPvQbCToho34NdqUhmiXUJPHG9XCgEFnUGFMbPEGY01/KxqdIa4kAJwefBDwWBvgSKJn
- nFfb7Bv2qL6tH005wJfeL2c2jRhc4RDPbRRRcytr3pjMofNmc3LYvAa9kbf7N6M/qqtI
- P2uHSYO2BGzqcaYxYPIdbLR+qD0GizMkoPHWgl5lNf4wojY+7gGQ+xUufHdGKO4R5YoS
- f0XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772815118; x=1773419918;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D6jWx1BGRFQjklrs2kWhg2v+cB8X8lSpsYI+htxB8Qs=;
- b=I2JafsovhnWhLKRVdgKupEEX5NkIh2a1J3kpkPglAIJPfaaWE6zM9UNpRBHz3qhyOv
- cdbNQlIu0nsm1H8v+4GiDJ/d4UF3j/byZ6zN/KV9PB0zZ4G6aWclOI3Eg4j4G/5vQDqB
- XJpsUCPZn0HLt82/eTUm75dhuAIpWH96cmWrEjTtQZiM3YXqpMMUM74jG+h7qX+e0Tm1
- 9gTNAMD5ATxAlRkWccPcPMftk9BdNW2fbTlslHtHt3scLSJfpVkhI7aUpH0SViW/O754
- 0M/LQ6v3SpIpvmU6v5D92skkHaS7XQxYFFKkJse00ZcVQSuV7jMYS00a6tfbThFOmRCi
- kZNg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzrIvruCMnF920fYoe6KQ9uFvC4DAQI8RsWZRtn1KKY56gq7LEjacacGdwY34/0Mtn7W8GcRJGz5MV@nongnu.org
-X-Gm-Message-State: AOJu0YzOSpap01kAd25IJIu4bAUgvzb/iV39F7GHZQWaeNXoo216Tu06
- yjrDIdY7pyadXcnz5GWcoC76Q4/OGwcAaIJvZ5NdZq1EwMcfPVq1wrP1BFGvh1naaZc=
-X-Gm-Gg: ATEYQzz5QwqaJWfIE5CP5vY045U3kpJu8mhlijCy/WFzBIIXup3mkqi6Z/5zDPMoWNJ
- NRg6s9Q2KrnfzuJUBkqeD6w+LLjPrpMQ5GX9E3qxijiSP7OPgcEoX/WB8GBeLuj0SjC4zZtyrb/
- OCTfX29GmCYwl8JdZwD0calW41Z630XnpPoTvXnfumfmo5/ZcIQFSuOFNqaS3BJM/51CoOFLxkb
- uoPun79sRmdPF8575xHwSRJPWHkDOJOfhynmG0Ipwzpzix0aSyDdoe5Ly4MbJJ/+jWcv9yqynfz
- d0wajIV7YNWGKdCRW1FAhfoFH3N8Dy/PsyIB+wxwUEA1Zy0XvJj2Kl4NmGGvfepI162e7UoySoQ
- /YXV1OfTK81K8fqbXsljCvxM8DwkZjXgzaZU08G1DwuFeD2+wR7CrExD0swIQYafSHHXzbBnFBN
- ug2vCvdxfO5My/N5dOTzmVTwsRub8q88F62HMbhdl8Ik49KPDKchs8WHjAPljP92BwTw==
-X-Received: by 2002:a05:600c:34d2:b0:483:badb:6191 with SMTP id
- 5b1f17b1804b1-48526923595mr44412985e9.8.1772815117531; 
- Fri, 06 Mar 2026 08:38:37 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fae538bsm165445295e9.7.2026.03.06.08.38.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Mar 2026 08:38:36 -0800 (PST)
-Message-ID: <6ba56fc4-210e-48f2-a31c-aa049dad8f57@linaro.org>
-Date: Fri, 6 Mar 2026 17:38:35 +0100
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyYMc-0002oQ-L7
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:49:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyYMb-0005Va-7m
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 11:49:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1772815760;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7SM6aaEMN8h5RCViJAlJrlj7L1a0jU4Acoemmwy9fW8=;
+ b=KcdJiEqqtN83GwQH4VIFwD38aSWfx4+ZC3K1REcQWlwcf504Ff6TOta5vsYZQYTRUCv/+P
+ 0FSnZsaLS1w19nnZmtPuTsCcZgfLMi4sUdVniU/fGbQLNK40yibNJqhGMQqaa/yqhqcCET
+ YosRQ8INlesftBkxZxLibSZkUS6W6mY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-58-Ipib_zVgMPCF2dhz9A1B3w-1; Fri,
+ 06 Mar 2026 11:49:17 -0500
+X-MC-Unique: Ipib_zVgMPCF2dhz9A1B3w-1
+X-Mimecast-MFC-AGG-ID: Ipib_zVgMPCF2dhz9A1B3w_1772815756
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 158B01800631; Fri,  6 Mar 2026 16:49:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.210])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 905511958DC5; Fri,  6 Mar 2026 16:49:14 +0000 (UTC)
+Date: Fri, 6 Mar 2026 17:49:12 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/4] qcow2: Add keep_data_file command-line option
+Message-ID: <aasFiDpYO9kpI1Vb@redhat.com>
+References: <20250530084448.192369-1-hreitz@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 01/17] hvf/arm: handle FEAT_SME2 migration
-Content-Language: en-US
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20260306161509.79712-1-mohamed@unpredictable.fr>
- <20260306161509.79712-2-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260306161509.79712-2-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250530084448.192369-1-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,84 +83,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 17:14, Mohamed Mediouni wrote:
-> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Am 30.05.2025 um 10:44 hat Hanna Czenczek geschrieben:
+> Hi,
 > 
-> SME2 support adds the following state for HVF guests:
+> This series adds a keep_data_file qemu-img create option to qcow2 that
+> makes it keep the given external data file for a newly created image
+> instead of overwriting it.
 > 
-> - Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
->    not support it)
-> - Predicate registers P0, .., P15 (also FEAT_SVE)
-> - ZA register
-> - ZT0 register
-> - PSTATE.{SM,ZA} bits (SVCR pseudo-register)
-> - SMPRI_EL1 which handles the PE's priority in the SMCU
-> - TPIDR2_EL0 the thread local ID register for SME
+> This allows to create a qcow2 image for an existing raw image using the
+> qemu-img create command, which previously wasn’t easily possible
+> (besides work-arounds using a temporary data file or qemu-img amend).
 > 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Message-Id: <20260306-sme2-hvf-v7-1-e72eeda41ed3@linaro.org>
+> (The “proper” way of doing it without this option is to use QMP
+> blockdev-create.)
 > 
-> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   target/arm/hvf/hvf.c           | 298 ++++++++++++++++++++++++++++++++-
->   target/arm/hvf/hvf_sme_stubs.h | 172 +++++++++++++++++++
->   target/arm/hvf/sysreg.c.inc    |   8 +
->   target/arm/hvf_arm.h           |  41 +++++
->   target/arm/machine.c           |   2 +-
->   5 files changed, 518 insertions(+), 3 deletions(-)
->   create mode 100644 target/arm/hvf/hvf_sme_stubs.h
+> This new option is a pure qemu-img create (i.e. command-line) option,
+> not available via QMP, because it does not make any sense there.  See
+> patch 1 for more explanation.
+> 
+> (See https://issues.redhat.com/browse/RHEL-73509 for perhaps a bit more
+> context.)
+> 
+> 
+> Hanna Czenczek (4):
+>   qcow2: Add keep_data_file command-line option
+>   qcow2: Simplify size round-up in co_create_opts
+>   iotests/common.filter: Sort keep_data_file
+>   iotests/244: Add test cases for keep_data_file
 
+Thanks, applied to the block branch.
 
-> diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-> index 5d19d82e5d..6b1c3b9792 100644
-> --- a/target/arm/hvf_arm.h
-> +++ b/target/arm/hvf_arm.h
-> @@ -22,4 +22,45 @@ void hvf_arm_init_debug(void);
->   
->   void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
->   
-> +/*
-> + * We need access to types from macOS SDK >=15.2, so expose stubs if the
-> + * headers are not available until we raise our minimum macOS version.
-> + */
-> +#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-> +  #if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200)
-> +    #include "system/hvf_int.h"
-> +
-> +    static inline bool hvf_arm_sme2_supported(void)
-> +    {
-> +        if (__builtin_available(macOS 15.2, *)) {
-> +            size_t svl_bytes;
-> +            hv_return_t result = hv_sme_config_get_max_svl_bytes(&svl_bytes);
-> +            if (result == HV_UNSUPPORTED) {
-> +                return false;
-> +            }
-> +            assert_hvf_ok(result);
-> +            return svl_bytes > 0;
-> +        } else {
-> +            return false;
-> +        }
-> +    }
+Kevin
 
-Why do we need inlined definitions?
-
-> +    static inline uint32_t hvf_arm_sme2_get_svl(void)
-> +    {
-> +        if (__builtin_available(macOS 15.2, *)) {
-> +            size_t svl_bytes;
-> +            hv_return_t result = hv_sme_config_get_max_svl_bytes(&svl_bytes);
-> +            assert_hvf_ok(result);
-> +            return svl_bytes;
-> +        } else {
-> +            abort();
-> +        }
-> +    }
-> +  #else /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
-> +      #include "hvf/hvf_sme_stubs.h"
-> +  #endif /* (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) */
-> +#else /* ifdef __MAC_OS_X_VERSION_MAX_ALLOWED */
-> +  #include "hvf/hvf_sme_stubs.h"
-> +#endif /* ifdef __MAC_OS_X_VERSION_MAX_ALLOWED */
-> +
->   #endif
 
