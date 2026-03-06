@@ -4,81 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8C4FCB605
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:05:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F90FCB605
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWej-0003rx-AS; Fri, 06 Mar 2026 09:59:57 -0500
+	id 1vyWfp-0005tq-Py; Fri, 06 Mar 2026 10:01:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWei-0003o4-5T
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:56 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vyWfN-0004na-GI
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:45 -0500
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWeg-0002Jv-AD
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:59:55 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso77578705e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 06:59:53 -0800 (PST)
+ id 1vyWfG-0002n0-Nv
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:33 -0500
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so8965236d50.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772809229; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dnxF9d7M5SGYbjQ312UBIbFRAphRZVnq77+5fgBfy9rHhNmK4VMbu3IAOq10jRGZlj
+ HyI/4lEEJ++vX0itGJHnz9Q37w1G1QeLLNcvN70NujbyedfB4PR5kpt9XCCkM5F/wvAi
+ jKxmenqFPBp0T3+jm8b5CZEaqeOiqp+fEiIMMzycL5uCCAvNAtOx4izxt4oEh6ID4M3w
+ kCLxpSqP/tWSpLQcSuOYDTQYyg+2xthisJQZ4qRuXEizBfEHmnREls/fVBpCJiq9pEme
+ ei5eUsoJFSkI6whzA99hELQ1+PDeMqWpEGovHbYkQSjP02YCpcxjd/NdtNI8p+/cKvdk
+ 9w8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=omPR7uI02WgQEWZfPFsGxpLQr3uKDGU/PPOW2eHyoC8=;
+ fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
+ b=eogaXplmpDwK3ksF9gUNmKAy5NdMMWJ6FBt5OWyTcbK/eL+/a0L20j1DMB3GfMlVIT
+ B1XKAuc5XkjJzCotkcyIjWlqqPWsDF8ku20GCBna9LE3+9grCRDEPhVFgQDPd8uJQwuI
+ lN4sj5eY9FmoyZTMMnHcDIjDVzSqj2aBfbTx9/nr6RkJtuwusyYGGREJ5X9Ss1dngPIE
+ 4vP2YS8RlfY7yphQ8Dh6j52/T43Nyqks+6NQ8Pe1Q1h2p3yAj7a5szvE3A45+nGtuFf8
+ YQR7VCsQg9XzVoK6XahEiDEgfoxqWXs8f3jLtqqI5VSsLnUpDz8rLOdKuxXZsq3ysV+B
+ WkRw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809193; x=1773413993; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gJ7VFJWuSeydb2nt0OqrAAoYzkq0sPNDXVosGYHOAwY=;
- b=mc744WCU7SIWY9hJKvHwuVWYddEqILxPAjsvHl3zL84TlLZAwCEn8SVfw1IbtZRq0z
- m2T45e5F4rhMF8RdrjAcCEdA4LXXQlrwinx1/eCK32PkN+4yFOBKnFrYY+cEbpZfw1wh
- 25eIcP0lznXSk9hMF9luBSfi0z4FOiZUv4y4JFVvMSAMqDlXL1sjHs9pc3YoOYEF9mWG
- Od6H8V7RZGCBqPM4Fx/c54ydfCbV0HHVa37h+ee5xjWqDflybedy3cxzPwwa6IzJnl69
- oAZ2uWtDYY5XIbvol0KdzEPGj/4Szn+4hSw8GeqGVvFVQnZBYJz6WrAKMXtk853AgYi+
- x8nA==
+ d=linaro.org; s=google; t=1772809229; x=1773414029; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=omPR7uI02WgQEWZfPFsGxpLQr3uKDGU/PPOW2eHyoC8=;
+ b=eEoWingV514PhSM57lEskNO8RTJGNsI2yA7TPnhl1MnJ9qJXo5UT/Hp08AAxdHPz4D
+ 8XWmnflUpiC8qddCWmVu/Sw2n0K4XYonVqjK3TwXF1IUj4SxnhBG0Q79aQwY6UjMR9Ze
+ CBS7nsWbeatCRxOg2RT8TsLK3zjpzMGEWicQXJ9xxuTWbduUtlJe20/+HV2euvQlquwE
+ QUhmocCKl6KPh3Wf9YdWwsbbEDTWqq4ehhNs3G38CqxCxPd8gK9bHRNDrSX/ngU4ow4B
+ M0cRSmTX40C8Hu69xHSDhCSCjCvjq/Zk3T05JRsKKzaIhvV7NuVeGyRtQpyVvX/Mbhlg
+ lANw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809193; x=1773413993;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=gJ7VFJWuSeydb2nt0OqrAAoYzkq0sPNDXVosGYHOAwY=;
- b=bjQFB2D49HXWt3MPXubZgVEv+dPRVPxSAH2n16dwmDqf7WoiInPJcL+mW+jYlTgqiU
- efYlb3o5xWYbTjGfUbVzAaObgpepf29GISW1qeyMDnl6FmpbSE2fEO0YpnQEjlnRhEKL
- Hmz9tquz4b1qZK26EtQ4pFdG3tSxcfumIrVfpWho6jhowRn5VmpP0oUpw/vkLkuKO+OM
- PPrrfdWASaYZ1iE4RcltN6J3G9e+G2siTwl4FQ5BqUNWyvgMnWzQN2xrNybexSPLmxZP
- /+L15HlmAE6T6THh1FKL/k3I8zgUmi2fGsJ8x2aP+UE+KQWvs6iRmO96pc6itVxMuiOe
- 7pBQ==
-X-Gm-Message-State: AOJu0YyZYxpIZDPcv0286K/ZOAo8jNHpNkg1Dx/b/NP13K41EJQVKOiy
- Qn8gjCR2aFWseUN3wYX3Lve45phfbDl7X8ky9CzMXy92/oRGmmzkBuoKMAoeVz1UBUceTMvhaZu
- 8HmqV
-X-Gm-Gg: ATEYQzwga8B1iKTjSGl1qvhL/eUCrAY9N1qy+sQ0VlN8czTIQHMioScqv41HKq0gaS/
- B+vI0BqIXm6KJPLzhGJ/L5TpejPd6/cN3JW6CwUu4tU8RBk/Vbn7vX1+6lKnZAMUU4ciH1T+iA6
- LCqUDaXf65LMIIxrlERBYWyIBic8CTWOuvB3flDicELXKhQVDlfYQuixxz87kuria6Xcl0tzraa
- cVggLrUE8B2ZONMipKdLR5Ez+Hb+8bMymXc6BBPOvgpQ/jU+SfPLRkXes9MVB08Y9zAIOS/sO6M
- F+R780yOOMJrvnW5BfkQPA1GT4mFrd/0QAePpLB4NctV9wlRHAIDMehFWLrnNCxJ5AQAxviQbCF
- 6WxQ+ZKpcqh4VPG1Jz6fyd/XEFsU9w04t8xu4Q5BkqCksfPsOP7Ao7eU+AUVUymDIn+Gt/bscw6
- 3zSkE+LK+NdbyiUThJJdX64/mP0d66P0/pFRNXn+f+CloaoZQvxaNuO0BMo4nb3xW9E/49dQ9SH
- IuNoElch3yjoL9XHw2ndCI6rnFgrqo=
-X-Received: by 2002:a05:600c:4e89:b0:480:1e9e:f9b with SMTP id
- 5b1f17b1804b1-48526951acemr36430665e9.16.1772809192516; 
- Fri, 06 Mar 2026 06:59:52 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.06.59.51
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 06:59:51 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 12/49] hw/net/smc91c111: Don't allow negative-length packets
-Date: Fri,  6 Mar 2026 14:59:02 +0000
-Message-ID: <20260306145939.2162189-13-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
-References: <20260306145939.2162189-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1772809229; x=1773414029;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=omPR7uI02WgQEWZfPFsGxpLQr3uKDGU/PPOW2eHyoC8=;
+ b=qPYJ2Ca1+Ha23f+vVLNd6m1XUK384dWRuhP+3o5veLXfC2y9KEHjEBlFmTNZkUDJHM
+ LalR9BqMcqgkPNt4TaitppUAwevsDTG0OA6LN9WamVYvpnaFsxATvSRHnRZI5pM9gNUh
+ g2ltMEAvfKcLyxzbk0uLZoAgNHKRHRGxQrhJzJvnLAeP5LlDhztfyDn/shmco2gTYgxB
+ T63Y+2yx5ENIj4L33AiKfgWjfGWNHeWbVmoFXk7OLHuqEIkbGFtNsGsiq3mnycQXLTdc
+ eqek7LFIcJmvQe+U5+Kf/aHIItnJ6syPunzYdwaUzZaqoqQ0FkhuOTlVK4tmH9UAU/cC
+ gA/w==
+X-Gm-Message-State: AOJu0YwMVG58pfM/1DLm2Mq89GuRGrocly/mf71Oto4PfbLRSAoVY8OY
+ a+ymz0YYHW+MDM634JWVfdDttd30KGtAgbPK23Z/aL5f5KoWI5zTysFgtrvcX+GBKiDCTyZDYuH
+ 99613iTS4aZWhWLPn4ur2O1E67nfXT6WvfZFN9A074Q==
+X-Gm-Gg: ATEYQzzTkBTduAafsF0RCXiUXRrf/DkYqm0dvHYAK8ydK7zYfU4d5I7Q6WQfg86RY9C
+ JZ0DBZ6Bw1lurJPbaCRYK7G0k7Mo11i/Y6xkzrNbIQnhowgM6h4xAG/XrT4TJq9wX2UZ/UTZeIg
+ kvSmxF4J+oO0w4MvCtAKgCcbUlVVrhvOlIPZEKWaaUeIUGvg2lymq1dHlqTFkiby8nAX8pTCUdD
+ X8/yBtoV13Z5oLXARfd9umvgUZw9LAY4ph9iw5GX6pWJ55ltja+8LQaPmjYFS8vtwexa5fmOXSS
+ K0kt+AZ7NQnFS1mt1jeVakWH+qWBR3lb6G1qqnynYUenS0MICCQRKZ8visK4s4ZR5/A=
+X-Received: by 2002:a53:ee59:0:b0:63c:f5a6:f2ef with SMTP id
+ 956f58d0204a3-64d14350b43mr1716150d50.65.1772809228410; Fri, 06 Mar 2026
+ 07:00:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+References: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260305205152.2121854-1-pierrick.bouvier@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Mar 2026 15:00:17 +0000
+X-Gm-Features: AaiRm50FXi7nvUIFCA8L7LcQNmOsMY1KgIg5upNEXL1OUavb9TAmYZ1JcOLVXNU
+Message-ID: <CAFEAcA_aD3LACyP0-7A+1s7Zt6p6iY_Mfz3QWW7Xp=chnFaiag@mail.gmail.com>
+Subject: Re: [PULL 00/12] Plugins update 2025-03-05
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,77 +114,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The smc91c111 data frame format in memory (figure 8-1 in the
-datasheet) includes a "byte count" field which is intended to be the
-total size of the data frame, including not just the packet data but
-also the leading and trailing information like the status word and
-the byte count field itself.  It is therefore possible for the guest
-to set this to a value so small that the leading and trailing fields
-won't fit and the packet has effectively a negative area.
+On Thu, 5 Mar 2026 at 20:52, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> The following changes since commit 314ff2e07ddc6163554077d68aed5d76a50b8e3d:
+>
+>   Merge tag 'pull-request-2026-03-05' of https://gitlab.com/thuth/qemu into staging (2026-03-05 16:58:20 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260305
+>
+> for you to fetch changes up to aca77dfd90c8a17a2b3526c5cc871cc410357a5f:
+>
+>   tests/tcg/plugins/patch: Free read_data in patch_hwaddr() (2026-03-05 10:54:09 -0800)
+>
+> ----------------------------------------------------------------
+> Changes:
+> - [PATCH v7 0/8] Enable PC diversion via the plugin API (Florian Hofhammer <florian.hofhammer@epfl.ch>)
+>   Link: https://lore.kernel.org/qemu-devel/20260305-setpc-v5-v7-0-4c3adba52403@epfl.ch
+> - [PATCH trivial] plugins: add missing callbacks to version history (Florian Hofhammer <florian.hofhammer@epfl.ch>)
+>   Link: https://lore.kernel.org/qemu-devel/c4ecefb4-8769-403f-8420-8bce42e43e13@epfl.ch
+> - [PATCH 0/3] tests/tcg/plugins: Fix sanitizer issues (Peter Maydell <peter.maydell@linaro.org>)
+>   Link: https://lore.kernel.org/qemu-devel/20260305161531.1774895-1-peter.maydell@linaro.org
+>
 
-We weren't checking for this, with the result that when we subtract 6
-from the length to get the length of the packet proper we end up with
-a negative length, which is then inconsistently handled in the
-qemu_send_packet() code such that we can try to transmit a very large
-amount of data and read off the end of the device's data array.
 
-Treat excessively small length values the same way we do excessively
-large values.  As with the oversized case, the datasheet does not
-describe what happens for this software error case, and there is no
-relevant tx error condition for this, so we just log and drop the
-packet.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3304
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260226175549.1319476-1-peter.maydell@linaro.org
----
- hw/net/smc91c111.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+Applied, thanks.
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 3420d8e28e..3b526524fb 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -30,6 +30,12 @@
-  * LAN91C111 datasheet).
-  */
- #define MAX_PACKET_SIZE 2048
-+/*
-+ * Size of the non-data fields in a data frame: status word,
-+ * byte count, control byte, and last data byte; this defines
-+ * the smallest value the byte count in the frame can validly be.
-+ */
-+#define MIN_PACKET_SIZE 6
- 
- #define TYPE_SMC91C111 "smc91c111"
- OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
-@@ -289,7 +295,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
-         *(p++) = 0x40;
-         len = *(p++);
-         len |= ((int)*(p++)) << 8;
--        if (len > MAX_PACKET_SIZE) {
-+        if (len < MIN_PACKET_SIZE || len > MAX_PACKET_SIZE) {
-             /*
-              * Datasheet doesn't say what to do here, and there is no
-              * relevant tx error condition listed. Log, and drop the packet.
-@@ -300,7 +306,13 @@ static void smc91c111_do_tx(smc91c111_state *s)
-             smc91c111_complete_tx_packet(s, packetnum);
-             continue;
-         }
--        len -= 6;
-+        /*
-+         * Convert from size of the data frame to number of bytes of
-+         * actual packet data. Whether the "last data byte" field is
-+         * included in the packet depends on the ODD bit in the control
-+         * byte at the end of the frame.
-+         */
-+        len -= MIN_PACKET_SIZE;
-         control = p[len + 1];
-         if (control & 0x20)
-             len++;
--- 
-2.43.0
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
 
+-- PMM
 
