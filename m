@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E21CFCB60B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F6DFCB613
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWiR-0006Wb-Ul; Fri, 06 Mar 2026 10:03:48 -0500
+	id 1vyWex-0004GX-16; Fri, 06 Mar 2026 10:00:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vyWi8-0006AH-8t
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:03:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vyWi6-0003Fb-66
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:03:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772809404;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eldssNcwL2vzqR/skuruxhEOMx/slaPtYj/2cYe4PG0=;
- b=JE4mOVYsZFrNuMq0geAzbZtNhrWDoXXYYx7CmWJ5B7HUt2e2VV0VlubDFefwyOTNX08xIx
- x8jFB8JXAwtYGReIbxVQRysUoY8m9PriC0fYiyxvn3yCx587A7nLb+mWYOi5r6yqf7ISyi
- rtMvAxNCr8B436hTjDJwaqcnOKhShRc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-gspfo7W7O96rgc5S92frEw-1; Fri,
- 06 Mar 2026 10:03:21 -0500
-X-MC-Unique: gspfo7W7O96rgc5S92frEw-1
-X-Mimecast-MFC-AGG-ID: gspfo7W7O96rgc5S92frEw_1772809400
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F28DA18005BA; Fri,  6 Mar 2026 15:03:19 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.126])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B3A903003EA4; Fri,  6 Mar 2026 15:03:16 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- sebott@redhat.com, peterx@redhat.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: [PATCH v9 3/6] target/arm/cpu64: Mitigate migration failures due to
- spurious TCR_EL1, PIRE0_EL1 and PIR_EL1
-Date: Fri,  6 Mar 2026 16:02:21 +0100
-Message-ID: <20260306150302.203112-4-eric.auger@redhat.com>
-In-Reply-To: <20260306150302.203112-1-eric.auger@redhat.com>
-References: <20260306150302.203112-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyWeu-0004D8-QM
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:08 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyWet-0002hl-5A
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:08 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-483770e0b25so80012425e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772809206; x=1773414006; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=bNW9OAAW7CqT3slS6bSdmD6LPZ5FjcK1/I23zVmHBdI=;
+ b=Kdl90/4XEyuaRK87++hv/3JWa7GqfZANKTWPqLDILqayi81uSKhFT+0xKm7XLXplun
+ yrDY98+WGLhCOpCEqu/fQwk1jatM2y27vrwnq9AX5V2iRYXNb5ILh4kJNarHc/Zr9iwI
+ y1t2Ml595cyQMyTbOdJYL57d222XeAojwlBjb64Fr41FhbkVm25s/6wbgzpYvC/p8RMa
+ wkp51ipj6Luma5h232EPMglqgzuH0b/S7HA2xHeFbLBAgLhz/N4uGZVLnNhQigbQ1OvD
+ JOB+lpD8YaWwAczI1EvtV5WA3hyU/mEq+xzwR2Zwyj9iHiBc8ocnWgW2t1c8FmdtviBK
+ Gbxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772809206; x=1773414006;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=bNW9OAAW7CqT3slS6bSdmD6LPZ5FjcK1/I23zVmHBdI=;
+ b=gC0Iu4VuZ44rppHRWHZznFWJ3QWDKIkwoJf3ydRJYp833p7BlgJPXTe5k7ZyjTANEd
+ JiF2CKsKkI3NWWp2XzJ7gJ17OfykDlFL6Wkbd3cj+SJMRBiQgHD8oe8YhZ8gQ5AlUep5
+ JA45oPPzJ1RWsku4ipf7Tw06LgEvHfB2QLKvcOwmOUxjK+oJb7B5NjKElm1Yuli4c2lO
+ 8p3rAthnsLKwY2yVDM8uPDUOaiQjJ7P/Mj8tL+hZSvIlxjInhlYPi/ndy/b2UvYbr9MA
+ eddQ0CuOkbioGteJoK3WbPQ49v4AA5ajC4nscnXisoD+AeEmJeuzOGHQypLscjRUpRIB
+ DIVw==
+X-Gm-Message-State: AOJu0YyOE7R/YeVDIzevqL4nWPA1psIqqeFMBU8LH9L9xRROmq1QVTjb
+ /ztX2JkaBBt/LChKRnjxYIboe2hWkwGk0yrenao3I34ZKpKe4x6g1WwojyozXJLekKOTsWvaD48
+ Fjyz4
+X-Gm-Gg: ATEYQzzaNhrUwHoHovWsnHoceGyMLe8vmcn4JrmdkjR4F2ufOI1R1gjGpJDJEVjvUUZ
+ 9nbUilqvZb2aGPyknBklE3nhitUnBG7vG987Z5jIj/v4QZLkOWL8BPMdC8r3I4FG0CSe658c6ZB
+ kEGOWO5GfvTQd2vxrW724qimTc38rUfOOo9zoBJJrNsz+87ONJNHKdHBw+sJmelOUyfUjzxc2sU
+ ij3yCPqlXwr3l6++P0ybS7kBk8bER5BTd21TNJYmxOYPLi1X+Y+VO97ol9OgbpcOzq8qDQHg/7W
+ KOS/VeCgc5VfzR2bnCNxM1lmKU/k/icDmFUujWdPhtjxion51MmAzlZNh+Jy+fElw+xwRnLbl4F
+ Tltsqm3k0lGqA83/CMlfAh4b6maCBgOnhj6f9+1x6q/C5UUvXN0/2Vsd6NxaKDifSe/8OjTNe8e
+ jHgfiyxFV8ZQlCmiXtGqiDJzYRckNqiSS0Tbarm5VxZoY2va7BuudYiptBh+GQii4MXNkoCsgy+
+ HBHhovnSzKo/IVDYtwsAfc0i1+8cc8=
+X-Received: by 2002:a05:600c:1e2a:b0:483:c771:10e with SMTP id
+ 5b1f17b1804b1-48526957d6cmr36362415e9.20.1772809204010; 
+ Fri, 06 Mar 2026 07:00:04 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.03
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Mar 2026 07:00:03 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 24/49] tests/qtest/iommu-smmuv3-test: Free QPCIDevice
+Date: Fri,  6 Mar 2026 14:59:14 +0000
+Message-ID: <20260306145939.2162189-25-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
+References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,70 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before linux v6.13 those registers were erroneously unconditionally
-exposed and this was fixed by commits:
-- 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace when
-                 disabled for guests")
-- a68cddbe47ef ("KVM: arm64: Hide S1PIE registers from userspace
-                 when disabled for guests")
-in v6.13.
+The QPCIDevice we get via qpci_device_foreach() is allocated
+memory, and we need to g_free() it after use.
 
-This means if we migrate from an old kernel host to a >= 6.13 kernel
-host, migration currently fails.
+This fixes asan leaks like this:
 
-Declare cpreg migration tolerance for those registers.
+Direct leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x622a5f16913d in calloc (/home/pm215/qemu/build/arm-clang/tests/qtest/iommu-smmuv3-test+0x1d413d) (BuildId: bc598be1f4ad6d1a9a600c55aeef36108bdb6a04)
+    #1 0x73ee41c0f771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x622a5f1d4cec in qpci_device_find /home/pm215/qemu/build/arm-clang/../../tests/qtest/libqos/pci.c:82:11
+    #3 0x622a5f1d4cec in qpci_device_foreach /home/pm215/qemu/build/arm-clang/../../tests/qtest/libqos/pci.c:34:19
+    #4 0x622a5f23cc73 in setup_qtest_pci_device /home/pm215/qemu/build/arm-clang/../../tests/qtest/iommu-smmuv3-test.c:45:5
+    #5 0x622a5f23cc73 in run_smmuv3_translation /home/pm215/qemu/build/arm-clang/../../tests/qtest/iommu-smmuv3-test.c:74:11
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260302092225.4088227-5-peter.maydell@linaro.org
 ---
- target/arm/cpu64.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ tests/qtest/iommu-smmuv3-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index d6feba220e8..4cfddc6e8c0 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -810,6 +810,31 @@ static void aarch64_a53_initfn(Object *obj)
-     define_cortex_a72_a57_a53_cp_reginfo(cpu);
+diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
+index cced49a9b6..dae9821b92 100644
+--- a/tests/qtest/iommu-smmuv3-test.c
++++ b/tests/qtest/iommu-smmuv3-test.c
+@@ -77,6 +77,7 @@ static void run_smmuv3_translation(const QSMMUTestConfig *cfg)
+     g_test_message("### SMMUv3 translation mode=%d sec_sid=%d ###",
+                    cfg->trans_mode, cfg->sec_sid);
+     qsmmu_run_translation_case(qts, dev, bar, VIRT_SMMU_BASE, cfg);
++    g_free(dev);
+     qtest_quit(qts);
  }
  
-+static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
-+{
-+    /*
-+     * Registers that may be in the incoming stream and not exposed
-+     * on the destination
-+     */
-+
-+    /*
-+     * TCR_EL1 was erroneously unconditionnally exposed before linux v6.13.
-+     * See commit 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace
-+     * when disabled for guests")
-+     */
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 2, 0, 3),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+    /*
-+     * PIRE0_EL1 and PIR_EL1 were erroneously unconditionnally exposed
-+     * before linux v6.13. See commit a68cddbe47ef ("KVM: arm64: Hide
-+     * S1PIE registers from userspace when disabled for guests")
-+     */
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 2),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
-+                                     0, 0, ToleranceNotOnBothEnds);
-+}
-+
- static void aarch64_host_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-@@ -822,6 +847,7 @@ static void aarch64_host_initfn(Object *obj)
- #endif
- 
- #if defined(CONFIG_KVM)
-+    kvm_arm_set_cpreg_mig_tolerances(cpu);
-     kvm_arm_set_cpu_features_from_host(cpu);
-     aarch64_add_sve_properties(obj);
- #elif defined(CONFIG_HVF)
 -- 
-2.53.0
+2.43.0
 
 
