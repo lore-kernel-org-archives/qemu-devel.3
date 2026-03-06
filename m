@@ -4,53 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94A6F513EB
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 01:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A8EF513E9
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 01:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyKBd-0008KZ-OO; Thu, 05 Mar 2026 20:41:05 -0500
+	id 1vyKPv-00073h-Sg; Thu, 05 Mar 2026 20:55:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyKBb-0008JY-6r
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:41:03 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vyKBZ-0006Ex-AL
- for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:41:02 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CFA7C596DA5;
- Fri, 06 Mar 2026 02:40:59 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id XDZxenRsPNz6; Fri,  6 Mar 2026 02:40:57 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id BE0F9596D94; Fri, 06 Mar 2026 02:40:57 +0100 (CET)
-Message-ID: <25822a04bfdf54cca3756be593db9f5c34ceb4b3.1772760714.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1772760714.git.balaton@eik.bme.hu>
-References: <cover.1772760714.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v8 5/8] memory: Remove memory_region_init_ram_nomigrate()
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vyKPu-00073T-DE
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:55:50 -0500
+Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vyKPq-0008A3-89
+ for qemu-devel@nongnu.org; Thu, 05 Mar 2026 20:55:49 -0500
+X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ a6fe344c5d94d448cf523ff75100021ccf85ab1e3627f80753cd74fae668093e with SMTP id
+ 69aa341d1ff86a8a1879c5bd; Fri, 06 Mar 2026 01:55:41 GMT
+X-Mailgun-Sending-Ip: 143.55.232.12
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
+ s=rsa2048; t=1772762139;
+ bh=LnC2fHLioAWeOaAUSQ6wRi/Lr8hBeEJbeQawGkfsPIA=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
+ Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
+ References;
+ b=OHAlZ9bCLi+f0POAooOYErsiXcrmGMXADOiG99bCeuDpQ5SxcHPh8a/L70Olee2Zh
+ eCB4VH6xej9+zean9Xd+2H1jtoeTGaqvQawWFb8UOTgg3FQm4nJCMbm2Moksh28cuV
+ aKn4hksXf3ihsAsWAVipoqqFbf813Jo8WPGuQfs5mz3kFs5cU41tR3Bc58WPovbKhy
+ 1/Lv+M/9G9XAqoxTBWZ9YPiGZ3npvjWyUyH1a9z/CO+51rscQ5tfB3GHoKZs3nq61N
+ /rMn9OW60TiGsp6zptDvVJKOHs/T/ZrJetCP1m45h9+pVNKOYwju91Bd7DVzJPCfep
+ UXTuK8vLx8PIw==
+Message-ID: <86f1149d-cd44-4169-aa9c-c57e1b2d0cc6@yodel.dev>
+Date: Thu, 5 Mar 2026 19:55:38 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+Subject: Re: duplicating CPUs with memcpy() in cpu_copy() vs memory-allocated
+ things in CPUArchState structs
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Fri, 06 Mar 2026 02:40:57 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Laurent Vivier <Laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <CAFEAcA9QAyZjjj4kXeC+wM4gg_C+U6Z7McYGrB9u=C1PbiaWZw@mail.gmail.com>
+ <ee0b3240-4939-4a6f-a6e7-5f2032bfc2ec@linaro.org>
+Content-Language: en-US
+X-Mailgun-Dkim: no
+X-Mailgun-Dkim: no
+From: Yodel Eldar <yodel.eldar@yodel.dev>
+Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
+ xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
+ I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
+ AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
+ Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
+ 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
+ imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
+ TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
+In-Reply-To: <ee0b3240-4939-4a6f-a6e7-5f2032bfc2ec@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=143.55.232.12;
+ envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
+ helo=v512.v5f06b487.use4.send.mailgun.net
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.892, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.622,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -68,165 +95,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the last remaining use outside of memory.c in vga to use
-memory_region_init_ram_flags_nomigrate() instead and inline and remove
-the memory_region_init_ram_nomigrate() variant. This leaves
-memory_region_init_ram_flags_nomigrate() as the only nomigrate variant
-that is still needed at a few places.
+Hi,
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- docs/devel/memory.rst                         |  8 +++----
- hw/display/vga.c                              |  4 ++--
- include/system/memory.h                       | 23 -------------------
- .../memory-region-housekeeping.cocci          | 19 ---------------
- system/memory.c                               | 13 ++---------
- 5 files changed, 7 insertions(+), 60 deletions(-)
+On 05/03/2026 13:45, Pierrick Bouvier wrote:
+> On 3/5/26 9:47 AM, Peter Maydell wrote:
+>> In the user-only emulators we need to be able to create a new CPU
+>> object for a newly created thread that has the same state as the
+>> one in the parent thread. We currently do that in cpu_copy()
+>> in linux-user/main.c, which does:
+>>
+>>      CPUState *cpu = env_cpu(env);
+>>      CPUState *new_cpu = cpu_create(cpu_type);
+>>      CPUArchState *new_env = cpu_env(new_cpu);
+>>
+>>      /* Reset non arch specific state */
+>>      cpu_reset(new_cpu);
+>>
+>>      memcpy(new_env, env, sizeof(CPUArchState));
+>>
+>> plus some special casing for things in the CPUState (cflags,
+>> and breakpoints), and an ifdef for x86.
+>>
+>> This makes several assumptions:
+>>
+>> (1) nothing in a target's CPU struct is runtime state that needs
+>> to be copied across from the old thread's CPU
+>> (2) everything in a target's CPU env struct can be handled by
+>> a shallow memcpy() from the old to the new
+>>
+>> Unfortunately (2) isn't true. The example I ran into was
+>> MIPS, which allocates a data structure pointed to by env->mvp.
+>> Copying the pointer from the old CPU means we leak the structure
+>> the new CPU allocated on creation. (We don't actually try to free
+>> this at the moment, but if we did try to free it we'd do a double
+>> free because both CPUs would be pointing to the same thing.)
+>> It seems likely that there are others too.
+>>
+>> (1) seems on somewhat shaky ground too, especially as we don't
+>> document it.
+>>
+>> There are a couple of ways I can see that we could try to fix this:
+>>
+>> (A) We could insist that every target's CPUFooState (env struct)
+>> must be shallow-copiable, and anything that isn't (pointers, etc)
+>> needs to be moved out to its FOOCPU (QOM CPU object struct).
+>> Then we could let targets implement any per-target copying specifics
+>> in some function in linux-user/$ARCH/ that we call from cpu_copy()
+>> after doing the memcpy(). This would be painful if there are any
+>> targets that have something non shallow-copiable that they want
+>> access to directly from generated code, which has the env pointer
+>> but not the CPU object struct.
+>>
 
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 0bb5acab21..9083b18f08 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -110,11 +110,9 @@ migrated:
- 
- For most devices and boards this is the correct thing. If you
- have a special case where you need to manage the migration of
--the backing memory yourself, you can call the functions:
--
--- memory_region_init_ram_nomigrate()
--
--which only initialize the MemoryRegion and leave handling
-+the backing memory yourself, you can call the function
-+memory_region_init_ram_flags_nomigrate()
-+which only initializes the MemoryRegion and leaves handling
- migration to the caller.
- 
- The functions:
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 59a65cbbff..ee7d97b5c2 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -2235,8 +2235,8 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
-         return false;
-     }
- 
--    memory_region_init_ram_nomigrate(&s->vram, obj, "vga.vram", s->vram_size,
--                                     &local_err);
-+    memory_region_init_ram_flags_nomigrate(&s->vram, obj, "vga.vram",
-+                                           s->vram_size, 0, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return false;
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 7117699b10..d4793a08a7 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1374,29 +1374,6 @@ void memory_region_init_io(MemoryRegion *mr,
-                            const char *name,
-                            uint64_t size);
- 
--/**
-- * memory_region_init_ram_nomigrate:  Initialize RAM memory region.  Accesses
-- *                                    into the region will modify memory
-- *                                    directly.
-- *
-- * @mr: the #MemoryRegion to be initialized.
-- * @owner: the object that tracks the region's reference count
-- * @name: Region name, becomes part of RAMBlock name used in migration stream
-- *        must be unique within any device
-- * @size: size of the region.
-- * @errp: pointer to Error*, to store an error if it happens.
-- *
-- * Note that this function does not do anything to cause the data in the
-- * RAM memory region to be migrated; that is the responsibility of the caller.
-- *
-- * Return: true on success, else false setting @errp with error.
-- */
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp);
--
- /**
-  * memory_region_init_ram_flags_nomigrate:  Initialize RAM memory region.
-  *                                          Accesses into the region will
-diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
-index e45703141a..b23647a3d8 100644
---- a/scripts/coccinelle/memory-region-housekeeping.cocci
-+++ b/scripts/coccinelle/memory-region-housekeeping.cocci
-@@ -26,15 +26,9 @@ symbol true;
- expression E1, E2, E3, E4, E5;
- position p;
- @@
--(
-   memory_region_init_ram@p(E1, E2, E3, E4, E5);
-   ...
-   memory_region_set_readonly(E1, true);
--|
--  memory_region_init_ram_nomigrate@p(E1, E2, E3, E4, E5);
--  ...
--  memory_region_set_readonly(E1, true);
--)
- @script:python@
- p << possible_memory_region_init_rom.p;
- @@
-@@ -52,23 +46,10 @@ expression ALIAS, E5, E6, E7, E8;
- -  memory_region_set_readonly(ALIAS, true);
- 
- 
--// Replace by-hand memory_region_init_ram_nomigrate/vmstate_register_ram
--// code sequences with use of the new memory_region_init_ram function.
--// Similarly for the _rom and _rom_device functions.
- // We don't try to replace sequences with a non-NULL owner, because
- // there are none in the tree that can be automatically converted
- // (and only a handful that can be manually converted).
- @@
--expression MR;
--expression NAME;
--expression SIZE;
--expression ERRP;
--@@
---memory_region_init_ram_nomigrate(MR, NULL, NAME, SIZE, ERRP);
--+memory_region_init_ram(MR, NULL, NAME, SIZE, ERRP);
-- ...
---vmstate_register_ram_global(MR);
--@@
- typedef DeviceState;
- identifier device_fn, dev, obj;
- expression E1, E2, E3, E4, E5;
-diff --git a/system/memory.c b/system/memory.c
-index 65042bd9fa..e15f931a8a 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1579,16 +1579,6 @@ void memory_region_init_io(MemoryRegion *mr,
-     memory_region_set_ops(mr, ops, opaque);
- }
- 
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp)
--{
--    return memory_region_init_ram_flags_nomigrate(mr, owner, name,
--                                                  size, 0, errp);
--}
--
- bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-                                             Object *owner,
-                                             const char *name,
-@@ -3695,7 +3685,8 @@ bool memory_region_init_ram(MemoryRegion *mr,
- {
-     DeviceState *owner_dev;
- 
--    if (!memory_region_init_ram_nomigrate(mr, owner, name, size, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-+                                                size, 0, errp)) {
-         return false;
-     }
-     /* This will assert if owner is neither NULL nor a DeviceState.
--- 
-2.41.3
+Did/does CPUArchState's design intend for it to be shallow-copiable,
+but it was extended out of necessity/convenience? Relevant if so,
+because that's often how bugs get introduced, so the value added from
+discovering and resolving anything found as a result of the transition
+could make it worth said pain, though I'd want to comprehensively
+survey the lay of the land before forming an opinion on this one.
+
+>> (B) We could standardize the "end_reset_fields" convention that
+>> some targets have in their env struct, where an empty struct
+>> marks the end of the point in the struct where fields can be
+>> reset by zeroing them. If they can be reset by zeroing they can
+>> also be safely shallow copied with memcpy(). We could then let the
+>> target handle anything else via some target hook as above.
+>> This would require a lot of targets having this field marker added,
+>> which could be a pain if they don't have their structs ordered in
+>> a convenient way for this.
+>>
+
+I like this one, because it's buy one cpu_copy subroutine, get
+a Resettable reset_* hook at a large discount.
+
+>> (C) We could say that trying to write generic code that can
+>> copy a target-specific structure is a fool's errand, and require
+>> the targets to implement it entirely themselves (only copying the
+>> stuff in the common CPU base class in common code). If a plain
+>> memcpy() works for them then their implementation can be simple.
+>>
+> 
+> This sounds good, as it's the only approach we can really enforce, by 
+> adding a mandatory clone_cpu operation per target. This sounds better 
+> than a "partial" clone operation mentioned above.
+> 
+> To ensure it keeps working, we could add a static_assert on cpu size 
+> with a fixed constant directly in clone. This makes sure that when 
+> people add fields they have to update this clone_cpu op accordingly 
+> also, by changing the size and optionally deep copy the new field.
+> 
+
+I especially like the poka-yoke of this one, as in Pierrick's
+suggestion of a static_assert constraint. Moreover, this one also
+assists with the Resettable Interface transition (albeit not as
+directly as (B)) since one can look to the copy code for pitfalls
+when implementing reset.
+
+>> Any preferences ?
+>>
+
+Too early for me to say, but I'm glad to be thinking about it now.
+
+Thanks,
+Yodel
+
+>> thanks
+>> -- PMM
+> 
+> 
 
 
