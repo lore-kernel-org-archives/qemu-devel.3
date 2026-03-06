@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70964FCC067
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D479FCC062
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vybCb-0004Go-AJ; Fri, 06 Mar 2026 14:51:14 -0500
+	id 1vybCd-0004LD-Iu; Fri, 06 Mar 2026 14:51:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCN-0004BB-AW
+ id 1vybCN-0004BL-E1
  for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:59 -0500
 Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCJ-0000Q6-3N
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:58 -0500
+ id 1vybCL-0000QG-3u
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:50:59 -0500
 Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4852a8482fcso5060845e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:53 -0800 (PST)
+ 5b1f17b1804b1-4836f363ad2so112134085e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772826652; x=1773431452; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RRsD9LOS1hSeZNCPBaDn+y7RmCBrA9WXQ73ZIq9hjNg=;
- b=THNa/YSibiURekPcdO8NkmOhzyOZsMDMzwERGKnuPjhqNtDrGVzFfpVv5DO9cox6Rd
- 0gy6pbGnQOG0OPq3ItqY4prPIEZdG1aSQWAz6u0wF74B8I9YZpVV9WTxs2lJGGBSxcfP
- LmmyIZ9bGYM1TU8h5VwtKUsfIqzGLk1aprAPJYTolCI8uT4RgEqgYnXUb5/pu1KON31f
- XABqu+4tW4Icy0yX5Rz4JGubPp+cY4Z6eIplcdIRkU+iGnRhVZMilixWrzPeNZIgHMqX
- fJC1h93ZjiPMzdpMXT838Jbj7+ywCFaTflQRNt2rNT2ecRCO/HX5hL9xD0hZ4lDL/vN2
- eG0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772826652; x=1773431452;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1772826654; x=1773431454; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RRsD9LOS1hSeZNCPBaDn+y7RmCBrA9WXQ73ZIq9hjNg=;
- b=NGt7u272MRXSTsU/GRIWxjq6VmDn7YljMBR6c+hEQXuO4Qj2e+o0scgDKvYPPGgknP
- ebubL7Z+EpwkYsNqlnyxxHupjQxELHZdUafEmv3wFVjOoeCUewBhckiFCseEed+1F25m
- A+Lp8XUHQ7wryAPLvZnkfCsrqlNbcuR9igPPha+rIPuwvMwliNfmAhsPAav1+mLVr4r7
- QYBwldroN+r/vaTMzPP9hveitxICOtaXJ24JRUD/SBe4MPpxxpd6kblJP8SIBO3Ocom+
- IKYzXbVilBoH5K1R/hO5e2gtduiOK72Qk/Ch38BEYN+qNASQOra8ne3Ay6sh3pgiQhyu
- +L2w==
-X-Gm-Message-State: AOJu0YzD8YR8jXLA9oFeZJhGi1QA3+4t02N9Wu7VmLBcanTVqcjetQB9
- ocVQIwlrs5iY+myrGheSmbhkcdOhSWwEz3Dlih/sR0mgEb0uKodLOZkUAeKewy+qoz8=
-X-Gm-Gg: ATEYQzzxART4LKN/f9LzzmK9+UP90vPNUttQw1i6ZHH4WaYITOW2vdh93r+uRtCVAI0
- OMTfN51ZKjSBsKzI7jGlkU7+VMRfgIiPvvL/UkXpqa04tQh8J3mELrkvqESUn1hnMjgu4p9pHCy
- wlNkf22aJnrZWx7iHcWZ5VRDUL1hpocvp410QSjrW6Bz8FjIxFwJMX+p8kTZJiWJbGt4bs8rLJL
- TKDxyYOCiC9jnR98Uy2puUxA8BTTvqFyQt8oHidh2UENX6m41wj7LHReXKkibRQxwIMcs0HBBFO
- sOA6UJnRmwG+Xh03k6T0bTedYj9ANL/uDJ7LrP0PG+2ko7LgvD4tED6xokfr2KpRk2Ucn6K0Am4
- JOfaFj4q0v45x3EEXFrlCqIPbpN2gOS6E9H1Ifr8YPJ8mhruGAVaMXKzGYS/CMKCECerY4JkdN2
- E6ph6RFmRUm+5unxamPmud2ok=
-X-Received: by 2002:a05:600c:37cc:b0:485:2304:a1f7 with SMTP id
- 5b1f17b1804b1-485269669e9mr53602045e9.23.1772826652045; 
- Fri, 06 Mar 2026 11:50:52 -0800 (PST)
+ bh=gPkKXJYX4SKRB+WSPLR+a/LvTfT4xEY7xvivBzryjps=;
+ b=nMVXj6q22f9qsEm8fchzugtA30fbCK/wTvh/mFI32rBxMasbQ+osXwRa0UoN8j4hG9
+ 7zmZr1GH1BmyMa/acMmi5hS6/h6ahjW54cDls/KSCws5dALUnA5H4Dlmj3CvckPlFy9Z
+ 61l0Nx1/scTenJJJfHl08JPCzzQOr6br7Ulv/aSs7o9ZKiIVuKVZbWAqTLxKrq1W+wAi
+ Ygte1azwyB8ldi7qyUet0NaYM66eQ9H4kzPatjlCSvMOTzUNSWGA+jp1iQPagCSQ8aEL
+ 8bo8htofMeFZAOKd02So0Mz8o2MRk3zM25QJV/5IHRd0g01DBunRhd/5xDLm9pMqxbXV
+ 7GyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772826654; x=1773431454;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gPkKXJYX4SKRB+WSPLR+a/LvTfT4xEY7xvivBzryjps=;
+ b=wiDeWcCigtYYSNrzvLX2w33dpEGSznvxcRgyP1of7tYaibmHKOST8Qms9m3+wL0jM7
+ WNvE55ljKksy7xl1hip4A94GNQ1CCJA4qEYmtjTqJeQqqOGX3dJ2QPWcdoZEinC9Yijc
+ GtO7momtiwu/1ioLYiUgM0+whOuCAJXITCxNYjag9E+xSw8rtY+cCeQr34IxDd1ZToTK
+ Djbrb7rfqnyNnYGjanN961KF8rcA164nmZNmqrxynld0WLhSQjS3Pxx/HYwerchh6eyv
+ BYlR3/IxdvFjXRI6Vh4DYFtut26NWB7zCVPTcdUrizXPUXhSUOFNBiiLXk/gwn8+kjGc
+ XFeA==
+X-Gm-Message-State: AOJu0YwEgCiMJzXsn54BpxFwVl8roomIXXMDtHsOlN5FNfMzwyik+CfG
+ YGnNJQ8HloFCRHl5lTDX3TQqrRJ0j5R/47DOpzWNt3yj3dz7gELhbz1wUaUFjDJGsLk=
+X-Gm-Gg: ATEYQzzftdDQNXdx/NeouRAVcPRjB+bRnRYWSGFXBT8qN6CqFiIOjIholesYdDMbmx+
+ afjzrE7kF+mnfYMhD2HRos1btAEO7d6PR80uJhSGtLsKMBu0I84dXaac98iTlhkNLjeG7aF5QDI
+ akoRLCZWytqootOz9/zq0z9rsRNvxvnfnFxe/CKSaFmxQEi6pGWKqldB+zF7w0zUjeg2fcNXwMH
+ /OMdA6rQ/SWp9fE+jLoOAdnuFta+hvjhvW+/qMmq9Y6z7qg7q88AVvyA202IJIR7Kjveyv3Xi8v
+ JW3QAXZuNe/P3Hjm0UCD5sz3fpr2czNQP+5+6iulZ8WvLbqSdU0l9pcHxIFihjzniSt2LPNb/aA
+ gbQ91nWL+HmQ28u5kCkZ+LRjWtn9I00EuCs42JhMPVx28VncW79YeZJtDZ3i0D2Rd4Ue9OyEB/P
+ /MykIPlhC7MWTf6apa8cYKecQ=
+X-Received: by 2002:a05:600c:3acf:b0:483:6f37:1b33 with SMTP id
+ 5b1f17b1804b1-48526978d48mr58668425e9.30.1772826654070; 
+ Fri, 06 Mar 2026 11:50:54 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fad27dbsm113948475e9.2.2026.03.06.11.50.49
+ 5b1f17b1804b1-48527686fa9sm72936415e9.8.2026.03.06.11.50.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 11:50:50 -0800 (PST)
+ Fri, 06 Mar 2026 11:50:52 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E040D689CF;
- Fri, 06 Mar 2026 19:50:48 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 8C5FA689D6;
+ Fri, 06 Mar 2026 19:50:49 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 00/20] virtio-gpu updates (resolution, error handling, fences,
- native context)
-Date: Fri,  6 Mar 2026 19:50:27 +0000
-Message-ID: <20260306195048.2869788-1-alex.bennee@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 07/20] ui/sdl2: Restore original context after new context
+ creation
+Date: Fri,  6 Mar 2026 19:50:34 +0000
+Message-ID: <20260306195048.2869788-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260306195048.2869788-1-alex.bennee@linaro.org>
+References: <20260306195048.2869788-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -100,91 +109,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 900682c57287ea308850af4490339455512e92e7:
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-  Merge tag 'pull-target-arm-20260306-2' of https://gitlab.com/pm215/qemu into staging (2026-03-06 15:58:24 +0000)
+SDL API changes GL context to a newly created GL context, which differs
+from other GL providers that don't switch context. Change SDL backend to
+restore the original GL context. This allows Qemu's virtio-gpu to support
+new virglrenderer async-fencing feature for Virgl contexts, otherwise
+virglrenderer's vrend creates a fence-sync context on the Qemu's
+main-loop thread that erroneously stays in-use by the main-loop after
+creation, not allowing vrend's fence-sync thread switch to this new
+context that belongs to it.
 
-are available in the Git repository at:
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-6-dmitry.osipenko@collabora.com>
+Message-ID: <20260304165043.1437519-8-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-11.0-virtio-gpu-updates-060326-1
-
-for you to fetch changes up to 4eb0aace85f507e21bb8ac323ad81c5860f7a52d:
-
-  virtio-gpu: Support mapping hostmem blobs with map_fixed (2026-03-06 17:27:40 +0000)
-
-----------------------------------------------------------------
-virtio-gpu updates (resolution, error handling, fences, native context)
-
-  - support per-head resolution definitions
-  - don't disable scanouts on sdl and gtk when display refreshed
-  - take care not confuse virgl with switching contexts
-  - use dmabuf to import textures when we can
-  - keep virtio BH processing to main-loop
-  - improve error handling for fence creation
-  - support async fences
-  - add support for DRM native context
-  - update virtio-gpu docs
-  - remove superfluous memory region enabling
-  - validate mapping offsets
-  - destroy vrigl resources on reset
-  - support mapping hostmem blobs with map_fixed
-
-----------------------------------------------------------------
-Alex Bennée (1):
-      docs/system: virtio-gpu: Document host/guest requirements
-
-Andrew Keesler (1):
-      Support per-head resolutions with virtio-gpu
-
-Dmitry Osipenko (16):
-      ui/gtk: Don't disable scanout when display is refreshed
-      ui/sdl2: Don't disable scanout when display is refreshed
-      ui/egl: Don't change bound GL context when creating new context
-      ui/gdk: Restore original context after new context creation
-      ui/sdl2: Restore original context after new context creation
-      virtio-gpu: Ensure BHs are invoked only from main-loop thread
-      virtio-gpu: Handle virgl fence creation errors
-      virtio-gpu: Support asynchronous fencing
-      virtio-gpu: Support DRM native context
-      docs/system: virtio-gpu: Add link to Mesa VirGL doc
-      docs/system: virtio-gpu: Update Venus link
-      virtio-gpu: Remove superfluous memory_region_set_enabled()
-      virtio-gpu: Validate hostmem mapping offset
-      virtio-gpu: Replace finish_unmapping with mapping_state
-      virtio-gpu: Destroy virgl resources on virtio-gpu reset
-      virtio-gpu: Support mapping hostmem blobs with map_fixed
-
-Dongwon Kim (1):
-      virtio-gpu: Fix scanout dmabuf cleanup during resource destruction
-
-Pierre-Eric Pelloux-Prayer (1):
-      ui/sdl2: Implement dpy dmabuf functions
-
- docs/system/devices/virtio/virtio-gpu.rst | 121 ++++++++-
- meson.build                               |   8 +-
- qapi/virtio.json                          |  13 +-
- include/hw/virtio/virtio-gpu.h            |  26 +-
- include/hw/virtio/virtio.h                |  10 +
- include/ui/egl-context.h                  |   3 +-
- include/ui/sdl2.h                         |   7 +
- hw/display/virtio-gpu-base.c              |  16 ++
- hw/display/virtio-gpu-gl.c                |  62 +++--
- hw/display/virtio-gpu-udmabuf-stubs.c     |   2 +-
- hw/display/virtio-gpu-udmabuf.c           |  27 +-
- hw/display/virtio-gpu-virgl.c             | 410 +++++++++++++++++++++++++++---
- hw/display/virtio-gpu.c                   |  23 +-
- hw/virtio/virtio.c                        |  10 +
- ui/dbus.c                                 |   4 +-
- ui/egl-context.c                          |   6 +-
- ui/egl-headless.c                         |   4 +-
- ui/gtk-egl.c                              |   5 +-
- ui/gtk-gl-area.c                          |  13 +-
- ui/sdl2-gl.c                              |  76 +++++-
- ui/sdl2.c                                 |  48 ++++
- ui/spice-display.c                        |   4 +-
- hw/display/trace-events                   |   2 +-
- 23 files changed, 794 insertions(+), 106 deletions(-)
-
+diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
+index 5eca0248233..fbac3edbc09 100644
+--- a/ui/sdl2-gl.c
++++ b/ui/sdl2-gl.c
+@@ -139,10 +139,12 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+                                      QEMUGLParams *params)
+ {
+     struct sdl2_console *scon = container_of(dgc, struct sdl2_console, dgc);
+-    SDL_GLContext ctx;
++    SDL_GLContext ctx, current_ctx;
+ 
+     assert(scon->opengl);
+ 
++    current_ctx = SDL_GL_GetCurrentContext();
++
+     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
+ 
+     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+@@ -167,6 +169,9 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
+                             SDL_GL_CONTEXT_PROFILE_ES);
+         ctx = SDL_GL_CreateContext(scon->real_window);
+     }
++
++    SDL_GL_MakeCurrent(scon->real_window, current_ctx);
++
+     return (QEMUGLContext)ctx;
+ }
+ 
 -- 
 2.47.3
 
