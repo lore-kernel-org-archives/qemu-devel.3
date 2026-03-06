@@ -4,76 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26645F0181F
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E8FF51416
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 14:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyVvM-0001rk-DR; Fri, 06 Mar 2026 09:13:04 -0500
+	id 1vyWBE-0007DU-Ic; Fri, 06 Mar 2026 09:29:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyVvH-0001rE-LJ
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:13:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyWBD-0007CZ-2b
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:29:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vyVvF-0003c1-00
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:12:58 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vyWBB-0004tD-Nl
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 09:29:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772806371;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1772807365;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4dzpQYFBj+jiKRhG4ukKywl9h3r9zAzE/SmwWyF39E4=;
- b=goZcTOe2jWp9J4sYiOUrCWNbTbOrj1vU39oSgb3FJxkDqEQ4XY+VXaARNeuRbTPQ2NGuAB
- WM/yBSWmLM4Ahj8Al+myDt0+s7pIwWQzDoBbayF0Cr/72Y0xCdDgOZSam+BOayRIYPNbaw
- qgRLqwmlvRaAFkNU5OxE+E624pTVgPA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3uePhOIw7V33gcTtcHzAfCvatCscfEm67Ki3tJ5CTXE=;
+ b=a46RPpjBOWuvfYPkh3V/UWFHqBfR5ln7n2Q+WC5Kk3YmTm7i0MYoRM5tdxw0rt+6LMWP7a
+ dz75lGahUrPh1AnO7+eehSN/1tvejHFKf1LzwERYNBmMfRXqCZf/DF1KB4CAAxyDHqMVtA
+ /feGmAXcMusqHTwCU4q1wOo+yquHoAM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-6h5tTk4gMC2fdEh9Wzf0DQ-1; Fri,
- 06 Mar 2026 09:12:45 -0500
-X-MC-Unique: 6h5tTk4gMC2fdEh9Wzf0DQ-1
-X-Mimecast-MFC-AGG-ID: 6h5tTk4gMC2fdEh9Wzf0DQ_1772806364
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-OnhERoQbPBSGP2ajjyilDw-1; Fri,
+ 06 Mar 2026 09:29:22 -0500
+X-MC-Unique: OnhERoQbPBSGP2ajjyilDw-1
+X-Mimecast-MFC-AGG-ID: OnhERoQbPBSGP2ajjyilDw_1772807361
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1672195605C; Fri,  6 Mar 2026 14:12:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.225.197])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0ABB11958DC7; Fri,  6 Mar 2026 14:12:39 +0000 (UTC)
-Date: Fri, 6 Mar 2026 14:12:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
- Stacey Son <sson@freebsd.org>, Sean Bruno <sbruno@freebsd.org>,
- =?utf-8?Q?Mika=C3=ABl?= Urankar <mikael.urankar@gmail.com>,
- Guy Yur <guyyur@gmail.com>, Alexander Kabaev <kan@freebsd.org>,
- Michal Meloun <mmel@freebsd.org>, Ed Schouten <ed@nuxi.nl>
-Subject: Re: [PATCH v2] bsd-user: Switch to SPDX-License-Expression
-Message-ID: <aarg1MVnbcnxLMEL@redhat.com>
-References: <20260304-bsd-user-copyright-v2-1-173525ffa614@bsdimp.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0794C18002CF; Fri,  6 Mar 2026 14:29:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.210])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BCE851800673; Fri,  6 Mar 2026 14:29:19 +0000 (UTC)
+Date: Fri, 6 Mar 2026 15:29:17 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/4] qcow2: Add keep_data_file command-line option
+Message-ID: <aarkvZt4Ww4ekTTu@redhat.com>
+References: <20250530084448.192369-1-hreitz@redhat.com>
+ <20250530084448.192369-2-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260304-bsd-user-copyright-v2-1-173525ffa614@bsdimp.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20250530084448.192369-2-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
 X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -88,66 +79,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 04, 2026 at 09:05:33AM -0700, Warner Losh wrote:
-> Two minor changes to the copyright and license marking for these files:
-> (1) Stacey D Son is used instead of variations of his name.
-> (2) The GPL boilerplate is replaced by SPDX markings. No change to the
-> terms of the license are intended, and this matches current QEMU practice.
+Am 30.05.2025 um 10:44 hat Hanna Czenczek geschrieben:
+> Add a command-line-only option to prevent overwriting the file specified
+> as external data file.
 > 
-> There's no changes to the license or additional claims to any IP that
-> others may hold in these files. All the S-o-bs in this commit have given
-> me permission to do this to the extent they may hold rights. git blame
-> over multiple repos and branches suggests that only minimal other
-> material is present (much of it likely not subject to copyright
-> protection). The project's long and complex history as well as tooling
-> limitations make it hard to be 100% sure. Any omissions are
-> unintentional and I will correct them as they come to light.
+> This option is only available on the qemu-img create command line, not
+> via blockdev-create, as it makes no sense there: That interface
+> separates file creation and formatting, so where the external data file
+> attached to a newly formatted qcow2 node comes from is completely up to
+> the user.
 > 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-> Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
-> Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-> Signed-off-by: Guy Yur <guyyur@gmail.com>
-> Signed-off-by: Alexander Kabaev <kan@FreeBSD.org>
-> Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
-> Signed-off-by: Ed Schouten <ed@nuxi.nl>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> Implementation detail: Enabling this option will not only not overwrite
+> the external data file, but also assume it already exists, for two
+> reasons:
+> - It is simpler than checking whether the file exists, and only skipping
+>   creating it when it does not.  It is therefore also less error-prone,
+>   i.e. we can never accidentally overwrite an existing file because we
+>   made some mistake in checking whether it exists.
+> - I think it makes sense from a user's perspective: You set this option
+>   when you want to use an existing data file, and you unset it when you
+>   want a new one.  Getting an error when you expect to use an existing
+>   data file seems to me a nice warning that something is not right.
+> 
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 
-Thanks, I used that set of emails to filter out commits 
+> @@ -4004,6 +4029,40 @@ qcow2_co_create_opts(BlockDriver *drv, const char *filename, QemuOpts *opts,
+>          goto finish;
+>      }
+>  
+> +    qcow2_opts = &create_options->u.qcow2;
+> +
+> +    if (!qcow2_opts->has_preallocation) {
+> +        qcow2_opts->preallocation = PREALLOC_MODE_OFF;
+> +    }
+> +    if (!qcow2_opts->has_data_file_raw) {
+> +        qcow2_opts->data_file_raw = false;
+> +    }
 
-Out of the remaining commits/files with other authors, most were a
-case of  trivial function renames, code deletion, or trivial syntax
-fixes to deal with external cleanups which can be exluded.
+These checks are technically redundant, QAPI already gives us a zeroed
+object. At least for the enum, it might still be nice not to rely on the
+order. I don't think there's a reason for the bool one, though.
 
-The only files where I saw any non-trivial code from other contributors
-are
- 
-bsd-user/bsd-mem.h: 8
-bsd-user/elfload.c: 36
-bsd-user/freebsd/os-misc.h: 1
-bsd-user/freebsd/os-proc.c: 3
-bsd-user/freebsd/os-proc.h: 3
-bsd-user/qemu.h: 58
-bsd-user/strace.c: 7
-
-There are way too many historic authors for elfload.c, qemu.h and
-strace.c to make it worth chasing those down, so I'd suggest just
-dropping those three files from the commit.
-
-For bsd-mem.h, and freebsd/os* Karim Taha <kariem.taha2.7@gmail.com>
-is the only notable omission I saw. Up to you whether to check with
-them or just drop those files from the cleanup.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Kevin
 
 
