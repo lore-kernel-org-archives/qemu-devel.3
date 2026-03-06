@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCBBFCB611
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE3AFCB60B
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 15:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyWf7-0004Y5-0a; Fri, 06 Mar 2026 10:00:22 -0500
+	id 1vyWes-0004At-Hx; Fri, 06 Mar 2026 10:00:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWf2-0004T5-6X
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:16 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vyWeq-00049D-PE
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:04 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyWf0-0002jc-AW
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:15 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-480706554beso101650885e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:13 -0800 (PST)
+ id 1vyWep-0002T6-0C
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 10:00:04 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48069a48629so97900575e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 07:00:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772809213; x=1773414013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772809201; x=1773414001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=neIVOnBr0Aa66xW+JsZOMzMUdIBz29j3DIzODXV+V+8=;
- b=CTAXksa+wJ4fSup/y2X0P2g+bk+bNSVmhgruSSOnP6w7yquILTZx8dvKRg89//smcJ
- AKuZroUj79t8opPAtNCeuPafBpprm8GJSTDsRcPH8YOL+TkafcsRFjyXZbcdNRusuNCC
- x1wZgslcfbvL2/5zjQA8LmDvWl+ue1gHARRNeg8/54eXMdth2npzX1GXvZKz774i02dS
- 1Q7Of4ZGG22c30SdiLrKxT5OxZZn7R/YouWWFJyFjSY+Gr2rR2g8+efaYlhsaQgF7MKU
- 1zsyfnIz8IdZsFQswPJEdyauNcqW34a0gQPEzzSdN58eBXZAcrrCfQw4fYZ3Zy8GMSIs
- CtxQ==
+ :reply-to; bh=mP1M5gBlVb0DOzqQFi7vxvIto0M97Lt8KwvwGVINUDk=;
+ b=sV0hmDSsyfJA2+SBQicr9FJUbkv4ZuFebjvaOpnZlTH5jJeai3gvvHSsXt8eP8r4r2
+ sYOG3s7/PueCvbgM18G97JyHOlV/zAP3Uscsqui5NoK+MKGlyLzwq85iy9xrfjjnH+29
+ hCZGHsNEy/lkaNbnNPoNyZXbhaRi1pzHzEaBZvhhrizD0iSvWY6jOjNs0o73GLz9qqCG
+ NfOeHz0UySNiGyuYv51USuu8um9RSZy+T4u6seBTsXrWQlaGzSYw7f7kE8oWXqn2GpmY
+ sqq3IGpzkE1rAcnfOrosLS5aoxEdiz7IIsf2PDJpa75Chk5guCtkfCuLfJUZjutYX9YX
+ 9IIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772809213; x=1773414013;
+ d=1e100.net; s=20230601; t=1772809201; x=1773414001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=neIVOnBr0Aa66xW+JsZOMzMUdIBz29j3DIzODXV+V+8=;
- b=LMNLwlC3YEYtVbiKcEeILYfnBLfVFo1Admw2lgHoaec105ioMiVZfMovwxPodoBFLV
- gbkqKjZaglNdbP5/nz/EO3a0fqRtAyUypHjYWadoxknc82O4HcaeORoEpw9ZbMgSm0Zx
- 5vzNWNnE406bIBhpOq/IgX9ByIu7hkCvMiHpJ0saCmmgLFBTF4YdBN5DnxUCtN2BB7gJ
- g6gEBalbKTrOAjY+kkWXKEKmY3vUg6KdkO6I3KMCzrPw13g1EkV68N5w4QMcSMgMAyNs
- kHnbBu1LyD4HdbqofnmcwD2vcPMWRBcIY/i01F3TiNJ3ncxbIOFjtxx3/r1K/s6O53Lm
- lS9Q==
-X-Gm-Message-State: AOJu0YwYjPqiAar2Qw751K47dwf+42JulGnLXrWLY1Uk4g9zIa8Q2BoL
- TKx6y/cwQ/R91Jn3b2scjpFSHmvMDm0LEE61BCMP3Q3cffmdcHIk+uKj3VB2AOAJ7rAXDK0vbvq
- 5fu2b
-X-Gm-Gg: ATEYQzxUhe52nIwwdx5Oegd3yhI0FR5DIaVjfqLZbiWaDgJNDDIUlrN2/vC2VWgH7o0
- XssspvOFyaYVgmTl+uTsAHxLDHaP8uXQFEDeLG2qQrst1jcagUkpAY3NF/4kPJ4a8pp9MwNyk+u
- gfLgVxt9SQJsugwnIcoDDRfygW/jru5LopboEQL4eZ90PrUw7MyIcVo18YzjxJJTn/cp2jMA2uA
- pyp/E6bgy5OnvUaY2nsWqlEo1/R8pweuy8Cw9U6LlfzMcelUuTlgUo/Hl50e+kbGSZRjAjElva+
- fehDjAx6vKN7rVGnIfLwCGLBzA/kEknJ9Irw10IsR+hSERWYZTU1MF6EivY9EUaU94dTayW8HpI
- j4MwbyfWnrpTM6jiJTD+ukcyoQYAYC3JVp98D4T5po1Jr9EUCdQYAsgrYEFosJCW85lXPY4fhn3
- Cj+nVzfGOHfaaXw5/jDyCf5mLM8PoWLc9wuRhQPwiVhFIhIgyOuJqboc89fY/7Inhpw48nDNGpJ
- JgVloZYQQzO0Wvi9UdgBzP47q8Li38=
-X-Received: by 2002:a05:600c:a12:b0:483:6d42:25c6 with SMTP id
- 5b1f17b1804b1-48526967fd5mr37674005e9.23.1772809211134; 
- Fri, 06 Mar 2026 07:00:11 -0800 (PST)
+ bh=mP1M5gBlVb0DOzqQFi7vxvIto0M97Lt8KwvwGVINUDk=;
+ b=b3RV3/kqXuHLhnVJNH262k9BjQRsgOP7omPw57QyLdpaVlyC2ynqqRO8rAINApEzQh
+ /o2Z10LOkPvSylMyADLayP732NKfH1OKqOgPd/KHz35h5dqCTfCQOEzsA48rEQN3vMCm
+ bTIUtAg2wz493SvBHSyhsBOCbeSsOiLBbb7ebnPinFbUJF5IWVVGjEQBidSrlyhcvvFh
+ Okm3t9riByV3bXc247D7OsFP/96UJHdBXeCh+AKTHyjylYYDVVn/FfyUaIiGWFyF2qC2
+ WKEHqjVBO6KU1rIXCkQVzAheV6Hx6Lto5sy6MRU2h/Wol2tOpVwv23gBNKJI8pF9tosb
+ lFlw==
+X-Gm-Message-State: AOJu0YwlD2cB0Z0kxW/IHGpHpaaK70N/3BYlGxkI1UaksVInBCeuqsLr
+ MeSWq7fNBeGWJH0FAMzJ+jiitxUfD4g52YasgiqBCVhqMc8iJv4bqB+GF+I5Vet0RGui1n+eqEA
+ 3cYbs
+X-Gm-Gg: ATEYQzzvE59jjwztWcUOpB08XQzMevd0MVWTMIH6ifDwXmhsnO++r7VHQ+4/QMbuCLd
+ X5UMGl3ag+e/y6n7er+ox3NL21odUCulvyRb1iT+2IO84HViR0mdgBvegsBXVIZ4seg9L7HWqfn
+ HJlGt9KbrELX/Dhg6xxWdDbw6cRM+xOlZErZ+vJLjSmDC+gNIi2jaTsEhuDxrt2bT1xKqrzeQlX
+ zhJx+j8aqLz0Njx22M2Lu2b5VHItq011PK22wCjcL1mW6FmySB6aqJu8r81Hw2GhpgbBKYFhCIi
+ kfThUOGkR6nyg7+fT9zXFDjaJgsV6+d0CefLYJMZ+7mAGu0h1+IsIujy1PxrfYAeFpvOo8FwkjO
+ MZsXbpFlbYqt/awbYzVITkdkgFI3MoPe9GtWZ/UjuvPsFf5+0xanPZsSiCbbpA+nsr1fyKGwVvs
+ uQYq7LQE/RicQVoAkXzwZ9p68od+IzJtwevChS7lJpvXpY/ggsie4kd4eaYi2FOEiqRVw9Vag6/
+ A1wzHzDbM2znFaqF6va51zP+TbHt0k=
+X-Received: by 2002:a05:600c:46c3:b0:483:47ae:7c00 with SMTP id
+ 5b1f17b1804b1-4852695aeaemr40385375e9.20.1772809201402; 
+ Fri, 06 Mar 2026 07:00:01 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.10
+ 5b1f17b1804b1-485246ece8bsm28681845e9.4.2026.03.06.07.00.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 07:00:10 -0800 (PST)
+ Fri, 06 Mar 2026 07:00:00 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/49] hw/arm/smmuv3-common: Fix incorrect reserved mask for
- SMMU CR0 register
-Date: Fri,  6 Mar 2026 14:59:20 +0000
-Message-ID: <20260306145939.2162189-31-peter.maydell@linaro.org>
+Subject: [PULL 21/49] scripts: Move lsan_suppressions.txt out of oss-fuzz
+ subdir
+Date: Fri,  6 Mar 2026 14:59:11 +0000
+Message-ID: <20260306145939.2162189-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260306145939.2162189-1-peter.maydell@linaro.org>
 References: <20260306145939.2162189-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,49 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Tang <tangtao1634@phytium.com.cn>
+The oss-fuzz code uses an lsan_suppressions file to suppress certain
+leak-sanitizer cases that are known issues or not our code's bug.
+This is useful more widely than just for the fuzzer harness: if you
+want to build QEMU with the leak sanitizer enabled and run 'make
+check' then you will want to suppress some bogus leak reports.
 
-The current definition of the SMMU_CR0_RESERVED mask is incorrect.
-It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
-treating bit 9 (RES0) as an implemented bit.
+Move the file up a directory.
 
-According to the SMMU architecture specification, the layout for CR0 is:
-| 31:11| RES0           |
-| 10   | DPT_WALK_EN    |
-| 9    | RES0           |
-| 8:6  | VMW            |
-| 5    | RES0           |
-| 4    | ATSCHK         |
-| 3    | CMDQEN         |
-| 2    | EVENTQEN       |
-| 1    | PRIQEN         |
-| 0    | SMMUEN         |
-
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Mostafa Saleh <smostafa@google.com>
-Message-id: 20260304142344.3341444-2-tangtao1634@phytium.com.cn
-Fixes: fae4be38b35 ("hw/arm/smmuv3: Implement MMIO write operations")
-Link: https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00088.html
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Message-id: 20260302092225.4088227-2-peter.maydell@linaro.org
 ---
- include/hw/arm/smmuv3-common.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitlab-ci.d/buildtest.yml                   | 2 +-
+ scripts/{oss-fuzz => }/lsan_suppressions.txt | 0
+ tests/docker/test-fuzz                       | 2 +-
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ rename scripts/{oss-fuzz => }/lsan_suppressions.txt (100%)
 
-diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-index 67a23fbeaa..2df54ba60f 100644
---- a/include/hw/arm/smmuv3-common.h
-+++ b/include/hw/arm/smmuv3-common.h
-@@ -355,7 +355,7 @@ REG32(CR0,                 0x20)
-     FIELD(CR0, EVENTQEN,      2, 1)
-     FIELD(CR0, CMDQEN,        3, 1)
- 
--#define SMMU_CR0_RESERVED 0xFFFFFC20
-+#define SMMU_CR0_RESERVED 0xFFFFFA20
- 
- REG32(CR0ACK,              0x24)
- REG32(CR1,                 0x28)
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 6ad3594522..4b1949a3a5 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -614,7 +614,7 @@ build-oss-fuzz:
+     IMAGE: fedora
+   script:
+     - mkdir build-oss-fuzz
+-    - export LSAN_OPTIONS=suppressions=scripts/oss-fuzz/lsan_suppressions.txt
++    - export LSAN_OPTIONS=suppressions=scripts/lsan_suppressions.txt
+     - CC="clang" CXX="clang++" CFLAGS="-fsanitize=address"
+       ./scripts/oss-fuzz/build.sh
+     - export ASAN_OPTIONS="fast_unwind_on_malloc=0"
+diff --git a/scripts/oss-fuzz/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
+similarity index 100%
+rename from scripts/oss-fuzz/lsan_suppressions.txt
+rename to scripts/lsan_suppressions.txt
+diff --git a/tests/docker/test-fuzz b/tests/docker/test-fuzz
+index 7e506ae1f6..d2bdc8afba 100755
+--- a/tests/docker/test-fuzz
++++ b/tests/docker/test-fuzz
+@@ -18,7 +18,7 @@ cd "$BUILD_DIR"
+ cp -a $QEMU_SRC .
+ cd src
+ mkdir build-oss-fuzz
+-export LSAN_OPTIONS=suppressions=scripts/oss-fuzz/lsan_suppressions.txt
++export LSAN_OPTIONS=suppressions=scripts/lsan_suppressions.txt
+ env CC="clang" CXX="clang++" CFLAGS="-fsanitize=address" ./scripts/oss-fuzz/build.sh
+ export ASAN_OPTIONS="fast_unwind_on_malloc=0"
+ for fuzzer in $(find ./build-oss-fuzz/DEST_DIR/ -executable -type f | grep -v slirp); do
 -- 
 2.43.0
 
