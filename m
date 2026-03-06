@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA82FCC062
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBC9FCC066
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Mar 2026 19:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vybDM-0005yg-Sy; Fri, 06 Mar 2026 14:52:01 -0500
+	id 1vybDE-0004te-4P; Fri, 06 Mar 2026 14:51:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCP-0004Cj-1D
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:03 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1vybCT-0004DX-UR
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:07 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vybCM-0000Qn-M1
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:00 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4837584120eso74144955e9.1
- for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:50:58 -0800 (PST)
+ id 1vybCQ-0000Rx-1x
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 14:51:03 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-483a233819aso94836385e9.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Mar 2026 11:51:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772826657; x=1773431457; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772826660; x=1773431460; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a2kV+uwRVblqcYCucxpenxbvBTbdi2je9MkAk6XrOXE=;
- b=mnWF8Qhl4ziSh89UPWvY4MB7YxhiyvtHQrIGjg6GAZ3GR5K+ErCjlD1hxXYfno4YQu
- g7C+Aiw7/iBSAPpVXbgKQrDbSmTX/QYcUQqzFdZl4ZFvCpKwDd41cl/3qAh8NA/lytO4
- /GdospuNA9DqsJB3tPukEfv6rR1YqHwpKlrQp/WcF//itOCpR67oiiBpn0sBuUdP+fWU
- 1sbHhlv/PDS8HHnUScK/FzAK/Wf3FNP1wuOcvzxS7KLlnPA9YsblmLlzmmVFm6ZHsDV0
- Fi/05GXOGChEWtl2NaBMxOshhyIzxiydSWMAofbDLyKg3Nk6CqK0cobrJhao1lVSrp8Q
- G1Mw==
+ bh=gfe3K7QKeRshXSLGLqPywya5dd4X5MPIdqIvBVHRxYY=;
+ b=XcEwnzOIk7U2iRKQlQ/Q7pZnrnaQ+z3RET2UJJcvdkuosp0/51Ik/40JhBZQl2zExo
+ W/+M87x8elxbUgjv7sZVMZjJPUbE6MvxfpXtKxI9joIj+5k33H/sRe3/zJ0e5mIm9iz2
+ l+DZwWTq9+SyspITjPPVFcQpWxc4FL39hJYo3HPfS4Ad+yr0IpBXjO1XCE5xw5kHLrN+
+ 4himvwGyt2CWQ9q0sRyTzh6Tg2MPXUItepmQBxNB8jAcAoAvl8Xxn4QN7NLe7H8sU2uW
+ q1EYYVviUxzNsOBZPfBebW1cVpdADoc1qpw80vvGGNiXKbBtBYCg+cdEA5hs7T6zoWJW
+ bSSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772826657; x=1773431457;
+ d=1e100.net; s=20230601; t=1772826660; x=1773431460;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=a2kV+uwRVblqcYCucxpenxbvBTbdi2je9MkAk6XrOXE=;
- b=XeRZTG8nmxzcW6CBE3b79JIJpUJg5JyYWnkqTPyHkJ/a6lnE/cGTLUZBEuw9TSClxR
- yoWi8WID9tYYhLSBotQYXZNJUq8/7UK2IhfcbKPeKI9ywDN2emP0HQOTJGguw8HoiTRv
- liWyZ0fJkjKb6U0syVLhrmmjl1mYOO/Syku7UXjh3S45ihsxh7fkEX5OYKWiOCCbnJB/
- RYYZMj7XkKdaFpotPToghApltiBTnv3ZcNYi26gVVzBEUCIYvxoYLjC3ZDA3KkCPgFRl
- UFDoWm5MtpgKfEb40rvm5IwYbG1YCoDVmofdr9wVNfnw01YRtYEH8UZXeX9SAmWrOm7Y
- jWbw==
-X-Gm-Message-State: AOJu0YzBZBtuAnhZv2QCoZOUwS9gvpCpTSIa4Dc7qMEbieRkpYJpyvmB
- MHTfzYuoyKgiVOFfI0z/Utela1RsqigPWWpGJPPWK1N7dVNlg+aFtKo5TZfbf7yfmLY=
-X-Gm-Gg: ATEYQzzGWa6FavSDrsFrKBaOK5wpSyWOyE2mK8puw83cP9ObrTcwcl/N3Z9orqM/MLt
- Mv34pzx6VMQW2tt0CAQVtJKYBTnX1hIfCKPd8Y5ci0WvFBdMmQe1gkbFF756DTMf5L7cm5+Hfsc
- 1GW2y6eelQaZdhOO1L/bMLX30xXYKh/2HwnYf/hMkL6LWL9FtGHDMcOwx+lxESzJF/2MWjLgVqP
- F5C0Kblum4rO53mTmMom79aPaGitJOtt1jb/TeA9e0IfIK6tKFo3MKn2jvOgzmAHZ/3WMb/wBb9
- ISk+k7CgmqMcZphb9+TG0VFKAz0suV2Z2IbKLGMeeTuR+HiVpsbCN12zCoLz5l2N/rtwyIEXGQK
- uhNcAEjkrPSX7inU7nwoFh4zfrjbsyHSlSuGPytqBOSfJHj64wajQ024fMxp4GPU/pAgWdmhCse
- 9fijkdiv5mHrA3MObcPsAajLM=
-X-Received: by 2002:a05:600c:4591:b0:47e:e78a:c834 with SMTP id
- 5b1f17b1804b1-48526978664mr56717595e9.34.1772826657056; 
- Fri, 06 Mar 2026 11:50:57 -0800 (PST)
+ bh=gfe3K7QKeRshXSLGLqPywya5dd4X5MPIdqIvBVHRxYY=;
+ b=IemlVMGXSSYMrkSGi55CsUip0msKjIcnlFD4Q7l2CkO74IJR+FFGss/xZePfKSI8cd
+ wN1FPbDkbmhRWOT7McyP2GpuRbhoKiIrFPYh8kn8lLgN3SUsChuDmlIevDgvhR36hH0/
+ rZ3fARSk1S+c9wxdny4EDdydrwBtXaGxp1oH5RtpsMKGGsFsFgoMSEzc++E6u9OhsK9P
+ u8UGTw2x9RAun4UWb/hwe3Xd8UAcH0XwiB4FkI1KPVD5cucXYSfTH1D3FN7paUmopErH
+ zRSbvUZeUnXEBR+m7JE0PacXymhh/Fx6Gdn69MqC1Sys9rB91UKPRssPZJLVmPPeeomM
+ 2+Hg==
+X-Gm-Message-State: AOJu0Ywn6ooNzK+5V4NazXnvbn0Jgm6+pXziglHg3OHNvZovgTM6wnz2
+ jrVCVzsOPBCoMlGWk0AUDTJk1qVoVwmcAwCAp1wagLg9mr8Hb2NYJED2shnCQEE7ZYk=
+X-Gm-Gg: ATEYQzyRDjB3jHnkZhIGtF50tMzSI4t8gDbbhGW8vagLix4rg+6TY5kh5gR2R6bwzCH
+ QeN2WpGWoGVPsKEBimNZ6KTbzhjyFwuXbZLjONLqpcBUqNjis8pz5yd07+qvyg55NgdcoZ2jyIe
+ faL/AysnOoQJQyg7941Jh9KPUcNML78FZfa48yzplURLRBzHZoBF8ADthfqMoaDVsMOSWIVlMVo
+ yjk5PnzX9tRucOEqWTCPhr4+khnwh31LQW+CcJ1ZY75cnYenSIf4CABZuwEoFG8FZRuGiIIS7sg
+ 0iR9AxqZwlbxDsqQhUe6z5R8R7EbEttujQ64v2pwmsr/ZN+3vc4u/1LFYpP8R4NoDnWi9nsdZ9w
+ EBDvGvssudn0I0GEuPiqbWMkCVSunPDmP1W4WgxKLrbqari7rbMRFJCJ7xdEs2lVe0JashmBtcK
+ I4LEP84K+hII+7DeS71yNfBxVcaMJz39FNrQ==
+X-Received: by 2002:a05:600c:34d2:b0:483:badb:6191 with SMTP id
+ 5b1f17b1804b1-48526923595mr54794455e9.8.1772826659679; 
+ Fri, 06 Mar 2026 11:50:59 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fae00absm133404985e9.4.2026.03.06.11.50.51
+ 5b1f17b1804b1-4851fae00absm133406515e9.4.2026.03.06.11.50.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Mar 2026 11:50:54 -0800 (PST)
+ Fri, 06 Mar 2026 11:50:53 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 62130689D4;
+ by draig.lan (Postfix) with ESMTP id DA061689D9;
  Fri, 06 Mar 2026 19:50:49 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 05/20] ui/egl: Don't change bound GL context when creating new
- context
-Date: Fri,  6 Mar 2026 19:50:32 +0000
-Message-ID: <20260306195048.2869788-6-alex.bennee@linaro.org>
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 10/20] virtio-gpu: Handle virgl fence creation errors
+Date: Fri,  6 Mar 2026 19:50:37 +0000
+Message-ID: <20260306195048.2869788-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260306195048.2869788-1-alex.bennee@linaro.org>
 References: <20260306195048.2869788-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,115 +110,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Don't change bound GL context when creating new GL context for consistency
-with behavior expected by virglrenderer that assumes context-creation doesn't
-switch context. eglCreateContext() doesn't require GL context to be bound
-when it's invoked. Update qemu_egl_create_context() to spawn GL sub-contexts
-from a given shared GL context instead of a currently-bound context.
+Print out error messages when virgl fence creation fails to aid debugging
+of the fence-related bugs.
 
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Yiwei Zhang <zzyiwei@gmail.com>
+Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-4-dmitry.osipenko@collabora.com>
-Message-ID: <20260304165043.1437519-6-alex.bennee@linaro.org>
+Message-ID: <20260303151422.977399-9-dmitry.osipenko@collabora.com>
+Message-ID: <20260304165043.1437519-11-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/include/ui/egl-context.h b/include/ui/egl-context.h
-index c2761d747a4..4d559ae7bd4 100644
---- a/include/ui/egl-context.h
-+++ b/include/ui/egl-context.h
-@@ -5,7 +5,8 @@
- #include "ui/egl-helpers.h"
- 
- QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
--                                      QEMUGLParams *params);
-+                                      QEMUGLParams *params,
-+                                      EGLContext share_context);
- void qemu_egl_destroy_context(DisplayGLCtx *dgc, QEMUGLContext ctx);
- int qemu_egl_make_context_current(DisplayGLCtx *dgc,
-                                   QEMUGLContext ctx);
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 905ee6fea71..4f24215555a 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -47,9 +47,7 @@ static DBusDisplay *dbus_display;
- static QEMUGLContext dbus_create_context(DisplayGLCtx *dgc,
-                                          QEMUGLParams *params)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 10c4b5160f4..f00c666f61f 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -900,6 +900,7 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+                                       struct virtio_gpu_ctrl_command *cmd)
  {
--    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
--                   qemu_egl_rn_ctx);
--    return qemu_egl_create_context(dgc, params);
-+    return qemu_egl_create_context(dgc, params, qemu_egl_rn_ctx);
+     bool cmd_suspended = false;
++    int ret;
+ 
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+ 
+@@ -1000,14 +1001,30 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+ #if VIRGL_VERSION_MAJOR >= 1
+     if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+-        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
+-                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
+-                                            cmd->cmd_hdr.ring_idx,
+-                                            cmd->cmd_hdr.fence_id);
++        const uint32_t flags = VIRGL_RENDERER_FENCE_FLAG_MERGEABLE;
++
++        ret = virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id, flags,
++                                                  cmd->cmd_hdr.ring_idx,
++                                                  cmd->cmd_hdr.fence_id);
++        if (ret) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: virgl_renderer_context_create_fence error: %s",
++                          __func__, strerror(-ret));
++        }
+         return;
+     }
+ #endif
+-    virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
++
++    /*
++     * Unlike other virglrenderer functions, this one returns a positive
++     * error code.
++     */
++    ret = virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, 0);
++    if (ret) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: virgl_renderer_create_fence error: %s",
++                      __func__, strerror(ret));
++    }
  }
  
- static bool
-diff --git a/ui/egl-context.c b/ui/egl-context.c
-index aed3e3ba1f3..5787199347b 100644
---- a/ui/egl-context.c
-+++ b/ui/egl-context.c
-@@ -3,7 +3,8 @@
- #include "ui/egl-context.h"
- 
- QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
--                                      QEMUGLParams *params)
-+                                      QEMUGLParams *params,
-+                                      EGLContext share_context)
- {
-    EGLContext ctx;
-    EGLint ctx_att_core[] = {
-@@ -19,8 +20,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
-    };
-    bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
- 
--   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
--                          eglGetCurrentContext(),
-+   ctx = eglCreateContext(qemu_egl_display, qemu_egl_config, share_context,
-                           gles ? ctx_att_gles : ctx_att_core);
-    return ctx;
- }
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index 1f6b845500d..352b30b43fb 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -42,9 +42,7 @@ static void egl_gfx_switch(DisplayChangeListener *dcl,
- static QEMUGLContext egl_create_context(DisplayGLCtx *dgc,
-                                         QEMUGLParams *params)
- {
--    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
--                   qemu_egl_rn_ctx);
--    return qemu_egl_create_context(dgc, params);
-+    return qemu_egl_create_context(dgc, params, qemu_egl_rn_ctx);
- }
- 
- static void egl_scanout_disable(DisplayChangeListener *dcl)
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 0dbb429958e..1b5c1d4533c 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -219,9 +219,7 @@ QEMUGLContext gd_egl_create_context(DisplayGLCtx *dgc,
- {
-     VirtualConsole *vc = container_of(dgc, VirtualConsole, gfx.dgc);
- 
--    eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
--                   vc->gfx.esurface, vc->gfx.ectx);
--    return qemu_egl_create_context(dgc, params);
-+    return qemu_egl_create_context(dgc, params, vc->gfx.ectx);
- }
- 
- void gd_egl_scanout_disable(DisplayChangeListener *dcl)
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 28399f8a817..5052f371f44 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -1033,9 +1033,7 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
- static QEMUGLContext qemu_spice_gl_create_context(DisplayGLCtx *dgc,
-                                                   QEMUGLParams *params)
- {
--    eglMakeCurrent(qemu_egl_display, EGL_NO_SURFACE, EGL_NO_SURFACE,
--                   qemu_egl_rn_ctx);
--    return qemu_egl_create_context(dgc, params);
-+    return qemu_egl_create_context(dgc, params, qemu_egl_rn_ctx);
- }
- 
- static void qemu_spice_gl_scanout_disable(DisplayChangeListener *dcl)
+ static void virgl_write_fence(void *opaque, uint32_t fence)
 -- 
 2.47.3
 
