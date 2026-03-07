@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F679FCB602
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1606EF5141C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytvd-0001yX-9L; Sat, 07 Mar 2026 10:50:57 -0500
+	id 1vytvc-0001yN-Kc; Sat, 07 Mar 2026 10:50:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vytvZ-0001wy-WF
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:50:54 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vytvY-0001wX-Hk
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:50:52 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vytvX-0003Zy-T7
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:50:53 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-480706554beso111861275e9.1
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:50:51 -0800 (PST)
+ id 1vytvW-0003Zp-9V
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:50:52 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439b97a8a8cso6303156f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:50:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772898650; x=1773503450; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vIOiv6RhC5CqYyhTPfJpLbKif/WD1Xb7jVHEWR0mkGA=;
- b=bbVA+7HtrO9cBgpHJu/y3tUeIdL2TL794OJ77GB7NcGDV+IVMFw8udn6W33bnzq258
- y0IhJsPlrAYMqkOS69V/AYqrBxgamB8Hcxp1LflI6c1BGX8+d7k+LV/c4Wqe4pbyweIM
- DoQkDPZPeQ7y2tt5xv2iakTgyrQ0QyfCOJDmdYG9TgJpaym5S5H0spZ6lcbT+U5Voqz7
- m9woruet4ww8wA+ftZusMxN5Xz/r2PTGCvKOjcV2udfOlsNlFMT/btVC0FfkfLTFGKkB
- NOb4oxVWMYMifnfAhRAmaMH4N4YJwzHixmmWD1mg58r5CVrVGTgxsCZt4+JxLo1GiEJb
- PWjA==
+ d=linaro.org; s=google; t=1772898648; x=1773503448; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i2IkRMpl1Z18XiGK9Xxl4D2j1zExB9q/jQYoMYTB6+I=;
+ b=opbvM+4HpdvdIESESBZg3uVpLuzZYXS9Y2TuUjK3sdsKSmAaHdFespwBEP884QGa++
+ lTQiHLs9uAznT/xVAFoNxLnuCf+9y5VqP06Dna8DHvh6ETTVaQMg3VGZBlQcKfgKVmFl
+ 9AYDyNhdBHIlB6wTNZ0TFXmXPx5y3BzsRbHQft/jyc7IW7EDlTeGdpiFuL+odtXdWbA+
+ VO4AmCJpT1FCLreRjRXKOChZeiQI8swxUgZuksjaTEhoeUPYqUYp3CRYOlV+9v7fpf2j
+ ch3zX9+0PwkH2grEnsh8gILaUUcjUvh2XjciJ54GrBhHLQ9bu6JGsgvcYCR7GUHCdgDv
+ bPdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772898650; x=1773503450;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vIOiv6RhC5CqYyhTPfJpLbKif/WD1Xb7jVHEWR0mkGA=;
- b=EI+thMeHzOJTdULorgDhfvIIliUxzgV/17EjhsWEwazcfuMkKn8Bap/jCmDea2TZ+q
- WFYASuIUYOo/xPk69uFKSolWbScdFnL+EIDcTLv/r57BqMOUrFrT42poj3GzhOciNI8t
- 6fVTCiFabHXGA3zOVeuIoI7DF8JaebpwtTJwRgNRkMv/n9yQm9z1uAAtoaSYT1K2mJcX
- wLajE/SiWKsagYf5wEB11CIfij9ziNo6W2IYaF3Bn5ogXohDOW4OzrLCepBHJrAhVdyG
- sq4oEJ1G5XtFvYV+M+wsvMUNnVXcpwo+p7+RhRnw9HwhG0g6SU3zmvqqYUNeUdnS1q9L
- jU2Q==
-X-Gm-Message-State: AOJu0YyGTFO3V0SlRHEmSfjRfvts7R6LH7wV7WadmKIu555piD1KdlBB
- YjaZHBvY1LN00JJryZjoku9UupBw2t00nOv7IVdcC3NNcXn5JOYKkLrKlaHFUFy4Sa7WAPeJB7/
- Qvt4W
-X-Gm-Gg: ATEYQzyrHtrX1OD18wYVnqLQPE6VNBz/jBhOLBfp6QHYPXifZAbyguhOY+zLH9NrhZg
- ozEHCa+2mcacMYsSpGXaWb3Tsv3C9Ik8IZLKk1PQJTs5J4PTwvvMiw7yNOcbzUVLjkclVrkdKk0
- Et8qnhd4+1hZCdyNRMavgpQXTj50cTNwFARClEay/W6h9MaPCkK7s5cJIgKWwfDgUMaKCPvT7HZ
- qCfeXyR6IE8HfkTQV+Rev49wiMHq5swdzFu6oqB6Ei7CjMp4X4tGi8z/l304MRwk36c8vWSYEY6
- 5vrEi7pKHaIgjArBjsWgTL6oQZythu4lfH519XSwXYAINS37kQpxdVVZIWczuF6C3V3bl59qmql
- lyopKINxEX5yqPOEDBZNLN7itt5k/RVyX5zjf6hqN0Q2+o8mm8Rbv1B3+bhFzYOmmY0zpo16PWs
- 1zYr8zcV4roFgFXbKYTaK8LWHJqoI0lmbmTaqjZ2wMP6JGfEdzAKPO6Q4izEB9wlut+TQQThKon
- jQWL1VOCRbtWxGl5L29DnzaVRoi1rU=
-X-Received: by 2002:a05:600c:8b86:b0:485:3473:d4a1 with SMTP id
- 5b1f17b1804b1-4853473d6dcmr4104205e9.34.1772898650375; 
- Sat, 07 Mar 2026 07:50:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1772898648; x=1773503448;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i2IkRMpl1Z18XiGK9Xxl4D2j1zExB9q/jQYoMYTB6+I=;
+ b=XCw+01h4+DV98+tecKkS6j2TCjRI0f113RZ0b4T3IUCV2wE7mmPhUXoW3Xmcx+/Fgh
+ D3LKp6hDkWjfcxCW+q7rr5UuPJ0uvL96CE0hb+/yE2XiuB6KF6ClJa15WMX54zygQJiC
+ Tlbu/bmv8KlYtgs0hh0HiyWY6OwfoEb5HkJHA82J/Haod+d6UjWjm+PFkLps7IMp8+Xh
+ bVVDEEZKwIvA5+d0mz177L8HI4Q54LelYGtNCRl1A90hQyiVoDzxUh4+R8t8n7gjNKSJ
+ tcISnyj1P/CvBfBtVVGvD/ZJLHcI1m+Jl+B9vSEBcGrBUOwAnnqqa4E9RqAC5zCXW++w
+ dsUQ==
+X-Gm-Message-State: AOJu0YwoL7GSBz1cKXAbSN2/nRMQtXbbWrJdvdAfyC3bLOrpMbnWsNW7
+ 0/VPjyxJybOSyAfhkPoLgE4srzkjW3kt/HdNQIkwfqao2oNy1NegE1sUMFcBoxDclqibc+W+P3x
+ FyZPc
+X-Gm-Gg: ATEYQzz/pfafiDG5sSVaDC62VqDuoTLCfvGUOOHAUQrKBxHCuxJ+pQk4G6viRiVt35Z
+ aNhIpqF1ceObdH+NcUu1RPoQmIt+Y7ZikBpgOHiudd0c4KJQxPWq4w+xq0G2Raz8qwQgMdoQTdZ
+ ZivJhLCaI9N1GJVbxOeuWAW5QGeuHLgHs9TBJdjoenov7gOS17EsGsDs6saTOo+UWO5/+3PYauV
+ Ng+hMG6ntYYTLHZi1EB9oaBnxwo4N8ynXTSLbXEP/KoQF+yVjEEw1+486S/aweM4Z/AY6F0ZBLL
+ sW+wh3R4Bmbhhr4QaryaYEVGTqQQwrTnUMAtMelpgO4sB/CQnoCI3aeaC77wdUQdO2mhE5orfFP
+ QT13YnesWxIea+i1ctlhBrvhj227usivYKUAtv1zkDEAgrrTlBa5N02yKaoyMdBu+R5XjvEMueA
+ O6P6OZ2x+6FNLi0Lej/tig0FF3hXMLdQqpIehhupIH1EYhLY+kS1eZeOXtU37bcEn2YXNLq3VZh
+ AEZd7+YdJCEbLQDAaf8vHlmWh5XLfM=
+X-Received: by 2002:a5d:5f84:0:b0:439:bc8a:78ac with SMTP id
+ ffacd0b85a97d-439da89b707mr10362570f8f.40.1772898648420; 
+ Sat, 07 Mar 2026 07:50:48 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad8ec97sm13121750f8f.5.2026.03.07.07.50.49
+ ffacd0b85a97d-439dad8ec97sm13121750f8f.5.2026.03.07.07.50.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 07:50:49 -0800 (PST)
+ Sat, 07 Mar 2026 07:50:47 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Alessandro Ratti <alessandro@0x65c.net>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 2/2] hw: Make qdev_get_printable_name() consistently return
- freeable string
-Date: Sat,  7 Mar 2026 15:50:46 +0000
-Message-ID: <20260307155046.3940197-3-peter.maydell@linaro.org>
+Subject: [PATCH 0/2] hw: fix qdev_get_printable_name() leak
+Date: Sat,  7 Mar 2026 15:50:44 +0000
+Message-ID: <20260307155046.3940197-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260307155046.3940197-1-peter.maydell@linaro.org>
-References: <20260307155046.3940197-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,134 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current implementation of qdev_get_printable_name() sometimes
-returns a string that must not be freed (vdev->id or the fixed
-fallback string "<unknown device>" and sometimes returns a string
-that must be freed (the return value of qdev_get_dev_path()). This
-forces callers to leak the string in the "must be freed" case.
+The qdev_get_printable_name() function is currently unusable without
+leaking memory, because sometimes it returns a string that must be
+freed and sometimes a string that must not be freed.
 
-Make the function consistent that it always returns a string that
-the caller must free, and make the three callsites free it.
+Fix this by making it always return a string that the caller must
+free.
 
-This fixes leaks like this that show up when running "make check"
-with the address sanitizer enabled:
+Patch 1 addresses an underlying cause of this -- we didn't document
+qdev_get_dev_path() and in particular didn't document that its
+return value is a string the caller must free.
 
-Direct leak of 13 byte(s) in 1 object(s) allocated from:
-    #0 0x5561de21f293 in malloc (/home/pm215/qemu/build/san/qemu-system-i386+0x1a2d293) (BuildId: 6d6fad7130fd5c8dbbc03401df554f68b8034936)
-    #1 0x767ad7a82ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5561deaf34f2 in pcibus_get_dev_path /home/pm215/qemu/build/san/../../hw/pci/pci.c:2792:12
-    #3 0x5561df9d8830 in qdev_get_printable_name /home/pm215/qemu/build/san/../../hw/core/qdev.c:431:24
-    #4 0x5561deebdca2 in virtio_init_region_cache /home/pm215/qemu/build/san/../../hw/virtio/virtio.c:298:17
-    #5 0x5561df05f842 in memory_region_write_accessor /home/pm215/qemu/build/san/../../system/memory.c:491:5
-    #6 0x5561df05ed1b in access_with_adjusted_size /home/pm215/qemu/build/san/../../system/memory.c:567:18
-    #7 0x5561df05e3fa in memory_region_dispatch_write /home/pm215/qemu/build/san/../../system/memory.c
-    #8 0x5561df0aa805 in address_space_stm_internal /home/pm215/qemu/build/san/../../system/memory_ldst.c.inc:85:13
-    #9 0x5561df0bcad3 in qtest_process_command /home/pm215/qemu/build/san/../../system/qtest.c:480:13
+thanks
+-- PMM
 
-Cc: qemu-stable@nongnu.org
-Fixes: e209d4d7a31b9 ("virtio: improve virtqueue mapping error messages")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
+Peter Maydell (2):
+  hw/qdev: Document qdev_get_dev_path()
+  hw: Make qdev_get_printable_name() consistently return freeable string
+
  hw/core/qdev.c         |  4 ++--
  hw/virtio/virtio.c     | 12 +++++++++---
- include/hw/core/qdev.h | 16 ++++++++++++++++
- 3 files changed, 27 insertions(+), 5 deletions(-)
+ include/hw/core/qdev.h | 39 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+), 5 deletions(-)
 
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index fc3425a8fe..e48616b2c6 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -420,7 +420,7 @@ const char *qdev_get_printable_name(DeviceState *vdev)
-      * names.
-      */
-     if (vdev->id) {
--        return vdev->id;
-+        return g_strdup(vdev->id);
-     }
-     /*
-      * Fall back to the canonical QOM device path (eg. ID for PCI
-@@ -437,7 +437,7 @@ const char *qdev_get_printable_name(DeviceState *vdev)
-      * Final fallback: if all else fails, return a placeholder string.
-      * This ensures the error message always contains a valid string.
-      */
--    return "<unknown device>";
-+    return g_strdup("<unknown device>");
- }
- 
- void qdev_add_unplug_blocker(DeviceState *dev, Error *reason)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 22d798e6cd..db6e08c13b 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -281,10 +281,12 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->desc, vdev->dma_as,
-                                    addr, size, packed);
-     if (len < size) {
-+        g_autofree const char *devname = qdev_get_printable_name(DEVICE(vdev));
-+
-         virtio_error(vdev,
-                 "Failed to map descriptor ring for device %s: "
-                 "invalid guest physical address or corrupted queue setup",
--                qdev_get_printable_name(DEVICE(vdev)));
-+                devname);
-         goto err_desc;
-     }
- 
-@@ -292,10 +294,12 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->used, vdev->dma_as,
-                                    vq->vring.used, size, true);
-     if (len < size) {
-+        g_autofree const char *devname = qdev_get_printable_name(DEVICE(vdev));
-+
-         virtio_error(vdev,
-                 "Failed to map used ring for device %s: "
-                 "possible guest misconfiguration or insufficient memory",
--                qdev_get_printable_name(DEVICE(vdev)));
-+                devname);
-         goto err_used;
-     }
- 
-@@ -303,10 +307,12 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->avail, vdev->dma_as,
-                                    vq->vring.avail, size, false);
-     if (len < size) {
-+        g_autofree const char *devname = qdev_get_printable_name(DEVICE(vdev));
-+
-         virtio_error(vdev,
-                 "Failed to map avalaible ring for device %s: "
-                 "possible queue misconfiguration or overlapping memory region",
--                qdev_get_printable_name(DEVICE(vdev)));
-+                devname);
-         goto err_avail;
-     }
- 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index 29083bc907..f99a8979cc 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -1084,6 +1084,22 @@ extern bool qdev_hot_removed;
-  * If @dev is NULL or not on a bus, returns NULL.
-  */
- char *qdev_get_dev_path(DeviceState *dev);
-+
-+/**
-+ * qdev_get_printable_name: Return human readable name for device
-+ * @dev: Device to get name of
-+ *
-+ * Returns: A newly allocated string containing some human
-+ * readable name for the device, suitable for printing in
-+ * user-facing error messages. The function will never return NULL,
-+ * so the name can be used without further checking or fallbacks.
-+ *
-+ * If the device has an explicitly set ID (e.g. by the user on the
-+ * command line via "-device thisdev,id=myid") this is preferred.
-+ * Otherwise we try the canonical QOM device path (which will be
-+ * the PCI ID for PCI devices, for example). If all else fails
-+ * we will return the placeholder "<unknown device">.
-+ */
- const char *qdev_get_printable_name(DeviceState *dev);
- 
- void qbus_set_hotplug_handler(BusState *bus, Object *handler);
 -- 
 2.43.0
 
