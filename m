@@ -4,62 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D602FC9EC3
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA5FFC9EC3
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyi2Q-00047s-5Z; Fri, 06 Mar 2026 22:09:10 -0500
+	id 1vyi4M-0004k5-G9; Fri, 06 Mar 2026 22:11:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vyi2O-000474-8R; Fri, 06 Mar 2026 22:09:08 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vyi4K-0004jr-Mc
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:08 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vyi2M-0000Go-1w; Fri, 06 Mar 2026 22:09:08 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62738ci1031541
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 7 Mar 2026 12:08:45 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=yFdzswCkWVALbgjV+av34rpJGNid+9YoK/8SPaihKDk=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772852925; v=1;
- b=ItBHq47ze80K/WhCYXwqiE3JnnMS9cHqbqYjLdEMGz/Hoxk/gOF/yoW/WnBKJNxt
- qfx7O3Hl5rTNk2Hy/SGVxWaDbMhdsMYGO5LYCumu8YJAtd5X8HgElfiw+PfFlA7U
- F2rB3+DPXgc0G6vj2d36YzrtweCV+ygkrZRdrxouOpwz4aJjAFYThzzFiZa7r8Y6
- RLN4xbP8XI8PDXCpA9KwhbWhi5RovMWh2bpgzc/c+iUDyAUrEV1oqUF/7XJdznsv
- p7kNr8yjCUVRBGhORXxvNERabHKrbE52uhVY0quUVpOzxUDV68KVg0wKCrp99Qzu
- Jmf55G2pXuTUd51XjLrTNA==
-Message-ID: <8908689a-f5c1-490e-925d-7a664093963f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 7 Mar 2026 12:08:38 +0900
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vyi4H-0000oK-Je
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1772853066; x=1804389066;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=tIFQZP+Rg9fXShzbUZvyVuJnYDhLRuJqOhF+QJJ1CJA=;
+ b=RNFfyugRcDhPcyOvSuPnN26EOdqSaP1eXuUHdh8Q/sBuE6x1mKrMaz+R
+ HP3UDFFCwmG0vCfRpAVrtGpZnSY+KeNOTUBnDSNvjpXawKWLc5whmmTgD
+ ONRTy2VPSSTeNtd/sITj+QHEot2PFTq3JiRw17bmQx3f+phaCslGAruU8
+ q/MfgtKg63mImCQVQAohn7IMG6e5mTVDZGT3GzpUVs3xefoqMu7ev2v+v
+ 3Mm1fU4w2hu2XKPqk6aDNiuT3ElxLWNGCWvM5d6a1pUNuWnhgFW+gkxR1
+ UE19LNcSWvewvS2mO+GAs+DvS1d742pCA4Cs9qLD3vFgJVt7TS0dadcQU w==;
+X-CSE-ConnectionGUID: yOoPzbgLQg2JWIsm6ED2fA==
+X-CSE-MsgGUID: 04NOLwyoQ0ScQxzeJY82sg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99433994"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99433994"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Mar 2026 19:11:01 -0800
+X-CSE-ConnectionGUID: zCzOXvZjRW2XvGGea7MM+Q==
+X-CSE-MsgGUID: nq9VO2WoShuI+HM2Zm8BRA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813754"
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Mar 2026 19:11:01 -0800
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Dongwon Kim <dongwon.kim@intel.com>
+Subject: [PATCH v10 00/10] vfio: Create dmabuf from multiple VFIO ranges and
+ use it in virtio-gpu
+Date: Fri,  6 Mar 2026 19:05:49 -0800
+Message-ID: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] vmapple: apple-gfx: make it work on the latest
- macOS release
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>
-References: <20260306145246.10274-1-mohamed@unpredictable.fr>
- <20260306145246.10274-2-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260306145246.10274-2-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.7;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,255 +89,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/06 23:52, Mohamed Mediouni wrote:
-> Follow changes in memory management introduced on macOS 15.4.
-> 
-> The legacy memory management API has been removed for the IOSurface mapper on that macOS version.
-> 
-> Also enable process isolation for a sandboxed GPU process when on a new OS.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   hw/display/apple-gfx-mmio.m | 62 ++++++++++++++++++++++++++++---------
->   hw/display/apple-gfx.h      | 18 +++++++++++
->   hw/display/apple-gfx.m      | 43 ++++++++++++++++++++++++-
->   3 files changed, 107 insertions(+), 16 deletions(-)
-> 
-> diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-> index 58beaadd1f..323dcfe8cd 100644
-> --- a/hw/display/apple-gfx-mmio.m
-> +++ b/hw/display/apple-gfx-mmio.m
-> @@ -19,6 +19,7 @@
->   #include "hw/core/irq.h"
->   #include "apple-gfx.h"
->   #include "trace.h"
-> +#include "system/address-spaces.h"
->   
->   #import <ParavirtualizedGraphics/ParavirtualizedGraphics.h>
->   
-> @@ -36,12 +37,19 @@ typedef bool(^IOSFCMapMemory)(uint64_t phys, uint64_t len, bool ro, void **va,
->   
->   @interface PGDeviceDescriptor (IOSurfaceMapper)
->   @property (readwrite, nonatomic) bool usingIOSurfaceMapper;
-> +@property (readwrite, nonatomic) bool enableArgumentBuffers;
-> +@property (readwrite, nonatomic) bool enableProcessIsolation;
-> +@property (readwrite, nonatomic) bool enableProtectedContent;
-> +
-> +@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
->   @end
->   
->   @interface PGIOSurfaceHostDeviceDescriptor : NSObject
->   -(PGIOSurfaceHostDeviceDescriptor *)init;
->   @property (readwrite, nonatomic, copy, nullable) IOSFCMapMemory mapMemory;
->   @property (readwrite, nonatomic, copy, nullable) IOSFCUnmapMemory unmapMemory;
-> +@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
-> +@property (readwrite, nonatomic) unsigned long long mmioLength;
->   @property (readwrite, nonatomic, copy, nullable) IOSFCRaiseInterrupt raiseInterrupt;
->   @end
->   
-> @@ -182,20 +190,34 @@ static bool apple_gfx_mmio_unmap_surface_memory(void *ptr)
->       PGIOSurfaceHostDeviceDescriptor *iosfc_desc =
->           [PGIOSurfaceHostDeviceDescriptor new];
->       PGIOSurfaceHostDevice *iosfc_host_dev;
-> -
-> -    iosfc_desc.mapMemory =
-> -        ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
-> -            *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
-> -
-> -            trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
-> -
-> -            return *va != NULL;
-> -        };
-> -
-> -    iosfc_desc.unmapMemory =
-> -        ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
-> -            return apple_gfx_mmio_unmap_surface_memory(va);
-> -        };
-> +    PGMemoryMapDescriptor* memory_map_descriptor;
+The virtio-gpu driver running in the Guest VM can create Guest blob
+resources (by importing dmabufs) that are backed by System RAM. This
+is made possible by making use of memfd memory backend and udmabuf
+driver on the Host side. However, in order to create Guest blobs
+that are backed by vfio-pci device regions (which happens when
+virtio-gpu imports dmabufs from devices that have local memory such
+as dGPU VFs), we have to add support for creating dmabuf from multiple
+VFIO device ranges (same region) and leverage it in virtio-gpu.
 
-This should be:
-PGMemoryMapDescriptor *memory_map_descriptor
+So, while creating the blobs we first try to create a dmabuf by
+calling into the udmabuf driver assuming that the backing memory 
+is memfd based. If that fails, and if it is determined that the blob
+is backed by a vfio-pci device region, we would then call into the
+vfio-pci driver to have a dmabuf fd created.
 
-scripts/checkpatch.pl enforces this, but sadly this script does not 
-support Objective-C.
+Changelog:
+v9 -> v10:
+- Adopt the logic structure and style recommended by Akihiko in
+  virtio_gpu_init_dmabuf() while creating and mmaping dmabuf
+- Destroy the dmabuf by calling virtio_gpu_destroy_dmabuf() if
+  mmap fails
+- Set res->dmabuf_fd to -1 after closing it to improve consistency
 
-Also, docs/devel/style.rst says "Mixed declarations (interleaving 
-statements and declarations within blocks) are generally not allowed; 
-declarations should be at the beginning of blocks." Moving this to the 
-if block below will fix it.
+v8 -> v9:
+- Replace VFIO_DMABUF_CREATE_GUEST_ERROR/VFIO_DMABUF_CREATE_HOST_ERROR
+  with VFIO_DMABUF_CREATE_ERR_INVALID_IOV/VFIO_DMABUF_CREATE_ERR_UNSPEC
+  (Akihiko)
+- Drop the error_prepend() in virtio_gpu_init_dmabuf() (Akihiko)
+- Improve the logic structure in virtio_gpu_init_dmabuf() by calling
+  the map memory function immediately after creating the dmabuf
+  in both memfd/udmabuf and VFIO cases (Akihiko)
 
-> +
-> +    /*
-> +     * The legacy memory management API is no longer present
-> +     * for the IOSurface mapper as of macOS 15.4.
-> +     */
-> +    if (@available(macOS 15.4, *)) {
-> +        memory_map_descriptor = [PGMemoryMapDescriptor new];
-> +        FlatView* fv = address_space_to_flatview(&address_space_memory);> +        flatview_for_each_range(fv, apple_gfx_register_memory_cb, 
-memory_map_descriptor);
-> +        /* the device model defines this as a single-page MMIO region, hence 16KB */
-> +        iosfc_desc.mmioLength = 0x10000;
-> +        iosfc_desc.memoryMapDescriptor = memory_map_descriptor;
-> +    } else {
-> +        iosfc_desc.mapMemory =
-> +            ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
-> +                *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
-> +
-> +                trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
-> +
-> +                return *va != NULL;
-> +            };
-> +
-> +        iosfc_desc.unmapMemory =
-> +            ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
-> +                return apple_gfx_mmio_unmap_surface_memory(va);
-> +            };
-> +    }
->   
->       iosfc_desc.raiseInterrupt = ^bool(uint32_t vector) {
->           trace_apple_gfx_iosfc_raise_irq(vector);
-> @@ -223,13 +245,23 @@ static void apple_gfx_mmio_realize(DeviceState *dev, Error **errp)
->           };
->   
->           desc.usingIOSurfaceMapper = true;
-> -        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
-> +        desc.enableArgumentBuffers = true;
-> +        /*
-> +         * Process isolation needs PGMemoryMapDescriptor instead of
-> +         * the legacy memory management interface present in releases
-> +         * older than macOS 15.4.
-> +         */
-> +        if (@available(macOS 15.4, *)) {
-> +            desc.enableProcessIsolation = true;
-> +        }
->   
->           if (!apple_gfx_common_realize(&s->common, dev, desc, errp)) {
->               [s->pgiosfc release];
->               s->pgiosfc = nil;
->           }
->   
-> +        s->pgiosfc = apple_gfx_prepare_iosurface_host_device(s);
-> +
->           [desc release];
->           desc = nil;
->       }
-> diff --git a/hw/display/apple-gfx.h b/hw/display/apple-gfx.h
-> index 3197bd853d..72b360454e 100644
-> --- a/hw/display/apple-gfx.h
-> +++ b/hw/display/apple-gfx.h
-> @@ -12,6 +12,7 @@
->   #include "system/memory.h"
->   #include "hw/core/qdev-properties.h"
->   #include "ui/surface.h"
-> +#include "objc/NSObject.h"
->   
->   #define TYPE_APPLE_GFX_MMIO         "apple-gfx-mmio"
->   #define TYPE_APPLE_GFX_PCI          "apple-gfx-pci"
-> @@ -23,6 +24,17 @@
->   @protocol MTLTexture;
->   @protocol MTLCommandQueue;
->   
-> +typedef struct PGGuestPhysicalRange_s
-> +{
-> +    uint64_t physicalAddress;
-> +    uint64_t physicalLength;
-> +    void *hostAddress;
-> +} PGGuestPhysicalRange_t;
-> +
-> +@interface PGMemoryMapDescriptor : NSObject
-> +-(void)addRange:(PGGuestPhysicalRange_t) range;
-> +@end
-> +
->   typedef QTAILQ_HEAD(, PGTask_s) PGTaskList;
->   
->   typedef struct AppleGFXDisplayMode {
-> @@ -68,6 +80,12 @@ void *apple_gfx_host_ptr_for_gpa_range(uint64_t guest_physical,
->                                          uint64_t length, bool read_only,
->                                          MemoryRegion **mapping_in_region);
->   
-> +bool apple_gfx_register_memory_cb(Int128 start,
-> +                            Int128 len,
-> +                            const MemoryRegion *mr,
-> +                            hwaddr offset_in_region,
-> +                            void *opaque);
-> +
->   extern const PropertyInfo qdev_prop_apple_gfx_display_mode;
->   
->   #endif
-> diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-> index e0a765fcb1..92404d20bf 100644
-> --- a/hw/display/apple-gfx.m
-> +++ b/hw/display/apple-gfx.m
-> @@ -21,6 +21,7 @@
->   #include "system/address-spaces.h"
->   #include "system/dma.h"
->   #include "migration/blocker.h"
-> +#include "system/memory.h"
->   #include "ui/console.h"
->   #include "apple-gfx.h"
->   #include "trace.h"
-> @@ -596,6 +597,37 @@ void apple_gfx_common_init(Object *obj, AppleGFXState *s, const char* obj_name)
->       /* TODO: PVG framework supports serialising device state: integrate it! */
->   }
->   
-> +@interface PGDeviceDescriptor (IOSurfaceMapper)
-> +@property (readwrite, nonatomic, copy, nullable) PGMemoryMapDescriptor* memoryMapDescriptor;
-> +@end
-> +
-> +bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
-> +                                  const MemoryRegion *mr_const,
-> +                                  hwaddr offset_in_region, void *opaque) {
-> +    MemoryRegion *mr = (MemoryRegion *)mr_const;
+v7 -> v8:
+- Move the error enum to vfio and include only negative values (Akihiko)
+- Reuse the same VFIO err enum to categorize Guest/Host errors in
+  virtio_gpu_create_udmabuf() (Akihiko)
+- Make the error messages more descriptive and readable (Akihiko)
+- Do not print any error messages on Guest triggered errors (Akihiko)
+- Move the vfio dmabuf stubs file to hw/vfio directory (Akihiko)
+- Make vfio_device_create_dmabuf() return an fd on success (Akihiko)
+- Rename vfio_device_create_dmabuf to vfio_device_create_dmabuf_fd
+  since it now returns an fd on success
 
-flatview_for_each_range() should be changed to pass non-const pointers 
-instead.
+v6 -> v7:
+- Introduce an enum to categorize Guest and Host errors (Akihiko)
+- Drop the CONFIG_VIRTIO_GPU_VFIO_BLOB Kconfig option and add stubs
+  for VFIO dmabuf helpers when CONFIG_VFIO is not enabled (Akihiko)
+- Check the correct return value of vfio_device_get_region_info()
+  in vfio_device_mmap_dmabuf()
 
-Regards,
-Akihiko Odaki
+v5 -> v6:
+- Drop the additional error_setg() call in virtio_gpu_create_udmabuf()
+  and only have LOG_GUEST_ERROR for invalid ramblocks (Akihiko)
+- Merge the patch that introduces vfio_device_lookup() helper with the
+  one that adds support for vfio_device_create_dmabuf() (Cedric)
+- Use only one 'Error **' parameter instead of two while creating
+  and mmapping the dmabuf (Cedric)
+- Collect R-b tags from Akihiko
 
-> +    PGGuestPhysicalRange_t range;
-> +    PGMemoryMapDescriptor *memory_map_descriptor = opaque;
-> +    if (memory_access_is_direct(mr, true, MEMTXATTRS_UNSPECIFIED)) {
-> +        range.physicalAddress = start;
-> +        range.physicalLength = len;
-> +        range.hostAddress = memory_region_get_ram_ptr(mr);
-> +        [memory_map_descriptor addRange:range];
-> +        memory_region_ref(mr);
-> +    }
-> +    return false;
-> +}
-> +
-> +static void apple_gfx_register_memory(AppleGFXState *s,
-> +                                                     PGDeviceDescriptor *desc)
-> +{
-> +    PGMemoryMapDescriptor* memoryMapDescriptor = [PGMemoryMapDescriptor new];
-> +
-> +    FlatView* fv = address_space_to_flatview(&address_space_memory);
-> +    flatview_for_each_range(fv, apple_gfx_register_memory_cb, memoryMapDescriptor);
-> +
-> +    desc.memoryMapDescriptor = memoryMapDescriptor;
-> +}
-> +
->   static void apple_gfx_register_task_mapping_handlers(AppleGFXState *s,
->                                                        PGDeviceDescriptor *desc)
->   {
-> @@ -763,7 +795,16 @@ bool apple_gfx_common_realize(AppleGFXState *s, DeviceState *dev,
->   
->       desc.device = s->mtl;
->   
-> -    apple_gfx_register_task_mapping_handlers(s, desc);
-> +    /*
-> +     * The legacy memory management interface doesn't allow for
-> +     * vGPU sandboxing. As such, always use the new interface
-> +     * on macOS 15.4 onwards.
-> +     */
-> +    if (@available(macOS 15.4, *)) {
-> +        apple_gfx_register_memory(s, desc);
-> +    } else {
-> +        apple_gfx_register_task_mapping_handlers(s, desc);
-> +    }
->   
->       s->cursor_show = true;
->   
+v4 -> v5:
+- Improve commit message for the patch that replaces dma_memory_map()
+  with virtio_gpu_dma_memory_map() (Akihiko)
+- Create separate patches to remove rcu_read_lock/unlock and use
+  g_autofree for list pointer in virtio_gpu_create_udmabuf()
+  (Akihiko, Cedric)
+- Create a separate patch to improve error handling (Cedric)
+- Make vfio_device_lookup() a common helper local to vfio/device.c
+  (Cedric, Akihiko)
+- Move the dmabuf mmap helper to vfio/device.c (Akihiko)
+- Replace PROT_READ with PROT_NONE and vbasedev->fd with -1 while
+  creating the placeholder mapping in dmabuf mmap helper (Akihiko)
+
+v3 -> v4:
+- Drop the patch that introduces ram_block_is_memfd_backed()
+- Drop the additional check in virtio_gpu_create_udmabuf() that
+  checks for memfd backed ram blocks (Akihiko)
+- Remove rcu_read_lock/unlock and replace warn_report() with
+  qemu_log_mask() in virtio_gpu_create_udmabuf()
+- Improve the commit message and logic in the patch that adds
+  support for vfio_device_create_dmabuf_fd()
+- Rebase on top of vfio-next
+
+v2 -> v3:
+- Use memory_region_get_ram_ptr() to obtain hva for both memfd and
+  VFIO backed memory regions (Akihiko)
+- Drop the patch that introduced qemu_iovec_same_memory_regions()
+  helper and move the "same memory region" check into
+  virtio_gpu_create_udmabuf(), vfio_device_create_dmabuf_fd() (Akihiko)
+- Refactor virtio_gpu_init_dmabuf() to not rely on helpers such as
+  memory_region_is_ram_device() to identify memory regions and
+  instead call virtio_gpu_create_udmabuf() unconditionally (Akihiko)
+- Add a patch to introduce ram_block_is_memfd_backed() helper
+
+v1 -> v2:
+- Drop the patch that uses res->blob_size instead of res->blob to
+  identify blob resources (Akihiko)
+- Remove the res->dmabuf_fd < 0 check while attaching backing to a
+  resource (Akihiko)
+- Remove cmd->cmd_hdr.type != VIRTIO_GPU_CMD_RESOURCE_CREATE_BLOB
+  check while attaching backing (Akihiko)
+- Improve vfio_get_region_index_from_mr() and add documentation (Cedric)
+- Remove rcu_read_lock/unlock around qemu_ram_block_from_host()
+  (Akihiko, Cedric)
+- Improve, document and rename vfio_device_create_dmabuf() to
+  vfio_device_create_dmabuf_fd() (Cedric)
+- Add a new helper to lookup VFIO device from memory region (Cedric)
+- Document vfio_device_get_region_info() (Cedric)
+- Ensure that info variable (in vfio_dmabuf_mmap()) is initialized
+  before use (Cedric)
+- Rename udmabuf files and helpers to dmabuf (Akihiko)
+- Remove the redundant check for virtio_gpu_have_udmabuf() in
+  virtio_gpu_init_dmabuf() (Akihiko)
+- Add a helper to check whether all the entries of a dmabuf belong
+  to a single memory region or not (Akihiko)
+
+RFC -> v1:
+- Create the CPU mapping using vfio device fd if the dmabuf exporter
+  (vfio-pci) does not provide mmap() support (Akihiko)
+- Log a warning with LOG_GUEST_ERROR instead of warn_report() when
+  dmabuf cannot be created using Guest provided addresses (Akihiko)
+- Use address_space_translate() instead of gpa2hva() to obtain the
+  Host addresses (Akihiko)
+- Rearrange the patches and improve the commit messages (Akihiko)
+- Fix compilation error when VFIO is not enabled (Alex)
+- Add a new helper to obtain VFIO region index from memory region
+- Move vfio_device_create_dmabuf() to hw/vfio/device.c
+
+Tested with an SRIOV enabled Intel dGPU (B60) by running Gnome Wayland
+(in the VM) and Qemu with the following (relevant) parameters:
+-device vfio-pci,host=0000:03:00.1
+-device virtio-vga,max_outputs=1,xres=1920,yres=1080,blob=true
+-display gtk,gl=on
+
+Associated virtio-gpu kernel driver series (merged):
+https://lore.kernel.org/dri-devel/20241126031643.3490496-1-vivek.kasireddy@intel.com/
+
+---
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+
+Vivek Kasireddy (10):
+  virtio-gpu: Recreate the resource's dmabuf if new backing is attached
+  virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
+  virtio-gpu: Rename udmabuf files and helpers to dmabuf
+  virtio-gpu-dmabuf: Remove rcu_read_lock/unlock from
+    virtio_gpu_create_udmabuf()
+  virtio-gpu-dmabuf: Use g_autofree for the list pointer
+  vfio/region: Add a helper to get region index from memory region
+  vfio/device: Add support for creating dmabuf from multiple ranges
+  vfio/device: Add a helper to mmap a dmabuf
+  virtio-gpu-dmabuf: Improve error handling with 'Error **' and err enum
+  virtio-gpu-dmabuf: Create dmabuf for blobs associated with VFIO
+    devices
+
+ hw/display/meson.build                        |   4 +-
+ ...abuf-stubs.c => virtio-gpu-dmabuf-stubs.c} |   4 +-
+ ...rtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} |  93 +++++++----
+ hw/display/virtio-gpu.c                       |  31 +++-
+ hw/vfio/device.c                              | 146 ++++++++++++++++++
+ hw/vfio/dmabuf-stubs.c                        |  24 +++
+ hw/vfio/meson.build                           |   1 +
+ hw/vfio/region.c                              |  14 ++
+ include/hw/vfio/vfio-device.h                 |  49 ++++++
+ include/hw/virtio/virtio-gpu.h                |   6 +-
+ 10 files changed, 327 insertions(+), 45 deletions(-)
+ rename hw/display/{virtio-gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} (79%)
+ rename hw/display/{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} (64%)
+ create mode 100644 hw/vfio/dmabuf-stubs.c
+
+-- 
+2.53.0
 
 
