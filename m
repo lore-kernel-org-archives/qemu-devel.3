@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C505F55102
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 18:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 930FBF55105
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 18:19:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyw0a-00026A-Hm; Sat, 07 Mar 2026 13:04:12 -0500
+	id 1vywF8-0005Ia-8x; Sat, 07 Mar 2026 13:19:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyw0X-000259-Qb
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:04:10 -0500
-Received: from p-west2-cluster2-host9-snip4-8.eps.apple.com ([57.103.68.171]
- helo=outbound.mr.icloud.com)
+ id 1vywF6-0005Fu-2m
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:19:12 -0500
+Received: from qs-2004l-snip4-5.eps.apple.com ([57.103.84.118]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyw0W-0003YZ-Ah
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:04:09 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPS id
- 39AE91800610; Sat,  7 Mar 2026 18:04:06 +0000 (UTC)
+ id 1vywF4-0005P9-2r
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:19:11 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-4 (Postfix) with ESMTPS id
+ 3FB271800115; Sat,  7 Mar 2026 18:19:06 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772906647; x=1775498647;
- bh=ijV/TFHDkMx/sDtjnbI4Tcf5/3qsWHHZ7tvtB+wJk+k=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=cS9wpwexRd2DmDCDCCBDPdx6xA8D729/dZiZ0LAPW9YAq4RJeOUR3WQawp/5TQyvTAJmN6pABVxx2V4mU6yRO5DPm9NtzlTmDxeB4RwWKk6r+nCvww1T+HeGyRjAv5rPAqZw0bcqtvNNUjzBvuKu98Z5yolg/huX9ssFsNZvftNTt7es6+HffgTNcikbIwUJ61YAZAtRueTBooCHbNe83E7xLeuz0LpZjdNAJWn4/gL2MAOQ5+i52DiKXD+KN8jE+k7D85FdTw3dHFtrkzAK6rtrBYFk2KyoWeLGIgzyIkS2U5EJK9A92Cd+r92xv99VRFZPuRTOkmsZgz451a3YnQ==
+ s=sig1; t=1772907549; x=1775499549;
+ bh=XOOEaOtBZC6aiAXdM9D8RgIzSZ7nFzWhQdlk7srjCXI=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=O9tyS6R4ZspW6vvvtOf8sAtWZegb5JXLkhBR57LhEypi7bGakqJRcS8KN36ULi9GQdQ2sBdra90bo4WNIUtzbUo7md2/ErDzujbRA6BhTJCCefnAqyQzK8/ui7jItem03btOWieymEiFdXNAU7bshqVjRV0Yw8Xx7VuHlpTUR+SDQ00jIcrnetNBtDMoyAJ4hWH2Og4ZKwgAWfG8xn0an/YKYpMtQRM76JDiQuXie+hXxKTiiTS+R6nbOuTyxrxhR41MDcQTjvV8Q83kM3NQedsPP2zk06DE8Kk5bIji3SluF+uWPkQsiwnNCRM7FVfllNnt2IjztCVXtJvMUv7GvA==
 mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPSA id
- E12101800E3D; Sat,  7 Mar 2026 18:04:03 +0000 (UTC)
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-4 (Postfix) with ESMTPSA id
+ 02323180013C; Sat,  7 Mar 2026 18:19:03 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Wei Liu <wei.liu@kernel.org>, Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v19 13/13] hvf: enable nested virtualisation support
-Date: Sat,  7 Mar 2026 19:03:30 +0100
-Message-ID: <20260307180330.75168-14-mohamed@unpredictable.fr>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pedro Barbuda <pbarbuda@microsoft.com>
+Subject: [PATCH v6 3/9] hvf: arm: unbreak the x86 build
+Date: Sat,  7 Mar 2026 19:18:50 +0100
+Message-ID: <20260307181856.2209-4-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260307180330.75168-1-mohamed@unpredictable.fr>
-References: <20260307180330.75168-1-mohamed@unpredictable.fr>
+In-Reply-To: <20260307181856.2209-1-mohamed@unpredictable.fr>
+References: <20260307181856.2209-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=ULnQ3Sfy c=1 sm=1 tr=0 ts=69ac6896
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=5Chse3eIq3h0lgOaJ4gA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 3NZ3uJsnvmkrXTPepIezxGsVkDRv9ynS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE3MSBTYWx0ZWRfXwsFgiMLeBTvn
- I9Hw4Myg8ZI98fGqsqTPA3Ojc8fArN832NVQiXruXgHBUzHC9GYr2bIH55L1yENpTHF9euLZWXc
- bdqkQB8kOEmCycGLK4LZonzrVsYOurv3x6OJRstPDoSy2qPkbjR9yj5S8im5J89p3mDygwBkri4
- m3YN6NlMGmdbySoMK/C9Kw9ReAEykD7viLYdxyfDTx8Vojm33CyGCcVmG/+HiN6VtKMXtsacxDm
- GkQZT8u6ifpdSMXinYiZbVVmD4RZOAwpylSGbIpYCEnvhGRGpMZmFFAP0bsO+zs9LuIzCqX5+r4
- ipV4ANj84lz5V+oJgpvednyLnMcnnjTfROS54RO7g7Lbnebr884FbSLs0o1Jco=
-X-Proofpoint-GUID: 3NZ3uJsnvmkrXTPepIezxGsVkDRv9ynS
+X-Proofpoint-ORIG-GUID: NkWIX26e0DR0yA28MnmP5ckRbmLs94E0
+X-Proofpoint-GUID: NkWIX26e0DR0yA28MnmP5ckRbmLs94E0
+X-Authority-Info-Out: v=2.4 cv=Criys34D c=1 sm=1 tr=0 ts=69ac6c1b
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=_3_ydfWBwt0DpU-JqN4A:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE3NCBTYWx0ZWRfXy8gM+7DtM+gN
+ Rvkk32X2+xhkPSGKcivW2q5/04nejti8ZfiYRsp8PO6dE0XxSc0h72jhzpi/5jD4MRnmeiXVFY7
+ 69mSS5r+7nMrSj4RhvZ6xqhGG/uEJe60YHhZrgf76LxQR5CUEY+utEk32aqXDiMjestyHBOnlQc
+ x1f7/gBFaUAo0uyNzWMFReeTKRRH19AtLiMNZfNu0w5PFc5+0PC3Hshlylqda4v+HRpJgDPQ9W2
+ VLoPG6dLJ5uAxrLkUPI22LFB/phu+jbwdnRLpKciRC9fmCiq2hlFf4vJ47UrcKx68kloOAmVot0
+ DlCkkfL2n+mu/4SBaFOSGvDk+q+GJjHC5QvB0KsJDjV9LPFKTyxsnUa6HZB4x4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-07_06,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- clxscore=1030 bulkscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=916 suspectscore=0 spamscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603070171
-X-JNJ: AAAAAAABf8E5S53Yuh0Q9EC+aukOzswYyYa1Xu2RrCebRg2+5u3DfsUkbAu2Um6UfRnpfZuMeODCHynqCqcqWexKjAg+Up0c/lufcsV1c6r/1+ULyzNP+NgeXZgrdUbkX0scTkFb5rqyftfxYZJD6aFhi9x/C6rhu8bxuYD6I+onUqeRxl2BdqieAHaX/4uSgUz7QGuYNkuYwdIsFluje40wAz9dbegTu+x4wD5V/WB3Yezoc0yV5DYw3L+1Vcqq4O8zjRRo/WerAIps4eZns2maxH/6tFoU8DGqaN711/m2WaQ7S0PLUCsYAH/JrSIL5pkaF23ZRgQ1vMc79ZLRBWXc7CKh/J0yL9Jm0Q8iOoRHrRD5hp0VZL2yDQDY7I054Srqjogj2RdYj7vyWm4ur2J2sJPUgEu6L9gjuBKHbyVszHqzGSnauGwAbKM8+pcL5dwAsalKTTZWt9XxHXyac2ZRh/I0YS4ePoqYYMEnOqdiAQRVHgETncRymoshH/ZKbxR0Nyzny1QdkXEVFXx7Q5yfufjCcjcor75dLn7nkzyjIO+Um5CwzCd81DDB49rM8ymu1n3Wbe+M9OCNXjjI/mhWub6bPFYNs1tih95Wbc4JMkxwi1MZ14GWkqPnwd28v0E/TVdsQvr9EAnz3kQbYsCCzyVB2OUjhfB5sggpFUJaRi/LzURQytURHU9H0gOn8+wJzh1lvFo4XkXFTSmUKUv+G+VySlCBG86gmJUGChwYoW7waQ==
-Received-SPF: pass client-ip=57.103.68.171;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ phishscore=0 malwarescore=0 mlxscore=0 bulkscore=0 spamscore=0 adultscore=0
+ mlxlogscore=631 suspectscore=0 lowpriorityscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603070174
+X-JNJ: AAAAAAABsQLMYU8wn2LHNeyAagtTFGc6OO1EOZhx6JrVEzPEbBiztNjyR1AIUL2J3lmkrCom1wRWmcXQbfHlYRB7+qa0cGF2yka1UOpxrEsD7rOJ5KGFWC3vbJcJ3DeVTEYRB7Gamn5MWvtxt9KEqWhdnrzJaJCRhMQoTwxjzjFru7ACJuEAnPQkH0unwr0gO2FIQZduZijjd2C3T9nH+LWM1+cBMPJCqY+9wj1MKAHFhW8ZgUAtHTSoV4getb+ea+K/dARrCyGRvu9B4OR3Eq+TvXbmAcXVr4aOrWN3yq377vU24ifkvoAkfQJ8GsKpRUHghB1ZdluqPSN5ZDicuRbyP6KmRd5ilavtViGLJb4LvTKvnn5Ojr2rZf+XZMylW4oH8BLMHRpVXc0eAF8dQ9Xh50QptSEnmq7ae0sV8NFl87WikrhD4NTzwWZnRP3B7VJBSOxakeVudyHIWIK32QomSG1ei60i/0k5HOGmhZ+as1A6uS1OI49BkSN/QSjz9fpEjwVDZw1Ot32pQnXCgXq9jCjamW4yUA7cl0mWgYiQHeRBV9OxDusovuZHfC+dz5BdfMTkRsYiQLWJoZDIntqRNiHZv6VZfTIencFQLrSA8y5Jzq3yXxVJ812Ahagtv91VVKFmq1DDum90NT9cRFrp9XOmF7ZIiS60Lgk6D7ID/qYqvBJ34cnf+IM7/s/J9V5QbaUcPadsEf0C313Xow/imAi22F3D6Duuem1MTdHoAkktyNaxoJaoqEDoy3rRlJBY7xgYDkyh
+Received-SPF: pass client-ip=57.103.84.118;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -98,38 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/virt.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+We don't really have any great choices here, so use the __aarch64__ define to unbreak the x86 build.
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 90769936d0..bced9f67f4 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2393,13 +2393,20 @@ static void machvirt_init(MachineState *machine)
-         exit(1);
-     }
+Once the CI moves away from macOS 15.1 SDK to... 15.2 even we can get rid of these SME stubs horrible hacks.
+
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr
+---
+ target/arm/hvf_arm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
+index 6b1c3b9792..8029d48caf 100644
+--- a/target/arm/hvf_arm.h
++++ b/target/arm/hvf_arm.h
+@@ -27,7 +27,7 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
+  * headers are not available until we raise our minimum macOS version.
+  */
+ #ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
+-  #if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200)
++  #if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) && defined(__aarch64__)
+     #include "system/hvf_int.h"
  
--    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
-+    if (vms->virt && !kvm_enabled() && !tcg_enabled()
-+       && !hvf_enabled() && !qtest_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "Virtualization extensions to the guest CPU",
-                      current_accel_name());
-         exit(1);
-     }
- 
-+    if (vms->virt && hvf_enabled() && !hvf_irqchip_in_kernel()) {
-+        error_report("mach-virt: For HVF and Virtualization extensions "
-+                     "only kernel-irqchip=on is currently supported");
-+        exit(1);
-+    }
-+
-     if (vms->mte && hvf_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "MTE to the guest CPU",
+     static inline bool hvf_arm_sme2_supported(void)
 -- 
 2.50.1 (Apple Git-155)
 
