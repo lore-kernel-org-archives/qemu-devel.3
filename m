@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89DFFF55104
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54315F55102
 	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyxi7-00087V-SX; Sat, 07 Mar 2026 14:53:15 -0500
+	id 1vyxhp-00082x-EI; Sat, 07 Mar 2026 14:52:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi6-00086Y-7T
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:14 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxho-00082a-6A
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:52:56 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi4-0008VM-FV
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:13 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhm-0008U0-Mf
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:52:55 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 9515E4448E;
- Sat,  7 Mar 2026 19:53:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9BDC19422;
- Sat,  7 Mar 2026 19:53:09 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 40B5B43D7C;
+ Sat,  7 Mar 2026 19:52:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE060C19423;
+ Sat,  7 Mar 2026 19:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772913191;
- bh=OOKfroUsa/NmmKFDrQXJY1cwDi1GkvGCyavkONtRuAE=;
+ s=k20201202; t=1772913173;
+ bh=QIdUQ5ojIh6pUED378YIZDxyX5WSDR8KZ+KkV6/pMI4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nZ5QELcoMuG41M0Ort6CBbgWBlrPLDffM800Pa/YGNHxMqHuaiF6S1uvEq7kfoAII
- 4HpywoSmkdPuBh1Qna0XgF96VrlqLyhKjlQwGy30+WidGvYBg9wGi+5mZ39uqkHAwd
- 7qhdF28Ml9WH8Ra3CeXA9b00Fmy0I6FFuAu+AcwMQ2xolyyJjT8Rs7TBOWwQcxLmuX
- XrPcVEUGQXRNSkQvxQOe5o8Zt46ixQmsgNLKO/bYQHWuNOWvAzl5M7EnP5+52ZNIY9
- x8jPazCyDgesdjRmSLPGslt3DrtzvlTHQh6B+gE9BMtKnt8Cc0tEHbq2u+uj4XYhzM
- jyLG1zyBmdFzA==
+ b=b8hNLXWXcm8LN48N+6JsdNpX7zcmG6+hnyT8GZHMbckIxPTx1r+2F9zHLW196aMp8
+ c8+ElyJEKwNcysqF5jHA12tf1jPvNpGdZTJqx4CPFH4WbPWyfM97CWBDQ8brMyjCbR
+ sQRaPnVee8fGiw46fjxNpIJYtMduCeVIcqCsWW9zN5dmaV0hlBTYKqNYh9EZ63b9xk
+ 28JuuK/7YWGNKX+0l8poFhpCilJw1/kI8sYbPobrZehiDS7hoRdXgqKA2TReUmRtEO
+ e0LBJJe65Q6HJu+j0M4FRMOVwdM7s2oMNL328WVMLOCQ99fsInX00+c9Kn40LnHiTx
+ O9y6PbGg2HLzg==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -42,9 +42,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 09/12] bsd-user: Deal with mmap where start > reserved_va
-Date: Sat,  7 Mar 2026 20:52:40 +0100
-Message-ID: <20260307195243.8813-10-deller@kernel.org>
+Subject: [PATCH 02/12] hw/char: Drop disable property of Diva GSP card
+Date: Sat,  7 Mar 2026 20:52:33 +0100
+Message-ID: <20260307195243.8813-3-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307195243.8813-1-deller@kernel.org>
 References: <20260307195243.8813-1-deller@kernel.org>
@@ -73,39 +73,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bingwu Zhang <xtex@astrafall.org>
+From: Helge Deller <deller@gmx.de>
 
-Fixes: f12294b5bd21 ("bsd-user: Use page_find_range_empty for mmap_find_vma_reserved")
-Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+The "disable" property is not used, so drop it.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- bsd-user/mmap.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ hw/char/diva-gsp.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 24ba1728eb..fe77eceb48 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -258,12 +258,14 @@ abi_ulong mmap_next_start = TASK_UNMAPPED_BASE;
- static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
-                                         abi_ulong alignment)
- {
--    abi_ulong ret;
-+    abi_ulong ret = -1;
+diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+index 280d0413c6..2be5183216 100644
+--- a/hw/char/diva-gsp.c
++++ b/hw/char/diva-gsp.c
+@@ -51,7 +51,6 @@ typedef struct PCIDivaSerialState {
+     SerialState  state[PCI_SERIAL_MAX_PORTS];
+     uint32_t     level[PCI_SERIAL_MAX_PORTS];
+     qemu_irq     *irqs;
+-    bool         disable;
+ } PCIDivaSerialState;
  
--    ret = page_find_range_empty(start, reserved_va, size, alignment);
-+    if (start <= reserved_va) {
-+        ret = page_find_range_empty(start, reserved_va, size, alignment);
-+    }
-     if (ret == -1 && start > TARGET_PAGE_SIZE) {
-         /* Restart at the beginning of the address space. */
--        ret = page_find_range_empty(TARGET_PAGE_SIZE, start - 1,
-+        ret = page_find_range_empty(TARGET_PAGE_SIZE, MIN(start - 1, reserved_va),
-                                     size, alignment);
+ static void diva_pci_exit(PCIDevice *dev)
+@@ -159,20 +158,18 @@ static void diva_pci_realize(PCIDevice *dev, Error **errp)
+ 
+ static const VMStateDescription vmstate_pci_diva = {
+     .name = "pci-diva-serial",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_PCI_DEVICE(dev, PCIDivaSerialState),
+         VMSTATE_STRUCT_ARRAY(state, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS,
+                              0, vmstate_serial, SerialState),
+         VMSTATE_UINT32_ARRAY(level, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS),
+-        VMSTATE_BOOL(disable, PCIDivaSerialState),
+         VMSTATE_END_OF_LIST()
      }
+ };
  
+ static const Property diva_serial_properties[] = {
+-    DEFINE_PROP_BOOL("disable",  PCIDivaSerialState, disable, false),
+     DEFINE_PROP_CHR("chardev1",  PCIDivaSerialState, state[0].chr),
+     DEFINE_PROP_CHR("chardev2",  PCIDivaSerialState, state[1].chr),
+     DEFINE_PROP_CHR("chardev3",  PCIDivaSerialState, state[2].chr),
 -- 
 2.53.0
 
