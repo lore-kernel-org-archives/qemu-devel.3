@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7986F55104
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C7C8F55102
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:54:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyxi1-00085h-VT; Sat, 07 Mar 2026 14:53:09 -0500
+	id 1vyxhl-000820-EM; Sat, 07 Mar 2026 14:52:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi0-00085Z-MD
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:08 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhj-00081e-5b
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:52:51 -0500
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhz-0008Uw-81
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:08 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhh-0008Tf-MD
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:52:50 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 88D0B600B0;
- Sat,  7 Mar 2026 19:53:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139D6C19423;
- Sat,  7 Mar 2026 19:53:03 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 31C2560051;
+ Sat,  7 Mar 2026 19:52:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A39C19422;
+ Sat,  7 Mar 2026 19:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772913186;
- bh=lUwAO9km4/S+zD0o1NtjbvrV7Uoam/HK5Wb+d30GVks=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=kgAauUvUrYW4MARgBrOrN6uHfpL0HlyWskVlYHRqQ/0qN/TR2YXTV4hnbRfDC+x7i
- gt7WdDjAQ1pySM26+lJwyo53WhS6zMBGPD7vLzkssQvJs9pTF+Bsz7ZXprILr/qfUp
- ogvoeRWwB25NnjDCZkDRZ1jv1OqKhgnp7geO1i53faLePif0X/RU8tMrh65u2oNc4N
- vk68VuLv4YbuDr8IxRf7VLCG7bZYDgEwsoChAPnlSWWz4zESs5MracPL40xmiZbsY4
- x2Q6DjeADWj2lRMceiiWgYmW69d/faBlkt/M9pRIH+1Sux0ScnIJNusVkh8TH7o8bw
- j3IMTLepDtPFg==
+ s=k20201202; t=1772913167;
+ bh=fe9YyMLWT/fL/F+s+3fYcOMXRjETGkd6+MoXdGeL0SI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=e29v8L0KJLKKZGKkEi5jzY19CY5W8CmPqgni/Xvog1ow508wuWj1xsMt2Ybgyo0Ns
+ aMOUGjQa/woihgzgaUIY2iRa870vG1KFH6/rYrhIuTw7UAgc2uDVSq/P8Ri9F6SL5F
+ 5DG5+pD2AL4BdwmZCsPBMUVS1CLvR6FcgXjZffksEugN+2OynDx4p/sTRN076uH4Cs
+ 5Gx7cEoqbId8QCseG1JbYa+UrqyrM659eNiJz4bmaHHlbaBQqDYNaP2GQIFNVDCCtu
+ FwMGi5kSS5ojNC7+5lNmvQGWEn0dCGSuQuDhHhphJi40qa/SQImCaTer2ZILFa+0c/
+ zIVs8g7WFzw5A==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -42,13 +42,12 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 07/12] linux-user: fix TIOCGSID ioctl
-Date: Sat,  7 Mar 2026 20:52:38 +0100
-Message-ID: <20260307195243.8813-8-deller@kernel.org>
+Subject: [PATCH 00/12] linux-user and hppa patches
+Date: Sat,  7 Mar 2026 20:52:31 +0100
+Message-ID: <20260307195243.8813-1-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260307195243.8813-1-deller@kernel.org>
-References: <20260307195243.8813-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
  helo=tor.source.kernel.org
@@ -74,30 +73,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andreas Schwab <schwab@suse.de>
+From: Helge Deller <deller@gmx.de>
 
-TIOCGSID is IOC_R, not IOC_W.
+Two patches which prevent memleaks when using Diva PCI
+cards, all other patches are for linux-user emulation.
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/ioctls.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Please check...
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 6ecfe6306e..5b7d00e92f 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -26,7 +26,7 @@
-      IOCTL(TIOCSCTTY, 0, TYPE_INT)
-      IOCTL(TIOCGPGRP, IOC_R, MK_PTR(TYPE_INT))
-      IOCTL(TIOCSPGRP, IOC_W, MK_PTR(TYPE_INT))
--     IOCTL(TIOCGSID, IOC_W, MK_PTR(TYPE_INT))
-+     IOCTL(TIOCGSID, IOC_R, MK_PTR(TYPE_INT))
-      IOCTL(TIOCOUTQ, IOC_R, MK_PTR(TYPE_INT))
-      IOCTL(TIOCSTI, IOC_W, MK_PTR(TYPE_INT))
-      IOCTL(TIOCMGET, IOC_R, MK_PTR(TYPE_INT))
+Helge
+
+Andreas Schwab (3):
+  linux-user: properly check flags in openat2
+  linux-user: fix matching ioctl numbers in print_ioctl
+  linux-user: fix TIOCGSID ioctl
+
+Bingwu Zhang (4):
+  linux-user: Deal with mmap where start > reserved_va
+  bsd-user: Deal with mmap where start > reserved_va
+  tests/tcg/multiarch/test-mmap: Print more details
+  tests/tcg/multiarch/test-mmap: Check mmaps beyond reserved_va
+
+Frank Chang (1):
+  linux-user: Check if RESOLVE_CACHED flag is defined before using it
+
+Helge Deller (3):
+  hw/hppa: Avoid leaking a diva-gsp device
+  hw/char: Drop disable property of Diva GSP card
+  linux-user: Improve formatting for mremap()
+
+Jean-Christian CÎRSTEA (1):
+  linux-user/strace: fix printing of file offsets
+
+ bsd-user/mmap.c                 |  8 ++++--
+ hw/char/diva-gsp.c              |  7 ++---
+ hw/hppa/machine.c               | 19 ++++++------
+ linux-user/ioctls.h             |  2 +-
+ linux-user/mmap.c               |  9 ++++--
+ linux-user/strace.c             | 51 +++++++++++++++++++++++----------
+ linux-user/strace.list          |  2 +-
+ linux-user/syscall.c            |  4 +++
+ tests/tcg/multiarch/test-mmap.c | 27 +++++++++++++++--
+ 9 files changed, 87 insertions(+), 42 deletions(-)
+
 -- 
 2.53.0
 
