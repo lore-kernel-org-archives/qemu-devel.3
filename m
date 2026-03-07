@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FECF55121
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BABDF55124
 	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 23:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz0iz-0006he-WE; Sat, 07 Mar 2026 18:06:22 -0500
+	id 1vz0iy-0006gc-DW; Sat, 07 Mar 2026 18:06:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vz0iq-0006a9-TD
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:14 -0500
+ id 1vz0im-0006ZM-Su
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:08 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vz0ip-0002y1-52
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:12 -0500
+ id 1vz0ik-0002wQ-0U
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:08 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EFDCA596DA7;
- Sun, 08 Mar 2026 00:06:09 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id BAAE7596DA1;
+ Sun, 08 Mar 2026 00:06:01 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Keg7WeAmYCpF; Sun,  8 Mar 2026 00:06:08 +0100 (CET)
+ id 2vgCOWR5VUUc; Sun,  8 Mar 2026 00:05:59 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 02E7B596D94; Sun, 08 Mar 2026 00:06:08 +0100 (CET)
-Message-ID: <7c5a31fc2202e6927437ed57cb9ce08a224f2a50.1772924151.git.balaton@eik.bme.hu>
+ id 99EB5596A3F; Sun, 08 Mar 2026 00:05:59 +0100 (CET)
+Message-ID: <819df754e359b024bc9bf8f971ecd26816552559.1772924151.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1772924151.git.balaton@eik.bme.hu>
 References: <cover.1772924151.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v10 9/9] memory: Factor out common ram ptr initialization
+Subject: [PATCH v10 1/9] hw/display/{cg3.tcx}: Do not use
+ memory_region_init_rom_nomigrate()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -44,7 +45,7 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 08 Mar 2026 00:06:08 +0100 (CET)
+Date: Sun, 08 Mar 2026 00:05:59 +0100 (CET)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -67,61 +68,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce internal helper function to remove duplicated code from
-different memory_region_init_ram_*ptr functions.
+Use memory_region_init_rom() instead which is what other devices do.
+This breaks migration but these devices are only used by sparc Sun
+machines which have no migration compatibility guarantee.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- system/memory.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ hw/display/cg3.c | 5 ++---
+ hw/display/tcx.c | 5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index 2cda814bd6..f1db72eb42 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1649,31 +1649,30 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
- }
- #endif
+diff --git a/hw/display/cg3.c b/hw/display/cg3.c
+index 568d6048a6..61bdb0552e 100644
+--- a/hw/display/cg3.c
++++ b/hw/display/cg3.c
+@@ -282,8 +282,8 @@ static void cg3_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     CG3State *s = CG3(obj);
  
-+static void memory_region_set_ram_ptr(MemoryRegion *mr, uint64_t size,
-+                                      void *ptr)
-+{
-+    /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
-+    assert(ptr != NULL);
-+    RAMBlock *rb = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-+    memory_region_set_ram_block(mr, rb);
-+}
-+
- void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
-                                 const char *name, uint64_t size,
-                                 void *ptr)
- {
--    RAMBlock *rb;
--
-     memory_region_init(mr, owner, name, size);
--    /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
--    assert(ptr != NULL);
--    rb = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
--    memory_region_set_ram_block(mr, rb);
-+    memory_region_set_ram_ptr(mr, size, ptr);
- }
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "cg3.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_rom(&s->rom, obj, "cg3.prom", FCODE_MAX_ROM_SIZE,
++                           &error_fatal);
+     sysbus_init_mmio(sbd, &s->rom);
  
- void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-                                        const char *name, uint64_t size,
-                                        void *ptr)
- {
--    RAMBlock *rb;
--
-     memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
-     mr->ram_device = true;
--    /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
--    assert(ptr != NULL);
--    rb = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
--    memory_region_set_ram_block(mr, rb);
-+    memory_region_set_ram_ptr(mr, size, ptr);
- }
+     memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
+@@ -299,7 +299,6 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
+     char *fcode_filename;
  
- void memory_region_init_alias(MemoryRegion *mr, Object *owner,
+     /* FCode ROM */
+-    vmstate_register_ram_global(&s->rom);
+     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, CG3_ROM_FILE);
+     if (fcode_filename) {
+         ret = load_image_mr(fcode_filename, &s->rom);
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 36cad82abd..16114b9bb8 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -756,8 +756,8 @@ static void tcx_initfn(Object *obj)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+     TCXState *s = TCX(obj);
+ 
+-    memory_region_init_rom_nomigrate(&s->rom, obj, "tcx.prom",
+-                                     FCODE_MAX_ROM_SIZE, &error_fatal);
++    memory_region_init_rom(&s->rom, obj, "tcx.prom", FCODE_MAX_ROM_SIZE,
++                           &error_fatal);
+     sysbus_init_mmio(sbd, &s->rom);
+ 
+     /* 2/STIP : Stippler */
+@@ -822,7 +822,6 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
+     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
+ 
+     /* 10/ROM : FCode ROM */
+-    vmstate_register_ram_global(&s->rom);
+     fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, TCX_ROM_FILE);
+     if (fcode_filename) {
+         ret = load_image_mr(fcode_filename, &s->rom);
 -- 
 2.41.3
 
