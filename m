@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C3AF55104
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B36F55102
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyxi0-00085Y-JA; Sat, 07 Mar 2026 14:53:08 -0500
+	id 1vyxiC-00088F-DX; Sat, 07 Mar 2026 14:53:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhy-000851-G3
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:06 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxiB-000887-Dh
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:19 -0500
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhx-0008Um-0u
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:06 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxiA-0008Vg-0F
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:19 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id B8297419DB;
- Sat,  7 Mar 2026 19:53:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70771C19423;
- Sat,  7 Mar 2026 19:53:01 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id D035142148;
+ Sat,  7 Mar 2026 19:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACCDC19422;
+ Sat,  7 Mar 2026 19:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772913183;
- bh=yQjfyq4uMUjaesM0EhyZ3X0IrXyyB6Sp6uAxR9zq4is=;
+ s=k20201202; t=1772913196;
+ bh=fGNhZhGwYx5O0WsKa+ya31k08B1YR0SmQJGqiNNdM0g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=nLe/FlHBJfO649QuXOXXPGqzRwOH3LxaqrP34Q2ci2NK28v7JNq6zDkPxrWw7o95K
- 6YKsJ+6K/HKTUBqKMkzomHrfUKUbk0jL7SMPnMcCzRakUl9ZSktUvyVI/ONGi4czKV
- 4YHxEpXJ7P65CxITYlNa9xF1SZPHxKej2kBBmwhVd2gVdEY8LnGGdaa+X/r9ffTEzN
- GAqvYDiMODU4NK7PI7rU+LYNon8WgqRe9fvzkLFZrR6r71Jdyv7vph6Vk/aMYgDW25
- fmUlrrUszkJMfRyDYEAoqaCjmYCQ0Uhy8dyJ7mNgZEs8z7KW+Fsq4WG0/MihbNT5t1
- ejbr38DcVufAA==
+ b=gHJTaNqgrfZLtsL9dcqL6eiwgnaRB1WujCx8lyXeP9vFCdg2HjlfvNzhAEAeQ1uZC
+ +B32vU6y/fw+5e/35PQ4SJUdgaI1n4nKqudUVud3B4uB8sR3Tf6fy54gIY7TIzpeo6
+ GjnTEpBZYix83qv7RW7rKTdmoR6xBvYnd8HoBD/FWPN8WIFDqWH6H3ZpkhdeDVA3wW
+ l8N0eBkdFX5WB4cKkjpkKcmrSgSUvGo46o+LK4Zhr9GdXNvL+uOcnot0tgW6UAx3re
+ DfXWNSFUJGNjnaZVTeREjds4U+zLaZaa/YRG/O2ZBAcgRTtDxAbABpZupIU9d7yIHX
+ Rmg8KtCEqRMPw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -42,9 +42,10 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 06/12] linux-user: fix matching ioctl numbers in print_ioctl
-Date: Sat,  7 Mar 2026 20:52:37 +0100
-Message-ID: <20260307195243.8813-7-deller@kernel.org>
+Subject: [PATCH 11/12] tests/tcg/multiarch/test-mmap: Check mmaps beyond
+ reserved_va
+Date: Sat,  7 Mar 2026 20:52:42 +0100
+Message-ID: <20260307195243.8813-12-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307195243.8813-1-deller@kernel.org>
 References: <20260307195243.8813-1-deller@kernel.org>
@@ -74,47 +75,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andreas Schwab <schwab@suse.de>
+From: Bingwu Zhang <xtex@astrafall.org>
 
-target_cmd in struct IOCTLEntry is a signed int.  Make sure the ioctl cmd
-argument in the syscall is converted to int when matching, so that it
-works correctly with an ioctl cmd that has bit 31 set.
+Unfixed mmap calls where start > reserved_va or the max guest addr
+should have a valid result.
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/strace.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tests/tcg/multiarch/test-mmap.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 02d610a7f8..2cbaf94c89 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1021,12 +1021,12 @@ print_syscall_ret_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-         int target_size;
+diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
+index 88f7a04101..2bfa529127 100644
+--- a/tests/tcg/multiarch/test-mmap.c
++++ b/tests/tcg/multiarch/test-mmap.c
+@@ -497,6 +497,20 @@ void check_shrink_mmaps(void)
+     fprintf(stdout, " passed\n");
+ }
  
-         for (ie = ioctl_entries; ie->target_cmd != 0; ie++) {
--            if (ie->target_cmd == arg1) {
-+            if (ie->target_cmd == (int)arg1) {
-                 break;
-             }
-         }
++void check_mmaps_beyond_addr_space(void)
++{
++    unsigned char *addr;
++    addr = mmap((void *)(-(unsigned long)pagesize * 10), pagesize * 2,
++                PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d", __func__, (void *)addr, errno);
++    fail_unless(addr != MAP_FAILED);
++
++    memcpy(dummybuf, addr, 2 * pagesize);
++    munmap(addr, 2 * pagesize);
++
++    fprintf(stdout, " passed\n");
++}
++
+ int main(int argc, char **argv)
+ {
+ 	char tempname[] = "/tmp/.cmmapXXXXXX";
+@@ -540,6 +554,7 @@ int main(int argc, char **argv)
+ 	check_file_unfixed_eof_mmaps();
+ 	check_invalid_mmaps();
+     check_shrink_mmaps();
++    check_mmaps_beyond_addr_space();
  
--        if (ie->target_cmd == arg1 &&
-+        if (ie->target_cmd == (int)arg1 &&
-            (ie->access == IOC_R || ie->access == IOC_RW)) {
-             arg_type = ie->arg_type;
-             qemu_log(" (");
-@@ -4359,7 +4359,7 @@ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-     int target_size;
- 
-     for (ie = ioctl_entries; ie->target_cmd != 0; ie++) {
--        if (ie->target_cmd == arg1) {
-+        if (ie->target_cmd == (int)arg1) {
-             break;
-         }
-     }
+ 	/* Fails at the moment.  */
+ 	/* check_aligned_anonymous_fixed_mmaps_collide_with_host(); */
 -- 
 2.53.0
 
