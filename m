@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C629FCB602
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 090CBF55102
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytxm-0003fT-3N; Sat, 07 Mar 2026 10:53:10 -0500
+	id 1vyu2L-00053q-Vh; Sat, 07 Mar 2026 10:57:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytxl-0003fC-7a
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:53:09 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyu2I-00053X-6T
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:57:51 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytxj-0003lR-LS
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:53:08 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48534e9076fso29345e9.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:53:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyu2G-00049T-Gi
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:57:49 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4852fdb36a8so5666345e9.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:57:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772898786; x=1773503586; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772899067; x=1773503867; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xsr7G48kO9RxsxoKWdMYMsQcdxFbvaBe7c3qmkwQQs8=;
- b=emVJ3VP+pj0qbgzBYZRQhAM7bDdMtCdNAFruGk8asTD8PJhEnRfZGVG4FMpJl6jFWF
- jXoj5Qb8AxpSu58R7d6S0dkePgRaM3zPv16jQgVNIpvEnPesJKfVZxOc/nM+nqS+qn3Z
- TVQ7TpUpWlPoPP9As5P6wZotIzehHNwVkB5p9ItSAsWWbn0gJUdhKGE10GysRLj6i5cR
- CBbGs0UkGAiq/3/H+kXq2flBPPC24BMJ3l59kr9dbkaXSGJ5oxOsz7NTCDlkbt+Gpo5e
- n0v3ytN4kU1jXA1p20+9MtuDIHvQsrQtE6joPD4hXujvXGiALQqFeIaPVGNYTg748hAF
- 1H3A==
+ bh=dlSK1j/VjooLvCJuHt+EHfwQhEZiRMPePR057knV1iM=;
+ b=WBK11m40kN0MTP3Yn92NMpVzXo6SEMA9BupUnHq3DdnI9ejyHIwkHpvscOF7H/O3Mf
+ 5AAKj2g5WhuDgc6axg5A040cg5yHc66SNs7/tsAFd3YUn/4nR0RIT0a7ozso5cSh9bcc
+ dKplk80RFl0cd76e12Bw1lNbyoD1BrP0vrc1/uJ8i4hGK73wtFNaxf0G3FcFSjvb/vc0
+ YHTh0t8xGamddpFd1jTixA5HsbLlWcLWZYXPiebk5Ga600bxx6Sb7RISzNlTIi2oLbPo
+ Agpk0C+HURr52IaDowhtVhU0dd/qIz3slZ/T7pjVzQVplkfiaUOHnE3Al+ye0JXvZFJ+
+ XoOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772898786; x=1773503586;
+ d=1e100.net; s=20230601; t=1772899067; x=1773503867;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xsr7G48kO9RxsxoKWdMYMsQcdxFbvaBe7c3qmkwQQs8=;
- b=tKAsC+gJVivO/9D6Rmqlhcaky5Kc9whKNdz9x1WzJxPBkt5HNDdv7Lx0dn3H9r+cVL
- jnMfKl6LZ8+s2CA7GA7TBVG/AamjdNV0ZntDeTyq/nrBjYA3c5UBr+K2FO7eEY+iOPYt
- v1W+he6UdAI0fjlTZddIrCRFntw1R7gYfeMvk7b3ZxJEjGl6dTzVm7waIHcTxqFM2HXk
- sn/D/MH6MZ/JOiRwH6yWt6D8aedQ+8/k26cK1dPAUSwhWzv52ImEMMuevcDdiuRM3jxr
- I5VZ1rm5CLcKW1UpDaFMq3JKVB08SwTjW7EtOmRY3HedSmjpFOEv0tsgFLqfjIORhlNr
- wZ6Q==
+ bh=dlSK1j/VjooLvCJuHt+EHfwQhEZiRMPePR057knV1iM=;
+ b=PohZziVzgl3xQRubnWtYSgfmt4PxAtdYooF6D9iRvP0CBxMF1MlkW/NIS744gcpSuE
+ hXfXQUAZuHOLoy2lZ7UhrBZP6ModZoa5zAVyCYosqBfRrU07y01y/tQPmOoAruAbXTwO
+ AK9KsX1GKH7+Ur1rVrz3GZWpGdcBCCBuszIG7wOyDoHAzOvGqpWBeQEde5ZMJNHO/xh0
+ BHbfyOkWqu6g62lVBg6/zZCZlquWMXXp7c/Pw19ypti7PsGqtTpN1YiSFroWu8N4l5oV
+ J3bMmXwQDKSIyu4N0Ouk6n3HOk9r8jEwjxTHrgdXJpLG0mjcEOM06VX0rwvd9fjMzIp8
+ 3Ljw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsdWmyL76CHIqWfab4rK/B3vsXflgbMVUn5xs3eBxYjHKRMmbZaHE7M2mj5hkF9dtw3dyOHDOtkVXL@nongnu.org
-X-Gm-Message-State: AOJu0YwNI0+88FL6+IalwZqpzMhoZaf8pk1LEinBz4NU/VmRu/VGTHNl
- //4CtSzXH7WhOkXbxwStIZ/K2dneWw2AqARZ/npbvx0tkj1jGjiKxRAxaoVZdBRagdo=
-X-Gm-Gg: ATEYQzxVlUQrLfE0/7v5/jpa/0iNr1ZWZZ4AnyNpiu7e/eQFvXbLT9cFY4xVgrQ9xvr
- KkNN1QK9HvZT93L6WTJrXfh7zQEr+lowodUoFz8JKk2QHo4+Tce+hImhWQqoV//ARw6xVGxTAqg
- PQMv/a5gIp4MLfT8YUjLbRxk4y6aTUGvz0TCVA358juEQXh9Hl5EXfSefv8L47DSGKQpyndBtZz
- llPEbWGa0d2I6qkHOlizlv9zKF3+efjmYvUF2JFebRuDdB0aIO3SWBhnAXd9sG1vEJ4PSEMgO5D
- owFnthMfitSOFqb/BXSh6QsLzSrDgEdJ51Zu8n0Fp00MOlCyeOEYxU3qa5z8mtZvVtiS3FgFSLm
- 1OOkZt59TsL8e3B4LN2HSB6vxkf3+V4vUkBAduEchL8V9SFRLeDHfKU1NbvDGiXaN69fnkocT2f
- dOElJSPfL6yyZJ2cTrbmVLG51dhnwxgL3ryqOfo+tUvXzzYgv7sYp5nmJ3mXSYi7ff+w==
-X-Received: by 2002:a05:600c:c16d:b0:480:39ad:3b7c with SMTP id
- 5b1f17b1804b1-485269582fbmr106990085e9.16.1772898785629; 
- Sat, 07 Mar 2026 07:53:05 -0800 (PST)
+ AJvYcCW8Xhl16aWSAwG6GuO0mxulEGeBru6R4qyGLc2xT3wY3j+jnpMbG3sEtS7RNoNUqW0BmaHFkUgX3CR7@nongnu.org
+X-Gm-Message-State: AOJu0Ywgs4HnYuFnfGml4iFV7BLdL9FoDJtsZ5pzncbsDfkOKcqjSIsS
+ cW6t1X7Vyj35QvJ6KNxsvNbMuC8zpzmwUhxIcp+7RZunlyjLEvl/VpXON33ePDG2UE0=
+X-Gm-Gg: ATEYQzwN+Pfw7L3wPl8+OA8exh82IH7gvdBkLaZuqNhkC4V6JFueiKLC94MhDWVxGxI
+ lU/aJYdNikRuc7vhxfkgImE3BVui0AGpYb+FQ0kaTmaTkru1pWS/y4QtKHtsyip68sDj75WgqWb
+ wzYnfpM1OJZjaqAPFpdkt+797yuynNUTYUg8mdv7opCVQjw4kahY5zntBxXAIOc9vu46r0Enovy
+ GVjokRUrrWwIkYer1EbCKH88FVQetZ/VYHoVnT20YVwcNE2FqWRzcTQNgFPktrQWqApFJyUxcW8
+ ilM7UWoB0UO9dFWoVhwQ/An16TfvBWQSU0G9LwhyqEUiaCV4p/5L08fi67kaXPkFUr+MCQKYNUf
+ PwnDyOUoape8POAdoJzHXETKLu94z6q4bh+DIsFAXt2dYWNg9QMpu++hoCiaPckaBwSqM3oZlru
+ KMSI2vZ3D+5NIUI4q5fIweWEq0j6NGavZJ5HkDyizjbvE8MzFKT1yFF/4kthe7W73NNg==
+X-Received: by 2002:a05:600c:198f:b0:483:6ff1:18b with SMTP id
+ 5b1f17b1804b1-485268bd6cbmr99614835e9.0.1772899066745; 
+ Sat, 07 Mar 2026 07:57:46 -0800 (PST)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb4257csm315745455e9.15.2026.03.07.07.53.03
+ ffacd0b85a97d-439dae56300sm11518010f8f.37.2026.03.07.07.57.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Mar 2026 07:53:04 -0800 (PST)
-Message-ID: <ef4e4171-e4fe-43a9-91c5-a720ba0612d3@linaro.org>
-Date: Sat, 7 Mar 2026 16:53:03 +0100
+ Sat, 07 Mar 2026 07:57:46 -0800 (PST)
+Message-ID: <17294e54-cce8-43e1-863e-e1b2583763ad@linaro.org>
+Date: Sat, 7 Mar 2026 16:57:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/9] whpx: make Hyper-V enlightenments configurable
+Subject: Re: [PATCH 2/2] hw: Make qdev_get_printable_name() consistently
+ return freeable string
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Wei Liu <wei.liu@kernel.org>, Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260307154104.84567-1-mohamed@unpredictable.fr>
- <20260307154104.84567-8-mohamed@unpredictable.fr>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Alessandro Ratti <alessandro@0x65c.net>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260307155046.3940197-1-peter.maydell@linaro.org>
+ <20260307155046.3940197-3-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260307154104.84567-8-mohamed@unpredictable.fr>
+In-Reply-To: <20260307155046.3940197-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,93 +107,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 16:41, Mohamed Mediouni wrote:
-> Have them be a machine option instead of a CPU one, to have something available, even if not ideal...
+On 7/3/26 16:50, Peter Maydell wrote:
+> The current implementation of qdev_get_printable_name() sometimes
+> returns a string that must not be freed (vdev->id or the fixed
+> fallback string "<unknown device>" and sometimes returns a string
+> that must be freed (the return value of qdev_get_dev_path()). This
+> forces callers to leak the string in the "must be freed" case.
 > 
-> The existing Hyper-V enlightenments configuration mechanism is part of per-CPU configuration, which happens too late for this.
+> Make the function consistent that it always returns a string that
+> the caller must free, and make the three callsites free it.
 > 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> This fixes leaks like this that show up when running "make check"
+> with the address sanitizer enabled:
+> 
+> Direct leak of 13 byte(s) in 1 object(s) allocated from:
+>      #0 0x5561de21f293 in malloc (/home/pm215/qemu/build/san/qemu-system-i386+0x1a2d293) (BuildId: 6d6fad7130fd5c8dbbc03401df554f68b8034936)
+>      #1 0x767ad7a82ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x5561deaf34f2 in pcibus_get_dev_path /home/pm215/qemu/build/san/../../hw/pci/pci.c:2792:12
+>      #3 0x5561df9d8830 in qdev_get_printable_name /home/pm215/qemu/build/san/../../hw/core/qdev.c:431:24
+>      #4 0x5561deebdca2 in virtio_init_region_cache /home/pm215/qemu/build/san/../../hw/virtio/virtio.c:298:17
+>      #5 0x5561df05f842 in memory_region_write_accessor /home/pm215/qemu/build/san/../../system/memory.c:491:5
+>      #6 0x5561df05ed1b in access_with_adjusted_size /home/pm215/qemu/build/san/../../system/memory.c:567:18
+>      #7 0x5561df05e3fa in memory_region_dispatch_write /home/pm215/qemu/build/san/../../system/memory.c
+>      #8 0x5561df0aa805 in address_space_stm_internal /home/pm215/qemu/build/san/../../system/memory_ldst.c.inc:85:13
+>      #9 0x5561df0bcad3 in qtest_process_command /home/pm215/qemu/build/san/../../system/qtest.c:480:13
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: e209d4d7a31b9 ("virtio: improve virtqueue mapping error messages")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   accel/whpx/whpx-common.c       | 44 ++++++++++++++++++++++++++++++++++
->   include/system/whpx-internal.h |  4 ++++
->   target/i386/whpx/whpx-all.c    | 20 +++++++++-------
->   3 files changed, 59 insertions(+), 9 deletions(-)
-> 
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 4863fc8663..dae9ff0800 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -25,6 +25,7 @@
->   #include "qapi/qapi-visit-common.h"
->   #include "migration/blocker.h"
->   #include "accel/accel-cpu-target.h"
-> +#include "qemu/target-info.h"
+>   hw/core/qdev.c         |  4 ++--
+>   hw/virtio/virtio.c     | 12 +++++++++---
+>   include/hw/core/qdev.h | 16 ++++++++++++++++
+>   3 files changed, 27 insertions(+), 5 deletions(-)
 
-I suppose you meant "qapi/qapi-types-common.h"?
-
->   #include <winerror.h>
->   
->   #include "system/whpx-internal.h"
-> @@ -470,6 +471,41 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
->       }
->   }
->   
-> +static void whpx_set_hyperv(Object *obj, Visitor *v,
-> +                                   const char *name, void *opaque,
-> +                                   Error **errp)
-> +{
-> +    struct whpx_state *whpx = &whpx_global;
-> +    OnOffAuto mode;
-> +
-> +    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
-> +        return;
-> +    }
-> +
-> +    switch (mode) {
-> +    case ON_OFF_AUTO_ON:
-> +        whpx->hyperv_enlightenments_allowed = true;
-> +        whpx->hyperv_enlightenments_required = true;
-> +        break;
-> +
-> +    case ON_OFF_AUTO_OFF:
-> +        whpx->hyperv_enlightenments_allowed = false;
-> +        whpx->hyperv_enlightenments_required = false;
-> +        break;
-> +
-> +    case ON_OFF_AUTO_AUTO:
-> +        whpx->hyperv_enlightenments_allowed = true;
-> +        whpx->hyperv_enlightenments_required = false;
-> +        break;
-> +    default:
-> +        /*
-> +         * The value was checked in visit_type_OnOffAuto() above. If
-> +         * we get here, then something is wrong in QEMU.
-> +         */
-> +        abort();
-> +    }
-> +}
-> +
->   static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
->   {
->       AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
-> @@ -498,6 +534,11 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
->           NULL, NULL);
->       object_class_property_set_description(oc, "kernel-irqchip",
->           "Configure WHPX in-kernel irqchip");
-> +    object_class_property_add(oc, "hyperv", "OnOffAuto",
-> +        NULL, whpx_set_hyperv,
-> +        NULL, NULL);
-> +    object_class_property_set_description(oc, "hyperv",
-> +        "Configure Hyper-V enlightenments");
->   }
->   
->   static void whpx_accel_instance_init(Object *obj)
-> @@ -507,6 +548,9 @@ static void whpx_accel_instance_init(Object *obj)
->       memset(whpx, 0, sizeof(struct whpx_state));
->       /* Turn on kernel-irqchip, by default */
->       whpx->kernel_irqchip_allowed = true;
-> +
-> +    whpx->hyperv_enlightenments_allowed = true;
-> +    whpx->hyperv_enlightenments_required = false;
->   }
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
