@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2AAFFC9EDA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 09:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81228FC9EF5
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 10:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyniz-0005u2-Kb; Sat, 07 Mar 2026 04:13:29 -0500
+	id 1vyp8M-0000Px-9b; Sat, 07 Mar 2026 05:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyniw-0005t7-QA
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 04:13:26 -0500
-Received: from ci-2003b-snip4-11.eps.apple.com ([57.103.91.151]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyniu-0005Ml-2Q
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 04:13:26 -0500
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-0 (Postfix) with ESMTPS id
- 62BA61800167; Sat,  7 Mar 2026 09:13:18 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772874801; x=1775466801;
- bh=7QUN000MA0rOKOh8aD0F03Bdt/hAEWOM328SthX3qYg=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=ayQ+uI9fWDGr1Vk8PcPamthaF3i3cgug5RX2J3A1BhLVpeXkWpuDR/reaHl+C3AuIFAqjO6fUlt0IryC2AdmGGJMbo60wGPK9qKEZH3HOK/aY87SCVQKHLsnBgA4QV9rmTEiM1r1E20NGsLugwQB7k8+Q75pG1jSORhwdmRF7xs5uVLWMy4uIBhw92TR8aMG4E+yPYmOzV8xfV1OfP9uB0pk7NBDW1qZl0dTMupEjfs5cHpok1xH8uC3a5O3+iaJckWcMbggMvk9aueR2/+vkBWtfWCnMh/mrBuNvrZehTjfDwidSfSOEU7jVjud4V+oH0tvVYoonbk1e4kT7R3vTg==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-0 (Postfix) with ESMTPSA id
- 519391800096; Sat,  7 Mar 2026 09:13:16 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v17 12/14] hvf: arm: disable SME when nested virt is active
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260307090606.95300-13-mohamed@unpredictable.fr>
-Date: Sat, 7 Mar 2026 10:13:03 +0100
-Cc: Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BE4DF00D-6E4A-4BBC-9E56-6A2327C9F371@unpredictable.fr>
-References: <20260307090606.95300-1-mohamed@unpredictable.fr>
- <20260307090606.95300-13-mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-ORIG-GUID: vqO6eo78Xgy56fbEtCOxDhbgur5m-0g7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDA4NCBTYWx0ZWRfX6THsmKZA9VMB
- +MGGdN9xko41HYMkNZqJycWjWgONhKGc+cipPbGpGCG7YAA3Bi386zNKHtEEQcD2Eyrl4H15tez
- B2dqWPc196j/JzJCnDoykm5RghE9Msxrnx8QEOqDv8zS25s/nVJCKMpNrRJxZMd7wQEzRkt/W0k
- Z6XNbaGdKrcQIo1uadW2577PGOl+xEJ1J5X/GLSAaCvE23EEn/E4yYnx3oheTVka9dsIKO0k0+e
- uOFkRCyBBJVqIWORnwRpEK0trUaoLSF6gtvgHI1iJr2KQwSq9mOh3KOULg9FKJHoEiJWkXyNHeN
- /pentaj2x2vxMdvdhvS1aRy8HNsmRFclrn9j+Sgf2DhNKl1l+Jb0YNllm1IPUQ=
-X-Authority-Info-Out: v=2.4 cv=FcI6BZ+6 c=1 sm=1 tr=0 ts=69abec2f
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=XYctVz3StARBtGIkRf4A:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: vqO6eo78Xgy56fbEtCOxDhbgur5m-0g7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-07_03,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 adultscore=0 suspectscore=0
- clxscore=1030 phishscore=0
- bulkscore=0 mlxlogscore=702 lowpriorityscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603070084
-X-JNJ: AAAAAAABNKwDyN8TZpUZZXCAsxd0D06grUf0WwwriIhbJiPM8NX7SgG2de1ewxP8C+C4S67pYnAcFWAuPSnRNMQLXyy/xslBqLqW7/cnEq0hiVE9q/24sB5VsLyzJ/0ngEliGP9hRVu2mew+T38T1jN+zkI03i+ssFinR0/H2B5XUxI4r/tscgyWipRY/trYgakzYy07MuoG+mZCZenRQMLOB2/m1E2Erey/LjRrI9BWiFhO8pxiktRZ1OFbAU2coZ/9Lkk8gdRR9roQlopy0KMvO2t2Mv8jeClMUXyDB8ZkYOPyhVG6JPQCv3gfd6f7xB9c9GveJPfdnf5+PnPQtNHeOJqA+SHSAi5pxgrx2iqwR5w8hh2PxRafyGcat4WPQ8+Jvb39tXdJjaELzrw/hKRHVJjqpvyqwyJC3bYFPQ/aNhawS3Qi/e7BQZCLQpbCK5iLis6YnwGvIcawyF0DqPS4PUyj9EPrW3XYS2ov5ASSWqdaA485zYNBPFkDJpoXEHjhi2+yY0ndYC+pi/hEJ3aA2Mu/Bidg/S53lFTvzUGHyQpxw5oWmSpyG0DTtiihVOTRfpKe+nBUo85rQTEFhj4MMQ+wZYl1EUTXow6qI+x1vko42KJ/WuVZgA1rZu3rGenlYm6m0YAyQQ5gdI0TWd/HRHXHQxFSbZ5xq21e6aDhPGPJvMV91ne1IcyZJrElyVSITb/CjdZco5paHQM9fVUjvnN4rZChU/KbLpoJ385Y2Q==
-Received-SPF: pass client-ip=57.103.91.151;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyp8K-0000PN-Ur
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 05:43:45 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyp8J-0007JL-6W
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 05:43:44 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-483abed83b6so84041135e9.0
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 02:43:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772880221; x=1773485021; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Na46LPPaJn3Q05XskxsIzkdab0NAITm5NixAze0ucts=;
+ b=SL4d80h61aNMXOoHsyKoSjHslM2GRihhqMb/xZHIUtTaeqmVT2Q083DxByipZw+IOn
+ 0P1gnlPTv8f3x2x1tJdSefch6uRoYrm67OEHUy4tRoFVw853A8soelysAEdGjqIcPIuT
+ oynr7lSFpBXELBjmXa8zfBEjkB4UObCtSH2tiNzu4mDuasCEtEN2Gwq+fx87/QNxs8Gr
+ /5IAmymVWBubYVGDON9kt7CS5NJYEIfh+BlKbd8gxKJnltJY5bz3DzlnhLbiYiwJ7Z4A
+ LzizvGuwa0aFvhCGP2ltVoAkrTL7BteWQoOrWYVxDefPfYvUKiy61WVQbBfUl+jBLKiw
+ H+Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772880221; x=1773485021;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Na46LPPaJn3Q05XskxsIzkdab0NAITm5NixAze0ucts=;
+ b=p5p96ZXlPT42aqT9I4wmdIWzpukybcqF5D4wtZAvIfLMVv7ZexGDsjSIgEfNl4/0YO
+ XFOC+h3XlechcnzV4Q/tbCWUQkU1vgQt9DTlo5jrxNveKz4Jj3+GgXQQDIwd4r7uAz+X
+ b7lmcAkxiPZE5xmUdtRQK83FgYvILX9yx23wXbF+VT56j8T9uXBVQ3LvtOi13IBlCcHT
+ hINb2lee/hI9nv+ZRT1Lf9chdgYCxO1lzaObUY8NsqunPQl3dKTwrGvH1Fm69iaVEZXM
+ kID/3r7I7rf0tSoD16eTyly0/6JLynQ+aLQSvl4J0nShd4cMPTTSwq30Tg387K33yJRE
+ qbIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVr3LJ8lBGmSEyK3oTgknF44mXnY6pSbqLzTH1yCYyPpSaTEHOq3yS1yUR/pvTtqGcwJ3IbsEZrcn1N@nongnu.org
+X-Gm-Message-State: AOJu0Yzf563TXwuQC0L2iHa1rCrWzRFSi5rjM11Fa0M2El6tcZx0oXwY
+ ZGUC720jVGzVnj1evc1meYA9UFnmsO1phWa4pb5joCwfBGcPGhIwu1Rd4O/hQXm9nu4VZiwBAaQ
+ exou0TGA=
+X-Gm-Gg: ATEYQzykPTdD8JKXH0VHq88XRQnR8bG8A81inbrH+UDA/QML2mNrJim1cl+uaWRrmr+
+ dftqvLL8qd3Yl3okWAPhr7RDSWAs+Vv7rZzR8hnnmMLumCz6K+8r0FBqNV0DdhB3RXxBPGUvozJ
+ T3JX8RC5ej2sGA3ymacJcZAB3rtu6rx9HOHniGOtoBFnQpTU73JlxxBcG7wTh7I+hcsPrgm5pCO
+ OkSL4m4HmJBKsgF8DUKXiQ2Mcn0fazJ29DP+SN5ZUPL0tLXcFUPXVG3wqzRtQGFpabRgjCN/a8M
+ cj+GugxwfM5ZWcyn/5Ak9/U4Bd3Isuy7Qp1M7x2Ta8QGQzCnUkVNhz+1bSAfx3MM2iZphbGiPTO
+ tU6LSpwJVcr9ZDY9sv4SoPyC3fvzWMjfFYRMUUNSYTol+YSRGuNVvoPPaKpoaHYMACzxM+NJgTE
+ O3GGKQDmcCL//W7RHsEtVyRR+17c0rrWwaFQjMmGGsoj5uZK0SpigHHxhglWtfPxFarv+EKTNiV
+ 908
+X-Received: by 2002:a05:600c:34c3:b0:47e:e8c2:905f with SMTP id
+ 5b1f17b1804b1-48526925423mr92395575e9.8.1772880221339; 
+ Sat, 07 Mar 2026 02:43:41 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae46353sm11112537f8f.33.2026.03.07.02.43.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Mar 2026 02:43:40 -0800 (PST)
+Message-ID: <25dd2ac5-7837-43f5-86f4-3069c2f06baa@linaro.org>
+Date: Sat, 7 Mar 2026 11:43:39 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/m68k/mcf_intc: Use qdev input gpios for input IRQs
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>
+References: <20260306190425.3047580-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260306190425.3047580-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,70 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 7. Mar 2026, at 10:06, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->=20
-> Currently, Apple doesn't support the nested virtualisation + SME =
-combination.
->=20
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 6/3/26 20:04, Peter Maydell wrote:
+> The m68k mcf_intc interrupt controller currently implements its
+> inbound IRQ lines by calling qemu_allocate_irqs() in mcf_intc_init().
+> This results in leaks like this:
+> 
+> Direct leak of 2944 byte(s) in 46 object(s) allocated from:
+>      #0 0x5cf95ec15323 in malloc (/home/pm215/qemu/build/san/qemu-system-m68k+0xf9e323) (BuildId: 18d55ef8ea9856e68ee30802078af5050b8b06c5)
+>      #1 0x7637c65c5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x5cf95f6b2f27 in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:767:15
+>      #3 0x5cf95f6aa62e in qemu_allocate_irq /home/pm215/qemu/build/san/../../hw/core/irq.c:91:25
+>      #4 0x5cf95f6aa62e in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:79:16
+>      #5 0x5cf95f5f6d99 in mcf5208evb_init /home/pm215/qemu/build/san/../../hw/m68k/mcf5208.c:310:11
+> 
+> This isn't an important leak, as it is memory we allocate once at
+> QEMU startup and that has to stay live for the lifetime of the
+> system.  However it does point at a code improvement.
+> 
+> Modernise this to have the device itself create inbound GPIOs with
+> qdev_init_gpio_in() that the board can then refer to and wire up
+> individually.
+> 
+> As the device is used in only a single board, we can update device
+> and board in a single patch rather than having to try to figure out
+> some way to change the API more piecemeal.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> target/arm/hvf/hvf.c | 3 +++
-> target/arm/hvf_arm.h | 5 +++++
-> 2 files changed, 8 insertions(+)
->=20
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 6666d77e18..2cb4c4aa4e 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1189,6 +1189,9 @@ static bool =
-hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->=20
->     if (hvf_nested_virt_enabled()) {
->         FIELD_DP64_IDREG(&host_isar, ID_AA64DFR0, PMUVER, 0x1);
-> +        /* SME is not implemented with nested virt on the Apple side =
-*/
-> +        SET_IDREG(&host_isar, ID_AA64PFR1,
-> +              GET_IDREG(&host_isar, ID_AA64PFR1) & =
-~R_ID_AA64PFR1_SME_MASK);
+> there's quite a bit more in this board which could be
+> modernised, but I stuck to just the thing getting reported
+> as a memory leak...
+> ---
+>   hw/m68k/mcf5208.c     | 24 +++++++++++-------------
+>   hw/m68k/mcf_intc.c    |  8 +++-----
+>   include/hw/m68k/mcf.h |  5 ++---
+>   3 files changed, 16 insertions(+), 21 deletions(-)
 
-Oops, same note applies that this is equivalent to
-
-FIELD_DP64_IDREG(&host_isar, ID_AA64PFR1, SME, 0);
-
->     }
->=20
->     ahcf->isar =3D host_isar;
-> diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-> index 6b1c3b9792..9cb58ad9ab 100644
-> --- a/target/arm/hvf_arm.h
-> +++ b/target/arm/hvf_arm.h
-> @@ -11,6 +11,7 @@
-> #ifndef QEMU_HVF_ARM_H
-> #define QEMU_HVF_ARM_H
->=20
-> +#include "system/hvf.h"
-> #include "target/arm/cpu-qom.h"
->=20
-> /**
-> @@ -35,6 +36,10 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU =
-*cpu);
->         if (__builtin_available(macOS 15.2, *)) {
->             size_t svl_bytes;
->             hv_return_t result =3D =
-hv_sme_config_get_max_svl_bytes(&svl_bytes);
-> +            /* Nested virt not supported together with SME right now. =
-*/
-> +            if (hvf_nested_virt_enabled()) {
-> +                return false;
-> +            }
->             if (result =3D=3D HV_UNSUPPORTED) {
->                 return false;
->             }
-> --=20
-> 2.50.1 (Apple Git-155)
->=20
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
