@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA31FC9ECA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2908CFC9EC3
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyi4O-0004ki-CX; Fri, 06 Mar 2026 22:11:12 -0500
+	id 1vyi4f-0004sP-Cy; Fri, 06 Mar 2026 22:11:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4M-0004kP-R2
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:10 -0500
+ id 1vyi4d-0004s5-Ei
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:27 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4L-0000oK-0T
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:10 -0500
+ id 1vyi4b-0000ol-UR
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772853069; x=1804389069;
+ t=1772853086; x=1804389086;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lYWaP1kFmLOPTRi7iW/x1sxii0x816fC62gZjXLi8LA=;
- b=TfKHhizR6lbM5w5d3ncLAHp0p05UOwUlybpQ1vl5316m26NjIzhZuEq1
- Nr2rrFRuXmhzzz2ehuHGjpQyPMQ3a2o4pVKnSJUZ00e1Zpkt4adDSDKMK
- yzit+N6agblzPP4PCom2da09Anuw0KHO4DQ+JSIaO+73s9m4fDnL6gd7v
- oVadcipP7/2x+EfcazRcUn85AtPqkG8Uh7cfeybvJ3Y+ir8chhBh1USlu
- lq8Dgz9FrCnbo8+l15no59wEsijFHl/ZIKAGOuigHI+gnzMPDI3LweWnD
- 9vqpFXliCdNsgVF9BhMxj6uE4w4MibaARkHxC79EY4oiXqaWvvvkoSZ9K g==;
-X-CSE-ConnectionGUID: /QmGwQilSYK/8wKY6OV05A==
-X-CSE-MsgGUID: hbUQe6rUQCuApWDLB/bSFA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434006"
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434006"
+ bh=ndxcgores0l2qC+gItZqykbKhchBgLacTV55nno2J1c=;
+ b=BadbmyPqGq3G8vWat2gnMaI3HgvVYw4tYrJ3/5ks6RTgcE0UuhWsNPkx
+ njxAPNbOrLsZH8lroH3nOsKy7YvFE//XvLnKkzoM7ZC1KJSC/AWle1d7P
+ DIJmWzkEDpvVeerTCggvpInNSzwHWjpp5nCPafj1cEb8w67+1m1WB8+W7
+ Lj2NHfwflsthRtgZ+tEk2j2vnBWXgadTJb+t0qJ48L1EIi6uFwLyTmg7m
+ NXMndZrAeR8vt2Qk08zBC+rNAYE0n0i7/nzjphPFQwakRHLKbia29qeiu
+ ysNdp2Dyxxoa6i9xq2Ui4KhnlhMWY6DFua28U7jJ2mfgJZ8xBwtqKlrT1 Q==;
+X-CSE-ConnectionGUID: c3IX8VxWRvWxiAfeJhOLRQ==
+X-CSE-MsgGUID: j4KNE3e3QnGyX74pDqhqag==
+X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434046"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434046"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
-X-CSE-ConnectionGUID: TuAfv0T7SpuORSVUxmYh0g==
-X-CSE-MsgGUID: C7q0Vf6ETNG84msgqhyPeA==
+X-CSE-ConnectionGUID: iMwvIcS8QKuxAkdpMYa6cw==
+X-CSE-MsgGUID: BKFhtA3IQfqR3HOQSDmcsQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813762"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813786"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
@@ -55,10 +55,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v10 02/10] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-Date: Fri,  6 Mar 2026 19:05:51 -0800
-Message-ID: <20260307030812.1224392-3-vivek.kasireddy@intel.com>
+Subject: [PATCH v10 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+Date: Fri,  6 Mar 2026 19:05:59 -0800
+Message-ID: <20260307030812.1224392-11-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
 References: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
@@ -90,28 +90,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the Guest provides a DMA address that is associated with a ram
-device (such as a VFIO PCI device region and not its system memory),
-then we can obtain the hva (host virtual address) by invoking
-address_space_translate() followed by memory_region_get_ram_ptr().
+In addition to memfd, a blob resource can also have its backing
+storage in a VFIO device region. Since, there is no effective way
+to determine where the backing storage is located, we first try to
+create a dmabuf assuming it is in memfd. If that fails, we try to
+create a dmabuf assuming it is in VFIO device region.
 
-We cannot use dma_memory_map() because for memory regions that do
-not support direct access, it would create bounce buffers instead
-of returning the actual hva, which is not desirable here. And, since
-VFIO device regions are not considered directly accessible (because
-they are mostly MMIO based), virtio-gpu cannot invoke dma_memory_map()
-to obtain the hva in this case.
+So, we first call virtio_gpu_create_udmabuf() to check if the blob's
+backing storage is located in a memfd or not. If it is not, we invoke
+the vfio_device_create_dmabuf_fd() API which identifies the right
+VFIO device and eventually creates a dmabuf fd.
 
-Therefore, in order to handle addresses associated with VFIO devices,
-we need to use the address_space_translate() API to first identify
-the right memory region and the appropriate offset within that
-region and then use memory_region_get_ram_ptr() to get the hva.
-This approach also works for addresses associated with the system
-memory region.
-
-Note that, although we take an explicit reference on the memory
-region, we would still rely on dma_memory_unmap() to drop that
-reference when the dma mapping is eventually unmapped.
+Note that, for mmapping the dmabuf, we directly call mmap() if the
+dmabuf fd was created via virtio_gpu_create_udmabuf() since we know
+that the udmabuf driver supports mmap(). However, if the dmabuf was
+created via vfio_device_create_dmabuf_fd(), we use the
+vfio_device_mmap_dmabuf() API to get a mapping for the dmabuf.
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -119,51 +113,41 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ hw/display/virtio-gpu-dmabuf.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index f20111fa57..f5c6a7deb9 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -798,6 +798,23 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
-                               &fb, res, &ss.r, &cmd->error);
- }
+diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+index 0a6b54fde5..55e3f60b60 100644
+--- a/hw/display/virtio-gpu-dmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -148,9 +148,22 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+         if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
+             error_free_or_abort(&local_err);
  
-+static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-+                                       struct virtio_gpu_ctrl_command *cmd,
-+                                       uint64_t a, hwaddr *len)
-+{
-+    MemoryRegion *mr;
-+    hwaddr xlat;
+-            qemu_log_mask(LOG_GUEST_ERROR,
+-                          "Cannot create dmabuf: incompatible memory\n");
+-            return;
++            res->dmabuf_fd = vfio_device_create_dmabuf_fd(res->iov,
++                                                          res->iov_cnt,
++                                                          &local_err);
++            if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
++                error_free_or_abort(&local_err);
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "Cannot create dmabuf: incompatible memory\n");
++                return;
++            }
 +
-+    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
-+                                 DMA_DIRECTION_TO_DEVICE,
-+                                 MEMTXATTRS_UNSPECIFIED);
-+    if (memory_region_is_ram(mr)) {
-+        memory_region_ref(mr);
-+        return memory_region_get_ram_ptr(mr) + xlat;
-+    }
-+    return NULL;
-+}
-+
- int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
-                                   uint32_t nr_entries, uint32_t offset,
-                                   struct virtio_gpu_ctrl_command *cmd,
-@@ -839,9 +856,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
- 
-         do {
-             len = l;
--            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
--                                 DMA_DIRECTION_TO_DEVICE,
--                                 MEMTXATTRS_UNSPECIFIED);
-+            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
-             if (!map) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
-                               " element %d\n", __func__, e);
++            if (res->dmabuf_fd < 0 ||
++                !vfio_device_mmap_dmabuf(res->iov, res->iov_cnt, &pdata,
++                                         res->blob_size, &local_err)) {
++                virtio_gpu_destroy_dmabuf(res);
++                res->dmabuf_fd = -1;
++            }
+         } else if (res->dmabuf_fd < 0 ||
+                    !virtio_gpu_remap_dmabuf(res, &pdata, &local_err)) {
+             virtio_gpu_destroy_dmabuf(res);
 -- 
 2.53.0
 
