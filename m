@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6078FCB602
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDC7F5141C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyttr-0001FK-9z; Sat, 07 Mar 2026 10:49:07 -0500
+	id 1vytvZ-0001ww-Rx; Sat, 07 Mar 2026 10:50:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyttm-0001Eg-RA
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:49:05 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vytvY-0001wh-Oy
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:50:52 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyttl-0003I3-91
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:49:02 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-439b8a3f2bcso5077159f8f.3
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:49:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vytvX-0003Zu-6q
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:50:52 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-439c5cce2c6so3990180f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:50:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772898540; x=1773503340; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7WLioosD1RjShB0PXaIfA0EBD3SfzvwrSkU3+hGUsVg=;
- b=B5jXnnHTUI3fXxGVrLkhL9jxlZF4hLXkXsZN7HcThle6KNvVzgbxkx5jmogtk9TJiK
- 7pCx+Eb/9D/G+13eBc9tF7MwK4H2jVT+E2cEcmthMSgSfPKkCUWp2ct9XxwEZoMP06UG
- F9eINkfE+rhPDBDlpt7BvYygSM9attK/Zcl5X5VwPWYNBbtWDhIZVO/0pyI92MQT7oIc
- jDgVhpVYjjimAyPgLUu9wKlwdU4W/n5p8NHd7LPIZBVnJdMJ1cYQtHOR3sMjGYdyoPCI
- uPpdxj5kto89uvSEw6ODeGJfVJaXGP4dFd94e7rDhOK5MIwDnbUFZ/8QQqA865bsdyav
- BwBw==
+ d=linaro.org; s=google; t=1772898649; x=1773503449; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xU1XG9iYYjPKXUSfPg2ijEBZc0ojBue34vGRwLlKGlw=;
+ b=xXQWUQvWYM6sdngHmk89obaEZHnya24jHrsocYI/ABGSkhyte+g8cZePJZ2AcIT5ki
+ 6CdhJAHzHn1o4flA+t0ivoBBHKOAWuJKw/D1cY4+AOHKwG2enCVmYdGjdN2/23kb7K5y
+ dYvMIuibkaXt8Ws5LjmpqE7IKa1EYOv91o/PmpCYf+TVhvYiL6BMcBmgbfkcJbRAAXE4
+ 3NYWYCstVEYUeX4cHSIzXOA0Gis12H40HxXmZRApBPjMiYbByymXgz3PeMKXMUndDC/p
+ tRnxQLZYlpnkpTQOIWk8mbXv4HhZbL/D8FIhdyLUfzafDD8/V8Hg7FlOvc54ve8rtRiX
+ geGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772898540; x=1773503340;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7WLioosD1RjShB0PXaIfA0EBD3SfzvwrSkU3+hGUsVg=;
- b=HLgTcAh50uxINsofzSLth/ExdZbqfndWYgJ0vTkJcQg3ott2+nJMcIdB4yLG7oh/U3
- 4TtCcN6RBeivLvtxBcsxhC13TIQCwl/BXl5xL6iqzCAsmZp01X772CjMtL/369YVxO3G
- i6spuL/+FZLBCGyYvbJw6lRPgVg3u59FUNzi/9ef9JMe20eXdn9Ryp46tJxU2Qi1Bwtv
- iXx8Shvftxiak7pQcJDwc6WYbgxM2K1gqLWfIQ62voG6MaGrhu/9kfM5uzvApN4T4jR3
- j9CEI7P55KktIja+MXveyFCVGUYqvKTksiArtJC6lo0mnTK3rt1j4NWrbUpbtKXhFTfO
- yyTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgMq/28QN34/PHA6BOKpA3SuhDASz4g1kQ1ZnJsUNdaUptEG4JYgoP/fqQqn9TI0iHRPXQHgspLaep@nongnu.org
-X-Gm-Message-State: AOJu0YzIuX2MLtj/kRFZ+hKqCkn00Mb9dWyQIienY0kf8z/wfhtxEFBg
- nUMaskeR8OE4qtBWf8vFQabGgykf+KDcz8m3O0KpYkaA7b2gfWAUoIdBL7OhBEHz3ng=
-X-Gm-Gg: ATEYQzwBhdAUx6BFxu/sKNhC92i/WTH0btQPVu7buRIFc5g+ArPgafnjoSThouBXt4f
- dBQEw0+8+MqV+xUYNcqRcn0Y9I2vAO9EuTFxcL8Czz906zLyj51njIy3Xcy4VQAbVfVntF+weqV
- zLvg/WR7NLfsdcXD20EZvctUZdrm9YTwQvhS6vbmpnWoWNgJ1Eck8rm671DRK/UJj9OGN5E/MJ+
- dNm6CaxPvgKhb6G8opygVzm7DuB4iXbGEkQmMJPoND9BaQ8z2HkBYpyjUo3/LOFC+wsdndZdpXg
- DNhNb1+KT91q2QNmdzRTNnSBI3cQ6KA7LEma3HGdapO8yuuho4TyELg/SQxmD5WXxf2d5T6eFoo
- hPvuLEl0tnyJXJBXhSQUIaWWSJtCmSv9lP+8wlJhOKoPXFj2RUqQ7cXhSdbMdAFj5V1n6EJkzEQ
- yk57eIAfAj9JHtQ+cDq2zS7eYe1aaUiqkLj9qal8SJcFl4uq8a43Pseq9otgsekWQ4bg==
-X-Received: by 2002:a05:6000:2891:b0:439:d935:87c0 with SMTP id
- ffacd0b85a97d-439da65d71emr10291937f8f.17.1772898539621; 
- Sat, 07 Mar 2026 07:48:59 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae56300sm11473760f8f.37.2026.03.07.07.48.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Mar 2026 07:48:58 -0800 (PST)
-Message-ID: <d2bd5f90-a0f7-490e-b735-43442f41c679@linaro.org>
-Date: Sat, 7 Mar 2026 16:48:57 +0100
+ d=1e100.net; s=20230601; t=1772898649; x=1773503449;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xU1XG9iYYjPKXUSfPg2ijEBZc0ojBue34vGRwLlKGlw=;
+ b=GhX8iNjTRn1gFcnpGx2xs1yr2FcSG3ItME5jskMA1/9LfyvZ4K2eeaGtxJYE8JIApp
+ 5QCKHLUQkH5dLDW350wIjf++xTEqt//2d9QSmjoVGn7NpfhO0lzEnRs5VBPxckbixtRG
+ f4+aDy/7iu0KeZ3aEm1IRz2faQ/x4yk8Yg8pxeBRUoDeMScvdX6Jev7AgwnRkmIhGnVS
+ WKGDZ7l2qaFVvV8Rmza1H19srrEgljEsimxDkDUwx1r9UAQ98ObQKyXodaZzyAMsAyBI
+ YfmZkdvPQCFWM8L+zQDKI/fxFxzAh7OtI3jV6Rj8LQrvuJBAE+aLzq43snywWuCYuUGB
+ Z6XQ==
+X-Gm-Message-State: AOJu0YyZz0d3gIkC89C4OCXs2EFtldFTYV1k1PWCbkzCjUTRoLhvH44a
+ dPMw4UDHVOteTjUmiTuq2HHS3YSetOVBiiFBTo3bOBMi+LN+uHJldOtwdHjbaVxvoKP0Zx0IIFy
+ iQRU7
+X-Gm-Gg: ATEYQzy/55m0h+niNwviCsznHEdnCMPxvYyKwfcwVTHYzGJtxNSzuKERiXuzHzHvDzl
+ bIKX/ZpyhlWXxxaiWcVT13fqvvesaL0rxxTGz31vblvx8sB7igZxS/IhHp+fHauDUtpLqoUHDPq
+ ZZ7WXfWlfEr6eDaNSzVNhOud0hJGW/Zgj0qvhAeNApqet0AQ6dxk7v+rSAJ3ekrbfMz17UHLwfV
+ VbV+M1a9tD6lM/wl8x7tkMLcXohIQ4bmAnuzDujJ5Ks+197Jqf+I5HXxo2KNnVROd4YUSAVgQSp
+ XADgE0ZulaQgwLK0C3Blp0e7k9Tdm1GZmxfJFQDWgLSPYyMWXC64ENXx1bBBw+YZ+/yf0O6qMfH
+ Tq52UhxJucenvUq6n1H3k68XKVw7WvPlAB94a+TUMR7JulvClYXv4wCdF1RUv2fk+e18sRrMpbk
+ ub4mKzIJKboI5ceHtIHjQNSvV1HOJDFd26HAAA+ckRP49yGLgSd1fNW+RdtVhhMeDbW3bYVqsXK
+ 0nVTFRrT8weTe/T9gJcBZ87rnfeSKQ=
+X-Received: by 2002:a05:6000:4308:b0:439:ccec:fcd0 with SMTP id
+ ffacd0b85a97d-439da88bce0mr10478669f8f.29.1772898649491; 
+ Sat, 07 Mar 2026 07:50:49 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dad8ec97sm13121750f8f.5.2026.03.07.07.50.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 07 Mar 2026 07:50:48 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alessandro Ratti <alessandro@0x65c.net>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH 1/2] hw/qdev: Document qdev_get_dev_path()
+Date: Sat,  7 Mar 2026 15:50:45 +0000
+Message-ID: <20260307155046.3940197-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260307155046.3940197-1-peter.maydell@linaro.org>
+References: <20260307155046.3940197-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 05/13] hw/arm, target/arm: nested virtualisation on HVF
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>
-References: <20260307153143.76893-1-mohamed@unpredictable.fr>
- <20260307153143.76893-6-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260307153143.76893-6-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,36 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 16:31, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/hvf/hvf-all.c    |  1 +
->   accel/stubs/hvf-stub.c |  1 +
->   hw/arm/virt.c          |  5 +++++
->   include/system/hvf.h   |  5 +++++
->   target/arm/hvf/hvf.c   | 42 ++++++++++++++++++++++++++++++++++++++++--
->   5 files changed, 52 insertions(+), 2 deletions(-)
+We don't document qdev_get_dev_path() at all; in particular
+we do not mention that it returns a string that the caller
+must free.
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/hw/core/qdev.h | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-> diff --git a/include/system/hvf.h b/include/system/hvf.h
-> index dc8da85979..0f0632f7ae 100644
-> --- a/include/system/hvf.h
-> +++ b/include/system/hvf.h
-> @@ -28,9 +28,14 @@ extern bool hvf_allowed;
->   #define hvf_enabled() (hvf_allowed)
->   extern bool hvf_kernel_irqchip;
->   #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
-> +extern bool hvf_nested_virt;
-> +#define hvf_nested_virt_enabled()  (hvf_nested_virt)
-> +#define hvf_nested_virt_enable(enable) hvf_nested_virt = enable
-
-Unsafe macro. Better expose the method and add a stub.
-
->   #else /* !CONFIG_HVF_IS_POSSIBLE */
->   #define hvf_enabled() 0
->   #define hvf_irqchip_in_kernel() 0
-> +#define hvf_nested_virt_enabled() 0
-> +#define hvf_nested_virt_enable(enable) 0
->   #endif /* !CONFIG_HVF_IS_POSSIBLE */
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index 4b2730e9d8..29083bc907 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -324,6 +324,10 @@ struct BusClass {
+ 
+     /* FIXME first arg should be BusState */
+     void (*print_dev)(Monitor *mon, DeviceState *dev, int indent);
++    /*
++     * Return a newly allocated string containing the path of the
++     * device on this bus.
++     */
+     char *(*get_dev_path)(DeviceState *dev);
+ 
+     /*
+@@ -1060,6 +1064,25 @@ bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp);
+ 
+ extern bool qdev_hot_removed;
+ 
++/**
++ * qdev_get_dev_path(): Return the path of a device on its bus
++ * @dev: device to get the path of
++ *
++ * Returns: A newly allocated string containing the dev path of
++ * @dev. The caller must free this with g_free().
++ * The format of the string depends on the bus; for instance a
++ * PCI device's path will be in the format::
++ *
++ *   Domain:00:Slot.Function:Slot.Function....:Slot.Function
++ *
++ * and a SCSI device's path will be::
++ *
++ *   channel:ID:LUN
++ *
++ * (possibly prefixed by the path of the SCSI controller).
++ *
++ * If @dev is NULL or not on a bus, returns NULL.
++ */
+ char *qdev_get_dev_path(DeviceState *dev);
+ const char *qdev_get_printable_name(DeviceState *dev);
+ 
+-- 
+2.43.0
 
 
