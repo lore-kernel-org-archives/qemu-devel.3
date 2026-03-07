@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF6AF55103
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 18:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B86F55103
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 18:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyw0H-0001kU-3i; Sat, 07 Mar 2026 13:03:53 -0500
+	id 1vyw0H-0001kn-W6; Sat, 07 Mar 2026 13:03:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyw0F-0001jN-OF
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:03:51 -0500
-Received: from p-west2-cluster4-host5-snip4-10.eps.apple.com ([57.103.69.161]
+ id 1vyw0G-0001jw-FM
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:03:52 -0500
+Received: from p-west2-cluster4-host4-snip4-10.eps.apple.com ([57.103.69.251]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyw0B-0003Tm-Iy
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:03:50 -0500
+ id 1vyw0D-0003UA-GE
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:03:52 -0500
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPS id
- 63711180062D; Sat,  7 Mar 2026 18:03:45 +0000 (UTC)
+ 678DA1800626; Sat,  7 Mar 2026 18:03:47 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772906626; x=1775498626;
- bh=I39KlZsy6P5F3w8BmyZE0FxzdEcPXKIH1UdSg5cxOh0=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=GA/qIy6xXsGMQGnGHzR7So5vFsN+Sl+W1EKdEY22Ef9qYXUE0ToL77xTg/ytHUNLElY/J/Zds9zttqzVtvVXdExqUHbdHz3M1eA6ycsebl3Q2yi3KFvg1mPKoCnq+5gV4dtEtokkYW95/NqdNmfgvC9LHn5XhEhomJmEopct0TAe+kiHfQ2aNEUygTTFtPl+AujFXKlv5/KEIUB/ujTAYswd1J+2jBXnJjLoqh0L57BelN92TJSiHrJhwOfUslk2nf+/sS7mQG7cxprBoDldKFeMyw8xbd0N37zzW8F2kIEKQ9uPtUnAqYhVEf5r0BCRekgHPVFrjoUerc59UhvYGw==
+ s=sig1; t=1772906628; x=1775498628;
+ bh=Ov64POP+pZwVBL2apOExReA3NsH1PM1K6fyKkqQNOAI=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=d6TR8q+kAYzvITKEc+Kq/+9aGHoh310zym2g65fE+BVa1Fh8AlUTL2KE8qQHFD6aVHZfxFqjRS5AAtPlMjLFWufbU28Pj/ME6DFxafyCqT+1OjOdIC+eXj3Auiy0vMWfN35pABiviZB3lxxVxxvMfWYzlyWcINnPjoIhlgzMJKvp7bqHClYdMnXBWg/ex4oWRsy/jvTxGXwqgzneRFLpaoYsvIGsGq2FHeKVWrHajmEg7zoT+HTj/+9alrmTcVTDyg+yfvi5Ai8BKVZI/ucqkZx9kUn31xwjiw9SO0A1oSpUZ/zdKFaMdVEuI/KVHeZ/7KqXx0inLpgSFNI7FHl7fg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPSA id
- 04E0218001BC; Sat,  7 Mar 2026 18:03:42 +0000 (UTC)
+ 4B489180018B; Sat,  7 Mar 2026 18:03:45 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -43,45 +43,43 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v19 04/13] target/arm: hvf: instantiate GIC early
-Date: Sat,  7 Mar 2026 19:03:21 +0100
-Message-ID: <20260307180330.75168-5-mohamed@unpredictable.fr>
+Subject: [PATCH v19 05/13] hw/arm, target/arm: nested virtualisation on HVF
+Date: Sat,  7 Mar 2026 19:03:22 +0100
+Message-ID: <20260307180330.75168-6-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260307180330.75168-1-mohamed@unpredictable.fr>
 References: <20260307180330.75168-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE3MSBTYWx0ZWRfXwIZxnU9R/bYt
- yBKMXNSN7zRZsrlhTY342WvVGcDfINGLmsvEIW6ySP4PGT8Jou8V1daL53+OJeJ6yOLRhDZiLD8
- ltLTf9wgVOlz/BxOOzfjOZGC3x2C8CrIB0PdHdkX1/Gb6ctAycLfgaQuxkY0q+1Ql7vBcxpczn4
- RgUIU3vHwsvMqvbLSjV4k2HWOXp5Kj4RziAN7FdEn5sZPWMGXRpSOHHchaH/LDTZupWokZamRGS
- MfREJyWCYrght/FdrJ7P1pHj6tyW6e1o36/K8dCTXgSIgLegNCoWTYZmchs7kDX4f5UPLCigc9G
- x+DNjN3oQAYFWXGwErDQWLDrx1wv7wtbPWMklxqLzIGwNPHyuQW9sowiEjwsWE=
-X-Proofpoint-ORIG-GUID: 7nU3hdl70mOTh7vsgGsS-ajB8xsSLwWK
-X-Proofpoint-GUID: 7nU3hdl70mOTh7vsgGsS-ajB8xsSLwWK
-X-Authority-Info-Out: v=2.4 cv=CL4nnBrD c=1 sm=1 tr=0 ts=69ac6881
+X-Proofpoint-ORIG-GUID: D5ChkuGs16k9bFnxfvCQDDXFFMnO_nLZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE3MSBTYWx0ZWRfX9AdGyn2CMVCo
+ eS7hwE9JO26KnUSkqkW0Uo2OKujgVyZSOJQsZlFp31Tv7ZDBpXrTy4JlWAWn2nc8KKHdO700rMz
+ iUl04ig//HM2tG0g+Wepz6HKeNvLZXe+udrPPdMZwaccpzp2lO0KCMY1h9XzF7uBHdmjHa3pemy
+ nNxDdiLdbqZLdek7H7NT3lfIUOs1Y5sRVstRPPqTwdp0k+YLV7kHJQFQ/eCcNYy3EZAQ02TsW1l
+ ZFff7YvOG1I/BK/10TLfat9220BHCPkaiQuqnDZgpW4NHpC3zg9MLvidbrrqSCs1FpANji85oB6
+ m6s+yMtuRTKnWd6rNPViN1PRwUhH9XNhKDjuWQ3xJ63eP63EGLYHoKVT1PbjWI=
+X-Authority-Info-Out: v=2.4 cv=KqNAGGWN c=1 sm=1 tr=0 ts=69ac6883
  cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=8CAvFU3GWpP82fccr8MA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=G65AtosZd4T4P2EQXfAA:9
+X-Proofpoint-GUID: D5ChkuGs16k9bFnxfvCQDDXFFMnO_nLZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-07_06,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- adultscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=551 phishscore=0 bulkscore=0 clxscore=1030 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 adultscore=0
+ mlxlogscore=871 clxscore=1030 mlxscore=0 lowpriorityscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603070171
-X-JNJ: AAAAAAABeWQekmaofsKwllgqXsaoERV9NmJBHMVeQpFaqaL5OBtZyCHRK/RGSr4z6glXebRfen/fbpKz2grVDRK7fsUMIs1OKZWIenXYb/Nu05ArCjxBkVrOHktykNCpc8NBK+kFrHyN9P3hysrloBMhwE70dj7NNlRD67vJzmx4MrSuti7GkgHOza9AdiZIjmG84NlCqznTH324zioXiQLhlIHXUGABFB81X6mX05wchEapuQ5FmvaJdlucaaEt0ksIAoh4YORxt97C6tB36vAfDWfshKjUsPEwybyt7FkEWTqh2MufDA920JATFsNYW5zpHoDY2AHlcFCB8ImL+E58OILA5kDu3MKU3Nr3/Dj28Y1XEW+zyFXmD2lu9/FJjQ/FU2GrEgDD5KM9KPFAO/65JNI4opmv2tl7I125Gean1HfEH8yxMVoDD1Uu3L0jrFcIQ4us0m8U+Txk9rk7ZdOtgYUOz57F+InFx1RLRG/5nRszyL7rMqKwi+Jvw501FBn4fwFQiWFT7sL8hVxiokRgglTiK+9I/wkUMUgaW7IsrHgAR/FVl4tfO0oQJ+D5FtZqTBZCypfbN7RrjqpG0FMy856kqV4Kez50LSBOKVWvfHO2pq9FNw+zO/pFNp+WGgigMq9gyDHSPWJPk4SkFIvPvIfOUEEUdDgfrqvtWgJ9ehEbeZMDsSV09clEcxhsAFdcgwhakPJSgbi+mfTlLfPltORMyr/altlH1mRLKR7yZA==
-Received-SPF: pass client-ip=57.103.69.161;
+X-JNJ: AAAAAAABE3kmyF2notVUPoC1COsCKE7D7q0IPEz+SnY8GdrLjTnU4xFT9t0LN9Q3xk0P5NkXzg0qs+7WHS9tYJWo5zI+Azm4AWzTMqFRQZC359bahcz7L62fteN6Ac5QDYpo+ftdGpA7pdMhbIcabHlUc7ag0bmO0FbXf9V+uRRsunULHeiR3WuINbPGqolGvK/BfiLmonz9IO40f4J9wetxY/lZzH3e/QqcJ9N8erieD3IMUQ9xMYPvrEdnY1H91wqI0IFy0570r/8nRLUyHXilE/ZPh2pz4yBAbBb6UbQ70NCSVOSVQIpY/ojE5tneR/9CP9w5mugucjPjl4KI5f+xdX0YtbEyzDWIK5ZUN7ftun6ejWpXqm8h3VjCTSMvNC7815K+5/REHgdDhjVXH3AwNPadXURHv7QbMvSn7yuUAg/8sPzBbahC2WMjtCoQgrXNe8BXF6rK3UDp1PtYyCCFFmAVd7fImN8D/lJ0jTWQExoVWc8Om+tqoz1lyfu+R4QeLitVhDjQG6kH/MFHb/K8QIGuc3WK3dQxi3FQk3a5aR3wB7ryUXKehSTIIGBCjFh/yR6Wv9mAx6rJn1jT6e7gu7uJNDdh8cHuk7T/uanu5OppX3kga+zqMzbkPSBbI0iWI18Q6u1wuz/6C6UkE4HYl50xZ6T6euKyPMZeh2vPVyL0Sqnwwqq4LxpYU6x6p7S+c2iP1j5LEV+hxurKK1YddgnD+4CL2ZYLQYjjyZUCgsgq
+Received-SPF: pass client-ip=57.103.69.251;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
 X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -99,50 +97,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While figuring out a better spot for it, put it in hv_arch_vm_create().
-
-After hv_vcpu_create is documented as too late, and deferring
-vCPU initialization isn't enough either.
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ accel/hvf/hvf-all.c    |  5 +++++
+ accel/stubs/hvf-stub.c | 10 ++++++++++
+ hw/arm/virt.c          |  5 +++++
+ include/system/hvf.h   |  5 +++++
+ target/arm/hvf/hvf.c   | 42 ++++++++++++++++++++++++++++++++++++++++--
+ 5 files changed, 65 insertions(+), 2 deletions(-)
 
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index a296b108bc..66c3b48608 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -24,6 +24,11 @@
+ 
+ bool hvf_allowed;
+ bool hvf_kernel_irqchip;
++bool hvf_nested_virt;
++
++void hvf_nested_virt_enable(bool nested_virt) {
++    hvf_nested_virt = nested_virt;
++}
+ 
+ const char *hvf_return_string(hv_return_t ret)
+ {
+diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
+index 6bd08759ba..dc365c5307 100644
+--- a/accel/stubs/hvf-stub.c
++++ b/accel/stubs/hvf-stub.c
+@@ -11,3 +11,13 @@
+ 
+ bool hvf_allowed;
+ bool hvf_kernel_irqchip;
++bool hvf_nested_virt;
++
++void hvf_nested_virt_enable(bool nested_virt) {
++    /*
++     * This is called unconditionally from hw/arm/virt.c
++     * because we don't know if HVF is going to be used
++     * as that step of initialisation happens later.
++     * As such, do nothing here instead of marking as unreachable.
++     */
++}
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 7a6fad1094..90769936d0 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2661,6 +2661,11 @@ static void virt_set_virt(Object *obj, bool value, Error **errp)
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+ 
+     vms->virt = value;
++    /*
++     * At this point, HVF is not initialised yet.
++     * However, it needs to know if nested virt is enabled at init time.
++     */
++    hvf_nested_virt_enable(value);
+ }
+ 
+ static bool virt_get_highmem(Object *obj, Error **errp)
+diff --git a/include/system/hvf.h b/include/system/hvf.h
+index dc8da85979..a961df8b95 100644
+--- a/include/system/hvf.h
++++ b/include/system/hvf.h
+@@ -28,11 +28,16 @@ extern bool hvf_allowed;
+ #define hvf_enabled() (hvf_allowed)
+ extern bool hvf_kernel_irqchip;
+ #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
++extern bool hvf_nested_virt;
++#define hvf_nested_virt_enabled()  (hvf_nested_virt)
+ #else /* !CONFIG_HVF_IS_POSSIBLE */
+ #define hvf_enabled() 0
+ #define hvf_irqchip_in_kernel() 0
++#define hvf_nested_virt_enabled() 0
+ #endif /* !CONFIG_HVF_IS_POSSIBLE */
+ 
++void hvf_nested_virt_enable(bool nested_virt);
++
+ #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
+ 
+ typedef struct HVFState HVFState;
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 5fc8f6bbbd..d431d96ba3 100644
+index d431d96ba3..d6ef4488fa 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -1230,6 +1230,28 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+@@ -27,6 +27,7 @@
+ #include "system/memory.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/irq.h"
++#include "hw/arm/virt.h"
+ #include "qemu/main-loop.h"
+ #include "system/cpus.h"
+ #include "arm-powerctl.h"
+@@ -1103,6 +1104,10 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+                      (1ULL << ARM_FEATURE_PMU) |
+                      (1ULL << ARM_FEATURE_GENERIC_TIMER);
+ 
++    if (hvf_nested_virt_enabled()) {
++        ahcf->features |= 1ULL << ARM_FEATURE_EL2;
++    }
++
+     for (i = 0; i < ARRAY_SIZE(regs); i++) {
+         r |= hv_vcpu_config_get_feature_reg(config, regs[i].reg,
+                                             &host_isar.idregs[regs[i].index]);
+@@ -1218,6 +1223,19 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
+     assert_hvf_ok(ret);
+ }
+ 
++static bool hvf_arm_el2_supported(void)
++{
++    bool is_nested_virt_supported;
++    if (__builtin_available(macOS 15.0, *)) {
++        hv_return_t ret = hv_vm_config_get_el2_supported(&is_nested_virt_supported);
++        assert_hvf_ok(ret);
++    } else {
++        return false;
++    }
++    return is_nested_virt_supported;
++}
++
++
+ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+ {
+     hv_return_t ret;
+@@ -1229,6 +1247,20 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+     }
      chosen_ipa_bit_size = pa_range;
  
-     ret = hv_vm_create(config);
-+    if (hvf_irqchip_in_kernel()) {
-+        if (__builtin_available(macOS 15.0, *)) {
-+            /*
-+             * Instantiate GIC.
-+             * This must be done prior to the creation of any vCPU
-+             * but past hv_vm_create()
-+             */
-+            hv_gic_config_t cfg = hv_gic_config_create();
-+            hv_gic_config_set_distributor_base(cfg, 0x08000000);
-+            hv_gic_config_set_redistributor_base(cfg, 0x080A0000);
-+            ret = hv_gic_create(cfg);
-+            if (ret != HV_SUCCESS) {
-+                error_report("error creating platform VGIC");
++    if (__builtin_available(macOS 15.0, *)) {
++        if (hvf_nested_virt_enabled()) {
++            if (!hvf_arm_el2_supported()) {
++                error_report("Nested virtualization not supported on this system.");
 +                goto cleanup;
 +            }
-+            os_release(cfg);
-+        } else {
-+            error_report("HVF: Unsupported OS for platform vGIC.");
-+            ret = HV_UNSUPPORTED;
-+            goto cleanup;
++            ret = hv_vm_config_set_el2_enabled(config, true);
++            if (ret != HV_SUCCESS) {
++                error_report("Failed to enable nested virtualization.");
++                goto cleanup;
++            }
 +        }
 +    }
++
+     ret = hv_vm_create(config);
+     if (hvf_irqchip_in_kernel()) {
+         if (__builtin_available(macOS 15.0, *)) {
+@@ -1420,6 +1452,13 @@ static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
+     assert(ret == QEMU_ARM_POWERCTL_RET_SUCCESS);
+ }
  
- cleanup:
-     os_release(config);
++static int hvf_psci_get_target_el(void)
++{
++    if (hvf_nested_virt_enabled()) {
++        return 2;
++    }
++    return 1;
++}
+ /*
+  * Handle a PSCI call.
+  *
+@@ -1441,7 +1480,6 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
+     CPUState *target_cpu_state;
+     ARMCPU *target_cpu;
+     target_ulong entry;
+-    int target_el = 1;
+     int32_t ret = 0;
+ 
+     trace_arm_psci_call(param[0], param[1], param[2], param[3],
+@@ -1495,7 +1533,7 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
+         entry = param[2];
+         context_id = param[3];
+         ret = arm_set_cpu_on(mpidr, entry, context_id,
+-                             target_el, target_aarch64);
++                             hvf_psci_get_target_el(), target_aarch64);
+         break;
+     case QEMU_PSCI_0_1_FN_CPU_OFF:
+     case QEMU_PSCI_0_2_FN_CPU_OFF:
 -- 
 2.50.1 (Apple Git-155)
 
