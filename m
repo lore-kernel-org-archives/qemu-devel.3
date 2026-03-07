@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940DEF5141C
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FB8FCB638
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytmH-0000hW-Dq; Sat, 07 Mar 2026 10:41:17 -0500
+	id 1vytnf-0003Uq-RH; Sat, 07 Mar 2026 10:42:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vytmF-0000gb-OT
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:15 -0500
-Received: from qs-2004d-snip4-1.eps.apple.com ([57.103.84.34]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vytmD-0001uF-VI
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:15 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPS id
- 2BCE61800AB6; Sat,  7 Mar 2026 15:41:08 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772898072; x=1775490072;
- bh=uFnSCt530eDZTdUYCOZjfr/zmR792B8dPu7lXXJfa2Q=;
- h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
- b=Fz6bFL62+sASTmr0LmeqIaVHAlWR0bfOLp8yU25WRaRsLKP4VYg2G8CI1eI4VKqN0TN+8W/86W9JFrfQ7HiQSwxfqoFl8XqkQo63SenDAx7in1HT2FMpUVAKtBeAIir/Hi2TNUfOO4MEJjU4ufsYvvUHa8+TX0TunI8XQw9IRxIgKvYqoKt55hjk7VeSQfRQRVa7Wuzi4STN9ITbecMzLJpMjOS8JjXBf1FD+/LbdKTx+HOMDST7z9VBKxEO4lTfm6kezR1QCusuOJVazCXxovnrrrFiZeI0xzB1hNXDAVPA7on0tbJcfawGTvUpb1lQF4E/2hCqbjnHALVyHAEpnw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPSA id
- 7BBF21825303; Sat,  7 Mar 2026 15:41:06 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytne-0003P1-R2
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:42 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytnd-0002cI-68
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:42 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so118064265e9.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:42:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772898159; x=1773502959; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Og9IPGiSN9L03BPKj7huycvO2v5oSung0TvI7JHvuuE=;
+ b=bhGkD+/l8MY1ke9sVRgN/44dFFDVB2N4ti0k3jw6/VmiRR1CANy+Z8Hi7t6dilP3eu
+ xy34aVROaoR5m1NYPfbwn+rZOm3+JfQP/OjJWF5+BMwiMEFTHkovhnkhXEgrTtCRTD64
+ Bwu4G3zkKgeZYIxlds45q0tqawAwZUGhQXOg4P8mmK1XvDgG2Dabj/7DAwBdKhHnZp3+
+ EI2Lmjzp32bOPAmigo/Qbs2P/kXjUN1p5x9zWbtmmEsAzK009WG8Qkgx9I61iwvNd7IT
+ fFgVbSNUkVho1th4fIF2fJ4Q6Rg93p30VxijaXaQPVWpNuMVYkQE0Ve4ZhRvVdbiNDdS
+ 1mrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772898159; x=1773502959;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Og9IPGiSN9L03BPKj7huycvO2v5oSung0TvI7JHvuuE=;
+ b=d8WbXuKvTP5zWCzIdaFHpzvNatPBCu1uPCZSo2OdPq/FidrkviiGa5qQRnT6MdwE16
+ sfb91HxdIrL0xjIJzzLy4Ap8SttKplyBeB4win7MI5AUZUmoBG7/FrTRcmgA3Miy5YBE
+ XQObPXLCwDX0B2wD+dXCpPnq0X8UdoJ0svLluZZ+3+Nig+eqdxXjIwIjKwQG6HtKkSnb
+ dqmwmIkD9/MJawzM/guZKdBCvvgRls9989JCQEDSGta3uWxbS/mY/jejFZSSAuwMn9z/
+ FdMj0UGcEthourqb7IPl+aawferDtAIfbW/Fg61wg93pzdApiIIeZD2830N4n2B9pg8Y
+ a56A==
+X-Gm-Message-State: AOJu0Yzu9wZelpOH736vyDQ8qrrDIITI/c6fzuHVOUyMdiez2KTKPCPH
+ /IJj6CX512N6wlTU+zbqEHnuK0+FpvAkq/NyjziL3dxhx1ou0QD4UkuOGZv580R4AA11CKqvBm+
+ pAv03NZY=
+X-Gm-Gg: ATEYQzx3B3x6UKropZGq4ke/XkIpVepGrv4qn806P06Lq+fZ27y2zkEl0Rnq8Q55K6O
+ GCUne2mMzHz4QXH/GSAEfwrfnUjYPpRcQQeEYsQWxp7nzTxs3F5vXeSmog48RNXBnjhdF3qQxPJ
+ mzi9jy7ELj6HSQD4SSRyyEJ7pRh6QgUgfCjt9ELLTxinAWqQi4tExWAgip37JwjO2qGWlQEPNn2
+ fR1k+lFvctt+eNehb2+1om0wevGzQ40dpLltlhE59JhzPIzvry3THj7e95MWKHg/k9/gWjdyAEW
+ eQ58eLE91D63L9jls89vtZj4jud1I6kmLub4KCqVWvCSQ8mA5BnlchVs/NTyh3emPlnPByIGYRD
+ dWJQgvaywYeIhpjrVgGOWHiq25kLLjmDUtlT+i58buDjrzQj67l2ezZo95sVbyoZOVKHqgyd/lb
+ FY3uXdG1ItIg9tY7xUwxU2Bg3v1ooezeGiPySvibW1zPMg/pm/BGm+h/nnKIDNWlfYWVr922Mz
+X-Received: by 2002:a05:600c:a013:b0:485:17a7:b9cc with SMTP id
+ 5b1f17b1804b1-48526958835mr93584975e9.18.1772898159210; 
+ Sat, 07 Mar 2026 07:42:39 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dadb85b8sm12050264f8f.17.2026.03.07.07.42.38
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 07 Mar 2026 07:42:38 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Wei Liu <wei.liu@kernel.org>, Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v5 0/9] hvf, whpx: i386: x86-centric fixes before softfreeze
-Date: Sat,  7 Mar 2026 16:40:55 +0100
-Message-ID: <20260307154104.84567-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, David Hildenbrand <david@kernel.org>
+Subject: [PATCH 5/6] hw/virtio: Remove VirtIOBalloon::qemu_4_0_config_size
+ field
+Date: Sat,  7 Mar 2026 16:42:01 +0100
+Message-ID: <20260307154202.86309-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260307154202.86309-1-philmd@linaro.org>
+References: <20260307154202.86309-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=NbnrFmD4 c=1 sm=1 tr=0 ts=69ac4717
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=2hR40MzdYebMGYd4gb8A:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 5GmARcu8n4ioAV8Q57n-12rkFDwJggmi
-X-Proofpoint-ORIG-GUID: 5GmARcu8n4ioAV8Q57n-12rkFDwJggmi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE0OSBTYWx0ZWRfXxM4gtVtOZO/i
- 8dKqq7I0UVPgBU5bDkSJQJVJT7BPEu9o4Bhgq3i+lyypJKvp4osT0LzwxHZU0xEzvomlYmmG5uV
- 0tLeuKC9ybo86outOUVypA8StwntbAQuB5jmGpDBtoV4wuxypz0n1p7ATQzkORGAdzNT0SKFSRx
- hirGHK3BXK8tQb9eHZiK6ZSJv/VoX5r3gnQCtt4lyMxxit/FNnVGqF8ATPsxR+r4+lW+uMVQbqp
- ZndtKWp/rS4ZM6pJVPNPoiKlFhk+26enr6tzRGfeT/5gh1qPF8NP+PWzKVkNTWb/wlPNkMjwMfB
- So9nL1uyoZYt1kanutXSmHpG9zaeY0S68tzGr5y9m5Tm0WzUhy1Y6n6jNckMyU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-07_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- spamscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1030
- malwarescore=0 mlxlogscore=874 mlxscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603070149
-X-JNJ: AAAAAAABOqq+24FMoPWNxjgEI7kOqL5nsyq6kAOG7+rV50arXTqqMmGolgV9HGUIDBPsMUJDGc6peLPq6/x8HzVMLhf1v93Xjg4hfodQH3KxiO8iOqr0nh2OpXvqqCC+H6IXMzUSAzvJaDZp5faXO0+eeVaFn3L5GHleRbOoifb94Uqk4MqrCxtxbPLu28Z9FoaZ5nYdR97FNprtEMg8bHtk62hE9t7ry4TMtU969GzXyN4XnY7LhroK9HchIpsA/r1NxMDTpxQT259G0kcApP2AIYtPipBG/apgHLAObftHccv6jTcxBfQTUUnGf1aFxTFMSPNOEcl/2P7Latvv2PgNSKFgrhybgRPD7uf5HY08i4nTwkO1PXv+LJHl046nUBcnwtfap4sEKe7QdvJ/i/QBIiXuQmYAfXud9/wO2WVXSvnXg9uOxcHgHdydUprOXWmeBa/NITxJYa9Tgki8A6CUZGSrbB/vqjVRVK7tvScjdYfZPN5t1ls0HVqiSLgThTH/1pngg70DEN0RxsdHgxbAh6FzXfjBN538n3g47TfHUvm7sWiXnQ8y8RtzgpytaC2VBq0KQMPi3lOCN/+7qMvRSWvx3bRVgtiJcPpf5tX1SGzD8mT0BPh6HUIfNZORYIkL1B4LXaVonsgOiI7YXGQEHkmTV9W2aPX64px6aLtxnExIVW1TbiOPrKJW3loChiFk91ao4MYI7uiFQBeCvTXwkETHJ1h/8WHPXdHXMbI1o35uXkR3Qsyy+7JCqBKRm8LzoorSL9OaFUKmzweY5+3QZbCxKBAqoXFd
-Received-SPF: pass client-ip=57.103.84.34;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,41 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v5:
-- Also include HVF buildability fixes...
+The VirtIOBalloon::qemu_4_0_config_size boolean was only set in
+the hw_compat_4_0[] array, via the 'qemu-4-0-config-size=true'
+property.  We removed all machines using that array, lets remove
+that property.
 
-v4:
-- Removed two patches that I didn't intend to be merged at this point yet...
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/virtio/virtio-balloon.h | 1 -
+ hw/virtio/virtio-balloon.c         | 5 -----
+ 2 files changed, 6 deletions(-)
 
-v3:
-
-- Added HVF build fix from Pierrick Bouvier (oops... forgot to have it copied over from the test machine earlier...)
-- Also added a fix for "whpx: make enlightenments configurable" highlighted with an error from GCC. Clang did not catch this...
-
-Mohamed Mediouni (8):
-  meson.build: older macOS targeting compatibility with macOS 15.4 SDK
-  hvf: arm: unbreak the x86 build
-  whpx: i386: do not enable nested virt when kernel-irqchip=off
-  target/i386: emulate: LA57 fix
-  whpx: i386: enable some more enlightenments
-  whpx: make Hyper-V enlightenments configurable
-  whpx: arm64: enable enlightenments if asked for
-  whpx: i386: remove SIPI trapping
-
-Pierrick Bouvier (1):
-  target/i386/hvf/hvf.c: fix compilation
-
- accel/whpx/whpx-common.c       |  44 ++++++++++++
- include/system/whpx-internal.h |   4 ++
- meson.build                    |   7 +-
- target/arm/hvf_arm.h           |   2 +-
- target/arm/whpx/whpx-all.c     |  37 ++++++++++
- target/i386/emulate/x86_mmu.c  |   2 +-
- target/i386/hvf/hvf.c          |  14 ++--
- target/i386/whpx/whpx-all.c    | 122 ++++-----------------------------
- 8 files changed, 115 insertions(+), 117 deletions(-)
-
+diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
+index 79ac194ccec..abbf3397188 100644
+--- a/include/hw/virtio/virtio-balloon.h
++++ b/include/hw/virtio/virtio-balloon.h
+@@ -70,7 +70,6 @@ struct VirtIOBalloon {
+     int64_t stats_poll_interval;
+     uint32_t host_features;
+ 
+-    bool qemu_4_0_config_size;
+     uint32_t poison_val;
+ 
+     /* State of the resettable container */
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 38bf1e84a1d..4c5f486ba23 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -708,9 +708,6 @@ static size_t virtio_balloon_config_size(VirtIOBalloon *s)
+ {
+     uint64_t features = s->host_features;
+ 
+-    if (s->qemu_4_0_config_size) {
+-        return sizeof(struct virtio_balloon_config);
+-    }
+     if (virtio_has_feature(features, VIRTIO_BALLOON_F_PAGE_POISON)) {
+         return sizeof(struct virtio_balloon_config);
+     }
+@@ -1054,8 +1051,6 @@ static const Property virtio_balloon_properties[] = {
+      * is disabled, resulting in QEMU 3.1 migration incompatibility.  This
+      * property retains this quirk for QEMU 4.1 machine types.
+      */
+-    DEFINE_PROP_BOOL("qemu-4-0-config-size", VirtIOBalloon,
+-                     qemu_4_0_config_size, false),
+     DEFINE_PROP_LINK("iothread", VirtIOBalloon, iothread, TYPE_IOTHREAD,
+                      IOThread *),
+ };
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
