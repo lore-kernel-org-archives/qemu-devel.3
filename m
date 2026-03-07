@@ -4,65 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6CAFC9ECF
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 05:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCE5FC9EDA
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 09:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vykYU-00056I-On; Sat, 07 Mar 2026 00:50:27 -0500
+	id 1vyncB-0006i8-4E; Sat, 07 Mar 2026 04:06:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vykYL-00055G-DR; Sat, 07 Mar 2026 00:50:17 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vync4-0006es-Ve
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 04:06:21 -0500
+Received: from qs-2007k-snip4-11.eps.apple.com ([57.103.84.241]
+ helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vykYI-0004mA-9k; Sat, 07 Mar 2026 00:50:17 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6275mnlo066273
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 7 Mar 2026 14:49:50 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=orITRtaC4a0R0PsWvNR48y3aT8WPRnKWjVVi0dmYyWY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772862590; v=1;
- b=Re2i7o0CB1GQy3H93cEygFvD7gXSHrTHU3aLo2fySZ0CbZZj92iXb8lwqUAjczLD
- 6NUDN2HJ/jvGIMaiJO3/roS2HZSQvqDgmNietlYT762jSlYNj6EnfE84uOp/PZ9q
- AZFuoC+03wkNhyWmls7TuFYKTBapRCdTIDYo9BMy5lOMWKMLi2AmvCW+W9fNpxBB
- t61dYKszpDYZmqP/73/hO2hpblAOLrBaGC30ThNYLDfinVRIOSmHTjylZUEan22p
- 1XjVF1WuclnQ3AeQJUPAskzNv4s4GvBGYeJfb8dpuZt3tlYCMa3XybTKbih/38aw
- 5xwpk50ESedD66n1cIUqMQ==
-Message-ID: <17fccf01-7784-44a2-9745-33a48e8c60e3@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 7 Mar 2026 14:48:49 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/4] system: memory: convert some helpers to const
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
- Mads Ynddal <mads@ynddal.dk>, Peter Xu <peterx@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vync1-0000xQ-Bg
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 04:06:20 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-7 (Postfix) with ESMTPS id
+ 7D3AB1800138; Sat,  7 Mar 2026 09:06:15 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772874376; x=1775466376;
+ bh=MVkulPZG/P32eig2T0uS/HmO19+ssM94R08S2oM1hno=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=WaXdxC+aRiroW2olGmX6TGHLwx4MFAMzqbDyTFjMiK2QvxAr57BcNAqMTeEAoRG9Hf3FLbaM+lTq2qGnPRZglF/VVpwlAnEaOqD8f0E+jPDXQsw221jv2D5UpzH0QVGbbDECq8vpUWUOqzCckntqLGSUT8UgkEhSMlxBnioJcSbbwuHJnlV9aFSH9FYlosO8IaPsdb70hIMv54XhXmWycnQDWPGxFTuGAJM3xfShCEOoYFz+7b+C214LJJp34AUui4ZMVG+doIE7YkmrUc8scfeBGau5EZsOEoHaB77sqhngfxBc4thsLTqSnyjwJa3Rf7fA720ffXBIeIeiMwgOxg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-7 (Postfix) with ESMTPSA id
+ D108F18000A2; Sat,  7 Mar 2026 09:06:13 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>
-References: <20260307044608.25486-1-mohamed@unpredictable.fr>
- <20260307044608.25486-2-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260307044608.25486-2-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v17 03/14] accel, hw/arm,
+ include/system/hvf: infrastructure changes for HVF vGIC
+Date: Sat,  7 Mar 2026 10:05:55 +0100
+Message-ID: <20260307090606.95300-4-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260307090606.95300-1-mohamed@unpredictable.fr>
+References: <20260307090606.95300-1-mohamed@unpredictable.fr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Info-Out: v=2.4 cv=AZa83nXG c=1 sm=1 tr=0 ts=69abea87
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=n4FVybPFTm1vobq06wUA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 8Nf9TH5e4ktW7pRvFuafFSi_SWtVBEd3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDA4MyBTYWx0ZWRfXwBm7ujWJawbR
+ 0WMvpIrE3Dy2ACEcfWOGC7trAbbgNGq+elwjx2on3ilbPffvcJle0pKTR08C5LGO8AuI5Uo4NPq
+ AhdMUc4Ftjc2OuVNhUykAGkhfFJDFT1I0HBK8J+JkR4lMtZCZAcjGkHX/v5sJSWieOHGTEl6laK
+ GyTCfdkini4hQPzbMnT0mVGfGF1Sn1n1D0ApixJDTkHxepNMF6JNaLcFuR8rOiZkSs6EH6rVCgG
+ YS1Nqel0XVCdG8myqJLVYfBtTQb739K9p5AenB999Bwj8LyqZ71jSJMo3akN59LabkOG6/5Md8z
+ YTdLd4B3D//pyur9d18t8wJWtfpY/+FJFYbnG8umeiykC8UvUdMIu7rWqCV7yk=
+X-Proofpoint-GUID: 8Nf9TH5e4ktW7pRvFuafFSi_SWtVBEd3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-07_03,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ adultscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0
+ mlxscore=0 clxscore=1030 malwarescore=0 suspectscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603070083
+X-JNJ: AAAAAAABnekHjfnLpsCdbuJ8v0VXnVSO+UyJLGvlnSG7nY/+RulHoQvM9UlY5igjgFDPZQQjvrkIj2l8k49brNDCK22OzW9cZOouOfjNhr0zm3xJeUXOs2pypSbhoNIUPYzmDs2QATREeAZOhWFw/XcduSXBNmRELzCxznPsFckgJKSE+ynrUQuLY9zczZq+5liqECLOO/tdDOLPQEx3mE1ZksPJsEOz7s4t6pQR2ISBD9YiAPSRlYgXpjOpurUo8R9IZt1r/7dnSxIJlcucJZPYN8pNeSmWUl1BwHpI614+0cU9tQDzC41zT7Hp3vJT9bXUlbAvoSzoVqrO55c+wBsZbGtZn8T2ejBQgWmkp274NbWUTBMkQ2ODH+aAd321BG31if+MLbZV7YAWMZjLcOCZtmYtq0hgcQIp/lX6LahucLGwncfGt/3GWIT8cddjt9RvCQPyAribqBiov22KgwgzYGbiXU0Zo3NchQjqI+YU195tKdRmtX+tTtrqRIKOj2+FPuMff2qxJ0zmmrtx0OM4M2uGN9iF5Vod/uoPsOljye2Ay9Req1jwLWg0+S4gvXSDRdJxFYcwUmgh64TD23ol92aC/jdBi4e+6wP6YrIBbVq0ovjHJ68QRfLRAgrahcujtgUSAa/9WMCSsUsk2ztaknf8T2gak8LKZQnhIoW5Ovqrmxa5PNAYZf6PrsromQ+WjRHMOsjbeQeZpoak50RBFs/+rVgwMdKrpgpZTghj2uREUoa5mhN4mrP1MjqwPsJQ091IN0iYFOR4T1mL4FuQRS/f62se
+Received-SPF: pass client-ip=57.103.84.241;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.411, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.679,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,126 +99,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/07 13:46, Mohamed Mediouni wrote:
-> Seemed to be a better alternative than making flatview_for_each_range pass non-const
-> pointers.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   include/system/memory.h | 14 +++++++-------
->   system/memory.c         |  6 +++---
->   2 files changed, 10 insertions(+), 10 deletions(-)
-> 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 0562af3136..1a140ef203 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -1339,7 +1339,7 @@ void memory_region_init(MemoryRegion *mr,
->    *
->    * @mr: the #MemoryRegion
->    */
-> -void memory_region_ref(MemoryRegion *mr);
-> +void memory_region_ref(const MemoryRegion *mr);
+Misc changes needed for HVF vGIC enablement.
 
-I don't firmly oppose this, but I feel a bit uneasy about this change.
+Note: x86_64 macOS exposes interrupt controller virtualisation since macOS 12.
+Keeping an #ifdef here in case we end up supporting that...
 
-You are right that this should be const in principle: this function does 
-not modify mr in any way.
+However, given that x86_64 macOS is on its way out, it'll probably (?) not be supported in Qemu.
 
-However, we can also consider the current implement as "abusing" the 
-const qualifier to express that we are not going to ref/unref. It is an 
-abuse, but I think it is practically makes sense.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/hvf/hvf-all.c        | 50 ++++++++++++++++++++++++++++++++++++++
+ accel/stubs/hvf-stub.c     |  1 +
+ hw/arm/virt.c              | 23 +++++++++++++++---
+ hw/intc/arm_gicv3_common.c |  3 +++
+ include/system/hvf.h       |  3 +++
+ system/vl.c                |  2 ++
+ 6 files changed, 78 insertions(+), 4 deletions(-)
 
-Regards,
-Akihiko Odaki
-
->   
->   /**
->    * memory_region_unref: Remove 1 to a memory region's reference count
-> @@ -1765,7 +1765,7 @@ uint64_t memory_region_size(MemoryRegion *mr);
->    *
->    * @mr: the memory region being queried
->    */
-> -static inline bool memory_region_is_ram(MemoryRegion *mr)
-> +static inline bool memory_region_is_ram(const MemoryRegion *mr)
->   {
->       return mr->ram;
->   }
-> @@ -1777,7 +1777,7 @@ static inline bool memory_region_is_ram(MemoryRegion *mr)
->    *
->    * @mr: the memory region being queried
->    */
-> -bool memory_region_is_ram_device(MemoryRegion *mr);
-> +bool memory_region_is_ram_device(const MemoryRegion *mr);
->   
->   /**
->    * memory_region_is_romd: check whether a memory region is in ROMD mode
-> @@ -1787,7 +1787,7 @@ bool memory_region_is_ram_device(MemoryRegion *mr);
->    *
->    * @mr: the memory region being queried
->    */
-> -static inline bool memory_region_is_romd(MemoryRegion *mr)
-> +static inline bool memory_region_is_romd(const MemoryRegion *mr)
->   {
->       return mr->rom_device && mr->romd_mode;
->   }
-> @@ -2071,7 +2071,7 @@ MemoryRegion *memory_region_from_host(void *ptr, ram_addr_t *offset);
->    *
->    * @mr: the memory region being queried.
->    */
-> -void *memory_region_get_ram_ptr(MemoryRegion *mr);
-> +void *memory_region_get_ram_ptr(const MemoryRegion *mr);
->   
->   /* memory_region_ram_resize: Resize a RAM region.
->    *
-> @@ -2967,7 +2967,7 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr);
->   int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
->   bool prepare_mmio_access(MemoryRegion *mr);
->   
-> -static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
-> +static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
->   {
->       /* ROM DEVICE regions only allow direct access if in ROMD mode. */
->       if (memory_region_is_romd(mr)) {
-> @@ -2984,7 +2984,7 @@ static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
->       return !memory_region_is_ram_device(mr);
->   }
->   
-> -static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write,
-> +static inline bool memory_access_is_direct(const MemoryRegion *mr, bool is_write,
->                                              MemTxAttrs attrs)
->   {
->       if (!memory_region_supports_direct_access(mr)) {
-> diff --git a/system/memory.c b/system/memory.c
-> index c51d0798a8..eb515fbee4 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1825,7 +1825,7 @@ Object *memory_region_owner(MemoryRegion *mr)
->       return obj->parent;
->   }
->   
-> -void memory_region_ref(MemoryRegion *mr)
-> +void memory_region_ref(const MemoryRegion *mr)
->   {
->       /* MMIO callbacks most likely will access data that belongs
->        * to the owner, hence the need to ref/unref the owner whenever
-> @@ -1866,7 +1866,7 @@ const char *memory_region_name(const MemoryRegion *mr)
->       return mr->name;
->   }
->   
-> -bool memory_region_is_ram_device(MemoryRegion *mr)
-> +bool memory_region_is_ram_device(const MemoryRegion *mr)
->   {
->       return mr->ram_device;
->   }
-> @@ -2415,7 +2415,7 @@ int memory_region_get_fd(MemoryRegion *mr)
->       return mr->ram_block->fd;
->   }
->   
-> -void *memory_region_get_ram_ptr(MemoryRegion *mr)
-> +void *memory_region_get_ram_ptr(const MemoryRegion *mr)
->   {
->       uint64_t offset = 0;
->   
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 5f357c6d19..a296b108bc 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -10,6 +10,8 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "qapi/qapi-visit-common.h"
+ #include "accel/accel-ops.h"
+ #include "exec/cpu-common.h"
+ #include "system/address-spaces.h"
+@@ -21,6 +23,7 @@
+ #include "trace.h"
+ 
+ bool hvf_allowed;
++bool hvf_kernel_irqchip;
+ 
+ const char *hvf_return_string(hv_return_t ret)
+ {
+@@ -216,6 +219,43 @@ static int hvf_gdbstub_sstep_flags(AccelState *as)
+     return SSTEP_ENABLE | SSTEP_NOIRQ;
+ }
+ 
++static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    OnOffSplit mode;
++    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
++        return;
++    }
++
++    switch (mode) {
++    case ON_OFF_SPLIT_ON:
++#ifdef HOST_X86_64
++        /* macOS 12 onwards exposes an HVF virtual APIC. */
++        error_setg(errp, "HVF: kernel irqchip is not currently implemented for x86.");
++        break;
++#else
++        hvf_kernel_irqchip = true;
++        break;
++#endif
++
++    case ON_OFF_SPLIT_OFF:
++        hvf_kernel_irqchip = false;
++        break;
++
++    case ON_OFF_SPLIT_SPLIT:
++        error_setg(errp, "HVF: split irqchip is not supported on HVF.");
++        break;
++
++    default:
++        /*
++         * The value was checked in visit_type_OnOffSplit() above. If
++         * we get here, then something is wrong in QEMU.
++         */
++        abort();
++    }
++}
++
+ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelClass *ac = ACCEL_CLASS(oc);
+@@ -223,6 +263,16 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+     ac->init_machine = hvf_accel_init;
+     ac->allowed = &hvf_allowed;
+     ac->gdbstub_supported_sstep_flags = hvf_gdbstub_sstep_flags;
++#ifdef HOST_X86_64
++    hvf_kernel_irqchip = false;
++#else
++    hvf_kernel_irqchip = true;
++#endif
++    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
++        NULL, hvf_set_kernel_irqchip,
++        NULL, NULL);
++    object_class_property_set_description(oc, "kernel-irqchip",
++        "Configure HVF irqchip");
+ }
+ 
+ static const TypeInfo hvf_accel_type = {
+diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
+index 42eadc5ca9..6bd08759ba 100644
+--- a/accel/stubs/hvf-stub.c
++++ b/accel/stubs/hvf-stub.c
+@@ -10,3 +10,4 @@
+ #include "system/hvf.h"
+ 
+ bool hvf_allowed;
++bool hvf_kernel_irqchip;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 7456614d05..7a6fad1094 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -837,7 +837,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+      * interrupts; there are always 32 of the former (mandated by GIC spec).
+      */
+     qdev_prop_set_uint32(vms->gic, "num-irq", NUM_IRQS + 32);
+-    if (!kvm_irqchip_in_kernel()) {
++    if (!kvm_irqchip_in_kernel() && !hvf_irqchip_in_kernel()) {
+         qdev_prop_set_bit(vms->gic, "has-security-extensions", vms->secure);
+     }
+ 
+@@ -860,7 +860,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         qdev_prop_set_array(vms->gic, "redist-region-count",
+                             redist_region_count);
+ 
+-        if (!kvm_irqchip_in_kernel()) {
++        if (!kvm_irqchip_in_kernel() &&
++         !(hvf_enabled() && hvf_irqchip_in_kernel())) {
+             if (vms->tcg_its) {
+                 object_property_set_link(OBJECT(vms->gic), "sysmem",
+                                          OBJECT(mem), &error_fatal);
+@@ -871,7 +872,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+                                  ARCH_GIC_MAINT_IRQ);
+         }
+     } else {
+-        if (!kvm_irqchip_in_kernel()) {
++        if (!kvm_irqchip_in_kernel() && !hvf_irqchip_in_kernel()) {
+             qdev_prop_set_bit(vms->gic, "has-virtualization-extensions",
+                               vms->virt);
+         }
+@@ -2118,7 +2119,15 @@ static void finalize_gic_version(VirtMachineState *vms)
+         accel_name = "KVM with kernel-irqchip=off";
+     } else if (whpx_enabled()) {
+         gics_supported |= VIRT_GIC_VERSION_3_MASK;
+-    } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
++    } else if (hvf_enabled()) {
++        if (!hvf_irqchip_in_kernel()) {
++            gics_supported |= VIRT_GIC_VERSION_2_MASK;
++        }
++        /* Hypervisor.framework doesn't expose EL2<->1 transition notifiers */
++        if (!(!hvf_irqchip_in_kernel() && vms->virt)) {
++            gics_supported |= VIRT_GIC_VERSION_3_MASK;
++        }
++    } else if (tcg_enabled() || qtest_enabled())  {
+         gics_supported |= VIRT_GIC_VERSION_2_MASK;
+         if (module_object_class_by_name("arm-gicv3")) {
+             gics_supported |= VIRT_GIC_VERSION_3_MASK;
+@@ -2160,6 +2169,8 @@ static void finalize_msi_controller(VirtMachineState *vms)
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+         } else if (whpx_enabled()) {
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++        }  else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
++            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+         } else {
+             vms->msi_controller = VIRT_MSI_CTRL_ITS;
+         }
+@@ -2179,6 +2190,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
+             error_report("ITS not supported on WHPX.");
+             exit(1);
+         }
++        if (hvf_enabled() && hvf_irqchip_in_kernel()) {
++            error_report("ITS not supported on HVF when using the hardware vGIC.");
++            exit(1);
++        }
+     }
+ 
+     assert(vms->msi_controller != VIRT_MSI_CTRL_AUTO);
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index 9c3fb2f4bf..f7ba74e6d5 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -33,6 +33,7 @@
+ #include "hw/arm/linux-boot-if.h"
+ #include "system/kvm.h"
+ #include "system/whpx.h"
++#include "system/hvf.h"
+ 
+ 
+ static void gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
+@@ -659,6 +660,8 @@ const char *gicv3_class_name(void)
+         return "kvm-arm-gicv3";
+     } else if (whpx_enabled()) {
+         return TYPE_WHPX_GICV3;
++    } else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
++        return TYPE_HVF_GICV3;
+     } else {
+         if (kvm_enabled()) {
+             error_report("Userspace GICv3 is not supported with KVM");
+diff --git a/include/system/hvf.h b/include/system/hvf.h
+index d3dcf088b3..dc8da85979 100644
+--- a/include/system/hvf.h
++++ b/include/system/hvf.h
+@@ -26,8 +26,11 @@
+ #ifdef CONFIG_HVF_IS_POSSIBLE
+ extern bool hvf_allowed;
+ #define hvf_enabled() (hvf_allowed)
++extern bool hvf_kernel_irqchip;
++#define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
+ #else /* !CONFIG_HVF_IS_POSSIBLE */
+ #define hvf_enabled() 0
++#define hvf_irqchip_in_kernel() 0
+ #endif /* !CONFIG_HVF_IS_POSSIBLE */
+ 
+ #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
+diff --git a/system/vl.c b/system/vl.c
+index 38d7b849e0..871799a2ae 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1780,6 +1780,8 @@ static void qemu_apply_legacy_machine_options(QDict *qdict)
+                                    false);
+         object_register_sugar_prop(ACCEL_CLASS_NAME("whpx"), "kernel-irqchip", value,
+                                    false);
++        object_register_sugar_prop(ACCEL_CLASS_NAME("hvf"), "kernel-irqchip", value,
++                                   false);
+         qdict_del(qdict, "kernel-irqchip");
+     }
+ 
+-- 
+2.50.1 (Apple Git-155)
 
 
