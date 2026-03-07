@@ -4,42 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD969F55102
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89DFFF55104
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyxQe-0004tO-7h; Sat, 07 Mar 2026 14:35:12 -0500
+	id 1vyxi7-00087V-SX; Sat, 07 Mar 2026 14:53:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxQc-0004tG-Hd
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:35:10 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi6-00086Y-7T
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:14 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxQW-0006CP-EY
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:35:05 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi4-0008VM-FV
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:13 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 7F1784403E;
- Sat,  7 Mar 2026 19:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB6CC19422;
- Sat,  7 Mar 2026 19:34:53 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 9515E4448E;
+ Sat,  7 Mar 2026 19:53:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9BDC19422;
+ Sat,  7 Mar 2026 19:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772912094;
- bh=iLgVWhB/TsC5r5zIEl2ocO7gnuTYhna8kv+GAWad4Oo=;
- h=From:To:Cc:Subject:Date:From;
- b=exUFgmBwco8rEbz31McdA0r1bVBxUYFP1LTsWkbtN8Vvko7BnIJpMPW+YodLM+hGr
- HlKLtlnKckHSyn429/CCXATKddtY5gilywj664hgBu8OLveicoz6gy056zORL/wwsh
- OyRb5+QxwsmLePrefZeaRhd2rfEh9ETj0ix8iCfomF2o9LCZFA0pbiPn8o75pScWmA
- FeHxy4KbMw1SuWVmEhsMXDSgbylXrybbmUmmFxvpHjk5IxnGHiMiHCjF0GpnLkGCDH
- EXysRb0/GFRUILgEIYECYA0YVJmdxEn+SQ1n+dP09Fhk//u85rDR5yBQs/V6so751Q
- q3/nbjqd6d/vg==
+ s=k20201202; t=1772913191;
+ bh=OOKfroUsa/NmmKFDrQXJY1cwDi1GkvGCyavkONtRuAE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=nZ5QELcoMuG41M0Ort6CBbgWBlrPLDffM800Pa/YGNHxMqHuaiF6S1uvEq7kfoAII
+ 4HpywoSmkdPuBh1Qna0XgF96VrlqLyhKjlQwGy30+WidGvYBg9wGi+5mZ39uqkHAwd
+ 7qhdF28Ml9WH8Ra3CeXA9b00Fmy0I6FFuAu+AcwMQ2xolyyJjT8Rs7TBOWwQcxLmuX
+ XrPcVEUGQXRNSkQvxQOe5o8Zt46ixQmsgNLKO/bYQHWuNOWvAzl5M7EnP5+52ZNIY9
+ x8jPazCyDgesdjRmSLPGslt3DrtzvlTHQh6B+gE9BMtKnt8Cc0tEHbq2u+uj4XYhzM
+ jyLG1zyBmdFzA==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH] linux-user: Improve formatting for mremap()
-Date: Sat,  7 Mar 2026 20:34:47 +0100
-Message-ID: <20260307193447.7873-1-deller@kernel.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 09/12] bsd-user: Deal with mmap where start > reserved_va
+Date: Sat,  7 Mar 2026 20:52:40 +0100
+Message-ID: <20260307195243.8813-10-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260307195243.8813-1-deller@kernel.org>
+References: <20260307195243.8813-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
@@ -65,30 +73,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Bingwu Zhang <xtex@astrafall.org>
 
-Improve slightly the strace output for mremap().
-Print the old_address and new_address as hex values, old_size and
-new_size as unsigned, and the flags as integer.
-
+Fixes: f12294b5bd21 ("bsd-user: Use page_find_range_empty for mmap_find_vma_reserved")
+Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/strace.list | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ bsd-user/mmap.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 51b5ead969..35f001fecd 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -641,7 +641,7 @@
- { TARGET_NR_mq_unlink, "mq_unlink" , NULL, print_mq_unlink, NULL },
- #endif
- #ifdef TARGET_NR_mremap
--{ TARGET_NR_mremap, "mremap" , NULL, NULL, NULL },
-+{ TARGET_NR_mremap, "mremap" , "%s(%#x,%u,%u,%d,%#x)", NULL, NULL },
- #endif
- #ifdef TARGET_NR_msgctl
- { TARGET_NR_msgctl, "msgctl" , NULL, NULL, NULL },
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index 24ba1728eb..fe77eceb48 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -258,12 +258,14 @@ abi_ulong mmap_next_start = TASK_UNMAPPED_BASE;
+ static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
+                                         abi_ulong alignment)
+ {
+-    abi_ulong ret;
++    abi_ulong ret = -1;
+ 
+-    ret = page_find_range_empty(start, reserved_va, size, alignment);
++    if (start <= reserved_va) {
++        ret = page_find_range_empty(start, reserved_va, size, alignment);
++    }
+     if (ret == -1 && start > TARGET_PAGE_SIZE) {
+         /* Restart at the beginning of the address space. */
+-        ret = page_find_range_empty(TARGET_PAGE_SIZE, start - 1,
++        ret = page_find_range_empty(TARGET_PAGE_SIZE, MIN(start - 1, reserved_va),
+                                     size, alignment);
+     }
+ 
 -- 
 2.53.0
 
