@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A481FC9ECA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 05:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6CAFC9ECF
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 05:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vykEZ-0002JG-Pm; Sat, 07 Mar 2026 00:29:52 -0500
+	id 1vykYU-00056I-On; Sat, 07 Mar 2026 00:50:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vykEW-0002Is-Uw
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 00:29:49 -0500
+ id 1vykYL-00055G-DR; Sat, 07 Mar 2026 00:50:17 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vykES-00026B-9B
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 00:29:46 -0500
+ id 1vykYI-0004mA-9k; Sat, 07 Mar 2026 00:50:17 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6275TJmU061539
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6275mnlo066273
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 7 Mar 2026 14:29:23 +0900 (JST)
+ Sat, 7 Mar 2026 14:49:50 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=8wjVO4GWeRHE64ThAd5zjI57iADAPSmfWcG2KV13YL8=; 
+DKIM-Signature: a=rsa-sha256; bh=orITRtaC4a0R0PsWvNR48y3aT8WPRnKWjVVi0dmYyWY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772861363; v=1;
- b=I8EAvNMgB7Pskd6HfiDxQv2j7lpSMEmyr9I4sOXwqzqi/xC42Iedn1wk93YURx1j
- hI5+1ctHZFO2cSFLz6zKzi935xc+QumbRjaLueWfx5PftbfZcPjffk5ygBJUGLBZ
- EXjHt7n7haRzPDFsEBuJ/6RoKK0fuASLtBMWFhLI/00JWoCrNY57tnk5AtX702IJ
- s0OBnTTedcsjGPlzAUKy3Z7MzjoXHXdyxIEXMoGEQGdcMlHaT7a4Y8OCOtY/Q/dI
- jth+Ln6cQmjiBsBYBt7cHt5ieNOo1xnOac2KqEaLAg88/yhXkqMGWUTi0+/E6cIM
- wa9k2soLuzpxv8VeQrKmKA==
-Message-ID: <61e7f8dc-07c3-4300-b22e-15037c3ba10f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 7 Mar 2026 14:29:19 +0900
+ s=rs20250326; t=1772862590; v=1;
+ b=Re2i7o0CB1GQy3H93cEygFvD7gXSHrTHU3aLo2fySZ0CbZZj92iXb8lwqUAjczLD
+ 6NUDN2HJ/jvGIMaiJO3/roS2HZSQvqDgmNietlYT762jSlYNj6EnfE84uOp/PZ9q
+ AZFuoC+03wkNhyWmls7TuFYKTBapRCdTIDYo9BMy5lOMWKMLi2AmvCW+W9fNpxBB
+ t61dYKszpDYZmqP/73/hO2hpblAOLrBaGC30ThNYLDfinVRIOSmHTjylZUEan22p
+ 1XjVF1WuclnQ3AeQJUPAskzNv4s4GvBGYeJfb8dpuZt3tlYCMa3XybTKbih/38aw
+ 5xwpk50ESedD66n1cIUqMQ==
+Message-ID: <17fccf01-7784-44a2-9745-33a48e8c60e3@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 7 Mar 2026 14:48:49 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 6/6] coreaudio: Initialize the buffer for device change
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <20260304-coreaudio-v8-6-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <1921566.atdPhlSkOF@weasel>
+Subject: Re: [PATCH v6 1/4] system: memory: convert some helpers to const
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
+ Mads Ynddal <mads@ynddal.dk>, Peter Xu <peterx@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>
+References: <20260307044608.25486-1-mohamed@unpredictable.fr>
+ <20260307044608.25486-2-mohamed@unpredictable.fr>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <1921566.atdPhlSkOF@weasel>
+In-Reply-To: <20260307044608.25486-2-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,46 +78,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/04 20:39, Christian Schoenebeck wrote:
-> On Wednesday, 4 March 2026 07:16:59 CET Akihiko Odaki wrote:
->> Reallocate buffers when the active device change as the required buffer
->> size may differ.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
->> Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
->> ---
->>   audio/coreaudio.m | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->> index 23c3d1f80ac5..e4ec1df971c8 100644
->> --- a/audio/coreaudio.m
->> +++ b/audio/coreaudio.m
->> @@ -471,6 +471,7 @@ static OSStatus init_out_device(CoreaudioVoiceOut *core)
->> core->device_id = device_id;
->>       core->device_frame_size = device_frame_size;
->>       core->hw.samples = core->buffer_count * core->device_frame_size;
->> +    audio_generic_initialize_buffer_out(&core->hw);
->>       core->ioprocid = ioprocid;
->>
->>       return 0;
+On 2026/03/07 13:46, Mohamed Mediouni wrote:
+> Seemed to be a better alternative than making flatview_for_each_range pass non-const
+> pointers.
 > 
-> There is no specific reason to insert that call between the struct
-> initializers here, or is there? I mean the device is suspended at this point,
-> so it should not matter. Just looks a bit weird.
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   include/system/memory.h | 14 +++++++-------
+>   system/memory.c         |  6 +++---
+>   2 files changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index 0562af3136..1a140ef203 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -1339,7 +1339,7 @@ void memory_region_init(MemoryRegion *mr,
+>    *
+>    * @mr: the #MemoryRegion
+>    */
+> -void memory_region_ref(MemoryRegion *mr);
+> +void memory_region_ref(const MemoryRegion *mr);
 
-I will move it after core->ioprocid = ioprocid.
+I don't firmly oppose this, but I feel a bit uneasy about this change.
+
+You are right that this should be const in principle: this function does 
+not modify mr in any way.
+
+However, we can also consider the current implement as "abusing" the 
+const qualifier to express that we are not going to ref/unref. It is an 
+abuse, but I think it is practically makes sense.
 
 Regards,
 Akihiko Odaki
 
-> 
-> But in general, LGTM:
-> 
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> 
-> 
-> 
+>   
+>   /**
+>    * memory_region_unref: Remove 1 to a memory region's reference count
+> @@ -1765,7 +1765,7 @@ uint64_t memory_region_size(MemoryRegion *mr);
+>    *
+>    * @mr: the memory region being queried
+>    */
+> -static inline bool memory_region_is_ram(MemoryRegion *mr)
+> +static inline bool memory_region_is_ram(const MemoryRegion *mr)
+>   {
+>       return mr->ram;
+>   }
+> @@ -1777,7 +1777,7 @@ static inline bool memory_region_is_ram(MemoryRegion *mr)
+>    *
+>    * @mr: the memory region being queried
+>    */
+> -bool memory_region_is_ram_device(MemoryRegion *mr);
+> +bool memory_region_is_ram_device(const MemoryRegion *mr);
+>   
+>   /**
+>    * memory_region_is_romd: check whether a memory region is in ROMD mode
+> @@ -1787,7 +1787,7 @@ bool memory_region_is_ram_device(MemoryRegion *mr);
+>    *
+>    * @mr: the memory region being queried
+>    */
+> -static inline bool memory_region_is_romd(MemoryRegion *mr)
+> +static inline bool memory_region_is_romd(const MemoryRegion *mr)
+>   {
+>       return mr->rom_device && mr->romd_mode;
+>   }
+> @@ -2071,7 +2071,7 @@ MemoryRegion *memory_region_from_host(void *ptr, ram_addr_t *offset);
+>    *
+>    * @mr: the memory region being queried.
+>    */
+> -void *memory_region_get_ram_ptr(MemoryRegion *mr);
+> +void *memory_region_get_ram_ptr(const MemoryRegion *mr);
+>   
+>   /* memory_region_ram_resize: Resize a RAM region.
+>    *
+> @@ -2967,7 +2967,7 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr);
+>   int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
+>   bool prepare_mmio_access(MemoryRegion *mr);
+>   
+> -static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
+> +static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
+>   {
+>       /* ROM DEVICE regions only allow direct access if in ROMD mode. */
+>       if (memory_region_is_romd(mr)) {
+> @@ -2984,7 +2984,7 @@ static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
+>       return !memory_region_is_ram_device(mr);
+>   }
+>   
+> -static inline bool memory_access_is_direct(MemoryRegion *mr, bool is_write,
+> +static inline bool memory_access_is_direct(const MemoryRegion *mr, bool is_write,
+>                                              MemTxAttrs attrs)
+>   {
+>       if (!memory_region_supports_direct_access(mr)) {
+> diff --git a/system/memory.c b/system/memory.c
+> index c51d0798a8..eb515fbee4 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -1825,7 +1825,7 @@ Object *memory_region_owner(MemoryRegion *mr)
+>       return obj->parent;
+>   }
+>   
+> -void memory_region_ref(MemoryRegion *mr)
+> +void memory_region_ref(const MemoryRegion *mr)
+>   {
+>       /* MMIO callbacks most likely will access data that belongs
+>        * to the owner, hence the need to ref/unref the owner whenever
+> @@ -1866,7 +1866,7 @@ const char *memory_region_name(const MemoryRegion *mr)
+>       return mr->name;
+>   }
+>   
+> -bool memory_region_is_ram_device(MemoryRegion *mr)
+> +bool memory_region_is_ram_device(const MemoryRegion *mr)
+>   {
+>       return mr->ram_device;
+>   }
+> @@ -2415,7 +2415,7 @@ int memory_region_get_fd(MemoryRegion *mr)
+>       return mr->ram_block->fd;
+>   }
+>   
+> -void *memory_region_get_ram_ptr(MemoryRegion *mr)
+> +void *memory_region_get_ram_ptr(const MemoryRegion *mr)
+>   {
+>       uint64_t offset = 0;
+>   
 
 
