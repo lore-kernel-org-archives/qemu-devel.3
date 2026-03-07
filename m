@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718A5F55104
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 17:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF6AF55103
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 18:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyvi0-0003u0-QU; Sat, 07 Mar 2026 12:45:00 -0500
+	id 1vyw0H-0001kU-3i; Sat, 07 Mar 2026 13:03:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyvhz-0003tY-K8
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 12:44:59 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyvhy-00016b-0f
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 12:44:59 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4807068eacbso86212375e9.2
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 09:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772905495; x=1773510295; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OFsxOl6zIWrNsamLDFr3F2cFhvCsYX3I0jV0QKwgKQ0=;
- b=XbGU6ayBQQR3+u1da61eh+/Oq1vkHmJ1Me+kiZol9nD5tgDEIXKWxuB08+uby2bZAb
- zroieJXPN6txo2xc+7tsOBacJ4x0xpSJdjXSEXqDvraNxIYqR9ZV0w31LYMvvTqFi9oR
- fJoCaqnZOMcRVv/3B9fI7oBvO2CD92zExI5fhmEpT3HzAWiEDoZ0vF5LbYnkMh2Qz/Id
- 6tj20IbBvtWfMU0hlCbXcI9siZYVMwMaD6H96I365WqpSFsFFW7uMiJ0W+IfOZClKQGc
- gnpwRVmy1NPPNayWAF7Wr1h2NX5O86itUdsRciZFxgwHkxGzrF5tStW4KHuVQIwk7q0S
- OLsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772905495; x=1773510295;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OFsxOl6zIWrNsamLDFr3F2cFhvCsYX3I0jV0QKwgKQ0=;
- b=J4gMnc5bnxhq0AfDyLVX3SPs4MhqMNabKwx0ALwzhMefJTx4J00zXzvlGDPCQkeT0W
- tQEvQdhs05TBC4Ucel3Hf78x+fZS01QO+DW8UeB2CIZ2fds3rYYgLfvROQnZJnFzP56R
- KhdzuzjccnnHQHcc/NucS3Fk4vo8p3OAqXvXGGD6GKi5q8Z6M3jZ/ympbmrLMc94fgnp
- njkOCMB/i11Nriy5zabBtv9J4AbDf5dRXcXQd+NTAWEvGJzHj8GG8HY+wssHiNtAqwMD
- QfCIsxsiWv6EHJM7Vqa43Uad6kn7FXZIcIQev+T1O/RH52X8/sfC4AZIGnKMMPfCX7J6
- 0Wsg==
-X-Gm-Message-State: AOJu0Yx80OX07bUbC623dsohjrbuSgIE6YdkLmbV1u+wwMaTtSuwHcfs
- VLer8u34/kbC2aSI/Z/pkl1ooMU5pNqpMfM6lvjP3h/a+bKCSUuqJTC8ErDP3fMoiNs=
-X-Gm-Gg: ATEYQzy6NLvME7Q5hhlAqqsHx7pfU7I9tt7vHDRPhASxBHEhzJ1Y2cT3HdC16VuWKZb
- 3nwVEnNPXbc4mBI4Y7Y4SA06Q4nNb9pSnL+bnwr3uBkQp1qX46uzNZLfSii0mOA+jKovYDzd8km
- ZWlH7WNPn4szAs1u5wRY9zmksMIG5ss8QE9LNy4Gh9Bpzhcvcjos0DFWycAr7/ACoYkSv9dkQtO
- 3A+P9/W+WhBQUsBpg0D1biqt1kcbcwEOQ0N8i3JplNGKvXIaZOsSGcfbO7bU6v4C0w6EC10S6sh
- zZo7BcT/3rnsqpE8pRDqWXTYDEnf/0Bug0KV/CrHsGl5VWx4ftoZvjyEyHp2ukkinLFw1NJMy//
- 07xUZtrNzM2JUPR1yHsAdTGKU4npTqigTImubeLs5FQLUHVgw/vUISGxwjgbR72NjqoMDvlOlfR
- GxdHzDlRyO04cufhQYgjBCVAW6XA4G9GG4LO/rqvOnedg1nvmIsAcAvXw1e7qSi2A5SQhIMMTwY
- qX4
-X-Received: by 2002:a05:600c:870e:b0:47b:e2a9:2bd7 with SMTP id
- 5b1f17b1804b1-48526951415mr107613225e9.19.1772905495062; 
- Sat, 07 Mar 2026 09:44:55 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853044d849sm75773485e9.11.2026.03.07.09.44.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Mar 2026 09:44:54 -0800 (PST)
-Message-ID: <eb4166f0-41c2-4493-9a8b-24e1889dbf05@linaro.org>
-Date: Sat, 7 Mar 2026 18:44:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 05/13] hw/arm, target/arm: nested virtualisation on HVF
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyw0F-0001jN-OF
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:03:51 -0500
+Received: from p-west2-cluster4-host5-snip4-10.eps.apple.com ([57.103.69.161]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyw0B-0003Tm-Iy
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 13:03:50 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPS id
+ 63711180062D; Sat,  7 Mar 2026 18:03:45 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772906626; x=1775498626;
+ bh=I39KlZsy6P5F3w8BmyZE0FxzdEcPXKIH1UdSg5cxOh0=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=GA/qIy6xXsGMQGnGHzR7So5vFsN+Sl+W1EKdEY22Ef9qYXUE0ToL77xTg/ytHUNLElY/J/Zds9zttqzVtvVXdExqUHbdHz3M1eA6ycsebl3Q2yi3KFvg1mPKoCnq+5gV4dtEtokkYW95/NqdNmfgvC9LHn5XhEhomJmEopct0TAe+kiHfQ2aNEUygTTFtPl+AujFXKlv5/KEIUB/ujTAYswd1J+2jBXnJjLoqh0L57BelN92TJSiHrJhwOfUslk2nf+/sS7mQG7cxprBoDldKFeMyw8xbd0N37zzW8F2kIEKQ9uPtUnAqYhVEf5r0BCRekgHPVFrjoUerc59UhvYGw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-5 (Postfix) with ESMTPSA id
+ 04E0218001BC; Sat,  7 Mar 2026 18:03:42 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>
-References: <20260307153143.76893-1-mohamed@unpredictable.fr>
- <20260307153143.76893-6-mohamed@unpredictable.fr>
- <d2bd5f90-a0f7-490e-b735-43442f41c679@linaro.org>
- <E8185464-F6BB-4A50-BE57-EFB2A7F777F1@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <E8185464-F6BB-4A50-BE57-EFB2A7F777F1@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Alexander Graf <agraf@csgraf.de>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v19 04/13] target/arm: hvf: instantiate GIC early
+Date: Sat,  7 Mar 2026 19:03:21 +0100
+Message-ID: <20260307180330.75168-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260307180330.75168-1-mohamed@unpredictable.fr>
+References: <20260307180330.75168-1-mohamed@unpredictable.fr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE3MSBTYWx0ZWRfXwIZxnU9R/bYt
+ yBKMXNSN7zRZsrlhTY342WvVGcDfINGLmsvEIW6ySP4PGT8Jou8V1daL53+OJeJ6yOLRhDZiLD8
+ ltLTf9wgVOlz/BxOOzfjOZGC3x2C8CrIB0PdHdkX1/Gb6ctAycLfgaQuxkY0q+1Ql7vBcxpczn4
+ RgUIU3vHwsvMqvbLSjV4k2HWOXp5Kj4RziAN7FdEn5sZPWMGXRpSOHHchaH/LDTZupWokZamRGS
+ MfREJyWCYrght/FdrJ7P1pHj6tyW6e1o36/K8dCTXgSIgLegNCoWTYZmchs7kDX4f5UPLCigc9G
+ x+DNjN3oQAYFWXGwErDQWLDrx1wv7wtbPWMklxqLzIGwNPHyuQW9sowiEjwsWE=
+X-Proofpoint-ORIG-GUID: 7nU3hdl70mOTh7vsgGsS-ajB8xsSLwWK
+X-Proofpoint-GUID: 7nU3hdl70mOTh7vsgGsS-ajB8xsSLwWK
+X-Authority-Info-Out: v=2.4 cv=CL4nnBrD c=1 sm=1 tr=0 ts=69ac6881
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=8CAvFU3GWpP82fccr8MA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-07_06,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ mlxlogscore=551 phishscore=0 bulkscore=0 clxscore=1030 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603070171
+X-JNJ: AAAAAAABeWQekmaofsKwllgqXsaoERV9NmJBHMVeQpFaqaL5OBtZyCHRK/RGSr4z6glXebRfen/fbpKz2grVDRK7fsUMIs1OKZWIenXYb/Nu05ArCjxBkVrOHktykNCpc8NBK+kFrHyN9P3hysrloBMhwE70dj7NNlRD67vJzmx4MrSuti7GkgHOza9AdiZIjmG84NlCqznTH324zioXiQLhlIHXUGABFB81X6mX05wchEapuQ5FmvaJdlucaaEt0ksIAoh4YORxt97C6tB36vAfDWfshKjUsPEwybyt7FkEWTqh2MufDA920JATFsNYW5zpHoDY2AHlcFCB8ImL+E58OILA5kDu3MKU3Nr3/Dj28Y1XEW+zyFXmD2lu9/FJjQ/FU2GrEgDD5KM9KPFAO/65JNI4opmv2tl7I125Gean1HfEH8yxMVoDD1Uu3L0jrFcIQ4us0m8U+Txk9rk7ZdOtgYUOz57F+InFx1RLRG/5nRszyL7rMqKwi+Jvw501FBn4fwFQiWFT7sL8hVxiokRgglTiK+9I/wkUMUgaW7IsrHgAR/FVl4tfO0oQJ+D5FtZqTBZCypfbN7RrjqpG0FMy856kqV4Kez50LSBOKVWvfHO2pq9FNw+zO/pFNp+WGgigMq9gyDHSPWJPk4SkFIvPvIfOUEEUdDgfrqvtWgJ9ehEbeZMDsSV09clEcxhsAFdcgwhakPJSgbi+mfTlLfPltORMyr/altlH1mRLKR7yZA==
+Received-SPF: pass client-ip=57.103.69.161;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,103 +99,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 17:21, Mohamed Mediouni wrote:
-> 
-> 
->> On 7. Mar 2026, at 16:48, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 7/3/26 16:31, Mohamed Mediouni wrote:
->>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->>> ---
->>>   accel/hvf/hvf-all.c    |  1 +
->>>   accel/stubs/hvf-stub.c |  1 +
->>>   hw/arm/virt.c          |  5 +++++
->>>   include/system/hvf.h   |  5 +++++
->>>   target/arm/hvf/hvf.c   | 42 ++++++++++++++++++++++++++++++++++++++++--
->>>   5 files changed, 52 insertions(+), 2 deletions(-)
->>
->>
->>> diff --git a/include/system/hvf.h b/include/system/hvf.h
->>> index dc8da85979..0f0632f7ae 100644
->>> --- a/include/system/hvf.h
->>> +++ b/include/system/hvf.h
->>> @@ -28,9 +28,14 @@ extern bool hvf_allowed;
->>>   #define hvf_enabled() (hvf_allowed)
->>>   extern bool hvf_kernel_irqchip;
->>>   #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
->>> +extern bool hvf_nested_virt;
->>> +#define hvf_nested_virt_enabled()  (hvf_nested_virt)
->>> +#define hvf_nested_virt_enable(enable) hvf_nested_virt = enable
->>
->> Unsafe macro. Better expose the method and add a stub.
->>
-> Does this look saner? If so can send a rev with it…
+While figuring out a better spot for it, put it in hv_arch_vm_create().
 
-LGTM!
+After hv_vcpu_create is documented as too late, and deferring
+vCPU initialization isn't enough either.
 
-> 
-> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-> index 1c1437b467..66c3b48608 100644
-> --- a/accel/hvf/hvf-all.c
-> +++ b/accel/hvf/hvf-all.c
-> @@ -26,6 +26,10 @@ bool hvf_allowed;
->   bool hvf_kernel_irqchip;
->   bool hvf_nested_virt;
->   
-> +void hvf_nested_virt_enable(bool nested_virt) {
-> +    hvf_nested_virt = nested_virt;
-> +}
-> +
->   const char *hvf_return_string(hv_return_t ret)
->   {
->       switch (ret) {
-> diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
-> index cec1cbb056..dc365c5307 100644
-> --- a/accel/stubs/hvf-stub.c
-> +++ b/accel/stubs/hvf-stub.c
-> @@ -12,3 +12,12 @@
->   bool hvf_allowed;
->   bool hvf_kernel_irqchip;
->   bool hvf_nested_virt;
-> +
-> +void hvf_nested_virt_enable(bool nested_virt) {
-> +    /*
-> +     * This is called unconditionally from hw/arm/virt.c
-> +     * because we don't know if HVF is going to be used
-> +     * as that step of initialisation happens later.
-> +     * As such, do nothing here instead of marking as unreachable.
-> +     */
-> +}
-> diff --git a/include/system/hvf.h b/include/system/hvf.h
-> index 0f0632f7ae..a961df8b95 100644
-> --- a/include/system/hvf.h
-> +++ b/include/system/hvf.h
-> @@ -30,14 +30,14 @@ extern bool hvf_kernel_irqchip;
->   #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
->   extern bool hvf_nested_virt;
->   #define hvf_nested_virt_enabled()  (hvf_nested_virt)
-> -#define hvf_nested_virt_enable(enable) hvf_nested_virt = enable
->   #else /* !CONFIG_HVF_IS_POSSIBLE */
->   #define hvf_enabled() 0
->   #define hvf_irqchip_in_kernel() 0
->   #define hvf_nested_virt_enabled() 0
-> -#define hvf_nested_virt_enable(enable) 0
->   #endif /* !CONFIG_HVF_IS_POSSIBLE */
->   
-> +void hvf_nested_virt_enable(bool nested_virt);
-> +
->   #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
->   
->   typedef struct HVFState HVFState;
-> 
->>>   #else /* !CONFIG_HVF_IS_POSSIBLE */
->>>   #define hvf_enabled() 0
->>>   #define hvf_irqchip_in_kernel() 0
->>> +#define hvf_nested_virt_enabled() 0
->>> +#define hvf_nested_virt_enable(enable) 0
->>>   #endif /* !CONFIG_HVF_IS_POSSIBLE */
->>
->>
-> 
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/arm/hvf/hvf.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5fc8f6bbbd..d431d96ba3 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1230,6 +1230,28 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+     chosen_ipa_bit_size = pa_range;
+ 
+     ret = hv_vm_create(config);
++    if (hvf_irqchip_in_kernel()) {
++        if (__builtin_available(macOS 15.0, *)) {
++            /*
++             * Instantiate GIC.
++             * This must be done prior to the creation of any vCPU
++             * but past hv_vm_create()
++             */
++            hv_gic_config_t cfg = hv_gic_config_create();
++            hv_gic_config_set_distributor_base(cfg, 0x08000000);
++            hv_gic_config_set_redistributor_base(cfg, 0x080A0000);
++            ret = hv_gic_create(cfg);
++            if (ret != HV_SUCCESS) {
++                error_report("error creating platform VGIC");
++                goto cleanup;
++            }
++            os_release(cfg);
++        } else {
++            error_report("HVF: Unsupported OS for platform vGIC.");
++            ret = HV_UNSUPPORTED;
++            goto cleanup;
++        }
++    }
+ 
+ cleanup:
+     os_release(config);
+-- 
+2.50.1 (Apple Git-155)
 
 
