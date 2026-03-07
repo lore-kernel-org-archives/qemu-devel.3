@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A049F5141C
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86564F513F1
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytnA-0001SX-6G; Sat, 07 Mar 2026 10:42:12 -0500
+	id 1vytol-0006u9-Kz; Sat, 07 Mar 2026 10:43:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytn6-0001D6-5C
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:08 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytoD-0006gE-AB
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:43:18 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytn4-0002Qq-J7
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:07 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4852c9b4158so5997025e9.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:42:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyto9-0002gO-0f
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:43:17 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-439cd6b0aedso2479944f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:43:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772898124; x=1773502924; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3sbiV+H5M06szdNZTbNdyja9k8Sdt8kDUSoFguffq2c=;
- b=ROaXuuGBgruSbmW+4isgZZGjEEDCpxm/fgD8Rgq0BlnAQdYVnXeFfgG04Fs6H99RC/
- AFZdgQrnypttjSH6gGQ9OCHHHFOs6EZE2hFoj/rZIKwgDpNvNKRw5i9/BgZI2ivLzmNr
- xt92tDoCMWFx6DLe1mL+9Aq6rVDsgLYfKR8Q0CvKz/Xy5z4lnCt32G9eEaHRjjM2tZqM
- eEP5TGc/hc5QFW7b8NpqYTDYVAAQipTJEeZKrSJ+Q1CZ7I4BSltFak71SH6ZEyMIRQ6+
- 642D6z6cvCQ8Rk2lE3lbyskfdSHItQ3EohjkVyxszBxzuC9n4Fjy0TxTRSqss7zGjCZF
- h3CA==
+ d=linaro.org; s=google; t=1772898191; x=1773502991; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K8bdIpUsSaDWT9yjEAOcaZ+kceZGFEszMZs5LMnF+b4=;
+ b=plmG/IJ+JrwSyiHle0bKpuPr9SlHsZS1cE3EIBZlyluwt6CUvVk2x1oFdwRTaj35AT
+ 8hAM08qXuDrbsXBEJXXEjo9Za/zjAGbDcBDin7AIp5JCxGw8hqNExokG7f/7vSxxIFEm
+ DFKLlHvi7wipWNqqxy3qOdPqGxUQ5HKtdZe8V9FIMa4HyseGW2Rd9e7ZuTf5sVSMhQjy
+ KpyUj5X2EWAnTmV8yyZCxT93eRKevi0Rz9TlfVdTxIWpgnuEoFAbkcVWWZE72YpVk0e0
+ HEJsmRXmN2puV2R+g2HOh/gGkHmn8LbKdNcoipY4LNJ+S/8QHHNMNDpZhP+2U0V8qNUA
+ GE1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772898124; x=1773502924;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3sbiV+H5M06szdNZTbNdyja9k8Sdt8kDUSoFguffq2c=;
- b=PHic9EWub2ouKhO2B3jltc1vgYrSdA9u36QX+hGpG415g8CdBw2UJuTmYCUp39jO78
- Bp4oFfJEjokZ2bk88G9ZVs6+Op36Qmo8W3dLbFb3raMBvjkiE/hqYxscExJarTBNSqUv
- wUPdImVdxtpPdUmQpweoRkMWnXCWCR8wuNBkeg3KO47Yy8hOkvo5mCPYsGQnYGNVMBvA
- uVfIsOW7zBu2jnggpwv5MwBoWQ5zFv8J14pkV1hjatWAwkUUqNndLDj/5s4UVWGfWizM
- 1G66YrNheRtW6YHKFrSMHDgpJFfwZAknDHjGlb1G0xoSAvZFM6NbxRgi37p685xLwki3
- 7amQ==
-X-Gm-Message-State: AOJu0Yx4UxjBRFCkVo5KoWWu1GEUiUNv7DuVCDIOf1wmfSCUmC65+uhl
- epjXKwqQa+E0APfccKflTjLnOCXXrFiWT0pi3FUQPO8hPzryISw3GRrVodOxhTeNoFX1URxGmiD
- +5dcpuJU=
-X-Gm-Gg: ATEYQzycpzWDitQx7zhk7AEo+Qlh1Fd/PNhQayXvaEexboS66BVQjWs8odEf3QW39/n
- ApUDwrM41aUW858iPkZPx+yIDaQ+0WSY3/WY93dWtRLB6zobxu81+duBH7CvqnWXwM/WsBKz3ys
- pv46Eo7f/xNiTd+QMe2WbtGQBWDxGjh8BrgYDAvMEErcqbaNdG9DKxoycASgJWsVvXM+Mkj3ABm
- EwsRpS7UqDLJ2bgi9s5GMsPN2LpwsRF029A414qXhTsN11+SPyqV5IAIqa5A46tthzja+Geo/cB
- DhhCEvHtVqSZiZYB5I/tON+x0tO+3AhnK+ch6ly7s+4MZ/wD/xE0v+lWhbqjmK98Iwb+SWf6omU
- EwuUcxBqMTdb5rCGA9ltMaP2wSllkx+KXUxggxiUOajuiZzfFQ+L1O/hfv0VVGdjqW8C6qLw354
- YU//bwa9fFgp4Pn7Ux/S+ouJZbeuGhFrpI15UbvJoGnacj0CAQRI/5M0Cq27kLkd1L2Y7yF18Y
-X-Received: by 2002:a05:600c:4710:b0:480:20f1:7abd with SMTP id
- 5b1f17b1804b1-48526978dc0mr91060155e9.31.1772898124259; 
- Sat, 07 Mar 2026 07:42:04 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1772898191; x=1773502991;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=K8bdIpUsSaDWT9yjEAOcaZ+kceZGFEszMZs5LMnF+b4=;
+ b=oqm/JgXQYTrAmZC27F/6KnQrDqcgH6Xv/2tF6Kfg0J65rRzxtMLyUqa8kBJLhYFCfc
+ f0SJQ2Ar282brQs6X7AtfpMsTntbJrNpmrYBDSgGb0f/MWHVibRBttdfwSr97MUUGbzv
+ fouwhZcZE+dy7r02VD+fnLH3TgZE0g83OdLE1LPMfa9lf5xyS+9Uh6KAI6OUMEAHIr31
+ I8KNvpRQGKMKpKCGYOE5BxofNgrG7P3NY7ts8rvlDFQ6bHedDLbUNGJNJHWH68NvpuZR
+ iQVxtTd+urgR9mu5jxHdN9cRpEHM9hzaWgiXBlTicV30qnF07NPZx+lXUcDmwHCl1/vB
+ itUg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX70PEgPAL5zgY9NIA8roJrM5y10yF7aXoqFvTqfxq66znmKw0eDrhx+ALcOtDOpPTfBus3RcqmDTRb@nongnu.org
+X-Gm-Message-State: AOJu0YyTf+U3/t3Hn0Uxf4f7Bf6Tfn03CVY+WYpYhr7H/vMUbCj9NpkE
+ FfRwrQYyFSK3W4eO/cX0ediidMUGqRHpu+Qvs053nIQHODGBaCd9I8CQTROxIoRx5jk=
+X-Gm-Gg: ATEYQzywX4KT2H7EWhe0yErV7UB87iVwEIjy16qk7rg9Q1nRHGbwKlEZgxCwpyXJUgv
+ Hp5U/3i8ZTd1EKjskU2P8Ks8S+qP6c41PnHyeVd8zRe9OpQgrrlBUZLyAg53/uoQRmJC45Nh5MT
+ LhI69eCiJK1+2r2mou6dLqYH/dlCh0OMTtX3QoWJjcFMtsPVRRgBzuUewN+O6Id1tJZsBxG1s0m
+ a2U2HE8TjD31X3nZVyaHi5Puf0iiO99Y7CPZtMwxkMaDqB4Rbo5LmoQ6gXy3Txk2nThxr/4fp1H
+ U2Prh7Imyl3NZ3aFDHaVUUK/WUECRfZM7VMnRZZDWjCuke5dzeL2DdN6jN8C+DZM/FL6lV8y41d
+ 5x8Dm/wsxSwM0IN7HfULbuWq0LMsWkPzFc9dUu2NMXbIEKzc7tjnzIbWoFw4d29YDuenlbQUYVW
+ ClJSIe3ymgSJkHP6278nEGkRmRrAIkNUv3S0EN6mtaMCQnInBbyf5dj7CzXTvZblYYUg==
+X-Received: by 2002:a05:600c:6992:b0:483:c490:8c0 with SMTP id
+ 5b1f17b1804b1-48526923bdfmr96416755e9.11.1772898191060; 
+ Sat, 07 Mar 2026 07:43:11 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852ad0ce60sm151843335e9.12.2026.03.07.07.42.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 07 Mar 2026 07:42:03 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 0/6] hw/i386/pc: Remove deprecated 4.0 machines
-Date: Sat,  7 Mar 2026 16:41:56 +0100
-Message-ID: <20260307154202.86309-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ 5b1f17b1804b1-485276b75eesm100159865e9.14.2026.03.07.07.43.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Mar 2026 07:43:10 -0800 (PST)
+Message-ID: <4cdbd6df-cf0e-4fb1-8d23-4fe52b7dcf52@linaro.org>
+Date: Sat, 7 Mar 2026 16:43:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v18 12/13] hvf: arm: disable SME when nested virt is active
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>
+References: <20260307153143.76893-1-mohamed@unpredictable.fr>
+ <20260307153143.76893-13-mohamed@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260307153143.76893-13-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,41 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1 y.o. dust Thomas asked me to rebase & post:
+On 7/3/26 16:31, Mohamed Mediouni wrote:
+> Currently, Apple doesn't support the nested virtualisation + SME combination.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   target/arm/hvf/hvf.c | 2 ++
+>   target/arm/hvf_arm.h | 5 +++++
+>   2 files changed, 7 insertions(+)
 
-The versioned 'pc' and 'q35' machines up to 4.0 been marked
-as deprecated two releases ago, and are older than 6 years,
-so according to our support policy we can remove them.
-
-Based-on: <20260307152635.83893-1-philmd@linaro.org>
-          "hw/i386/pc: Remove deprecated 3.1 machines"
-
-Philippe Mathieu-Daudé (6):
-  hw/i386/pc: Remove deprecated pc-q35-4.0[.1] and pc-i440fx-4.0
-    machines
-  system/hostmem: Remove HostMemoryBackend::use_canonical_path field
-  hw/i386/pc: Remove pc_compat_4_0[] array
-  hw/core/machine: Remove the hw_compat_4_0[] array
-  hw/virtio: Remove VirtIOBalloon::qemu_4_0_config_size field
-  hw/rtc/pl031: : Remove PL031State::migrate_tick_offset field
-
- qapi/qom.json                      |  8 +------
- include/hw/core/boards.h           |  3 ---
- include/hw/i386/pc.h               |  3 ---
- include/hw/rtc/pl031.h             |  1 -
- include/hw/virtio/virtio-balloon.h |  1 -
- include/system/hostmem.h           |  2 +-
- backends/hostmem.c                 | 34 ------------------------------
- hw/core/machine.c                  | 12 -----------
- hw/i386/pc.c                       |  3 ---
- hw/i386/pc_piix.c                  | 11 ----------
- hw/i386/pc_q35.c                   | 25 ----------------------
- hw/rtc/pl031.c                     | 22 -------------------
- hw/virtio/virtio-balloon.c         |  5 -----
- qemu-options.hx                    | 10 ---------
- 14 files changed, 2 insertions(+), 138 deletions(-)
-
--- 
-2.52.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
