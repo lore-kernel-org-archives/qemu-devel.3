@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53BD3FC9EF9
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EE6FC9EF5
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:30:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vypqn-0004J7-8G; Sat, 07 Mar 2026 06:29:41 -0500
+	id 1vypqn-0004J3-6A; Sat, 07 Mar 2026 06:29:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vypql-0004IE-S2
+ id 1vypql-0004I0-I8
  for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:29:39 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vypqj-0006Az-Uc
+ id 1vypqj-0006Af-P3
  for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:29:39 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-439ac15f35fso6662558f8f.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:29:37 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439c56e822eso4414155f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:29:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772882976; x=1773487776; darn=nongnu.org;
+ d=linaro.org; s=google; t=1772882974; x=1773487774; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xMnDQck5QQNf//a2RzY2HmbmULk0Zh9OexRkCmP4tes=;
- b=atEvJj1jY4DyKVaEzuWtqu5ABQU8l1PsZBpiHh4GU9rtVsZ1KmM+9lmd4RgP7B7zux
- 2CdSFQ46os29lx3u/KE5piZrO7+yjz4LT5+vM7NL5ok+kzK4nbO5lG9ufee5WeWKh2CN
- UdTe02yvRYCgYzibAVAm59na4YLpP1gv3OZ5oIO5my5axB2M8FGvDrcaEvsuXxvXQ++E
- VvO+/bT9IczN3xscpivFXS7UmMUH5Z3wMRX2aDHrmCNq1WLTII48PSyyPIhMnFgZpvhb
- mxT8aYtjSucWaGEwD556jzLHI6GGs+2XoxjdPJ1dBf/Uk6PHUdp7Pq5U7yzWQs5KrE0k
- d7Pw==
+ bh=uMhouh8lU7AhEzD5xKxFtylYc2aC2/dOO3bXKq0ZJng=;
+ b=IujCuo3EWmdhwRTjV67A5sqJGhUoAvLCP4luB3XICghIxuidGCZhKFK49MU91fKgbr
+ EfObkU618z5Wsftr8g/00hhOt6X1SySScgWbfUQX5XdmkpiRPDLvOl+DZTWdcTmEgtPv
+ ZG6kzhDPCQwFhDv8sV3klgmKWtyphgCQtgdsISzR3hjtox1Kfzho6JsWU2LOqElH6dWr
+ 9d82xpZatxL96k+af8W/btN/OswZSYsoJ35m3lYEVmXc8yRnw2DjUFb35bLFIbpKX1rK
+ XrptkG1B+kNrQ1YQT/i+m3shfq1O+wDD0yiDELy2KA3hk/NGuID3m4qF+E5B6gqleRxx
+ p3Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772882976; x=1773487776;
+ d=1e100.net; s=20230601; t=1772882974; x=1773487774;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xMnDQck5QQNf//a2RzY2HmbmULk0Zh9OexRkCmP4tes=;
- b=dCNHmjUZ4+Vgs77N307dEVVm2i86lr3v7izAgxs6Kd7ADPDVSwU+YGXFAYkkZ9xUKN
- W4gDSggqfBsZDpCDYLzLpmjEhNeTjvcSr5XjpHrzpFobNslWOnGlbA8kSprKPuXtsEIQ
- 3dXUB683+QtjHLpxxo3dxulKPjKG+FVgm+lfj6UgjWYeq+4kx1t67PK5Q8jyYrlaX2jl
- rquYLKQxk6LOw4niqcIjhNtp+pEvkohKacqU0CT7wUsXq91bL+lTzuztmgDkjKNT49Ds
- hjhjsXD5xVGdId2E8G23FfyiHMORYFsWLcySSQaASfKrpS0ctgIpc97WY4ZE0NkZvgJ9
- 3V1g==
-X-Gm-Message-State: AOJu0YyzA1Qp/aTLE3JnwA3cmffV+4ECetmcXB1K8D27XKHo87yDWAIB
- 686G3BgVaPViPjfC9LebRKYTRw4sBEDgKI2vRMeGOJVpsuRmveQmu6SQ4ley1vm53ascP++/OSJ
- oBsUh
-X-Gm-Gg: ATEYQzwixj7kIzoKcnVzxJ/sEe+t8aofUUOWSiOjKVc/T4YfZ6PvUMb7KMSNr3jtP0K
- wAef468e8b1V7yZ53vqKROmK9g10NbVbqnDY+FLgQMU5ASKksxBtAgHFaIQbhIaJS2v7UZp+z3S
- rruJOz26HA2rBxCGSJYXohLRpI+Fgl8e4DX0cWJG72et/5ojfR3RRFYIBl0GcSrV42OBYHWt+Z4
- +RjtkZ0PEtc+DPMsGAFi+al+YqtRWi7u3tXg+DtD79e/Ckp9+OR69xJdNcXU+POgMtO+bIllbS8
- utP2e+I2PfGVfhrX9z9yP9jGXIdlWcQiN3/x6Uc9/MvxMHxUfITTWh4vY403MQjbx9A9FtQiE24
- A8M1TzwE6IN5Tq8sZ15VcAh8xO1QVAg4OeJ1+IIo0Knueh1svhDWEJit5Jh882KigQ2oMxGvdyx
- qwOn84eK2F45NQT8izX/Q1LC5jsYuHLIwTQ2ZnM4UGbMv/HWuoy9/2XxQ6lX6iyrKvdjFZqmp7Q
- niHWtVibNeE/qXkswwxO8JLJ4kfTWc=
-X-Received: by 2002:a05:600c:6299:b0:480:4a4f:c36f with SMTP id
- 5b1f17b1804b1-4852696973bmr81590865e9.21.1772882976420; 
- Sat, 07 Mar 2026 03:29:36 -0800 (PST)
+ bh=uMhouh8lU7AhEzD5xKxFtylYc2aC2/dOO3bXKq0ZJng=;
+ b=vBT/fDpU8ch7I60NfMcXG1mGfdRbs/h60eEZAL9beIjGUvSDL14R24GGtNuTUCsWgE
+ /7bof9wE/J7NsTVI8IGWomP0bglal2O55Cd7CpfdxGud9VXwesQLI1W1JlvNmRYXs2F3
+ QWMHuLJifDrA4YOMSo5DeOoYejO0KW3juVyBDPQxmmICFYkyw7+tF849mX26C+nisCtE
+ 2oM6m7g1VKdB2WG1GJc2d9P52q7ITXqV55oDj8oi90fusWEjLu6nEmWCnnSaRjAvASyq
+ ZJXQfgo4zAnJMhLJxeAp97imaXKHLMp3dsyGPQkmqWSOMi53cfiooyrnLL0GOErFMsF2
+ OZ+w==
+X-Gm-Message-State: AOJu0YxBjkhG0O952xnMPFHsXHyeCW2QST48GUwUr7AAUgHDtDbPErEv
+ SkdP8DvzRYUHDWWqY7RgKgHHIX9Zb1wPJR4Uraveih07iKLKX35ZTEcC2y4SzMYkR0BHtHxd3GY
+ 1cuex
+X-Gm-Gg: ATEYQzzUgA6ZRaIoqanSmnorWJyAo61CAGQrP+nPHHafFB4mWc41umVVTSdMHobBaIk
+ SwTwyPQKnMVklsvzaQ7wYeZCdm80g15z94M5AHv/BaJa6fduWrX+8JVcIupS3P1HO81CQ4i4UlE
+ +u39ZZHXIUzHkkAqwtZ6OMlNm/Ybx+3BVp4MyrTLkIunFtWG9NPpNMV610Og08WXkBODdFDQzWK
+ qJ3UZTBrwmcLSPrVWtAS2PGy0BQhvEnUrLu0Xu3jcByrLxmxNtERqGNF2RvvVwZHJlPAjB7/2Gj
+ okw/mwfL1oFU7Kbs2qhyfI12LkEMXHZPn8mnLw7ucs1smZVtwgCm6p0dVjaNeQi5RUHiRvDxUeY
+ IFMIyL8WBY9M6445bte+lgTNV7KFDBl9wU4alGm0m99zEGsprnIaB7N1JTYnijpdjS2g8nxI263
+ VTxtACeW2FxPJQZ39YGVtE9OyHUs0PauUEPdt2E15d68mkgRu+NbH0fO18UMYrBGubOSSoxPawE
+ he4s37cZnjB9l5LFhhoCmUfeRlQk7U=
+X-Received: by 2002:a05:600c:1e88:b0:477:6d96:b3e5 with SMTP id
+ 5b1f17b1804b1-48526916beamr101336255e9.7.1772882974219; 
+ Sat, 07 Mar 2026 03:29:34 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853252cae1sm13462255e9.3.2026.03.07.03.29.35
+ 5b1f17b1804b1-4853252cae1sm13462255e9.3.2026.03.07.03.29.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 03:29:35 -0800 (PST)
+ Sat, 07 Mar 2026 03:29:33 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH 3/3] hw/timer/slavio_timer: Free resources allocated in
- instance_init
-Date: Sat,  7 Mar 2026 11:29:31 +0000
-Message-ID: <20260307112931.3322532-4-peter.maydell@linaro.org>
+Subject: [PATCH 1/3] hw/sparc/sun4m: Don't set up dummy cpu interrupts
+Date: Sat,  7 Mar 2026 11:29:29 +0000
+Message-ID: <20260307112931.3322532-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260307112931.3322532-1-peter.maydell@linaro.org>
 References: <20260307112931.3322532-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,106 +102,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The slavio_timer device's instance_init function allocates memory for
-TimerContext structs and a ptimer, but it never frees this memory, so
-we will leak it if the QMP interface does introspection of this
-device type, as reported by the clang address sanitizer:
+In the sun4m machine init, we set up the cpu_irqs[] array
+with the real inbound IRQs for each CPU, followed by some
+dummy IRQs for the remaining slots from smp_cpus up to
+MAX_CPUS. These dummy IRQs do nothing when set/cleared
+because the dummy_cpu_set_irq() function does nothing.
 
-Indirect leak of 4896 byte(s) in 17 object(s) allocated from:
-    #0 0x5f2948d9b14d in calloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0c14d) (BuildId: 7210711bdf6f7fbd0b863bd2dfcc7c42c7175db1)
-    #1 0x758584b11771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5f2949097b8a in slavio_timer_init /home/pm215/qemu/build/san/../../hw/timer/slavio_timer.c:403:14
-    #3 0x5f29495d790f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #4 0x5f29495d96ef in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
-    #5 0x5f2949a30a26 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+Instead of creating these "do nothing" qemu_irqs, instead
+pass the number of CPUs to slavio_intctl_init() so that it
+can only wire up the interrupt controller's interrupts
+for the CPUs that actually exist. Calling qemu_set_irq()
+on an irq that isn't connected does nothing, so this is
+a simpler way to achieve the same result.
 
-Indirect leak of 1632 byte(s) in 17 object(s) allocated from:
-    #0 0x5f2948d9b14d in calloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0c14d) (BuildId: 7210711bdf6f7fbd0b863bd2dfcc7c42c7175db1)
-    #1 0x758584b11771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5f2948f7c65a in ptimer_init /home/pm215/qemu/build/san/../../hw/core/ptimer.c:464:9
-    #3 0x5f2949097c1f in slavio_timer_init /home/pm215/qemu/build/san/../../hw/timer/slavio_timer.c:407:32
-    #4 0x5f29495d790f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #5 0x5f29495d96ef in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
-    #6 0x5f2949a30a26 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+This cleanup fixes an unimportant memory leak reported by
+the address sanitizer that happens because we allocate these
+dummy IRQs with qemu_allocate_irqs():
 
-Avoid the TimerContext leaks by making them an array inside the
-SLAVIO_TimerState struct instead of allocating a compile-time-fixed
-number of them each individually with g_new0() and then throwing away
-the pointer.
-
-Avoid the ptimer() leak by calling ptimer_free in
-instance_finalize().
+Direct leak of 1920 byte(s) in 15 object(s) allocated from:
+    #0 0x5cb7b120cf63 in malloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0bf63) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
+    #1 0x743cd6dc5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x5cb7b1a42fb4 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
+    #3 0x5cb7b19e7e72 in sun4m_hw_init /home/pm215/qemu/build/san/../../hw/sparc/sun4m.c:845:23
+    #4 0x5cb7b141d3dd in machine_run_board_init /home/pm215/qemu/build/san/../../hw/core/machine.c:1709:5
+    #5 0x5cb7b1542895 in qemu_init_board /home/pm215/qemu/build/san/../../system/vl.c:2717:5
+    #6 0x5cb7b1542895 in qmp_x_exit_preconfig /home/pm215/qemu/build/san/../../system/vl.c:2811:5
+    #7 0x5cb7b15493ac in qemu_init /home/pm215/qemu/build/san/../../system/vl.c:3849:9
+    #8 0x5cb7b1f3f201 in main /home/pm215/qemu/build/san/../../system/main.c:71:5
+    #9 0x743cd4a2a1c9 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #10 0x743cd4a2a28a in __libc_start_main csu/../csu/libc-start.c:360:3
+    #11 0x5cb7b1172114 in _start (/home/pm215/qemu/build/san/qemu-system-sparc+0xd71114) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/timer/slavio_timer.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ hw/sparc/sun4m.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
-index 4a3e227fba..eccdc532fb 100644
---- a/hw/timer/slavio_timer.c
-+++ b/hw/timer/slavio_timer.c
-@@ -62,20 +62,21 @@ typedef struct CPUTimerState {
- #define TYPE_SLAVIO_TIMER "slavio_timer"
- OBJECT_DECLARE_SIMPLE_TYPE(SLAVIO_TIMERState, SLAVIO_TIMER)
- 
-+typedef struct TimerContext {
-+    MemoryRegion iomem;
-+    SLAVIO_TIMERState *s;
-+    unsigned int timer_index; /* 0 for system, 1 ... MAX_CPUS for CPU timers */
-+} TimerContext;
-+
- struct SLAVIO_TIMERState {
-     SysBusDevice parent_obj;
- 
-     uint32_t num_cpus;
-     uint32_t cputimer_mode;
-     CPUTimerState cputimer[MAX_CPUS + 1];
-+    TimerContext timer_context[MAX_CPUS + 1];
- };
- 
--typedef struct TimerContext {
--    MemoryRegion iomem;
--    SLAVIO_TIMERState *s;
--    unsigned int timer_index; /* 0 for system, 1 ... MAX_CPUS for CPU timers */
--} TimerContext;
--
- #define SYS_TIMER_SIZE 0x14
- #define CPU_TIMER_SIZE 0x10
- 
-@@ -400,7 +401,7 @@ static void slavio_timer_init(Object *obj)
-         uint64_t size;
-         char timer_name[20];
- 
--        tc = g_new0(TimerContext, 1);
-+        tc = &s->timer_context[i];
-         tc->s = s;
-         tc->timer_index = i;
- 
-@@ -420,6 +421,15 @@ static void slavio_timer_init(Object *obj)
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index a17bdb3692..29bc26ebcb 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -196,10 +196,6 @@ static void cpu_set_irq(void *opaque, int irq, int level)
      }
  }
  
-+static void slavio_timer_finalize(Object *obj)
-+{
-+    SLAVIO_TIMERState *s = SLAVIO_TIMER(obj);
-+
-+    for (int i = 0; i <= MAX_CPUS; i++) {
-+        ptimer_free(s->cputimer[i].timer);
-+    }
-+}
-+
- static const Property slavio_timer_properties[] = {
-     DEFINE_PROP_UINT32("num_cpus",  SLAVIO_TIMERState, num_cpus,  0),
- };
-@@ -438,6 +448,7 @@ static const TypeInfo slavio_timer_info = {
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(SLAVIO_TIMERState),
-     .instance_init = slavio_timer_init,
-+    .instance_finalize = slavio_timer_finalize,
-     .class_init    = slavio_timer_class_init,
- };
+-static void dummy_cpu_set_irq(void *opaque, int irq, int level)
+-{
+-}
+-
+ static void sun4m_cpu_reset(void *opaque)
+ {
+     SPARCCPU *cpu = opaque;
+@@ -344,6 +340,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
  
+ static DeviceState *slavio_intctl_init(hwaddr addr,
+                                        hwaddr addrg,
++                                       unsigned int smp_cpus,
+                                        qemu_irq **parent_irq)
+ {
+     DeviceState *dev;
+@@ -355,7 +352,7 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
+     s = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(s, &error_fatal);
+ 
+-    for (i = 0; i < MAX_CPUS; i++) {
++    for (i = 0; i < smp_cpus; i++) {
+         for (j = 0; j < MAX_PILS; j++) {
+             sysbus_connect_irq(s, i * MAX_PILS + j, parent_irq[i][j]);
+         }
+@@ -841,9 +838,6 @@ static void sun4m_hw_init(MachineState *machine)
+         cpu_devinit(machine->cpu_type, i, hwdef->slavio_base, &cpu_irqs[i]);
+     }
+ 
+-    for (i = smp_cpus; i < MAX_CPUS; i++)
+-        cpu_irqs[i] = qemu_allocate_irqs(dummy_cpu_set_irq, NULL, MAX_PILS);
+-
+     /* Create and map RAM frontend */
+     dev = qdev_new("memory");
+     object_property_set_link(OBJECT(dev), "memdev", OBJECT(ram_memdev), &error_fatal);
+@@ -860,6 +854,7 @@ static void sun4m_hw_init(MachineState *machine)
+ 
+     slavio_intctl = slavio_intctl_init(hwdef->intctl_base,
+                                        hwdef->intctl_base + 0x10000ULL,
++                                       smp_cpus,
+                                        cpu_irqs);
+ 
+     for (i = 0; i < 32; i++) {
 -- 
 2.43.0
 
