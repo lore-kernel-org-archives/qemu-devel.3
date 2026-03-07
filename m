@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D6BF5510A
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFF4F55107
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 19:53:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyxhs-00083O-Bj; Sat, 07 Mar 2026 14:53:00 -0500
+	id 1vyxi9-00087p-S0; Sat, 07 Mar 2026 14:53:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhr-00083A-4p
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:52:59 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi8-00087Z-JI
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:16 -0500
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxhp-0008U9-8b
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:52:58 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vyxi7-0008VW-23
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 14:53:16 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id D735942AFC;
- Sat,  7 Mar 2026 19:52:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921C3C19422;
- Sat,  7 Mar 2026 19:52:53 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 3A71F43515;
+ Sat,  7 Mar 2026 19:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66CEC19422;
+ Sat,  7 Mar 2026 19:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772913175;
- bh=0nM1s+NQvWZ8mFk4qsfcfN21HkyWkiji/p4/PrOht4w=;
+ s=k20201202; t=1772913194;
+ bh=x2p9sfsUBTUAYtkqoTf6MRparRAy9QhO3P2K4BkAkCQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=PYvsxZ1nbnLz3SYK6iAvVvDoKc/ccirJKRFdtiq/tHAtrpHD9LYQSly1VkMe4oBJI
- 5FFLxQZYBc5br0ge9WJOQ2shpGDHs11Wbq4W6K11+ZKRWMh5J8554VUcir7NS0TTcS
- sPA7KWEZ0SD/sv4YS8dyDWtBa72zoRD+7n8Kt6a5l/fyvNAyk4V0hvc8rMVaPZvgkf
- dw5hbBCyKcBZ4rxDY1+pn4wLzvIUFw3zgVF4cji6MbEvQ1Ry3LEvOdFFDaC4lspS43
- 0QoyeGqBRhv2kDzqBGxH24TdVQe8ROHy0bPduPa6crhxaYDG76c6Sp1nBnmyRJmaTw
- enfkqy0bw4I+A==
+ b=T12hHsbfvCwnQbixu8gSulfU/29Ws6hUs/w6m7zhX+971RrvIUefIhJagc2C8qTjU
+ x73gf/1NslIzl5TABZBDsdqvLjsUp9yksXCQWx3L8zpw5O5Do88sqpYqMZWpS/fomP
+ 2GbASiBJHrEvksq9mIuF+qFbGWzTBB7ulCjIAPN9Z7m3FeHi56d+crxQUCwNAr3TW9
+ cCaQTwxVdL1TRyD8cnHaFUAIzTo2bcZm3CO/8dae+NhKoKasftX1pQ96dHPK/pnQEU
+ gNUlypJ9FGzz68ttEZMT+U1mPeZJYxGn7uAClo298zbulLNGCf6o0RjO4uNu869PZ7
+ jir8gw9+LNlFw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -42,14 +42,13 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 03/12] linux-user/strace: fix printing of file offsets
-Date: Sat,  7 Mar 2026 20:52:34 +0100
-Message-ID: <20260307195243.8813-4-deller@kernel.org>
+Subject: [PATCH 10/12] tests/tcg/multiarch/test-mmap: Print more details
+Date: Sat,  7 Mar 2026 20:52:41 +0100
+Message-ID: <20260307195243.8813-11-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307195243.8813-1-deller@kernel.org>
 References: <20260307195243.8813-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
  envelope-from=deller@kernel.org; helo=sea.source.kernel.org
@@ -74,150 +73,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
+From: Bingwu Zhang <xtex@astrafall.org>
 
-Previously, 64-bit file offsets (loff_t) were printed using `print_raw_param()`
-function, which led to silent truncation of the upper part. This commit fixes
-this issue by adding two helper functions:
+Useful for debugging
 
-1. print_file_offset32(): prints 32-bit file offsets (off_t)
-2. print_file_offset64(): prints 64-bit file offsets (loff_t)
-
-Changelog v2:
-
-1. Make `print_file_offset32()` static.
-2. Use `last` parameter in `print_file_offset32()`.
-3. Rename `low` and `high` parameters of `print_file_offset64()` to `word0`,
-`word1` respectively
-4. Convert `last` to bool for `print_file_offset[32,64]()`
-5. Use `PRId64` instead of `PRIu64` for `print_file_offset64()`
-6. Fix `print__llseek()`
-
-Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/strace.c | 43 +++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ tests/tcg/multiarch/test-mmap.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index ca67cfd09d..d253b522bf 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -85,6 +85,10 @@ UNUSED static void print_enums(const struct enums *, abi_long, int);
- UNUSED static void print_at_dirfd(abi_long, int);
- UNUSED static void print_file_mode(abi_long, int);
- UNUSED static void print_open_flags(abi_long, int);
-+UNUSED static void print_file_offset32(abi_long offset, bool last);
-+UNUSED static void print_file_offset64(abi_long word0,
-+                                       abi_long word1,
-+                                       bool last);
- UNUSED static void print_syscall_prologue(const struct syscallname *);
- UNUSED static void print_syscall_epilogue(const struct syscallname *);
- UNUSED static void print_string(abi_long, int);
-@@ -1664,6 +1668,20 @@ print_open_flags(abi_long flags, int last)
-     print_flags(open_flags, flags, last);
+diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
+index e297f4b1e9..88f7a04101 100644
+--- a/tests/tcg/multiarch/test-mmap.c
++++ b/tests/tcg/multiarch/test-mmap.c
+@@ -442,19 +442,19 @@ void check_invalid_mmaps(void)
+ 
+     /* Attempt to map a zero length page.  */
+     addr = mmap(NULL, 0, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+-    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
+     fail_unless(addr == MAP_FAILED);
+     fail_unless(errno == EINVAL);
+ 
+     /* Attempt to map a over length page.  */
+     addr = mmap(NULL, -4, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+-    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
+     fail_unless(addr == MAP_FAILED);
+     fail_unless(errno == ENOMEM);
+ 
+     /* Attempt to remap a region which exceeds the bounds of memory. */
+     addr = mremap((void *)((uintptr_t)pagesize * 10), SIZE_MAX & ~(size_t)pagemask, pagesize, 0);
+-    fprintf(stdout, "%s mremap addr=%p", __func__, (void *)addr);
++    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)addr, errno);
+     fail_unless(addr == MAP_FAILED);
+     fail_unless(errno == EFAULT);
+ 
+@@ -465,8 +465,11 @@ void check_shrink_mmaps(void)
+ {
+     unsigned char *a, *b, *c;
+     a = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)a, errno);
+     b = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)b, errno);
+     c = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)c, errno);
+ 
+     fail_unless(a != MAP_FAILED);
+     fail_unless(b != MAP_FAILED);
+@@ -479,6 +482,7 @@ void check_shrink_mmaps(void)
+ 
+     /* Shrink the middle mapping in-place; the others should be unaffected */
+     b = mremap(b, pagesize * 2, pagesize, 0);
++    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)b, errno);
+     fail_unless(b != MAP_FAILED);
+ 
+     /* Ensure we can still access all valid mappings */
+@@ -489,6 +493,8 @@ void check_shrink_mmaps(void)
+     munmap(a, 2 * pagesize);
+     munmap(b, pagesize);
+     munmap(c, 2 * pagesize);
++
++    fprintf(stdout, " passed\n");
  }
  
-+/* Prints 32-bit file offset (off_t) */
-+static void
-+print_file_offset32(abi_long offset, bool last)
-+{
-+    print_raw_param(TARGET_ABI_FMT_ld, offset, last);
-+}
-+
-+/* Prints 64-bit file offset (loff_t) */
-+static void
-+print_file_offset64(abi_long word0, abi_long word1, bool last)
-+{
-+    print_raw_param64("%" PRId64, target_offset64(word0, word1), last);
-+}
-+
- static void
- print_syscall_prologue(const struct syscallname *sc)
- {
-@@ -2256,11 +2274,13 @@ print_fallocate(CPUArchState *cpu_env, const struct syscallname *name,
-     print_raw_param("%d", arg0, 0);
-     print_flags(falloc_flags, arg1, 0);
- #if TARGET_ABI_BITS == 32
--    print_raw_param("%" PRIu64, target_offset64(arg2, arg3), 0);
--    print_raw_param("%" PRIu64, target_offset64(arg4, arg5), 1);
-+    /* On 32-bit targets, two registers are used for `loff_t` */
-+    print_file_offset64(arg2, arg3, false);
-+    print_file_offset64(arg4, arg5, true);
- #else
--    print_raw_param(TARGET_ABI_FMT_ld, arg2, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg3, 1);
-+    /* On 64-bit targets, one register is used for `loff_t` */
-+    print_file_offset64(arg2, 0, false);
-+    print_file_offset64(arg3, 0, true);
- #endif
-     print_syscall_epilogue(name);
- }
-@@ -2666,8 +2686,7 @@ print__llseek(CPUArchState *cpu_env, const struct syscallname *name,
-     const char *whence = "UNKNOWN";
-     print_syscall_prologue(name);
-     print_raw_param("%d", arg0, 0);
--    print_raw_param("%ld", arg1, 0);
--    print_raw_param("%ld", arg2, 0);
-+    print_file_offset64(arg1, arg2, false);
-     print_pointer(arg3, 0);
-     switch(arg4) {
-     case SEEK_SET: whence = "SEEK_SET"; break;
-@@ -2688,7 +2707,7 @@ print_lseek(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     print_syscall_prologue(name);
-     print_raw_param("%d", arg0, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg1, 0);
-+    print_file_offset32(arg1, false);
-     switch (arg2) {
-     case SEEK_SET:
-         qemu_log("SEEK_SET"); break;
-@@ -2719,7 +2738,7 @@ print_truncate(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     print_syscall_prologue(name);
-     print_string(arg0, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg1, 1);
-+    print_file_offset32(arg1, true);
-     print_syscall_epilogue(name);
- }
- #endif
-@@ -2736,7 +2755,7 @@ print_truncate64(CPUArchState *cpu_env, const struct syscallname *name,
-         arg1 = arg2;
-         arg2 = arg3;
-     }
--    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
-+    print_file_offset64(arg1, arg2, true);
-     print_syscall_epilogue(name);
- }
- #endif
-@@ -2753,7 +2772,7 @@ print_ftruncate64(CPUArchState *cpu_env, const struct syscallname *name,
-         arg1 = arg2;
-         arg2 = arg3;
-     }
--    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
-+    print_file_offset64(arg1, arg2, true);
-     print_syscall_epilogue(name);
- }
- #endif
-@@ -3308,7 +3327,7 @@ print_stat(CPUArchState *cpu_env, const struct syscallname *name,
-     print_syscall_epilogue(name);
- }
- #define print_lstat     print_stat
--#define print_stat64	print_stat
-+#define print_stat64    print_stat
- #define print_lstat64   print_stat
- #endif
- 
-@@ -4302,7 +4321,7 @@ print_pread64(CPUArchState *cpu_env, const struct syscallname *name,
-     print_raw_param("%d", arg0, 0);
-     print_pointer(arg1, 0);
-     print_raw_param("%d", arg2, 0);
--    print_raw_param("%" PRIu64, target_offset64(arg3, arg4), 1);
-+    print_file_offset64(arg3, arg4, true);
-     print_syscall_epilogue(name);
- }
- #endif
+ int main(int argc, char **argv)
 -- 
 2.53.0
 
