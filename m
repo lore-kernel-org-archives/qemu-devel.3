@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78FBFC9EC0
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 04:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 419EEFC9ECA
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 04:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyj0p-00035S-HD; Fri, 06 Mar 2026 23:11:37 -0500
+	id 1vyj7K-0004M2-4h; Fri, 06 Mar 2026 23:18:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vyj0j-00035E-0m
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 23:11:29 -0500
+ id 1vyj7I-0004Ll-S7
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 23:18:16 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vyj0f-0000Zn-KL
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 23:11:27 -0500
+ id 1vyj7G-00014h-Vq
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 23:18:16 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6274AM4N043990
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6274Hu3w045857
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 7 Mar 2026 13:11:02 +0900 (JST)
+ Sat, 7 Mar 2026 13:18:01 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=DRfM3tVXd5Q1z1GYW13AOxfLtmlHHt4E1OcHEFzbKAQ=; 
+DKIM-Signature: a=rsa-sha256; bh=0HDQW9Ffmj3PIpJxS/VLoJ2xGIjaZqbDQSlcRnh1ZFs=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772856663; v=1;
- b=GB1nLhG6a/raEya9q50DDG/Ku85UznEa/tBkc4Pae0BL0hbqKKyOkg/PMcNHJD2c
- WAOpaDZMKhOrTzByilOAYY+8V608yjtdTaptgIdE4ZRMzeUhjeDPaNFrqSkd8iH/
- WqJDbPaUJlZmL0nhhZNZHfEDAEx/gpan93D08CNNmlhzRXdNjlEGa2CU1Ojc+XQw
- W1OyHLcPWeku3KdBrxgRkRaOD996+i1MCduUGKCs7BaG30BCLfT2Wj9DQzoKEs+M
- YjZ9GJSozsnFsWdMwTf4vsFtT31fVgf7IngwTn9fmyLaJEmIPddndHZubuULNnah
- rzqaMxkFpiEiTU3WA8cwuA==
-Message-ID: <e18e2371-4866-4158-b2c8-dfa159a0b587@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 7 Mar 2026 13:10:22 +0900
+ s=rs20250326; t=1772857081; v=1;
+ b=HMqu+jZwuOoGl6Uqdl0RCTjVxr4BPmSlYtOafMrVazIsK4AGUQgWfkESlftJ9pyU
+ rlsSKXxInA6+527Dh2BBqJthYeGufUc+gZGKMbOI3diAVDZSRO4Iq9mQCyHQmnF1
+ Bc+Fh46QUz5/LSJ7Uk+xHOqXEGnWebzVe0bqPq4sxHRKdbAEUnnZcCVHbCMvhWsy
+ YOU3sjWsASVkn7ZgpKfrPhrOMLvLj4wcNtOMjcTjvIO+Om6ilDeFoXb17ZgXBp3Z
+ JZLTfo02S5xbKM6MdpPYCpPsHiplzbX7J8LRSnbmaBUB322LwfwJTHkgnojs6rTx
+ DucafePZaip9HCRYBZ7+5Q==
+Message-ID: <c5e012a9-c26e-462f-b4cc-28745477df5e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 7 Mar 2026 13:17:56 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 4/6] coreaudio: Commit the result of init in the end
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Subject: Re: [PATCH v8 5/6] audio: Add functions to initialize buffers
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: devel@daynix.com, Phil Dennis-Jordan <phil@philjordan.eu>,
  Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
 References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <20260304-coreaudio-v8-4-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
- <2042987.yKVeVyVuyW@weasel>
+ <12848166.O9o76ZdvQC@weasel>
+ <8d6f53c2-417a-4e4e-a75e-e0038cfd7f9c@rsg.ci.i.u-tokyo.ac.jp>
+ <3742853.R56niFO833@weasel>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <2042987.yKVeVyVuyW@weasel>
+In-Reply-To: <3742853.R56niFO833@weasel>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -5
@@ -79,66 +80,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/04 20:56, Christian Schoenebeck wrote:
-> On Wednesday, 4 March 2026 07:16:57 CET Akihiko Odaki wrote:
->> init_out_device may only commit some part of the result and leave the
->> state inconsistent when it encounters a fatal error or the device gets
->> unplugged during the operation, which is expressed by
->> kAudioHardwareBadObjectError or kAudioHardwareBadDeviceError. Commit the
->> result in the end of the function so that it commits the result iff it
->> sees no fatal error and the device remains plugged.
->>
->> With this change, handle_voice_change can rely on core->outputDeviceID
->> to know whether the output device is initialized after calling
->> init_out_device.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->>   audio/coreaudio.m | 47 ++++++++++++++++++++++++++---------------------
->>   1 file changed, 26 insertions(+), 21 deletions(-)
->>
->> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
->> index 736227eb2b7a..23c3d1f80ac5 100644
->> --- a/audio/coreaudio.m
->> +++ b/audio/coreaudio.m
->> @@ -357,8 +357,11 @@ static OSStatus out_device_ioproc(
->>
->>   static OSStatus init_out_device(CoreaudioVoiceOut *core)
->>   {
->> +    AudioDeviceID device_id;
->> +    AudioDeviceIOProcID ioprocid;
->>       AudioValueRange value_range;
->>       OSStatus status;
->> +    UInt32 device_frame_size;
-> 
-> Shouldn't then be this here at the beginning?
-> 
->    core->device_id = kAudioDeviceUnknown;
->    core->ioprocid = NULL;
->    ...
-
-Setting device members is done in correspondence with actual device 
-operations. Concretely, fini_out_device() sets kAudioDeviceUnknown to 
-device_id to express it finalized the device. This function initializes 
-the device or does nothing if an error happens, so it sets device 
-members or does not touch otherwise.
-
-> 
+On 2026/03/04 20:17, Christian Schoenebeck wrote:
+> On Wednesday, 4 March 2026 11:47:01 CET Akihiko Odaki wrote:
+>> On 2026/03/04 17:36, Christian Schoenebeck wrote:
+>>> On Wednesday, 4 March 2026 07:16:58 CET Akihiko Odaki wrote:
+>>>> These functions can be used to re-initialize buffers when hardware
+>>>> parameters change due to device hotplug, for example.
+>>>>
+>>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+>>>> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+>>>> ---
 > [...]
->>       if (status != kAudioHardwareNoError) {
->>           coreaudio_playback_logerr(status,
->>                                     "Could not set device buffer frame size %" PRIu32,
->> -                                  (uint32_t)core->device_frame_size);
->> +                                  (uint32_t)device_frame_size);
->>           return status;
->>       }
+>>>>
+>>>> +void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
+>>>> +{
+>>>> +    g_free(hw->buf_emul);
+>>>> +    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+>>>> +    hw->buf_emul = g_malloc(hw->size_emul);
+>>>> +    hw->pos_emul = hw->pending_emul = 0;
+>>>> +}
+>>>> +
+>>>>
+>>>>    void audio_generic_run_buffer_in(HWVoiceIn *hw)
+>>>>    {
+>>>>    
+>>>>        AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_GET_CLASS(hw->s);
+>>>>        
+>>>>        if (unlikely(!hw->buf_emul)) {
+>>>>
+>>>> -        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+>>>> -        hw->buf_emul = g_malloc(hw->size_emul);
+>>>> -        hw->pos_emul = hw->pending_emul = 0;
+>>>> +        audio_generic_initialize_buffer_in(hw);
+>>>>
+>>>>        }
+>>>
+>>> It would be cleaner having split this patch over 2 patches. One for pure
+>>> refactoring (no behaviour change), and one that adds g_free(hw->buf_emul);
+>>
+>> g_free() was added because the extracted function can be called with
+>> hw->buf_emul set. Extracting this into a function without adding
+>> g_free() makes the function dangerous with non-NULL hw->buf_emul. Adding
+>> g_free() without extracting it into a function doesn't make sense as it
+>> checks !hw->buf_emul immediate above.
 > 
-> Why the cast here? device_frame_size is declared as UInt32.
+> You are adding the function. So at this point, nobody could have called the
+> function by accident except you. And as you would have added g_malloc()
+> immediately with the next patch, there would be no danger.
+> 
+> In general it does make sense splitting pure refactoring from behaviour
+> changes. And by adding g_free() you are changing existing behaviour. That's
+> not bike shedding, it's for the sake of being able to skip all those white
+> noise changes when investigating if something breaks.
 
-The definition of uint32_t is not literally identical with UInt32, so 
-the compiler complains it is different from what the format string 
-(PRIu32) expects. I think I'm going to use uint32_t for the variable to 
-avoid this.
+You will also certainly wonder why adding g_free() in that case.
+
+> 
+> And the potential danger argument contradicts itself, because if the function
+> was called with an uninitialized structure then g_free() would crash. Without
+> g_free() it was just a potential memory leak OTOH. Choose your poison.
+
+In the state machine of AudioMixengBackend it is NULL or a valid 
+pointer: it never has an invalid pointer.
+
+Marc-André Lureau, I'd like to ask you for an opinion on these matters 
+since you are recently working on this and I think you are eventually 
+going to make a pull request for this series.
 
 Regards,
 Akihiko Odaki
