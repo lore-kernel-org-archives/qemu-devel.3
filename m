@@ -4,79 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F288BFC9EF9
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B85FC9EF9
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyqA0-0004zL-Ch; Sat, 07 Mar 2026 06:49:32 -0500
+	id 1vyqHu-0008UX-DW; Sat, 07 Mar 2026 06:57:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyq9y-0004zB-5j
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:49:30 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyqHs-0008SE-GF
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:57:40 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyq9v-0000ee-TP
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:49:29 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4836e3288cdso68951465e9.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:49:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vyqHp-0001vc-JD
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:57:40 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-64ae222d87dso9273190d50.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:57:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772884654; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Su6eFbgdVj3MoQz3TH2oE1nQUwiWRIo+N+LAAfJY+2KT7xMcj/RJ8c9sYL5R90Pc9e
+ tLR4ns1AIyqp8uo32dwtyCKTqALpnvRAjJfl6MAs0dj2ZV9e9MOSMha2Lcx8WvFSp1/v
+ Mnn9TmFX4EQCOVG7gL6Wm6an1TK4zw+s7GuhrYTXCqlssEzeoKRYjCNsQIhiCFV3SGwi
+ nBOG2uqcTk0IHzwsQMbYpVoPZIowjDJeeRC8XIbISZbSACBYQVbBdRvTKe0QgYgfK7Jm
+ 4sgZG8L1HdvLAbHEMoMOUqkdfYwB/ZSLnrRLTi2KKtDtlAnuI79uNwDCevi7A3f5s2Ql
+ CRfQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bqjfmx6l65XDlRbYgcElRyKso9BXBZuLNioK67IT7/o=;
+ fh=BWQLt1rHW1xLgWd4huE0rSwJ9gDLpGmKBg+4vEq3v/8=;
+ b=Zz4FFNftNWRoZ7zUHqcntVT5LFk6+ibZbnNOAon0w/sLPqA+fL87l7dqo1FAqbwQRC
+ kXYWQ9/FDqRGzJMdTEsB01goMGKJwbvbUS5oiPgGjqYlmMJCJiwFbog5oLQL5vUE+zb0
+ V112SdYTqaQAcUCQROvuDajybfy70PXfEgyXG59O6/ARpBv1yCIfHHUKMJqctp6OvxHc
+ I6YV0mU/gvW7HD8w623LJreGFjBBVr2X9Xwai4qw6EPM7/e01Ny9rCRXUfMAAJdRJSRZ
+ wzxJy2mpBhDPGBLNYqb3c5bpuVHiIi2dwBkATUBehjvQtS37zE8bpkyzhjtB4X2lhz3V
+ b72Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772884165; x=1773488965; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=s6KpcxbIXeN+QMyvxZ1C1nsc9/84b21RhzyjzemLfV4=;
- b=tN4GCAL9jJwCO0APc/uNlnSEfwtEnCFdFxcCASI4xHh1n5UQlptgNTnmuGOXxRPXT+
- 7lKiI7LLn4P9Pz0MZYFU714Kja8k7WkxDo1h0ftw3sM0qfRToJFeRxxngydb2T9WsdYh
- q4I4PAxQaz3tZNLg0Qk65TBt6bNVN1BhG96Xc0jGMTn1SDFPZDnp1G4gn5M0eO418SsZ
- qfOzx8h2egQNjfyF6gYR9QCuv+BD5xY6NYohVxwv7iDRNzGa6Ed6SiTXZsx1/oiKMYdq
- FpY0V1fA2gjbOfR+kU6PM7xNOPfKTYSWEhDqim9CqLp5IZgEyH49m5Bi0/Hmk17qmoXh
- 8QPA==
+ d=linaro.org; s=google; t=1772884654; x=1773489454; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bqjfmx6l65XDlRbYgcElRyKso9BXBZuLNioK67IT7/o=;
+ b=YWMCiKPbo9nouYmnWpEJnjUyJuVmBaHsEzfUvqihd/dnP3xWY2Gss5FLgZ/W/7XySY
+ s5WFF3QPry5alPirb3T4s8LUnAYULRdKLBMFaemizxNwrY6wIxLbaJrgQf7kMcXJDrn1
+ cxJ0MaDFJZKoN1DvCSnyJLckrYkwNkooMoGuTAzok4jwhoP+a2ahDFFbuFHZzE2hTpxG
+ bxlJ0ZWGKWA1ysSZEgcvDMfTl9tSLt9dZpgQTAbCsgq4E8feK/kN34SNKBNRuM/A0cC+
+ mSx7BTWoi6UGPw8VpzCRbFTJ0h1iI5HESHUqb5JPQqbocVeVnBS1bJhjMOg98oFE1AnC
+ 5uDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772884165; x=1773488965;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1772884654; x=1773489454;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s6KpcxbIXeN+QMyvxZ1C1nsc9/84b21RhzyjzemLfV4=;
- b=w+42P/5AMZZmTRxP9rEB0Fq3SZrG8ZMCExmB5rSzFUA8aQrIrLIg4GhhVjXZ14MGhy
- sbjRxkMLPWXpfbjN3kT4AXTjrVDpZiDyo1G2SQ8ajhsUowueAL+XUt73DU36Uo7QNm9l
- +e+iXAik0pSHYtOlU9iySGs5Fr97K1s7SJ/+wTTbZfq5wXWt1WLvGcTaAH832MF5To3T
- hgp7cKeMXJNx9ukWEac6fCHZD3HPQ5l+r+1Lvcrq9v6I4awcd8qkuQaqgmbkjWXk2xAR
- GpiDqTqTTraDelPs4vQaWf1tR/ZFi6gawnNBSlr8RNB8cWbdVolkkYDcTc1nNPsPbpLq
- A3GQ==
-X-Gm-Message-State: AOJu0YwrNFx7PcfRrFpWIldAcHP1k3nJjBOc2nTiHKT3aS27y+Bbl7NM
- rvEkxroCwkYhgtLhLqpEPiVObxKMFx2UwaJQpDotTla/uqz8mPMFo/8EINmCV1Yum1kYfk/7bz6
- 4WGJ5jlY=
-X-Gm-Gg: ATEYQzw+0/zazgm8idZDDKs03asmwuGW/ma/+k43IwAt9jsuI+sh/5dcKp2XTEMnpva
- EKcFSQVc2UcqEVmrwpj8/Z4AzISWhhA/P7kjTpOCfICHSxktg0PkD6iR/m46LJYLbk2uzBm8yBW
- C+86IU5mPCQH7Gz7FG89O8QnBxMWi1QnjsqIzwAdrk/fVjCTr2mfq2r/QflrUxXN147oMXuBTb2
- hq7CZryGZSmJjvGKbkGYOrLbulFWF9lsM816VD8JUmqM/9Fe3hNrlyvyuNxHV2AogO0jqyokqB+
- EV5rFkoUQ3aqwcbwKxpM1QdoWI2vbDBmGIXfzwUJ6dpZ0iQaPnByBYKjBHznMZp2qbGPnsCjF+E
- tCOGVoGaB6xnYb9TpOddycyVsuGpwZyBd60M+nWjYDGmkfSVjITQ+LRqH6Agn9AZ8t+FQjYXMT6
- jUWaealr7m+yh2XV/Zf66Ev1vKH3WMXvL0l1tzLXxmEuipED4dm6fOf01bvDTAxHWbLve0t4je
-X-Received: by 2002:a05:600c:1e88:b0:479:13e9:3d64 with SMTP id
- 5b1f17b1804b1-48526759d12mr98347065e9.15.1772884165346; 
- Sat, 07 Mar 2026 03:49:25 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb3666asm164506655e9.14.2026.03.07.03.49.24
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 07 Mar 2026 03:49:24 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] audio: Fix macOS JACK Audio Connection Kit
-Date: Sat,  7 Mar 2026 12:49:23 +0100
-Message-ID: <20260307114923.75394-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+ bh=bqjfmx6l65XDlRbYgcElRyKso9BXBZuLNioK67IT7/o=;
+ b=Jt74et/MkAj1QapijQDtqRmPo9C5EEfA7pMfkLVau9j7bFz/BiNcnULZ/MPcXcCeom
+ CrEaqMAUjfeduxC289A5PoMBKb3H80lxH3OTW3LaCnbbYX4dweZ95mWShse6Uyo+xGZK
+ KuGHgm/fGykSC5ikYPdIf41d8mHis+UEM2MsxYrraaVb1Gwlj3n4tUcsHDwpEUoyeyM9
+ bNSNQlLdpRCaURjZJINakVdFV/7vkWaHNP4oY/1Tlcupl+seUSr1Fbvb/3hRwu72R3sL
+ kSjJ5iL1SnQfvNcs/jt0lA8WEJhNcpEFLiylnEoT9dseYsKSXaF5D1M7tjZvUIO0Sav4
+ KGCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnPCFfvTGzObxA6d5KWsk4oAN7fEzfO4IZ+zhLlOhDCAku+Yb2nqLanuIdmG4rtyFbjysqJneinyzF@nongnu.org
+X-Gm-Message-State: AOJu0YzZ5B2bHKHlxX2ewlsjGddza1Lg+fVRrEVQpU583Rm5Ssyrvgyv
+ To+BQtrGlvgpUgE9jQdgO9AbeXWFLzyuuHWJFRcKJBnXbUIerZkcPRrywucfE16A+h38WMG+NKO
+ v/6vnae3D8BSy2hvcFg9EcUVs4f15w2Y0lkKwe/tQ0A==
+X-Gm-Gg: ATEYQzwTLMhd6l3PdQi8nhA4Zarrv31PS8kZ86+8BuiHLC308Ij1xrdZLT8mkwkIUjQ
+ yE43aCUrf8Pv7imQChGxvaBjSEbjiuSoTZrijIChIY6tL+/2XkxKCUCclkDGhdh+nbxv85h/rHQ
+ 0aTM96Q94E1npS2la61YtsRGsE8W9/COwGUNkvJiWodF0JuF7fVpzQKQcVMsY7C/jWfCdvDiOIl
+ y03qATyb0iGU+IrdFYebOD0WDxN39yXzLq155GrO8xzt/HpMipRyQycAKonvpqiPsp7at1PJTdG
+ 8tNaANqlLoDAa8/hBSqfKWsAnU5KCb91PqN6BWqCWvaUIpPad/dA1zRaMeabFLfQQdlWu9sDia8
+ /OQ==
+X-Received: by 2002:a05:690e:1a8d:b0:64c:ed45:c612 with SMTP id
+ 956f58d0204a3-64d1433f697mr3518866d50.75.1772884653997; Sat, 07 Mar 2026
+ 03:57:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+References: <20250207210540.24594-1-deller@kernel.org>
+ <20250207210540.24594-3-deller@kernel.org>
+ <CAFEAcA_VWSYYE+GdDRwxpWzOX6qVYptjYOe--azOzo4_pre_+A@mail.gmail.com>
+ <aasZKZ1FQY5ytrb2@p100>
+ <CAFEAcA8MLNYfDe_0chBmo+wwwNJoUHWj4Sg1nhCNSjodCzTOtw@mail.gmail.com>
+ <aaseBa-3GVyjKGXh@p100>
+ <CAFEAcA_g4tT2dTyWHoTn0hVZ_Soy7W_exh2JEE-C9U+PN4LGPg@mail.gmail.com>
+ <aas7xpjiDx5Bhrs4@p100>
+ <CAFEAcA_Tcarx1+EbLfrZxVpHFaKQkfOy_pTLc_T0FdNFRDfPTw@mail.gmail.com>
+ <9ad53895-e340-433c-b60f-bb4901aad668@gmx.de>
+In-Reply-To: <9ad53895-e340-433c-b60f-bb4901aad668@gmx.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 7 Mar 2026 11:57:22 +0000
+X-Gm-Features: AaiRm539My7L3kWETUGUL7ct0F-B8d5ECEEoJJYOb4G0e05auE5h2nsL23tqMZs
+Message-ID: <CAFEAcA-pRycQRdQLfvMq+jEOQv=gk_5SM5Hyb34Pe6dwPVE0MQ@mail.gmail.com>
+Subject: Re: [PULL 2/6] hw/hppa: Wire up Diva GSP card
+To: Helge Deller <deller@gmx.de>
+Cc: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org, 
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +127,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 8f68a33ad46 we get on macOS:
+On Sat, 7 Mar 2026 at 11:41, Helge Deller <deller@gmx.de> wrote:
+>
+> On 3/7/26 11:46, Peter Maydell wrote:
+> > On Fri, 6 Mar 2026 at 20:40, Helge Deller <deller@kernel.org> wrote:
+> >>
+> >> * Peter Maydell <peter.maydell@linaro.org>:
+> >>> You need to increment the version_id and minimum_version_id
+> >>> to change the vmstate. Or you could instead replace the line with
+> >>>             VMSTATE_UNUSED(1), /* was "disable" */
+> >>> (which keeps the migration data structure the same, so no
+> >>> version bump needed).
+> >>>
+> >>> I have no strong preference; I would probably just bump
+> >>> the version numbers personally.
+> >>
+> >> New patch below.
+> >> Ok?
+> >>
+> >> Helge
+> >>
+> >>
+> >> From: Helge Deller <deller@gmx.de>
+> >> Subject: [PATCH] hw/char: Drop disable property of Diva GSP card
+> >>
+> >> The "disable" property is not used, so drop it.
+> >>
+> >> Noticed-by: Peter Maydell <peter.maydell@linaro.org>
+> >> Signed-off-by: Helge Deller <deller@gmx.de>
+> >
+> > That looks fine, you can have
+> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>
+> Thanks!
+>
+> > (You should send these to the list as proper patchmails.)
+>
+> Yes, I'll include them in my next pull request and then
+> they will show up as normal stand-alone patches.
 
-  Audio backends
-    CoreAudio support               : YES
-    PipeWire support                : NO
-    JACK support                    : YES 1.9.22
+No, I mean you should send them as patch mails first.
+Nothing is supposed to turn up in a pull request
+email series if it hasn't first been on the list as
+a patch email for potential review.
 
-  ../audio/jackaudio.c:654:12: error: unused function 'qjack_thread_creator' [-Werror,-Wunused-function]
-    654 | static int qjack_thread_creator(jack_native_thread_t *thread,
-        |            ^~~~~~~~~~~~~~~~~~~~
-
-This is simply due to a missing #ifdef'ry change. Update
-so we can use the new qemu_thread_set_name() exposed by
-commit 46255cc2be9.
-
-Fixes: 8f68a33ad46 ("audio: make jackaudio use qemu_thread_set_name")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- audio/jackaudio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index be6fb378f72..589aecede9a 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -712,7 +712,7 @@ static const TypeInfo audio_types[] = {
- static void __attribute__((__constructor__)) audio_jack_init(void)
- {
-     qemu_mutex_init(&qjack_shutdown_lock);
--#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-+#if !defined(WIN32)
-     jack_set_thread_creator(qjack_thread_creator);
- #endif
-     jack_set_error_function(qjack_error);
--- 
-2.52.0
-
+thanks
+-- PMM
 
