@@ -4,97 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C07F55100
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 16:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4958F55101
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 16:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyuCB-0006z1-BE; Sat, 07 Mar 2026 11:08:03 -0500
+	id 1vyuPu-0004dc-UZ; Sat, 07 Mar 2026 11:22:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyuC8-0006yj-IB
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:08:01 -0500
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyuC6-00060U-Ih
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:07:59 -0500
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64c97997b0fso7296971d50.3
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 08:07:57 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772899676; cv=none;
- d=google.com; s=arc-20240605;
- b=kCjrlPcuuWAgLgBV7Z7rLwUwH+kGU+XtRD/FHD2Bsd5bM4rhrAjaboeRrraGZC6rfe
- AGFgdQKTezhxHgMnNWXY1Tsmt+vQHE+UUml+iz2JcwyajCVjGKXBNdZzbGlbxxb9RcrP
- 2kI8yazoGBoAOdOFHqMmpqf/J7JberzfuaQUxkGAocgxJg8I4vNK/JMM5aZTVa5BfnNu
- s0BN8zCrCYuQwwtKy8temFSqoljhfm4JgptcaPz/XbRnlxBOU29kAgjyLPGDk19ZUMvS
- ebtvCdUXWp4B1Ycn45skBXqmE4m2DNE5Je1jdbQpqwVFSBDgigvKcMBru0HzNQFxkeDd
- uEjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=jbdokrxry/+gOpyfyeVT+LvOwdRXhkB8OM1gU8cd80g=;
- fh=MzUcy3tyVEHKwL229u6HkegZMk5Q8mTbxEL4x3WlqPg=;
- b=g/95OVJqI8XMkLkT6nw5xZW33mylSK5WcvZaHHFTKINe5cbrSoC9RqnBR5fHerSo9w
- TBlkv8g3kFV+FVeNwL44dW3PIJbvpHtWNGZi2VNz0GQcUmKePiaktthcejsJgCZ7fjS3
- 5oPAwnWfQ42v7VktDH2bMtQ1L2lY9FB7HbyMIdx/aUFeZAUTGFlzCik+aUOX6z7w+Wyl
- M/LBdIw63zfcQyQfzW9PtJaGmMZcKodU9qYfvgFUyaAAprENCEwttZnAYNFnMYpPnlFp
- 6UiXGFqQ7tQq61lNbxgLyalBw7UK2ExCRtLUuGv7k1PgOdRb97gQjRLlxYcOw7g3wAHH
- ecWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772899676; x=1773504476; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=jbdokrxry/+gOpyfyeVT+LvOwdRXhkB8OM1gU8cd80g=;
- b=on+DYTivZOnsndFOSSzQMjdppB8SKTA9mdMGE69SnwPMkpFc7Jnz3HTEf5KoYAVE6g
- nv3rgc5w940RdatOV9YorMwk/QqeZgDiu55FW8+DW409yTxtgSl8MtAm8e45iUeO72xV
- stDdmQBqpmFCbLf31EjdZavQAZkB6Ti+DGimA5HOR5IKOoSQgHjhcOKE+Sy8nIGbKUW5
- rCPUjbytneulMi9+kxxwAVvQ6X487L9EqumliVdf7TTrZD9GK8XdhB4pIslxfTKmbzlv
- Df/ZF0c+WgoXkiwk626X4KfgA9hJ96KY03cMcxWnQdg1d7XhIXN6fjqrsNveBAMvgSm9
- oJ/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772899676; x=1773504476;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jbdokrxry/+gOpyfyeVT+LvOwdRXhkB8OM1gU8cd80g=;
- b=AwykqB87hy9r4m/L0xLWxc0n1m3qt9V8yRd6b6ckYlvbwZcPtg3FV9121TC8ntIBrp
- Rn2ut7uOF/AqLjtuVPAAXfmimSp3d+veBQphXtZYk9iBRN3Cb8gn685VRIoHdvgCfB+x
- pQNeJXpgsPB9JsObnNKgSM7yI6NeLMLs1MFjZlLAY36HDiZItdJAjin14vCf/6hD6Crx
- rUmYa0xE+oM9alGF590+lRkU0LkJAIBw2ebQeSzNRzyBHPNiair1K19Q+XNuLZ25JTn4
- TL7090tsKP3MLpIGSIA3g0dBts7P370wm8Z5OO2z3wtp1z46flwtUoNxGYo+1JJMlLc1
- H08g==
-X-Gm-Message-State: AOJu0YyM7cqZ+klSlTvRPe89r0gQiIUDbXp4bGJFzbeMVirm+ujt9m67
- WR+p305uC6LrN3rUt6EsbT3f926Dx6+2yNuqNbWNkIYPJ+f+ypj8BpTQ1x7BVoT62znO6rFBVxz
- D/bEoz/GHsNxsAHI0HSzZQmXJPJdg8gyN7yaLEYDSldHTK5FDktO4jVE=
-X-Gm-Gg: ATEYQzy9rmNvRphQyPC17tM8yI+Ay7FopS9Cf4nFgqiwyt8dXR8SqMu2aUj4Is3UBdp
- vVfRY/FTywckE8q2GGRObBShno1fMooqClrO1ya89yelFSJDF+Q5Evh9sTMtznekup6oXy6UvuG
- ayl9yh0tFEShRnLC9lw6r6iQy7+5VydhS4B/u6a3zF2ocliEHZdreRSQo8/GxRmGGmle1wds6o0
- yLsD9mGNh5gqb2MGWYuordpKK+AN+fRlylznEr4BvQ52LWnKlMDi8gnMbPrQaObCoofC0UREurj
- JBwzcEM70yKP/n/4d+AB6dUTnDjdtVjPPx773B6mFdBptiEGi9rjgDN7VttKBrQOkogxnMQlkqU
- Hyw==
-X-Received: by 2002:a53:ecc3:0:b0:644:444f:3bd1 with SMTP id
- 956f58d0204a3-64d143192f8mr4498603d50.68.1772899676472; Sat, 07 Mar 2026
- 08:07:56 -0800 (PST)
-MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 7 Mar 2026 16:07:44 +0000
-X-Gm-Features: AaiRm53wcaO9Hr9d5qs_4nHuFhe45NewtKgH8RS48NAVoo9UCElhbJykygMqPoQ
-Message-ID: <CAFEAcA9X5khjbOYcnbQVG9vRNhMRS7WB4eMo-UhSJD+cpWx9Zg@mail.gmail.com>
-Subject: memory leaks in dbus-display-test
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyuPr-0004Z1-Tl
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:22:12 -0500
+Received: from p-east2-cluster6-host2-snip4-10.eps.apple.com ([57.103.76.191]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vyuPp-00084I-F0
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:22:11 -0500
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPS id
+ CFB1E1800520; Sat,  7 Mar 2026 16:22:03 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772900527; x=1775492527;
+ bh=Rwu6a4GQR/Fafkutd6iRYbGks+rvieci/uf7WVSt/og=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=ezL4QvneMwHNUzmboZrbAEudwwdk1i372+KQc6qxqhSJaZxqIYKTEPrAr683m2OVme+ZNFFJIyVL03sDy1Kpyb71zSYtQu9PoZoc4jfh2uiDtLbH++Jr3CbU0lWc90NQl1eUcZ5JmjwRe1oqWVvVBlNx6mW4J7D0C6T97moBe7bKjz2Iet4wG1SdmCkTcfxBdBtO8BZTipqPSt4Qd4gLllunpJJsU/kg2cbfGY+R6kPnhU+e/KdYlSY/1B3wNKPB4liDYdzU6pKjlvnT7FH37ETcAK+nNm4vJr43G7HEDZpb4/LIhU6UfQYHqF0AkmIMb3bQGaBbS9O64MBpmfPDrA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPSA id
+ 993051800188; Sat,  7 Mar 2026 16:22:01 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v18 05/13] hw/arm, target/arm: nested virtualisation on HVF
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <d2bd5f90-a0f7-490e-b735-43442f41c679@linaro.org>
+Date: Sat, 7 Mar 2026 17:21:49 +0100
+Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E8185464-F6BB-4A50-BE57-EFB2A7F777F1@unpredictable.fr>
+References: <20260307153143.76893-1-mohamed@unpredictable.fr>
+ <20260307153143.76893-6-mohamed@unpredictable.fr>
+ <d2bd5f90-a0f7-490e-b735-43442f41c679@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Authority-Info-Out: v=2.4 cv=dr/Wylg4 c=1 sm=1 tr=0 ts=69ac50ad
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=xsIae2ODNr0s6XOKyHUA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE1NSBTYWx0ZWRfXyVUNmDK6lCdh
+ 0stW8wXnRvC0fq1+nFFlWJXXvQT2V7x2Eh5f0irLINMM0Vn2YjQtJHkCd5J6B/YpqsTTUBoSFDP
+ ucW5PZtV1OqSyiV7hbqRfz2HnwP2rS1PfACe/XJy1Ia/mgDuz3JCwvZoU8ifDuwDci9P+3ZJ5EE
+ JNH8hr+wTCrkXOp7tyGQVn77UhbNG9w80jodoygrimCjTuwxMxC7r6DtoclAxY8Ic6QR/+L+r5p
+ fA2Y2qF+2eatnpPtSWu/h4PD040qYMuvU1TBROOLEchekzoR4o3hAfdUSLmxOq6G0FHSnE+ptGy
+ PitZbRwddnHuf+c0Fu2zouvlbY8z04wr+S4v/UujNnfkyAdsAgUiH5ol/8AXv0=
+X-Proofpoint-ORIG-GUID: wcwzsuJfLUwPrRPO0lg7XWgpqHKwzdx2
+X-Proofpoint-GUID: wcwzsuJfLUwPrRPO0lg7XWgpqHKwzdx2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-07_05,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999
+ spamscore=0 clxscore=1030 bulkscore=0 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603070155
+X-JNJ: AAAAAAABhovdkAHzJ+nXTrhBLVtt/wra4q+bFN4ZtFqMvbySEE/ZE7HsNtf4IrYVsnh2vYxOhIjOnntBiWxna9QlXE9ediDQ8U9q35vXMt+qR5LZBSjbi83lhKF7GTfqhCgsH5qeTy78Rboxmn5LHt34SfOk5vxKNtviLZg9P/AYnbMtVD927PUEwi8ejvpca9aYr/kgXBTbgNmN7RtX3QtQ2hqidRd2SS1EVL8fBJfqv+ycBxBlM4azdq+taO8gorAxTImSbf5jS3cFVN1iB+72Q6+hL9yIJDUw4IO+mXo/RCFkktiYxSfcSf0XElwG0nWebwfWk2B6djzbJFqyIKFnbRDFpYTchfONc1BvVG3L5GnFClt+loi8sYKOGGQxUcsgACQuajIZJXnVvipFQS5zxCkluzyMCBvgpkWGtO4LIn40EPuGPRgU5LrJ2FI5FFGwk2g9ROMY8xiki3Sjkn/+3f/79YuhkAmozL0ZV1mK6y6tWGBlWpMkZYQP+4xFcnA+knmn3Lwmnpi32jH4KBHws+7STkJj1DTwJOjPO90gE7FCCgr7pslAN+xI8ropWtC5q489JsECsi3fi1FwaDutt706o4aSA6oS/EhPkdOCOiyxuXgzvYqeMPGscd5Ve+Fp/dbOH8O6yB+ydWfw+eGXZPMrDzUsJRvBRBfBjMCc+Lal333INs94lKjx5sgycFAmZ4B4KbEJD4GD+IVLnpS+SPQoQUH+
+Received-SPF: pass client-ip=57.103.76.191;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,134 +99,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; the dbus-display-test when built with the clang address sanitizer
-produces a lot of memory leaks. Repro:
 
-1) configure with:
-'--cc=clang' '--cxx=clang++' '--enable-ubsan' '--enable-asan'
-'--target-list=x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user'
-'--disable-docs' '--enable-debug'
 
-and build.
+> On 7. Mar 2026, at 16:48, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> On 7/3/26 16:31, Mohamed Mediouni wrote:
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> ---
+>>  accel/hvf/hvf-all.c    |  1 +
+>>  accel/stubs/hvf-stub.c |  1 +
+>>  hw/arm/virt.c          |  5 +++++
+>>  include/system/hvf.h   |  5 +++++
+>>  target/arm/hvf/hvf.c   | 42 =
+++++++++++++++++++++++++++++++++++++++++--
+>>  5 files changed, 52 insertions(+), 2 deletions(-)
+>=20
+>=20
+>> diff --git a/include/system/hvf.h b/include/system/hvf.h
+>> index dc8da85979..0f0632f7ae 100644
+>> --- a/include/system/hvf.h
+>> +++ b/include/system/hvf.h
+>> @@ -28,9 +28,14 @@ extern bool hvf_allowed;
+>>  #define hvf_enabled() (hvf_allowed)
+>>  extern bool hvf_kernel_irqchip;
+>>  #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
+>> +extern bool hvf_nested_virt;
+>> +#define hvf_nested_virt_enabled()  (hvf_nested_virt)
+>> +#define hvf_nested_virt_enable(enable) hvf_nested_virt =3D enable
+>=20
+> Unsafe macro. Better expose the method and add a stub.
+>=20
+Does this look saner? If so can send a rev with it=E2=80=A6
 
-2) run the test with:
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 1c1437b467..66c3b48608 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -26,6 +26,10 @@ bool hvf_allowed;
+ bool hvf_kernel_irqchip;
+ bool hvf_nested_virt;
+=20
++void hvf_nested_virt_enable(bool nested_virt) {
++    hvf_nested_virt =3D nested_virt;
++}
++
+ const char *hvf_return_string(hv_return_t ret)
+ {
+     switch (ret) {
+diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
+index cec1cbb056..dc365c5307 100644
+--- a/accel/stubs/hvf-stub.c
++++ b/accel/stubs/hvf-stub.c
+@@ -12,3 +12,12 @@
+ bool hvf_allowed;
+ bool hvf_kernel_irqchip;
+ bool hvf_nested_virt;
++
++void hvf_nested_virt_enable(bool nested_virt) {
++    /*
++     * This is called unconditionally from hw/arm/virt.c
++     * because we don't know if HVF is going to be used
++     * as that step of initialisation happens later.
++     * As such, do nothing here instead of marking as unreachable.
++     */
++}
+diff --git a/include/system/hvf.h b/include/system/hvf.h
+index 0f0632f7ae..a961df8b95 100644
+--- a/include/system/hvf.h
++++ b/include/system/hvf.h
+@@ -30,14 +30,14 @@ extern bool hvf_kernel_irqchip;
+ #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
+ extern bool hvf_nested_virt;
+ #define hvf_nested_virt_enabled()  (hvf_nested_virt)
+-#define hvf_nested_virt_enable(enable) hvf_nested_virt =3D enable
+ #else /* !CONFIG_HVF_IS_POSSIBLE */
+ #define hvf_enabled() 0
+ #define hvf_irqchip_in_kernel() 0
+ #define hvf_nested_virt_enabled() 0
+-#define hvf_nested_virt_enable(enable) 0
+ #endif /* !CONFIG_HVF_IS_POSSIBLE */
+=20
++void hvf_nested_virt_enable(bool nested_virt);
++
+ #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
+=20
+ typedef struct HVFState HVFState;
 
-(cd build/x86-tgt-san-dbg/ && QTEST_QEMU_BINARY=./qemu-system-x86_64
-./tests/qtest/dbus-display-test ) 2>&1|less
+>>  #else /* !CONFIG_HVF_IS_POSSIBLE */
+>>  #define hvf_enabled() 0
+>>  #define hvf_irqchip_in_kernel() 0
+>> +#define hvf_nested_virt_enabled() 0
+>> +#define hvf_nested_virt_enable(enable) 0
+>>  #endif /* !CONFIG_HVF_IS_POSSIBLE */
+>=20
+>=20
 
-The 'console' subtest will cause it to output a lot of leak reports, e.g.
-
-Direct leak of 208 byte(s) in 2 object(s) allocated from:
-    #0 0x64e038cdfadd in calloc
-(/home/pm215/qemu/build/x86-tgt-san-dbg/tests/qtest/dbus-display-test+0x258add)
-(BuildId: aa998e9bf2752fab128fa39c22c94bbb5b77ce2d)
-    #1 0x7ef13b191771 in g_malloc0
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x7ef13b2b7f65 in g_type_create_instance
-(/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x40f65) (BuildId:
-91bcc5d52326f5490fa62acc824cb87c700d0f8a)
-    #3 0x7ef13b29da63
-(/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x26a63) (BuildId:
-91bcc5d52326f5490fa62acc824cb87c700d0f8a)
-    #4 0x7ef13b29f015 in g_object_new_with_properties
-(/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x28015) (BuildId:
-91bcc5d52326f5490fa62acc824cb87c700d0f8a)
-    #5 0x7ef13b29ff70 in g_object_new
-(/lib/x86_64-linux-gnu/libgobject-2.0.so.0+0x28f70) (BuildId:
-91bcc5d52326f5490fa62acc824cb87c700d0f8a)
-    #6 0x7ef13b428809
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x14e809) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #7 0x7ef13b3e7d96
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x10dd96) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #8 0x7ef13b3e83c2
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x10e3c2) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #9 0x7ef13b3fcad7
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x122ad7) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #10 0x7ef13b38b7ba
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0xb17ba) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #11 0x7ef13b38b7f4
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0xb17f4) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #12 0x7ef13b18b45d
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d45d) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #13 0x7ef13b1ea976
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0xbc976) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #14 0x7ef13b18bf46 in g_main_loop_run
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5df46) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #15 0x7ef13b3f4581
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x11a581) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #16 0x7ef13b1b9e61
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x8be61) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #17 0x64e038cdd3dc in asan_thread_start(void*) asan_interceptors.cpp.o
-
-Indirect leak of 1228800 byte(s) in 1 object(s) allocated from:
-    #0 0x64e038cdf8f3 in malloc
-(/home/pm215/qemu/build/x86-tgt-san-dbg/tests/qtest/dbus-display-test+0x2588f3)
-(BuildId: aa998e9bf2752fab128fa39c22c94bbb5b77ce2d)
-    #1 0x7ef13b190ac9 in g_malloc
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x7ef13b1a6532 in g_memdup2
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x78532) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #3 0x7ef13b1d2d81 in g_variant_new_fixed_array
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0xa4d81) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #4 0x7ef13b425412
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x14b412) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #5 0x7ef13b42520c
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x14b20c) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #6 0x7ef13b3f0190 in g_dbus_message_new_from_blob
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x116190) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #7 0x7ef13b3fc6a2
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x1226a2) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #8 0x7ef13b38b7ba  (/lib/x86_64-linux-gnu/libgio-2.0.so.0+0xb17ba)
-(BuildId: ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #9 0x7ef13b38b7f4  (/lib/x86_64-linux-gnu/libgio-2.0.so.0+0xb17f4)
-(BuildId: ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #10 0x7ef13b18b45d
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d45d) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #11 0x7ef13b1ea976
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0xbc976) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #12 0x7ef13b18bf46 in g_main_loop_run
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5df46) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #13 0x7ef13b3f4581
-(/lib/x86_64-linux-gnu/libgio-2.0.so.0+0x11a581) (BuildId:
-ebdb30973c66c71f7f9fc82981b95f418ea1dfb1)
-    #14 0x7ef13b1b9e61
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x8be61) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #15 0x64e038cdd3dc in asan_thread_start(void*) asan_interceptors.cpp.o
-
-and many others, for a total of:
-
-SUMMARY: AddressSanitizer: 1232414 byte(s) leaked in 86 allocation(s).
-
-Nothing in the backtraces is in the test program itself -- it all
-goes straight from libglib to libgio to libglib again. So I'm
-not sure exactly what's going on here, but presumably we're
-failing to dereference something we ought to.
-
-Could you have a look, please?
-
-thanks
--- PMM
 
