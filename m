@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CFCF55121
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 23:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B348F55113
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 23:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz0iw-0006bI-G6; Sat, 07 Mar 2026 18:06:18 -0500
+	id 1vz0iy-0006eY-6L; Sat, 07 Mar 2026 18:06:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vz0in-0006ZW-2p
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:09 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vz0io-0006Zb-4C
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:10 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vz0ik-0002wn-0G
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:08 -0500
+ id 1vz0im-0002xF-J3
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 18:06:09 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B51FE596D9A;
- Sun, 08 Mar 2026 00:06:03 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id CC77B596DA4;
+ Sun, 08 Mar 2026 00:06:06 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id LLwyct7jSt2y; Sun,  8 Mar 2026 00:06:01 +0100 (CET)
+ id Z3GpvU_CsfV0; Sun,  8 Mar 2026 00:06:04 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AF984596D9D; Sun, 08 Mar 2026 00:06:01 +0100 (CET)
-Message-ID: <1d0f04534af14598f5c6b8c6922e3f10d8bb18cf.1772924151.git.balaton@eik.bme.hu>
+ id D253F596DA3; Sun, 08 Mar 2026 00:06:04 +0100 (CET)
+Message-ID: <79ff00abd2eb5c304f1f00664c94784e1269d984.1772924151.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1772924151.git.balaton@eik.bme.hu>
 References: <cover.1772924151.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v10 3/9] sun4m,sun4u,tcx: Do not use
- memory_region_init_ram_nomigrate()
+Subject: [PATCH v10 6/9] memory: Shorten memory_region_init_ram_device_ptr and
+ memory_region_init_rom_device
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -45,14 +45,15 @@ Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 08 Mar 2026 00:06:01 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Sun, 08 Mar 2026 00:06:04 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,115 +69,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert to use memory_region_init_{ram,rom} instead. This breaks
-migration but these machines have no migration compatibility guarantee
-and this removes most remaining usages of this nomigrate variant.
+We can reuse memory_region_init_io in these functions.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/display/tcx.c   |  3 +--
- hw/sparc/sun4m.c   | 19 +++++--------------
- hw/sparc64/sun4u.c | 10 +++-------
- 3 files changed, 9 insertions(+), 23 deletions(-)
+ system/memory.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 16114b9bb8..c8a4ac21ca 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -815,9 +815,8 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
-     uint8_t *vram_base;
-     char *fcode_filename;
+diff --git a/system/memory.c b/system/memory.c
+index e15f931a8a..13d4e3314b 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1705,10 +1705,9 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
+                                        uint64_t size,
+                                        void *ptr)
+ {
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+     mr->ram = true;
+     mr->ram_device = true;
+-    memory_region_set_ops(mr, &ram_device_mem_ops, mr);
+     mr->destructor = memory_region_destructor_ram;
  
--    memory_region_init_ram_nomigrate(&s->vram_mem, OBJECT(s), "tcx.vram",
-+    memory_region_init_ram(&s->vram_mem, OBJECT(s), "tcx.vram",
-                            s->vram_size * (1 + 4 + 4), &error_fatal);
--    vmstate_register_ram_global(&s->vram_mem);
-     memory_region_set_log(&s->vram_mem, true, DIRTY_MEMORY_VGA);
-     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
+     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
+@@ -3762,8 +3761,7 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+     Error *err = NULL;
  
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index a17bdb3692..47853e3f76 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -587,13 +587,10 @@ static void idreg_realize(DeviceState *ds, Error **errp)
-     IDRegState *s = MACIO_ID_REGISTER(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->mem, OBJECT(ds), "sun4m.idreg",
--                                          sizeof(idreg_data), errp)) {
-+    if (!memory_region_init_rom(&s->mem, OBJECT(ds), "sun4m.idreg",
-+                                sizeof(idreg_data), errp)) {
-         return;
-     }
--
--    vmstate_register_ram_global(&s->mem);
--    memory_region_set_readonly(&s->mem, true);
-     sysbus_init_mmio(dev, &s->mem);
- }
- 
-@@ -638,12 +635,9 @@ static void afx_realize(DeviceState *ds, Error **errp)
-     AFXState *s = TCX_AFX(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->mem, OBJECT(ds), "sun4m.afx",
--                                          4, errp)) {
-+    if (!memory_region_init_ram(&s->mem, OBJECT(ds), "sun4m.afx", 4, errp)) {
-         return;
-     }
--
--    vmstate_register_ram_global(&s->mem);
-     sysbus_init_mmio(dev, &s->mem);
- }
- 
-@@ -719,13 +713,10 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     PROMState *s = OPENPROM(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->prom, OBJECT(ds), "sun4m.prom",
--                                          PROM_SIZE_MAX, errp)) {
-+    if (!memory_region_init_rom(&s->prom, OBJECT(ds), "sun4m.prom",
-+                                PROM_SIZE_MAX, errp)) {
-         return;
-     }
--
--    vmstate_register_ram_global(&s->prom);
--    memory_region_set_readonly(&s->prom, true);
-     sysbus_init_mmio(dev, &s->prom);
- }
- 
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index b8bda1eb81..2e41785b78 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -455,13 +455,10 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     PROMState *s = OPENPROM(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->prom, OBJECT(ds), "sun4u.prom",
--                                          PROM_SIZE_MAX, errp)) {
-+    if (!memory_region_init_rom(&s->prom, OBJECT(ds), "sun4u.prom",
-+                                PROM_SIZE_MAX, errp)) {
-         return;
-     }
--
--    vmstate_register_ram_global(&s->prom);
--    memory_region_set_readonly(&s->prom, true);
-     sysbus_init_mmio(dev, &s->prom);
- }
- 
-@@ -498,9 +495,8 @@ static void ram_realize(DeviceState *dev, Error **errp)
-     RamDevice *d = SUN4U_RAM(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
--    memory_region_init_ram_nomigrate(&d->ram, OBJECT(d), "sun4u.ram", d->size,
-+    memory_region_init_ram(&d->ram, OBJECT(d), "sun4u.ram", d->size,
-                            &error_fatal);
--    vmstate_register_ram_global(&d->ram);
-     sysbus_init_mmio(sbd, &d->ram);
- }
- 
+     assert(ops);
+-    memory_region_init(mr, owner, name, size);
+-    memory_region_set_ops(mr, ops, opaque);
++    memory_region_init_io(mr, owner, ops, opaque, name, size);
+     mr->rom_device = true;
+     mr->destructor = memory_region_destructor_ram;
+     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
 -- 
 2.41.3
 
