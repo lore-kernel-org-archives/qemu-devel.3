@@ -4,61 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 416EDFC9ECA
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64BBFC9ECA
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyi4P-0004l0-CI; Fri, 06 Mar 2026 22:11:13 -0500
+	id 1vyi4V-0004nT-LW; Fri, 06 Mar 2026 22:11:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4N-0004kY-H7
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:11 -0500
+ id 1vyi4R-0004lo-K0
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:15 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4L-0000oY-PK
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:11 -0500
+ id 1vyi4P-0000ol-O4
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772853070; x=1804389070;
+ t=1772853074; x=1804389074;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=mSJwk8OL8GT7Kwlz7h7yRvXBaRvRP8lpklTQLrCYMRk=;
- b=Ag26J0+K+knYfig50A6DTMwwO8ZKbYq8bT+Nsf9xBvYrIf1aJ7bdq/zw
- NPmIoYHhq00lZ5w6KAPD3EBPnr6pSymoKp5jMWw2OOX8mwF/syHvF34v+
- mXAuXB0dhyz04pgjoB2mt0W1/NaCq74B3LMBLjUUVqs7Ay2Ridpq+U5BD
- uWs2QC3XLU8FPc759KM+3Xet7/2xuR19ObdmZ+5lmRvcXquFrqjGaPWKR
- fZoRgDr1TUcRLflSp/8AKMXDJZGdhViygsL7tH5y3zs+qAlQwW5H9UL67
- 3I3Zb+3DiGijOdxnyzebHAfvUmEeEK8miWvHVgeOWBE0DR0lSuLJQwy95 w==;
-X-CSE-ConnectionGUID: z8qd3GqIQUui0fUFei1vjQ==
-X-CSE-MsgGUID: IuYHfzShTm6nFbv1WpkjWw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434000"
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434000"
+ bh=UItcbupB/uwZcfp4UNEcPNYUFQcpUcNo+S9Ep6gGUiM=;
+ b=cGp/wTRcr9B8/Jf0PxZdds6KIz/fZ+HQp25EkUKsDsWgmX6m8GG7HOQs
+ g0bGqkmRi7vbltEV2yuq+B7vckLk0LB72OFgSr5WRoL1/x2n4uTBMN7sc
+ y3KvEvi+MKQyUvqFk6e5t4/scSIDgpEKS4PBfzIkNMjzXBXuAxcFUTHJY
+ vofOIargtoQdyKRdlbr5HjLwzPmGFUsUIjvjVGZgQ7l7oyKcwBUTFE/XD
+ HpchoR3kamXupdjKeEh+SqrunVt4qRvb2zubn3P+ISkp3xfDpEnAy/247
+ Zsdvv3ZHWvLt58PPmUdn3aSuCEEnuOKau40EY3Vo/FK/YNRyeaxZpGMks g==;
+X-CSE-ConnectionGUID: MFejFkQETTyO8RRyFktB6g==
+X-CSE-MsgGUID: FQUJ1R/ATKmgx+Fv4y8+XQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434035"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434035"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
-X-CSE-ConnectionGUID: Kcs+ZqsWT2iSmKQP5XBITA==
-X-CSE-MsgGUID: 42mCRZaMTuucO+C6lKDjHQ==
+X-CSE-ConnectionGUID: XW8XJuR4Tz6XN/X0Vh8HvQ==
+X-CSE-MsgGUID: BWGIxuwVS5eCXWxAi4ZTNg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813758"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813777"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v10 01/10] virtio-gpu: Recreate the resource's dmabuf if new
- backing is attached
-Date: Fri,  6 Mar 2026 19:05:50 -0800
-Message-ID: <20260307030812.1224392-2-vivek.kasireddy@intel.com>
+Subject: [PATCH v10 07/10] vfio/device: Add support for creating dmabuf from
+ multiple ranges
+Date: Fri,  6 Mar 2026 19:05:56 -0800
+Message-ID: <20260307030812.1224392-8-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
 References: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
@@ -90,38 +86,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are cases when a blob resource's backing might get detached
-and re-attached again such as when the underlying object is getting
-migrated in the Guest. In these situations, we need to obtain a new
-dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
+In order to create a dmabuf associated with a buffer that spans
+multiple ranges, we first need to identify the VFIO region and
+index the buffer (represented by iovec) belongs to and then
+translate its addresses to offsets within that region.
 
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+The qemu_ram_block_from_host() API gives us both the region and
+the offset info we need to populate the dma ranges so that we can
+invoke the VFIO_DEVICE_FEATURE_DMA_BUF feature to create the dmabuf.
+
+Also, instead of iterating over all QOM devices to find the
+VFIODevice associated with a memory region, introduce a helper to
+just use the vfio_device_list to lookup the VFIODevice.
+
+Lastly, introduce an enum to return the type of error encountered
+while creating the dmabuf fd.
+
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/vfio/device.c              | 81 +++++++++++++++++++++++++++++++++++
+ hw/vfio/dmabuf-stubs.c        | 17 ++++++++
+ hw/vfio/meson.build           |  1 +
+ include/hw/vfio/vfio-device.h | 22 ++++++++++
+ 4 files changed, 121 insertions(+)
+ create mode 100644 hw/vfio/dmabuf-stubs.c
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 643e91ca2a..f20111fa57 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -937,6 +937,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         return;
-     }
-+
-+    if (res->blob_size) {
-+        virtio_gpu_init_udmabuf(res);
-+    }
- }
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 973fc35b59..2d01059be0 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ #include <sys/ioctl.h>
  
- static void
++#include "system/ramblock.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/pci.h"
+ #include "hw/core/iommu.h"
+@@ -644,3 +645,83 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
+     .region_read = vfio_device_io_region_read,
+     .region_write = vfio_device_io_region_write,
+ };
++
++static bool vfio_device_lookup(struct iovec *iov, VFIODevice **vbasedevp,
++                               Error **errp)
++{
++    VFIODevice *vbasedev;
++    RAMBlock *first_rb;
++    ram_addr_t offset;
++
++    first_rb = qemu_ram_block_from_host(iov[0].iov_base, false, &offset);
++    if (!first_rb) {
++        error_setg(errp, "Could not find first ramblock\n");
++        return false;
++    }
++
++    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
++        if (vbasedev->dev == first_rb->mr->dev) {
++            *vbasedevp = vbasedev;
++            return true;
++        }
++    }
++    error_setg(errp, "No VFIO device found to create dmabuf from\n");
++    return false;
++}
++
++int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
++                                 Error **errp)
++{
++    g_autofree struct vfio_device_feature *feature = NULL;
++    struct vfio_device_feature_dma_buf *dma_buf;
++    RAMBlock *rb, *first_rb;
++    VFIODevice *vbasedev;
++    ram_addr_t offset;
++    int i, index, ret;
++    size_t argsz;
++
++    argsz = sizeof(*feature) + sizeof (*dma_buf) +
++            sizeof(struct vfio_region_dma_range) * iov_cnt;
++    feature = g_malloc0(argsz);
++    *feature = (struct vfio_device_feature) {
++        .argsz = argsz,
++        .flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_DMA_BUF,
++    };
++    dma_buf = (struct vfio_device_feature_dma_buf *)feature->data;
++
++    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
++        return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
++    }
++
++    for (i = 0; i < iov_cnt; i++) {
++        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
++        if (i == 0) {
++            first_rb = rb;
++        }
++        if (!rb || rb != first_rb) {
++            error_setg(errp, "Cannot create dmabuf with different regions\n");
++            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
++        }
++
++        index = vfio_get_region_index_from_mr(rb->mr);
++        if (index < 0) {
++            error_setg(errp, "Cannot find region index for dmabuf segment\n");
++            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
++        }
++
++        dma_buf->region_index = index;
++        dma_buf->dma_ranges[i].offset = offset;
++        dma_buf->dma_ranges[i].length = iov[i].iov_len;
++    }
++
++    dma_buf->nr_ranges = iov_cnt;
++    dma_buf->open_flags = O_RDONLY | O_CLOEXEC;
++
++    ret = vfio_device_get_feature(vbasedev, feature);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret,
++                         "Could not create dmabuf fd via VFIO device");
++        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
++    }
++    return ret;
++}
+diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
+new file mode 100644
+index 0000000000..e71e2b68dd
+--- /dev/null
++++ b/hw/vfio/dmabuf-stubs.c
+@@ -0,0 +1,17 @@
++/*
++ * Copyright (c) 2026 Intel and/or its affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qemu/iov.h"
++#include "hw/vfio/vfio-device.h"
++
++int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
++                                 Error **errp)
++{
++    error_setg(errp, "VFIO dmabuf support is not enabled");
++    return VFIO_DMABUF_CREATE_HOST_ERROR;
++}
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index 82f68698fb..ac899d30a8 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -34,3 +34,4 @@ system_ss.add(when: 'CONFIG_IOMMUFD', if_false: files('iommufd-stubs.c'))
+ system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+   'display.c',
+ ))
++system_ss.add(when: 'CONFIG_VFIO', if_false: files('dmabuf-stubs.c'))
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 596c7f5a10..566e5d8bc0 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -41,6 +41,13 @@ enum {
+     VFIO_DEVICE_TYPE_AP = 3,
+ };
+ 
++enum {
++    /* The Guest passed addresses stored in IOV are invalid */
++    VFIO_DMABUF_CREATE_ERR_INVALID_IOV = -1,
++    /* Guest or Host may be at fault for this type of error */
++    VFIO_DMABUF_CREATE_ERR_UNSPEC = -2,
++};
++
+ typedef struct VFIODeviceOps VFIODeviceOps;
+ typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+ typedef struct VFIOMigration VFIOMigration;
+@@ -318,6 +325,21 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+  * Returns the region index or -1 on error.
+  */
+ int vfio_get_region_index_from_mr(MemoryRegion *mr);
++
++/**
++ * Create a dmabuf fd by first translating the addresses in the
++ * iovec array into VFIO region offsets and then invoking the
++ * VFIO_DEVICE_FEATURE_DMA_BUF feature.
++ *
++ * @iov: array of iovec entries associated with a buffer
++ * @iov_cnt: number of entries in the iovec array
++ * @errp: pointer to Error*, to store an error if it happens.
++ *
++ * Returns the created dmabuf fd or either VFIO_DMABUF_CREATE_ERR_UNSPEC
++ * or VFIO_DMABUF_CREATE_ERR_INVALID_IOV on error.
++ */
++int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
++                                 Error **errp);
+ #endif
+ 
+ /* Returns 0 on success, or a negative errno. */
 -- 
 2.53.0
 
