@@ -4,90 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F7E9FC9EF9
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 12:53:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8A3FC9EF9
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 13:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyr8x-0005UD-Ks; Sat, 07 Mar 2026 07:52:31 -0500
+	id 1vyrN6-0000CN-Vu; Sat, 07 Mar 2026 08:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyr8t-0005Ti-Ry
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 07:52:27 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyr8r-0002UJ-SD
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 07:52:27 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4806cc07ce7so117094815e9.1
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 04:52:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772887944; x=1773492744; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ag6+elzpX6KdCT6AK+kx65CXgTT3Bx85wj16Mpz62kw=;
- b=xMxEJ4ezn/Or3jKrrDZTo9/N/ap+UN4nJTFw03yCOoW+M8xERXgM0/DZPnn/JVUta2
- XwYihyLu+NTZBtMIHZMM+d0MUe5VojhJkBY4f7jCrFyZ9t1hx8HpB8BEqIe1muacS6NS
- a4Y/uRkQHFnvUSMZ9UIIEW9bXDKXmg3z31lUgdCY+72YBmj9uTEmhAE0zzQ3YyHafiHI
- 0YLmAyK3sQqrMerKFADyKHtYDkNh3puT77GRrzCp4xBHQDavoYirbo2AZGJk1k6mae2H
- EsnSuNHKDSU9Ys7NekPJ8hKtV/cPoCtAalngauBV1kV1cj9C5L8oxyLXisjhUTs8w/RK
- ZO4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772887944; x=1773492744;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ag6+elzpX6KdCT6AK+kx65CXgTT3Bx85wj16Mpz62kw=;
- b=SRDdUAc6+BXYe6gxIeUGrkybEosh9JRrIeOMcaiRD/t6sh16Gc9eexnq0reXMydFPz
- wk1SrRM/fla4DT2B5UnKP4Rw5l9rUD0TX4YoLaC+GT3ymwyd4D6lGtxL0vytFZbpk7iT
- suZklDQHLMmkT4Jf9GJFXudI5Q3uCYJA39R2TI4QlnDaZQyGdM26HQ664QDmXBoawkQ/
- qI0sVX6tQ/xrjZZM8xYLRH6aipw+icug3wEUKs413ebMx9ApbJBX/m6toMx/9UoQYIS0
- j+OowlZDTpLmnBALm4vZ4HmOg4YRhgq2yW7kKlSvYv7iMiatNMxOHAt6e+5EjfijD923
- pEzg==
-X-Gm-Message-State: AOJu0YwbTDT000q+pUAYo4exeTU/pq3WL6S0BNvLwGbA7jJ70iXUiqoj
- w25PxDLc6qI180BMguCHHjXZLmD9p2M5OlyTq94Sxp2cxoGJHxM8uVHxX4lbqs8DimwF8pz+LKr
- 9Z2Gf
-X-Gm-Gg: ATEYQzzK9Vh2d77Zaaf5xkKnqM8p8ZGaJp67Ybkjw24RVeH92/T3ITA67pgzoc4Nd8n
- TC/RoxSmvYezWZWx9DuuFBDcdyJNeWBkeWXXSz9fq1yHJP4/4v6CnF5Dv5WOaW3mfbyDb08XQ/g
- zr+3psaU7VtpdRqJ1vMMM0K3u+QviuRLoCpDwxnv9G/pN0LsLip9mQ3yhw7M7fLhIDdWk8kMHzW
- Cl015PnwPMEISZ0Cbjqfck/C0DU+eckgLjo7H726/8310IUgN9bvgqFHjgQTDCVcKSvgjHynWWx
- opLgBoNWulTFms7KFffbXee8xjtcPUM3QgWDnT2NKOaIQT2kGwxLk+DqkLZqbolLvYA9qVrWd+H
- cSnjNeOuTcXJBjbKH3c2p6qEPH9UW4PASqwb6IT/glM2W/lqdqFGjZHtGSXBPARaay+Di4ZZwTl
- jGOFaOns4jmMl1ESPHO+jGHI4Dn6+gICSeLjW3nrf2SnlLuTcgmObyOK4qb/SQyboDnMj+YnsbQ
- th7LRgK9B1qbBwRYbh1bgkqgqTE8Eo=
-X-Received: by 2002:a05:600c:a41:b0:485:2c61:9459 with SMTP id
- 5b1f17b1804b1-4852c61bcd8mr47371795e9.8.1772887944255; 
- Sat, 07 Mar 2026 04:52:24 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb27a20sm395332455e9.9.2026.03.07.04.52.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 04:52:23 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vyrN0-0000Bm-E9
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 08:07:02 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vyrMy-0005Io-D7
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 08:07:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=z0Zs7AhbqosNKjbAXXNlgKT5J/ywJbNhMxXGbJo/3cM=; b=c+nosCPuxTVWbOUZZrWqORbUmv
+ 6yLOd7bP7RUOBmrCLfkz0cjICv2OWfHHxJvxtuWhRKkb6Ttb3HCWeas/4Kqd5yTaIEJs3byWwlEoV
+ bSMSuABNzqXra7ktLcDyrYwNnBPT71KG/R3Z3pyJJfxUlD3zDWvpS+KjmQfQo6DK6cuw2tExVi8Dp
+ l0qUUcV22QfBuFSwOUDx/V98Ld+LGGP8PSFQTscKQZmswGuYvjZzqFc520D700aDtR3OAQXhJjYRH
+ ZC0eLQbqQI1iSnz8Vmk3LQUqtYOwRF19YLhCGzcHoQBmzsX/+KP5lkE+RW/FUhwNBgGpT0ZvDc14Q
+ VZQke3Z5gcgH9abavxXBeaCZjZ4SSjg32EoSQq/DwY6reZTxoiU50VWT4fdnxd/CIZE8HOecUc5B+
+ cyx0jk1YqrYz+UX6G4khjPXOEwXZG694BrGgOgNYwciOXc596M1A5hDQqXMval5CBs34IaDKf+cTb
+ dWD2EhovNu1MlENYgAJxosVQbHTkNYWX8jeXglKKPdaf1gFEvGASIobyq73PPn8k7SDEk7L7vr+Xs
+ IHys4/qQUKo1k+jJ7y8Zu9UKu1QWnLA892ArIJbHtWmXsaqrt08lmswLuroLMlNkLSIv8h/RIWD39
+ IS60rryhrzJGF2p4OTqjiBHlwr1QS8TASCyW57BUo=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
-Subject: [PATCH] hw/riscv/riscv-iommu: Free instance_init allocations in
- instance_finalize
-Date: Sat,  7 Mar 2026 12:52:22 +0000
-Message-ID: <20260307125222.3656140-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Daniel P =?UTF-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Subject: Re: [PATCH] audio: Fix macOS JACK Audio Connection Kit
+Date: Sat, 07 Mar 2026 14:06:50 +0100
+Message-ID: <5083100.31r3eYUQgx@weasel>
+In-Reply-To: <20260307114923.75394-1-philmd@linaro.org>
+References: <20260307114923.75394-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,78 +72,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The riscv-iommu device makes various allocations in its
-instance_init method. These will leak when QMP inits an
-object of this type to introspect it, as can be seen if you
-run 'make check' with the address sanitizer enabled:
+On Saturday, 7 March 2026 12:49:23 CET Philippe Mathieu-Daud=C3=A9 wrote:
+> Since commit 8f68a33ad46 we get on macOS:
+>=20
+>   Audio backends
+>     CoreAudio support               : YES
+>     PipeWire support                : NO
+>     JACK support                    : YES 1.9.22
+>=20
+>   ../audio/jackaudio.c:654:12: error: unused function 'qjack_thread_creat=
+or'
+> [-Werror,-Wunused-function] 654 | static int
+> qjack_thread_creator(jack_native_thread_t *thread,
+>         |            ^~~~~~~~~~~~~~~~~~~~
+>=20
+> This is simply due to a missing #ifdef'ry change. Update
+> so we can use the new qemu_thread_set_name() exposed by
+> commit 46255cc2be9.
+>=20
+> Fixes: 8f68a33ad46 ("audio: make jackaudio use qemu_thread_set_name")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
-Direct leak of 4096 byte(s) in 1 object(s) allocated from:
-    #0 0x5d8415b6ed9d in calloc (/home/pm215/qemu/build/san/qemu-system-riscv32+0x1832d9d) (BuildId: fedcc313e48ba803d63837329c37fd609dd50849)
-    #1 0x75c0502f1771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5d8416d09391 in riscv_iommu_instance_init /home/pm215/qemu/build/san/../../hw/riscv/riscv-iommu.c:2463:18
-    #3 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #4 0x5d8417104ee9 in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
-    #5 0x5d8417104ee9 in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
-    #6 0x5d8417104db1 in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
-    #7 0x5d8417106506 in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
-    #8 0x5d8416d16a12 in riscv_iommu_sys_init /home/pm215/qemu/build/san/../../hw/riscv/riscv-iommu-sys.c:199:5
-    #9 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #10 0x5d841710661f in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
-    #11 0x5d841755d956 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+Nit: the commit title could have been a bit more precise, e.g. fix use of
+qjack_thread_creator() on macOS.
 
-(and other similar backtraces).
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Fix these by freeing the resources we allocate in instance_init in
-instance_finalize.  In some cases we were freeing these in unrealize,
-and in some cases not at all.
+>  audio/jackaudio.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+> index be6fb378f72..589aecede9a 100644
+> --- a/audio/jackaudio.c
+> +++ b/audio/jackaudio.c
+> @@ -712,7 +712,7 @@ static const TypeInfo audio_types[] =3D {
+>  static void __attribute__((__constructor__)) audio_jack_init(void)
+>  {
+>      qemu_mutex_init(&qjack_shutdown_lock);
+> -#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> +#if !defined(WIN32)
+>      jack_set_thread_creator(qjack_thread_creator);
+>  #endif
+>      jack_set_error_function(qjack_error);
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/riscv/riscv-iommu.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 98345b1280..225394ea83 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2479,6 +2479,18 @@ static void riscv_iommu_instance_init(Object *obj)
-     QLIST_INIT(&s->spaces);
- }
- 
-+static void riscv_iommu_instance_finalize(Object *obj)
-+{
-+    RISCVIOMMUState *s = RISCV_IOMMU(obj);
-+
-+    g_free(s->regs_rw);
-+    g_free(s->regs_ro);
-+    g_free(s->regs_wc);
-+
-+    g_hash_table_unref(s->ctx_cache);
-+    g_hash_table_unref(s->iot_cache);
-+}
-+
- static void riscv_iommu_realize(DeviceState *dev, Error **errp)
- {
-     RISCVIOMMUState *s = RISCV_IOMMU(dev);
-@@ -2597,9 +2609,6 @@ static void riscv_iommu_unrealize(DeviceState *dev)
- {
-     RISCVIOMMUState *s = RISCV_IOMMU(dev);
- 
--    g_hash_table_unref(s->iot_cache);
--    g_hash_table_unref(s->ctx_cache);
--
-     if (s->cap & RISCV_IOMMU_CAP_HPM) {
-         g_hash_table_unref(s->hpm_event_ctr_map);
-         timer_free(s->hpm_timer);
-@@ -2675,6 +2684,7 @@ static const TypeInfo riscv_iommu_info = {
-     .parent = TYPE_DEVICE,
-     .instance_size = sizeof(RISCVIOMMUState),
-     .instance_init = riscv_iommu_instance_init,
-+    .instance_finalize = riscv_iommu_instance_finalize,
-     .class_init = riscv_iommu_class_init,
- };
- 
--- 
-2.43.0
 
 
