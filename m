@@ -4,84 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81228FC9EF5
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 10:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1090EFC9EE4
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 10:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyp8M-0000Px-9b; Sat, 07 Mar 2026 05:43:46 -0500
+	id 1vypBd-0001lI-6a; Sat, 07 Mar 2026 05:47:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyp8K-0000PN-Ur
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 05:43:45 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vypBa-0001kv-PO
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 05:47:06 -0500
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vyp8J-0007JL-6W
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 05:43:44 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-483abed83b6so84041135e9.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 02:43:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vypBZ-0007eL-Ek
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 05:47:06 -0500
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so9794166d50.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 02:47:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772880424; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eqyfI6HBjoVIOj+/pfwL8hEKAcvJf73uUi2ZYCmbIf6J72VRPDA38CNLfCVErsE8wE
+ 1H4RxdODtT+EZE+efjgahI80N0BpJJmi78ZaYXLzKxm6NX1yoqnK5qnpQdyjfRTTm9UU
+ y0QrgTZZMYzbSLN8xUdjBJwer02Ra9oX//UMyhRqeRlaQRHIiXoONkeMRRfa08kQMSoe
+ /lkVqyNBWJFEOiENdXGSYLBcY3v7X3kBPfr8p1nVqZF2rqrAzq3vl7RQbHGg5dIjgp9Q
+ c5Tgvkn0LA65rrY9XCmDF6FQJBUnFWo+4VyLl+MKx4lOpukNfeMLXCfE3fjBSo606dZq
+ DNpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=GEBStAUlGAnSVua+gRmnZy14m+9hwuYx1uL8rKIZYlE=;
+ fh=F6bOIkOA5aBYREcZAmFgJCjXkzyN1AsEyw/DQQWelOI=;
+ b=VuuQKDgAPF1iINFvovkZrQkZUPQHJfTuUCn4J/7uiafh1VBalj23LBw65nb/ldvuy1
+ bRwt4xAyZ6SvbV+h7/a+ayJhvWPDPjVOCPSZD4wq3rX7oxhADMyGZT9x7lhGDAxhZFTb
+ 4vnUWepfpv3eYGK1ayfeWsu50oxpq/FwmdOOSzwtbONsHrU2yqDFWlTTWFdWOtcrLXUF
+ Cgx/YdxG7pHgRw3W2PXxPc22qVBHFaGb4RdzqeV2QIQsca56MKLIGwwO9mhObFpkyncx
+ qO6OE7yCUZgV9fJEe5Ld94pa1WX5FCF5j0gCJXq11klKjnQlAFBG8GKko233gnKJ+P5z
+ hO9w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772880221; x=1773485021; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Na46LPPaJn3Q05XskxsIzkdab0NAITm5NixAze0ucts=;
- b=SL4d80h61aNMXOoHsyKoSjHslM2GRihhqMb/xZHIUtTaeqmVT2Q083DxByipZw+IOn
- 0P1gnlPTv8f3x2x1tJdSefch6uRoYrm67OEHUy4tRoFVw853A8soelysAEdGjqIcPIuT
- oynr7lSFpBXELBjmXa8zfBEjkB4UObCtSH2tiNzu4mDuasCEtEN2Gwq+fx87/QNxs8Gr
- /5IAmymVWBubYVGDON9kt7CS5NJYEIfh+BlKbd8gxKJnltJY5bz3DzlnhLbiYiwJ7Z4A
- LzizvGuwa0aFvhCGP2ltVoAkrTL7BteWQoOrWYVxDefPfYvUKiy61WVQbBfUl+jBLKiw
- H+Sg==
+ d=linaro.org; s=google; t=1772880424; x=1773485224; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GEBStAUlGAnSVua+gRmnZy14m+9hwuYx1uL8rKIZYlE=;
+ b=U86az9n0p5krQktcUEB3G+CoCE5nm6FBxZ6zgGPmpT3n5cav7vDWzR1NHcwy07oRwz
+ JD8AEhVZ1mSaeWEebBh9j1YhBw6xX7M7IvnstKUXhGGLJ9zjjCysrbgr+gBCIk4DLO4g
+ R0IuVoqhXvYEI8xcVJv5n9RTr1kjinQNZ8F2IySFq0b7x5lseIcqvRXSNgWGJmQqz0P7
+ GHaNiWYqI9wIsgaRVB5J3IKrZHKD/jvk4ZlFwmUifuAu3XSWEmkPwaimIIR088Cl7y64
+ xttvv4Il/0GN3LgL6wGWZwPWm7dmAwc5/MjIqNSTZ4t3QbSg2EA2ZtoD88CnTSv+L8Ss
+ nQgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772880221; x=1773485021;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Na46LPPaJn3Q05XskxsIzkdab0NAITm5NixAze0ucts=;
- b=p5p96ZXlPT42aqT9I4wmdIWzpukybcqF5D4wtZAvIfLMVv7ZexGDsjSIgEfNl4/0YO
- XFOC+h3XlechcnzV4Q/tbCWUQkU1vgQt9DTlo5jrxNveKz4Jj3+GgXQQDIwd4r7uAz+X
- b7lmcAkxiPZE5xmUdtRQK83FgYvILX9yx23wXbF+VT56j8T9uXBVQ3LvtOi13IBlCcHT
- hINb2lee/hI9nv+ZRT1Lf9chdgYCxO1lzaObUY8NsqunPQl3dKTwrGvH1Fm69iaVEZXM
- kID/3r7I7rf0tSoD16eTyly0/6JLynQ+aLQSvl4J0nShd4cMPTTSwq30Tg387K33yJRE
- qbIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVr3LJ8lBGmSEyK3oTgknF44mXnY6pSbqLzTH1yCYyPpSaTEHOq3yS1yUR/pvTtqGcwJ3IbsEZrcn1N@nongnu.org
-X-Gm-Message-State: AOJu0Yzf563TXwuQC0L2iHa1rCrWzRFSi5rjM11Fa0M2El6tcZx0oXwY
- ZGUC720jVGzVnj1evc1meYA9UFnmsO1phWa4pb5joCwfBGcPGhIwu1Rd4O/hQXm9nu4VZiwBAaQ
- exou0TGA=
-X-Gm-Gg: ATEYQzykPTdD8JKXH0VHq88XRQnR8bG8A81inbrH+UDA/QML2mNrJim1cl+uaWRrmr+
- dftqvLL8qd3Yl3okWAPhr7RDSWAs+Vv7rZzR8hnnmMLumCz6K+8r0FBqNV0DdhB3RXxBPGUvozJ
- T3JX8RC5ej2sGA3ymacJcZAB3rtu6rx9HOHniGOtoBFnQpTU73JlxxBcG7wTh7I+hcsPrgm5pCO
- OkSL4m4HmJBKsgF8DUKXiQ2Mcn0fazJ29DP+SN5ZUPL0tLXcFUPXVG3wqzRtQGFpabRgjCN/a8M
- cj+GugxwfM5ZWcyn/5Ak9/U4Bd3Isuy7Qp1M7x2Ta8QGQzCnUkVNhz+1bSAfx3MM2iZphbGiPTO
- tU6LSpwJVcr9ZDY9sv4SoPyC3fvzWMjfFYRMUUNSYTol+YSRGuNVvoPPaKpoaHYMACzxM+NJgTE
- O3GGKQDmcCL//W7RHsEtVyRR+17c0rrWwaFQjMmGGsoj5uZK0SpigHHxhglWtfPxFarv+EKTNiV
- 908
-X-Received: by 2002:a05:600c:34c3:b0:47e:e8c2:905f with SMTP id
- 5b1f17b1804b1-48526925423mr92395575e9.8.1772880221339; 
- Sat, 07 Mar 2026 02:43:41 -0800 (PST)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae46353sm11112537f8f.33.2026.03.07.02.43.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Mar 2026 02:43:40 -0800 (PST)
-Message-ID: <25dd2ac5-7837-43f5-86f4-3069c2f06baa@linaro.org>
-Date: Sat, 7 Mar 2026 11:43:39 +0100
+ d=1e100.net; s=20230601; t=1772880424; x=1773485224;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GEBStAUlGAnSVua+gRmnZy14m+9hwuYx1uL8rKIZYlE=;
+ b=nJAmGsbXCFPFP3RBlmDvb0Bt7RHxT3ItokME4XagSl8XaPjhq4erh/XVt8Y0s6/e12
+ 2DALbEzeWBkMUAkrJOIvrHMPxyZBOdmGZ417zVgesxgf6Yu3T5TmRN9QLIixy3kuNXHS
+ DHBSQIHfToHkly50SqXNuvLnjGnRnjxlIZvAFgLYL1rGg+MFYT9GOCI8DP2dmDJfW3uL
+ QPP2WqKbLonLY7p27RIy4W+kKFX9MVjRIotrdMOPojfGoy/WU8+5UZzxQDtC7iapY8AQ
+ rYi7AkigOj3Zvnrsya7jJPS4OBxSsxSNumergu/kF7F4ZPSzt1YszLIzgwqFpbBDFcum
+ Hz6g==
+X-Gm-Message-State: AOJu0YySrsiFreXZ2eV0pubJJF73wYxgslxkMTvh4wHVpLxt3SMY4mwK
+ xoh5tQ3sNIwDk4eFeBFGG9y/5+Aja9slyW0Nkj5QCz2zs2K4QHwIpoyROLrcmy6u7tbke7myXwn
+ ijXW9aGbtEg2c90BJc9CPkHLpDQ2sy1h/4QCQxQXDmA==
+X-Gm-Gg: ATEYQzxDBfQGWanSHg9bNNzPSPD9RM2qRZP2I4GOeI9+tIqWBFp+0Wt8myYmuyfFMaT
+ heon3p6+DTbbj8UpMDF78wU2N+N+Aaqe6fsiCYU9kKVGKJwd9pI1+QtYfhxzo4Ca1YRkx/7njD/
+ iGrq9ieIdbtdwrsO3Hrt5d0Y+0ProNNvG5WfVNCO2Ha/0UzcDLA5Zd0UEazAmldDdvyd82gDY7f
+ +3PWSuPZ0gG9hC/amnEHrhbo3atFC/yIJK2BvArQnIrLu2EZvBe06pqa+8SFY+riw1MvLDL1JKv
+ qOnGtzSmX1slNx+kmD+FqqrnXAUJQz4uuRFC7T6b3e/qM8OvCaFpyfi9RVC0Mb4CAVk=
+X-Received: by 2002:a05:690e:d4b:b0:64a:fe95:2ba7 with SMTP id
+ 956f58d0204a3-64d14164dcfmr4221659d50.31.1772880423852; Sat, 07 Mar 2026
+ 02:47:03 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/m68k/mcf_intc: Use qdev input gpios for input IRQs
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>
-References: <20260306190425.3047580-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260306190425.3047580-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+References: <20250207210540.24594-1-deller@kernel.org>
+ <20250207210540.24594-3-deller@kernel.org>
+ <CAFEAcA_VWSYYE+GdDRwxpWzOX6qVYptjYOe--azOzo4_pre_+A@mail.gmail.com>
+ <aasZKZ1FQY5ytrb2@p100>
+ <CAFEAcA8MLNYfDe_0chBmo+wwwNJoUHWj4Sg1nhCNSjodCzTOtw@mail.gmail.com>
+ <aaseBa-3GVyjKGXh@p100>
+ <CAFEAcA_g4tT2dTyWHoTn0hVZ_Soy7W_exh2JEE-C9U+PN4LGPg@mail.gmail.com>
+ <aas7xpjiDx5Bhrs4@p100>
+In-Reply-To: <aas7xpjiDx5Bhrs4@p100>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 7 Mar 2026 10:46:52 +0000
+X-Gm-Features: AaiRm52OriZ479mxbJ7cFyG_ds0Rqm_WkctSEmOcBNYAA-5F8ayh8IJmkENxEBY
+Message-ID: <CAFEAcA_Tcarx1+EbLfrZxVpHFaKQkfOy_pTLc_T0FdNFRDfPTw@mail.gmail.com>
+Subject: Re: [PULL 2/6] hw/hppa: Wire up Diva GSP card
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,41 +121,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 20:04, Peter Maydell wrote:
-> The m68k mcf_intc interrupt controller currently implements its
-> inbound IRQ lines by calling qemu_allocate_irqs() in mcf_intc_init().
-> This results in leaks like this:
-> 
-> Direct leak of 2944 byte(s) in 46 object(s) allocated from:
->      #0 0x5cf95ec15323 in malloc (/home/pm215/qemu/build/san/qemu-system-m68k+0xf9e323) (BuildId: 18d55ef8ea9856e68ee30802078af5050b8b06c5)
->      #1 0x7637c65c5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x5cf95f6b2f27 in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:767:15
->      #3 0x5cf95f6aa62e in qemu_allocate_irq /home/pm215/qemu/build/san/../../hw/core/irq.c:91:25
->      #4 0x5cf95f6aa62e in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:79:16
->      #5 0x5cf95f5f6d99 in mcf5208evb_init /home/pm215/qemu/build/san/../../hw/m68k/mcf5208.c:310:11
-> 
-> This isn't an important leak, as it is memory we allocate once at
-> QEMU startup and that has to stay live for the lifetime of the
-> system.  However it does point at a code improvement.
-> 
-> Modernise this to have the device itself create inbound GPIOs with
-> qdev_init_gpio_in() that the board can then refer to and wire up
-> individually.
-> 
-> As the device is used in only a single board, we can update device
-> and board in a single patch rather than having to try to figure out
-> some way to change the API more piecemeal.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> there's quite a bit more in this board which could be
-> modernised, but I stuck to just the thing getting reported
-> as a memory leak...
-> ---
->   hw/m68k/mcf5208.c     | 24 +++++++++++-------------
->   hw/m68k/mcf_intc.c    |  8 +++-----
->   include/hw/m68k/mcf.h |  5 ++---
->   3 files changed, 16 insertions(+), 21 deletions(-)
+On Fri, 6 Mar 2026 at 20:40, Helge Deller <deller@kernel.org> wrote:
+>
+> * Peter Maydell <peter.maydell@linaro.org>:
+> > You need to increment the version_id and minimum_version_id
+> > to change the vmstate. Or you could instead replace the line with
+> >            VMSTATE_UNUSED(1), /* was "disable" */
+> > (which keeps the migration data structure the same, so no
+> > version bump needed).
+> >
+> > I have no strong preference; I would probably just bump
+> > the version numbers personally.
+>
+> New patch below.
+> Ok?
+>
+> Helge
+>
+>
+> From: Helge Deller <deller@gmx.de>
+> Subject: [PATCH] hw/char: Drop disable property of Diva GSP card
+>
+> The "disable" property is not used, so drop it.
+>
+> Noticed-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Helge Deller <deller@gmx.de>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+That looks fine, you can have
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+(You should send these to the list as proper patchmails.)
+
+thanks
+-- PMM
 
