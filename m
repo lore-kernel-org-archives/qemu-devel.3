@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C38EFC9EC0
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 04:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78FBFC9EC0
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 04:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyipa-0008Sz-Kp; Fri, 06 Mar 2026 22:59:59 -0500
+	id 1vyj0p-00035S-HD; Fri, 06 Mar 2026 23:11:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vyipX-0008Sk-RU
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:59:55 -0500
+ id 1vyj0j-00035E-0m
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 23:11:29 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vyipV-0007Bx-50
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:59:55 -0500
+ id 1vyj0f-0000Zn-KL
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 23:11:27 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6273xhnV041804
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 6274AM4N043990
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 7 Mar 2026 12:59:46 +0900 (JST)
+ Sat, 7 Mar 2026 13:11:02 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=l99rB9b/Fas8AjKuBVc1QobHafYR/e3bjpCxQYwNcBY=; 
+DKIM-Signature: a=rsa-sha256; bh=DRfM3tVXd5Q1z1GYW13AOxfLtmlHHt4E1OcHEFzbKAQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1772855986; v=1;
- b=Lyk+DZThi72bFGz9USvWgrjXh/IvIeoo4Z7Dcmf/Yd8XUbWbrIjYGwqi2sW5Jhq6
- J3t50qMzrZv2xItZZWjAmIffqqat762P/n6XM6PQmnP5fF33sJ0xr09p9hRunmij
- 90sRZI29OXIUuGXnTDRPyguA1v1Fa/5c7cmG1jLRjXkdV6zJ/3P/YPyODxyfHas2
- T/YFhloaoETEvpYxI0724ZVWwAvLlgEUS9R+Goaj/SKVwCWDrcpdaPPNaA8r1Mon
- kdCR1dYCP8tK7HWHxCIulcH1+G+5rFlB9r1YsIioiaHjLtcI/Z989YjU8hzF5N2H
- naQ1kDmwcCTYkAc1vhn/EA==
-Message-ID: <0fcb33f3-4d2b-4825-93ea-27dac89c4237@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 7 Mar 2026 12:59:42 +0900
+ s=rs20250326; t=1772856663; v=1;
+ b=GB1nLhG6a/raEya9q50DDG/Ku85UznEa/tBkc4Pae0BL0hbqKKyOkg/PMcNHJD2c
+ WAOpaDZMKhOrTzByilOAYY+8V608yjtdTaptgIdE4ZRMzeUhjeDPaNFrqSkd8iH/
+ WqJDbPaUJlZmL0nhhZNZHfEDAEx/gpan93D08CNNmlhzRXdNjlEGa2CU1Ojc+XQw
+ W1OyHLcPWeku3KdBrxgRkRaOD996+i1MCduUGKCs7BaG30BCLfT2Wj9DQzoKEs+M
+ YjZ9GJSozsnFsWdMwTf4vsFtT31fVgf7IngwTn9fmyLaJEmIPddndHZubuULNnah
+ rzqaMxkFpiEiTU3WA8cwuA==
+Message-ID: <e18e2371-4866-4158-b2c8-dfa159a0b587@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 7 Mar 2026 13:10:22 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
- <20260307030812.1224392-10-vivek.kasireddy@intel.com>
+Subject: Re: [PATCH v8 4/6] coreaudio: Commit the result of init in the end
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20260304-coreaudio-v8-0-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+ <20260304-coreaudio-v8-4-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+ <2042987.yKVeVyVuyW@weasel>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260307030812.1224392-10-vivek.kasireddy@intel.com>
+In-Reply-To: <2042987.yKVeVyVuyW@weasel>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -5
@@ -79,155 +79,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/07 12:05, Vivek Kasireddy wrote:
-> Make the error handling more robust in virtio_gpu_init_udmabuf()
-> by introducing 'Error **' parameter to capture errors and using an
-> enum from VFIO to categorize Guest and Host errors. This allows
-> for better error reporting and handling of errors from
-> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
+On 2026/03/04 20:56, Christian Schoenebeck wrote:
+> On Wednesday, 4 March 2026 07:16:57 CET Akihiko Odaki wrote:
+>> init_out_device may only commit some part of the result and leave the
+>> state inconsistent when it encounters a fatal error or the device gets
+>> unplugged during the operation, which is expressed by
+>> kAudioHardwareBadObjectError or kAudioHardwareBadDeviceError. Commit the
+>> result in the end of the function so that it commits the result iff it
+>> sees no fatal error and the device remains plugged.
+>>
+>> With this change, handle_voice_change can rely on core->outputDeviceID
+>> to know whether the output device is initialized after calling
+>> init_out_device.
+>>
+>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> ---
+>>   audio/coreaudio.m | 47 ++++++++++++++++++++++++++---------------------
+>>   1 file changed, 26 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+>> index 736227eb2b7a..23c3d1f80ac5 100644
+>> --- a/audio/coreaudio.m
+>> +++ b/audio/coreaudio.m
+>> @@ -357,8 +357,11 @@ static OSStatus out_device_ioproc(
+>>
+>>   static OSStatus init_out_device(CoreaudioVoiceOut *core)
+>>   {
+>> +    AudioDeviceID device_id;
+>> +    AudioDeviceIOProcID ioprocid;
+>>       AudioValueRange value_range;
+>>       OSStatus status;
+>> +    UInt32 device_frame_size;
 > 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/display/virtio-gpu-dmabuf.c | 65 ++++++++++++++++++++++------------
->   1 file changed, 43 insertions(+), 22 deletions(-)
+> Shouldn't then be this here at the beginning?
 > 
-> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index 8d67ef7c2a..0a6b54fde5 100644
-> --- a/hw/display/virtio-gpu-dmabuf.c
-> +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -18,6 +18,7 @@
->   #include "ui/console.h"
->   #include "hw/virtio/virtio-gpu.h"
->   #include "hw/virtio/virtio-gpu-pixman.h"
-> +#include "hw/vfio/vfio-device.h"
->   #include "trace.h"
->   #include "system/ramblock.h"
->   #include "system/hostmem.h"
-> @@ -27,16 +28,18 @@
->   #include "standard-headers/linux/udmabuf.h"
->   #include "standard-headers/drm/drm_fourcc.h"
->   
-> -static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
-> +static int virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res,
-> +                                     Error **errp)
->   {
->       g_autofree struct udmabuf_create_list *list = NULL;
->       RAMBlock *rb;
->       ram_addr_t offset;
-> -    int udmabuf, i;
-> +    int udmabuf, i, fd;
->   
->       udmabuf = udmabuf_fd();
->       if (udmabuf < 0) {
-> -        return;
-> +        error_setg(errp, "udmabuf device not available or enabled");
-> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
->       }
->   
->       list = g_malloc0(sizeof(struct udmabuf_create_list) +
-> @@ -45,7 +48,8 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->       for (i = 0; i < res->iov_cnt; i++) {
->           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
->           if (!rb || rb->fd < 0) {
-> -            return;
-> +            error_setg(errp, "IOV memory address incompatible with udmabuf ");
-> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
->           }
->   
->           list->list[i].memfd  = rb->fd;
-> @@ -56,22 +60,29 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->       list->count = res->iov_cnt;
->       list->flags = UDMABUF_FLAGS_CLOEXEC;
->   
-> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
-> -    if (res->dmabuf_fd < 0) {
-> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
-> -                    strerror(errno));
-> +    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
-> +    if (fd < 0) {
-> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl failed");
-> +        if (errno == EINVAL || errno == EBADFD) {
-> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-> +        }
-> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
->       }
-> +    return fd;
->   }
->   
-> -static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
-> +static bool virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res,
-> +                                    void **addr, Error **errp)
->   {
-> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
-> -                         MAP_SHARED, res->dmabuf_fd, 0);
-> -    if (res->remapped == MAP_FAILED) {
-> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
-> -                    strerror(errno));
-> -        res->remapped = NULL;
-> +    void *map;
-> +
-> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res->dmabuf_fd, 0);
-> +    if (map == MAP_FAILED) {
-> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
-> +        return false;
->       }
-> +    *addr = map;
-> +    return true;
->   }
+>    core->device_id = kAudioDeviceUnknown;
+>    core->ioprocid = NULL;
+>    ...
 
-Following the convention, this function should return the mapped pointer 
-if success and return NULL otherwise.
+Setting device members is done in correspondence with actual device 
+operations. Concretely, fini_out_device() sets kAudioDeviceUnknown to 
+device_id to express it finalized the device. This function initializes 
+the device or does nothing if an error happens, so it sets device 
+members or does not touch otherwise.
+
+> 
+> [...]
+>>       if (status != kAudioHardwareNoError) {
+>>           coreaudio_playback_logerr(status,
+>>                                     "Could not set device buffer frame size %" PRIu32,
+>> -                                  (uint32_t)core->device_frame_size);
+>> +                                  (uint32_t)device_frame_size);
+>>           return status;
+>>       }
+> 
+> Why the cast here? device_frame_size is declared as UInt32.
+
+The definition of uint32_t is not literally identical with UInt32, so 
+the compiler complains it is different from what the format string 
+(PRIu32) expects. I think I'm going to use uint32_t for the variable to 
+avoid this.
 
 Regards,
 Akihiko Odaki
-
->   
->   static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
-> @@ -125,22 +136,32 @@ bool virtio_gpu_have_udmabuf(void)
->   
->   void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
-> +    Error *local_err = NULL;
->       void *pdata = NULL;
->   
-> -    res->dmabuf_fd = -1;
->       if (res->iov_cnt == 1 &&
->           res->iov[0].iov_len < 4096) {
-> +        res->dmabuf_fd = -1;
->           pdata = res->iov[0].iov_base;
->       } else {
-> -        virtio_gpu_create_udmabuf(res);
-> +        res->dmabuf_fd = virtio_gpu_create_udmabuf(res, &local_err);
-> +        if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV) {
-> +            error_free_or_abort(&local_err);
-> +
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "Cannot create dmabuf: incompatible memory\n");
-> +            return;
-> +        } else if (res->dmabuf_fd < 0 ||
-> +                   !virtio_gpu_remap_dmabuf(res, &pdata, &local_err)) {
-> +            virtio_gpu_destroy_dmabuf(res);
-> +            res->dmabuf_fd = -1;
-> +        }
-> +
->           if (res->dmabuf_fd < 0) {
-> +            error_report_err(local_err);
->               return;
->           }
-> -        virtio_gpu_remap_dmabuf(res);
-> -        if (!res->remapped) {
-> -            return;
-> -        }
-> -        pdata = res->remapped;
-> +        res->remapped = pdata;
->       }
->   
->       res->blob = pdata;
-
 
