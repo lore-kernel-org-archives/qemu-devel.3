@@ -4,82 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EE6FC9EF5
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F44FC9EF5
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vypqn-0004J3-6A; Sat, 07 Mar 2026 06:29:41 -0500
+	id 1vypyF-0008TD-U2; Sat, 07 Mar 2026 06:37:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vypql-0004I0-I8
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:29:39 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vypyA-0008SP-5N
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:37:18 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vypqj-0006Af-P3
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:29:39 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-439c56e822eso4414155f8f.2
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:29:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vypy7-0007RZ-4l
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:37:16 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48375f10628so66550705e9.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:37:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772882974; x=1773487774; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uMhouh8lU7AhEzD5xKxFtylYc2aC2/dOO3bXKq0ZJng=;
- b=IujCuo3EWmdhwRTjV67A5sqJGhUoAvLCP4luB3XICghIxuidGCZhKFK49MU91fKgbr
- EfObkU618z5Wsftr8g/00hhOt6X1SySScgWbfUQX5XdmkpiRPDLvOl+DZTWdcTmEgtPv
- ZG6kzhDPCQwFhDv8sV3klgmKWtyphgCQtgdsISzR3hjtox1Kfzho6JsWU2LOqElH6dWr
- 9d82xpZatxL96k+af8W/btN/OswZSYsoJ35m3lYEVmXc8yRnw2DjUFb35bLFIbpKX1rK
- XrptkG1B+kNrQ1YQT/i+m3shfq1O+wDD0yiDELy2KA3hk/NGuID3m4qF+E5B6gqleRxx
- p3Qw==
+ d=linaro.org; s=google; t=1772883432; x=1773488232; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ph3h9lg7Q2cj9fEXg9hEbgjSF7fjMUHWQscfkdIi7LI=;
+ b=gbKd5eJHKtPvmp+HyGTGL61IXr2hODSNw76LyqDhaD6qbQ0WyIZsi2QwBN0XLz/SDo
+ e/bMnhbDuNE44JucmLCIGpjzHgaf9lVaDt5QiVhque3fEFr6HfpmR3CQeQ3xdAtt26L6
+ p53dUqwdGDq9bf0LsSRw69cSnTlfLOe+f/pZglnlbscBiwAUiNT0IDrQCmDwrpMIko2f
+ 4K1TDO+kFFHM1qRqJ1nb1L0A2WOfWCfFJ92JohSleg7aeLqhSw0erg+rwXSF370n3tsj
+ oMrZwJkRUFuCmP0u4dFqU0tl0M0eFat3Tym5t5SLV3WpZP62v4pfwhK7D+vsHVdGoESO
+ Xlrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772882974; x=1773487774;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uMhouh8lU7AhEzD5xKxFtylYc2aC2/dOO3bXKq0ZJng=;
- b=vBT/fDpU8ch7I60NfMcXG1mGfdRbs/h60eEZAL9beIjGUvSDL14R24GGtNuTUCsWgE
- /7bof9wE/J7NsTVI8IGWomP0bglal2O55Cd7CpfdxGud9VXwesQLI1W1JlvNmRYXs2F3
- QWMHuLJifDrA4YOMSo5DeOoYejO0KW3juVyBDPQxmmICFYkyw7+tF849mX26C+nisCtE
- 2oM6m7g1VKdB2WG1GJc2d9P52q7ITXqV55oDj8oi90fusWEjLu6nEmWCnnSaRjAvASyq
- ZJXQfgo4zAnJMhLJxeAp97imaXKHLMp3dsyGPQkmqWSOMi53cfiooyrnLL0GOErFMsF2
- OZ+w==
-X-Gm-Message-State: AOJu0YxBjkhG0O952xnMPFHsXHyeCW2QST48GUwUr7AAUgHDtDbPErEv
- SkdP8DvzRYUHDWWqY7RgKgHHIX9Zb1wPJR4Uraveih07iKLKX35ZTEcC2y4SzMYkR0BHtHxd3GY
- 1cuex
-X-Gm-Gg: ATEYQzzUgA6ZRaIoqanSmnorWJyAo61CAGQrP+nPHHafFB4mWc41umVVTSdMHobBaIk
- SwTwyPQKnMVklsvzaQ7wYeZCdm80g15z94M5AHv/BaJa6fduWrX+8JVcIupS3P1HO81CQ4i4UlE
- +u39ZZHXIUzHkkAqwtZ6OMlNm/Ybx+3BVp4MyrTLkIunFtWG9NPpNMV610Og08WXkBODdFDQzWK
- qJ3UZTBrwmcLSPrVWtAS2PGy0BQhvEnUrLu0Xu3jcByrLxmxNtERqGNF2RvvVwZHJlPAjB7/2Gj
- okw/mwfL1oFU7Kbs2qhyfI12LkEMXHZPn8mnLw7ucs1smZVtwgCm6p0dVjaNeQi5RUHiRvDxUeY
- IFMIyL8WBY9M6445bte+lgTNV7KFDBl9wU4alGm0m99zEGsprnIaB7N1JTYnijpdjS2g8nxI263
- VTxtACeW2FxPJQZ39YGVtE9OyHUs0PauUEPdt2E15d68mkgRu+NbH0fO18UMYrBGubOSSoxPawE
- he4s37cZnjB9l5LFhhoCmUfeRlQk7U=
-X-Received: by 2002:a05:600c:1e88:b0:477:6d96:b3e5 with SMTP id
- 5b1f17b1804b1-48526916beamr101336255e9.7.1772882974219; 
- Sat, 07 Mar 2026 03:29:34 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853252cae1sm13462255e9.3.2026.03.07.03.29.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 03:29:33 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH 1/3] hw/sparc/sun4m: Don't set up dummy cpu interrupts
-Date: Sat,  7 Mar 2026 11:29:29 +0000
-Message-ID: <20260307112931.3322532-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260307112931.3322532-1-peter.maydell@linaro.org>
-References: <20260307112931.3322532-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1772883432; x=1773488232;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ph3h9lg7Q2cj9fEXg9hEbgjSF7fjMUHWQscfkdIi7LI=;
+ b=esGhezRgTBy8jdMzH9iJr0rH/JJqDOBzFubDvVYqL0dIq5yL/DobLe/nCx93gIhW/y
+ jI/U+PRt3X4GpcXTHHjxqtz8HivqitePmQkShHk7KMifTD5P/mf4A4NBtFPxCyp7g5aY
+ p7p5BdJzj3zIzewn8Sz1NF+KSRJED4yJM+0WPsXy/RlNoMryegNTFXN5mMwBeFOhpBr2
+ fD5VGr1trDk2wmn69JI0v1MXrK/IpPImjwjWDduNpewFzme3uNMO+8KCw2zAhje6ZihN
+ lkOEH0IP2ynUmL5GjWtWQIINIixoByxqIIBZeXNuVbUOZI8QFjVmUFP7tZAUIeZQb91d
+ ckGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmU3mK9nJPplg4flrUL5676ZsgSS7CXDqZ6oJhNNWYvX+ZEGMSVYjTazeCdJh3XThW3LttDUXZACwH@nongnu.org
+X-Gm-Message-State: AOJu0Yxb4damjw+A15+jo3s6VR9rUdhIHkvEPgcxqRpUZPQTyTIR9UYT
+ reZKpTkcxvOVWBn+pmlTKe/S/gfHI/WgXAw3p6cENogJ+QTW4QOIzD8OMTMk3vWzSvc=
+X-Gm-Gg: ATEYQzyP91bRLamuU0QEcUoF7P7r1/bL3cfPPYGQJQaKLLMYQcA94YKhhDlOMJKn3Vj
+ H61ZUBHWjz1PJwLCca89g1Sq44rvGHka9/8NxtqcOAGm7Ifgvje71xGWvOYTvu1UStCRpKEZ8Vh
+ ud8MFtJQDePWqbOnGEjtoKlhdyUK2MDpS4P5Ep2IJrqOROUF3FClWDpQpE7urIkNJ5Rt7vlWbtb
+ eJE3AkuiZbfT3TkON05QTade8sLc6mS4NCMI4W27vXKYT5Ih1ps9jqb9thMrvOI/Hk8YEwQUaYe
+ VXhLz3cMN0Ywa3xLTtzarDyRh4cH29pRA38ageNsrez/rbxHK6yTb5e/gouqc05bn2YHSNGw0P4
+ DY3qd12Gj0kdIzbjuEhUiX60xXqmN2GawTv0d1R9xePsMIyFGFJmgy3J+ALSoE2D/Ei6gOaxIRv
+ qeBBOjqf+r5J/1gqI4vAvb8s2ndBjvbOalM4nS2OGqa3Xd/I3OU4MkpDmLq6Fhr6ixgg5k6EdGu
+ D1m
+X-Received: by 2002:a05:600c:3b0c:b0:480:3ad0:93bf with SMTP id
+ 5b1f17b1804b1-48526979668mr86001445e9.24.1772883431862; 
+ Sat, 07 Mar 2026 03:37:11 -0800 (PST)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851fb3666asm163949625e9.14.2026.03.07.03.37.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Mar 2026 03:37:11 -0800 (PST)
+Message-ID: <5b57e5c8-8efd-42ae-a965-5b6e1c6af2ca@linaro.org>
+Date: Sat, 7 Mar 2026 12:37:10 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 12/27] audio: make jackaudio use qemu_thread_set_name
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, devel@lists.libvirt.org,
+ qemu-rust@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>
+References: <20260305174743.3084606-1-berrange@redhat.com>
+ <20260305174743.3084606-13-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260305174743.3084606-13-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,93 +114,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the sun4m machine init, we set up the cpu_irqs[] array
-with the real inbound IRQs for each CPU, followed by some
-dummy IRQs for the remaining slots from smp_cpus up to
-MAX_CPUS. These dummy IRQs do nothing when set/cleared
-because the dummy_cpu_set_irq() function does nothing.
+Hi,
 
-Instead of creating these "do nothing" qemu_irqs, instead
-pass the number of CPUs to slavio_intctl_init() so that it
-can only wire up the interrupt controller's interrupts
-for the CPUs that actually exist. Calling qemu_set_irq()
-on an irq that isn't connected does nothing, so this is
-a simpler way to achieve the same result.
+On 5/3/26 18:47, Daniel P. Berrangé wrote:
+> This has greater portability than directly call pthread_setname_np,
+> which is only 1 out of 3 possible functions for pthreads that can
+> set the name.
+> 
+> The new API requires a trampoline function, since it can only set
+> the name of the current thread.
+> 
+> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   audio/jackaudio.c | 28 +++++++++++++++++++++++-----
+>   1 file changed, 23 insertions(+), 5 deletions(-)
+> 
+> diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+> index f49fd82c45..be6fb378f7 100644
+> --- a/audio/jackaudio.c
+> +++ b/audio/jackaudio.c
+> @@ -633,18 +633,36 @@ static void qjack_enable_in(HWVoiceIn *hw, bool enable)
+>       ji->c.enabled = enable;
+>   }
+>   
+> -#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
+> +#if !defined(WIN32)
 
-This cleanup fixes an unimportant memory leak reported by
-the address sanitizer that happens because we allocate these
-dummy IRQs with qemu_allocate_irqs():
+I'm getting on macOS:
 
-Direct leak of 1920 byte(s) in 15 object(s) allocated from:
-    #0 0x5cb7b120cf63 in malloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0bf63) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
-    #1 0x743cd6dc5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5cb7b1a42fb4 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
-    #3 0x5cb7b19e7e72 in sun4m_hw_init /home/pm215/qemu/build/san/../../hw/sparc/sun4m.c:845:23
-    #4 0x5cb7b141d3dd in machine_run_board_init /home/pm215/qemu/build/san/../../hw/core/machine.c:1709:5
-    #5 0x5cb7b1542895 in qemu_init_board /home/pm215/qemu/build/san/../../system/vl.c:2717:5
-    #6 0x5cb7b1542895 in qmp_x_exit_preconfig /home/pm215/qemu/build/san/../../system/vl.c:2811:5
-    #7 0x5cb7b15493ac in qemu_init /home/pm215/qemu/build/san/../../system/vl.c:3849:9
-    #8 0x5cb7b1f3f201 in main /home/pm215/qemu/build/san/../../system/main.c:71:5
-    #9 0x743cd4a2a1c9 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #10 0x743cd4a2a28a in __libc_start_main csu/../csu/libc-start.c:360:3
-    #11 0x5cb7b1172114 in _start (/home/pm215/qemu/build/san/qemu-system-sparc+0xd71114) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
+../../audio/jackaudio.c:654:12: error: unused function 
+'qjack_thread_creator' [-Werror,-Wunused-function]
+   654 | static int qjack_thread_creator(jack_native_thread_t *thread,
+       |            ^~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+No clue why this isn't covered on CI. My local build:
+
+   Audio backends
+     CoreAudio support               : YES
+     PipeWire support                : NO
+     JACK support                    : YES 1.9.22
+
+> +struct QJackThreadData {
+> +    void *(*function)(void *);
+> +    void *arg;
+> +};
+> +
+> +static void *qjack_thread_trampoline(void *targ)
+> +{
+> +    struct QJackThreadData *data = targ;
+> +    void *(*function)(void *) = data->function;
+> +    void *arg = data->arg;
+> +
+> +    g_free(data);
+> +    qemu_thread_set_name("jack-client");
+> +
+> +    return function(arg);
+> +}
+> +
+>   static int qjack_thread_creator(jack_native_thread_t *thread,
+>       const pthread_attr_t *attr, void *(*function)(void *), void *arg)
+>   {
+> -    int ret = pthread_create(thread, attr, function, arg);
+> +    struct QJackThreadData *data = g_new0(struct QJackThreadData, 1);
+> +    data->function = function;
+> +    data->arg = arg;
+> +    int ret = pthread_create(thread, attr, qjack_thread_trampoline, data);
+>       if (ret != 0) {
+> +        g_free(data);
+>           return ret;
+>       }
+>   
+> -    /* set the name of the thread */
+> -    pthread_setname_np(*thread, "jack-client");
+> -
+>       return ret;
+>   }
+>   #endif
+
+Fixed adding:
+
+-- >8 --
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index be6fb378f72..589aecede9a 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -712,7 +712,7 @@ static const TypeInfo audio_types[] = {
+  static void __attribute__((__constructor__)) audio_jack_init(void)
+  {
+      qemu_mutex_init(&qjack_shutdown_lock);
+-#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
++#if !defined(WIN32)
+      jack_set_thread_creator(qjack_thread_creator);
+  #endif
+      jack_set_error_function(qjack_error);
 ---
- hw/sparc/sun4m.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
-
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index a17bdb3692..29bc26ebcb 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -196,10 +196,6 @@ static void cpu_set_irq(void *opaque, int irq, int level)
-     }
- }
- 
--static void dummy_cpu_set_irq(void *opaque, int irq, int level)
--{
--}
--
- static void sun4m_cpu_reset(void *opaque)
- {
-     SPARCCPU *cpu = opaque;
-@@ -344,6 +340,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
- 
- static DeviceState *slavio_intctl_init(hwaddr addr,
-                                        hwaddr addrg,
-+                                       unsigned int smp_cpus,
-                                        qemu_irq **parent_irq)
- {
-     DeviceState *dev;
-@@ -355,7 +352,7 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
-     s = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(s, &error_fatal);
- 
--    for (i = 0; i < MAX_CPUS; i++) {
-+    for (i = 0; i < smp_cpus; i++) {
-         for (j = 0; j < MAX_PILS; j++) {
-             sysbus_connect_irq(s, i * MAX_PILS + j, parent_irq[i][j]);
-         }
-@@ -841,9 +838,6 @@ static void sun4m_hw_init(MachineState *machine)
-         cpu_devinit(machine->cpu_type, i, hwdef->slavio_base, &cpu_irqs[i]);
-     }
- 
--    for (i = smp_cpus; i < MAX_CPUS; i++)
--        cpu_irqs[i] = qemu_allocate_irqs(dummy_cpu_set_irq, NULL, MAX_PILS);
--
-     /* Create and map RAM frontend */
-     dev = qdev_new("memory");
-     object_property_set_link(OBJECT(dev), "memdev", OBJECT(ram_memdev), &error_fatal);
-@@ -860,6 +854,7 @@ static void sun4m_hw_init(MachineState *machine)
- 
-     slavio_intctl = slavio_intctl_init(hwdef->intctl_base,
-                                        hwdef->intctl_base + 0x10000ULL,
-+                                       smp_cpus,
-                                        cpu_irqs);
- 
-     for (i = 0; i < 32; i++) {
--- 
-2.43.0
-
 
