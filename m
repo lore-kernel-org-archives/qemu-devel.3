@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9744FCB63F
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BCFF5141C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytmO-0000kD-5m; Sat, 07 Mar 2026 10:41:24 -0500
+	id 1vytnb-000308-Iq; Sat, 07 Mar 2026 10:42:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vytmK-0000iC-EI
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:21 -0500
-Received: from qs-2004k-snip4-8.eps.apple.com ([57.103.84.111]
- helo=outbound.qs.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vytmJ-0001vR-4K
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:20 -0500
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPS id
- B42661800AB3; Sat,  7 Mar 2026 15:41:14 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772898078; x=1775490078;
- bh=+9+Podwr/FWSiiIbKvGiXUj/qrM2SprCY9pTVBwpz7I=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=SKOHPw5H+k5b4DgQS8sGimbYkuqpSrMreKCtqCQTuO4Sc8aWuZ92Q86Y+pSnYndrEsugUxwU/Cqzf/Wmv5n/frj1C3OzLfFPkqVAXNLrk7FjtIoF7AwH7lXNQcspD+hQ5r5uxpnAU1UzlPGH6BgYOEwJzZZeoiNprAPbBOjuZjmjgSDyBU9KRqCoOnzKLwjJWQ/g0C8I5yJvlVWnH3yqFy9pWEonq1DirZPuHxl0juH7xhAyGn2NQ3L3uwzcqJyI0wjBq94/QQWqS3nkjLcss0CWpOe3ABCZkLOyVHwFB6/xh16RSrj3yO2Rl8vJiQvsIqtBJ7nJBromWxg3m/MEJQ==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPSA id
- 1E72D180009E; Sat,  7 Mar 2026 15:41:12 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytnY-0002t3-2U
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:36 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytnW-0002bk-F2
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:35 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4836e3288cdso69635755e9.0
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:42:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772898152; x=1773502952; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=19Jh4cxb/4s8fkFA1FRyjet0D0g0yjU6dnxuKdjK/IA=;
+ b=PwXYWHQgG3qRv5eJ2/LM9NEz5QKBg8QSl7QLqKa1ex3ZnqTeywJqKpW9eUAT9QMU4P
+ bO8H0euACid2sb5OWqfUV8M2Uu9MnXf4yag/jjfOgvie9HNZmgoqDqJR4gOFPAXtxwyW
+ DRQOVyX2/Y5ZCGabqVmbhw5gtrPaob/xGRuUM70V3IccY8EbfAe3FqyhbwWonpGH1erE
+ iwhPYCt/5KqA5BCfngG6pikwElx5oRmDqhr+WlW8DehnR3wN2hVEDMVORjD5nmzipz29
+ 4qlhEBa2StwlrsVdZhPdlNdhVxGkffWO3MBJH0+JcCHrT4TBskDQpMquUq1LGaDIbK2z
+ ghTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772898152; x=1773502952;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=19Jh4cxb/4s8fkFA1FRyjet0D0g0yjU6dnxuKdjK/IA=;
+ b=J4m36aM2v0wWDvUYw4fLqcarEOt/RgYA8FIf7ofXXFLmwqYrX53xCeuTAVROrnGL7T
+ hHtqfSSqdyR9U76eKEbpebbY+q0ndjr8bGz6k4C0zt4H/bhS/LQpagZ0z+s5hYf7v8pM
+ tw2bhrgjOBwF+KmBuGgYk2isaSuA/8oczChmk5s086Dch+/I1bkTKhRLjDQ54G9GVTY4
+ ayKi9iCTyKizfyAuT4UFMCkIjSpOe1qKdbdDdjvmceNe5tEDpokxQrOzlM/+qJS/JXyy
+ eI6/SnPyuCe28jE694K9nDKXE1Nq9sLHP5HvS1fjiLS+9lhbt3xpv65Qk1P18nEBJjpR
+ aMhw==
+X-Gm-Message-State: AOJu0YzT4dH//D+UB8IcMTKBHvz6brBbirBcEFrriHXSphBvgJ19TT/x
+ b04XTg2TojqU67nkp2g6ViyV1FUSuAb+b761lYcfSks/53Qs4/e0QrPL549RBzEaUpViY3qgJAi
+ RIxlxJY4=
+X-Gm-Gg: ATEYQzx3X/lVNaCmpBh53dQZ5fxTIgwSxjciG1cjgLK9XO6B75o0C4i4OQ+VNxM4gOP
+ IRqt0pX5FP2567Tz9DysNyT3icAnuJMaq6PJFp8SVg7SixGdi/+Dl/fVtU2Nlr2cI/B0tLH1sPM
+ qRoz/lLVhvmPZtj3hvC9o6Z5mf9B7xKDCVovKoIZvBLeJTC9a9gwmN6+VChsljyYLDzX75F96zN
+ zEtHO+uMo550mriKWOskn1Zxpg9Owy91n4ehqecckWWld9HNPrJv+mdB4nEp4O8WvcGai7hZ7ZL
+ 5jS9i5ilwj62/kACpvlh0Xf5Am0S4131SoV0egbATbRbWHqyFcXHTTZuHiklqCIuwRsL4HwPsQG
+ GqD4VDgOvgN9p1+ouEj9FyrnGyJwmIoEalGbXLI4OQ2elgZnIFVFXK2Zn3ilQLlx85BnKDUyCpv
+ b2vcodOj99pR2OiA54IqjnvQEGLEaiH01iZ/NjbkdvMYvVROvO5O9Qm2rsKPoSwFWvkfh6bLP6
+X-Received: by 2002:a05:600c:45d1:b0:483:7b99:131d with SMTP id
+ 5b1f17b1804b1-4852675e55cmr97394835e9.16.1772898152441; 
+ Sat, 07 Mar 2026 07:42:32 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4852767d8e4sm110786735e9.2.2026.03.07.07.42.31
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 07 Mar 2026 07:42:31 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Wei Liu <wei.liu@kernel.org>, Pedro Barbuda <pbarbuda@microsoft.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v5 3/9] hvf: arm: unbreak the x86 build
-Date: Sat,  7 Mar 2026 16:40:58 +0100
-Message-ID: <20260307154104.84567-4-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260307154104.84567-1-mohamed@unpredictable.fr>
-References: <20260307154104.84567-1-mohamed@unpredictable.fr>
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 4/6] hw/core/machine: Remove the hw_compat_4_0[] array
+Date: Sat,  7 Mar 2026 16:42:00 +0100
+Message-ID: <20260307154202.86309-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260307154202.86309-1-philmd@linaro.org>
+References: <20260307154202.86309-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=Uo5u9uwB c=1 sm=1 tr=0 ts=69ac471c
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=_3_ydfWBwt0DpU-JqN4A:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE0OSBTYWx0ZWRfXxQSDpJ5+8kf2
- MLvCjNKgrhOcDMpfA0s1/Lk4ngCy2vF3xnBTUzeuHHONfI/rQNVRCu2yE4pUyByKIKM0gKrMI59
- /QirWCbRTYPpX/n63AXx/59t/d5BJ7hiToUUZc49uDGF57e9HZU8wDdtZW31CHgEnDyvUy3NG/4
- VHr8QgvuV3WINIzWTY3GnBHrM9A7NEhaqo3avoy3RYvXgL7BY5GqRM+0+F9wX3g7BkXwqqKmHOu
- Zypne2ks9XUv4+VXrlKmPqqYqdFdKfptvGxnFCCm7BHKui7e15rEzNAuPGgwsF4C0X+CGFEwn7G
- 8rV1fN2cm05oTi15B657FppZh/mjRKZZdFgB6f5oN0VjKRD55HIKuFQ5a6EyOU=
-X-Proofpoint-ORIG-GUID: QNfkN1QVikT6pR_5VQZil5qC6Zd8DSIy
-X-Proofpoint-GUID: QNfkN1QVikT6pR_5VQZil5qC6Zd8DSIy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-07_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0 mlxscore=0 clxscore=1030 lowpriorityscore=0 spamscore=0
- malwarescore=0 mlxlogscore=667 bulkscore=0 suspectscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603070149
-X-JNJ: AAAAAAABnrdGpNEAOmemQem9bvMpqj1/CtFAYYVGX3UGbCWKun4inZdjzWMK2glQNQrjrneM5E+aTppK4QQYgqJCi5Xkaf+SbHM2PL5TnvEaagn8SGjO1gbH+4fl/+4tQOwDRuKevjadR9D4ix6mEk6vWQxkJfaBb89+nazfB73Xbtl1YVXn83sJKfVZzdkZAFJlcyRPCuRnKQ+ngUKldCY0wLJmlQX+I+kkWjg/nIVjmqRxWc0t8Vzm2/vyo+C+RvZY6+IdlhrXwZaeiJ+1JDA6o3NZDVP5p1ODeemj0D5Gxhy8MI/XZ2XwemDf/cRQKawUZzvqgItmG07g3lMwirWXaoAQvodoKdOeEQs41aOmN/InObZdubN4IUgnQ66qkqOLzw6Fue3TwMRTQ0V3q1KToUYZE7O/HtM1/30WAt4TPb3/6V320D+WbVujDCBviblsfgaFowSVSK7gnt4SfE4/rk769O9qWP+tduX/4SB+HDpX18JhyRP+DGNT5U0IDT4eNFFS65S4uhzMcvP5/VhSMphd5/iXa0LX8rMgvz0ynUHUeGRhK6QLrlA7l3mXUjYkGDZnv/usMB+J53pYG8a50tW38wSUR2wDZ5qT6kmjq7mMSfSn5Ey74yHvLWAh2o2ajgD+0WCPJqMnOkrAFdK1leyRzrGM5xMFCkHsoOu5FIRfFBSRtXcVX8ofhPDYw6lpLEQgpln8tWgRzYAlsxk4q0eocQCSVJme69vvFL1Lce6gh3coq9bdvTj7i0BoLK99vq8vI6hw50lVkw1JoYG0YIh9Etg=
-Received-SPF: pass client-ip=57.103.84.111;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,29 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We don't really have any great choices here, so use the __aarch64__ define to unbreak the x86 build.
+The hw_compat_4_0[] array was only used by the pc-q35-4.0
+and pc-i440fx-4.0 machines, which got removed. Remove it.
 
-Once the CI moves away from macOS 15.1 SDK to... 15.2 even we can get rid of these SME stubs horrible hacks.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf_arm.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/core/boards.h |  3 ---
+ hw/core/machine.c        | 12 ------------
+ 2 files changed, 15 deletions(-)
 
-diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-index 6b1c3b9792..797da56c52 100644
---- a/target/arm/hvf_arm.h
-+++ b/target/arm/hvf_arm.h
-@@ -27,7 +27,7 @@ void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
-  * headers are not available until we raise our minimum macOS version.
-  */
- #ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
--  #if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200)
-+  #if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 150200) && __aarch64__
-     #include "system/hvf_int.h"
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 9155e0cc9ed..f85f31bd90d 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -864,7 +864,4 @@ extern const size_t hw_compat_4_2_len;
+ extern GlobalProperty hw_compat_4_1[];
+ extern const size_t hw_compat_4_1_len;
  
-     static inline bool hvf_arm_sme2_supported(void)
+-extern GlobalProperty hw_compat_4_0[];
+-extern const size_t hw_compat_4_0_len;
+-
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9a3d826c3cb..a14ad05b9a6 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -209,18 +209,6 @@ GlobalProperty hw_compat_4_1[] = {
+ };
+ const size_t hw_compat_4_1_len = G_N_ELEMENTS(hw_compat_4_1);
+ 
+-GlobalProperty hw_compat_4_0[] = {
+-    { "VGA",            "edid", "false" },
+-    { "secondary-vga",  "edid", "false" },
+-    { "bochs-display",  "edid", "false" },
+-    { "virtio-vga",     "edid", "false" },
+-    { "virtio-gpu-device", "edid", "false" },
+-    { "virtio-device", "use-started", "false" },
+-    { "virtio-balloon-device", "qemu-4-0-config-size", "true" },
+-    { "pl031", "migrate-tick-offset", "false" },
+-};
+-const size_t hw_compat_4_0_len = G_N_ELEMENTS(hw_compat_4_0);
+-
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
