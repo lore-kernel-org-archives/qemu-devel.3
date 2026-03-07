@@ -4,104 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D7B6F55102
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 16:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 149A2F55103
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 16:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyuhW-0000pZ-AR; Sat, 07 Mar 2026 11:40:26 -0500
+	id 1vyur1-0004jq-AK; Sat, 07 Mar 2026 11:50:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vyuhQ-0000oG-Du
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:40:21 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vyur0-0004io-1Z
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:50:14 -0500
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vyuhN-0001HN-A9
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:40:19 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3599019ae92so3677222a91.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 08:40:15 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772901614; cv=none;
- d=google.com; s=arc-20240605;
- b=Hm3KTAkRSpynje4BPNBAGRYy0l6pJpdK6DQZiTR7PUD3qqlN4PgyDJnDBSyx2QLUXb
- mooPjQeXb5xuQXv6JXtwqWnfkP2XpuI7Y8hsTawQKfg7AA8gPukQpl/llrfb+T+3ffyg
- IJ58qQIHkLVY02xHdWrRR5s1++WF8ev+3hV4POLL+eOQ4iJR4kKWx9nX3x85z+7oXXnd
- cm5U5slyiD7SF2pSoceWXsipvwxSOy+QEU6LjHa44zpZ5ibZy1163KoWPbchHgftE88V
- hc9gMp3SjxiPUCIfBm15DH6scF8Fb1OqMPqwCtnJkG6NNb2cIYkaEzO0E4rajFP3TU5u
- UAyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=meslNmp+n0fRo0zTI5W8zqnlA4dRQyXdOewvqu3bMbA=;
- fh=3qUuBNeQGLGc8SJQr+mdaV1sqgu10HJzCBUR3PXbE/8=;
- b=fqKUkhM1y09K4GSWLu4yiYUcuC/L3mChqMYlInaEvlVq0vSMazZlaivB/7vFrv5lNO
- 9u9N0wwzI5ZceeDFgVz3c1CJHjXi+5HKN7tnRgNFvEHacSrpHDKpJgUVBW3WkcHZbXbH
- BGRTOneMJWb6jsD9mq1+Xlv0ZLR6I/GgMFYa5O/eKrp4l7Rc+X1BbZFpWhk25rCTrNUk
- OPAMErDchbsTvJ/eADKjqWIABbVUbQO01S72h/vm8Cno1qQi+GS2CNB6hnhoV/uJxijm
- D8MTHUIywjRGypuvtOf4PtgorsQZ3FBXvsMgfcONs/sHyeTUJha7I/8C9DP+5Iu91U3y
- wINQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1vyuqr-0002rh-OE
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 11:50:13 -0500
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-466effa81c6so299449b6e.0
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 08:49:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772901614; x=1773506414;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1772902195; x=1773506995;
  darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=meslNmp+n0fRo0zTI5W8zqnlA4dRQyXdOewvqu3bMbA=;
- b=ZaJ7M2fbBRU0LkNbj7LPfAy4KUpceaTsyBM1BRZe6S69MIUvwuLJZCZgX1k8heU5zy
- wg2LLKKAnt8DAyJUiZKtOiLs1yNM08DFMwVWD/SsCguXbG0A7cOWKh/ev79Lox661sbQ
- vhROhqUFnqCJhhtXoagPFQmIh8n6JgtmStM7HQJISP1utYWaYd6zXkqiJ+/AN+RTfiBo
- pzHom1rCPjQfv15VW/Sa4fE74gw6XUJmVTn+GajvCCfR474w33UBS3+D1W3CnPCT0S/r
- xCQQGjUHFt8jVbCuwXOj2myprBsFEaQuOlChEawCGGqdez+mmNbJBsFSGJLChXPRwLjs
- 3ivw==
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UGCk0u0Dbdkx4qF82ek8Xq65/V68sLGzxWcmbEDeMDA=;
+ b=xJgsbEEHwPWw0CLyoAnvM4c07SKgjL29Pv62s/IUI/QHgZccKGvv/zI58vCN/CjXO4
+ J+WVhPxE61JiYQ3oBF97QZShQX1/vrnpdBXoCj0d2bXp2erpYBH7XLJEu41ZLVRq8PJ5
+ BdHKbbxIeXXtkVigWaqCMPyiVocJEFhYsx7XM1WuLC155DV2CC1NeLbdDj+OoAB0U7jN
+ Asy8fckdVSqcXkbEKZoFRcXUje8YkNYx6Y7Dvqlp4vN0ttZGLz2Ika8XWsCAvBjph9nE
+ fUOSdbw70C8G0FwSH9jQ5CDi9T9OJUTn7BW8Arf8sSqK9RV5U+ET1ZHiwyboTOaWD/6i
+ zGCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772901614; x=1773506414;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1772902195; x=1773506995;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=meslNmp+n0fRo0zTI5W8zqnlA4dRQyXdOewvqu3bMbA=;
- b=Rm26ztAknesgvfOlofnNgSq1gYhQ9VC8qusmXnQe9NLsg0mbw1qsNtd/VDgS1qoE32
- Cgf3Cbea+sCY+dD3H7QGZP51fPo/JMQPfb9JhpVlH0UtiBsS4ODvKmW0XLrAU26qwn3k
- LtiSk043p07mYnVmaDeORSy+lrUc8Z890b2pPmNgEBA0+X8I5QgQ1mayX6kodXFybg0I
- 78OVvELHeR5ow6loyTW7uKunjqIr/wth9dMJvv3Vz2vteewN/xxc5SzT0n1IhweyNZVb
- HSdHGmkA66TwjNm04WtgxAN3pVungZDFZtu4kZ7kz3WnWxW2ovve2oixw1gmiWWAe8q5
- bXjw==
-X-Gm-Message-State: AOJu0Ywmgil2iJNHxFh44Xq7FAOyIAkGbW41SoEq6OdcDqRJXJwcijc6
- YJKSrrl+hSJgv+2nwp8ezIn/hIijbphMlDEhWXXc6g4s/lFeOsm09MdtOHSJzG8Hw4nqqw6pSYK
- 5m023+HSj0jqtfQyoDytA2y1f1eWxULrwWlmbqb4onfrWdDndh7+2
-X-Gm-Gg: ATEYQzyipWWzdLlAA7c0nCkq9Q8NvLFEfLiSq2pK3UxKInPIKRoAwqwXPy3JOTpBZgc
- fT/FnzGejzUSaJCsWlZcTLraWDdDJhbjpiRhBzWEq0Ic4sV1XV7zcP8v4+gjf5dEBTe7GxBlB+b
- lXH+m9Ga48joP9XMqtunqSSipyvVJYl/hw3ixLorUCeC2m+QzmTOnDMxG7+E09KoVdAXGQtYgaj
- yUWYirOKNNJUrraZrY8lBzJzNoyEoMeiAb6X1ugqIZmTuxLHGBwStAy1FYoW8b9Gum7MRNg2GpB
- BQYHOIA=
-X-Received: by 2002:a17:90a:d404:b0:341:134:a962 with SMTP id
- 98e67ed59e1d1-359be31e147mr5174121a91.28.1772901614116; Sat, 07 Mar 2026
- 08:40:14 -0800 (PST)
-MIME-Version: 1.0
-References: <20260304-bsd-user-copyright-v2-1-173525ffa614@bsdimp.com>
- <aarg1MVnbcnxLMEL@redhat.com>
- <CANCZdfrs5JgsSCoRnNvsN5uQH3KbO8n+8gm7s5WyKJHzR1Wu4Q@mail.gmail.com>
-In-Reply-To: <CANCZdfrs5JgsSCoRnNvsN5uQH3KbO8n+8gm7s5WyKJHzR1Wu4Q@mail.gmail.com>
+ bh=UGCk0u0Dbdkx4qF82ek8Xq65/V68sLGzxWcmbEDeMDA=;
+ b=OeNDN7yPTirGMJMuj306CwjEC9kYSDwoNCOYxQTbjqtdR2UJPLaj2JgZ4pk17MVtKB
+ z2wLRwfUlWgJh2MYnX1vfesSbCqkWnsgAq7zPgupvTzfCdSFrhnP0ZVqujyfoNE62GbO
+ 6PAcp8/w0z83LjwD7XazZwRpzMydI0vpAmgHsSkfN0NviD6khDFrW10gblHTGY/vIEeM
+ d2vxv3A1U9w6TQEu411b8KALxbv3k8CM1jPZpANDeDvmkVJAVnaLR/zB857wQq+OeVTW
+ v2d+xA4h34cG/n7F9z0ul5vuQon12MPlKjnvyZRRU4iSYRtWi5dloKKogX/xKo+WEcDY
+ DEcw==
+X-Gm-Message-State: AOJu0YzViDoLDjbUaa0dkRr32OopyO68fpFfgYYNqIN+YuiV9y4d5hoi
+ oTFDaoIh2xNCpLcv6q6+4TB/f48lziK+Jh/5A7U56v4QmP1b5OWQR08PFq9f9vJoyKg=
+X-Gm-Gg: ATEYQzw2I/pu9gCa3bJZZ/nO3WYI/dUDqx6xzHZr3pwxPJCJBYJiYAyGOoC8Gj7pyxd
+ GB4Fc3DwoJLTNSPjw8LebfcWVekJXYFlfu2olOyXkyvhcQLI/m4wKxOEhpgvt6r5abfL08zPDDB
+ 1cyYeeim921j307UhdthgShdkSeklDEet1pvYZFeicLJzTIsMOOioA1OjmYOhA81+jXlKWw3ZW7
+ ViydsGC4uvXJAZX7VHJqzJwqoQCVXAMYklAbeOxTsXpqUd+up66dLerL/9B4QBy5mj3HpZ1Z72l
+ 3Tb4AIGLDQ+P+IK3y9vaiXRMBFkOyYZLljpiaIKCTQYfu9AEqspOiAnPs40/RQIwZvJ4H5lO9nX
+ nysSY63bTbCGzSTlHQ7kJfBVK5tGRJy99EaXoRSy2wa575fFzd1HErtb5PWsS7tUK94CPx7ru08
+ rRyr7Rm8sW8A==
+X-Received: by 2002:a05:6808:5194:b0:459:bcff:a9ff with SMTP id
+ 5614622812f47-466dcb2c852mr3473212b6e.34.1772902194268; 
+ Sat, 07 Mar 2026 08:49:54 -0800 (PST)
+Received: from rebo.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-416e61b9c24sm4376383fac.0.2026.03.07.08.49.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 07 Mar 2026 08:49:53 -0800 (PST)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 7 Mar 2026 09:40:02 -0700
-X-Gm-Features: AaiRm53saFjQtbykqXLlLTabQUbjtYZyvMqplsjrSAh5oLXKVdnc0RPPXH247HI
-Message-ID: <CANCZdfrSxWbKwEZmD3EEZtu+pNCYMChJNzfhCX921nwmyUbN2A@mail.gmail.com>
-Subject: Re: [PATCH v2] bsd-user: Switch to SPDX-License-Expression
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>, 
- Stacey Son <sson@freebsd.org>, Sean Bruno <sbruno@freebsd.org>, 
- =?UTF-8?Q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
- Guy Yur <guyyur@gmail.com>, Alexander Kabaev <kan@freebsd.org>,
- Michal Meloun <mmel@freebsd.org>, Ed Schouten <ed@nuxi.nl>
-Content-Type: multipart/alternative; boundary="000000000000ee6cfd064c71d277"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1031;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1031.google.com
+Date: Sat, 07 Mar 2026 09:49:41 -0700
+Subject: [PATCH v3] bsd-user: Switch to SPDX-License-Expression
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260307-bsd-user-copyright-v3-1-666ac0b819f1@bsdimp.com>
+X-B4-Tracking: v=1; b=H4sIACRXrGkC/33NTQ6CMBAF4KuQrh3TXyCuvIdxgbSFWUBJi42Ec
+ HcHVpoYl+9l3jcrSy6iS+xSrCy6jAnDSEGdCtb2zdg5QEuZSS5LrriER7LwpBG0YVoidv0MqtG
+ llYpXwnBGwyk6j68Dvd0p95jmEJfjRxZ7+5fLAgR4bkxdWVFb7a50hMN0bsPAdi/LT0P/NCQZo
+ lJGGu+bUugvY9u2N+mFCyD5AAAA
+X-Change-ID: 20260302-bsd-user-copyright-3a46d2307150
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kyle Evans <kevans@freebsd.org>, Stacey Son <sson@FreeBSD.org>, 
+ Sean Bruno <sbruno@FreeBSD.org>, 
+ =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
+ Guy Yur <guyyur@gmail.com>, Alexander Kabaev <kan@FreeBSD.org>, 
+ Michal Meloun <mmel@FreeBSD.org>, Ed Schouten <ed@nuxi.nl>, 
+ Karim Taha <kariem.taha2.7@gmail.com>, Kyle Evans <kevans@FreeBSD.org>, 
+ Warner Losh <imp@bsdimp.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=86461; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=oUNNrT7TlMme7Ix+/C0cSClSj++jOtDmfjY2iqj0jS8=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBprFcokEsoAzDrU306WQ5OcpLMbfb2OCv7jLdU8
+ lNLq1e07ZOJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaaxXKAAKCRBsHNEofbAR
+ AD7EEAC4yIqwkAMOact3tkLweoFOZUaDRW4TPTnMTW0vsxfrRoI57dWzNBdhEx1Kjbcli6F/rYf
+ FDxRdJOd8pGRVnp9V6mlS4dzfImuOLhn4EmaBcEPJ++BMLDLMidCbm5lUR9Y6fLZVH9cOe0Xkoh
+ 3Eh7ilbUYMaVWxkfOsdvDs0z6PvEdkIruvAut+tt03qovIlt5SBsI7yhsXOyPGFcgWRNVNJ1xYc
+ y8ALwyqpR0OtIcsQfmkAGBHLKNRyyOWcws+eHTNOLdMmZr6Smv3X8SWeZrusUhSyY5JFz4ojkII
+ 71VUbE7kopn/ZVF8FhJz6ICfg8U51zWDck9KGXsT8bsZoTPddaXQX/bgutiyIj6mnpXBPItrC/y
+ rGJmoe8dZ04N5c4Z8S4VvesQdTcztTEWIkNveaQKt1VzYL3JeakeYOeKuVpNvwroVR30c2T48gT
+ NunHXyy69g865N77V6QNGiXMuH3BIJBt1uzRE90WViSqgHds2pDy/xMk/UbkFIHxpGIVQtk3uTV
+ vr6+8OMi7Eqra17OuyXcEm4cwdDwnARqX46WtM5NsldQL3XmGKjSuiMwUPjBPGlKlNTzvh7kPBc
+ 27zR3mlNFP4NcZa2Jl+YsIxAhTl3aXurBQJS/goMJYo6OiRRIPShz3UMeJyii63UHr65JI+KV0t
+ DNY6DPtgz0m625Q==
+X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
+ fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
+Received-SPF: none client-ip=2607:f8b0:4864:20::235;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,189 +123,2114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ee6cfd064c71d277
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Two minor changes to the copyright and license marking for these files:
+(1) Stacey D Son is used instead of variations of his name.
+(2) The GPL boilerplate is replaced by SPDX markings. No change to the
+terms of the license are intended, and this matches current QEMU practice.
 
-On Fri, Mar 6, 2026 at 9:28=E2=80=AFAM Warner Losh <imp@bsdimp.com> wrote:
+There's no changes to the license or additional claims to any IP that
+others may hold in these files. All the S-o-bs in this commit have given
+me permission to do this to the extent they may hold rights. git blame
+over multiple repos and branches suggests that only minimal other
+material is present (much of it likely not subject to copyright
+protection). The project's long and complex history as well as tooling
+limitations make it hard to be 100% sure. Any omissions are
+unintentional and I will correct them as they come to light.
 
->
->
-> On Fri, Mar 6, 2026 at 7:12=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com>
-> wrote:
->
->> On Wed, Mar 04, 2026 at 09:05:33AM -0700, Warner Losh wrote:
->> > Two minor changes to the copyright and license marking for these files=
-:
->> > (1) Stacey D Son is used instead of variations of his name.
->> > (2) The GPL boilerplate is replaced by SPDX markings. No change to the
->> > terms of the license are intended, and this matches current QEMU
->> practice.
->> >
->> > There's no changes to the license or additional claims to any IP that
->> > others may hold in these files. All the S-o-bs in this commit have giv=
-en
->> > me permission to do this to the extent they may hold rights. git blame
->> > over multiple repos and branches suggests that only minimal other
->> > material is present (much of it likely not subject to copyright
->> > protection). The project's long and complex history as well as tooling
->> > limitations make it hard to be 100% sure. Any omissions are
->> > unintentional and I will correct them as they come to light.
->> >
->> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
->> > Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
->> > Signed-off-by: Mika=C3=ABl Urankar <mikael.urankar@gmail.com>
->> > Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
->> > Signed-off-by: Guy Yur <guyyur@gmail.com>
->> > Signed-off-by: Alexander Kabaev <kan@FreeBSD.org>
->> > Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
->> > Signed-off-by: Ed Schouten <ed@nuxi.nl>
->> > Signed-off-by: Warner Losh <imp@bsdimp.com>
->>
->> Thanks, I used that set of emails to filter out commits
->>
->> Out of the remaining commits/files with other authors, most were a
->> case of  trivial function renames, code deletion, or trivial syntax
->> fixes to deal with external cleanups which can be exluded.
->>
->> The only files where I saw any non-trivial code from other contributors
->> are
->>
->> bsd-user/bsd-mem.h: 8
->> bsd-user/elfload.c: 36
->> bsd-user/freebsd/os-misc.h: 1
->> bsd-user/freebsd/os-proc.c: 3
->> bsd-user/freebsd/os-proc.h: 3
->> bsd-user/qemu.h: 58
->> bsd-user/strace.c: 7
->>
->> There are way too many historic authors for elfload.c, qemu.h and
->> strace.c to make it worth chasing those down, so I'd suggest just
->> dropping those three files from the commit.
->>
->
-> I'll drop those. The qemu.h issue is more Blue Swirl shows in git blame,
-> and those files are more from linux-user, which git blame is useless to
-> chase down.
->
->
->> For bsd-mem.h, and freebsd/os* Karim Taha <kariem.taha2.7@gmail.com>
->> is the only notable omission I saw. Up to you whether to check with
->> them or just drop those files from the cleanup.
->>
->
-> Karim's case is interesting. He was a GSoC student that took the work
-> from bsd-user blitz branch. In the blitz branch, the blame shows style
-> changes and a few other tweaks from the upstreaming. He also contributed
-> some things that aren't in these files. He shows up as more than that in
-> in qemu's upstream repo because of the code copying. That's why I
-> hadn't contacted him.
->
-> I'll chase those down and also see if I can make contact with him. I had
-> trouble reaching him after he entered the military after GSoC finished, b=
-ut
-> haven't tried in years.
->
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Signed-off-by: Guy Yur <guyyur@gmail.com>
+Signed-off-by: Alexander Kabaev <kan@FreeBSD.org>
+Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
+Signed-off-by: Ed Schouten <ed@nuxi.nl>
+Signed-off-by: Karim Taha <kariem.taha2.7@gmail.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+Adjust the copyright markings for the bsd-user project to the extent
+that's easy and prudent. This removes the gpl boilerplate and replaces
+it with a SPDX line, per QEMU standard proactice. It uses Stacey D Son
+everytwhere rather than variations on that name. It uses full date
+ranges as appropriate.
 
-Ah! He's back online and has given me permission. I'll update with what we
-discussed.
+All that's changing is the markings. I have Stacey's explicit permission
+to do this, as well as people cc'd. The history of bsd-user, first
+copied from linux-user and then passing through several branches in
+several repos as maintainers shifted make it hard to get a complete list
+of authors. But to the best of my ability to determine, this list
+represents the overwhelming majority of people who may have a copyright
+interest in the files not documented with a Copyright line.
 
-Warner
+This does not chanage any intellectual property rights people hold in
+these files. Nor does it change the licensing of these files in any
+way. It's easy to revert relevant parts should an unknown-to-me author
+appear and desire it. I believe it's legally defensible and would not
+affect future legal matters, especailly given this explicit statement of
+intent.
 
---000000000000ee6cfd064c71d277
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I'm doing this proactively so that all the files, with only few
+exceptions, can be marked in a similar manner in bsd-user's blitz repo.
+This will help in upstreaming as it completely takes the issue off the
+table, likely saving me hours of future work in reply to why something
+is marked the old way or realizing in the upstreaming process I have to
+make the change in bsd-user's blitz branch first (or worse, during the
+review process). Each individual change might not be a big deal, but the
+cumulative effect can grow large.
+---
+Changes in v3:
+- Drop a few more files
+- Add Karim Taha, who has given me permission
+- Link to v2: https://lore.kernel.org/qemu-devel/20260304-bsd-user-copyright-v2-1-173525ffa614@bsdimp.com
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 6, =
-2026 at 9:28=E2=80=AFAM Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">i=
-mp@bsdimp.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Mar 6, 2026 at 7=
-:12=E2=80=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redha=
-t.com" target=3D"_blank">berrange@redhat.com</a>&gt; wrote:<br></div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">On Wed, Mar 04, 2026 at 09:05:3=
-3AM -0700, Warner Losh wrote:<br>
-&gt; Two minor changes to the copyright and license marking for these files=
-:<br>
-&gt; (1) Stacey D Son is used instead of variations of his name.<br>
-&gt; (2) The GPL boilerplate is replaced by SPDX markings. No change to the=
-<br>
-&gt; terms of the license are intended, and this matches current QEMU pract=
-ice.<br>
-&gt; <br>
-&gt; There&#39;s no changes to the license or additional claims to any IP t=
-hat<br>
-&gt; others may hold in these files. All the S-o-bs in this commit have giv=
-en<br>
-&gt; me permission to do this to the extent they may hold rights. git blame=
-<br>
-&gt; over multiple repos and branches suggests that only minimal other<br>
-&gt; material is present (much of it likely not subject to copyright<br>
-&gt; protection). The project&#39;s long and complex history as well as too=
-ling<br>
-&gt; limitations make it hard to be 100% sure. Any omissions are<br>
-&gt; unintentional and I will correct them as they come to light.<br>
-&gt; <br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Sean Bruno &lt;sbruno@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Mika=C3=ABl Urankar &lt;<a href=3D"mailto:mikael.uranka=
-r@gmail.com" target=3D"_blank">mikael.urankar@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Kyle Evans &lt;kevans@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Guy Yur &lt;<a href=3D"mailto:guyyur@gmail.com" target=
-=3D"_blank">guyyur@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Alexander Kabaev &lt;kan@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Michal Meloun &lt;mmel@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Ed Schouten &lt;<a href=3D"mailto:ed@nuxi.nl" target=3D=
-"_blank">ed@nuxi.nl</a>&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-<br>
-Thanks, I used that set of emails to filter out commits <br>
-<br>
-Out of the remaining commits/files with other authors, most were a<br>
-case of=C2=A0 trivial function renames, code deletion, or trivial syntax<br=
->
-fixes to deal with external cleanups which can be exluded.<br>
-<br>
-The only files where I saw any non-trivial code from other contributors<br>
-are<br>
-<br>
-bsd-user/bsd-mem.h: 8<br>
-bsd-user/elfload.c: 36<br>
-bsd-user/freebsd/os-misc.h: 1<br>
-bsd-user/freebsd/os-proc.c: 3<br>
-bsd-user/freebsd/os-proc.h: 3<br>
-bsd-user/qemu.h: 58<br>
-bsd-user/strace.c: 7<br>
-<br>
-There are way too many historic authors for elfload.c, qemu.h and<br>
-strace.c to make it worth chasing those down, so I&#39;d suggest just<br>
-dropping those three files from the commit.<br></blockquote><div><br></div>=
-<div>I&#39;ll drop those. The qemu.h issue is more Blue Swirl shows in git =
-blame,</div><div>and those files are more from linux-user, which git blame =
-is useless to</div><div>chase down.</div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-For bsd-mem.h, and freebsd/os* Karim Taha &lt;<a href=3D"mailto:kariem.taha=
-2.7@gmail.com" target=3D"_blank">kariem.taha2.7@gmail.com</a>&gt;<br>
-is the only notable omission I saw. Up to you whether to check with<br>
-them or just drop those files from the cleanup.<br></blockquote><div><br></=
-div><div>Karim&#39;s case is interesting. He was a GSoC student that took t=
-he work</div><div>from bsd-user blitz branch. In the blitz branch, the blam=
-e shows style</div><div>changes and a few other tweaks from the upstreaming=
-. He also contributed</div><div>some things that aren&#39;t in these files.=
- He shows up as more than that in</div><div>in qemu&#39;s upstream repo bec=
-ause of the code copying. That&#39;s why I</div><div>hadn&#39;t contacted h=
-im.</div><div><br></div><div>I&#39;ll chase those down and also see if I ca=
-n make contact with him. I had</div><div>trouble reaching him after he ente=
-red the military after GSoC finished, but</div><div>haven&#39;t tried in ye=
-ars.</div></div></div></blockquote><div><br></div><div>Ah! He&#39;s back on=
-line and has given me permission. I&#39;ll update with what we discussed.</=
-div><div><br></div><div>Warner=C2=A0</div></div></div>
+Changes in v2:
+- document permissions better
+- drop a couple files that had others claiming copyright.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260302-bsd-user-copyright-v1-1-f05587d18d4e@bsdimp.com
+---
+ bsd-user/aarch64/signal.c               | 15 ++-------------
+ bsd-user/aarch64/target_arch.h          | 16 ++--------------
+ bsd-user/aarch64/target_arch_cpu.c      | 15 ++-------------
+ bsd-user/aarch64/target_arch_cpu.h      | 18 +++---------------
+ bsd-user/aarch64/target_arch_elf.h      | 14 +-------------
+ bsd-user/aarch64/target_arch_reg.h      | 19 +++----------------
+ bsd-user/aarch64/target_arch_signal.h   | 16 ++--------------
+ bsd-user/aarch64/target_arch_sigtramp.h | 16 ++--------------
+ bsd-user/aarch64/target_arch_sysarch.h  | 16 ++--------------
+ bsd-user/aarch64/target_arch_thread.h   | 16 ++--------------
+ bsd-user/aarch64/target_arch_vmparam.h  | 16 ++--------------
+ bsd-user/aarch64/target_syscall.h       | 16 ++--------------
+ bsd-user/arm/signal.c                   | 18 +++---------------
+ bsd-user/arm/target_arch.h              | 16 ++--------------
+ bsd-user/arm/target_arch_cpu.c          | 18 +++---------------
+ bsd-user/arm/target_arch_cpu.h          | 18 +++---------------
+ bsd-user/arm/target_arch_elf.h          | 18 +++---------------
+ bsd-user/arm/target_arch_reg.h          | 18 +++---------------
+ bsd-user/arm/target_arch_signal.h       | 18 +++---------------
+ bsd-user/arm/target_arch_sigtramp.h     | 18 +++---------------
+ bsd-user/arm/target_arch_sysarch.h      | 18 +++---------------
+ bsd-user/arm/target_arch_thread.h       | 18 +++---------------
+ bsd-user/arm/target_arch_vmparam.h      | 18 +++---------------
+ bsd-user/arm/target_syscall.h           | 18 +++---------------
+ bsd-user/bsd-file.h                     | 18 +++---------------
+ bsd-user/bsd-mem.c                      | 17 +++--------------
+ bsd-user/bsd-mem.h                      | 17 +++--------------
+ bsd-user/bsd-proc.c                     | 17 +++--------------
+ bsd-user/bsd-proc.h                     | 17 +++--------------
+ bsd-user/freebsd/os-misc.h              | 18 +++---------------
+ bsd-user/freebsd/os-proc.c              | 17 +++--------------
+ bsd-user/freebsd/os-proc.h              | 18 +++---------------
+ bsd-user/freebsd/os-stat.c              | 17 +++--------------
+ bsd-user/freebsd/os-stat.h              | 18 +++---------------
+ bsd-user/freebsd/os-strace.h            | 19 +++----------------
+ bsd-user/freebsd/target_os_elf.h        | 18 +++---------------
+ bsd-user/freebsd/target_os_siginfo.h    | 18 +++---------------
+ bsd-user/freebsd/target_os_stack.h      | 18 +++---------------
+ bsd-user/freebsd/target_os_thread.h     | 18 +++---------------
+ bsd-user/freebsd/target_os_user.h       | 18 +++---------------
+ bsd-user/freebsd/target_os_vmparam.h    | 18 +++---------------
+ bsd-user/i386/signal.c                  | 17 +++--------------
+ bsd-user/i386/target_arch.h             | 16 ++--------------
+ bsd-user/i386/target_arch_cpu.c         | 17 +++--------------
+ bsd-user/i386/target_arch_cpu.h         | 17 +++--------------
+ bsd-user/i386/target_arch_elf.h         | 18 +++---------------
+ bsd-user/i386/target_arch_reg.h         | 19 +++----------------
+ bsd-user/i386/target_arch_signal.h      | 16 +++-------------
+ bsd-user/i386/target_arch_sigtramp.h    | 16 ++--------------
+ bsd-user/i386/target_arch_sysarch.h     | 18 +++---------------
+ bsd-user/i386/target_arch_thread.h      | 18 +++---------------
+ bsd-user/i386/target_arch_vmparam.h     | 18 +++---------------
+ bsd-user/i386/target_syscall.h          | 16 +++-------------
+ bsd-user/qemu-bsd.h                     | 18 +++---------------
+ bsd-user/syscall_defs.h                 | 18 +++---------------
+ bsd-user/x86_64/signal.c                | 16 +++-------------
+ bsd-user/x86_64/target_arch.h           | 16 ++--------------
+ bsd-user/x86_64/target_arch_cpu.c       | 17 +++--------------
+ bsd-user/x86_64/target_arch_cpu.h       | 17 +++--------------
+ bsd-user/x86_64/target_arch_elf.h       | 18 +++---------------
+ bsd-user/x86_64/target_arch_reg.h       | 19 +++----------------
+ bsd-user/x86_64/target_arch_signal.h    | 17 +++--------------
+ bsd-user/x86_64/target_arch_sigtramp.h  | 17 ++---------------
+ bsd-user/x86_64/target_arch_sysarch.h   | 17 +++--------------
+ bsd-user/x86_64/target_arch_thread.h    | 18 +++---------------
+ bsd-user/x86_64/target_arch_vmparam.h   | 18 +++---------------
+ bsd-user/x86_64/target_syscall.h        | 16 +++-------------
+ 67 files changed, 185 insertions(+), 971 deletions(-)
 
---000000000000ee6cfd064c71d277--
+diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
+index 6bc73a798f..ad19e5144e 100644
+--- a/bsd-user/aarch64/signal.c
++++ b/bsd-user/aarch64/signal.c
+@@ -1,20 +1,9 @@
+ /*
+  * ARM AArch64 specific signal definitions for bsd-user
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ 
+diff --git a/bsd-user/aarch64/target_arch.h b/bsd-user/aarch64/target_arch.h
+index 4815a56ae3..7861233889 100644
+--- a/bsd-user/aarch64/target_arch.h
++++ b/bsd-user/aarch64/target_arch.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 specific prototypes for bsd-user
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_H
+ #define TARGET_ARCH_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_cpu.c b/bsd-user/aarch64/target_arch_cpu.c
+index b2fa59efaf..6e9519e1b0 100644
+--- a/bsd-user/aarch64/target_arch_cpu.c
++++ b/bsd-user/aarch64/target_arch_cpu.c
+@@ -1,20 +1,9 @@
+ /*
+  * ARM AArch64 specific CPU for bsd-user
+  *
+- * Copyright (c) 2015 Stacey Son
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ #include "target_arch.h"
+diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/target_arch_cpu.h
+index 15df84fda2..09d942b040 100644
+--- a/bsd-user/aarch64/target_arch_cpu.h
++++ b/bsd-user/aarch64/target_arch_cpu.h
+@@ -1,22 +1,10 @@
+ /*
+- *  ARM AArch64 cpu init and loop
++ * ARM AArch64 cpu init and loop
+  *
+- * Copyright (c) 2015 Stacey Son
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_CPU_H
+ #define TARGET_ARCH_CPU_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_elf.h b/bsd-user/aarch64/target_arch_elf.h
+index cec254f88b..5ea5232a57 100644
+--- a/bsd-user/aarch64/target_arch_elf.h
++++ b/bsd-user/aarch64/target_arch_elf.h
+@@ -3,20 +3,8 @@
+  *
+  * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_ELF_H
+ #define TARGET_ARCH_ELF_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_reg.h b/bsd-user/aarch64/target_arch_reg.h
+index b53302e7f7..9cca3c0ea0 100644
+--- a/bsd-user/aarch64/target_arch_reg.h
++++ b/bsd-user/aarch64/target_arch_reg.h
+@@ -1,23 +1,10 @@
+ /*
+- *  FreeBSD arm64 register structures
++ * FreeBSD arm64 register structures
+  *
+- *  Copyright (c) 2015 Stacey Son
+- *  All rights reserved.
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_REG_H
+ #define TARGET_ARCH_REG_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_signal.h b/bsd-user/aarch64/target_arch_signal.h
+index b72ba7aa50..6085217546 100644
+--- a/bsd-user/aarch64/target_arch_signal.h
++++ b/bsd-user/aarch64/target_arch_signal.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 specific signal definitions for bsd-user
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGNAL_H
+ #define TARGET_ARCH_SIGNAL_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_sigtramp.h b/bsd-user/aarch64/target_arch_sigtramp.h
+index 8cdd33b621..38a447fc25 100644
+--- a/bsd-user/aarch64/target_arch_sigtramp.h
++++ b/bsd-user/aarch64/target_arch_sigtramp.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 sigcode for bsd-user
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGTRAMP_H
+ #define TARGET_ARCH_SIGTRAMP_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_sysarch.h b/bsd-user/aarch64/target_arch_sysarch.h
+index b003015daf..5569c996cb 100644
+--- a/bsd-user/aarch64/target_arch_sysarch.h
++++ b/bsd-user/aarch64/target_arch_sysarch.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 sysarch() system call emulation for bsd-user.
+  *
+- * Copyright (c) 2015 <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SYSARCH_H
+ #define TARGET_ARCH_SYSARCH_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_thread.h b/bsd-user/aarch64/target_arch_thread.h
+index 4c911e605a..06676980c9 100644
+--- a/bsd-user/aarch64/target_arch_thread.h
++++ b/bsd-user/aarch64/target_arch_thread.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 thread support for bsd-user.
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_THREAD_H
+ #define TARGET_ARCH_THREAD_H
+ 
+diff --git a/bsd-user/aarch64/target_arch_vmparam.h b/bsd-user/aarch64/target_arch_vmparam.h
+index 0c35491970..ea32f5b56d 100644
+--- a/bsd-user/aarch64/target_arch_vmparam.h
++++ b/bsd-user/aarch64/target_arch_vmparam.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 VM parameters definitions for bsd-user.
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_VMPARAM_H
+ #define TARGET_ARCH_VMPARAM_H
+ 
+diff --git a/bsd-user/aarch64/target_syscall.h b/bsd-user/aarch64/target_syscall.h
+index 08ae913c42..a574edc429 100644
+--- a/bsd-user/aarch64/target_syscall.h
++++ b/bsd-user/aarch64/target_syscall.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM AArch64 specific CPU for bsd-user
+  *
+- * Copyright (c) 2015 Stacey D. Son <sson at Freebsd>
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef BSD_USER_AARCH64_TARGET_SYSCALL_H
+ #define BSD_USER_AARCH64_TARGET_SYSCALL_H
+ 
+diff --git a/bsd-user/arm/signal.c b/bsd-user/arm/signal.c
+index 9734407543..35cedeba06 100644
+--- a/bsd-user/arm/signal.c
++++ b/bsd-user/arm/signal.c
+@@ -1,22 +1,10 @@
+ /*
+- *  arm signal functions
++ * arm signal functions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ 
+diff --git a/bsd-user/arm/target_arch.h b/bsd-user/arm/target_arch.h
+index d80cb85c64..e0add162e8 100644
+--- a/bsd-user/arm/target_arch.h
++++ b/bsd-user/arm/target_arch.h
+@@ -1,22 +1,10 @@
+ /*
+  * ARM 32-bit specific prototypes for bsd-user
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_H
+ #define TARGET_ARCH_H
+ 
+diff --git a/bsd-user/arm/target_arch_cpu.c b/bsd-user/arm/target_arch_cpu.c
+index fe38ae2210..6a4f5cec0e 100644
+--- a/bsd-user/arm/target_arch_cpu.c
++++ b/bsd-user/arm/target_arch_cpu.c
+@@ -1,22 +1,10 @@
+ /*
+- *  arm cpu related code
++ * arm cpu related code
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #include "qemu/osdep.h"
+ #include "target_arch.h"
+ 
+diff --git a/bsd-user/arm/target_arch_cpu.h b/bsd-user/arm/target_arch_cpu.h
+index 9a952ef0ff..faef3ea17a 100644
+--- a/bsd-user/arm/target_arch_cpu.h
++++ b/bsd-user/arm/target_arch_cpu.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm cpu init and loop
++ * arm cpu init and loop
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_CPU_H
+ #define TARGET_ARCH_CPU_H
+ 
+diff --git a/bsd-user/arm/target_arch_elf.h b/bsd-user/arm/target_arch_elf.h
+index b54bf5fbc6..fd13bc87f4 100644
+--- a/bsd-user/arm/target_arch_elf.h
++++ b/bsd-user/arm/target_arch_elf.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm ELF definitions
++ * arm ELF definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_ELF_H
+ #define TARGET_ARCH_ELF_H
+ 
+diff --git a/bsd-user/arm/target_arch_reg.h b/bsd-user/arm/target_arch_reg.h
+index 070fa24da1..9d23dda27d 100644
+--- a/bsd-user/arm/target_arch_reg.h
++++ b/bsd-user/arm/target_arch_reg.h
+@@ -1,22 +1,10 @@
+ /*
+- *  FreeBSD arm register structures
++ * FreeBSD arm register structures
+  *
+- *  Copyright (c) 2015 Stacey Son
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_REG_H
+ #define TARGET_ARCH_REG_H
+ 
+diff --git a/bsd-user/arm/target_arch_signal.h b/bsd-user/arm/target_arch_signal.h
+index 10f96b8bfc..dfaefa25d1 100644
+--- a/bsd-user/arm/target_arch_signal.h
++++ b/bsd-user/arm/target_arch_signal.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm signal definitions
++ * arm signal definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGNAL_H
+ #define TARGET_ARCH_SIGNAL_H
+ 
+diff --git a/bsd-user/arm/target_arch_sigtramp.h b/bsd-user/arm/target_arch_sigtramp.h
+index 06198045ed..8a2d34aafc 100644
+--- a/bsd-user/arm/target_arch_sigtramp.h
++++ b/bsd-user/arm/target_arch_sigtramp.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm sysarch() system call emulation
++ * arm sysarch() system call emulation
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGTRAMP_H
+ #define TARGET_ARCH_SIGTRAMP_H
+ 
+diff --git a/bsd-user/arm/target_arch_sysarch.h b/bsd-user/arm/target_arch_sysarch.h
+index 5cb7864197..5f7c421e11 100644
+--- a/bsd-user/arm/target_arch_sysarch.h
++++ b/bsd-user/arm/target_arch_sysarch.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm sysarch() system call emulation
++ * arm sysarch() system call emulation
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SYSARCH_H
+ #define TARGET_ARCH_SYSARCH_H
+ 
+diff --git a/bsd-user/arm/target_arch_thread.h b/bsd-user/arm/target_arch_thread.h
+index fd257f313d..d22619a845 100644
+--- a/bsd-user/arm/target_arch_thread.h
++++ b/bsd-user/arm/target_arch_thread.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm thread support
++ * arm thread support
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_THREAD_H
+ #define TARGET_ARCH_THREAD_H
+ 
+diff --git a/bsd-user/arm/target_arch_vmparam.h b/bsd-user/arm/target_arch_vmparam.h
+index 3fb69aff51..c973fcf7d5 100644
+--- a/bsd-user/arm/target_arch_vmparam.h
++++ b/bsd-user/arm/target_arch_vmparam.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm VM parameters definitions
++ * arm VM parameters definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_VMPARAM_H
+ #define TARGET_ARCH_VMPARAM_H
+ 
+diff --git a/bsd-user/arm/target_syscall.h b/bsd-user/arm/target_syscall.h
+index 5804a53541..deab3baebf 100644
+--- a/bsd-user/arm/target_syscall.h
++++ b/bsd-user/arm/target_syscall.h
+@@ -1,22 +1,10 @@
+ /*
+- *  arm cpu system call stubs
++ * arm cpu system call stubs
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef ARM_TARGET_SYSCALL_H
+ #define ARM_TARGET_SYSCALL_H
+ 
+diff --git a/bsd-user/bsd-file.h b/bsd-user/bsd-file.h
+index 6fa2c30b4d..dca1518cb1 100644
+--- a/bsd-user/bsd-file.h
++++ b/bsd-user/bsd-file.h
+@@ -1,22 +1,10 @@
+ /*
+- *  file related system call shims and definitions
++ * file related system call shims and definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef BSD_FILE_H
+ #define BSD_FILE_H
+ 
+diff --git a/bsd-user/bsd-mem.c b/bsd-user/bsd-mem.c
+index 2ab1334b70..8c6c4081f7 100644
+--- a/bsd-user/bsd-mem.c
++++ b/bsd-user/bsd-mem.c
+@@ -1,20 +1,9 @@
+ /*
+- *  memory management system conversion routines
++ * memory management system conversion routines
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h
+index a118e57260..8c0b0b6919 100644
+--- a/bsd-user/bsd-mem.h
++++ b/bsd-user/bsd-mem.h
+@@ -1,20 +1,9 @@
+ /*
+- *  memory management system call shims and definitions
++ * memory management system call shims and definitions
+  *
+- *  Copyright (c) 2013-15 Stacey D. Son
++ * Copyright (c) 2013-2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+ /*
+diff --git a/bsd-user/bsd-proc.c b/bsd-user/bsd-proc.c
+index 8dcac9608d..7fb46046c7 100644
+--- a/bsd-user/bsd-proc.c
++++ b/bsd-user/bsd-proc.c
+@@ -1,20 +1,9 @@
+ /*
+- *  BSD process related system call helpers
++ * BSD process related system call helpers
+  *
+- *  Copyright (c) 2013-14 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ 
+diff --git a/bsd-user/bsd-proc.h b/bsd-user/bsd-proc.h
+index 8b1c2deea3..b1d4446ff1 100644
+--- a/bsd-user/bsd-proc.h
++++ b/bsd-user/bsd-proc.h
+@@ -1,20 +1,9 @@
+ /*
+- *  process related system call shims and definitions
++ * process related system call shims and definitions
+  *
+- *  Copyright (c) 2013-2014 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+ #ifndef BSD_PROC_H_
+diff --git a/bsd-user/freebsd/os-misc.h b/bsd-user/freebsd/os-misc.h
+index 71145764a4..d9979b2a8b 100644
+--- a/bsd-user/freebsd/os-misc.h
++++ b/bsd-user/freebsd/os-misc.h
+@@ -1,22 +1,10 @@
+ /*
+- *  miscellaneous FreeBSD system call shims
++ * miscellaneous FreeBSD system call shims
+  *
+- *  Copyright (c) 2013-14 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef OS_MISC_H
+ #define OS_MISC_H
+ 
+diff --git a/bsd-user/freebsd/os-proc.c b/bsd-user/freebsd/os-proc.c
+index bf993f1b66..0309036178 100644
+--- a/bsd-user/freebsd/os-proc.c
++++ b/bsd-user/freebsd/os-proc.c
+@@ -1,20 +1,9 @@
+ /*
+- *  FreeBSD process related emulation code
++ * FreeBSD process related emulation code
+  *
+- *  Copyright (c) 2013-15 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ 
+diff --git a/bsd-user/freebsd/os-proc.h b/bsd-user/freebsd/os-proc.h
+index cc53215138..72ccf23e17 100644
+--- a/bsd-user/freebsd/os-proc.h
++++ b/bsd-user/freebsd/os-proc.h
+@@ -1,22 +1,10 @@
+ /*
+- *  process related system call shims and definitions
++ * process related system call shims and definitions
+  *
+- *  Copyright (c) 2013-14 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef BSD_USER_FREEBSD_OS_PROC_H
+ #define BSD_USER_FREEBSD_OS_PROC_H
+ 
+diff --git a/bsd-user/freebsd/os-stat.c b/bsd-user/freebsd/os-stat.c
+index f0f9e609c3..10870430fe 100644
+--- a/bsd-user/freebsd/os-stat.c
++++ b/bsd-user/freebsd/os-stat.c
+@@ -1,20 +1,9 @@
+ /*
+- *  FreeBSD stat related conversion routines
++ * FreeBSD stat related conversion routines
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #include "qemu/osdep.h"
+ 
+diff --git a/bsd-user/freebsd/os-stat.h b/bsd-user/freebsd/os-stat.h
+index 3bdc66aa98..ea95aa6344 100644
+--- a/bsd-user/freebsd/os-stat.h
++++ b/bsd-user/freebsd/os-stat.h
+@@ -1,22 +1,10 @@
+ /*
+- *  stat related system call shims and definitions
++ * stat related system call shims and definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef BSD_USER_FREEBSD_OS_STAT_H
+ #define BSD_USER_FREEBSD_OS_STAT_H
+ 
+diff --git a/bsd-user/freebsd/os-strace.h b/bsd-user/freebsd/os-strace.h
+index a222f093b5..ad48e99db1 100644
+--- a/bsd-user/freebsd/os-strace.h
++++ b/bsd-user/freebsd/os-strace.h
+@@ -1,25 +1,12 @@
+ /*
+- *  FreeBSD dependent strace print functions
++ * FreeBSD dependent strace print functions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #include "target_arch_sysarch.h"    /* architecture dependent functions */
+ 
+-
+ static inline void do_os_print_sysarch(const struct syscallname *name,
+         abi_long arg1, abi_long arg2, abi_long arg3, abi_long arg4,
+         abi_long arg5, abi_long arg6)
+diff --git a/bsd-user/freebsd/target_os_elf.h b/bsd-user/freebsd/target_os_elf.h
+index 01124979f7..c67e5a0f8e 100644
+--- a/bsd-user/freebsd/target_os_elf.h
++++ b/bsd-user/freebsd/target_os_elf.h
+@@ -1,22 +1,10 @@
+ /*
+- *  freebsd ELF definitions
++ * FreeBSD ELF definitions
+  *
+- *  Copyright (c) 2013-15 Stacey D. Son
++ * Copyright (c) 2013-2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_OS_ELF_H
+ #define TARGET_OS_ELF_H
+ 
+diff --git a/bsd-user/freebsd/target_os_siginfo.h b/bsd-user/freebsd/target_os_siginfo.h
+index 6c282d8502..e7cf76b9bd 100644
+--- a/bsd-user/freebsd/target_os_siginfo.h
++++ b/bsd-user/freebsd/target_os_siginfo.h
+@@ -1,22 +1,10 @@
+ /*
+- *  FreeBSD siginfo related definitions
++ * FreeBSD siginfo related definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_OS_SIGINFO_H
+ #define TARGET_OS_SIGINFO_H
+ 
+diff --git a/bsd-user/freebsd/target_os_stack.h b/bsd-user/freebsd/target_os_stack.h
+index ac0ef22cd7..262f33d839 100644
+--- a/bsd-user/freebsd/target_os_stack.h
++++ b/bsd-user/freebsd/target_os_stack.h
+@@ -1,22 +1,10 @@
+ /*
+- *  FreeBSD setup_initial_stack() implementation.
++ * FreeBSD setup_initial_stack() implementation.
+  *
+- *  Copyright (c) 2013-14 Stacey D. Son
++ * Copyright (c) 2013-2014 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_OS_STACK_H
+ #define TARGET_OS_STACK_H
+ 
+diff --git a/bsd-user/freebsd/target_os_thread.h b/bsd-user/freebsd/target_os_thread.h
+index 1b32cebd26..ff88679e40 100644
+--- a/bsd-user/freebsd/target_os_thread.h
++++ b/bsd-user/freebsd/target_os_thread.h
+@@ -1,22 +1,10 @@
+ /*
+- *  FreeBSD thread dependent code and definitions
++ * FreeBSD thread dependent code and definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_OS_THREAD_H
+ #define TARGET_OS_THREAD_H
+ 
+diff --git a/bsd-user/freebsd/target_os_user.h b/bsd-user/freebsd/target_os_user.h
+index 1ca7b5ab17..9703b9a61a 100644
+--- a/bsd-user/freebsd/target_os_user.h
++++ b/bsd-user/freebsd/target_os_user.h
+@@ -1,22 +1,10 @@
+ /*
+- *  sys/user.h definitions
++ * sys/user.h definitions
+  *
+- *  Copyright (c) 2015 Stacey D. Son (sson at FreeBSD)
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_OS_USER_H
+ #define TARGET_OS_USER_H
+ 
+diff --git a/bsd-user/freebsd/target_os_vmparam.h b/bsd-user/freebsd/target_os_vmparam.h
+index 8457dd3913..9feec5296d 100644
+--- a/bsd-user/freebsd/target_os_vmparam.h
++++ b/bsd-user/freebsd/target_os_vmparam.h
+@@ -1,22 +1,10 @@
+ /*
+- *  FreeBSD VM parameters definitions
++ * FreeBSD VM parameters definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_OS_VMPARAM_H
+ #define TARGET_OS_VMPARAM_H
+ 
+diff --git a/bsd-user/i386/signal.c b/bsd-user/i386/signal.c
+index a3131047b8..742032090d 100644
+--- a/bsd-user/i386/signal.c
++++ b/bsd-user/i386/signal.c
+@@ -1,20 +1,9 @@
+ /*
+- *  i386 dependent signal definitions
++ * i386 dependent signal definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+ #include "qemu/osdep.h"
+diff --git a/bsd-user/i386/target_arch.h b/bsd-user/i386/target_arch.h
+index 9595e60f09..74c8e7fb47 100644
+--- a/bsd-user/i386/target_arch.h
++++ b/bsd-user/i386/target_arch.h
+@@ -1,22 +1,10 @@
+ /*
+  * Intel x86 specific prototypes for bsd-user
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_H
+ #define TARGET_ARCH_H
+ 
+diff --git a/bsd-user/i386/target_arch_cpu.c b/bsd-user/i386/target_arch_cpu.c
+index 2a3af2ddef..fa8ad4b385 100644
+--- a/bsd-user/i386/target_arch_cpu.c
++++ b/bsd-user/i386/target_arch_cpu.c
+@@ -1,20 +1,9 @@
+ /*
+- *  i386 cpu related code
++ * i386 cpu related code
+  *
+- * Copyright (c) 2013 Stacey Son <sson@FreeBSD.org>
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+ #include "qemu/osdep.h"
+diff --git a/bsd-user/i386/target_arch_cpu.h b/bsd-user/i386/target_arch_cpu.h
+index f147d5b6f8..c6e8bfd8ca 100644
+--- a/bsd-user/i386/target_arch_cpu.h
++++ b/bsd-user/i386/target_arch_cpu.h
+@@ -1,21 +1,10 @@
+ /*
+- *  i386 cpu init and loop
++ * i386 cpu init and loop
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_CPU_H
+ #define TARGET_ARCH_CPU_H
+ 
+diff --git a/bsd-user/i386/target_arch_elf.h b/bsd-user/i386/target_arch_elf.h
+index 4ac27b02e7..99cff66a22 100644
+--- a/bsd-user/i386/target_arch_elf.h
++++ b/bsd-user/i386/target_arch_elf.h
+@@ -1,22 +1,10 @@
+ /*
+- *  i386 ELF definitions
++ * i386 ELF definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_ELF_H
+ #define TARGET_ARCH_ELF_H
+ 
+diff --git a/bsd-user/i386/target_arch_reg.h b/bsd-user/i386/target_arch_reg.h
+index 8123109697..cebf2fd5cc 100644
+--- a/bsd-user/i386/target_arch_reg.h
++++ b/bsd-user/i386/target_arch_reg.h
+@@ -1,23 +1,10 @@
+ /*
+- *  FreeBSD i386 register structures
++ * FreeBSD i386 register structures
+  *
+- *  Copyright (c) 2015 Stacey Son
+- *  All rights reserved.
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_REG_H
+ #define TARGET_ARCH_REG_H
+ 
+diff --git a/bsd-user/i386/target_arch_signal.h b/bsd-user/i386/target_arch_signal.h
+index 2c14153ab6..070ba4357a 100644
+--- a/bsd-user/i386/target_arch_signal.h
++++ b/bsd-user/i386/target_arch_signal.h
+@@ -1,19 +1,9 @@
+ /*
+- *  i386 dependent signal definitions
++ * i386 dependent signal definitions
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #ifndef TARGET_ARCH_SIGNAL_H
+ #define TARGET_ARCH_SIGNAL_H
+diff --git a/bsd-user/i386/target_arch_sigtramp.h b/bsd-user/i386/target_arch_sigtramp.h
+index ef94cc864f..ace243b6f5 100644
+--- a/bsd-user/i386/target_arch_sigtramp.h
++++ b/bsd-user/i386/target_arch_sigtramp.h
+@@ -1,22 +1,10 @@
+ /*
+  * Intel i386  sigcode for bsd-user
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGTRAMP_H
+ #define TARGET_ARCH_SIGTRAMP_H
+ 
+diff --git a/bsd-user/i386/target_arch_sysarch.h b/bsd-user/i386/target_arch_sysarch.h
+index db8fee6380..7b128dfab1 100644
+--- a/bsd-user/i386/target_arch_sysarch.h
++++ b/bsd-user/i386/target_arch_sysarch.h
+@@ -1,22 +1,10 @@
+ /*
+- *  i386 sysarch system call emulation
++ * i386 sysarch system call emulation
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SYSARCH_H
+ #define TARGET_ARCH_SYSARCH_H
+ 
+diff --git a/bsd-user/i386/target_arch_thread.h b/bsd-user/i386/target_arch_thread.h
+index cee2148d94..8ef4f6b648 100644
+--- a/bsd-user/i386/target_arch_thread.h
++++ b/bsd-user/i386/target_arch_thread.h
+@@ -1,22 +1,10 @@
+ /*
+- *  i386 thread support
++ * i386 thread support
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_THREAD_H
+ #define TARGET_ARCH_THREAD_H
+ 
+diff --git a/bsd-user/i386/target_arch_vmparam.h b/bsd-user/i386/target_arch_vmparam.h
+index 79db420e59..cdf6ab0a49 100644
+--- a/bsd-user/i386/target_arch_vmparam.h
++++ b/bsd-user/i386/target_arch_vmparam.h
+@@ -1,22 +1,10 @@
+ /*
+- *  i386 VM parameters definitions
++ * i386 VM parameters definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_VMPARAM_H
+ #define TARGET_ARCH_VMPARAM_H
+ 
+diff --git a/bsd-user/i386/target_syscall.h b/bsd-user/i386/target_syscall.h
+index 940c687a52..a52851f635 100644
+--- a/bsd-user/i386/target_syscall.h
++++ b/bsd-user/i386/target_syscall.h
+@@ -1,19 +1,9 @@
+ /*
+- *  i386 system call definitions
++ * i386 system call definitions
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #ifndef TARGET_SYSCALL_H
+ #define TARGET_SYSCALL_H
+diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h
+index b98d1d76b2..756425d18e 100644
+--- a/bsd-user/qemu-bsd.h
++++ b/bsd-user/qemu-bsd.h
+@@ -1,22 +1,10 @@
+ /*
+- *  BSD conversion extern declarations
++ * BSD conversion extern declarations
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef QEMU_BSD_H
+ #define QEMU_BSD_H
+ 
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 4dbd90c2f1..90ec3c048d 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -1,22 +1,10 @@
+ /*
+- *  System call related declarations
++ * System call related declarations
+  *
+- *  Copyright (c) 2013-15 Stacey D. Son (sson at FreeBSD)
++ * Copyright (c) 2013-2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef SYSCALL_DEFS_H
+ #define SYSCALL_DEFS_H
+ 
+diff --git a/bsd-user/x86_64/signal.c b/bsd-user/x86_64/signal.c
+index 46cb865180..823d7217ad 100644
+--- a/bsd-user/x86_64/signal.c
++++ b/bsd-user/x86_64/signal.c
+@@ -1,19 +1,9 @@
+ /*
+- *  x86_64 signal definitions
++ * x86_64 signal definitions
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+ #include "qemu/osdep.h"
+diff --git a/bsd-user/x86_64/target_arch.h b/bsd-user/x86_64/target_arch.h
+index 09bd974889..177e6b442a 100644
+--- a/bsd-user/x86_64/target_arch.h
++++ b/bsd-user/x86_64/target_arch.h
+@@ -1,22 +1,10 @@
+ /*
+  * Intel x86_64 specific prototypes for bsd-user
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_H
+ #define TARGET_ARCH_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_cpu.c b/bsd-user/x86_64/target_arch_cpu.c
+index 1d32f18907..aeeb1235c9 100644
+--- a/bsd-user/x86_64/target_arch_cpu.c
++++ b/bsd-user/x86_64/target_arch_cpu.c
+@@ -1,20 +1,9 @@
+ /*
+- *  x86_64 cpu related code
++ * x86_64 cpu related code
+  *
+- * Copyright (c) 2013 Stacey Son <sson@FreeBSD.org>
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+ #include "qemu/osdep.h"
+diff --git a/bsd-user/x86_64/target_arch_cpu.h b/bsd-user/x86_64/target_arch_cpu.h
+index 1fa71d87f1..f12a8ab49e 100644
+--- a/bsd-user/x86_64/target_arch_cpu.h
++++ b/bsd-user/x86_64/target_arch_cpu.h
+@@ -1,21 +1,10 @@
+ /*
+- *  x86_64 cpu init and loop
++ * x86_64 cpu init and loop
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_CPU_H
+ #define TARGET_ARCH_CPU_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_elf.h b/bsd-user/x86_64/target_arch_elf.h
+index e51c2faf08..020533904e 100644
+--- a/bsd-user/x86_64/target_arch_elf.h
++++ b/bsd-user/x86_64/target_arch_elf.h
+@@ -1,22 +1,10 @@
+ /*
+- *  x86_64 ELF definitions
++ * x86_64 ELF definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_ELF_H
+ #define TARGET_ARCH_ELF_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_reg.h b/bsd-user/x86_64/target_arch_reg.h
+index 7a766de918..c0c766ac1a 100644
+--- a/bsd-user/x86_64/target_arch_reg.h
++++ b/bsd-user/x86_64/target_arch_reg.h
+@@ -1,23 +1,10 @@
+ /*
+- *  FreeBSD amd64 register structures
++ * FreeBSD amd64 register structures
+  *
+- *  Copyright (c) 2015 Stacey Son
+- *  All rights reserved.
++ * Copyright (c) 2015 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_REG_H
+ #define TARGET_ARCH_REG_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_signal.h b/bsd-user/x86_64/target_arch_signal.h
+index f833ee66ce..2b63048f8b 100644
+--- a/bsd-user/x86_64/target_arch_signal.h
++++ b/bsd-user/x86_64/target_arch_signal.h
+@@ -1,21 +1,10 @@
+ /*
+- *  x86_64 signal definitions
++ * x86_64 signal definitions
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGNAL_H
+ #define TARGET_ARCH_SIGNAL_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_sigtramp.h b/bsd-user/x86_64/target_arch_sigtramp.h
+index 01da614098..cab22fb7e8 100644
+--- a/bsd-user/x86_64/target_arch_sigtramp.h
++++ b/bsd-user/x86_64/target_arch_sigtramp.h
+@@ -1,29 +1,16 @@
+ /*
+  * Intel x86_64  sigcode for bsd-user
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SIGTRAMP_H
+ #define TARGET_ARCH_SIGTRAMP_H
+ 
+ static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf_uc,
+         unsigned sys_sigreturn)
+ {
+-
+     return 0;
+ }
+ #endif /* TARGET_ARCH_SIGTRAMP_H */
+diff --git a/bsd-user/x86_64/target_arch_sysarch.h b/bsd-user/x86_64/target_arch_sysarch.h
+index 152cb8bcb8..3a6f74161f 100644
+--- a/bsd-user/x86_64/target_arch_sysarch.h
++++ b/bsd-user/x86_64/target_arch_sysarch.h
+@@ -1,21 +1,10 @@
+ /*
+- *  x86_64 sysarch() syscall emulation
++ * x86_64 sysarch() syscall emulation
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_SYSARCH_H
+ #define TARGET_ARCH_SYSARCH_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_thread.h b/bsd-user/x86_64/target_arch_thread.h
+index 7739bb2154..176c347037 100644
+--- a/bsd-user/x86_64/target_arch_thread.h
++++ b/bsd-user/x86_64/target_arch_thread.h
+@@ -1,22 +1,10 @@
+ /*
+- *  x86_64 thread support
++ * x86_64 thread support
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_THREAD_H
+ #define TARGET_ARCH_THREAD_H
+ 
+diff --git a/bsd-user/x86_64/target_arch_vmparam.h b/bsd-user/x86_64/target_arch_vmparam.h
+index 6797623a6b..8919c5e6e5 100644
+--- a/bsd-user/x86_64/target_arch_vmparam.h
++++ b/bsd-user/x86_64/target_arch_vmparam.h
+@@ -1,22 +1,10 @@
+ /*
+- *  Intel x86_64 VM parameters definitions
++ * Intel x86_64 VM parameters definitions
+  *
+- *  Copyright (c) 2013 Stacey D. Son
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-
+ #ifndef TARGET_ARCH_VMPARAM_H
+ #define TARGET_ARCH_VMPARAM_H
+ 
+diff --git a/bsd-user/x86_64/target_syscall.h b/bsd-user/x86_64/target_syscall.h
+index a8e6274b76..5adced9bde 100644
+--- a/bsd-user/x86_64/target_syscall.h
++++ b/bsd-user/x86_64/target_syscall.h
+@@ -1,19 +1,9 @@
+ /*
+- *  x86_64 system call definitions
++ * x86_64 system call definitions
+  *
++ * Copyright (c) 2013 Stacey D. Son
+  *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License, or
+- *  (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #ifndef TARGET_SYSCALL_H
+ #define TARGET_SYSCALL_H
+
+---
+base-commit: d41b9b44ac9a9c4d82cc74f59bfd1bdd4ac4014c
+change-id: 20260302-bsd-user-copyright-3a46d2307150
+
+Best regards,
+-- 
+Warner Losh <imp@bsdimp.com>
+
 
