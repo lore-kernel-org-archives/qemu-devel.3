@@ -4,107 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B85FC9EF9
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 11:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F7E9FC9EF9
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 12:53:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyqHu-0008UX-DW; Sat, 07 Mar 2026 06:57:42 -0500
+	id 1vyr8x-0005UD-Ks; Sat, 07 Mar 2026 07:52:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyqHs-0008SE-GF
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:57:40 -0500
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1vyr8t-0005Ti-Ry
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 07:52:27 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vyqHp-0001vc-JD
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 06:57:40 -0500
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ae222d87dso9273190d50.2
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 03:57:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772884654; cv=none;
- d=google.com; s=arc-20240605;
- b=Su6eFbgdVj3MoQz3TH2oE1nQUwiWRIo+N+LAAfJY+2KT7xMcj/RJ8c9sYL5R90Pc9e
- tLR4ns1AIyqp8uo32dwtyCKTqALpnvRAjJfl6MAs0dj2ZV9e9MOSMha2Lcx8WvFSp1/v
- Mnn9TmFX4EQCOVG7gL6Wm6an1TK4zw+s7GuhrYTXCqlssEzeoKRYjCNsQIhiCFV3SGwi
- nBOG2uqcTk0IHzwsQMbYpVoPZIowjDJeeRC8XIbISZbSACBYQVbBdRvTKe0QgYgfK7Jm
- 4sgZG8L1HdvLAbHEMoMOUqkdfYwB/ZSLnrRLTi2KKtDtlAnuI79uNwDCevi7A3f5s2Ql
- CRfQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=bqjfmx6l65XDlRbYgcElRyKso9BXBZuLNioK67IT7/o=;
- fh=BWQLt1rHW1xLgWd4huE0rSwJ9gDLpGmKBg+4vEq3v/8=;
- b=Zz4FFNftNWRoZ7zUHqcntVT5LFk6+ibZbnNOAon0w/sLPqA+fL87l7dqo1FAqbwQRC
- kXYWQ9/FDqRGzJMdTEsB01goMGKJwbvbUS5oiPgGjqYlmMJCJiwFbog5oLQL5vUE+zb0
- V112SdYTqaQAcUCQROvuDajybfy70PXfEgyXG59O6/ARpBv1yCIfHHUKMJqctp6OvxHc
- I6YV0mU/gvW7HD8w623LJreGFjBBVr2X9Xwai4qw6EPM7/e01Ny9rCRXUfMAAJdRJSRZ
- wzxJy2mpBhDPGBLNYqb3c5bpuVHiIi2dwBkATUBehjvQtS37zE8bpkyzhjtB4X2lhz3V
- b72Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1vyr8r-0002UJ-SD
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 07:52:27 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so117094815e9.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 04:52:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772884654; x=1773489454; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bqjfmx6l65XDlRbYgcElRyKso9BXBZuLNioK67IT7/o=;
- b=YWMCiKPbo9nouYmnWpEJnjUyJuVmBaHsEzfUvqihd/dnP3xWY2Gss5FLgZ/W/7XySY
- s5WFF3QPry5alPirb3T4s8LUnAYULRdKLBMFaemizxNwrY6wIxLbaJrgQf7kMcXJDrn1
- cxJ0MaDFJZKoN1DvCSnyJLckrYkwNkooMoGuTAzok4jwhoP+a2ahDFFbuFHZzE2hTpxG
- bxlJ0ZWGKWA1ysSZEgcvDMfTl9tSLt9dZpgQTAbCsgq4E8feK/kN34SNKBNRuM/A0cC+
- mSx7BTWoi6UGPw8VpzCRbFTJ0h1iI5HESHUqb5JPQqbocVeVnBS1bJhjMOg98oFE1AnC
- 5uDw==
+ d=linaro.org; s=google; t=1772887944; x=1773492744; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ag6+elzpX6KdCT6AK+kx65CXgTT3Bx85wj16Mpz62kw=;
+ b=xMxEJ4ezn/Or3jKrrDZTo9/N/ap+UN4nJTFw03yCOoW+M8xERXgM0/DZPnn/JVUta2
+ XwYihyLu+NTZBtMIHZMM+d0MUe5VojhJkBY4f7jCrFyZ9t1hx8HpB8BEqIe1muacS6NS
+ a4Y/uRkQHFnvUSMZ9UIIEW9bXDKXmg3z31lUgdCY+72YBmj9uTEmhAE0zzQ3YyHafiHI
+ 0YLmAyK3sQqrMerKFADyKHtYDkNh3puT77GRrzCp4xBHQDavoYirbo2AZGJk1k6mae2H
+ EsnSuNHKDSU9Ys7NekPJ8hKtV/cPoCtAalngauBV1kV1cj9C5L8oxyLXisjhUTs8w/RK
+ ZO4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772884654; x=1773489454;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1772887944; x=1773492744;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bqjfmx6l65XDlRbYgcElRyKso9BXBZuLNioK67IT7/o=;
- b=Jt74et/MkAj1QapijQDtqRmPo9C5EEfA7pMfkLVau9j7bFz/BiNcnULZ/MPcXcCeom
- CrEaqMAUjfeduxC289A5PoMBKb3H80lxH3OTW3LaCnbbYX4dweZ95mWShse6Uyo+xGZK
- KuGHgm/fGykSC5ikYPdIf41d8mHis+UEM2MsxYrraaVb1Gwlj3n4tUcsHDwpEUoyeyM9
- bNSNQlLdpRCaURjZJINakVdFV/7vkWaHNP4oY/1Tlcupl+seUSr1Fbvb/3hRwu72R3sL
- kSjJ5iL1SnQfvNcs/jt0lA8WEJhNcpEFLiylnEoT9dseYsKSXaF5D1M7tjZvUIO0Sav4
- KGCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnPCFfvTGzObxA6d5KWsk4oAN7fEzfO4IZ+zhLlOhDCAku+Yb2nqLanuIdmG4rtyFbjysqJneinyzF@nongnu.org
-X-Gm-Message-State: AOJu0YzZ5B2bHKHlxX2ewlsjGddza1Lg+fVRrEVQpU583Rm5Ssyrvgyv
- To+BQtrGlvgpUgE9jQdgO9AbeXWFLzyuuHWJFRcKJBnXbUIerZkcPRrywucfE16A+h38WMG+NKO
- v/6vnae3D8BSy2hvcFg9EcUVs4f15w2Y0lkKwe/tQ0A==
-X-Gm-Gg: ATEYQzwTLMhd6l3PdQi8nhA4Zarrv31PS8kZ86+8BuiHLC308Ij1xrdZLT8mkwkIUjQ
- yE43aCUrf8Pv7imQChGxvaBjSEbjiuSoTZrijIChIY6tL+/2XkxKCUCclkDGhdh+nbxv85h/rHQ
- 0aTM96Q94E1npS2la61YtsRGsE8W9/COwGUNkvJiWodF0JuF7fVpzQKQcVMsY7C/jWfCdvDiOIl
- y03qATyb0iGU+IrdFYebOD0WDxN39yXzLq155GrO8xzt/HpMipRyQycAKonvpqiPsp7at1PJTdG
- 8tNaANqlLoDAa8/hBSqfKWsAnU5KCb91PqN6BWqCWvaUIpPad/dA1zRaMeabFLfQQdlWu9sDia8
- /OQ==
-X-Received: by 2002:a05:690e:1a8d:b0:64c:ed45:c612 with SMTP id
- 956f58d0204a3-64d1433f697mr3518866d50.75.1772884653997; Sat, 07 Mar 2026
- 03:57:33 -0800 (PST)
-MIME-Version: 1.0
-References: <20250207210540.24594-1-deller@kernel.org>
- <20250207210540.24594-3-deller@kernel.org>
- <CAFEAcA_VWSYYE+GdDRwxpWzOX6qVYptjYOe--azOzo4_pre_+A@mail.gmail.com>
- <aasZKZ1FQY5ytrb2@p100>
- <CAFEAcA8MLNYfDe_0chBmo+wwwNJoUHWj4Sg1nhCNSjodCzTOtw@mail.gmail.com>
- <aaseBa-3GVyjKGXh@p100>
- <CAFEAcA_g4tT2dTyWHoTn0hVZ_Soy7W_exh2JEE-C9U+PN4LGPg@mail.gmail.com>
- <aas7xpjiDx5Bhrs4@p100>
- <CAFEAcA_Tcarx1+EbLfrZxVpHFaKQkfOy_pTLc_T0FdNFRDfPTw@mail.gmail.com>
- <9ad53895-e340-433c-b60f-bb4901aad668@gmx.de>
-In-Reply-To: <9ad53895-e340-433c-b60f-bb4901aad668@gmx.de>
+ bh=ag6+elzpX6KdCT6AK+kx65CXgTT3Bx85wj16Mpz62kw=;
+ b=SRDdUAc6+BXYe6gxIeUGrkybEosh9JRrIeOMcaiRD/t6sh16Gc9eexnq0reXMydFPz
+ wk1SrRM/fla4DT2B5UnKP4Rw5l9rUD0TX4YoLaC+GT3ymwyd4D6lGtxL0vytFZbpk7iT
+ suZklDQHLMmkT4Jf9GJFXudI5Q3uCYJA39R2TI4QlnDaZQyGdM26HQ664QDmXBoawkQ/
+ qI0sVX6tQ/xrjZZM8xYLRH6aipw+icug3wEUKs413ebMx9ApbJBX/m6toMx/9UoQYIS0
+ j+OowlZDTpLmnBALm4vZ4HmOg4YRhgq2yW7kKlSvYv7iMiatNMxOHAt6e+5EjfijD923
+ pEzg==
+X-Gm-Message-State: AOJu0YwbTDT000q+pUAYo4exeTU/pq3WL6S0BNvLwGbA7jJ70iXUiqoj
+ w25PxDLc6qI180BMguCHHjXZLmD9p2M5OlyTq94Sxp2cxoGJHxM8uVHxX4lbqs8DimwF8pz+LKr
+ 9Z2Gf
+X-Gm-Gg: ATEYQzzK9Vh2d77Zaaf5xkKnqM8p8ZGaJp67Ybkjw24RVeH92/T3ITA67pgzoc4Nd8n
+ TC/RoxSmvYezWZWx9DuuFBDcdyJNeWBkeWXXSz9fq1yHJP4/4v6CnF5Dv5WOaW3mfbyDb08XQ/g
+ zr+3psaU7VtpdRqJ1vMMM0K3u+QviuRLoCpDwxnv9G/pN0LsLip9mQ3yhw7M7fLhIDdWk8kMHzW
+ Cl015PnwPMEISZ0Cbjqfck/C0DU+eckgLjo7H726/8310IUgN9bvgqFHjgQTDCVcKSvgjHynWWx
+ opLgBoNWulTFms7KFffbXee8xjtcPUM3QgWDnT2NKOaIQT2kGwxLk+DqkLZqbolLvYA9qVrWd+H
+ cSnjNeOuTcXJBjbKH3c2p6qEPH9UW4PASqwb6IT/glM2W/lqdqFGjZHtGSXBPARaay+Di4ZZwTl
+ jGOFaOns4jmMl1ESPHO+jGHI4Dn6+gICSeLjW3nrf2SnlLuTcgmObyOK4qb/SQyboDnMj+YnsbQ
+ th7LRgK9B1qbBwRYbh1bgkqgqTE8Eo=
+X-Received: by 2002:a05:600c:a41:b0:485:2c61:9459 with SMTP id
+ 5b1f17b1804b1-4852c61bcd8mr47371795e9.8.1772887944255; 
+ Sat, 07 Mar 2026 04:52:24 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4851fb27a20sm395332455e9.9.2026.03.07.04.52.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 07 Mar 2026 04:52:23 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 7 Mar 2026 11:57:22 +0000
-X-Gm-Features: AaiRm539My7L3kWETUGUL7ct0F-B8d5ECEEoJJYOb4G0e05auE5h2nsL23tqMZs
-Message-ID: <CAFEAcA-pRycQRdQLfvMq+jEOQv=gk_5SM5Hyb34Pe6dwPVE0MQ@mail.gmail.com>
-Subject: Re: [PULL 2/6] hw/hppa: Wire up Diva GSP card
-To: Helge Deller <deller@gmx.de>
-Cc: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+Subject: [PATCH] hw/riscv/riscv-iommu: Free instance_init allocations in
+ instance_finalize
+Date: Sat,  7 Mar 2026 12:52:22 +0000
+Message-ID: <20260307125222.3656140-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,50 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 7 Mar 2026 at 11:41, Helge Deller <deller@gmx.de> wrote:
->
-> On 3/7/26 11:46, Peter Maydell wrote:
-> > On Fri, 6 Mar 2026 at 20:40, Helge Deller <deller@kernel.org> wrote:
-> >>
-> >> * Peter Maydell <peter.maydell@linaro.org>:
-> >>> You need to increment the version_id and minimum_version_id
-> >>> to change the vmstate. Or you could instead replace the line with
-> >>>             VMSTATE_UNUSED(1), /* was "disable" */
-> >>> (which keeps the migration data structure the same, so no
-> >>> version bump needed).
-> >>>
-> >>> I have no strong preference; I would probably just bump
-> >>> the version numbers personally.
-> >>
-> >> New patch below.
-> >> Ok?
-> >>
-> >> Helge
-> >>
-> >>
-> >> From: Helge Deller <deller@gmx.de>
-> >> Subject: [PATCH] hw/char: Drop disable property of Diva GSP card
-> >>
-> >> The "disable" property is not used, so drop it.
-> >>
-> >> Noticed-by: Peter Maydell <peter.maydell@linaro.org>
-> >> Signed-off-by: Helge Deller <deller@gmx.de>
-> >
-> > That looks fine, you can have
-> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Thanks!
->
-> > (You should send these to the list as proper patchmails.)
->
-> Yes, I'll include them in my next pull request and then
-> they will show up as normal stand-alone patches.
+The riscv-iommu device makes various allocations in its
+instance_init method. These will leak when QMP inits an
+object of this type to introspect it, as can be seen if you
+run 'make check' with the address sanitizer enabled:
 
-No, I mean you should send them as patch mails first.
-Nothing is supposed to turn up in a pull request
-email series if it hasn't first been on the list as
-a patch email for potential review.
+Direct leak of 4096 byte(s) in 1 object(s) allocated from:
+    #0 0x5d8415b6ed9d in calloc (/home/pm215/qemu/build/san/qemu-system-riscv32+0x1832d9d) (BuildId: fedcc313e48ba803d63837329c37fd609dd50849)
+    #1 0x75c0502f1771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x5d8416d09391 in riscv_iommu_instance_init /home/pm215/qemu/build/san/../../hw/riscv/riscv-iommu.c:2463:18
+    #3 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #4 0x5d8417104ee9 in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
+    #5 0x5d8417104ee9 in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
+    #6 0x5d8417104db1 in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
+    #7 0x5d8417106506 in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
+    #8 0x5d8416d16a12 in riscv_iommu_sys_init /home/pm215/qemu/build/san/../../hw/riscv/riscv-iommu-sys.c:199:5
+    #9 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #10 0x5d841710661f in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+    #11 0x5d841755d956 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
 
-thanks
--- PMM
+(and other similar backtraces).
+
+Fix these by freeing the resources we allocate in instance_init in
+instance_finalize.  In some cases we were freeing these in unrealize,
+and in some cases not at all.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/riscv/riscv-iommu.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 98345b1280..225394ea83 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2479,6 +2479,18 @@ static void riscv_iommu_instance_init(Object *obj)
+     QLIST_INIT(&s->spaces);
+ }
+ 
++static void riscv_iommu_instance_finalize(Object *obj)
++{
++    RISCVIOMMUState *s = RISCV_IOMMU(obj);
++
++    g_free(s->regs_rw);
++    g_free(s->regs_ro);
++    g_free(s->regs_wc);
++
++    g_hash_table_unref(s->ctx_cache);
++    g_hash_table_unref(s->iot_cache);
++}
++
+ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+@@ -2597,9 +2609,6 @@ static void riscv_iommu_unrealize(DeviceState *dev)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+ 
+-    g_hash_table_unref(s->iot_cache);
+-    g_hash_table_unref(s->ctx_cache);
+-
+     if (s->cap & RISCV_IOMMU_CAP_HPM) {
+         g_hash_table_unref(s->hpm_event_ctr_map);
+         timer_free(s->hpm_timer);
+@@ -2675,6 +2684,7 @@ static const TypeInfo riscv_iommu_info = {
+     .parent = TYPE_DEVICE,
+     .instance_size = sizeof(RISCVIOMMUState),
+     .instance_init = riscv_iommu_instance_init,
++    .instance_finalize = riscv_iommu_instance_finalize,
+     .class_init = riscv_iommu_class_init,
+ };
+ 
+-- 
+2.43.0
+
 
