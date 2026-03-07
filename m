@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0B01F513ED
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31FFFCB602
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytB1-0006UF-1G; Sat, 07 Mar 2026 10:02:47 -0500
+	id 1vytYN-0004x0-Vp; Sat, 07 Mar 2026 10:26:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyt9u-0005iI-3i
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:01:43 -0500
-Received: from p-west1-cluster2-host8-snip4-1.eps.apple.com ([57.103.64.202]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vyt9o-000571-T7
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:01:36 -0500
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-7 (Postfix) with ESMTPS id
- 19B201800215; Sat,  7 Mar 2026 15:01:23 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772895688; x=1775487688;
- bh=FxDjNm/2quGgkn/WgUpRBwpf4xG7+uf5Iw7NLZc9Hbg=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=WpwdRcJSRaOEdRGUA7t6UqCAMHUBJYvRngu1YfGvYPPbjkETXVeP6shE88EIYoIl/JkUh8iRDjUxU8Avd8T1cFnA1YqqUGDHZ63uUT33c0sZdBqVB8la4nHyb4z7z+pcB1zFTQqgE0uDRXIliBfa/gy4MmEQb8vIi7pFwsVerHmrtU9Khl+h9qtNpDQVkD85Khn4a9TaFSSEqinE2Yr9QtwSVCoL99GosqILAN7ucO7oEkYjNjzHc9eDYfeVUo3oxAoe/qCtYREDw/sp6Qx8V431oya6GP74dyp3c5LASrb9TsZE1LcIhIIi58j1A1oiCJjEOLlj83DqPDdWJtbR5A==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-7 (Postfix) with ESMTPSA id
- 5205818001B8; Sat,  7 Mar 2026 15:01:18 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v17 14/14] hvf: arm: move SME2 registers to common
- hvf_sreg structure
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260307090606.95300-15-mohamed@unpredictable.fr>
-Date: Sat, 7 Mar 2026 16:01:06 +0100
-Cc: Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C12B38DB-B707-4DCF-AFEA-8BF283CE5654@unpredictable.fr>
-References: <20260307090606.95300-1-mohamed@unpredictable.fr>
- <20260307090606.95300-15-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytYM-0004wq-QY
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:26:54 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytYL-00084L-AH
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:26:54 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso84007785e9.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:26:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772897211; x=1773502011; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IMoQ3NbTol8pSbdgghPvXG4r2n1wnaW8ZAPS6V4fUYw=;
+ b=pdbPHmCRGVAUAJTVPjwkMSuGN3MDPt02dvfaM7B6ST7kRHV4SRN8TB4mFdD+Otbsao
+ CCeybe1ZGdRphdrDHQJbjijjJJ/wA4nn9JJCyO+9PEsexWKyh05uQ6UyP1DAL4r+Ruqg
+ WGq2/mJcafBuJkta8hsBB1E/skf2XYBLTec+iIUVQF4j/ZvyBL0RRAY6Q5x0tvRZ1yUs
+ 7UBY9dYjo9JMOb2vhxGefzVy0ADBHHQSHiXSo3oSj4wOrUam5isognczPkTw/2IAqTyu
+ zS3a6L9tmLAL9bXjVwmVQ2mS4oJ+gmpy53s3Db6qEBlttMT/z/VlcWwwMQWoMjzhwD9V
+ 87og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772897211; x=1773502011;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IMoQ3NbTol8pSbdgghPvXG4r2n1wnaW8ZAPS6V4fUYw=;
+ b=EBD6hByp/IUZ9/WYKtmXYR+RFDkeqCxpDxSQS7SFNT1G9XcHr1TFVDEiTBaR4WfkHY
+ hTtXnfSYfaVbOZx/xxzxvAaHAu78dwjiy+EhCufyqtRjfhlx7K6xXlaCK/FIUqTwCp4C
+ BZNeIWiEF9q5cRN8lZsgXuEkXnV2RMmtnpjWCPXdvfIzf65Woh8BSjHIN14TtdF7Q+37
+ iHCGFcW0cFvtT/Z5UmVifvlWYf1lca8HSZ27GU25deYda0U/KTHK/p9VgsBOVvgRviVX
+ P9t2wmREpeiTlaiUDJAFD/FO5YW23OjtbVjiTGjwHNWCDGY810UzmPURXutBZM/9Mtov
+ fIdg==
+X-Gm-Message-State: AOJu0YxBbbr/WL36pyQfigynX1Bz1/PBZvv57Ymnp+CW5wJuQEYYle7V
+ JIr+kKGg6An+YmyVbkQhMfsuFbs52UyQuVqHsBUwfHzBIgx0uBFkQmm6ttflbb8+Z3uWBl14KSp
+ ETTIijqM=
+X-Gm-Gg: ATEYQzy+3RWCMZH5zj5MLL96LjauIil5c18B93UTY5Qk71S/P2YDxDSID+Gl5UhTTtX
+ zhEhV4/+Hd3MlFQLdGFq+2183aKv7K2OVNiAxmXbbEfZEw8rliGs2o+/Yd2QlTlt0TKgAp6HDiP
+ ncChJbwhQCkf7KCE7Y9KPDDX6Md1fP/zjFVWwmV1SFrfrzlI+VnJoZ6QrYjOnGv1FWSaL4T2UyF
+ bDmLBZImVOwONOOgHWaFdAxbsVtMvm5M3IYzgdBorrLXNiTs8QoNAhqE2cCr+CyVbtYC2h7JwmI
+ 9f3BlyWdCu1/u6d7xszhUgN4saCa2JBR2cxgmedttGuel630XMu3EU3WHI8TjBJqYwAhxBO+ZAA
+ Mb7ITjLRtwKntwE/cKp/zc2QfplUDCCTo7MYZOlKZZ3JuOGDpSTanYp6n3ZaOlVFDp0iBDZRIsg
+ y3Ayo38dZ4BsiLtjoFGhjBFJLgJk90Y1Z4o4PopWZZ+64dTmTedodYlPmCrhwMciCeOC2+EVab
+X-Received: by 2002:a05:600c:4e89:b0:480:1e9e:f9b with SMTP id
+ 5b1f17b1804b1-48526951acemr87854005e9.16.1772897211330; 
+ Sat, 07 Mar 2026 07:26:51 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dadb85b8sm11981944f8f.17.2026.03.07.07.26.50
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 07 Mar 2026 07:26:50 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Authority-Info-Out: v=2.4 cv=aZhsXBot c=1 sm=1 tr=0 ts=69ac3dc6
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=osJ17xdEAtvT97lCEQUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: FX-WeqBlOLXYNaax-MWdP7Q2SgQavjJs
-X-Proofpoint-ORIG-GUID: FX-WeqBlOLXYNaax-MWdP7Q2SgQavjJs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE0MyBTYWx0ZWRfXwOZnvU5/FzcZ
- dGeA1LtMpcxNHZhnb2L2bVDbLYib92KeK5cMlXGXNazco8kNa62tMydSLsl5wK4zPDrJefYQUoD
- Jii3BReB4ptDvcW81PTAMnGYeOysH9jhVQ6lVIkxqNznHuli3W9+rlqNDH+yXiIBvS6Gwg84Fm9
- F3Qf0MS/sFu5UOBEYl1JNHRIxdC+zxriI5SkSB7D0culXMIKgK/nK8TxuU3BLmlY49J/aqFbF9A
- W2A382cPM5vR3H0+7+Po8hEnyOXbYPS6HimgML30KtdsrGkDViYUYFYpxs1pG3T1swTmPAfRCQL
- m/rDYKoMXgxI/wu/UGG4Mbt1flE6xBZ+MenEyegeX8l9pDoIfBckU+A5wqHtbc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-07_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 spamscore=0 adultscore=0 mlxlogscore=999 phishscore=0
- suspectscore=0 malwarescore=0 clxscore=1030 bulkscore=0 mlxscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603070143
-Received-SPF: pass client-ip=57.103.64.202;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Cc: Yi Liu <yi.l.liu@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH 02/10] hw/i386/pc: Remove PCMachineClass::pvh_enabled field
+Date: Sat,  7 Mar 2026 16:26:26 +0100
+Message-ID: <20260307152635.83893-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260307152635.83893-1-philmd@linaro.org>
+References: <20260307152635.83893-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,204 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Going to resend the series=E2=80=A6 again=E2=80=A6 without this commit =
-because the SDK in the CI is the macOS 15.1 one instead of 15.2.
+The PCMachineClass::pvh_enabled boolean was only used by
+the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
+Remove it.
 
-> On 7. Mar 2026, at 10:06, Mohamed Mediouni <mohamed@unpredictable.fr> =
-wrote:
->=20
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
-> target/arm/hvf/hvf.c        | 77 +++++++++++--------------------------
-> target/arm/hvf/sysreg.c.inc | 14 +++----
-> 2 files changed, 29 insertions(+), 62 deletions(-)
->=20
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index 2cb4c4aa4e..4630d76930 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -481,7 +481,9 @@ static const struct hvf_reg_match =
-hvf_sme2_preg_match[] =3D {
->=20
-> #define DEF_SYSREG(HVF_ID, ...) \
->   QEMU_BUILD_BUG_ON(HVF_ID !=3D =
-KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
-> -#define DEF_SYSREG_15_02(...)
-> +
-> +#define DEF_SYSREG_SME2(HVF_ID, ...) \
-> +  QEMU_BUILD_BUG_ON(HVF_ID !=3D =
-KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
->=20
-> #define DEF_SYSREG_EL2(HVF_ID, ...) \
->   QEMU_BUILD_BUG_ON(HVF_ID !=3D =
-KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
-> @@ -495,13 +497,13 @@ static const struct hvf_reg_match =
-hvf_sme2_preg_match[] =3D {
-> #include "sysreg.c.inc"
->=20
-> #undef DEF_SYSREG
-> -#undef DEF_SYSREG_15_02
-> +#undef DEF_SYSREG_SME2
-> #undef DEF_SYSREG_EL2
-> #undef DEF_SYSREG_VGIC
-> #undef DEF_SYSREG_VGIC_EL2
->=20
-> #define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID},
-> -#define DEF_SYSREG_15_02(...)
-> +#define DEF_SYSREG_SME2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, =
-.sme2 =3D true},
-> #define DEF_SYSREG_EL2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, .el2 =
-=3D true},
-> #define DEF_SYSREG_VGIC(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, =
-.vgic =3D true},
-> #define DEF_SYSREG_VGIC_EL2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, =
-true, true},
-> @@ -510,6 +512,7 @@ struct hvf_sreg {
->     hv_sys_reg_t sreg;
->     bool vgic;
->     bool el2;
-> +    bool sme2;
-> };
->=20
-> static struct hvf_sreg hvf_sreg_list[] =3D {
-> @@ -517,30 +520,13 @@ static struct hvf_sreg hvf_sreg_list[] =3D {
-> };
->=20
-> #undef DEF_SYSREG
-> -#undef DEF_SYSREG_15_02
-> +#undef DEF_SYSREG_SME2
-> #undef DEF_SYSREG_EL2
-> #undef DEF_SYSREG_VGIC
-> #undef DEF_SYSREG_VGIC_EL2
->=20
-> #pragma clang diagnostic pop
->=20
-> -#define DEF_SYSREG(...)
-> -#define DEF_SYSREG_15_02(HVF_ID, op0, op1, crn, crm, op2) {HVF_ID},
-> -#define DEF_SYSREG_EL2(...)
-> -#define DEF_SYSREG_VGIC(...)
-> -#define DEF_SYSREG_VGIC_EL2(...)
-> -
-> -API_AVAILABLE(macos(15.2))
-> -static struct hvf_sreg hvf_sreg_list_sme2[] =3D {
-> -#include "sysreg.c.inc"
-> -};
-> -
-> -#undef DEF_SYSREG
-> -#undef DEF_SYSREG_15_02
-> -#undef DEF_SYSREG_EL2
-> -#undef DEF_SYSREG_VGIC
-> -#undef DEF_SYSREG_VGIC_EL2
-> -
-> /*
->  * For FEAT_SME2 migration, we need to store PSTATE.{SM,ZA} bits which =
-are
->  * accessible with the SVCR pseudo-register. However, in the HVF API =
-this is
-> @@ -1357,23 +1343,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->     hv_return_t ret;
->     int i;
->=20
-> -    if (__builtin_available(macOS 15.2, *)) {
-> -        if (hvf_arm_sme2_supported()) {
-> -            sregs_match_len +=3D ARRAY_SIZE(hvf_sreg_list_sme2) + 1;
-> -        }
-> -
-> -#define DEF_SYSREG_15_02(HVF_ID, ...) \
-> -        g_assert(HVF_ID =3D=3D =
-KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
-> -#define DEF_SYSREG(...)
-> -#define DEF_SYSREG_EL2(...)
-> -#define DEF_SYSREG_VGIC(...)
-> -#define DEF_SYSREG_VGIC_EL2(...)
-> -
-> -#include "sysreg.c.inc"
-> -
-> -#undef DEF_SYSREG
-> -#undef DEF_SYSREG_15_02
-> +    if (hvf_arm_sme2_supported()) {
-> +        /* SVCR will be added at the end. */
-> +        sregs_match_len +=3D 1;
->     }
-> +
->     env->aarch64 =3D true;
->=20
->     /* system count frequency sanity check */
-> @@ -1408,31 +1382,24 @@ int hvf_arch_init_vcpu(CPUState *cpu)
->             continue;
->         }
->=20
-> +        if (hvf_sreg_list[i].sme2 && !hvf_arm_sme2_supported()) {
-> +            continue;
-> +        }
-> +
->         if (ri) {
->             assert(!(ri->type & ARM_CP_NO_RAW));
->             arm_cpu->cpreg_indexes[sregs_cnt++] =3D kvm_id;
->         }
->     }
-> -    if (__builtin_available(macOS 15.2, *)) {
-> -        if (hvf_arm_sme2_supported()) {
-> -            for (i =3D 0; i < ARRAY_SIZE(hvf_sreg_list_sme2); i++) {
-> -                hv_sys_reg_t hvf_id =3D hvf_sreg_list_sme2[i].sreg;
-> -                uint64_t kvm_id =3D HVF_TO_KVMID(hvf_id);
-> -                uint32_t key =3D kvm_to_cpreg_id(kvm_id);
-> -                const ARMCPRegInfo *ri =3D =
-get_arm_cp_reginfo(arm_cpu->cp_regs, key);
->=20
-> -                if (ri) {
-> -                    assert(!(ri->type & ARM_CP_NO_RAW));
-> -                    arm_cpu->cpreg_indexes[sregs_cnt++] =3D kvm_id;
-> -                }
-> -            }
-> -            /*
-> -             * Add SVCR last. It is elsewhere assumed its index is =
-after
-> -             * hvf_sreg_list and hvf_sreg_list_sme2.
-> -             */
-> -            arm_cpu->cpreg_indexes[sregs_cnt++] =3D =
-HVF_TO_KVMID(SVCR);
-> -        }
-> +    if (hvf_arm_sme2_supported()) {
-> +        /*
-> +         * Add SVCR last. It is elsewhere assumed its index is after
-> +         * hvf_sreg_list.
-> +         */
-> +        arm_cpu->cpreg_indexes[sregs_cnt++] =3D HVF_TO_KVMID(SVCR);
->     }
-> +
->     arm_cpu->cpreg_array_len =3D sregs_cnt;
->     arm_cpu->cpreg_vmstate_array_len =3D sregs_cnt;
->=20
-> diff --git a/target/arm/hvf/sysreg.c.inc b/target/arm/hvf/sysreg.c.inc
-> index c11dbf274e..2d29c2feec 100644
-> --- a/target/arm/hvf/sysreg.c.inc
-> +++ b/target/arm/hvf/sysreg.c.inc
-> @@ -146,13 +146,13 @@ DEF_SYSREG(HV_SYS_REG_CNTV_CTL_EL0, 3, 3, 14, 3, =
-1)
-> DEF_SYSREG(HV_SYS_REG_CNTV_CVAL_EL0, 3, 3, 14, 3, 2)
-> DEF_SYSREG(HV_SYS_REG_SP_EL1, 3, 4, 4, 1, 0)
->=20
-> -DEF_SYSREG_15_02(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
-> -DEF_SYSREG_15_02(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
-> -DEF_SYSREG_15_02(HV_SYS_REG_TPIDR2_EL0, 3, 3, 13, 0, 5)
-> -DEF_SYSREG_15_02(HV_SYS_REG_ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
-> -DEF_SYSREG_15_02(HV_SYS_REG_ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-> -DEF_SYSREG_15_02(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
-> -DEF_SYSREG_15_02(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
-> +DEF_SYSREG_SME2(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
-> +DEF_SYSREG_SME2(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
-> +DEF_SYSREG_SME2(HV_SYS_REG_TPIDR2_EL0, 3, 3, 13, 0, 5)
-> +DEF_SYSREG_SME2(HV_SYS_REG_ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
-> +DEF_SYSREG_SME2(HV_SYS_REG_ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-> +DEF_SYSREG_SME2(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
-> +DEF_SYSREG_SME2(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
-> /*
->  * Block these because of the same issue as virtual counters in
->  * that caused the revert in 28b0ed32b32c7e5094cf2f1ec9c0645c65fad2aa
-> --=20
-> 2.50.1 (Apple Git-155)
->=20
->=20
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/i386/pc.h | 3 ---
+ hw/i386/pc.c         | 6 ++----
+ hw/i386/x86-common.c | 3 +--
+ 3 files changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 5623660f5dd..908de5e1eab 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -110,9 +110,6 @@ struct PCMachineClass {
+     bool enforce_amd_1tb_hole;
+     bool isa_bios_alias;
+ 
+-    /* use PVH to load kernels that support this feature */
+-    bool pvh_enabled;
+-
+     /* create kvmclock device even when KVM PV features are not exposed */
+     bool kvmclock_create_always;
+ 
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index a38634e3577..107f12cbe73 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -597,7 +597,6 @@ void xen_load_linux(PCMachineState *pcms)
+ {
+     int i;
+     FWCfgState *fw_cfg;
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(pcms);
+ 
+     assert(MACHINE(pcms)->kernel_filename != NULL);
+@@ -607,7 +606,7 @@ void xen_load_linux(PCMachineState *pcms)
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+     rom_set_fw(fw_cfg);
+ 
+-    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
++    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
+     for (i = 0; i < nb_option_roms; i++) {
+         assert(!strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
+                !strcmp(option_rom[i].name, "pvh.bin") ||
+@@ -941,7 +940,7 @@ void pc_memory_init(PCMachineState *pcms,
+     }
+ 
+     if (linux_boot) {
+-        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
++        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
+     }
+ 
+     for (i = 0; i < nb_option_roms; i++) {
+@@ -1682,7 +1681,6 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_amd_1tb_hole = true;
+     pcmc->isa_bios_alias = true;
+-    pcmc->pvh_enabled = true;
+     pcmc->kvmclock_create_always = true;
+     x86mc->apic_xrupt_override = true;
+     assert(!mc->get_hotplug_handler);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index a420112666a..db8d4e855f4 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -704,8 +704,7 @@ void x86_load_linux(X86MachineState *x86ms,
+          * saving the PVH entry point used by the x86/HVM direct boot ABI.
+          * If load_elfboot() is successful, populate the fw_cfg info.
+          */
+-        if (pvh_enabled &&
+-            load_elfboot(kernel_filename, kernel_size,
++        if (load_elfboot(kernel_filename, kernel_size,
+                          header, pvh_start_addr, fw_cfg)) {
+             fclose(f);
+ 
+-- 
+2.52.0
 
 
