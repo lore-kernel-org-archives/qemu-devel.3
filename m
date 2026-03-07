@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA2DFC9EC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1651FC9ECA
 	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyi4V-0004nf-So; Fri, 06 Mar 2026 22:11:19 -0500
+	id 1vyi4Z-0004rA-4o; Fri, 06 Mar 2026 22:11:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4R-0004lg-2n
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:15 -0500
+ id 1vyi4P-0004l2-DX
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:14 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4P-0000oK-BK
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:14 -0500
+ id 1vyi4N-0000ol-Pu
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772853073; x=1804389073;
+ t=1772853072; x=1804389072;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1TEvr2QnTOUFzPzfTMXk5IYYw/2XkOgNrkkXD+yNNs8=;
- b=Bi4V6+pwYc91lJji3ycMp5qW2bh3IgiHFugBd5gRVfp2z2CJRzLcsD8Q
- n78Sn1+L29CFzQ4rhAbcYud/UcuURz44yu7AGPGMvtspoLdyHAJrLQ20I
- ziSmdsB3dkQ4Rjs1WH6sjfuuNy9HcMSRxzKu6klz6TWfuOhfqAdPZ8T3M
- IUdsi3Bd8dKq279oKUxLIpD+b/YlqZl6XbUMMq4ZzV08yGuuhl7+0NNH2
- 1v9dvx9YEyAiNPA7m0e3IzasKIQYh2LT63BbU/LymeWpDQRzvluCKiybA
- nP+gUil03IpLKPf3qX/ZEb6vXSAQUulZI09/56nZPGZ4cPgWUGrmuqJxX A==;
-X-CSE-ConnectionGUID: 4f/Bpr1mSlyvhKZjYvs66w==
-X-CSE-MsgGUID: UbOl8diNTcC+qZKDttRPcQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434029"
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434029"
+ bh=8DjDopZg0XVik4k1ICxjRmt2mb1IxbLdY763BFKsh0Y=;
+ b=nJU5n4KOiHduq9phni1lYu5bRLPsiskALxAQa3w2ONcqNmXdzGWYZxC7
+ Ca/pCFYL7kGuy+CZsd2hXPvYGCp6/CAAnMu8oXF0rs0Y19yq/VD2cpYWh
+ 0QNk6BJEr6reNqoulAtyUlCYbuF28iY9hoZiptKbEl7QEu+satNLamhO6
+ O0tmMi/YqmdOz1Sd7uBGBhzhA++uBJf+/ONWmH5Q9AttYkUrXc+Ws+roX
+ KQbMKqrl5pLSaA4gZpthTdyxDAGh5Hpvs88J2JlAJtxBx9Po75UK8pof+
+ G5kERtT48nfbon6NYGBxTEQH4E6lCg5zQFYpgNg+PGKSQ9ifGD08QggfZ g==;
+X-CSE-ConnectionGUID: ud+kD78fRjqmpigP4KZ6TQ==
+X-CSE-MsgGUID: p/6v9nLiQguRBiXBPAZv4w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434018"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434018"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
-X-CSE-ConnectionGUID: zHPNlRYwTa+0um0pZfA80w==
-X-CSE-MsgGUID: qbiYDQdmS6qywCqWvIcb9g==
+X-CSE-ConnectionGUID: TAPcllkAQdu5UVdjrtdd4g==
+X-CSE-MsgGUID: VH6tO3iyQ3ilgq0dZIZsCw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813774"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813768"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v10 06/10] vfio/region: Add a helper to get region index from
- memory region
-Date: Fri,  6 Mar 2026 19:05:55 -0800
-Message-ID: <20260307030812.1224392-7-vivek.kasireddy@intel.com>
+Subject: [PATCH v10 04/10] virtio-gpu-dmabuf: Remove rcu_read_lock/unlock from
+ virtio_gpu_create_udmabuf()
+Date: Fri,  6 Mar 2026 19:05:53 -0800
+Message-ID: <20260307030812.1224392-5-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
 References: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
@@ -86,62 +90,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having a way to figure out the region index (or bar) associated
-with a memory region is helpful in various scenarios. For example,
-this capability can be useful in retrieving the region info needed
-for mapping a part of a VFIO region or creating a dmabuf.
+There is no need to wrap the call to qemu_ram_block_from_host() with
+rcu_read_lock/unlock as we already hold a reference to the memory
+region that owns the ram block. Note that, the reference was obtained
+via dma_memory_map() while creating the mapping.
 
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/vfio/region.c              | 14 ++++++++++++++
- include/hw/vfio/vfio-device.h | 10 ++++++++++
- 2 files changed, 24 insertions(+)
+ hw/display/virtio-gpu-dmabuf.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index 47fdc2df34..4cb92216ef 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -539,3 +539,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
-     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
-                                         enabled);
- }
-+
-+int vfio_get_region_index_from_mr(MemoryRegion *mr)
-+{
-+    VFIORegion *region;
-+
-+    while (mr->container) {
-+        if (mr->ops == &vfio_region_ops) {
-+            region = mr->opaque;
-+            return region->nr;
-+        }
-+        mr = mr->container;
-+    }
-+    return -1;
-+}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 828a31c006..596c7f5a10 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -308,6 +308,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
+diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+index c34d4c85bc..0782bcf3a1 100644
+--- a/hw/display/virtio-gpu-dmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -43,10 +43,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+                      sizeof(struct udmabuf_create_item) * res->iov_cnt);
  
- int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_irq_info *info);
-+
-+/**
-+ * Return the region index associated with a given MemoryRegion. The index
-+ * can be useful in retrieving region info.
-+ *
-+ * @mr: MemoryRegion to use
-+ *
-+ * Returns the region index or -1 on error.
-+ */
-+int vfio_get_region_index_from_mr(MemoryRegion *mr);
- #endif
- 
- /* Returns 0 on success, or a negative errno. */
+     for (i = 0; i < res->iov_cnt; i++) {
+-        rcu_read_lock();
+         rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+-        rcu_read_unlock();
+-
+         if (!rb || rb->fd < 0) {
+             g_free(list);
+             return;
 -- 
 2.53.0
 
