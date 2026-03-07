@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02793FC9ECB
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA2DFC9EC3
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 03:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vyi4W-0004ni-3z; Fri, 06 Mar 2026 22:11:20 -0500
+	id 1vyi4V-0004nf-So; Fri, 06 Mar 2026 22:11:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4T-0004mD-BV
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:18 -0500
+ id 1vyi4R-0004lg-2n
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:15 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vyi4R-0000oK-Cs
- for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:17 -0500
+ id 1vyi4P-0000oK-BK
+ for qemu-devel@nongnu.org; Fri, 06 Mar 2026 22:11:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1772853075; x=1804389075;
+ t=1772853073; x=1804389073;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Hhz5My/Nci4MkLLcv1gOxQ5MgaITXA44LkA+ZiKWCXU=;
- b=Fo+JwFxi/52HJx57F1SeAJ5dmlYrMjZ/ohY5L+d6UXMTVGvXVDx9DefC
- iBxsR80Z/dWGa+tCrA6bZJMw6GaiemLCDpR4zy8Ih7vfMgcN9KCjgoZkx
- uRjSAA7piRHVrIc5OXh0IVnXO4rnAzIBVuJAuAJU7G7Z7WojFo/3SWc18
- 4C0hYEhJ6WFg3Rj9aH+QNAOxvWsu8AkLDBknTF+u9R1x+Qb299oZcavu1
- e1yrOvbryn3okGSJUw7IlgrrRZmA4+dpFfXVS/q2OpI+iuLEb/TkPd/W/
- WkfpSdOhKKGqL2pvZnPfAs5KW/8Vw76L8InDURwzNmNtVucfjXQAFyRCa g==;
-X-CSE-ConnectionGUID: B+ec/WoqQuGXiaO0Nrw28w==
-X-CSE-MsgGUID: UMi8XxiLT+mb/Oi2i0FRNA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434040"
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434040"
+ bh=1TEvr2QnTOUFzPzfTMXk5IYYw/2XkOgNrkkXD+yNNs8=;
+ b=Bi4V6+pwYc91lJji3ycMp5qW2bh3IgiHFugBd5gRVfp2z2CJRzLcsD8Q
+ n78Sn1+L29CFzQ4rhAbcYud/UcuURz44yu7AGPGMvtspoLdyHAJrLQ20I
+ ziSmdsB3dkQ4Rjs1WH6sjfuuNy9HcMSRxzKu6klz6TWfuOhfqAdPZ8T3M
+ IUdsi3Bd8dKq279oKUxLIpD+b/YlqZl6XbUMMq4ZzV08yGuuhl7+0NNH2
+ 1v9dvx9YEyAiNPA7m0e3IzasKIQYh2LT63BbU/LymeWpDQRzvluCKiybA
+ nP+gUil03IpLKPf3qX/ZEb6vXSAQUulZI09/56nZPGZ4cPgWUGrmuqJxX A==;
+X-CSE-ConnectionGUID: 4f/Bpr1mSlyvhKZjYvs66w==
+X-CSE-MsgGUID: UbOl8diNTcC+qZKDttRPcQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="99434029"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="99434029"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
-X-CSE-ConnectionGUID: q9DVSK8HTMSy63lX1FYqsA==
-X-CSE-MsgGUID: xJUNaIDtR4ObOPmwmjHykA==
+X-CSE-ConnectionGUID: zHPNlRYwTa+0um0pZfA80w==
+X-CSE-MsgGUID: qbiYDQdmS6qywCqWvIcb9g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813780"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; d="scan'208";a="215813774"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  06 Mar 2026 19:11:01 -0800
@@ -51,9 +51,10 @@ To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v10 08/10] vfio/device: Add a helper to mmap a dmabuf
-Date: Fri,  6 Mar 2026 19:05:57 -0800
-Message-ID: <20260307030812.1224392-9-vivek.kasireddy@intel.com>
+Subject: [PATCH v10 06/10] vfio/region: Add a helper to get region index from
+ memory region
+Date: Fri,  6 Mar 2026 19:05:55 -0800
+Message-ID: <20260307030812.1224392-7-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
 References: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
@@ -85,133 +86,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to mmap a dmabuf, we first need to create a placeholder
-mapping that would fit the entire size of the dmabuf. This mapping
-would then be replaced with smaller mappings of individual dmabuf
-segments.
+Having a way to figure out the region index (or bar) associated
+with a memory region is helpful in various scenarios. For example,
+this capability can be useful in retrieving the region info needed
+for mapping a part of a VFIO region or creating a dmabuf.
 
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/vfio/device.c              | 65 +++++++++++++++++++++++++++++++++++
- hw/vfio/dmabuf-stubs.c        |  7 ++++
- include/hw/vfio/vfio-device.h | 17 +++++++++
- 3 files changed, 89 insertions(+)
+ hw/vfio/region.c              | 14 ++++++++++++++
+ include/hw/vfio/vfio-device.h | 10 ++++++++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 2d01059be0..592d901c77 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -725,3 +725,68 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     }
-     return ret;
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index 47fdc2df34..4cb92216ef 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -539,3 +539,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
+     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
+                                         enabled);
  }
 +
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp)
++int vfio_get_region_index_from_mr(MemoryRegion *mr)
 +{
-+    struct vfio_region_info *info = NULL;
-+    VFIODevice *vbasedev = NULL;
-+    ram_addr_t offset, len = 0;
-+    RAMBlock *first_rb, *rb;
-+    void *map, *submap;
-+    int i, index;
++    VFIORegion *region;
 +
-+    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
-+        return false;
++    while (mr->container) {
++        if (mr->ops == &vfio_region_ops) {
++            region = mr->opaque;
++            return region->nr;
++        }
++        mr = mr->container;
 +    }
-+
-+    /*
-+     * We first reserve a contiguous chunk of address space for the entire
-+     * dmabuf, then replace it with smaller mappings that correspond to the
-+     * individual segments of the dmabuf.
-+     */
-+    map = mmap(NULL, total_size, PROT_NONE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+    if (map == MAP_FAILED) {
-+        error_setg_errno(errp, errno, "Could not reserve placeholder mapping");
-+        return false;
-+    }
-+
-+    for (i = 0; i < iov_cnt; i++) {
-+        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
-+        if (i == 0) {
-+            first_rb = rb;
-+        }
-+        if (!rb || rb != first_rb) {
-+            error_setg(errp, "Cannot mmap dmabuf with different regions\n");
-+            goto err;
-+        }
-+
-+        index = vfio_get_region_index_from_mr(rb->mr);
-+        if (index < 0) {
-+            error_setg(errp, "Cannot find region index for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        if (vfio_device_get_region_info(vbasedev, index, &info)) {
-+            error_setg(errp, "Cannot find region info for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        submap = mmap(map + len, iov[i].iov_len, PROT_READ,
-+                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-+                      info->offset + offset);
-+        if (submap == MAP_FAILED) {
-+            error_setg(errp, "Could not mmap dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        len += iov[i].iov_len;
-+    }
-+    *addr = map;
-+    return true;
-+err:
-+    munmap(map, total_size);
-+    error_prepend(errp, "VFIO dmabuf mmap failed: ");
-+    return false;
-+}
-+
-diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
-index e71e2b68dd..c3aa37233d 100644
---- a/hw/vfio/dmabuf-stubs.c
-+++ b/hw/vfio/dmabuf-stubs.c
-@@ -15,3 +15,10 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     error_setg(errp, "VFIO dmabuf support is not enabled");
-     return VFIO_DMABUF_CREATE_HOST_ERROR;
- }
-+
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp)
-+{
-+    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
-+    return false;
++    return -1;
 +}
 diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 566e5d8bc0..2de21a3047 100644
+index 828a31c006..596c7f5a10 100644
 --- a/include/hw/vfio/vfio-device.h
 +++ b/include/hw/vfio/vfio-device.h
-@@ -340,6 +340,23 @@ int vfio_get_region_index_from_mr(MemoryRegion *mr);
-  */
- int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-                                  Error **errp);
+@@ -308,6 +308,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
+ 
+ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+                                 struct vfio_irq_info *info);
 +
 +/**
-+ * Mmap a dmabuf by first translating the addresses in the iovec
-+ * array into VFIO region offsets and then creating a placeholder
-+ * mapping that would be replaced later with mappings that
-+ * correspond to the dmabuf segments.
++ * Return the region index associated with a given MemoryRegion. The index
++ * can be useful in retrieving region info.
 + *
-+ * @iov: array of iovec entries associated with the dmabuf
-+ * @iov_cnt: number of entries in the iovec array
-+ * @addr: pointer to store the resulting mmap address
-+ * @total_size: total size of the dmabuf
-+ * @errp: pointer to Error*, to store an error if it happens.
++ * @mr: MemoryRegion to use
 + *
-+ * Returns true on success and false in case of an error.
++ * Returns the region index or -1 on error.
 + */
-+bool vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                             void **addr, size_t total_size, Error **errp);
++int vfio_get_region_index_from_mr(MemoryRegion *mr);
  #endif
  
  /* Returns 0 on success, or a negative errno. */
