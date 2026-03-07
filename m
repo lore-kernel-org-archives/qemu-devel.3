@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A0A1FCB63F
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC69F5141C
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:43:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytnP-0002LG-G0; Sat, 07 Mar 2026 10:42:27 -0500
+	id 1vytn6-0001BK-KZ; Sat, 07 Mar 2026 10:42:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytnM-0002II-LK
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:24 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vytnJ-0002an-KP
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:42:23 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-483a233819aso101063835e9.3
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 07:42:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1772898139; x=1773502939; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9QMzd5YEWPj9Xk6Qsl6F51AjQBHHbgm82IdFibYrq5I=;
- b=uJHILmkzmP3gQ8oppduaBpM6UUutsq+jFpiuh+7s562t9ANNXfHZCVAISU8jtu/Wg9
- cD275ODc25VzIxufnDCtv+DS7JBP2Fu51rJ9HZr0r4rPp7WJ0U3nl52p0r3LaYJXVDES
- 4KpwZo9fQ/o7m3K9VsJ68memv1tQcFCTMsU5OpoIZbxuTyh6YbkElVZYlSHHOEh46c84
- p7iJi2wbNmpBSgYbwI6YQgrVbuMUuIlZpzQOFw5Hw1f937fys2N4TK5hg+P1wGlDXHkF
- hK8anmm2GZ9ROkwYToFYopyblfPA+voCfIPRnaV/d1fP7nkfBjR3nvzuh0XYUkFh2IGi
- /cdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772898139; x=1773502939;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9QMzd5YEWPj9Xk6Qsl6F51AjQBHHbgm82IdFibYrq5I=;
- b=a5yQ5gocMIEwLjZcEMDQ2ehyXkeHBpxiKbOWzZwWTW31Lf0cszQnE3zsmgSIsDHzSU
- y9ln+AQmpQmSvubJxOrSZHEgtzvStWZNgTvN2kidqnzUcTrIPAdp4+3wSkwEIHxcHJVA
- 2kYk7dgz6dU7Yi470P3iqIZEs8pCzvKCcXSafo+ZOeT17iePD/twbUvAOwOK1HW+7nlu
- chTCzBUyDyAeYgFd6xMHWdbHM9iiYHKSPGopHNqrAcNqy6PgqQRQqx4+F+tcoDCmrTXl
- 5xc1ZxmeXmwrKrZKOK8+MIr3xM/CgOlfOGIAqAapipKdxAc1pulVSruwoJHy4EiNPlBT
- UzLQ==
-X-Gm-Message-State: AOJu0Yy/XT7dM5pqyUibDFhVZ+OLtSVbzDEoBR6SaFZf0KNE0B74vUZm
- 2LTK2lJG4IYt2KPMRnp94+1i7g2sAWaFVtlPi+k7K28NKpx9aikxTYaUZ/U2fqRGwJ0RP9FsHxk
- ZT4HBR+g=
-X-Gm-Gg: ATEYQzwL+YddNe/9f3U46ZBTURh/2kGGDxsR0sUiXej+py2VXT4QOEIKymrCjDS3rwh
- etpomgSvrQxvx0tcbsCeLn32BIuJYbKSkL9CdXs4yCnkXM2IlDUjq1DXA+VTuGMH6ITsGJ8GAmt
- ZPcT43XG8nUcYAI6Nyqg9Il7kcEPXHBhWCtffeiGuMKHH4OCUahi6ThBP28IriuNpQLmp4SGp1u
- 9bd9ZTPs9hyE5MB+Z6V3IZt700DaJTRHy3ZI68ic4Ev802PVtoEPhebsCpmkJ8RtsMKusf2cXNe
- qOrAd/nqwqa1UWh2ZMmpihqMEoxrnxytMbxomO0DnNUgohdp/MO9wx11Z6P0Rv5Kg1hhnXxw6kg
- QSJosgZ1Io5bckLNare3r8rvfleVyQ8w6i1YQ+HYFrrfX7YbqhAfzVCBINh3BeZL7sOEsn5QDbk
- 9T07XaicCvIAZmshAO2zFGW3L/ofPiNN6B7RJpVRGAum9/3uYgo6bAqCbAQ7ygFAEb1VW7zmjN
-X-Received: by 2002:a05:600c:45c6:b0:483:c35d:3662 with SMTP id
- 5b1f17b1804b1-48526957c37mr92738305e9.18.1772898138847; 
- Sat, 07 Mar 2026 07:42:18 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852e38c013sm110315295e9.8.2026.03.07.07.42.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 07 Mar 2026 07:42:17 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vytmc-0000qz-96
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:47 -0500
+Received: from qs-2004b-snip4-2.eps.apple.com ([57.103.84.15]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vytmU-000220-Oq
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:33 -0500
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPS id
+ A4EB41800887; Sat,  7 Mar 2026 15:41:25 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1772898089; x=1775490089;
+ bh=4TmqJMoXVEKb3HMgHzQp4gRnTyoFFXJDWRIsbiC4fMg=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=F6ZtOheDof1eRFvbg6u7W254/XWfqkXOA6R7TnUh2ZX5ljKJQ4lt1BLJ0Z2jghSkWNrnuSUioiDZoivBG1CjAGHcbbBzzdQv4Emh/2bPe5YhdjWeMpXCtQvznY3bciEnHZ4AzJoKyvdvcl0G7SMAKFptORC/1h8Edi3nq68s4uMwHF5w6wdq5n0pLG66x4WY+SX+zbXZMzMUWLfDiCmLpDmH2Qku0KSwVdYwfl9ktbSqgqVoSm94KujPjHhf3ZIrKW1JkoisoYmTxmagNTSQyPcjZQYRo8+Q8FLlaU64UM2wFry1m8sxLZjbaRRFIvURGxblkJ7i6+pMO93HQxOrxA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPSA id
+ 13FE718008B3; Sat,  7 Mar 2026 15:41:22 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH 2/6] system/hostmem: Remove
- HostMemoryBackend::use_canonical_path field
-Date: Sat,  7 Mar 2026 16:41:58 +0100
-Message-ID: <20260307154202.86309-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260307154202.86309-1-philmd@linaro.org>
-References: <20260307154202.86309-1-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Wei Liu <wei.liu@kernel.org>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v5 9/9] whpx: i386: remove SIPI trapping
+Date: Sat,  7 Mar 2026 16:41:04 +0100
+Message-ID: <20260307154104.84567-10-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260307154104.84567-1-mohamed@unpredictable.fr>
+References: <20260307154104.84567-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-ORIG-GUID: TwXcvAcxO-jxkDyDV4XaXZkxzziGiNwN
+X-Proofpoint-GUID: TwXcvAcxO-jxkDyDV4XaXZkxzziGiNwN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE0OSBTYWx0ZWRfX0SIHvIdOxHg9
+ ySwSsgJui+sLQLAFRKP38Jo5NecgMpfLeLVga9o63lDqG7KDEAhFI3tH2mKZk+87lBbyFoaPOnv
+ CMkYn8aXcTIh25sFm1sdhSk+Y8XYfTdM+2/fXpHv9AQtZww6zSeY2ZaP39VETdekbg/KAFPF0Ux
+ /SjnTa4tFBzUlA+V1Cf0dqe1VJj6y7IRbNnGyruUtkEcEKg7s5b9U/HjHGR+JOxodZtetyFs3ve
+ SItc5TyxDIFoBTDrMJ/zLmOTAFXQ1KnoSmaWuZsPDwKfyxxnCVEUuoGfE/nP0UqD++4YW1dPQ/M
+ aVx4AyvufZsW++AwMIh8eLVI3q3D9bgIkfFoOZiVMqFPYBqWv263g6YwYF7woI=
+X-Authority-Info-Out: v=2.4 cv=V/9wEOni c=1 sm=1 tr=0 ts=69ac4727
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Xl7PRCIL3n5FuX7mVuoA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-07_05,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 clxscore=1030
+ mlxlogscore=994 bulkscore=0 malwarescore=0 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603070149
+X-JNJ: AAAAAAABPa8AEV7HaH+GjlN4CgWo5tATV80sRRUm7KZSbvydmIqyL1QZyn0AcjAspLBA0kmZFZLy7z2eHwUCy1Zm0xe9plv4eMsTuH4G1/eUP6cO87yq0N+M/3LOIdAuRZu6psArCCLwR0KtUj/JQpsDbYFptWSvvP2pqoJihCRCVboD2bVdh9lGsDPqgRsr8qw8H9Ss3R05YF6YUBiYvk0H0z8QgNMsARUUltZeT1qv95QlyOG5OClaS5E0/e3LvgYKunmAGhgIh/N9Mlti9MQ9M0AjyEA/R7pkrp1e8Krw2lR3aClf3k101Bxeq7kPKzilcFEDew5lbzVVA0THeqme+9BSfycsEuXY+jhdrcpTAS7gUhcLNAC1UPyRTr+hS6xBhDy11Tb2yDMcOrbib+jfDotKYvhqg8nfot1Q1MtQ5B5TQGqfAamQD8iyP3LLpKZ9FJzCCrBeiOo44yxRBex599wMiPu5RnRh7j2BRanywVcKEHIJUDCwWvgpbUbuRjegVnXZcOLNmofBgZACv856R3Eyv5QnjL21KbdmfI2YcoLQ1yzyx+Se5m+wdQf79iEvlqcwy/BpMcNyqAdaeJnA6emno+4obHNXJyzrp7LsKjGHPkV6U/X+wi93vyZAHDmms56QOhxT6zydL2xfkAq4mB5ewpFJu48V8yfhSvdYbuTDMx5h8Atk5DDzGwfbE2PX9kKVG74jv+6pbqL8WsvfskfjkAYca+dtpT0Wr4ahB+b/QBGi1ULKDRfP18KI2NTUx6/Bfd9WhT2AAmec1RtlzGFAZUSouo9T
+Received-SPF: pass client-ip=57.103.84.15;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,145 +98,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HostMemoryBackend::use_canonical_path boolean
-was only set in the hw_compat_3_1[] array, via the
-'x-use-canonical-path-for-ramblock-id=true' property.
-We removed all machines using that array, but the
-comment added in commit 8db0b20415c ("machine: add
-missing doc for memory-backend option") requested to
-not remove this property "as long as 4.0 and older
-machine types exists". Previous commit removed the
-last machines in this range, we can now remove that
-property and all the code around it.
+The implementation in Hyper-V works fine and the code
+currently present doesn't handle x2APIC correctly anyway, so
+remove it and use the implementation in Hyper-V.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- qapi/qom.json            |  8 +-------
- include/system/hostmem.h |  2 +-
- backends/hostmem.c       | 34 ----------------------------------
- qemu-options.hx          | 10 ----------
- 4 files changed, 2 insertions(+), 52 deletions(-)
+ target/i386/whpx/whpx-all.c | 97 -------------------------------------
+ 1 file changed, 97 deletions(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index c653248f85d..3e13e3fd25c 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -660,11 +660,6 @@
- #
- # @size: size of the memory region in bytes
- #
--# @x-use-canonical-path-for-ramblock-id: if true, the canonical path
--#     is used for ramblock-id.  Disable this for 4.0 machine types or
--#     older to allow migration with newer QEMU versions.
--#     (default: false generally, but true for machine types <= 4.0)
--#
- # .. note:: prealloc=true and reserve=false cannot be set at the same
- #    time.  With reserve=true, the behavior depends on the operating
- #    system: for example, Linux will not reserve swap space for shared
-@@ -683,8 +678,7 @@
-             '*prealloc-context': 'str',
-             '*share': 'bool',
-             '*reserve': 'bool',
--            'size': 'size',
--            '*x-use-canonical-path-for-ramblock-id': 'bool' } }
-+            'size': 'size' } }
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index b095c96962..4d5d3dbd24 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1692,100 +1692,6 @@ int whpx_vcpu_run(CPUState *cpu)
+             ret = whpx_handle_halt(cpu);
+             break;
  
- ##
- # @MemoryBackendFileProperties:
-diff --git a/include/system/hostmem.h b/include/system/hostmem.h
-index 88fa791ac78..cafcf9c9c74 100644
---- a/include/system/hostmem.h
-+++ b/include/system/hostmem.h
-@@ -74,7 +74,7 @@ struct HostMemoryBackend {
- 
-     /* protected */
-     uint64_t size;
--    bool merge, dump, use_canonical_path;
-+    bool merge, dump;
-     bool prealloc, is_mapped, share, reserve;
-     bool guest_memfd, aligned;
-     uint32_t prealloc_threads;
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 15d4365b697..7da7cd54e05 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -40,10 +40,6 @@ QEMU_BUILD_BUG_ON(HOST_MEM_POLICY_INTERLEAVE != MPOL_INTERLEAVE);
- char *
- host_memory_backend_get_name(HostMemoryBackend *backend)
- {
--    if (!backend->use_canonical_path) {
--        return g_strdup(object_get_canonical_path_component(OBJECT(backend)));
+-        case WHvRunVpExitReasonX64ApicInitSipiTrap: {
+-            WHV_INTERRUPT_CONTROL ipi = {0};
+-            uint64_t icr = vcpu->exit_ctx.ApicInitSipi.ApicIcr;
+-            uint32_t delivery_mode =
+-                (icr & APIC_ICR_DELIV_MOD) >> APIC_ICR_DELIV_MOD_SHIFT;
+-            int dest_shorthand =
+-                (icr & APIC_ICR_DEST_SHORT) >> APIC_ICR_DEST_SHORT_SHIFT;
+-            bool broadcast = false;
+-            bool include_self = false;
+-            uint32_t i;
+-
+-            /* We only registered for INIT and SIPI exits. */
+-            if ((delivery_mode != APIC_DM_INIT) &&
+-                (delivery_mode != APIC_DM_SIPI)) {
+-                error_report(
+-                    "WHPX: Unexpected APIC exit that is not a INIT or SIPI");
+-                break;
+-            }
+-
+-            if (delivery_mode == APIC_DM_INIT) {
+-                ipi.Type = WHvX64InterruptTypeInit;
+-            } else {
+-                ipi.Type = WHvX64InterruptTypeSipi;
+-            }
+-
+-            ipi.DestinationMode =
+-                ((icr & APIC_ICR_DEST_MOD) >> APIC_ICR_DEST_MOD_SHIFT) ?
+-                    WHvX64InterruptDestinationModeLogical :
+-                    WHvX64InterruptDestinationModePhysical;
+-
+-            ipi.TriggerMode =
+-                ((icr & APIC_ICR_TRIGGER_MOD) >> APIC_ICR_TRIGGER_MOD_SHIFT) ?
+-                    WHvX64InterruptTriggerModeLevel :
+-                    WHvX64InterruptTriggerModeEdge;
+-
+-            ipi.Vector = icr & APIC_VECTOR_MASK;
+-            switch (dest_shorthand) {
+-            /* no shorthand. Bits 56-63 contain the destination. */
+-            case 0:
+-                ipi.Destination = (icr >> 56) & APIC_VECTOR_MASK;
+-                hr = whp_dispatch.WHvRequestInterrupt(whpx->partition,
+-                        &ipi, sizeof(ipi));
+-                if (FAILED(hr)) {
+-                    error_report("WHPX: Failed to request interrupt  hr=%08lx",
+-                        hr);
+-                }
+-
+-                break;
+-
+-            /* self */
+-            case 1:
+-                include_self = true;
+-                break;
+-
+-            /* broadcast, including self */
+-            case 2:
+-                broadcast = true;
+-                include_self = true;
+-                break;
+-
+-            /* broadcast, excluding self */
+-            case 3:
+-                broadcast = true;
+-                break;
+-            }
+-
+-            if (!broadcast && !include_self) {
+-                break;
+-            }
+-
+-            for (i = 0; i <= max_vcpu_index; i++) {
+-                if (i == cpu->cpu_index && !include_self) {
+-                    continue;
+-                }
+-
+-                /*
+-                 * Assuming that APIC Ids are identity mapped since
+-                 * WHvX64RegisterApicId & WHvX64RegisterInitialApicId registers
+-                 * are not handled yet and the hypervisor doesn't allow the
+-                 * guest to modify the APIC ID.
+-                 */
+-                ipi.Destination = i;
+-                hr = whp_dispatch.WHvRequestInterrupt(whpx->partition,
+-                        &ipi, sizeof(ipi));
+-                if (FAILED(hr)) {
+-                    error_report(
+-                        "WHPX: Failed to request SIPI for %d,  hr=%08lx",
+-                        i, hr);
+-                }
+-            }
+-
+-            break;
+-        }
+-
+         case WHvRunVpExitReasonCanceled:
+             if (exclusive_step_mode != WHPX_STEP_NONE) {
+                 /*
+@@ -2249,9 +2155,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
+     prop.ExtendedVmExits.X64MsrExit = 1;
+     prop.ExtendedVmExits.ExceptionExit = 1;
+-    if (whpx_irqchip_in_kernel()) {
+-        prop.ExtendedVmExits.X64ApicInitSipiExitTrap = 1;
 -    }
--
-     return object_get_canonical_path(OBJECT(backend));
- }
  
-@@ -484,23 +480,6 @@ static void host_memory_backend_set_reserve(Object *o, bool value, Error **errp)
- }
- #endif /* CONFIG_LINUX */
- 
--static bool
--host_memory_backend_get_use_canonical_path(Object *obj, Error **errp)
--{
--    HostMemoryBackend *backend = MEMORY_BACKEND(obj);
--
--    return backend->use_canonical_path;
--}
--
--static void
--host_memory_backend_set_use_canonical_path(Object *obj, bool value,
--                                           Error **errp)
--{
--    HostMemoryBackend *backend = MEMORY_BACKEND(obj);
--
--    backend->use_canonical_path = value;
--}
--
- static void
- host_memory_backend_class_init(ObjectClass *oc, const void *data)
- {
-@@ -563,19 +542,6 @@ host_memory_backend_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "reserve",
-         "Reserve swap space (or huge pages) if applicable");
- #endif /* CONFIG_LINUX */
--    /*
--     * Do not delete/rename option. This option must be considered stable
--     * (as if it didn't have the 'x-' prefix including deprecation period) as
--     * long as 4.0 and older machine types exists.
--     * Option will be used by upper layers to override (disable) canonical path
--     * for ramblock-id set by compat properties on old machine types ( <= 4.0),
--     * to keep migration working when backend is used for main RAM with
--     * -machine memory-backend= option (main RAM historically used prefix-less
--     * ramblock-id).
--     */
--    object_class_property_add_bool(oc, "x-use-canonical-path-for-ramblock-id",
--        host_memory_backend_get_use_canonical_path,
--        host_memory_backend_set_use_canonical_path);
- }
- 
- static const TypeInfo host_memory_backend_info = {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 890c4f1d230..dce5d8cd5d2 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -137,16 +137,6 @@ SRST
-         * as backend id one shall use value of 'default-ram-id', advertised by
-           machine type (available via ``query-machines`` QMP command), if migration
-           to/from old QEMU (<5.0) is expected.
--        * for machine types 4.0 and older, user shall
--          use ``x-use-canonical-path-for-ramblock-id=off`` backend option
--          if migration to/from old QEMU (<5.0) is expected.
--
--        For example:
--        ::
--
--            -object memory-backend-ram,id=pc.ram,size=512M,x-use-canonical-path-for-ramblock-id=off
--            -machine memory-backend=pc.ram
--            -m 512M
- 
-     ``cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]``
-         Define a CXL Fixed Memory Window (CFMW).
+     hr = whp_dispatch.WHvSetPartitionProperty(
+             whpx->partition,
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
