@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D35FCB638
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91339F5141C
 	for <qemu-devel@archiver.kernel.org>; Sat,  7 Mar 2026 15:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vytmM-0000j0-VB; Sat, 07 Mar 2026 10:41:23 -0500
+	id 1vytmL-0000i7-3Y; Sat, 07 Mar 2026 10:41:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vytmI-0000hm-KF
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:19 -0500
-Received: from qs-2004k-snip4-7.eps.apple.com ([57.103.84.110]
+ id 1vytmH-0000gt-0B
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:17 -0500
+Received: from qs-2004k-snip4-11.eps.apple.com ([57.103.84.113]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vytmH-0001uz-3i
- for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:18 -0500
+ id 1vytmF-0001uV-Ed
+ for qemu-devel@nongnu.org; Sat, 07 Mar 2026 10:41:16 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPS id
- D854B18000BC; Sat,  7 Mar 2026 15:41:12 +0000 (UTC)
+ 0CD081800A8C; Sat,  7 Mar 2026 15:41:10 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1772898076; x=1775490076;
- bh=XrC+A2cdwnTtrklru5J6gKiuM0nyKsFULUgUC4G4lrc=;
+ s=sig1; t=1772898074; x=1775490074;
+ bh=+NoH88IZWNOWXHn7XiZHTQBxVxI8RNautRlaqzdVGdA=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=DIPS8MpDjKl5sNNCcaUVFKHmk8sOhNjR+vh/oPZdCaNp2XrJC7Xc1f3LZpAn3PZp05n+i3yvNioqwUfP6HzOK4RSO3UrvBj10CR2BkTjXUB/Loz4Qe8DyM5etlACZOoSMGv9keZzIzgim0p6nF5+CE7YCzb3MvxCK+fqTE4CMFuo70bkdXnPKRLD5t2lEq/S+exaNzCiqrEb2T0Dhw0Wv8q0vvIIAADPCFmPDU/KfkQVD2pXN8sSeLmy0dQF5W6WABZYS0UI8jyOuRFGT6O0vk2r79ftkfFKYvON5J2jG14YToL0h3SzXhFAa42Sy+NFU5CMCnghawYPjSGdkA7BJg==
+ b=Y23r2EG39LyxkyLoIR/+z3jnCquCa7SOERCabDpZxurrpIzDJTwosKfHKmUCCwO6Ba4VCv0H4bBfDMpOX2efUWypfVO5ibsEKJanHg8pgRPyokA4nm8Pb35+paaEb/sFpyTAPMGxroW8zRH5zVsAhYX2iLwJyEjjKT/9wUADoaVtcJXGM+wQLkCv2dO5XKMHvz8ku9Poo28B7QBFOQ3X8XB1CbdZ1yXbP/tKi1ZInIOmdMuTMm3v7xDXaAgfxL+vxY5T5ka7ORZgvVEfojW9Z7kht6iUq90cBYeZE8tI/4AqDAXdAy6jzR6t+MI6x0OlDL3bKmQ5S3JJdzB2nkUirQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPSA id
- 4BBC11825302; Sat,  7 Mar 2026 15:41:10 +0000 (UTC)
+ 618A8180089E; Sat,  7 Mar 2026 15:41:08 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -44,44 +44,46 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  Wei Liu <wei.liu@kernel.org>, Pedro Barbuda <pbarbuda@microsoft.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v5 2/9] meson.build: older macOS targeting compatibility with
- macOS 15.4 SDK
-Date: Sat,  7 Mar 2026 16:40:57 +0100
-Message-ID: <20260307154104.84567-3-mohamed@unpredictable.fr>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 1/9] target/i386/hvf/hvf.c: fix compilation
+Date: Sat,  7 Mar 2026 16:40:56 +0100
+Message-ID: <20260307154104.84567-2-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260307154104.84567-1-mohamed@unpredictable.fr>
 References: <20260307154104.84567-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: FW8S7K-Y2vpRuCXyuRyrgQDZbwcvliec
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE0OSBTYWx0ZWRfX9Rx3LngyKgaW
- i6TbgXH17sBZ91Pwn/D8PSeBc80xSWW7PPt6yKg3DmWcRah4qbnZv6G2qUoK/BeZLwsvfEJgK9g
- DcG6AI8JjYAG8PiffYqOI5yOEJTMXCxQSnkv+VdUW/Va56PJxAaTYEfHYi+zVRwi7evttnd5ivb
- 1qMFOU/j5Hhlb59bgmh5XeinXVYZjfoHEmQblDk0IBiFV1NgzHK+oDczwyjbRD+diI7vRhnCRMY
- aC7nc7auNN0eTbRVSS3eJNUZbqHkx6ydsGIjCODAO3cmQFJq/JxjfsV83TjKuRNePBoGXpJaU8q
- H1wyI0BpfT6Ozavy/eWw1gMs5m0odejthp14tP2KYs4bF4lTQTLhPgBpNXeSfs=
-X-Authority-Info-Out: v=2.4 cv=XfmEDY55 c=1 sm=1 tr=0 ts=69ac471a
+X-Proofpoint-ORIG-GUID: Br5hv4kUyTGacZ4R-mybtFcNc1tXxyWb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDE0OSBTYWx0ZWRfXzQsMxclCsRgP
+ Nez6D5ZQh7nBUGHOHkb6Inthsbj5COSA7AKuKNz6Na3zDogAC8CbvSEZePPjqXQyJS176A+VXyi
+ 6sO/kqF3fBSEWJCNrlfk+oHwictq+uEpjJ4WiAU7dfcMPMoSfYA+VOTDoVrvRVdT3soOEbqSsAW
+ YRdJrAmEO8tPehasCpN8253whoieGK4uRg5hnQlU49R+XR6IJ0G6+i/IZC8JiWNSCgWPY4Smvyi
+ hklWg5N+YkRdie7QxWY+qEhXkDN7PH0P6xAL0JPCJCgVV9E5kBnQYNv1ZdYftO0DsmsiMkRps11
+ mttVpCzh+oWpK0/CWZ/vN87Oxa1Iu51Q2r6jsrgPT51sg7whB9HiP6/9B8VE5c=
+X-Authority-Info-Out: v=2.4 cv=FcI6BZ+6 c=1 sm=1 tr=0 ts=69ac4719
  cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=11mQs7XRU_pcqQXa4wYA:9 a=O8hF6Hzn-FEA:10
-X-Proofpoint-GUID: FW8S7K-Y2vpRuCXyuRyrgQDZbwcvliec
+ a=KKAkSRfTAAAA:8 a=prbQHjbDPxtVlcUdaJMA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: Br5hv4kUyTGacZ4R-mybtFcNc1tXxyWb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-07_05,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 clxscore=1030 spamscore=0
- mlxlogscore=999 phishscore=0 bulkscore=0 adultscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ spamscore=0 adultscore=0 suspectscore=0
+ clxscore=1030 phishscore=0
+ bulkscore=0 mlxlogscore=975 lowpriorityscore=0 mlxscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603070149
-X-JNJ: AAAAAAABJaAZRThjeL+VdbNBBO+NsGQUxrZeLv64CxKjVb8mUKzR8wQ7oH4yfhTREVI49BfUO+unMaYmf0X+osR1F4Kf038V3oMvT/reyzfuTfB2dpH0NFZEA5gVy9UAYBhW32z05f4YrRLZh2LSMhCGlUHnfMkiwzp2iJtnSDIP10Jx5v5tml7rGCgdzK2OXNkN9TsLvw6e2JRcon2OLAAaE6RzyRvd8wpyPFBOwBtSWM8b73lzvjmmFidrdMsWvLQpUv+GrGFSPILdwh5bhtvuxPjZ+3EDsDkFow5QTkmCuKFtt4DYlyKEjR+2GT5QPD9LnQxHK0ww7iz16xU9nsWJINBFscRgBQdCzO4xi1PixoBV6Ipg90ZgsC7STwJho+tDrcdDKLfeNKZ+90swAh+TPHatZZvK9kgz+LzqePIKy1s3ViN9AH+UrBfeQA/yb69TarsgwknNZXcZVIcUoml4ReSCPzD4KpQVzYZ14+N1lUPIKHg/8SLJrXuk9tuoTGN8SugWXx3t/Jr/wD4PBArc6hGCTCG/9O5BOWXGIq+n52MJA8H4IzWcFlsiyWUcRLuMlHq9ExZxSWL/crgHMUhYNcwbesGvKOw4C8NlmDbjgFnu9SZwAxrk7MuW90cCKhADgqn8hk8MqnmxytueJUBjk28Ki4IQSov2OLBfZYsVPGQOVtNKLqT/pU61XGLubB3e03ny5Aeg03xPMh8aqyY05ip/fVkLCtVBq1fbch9tqVgSWZWPO0vmlWeK2G3dSt7+QsIDao3rRa7vjAztJwllo4mbESeRvQzM
-Received-SPF: pass client-ip=57.103.84.110;
+X-JNJ: AAAAAAAB2si0L1mH7Gwh7fHTGZqa89095+ufJf1IH9/qUVJ7/1g5VWBgWU+BGVMZuq+KZaKnp6QUQwOz/C9wF+BzyeKUWKfEsyYOdvl3NL4vdQ/5YlIrGbIeu7045ZSHXKpqk54JqhvRPSwrPEOb7iuAJcnbEeWosZChvewfQe2gwaeMQGznM/hhopQZCYENSgq0KqB49VoV8u5/o3VUGZ5p1XCO6Cdu3yH+Y3dIN7bYlwYdD/uT4qXTJb4Acn4g5jggKpS6fC5tAF9mPx10Eru/7KWu2xfKS4atDm+Qek3kOCW1KkSfaDgXTn7XCxWqf/aNB3hzabbNyEPw33OyJskXnNz8dugkrJV5oWmglH31WuXhTRAxYYVbRdCzjSv7z34hzUQXLdZqUtJNMnFMX/PYIRA7ay9cbIf3sqGX7GNFBwuU4z4Av2ynmSfqxZIZ48KRpY+BSzi7y8h5iv3NEjQZXHBn/y4cZwPxX5eK8ukNbx7kIqKFLT1Rz0nU1LcuWM4sgnmCxKRhf21opscgSUL+4iqr6RH1FJZL5aQn69+rti3EvcKRbvMRKg0QGy0feypJMr7bplor0/vR717y9fBbacroOcPFaDSd5DupYI6+TIwr7oPQlhmzcEYKNneNYoD0alLaWyWcizBINAXANGp3wJP+C4PZXElCbVoHU6asTR6XT7V9RW+oS3wH+GYnARyOQP+MfoUKJnPEAyVoo41qJMeUFrIXxZ1rLzMBlzyloFA/DzyEX+L0KDFYdwMIRlyTFyZdV6BA3XFewLspFzf3eTZyY4ZmpyKsJBG2iAso2g==
+Received-SPF: pass client-ip=57.103.84.113;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -99,37 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using strchrnul eagerly results in a failure to compile when using the newest SDKs, with:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-error: 'strchrnul' is only available on macOS 15.4 or newer [-Werror,-Wunguarded-availability-new]
+../target/i386/hvf/hvf.c:476:31: error: use of undeclared identifier 'cpu'
+  476 |     X86CPU *x86_cpu = X86_CPU(cpu);
+      |                               ^
+../target/i386/hvf/hvf.c:479:24: error: use of undeclared identifier 'cpu'
+  479 |     env->cr[0] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
+      |                        ^
+../target/i386/hvf/hvf.c:480:24: error: use of undeclared identifier 'cpu'
+  480 |     env->cr[3] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
+      |                        ^
+../target/i386/hvf/hvf.c:481:23: error: use of undeclared identifier 'cpu'
+  481 |     env->cr[2] = rreg(cpu->accel->fd, HV_X86_CR2);
+      |                       ^
+../target/i386/hvf/hvf.c:486:31: error: use of undeclared identifier 'cpu'
+  486 |     X86CPU *x86_cpu = X86_CPU(cpu);
+      |                               ^
+../target/i386/hvf/hvf.c:489:11: error: use of undeclared identifier 'cpu'
+  489 |     wvmcs(cpu->accel->fd, VMCS_GUEST_CR0, env->cr[0]);
+      |           ^
+../target/i386/hvf/hvf.c:490:11: error: use of undeclared identifier 'cpu'
+  490 |     wvmcs(cpu->accel->fd, VMCS_GUEST_CR3, env->cr[3]);
+      |           ^
+7 errors generated.
 
-Working around that by not using strchrnul when targeting macOS.
-
-This didn't show up on the CI because it used the macOS 15.1 SDK instead of a macOS 15.4 SDK or later.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- meson.build | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ target/i386/hvf/hvf.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 7b4e5bc72b..78bde0611b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2646,7 +2646,12 @@ config_host_data.set('HAVE_COPY_FILE_RANGE', cc.has_function('copy_file_range'))
- config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
- config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
- config_host_data.set('HAVE_OPENPTY', cc.has_function('openpty', dependencies: util))
--config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul', prefix: osdep_prefix))
-+
-+# strchrnul was introduced in macOS 15.4.
-+# Keep this condition for compatibility of new macOS SDKs with older releases.
-+if host_os != 'darwin'
-+  config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul', prefix: osdep_prefix))
-+endif
- config_host_data.set('HAVE_SYSTEM_FUNCTION', cc.has_function('system', prefix: '#include <stdlib.h>'))
- if rbd.found()
-   config_host_data.set('HAVE_RBD_NAMESPACE_EXISTS',
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index a70f8461b0..c0d028b147 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -472,21 +472,21 @@ static void hvf_cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+ 
+ static void hvf_load_crs(CPUState *cs)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
++    X86CPU *x86_cpu = X86_CPU(cs);
+     CPUX86State *env = &x86_cpu->env;
+ 
+-    env->cr[0] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
+-    env->cr[3] = rvmcs(cpu->accel->fd, VMCS_GUEST_CR3);
+-    env->cr[2] = rreg(cpu->accel->fd, HV_X86_CR2);
++    env->cr[0] = rvmcs(cs->accel->fd, VMCS_GUEST_CR0);
++    env->cr[3] = rvmcs(cs->accel->fd, VMCS_GUEST_CR3);
++    env->cr[2] = rreg(cs->accel->fd, HV_X86_CR2);
+ }
+ 
+ static void hvf_save_crs(CPUState *cs)
+ {
+-    X86CPU *x86_cpu = X86_CPU(cpu);
++    X86CPU *x86_cpu = X86_CPU(cs);
+     CPUX86State *env = &x86_cpu->env;
+ 
+-    wvmcs(cpu->accel->fd, VMCS_GUEST_CR0, env->cr[0]);
+-    wvmcs(cpu->accel->fd, VMCS_GUEST_CR3, env->cr[3]);
++    wvmcs(cs->accel->fd, VMCS_GUEST_CR0, env->cr[0]);
++    wvmcs(cs->accel->fd, VMCS_GUEST_CR3, env->cr[3]);
+     wreg(cs->accel->fd, HV_X86_CR2, env->cr[2]);
+ }
+ 
 -- 
 2.50.1 (Apple Git-155)
 
