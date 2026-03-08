@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296D6EA8537
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11617EA853F
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzHxy-0004KT-Uc; Sun, 08 Mar 2026 13:31:06 -0400
+	id 1vzHyQ-0004lJ-8G; Sun, 08 Mar 2026 13:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHxD-0003nK-9I
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHxA-0003mP-VB
  for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:14 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHx9-000415-Ec
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:09 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHx7-0003pN-HF
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:08 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 77E0C440A3;
- Sun,  8 Mar 2026 17:30:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200D1C2BC9E;
- Sun,  8 Mar 2026 17:30:00 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 72ACE44099;
+ Sun,  8 Mar 2026 17:30:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CCCC116C6;
+ Sun,  8 Mar 2026 17:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772991003;
- bh=OOKfroUsa/NmmKFDrQXJY1cwDi1GkvGCyavkONtRuAE=;
+ s=k20201202; t=1772991000;
+ bh=cXfFHAsd3SNFbK+y4uunPJeG053eQtIxwzALDggDNXs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=CzeYbz4nGF8qBiKqNz2xpa4OdJPdJ3zUqD9vXIgc4jb4MW26+vJaanZ88Gp8LmR4A
- +dDTNJ4Gri5YN4V1rz4Aj6mLfssPYWpeNg1suLTRh+t3KhZ+S6rPPyglVzJ4ADiVou
- XbJN95lw9oykexUznY1GYkl+SC19+c86/0wHJ6W85PKVkwBZ+IQas5Et8RZBjNsS0T
- mhRhj7yn0EdnSp6omdl2m8GHnyEkZgd2NeP35en24XJBbD6Q56+BrXtiUFJytRcNQq
- 7x/x2FnEHpoPdwUYGhbwADZfVA1KUwcTsR3rC4EBF4sZmHd2K02mxOwDMkoO3w65wq
- EDf59mJCmaGuQ==
+ b=d8NFl0DUgs4AI8pT3FP4SPFqSa4Lcqdr7Iybg3u2I5xWEhKmrbCgtPVcS2vgXiERj
+ cvGiD7uDLurfPcdcTE8712x5PMcG8GzjQTVSELn5xjJiz9HyH3b/kQOIxWgoCxrN0j
+ PytY58D9PURBmTMczPKHSAt2pcnFGir9jWYQM4mIh30j7Uz759rgXjR9uc64MJUVcV
+ lAFT5X/qffhem5sIHcxo+1QjMXiwZKyJjjdhssYMEyMsi+94c1oANV956C0Jkqsiay
+ eieyqubP2GKh4WP526eOehVKGmBdC3DPces1Iw4eaRosUcdEzrxRiytRNWM+4XVmkl
+ nJ2YD3p0hQGEQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -41,9 +41,9 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 09/12] bsd-user: Deal with mmap where start > reserved_va
-Date: Sun,  8 Mar 2026 18:29:33 +0100
-Message-ID: <20260308172936.2835-10-deller@kernel.org>
+Subject: [PULL 08/12] linux-user: Deal with mmap where start > reserved_va
+Date: Sun,  8 Mar 2026 18:29:32 +0100
+Message-ID: <20260308172936.2835-9-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308172936.2835-1-deller@kernel.org>
 References: <20260308172936.2835-1-deller@kernel.org>
@@ -75,37 +75,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bingwu Zhang <xtex@astrafall.org>
 
-Fixes: f12294b5bd21 ("bsd-user: Use page_find_range_empty for mmap_find_vma_reserved")
+Fixes: 4c13048e02d9 ("linux-user: Use page_find_range_empty for mmap_find_vma_reserved")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3310
 Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
 Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- bsd-user/mmap.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ linux-user/mmap.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 24ba1728eb..fe77eceb48 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -258,12 +258,14 @@ abi_ulong mmap_next_start = TASK_UNMAPPED_BASE;
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 07175e11d5..76978a56a8 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -423,12 +423,15 @@ abi_ulong mmap_next_start;
  static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
-                                         abi_ulong alignment)
+                                         abi_ulong align)
  {
--    abi_ulong ret;
-+    abi_ulong ret = -1;
+-    target_ulong ret;
++    target_ulong ret = -1;
  
--    ret = page_find_range_empty(start, reserved_va, size, alignment);
+-    ret = page_find_range_empty(start, reserved_va, size, align);
 +    if (start <= reserved_va) {
-+        ret = page_find_range_empty(start, reserved_va, size, alignment);
++        ret = page_find_range_empty(start, reserved_va, size, align);
 +    }
-     if (ret == -1 && start > TARGET_PAGE_SIZE) {
+     if (ret == -1 && start > mmap_min_addr) {
          /* Restart at the beginning of the address space. */
--        ret = page_find_range_empty(TARGET_PAGE_SIZE, start - 1,
-+        ret = page_find_range_empty(TARGET_PAGE_SIZE, MIN(start - 1, reserved_va),
-                                     size, alignment);
+-        ret = page_find_range_empty(mmap_min_addr, start - 1, size, align);
++        ret = page_find_range_empty(mmap_min_addr, MIN(start - 1, reserved_va),
++                                    size, align);
      }
  
+     return ret;
 -- 
 2.53.0
 
