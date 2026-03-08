@@ -4,100 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B0CF55102
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 12:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89512F5513F
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 13:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzCzd-0004yi-9k; Sun, 08 Mar 2026 08:12:21 -0400
+	id 1vzE5y-0003qd-18; Sun, 08 Mar 2026 09:22:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vzCzI-0004tN-UY; Sun, 08 Mar 2026 08:12:04 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vzCzG-0004aS-Iw; Sun, 08 Mar 2026 08:12:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1772971878; bh=7zKM8SviePidu7IHgu2cf5s1FUsYG5pqp8gjscFoFb8=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=mmTOjBJBDRJ/xw2ix7uKC5wcQdLc5Uoy0LSLgNboAq4AJii5U6AzgCP+VcmHOoRxP
- 9CPreLj919in8zte8cu7tP2VADzNXRp9QmQd84NWJG7i+RdOHV8VRudTt5Fm6zBzPw
- K1Vrr+H1XMKYSyTlmatw1n+C5SzVJs6XW78SPiO/cIfOyFAVdsIlgG8rmRplMCeaDM
- rQ0IpdtWgFLZP4wCBh868jNKRBdeQIQW6QFSqXs7QDRijH1zlym6oEV9W71pdxxsi6
- L4qDdk+BLd1aLSqqCZF3bcWQQapm1cCH9yg446V0qGUPpB8aV4GlDh1ZLyp2b9KfZO
- y2jHomoldewZg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id BB458190943;
- Sun, 08 Mar 2026 15:11:18 +0300 (MSK)
-Message-ID: <68d9a9ba-2999-43ad-b2ec-5320f3089ba7@tls.msk.ru>
-Date: Sun, 8 Mar 2026 15:11:50 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzE5v-0003qE-Ta
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 09:22:55 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzE5u-0006Ld-Fn
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 09:22:55 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-79495b1aaa7so93619227b3.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 06:22:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1772976173; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PPYeZU2gljAaTdPuHH8maPMBzqjG8omow4m/6sySszgshOq3GFipFatx0UTzWAsbOP
+ 8WLtnEdhJNSFhWzoctcpw13J+6IRJsG1wtVm5YnVsmMvmAJJU1vJYMjdH4uKzPwD4nY8
+ pIduQjHaSzH44QOC1s8Lq2hi8Xe9DpFHQcJD0DAl4aizHgn/RcwRX2X3mtwbibDbEWS6
+ cu0jYqgmFbP2/u4JqKp7k7PZrwV+NXWCW27M1qg83dp52/wYCgAEUB7SNV/+NQZitbX8
+ RJg8PcSWaUs52oe/aHWBCNhvUW8DNKjY5JlRwugWz/Tq2CafFvqEl+ka8HHCdkIyxERf
+ HvPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=VogvfXjIsNNJ05/YtFtqAaBEw2PF/2qocca8wrzZZwA=;
+ fh=bOjPkmr4ek6Om+3EEoGyd2p+LFwujOt9ZQcr6jTi7HM=;
+ b=VA7wYgWfvMA+XWcIyfkse6uq0ECPlfcBWmqUda6+Id9A4nFTG5nM10Q4D8y0wQxZ05
+ ggJ1FDfV/CV4DEx0edIIofS5GEzAkW4cJeY9QmV03W/0FN2v/3cQSJd3vHFNojfThiz7
+ ci3Nnb30vB9WIBD5Nkj9PP/hredc751Kg6URQVwKOXRLsrZsZyTDmJJBOXZzebC2X7NA
+ q4Gwoap/SjVxZzCxlYouV0MNW5+ijTx6bZCOevZN53lgVvENAHnE+N76I8IWIx8sIt93
+ G4Nx4q2gHLPVMsVmWVe1sZkfaB0fVNiRzko+ZBXZezl63P5h9acfoaUB8Ge73ptSe5Xc
+ wd7w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1772976173; x=1773580973; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VogvfXjIsNNJ05/YtFtqAaBEw2PF/2qocca8wrzZZwA=;
+ b=s8L9xnosX5EZufZV/zEkkR/TJwO3YxJxeDf6uBsgRm+DxnG4bAOGJLRQFbLiDWlini
+ pjDfww8W3v5MgAqN7tQGK5Cis8kuW916xgWCdEs2Vhea94E0+BB9FrjGXrveTgyK2Nt8
+ V7XHa6lmq9c+54aWoMumLeuPYfwUqxHNmsf7CsRqLpdD6uMCQn3WbDKk57L+pkYO9Vl5
+ m/0bYre/H3iOWYE7YwOzmSyJZn1/FAPtiPYZl+/KM3tabOjdPmSqJmFpliBVVuP6OsPk
+ cd+8YDkkXnW5OlCvA0eLO6w0cIksYdnK0375oifX99/ueG+ow1kJWDaqlf+DgdlmmhiU
+ awsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1772976173; x=1773580973;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VogvfXjIsNNJ05/YtFtqAaBEw2PF/2qocca8wrzZZwA=;
+ b=VzJFl0MQ4ELo386oV7FqJv6BwaneJIzBZXGMEifom5x9zKq5OpV0rwPxM2gRkQc6BT
+ p4sAXEmLD0kw7iWe1bHxwwyi60Zxshogxx7Xjp/R8iRD0NhBTVPTtLnx0Qb0NanlsEt7
+ AiukpqdY7SryJcng+oIUkPS111j6ryzMDLuLseKNfA08jQ7Hbu8InT3d1hqE05T0PwwX
+ NQh7D8fSQsszcgKyq/YcFt9miVb98/jSYIFk8XKrxTrcGP9Z2/Uk7RFQ+qVv98bHd33x
+ SHkHqcWSKkHDVp5ebTPK8DFCWQtBXgQiNqB0NTs+A4X9U48QXccBOKKVc9fCYJDCYSTS
+ bukg==
+X-Gm-Message-State: AOJu0Yzamb3PZgdyMztH+PS1mO43pm0aELXE3N98wDCHV6ye5Prlfm/W
+ Kgld2gAUEc5JPsMBsTXqjk+/hU+TdCNl6OpU8TiSY9GJJksImyynea1tx7XPkHL4mrL64bPKetm
+ mU9f4H8ggwVc74zRptTFR2ZsuSW5MxJgZHF26bsbknQ==
+X-Gm-Gg: ATEYQzzq4nT4wS1etD35vEbG6UhN0/Hg/hyc4gKW0jHf+Mqas51g01ntTlT19CZHL8C
+ 2nw7XdEBXT0mMOg/PCmqtZ/UfhneOwadJ8/wSCAuCH/UhGSWaChHfEmuhn7V11klwRO1CpipjZj
+ sqe4vSV4BEq1fAs9BQUiZ1MLveRANFL7Pz/zl917jh+J/oWg7V9yzpZOWdLmVcgXUmVpVuVIm2F
+ 3m33bZJ4BjdP7zDgTtxjm9iTJditYN4BBDrYjglfzCA51QJZT6SnzC/7FJkOKCnmSrQ8dVMYOVV
+ uufGit1sIespT/mbrQV9GQePV7idJKwNveBG7RBJOOd902ps61FRffb/8NkNG1p9ajVtYTVv/8U
+ PaA==
+X-Received: by 2002:a05:690e:130c:b0:649:e871:3eb7 with SMTP id
+ 956f58d0204a3-64d14274376mr7840062d50.57.1772976172979; Sun, 08 Mar 2026
+ 06:22:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHSET 0/2] io_uring fixes
-To: Fiona Ebner <f.ebner@proxmox.com>, Jens Axboe <axboe@kernel.dk>,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, fam@euphon.net, stefanha@redhat.com,
- qemu-stable@nongnu.org
-References: <20260213143225.161043-1-axboe@kernel.dk>
- <3ba732d8-8e33-4bf3-af39-00360c39b940@proxmox.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <3ba732d8-8e33-4bf3-af39-00360c39b940@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260122113144.2046899-1-marcandre.lureau@redhat.com>
+ <20260122113144.2046899-4-marcandre.lureau@redhat.com>
+In-Reply-To: <20260122113144.2046899-4-marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 8 Mar 2026 13:22:41 +0000
+X-Gm-Features: AaiRm52tD3aq9HmHqYSbZINab9Jgj5rbMlxebswviAvf5SrWRS2UKYOWO7LrI5s
+Message-ID: <CAFEAcA8oB0ZcL_6EFX2HPqUYetH2ie291gh_W2g_=UErzqGNsw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] ui/dbus: fix Unix.Map proxy leak
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,15 +119,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03.03.2026 14:52, Fiona Ebner wrote:
+On Thu, 22 Jan 2026 at 11:33, <marcandre.lureau@redhat.com> wrote:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Fixes: commit 48b7ef0f0 ("ui/dbus: implement Unix.Map")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  ui/dbus-listener.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-> CC-ing qemu-stable since this affects the 10.2 branch. The fixes are
-> already applied to master as
-> 
-> 2ae361ef1d aio-posix: notify main loop when SQEs are queued
-> 961fcc0f22 fdmon-io_uring: check CQ ring directly in gsource_check
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Picked up.  Thank you!
-
-/mjt
+thanks
+-- PMM
 
