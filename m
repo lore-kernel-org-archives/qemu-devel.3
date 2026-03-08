@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651A9EA8549
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 20:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86A6EA8541
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 20:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzKqb-0007H5-R4; Sun, 08 Mar 2026 16:35:33 -0400
+	id 1vzKqc-0007Hx-FV; Sun, 08 Mar 2026 16:35:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqZ-0007Er-TT
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:31 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqb-0007Fy-08
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:33 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqY-00045A-Dn
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:31 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439d8dc4ae4so1042880f8f.2
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 13:35:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqZ-00045c-KG
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:32 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439ce3605ecso2605113f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 13:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773002129; x=1773606929; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773002130; x=1773606930; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ht0en4g7BEiKReMa2mnsHtL6XNX6arYhl4MswHJxcl8=;
- b=T3A7DnVYpUPWKv8BLxTSpn2rKSbwjBUSn2DSsl/8hkOdJp2iHbP9bsbvnJaBaFuyED
- NukXIcMy3zVKFyHdKKGPzadPbdeCJWwSr4Wcel9vyG9jHocT8Idi8yfN5UhLTRYh3jIE
- gOumEg6jjl7VEsQqpe+h1ocvXoxasIBwEEdaKM4DXKb3z4mhxZ/EMAOe1e5Q8YBJiWnZ
- JFS8RJreryIqthrGEmfoxCPQlL5FviJNj7iGpTXMgEhKA4puuuAE8hoMH2hYq7ahX4Wo
- AlsQfIo6LTQp8mW076ZdLResI8XJsXRiqkNJV5zgPzz9wJGVHX0k91h6hKLcNDC0DmJq
- 4tVg==
+ bh=rGa+Qk9w7jO0yb09YCUU3MEUEX2jrREiC7pzktGBq9g=;
+ b=WpeSB+xPA7eTCjTbiNfNBL5Nl2d3gfJWuT1Osj8ZBhl4D57QmnWV4uGcLnL2CGDzJh
+ JB6KDJ1vdFsbQna+x/34y2actYmKAkb5pArxuPjFWOOzcRgVpX4JIFLTKbiG/dy4GNiL
+ ZAdmZEOgau6AYTORViBYtxFNsPKT8SrFBnnRbZErokzyuArelOoQmCH8bEsRrEhDbrHS
+ IZbXG9pIgoHj4Q+cwfpblrd1agJR1qTgZgKBEaKz6BbwbvZsIxg7jI8XNUDIoAlq4QlF
+ M/xh5UMz4beJap0vuBJta9SPX9qRsieAv7+4h72dCBdSlEDFxsyY1btFBacDKF5QIl64
+ fj9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773002129; x=1773606929;
+ d=1e100.net; s=20230601; t=1773002130; x=1773606930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ht0en4g7BEiKReMa2mnsHtL6XNX6arYhl4MswHJxcl8=;
- b=f0m40uX4TpTSv+N1b8WwPrBeyclqAw4JAolYHhGo8UHoODq8RhWFR7NU9BSGJtVBxN
- eagBHbfv0a7QWDaCYt1LMKcv3jPL6QRyPl5il1ZblpU9wyXQF71XmPUu7lP59LxgD5Gh
- if32cfWpI9loKZj1G8DdY4rZF6snfS2VaWQqgy8dkBWXM7CnHaIktAg5w4urpqYYGmfG
- 2GjkpgTqwEDj7dZZChRQz0mts1xSj/lHWW8R37AfsWhdRYJmnf3Q5qifC3QeNpzE76UE
- qLc17MBykIMMjGJNXfPxAs+dXNfhSpYmrOMkF9+BiYPo7CfIRVMWaVrhwUwVwbg4vBBS
- kUBQ==
-X-Gm-Message-State: AOJu0Yx30G+HytPooYF0tOHWBRCINWAqk4VL0zOso6JsstJoj3AjeBhd
- WQa38fNrFcCxGHivMpMQvNLrJpj9u8sAoE1Mfn7SLKBgv+OwPOkUokxpgVypXA==
-X-Gm-Gg: ATEYQzzq7IbRIey6EPnhNT6ziDzctjtdJCJQXKAZ5oZVy5pJyUFOZolkgXFGKjyGDpd
- iWtFp0VM3VspY6kwGgPxv+e6GSsKAFJvzH5EnMhqm4P5WlupP6zHiWfTSWlZvEFQUf+aWwd9wfP
- 8tZGwYl0vwwRwe6ePQoBQmM4hU4r2z1x7qpFRhh/qSmq/6Ag9U1TrLJrp+3VAtJcppx2SU8W+fl
- Jrij8YG0fmB93/rQNjlBO2uoZShFRYdhDlGoFoFZhKNsw3UBc1PBmawJ4mVissvQ8zxD89YxnOc
- K41fxzAbOqquVSo3fFWZvZAx4O28f1xDfO1j31UJ04QRA8zT4H2ENscXuwNHuhlb6xF3iKXNs7Z
- Ohb8zQ2ALvglG4xzgQwnB2TQeIAHaA27ZGkQy8yuFg9813WoKzFVkNfElfarsxRUUt02FomSVk2
- qYroGMk5hnq418hI6B7UJWRKEpUT3t47ZYg1ZlY8pTOmSSJw0EnjvDzQP3Sv7Sio/BAMTWtW0Lz
- 9fLdr8iMwagaVEK4EGhxaujB+En5TU=
-X-Received: by 2002:a05:6000:4210:b0:439:becb:6286 with SMTP id
- ffacd0b85a97d-439da87c5a7mr15185221f8f.54.1773002128422; 
- Sun, 08 Mar 2026 13:35:28 -0700 (PDT)
+ bh=rGa+Qk9w7jO0yb09YCUU3MEUEX2jrREiC7pzktGBq9g=;
+ b=O1NkagizuguL36dcDlwRgozTVafBVuO6ACt2uLZ9Sx2L/r4Pffw4ksnguPwit6OOW8
+ A+XXEccn50rM90nAwhgz6AyC25eNhx7OpGiJdusAis1DD/7A8Cr5eOQziX0jy/KPawcR
+ FMR67Gb6zZxWL9brRotTc8SRjdQWu7mcAj5ilOyBqNFG6yLk6b14NHR3p1HcDmvaTKCe
+ outNkATyHN+io0jNrDFJjubCtpf6VlcwEQpYE/8UJd2P81AASkXHWu7UgNsUsykom0XY
+ shK3aop33hQ1sn4Jwc2fHZ3LhhuPDtPO3yybhWhtrxbVJ63XBqdLqW7ng9vxBFKVJgMr
+ 7Wzw==
+X-Gm-Message-State: AOJu0YytXnraoCHn7TbJ8NM1srrf162E8D7diT1XhSdWC1WYDO50Cpou
+ vhOFNqHeMaPvHcFClO+FqdYi42i1Fa1ko6OvEfi5mppYEYXsALWb3zd7cnd+Aw==
+X-Gm-Gg: ATEYQzwfoIfUlvAKwOzOs6xGLmMALfD80g/Cl4yfcg246tzfNmMBdll0NJR6catXpCq
+ WTWGh6pSm/4MFTiA8rxlNQbsWFZjpSuX7H5/g9w1N5kTkQAcoOT/z8Y/udSOJSvGq7VOsrfPfM1
+ aTPuLaFCq4/yHbTLqZ8C3ZCgg4vtk4kFKcRd1DVO7yMzNwf6de8TtgZCyLSphf+quWUTaf7LSza
+ 5JprZstkNhm6FDidx+EdPKHR29u2l+OZjAlBUBQuOWKELgS3vXT2O54ze4CG5DkQ65Fp6prCO64
+ 858zWA+X2sDJdxj00iV9t8DRGjMSey1Ew0GUFqsnyHXAfMsWpvhRD8H6l5XKzaIFt+Ip3XuIT3c
+ wkVguAofc4wCfhJBUEnAaZh2fsVCk1F77EF7EkGNyDWgCzmiMbnV93B0HIPDNcHV7l8njdUGzGY
+ Hn+44loJK4JEKEDeuZ8RuCKwk3WH/xoSFKbfGNWwsuRDa68uWG+Lsmx/WW9GVA4Jheg/uNHb32S
+ 4uLMIf0H8i+C+SlXyKgd9f+u2KPDDE=
+X-Received: by 2002:a05:6000:4313:b0:439:a95b:3c43 with SMTP id
+ ffacd0b85a97d-439da65e31amr15851395f8f.21.1773002129604; 
+ Sun, 08 Mar 2026 13:35:29 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-25c6-8f00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:25c6:8f00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2bdf8sm20995508f8f.25.2026.03.08.13.35.27
+ ffacd0b85a97d-439dae2bdf8sm20995508f8f.25.2026.03.08.13.35.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Mar 2026 13:35:28 -0700 (PDT)
+ Sun, 08 Mar 2026 13:35:29 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,18 +72,17 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 3/5] hw/arm/imx8mp-evk: Fix reference count of SoC object
-Date: Sun,  8 Mar 2026 21:35:14 +0100
-Message-ID: <20260308203516.160103-4-shentey@gmail.com>
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 4/5] system/vl: Fix reference count of machine object
+Date: Sun,  8 Mar 2026 21:35:15 +0100
+Message-ID: <20260308203516.160103-5-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308203516.160103-1-shentey@gmail.com>
 References: <20260308203516.160103-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,34 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-object_new() leaves a reference count of one, and object_property_add_child()
-then leaves it at two. This would leak the SoC object if the machine object was
-destroyed since the machine is the SoC's sole owner. Fix this by converting to
-object_new_with_props() which gets the parenting and reference count right in
-one go.
+object_new_with_class() and object_property_add_child() leave a reference count
+of two while the QOM root is the sole owner. Fix the reference count to be one
+by calling object_unref() once.
 
-Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
-cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/arm/imx8mp-evk.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ system/vl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-index b84ac91a17..cfc3038c36 100644
---- a/hw/arm/imx8mp-evk.c
-+++ b/hw/arm/imx8mp-evk.c
-@@ -74,8 +74,8 @@ static void imx8mp_evk_init(MachineState *machine)
-         .modify_dtb = imx8mp_evk_modify_dtb,
-     };
- 
--    s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
--    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-+    s = FSL_IMX8MP(object_new_with_props(TYPE_FSL_IMX8MP, OBJECT(machine),
-+                                         "soc", &error_fatal, NULL));
-     object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
- 
+diff --git a/system/vl.c b/system/vl.c
+index 38d7b849e0..91b390dafd 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2197,6 +2197,7 @@ static void qemu_create_machine(QDict *qdict)
+     current_machine = MACHINE(object_new_with_class(OBJECT_CLASS(machine_class)));
+     object_property_add_child(object_get_root(), "machine",
+                               OBJECT(current_machine));
++    object_unref(current_machine);
+     qemu_create_machine_containers(OBJECT(current_machine));
+     object_property_add_child(machine_get_container("unattached"),
+                               "sysbus", OBJECT(sysbus_get_default()));
 -- 
 2.53.0
 
