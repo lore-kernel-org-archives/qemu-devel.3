@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECBBF55126
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:23:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE03F55132
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:23:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz8T3-0005Lh-8D; Sun, 08 Mar 2026 03:22:25 -0400
+	id 1vz8Sy-0004n2-La; Sun, 08 Mar 2026 03:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8Rp-0002gt-Ia
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:11 -0400
-Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
+ id 1vz8S8-00039L-5B
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:29 -0400
+Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8Rm-0003D2-FI
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:09 -0400
-Received: by mail-dy1-x1343.google.com with SMTP id
- 5a478bee46e88-2be27fa54feso7436723eec.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:21:02 -0800 (PST)
+ id 1vz8S2-0003Uc-AG
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:25 -0400
+Received: by mail-dy1-x1342.google.com with SMTP id
+ 5a478bee46e88-2be3bdfda8eso3687646eec.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772954461; x=1773559261; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772954481; x=1773559281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h/RSbypv/ZVnxXM1y5bTNKWJzgNjI04NBQqEcovui8E=;
- b=ScghuP+I9NFoPGH9pSCm/oeviQBj0k9eRSbahTRiA+ZmVxpBntFTicnp+aCrF2GYZW
- OOitppxrMVI7kIWMKruwVXjNQJCDXzBxGvBU2Lsw1sb5S4KKjv2//7aTlHRlzNCu5fMb
- zykOYKgDsiB8Pn+8j7qh66fVWsWswGwc1NI8peghD2DY6LzLF0tT4JBxULPv+UV+J9J4
- m1s6wZojAOkIgsteEw8pAts5A5OvunKy/iGioXXonFGIy918h2k4yMHKLuzihz3+8Fxe
- vmjCbDfrtGkCQsussfWyAW16Aon2/l+C0axUuBzADM6C8rTeZRgYzOlFUefTG32daqqS
- 7hpA==
+ bh=a3qLbUC44VdhutdRCzgiU5V4BeYTIqYuq+q3+7FdlOk=;
+ b=P91mV6/Pyhvm99zyrWaGsHc8cyCK8rqZ1JnEmEVdEnDSUe0B/Jwtywr8AdLrGk7Ym9
+ w35IYUYAEYc91zQrfdloc/tDlZLX2g3CoZEYUdQByyVvYgf487mm5tqcKajVnOqXO96f
+ uwYhAiOBOgMclsNLJOZNh++hpup0hgCiCX4f4fn5vnv/XwJIBSG/98QBiCjxPjneBM8i
+ pQRZgyFRGK8APw08dM4xY4QDJ5tHcOZPx9urhQfUP1+U3GKJNH/AHVWSjN09L9eLih9M
+ F+Pw3Fc36XaThT5Bz4rXCYEa+qgpYoIdLRbvAzt46r9idI+NzBIeV1iA++kibtbpNxF/
+ unhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772954461; x=1773559261;
+ d=1e100.net; s=20230601; t=1772954481; x=1773559281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=h/RSbypv/ZVnxXM1y5bTNKWJzgNjI04NBQqEcovui8E=;
- b=INhwUUDqx+6wfDvAjxpb70NnFLotKnZB2tNfoNy1E61s/7QLIXoZtS3C6xFI7V6jVH
- P7FlVtk7HP3EKWJuE4IO9ulsv0zh3PKcw8YrMTipWq8+5270id9hlzlmOxQhMsoS4miw
- qyFRY4ziBF5XZ5CYxfY2k8Fc303EtL3ys12AszOO57yK62NS6VJ9fY/28TuTJ7IR6C82
- D8O8RrL9hyHSRMJ2DhiInVaZwNjXzxIP6CBqmWN20Y2HEOLcWqPaQ0oza1Zo+TEKj2MX
- b8fHskDQf7oCBfHeEuXUoUdf7zbgon131SyFH8t6fk90nmBDtMzRViIed9YZxPEI7gBY
- 8C4A==
+ bh=a3qLbUC44VdhutdRCzgiU5V4BeYTIqYuq+q3+7FdlOk=;
+ b=QznY4czdGmQtEkMK43Mp/te3eMxJ8oArxGBh9SJlgk/uMTnLGBSH5ER5mj9i3hv+s6
+ l+UBHUplA+nwkZ/18SQXseToCdYa4+oMgW2TPiROTveLtwpfeW7IFWzABiIkCSqGd0wM
+ 9iUnxvXD4B61Yv4uqFNxld/K4qgr7qGM1YOsQrQalHLUQdCTlY8lv/o/70y3ovw9mDQ7
+ 7IFxwt+TJlzwQgV/5tO1742CSwPXFRgyszfChBTlrgZo4O8D/J3x+MLlcv+HTNPInqTr
+ VJTEjpoowjAECuKVDe4c6DxvCDXP4pnRjngCZE9lO9Ljg7sDlXNbwuHf3FI2RfcRgk5r
+ hlsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXK2qXkGpx4N3SHpKB24JkWFCMmKOeF+MgaPPbw4j5WmAEBfjHHR5bNr8FCEAemo2Q/WaJOcigDYPyf@nongnu.org
-X-Gm-Message-State: AOJu0Yz/H8xFoyZYwlt8F92iX5Pk6SOrgOrAOLsCr+T9qB6QNsnkxCXh
- CggVuiy096CKN8fGUpipGjZjUCbqUMwa4MAc2V+2E6NB53Blsug08zLf
-X-Gm-Gg: ATEYQzzAeT8F195iDGSB+VREurBPJfULqVkflb7f/qrZQmBSAXRNeGHbbDlEMK70ALq
- JSXmwK0+z0I+sP+Utv2kmGWd7fVCq5A1JC/owyKR6gQYfagjDSDUvi0NShseiZk4t4HOwGmZH0a
- B3t0tCI3Dz7n44lxvnk7v7tGGA4oBubd6nhM5fz0u9pmiuaL5IYYqU6WoJM7CQvaUJTJR8Vdy0+
- xw0hq5chfW5uSIEOjI0f1W0DC8zgoSS2rKCFLIFk1Tt1BjbkmzEjZT6ialE4QQp2gUU1yvjhiMK
- v29IGLHABzy9k2CUwBAJD63yZTHAo1ELYyBARV7Hmwq5apC+/PjU0GGTN3Jkc7XVQfACE8R143z
- 2165YQnJEQQZydDoqaDn3Rbm+GK4+5uxa09+FLqrgA0RcPwfapwP8vWVT6+8hBEWCEhNbU5Qlkz
- xNjgras6LzIyQMy1pd+CwSPklqlCVwmTb47GRCN2kA+v+EjIqk8I1gjjLR2nDparZQDpNeQwXL7
- oW3vxubRoDFKYn07MFoN9EtmII=
-X-Received: by 2002:a05:7301:5789:b0:2be:1803:7e11 with SMTP id
- 5a478bee46e88-2be4e08affcmr2422026eec.30.1772954461029; 
- Sat, 07 Mar 2026 23:21:01 -0800 (PST)
+ AJvYcCV661dtfILbgFNOG5r13AlWar9NPGkdvFBbnLgiUh+P83VOtIMjr3VMmN9djDFJB0FLmPPMH4ohGxoB@nongnu.org
+X-Gm-Message-State: AOJu0Yx+BVwGrktpIU8D7yNwtcB46Pxp1pwFD06dh4PdJl9aNAfBX8Wh
+ DFH6Pl0ODR5gpv/G9NYKrDjXziN37Tj/RRc4whoOcFMjA7qDibY4bHQk
+X-Gm-Gg: ATEYQzx4Px04/aoM0vR7w73S3RR7yNnHKUdA7WjBo3S7zKqxj+47pzyM/IWxtzdNKw5
+ OAFTIyp7Eb87dR5Z65B8WNaALcX+Rc6NbBQ2foIFmS2CyscEfdgNLTZIoLmaBO+EgEnK2wqjIOg
+ CvZRh7Sf7LHJmvMaAM7UcTLEMaMwvDU+9LDwdrXMiEGpdRChtxapDP41PLfOzadGasEdeSRxMAW
+ 4Cr/vJvG1NYAHCC/YE7rNOj4td9l4RU189EtDKv+ZWmS3awWZZVWYQMe6W+3aR09PqO/nFayfe4
+ YjUiJArUGBpqpZpzlf+/7/A+UZhPz1zox2FGDzHog6qzmbD6E7RTHd6B4ySPmBl266n0bxm20TI
+ xRkSdUNRkO3Nha8C1KVALqsSaEHPba6QylXS5PJN5NiHNF/XWgp34WJE37hBCw1gmXt3FdTMzB8
+ fkoTB80eFUPFcWfnwnfvkesLOql1nclJrpfZek2OoEi8oxmFdpoTlQxY2ky3a+oFh9eL3aGFHG9
+ /UhMgYmoN5LqkmsGwgjBMqi+WI=
+X-Received: by 2002:a05:7301:608a:b0:2be:1946:8587 with SMTP id
+ 5a478bee46e88-2be4de8f969mr2620151eec.9.1772954480839; 
+ Sat, 07 Mar 2026 23:21:20 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.20.55
+ 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.21.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 23:20:59 -0800 (PST)
+ Sat, 07 Mar 2026 23:21:20 -0800 (PST)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -76,17 +76,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: tangtao1634@phytium.com.cn, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v1 25/28] tests/qtest: extend DM register semantics coverage
-Date: Sun,  8 Mar 2026 15:17:28 +0800
-Message-ID: <21d42ab8e77b205319a2b085371d62edecfdf983.1772936778.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v1 28/28] tests/qtest: add DM TCG single-step and trigger tests
+Date: Sun,  8 Mar 2026 15:17:31 +0800
+Message-ID: <815a1695c1a8f39d2d4e131612602c07244bf80e.1772936778.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 References: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,753 +109,601 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add tests for the DMI register interface exercised in qtest mode
-(no real CPU execution):
+Add the remaining TCG-mode helpers (64-bit register access,
+resume-and-run, is_rv64) and the second batch of TCG tests:
 
-  data-rw, progbuf-rw         – DATA/PROGBUF read-write
-  ro-registers                – read-only register enforcement
-  abstractcs-w1c              – write-1-to-clear cmderr field
-  hart-selection              – hartsel/hasel routing
-  dmcontrol-warz              – write-any-read-zero fields
-  hartreset                   – per-hart reset semantics
-  ndmreset-gate               – ndmreset gating other operations
-  optional-regs-absent        – unimplemented register reads
-  deactivate                  – DM deactivation clears state
-  ackhavereset                – havereset acknowledgment
-
-Also expand the define/macro header to cover the full DMI
-register map and rewrite the existing four basic tests to use
-the new constants.
+  tcg/single-step               – single-step via DCSR.step
+  tcg/postexec-impebreak        – postexec with implicit ebreak
+  tcg/postexec-exception        – abstract cmd exception path
+  tcg/trigger-debug-mode        – mcontrol6 breakpoint fires
+  tcg/load-trigger-debug-mode   – load watchpoint enters debug
+  tcg/store-trigger-debug-mode  – store watchpoint enters debug
+  tcg/itrigger-debug-mode       – instruction trigger enters debug
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- tests/qtest/riscv-dm-test.c | 589 +++++++++++++++++++++++++++++++++---
- 1 file changed, 539 insertions(+), 50 deletions(-)
+ tests/qtest/riscv-dm-test.c | 547 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 547 insertions(+)
 
 diff --git a/tests/qtest/riscv-dm-test.c b/tests/qtest/riscv-dm-test.c
-index c9e3c22a20..3a0dd1cbd4 100644
+index 2e7c29ed7c..b2fb47e8f0 100644
 --- a/tests/qtest/riscv-dm-test.c
 +++ b/tests/qtest/riscv-dm-test.c
-@@ -9,43 +9,150 @@
- #include "qemu/osdep.h"
- #include "libqtest.h"
- 
-+/* Virt machine memory map base address for the Debug Module */
- #define DM_BASE                 0x0
- 
--#define ROM_HARTID              0x104
--#define ROM_RESUME              0x10c
--
--#define A_DATA0                 0x10
--#define A_DMCONTROL             0x40
--#define A_DMSTATUS              0x44
--#define A_HARTINFO              0x48
--#define A_ABSTRACTCS            0x58
--
-+/*
-+ * ROM layout offsets (byte offsets within DM ROM).
-+ * CPU ROM code writes to these addresses to signal state changes to the DM.
-+ */
-+#define ROM_HARTID      0x104
-+#define ROM_GOING       0x108
-+#define ROM_RESUME      0x10C
-+#define ROM_EXCP        0x110
-+#define ROM_DATA        0x3C0
-+#define ROM_FLAGS       0x400
-+#define ROM_ENTRY       0x800
-+
-+/* DMI register byte offsets (word address × 4) */
-+#define A_DATA0         0x10
-+#define A_DATA1         0x14
-+#define A_DMCONTROL     0x40
-+#define A_DMSTATUS      0x44
-+#define A_HARTINFO      0x48
-+#define A_HALTSUM1      0x4C
-+#define A_HAWINDOWSEL   0x50
-+#define A_HAWINDOW      0x54
-+#define A_ABSTRACTCS    0x58
-+#define A_COMMAND       0x5C
-+#define A_ABSTRACTAUTO  0x60
-+#define A_PROGBUF0      0x80
-+#define A_PROGBUF1      0x84
-+#define A_AUTHDATA      0xC0
-+#define A_DMCS2         0xC8
-+#define A_SBCS          0xE0
-+#define A_SBADDRESS0    0xE4
-+#define A_SBADDRESS1    0xE8
-+#define A_SBADDRESS2    0xEC
-+#define A_SBDATA0       0xF0
-+#define A_SBDATA1       0xF4
-+#define A_SBDATA2       0xF8
-+#define A_SBDATA3       0xFC
-+#define A_HALTSUM0      0x100
-+
-+/* DMCONTROL fields */
- #define DMCONTROL_DMACTIVE      (1u << 0)
-+#define DMCONTROL_NDMRESET      (1u << 1)
-+#define DMCONTROL_CLRRESETHALTREQ (1u << 2)
-+#define DMCONTROL_SETRESETHALTREQ (1u << 3)
-+#define DMCONTROL_HARTRESET     (1u << 29)
- #define DMCONTROL_HALTREQ       (1u << 31)
- #define DMCONTROL_RESUMEREQ     (1u << 30)
--
--#define DMSTATUS_VERSION_MASK   0xf
-+#define DMCONTROL_ACKHAVERESET  (1u << 28)
-+#define DMCONTROL_HASEL         (1u << 26)
-+#define DMCONTROL_HARTSELHI_SHIFT   16
-+#define DMCONTROL_HARTSELLO_SHIFT   6
-+#define DMCONTROL_HARTSELLO_MASK    (0x3FFu << 6)
-+
-+/* DMSTATUS fields */
-+#define DMSTATUS_VERSION_MASK   0xF
- #define DMSTATUS_AUTHENTICATED  (1u << 7)
- #define DMSTATUS_ANYHALTED      (1u << 8)
- #define DMSTATUS_ALLHALTED      (1u << 9)
- #define DMSTATUS_ANYRUNNING     (1u << 10)
- #define DMSTATUS_ALLRUNNING     (1u << 11)
-+#define DMSTATUS_ANYUNAVAIL     (1u << 12)
-+#define DMSTATUS_ALLUNAVAIL     (1u << 13)
-+#define DMSTATUS_ANYNONEXISTENT (1u << 14)
-+#define DMSTATUS_ALLNONEXISTENT (1u << 15)
- #define DMSTATUS_ANYRESUMEACK   (1u << 16)
- #define DMSTATUS_ALLRESUMEACK   (1u << 17)
- #define DMSTATUS_ANYHAVERESET   (1u << 18)
-+#define DMSTATUS_ALLHAVERESET   (1u << 19)
- #define DMSTATUS_IMPEBREAK      (1u << 22)
-+#define DMSTATUS_NDMRESETPENDING (1u << 24)
- 
--#define HARTINFO_DATAADDR_MASK      0xfffu
-+/* HARTINFO fields */
-+#define HARTINFO_DATAADDR_MASK      0xFFFu
- #define HARTINFO_DATASIZE_SHIFT     12
--#define HARTINFO_DATASIZE_MASK      (0xfu << HARTINFO_DATASIZE_SHIFT)
-+#define HARTINFO_DATASIZE_MASK      (0xFu << HARTINFO_DATASIZE_SHIFT)
- #define HARTINFO_DATAACCESS         (1u << 16)
- #define HARTINFO_NSCRATCH_SHIFT     20
--#define HARTINFO_NSCRATCH_MASK      (0xfu << HARTINFO_NSCRATCH_SHIFT)
-+#define HARTINFO_NSCRATCH_MASK      (0xFu << HARTINFO_NSCRATCH_SHIFT)
- 
--#define ABSTRACTCS_DATACOUNT_MASK       0xf
-+/* ABSTRACTCS fields */
-+#define ABSTRACTCS_DATACOUNT_MASK       0xF
-+#define ABSTRACTCS_CMDERR_MASK          (0x7u << 8)
-+#define ABSTRACTCS_CMDERR_SHIFT         8
- #define ABSTRACTCS_BUSY                 (1u << 12)
-+#define ABSTRACTCS_PROGBUFSIZE_MASK     (0x1Fu << 24)
- #define ABSTRACTCS_PROGBUFSIZE_SHIFT    24
--#define ABSTRACTCS_PROGBUFSIZE_MASK     (0x1fu << ABSTRACTCS_PROGBUFSIZE_SHIFT)
-+
-+/* SBCS fields */
-+#define SBCS_SBERROR_MASK       (0x7u << 12)
-+#define SBCS_SBBUSYERROR        (1u << 22)
-+#define SBCS_SBVERSION_MASK     (0x7u << 29)
-+#define SBCS_SBVERSION_SHIFT    29
-+#define SBCS_SBASIZE_SHIFT      5
-+#define SBCS_SBASIZE_MASK       (0x7Fu << SBCS_SBASIZE_SHIFT)
-+#define SBCS_SBACCESS32         (1u << 2)
-+
-+/* Abstract command register number space */
-+#define REGNO_GPR(n)    (0x1000 + (n))  /* x0..x31 */
-+#define REGNO_FPR(n)    (0x1020 + (n))  /* f0..f31 */
-+#define REGNO_CSR(n)    (n)             /* CSR direct */
-+#define REGNO_DPC       0x7b1
-+#define REGNO_DCSR      0x7b0
-+
-+/* DCSR fields */
-+#define DCSR_STEP           (1u << 2)
-+#define DCSR_CAUSE_SHIFT    6
-+#define DCSR_CAUSE_MASK     (0x7u << DCSR_CAUSE_SHIFT)
-+#define DCSR_CAUSE_EBREAK   1
-+#define DCSR_CAUSE_TRIGGER  2
-+#define DCSR_CAUSE_HALTREQ  3
-+#define DCSR_CAUSE_STEP     4
-+#define DCSR_CAUSE_RESET    5
-+
-+/* Trigger CSRs (abstract command register numbers) */
-+#define REGNO_TSELECT       REGNO_CSR(0x7a0)
-+#define REGNO_TDATA1        REGNO_CSR(0x7a1)
-+#define REGNO_TDATA2        REGNO_CSR(0x7a2)
-+
-+/* mcontrol (type 2) tdata1 field helpers */
-+#define TDATA1_TYPE2_TYPE       (2u << 28)
-+#define TDATA1_TYPE2_DMODE      (1u << 27)
-+#define TDATA1_TYPE2_ACTION_DBG (1u << 12)
-+#define TDATA1_TYPE2_M          (1u << 6)
-+#define TDATA1_TYPE2_S          (1u << 4)
-+#define TDATA1_TYPE2_U          (1u << 3)
-+#define TDATA1_TYPE2_EXEC       (1u << 2)
-+#define TDATA1_TYPE2_STORE      (1u << 1)
-+#define TDATA1_TYPE2_LOAD       (1u << 0)
-+
-+/* itrigger (type 3) tdata1 field helpers */
-+#define TDATA1_ITRIGGER_TYPE        (3u << 28)
-+#define TDATA1_ITRIGGER_ACTION_DBG  1u
-+#define TDATA1_ITRIGGER_U           (1u << 6)
-+#define TDATA1_ITRIGGER_S           (1u << 7)
-+#define TDATA1_ITRIGGER_M           (1u << 9)
-+#define TDATA1_ITRIGGER_COUNT(n)    (((n) & 0x3fffu) << 10)
-+#define TDATA1_ITRIGGER_COUNT_MASK  TDATA1_ITRIGGER_COUNT(0x3fff)
-+
-+/* TCG test timing (wall-clock microseconds, CPU runs via MTTCG thread) */
-+#define TCG_POLL_STEP_US    10000       /* 10ms per poll step */
-+#define TCG_POLL_TIMEOUT_US 5000000     /* 5s max */
-+#define TCG_BOOT_US         200000      /* 200ms boot */
- 
- static uint32_t dm_read(QTestState *qts, uint32_t reg)
- {
-@@ -62,118 +169,491 @@ static void dm_set_active(QTestState *qts)
-     dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE);
+@@ -288,6 +288,15 @@ static bool tcg_resume_hart(QTestState *qts)
+     return false;
  }
  
-+/* Write to DM ROM area (simulates CPU writing from ROM code) */
- static void rom_write32(QTestState *qts, uint32_t offset, uint32_t val)
- {
-     qtest_writel(qts, DM_BASE + offset, val);
- }
- 
-+/*
-+ * Simulate the CPU executing the DM ROM halt entry code.
-+ * In real hardware: CPU enters debug mode → jumps to ROM entry (0x800) →
-+ * ROM code writes mhartid to HARTID offset → DM recognizes hart as halted.
-+ */
- static void sim_cpu_halt_ack(QTestState *qts, uint32_t hartid)
- {
-     rom_write32(qts, ROM_HARTID, hartid);
- }
- 
-+/*
-+ * Simulate the CPU executing the DM ROM resume handler.
-+ * In real hardware: ROM detects RESUME flag → writes hartid to RESUME offset
-+ * → DM recognizes hart as resumed → CPU executes dret.
-+ */
- static void sim_cpu_resume_ack(QTestState *qts, uint32_t hartid)
- {
-     rom_write32(qts, ROM_RESUME, hartid);
- }
- 
-+
-+/*
-+ * Test: dmactive gate.
-+ * When dmactive=0 (after reset), all non-DMCONTROL reads should return 0.
-+ */
- static void test_dmactive_gate(void)
- {
-     QTestState *qts = qtest_init("-machine virt");
- 
-+    /* DM starts inactive after reset */
-     g_assert_cmpuint(dm_read(qts, A_DMCONTROL), ==, 0);
-+
-+    /* All other registers should return 0 when dmactive=0 */
-     g_assert_cmpuint(dm_read(qts, A_DMSTATUS), ==, 0);
--    g_assert_cmpuint(dm_read(qts, A_HARTINFO), ==, 0);
-     g_assert_cmpuint(dm_read(qts, A_ABSTRACTCS), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_HARTINFO), ==, 0);
-     g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_PROGBUF0), ==, 0);
- 
--    dm_write(qts, A_DATA0, 0xdeadbeef);
-+    /* Writes to non-DMCONTROL registers should be ignored */
-+    dm_write(qts, A_DATA0, 0xDEADBEEF);
-+    /* Still inactive, so read should still return 0 */
-     g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0);
- 
-+    /* Activate the DM */
-     dm_set_active(qts);
-     g_assert_cmpuint(dm_read(qts, A_DMCONTROL) & DMCONTROL_DMACTIVE, ==,
-                      DMCONTROL_DMACTIVE);
-+
-+    /* Now DMSTATUS should be non-zero (version, authenticated, etc.) */
-     g_assert_cmpuint(dm_read(qts, A_DMSTATUS), !=, 0);
- 
-     qtest_quit(qts);
- }
- 
-+/*
-+ * Test: DMSTATUS register fields after activation.
-+ */
- static void test_dmstatus(void)
- {
-     QTestState *qts = qtest_init("-machine virt");
--    uint32_t status;
--
-     dm_set_active(qts);
--    status = dm_read(qts, A_DMSTATUS);
- 
-+    uint32_t status = dm_read(qts, A_DMSTATUS);
-+
-+    /* Version should be 3 (v1.0 spec) */
-     g_assert_cmpuint(status & DMSTATUS_VERSION_MASK, ==, 3);
-+
-+    /* Should be authenticated */
-     g_assert_cmpuint(status & DMSTATUS_AUTHENTICATED, ==,
-                      DMSTATUS_AUTHENTICATED);
--    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==,
--                     DMSTATUS_ANYRUNNING);
--    g_assert_cmpuint(status & DMSTATUS_ALLRUNNING, ==,
--                     DMSTATUS_ALLRUNNING);
-+
-+    /* impebreak should be set (default property) */
-+    g_assert_cmpuint(status & DMSTATUS_IMPEBREAK, ==, DMSTATUS_IMPEBREAK);
-+
-+    /* Hart 0 should be running (not halted) */
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
-+    g_assert_cmpuint(status & DMSTATUS_ALLRUNNING, ==, DMSTATUS_ALLRUNNING);
-     g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, 0);
-+    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, 0);
-+
-+    /* Should have havereset after initial reset */
-     g_assert_cmpuint(status & DMSTATUS_ANYHAVERESET, ==,
-                      DMSTATUS_ANYHAVERESET);
--    g_assert_cmpuint(status & DMSTATUS_IMPEBREAK, ==, DMSTATUS_IMPEBREAK);
-+    g_assert_cmpuint(status & DMSTATUS_ALLHAVERESET, ==,
-+                     DMSTATUS_ALLHAVERESET);
-+
-+    /* Hart 0 should not be nonexistent or unavailable */
-+    g_assert_cmpuint(status & DMSTATUS_ANYNONEXISTENT, ==, 0);
-+    g_assert_cmpuint(status & DMSTATUS_ANYUNAVAIL, ==, 0);
- 
-     qtest_quit(qts);
- }
- 
-+/*
-+ * Test: HARTINFO fields describe memory-mapped DATA registers.
-+ */
- static void test_hartinfo(void)
- {
-     QTestState *qts = qtest_init("-machine virt");
--    uint32_t info;
--
-     dm_set_active(qts);
--    info = dm_read(qts, A_HARTINFO);
- 
--    g_assert_cmpuint(info & HARTINFO_DATAADDR_MASK, ==, 0x3c0);
-+    uint32_t info = dm_read(qts, A_HARTINFO);
-+    uint32_t datasize =
-+        (info & HARTINFO_DATASIZE_MASK) >> HARTINFO_DATASIZE_SHIFT;
-+    uint32_t nscratch =
-+        (info & HARTINFO_NSCRATCH_MASK) >> HARTINFO_NSCRATCH_SHIFT;
-+
-     g_assert_cmpuint(info & HARTINFO_DATAACCESS, ==, HARTINFO_DATAACCESS);
--    g_assert_cmpuint((info & HARTINFO_DATASIZE_MASK) >>
--                     HARTINFO_DATASIZE_SHIFT, ==, 2);
--    g_assert_cmpuint((info & HARTINFO_NSCRATCH_MASK) >>
--                     HARTINFO_NSCRATCH_SHIFT, ==, 1);
-+    g_assert_cmpuint(info & HARTINFO_DATAADDR_MASK, ==, ROM_DATA);
-+    g_assert_cmpuint(datasize, ==, 2);
-+    g_assert_cmpuint(nscratch, ==, 1);
- 
-     qtest_quit(qts);
- }
- 
-+/*
-+ * Test: ABSTRACTCS config fields (datacount, progbufsize).
-+ */
- static void test_abstractcs_config(void)
- {
-     QTestState *qts = qtest_init("-machine virt");
--    uint32_t acs;
--
-     dm_set_active(qts);
--    acs = dm_read(qts, A_ABSTRACTCS);
- 
-+    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
-+
-+    /* Default datacount = 2 */
-     g_assert_cmpuint(acs & ABSTRACTCS_DATACOUNT_MASK, ==, 2);
--    g_assert_cmpuint((acs & ABSTRACTCS_PROGBUFSIZE_MASK) >>
--                     ABSTRACTCS_PROGBUFSIZE_SHIFT, ==, 8);
-+
-+    /* Default progbufsize = 8 */
-+    uint32_t progbufsize =
-+        (acs & ABSTRACTCS_PROGBUFSIZE_MASK) >> ABSTRACTCS_PROGBUFSIZE_SHIFT;
-+    g_assert_cmpuint(progbufsize, ==, 8);
-+
-+    /* BUSY should be 0 */
-     g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, 0);
- 
-+    /* CMDERR should be 0 */
-+    g_assert_cmpuint(acs & ABSTRACTCS_CMDERR_MASK, ==, 0);
-+
-     qtest_quit(qts);
- }
- 
--static void test_halt_resume(void)
-+/*
-+ * Test: DATA register read/write.
-+ */
-+static void test_data_rw(void)
++static bool tcg_resume_hart_and_run(QTestState *qts)
 +{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    /* Write to DATA0 and DATA1 */
-+    dm_write(qts, A_DATA0, 0xCAFEBABE);
-+    dm_write(qts, A_DATA1, 0x12345678);
-+
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0xCAFEBABE);
-+    g_assert_cmpuint(dm_read(qts, A_DATA1), ==, 0x12345678);
-+
-+    /* Overwrite */
-+    dm_write(qts, A_DATA0, 0x0);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0x0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: PROGBUF register read/write.
-+ */
-+static void test_progbuf_rw(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    /* Write distinct values to progbuf0..3 */
-+    for (int i = 0; i < 4; i++) {
-+        dm_write(qts, A_PROGBUF0 + i * 4, 0xA0000000 | i);
++    if (!tcg_resume_hart(qts)) {
++        return false;
 +    }
 +
-+    for (int i = 0; i < 4; i++) {
-+        g_assert_cmpuint(dm_read(qts, A_PROGBUF0 + i * 4), ==,
-+                         0xA0000000 | (uint32_t)i);
++    g_usleep(TCG_BOOT_US);
++    return true;
++}
+ 
+ /*
+  * Read a register via Access Register abstract command.
+@@ -346,6 +355,62 @@ static bool tcg_abstract_write_reg(QTestState *qts, uint32_t regno,
+  * Write a 64-bit register via Access Register abstract command (aarsize=3).
+  * DATA1 holds high 32 bits, DATA0 holds low 32 bits.
+  */
++static bool tcg_abstract_write_reg64(QTestState *qts, uint32_t regno,
++                                     uint64_t val)
++{
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++    dm_write(qts, A_DATA0, (uint32_t)val);
++    dm_write(qts, A_DATA1, (uint32_t)(val >> 32));
++
++    uint32_t cmd = (0u << 24) |     /* cmdtype = Access Register */
++                   (1u << 17) |     /* transfer = 1 */
++                   (1u << 16) |     /* write = 1 */
++                   (3u << 20) |     /* aarsize = 64-bit */
++                   (regno & 0xFFFF);
++    dm_write(qts, A_COMMAND, cmd);
++
++    if (!tcg_wait_for_cmd_done(qts)) {
++        return false;
 +    }
 +
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: Read-only register protection (DMSTATUS, HARTINFO, HALTSUM).
-+ */
-+static void test_ro_registers(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    uint32_t orig_status = dm_read(qts, A_DMSTATUS);
-+
-+    /* Try to write DMSTATUS - should be ignored (RO) */
-+    dm_write(qts, A_DMSTATUS, 0xFFFFFFFF);
-+    g_assert_cmpuint(dm_read(qts, A_DMSTATUS), ==, orig_status);
-+
-+    /* Try to write HARTINFO - should be ignored (RO) */
-+    uint32_t orig_hartinfo = dm_read(qts, A_HARTINFO);
-+    dm_write(qts, A_HARTINFO, 0xFFFFFFFF);
-+    g_assert_cmpuint(dm_read(qts, A_HARTINFO), ==, orig_hartinfo);
-+
-+    /* Try to write HALTSUM0 - should be ignored (RO) */
-+    uint32_t orig_haltsum0 = dm_read(qts, A_HALTSUM0);
-+    dm_write(qts, A_HALTSUM0, 0xFFFFFFFF);
-+    g_assert_cmpuint(dm_read(qts, A_HALTSUM0), ==, orig_haltsum0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: W1C (Write-1-to-Clear) behavior on ABSTRACTCS.CMDERR.
-+ */
-+static void test_abstractcs_w1c(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    /*
-+     * CMDERR is 0 initially. To test W1C, we need to trigger an error.
-+     * Issue an invalid command (cmdtype=0xFF) to a running hart.
-+     * This should set CMDERR to HALTRESUME (4) since hart is not halted.
-+     */
-+    dm_write(qts, A_COMMAND, 0xFF000000);
-+
 +    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
-+    uint32_t cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
-+    g_assert_cmpuint(cmderr, !=, 0);
++    return !(acs & ABSTRACTCS_CMDERR_MASK);
++}
 +
-+    /* Clear CMDERR by writing 1s to the CMDERR field */
++/*
++ * Read a 64-bit register via Access Register abstract command (aarsize=3).
++ * DATA0 holds low 32 bits, DATA1 holds high 32 bits.
++ */
++static bool tcg_abstract_read_reg64(QTestState *qts, uint32_t regno,
++                                    uint64_t *val)
++{
 +    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
 +
-+    acs = dm_read(qts, A_ABSTRACTCS);
-+    cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
-+    g_assert_cmpuint(cmderr, ==, 0);
++    uint32_t cmd = (0u << 24) |     /* cmdtype = Access Register */
++                   (1u << 17) |     /* transfer = 1 */
++                   (3u << 20) |     /* aarsize = 64-bit */
++                   (regno & 0xFFFF);
++    dm_write(qts, A_COMMAND, cmd);
 +
-+    qtest_quit(qts);
++    if (!tcg_wait_for_cmd_done(qts)) {
++        return false;
++    }
++
++    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
++    if (acs & ABSTRACTCS_CMDERR_MASK) {
++        return false;
++    }
++
++    uint32_t lo = dm_read(qts, A_DATA0);
++    uint32_t hi = dm_read(qts, A_DATA1);
++    *val = ((uint64_t)hi << 32) | lo;
++    return true;
 +}
 +
-+/*
-+ * Test: Hart selection via DMCONTROL.hartsel.
-+ * Select a nonexistent hart and verify DMSTATUS reports it.
-+ */
-+static void test_hart_selection(void)
++static bool is_rv64(void)
 +{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    /* Default hart 0 is selected and should be running */
-+    uint32_t status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
-+    g_assert_cmpuint(status & DMSTATUS_ANYNONEXISTENT, ==, 0);
-+
-+    /* Select nonexistent hart 99 */
-+    uint32_t ctl = DMCONTROL_DMACTIVE |
-+                   (99u << DMCONTROL_HARTSELLO_SHIFT);
-+    dm_write(qts, A_DMCONTROL, ctl);
-+
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ANYNONEXISTENT, ==,
-+                     DMSTATUS_ANYNONEXISTENT);
-+    g_assert_cmpuint(status & DMSTATUS_ALLNONEXISTENT, ==,
-+                     DMSTATUS_ALLNONEXISTENT);
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, 0);
-+
-+    /* Switch back to hart 0 */
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE);
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
-+    g_assert_cmpuint(status & DMSTATUS_ANYNONEXISTENT, ==, 0);
-+
-+    qtest_quit(qts);
++    return strstr(qtest_get_arch(), "64") != NULL;
 +}
-+
-+/*
-+ * Test: DMCONTROL WARZ (Write-Any-Read-Zero) fields.
-+ * HALTREQ, RESUMEREQ, ACKHAVERESET etc. should not read back.
-+ */
-+static void test_dmcontrol_warz(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    /* Write HALTREQ | DMACTIVE */
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
-+
-+    /* HALTREQ should not read back */
-+    uint32_t ctl = dm_read(qts, A_DMCONTROL);
-+    g_assert_cmpuint(ctl & DMCONTROL_HALTREQ, ==, 0);
-+
-+    /* DMACTIVE should still be set */
-+    g_assert_cmpuint(ctl & DMCONTROL_DMACTIVE, ==, DMCONTROL_DMACTIVE);
-+
-+    /* Write RESUMEREQ | DMACTIVE */
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_RESUMEREQ);
-+    ctl = dm_read(qts, A_DMCONTROL);
-+    g_assert_cmpuint(ctl & DMCONTROL_RESUMEREQ, ==, 0);
-+
-+    /* Write ACKHAVERESET | DMACTIVE */
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_ACKHAVERESET);
-+    ctl = dm_read(qts, A_DMCONTROL);
-+    g_assert_cmpuint(ctl & DMCONTROL_ACKHAVERESET, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: HARTRESET is implemented and reads back while asserted.
-+ */
-+static void test_hartreset(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    uint32_t ctl, status;
-+
-+    dm_set_active(qts);
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HARTRESET);
-+    ctl = dm_read(qts, A_DMCONTROL);
-+    g_assert_cmpuint(ctl & DMCONTROL_HARTRESET, ==, DMCONTROL_HARTRESET);
-+
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ANYHAVERESET, ==,
-+                     DMSTATUS_ANYHAVERESET);
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE);
-+    ctl = dm_read(qts, A_DMCONTROL);
-+    g_assert_cmpuint(ctl & DMCONTROL_HARTRESET, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: NDMRESET gates non-DMCONTROL accesses and exposes only pending state.
-+ */
-+static void test_ndmreset_gate(void)
- {
-     QTestState *qts = qtest_init("-machine virt");
-     uint32_t status;
  
-     dm_set_active(qts);
-+    dm_write(qts, A_DATA0, 0xDEADBEEF);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0xDEADBEEF);
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_NDMRESET);
-+
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status, ==, DMSTATUS_NDMRESETPENDING);
-+
-+    dm_write(qts, A_DATA0, 0x11223344);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0);
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE);
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_NDMRESETPENDING, ==, 0);
-+    g_assert_cmpuint(status & DMSTATUS_ANYHAVERESET, ==,
-+                     DMSTATUS_ANYHAVERESET);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: Optional registers that are not implemented read as 0 and ignore
-+ * writes.
-+ */
-+static void test_optional_regs_absent(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+
-+    dm_set_active(qts);
-+
-+    dm_write(qts, A_AUTHDATA, 0xFFFFFFFF);
-+    g_assert_cmpuint(dm_read(qts, A_AUTHDATA), ==, 0);
-+
-+    dm_write(qts, A_DMCS2, 0xFFFFFFFF);
-+    g_assert_cmpuint(dm_read(qts, A_DMCS2), ==, 0);
-+
-+    dm_write(qts, A_SBADDRESS0, 0xFFFFFFFF);
-+    dm_write(qts, A_SBADDRESS1, 0xFFFFFFFF);
-+    dm_write(qts, A_SBADDRESS2, 0xFFFFFFFF);
-+    dm_write(qts, A_SBDATA0, 0xAAAAAAAA);
-+    dm_write(qts, A_SBDATA1, 0xBBBBBBBB);
-+    dm_write(qts, A_SBDATA2, 0xCCCCCCCC);
-+    dm_write(qts, A_SBDATA3, 0xDDDDDDDD);
-+
-+    g_assert_cmpuint(dm_read(qts, A_SBADDRESS0), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_SBADDRESS1), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_SBADDRESS2), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_SBDATA0), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_SBDATA1), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_SBDATA2), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_SBDATA3), ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: Deactivation resets all state.
-+ */
-+static void test_deactivate(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+
-+    /* Activate and write some data */
-+    dm_set_active(qts);
-+    dm_write(qts, A_DATA0, 0xDEADBEEF);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0xDEADBEEF);
-+
-+    /* Deactivate: clear dmactive */
-+    dm_write(qts, A_DMCONTROL, 0);
-+
-+    /* All registers should return 0 again */
-+    g_assert_cmpuint(dm_read(qts, A_DMSTATUS), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0);
-+    g_assert_cmpuint(dm_read(qts, A_ABSTRACTCS), ==, 0);
-+
-+    /* Re-activate: verify state was reset */
-+    dm_set_active(qts);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0);
-+
-+    uint32_t status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_VERSION_MASK, ==, 3);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: ACKHAVERESET clears havereset in DMSTATUS.
-+ */
-+static void test_ackhavereset(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    /* After reset, havereset should be set */
-+    uint32_t status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ANYHAVERESET, ==,
-+                     DMSTATUS_ANYHAVERESET);
-+
-+    /* Acknowledge havereset */
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_ACKHAVERESET);
-+
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ANYHAVERESET, ==, 0);
-+    g_assert_cmpuint(status & DMSTATUS_ALLHAVERESET, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: Halt and resume cycle via ROM simulation.
-+ *
-+ * Simulates the full halt/resume flow:
-+ * 1. Debugger writes HALTREQ → DM signals halt IRQ
-+ * 2. CPU enters debug mode → ROM entry code writes mhartid to HARTID offset
-+ * 3. DM recognizes hart as halted (anyhalted/allhalted set)
-+ * 4. Debugger writes RESUMEREQ → DM sets FLAGS to RESUME
-+ * 5. CPU ROM resume handler writes hartid to RESUME offset → dret
-+ * 6. DM recognizes hart as resumed (resumeack set, running)
-+ */
-+static void test_halt_resume(void)
-+{
-+    QTestState *qts = qtest_init("-machine virt");
-+    dm_set_active(qts);
-+
-+    uint32_t status;
-+
-     status = dm_read(qts, A_DMSTATUS);
--    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==,
--                     DMSTATUS_ANYRUNNING);
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
-     g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, 0);
- 
-     dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
-     sim_cpu_halt_ack(qts, 0);
- 
-     status = dm_read(qts, A_DMSTATUS);
--    g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==,
--                     DMSTATUS_ANYHALTED);
--    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==,
--                     DMSTATUS_ALLHALTED);
-+    g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, DMSTATUS_ANYHALTED);
-+    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
-     g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, 0);
-     g_assert_cmpuint(status & DMSTATUS_ALLRUNNING, ==, 0);
- 
-@@ -185,10 +665,8 @@ static void test_halt_resume(void)
-                      DMSTATUS_ANYRESUMEACK);
-     g_assert_cmpuint(status & DMSTATUS_ALLRESUMEACK, ==,
-                      DMSTATUS_ALLRESUMEACK);
--    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==,
--                     DMSTATUS_ANYRUNNING);
--    g_assert_cmpuint(status & DMSTATUS_ALLRUNNING, ==,
--                     DMSTATUS_ALLRUNNING);
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
-+    g_assert_cmpuint(status & DMSTATUS_ALLRUNNING, ==, DMSTATUS_ALLRUNNING);
-     g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, 0);
- 
+ /*
+  * Test: dmactive gate.
+@@ -1275,6 +1340,475 @@ static void test_tcg_command_ignored_on_cmderr(void)
      qtest_quit(qts);
-@@ -202,6 +680,17 @@ int main(int argc, char *argv[])
-     qtest_add_func("/riscv-dm/dmstatus", test_dmstatus);
-     qtest_add_func("/riscv-dm/hartinfo", test_hartinfo);
-     qtest_add_func("/riscv-dm/abstractcs-config", test_abstractcs_config);
-+    qtest_add_func("/riscv-dm/data-rw", test_data_rw);
-+    qtest_add_func("/riscv-dm/progbuf-rw", test_progbuf_rw);
-+    qtest_add_func("/riscv-dm/ro-registers", test_ro_registers);
-+    qtest_add_func("/riscv-dm/abstractcs-w1c", test_abstractcs_w1c);
-+    qtest_add_func("/riscv-dm/hart-selection", test_hart_selection);
-+    qtest_add_func("/riscv-dm/dmcontrol-warz", test_dmcontrol_warz);
-+    qtest_add_func("/riscv-dm/hartreset", test_hartreset);
-+    qtest_add_func("/riscv-dm/ndmreset-gate", test_ndmreset_gate);
-+    qtest_add_func("/riscv-dm/optional-regs-absent", test_optional_regs_absent);
-+    qtest_add_func("/riscv-dm/deactivate", test_deactivate);
-+    qtest_add_func("/riscv-dm/ackhavereset", test_ackhavereset);
-     qtest_add_func("/riscv-dm/halt-resume", test_halt_resume);
+ }
+ 
++/*
++ * Test: Single-step via DM.
++ *
++ * Verifies the Sdext single-step mechanism end-to-end:
++ * 1. Halt the hart via HALTREQ
++ * 2. Read DPC (save initial PC)
++ * 3. Set DCSR.step = 1 via abstract command
++ * 4. Resume the hart → CPU executes one instruction → re-enters debug mode
++ * 5. Verify DCSR.cause = STEP (4)
++ * 6. Verify DPC advanced from the initial value
++ * 7. Step again to confirm repeatability
++ * 8. Clear DCSR.step, resume, verify hart stays running
++ */
++static void test_tcg_single_step(void)
++{
++    QTestState *qts = tcg_dm_init();
++
++    /* Step 1: Halt the hart */
++    g_assert_true(tcg_halt_hart(qts));
++    uint32_t status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
++
++    /* Step 2: Read initial DPC */
++    uint32_t dpc0;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &dpc0));
++    g_test_message("initial DPC = 0x%08x", dpc0);
++
++    /* Step 3: Set DCSR.step = 1 */
++    uint32_t dcsr;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    g_test_message("DCSR before step = 0x%08x", dcsr);
++    dcsr |= DCSR_STEP;
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_DCSR, dcsr));
++
++    /* Verify step bit is set */
++    uint32_t dcsr_check;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr_check));
++    g_assert_cmpuint(dcsr_check & DCSR_STEP, ==, DCSR_STEP);
++
++    /* Step 4: Resume → hart executes one instruction → re-halts */
++    g_assert_true(tcg_resume_hart_and_run(qts));
++    g_assert_true(tcg_wait_for_halt(qts));
++
++    /* Step 5: Verify DCSR.cause = STEP (4) */
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    uint32_t cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
++    g_test_message("DCSR after step = 0x%08x, cause = %u", dcsr, cause);
++    g_assert_cmpuint(cause, ==, DCSR_CAUSE_STEP);
++
++    /* Step 6: Verify DPC advanced */
++    uint32_t dpc1;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &dpc1));
++    g_test_message("DPC after step = 0x%08x", dpc1);
++    g_assert_cmpuint(dpc1, !=, dpc0);
++
++    /* Step 7: Step again to confirm repeatability */
++    uint32_t dpc_prev = dpc1;
++    g_assert_true(tcg_resume_hart_and_run(qts));
++    g_assert_true(tcg_wait_for_halt(qts));
++
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
++    g_assert_cmpuint(cause, ==, DCSR_CAUSE_STEP);
++
++    uint32_t dpc2;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &dpc2));
++    g_test_message("DPC after 2nd step = 0x%08x", dpc2);
++    g_assert_cmpuint(dpc2, !=, dpc_prev);
++
++    /* Step 8: Clear step bit, resume, verify hart stays running */
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    dcsr &= ~DCSR_STEP;
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_DCSR, dcsr));
++
++    g_assert_true(tcg_resume_hart(qts));
++
++    /* Give CPU time to run freely, then verify it's still running */
++    g_usleep(TCG_BOOT_US);
++    status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
++    g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, 0);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: POSTEXEC completes via the implicit ebreak after Program Buffer.
++ */
++static void test_tcg_postexec_impebreak(void)
++{
++    QTestState *qts = tcg_dm_init();
++    uint32_t cmd, acs, status;
++
++    g_assert_true(tcg_halt_hart(qts));
++
++    for (int i = 0; i < 8; i++) {
++        dm_write(qts, A_PROGBUF0 + i * 4, 0x00000013);
++    }
++
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++
++    cmd = (0u << 24) | (1u << 18);
++    dm_write(qts, A_COMMAND, cmd);
++
++    g_assert_true(tcg_wait_for_cmd_done(qts));
++
++    acs = dm_read(qts, A_ABSTRACTCS);
++    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, 0);
++    g_assert_cmpuint(acs & ABSTRACTCS_CMDERR_MASK, ==, 0);
++
++    status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: POSTEXEC illegal instruction in Program Buffer.
++ *
++ * The hart is in Debug Mode and executes Program Buffer from DM ROM.
++ * If the first progbuf instruction is illegal, CPU should vector to the
++ * DM ROM exception entry and DM should latch CMDERR=EXCEPTION.
++ */
++static void test_tcg_postexec_exception(void)
++{
++    QTestState *qts = tcg_dm_init();
++    uint32_t cmd, acs, cmderr, status;
++
++    g_assert_true(tcg_halt_hart(qts));
++
++    /* 0x00000000 is an illegal instruction encoding. */
++    dm_write(qts, A_PROGBUF0, 0x00000000);
++    for (int i = 1; i < 8; i++) {
++        dm_write(qts, A_PROGBUF0 + i * 4, 0x00000013);
++    }
++
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++
++    cmd = (0u << 24) | (1u << 18);
++    dm_write(qts, A_COMMAND, cmd);
++
++    g_assert_true(tcg_wait_for_cmd_done(qts));
++
++    acs = dm_read(qts, A_ABSTRACTCS);
++    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, 0);
++    cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    g_assert_cmpuint(cmderr, ==, 3);
++
++    status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
++
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: Trigger with action=debug_mode halts the hart via DM.
++ *
++ * Configures an mcontrol (type 2) trigger on the current DPC address with
++ * action=1 (enter debug mode).  After resume the CPU hits the trigger and
++ * re-enters debug mode.  Verifies DCSR.cause = TRIGGER and DPC matches.
++ */
++static void test_tcg_trigger_debug_mode(void)
++{
++    QTestState *qts = tcg_dm_init();
++    bool rv64 = is_rv64();
++    const uint64_t code_addr = 0x80400000ULL;
++    const uint32_t nop_insn = 0x00000013;
++    const uint32_t loop_insn = 0x0000006f;
++
++    /* Halt the hart */
++    g_assert_true(tcg_halt_hart(qts));
++
++    /*
++     * Use a fixed code location so the test does not depend on where the CPU
++     * happened to be halted during boot.
++     */
++    qtest_writel(qts, code_addr, nop_insn);
++    qtest_writel(qts, code_addr + 4, loop_insn);
++
++    uint64_t dpc = code_addr;
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_DPC, dpc));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_DPC, (uint32_t)dpc));
++    }
++    g_test_message("DPC before trigger = 0x%lx", (unsigned long)dpc);
++
++    /* Select trigger 1 to verify non-zero trigger index handling */
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_TSELECT, 1));
++
++    /*
++     * Configure mcontrol type 2 trigger:
++     * - type=2, action=1 (DBG_ACTION_DBG_MODE)
++     * - match on EXEC in M/S/U modes
++     * - exact address match (match=0)
++     *
++     * On RV64 the type field is at bits[63:60] and tdata2 is 64-bit,
++     * so both require 64-bit abstract commands to avoid sign-extension.
++     */
++    uint64_t tdata1_lo = TDATA1_TYPE2_ACTION_DBG |
++                         TDATA1_TYPE2_M | TDATA1_TYPE2_S | TDATA1_TYPE2_U |
++                         TDATA1_TYPE2_EXEC;
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA2, dpc));
++        uint64_t tdata1_64 = (2ULL << 60) | tdata1_lo;
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA1, tdata1_64));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA2, (uint32_t)dpc));
++        uint32_t tdata1 = TDATA1_TYPE2_TYPE | (uint32_t)tdata1_lo;
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA1, tdata1));
++    }
++
++    /* Verify trigger configuration was accepted (low 32 bits) */
++    uint32_t td1_rb;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_TDATA1, &td1_rb));
++    g_test_message("tdata1 readback low = 0x%08x", td1_rb);
++    g_assert_cmpuint(td1_rb & TDATA1_TYPE2_EXEC, ==, TDATA1_TYPE2_EXEC);
++
++    /* Resume -> CPU tries to execute at DPC -> trigger fires -> debug mode */
++    g_assert_true(tcg_resume_hart_and_run(qts));
++    g_assert_true(tcg_wait_for_halt(qts));
++
++    /* Verify DCSR.cause = TRIGGER (2) */
++    uint32_t dcsr;
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    uint32_t cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
++    g_test_message("DCSR after trigger = 0x%08x, cause = %u", dcsr, cause);
++    g_assert_cmpuint(cause, ==, DCSR_CAUSE_TRIGGER);
++
++    /* Verify DPC is the trigger address */
++    uint64_t dpc_after;
++    if (rv64) {
++        g_assert_true(tcg_abstract_read_reg64(qts, REGNO_DPC, &dpc_after));
++    } else {
++        uint32_t tmp;
++        g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &tmp));
++        dpc_after = tmp;
++    }
++    g_test_message("DPC after trigger = 0x%lx", (unsigned long)dpc_after);
++    g_assert_cmpuint(dpc_after, ==, dpc);
++
++    /* Disable trigger: write tdata1 with type=2 but no EXEC/LOAD/STORE bits */
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_TSELECT, 1));
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA1,
++                                                2ULL << 60));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA1,
++                                              TDATA1_TYPE2_TYPE));
++    }
++
++    /*
++     * Advance DPC past the trigger address so resume doesn't re-trigger.
++     * The loop instruction keeps the hart running at a stable address.
++     */
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_DPC, dpc + 4));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_DPC,
++                                              (uint32_t)(dpc + 4)));
++    }
++
++    /* Resume and verify hart stays running */
++    g_assert_true(tcg_resume_hart(qts));
++    g_usleep(TCG_BOOT_US);
++    uint32_t status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
++    g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, 0);
++
++    qtest_quit(qts);
++}
++
++
++static void test_tcg_watchpoint_trigger_debug_mode(bool store)
++{
++    QTestState *qts = tcg_dm_init();
++    bool rv64 = is_rv64();
++    const uint64_t code_addr = 0x80400000ULL;
++    const uint64_t data_addr = 0x80401000ULL;
++    const uint32_t load_insn = 0x0002a383;  /* lw x7, 0(x5) */
++    const uint32_t store_insn = 0x0062a023; /* sw x6, 0(x5) */
++    const uint32_t loop_insn = 0x0000006f;  /* j . */
++    const uint32_t data_init = 0x11223344;
++    const uint32_t store_val = 0x55667788;
++    const uint32_t trigger_idx = store ? 3 : 2;
++    uint32_t dcsr, cause, status;
++    uint64_t tdata1_lo = TDATA1_TYPE2_ACTION_DBG |
++                         TDATA1_TYPE2_M | TDATA1_TYPE2_S | TDATA1_TYPE2_U |
++                         (store ? TDATA1_TYPE2_STORE : TDATA1_TYPE2_LOAD);
++
++    g_assert_true(tcg_halt_hart(qts));
++
++    qtest_writel(qts, code_addr, store ? store_insn : load_insn);
++    qtest_writel(qts, code_addr + 4, loop_insn);
++    qtest_writel(qts, data_addr, data_init);
++
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_GPR(5), data_addr));
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_GPR(6), store_val));
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_GPR(7), 0));
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_DPC, code_addr));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_GPR(5),
++                                             (uint32_t)data_addr));
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_GPR(6), store_val));
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_GPR(7), 0));
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_DPC,
++                                             (uint32_t)code_addr));
++    }
++
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_TSELECT, trigger_idx));
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA2, data_addr));
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA1,
++                                               (2ULL << 60) | tdata1_lo));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA2,
++                                             (uint32_t)data_addr));
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA1,
++                                             TDATA1_TYPE2_TYPE |
++                                             (uint32_t)tdata1_lo));
++    }
++
++    g_assert_true(tcg_resume_hart_and_run(qts));
++    g_assert_true(tcg_wait_for_halt(qts));
++
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
++    g_assert_cmpuint(cause, ==, DCSR_CAUSE_TRIGGER);
++
++    if (rv64) {
++        uint64_t dpc;
++        g_assert_true(tcg_abstract_read_reg64(qts, REGNO_DPC, &dpc));
++        g_assert_cmpuint(dpc, ==, code_addr);
++    } else {
++        uint32_t dpc;
++        g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &dpc));
++        g_assert_cmpuint(dpc, ==, (uint32_t)code_addr);
++    }
++
++    if (store) {
++        g_assert_cmpuint(qtest_readl(qts, data_addr), ==, data_init);
++    }
++
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_TSELECT, trigger_idx));
++    if (rv64) {
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA1, 2ULL << 60));
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_DPC, code_addr));
++    } else {
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA1,
++                                             TDATA1_TYPE2_TYPE));
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_DPC,
++                                             (uint32_t)code_addr));
++    }
++
++    g_assert_true(tcg_resume_hart(qts));
++    g_usleep(TCG_BOOT_US);
++
++    if (store) {
++        g_assert_cmpuint(qtest_readl(qts, data_addr), ==, store_val);
++        status = dm_read(qts, A_DMSTATUS);
++        g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
++    } else {
++        uint64_t load_val;
++
++        g_assert_true(tcg_halt_hart(qts));
++        if (rv64) {
++            g_assert_true(tcg_abstract_read_reg64(qts, REGNO_GPR(7),
++                                                  &load_val));
++        } else {
++            uint32_t tmp;
++
++            g_assert_true(tcg_abstract_read_reg(qts, REGNO_GPR(7), &tmp));
++            load_val = tmp;
++        }
++        g_assert_cmpuint(load_val, ==, data_init);
++        status = dm_read(qts, A_DMSTATUS);
++        g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_tcg_load_trigger_debug_mode(void)
++{
++    test_tcg_watchpoint_trigger_debug_mode(false);
++}
++
++static void test_tcg_store_trigger_debug_mode(void)
++{
++    test_tcg_watchpoint_trigger_debug_mode(true);
++}
++
++/*
++ * Test: itrigger with action=debug_mode enters Debug Mode.
++ *
++ * Configures an itrigger with count=1 so the hart executes one instruction,
++ * re-enters debug mode with cause=TRIGGER, and clears the count.
++ */
++static void test_tcg_itrigger_debug_mode(void)
++{
++    QTestState *qts = tcg_dm_init();
++    bool rv64 = is_rv64();
++    uint64_t dpc;
++    uint64_t dpc_after;
++    uint64_t tdata1;
++    uint32_t dcsr;
++    uint32_t status;
++    uint32_t cause;
++
++    g_assert_true(tcg_halt_hart(qts));
++    g_assert_true(tcg_abstract_write_reg(qts, REGNO_TSELECT, 1));
++
++    if (rv64) {
++        g_assert_true(tcg_abstract_read_reg64(qts, REGNO_DPC, &dpc));
++        tdata1 = (3ULL << 60) |
++                 TDATA1_ITRIGGER_ACTION_DBG |
++                 TDATA1_ITRIGGER_U |
++                 TDATA1_ITRIGGER_S |
++                 TDATA1_ITRIGGER_M |
++                 TDATA1_ITRIGGER_COUNT(1);
++        g_assert_true(tcg_abstract_write_reg64(qts, REGNO_TDATA1, tdata1));
++    } else {
++        uint32_t tmp;
++
++        g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &tmp));
++        dpc = tmp;
++        tdata1 = TDATA1_ITRIGGER_TYPE |
++                 TDATA1_ITRIGGER_ACTION_DBG |
++                 TDATA1_ITRIGGER_U |
++                 TDATA1_ITRIGGER_S |
++                 TDATA1_ITRIGGER_M |
++                 TDATA1_ITRIGGER_COUNT(1);
++        g_assert_true(tcg_abstract_write_reg(qts, REGNO_TDATA1,
++                                             (uint32_t)tdata1));
++    }
++
++    g_assert_true(tcg_resume_hart(qts));
++    g_assert_true(tcg_wait_for_halt(qts));
++
++    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
++    cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
++    g_assert_cmpuint(cause, ==, DCSR_CAUSE_TRIGGER);
++
++    if (rv64) {
++        g_assert_true(tcg_abstract_read_reg64(qts, REGNO_DPC, &dpc_after));
++        g_assert_true(tcg_abstract_read_reg64(qts, REGNO_TDATA1, &tdata1));
++    } else {
++        uint32_t tmp;
++
++        g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &tmp));
++        dpc_after = tmp;
++        g_assert_true(tcg_abstract_read_reg(qts, REGNO_TDATA1, &tmp));
++        tdata1 = tmp;
++    }
++
++    g_assert_cmpuint(dpc_after, !=, dpc);
++    g_assert_cmpuint(tdata1 & TDATA1_ITRIGGER_COUNT_MASK, ==, 0);
++
++    g_assert_true(tcg_resume_hart(qts));
++    g_usleep(TCG_BOOT_US);
++    status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, DMSTATUS_ANYRUNNING);
++    g_assert_cmpuint(status & DMSTATUS_ANYHALTED, ==, 0);
++
++    qtest_quit(qts);
++}
+ 
+ /*
+  * Test: Halt and resume cycle via ROM simulation.
+@@ -1362,6 +1896,19 @@ int main(int argc, char *argv[])
+     qtest_add_func("/riscv-dm/rv32-gpr64-notsup", test_rv32_gpr64_notsup);
+     qtest_add_func("/riscv-dm/tcg/command-ignored-on-cmderr",
+                    test_tcg_command_ignored_on_cmderr);
++    qtest_add_func("/riscv-dm/tcg/single-step", test_tcg_single_step);
++    qtest_add_func("/riscv-dm/tcg/postexec-impebreak",
++                   test_tcg_postexec_impebreak);
++    qtest_add_func("/riscv-dm/tcg/postexec-exception",
++                   test_tcg_postexec_exception);
++    qtest_add_func("/riscv-dm/tcg/trigger-debug-mode",
++                   test_tcg_trigger_debug_mode);
++    qtest_add_func("/riscv-dm/tcg/load-trigger-debug-mode",
++                   test_tcg_load_trigger_debug_mode);
++    qtest_add_func("/riscv-dm/tcg/store-trigger-debug-mode",
++                   test_tcg_store_trigger_debug_mode);
++    qtest_add_func("/riscv-dm/tcg/itrigger-debug-mode",
++                   test_tcg_itrigger_debug_mode);
  
      return g_test_run();
+ }
 -- 
 2.53.0
 
