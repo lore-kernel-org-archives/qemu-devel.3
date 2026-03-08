@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0804EA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA75AEA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMn4-0008P6-CL; Sun, 08 Mar 2026 18:40:02 -0400
+	id 1vzMn8-0000Uc-Gk; Sun, 08 Mar 2026 18:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMn1-0007yb-A3
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:39:59 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMn7-0000QD-GO
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:40:05 -0400
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMmz-0003of-RR
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:39:59 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMn5-0003pU-Mk
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:40:05 -0400
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso5627075e9.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:39:56 -0700 (PDT)
+ 5b1f17b1804b1-4837f27cf2dso102169915e9.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009595; x=1773614395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009602; x=1773614402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+6XuEcNraxH7BH41Yk9P7HZEnHj+sBykaCOA3JVPxYc=;
- b=i968ZE+b7WGRDEThnNOwDgvJMiztYuXKznp+jibHGtYUDPR2bPXcQTtfvztkn4D1ez
- jlDzv2GaB8J4bDzPpucDkT+XouTg/izjBFaOB+RkrgW4/H7EORwDxkFG8yDt7Q29K4M0
- 8Cp98x5s++PuwqxhxK8+vkIN0YX2w7+pZkhMoWGc5jEVEfyJIZQrBMo4P/as0BBHm0Fe
- o/KmUwZBdDfa6/NeuoeouBDzJhD7TlIhk/9c5KWtT25GXjhGjIRetretXMF0v0GztvBA
- G73sE5kFwGa9jgvkuJAANRabm8o4fWoqQeHIMQ2HXcecWciCUXiz2mJqzZT4j8vZob7J
- czDg==
+ :reply-to; bh=8DwSG/tB/iXvNNLgKPuBzabsRMX6X8tCIczGBV0fYKM=;
+ b=XM32t1Ooqh9qfty3JO9aQi6pifT1dmjnxvnUpXcsHNhcZF/O9nYvs++njfpS4KXQAh
+ O9b/fHWFIBks70uiqjgh2tn8FgabpxcRH+frTLDaIJii20xik3HME3g64yuf7ipiUd+j
+ u8sotr9tls3Y82fhNBRAyI9QgRjY6QbDZ8SSLsBUI9XS+C5PU38653t5JcKKkmvl08h4
+ LYZdZBIW/ajUo/5Ovnau1IiK4yYYdZHvmbcFhEsQaRKE7d04oUmtJrp/Upl7qfE82V2u
+ ZdFjtay3W7+EfzBtldsQgeqY9MgKpEtl8X2AFKJjHXsI31oFNAM8mNjAsXM2A3ohxN4Q
+ Czlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009595; x=1773614395;
+ d=1e100.net; s=20230601; t=1773009602; x=1773614402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+6XuEcNraxH7BH41Yk9P7HZEnHj+sBykaCOA3JVPxYc=;
- b=gu5xgfGzB2u1fa4INfeiD3S5kssfTrJAiKprW1CianeUqtWAIyuuoP49cw8EiLtnr/
- ve8y4NmoXm9apOmOnnmSoEx+2kYIlUD9/C1q2UwzZiUessatWscS9+zp0KUWvvxU/0Y2
- KbSzx7IRyz8WkF+NI9er1Qaee0QCwq7mpz8v0QyUqHJ+WnyyLkBDYfZZKFfUjonLfGwA
- EaLaK423sjryx6q3MiwyFku25OfFWXNG9AhSmF8faKcazcz2enhw7svKQ4xiX3X18hFT
- aIvIzNUgW18uoGNK963tTALBnC1NyThCDXa/uBZ7M33SujUjPuDg903r4/i4PsOct/B/
- fQzw==
-X-Gm-Message-State: AOJu0YywzwnicukdbMTPIINx7exsLPNMRBZ6nnbqjBvy/aiW9UWy9HF3
- 3LNMjQNA70vqNxGpXxhef9aziehUw0cMKdP3CuirCIvURDiYpQDP4a+qwsggfihYOB8L2v+afuZ
- ZMxt57bc=
-X-Gm-Gg: ATEYQzz+JO1MW9d+ockFJ2k+Sif5CvsomD6CROJMJNW4q3wQumSzgxifLL3tGxYUIDA
- 0ADLXhA9Fh/02NtJe6jXJYDpzUC1p3c5JNmHdDivIEYl/3RhqvbMlE4ET1nnPDPgPScibL+AJf2
- 0pPBGt4T+MeKJpKrDN01UaGWOz0rKQBY/srW0IgzR/NDIYKQpzxzaq7vGJPqKevYbOmM7HkhCdf
- cSuL/R0G8MTD8tOBQ6eGtKWREDgi9Xxmj0448KkFJGVOuGPtp6qtDiWXiB98qmqbfH6+NSmbAmt
- lFpUOp05uyffRrmBhGpf1aum5EFbERdqBJIA4OXR2HLMVSb8w321QrfuJe9ky4z27KZLnbWTinp
- KIH4xY5WukQbCjR3pZ6s9PtaNOyKQulE/umc2JzkGYGnfx8E9sfMMVikVaF35WGd/Pet3uGZMWB
- Emh27niKbhex0r1j+EjViGtLzHUQoW2r0vuTtqgSPKgKfeyu7sbQ/Yy6D/bnk6/H80RusOGbyju
- DMBI8RjRBD/smX+
-X-Received: by 2002:a05:600c:8b2b:b0:477:9890:9ab8 with SMTP id
- 5b1f17b1804b1-48526715213mr136501055e9.3.1773009595151; 
- Sun, 08 Mar 2026 15:39:55 -0700 (PDT)
+ bh=8DwSG/tB/iXvNNLgKPuBzabsRMX6X8tCIczGBV0fYKM=;
+ b=i5zYEPIWzzS9rIfALNf7oOjGfUY/k99j81XXTpeOdx25tF7z2xS5Qp63IzmdT72eUo
+ oab0YdlJ8hBrZS+RzdHJUSpZxo9ZurIpGjWNB3KnL85blXA3hfCPY0NQPHti6/bWw1dk
+ s/92UUD2u2TNnWUZrdiaFYaNwBLaS8ApxpTBxvxhUesmDu0Z5cYSMGJKbtMzJQnw5nsU
+ gm8GD31qaN+aZLffYj6FIziipdxGu13TSnikWhrrcrrGPCiDMumWHMc7lO4w1VGC6r/s
+ Ulsn/7mZ6+XJRtOlCavg9xjgKC+X3v1qY0eJppSo0MYVKwS1GDJ/3yIFkE/eEBE68KN3
+ XRgQ==
+X-Gm-Message-State: AOJu0YxMFwbiaZa33opwvikp2lem3rHc+YoDIXZeHPvkpCtnJmbGR4Eh
+ Lt5hZrRIHWDdG8u6qjxUEqiio1rLMmV/iNHKfzpCOYKiz8NgF76SkYrti5Q99dcDLWJQh2Ct1pg
+ leSA3wWY=
+X-Gm-Gg: ATEYQzyvC+8jCjsJ7965Rj5wDkfIUHsGBrkZ7H4vNAwlMNE6Cj0sf3J0RLuQonh/9Cg
+ UUDZJKwhA2LWbcjmRkbEmEb1c7oNGz3sObMS5EcNTlrvxyiNHyrDMsHVOdAkJi9OB2cAX2ygG9R
+ 4rJwu8++gpFnigPqaYbkxlur2TMHU8juxPNkVtaWvHq4qHmF8M8hczDpqEbU36GOexPXPiLWzoU
+ rQnIhCKufXgKiueDNXhJiLHeM8Ra7qrNBdiX7cqzzd+mqNv61/8cc/3v9mEtK5ksbwYknfPGbHi
+ XQxs/TMt+xiU8tS9CVVSKgTM1Et5tE+rZefNrBKe36jhAaDAlnB1MNWVjN2J3DG4b6iqKfVN8Oa
+ ovIJ8snsmxGfo5Cxkcj+3Hc02VF3mJhDNd2zGsQSOr4fX2lCgnqIGZxGlES6TIgq0s9emVhQl7p
+ NmLmMom5pcy8/5bHFwJv8Y136RwTZxOsqhmMBERhxGHgbCgKdmuJSqNKt/WW7xYgMrnuR5YZMAp
+ YUATQ==
+X-Received: by 2002:a05:600c:5288:b0:485:3af5:7e53 with SMTP id
+ 5b1f17b1804b1-4853af58154mr29535285e9.19.1773009601840; 
+ Sun, 08 Mar 2026 15:40:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853438017bsm139026065e9.0.2026.03.08.15.39.54
+ ffacd0b85a97d-439dae483desm19937614f8f.34.2026.03.08.15.40.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:39:54 -0700 (PDT)
+ Sun, 08 Mar 2026 15:40:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/49] audio/jack: Fix use of qemu_thread_set_name() on macOS
-Date: Sun,  8 Mar 2026 23:34:31 +0100
-Message-ID: <20260308223433.25503-48-philmd@linaro.org>
+Subject: [PULL 48/49] hw/hppa: Avoid leaking a diva-gsp device
+Date: Sun,  8 Mar 2026 23:34:32 +0100
+Message-ID: <20260308223433.25503-49-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
@@ -99,42 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 8f68a33ad46 we get on macOS:
+From: Helge Deller <deller@gmx.de>
 
-  Audio backends
-    CoreAudio support               : YES
-    PipeWire support                : NO
-    JACK support                    : YES 1.9.22
+Create a Diva-gsp unconditionally on all 64-bit PCI machines.
+The A400 usually comes with a Diva card. The C3700 has a built-in
+SUPERIO chip, which we haven't implemented yet, so running with an
+emulated Diva is the best we can do for now.
 
-  ../audio/jackaudio.c:654:12: error: unused function 'qjack_thread_creator' [-Werror,-Wunused-function]
-    654 | static int qjack_thread_creator(jack_native_thread_t *thread,
-        |            ^~~~~~~~~~~~~~~~~~~~
-
-This is simply due to a missing #ifdef'ry change. Update
-so we can use the new qemu_thread_set_name() exposed by
-commit 46255cc2be9.
-
-Fixes: 8f68a33ad46 ("audio: make jackaudio use qemu_thread_set_name")
+Signed-off-by: Helge Deller <deller@gmx.de>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260307195243.8813-2-deller@kernel.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <20260307114923.75394-1-philmd@linaro.org>
 ---
- audio/jackaudio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/machine.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index be6fb378f72..589aecede9a 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -712,7 +712,7 @@ static const TypeInfo audio_types[] = {
- static void __attribute__((__constructor__)) audio_jack_init(void)
- {
-     qemu_mutex_init(&qjack_shutdown_lock);
--#if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-+#if !defined(WIN32)
-     jack_set_thread_creator(qjack_thread_creator);
- #endif
-     jack_set_error_function(qjack_error);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 6b69a304c2a..ec63dc12979 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -382,18 +382,15 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+ 
+     if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
+         /* BMC board: HP Diva GSP PCI card */
+-        dev = qdev_new("diva-gsp");
+-        if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
+-            pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
+-            if (!lasi_dev) {
+-                /* bind default keyboard/serial to Diva card */
+-                qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
+-                qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
+-                qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
+-                qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
+-            }
+-            pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
++        pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
++        if (!lasi_dev) {
++            /* bind default keyboard/serial to Diva card */
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
++            qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
+         }
++        pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
+     }
+ 
+     /* create USB OHCI controller for USB keyboard & mouse on Astro machines */
 -- 
 2.53.0
 
