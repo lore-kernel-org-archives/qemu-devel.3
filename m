@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACAE0EA8549
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5EDEA8549
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzNDz-0007CE-VE; Sun, 08 Mar 2026 19:07:51 -0400
+	id 1vzNF9-0008IY-RK; Sun, 08 Mar 2026 19:09:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNDx-0007Bw-W9
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:07:50 -0400
+ id 1vzNF8-0008I9-4n
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:09:02 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNDw-00087x-BZ
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:07:49 -0400
+ id 1vzNF6-0008A6-DR
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:09:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Ii6yX2+1ACPZVmoh3EuqMeVk0q1w4Zd90bUfdIQjVEs=; b=ctf34xejO/fmwXVnAUy2DA7ksY
- NRlm0QAjaOv1rOuASVUK92Tw+KL165rw/86RNjJseEkA5d8dLFN2j+h6eDXWAJ6kg+XiAU5J4HPVw
- DMspllLARK//KsxYce6HjxmahvjvBWqBdc+V9Rj19CtAgnGHsCvnTKM5F2lmepfA0tc+rBlC4eELV
- dNjEUQ5Ufx6EI8+KFXRBi9IACnsf+gZY7Urq7qlmE6KSMFJHXXzug5dmmiMvtdV/6J+Dj6IBJrAY7
- cHPr7kIZFE7yD7q+YCDpRE/cFTMV8bRQ5XE0NEaeKB5wKinyC9Mi2q6KV/Eb23fV+6GeX98H6P0Tp
- oUw45kZ0NVvvbomNmywVRDIdcjw/lFXvv0X6i6VW0spIcnw3G0jBQiCAHoT8Vq8Ceowbs1M05ch67
- n+h2xujrmwLq1GKhouVbQvoq1zb+Rjl27PbwaovKwt3KgjHscCSvx00VgCJ7xy7I7gI4MubHi+aUm
- quFoLD/0RoawUIWwcMkrbYmsmlRu4R4HSPLY94RZ30fxCvuYjbHyiDmsbAKr24C13x4Zbh5XD4DMC
- hzibklIsDv0mjc4WO13++O1vbC57W0mkx9dz1Sb8YorSLqpjQKraHzPi6tWiYRwWrTUPBA19WvqzN
- DWqqKg3Dpbs28dX16Ml//ZwxUqWuHbo5NT9YaVt/E=;
+ bh=AqeSfDh5QlhdWUEYShzCdR52V/Dc0oQIKl4CE34MReQ=; b=0ywHZ8P6I+c65aF+I0seTxbIAf
+ 3S21d0cyEFmPCLMQ/Gj7NQtN0u/fg7aknEDTvltbByXpT64OqqRzgkI2q3FILByI7Sfr7AQBS/bUH
+ nepcbDw6ctCFsI0QDvUhQZXOKrDp8+LDosfrN0b/vCF3O6laMraVm6bQT4eWd0LKkqMbmW7SZCcvc
+ bQ9UBxgJj0Srv4ScK8UDIewGVQfWDX3PW53D60zjxJO73rBCO4pnS/ndtWvUGIA0UJoAFmcVIV8V1
+ KDakeR46lP2/3FsGcB9DWDED1/SsYAeN062GMjo+eUFeiKx9uTLf3ntFBWOFiXWcd1SwFtjssQN1L
+ tdJwwoWZGLlATxD1CCPOlnQCYXLW+EGAyxM5MGEQzyKwztVHL2UX2/2LcRQJRQudw6y/NGSScFpj3
+ MBygZcpgOsAzMaTRwBjs+Z2wFmRtrfwAmaJz/NJJjsDE5aYevu3OXnPsdr7uzeZaavDnvlVGniKOw
+ r3ZHBr5xi104tjsZumn84V7W747uOMihTJwok3Np/TOe2fJu1mmhtv6OyG2hKHxKQ0Asn5FQnE614
+ zpDYgSgWMLdZAdGzyEud6HOorQiwRFidVJKd+4EFgX9lgWdzddJh29XI0lZIN2Y/yCuRE3w/AMScb
+ AM4Xud4TLxsaqlEO0/d8Nz6yWPCIt2P7L0Vh23AY0=;
 Received: from [2a02:8012:2f01:0:853d:6c6b:2689:bc0e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNB1-0004lS-UX; Sun, 08 Mar 2026 23:04:48 +0000
-Message-ID: <8bf3c2c3-efbb-468f-bbd3-571aaf468bd6@ilande.co.uk>
-Date: Sun, 8 Mar 2026 23:07:45 +0000
+ id 1vzNC9-0004m9-Or; Sun, 08 Mar 2026 23:06:01 +0000
+Message-ID: <28970d39-7284-4ed8-a942-34d7c930681a@ilande.co.uk>
+Date: Sun, 8 Mar 2026 23:08:55 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20260307112931.3322532-1-peter.maydell@linaro.org>
- <20260307112931.3322532-2-peter.maydell@linaro.org>
+ <20260307112931.3322532-3-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,12 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260307112931.3322532-2-peter.maydell@linaro.org>
+In-Reply-To: <20260307112931.3322532-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:853d:6c6b:2689:bc0e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/3] hw/sparc/sun4m: Don't set up dummy cpu interrupts
+Subject: Re: [PATCH 2/3] hw/sparc/sun4m: Use qdev GPIOs rather than
+ qemu_allocate_irqs()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,92 +107,120 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 11:29, Peter Maydell wrote:
 
-> In the sun4m machine init, we set up the cpu_irqs[] array
-> with the real inbound IRQs for each CPU, followed by some
-> dummy IRQs for the remaining slots from smp_cpus up to
-> MAX_CPUS. These dummy IRQs do nothing when set/cleared
-> because the dummy_cpu_set_irq() function does nothing.
+> In the sun4m machine creation code, we currently use qemu_allocate_irqs()
+> to set up the IRQ lines that act as the inbound IRQ lines to the CPUs.
+> This results in a memory leak:
 > 
-> Instead of creating these "do nothing" qemu_irqs, instead
-> pass the number of CPUs to slavio_intctl_init() so that it
-> can only wire up the interrupt controller's interrupts
-> for the CPUs that actually exist. Calling qemu_set_irq()
-> on an irq that isn't connected does nothing, so this is
-> a simpler way to achieve the same result.
+> Direct leak of 128 byte(s) in 1 object(s) allocated from:
+>      #0 0x5a23c1281ec3 in malloc (/home/pm215/qemu/build/sparc-san/qemu-system-sparc+0xdf1ec3) (BuildId: e6aa10be01feb5524656dd083997bc82b85e3e93)
+>      #1 0x79e8f78f0ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x5a23c1a94e54 in qemu_extend_irqs /home/pm215/qemu/build/sparc-san/../../hw/core/irq.c:77:51
+>      #3 0x5a23c1a39e03 in cpu_devinit /home/pm215/qemu/build/sparc-san/../../hw/sparc/sun4m.c:802:17
+>      #4 0x5a23c1a39e03 in sun4m_hw_init /home/pm215/qemu/build/sparc-san/../../hw/sparc/sun4m.c:838:9
 > 
-> This cleanup fixes an unimportant memory leak reported by
-> the address sanitizer that happens because we allocate these
-> dummy IRQs with qemu_allocate_irqs():
+> The leak is unimportant as it is a "once at startup" leak, but
+> fixing it helps in getting a clean leak-sanitizer test run.
 > 
-> Direct leak of 1920 byte(s) in 15 object(s) allocated from:
->      #0 0x5cb7b120cf63 in malloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0bf63) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
->      #1 0x743cd6dc5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x5cb7b1a42fb4 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
->      #3 0x5cb7b19e7e72 in sun4m_hw_init /home/pm215/qemu/build/san/../../hw/sparc/sun4m.c:845:23
->      #4 0x5cb7b141d3dd in machine_run_board_init /home/pm215/qemu/build/san/../../hw/core/machine.c:1709:5
->      #5 0x5cb7b1542895 in qemu_init_board /home/pm215/qemu/build/san/../../system/vl.c:2717:5
->      #6 0x5cb7b1542895 in qmp_x_exit_preconfig /home/pm215/qemu/build/san/../../system/vl.c:2811:5
->      #7 0x5cb7b15493ac in qemu_init /home/pm215/qemu/build/san/../../system/vl.c:3849:9
->      #8 0x5cb7b1f3f201 in main /home/pm215/qemu/build/san/../../system/main.c:71:5
->      #9 0x743cd4a2a1c9 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
->      #10 0x743cd4a2a28a in __libc_start_main csu/../csu/libc-start.c:360:3
->      #11 0x5cb7b1172114 in _start (/home/pm215/qemu/build/san/qemu-system-sparc+0xd71114) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
+> Switch the sun4m code to handle CPU interrupt lines in the same way
+> as the leon3 machine does: the machine init code uses
+> qdev_init_gpio_in to create GPIO lines on the CPU objects.  This is a
+> little bit odd as ideally the CPU would do that itself, but for these
+> 32-bit SPARC machines the machine and the CPU are very closely
+> coupled already (the functions handling the IRQ lines modify data
+> fields inside the CPU).
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/sparc/sun4m.c | 11 +++--------
->   1 file changed, 3 insertions(+), 8 deletions(-)
+>   hw/sparc/sun4m.c | 23 ++++++++++++++---------
+>   1 file changed, 14 insertions(+), 9 deletions(-)
 > 
 > diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-> index a17bdb3692..29bc26ebcb 100644
+> index 29bc26ebcb..b9f8236be5 100644
 > --- a/hw/sparc/sun4m.c
 > +++ b/hw/sparc/sun4m.c
-> @@ -196,10 +196,6 @@ static void cpu_set_irq(void *opaque, int irq, int level)
->       }
->   }
->   
-> -static void dummy_cpu_set_irq(void *opaque, int irq, int level)
-> -{
-> -}
-> -
->   static void sun4m_cpu_reset(void *opaque)
->   {
->       SPARCCPU *cpu = opaque;
-> @@ -344,6 +340,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
->   
+> @@ -341,7 +341,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
 >   static DeviceState *slavio_intctl_init(hwaddr addr,
 >                                          hwaddr addrg,
-> +                                       unsigned int smp_cpus,
->                                          qemu_irq **parent_irq)
+>                                          unsigned int smp_cpus,
+> -                                       qemu_irq **parent_irq)
+> +                                       DeviceState **cpus)
 >   {
 >       DeviceState *dev;
-> @@ -355,7 +352,7 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
->       s = SYS_BUS_DEVICE(dev);
->       sysbus_realize_and_unref(s, &error_fatal);
+>       SysBusDevice *s;
+> @@ -354,7 +354,8 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
 >   
-> -    for (i = 0; i < MAX_CPUS; i++) {
-> +    for (i = 0; i < smp_cpus; i++) {
+>       for (i = 0; i < smp_cpus; i++) {
 >           for (j = 0; j < MAX_PILS; j++) {
->               sysbus_connect_irq(s, i * MAX_PILS + j, parent_irq[i][j]);
+> -            sysbus_connect_irq(s, i * MAX_PILS + j, parent_irq[i][j]);
+> +            sysbus_connect_irq(s, i * MAX_PILS + j,
+> +                               qdev_get_gpio_in_named(cpus[i], "pil", j));
 >           }
-> @@ -841,9 +838,6 @@ static void sun4m_hw_init(MachineState *machine)
->           cpu_devinit(machine->cpu_type, i, hwdef->slavio_base, &cpu_irqs[i]);
+>       }
+>       sysbus_mmio_map(s, 0, addrg);
+> @@ -785,22 +786,25 @@ static const TypeInfo ram_info = {
+>       .class_init    = ram_class_init,
+>   };
+>   
+> -static void cpu_devinit(const char *cpu_type, unsigned int id,
+> -                        uint64_t prom_addr, qemu_irq **cpu_irqs)
+> +static DeviceState *cpu_devinit(const char *cpu_type, unsigned int id,
+> +                                uint64_t prom_addr)
+>   {
+>       SPARCCPU *cpu;
+>       CPUSPARCState *env;
+> +    DeviceState *cpudev;
+>   
+>       cpu = SPARC_CPU(object_new(cpu_type));
+>       env = &cpu->env;
+> +    cpudev = DEVICE(cpu);
+>   
+>       qemu_register_reset(sun4m_cpu_reset, cpu);
+>       object_property_set_bool(OBJECT(cpu), "start-powered-off", id != 0,
+>                                &error_abort);
+> -    qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal);
+> +    qdev_init_gpio_in_named(cpudev, cpu_set_irq, "pil", MAX_PILS);
+> +    qdev_realize_and_unref(cpudev, NULL, &error_fatal);
+>       cpu_sparc_set_id(env, id);
+> -    *cpu_irqs = qemu_allocate_irqs(cpu_set_irq, cpu, MAX_PILS);
+>       env->prom_addr = prom_addr;
+> +    return cpudev;
+>   }
+>   
+>   static void dummy_fdc_tc(void *opaque, int irq, int level)
+> @@ -813,13 +817,14 @@ static void sun4m_hw_init(MachineState *machine)
+>       DeviceState *slavio_intctl;
+>       unsigned int i;
+>       Nvram *nvram;
+> -    qemu_irq *cpu_irqs[MAX_CPUS], slavio_irq[32], slavio_cpu_irq[MAX_CPUS];
+> +    qemu_irq slavio_irq[32], slavio_cpu_irq[MAX_CPUS];
+>       qemu_irq fdc_tc;
+>       unsigned long kernel_size;
+>       uint32_t initrd_size;
+>       DriveInfo *fd[MAX_FD];
+>       FWCfgState *fw_cfg;
+>       DeviceState *dev, *ms_kb_orgate, *serial_orgate;
+> +    DeviceState *cpus[MAX_CPUS];
+>       SysBusDevice *s;
+>       unsigned int smp_cpus = machine->smp.cpus;
+>       unsigned int max_cpus = machine->smp.max_cpus;
+> @@ -835,7 +840,7 @@ static void sun4m_hw_init(MachineState *machine)
+>   
+>       /* init CPUs */
+>       for(i = 0; i < smp_cpus; i++) {
+> -        cpu_devinit(machine->cpu_type, i, hwdef->slavio_base, &cpu_irqs[i]);
+> +        cpus[i] = cpu_devinit(machine->cpu_type, i, hwdef->slavio_base);
 >       }
 >   
-> -    for (i = smp_cpus; i < MAX_CPUS; i++)
-> -        cpu_irqs[i] = qemu_allocate_irqs(dummy_cpu_set_irq, NULL, MAX_PILS);
-> -
 >       /* Create and map RAM frontend */
->       dev = qdev_new("memory");
->       object_property_set_link(OBJECT(dev), "memdev", OBJECT(ram_memdev), &error_fatal);
-> @@ -860,6 +854,7 @@ static void sun4m_hw_init(MachineState *machine)
->   
+> @@ -855,7 +860,7 @@ static void sun4m_hw_init(MachineState *machine)
 >       slavio_intctl = slavio_intctl_init(hwdef->intctl_base,
 >                                          hwdef->intctl_base + 0x10000ULL,
-> +                                       smp_cpus,
->                                          cpu_irqs);
+>                                          smp_cpus,
+> -                                       cpu_irqs);
+> +                                       cpus);
 >   
 >       for (i = 0; i < 32; i++) {
+>           slavio_irq[i] = qdev_get_gpio_in(slavio_intctl, i);
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
