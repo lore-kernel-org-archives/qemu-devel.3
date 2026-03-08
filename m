@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B30DEA8543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 21:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C591CEA8545
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 21:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzLzE-0003xn-MY; Sun, 08 Mar 2026 17:48:32 -0400
+	id 1vzM1Y-0004Uj-Fs; Sun, 08 Mar 2026 17:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzLzD-0003xa-NV
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:48:31 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzM1W-0004UM-MI
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:50:54 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzLzC-0005Al-6g
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:48:31 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439b7a87fb5so4715429f8f.3
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 14:48:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzM1V-0005Z8-7G
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:50:54 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-439bcec8613so5440296f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 14:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773006507; x=1773611307; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1773006651; x=1773611451; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fjk/mQZ4n3hfs6TZmoOSutIVx1zwKoXAU5Yjrs3WmQg=;
- b=Qwa6MAhJIkE8Ky4F+ZlgiYescCx6NLe37C6lMnPCuCvBGi611JXX7T49csxy/BM3/B
- v15ZmWfx+erDugJQ/T1u5ehtuggCdUyclqKdoPvu9aVdDOKrDXf8Htsgd1sOAdesDeLt
- bcSe38+iEqedEQIIfM5ivTiZoFrG5w3DxFiImwLgyJmeUq3/haSSJMuDy8bA5GguBHop
- kANPQ4pytWQ5YJiGHg5Xy+lKKlBzRPZoF3DTBiQ+NoYkZDUZsUzEkm0nCshOPcIQ13y9
- 05CrJuXkz8jj2BA7Ij2+/ypS4xOR0ZxW1kPMjXuj7LCiJE7fg+f39BquMGyDmO7qf8qy
- Mawg==
+ bh=xNaQ285QaEXfCB4bHbNRM3rMGqNnY2DSr9BhZrcWs6o=;
+ b=ZQ0XScDOfIUD/oCFZz9OG9vQXiXHlwQoCaCUDv5fT3bftr3bb5b5WL91o11CdhmTEs
+ T2aN4W83XSXy3QOuAC2et/VDTBDqI8BQuJQvUJYTbzK8G9IQr2OWIk8Ov/Q+BMZxhcBz
+ 1PuwhZ2pDV3j4cOsawk1G7IC+YE1NtmbXcFOt3dI9ORmqNWsTT6IVpJAqRCYF/43o8ox
+ p8j5dSllEydn2h7Ul0VmC97UzhRG8VFAUHULXB+9pP4e4keuWWLM5uG8/DWZHzt0+l0X
+ X3vD9jLYOfROp8LmC0s+5luTur2R1kinY91DqVZyXx3YjxJAFmmLijjA/kn8/UV4dm7R
+ y6Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773006507; x=1773611307;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1773006651; x=1773611451;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fjk/mQZ4n3hfs6TZmoOSutIVx1zwKoXAU5Yjrs3WmQg=;
- b=kkhp8CCR3owxCdcagI+rC5H/FO+kjpkOJ2j4rgBwWKCKjjfN3Z/NdpdBF4nQVfPXNR
- sKUdRLfrkE9nmErJWtzd034qUxJTMSMUcGvomTKCri49LTCp7Bdso2S9kQrfya71WWh6
- AdPq6dzdW2MYn+2oNCkz1xxWw1g1xUBARgMEzN/PXxTdFaftJDPPpXaQ8jbSrAGImXDx
- gFFLgtArIbwZdJ52y1F+ZH+kJ8oXKFXEiJv43d1z/ZUC71BnOdPoO3JX2mskfSwW8HOz
- a3uH9C7aI60Z3gY4dWUck1NCDyOIHahREKD6UBG1s48HK5b2uBHYo9jQHkQcKWRAUvHS
- 0mlQ==
-X-Gm-Message-State: AOJu0Yz2U2JntN9tt0PjXOySfkzLCv114a5Fn6AZBXDj4tSjbtpOTL9z
- gXqWZk+/bZwrMF/cXRUgDOcykKVJ2MRYTJen1QL1JsQbJmOrZfG8EJxvxfFMrmoH9ua8Cp/B7kz
- 4NjkAtQo=
-X-Gm-Gg: ATEYQzyutOtYdpAWbah2RmJrm/RIdMi+J4uDXNIv2/x9LyHXFj6aXavGbGuvW/zcPXN
- 8iGP22x68+Iuk1WbW2LBUEA+wemtNerKSBdsheqhEQO+5W+Go/am6D4MtyyMkXTrT4zUW/NhUH4
- A3cKjgL9stVk7EIcKMc3T1iAeEgfLqEIZZA4BRzkbvB+AnJkYOB9AhISyD1k3JyiwDZ02I5q1b8
- yjPRgx9zQCSkusYB2ER/Ihnp9S9uzAYZY5GMWpBULG6ePWmPM91HMI7DVOAK84xv0sFkMNrtmQL
- WoksH+jrLHbkqRrPJpjD3Egj28UvjHBSOuBnP6kBUDXu/Mv21+WtRgjbYJiwd98ThNItUNIVVga
- xMWbFOeS4ALmh+aAxaS6PAdRY1Lx4AP1qfO7S1Kayeel3LSvKKT/S1QzA0lfNA/E6kKHykOIyfP
- PSDgYxOeMe9VyxLGuPOQ9nHxnTyt41hYK0CFj45zHTNSFjJNhOR7iTcllNYENzOm4MnnuV16ypr
- rFy
-X-Received: by 2002:a05:600c:1e2a:b0:480:69b6:dfed with SMTP id
- 5b1f17b1804b1-4852695d16fmr153648425e9.24.1773006507187; 
- Sun, 08 Mar 2026 14:48:27 -0700 (PDT)
+ bh=xNaQ285QaEXfCB4bHbNRM3rMGqNnY2DSr9BhZrcWs6o=;
+ b=s/TvoFS4bRvRKVYNatocaA94xdIirIPAXAM9I4KKjheytLgs52xObJmAIcXzCYuUBJ
+ Z2AH+KuS1p+NcKIROZGyI65hDEJUx8NVfVqDajSGVzMTxNt+w1/n95ns5kGsNKnCCnu9
+ 7F5AVFB3KZbCdKSgKLmfFu+ITstbjVkwQktApiA3epe881ij8bJNJLoF0dd0CgYUzMtw
+ BApWjfkpI+0qX4HoMpxgCod2ANPQwP815x2moapi8sd8HR9BQxHUUQGnSamTgugpYpEC
+ Kr6YvNMvOnb/lzJOZRgh1vfCVTpDtbn/bq83Cx7VbkxBKzSu17W4zEjHi9g1Nhc8BPNC
+ 6oGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwwAbXzAX+ivCLY8xLwEU5wGpXrsB2o0VEXNhxZolYHkUgn3dFFqWEiGLE/+/k1QfHEzxk9oBDQOc5@nongnu.org
+X-Gm-Message-State: AOJu0YwqRTqyGeEK7ArqUv0G7MOLOfsX0atok9wWVZLFXO03So86p+rN
+ EslPg61dIpw+sTQaM2HjWWDiOHHuqPEH4qBonsS+2xqTf/l49/y/iYGh5J7JYq36zpM=
+X-Gm-Gg: ATEYQzytDIYUECadljk04mqTtcIWgCGnv9TXKyXOJJly/Q22/GeFBqlo8F4Flpsyjzx
+ lOHrQK0y3kO5VuHYsgsR6jiDPCC3F4PwYIW+/BACrTaM47Vq76EwkWiXNYKCqkKEH3a9VvOGsQm
+ a4tTc79OuZPZMDG4/2CQTZixMDjYvLvE3wFs0mCCyuDaVWZRvUlbvVVjxQ2+7n36oPcaWDeDQuN
+ RYGNYJtXF/Q3Z8Tfv+PIbM87l18l15GEKVDMukD6Pf1gmc/pZopS1SkMrWc7nNYK+rxkZJpjeNS
+ uX/z1Nta7LVRZ9il/KTw4y/yDm47R0hrUftqtkJ4Ftqx9PfiRqndyKNEVEloxgfN0vQHJOt8doT
+ /fGxUKhKaaX4qValnlr3p5nPCrskEV57AljVkAB1Wzxcrn7BtSNMjwLksFNy8qQXofS+J3Kzpzg
+ U1SDMPScmcpBHFZPmUrwmE5WalezgMgEMJAF1+XfP3emuuz0zQ9T/jQMR603IRmBpVwQ==
+X-Received: by 2002:a05:600c:1f0f:b0:483:badb:618b with SMTP id
+ 5b1f17b1804b1-4852696758emr143128385e9.24.1773006651179; 
+ Sun, 08 Mar 2026 14:50:51 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853a4df13bsm50381085e9.4.2026.03.08.14.48.25
+ 5b1f17b1804b1-4853044d849sm214091995e9.11.2026.03.08.14.50.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Mar 2026 14:48:25 -0700 (PDT)
-Message-ID: <3a435642-2e9d-421a-80e5-1b5b02f1cc1b@linaro.org>
-Date: Sun, 8 Mar 2026 22:48:24 +0100
+ Sun, 08 Mar 2026 14:50:50 -0700 (PDT)
+Message-ID: <f50695b9-4736-4277-bcc8-801b1fc03317@linaro.org>
+Date: Sun, 8 Mar 2026 22:50:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/i386/pc: Remove deprecated 3.0 machines
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-References: <20260307150042.78030-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 00/12] linux-user and hppa patches
 Content-Language: en-US
-In-Reply-To: <20260307150042.78030-1-philmd@linaro.org>
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Warner Losh <imp@bsdimp.com>, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller
+ <deller@gmx.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260307195243.8813-1-deller@kernel.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260307195243.8813-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,13 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/26 16:00, Philippe Mathieu-Daudé wrote:
+On 7/3/26 20:52, deller@kernel.org wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> Two patches which prevent memleaks when using Diva PCI
+> cards,
 
-> Philippe Mathieu-Daudé (4):
->    hw/i386/pc: Remove deprecated pc-q35-3.0 and pc-i440fx-3.0 machines
->    hw/i386/pc: Remove pc_compat_3_0[] array
->    target/i386/kvm: Remove X86CPU::hyperv_synic_kvm_only field
->    hw/core/machine: Remove the hw_compat_3_0[] array
 
-Queued via hw-misc, thanks.
+Queuing those via hw-misc, thanks.
+
+  all other patches are for linux-user emulation.
+> 
+> Please check...
+> 
+> Helge
 
