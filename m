@@ -4,62 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69F1F5513F
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 11:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF09F55102
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 11:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzCRR-0004SB-86; Sun, 08 Mar 2026 07:37:01 -0400
+	id 1vzCTT-0005l6-OC; Sun, 08 Mar 2026 07:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCRQ-0004PA-20
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:37:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCTR-0005kn-6Z
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCRN-0007J0-Vu
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:36:59 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCTL-0007Wa-Q7
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772969816;
+ s=mimecast20190719; t=1772969938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qEsaV3vLH9Ug+TLqfomtjAT9s5QTNyUrRJX0G9YjYrI=;
- b=IKxHFwayVr0GYyOsKQPGgflsYFztd+V606VIt8llj1nJXStMrQjDS496ky8imR/Ey0p8JJ
- Xqr3QD+QPhjJCmUIYttqV+p97bij3PGTzz6zTbjthpeuhOk8mcbI3RizbExE9pSgtkCEwV
- YlafAot4sNbxiN8r4XJWFDdi7UddK40=
+ bh=KJ8bzg8V+uvZAsLa7IYzmmSXgUWNDaSyMpThEwzLfNY=;
+ b=QgiHtU+50wVMt7f+fHNzF8eVmumvF0hQ4lDVsZdpsHG4d2su01RVHsmsuB4xZywm2UmtnQ
+ vQO9gyIaMJ/ARcOyEpMQqvO4oZdv0hq4j7mACxJfTMlh5RK7IOTS1YthWX/ukJNIlKKnpE
+ TG+lMz8hbT5nD0Hk3MJsj6Sa8VcLBGI=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-2F8HUr0WMgSRr_Youa25qA-1; Sun,
- 08 Mar 2026 07:36:53 -0400
-X-MC-Unique: 2F8HUr0WMgSRr_Youa25qA-1
-X-Mimecast-MFC-AGG-ID: 2F8HUr0WMgSRr_Youa25qA_1772969812
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-gbvbB5zdMmqjnisJl9BFmw-1; Sun,
+ 08 Mar 2026 07:38:57 -0400
+X-MC-Unique: gbvbB5zdMmqjnisJl9BFmw-1
+X-Mimecast-MFC-AGG-ID: gbvbB5zdMmqjnisJl9BFmw_1772969936
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF9E019560B7; Sun,  8 Mar 2026 11:36:51 +0000 (UTC)
+ id D36841956050; Sun,  8 Mar 2026 11:38:55 +0000 (UTC)
 Received: from [10.44.32.5] (unknown [10.44.32.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DAB7C18002A6; Sun,  8 Mar 2026 11:36:47 +0000 (UTC)
-Message-ID: <16ced31c-6d4b-417f-92de-386bfee9dcf8@redhat.com>
-Date: Sun, 8 Mar 2026 12:36:46 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 72D0A1958DC5; Sun,  8 Mar 2026 11:38:51 +0000 (UTC)
+Message-ID: <ec3ccf72-d44e-4078-bbe7-12c70bf4e4e4@redhat.com>
+Date: Sun, 8 Mar 2026 12:38:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/i386/pc: Remove pc_compat_3_0[] array
+Subject: Re: [PATCH 3/4] target/i386/kvm: Remove X86CPU::hyperv_synic_kvm_only
+ field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
 References: <20260307150042.78030-1-philmd@linaro.org>
- <20260307150042.78030-3-philmd@linaro.org>
+ <20260307150042.78030-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -104,18 +102,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307150042.78030-3-philmd@linaro.org>
+In-Reply-To: <20260307150042.78030-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -134,47 +132,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.00, Philippe Mathieu-Daudé wrote:
-> The pc_compat_3_0[] array was only used by the pc-q35-3.0
-> and pc-i440fx-3.0 machines, which got removed. Remove it.
+> The X86CPU::hyperv_synic_kvm_only boolean (see commit 9b4cf107b09
+> "hyperv: only add SynIC in compatible configurations") was only set
+> in the pc_compat_3_0[] array, via the 'x-hv-synic-kvm-only=on'
+> property. We removed all machines using that array, lets remove that
+> property and all the code around it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/pc.h | 3 ---
->   hw/i386/pc.c         | 7 -------
->   2 files changed, 10 deletions(-)
-> 
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 113813c07d7..5623660f5dd 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -277,9 +277,6 @@ extern const size_t pc_compat_4_0_len;
->   extern GlobalProperty pc_compat_3_1[];
->   extern const size_t pc_compat_3_1_len;
->   
-> -extern GlobalProperty pc_compat_3_0[];
-> -extern const size_t pc_compat_3_0_len;
-> -
->   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
->       static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
->                                                    const void *data) \
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 819e729a6e3..a38634e3577 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -214,13 +214,6 @@ GlobalProperty pc_compat_3_1[] = {
->   };
->   const size_t pc_compat_3_1_len = G_N_ELEMENTS(pc_compat_3_1);
->   
-> -GlobalProperty pc_compat_3_0[] = {
-> -    { TYPE_X86_CPU, "x-hv-synic-kvm-only", "on" },
-> -    { "Skylake-Server" "-" TYPE_X86_CPU, "pku", "off" },
-> -    { "Skylake-Server-IBRS" "-" TYPE_X86_CPU, "pku", "off" },
-> -};
-> -const size_t pc_compat_3_0_len = G_N_ELEMENTS(pc_compat_3_0);
-> -
->   /*
->    * @PC_FW_DATA:
->    * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+>   target/i386/cpu.h     |  1 -
+>   target/i386/cpu.c     |  2 --
+>   target/i386/kvm/kvm.c | 15 ++++-----------
+>   3 files changed, 4 insertions(+), 14 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
