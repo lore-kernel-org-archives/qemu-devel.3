@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B8F3EA8543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86974EA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMjM-0003EH-1K; Sun, 08 Mar 2026 18:36:12 -0400
+	id 1vzMjT-0003NA-4d; Sun, 08 Mar 2026 18:36:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjJ-0003Bj-OK
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:09 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjQ-0003JU-OP
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:16 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjH-0003ML-Dv
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:09 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4327790c4e9so8465628f8f.2
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjN-0003NN-Uh
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:16 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so8465658f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:36:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009365; x=1773614165; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009372; x=1773614172; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=t4eGZ6Wov9vgJTgXJvaXO5cQavtM/WJnNpf+PFgt2X4=;
- b=yG7Zkfd1PfB26gSBMzX8PkTG+WSOdhT3Hn0DVZXqJyLZfPCep0GhTGl/8RG+rb7Ksl
- B7CuesFl8XwU78w5B0z2AliFJySr68EPb34zA+bBrxsB6OOS7n5Puuf+3zKxTROCOU9j
- ozEhaff1qYZmIuVn1j+9dpZLPSUCerGvuB8Om7i6l9zHAXFltkN+igO93j3SwdG6ACOm
- Snwv53DJ1v1XMa2pXlcrr2sKpyTVwie5hxFuJJ8KtfcrmlpcfM4jG2352E88S6+YWHT3
- oXpoPd5RasbyYRuUDMCmF0JN1iBWb2ne7fHh8GnLKvfOY1LyssppIKH+r70csCWREX8G
- st5w==
+ :reply-to; bh=C6RmIeQiTwJ3+6txXA5Lk1LKbCm90eL+X6+snaXIrnY=;
+ b=ZFfA+NszByFwGB+llkB1KKpFqW8ZjzqnXh5hd8BqddI3iZIxD4pCYgz4PS6Nwmj+Ze
+ R/dTp2cn8D93M6WXcyxv45rr13XcbJiSx6k6epNkFo5wWVbaDjHfN0hD4sZceVznO6KP
+ wAEwr7zqEhSyWSiDKeyDo6RswdCK6omyBTtoeXLeEnrTwnNOsRLGjrvpu+e9LiJitUUd
+ ut8xR+gwgUI9bYqdT7p3IeVhmvpdvcpHilulnJXpBTGY0R/2TjQ4xwxM3XYGla8h+Fm2
+ 8RaKlZYzT7pRAXF7dhmKG1TyU9CotE9bneeJwAdufabMwBFQUuj1hgpgiw+lGq4mNqGy
+ la1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009365; x=1773614165;
+ d=1e100.net; s=20230601; t=1773009372; x=1773614172;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=t4eGZ6Wov9vgJTgXJvaXO5cQavtM/WJnNpf+PFgt2X4=;
- b=HZCXmyASGot4KKIZ5Fh1dToiBl+yDPBw7xnGqCN0vc0MBi/hbYiibvxjLmq3MydLv/
- NoU0oL8OoNUqeGDKBXgcdLhLN12sIZAd9NB6x8dZA6f0MtUSydDjaD+ojrptagNzmi7S
- /J/hZAYFFLp/v/f4rVfQUUxNXXC6Ti9TY5Ew+pK1vOj+MIjtbhAD9+uXsVYTRYQGOFDT
- UQfbPkdce4nHE0RPp4Ece/JIfw+fxwLDHjLz+m9qhhOkO34CGXwrbquvWmKEkpka8BM0
- bpqZNcr6c1Y3mn62xw/EsOuHJac97z44/kl2JbvOtHGciOOwbgnP3pd5ttYpH9jnSkDd
- pg5Q==
-X-Gm-Message-State: AOJu0YwZ3fBj82C/kVw6r1E0/CaMRz+NK+Adnqn4CORLOtbt1mgvz1cZ
- 7sPqFyFosto0KmgdfHi1ak0+CzZOoq8L88CQt6L0IFrxyxrVPENwxMDPSe3fBOK3aAd8TaKlZ0Z
- e8wfh0i4=
-X-Gm-Gg: ATEYQzzToF/2jcSykIhvul5hnbOhPkkq2ZWB1cFU8sEv7j6tOzdsbe3xzUeFoWekGOU
- M+b/MrYZMcrLI400BvKtYkyEAyvU2vm3agTrZS1KDxEMoxN+E5xu5P9f4TZ7I5KMG7l663dNX71
- y1eQSEIZW+++Kbbp/vGE7CBYfAUoKdQk7nqXi+ObmFBw/hCctoSmwH3sKiKKcsPzBRIKodz/2xH
- Gvl5LTdSRyTCv+fItLsU9uCEKPkoz92t4WtLi4YOcPbB2JwJkDPIdK2EmOGGxx063K6pTR74Dee
- CC5+1Wac0WamAxfbPf3aojBzGvzL+lRm3OePvI0n47zy0olUYwCrWGf0PgevbFX7z6o/iUglbB8
- P+SFNas9rdqaAMCf2hy9BkNTu+QUzCw2DbyPRpy7kIGhaDCbmHQqWcjaMhqp1LCKn8/DzihFGIZ
- G1vwOzD1Kjri4cYqc4M+C/QOqxK+L8quxqs+B/b8qvYyLRRaZSSFwtM3KQQni4Dkmt+LNZaF3HI
- sRH+Q==
-X-Received: by 2002:a05:600c:4752:b0:480:4a8f:2d5c with SMTP id
- 5b1f17b1804b1-4852697721cmr157502685e9.29.1773009365207; 
- Sun, 08 Mar 2026 15:36:05 -0700 (PDT)
+ bh=C6RmIeQiTwJ3+6txXA5Lk1LKbCm90eL+X6+snaXIrnY=;
+ b=Al0v/V7ZThWDU4H4IoNhtx7wu9b4wD9YNbhQ7mgJ3pmNMujU3e66Nq8yybqVSImdmh
+ U2SkGuunodFseT/DmxqOq70eotbdEyEJHfL0gfi20le0unGuWRJsFaws64S/qOhUNwFh
+ clcnnU5zWjB+GLjNyBHC0T7ri32oPQ+SYKpiaxwQxyyajn2m84m/MG3ApfwPHLJikVqc
+ aGHU1mGH3gbTvdVs4sHImcokIvjeLw5GxjF6DuSAjbPxPomQ77UXlrmlVH7PuS4fs5WQ
+ 1UF+pmeiewEDW/0Gk+2oGiL3G9dZ31JBvYQjghFZqLWx+VODQVLBYU+urJj3fBxaMdLK
+ LmEQ==
+X-Gm-Message-State: AOJu0Yy+LvKPD3EIARfFqHOYX40DteY1bianh5XHtNWJdaTfs7F57T3S
+ F7Ec/+PdAwg8AgJ6OrVezIiEPib+pSf397iWyorjgpDTc7y0tt40v27Ad67LG7rGJZde7cfO77r
+ syvMfTdU=
+X-Gm-Gg: ATEYQzzxvxTh2MgPbRTwvi+9ylw0sb7Azk2a92qMe7k5AoE3H7+1V41BQU56woU4g8A
+ cmOzGz8fPiONpi/LcpR6I69LhjPp+U1ryI88FWhrEzHfpP3I9//fwnMoQjddsjlZb7OkLzcmfwe
+ 6CUqb4IY+l0VSiOVh31/2fmfzENXeZ5lKu6g7Cq21SyPhx23mCB0FYG1et8IBpoifIC1TjyKUVL
+ szbObh/x2hFTeGOxYqzIad1yhyaWa45w5CbX8CwZQv13i6ZWIYT1yTb1VYrAIlHBT9/fMhhJlgV
+ YH4PJInf0TJBciWMCPU7Fef1JZNPiRxWIrBTAkDE8yaTT2z5nvUDBBPq1UDVg/BEYep/QW1lxin
+ SBu3yFP2Onbw3q8hPIGj6mJvhnG7J3fQTnrghUJFNm/bK/jm+RnJLd4H5SR7IlQngkRHBz4A5fZ
+ widMhTHjEy3pjmm8wajr40wdSKWbsHaJUe7K0/E5cmSHRClYNFTEI1QNeSS3Vz62yL2+EL7AHLc
+ Ml4FwSPw1kbYgih
+X-Received: by 2002:a05:6000:1865:b0:437:8fd6:d849 with SMTP id
+ ffacd0b85a97d-439da8a2ef3mr15386656f8f.54.1773009371974; 
+ Sun, 08 Mar 2026 15:36:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485237e8095sm127662315e9.2.2026.03.08.15.36.02
+ ffacd0b85a97d-439dae45786sm23222664f8f.32.2026.03.08.15.36.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:36:03 -0700 (PDT)
+ Sun, 08 Mar 2026 15:36:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/49] semihosting: Build stubs once
-Date: Sun,  8 Mar 2026 23:33:57 +0100
-Message-ID: <20260308223433.25503-14-philmd@linaro.org>
+Subject: [PULL 14/49] hw/s390x/s390-pci-vfio: Avoid including CONFIG_DEVICES
+ in hw/ header
+Date: Sun,  8 Mar 2026 23:33:58 +0100
+Message-ID: <20260308223433.25503-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,45 +100,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move stubs to the global stub_ss[] source set. These files
-are now built once for all binaries, instead of one time
-per system binary.
+By turning the inline functions into stubs we can avoid the
+use of target-specific CONFIG_DEVICES include in a hw/ header,
+allowing to build the source files including it as common objects.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260225035739.42848-12-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+Message-Id: <20260225031658.32095-4-philmd@linaro.org>
 ---
- semihosting/meson.build | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ include/hw/s390x/s390-pci-vfio.h | 20 --------------------
+ hw/s390x/s390-pci-vfio-stubs.c   | 32 ++++++++++++++++++++++++++++++++
+ hw/s390x/meson.build             |  1 +
+ 3 files changed, 33 insertions(+), 20 deletions(-)
+ create mode 100644 hw/s390x/s390-pci-vfio-stubs.c
 
-diff --git a/semihosting/meson.build b/semihosting/meson.build
-index 99f10e2e2bb..15e3be26989 100644
---- a/semihosting/meson.build
-+++ b/semihosting/meson.build
-@@ -1,4 +1,4 @@
--common_ss.add(when: 'CONFIG_SEMIHOSTING', if_false: files('stubs-all.c'))
-+stub_ss.add(files('stubs-all.c'))
- user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
-   'user.c',
-   'guestfd.c'))
-@@ -8,12 +8,13 @@ system_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
-   'guestfd.c',
-   'uaccess.c',
-   'syscalls.c',
--), if_false: files(
-+))
-+stub_ss.add(files(
-   'stubs-system.c',
- ))
- system_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
--  if_true: files('arm-compat-semi.c'),
--  if_false: files('arm-compat-semi-stub.c'))
-+  if_true: files('arm-compat-semi.c'))
-+stub_ss.add(files('arm-compat-semi-stub.c'))
+diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
+index ae1b126ff70..f7d6149daf6 100644
+--- a/include/hw/s390x/s390-pci-vfio.h
++++ b/include/hw/s390x/s390-pci-vfio.h
+@@ -13,32 +13,12 @@
+ #define HW_S390_PCI_VFIO_H
  
- specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_USER_ONLY'],
-                 if_true: files('syscalls.c'))
+ #include "hw/s390x/s390-pci-bus.h"
+-#include CONFIG_DEVICES
+ 
+-#ifdef CONFIG_VFIO
+ bool s390_pci_update_dma_avail(int fd, unsigned int *avail);
+ S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
+                                           S390PCIBusDevice *pbdev);
+ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
+ bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
+ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
+-#else
+-static inline bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
+-{
+-    return false;
+-}
+-static inline S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
+-                                                        S390PCIBusDevice *pbdev)
+-{
+-    return NULL;
+-}
+-static inline void s390_pci_end_dma_count(S390pciState *s,
+-                                          S390PCIDMACount *cnt) { }
+-static inline bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
+-{
+-    return false;
+-}
+-static inline void s390_pci_get_clp_info(S390PCIBusDevice *pbdev) { }
+-#endif
+ 
+ #endif
+diff --git a/hw/s390x/s390-pci-vfio-stubs.c b/hw/s390x/s390-pci-vfio-stubs.c
+new file mode 100644
+index 00000000000..d9882b7aad0
+--- /dev/null
++++ b/hw/s390x/s390-pci-vfio-stubs.c
+@@ -0,0 +1,32 @@
++/*
++ * s390 vfio-pci stubs
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/s390x/s390-pci-vfio.h"
++
++bool s390_pci_update_dma_avail(int fd, unsigned int *avail)
++{
++    return false;
++}
++
++S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
++                                          S390PCIBusDevice *pbdev)
++{
++    return NULL;
++}
++
++void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt)
++{
++}
++
++bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
++{
++    return false;
++}
++
++void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
++{
++}
+diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
+index 1bc85837996..57cc2a6be3d 100644
+--- a/hw/s390x/meson.build
++++ b/hw/s390x/meson.build
+@@ -34,6 +34,7 @@ s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
+ ))
+ s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
+ s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
++stub_ss.add(files('s390-pci-vfio-stubs.c'))
+ s390x_ss.add(when: 'CONFIG_VFIO_AP', if_false: files('ap-stub.c'))
+ 
+ virtio_ss = ss.source_set()
 -- 
 2.53.0
 
