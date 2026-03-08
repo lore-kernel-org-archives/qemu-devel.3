@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B728EA853C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BDCEA853E
 	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzHyW-00051D-Hi; Sun, 08 Mar 2026 13:31:32 -0400
+	id 1vzHyW-000513-Hn; Sun, 08 Mar 2026 13:31:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHxD-0003nL-AD
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:14 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHxH-0003qr-UU
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:23 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHxA-00041W-JZ
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:10 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHxG-00042M-3D
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:30:15 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 158C9600AD;
- Sun,  8 Mar 2026 17:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5806C116C6;
- Sun,  8 Mar 2026 17:30:03 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 754E244099;
+ Sun,  8 Mar 2026 17:30:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6605C116C6;
+ Sun,  8 Mar 2026 17:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772991005;
- bh=x2p9sfsUBTUAYtkqoTf6MRparRAy9QhO3P2K4BkAkCQ=;
+ s=k20201202; t=1772991010;
+ bh=C+C82ybik9x9gjXt76xrkRauzAp/2YKwqHuKob5hmVE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ElbUlxsNNv6QykPXTQSu3rDwQNeFpcaBQHUHdzYk9XsHQ4TcE7hQxhkNb2kJyizq3
- KMy0t2Tq95GjiuyZMPk95TNfa5oSJMQxRBoBrI/eDcsu1wIa3kELcDFkcc5RxgGhmb
- KVD221oi4nZxEfttBPz7gkBOfVBSVyk3DH939UEPgSY/v9E3jOmQ30gN0JdXQUfOZD
- Icl4elN7nOzIbwlr1cL2IV/tTQBCBIyFh2K/6Ax8wdA18JKtqJT4SFYLVkLvLaehuV
- XbAEJxbNLQdwrPmA4W1SvTE3J0mO0h8PizhQGC93+QzIR/P+HW14urJl2YMhDE/cpZ
- PcTY8s+UtqiJw==
+ b=Dt/fMkJdITwV3L7QbwE9SbFLhNFqbgy6DtVFWVYdBloFfgisfwFsLtDSuGaA1uBQq
+ nchEJwOIA41x4nNzv01OYkRTfvdh8SS+zKGFmvrmzTmFm3WPF4Vv+cojiGg71TLYVG
+ P+5qFdGHZiRR4F2WJcUnBPug8tfRiz0MTqv+8dIM90SfytXrIhO5IoAZmUDN2V3I2H
+ cwZ1Qmepcz6jGeHQUJEIgJ+qYUG5RQUY1n+LE2zo++BSp8Fsyvs2bgsb6eC1r2buoO
+ dDibaxLJWW8Z1KHB/XiDgvmCj84wfyBy5+RuTXdapzm+RZucyBNFvCcHQouOWSJ39n
+ /yQip/CnOhNsQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -41,16 +41,16 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 10/12] tests/tcg/multiarch/test-mmap: Print more details
-Date: Sun,  8 Mar 2026 18:29:34 +0100
-Message-ID: <20260308172936.2835-11-deller@kernel.org>
+Subject: [PULL 12/12] linux-user: Improve formatting for mremap()
+Date: Sun,  8 Mar 2026 18:29:36 +0100
+Message-ID: <20260308172936.2835-13-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308172936.2835-1-deller@kernel.org>
 References: <20260308172936.2835-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,72 +72,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bingwu Zhang <xtex@astrafall.org>
+From: Helge Deller <deller@gmx.de>
 
-Useful for debugging
+Improve slightly the strace output for mremap().
+Print the old_address and new_address as hex values, old_size and
+new_size as unsigned, and the flags as integer.
 
-Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/tcg/multiarch/test-mmap.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ linux-user/strace.list | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
-index e297f4b1e9..88f7a04101 100644
---- a/tests/tcg/multiarch/test-mmap.c
-+++ b/tests/tcg/multiarch/test-mmap.c
-@@ -442,19 +442,19 @@ void check_invalid_mmaps(void)
- 
-     /* Attempt to map a zero length page.  */
-     addr = mmap(NULL, 0, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
--    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
-     fail_unless(addr == MAP_FAILED);
-     fail_unless(errno == EINVAL);
- 
-     /* Attempt to map a over length page.  */
-     addr = mmap(NULL, -4, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
--    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
-     fail_unless(addr == MAP_FAILED);
-     fail_unless(errno == ENOMEM);
- 
-     /* Attempt to remap a region which exceeds the bounds of memory. */
-     addr = mremap((void *)((uintptr_t)pagesize * 10), SIZE_MAX & ~(size_t)pagemask, pagesize, 0);
--    fprintf(stdout, "%s mremap addr=%p", __func__, (void *)addr);
-+    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)addr, errno);
-     fail_unless(addr == MAP_FAILED);
-     fail_unless(errno == EFAULT);
- 
-@@ -465,8 +465,11 @@ void check_shrink_mmaps(void)
- {
-     unsigned char *a, *b, *c;
-     a = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)a, errno);
-     b = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)b, errno);
-     c = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)c, errno);
- 
-     fail_unless(a != MAP_FAILED);
-     fail_unless(b != MAP_FAILED);
-@@ -479,6 +482,7 @@ void check_shrink_mmaps(void)
- 
-     /* Shrink the middle mapping in-place; the others should be unaffected */
-     b = mremap(b, pagesize * 2, pagesize, 0);
-+    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)b, errno);
-     fail_unless(b != MAP_FAILED);
- 
-     /* Ensure we can still access all valid mappings */
-@@ -489,6 +493,8 @@ void check_shrink_mmaps(void)
-     munmap(a, 2 * pagesize);
-     munmap(b, pagesize);
-     munmap(c, 2 * pagesize);
-+
-+    fprintf(stdout, " passed\n");
- }
- 
- int main(int argc, char **argv)
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 51b5ead969..35f001fecd 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -641,7 +641,7 @@
+ { TARGET_NR_mq_unlink, "mq_unlink" , NULL, print_mq_unlink, NULL },
+ #endif
+ #ifdef TARGET_NR_mremap
+-{ TARGET_NR_mremap, "mremap" , NULL, NULL, NULL },
++{ TARGET_NR_mremap, "mremap" , "%s(%#x,%u,%u,%d,%#x)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_msgctl
+ { TARGET_NR_msgctl, "msgctl" , NULL, NULL, NULL },
 -- 
 2.53.0
 
