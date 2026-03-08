@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81918F55132
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 106F5F55132
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz8PV-0006bX-Of; Sun, 08 Mar 2026 03:18:45 -0400
+	id 1vz8Qj-0000Be-4O; Sun, 08 Mar 2026 03:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8PT-0006ay-U7
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:18:44 -0400
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ id 1vz8Qc-0008Oq-Tm
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:19:54 -0400
+Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8PS-0001He-8b
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:18:43 -0400
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-2ba9c484e5eso9940140eec.1
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:18:41 -0800 (PST)
+ id 1vz8Qb-00023E-GD
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:19:54 -0400
+Received: by mail-dy1-x1343.google.com with SMTP id
+ 5a478bee46e88-2b4520f6b32so12156008eec.0
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:19:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772954321; x=1773559121; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772954392; x=1773559192; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KK9Uyjy96zs7twHNYpg5aWknY8afXFteBSqdlJa3j3g=;
- b=TomvkPgq7YOqx0j7KRMg7C5JttXpWAPozXSQrEOhN5LlgKEXr39z5P92m5l3S7NFRK
- tHf9Crk567/D/jKh8bke5LFycLYYZ8wrQWOnVccesJhbcYP1wUyJu9el3KHbu5HYYp7W
- 9z+vKZDuREH5TNwAONI1GRA3fqvfDNaNIs3Q8iAXkxLNwXvnlQJbE3Ft0sUcUVVLxMRi
- 619bd+wWBtx016Y0k0ZiCSSiLB555/cX1NO+E4+rShlP96a2zoaFHBNkYT9yFPFyEt0R
- dKpoQs4PGE9FwxGY0ptxc5pqjd5sfggZlQCzl3q2gAmAVBH+cIRPsbodfTb/7TQ2YkiX
- UGNQ==
+ bh=MZ70pDkBubnfAy6PbUsKzZ+QirfaHkd5aNPfsmS2uPM=;
+ b=E3FjLXyavPZBtw4OQLpiUCx6U2KojuU3CuuainUOODTnP8hGOUQHib00TwN6uVauuT
+ qYno1PYhLsJhKI9bGCFk1VP27n4Dpv/g8tshIEaLNH1srNo+Za2yPzPzdIXuFxR52Ft3
+ z5XM9IrUU+RFH/71gKZqJXNOuZSN6iFrQgf5ECaRITyAEpFsrtNz+YUDEmbvvHG7xHrg
+ IJ9dyhop6jFQmeM4LEF/GWxNZtbs9ejShRFVITNIgMrPcoP7a1oYLBIyykb1/6p10EFo
+ RtiAKG8CUQBMsalJmIwOFynsLfGQUGRDkEWgYAdjs9PhxVvpiuDBwUB0CL1OwGsG97vn
+ I5kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772954321; x=1773559121;
+ d=1e100.net; s=20230601; t=1772954392; x=1773559192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KK9Uyjy96zs7twHNYpg5aWknY8afXFteBSqdlJa3j3g=;
- b=k0og5926VNs/b4ML6wtAwHOP1Joa9g7t/laDrx20xxP5t5wwhzY/9b9d6zyPsP7GP0
- 3xycsJ/nkPKtB44OiVRe4uHxb4KLhBzTIoBJpXZ30FilIfoWrh7ZB6VcjWd7lb71FLGe
- 1v3icunzAnS2WaHkoKPGuMg8HsMP+mZAwQwmD6BS6QWfiWXxYisT2naiLbaCaC7FQXl4
- hAHai1IjKlxPoXBr7BhNc4KCISe3XpfrInrYXL3+Ox/06nq6updYBJw2wlKmEt9S8Cbk
- 9RUM9dLeMMeLfm8XObK3TXiA3l5dIJY2MEN7hkMYFOwJE8DQc1TVr4th/tUJ6Zf8kvnI
- zNaA==
+ bh=MZ70pDkBubnfAy6PbUsKzZ+QirfaHkd5aNPfsmS2uPM=;
+ b=bVGyiB9CUoQeNCSe1wfRhnQC1zvna+Q/ij8qDiS1p0k93ivSFwteuVKbywC3nsw3IU
+ 0YogDUdUjHnhtqwDZspOS+KdeDE1FVFwpOHGNnkeDiWhXVWDGcHg/BHEYvU/4UFnsomI
+ uLqSgKG0Wtonmvw9nYjgOvdx1z1tx3vtFzqiEZDIYrxbf39MTZABaDpCMszvM398ReFH
+ e56gHEE4I75P4uqPRzu3/IL172Sr0zAVMDOjOei0V/BLN8+bnwu7EH14pABh9rwtPKaL
+ /0IQiAx0p3Z8RvuGOTEiEfbBlf5OxXWyHMUVPpCYkkESR+Fu7I5r5lJCt7l/n9lPQblg
+ AgFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLVxaYA/IMR4MwrcvvMrTG9aNjWUjpLGl6BveHtLVM+2KSswEgIC88JQzyMtJghbuSzWfI7OSKhZuz@nongnu.org
-X-Gm-Message-State: AOJu0YyDlgakQlebC6LwOZQ+HLPrxjc9d3ElKh99pA5eib+7TJjZwigl
- 5CiQOS0OwPqi5I/m0nDa12OCOnGBmLF3a74T33pOAZgq+N5vsOLdKcwg
-X-Gm-Gg: ATEYQzzrWDfXOXtJAaEuMywYfgb/A08g428lmk1Frhzc25PCOMSoJZrFQLsfkZC8HB9
- cuP0lFKmK6UGOnNX+Gz1HjDFJhg7pztaN7ZhQgCmTxEas4I00XtodIRSMpgaItKpvK/UnpYJHif
- s9tJNoIHKkFqNzdUDU2EHzlejH+416HsdpzM84tho8OZO/dvT6nmD2VfsHPXPWCVrHsOAJFNHu9
- EdZjDRtfckLqmv0vQXu3+Bl9JOAIX3naHvngqUp+TBWYoE/bBQGPGJdbaBXtUVJetrjPnkU+8fm
- cU1f6fEnET7OkNYfjKk+yw9aEQgK3JRjduu7l6F6hFtdY+6bA6b/E+o+JNQPDbvWPNWf4bWpv1L
- nmyK/UcGKmgxhy9d0R/hyOBwqRVFsgZcifKZoZN54h+znQhZiHk5bM3nEg6pb7Y4XnPOfNG01lj
- 0JB1b2blw3jydaQ61XHlQGoc3Pv7EW+CLvpuP0Jw5m6aC1/LH1YJ/j6hS8uhGLGRnPoI/qPjn9y
- 9tu3Kop4bnSOMBMz9ytajNI1IY=
-X-Received: by 2002:a05:7300:cb17:b0:2b7:3281:6c64 with SMTP id
- 5a478bee46e88-2be4e007aebmr3003941eec.14.1772954320781; 
- Sat, 07 Mar 2026 23:18:40 -0800 (PST)
+ AJvYcCWogCEmUZ+qWdlELU+4fMPJrCd9ZKEdLpqbbYL/y18S0vPXcFFx8VnfegZxrxJ1W7sLpOUL3TMxgSZ0@nongnu.org
+X-Gm-Message-State: AOJu0Yx1xBfF14Gfrjjc3XSZsYeVMg1n40Q9MM0ml7xrQlh4mnbyWdJM
+ /i97IZLIDOYAG6/lEZVuBHI2IfJhO03pxJEXF8qEILev+0sd3aEsrhKu
+X-Gm-Gg: ATEYQzxrSqvt4FJx8Ru2G0aRkMK0gQ5fr+MbUoKu/MlYuMrHtfkBwRqWOeBzoWSAYSZ
+ YWQ8UNjW5N7EQY/MMQ0GuZcVSvoXYjGjddvHeDIfFagVGiEo4YVWIhX+iUw5L+Y361rsvzd3qZg
+ 32MGvXIhXABF0W6Jn3qTm0S6aTLRB2CBJYn4ifgAKs2ur9odkTlG8dd5Idj9DV4Fxgvr4J1ZRz3
+ mqDtcfs1/8XJqETuyxNR+KICWJTCqs8RhPjyjKbV+HaL6ZNkE530gTQy6GHZhybKqg1m0F0OXik
+ op6hedLnvHlp9WQ0kH4q4cmbsgnp5zawcr2Z2LxIfMOB32Q4qfF7/D5UGNfNPOJb/NADI7iGLJg
+ TPWHY0t1w707LWg043NUzDeK+j1FrI7Z/Nfw3jOGHoKZGFyEieKh6DfDdaAKag4pVGpGjWs9vhZ
+ Ghcnsxm7lUi9V5k7wtGtomFl8n17TCGiCNcFoyp2PAv/W2alKq/Dgpl8UfwNHN6j+yAaqGcDLDu
+ NBDow865TOYA6bzMkRYh+rUguY=
+X-Received: by 2002:a05:7300:3b24:b0:2be:2a16:4a54 with SMTP id
+ 5a478bee46e88-2be4e03edd3mr2825263eec.25.1772954391584; 
+ Sat, 07 Mar 2026 23:19:51 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.18.35
+ 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.19.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 23:18:40 -0800 (PST)
+ Sat, 07 Mar 2026 23:19:51 -0800 (PST)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -76,17 +76,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: tangtao1634@phytium.com.cn, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v1 02/28] target/riscv: keep Debug Mode active when a DM ROM
- is present
-Date: Sun,  8 Mar 2026 15:17:05 +0800
-Message-ID: <50bb827520cc1fc9e913a6293e5fe30c355a5a69.1772936778.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v1 14/28] target/riscv: stop consuming itrigger counts in
+ Debug Mode
+Date: Sun,  8 Mar 2026 15:17:17 +0800
+Message-ID: <378f3cac42ed118add63c496d52ea54b426ff284.1772936778.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 References: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1341.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,111 +109,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Record whether a hart has a Debug Module ROM entry point and keep
-the CPU in Debug Mode while that ROM is active, instead of always
-returning to dpc on the next exec loop entry.
+Do not decrement instruction-count triggers while the hart is
+already in Debug Mode, and store the decremented count before
+testing whether it reached zero.
 
-This updates Debug Mode entry so dpc follows the architectural
-cause rules, switches ROM and Program Buffer execution to M-mode,
-and lets later DM patches hand control to the ROM park loop.
+This matches the architectural rule that triggers do not fire in
+Debug Mode and avoids losing a count update when the trigger
+transitions to its firing state.
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- target/riscv/cpu.h         |  4 +++-
- target/riscv/cpu_helper.c  | 27 ++++++++++++++++++++++++++-
- target/riscv/tcg/tcg-cpu.c | 10 ++++++++++
- 3 files changed, 39 insertions(+), 2 deletions(-)
+ target/riscv/debug.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 6fb255c7c3..0bc14f6953 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -481,9 +481,11 @@ struct CPUArchState {
-     target_ulong dpc;
-     target_ulong dscratch[2];
- 
--    /* Pending Debug Module halt request from the board-level controller. */
-+    /* DM halt request (set by external Debug Module GPIO) */
-     bool dm_halt_request;
-     uint8_t dm_halt_cause;
-+    bool dm_rom_present;
-+    uint64_t dm_halt_addr;
- 
-     uint64_t mstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index a0874f4e23..714dcb446e 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -141,6 +141,24 @@ static bool riscv_sdext_enabled(CPURISCVState *env)
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index 4dbcf289f2..ae9b1cd42a 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -837,6 +837,11 @@ bool riscv_itrigger_enabled(CPURISCVState *env)
+ void helper_itrigger_match(CPURISCVState *env)
  {
-     return riscv_cpu_cfg(env)->ext_sdext;
- }
+     int count;
 +
-+/*
-+ * Debug Spec v1.0 Table 9:
-+ * - ebreak: dpc = address of the ebreak instruction.
-+ * - step/trigger/haltreq (and reset/group/other): dpc = next instruction
-+ *   to execute when Debug Mode was entered.
-+ */
-+static target_ulong riscv_debug_dpc_on_entry(CPURISCVState *env,
-+                                             target_ulong trap_pc,
-+                                             uint32_t cause)
-+{
-+    switch (cause & 0x7) {
-+    case DCSR_CAUSE_EBREAK:
-+        return trap_pc & get_xepc_mask(env);
-+    default:
-+        return env->pc & get_xepc_mask(env);
-+    }
-+}
- #endif
- 
- void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-@@ -152,7 +170,7 @@ void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-     }
- 
-     env->debug_mode = true;
--    env->dpc = pc & get_xepc_mask(env);
-+    env->dpc = riscv_debug_dpc_on_entry(env, pc, cause);
-     env->dcsr &= ~(DCSR_CAUSE_MASK | DCSR_PRV_MASK | DCSR_V);
-     env->dcsr |= ((target_ulong)(cause & 0x7)) << DCSR_CAUSE_SHIFT;
-     env->dcsr |= env->priv & DCSR_PRV_MASK;
-@@ -168,6 +186,13 @@ void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-         }
-         env->elp = false;
-     }
-+
-+    /*
-+     * Per RISC-V Debug Spec v1.0 Section 4.1:
-+     * "All operations are executed with machine mode privilege."
-+     * Switch to M-mode so ROM/progbuf fetches use physical addressing.
-+     */
-+    riscv_cpu_set_mode(env, PRV_M, false);
- #endif
- }
- 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 53d862080c..4674ff3e3c 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -280,6 +280,16 @@ static void riscv_cpu_exec_enter(CPUState *cs)
-     if (!cpu->cfg.ext_sdext || !env->debug_mode) {
-         return;
-     }
-+
-+    /*
-+     * When a DM ROM is present, the CPU must stay in debug mode and
-+     * execute ROM code. DRET will leave debug mode later. Without a DM
-+     * ROM, leave debug mode immediately (legacy shortcut).
-+     */
-+    if (env->dm_rom_present) {
++    if (env->debug_mode) {
 +        return;
 +    }
 +
-     target_ulong pc = env->dpc;
-     riscv_cpu_leave_debug_mode(env);
-     env->pc = pc;
+     for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
+         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
+             continue;
+@@ -848,7 +853,9 @@ void helper_itrigger_match(CPURISCVState *env)
+         if (!count) {
+             continue;
+         }
+-        itrigger_set_count(env, i, count--);
++
++        count--;
++        itrigger_set_count(env, i, count);
+         if (!count) {
+             env->itrigger_enabled = riscv_itrigger_enabled(env);
+             do_trigger_action(env, i);
 -- 
 2.53.0
 
