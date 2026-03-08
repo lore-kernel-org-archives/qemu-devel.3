@@ -4,42 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF316F55126
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 08:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4604F55126
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 08:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz9Rv-0006V0-6M; Sun, 08 Mar 2026 04:25:19 -0400
+	id 1vz9WQ-0007QJ-JZ; Sun, 08 Mar 2026 04:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vz9Rt-0006UL-A9; Sun, 08 Mar 2026 04:25:17 -0400
+ id 1vz9WO-0007Pc-Hh; Sun, 08 Mar 2026 04:29:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vz9Rq-0007p7-El; Sun, 08 Mar 2026 04:25:17 -0400
+ id 1vz9WM-00006z-Ri; Sun, 08 Mar 2026 04:29:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1772958269; bh=pDhhETBfmsfxq6ajF6IWdr3+lb2kFOB0x5h0yf48up4=;
+ t=1772958559; bh=QLvyArDQqA6DYNk53G4XxeaRmbJPyBZE1PezPydaYHI=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=CPn8OmFIriKJh+vshrWCtKdDLGfZIKSwUCA+uoCslEp+qRZEBFeu0c458CneE+eI8
- d5h/qcPlL+UgvHKid7w0TbuhzJXimqHLp6iKc2ce/1Y5U4zN/aobNaiVWg/cgXuHdx
- 7TBxmv4Nm5qgE15iNB3lBqpokZ/URhB+zHmCnTfxphjL8s5i9emWgE22mD54wmGqGv
- eGunNW92AFV/8yzA8+R9cuARYtMUbxvKR6gMz3qQDR2KeC2vB8NurkH5DYGDtmRINU
- NT6er8prMqA2w6ALv0uSb+1soYNfCuEdnhfr77SJAtxs8zAyrrWnoFsqs2k9jeCcyA
- wCk/xFUPIBuaQ==
+ b=KqLtHtjQmz57d7tfHpy9ilLL+zbQOwmfAfo6Y89ggxMdtOvgE76+Xdi9NiI1oKwV+
+ fgrpkta/kGNBOwHSlEh4KgYV8xEbmKqVczn4dCI3ihjbgtB9U8ZzJccoyxp+MgL4Eq
+ 0+hIj9nygCkaza1VnPV58iGRh6eCvbIZBm4yjKZyLPLcGpPYKpn602HZO6OKoQtTl/
+ Juhv55h+F+pazh82pUh7Ol4H3ZsjBtJfprRJtuBnB7xCya53C6TsPOb4FVjnAepf/7
+ 2HIYyhchy09iraPMFYnApzgThmwL1VMsLCiuKyaj42iMYDAsiUGPyCYk7XPl2QjS/j
+ 2YIfDgBn3/2+g==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 33A0F19088C;
- Sun, 08 Mar 2026 11:24:29 +0300 (MSK)
-Message-ID: <27e0c423-7133-4aeb-95ea-50255871921e@tls.msk.ru>
-Date: Sun, 8 Mar 2026 11:25:01 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id D6D51190890;
+ Sun, 08 Mar 2026 11:29:19 +0300 (MSK)
+Message-ID: <acbb62f8-17d0-421f-858e-fcc0478d55b2@tls.msk.ru>
+Date: Sun, 8 Mar 2026 11:29:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mirror: Fix missed dirty bitmap writes during startup
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: hreitz@redhat.com, f.ebner@proxmox.com, vsementsov@yandex-team.ru,
- jsnow@redhat.com, jean-louis@dupond.be, dionbosschieter@gmail.com,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20260219202446.312493-1-kwolf@redhat.com>
+Subject: Re: [PATCH resend] block/throttle-groups: fix deadlock with iolimits
+ and muliple iothreads
+To: Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Cc: Dmitry Guryanov <dmitry.guryanov@gmail.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
+ <5011ccf5-7af5-4f88-8261-35514c72bc84@redhat.com>
+ <aaCmmgtIlDQMaj8V@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -85,7 +88,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260219202446.312493-1-kwolf@redhat.com>
+In-Reply-To: <aaCmmgtIlDQMaj8V@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -112,51 +115,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.02.2026 23:24, Kevin Wolf wrote:
-> Currently, mirror disables the block layer's dirty bitmap before its own
-> replacement is working. This means that during startup, there is a
-> window in which the allocation status of blocks in the source has
-> already been checked, but new writes coming in aren't tracked yet,
-> resulting in a corrupted copy:
-> 
-> 1. Dirty bitmap is disabled in mirror_start_job()
-> 2. Some request are started in mirror_top_bs while s->job == NULL
-> 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
->     the request hasn't completed yet, the block isn't allocated
-> 4. The request completes, still sees s->job == NULL and skips the
->     bitmap, and nothing else will mark it dirty either
-> 
-> One ingredient is that mirror_top_opaque->job is only set after the
-> job is fully initialized. For the rationale, see commit 32125b1460
-> ("mirror: Fix access of uninitialised fields during start").
-> 
-> Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-> to track writes from the beginning. Disabling the block layer's tracking
-> and enabling the mirror_top_bs one happens in a drained section, so
-> there is no danger of races with in-flight requests any more. All of
-> this happens well before the block allocation status is checked, so we
-> can be sure that no writes will be missed.
-> 
-> Cc: qemu-stable@nongnu.org
-> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-> Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+On 26.02.2026 23:01, Kevin Wolf wrote:
+> Am 26.02.2026 um 15:37 hat Hanna Czenczek geschrieben:
+>> On 08.12.25 09:55, Dmitry Guryanov wrote:
+>>> Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
+>>>
+>>> The function schedule_next_request is called with tg->lock held and
+>>> it may call throttle_group_co_restart_queue, which takes
+>>> tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
+>>> coroutine if other iothread has taken the lock. If the next
+>>> coroutine will call throttle_group_co_io_limits_intercept - it
+>>> will try to take the mutex tg->lock which will never be released.
+...
 
-Hi!
+This smells like a qemu-stable material (10.0.x, 10.1.x, 10.2.x).
 
-While trying to apply this one to 10.0.x series of qemu, I noticed there
-are a few other commits missing in this area.  Namely, these commits are
-missing in there:
-
-91ba0e1c382bd4 block: move drain outside of bdrv_change_aio_context() 
-and mark GRAPH_RDLOCK
-ffdcd081f52544 block: move drain outside of bdrv_root_attach_child()
-6b89e851fabf78 block: add bdrv_graph_wrlock_drained() convenience wrapper
-
-This is just a context, but I wonder if the resulting thing look sane.
-https://gitlab.com/mjt0k/qemu/-/commit/04c53bdbef634f93ac4149a19bf2de2e8d156b2b 
---
-can you take a look please?
+Please let me know if it isn't.
 
 Thanks,
 
