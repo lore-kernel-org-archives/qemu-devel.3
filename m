@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F927EA8543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:39:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20B6EA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMmf-0007P3-Es; Sun, 08 Mar 2026 18:39:37 -0400
+	id 1vzMmX-0006tQ-0u; Sun, 08 Mar 2026 18:39:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMma-0007AB-Np
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:39:34 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMmV-0006pv-IF
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:39:27 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMmY-0003l2-P3
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:39:32 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-480706554beso122880965e9.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:39:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMmT-0003kO-4j
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:39:27 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4852fdb36a8so14720125e9.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009569; x=1773614369; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009562; x=1773614362; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=my/LVrxysf1jEbG5Gn9om1dyx26cxh6RaihKhmPCfeA=;
- b=EuSrXXD8k42IABg4q3YIOGNWMn3rzzWJLlaa/403vLvWJsBmouWwKf1f3QTXJxznf9
- PsjYTpQLMpSShPvdv98Wg5VvWWL1TnfPqRMw+WrHwqiTzQNIy7AEXVrNQtJb7a6zsK+Q
- qhC+jvbIE3hOiTvDINDL8R+hgdvucCebOEKC6k4gR1FnBGeaj8dwe3TjsEK+KlJ0oKYd
- V9C0gvzuCvpG/u0S5Z9kCeIhl3uIL/+wSPSCDN4ci1uykcC/uU4tFAOCIhQa/oNwDmqb
- i4lAsorNKhXhMWhB6TWC6gjjqeLhnWkoTFGAa/ZoHZFknUY7LBwkqgwuAsVlIGFGz0GK
- aTnw==
+ :reply-to; bh=PfjxtWhAJ3CuZYePYTssU/iwsvuWkdbwakKwc8f5rYI=;
+ b=H71VdGSurUqtJsed/b+q7xEcgU0xKudmuMMDiLGcPycXuRLCB4/QtqkYsE4ssPQV6f
+ w5r7qXKXKz3ybr7w6PmpxNbPsdYugq3pKnkOh7N9pDMQBvMUL4X9AL0joZ1Cardb1uvA
+ +fPhDduEuPFtY9LUeAr/DAhwS4q/4/89bdSSDFZac7bSjic8qIvRN1s1WhqwlRj5WrO+
+ s3vAX33KBJq3syUdDbq+kyBzMIJ/kUN5k6Hk3dNqdxRCjFpkBrvn9Xlq2zKe7/wTTYat
+ wqRgb8E6JsqiVa56JSX5pvQSIaJHCVG9PR7qBAV2oizRqkgroug+ZsZWqgSKEyGunKhK
+ F3PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009569; x=1773614369;
+ d=1e100.net; s=20230601; t=1773009562; x=1773614362;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=my/LVrxysf1jEbG5Gn9om1dyx26cxh6RaihKhmPCfeA=;
- b=P77r23cysD/3wL3v/eCP2/BU6LMot65eYt/nOQvjKCDIPwLchtPo2tJJue+SdhbCyO
- 3r7qD9vVFWcf6PHfG/iS8KktNir2NbakNG2JG6crbXKQL0mcseZTk9uAdQQGxa1SuJLN
- jfZAvpEUsxjgzrosZ6WNXj5I9+q2/FkAOoivT4OpS5kq2MnY4LTAsrLjqpGINGWNK/7l
- f06AMMKB3kjoJ6be04hjgqTjJXhzbwLyiq0AkpKmQvBXvh5Pm4FO5h7WpLjNwrx567Jj
- IEDeJxIcRPnMcFO5tW8lo8KAyRqcMLgeu0VYh8JUhbvKaJ1m5OycR+8Q5295Vo4gR627
- EgvA==
-X-Gm-Message-State: AOJu0Yxf/CG0e9514eXw26MU8YZA15il1jfJ4veNo7xYIp/seSbI3o8v
- 6I7Xl1bd+dJu562f53Ajf1yM2NJzQBCaQ8A0l2ZyzdVrNYginpQNp6XcfE2flcuz0u2XlOk0xzE
- ocxYGPqA=
-X-Gm-Gg: ATEYQzwuCMG6ipZpQA0T6A0EUM6+Yq8Q57WiqPupqOOjYZ1WVvg6pPXry56zlaf0Rda
- NAzxBTpgF27vWoZ6Y5FLfW8eRO1A+9vEQNh12EOzleD0FNH75Kun2iHEQjYRhiOhpN51bJvOPGr
- H6Lt0WJU9+VupO1zc6hRXWO64fgkcuaBv1rNEIRK+YsjxLB0yhMPLMSXVbz/Mq1INyKDktQXRuO
- Fo+b+NWOibwuGOPG0iCaJmET5dyEDWMHqJusKV2pA7Mp7A5V3Hd4oDzLhpC+VYFys/SCO3qjpRY
- GlRaIeJML30pcgHd+H2rA3LlPhmVJz7wPZU0SV3qDJ1KMLPOAvEiAxPVmwSl+pRWCH+NxCr4t1t
- lIvdn2wABKEjdCjgqQggdKfsiReqTAVJYvfuMzaZfMDEe9A5oHzQx45+KGRAJRAu3S9qlABJhr1
- 96bWMI/jJrUDW94Seq6cVE0Vv8/WviVHfCe3gF0S/DZvFyCZxiCDsSuN23InvTK3Amos+POo5id
- dtz3Q==
-X-Received: by 2002:a05:600c:34d0:b0:477:5cc6:7e44 with SMTP id
- 5b1f17b1804b1-48526923c5cmr153565385e9.11.1773009568874; 
- Sun, 08 Mar 2026 15:39:28 -0700 (PDT)
+ bh=PfjxtWhAJ3CuZYePYTssU/iwsvuWkdbwakKwc8f5rYI=;
+ b=UBYp5LYo5gceoVTLmsciXSu0KGhz0Y1tIp6UP2xDTmWTw5snYE8MA4tTXgyqbPBDvx
+ SmVa42vZy3UDJYBGOLlu1ioUoLj62QXb5TPZB7z1pZak6tMRz1WjAK39iBaa9rQrIyVf
+ P21STOmeI0W50qvVrau8oW1zhAqGAy3dpECItfpbtnZnwgcduC02yHvbqXvUMMoaclXW
+ w1pFQznJOyn7NVTDp32T0DglYifgqCk3r9TJK2jpn33E3tK9LYPwMtqk+U3aG+fpnbND
+ XzY1xwZouKJo4x+fN7GsLN3pETQ/GY48o1Zw+GoCH2RzO5t/hVmooNhMcQYFcMDTuszj
+ Vm0Q==
+X-Gm-Message-State: AOJu0YykBetcEY4A7WWPNYrLiCKrE4v1x64WGOgPumfgbVEX/I88uM5t
+ UyOlixeus8lf6+vuhZx+r/flOtPloE/u0GRrNNTX5G51fZCMal8SrogSOWr+XSKiWmsRCkTfSG6
+ EyRUlIkY=
+X-Gm-Gg: ATEYQzxDvaQo/3yJK6gSLvSRgAnqZ+AMQZTSLtKhvOISRijQEINReIIF87m0QH6BP7y
+ pKKKsVdK2xSscKqlbb3jEBzpw3G58FbM/0nYk7vAAMJkRFYxyzda2n1yCbTNBaj9gQgOKJtAhkN
+ ZEbSdP2Crhk+Cygtx4CyqItNURgv4W0aNlIrOGr0Ewl5QviwDgCcKszYsss8aHA9B0u2Hk95xqH
+ 3oEaxFtiMjpHlyAVucvBuQBIQhauB+oXjHHDGuJSqghNsZS8WXChxXHW/Zp7FsGMGbOsFfCT+bG
+ /9uWPY5/LyIw0hTbw1YiXuupLm1YT1HmY4jHElAdg0GzMV/gzXbFkcGKTcT1gjUl9bUXVrlewG2
+ xoe9/+NCPnf5FFFyvUPkE5iVBNYf68raTjhIEcZBbpmpQoCoi63toeHaF8GHYRRv9yTaS8St1rK
+ Lm4foeMOLDp9iJgP5V1z+btTcSxHNRa//Mo6i2dRjOmkbJ3Lnfx1Ua7sjCDL4YS01nXdKvDIMa1
+ 48BKg==
+X-Received: by 2002:a05:600c:4e4e:b0:485:363b:fafd with SMTP id
+ 5b1f17b1804b1-485363bfc84mr49922665e9.6.1773009562321; 
+ Sun, 08 Mar 2026 15:39:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485276b7547sm222008405e9.12.2026.03.08.15.39.28
+ 5b1f17b1804b1-4853c22762esm7155975e9.28.2026.03.08.15.39.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:39:28 -0700 (PDT)
+ Sun, 08 Mar 2026 15:39:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/49] hppa: Get physical address space bits from HPPACPUDef
-Date: Sun,  8 Mar 2026 23:34:27 +0100
-Message-ID: <20260308223433.25503-44-philmd@linaro.org>
+Subject: [PULL 42/49] hppa: Introduce HPPACPUDef
+Date: Sun,  8 Mar 2026 23:34:26 +0100
+Message-ID: <20260308223433.25503-43-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,240 +101,295 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
+Restructures the CPU class heirarchy to clarify model names and allow
+for per-model configuration options via HPPACPUDef. 32-bit HPPA is
+assumed to run a PA-7300LC, and 64-bit assumed to run a PA-8700.
+A new PA-8500 model is added, which will later be used by the A400
+machine.  All CPU models are made into children of the now abstract
+TYPE_HPPA_CPU base class.
+
+Two fields are added to HPPACPUDef describing the size of the physical
+address space, and whether or not the CPU uses the PA-RISC 2.0
+architecture.  The latter was previously a field in CPUHPPAState.
+
+phys_addr_bits is currently set but unused, and will be used in the
+following commit.  Likewise, PA-8700 is moved to use 44 bit physical
+addresses in a followup commit to not break bisection.
+
+References to "hppa/hppa64" models in test cases are also updated.
+
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260305-hppa-c3600-v6-2-d51526e5269c@rev.ng>
+Message-ID: <20260305-hppa-c3600-v6-1-d51526e5269c@rev.ng>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/pci-host/astro.h |  2 ++
- target/hppa/cpu.h           | 11 ++++++++---
- hw/hppa/machine.c           | 15 +++++++++-----
- hw/pci-host/astro.c         |  8 +++++++-
- target/hppa/cpu.c           |  5 +++++
- target/hppa/mem_helper.c    | 39 +++++++++++--------------------------
- 6 files changed, 43 insertions(+), 37 deletions(-)
+ target/hppa/cpu-qom.h           |  8 +++++-
+ target/hppa/cpu.h               | 24 +++++++++++++---
+ hw/hppa/machine.c               | 21 ++++++++------
+ linux-user/hppa/elfload.c       |  2 +-
+ target/hppa/cpu.c               | 50 +++++++++++++++++++++++++--------
+ tests/qtest/machine-none-test.c |  2 +-
+ 6 files changed, 80 insertions(+), 27 deletions(-)
 
-diff --git a/include/hw/pci-host/astro.h b/include/hw/pci-host/astro.h
-index 832125a05af..fce052c9f86 100644
---- a/include/hw/pci-host/astro.h
-+++ b/include/hw/pci-host/astro.h
-@@ -82,6 +82,8 @@ struct AstroState {
-     uint64_t tlb_tcnfg;
-     uint64_t tlb_pdir_base;
+diff --git a/target/hppa/cpu-qom.h b/target/hppa/cpu-qom.h
+index 5c454bf543b..7541c25b3d5 100644
+--- a/target/hppa/cpu-qom.h
++++ b/target/hppa/cpu-qom.h
+@@ -23,7 +23,13 @@
+ #include "hw/core/cpu.h"
  
-+    uint8_t phys_addr_bits;
+ #define TYPE_HPPA_CPU "hppa-cpu"
+-#define TYPE_HPPA64_CPU "hppa64-cpu"
 +
-     struct ElroyState *elroy[ELROY_NUM];
++#define HPPA_CPU_TYPE_SUFFIX "-" TYPE_HPPA_CPU
++#define HPPA_CPU_TYPE_NAME(name) (name HPPA_CPU_TYPE_SUFFIX)
++
++#define TYPE_HPPA_CPU_PA_7300LC HPPA_CPU_TYPE_NAME("pa-7300lc")
++#define TYPE_HPPA_CPU_PA_8500   HPPA_CPU_TYPE_NAME("pa-8500")
++#define TYPE_HPPA_CPU_PA_8700   HPPA_CPU_TYPE_NAME("pa-8700")
  
-     MemoryRegion this_mem;
+ OBJECT_DECLARE_CPU_TYPE(HPPACPU, HPPACPUClass, HPPA_CPU)
+ 
 diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 43b4882fb4f..7d47afe8efa 100644
+index 092e647ccf5..43b4882fb4f 100644
 --- a/target/hppa/cpu.h
 +++ b/target/hppa/cpu.h
-@@ -320,6 +320,11 @@ static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
-     return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
- }
+@@ -270,8 +270,6 @@ typedef struct CPUArchState {
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
  
-+static inline uint8_t hppa_phys_addr_bits(CPUHPPAState *env)
-+{
-+    return hppa_def(env)->phys_addr_bits;
+-    bool is_pa20;
+-
+     target_ulong kernel_entry; /* Linux kernel was loaded here */
+     target_ulong cmdline_or_bootorder;
+     target_ulong initrd_base, initrd_end;
+@@ -290,6 +288,18 @@ struct ArchCPU {
+     QEMUTimer *alarm_timer;
+ };
+ 
++/**
++ * HPPACPUDef:
++ * @phys_addr_bits: Number of bits in the physical address space.
++ * @is_pa20: Whether the CPU model follows the PA-RISC 2.0 or 1.1 spec.
++ *
++ * Configuration options for a HPPA CPU model.
++ */
++typedef struct HPPACPUDef {
++    uint8_t phys_addr_bits;
++    bool is_pa20;
++} HPPACPUDef;
++
+ /**
+  * HPPACPUClass:
+  * @parent_realize: The parent class' realize handler.
+@@ -302,11 +312,17 @@ struct HPPACPUClass {
+ 
+     DeviceRealize parent_realize;
+     ResettablePhases parent_phases;
++    const HPPACPUDef *def;
+ };
+ 
+-static inline bool hppa_is_pa20(const CPUHPPAState *env)
++static inline const HPPACPUDef *hppa_def(CPUHPPAState *env)
+ {
+-    return env->is_pa20;
++    return HPPA_CPU_GET_CLASS(env_cpu(env))->def;
 +}
 +
- static inline bool hppa_is_pa20(CPUHPPAState *env)
- {
-     return hppa_def(env)->is_pa20;
-@@ -352,9 +357,9 @@ static inline vaddr hppa_form_gva(CPUHPPAState *env, uint64_t spc,
-     return hppa_form_gva_mask(env->gva_offset_mask, spc, off);
++static inline bool hppa_is_pa20(CPUHPPAState *env)
++{
++    return hppa_def(env)->is_pa20;
  }
  
--hwaddr hppa_abs_to_phys_pa1x(vaddr addr);
--hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr);
--hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr);
-+hwaddr hppa_abs_to_phys_pa1x(uint8_t phys_addr_bits, vaddr addr);
-+hwaddr hppa_abs_to_phys_pa2_w0(uint8_t phys_addr_bits, vaddr addr);
-+hwaddr hppa_abs_to_phys_pa2_w1(uint8_t phys_addr_bits, vaddr addr);
- 
- /*
-  * Since PSW_{I,CB} will never need to be in tb->flags, reuse them.
+ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *env)
 diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 5d0d4de09ed..6b69a304c2a 100644
+index f55e84529f6..5d0d4de09ed 100644
 --- a/hw/hppa/machine.c
 +++ b/hw/hppa/machine.c
-@@ -179,19 +179,21 @@ static uint64_t linux_kernel_virt_to_phys(void *opaque, uint64_t addr)
-     return addr;
- }
- 
-+static HPPACPU *cpu[HPPA_MAX_CPUS];
-+static uint64_t firmware_entry;
-+
- static uint64_t translate_pa10(void *dummy, uint64_t addr)
+@@ -801,13 +801,13 @@ static void hppa_machine_common_class_init(ObjectClass *oc, const void *data)
+ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
  {
--    return hppa_abs_to_phys_pa1x(addr);
-+    const uint8_t pa_bits = hppa_phys_addr_bits(&cpu[0]->env);
-+    return hppa_abs_to_phys_pa1x(pa_bits, addr);
- }
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
  
- static uint64_t translate_pa20(void *dummy, uint64_t addr)
+     mc->desc = "HP B160L workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_B160L_init;
+     mc->is_default = true;
+@@ -817,13 +817,13 @@ static void HP_B160L_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
  {
--    return hppa_abs_to_phys_pa2_w0(addr);
-+    const uint8_t pa_bits = hppa_phys_addr_bits(&cpu[0]->env);
-+    return hppa_abs_to_phys_pa2_w0(pa_bits, addr);
- }
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8700,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
  
--static HPPACPU *cpu[HPPA_MAX_CPUS];
--static uint64_t firmware_entry;
--
- static void fw_cfg_boot_set(void *opaque, const char *boot_device,
-                             Error **errp)
+     mc->desc = "HP C3700 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8700;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_C3700_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -833,13 +833,13 @@ static void HP_C3700_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
  {
-@@ -685,6 +687,9 @@ static AstroState *astro_init(void)
-     DeviceState *dev;
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA64_CPU,
++        TYPE_HPPA_CPU_PA_8500,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
  
-     dev = qdev_new(TYPE_ASTRO_CHIP);
-+    object_property_set_int(OBJECT(dev), "phys-addr-bits",
-+                            hppa_phys_addr_bits(&cpu[0]->env),
-+                            &error_abort);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     return ASTRO_CHIP(dev);
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 00a904277c0..626aa9ce223 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -303,7 +303,7 @@ static IOMMUTLBEntry astro_translate_iommu(IOMMUMemoryRegion *iommu,
-      * language which not-coincidentally matches the PSW.W=0 mapping.
-      */
-     if (addr <= UINT32_MAX) {
--        entry = hppa_abs_to_phys_pa2_w0(addr);
-+        entry = hppa_abs_to_phys_pa2_w0(s->phys_addr_bits, addr);
-     } else {
-         entry = addr;
-     }
-@@ -910,6 +910,10 @@ static void astro_realize(DeviceState *obj, Error **errp)
-     }
- }
- 
-+static const Property astro_props[] = {
-+    DEFINE_PROP_UINT8("phys-addr-bits", AstroState, phys_addr_bits, 32),
-+};
-+
- static void astro_class_init(ObjectClass *klass, const void *data)
+     mc->desc = "HP A400-44 workstation";
+-    mc->default_cpu_type = TYPE_HPPA64_CPU;
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_8500;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_A400_init;
+     mc->max_cpus = HPPA_MAX_CPUS;
+@@ -849,13 +849,18 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
+ static void HP_715_machine_init_class_init(ObjectClass *oc, const void *data)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -922,6 +926,8 @@ static void astro_class_init(ObjectClass *klass, const void *data)
-      * be created without that hardware
-      */
-     dc->user_creatable = false;
-+
-+    device_class_set_props(dc, astro_props);
+     static const char * const valid_cpu_types[] = {
+-        TYPE_HPPA_CPU,
++        TYPE_HPPA_CPU_PA_7300LC,
+         NULL
+     };
+     MachineClass *mc = MACHINE_CLASS(oc);
+ 
+     mc->desc = "HP 715/64 workstation";
+-    mc->default_cpu_type = TYPE_HPPA_CPU;
++    /*
++     * Although the 715 workstation should use a 7100LC, it can be safely
++     * modeled as a 7300LC as the difference is a moving of the L1 data cache
++     * to on-chip.
++     */
++    mc->default_cpu_type = TYPE_HPPA_CPU_PA_7300LC;
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->init = machine_HP_715_init;
+     /* can only support up to max. 8 CPUs due inventory major numbers */
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 46007087020..7f7ece6dc19 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -8,7 +8,7 @@
+ 
+ const char *get_elf_cpu_model(uint32_t eflags)
+ {
+-    return "hppa";
++    return "pa-7300lc";
  }
  
- static const TypeInfo astro_chip_info = {
+ const char *get_elf_platform(CPUState *cs)
 diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index cc755da8be2..5895b9d7c09 100644
+index 714f3bbdaf7..cc755da8be2 100644
 --- a/target/hppa/cpu.c
 +++ b/target/hppa/cpu.c
-@@ -283,6 +283,11 @@ static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
-     /* Make sure all CPU models define a HPPACPUDef */
-     g_assert(!object_class_is_abstract(oc) && data != NULL);
-     acc->def = data;
-+    /*
-+     * Verify assumptions made in hppa_abs_to_phys_pa2_w1() on the size
-+     * of the physical address space.
-+     */
-+    g_assert(acc->def->phys_addr_bits <= 54);
+@@ -203,13 +203,6 @@ static void hppa_cpu_realizefn(DeviceState *dev, Error **errp)
+     tcg_cflags_set(cs, CF_PCREL);
  }
  
- static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index 9199d1e06ab..a4b382069d8 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -29,29 +29,12 @@
- #include "hw/core/cpu.h"
- #include "trace.h"
- 
--/*
-- * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-- * machines 7300LC.  This should give 44 and 32 bits of physical address
-- * space respectively.
-- *
-- *   CPU model        Physical address space bits
-- *   PA-7000--7300LC  32
-- *   PA-8000--8600    40
-- *   PA-8700--8900    44
-- *
-- * FIXME: However, the SeaBIOS firmware that is that tested against
-- * uses 40-bit physical addresses, despite supposedly running a C3700
-- * with a PA-8700 cpu, so use 40-bits for 64-bit.
-- */
--#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 40
--#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
+-static void hppa_cpu_initfn(Object *obj)
+-{
+-    CPUHPPAState *env = cpu_env(CPU(obj));
 -
--hwaddr hppa_abs_to_phys_pa1x(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa1x(uint8_t phys_addr_bits, vaddr addr)
+-    env->is_pa20 = !!object_dynamic_cast(obj, TYPE_HPPA64_CPU);
+-}
+-
+ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
  {
--    return extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
-+    return extract64(addr, 0, phys_addr_bits);
+     HPPACPUClass *scc = HPPA_CPU_GET_CLASS(obj);
+@@ -236,9 +229,14 @@ static void hppa_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
+ {
+-    g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
++    ObjectClass *oc;
++    char *typename;
+ 
+-    return object_class_by_name(typename);
++    typename = g_strdup_printf(HPPA_CPU_TYPE_NAME("%s"), cpu_model);
++    oc = object_class_by_name(typename);
++    g_free(typename);
++
++    return oc;
  }
  
--hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa2_w1(uint8_t phys_addr_bits, vaddr addr)
+ #ifndef CONFIG_USER_ONLY
+@@ -279,6 +277,14 @@ static const TCGCPUOps hppa_tcg_ops = {
+ #endif /* !CONFIG_USER_ONLY */
+ };
+ 
++static void hppa_cpu_class_base_init(ObjectClass *oc, const void *data)
++{
++    HPPACPUClass *acc = HPPA_CPU_CLASS(oc);
++    /* Make sure all CPU models define a HPPACPUDef */
++    g_assert(!object_class_is_abstract(oc) && data != NULL);
++    acc->def = data;
++}
++
+ static void hppa_cpu_class_init(ObjectClass *oc, const void *data)
  {
-     /*
-      * Figure H-8 "62-bit Absolute Accesses when PSW W-bit is 1" describes
-@@ -64,11 +47,10 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-      * Since the supported physical address space is below 54 bits, the
-      * H-8 algorithm is moot and all that is left is to truncate.
-      */
--    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
--    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-+    return sextract64(addr, 0, phys_addr_bits);
- }
+     DeviceClass *dc = DEVICE_CLASS(oc);
+@@ -313,14 +319,34 @@ static const TypeInfo hppa_cpu_type_infos[] = {
+         .parent = TYPE_CPU,
+         .instance_size = sizeof(HPPACPU),
+         .instance_align = __alignof(HPPACPU),
+-        .instance_init = hppa_cpu_initfn,
+-        .abstract = false,
++        .abstract = true,
+         .class_size = sizeof(HPPACPUClass),
+         .class_init = hppa_cpu_class_init,
++        .class_base_init = hppa_cpu_class_base_init,
+     },
+     {
+-        .name = TYPE_HPPA64_CPU,
++        .name = TYPE_HPPA_CPU_PA_7300LC,
+         .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 32,
++            .is_pa20 = false,
++        },
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8500,
++        .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
++    },
++    {
++        .name = TYPE_HPPA_CPU_PA_8700,
++        .parent = TYPE_HPPA_CPU,
++        .class_data = &(const HPPACPUDef) {
++            .phys_addr_bits = 40,
++            .is_pa20 = true,
++        },
+     },
+ };
  
--hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-+hwaddr hppa_abs_to_phys_pa2_w0(uint8_t phys_addr_bits, vaddr addr)
- {
-     /*
-      * See Figure H-10, "Absolute Accesses when PSW W-bit is 0",
-@@ -89,7 +71,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-          * is what can be seen on physical machines too.
-          */
-         addr = (uint32_t)addr;
--        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
-+        addr |= -1ull << (phys_addr_bits - 4);
-     }
-     return addr;
- }
-@@ -231,15 +213,16 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
- 
-     /* Virtual translation disabled.  Map absolute to physical.  */
-     if (MMU_IDX_MMU_DISABLED(mmu_idx)) {
-+        const uint8_t phys_addr_bits = hppa_phys_addr_bits(env);
-         switch (mmu_idx) {
-         case MMU_ABS_W_IDX:
--            phys = hppa_abs_to_phys_pa2_w1(addr);
-+            phys = hppa_abs_to_phys_pa2_w1(phys_addr_bits, addr);
-             break;
-         case MMU_ABS_IDX:
-             if (hppa_is_pa20(env)) {
--                phys = hppa_abs_to_phys_pa2_w0(addr);
-+                phys = hppa_abs_to_phys_pa2_w0(phys_addr_bits, addr);
-             } else {
--                phys = hppa_abs_to_phys_pa1x(addr);
-+                phys = hppa_abs_to_phys_pa1x(phys_addr_bits, addr);
-             }
-             break;
-         default:
-@@ -580,7 +563,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
-     /* Align per the page size. */
-     ent->pa &= TARGET_PAGE_MASK << mask_shift;
-     /* Ignore the bits beyond physical address space. */
--    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
-+    ent->pa = sextract64(ent->pa, 0, hppa_phys_addr_bits(env));
- 
-     ent->t = extract64(r2, 61, 1);
-     ent->d = extract64(r2, 60, 1);
+diff --git a/tests/qtest/machine-none-test.c b/tests/qtest/machine-none-test.c
+index c1e22dcecc7..bafd7d660ec 100644
+--- a/tests/qtest/machine-none-test.c
++++ b/tests/qtest/machine-none-test.c
+@@ -47,7 +47,7 @@ static struct arch2cpu cpus_map[] = {
+     { "tricore", "tc1796" },
+     { "xtensa", "dc233c" },
+     { "xtensaeb", "fsf" },
+-    { "hppa", "hppa" },
++    { "hppa", "pa-7300lc" },
+     { "riscv64", "rv64" },
+     { "riscv32", "rv32" },
+     { "rx", "rx62n" },
 -- 
 2.53.0
 
