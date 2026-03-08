@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF09F55102
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 11:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF93F55102
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 11:40:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzCTT-0005l6-OC; Sun, 08 Mar 2026 07:39:09 -0400
+	id 1vzCUB-0006X6-Qr; Sun, 08 Mar 2026 07:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCTR-0005kn-6Z
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCU6-0006Ng-89
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCTL-0007Wa-Q7
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzCU3-0007eV-ER
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1772969938;
+ s=mimecast20190719; t=1772969982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KJ8bzg8V+uvZAsLa7IYzmmSXgUWNDaSyMpThEwzLfNY=;
- b=QgiHtU+50wVMt7f+fHNzF8eVmumvF0hQ4lDVsZdpsHG4d2su01RVHsmsuB4xZywm2UmtnQ
- vQO9gyIaMJ/ARcOyEpMQqvO4oZdv0hq4j7mACxJfTMlh5RK7IOTS1YthWX/ukJNIlKKnpE
- TG+lMz8hbT5nD0Hk3MJsj6Sa8VcLBGI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=n9DveWYBn80FzeMRFh3ElHW6XB0/7DQWPl88cnhG9qY=;
+ b=ZbGIIr5xfSxMw9il33aXYO5mIgWOON5dt8TmhICVxiIXtWsr9zg2My240iBGQwJ6DYp7s8
+ mmVqVoOotGvBe/+nG/aFQOiuv66ihEAB/lQGonGBVoWjtsnmaya7WU651CeO3i4V+NBRZV
+ iEq+YtsHRIVjIGifIoDrbIRasi8l660=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-gbvbB5zdMmqjnisJl9BFmw-1; Sun,
- 08 Mar 2026 07:38:57 -0400
-X-MC-Unique: gbvbB5zdMmqjnisJl9BFmw-1
-X-Mimecast-MFC-AGG-ID: gbvbB5zdMmqjnisJl9BFmw_1772969936
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-uL1QPb0nM3iYE0yM_FrTGw-1; Sun,
+ 08 Mar 2026 07:39:39 -0400
+X-MC-Unique: uL1QPb0nM3iYE0yM_FrTGw-1
+X-Mimecast-MFC-AGG-ID: uL1QPb0nM3iYE0yM_FrTGw_1772969978
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D36841956050; Sun,  8 Mar 2026 11:38:55 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C95ED195608F; Sun,  8 Mar 2026 11:39:37 +0000 (UTC)
 Received: from [10.44.32.5] (unknown [10.44.32.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 72D0A1958DC5; Sun,  8 Mar 2026 11:38:51 +0000 (UTC)
-Message-ID: <ec3ccf72-d44e-4078-bbe7-12c70bf4e4e4@redhat.com>
-Date: Sun, 8 Mar 2026 12:38:50 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3B2671800361; Sun,  8 Mar 2026 11:39:31 +0000 (UTC)
+Message-ID: <60a45a80-cc07-4441-8c4a-a644d04602e4@redhat.com>
+Date: Sun, 8 Mar 2026 12:39:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] target/i386/kvm: Remove X86CPU::hyperv_synic_kvm_only
- field
+Subject: Re: [PATCH 4/4] hw/core/machine: Remove the hw_compat_3_0[] array
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
+ Marcelo Tosatti <mtosatti@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
 References: <20260307150042.78030-1-philmd@linaro.org>
- <20260307150042.78030-4-philmd@linaro.org>
+ <20260307150042.78030-5-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -102,10 +103,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307150042.78030-4-philmd@linaro.org>
+In-Reply-To: <20260307150042.78030-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -132,18 +133,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.00, Philippe Mathieu-Daudé wrote:
-> The X86CPU::hyperv_synic_kvm_only boolean (see commit 9b4cf107b09
-> "hyperv: only add SynIC in compatible configurations") was only set
-> in the pc_compat_3_0[] array, via the 'x-hv-synic-kvm-only=on'
-> property. We removed all machines using that array, lets remove that
-> property and all the code around it.
+> The hw_compat_3_0[] array was only used by the pc-q35-3.0
+> and pc-i440fx-3.0 machines, which got removed. Remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/cpu.h     |  1 -
->   target/i386/cpu.c     |  2 --
->   target/i386/kvm/kvm.c | 15 ++++-----------
->   3 files changed, 4 insertions(+), 14 deletions(-)
+>   include/hw/core/boards.h | 3 ---
+>   hw/core/machine.c        | 3 ---
+>   2 files changed, 6 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
