@@ -4,57 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECCDEA8531
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 16:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29303EA8534
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 16:31:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzGcY-0001Pb-U1; Sun, 08 Mar 2026 12:04:47 -0400
+	id 1vzH1l-0007zL-C9; Sun, 08 Mar 2026 12:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1vzGcR-0001If-GZ
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 12:04:41 -0400
-Received: from v54.v54282eed.euw1.send.eu.mailgun.net ([185.250.239.4])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net>)
- id 1vzGcP-0001DX-1p
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 12:04:38 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=0x65c.net; q=dns/txt;
- s=email; t=1772985872; x=1772993072; 
- h=Content-Transfer-Encoding: MIME-Version: Message-ID: Date: Subject: Subject:
- Cc: To: To: From: From: Sender: Sender; 
- bh=dJ2R1CMjxYo7prT2KJ7Frt04kJRwhDOvWhu8+GuKbMI=;
- b=Ln7tZ7R43s/oa0M8VIrvK64uoibdwVhU7vdmQVtR5PZfX8jFssdk38aLCIE6nEZsWOCNhnDqz4PwgK1ju6HigfoOtEKv9GXyQj20FpXmtGq7zo2WbuyzQwLGhVLSis7NVBDADfBl1gJn1o66XxbnV4aVdMZ3aKNZtGIsSFYxGgf5Jn9dJWdATzB9URXoGWUceOHeDsgdRLPntYa3hK97fnEc0mNyDVA2BDFzFXPvcDmm0fKRFH+qr2vhtWZly+llK3en00qCNnd3imcyTLnieZ/+33p7cGaEz30YPlrn/cTKX2vWXGhiZxCUFs0lTGPl4df0duthP1/rG6eykdxh2A==
-X-Mailgun-Sid: WyJiNjdhNCIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjU0ZWY0Il0=
-Received: from fedora (pub158181109038.dh-hfc.datazug.ch [158.181.109.38]) by
- 820e6a982281072c0d8054a8b0ebf264f6462bee9871bbd6a674b9b471d2980c
- with SMTP id 69ad9e1089b476602e9875fd; Sun, 08 Mar 2026 16:04:32 GMT
-X-Mailgun-Sending-Ip: 185.250.239.4
-From: Alessandro Ratti <alessandro@0x65c.net>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, berrange@redhat.com, mst@redhat.com,
- pbonzini@redhat.com, Alessandro Ratti <alessandro@0x65c.net>
-Subject: [PATCH] qdev: Consolidate qdev_get_human_name() into
- qdev_get_printable_name()
-Date: Sun,  8 Mar 2026 17:00:41 +0100
-Message-ID: <20260308160040.354186-2-alessandro@0x65c.net>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vzH1W-0007xy-8T; Sun, 08 Mar 2026 12:30:37 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vzH1U-0005SK-Kw; Sun, 08 Mar 2026 12:30:34 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 68E78401A2;
+ Sun,  8 Mar 2026 16:30:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BFBC116C6;
+ Sun,  8 Mar 2026 16:30:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1772987427;
+ bh=rAXQ4qXmr8ldMMd1OEW/oKpHo6XN1tVics906PmakEw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=j3GtujUI7Fj/qC3tnaQf0WVLXMMi8VqaltFplLt3WXiCRHFYKGflnZ0MFS2y49rKI
+ R2RAi9E5GtIfnCSmAWGoFDxmkwdWQiivKcMqw2e/J6bi54cZu9iTafXiJbYNmws+/i
+ xxpJqRnQSjAYpvz4VrCTtCSSkllJqc5jHmU6SucrBAIIX1fIpAxjjKJpKhN4MvpMiO
+ 14t1yJ8pptEo2pGfLqXmLQ9meBfdKa8yJRhD8B3kiehVd1u3TI4Qhl7zOuNyqYlaI+
+ ehGyItcNs0/pUcfEPKkFaglJZD72fgNp0PGN0rv1T9FZtUXyjy6QBGD6p5iiBrSpA0
+ uNOM7GeCpTVtQ==
+Date: Sun, 8 Mar 2026 09:30:25 -0700
+From: Drew Fustini <fustini@kernel.org>
+To: Radim Krcmar <rkrcmar@qti.qualcomm.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>,
+ Kornel =?utf-8?Q?Dul=C4=99ba?= <mindal@semihalf.com>,
+ Atish Kumar Patra <atishp@rivosinc.com>,
+ Atish Patra <atish.patra@linux.dev>,
+ Vasudevan Srinivasan <vasu@rivosinc.com>,
+ "rkrcmar@ventanamicro.com" <rkrcmar@ventanamicro.com>,
+ yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>,
+ "guo.wenjia23@zte.com.cn" <guo.wenjia23@zte.com.cn>,
+ "liu.qingtao2@zte.com.cn" <liu.qingtao2@zte.com.cn>,
+ "qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org"
+ <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
+Subject: Re: [PATCH v5 2/6] hw/riscv: define capabilities of CBQRI controllers
+Message-ID: <aa2kIVk1B2Fm28Xs@x1>
+References: <20260201-riscv-ssqosid-cbqri-v5-0-273ea4a21703@kernel.org>
+ <20260201-riscv-ssqosid-cbqri-v5-2-273ea4a21703@kernel.org>
+ <DGSI3PC0N9OO.NV1W4DTKW4C2@qti.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.250.239.4;
- envelope-from=bounce+db73df.54ef4-qemu-devel=nongnu.org@0x65c.net;
- helo=v54.v54282eed.euw1.send.eu.mailgun.net
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DGSI3PC0N9OO.NV1W4DTKW4C2@qti.qualcomm.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,138 +87,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On Mon, Mar 02, 2026 at 06:17:14PM +0000, Radim Krcmar wrote:
+> 2026-02-01T15:58:08-08:00, Drew Fustini <fustini@kernel.org>:
+> > From: Nicolas Pitre <npitre@baylibre.com>
+> >
+> > Define structs to represent the hardware capabilities of capacity and
+> > bandwidth controllers according to the RISC-V Capacity and Bandwidth QoS
+> > Register Interface (CBQRI).
+> >
+> > Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
+> > Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> > Signed-off-by: Drew Fustini <fustini@kernel.org>
+> > ---
+> > diff --git a/include/hw/riscv/cbqri.h b/include/hw/riscv/cbqri.h
+> >[...]
+> > +#define RISCV_CBQRI_VERSION_MAJOR   0
+> > +#define RISCV_CBQRI_VERSION_MINOR   1
+> 
+> I the series actually implements 1.0, instead of 0.1.
 
-This patch consolidates qdev_get_human_name() and qdev_get_printable_name()
-into a single function, as suggested by Peter Maydell here [1]
-
-This patch is based on Peter's recent series and should be applied after [2]:
-- "hw/qdev: Document qdev_get_dev_path()"  
-- "hw: Make qdev_get_printable_name() consistently return freeable string"
-
-Thank you for your time and consideration.
-
-Best regards
-Alessandro
-
-[1]: https://lore.kernel.org/qemu-devel/aNLIHOwcGB47qbUY@redhat.com/T/#m89da9b4e30b7c84713ca4b6c323514c72897e649
-[2]: https://lore.kernel.org/qemu-devel/20260307155046.3940197-1-peter.maydell@linaro.org/T/#m962127cb58192e0b2095039cb2fb79145f2a7388
-
----
-Remove qdev_get_human_name() and use qdev_get_printable_name() for all
-device identification in error messages.
-
-Both functions now behave similarly, with qdev_get_printable_name()
-preferring bus-specific paths (e.g., PCI addresses) when available
-before falling back to QOM canonical paths. This provides better
-context in error messages while maintaining the same level of detail.
-
-Error messages will now show device identifiers in this priority:
-1. User-specified device IDs (e.g., -device virtio-blk,id=foo)
-2. Bus-specific identifiers (e.g., PCI addresses like 0000:00:04.0)
-3. QOM canonical paths as a last resort
-
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
----
- hw/block/block.c       |  5 ++---
- hw/core/qdev.c         | 19 ++++++++-----------
- include/hw/core/qdev.h | 13 -------------
- 3 files changed, 10 insertions(+), 27 deletions(-)
-
-diff --git a/hw/block/block.c b/hw/block/block.c
-index f187fa025d..84e5298e2f 100644
---- a/hw/block/block.c
-+++ b/hw/block/block.c
-@@ -65,7 +65,6 @@ bool blk_check_size_and_read_all(BlockBackend *blk, DeviceState *dev,
- {
-     int64_t blk_len;
-     int ret;
--    g_autofree char *dev_id = NULL;
- 
-     if (cpr_is_incoming()) {
-         return true;
-@@ -78,7 +77,7 @@ bool blk_check_size_and_read_all(BlockBackend *blk, DeviceState *dev,
-         return false;
-     }
-     if (blk_len != size) {
--        dev_id = qdev_get_human_name(dev);
-+        g_autofree const char *dev_id = qdev_get_printable_name(dev);
-         error_setg(errp, "%s device '%s' requires %" HWADDR_PRIu
-                    " bytes, %s block backend provides %" PRIu64 " bytes",
-                    object_get_typename(OBJECT(dev)), dev_id, size,
-@@ -95,7 +94,7 @@ bool blk_check_size_and_read_all(BlockBackend *blk, DeviceState *dev,
-     assert(size <= BDRV_REQUEST_MAX_BYTES);
-     ret = blk_pread_nonzeroes(blk, size, buf);
-     if (ret < 0) {
--        dev_id = qdev_get_human_name(dev);
-+        g_autofree const char *dev_id = qdev_get_printable_name(dev);
-         error_setg_errno(errp, -ret, "can't read %s block backend"
-                          " for %s device '%s'",
-                          blk_name(blk), object_get_typename(OBJECT(dev)),
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index e48616b2c6..9ee98a0c39 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -434,10 +434,15 @@ const char *qdev_get_printable_name(DeviceState *vdev)
-     }
- 
-     /*
--     * Final fallback: if all else fails, return a placeholder string.
--     * This ensures the error message always contains a valid string.
-+     * Final fallback: return the canonical QOM path.
-+     * While verbose (e.g., /machine/peripheral-anon/device[0]), this
-+     * provides accurate device identification when neither a user-specified
-+     * ID nor a bus-specific path is available. Only falls back to
-+     * <unknown device> in the extremely rare case where even the QOM
-+     * path is unavailable.
-      */
--    return g_strdup("<unknown device>");
-+    char *qom_path = object_get_canonical_path(OBJECT(vdev));
-+    return qom_path ? qom_path : g_strdup("<unknown device>");
- }
- 
- void qdev_add_unplug_blocker(DeviceState *dev, Error *reason)
-@@ -867,14 +872,6 @@ Object *machine_get_container(const char *name)
-     return container;
- }
- 
--char *qdev_get_human_name(DeviceState *dev)
--{
--    g_assert(dev != NULL);
--
--    return dev->id ?
--           g_strdup(dev->id) : object_get_canonical_path(OBJECT(dev));
--}
--
- static MachineInitPhase machine_phase;
- 
- bool phase_check(MachineInitPhase phase)
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index f99a8979cc..09dafd3d59 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -1045,19 +1045,6 @@ void qdev_create_fake_machine(void);
-  */
- Object *machine_get_container(const char *name);
- 
--/**
-- * qdev_get_human_name() - Return a human-readable name for a device
-- * @dev: The device. Must be a valid and non-NULL pointer.
-- *
-- * .. note::
-- *    This function is intended for user friendly error messages.
-- *
-- * Returns: A newly allocated string containing the device id if not null,
-- * else the object canonical path.
-- *
-- * Use g_free() to free it.
-- */
--char *qdev_get_human_name(DeviceState *dev);
- 
- /* FIXME: make this a link<> */
- bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp);
--- 
-2.53.0
-
+Thanks, I'll fix that.
 
