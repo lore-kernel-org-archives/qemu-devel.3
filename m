@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 391D0EA8543
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81444EA8548
 	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMkX-00063c-Sm; Sun, 08 Mar 2026 18:37:25 -0400
+	id 1vzMkz-0007su-SQ; Sun, 08 Mar 2026 18:37:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMkV-0005vn-Lj
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:23 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMkv-0007kn-SQ
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:50 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMkU-0003WL-1i
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:23 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-439c4a93841so3617018f8f.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:37:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMkt-0003Yy-WC
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:49 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439c6fc2910so3360724f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:37:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009440; x=1773614240; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009466; x=1773614266; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pEcmCtk5Y5SmYmBzYXMrn+DWhfnlB/6nRRhyFttZBcI=;
- b=nl6Pub/HZe3mE+q38FT0QZlJD3LllaH7nt9mydaeSgfpgaBcZHSdlrQWcJNYDqSVOT
- VJH4BS93EY8TgUyMpcQDaiehp6y97rpeuyhzosIZM1N9niXfyx0ghTOOB/5/vodIvVP9
- Ken5IT6fGWPaHyxGv4toQzwOeSxGWgSto0D288XoVC9VyOHBY7RRqUVIErTyDiQTqELZ
- JBXFyxgbPPUFTloomfgX5eCvg7FMFojZPnXcylkkzOHMFoc8Kzv/NjO5lwmffVZ2IbhY
- 0S61TrEzvhCXfHgUZU0dgPp57wjljD5pRDm5ryGXey7wp1RQDQzIhSGLAmHwLZ0iLFlO
- cgZA==
+ :reply-to; bh=i20vJNc5d6p6GTvYkEwQZHERtzs5jfNRGw8++gGe1Qs=;
+ b=DGOnJmLXX/ABFBHwggaqwP2je1bFeHRuNOvHwkhjN4CM2X+Tkpy91526AGnAlSXUql
+ OuKpbvXUxmqPjFlhDEq2kJbkEIJH+rYJQKNUeAu5d23kLfimSAQy/aKFoAC1oTTW/fVO
+ CrZDixkO3W2ZdSy6bWmnwiqow+IcmwsQm5B2Vbyn+77weJq4csfi77oPDlMFRFfEK7c9
+ fwOcvbChFsxbJ8MVxDcWGQW8kvaKdUZ2n2BhhaG2/cVIBnSNgN1MRNaqQQRuF9qmgwCJ
+ G22wjQsQLh2PsQCL4bC1pXRQ0ip/1/Fz/THFQ/ml/tPHzsUxOYjSRWCPj5C2uZ56kxqK
+ RQPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009440; x=1773614240;
+ d=1e100.net; s=20230601; t=1773009466; x=1773614266;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pEcmCtk5Y5SmYmBzYXMrn+DWhfnlB/6nRRhyFttZBcI=;
- b=ubvCyqBC39R6ytxibXjlNJa1qf6KiAnzhXt86Q0rTmQ7zjWz3ztABo0lPTWnqdgqPz
- ZulQ1hbueSH2Jxc0pw5j8COTFxlBUkpJOsu/y6RxFoVyvO0GKaDxXQB3omJ2XQQdtOfc
- dKrkYgjpi8ZXXFEcmKip6IWVRGCC05FdnoG7HAa0w7wocYh7IkS8AG9g3i/mzAx8P60y
- iU1Cly2qAmcBifUAm6ntQZVdwxAyesGHyNRJUfNA7uTtS90aW+Nj9WqUtKQ+F8aosA2p
- ebP7h3n45Gxbl3Tup+j1e3fBr63UsCyES/iCzt7c6lytj+q84ATdotpi3nsfxzDXVB+m
- SAgw==
-X-Gm-Message-State: AOJu0YyWXixW9Dxtdzxat+4XDL/ISpu7jJt0YjBGj8UPLKgVHc+CEW+7
- csVWM5T0ZGMFurytZFPjbKGohmgGjwxm9paw284CfC1diX0mjEEOYPtgqFTWUIx8T3++/q0KDhp
- OCSbkcxo=
-X-Gm-Gg: ATEYQzygFI/XURpZIOro22vuy62TvXLYeGgG3wCj0JjGiHuiQeYfnCcDQYe8IIVn2qv
- LrbXmvXh9e/JzhAerx4hoXzWUtmK2YSiUSuNZO7tuVf4G+JkVq6bbZoDcQadLWqpJ06Op3QW/xL
- suvQfP4bwasVMVArXfisRBbu4Bf5lyGfBKue8LRFFRhiQa6S4inrbfVxlvwCSqYYCtcCGLtr6+C
- 16iGwVIeIKX0OCA4LE+0gBqDMeY9eDcx+cfgFHR2zV53641Pq873Fe70jmtMpdcca10wXRrCAno
- RwxbFG5zLDqohXwSrBnEjUHGBTG5BBR0RlHEB+hnzMkHn+ey15YAGNYb99UomAX38Iw84XilG6F
- TmSOTVVlv91IvPDa+I2HzahfFO9m6JB7chv79kXfjXNReP+Ko9KBLH/sxiJ4yQD99TGk4yXbYZj
- CUf8e/sLSyBGngoDg5ViWWRWGMbgr/BRJX0+R90Qm84OLwH+I9YhdbFq0FrNm3DNSz496qUlmf6
- RxXww==
-X-Received: by 2002:a05:6000:2911:b0:439:beee:43aa with SMTP id
- ffacd0b85a97d-439da351b41mr16853379f8f.16.1773009440002; 
- Sun, 08 Mar 2026 15:37:20 -0700 (PDT)
+ bh=i20vJNc5d6p6GTvYkEwQZHERtzs5jfNRGw8++gGe1Qs=;
+ b=qfGB6NQDpBjfHwwwGD1DBNBsBo+p1yLVNyoFxmpNINr+0I+0xwbyUwC/+9eky3pexJ
+ lBnIKE/rZWfv3WetUeIeh5jw0qUvwaWrjcMzM2EXZRtJnPglH5kZEvRg8remFz08x1f1
+ 8B7/xhWyPHWzC8nUdzG5RR5LC54/doRKsc360eq/VfZUdAAJmwj28js1mZ3mEQGRHYf+
+ ClxhvFL0PtPM0OOuM3XNKjquYy9diilF2t9UOWQyO6nCTlaOZpih9jeEUmernx2HGQZZ
+ ndL7YKJIEtVrBIj6sy75vCyMqStfKlEddHgPnQazmYnn786l29s1JOWBvgbXyKI4zUPP
+ jPKA==
+X-Gm-Message-State: AOJu0YxK01LlGR4DP10IUIY+t2vqSIoi7ck+GBp2jIgGoXt3UN/sQ4B3
+ xY77l/IsXOIzG6Z5uG0rCwwB220mZeuWAzZqQwVKUuQ1RhV8GUWwPxNx48Z5YPwVHLp9fdH7wF2
+ pW9gw4Qc=
+X-Gm-Gg: ATEYQzwCrukS3j0FRskZFDBCiANIJHA935Hg7u0R5DTNHh/dWfttEdPCxgtVNnxLcZy
+ wIiBU6ZjUohh8BeiFLKScE5SMamItuR6pYqdVZdJ+PtvUncjmYn/dS469IN5hxguvK1oADX+mZ8
+ bUUNldxizKWK2MOap8Sj+t1r94k3fWoAQW2+qPN57fizzKtzC/p+g2r+aZBAaPShiYlHzepCkih
+ 5/sr51cUY1raWCyfeEbJPXMOC43yjYoWdjCOmLl7JDOs1+Opx+c1kVNGb5Ys71X5RtfnN0oRBqh
+ aKW0zRwDSdYg7w/+cKlBgBGxvRVctYNWVc5DN9d2NIFY/jvdQYSAl8972Mwk9OOa1IMpHWtYQ3V
+ r6htiGBmnA++5faWI9I5Zn6+LSvC45PnwMcVlfojpgzQRRAmPb9eXPght5y5PxAE2wTV9OVr4jl
+ 8QjH/foL8Ceh8F4nlMHldU4Nqly56ImXzOHE8c2Zvnl026d1WNcoV37iJVYfuFss2139mZg4r/N
+ Kx43Q==
+X-Received: by 2002:a05:6000:61e:b0:439:cbf3:4a8f with SMTP id
+ ffacd0b85a97d-439da67a8c4mr17863014f8f.41.1773009466117; 
+ Sun, 08 Mar 2026 15:37:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae3f267sm20281131f8f.31.2026.03.08.15.37.19
+ ffacd0b85a97d-439dad8dbb3sm19132623f8f.4.2026.03.08.15.37.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:37:19 -0700 (PDT)
+ Sun, 08 Mar 2026 15:37:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/49] ati-vga: Consolidate dirty region tracking in ati_2d_blt
-Date: Sun,  8 Mar 2026 23:34:08 +0100
-Message-ID: <20260308223433.25503-25-philmd@linaro.org>
+Subject: [PULL 28/49] hw/uefi: add variable digest to vmstate
+Date: Sun,  8 Mar 2026 23:34:12 +0100
+Message-ID: <20260308223433.25503-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,95 +99,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chad Jablonski <chad@jablonski.xyz>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-Both supported ROPs follow the same memory set dirty logic.
-This consolidates that logic to remove the duplication.
+Add digest to vmstate if needed.  Clear digest before
+loading vmstate to make sure it is initialized.
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260303024730.1489136-9-chad@jablonski.xyz>
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260304075954.584423-1-kraxel@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/ati_2d.c | 43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ hw/uefi/var-service-vars.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index cfc7bf97899..8e192802d3a 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -43,15 +43,29 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
-     }
- }
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 94f40ef2368..5e3907118d4 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -37,8 +37,41 @@ const VMStateDescription vmstate_uefi_time = {
+     },
+ };
  
-+static void ati_set_dirty(ATIVGAState *s,
-+                          const uint8_t *dst_bits, unsigned dst_y)
++static int uefi_vars_pre_load(void *opaque)
 +{
-+    VGACommonState *vga = &s->vga;
-+    DisplaySurface *ds = qemu_console_surface(vga->con);
++    uefi_variable *var = opaque;
 +
-+    DPRINTF("%p %u ds: %p %d %d rop: %x\n", vga->vram_ptr, vga->vbe_start_addr,
-+            surface_data(ds), surface_stride(ds), surface_bits_per_pixel(ds),
-+            (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
-+    if (dst_bits >= vga->vram_ptr + vga->vbe_start_addr &&
-+        dst_bits < vga->vram_ptr + vga->vbe_start_addr +
-+                   vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
-+        memory_region_set_dirty(&vga->vram,
-+                                vga->vbe_start_addr + s->regs.dst_offset
-+                                                    + dst_y * surface_stride(ds),
-+                                s->regs.dst_height * surface_stride(ds));
-+    }
++    /* clear digest which is optional in the live migration data stream */
++    var->digest = NULL;
++    var->digest_size = 0;
++    return 0;
 +}
 +
- void ati_2d_blt(ATIVGAState *s)
- {
-     /* FIXME it is probably more complex than this and may need to be */
-     /* rewritten but for now as a start just to get some output: */
--    DisplaySurface *ds = qemu_console_surface(s->vga.con);
--    DPRINTF("%p %u ds: %p %d %d rop: %x\n", s->vga.vram_ptr,
--            s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
--            surface_bits_per_pixel(ds),
--            (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
-     unsigned dst_x = (s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT ?
-                       s->regs.dst_x : s->regs.dst_x + 1 - s->regs.dst_width);
-     unsigned dst_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
-@@ -166,14 +180,6 @@ void ati_2d_blt(ATIVGAState *s)
-                 memmove(&dst_bits[i], &src_bits[j], s->regs.dst_width * bypp);
-             }
-         }
--        if (dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
--            dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
--            s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
--            memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
--                                    s->regs.dst_offset +
--                                    dst_y * surface_stride(ds),
--                                    s->regs.dst_height * surface_stride(ds));
--        }
-         break;
-     }
-     case ROP3_PATCOPY:
-@@ -216,18 +222,13 @@ void ati_2d_blt(ATIVGAState *s)
-                 }
-             }
-         }
--        if (dst_bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
--            dst_bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
--            s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
--            memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
--                                    s->regs.dst_offset +
--                                    dst_y * surface_stride(ds),
--                                    s->regs.dst_height * surface_stride(ds));
--        }
-         break;
-     }
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unimplemented ati_2d blt op %x\n",
-                       (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
-+        return;
-     }
++static bool uefi_vars_digest_is_needed(void *opaque)
++{
++    uefi_variable *var = opaque;
 +
-+    ati_set_dirty(s, dst_bits, dst_y);
- }
++    if ((var->attributes & EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS)
++        && !uefi_vars_is_sb_any(var)) {
++        return true;
++    }
++    return false;
++}
++
++const VMStateDescription vmstate_uefi_variable_digest = {
++    .name = "uefi-variable-digest",
++    .needed = uefi_vars_digest_is_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT32(digest_size, uefi_variable),
++        VMSTATE_VBUFFER_ALLOC_UINT32(digest, uefi_variable,
++                                     0, NULL, digest_size),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ const VMStateDescription vmstate_uefi_variable = {
+     .name = "uefi-variable",
++    .pre_load = uefi_vars_pre_load,
+     .fields = (VMStateField[]) {
+         VMSTATE_UINT8_ARRAY_V(guid.data, uefi_variable, sizeof(QemuUUID), 0),
+         VMSTATE_UINT32(name_size, uefi_variable),
+@@ -49,6 +82,10 @@ const VMStateDescription vmstate_uefi_variable = {
+         VMSTATE_STRUCT(time, uefi_variable, 0, vmstate_uefi_time, efi_time),
+         VMSTATE_END_OF_LIST()
+     },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_uefi_variable_digest,
++        NULL
++    }
+ };
+ 
+ uefi_variable *uefi_vars_find_variable(uefi_vars_state *uv, QemuUUID guid,
 -- 
 2.53.0
 
