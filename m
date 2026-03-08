@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78482EA852F
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958E6EA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMBQ-0008Kz-QD; Sun, 08 Mar 2026 18:01:08 -0400
+	id 1vzMNE-0002tB-H5; Sun, 08 Mar 2026 18:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMBP-0008KV-8f
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:01:07 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMNC-0002sS-LD
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:13:18 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMBL-0007E2-0m
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:01:05 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-439c5cce2c6so4763658f8f.3
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:01:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMNA-0008QA-JC
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:13:18 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48532925a4bso3982225e9.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:13:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773007261; x=1773612061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773007995; x=1773612795; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2J84YM58d5wAYHJfhdts335E5b4T3Nn+lhfBoecRIcI=;
- b=rvh3IIfRfvEnA/8VWX99g07AL09eJYjXKH8P0N70iNmxneHqaIrBCD7e4J02pukvNt
- vyReipq/34LTvoXRwo/pJEbQ9hukz/CNY+pRS/GAVv59JbFOGVHdY4YlEfdKzn7WzsIw
- dx7QCw1aXIqRIt0GojOCiEnDlyK6PwKhahl0X3VyX1pIK4YV+8SPeeDeeBWKKs9SqnA0
- SBdog2cVAaY2QimTvnKP4kQceHuqdihdQCIXG59ihZ2FM+iLqg9reNoDGpqGQ17AIaUt
- /U0RKzWa1nOgcBzbKfIYR/uBWK6esxLLDD3wOfiSkKisxf6wMlHeokXGcvPtKbsv8s9m
- gsuA==
+ bh=fsx74MyDH7KJyFPLeVgbpBGFYJeh8RWY/evLyakF4cM=;
+ b=U2SdZD8wr7ukd0QY1WQpwD7bPvBhFUj9WZSNymO+FgytuuuCaCqnYmme9S9o2FA7uV
+ rD2ksV64U22JwRu4JyUqI8YpCqbU5kQtUX5FskqYBhNXrCIvx9kUFR0MQ8+UR6GxdPPz
+ GphqHPRoUfJK/3oKItqmnmjx29eZyV9aCe5rIBgzch1Zs0OHqnMOuyGajXnp50r+U2SV
+ rcsO85pvXVsOtaZB3nj1XWJ9saJfSl7j+/dx2Ll9pwF4iPtIPw61dxjcThFHcxNrurlJ
+ qCoszrl+vTX18bexnjc2Nay+nXHS/tCF/6hU6DtHLkDheQ8Kr579622W29MDDLpQ88B7
+ C68g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773007261; x=1773612061;
+ d=1e100.net; s=20230601; t=1773007995; x=1773612795;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2J84YM58d5wAYHJfhdts335E5b4T3Nn+lhfBoecRIcI=;
- b=nYMLRh3xQ4fGzbFAVGTVJN1lhQvAon+tos870aPb4AnDCZknB6tTqAVGl7hOcdMrEp
- Ey5NTczry5+dgMC/tCkZ9LYToqpumFr4DATYlpmToHBf4cVLiVhLlLph8TZlM1RVznGl
- oQOfCSFiIQ23/jtjWpFVPwZB8sF+akTNpkRFby9ii370rXY1JBJ1XlC6uR9JkIarQmCg
- dpUkpsVX6Gos/rERi4wAuooffZBYhwrryTQuT+0KcR+Edh6j9ude4D9pQv3Rd1r+0CHQ
- 79c2/F71lIx2xHgEmcInltJ7IjwR9cwZf9gEjYIYc2Slahr91PfDmCixR1UEyq7f1dXy
- BIDA==
+ bh=fsx74MyDH7KJyFPLeVgbpBGFYJeh8RWY/evLyakF4cM=;
+ b=v7Y015jLmS54zwFqX5s9prk+T7/vYbYtz7Aat9noRCwF0fOg2edOzupsqEdV+7iEri
+ T3bX1eIU/doncaS54TZAv2JJ+eSd/QN8Sp+uRA4LRXXjOkmmivj1AqcXP+GmHIEW8v49
+ toz9B1k6ftmHQMY7wHs0/zfbBCHYNJr6jtM5xnK8CY/dPaerLbCt6MbSzyJr1gWhA4A9
+ g1v1/gKxm6VP63Ii1F3QnPAb96xUGH37+PvjFk/MQlMp+J70ZYD9l/I3mXkfk1yxU+60
+ JE2C7xASevCYr4j8v/FtFO/JFeduqar7iEP23P8t2EsIE0fVc4tUWzel7AK8nTuVIDWu
+ AK0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWOfgjXqecjdkUF+9RLwbLkFdwdCBX+mKJ+gCXY7iBWtAmIKH2+DhmTpZyhrWfPd0j//RoFyqiuCBm@nongnu.org
-X-Gm-Message-State: AOJu0Yx4qq5ZwXtTbwy+jkQgdxbyR2WVVGxejcdSLU8ZgU7ckYCscnYr
- s5XyyCmIGrv8Y6HwQsgzEfyREE7C1rUvW55iDskAJWcwv6o8iGxEK/0u9OEuipVKJjY=
-X-Gm-Gg: ATEYQzzf0hFeElwZw5mlW1NpR0W2Gd4fh9ncTvfzXs2gW3zYNW4djoeijPJMxStPzmC
- 1PtkUTyfiiSBRdZkcgpjAB98SNBT4heTGVyd819aD+D19nXoW7d9IOk2YQ4ULe/+eJgAPILuwem
- aIqfFzVtVzWvAyScasWJxcShP6POp8N59dtf1sJscmaLr8Xt4NfbeEALzxA6gOZSq0V7ZQ3uMGX
- j3ZNj6RkMtSQ2YE/s2t3UdHS3o6IhsYYnKR1GxLMgeX8wTCoSKehEDfbtnRAfHDjrfZi8SsfiRY
- soHlfxWcTTgpWXgWi0Ya8DAc9ucVgIe42Hyba1tJjcilq74Dd4/xgscAzsgtHL1kJAhSVsJ0m+l
- xtrtPimNyEG6vkEKLKNDkihJymoQ8y2ZACzDqxZR58YHtYG/Gt53TXsgEoxnhqhlunfcSAFdgZi
- wRqI0YN54s5AHRPS8ck5/rgKU0Ge1qfTmno/SBo/n54l/OZaIM6UP1OPYXHZFlTWPWfA==
-X-Received: by 2002:a05:6000:3113:b0:439:ba75:7dab with SMTP id
- ffacd0b85a97d-439da65450fmr16318525f8f.9.1773007260571; 
- Sun, 08 Mar 2026 15:01:00 -0700 (PDT)
+ AJvYcCVQa9qLdQCQkKkxhb77f/y7MGZlKOB+uZUe4lmlbzDyIZ4qZFZwZ1ncJ5GonpcGYUNYY9Kj2/bBi1Mx@nongnu.org
+X-Gm-Message-State: AOJu0YzfHDWYOrmEVfSDSemVOjkJGEXPyMLVVDOMJdgtNdajmBz6Ri/V
+ VZEMZ7aKZfi0Im0JTQH73LBA0QnTI+HeFe4iOCe6EH/tmJ9boaRRyLqJFaFRskCQtts=
+X-Gm-Gg: ATEYQzyvr9Xck+h3gxZlWEeR7ruZHvxT0do3HFyog5tKxfQyW0doz/cG4WW5EdSRdRY
+ 9iXUXyDCBUSla8MSdx+mEmN+yY3j913vXZITOIOpWWWkLn9peVM0d/zSObZnhNySkj933+bIGUf
+ IR6GzaV3m+YEG1V42Zw142jCjmx4+Z9HpZSANk4jmjHb3OhEq/Ht+gJrAkGs5WYgtWOUOXYzrIB
+ 8ux2nsyzyvxGj+02zSK6ZwLckyH9Ar3Cdhrbr0Sv5Mnmtau2AuS2H0pxkZwB/gbR3bqCEBKi3ST
+ xcD8ovVaDypNFM/11iQdg/H4PyD+j90L8GhY4uqayvOnEMcg5nybD51rUWQtvKfIYmh/SEOUCxF
+ fzlgyYBgNYudDC0a6tAAjk0eaWwvWyhOnm3bTdYx+bY+Bto2q6NoYlic86ArRhvnmDcWxGIEofh
+ gGSN+4KMccx0q7/VBJqz552JtCTUb2i9xQgtoNTMs1C0zrTv554V/YrImRjn+IhD+Qag==
+X-Received: by 2002:a05:600c:138a:b0:477:7ae0:cd6e with SMTP id
+ 5b1f17b1804b1-485269196ffmr173793425e9.5.1773007994646; 
+ Sun, 08 Mar 2026 15:13:14 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae45786sm23025769f8f.32.2026.03.08.15.00.58
+ 5b1f17b1804b1-4853616a085sm33693585e9.3.2026.03.08.15.13.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Mar 2026 15:00:59 -0700 (PDT)
-Message-ID: <9266107a-b9c1-41e8-9040-3516fabb005a@linaro.org>
-Date: Sun, 8 Mar 2026 23:00:58 +0100
+ Sun, 08 Mar 2026 15:13:13 -0700 (PDT)
+Message-ID: <2fdfc484-cf0c-4d91-96b8-4ca0e1bd6f76@linaro.org>
+Date: Sun, 8 Mar 2026 23:13:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/xilinx_ethlite: Check for oversized TX packets
+Subject: Re: [PATCH] hw/net/xilinx_axienet.c: Prevent writes to PHY
+ Identification registers
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jason Wang <jasowang@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>
-References: <20260303172718.437015-1-peter.maydell@linaro.org>
+To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ qemu-arm@nongnu.org
+References: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260303172718.437015-1-peter.maydell@linaro.org>
+In-Reply-To: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,63 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/3/26 18:27, Peter Maydell wrote:
-> The xilinx_ethlite network device wasn't checking that the TX packet
-> size set by the guest was within the size of its dual port RAM, with
-> the effect that the guest could get it to read off the end of the RAM
-> block.
+On 5/3/26 13:13, Jim MacArthur wrote:
+> There are other registers in the PHY model which should be partially or
+> entirely read-only, but this solves the immediate issue.
 > 
-> Check the length.  There is no provision in this very simple device
-> for reporting errors, so as with various RX errors we just report via
-> tracepoint.
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3297
 > 
-> This lack of length check has been present since the device was first
-> introduced, though the code implementing the tx path has changed
-> somewhat since then.
-> 
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
-> Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 > ---
->   hw/net/trace-events     |  1 +
->   hw/net/xilinx_ethlite.c | 12 +++++++++---
->   2 files changed, 10 insertions(+), 3 deletions(-)
 
 
-> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-> index ba3acd4c77..75e6520569 100644
-> --- a/hw/net/xilinx_ethlite.c
-> +++ b/hw/net/xilinx_ethlite.c
-> @@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
->           break;
->       case TX_CTRL:
->           if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
-> -            qemu_send_packet(qemu_get_queue(s->nic),
-> -                             txbuf_ptr(s, port_index),
-> -                             s->port[port_index].reg.tx_len);
-> +            uint32_t size = s->port[port_index].reg.tx_len;
-> +
-> +            if (size >= BUFSZ_MAX) {
-> +                trace_ethlite_pkt_tx_size_too_big(size);
-> +            } else {
-> +                qemu_send_packet(qemu_get_queue(s->nic),
-> +                                 txbuf_ptr(s, port_index),
-> +                                 size);
-> +            }
->               if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
->                   eth_pulse_irq(s);
->               }
+> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+> index d85f8bb23f..970732b162 100644
+> --- a/hw/net/xilinx_axienet.c
+> +++ b/hw/net/xilinx_axienet.c
+> @@ -141,6 +141,10 @@ tdk_write(struct PHY *phy, unsigned int req, unsigned int data)
+>       regnum = req & 0x1f;
+>       DPHY(qemu_log("%s reg[%d] = %x\n", __func__, regnum, data));
+>       switch (regnum) {
+> +        case 2:
+> +        case 3:
+> +            /* Writes to PHY Identification registers are disallowed */
+> +            break;
+>           default:
+>               phy->regs[regnum] = data;
+>               break;
 
-Patch queued renaming @size -> @tx_size to prevent:
+Checkpatch.pl complains for pre-existing coding style:
 
-../hw/net/xilinx_ethlite.c: In function ‘port_tx_write’:
-../hw/net/xilinx_ethlite.c:165:22: error: declaration of ‘size’ shadows 
-a parameter [-Werror=shadow=compatible-local]
-   165 |             uint32_t size = s->port[port_index].reg.tx_len;
-       |                      ^~~~
-../hw/net/xilinx_ethlite.c:151:40: note: shadowed declaration is here
-   151 |                           unsigned int size)
-       |                           ~~~~~~~~~~~~~^~~~
+ERROR: switch and case should be at the same indent
+#27: FILE: hw/net/xilinx_axienet.c:143:
+      switch (regnum) {
++        case 2:
++        case 3:
 
+total: 1 errors, 0 warnings, 10 lines checked
+
+Anyway, queued, thanks!
 
