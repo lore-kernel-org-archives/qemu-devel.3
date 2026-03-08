@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B066AEA8543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 21:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF84CEA8543
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 21:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzM1u-0004YH-21; Sun, 08 Mar 2026 17:51:18 -0400
+	id 1vzM2i-0005Mk-EY; Sun, 08 Mar 2026 17:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzM1r-0004VP-Bu
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:51:16 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzM2d-0005LT-J5
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:52:05 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzM1p-0005fs-Sl
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:51:15 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso111025765e9.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 14:51:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzM2Y-0005ii-OF
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:52:03 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-439a89b6fd0so7702718f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 14:51:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773006672; x=1773611472; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773006714; x=1773611514; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0+tqmKHu/+oqg/FK6qsOGhfaiZ9s2zEPwTyIgwoAC0U=;
- b=s4r8ue3dx19Dkio6qXaHSbNYSOLL9WHaE0ElW7FkKUzGa6o3TTdKzubKF9slTY5bZA
- pCKLo8NpM/8F6FsFH68K77BdSVG/VyQPmkQAGBpSJF5C3AKhPJG8KKDMUsJTi2/29cRk
- ioXUZtXbz0wypsp2qeuSomozV2Ip1bplgE0XfjuwrS6tEWUMz3yaAGlGq0Oy+zQqwlCM
- WdepvsJkz66BR25za37HRpcpeDbtuTMn4bhil3/nY4U1dACzkY/jphuk0nfWJHy98lXy
- SLWnFVRoHkR/pJca4kYVcExLiDdwI9LXEBUpxRXcjs3QTbjECuu6HlqqCw7fVIJxqoOB
- SMbw==
+ bh=svpbkY05sqtNQbwztgak8AUdlK/lA4vwHpUlNIcrfb0=;
+ b=cPwh6xKJOTWU+WEC3EzhWsUILIGQzdSFgZ/Vqnii1N3b8hmnmZxDxOYK5dBv5EHpbC
+ BBtq7Gg2+ClQCOaQPW8w6Q8gMIyZ09/futXPNQ42mEOGVaXIBHjN8CKQYwNrwMRVhSsM
+ 7RSdOcs+1rg9Jn8RV8763CmjBlDKtmRvmw4NrV0joQvCOD5nhTdX2pGcJuR4DBfQP1bm
+ rZMaKOo9t6GXrPE/C3t5rONyb/9hf4rrj09p2se8gqtssXm2tbS0U1S3QjIgNLfpLRNF
+ 0PCcU1ByF6nHi8naBEpdx43R1NgpCQxKVENVcrV7SGXkUCFil4PS8PZIj1iQF8ppRWBB
+ xVLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773006672; x=1773611472;
+ d=1e100.net; s=20230601; t=1773006714; x=1773611514;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0+tqmKHu/+oqg/FK6qsOGhfaiZ9s2zEPwTyIgwoAC0U=;
- b=Qbu4hPCRGBrA+DF1Y2VuddH1CJoqpaRGVIhUIV7y7L79u8srOg0s70D8cavoueNimL
- rK+zdbxtSjzwGmk6VJ8Mfc0gMjdAwCPtFZm/J6Tj5JeytuLO0G6kDEbKXRduspxXAsDx
- H3YcwrA6Z2ZG4PM5aOTsj/RzzgvAbte0A+3IZLw8c7lvnr3K6J/nD8Dy1v0tKkHF9W8U
- hBridzowuDvhJgj0Qq9cMOC5hQHRNxCT8Czc+SDfrskiSqh0EcS/Jv0Uu5cYWBSzxIxk
- 2VmckOtQ/mJoMoZ6gL/jleywe4fxGtpbdljYAmuMMWJx7z6R5Mkilt0V/Oi+x9TURXfd
- leQw==
+ bh=svpbkY05sqtNQbwztgak8AUdlK/lA4vwHpUlNIcrfb0=;
+ b=wuFYmLPi+opvgsEDNxH0QqTyFgA6if8lbPW1JdFnCDIHeTBzLovQLxHtlhyA25Xphh
+ eDdF3P67wbbZsiOf8lb1vkOv8aW9NA9jUWJ/TPP2Z4zwrlSdKS7XG50GRRTTLoOjP6J4
+ qsfhzR9bS0hSZixFYGr3eRvAIseMTplzcpYmPtYPcauCzW5PmWAp2fXhehLcfj1TCBKY
+ qpukU2R+EpZcaM8KIOxcUdyQSXc30FKb5SrrkmO3ViJmENMiPwtpeOnwjLgcBnOHhdbe
+ 346iqxYwGbxkH5vHplAEjAAOz3PbgfFVpcs+jusHTC98Y4FzwjsJ5DctMCz/znGV/a5Z
+ +RwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkCgaFde7lZZq7TeTUbYGawivInIlvSa4SqZhv7eA1s1j+Ky4ulH1wH69Uy3pFZTB2+sHejZSA5lDt@nongnu.org
-X-Gm-Message-State: AOJu0YxYoVYiVZJn1orjDZqojvRH0cYUeWy7AQfBEAxSjLUVV2mfX5Gq
- O0cHxKw0JeP5+uURd3bgnfg9VEu9AeE6SsYoUQwaeduR9c8+tsV8bGV4T2out/BHw+s=
-X-Gm-Gg: ATEYQzxJ80+NJKvR3bhQK5bkngM/UWlgWk0k9WAijUI4cwriDN/1Gk8ZMuJiDaUyELG
- /wWbvWOkgcsp1dmGuUCeLiEMatqaYvy7OpwO9pBYlKd1RjRM02JWpCvILNFW2SNKM+tG8CqiWLv
- lxnd++RFxR2wwPUwEDqF3540IiVGz3CqidiPWHAJP7LmAq/K7oS3b7wuE8tkO/AdpXpPYtuCeSy
- WYmLGpwNLzYznmqEezVqorMnfsCVike98XY9rMj6INVkQmCFxBFRUfqHdn2GX+yyRFEZ/GQktX/
- /fZHrVoGCHCQH3vNxqTOBgsjbK5sIaVqfC9jeL/vlCQ5hqRKw/KIvmyJRtbnMiP8VZAsabWu1Tj
- +nURE6fNTnKvJF8QY7suANpNgritDTKd06o/4t+2SP3iKR9W4fepIxKyPkvk2T/jYpuMc9l/I2o
- NKItBBEeW1ego2Ca1ixaDFMKhqxsCzH6COH3FjMGaHzTAIkiQmByQqqc9OqWhpIBKVEQ==
-X-Received: by 2002:a05:600c:45d1:b0:483:7b99:131d with SMTP id
- 5b1f17b1804b1-4852675e55cmr157569005e9.16.1773006672055; 
- Sun, 08 Mar 2026 14:51:12 -0700 (PDT)
+ AJvYcCUMiOAHqd8d3hXsOIJZNWn7/MprLqiEEodho48sDwhOzbC/XDOkLaIJmfgV74AA5G39lUUtVNTDGGPh@nongnu.org
+X-Gm-Message-State: AOJu0YwfbzHWMr0MyizAhUkgUXvksxRIRticHpsQVlcyQcJFU5ZHRrhH
+ 1dVPAK7JW4VX6tI5sF/9QOGuIU0nVtKfvSy7KodaRzVqA5LsqdeDVnEtZy8TA6S5NJ0=
+X-Gm-Gg: ATEYQzx49X1rAAB126OCjlVrceSvMlHwLJXWbeD3lgANQqZoMWmnSD12AOyb80Pk/zp
+ ZCuVJh/IAxxZhPtvSt2CJ2jj1rm/gxtfhphfTdWM0dnTmkkf20T8HsOAqlmEiAiWwaEe9MH5VSO
+ SJTawTByG3vGacg0mRzAc/yqU6NUU473M6bp1mlJoUiHUXPOqevpCg8j4YbwgQuPX2TQXIjO4qy
+ zV1FDdIoMc4p1dQokGqn3o99NCGlVB62qF+wu/LtNkbP0qqtU+4UYSEfB/FZzgWVDObavz5zuFj
+ R8Ou5b1jgxKjpTD1T1PN6X85dcHUpKAAi7xwZ2ZsQpwoMGlpcZP6zhCf5L0oKmCT2eCdEqgeuCU
+ to1Fk/onN2CKKKFs52NRBABXDnBC7X/kyfTQAzcfC5wzHL/xcdU1u0+SvwKWGfHb7rqbgLtchXx
+ r6xt0jnRvZDV4UL01dbXYjnlmPmjIZEO0nQMhhUsZZWgnj+CLtGroqRKz5XNrs8+FJYw==
+X-Received: by 2002:a05:6000:24c9:b0:439:cc06:e134 with SMTP id
+ ffacd0b85a97d-439da6632bcmr16180455f8f.24.1773006713595; 
+ Sun, 08 Mar 2026 14:51:53 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485245dc298sm73897825e9.15.2026.03.08.14.51.11
+ ffacd0b85a97d-439dae36785sm19660765f8f.27.2026.03.08.14.51.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Mar 2026 14:51:11 -0700 (PDT)
-Message-ID: <b5d5883f-5d37-476a-af2c-d1331360848b@linaro.org>
-Date: Sun, 8 Mar 2026 22:51:10 +0100
+ Sun, 08 Mar 2026 14:51:52 -0700 (PDT)
+Message-ID: <f91dfd2d-dffc-4905-98f7-9fde3cbd887b@linaro.org>
+Date: Sun, 8 Mar 2026 22:51:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/m68k/mcf_intc: Use qdev input gpios for input IRQs
+Subject: Re: [PATCH] audio: Fix macOS JACK Audio Connection Kit
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>
-References: <20260306190425.3047580-1-peter.maydell@linaro.org>
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260307114923.75394-1-philmd@linaro.org>
+ <5083100.31r3eYUQgx@weasel>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260306190425.3047580-1-peter.maydell@linaro.org>
+In-Reply-To: <5083100.31r3eYUQgx@weasel>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,42 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/26 20:04, Peter Maydell wrote:
-> The m68k mcf_intc interrupt controller currently implements its
-> inbound IRQ lines by calling qemu_allocate_irqs() in mcf_intc_init().
-> This results in leaks like this:
+On 7/3/26 14:06, Christian Schoenebeck wrote:
+> On Saturday, 7 March 2026 12:49:23 CET Philippe Mathieu-Daudé wrote:
+>> Since commit 8f68a33ad46 we get on macOS:
+>>
+>>    Audio backends
+>>      CoreAudio support               : YES
+>>      PipeWire support                : NO
+>>      JACK support                    : YES 1.9.22
+>>
+>>    ../audio/jackaudio.c:654:12: error: unused function 'qjack_thread_creator'
+>> [-Werror,-Wunused-function] 654 | static int
+>> qjack_thread_creator(jack_native_thread_t *thread,
+>>          |            ^~~~~~~~~~~~~~~~~~~~
+>>
+>> This is simply due to a missing #ifdef'ry change. Update
+>> so we can use the new qemu_thread_set_name() exposed by
+>> commit 46255cc2be9.
+>>
+>> Fixes: 8f68a33ad46 ("audio: make jackaudio use qemu_thread_set_name")
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
 > 
-> Direct leak of 2944 byte(s) in 46 object(s) allocated from:
->      #0 0x5cf95ec15323 in malloc (/home/pm215/qemu/build/san/qemu-system-m68k+0xf9e323) (BuildId: 18d55ef8ea9856e68ee30802078af5050b8b06c5)
->      #1 0x7637c65c5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x5cf95f6b2f27 in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:767:15
->      #3 0x5cf95f6aa62e in qemu_allocate_irq /home/pm215/qemu/build/san/../../hw/core/irq.c:91:25
->      #4 0x5cf95f6aa62e in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:79:16
->      #5 0x5cf95f5f6d99 in mcf5208evb_init /home/pm215/qemu/build/san/../../hw/m68k/mcf5208.c:310:11
+> Nit: the commit title could have been a bit more precise, e.g. fix use of
+> qjack_thread_creator() on macOS.
 > 
-> This isn't an important leak, as it is memory we allocate once at
-> QEMU startup and that has to stay live for the lifetime of the
-> system.  However it does point at a code improvement.
-> 
-> Modernise this to have the device itself create inbound GPIOs with
-> qdev_init_gpio_in() that the board can then refer to and wire up
-> individually.
-> 
-> As the device is used in only a single board, we can update device
-> and board in a single patch rather than having to try to figure out
-> some way to change the API more piecemeal.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> there's quite a bit more in this board which could be
-> modernised, but I stuck to just the thing getting reported
-> as a memory leak...
-> ---
->   hw/m68k/mcf5208.c     | 24 +++++++++++-------------
->   hw/m68k/mcf_intc.c    |  8 +++-----
->   include/hw/m68k/mcf.h |  5 ++---
->   3 files changed, 16 insertions(+), 21 deletions(-)
+> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-
-Queued via hw-misc, thanks.
+Queued via hw-misc updating subject, thanks.
 
