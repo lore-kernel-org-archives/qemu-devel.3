@@ -4,45 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4604F55126
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 08:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0647EF55137
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 08:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz9WQ-0007QJ-JZ; Sun, 08 Mar 2026 04:29:59 -0400
+	id 1vz9YB-0008FB-HW; Sun, 08 Mar 2026 04:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vz9WO-0007Pc-Hh; Sun, 08 Mar 2026 04:29:56 -0400
+ id 1vz9Y9-0008EG-Am; Sun, 08 Mar 2026 04:31:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vz9WM-00006z-Ri; Sun, 08 Mar 2026 04:29:56 -0400
+ id 1vz9Y7-0000TE-SY; Sun, 08 Mar 2026 04:31:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1772958559; bh=QLvyArDQqA6DYNk53G4XxeaRmbJPyBZE1PezPydaYHI=;
+ t=1772958670; bh=4zQw6IGkUX68dKGJ34ZlIphGRQcn8Q7mjLcn+DvQ4BQ=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=KqLtHtjQmz57d7tfHpy9ilLL+zbQOwmfAfo6Y89ggxMdtOvgE76+Xdi9NiI1oKwV+
- fgrpkta/kGNBOwHSlEh4KgYV8xEbmKqVczn4dCI3ihjbgtB9U8ZzJccoyxp+MgL4Eq
- 0+hIj9nygCkaza1VnPV58iGRh6eCvbIZBm4yjKZyLPLcGpPYKpn602HZO6OKoQtTl/
- Juhv55h+F+pazh82pUh7Ol4H3ZsjBtJfprRJtuBnB7xCya53C6TsPOb4FVjnAepf/7
- 2HIYyhchy09iraPMFYnApzgThmwL1VMsLCiuKyaj42iMYDAsiUGPyCYk7XPl2QjS/j
- 2YIfDgBn3/2+g==
+ b=Gm9OPVG/YYiC0TqwoUj8Y+2+c0S1fPA0Ujh7WN0dl7ImMjc6jFZ/R99tmoWjyim9V
+ sdWqRqDr37echzbXkAxl0SK4qI2MBsiGOf6sFtcL/nkPhtW0S78jkkXVVtWiQyIe+n
+ jTSQZXNY04t1V57KledS2agNcl4JQqdvE+Nt0RKXXxT/lTA27xQ7H4CgiLoRYdvd6a
+ /uqBl8ykhpRoLb/e/as86gPmJ3SPdsalOW1I+QUUj75aifzXwNG6w11rByaGFhVCzr
+ KR/m0sxUg08H5492gF18uJ2cI+1qfWqN4nmcxcrdrQQFLLvaboAB7E7he2mul5ZyzY
+ +fIgtIAp3je9A==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id D6D51190890;
- Sun, 08 Mar 2026 11:29:19 +0300 (MSK)
-Message-ID: <acbb62f8-17d0-421f-858e-fcc0478d55b2@tls.msk.ru>
-Date: Sun, 8 Mar 2026 11:29:51 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id EA30C190893;
+ Sun, 08 Mar 2026 11:31:09 +0300 (MSK)
+Message-ID: <84a16fad-59e8-47a2-b66e-72cb64a04aa1@tls.msk.ru>
+Date: Sun, 8 Mar 2026 11:31:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH resend] block/throttle-groups: fix deadlock with iolimits
- and muliple iothreads
-To: Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
-Cc: Dmitry Guryanov <dmitry.guryanov@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
- <5011ccf5-7af5-4f88-8261-35514c72bc84@redhat.com>
- <aaCmmgtIlDQMaj8V@redhat.com>
+Subject: Re: [PATCH] block: Never drop BLOCK_IO_ERROR with action=stop for
+ rate limiting
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, xeor@yandex-team.ru, vsementsov@yandex-team.ru,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20260212212738.141780-1-kwolf@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -88,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <aaCmmgtIlDQMaj8V@redhat.com>
+In-Reply-To: <20260212212738.141780-1-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,20 +112,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.02.2026 23:01, Kevin Wolf wrote:
-> Am 26.02.2026 um 15:37 hat Hanna Czenczek geschrieben:
->> On 08.12.25 09:55, Dmitry Guryanov wrote:
->>> Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
->>>
->>> The function schedule_next_request is called with tg->lock held and
->>> it may call throttle_group_co_restart_queue, which takes
->>> tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
->>> coroutine if other iothread has taken the lock. If the next
->>> coroutine will call throttle_group_co_io_limits_intercept - it
->>> will try to take the mutex tg->lock which will never be released.
-...
+On 13.02.2026 00:27, Kevin Wolf wrote:
+> Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
+> event only once a second. This makes sense for cases in which the guest
+> keeps running and can submit more requests that would possibly also fail
+> because there is a problem with the backend.
+> 
+> However, if the error policy is configured so that the VM is stopped on
+> errors, this is both unnecessary because stopping the VM means that the
+> guest can't issue more requests and in fact harmful because stopping the
+> VM is an important state change that management tools need to keep track
+> of even if it happens more than once in a given second. If an event is
+> dropped, the management tool would see a VM randomly going to paused
+> state without an associated error, so it has a hard time deciding how to
+> handle the situation.
+> 
+> This patch disables rate limiting for action=stop by essentially
+> considering all BLOCK_IO_ERRORs with action=stop different errors. If
+> the error is reported to the guest or ignored, the rate limiting stays
+> in place.
+> 
+> Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
-This smells like a qemu-stable material (10.0.x, 10.1.x, 10.2.x).
+This looks like a qemu-stable material (10.0.x, 10.1.x, 10.2.x).
 
 Please let me know if it isn't.
 
