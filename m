@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35C8EA8545
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A48EA8546
 	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 20:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzKqZ-0007Eg-SR; Sun, 08 Mar 2026 16:35:31 -0400
+	id 1vzKqY-0007DW-It; Sun, 08 Mar 2026 16:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqY-0007Cu-17
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:30 -0400
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqX-0007CM-DH
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:29 -0400
 Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqW-00044E-Fn
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzKqU-000442-Vp
  for qemu-devel@nongnu.org; Sun, 08 Mar 2026 16:35:29 -0400
 Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so5413913f8f.3
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 13:35:28 -0700 (PDT)
+ ffacd0b85a97d-439b7c2788dso5326650f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 13:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773002126; x=1773606926; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=62gCgQG/SMP3y4B1tt6fRNn10YsHIOVvwcEBSzKHvaM=;
- b=H9CiWwTdI0ffNqa7x2o8w1HDo1bvXZaYuWr2YtskW3si4xmZMKfcqRZqhqt+w2RXup
- oV04fMrfalejFYFdQn0QfHuMHvlLvjmgSIlqaaxj+K+cLJ8ytq1yy3TM96hFmdm02G+e
- raBrF4AKlJn9k/fGN70YOTrEvS/u9NH/pcrr2uYi+AawJ4r3gfD6GRe9dcdQgQF1+6AV
- EytrcLbS2dyMhBTqv2SCG68PEaYAWB575YXKeba8Pj+909zi2E25Zq7vjunvb2KX5XGa
- gCCX3QZcqYASBblXgNtm6sZ+PpW5+k1OagDutm6aFINm57S3L3Yv8R645czJXC0kG7tb
- boxQ==
+ d=gmail.com; s=20230601; t=1773002125; x=1773606925; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/7XgWxKgyE/WQ+XgF0P4RAkLFP5Q5Xqwf/wEtAP3zBA=;
+ b=kF35cJxV/TLy7HaEamErFteAPcAPsTqaqzS75dcgsoF8HTkIws1mqlY5xaYIaaHFGO
+ 8a5xC9weOxqca8uHB9x/nZgAD4eQIn9N/Jes4X4MedMVWLxM6M24ziHEHqHwGzSB7KJj
+ Mk2uobvOCeY94ATo3K/TDIQ9qGhRuOiLGswN9QS+lnfJwqhL9oVKwk5Fm2FzoVU8rmEy
+ n/Q/aGzlQPRhrpbuUiGQ3wFi+cPuM579j1EHzQWhDTmc09wd1VSRwlX66OcrcAhqG9Hn
+ uyVUXp6f/qKODC2R1ssM1sPsYJJDxqrf7f8UzWpKi18NBru7qnFiYghdTI6g91rIpXfi
+ uYCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773002126; x=1773606926;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=62gCgQG/SMP3y4B1tt6fRNn10YsHIOVvwcEBSzKHvaM=;
- b=vrJjbHhjVouLzx1tM9ZQq42S7y1CctXfHMjtIPy+Vb1irJs5b0GLWa5uwhGcq/Ix9L
- mU4cd4EUsse518mrtLXn37nTNL2MYfBEVws9bfpud8EO/edudDmLb0H5nh1Qc4PtAV8I
- xjLRggX2VXJRJGS3wkTPSE7y52P9WNaBx1fSoco2knoQTukhuD97EOLhN/V/2uHeDpoY
- ELn0c4XsbRHJdvBFDXN8ujCpne7iAqXqvklJ2pJbXHGXs628g0kRjHQTCZZ1iyYoYq2c
- H7IKjAd7pwgEb7wphtAY/NegfM2Isfn+lIrk18hd3cxTHtiKtCTsxE1WTbfj64YpSY76
- JPwA==
-X-Gm-Message-State: AOJu0YxSEHXHmKWCO7lWRLIkNsCEnlUezCzM7WYPlZzKm+va1yZdCKmW
- vfm+ZhclICKJdCzuDq4slWuuLDl9SA8CllKOfhYesokXWREIf26Oj9SMab84Yg==
-X-Gm-Gg: ATEYQzw1w+WbA6Vk3WEVCB7Wb9dPaJaqqh4Mi8lVSl+9ofgvCNMkG20XZS+05TaCvr4
- oyyPyD2l98rNJliwvCldZAaQCjYvDi0sCkql0jKD005cpMYXEPqErCrA3WcU0Eq1UsZEd7jGXkH
- uT6HtWE1oQzje5fATSh9cXkvdUEhTk8NNA1nxdX3sE14QnOBVQ2V4Dvhucx0EdpN9HsPJIWj5Ih
- qL5cLE2O6Pe9+1DHE2YdwhpjUoZ9yvZB7UxoxQXykV/yGRBN8KMgUeZfpJACTbqYPxelkaF49t/
- jH3o4pKY82zrMvYv68o4x33jdHiVXooSsyLg1mI0zQyyvnCI5Wkf9ELvYqGLygm9AX+5NQB/ddc
- SwUw3fd+3Atr1uCsoWxYQ+tAKWLP6/CuCd93p1AWvaMTiY9OOx1clyNPdyNjVR6NEMY1jpfysxf
- LiaMxgPWw4gtt9+gVKbkP2Mzf7PUcsGakegtc8TVI+OmPxWLeG9N2uVZsHG+h5fSYZlIEpzGg0W
- PJu0r+/ZEvZmjGdV3+i6yBL0o+aay6QZmilelQ0zA==
-X-Received: by 2002:a05:6000:258a:b0:439:b666:6cab with SMTP id
- ffacd0b85a97d-439da679715mr15229730f8f.40.1773002126096; 
- Sun, 08 Mar 2026 13:35:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773002125; x=1773606925;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/7XgWxKgyE/WQ+XgF0P4RAkLFP5Q5Xqwf/wEtAP3zBA=;
+ b=omhZLmx+mU3rdjTmlx7fG0yJf5P896Gtr0lZcYZeboqzxuAduNOaDn56MCaICVxwnR
+ M7P7YQeoure+xUVWlJXG3m8/eWYYypaAZqbiC966u97CLJazIfZRlSkwWq39L4K4RqHf
+ YNPFkKVipI6fWnAOasY+VkhVGYamx8JCLlprKj+3X0ZUTiBlHreRgDQUq69j9/wAcq/Z
+ RVtBArDy5RT8j4TWPRJkLVHdjGwjea8Qnhe8NjF5N/Pt2gc5yLslZOLe+ygtyLuwpxPF
+ qSE55rxu6WqOlxT76m+AJGqiL6b4ykEbtEWFnp+eAnvIndqVakTIfoF1h2iIoGKqDKbi
+ dsiw==
+X-Gm-Message-State: AOJu0YzHNMJNDhYYlXMj/rDebNcXhphTo3ABAvVN/87N8wwdn4jbF761
+ RXEd34wiYBRXBMWSP7B/ySW0b+sKe97RLf7jmoTACoZQmmpdfMg2uv4cGQu2mQ==
+X-Gm-Gg: ATEYQzw7S/m07rWsTq4Zit5S/TNKZzm5z0m/O9jlKUmlglZTtHMWnQUXIvSgDGYclzk
+ bueKcXmOOtefT9PDA929QHqtjdYMz1Nd3UMRTQAE1rFVJbB9tGS5DkQt4QJmOHyvtngKNAjNEyx
+ 8LEpcST/mwgkfZIteO1YKoGvfRWnATx/Rnn0dq8/RrB3gDdj1uCVD3YVyw+soA+VoquzXiqf7Yk
+ amp71tENGlmTEdDf5wpTZWKtouZkWH4M1hCPDou3N5bKlBC1Tg4ytD91oEEfc5wxcnZt7n/OWBP
+ BxHqcZO2Stc3ZSBGQWwnbTGEzniCNnGKwEYS4eh16/95yaDbHocTqGMV/CU2wjBGMqxNw4YBesy
+ L6vOmk1//NsR7X1ypRdKyf2ri9FACHaItr27M5Hiyt8qDloRZ/U13nLkzqQwonWUGtW11UFGgUY
+ 5X0mz7YQNda0ItoyhkH4DwZFIJjxD6FZ9hNTAFCfkMZW8f0ZIdnFC5YDH+MFLQlLNuIGkLO9PlB
+ Q0q9PWJm4l2GgI1sRbYj0LSOFmVXcw=
+X-Received: by 2002:a05:6000:603:b0:439:b59e:5e69 with SMTP id
+ ffacd0b85a97d-439da348049mr15177586f8f.8.1773002124992; 
+ Sun, 08 Mar 2026 13:35:24 -0700 (PDT)
 Received: from Provence
  (dynamic-2a02-3100-25c6-8f00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:25c6:8f00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2bdf8sm20995508f8f.25.2026.03.08.13.35.25
+ ffacd0b85a97d-439dae2bdf8sm20995508f8f.25.2026.03.08.13.35.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Mar 2026 13:35:25 -0700 (PDT)
+ Sun, 08 Mar 2026 13:35:24 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,16 +71,13 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCH 1/5] hw/arm/fsl-imx8mp: Do not create redundant unimplemented
- devices
-Date: Sun,  8 Mar 2026 21:35:12 +0100
-Message-ID: <20260308203516.160103-2-shentey@gmail.com>
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 0/5] Trivial cleanup
+Date: Sun,  8 Mar 2026 21:35:11 +0100
+Message-ID: <20260308203516.160103-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260308203516.160103-1-shentey@gmail.com>
-References: <20260308203516.160103-1-shentey@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
  envelope-from=shentey@gmail.com; helo=mail-wr1-x42d.google.com
@@ -107,29 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GPT devices are implemented. No need to create redundant
-unimplemented devices.
+This series contains some low-hanging fruit fixes I came up with when
+investigating Rust for QEMU, especially QOM object lifecycle vs. the Drop trait.
 
-Fixes: f8b26121762c ("hw/arm/fsl-imx8mp: Implement general purpose
-timers")
-cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/arm/fsl-imx8mp.c | 1 +
- 1 file changed, 1 insertion(+)
+I noticed that no finalize methods were called in Rust sysbus devices when QEMU
+quits, and neither are its C variants. What is probably missing in the first
+place is a
 
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 79f9142777..0119a18416 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -688,6 +688,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MP_GIC_DIST:
-         case FSL_IMX8MP_GIC_REDIST:
-         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
-+        case FSL_IMX8MP_GPT1 ... FSL_IMX8MP_GPT6:
-         case FSL_IMX8MP_ECSPI1 ... FSL_IMX8MP_ECSPI3:
-         case FSL_IMX8MP_ENET1:
-         case FSL_IMX8MP_I2C1 ... FSL_IMX8MP_I2C6:
+  object_unref(object_get_root());
+
+at the end of qemu_cleanup() in runstate.c (see TODO there). Adding it before
+this series won't clean up machines since their refcount won't reach zero. With
+this series applied this additional line will cause various issues when quitting
+QEMU, allowing the problem to be investigated. Fixing it is beyond the scope of
+this series (and my time budget).
+
+Testing done:
+* `make check`
+* Run imx8mp-evk with a Buildroot image
+
+Bernhard Beschow (5):
+  hw/arm/fsl-imx8mp: Do not create redundant unimplemented devices
+  hw/arm/fsl-imx8mp: Fix parent of ocram memory region
+  hw/arm/imx8mp-evk: Fix reference count of SoC object
+  system/vl: Fix reference count of machine object
+  Revert "sysbus: add irq_routing_notifier"
+
+ include/hw/core/sysbus.h | 1 -
+ hw/arm/fsl-imx8mp.c      | 3 ++-
+ hw/arm/imx8mp-evk.c      | 4 ++--
+ hw/core/sysbus.c         | 6 ------
+ system/vl.c              | 1 +
+ 5 files changed, 5 insertions(+), 10 deletions(-)
+
 -- 
 2.53.0
 
