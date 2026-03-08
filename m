@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CB6EA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F6DEA8543
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMkj-00076Q-C6; Sun, 08 Mar 2026 18:37:37 -0400
+	id 1vzMl6-0008St-Lw; Sun, 08 Mar 2026 18:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMki-00075E-H5
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:36 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMl2-0008IG-RB
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:57 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMkg-0003XL-SM
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:36 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48534b59cf3so5313385e9.2
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:37:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMl0-0003ZS-P7
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:37:56 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439b9cf8cb5so6649322f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009453; x=1773614253; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009473; x=1773614273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Zp4tzyYE1+SHUwjfn9CYbM0y2EMXsnd90/WhSxnB9Vo=;
- b=hISQ7PBh53iRkHaENbIZPSVvQsuOA0TnwbODQbepQ5YJEeBi+Cz+KGRrjr6vyiJRFf
- PA9SdeQsMPI9/TfN9KMfXy8WD5m8ha/8aFDYVUYLJibvDL96LYGk5RW9gymoDGbe4HnT
- SMjTgKXx1lBcd6dZ6Ddu7aQcZR9yQNX3kUeyo6bYyR+mRIDceQFW2fMjrGSor+3xKrUq
- hF7S9iE7VuuPk2TXpbANym7nO0lvc0u7EiC1uufQOS2XwCimF49fyCXgoh1o36XSctul
- Y2A4rl8nLUanKk2xL6Nwtd4iKWy0Sq7LJBZis8Rq0cKM5neD8fktIjGNX3wbqmwMTSfu
- ikuQ==
+ :reply-to; bh=M77BldNhBLWDAqoR5Ls4NYc5x77VJRLwJ22XVsrrWUA=;
+ b=HmXYIYrGSHbyGoh3i2b68BksumpYNVC5LdMkKWsN2zka3wZbtSIdUoLLEyZw/jXhjA
+ hXweMrQWwZpFadlruGI/bRo5aSec+IuRoGEqey7Rz9kUDR9BTHJPuoFUrbAtWzySYRqT
+ olRrwpSSb3uVOU5Ql4CRKPS9HIWuAm8rUvGCjPBXXZAIbYGx9WQ1DfCkwHHe8t0U2sg5
+ 4BSevY730UI0J1GQm/wCV0eW8vtbbGNktSk3T7LfyIHLcVlKGogrq/OtC49SMGazUqXl
+ 8eIkFZW/8LFj5uaQfm5qga0unp1fOLKMF33ilkuEYmYzSfpIn8DtX9O5+61EcrIxylc+
+ dtEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009453; x=1773614253;
+ d=1e100.net; s=20230601; t=1773009473; x=1773614273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Zp4tzyYE1+SHUwjfn9CYbM0y2EMXsnd90/WhSxnB9Vo=;
- b=kXMEPPrXW84c6nKwHAec7kNTqRMyDLBDlE2jnZka6h4yLP0J1L6wUE6LtMxxlytJBN
- 4bAB4pJaMUWRgWBlOAjP+uXCIWZ8ldp31gyeWCDEKEmBavaQYehekOgoqk2mnv4cBr0d
- VG4MiFZQslBJY+dTOHy2QPId/AOZJXmHqUgtFYn5jpO+OlD2rPiER6+FxB76cLacmBlH
- 5RmGWU/6hxBD1Cx88WjRrnqFdnTmJ06X+rI5jddJnsijGLCyfoQOpVmCxz6WPX8H/SmV
- 6jI2W/ekIr6snfP6DOIKAZurI4VQQarmdNyjITj2O8s2cMQP8ny/UJoV73Kn38EAe+O6
- rEoA==
-X-Gm-Message-State: AOJu0Yx+C1U38+4e8f2Ho5iqxVly/pCcxFHKPuOxS+jzHB1eZI5wUf8q
- peA85+8zp+i6y9Gv06KkbavAatwJm9Mw3nsHEiLcNIYKs82Fk0LwPNeSMyh+hpQXdEHIrwcyTCL
- /N0T78V4=
-X-Gm-Gg: ATEYQzzT1k1aIjspPfiH/jaNTPJADmv7sKXZmpowGUAD/Bs6EA9hvqba3rKy1fEXwL5
- VhNSy4z0Q1I+y82ZoWLc0T6Fqas8WjGNrlcUgPHI5eksgYSLxcZI2tvoSmon6jApoeYMTBbsI/5
- QDalRlZBVOE5nDCDWoKu2By71aWG/rkZju2UGNHQPWrvftLkAA9RB8kOTBzw0kDmlgtbk7p5gvg
- tBQLjh0XhKAqLp4CaNRbHMTkv47mdW8z6orI/yFuM87V586NOCdX51/nnNJHCpaLQUAohaoEWlO
- Y7yToW0vZACXKsYF0V+B/b3og2YgrfHBOKWvnf0dRgu63pvUhicOzJkppSEvOmBautCfQVJ4LOM
- wauVwXHd8RermCfUOYbROVShSbla/wdozYPKC4JDB6E6OEPwHdDmHCIFLY/U5A/VH/Ig/ZyrMvG
- e3KdqL9Qbalyl4Ykdx0smWZEeD1VJ2h1W67vfK1Lz/MTX4L2x1CQILSeHjKAi5WCLks7vTl1mC8
- qquTzuUJwNkt9/O
-X-Received: by 2002:a05:600d:8497:10b0:485:2ce2:4c8a with SMTP id
- 5b1f17b1804b1-4852ce24e86mr74582875e9.1.1773009453042; 
- Sun, 08 Mar 2026 15:37:33 -0700 (PDT)
+ bh=M77BldNhBLWDAqoR5Ls4NYc5x77VJRLwJ22XVsrrWUA=;
+ b=VxJsvvFhUSg9Hb/SfVjZmQpqzf1qtlRW4qB9MN2VYIVqwr1rxViKnP7VWq0CXzIbMA
+ 3rjbiEhrxDWDYyWXzn6Q3ekIK8eOVit0nD0QBKzMVvjG86/DQTBubF+7eEF7PiV5ZAGm
+ gPTOhph6iIg80TTZB1gfO/wBd06qMIaJ0aG4VF5OSa3c3EUjkV+mFkMl40xbFblQsbhA
+ J8AnRMm+vWcJJ9ZIpAf0Tx5g1HKBvX9kORA2ACRvdNk/r00D7Q/3jD9ejFQK1mx6GZo7
+ GByUu/OYfjjeidYqcrjEWM8zJHaUpfSv1mfYKcg7pHt+2UGznleOwAZ4e9d1R0Fj7lYj
+ +8ig==
+X-Gm-Message-State: AOJu0YwvQvUqgT9rltwa8JAJcEqChDmjNisnRQZNwFonC6R3erm6QaYz
+ jOIa2iF0ZG8eRKtJbG/oAEe/I7pve656xzu9DRslbnuSOiUIqh9D+IMxIHHc0D1EmEEJl0C4r6U
+ dpmLCwMY=
+X-Gm-Gg: ATEYQzwEuRNByi447zEQVnt1ckCr8b/sxH16kz3MR/lNpmBSmyDx5UkEjBPj+R6LTHI
+ H/Iis2pISE2D/jv7EyX8B9WhnnuH7mGV3vGbys8+VG1+zrxbf68b+ujFV6qPSnO6f7gzktS2Len
+ /VzXRWfq6uRlgMs8MWM52YikdSakeXc9uavm3yDYsT/zTVm/JpNku6PWurVzgblzPsmii8rmxF7
+ +egAe9+xAxuIvENI53MIATvSEDBKzxldra+eXQdAdMr1dQGWTNoAT1fWVsSgZdh1OZa/gol6z0x
+ mOUVJrXF2ZSsiZKtlYuILAnrldnv2giOwbM+f/Omffqu8/eByDagdCLh5zCUiDWXj4QNGStLJr7
+ sU3NwJxrjotvDO9H7KIBOGAidTOTH1eWbpE/hxO+xLPl9SpSm1fs1nTVkL1u2N3AHG/nKs/ZVjV
+ 0nve9HqzxG7c+JKzYXr3ItvT4alAxdHtdvrFsQeTgpwHIfk6m6EW4BGhuuXl5BrED7mm204X9LP
+ PO2biToPsOr3AfB
+X-Received: by 2002:adf:ffc9:0:b0:439:df0b:2885 with SMTP id
+ ffacd0b85a97d-439df0b28e1mr7445746f8f.58.1773009472790; 
+ Sun, 08 Mar 2026 15:37:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae56300sm20799956f8f.37.2026.03.08.15.37.32
+ ffacd0b85a97d-439dad1cb7csm21421438f8f.0.2026.03.08.15.37.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:37:32 -0700 (PDT)
+ Sun, 08 Mar 2026 15:37:52 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/49] MAINTAINERS: Replace @tuxfamily.org address
-Date: Sun,  8 Mar 2026 23:34:10 +0100
-Message-ID: <20260308223433.25503-27-philmd@linaro.org>
+Subject: [PULL 29/49] hw/net/xilinx_axienet: Prevent writes to PHY
+ Identification registers
+Date: Sun,  8 Mar 2026 23:34:13 +0100
+Message-ID: <20260308223433.25503-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,62 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <huth@tuxfamily.org>
+From: Jim MacArthur <jim.macarthur@linaro.org>
 
-Tuxfamily.org has had many outages in the recent years and will likely
-go away in the near future:
+There are other registers in the PHY model which should be partially or
+entirely read-only, but this solves the immediate issue.
 
- https://forum.tuxfamily.org/post/3381/#p3381
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3297
 
-Thus replace my @tuxfamily.org address with another one that is more
-reliable and hopefully will survive longer.
-
-Signed-off-by: Thomas Huth <huth@tuxfamily.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <20260303203044.8403-1-huth@tuxfamily.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/net/xilinx_axienet.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6730cee490c..5ad5918d7aa 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1357,13 +1357,13 @@ F: gdb-xml/loongarch*.xml
- M68K Machines
- -------------
- an5206
--M: Thomas Huth <huth@tuxfamily.org>
-+M: Thomas Huth <th.huth+qemu@posteo.eu>
- S: Odd Fixes
- F: hw/m68k/an5206.c
- F: hw/m68k/mcf5206.c
- 
- mcf5208
--M: Thomas Huth <huth@tuxfamily.org>
-+M: Thomas Huth <th.huth+qemu@posteo.eu>
- S: Odd Fixes
- F: hw/m68k/mcf5208.c
- F: hw/m68k/mcf_intc.c
-@@ -1373,7 +1373,7 @@ F: include/hw/m68k/mcf*.h
- F: tests/functional/m68k/test_mcf5208evb.py
- 
- NeXTcube
--M: Thomas Huth <huth@tuxfamily.org>
-+M: Thomas Huth <th.huth+qemu@posteo.eu>
- S: Odd Fixes
- F: hw/m68k/next-*.c
- F: hw/display/next-fb.c
-@@ -3088,7 +3088,7 @@ F: audio/paaudio.c
- 
- SDL Audio backend
- M: Gerd Hoffmann <kraxel@redhat.com>
--R: Thomas Huth <huth@tuxfamily.org>
-+R: Thomas Huth <th.huth+qemu@posteo.eu>
- S: Odd Fixes
- F: audio/sdlaudio.c
- 
+diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+index d85f8bb23fe..970732b162b 100644
+--- a/hw/net/xilinx_axienet.c
++++ b/hw/net/xilinx_axienet.c
+@@ -141,6 +141,10 @@ tdk_write(struct PHY *phy, unsigned int req, unsigned int data)
+     regnum = req & 0x1f;
+     DPHY(qemu_log("%s reg[%d] = %x\n", __func__, regnum, data));
+     switch (regnum) {
++        case 2:
++        case 3:
++            /* Writes to PHY Identification registers are disallowed */
++            break;
+         default:
+             phy->regs[regnum] = data;
+             break;
 -- 
 2.53.0
 
