@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F63EA8543
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84BDCEA8546
 	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMlm-0001qm-E6; Sun, 08 Mar 2026 18:38:43 -0400
+	id 1vzMls-0002GX-C6; Sun, 08 Mar 2026 18:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlW-0000zF-CP
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:28 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlo-00025i-Vt
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:46 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlS-0003ce-Eh
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:24 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-439c4a93841so3617255f8f.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMln-0003f8-Gy
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:44 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4852f8ac7e9so17236555e9.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009501; x=1773614301; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009521; x=1773614321; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XEPh2xTN7YPEj7nIs4tW6xzkgeZmWy42bG++Vd7IoLs=;
- b=sJS4gWjURQh9tEVLLcJR5lY5w224xRQrEn0+8tWL3kEEYI6utxdUf08dY5MHxh9/Vv
- cmt0QnRUjE0d0ayfuipKO7gMt7hUneu2fNKujxjmQRJ7YqY6o5+QRfvhxa+ajWz/O2o+
- 5twUE0tdYsiywFj2kQn1HfoWARih4ZCSsyR3EpNvmNi3e78TtnYP8K59s+10WHGKQlQ8
- KZrAPQzKR1P6KI1tlWSI965OJ8JK30Zhha9M7TuVFK/+xvOCcyzVSlOV1a3xVUfKIYGq
- xRfuJ3L45BXokEsW79n90fGZHI5t/0ROJyTDtjENSSpT5I04zGvJgAmbldIvTVEOSf0X
- W+mQ==
+ :reply-to; bh=6qexEWqj7iCTD7/+Rc0f8L0qzeY//jV37wBu4R3LB4M=;
+ b=SLkXTOOhvbej8yz5Srv0SbmuquI4iG5zSgUB889Zr5zXY7n9ztClSs4LgxN8Du8974
+ Y1Fnmk8Q30VvtxCAyas6dGKUXLpDIAZ1OVT2KV8J7Q3Ezbl8CvD/YHc9KTM5Zjn5sA1s
+ X/SqSY1VQ6fvslunH51/DX3tE2o/7EfLrumtDEdhCR1LYn9JRFIzGcN8ttNH3ImWA1nT
+ PbJr7sfr+BFrk3h0Xbm94v153+6Sn7rJwE+mWjKAzMAEsA5S7cQms0D7/sCpORNyTLn+
+ +dfbRLGYw0W0Omi6filii3k2rJee49k8VDEZTjkxpniJsFnDNNkdTyCQfdR9+Xt5i03a
+ O+Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009501; x=1773614301;
+ d=1e100.net; s=20230601; t=1773009521; x=1773614321;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XEPh2xTN7YPEj7nIs4tW6xzkgeZmWy42bG++Vd7IoLs=;
- b=SpsYGGE9D7voHlhrtvSS0Bbs9Egm0+Kdpg+imEBefrelvPXZt64Szxr40vAW6EqAQD
- 1mPFFCaIsXexaxc5mvwGSW8rnnBBwFDgh3wvefHpnGxYjlm1lRhSaQ+y/VlgMRRPMnkG
- Q/LZMGw5Z5pCYMW9Gk8nug73unRiE1jLhc7r6/Qn3ek8Fvuw09uuAgzqVN2lMYEi3coj
- hky/7z7zSNY095wFSwHJmXu0blNWk6PNICkwLur5sy+Q6LE2x8YTgrZsOKMD2ubVaLg0
- NAKnyM4cTM6sjqqzE16KPVR5fy9B08PQp7c6n4BBb9zSy4J/tMvX4RGAGBHvYnsRIAIL
- Ir1Q==
-X-Gm-Message-State: AOJu0YwdmdNP4vdh9kkuA/k+Q5uQVV015g8CTGPmNkhdLO7043d/b1BG
- ikC55krpEyiKRRNoIttDRHaGEkG//n9lJt6Vu1hCLPtGRRULvg5/IvkJikNu0NqhEuK8nD/ONkC
- brYDbg1I=
-X-Gm-Gg: ATEYQzzc5NdybYDaJhVMKmSZNFOEVzEf3dD/i3dOVHRYh+8IN9zIPaYH+QuyuYzSvai
- 49SUyHjDfjXo6tz61VMHTvP/QWMdXlLrlPihcWt0FTIXQkLK3G5Oh7E3zxZMXBHHr6aG0gaCICn
- nNAF/AVKV3L6hEsjmA9pV3CmgVVqMkPjflLbtxEbdyP1ajcmxHQpw/XW/Ije8pKd3qonmK2dHPs
- fdbzYruGwwYMxrVXCNA3jIeMCFHRZEuzT4GbB+jHuoPccCLWs+QGb00E2pKeCBZnQw+kjGhCfGn
- BwJgmGnzC3wTziopZP20uphOWLMNS4r/Zxuexgc7wJKi7UjuExp8gAeWv6OIQJQj5Q7MaBUnfKW
- /Teq7XQTwmkRT00tQ2lZZ4GVHlrNuy9DVDg0HTRr/doI533r+zwH5IUVCSf4r/TEsnrQLdD/CvY
- s6IQk+EDMPnhK1LsIIDg+fqX9i4WLczEnEvMjIJeU6uCSZJFxZlnpohEK2EHFroPh39xNlHBcpj
- sTC1A==
-X-Received: by 2002:a05:6000:310b:b0:439:bc2b:cb50 with SMTP id
- ffacd0b85a97d-439da348173mr17325899f8f.4.1773009500709; 
- Sun, 08 Mar 2026 15:38:20 -0700 (PDT)
+ bh=6qexEWqj7iCTD7/+Rc0f8L0qzeY//jV37wBu4R3LB4M=;
+ b=Nxxh0kl20I3TqZYaPki4KdGSb0UyjJBVMIrWlOq2jhuipvTqQtfwY36gMZOIuFSJdX
+ oDf01et92sBLx3tqgzWl6ExyTn/tp+jslcBM1psc3IWpN+PeURv0LPU3FAlR8tlkWnw+
+ wXjRjVW3TPg3urP7g3qZw8Bfc4YDxAopFCXyeRPkUXbmt5Y7QXdVErXyQGGmuwC/Xy+1
+ mVFN2QEz+J0NTLRtc21XeVBp+LBW6Ne9HWxRlgZeT2p9zTN6Qrr9O2vkQKnf18bx5HZC
+ iDsA4WNn7Mm/HFY8wFmpADzbhcWEkQstjlmZWzz1keCbhhvW0SZ0xjbh/z14F4y7qIHW
+ 9pYg==
+X-Gm-Message-State: AOJu0YxNaVVwxVQ5GrrcbPFvWl6rq1QDhPxxxoSxyMbK3pS2wn2jQJ6h
+ nNFTEQwGXq+pnkW6klXgVhocAh7rEtUNQZypw8n41z5lJ/YpmtJ8GQ1MZPtViZJSn1jGMtQbazB
+ nEYJUnCk=
+X-Gm-Gg: ATEYQzyYp2rotDloKypKopNlb0ASBTFvx2Dv0JhjfMhSFOu/5Labas63y4WQn8c/Se3
+ Vz8Y+jSLqE8yIbnpIqmbdtC11PdUeBBRWXpK/Tum+ytPPDq/b18xF6BQrL/CDib/2xUmLpaEFLk
+ A/wdXs9Dx1bBp1hJfnwdkrbY+w83onCD8zok2q4oyr7w9iKZMejgs0v/1F+vJQ2XcIj5cMqKTB2
+ iYTVeAkvjUKNdWCs6imk7+50OH6vYfUnnQ5PQGNFobGAO7nUubzmUSO/JrLpPANmxK5TosQCVVH
+ ejm2jFX7I+GvPzaJ3VC81tVLmTRcF/fL1uY2T4ReN9qgMY9ixTHqYGw5S4Bwf+RPNFoe2mwGqRT
+ eP7riagBmr0Sshdz2/AZZr1aZ7Evuw82kJqZCx8EKaL7um5H6K46DTNvdg5vntkzXrslew2/6oP
+ fu0ayPHVPSmrPqJmg3FdLGuTyyd6rW8YcvEzNDAX+SKAX+Tbg7RJB4J5Dz8Bxq6hScfG5w0lCGj
+ s/lv0sxwi6UXoIf
+X-Received: by 2002:a05:600c:3e87:b0:485:3e00:9440 with SMTP id
+ 5b1f17b1804b1-4853e0094acmr927015e9.24.1773009520999; 
+ Sun, 08 Mar 2026 15:38:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae57401sm17679188f8f.38.2026.03.08.15.38.19
+ 5b1f17b1804b1-48527681e3fsm200375215e9.6.2026.03.08.15.38.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:38:20 -0700 (PDT)
+ Sun, 08 Mar 2026 15:38:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/49] hw/arm/aspeed_ast27x0-{ssp,
- tsp}: Do not access SerialMM internals directly
-Date: Sun,  8 Mar 2026 23:34:17 +0100
-Message-ID: <20260308223433.25503-34-philmd@linaro.org>
+Subject: [PULL 36/49] hw/char/serial: Prefer fifo8 methods over open-coding
+Date: Sun,  8 Mar 2026 23:34:20 +0100
+Message-ID: <20260308223433.25503-37-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,70 +101,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-SerialMM inherits from SysBusDevice and exposes the memory region by
-means of sysbus_mmio_get_region(). Use that in order to avoid accessing
-implementation details of SerialMM.
+Use fifo8_is_empty() and fifo8_is_full() to improve readability of the
+code.
 
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20260305220911.131508-4-shentey@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260305220911.131508-7-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/aspeed_ast27x0-ssp.c | 7 ++++---
- hw/arm/aspeed_ast27x0-tsp.c | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ hw/char/serial.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index 9b12ba67430..8b84300e0f6 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     DeviceState *armv7m;
-+    MemoryRegion *mr;
-     g_autofree char *sdram_name = NULL;
-     int i;
- 
-@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+diff --git a/hw/char/serial.c b/hw/char/serial.c
+index 0f2e79dfba6..20f68fd2f83 100644
+--- a/hw/char/serial.c
++++ b/hw/char/serial.c
+@@ -239,7 +239,7 @@ static void serial_xmit(SerialState *s)
+             if (s->fcr & UART_FCR_FE) {
+                 assert(!fifo8_is_empty(&s->xmit_fifo));
+                 s->tsr = fifo8_pop(&s->xmit_fifo);
+-                if (!s->xmit_fifo.num) {
++                if (fifo8_is_empty(&s->xmit_fifo)) {
+                     s->lsr |= UART_LSR_THRE;
+                 }
+             } else {
+@@ -481,7 +481,7 @@ static uint64_t serial_ioport_read(void *opaque, hwaddr addr, unsigned size)
+             if(s->fcr & UART_FCR_FE) {
+                 ret = fifo8_is_empty(&s->recv_fifo) ?
+                             0 : fifo8_pop(&s->recv_fifo);
+-                if (s->recv_fifo.num == 0) {
++                if (fifo8_is_empty(&s->recv_fifo)) {
+                     s->lsr &= ~(UART_LSR_DR | UART_LSR_BI);
+                 } else {
+                     timer_mod(s->fifo_timeout_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + s->char_transmit_time * 4);
+@@ -555,7 +555,7 @@ static uint64_t serial_ioport_read(void *opaque, hwaddr addr, unsigned size)
+ static int serial_can_receive(SerialState *s)
+ {
+     if(s->fcr & UART_FCR_FE) {
+-        if (s->recv_fifo.num < UART_FIFO_LENGTH) {
++        if (!fifo8_is_full(&s->recv_fifo)) {
+             /*
+              * Advertise (fifo.itl - fifo.count) bytes when count < ITL, and 1
+              * if above. If UART_FIFO_LENGTH - fifo.count is advertised the
+@@ -585,7 +585,7 @@ static void serial_receive_break(SerialState *s)
+ /* There's data in recv_fifo and s->rbr has not been read for 4 char transmit times */
+ static void fifo_timeout_int (void *opaque) {
+     SerialState *s = opaque;
+-    if (s->recv_fifo.num) {
++    if (!fifo8_is_empty(&s->recv_fifo)) {
+         s->timeout_ipending = 1;
+         serial_update_irq(s);
      }
- 
-     /* UART */
--    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
--                             &s->uart->serial.io, 0,
--                             memory_region_size(&s->uart->serial.io));
-+    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
-+    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
-+                             memory_region_size(mr));
-     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
-                                 &s->uart_alias);
-     /*
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index e39d1dc1712..e7c7b744919 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
-     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
-     DeviceState *armv7m;
-+    MemoryRegion *mr;
-     g_autofree char *sdram_name = NULL;
-     int i;
- 
-@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     }
- 
-     /* UART */
--    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
--                             &s->uart->serial.io, 0,
--                             memory_region_size(&s->uart->serial.io));
-+    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
-+    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
-+                             memory_region_size(mr));
-     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
-                                 &s->uart_alias);
-     /*
 -- 
 2.53.0
 
