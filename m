@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32F2EA8537
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71B3EA853A
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzHx7-0003hR-JY; Sun, 08 Mar 2026 13:30:06 -0400
+	id 1vzHx6-0003gU-7h; Sun, 08 Mar 2026 13:30:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHwu-0003f5-69
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:54 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHwr-0003ek-Ob
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:50 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHws-0003ng-ED
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:51 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHwp-0003nL-1G
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:49 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 2E8204341E;
- Sun,  8 Mar 2026 17:29:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E6AC116C6;
+ by tor.source.kernel.org (Postfix) with ESMTP id C3FE6600AE;
  Sun,  8 Mar 2026 17:29:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64F97C116C6;
+ Sun,  8 Mar 2026 17:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772990988;
- bh=0nM1s+NQvWZ8mFk4qsfcfN21HkyWkiji/p4/PrOht4w=;
+ s=k20201202; t=1772990985;
+ bh=QIdUQ5ojIh6pUED378YIZDxyX5WSDR8KZ+KkV6/pMI4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=AziDDGDerWm1xBk/O+KjWJzrqd2US+WzXVAZNp/mGMI5v5XrksmNjNcBfIMGQU7lX
- yimX13tj2L0u6gR3WmnuwXZoAAF1j+iXH0LXk5JOvzJw2NNo7VFVakgiSYA/OFwjb5
- 7eYH2qofpZPwsCJUBSWtJEMJNADzdlhGFJ0XZTPXtMiTdntHdpAlibcCg56fZibaUK
- X4pwm4T/jp4ImfwRDWSf7cGSvbm7Sg7UszQoUow/53aSqUqJ5bfGSTZs8B0LylGyom
- CIAXCXhumvS9VD40aMAB07n6OV9b6dkyEu/8ulrPUjwmd6g3YqwaTQurjwMVsJguY+
- J3+42/ExQDZMQ==
+ b=NrGNfYrkD+9JGnxShLTLRbsCWesGkb4TT2+KWnc1B1PXsO/pk8mPFotI9zpeaUVzO
+ 1dVzUaoV0pOzQZDKtc0PGMLxHpS18crA/ryZIxECEz7Er6+4ADQxBBxhJTigyxVhfZ
+ 9GTOML4Jkb8inVNlibrYiYfywUi7Mt50CzYUcsza/tGsAxV0fnW0eEIiIZ35lnsuz1
+ AoGDGwJOMT2pNtKYTF/D8aJaGiRyUa1YP9+KcyYe9lAxUjsY9bsGc4qLkrQGT0G3vI
+ CR0MAA6orJb/XpbdMJ+mhMtTXC2p5adqjwGgRTNknbBXZedVS1wOXJBeR6FSxjUVD7
+ agD4CTuRwONVw==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -41,17 +41,16 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 03/12] linux-user/strace: fix printing of file offsets
-Date: Sun,  8 Mar 2026 18:29:27 +0100
-Message-ID: <20260308172936.2835-4-deller@kernel.org>
+Subject: [PULL 02/12] hw/char: Drop disable property of Diva GSP card
+Date: Sun,  8 Mar 2026 18:29:26 +0100
+Message-ID: <20260308172936.2835-3-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308172936.2835-1-deller@kernel.org>
 References: <20260308172936.2835-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -73,150 +72,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-Previously, 64-bit file offsets (loff_t) were printed using `print_raw_param()`
-function, which led to silent truncation of the upper part. This commit fixes
-this issue by adding two helper functions:
+The "disable" property is not used, so drop it.
 
-1. print_file_offset32(): prints 32-bit file offsets (off_t)
-2. print_file_offset64(): prints 64-bit file offsets (loff_t)
-
-Changelog v2:
-
-1. Make `print_file_offset32()` static.
-2. Use `last` parameter in `print_file_offset32()`.
-3. Rename `low` and `high` parameters of `print_file_offset64()` to `word0`,
-`word1` respectively
-4. Convert `last` to bool for `print_file_offset[32,64]()`
-5. Use `PRId64` instead of `PRIu64` for `print_file_offset64()`
-6. Fix `print__llseek()`
-
-Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/strace.c | 43 +++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ hw/char/diva-gsp.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index ca67cfd09d..d253b522bf 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -85,6 +85,10 @@ UNUSED static void print_enums(const struct enums *, abi_long, int);
- UNUSED static void print_at_dirfd(abi_long, int);
- UNUSED static void print_file_mode(abi_long, int);
- UNUSED static void print_open_flags(abi_long, int);
-+UNUSED static void print_file_offset32(abi_long offset, bool last);
-+UNUSED static void print_file_offset64(abi_long word0,
-+                                       abi_long word1,
-+                                       bool last);
- UNUSED static void print_syscall_prologue(const struct syscallname *);
- UNUSED static void print_syscall_epilogue(const struct syscallname *);
- UNUSED static void print_string(abi_long, int);
-@@ -1664,6 +1668,20 @@ print_open_flags(abi_long flags, int last)
-     print_flags(open_flags, flags, last);
- }
+diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+index 280d0413c6..2be5183216 100644
+--- a/hw/char/diva-gsp.c
++++ b/hw/char/diva-gsp.c
+@@ -51,7 +51,6 @@ typedef struct PCIDivaSerialState {
+     SerialState  state[PCI_SERIAL_MAX_PORTS];
+     uint32_t     level[PCI_SERIAL_MAX_PORTS];
+     qemu_irq     *irqs;
+-    bool         disable;
+ } PCIDivaSerialState;
  
-+/* Prints 32-bit file offset (off_t) */
-+static void
-+print_file_offset32(abi_long offset, bool last)
-+{
-+    print_raw_param(TARGET_ABI_FMT_ld, offset, last);
-+}
-+
-+/* Prints 64-bit file offset (loff_t) */
-+static void
-+print_file_offset64(abi_long word0, abi_long word1, bool last)
-+{
-+    print_raw_param64("%" PRId64, target_offset64(word0, word1), last);
-+}
-+
- static void
- print_syscall_prologue(const struct syscallname *sc)
- {
-@@ -2256,11 +2274,13 @@ print_fallocate(CPUArchState *cpu_env, const struct syscallname *name,
-     print_raw_param("%d", arg0, 0);
-     print_flags(falloc_flags, arg1, 0);
- #if TARGET_ABI_BITS == 32
--    print_raw_param("%" PRIu64, target_offset64(arg2, arg3), 0);
--    print_raw_param("%" PRIu64, target_offset64(arg4, arg5), 1);
-+    /* On 32-bit targets, two registers are used for `loff_t` */
-+    print_file_offset64(arg2, arg3, false);
-+    print_file_offset64(arg4, arg5, true);
- #else
--    print_raw_param(TARGET_ABI_FMT_ld, arg2, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg3, 1);
-+    /* On 64-bit targets, one register is used for `loff_t` */
-+    print_file_offset64(arg2, 0, false);
-+    print_file_offset64(arg3, 0, true);
- #endif
-     print_syscall_epilogue(name);
- }
-@@ -2666,8 +2686,7 @@ print__llseek(CPUArchState *cpu_env, const struct syscallname *name,
-     const char *whence = "UNKNOWN";
-     print_syscall_prologue(name);
-     print_raw_param("%d", arg0, 0);
--    print_raw_param("%ld", arg1, 0);
--    print_raw_param("%ld", arg2, 0);
-+    print_file_offset64(arg1, arg2, false);
-     print_pointer(arg3, 0);
-     switch(arg4) {
-     case SEEK_SET: whence = "SEEK_SET"; break;
-@@ -2688,7 +2707,7 @@ print_lseek(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     print_syscall_prologue(name);
-     print_raw_param("%d", arg0, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg1, 0);
-+    print_file_offset32(arg1, false);
-     switch (arg2) {
-     case SEEK_SET:
-         qemu_log("SEEK_SET"); break;
-@@ -2719,7 +2738,7 @@ print_truncate(CPUArchState *cpu_env, const struct syscallname *name,
- {
-     print_syscall_prologue(name);
-     print_string(arg0, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, arg1, 1);
-+    print_file_offset32(arg1, true);
-     print_syscall_epilogue(name);
- }
- #endif
-@@ -2736,7 +2755,7 @@ print_truncate64(CPUArchState *cpu_env, const struct syscallname *name,
-         arg1 = arg2;
-         arg2 = arg3;
-     }
--    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
-+    print_file_offset64(arg1, arg2, true);
-     print_syscall_epilogue(name);
- }
- #endif
-@@ -2753,7 +2772,7 @@ print_ftruncate64(CPUArchState *cpu_env, const struct syscallname *name,
-         arg1 = arg2;
-         arg2 = arg3;
-     }
--    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
-+    print_file_offset64(arg1, arg2, true);
-     print_syscall_epilogue(name);
- }
- #endif
-@@ -3308,7 +3327,7 @@ print_stat(CPUArchState *cpu_env, const struct syscallname *name,
-     print_syscall_epilogue(name);
- }
- #define print_lstat     print_stat
--#define print_stat64	print_stat
-+#define print_stat64    print_stat
- #define print_lstat64   print_stat
- #endif
+ static void diva_pci_exit(PCIDevice *dev)
+@@ -159,20 +158,18 @@ static void diva_pci_realize(PCIDevice *dev, Error **errp)
  
-@@ -4302,7 +4321,7 @@ print_pread64(CPUArchState *cpu_env, const struct syscallname *name,
-     print_raw_param("%d", arg0, 0);
-     print_pointer(arg1, 0);
-     print_raw_param("%d", arg2, 0);
--    print_raw_param("%" PRIu64, target_offset64(arg3, arg4), 1);
-+    print_file_offset64(arg3, arg4, true);
-     print_syscall_epilogue(name);
- }
- #endif
+ static const VMStateDescription vmstate_pci_diva = {
+     .name = "pci-diva-serial",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .fields = (const VMStateField[]) {
+         VMSTATE_PCI_DEVICE(dev, PCIDivaSerialState),
+         VMSTATE_STRUCT_ARRAY(state, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS,
+                              0, vmstate_serial, SerialState),
+         VMSTATE_UINT32_ARRAY(level, PCIDivaSerialState, PCI_SERIAL_MAX_PORTS),
+-        VMSTATE_BOOL(disable, PCIDivaSerialState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+ 
+ static const Property diva_serial_properties[] = {
+-    DEFINE_PROP_BOOL("disable",  PCIDivaSerialState, disable, false),
+     DEFINE_PROP_CHR("chardev1",  PCIDivaSerialState, state[0].chr),
+     DEFINE_PROP_CHR("chardev2",  PCIDivaSerialState, state[1].chr),
+     DEFINE_PROP_CHR("chardev3",  PCIDivaSerialState, state[2].chr),
 -- 
 2.53.0
 
