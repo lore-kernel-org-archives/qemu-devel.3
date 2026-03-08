@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57703EA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FCE1EA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMlx-00036q-3o; Sun, 08 Mar 2026 18:38:53 -0400
+	id 1vzMls-0002Dc-3N; Sun, 08 Mar 2026 18:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlu-0002g8-VH
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:50 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlh-0001ii-Af
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:37 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlt-0003fq-Bb
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:50 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4852afd42ceso18739835e9.2
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlf-0003e0-Mc
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:37 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-439b8a3f2bcso5556420f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009528; x=1773614328; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009514; x=1773614314; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6C8YP53jTJUFe5XlsI4+jeif+amgbN6vtqB11RHrjI4=;
- b=pAwq5DG+XbgTLiG8qj+OBav2y2oUp2DxU81avMspomzk7QZ7oy9udB6cpY/avgzDkT
- /jZ9WD1LFbt5CihScFsbTFotIvdr30Lg9QXcJYpCB3zwBv/ytThC/ShFh2pOGaaGbWYV
- QanR4IeG8gPB+rFEljrfTMIPGKw3tp6syi+9fEV+B51Hbr3ZZhbRKh4G+OSsAWM9kLrZ
- clMY0cZE3opFtaeWwMQg6eCAxGA5lqkqaTKKD2/MGEj4p8EdKjRKwj5cOBR6wI7ZVJgD
- Ve0mFUuWLvH8/iT6SgwX0rx2s6oNHR/ZPH/gr8EllhsuLEGuLEKrkOXMge40y1wcPXco
- 3FQw==
+ :reply-to; bh=c0hbwBE0hnQGstdyI1VIsE+1GxU4ynbA0Wq9xhPHvFk=;
+ b=KwwvXer2rR/xtAG4D1AujNQnvu8WwiS5Ho2dwYv4RsIOPbSxH1EvVe6K5PJf1MiPM+
+ dl1LmH8Tu7o9EM/mYh5xtGJvwxMDpUsifIWCwycQu7M3ajEtK0jg2rC98dFhXQmFBL2T
+ 2pUBOy3paPI0CtBOzJTXFU6FIJGKjx0SHfkf28GDeDjR1i7zTRNUAbR4uzBYqyYl50HW
+ dHsmmnhSzOPVJnVU/KZ6pfPZ3HNvwKGcpNF/051xM5m3oxPydpTrJ/TF4cHyIO3/d7c3
+ qEQTwzkF/i8IpY0QceVPgJay+VCrkKImsPrbchcq40kX0X9Ci7Sk3Npx4JqGe/2Ts94F
+ Reyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009528; x=1773614328;
+ d=1e100.net; s=20230601; t=1773009514; x=1773614314;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=6C8YP53jTJUFe5XlsI4+jeif+amgbN6vtqB11RHrjI4=;
- b=ZZDq9HglO4Zud7nz1NISVcWGtCCJ0O7XqRYYHBCLnmUN/09lo+GYsXQiAEkkbt7wMO
- wtC1PlPnemRVB+bGPnhZnUeJtkAL2Dcw7U2GDvZp/XEH9g7AImyhaYPaWFAyKp0M630S
- jjDFZfifGyGRp56H2wZRv0n6E2aV858K3kWoYqmR2fDEN1z9WEBO+Xs/RVGpoaIleySc
- gRAtHzTn4vg7BFiqjUQwnV4TgeVSd5FIMUXwYKLq8M9h1CDTlNUqqYsIIcx9ZvRiILUR
- TSSCXOuFRuMl1IuT8r7C9XLEtIt/tIwGC/DY0+6dBDzjh/bJ7Qxo9A+e/cIRDsm9YCIW
- kIrg==
-X-Gm-Message-State: AOJu0YzIGkTqx/lLBzfsKKk7J07pesa11BqR3XfQs2bwi7MJJMY+8Hrf
- v/N+4Y/C6hqAmeuBWu2yJLXsTPkiyMF0o+xxTqoSZEUm0g7v57QtMsZr3j1RnX06JcbiiD7SYz4
- PDKznXlA=
-X-Gm-Gg: ATEYQzy5YvqgYigwo8/cNzut+PbCFxfpGyDqFdQgGTFmPDW2ZP0Zzgl2fI28vuqiHFp
- pG/urHaZIJAE0tLRPEz/r2mwBlRCD6DWFfhiKfCwxzcbw4aY3ucotuyXCExc8t/lzB6rUdhYsYR
- /4h8vg0hAucn6IOm+3tzcg6nt990Zr7F0W73WaK4tPNZIRLRVPqLQ/LjINDeftRUbkmIFLDnA0g
- f5Csy9CA1qJ72CPzFpK9NDQpO5QFmBGZMlI0RwMhcAwnSWXTxwfr8Dg8hyBp2c+e75EUTf2hbCQ
- lo6xvy0pw4hDeCuR1rk939cwmlpxkuqs8llrzUSriFKOBSTtAXXvOuH/MOl0lcYoE5HbuGDH/jR
- LtJZe0YGxt9cAeZBvQtsGWK/3JG6ZnSz+91UHesXV2HQh7ag2prlB7TlUYkap7WJr46Nwgj3FV1
- 9EWKThIweWPDLF4ftIMgI3Yai2vpZ6R4HHCUnfwda+AZWghUAD1SiYEuikCzmTgZ8J8OE+SOEHF
- Sqe1Q==
-X-Received: by 2002:a05:600c:1e88:b0:482:eec4:76d with SMTP id
- 5b1f17b1804b1-48526959464mr147091035e9.17.1773009527552; 
- Sun, 08 Mar 2026 15:38:47 -0700 (PDT)
+ bh=c0hbwBE0hnQGstdyI1VIsE+1GxU4ynbA0Wq9xhPHvFk=;
+ b=c5BMaZLaLVirbhV6sjDDQVJS6vshf89N+YQIHwuINxGSgfg6NdUZ1roMQeK7AXxWX4
+ 97d0mFbX/1ZrjnC2RmxrbOvWgGta/m5p0OZPx2Gs/NAiJL88ZCklRTD6N3X0kfvAeGyS
+ 1RWt4aeUcN/XgPjfz8gNdKosQz0txfcSvS409WMaxb9ZPzlQxOKsC94VBXVJ4j16Pc32
+ 18rJxLexkCmaWPkeTCNFEqQQ8qGEpMOI0QvfxjJspiq3DiiS5I0rBGR4GiFnWz8b7zWX
+ xa8wwQej27XpxrPfGxpdbgUOWw6N64ZD4h8+s7IYV2ey45OUXtKJkUh7zsKr2h5nw/Tq
+ iPvg==
+X-Gm-Message-State: AOJu0YyvZenpzKNsmrYN/dw1uD2a0p5lKt3oSX+XoaN0p/Bw5qupgmZF
+ 10PAO57G+maBFHI2W1uaUHmm/ODHw0sTVivTgT3/K4gmnxcqhMeFko5y+/N8NjttYxYin3iU/nD
+ voDQfClE=
+X-Gm-Gg: ATEYQzwFwv1PG9lzVqzYZxPwd2ykZfHIXJ4jebXHvFdlmLlg7o4Mqg6U/NaKyx4DGP2
+ +T0Rwvmc1hdL3T4une6pJxtzpAsac6JzjXrMnFiOQa4/oVYwnCuPz7bzOlhwspuHwDeEq8Ramrj
+ BHNlA09PPe20vCzKgh3oDRWZPlUfbzV0tVUSTj486QqdmNZuTjb2jNa/DP3Ns2fc50+WO3ZTARX
+ cs0FiOh0SqctJwIuGaH1qR3GLLu8/W8OaTu8pa6azg1YgIxZtqeM/QORe2pOqRP+8lWKcHLG/K9
+ c8xD3IUROH+WDvxpWaUyLj48b07R/ubAyBl2ieyjHI11HP1yywYP6KbT1gR4P5V7zFk5da9ZfAJ
+ UxqiUu8IP6mHeL+cIwge+CzAuA0DeeFomRGAl8nhwOyHPBCqtTH5FXWp1oL3s4k7yah8nx4iasr
+ UtybO3WWMTd63ItT9B/oJr/JsFpJytHkqyFFIZxpGasGrQfZ55/YKO94vSCCCD2obk5GpQEHwMW
+ wJg8Q==
+X-Received: by 2002:a05:6000:250e:b0:439:ad72:9900 with SMTP id
+ ffacd0b85a97d-439da885f79mr16119738f8f.29.1773009513797; 
+ Sun, 08 Mar 2026 15:38:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48527686bcesm339163205e9.7.2026.03.08.15.38.46
+ ffacd0b85a97d-439dae2b9d8sm22744808f8f.21.2026.03.08.15.38.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:38:47 -0700 (PDT)
+ Sun, 08 Mar 2026 15:38:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 37/49] hw/char/serial: Reuse fifo8_num_used()
-Date: Sun,  8 Mar 2026 23:34:21 +0100
-Message-ID: <20260308223433.25503-38-philmd@linaro.org>
+Subject: [PULL 35/49] hw/char/serial: Remove explicit cast from void pointer
+Date: Sun,  8 Mar 2026 23:34:19 +0100
+Message-ID: <20260308223433.25503-36-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +101,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Avoids accessing private fields of struct Fifo8. Now, TYPE_SERIAL only
-accesses struct Fifo8 through its methods.
+A void pointer asks for being casted, so C allows for omitting the
+explicit cast. Take advantage of that.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260305220911.131508-8-shentey@gmail.com>
+Message-ID: <20260305220911.131508-6-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/serial.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/char/serial.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 20f68fd2f83..2c558cb9fc6 100644
+index adbd1d1d4ab..0f2e79dfba6 100644
 --- a/hw/char/serial.c
 +++ b/hw/char/serial.c
-@@ -128,7 +128,7 @@ static void serial_update_irq(SerialState *s)
-         tmp_iir = UART_IIR_CTI;
-     } else if ((s->ier & UART_IER_RDI) && (s->lsr & UART_LSR_DR) &&
-                (!(s->fcr & UART_FCR_FE) ||
--                s->recv_fifo.num >= s->recv_fifo_itl)) {
-+                fifo8_num_used(&s->recv_fifo) >= s->recv_fifo_itl)) {
-         tmp_iir = UART_IIR_RDI;
-     } else if ((s->ier & UART_IER_THRI) && s->thr_ipending) {
-         tmp_iir = UART_IIR_THRI;
-@@ -563,8 +563,8 @@ static int serial_can_receive(SerialState *s)
-              * the guest has a chance to respond, effectively overriding the ITL
-              * that the guest has set.
-              */
--            return (s->recv_fifo.num <= s->recv_fifo_itl) ?
--                        s->recv_fifo_itl - s->recv_fifo.num : 1;
-+            return (fifo8_num_used(&s->recv_fifo) <= s->recv_fifo_itl) ?
-+                        s->recv_fifo_itl - fifo8_num_used(&s->recv_fifo) : 1;
-         } else {
-             return 0;
-         }
+@@ -715,7 +715,7 @@ static const VMStateDescription vmstate_serial_thr_ipending = {
+ 
+ static bool serial_tsr_needed(void *opaque)
+ {
+-    SerialState *s = (SerialState *)opaque;
++    SerialState *s = opaque;
+     return s->tsr_retry != 0;
+ }
+ 
+@@ -734,7 +734,7 @@ static const VMStateDescription vmstate_serial_tsr = {
+ 
+ static bool serial_recv_fifo_needed(void *opaque)
+ {
+-    SerialState *s = (SerialState *)opaque;
++    SerialState *s = opaque;
+     return !fifo8_is_empty(&s->recv_fifo);
+ 
+ }
+@@ -752,7 +752,7 @@ static const VMStateDescription vmstate_serial_recv_fifo = {
+ 
+ static bool serial_xmit_fifo_needed(void *opaque)
+ {
+-    SerialState *s = (SerialState *)opaque;
++    SerialState *s = opaque;
+     return !fifo8_is_empty(&s->xmit_fifo);
+ }
+ 
+@@ -769,7 +769,7 @@ static const VMStateDescription vmstate_serial_xmit_fifo = {
+ 
+ static bool serial_fifo_timeout_timer_needed(void *opaque)
+ {
+-    SerialState *s = (SerialState *)opaque;
++    SerialState *s = opaque;
+     return timer_pending(s->fifo_timeout_timer);
+ }
+ 
+@@ -786,7 +786,7 @@ static const VMStateDescription vmstate_serial_fifo_timeout_timer = {
+ 
+ static bool serial_timeout_ipending_needed(void *opaque)
+ {
+-    SerialState *s = (SerialState *)opaque;
++    SerialState *s = opaque;
+     return s->timeout_ipending != 0;
+ }
+ 
+@@ -803,7 +803,7 @@ static const VMStateDescription vmstate_serial_timeout_ipending = {
+ 
+ static bool serial_poll_needed(void *opaque)
+ {
+-    SerialState *s = (SerialState *)opaque;
++    SerialState *s = opaque;
+     return s->poll_msl >= 0;
+ }
+ 
 -- 
 2.53.0
 
