@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2C7F55132
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21784F55126
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz8SH-0003IL-Mv; Sun, 08 Mar 2026 03:21:39 -0400
+	id 1vz8SP-0003O7-Nf; Sun, 08 Mar 2026 03:21:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8RS-0002BN-Of
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:20:49 -0400
+ id 1vz8RZ-0002KP-W1
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:20:56 -0400
 Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8RQ-0002y0-N0
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:20:46 -0400
+ id 1vz8RW-00033S-LS
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:20:52 -0400
 Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-2be4781d2baso4108246eec.0
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:20:44 -0800 (PST)
+ 5a478bee46e88-2bdd40d3c61so9004119eec.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:20:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772954443; x=1773559243; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772954449; x=1773559249; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kto/w2AEorrBM5dZgT70XuVChojeFObxlu6B65tX8r8=;
- b=LpKI2gej/9StYGbq++OIGLAxumf0k5YmqznI5zdoBWcl7GIJWHNzNg0zgbKRDQWNyC
- lgrhypS0aRKzuJmMQEkz6urPknOP5FjSyTiFTpbJyVAJWLEzlHSTMXVjgkYnaypWKZWq
- 7GhLgSy+kmDH32vO0Q2M7hjmx+bA8Da0+z6XxLaoQwe+vmsUeJ+s3WufTLqJrjC4hx5q
- Eqq4+NohirxjWfMtRcro0eBhcdtM/bn/RHX4rqJX2Ok8WOBDxS+F4npsC8thOvao9N35
- 7efrf3uSv6zRMZKBmnwa+Vnam8jv0dde2Cdf0nwn3cgeQ+0DtTe+EjETprH2EIPE8d2I
- htBg==
+ bh=WzztSLe6IJjCsyASv5LBpq00D3Si30OBdTuZqVzuOjU=;
+ b=P3/nBtw5fTPH8cUv+Fg15JJGYbR79kgRDtPxzEe0i5ZFAseemWWFAByKHgxgBKBwlr
+ ch/JXVn+RrFs8I+uPHTbHquJa4Zq1FiKV05SI+MA5juX5tpSmKlE/PYZnE2vG/dweawR
+ R8B9IxCPR1dDKlKv4DGVVhZ4QwfEEGo7vMrUjKvTZC754JBpojGDcUo3VPgagmwZhUeL
+ CI5T/VpIqtc9VQ9S4repVrvBEsLB2+11FRD6soJnM/8F/4WGm0rBKBVJ95u0jSMJNIwj
+ 9IjVW4Lk5Ocas2ruwf/mquohlJJFGHNzV7MY+cQjrJrMTdXJWQDbqxeb63Lrd80m2fN4
+ dgYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772954443; x=1773559243;
+ d=1e100.net; s=20230601; t=1772954449; x=1773559249;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Kto/w2AEorrBM5dZgT70XuVChojeFObxlu6B65tX8r8=;
- b=v6/Qm2NK2zcRPd6RQppkRyyyTIaTadO6AaitJtXZTPPSIONbzLEn7cQIti2m82kpFZ
- MmFp1BkusdCcAXCZr96fHjv/7/53RquYmD0ZgrLHhFX1Y46CdwyW4EgiXukVLy20NO7h
- ZnX8a68rSuOxalDo2IaV+e9nCPjtoOeuslPiKpU/tc8/oJTXbYMOdOTwZJwuNOfAdC72
- NjqbyKV6CgPuOl5qEOpFRnw6/547KuPdP6e8fkS3WvjI6/wmXXYgxgANGj16L7Ey2n9I
- OiBcR2whIHvJMrdf0w4UKHmfONkuC9q46nR9NjLBdM4COPF/29xHLfjxl5TDdoCUH4YC
- KpDw==
+ bh=WzztSLe6IJjCsyASv5LBpq00D3Si30OBdTuZqVzuOjU=;
+ b=VNQfgfsY1NLdtru0+WmSI/iCuSY4VDZwWJZ1wM+IG7AYB0efUdy700RN9cJGkGQrhD
+ wp5DLvJS6bKzvNGJh+mGal9gh+hKS46l3uneW0fVZcmUB3/RlqlVR8XRnTx0Hoc1mMZH
+ 5OwWev6JFw5znz5JsiZ+AjoEZ6zogyedaagtClmupKdRKbeFnnu3N+e7QHa7k1gA+kjz
+ ob2gbLBlQI/Q/X72+GkGm2kQgQmg4OsJ2x+GJVwYlDuk2Jn5DzLKU3WPOTo/tp+42AVO
+ iuAh3JVYd0hhm3+rpory0fdGOfOfqsKl8av6dCgoFisFzH1HoWpAA/85St/xInktLMKQ
+ VlNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwbpdYlEOjD14YQXvWBJ9DIpDG937JP7vdWZ9Lcvc/xNaIExe+G2daQSDKQ7VMs/hXDhg76Q0s85LM@nongnu.org
-X-Gm-Message-State: AOJu0YwXSGqe8l64+fL0pYcaITuY2cVWnp6Ug4xZZEK+YGHGVwII30wJ
- yDVy0awVf4YnqOTaUWK6T54DR++L2a30Q/h7V2Y29kwCTVfqzrKD0Dwv
-X-Gm-Gg: ATEYQzxDHvhnP2FvYn4JxjxKlyYKVhlef8OSa/ojfsu2GlA+y+TWPmt+GhW4pWvILkZ
- lTK75vVvd/Tm4IoK8arQiba4hk1OBsqyG7U1ASqwh4LSKu1PADXoyPblcFNO7xHCGTmh7+xd34M
- CXcwjMe8lHieVtEQoamzY0MQrjBCT73+2YzUZcSjvk7H4sif6C1QjdXXBSKBHpBDqxurdYx9kPN
- ezDHFlgCl6YVIBCTC8kVZ5NMM5Nk3upsRs8wrIos4sNAHGdWvZ7Y8E0a4NaG9sBbpYdlzPiTZP+
- yHWCEGDGwwcjdd0Ky0PIN6nmrxlfPo4S9pm8X1+TH3V2vRf83Vi6rMaPgam7yWw2zmduFUIg8D4
- yRH92DEMpm+cqdBE6P/ehWDxA9jJymp9sqQlRUUDs7BFU+R2EHvEuG1tz+93KBjBIZgUh1n84iQ
- 1O7w8JwNBjhtCjqEQa3S5SyzxuK86whKURd2EBQ7D3pMj/Kidvn7SlG42ICvK+cfsU8tVHUvJYO
- 0fPwx/mYDXsDLtnXjr4TOglPlI=
-X-Received: by 2002:a05:7300:2393:b0:2b8:66f3:2502 with SMTP id
- 5a478bee46e88-2be4deb8aaamr3515941eec.1.1772954443092; 
- Sat, 07 Mar 2026 23:20:43 -0800 (PST)
+ AJvYcCXSd2ELl5/n/NTYLiC4IpNfMKNexUOJebz1/NEn6gxR56TzrIkAhqg04k+kUKxnqkEjbArHuig4OTV6@nongnu.org
+X-Gm-Message-State: AOJu0YwIOX9sKiBRro09rDxvEWyL1dhfAXa5+5Wqw0BNapKtqIR1ceT3
+ bJQj13hsSUEKI6lEXD48gVgCNgcdRrdDb2Tnlk8U+sGjyMInYXyxuSPe
+X-Gm-Gg: ATEYQzwOQ9ic5/73T/HrIMgIaYseYUP8mIe67m3eClZVPsJeGYoZrLOkHGBHJ0bjyxC
+ eEB4Pvg3LieVFV9QKfiZyvC6RmpoXDfq0EgS2yAVZGg/fpxLknf3Z2yD1WSgqQM00+sG8kzKotm
+ ISYlPZw2ePshkraKAbXk9J7XOcXIH4EYWPs8Q9OX/K+1m7l6UJVHDRsaS4I9hzhy2lgaLycRgW6
+ r2hhiJaoqh7YtowEi65ZDftxj3ueqTOd8S4W/C7uT+FjcGjawHetOCk7DaD5GlQSj6JbhuNPRYS
+ kp9ZjsteNh/GEouV4H0pXjv2EahVM+jmwUzBsNMK39OOFY6qn9E8zWIYQV5boBFPI2H09hMTWLW
+ gBV1amKVkURraMOvHaTG+Vc7HOH1Qvg7M3ZQD8aJrUX8KYXab1CZ6Vq3hdog6+EX9kwlW+oINbS
+ JJ97T7EZjZKfS8l0pf3bTtUixqQD3jEP5192haSGj5ScNUuzU9zXfCDWW8iu3rx/fidn5+n9R9a
+ vsgCvlZAHljMcxO23yquYDLkCQ=
+X-Received: by 2002:a05:7301:1e89:b0:2b7:32fe:4bbb with SMTP id
+ 5a478bee46e88-2be4deaed60mr2676045eec.11.1772954449182; 
+ Sat, 07 Mar 2026 23:20:49 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.20.37
+ 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.20.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 23:20:41 -0800 (PST)
+ Sat, 07 Mar 2026 23:20:47 -0800 (PST)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -76,9 +76,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: tangtao1634@phytium.com.cn, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v1 22/28] hw/riscv/dm: add system bus access
-Date: Sun,  8 Mar 2026 15:17:25 +0800
-Message-ID: <37a88487caad84ae50b47cc190820ebfac5ecb3e.1772936778.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v1 23/28] hw/riscv/virt: integrate the Debug Module
+Date: Sun,  8 Mar 2026 15:17:26 +0800
+Message-ID: <9d4f695c95229e5b28247c477f2278294f5b2cbb.1772936778.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 References: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
@@ -108,316 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the optional System Bus Access (SBA) register set
-that allows the debugger to read and write system memory
-without involving a hart.
+Expand the VIRT_DEBUG memory map entry from 0x100 to
+RISCV_DM_SIZE (0x1000 = 4 KiB) to accommodate the full
+Debug Module address space: DMI registers, work area, and ROM
+entry vector.
 
-This adds SBCS, SBADDRESS0-3, and SBDATA0-3 register handlers
-with sticky error reporting, sbreadonaddr, sbreadondata, and
-sbautoincrement support. The SBA path supports 8/16/32/64-bit
-access widths and sets the SBA capability bits during DM reset
-based on the configured sba-addr-width property.
+Create the Debug Module device via riscv_dm_create() and wire
+each hart's halt-request GPIO to it. Set dm_halt_addr so the
+CPU enters the DM ROM entry point on debug-mode entry.
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- hw/riscv/dm.c | 249 ++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 242 insertions(+), 7 deletions(-)
+ hw/riscv/virt.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/dm.c b/hw/riscv/dm.c
-index 818e48629f..bcaaffd02b 100644
---- a/hw/riscv/dm.c
-+++ b/hw/riscv/dm.c
-@@ -19,6 +19,7 @@
- #include "exec/cpu-common.h"
- #include "migration/vmstate.h"
- #include "exec/translation-block.h"
-+#include "system/address-spaces.h"
- #include "system/tcg.h"
- #include "target/riscv/cpu.h"
- #include "trace.h"
-@@ -736,6 +737,95 @@ static bool dm_execute_abstract_cmd(RISCVDMState *s, uint32_t command)
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index bbce2fb667..0a7e29a743 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -58,6 +58,7 @@
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
++#include "hw/riscv/dm.h"
+ 
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+@@ -80,7 +81,7 @@ static bool virt_aclint_allowed(void)
  }
  
+ static const MemMapEntry virt_memmap[] = {
+-    [VIRT_DEBUG] =        {        0x0,         0x100 },
++    [VIRT_DEBUG] =        {        0x0, RISCV_DM_SIZE },
+     [VIRT_MROM] =         {     0x1000,        0xf000 },
+     [VIRT_TEST] =         {   0x100000,        0x1000 },
+     [VIRT_RTC] =          {   0x101000,        0x1000 },
+@@ -1702,6 +1703,24 @@ static void virt_machine_init(MachineState *machine)
  
-+static int dm_sba_access_bytes(uint32_t sbaccess)
-+{
-+    if (sbaccess <= 4) {
-+        return 1 << sbaccess;
-+    }
-+    return 0;
-+}
-+
-+static bool dm_sba_access_supported(RISCVDMState *s, uint32_t sbaccess)
-+{
-+    switch (sbaccess) {
-+    case 0: return ARRAY_FIELD_EX32(s->regs, SBCS, SBACCESS8);
-+    case 1: return ARRAY_FIELD_EX32(s->regs, SBCS, SBACCESS16);
-+    case 2: return ARRAY_FIELD_EX32(s->regs, SBCS, SBACCESS32);
-+    case 3: return ARRAY_FIELD_EX32(s->regs, SBCS, SBACCESS64);
-+    case 4: return ARRAY_FIELD_EX32(s->regs, SBCS, SBACCESS128);
-+    default: return false;
-+    }
-+}
-+
-+static void dm_sba_execute(RISCVDMState *s, bool is_write)
-+{
-+    uint32_t sbaccess = ARRAY_FIELD_EX32(s->regs, SBCS, SBACCESS);
-+    int access_bytes = dm_sba_access_bytes(sbaccess);
-+    uint8_t buf[16] = { 0 };
-+    MemTxResult result;
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSYERROR) ||
-+        ARRAY_FIELD_EX32(s->regs, SBCS, SBERROR)) {
-+        return;
-+    }
-+
-+    if (!access_bytes || !dm_sba_access_supported(s, sbaccess)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBERROR, 4); /* other error */
-+        return;
-+    }
-+
-+    if (s->regs[R_SBADDRESS2] || s->regs[R_SBADDRESS3]) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBERROR, 2);
-+        return;
-+    }
-+
-+    hwaddr lo = s->regs[R_SBADDRESS0];
-+    hwaddr hi = s->regs[R_SBADDRESS1];
-+    hwaddr addr = (hi << 32) | lo;
-+
-+    if (addr & (access_bytes - 1)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBERROR, 3); /* alignment */
-+        return;
-+    }
-+
-+    ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSY, 1);
-+    for (int i = 0; i < 4; i++) {
-+        stl_le_p(buf + i * 4, s->regs[R_SBDATA0 + i]);
-+    }
-+
-+    if (is_write) {
-+        result = address_space_rw(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, buf,
-+                                  access_bytes, true);
-+    } else {
-+        result = address_space_rw(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, buf,
-+                                  access_bytes, false);
-+        if (result == MEMTX_OK) {
-+            for (int i = 0; i < 4; i++) {
-+                s->regs[R_SBDATA0 + i] = ldl_le_p(buf + i * 4);
-+            }
-+        }
-+    }
-+
-+    if (result != MEMTX_OK) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBERROR,
-+                         result == MEMTX_DECODE_ERROR ? 2 : 7);
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSY, 0);
-+        return;
-+    }
-+
-+    trace_riscv_dm_sba_access(addr, s->regs[R_SBDATA0], access_bytes, is_write);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBAUTOINCREMENT)) {
-+        addr += access_bytes;
-+        s->regs[R_SBADDRESS0] = (uint32_t)addr;
-+        s->regs[R_SBADDRESS1] = addr >> 32;
-+    }
-+
-+    ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSY, 0);
-+}
-+
+     create_platform_bus(s, mmio_irqchip);
  
- static void dm_status_refresh(RISCVDMState *s)
- {
-@@ -1108,6 +1198,129 @@ static uint64_t dm_progbuf_post_read(RegisterInfo *reg, uint64_t val)
-     return val;
- }
- 
-+static uint64_t dm_sbcs_pre_write(RegisterInfo *reg, uint64_t val64)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+    uint32_t val = (uint32_t)val64;
++    /* Create Debug Module and connect each hart's halt-request IRQ */
++    int total_harts = machine->smp.cpus;
++    DeviceState *dm = riscv_dm_create(system_memory,
++                                      s->memmap[VIRT_DEBUG].base,
++                                      total_harts);
 +
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "riscv-dm: write to sbcs while busy\n");
-+        return s->regs[R_SBCS];
++    for (int h = 0; h < total_harts; h++) {
++        CPUState *cs = qemu_get_cpu(h);
++        RISCVCPU *rcpu = RISCV_CPU(cs);
++
++        qdev_connect_gpio_out(dm, h,
++                              qdev_get_gpio_in_named(DEVICE(cs),
++                                                     "dm-halt-req", 0));
++        rcpu->env.dm_rom_present = true;
++        rcpu->env.dm_halt_addr = s->memmap[VIRT_DEBUG].base +
++                                 RISCV_DM_ROM_ENTRY;
 +    }
 +
-+    uint32_t cur = s->regs[R_SBCS];
-+
-+    /* W1C: sberror and sbbusyerror */
-+    uint32_t sberror_clr = FIELD_EX32(val, SBCS, SBERROR);
-+    uint32_t sberror_cur = FIELD_EX32(cur, SBCS, SBERROR);
-+    cur = FIELD_DP32(cur, SBCS, SBERROR, sberror_cur & ~sberror_clr);
-+
-+    uint32_t busyerr_clr = FIELD_EX32(val, SBCS, SBBUSYERROR);
-+    uint32_t busyerr_cur = FIELD_EX32(cur, SBCS, SBBUSYERROR);
-+    cur = FIELD_DP32(cur, SBCS, SBBUSYERROR, busyerr_cur & ~busyerr_clr);
-+
-+    /* Writable fields */
-+    cur = FIELD_DP32(cur, SBCS, SBREADONADDR,
-+                     FIELD_EX32(val, SBCS, SBREADONADDR));
-+    cur = FIELD_DP32(cur, SBCS, SBACCESS,
-+                     FIELD_EX32(val, SBCS, SBACCESS));
-+    cur = FIELD_DP32(cur, SBCS, SBAUTOINCREMENT,
-+                     FIELD_EX32(val, SBCS, SBAUTOINCREMENT));
-+    cur = FIELD_DP32(cur, SBCS, SBREADONDATA,
-+                     FIELD_EX32(val, SBCS, SBREADONDATA));
-+
-+    return cur;
-+}
-+
-+static void dm_sbaddress0_post_write(RegisterInfo *reg, uint64_t val64)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSYERROR, 1);
-+        return;
-+    }
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBREADONADDR) &&
-+        !ARRAY_FIELD_EX32(s->regs, SBCS, SBERROR) &&
-+        !ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSYERROR)) {
-+        dm_sba_execute(s, false);
-+    }
-+}
-+
-+static uint64_t dm_sbaddress1_pre_write(RegisterInfo *reg, uint64_t val64)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSYERROR, 1);
-+        return s->regs[R_SBADDRESS1];
-+    }
-+    return (uint32_t)val64;
-+}
-+
-+static void dm_sbdata0_post_write(RegisterInfo *reg, uint64_t val64)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSYERROR, 1);
-+        return;
-+    }
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSYERROR) ||
-+        ARRAY_FIELD_EX32(s->regs, SBCS, SBERROR)) {
-+        return;
-+    }
-+
-+    dm_sba_execute(s, true);
-+}
-+
-+static uint64_t dm_sbdata0_post_read(RegisterInfo *reg, uint64_t val)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSYERROR, 1);
-+        return val;
-+    }
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSYERROR) ||
-+        ARRAY_FIELD_EX32(s->regs, SBCS, SBERROR)) {
-+        return val;
-+    }
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBREADONDATA)) {
-+        dm_sba_execute(s, false);
-+        return val;
-+    }
-+    return val;
-+}
-+
-+static uint64_t dm_sbdata1_pre_write(RegisterInfo *reg, uint64_t val64)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSYERROR, 1);
-+        return s->regs[R_SBDATA1];
-+    }
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSYERROR) ||
-+        ARRAY_FIELD_EX32(s->regs, SBCS, SBERROR)) {
-+        return s->regs[R_SBDATA1];
-+    }
-+    return (uint32_t)val64;
-+}
-+
-+static uint64_t dm_sbdata_hi_post_read(RegisterInfo *reg, uint64_t val)
-+{
-+    RISCVDMState *s = RISCV_DM(reg->opaque);
-+
-+    if (ARRAY_FIELD_EX32(s->regs, SBCS, SBBUSY)) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBBUSYERROR, 1);
-+    }
-+    return val;
-+}
-+
- static uint64_t dm_haltsum0_post_read(RegisterInfo *reg, uint64_t val)
- {
-     RISCVDMState *s = RISCV_DM(reg->opaque);
-@@ -1287,20 +1500,31 @@ static RegisterAccessInfo riscv_dm_regs_info[] = {
-       .ro = R_SBCS_SBACCESS8_MASK | R_SBCS_SBACCESS16_MASK |
-             R_SBCS_SBACCESS32_MASK | R_SBCS_SBACCESS64_MASK |
-             R_SBCS_SBACCESS128_MASK | R_SBCS_SBASIZE_MASK |
--            R_SBCS_SBBUSY_MASK | R_SBCS_SBVERSION_MASK, },
-+            R_SBCS_SBBUSY_MASK | R_SBCS_SBVERSION_MASK,
-+      .pre_write = dm_sbcs_pre_write, },
- 
--    { .name = "SBADDRESS0", .addr = A_SBADDRESS0, },
-+    { .name = "SBADDRESS0", .addr = A_SBADDRESS0,
-+      .post_write = dm_sbaddress0_post_write, },
- 
--    { .name = "SBADDRESS1", .addr = A_SBADDRESS1, },
-+    { .name = "SBADDRESS1", .addr = A_SBADDRESS1,
-+      .pre_write = dm_sbaddress1_pre_write, },
- 
-     { .name = "SBADDRESS2", .addr = A_SBADDRESS2, },
- 
--    { .name = "SBDATA0", .addr = A_SBDATA0, },
-+    { .name = "SBDATA0", .addr = A_SBDATA0,
-+      .post_write = dm_sbdata0_post_write,
-+      .post_read = dm_sbdata0_post_read, },
- 
--    { .name = "SBDATA1", .addr = A_SBDATA1, },
-+    { .name = "SBDATA1", .addr = A_SBDATA1,
-+      .pre_write = dm_sbdata1_pre_write,
-+      .post_read = dm_sbdata_hi_post_read, },
- 
--    { .name = "SBDATA2", .addr = A_SBDATA2, },
--    { .name = "SBDATA3", .addr = A_SBDATA3, },
-+    { .name = "SBDATA2", .addr = A_SBDATA2,
-+      .pre_write = dm_sbdata1_pre_write,
-+      .post_read = dm_sbdata_hi_post_read, },
-+    { .name = "SBDATA3", .addr = A_SBDATA3,
-+      .pre_write = dm_sbdata1_pre_write,
-+      .post_read = dm_sbdata_hi_post_read, },
- 
-     { .name = "HALTSUM0", .addr = A_HALTSUM0,
-       .ro = 0xFFFFFFFF,
-@@ -1602,6 +1826,17 @@ static void dm_debug_reset(RISCVDMState *s)
-     ARRAY_FIELD_DP32(s->regs, ABSTRACTCS, DATACOUNT, s->num_abstract_data);
-     ARRAY_FIELD_DP32(s->regs, ABSTRACTCS, PROGBUFSIZE, s->progbuf_size);
- 
-+    /* SBA capabilities */
-+    if (s->sba_addr_width > 0) {
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBACCESS8, 1);
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBACCESS16, 1);
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBACCESS32, 1);
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBACCESS64, 1);
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBASIZE, s->sba_addr_width);
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBACCESS, 2); /* default 32-bit */
-+        ARRAY_FIELD_DP32(s->regs, SBCS, SBVERSION, 1);
-+    }
-+
-     /* Reset per-hart state */
-     if (s->hart_resumeack && s->num_harts > 0) {
-         for (uint32_t i = 0; i < s->num_harts; i++) {
+     serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
+         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+         serial_hd(0), DEVICE_LITTLE_ENDIAN);
 -- 
 2.53.0
 
