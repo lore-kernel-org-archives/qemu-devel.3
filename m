@@ -4,91 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCEEEA8549
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201E7EA854A
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzNGf-0000OU-LD; Sun, 08 Mar 2026 19:10:37 -0400
+	id 1vzNiM-0003f3-F2; Sun, 08 Mar 2026 19:39:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNGZ-0000Mv-GR
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:10:31 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNGV-0008O5-Gn
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:10:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=sXbhxsVI3zWGvGfTHn/bIPgdJnkCYT30kW/kZ8+nk6Q=; b=aJr/M7szoYobcNqM48eCHQ51Sd
- bw6Ti0KhwpjAJ4KdEbtbgeZUSqo89CJeGnFHElgEZwU+Bbim0iijvQ0C0yPzif8P3LMHezOx5zw9T
- vwlcFHuCS/6yOWwmCv3Ibn1E4j8nnD0JmawSy/Gb2vAeQ9owBWSW5XgoGJDkrfh/obNxdPre8ZVPw
- YHGaGKdlaqKBCvzU5E5HAICoDcKQmdxjId6cvCat66s1dghfb3iyJBGmlm7GGPgp//WxBzNxSD51p
- Xp7L6yJNwHCyV+ORznIY41lZSCX6Efz2on0kQvsr3JyQVD/qsPnRD8ny/MzU2GL2ZkgmjFIQ9dJuO
- qxs7tz/kscZZ+PX8XptOoeQyLzSMr+iRnFdQ/eYhL8EWajOT/bokuZ9sAZ9xJN9lPRuqC/09kYxzP
- sSRMqxt5mAgTsUhvtSRRqSomhKeh6N/oEWDZ+jqEA1TRFzDxG176tkREb1owTg8chE6K/14136C9Y
- vZsjnHqBsAePAInM+WA4DP8fN+d4nszyyZ8Q6HqtmNQJdzwxoDS9nuaI83YrVEXcoCbNhBDmx8ohV
- 9w4AqJPnCrSJcQNAfWc3dHOTo9sLRG6O8KkFn4APUZ35/1Kb7prB5EY0yvRVehW0YHqE+CubWGLVp
- sDu8GDUQSJWYDxf4O6+O/yyTvmFscBhTWFMLcnbOc=;
-Received: from [2a02:8012:2f01:0:853d:6c6b:2689:bc0e]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNDc-0004n5-6L; Sun, 08 Mar 2026 23:07:28 +0000
-Message-ID: <3df9a747-2c55-4442-ad84-9c3a03bb061a@ilande.co.uk>
-Date: Sun, 8 Mar 2026 23:10:25 +0000
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzNiK-0003el-Bl
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:39:12 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzNiI-0002de-Lj
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:39:11 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-35990245493so4783443a91.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 16:39:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773013148; x=1773617948; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Eug/jfxnSan6lzaq3lUDDGCvVd8cjG6uoHHMv+3dEPk=;
+ b=i/DCvAtx+PDrVeKEgjl3DutQdD8IYAmkP8pdXfGZ/1xcw3WWjBjThrv7WqoACsIFEO
+ 4O6H+wbFbh3oGH28tqNAN9PgkpJr1gHcXElsYrn2Ik1fz0zUt409Wd7PkLw710acyGLK
+ rsT1iPMh4OEMHz3aPx9UuOOgOpobZ7RluzID6aFdTW3iYR2PlDZPDxal7rN5XrzhGj9l
+ zhHxknT98p0OWD0xTT0N0rw1SCANPNXR7lNm4xDnAInsBiCQONGTH0+Y5wm94Btx8iJC
+ JyyLBvg2YgoxXASCwQJMQ78PoyfwuvKg/UvBiKqGhVi0AjusKyyTapePD0jPFeUJFiu8
+ YUmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773013148; x=1773617948;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Eug/jfxnSan6lzaq3lUDDGCvVd8cjG6uoHHMv+3dEPk=;
+ b=eeLlHqwWVBb5tG8gPjXzSFdeURY5qPzThO6qJpR8tUMgAohD6rxE29tclknVbVeDTl
+ k7+Qd/8sbykQ7DW6AeifOiER3pCPrBn10IXRV8LDShSV0LXfxb88MvuNV1zqoB8ImABd
+ anN0Ib6cg1yxLYDkYp2tZIVD054Srnm9iHmC8ebZ5GXz9qJvfydB/7CcH4SOP+xmMVx5
+ EIWRXNnLYu5yB9y4nOc1eg1mIqsVdFQ/RJFsIEF+QqsbVEOgckbBj892Z4hn4eyVdBrd
+ XwJCpTNdKrYGgLmDYWSEZcLYf453t2b+8DnD+0TXQ0YpjTv+VppQaXs9+iiJM3+c68iW
+ m+qw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5eyDQnSHbmB1gH6loeSAuFDMTK0d6/swR4lD6RGdICDELOiybaOTQ79vaaHc/amHEYkL7r+zoo1Xg@nongnu.org
+X-Gm-Message-State: AOJu0Yx1YvMdr3FSN4e3oTZa+c7f+yljkAYH3IOp32ULRGOvjaZPP0Xd
+ FTN9dyFjmGGcAi4/bezb+jr3c1Sn1MCMAN5ksIJKyAIwjNdCM6qPK50J46dTzvEM/gE=
+X-Gm-Gg: ATEYQzxFjy9DcPomQmZG4GfMGv838LMFzHF1XwRZF7f4qnIonIS4kClx5uMogpuYA3j
+ vNRJIAh2TCTBwFnwDnLEXuJcHHkcCazDawXbEt09S1xzKNtYNlcu/PQIbjagDWp+8YMOTKaSJXd
+ Ti0SsLjEPYoZtBwBbSF5Wc7ik26AHXv7cXF+1Z6EkMjKBhVcFDzDeMfBFo3pHPtEajLK72/Qdz8
+ CH0tyY51KYIdiZqs6JaoS5Xsc/nGk5RJTnWCiGn/vksurMyT2quOX1i/r5AMfk5rskfkcP1BUM5
+ MgxihIBUkU+uKgSivC8CojKO9cQS3h9zArdcBh21HMP8YQrxuLFzTTCjCleJbocOJUM9/6HGWaU
+ XeCEK/HF8nAo6oh2fJbmXImWtZQpJmnXlggLmGjsbPv2IU9j+Sn6DP35zlEWxUQ/TZLudIMVTI6
+ gGuUCpN21+4FDKAO7EXBG822zeIU9mn8aQo0oFNnNn7VsVOUrWdJ9xLHr+cnm0CvUjrb+Y
+X-Received: by 2002:a17:90a:fc45:b0:359:791f:5f7a with SMTP id
+ 98e67ed59e1d1-359be34a896mr8466509a91.30.1773013148361; 
+ Sun, 08 Mar 2026 16:39:08 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-359c003d75csm11152512a91.2.2026.03.08.16.39.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 08 Mar 2026 16:39:07 -0700 (PDT)
+Message-ID: <30d92179-80ea-4285-a6a0-90e2544fea3f@linaro.org>
+Date: Sun, 8 Mar 2026 16:39:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20260307112931.3322532-1-peter.maydell@linaro.org>
- <20260307112931.3322532-4-peter.maydell@linaro.org>
+Subject: Re: skipping the x86_64/test_memlock.py functional test when QEMU
+ built with asan
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20260307112931.3322532-4-peter.maydell@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+References: <CAFEAcA8yiCxkyoGdCE-CZiDFK8gqim48_9XteOcBmbgSG2MnGA@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <CAFEAcA8yiCxkyoGdCE-CZiDFK8gqim48_9XteOcBmbgSG2MnGA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:853d:6c6b:2689:bc0e
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 3/3] hw/timer/slavio_timer: Free resources allocated in
- instance_init
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,113 +141,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/03/2026 11:29, Peter Maydell wrote:
-
-> The slavio_timer device's instance_init function allocates memory for
-> TimerContext structs and a ptimer, but it never frees this memory, so
-> we will leak it if the QMP interface does introspection of this
-> device type, as reported by the clang address sanitizer:
+On 3/8/26 1:01 PM, Peter Maydell wrote:
+> The clang/gcc address sanitizers intercept calls to mlock() and
+> make them do nothing, because mlock doesn't play nicely with the
+> huge allocations the sanitizers do. This means that the functional
+> test x86_64/test_memlock.py fails, because it looks in /proc/ to
+> see if the binary actually locked anything, and fails because it
+> sees 0 pages locked.
 > 
-> Indirect leak of 4896 byte(s) in 17 object(s) allocated from:
->      #0 0x5f2948d9b14d in calloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0c14d) (BuildId: 7210711bdf6f7fbd0b863bd2dfcc7c42c7175db1)
->      #1 0x758584b11771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x5f2949097b8a in slavio_timer_init /home/pm215/qemu/build/san/../../hw/timer/slavio_timer.c:403:14
->      #3 0x5f29495d790f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
->      #4 0x5f29495d96ef in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
->      #5 0x5f2949a30a26 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+> What would be a good way to skip this test in this situation?
 > 
-> Indirect leak of 1632 byte(s) in 17 object(s) allocated from:
->      #0 0x5f2948d9b14d in calloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0c14d) (BuildId: 7210711bdf6f7fbd0b863bd2dfcc7c42c7175db1)
->      #1 0x758584b11771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x5f2948f7c65a in ptimer_init /home/pm215/qemu/build/san/../../hw/core/ptimer.c:464:9
->      #3 0x5f2949097c1f in slavio_timer_init /home/pm215/qemu/build/san/../../hw/timer/slavio_timer.c:407:32
->      #4 0x5f29495d790f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
->      #5 0x5f29495d96ef in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
->      #6 0x5f2949a30a26 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+> (1) Should we make QEMU's mem-lock related command line options
+> actively fail for an asan build (since they won't actually do
+> anything, and if a user runs one they probably would want to
+> know this)?  Then we could detect that particular error in the test.
 > 
-> Avoid the TimerContext leaks by making them an array inside the
-> SLAVIO_TimerState struct instead of allocating a compile-time-fixed
-> number of them each individually with g_new0() and then throwing away
-> the pointer.
+> (2) We could run the QEMU binary with
+>   ASAN_OPTIONS='bang' qemu-system-x86_64 -help >/dev/null 2>&1
+> which will exit success on a non-asan build and fail on an asan
+> build (with an error to stderr about the invalid ASAN_OPTIONS
+> syntax, which we send to /dev/null). Then we could use that to
+> decide whether to skip the test.
 > 
-> Avoid the ptimer() leak by calling ptimer_free in
-> instance_finalize().
+> thanks
+> -- PMM
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/timer/slavio_timer.c | 25 ++++++++++++++++++-------
->   1 file changed, 18 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
-> index 4a3e227fba..eccdc532fb 100644
-> --- a/hw/timer/slavio_timer.c
-> +++ b/hw/timer/slavio_timer.c
-> @@ -62,20 +62,21 @@ typedef struct CPUTimerState {
->   #define TYPE_SLAVIO_TIMER "slavio_timer"
->   OBJECT_DECLARE_SIMPLE_TYPE(SLAVIO_TIMERState, SLAVIO_TIMER)
->   
-> +typedef struct TimerContext {
-> +    MemoryRegion iomem;
-> +    SLAVIO_TIMERState *s;
-> +    unsigned int timer_index; /* 0 for system, 1 ... MAX_CPUS for CPU timers */
-> +} TimerContext;
-> +
->   struct SLAVIO_TIMERState {
->       SysBusDevice parent_obj;
->   
->       uint32_t num_cpus;
->       uint32_t cputimer_mode;
->       CPUTimerState cputimer[MAX_CPUS + 1];
-> +    TimerContext timer_context[MAX_CPUS + 1];
->   };
->   
-> -typedef struct TimerContext {
-> -    MemoryRegion iomem;
-> -    SLAVIO_TIMERState *s;
-> -    unsigned int timer_index; /* 0 for system, 1 ... MAX_CPUS for CPU timers */
-> -} TimerContext;
-> -
->   #define SYS_TIMER_SIZE 0x14
->   #define CPU_TIMER_SIZE 0x10
->   
-> @@ -400,7 +401,7 @@ static void slavio_timer_init(Object *obj)
->           uint64_t size;
->           char timer_name[20];
->   
-> -        tc = g_new0(TimerContext, 1);
-> +        tc = &s->timer_context[i];
->           tc->s = s;
->           tc->timer_index = i;
->   
-> @@ -420,6 +421,15 @@ static void slavio_timer_init(Object *obj)
->       }
->   }
->   
-> +static void slavio_timer_finalize(Object *obj)
-> +{
-> +    SLAVIO_TIMERState *s = SLAVIO_TIMER(obj);
-> +
-> +    for (int i = 0; i <= MAX_CPUS; i++) {
-> +        ptimer_free(s->cputimer[i].timer);
-> +    }
-> +}
-> +
->   static const Property slavio_timer_properties[] = {
->       DEFINE_PROP_UINT32("num_cpus",  SLAVIO_TIMERState, num_cpus,  0),
->   };
-> @@ -438,6 +448,7 @@ static const TypeInfo slavio_timer_info = {
->       .parent        = TYPE_SYS_BUS_DEVICE,
->       .instance_size = sizeof(SLAVIO_TIMERState),
->       .instance_init = slavio_timer_init,
-> +    .instance_finalize = slavio_timer_finalize,
->       .class_init    = slavio_timer_class_init,
->   };
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Wouldn't that be possible to simply deactivate this test in meson.build 
+in case of sanitized builds?
 
-
-ATB,
-
-Mark.
-
+if get_option('asan')
+...
+endif
 
