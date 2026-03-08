@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E344EA853A
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32F2EA8537
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 17:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzHwx-0003f6-Ex; Sun, 08 Mar 2026 13:29:57 -0400
+	id 1vzHx7-0003hR-JY; Sun, 08 Mar 2026 13:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHwq-0003eY-DD
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:48 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHwu-0003f5-69
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:54 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHwo-0003nK-Uz
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:48 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzHws-0003ng-ED
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 13:29:51 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 8076B42AC1;
- Sun,  8 Mar 2026 17:29:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D848CC2BC86;
- Sun,  8 Mar 2026 17:29:40 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 2E8204341E;
+ Sun,  8 Mar 2026 17:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E6AC116C6;
+ Sun,  8 Mar 2026 17:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1772990983;
- bh=5T1LhH5J6f2Ao8dbBECeACv01ggKw++t/KA2Q4VUqbw=;
+ s=k20201202; t=1772990988;
+ bh=0nM1s+NQvWZ8mFk4qsfcfN21HkyWkiji/p4/PrOht4w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=JcR/K77APKtIltX2KVF4twyulwUuA5yvLtk6YYihM+osTyX7d5NATDRMvNmytwcTM
- 78VLVTpSthqneBqKnQ1E3s9Je9qv/HWPaF1GeVL2q7INNEgcIcLGgEOKhG/NvkxmEp
- kdymZ5N3zlFG3lY3FVA4xyB9ityNbaViIIScLEGFjk4bkk7V/FveG/EhjXj+mj2jxk
- n3XsA8v7Nsy6zhIWrm5ux9IfWGuUtOMvoDcI6uBkTWrxcGIko8/a7oWp7oNuhdkhk3
- DYxGeStDokoZlhjzrJqpdiAWwXCLp6XVMKIhIRsjfRNhGycKgthW8qgBkeHxkbBccG
- e1+E2BAZ12yxg==
+ b=AziDDGDerWm1xBk/O+KjWJzrqd2US+WzXVAZNp/mGMI5v5XrksmNjNcBfIMGQU7lX
+ yimX13tj2L0u6gR3WmnuwXZoAAF1j+iXH0LXk5JOvzJw2NNo7VFVakgiSYA/OFwjb5
+ 7eYH2qofpZPwsCJUBSWtJEMJNADzdlhGFJ0XZTPXtMiTdntHdpAlibcCg56fZibaUK
+ X4pwm4T/jp4ImfwRDWSf7cGSvbm7Sg7UszQoUow/53aSqUqJ5bfGSTZs8B0LylGyom
+ CIAXCXhumvS9VD40aMAB07n6OV9b6dkyEu/8ulrPUjwmd6g3YqwaTQurjwMVsJguY+
+ J3+42/ExQDZMQ==
 From: deller@kernel.org
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -41,13 +41,14 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  deller@gmx.de, Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 01/12] hw/hppa: Avoid leaking a diva-gsp device
-Date: Sun,  8 Mar 2026 18:29:25 +0100
-Message-ID: <20260308172936.2835-2-deller@kernel.org>
+Subject: [PULL 03/12] linux-user/strace: fix printing of file offsets
+Date: Sun,  8 Mar 2026 18:29:27 +0100
+Message-ID: <20260308172936.2835-4-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308172936.2835-1-deller@kernel.org>
 References: <20260308172936.2835-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
  envelope-from=deller@kernel.org; helo=sea.source.kernel.org
@@ -72,51 +73,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
 
-Create a Diva-gsp unconditionally on all 64-bit PCI machines.
-The A400 usually comes with a Diva card. The C3700 has a built-in
-SUPERIO chip, which we haven't implemented yet, so running with an
-emulated Diva is the best we can do for now.
+Previously, 64-bit file offsets (loff_t) were printed using `print_raw_param()`
+function, which led to silent truncation of the upper part. This commit fixes
+this issue by adding two helper functions:
 
+1. print_file_offset32(): prints 32-bit file offsets (off_t)
+2. print_file_offset64(): prints 64-bit file offsets (loff_t)
+
+Changelog v2:
+
+1. Make `print_file_offset32()` static.
+2. Use `last` parameter in `print_file_offset32()`.
+3. Rename `low` and `high` parameters of `print_file_offset64()` to `word0`,
+`word1` respectively
+4. Convert `last` to bool for `print_file_offset[32,64]()`
+5. Use `PRId64` instead of `PRIu64` for `print_file_offset64()`
+6. Fix `print__llseek()`
+
+Signed-off-by: Jean-Christian CÎRSTEA <jean.christian.cirstea@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/hppa/machine.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ linux-user/strace.c | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index f55e84529f..50ace81528 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -380,18 +380,15 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index ca67cfd09d..d253b522bf 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -85,6 +85,10 @@ UNUSED static void print_enums(const struct enums *, abi_long, int);
+ UNUSED static void print_at_dirfd(abi_long, int);
+ UNUSED static void print_file_mode(abi_long, int);
+ UNUSED static void print_open_flags(abi_long, int);
++UNUSED static void print_file_offset32(abi_long offset, bool last);
++UNUSED static void print_file_offset64(abi_long word0,
++                                       abi_long word1,
++                                       bool last);
+ UNUSED static void print_syscall_prologue(const struct syscallname *);
+ UNUSED static void print_syscall_epilogue(const struct syscallname *);
+ UNUSED static void print_string(abi_long, int);
+@@ -1664,6 +1668,20 @@ print_open_flags(abi_long flags, int last)
+     print_flags(open_flags, flags, last);
+ }
  
-     if (pci_bus && hppa_is_pa20(&cpu[0]->env)) {
-         /* BMC board: HP Diva GSP PCI card */
--        dev = qdev_new("diva-gsp");
--        if (dev && !object_property_get_bool(OBJECT(dev), "disable", NULL)) {
--            pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
--            if (!lasi_dev) {
--                /* bind default keyboard/serial to Diva card */
--                qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
--                qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
--                qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
--                qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
--            }
--            pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
-+        pci_dev = pci_new_multifunction(PCI_DEVFN(2, 0), "diva-gsp");
-+        if (!lasi_dev) {
-+            /* bind default keyboard/serial to Diva card */
-+            qdev_prop_set_chr(DEVICE(pci_dev), "chardev1", serial_hd(0));
-+            qdev_prop_set_chr(DEVICE(pci_dev), "chardev2", serial_hd(1));
-+            qdev_prop_set_chr(DEVICE(pci_dev), "chardev3", serial_hd(2));
-+            qdev_prop_set_chr(DEVICE(pci_dev), "chardev4", serial_hd(3));
-         }
-+        pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
++/* Prints 32-bit file offset (off_t) */
++static void
++print_file_offset32(abi_long offset, bool last)
++{
++    print_raw_param(TARGET_ABI_FMT_ld, offset, last);
++}
++
++/* Prints 64-bit file offset (loff_t) */
++static void
++print_file_offset64(abi_long word0, abi_long word1, bool last)
++{
++    print_raw_param64("%" PRId64, target_offset64(word0, word1), last);
++}
++
+ static void
+ print_syscall_prologue(const struct syscallname *sc)
+ {
+@@ -2256,11 +2274,13 @@ print_fallocate(CPUArchState *cpu_env, const struct syscallname *name,
+     print_raw_param("%d", arg0, 0);
+     print_flags(falloc_flags, arg1, 0);
+ #if TARGET_ABI_BITS == 32
+-    print_raw_param("%" PRIu64, target_offset64(arg2, arg3), 0);
+-    print_raw_param("%" PRIu64, target_offset64(arg4, arg5), 1);
++    /* On 32-bit targets, two registers are used for `loff_t` */
++    print_file_offset64(arg2, arg3, false);
++    print_file_offset64(arg4, arg5, true);
+ #else
+-    print_raw_param(TARGET_ABI_FMT_ld, arg2, 0);
+-    print_raw_param(TARGET_ABI_FMT_ld, arg3, 1);
++    /* On 64-bit targets, one register is used for `loff_t` */
++    print_file_offset64(arg2, 0, false);
++    print_file_offset64(arg3, 0, true);
+ #endif
+     print_syscall_epilogue(name);
+ }
+@@ -2666,8 +2686,7 @@ print__llseek(CPUArchState *cpu_env, const struct syscallname *name,
+     const char *whence = "UNKNOWN";
+     print_syscall_prologue(name);
+     print_raw_param("%d", arg0, 0);
+-    print_raw_param("%ld", arg1, 0);
+-    print_raw_param("%ld", arg2, 0);
++    print_file_offset64(arg1, arg2, false);
+     print_pointer(arg3, 0);
+     switch(arg4) {
+     case SEEK_SET: whence = "SEEK_SET"; break;
+@@ -2688,7 +2707,7 @@ print_lseek(CPUArchState *cpu_env, const struct syscallname *name,
+ {
+     print_syscall_prologue(name);
+     print_raw_param("%d", arg0, 0);
+-    print_raw_param(TARGET_ABI_FMT_ld, arg1, 0);
++    print_file_offset32(arg1, false);
+     switch (arg2) {
+     case SEEK_SET:
+         qemu_log("SEEK_SET"); break;
+@@ -2719,7 +2738,7 @@ print_truncate(CPUArchState *cpu_env, const struct syscallname *name,
+ {
+     print_syscall_prologue(name);
+     print_string(arg0, 0);
+-    print_raw_param(TARGET_ABI_FMT_ld, arg1, 1);
++    print_file_offset32(arg1, true);
+     print_syscall_epilogue(name);
+ }
+ #endif
+@@ -2736,7 +2755,7 @@ print_truncate64(CPUArchState *cpu_env, const struct syscallname *name,
+         arg1 = arg2;
+         arg2 = arg3;
      }
+-    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
++    print_file_offset64(arg1, arg2, true);
+     print_syscall_epilogue(name);
+ }
+ #endif
+@@ -2753,7 +2772,7 @@ print_ftruncate64(CPUArchState *cpu_env, const struct syscallname *name,
+         arg1 = arg2;
+         arg2 = arg3;
+     }
+-    print_raw_param("%" PRIu64, target_offset64(arg1, arg2), 1);
++    print_file_offset64(arg1, arg2, true);
+     print_syscall_epilogue(name);
+ }
+ #endif
+@@ -3308,7 +3327,7 @@ print_stat(CPUArchState *cpu_env, const struct syscallname *name,
+     print_syscall_epilogue(name);
+ }
+ #define print_lstat     print_stat
+-#define print_stat64	print_stat
++#define print_stat64    print_stat
+ #define print_lstat64   print_stat
+ #endif
  
-     /* create USB OHCI controller for USB keyboard & mouse on Astro machines */
+@@ -4302,7 +4321,7 @@ print_pread64(CPUArchState *cpu_env, const struct syscallname *name,
+     print_raw_param("%d", arg0, 0);
+     print_pointer(arg1, 0);
+     print_raw_param("%d", arg2, 0);
+-    print_raw_param("%" PRIu64, target_offset64(arg3, arg4), 1);
++    print_file_offset64(arg3, arg4, true);
+     print_syscall_epilogue(name);
+ }
+ #endif
 -- 
 2.53.0
 
