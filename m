@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201E7EA854A
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE61EA854A
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzNiM-0003f3-F2; Sun, 08 Mar 2026 19:39:14 -0400
+	id 1vzNm6-0004Wt-HJ; Sun, 08 Mar 2026 19:43:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzNiK-0003el-Bl
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:39:12 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1vzNlw-0004WN-Rm
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:42:57 -0400
+Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzNiI-0002de-Lj
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:39:11 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-35990245493so4783443a91.2
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 16:39:09 -0700 (PDT)
+ id 1vzNlu-0003m4-6H
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:42:56 -0400
+Received: by mail-qv1-xf2c.google.com with SMTP id
+ 6a1803df08f44-899d6b7b073so121561446d6.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 16:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773013148; x=1773617948; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773013373; x=1773618173; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Eug/jfxnSan6lzaq3lUDDGCvVd8cjG6uoHHMv+3dEPk=;
- b=i/DCvAtx+PDrVeKEgjl3DutQdD8IYAmkP8pdXfGZ/1xcw3WWjBjThrv7WqoACsIFEO
- 4O6H+wbFbh3oGH28tqNAN9PgkpJr1gHcXElsYrn2Ik1fz0zUt409Wd7PkLw710acyGLK
- rsT1iPMh4OEMHz3aPx9UuOOgOpobZ7RluzID6aFdTW3iYR2PlDZPDxal7rN5XrzhGj9l
- zhHxknT98p0OWD0xTT0N0rw1SCANPNXR7lNm4xDnAInsBiCQONGTH0+Y5wm94Btx8iJC
- JyyLBvg2YgoxXASCwQJMQ78PoyfwuvKg/UvBiKqGhVi0AjusKyyTapePD0jPFeUJFiu8
- YUmQ==
+ bh=3tKHNjL2n1BxBzTUeRfd6YG5gjX4fDA9dvjztNHe61M=;
+ b=mmRbJ8d2nEcwbzOk57bDy+mzdbeg0kNGNrzQ3xRB61P6r4RpK44d8Ae015lR7hyWfO
+ vuBA2z7ef04AC6z9UnOZLnNY1wPYHYdCTjx2vmsdg+9VYBshl3jt88Ud68gqY+72bllw
+ XkMF40hd4d1yl22qVcDIxo2KDg9XBEY00tBieDfLZKfHUm3FIcKB5Slxep1EN02X9pOI
+ W8glT9QOoS7aiNlvli7aaysStC9V79K/B0/CnUHPvWCqruqfTdu6i7Y6qv+Q2V2vRS4n
+ v3qhuEUQF6ZsXNgFt9IzsCqZRomkxaOuvZD8Mci2g4JI2A1j+akjciZKtCZijfFPoYJb
+ WP0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773013148; x=1773617948;
+ d=1e100.net; s=20230601; t=1773013373; x=1773618173;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Eug/jfxnSan6lzaq3lUDDGCvVd8cjG6uoHHMv+3dEPk=;
- b=eeLlHqwWVBb5tG8gPjXzSFdeURY5qPzThO6qJpR8tUMgAohD6rxE29tclknVbVeDTl
- k7+Qd/8sbykQ7DW6AeifOiER3pCPrBn10IXRV8LDShSV0LXfxb88MvuNV1zqoB8ImABd
- anN0Ib6cg1yxLYDkYp2tZIVD054Srnm9iHmC8ebZ5GXz9qJvfydB/7CcH4SOP+xmMVx5
- EIWRXNnLYu5yB9y4nOc1eg1mIqsVdFQ/RJFsIEF+QqsbVEOgckbBj892Z4hn4eyVdBrd
- XwJCpTNdKrYGgLmDYWSEZcLYf453t2b+8DnD+0TXQ0YpjTv+VppQaXs9+iiJM3+c68iW
- m+qw==
+ bh=3tKHNjL2n1BxBzTUeRfd6YG5gjX4fDA9dvjztNHe61M=;
+ b=qWnxG77EqRMhdPPBpf1lsAOdTkQiG2DKUhL0QzCXrILbTKg2dR1OAbD7eAsS3lb8rH
+ EaEKVfiBzRyDGHL7M9g6320YJeCsfe+Pc76YW/a64sK0652KspSuHf0BcspcSFgfM8VT
+ 3hMXIJeabqOgR0qf0gn+YGIiMN0IAIOWk7dvJGGq3x+bJIRP2l5W8/6k4s+vavodOtvd
+ 44eppq6P9bwJs8rgSk932n1sqiXIt/ZkVMfa9AW+KC42lXt5G2VbTWCRy4SPTiGqfcva
+ OOrrm5aVAYlQpfmL0Rjx2t/rctImcqsTvA8JoPggoIuOnCqE1Rv1Bmun7qHvM11X/NRa
+ tLNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5eyDQnSHbmB1gH6loeSAuFDMTK0d6/swR4lD6RGdICDELOiybaOTQ79vaaHc/amHEYkL7r+zoo1Xg@nongnu.org
-X-Gm-Message-State: AOJu0Yx1YvMdr3FSN4e3oTZa+c7f+yljkAYH3IOp32ULRGOvjaZPP0Xd
- FTN9dyFjmGGcAi4/bezb+jr3c1Sn1MCMAN5ksIJKyAIwjNdCM6qPK50J46dTzvEM/gE=
-X-Gm-Gg: ATEYQzxFjy9DcPomQmZG4GfMGv838LMFzHF1XwRZF7f4qnIonIS4kClx5uMogpuYA3j
- vNRJIAh2TCTBwFnwDnLEXuJcHHkcCazDawXbEt09S1xzKNtYNlcu/PQIbjagDWp+8YMOTKaSJXd
- Ti0SsLjEPYoZtBwBbSF5Wc7ik26AHXv7cXF+1Z6EkMjKBhVcFDzDeMfBFo3pHPtEajLK72/Qdz8
- CH0tyY51KYIdiZqs6JaoS5Xsc/nGk5RJTnWCiGn/vksurMyT2quOX1i/r5AMfk5rskfkcP1BUM5
- MgxihIBUkU+uKgSivC8CojKO9cQS3h9zArdcBh21HMP8YQrxuLFzTTCjCleJbocOJUM9/6HGWaU
- XeCEK/HF8nAo6oh2fJbmXImWtZQpJmnXlggLmGjsbPv2IU9j+Sn6DP35zlEWxUQ/TZLudIMVTI6
- gGuUCpN21+4FDKAO7EXBG822zeIU9mn8aQo0oFNnNn7VsVOUrWdJ9xLHr+cnm0CvUjrb+Y
-X-Received: by 2002:a17:90a:fc45:b0:359:791f:5f7a with SMTP id
- 98e67ed59e1d1-359be34a896mr8466509a91.30.1773013148361; 
- Sun, 08 Mar 2026 16:39:08 -0700 (PDT)
+ AJvYcCWSkHvCH+vfQCvI4lYGCYvHMeNxVHltPiIhImstQTavb5IMjmZqWpdAMa4is9+0NigIvipWw7a5tOMG@nongnu.org
+X-Gm-Message-State: AOJu0Yw5TRO/9LJ95FIMOTTEodulH4gUUPESaEijtO1oOjkAtk4z/DOk
+ 1jATuVxZ0FS1tF+MU5rH1a+3+n90iUZ7pKYQ4xTieRDFO42KBP2jGwEaMBn58U1JrPg=
+X-Gm-Gg: ATEYQzyOC3ta355k4VCpaB7e5UDDXVQsixqWT1lcWLieiglMIHuron46GAkJx1iNLjg
+ xav0d1aTPkQ16F1K4mZlK+i5hPHfZ5HZ2i1fkRmgj9D/RLXjq7xCNm6m1EnuUpg2Mee1mUVdEcP
+ iKVW1xhwuBJenBUAdrsCE94zIc49LfSYURKiSD7Z2hsrN2SH94mQyOw348mwxaJ0RQertByeDIY
+ hDeO0cY7Y8TBhCViZsv0ogGW+ooO2gp0o52nukTR1equuHeCcaNJ8rsh66FeEnJiS8iEsxcNTVn
+ dlWuj3IHfQQcq5313xPmF0Hbb8nLpApZQh5Yi9Klel8UgsF304LQI1GOMO9Xh6hweRtxlF5WgMU
+ lsL8I4ylEi8MIZc5vkPAvvnlplZoo3xGrXiSgCiEluLIeCK2WOdqGekVmKHX1OWd3IKNp2IAUOr
+ gOmV35Cx07CYVzT2drwbsHtZJGdiFRhKgyPrIaBzyzreb398kHSWyJHP99hZAHoUsRtlgs
+X-Received: by 2002:a05:6214:2524:b0:89a:b0c:7264 with SMTP id
+ 6a1803df08f44-89a30ad17b6mr146479646d6.49.1773013372794; 
+ Sun, 08 Mar 2026 16:42:52 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-359c003d75csm11152512a91.2.2026.03.08.16.39.07
+ 6a1803df08f44-89a3140da14sm70983646d6.9.2026.03.08.16.42.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Mar 2026 16:39:07 -0700 (PDT)
-Message-ID: <30d92179-80ea-4285-a6a0-90e2544fea3f@linaro.org>
-Date: Sun, 8 Mar 2026 16:39:06 -0700
+ Sun, 08 Mar 2026 16:42:52 -0700 (PDT)
+Message-ID: <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
+Date: Sun, 8 Mar 2026 16:42:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: skipping the x86_64/test_memlock.py functional test when QEMU
- built with asan
+Subject: Re: leaks in migration-test
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>,
  QEMU Developers <qemu-devel@nongnu.org>
-Cc: Thomas Huth <thuth@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-References: <CAFEAcA8yiCxkyoGdCE-CZiDFK8gqim48_9XteOcBmbgSG2MnGA@mail.gmail.com>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <CAFEAcA_3ed-jb+P8SVh6Pj8uGM+aYcCHTZgvzzHEUFW5zSn3rQ@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAFEAcA8yiCxkyoGdCE-CZiDFK8gqim48_9XteOcBmbgSG2MnGA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_3ed-jb+P8SVh6Pj8uGM+aYcCHTZgvzzHEUFW5zSn3rQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,36 +139,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/8/26 1:01 PM, Peter Maydell wrote:
-> The clang/gcc address sanitizers intercept calls to mlock() and
-> make them do nothing, because mlock doesn't play nicely with the
-> huge allocations the sanitizers do. This means that the functional
-> test x86_64/test_memlock.py fails, because it looks in /proc/ to
-> see if the binary actually locked anything, and fails because it
-> sees 0 pages locked.
+On 3/8/26 12:22 PM, Peter Maydell wrote:
+> I'm continuing to work through leaks reported during "make check".
+> Some of them come from the migration-test. (For these to actually
+> appear in the log you need to run with QTEST_LOG=1, otherwise the
+> migration test framework will send stderr to /dev/null and the
+> tests will fail without printing the leak report.)
 > 
-> What would be a good way to skip this test in this situation?
+> I did find this comment in qmp_migrate_incoming():
 > 
-> (1) Should we make QEMU's mem-lock related command line options
-> actively fail for an asan build (since they won't actually do
-> anything, and if a user runs one they probably would want to
-> know this)?  Then we could detect that particular error in the test.
+>       * NOTE: QEMU _might_ leak this refcount in some failure paths, but
+>       * that's OK.  This is the minimum change we need to at least making
+>       * sure success case is clean on the refcount.  We can try harder to
+>       * make it accurate for any kind of failures, but it might be an
+>       * overkill and doesn't bring us much benefit.
 > 
-> (2) We could run the QEMU binary with
->   ASAN_OPTIONS='bang' qemu-system-x86_64 -help >/dev/null 2>&1
-> which will exit success on a non-asan build and fail on an asan
-> build (with an error to stderr about the invalid ASAN_OPTIONS
-> syntax, which we send to /dev/null). Then we could use that to
-> decide whether to skip the test.
+> The issue with this is that it means we need to suppress leak
+> reports in the whole migration-test binary, which means the
+> migration code will get no leak-detection coverage at all.
+> (Not all the leak paths have qmp_migrate_incoming() in their backtrace,
+> as you can see below.)
 > 
-> thanks
-> -- PMM
-> 
+> We're getting pretty close to being able to get a complete "make check"
+> run with the leak sanitizer enabled, so it would be nice to not have
+> to suppress leak reports for this test at some point.
+>
 
-Wouldn't that be possible to simply deactivate this test in meson.build 
-in case of sanitized builds?
+That's a nice thing in itself.
 
-if get_option('asan')
-...
-endif
+Is the end goal is to enable that in CI? If not, I doubt there is a 
+strong value in reaching that state today. You'll run out of steam and 
+motivation to fix that yourself in the end.
+Same goes for all other sanitizer errors.
 
