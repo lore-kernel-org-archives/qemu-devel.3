@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F699EA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B7EEA8543
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:36:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMjX-0003Uw-H3; Sun, 08 Mar 2026 18:36:23 -0400
+	id 1vzMjf-000461-2N; Sun, 08 Mar 2026 18:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjW-0003UO-4a
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:22 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjc-0003qR-VM
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:28 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjU-0003OV-KA
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:21 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso111175485e9.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:36:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjb-0003P4-CY
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:28 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4852f8ac7e9so17226185e9.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:36:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009379; x=1773614179; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009385; x=1773614185; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1zHa6CCTrFYbjN6RjQR3YC8ud8RTRle2qGhoFe0WxOA=;
- b=i9XonAAa/1nA+w933wwoNaW1BcK70WY1zt1nSgvvvCpI4psgLBojtQV2GOGmUneljc
- U3vjjfSG7kdKxN+x4YER6q8MlTfegmu+OTz0t2/tQktGppq3iVgRJsgOPvZOggJVR1EP
- tw4QAmsUdCdqoTT0bzDHokG+s4YjfNXGD7H5UVyydeI6ieGip2LC2jKO7N2BA8T5r/R/
- t8Ja/vhhaa1nrptl1b8xgrhPZWw9nqkzUAylwRRS4ITKvcm9Sv8WAMawnzlSxSAf8MHG
- PIO5LAHkVqRI3ua/Y5EzoY+lRDTFWsJ+K7f7gRrsmLtEBXthWu/ZPbVVwBONvoojIZc5
- hlpQ==
+ :reply-to; bh=+yRRJgECb4/26rJHc/IeEtstl18ywy46YVHX8cCDbag=;
+ b=J4mTI9NH3J9r4QbZlm4p2DZ1nnsnkkBOijrxH42Tmrh2bOIW7zdjmAtq50eVZCMjnk
+ fkMPqMql+2EO36LFVrcH8i7gT7k1cuy0jSQPS7H+E1YOD+CQ2GNm0X2P3vSoYj6tzpsE
+ ZzOUzUiGFDNfRlAgGvb+3/P+YZaGJDJcpTYqUAFDqfN0iyxkVnGmqv3CFiUZO7K2vF05
+ UTAHr6OjvBlYGD3uJGoasam6hZp1lca2VGH7SndBDrfbUBDP2KT7L2DF2JReAt6DOtD8
+ gfBFJ0Yyc/RGH2wqnZTz9qq8+yhYN9W5hTiL10VF/egBAEvkWx2Dk7l8d4WpDASqwxW1
+ o8sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009379; x=1773614179;
+ d=1e100.net; s=20230601; t=1773009385; x=1773614185;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=1zHa6CCTrFYbjN6RjQR3YC8ud8RTRle2qGhoFe0WxOA=;
- b=ZEc0i/jXi0Bxecz+1tJB2NXcYQybzZHoo5Tawl0UhIZmNAqYloHhgWhibJGw8/c1+n
- FscVAbQ5hxmJpJ21h/l0SOY58tjwt34VSF9IE6Q2lVmtdefvB5dx3x4ZjJfc6HuTnESc
- RZOCfP41WfHsNJBTfSK7JWhAb5bbqBAZlDv+FeEKZtn+hsnqTYORJNpA7PXdicHVC8S4
- j+3l8MJ11yllj4aswVnReAg6KuGU8SO+T9Yzg4Ug7LS7tzp8kuqqy4jl0ESKs6d61uWR
- 7bFwze0UAKe2CtK+7nDHkCeB8LnPnIAZ04oVDEddP2NHhOQjBT6G6i0NJWaMptPIFSSy
- uSPw==
-X-Gm-Message-State: AOJu0Yzd6qwluRPeTrf1Eek+OMnsxDLQ1d5QMDLmyZ8Vbw2Zvu8C5W6Z
- W0MY6UT0jBV0Jw+D7F+0RVVxQOZn2oHxLDzcY+f/87I0i9gKGCi+97kSKxYsMmO8I6KqId0GDY8
- Q0VJrL4U=
-X-Gm-Gg: ATEYQzzJawLZpXYHXMF8rOOh5GeG2AUX8v6kJMPhrEEbURroo9zwZnD7Oi8BUmGO3jh
- uNTDwxqc58fcV6lbDE8epatxL11zzmmv/SsREUG8Eo+wuavI47frTbRNe3WjYxxqpjVyCdUhr2T
- xE0IE0ZwK20Ub5lq650gYVxK/LuHwOSV/31YKj08GuWHV4GWVWz+G6+hLyOG2LdtetuUyHKfquo
- bGOX/DrQiuLhN/vbG8CCSnyaVb+IUsx1dpdyg5/GnKi9Xpu9yWBJGnrkOmHWPKQ+tPuRJ1ZF/mo
- a8Z2yywVNKw9/E9xTqmFGgmv+ucjx34r8d2J6Ith0c6eKPDXbNolBnCaH3iRvidfG6hbKg/QElp
- watqJkfCQjZcREuw+9J4+MNSp68Gg9tKrqaRgGxl7i6Q3JyumCcKina6a1nFPZYmPPlQ+7bCYnN
- YMr1gKJSDvbNQJosRK/mGSnevT6ViZARPNEgdejMEo0PVv95dGZJVytM4oExZnXIbgWcCM1u4Ii
- nQ65g==
-X-Received: by 2002:a05:600c:1c1a:b0:485:38f1:5cec with SMTP id
- 5b1f17b1804b1-48538f15df6mr45316565e9.7.1773009378841; 
- Sun, 08 Mar 2026 15:36:18 -0700 (PDT)
+ bh=+yRRJgECb4/26rJHc/IeEtstl18ywy46YVHX8cCDbag=;
+ b=joO3zMsc2GEYwHpbgBex2HadEQ5qgk+zpRkSLw1jXRbCSb3TXFQf4GY/uKX3khlXOC
+ PHlg5nHodxX3VtN0BF1LyzPzUJ0/ZMAdW1CLT34H7D2OiAia/7FlZ34J4gnh+Xgf2Ci9
+ 2z2wtnr/0d3mDPXap/wFRN7ZhI9pMHQElaZ+JP3oITuCowVhpE2krJcC1+6oaOLksaR/
+ 8XrnCMsfthyLNlnZ5qvjR7q0hS6bTzoZjXN0C6qu7xKhp79vfYq+GSIEZ4NoaAIV3aor
+ lwKkvxAff8xhasRa2KYONmcaOwFs79Y1Sek0ZsPpx8014420jKl6U5LdMtMdYY9qPnnT
+ eW7w==
+X-Gm-Message-State: AOJu0YwsFjgpEAGZgakE1iBA7fwZ3CfIXXoimcsxdVUyraXg7vmFLnVc
+ ooWakOyV5hmwQg6nlN2PawlJCrfXF7clywjuiBro8vJF9A/iWzuG8KUtaFDgp8mX6QDc3kCMsTo
+ jJa3FE8g=
+X-Gm-Gg: ATEYQzxFeBfX3UpbyvfhPqy+ujNc+Q8/92FDqOvh6Yr1poFsvOIT+AwdOfg/+VrFhGz
+ CcMTeT9ubEkD75mMFfROvnHSLYN5sJmnQ2PhCjrWS3uqNBVGMSSvuZznTqU/6MQOnY4OTEarCaM
+ VSM0m+8LzKB6J6baAmJsI9Q00CMjS1L/E3NbT1tWVyi6/cj4V8orIlRh6iDERpdAc7ZIL57IV5Q
+ U3FcZOx/dnixJ3CmZbpN/vG+x0iqIniVla4ofARyQ/HBKKFGNflw9GWnehmt9pylyJzloh1R7hg
+ iSgvhWK9q5sjnwHU2gCpZSjxv/cQA5qCRoWR1NsDwBBLW4uCbNf2e+toER5Rf/kqOHdgyKveVDP
+ /qLsEvSXhVPlNRJwd01V9kMHEFi90tnaxd80tuX0n3aPhNWYYo0NqxsksnL1IynjyiDfRkCIAO+
+ 1GjhoaobWuPpScIVgT5jax3vTYN8S1BZhHiou/AJbmXsXYii+30HGnjvrbl+RrgevimmsS/3Djg
+ 4kFwg==
+X-Received: by 2002:a05:600c:3b0c:b0:477:7b16:5fb1 with SMTP id
+ 5b1f17b1804b1-48526918939mr162944205e9.7.1773009385444; 
+ Sun, 08 Mar 2026 15:36:25 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48527681e2bsm212856695e9.5.2026.03.08.15.36.18
+ 5b1f17b1804b1-4853a946978sm51844095e9.1.2026.03.08.15.36.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:36:18 -0700 (PDT)
+ Sun, 08 Mar 2026 15:36:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/49] hw/misc/ivshmem-pci: Handle error from
- kvm_irqchip_add_irqfd_notifier_gsi()
-Date: Sun,  8 Mar 2026 23:33:59 +0100
-Message-ID: <20260308223433.25503-16-philmd@linaro.org>
+Subject: [PULL 16/49] hw/i386: drop unused PC_CPU_MODEL_IDS macro
+Date: Sun,  8 Mar 2026 23:34:00 +0100
+Message-ID: <20260308223433.25503-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,70 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hamilton <dahamilt0@gmail.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The return value of kvm_irqchip_add_irqfd_notifier_gsi() was being
-ignored. Propagate the error to the caller via errp.
+This is redundant since the 2.4 machine types were dropped.
 
-Also change setup_interrupt() to return bool to follow QEMU error
-handling conventions, making error checks at call sites simpler.
-
-Resolves the TODO comment at the call site.
-
-Signed-off-by: David Hamilton <dahamilt0@gmail.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260225121323.5395-2-dahamilt0@gmail.com>
+Fixes: 4c82e7b34b1bf35d97e026196f5bf10ea916512c
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260225165400.605941-1-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/misc/ivshmem-pci.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ hw/i386/pc.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index a3a43f53bd1..c987eebb983 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -442,13 +442,14 @@ static void ivshmem_add_kvm_msi_virq(IVShmemState *s, int vector,
-     s->msi_vectors[vector].pdev = pdev;
- }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index a38634e3577..052226baa57 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -73,15 +73,6 @@
+ #include "hw/xen/xen-bus.h"
+ #endif
  
--static void setup_interrupt(IVShmemState *s, int vector, Error **errp)
-+static bool setup_interrupt(IVShmemState *s, int vector, Error **errp)
- {
-     EventNotifier *n = &s->peers[s->vm_id].eventfds[vector];
-     bool with_irqfd = kvm_msi_via_irqfd_enabled() &&
-         ivshmem_has_feature(s, IVSHMEM_MSI);
-     PCIDevice *pdev = PCI_DEVICE(s);
-     Error *err = NULL;
-+    int ret;
+-/*
+- * Helper for setting model-id for CPU models that changed model-id
+- * depending on QEMU versions up to QEMU 2.4.
+- */
+-#define PC_CPU_MODEL_IDS(v) \
+-    { "qemu32-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+-    { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+-    { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+-
+ GlobalProperty pc_compat_10_2[] = {};
+ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
  
-     IVSHMEM_DPRINTF("setting up interrupt for vector: %d\n", vector);
- 
-@@ -460,18 +461,22 @@ static void setup_interrupt(IVShmemState *s, int vector, Error **errp)
-         ivshmem_add_kvm_msi_virq(s, vector, &err);
-         if (err) {
-             error_propagate(errp, err);
--            return;
-+            return false;
-         }
- 
-         if (!msix_is_masked(pdev, vector)) {
--            kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL,
-+            ret = kvm_irqchip_add_irqfd_notifier_gsi(kvm_state, n, NULL,
-                                                s->msi_vectors[vector].virq);
--            /* TODO handle error */
-+            if (ret < 0) {
-+                error_setg(errp, "Failed to configure irqfd notifier");
-+                return false;
-+            }
-         }
-     } else {
-         /* it will be delayed until msix is enabled, in write_config */
-         IVSHMEM_DPRINTF("with irqfd, delayed until msix enabled\n");
-     }
-+    return true;
- }
- 
- static void process_msg_shmem(IVShmemState *s, int fd, Error **errp)
 -- 
 2.53.0
 
