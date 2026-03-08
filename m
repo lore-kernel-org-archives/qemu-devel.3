@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B52F55132
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0023F55132
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz8Pt-0006nR-DM; Sun, 08 Mar 2026 03:19:09 -0400
+	id 1vz8Pi-0006fw-Cj; Sun, 08 Mar 2026 03:18:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8Pr-0006i2-Qu
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:19:07 -0400
-Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
+ id 1vz8Pg-0006ec-JQ
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:18:56 -0400
+Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8Pq-0001YF-8x
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:19:07 -0400
-Received: by mail-dy1-x1343.google.com with SMTP id
- 5a478bee46e88-2bdfc4b191fso6049491eec.1
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:19:05 -0800 (PST)
+ id 1vz8Pf-0001Pn-5Y
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:18:56 -0400
+Received: by mail-dl1-x1243.google.com with SMTP id
+ a92af1059eb24-12732e6a123so1413881c88.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:18:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772954345; x=1773559145; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772954333; x=1773559133; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+FYgaldNviBYwmlMbWUmbtHwZ6I6FRjtzV/+ajNVBhY=;
- b=dr+FZTy6dmyk6GYTkqE7POJtR6NBkWAtOpxNMAwHutumRXyCiI8JHF7mf4mFeDGzXZ
- 0YG478mKieYy4xNzFWV2Pa4QbYFV5Thy9NfuZBDeGdYHRBQHdKRX6J2rkC4EmjlQVMBI
- v1Ssx+ZCIpXiVqQZVghYFsUvVo3lYkYs2t7kgazstd7eHQaa37yUw4JP87swx431gHME
- a+Ib9aRnR5tVUGpiaIN3nxjSOFlih1G4KfNihAkACpd+wHiraORfeeiMMtgLvES9nzYn
- o+Ho+VCJDCBW5qDhY0zVMvDhgJgrYZgc6HQDhMZSpNNeC7c9Sb+8pxDCXi0VXPT+THYc
- ALFQ==
+ bh=bYcU9A1WiITUSWFwxQC1FMA42v4mgGSsjlTStLdxexA=;
+ b=W8sh9T4dlUUiW77XYG/o9i2eoLkP3xX67rxpxCFGhFlXRMcNacoXUpMh2AVYb82qsY
+ 5S9BNrXzd2r/EAL2jcgYnsIrr6HXcAoULzlaQZlzKYev65WGepQcY4giKfbw06U6U43c
+ caaNI7DiJIUSrPi2wqw0DLKJbYptB+JU+7HUjMWJXD56hlRItxoqOAF7t8ckR6qZSSfl
+ GCqjWn2H/sxMMpzFJxIbF2NhuzowuZ04KIZqYaeGUj4+W7HEE7Y4Dq0eV84oMreoKQhK
+ et0bRAM6KrExLLlAku9/xnbpXLKlTvFMFGzI45pKSHT+TdBc7dDTmnU2t2LCAAaJ9TeS
+ F0ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772954345; x=1773559145;
+ d=1e100.net; s=20230601; t=1772954333; x=1773559133;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+FYgaldNviBYwmlMbWUmbtHwZ6I6FRjtzV/+ajNVBhY=;
- b=LtIFHTmRYU+QI/06NykkEAS6LMk3P5GjRv0/2dg6xHRlROecgsKrSnNw3ZcdSnjg/n
- QpnZJw1dX6zRd27PxAe+LM8nggvWIQ0d67cIfly54/5xcOGErn5P+mJvvCu3sA15pAxR
- Aua83NsP8OHrfWVDxgYVuaKW49c2nJxhZc/+AfRERrvvv41Mx2txPJOaqSO7Q6WLmGkC
- zZwo5yeOFRKxVqhlZ97KPy/KWQE/yYqYfA3Ht4NDN4L/ChA8YSrhVf7ICB+gyDRdPzf4
- jHzdaexv6WtYrDYrHd2WcXO5z5BIkXizPMqU9rvAr+gMSU/foTH4ez55f0Rn3P1xw2Zu
- JQ3g==
+ bh=bYcU9A1WiITUSWFwxQC1FMA42v4mgGSsjlTStLdxexA=;
+ b=o4uoQuly3TOirh42blwxRMJgAg/ycyBGvsc0x2KiuBMBlY3Q6tJoP5oV+Y1aAGgmX7
+ eBnZjqOhrBl0VIOI7QyC0m6H4rzbbT/BSYKWCnd5v1KcwcTsKo8Fr20fig4oSC9woRLu
+ 7RxXikmZesPXeo+a6llxy1QxTRRA0y45xBylaUdADhYye/JVlwh3Tfho/4fBO84IuaN6
+ 4R3/JlbTcRkOkrhh8oZ2CnpLQpGRoEvaXwzcFZrxugTf5dD9EEIMDc6n1g2Bck3x09PR
+ wJIeacLFTTz5u50Hfn6EOYZFj5mDCFBeVAO+0KJIcCYoSYPJVwK3ghkWflf0SVgCVhVy
+ coTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMGjyDxUd+se+dc+x2/9u+oRsHXieYqB/ZF3YDb2Z+AT+h/t59BE7Q7Bh0OI+TPqGuf3OG4HGg0fm7@nongnu.org
-X-Gm-Message-State: AOJu0Yz6QAv8ToSDi6VzTcKQzL7ZdEH+tj0AKHF2i9WEwCdUHPfHT+eG
- ugmSi6Tm4mnqfU5W6FOcNFtDNZ7Kz6qUxoMdzCjOSKuQEQ819EMesOOV
-X-Gm-Gg: ATEYQzzA5bblIYjGT2333TQF49hSqooESEl5xi0bP0SdJi+gCKlqo3xBo6FYaHQhe2H
- oHqi0oXt4kyBbK0vOG99u8nUgoc/XMnBNjtS53bV77550dmfzgl5svD7+KqyEbAe2GVtoErgmSh
- z7NleDXIJ9cOfz+WqHkYOeyY0+vtw8QciUt3ZgKATtS1EbQnFuVrLiR+ZsI7ccj6aTC+DoSXBRx
- RaCGtqdq/E75BoRagZ1eMSpgYpbN4NQytT/N4Qnwr1Wy3ypWskeZ+fsqPGv/wPpU2BsnvVBf/yf
- Mayb7RVb7BqAXBNrVoXzdsvf/sQQ4FLid45fioMrDGlTdDI+KMqGXphsIogadlHRwQH9SdRT7y3
- mxpQwDyaQa3oX95l8HkoS51/pSimUubpNoF+/y7rdA1ziBV5Wn/LJrZrbjNTpLJmo8ldCtDxjW7
- HUyydcvAuJwq4wUZ+3/FsOijfJAawmOkaijXwJEIJLQTlRFXKrt7FBgPfnmbL/hx5AUiwqBwLCG
- HMDjqnDV43hxkGAVA7R1uxlCvc=
-X-Received: by 2002:a05:7300:a887:b0:2ba:a60a:15ef with SMTP id
- 5a478bee46e88-2be4de8dea3mr3085524eec.1.1772954344869; 
- Sat, 07 Mar 2026 23:19:04 -0800 (PST)
+ AJvYcCXRoYnBM+tT/g2PgkGjEcjp8VLIAVKIUOH+kuDuUuWN3dayqkyIuszvf8fVaV2yGvqRnOwUSSRncTDG@nongnu.org
+X-Gm-Message-State: AOJu0Yy463PNKgKYzRfEYlUOLI5xTeVO6Kknyx1J7+M7k4Uju9dPm4J2
+ BchDXH0uZ5QgHqDaJgjTK5BNqSHfl0Kra2qdkK9cBA43amhbNz5j9we5
+X-Gm-Gg: ATEYQzx2+4SNQGS5vt9msMaP7LUePP2lnLLJ+PBO0wOp1LZEP8fF3v75MLYHMXP++CR
+ Z71HxCwKQjM0K2u0AklWB8DS3BZo1SyEk8gHb8v8wjLf/kk146VU+8E2LfeBEzB2qJafj3iGJwi
+ htEwRVINgTN/2VvVFeDgp/YsSxtRVowq4dkDIwNqTr81/EWEmiYfuYadjwlqCNwxvqgWdJLHxLy
+ eY39Nj762acgMKxfaxPV0lSq9JY+ATRmEW8RkL5aSxju48cXmLyRTrxlWcdiNl7cvmfrwbeP1eS
+ mAfVnCduydzPv2cREy7bmymj49qxwZvEDfQ+qHs8Chy3NpDxXB1Ofi5vpHENqmJq7Q6ghKoMh4M
+ 1VKLCTZCopkVYfPNsuBREGwb0gyX50grQATkQ2/UjJ7rM4NCEdysIs/+K6/QwE7ZctI2RW4CeMU
+ /ZuMyE0lte1z2WzAXft7RcRGlBxD7u4nITVr//OVY0YY9qCN0i83ikDfKIzRi3Fl7EaT4padkKz
+ UB1CeKEp8mAGKXqbnIprtdACAc=
+X-Received: by 2002:a05:7301:1009:b0:2be:3f:307c with SMTP id
+ 5a478bee46e88-2be4e0644camr2877195eec.29.1772954333513; 
+ Sat, 07 Mar 2026 23:18:53 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.19.00
+ 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.18.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 23:19:04 -0800 (PST)
+ Sat, 07 Mar 2026 23:18:51 -0800 (PST)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -76,16 +76,17 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: tangtao1634@phytium.com.cn, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v1 06/28] target/riscv: let ebreak enter the DM ROM
-Date: Sun,  8 Mar 2026 15:17:09 +0800
-Message-ID: <fe29b3622f3db629078fdbd466829d7a777e3100.1772936778.git.chao.liu.zevorn@gmail.com>
+Subject: [PATCH v1 04/28] target/riscv: route in-debug exceptions back to the
+ DM ROM
+Date: Sun,  8 Mar 2026 15:17:07 +0800
+Message-ID: <fd669f903f8ded5b2c96023bf9a11bcbdfda400b.1772936778.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 References: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,33 +109,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When ebreak is configured to enter Debug Mode and a Debug Module
-ROM is present, restart execution from the ROM halt entry
-instead of reporting a legacy EXCP_DEBUG stop.
+When a hart is already executing from the Debug Module ROM,
+redirect synchronous exceptions to the ROM exception entry
+instead of taking the normal trap path.
 
-This makes ebreak-driven debug entry follow the same ROM-based
-flow as haltreq and single-step stops.
+This keeps the hart inside the Debug Module state machine and
+lets the ROM report command faults through its mailbox protocol.
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- target/riscv/op_helper.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/cpu_helper.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 945688eca8..7f2769f444 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -517,6 +517,10 @@ void helper_sdext_ebreak(CPURISCVState *env, target_ulong pc)
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e477016d4a..81b74f7e4a 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -142,6 +142,9 @@ static bool riscv_sdext_enabled(CPURISCVState *env)
+     return riscv_cpu_cfg(env)->ext_sdext;
+ }
  
-     if (enter_debug) {
-         riscv_cpu_enter_debug_mode(env, pc, DCSR_CAUSE_EBREAK);
-+        if (env->dm_rom_present) {
-+            env->pc = env->dm_halt_addr;
-+            cpu_loop_exit(cs);
-+        }
-         cs->exception_index = EXCP_DEBUG;
-         cpu_loop_exit_restore(cs, GETPC());
++/* DM ROM entry window offsets: exception vector is entry + 0x10 (0x810). */
++#define RISCV_DEBUG_ROM_EXCEPTION_OFS 0x10
++
+ /*
+  * Debug Spec v1.0 Table 9:
+  * - ebreak: dpc = address of the ebreak instruction.
+@@ -2326,6 +2329,15 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         return;
      }
+ 
++    if (env->debug_mode && env->dm_rom_present) {
++        /*
++         * Exceptions taken while already in Debug Mode are handled by the
++         * DM ROM exception entry (0x810 in the backing ROM).
++         */
++        env->pc = env->dm_halt_addr + RISCV_DEBUG_ROM_EXCEPTION_OFS;
++        return;
++    }
++
+     if (!async) {
+         /* set tval to badaddr for traps with address information */
+         switch (cause) {
 -- 
 2.53.0
 
