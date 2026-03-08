@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857E4EA8549
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACAE0EA8549
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzNCs-00075J-2Q; Sun, 08 Mar 2026 19:06:42 -0400
+	id 1vzNDz-0007CE-VE; Sun, 08 Mar 2026 19:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNCr-000757-BW
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:06:41 -0400
+ id 1vzNDx-0007Bw-W9
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:07:50 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNCp-00086S-KF
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:06:41 -0400
+ id 1vzNDw-00087x-BZ
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:07:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=hU+Cy+ZOmhnX74B/J0TaXJ7GVGAmh/MTt+tR3EKJcVI=; b=IZMOFa9kpu0qs5dRbhqKxWJm9J
- ZhcXTpjkkWD/utFghHY/QZvzeUcqGfjwFNYST/pXwzSGBtX4873n1qAiDEQtF/9K3G7nGie3/3VbF
- UCY7D8TMgO52MAf++ugg2Y1VTpwWE0ew3F4feb6QR3IFxXwK8VdylvS0DZav0ZTFvo32kEnmnd+w0
- lmuIVxnHRpc7ZyRFVo8VCZY1GpR/m9MNxlW8CfJF74JVeK8qG3nls94X+tnESFR/HMNPyNkAt1ePq
- ta5PtD0CnyLPnJg+Nexnf9N/BhclSOL4bcey4wuCiHez0XoejX7OVPVhQRp+B6FUs0uVxFEZ/6O3W
- 1KIw8o7hzo2aeC7XrTXNSQt4vNp3erpkJDaiKuwuizTsoOvVq9Hh98wH47MddsHSQrd+aZG+z+g+K
- mv3Uy9NzujO3is8MSOSpZHziNQ+JQcEE3yxQZFkwk7bCzja6vfh2vJJbccZbTchgJuzaDsg7watAt
- rELGWQ7iUe60Cp3ZhgTuK9Dug0z7qodFUJSTNOd2rHgw+1t2Lw3Ik6Zj2euTbWpxXvt08BDnMzIJp
- D3+cUe6W4iu5yGV44TLrBAfCX5GHyvJMrRYLxa9ANBlJ38VCtoHounH4gVvT61hTU22CvqBpj0RMf
- GboNUnUWjIDfYIcRHW1HOWhojhUnh8nbARmDVa+ZY=;
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=Ii6yX2+1ACPZVmoh3EuqMeVk0q1w4Zd90bUfdIQjVEs=; b=ctf34xejO/fmwXVnAUy2DA7ksY
+ NRlm0QAjaOv1rOuASVUK92Tw+KL165rw/86RNjJseEkA5d8dLFN2j+h6eDXWAJ6kg+XiAU5J4HPVw
+ DMspllLARK//KsxYce6HjxmahvjvBWqBdc+V9Rj19CtAgnGHsCvnTKM5F2lmepfA0tc+rBlC4eELV
+ dNjEUQ5Ufx6EI8+KFXRBi9IACnsf+gZY7Urq7qlmE6KSMFJHXXzug5dmmiMvtdV/6J+Dj6IBJrAY7
+ cHPr7kIZFE7yD7q+YCDpRE/cFTMV8bRQ5XE0NEaeKB5wKinyC9Mi2q6KV/Eb23fV+6GeX98H6P0Tp
+ oUw45kZ0NVvvbomNmywVRDIdcjw/lFXvv0X6i6VW0spIcnw3G0jBQiCAHoT8Vq8Ceowbs1M05ch67
+ n+h2xujrmwLq1GKhouVbQvoq1zb+Rjl27PbwaovKwt3KgjHscCSvx00VgCJ7xy7I7gI4MubHi+aUm
+ quFoLD/0RoawUIWwcMkrbYmsmlRu4R4HSPLY94RZ30fxCvuYjbHyiDmsbAKr24C13x4Zbh5XD4DMC
+ hzibklIsDv0mjc4WO13++O1vbC57W0mkx9dz1Sb8YorSLqpjQKraHzPi6tWiYRwWrTUPBA19WvqzN
+ DWqqKg3Dpbs28dX16Ml//ZwxUqWuHbo5NT9YaVt/E=;
 Received: from [2a02:8012:2f01:0:853d:6c6b:2689:bc0e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzN9t-0004kw-2L; Sun, 08 Mar 2026 23:03:37 +0000
-Message-ID: <7ac11fc9-a672-45b9-a0b9-c95b8bc65cc8@ilande.co.uk>
-Date: Sun, 8 Mar 2026 23:06:32 +0000
+ id 1vzNB1-0004lS-UX; Sun, 08 Mar 2026 23:04:48 +0000
+Message-ID: <8bf3c2c3-efbb-468f-bbd3-571aaf468bd6@ilande.co.uk>
+Date: Sun, 8 Mar 2026 23:07:45 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20260216154901.602613-1-thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260307112931.3322532-1-peter.maydell@linaro.org>
+ <20260307112931.3322532-2-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -71,13 +73,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260216154901.602613-1-thuth@redhat.com>
+In-Reply-To: <20260307112931.3322532-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:853d:6c6b:2689:bc0e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/pci-host/sabre: Mark unusable PCI busses as full to
- ease device plugging
+Subject: Re: [PATCH 1/3] hw/sparc/sun4m: Don't set up dummy cpu interrupts
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -103,55 +104,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/02/2026 15:49, Thomas Huth wrote:
+On 07/03/2026 11:29, Peter Maydell wrote:
 
-> From: Thomas Huth <thuth@redhat.com>
+> In the sun4m machine init, we set up the cpu_irqs[] array
+> with the real inbound IRQs for each CPU, followed by some
+> dummy IRQs for the remaining slots from smp_cpus up to
+> MAX_CPUS. These dummy IRQs do nothing when set/cleared
+> because the dummy_cpu_set_irq() function does nothing.
 > 
-> When trying to plug a PCI device to a Sparc64 machine, you currently
-> have to specify the right bus ("bus=pciB"), otherwise you get this error:
+> Instead of creating these "do nothing" qemu_irqs, instead
+> pass the number of CPUs to slavio_intctl_init() so that it
+> can only wire up the interrupt controller's interrupts
+> for the CPUs that actually exist. Calling qemu_set_irq()
+> on an irq that isn't connected does nothing, so this is
+> a simpler way to achieve the same result.
 > 
->   $ qemu-system-sparc64 -device virtio-scsi-pci
->   qemu-system-sparc64: -device virtio-scsi-pci: PCI: no slot/function
->    available for virtio-scsi-pci, all in use or reserved
+> This cleanup fixes an unimportant memory leak reported by
+> the address sanitizer that happens because we allocate these
+> dummy IRQs with qemu_allocate_irqs():
 > 
-> This is quite annoying for the unexperienced users, and it also breaks
-> e.g. the iotests ("make check-block") when running with qemu-system-sparc64.
+> Direct leak of 1920 byte(s) in 15 object(s) allocated from:
+>      #0 0x5cb7b120cf63 in malloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0bf63) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
+>      #1 0x743cd6dc5ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x5cb7b1a42fb4 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
+>      #3 0x5cb7b19e7e72 in sun4m_hw_init /home/pm215/qemu/build/san/../../hw/sparc/sun4m.c:845:23
+>      #4 0x5cb7b141d3dd in machine_run_board_init /home/pm215/qemu/build/san/../../hw/core/machine.c:1709:5
+>      #5 0x5cb7b1542895 in qemu_init_board /home/pm215/qemu/build/san/../../system/vl.c:2717:5
+>      #6 0x5cb7b1542895 in qmp_x_exit_preconfig /home/pm215/qemu/build/san/../../system/vl.c:2811:5
+>      #7 0x5cb7b15493ac in qemu_init /home/pm215/qemu/build/san/../../system/vl.c:3849:9
+>      #8 0x5cb7b1f3f201 in main /home/pm215/qemu/build/san/../../system/main.c:71:5
+>      #9 0x743cd4a2a1c9 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+>      #10 0x743cd4a2a28a in __libc_start_main csu/../csu/libc-start.c:360:3
+>      #11 0x5cb7b1172114 in _start (/home/pm215/qemu/build/san/qemu-system-sparc+0xd71114) (BuildId: d27f9230a7cc82ebfaf0cf9e439dc215ddd7ac68)
 > 
-> Mark the non-usable PCI busses as full now, so that QEMU can automatically
-> plug new PCI devices to the right "pciB" bus.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   Note: Only lightly tested, it seems to work fine for me at a first glance,
->   but maybe I missed something...
+>   hw/sparc/sun4m.c | 11 +++--------
+>   1 file changed, 3 insertions(+), 8 deletions(-)
 > 
->   hw/pci-host/sabre.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/pci-host/sabre.c b/hw/pci-host/sabre.c
-> index cd2328ad53f..9c8519f3849 100644
-> --- a/hw/pci-host/sabre.c
-> +++ b/hw/pci-host/sabre.c
-> @@ -382,6 +382,7 @@ static void sabre_realize(DeviceState *dev, Error **errp)
->                                        &s->pci_mmio,
->                                        &s->pci_ioport,
->                                        0, 0x40, TYPE_PCI_BUS);
-> +    qbus_mark_full(&phb->bus->qbus);
->   
->       pci_create_simple(phb->bus, 0, TYPE_SABRE_PCI_DEVICE);
->   
-> @@ -400,6 +401,7 @@ static void sabre_realize(DeviceState *dev, Error **errp)
->       s->bridgeA = PCI_BRIDGE(pci_dev);
->       pci_bridge_map_irq(s->bridgeA, "pciA", pci_simbaA_map_irq);
->       pci_realize_and_unref(pci_dev, phb->bus, &error_fatal);
-> +    qbus_mark_full(&s->bridgeA->sec_bus.qbus);
+> diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+> index a17bdb3692..29bc26ebcb 100644
+> --- a/hw/sparc/sun4m.c
+> +++ b/hw/sparc/sun4m.c
+> @@ -196,10 +196,6 @@ static void cpu_set_irq(void *opaque, int irq, int level)
+>       }
 >   }
 >   
->   static void sabre_init(Object *obj)
+> -static void dummy_cpu_set_irq(void *opaque, int irq, int level)
+> -{
+> -}
+> -
+>   static void sun4m_cpu_reset(void *opaque)
+>   {
+>       SPARCCPU *cpu = opaque;
+> @@ -344,6 +340,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
+>   
+>   static DeviceState *slavio_intctl_init(hwaddr addr,
+>                                          hwaddr addrg,
+> +                                       unsigned int smp_cpus,
+>                                          qemu_irq **parent_irq)
+>   {
+>       DeviceState *dev;
+> @@ -355,7 +352,7 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
+>       s = SYS_BUS_DEVICE(dev);
+>       sysbus_realize_and_unref(s, &error_fatal);
+>   
+> -    for (i = 0; i < MAX_CPUS; i++) {
+> +    for (i = 0; i < smp_cpus; i++) {
+>           for (j = 0; j < MAX_PILS; j++) {
+>               sysbus_connect_irq(s, i * MAX_PILS + j, parent_irq[i][j]);
+>           }
+> @@ -841,9 +838,6 @@ static void sun4m_hw_init(MachineState *machine)
+>           cpu_devinit(machine->cpu_type, i, hwdef->slavio_base, &cpu_irqs[i]);
+>       }
+>   
+> -    for (i = smp_cpus; i < MAX_CPUS; i++)
+> -        cpu_irqs[i] = qemu_allocate_irqs(dummy_cpu_set_irq, NULL, MAX_PILS);
+> -
+>       /* Create and map RAM frontend */
+>       dev = qdev_new("memory");
+>       object_property_set_link(OBJECT(dev), "memdev", OBJECT(ram_memdev), &error_fatal);
+> @@ -860,6 +854,7 @@ static void sun4m_hw_init(MachineState *machine)
+>   
+>       slavio_intctl = slavio_intctl_init(hwdef->intctl_base,
+>                                          hwdef->intctl_base + 0x10000ULL,
+> +                                       smp_cpus,
+>                                          cpu_irqs);
+>   
+>       for (i = 0; i < 32; i++) {
 
-Apologies for the delay on this: I think the patch makes logical sense, however the 
-existing logic to manage the available PCI slots is handled in sun4uv_init(). Do you 
-think it makes sense to move the qbus_mark_full() calls to the same place?
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
