@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7926AEA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F63EA8543
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMlj-0001pW-R8; Sun, 08 Mar 2026 18:38:41 -0400
+	id 1vzMlm-0001qm-E6; Sun, 08 Mar 2026 18:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMla-0001In-V3
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:33 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlW-0000zF-CP
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:28 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlZ-0003dE-FO
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:30 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4852f8ac7e9so17234975e9.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlS-0003ce-Eh
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:24 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439c4a93841so3617255f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009507; x=1773614307; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009501; x=1773614301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3zOV3qUmRo9bOigA0eOBWw/VAz+Y8n3y3THv+nRsqxQ=;
- b=RZnPagHF6P5KM5C6KKw4qPWZwG3ms3j5jATaBVQiRXfpJggT1MlohSUKRLSy3x6pnb
- 3pYf1yN9nfnmSuxTlKiFZKVkwyvDLHp8H/yCGNy021DK1rwyUkEZsm0Eo00UJAKLy45w
- 3T+efyKuxi9ZGIdw32+zk1lAmz0CODLl3nZuWYy60auHWSU6HzOhHsfPHclvy7dooYvL
- /kYe/QX4Nsr9bWZwgupqS1mcsMDGftxXG4pv/pG1aqVdHUUMnt5LZ4fu2ycf2gLlpShv
- fpDvLsBtLs2g7whemR0IOzG96xM2L+iJOF3TE9kxyJ9WZQDWrpj6C8Gzs7obDqKEiEIY
- ammA==
+ :reply-to; bh=XEPh2xTN7YPEj7nIs4tW6xzkgeZmWy42bG++Vd7IoLs=;
+ b=sJS4gWjURQh9tEVLLcJR5lY5w224xRQrEn0+8tWL3kEEYI6utxdUf08dY5MHxh9/Vv
+ cmt0QnRUjE0d0ayfuipKO7gMt7hUneu2fNKujxjmQRJ7YqY6o5+QRfvhxa+ajWz/O2o+
+ 5twUE0tdYsiywFj2kQn1HfoWARih4ZCSsyR3EpNvmNi3e78TtnYP8K59s+10WHGKQlQ8
+ KZrAPQzKR1P6KI1tlWSI965OJ8JK30Zhha9M7TuVFK/+xvOCcyzVSlOV1a3xVUfKIYGq
+ xRfuJ3L45BXokEsW79n90fGZHI5t/0ROJyTDtjENSSpT5I04zGvJgAmbldIvTVEOSf0X
+ W+mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009507; x=1773614307;
+ d=1e100.net; s=20230601; t=1773009501; x=1773614301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3zOV3qUmRo9bOigA0eOBWw/VAz+Y8n3y3THv+nRsqxQ=;
- b=qSwpEyKjMWAUrTdPezgpySfJW7RN43MuASGJv1anfXz8To3XUyta6yAwds7Z20qYQb
- 9JqkHCQp+r/bl5MHn/ohUKyXgNTj8pZ9AfmX6JEz129g+wkEStRvCfbPT6+lFWSXXCiI
- FR8FW5b3gtgdflrC8IhMaeA/yhi2xi6vNoZGY/JzJKSuSZtJWFbAZToMoS5hrcYulyA0
- SoDXxw1MKa4d5L6AsuHf/P7RIzzjJOYFMbwxk3Jz6HTfVyXnp7y2+JxMgFGEsIP7dTRE
- XJb/dQ+zwMFmkURlaDSe2BP0IpDBcOZ42gy6u5b2KLy+tcPZjPa/ipXcX8FHeK+go2pk
- EhbQ==
-X-Gm-Message-State: AOJu0YygJ+edToHeeKmxFWKNnVC2W6LZpJ8J6y1NFYNHmMXXrN00aNoB
- UXifdQ0f5uI9jyoxJrcyxFL3FkUcb27OGUpG9Uan16Wbh9AWax7f+Q/8PGkIGEWoY1ovh45oGlI
- KXz+U760=
-X-Gm-Gg: ATEYQzz3kSToSdN1prTrlvlSuENMINcQTpKjBiAHPz/Bzl34JY+zWr+xchUnh5a02fO
- 8QWOVogUvJx45ZlK2I2EucLlKd9ZGs6FKwVrujtu3gPTgOPaTgEqlhdarnRi1XjxYDvpdcJcf/W
- z1fwA+lqQjFO3ZO0qpisize06meJmq9VjueLmK5wfz0knLObE3fOw0rjwiv1c0BeGl4cKGQlaNo
- yhk6Uv8vIo1kyHYU6lAuwqfgzMmmpIRHUrOCpotmPJHgZcdmBSy80pVpqiio6w0/Rgk3oOLBt5d
- 2v0KivAcQTEH/UL4FBLriRsNsKNr6UnWp7QyktDjDtwF8FonM5cWhbKRH5KITmL5JaugkMwEtRV
- 6Y4l0DFhYOpTGjPn3ZCAiiEhLcxZHzCapO64rZrVcT3DKuCCZDiCKqtvG+jp1iPGLglZ9eZM8xV
- SEaoAiQokwczwMeXOcQVKUr0huPnS0prH2ySF0MixKqISPzSEkQFcIA1vk9/fxmemvi3KPo3Oyg
- ROhMA==
-X-Received: by 2002:a05:600c:46c3:b0:483:47ae:7c00 with SMTP id
- 5b1f17b1804b1-4852695aeaemr165621675e9.20.1773009507180; 
- Sun, 08 Mar 2026 15:38:27 -0700 (PDT)
+ bh=XEPh2xTN7YPEj7nIs4tW6xzkgeZmWy42bG++Vd7IoLs=;
+ b=SpsYGGE9D7voHlhrtvSS0Bbs9Egm0+Kdpg+imEBefrelvPXZt64Szxr40vAW6EqAQD
+ 1mPFFCaIsXexaxc5mvwGSW8rnnBBwFDgh3wvefHpnGxYjlm1lRhSaQ+y/VlgMRRPMnkG
+ Q/LZMGw5Z5pCYMW9Gk8nug73unRiE1jLhc7r6/Qn3ek8Fvuw09uuAgzqVN2lMYEi3coj
+ hky/7z7zSNY095wFSwHJmXu0blNWk6PNICkwLur5sy+Q6LE2x8YTgrZsOKMD2ubVaLg0
+ NAKnyM4cTM6sjqqzE16KPVR5fy9B08PQp7c6n4BBb9zSy4J/tMvX4RGAGBHvYnsRIAIL
+ Ir1Q==
+X-Gm-Message-State: AOJu0YwdmdNP4vdh9kkuA/k+Q5uQVV015g8CTGPmNkhdLO7043d/b1BG
+ ikC55krpEyiKRRNoIttDRHaGEkG//n9lJt6Vu1hCLPtGRRULvg5/IvkJikNu0NqhEuK8nD/ONkC
+ brYDbg1I=
+X-Gm-Gg: ATEYQzzc5NdybYDaJhVMKmSZNFOEVzEf3dD/i3dOVHRYh+8IN9zIPaYH+QuyuYzSvai
+ 49SUyHjDfjXo6tz61VMHTvP/QWMdXlLrlPihcWt0FTIXQkLK3G5Oh7E3zxZMXBHHr6aG0gaCICn
+ nNAF/AVKV3L6hEsjmA9pV3CmgVVqMkPjflLbtxEbdyP1ajcmxHQpw/XW/Ije8pKd3qonmK2dHPs
+ fdbzYruGwwYMxrVXCNA3jIeMCFHRZEuzT4GbB+jHuoPccCLWs+QGb00E2pKeCBZnQw+kjGhCfGn
+ BwJgmGnzC3wTziopZP20uphOWLMNS4r/Zxuexgc7wJKi7UjuExp8gAeWv6OIQJQj5Q7MaBUnfKW
+ /Teq7XQTwmkRT00tQ2lZZ4GVHlrNuy9DVDg0HTRr/doI533r+zwH5IUVCSf4r/TEsnrQLdD/CvY
+ s6IQk+EDMPnhK1LsIIDg+fqX9i4WLczEnEvMjIJeU6uCSZJFxZlnpohEK2EHFroPh39xNlHBcpj
+ sTC1A==
+X-Received: by 2002:a05:6000:310b:b0:439:bc2b:cb50 with SMTP id
+ ffacd0b85a97d-439da348173mr17325899f8f.4.1773009500709; 
+ Sun, 08 Mar 2026 15:38:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852378de92sm109056735e9.0.2026.03.08.15.38.26
+ ffacd0b85a97d-439dae57401sm17679188f8f.38.2026.03.08.15.38.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:38:26 -0700 (PDT)
+ Sun, 08 Mar 2026 15:38:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/49] util/fifo8: Make all read-only methods const-correct
-Date: Sun,  8 Mar 2026 23:34:18 +0100
-Message-ID: <20260308223433.25503-35-philmd@linaro.org>
+Subject: [PULL 33/49] hw/arm/aspeed_ast27x0-{ssp,
+ tsp}: Do not access SerialMM internals directly
+Date: Sun,  8 Mar 2026 23:34:17 +0100
+Message-ID: <20260308223433.25503-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,108 +102,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-Allows these methods to be used in const contexts, i.e. where the parent
-of the fifo itself is const. This is in particular useful for Rust code.
+SerialMM inherits from SysBusDevice and exposes the memory region by
+means of sysbus_mmio_get_region(). Use that in order to avoid accessing
+implementation details of SerialMM.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260305220911.131508-5-shentey@gmail.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20260305220911.131508-4-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qemu/fifo8.h | 10 +++++-----
- util/fifo8.c         | 10 +++++-----
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ hw/arm/aspeed_ast27x0-ssp.c | 7 ++++---
+ hw/arm/aspeed_ast27x0-tsp.c | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/include/qemu/fifo8.h b/include/qemu/fifo8.h
-index 4f768d4ee38..6b476b404ee 100644
---- a/include/qemu/fifo8.h
-+++ b/include/qemu/fifo8.h
-@@ -71,7 +71,7 @@ uint8_t fifo8_pop(Fifo8 *fifo);
-  *
-  * Returns: The peeked data byte.
-  */
--uint8_t fifo8_peek(Fifo8 *fifo);
-+uint8_t fifo8_peek(const Fifo8 *fifo);
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index 9b12ba67430..8b84300e0f6 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
++    MemoryRegion *mr;
+     g_autofree char *sdram_name = NULL;
+     int i;
  
- /**
-  * fifo8_pop_buf:
-@@ -181,7 +181,7 @@ void fifo8_reset(Fifo8 *fifo);
-  *
-  * Returns: True if the fifo is empty, false otherwise.
-  */
--bool fifo8_is_empty(Fifo8 *fifo);
-+bool fifo8_is_empty(const Fifo8 *fifo);
+@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     }
  
- /**
-  * fifo8_is_full:
-@@ -191,7 +191,7 @@ bool fifo8_is_empty(Fifo8 *fifo);
-  *
-  * Returns: True if the fifo is full, false otherwise.
-  */
--bool fifo8_is_full(Fifo8 *fifo);
-+bool fifo8_is_full(const Fifo8 *fifo);
+     /* UART */
+-    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
+-                             &s->uart->serial.io, 0,
+-                             memory_region_size(&s->uart->serial.io));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
++    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
++                             memory_region_size(mr));
+     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
+                                 &s->uart_alias);
+     /*
+diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
+index e39d1dc1712..e7c7b744919 100644
+--- a/hw/arm/aspeed_ast27x0-tsp.c
++++ b/hw/arm/aspeed_ast27x0-tsp.c
+@@ -149,6 +149,7 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     AspeedCoprocessorState *s = ASPEED_COPROCESSOR(dev_soc);
+     AspeedCoprocessorClass *sc = ASPEED_COPROCESSOR_GET_CLASS(s);
+     DeviceState *armv7m;
++    MemoryRegion *mr;
+     g_autofree char *sdram_name = NULL;
+     int i;
  
- /**
-  * fifo8_num_free:
-@@ -201,7 +201,7 @@ bool fifo8_is_full(Fifo8 *fifo);
-  *
-  * Returns: Number of free bytes.
-  */
--uint32_t fifo8_num_free(Fifo8 *fifo);
-+uint32_t fifo8_num_free(const Fifo8 *fifo);
+@@ -230,9 +231,9 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
+     }
  
- /**
-  * fifo8_num_used:
-@@ -211,7 +211,7 @@ uint32_t fifo8_num_free(Fifo8 *fifo);
-  *
-  * Returns: Number of used bytes.
-  */
--uint32_t fifo8_num_used(Fifo8 *fifo);
-+uint32_t fifo8_num_used(const Fifo8 *fifo);
- 
- extern const VMStateDescription vmstate_fifo8;
- 
-diff --git a/util/fifo8.c b/util/fifo8.c
-index a26da66ad2c..cc4f590b7af 100644
---- a/util/fifo8.c
-+++ b/util/fifo8.c
-@@ -71,7 +71,7 @@ uint8_t fifo8_pop(Fifo8 *fifo)
-     return ret;
- }
- 
--uint8_t fifo8_peek(Fifo8 *fifo)
-+uint8_t fifo8_peek(const Fifo8 *fifo)
- {
-     assert(fifo->num > 0);
-     return fifo->data[fifo->head];
-@@ -157,22 +157,22 @@ void fifo8_drop(Fifo8 *fifo, uint32_t len)
-     assert(len == 0);
- }
- 
--bool fifo8_is_empty(Fifo8 *fifo)
-+bool fifo8_is_empty(const Fifo8 *fifo)
- {
-     return (fifo->num == 0);
- }
- 
--bool fifo8_is_full(Fifo8 *fifo)
-+bool fifo8_is_full(const Fifo8 *fifo)
- {
-     return (fifo->num == fifo->capacity);
- }
- 
--uint32_t fifo8_num_free(Fifo8 *fifo)
-+uint32_t fifo8_num_free(const Fifo8 *fifo)
- {
-     return fifo->capacity - fifo->num;
- }
- 
--uint32_t fifo8_num_used(Fifo8 *fifo)
-+uint32_t fifo8_num_used(const Fifo8 *fifo)
- {
-     return fifo->num;
- }
+     /* UART */
+-    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias",
+-                             &s->uart->serial.io, 0,
+-                             memory_region_size(&s->uart->serial.io));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(s->uart), 0);
++    memory_region_init_alias(&s->uart_alias, OBJECT(s), "uart.alias", mr, 0,
++                             memory_region_size(mr));
+     memory_region_add_subregion(s->memory, sc->memmap[s->uart_dev],
+                                 &s->uart_alias);
+     /*
 -- 
 2.53.0
 
