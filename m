@@ -4,110 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A02F55102
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 11:40:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B0CF55102
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 12:13:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzCU9-0006RZ-ON; Sun, 08 Mar 2026 07:39:49 -0400
+	id 1vzCzd-0004yi-9k; Sun, 08 Mar 2026 08:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ikerjosemartinez26@gmail.com>)
- id 1vzCU2-0006Ih-5W
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:42 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ikerjosemartinez26@gmail.com>)
- id 1vzCTz-0007cg-SE
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 07:39:41 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4852f73d0a3so7282175e9.3
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 04:39:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1772969976; cv=none;
- d=google.com; s=arc-20240605;
- b=hZkwh6ykeATtCrcrGvEBYD+jjoPLK6xYOptXs4wLWINIzHfgBBUcowsuDjjBc3KiYQ
- I5JuxuiWOGlawDZWerZY7xMIv7/KlSuUJ3JGwxaXgmV/PhS91tqqdKIUW9Z7isz2QZPI
- jd8w8fa7B8DjxDXMWDSYOyOcoPEpv0UXS4KP/92eXbHZztyumXMpf0bkCIwkWjqDfHIJ
- 3zdpWcERpS1+ax/8ujF0dhcz0ShKeIrEI4EfiSr28y7xVOBZpCPoT4HllWrAtEtsYQAm
- J9GJyzJUns41j/pvb4Ohu5BfRg34uWhoX/vbaa1OW7hXyLojTbM8mQqIllLN/mPo25dD
- D9hA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=h/tnMWRBgygzNtuzTH0P2dD/SeY7Z8vprToMX46vSl4=;
- fh=ToF0T0xSsWdnwGnhkVLJfniB0IXSpNUL8J/nfdNKpUM=;
- b=LQJUJtLNItQQAq+Q9FeJmPlYFKM9dob0xff8VRRRsBcoZLpDUzkxAp1c6knL6+ABlz
- sDtgSo/9q6/UrfYbcdFrOJ7ZS8dnJVi4Qk8VcY7GXXApwpAtTny0ONGQzay3LTBvvuJu
- ff3AjCCt0AY04ZveaO14Oyh+ekRdCrXJSqWRzXCWHqcrwRDDeHsCny73AVMsdgBPfD5U
- bDhLbCWono+Vamcw7mtmTKjrsSk8TBU4KuXhimUMfcCuU0ayEX6pEn9FviToq+itvOqQ
- 1dUNVUsRFiapVZXS2QihsO1AFAceU2Esq9Fmf6KN2J4DgKCylLU1esVbKh3V5do1hS3J
- tbvw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772969976; x=1773574776; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h/tnMWRBgygzNtuzTH0P2dD/SeY7Z8vprToMX46vSl4=;
- b=TZxWm9LkMgGcNSeo8ZSGLyTFwuzEGLChsNBMEgtpouc2XA34l+Uo3ecumNwMD1APKS
- y5589Wwpksi7rqdhzB7CPlERxC/KzJhkE457vGyiQnpYEWmmiSKEjVsVAPwKx+nhQd+1
- 0zck/CkLoka5ysZSxQPtJFbKqrJ8q8eXl0oT1bo+vwDGP1wtXMDaKtUeBjz0DrD+l4FR
- jGMwkcy24cmjmGRF93J/Jy2qWVNJSk+/YoKIDKqLQ9SPdoyeqf7b8q/yYRrZszufPhG3
- w8+sN8xsWoii0+uAOtdKwhLrEqptKIvHHTUPUSqcjJ5wevIzjApDbhNhnauPdiqFKVIp
- FSgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772969976; x=1773574776;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h/tnMWRBgygzNtuzTH0P2dD/SeY7Z8vprToMX46vSl4=;
- b=GKy3S9aZasT+bNbcbqMf6MTPu7/1sDXGhGNZj9v6GRHV0jb9FamVSKfZt6OjgBiHxW
- M2in+EtZpVdQwJaA/sJ3Qcx+3WMRqDmIt2epAfduTiKdAWbbaCpJpLHckDKnhRHX+vLb
- aBbCYEW8+UKmadaY61oILM5dsX6SliF3ATzkJR8Eu9O2ZvVJvfavbY/CWBwKZB0mzhOF
- q/+NX8VicGlHN1RPV7KM1P+VvT6eoFuluXaLINhpbmvBCYY6ApRMnuLxc77hBwWzpF3k
- PQfNy077/+AXmwioW0JDrQpy8eEqKOqo1vn/LrSUYbdpk77clWsji7CjgF7UIMcw1rLB
- j2qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXnFFx915j/5rT2LEXmCZ1MLtaytKAsPWLMkJDPi4Xa+HShdEUUdurQV5gAzsz/MjDwt3EqpKoXD3UT@nongnu.org
-X-Gm-Message-State: AOJu0YyTlT8WLlS4eMMWR1/AQdEDHL6nhBAWfyVylN31WYQRfGCrhd3S
- x5cqsQGS3+8eKmABgj/DzGLvVUA30Hk0cP+cL29Srb17p5NORlubB7mly6FwSbaHJdciFkZaxqA
- ScjSzaiPRqYTx0zjRmGFKysrrNw35hkY=
-X-Gm-Gg: ATEYQzzxokdZuE1jj/nOn+Cr3jrvyKtLZQ36OQjCXLcZRpEmKT86q/OVV/XZPh8KGir
- 7rTJRKR2sqTEEbJw7hMfZQubDN718BPB96WEIgzaV9gm/l6421mtb7esU3ZZz7SL4vvDUdJLvWm
- rFw+VtRvIw4JflqAdPUWxCXwBonpUbyfVb3pQ/TjTCTwcSASxIN7VMJwb9J2KMx7b0y70/HMhTU
- I/LUvTEqKA9x8j7Fiw99f84PfSTt1m5OjfsijeMhkbXpIeLFWUC9++XzaeW9qNBWIDXEd94uS4g
- WS7xvdCbdsgaXRMO6QNG
-X-Received: by 2002:a05:600c:8b5b:b0:480:4ae2:def1 with SMTP id
- 5b1f17b1804b1-485269305e5mr122402845e9.13.1772969976161; Sun, 08 Mar 2026
- 04:39:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vzCzI-0004tN-UY; Sun, 08 Mar 2026 08:12:04 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vzCzG-0004aS-Iw; Sun, 08 Mar 2026 08:12:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1772971878; bh=7zKM8SviePidu7IHgu2cf5s1FUsYG5pqp8gjscFoFb8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=mmTOjBJBDRJ/xw2ix7uKC5wcQdLc5Uoy0LSLgNboAq4AJii5U6AzgCP+VcmHOoRxP
+ 9CPreLj919in8zte8cu7tP2VADzNXRp9QmQd84NWJG7i+RdOHV8VRudTt5Fm6zBzPw
+ K1Vrr+H1XMKYSyTlmatw1n+C5SzVJs6XW78SPiO/cIfOyFAVdsIlgG8rmRplMCeaDM
+ rQ0IpdtWgFLZP4wCBh868jNKRBdeQIQW6QFSqXs7QDRijH1zlym6oEV9W71pdxxsi6
+ L4qDdk+BLd1aLSqqCZF3bcWQQapm1cCH9yg446V0qGUPpB8aV4GlDh1ZLyp2b9KfZO
+ y2jHomoldewZg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id BB458190943;
+ Sun, 08 Mar 2026 15:11:18 +0300 (MSK)
+Message-ID: <68d9a9ba-2999-43ad-b2ec-5320f3089ba7@tls.msk.ru>
+Date: Sun, 8 Mar 2026 15:11:50 +0300
 MIME-Version: 1.0
-References: <20260307150042.78030-1-philmd@linaro.org>
- <20260307150042.78030-3-philmd@linaro.org>
- <16ced31c-6d4b-417f-92de-386bfee9dcf8@redhat.com>
-In-Reply-To: <16ced31c-6d4b-417f-92de-386bfee9dcf8@redhat.com>
-From: "noreply77-demartz@thinocorp.com" <ikerjosemartinez26@gmail.com>
-Date: Sun, 8 Mar 2026 05:39:24 -0600
-X-Gm-Features: AaiRm50yI2713ETrNq6iQ7DhOEbFNrO1mIVSGSVBlortzGW1ERKNeqwnj-1CAF4
-Message-ID: <CAMLMkj2zz3+_TE7UU-UkW2MNomVRw7pfHOiBz-pXz0W0aByV7g@mail.gmail.com>
-Subject: Re: [PATCH 2/4] hw/i386/pc: Remove pc_compat_3_0[] array
-To: Thomas Huth <thuth@redhat.com>, martz_jose@mi.com
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000a068f0064c81bdba"
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=ikerjosemartinez26@gmail.com; helo=mail-wm1-x336.google.com
-X-Spam_score_int: 7
-X-Spam_score: 0.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCHSET 0/2] io_uring fixes
+To: Fiona Ebner <f.ebner@proxmox.com>, Jens Axboe <axboe@kernel.dk>,
+ qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, fam@euphon.net, stefanha@redhat.com,
+ qemu-stable@nongnu.org
+References: <20260213143225.161043-1-axboe@kernel.dk>
+ <3ba732d8-8e33-4bf3-af39-00360c39b940@proxmox.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <3ba732d8-8e33-4bf3-af39-00360c39b940@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, POSSIBLE_GMAIL_PHISHER=2.591,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,147 +113,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a068f0064c81bdba
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 03.03.2026 14:52, Fiona Ebner wrote:
 
-   - Philippe propuso eliminar la matriz pc_compat_3_0[] del c=C3=B3digo i3=
-86/pc.
-   - Thomas Huth revis=C3=B3 y aprob=C3=B3 el parche propuesto por Philippe=
-.
+> CC-ing qemu-stable since this affects the 10.2 branch. The fixes are
+> already applied to master as
+> 
+> 2ae361ef1d aio-posix: notify main loop when SQEs are queued
+> 961fcc0f22 fdmon-io_uring: check CQ ring directly in gsource_check
 
+Picked up.  Thank you!
 
-
-
-
-sales@thinocorp.com
-
-El dom, 8 de mar de 2026, 05:37, Thomas Huth <thuth@redhat.com> escribi=C3=
-=B3:
-
-> On 07/03/2026 16.00, Philippe Mathieu-Daud=C3=A9 wrote:
-> > The pc_compat_3_0[] array was only used by the pc-q35-3.0
-> > and pc-i440fx-3.0 machines, which got removed. Remove it.
-> >
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > ---
-> >   include/hw/i386/pc.h | 3 ---
-> >   hw/i386/pc.c         | 7 -------
-> >   2 files changed, 10 deletions(-)
-> >
-> > diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> > index 113813c07d7..5623660f5dd 100644
-> > --- a/include/hw/i386/pc.h
-> > +++ b/include/hw/i386/pc.h
-> > @@ -277,9 +277,6 @@ extern const size_t pc_compat_4_0_len;
-> >   extern GlobalProperty pc_compat_3_1[];
-> >   extern const size_t pc_compat_3_1_len;
-> >
-> > -extern GlobalProperty pc_compat_3_0[];
-> > -extern const size_t pc_compat_3_0_len;
-> > -
-> >   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-> >       static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
-> >                                                    const void *data) \
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index 819e729a6e3..a38634e3577 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -214,13 +214,6 @@ GlobalProperty pc_compat_3_1[] =3D {
-> >   };
-> >   const size_t pc_compat_3_1_len =3D G_N_ELEMENTS(pc_compat_3_1);
-> >
-> > -GlobalProperty pc_compat_3_0[] =3D {
-> > -    { TYPE_X86_CPU, "x-hv-synic-kvm-only", "on" },
-> > -    { "Skylake-Server" "-" TYPE_X86_CPU, "pku", "off" },
-> > -    { "Skylake-Server-IBRS" "-" TYPE_X86_CPU, "pku", "off" },
-> > -};
-> > -const size_t pc_compat_3_0_len =3D G_N_ELEMENTS(pc_compat_3_0);
-> > -
-> >   /*
-> >    * @PC_FW_DATA:
-> >    * Size of the chunk of memory at the top of RAM for the BIOS ACPI
-> tables
->
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
->
->
->
-
---000000000000a068f0064c81bdba
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><ul><li>Philippe propuso eliminar la matriz <code>pc_comp=
-at_3_0[]</code>=C2=A0del c=C3=B3digo i386/pc.</li><li>Thomas Huth revis=C3=
-=B3 y aprob=C3=B3 el parche propuesto por Philippe.</li></ul><br><br><br><b=
-r><div data-smartmail=3D"gmail_signature"><font color=3D"#2196f3"><a href=
-=3D"mailto:sales@thinocorp.com">sales@thinocorp.com</a></font></div></div><=
-br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">El dom, 8 de mar de 2026, 05:37, Thomas Huth &lt;<a href=3D=
-"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; escribi=C3=B3:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
-x #ccc solid;padding-left:1ex">On 07/03/2026 16.00, Philippe Mathieu-Daud=
-=C3=A9 wrote:<br>
-&gt; The pc_compat_3_0[] array was only used by the pc-q35-3.0<br>
-&gt; and pc-i440fx-3.0 machines, which got removed. Remove it.<br>
-&gt; <br>
-&gt; Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philm=
-d@linaro.org" target=3D"_blank" rel=3D"noreferrer">philmd@linaro.org</a>&gt=
-;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0include/hw/i386/pc.h | 3 ---<br>
-&gt;=C2=A0 =C2=A0hw/i386/pc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 7 -------<=
-br>
-&gt;=C2=A0 =C2=A02 files changed, 10 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h<br>
-&gt; index 113813c07d7..5623660f5dd 100644<br>
-&gt; --- a/include/hw/i386/pc.h<br>
-&gt; +++ b/include/hw/i386/pc.h<br>
-&gt; @@ -277,9 +277,6 @@ extern const size_t pc_compat_4_0_len;<br>
-&gt;=C2=A0 =C2=A0extern GlobalProperty pc_compat_3_1[];<br>
-&gt;=C2=A0 =C2=A0extern const size_t pc_compat_3_1_len;<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; -extern GlobalProperty pc_compat_3_0[];<br>
-&gt; -extern const size_t pc_compat_3_0_len;<br>
-&gt; -<br>
-&gt;=C2=A0 =C2=A0#define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn)=
- \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0static void pc_machine_##suffix##_class_init=
-(ObjectClass *oc, \<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const void *data) \<br>
-&gt; diff --git a/hw/i386/pc.c b/hw/i386/pc.c<br>
-&gt; index 819e729a6e3..a38634e3577 100644<br>
-&gt; --- a/hw/i386/pc.c<br>
-&gt; +++ b/hw/i386/pc.c<br>
-&gt; @@ -214,13 +214,6 @@ GlobalProperty pc_compat_3_1[] =3D {<br>
-&gt;=C2=A0 =C2=A0};<br>
-&gt;=C2=A0 =C2=A0const size_t pc_compat_3_1_len =3D G_N_ELEMENTS(pc_compat_=
-3_1);<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; -GlobalProperty pc_compat_3_0[] =3D {<br>
-&gt; -=C2=A0 =C2=A0 { TYPE_X86_CPU, &quot;x-hv-synic-kvm-only&quot;, &quot;=
-on&quot; },<br>
-&gt; -=C2=A0 =C2=A0 { &quot;Skylake-Server&quot; &quot;-&quot; TYPE_X86_CPU=
-, &quot;pku&quot;, &quot;off&quot; },<br>
-&gt; -=C2=A0 =C2=A0 { &quot;Skylake-Server-IBRS&quot; &quot;-&quot; TYPE_X8=
-6_CPU, &quot;pku&quot;, &quot;off&quot; },<br>
-&gt; -};<br>
-&gt; -const size_t pc_compat_3_0_len =3D G_N_ELEMENTS(pc_compat_3_0);<br>
-&gt; -<br>
-&gt;=C2=A0 =C2=A0/*<br>
-&gt;=C2=A0 =C2=A0 * @PC_FW_DATA:<br>
-&gt;=C2=A0 =C2=A0 * Size of the chunk of memory at the top of RAM for the B=
-IOS ACPI tables<br>
-<br>
-Reviewed-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=3D"=
-_blank" rel=3D"noreferrer">thuth@redhat.com</a>&gt;<br>
-<br>
-<br>
-</blockquote></div>
-
---000000000000a068f0064c81bdba--
+/mjt
 
