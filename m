@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62302EA852F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6923EEA854B
 	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMw8-0003oh-Ps; Sun, 08 Mar 2026 18:49:24 -0400
+	id 1vzMw8-0003oQ-CX; Sun, 08 Mar 2026 18:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vzMw7-0003o3-Mf
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:49:23 -0400
+ id 1vzMw6-0003no-MO
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:49:22 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vzMw5-0005TR-JG
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:49:23 -0400
+ id 1vzMw4-0005TO-O0
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:49:22 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id ABB21596D9A;
- Sun, 08 Mar 2026 23:49:19 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9CF15596D97;
+ Sun, 08 Mar 2026 23:49:18 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id RTM1MFTzulFa; Sun,  8 Mar 2026 23:49:17 +0100 (CET)
+ id Z3v3a1X3OU56; Sun,  8 Mar 2026 23:49:16 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A99CC596D94; Sun, 08 Mar 2026 23:49:17 +0100 (CET)
-Message-ID: <26db0715a6b9f6504f394010513facc9a37882ad.1773009887.git.balaton@eik.bme.hu>
+ id 9C15F5969FD; Sun, 08 Mar 2026 23:49:16 +0100 (CET)
+Message-ID: <90b49357b6bf80bcf8962331575ffd16a96b706a.1773009887.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1773009887.git.balaton@eik.bme.hu>
 References: <cover.1773009887.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 2/2] ati-vga: Do not access pixel outside the screen
+Subject: [PATCH 1/2] ati-vga: Simplify hw cursor drawing
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>
-Date: Sun, 08 Mar 2026 23:49:17 +0100 (CET)
+Date: Sun, 08 Mar 2026 23:49:16 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -1
@@ -61,40 +61,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We check end of screen before writing the pixel but before that
-complement color also accesses screen pixel so we have to check before
-that. This fixes a segmentation fault with guest_hwcursor when pointer
-is partially out of screen at lower right corner.
+Avoid calculating index at every step when we can just count the
+position.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/display/ati.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 7543065456..9fb798b3e9 100644
+index be41f2e0e2..7543065456 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -216,6 +216,9 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+@@ -200,7 +200,7 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+     ATIVGAState *s = container_of(vga, ATIVGAState, vga);
+     uint32_t srcoff;
+     uint32_t *dp = (uint32_t *)d;
+-    int i, j, h;
++    int i, j, h, idx = 0;
+ 
+     if (!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN) ||
+         scr_y < vga->hw_cursor_y || scr_y >= vga->hw_cursor_y + 64 ||
+@@ -215,10 +215,10 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+         uint32_t color;
          uint8_t abits = vga_read_byte(vga, srcoff + i);
          uint8_t xbits = vga_read_byte(vga, srcoff + i + 8);
-         for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
-+            if (vga->hw_cursor_x + idx >= h) {
-+                return; /* end of screen, don't span to next line */
-+            }
+-        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1) {
++        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
              if (abits & BIT(7)) {
                  if (xbits & BIT(7)) {
-                     color = dp[idx] ^ 0xffffffff; /* complement */
-@@ -226,9 +229,6 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+-                    color = dp[i * 8 + j] ^ 0xffffffff; /* complement */
++                    color = dp[idx] ^ 0xffffffff; /* complement */
+                 } else {
+                     continue; /* transparent, no change */
+                 }
+@@ -226,10 +226,10 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
                  color = (xbits & BIT(7) ? s->regs.cur_color1 :
                                            s->regs.cur_color0) | 0xff000000;
              }
--            if (vga->hw_cursor_x + idx >= h) {
--                return; /* end of screen, don't span to next line */
--            }
-             dp[idx] = color;
+-            if (vga->hw_cursor_x + i * 8 + j >= h) {
++            if (vga->hw_cursor_x + idx >= h) {
+                 return; /* end of screen, don't span to next line */
+             }
+-            dp[i * 8 + j] = color;
++            dp[idx] = color;
          }
      }
+ }
 -- 
 2.41.3
 
