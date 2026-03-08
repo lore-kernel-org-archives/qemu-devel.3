@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4107AF55132
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB8FF55132
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 07:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vz8T5-0005e4-OL; Sun, 08 Mar 2026 03:22:27 -0400
+	id 1vz8Sh-0003l4-4W; Sun, 08 Mar 2026 03:22:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8Rx-0002xA-TM
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:18 -0400
-Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
+ id 1vz8Rt-0002ry-KJ
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:14 -0400
+Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vz8Rv-0003OG-NA
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:17 -0400
-Received: by mail-dl1-x1243.google.com with SMTP id
- a92af1059eb24-126ea4e9694so4374397c88.1
- for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:21:15 -0800 (PST)
+ id 1vz8Rr-0003J9-8p
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 03:21:13 -0400
+Received: by mail-dy1-x1344.google.com with SMTP id
+ 5a478bee46e88-2bdfc4b191fso6050025eec.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Mar 2026 23:21:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1772954474; x=1773559274; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1772954468; x=1773559268; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bcvnvVJoE5XYpkkYLdY/36Vds/J4Eu0RKogC8hkAKYU=;
- b=MJKha3SgFA5Tj2E5mB0OtcpX8zF2A7DgBp3skZEcTSIGW0KjcVZbcDwjxo/6rbHYIO
- SFraSPqEEQwI8RFk0jUjFOY0XNpQg+sGIsYBv1IPgXf5myRTtVcnbtAj74aftMyCkATH
- /Md8RKfgXRWUOmhZ7Jn/h9V/9/+CucUZTDkBszfKUbDdkKxtE8qN6/mHf/mMGVnkGrZY
- d1Li8HL10O0iftxk1xTgumGktrtimIfmrIL13eZI6aHauxW2gM88qgYyl0kP3Ra66cfN
- Jc6aiproqN9F80PHWLnftI4Bpwa9+eJ+j7zSh55k+tSSGHEBPLVkeKU7U7qoJE2eBPAW
- YYcw==
+ bh=TJZ+rBevmOiRZs5yFHqYuEbMVHGXG6seK7boNd+RNkY=;
+ b=aQ4jGbjuyLZgSxfnOMk0Q7hnk/N3DVn6HBNT4ypKEdTyuqIlJstNae6AJJXEEGRUQy
+ YY9rpBV1VeWZfL3ZDP5iQBsZWrsJaotuVDmTgvdXs9u6adBQVced9b+eBiWyH/m/mcob
+ +cMiCKN3Kt3+tdHVp/UfoPKlXY7OqHMospqmOSfk//1QPiuLeFm/D3niMeBlzJDAJ6Ap
+ krIWSuRYcOwOJic1lZOH9zkeHBZUNfdy+6at/74PXWkCaxX0ysrvHmZsfklobI8apz3w
+ jQWDAqJ8KQubZroKgpYyEDRT6S2xRdy+rqR61UnOy5PxlCK/i92R1Zw7V+Mfh3ENUFQG
+ MAxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1772954474; x=1773559274;
+ d=1e100.net; s=20230601; t=1772954468; x=1773559268;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bcvnvVJoE5XYpkkYLdY/36Vds/J4Eu0RKogC8hkAKYU=;
- b=GjKfi+aTzEi+nVdhU8BtZ4rjIlCfwG2YxyH71uU6Ji62XmnTjxrNzlPgzr+d64PdHn
- ePw6MgXZO/R0OsWhXAk5KIm+E6siQjnqzc0UD4d/WuhrJfdppBxroCPPKUa771dsuCQT
- Fii9p7kqnrUcGhwJZSkZ7Lt++2MxJjLr9PR2VWkMWhlwApJi/lztBxsnE03MYS3qtcSi
- MlNZtyDVyAlxBU1qzLPJ/sdI8H/aFWZVb5+xB5JxT8/sth0NaYvT0cx2GA/QxRwsHkPH
- SGqwmK65z0XYqI9Tgj9kY8U38s6PLwHxNfs3t4G5o5pBObg0FsENPNJZWYs9X3y2GB1M
- rbIA==
+ bh=TJZ+rBevmOiRZs5yFHqYuEbMVHGXG6seK7boNd+RNkY=;
+ b=cMuBf720oinG1OwV33YwcSuKgtz1NoCv3cQz6UdA+cEAmQAP62+iqaHCeGOlp2ylLj
+ 9/KYBGAkdkX+cd9XhMiVXinMIOuypzHgNqDigSpryjbwuY2gd2DU1CCUcL6o6P/XglK0
+ wjRJtb6dU5A5VIdR0hxJgFzFT5mhpGvXRn+SMx2QcBdy4Kl2NUYAviWM4DdoOITNft5s
+ Napz0LHROmBEm7M72Y/I7v5MV3W+TfG7QmzX22v7zXJJI8tTe12GLDVniOmeXyAkKh4H
+ eJG3DGTnhAl9eKIPOBl9ixOKv4hmQYOVcMqSNu5QNBQqvkwHh3VcAIKw2iWWEwIIZgyd
+ 6e0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8ZtxUwhUGCZtp98RQi38LUcaNCOfh7jkJiSPPwRHzyawtUNAv+ApS4CplXEIHR2iXzBVBPRzaBx+J@nongnu.org
-X-Gm-Message-State: AOJu0YyhNFEqpp+Sa4oYE5bIRTkQLYJk/kcVPLTjgQittgxyvpYpbOEC
- t80ZZRCqum8yV0Ug15an73s5+2x/pRQB9/x7qkv2UQBcDMnvrlgraPzR
-X-Gm-Gg: ATEYQzxkv282bfVDCI/SnNqwp/sokDz3jS3l/G4yOTfynECP7+vWp/CbmaaHtu95WvI
- kDOJXL+ILxOIqoz2B08i5rWbno0Ls3sB6Kk1OzukaRemBn/l6Sgm/4cI26ipv1OFi5z8dTerupR
- K67bTQQJUjAUnCbPBQnUmDzWL3hCaY89zqJPzEU8DKO7QbjmQMh19iRitBrydH7GYiKrpH3BqA+
- Z/USMuel6TtxfOXXUjaIX7DnPwICQ6B1BqNv+tOmlyXQhIy1ZD/0jHCiSKe+rtiKnORWsN/3N/U
- VSHTwVzYW8/XedD8/UfCV71iX50UxSkgXqducCWGJonP3RvEMExk0Gu11yPa4JiSv9W1+tniNs5
- fS6LQURfOWomX50HIvQuKZkRpfOp4R60PN7rngLikbKZ+d9SH8a9oTYKzluCDpt6t+8db6DxcGr
- EWWnnuaRH2buQY0ej+2r/pH7OHJZ3o4v2a3X9u/dTFSdkIi5P/IUcn+V4MFFUQmkZUdyGR82YNf
- uZRL33GVt2oFJ5DvQG0VtTQQAE=
-X-Received: by 2002:a05:7022:b81:b0:128:d4be:7428 with SMTP id
- a92af1059eb24-128d4be781dmr204892c88.19.1772954474197; 
- Sat, 07 Mar 2026 23:21:14 -0800 (PST)
+ AJvYcCU7WyoPwXNcX90ViaRlzO60rQRSNo9KsuV+DPbvleLVDnSNQBYMGcviPKOib+p0ShLXMrpipo0VmJs6@nongnu.org
+X-Gm-Message-State: AOJu0YzQEXXz9o6dy169Sfl69U6JDtdBzID3tOP46DnubtL0rj0OGBSP
+ eEuVrmQDkD/wG6XvmwqhEk5fKWSCnSvzzg3hJM4I4nGIfrmkJASwElVB
+X-Gm-Gg: ATEYQzx9ONanA9c+KTtEpLNKQWdEq+8Z10YhEJzxL3tFwccDL/OYA9WFA9veiDuBKtU
+ wlo4qavXLtEgqUPvAAcbYAwnUq+uT4cxKDdIrAtOP08/0AT8P/+bjXkEoSIgiciZr+l30F0W0Sp
+ mPFnwRAbIQJUYCxQwM2oAPd/rMVPU0ZTE0HDyf0SgvlTH2/NtpztY4eFL4BClPw0nWdMg8wqih1
+ e0U8wgV77XPEAPBiulpKhCF97rQ0kEw6GoASNpxy1a+M5LUj0+CzU3KTXHKxinlOTZDzQvY66Ku
+ uJtwsy1itiTPZx8o697eq2+5svvQSnRALnZCpVG+3LDJWVncrfcRkup8/O0+HdaeQTCwy2FOleI
+ iiEl4iCmYpkvS9c3XF7BbZka0foti46ltUNsWn+kZu/QecB4IuonZn1plSb+s3xuCW58Cturxnb
+ q6M4YsA0j3FnwI6XKpOvMZ+PiEN8NZn+0iaSIybBigF10jL4GNOCgAM++SCUBeWBUr/UB+a4hrD
+ YyYmXH1gaE2S/VlqtxdqCGkBsZjlVENpV56Sg==
+X-Received: by 2002:a05:7300:320a:b0:2bd:fb12:9a01 with SMTP id
+ 5a478bee46e88-2be4deab763mr2883909eec.12.1772954468286; 
+ Sat, 07 Mar 2026 23:21:08 -0800 (PST)
 Received: from ZEVORN-PC.bbrouter ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.21.08
+ 5a478bee46e88-2be4f984ceasm6014081eec.32.2026.03.07.23.21.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Mar 2026 23:21:13 -0800 (PST)
+ Sat, 07 Mar 2026 23:21:06 -0800 (PST)
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>,
@@ -76,18 +76,18 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: tangtao1634@phytium.com.cn, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: [PATCH v1 27/28] tests/qtest: add DM TCG halt and register access
+Subject: [PATCH v1 26/28] tests/qtest: add DM abstract command and halt/resume
  tests
-Date: Sun,  8 Mar 2026 15:17:30 +0800
-Message-ID: <e49545f7d00d9b4010ab4e5ad8fe0c3d05d6b501.1772936778.git.chao.liu.zevorn@gmail.com>
+Date: Sun,  8 Mar 2026 15:17:29 +0800
+Message-ID: <c728e790d60d1d066e1c4de935afe8ee53e47ec2.1772936778.git.chao.liu.zevorn@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 References: <cover.1772936778.git.chao.liu.zevorn@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,399 +110,363 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add TCG-mode helper functions that boot a real CPU and interact
-with the Debug Module through clock stepping, then add the first
-batch of TCG tests:
+Add the ROM simulation helpers (sim_cpu_going_ack,
+sim_cpu_exception) and tests that exercise the abstract command
+interface and hart-window registers in qtest mode:
 
-  tcg/halt-dpc              – halt via HALTREQ, verify DPC/DCSR
-  tcg/resethaltreq-priority – resethaltreq takes effect on reset
-  tcg/gpr-rw                – read/write GPRs via abstract cmds
-  tcg/fpr-rw                – read/write FPRs via abstract cmds
-  rv32-gpr64-notsup         – 64-bit GPR access rejected on RV32
-  tcg/command-ignored-on-cmderr – sticky cmderr blocks new cmds
+  abstractauto              – auto-execute on data/progbuf write
+  command-not-halted        – command rejected when hart running
+  invalid-regno-exception   – out-of-range register access
+  abstract-cmd-flow         – SMP abstract read/write cycle
+  abstract-cmd-exception    – exception during abstract command
+  hawindow                  – hart array window register
+  haltsum0-window           – haltsum0 with 64-hart SMP
+  haltsum1-window           – haltsum1 with 64-hart SMP
 
 Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- tests/qtest/riscv-dm-test.c | 355 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 355 insertions(+)
+ tests/qtest/riscv-dm-test.c | 315 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 315 insertions(+)
 
 diff --git a/tests/qtest/riscv-dm-test.c b/tests/qtest/riscv-dm-test.c
-index 1b1ab02284..2e7c29ed7c 100644
+index 3a0dd1cbd4..1b1ab02284 100644
 --- a/tests/qtest/riscv-dm-test.c
 +++ b/tests/qtest/riscv-dm-test.c
-@@ -213,6 +213,139 @@ static void sim_cpu_exception(QTestState *qts)
-     rom_write32(qts, ROM_EXCP, 0);
+@@ -195,6 +195,24 @@ static void sim_cpu_resume_ack(QTestState *qts, uint32_t hartid)
+     rom_write32(qts, ROM_RESUME, hartid);
  }
  
-+/* TCG-mode helpers: real CPU execution with clock stepping. */
-+
-+static QTestState *tcg_dm_init(void)
-+{
-+    const char *arch = qtest_get_arch();
-+    const char *cpu_type = strstr(arch, "64") ? "rv64" : "rv32";
-+    g_autofree char *args = g_strdup_printf(
-+        "-machine virt -accel tcg -smp 1 -cpu %s,sdext=true", cpu_type);
-+    QTestState *qts = qtest_init(args);
-+
-+    /* Check VM status */
-+    QDict *resp = qtest_qmp(qts, "{'execute': 'query-status'}");
-+    const QDict *ret = qdict_get_qdict(resp, "return");
-+    bool running = qdict_get_bool(ret, "running");
-+    const char *vm_status = qdict_get_str(ret, "status");
-+    g_test_message("VM status: %s running=%d", vm_status, running);
-+    qobject_unref(resp);
-+
-+    if (!running) {
-+        resp = qtest_qmp(qts, "{'execute': 'cont'}");
-+        g_test_message("Sent cont");
-+        qobject_unref(resp);
-+    }
-+
-+    /* Let the CPU boot via MTTCG thread */
-+    g_usleep(TCG_BOOT_US);
-+
-+    dm_set_active(qts);
-+    return qts;
-+}
-+
-+static bool tcg_wait_for_halt(QTestState *qts)
-+{
-+    for (int t = 0; t < TCG_POLL_TIMEOUT_US; t += TCG_POLL_STEP_US) {
-+        g_usleep(TCG_POLL_STEP_US);
-+        uint32_t st = dm_read(qts, A_DMSTATUS);
-+        if (t < TCG_POLL_STEP_US * 5) {
-+            g_test_message("halt poll: DMSTATUS=0x%08x", st);
-+        }
-+        if (st & DMSTATUS_ALLHALTED) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static bool tcg_wait_for_cmd_done(QTestState *qts)
-+{
-+    for (int t = 0; t < TCG_POLL_TIMEOUT_US; t += TCG_POLL_STEP_US) {
-+        g_usleep(TCG_POLL_STEP_US);
-+        if (!(dm_read(qts, A_ABSTRACTCS) & ABSTRACTCS_BUSY)) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static bool tcg_halt_hart(QTestState *qts)
-+{
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
-+    return tcg_wait_for_halt(qts);
-+}
-+
-+static bool tcg_resume_hart(QTestState *qts)
-+{
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_RESUMEREQ);
-+    for (int t = 0; t < TCG_POLL_TIMEOUT_US; t += TCG_POLL_STEP_US) {
-+        g_usleep(TCG_POLL_STEP_US);
-+        if (dm_read(qts, A_DMSTATUS) & DMSTATUS_ALLRESUMEACK) {
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+
 +/*
-+ * Read a register via Access Register abstract command.
-+ * Returns true on success, false on error or timeout.
++ * Simulate the CPU executing the GOING acknowledgment.
++ * ROM code: detects GOING flag → writes 0 to GOING offset → jumps to cmd.
 + */
-+static bool tcg_abstract_read_reg(QTestState *qts, uint32_t regno,
-+                                  uint32_t *val)
++static void sim_cpu_going_ack(QTestState *qts)
 +{
-+    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
-+
-+    uint32_t cmd = (0u << 24) |     /* cmdtype = Access Register */
-+                   (1u << 17) |     /* transfer = 1 */
-+                   (2u << 20) |     /* aarsize = 32-bit */
-+                   (regno & 0xFFFF);
-+    dm_write(qts, A_COMMAND, cmd);
-+
-+    if (!tcg_wait_for_cmd_done(qts)) {
-+        return false;
-+    }
-+
-+    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
-+    if (acs & ABSTRACTCS_CMDERR_MASK) {
-+        return false;
-+    }
-+
-+    *val = dm_read(qts, A_DATA0);
-+    return true;
++    rom_write32(qts, ROM_GOING, 0);
 +}
 +
 +/*
-+ * Write a register via Access Register abstract command.
-+ * Returns true on success, false on error or timeout.
++ * Simulate CPU hitting exception during abstract command.
++ * ROM exception handler writes 0 to EXCP offset.
 + */
-+static bool tcg_abstract_write_reg(QTestState *qts, uint32_t regno,
-+                                   uint32_t val)
++static void sim_cpu_exception(QTestState *qts)
 +{
-+    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
-+    dm_write(qts, A_DATA0, val);
-+
-+    uint32_t cmd = (0u << 24) |     /* cmdtype = Access Register */
-+                   (1u << 17) |     /* transfer = 1 */
-+                   (1u << 16) |     /* write = 1 */
-+                   (2u << 20) |     /* aarsize = 32-bit */
-+                   (regno & 0xFFFF);
-+    dm_write(qts, A_COMMAND, cmd);
-+
-+    if (!tcg_wait_for_cmd_done(qts)) {
-+        return false;
-+    }
-+
-+    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
-+    return !(acs & ABSTRACTCS_CMDERR_MASK);
++    rom_write32(qts, ROM_EXCP, 0);
 +}
 +
-+/*
-+ * Write a 64-bit register via Access Register abstract command (aarsize=3).
-+ * DATA1 holds high 32 bits, DATA0 holds low 32 bits.
-+ */
  
  /*
   * Test: dmactive gate.
-@@ -930,6 +1063,218 @@ static void test_haltsum1_window(void)
-  * 4. Read DPC via abstract command → verify it's a valid address
-  * 5. Resume CPU, then re-halt to verify the cycle works
-  */
-+static void test_tcg_halt_dpc(void)
-+{
-+    QTestState *qts = tcg_dm_init();
-+
-+    /* Halt the CPU */
-+    g_assert_true(tcg_halt_hart(qts));
-+
-+    uint32_t status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
-+    g_assert_cmpuint(status & DMSTATUS_ANYRUNNING, ==, 0);
-+
-+    /* Read DCSR: verify cause = HALTREQ (3) */
-+    uint32_t dcsr;
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
-+    uint32_t cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
-+    g_assert_cmpuint(cause, ==, DCSR_CAUSE_HALTREQ);
-+
-+    /* Read DPC: implementation dependent, but it must stay aligned. */
-+    uint32_t dpc;
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &dpc));
-+    g_assert_cmpuint(dpc & 1u, ==, 0);
-+
-+    /* Resume the CPU */
-+    g_assert_true(tcg_resume_hart(qts));
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ALLRESUMEACK, ==,
-+                     DMSTATUS_ALLRESUMEACK);
-+
-+    /* Let it run a bit, then re-halt */
-+    g_usleep(TCG_BOOT_US);
-+
-+    g_assert_true(tcg_halt_hart(qts));
-+
-+    /* DPC after re-halt is also execution dependent; only assert alignment */
-+    uint32_t dpc2;
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DPC, &dpc2));
-+    g_assert_cmpuint(dpc2 & 1u, ==, 0);
-+
-+    /* DCSR cause should be HALTREQ again */
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
-+    cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
-+    g_assert_cmpuint(cause, ==, DCSR_CAUSE_HALTREQ);
-+
-+    qtest_quit(qts);
-+}
-+
+@@ -626,6 +644,293 @@ static void test_ackhavereset(void)
+     qtest_quit(qts);
+ }
+ 
 +/*
-+ * Test: reset-haltreq and haltreq asserted together.
-+ *
-+ * Priority per Debug Spec v1.0 Table 4.2 requires reset-haltreq (cause=5)
-+ * to win over haltreq (cause=3).
++ * Test: Unsupported register numbers report CMDERR=EXCEPTION.
 + */
-+static void test_tcg_resethaltreq_priority(void)
++static void test_invalid_regno_exception(void)
 +{
-+    QTestState *qts = tcg_dm_init();
-+    uint32_t status, dcsr, cause;
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_SETRESETHALTREQ);
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE |
-+                               DMCONTROL_HARTRESET | DMCONTROL_HALTREQ);
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
-+
-+    g_assert_true(tcg_wait_for_halt(qts));
-+    status = dm_read(qts, A_DMSTATUS);
-+    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
-+
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_DCSR, &dcsr));
-+    cause = (dcsr & DCSR_CAUSE_MASK) >> DCSR_CAUSE_SHIFT;
-+    g_assert_cmpuint(cause, ==, DCSR_CAUSE_RESET);
-+
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE |
-+                               DMCONTROL_CLRRESETHALTREQ | DMCONTROL_HALTREQ);
-+    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: Read/Write all 32 GPR registers via abstract commands (TCG).
-+ *
-+ * For each GPR x0..x31:
-+ * - x0: hardwired to 0, read should return 0
-+ * - x1..x31: write a test pattern, read back and verify
-+ */
-+static void test_tcg_gpr_rw(void)
-+{
-+    QTestState *qts = tcg_dm_init();
-+
-+    g_assert_true(tcg_halt_hart(qts));
-+
-+    /* x0 is hardwired to 0 */
-+    uint32_t val;
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_GPR(0), &val));
-+    g_assert_cmpuint(val, ==, 0);
-+
-+    /* x1..x31: write test patterns and read back */
-+    for (int i = 1; i < 32; i++) {
-+        uint32_t pattern = 0xA5000000u | (uint32_t)i;
-+
-+        g_assert_true(tcg_abstract_write_reg(qts, REGNO_GPR(i), pattern));
-+        g_assert_true(tcg_abstract_read_reg(qts, REGNO_GPR(i), &val));
-+        g_assert_cmpuint(val, ==, pattern);
-+    }
-+
-+    /* Verify x0 is still 0 after all writes */
-+    g_assert_true(tcg_abstract_read_reg(qts, REGNO_GPR(0), &val));
-+    g_assert_cmpuint(val, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: Read/Write all 32 FPR registers via abstract commands (TCG).
-+ *
-+ * For each FPR f0..f31:
-+ * - Write a 32-bit test pattern (single-precision view)
-+ * - Read back and verify
-+ */
-+static void test_tcg_fpr_rw(void)
-+{
-+    QTestState *qts = tcg_dm_init();
-+
-+    g_assert_true(tcg_halt_hart(qts));
-+
-+    uint32_t val;
-+
-+    for (int i = 0; i < 32; i++) {
-+        uint32_t pattern = 0x3F800000u + (uint32_t)i; /* 1.0f + i */
-+
-+        g_assert_true(tcg_abstract_write_reg(qts, REGNO_FPR(i), pattern));
-+        g_assert_true(tcg_abstract_read_reg(qts, REGNO_FPR(i), &val));
-+        g_assert_cmpuint(val, ==, pattern);
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+/*
-+ * Test: RV32 rejects 64-bit GPR abstract accesses at command decode time.
-+ */
-+static void test_rv32_gpr64_notsup(void)
-+{
-+    QTestState *qts;
-+    uint32_t acs;
-+    const char *arch = qtest_get_arch();
-+
-+    if (!strstr(arch, "32")) {
-+        g_test_skip("RV32-only");
-+        return;
-+    }
-+
-+    qts = qtest_init("-machine virt");
++    QTestState *qts = qtest_init("-machine virt");
++    uint32_t cmd, acs, cmderr;
 +
 +    dm_set_active(qts);
 +    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
 +    sim_cpu_halt_ack(qts, 0);
++
 +    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
 +
-+    dm_write(qts, A_COMMAND,
-+             (0u << 24) | (1u << 17) | (3u << 20) | REGNO_GPR(1));
++    cmd = (0u << 24) | (1u << 17) | (2u << 20) | 0x1040u;
++    dm_write(qts, A_COMMAND, cmd);
 +
 +    acs = dm_read(qts, A_ABSTRACTCS);
-+    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, 0);
-+    g_assert_cmpuint((acs & ABSTRACTCS_CMDERR_MASK) >>
-+                     ABSTRACTCS_CMDERR_SHIFT, ==, 2);
++    cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    g_assert_cmpuint(cmderr, ==, 3);
 +
 +    qtest_quit(qts);
 +}
 +
 +/*
-+ * Test: COMMAND writes are ignored while CMDERR is non-zero.
++ * Test: ABSTRACTAUTO read/write.
 + */
-+static void test_tcg_command_ignored_on_cmderr(void)
++static void test_abstractauto(void)
 +{
-+    QTestState *qts = tcg_dm_init();
++    QTestState *qts = qtest_init("-machine virt");
++    dm_set_active(qts);
 +
-+    g_assert_true(tcg_halt_hart(qts));
++    /* Write autoexec pattern */
++    dm_write(qts, A_ABSTRACTAUTO, 0x00030003);
++    g_assert_cmpuint(dm_read(qts, A_ABSTRACTAUTO), ==, 0x00030003);
 +
-+    /* Baseline last command: read x0, result must be 0. */
-+    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
-+    dm_write(qts, A_COMMAND,
-+             (0u << 24) | (1u << 17) | (2u << 20) | REGNO_GPR(0));
-+    g_assert_true(tcg_wait_for_cmd_done(qts));
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0);
-+
-+    /* Latch cmderr with an unsupported command. */
-+    dm_write(qts, A_COMMAND, 0xFF000000);
-+    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
-+    g_assert_cmpuint((acs & ABSTRACTCS_CMDERR_MASK) >>
-+                     ABSTRACTCS_CMDERR_SHIFT, ==, 2);
-+
-+    /*
-+     * This command must be ignored because cmderr != 0.
-+     * If it incorrectly overwrites last_cmd, later autoexec will read DCSR.
-+     */
-+    dm_write(qts, A_COMMAND,
-+             (0u << 24) | (1u << 17) | (2u << 20) | REGNO_DCSR);
-+
-+    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
-+    dm_write(qts, A_ABSTRACTAUTO, 0x1);    /* autoexec on data0 */
-+    dm_write(qts, A_DATA0, 0xDEADBEEF);    /* triggers autoexec of last_cmd */
-+
-+    g_assert_true(tcg_wait_for_cmd_done(qts));
-+    acs = dm_read(qts, A_ABSTRACTCS);
-+    g_assert_cmpuint((acs & ABSTRACTCS_CMDERR_MASK) >>
-+                     ABSTRACTCS_CMDERR_SHIFT, ==, 2);
-+    g_assert_cmpuint(dm_read(qts, A_DATA0), ==, 0xDEADBEEF);
++    /* Clear */
++    dm_write(qts, A_ABSTRACTAUTO, 0);
++    g_assert_cmpuint(dm_read(qts, A_ABSTRACTAUTO), ==, 0);
 +
 +    qtest_quit(qts);
 +}
 +
- 
++/*
++ * Test: COMMAND write when hart is not halted should set CMDERR.
++ */
++static void test_command_not_halted(void)
++{
++    QTestState *qts = qtest_init("-machine virt");
++    dm_set_active(qts);
++
++    /* Clear any existing CMDERR */
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++
++    /*
++     * Issue Access Register command (cmdtype=0, transfer=1, regno=0x1000)
++     * to a running hart. Should fail with HALTRESUME error (4).
++     */
++    uint32_t cmd = (0u << 24) |     /* cmdtype = Access Register */
++                   (1u << 17) |     /* transfer = 1 */
++                   (2u << 20) |     /* aarsize = 32-bit */
++                   0x1000;          /* regno = x0 */
++    dm_write(qts, A_COMMAND, cmd);
++
++    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
++    uint32_t cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    /* HALTRESUME error = 4 */
++    g_assert_cmpuint(cmderr, ==, 4);
++
++    /* Clear CMDERR */
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++    acs = dm_read(qts, A_ABSTRACTCS);
++    cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    g_assert_cmpuint(cmderr, ==, 0);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: Abstract command execution flow (Access Register).
++ *
++ * With hart halted, issue an Access Register command:
++ * 1. Hart must be halted first
++ * 2. Write COMMAND → DM sets BUSY=1, writes instructions to CMD space,
++ *    sets FLAGS=GOING
++ * 3. Hart can keep reporting HALTED in the park loop before consuming GO
++ * 4. CPU ROM detects GOING → writes to GOING offset (ack) → jumps to cmd
++ * 5. CPU executes cmd → hits ebreak → re-enters ROM → writes HARTID
++ * 6. DM only completes after the selected hart returns to the park loop
++ */
++static void test_abstract_cmd_flow(void)
++{
++    QTestState *qts = qtest_init("-machine virt -smp 2");
++    dm_set_active(qts);
++
++    /* Halt both harts first. */
++    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
++    sim_cpu_halt_ack(qts, 0);
++    sim_cpu_halt_ack(qts, 1);
++
++    uint32_t status = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(status & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
++
++    /* Clear any latched CMDERR */
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++
++    /*
++     * Issue Access Register command:
++     * cmdtype=0 (Access Register), transfer=1, write=0 (read),
++     * aarsize=2 (32-bit), regno=0x1000 (x0)
++     */
++    uint32_t cmd = (0u << 24) |     /* cmdtype = Access Register */
++                   (1u << 17) |     /* transfer = 1 */
++                   (2u << 20) |     /* aarsize = 32-bit */
++                   0x1000;          /* regno = x0 */
++    dm_write(qts, A_COMMAND, cmd);
++
++    /* BUSY should be set */
++    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
++    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, ABSTRACTCS_BUSY);
++
++    /*
++     * A different halted hart must not complete the command, and the selected
++     * hart must not complete it before GO has been consumed.
++     */
++    sim_cpu_halt_ack(qts, 1);
++    g_assert_cmpuint(dm_read(qts, A_ABSTRACTCS) & ABSTRACTCS_BUSY, ==,
++                     ABSTRACTCS_BUSY);
++    sim_cpu_halt_ack(qts, 0);
++    g_assert_cmpuint(dm_read(qts, A_ABSTRACTCS) & ABSTRACTCS_BUSY, ==,
++                     ABSTRACTCS_BUSY);
++
++    /* Simulate CPU: ROM detects GOING flag → writes GOING ack. */
++    sim_cpu_going_ack(qts);
++
++    /* Simulate CPU: execute cmd, hit ebreak, then re-enter ROM. */
++    sim_cpu_halt_ack(qts, 0);
++
++    /* BUSY should be cleared, no error */
++    acs = dm_read(qts, A_ABSTRACTCS);
++    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, 0);
++    uint32_t cmderr =
++        (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    g_assert_cmpuint(cmderr, ==, 0);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: Abstract command exception path.
++ *
++ * When CPU hits an exception during abstract cmd execution:
++ * 1. ROM exception handler writes to EXCP offset
++ * 2. DM latches CMDERR=EXCEPTION(3) and stays busy until the hart parks again
++ * 3. CPU ebreak → re-enters ROM → writes HARTID (re-halt)
++ */
++static void test_abstract_cmd_exception(void)
++{
++    QTestState *qts = qtest_init("-machine virt");
++    dm_set_active(qts);
++
++    /* Halt hart 0 */
++    dm_write(qts, A_DMCONTROL, DMCONTROL_DMACTIVE | DMCONTROL_HALTREQ);
++    sim_cpu_halt_ack(qts, 0);
++
++    /* Clear CMDERR */
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++
++    /* Issue Access Register command */
++    uint32_t cmd = (0u << 24) | (1u << 17) | (2u << 20) | 0x1000;
++    dm_write(qts, A_COMMAND, cmd);
++
++    g_assert_cmpuint(dm_read(qts, A_ABSTRACTCS) & ABSTRACTCS_BUSY, ==,
++                     ABSTRACTCS_BUSY);
++
++    /* CPU acknowledges going */
++    sim_cpu_going_ack(qts);
++
++    /* CPU hits exception during cmd execution → ROM exception handler */
++    sim_cpu_exception(qts);
++
++    /* BUSY stays set until the hart re-enters the park loop. */
++    uint32_t acs = dm_read(qts, A_ABSTRACTCS);
++    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, ABSTRACTCS_BUSY);
++    uint32_t cmderr =
++        (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    g_assert_cmpuint(cmderr, ==, 3);  /* EXCEPTION */
++
++    /* CPU ebreak in exception handler → re-enters ROM → writes HARTID */
++    sim_cpu_halt_ack(qts, 0);
++
++    acs = dm_read(qts, A_ABSTRACTCS);
++    g_assert_cmpuint(acs & ABSTRACTCS_BUSY, ==, 0);
++
++    /* Hart should still be halted */
++    uint32_t st = dm_read(qts, A_DMSTATUS);
++    g_assert_cmpuint(st & DMSTATUS_ALLHALTED, ==, DMSTATUS_ALLHALTED);
++
++    /* Clear CMDERR for cleanup */
++    dm_write(qts, A_ABSTRACTCS, ABSTRACTCS_CMDERR_MASK);
++    acs = dm_read(qts, A_ABSTRACTCS);
++    cmderr = (acs & ABSTRACTCS_CMDERR_MASK) >> ABSTRACTCS_CMDERR_SHIFT;
++    g_assert_cmpuint(cmderr, ==, 0);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: HAWINDOWSEL and HAWINDOW read/write.
++ */
++static void test_hawindow(void)
++{
++    QTestState *qts = qtest_init("-machine virt");
++    dm_set_active(qts);
++
++    /* Select window 0 */
++    dm_write(qts, A_HAWINDOWSEL, 0);
++    g_assert_cmpuint(dm_read(qts, A_HAWINDOWSEL), ==, 0);
++
++    /* Write a mask to HAWINDOW */
++    dm_write(qts, A_HAWINDOW, 0x5);
++    g_assert_cmpuint(dm_read(qts, A_HAWINDOW), ==, 0x5);
++
++    /* Clear */
++    dm_write(qts, A_HAWINDOW, 0);
++    g_assert_cmpuint(dm_read(qts, A_HAWINDOW), ==, 0);
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: HALTSUM0 window follows hartsel[19:5].
++ */
++static void test_haltsum0_window(void)
++{
++    QTestState *qts = qtest_init("-machine virt -smp 64");
++    dm_set_active(qts);
++
++    /* Mark hart 40 halted. */
++    sim_cpu_halt_ack(qts, 40);
++
++    /* Window base 0: hart 40 is out of range 0..31. */
++    dm_write(qts, A_DMCONTROL,
++             DMCONTROL_DMACTIVE | (0u << DMCONTROL_HARTSELLO_SHIFT));
++    g_assert_cmpuint(dm_read(qts, A_HALTSUM0), ==, 0);
++
++    /* Window base 32: hart 40 maps to bit 8. */
++    dm_write(qts, A_DMCONTROL,
++             DMCONTROL_DMACTIVE | (32u << DMCONTROL_HARTSELLO_SHIFT));
++    g_assert_cmpuint(dm_read(qts, A_HALTSUM0), ==, (1u << 8));
++
++    qtest_quit(qts);
++}
++
++/*
++ * Test: HALTSUM1 window follows hartsel[19:10].
++ */
++static void test_haltsum1_window(void)
++{
++    QTestState *qts = qtest_init("-machine virt -smp 64");
++
++    dm_set_active(qts);
++
++    sim_cpu_halt_ack(qts, 33);
++
++    g_assert_cmpuint(dm_read(qts, A_HALTSUM1), ==, (1u << 1));
++
++    dm_write(qts, A_DMCONTROL,
++             DMCONTROL_DMACTIVE | (1u << DMCONTROL_HARTSELHI_SHIFT));
++    g_assert_cmpuint(dm_read(qts, A_HALTSUM1), ==, 0);
++
++    qtest_quit(qts);
++}
++
++/* TCG-mode tests: real CPU execution. */
++
++/*
++ * Test: Halt CPU with TCG and verify DPC/DCSR.
++ *
++ * With real CPU execution:
++ * 1. Boot CPU, let it run briefly
++ * 2. Send HALTREQ → CPU enters debug mode
++ * 3. Read DCSR via abstract command → verify cause = HALTREQ (3)
++ * 4. Read DPC via abstract command → verify it's a valid address
++ * 5. Resume CPU, then re-halt to verify the cycle works
++ */
++
  /*
   * Test: Halt and resume cycle via ROM simulation.
-@@ -1008,5 +1353,15 @@ int main(int argc, char *argv[])
-     qtest_add_func("/riscv-dm/abstract-cmd-exception",
-                    test_abstract_cmd_exception);
+  *
+@@ -691,7 +996,17 @@ int main(int argc, char *argv[])
+     qtest_add_func("/riscv-dm/optional-regs-absent", test_optional_regs_absent);
+     qtest_add_func("/riscv-dm/deactivate", test_deactivate);
+     qtest_add_func("/riscv-dm/ackhavereset", test_ackhavereset);
++    qtest_add_func("/riscv-dm/abstractauto", test_abstractauto);
++    qtest_add_func("/riscv-dm/command-not-halted", test_command_not_halted);
++    qtest_add_func("/riscv-dm/invalid-regno-exception",
++                   test_invalid_regno_exception);
++    qtest_add_func("/riscv-dm/hawindow", test_hawindow);
++    qtest_add_func("/riscv-dm/haltsum0-window", test_haltsum0_window);
++    qtest_add_func("/riscv-dm/haltsum1-window", test_haltsum1_window);
+     qtest_add_func("/riscv-dm/halt-resume", test_halt_resume);
++    qtest_add_func("/riscv-dm/abstract-cmd-flow", test_abstract_cmd_flow);
++    qtest_add_func("/riscv-dm/abstract-cmd-exception",
++                   test_abstract_cmd_exception);
  
-+    /* TCG-mode tests: real CPU execution */
-+    qtest_add_func("/riscv-dm/tcg/halt-dpc", test_tcg_halt_dpc);
-+    qtest_add_func("/riscv-dm/tcg/resethaltreq-priority",
-+                   test_tcg_resethaltreq_priority);
-+    qtest_add_func("/riscv-dm/tcg/gpr-rw", test_tcg_gpr_rw);
-+    qtest_add_func("/riscv-dm/tcg/fpr-rw", test_tcg_fpr_rw);
-+    qtest_add_func("/riscv-dm/rv32-gpr64-notsup", test_rv32_gpr64_notsup);
-+    qtest_add_func("/riscv-dm/tcg/command-ignored-on-cmderr",
-+                   test_tcg_command_ignored_on_cmderr);
-+
      return g_test_run();
  }
 -- 
