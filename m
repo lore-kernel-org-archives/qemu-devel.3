@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FD02EA8543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 21:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B30DEA8543
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 21:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzLep-0007tb-3j; Sun, 08 Mar 2026 17:27:27 -0400
+	id 1vzLzE-0003xn-MY; Sun, 08 Mar 2026 17:48:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzLen-0007tE-VS
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:27:25 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzLzD-0003xa-NV
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:48:31 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vzLem-0001p8-FV
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:27:25 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso110956865e9.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 14:27:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzLzC-0005Al-6g
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 17:48:31 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439b7a87fb5so4715429f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 14:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773005243; x=1773610043; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iRlgP8G6B3LdQQh2fMfV60imkb6aMf4xZzOp/olhoLw=;
- b=VXveDkjIPiAnY5NIlHJ9g5TxU1XL7B2D2wuUF1cr6S80vnw2fGS5WEN72qcKvJgx/Q
- a7jwXITYApizyh3AwuS3W31N51rorXc8FHiP8OQImW42UW7F1VnlrG8rWlYZwZe2GX4C
- JQlF/fdyfn5u5WoapyBmxvwXcBXfgTGdFqplf4MT3hlv0/Bq7Kmdx/659ddHj9qrPaSs
- bWyM/4b7EkRPqezEClMGN1sVubKb6NeCD3ryALG2RSALZqNZG9NK2nhtJTPg/4WVX2rF
- aIfFXdHjFRQoNwaNQeDiY8FBG6eWSuSvnmf5HfJPLzHxzsONzRUVGr+DDaq3ZbbL8m8Y
- n1YQ==
+ d=linaro.org; s=google; t=1773006507; x=1773611307; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fjk/mQZ4n3hfs6TZmoOSutIVx1zwKoXAU5Yjrs3WmQg=;
+ b=Qwa6MAhJIkE8Ky4F+ZlgiYescCx6NLe37C6lMnPCuCvBGi611JXX7T49csxy/BM3/B
+ v15ZmWfx+erDugJQ/T1u5ehtuggCdUyclqKdoPvu9aVdDOKrDXf8Htsgd1sOAdesDeLt
+ bcSe38+iEqedEQIIfM5ivTiZoFrG5w3DxFiImwLgyJmeUq3/haSSJMuDy8bA5GguBHop
+ kANPQ4pytWQ5YJiGHg5Xy+lKKlBzRPZoF3DTBiQ+NoYkZDUZsUzEkm0nCshOPcIQ13y9
+ 05CrJuXkz8jj2BA7Ij2+/ypS4xOR0ZxW1kPMjXuj7LCiJE7fg+f39BquMGyDmO7qf8qy
+ Mawg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773005243; x=1773610043;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iRlgP8G6B3LdQQh2fMfV60imkb6aMf4xZzOp/olhoLw=;
- b=pJxPdS6rnpspKL6C9LWZqvtpaEZOiDn2eqTAriyj2lIp0IjMyVH+i0QKCCJwlEOYLe
- JQONTolVJFt/JROIw+7fxfdrUqfcrkaHy3buS9IYB9UP4Ovqh8zH+tHqzQWZ0bdOl7Uc
- pNsB9FFfVeS/KDBLdf2J46thJQUOXo4IdT+gu5nP9QZlSKL9JB7RslAPIPi5/XCvS2pm
- eIRV2YBYeF2l991C2UvzyZLoovXDDQVzWNvLTFHa62hxnEV88c6cKvTRph4suqnWl4r3
- KxIzury5cchpIGOiUyww12h2GQf+QJLPRMGnOH0jA/CuPZFtvzU1si0QXK2qBQQGRQOC
- d2Vg==
-X-Gm-Message-State: AOJu0YzISQy0T7k4lcsZ4bh2mjmqhEMWW3oetsfX4InIO9Hu3aY011MB
- gagM3xvikQ22Rrlj3X7DHy6JI9h5Efd4aThGPuTsHKcG3ZAzZ/chIFCbjs7auQ==
-X-Gm-Gg: ATEYQzwGR5TtprmkvSjE6sZTjh71kJYD3+0uOckR8ycoSQNh7uchZUniekhVZ0xdVd9
- sE2VvDkhA2n92YRh7v3svjGwUcq6/5zveJ04BZXIuagkX0QLBRrBKhO3I2sNsZKeg8Nd1sqYOIj
- p/mWqfQtnURJf27j4/kRsdrRGxgXZKkqf94o9RpoCSVwiJal87HciEDf/QBqPoAh0Rf6Yx5xcZS
- LUFG8ndWCaO291tfwkKFx2z7b2Dry3IuC9Ew8DvvP8bsTGKN6eFfqWFmO8dvJy2C6p0MTmOKWCW
- gREJ7FJLVnGLQ7HJx6lUr0p9imWdj2oYVq1siKN3alpBckbyk9eeDtIcHDVjd2woarZYtmQ+hXi
- qgtmF2tv8VfSlnp9ruje5PKpNAtHHuGWA46Qo6AQusTFbMpfsCpbE4TqV1YfLPaPLaTFGRvOn2P
- 8/BYWibGHmng5qlcWDUfM1be3dzr8D8AsQ8qx8PqausmQ2cbz3vSFLajcgxOJ5Zrq5Q6VOgr67y
- QCbA1anJ2d5HFFIKsXflg==
-X-Received: by 2002:a05:600c:350a:b0:485:3cef:d6ea with SMTP id
- 5b1f17b1804b1-4853cefd8famr3345355e9.13.1773005242737; 
- Sun, 08 Mar 2026 14:27:22 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (dynamic-089-012-148-039.89.12.pool.telefonica.de. [89.12.148.39])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853a4be19esm51531785e9.2.2026.03.08.14.27.21
+ d=1e100.net; s=20230601; t=1773006507; x=1773611307;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fjk/mQZ4n3hfs6TZmoOSutIVx1zwKoXAU5Yjrs3WmQg=;
+ b=kkhp8CCR3owxCdcagI+rC5H/FO+kjpkOJ2j4rgBwWKCKjjfN3Z/NdpdBF4nQVfPXNR
+ sKUdRLfrkE9nmErJWtzd034qUxJTMSMUcGvomTKCri49LTCp7Bdso2S9kQrfya71WWh6
+ AdPq6dzdW2MYn+2oNCkz1xxWw1g1xUBARgMEzN/PXxTdFaftJDPPpXaQ8jbSrAGImXDx
+ gFFLgtArIbwZdJ52y1F+ZH+kJ8oXKFXEiJv43d1z/ZUC71BnOdPoO3JX2mskfSwW8HOz
+ a3uH9C7aI60Z3gY4dWUck1NCDyOIHahREKD6UBG1s48HK5b2uBHYo9jQHkQcKWRAUvHS
+ 0mlQ==
+X-Gm-Message-State: AOJu0Yz2U2JntN9tt0PjXOySfkzLCv114a5Fn6AZBXDj4tSjbtpOTL9z
+ gXqWZk+/bZwrMF/cXRUgDOcykKVJ2MRYTJen1QL1JsQbJmOrZfG8EJxvxfFMrmoH9ua8Cp/B7kz
+ 4NjkAtQo=
+X-Gm-Gg: ATEYQzyutOtYdpAWbah2RmJrm/RIdMi+J4uDXNIv2/x9LyHXFj6aXavGbGuvW/zcPXN
+ 8iGP22x68+Iuk1WbW2LBUEA+wemtNerKSBdsheqhEQO+5W+Go/am6D4MtyyMkXTrT4zUW/NhUH4
+ A3cKjgL9stVk7EIcKMc3T1iAeEgfLqEIZZA4BRzkbvB+AnJkYOB9AhISyD1k3JyiwDZ02I5q1b8
+ yjPRgx9zQCSkusYB2ER/Ihnp9S9uzAYZY5GMWpBULG6ePWmPM91HMI7DVOAK84xv0sFkMNrtmQL
+ WoksH+jrLHbkqRrPJpjD3Egj28UvjHBSOuBnP6kBUDXu/Mv21+WtRgjbYJiwd98ThNItUNIVVga
+ xMWbFOeS4ALmh+aAxaS6PAdRY1Lx4AP1qfO7S1Kayeel3LSvKKT/S1QzA0lfNA/E6kKHykOIyfP
+ PSDgYxOeMe9VyxLGuPOQ9nHxnTyt41hYK0CFj45zHTNSFjJNhOR7iTcllNYENzOm4MnnuV16ypr
+ rFy
+X-Received: by 2002:a05:600c:1e2a:b0:480:69b6:dfed with SMTP id
+ 5b1f17b1804b1-4852695d16fmr153648425e9.24.1773006507187; 
+ Sun, 08 Mar 2026 14:48:27 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4853a4df13bsm50381085e9.4.2026.03.08.14.48.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Mar 2026 14:27:22 -0700 (PDT)
-Date: Sun, 08 Mar 2026 21:27:21 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-CC: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
- qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 0/5] Trivial cleanup
-In-Reply-To: <20260308203516.160103-1-shentey@gmail.com>
-References: <20260308203516.160103-1-shentey@gmail.com>
-Message-ID: <7DEA8279-1250-4627-8CAC-80714A4590FD@gmail.com>
+ Sun, 08 Mar 2026 14:48:25 -0700 (PDT)
+Message-ID: <3a435642-2e9d-421a-80e5-1b5b02f1cc1b@linaro.org>
+Date: Sun, 8 Mar 2026 22:48:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x329.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] hw/i386/pc: Remove deprecated 3.0 machines
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+References: <20260307150042.78030-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260307150042.78030-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,51 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 7/3/26 16:00, Philippe Mathieu-Daudé wrote:
 
+> Philippe Mathieu-Daudé (4):
+>    hw/i386/pc: Remove deprecated pc-q35-3.0 and pc-i440fx-3.0 machines
+>    hw/i386/pc: Remove pc_compat_3_0[] array
+>    target/i386/kvm: Remove X86CPU::hyperv_synic_kvm_only field
+>    hw/core/machine: Remove the hw_compat_3_0[] array
 
-Am 8=2E M=C3=A4rz 2026 20:35:11 UTC schrieb Bernhard Beschow <shentey@gmai=
-l=2Ecom>:
-
-+Markus
-
->This series contains some low-hanging fruit fixes I came up with when
->investigating Rust for QEMU, especially QOM object lifecycle vs=2E the Dr=
-op trait=2E
->
->I noticed that no finalize methods were called in Rust sysbus devices whe=
-n QEMU
->quits, and neither are its C variants=2E What is probably missing in the =
-first
->place is a
->
->  object_unref(object_get_root());
->
->at the end of qemu_cleanup() in runstate=2Ec (see TODO there)=2E Adding i=
-t before
->this series won't clean up machines since their refcount won't reach zero=
-=2E With
->this series applied this additional line will cause various issues when q=
-uitting
->QEMU, allowing the problem to be investigated=2E Fixing it is beyond the =
-scope of
->this series (and my time budget)=2E
->
->Testing done:
->* `make check`
->* Run imx8mp-evk with a Buildroot image
->
->Bernhard Beschow (5):
->  hw/arm/fsl-imx8mp: Do not create redundant unimplemented devices
->  hw/arm/fsl-imx8mp: Fix parent of ocram memory region
->  hw/arm/imx8mp-evk: Fix reference count of SoC object
->  system/vl: Fix reference count of machine object
->  Revert "sysbus: add irq_routing_notifier"
->
-> include/hw/core/sysbus=2Eh | 1 -
-> hw/arm/fsl-imx8mp=2Ec      | 3 ++-
-> hw/arm/imx8mp-evk=2Ec      | 4 ++--
-> hw/core/sysbus=2Ec         | 6 ------
-> system/vl=2Ec              | 1 +
-> 5 files changed, 5 insertions(+), 10 deletions(-)
->
+Queued via hw-misc, thanks.
 
