@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1C85EA8543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51735EA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMiS-00080X-0W; Sun, 08 Mar 2026 18:35:16 -0400
+	id 1vzMim-0000iD-Ov; Sun, 08 Mar 2026 18:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMiQ-0007yi-2G
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:35:14 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMik-0000Vr-AJ
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:35:34 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMiO-0003GO-IC
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:35:13 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-480706554beso122859705e9.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:35:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMii-0003HR-Ll
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:35:34 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-439b94a19fdso6875169f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009310; x=1773614110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009330; x=1773614130; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OzEr0Nd2AyO6RB9wHjs1m98fsLiXBTjIk06FoEIBMxQ=;
- b=DqM20ATmLG8midKcuwcipAKfjKpnrYjpf++MXbI4En91I89tftjR/kraafOetkEFb8
- 8GXsZnfJQY3ZlsfmhRSowJWgU5JOH3Sj73BWx9Yj7ttY3FqUKBy6Mh4LRAB6+5l0HMNU
- N7HbEXxxoH/DdrSed6+D6rvdmROLMv96BM9Ws3mLSNNdxxyeFSl9qYPhn0Nda1v7BNGt
- futf3iSR2SdZjQxBA9e1bpm1R7C1omjZX+4oEh1XjzvKWVIfhhSLrdhHgsaV7D22Fp1h
- OodgFjVrqtFrfzlaaPgYt0wWt/qNCf8rU7QAws55tWJ41tjNN7tJzA/nVj2NCnKyxk5J
- I4bw==
+ :reply-to; bh=XM9jeNcCgTiWmoXI2IRnHd+zaADJdT6x62UupLcOabs=;
+ b=d9VL+W/UZhbJanCqsseEFP9CGgXDK/G5SJiNpW0ynxr+94SMlv4raFz72rz5Q+8z86
+ kjE0Vz7ktTQiQx3cPpVTbLRhyvKaVdGqNEMhmBp8m+YtCDcv5C+dSkznvDrw/1YUAZxk
+ 1JoaVO4Veml08ZnsdUZpZOiGpuqq2FhbCELJhVze7OT5HO/VNn1lCXwU8cJBsQzy8k24
+ gHpZ6/irOT93DJP4a7qt0E2TZh1zSe/ghn3SpS4c/FGlsAYUGy6/8tdnGfuy2j1h7TB0
+ z5U6C4Js8WYYVQqUbGb13h68NZQvkRlXEU/gNx95TuySbZsb1GMzTfBhAk56SoTdnEZR
+ vVOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009310; x=1773614110;
+ d=1e100.net; s=20230601; t=1773009330; x=1773614130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=OzEr0Nd2AyO6RB9wHjs1m98fsLiXBTjIk06FoEIBMxQ=;
- b=S0htbsDpulMWeeljGyuQ9UDmf/Fjt0fVRFZIujpTs6wuqGlwyl9p3SLed+jXvtvMKR
- W/Xj3pfdEN6onOy3yDLUi29SK92YxqGwIV/cDwov3FE1RDB2DF7btHjbyzTaeN0BTLZK
- 4oheY4FqT0kr+X81oFH9asHJfs0H45/aJK6lQOJO7i4uN3wZpkFSUiEdWUoEZeUzOqaH
- 3w0QFnD4KtTd61gc5ieWTEmjoE5CKlxJwVjDRvCI0oxySE/Emck9w+g9lLCj0JSpxqht
- 60/FLSyN1nxu9MoBvqWgQm/hH2hK1dOVd6vjYl8hJpw+K6dyfwG9hbSRzquqYd7cdAqF
- mLmg==
-X-Gm-Message-State: AOJu0YzoQ8OkXObIpgC3Ir27JrerhQXvebNRt2UE+oSiiyPD4Mn0XTcf
- VKwwKmEqurgCi8bNG8x4R+Llbm8z5QaUwCZzq299ierxqoIKuGUlpXwLCeOXaw0YQ3wPmUD2tnw
- OjXJEa3g=
-X-Gm-Gg: ATEYQzzCX+ak/DDWOnDBsSDVcbok8nnCCMXSIA59Vb5CWklkoKFakA9kZJ/VeeguvFO
- 6p7E1wI0WjCt+zTWNSWsAcg5dONXNa0V2qfq9DccKdvVJHjrsDnfa8SUCSo+O8MjLue7l/IkVvZ
- b6ckNvJHof2EwDwBC4Gei3Jtz9rmdHw/nzuxwQr5KGyVbSdIBPUz9jG8Hf+/isn9AiTcqGyEYWX
- RSSPvU2FQh/scqztc+XuOVGvTD5S/iV8vHghePUNzKHXFCk6mXrIZHqmP0qUlXainHS1UWvXkBJ
- lik1HfbE/zlnuw2KNxH4Il0g6mEniBv9P86bSloZinS+PmlvwvtWpTG9pivP07szINuSBrgjaOU
- elepJhnt0lChS9K18eOR5P4hQ6gtETtmBzSOwALajndaoE/xwMmI8vvVMQ9HDS/Gdmll4H8nXUX
- gF4rqvGCcjveshA7B4mrhg3An3Mt958aezsvW60V9pj0dEREOlv2cr8HNFxbkl/0K7rCak0s2ZS
- GiJwQ==
-X-Received: by 2002:a05:600c:3b8e:b0:485:35a4:939c with SMTP id
- 5b1f17b1804b1-48535a4a188mr61363785e9.29.1773009310524; 
- Sun, 08 Mar 2026 15:35:10 -0700 (PDT)
+ bh=XM9jeNcCgTiWmoXI2IRnHd+zaADJdT6x62UupLcOabs=;
+ b=igni1m/TDkQOET3jTsC7CDwwMkbsbCvdZOF6KXZH8l4QuKlNcpbBKGZw+44YuVMxlq
+ KlivyZG9lwL9IqBBw5HYyTpNnopm22IwFcxZyWLyOj/jLxBH9gvVUFre7LyDycvE5jD0
+ zpDznGQb1xTqnlbkc3aWf7B9GN+XxGb/emPNKNLfSgm94kMuOxww/c0crQxflai9dPF8
+ wW55hZHuHjWRnJNec418kYMfpPef+R1bJOn12PztEKaHqvUF7xK/edXeDTXULwKDcegz
+ qA7jnzhZwcYhZlUE3grbq8TvGmpAougdr7CPJWVfzBRwTBtA/WuH+kb8mdRCFIwcnjWk
+ QXww==
+X-Gm-Message-State: AOJu0YyoYOMgcmGBYLBHfVcTPyCqTPdG8L0PiK3f+On+lpGDZk0hqivN
+ GU6jcEwFDqTfhoCcGheTox2oVVQhXs50HYNlPg8stf5ylJeNDJ2PHINadMlqYEa6RHE48VPSO0v
+ Bl+9uyJM=
+X-Gm-Gg: ATEYQzyAP+yhCiGT5+CKimb//zv/FFmpm+UmZvZXv6fult3w+abfoSf7WhGwrPxGd2O
+ PMusoNQXRzMCLmHUXMivJi/pEVxufLTs3zqLo7yhf+P1+QfPHkuzNJKrvwhB5WiAbAeC7gcK84k
+ 6pQiJIlNM7kIMLFRgCqMfvnzwvLeKooxD13B8NTAoiMQbTd/YiX2me1gaBlZPUXpHjZ1FOEh5zC
+ IGJgg1GP9qDEQMvQTGrRicuY93eaAQdiQ7ZDJob0wz4FnbwZrt8PYSHIJ/a/lrV1Nxv5CpcRcVn
+ jyE2cqZE+2NbkzwOGUM5kc78/9cDjKfJat0Fhv2lF01588q856hFgZoA4gwk10TZvRtzIqq0B+I
+ OiFtv+X4jvFxdv3NqlJV44VIgDTRLDvkFzBxKYvQkTBywj7pDrJAOoYGqE2WzM/eu2jR6/1bSJu
+ 7cL/hv83Mv81Xb8xD26YxFyvaAv0gmqOlSPGbmFkHq4TsrSeI/Qze3myW+0w6kPlQyCNL1v3ziO
+ HuVQg==
+X-Received: by 2002:a05:6000:2388:b0:439:c1f4:302a with SMTP id
+ ffacd0b85a97d-439da6543efmr16297624f8f.11.1773009330183; 
+ Sun, 08 Mar 2026 15:35:30 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad1cb7csm21405961f8f.0.2026.03.08.15.35.09
+ ffacd0b85a97d-439dae49177sm21015655f8f.35.2026.03.08.15.35.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:35:10 -0700 (PDT)
+ Sun, 08 Mar 2026 15:35:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/49] meson: Include various directories providing stubs
- before libqemuutil
-Date: Sun,  8 Mar 2026 23:33:49 +0100
-Message-ID: <20260308223433.25503-6-philmd@linaro.org>
+Subject: [PULL 08/49] hw/acpi: Always link QOM interfaces with system binaries
+Date: Sun,  8 Mar 2026 23:33:52 +0100
+Message-ID: <20260308223433.25503-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,63 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stubs are provided by libqemuutil. We want to use the generic meson
-machinery to provide stubs once, instead of per sub-directories. Move
-the 'subdir' calls earlier so when these directories are processed
-they can add units to the global stub_ss[] source set.
+Now that acpi_interface.c only contains QOM interfaces,
+unconditionally link it with system binaries, regardless
+of whether CONFIG_ACPI is set or not. It is now easier to
+deselect hardware models depending on ACPI.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260225035739.42848-2-philmd@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20260225035739.42848-5-philmd@linaro.org>
 ---
- meson.build | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ hw/acpi/meson.build | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 0029c970b08..102f0cbb13e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3754,6 +3754,14 @@ subdir('authz')
- subdir('crypto')
- subdir('ui')
- subdir('gdbstub')
-+subdir('semihosting')
-+subdir('audio')
-+subdir('io')
-+subdir('chardev')
-+subdir('fsdev')
-+subdir('dump')
-+subdir('accel')
-+
- if have_system
-   subdir('hw')
- else
-@@ -3799,12 +3807,6 @@ if have_system or have_user
-   subdir('target')
- endif
- 
--subdir('audio')
--subdir('io')
--subdir('chardev')
--subdir('fsdev')
--subdir('dump')
--
- if have_block
-   block_ss.add(files(
-     'block.c',
-@@ -3874,11 +3876,9 @@ subdir('migration')
- subdir('monitor')
- subdir('net')
- subdir('replay')
--subdir('semihosting')
- subdir('stats')
- subdir('tcg')
- subdir('fpu')
--subdir('accel')
- subdir('plugins')
- subdir('ebpf')
- 
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index 66c978aae83..e1e848327b9 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -1,6 +1,5 @@
+ acpi_ss = ss.source_set()
+ acpi_ss.add(files(
+-  'acpi_interface.c',
+   'aml-build.c',
+   'bios-linker-loader.c',
+   'core.c',
+@@ -36,4 +35,4 @@ system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c
+ system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
+ system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
+ system_ss.add(when: 'CONFIG_GHES_CPER', if_false: files('ghes_cper_stub.c'))
+-system_ss.add(files('acpi-qmp-cmds.c'))
++system_ss.add(files('acpi-qmp-cmds.c', 'acpi_interface.c'))
 -- 
 2.53.0
 
