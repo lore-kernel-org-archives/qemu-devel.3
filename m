@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5EDEA8549
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCEEEA8549
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 23:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzNF9-0008IY-RK; Sun, 08 Mar 2026 19:09:03 -0400
+	id 1vzNGf-0000OU-LD; Sun, 08 Mar 2026 19:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNF8-0008I9-4n
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:09:02 -0400
+ id 1vzNGZ-0000Mv-GR
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:10:31 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNF6-0008A6-DR
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:09:01 -0400
+ id 1vzNGV-0008O5-Gn
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 19:10:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=AqeSfDh5QlhdWUEYShzCdR52V/Dc0oQIKl4CE34MReQ=; b=0ywHZ8P6I+c65aF+I0seTxbIAf
- 3S21d0cyEFmPCLMQ/Gj7NQtN0u/fg7aknEDTvltbByXpT64OqqRzgkI2q3FILByI7Sfr7AQBS/bUH
- nepcbDw6ctCFsI0QDvUhQZXOKrDp8+LDosfrN0b/vCF3O6laMraVm6bQT4eWd0LKkqMbmW7SZCcvc
- bQ9UBxgJj0Srv4ScK8UDIewGVQfWDX3PW53D60zjxJO73rBCO4pnS/ndtWvUGIA0UJoAFmcVIV8V1
- KDakeR46lP2/3FsGcB9DWDED1/SsYAeN062GMjo+eUFeiKx9uTLf3ntFBWOFiXWcd1SwFtjssQN1L
- tdJwwoWZGLlATxD1CCPOlnQCYXLW+EGAyxM5MGEQzyKwztVHL2UX2/2LcRQJRQudw6y/NGSScFpj3
- MBygZcpgOsAzMaTRwBjs+Z2wFmRtrfwAmaJz/NJJjsDE5aYevu3OXnPsdr7uzeZaavDnvlVGniKOw
- r3ZHBr5xi104tjsZumn84V7W747uOMihTJwok3Np/TOe2fJu1mmhtv6OyG2hKHxKQ0Asn5FQnE614
- zpDYgSgWMLdZAdGzyEud6HOorQiwRFidVJKd+4EFgX9lgWdzddJh29XI0lZIN2Y/yCuRE3w/AMScb
- AM4Xud4TLxsaqlEO0/d8Nz6yWPCIt2P7L0Vh23AY0=;
+ bh=sXbhxsVI3zWGvGfTHn/bIPgdJnkCYT30kW/kZ8+nk6Q=; b=aJr/M7szoYobcNqM48eCHQ51Sd
+ bw6Ti0KhwpjAJ4KdEbtbgeZUSqo89CJeGnFHElgEZwU+Bbim0iijvQ0C0yPzif8P3LMHezOx5zw9T
+ vwlcFHuCS/6yOWwmCv3Ibn1E4j8nnD0JmawSy/Gb2vAeQ9owBWSW5XgoGJDkrfh/obNxdPre8ZVPw
+ YHGaGKdlaqKBCvzU5E5HAICoDcKQmdxjId6cvCat66s1dghfb3iyJBGmlm7GGPgp//WxBzNxSD51p
+ Xp7L6yJNwHCyV+ORznIY41lZSCX6Efz2on0kQvsr3JyQVD/qsPnRD8ny/MzU2GL2ZkgmjFIQ9dJuO
+ qxs7tz/kscZZ+PX8XptOoeQyLzSMr+iRnFdQ/eYhL8EWajOT/bokuZ9sAZ9xJN9lPRuqC/09kYxzP
+ sSRMqxt5mAgTsUhvtSRRqSomhKeh6N/oEWDZ+jqEA1TRFzDxG176tkREb1owTg8chE6K/14136C9Y
+ vZsjnHqBsAePAInM+WA4DP8fN+d4nszyyZ8Q6HqtmNQJdzwxoDS9nuaI83YrVEXcoCbNhBDmx8ohV
+ 9w4AqJPnCrSJcQNAfWc3dHOTo9sLRG6O8KkFn4APUZ35/1Kb7prB5EY0yvRVehW0YHqE+CubWGLVp
+ sDu8GDUQSJWYDxf4O6+O/yyTvmFscBhTWFMLcnbOc=;
 Received: from [2a02:8012:2f01:0:853d:6c6b:2689:bc0e]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vzNC9-0004m9-Or; Sun, 08 Mar 2026 23:06:01 +0000
-Message-ID: <28970d39-7284-4ed8-a942-34d7c930681a@ilande.co.uk>
-Date: Sun, 8 Mar 2026 23:08:55 +0000
+ id 1vzNDc-0004n5-6L; Sun, 08 Mar 2026 23:07:28 +0000
+Message-ID: <3df9a747-2c55-4442-ad84-9c3a03bb061a@ilande.co.uk>
+Date: Sun, 8 Mar 2026 23:10:25 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20260307112931.3322532-1-peter.maydell@linaro.org>
- <20260307112931.3322532-3-peter.maydell@linaro.org>
+ <20260307112931.3322532-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -73,13 +73,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260307112931.3322532-3-peter.maydell@linaro.org>
+In-Reply-To: <20260307112931.3322532-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:853d:6c6b:2689:bc0e
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/3] hw/sparc/sun4m: Use qdev GPIOs rather than
- qemu_allocate_irqs()
+Subject: Re: [PATCH 3/3] hw/timer/slavio_timer: Free resources allocated in
+ instance_init
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -107,120 +107,105 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 11:29, Peter Maydell wrote:
 
-> In the sun4m machine creation code, we currently use qemu_allocate_irqs()
-> to set up the IRQ lines that act as the inbound IRQ lines to the CPUs.
-> This results in a memory leak:
+> The slavio_timer device's instance_init function allocates memory for
+> TimerContext structs and a ptimer, but it never frees this memory, so
+> we will leak it if the QMP interface does introspection of this
+> device type, as reported by the clang address sanitizer:
 > 
-> Direct leak of 128 byte(s) in 1 object(s) allocated from:
->      #0 0x5a23c1281ec3 in malloc (/home/pm215/qemu/build/sparc-san/qemu-system-sparc+0xdf1ec3) (BuildId: e6aa10be01feb5524656dd083997bc82b85e3e93)
->      #1 0x79e8f78f0ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->      #2 0x5a23c1a94e54 in qemu_extend_irqs /home/pm215/qemu/build/sparc-san/../../hw/core/irq.c:77:51
->      #3 0x5a23c1a39e03 in cpu_devinit /home/pm215/qemu/build/sparc-san/../../hw/sparc/sun4m.c:802:17
->      #4 0x5a23c1a39e03 in sun4m_hw_init /home/pm215/qemu/build/sparc-san/../../hw/sparc/sun4m.c:838:9
+> Indirect leak of 4896 byte(s) in 17 object(s) allocated from:
+>      #0 0x5f2948d9b14d in calloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0c14d) (BuildId: 7210711bdf6f7fbd0b863bd2dfcc7c42c7175db1)
+>      #1 0x758584b11771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x5f2949097b8a in slavio_timer_init /home/pm215/qemu/build/san/../../hw/timer/slavio_timer.c:403:14
+>      #3 0x5f29495d790f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+>      #4 0x5f29495d96ef in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+>      #5 0x5f2949a30a26 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
 > 
-> The leak is unimportant as it is a "once at startup" leak, but
-> fixing it helps in getting a clean leak-sanitizer test run.
+> Indirect leak of 1632 byte(s) in 17 object(s) allocated from:
+>      #0 0x5f2948d9b14d in calloc (/home/pm215/qemu/build/san/qemu-system-sparc+0xe0c14d) (BuildId: 7210711bdf6f7fbd0b863bd2dfcc7c42c7175db1)
+>      #1 0x758584b11771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>      #2 0x5f2948f7c65a in ptimer_init /home/pm215/qemu/build/san/../../hw/core/ptimer.c:464:9
+>      #3 0x5f2949097c1f in slavio_timer_init /home/pm215/qemu/build/san/../../hw/timer/slavio_timer.c:407:32
+>      #4 0x5f29495d790f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+>      #5 0x5f29495d96ef in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+>      #6 0x5f2949a30a26 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
 > 
-> Switch the sun4m code to handle CPU interrupt lines in the same way
-> as the leon3 machine does: the machine init code uses
-> qdev_init_gpio_in to create GPIO lines on the CPU objects.  This is a
-> little bit odd as ideally the CPU would do that itself, but for these
-> 32-bit SPARC machines the machine and the CPU are very closely
-> coupled already (the functions handling the IRQ lines modify data
-> fields inside the CPU).
+> Avoid the TimerContext leaks by making them an array inside the
+> SLAVIO_TimerState struct instead of allocating a compile-time-fixed
+> number of them each individually with g_new0() and then throwing away
+> the pointer.
+> 
+> Avoid the ptimer() leak by calling ptimer_free in
+> instance_finalize().
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/sparc/sun4m.c | 23 ++++++++++++++---------
->   1 file changed, 14 insertions(+), 9 deletions(-)
+>   hw/timer/slavio_timer.c | 25 ++++++++++++++++++-------
+>   1 file changed, 18 insertions(+), 7 deletions(-)
 > 
-> diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-> index 29bc26ebcb..b9f8236be5 100644
-> --- a/hw/sparc/sun4m.c
-> +++ b/hw/sparc/sun4m.c
-> @@ -341,7 +341,7 @@ static void *sparc32_dma_init(hwaddr dma_base,
->   static DeviceState *slavio_intctl_init(hwaddr addr,
->                                          hwaddr addrg,
->                                          unsigned int smp_cpus,
-> -                                       qemu_irq **parent_irq)
-> +                                       DeviceState **cpus)
->   {
->       DeviceState *dev;
->       SysBusDevice *s;
-> @@ -354,7 +354,8 @@ static DeviceState *slavio_intctl_init(hwaddr addr,
+> diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
+> index 4a3e227fba..eccdc532fb 100644
+> --- a/hw/timer/slavio_timer.c
+> +++ b/hw/timer/slavio_timer.c
+> @@ -62,20 +62,21 @@ typedef struct CPUTimerState {
+>   #define TYPE_SLAVIO_TIMER "slavio_timer"
+>   OBJECT_DECLARE_SIMPLE_TYPE(SLAVIO_TIMERState, SLAVIO_TIMER)
 >   
->       for (i = 0; i < smp_cpus; i++) {
->           for (j = 0; j < MAX_PILS; j++) {
-> -            sysbus_connect_irq(s, i * MAX_PILS + j, parent_irq[i][j]);
-> +            sysbus_connect_irq(s, i * MAX_PILS + j,
-> +                               qdev_get_gpio_in_named(cpus[i], "pil", j));
->           }
->       }
->       sysbus_mmio_map(s, 0, addrg);
-> @@ -785,22 +786,25 @@ static const TypeInfo ram_info = {
->       .class_init    = ram_class_init,
+> +typedef struct TimerContext {
+> +    MemoryRegion iomem;
+> +    SLAVIO_TIMERState *s;
+> +    unsigned int timer_index; /* 0 for system, 1 ... MAX_CPUS for CPU timers */
+> +} TimerContext;
+> +
+>   struct SLAVIO_TIMERState {
+>       SysBusDevice parent_obj;
+>   
+>       uint32_t num_cpus;
+>       uint32_t cputimer_mode;
+>       CPUTimerState cputimer[MAX_CPUS + 1];
+> +    TimerContext timer_context[MAX_CPUS + 1];
 >   };
 >   
-> -static void cpu_devinit(const char *cpu_type, unsigned int id,
-> -                        uint64_t prom_addr, qemu_irq **cpu_irqs)
-> +static DeviceState *cpu_devinit(const char *cpu_type, unsigned int id,
-> +                                uint64_t prom_addr)
->   {
->       SPARCCPU *cpu;
->       CPUSPARCState *env;
-> +    DeviceState *cpudev;
+> -typedef struct TimerContext {
+> -    MemoryRegion iomem;
+> -    SLAVIO_TIMERState *s;
+> -    unsigned int timer_index; /* 0 for system, 1 ... MAX_CPUS for CPU timers */
+> -} TimerContext;
+> -
+>   #define SYS_TIMER_SIZE 0x14
+>   #define CPU_TIMER_SIZE 0x10
 >   
->       cpu = SPARC_CPU(object_new(cpu_type));
->       env = &cpu->env;
-> +    cpudev = DEVICE(cpu);
+> @@ -400,7 +401,7 @@ static void slavio_timer_init(Object *obj)
+>           uint64_t size;
+>           char timer_name[20];
 >   
->       qemu_register_reset(sun4m_cpu_reset, cpu);
->       object_property_set_bool(OBJECT(cpu), "start-powered-off", id != 0,
->                                &error_abort);
-> -    qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal);
-> +    qdev_init_gpio_in_named(cpudev, cpu_set_irq, "pil", MAX_PILS);
-> +    qdev_realize_and_unref(cpudev, NULL, &error_fatal);
->       cpu_sparc_set_id(env, id);
-> -    *cpu_irqs = qemu_allocate_irqs(cpu_set_irq, cpu, MAX_PILS);
->       env->prom_addr = prom_addr;
-> +    return cpudev;
+> -        tc = g_new0(TimerContext, 1);
+> +        tc = &s->timer_context[i];
+>           tc->s = s;
+>           tc->timer_index = i;
+>   
+> @@ -420,6 +421,15 @@ static void slavio_timer_init(Object *obj)
+>       }
 >   }
 >   
->   static void dummy_fdc_tc(void *opaque, int irq, int level)
-> @@ -813,13 +817,14 @@ static void sun4m_hw_init(MachineState *machine)
->       DeviceState *slavio_intctl;
->       unsigned int i;
->       Nvram *nvram;
-> -    qemu_irq *cpu_irqs[MAX_CPUS], slavio_irq[32], slavio_cpu_irq[MAX_CPUS];
-> +    qemu_irq slavio_irq[32], slavio_cpu_irq[MAX_CPUS];
->       qemu_irq fdc_tc;
->       unsigned long kernel_size;
->       uint32_t initrd_size;
->       DriveInfo *fd[MAX_FD];
->       FWCfgState *fw_cfg;
->       DeviceState *dev, *ms_kb_orgate, *serial_orgate;
-> +    DeviceState *cpus[MAX_CPUS];
->       SysBusDevice *s;
->       unsigned int smp_cpus = machine->smp.cpus;
->       unsigned int max_cpus = machine->smp.max_cpus;
-> @@ -835,7 +840,7 @@ static void sun4m_hw_init(MachineState *machine)
->   
->       /* init CPUs */
->       for(i = 0; i < smp_cpus; i++) {
-> -        cpu_devinit(machine->cpu_type, i, hwdef->slavio_base, &cpu_irqs[i]);
-> +        cpus[i] = cpu_devinit(machine->cpu_type, i, hwdef->slavio_base);
->       }
->   
->       /* Create and map RAM frontend */
-> @@ -855,7 +860,7 @@ static void sun4m_hw_init(MachineState *machine)
->       slavio_intctl = slavio_intctl_init(hwdef->intctl_base,
->                                          hwdef->intctl_base + 0x10000ULL,
->                                          smp_cpus,
-> -                                       cpu_irqs);
-> +                                       cpus);
->   
->       for (i = 0; i < 32; i++) {
->           slavio_irq[i] = qdev_get_gpio_in(slavio_intctl, i);
+> +static void slavio_timer_finalize(Object *obj)
+> +{
+> +    SLAVIO_TIMERState *s = SLAVIO_TIMER(obj);
+> +
+> +    for (int i = 0; i <= MAX_CPUS; i++) {
+> +        ptimer_free(s->cputimer[i].timer);
+> +    }
+> +}
+> +
+>   static const Property slavio_timer_properties[] = {
+>       DEFINE_PROP_UINT32("num_cpus",  SLAVIO_TIMERState, num_cpus,  0),
+>   };
+> @@ -438,6 +448,7 @@ static const TypeInfo slavio_timer_info = {
+>       .parent        = TYPE_SYS_BUS_DEVICE,
+>       .instance_size = sizeof(SLAVIO_TIMERState),
+>       .instance_init = slavio_timer_init,
+> +    .instance_finalize = slavio_timer_finalize,
+>       .class_init    = slavio_timer_class_init,
+>   };
 
 Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
