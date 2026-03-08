@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958E6EA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 238FFEA8543
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMNE-0002tB-H5; Sun, 08 Mar 2026 18:13:20 -0400
+	id 1vzMUx-0004FC-Hg; Sun, 08 Mar 2026 18:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMNC-0002sS-LD
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:13:18 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMUw-0004Bg-46
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:21:18 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMNA-0008QA-JC
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:13:18 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-48532925a4bso3982225e9.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:13:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMUr-00013e-Tt
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:21:17 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so8461022f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773007995; x=1773612795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773008470; x=1773613270; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fsx74MyDH7KJyFPLeVgbpBGFYJeh8RWY/evLyakF4cM=;
- b=U2SdZD8wr7ukd0QY1WQpwD7bPvBhFUj9WZSNymO+FgytuuuCaCqnYmme9S9o2FA7uV
- rD2ksV64U22JwRu4JyUqI8YpCqbU5kQtUX5FskqYBhNXrCIvx9kUFR0MQ8+UR6GxdPPz
- GphqHPRoUfJK/3oKItqmnmjx29eZyV9aCe5rIBgzch1Zs0OHqnMOuyGajXnp50r+U2SV
- rcsO85pvXVsOtaZB3nj1XWJ9saJfSl7j+/dx2Ll9pwF4iPtIPw61dxjcThFHcxNrurlJ
- qCoszrl+vTX18bexnjc2Nay+nXHS/tCF/6hU6DtHLkDheQ8Kr579622W29MDDLpQ88B7
- C68g==
+ bh=T5Dpj6c1gAeLPkSekT9sJ723kDIxLzlTFepZ8snPZgc=;
+ b=UqArWzDNw32eUw5l4Ah/kTWE5LlFXxc3qB7hccH6fKCkkjnQ6S85vAGvR61RHts92k
+ IK2uz/GfONgaxPIaB3KoRhoZISc3xw7V77a//gyTwtmw0IzYtB4ExWWBn4lJah6V9Gs2
+ 6goZrSwdUgjK57BeS9ULJW6qHCfHQ7uQ5DpmW7GpVOiI1qJqhFP3hVdaPRUrvhQVdWNq
+ HXRm7PBMr8KwJnBzBb7vAEa/iIDF3vE5F1fLqjKEuRfVtrttko9+k2xqN4p8cNLMZgeW
+ Gvh9NlEZGB8NRjOJS+q1twXoqKy1QwwQv3mHdOEHkMFaR6JXBleFCb8TJe8WQmPeJMvj
+ xt9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773007995; x=1773612795;
+ d=1e100.net; s=20230601; t=1773008470; x=1773613270;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=fsx74MyDH7KJyFPLeVgbpBGFYJeh8RWY/evLyakF4cM=;
- b=v7Y015jLmS54zwFqX5s9prk+T7/vYbYtz7Aat9noRCwF0fOg2edOzupsqEdV+7iEri
- T3bX1eIU/doncaS54TZAv2JJ+eSd/QN8Sp+uRA4LRXXjOkmmivj1AqcXP+GmHIEW8v49
- toz9B1k6ftmHQMY7wHs0/zfbBCHYNJr6jtM5xnK8CY/dPaerLbCt6MbSzyJr1gWhA4A9
- g1v1/gKxm6VP63Ii1F3QnPAb96xUGH37+PvjFk/MQlMp+J70ZYD9l/I3mXkfk1yxU+60
- JE2C7xASevCYr4j8v/FtFO/JFeduqar7iEP23P8t2EsIE0fVc4tUWzel7AK8nTuVIDWu
- AK0Q==
+ bh=T5Dpj6c1gAeLPkSekT9sJ723kDIxLzlTFepZ8snPZgc=;
+ b=CFrYmjlRv1FsmMK7w9U7kmD/UP1a+ZuNODJZo+AoHy4hhzAfTeIdnGpn675BwypIsj
+ U/BSngnthVXP/EiUw8ylpsRVqNBP9s/gLkyLHDQMhyHIU9JdsvoEKQ57p0bt9NSJfzqZ
+ FF9N4mATqgz6plL/rQzCPN5sQI/01NZdEtTLBmGZwy8aAF56bLHbq+5q5SH0ECMI/Qg+
+ Py7qJsYQ16Iw1lccSydosdXtKEFqqqrDVI61Ek7K2kCA4qqnc/GsHcRnL8qbos4Oq/a9
+ LuQnKYdV4jwlSVlGFxrcLFBCa4006LNk5KTlIvhqMm8o8PzY22D01cHV79VV4OxWe1JP
+ +13Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQa9qLdQCQkKkxhb77f/y7MGZlKOB+uZUe4lmlbzDyIZ4qZFZwZ1ncJ5GonpcGYUNYY9Kj2/bBi1Mx@nongnu.org
-X-Gm-Message-State: AOJu0YzfHDWYOrmEVfSDSemVOjkJGEXPyMLVVDOMJdgtNdajmBz6Ri/V
- VZEMZ7aKZfi0Im0JTQH73LBA0QnTI+HeFe4iOCe6EH/tmJ9boaRRyLqJFaFRskCQtts=
-X-Gm-Gg: ATEYQzyvr9Xck+h3gxZlWEeR7ruZHvxT0do3HFyog5tKxfQyW0doz/cG4WW5EdSRdRY
- 9iXUXyDCBUSla8MSdx+mEmN+yY3j913vXZITOIOpWWWkLn9peVM0d/zSObZnhNySkj933+bIGUf
- IR6GzaV3m+YEG1V42Zw142jCjmx4+Z9HpZSANk4jmjHb3OhEq/Ht+gJrAkGs5WYgtWOUOXYzrIB
- 8ux2nsyzyvxGj+02zSK6ZwLckyH9Ar3Cdhrbr0Sv5Mnmtau2AuS2H0pxkZwB/gbR3bqCEBKi3ST
- xcD8ovVaDypNFM/11iQdg/H4PyD+j90L8GhY4uqayvOnEMcg5nybD51rUWQtvKfIYmh/SEOUCxF
- fzlgyYBgNYudDC0a6tAAjk0eaWwvWyhOnm3bTdYx+bY+Bto2q6NoYlic86ArRhvnmDcWxGIEofh
- gGSN+4KMccx0q7/VBJqz552JtCTUb2i9xQgtoNTMs1C0zrTv554V/YrImRjn+IhD+Qag==
-X-Received: by 2002:a05:600c:138a:b0:477:7ae0:cd6e with SMTP id
- 5b1f17b1804b1-485269196ffmr173793425e9.5.1773007994646; 
- Sun, 08 Mar 2026 15:13:14 -0700 (PDT)
+ AJvYcCUb5wuV+xvwWjriL99kG/y0X22cARO2VMLAYWw/J0yW92z2SCDRXefddpTT9TeYpesLIQyrRWgC6nWW@nongnu.org
+X-Gm-Message-State: AOJu0YzN5LJiCV1XHm6/qacjmbGhRF7Ry1gn5Lz5MeOnrkwBXZ9vJZnW
+ pntOrVuw+5jxjTdwSvvQkzbBNR9YTKpd0WJp+JFYIZnj2M4+xuD9uhk5/5pB2x64kE8=
+X-Gm-Gg: ATEYQzyr4czsRBHQQxWGbPX2P8paILs0Mv9oFz/7+Jr+9MUV5uYRhT/dCXAPziTDDLA
+ CttGncDe/cy+ncr+MfuPnti1NzV82Bb9wgOK3kzDixJ6u7soBxVuCZQxvJRnMOWox5u6UdNYbr6
+ NCuJHWzFdUENXRvixWGAOFRKICbVF5OPYHamf/ZPvP7dEasd3qSrLGcfoOiTUi9XO8K9UF20yyj
+ PIVGgim6YCYOGGrqcJiTjNehX0EHm1frxTABym4/WU8dl0bPMSL6FfxRhH0ULZPPXSF2ySVAGo/
+ N8VxEVhfxjnPo5Z+uJgkHhaOGAOJC5yYE2GdZmdTKhWNd1cp3AMVbMTuph/tgWAeJ6wPzfwuuS1
+ srY1WRdMBhzjJoX/0KRtyhSJBK8y0Ggi6lsr4zyMy7eyx9D02pLjUSttRB/zXML3I6fg6usnJnb
+ Ko+s2eLOxXEEP4GKCs8R2/dCV8iZOT6J9UKmIolVH1BXXXtUEQwRvuOaswMBSD9+cP2d2Oung=
+X-Received: by 2002:a05:6000:310c:b0:439:b636:1fa4 with SMTP id
+ ffacd0b85a97d-439da8951damr15986588f8f.48.1773008470523; 
+ Sun, 08 Mar 2026 15:21:10 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853616a085sm33693585e9.3.2026.03.08.15.13.13
+ ffacd0b85a97d-439dae49177sm20939184f8f.35.2026.03.08.15.21.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Mar 2026 15:13:13 -0700 (PDT)
-Message-ID: <2fdfc484-cf0c-4d91-96b8-4ca0e1bd6f76@linaro.org>
-Date: Sun, 8 Mar 2026 23:13:13 +0100
+ Sun, 08 Mar 2026 15:21:09 -0700 (PDT)
+Message-ID: <a04c9f47-d371-4e78-93cd-7798b804f237@linaro.org>
+Date: Sun, 8 Mar 2026 23:21:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/xilinx_axienet.c: Prevent writes to PHY
- Identification registers
+Subject: Re: [PATCH v11 00/17] ati-vga: Implement HOST_DATA transfers to
+ enable X.org text rendering
 Content-Language: en-US
-To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- qemu-arm@nongnu.org
-References: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
+To: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260303024730.1489136-1-chad@jablonski.xyz>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260305-xilinx-phy-protection-v1-1-ffc9edd84e58@linaro.org>
+In-Reply-To: <20260303024730.1489136-1-chad@jablonski.xyz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,41 +104,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/26 13:13, Jim MacArthur wrote:
-> There are other registers in the PHY model which should be partially or
-> entirely read-only, but this solves the immediate issue.
+Hi Chad,
+
+On 3/3/26 03:47, Chad Jablonski wrote:
+> This series implements HOST_DATA as a blit source enabling text rendering in
+> xterm under X.org with 2D acceleration.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3297
+> The series builds up functionality incrementally:
 > 
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
+> * Patches   1-6:  Bug fixes and register implementations
+> * Patches  7-14:  Refactor of ati_2d_blt to decouple from ATIVGAState
+> * Patch      15:  Scissor clipping implementation
+> * Patches 16-17:  HOST_DATA register writes, color expansion, and
+>                    accumulator flush
 
 
-> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
-> index d85f8bb23f..970732b162 100644
-> --- a/hw/net/xilinx_axienet.c
-> +++ b/hw/net/xilinx_axienet.c
-> @@ -141,6 +141,10 @@ tdk_write(struct PHY *phy, unsigned int req, unsigned int data)
->       regnum = req & 0x1f;
->       DPHY(qemu_log("%s reg[%d] = %x\n", __func__, regnum, data));
->       switch (regnum) {
-> +        case 2:
-> +        case 3:
-> +            /* Writes to PHY Identification registers are disallowed */
-> +            break;
->           default:
->               phy->regs[regnum] = data;
->               break;
+> Chad Jablonski (17):
+>    ati-vga: Fix framebuffer mapping by using hardware-correct aperture
+>      sizes
+>    ati-vga: Fix DST_PITCH and SRC_PITCH reads
+>    ati-vga: Read aliased values from DP_GUI_MASTER_CNTL
+>    ati-vga: Latch src and dst pitch and offset on master_cntl default
+>    ati-vga: Implement foreground and background color register writes
+>    ati-vga: Add scissor clipping register support
+>    ati-vga: Remove dst_x/y updates after blit
+>    ati-vga: Consolidate dirty region tracking in ati_2d_blt
+>    ati-vga: Remove src and dst stride mutation in ati_2d_blt
+>    ati-vga: Use local variables for register values in ati_2d_blt
+>    ati-vga: Introduce ATI2DCtx struct for 2D blit context
+>    ati-vga: Extract setup_2d_blt_ctx from ati_2d_blt
+>    ati-vga: Split ati_2d_do_blt from ati_2d_blt
+>    ati-vga: Remove ATIVGAState param from ati_2d_do_blt
+>    ati-vga: Implement scissor rectangle clipping for 2D operations
+>    ati-vga: Implement HOST_DATA register writes
+>    ati-vga: Implement HOST_DATA flush to VRAM
 
-Checkpatch.pl complains for pre-existing coding style:
+Zoltan asked me to look at your series [*] but unfortunately I'm
+getting a build failure when building without PIXMAN starting
+with patch #9:
 
-ERROR: switch and case should be at the same indent
-#27: FILE: hw/net/xilinx_axienet.c:143:
-      switch (regnum) {
-+        case 2:
-+        case 3:
+../hw/display/ati_2d.c: In function ‘ati_2d_do_blt’:
+../hw/display/ati_2d.c:185:13: error: unused variable ‘src_stride_words’ 
+[-Werror=unused-variable]
+   185 |         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
+       |             ^~~~~~~~~~~~~~~~
+../hw/display/ati_2d.c:147:9: error: unused variable ‘dst_stride_words’ 
+[-Werror=unused-variable]
+   147 |     int dst_stride_words = ctx->dst_stride / sizeof(uint32_t);
+       |         ^~~~~~~~~~~~~~~~
+../hw/display/ati_2d.c:137:10: error: unused variable ‘use_pixman_blt’ 
+[-Werror=unused-variable]
+   137 |     bool use_pixman_blt = use_pixman & BIT(1);
+       |          ^~~~~~~~~~~~~~
+../hw/display/ati_2d.c:136:10: error: unused variable ‘use_pixman_fill’ 
+[-Werror=unused-variable]
+   136 |     bool use_pixman_fill = use_pixman & BIT(0);
+       |          ^~~~~~~~~~~~~~~
 
-total: 1 errors, 0 warnings, 10 lines checked
+I'm queueing the first 8 patches hoping it helps.
 
-Anyway, queued, thanks!
+Also, please fix the checkpatch.pl coding style errors
+before re-posting.
+
+Regards,
+
+Phil.
+
+[*] 
+https://lore.kernel.org/qemu-devel/7f1df452-05c2-efa3-fdce-a5d987cfdcc8@eik.bme.hu/
+
 
