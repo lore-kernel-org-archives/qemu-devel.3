@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF80EA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1FCEA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMjB-0002qa-7w; Sun, 08 Mar 2026 18:36:01 -0400
+	id 1vzMiz-00028o-8G; Sun, 08 Mar 2026 18:35:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMjA-0002po-Co
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:00 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMix-0001zu-MY
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:35:47 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMj8-0003LM-KQ
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:36:00 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4853510b4f3so10346535e9.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:35:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMiv-0003J3-NI
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:35:47 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso89215865e9.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:35:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009357; x=1773614157; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009344; x=1773614144; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IvyubgiZnLR/Qn25dRzLRywypTI2tFXuMoTf+d/sfJE=;
- b=w1pfytaxVA42oYtx/okkAiV/taGqZdjQw7m8bd8wSnbJMyd4h3IzleW9VNFo8k69+A
- WsxcSiFIBviDEWY1VFk4N2wULUzxLZmfVuL+iVn2AUhzsLpHkd5alFwR01BbG85bPlLY
- kx7ZidnbNS9MfEgYmlLx248CYSNyMFPte+uzVYQfN+JjHGvOgHNYrEjgTQdLfBDnwlJZ
- yBuiR/oMBR6NzBlT88P9RTCcn+LCCawMBaJF/NbphuwVXKC02Wsna64oD/uLPMUCG//l
- 63zHN2eYHOk9iNA9JDX2LF/GCcTaISBUKWig51uKNdb5lKy8Hnr6M6MWXTNEMlwL1rdA
- G32g==
+ :reply-to; bh=gk2rwwBrHZhMQrfODT1MQGRLgxz5V9+zQXEuJZbNKHo=;
+ b=hP784BWY4babjGWVQj4+/aiy6rqrf5mcGHPxRq/hCOMtOE6JcqWICIFrd9en2HGDv+
+ ClrwasEwFmJohyvkId5Fzr1da9R00jsaKTeahNZW7UAMw1nxFM4oD0yqibOYAFk3HOL6
+ CaU0Lc2LgxDbPKjlLAie745eg7ubOI8PrFZ1AzPIzaCIOeFiIEgQ6SOmUPRq/b0l7vxy
+ TQwL8wUdMVEZnY/9J/1J2Yp+vPsDfZpgI6bAu6eReErcVBcPbZOx1FuZ6orgj9P1ZIRb
+ 2obL1iwY+w/eJ+Lt6RwfisjlKnflh9mYPlZtfYQ9Xxi9vCesWyos5//aA7iHRF4N0bDu
+ LakA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009357; x=1773614157;
+ d=1e100.net; s=20230601; t=1773009344; x=1773614144;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IvyubgiZnLR/Qn25dRzLRywypTI2tFXuMoTf+d/sfJE=;
- b=f9LGvUx3u1CsWJ6MAMBD5C4EotVYLiDGdFNYAlVWhMadIaIFFInfVtvn0KhL0SCMnR
- KIqdvE71KZsEVSsOipdKNluY0iSnvRNbmWm6dJUhhb1U1XorLQpj4Gjkind9ERRehvjJ
- GTNwND8XniqSz0Vbxd41YpYgLCMmxC9/A2jR3fZr9ANMmgB8PEY2FqEGfuUvJj2YePyt
- vq5hPb61dboO/yKeNUzWeGSZrMd62AeQ9sMhp3gJEzQQlmWNuVp+Eb5FIViR5UAqNQfI
- IHGdhtY2v2NSdkTPT2+JHLzMt2+hTl8bN96HFxZ2gZiy08gy1BE2Md5pzF+XCIRLpn1X
- MM+A==
-X-Gm-Message-State: AOJu0YyA/Mtson2kECBRShMTR61JsrpkmHNUlZcTPC9mGxPyEoL4riuP
- TijZlFdep1B0VSW+RcLVB7xlnLlLhLGqprp3bDRrUi1HdZRiCtdGpY8pDREDv0n1cpM7vCRtvm1
- Q/1jyIUE=
-X-Gm-Gg: ATEYQzwrHWVyiJdZ3xLRti0tefktvIV5zWo4KuCubLUd+t0gx0McKqiClXVPFNzN8oe
- hNAJiTnX6UGbK9L6OPhf9gI5+J3P0xIFRt7oNTYs8/bwVMainY9Sh3O4bxLrERvXl3XDFoqbufe
- PF+XO1+fyknsC1NYLPcL7SqkGLYngj/tZeM4VoRR89iPlCFBPEWX5028ehkxli8lusOLbwDdG8F
- DSLQyE6k3PSiU53fDq2cixa3eMv73flYy41Ea3FVwi3dMcE2WSsc5gruJdbH+Dir+jvqGwiUo0Q
- RnG6i6m8t+q/GumiAoc9zoFwEJ771vWtNuZLn91VK18srD9fB4Wa/ZRTXaV2jEjRx1BN0aksb5r
- heV4VVdfmE3/s9zEPxrSYnFPG21afJkq/bIRNenODAlMN/eIQF5prnAiYMNKvfZW6MmxeDnYM09
- YO+RyywZXUB57NreSBWuQ2dCQQco5BAsxr/24ygDHxumIqD8PobYycAmUfdeyPnXDujw3EdaXz2
- KdkeA==
-X-Received: by 2002:a05:600c:c173:b0:485:3812:36dc with SMTP id
- 5b1f17b1804b1-485381238b3mr50587285e9.9.1773009356689; 
- Sun, 08 Mar 2026 15:35:56 -0700 (PDT)
+ bh=gk2rwwBrHZhMQrfODT1MQGRLgxz5V9+zQXEuJZbNKHo=;
+ b=wptoUkUIDOiVFeWFI2ghVR06qytP60MxbcOXBLZmGSaWL2/7Exxf5RZQYdC4s9TTOc
+ KegM7mjHIsRyJTAxqQGhlJlj8nu90B5X9IqNA295G6hcYJiXsVvsf8ihiGUffd9TpLn0
+ a8RRI+Vk2Sz0JGcZFFjTPQjvTGdl0FTcCM8ndj5OaUkuaa5Ww9VvMYD1wYzkYCbJrBgl
+ 7TIs3g4dAZ7ilYm7tOqGkmA/40UK34mKWqN0UCSIZOHs8hIRee0IP+3nFLVKajoK11wS
+ 5AgU1l2VRRYBf8OukvrBGn8z8RdPi1D/5Y94jOqDibzqdxdH1JXhZD99Hq6rpZFaEPPO
+ F8/A==
+X-Gm-Message-State: AOJu0Yxv3IM4i+huWpNhxB3BHxfSbFoFdLBrpLZeIXDb9h7/RTAipOeP
+ GB9Ugm9LlkJMcc3E7yRYglz7D1SIGNSqQdEHSCkSnddsDDC/N1War7nMuCjC7UcgIv4W98e4sO/
+ 9jO4mMds=
+X-Gm-Gg: ATEYQzw2G9PPdriNIWoNDXpoLA1y5dT0Be6LvLf7uKEQjEeqXtNY/AuqagAurGrMhWc
+ 4824dMSR30o+YFNoeX1Xb7vqvT5ka6acofzmQXLdQ8pNiUdi6gOxE6o9NOrnzKwTdGydZnU+uTV
+ b7fRepSrxXdxqMcy9LJ7LUwgB3a1TVrD8a0SXf0IWAOkzj5MZgoYxM0TDywFd+W+7Jvosqh8z5c
+ G+rq1m7LoKg0ptVczudnMViaexdeBDxB3+E8fw3pm0MUb94VByZtHKfsi54Ghw3d62KMZjqCPwR
+ /oU9OH/8vEDHpUiiQgOyO6laymyjXyAGkKEq75V5RAxd4B/NQk1AOYGH+5r8AmnTgjOat4RJtbt
+ 6k6yNSpl0EAJ5aRrtMZJLnT4pOLYc/LTTu0llpqRm8o7J1Bj/yIegWySRMqPHrT2BCgSjs4dcHs
+ ivi48kFcDBIisT/VRx8J9cxvMmURDU2mkiMqDV5LDJDGFZjcvjwBrET0E0fpOTbVjOdW75AKzK+
+ BiUPQ==
+X-Received: by 2002:a05:600c:4f55:b0:485:3c66:e230 with SMTP id
+ 5b1f17b1804b1-4853c66e4eamr10341165e9.29.1773009343560; 
+ Sun, 08 Mar 2026 15:35:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad8ec97sm23445128f8f.5.2026.03.08.15.35.55
+ 5b1f17b1804b1-4852f6994a1sm114992955e9.9.2026.03.08.15.35.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:35:56 -0700 (PDT)
+ Sun, 08 Mar 2026 15:35:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/49] hw/*: Build stubs once
-Date: Sun,  8 Mar 2026 23:33:56 +0100
-Message-ID: <20260308223433.25503-13-philmd@linaro.org>
+Subject: [PULL 10/49] hw/acpi: Build stubs once
+Date: Sun,  8 Mar 2026 23:33:54 +0100
+Message-ID: <20260308223433.25503-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,135 +106,64 @@ per system binary.
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260225035739.42848-10-philmd@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20260225035739.42848-7-philmd@linaro.org>
 ---
- hw/cxl/meson.build      |  4 ++--
- hw/i386/kvm/meson.build |  5 +----
- hw/mem/meson.build      |  4 ++--
- hw/pci/meson.build      |  2 +-
- hw/smbios/meson.build   | 10 +++++-----
- hw/usb/meson.build      |  3 ++-
- hw/virtio/meson.build   |  9 +++------
- 7 files changed, 16 insertions(+), 21 deletions(-)
+ hw/acpi/meson.build | 25 ++++++++++++++-----------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/hw/cxl/meson.build b/hw/cxl/meson.build
-index 3e375f61a98..5f61273a68d 100644
---- a/hw/cxl/meson.build
-+++ b/hw/cxl/meson.build
-@@ -7,7 +7,7 @@ system_ss.add(when: 'CONFIG_CXL',
-                    'cxl-cdat.c',
-                    'cxl-events.c',
-                    'switch-mailbox-cci.c',
--               ),
--               if_false: files(
-+               ))
-+stub_ss.add(files(
-                    'cxl-host-stubs.c',
-                ))
-diff --git a/hw/i386/kvm/meson.build b/hw/i386/kvm/meson.build
-index a4a2e23c06e..a34b3504cba 100644
---- a/hw/i386/kvm/meson.build
-+++ b/hw/i386/kvm/meson.build
-@@ -15,9 +15,6 @@ i386_kvm_ss.add(when: 'CONFIG_XEN_EMU', if_true: files(
- 
- i386_ss.add_all(when: 'CONFIG_KVM', if_true: i386_kvm_ss)
- 
--xen_stubs_ss = ss.source_set()
--xen_stubs_ss.add(when: 'CONFIG_XEN_EMU', if_false: files(
-+stub_ss.add(files(
-   'xen-stubs.c',
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index e1e848327b9..1c5251909b4 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -6,33 +6,36 @@ acpi_ss.add(files(
+   'utils.c',
  ))
--
--specific_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: xen_stubs_ss)
-diff --git a/hw/mem/meson.build b/hw/mem/meson.build
-index 1c1c6da24b5..8c2beeb7d4d 100644
---- a/hw/mem/meson.build
-+++ b/hw/mem/meson.build
-@@ -4,9 +4,9 @@ mem_ss.add(when: 'CONFIG_DIMM', if_true: files('pc-dimm.c'))
- mem_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_mc.c'))
- mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
- mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
--system_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_false: files('cxl_type3_stubs.c'))
-+stub_ss.add(files('cxl_type3_stubs.c'))
- 
--system_ss.add(when: 'CONFIG_MEM_DEVICE', if_false: files('memory-device-stubs.c'))
-+stub_ss.add(files('memory-device-stubs.c'))
- system_ss.add_all(when: 'CONFIG_MEM_DEVICE', if_true: mem_ss)
- 
- system_ss.add(when: 'CONFIG_SPARSE_MEM', if_true: files('sparse-mem.c'))
-diff --git a/hw/pci/meson.build b/hw/pci/meson.build
-index b9c34b2acfe..a6cbd89c0a3 100644
---- a/hw/pci/meson.build
-+++ b/hw/pci/meson.build
-@@ -19,4 +19,4 @@ pci_ss.add(files('pcie_doe.c'))
- system_ss.add(when: 'CONFIG_PCI_EXPRESS', if_true: files('pcie_port.c', 'pcie_host.c'))
- system_ss.add_all(when: 'CONFIG_PCI', if_true: pci_ss)
- 
--system_ss.add(when: 'CONFIG_PCI', if_false: files('pci-stub.c'))
-+stub_ss.add(files('pci-stub.c'))
-diff --git a/hw/smbios/meson.build b/hw/smbios/meson.build
-index a59039f6692..9bf4b1ad1e5 100644
---- a/hw/smbios/meson.build
-+++ b/hw/smbios/meson.build
-@@ -1,12 +1,12 @@
- smbios_ss = ss.source_set()
- smbios_ss.add(files('smbios.c'))
- smbios_ss.add(when: 'CONFIG_IPMI',
--              if_true: files('smbios_type_38.c'),
--              if_false: files('smbios_type_38-stub.c'))
-+              if_true: files('smbios_type_38.c'))
-+stub_ss.add(files('smbios_type_38-stub.c'))
- 
- smbios_ss.add(when: 'CONFIG_SMBIOS_LEGACY',
--              if_true: files('smbios_legacy.c'),
--              if_false: files('smbios_legacy_stub.c'))
-+              if_true: files('smbios_legacy.c'))
-+stub_ss.add(files('smbios_legacy_stub.c'))
- 
- system_ss.add_all(when: 'CONFIG_SMBIOS', if_true: smbios_ss)
--system_ss.add(when: 'CONFIG_SMBIOS', if_false: files('smbios-stub.c'))
-+stub_ss.add(files('smbios-stub.c'))
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index 17360a5b5a4..ba55c28ef69 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -9,7 +9,8 @@ system_ss.add(when: 'CONFIG_USB', if_true: files(
-   'desc-msos.c',
-   'libhw.c',
-   'pcap.c',
--), if_false: files('bus-stub.c'))
-+))
-+stub_ss.add(files('bus-stub.c'))
- 
- # usb host adapters
- system_ss.add(when: 'CONFIG_USB_UHCI', if_true: files('hcd-uhci.c'))
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 821366f5e90..415e359e9fc 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -48,8 +48,6 @@ if have_vhost
-     system_virtio_ss.add(files('vhost-vdpa.c'))
-     system_virtio_ss.add(files('vhost-shadow-virtqueue.c'))
-   endif
--else
--  system_virtio_ss.add(files('vhost-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_CPU_HOTPLUG', if_true: files('cpu.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_CPU_HOTPLUG', if_false: files('acpi-cpu-hotplug-stub.c'))
++stub_ss.add(files('acpi-cpu-hotplug-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_MEMORY_HOTPLUG', if_true: files('memory_hotplug.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_MEMORY_HOTPLUG', if_false: files('acpi-mem-hotplug-stub.c'))
++stub_ss.add(files('acpi-mem-hotplug-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_NVDIMM', if_true: files('nvdimm.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_NVDIMM', if_false: files('acpi-nvdimm-stub.c'))
++stub_ss.add(files('acpi-nvdimm-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCI', if_true: files('pci.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('cxl-stub.c'))
++acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'))
++stub_ss.add(files('cxl-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
++acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'))
++stub_ss.add(files('ghes-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PIIX4', if_true: files('piix4.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
+-acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
++stub_ss.add(files('acpi-pci-hotplug-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+-acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
+-acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
++acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'))
++stub_ss.add(files('ipmi-stub.c'))
++stub_ss.add(files('acpi-x86-stub.c'))
+ if have_tpm
+   acpi_ss.add(files('tpm.c'))
  endif
- system_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
- system_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
-@@ -92,10 +90,9 @@ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MD', if_true: files('virtio-md-pci.c'))
- system_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
- 
- system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
--system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('vhost-stub.c'))
--system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('virtio-stub.c'))
--system_ss.add(when: ['CONFIG_VIRTIO_MD', 'CONFIG_VIRTIO_PCI'],
--              if_false: files('virtio-md-stubs.c'))
-+stub_ss.add(files('vhost-stub.c'))
-+stub_ss.add(files('virtio-stub.c'))
-+stub_ss.add(files('virtio-md-stubs.c'))
- 
- system_ss.add(files('virtio-hmp-cmds.c'))
- 
+-system_ss.add(when: 'CONFIG_ACPI', if_false: files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c', 'acpi_interface.c'))
+-system_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_false: files('pci-bridge-stub.c'))
++stub_ss.add(files('acpi-stub.c', 'aml-build-stub.c', 'ghes-stub.c'))
++stub_ss.add(files('pci-bridge-stub.c'))
+ system_ss.add_all(when: 'CONFIG_ACPI', if_true: acpi_ss)
+ system_ss.add(when: 'CONFIG_GHES_CPER', if_true: files('ghes_cper.c'))
+-system_ss.add(when: 'CONFIG_GHES_CPER', if_false: files('ghes_cper_stub.c'))
++stub_ss.add(files('ghes_cper_stub.c'))
+ system_ss.add(files('acpi-qmp-cmds.c', 'acpi_interface.c'))
 -- 
 2.53.0
 
