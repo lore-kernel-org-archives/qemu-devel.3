@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E08FEA8546
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9E7EA8546
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Mar 2026 22:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzMlS-0000Va-EJ; Sun, 08 Mar 2026 18:38:22 -0400
+	id 1vzMlY-00010t-Hy; Sun, 08 Mar 2026 18:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlB-0000FP-5f
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:05 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlI-0000VQ-Td
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:18 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMl8-0003aF-JI
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:03 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4853e1ce427so66955e9.3
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzMlG-0003au-PV
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 18:38:12 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4806f3fc50bso120497655e9.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 15:38:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773009480; x=1773614280; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773009488; x=1773614288; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=V+hagX+lMg1RLLXCOXLv/+2gyVSWe5aZrKHu4oJOc9M=;
- b=JpsoP0Ll5LlrNZb3mqE/PXMqlnjSbVQOVB20TGT3KN4u2oHHkaC438s3vxXQDnqv3d
- jvg4A7iCWXQaM6l05mLksTEg9kzU+kKwnmNDMPupn4mzYXXBQsLIw3XofarW56Idgl6I
- mgbmtp0dXaihdHgVYkUogz0bTW4BBho48E22J4ZW8Kjsx0QaT25/rOrJOvtts/M+VBOn
- l6hN/RN/5j5Xi8tjQ1vCOP4vm1O+yFW51mYhtz1ROCqgtsmVDvgiSbaD9jiWsOzKNFpt
- rqG6BnPSpv+4hPLO7vSjKcgtvrRr0ofLbvibWPl0ikZeET5bP8Yp8OEHiYvd+Go740A7
- xKAw==
+ :reply-to; bh=47kyoNz4TXjQKO3OpO42aT92D29Nt88tammbySClZk0=;
+ b=Q2+zlqu/Wwqfpio0BFEaMqncQ/49Vw84/PmutmbM1tJDlkgsOKEAJV/I5iTRDipryW
+ EghL8TPwnJoWX7UIQakk+hcGibaU5TehmQaq9j75l6sVOBDPrKMBqAS2QS9Y5rIzJPsQ
+ NKni6rc1xUVga7tajUBNXGLfChb5v2qA58VadBITvoWsNitVkcqWdZLF6pBF1pFkbgoQ
+ SK8+P7UNZAB3b25piVWFyllHKqsdeFEqBRamRdM29bAHme5akNM+NRdba0UvX9efxNr6
+ 5KcUtYUBQorzsNdcXTQK2j2U+Db7D5Qag8p+aAdn0hZkzK+1hmmb+ezY5g9kzxdiGlRI
+ gyLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773009480; x=1773614280;
+ d=1e100.net; s=20230601; t=1773009488; x=1773614288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=V+hagX+lMg1RLLXCOXLv/+2gyVSWe5aZrKHu4oJOc9M=;
- b=oB0iFmy17uWlZfRPv4zLqSsUZvn7Q+IZslGZGJvNp0oYSe9692+k+XCpdzuUdpzFuL
- KIf5Gr0Y1NjbeZbuVvTxuN+jYy8zcaIRjKMm1Jl6EDKf5pS8OcRxiqhupGUwchWWlmCq
- 5P2ChenceliaUeF4TZ3+btQVEa6qiPBIGWuxfuy9M8rhMPE+eBcJJUEicnQfkc1jotfw
- zC9C+ReKyrIcqxI0hCRawOxEOG15K7qeQY4IZ9h12mPyInY/5ljEeQEMg2szyq6xHyjj
- iAZuhOw2EEnW2RWM28YmB/MnEg0W7C9v6L9RP7TNNxG7pJSsild7GZg38N6F3+qOqe9y
- /FkQ==
-X-Gm-Message-State: AOJu0Yy9bktlJL6AW3/Yu8ZNUdSVThdv6Z8f0NIwyi42S7r5jdn8V4Fk
- FTFvRAuCj8xd09WGL24e1urGUfPrB/IPHxxOFKWo3oESamM/eOJWDBhLKa+ShHpnnHXEMCDrHw7
- GIA9+ibg=
-X-Gm-Gg: ATEYQzzz6dIG9P5sn/1Lfqjhw/PZwYtRVK8z/YJk8E+zX009ONJkAsXVN4TGv3Qq+yR
- 0BTob90TEAGU53L1kPp83f4uKXBEJ5NMJs8XW38WA+VCp1wV2V5KPKawrqC1wKnBVgWG/QOOrdu
- f5ZeLl5vz1EkfdJy8qboyt1btbDNheSS8lQqQRJ8CU+qMGTHk570A96TJnCDI5vAGlUnoS/razk
- ISxunEIzLJgBL79wkJmfVy7Bf9pYOMh46zH8+8JZK44UfBs3ytBHPwOV0P5UeONJc6pxhACMdDT
- ONpZCn2k3G7rA74pWJo/P1WW9sdNJ8QYUIMYvfu3U4y+WdVd+4D7zX2yrhmQV/e0Vnuk8rN255W
- ocCTDpsgu+47TSRADfFVq9Zv2cpkrJGbe2eZR/mYBv4j0QGMSWfemmgib2MZ0L/pnJvWYCNz7Zd
- mESKdg6edHxie3hqfeEly4I3sw5R8UknZgjsO9f4yY/H1gVXtwLGFBPUq2IS5zWLaWLPptVmczn
- b+Yig==
-X-Received: by 2002:a05:600d:16:b0:485:3c14:885b with SMTP id
- 5b1f17b1804b1-4853c148d07mr10771385e9.28.1773009480227; 
- Sun, 08 Mar 2026 15:38:00 -0700 (PDT)
+ bh=47kyoNz4TXjQKO3OpO42aT92D29Nt88tammbySClZk0=;
+ b=KB7MmTC5SJIeP8H+XzO/4i8JGcIEEes3V3/g2JhkbxJrd0C9+FdDZCUGyoplDQ1nWw
+ JuGuAgpgb2TgLNuogNc6X8PCA7LyLq7hSZf3IwudrXIFUqqO4F9U81il4uGoUu9VLT/R
+ lXYlr53KX+9Z3kdR6/rb7yACHrLudnNT0360PmgEe0jJINmKV5vOgqp8sV0PKMMob9Fk
+ 3OmvsSdh+XfP87R9X+27dWsmGUvMgICszBwQrwpCMd+Or7LOp+meOoeQhtewwKNRHLK7
+ 8gBj46ddLTOXOWF8W4+nnEGV2AKKWVALCTWW171FJkQOazltAXZmYMux7fiUlxQZYdva
+ Hb+g==
+X-Gm-Message-State: AOJu0YwAXYgz/kpdCimQCoLxiL6cksfduJzH/OXwsK69mJlIgMqyP81K
+ 6nL3Wy5fJyhbhQy98cL6aVRjtIZPQ9UBhPVmCt3iZlv/PQd/YopQWG3MK5j60FJjkHwM8DqDBJb
+ fPqxzOYI=
+X-Gm-Gg: ATEYQzxFOcgQejazBYThElEJLR54NRXg1gdUSCKO1Jd4nUNat9LrXmLnxGs9McLRWd0
+ A/0wEYPEnwOT1f2XlS7o6d8tROhZbZHgmiSFtsoPXjz0/DfAGGDC/aPUeFuD3aTYF+X/IdJ0mko
+ GTvYiV13SzdwjQ7txtk9N18cBnLnz2RsYI9ebZsG46WkohIVX62CC8bThMHjnC3h/+c68AqMcab
+ 6ni9NI14kNUIV6GY3f/2dPqCngppqyCPjK8V4Mx67QsTKWuvSv7g3XpJpRhQr8P2bRZWa3GEeIH
+ vCkwn7x+DtBwR0Db7hUHy2io8kETe46tx3Q3N4egRmcvxuUnYY87KXLGqDQh2bwVWaH96e8/vwG
+ IEjgm0Tm60mNTQKW7gDsbZvvN1GiySOU6ikLpE+kGRE/66sesZkHdod3Rm/K1AgQ06rMpbA9/yS
+ QoPDIk6BmaEMS/9WWen0OiX/+dzAowX7oLcGFoiStcJ3cUPhKE6ig0aUH/P62VcANOxmOvbYGim
+ f38xYjgVDsNi+4k
+X-Received: by 2002:a05:600c:4fc2:b0:477:b734:8c53 with SMTP id
+ 5b1f17b1804b1-4852692b621mr155025385e9.12.1773009487759; 
+ Sun, 08 Mar 2026 15:38:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48529a2fa39sm55062995e9.8.2026.03.08.15.37.58
+ 5b1f17b1804b1-4852378e700sm123544225e9.0.2026.03.08.15.38.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 08 Mar 2026 15:37:58 -0700 (PDT)
+ Sun, 08 Mar 2026 15:38:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/49] MAINTAINERS: Update the maintainer for the CHRP NVRAM
- section
-Date: Sun,  8 Mar 2026 23:34:14 +0100
-Message-ID: <20260308223433.25503-31-philmd@linaro.org>
+Subject: [PULL 31/49] hw/arm/Kconfig: Fix serial selection for NPCM8XX
+Date: Sun,  8 Mar 2026 23:34:15 +0100
+Message-ID: <20260308223433.25503-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
 References: <20260308223433.25503-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,38 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-I am not involved in the ppc machines anymore (the pseries machine was
-the reason why I took over maintainership of the CHRP NVRAM code in the
-past), so it does not make much sense that I'm still listed here as the
-maintainer.
-The CHRP NVRAM code is used by the mac99 / g3beige ppc machines and
-some Sparc machines, too, where Mark is the maintainer, so I asked him
-whether he would be interested in being listed as the maintainer here,
-and fortunately, he agreed! Thanks, Mark!
+CONFIG_SERIAL selects the internal TYPE_SERIAL device which is akin to
+an "IP block" that needs to be integrated with glue logic. In case of
+NPCM8XX this glue logic is TYPE_SERIAL_MM which the code uses already.
+Fix Kconfig to select CONFIG_SERIAL_MM which matches TYPE_SERIAL_MM.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20260305192223.6214-1-thuth@redhat.com>
+Fixes: ae0c4d1a1290 ("hw/arm: Add NPCM8XX SoC")
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260305220911.131508-2-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 2 +-
+ hw/arm/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5ad5918d7aa..47e2782468f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2742,7 +2742,7 @@ F: tests/qtest/hexloader-test.c
- F: tests/data/hex-loader/test.hex
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 03aa2a03db8..4e50fb1111f 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -482,7 +482,7 @@ config NPCM8XX
+     select SMBUS
+     select PL310  # cache controller
+     select NPCM7XX
+-    select SERIAL
++    select SERIAL_MM
+     select SSI
+     select UNIMP
  
- CHRP NVRAM
--M: Thomas Huth <thuth@redhat.com>
-+M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
- S: Maintained
- F: hw/nvram/chrp_nvram.c
- F: include/hw/nvram/chrp_nvram.h
 -- 
 2.53.0
 
