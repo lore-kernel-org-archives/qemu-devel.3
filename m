@@ -4,102 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58BCCEFCD72
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10466EFCD71
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzX86-0003BL-Js; Mon, 09 Mar 2026 05:42:26 -0400
+	id 1vzX9a-0003dD-T3; Mon, 09 Mar 2026 05:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzX85-0003B0-GK
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:42:25 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzX83-0007sF-U8
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:42:25 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-64ca09f2170so11665362d50.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:42:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773049342; cv=none;
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vzX9X-0003cP-B5
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:43:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vzX9U-0007xp-JG
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:43:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773049432;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
+ b=gIu87SkXzBKifM+Oyc4d0tzo3qbtp/9UtFD5xGPmmF/INgnoMuPjSFuQe7eMecXU/nbROf
+ ClNI0B5miwsZtTVU4ezQ/Dq6Urp5iNU/I9Cns83ws+TW5+2bNC7DUCIismYfsidU57WUrI
+ lAh50btYiZPdUutFCKoyaI5fl+RGWIo=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-yD32H-2TOBOciztgXqViPw-1; Mon, 09 Mar 2026 05:43:50 -0400
+X-MC-Unique: yD32H-2TOBOciztgXqViPw-1
+X-Mimecast-MFC-AGG-ID: yD32H-2TOBOciztgXqViPw_1773049430
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-79904eb0d1bso2194087b3.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:43:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773049430; cv=none;
  d=google.com; s=arc-20240605;
- b=hkS+cokHZ8Gb+ImfwVfPPh1G8st+Q8OSK41odQXpjbrqnNB++QrwIhGGzSi6f9uHNz
- g9oVxXhBBf4OqrCZQIYErHyC21SNryex6MkAieVjdJN8FuWWCipB3dnKfzXtlPpmVz9l
- Ugwsk489zxo9ygy4VJXwStCjKJb6JA5m4drQRM8wO22rYQi7EAe1L3LKLhWDfU3F3Ffa
- Jm1EPhDMY8jv5oJAgR45rLDdADFORhJOnnX1bvu6LQLRAPBOLBnmxb4lTwxGoJqMBe+2
- R3CVb8SIiejT/vfVN0KtxPa7wP91X1s4zADWHhSMKUJ2JgPfb4qbs+COhcg4SYiWsk9R
- qFTw==
+ b=MUmarmE5iU4CuShLwJd2czrAWNLfFpzBHuWmtFIWzNTSDDwG63cQ1jXms6CstSpy/A
+ kDbc+Zzt1A8dpXybcgM6hJ3yIR9ksgxLXbCLnTo7VVPgZAXg4Qcdv4YoZs1+LNY+HeHb
+ iOmwh6sYoq8P2dWYXYEiAuOHW7ySuSVvYBmMmPTC/hVCtCdlVpmEMN302lLBrdhcrikL
+ YNG9IUNYIzDJSLOFZ0+kq1mFwsmntxLhnT/p1JLzlipv/IfPPCKG7PM5VQCWc44wwovx
+ 2JXShNxbYqH4QOrr7d4aKUiypucHlv3EKOCycbVNTOBwI2ZqYqHDqboh8DdHWBh4BKY9
+ TdFA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=NWwP3Ue+alTqVv8klH3Uf3jiakxGCz93PJzD5pzzH9M=;
- fh=LjZC2//iffA7IpGIEUwHfyiPvMMVpvRVKyaQrPHJg+Y=;
- b=NWpkfMinAsjfLFtPeUaYbjnJLlJrH3PwfD2R1D/JLLy1EFsGmNTcRXdKJlwlR0dagP
- epL7ewmjH73/gdAXRRHQEI9G0G2aiHQcLxztAWaSeuL//a9xAJOMB3Zq1A490JXekspP
- lFumZS5/jT9UHEzvW4GGT0ZjZOZ2UbcgVad7IT1znWbLGA4qUOPrqXOvT6+IwHzshK+1
- fotN9+xT6FFr/JN67ED8+8zl6RID3tWY9IKIgI7FXckxZ3PJuQ6/yY5RPP7WzlUvVG3C
- 45+c0E2ZkfwbBEyV3xGqWUkrd88wVTGk88sGJkbNK4dAC3NKPA2X1Fe4P//7n5qdRlBR
- ec3g==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
+ fh=srKTuQ1zrFvCk697vtO4h473zqLsuvDuubo1BzKDh1s=;
+ b=NCkt/CLArdy6EkETIormRLscp+r5M6lpDA0b4ANcYQLuCazHwxL2newPdpsL4YXO2l
+ XvnASJDlXG7Ncr9UxLOMgyiguH9J+S4Nfd4CiX5lLkN0I2as/CCJQVINs6UWnz/YGRJr
+ PlC/bsplxW2BxR7fBjHExAzpWfge9tH+PrUVatBndR7ME7mgfD1HEnzk6QblpszZBqXx
+ y6cdvYoR88xhzvrdOdWsOELw+TbkZJfSNVqlanTLibkNUZFagetd/EPJVf68T9f0bi2m
+ NaBuG/OYE55Srg0YM4Cr01dy2T/0uiPeW6yGJ6o2dODinPjDX/wX5i5ulTsOlb+STHd9
+ v/Pw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773049342; x=1773654142; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NWwP3Ue+alTqVv8klH3Uf3jiakxGCz93PJzD5pzzH9M=;
- b=RAVriTjAuP5ZGP5SnfArCfbIsFJpVSQcfOnvRfZm5njfrZX0ayfLMQx5KaEUOm1JuM
- jKczwwnL93dF9M3k7pBcnfbpAwU8r8wEQtgBbszFc4bgBOBnOIDNXMA36Hdl6pJ25Xwa
- 5YFtX1bNwcAij3D1+6V0CqEdJBLEkpPsFmHPTi++lrAZlEuE+fe5MyZBVw95AEmnscAX
- 1EwHPply6E2lDnLYUMiMAy1xuMhl1yWjC8k85w5IbgExrjd6IT3KQoUnnaY8aHgJMcBt
- 2zBm82xDvrk/CM7+RrXpel6fDKxZf6bvnI2/8egCO5VFynShMA6yU/MF/sUDfkYQVa4u
- zbcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773049342; x=1773654142;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1773049430; x=1773654230; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NWwP3Ue+alTqVv8klH3Uf3jiakxGCz93PJzD5pzzH9M=;
- b=EUBWOJSSH2Tr/oGYRp7fjRZsM0bEc4pmiUa95jxtE2bfVTMJtJSjFBH6ppXxKPoKpw
- iXtF+iw9yXeGwOaDuiYW26i+z8fIFjOIxAA3VCj4Qy4BBR7l+Tha9rgqosm1/JEKuJ50
- lcma647WT6aOoH70c4s9wZ34Gn1ftQ7yM9h+2wdL5szSmAtpvgBqkFt4KyJBUhqnLYkx
- kwyx30NlevBNXhESgkVVfhEnBcvy2qrv/dpfgsXHZAq7VGYScdeuY+tL/Snqv3gfoU/F
- aiDfZq8VNkvConZwVTpFHBlEe+OKqDoGvqtsV4MFrzGMoAkFSKNI1BDTN6IGIlYyXSXd
- cu9g==
-X-Gm-Message-State: AOJu0YzpVKP5KXX/Kpi3HLlt90thJ5OZm75Ku6OsovZaiquXEdUYOMWE
- mNI76rspVmaitxVy4/Rxx0apmbV8NcPrplU3f7SPBd7EXWlBIyTxlY6gaBZ3OkN1m9qyzmDuEcT
- IeDGpIsEV2QM14UiofjaGCQMDPBDda47yoy4fnceTGw==
-X-Gm-Gg: ATEYQzxBNjA/hO1gxQSCuUzuBWn1D6hOp5RF4HoSQgqSdHd2gkCmpu7VZi+WFISinx1
- Z+uDZtMEQ1mvlD1LOf7/9rtzq1kvya2k9BRYrM6RrmwDyGb4AGr10gn2rYR3cqgIhBxjJdZQQM2
- luGGFDNlicthcKUNwSudVMewwSD2alWmdyR9bI3x6PeE561NinNqmaXfG8OGazQM5IiFD/G8LHG
- RuDszwX+EHOxM0LqQGVMZt97R9D1Zwx5quT+tSE/KnOkxlUuM8HdVZgRCom/v9AZUO83R/n/PzN
- lCXKyJ7kouyYFlaNZNAty6WHtnOohI4DiU/CnosC1e7/fviF206JvPIxE3EwqpD1gFM=
-X-Received: by 2002:a53:b10a:0:b0:64c:a048:9cf2 with SMTP id
- 956f58d0204a3-64d1414f4f3mr9040877d50.27.1773049342497; Mon, 09 Mar 2026
- 02:42:22 -0700 (PDT)
+ bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
+ b=B/MqBt4re/XeT5z6LW6aAQPUmjw0lOzLhSI6NDJXtRUOqkFOqvOtYGWgYGLLIiaUR+
+ u2wX23DuGXdG28q2eS7HhZdMXvriDcxdRJWIk2wgEGFL8MwzmnzwwMLJe3A/SmtmKUbn
+ MjcTKiuvoz+Iu0S9BrXYh3P/uPAKvKuL/L2lAARlHtwZ4mRzBao11U0A1TTyiHVy0aYP
+ qDP/zdBq9SrgBwwiZCz957jxnDOpZnilQuNNk+EPp/aD4aYuB4OXI8h1IdRX0YMdjIAA
+ VUHRZ0PkzxXsJLyCDnSLioWqgJ5MiAEv5BJpSwiFR35oBE15tvJ2zonpuPmcvBsAKNL8
+ ME4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773049430; x=1773654230;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
+ b=l2XaYpHXKzG59278nilMhobQwdMECa79ZrzTfvSIFlvp10onKjJPjKTdn58NnputP1
+ /FJiRmHJcexYNbx7LEBFtAKN9om+k8pXMqlOmGQWrumvp4PRKuWiiKTpgACSzirimLJd
+ xJ+JJvHxoiTug4+5Q0FUGZDLHJUVcZ0TS/tImqOfbqnmdNSStCYnE8Sid9HEwXS3nMnF
+ fINWA/qAiUhbP//ybSgYrvSdeyxsBCyKUqJjniHyYf0IbIppX4QA5NqarjDSTm3qt16w
+ tndpVWPU5OtkdhVlXXRkYXsWZBejGgxicYTVNRyvqOVzuqJBAkrGww7U9UA2MtxwuOOc
+ SuuQ==
+X-Gm-Message-State: AOJu0YyU7x195r6ZbRCRa1H+TK4kMiWJWbZvsWwOa0ANyMsZ9Th8WBhh
+ Rgf5wvp95nVyA218StEGZIoyFz18FmK38W8+LiB8Ls+flu2AIUcEn7PSl+Rd2m7211cp2fNrQ+s
+ 1mgDgH7nHSj9CrEwNweAUo23ytGKqiVbmTn/3e9I7ExNU5ms8+CCN6KNp/ohceFKAprfcuguM+s
+ f7HbpWgkK8xInoDlcGLGqwLNC3zc4mOJw=
+X-Gm-Gg: ATEYQzwWq1yJC2bLke6jbyzPy8oxUUBdJB9aU2r2RSa+2nL0/e3PhZlHmyyjBWik1/K
+ 8q+kIxgqMehGpCfQRJ6avNQV9q+pYv1ByooXJEZXFv68AoKJtLgRx99PIPTQ7QfPGYLTm1NjaSB
+ VuVKkkXQZ9TsOD5Q4FhxccyO3SqSeVBIrGibhtHsbYvYVumtsg/EKgpqVPsibSyU4aWjI9Pxyvc
+ WRwsw==
+X-Received: by 2002:a05:690e:e17:b0:649:b9f4:c536 with SMTP id
+ 956f58d0204a3-64d142fedb7mr7226668d50.73.1773049430320; 
+ Mon, 09 Mar 2026 02:43:50 -0700 (PDT)
+X-Received: by 2002:a05:690e:e17:b0:649:b9f4:c536 with SMTP id
+ 956f58d0204a3-64d142fedb7mr7226653d50.73.1773049430006; Mon, 09 Mar 2026
+ 02:43:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFEAcA_3ed-jb+P8SVh6Pj8uGM+aYcCHTZgvzzHEUFW5zSn3rQ@mail.gmail.com>
- <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
-In-Reply-To: <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Mar 2026 09:42:10 +0000
-X-Gm-Features: AaiRm50_aGh6f7QZRDcJ-dp5x3b2MYB4dyCZ28ESbGL-x3E-VWKbkXceyGudnFU
-Message-ID: <CAFEAcA-zd=k0xioNOKgpe6hAsY76ux04=VkHeQWkngkBnTXTVw@mail.gmail.com>
-Subject: Re: leaks in migration-test
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+ <20260304173535.2702587-6-eperezma@redhat.com>
+ <CACGkMEsCDDSV1m9-2cz3SGEh=MB0viA6h5a9vF5BCHPEhadfUQ@mail.gmail.com>
+In-Reply-To: <CACGkMEsCDDSV1m9-2cz3SGEh=MB0viA6h5a9vF5BCHPEhadfUQ@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 9 Mar 2026 10:43:13 +0100
+X-Gm-Features: AaiRm52vEgNHznDwzVWVegwWsBvw2DSsHrZKW6A5PS-ZSg6P4BjnssmaXBVFF9A
+Message-ID: <CAJaqyWdPbU3HXxsc-e4+K_CBPtnYZzbW8vrQJYK-nSUu35LtWg@mail.gmail.com>
+Subject: Re: [PATCH 5/7] vhost: factor out the detach buf logic in SVQ
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Koushik Dutta <kdutta@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,45 +142,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 8 Mar 2026 at 23:42, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Mon, Mar 9, 2026 at 9:57=E2=80=AFAM Jason Wang <jasowang@redhat.com> wro=
+te:
 >
-> On 3/8/26 12:22 PM, Peter Maydell wrote:
-> > I'm continuing to work through leaks reported during "make check".
-> > Some of them come from the migration-test. (For these to actually
-> > appear in the log you need to run with QTEST_LOG=1, otherwise the
-> > migration test framework will send stderr to /dev/null and the
-> > tests will fail without printing the leak report.)
+> On Thu, Mar 5, 2026 at 1:36=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@redha=
+t.com> wrote:
 > >
-> > I did find this comment in qmp_migrate_incoming():
+> > This code path is modified to handle in order devices.  Abstract here s=
+o
+> > we can generalize on the caller.
 > >
-> >       * NOTE: QEMU _might_ leak this refcount in some failure paths, but
-> >       * that's OK.  This is the minimum change we need to at least making
-> >       * sure success case is clean on the refcount.  We can try harder to
-> >       * make it accurate for any kind of failures, but it might be an
-> >       * overkill and doesn't bring us much benefit.
+> > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > ---
+> >  hw/virtio/vhost-shadow-virtqueue.c | 24 ++++++++++++++++--------
+> >  1 file changed, 16 insertions(+), 8 deletions(-)
 > >
-> > The issue with this is that it means we need to suppress leak
-> > reports in the whole migration-test binary, which means the
-> > migration code will get no leak-detection coverage at all.
-> > (Not all the leak paths have qmp_migrate_incoming() in their backtrace,
-> > as you can see below.)
+> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
+w-virtqueue.c
+> > index e7e3c9155cd0..2d8fc82cc06f 100644
+> > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > @@ -473,11 +473,24 @@ static uint16_t vhost_svq_last_desc_of_chain(cons=
+t VhostShadowVirtqueue *svq,
+> >      return i;
+> >  }
 > >
-> > We're getting pretty close to being able to get a complete "make check"
-> > run with the leak sanitizer enabled, so it would be nice to not have
-> > to suppress leak reports for this test at some point.
+> > +G_GNUC_WARN_UNUSED_RESULT
+> > +static VirtQueueElement *vhost_svq_detach_buf(VhostShadowVirtqueue *sv=
+q,
+> > +                                              uint16_t id)
+> > +{
+> > +    uint16_t num =3D svq->desc_state[id].ndescs;
+> > +    uint16_t last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num=
+, id);
+> > +
+> > +    svq->desc_state[last_used_chain].next =3D svq->free_head;
+> > +    svq->free_head =3D id;
+> > +
+> > +    return g_steal_pointer(&svq->desc_state[id].elem);
+> > +}
+> > +
+> >  G_GNUC_WARN_UNUSED_RESULT
+> >  static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
+> >                                             uint32_t *len)
+> >  {
+> > -    uint16_t last_used, last_used_chain, num;
+> > +    uint16_t last_used;
 > >
+> >      if (!vhost_svq_more_used(svq)) {
+> >          return NULL;
+> > @@ -500,14 +513,9 @@ static VirtQueueElement *vhost_svq_get_buf(VhostSh=
+adowVirtqueue *svq,
+> >          return NULL;
+> >      }
+> >
+> > -    num =3D svq->desc_state[last_used].ndescs;
+> > +    svq->num_free +=3D svq->desc_state[last_used].ndescs;
+> >      svq->desc_state[last_used].ndescs =3D 0;
 >
-> That's a nice thing in itself.
+> Any reason we don't factor those two lines?
 >
-> Is the end goal is to enable that in CI? If not, I doubt there is a
-> strong value in reaching that state today. You'll run out of steam and
-> motivation to fix that yourself in the end.
-> Same goes for all other sanitizer errors.
 
-Yes, I'd like to be able to get this into CI at some point.
-I periodically have a look through some of these things and
-whittle down the number of failures.
+They are common for split and split_in_order case.
 
--- PMM
+> > -    last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, last_us=
+ed);
+> > -    svq->desc_state[last_used_chain].next =3D svq->free_head;
+> > -    svq->free_head =3D last_used;
+> > -    svq->num_free +=3D num;
+> > -
+> > -    return g_steal_pointer(&svq->desc_state[last_used].elem);
+> > +    return vhost_svq_detach_buf(svq, last_used);
+> >  }
+> >
+> >  /**
+> > --
+> > 2.53.0
+> >
+>
+> Thanks
+>
+
 
