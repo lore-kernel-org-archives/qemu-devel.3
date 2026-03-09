@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B34BEF3717
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 11:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1AFEFCD9B
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 12:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzZEZ-0007FJ-Rl; Mon, 09 Mar 2026 07:57:18 -0400
+	id 1vzZHK-000091-Qt; Mon, 09 Mar 2026 08:00:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzZEM-0007Df-QX
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:57:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzZHC-00007w-0E
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:59:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzZEK-0003Rn-3m
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:57:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzZHA-0004CO-ND
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:59:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773057418;
+ s=mimecast20190719; t=1773057595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=F0NgWgEJ1AYNW1ZTLAovwsX2xoukcGfm3rkBw6bdNuc=;
- b=UJ6UgTC2TQANXoB4DSFbiIGw4jU5ici+jKF8aquUvlrsYC0EHUwd0dq69wORCg3HDdYTqj
- kdnwgOk9sk6/qBznUxmCaQCvP2AGtmfON86QPNigKxr08VzsxP6w4+KVey3KIqpyYRdSJ3
- mmHLmNScew35BqzTlj5zmIn8HOvw0W0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zHNf6tkdMfjAfRZEzk/q/eRizHAnL1iRb86NO1z3Bw0=;
+ b=WoxPtfanZi9F2D+9co/nklmNYuwaGpmyOdBuo66FRScASuEaagqirrjIXKL+Rw9CMNlRN2
+ UwX0sVinSq3W8gm4PFWNOl5TuRg+Tjw84GMYu3NI/+dQwjnYp0LabCrQ4msmbjUW9g8dgy
+ pu/lSzbazXWhAnkUGy1xvzpo08/JVAo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-BlK6YY1mPyen23CPqIocyA-1; Mon,
- 09 Mar 2026 07:56:55 -0400
-X-MC-Unique: BlK6YY1mPyen23CPqIocyA-1
-X-Mimecast-MFC-AGG-ID: BlK6YY1mPyen23CPqIocyA_1773057414
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-wHUXZA6FPHqTRNzmaD6Vgg-1; Mon,
+ 09 Mar 2026 07:59:50 -0400
+X-MC-Unique: wHUXZA6FPHqTRNzmaD6Vgg-1
+X-Mimecast-MFC-AGG-ID: wHUXZA6FPHqTRNzmaD6Vgg_1773057589
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B2041955F29; Mon,  9 Mar 2026 11:56:53 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EDAC4195608F; Mon,  9 Mar 2026 11:59:48 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F3C1B19560A6; Mon,  9 Mar 2026 11:56:49 +0000 (UTC)
-Message-ID: <ef450046-d43a-4284-9a46-0926a89fbf55@redhat.com>
-Date: Mon, 9 Mar 2026 12:56:48 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9BD311956095; Mon,  9 Mar 2026 11:59:45 +0000 (UTC)
+Message-ID: <205a18d7-4069-4f1d-b4fd-59f3ce8ed6a6@redhat.com>
+Date: Mon, 9 Mar 2026 12:59:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/15] pc-bios/s390-ccw: Introduce PCI device
+Subject: Re: [PATCH v5 11/15] pc-bios/s390-ccw: Introduce virtio-pci functions
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, zycai@linux.ibm.com
 References: <20260309003601.242634-1-jrossi@linux.ibm.com>
- <20260309003601.242634-11-jrossi@linux.ibm.com>
+ <20260309003601.242634-12-jrossi@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -100,10 +100,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260309003601.242634-11-jrossi@linux.ibm.com>
+In-Reply-To: <20260309003601.242634-12-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -132,17 +132,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 09/03/2026 01.35, jrossi@linux.ibm.com wrote:
 > From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Define selected s390x PCI instructions.
+> Define common functionality for interacting with virtio-pci devices.
 > 
 > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/Makefile |   2 +-
->   pc-bios/s390-ccw/pci.c    | 118 ++++++++++++++++++++++++++++++++++++++
->   pc-bios/s390-ccw/pci.h    |  39 +++++++++++++
->   3 files changed, 158 insertions(+), 1 deletion(-)
->   create mode 100644 pc-bios/s390-ccw/pci.c
->   create mode 100644 pc-bios/s390-ccw/pci.h
+>   pc-bios/s390-ccw/Makefile     |   2 +-
+>   pc-bios/s390-ccw/virtio-pci.c | 167 ++++++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/virtio-pci.h |  80 ++++++++++++++++
+>   pc-bios/s390-ccw/virtio.h     |   3 +
+>   4 files changed, 251 insertions(+), 1 deletion(-)
+>   create mode 100644 pc-bios/s390-ccw/virtio-pci.c
+>   create mode 100644 pc-bios/s390-ccw/virtio-pci.h
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
