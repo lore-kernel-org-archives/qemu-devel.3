@@ -4,132 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FC3FCA178
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 19:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B004FCA17B
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 19:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzg4d-0003bT-72; Mon, 09 Mar 2026 15:15:27 -0400
+	id 1vzgAo-0004n9-Px; Mon, 09 Mar 2026 15:21:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vzg4W-0003W4-IY; Mon, 09 Mar 2026 15:15:21 -0400
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vzg4U-0002OO-Nv; Mon, 09 Mar 2026 15:15:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=x8IX3+FeBl4Pbq/Hjg32MzyYAu6w5a2OMtKQ8I8ngrdGnc8rYeub6armixUyJyQavSb9DQu9WKGq0dnPjGC4A2RFpdYPVYYYvks3UB9dyLbOKHRXgFQlmFCEH9FUHwBPvosEaZaET0O0O5BofQO1S0LtoYE9A1nC0L82Yd86vpgjq5tk25E6wj4jvnohivt8UVwUveG4u1Hxhi4lRdNugBCGQysgxsk/vIJgOYYl2e+0r54oobbnW45IxE8DA0BwG/JczZ8Vu0+veJhXsKNDxjtSJgwOi8gC0cJK5gt03hbdFLmlyQQa3nRO+5qxp31SW69UzTzV//R1FqQcVLSd9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+VdNBakTYcj60DVnlRERPaRxzVAaJGoNorU1X7G+ses=;
- b=cZWklZK/rYuW8yaXTwuxHXqz9bJrkzv8+GXjoYuayEYdJBR1Q5o9E6MEY9Gok7p3jtRp4eC0eO/i2E/tB/PXtVGFR33AWTcmQe35ZP/j5zORvqBfssouVLJMtGzQnby923q84zGnv66Au9QVrqMyZ8QlKlVWxBMbG+TqZqGP/6a5IBYRpLLGTV2avp2zE56Zp3TJqg2BWBSIrNlWu2sCW0Z3MitU+tcSVBtJcc7bkPmHrBj18EzGrKfzC2oWp8KwtO9xkko6rEpmmMwZWXWNAhFuFMiPrCJkP93OhKSUhwPsoWcRZfzpDqW927RXZiwArjKXUIQLB6gwPETGhPUYNw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+VdNBakTYcj60DVnlRERPaRxzVAaJGoNorU1X7G+ses=;
- b=Xf9SgJAkaUGW//dFruDazmsWoebutxG78Aad5Ko2yXRjdxf//pxd89tWqgFlnCMC0KL9+t31yIr7oLAYCANMG2UBT0eHmVoY6par2jLARrUdyYQieZZZ4frkV+BFfe6xOO6kZbci36GpBZ1+S2+mAvWxiYmHa/a7opbZ+w6m5OF0LgTq6d743LazmyUNwCElkd4DeNakLU/1yQBujFdytwJ1zlXsHBkTuaEkMX5m5pVP0KE9FZJKvhAqlNxMYW3VF9vFDjfbRUB9t1pAuetR+lwQvPeApXk9PnS1SlLEsumEuccGHbfDYFIksbwQs+WYRgQp+uLkNzARAgHF/evqHw==
-Received: from SJ0PR05CA0043.namprd05.prod.outlook.com (2603:10b6:a03:33f::18)
- by SN7PR12MB6691.namprd12.prod.outlook.com (2603:10b6:806:271::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Mon, 9 Mar
- 2026 19:15:08 +0000
-Received: from SJ5PEPF000001CB.namprd05.prod.outlook.com
- (2603:10b6:a03:33f:cafe::4e) by SJ0PR05CA0043.outlook.office365.com
- (2603:10b6:a03:33f::18) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.25 via Frontend Transport; Mon,
- 9 Mar 2026 19:15:08 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- SJ5PEPF000001CB.mail.protection.outlook.com (10.167.242.40) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9678.18 via Frontend Transport; Mon, 9 Mar 2026 19:15:07 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Mar
- 2026 12:14:48 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Mon, 9 Mar 2026 12:14:48 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 9 Mar 2026 12:14:47 -0700
-Date: Mon, 9 Mar 2026 12:14:46 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: Re: [PATCH v3 15/32] hw/arm/tegra241-cmdqv: Emulate global and VINTF
- VCMDQ register reads
-Message-ID: <aa8cJszkOKGLUYdD@Asurada-Nvidia>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-16-skolothumtho@nvidia.com>
- <1b64d8d1-85d9-4894-8813-d645977aee68@redhat.com>
- <CH3PR12MB7548413828C8ED32C75B1ED1AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aa8UOhKhA4jIXVxf@Asurada-Nvidia>
- <CH3PR12MB75481A77D2468CA6848824EEAB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzgAk-0004mm-6R
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:21:46 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzgAh-0003bQ-6l
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:21:44 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-829756f3ee9so4961475b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 12:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773084100; x=1773688900; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=V+zc7m8AXGS3NP8Uhy0CUA61wN9kBxJxnryrQblP2Qc=;
+ b=uwz4dmFLRsUhuUV8gH30utLYyzhiiu5ziDc+CC27xL56gjdwSl0Jpb1OBeRUjMG0E3
+ W7MVoYB/A1W9LD6BV1lrDdPp3DDoex5lzA1EIBUxwy9YNPrPH0VwVp+ZKODWmnSOUych
+ 4rHmsOrbVDZ1nMSbRX6TirG3if/TdObYDmon5gAOepccnvlGdGVAK8KN/C/PuPg7bjle
+ WxNDNZlu3/ShZuj9M9MMzuDyhih25kDgrjSE8xatTtqoldf/F0L+WB85J7ow5Vb4PHC9
+ 5lzquxEnKHV2AeP/aO8Iyjdia/vhmJAGaklFM5bhUIJbslZgesP1Mw+tMKKOmjsycyb5
+ cgKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773084100; x=1773688900;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V+zc7m8AXGS3NP8Uhy0CUA61wN9kBxJxnryrQblP2Qc=;
+ b=SPEtAGiG7PXedcRL4uuQQfeqP2ECVzd5gBiZrxPPII3cIiZArr7nAYbaJtR/aDfHJp
+ nhyeTLntd410Bjs8RtkNAHREq9OnEzfukNAt9g22i6NDW3ffg986wK/mfKjlt5Vpc35u
+ 040vn0cVqyaXdj/W2lhajuA+vcXaZG37U2qqPCQL+gy86GZ69S8bFO+atFiAq7++J8P3
+ L/MxzDux9Iti37BOYErrg/pEV0NWvZJiugZzoy1TdLEzMRgk5PmCzTL16OYC0OGeqqJ4
+ JRq66rx5YKPU9fiJsl+ZxusT730zQqiqTwyC7j8sBakVIO7f7q6j18VUAz1txom4A6pU
+ qCYw==
+X-Gm-Message-State: AOJu0YyjyKlqppo3udQTtz454oR0zujVWBFVJB3Jc6bOGIoHaUIftcUk
+ Y9DmlmsnWDlIeBNjc6zz7PaSNhQfMu10dpg1pcUERIT94ziRWTs5wB7YinB8t25W8CI=
+X-Gm-Gg: ATEYQzwWiVqOEngfi4V1IstniKGPqdAQ0sMuG7iEtrH0bnFoVWX9598gB/S/js8GkGx
+ bLZWASZCYBZEeDK8Pw6qKmY4S3Kd4zy7rvFby3D+yUKmpK9IvoZ+zqKKfeM8w1E8wZpEwUakolz
+ R/m4JxFfrpAhqeTNBCBEL3wRxavwd8/4y10g+4MPnFART1F0WvjSgOG4zDrcex0sBkTA9oLERdj
+ e3GNFz8LdN7Uozuo114NDQpo9WFHCWfY7hx77xlzfXgH/8poFfwBpUW0lVQdAlLAXZn4jgADtmW
+ ENNPgkDKIkv5+3USLfsW9V5c6kpvskrFqJOyyk2YbHPkR35DL+dRoJ5HncqGyBVBz260YY7pnuX
+ c7F0bEMNrCq6rI0eC7HuDHJbY0G06YxrkPgeIQY9xAivfXlKIq9ZkV6kCrTHnD57MeZS6kw5Vkv
+ RsfBtdAMRGOcP02a8x0W/20S1lVXz+SLNIa0iPxl+pDJEkbRmCtCHcYgRjliKmqem6TddoHCw6Z
+ G/aLoI=
+X-Received: by 2002:a05:6a00:761a:b0:823:877:5519 with SMTP id
+ d2e1a72fcca58-829a2ef7a2bmr7769502b3a.43.1773084100327; 
+ Mon, 09 Mar 2026 12:21:40 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-829a48b437fsm10828383b3a.52.2026.03.09.12.21.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 12:21:39 -0700 (PDT)
+Message-ID: <905957d4-4d5d-45d1-95e0-f7cdc6f75a97@linaro.org>
+Date: Mon, 9 Mar 2026 12:21:39 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CH3PR12MB75481A77D2468CA6848824EEAB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001CB:EE_|SN7PR12MB6691:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc0d6300-c9de-41dd-6334-08de7e102d71
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|82310400026|36860700016|7053199007; 
-X-Microsoft-Antispam-Message-Info: Fgw0M9aZITUR6yykNqwV5GDpDu18te3GRpOE53UrpQqRHuvnxnHxdv0/NQ3qyubhjqNJkC9yqyvwZ7toZbSImXyIixfgI21jNKj5DYg7OaxFc8lfkH2DJJZowDXJmpXabaheruSGn5YVJ4RiqKONHIkbbUOF6cDMNWfZ86Lc8Dcy3+w04t+spAORqgz/2y8MHrVo7gmTJL+T/ukI4/jylWPNUjsH65Y+Lcg8Tyo8bsc3OC2UJlYSuLvv1XsOoVjNp2gRJdk3vphOi9sFvyfbmfqDpYfR3m2qAk6UexVxRW3FhDXFz9askGoNMXpcXPbr0ZcUSukcn8Zsf9RsYuMKD4aW+6LyVguxEVTycSjn9PG17yPzKx5mE05REOIlUfNKekYkBRtz2pa5UqegCAae7+IqN0GztE3Jo2gQef+4r+8r9OUK2IRWevJCt2XF9/K76iX+hDF0WMjM4h8/uBMoIb41M3BYdwGwQ4LnIqWu3Sgc6rrkXeqNNVXB0AUBZvnbdMBM6c5pgo4mYQIxhSB8gJOtI81Z7LP9vr2eEKg8C3KprlRpE1UjEYjkr7ggYnFltexvpYaR2t81irKQClMxI2TrwSaQL4uTpvC9l6gh6fmJBQ/RqWReddIbcjnabf3vSTFai8wrJNki+UgF/mAJ60HOEdxf0JgwSLbSz06yOcZOx01t1W5hLtybg59F+fQaM1otX8xfobJKmiH72yZm7wUu0Wx7mnDOXPaQ0l5Lq9KPrgnwUIUFSbTVQNLfkX6W0FKJ0Ee4jS2JyKDAXTaViw==
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(82310400026)(36860700016)(7053199007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: gEM41oRoSUHZGToe5vmlG8BmopgYf6DHrmlDdWVpYiocpC1KC9P1k/OBY9o2KzNKcrW+XnISEXMiPR6W0n5kvsL2Q53d3RWl5wmGMiXDF7AFLd+VTpkdhQzkvxDj/Z7rKzrZ+1gDv/jsHRCw0ELobU8eSajvSsjnmGUd63zf7RMbNxBhiYOefw0sgb72mvwrIKSjGi3OmjX8rc/i+m/qeLUERURoMppaG2C2/AJlSh/PlFpw96YkiayOVttN/I4GG6vZlytznv4iy7400MrwwM4cyYb54HpCfYeBzJCEVF0xJvKs/04uhMIsiSNFIy37OfJnaaueVGSiDJoudCnHxCKj6k1mLSYyUP+zJHd3NfDq1aFk7SzaajQfTHDo6hDFzL+IxhmS7uRrgok/gFtz/O1WENA+3uiHPLnxyvnrUkYybPna6W+vWxYJNdaq914D
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2026 19:15:07.9825 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc0d6300-c9de-41dd-6334-08de7e102d71
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001CB.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6691
-Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
- envelope-from=nicolinc@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] contrib/plugins/uftrace_symbols.py: ignore zero sized
+ symbols
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260306051553.2778652-1-pierrick.bouvier@linaro.org>
+ <f7e095e3-18f8-4c5e-8a39-ff428f984b07@linaro.org>
+ <f9c9d581-294d-a813-2cfd-584fb57af743@eik.bme.hu>
+ <0a0f0d55-24ed-4018-addf-dac2b7bcfe6e@linaro.org>
+ <e5bef5ed-23e9-119d-3f63-a45343cc9c53@eik.bme.hu>
+ <cbc1b812-40f4-4b1e-b206-ed4962cb5dd9@linaro.org>
+ <c30ea720-5208-adea-c8a3-788c870fedee@eik.bme.hu>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <c30ea720-5208-adea-c8a3-788c870fedee@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,87 +145,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 11:53:59AM -0700, Shameer Kolothum Thodi wrote:
+On 3/9/26 11:50 AM, BALATON Zoltan wrote:
+>> Every N months, you can run a manual "archive" command (i.e. move to another
+>> INBOX subfolder) on messages older than N months and your qemu-devel INBOX
+>> will keep a constant size.
 > 
+> Glad that it works for you but I have a limited mail quota so I have to
+> delete read messages.
+>
+
+Let me update my suggestion with something that would work in your case.
+
+Every N *weeks*, you can run a manual "delete" command on messages older 
+than N weeks and your qemu-devel INBOX will keep a constant size under 
+your quota.
+
+The key is to not delete thread as soon as you receive them, but keep 
+context for a few weeks, similar to keeping your git clone to a constant 
+-depth=N because your disk space could be limited.
+
+It's a win-win: you keep semantic context *and* your quota stays under 
+control.
+
+>>>>> Getting messages about patches being queued is useful for other
+>>>>> maintainers and contributors to know the patches are picked up and then
+>>>>> they will also see the pull request on the list and when the pull request
+>>>>> got merged. Getting separate messages for each patch in a pull request
+>>>>> does not add more info to that for people already following the list.
+>>>>>
+>>>>
+>>>> Except that some maintainers, including me, don't cc original authors when
+>>>> sending a PR (that's a deliberate decision). As well, some top maintainers
+>>>> don't always send back a message once the PR is done. Or they don't
+>>>> include
+>>>> all authors on individual patches.
+>>>
+>>> I don't think that's a problem. If somebody is interested they could
+>>> follow the list or filter it e.g. for their S-o-b or simliar to get those
+>>> messages or pull requests even without being cc'd.
+>>>
+>>
+>> In the case of TCG plugins, a lot of contributors are new comers and are not
+>> used to all this. I personally don't want to put the pressure on them to
+>> configure this kind of complicated setup, but prefer to offer them a
+>> GitHub/GitLab like experience. The series is a PR/MR, and when it's merged,
+>> the forge notify them it is.
+>>
+>> Sending email patches is already a pain in itself for newcomers, no need to
+>> ask them to configure email filters on top of that.
 > 
-> > -----Original Message-----
-> > From: Nicolin Chen <nicolinc@nvidia.com>
-> > Sent: 09 March 2026 18:41
-> > To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-> > Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
-> > devel@nongnu.org; peter.maydell@linaro.org; clg@redhat.com;
-> > alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
-> > <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
-> > <jgg@nvidia.com>; jonathan.cameron@huawei.com;
-> > zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
-> > <kjaju@nvidia.com>; phrdina@redhat.com
-> > Subject: Re: [PATCH v3 15/32] hw/arm/tegra241-cmdqv: Emulate global and
-> > VINTF VCMDQ register reads
-> > 
-> > On Mon, Mar 09, 2026 at 11:04:31AM -0700, Shameer Kolothum Thodi
-> > wrote:
-> > > > > The VI_VCMDQ register ranges are an alias of the global VCMDQ registers
-> > > > > and are only meaningful when a VCMDQ is mapped to a VINTF via ioctl
-> > > > > IOMMU_HW_QUEUE_ALLOC.
-> > 
-> > > > If the guest detects he can use a single VMCDQs (I guess he can
-> > > > introspect this by reading the SMMU_CMDQ_PARAM_0) how does he
-> > know if
-> > > > he
-> > > > shall access your so-called "Global VCMD regs" at 0x10000 or VI0 regs
-> > > > (0x30000-40000). How does the guest know that he is supposed to use
-> > VI0?
-> > >
-> > > The CMDQ registers can be accessed via both the so called "Global VCMDQ
-> > registers
-> > > Page0" and by "VINTF logical VCMDQ registers Page 0". And they are aliased.
-> > >
-> > > The difference being(from Nicolin's explanation here[0]):
-> > >
-> > > "
-> > > The global page0 is programmable at any time so long as CMDQV_EN
-> > > is enabled.
-> > >
-> > > The logical page0 is programmable only when SW allocates and maps
-> > > global vcmdq(s) to a VINTF. "logical" also means "local" to that
-> > > VINTF.
-> > > ".
-> > >
-> > > IIUC, for now a Linux Guest kernel will only use "VINTF logical VCMDQ
-> > > registers Page 0".
-> > 
-> > Yes.
-> > 
-> > > The question is whether QEMU should also support accesses via the
-> > > "Global VCMDQ registers Page 0" if some other guest implementation
-> > > chooses to use that path.
-> > 
-> > Yes.
-> > 
-> > The point is that we can't reject guest's access to the global MMIO
-> > space. So, QEMU has to support both. But guest OS is allowed to do a
-> > partial map/alloc, so global MMIO page isn't identical to the VINTF
-> > logical page in this case.
+> But you have no problem putting that pressure on me :-). Yes I know it can
+> be a pain for newcomers and did not say these messages can't be useful to
+> them. But I can't follow your logic about sending these to the list. You
+> say that they won't see if their patch were merged because they won't
+> follow the list because it gets too many messages. So you need to cc them
+> but you also send that to the list where they won't read it anyway so it
+> just increases the volume of the list even more with messages that those
+> on the list will just have to ignore. Wouldn't it be simpler to not send
+> these messages to the list if those interested are already cc'd because
+> they are not expected to read the list?
+>
+
+Answering below.
+
+>>>> So for consistency and the series I personnally track, yes, I believe
+>>>> there
+>>>> is a value in notifiying original series and author.
+>>>
+>>> I'm OK with that, what I doubted is that it is useful to send this to the
+>>> list too. Wouldn't it be enough to only send it to the people involved off
+>>> list?
+>>>
+>>
+>> It does not notify only original author, but other maintainers or reviewers
+>> also. As a concrete example, I'm sure you already went through a thread where
+>> someone was reviewing code already merged. With such notification, it would
+>> not have happened.
 > 
-> Are there any benefits for a guest implementation making use of the
-> "Global VCMDQ registers Page 0"?
+> I'm not sure about that. If they are not on cc they would miss this
+> message on the list the same way they missed the pull request. If they are
+> on cc they would see this message without it being sent to the list too.
+>
+>> If you started arguing about the message itself, it would be an interesting
+>> debate. But your point is "My email workflow is A, and I don't like B, please
+>> change B". So my polite answer is "Your email workflow is A, and you don't
+>> like B, so change A". We can run in circles for hours I guess.
 > 
-> If not, the VINTF-based access path seems preferable from a hardware
-> isolation point of view.
+> I'm arguing about if it's useful to send these messages to the list. My
+> workflow is an example but just ignore that for now to avoid
+> misunderstandings. If you say that you need to send these messages because
+> those people won't follow the list then I think it's not useful to spam
+> the list where nobody would read these messages just in case somebody
+> might read them. I don't care if you send them off list or not and if
+> others think that it's useful on the list I'm also OK with that but I
+> don't see what this would add to the already sent pull requests and pull
+> applied messages already sent to the list for those who follow the list.
+> 
 
-Yea. That's why Linux was implemented in that way.
+They might not be in pull request messages recipients, or didn't 
+configure ad hoc filters for that, so they might have missed that.
 
-> In that case, would it make sense to restrict
-> usage to the VINTF logical page and recommend that guests use that
-> interface?
+As well, for people reading the thread afterward from lore.kernel.org, 
+it confirms the series was merged and the topic is closed, without 
+needing to check manually in git log, parse pull requests, or check on 
+patchew status of series. You'll notice that I always send an update 
+email when posting a new version to link to new version also, to "close" 
+a given version, in a similar way. See it as an email ladder version -> 
+version -> version -> notify_merged.
 
-I don't think QEMU can recommend that... Linux kernel made a good
-example but it doesn't make a lot of sense to recommend or force
-all guest SWs to follow.
+I didn't invent any of this but simply mimic what GitHub and GitLab (and 
+other forges) do. They notify you on new versions, on final merge, and 
+you're free to unsubscribe from a PR if you're not interested.
 
-From hardware emulation perspective, QEMU should just re-act like
-a real HW. It's okay to make it unfunctional v.s. unpredictable.
-But it shouldn't reject any MMIO access, since the HW wouldn't.
+Once again, I totally respect you don't find it useful, feel free to 
+delete and ignore those messages.
 
-Nicolin
+Regards,
+Pierrick
 
