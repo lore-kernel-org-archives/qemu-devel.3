@@ -4,64 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 643A3EFCD95
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 10:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159CDEFCD92
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 10:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzXuX-00069A-RM; Mon, 09 Mar 2026 06:32:29 -0400
+	id 1vzXuV-00067H-V0; Mon, 09 Mar 2026 06:32:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69ae9dc7.v1-1d79080cf5a8418284b903d3f126aa2a@bounce.vates.tech>)
- id 1vzXuU-00065P-A2
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:32:26 -0400
+ <bounce-md_30504962.69ae9dc7.v1-a1a9f8af29314422bd95843cc0b24db1@bounce.vates.tech>)
+ id 1vzXuR-00064X-7T
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:32:25 -0400
 Received: from mail132-19.atl131.mandrillapp.com ([198.2.132.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69ae9dc7.v1-1d79080cf5a8418284b903d3f126aa2a@bounce.vates.tech>)
- id 1vzXuS-0006Zc-I9
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:32:26 -0400
+ <bounce-md_30504962.69ae9dc7.v1-a1a9f8af29314422bd95843cc0b24db1@bounce.vates.tech>)
+ id 1vzXuO-0006Z1-8P
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:32:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1773051335; x=1773321335;
- bh=3V1F5y00zAa+MdTV4jWBPDvbAqCcLx2ckw1wLWI6mTo=;
- h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
- Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
- b=UbujrpldGytPXFKcF4YRUQBcRulXEPx4hLPjaLIdJujQCnj1nIiZq37gX2qLe8ct7
- 7MHkiIyVUCk0EHWDl4jwAlIcZpanEwoBNEL8htuMChOg/Z0f9zBw3ylI5I6Lq5s4hs
- Rax9YCeWAG0/Henxep8I/JghZk+7PnPKk89LzX8hgkTY4GU4MKywJ5SoPeEPBMmFe6
- Dh5KyuhcKxLKijVJkipUWQJMA9JhrZDre4Q6wAzB+kxpdnKaLxnDFEqrgguvSmv7hi
- +o7IvJu+87oskv4I9Q8qbWEZqSr70EUJ0ls5LsEgIybYBc4wOtmGcil0V3HGIaSs6K
- 1PgKyrfyMCbqQ==
+ s=mte1; t=1773051336; x=1773321336;
+ bh=WT0SylEBpMCEz50mi1VO5bCYNnAqM2EjVLiN1Dm+TEQ=;
+ h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
+ Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
+ Subject:From;
+ b=aZX++omEOKKqpVdTcO/RRlUI1KpMdaauorNzlyiGnrRWs4XEoJkA7Gh27BR5/KvJY
+ q9DRdgYQcneSz+d5nJteTAILr5jiXZ/NvZOlO+4gVuT3dfOwtNDfjpZNDDmngpXpb2
+ yyZNRSuX/biH0vb6/JrNXJmN0J4Dp67MOImk37ZNLnXM/N/9Yx8JdeiWh/16a7De2C
+ OLasNPhnzR0qkUMMrtjoaY32dqeelFugcOCWjookFcwY/IJkUIYgoB6IlHw+pymAKN
+ lFw+fmwFYzHtAYi1O1Ivb6RBiCLYewWxgBPDIAPp0Sfsd5sP4tddItmFyvf3dl5z6o
+ f+xYZALpO0PGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1773051335; x=1773311835; i=anthony.perard@vates.tech;
- bh=3V1F5y00zAa+MdTV4jWBPDvbAqCcLx2ckw1wLWI6mTo=;
- h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
- Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
- b=NDXxAenJ0+CmWTsMHnYxxWGJ4IIgKKHtLzd1di+CFM7ztTVt8lxvSVmPvcIrsbPkc
- J2ON5FxjcSMA9Bh5DYdUA2+ElEqwWf8AKsDBnyPMtIWRtlmn62R5awCp3VOUJaEhT+
- VxV9hkWU4VL6ZfGW22fH1rHqJYS1HZzUgeX80W5ikg067Pg9JctC839Se3gin/mD6q
- 7DqVCSGz2SQcZGewS8UX5/+WIh5sbK4ii+7JZhsuqhKNzCgGycdL48Xu/F8evAIgfe
- enTm4rjwc+sZ37ysZZoz1eza8DB11Ny+bD8PFgGgyhgIAOvsw0ogHdTBSvT2EEaQSt
- KIq9SOzLlSCGg==
+ t=1773051336; x=1773311836; i=anthony.perard@vates.tech;
+ bh=WT0SylEBpMCEz50mi1VO5bCYNnAqM2EjVLiN1Dm+TEQ=;
+ h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
+ Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
+ Subject:From;
+ b=qOPwUBg7MWmvmqRLB7QSMXRSsmMDbt/YmSenijqsRW048REtvsPQRECzmxw9QP8jD
+ 32qiMWwIwfm6AATo497UigHQjMl5H2pxUWjjzO61BR/ClJZxBnbyRFe5umpG/emhiY
+ 3U1XiT7KVTZDN59QNq69OzuYorBd0znFXHRVHHH4m0mfhLYU2FGGuj4w424DYQDV/P
+ Fxka+89jXc9//ziCvNjwhMuXTqHLcMvDWz78y4fO00amAZzmM+jYFuLIcPwg7ajwDi
+ dOpNenHzjDqZJFKRD7HnpUh+gISKauRJEqLLVAwS4wRjgombi7wjCdgxACojcR32Vn
+ RGqSGh5tMfZCA==
 Received: from pmta09.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
- by mail132-19.atl131.mandrillapp.com (Mailchimp) with ESMTP id 4fTtF3318cz1Yg
- for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 10:15:35 +0000 (GMT)
+ by mail132-19.atl131.mandrillapp.com (Mailchimp) with ESMTP id 4fTtF40dYzz1y4
+ for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 10:15:36 +0000 (GMT)
 From: "Anthony PERARD" <anthony.perard@vates.tech>
-Subject: =?utf-8?Q?[PULL=200/3]=20Xen=20queue=202026-03-09?=
+Subject: =?utf-8?Q?[PULL=202/3]=20xen-hvm:=20Handle=20framebuffer=20relocation?=
 Received: from [37.26.189.201] by mandrillapp.com id
- 1d79080cf5a8418284b903d3f126aa2a; Mon, 09 Mar 2026 10:15:35 +0000
+ a1a9f8af29314422bd95843cc0b24db1; Mon, 09 Mar 2026 10:15:35 +0000
 X-Mailer: git-send-email 2.47.3
 X-Bm-Disclaimer: Yes
 X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1773051334677
+X-Bm-Transport-Timestamp: 1773051335462
 To: qemu-devel@nongnu.org
 Cc: "Anthony PERARD" <anthony.perard@vates.tech>
-Message-Id: <20260309101529.25695-5-anthony.perard@vates.tech>
+Message-Id: <20260309101529.25695-7-anthony.perard@vates.tech>
+In-Reply-To: <20260309101529.25695-5-anthony.perard@vates.tech>
+References: <20260309101529.25695-5-anthony.perard@vates.tech>
 X-Native-Encoded: 1
 X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
  =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.1d79080cf5a8418284b903d3f126aa2a?=
+ =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.a1a9f8af29314422bd95843cc0b24db1?=
 X-Mandrill-User: md_30504962
 Feedback-ID: 30504962:30504962.20260309:md
 Date: Mon, 09 Mar 2026 10:15:35 +0000
@@ -69,7 +73,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=198.2.132.19;
- envelope-from=bounce-md_30504962.69ae9dc7.v1-1d79080cf5a8418284b903d3f126aa2a@bounce.vates.tech;
+ envelope-from=bounce-md_30504962.69ae9dc7.v1-a1a9f8af29314422bd95843cc0b24db1@bounce.vates.tech;
  helo=mail132-19.atl131.mandrillapp.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -94,41 +98,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 1ae4271ab8dbfbf5dc28b36baa7f3fd5fd2215e1:
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-  Merge tag 'pull-11.0-virtio-gpu-updates-060326-1' of https://gitlab.com/stsquad/qemu into staging (2026-03-07 11:22:16 +0000)
+It is possible for a guest to relocate the linear framebuffer by writing
+to the VGA device's BAR. This causes QEMU to report an error and if the
+VM is migrated, the destination QEMU hits an assertion.
+The problem is that updating the BAR causes the PCI core code to call
+the del region callback followed by the add region callback but the
+xen-hvm code ignores the del region call and therefore the subsequent
+call to xen_relocate_memory() during the add region callback fails
+because the source address is not correct.
 
-are available in the Git repository at:
+Fix it by calling in to xen_remove_from_physmap() in response to a
+del region callback for the linear framebuffer so that the subsequent
+add region callback succeeds.
 
-  https://xenbits.xen.org/git-http/people/aperard/qemu-dm.git tags/pull-xen-20260309
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Reviewed-by: Anthony PERARD <anthony.perard@vates.tech>
+Message-ID: <20260108132514.1862552-1-ross.lagerwall@citrix.com>
+Signed-off-by: Anthony PERARD <anthony.perard@vates.tech>
+---
+ hw/i386/xen/xen-hvm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-for you to fetch changes up to 5a0b8890862251de3f182020cdfa3faaec7623aa:
-
-  xen-hvm: Emit RTC_CHANGE upon TIMEOFFSET ioreq (2026-03-09 10:48:33 +0100)
-
-----------------------------------------------------------------
-Xen queue:
-
-- Bug fix handling framebuffer during migration
-- Emit RTC_CHANGE event
-- One build fix
-
-----------------------------------------------------------------
-Liam Merwick (1):
-      hw/xen: Fix trace_xs_node_read() params
-
-Ross Lagerwall (2):
-      xen-hvm: Handle framebuffer relocation
-      xen-hvm: Emit RTC_CHANGE upon TIMEOFFSET ioreq
-
- hw/i386/xen/xen-hvm.c   | 3 ++-
- hw/xen/xen-bus-helper.c | 2 +-
- hw/xen/xen-hvm-common.c | 2 ++
- 3 files changed, 5 insertions(+), 2 deletions(-)
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index a6e1683885..fd7ef56bdb 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -720,7 +720,8 @@ void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+         return;
+     }
+ 
+-    if (log_dirty != add) {
++    if (log_dirty != add &&
++        !(section->mr == framebuffer && start_addr > 0xbffff)) {
+         return;
+     }
+ 
 
 
 --
- | Vates
+Anthony Perard | Vates XCP-ng Developer
 
 XCP-ng & Xen Orchestra - Vates solutions
 
