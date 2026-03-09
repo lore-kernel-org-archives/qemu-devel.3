@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B08FCA168
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F31FCA168
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzejw-0001Iw-AV; Mon, 09 Mar 2026 13:50:00 -0400
+	id 1vzek6-0001T8-Gb; Mon, 09 Mar 2026 13:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzejk-000194-UW
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:49:52 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzejs-0001Db-CQ
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:49:58 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzeji-0002yT-Tj
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:49:48 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48539d21b76so11492765e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzejq-000300-8f
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:49:56 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48540d21f7dso5318525e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773078585; x=1773683385; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IsNjI4BjTTn39ADNHcYY6cGNw6j3aYRSbYWW+jepIQ4=;
- b=x38C0fH2x2BZo6wZIT7MX6MzDpQx4m4Ko0vGeAdILaEWDK2+Rxl8EeSxzOs9WBdB8m
- bjxrhHoGO42aDL3LxKiSG4PJq4h4Olkx53yxyw/KphdN9NodxJGBGRa4WZjvTYrpHfK6
- oAzGgFFODbtdHI+XUJXurkO8CbUVSIdUaSiFYgsGgNZdIt56e4P67zepMJJ6F1RAJ7ol
- Kcb0P/uceN51l5QwNG5klDTkGtGHKKaJ9GUOAXif+fsqbRZ/J90rYGmCDK5a9KW77du8
- tv1eTPu2wPrpXQugfUvzTO0cU++1DlP58G9YbFVWqh1OLcST401od32wsLu+KVZcR96v
- xRVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773078585; x=1773683385;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773078592; x=1773683392; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IsNjI4BjTTn39ADNHcYY6cGNw6j3aYRSbYWW+jepIQ4=;
- b=OQ1t2Nx8M8vRb90Hy/qm7mZFKqE23+Q7sR6HEMxMGYGhG/5qwmD2/ztyR0lCI261Kp
- /y2wRIuHl1BoEoELxR5f0EKUKu1T9JaBEI/MnMeB40m0+27eK+9JGIKjjMrjNYMzh5B6
- iMgaMOJRzsLMrJUEwFhO5bOa2M1nFSxYlgGZ4PQGW/6uKjqvKHveSM+T7qZ4UugWckYV
- qgWLe1ekuLYBVO9a7umMgLTXXmsGaKIZKKNwbXuK8X1xfbjnwRD8XImWf3BXMyOs7cUw
- w+TncQjpFMETdYno6wbdpn4pEqj9j6lc+Vtuix54UII+qjtHg+3idxuT+LH9DsDgnZcO
- opRA==
-X-Gm-Message-State: AOJu0YyczOtHgWj0gaMd58Okf5K6bzzMH/jkD5cKHWFcc2Bp6Rz5uWth
- xEPNZd8nfwG9EFKqIC/cnQQxs2VgSsidMXoed9lu81hDWrgT/oG7IO1Ux75JHtdRtg0Zl1X6AN8
- o5wvtZek=
-X-Gm-Gg: ATEYQzwkQWNBNVkMKggzWoqGC3oN0aCSc1zArw6A9F/dyF6tYP+Q0/+vTZRy39IDqOf
- WOjVh83zSaeGEH60jKu092xtoO7GHv8Gf88EL5IiPERz80IspWKKW4M56lpP4yXtWYeiAJiKQoE
- IrOtDX2o1B1q71p1912TTqq7DCs5op5+YSiWEFgtbgcWIMO7bIEmBMLLhboWe//yi1vCCuJ9rXW
- xsE7bMD7Nh6jZy181BzaAOpWrG60e3L3g0pEc4hbTNDc1avoFAgttt4jc7ADgietgfXVO/wYpSt
- IDyHVPxcqDiYNigo7KsoOF2ycD8XKgMMlJspBcd+mjndITAnQdB6uDBehhBimnscpfVytKxHNRx
- L3CNNnsHFJ7a8ELap9s70c8xeLhcZjLZ4GkRCUIYsPGil/u0QOIo7iYgyV0v9A9ejWuP24pCbP4
- h8QkLciFCuDqfLodgDeCsc8IfgPq1HgfVZj5lz7EpQR5tfn8XrfSp4KEQpWExB27Ty7dHsnC5PO
- 4om5KPAlBQ=
-X-Received: by 2002:a05:600c:4507:b0:485:34a2:919e with SMTP id
- 5b1f17b1804b1-48534a29447mr104839385e9.33.1773078584740; 
- Mon, 09 Mar 2026 10:49:44 -0700 (PDT)
+ bh=FfOU74AZsB0BJ+9t5I5qi8V7Be00GDq0IJGiovLZCOM=;
+ b=YqsdUAusbiH0xyBqxZK/VoSXtCcFNSAXPITsfQpzMhYN9ffOrzvRxSEQZbWbHGmKYf
+ g3H/8zGAW8gWGTAwFMi9tGQt8svbP45gUMqiIGOybFsKRY2DW30He5mJDwCWWDJ489bK
+ uDRlatyElGq7QhSmER9QUJcplkS/iNOHjvhHphRt0uimFYhzFa5Yvi1NWNaDtv06A2bK
+ NIVwwIgIViQoMnaL/l2GDnvA/K+gWNjpvSeAyyUuC0eK3e5q846YT2wXXKaZ1Z7S7Kgp
+ mBUNgKUPreFzVyq8cVRgznwL2W8i8uSWErsqKqZaMp23v5OLrKbn7th6vYeJiUi/np58
+ ceIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773078592; x=1773683392;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FfOU74AZsB0BJ+9t5I5qi8V7Be00GDq0IJGiovLZCOM=;
+ b=VgGAAnms+sPvzDQG2yCUGQEmKYdH9v7kp2wE5ZD7nEVjM6feDx3+GDhW+SWd7c3ckJ
+ HCzbDuQXSA6N6IjvnTURr1ivXDx70SIApeAfpw6iJUUbda9yw8lhVkAjBdIiqf5MQMvN
+ 67ZTh8CRWoXQmlMVNfs3nfh57pEqNN/Q7RQW4UZUCdZQeL30Ly5WmHzQXxhATQS4KcGv
+ O+A/rOww0NzgUyErcFCVeahQFXt1bkc76PBCRUO2YEvSXIepg0EFDw/qYMZQI1LQ7jI+
+ L3wic20Z8Hh1mHpLnPgFSSgKrWtX+HnAUcbZV3Pel8UbjBwvTXnlxbJro3PlPcQQ0ZCE
+ iVcg==
+X-Gm-Message-State: AOJu0YzLnFT+ngrrKCJYx0B3pu1pzMSzCF6oJOd+gr7SQwWzL9eHJJBU
+ UPBxGc59W7ydkAEYviTKOqO47B5juLVA3mGWq32UDeBTzFJFxPCxogEMsxJeRKpDa9mepB67UXd
+ 56QFf7DU=
+X-Gm-Gg: ATEYQzzY82mu/Xgm2Qs+yB6LoVahvBM+PZICBXjw8qfTqPfA0uAs1cSCApLDrc9H/J1
+ 57aOhh/Y+Vmd8lnK3S5w0O7fpvN2A6DQUxNLfAYXImyrBuV11hrTx6w8ly7dwnB8n8gJw+bYX9B
+ Rjp8gV9kFeGAvYuieme1SWEuPjtfGRIQg6t2AQmUQuQyFvB7TD5SR0237hHgLnie+V7LRcMMfyh
+ 8nC9C3RgPR+CkoaCLLXCUqyICbUevIaXpcAvM8aLq2nzIoC0hUx+ApRa5n424B5SMbx69xFf7xC
+ TfoEtFjlCtN9J8Dk3k+1FPSMQAcnOPO/WNNeNJfG1XZ2cc16Z8Jrd/Twa6DC6/Rg0QQ0ThJtbor
+ K9B8TmSyI20jwT3uxnz9nBwaKnA8Wo5wsi/Y506uhd5Gv1Fh2PLP5GVhgVaynL962MiQ9DcrP1m
+ vijLITifzwVz7rlANyp5u6gfyawtFhSSTuIKp4ggZq5Tj0gRCmfSQG8uM2JE/3py0DqZVb1XB1
+X-Received: by 2002:a05:600c:8b01:b0:477:5ad9:6df1 with SMTP id
+ 5b1f17b1804b1-4852691989bmr200833445e9.3.1773078592217; 
+ Mon, 09 Mar 2026 10:49:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541b6f708sm9142425e9.11.2026.03.09.10.49.42
+ 5b1f17b1804b1-48541a6bbcesm7670835e9.3.2026.03.09.10.49.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 10:49:42 -0700 (PDT)
+ Mon, 09 Mar 2026 10:49:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/2] accel: Build stubs once
-Date: Mon,  9 Mar 2026 18:49:39 +0100
-Message-ID: <20260309174941.67624-1-philmd@linaro.org>
+Subject: [PATCH v2 1/2] system/kvm: Make kvm_irqchip*notifier() declaration
+ non target-specific
+Date: Mon,  9 Mar 2026 18:49:40 +0100
+Message-ID: <20260309174941.67624-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260309174941.67624-1-philmd@linaro.org>
+References: <20260309174941.67624-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: Expose kvm_irqchip*notifier() declarations
+Commit 3607715a308 ("kvm: Introduce KVM irqchip change notifier")
+restricted the kvm_irqchip*notifier() declarations to target-specific
+files, guarding them under the NEED_CPU_H (later renamed as
+COMPILING_PER_TARGET) #ifdef check.
 
-Philippe Mathieu-Daudé (2):
-  system/kvm: Make kvm_irqchip*notifier() declaration non
-    target-specific
-  accel: Build stubs once
+This however prohibit building the kvm-stub.c file once:
 
- include/system/kvm.h    |  8 ++++----
- accel/stubs/meson.build | 21 ++++++++++-----------
- 2 files changed, 14 insertions(+), 15 deletions(-)
+  ../accel/stubs/kvm-stub.c:70:6: error: no previous prototype for function 'kvm_irqchip_add_change_notifier' [-Werror,-Wmissing-prototypes]
+     70 | void kvm_irqchip_add_change_notifier(Notifier *n)
+        |      ^
+  ../accel/stubs/kvm-stub.c:74:6: error: no previous prototype for function 'kvm_irqchip_remove_change_notifier' [-Werror,-Wmissing-prototypes]
+     74 | void kvm_irqchip_remove_change_notifier(Notifier *n)
+        |      ^
+  ../accel/stubs/kvm-stub.c:78:6: error: no previous prototype for function 'kvm_irqchip_change_notify' [-Werror,-Wmissing-prototypes]
+     78 | void kvm_irqchip_change_notify(void)
+        |      ^
 
+Since nothing in these prototype declarations is target specific,
+move them around to be generically available, allowing to build
+kvm-stub.c once for all targets in the next commit.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/system/kvm.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index 4b0e1b4ab14..5fa33eddda3 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -219,6 +219,10 @@ int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
+ 
+ void kvm_flush_coalesced_mmio_buffer(void);
+ 
++void kvm_irqchip_add_change_notifier(Notifier *n);
++void kvm_irqchip_remove_change_notifier(Notifier *n);
++void kvm_irqchip_change_notify(void);
++
+ #ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+ 
+@@ -393,10 +397,6 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg);
+ 
+ void kvm_irqchip_add_irq_route(KVMState *s, int gsi, int irqchip, int pin);
+ 
+-void kvm_irqchip_add_change_notifier(Notifier *n);
+-void kvm_irqchip_remove_change_notifier(Notifier *n);
+-void kvm_irqchip_change_notify(void);
+-
+ struct kvm_guest_debug;
+ struct kvm_debug_exit_arch;
+ 
 -- 
 2.53.0
 
