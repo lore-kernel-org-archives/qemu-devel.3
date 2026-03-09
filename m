@@ -4,92 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EB6F3C266
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117CDF3C268
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:00:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzb7R-0004Vr-9H; Mon, 09 Mar 2026 09:58:01 -0400
+	id 1vzbA3-00053I-7y; Mon, 09 Mar 2026 10:00:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzb7N-0004UR-Ez
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:57:59 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzb7L-0007Jz-M0
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:57:57 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso12747515e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 06:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773064674; x=1773669474; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XD7AG/7XUD7HGuQc1h1iptBQuiYPSIU4YzmAdPy/m94=;
- b=E/91ZZQV46ovSsksg+KMvP7VTkjHG+JJmtQFK3XHhtFdNSosGm8++f1vwm/k7lCcLC
- dUdB8z8TRbtaJkIHkJvcG5yRzbP8YyCzlxjme+TGecG+w2EdfLHrvIKXkVFWeVHXbJpD
- xDJhSvY8jPaAvFbSUEF5XTcIoCi1JpzCRpL+mUwi6rQhHjssWzrHglFp1ohIUbPxqJYc
- PZv3Nl29jp0f1vjT3HOX9YQGrmN5XV8IVnz3rbgh6B8LWlxicU/oakAkpy7yzCAOhZLg
- zSbUv40dYET7sxX+8H5oUuArF4zzHDICp58scPE+M1PLuN1FODj2hjSZ0CPsCYTWoBBd
- azgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773064674; x=1773669474;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XD7AG/7XUD7HGuQc1h1iptBQuiYPSIU4YzmAdPy/m94=;
- b=H0qI0Aa2AsEsa3a5hbyGN8D/Y2E2yYSK1fwPjmVXntOZhI5DZhc+rETdy81Mo4T2s6
- 5MUjs3mIzOS+iqpD3fROA07VN0Jn6pWE6GY2QeFXgd5/gxAlRCntfHMr9nWyk2tZCBZ6
- yhdq7nWGz4iR4ulfAc4ETxjJ3nOlMAKaLtyb6dU7Gjfjc2bC5TL+PNDor0xGqdK1JEJ1
- IUz3w753NxAg+mDRoNOPYwPxCPbNI2/OOq1JTChJUd549yqRAFWA/GX/2siK64IbU5Yt
- EpbpfsqAL13gwdYcKKmFt9KIk7Ipt5/0rHw68/wElnqyteijSnHthDsurZhq6VnmI/5i
- ngkw==
-X-Gm-Message-State: AOJu0YxiABug51NYno62gqtftOUYs34nXhKVO0XGeSKYuiRzS/8JQRL3
- AhvKOuUcSrs+uaUjEm6j0AtHgcehwPioknJKQBuiDQRAzbde7nib26lYUtyV6esFavQ=
-X-Gm-Gg: ATEYQzwFxfC6aFHWfNvcdrHMJTIZcstkBmW0gcz/FbLmhU40mjJ1hC6mrv/jtdxF4h7
- 6sbBVRN2to4CptVH4KtTCIUbBQPJqkQoesX1h0fWYJJzFCt/Pd/gV0YXyeF4tAyzQklrbevTmpC
- 6n2sftGkRbcpnuLT6Q+GcJcruz7LZjjdBKiiHu2lQ+Fsi8kqny4eIfWR1G8oUuOlGyzc0vDU+BO
- D8FsFVuSVhzOMIoLGINxA00fS9o49dtMDRxEwQYPuKi200zg0+7eN5aiUV0NcfLppAlkT3tGdZj
- LewyYMjJIoYqKC2cb+G/Syv5pUSupy47HMT/5Sj4z7cd1tdDnYUrRH9rT+o/mgjWdBQyz/K2oe9
- owmcS/RX/jCsZ7uGH+VVn9uBoiLXg6aq2GUJ4YR/4r5jPcjIMbEHbxMD0wtLldeSh42gTZyjJZa
- 758k+7MeBtwxmqb8HQVjxHEc0chwQJDVoN6i0di9qKsdZjYRfZRjIVsFU6I3dZPorGgKtXHnksc
- U2FPQsLzg==
-X-Received: by 2002:a05:600c:8597:b0:485:33b7:573d with SMTP id
- 5b1f17b1804b1-48533b7577fmr88516405e9.1.1773064673759; 
- Mon, 09 Mar 2026 06:57:53 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246ff886sm89805135e9.24.2026.03.09.06.57.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 06:57:53 -0700 (PDT)
-Message-ID: <2ad41172-f06b-4854-adf1-bfd59fb10206@linaro.org>
-Date: Mon, 9 Mar 2026 14:57:51 +0100
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vzb9f-00051D-Tt; Mon, 09 Mar 2026 10:00:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vzb9d-0007ht-TH; Mon, 09 Mar 2026 10:00:19 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629BgQ0o313479; Mon, 9 Mar 2026 14:00:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tYhv/x
+ caJHTy6i1ob7qg66WlmcAkMA/VBMfp7n8Gok8=; b=mznz3cgj1JaDpyrUo8gj+m
+ 5K/5OhwPfPUKwJwPgRCCxsd5EB7tOtkHRmatf5yrKRWNQGJOEOsXz0E5ZZAldT0E
+ 2ce8Q6PhQy7Etgs1Y3MdCSDEmGmIx4ouMihp0D1kMCC9KHLlaHIwzV9o3IbEfnpN
+ y0lUYdro8sQF0xFAbiKyHObYqz1Rtq+p8WNE6OLRVRWHi1fBB3w+/WoeKYRVsHkq
+ 03+Oepe17eAgezRrcSo0pmJ16IFreyxi9gExnhXJ6b/eB5OhtcD2kQN8AkgH7vQi
+ ZHlvyLp7BZraRg3s4ZZlKiEy43PNnK2Zb1i8u/eIJZHUBSb4wAzgzuX7mjVE5/iw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcuy6t2n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 14:00:15 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 629DWZvY029360;
+ Mon, 9 Mar 2026 14:00:14 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4csp6uht9s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 14:00:14 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 629E0D7930737096
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Mar 2026 14:00:13 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C0CB58061;
+ Mon,  9 Mar 2026 14:00:13 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC7B75805A;
+ Mon,  9 Mar 2026 14:00:12 +0000 (GMT)
+Received: from [9.61.138.24] (unknown [9.61.138.24])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Mar 2026 14:00:12 +0000 (GMT)
+Message-ID: <4bef56aa-8b2c-43c7-9449-fea7c31d00b2@linux.ibm.com>
+Date: Mon, 9 Mar 2026 10:00:12 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 0/9] ati-vga: Implement HOST_DATA transfers to enable
- X.org text rendering
+Subject: Re: [PATCH v5 00/15] s390x: Add support for virtio-blk-pci IPL device
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260309003601.242634-1-jrossi@linux.ibm.com>
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>
-References: <cover.1773020351.git.balaton@eik.bme.hu>
- <4afcf7e0-5ff0-49c3-9f5c-965454737550@linaro.org>
- <b0f48520-08f6-be11-db53-2b7481c76594@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b0f48520-08f6-be11-db53-2b7481c76594@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260309003601.242634-1-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=EK4LElZC c=1 sm=1 tr=0 ts=69aed26f cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=M_lMVc4j4dWZTQOC06kA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEyMyBTYWx0ZWRfX1uqbxuMLyVkp
+ iT2/mZmlILZRty1SKmyYuN2ZECpVxCpUOD70zl7QH+MEZ3CwLG0NheiiPqMl+mI3sD3UdJD/ldj
+ ku3gbZdEyhBKoPQxrTOk5UsODU7Nq/I6lpGXfZeHuJLHMowfgcfRnTiGUQ/bvKqnVyKGv93AU6n
+ 5wFNOiVx9GWzblN7PjNpqvE9rvY3z4b13OBneXHufw/F27XN1Av4ZiWCkZAmsgfNs7swfPJ+hAR
+ +m1mTEfZm5duhfXGbEAY867MW3SoDRa6mriXgjhr6WsVV63qGMEAjN4BXAH+Yd9R6xnFACRAXzs
+ h0WxvYp9Yt6wL+yL8jMM3YZIXHn0FRZwwWKEJGCgjIjOa0HWIaVT8qKsWjAPCZsP5tt8pnDB0RK
+ vI9032HYe5Jjp9RV4Oa42g2wcrCjIj+vRVeiC7+2Ca5F/xGyflEIDD7MpHjtl9znNuqYO/uACdd
+ /Z6jxv3faFVof7wKE6g==
+X-Proofpoint-GUID: Ka6GYBoR_zIPnh36iOsUjUNCgwsz7k22
+X-Proofpoint-ORIG-GUID: Ka6GYBoR_zIPnh36iOsUjUNCgwsz7k22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_03,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1011
+ bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090123
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,71 +122,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 14:13, BALATON Zoltan wrote:
-> On Mon, 9 Mar 2026, Philippe Mathieu-Daudé wrote:
->> On 9/3/26 02:47, BALATON Zoltan wrote:
->>> Changes from v11:
->>> - Drop already merged patches in [PULL 00/49] Misc HW patches for 
->>> 2026-03-08
->>> Based-on: 20260308223433.25503-1-philmd@linaro.org
->>
->> This didn't apply on this tag:
->>
->> Applying: ati-vga: Remove src and dst stride mutation in ati_2d_blt
->> Applying: ati-vga: Use local variables for register values in ati_2d_blt
->> Applying: ati-vga: Introduce ATI2DCtx struct for 2D blit context
->> Patch failed at 0003 ati-vga: Introduce ATI2DCtx struct for 2D blit 
->> context
->> error: patch failed: hw/display/ati_2d.c:43
->> error: hw/display/ati_2d.c: patch does not apply
->>
->> But I figured it out (minor checkpatch change).
+On 3/8/26 8:35 PM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> Checkpatch did not complain to me before but there seem to have been a 
-> white space change in you pull request. I noticed that now and sent v13 
-> for that patch but looks like you were faster. Thanks a lot again for 
-> your help.
-
-The errors were:
-
-46/57 Checking commit 7ebf5e5ac2ad (ati-vga: Consolidate dirty region 
-tracking in ati_2d_blt)
-ERROR: "foo * bar" should be "foo *bar"
-#38: FILE: hw/display/ati_2d.c:59:
-+                                s->regs.dst_offset + dst_y * 
-surface_stride(ds),
-
-48/57 Checking commit 360cf823d841 (ati-vga: Use local variables for 
-register values in ati_2d_blt)
-ERROR: suspect code indent for conditional statements (8, 8)
-#196: FILE: hw/display/ati_2d.c:212:
-+        if (!use_pixman_fill ||
-[...]
-          {
-
-I marked the first one as spurious, and am going to ignore the
-second (some refactor could avoid the #ifdef'ry, but no time for
-that change before the soft-freeze).
-
+> This patch series introduces an IPLB subtype to support PCI devices, which may
+> be built if a device has been assigned a boot index and is identified as a PCI
+> device with a corresponding s390 PCI Bus device.
 > 
->> Series queued, thanks.
->>
->>> - Fix build without pixman
->>>
->>> Chad Jablonski (9):
->>>    ati-vga: Remove src and dst stride mutation in ati_2d_blt
->>>    ati-vga: Use local variables for register values in ati_2d_blt
->>>    ati-vga: Introduce ATI2DCtx struct for 2D blit context
->>>    ati-vga: Extract setup_2d_blt_ctx from ati_2d_blt
->>>    ati-vga: Split ati_2d_do_blt from ati_2d_blt
->>>    ati-vga: Remove ATIVGAState param from ati_2d_do_blt
->>>    ati-vga: Implement scissor rectangle clipping for 2D operations
->>>    ati-vga: Implement HOST_DATA register writes
->>>    ati-vga: Implement HOST_DATA flush to VRAM
+> Boot support is only added for virtio-blk-pci at this time and is limited to
+> devices with an assigned bootindex.
 > 
-> There was the other two patch series to fix guest_hwcursor will you 
-> queue that too?
+> A "loadparm" property is added to virtio-blk-pci boot devices on s390x.
+> 
+> A simple test to check basic functionality is added to the cdrom-tests in qtest.
+> 
+> Changes v4 -> v5:
+>     - Fix incorrect switch/case for virtio block device ID
+>     - Use target_s390x() instead of qemu_arch_available(QEMU_ARCH_S390X)
+>     - Properly denote switch fallthrough
+>     - Remove reduntant RC checks in PCI read/write
+> 
 
-Yep!
+Rather than reply to individual patches, I noticed new copyright lines with 2025 dates on the following patches that should be updated to 2026:
+
+6: pc-bios/s390-ccw: Split virtio-ccw and generic virtio
+8: pc-bios/s390-ccw: Introduce CLP Architecture
+10: pc-bios/s390-ccw: Introduce PCI device
+11: pc-bios/s390-ccw: Introduce virtio-pci functions
+
+Thomas, if there are no further comments would you still like Jared to respin for that kind of change or would you just fix up when you pick up the series?
+
+Thanks,
+Matt	
+
 
 
