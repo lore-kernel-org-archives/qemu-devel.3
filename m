@@ -4,67 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8E5EF3716
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17491EF3716
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzVsD-0007Wl-5N; Mon, 09 Mar 2026 04:21:57 -0400
+	id 1vzVuz-0008JU-SP; Mon, 09 Mar 2026 04:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vzVs6-0007Rc-7G
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:21:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVuy-0008IV-6q
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:24:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vzVs4-0005DP-PY
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:21:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVuw-0005Ql-Qd
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:24:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773044507;
+ s=mimecast20190719; t=1773044686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DMKL5nbkeeJ/qVlHLPP1EoyCUNfB2M+tLxWDlRf5SME=;
- b=Yw+hyBUR2iPpxSpDV/fpmIij6zR1MBSpU0W0AdZpvnC9t7da9hqQY8gAm9TkYZtxR937w4
- noglelQnRLmtjBqE81ebEq0E6wcaiWi6GPo0wpGLbx0CauXPZ5kHsZgtvJIro/4S9Q6RKP
- OsvG/VlQI817/UGOEYV2IZRQe9ui+Ek=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=JzwGvg3NQSCNSLSyuAxvngoXmffW8l47UKD161Lx3vg=;
+ b=HSL4HIa3w784MKOl/mv0Ji3vyM7zWJNxqhhJh+lm28/u9MCtGwRWMR4lwTy4txf7+I95zp
+ p4kfHWx43Gg4zhYeNvCbKHUFzYPs6PhnK5aufVucjDJKouVQt8FgfaONLDd/suzMW52joW
+ OLsUW93uQOjavqzI2oQz/GEiR5QLaLs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-ssQ5oeHUPaS0WbXTe4jR1w-1; Mon,
- 09 Mar 2026 04:21:44 -0400
-X-MC-Unique: ssQ5oeHUPaS0WbXTe4jR1w-1
-X-Mimecast-MFC-AGG-ID: ssQ5oeHUPaS0WbXTe4jR1w_1773044503
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-d_dIWJVXP1arNhUt_cptIg-1; Mon,
+ 09 Mar 2026 04:24:42 -0400
+X-MC-Unique: d_dIWJVXP1arNhUt_cptIg-1
+X-Mimecast-MFC-AGG-ID: d_dIWJVXP1arNhUt_cptIg_1773044681
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E50F18002CF; Mon,  9 Mar 2026 08:21:43 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.11])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3697E1800762; Mon,  9 Mar 2026 08:21:41 +0000 (UTC)
-Date: Mon, 9 Mar 2026 16:21:39 +0800
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH V5 05/13] virtio-vq-mapping: track iothread-vq-mapping
- references using device path
-Message-ID: <20260309082139.GD39949@fedora>
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-6-zhangckid@gmail.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D331C1955F38; Mon,  9 Mar 2026 08:24:40 +0000 (UTC)
+Received: from [10.45.224.73] (unknown [10.45.224.73])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7AA6818002A6; Mon,  9 Mar 2026 08:24:36 +0000 (UTC)
+Message-ID: <2ba20703-f79d-4d40-b050-0a49a48edee5@redhat.com>
+Date: Mon, 9 Mar 2026 09:24:34 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="A4OJO5nd2FwIzNQD"
-Content-Disposition: inline
-In-Reply-To: <20260305142459.52559-6-zhangckid@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] target/i386/cpu: Remove X86CPU::intel_pt_auto_level
+ field
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>
+References: <20260307152635.83893-1-philmd@linaro.org>
+ <20260307152635.83893-8-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260307152635.83893-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -89,58 +133,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
+> The X86CPU::intel_pt_auto_level boolean was only set in the
+> pc_compat_3_1[] array, via the 'x-intel-pt-auto-level=off'
+> property. We removed all machines using that array, lets remove
 
---A4OJO5nd2FwIzNQD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+s/lets/let's/
 
-On Thu, Mar 05, 2026 at 10:24:51PM +0800, Zhang Chen wrote:
-> Replace raw object_ref/unref calls with iothread_get/put_aio_context
-> in iothread-vq-mapping. This allows tracking IOThread users via
-> the device's canonical QOM path, improving lifecycle traceability
-> for virtio-blk and virtio-scsi devices.
->=20
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> that property and all the code around it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/block/virtio-blk.c                   | 10 +++++++++-
->  hw/scsi/virtio-scsi-dataplane.c         | 11 +++++++++--
->  hw/virtio/iothread-vq-mapping.c         | 11 +++++------
->  include/hw/virtio/iothread-vq-mapping.h |  6 +++++-
->  4 files changed, 28 insertions(+), 10 deletions(-)
->=20
-> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-> index ddf0e9ee53..b6f74df68f 100644
-> --- a/hw/block/virtio-blk.c
-> +++ b/hw/block/virtio-blk.c
-> @@ -1453,14 +1453,19 @@ static bool virtio_blk_vq_aio_context_init(VirtIO=
-Block *s, Error **errp)
->      s->vq_aio_context =3D g_new(AioContext *, conf->num_queues);
-> =20
->      if (conf->iothread_vq_mapping_list) {
-> +        char *path =3D object_get_canonical_path(OBJECT(vdev));
+>   target/i386/cpu.h | 3 ---
+>   target/i386/cpu.c | 8 --------
+>   2 files changed, 11 deletions(-)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 2b70d56e9b0..5a62aa61579 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2457,9 +2457,6 @@ struct ArchCPU {
+>       /* Only advertise TOPOEXT features that AMD defines */
+>       bool amd_topoext_features_only;
+>   
+> -    /* Enable auto level-increase for Intel Processor Trace leave */
+> -    bool intel_pt_auto_level;
+> -
+>       /* if true fill the top bits of the MTRR_PHYSMASKn variable range */
+>       bool fill_mtrr_mask;
+>   
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index c77addd2c25..d8cd0d81d7f 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -9565,13 +9565,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>   
+>       /* Intel Processor Trace requires CPUID[0x14] */
+>       if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT)) {
+> -        if (cpu->intel_pt_auto_level) {
+>               x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
 
-The g_free() calls can be avoided with:
+I think we should decrease the indentation here now?
 
-  g_autofree char *path =3D ...;
+> -        } else if (cpu->env.cpuid_min_level < 0x14) {
+> -            mark_unavailable_features(cpu, FEAT_7_0_EBX,
+> -                CPUID_7_0_EBX_INTEL_PT,
+> -                "Intel PT need CPUID leaf 0x14, please set by \"-cpu ...,intel-pt=on,min-level=0x14\"");
+> -        }
+>       }
 
-The same applies throughout the rest of this patch series.
-
---A4OJO5nd2FwIzNQD
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmugxMACgkQnKSrs4Gr
-c8hHcAgAv5mt0wmga+K4UfR8FB5NFYKXj3Zm53ndvEZ9kuCFgfyZy0lxB4VGgY6O
-JDaRNe7Mumw0tRLE4OlLj9NuYfQe+HnO4TNPRNRJ+A0T6C5QJ2Tjx6ZAemAzc+SM
-08t2RJJ7mm76iaxJEgMVKdoH8t0MRls4cFHT4GOzCMd+pSEdojiP+S7VogaWllwB
-4iIM1H6vDLgOTOY+xi0F97i2KB1dvqWjwflmSwxD78Kksa78FLGXCJ2A65qPFong
-s0AnwWT7RKvc575UylZQQDseKt20I3/Z0dgH0fqRVJ+BIMrrrFYqsoHkEOtK6bDV
-hVCOJY/BPd01XgE7n8x8NTwJbbJCNA==
-=I/6R
------END PGP SIGNATURE-----
-
---A4OJO5nd2FwIzNQD--
+With the indentation fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
