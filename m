@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB46AEF370D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66737EF370A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzVkY-0001n6-Qn; Mon, 09 Mar 2026 04:14:08 -0400
+	id 1vzVlk-0002Jc-0U; Mon, 09 Mar 2026 04:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVk9-0001jr-Ig
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:13:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVkV-0001qW-58
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:14:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVio-0003Zf-7f
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:12:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVkI-0003cf-Oy
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:13:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773043932;
+ s=mimecast20190719; t=1773043994;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EsFa7Wvzc89OElkUb3iAaX2vnpHpyuGuO6trXLnkN1k=;
- b=OF+hVN1q4GbZQH9p03MQxo+8DpKmhXvZfu/H7cd/a/B8kvBFbxV5zCwrh+IOz97I88S/tL
- GDnMpYLynio5i4o5Cy6y8oTo2ZDH294hhqyE/yl6SY1QGKEtkNuPSjjOpV7M+/q+1YxRAz
- yUVttIjEbKCu1B0XSuzKrnBKLGoeEzE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=xqbmfAsHPgWnDhGH5FwBEv8725mhpRC/Isj9L05UiEU=;
+ b=ZNIz5xjn50wfbW+xFFCykYJXUxYOQkw6T1S+iiMF5MgxForOke7BAXezQWreUtsUMqYt+6
+ +c6p435hZltkFV6QhiHQIei6g+JAjQdpMtZMYOgDUEQWs2Z2v4EsT5V+CMyrbAJwgryTff
+ XF6LqTT1YLQu+Cd/pOcLSUFdrLoZkKo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-Iugvunc6Oo-1mUiXIbotcg-1; Mon,
- 09 Mar 2026 04:07:00 -0400
-X-MC-Unique: Iugvunc6Oo-1mUiXIbotcg-1
-X-Mimecast-MFC-AGG-ID: Iugvunc6Oo-1mUiXIbotcg_1773043619
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-iZq-4oFnMzeefZWmJSG4bw-1; Mon,
+ 09 Mar 2026 04:13:09 -0400
+X-MC-Unique: iZq-4oFnMzeefZWmJSG4bw-1
+X-Mimecast-MFC-AGG-ID: iZq-4oFnMzeefZWmJSG4bw_1773043988
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44B25195608E; Mon,  9 Mar 2026 08:06:58 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9117F18002CA; Mon,  9 Mar 2026 08:13:07 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B9E4730001BB; Mon,  9 Mar 2026 08:06:51 +0000 (UTC)
-Message-ID: <73d4b6ef-1a44-4957-ae5a-ba6f7b936379@redhat.com>
-Date: Mon, 9 Mar 2026 09:06:50 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 645DE18001FE; Mon,  9 Mar 2026 08:12:59 +0000 (UTC)
+Message-ID: <635cb4c9-3907-468f-9c94-9e4bd612aec0@redhat.com>
+Date: Mon, 9 Mar 2026 09:12:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] hw/i386/pc: Remove PCMachineClass::pvh_enabled field
+Subject: Re: [PATCH 04/10] hw/core/boards: Remove
+ MachineClass::smbus_no_migration_support field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -57,13 +58,14 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
+ Corey Minyard <cminyard@mvista.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>
 References: <20260307152635.83893-1-philmd@linaro.org>
- <20260307152635.83893-3-philmd@linaro.org>
-Content-Language: en-US
+ <20260307152635.83893-5-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -106,18 +108,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307152635.83893-3-philmd@linaro.org>
+In-Reply-To: <20260307152635.83893-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -136,16 +138,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
-> The PCMachineClass::pvh_enabled boolean was only used by
-> the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
-> Remove it.
+> The MachineClass::smbus_no_migration_support boolean was only used
+> by the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
+> Remove it, along with pm_smbus_vmstate_needed().
+> 
+> Use the unconditional VMSTATE_BOOL() and VMSTATE_STRUCT() macros.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/pc.h | 3 ---
->   hw/i386/pc.c         | 6 ++----
->   hw/i386/x86-common.c | 3 +--
->   3 files changed, 3 insertions(+), 9 deletions(-)
+>   include/hw/core/boards.h  |  1 -
+>   include/hw/i2c/pm_smbus.h |  7 -------
+>   hw/acpi/piix4.c           |  8 +-------
+>   hw/i2c/pm_smbus.c         |  7 -------
+>   hw/i2c/smbus_eeprom.c     |  4 +---
+>   hw/i2c/smbus_ich9.c       | 10 ++--------
+>   6 files changed, 4 insertions(+), 33 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
