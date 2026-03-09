@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6349DF417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE294F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcup-0003bb-9R; Mon, 09 Mar 2026 11:53:07 -0400
+	id 1vzcuM-0003HN-OO; Mon, 09 Mar 2026 11:52:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcud-0003R4-7O
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:56 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuH-0003C7-2w
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:34 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcub-00089Q-H3
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:54 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4853510b4f3so22726975e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:52:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuE-00086B-Nc
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:32 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-439d8dc4ae4so1790686f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071569; x=1773676369; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071549; x=1773676349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jhTtmUG2GdnqCp2iN5JX67owbOh0LsPxSVz/8hOXpME=;
- b=Nu3Wn1pLLOoDaqZVHDlvGKmK/Eqy/Oj4ceGVD+CNYRe6mx5su0xXxvKd/K8B2SsI3v
- cI5dOTykvIlY7NRKFIreiD2SWrIvl9JdYmF2QTHTbgz44aXlgi0YQa1SHs+3RrAStSTg
- OWERLY2hu5YVUcsx+PnvcBlrBit233lDwDp9dTSxZ48oi/OV+L1C0IFg3IcjDvRcNG8b
- P209ksqJjxnE9Y6+VLIxKBTAHp051X6QwEPrIZQNmS8DKS+jUhlBd27QfzVJVuLWyWDh
- GTKika+X4ZRVMq7ukD2aM4qmUjq38WqPJOL9uVAmkjPbxUdeqRawDKeQcy7SzGUDY0md
- sicA==
+ :reply-to; bh=aAGNceKt9ICMl3PKB0LspGbqju2ajHOrPESyT1vA8as=;
+ b=CCE/ksDdVgOC+lyN8n0YVhpN180fyNxwuB9yPiuDKlMJP79hThuyn00eOjJy7yg7lK
+ Sss/miSiejzbp191q5XeVuqGfyjPNqk8O0EwbcOrEhnwAMjzWy9+YpaGoAfNZANa0W6/
+ xbvdDmPWjOvXDA8Dq3AH1UV7hOBzNHTUu3I8ZzWj05Urb8vN5o32vfjMw7g8R88PW85g
+ AhupUnkvK3BkgupyZXod2Bozpa62Y9UPGLZT6+4sGXOl0mSMAu0H2lx/NGUAITijRAQU
+ 23O42H0Pxmpc0kuv/npL2kw38GBCNRLNPuIeswMJ3VBMJz8gphkR5LhIKMz7GUWOBR7n
+ 6Acw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071569; x=1773676369;
+ d=1e100.net; s=20230601; t=1773071549; x=1773676349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=jhTtmUG2GdnqCp2iN5JX67owbOh0LsPxSVz/8hOXpME=;
- b=mgnOB2Sbdn3MgS8nTFD336up7pjf9NR0UcCVpPPMlsHZ9g15rHb8EBG7nT80cArtT/
- dgP+nL01mS+jXgPQQ4Ja7uE+FCZjOKfqh1hd8UemJsuOnK1sxNiNcDBlELSb9mPf9xld
- QEvvC5hRNEqRjNR3Koc83F3JLDORhtzy3q89fDqg1Uk9z8PPJg69Qfc5OGYexUETdUm9
- kM11HLunasJ8gWm/6QNvx/0WFO7/RpkiYqc9cdpwDjSDRtvEfDRZLAEAbsSVCA+ZGA23
- Cn9bo4u70hzPiJf+JkuAKFElWXc6y4QW23mfa4g4vpcC4oFfUfCNiCe+OAsPFBHJKs/W
- cOqw==
-X-Gm-Message-State: AOJu0YwnlGSzb681QPeC9YDlPg0z7Rie8sb6OgN9meM8RQcllxteACBv
- bzetWx/DlfGK0iTRzdd9lOvmr6G27kIxnjbjMn434r/ScrKfJXuzw5jJibTwZAsZz6rfq3wMK7i
- t4oImGbM=
-X-Gm-Gg: ATEYQzxNjKMZbvoFNXxFFjni1rNBORnwOgu3iK2Ho9GAxAeETB2hHKiCad5P8oP8jcN
- EBA66Ll+vkVdOpPBuqwbLyrp8Nvzq6p+YFC4Us9X9MqBeA2sndBk8FmivMSCc8uLXuj6zXQri+Q
- FYTgzDhLIlTG28NhdtGuB0OMP7c2gzI9w4GzaVr0XMmlbgbigk5uS0YQq6xS/4oqzVng6bbueLJ
- Hbcx++5zsg5Q0ROLi26ZnxYiWRdrpyvzUxxqihx1u8qJB0PGUwUGeNE0nURtikvhIxbTrzHuEV/
- xgnvxYUpW+Y42xL6B8RCDcPOu34bk+w6VS42whzmOpchbfGz5dO94vc1/4pTWNpVURD0Ytb+WLP
- LLnnngA17dVaKm+zoPd/gDKzCdJUq3PZXgSSngSBXYsotH90UnhoVIZSAV6muFm8pckr+BUVZoF
- QxXaNddsXMEVYE3HH5kVbL8Y5HYQv0o7wf/6swaJ7SV2l2yK/AH9EpSSUFYHLY0Slf6b4PYr+N
-X-Received: by 2002:a05:600c:3b82:b0:485:3bb0:194 with SMTP id
- 5b1f17b1804b1-4853bb00605mr58481855e9.35.1773071568940; 
- Mon, 09 Mar 2026 08:52:48 -0700 (PDT)
+ bh=aAGNceKt9ICMl3PKB0LspGbqju2ajHOrPESyT1vA8as=;
+ b=RKc+D0CRGocsdC4ZCPvGqXia2VwUJEHRWCKfIlJjGiMrrEuf7oy8CXZtdI0Ls6atIP
+ rI/F2lobqDiyphKrDD6/ZsrHkdXXAcD/UMBewykjI9z9EVisaKFJUNLZIxdKiZTUgTUG
+ WxnK924oJscJW0shj8+Ai0vi/OJfoHiLzgcK4Umn3coWxCeuOexfIXlJTRi40uI+e5Ij
+ K76s/u3tXeGVmo1FiijD0nmKlNO7+3DuMHNAeMwXTe9Npo9shR0LqmFX+qtAEHYslu38
+ YNCSD+/wR24CAAu/UeB58B9vSPoYPofxEG0RPud/e3ZDrK62IXEETQ1+Kifok6uZkLY8
+ 4lwA==
+X-Gm-Message-State: AOJu0Yw4QnPCArnVAKDprjgWbk9fBCJzADw6HFxUU8E+W+I45I7Sk5HP
+ WFuIS69sTRlpXXxVk185yzmCzwiHp2rJpfjaX0VxICxSvISMUpQ75pcOVm34cctz9he9o4lLGYS
+ rlOzuM5Q=
+X-Gm-Gg: ATEYQzzQoaableH/KGA+Vn4mCDw1YCnaaYiVtNMEtxwdvI7OaCA8Z8Q+GnXFhv5QBKL
+ +ESehcOeGkMmrmu/0OTQqJGsoFpPk3AcIeIe4jxDs6XrKWWyAF4Y3j5+4aLpTbS7yEhxMlyM39E
+ oJxMfJsl/G/TUy7PibAhBTv8+vIaVQ1lxz11oaKmAXTgTOEbJUY4eMj9K8umMKBfNal4aq+W1wW
+ rhkOD56b6dCNJZikPVyP1h0KBEjmnYGu3MXFrZIvS1ZvF7ugyUs5x/j6U1ROqxmUQyaqla6MQjm
+ 4RVAwFldMecwsZeAzSUeWaOnZZpEf5+58rvlAPdO5KOkkGNQpkHLwVLt6JMtQfWevyuWPLGCJdO
+ 9lJhjBL6nMKBoySU/AzeyPcgXgWN1AMFtubfpeZwlqlI0KsWIfp3vjvYyJqyyk3Rq4gpCnpRlfj
+ oCeUL5e+hmjcM75eE5NZBra62L/QvjPDtOz621NDX+KRqpJFPTa37zAeUkLQVvEUPqGNNejjxp
+X-Received: by 2002:a05:6000:2285:b0:439:ba69:101d with SMTP id
+ ffacd0b85a97d-439da354ccbmr19755263f8f.1.1773071548697; 
+ Mon, 09 Mar 2026 08:52:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a7f1f5sm1579825e9.4.2026.03.09.08.52.48
+ ffacd0b85a97d-439dae2ba06sm29306158f8f.24.2026.03.09.08.52.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:52:48 -0700 (PDT)
+ Mon, 09 Mar 2026 08:52:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/49] hw/i386/x86: Remove @pvh_enabled argument in
- x86_load_linux()
-Date: Mon,  9 Mar 2026 16:51:34 +0100
-Message-ID: <20260309155219.62400-5-philmd@linaro.org>
+Subject: [PULL 01/49] hw/timer/hpet: Remove HPETState::hpet_offset_saved field
+Date: Mon,  9 Mar 2026 16:51:31 +0100
+Message-ID: <20260309155219.62400-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,109 +98,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86_load_linux()'s @pvh_enabled is now always %true: remove it.
+The HPETState::hpet_offset_saved boolean was only set in the
+hw_compat_2_11[] array, via the 'hpet-offset-saved=false'
+property. We removed all machines using that array, let's remove
+that property and all the code around it.
 
+Message-ID: <20250501230129.2596-6-philmd@linaro.org>
+[thuth: Adapted the rust part to the current master branch]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-4-philmd@linaro.org>
+Message-ID: <20260306093134.27789-1-thuth@redhat.com>
 ---
- include/hw/i386/microvm.h | 2 +-
- include/hw/i386/x86.h     | 3 +--
- hw/i386/microvm.c         | 2 +-
- hw/i386/nitro_enclave.c   | 2 +-
- hw/i386/pc.c              | 4 ++--
- hw/i386/x86-common.c      | 3 +--
- 6 files changed, 7 insertions(+), 9 deletions(-)
+ hw/timer/hpet.c                  | 9 +--------
+ rust/hw/timer/hpet/src/device.rs | 9 +--------
+ 2 files changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/include/hw/i386/microvm.h b/include/hw/i386/microvm.h
-index 6b9a5065272..184b7a8c094 100644
---- a/include/hw/i386/microvm.h
-+++ b/include/hw/i386/microvm.h
-@@ -79,7 +79,7 @@ struct MicrovmMachineClass {
-     HotplugHandler *(*orig_hotplug_handler)(MachineState *machine,
-                                            DeviceState *dev);
-     void (*x86_load_linux)(X86MachineState *x86ms, FWCfgState *fw_cfg,
--                        int acpi_data_size, bool pvh_enabled);
-+                           int acpi_data_size);
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 0d7b8e0c7a3..767093c431a 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -75,7 +75,6 @@ struct HPETState {
+     QemuMutex lock;
+     MemoryRegion iomem;
+     uint64_t hpet_offset;
+-    bool hpet_offset_saved;
+     QemuSeqLock state_version;
+     qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
+     uint32_t flags;
+@@ -272,11 +271,6 @@ static int hpet_post_load(void *opaque, int version_id)
+         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
+         t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
+     }
+-    /* Recalculate the offset between the main counter and guest time */
+-    if (!s->hpet_offset_saved) {
+-        s->hpet_offset = ticks_to_ns(s->hpet_counter)
+-                        - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    }
+ 
+     return 0;
+ }
+@@ -285,7 +279,7 @@ static bool hpet_offset_needed(void *opaque)
+ {
+     HPETState *s = opaque;
+ 
+-    return hpet_enabled(s) && s->hpet_offset_saved;
++    return hpet_enabled(s);
+ }
+ 
+ static bool hpet_rtc_irq_level_needed(void *opaque)
+@@ -766,7 +760,6 @@ static const Property hpet_device_properties[] = {
+     DEFINE_PROP_UINT8("timers", HPETState, num_timers, HPET_MIN_TIMERS),
+     DEFINE_PROP_BIT("msi", HPETState, flags, HPET_MSI_SUPPORT, false),
+     DEFINE_PROP_UINT32(HPET_INTCAP, HPETState, intcap, 0),
+-    DEFINE_PROP_BOOL("hpet-offset-saved", HPETState, hpet_offset_saved, true),
  };
  
- struct MicrovmMachineState {
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index a85a5600ce9..71fe6b5e122 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -129,8 +129,7 @@ void x86_bios_rom_reload(X86MachineState *x86ms);
+ static void hpet_device_class_init(ObjectClass *klass, const void *data)
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index ebf715d3995..0a5c131819b 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -627,8 +627,6 @@ pub struct HPETState {
+     flags: u32,
  
- void x86_load_linux(X86MachineState *x86ms,
-                     FWCfgState *fw_cfg,
--                    int acpi_data_size,
--                    bool pvh_enabled);
-+                    int acpi_data_size);
+     hpet_offset_migration: BqlCell<u64>,
+-    #[property(rename = "hpet-offset-saved", default = true)]
+-    hpet_offset_saved: bool,
  
- bool x86_machine_is_smm_enabled(const X86MachineState *x86ms);
- bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms);
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 7ff20512636..5a7889f21b8 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -330,7 +330,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
-     rom_set_fw(fw_cfg);
+     irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
+     rtc_irq_level: BqlCell<u32>,
+@@ -947,11 +945,6 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
+             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
+         }
  
-     if (machine->kernel_filename != NULL) {
--        mmc->x86_load_linux(x86ms, fw_cfg, 0, true);
-+        mmc->x86_load_linux(x86ms, fw_cfg, 0);
+-        // Recalculate the offset between the main counter and guest time
+-        if !self.hpet_offset_saved {
+-            self.hpet_offset_migration
+-                .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
+-        }
+         regs.hpet_offset = self.hpet_offset_migration.get();
+ 
+         Ok(())
+@@ -962,7 +955,7 @@ fn is_rtc_irq_level_needed(&self) -> bool {
      }
  
-     if (mms->option_roms) {
-diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
-index 4cd18166ff6..a29f0044d0e 100644
---- a/hw/i386/nitro_enclave.c
-+++ b/hw/i386/nitro_enclave.c
-@@ -199,7 +199,7 @@ static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
-         machine->kernel_cmdline = eif_cmdline;
+     fn is_offset_needed(&self) -> bool {
+-        self.regs.borrow().is_hpet_enabled() && self.hpet_offset_saved
++        self.regs.borrow().is_hpet_enabled()
      }
  
--    x86_load_linux(x86ms, fw_cfg, 0, true);
-+    x86_load_linux(x86ms, fw_cfg, 0);
- 
-     unlink(machine->kernel_filename);
-     unlink(machine->initrd_filename);
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 3fc2f0a057e..00581dd8b44 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -597,7 +597,7 @@ void xen_load_linux(PCMachineState *pcms)
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     rom_set_fw(fw_cfg);
- 
--    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
-+    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA);
-     for (i = 0; i < nb_option_roms; i++) {
-         assert(!strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
-                !strcmp(option_rom[i].name, "pvh.bin") ||
-@@ -931,7 +931,7 @@ void pc_memory_init(PCMachineState *pcms,
-     }
- 
-     if (linux_boot) {
--        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
-+        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA);
-     }
- 
-     for (i = 0; i < nb_option_roms; i++) {
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index db8d4e855f4..fde05fa7d7b 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -642,8 +642,7 @@ static bool load_elfboot(const char *kernel_filename,
- 
- void x86_load_linux(X86MachineState *x86ms,
-                     FWCfgState *fw_cfg,
--                    int acpi_data_size,
--                    bool pvh_enabled)
-+                    int acpi_data_size)
- {
-     uint16_t protocol;
-     int setup_size, kernel_size, cmdline_size;
+     fn validate_num_timers(&self, _version_id: u8) -> bool {
 -- 
 2.53.0
 
