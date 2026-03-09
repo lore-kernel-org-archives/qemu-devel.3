@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BE9F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A394FF41808
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzczr-0005ky-K0; Mon, 09 Mar 2026 11:58:29 -0400
+	id 1vzd0P-0006S9-Fh; Mon, 09 Mar 2026 11:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczP-0005EI-7p
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:52 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcz3-00047V-KR
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:30 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczN-0000se-JG
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:50 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4852ff06541so21347415e9.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcz2-0000ql-3W
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:29 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4806cc07ce7so136747335e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071868; x=1773676668; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071846; x=1773676646; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IzmpeICsmhHpjzqq103V8NsIYXc7xyq7TsCvvhiVxQY=;
- b=B6glUdxU6nqHySWDZaI/zBB52NzAaDREW6N1dSwEg/qy4Q/qDaX0HnOORO+W9FPTBt
- iq4vHddObCX+5bs7KtRmXjDvOxihQkNuUiXfuKzlmwQPrMajX5pEgeEz4JqPUz3jxp6M
- WMTdeh+8eHdHzUOtqrK1aDBw6VjyF/cOOa1qjvMmiC6OSyQQwTeV6DbcoqAQFmFi0hzS
- IQHJJanzBaqo/7yzXT+3TMGh0BO++gGPjmNB3aaUBaRtvs6rOLs/EezS6SBe8Flcg6J0
- JGPyG1OVm+v3PVGmXOyIdqS+TNRCfI3oj2hvI9OJ4KUMDomBV2yZ8PbT03bXmevbDweS
- uaVg==
+ :reply-to; bh=P6b3kfLb5C5KN4L7wqKNdzZRULJ5wfyOi/20ivvG1AI=;
+ b=LTJUrE4CmWjr1+YPTN6B78TZZ3SIFc34tDtynKAezn5ERp37ctwxIXn1h4jHOWN2E0
+ 41kkHIGKXr82Nvh1jJENacP+konTC90CcMkFtUqZNJ1aazMqSlyX5Ufsp8ncnyy6rnvw
+ Or7jYcujAa05DpqobiiU3r0yuALcGlfd+PVO/Up/0GFClX292qAjfUxdz1q6imO9EM7O
+ ppYL4/mjWDutwvYdSxow7B0oiAJYdHQsYLjjHmSQ+v1iSuCxrr2IE1DhOXa1YZBtLRfP
+ 3xEDT8KzAMp8k7yeJXYsMtZ/arYqjFjLo3okkoRV6X+zq3J52ePvMZo5+GyL8rdY94qT
+ VBlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071868; x=1773676668;
+ d=1e100.net; s=20230601; t=1773071846; x=1773676646;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IzmpeICsmhHpjzqq103V8NsIYXc7xyq7TsCvvhiVxQY=;
- b=jnmHJ93Zmq6ng7Pkv0ZP1g8sP5m4oKO6Mii6BYcQJigVQIPHO2X83gRRYwzr2Jvgaz
- Dr0Ri63wTLxwTQkLPAxcTIW6g0ygmV1xmjQIrT4+q2hxEZkr0YSq3b55eP9zzTlssiBG
- KLQE1zb0iK9rtt4/KyUkSfiGfBPf7vyekXoIPLMGHGuqnmyQRBfkkapbHIv/9eOVdl0M
- iBl8BFQwJTJ0L7L2dNWj6Kib+Ge6LSIhS9g4vSLwcC8hQCpR3A+u5Pkiup3DGdegPTTr
- FEz3V8EneFIL/OK4DfN7Wr/KDv261S8lzwUq7VeJKxFpumSU5qKx8baKpnexBh8GCEfG
- XWAQ==
-X-Gm-Message-State: AOJu0YwUsqRkDxMJL6gugaVEFiUeaMMNLAqFCCspdiube3YjkOcwGPxR
- ZtXPOOPIVdR7+Pq5zVh5TD7eP7UuZoXy6qHmzBBQT5yghWXbb9kVqtAzgeZ2CTGbDCPNYrc/Swf
- +Mp6WGJI=
-X-Gm-Gg: ATEYQzxDkmSO1DhxO2Sso6mI03blAlzHIOulLSJLisL7UMnjNdj1Qh3/W9bdBDENypY
- Ze544TybOJFrDZepBEMRP3WHVoTLCz+Q7Upm83IJIzNBbIDL2uAAtQRSZd+R6d1qpyNbx2onzuX
- eyvQdT4NxtpGhcDBz4elVuYO4n8NBTQIZKtzLT42tfWWJvH3hk7bZhPNiB1pSaaemVXQPuhKTKO
- XdBppQ0mhdPGx+48d46polcHev5d8jZfjOov6i9RH2B1abbzUqHKB+081nbzSFtVGGLzQ1cgdSS
- sKe6Fo1kUxs0RhBPAAIb0asJX1WkGnG3BWDJzldECilzBkHTQMZdXdMHJ/TTWooJoJ+4NXxyhLJ
- X24fRg1y6BPMW3+WDbxiC/Lts41Ajvvpx5WBXh3iY+nLLgbVDBaw+t69A7Hx+ybq6dp4Mep/+DT
- WBpSe4zN4Fop+mL5s4fVADHiIB3zYR6ZFJuTcwPIj2TUbJ5cA1kBKXcMzHVCZQdK2N0Tcgi4E6
-X-Received: by 2002:a05:600c:350e:b0:480:4a90:1afe with SMTP id
- 5b1f17b1804b1-485269785afmr180533195e9.34.1773071867588; 
- Mon, 09 Mar 2026 08:57:47 -0700 (PDT)
+ bh=P6b3kfLb5C5KN4L7wqKNdzZRULJ5wfyOi/20ivvG1AI=;
+ b=LPR/O4Ua6DtRN9xa/maT80EK9uDotRreKwdLFKRiFpuJpDgG+8fQuB8UhL/FeBpDBp
+ ubggmIgZvpsoptiazjiRPkw1iOFG6N91MPrfla1vg74lI8LEiYWjCGqwYyvyALjU3Z0s
+ 4ysIdRbVIhJHSnXsGVmtmEIrRL12ytdkFkKnztZFRTqkBxNTGyYDv1ilh35QfMgj4KhK
+ 2YJNBDEnnV8GZT/0EZlHpdes81598zP+20BQpoKtpp4kUI0kWnUjgaHidDTnhdr1sUA5
+ +kPd1RGnEw9KZQd1zVKbEJ00uuHPSNj3YnDAqVJhFOTRWOfXL+MlXQkmM4tGt/4+CdL5
+ BYKA==
+X-Gm-Message-State: AOJu0YyAvOZEGPrv69vROo17ud5N/FVyzlWMI+vhRI4fFa9uwQ4QZRcv
+ QxYTYQ18ZaOtLqflctB1QfvpDmCJNDMNDcKXUXxDRDLULQi0F4cTpW9sBkTKi3e6r6XOoxUbQyv
+ oxOvQ1OE=
+X-Gm-Gg: ATEYQzwsCaFt8uDD6HyHMTWCQOVp+chljzqXRI8mm4Z67ADcY0aE4br2V8dTTUUB03v
+ Tj6i3KNnWMmiK5DxQwtmrKRE9j8Q4auhA95grXcywQ+qxbveRYz7sSKT3qLh5Ucs1WZrcPcUEjN
+ UJDcZRHRK2BVjC/7ZVsY2crQqgNDZrbr2guDxTQ0zNeWNPXPxvXZNO1KxteF0ebbNmV0ZUF3zzq
+ Jtlldm2DYBs6GsQAqnmJhHlCFVtOM5vIURZzWfKvxcn6OyatE6Eh1JlbDU0oGU20D8mEtwLfcBq
+ yk6dVlbmc9CH3e5jEjAibAq47WiGjDVDoQC18NC9IMglKC+jr74znlgB25yTJW/FHnaNU4jL8f9
+ HNDcIsYPr22Qh0oYxpEkhQt5stQJFJ3m/qEafo80+gWBeoFLfm3BesEltNdb71T7ia4WixZ4kPM
+ W2qZHdpi67Zz2hTUzSjcCUjFKSakx7Fur49EX1RplZ2pAc5WcVUSvK+JCtW9+doSXAeNg45AGtC
+ Z8kciso9YQ=
+X-Received: by 2002:a05:600c:b93:b0:479:1b0f:dfff with SMTP id
+ 5b1f17b1804b1-48526923bd3mr183562405e9.10.1773071846251; 
+ Mon, 09 Mar 2026 08:57:26 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a9c293sm781845e9.10.2026.03.09.08.57.46
+ 5b1f17b1804b1-48541a6bbcesm1188195e9.3.2026.03.09.08.57.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:57:46 -0700 (PDT)
+ Mon, 09 Mar 2026 08:57:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 48/49] hw/misc/sifive_e_aon: Don't leak timer
-Date: Mon,  9 Mar 2026 16:52:18 +0100
-Message-ID: <20260309155219.62400-49-philmd@linaro.org>
+Subject: [PULL 45/49] ati-vga: Simplify hw cursor drawing
+Date: Mon,  9 Mar 2026 16:52:15 +0100
+Message-ID: <20260309155219.62400-46-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,101 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-The sifive_e_aon watchdog creates a timer with timer_new_ns() in its
-instance_init method, but does not free it in instance_finalize.
-This means that QMP introspection of the device leaks it:
+Avoid calculating index at every step when we can just count the
+position.
 
-Direct leak of 48 byte in 1 object allocated from:
-    #0  in calloc
-    #1  in g_malloc0
-    #2  in timer_new_full /home/pm215/qemu/include/qemu/timer.h:520:21
-    #3  in timer_new /home/pm215/qemu/include/qemu/timer.h:543:12
-    #4  in timer_new_ns /home/pm215/qemu/include/qemu/timer.h:563:12
-    #5  in sifive_e_aon_init /home/pm215/qemu/build/san/../../hw/misc/sifive_e_aon.c:286:21
-    #6  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #7  in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
-    #8  in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
-    #9  in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
-    #10  in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
-    #11  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #12  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
-    #13  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
-
-Allocating a separate QEMUTimer with timer_new() is not the preferred
-interface (per the comments in include/qemu/timer.h); switch to an
-inline struct initialized with timer_init(), which we can clean up
-with timer_del() in finalize.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260309095129.1406506-1-peter.maydell@linaro.org>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Message-ID: <90b49357b6bf80bcf8962331575ffd16a96b706a.1773009887.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/misc/sifive_e_aon.h |  2 +-
- hw/misc/sifive_e_aon.c         | 16 ++++++++++++----
- 2 files changed, 13 insertions(+), 5 deletions(-)
+ hw/display/ati.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/misc/sifive_e_aon.h b/include/hw/misc/sifive_e_aon.h
-index efa2c3023f6..e907aa7869d 100644
---- a/include/hw/misc/sifive_e_aon.h
-+++ b/include/hw/misc/sifive_e_aon.h
-@@ -46,7 +46,7 @@ struct SiFiveEAONState {
-     MemoryRegion mmio;
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index bb9e0bba282..2c649e940b3 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -198,7 +198,7 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+     ATIVGAState *s = container_of(vga, ATIVGAState, vga);
+     uint32_t srcoff;
+     uint32_t *dp = (uint32_t *)d;
+-    int i, j, h;
++    int i, j, h, idx = 0;
  
-     /*< watchdog timer >*/
--    QEMUTimer *wdog_timer;
-+    QEMUTimer wdog_timer;
-     qemu_irq wdog_irq;
-     uint64_t wdog_restart_time;
-     uint64_t wdogclk_freq;
-diff --git a/hw/misc/sifive_e_aon.c b/hw/misc/sifive_e_aon.c
-index 0e82ae3758b..e78f4f56725 100644
---- a/hw/misc/sifive_e_aon.c
-+++ b/hw/misc/sifive_e_aon.c
-@@ -94,9 +94,9 @@ static void sifive_e_aon_wdt_update_state(SiFiveEAONState *r)
-         next += muldiv64((r->wdogcmp0 - wdogs) <<
-                          FIELD_EX32(r->wdogcfg, AON_WDT_WDOGCFG, SCALE),
-                          NANOSECONDS_PER_SECOND, r->wdogclk_freq);
--        timer_mod(r->wdog_timer, next);
-+        timer_mod(&r->wdog_timer, next);
-     } else {
--        timer_mod(r->wdog_timer, INT64_MAX);
-+        timer_mod(&r->wdog_timer, INT64_MAX);
+     if (!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN) ||
+         scr_y < vga->hw_cursor_y || scr_y >= vga->hw_cursor_y + 64 ||
+@@ -213,10 +213,10 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+         uint32_t color;
+         uint8_t abits = vga_read_byte(vga, srcoff + i);
+         uint8_t xbits = vga_read_byte(vga, srcoff + i + 8);
+-        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1) {
++        for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
+             if (abits & BIT(7)) {
+                 if (xbits & BIT(7)) {
+-                    color = dp[i * 8 + j] ^ 0xffffffff; /* complement */
++                    color = dp[idx] ^ 0xffffffff; /* complement */
+                 } else {
+                     continue; /* transparent, no change */
+                 }
+@@ -224,10 +224,10 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+                 color = (xbits & BIT(7) ? s->regs.cur_color1 :
+                                           s->regs.cur_color0) | 0xff000000;
+             }
+-            if (vga->hw_cursor_x + i * 8 + j >= h) {
++            if (vga->hw_cursor_x + idx >= h) {
+                 return; /* end of screen, don't span to next line */
+             }
+-            dp[i * 8 + j] = color;
++            dp[idx] = color;
+         }
      }
  }
- 
-@@ -283,12 +283,19 @@ static void sifive_e_aon_init(Object *obj)
-     sysbus_init_mmio(sbd, &r->mmio);
- 
-     /* watchdog timer */
--    r->wdog_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                 sifive_e_aon_wdt_expired_cb, r);
-+    timer_init_ns(&r->wdog_timer, QEMU_CLOCK_VIRTUAL,
-+                  sifive_e_aon_wdt_expired_cb, r);
-     r->wdogclk_freq = SIFIVE_E_LFCLK_DEFAULT_FREQ;
-     sysbus_init_irq(sbd, &r->wdog_irq);
- }
- 
-+static void sifive_e_aon_finalize(Object *obj)
-+{
-+    SiFiveEAONState *r = SIFIVE_E_AON(obj);
-+
-+    timer_del(&r->wdog_timer);
-+}
-+
- static const Property sifive_e_aon_properties[] = {
-     DEFINE_PROP_UINT64("wdogclk-frequency", SiFiveEAONState, wdogclk_freq,
-                        SIFIVE_E_LFCLK_DEFAULT_FREQ),
-@@ -307,6 +314,7 @@ static const TypeInfo sifive_e_aon_info = {
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(SiFiveEAONState),
-     .instance_init = sifive_e_aon_init,
-+    .instance_finalize = sifive_e_aon_finalize,
-     .class_init    = sifive_e_aon_class_init,
- };
- 
 -- 
 2.53.0
 
