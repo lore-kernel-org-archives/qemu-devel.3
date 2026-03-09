@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26489EF370D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC9AEF370D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzViZ-0001Dz-Je; Mon, 09 Mar 2026 04:12:00 -0400
+	id 1vzVio-0001Uv-6h; Mon, 09 Mar 2026 04:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzViV-000183-Mk
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:11:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVid-0001Pp-FK
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:12:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzViQ-0003Hq-9y
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:11:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzViR-0003Dn-Kd
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:12:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773043861;
+ s=mimecast20190719; t=1773043749;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hHBAoSzhkAK5rbQAwwxHE9eJgLZSKqGVQXIm12zOwbs=;
- b=VV5zzNTSafeefeg8SC79mUrlyYnelOcLHjQojYSrJ1IB9P1BDsSWTJ5VSUygNVTFE3ZZRE
- gQcNx77GPZ+900ikgCKdYu8kN+bi7OwbDGOyuX8VwvHCFHW0RNulp/giMQ3V7ppSB+/8nK
- db7y9Ml9Wya+kFafksit2jDoSQdkFI4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=tzeuwtONVpxI/hNRh4H2K0/0Q6UPSYYVzzHEmRKxSyM=;
+ b=BbXBZQW97J7ayOYmvBkPFAgty4j+/QEZl/jT2jo0gM6TliSiVwwph1EgkH44rEqxXkXXuB
+ 6ygVFQ/mWJb6tEx18Jd2LYJtTtv80GPd793D7PKUMUujQOzKezBIIqJWgg+5qx420iFTxD
+ jfsnKOl/MScyxxGYCY+MmBG+0fl+DtE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-Cp9UEmKdNzaS5PiMrlc8GQ-1; Mon,
- 09 Mar 2026 04:05:36 -0400
-X-MC-Unique: Cp9UEmKdNzaS5PiMrlc8GQ-1
-X-Mimecast-MFC-AGG-ID: Cp9UEmKdNzaS5PiMrlc8GQ_1773043535
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-dj8VOSAXM-K209PHW7zIFg-1; Mon,
+ 09 Mar 2026 04:09:06 -0400
+X-MC-Unique: dj8VOSAXM-K209PHW7zIFg-1
+X-Mimecast-MFC-AGG-ID: dj8VOSAXM-K209PHW7zIFg_1773043744
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F1DAA18002C8; Mon,  9 Mar 2026 08:05:34 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21444195608A; Mon,  9 Mar 2026 08:09:04 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9645F1956095; Mon,  9 Mar 2026 08:05:28 +0000 (UTC)
-Message-ID: <c2ddfa06-6c65-4fbe-9521-3a160b5721ba@redhat.com>
-Date: Mon, 9 Mar 2026 09:05:26 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 30AE51800671; Mon,  9 Mar 2026 08:08:55 +0000 (UTC)
+Message-ID: <befbb0e6-c124-45f2-92cc-81eb44849a6a@redhat.com>
+Date: Mon, 9 Mar 2026 09:08:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] hw/i386/pc: Remove deprecated pc-q35-3.1 and
- pc-i440fx-3.1 machines
+Subject: Re: [PATCH 03/10] hw/i386/x86: Remove @pvh_enabled argument in
+ x86_load_linux()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -58,11 +58,13 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
+ Eduardo Habkost <eduardo@habkost.net>, Alexander Graf <graf@amazon.com>,
+ Dorjoy Chowdhury <dorjoychy111@gmail.com>
 References: <20260307152635.83893-1-philmd@linaro.org>
- <20260307152635.83893-2-philmd@linaro.org>
+ <20260307152635.83893-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -107,10 +109,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307152635.83893-2-philmd@linaro.org>
+In-Reply-To: <20260307152635.83893-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -137,16 +139,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
+> x86_load_linux()'s @pvh_enabled is now always %true: remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/i386/pc_piix.c | 13 -------------
->   hw/i386/pc_q35.c  | 14 --------------
->   2 files changed, 27 deletions(-)
+>   include/hw/i386/microvm.h | 2 +-
+>   include/hw/i386/x86.h     | 3 +--
+>   hw/i386/microvm.c         | 2 +-
+>   hw/i386/nitro_enclave.c   | 2 +-
+>   hw/i386/pc.c              | 4 ++--
+>   hw/i386/x86-common.c      | 3 +--
+>   6 files changed, 7 insertions(+), 9 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
