@@ -4,142 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD14FCA173
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F358CFCA16E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfIk-00035w-QB; Mon, 09 Mar 2026 14:26:00 -0400
+	id 1vzfLR-0004ys-5L; Mon, 09 Mar 2026 14:28:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vzfIQ-00032F-Hl; Mon, 09 Mar 2026 14:25:42 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vzfIM-0001O3-4i; Mon, 09 Mar 2026 14:25:37 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OZLUJUnoyn/JITZJirq2xEYtplUVFBJ33up9q9fiSR2OWG9QXZHzGhki2XPZSXAd4BTUFr7HRZ5tOhKrT4pdB5YJk55CPoniIhdFJkFTxPmigf9ggQIygSU20Jy9tBsXtZPkSULtlRl+B5TDLi4HrnaHU/KwcwQ/8Oadtej6FcTYQFt5ay7COd/dVmgWn59ieqKnqMqqfXbzjOrsZKYhVBz+GbOPqHs/0e1gdMKFQdZJTlgP5YidIpYUejRw9JNmX/07PBU+whUJe3FoiPbsNijNeLBX2qpXYjnzkwGsCzYaXyIhOUKQp+nzsYsB1+/sOHdIlGLjmv6pVUvwlcboWA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mObuEcHIyrkHTF6qNEzCm6z7QjXPSrLljS81HjiVAiE=;
- b=wDKd28zeYmD8RVGB3hxo/ZtkPzk/pJtTt9LrJnLxQINzJBwL+eveSY5Ex9qh0BSeelINYHfksEc5Sr6raZSRVxWokWelt1nyvUBZhg5h+1+sRQYG6kS0+QRY9z9psNJyMXY5cUwcaIWCnZY101jkMLmd5Lsk1e3PouYiTFvtigfOb9aV+4uGLnNRA1npx9VxhP7uj1hl0OK5PfoCOQuC3lUr1+537pg6YAC1ykAaxbD8WQqHUQCUzWroVQ5YE/Vv/QiQjjizDwVXITNKNWGH6w8CTuUrg48KxWPx3Rx1Cp1/imZtomjOFoZTTMWJ6W9SCW/sbPX5g8ybdOvJmi2haA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mObuEcHIyrkHTF6qNEzCm6z7QjXPSrLljS81HjiVAiE=;
- b=tCE2FGXlO3cOzRaJ8Y2AxNznwsxqVJB9dZEfPHXrbtT+OtbFAa9aJiwpSrGBcrt1hIcy5ZD+7FlPJv+iUiAZeushRFVAXuA5tIcHGg5IWYGDM5nmgmnXQ/FGHEcUI44NcbC8vpdXP+mTzFL9OmPCPE2E7jCYAwXPTSwpcrup5yDMf6ermt89LZPCXz0YQd+vESrtLCFAHXRSmKMh8V8r806Kb2/1zy875GcaCldQBV8ln8plESMtUGH6fSUINWjxJHwBOxLZ2znGiRpmCw91Mx6/vJbgwbbJ9fPVT0qbzZtp/qld3ShhLdAcQzSZu61OE1U1gYnG6H6tFyXoM2kEyA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by PH7PR12MB5617.namprd12.prod.outlook.com (2603:10b6:510:133::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Mon, 9 Mar
- 2026 18:25:22 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9700.010; Mon, 9 Mar 2026
- 18:25:21 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: RE: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
- alloc/free
-Thread-Topic: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
- alloc/free
-Thread-Index: AQHcpw4Fma2ObIHsrEy0JlTsVjwpILWmHESAgAAEM4CAAHFPgIAAATFw
-Date: Mon, 9 Mar 2026 18:25:21 +0000
-Message-ID: <CH3PR12MB7548B6C7F7DC206BD38B9143AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-14-skolothumtho@nvidia.com>
- <ed5ca420-94e5-4e9e-a2c3-f59eb6ea8ada@redhat.com>
- <CH3PR12MB7548F5610D7F339C5DAD0E41AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aa8M96GLFbPiMNUo@Asurada-Nvidia>
-In-Reply-To: <aa8M96GLFbPiMNUo@Asurada-Nvidia>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|PH7PR12MB5617:EE_
-x-ms-office365-filtering-correlation-id: 6b465c6d-79d0-403d-d63a-08de7e093981
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|7416014|38070700021|7053199007; 
-x-microsoft-antispam-message-info: GujyqjSohJ0ZruVoCBNOf68aeIrCf4jZik20uxouOA4Ue1Vzw+xT3cK4iXpdi3az/62hmJjhWYc3bM0SVV/Izd0sDl+PUWVilNXj46Fk4mj6TWblDgfURkLJoEPnafWK3UNGIZ9bN/sgS/gqH0eTLxc99n+kNB94J6PX3kTMo3te0eAGlprsOq2ti4uMJbMgik8gpALpwZF1fJYU+HJmqF17R2i5YvRuvqqtK3FQNEgtvHWJTAlTnHuInzwNqrdQ6gWAh3fAiwC6ntpDn311k4oKBU8LBIzp5lHLmfajqWYOxHKR4MJr5RQ68KSBxEEKevmZmIrY77d2dwYaqdXrU6Xrr22O5vpqi+Lnln/Icnud+aIV8wxKzH2CavsMnJ/MzTL1YMlHg832koM8TuhiAbUQ0oAm411BDO4P90/or/gDg1G+FBdsV76+CMsM3ieVMMrqCiWMa20a0j84sgnl2tggDWaDascxZz8PekGCK4Vrv4U+8H7pw7SzFBz+2hJkQdcAiDxfcoavGW0TGoliMvrO7JzoplOtQiAD5Jsu+uWvHmN9ZYIwp5Qpphe3aWUahxaZebshQeJ6rbDBN3YVlNjD0UQuJWIO6MrbNQUM5ivxVq2EgSaYBUz2R67hq/SDaLI06xSq4COR4bXsO3iPNrPtSQplkmxI3wSI4zvqDdDsFCmAoNysTsj7H0DLneKkYF7ps0RGVnB0N1sFpCJZ5WRZS2T/a8Mtn1jNq8C98PYhtAoIpbr+txK3hNy6OYmy588RLTXfqQlJ/sTu8jZn0M9cy0a72fEZC2Tg7/9iDPc=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(7416014)(38070700021)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ycKOYhh2aMCruBRDvxJZy67EHgjQiwnsPjYQJ6wp5RrFJ0kQHE82pOEGjk3S?=
- =?us-ascii?Q?kLdv+S0RvTSQmvZqigvZBw1WndZeMfOKK1ao9VwyEA2iPj0+U8OmHMsmwn6+?=
- =?us-ascii?Q?5TdVT+H400y1xCdBDr3aU6Wc/et4dk4SSgNSNxNUjDy4zQS0iCTYOTmgR5K8?=
- =?us-ascii?Q?YIUQLuVaberPiQdTqHA1p0Uj/PTkFkYwEsHENIbH+9uzFjEJYctkuhDTF6Rt?=
- =?us-ascii?Q?4j5IVrWDqlhHu++1k7KkyYJogEY5XnHTbNoo+P2pxTe0ca3Up5X7Es/y6oXA?=
- =?us-ascii?Q?Oc621b5wGIaUWGIxpCIve5gNtw0BLeJ2ddl7hvG6kaE7h+eBoV+vRCSagpke?=
- =?us-ascii?Q?sAq9IeB0m75XJ35i8uBphqI+Vz1D38eMHiMDTpgn+YYp64JLHA/RcU6qRI+o?=
- =?us-ascii?Q?vGPiCbflsGEl06Xg9vIwZRi6sqGe9i4hZD+34EhQ6xXl2Ng2rHDwF+qzVbFE?=
- =?us-ascii?Q?7CDIpz72BhvIb2WIo4Dch4qvMEisPg9zn9d2eeAOjjvT35+/3XAX2eFio6w3?=
- =?us-ascii?Q?bDvJDt6mgKUudDzct5lE9J/Kc0riJrdVXfqWDU0DKo+aQDGVCpGmpQzQo9I3?=
- =?us-ascii?Q?hhlSldQvKBvca7VxDL16UedPBeuvaBUazRH/OkRNnK0Wq/muVIYNbKoCIWU3?=
- =?us-ascii?Q?oIEZHIYYEAI3d12yF8cqpBgThRJD+tRXlx3wxpQI7EHqrWBADXJqc0JunaS9?=
- =?us-ascii?Q?xH/6zKmyGhFCDPYLNoyZwsgblHHP9pynINgYdcLYf3joGag1UiHkdijpeEVM?=
- =?us-ascii?Q?2/UElUwTutJ97+UpNDXJihdjKUtWdRmoPfnVTHiBueV4ZZJheSTbl7rMvGgF?=
- =?us-ascii?Q?+MCJdpx3p/OH4stQmte9PpXSsy463F6q3vTjkKoMwU0sS998nUf6aeroUhiJ?=
- =?us-ascii?Q?7h2gEqFXsl0mqTwduOIUmmvYCOJH6cr+zvSLFDEu1jud9E/dDH+VAEL12uRb?=
- =?us-ascii?Q?C41K45BeJZUoIae/eOn1qekENWC74itfkbRIobHpf6IfCrs96W4ZmUG3vSSY?=
- =?us-ascii?Q?iB1+gut8VlWklHG7N898FQ5E1FIuiryU8fxU+ie8CjZ37X7k9JyRi/GrOXtF?=
- =?us-ascii?Q?pHFFCo214ywmd/w6MJbJ3pE5HHy+Pb3uYFNM4R/iUbEROKlx133ybnVWtNrj?=
- =?us-ascii?Q?azj6x6sFODD4Q/ogC+CHtCMTuepAu6TztIwuQNT/UDeAqLu+aNJE+f7spCv6?=
- =?us-ascii?Q?kWWlpptUvCOJQmarUAhUdqoGiSOzbvwEpxzct+xt09lKU/awtV635fhc1RL6?=
- =?us-ascii?Q?xQfgd3OPv8m1FSQ3NOWxcM5ihg+n3PxFrI8Rv2XtIN9c1raoUQtAOMBGrKMx?=
- =?us-ascii?Q?r6tMmHxbK4fbuBblIMcsTZCwqeiuWae+3+9dMhlXm3jXiUKnE7U0AaWesY3g?=
- =?us-ascii?Q?Bxl25qTSYRXtIng8mSpxbhgPW4BS4X9mOtseHgwx/4ZSpzYqxZs5s14Qw9Ol?=
- =?us-ascii?Q?BFjouP9rc7qh0WQkpvx+HAekSUd19ZEcBmy87WSXnJ1OFUhxw0xjuQPql/tG?=
- =?us-ascii?Q?Mi5uXJS5ytDLBkaTJ3ZCvkRepf7iYDLZKM08YlOTzXy31i7+FSSoSTDyHkCH?=
- =?us-ascii?Q?t+1i0LM7Yl7R5+YOzEXTm14mZ7ujUrV9uK6x9R+TCKn3Z+0c2HxKmZJeMFmE?=
- =?us-ascii?Q?rRZCemyAwbVS19k2t3MOJO31jE9ctXpaCDFU9TG4+idg4jW80lc95TDy2iY3?=
- =?us-ascii?Q?xR/qR31QnbRkEYb5YSnh6iuUBfwnzm0XNhQOIRAoSQis/ae2jitmvWVR+FHJ?=
- =?us-ascii?Q?0WoHzXrc8w=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzfLL-0004yY-AV
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:28:40 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzfLJ-0001lz-IC
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:28:39 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-64ad019bbd4so10828493d50.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:28:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773080916; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Im9QqT3k7XigeXc4wPweHUsyyAjA0Z2Izh31W0MfMPujKNTYZlT6CjWVeCLGaXyRaf
+ A8Juryw6dQb0pyyT63omWWpgXuNlBD790wQxrVX4I5oqGPY83c86e4Zi/TwmSdltezB0
+ YZ9zkz1wigCDwt5iwG8yRq/EGKLcrV3VC5XHSf1/YiufU7QmUuYGpXhp8cv4iCSm0w+a
+ +9MwM9KD4/Aoa8catNQzB3IH4R2pfTk2z8L5cwk01D9SczmpRmeGAcyLH/fA8g+9uIIY
+ NR7gi7CUoYuLDURUnincq+Qifv7s6pgRqpEfU4n4gm5pdgcHg62DvxkXKvm81J6n4FZ7
+ vbzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=PvesBgWB1I4/GmoPHWspukPhsJAjBgn1CnjVPXmePGc=;
+ fh=BL9oHhasQ6lbq2piGBix5DXgXmbihZRdCU3U4Uvb328=;
+ b=UY1PNGw+bAWLC6/+Gm6hOm1481tFFVYGEHMUrR5hFZydNvPLoPu0TN4OKKLYwofKQ1
+ LMqcNWHthFiZNegDmwJ7L0jtmTOys0pkuyXgnZ1uDprLLNrOLdXrUWXZi8287NR+dJfX
+ g3QSgC3X/OWcHFbr7q5sJAXHGtX41Gz2GEIWtwZ3tzTSZx2uz9JBH2gybv7EH7xWcpgy
+ P7/z4QPnPVkAjWXIZBJH6z+Ug2Ou+i9rSSq6RiZ1++ydMPBQs6kyONruJbRqO8gmmc9s
+ OkTIlPvlpIZc1fxJfHx0LIn6NAnoh2XYWybtfJZJ4liJRFO5cW9snHS4uMALAjEOMK71
+ 88rQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773080916; x=1773685716; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PvesBgWB1I4/GmoPHWspukPhsJAjBgn1CnjVPXmePGc=;
+ b=rttrDDSNgddRDqobdYPvwNH50cu5HVu7ucCqrJjvQapOAXXu4RU9Z8i1KrWRwuCb5x
+ ZYjGMT0hUyT5v74ASaDrJLPNVQY/FXUl7jukkjSI7zkJ+NDcU9/ck0sOtpsqDxB9YqGI
+ 5mdw1PtM2xLbAK5pA008v3L6INfpA6RyrZsyOOfVR1hGcqSasgYzt4S43TM5pHCyGPqL
+ zTP+5ifkbh9XnWaC7ilpC0ow/hpgG6ql0pLsmhGBozOB5ERqavv0kcr2tOsGX+0uu6Ry
+ UhGL7oeaXi+Xi87ShAueTmnpNi4Kiqel4/VNr8ab8I2TyoadYBqEJcB0BgXbszvDB6jw
+ 99gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773080916; x=1773685716;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PvesBgWB1I4/GmoPHWspukPhsJAjBgn1CnjVPXmePGc=;
+ b=HDCHVyLvS+aQ6JqN2oXm4z02o3q4ZxAXXdxbREircwPq+Z3eitsNU2Yo2dTScmhfA3
+ OsLc7EFF9DbwAWiMXOLS0bzrGddUVQa5Kh6KZZJm0tjOg7XEcwxxy81MOceQQbanhmxh
+ QSP98ePlQ6wUDNsvskutRPwRRTrMDDq+gf+DAS68IuhyMDOn3xzUcDYCnZ7Lk5PbpRWK
+ 9jooWRsiCstLhqLB1JwFuwvYZAxzQkN0rG6lkZwdg9ry2iVmVNXwJKr/zHCpZ2zJ4aNt
+ i0wvDD/vrSM40ruZNda28yoyH+kHdBAB7HlyyAwxBns+MS94svHXFXN6XnZp7bEgYLmW
+ qUNA==
+X-Gm-Message-State: AOJu0YzR5mfziH+VcgWYNqFKCXEtMYLQsC/ovTQz9iatI2DUSYEtKTvy
+ Oh8LKpihNPgiZ+jvrSlvAHanBCQJqLTzxJ83Ox+T9Ec5J+hxPk48rH9Tm50Pg6YYbMR9vEJ2To8
+ 9Vn4ivESH+oLk6lP+AzCEOsOk9z4J44P7kxEEUKf0Rg==
+X-Gm-Gg: ATEYQzxT9KviQzOXC5dqwkrmRHvH/LngvnTEowt+25CdhrGLYGnmVWJtvsnjKots0lw
+ d7+V0QEt8VbgL9xbVwNaqg0RdsQuhFEJxtahUL94dnTriCR7Xt1CmxBXp3D9MAZ250Glfveed9D
+ sAu/TTd9vjzfRuhXc1QhT9GQaBp5EACxGrYR1lB0lh1a3gc8B+1+wzlj6jzLwpgYn/H+AyjvqWu
+ yeR4zklCdB0H142MDDjEJEz8zWOT5Y4XmWNPR9Hsmfp4vwSAfD7kmpu8odgq1hOi4lJs1F/6DjB
+ fJ8T7N3JU+L78VdWt9m9Y8STDsTX/Lw8uiRPB712BORSztV3zVJWTpTxzASXheTSXT4=
+X-Received: by 2002:a05:690e:d56:b0:64c:f2f5:a283 with SMTP id
+ 956f58d0204a3-64d14129cbfmr10240808d50.26.1773080915996; Mon, 09 Mar 2026
+ 11:28:35 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b465c6d-79d0-403d-d63a-08de7e093981
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Mar 2026 18:25:21.7716 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: rbP5ZbP0G3FMtTzjbjFlXmNnADAd1I5SfqQN1qXeIboR631MEewfKGNOmbxrIE1W1pSp94qDUI3D+zk5IE6T+Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5617
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20260309171258.1905205-1-peter.maydell@linaro.org>
+ <947b79c6-cd6a-945d-be07-415647c14142@eik.bme.hu>
+In-Reply-To: <947b79c6-cd6a-945d-be07-415647c14142@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Mar 2026 18:28:24 +0000
+X-Gm-Features: AaiRm51EzzYZ1JmR9sTACY66e09U599xsgbdhHKTjJz7Cz6OhhDVudyzAlJMFsY
+Message-ID: <CAFEAcA_-BYH7pSPKdjAq8-wNj6kopkaQTPznDESurmshBSzegg@mail.gmail.com>
+Subject: Re: [PATCH] hw/isa/piix: Embed i8259 irq in device state instead of
+ allocating
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,68 +117,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: 09 March 2026 18:10
-> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-> Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
-> devel@nongnu.org; peter.maydell@linaro.org; clg@redhat.com;
-> alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
-> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
-> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
-> <kjaju@nvidia.com>; phrdina@redhat.com
-> Subject: Re: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV
-> vIOMMU alloc/free
->=20
-> On Mon, Mar 09, 2026 at 04:31:22AM -0700, Shameer Kolothum Thodi
-> wrote:
-> > > > -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
-> > > > -    return false;
-> > > > +    Tegra241CMDQV *cmdqv =3D s->s_accel->cmdqv;
-> > > > +
-> > > > +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> > > > +
-> > > > + IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
-> > > if the only think that differs compared to no cmdq is the type, ie.
-> > >
-> > > IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV vs
-> > > IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV
-> > >
-> > > + passing true args, maybe you can just record the type of the cmdqv
-> > > + that is being used in the smmu_accel device. Then you can get rid o=
-f
-> > > + alloc and free
+On Mon, 9 Mar 2026 at 18:10, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>
+> On Mon, 9 Mar 2026, Peter Maydell wrote:
+> > The pci_piix_realize() function's use of qemu_allocate_irqs()
+> > results in a memory leak:
 > >
-> > It is not just the type. Based on the type we also need to pass,
+> > Direct leak of 8 byte(s) in 1 object(s) allocated from:
+> >    #0 0x61045c7a1a43 in malloc (/home/pm215/qemu/build/san/qemu-system-mips+0x16f8a43) (BuildId: aa43d3865e0f1991b1fc04422b5570fe522b6fa7)
+> >    #1 0x724cc3095ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+> >    #2 0x61045db72134 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
+> >    #3 0x61045cd7bf49 in pci_piix_realize /home/pm215/qemu/build/san/../../hw/isa/piix.c:318:35
+> >    #4 0x61045cf4533e in pci_qdev_realize /home/pm215/qemu/build/san/../../hw/pci/pci.c:2308:9
+> >    #5 0x61045db6cbca in device_set_realized /home/pm215/qemu/build/san/../../hw/core/qdev.c:523:13
+> >    #6 0x61045db86bd9 in property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:2376:5
+> >    #7 0x61045db81c5e in object_property_set /home/pm215/qemu/build/san/../../qom/object.c:1450:5
+> >    #8 0x61045db8e2fc in object_property_set_qobject /home/pm215/qemu/build/san/../../qom/qom-qobject.c:28:10
+> >    #9 0x61045db8258f in object_property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:1520:15
+> >    #10 0x61045db687aa in qdev_realize_and_unref /home/pm215/qemu/build/san/../../hw/core/qdev.c:283:11
+> >    #11 0x61045d892e21 in mips_malta_init /home/pm215/qemu/build/san/../../hw/mips/malta.c:1239:5
 > >
-> >  * @data_len: Length of the type specific data
-> >  * @__reserved: Must be 0
-> >  * @data_uptr: User pointer to a driver-specific virtual IOMMU data
-> >  *
+> > (The i386 PC sets the has-pic property to 'false', so this only
+> > affects the MIPS Malta board.)
 > >
-> > And the above is implementation specific.
-> >
-> > If our idea of the "ops" is to allow easier support for different
-> > implementations in future, it probably makes sense to keep this.
->=20
-> Any future "cmdqv" will likely have a different viommu type. So,
-> essentially this is just a viommu type override, as Eric pointed
-> out above.
->=20
-> What we actually need to expose per viommu is type/data_len. The
-> data_uptr can be a union viommu_data in the accel structure?
+> > Fix this by embedding the i8259 irq in the device state instead of
+> > allocating it.  This is a similar fix to the one we used for vt82c686
+> > in commit 2225dc562a93dc, except that we use qemu_init_irq_child()
+> > instead of qemu_init_irq().  The behaviour is identical except that
+> > the _child() version avoids what would be a leak if we ever
+> > unrealized the device.
+>
+> How could it leak if it's embedded? This should be freed with PIIXState so
+> I think the _child probably only affects where it shows up in qom-tree or
+> I may be missing something.
 
-So the suggestion is to get rid of alloc_viommu() and retrieve type/len=20
-during probe() and store the data_uptr in struct accel . Doable, I guess.
+The leak is not of the memory of the IRQState struct itself,
+but of the QOM stuff that object_initialize() sets up and that
+object_finalize() tears down. (object_finalize() will not attempt
+to free() the IRQState struct itself because the Object will have
+its 'free' function pointer NULL. Only objects created via
+object_new(), the "allocate memory and initialize the object"
+function, will have a 'free' method set up so that the finalize then
+frees that allocated memory.) You can see an example backtrace
+of this kind of leak in the commit message of commit f905be62379aab:
+we leak a hash table that's part of QOM's internals.
 
-But then we need to do something similar for veventq as well, right?
+Using the _child version means we set up the irq object as a child
+of the PIIX device, so that in the (theoretical) case where the PIIX
+refcount goes to 0 and we unrealize/deinit it we will also finalize
+the IRQ object. Otherwise we would have to have the PIIX device
+explicitly unref the IRQ object in its unrealize method.
 
-Isn't that actually bloating struct accel then?=20
-IMHO, the ops way looks better.
+> > The handling of IRQs in i8259_init() is rather convoluted and forces
+> > its callers into having an IRQ that just forwards the set operation
+> > outwards. It could in theory be cleaned up, but it's used in too
+> > many places for that to seem worthwhile just now.
+>
+> I think we've tried that before and found that the forwarder is needed to
+> avoid problems with creating and connecting interrupts that need to be in
+> specific order which would lead to hard to follow rules that's easy to get
+> wrong so it's easier to have a forwarder that works without further
+> thought. I can't find the discussion about this now but was probably
+> around commit 3820001131. Or maybe it's a different issue.
 
-Thanks,
-Shameer
+Yes, there's definitely an ordering thing involved so you can't just
+pass the target qemu_irq in to i8259_init(), but maybe something
+using qdev_pass_gpios() or something similar so that we end up
+directly connecting the i8259 outbound GPIO to where it needs to go
+would work. But it all felt too complicated to try to dig into.
+
+-- PMM
 
