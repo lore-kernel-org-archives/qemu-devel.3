@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BFAAF3C269
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3054F3C26D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbRx-0002wu-Tq; Mon, 09 Mar 2026 10:19:13 -0400
+	id 1vzbUQ-0003al-TW; Mon, 09 Mar 2026 10:21:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbRq-0002wQ-Rq
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:19:07 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbUN-0003aX-0I
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:21:43 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbRo-0001dC-17
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:19:05 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4852f8ac7e9so26022285e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:19:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbUL-0001vO-Az
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:21:42 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48534e9076fso9985665e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773065941; x=1773670741; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773066100; x=1773670900; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kirClGvfV12VxpNmvOOYbXSW1hJFhFiuqd4/3ecDu0M=;
- b=vijP+vdygWg7Up0jfuuHmAJMPUfvbeQFKh3V3FbNTqTvYfIDX8Lp++lwsCRL9qM2I9
- yvo7AQhie4alD1L6N7Yh8qAHXuZ9m00za+ggcFiZCT+w0bXNw4SEZvNMv9QYe8qVbLMf
- iRg7A6WLFS2WjIuffe1jdflziKNF2xdeB/SEpyOzPCxYaXi8OowXofrDN0c2nQ6YT1up
- vh/lrRIMPnIXJh9a3PNC8WGvr4OSZXTbk1MR9XOtw8aQfz06dLPOqpj6QtR49QUOl3Un
- OVApqgFRP1v7TCOz03E37bYKDfLY5YxrYxs9g0cSKAWPyt8Q0ZiwLceB3GZlaUsJY2sx
- XjBA==
+ bh=oUsckXTZd4tTP9r6HpuHkfoacQ9KKPwkN9twd81ncxM=;
+ b=FSav4OfjRgfNw8KIqtry+AMOcoGjPDK9IYX1PN9c8cTBRrI/UG0ivmXruwMehXjnMN
+ Jk3OA08ZOI+dO0nAMVaZGH+djrDUFC+crdAxprl6o6bhZbna30VA5ea61mKSXYqIzg2W
+ cEosNwwBMpCisx8+5SLdEU3nQz4VLj2UtAlKDenpU6QTDhgUmO2cwE9wQwaUAB+oETm7
+ HjDKYjYvRSxeguA3VTT8h3u8S7U6yTil6zal1RF+vDf+g0uCdsI/vVNEeyDcjP4kI9PX
+ oj4sNeZJv7M08+Vdk5aGMM67w6DAVq9bZvmi/oWYrcZKVPJo0/CNB/q2VZebmei8PHFe
+ 1jbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773065941; x=1773670741;
+ d=1e100.net; s=20230601; t=1773066100; x=1773670900;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kirClGvfV12VxpNmvOOYbXSW1hJFhFiuqd4/3ecDu0M=;
- b=xGo180Fw16g7EHBeXb7EDTGC7IW7/w2ctaprtKS3xJCw13f5U9ScFGEgv4tYcUuRYK
- Wo7y6R3s72lrAPRjN4DVfqTRIoggktayf2pCMA48c+doamiSavYTP4UEJ6Y6ycyZXOq/
- O11RzJ4Muzv2Wzvws3+zZ4WlybkbC4wPgqqV9u0Y6g1c31y3Hmz3kY1+XLK4rjxDsC9b
- w0ULCjGStQMU6UuNFYcYRNI35z6yB3gEdPHRUMqjd2qPGtVxu3UlRnabsxMwZuCe3sWO
- RmbkB4LtM2y+WviUvtf30fB/qsd5HFZgy8+eXXW0Ukfwgws7GGUOIWqeX2K6Z9Kc+8X9
- wRSQ==
-X-Gm-Message-State: AOJu0YytVXb2PtBcEc2ZWFN8vDs6n3HObEGlJqrGkE84DcIbpHW356sN
- MOmNqqoCpU/vFuEK4bt7arNHTqJE2NLwXfoWQAAdT+XEJzXYAf6lQmftFOu+ExARMj8=
-X-Gm-Gg: ATEYQzzzwiJbBNuAU5y/l8cJQYEIwprojR0CemsnyPTPb/utbG1LCxXRmDvd2qzrsg/
- OkSmYPE81lbbL/LLOtZeaewXKPoKL6pafFoKEZvx8myrAEKOPBtuenZWCZ6jpRUjDQlMov8C9BO
- sXKZWVpAcC6vOeIlCkWBPW9caCgyPBHYkkWTeAtiuVwaYjPeL4DgwycignFTuhndN2CZjaI8Q7Z
- vCSnXyei1LZZ6ghXrD8t4fKTksCj+jehgPUY7O9JRGd/yOZltmn/odv6ONz8pOd+Mx0+JreV5ri
- tDanPyIuoWwiiNYPuUK86SweYKRjL/Jj16f3+rcP1eIUtjb26R4DcGPCuBKQ6GWUOVUoQ2E9xBr
- bi254oArdqgThxzW+PfELDBgnqgb3rptp1afA1zhFuNSGdrXttinrC879cpr2ZqJcMx9OD9CIyw
- GuOilt9QNPoANU0l9fAPfuEZzQ6Fh51qa3Ot+sqCABbadVgL6iNgya8EJ/4bLmm6zRTsbnPRE=
-X-Received: by 2002:a05:600c:3b89:b0:485:3f1c:d8a4 with SMTP id
- 5b1f17b1804b1-4853f1cda4cmr30560335e9.9.1773065941337; 
- Mon, 09 Mar 2026 07:19:01 -0700 (PDT)
+ bh=oUsckXTZd4tTP9r6HpuHkfoacQ9KKPwkN9twd81ncxM=;
+ b=d4EaW4FT/pzdzN8rdoKgUP+GZBhfxrTKmfsLpP3kHn0sOtRe33HtRgAQdUxeAWMtBT
+ HAP/TX5gqapTQIr4frPT1WeYZBjzlVajuRK/uYGtBWQnQV4JWyBZlJrVanhdn2gHcxGe
+ JqJDDBIvhYQf5T8N4FroJlw7RRK8e4nLQoHYtxKQIM4OXuUcw8fqXHXIIQEK8YMD3kPA
+ 1/tIN4X1GmaRWbEGfySnOJmjKPqBqmScKYxoJtpBjMJA/3xiTIzmradUPEt6zJ2e0vVN
+ PbT6mZbgUEU46oz0cfIKg6xG34TeDIwkab3WrBJ5qGNGwNy5Ia1MYbzZ3Z+2g0xwQz+8
+ 8MqA==
+X-Gm-Message-State: AOJu0Yyh3K2Gvm9R3AMIz5BCZNmupTuZ0Xn6YvZnkcUESaY0dZuUNMv5
+ 5cGs/lYETIziyEl8AhV6Csq7ogaHDnrLAk5bcAnUPohxCj2xylpcZnyreZr73rViTVw=
+X-Gm-Gg: ATEYQzxeyq9y/O9pkVWcmjrQB7PDmfHEEz4Gw+CT359Jp11/3+mm9q7T68CLEZYCJYV
+ Dmb9YX9dncep5SCttjEVUzTnUCE8ucqICzR1GqoAVZbzDfevCOtnO/vvgLzXeNJUhhRmTQazL4P
+ mTlvCv6UfJBlSL6lpht22/7rNxMXq8pM0BHwbWX0zYDb1o7j3OhuI5i7yxf6nnEVkfx016HTG0y
+ 1sR4ycb56k6D3Ok8naf546yPv5EfWMKuZFPnhEclFwHpqnFKz21UWx7ETU99SCIoINy88/rEKmz
+ 0RN5nvNJFQWGRtJEkK/+LdDzcR46XbRkkEnJURz6xGseP9GCZKpG5mqCzxtR+fSl7mZk+tEvIVY
+ hcUrHnB10tZymbhf3t+ODTKfSYmeO+NDlLHxOMW4xzkYz2gAhiYESSMpS7jyU59Ocq43bbqKVng
+ Tmtx1LNffF8GqN7SRUJZ+gJ2tBUsgnQ9iINBYxiaoRYfcQZCvlYIvu9TMLyp/PMUVnzus/r4s15
+ IFqzstFIA==
+X-Received: by 2002:a05:600c:8708:b0:485:3c8f:e4c5 with SMTP id
+ 5b1f17b1804b1-4853c8fe526mr35849315e9.17.1773066099570; 
+ Mon, 09 Mar 2026 07:21:39 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48529a2fa39sm70584255e9.8.2026.03.09.07.18.59
+ 5b1f17b1804b1-4853c784813sm61463275e9.5.2026.03.09.07.21.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 07:18:59 -0700 (PDT)
-Message-ID: <bc6a9fed-cfb8-4c16-aa96-90988f065121@linaro.org>
-Date: Mon, 9 Mar 2026 15:18:58 +0100
+ Mon, 09 Mar 2026 07:21:38 -0700 (PDT)
+Message-ID: <d884b7c9-5bc6-4b5f-a45b-43716fdb2268@linaro.org>
+Date: Mon, 9 Mar 2026 15:21:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] virtio-snd: remove redundant fields
+Subject: Re: [PATCH 0/4] ui: fix small leaks in -display dbus
 Content-Language: en-US
-To: Roman Kiryanov <rkir@google.com>, manos.pitsidianakis@linaro.org
-Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com,
- jpcottin@google.com
-References: <20260305042523.335493-1-rkir@google.com>
- <20260305042523.335493-2-rkir@google.com>
+To: Peter Maydell <peter.maydell@linaro.org>, marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ richard.henderson@linaro.org
+References: <20260122113144.2046899-1-marcandre.lureau@redhat.com>
+ <CAFEAcA8PwXsmYGsPDyctxm7Ud78VYB_3nFazxvTXpu=HsGTnzw@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260305042523.335493-2-rkir@google.com>
+In-Reply-To: <CAFEAcA8PwXsmYGsPDyctxm7Ud78VYB_3nFazxvTXpu=HsGTnzw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/26 05:25, Roman Kiryanov wrote:
-> VirtIOSoundPCM does not need a pointer to
-> VirtIOSound because each VirtIOSoundPCMStream
-> already carries a pointer to it.
+On 8/3/26 14:25, Peter Maydell wrote:
+> On Thu, 22 Jan 2026 at 11:33, <marcandre.lureau@redhat.com> wrote:
+>>
+>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>
+>>
+>>
+>> Marc-André Lureau (4):
+>>    tests: fix leaks in dbus-display-test
+>>    ui/dbus: fix leak regression
+>>    ui/dbus: fix Unix.Map proxy leak
+>>    ui/dbus: fix pixman cleanup
+>>
+>>   tests/qtest/dbus-display-test.c |  9 +++++++++
+>>   ui/dbus-listener.c              | 11 +++++------
+>>   2 files changed, 14 insertions(+), 6 deletions(-)
 > 
-> Signed-off-by: Roman Kiryanov <rkir@google.com>
-> ---
->   hw/audio/virtio-snd.c         | 6 ++----
->   include/hw/audio/virtio-snd.h | 2 --
->   2 files changed, 2 insertions(+), 6 deletions(-)
+> I don't know the code well enough to review more than the
+> two really obvious ones, but this series fixes all the leaks I
+> see in the dbus-display-test test.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Is this statement equivalent to:
+
+Tested-by: Peter Maydell <peter.maydell@linaro.org>
+
+?
 
