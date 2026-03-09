@@ -4,132 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DD33FCA170
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298D4FCA16E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:22:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfAw-0008IO-Hd; Mon, 09 Mar 2026 14:17:54 -0400
+	id 1vzfFB-0001y4-JB; Mon, 09 Mar 2026 14:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzfAo-0008HI-Te
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:17:46 -0400
-Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzfAn-0000Nv-BV
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:17:46 -0400
-Received: by mail-qk1-x731.google.com with SMTP id
- af79cd13be357-8cb40149037so1270684585a.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:17:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzfEv-0001wu-2g
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:22:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzfEq-0000zL-0z
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:21:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773080514;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wZoqVQ9p1M4/FSeTynDH4kDE6l45iwPwO8kRNhzfePo=;
+ b=WEljMeGY5Lg6HltUNm9wo09qZvc2evNoGKTA2vX6YIm+pDj2LgoDLOpA4mNENtRT61l8Br
+ a1+NehiXOR4zuZtNU6Ec1ATm8po9a3fAFD/nbH+EbIj5HbXJsz9w5GXurw6E32iYdPseDi
+ R37j0McWuiCig/fdLg8w9Cw8Tj94s9Q=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-564-PH5_BVIwPr6r_bS0b6m8ig-1; Mon, 09 Mar 2026 14:21:53 -0400
+X-MC-Unique: PH5_BVIwPr6r_bS0b6m8ig-1
+X-Mimecast-MFC-AGG-ID: PH5_BVIwPr6r_bS0b6m8ig_1773080513
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-89463017976so834960286d6.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:21:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773080264; x=1773685064; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X+R4o+BrQrFfyZH2D1qKyt9Ofr35TRhFtMT6NW16++I=;
- b=zybkRPOdW16hNAQUrSN1bCPWLQW46hwGtVGZFPS6CIT716ybwrdnY+Ol/oRBoZsAGy
- NHkbZZcpvpXLVslVxku2sahjGb4JSsWjQFBAK/ixgBiTBVtGqhyyp7IUYba1YBcoPqrP
- hg2ulHvdvzHHuqiz+wiLHmQXnEI7bvyLEmhu2P5JiVpEPy4kAG4SOXuNkSpqKj6CtBdj
- oNj50x6F4h+wFjXKuZS72nNjP0PT2efv1BmTt61031ptITR6aPQv9BhnbamwhmivnUoy
- u3lQTeOCUe3P3ZxEiU4VTF17KDwMBWMZU8eilcDJHlR1i8IZrKbBFEJUK57S3r67hsA4
- OXxA==
+ d=redhat.com; s=google; t=1773080513; x=1773685313; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wZoqVQ9p1M4/FSeTynDH4kDE6l45iwPwO8kRNhzfePo=;
+ b=AZD9ePizd+BLWKcxAj3Vz7H0AU9mPXZhi950T4s6JP6C45GyxxOjRfS4cZm5gKSg3e
+ fYpS09PRsMBOenHWMqKSWNTlMKOvMC62hao9unJR80LUJyWpUbdGO6bkjgNxi1edGROX
+ Vi3VbsMGtXPCGXtaMq8tCICRQo3wxEqwUVG6Mh9Ltg5Z8n5188qB+VhqJuQuKfzdRDP8
+ +dk+6ao6xZiiP66eu27g79O6lxI6EcUgyRzpeziFut+fz66ooo0m3dCatyTaYD+Lm1Ng
+ b4uq4t5cpUk1j3O0ZJQYHR2BBPkGPre9STzqBLCpJeMHCcAlbi6TNTJ+OLvlLVL+jPd9
+ mCUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773080264; x=1773685064;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X+R4o+BrQrFfyZH2D1qKyt9Ofr35TRhFtMT6NW16++I=;
- b=EICqwcazXPYNX4Hng3W55QU/GbCBICA9QSGDwhbfEWxUDLaf45cRdAJRi9WOu0YDu5
- nJqVHeO2ACsAzsnlxknfFE6WJ01owsXTWgF4xA2mWc4zBHCoQddWVzNohs1iKYLnAx7f
- mvSXDoBIDnOzlxeP7OeWpLSgc5UgJMbT+MOP3ucHRS2v6mE+NirHGJOc4WyqonbF+AyO
- Tq0kDfAK2Azz2oWM6z5dS5uy/KoSEuXQl3cl7FrJyvdcfHmEYu3+/XHblTO4dMsKWNe2
- xaXx5RmYkWSu+q1KYWNByBQdX8q6FCvuejMyo/qRHnIa/NWbu12a/Tk21IpYFusNbmMl
- +Wmw==
+ d=1e100.net; s=20230601; t=1773080513; x=1773685313;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wZoqVQ9p1M4/FSeTynDH4kDE6l45iwPwO8kRNhzfePo=;
+ b=xS+jMtGLkgOfdYVbZRxjUaeySc/Pfmvui1KyhiKwTJLU227R2cJKS8tXFZfuuvydY6
+ KMUNW7a84BJuscvapdTurfWPGqgn1Egn947awyI4ReHiDSfiOHKhu44th9yGFaDPtUQA
+ 2Oc5Xz0umnO7sMbmaRVvq727E1IsvM6Sqog6bqAb6gmCLWSvfFmUNMyjLxlX5dgAYxOL
+ c0CdhckOyTnmtzBCirJ5tcH6gv46swGV1GbBDDjx3Th1aG+jNlNvmEwlkt+dHTaynl+T
+ Nu20JvQg+JvhkmDGn13T1ijJGv/rL/HeTziGz4eomUnT8/lXUxqZDDgWzKgHZiSINebw
+ vuig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVssgrc7k9R4IoMkTUsc9qeRhzwXaHcNVaWktnKJrCwey5w4BVsjtQv/wBQyDktdNDmZUkiTYcty1Qj@nongnu.org
-X-Gm-Message-State: AOJu0YzsCKp9wbbNrENQLkabHWElWqZYtkSBYXnGjH/Wg69R3mBIUp3s
- C8DrjuQrH8WUwMNX5zvbC9CF0EYUrEUlXm/m8NJDOGJgFki8HouSBrn++2HTAQLKHQk=
-X-Gm-Gg: ATEYQzz370CzkDUnkh9m8P1sG8iwf+CuajBKda6djcacG/EPyQWjbsSQSvWEB4O3FM8
- euFbrgg+rjmiadn7FsThKl0yJU5GmysR9E+zfW8lJJRWsJ4mgfurzq0mF2L8UK9FFqTx2ls8laf
- VO1Gal4gyUqhS2U5JtcVhg4HBDefcJf4jGpY1Q809c2ZdzjcfjzOKDUCkdUopmZ+mIWO0677QvN
- iDLfjpqf+gayOHNQHrj2OjnWghoDLPUX04hg+JS/NHrTSZIfc4tl8MqadSuwmlVpZVeAYT0JZ4U
- PNWMjfBLlXiOORAPBk2fpGxffQeqfIUqOSlOqnI6c/2teF9Jgqyq3OHupJcm6wpnjQhLC1E8rFS
- r7S59PKiomnb30Mn3MtTXO5dUG4mB3zAqUd8kQZFe+iHfqGNvWA+xjzvqPLSZ4ZfAddyPi2+cEJ
- nR9slQWf+KLMOP1BGvrW/dXWisQLusX5/85MIibMfE+myHX+Iv7xU0/JBgQyiI0id2AhQA
-X-Received: by 2002:a05:620a:44d1:b0:8ca:2baa:766 with SMTP id
- af79cd13be357-8cd6d40d296mr1626454385a.2.1773080263786; 
- Mon, 09 Mar 2026 11:17:43 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ AJvYcCVLwcirAKkdpqnlcwalMrQclLoIqu/ZDGA9POju42ChDJGavkU/eR6rWtquxod7flh+6cZKa0uZ9qhq@nongnu.org
+X-Gm-Message-State: AOJu0YyXy1cF//tyuUSTSvkAWitgiCrbu1wwAfp/pa0sY9U9nqDYypXK
+ 3lbKOlYpsLwg1KoKy5P37XWUdwf3zrkYbSup+edO8GCa3rHsWxXMEzgFEHul/YzBYnYRV2ZSyaU
+ X60FwJshqgwHbrbZGuMGC2AB+yNTmRqtPMCdNyGftzlECztz3sDPZHa7o
+X-Gm-Gg: ATEYQzyvSeEMxrqU6A6t0F2LWLQBRFiX6LXnIfXeDK9ruOnKpMUncqhXgbLP7kDC1Ol
+ 2Fx5DjILF3BDvUnKmwMnfzRD5kd6d1LmUNeIOJcQq9iY6+XKcBOXeNMWZbgWf7xb9UThBJ3683C
+ Y5vMhRmVqlMhpseOnorLmAoRKv7clZtHBmrxrGZRTJT1VgEv6HoUVBmf7hM5KuADfL3Dh2Lb5/J
+ DPRbdT9A/f9EzrupPNEfI7TiMpMKtL7LLyoQ19jkoEys5oFS39i7IyW0ew7CMZZcfEDkKWwbvnN
+ 2+Xw9evmGPQOFm4OeGyxtfgZXpxuxjXi/0eQGDtFxTV1sMRs9cZtca9vp1hdg8mBPhHuTRGODvK
+ qE6+NWzk5MFjZ4KTon+yX8sX2CVlh3yEQhoLsmsO/Zp/Zj6k0h/L35fQ8FCwlssW/5wy6pRJIsl
+ 4ZapCYDw==
+X-Received: by 2002:a05:6214:242a:b0:899:e621:eac8 with SMTP id
+ 6a1803df08f44-89a30ad1c83mr178024986d6.39.1773080512931; 
+ Mon, 09 Mar 2026 11:21:52 -0700 (PDT)
+X-Received: by 2002:a05:6214:242a:b0:899:e621:eac8 with SMTP id
+ 6a1803df08f44-89a30ad1c83mr178024496d6.39.1773080512257; 
+ Mon, 09 Mar 2026 11:21:52 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cd6f57291esm798679785a.50.2026.03.09.11.17.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 11:17:43 -0700 (PDT)
-Message-ID: <b9c77055-e055-48fb-b504-6a00f912b4c9@linaro.org>
-Date: Mon, 9 Mar 2026 11:17:41 -0700
+ 6a1803df08f44-89a57c31483sm2917326d6.44.2026.03.09.11.21.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 11:21:51 -0700 (PDT)
+Date: Mon, 9 Mar 2026 14:21:49 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Tejus GK <tejus.gk@nutanix.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 1/1] io: make zerocopy fallback accounting more accurate
+Message-ID: <aa8Pvd5O-OLKIXam@x1.local>
+References: <20260309090907.956330-1-tejus.gk@nutanix.com>
+ <aa755Yc6t_bBzM_u@redhat.com> <aa78gMsQrt1BeXt3@x1.local>
+ <aa8AqKqOa8YhEiF9@redhat.com>
+ <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
+ <aa8IoQOZHzQvacSh@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] tests/functional: add VBSA linux tests
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Kyle Evans <kevans@freebsd.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20260309174841.4184117-1-alex.bennee@linaro.org>
- <20260309174841.4184117-6-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260309174841.4184117-6-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x731.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <aa8IoQOZHzQvacSh@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,29 +129,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 10:48 AM, Alex Bennée wrote:
-> This extends the VBSA test to run the linux tests. The sysarch-acs
-> test suite does provide some pre-built images which is good because
-> the tests require a patched kernel. However due to the structure of
-> the image we need to jump one or two hoops to get something useful:
+On Mon, Mar 09, 2026 at 05:51:29PM +0000, Daniel P. Berrangé wrote:
+> On Mon, Mar 09, 2026 at 05:42:08PM +0000, Tejus GK wrote:
+> > 
+> > 
+> > > On 9 Mar 2026, at 10:47 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > 
+> > > !-------------------------------------------------------------------|
+> > >  CAUTION: External Email
+> > > 
+> > > |-------------------------------------------------------------------!
+> > > 
+> > > On Mon, Mar 09, 2026 at 12:59:44PM -0400, Peter Xu wrote:
+> > >> On Mon, Mar 09, 2026 at 04:48:37PM +0000, Daniel P. Berrangé wrote:
+> > >>>> @@ -881,8 +881,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
+> > >>>>         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
+> > >>>> 
+> > >>>>         /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
+> > >>>> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
+> > >>>> -            sioc->new_zero_copy_sent_success = true;
+> > >>>> +        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
+> > >>>> +            sioc->zero_copy_fallback++;
+> > >>> 
+> > >>> ...this is counting the number of MSG_ERRQUEUE items, which is not
+> > >>> the same as the number of IO requests. That's why we only used it
+> > >>> as a boolean marker originally, rather than making it a counter.
+> > >> 
+> > >> Would the logic still work and better than before?  Say, it's a counter of
+> > >> "messages" rather than "IOs" then.
+> > > 
+> > > IIUC it is a counter of processing notifications which is not directly
+> > > correlated to any action by QEMU - neither bytes nor syscalls.
+> > 
+> > Please correct me if I'm wrong about this, isn’t each notification an information 
+> > about what happened to an individual IO?
 > 
->    - download and double decompress (zip then xz) the image
->    - navigate grub to launch the Linux Execution Environment
->    - shutdown the system once tests are done
->    - extract the logs from the MSDOS file system and parse them
+> If userspace hasn't read a queued notification yet, the kernel will
+> merge new notifications with the existing queued one.
 > 
-> It does make the code a bit ugly but it works for me at least. So far
-> the subset of tests run is limited but that might be solved by adding
-> some more devices to the PCIe bus to exercise the SMMU behaviour.
->
+> The line above your change
+> 
+>   serr->ee_data - serr->ee_info + 1;
+> 
+> records how many notifications were merged, so we now how many
+> syscalls were processed.
+> 
+> If ee_code is  SO_EE_CODE_ZEROCOPY_COPIED though it means at least
+> one syscall resulted in a copy, but that doesn't imply that *all*
+> syscalls resulted in a copy.
+> 
+> AFAICT, it could be 1 out of a 1000 syscalls resulted in a copy,
+> or it could be 1000 out of 1000 resulted in a copy. We don't know.
+> 
+> IIUC the kernel's merging of notifications appears lossy wrt this
+> information. It could be partially mitigated by doing a flush for
+> notifications really really frequently but that feels like it would
+> have its own downsides
 
-If I recall correctly, all TF-A tests concerning SMMU are based on 
-SMMUv3TestEngine device, which unfortunately has a proprietary interface.
-We would greatly benefit from all this is Arm published that as a 
-specification, and this would remove all the needs for ad hoc SMMU testing.
-Or we could reverse engineer the interface from how tests exercise it 
-and implement something similar in QEMU to run original Arm tests.
+IMHO what this change does is removing the false negatives.
 
-Regards,
-Pierrick
+Before this patch, if QEMU reports fallback=0, it doesn't mean all the
+MSG_ZEROCOPY requests were all fulfilled by zerocopy.  It's because we
+justify it with one boolean over "a period of time" between two flushes, we
+set the boolean to TRUE as long as there is _one_ successful report of
+MSG_ZEROCOPY.  So even if every flush reports TRUE it only means "there is
+at least one MSG_ZEROCOPY request that didn't fallback".  It has no
+implication of whether a fallback happened.
+
+Hence, before this v2 patch, there can be false negative reported by QEMU,
+assuming there's no fallback (reflected in stats) but it actually happened.
+
+After this patch, if QEMU reports fallback=0, it guarantees that _all_
+MSG_ZEROCOPY requests are fulfilled with zerocopy.  It's because we monitor
+all messages and accumulate any fallback cases.  Even if the messages can
+be merged, when "fallback" shows anything non-zero would imply some
+fallback happened.  Here, the counter value doesn't really matter much
+IMHO, as long as it becomes non-zero.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
