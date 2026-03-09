@@ -4,107 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E30EA854C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 02:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DC6EA854C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 03:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzQfo-0003pm-SE; Sun, 08 Mar 2026 22:48:48 -0400
+	id 1vzR7M-0008Q4-R2; Sun, 08 Mar 2026 23:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vzQfl-0003p0-VS
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:48:45 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vzQfk-0008Qc-AY
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:48:45 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-6615c461d3fso5230467a12.2
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 19:48:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773024522; cv=none;
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vzR7J-0008PL-2e
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 23:17:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vzR7F-0002xm-7Z
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 23:17:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773026227;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+mPxkTWQsgeLhLXg2L6mhTzw2WIzmrHTi0imdx0E3VA=;
+ b=jFDPqbXVVctOY/HEcIiLPg6fSJfWhhQUogLZaMyBuWAp76fzcSn0z8amxO8VZe6CCf/yEE
+ w9TMxHMS/w8PoO2b8RcQ6ISQQLITQqFoteNEMBXnTZ1U9Qn7W8Nrg+f+nXC38lkq6ntchs
+ kgY3E/O0IZYl6azEBVTfEqdpL6AcWWo=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-29-n8c9YkVePh-VabyQFhx0Hg-1; Sun, 08 Mar 2026 23:17:05 -0400
+X-MC-Unique: n8c9YkVePh-VabyQFhx0Hg-1
+X-Mimecast-MFC-AGG-ID: n8c9YkVePh-VabyQFhx0Hg_1773026225
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c73783c96baso2380303a12.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 20:17:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773026225; cv=none;
  d=google.com; s=arc-20240605;
- b=EOdBrvm+VIKAtF960eXLSXu+IfFnFdPRM1A28rRPAXkGADLRlNs/ezWCX5T54Yc2K9
- 6V8WIMLEze7VwNi+OXkm4c0TqJWIZxaKCIwYFDFq/0ClOvlNzrPOZ6KmNA9pv0alBwEO
- 4mdlTJSnRWzwTy+PRDc8WAb8Mob1bkyjJ/edIZ4h847ttD/KEtZ/zIElk2U9jJWvQB6X
- ZvTSR7kaCdnMO+PtUfbDO9uLHA5huUEwjmLkCA8D258HupGr34VzyeHneJHCPwfZZmjd
- FlryZXg2nOt1qBq49tBnzaNedJ2azDw3zqRhbplXEQDWBRB+72NgxpkS6rmtcCgLfC9I
- RGGw==
+ b=PBBZcr5ghYCccN7zNqhS7kR2JV4XP8zkOc6unUXDMbT6HuGekGNlZU0X6Ilq/90mXl
+ HFuSSUstKJ9JTFdeV0YqKrZVnxEEMR0fFiBZmHuiYxd2hoA3c1AuQFXL+67IGINRLP0T
+ oBNYgxJsWeAJ/joaMxTm4Sb7v6zOhEEiKzZDwaKRUmo+jgwH93hGHxU6YSd8W1q5S1dO
+ QnNtl2iCsYSCoV24nmRNES3ZdBAjl5UjfsSDSfLy7vkEVNXs0mByFWCPWuhEdczqZuyf
+ FzB+HLDVtdB+h4/o2w8ypaxv8xk4JtMZd0vaFL4F2558ByUKfdAY7ddVH+1qgQ6HXoCE
+ y62A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=MvrvG2jWSH3RI4Gi51QRXJBXB4fR2UdOx7dznIt1rDo=;
- fh=OB+sqaeSPNGtddv8NBpHBKr+XluyK9xGL9lrBlA84BU=;
- b=TvUBasiGkPvLywoB+9TBSkreNpjr8l+rFH7uSBBm1jROwLQtcXz3r+oOxUABTHxMO3
- yOQmuOcSW2zzv85qXwsCpGRkXbQjTZgI5fdWymX2ryBk9MSMMK3sIozMCaa7j7+ZLODO
- 24U5MKed1gLFoAw01bde5uIByw+HC2B6/oS0Gi+j37YRQFGOUrAsnsEMshXoGdyNjQqh
- PZRc4UHyqJE2m0w5fvXBNzKNpweTF3HuldL6Ht7bmvDph4BaCqsrCRsrY3AAbh/+MVMo
- JzpdkRNvIRrdHkF9RQdYUkHzlSQh+Q2/yS4jkJNPnIyoBXQcP2UeDzw7o8b+t/OzJM9d
- TRyg==; darn=nongnu.org
+ bh=+mPxkTWQsgeLhLXg2L6mhTzw2WIzmrHTi0imdx0E3VA=;
+ fh=CCzwMatiZjClffqXfYCT0E4TCmw+jdyoA/vgnnKOdRs=;
+ b=ZB5P3KQmvPOWbzG6QrtjfHbmGxtADm2coimRZ4hWoi3xDjIAP7NdrQuL5/Nc9iOc3t
+ XQQL0Wj0m7ByzoVSMCPxhzC84fh0BaroCdd7agoGPENXE7c1ffNrEqmnXrMllvXTpVAd
+ 3hh/2B0/oktkBfwB4DDEfRjeExK67Z7DjgOQhEFgGJqljxqi1U4CdLQ1995U6toBC78j
+ 9vVqXRfkDhaMZha9QsQxjQY5b+65p2/3RHwhYshJQrRNy3SAmCaNQtWX0DzEYafXMEC+
+ AaQX8/d25XnFgCb2TVv0hAvob5GdGALIntLV9ofRnd/xxtLB+Y3cjSQJDABB8rZBIwWk
+ Ij0w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773024522; x=1773629322; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773026225; x=1773631025; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MvrvG2jWSH3RI4Gi51QRXJBXB4fR2UdOx7dznIt1rDo=;
- b=F7o78cIF2uYSvZ1kpU7avdzUpIC4mVbmq1AXahzSF7QUNQZcVQ6buzmfi1h6mHCuDP
- fFWDThMb7HRiTdLeWVLjO+kkD5Xt9jnsDPt1qsdFscjWRS87L5QJ0TR/3NfjtUwUZyKI
- jKy8da8Ht8O6phsThSptmd5KUeQ0eG46Mnd2a89k6d9GfJyWVoZvHxmcDTOHKuWm0ycc
- Q7pdc+FUKAvKcmxjOm/DEbtDg8lUkjdhSqdxVhgrcs2QQ5f84SWYcQRvemECBRQPCZ89
- UEsTLL+dc8V3jQQjqf8qhtGEMws/OLKk/FtftP2nfNVmo++0I1hcBe8Z1GDymPr1U0t/
- Hhxg==
+ bh=+mPxkTWQsgeLhLXg2L6mhTzw2WIzmrHTi0imdx0E3VA=;
+ b=kQ5j6wkIrF2bAzrzYLXrrZujzVe1akobLB5jZfqFmU+2GtOaAaiITEMi1CUw1w8M4U
+ GyJyVm0REK0A9+fFsPz9TUOU7vthn3HWUqqC2OWHFG0jvUrsAxT1qUToyzPL1o5NIoAb
+ T33yiizBSjJP8+wyXIbk/Owdmk8KQeromk6Fa4oRnQ6YHPd5elmh1yBHCLKA3JWOUEPR
+ q7T1/n5n5j4AMC+5Y3+Ci8g6ILpmDX1Mdn0YS27g4R2ge8AgH7LsrnWFuKk1UuNppzr4
+ uSYquYFeUmKh5N49KZX1FWg2hzJiBmATVzhjKsWng8Y/X6U9GsmvxGmOpnJqVOB1PoRK
+ IDPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773024522; x=1773629322;
+ d=1e100.net; s=20230601; t=1773026225; x=1773631025;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MvrvG2jWSH3RI4Gi51QRXJBXB4fR2UdOx7dznIt1rDo=;
- b=itArgpRGuh2lsb43Gm6uolqvCsF/HziPUmsEMYbmEK/U+OcPoJlwF3TSO5lXXAQOG1
- hLch6NIEaMXlYcHnRqg87GHVlVL60+VD5Ae3yF6KNtSZEyhmZs/4vSvjloq1Yn9f+eMe
- LXJE+1q72zN0x4/4OKpuNWaFRoMfjo7CgSdKC4hIn16NLVk+ZIwuCMj55sAzz75XbLpl
- bPvARhK0B4iMSDP3GC8d9XgYrF+M36mZN+XMuIDauXzMOasov5sfHla9VMCqxFCRAdWK
- lWu20f+VzDQF3JAIYIZzDlxner3UwbLmEoaCo0oKpW7GPZ5E0HwR7yh7DV9IHWOR5Uhe
- M3vw==
-X-Gm-Message-State: AOJu0Yw3FbHa9OlMc7zcBcz3BuCh5/ouupE+sMkzKsYKiLfTPBiO1cX5
- jyI72uI48dAiCVOM2n8KtZ+x6D5GDEbxMh45zr7RheYcRrAQsaQb47QfUH4hZnYs0GZIbPpEPbx
- VoUveZQHFkrVu06anFTK5ra9BA3IMu5k=
-X-Gm-Gg: ATEYQzz93OqT8MbfU5s3M+Edp0qqdCHN0CeBw4EftSLHN48yljQNubZBWppkM1pccl0
- NFVhxpXNHKKUGf2kGZqmr8V9kzkcj5exN/bPp3vAOivoFKByqvK5QHzLg+SWoafPSto4UKJHA0c
- xm/lTTlBeA7P0mj4ESgGu/Kr4kkmgD92Yb0BsF2ZypPxy77ctYEUS2vhALRdnXqN3yJQBAIvyhL
- a2yAbkGZwJ4xls6G6zGscIw7RvR2SXSXes53nhfKmLqbt8+GoQrepUJwMXi2CvvWInY/a/BJDQ8
- ZwJCEr9uaclaWq72fHqhMV5L0Awg8bi98tRZkp7AiXl7HrVH
-X-Received: by 2002:a05:6402:210b:b0:660:dd8e:5382 with SMTP id
- 4fb4d7f45d1cf-6619d4a3429mr5219838a12.13.1773024522049; Sun, 08 Mar 2026
- 19:48:42 -0700 (PDT)
+ bh=+mPxkTWQsgeLhLXg2L6mhTzw2WIzmrHTi0imdx0E3VA=;
+ b=jsVbWv0BTSGAC0YbCXmVQI1rxZXcqBYbGRqZk+pAX1AIMU0lXN9fHIGDQaM9RyYag5
+ Xl2Tmga3U/WVruqbJ9UyDIDaSdOzpmVWCki3oeQSg1ts7XCOuuz85eQ6w1ZNkVp69430
+ GbzTm6it2Ce1Kqnn6WQcmJ1DHaZUATWogEJLmfSw1WX+lN5KJNDP/muVaW5LeWkFCuoE
+ +BxjuEkOa1RVrtgoOp++cWanQSvMzAQj33drL/hA6SGsBCpo7W/hm6ovJzMI9I9xmewI
+ 5Z7n+wXcYIf+C8vl2UZ27zlfkHnmhSAHwRKH5dBlwtVfSOGucmOe4kfCtXWNP1YhuJ2F
+ 9ikg==
+X-Gm-Message-State: AOJu0YyzBMoXtplhv9eP6MKLdNI6RHFX0wG3FXuxEQH9Hux+I5Fiu8SO
+ 8ga8EAKm/aKZV0WVF8V4Axt7Cf/SGElFtPqFRoFjyv6FgNdck3rizwm2I0MFW6GXpmgpIH19HPB
+ xWThFa1stxxNCIfy9Fk/38Z/ZqLgxZtKHCGD6sYCBwb6gx4kq23OPnpwTVhNut5zXVctRLb9SZ4
+ fRxNddgl5DG9vR+yYOG5zUTCG1mj9cXkw=
+X-Gm-Gg: ATEYQzzjHktOKwxNqfPddUqQmWpv6/6SpH2193GwSVr/QoFLRoyp9BGBiU2jLYgVxTL
+ yiK5oc18gVgv2m6ILS+D4w8ajzovgvmjvbv1+m6Z/izP1zFGrRa0eViMoTdN9pRerDD6dTCj5/A
+ dMcim55iP9kdDcvOcAta7mM8qIAKc8Pl5lm6SQ1tojwKhLfFPlDrSCez1cvUn9DiB8oMlXAZPAo
+ Okoy07A
+X-Received: by 2002:a05:6a21:180a:b0:398:7791:fb16 with SMTP id
+ adf61e73a8af0-3987791fdf9mr4245330637.57.1773026224848; 
+ Sun, 08 Mar 2026 20:17:04 -0700 (PDT)
+X-Received: by 2002:a05:6a21:180a:b0:398:7791:fb16 with SMTP id
+ adf61e73a8af0-3987791fdf9mr4245307637.57.1773026224433; Sun, 08 Mar 2026
+ 20:17:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260307125222.3656140-1-peter.maydell@linaro.org>
-In-Reply-To: <20260307125222.3656140-1-peter.maydell@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Mar 2026 12:48:15 +1000
-X-Gm-Features: AaiRm5117xvma0KXDuFWzUQzcqfVIu9iFhHJAX0AP3pUtstYjdFCVjzM0-wJJqo
-Message-ID: <CAKmqyKPSC2BwK6dVP-aEkUGgWxyFeXdUjCs2mPDc1Pxd5H4jbA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Free instance_init allocations in
- instance_finalize
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+ <20260304173535.2702587-2-eperezma@redhat.com>
+ <CACGkMEu5BGgdstpEVw8eH+wmXhi+nFdHRW2bXk7enZtxbAdsBQ@mail.gmail.com>
+ <CAJaqyWfADYQHjszX+DGoW1Cah--619_pVztmfV6ctTN6-0-Q5g@mail.gmail.com>
+In-Reply-To: <CAJaqyWfADYQHjszX+DGoW1Cah--619_pVztmfV6ctTN6-0-Q5g@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 9 Mar 2026 11:16:52 +0800
+X-Gm-Features: AaiRm52Srsrj3_AdmJYauUdsArebnMTm3BN90LYeKtVjbMHNVpROLnGcaLLZY5M
+Message-ID: <CACGkMEt09WkCgJmbrdmyDYdB8HUH=Y-DrwNChJGrfH2afua8QA@mail.gmail.com>
+Subject: Re: [PATCH 1/7] virtio: Allow to fill a whole virtqueue in order
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Koushik Dutta <kdutta@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,99 +143,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 7, 2026 at 10:53=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
+On Fri, Mar 6, 2026 at 2:23=E2=80=AFPM Eugenio Perez Martin <eperezma@redha=
+t.com> wrote:
 >
-> The riscv-iommu device makes various allocations in its
-> instance_init method. These will leak when QMP inits an
-> object of this type to introspect it, as can be seen if you
-> run 'make check' with the address sanitizer enabled:
+> On Fri, Mar 6, 2026 at 4:26=E2=80=AFAM Jason Wang <jasowang@redhat.com> w=
+rote:
+> >
+> > On Thu, Mar 5, 2026 at 1:35=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@red=
+hat.com> wrote:
+> > >
+> > > As the while steps < max_steps is already one less than the vq size, =
+the
+> > > right maximum max_steps variable is queue length, not the maximum
+> > > possible remainder of % vq->vring.num.
+> > >
+> > > Fixes: b44135daa37 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORD=
+ER support")
+> > > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > > ---
+> > > Personally I'd just remove max_steps and let it be vq->vring.num, but
+> > > let's make the minimal changes for now.
+> > > ---
+> > >  hw/virtio/virtio.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > > index e9d553295257..17f171551892 100644
+> > > --- a/hw/virtio/virtio.c
+> > > +++ b/hw/virtio/virtio.c
+> > > @@ -980,7 +980,7 @@ static void virtqueue_ordered_fill(VirtQueue *vq,=
+ const VirtQueueElement *elem,
+> > >       * We shouldn't need to increase 'i' by more than or equal to
+> > >       * the distance between used_idx and last_avail_idx (max_steps).
+> > >       */
+> > > -    max_steps =3D (vq->last_avail_idx - vq->used_idx) % vq->vring.nu=
+m;
+> > > +    max_steps =3D MIN(vq->last_avail_idx - vq->used_idx, vq->vring.n=
+um);
+> > >
+> > >      /* Search for element in vq->used_elems */
+> > >      while (steps < max_steps) {
+> >
+> > Not directly related but I found that the virtqueue_ordered_fill() and
+> > virtqueue_ordered_flush() can "emulate" an in-order device even if it
+> > isn't one. I'm not sure this is good for the device that can benefit
+> > from out of order completion like block devices.
+> >
 >
-> Direct leak of 4096 byte(s) in 1 object(s) allocated from:
->     #0 0x5d8415b6ed9d in calloc (/home/pm215/qemu/build/san/qemu-system-r=
-iscv32+0x1832d9d) (BuildId: fedcc313e48ba803d63837329c37fd609dd50849)
->     #1 0x75c0502f1771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.=
-0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->     #2 0x5d8416d09391 in riscv_iommu_instance_init /home/pm215/qemu/build=
-/san/../../hw/riscv/riscv-iommu.c:2463:18
->     #3 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/bui=
-ld/san/../../qom/object.c:570:5
->     #4 0x5d8417104ee9 in object_initialize /home/pm215/qemu/build/san/../=
-../qom/object.c:578:5
->     #5 0x5d8417104ee9 in object_initialize_child_with_propsv /home/pm215/=
-qemu/build/san/../../qom/object.c:608:5
->     #6 0x5d8417104db1 in object_initialize_child_with_props /home/pm215/q=
-emu/build/san/../../qom/object.c:591:10
->     #7 0x5d8417106506 in object_initialize_child_internal /home/pm215/qem=
-u/build/san/../../qom/object.c:645:5
->     #8 0x5d8416d16a12 in riscv_iommu_sys_init /home/pm215/qemu/build/san/=
-../../hw/riscv/riscv-iommu-sys.c:199:5
->     #9 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/bui=
-ld/san/../../qom/object.c:570:5
->     #10 0x5d841710661f in object_new_with_type /home/pm215/qemu/build/san=
-/../../qom/object.c:774:5
->     #11 0x5d841755d956 in qmp_device_list_properties /home/pm215/qemu/bui=
-ld/san/../../qom/qom-qmp-cmds.c:206:11
+> I guess the benefit is significantly reduced if the device cannot use
+> more than one descriptor in the same used entry.
 >
-> (and other similar backtraces).
+> > It seems the correct approach is to let the device decide whether it
+> > can operate in order, not the virtio core (as vhost-kernel did).
+> >
 >
-> Fix these by freeing the resources we allocate in instance_init in
-> instance_finalize.  In some cases we were freeing these in unrealize,
-> and in some cases not at all.
+> I agree with this.
 >
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Currently, `in_order` is off by default but we could enable it by
+> default per-device.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+After further thought, there's another reason. For example, for a
+networking device, virtio-net should know nothing about the networking
+backend (though some tricks exist in the code). So it can't know if
+the backend can handle OOO or not. Starting with this seems to be
+fine.
 
-Alistair
+Thanks
 
-> ---
->  hw/riscv/riscv-iommu.c | 16 +++++++++++++---
->  1 file changed, 13 insertions(+), 3 deletions(-)
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 98345b1280..225394ea83 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2479,6 +2479,18 @@ static void riscv_iommu_instance_init(Object *obj)
->      QLIST_INIT(&s->spaces);
->  }
->
-> +static void riscv_iommu_instance_finalize(Object *obj)
-> +{
-> +    RISCVIOMMUState *s =3D RISCV_IOMMU(obj);
-> +
-> +    g_free(s->regs_rw);
-> +    g_free(s->regs_ro);
-> +    g_free(s->regs_wc);
-> +
-> +    g_hash_table_unref(s->ctx_cache);
-> +    g_hash_table_unref(s->iot_cache);
-> +}
-> +
->  static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->  {
->      RISCVIOMMUState *s =3D RISCV_IOMMU(dev);
-> @@ -2597,9 +2609,6 @@ static void riscv_iommu_unrealize(DeviceState *dev)
->  {
->      RISCVIOMMUState *s =3D RISCV_IOMMU(dev);
->
-> -    g_hash_table_unref(s->iot_cache);
-> -    g_hash_table_unref(s->ctx_cache);
-> -
->      if (s->cap & RISCV_IOMMU_CAP_HPM) {
->          g_hash_table_unref(s->hpm_event_ctr_map);
->          timer_free(s->hpm_timer);
-> @@ -2675,6 +2684,7 @@ static const TypeInfo riscv_iommu_info =3D {
->      .parent =3D TYPE_DEVICE,
->      .instance_size =3D sizeof(RISCVIOMMUState),
->      .instance_init =3D riscv_iommu_instance_init,
-> +    .instance_finalize =3D riscv_iommu_instance_finalize,
->      .class_init =3D riscv_iommu_class_init,
->  };
->
-> --
-> 2.43.0
->
->
+
 
