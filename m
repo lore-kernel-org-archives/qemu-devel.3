@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F768EF36E6
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 06:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73E2FEF36E7
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 06:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzUMH-0007vM-UY; Mon, 09 Mar 2026 02:44:53 -0400
+	id 1vzUWV-0002wr-R2; Mon, 09 Mar 2026 02:55:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vzUMF-0007v1-Vk
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:44:51 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vzUME-000278-Co
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:44:51 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-56a9076813bso4437611e0c.3
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 23:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773038689; x=1773643489; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=a2tMEsPmEaiHyXknwk29SjcZVAaayzKi1p57s2lEHB0=;
- b=XmqA6fo/4c1uVD1d70si61mKP9HXkueuObtL6Qv0v1rTV5ppEiGeOp+KVdgEfhFWNL
- H/YD5KPrY/c3eiRxFCwqvqXniGA0wM7+57ywu8TaDqDIirU57oWov3jo6FEl0QXzDt1U
- qk/jmKU2wtR/L62SVG/SWdxcWAklpnTLtkGhNL4KUn+dje6n7VkNnR3FTWcwhOS27TnS
- 3gDxVc6C8WpzQzenhcS9Jx2fnnzvb4hpevckjj9qgBUZY3DVLjNd1+aUJjXZhHxFPFMB
- zC9Om5Yt55tLKNBcPLACVeK0XmwjHmZR4yMQKKt0Oc9InoeJWd/s8MiiWEqDBPOzfK2O
- Xrqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773038689; x=1773643489;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=a2tMEsPmEaiHyXknwk29SjcZVAaayzKi1p57s2lEHB0=;
- b=otOVmhPlFRHeUQ2ywWM4Fo0Z0oGq/rap/ohh+BnhN2ofJ8w1A3Eq5oZWaYzQksijzc
- TjW+yoAVeaUEO2B+D6xDMompIZnARGXM2dM4f2cxsVazpabf9EXrEH65/z9lXyECdZmK
- dNLMIIjmUMSECxP+tds0eNYtXD+e2qxEcKimR+JzOU4ty4dVPgCcRLtAgGW57ths29UL
- 0QSWBSMD/CE+U56aral2Mq0qei1oYjhbpJ+lG+Nsns1lnfLbh0dkwbg20NeN0ocCWxQQ
- 1Q/rK759gtBR52SgCncwGNQcOhYP3R5fvtic4mG8yc54wrCWZs4ES9x+UOdkN2Vzf62S
- UJdQ==
-X-Gm-Message-State: AOJu0Yw6xo/B/WcQWJGUFhl+KKydM1nsR4x8Adh04Fr+cw9ghUv/r5/L
- XeWYKAs2sn67O7hocCWOQwiukXREjV0tQ3VFHnOUL2+gCh3LEQKJ+/3yllQaqyXQ
-X-Gm-Gg: ATEYQzz++sSXJuuLKN2b2Ri35FrynOCleom9mAel73rATVkJaXCM86clBBDLQ79zUMQ
- WEXDTcY8ytKblKIVHBb0zUI7Mn/igTnRUrBGiqicJsLPAEH/E0YR3abBnQ8pr0fLW8hTeu/SLuI
- leWb5FmvAcpJiJX3vDpe35FF6rN7ucxtsrc0XyYqDzlVlBdJ5B6EvrhYK94IwafUFFf0vmDbWV0
- ORWHv3eoibgth59oBBeBzxpavUCijPFxow5MPFTfhSSeHvHJr04y0PNEWsh6p8D2EM2yObZpkYs
- O/LYWgjcF1N5omko9Zvz+mOLKMzwOSF+uPV/Y+JYFUiJ0qBVtRNzyYAm4TU+35eiLdGmZCA3SB8
- Z452rqXDVn+G1djTGPkRiAsd1Tdj0cyWF+2DoY7Ikr+GQza7zNpoQ+NH7OMHzTDmKe4lR1ioOhI
- v4BZb6tECIwXWpVQaoBO/Z2nzw+83ZkwKjKxrIlbeQOz6UwMStxMHu4JTZSg==
-X-Received: by 2002:a05:6122:1350:b0:566:36e7:8934 with SMTP id
- 71dfb90a1353d-56b07e8b7dcmr3378593e0c.16.1773038688827; 
- Sun, 08 Mar 2026 23:44:48 -0700 (PDT)
-Received: from gmail.com (ip190-5-140-138.intercom.com.sv. [190.5.140.138])
- by smtp.gmail.com with ESMTPSA id
- 71dfb90a1353d-56b09a2614fsm9529782e0c.7.2026.03.08.23.44.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Mar 2026 23:44:47 -0700 (PDT)
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org
-Subject: [PULL v1 3/5] physmem: xen: Conditionalize use of the mapcache
-Date: Mon,  9 Mar 2026 07:44:33 +0100
-Message-ID: <20260309064436.51860-4-edgar.iglesias@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260309064436.51860-1-edgar.iglesias@gmail.com>
-References: <20260309064436.51860-1-edgar.iglesias@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vzUWT-0002wi-Ro
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:55:25 -0400
+Received: from p-west2-cluster2-host5-snip4-10.eps.apple.com ([57.103.68.233]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vzUWR-000365-Gy
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:55:25 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-9 (Postfix) with ESMTPS id
+ 49A2B1800145; Mon,  9 Mar 2026 06:55:17 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773039319; x=1775631319;
+ bh=gsK5OvwyqkWoiBY1mXoMucvc9CuH/TrbMstXOjSt5VA=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=JnRFZQgjbqG1JrsESB01zyoO2FR0wlinaw3g5DNF7KoYVzHtv0yyPHJHBX8e62/0nc6iq9ptlCATa+Qvp+uydS0l5NQFhxSx/NZWlqIXBbxY1SykL6fwTto80OybB0HZVEotk8SayGRBr1CeJr728dMXHb92naJT3+hu7zj0B7ZhCpDnxrKJ0OJIv3zRzlPjRIYU8H/oGDJSFlg0RFgMBHeOlfDp/U/mMxNcpp2HIg0z4XIN9V3/AbnAXynfe0PHa7FvMRUOvHTZefSId74af81FX206VdxBsx3lxmIl6P73En3ySSgzjaZlnDt10pLfdEmgo465w2VbPd9hQU+r6Q==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-9 (Postfix) with ESMTPSA id
+ 6D51F1800138; Mon,  9 Mar 2026 06:55:15 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [RFC PATCH v2 0/1] target/i386/kvm: Configure proper KVM SEOIB
+ behavior
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <D74B0637-1332-4FC4-B29B-804E5AC18C33@nutanix.com>
+Date: Mon, 9 Mar 2026 07:55:03 +0100
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>, Jon Kohler <jon@nutanix.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "mst@redhat.com" <mst@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "eduardo@habkost.net" <eduardo@habkost.net>,
+ "mtosatti@redhat.com" <mtosatti@redhat.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1279CDB9-C8E1-40A3-A01D-3C53E831989F@unpredictable.fr>
+References: <20260309054243.440453-1-khushit.shah@nutanix.com>
+ <6A894B95-03A6-49EE-91A2-D3BCB09AAFCD@unpredictable.fr>
+ <D74B0637-1332-4FC4-B29B-804E5AC18C33@nutanix.com>
+To: Khushit Shah <khushit.shah@nutanix.com>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Authority-Info-Out: v=2.4 cv=ZPHaWH7b c=1 sm=1 tr=0 ts=69ae6ed7
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=64Cc0HZtAAAA:8 a=hq2CCHQ3Zjmsdc1K5isA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 5pm00IWxl8-ShB0iJ5or-1Xmk-1YYEbz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA2MiBTYWx0ZWRfX7qQ4IphH2nlr
+ VCcCRmZnogyyA0YZ5WhRS2tIrFSVdZ6+glSdQVEfeBByCaqB5XxAnVmkHNRkLGjXEeWn8MV7Pmu
+ gqj5LLOZ94b5EXwM6rMK6hy2BsPEZXZfAJj0GQ/8fJeMy22dts0njwPdnvjPhZ2+vDC3Aa9onrt
+ JdfyaSD2w9ZNSq7nEHZRzMuy+bXTY6jfgZJ0rEONkrLb24vRz/f5/ouNoZYDQ/0oDhUB5wFemey
+ YJsE95TkPPdiabX6DlT4E9eYBI/2WlDX8x7aQK5O2zbRg3VwEVzo/6IpRIMrB3xYldQCnU7M4IX
+ bWpHOQNDOvQ6Izg/tWUGZIskQWC/tyHhpD+Hc7zEaKjNH2jO5E9zA28/aRA8CU=
+X-Proofpoint-ORIG-GUID: 5pm00IWxl8-ShB0iJ5or-1Xmk-1YYEbz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_02,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 phishscore=0
+ mlxlogscore=999 mlxscore=0
+ malwarescore=0 clxscore=1030 spamscore=0 bulkscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603090062
+X-JNJ: AAAAAAAB+MIfcgwaci7uk5FEu/ujmzNgXYaDk9qGAxJv6IS7K5po/IDyJeqkfwaDYxQf1dymAr0xWtvuMBMcktu7RmJJGZwyRzpkqXo5zZgLGLL8iRWD05Z9pBMJ2FeTWZlhP5+v7Umml8BjOMae/LxEvPH9MjL7pgcgeECUsxvnMqKBMD+Y3XkNGpLoEyf5gYWKHi0r8yKf9CV0x8thjL9M7FhvuP3fUmcCNJgF8MSep13gQkqH6u7n5Rw9Qs3vC2IKruhw8egrcWBkuTffhoy75V7+e77g9XOae2CTU7k3b9OluZ0Oxh336h+9oROCu2dsD7jfKDnzme+bP2BSgiQ46j9e9uWJA9bx8wS/WIUZ5sCZS8P+0dp8Wv6rWAQl0WlxLPpgJMglvswoS33HkpiIXrHd/87lgKnUXP2Z50J1HXYM/HPyotNu+g1N0mmjEFdwjG8fUtnc7fsl3ZVMJCg353fxtOU1AN/UgS8CfcYsKkwKdO5E1wAq22yewo4UtiWSIPzZvESgiQtZKleM/Kg6OR25Dcv6HdXKu713/fnOSxVhvFj5iH3V81H8HawVslIPU34LBis/zq8WSwlextmZaLNQj7Iopsk0vf5msVQ5gJb0DKbd2fo7DFEjXXHJf1upZFunWo4S9tOdgCrDvNhivFuVpP1EC2fZAQjiUlcOcUtAKRSsxwDIpDJwDW+FmS3+Phn24YokPTbgXwk/j788J4vpDyX8bdJawXTaP6D0Y07q7rcjl4Rhz+SDcv1XgPBdjI10e17qRretNcwDRATqugwv
+Received-SPF: pass client-ip=57.103.68.233;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,79 +106,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Conditionalize use of the mapcache. This is in preparation
-to optionally disable the mapcache at runtime.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
----
- system/physmem.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+> On 9. Mar 2026, at 07:33, Khushit Shah <khushit.shah@nutanix.com> =
+wrote:
+>=20
+>=20
+>=20
+>> On 9 Mar 2026, at 11:27=E2=80=AFAM, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>=20
+>> Hi,
+>>=20
+>> Ugh about this one, but am still convinced that a machine model =
+version
+>> is _the_ right way to deal with this. Will this be backported to =
+Linux LTSes on the KVM side?
+>>=20
+>> Or alternatively, what are the odds of having it fit as a CPU flag?
+>> For example -cpu host,x2apic-suppress-eoi-broadcast=3Don.
+>=20
+>=20
+> Hi,=20
+>=20
+> Thanks for the review.
+>=20
+> Regarding the -cpu flag: This doesn't feel right because SEOIB is an =
+accelerator-specific (KVM)
+> value. Tying it to the CPU suggests an architectural feature that =
+wouldn't apply to TCG. What
+> specifically feels off about keeping it as a KVM/Machine property?
+Hello,
 
-diff --git a/system/physmem.c b/system/physmem.c
-index e5ff26acec..7eecd81877 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -578,7 +578,9 @@ MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
-                                     is_write, true, &as, attrs);
-     mr = section.mr;
- 
--    if (xen_enabled() && memory_access_is_direct(mr, is_write, attrs)) {
-+    if (xen_map_cache_enabled() &&
-+        memory_access_is_direct(mr, is_write, attrs)) {
-+        /* mapcache: Next page may be unmapped or in a different bucket/VA. */
-         hwaddr page = ((addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE) - addr;
-         *plen = MIN(page, *plen);
-     }
-@@ -2577,7 +2579,7 @@ static void reclaim_ramblock(RAMBlock *block)
- {
-     if (block->flags & RAM_PREALLOC) {
-         ;
--    } else if (xen_enabled()) {
-+    } else if (xen_map_cache_enabled()) {
-         xen_invalidate_map_cache_entry(block->host);
- #if !defined(_WIN32) && !defined(EMSCRIPTEN)
-     } else if (block->fd >= 0) {
-@@ -2736,7 +2738,7 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-         len = *size;
-     }
- 
--    if (xen_enabled() && block->host == NULL) {
-+    if (xen_map_cache_enabled() && block->host == NULL) {
-         /* We need to check if the requested address is in the RAM
-          * because we don't want to map the entire memory in QEMU.
-          * In that case just map the requested area.
-@@ -2785,7 +2787,7 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-     RAMBlock *block;
-     uint8_t *host = ptr;
- 
--    if (xen_enabled()) {
-+    if (xen_map_cache_enabled()) {
-         ram_addr_t ram_addr;
-         RCU_READ_LOCK_GUARD();
-         ram_addr = xen_ram_addr_from_mapcache(ptr);
-@@ -3787,7 +3789,7 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-         if (is_write) {
-             invalidate_and_set_dirty(mr, addr1, access_len);
-         }
--        if (xen_enabled()) {
-+        if (xen_map_cache_enabled()) {
-             xen_invalidate_map_cache_entry(buffer);
-         }
-         memory_region_unref(mr);
-@@ -3898,7 +3900,7 @@ void address_space_cache_destroy(MemoryRegionCache *cache)
-         return;
-     }
- 
--    if (xen_enabled()) {
-+    if (xen_map_cache_enabled()) {
-         xen_invalidate_map_cache_entry(cache->ptr);
-     }
-     memory_region_unref(cache->mrs.mr);
--- 
-2.43.0
+The reason why I considered this is that QEMU CPU models are versioned =
+separately from the machine
+model, with an understanding that an older CPU model might not work on =
+an older KVM.
+
+And with a common CPU model being also a requirement for live migration =
+too.
+
+This has historically been generally leveraged for security mitigations =
+but it could be a good fit here.
+
+That could provide a path towards it becoming the default when -cpu host =
+on a supported kernel (which doesn=E2=80=99t entail having LM support), =
+while keeping LM working and having it stepped in with newer CPU model =
+versions, which people will update to more often than new kernels. Maybe =
+the best shape could be a no_seoib flag for older predefined CPU =
+models=E2=80=A6
+
+My concern is primarily somebody installing a new QEMU, running =
+qemu-system-x86_64 -M q35,kernel-irqchip=3Dsplit [whatever], which would =
+pick the latest machine model version and fail straight away if this is =
+rolled as part of a new machine model if running on a kernel without the =
+KVM side merged in.
+
+And having a custom flag not turned on by default for a long time for =
+this comes with the risk that almost nobody will enable it instead of it =
+being eventually phased in as the default configuration=E2=80=A6 Or =
+maybe it matters a lot less because kernel-irqchip=3Dsplit is not the =
+default today anyway?
+
+Thank you,
+-Mohamed
+>=20
+> Regarding the backports: The KVM kernel side is currently in 6.18 and =
+6.19. I haven=E2=80=99t yet came
+> around to manually backported it to the older stable releases yet.
+>=20
+> Thanks,=20
+> Khushit.
+
 
 
