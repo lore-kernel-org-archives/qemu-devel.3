@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B31EF41808
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E0CF41808
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcEv-000140-Ve; Mon, 09 Mar 2026 11:09:50 -0400
+	id 1vzcFM-0001Rr-DO; Mon, 09 Mar 2026 11:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEu-00012a-GX
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcFB-0001PS-DU
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:10:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEt-0008Q5-1j
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:48 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcF9-000071-On
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:10:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773068986;
+ s=mimecast20190719; t=1773069003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6mEiC7wHSRQEMHrBtID2dzu9OQQrbDbRtARSqIO9BMw=;
- b=H86WnRI+g56/86gurdgTWLRqWH5oWF8Pdq9U2VkH5+WQ2dhodSYlf74PHBxzKFcN67wU8D
- 1jKftsvMk6C7OzmiHjBefEmMhKr6gl4Y1Wmmd4vUWC+t/ys/xIbaABmgaM4u2rEsJrZVT6
- XBYbtKVJOahVIem2E00k/EVlcRc/xcI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=633uGYxCqCqS9HhKtlvq4s6urigO3aDNgdTdJUn3P34=;
+ b=PqE8Arsvk8AuUT2S0dQcrebo56mN9TA/G3noeVg2mNNWlrehpvscpQc36aDItu1JtRi6eJ
+ 1oum5UTb+nZoBLDsURmUqgikXPqPBaj0kM1oy6aNx19SE1OxIbqlLFgsKC8ZfD42O50cef
+ RDRdj+CnRSiJT17mTaf2tdqafgR9j9Y=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-hObVzkqnNnqAOeYLtnvEKg-1; Mon, 09 Mar 2026 11:09:45 -0400
-X-MC-Unique: hObVzkqnNnqAOeYLtnvEKg-1
-X-Mimecast-MFC-AGG-ID: hObVzkqnNnqAOeYLtnvEKg_1773068984
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4837b6f6b93so94347935e9.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:09:45 -0700 (PDT)
+ us-mta-62-8Gx2_sfkPUiwY1z01t2gTw-1; Mon, 09 Mar 2026 11:10:01 -0400
+X-MC-Unique: 8Gx2_sfkPUiwY1z01t2gTw-1
+X-Mimecast-MFC-AGG-ID: 8Gx2_sfkPUiwY1z01t2gTw_1773069000
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-439b8bc43aeso6178011f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773068984; x=1773673784; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773069000; x=1773673800; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6mEiC7wHSRQEMHrBtID2dzu9OQQrbDbRtARSqIO9BMw=;
- b=DcM5nxDsYWTTjmX9FfeOTWsTYkpCJhQGrjUyNPRFyGmT3ubeNOCixj/5xlAW9ujHqo
- yD9hWrpLHwdxJjEj9c5iga7XbIpKCpYBuYHBQtF1p0nVPjGnqOENgZd+iF+WXS7HXEX0
- YSrpmZ723Bm485r2XPnhSewXI4vTCglbKo+SMgEjDQ6MRw2p3EHqs2YOlDO1KQxwboOL
- 9kCP8fZg0pLIxjkvyfvBKkhoZnOaIt2nXqO2216hqJiA5Y7wgDj7PYr3sUFphEFjURSV
- h1P4CSQePnPpSFR0Ulk/IL5at/zw99oubczj6g3WTTArzTvqG5skU1vCc6IzpLAPsY9b
- Mpyw==
+ bh=633uGYxCqCqS9HhKtlvq4s6urigO3aDNgdTdJUn3P34=;
+ b=m6+3NHEHwA1ipH/A2JBXPM080Dx9SZnHHgD1vfsaQZini2Cr3Rk9Llt1uTLgOGRWBX
+ +BKGdA8ANtNyOGJ+rSXduOEf1UV2MQXYVw9uJKoov0aqxmMZLBt9gfQ8f8b2DEvgfQoG
+ 9bu5L7IotdIKtVTduSdZVdAnP+1Fqz7v2UMcEzSUvpbF88B2n90UtjwDPuHzTvv4ZpZS
+ 9hD6sOu8r32Mn6E8yYLuWGiE6uFY9kfSinVWgFtCe1cQuXvkYP6EH0FiZB2zjcVnWPa9
+ 8ThhnuifOffnv0IP4B5zinKro3H1f7GuuhFYjwh2QLXABSVOhjlc9r6yKKhKGdbWsm9L
+ A7ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773068984; x=1773673784;
+ d=1e100.net; s=20230601; t=1773069000; x=1773673800;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6mEiC7wHSRQEMHrBtID2dzu9OQQrbDbRtARSqIO9BMw=;
- b=XCSbHyJ5o96lnELMwmRjgiRoBxM9B7LR2JQ9xkxJfjVXeMzgMuvqf6o6fEPAnBLVkg
- boicGAtARzzlww1a5BdYzUZVjRivfoYR27WAPU64pmI47oZCop75yWgrNwlKjR/rTN57
- TmMkqrAj4kXIhyStaz6msCyqtoYrrUcFOet1adXQ2rEiBv7c+juvIYCakVvOQR3lfwmQ
- 4Ijltd/Y0OctgCnAKuWgRyFcVqaLPZdJMgjpRzBsG15mQaidEP+8urS9Fc53an1TEkQv
- HpnEytwA3nysZAfa6hhJGrtzM7Q+GpSoVjERET9vZWt07lKYbPFkW6bcyBFbF46v7XrF
- quvg==
-X-Gm-Message-State: AOJu0YyuENJrt1DFVpdEOHD1wNw4E4E12ZnIJvRL1gXIJQcl4VqwFVc4
- UCLyAKPOWPjhQQ0Af/373eRNnlvXuGsvKV2BOL7poEXaAkFsq8X6SMPGVn9UUR7M53vCLnlGj8K
- ZogyXoAX0jyHylPZLdny75LWq4iTmSA8PrF7BIWDUmqcCO/h41bzGP33r
-X-Gm-Gg: ATEYQzw5cTUzp/24nFLFv7kQxP8WVpwKTDK2+z+Hpg9cg0D5FrFveDHrgWjLzxP9pez
- ugznI3Pa1XDbkdS96xRdVQPIubXFYl4FJ1+tUYRukafty+o1iO9GzLHMZBxreBimpAQmTa69tei
- uOxOEfLPQWtohLT8yfmTWCmvDvhOBybvBMzmRWvJEGXrv5P5fNiDKQkTNhBLRTCMSco1q4crCw1
- 7LLtNLKwwZKCTiIPEZlmuwKzOo3sBDgNQuJYIVFW9hsTHZLT29evc5UU5u8lMyoxQOyXQCsheU6
- GX/4kyXor3QzZKNT7PM2O4HWcMzDgeeSDWOePhNcspU5vZquKWxS7gn9JcyqFXAVox1PePTYvma
- JJXG/2nEPuyMrf1xC5wAq1L/yefvGSe1QF+80ApIuhM1dI23QuAkhAN0C6KPzjPkyL7eRMn2bpl
- 0vo7A0
-X-Received: by 2002:a05:600c:540e:b0:485:39d1:b4dd with SMTP id
- 5b1f17b1804b1-48539d1bb72mr69257195e9.10.1773068983896; 
- Mon, 09 Mar 2026 08:09:43 -0700 (PDT)
-X-Received: by 2002:a05:600c:540e:b0:485:39d1:b4dd with SMTP id
- 5b1f17b1804b1-48539d1bb72mr69256465e9.10.1773068983400; 
- Mon, 09 Mar 2026 08:09:43 -0700 (PDT)
+ bh=633uGYxCqCqS9HhKtlvq4s6urigO3aDNgdTdJUn3P34=;
+ b=ngerMhb/86U85Y30pB8MpaM4t5brzWW+z17eNO6uK9YfW8HZtQjjxvlygPXZP8s6Fb
+ CQm1+IiElCap5qF2UHKVCgBVe2IUGs7vwNQ0jc6nzrQF5oPEeyAoDAb06ub/OTOP+Usq
+ jRe33otZLMCvXQe7bFA952srsIYhYD7/gwwz28M0p+d3di30PE0v7k+l+MgLsV/tfnPk
+ 7YlUAu3rHL9BJzyTwTOWNAV/MJQ1Mqqq9KNcdEVsavfjw4MqTDz3unp+2WfelPRcbOV2
+ 1ZuLquGjVdxae/FlHnmZFJkO9YagmZEbfZgqkMnjI5hGTetx98rDAdWU4yoaPUXP7xYM
+ N1uw==
+X-Gm-Message-State: AOJu0YypYE7O/GTuURlOaFL4xCRpj84RbwX1N1KPG8vUJLvIaXP5yRg+
+ 5FVWYuykGfOw6KVEuRmVw6kUuJEmIRW53WsOxrHeBHP6QcgAXFOgTLCPzcM3BsZMgvUPY0ta03j
+ FiGwIaOMwpAqcJdt0maXzZTUBLIxyCRK9ijXOrbJ1XAn8StZNykB3dvyD
+X-Gm-Gg: ATEYQzx/rk08IizyPB7UktTEskU3JX3nUPP3fcZT8svf1GLUHGws7a9dNzCnSTlx7n0
+ bJ/FaQ4w+7BMCtl5c2uK8+r2+wgDAZx9t/hcwxCWl2pp6kzgDB3C4MC+PbllDUPjbd6kmtrYn+b
+ NkDoC7937Gn3MeWJqoNgQkvjs7jv2HA7HQ321xK3SqZIFXE3SPYcePmieUN397M+/3+owsmp5hV
+ 0FCk4kaGzln9B5KkovjghUT8uoZnjjub34GpA8A4GUW1KM5c512cPkJBMdX6kuTmn0979fGunvw
+ TojoSLaUKSzDduFt4xU+tJECS62AOwJA195ei+J3S78QlsMGnMOnw3KbBZNbz4gw0wCYY9nQR87
+ x4i8Zs921APmcfPgBFhO4ejjrLqQorm+sHUWyinqIwmFJFim9Cj2KKXcjY9OWKJnbymfqSbEir8
+ +cKAIc
+X-Received: by 2002:adf:ff89:0:b0:439:de1d:74c6 with SMTP id
+ ffacd0b85a97d-439de1d76famr14581666f8f.19.1773069000323; 
+ Mon, 09 Mar 2026 08:10:00 -0700 (PDT)
+X-Received: by 2002:adf:ff89:0:b0:439:de1d:74c6 with SMTP id
+ ffacd0b85a97d-439de1d76famr14581620f8f.19.1773068999863; 
+ Mon, 09 Mar 2026 08:09:59 -0700 (PDT)
 Received: from localhost
  (p200300cfd737d0cf29d515fbd6051d53.dip0.t-ipconnect.de.
  [2003:cf:d737:d0cf:29d5:15fb:d605:1d53])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853252cae1sm173654115e9.3.2026.03.09.08.09.42
+ ffacd0b85a97d-439dad8d968sm26247465f8f.6.2026.03.09.08.09.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 08:09:42 -0700 (PDT)
+ Mon, 09 Mar 2026 08:09:58 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v5 16/25] fuse: Drop permission changes in fuse_do_truncate
-Date: Mon,  9 Mar 2026 16:08:47 +0100
-Message-ID: <20260309150856.26800-17-hreitz@redhat.com>
+Subject: [PATCH v5 22/25] fuse: Make shared export state atomic
+Date: Mon,  9 Mar 2026 16:08:53 +0100
+Message-ID: <20260309150856.26800-23-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309150856.26800-1-hreitz@redhat.com>
 References: <20260309150856.26800-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -122,66 +122,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is always called with writable == true.  This makes
-add_resize_perm always false, and thus we can drop the quite ugly
-permission-changing code.
+The next commit is going to allow multi-threaded access to a FUSE
+export.  In order to allow safe concurrent SETATTR operations that
+can modify the shared st_mode, st_uid, and st_gid, make any access to
+those fields atomic operations.
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 34 ++--------------------------------
- 1 file changed, 2 insertions(+), 32 deletions(-)
+ block/export/fuse.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index af0a8de17b..b7a710c29f 100644
+index 1c79411839..fe1b6ad5ff 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -503,44 +503,14 @@ static void fuse_getattr(fuse_req_t req, fuse_ino_t inode,
- static int fuse_do_truncate(const FuseExport *exp, int64_t size,
-                             bool req_zero_write, PreallocMode prealloc)
- {
--    uint64_t blk_perm, blk_shared_perm;
-     BdrvRequestFlags truncate_flags = 0;
--    bool add_resize_perm;
--    int ret, ret_check;
--
--    /* Growable and writable exports have a permanent RESIZE permission */
--    add_resize_perm = !exp->growable && !exp->writable;
+@@ -156,6 +156,7 @@ typedef struct FuseExport {
+     /* Whether allow_other was used as a mount option or not */
+     bool allow_other;
  
-     if (req_zero_write) {
-         truncate_flags |= BDRV_REQ_ZERO_WRITE;
++    /* All atomic */
+     mode_t st_mode;
+     uid_t st_uid;
+     gid_t st_gid;
+@@ -266,6 +267,7 @@ static int fuse_export_create(BlockExport *blk_exp,
+     ERRP_GUARD(); /* ensure clean-up even with error_fatal */
+     FuseExport *exp = container_of(blk_exp, FuseExport, common);
+     BlockExportOptionsFuse *args = &blk_exp_args->u.fuse;
++    uint32_t st_mode;
+     int ret;
+ 
+     assert(blk_exp_args->type == BLOCK_EXPORT_TYPE_FUSE);
+@@ -334,12 +336,13 @@ static int fuse_export_create(BlockExport *blk_exp,
+         args->allow_other = FUSE_EXPORT_ALLOW_OTHER_AUTO;
      }
  
--    if (add_resize_perm) {
--        if (!qemu_in_main_thread()) {
--            /* Changing permissions like below only works in the main thread */
--            return -EPERM;
--        }
--
--        blk_get_perm(exp->common.blk, &blk_perm, &blk_shared_perm);
--
--        ret = blk_set_perm(exp->common.blk, blk_perm | BLK_PERM_RESIZE,
--                           blk_shared_perm, NULL);
--        if (ret < 0) {
--            return ret;
--        }
--    }
--
--    ret = blk_truncate(exp->common.blk, size, true, prealloc,
--                       truncate_flags, NULL);
--
--    if (add_resize_perm) {
--        /* Must succeed, because we are only giving up the RESIZE permission */
--        ret_check = blk_set_perm(exp->common.blk, blk_perm,
--                                 blk_shared_perm, &error_abort);
--        assert(ret_check == 0);
--    }
--
--    return ret;
-+    return blk_truncate(exp->common.blk, size, true, prealloc,
-+                        truncate_flags, NULL);
- }
+-    exp->st_mode = S_IFREG | S_IRUSR;
++    st_mode = S_IFREG | S_IRUSR;
+     if (exp->writable) {
+-        exp->st_mode |= S_IWUSR;
++        st_mode |= S_IWUSR;
+     }
+-    exp->st_uid = getuid();
+-    exp->st_gid = getgid();
++    qatomic_set(&exp->st_mode, st_mode);
++    qatomic_set(&exp->st_uid, getuid());
++    qatomic_set(&exp->st_gid, getgid());
  
- /**
+     if (args->allow_other == FUSE_EXPORT_ALLOW_OTHER_AUTO) {
+         /* Try allow_other == true first, ignore errors */
+@@ -817,10 +820,10 @@ fuse_co_getattr(FuseExport *exp, struct fuse_attr_out *out)
+         .attr_valid = 1,
+         .attr = {
+             .ino        = 1,
+-            .mode       = exp->st_mode,
++            .mode       = qatomic_read(&exp->st_mode),
+             .nlink      = 1,
+-            .uid        = exp->st_uid,
+-            .gid        = exp->st_gid,
++            .uid        = qatomic_read(&exp->st_uid),
++            .gid        = qatomic_read(&exp->st_gid),
+             .size       = length,
+             .blksize    = blk_bs(exp->common.blk)->bl.request_alignment,
+             .blocks     = allocated_blocks,
+@@ -903,15 +906,15 @@ fuse_co_setattr(FuseExport *exp, struct fuse_attr_out *out, uint32_t to_set,
+ 
+     if (to_set & FATTR_MODE) {
+         /* Ignore FUSE-supplied file type, only change the mode */
+-        exp->st_mode = (mode & 07777) | S_IFREG;
++        qatomic_set(&exp->st_mode, (mode & 07777) | S_IFREG);
+     }
+ 
+     if (to_set & FATTR_UID) {
+-        exp->st_uid = uid;
++        qatomic_set(&exp->st_uid, uid);
+     }
+ 
+     if (to_set & FATTR_GID) {
+-        exp->st_gid = gid;
++        qatomic_set(&exp->st_gid, gid);
+     }
+ 
+     return fuse_co_getattr(exp, out);
 -- 
 2.53.0
 
